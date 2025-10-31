@@ -578,6 +578,8 @@ namespace std {
 }
 ```
 
+`ios_base`
+
 defines several member types:
 
 - a type `failure`, defined as either a class derived from
@@ -971,9 +973,9 @@ static bool sync_with_stdio(bool sync = true);
 ***Effects:***
 
 If any input or output operation has occurred using the standard streams
-prior to the call, the effect is . Otherwise, called with a `false`
-argument, it allows the standard streams to operate independently of the
-standard C streams.
+prior to the call, the effect is *implementation-defined*. Otherwise,
+called with a `false` argument, it allows the standard streams to
+operate independently of the standard C streams.
 
 ***Returns:***
 
@@ -1202,18 +1204,21 @@ Current value of `st`.
 
 An `fpos` type specifies file position information. It holds a state
 object whose type is equal to the template parameter `stateT`. Type
-`stateT` shall meet the ( [cpp17.defaultconstructible]), (
-[cpp17.copyconstructible]), ( [cpp17.copyassignable]), and (
-[cpp17.destructible]) requirements. If
-`is_trivially_copy_constructible_v<stateT>` is `true`, then
-`fpos<stateT>` has a trivial copy constructor. If
+`stateT` shall meet the *Cpp17DefaultConstructible* (
+[cpp17.defaultconstructible]), *Cpp17CopyConstructible* (
+[cpp17.copyconstructible]), *Cpp17CopyAssignable* (
+[cpp17.copyassignable]), and *Cpp17Destructible* ( [cpp17.destructible])
+requirements. If `is_trivially_copy_constructible_v<stateT>` is `true`,
+then `fpos<stateT>` has a trivial copy constructor. If
 `is_trivially_copy_assignable_v<stateT>` is `true`, then `fpos<stateT>`
 has a trivial copy assignment operator. If
 `is_trivially_destructible_v<stateT>` is `true`, then `fpos<stateT>` has
-a trivial destructor. All specializations of `fpos` meet the , , , , and
-( [cpp17.equalitycomparable]) requirements. In addition, the expressions
-shown in [fpos.operations] are valid and have the indicated semantics.
-In that table,
+a trivial destructor. All specializations of `fpos` meet the
+*Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
+*Cpp17CopyAssignable*, *Cpp17Destructible*, and
+*Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) requirements. In
+addition, the expressions shown in [fpos.operations] are valid and have
+the indicated semantics. In that table,
 
 - `P` refers to a specialization of `fpos`,
 
@@ -1592,7 +1597,8 @@ void clear(iostate state = goodbit);
 
 If `((state | (rdbuf() ? goodbit : badbit)) & exceptions()) == 0`,
 returns. Otherwise, the function throws an object of class
-`ios_base::failure`\[ios.failure\], constructed with argument values.
+`ios_base::failure`\[ios.failure\], constructed with
+*implementation-defined* argument values.
 
 ***Ensures:***
 
@@ -3358,7 +3364,7 @@ basic_istream& operator>>(extended-floating-point-type& val);
 If the floating-point conversion rank of
 *`extended-floating-point-type`* is not less than or equal to that of
 `long double`, then an invocation of the operator function is
-conditionally supported with semantics.
+conditionally supported with *implementation-defined* semantics.
 
 Otherwise, let `FP` be a standard floating-point type:
 
@@ -4601,7 +4607,7 @@ bool failed = use_facet<
 ```
 
 Otherwise, an invocation of the operator function is conditionally
-supported with semantics.
+supported with *implementation-defined* semantics.
 
 If `failed` is `true` then does `setstate(badbit)`, which may throw an
 exception, and returns.
@@ -4699,7 +4705,7 @@ Equivalent to:
 return *this << s;
 ```
 
-where `s` is an NTCTS\[defns.ntcts\].
+where `s` is an *implementation-defined* NTCTS\[defns.ntcts\].
 
 ##### Character inserter function templates <a id="ostream.inserters.character">[ostream.inserters.character]</a>
 
@@ -5746,7 +5752,8 @@ initialization is presented here as:
 - `ios_base::openmode mode`, has `in` set if the input sequence can be
   read, and `out` set if the output sequence can be written.
 
-- contains the underlying character sequence.
+- `basic_string<charT, traits, Allocator> buf`
+  contains the underlying character sequence.
 
 - `init_buf_ptrs()` sets the base class’ get area [streambuf.get.area]
   and put area [streambuf.put.area] pointers after initializing, moving
@@ -5761,9 +5768,9 @@ explicit basic_stringbuf(ios_base::openmode which);
 ***Effects:***
 
 Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
-and `mode` with `which`. It is whether the sequence pointers (`eback()`,
-`gptr()`, `egptr()`, `pbase()`, `pptr()`, `epptr()`) are initialized to
-null pointers.
+and `mode` with `which`. It is *implementation-defined* whether the
+sequence pointers (`eback()`, `gptr()`, `egptr()`, `pbase()`, `pptr()`,
+`epptr()`) are initialized to null pointers.
 
 ***Ensures:***
 
@@ -5842,9 +5849,9 @@ basic_stringbuf(basic_stringbuf&& rhs, const Allocator& a);
 Copy constructs the base class from `rhs` and initializes `mode` with
 `rhs.mode`. In the first form `buf` is initialized from
 `std::move(rhs).str()`. In the second form `buf` is initialized from
-`{std::move(rhs).str(), a}`. It is whether the sequence pointers in
-`*this` (`eback()`, `gptr()`, `egptr()`, `pbase()`, `pptr()`, `epptr()`)
-obtain the values which `rhs` had.
+`{std::move(rhs).str(), a}`. It is *implementation-defined* whether the
+sequence pointers in `*this` (`eback()`, `gptr()`, `egptr()`, `pbase()`,
+`pptr()`, `epptr()`) obtain the values which `rhs` had.
 
 ***Ensures:***
 
@@ -6242,7 +6249,7 @@ basic_streambuf<charT, traits>* setbuf(charT* s, streamsize n) override;
 
 ***Effects:***
 
-, except that `setbuf(0, 0)` has no effect.
+*implementation-defined*, except that `setbuf(0, 0)` has no effect.
 
 ***Returns:***
 
@@ -7154,7 +7161,8 @@ Initializes the base class with `std::move(rhs)` and *mode* with
 `std::move(rhs.`*`mode`*`)` and *buf* with `std::move(rhs.`*`buf`*`)`.
 The sequence pointers in `*this` (`eback()`, `gptr()`, `egptr()`,
 `pbase()`, `pptr()`, `epptr()`) obtain the values which `rhs` had. It is
-whether `rhs.`*`buf`*`.empty()` returns `true` after the move.
+*implementation-defined* whether `rhs.`*`buf`*`.empty()` returns `true`
+after the move.
 
 ***Ensures:***
 
@@ -7903,13 +7911,13 @@ basic_filebuf(basic_filebuf&& rhs);
 
 ***Effects:***
 
-It is whether the sequence pointers in `*this` (`eback()`, `gptr()`,
-`egptr()`, `pbase()`, `pptr()`, `epptr()`) obtain the values which `rhs`
-had. Whether they do or not, `*this` and `rhs` reference separate
-buffers (if any at all) after the construction. Additionally `*this`
-references the file which `rhs` did before the construction, and `rhs`
-references no file after the construction. The openmode, locale and any
-other state of `rhs` is also copied.
+It is *implementation-defined* whether the sequence pointers in `*this`
+(`eback()`, `gptr()`, `egptr()`, `pbase()`, `pptr()`, `epptr()`) obtain
+the values which `rhs` had. Whether they do or not, `*this` and `rhs`
+reference separate buffers (if any at all) after the construction.
+Additionally `*this` references the file which `rhs` did before the
+construction, and `rhs` references no file after the construction. The
+openmode, locale and any other state of `rhs` is also copied.
 
 ***Ensures:***
 
@@ -8244,9 +8252,10 @@ basic_streambuf* setbuf(char_type* s, streamsize n) override;
 ***Effects:***
 
 If `setbuf(0, 0)` is called on a stream before any I/O has occurred on
-that stream, the stream becomes unbuffered. Otherwise the results are .
-“Unbuffered” means that `pbase()` and `pptr()` always return null and
-output to the file should appear as soon as possible.
+that stream, the stream becomes unbuffered. Otherwise the results are
+*implementation-defined*. “Unbuffered” means that `pbase()` and `pptr()`
+always return null and output to the file should appear as soon as
+possible.
 
 ``` cpp
 pos_type seekoff(off_type off, ios_base::seekdir way,
@@ -8328,7 +8337,7 @@ int sync() override;
 
 If a put area exists, calls `filebuf::overflow` to write the characters
 to the file, then flushes the file as if by calling `fflush(file)`. If a
-get area exists, the effect is .
+get area exists, the effect is *implementation-defined*.
 
 ``` cpp
 void imbue(const locale& loc) override;
@@ -9249,7 +9258,7 @@ namespace std {
 }
 ```
 
-`Allocator` shall meet the requirements
+`Allocator` shall meet the *Cpp17Allocator* requirements
 [allocator.requirements.general].
 
 \[*Example 1*:
@@ -9499,17 +9508,17 @@ Functions with template parameters named `EcharT` shall not participate
 in overload resolution unless `EcharT` is one of the encoded character
 types.
 
-Template parameters named `InputIterator` shall meet the requirements
-[input.iterators] and shall have a value type that is one of the encoded
-character types.
+Template parameters named `InputIterator` shall meet the
+*Cpp17InputIterator* requirements [input.iterators] and shall have a
+value type that is one of the encoded character types.
 
 \[*Note 6*: Use of an encoded character type implies an associated
 character set and encoding. Since `signed char` and `unsigned char` have
 no implied character set and encoding, they are not included as
 permitted types. — *end note*\]
 
-Template parameters named `Allocator` shall meet the requirements
-[allocator.requirements.general].
+Template parameters named `Allocator` shall meet the *Cpp17Allocator*
+requirements [allocator.requirements.general].
 
 ### Header `<filesystem>` synopsis <a id="fs.filesystem.syn">[fs.filesystem.syn]</a>
 
@@ -10256,11 +10265,11 @@ named `Source` shall be one of:
 - `basic_string_view<EcharT, traits>`. A function argument
   `const Source&` `source` shall have an effective range .
 
-- A type meeting the requirements that iterates over a NTCTS. The value
-  type shall be an encoded character type. A function argument
-  `const Source&` `source` shall have an effective range where `end` is
-  the first iterator value with an element value equal to
-  `iterator_traits<Source>::value_type()`.
+- A type meeting the *Cpp17InputIterator* requirements that iterates
+  over a NTCTS. The value type shall be an encoded character type. A
+  function argument `const Source&` `source` shall have an effective
+  range where `end` is the first iterator value with an element value
+  equal to `iterator_traits<Source>::value_type()`.
 
 - A character array that after array-to-pointer decay results in a
   pointer to the start of a NTCTS. The value type shall be an encoded
@@ -10481,12 +10490,13 @@ Otherwise, modifies `*this` as if by these steps:
   `has_filename()` is `true`, then appends `path::preferred_separator`
   to the generic format pathname.
 
-- Then appends the native format pathname of `p`, omitting any from its
-  generic format pathname, to the native format pathname.
+- Then appends the native format pathname of `p`, omitting any
+  *root-name* from its generic format pathname, to the native format
+  pathname.
 
 \[*Example 5*:
 
-Even if `//host` is interpreted as a , both of the paths
+Even if `//host` is interpreted as a *root-name*, both of the paths
 `path("//host")/"foo"` and `path("//host/")/"foo"` equal `"//host/foo"`
 (although the former might use backslash as the preferred separator).
 
@@ -10590,7 +10600,8 @@ path& make_preferred();
 
 ***Effects:***
 
-Each of the pathname in the generic format is converted to .
+Each *directory-separator* of the pathname in the generic format is
+converted to *preferred-separator*.
 
 ***Returns:***
 
@@ -10603,12 +10614,14 @@ Each of the pathname in the generic format is converted to .
     p.make_preferred();
     std::cout << p << '\n';
 
-On an operating system where is a slash, the output is:
+On an operating system where *preferred-separator* is a slash, the
+output is:
 
     "foo/bar"
     "foo/bar"
 
-On an operating system where is a backslash, the output is:
+On an operating system where *preferred-separator* is a backslash, the
+output is:
 
     "foo/bar"
     "foo\bar"
@@ -10853,7 +10866,8 @@ path root_name() const;
 
 ***Returns:***
 
-, if the pathname in the generic format includes , otherwise `path()`.
+*root-name*, if the pathname in the generic format includes *root-name*,
+otherwise `path()`.
 
 ``` cpp
 path root_directory() const;
@@ -10861,7 +10875,8 @@ path root_directory() const;
 
 ***Returns:***
 
-, if the pathname in the generic format includes , otherwise `path()`.
+*root-directory*, if the pathname in the generic format includes
+*root-directory*, otherwise `path()`.
 
 ``` cpp
 path root_path() const;
@@ -10878,8 +10893,8 @@ path relative_path() const;
 ***Returns:***
 
 A `path` composed from the pathname in the generic format, if `empty()`
-is `false`, beginning with the first after `root_path()`. Otherwise,
-`path()`.
+is `false`, beginning with the first *filename* after `root_path()`.
+Otherwise, `path()`.
 
 ``` cpp
 path parent_path() const;
@@ -11078,8 +11093,8 @@ form\[fs.path.generic\] of the pathname in the generic format of
     assert(path("foo/.///bar/../").lexically_normal() == "foo/");
 
 The above assertions will succeed. On Windows, the returned path’s
-characters will be backslashes rather than slashes, but that does not
-affect `path` equality.
+*directory-separator* characters will be backslashes rather than
+slashes, but that does not affect `path` equality.
 
 — *end example*\]
 
@@ -11097,13 +11112,13 @@ If:
 
 - `!has_root_directory() && base.has_root_directory()` is `true`, or
 
-- any in `relative_path()` or `base.relative_path()` can be interpreted
-  as a ,
+- any *filename* in `relative_path()` or `base.relative_path()` can be
+  interpreted as a *root-name*,
 
 returns `path()`.
 
-\[*Note 22*: On a POSIX implementation, no in a is acceptable as a
-. — *end note*\]
+\[*Note 22*: On a POSIX implementation, no *filename* in a
+*relative-path* is acceptable as a *root-name*. — *end note*\]
 
 Determines the first mismatched element of `*this` and `base` as if by:
 
@@ -11115,9 +11130,9 @@ Then,
 
 - if `a == end()` and `b == base.end()`, returns `path(".")`; otherwise
 
-- let `n` be the number of elements in \[`b`, `base.end()`) that are not
-  dot or dot-dot or empty, minus the number that are dot-dot. If `n<0,`
-  returns `path()`; otherwise
+- let `n` be the number of *filename* elements in \[`b`, `base.end()`)
+  that are not dot or dot-dot or empty, minus the number that are
+  dot-dot. If `n<0,` returns `path()`; otherwise
 
 - if `n == 0` and `(a == end() || a->empty())`, returns `path(".")`;
   otherwise
@@ -11144,8 +11159,8 @@ symlinks. Does not first normalize\[fs.path.generic\] `*this` or `base`.
     assert(path("a/b").lexically_relative("c/d") == "../../a/b");
 
 The above assertions will succeed. On Windows, the returned path’s
-characters will be backslashes rather than slashes, but that does not
-affect `path` equality.
+*directory-separator* characters will be backslashes rather than
+slashes, but that does not affect `path` equality.
 
 — *end example*\]
 
@@ -12044,7 +12059,8 @@ namespace std::filesystem {
 }
 ```
 
-`directory_iterator` meets the requirements [input.iterators].
+`directory_iterator` meets the *Cpp17InputIterator* requirements
+[input.iterators].
 
 If an iterator of type `directory_iterator` reports an error or is
 advanced past the last directory element, that iterator shall become
@@ -12631,7 +12647,8 @@ Before the first use of `f` and `t`:
 Effects are then as follows:
 
 - If `f.type()` or `t.type()` is an implementation-defined file
-  type\[fs.enum.file.type\], then the effects are .
+  type\[fs.enum.file.type\], then the effects are
+  *implementation-defined*.
 
 - Otherwise, an error is reported as specified in \[fs.err.report\] if:
 
@@ -13132,7 +13149,7 @@ If `exists(p)` is `false`, an error is reported\[fs.err.report\].
   to, determined as if by the value of the POSIX `stat` class member
   `st_size` obtained as if by POSIX `stat()`.
 
-- Otherwise, the result is .
+- Otherwise, the result is *implementation-defined*.
 
 The signature with argument `ec` returns `static_cast<uintmax_t>(-1)` if
 an error occurs.
@@ -13809,7 +13826,7 @@ determined as if by converting the `st_mode` member of the obtained
   - Otherwise, if the attributes indicate an implementation-defined file
     type\[fs.enum.file.type\], returns
     `file_status(file_type::`*`A`*`, prms)`, where *A* is the constant
-    for the file type.
+    for the *implementation-defined* file type.
 
   - Otherwise, returns `file_status(file_type::unknown, prms)`.
 

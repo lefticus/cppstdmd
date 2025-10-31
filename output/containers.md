@@ -95,7 +95,7 @@ typename X::value_type
 
 ***Preconditions:***
 
-`T` is *Erasable* from `X` (see \[container.alloc.reqmts\], below).
+`T` is *Cpp17Erasable* from `X` (see \[container.alloc.reqmts\], below).
 
 ``` cpp
 typename X::reference
@@ -158,7 +158,7 @@ X u = v;
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X` (see below).
+`T` is *Cpp17CopyInsertable* into `X` (see below).
 
 ***Ensures:***
 
@@ -302,7 +302,7 @@ c == b
 
 ***Preconditions:***
 
-`T` meets the *EqualityComparable* requirements.
+`T` meets the *Cpp17EqualityComparable* requirements.
 
 `bool`.
 
@@ -455,7 +455,7 @@ assignment, or swapping of the allocator only if
 - `allocator_traits<allocator_type>::propagate_on_container_move_assignment::value`,
   or
 
-- 
+- `allocator_traits<allocator_type>::propagate_on_container_swap::value`
 
 is `true` within the implementation of the corresponding container
 operation. In all container types defined in this Clause, the member
@@ -467,19 +467,19 @@ The expression `a.swap(b)`, for containers `a` and `b` of a standard
 container type other than `array`, shall exchange the values of `a` and
 `b` without invoking any move, copy, or swap operations on the
 individual container elements. Any `Compare`, `Pred`, or `Hash` types
-belonging to `a` and `b` shall meet the requirements and shall be
-exchanged by calling `swap` as described in  [swappable.requirements].
-If
+belonging to `a` and `b` shall meet the *Cpp17Swappable* requirements
+and shall be exchanged by calling `swap` as described in 
+[swappable.requirements]. If
 `allocator_traits<allocator_type>::propagate_on_container_swap::value`
-is `true`, then `allocator_type` shall meet the requirements and the
-allocators of `a` and `b` shall also be exchanged by calling `swap` as
-described in  [swappable.requirements]. Otherwise, the allocators shall
-not be swapped, and the behavior is undefined unless
-`a.get_allocator() == b.get_allocator()`. Every iterator referring to an
-element in one container before the swap shall refer to the same element
-in the other container after the swap. It is unspecified whether an
-iterator with value `a.end()` before the swap will have value `b.end()`
-after the swap.
+is `true`, then `allocator_type` shall meet the *Cpp17Swap\\pable*
+requirements and the allocators of `a` and `b` shall also be exchanged
+by calling `swap` as described in  [swappable.requirements]. Otherwise,
+the allocators shall not be swapped, and the behavior is undefined
+unless `a.get_allocator() == b.get_allocator()`. Every iterator
+referring to an element in one container before the swap shall refer to
+the same element in the other container after the swap. It is
+unspecified whether an iterator with value `a.end()` before the swap
+will have value `b.end()` after the swap.
 
 Unless otherwise specified (see  [associative.reqmts.except],
 [unord.req.except], [deque.modifiers], and [vector.modifiers]) all
@@ -514,8 +514,9 @@ invalidate iterators to, or change the values of, objects within that
 container.
 
 A *contiguous container* is a container whose member types `iterator`
-and `const_iterator` meet the requirements [random.access.iterators] and
-model `contiguous_iterator` [iterator.concept.contiguous].
+and `const_iterator` meet the *Cpp17RandomAccessIterator* requirements
+[random.access.iterators] and model `contiguous_iterator`
+[iterator.concept.contiguous].
 
 The behavior of certain container member functions and deduction guides
 depends on whether types qualify as input iterators or allocators. The
@@ -659,8 +660,8 @@ defined. If `X` is not allocator-aware or is a specialization of
 `allocator<T>` — no allocator object needs to be created and user
 specializations of `allocator<T>` are not instantiated:
 
-- `T` is `X}` into X@ into `X` means that the following expression is
-  well-formed:
+- `T` is `X}` into X@*Cpp17DefaultInsertable* into `X` means that the
+  following expression is well-formed:
 
   ``` cpp
   allocator_traits<A>::construct(m, p)
@@ -676,8 +677,8 @@ specializations of `allocator<T>` are not instantiated:
   where `p` is the address of the uninitialized storage for the element
   allocated within `X`.
 
-- `T` is `X}` into X@ into `X` means that the following expression is
-  well-formed:
+- `T` is `X}` into X@*Cpp17MoveInsertable* into `X` means that the
+  following expression is well-formed:
 
   ``` cpp
   allocator_traits<A>::construct(m, p, rv)
@@ -690,8 +691,9 @@ specializations of `allocator<T>` are not instantiated:
   \[*Note 2*: `rv` remains a valid object. Its state is
   unspecified — *end note*\]
 
-- `T` is `X}` into X@ into `X` means that, in addition to `T` being into
-  `X`, the following expression is well-formed:
+- `T` is `X}` into X@*Cpp17CopyInsertable* into `X` means that, in
+  addition to `T` being *Cpp17MoveInsertable* into `X`, the following
+  expression is well-formed:
 
   ``` cpp
   allocator_traits<A>::construct(m, p, v)
@@ -700,16 +702,17 @@ specializations of `allocator<T>` are not instantiated:
   and its evaluation causes the following postcondition to hold: The
   value of `v` is unchanged and is equivalent to `*p`.
 
-- `T` is `X} from \tcode{args}` into X from args@ into `X` from `args`,
-  for zero or more arguments `args`, means that the following expression
-  is well-formed:
+- `T` is `X} from \tcode{args}` into X from
+  args@*Cpp17EmplaceConstructible* into `X` from `args`, for zero or
+  more arguments `args`, means that the following expression is
+  well-formed:
 
   ``` cpp
   allocator_traits<A>::construct(m, p, args)
   ```
 
-- `T` is `X}` from X@ from `X` means that the following expression is
-  well-formed:
+- `T` is `X}` from X@*Cpp17Erasable* from `X` means that the following
+  expression is well-formed:
 
   ``` cpp
   allocator_traits<A>::destroy(m, p)
@@ -769,7 +772,7 @@ X u = X();
 
 ***Preconditions:***
 
-`A` meets the *DefaultConstructible* requirements.
+`A` meets the *Cpp17DefaultConstructible* requirements.
 
 ***Ensures:***
 
@@ -797,7 +800,7 @@ X u(t, m);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X`.
+`T` is *Cpp17CopyInsertable* into `X`.
 
 ***Ensures:***
 
@@ -827,7 +830,7 @@ X u(rv, m);
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `X`.
+`T` is *Cpp17MoveInsertable* into `X`.
 
 ***Ensures:***
 
@@ -846,7 +849,7 @@ a = t
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X` and *CopyAssignable*.
+`T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*.
 
 ***Ensures:***
 
@@ -866,7 +869,8 @@ a = rv
 
 If
 `allocator_traits<allocator_type>::propagate_on_container_move_assignment::value`
-is `false`, `T` is *MoveInsertable* into `X` and *MoveAssignable*.
+is `false`, `T` is *Cpp17MoveInsertable* into `X` and
+*Cpp17MoveAssignable*.
 
 ***Effects:***
 
@@ -947,8 +951,9 @@ In this subclause,
   `X::allocator_type` is valid and denotes a type [temp.deduct] and
   `allocator<T>` if it doesn’t,
 
-- `i` and `j` denote iterators that meet the requirements and refer to
-  elements implicitly convertible to `value_type`,
+- `i` and `j` denote iterators that meet the *Cpp17InputIterator*
+  requirements and refer to elements implicitly convertible to
+  `value_type`,
 
 - `[i, j)` denotes a valid range,
 
@@ -985,7 +990,7 @@ X u(n, t);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X`.
+`T` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -1001,10 +1006,10 @@ X u(i, j);
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*i`. For `vector`, if the
-iterator does not meet the *ForwardIterator*
-requirements\[forward.iterators\], `T` is also *MoveInsertable* into
-`X`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*i`. For `vector`, if
+the iterator does not meet the *Cpp17ForwardIterator*
+requirements\[forward.iterators\], `T` is also *Cpp17MoveInsertable*
+into `X`.
 
 ***Effects:***
 
@@ -1021,9 +1026,9 @@ X(from_range, rg)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*ranges::begin(rg)`. For
-`vector`, if `R` models neither `ranges::``sized_range` nor
-`ranges::``forward_range`, `T` is also *MoveInsertable* into `X`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
+For `vector`, if `R` models neither `ranges::``sized_range` nor
+`ranges::``forward_range`, `T` is also *Cpp17MoveInsertable* into `X`.
 
 ***Effects:***
 
@@ -1050,7 +1055,7 @@ a = il
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X` and *CopyAssignable*.
+`T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*.
 
 ***Effects:***
 
@@ -1069,8 +1074,9 @@ a.emplace(p, args)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `args`. For `vector` and
-`deque`, `T` is also *MoveInsertable* into `X` and *MoveAssignable*.
+`T` is *Cpp17EmplaceConstructible* into `X` from `args`. For `vector`
+and `deque`, `T` is also *Cpp17MoveInsertable* into `X` and
+*Cpp17MoveAssignable*.
 
 ***Effects:***
 
@@ -1093,8 +1099,8 @@ a.insert(p, t)
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X`. For `vector` and `deque`, `T` is also
-*CopyAssignable*.
+`T` is *Cpp17CopyInsertable* into `X`. For `vector` and `deque`, `T` is
+also *Cpp17CopyAssignable*.
 
 ***Effects:***
 
@@ -1112,8 +1118,8 @@ a.insert(p, rv)
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `X`. For `vector` and `deque`, `T` is also
-*MoveAssignable*.
+`T` is *Cpp17MoveInsertable* into `X`. For `vector` and `deque`, `T` is
+also *Cpp17MoveAssignable*.
 
 ***Effects:***
 
@@ -1131,7 +1137,7 @@ a.insert(p, n, t)
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X` and *CopyAssignable*.
+`T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*.
 
 ***Effects:***
 
@@ -1150,11 +1156,11 @@ a.insert(p, i, j)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*i`. For `vector` and
-`deque`, `T` is also *MoveInsertable* into `X`, and `T` meets the
-*MoveConstructible*, *MoveAssignable*, and
-*Swappable*\[swappable.requirements\] requirements. Neither `i` nor `j`
-are iterators into `a`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*i`. For `vector` and
+`deque`, `T` is also *Cpp17MoveInsertable* into `X`, and `T` meets the
+*Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
+*Cpp17Swappable*\[swappable.requirements\] requirements. Neither `i` nor
+`j` are iterators into `a`.
 
 ***Effects:***
 
@@ -1174,11 +1180,11 @@ a.insert_range(p, rg)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*ranges::begin(rg)`. For
-`vector` and `deque`, `T` is also *MoveInsertable* into `X`, and `T`
-meets the *MoveConstructible*, *MoveAssignable*, and
-*Swappable*\[swappable.requirements\] requirements. `rg` and `a` do not
-overlap.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
+For `vector` and `deque`, `T` is also *Cpp17MoveInsertable* into `X`,
+and `T` meets the *Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
+*Cpp17Swappable*\[swappable.requirements\] requirements. `rg` and `a` do
+not overlap.
 
 ***Effects:***
 
@@ -1206,7 +1212,7 @@ a.erase(q)
 
 ***Preconditions:***
 
-For `vector` and `deque`, `T` is *MoveAssignable*.
+For `vector` and `deque`, `T` is *Cpp17MoveAssignable*.
 
 ***Effects:***
 
@@ -1226,7 +1232,7 @@ a.erase(q1, q2)
 
 ***Preconditions:***
 
-For `vector` and `deque`, `T` is *MoveAssignable*.
+For `vector` and `deque`, `T` is *Cpp17MoveAssignable*.
 
 ***Effects:***
 
@@ -1261,10 +1267,11 @@ a.assign(i, j)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*i` and assignable from
-`*i`. For `vector`, if the iterator does not meet the forward iterator
-requirements\[forward.iterators\], `T` is also *MoveInsertable* into
-`X`. Neither `i` nor `j` are iterators into `a`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*i` and assignable
+from `*i`. For `vector`, if the iterator does not meet the forward
+iterator requirements\[forward.iterators\], `T` is also
+*Cpp17MoveInsertable* into `X`. Neither `i` nor `j` are iterators into
+`a`.
 
 ***Effects:***
 
@@ -1283,10 +1290,10 @@ a.assign_range(rg)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*ranges::begin(rg)`. For
-`vector`, if `R` models neither `ranges::``sized_range` nor
-`ranges::``forward_range`, `T` is also *MoveInsertable* into `X`. `rg`
-and `a` do not overlap.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
+For `vector`, if `R` models neither `ranges::``sized_range` nor
+`ranges::``forward_range`, `T` is also *Cpp17MoveInsertable* into `X`.
+`rg` and `a` do not overlap.
 
 ***Effects:***
 
@@ -1310,8 +1317,8 @@ a.assign(n, t)
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X` and *CopyAssignable*. `t` is not a
-reference into `a`.
+`T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*. `t` is
+not a reference into `a`.
 
 ***Effects:***
 
@@ -1406,7 +1413,7 @@ a.emplace_front(args)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `args`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `args`.
 
 ***Effects:***
 
@@ -1429,8 +1436,8 @@ a.emplace_back(args)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `args`. For `vector`, `T` is
-also *MoveInsertable* into `X`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `args`. For `vector`,
+`T` is also *Cpp17MoveInsertable* into `X`.
 
 ***Effects:***
 
@@ -1451,7 +1458,7 @@ a.push_front(t)
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X`.
+`T` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -1467,7 +1474,7 @@ a.push_front(rv)
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `X`.
+`T` is *Cpp17MoveInsertable* into `X`.
 
 ***Effects:***
 
@@ -1483,10 +1490,10 @@ a.prepend_range(rg)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*ranges::begin(rg)`. For
-`deque`, `T` is also *MoveInsertable* into `X`, and `T` meets the
-*MoveConstructible*, *MoveAssignable*, and
-*Swappable*\[swappable.requirements\] requirements.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
+For `deque`, `T` is also *Cpp17MoveInsertable* into `X`, and `T` meets
+the *Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
+*Cpp17Swappable*\[swappable.requirements\] requirements.
 
 ***Effects:***
 
@@ -1506,7 +1513,7 @@ a.push_back(t)
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `X`.
+`T` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -1522,7 +1529,7 @@ a.push_back(rv)
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `X`.
+`T` is *Cpp17MoveInsertable* into `X`.
 
 ***Effects:***
 
@@ -1538,8 +1545,8 @@ a.append_range(rg)
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `X` from `*ranges::begin(rg)`. For
-`vector`, `T` is also *MoveInsertable* into `X`.
+`T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
+For `vector`, `T` is also *Cpp17MoveInsertable* into `X`.
 
 ***Effects:***
 
@@ -1921,6 +1928,8 @@ ordering of equivalent elements.
 For `set` and `multiset` the value type is the same as the key type. For
 `map` and `multimap` it is equal to `pair<const Key, T>`.
 
+`iterator`
+
 of an associative container is of the bidirectional iterator category.
 For associative containers where the value type is the same as the key
 type, both `iterator` and `const_iterator` are constant iterators. It is
@@ -1953,8 +1962,8 @@ In this subclause,
   *qualified-id* `X::key_compare::is_transparent` is valid and denotes a
   type [temp.deduct],
 
-- `i` and `j` meet the requirements and refer to elements implicitly
-  convertible to `value_type`,
+- `i` and `j` meet the *Cpp17InputIterator* requirements and refer to
+  elements implicitly convertible to `value_type`,
 
 -  denotes a valid range,
 
@@ -2012,8 +2021,9 @@ in [container.alloc.reqmts] apply instead to `key_type` and
 `mapped_type`.
 
 \[*Note 13*: For example, in some cases `key_type` and `mapped_type` are
-required to be even though the associated `value_type`,
-`pair<const key_type, mapped_type>`, is not . — *end note*\]
+required to be *Cpp17CopyAssignable* even though the associated
+`value_type`, `pair<const key_type, mapped_type>`, is not
+*Cpp17CopyAssignable*. — *end note*\]
 
 ``` cpp
 typename X::key_type
@@ -2040,7 +2050,7 @@ typename X::value_type
 
 ***Preconditions:***
 
-`X::value_type` is *Erasable* from `X`.
+`X::value_type` is *Cpp17Erasable* from `X`.
 
 ``` cpp
 typename X::key_compare
@@ -2050,7 +2060,7 @@ typename X::key_compare
 
 ***Preconditions:***
 
-`key_compare` is *CopyConstructible*.
+`key_compare` is *Cpp17CopyConstructible*.
 
 ``` cpp
 typename X::value_compare
@@ -2088,7 +2098,7 @@ X u;
 
 ***Preconditions:***
 
-`key_compare` meets the *DefaultConstructible* requirements.
+`key_compare` meets the *Cpp17DefaultConstructible* requirements.
 
 ***Effects:***
 
@@ -2104,7 +2114,7 @@ X(i, j, c)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `*i`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
 
 ***Effects:***
 
@@ -2122,8 +2132,8 @@ X(i, j)
 
 ***Preconditions:***
 
-`key_compare` meets the *DefaultConstructible* requirements.
-`value_type` is *EmplaceConstructible* into `X` from `*i`.
+`key_compare` meets the *Cpp17DefaultConstructible* requirements.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
 
 ***Effects:***
 
@@ -2141,7 +2151,7 @@ X(from_range, rg, c)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from
+`value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`.
 
 ***Effects:***
@@ -2160,8 +2170,8 @@ X(from_range, rg)
 
 ***Preconditions:***
 
-`key_compare` meets the *DefaultConstructible* requirements.
-`value_type` is *EmplaceConstructible* into `X` from
+`key_compare` meets the *Cpp17DefaultConstructible* requirements.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`.
 
 ***Effects:***
@@ -2197,7 +2207,8 @@ a = il
 
 ***Preconditions:***
 
-`value_type` is *CopyInsertable* into `X` and *CopyAssignable*.
+`value_type` is *Cpp17CopyInsertable* into `X` and
+*Cpp17CopyAssignable*.
 
 ***Effects:***
 
@@ -2246,7 +2257,7 @@ a_uniq.emplace(args)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `args`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
 
 ***Effects:***
 
@@ -2272,7 +2283,7 @@ a_eq.emplace(args)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `args`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
 
 ***Effects:***
 
@@ -2318,8 +2329,8 @@ a_uniq.insert(t)
 
 ***Preconditions:***
 
-If `t` is a non-const rvalue, `value_type` is *MoveInsertable* into `X`;
-otherwise, `value_type` is *CopyInsertable* into `X`.
+If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable* into
+`X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -2344,8 +2355,8 @@ a_eq.insert(t)
 
 ***Preconditions:***
 
-If `t` is a non-const rvalue, `value_type` is *MoveInsertable* into `X`;
-otherwise, `value_type` is *CopyInsertable* into `X`.
+If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable* into
+`X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -2365,8 +2376,8 @@ a.insert(p, t)
 
 ***Preconditions:***
 
-If `t` is a non-const rvalue, `value_type` is *MoveInsertable* into `X`;
-otherwise, `value_type` is *CopyInsertable* into `X`.
+If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable* into
+`X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -2391,8 +2402,8 @@ a.insert(i, j)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `*i`. Neither `i`
-nor `j` are iterators into `a`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`. Neither
+`i` nor `j` are iterators into `a`.
 
 ***Effects:***
 
@@ -2412,7 +2423,7 @@ a.insert_range(rg)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from
+`value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`. `rg` and `a` do not overlap.
 
 ***Effects:***
@@ -2979,7 +2990,7 @@ Containers [container.requirements], except that the expressions
 container types.
 
 Each unordered associative container is parameterized by `Key`, by a
-function object type `Hash` that meets the requirements
+function object type `Hash` that meets the *Cpp17Hash* requirements
 [hash.requirements] and acts as a hash function for argument values of
 type `Key`, and by a binary predicate `Pred` that induces an equivalence
 relation on values of type `Key`. Additionally, `unordered_map` and
@@ -3126,8 +3137,9 @@ placed on `value_type` in [container.alloc.reqmts] apply instead to
 `key_type` and `mapped_type`.
 
 \[*Note 16*: For example, `key_type` and `mapped_type` are sometimes
-required to be even though the associated `value_type`,
-`pair<const key_type, mapped_type>`, is not . — *end note*\]
+required to be *Cpp17CopyAssignable* even though the associated
+`value_type`, `pair<const key_type, mapped_type>`, is not
+*Cpp17CopyAssignable*. — *end note*\]
 
 ``` cpp
 typename X::key_type
@@ -3154,7 +3166,7 @@ typename X::value_type
 
 ***Preconditions:***
 
-`value_type` is *Erasable* from `X`.
+`value_type` is *Cpp17Erasable* from `X`.
 
 ``` cpp
 typename X::hasher
@@ -3175,8 +3187,8 @@ typename X::key_equal
 
 ***Preconditions:***
 
-`Pred` meets the *CopyConstructible* requirements. `Pred` is a binary
-predicate that takes two arguments of type `Key`. `Pred` is an
+`Pred` meets the *Cpp17CopyConstructible* requirements. `Pred` is a
+binary predicate that takes two arguments of type `Key`. `Pred` is an
 equivalence relation.
 
 ``` cpp
@@ -3228,7 +3240,7 @@ X(n, hf)
 
 ***Preconditions:***
 
-`key_equal` meets the *DefaultConstructible* requirements.
+`key_equal` meets the *Cpp17DefaultConstructible* requirements.
 
 ***Effects:***
 
@@ -3245,7 +3257,8 @@ X(n)
 
 ***Preconditions:***
 
-`hasher` and `key_equal` meet the *DefaultConstructible* requirements.
+`hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
+requirements.
 
 ***Effects:***
 
@@ -3264,7 +3277,8 @@ X a;
 
 ***Preconditions:***
 
-`hasher` and `key_equal` meet the *DefaultConstructible* requirements.
+`hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
+requirements.
 
 ***Effects:***
 
@@ -3282,7 +3296,7 @@ X(i, j, n, hf, eq)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `*i`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
 
 ***Effects:***
 
@@ -3300,8 +3314,8 @@ X(i, j, n, hf)
 
 ***Preconditions:***
 
-`key_equal` meets the *DefaultConstructible* requirements. `value_type`
-is *EmplaceConstructible* into `X` from `*i`.
+`key_equal` meets the *Cpp17DefaultConstructible* requirements.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
 
 ***Effects:***
 
@@ -3319,8 +3333,9 @@ X(i, j, n)
 
 ***Preconditions:***
 
-`hasher` and `key_equal` meet the *DefaultConstructible* requirements.
-`value_type` is *EmplaceConstructible* into `X` from `*i`.
+`hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
+requirements. `value_type` is *Cpp17EmplaceConstructible* into `X` from
+`*i`.
 
 ***Effects:***
 
@@ -3338,8 +3353,9 @@ X(i, j)
 
 ***Preconditions:***
 
-`hasher` and `key_equal` meet the *DefaultConstructible* requirements.
-`value_type` is *EmplaceConstructible* into `X` from `*i`.
+`hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
+requirements. `value_type` is *Cpp17EmplaceConstructible* into `X` from
+`*i`.
 
 ***Effects:***
 
@@ -3357,7 +3373,7 @@ X(from_range, rg, n, hf, eq)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from
+`value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`.
 
 ***Effects:***
@@ -3376,8 +3392,9 @@ X(from_range, rg, n, hf)
 
 ***Preconditions:***
 
-`key_equal` meets the *DefaultConstructible* requirements. `value_type`
-is *EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
+`key_equal` meets the *Cpp17DefaultConstructible* requirements.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from
+`*ranges::begin(rg)`.
 
 ***Effects:***
 
@@ -3395,8 +3412,8 @@ X(from_range, rg, n)
 
 ***Preconditions:***
 
-`hasher` and `key_equal` meet the *DefaultConstructible* requirements.
-`value_type` is *EmplaceConstructible* into `X` from
+`hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
+requirements. `value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`.
 
 ***Effects:***
@@ -3415,8 +3432,8 @@ X(from_range, rg)
 
 ***Preconditions:***
 
-`hasher` and `key_equal` meet the *DefaultConstructible* requirements.
-`value_type` is *EmplaceConstructible* into `X` from
+`hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
+requirements. `value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`.
 
 ***Effects:***
@@ -3498,7 +3515,8 @@ a = il
 
 ***Preconditions:***
 
-`value_type` is *CopyInsertable* into `X` and *CopyAssignable*.
+`value_type` is *Cpp17CopyInsertable* into `X` and
+*Cpp17CopyAssignable*.
 
 ***Effects:***
 
@@ -3545,7 +3563,7 @@ a_uniq.emplace(args)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `args`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
 
 ***Effects:***
 
@@ -3571,7 +3589,7 @@ a_eq.emplace(args)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `args`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
 
 ***Effects:***
 
@@ -3594,7 +3612,7 @@ a.emplace_hint(p, args)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `args`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
 
 ***Effects:***
 
@@ -3619,8 +3637,8 @@ a_uniq.insert(t)
 
 ***Preconditions:***
 
-If `t` is a non-const rvalue, `value_type` is *MoveInsertable* into `X`;
-otherwise, `value_type` is *CopyInsertable* into `X`.
+If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable* into
+`X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -3645,8 +3663,8 @@ a_eq.insert(t)
 
 ***Preconditions:***
 
-If `t` is a non-const rvalue, `value_type` is *MoveInsertable* into `X`;
-otherwise, `value_type` is *CopyInsertable* into `X`.
+If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable* into
+`X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -3668,8 +3686,8 @@ a.insert(p, t)
 
 ***Preconditions:***
 
-If `t` is a non-const rvalue, `value_type` is *MoveInsertable* into `X`;
-otherwise, `value_type` is *CopyInsertable* into `X`.
+If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable* into
+`X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
 
 ***Effects:***
 
@@ -3692,8 +3710,8 @@ a.insert(i, j)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from `*i`. Neither `i`
-nor `j` are iterators into `a`.
+`value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`. Neither
+`i` nor `j` are iterators into `a`.
 
 ***Effects:***
 
@@ -3710,7 +3728,7 @@ a.insert_range(rg)
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `X` from
+`value_type` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`. `rg` and `a` do not overlap.
 
 ***Effects:***
@@ -4726,7 +4744,8 @@ The conditions for an aggregate [dcl.init.aggr] shall be met. Class
 container requirements table in  [container.requirements]. In addition
 to the requirements specified in the container requirements table, the
 implicit move constructor and move assignment operator for `array`
-require that `T` be or , respectively.
+require that `T` be *Cpp17MoveConstructible* or *Cpp17MoveAssignable*,
+respectively.
 
 ``` cpp
 template<class T, class... U>
@@ -4821,7 +4840,7 @@ template<class T, size_t N>
 
 ***Preconditions:***
 
-`T` meets the *CopyConstructible* requirements.
+`T` meets the *Cpp17CopyConstructible* requirements.
 
 ***Returns:***
 
@@ -4838,7 +4857,7 @@ template<class T, size_t N>
 
 ***Preconditions:***
 
-`T` meets the *MoveConstructible* requirements.
+`T` meets the *Cpp17MoveConstructible* requirements.
 
 ***Returns:***
 
@@ -5044,7 +5063,7 @@ explicit deque(size_type n, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *DefaultInsertable* into `*this`.
+`T` is *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5061,7 +5080,7 @@ deque(size_type n, const T& value, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5108,7 +5127,7 @@ void resize(size_type sz);
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* and *DefaultInsertable* into `*this`.
+`T` is *Cpp17MoveInsertable* and *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5122,7 +5141,7 @@ void resize(size_type sz, const T& c);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5136,7 +5155,7 @@ void shrink_to_fit();
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `*this`.
+`T` is *Cpp17MoveInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5147,8 +5166,8 @@ not change the size of the sequence.
 implementation-specific optimizations. — *end note*\]
 
 If the size is equal to the old capacity, or if an exception is thrown
-other than by the move constructor of a non-*CopyInsertable* `T`, then
-there are no effects.
+other than by the move constructor of a non-*Cpp17CopyInsertable* `T`,
+then there are no effects.
 
 ***Complexity:***
 
@@ -5207,8 +5226,8 @@ If an exception is thrown other than by the copy constructor, move
 constructor, assignment operator, or move assignment operator of `T`
 there are no effects. If an exception is thrown while inserting a single
 element at either end, there are no effects. Otherwise, if an exception
-is thrown by the move constructor of a non-*CopyInsertable* `T`, the
-effects are unspecified.
+is thrown by the move constructor of a non-*Cpp17CopyInsertable* `T`,
+the effects are unspecified.
 
 ``` cpp
 iterator erase(const_iterator position);
@@ -5461,7 +5480,7 @@ explicit forward_list(size_type n, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *DefaultInsertable* into `*this`.
+`T` is *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5478,7 +5497,7 @@ forward_list(size_type n, const T& value, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5603,7 +5622,7 @@ iterator insert_after(const_iterator position, const T& x);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `forward_list`. `position` is
+`T` is *Cpp17CopyInsertable* into `forward_list`. `position` is
 `before_begin()` or is a dereferenceable iterator in the range
 \[`begin()`, `end()`).
 
@@ -5621,7 +5640,7 @@ iterator insert_after(const_iterator position, T&& x);
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `forward_list`. `position` is
+`T` is *Cpp17MoveInsertable* into `forward_list`. `position` is
 `before_begin()` or is a dereferenceable iterator in the range
 \[`begin()`, `end()`).
 
@@ -5639,7 +5658,7 @@ iterator insert_after(const_iterator position, size_type n, const T& x);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `forward_list`. `position` is
+`T` is *Cpp17CopyInsertable* into `forward_list`. `position` is
 `before_begin()` or is a dereferenceable iterator in the range
 \[`begin()`, `end()`).
 
@@ -5659,7 +5678,7 @@ template<class InputIterator>
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `forward_list` from `*first`.
+`T` is *Cpp17EmplaceConstructible* into `forward_list` from `*first`.
 `position` is `before_begin()` or is a dereferenceable iterator in the
 range \[`begin()`, `end()`). Neither `first` nor `last` are iterators in
 `*this`.
@@ -5680,7 +5699,7 @@ template<container-compatible-range<T> R>
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `forward_list` from
+`T` is *Cpp17EmplaceConstructible* into `forward_list` from
 `*ranges::begin(rg)`. `position` is `before_begin()` or is a
 dereferenceable iterator in the range \[`begin()`, `end()`). `rg` and
 `*this` do not overlap.
@@ -5709,7 +5728,7 @@ template<class... Args>
 
 ***Preconditions:***
 
-`T` is *EmplaceConstructible* into `forward_list` from
+`T` is *Cpp17EmplaceConstructible* into `forward_list` from
 `std::forward<Args>(args)...`. `position` is `before_begin()` or is a
 dereferenceable iterator in the range \[`begin()`, `end()`).
 
@@ -5769,7 +5788,7 @@ void resize(size_type sz);
 
 ***Preconditions:***
 
-`T` is *DefaultInsertable* into `*this`.
+`T` is *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -5784,7 +5803,7 @@ void resize(size_type sz, const value_type& c);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6239,7 +6258,7 @@ explicit list(size_type n, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *DefaultInsertable* into `*this`.
+`T` is *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6256,7 +6275,7 @@ list(size_type n, const T& value, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6301,7 +6320,7 @@ void resize(size_type sz);
 
 ***Preconditions:***
 
-`T` is *DefaultInsertable* into `*this`.
+`T` is *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6320,7 +6339,7 @@ void resize(size_type sz, const T& c);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6820,7 +6839,7 @@ constexpr explicit vector(size_type n, const Allocator& = Allocator());
 
 ***Preconditions:***
 
-`T` is *DefaultInsertable* into `*this`.
+`T` is *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6838,7 +6857,7 @@ constexpr vector(size_type n, const T& value,
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6907,7 +6926,7 @@ constexpr void reserve(size_type n);
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `*this`.
+`T` is *Cpp17MoveInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6917,7 +6936,7 @@ it can manage the storage allocation accordingly. After `reserve()`,
 reallocation happens; and equal to the previous value of `capacity()`
 otherwise. Reallocation happens at this point if and only if the current
 capacity is less than the argument of `reserve()`. If an exception is
-thrown other than by the move constructor of a non-*CopyInsertable*
+thrown other than by the move constructor of a non-*Cpp17CopyInsertable*
 type, there are no effects.
 
 ***Throws:***
@@ -6951,7 +6970,7 @@ constexpr void shrink_to_fit();
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* into `*this`.
+`T` is *Cpp17MoveInsertable* into `*this`.
 
 ***Effects:***
 
@@ -6963,7 +6982,7 @@ implementation-specific optimizations. — *end note*\]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
 causing reallocation. If an exception is thrown other than by the move
-constructor of a non-*CopyInsertable* `T` there are no effects.
+constructor of a non-*Cpp17CopyInsertable* `T` there are no effects.
 
 ***Complexity:***
 
@@ -6998,7 +7017,7 @@ constexpr void resize(size_type sz);
 
 ***Preconditions:***
 
-`T` is *MoveInsertable* and *DefaultInsertable* into `*this`.
+`T` is *Cpp17MoveInsertable* and *Cpp17DefaultInsertable* into `*this`.
 
 ***Effects:***
 
@@ -7009,7 +7028,7 @@ the sequence.
 ***Remarks:***
 
 If an exception is thrown other than by the move constructor of a
-non-*CopyInsertable* `T` there are no effects.
+non-*Cpp17CopyInsertable* `T` there are no effects.
 
 ``` cpp
 constexpr void resize(size_type sz, const T& c);
@@ -7017,7 +7036,7 @@ constexpr void resize(size_type sz, const T& c);
 
 ***Preconditions:***
 
-`T` is *CopyInsertable* into `*this`.
+`T` is *Cpp17CopyInsertable* into `*this`.
 
 ***Effects:***
 
@@ -7083,10 +7102,10 @@ invalidated. If an exception is thrown other than by the copy
 constructor, move constructor, assignment operator, or move assignment
 operator of `T` or by any `InputIterator` operation there are no
 effects. If an exception is thrown while inserting a single element at
-the end and `T` is *CopyInsertable* or
+the end and `T` is *Cpp17CopyInsertable* or
 `is_nothrow_move_constructible_v<T>` is `true`, there are no effects.
 Otherwise, if an exception is thrown by the move constructor of a
-non-*CopyInsertable* `T`, the effects are unspecified.
+non-*Cpp17CopyInsertable* `T`, the effects are unspecified.
 
 ``` cpp
 constexpr iterator erase(const_iterator position);
@@ -7285,6 +7304,8 @@ not used to construct these values.
 There is no requirement that the data be stored as a contiguous
 allocation of `bool` values. A space-optimized representation of bits is
 recommended instead.
+
+`reference`
 
 is a class that simulates the behavior of references of a single bit in
 `vector<bool>`. The conversion function returns `true` when the bit is
@@ -7873,7 +7894,7 @@ template<class... Args>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `map` from
+`value_type` is *Cpp17EmplaceConstructible* into `map` from
 `piecewise_construct`, `forward_as_tuple(k)`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
@@ -7903,7 +7924,7 @@ template<class... Args>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `map` from
+`value_type` is *Cpp17EmplaceConstructible* into `map` from
 `piecewise_construct`, `forward_as_tuple(std::move(k))`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
@@ -7938,7 +7959,7 @@ template<class M>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `map` from `k`,
+`value_type` is *Cpp17EmplaceConstructible* into `map` from `k`,
 `std::forward<M>(obj)`.
 
 ***Effects:***
@@ -7971,8 +7992,8 @@ template<class M>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `map` from `std::move(k)`,
-`std::forward<M>(obj)`.
+`value_type` is *Cpp17EmplaceConstructible* into `map` from
+`std::move(k)`, `std::forward<M>(obj)`.
 
 ***Effects:***
 
@@ -9327,8 +9348,8 @@ explicit unordered_map(size_type n,
 
 Constructs an empty `unordered_map` using the specified hash function,
 key equality predicate, and allocator, and using at least `n` buckets.
-For the default constructor, the number of buckets is .
-`max_load_factor()` returns `1.0`.
+For the default constructor, the number of buckets is
+*implementation-defined*. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -9358,9 +9379,9 @@ unordered_map(initializer_list<value_type> il,
 
 Constructs an empty `unordered_map` using the specified hash function,
 key equality predicate, and allocator, and using at least `n` buckets.
-If `n` is not provided, the number of buckets is . Then inserts elements
-from the range \[`f`, `l`), `rg`, or `il`, respectively.
-`max_load_factor()` returns `1.0`.
+If `n` is not provided, the number of buckets is
+*implementation-defined*. Then inserts elements from the range \[`f`,
+`l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -9432,7 +9453,7 @@ template<class... Args>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `unordered_map` from
+`value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
 `piecewise_construct`, `forward_as_tuple(k)`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
@@ -9462,7 +9483,7 @@ template<class... Args>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `unordered_map` from
+`value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
 `piecewise_construct`, `forward_as_tuple(std::move(k))`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
@@ -9497,8 +9518,8 @@ template<class M>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `unordered_map` from `k`,
-`std::forward<M>(obj)`.
+`value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
+`k`, `std::forward<M>(obj)`.
 
 ***Effects:***
 
@@ -9530,7 +9551,7 @@ template<class M>
 
 ***Preconditions:***
 
-`value_type` is *EmplaceConstructible* into `unordered_map` from
+`value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
 `std::move(k)`, `std::forward<M>(obj)`.
 
 ***Effects:***
@@ -9876,8 +9897,8 @@ explicit unordered_multimap(size_type n,
 
 Constructs an empty `unordered_multimap` using the specified hash
 function, key equality predicate, and allocator, and using at least `n`
-buckets. For the default constructor, the number of buckets is .
-`max_load_factor()` returns `1.0`.
+buckets. For the default constructor, the number of buckets is
+*implementation-defined*. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -9907,9 +9928,9 @@ unordered_multimap(initializer_list<value_type> il,
 
 Constructs an empty `unordered_multimap` using the specified hash
 function, key equality predicate, and allocator, and using at least `n`
-buckets. If `n` is not provided, the number of buckets is . Then inserts
-elements from the range \[`f`, `l`), `rg`, or `il`, respectively.
-`max_load_factor()` returns `1.0`.
+buckets. If `n` is not provided, the number of buckets is
+*implementation-defined*. Then inserts elements from the range \[`f`,
+`l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -10249,8 +10270,8 @@ explicit unordered_set(size_type n,
 
 Constructs an empty `unordered_set` using the specified hash function,
 key equality predicate, and allocator, and using at least `n` buckets.
-For the default constructor, the number of buckets is .
-`max_load_factor()` returns `1.0`.
+For the default constructor, the number of buckets is
+*implementation-defined*. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -10280,9 +10301,9 @@ unordered_set(initializer_list<value_type> il,
 
 Constructs an empty `unordered_set` using the specified hash function,
 key equality predicate, and allocator, and using at least `n` buckets.
-If `n` is not provided, the number of buckets is . Then inserts elements
-from the range \[`f`, `l`), `rg`, or `il`, respectively.
-`max_load_factor()` returns `1.0`.
+If `n` is not provided, the number of buckets is
+*implementation-defined*. Then inserts elements from the range \[`f`,
+`l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -10601,8 +10622,8 @@ explicit unordered_multiset(size_type n,
 
 Constructs an empty `unordered_multiset` using the specified hash
 function, key equality predicate, and allocator, and using at least `n`
-buckets. For the default constructor, the number of buckets is .
-`max_load_factor()` returns `1.0`.
+buckets. For the default constructor, the number of buckets is
+*implementation-defined*. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -10632,9 +10653,9 @@ unordered_multiset(initializer_list<value_type> il,
 
 Constructs an empty `unordered_multiset` using the specified hash
 function, key equality predicate, and allocator, and using at least `n`
-buckets. If `n` is not provided, the number of buckets is . Then inserts
-elements from the range \[`f`, `l`), `rg`, or `il`, respectively.
-`max_load_factor()` returns `1.0`.
+buckets. If `n` is not provided, the number of buckets is
+*implementation-defined*. Then inserts elements from the range \[`f`,
+`l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
 
 ***Complexity:***
 
@@ -11889,8 +11910,8 @@ A `flat_map` is a container adaptor that provides an associative
 container interface that supports unique keys (i.e., contains at most
 one of each key value) and provides for fast retrieval of values of
 another type `T` based on the keys. `flat_map` supports iterators that
-meet the requirements and model the `random_access_iterator` concept
-[iterator.concept.random.access].
+meet the *Cpp17InputIterator* requirements and model the
+`random_access_iterator` concept [iterator.concept.random.access].
 
 A `flat_map` meets all of the requirements of a container
 [container.reqmts] and of a reversible container [container.rev.reqmts],
@@ -11938,9 +11959,10 @@ emptied. — *end note*\]
 
 Any type `C` that meets the sequence container requirements
 [sequence.reqmts] can be used to instantiate `flat_map`, as long as
-`C::iterator` meets the requirements and invocations of member functions
-`C::size` and `C::max_size` do not exit via an exception. In particular,
-`vector` [vector] and `deque` [deque] can be used.
+`C::iterator` meets the *Cpp17RandomAccessIterator* requirements and
+invocations of member functions `C::size` and `C::max_size` do not exit
+via an exception. In particular, `vector` [vector] and `deque` [deque]
+can be used.
 
 \[*Note 3*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -12464,7 +12486,8 @@ Equivalent to: `return try_emplace(std::move(x)).first->second;`
 template<class K> mapped_type& operator[](K&& x);
 ```
 
-The `Compare::is_transparent` is valid and denotes a type.
+The *qualified-id* `Compare::is_transparent` is valid and denotes a
+type.
 
 ***Effects:***
 
@@ -12493,7 +12516,8 @@ template<class K> mapped_type&       at(const K& x);
 template<class K> const mapped_type& at(const K& x) const;
 ```
 
-The `Compare::is_transparent` is valid and denotes a type.
+The *qualified-id* `Compare::is_transparent` is valid and denotes a
+type.
 
 ***Preconditions:***
 
@@ -12710,7 +12734,8 @@ template<class K, class... Args>
   iterator try_emplace(const_iterator hint, K&& k, Args&&... args);
 ```
 
-- The `Compare::is_transparent` is valid and denotes a type.
+- The *qualified-id* `Compare::is_transparent` is valid and denotes a
+  type.
 
 - `is_constructible_v<key_type, K>` is `true`.
 
@@ -12796,7 +12821,8 @@ template<class K, class M>
   iterator insert_or_assign(const_iterator hint, K&& k, M&& obj);
 ```
 
-- The `Compare::is_transparent` is valid and denotes a type.
+- The *qualified-id* `Compare::is_transparent` is valid and denotes a
+  type.
 
 - `is_constructible_v<key_type, K>` is `true`.
 
@@ -12893,7 +12919,7 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
 
 ***Preconditions:***
 
-`Key` and `T` meet the *MoveAssignable* requirements.
+`Key` and `T` meet the *Cpp17MoveAssignable* requirements.
 
 ***Effects:***
 
@@ -12924,8 +12950,9 @@ A `flat_multimap` is a container adaptor that provides an associative
 container interface that supports equivalent keys (i.e., possibly
 containing multiple copies of the same key value) and provides for fast
 retrieval of values of another type `T` based on the keys.
-`flat_multimap` supports iterators that meet the requirements and model
-the `random_access_iterator` concept [iterator.concept.random.access].
+`flat_multimap` supports iterators that meet the *Cpp17InputIterator*
+requirements and model the `random_access_iterator` concept
+[iterator.concept.random.access].
 
 A `flat_multimap` meets all of the requirements for a container
 [container.reqmts] and for a reversible container
@@ -12976,9 +13003,10 @@ emptied. — *end note*\]
 
 Any type `C` that meets the sequence container requirements
 [sequence.reqmts] can be used to instantiate `flat_multimap`, as long as
-`C::iterator` meets the requirements and invocations of member functions
-`C::size` and `C::max_size` do not exit via an exception. In particular,
-`vector` [vector] and `deque` [deque] can be used.
+`C::iterator` meets the *Cpp17RandomAccessIterator* requirements and
+invocations of member functions `C::size` and `C::max_size` do not exit
+via an exception. In particular, `vector` [vector] and `deque` [deque]
+can be used.
 
 \[*Note 7*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -13435,7 +13463,7 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
 
 ***Preconditions:***
 
-`Key` and `T` meet the *MoveAssignable* requirements.
+`Key` and `T` meet the *Cpp17MoveAssignable* requirements.
 
 ***Effects:***
 
@@ -13507,9 +13535,9 @@ invariant is restored.
 \[*Note 10*: This can result in the `flat_set`’s being
 emptied. — *end note*\]
 
-Any sequence container [sequence.reqmts] supporting can be used to
-instantiate `flat_set`. In particular, `vector` [vector] and `deque`
-[deque] can be used.
+Any sequence container [sequence.reqmts] supporting
+*Cpp17RandomAccessIterator* can be used to instantiate `flat_set`. In
+particular, `vector` [vector] and `deque` [deque] can be used.
 
 \[*Note 11*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -13880,8 +13908,8 @@ template<class K> pair<iterator, bool> insert(K&& x);
 template<class K> iterator insert(const_iterator hint, K&& x);
 ```
 
-The `Compare::is_transparent` is valid and denotes a type.
-`is_constructible_v<value_type, K>` is `true`.
+The *qualified-id* `Compare::is_transparent` is valid and denotes a
+type. `is_constructible_v<value_type, K>` is `true`.
 
 ***Preconditions:***
 
@@ -14019,7 +14047,7 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
 
 ***Preconditions:***
 
-`Key` meets the *MoveAssignable* requirements.
+`Key` meets the *Cpp17MoveAssignable* requirements.
 
 ***Effects:***
 
@@ -14092,9 +14120,9 @@ the invariant is restored.
 \[*Note 14*: This can result in the `flat_multiset`’s being
 emptied. — *end note*\]
 
-Any sequence container [sequence.reqmts] supporting can be used to
-instantiate `flat_multiset`. In particular, `vector` [vector] and
-`deque` [deque] can be used.
+Any sequence container [sequence.reqmts] supporting
+*Cpp17RandomAccessIterator* can be used to instantiate `flat_multiset`.
+In particular, `vector` [vector] and `deque` [deque] can be used.
 
 \[*Note 15*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -14570,7 +14598,7 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
 
 ***Preconditions:***
 
-`Key` meets the *MoveAssignable* requirements.
+`Key` meets the *Cpp17MoveAssignable* requirements.
 
 ***Effects:***
 
@@ -15206,7 +15234,7 @@ using iterator = \impdefx{type of span::iterator};
 ```
 
 The type models `contiguous_iterator`\[iterator.concept.contiguous\],
-meets the *RandomAccessIterator*
+meets the *Cpp17RandomAccessIterator*
 requirements\[random.access.iterators\], and meets the requirements for
 constexpr iterators\[iterator.requirements.general\], whose value type
 is `value_type` and whose reference type is `reference`.
@@ -16942,7 +16970,8 @@ namespace std {
 
 - `Extents` is a specialization of `extents`, and
 
-- is `true`.
+- `is_same_v<ElementType, typename AccessorPolicy::element_type>`
+  is `true`.
 
 `LayoutPolicy` shall meet the layout mapping policy requirements
 [mdspan.layout.policy.reqmts], and `AccessorPolicy` shall meet the

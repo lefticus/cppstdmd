@@ -27,7 +27,9 @@ floating-point types, as summarized in [numerics.summary].
 The `complex` and `valarray` components are parameterized by the type of
 information they contain and manipulate. A C++ program shall instantiate
 these components only with a numeric type. A *numeric type* is a
-cv-unqualified object type `T` that meets the , , , and requirements
+cv-unqualified object type `T` that meets the
+*Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
+*Cpp17CopyAssignable*, and *Cpp17Destructible* requirements
 [utility.arg.requirements].
 
 If any operation on `T` throws an exception the effects are undefined.
@@ -769,7 +771,7 @@ template<class T> complex<T> pow(const T& x, const complex<T>& y);
 
 The complex power of base `x` raised to the $\texttt{y}^\text{th}$
 power, defined as `exp(y * log(x))`. The value returned for `pow(0, 0)`
-is .
+is *implementation-defined*.
 
 ***Remarks:***
 
@@ -1231,9 +1233,9 @@ throughout this subclause:
 where `charT` and `traits` are constrained according to [strings] and
 [input.output].
 
-`E` shall meet the ( [cpp17.copyconstructible]) and (
-[cpp17.copyassignable]) requirements. These operations shall each be of
-complexity no worse than .
+`E` shall meet the *Cpp17CopyConstructible* ( [cpp17.copyconstructible])
+and *Cpp17CopyAssignable* ( [cpp17.copyassignable]) requirements. These
+operations shall each be of complexity no worse than .
 
 #### Random number engine adaptor requirements <a id="rand.req.adapt">[rand.req.adapt]</a>
 
@@ -1369,8 +1371,8 @@ throughout this subclause,
 where `charT` and `traits` are constrained according to [strings] and
 [input.output].
 
-`D` shall meet the ( [cpp17.copyconstructible]) and (
-[cpp17.copyassignable]) requirements.
+`D` shall meet the *Cpp17CopyConstructible* ( [cpp17.copyconstructible])
+and *Cpp17CopyAssignable* ( [cpp17.copyassignable]) requirements.
 
 The sequence of numbers produced by repeated invocations of `d(g)` shall
 be independent of any invocation of `os << d` or of any `const` member
@@ -1387,8 +1389,10 @@ It is unspecified whether `D::param_type` is declared as a (nested)
 `D::param_type` are in the form of `typedef`s for convenience of
 exposition only.
 
-`P` shall meet the ( [cpp17.copyconstructible]), (
-[cpp17.copyassignable]), and ( [cpp17.equalitycomparable]) requirements.
+`P` shall meet the *Cpp17CopyConstructible* (
+[cpp17.copyconstructible]), *Cpp17CopyAssignable* (
+[cpp17.copyassignable]), and *Cpp17Equality\\Comp\\arable* (
+[cpp17.equalitycomparable]) requirements.
 
 For each of the constructors of `D` taking arguments corresponding to
 parameters of the distribution, `P` shall have a corresponding
@@ -2150,7 +2154,7 @@ using default_random_engine = \textit{\impldef{type of default_random_engine}};
 
 ***Remarks:***
 
-The choice of engine type named by this is .
+The choice of engine type named by this is *implementation-defined*.
 
 \[*Note 7*: The implementation can select this type on the basis of
 performance, size, quality, or any combination of such factors, so as to
@@ -2201,13 +2205,13 @@ explicit random_device(const string& token);
 
 ***Throws:***
 
-A value of an type derived from `exception` if the `random_device`
-cannot be initialized.
+A value of an *implementation-defined* type derived from `exception` if
+the `random_device` cannot be initialized.
 
 ***Remarks:***
 
 The semantics of the `token` parameter and the token value used by the
-default constructor are .
+default constructor are *implementation-defined*.
 
 The parameter is intended to allow an implementation to differentiate
 between different sources of randomness.
@@ -2235,12 +2239,13 @@ result_type operator()();
 ***Returns:***
 
 A nondeterministic random value, uniformly distributed between `min()`
-and `max()` (inclusive). It is how these values are generated.
+and `max()` (inclusive). It is *implementation-defined* how these values
+are generated.
 
 ***Throws:***
 
-A value of an type derived from `exception` if a random number cannot be
-obtained.
+A value of an *implementation-defined* type derived from `exception` if
+a random number cannot be obtained.
 
 ### Utilities <a id="rand.util">[rand.util]</a>
 
@@ -2309,7 +2314,7 @@ template<class InputIterator>
 
 ***Preconditions:***
 
-`InputIterator` meets the *InputIterator*
+`InputIterator` meets the *Cpp17InputIterator*
 requirements\[input.iterators\].
 
 ***Effects:***
@@ -2333,7 +2338,7 @@ integer type capable of accommodating 32-bit quantities.
 
 ***Preconditions:***
 
-`RandomAccessIterator` meets the *RandomAccessIterator*
+`RandomAccessIterator` meets the *Cpp17RandomAccessIterator*
 requirements\[random.access.iterators\] and the requirements of a
 mutable iterator.
 
@@ -2418,7 +2423,7 @@ writable\[iterator.requirements.general\] to `dest`.
 
 ***Preconditions:***
 
-`OutputIterator` meets the *OutputIterator*
+`OutputIterator` meets the *Cpp17OutputIterator*
 requirements\[output.iterators\].
 
 ***Effects:***
@@ -3889,7 +3894,7 @@ is `true`.
 
 ***Preconditions:***
 
-`InputIterator` meets the *InputIterator*
+`InputIterator` meets the *Cpp17InputIterator*
 requirements\[input.iterators\]. If `firstW == lastW`, let n = 1 and
 w₀ = 1. Otherwise, $\bigl[\texttt{firstW}, \texttt{lastW}\bigr)$ forms a
 sequence w of length n > 0.
@@ -4039,7 +4044,7 @@ are `true`.
 
 ***Preconditions:***
 
-`InputIteratorB` and `InputIteratorW` each meet the *InputIterator*
+`InputIteratorB` and `InputIteratorW` each meet the *Cpp17InputIterator*
 requirements\[input.iterators\]. If `firstB == lastB` or
 `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1. Otherwise,
 $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a sequence b of
@@ -4209,7 +4214,7 @@ template<class InputIteratorB, class InputIteratorW>
 
 ***Preconditions:***
 
-`InputIteratorB` and `InputIteratorW` each meet the *InputIterator*
+`InputIteratorB` and `InputIteratorW` each meet the *Cpp17InputIterator*
 requirements\[input.iterators\]. If `firstB == lastB` or
 `++firstB == lastB`, let n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and
 b₁ = 1. Otherwise, $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a
@@ -4308,8 +4313,8 @@ standard library.
 ***Remarks:***
 
 The implementation may specify that particular library functions may
-call `rand`. It is whether the `rand` function may introduce data
-races\[res.on.data.races\].
+call `rand`. It is *implementation-defined* whether the `rand` function
+may introduce data races\[res.on.data.races\].
 
 ## Numeric arrays <a id="numarray">[numarray]</a>
 
@@ -5939,12 +5944,13 @@ argument to the elements of the `valarray<T>` object to which the
 
 In the `begin` and `end` function templates that follow, *unspecified*
 is a type that meets the requirements of a mutable
-[random.access.iterators] and models `contiguous_iterator`
-[iterator.concept.contiguous], whose `value_type` is the template
-parameter `T` and whose `reference` type is `T&`. *unspecified* is a
-type that meets the requirements of a constant and models
-`contiguous_iterator`, whose `value_type` is the template parameter `T`
-and whose `reference` type is `const T&`.
+*Cpp17RandomAccessIterator* [random.access.iterators] and models
+`contiguous_iterator` [iterator.concept.contiguous], whose `value_type`
+is the template parameter `T` and whose `reference` type is `T&`.
+*unspecified* is a type that meets the requirements of a constant
+*Cpp17RandomAccessIterator* and models `contiguous_iterator`, whose
+`value_type` is the template parameter `T` and whose `reference` type is
+`const T&`.
 
 The iterators returned by `begin` and `end` for an array are guaranteed
 to be valid until the member function `resize(size_t, T)`
@@ -6522,8 +6528,8 @@ $$\mathsf{L}_n^m(x) =
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `n >= 128` or if
-`m >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `n >= 128` or if `m >= 128`.
 
 #### Associated Legendre functions <a id="sf.cmath.assoc.legendre">[sf.cmath.assoc.legendre]</a>
 
@@ -6547,7 +6553,8 @@ $$\mathsf{P}_\ell^m(x) = (1 - x^2) ^ {m/2} \:
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `l >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `l >= 128`.
 
 #### Beta function <a id="sf.cmath.beta">[sf.cmath.beta]</a>
 
@@ -6649,7 +6656,8 @@ $$\mathsf{I}_\nu(x) =
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `nu >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
 
 See also \[sf.cmath.cyl.bessel.j\].
 
@@ -6674,7 +6682,8 @@ $$\mathsf{J}_\nu(x) =
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `nu >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
 
 #### Irregular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.k">[sf.cmath.cyl.bessel.k]</a>
 
@@ -6716,7 +6725,8 @@ $$%
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `nu >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
 
 See also \[sf.cmath.cyl.bessel.i\], \[sf.cmath.cyl.bessel.j\],
 \[sf.cmath.cyl.neumann\].
@@ -6756,7 +6766,8 @@ $$%
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `nu >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
 
 See also \[sf.cmath.cyl.bessel.j\].
 
@@ -6865,7 +6876,8 @@ $$%
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `n >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
 
 #### Laguerre polynomials <a id="sf.cmath.laguerre">[sf.cmath.laguerre]</a>
 
@@ -6888,7 +6900,8 @@ $$\mathsf{L}_n(x) =
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `n >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
 
 #### Legendre polynomials <a id="sf.cmath.legendre">[sf.cmath.legendre]</a>
 
@@ -6912,7 +6925,8 @@ $$\mathsf{P}_\ell(x) =
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `l >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `l >= 128`.
 
 #### Riemann zeta function <a id="sf.cmath.riemann.zeta">[sf.cmath.riemann.zeta]</a>
 
@@ -6972,7 +6986,8 @@ where n is `n` and x is `x`.
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `n >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
 
 See also \[sf.cmath.cyl.bessel.j\].
 
@@ -7001,7 +7016,8 @@ is `theta`.
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `l >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `l >= 128`.
 
 See also \[sf.cmath.assoc.legendre\].
 
@@ -7026,7 +7042,8 @@ $$\mathsf{n}_n(x) = (\pi/2x)^{1\!/\!2} \mathsf{N}_{n + 1\!/\!2}(x)
 
 ***Remarks:***
 
-The effect of calling each of these functions is if `n >= 128`.
+The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
 
 See also \[sf.cmath.cyl.neumann\].
 

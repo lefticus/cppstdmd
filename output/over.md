@@ -1347,10 +1347,12 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
 
   or, if not that,
 
-- is not a function template specialization and `F2` is a function
+- `F1`
+  is not a function template specialization and `F2` is a function
   template specialization, or, if not that,
 
-- and `F2` are function template specializations, and the function
+- `F1`
+  and `F2` are function template specializations, and the function
   template for `F1` is more specialized than the template for `F2`
   according to the partial ordering rules described in 
   [temp.func.order], or, if not that,
@@ -2162,7 +2164,8 @@ conversion sequences unless one of the following rules applies:
 
     or, if not that,
 
-  - and `S2` include reference bindings [dcl.init.ref], and the types to
+  - `S1`
+    and `S2` include reference bindings [dcl.init.ref], and the types to
     which the references refer are the same type except for top-level
     cv-qualifiers, and the type to which the reference initialized by
     `S2` refers is more cv-qualified than the type to which the

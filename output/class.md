@@ -1101,6 +1101,8 @@ all other parameters have default arguments [dcl.fct.default].
 
 \[*Example 12*:
 
+`X::X(const X&)`
+
 and `X::X(X&,int=1)` are copy constructors.
 
 ``` cpp
@@ -3700,12 +3702,15 @@ denoted by the *nested-name-specifier* of the *qualified-id* (that is,
 
 A member `m` is accessible at the point *R* when named in class `N` if
 
-- as a member of `N` is public, or
+- `m`
+  as a member of `N` is public, or
 
-- as a member of `N` is private, and *R* occurs in a direct member or
+- `m`
+  as a member of `N` is private, and *R* occurs in a direct member or
   friend of class `N`, or
 
-- as a member of `N` is protected, and *R* occurs in a direct member or
+- `m`
+  as a member of `N` is protected, and *R* occurs in a direct member or
   friend of class `N`, or in a member of a class `P` derived from `N`,
   where `m` as a member of `P` is public, private, or protected, or
 

@@ -2254,16 +2254,17 @@ integral constant with value N.
 
 The instantiation of a *fold-expression* [expr.prim.fold] produces:
 
-- `((`E₁ *op* E₂`)` *op* ⋯`)` *op* $\mathtt{E}_N$ `)` for a unary left
+- `(`
+  `((`E₁ *op* E₂`)` *op* ⋯`)` *op* $\mathtt{E}_N$ `)` for a unary left
   fold,
-
-- E₁ *op* `(`⋯ *op* `(`$\mathtt{E}_{N-1}$ *op* $\mathtt{E}_N$`))` `)`
+- `(`
+  E₁ *op* `(`⋯ *op* `(`$\mathtt{E}_{N-1}$ *op* $\mathtt{E}_N$`))` `)`
   for a unary right fold,
-
-- `(((`E *op* E₁`)` *op* E₂`)` *op* ⋯`)` *op* $\mathtt{E}_N$ `)` for a
+- `(`
+  `(((`E *op* E₁`)` *op* E₂`)` *op* ⋯`)` *op* $\mathtt{E}_N$ `)` for a
   binary left fold, and
-
-- E₁ *op* `(`⋯ *op* `(`$\mathtt{E}_{N-1}$ *op* `(`$\mathtt{E}_{N}$ *op*
+- `(`
+  E₁ *op* `(`⋯ *op* `(`$\mathtt{E}_{N-1}$ *op* `(`$\mathtt{E}_{N}$ *op*
   E`)))` `)` for a binary right fold.
 
 In each case, *op* is the *fold-operator*. For a binary fold, E is
@@ -4579,6 +4580,8 @@ template<class T> T X<T>::s = 0;
 X<int> aa;
 X<char*> bb;
 ```
+
+`X<int>`
 
 has a static member `s` of type `int` and `X<char*>` has a static member
 `s` of type `char*`.

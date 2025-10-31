@@ -201,14 +201,14 @@ expression requirements is described in terms of the valid expressions
 for its template type parameters.
 
 The library specification uses a typographical convention for naming
-requirements. Names in *italic* type that begin with the prefix refer to
-sets of well-defined expression requirements typically presented in
-tabular form, possibly with additional prose semantic requirements. For
-example,  ( [cpp17.destructible]) is such a named requirement. Names in
-`constant width` type refer to library concepts which are presented as a
-concept definition [temp], possibly with additional prose semantic
-requirements. For example, `destructible` [concept.destructible] is such
-a named requirement.
+requirements. Names in *italic* type that begin with the prefix *Cpp17*
+refer to sets of well-defined expression requirements typically
+presented in tabular form, possibly with additional prose semantic
+requirements. For example, *Cpp17Destructible* ( [cpp17.destructible])
+is such a named requirement. Names in `constant width` type refer to
+library concepts which are presented as a concept definition [temp],
+possibly with additional prose semantic requirements. For example,
+`destructible` [concept.destructible] is such a named requirement.
 
 Template argument requirements are sometimes referenced by name. See 
 [type.descriptions].
@@ -546,18 +546,18 @@ sequences that follow a few uniform conventions:
 
 ###### Byte strings <a id="byte.strings">[byte.strings]</a>
 
-A *null-terminated byte string*, or , is a character sequence whose
+A *null-terminated byte string*, or NTBS, is a character sequence whose
 highest-addressed element with defined content has the value zero (the
 *terminating null character*); no other element in the sequence has the
 value zero.
 
-The \*length of an \ntbs{}\* is the number of elements that precede the
-terminating null character. An \*empty \ntbs{}\* has a length of zero.
+The \*length of an NTBS\* is the number of elements that precede the
+terminating null character. An \*empty NTBS\* has a length of zero.
 
-The \*value of an \ntbs{}\* is the sequence of values of the elements up
-to and including the terminating null character.
+The \*value of an NTBS\* is the sequence of values of the elements up to
+and including the terminating null character.
 
-A \*static \ntbs{}\* is an with static storage duration.
+A \*static NTBS\* is an NTBS with static storage duration.
 
 ###### Multibyte strings <a id="multibyte.strings">[multibyte.strings]</a>
 
@@ -565,11 +565,11 @@ A *multibyte character* is a sequence of one or more bytes representing
 the code unit sequence for an encoded character of the execution
 character set.
 
-A *null-terminated multibyte string*, or , is an that constitutes a
-sequence of valid multibyte characters, beginning and ending in the
-initial shift state.
+A *null-terminated multibyte string*, or NTMBS, is an NTBS that
+constitutes a sequence of valid multibyte characters, beginning and
+ending in the initial shift state.
 
-A \*static \ntmbs{}\* is an with static storage duration.
+A \*static NTMBS\* is an NTMBS with static storage duration.
 
 ##### Customization Point Object types <a id="customization.point.object">[customization.point.object]</a>
 
@@ -599,13 +599,10 @@ initialized as if by `auto p = o;`. Then for any sequence of arguments
 `args...`, the following expressions have effects equivalent to
 `o(args...)`:
 
-- 
-
-- 
-
-- 
-
-- 
+- `p(args...)`
+- `as_const(p)(args...)`
+- `std::move(p)(args...)`
+- `std::move(as_const(p))(args...)`
 
 Each customization point object type constrains its return type to model
 a particular concept.
@@ -1048,11 +1045,12 @@ appropriate evaluation context. — *end note*\]
 An rvalue or lvalue `t` is *swappable* if and only if `t` is swappable
 with any rvalue or lvalue, respectively, of type `T`.
 
-A type `X` meets the requirements if lvalues of type `X` are swappable.
+A type `X` meets the *Cpp17Swappable* requirements if lvalues of type
+`X` are swappable.
 
 A type `X` meeting any of the iterator requirements
-[iterator.requirements] meets the requirements if, for any
-dereferenceable object `x` of type `X`, `*x` is swappable.
+[iterator.requirements] meets the *Cpp17ValueSwappable* requirements if,
+for any dereferenceable object `x` of type `X`, `*x` is swappable.
 
 \[*Example 3*:
 
@@ -1103,12 +1101,14 @@ int main() {
 
 — *end example*\]
 
-####  requirements <a id="nullablepointer.requirements">[nullablepointer.requirements]</a>
+#### *Cpp17NullablePointer* requirements <a id="nullablepointer.requirements">[nullablepointer.requirements]</a>
 
-A type is a pointer-like type that supports null values. A type `P`
-meets the requirements if:
+A *Cpp17NullablePointer* type is a pointer-like type that supports null
+values. A type `P` meets the *Cpp17\\Nullable\\Pointer* requirements if:
 
-- `P` meets the , , , , , and requirements,
+- `P` meets the *Cpp17EqualityComparable*, *Cpp17DefaultConstructible*,
+  *Cpp17CopyConstructible*, *Cpp17\\Copy\\Assign\\able*,
+  *Cpp17Swappable*, and *Cpp17Destructible* requirements,
 
 - the expressions shown in [cpp17.nullablepointer] are valid and have
   the indicated semantics, and
@@ -1126,22 +1126,22 @@ An object `p` of type `P` can be contextually converted to `bool`
 [conv]. The effect shall be as if `p != nullptr` had been evaluated in
 place of `p`.
 
-No operation which is part of the requirements shall exit via an
-exception.
+No operation which is part of the *Cpp17NullablePointer* requirements
+shall exit via an exception.
 
 In [cpp17.nullablepointer], `u` denotes an identifier, `t` denotes a
 non-`const` lvalue of type `P`, `a` and `b` denote values of type
 (possibly const) `P`, and `np` denotes a value of type (possibly const)
 `std::nullptr_t`.
 
-####  requirements <a id="hash.requirements">[hash.requirements]</a>
+#### *Cpp17Hash* requirements <a id="hash.requirements">[hash.requirements]</a>
 
 A type `H` meets the requirements if:
 
 - it is a function object type [function.objects],
 
-- it meets the ( [cpp17.copyconstructible]) and ( [cpp17.destructible])
-  requirements, and
+- it meets the *Cpp17CopyConstructible* ( [cpp17.copyconstructible]) and
+  *Cpp17Destructible* ( [cpp17.destructible]) requirements, and
 
 - the expressions shown in [cpp17.hash] are valid and have the indicated
   semantics.
@@ -1155,7 +1155,7 @@ lvalue of type `Key`, and `k` is a value of a type convertible to
 value for `k` yield the same result for a given execution of the
 program. — *end note*\]
 
-####  requirements <a id="allocator.requirements">[allocator.requirements]</a>
+#### *Cpp17Allocator* requirements <a id="allocator.requirements">[allocator.requirements]</a>
 
 ##### General <a id="allocator.requirements.general">[allocator.requirements.general]</a>
 
@@ -1658,8 +1658,8 @@ Identical to or derived from `true_type` or `false_type`.
 
 `true_type` only if an allocator of type `X` should be copied when the
 client container is copy-assigned; if so, `X` shall meet the
-*CopyAssignable* requirements (\[cpp17.copyassignable\]) and the copy
-operation shall not throw exceptions.
+*Cpp17CopyAssignable* requirements (\[cpp17.copyassignable\]) and the
+copy operation shall not throw exceptions.
 
 ***Remarks:***
 
@@ -1675,8 +1675,8 @@ Identical to or derived from `true_type` or `false_type`.
 
 `true_type` only if an allocator of type `X` should be moved when the
 client container is move-assigned; if so, `X` shall meet the
-*MoveAssignable* requirements (\[cpp17.moveassignable\]) and the move
-operation shall not throw exceptions.
+*Cpp17MoveAssignable* requirements (\[cpp17.moveassignable\]) and the
+move operation shall not throw exceptions.
 
 ***Remarks:***
 
@@ -1691,7 +1691,7 @@ Identical to or derived from `true_type` or `false_type`.
 ***Returns:***
 
 `true_type` only if an allocator of type `X` should be swapped when the
-client container is swapped; if so, `X` shall meet the *Swappable*
+client container is swapped; if so, `X` shall meet the *Cpp17Swappable*
 requirements\[swappable.requirements\] and the `swap` operation shall
 not throw exceptions.
 
@@ -1714,13 +1714,14 @@ for any two (possibly const) values `a1`, `a2` of type `X`.
 
 Default: `is_empty<X>::type`
 
-An allocator type `X` shall meet the requirements (
-[cpp17.copyconstructible]). The `XX::pointer`, `XX::const_pointer`,
-`XX::void_pointer`, and `XX::const_void_pointer` types shall meet the
-requirements ( [cpp17.nullablepointer]). No constructor, comparison
-operator function, copy operation, move operation, or swap operation on
-these pointer types shall exit via an exception. `XX::pointer` and
-`XX::const_pointer` shall also meet the requirements for a
+An allocator type `X` shall meet the *Cpp17CopyConstructible*
+requirements ( [cpp17.copyconstructible]). The `XX::pointer`,
+`XX::const_pointer`, `XX::void_pointer`, and `XX::const_void_pointer`
+types shall meet the *Cpp17Nullable\\Pointer* requirements (
+[cpp17.nullablepointer]). No constructor, comparison operator function,
+copy operation, move operation, or swap operation on these pointer types
+shall exit via an exception. `XX::pointer` and `XX::const_pointer` shall
+also meet the requirements for a *Cpp17RandomAccessIterator*
 [random.access.iterators] and the additional requirement that, when `p`
 and `(p + n)` are dereferenceable pointer values for some integral value
 `n`,
@@ -2155,15 +2156,15 @@ required.
 The C++ standard library provides a default version of the following
 handler function [support]:
 
-- 
+- `terminate_handler`
 
 A C++ program may install different handler functions during execution,
 by supplying a pointer to a function defined in the program or the
 library as an argument to (respectively):
 
-- 
+- `set_new_handler`
 
-- 
+- `set_terminate`
 
 See also subclauses  [alloc.errors], Storage allocation errors, and 
 [support.exception], Exception handling.
@@ -2173,7 +2174,7 @@ calling the following functions:
 
 -  `get_new_handler`
 
-- 
+- `get_terminate`
 
 Calling the `set_*` and `get_*` functions shall not incur a data race. A
 call to any of the `set_*` functions shall synchronize with subsequent

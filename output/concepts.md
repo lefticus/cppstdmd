@@ -637,7 +637,7 @@ template<class T>
   concept \deflibconcept{destructible} = is_nothrow_destructible_v<T>;
 ```
 
-\[*Note 13*: Unlike the *Destructible*
+\[*Note 13*: Unlike the *Cpp17Destructible*
 requirements (\[cpp17.destructible\]), this concept forbids destructors
 that are potentially throwing, even if a particular invocation of the
 destructor does not actually throw. — *end note*\]

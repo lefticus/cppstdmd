@@ -47,7 +47,8 @@ Let `POINTER_OF(T)` denote a type that is
 
 Let `POINTER_OF_OR(T, U)` denote a type that is:
 
-- if `POINTER_OF(T)` is valid and denotes a type,
+- `\exposid{POINTER_OF}(T)`
+  if `POINTER_OF(T)` is valid and denotes a type,
 
 - otherwise, `U`.
 
@@ -639,18 +640,18 @@ using element_type = see below;
 using difference_type = see below;
 ```
 
-`Ptr::difference_type` if the `Ptr::difference_type` is valid and
-denotes a type\[temp.deduct\]; otherwise, `ptrdiff_t`.
+`Ptr::difference_type` if the *qualified-id* `Ptr::difference_type` is
+valid and denotes a type\[temp.deduct\]; otherwise, `ptrdiff_t`.
 
 ``` cpp
 template<class U> using rebind = see below;
 ```
 
-`Ptr::rebind<U>` if the `Ptr::rebind<U>` is valid and denotes a
-type\[temp.deduct\]; otherwise, `SomePointer<U, Args>` if `Ptr` is a
-class template instantiation of the form `SomePointer<T, Args>`, where
-`Args` is zero or more type arguments; otherwise, the instantiation of
-`rebind` is ill-formed.
+`Ptr::rebind<U>` if the *qualified-id* `Ptr::rebind<U>` is valid and
+denotes a type\[temp.deduct\]; otherwise, `SomePointer<U, Args>` if
+`Ptr` is a class template instantiation of the form
+`SomePointer<T, Args>`, where `Args` is zero or more type arguments;
+otherwise, the instantiation of `rebind` is ill-formed.
 
 #### Member functions <a id="pointer.traits.functions">[pointer.traits.functions]</a>
 
@@ -869,7 +870,7 @@ The `allocator_arg_t` struct is an empty class type used as a unique
 type to disambiguate constructor and function overloading. Specifically,
 several types (see `tuple`  [tuple]) have constructors with
 `allocator_arg_t` as the first argument, immediately followed by an
-argument of a type that meets the requirements
+argument of a type that meets the *Cpp17Allocator* requirements
 [allocator.requirements.general].
 
 ### `uses_allocator` <a id="allocator.uses">[allocator.uses]</a>
@@ -883,10 +884,10 @@ template<class T, class Alloc> struct uses_allocator;
 ***Remarks:***
 
 Automatically detects whether `T` has a nested `allocator_type` that is
-convertible from `Alloc`. Meets the *BinaryTypeTrait*
+convertible from `Alloc`. Meets the *Cpp17BinaryTypeTrait*
 requirements\[meta.rqmts\]. The implementation shall provide a
-definition that is derived from `true_type` if the `T::allocator_type`
-is valid and denotes a type\[temp.deduct\] and
+definition that is derived from `true_type` if the *qualified-id*
+`T::allocator_type` is valid and denotes a type\[temp.deduct\] and
 `is_convertible_v<Alloc, T::allocator_type> != false`, otherwise it
 shall be derived from `false_type`. A program may specialize this
 template to derive from `true_type` for a program-defined type `T` that
@@ -1232,53 +1233,54 @@ namespace std {
 using pointer = see below;
 ```
 
-`Alloc::pointer` if the `Alloc::pointer` is valid and denotes a
-type\[temp.deduct\]; otherwise, `value_type*`.
+`Alloc::pointer` if the *qualified-id* `Alloc::pointer` is valid and
+denotes a type\[temp.deduct\]; otherwise, `value_type*`.
 
 ``` cpp
 using const_pointer = see below;
 ```
 
-`Alloc::const_pointer` if the `Alloc::const_pointer` is valid and
-denotes a type\[temp.deduct\]; otherwise,
+`Alloc::const_pointer` if the *qualified-id* `Alloc::const_pointer` is
+valid and denotes a type\[temp.deduct\]; otherwise,
 `pointer_traits<pointer>::rebind<const value_type>`.
 
 ``` cpp
 using void_pointer = see below;
 ```
 
-`Alloc::void_pointer` if the `Alloc::void_pointer` is valid and denotes
-a type\[temp.deduct\]; otherwise,
+`Alloc::void_pointer` if the *qualified-id* `Alloc::void_pointer` is
+valid and denotes a type\[temp.deduct\]; otherwise,
 `pointer_traits<pointer>::rebind<void>`.
 
 ``` cpp
 using const_void_pointer = see below;
 ```
 
-`Alloc::const_void_pointer` if the `Alloc::const_void_pointer` is valid
-and denotes a type\[temp.deduct\]; otherwise,
-`pointer_traits<pointer>::rebind<const void>`.
+`Alloc::const_void_pointer` if the *qualified-id*
+`Alloc::const_void_pointer` is valid and denotes a type\[temp.deduct\];
+otherwise, `pointer_traits<pointer>::rebind<const void>`.
 
 ``` cpp
 using difference_type = see below;
 ```
 
-`Alloc::difference_type` if the `Alloc::difference_type` is valid and
-denotes a type\[temp.deduct\]; otherwise,
+`Alloc::difference_type` if the *qualified-id* `Alloc::difference_type`
+is valid and denotes a type\[temp.deduct\]; otherwise,
 `pointer_traits<pointer>::difference_type`.
 
 ``` cpp
 using size_type = see below;
 ```
 
-`Alloc::size_type` if the `Alloc::size_type` is valid and denotes a
-type\[temp.deduct\]; otherwise, `make_unsigned_t<difference_type>`.
+`Alloc::size_type` if the *qualified-id* `Alloc::size_type` is valid and
+denotes a type\[temp.deduct\]; otherwise,
+`make_unsigned_t<difference_type>`.
 
 ``` cpp
 using propagate_on_container_copy_assignment = see below;
 ```
 
-`Alloc::propagate_on_container_copy_assignment` if the
+`Alloc::propagate_on_container_copy_assignment` if the *qualified-id*
 `Alloc::propagate_on_container_copy_assignment` is valid and denotes a
 type\[temp.deduct\]; otherwise `false_type`.
 
@@ -1286,7 +1288,7 @@ type\[temp.deduct\]; otherwise `false_type`.
 using propagate_on_container_move_assignment = see below;
 ```
 
-`Alloc::propagate_on_container_move_assignment` if the
+`Alloc::propagate_on_container_move_assignment` if the *qualified-id*
 `Alloc::propagate_on_container_move_assignment` is valid and denotes a
 type\[temp.deduct\]; otherwise `false_type`.
 
@@ -1294,7 +1296,7 @@ type\[temp.deduct\]; otherwise `false_type`.
 using propagate_on_container_swap = see below;
 ```
 
-`Alloc::propagate_on_container_swap` if the
+`Alloc::propagate_on_container_swap` if the *qualified-id*
 `Alloc::propagate_on_container_swap` is valid and denotes a
 type\[temp.deduct\]; otherwise `false_type`.
 
@@ -1302,18 +1304,19 @@ type\[temp.deduct\]; otherwise `false_type`.
 using is_always_equal = see below;
 ```
 
-`Alloc::is_always_equal` if the `Alloc::is_always_equal` is valid and
-denotes a type\[temp.deduct\]; otherwise `is_empty<Alloc>::type`.
+`Alloc::is_always_equal` if the *qualified-id* `Alloc::is_always_equal`
+is valid and denotes a type\[temp.deduct\]; otherwise
+`is_empty<Alloc>::type`.
 
 ``` cpp
 template<class T> using rebind_alloc = see below;
 ```
 
-`Alloc::rebind<T>::other` if the `Alloc::rebind<T>::other` is valid and
-denotes a type\[temp.deduct\]; otherwise, `Alloc<T, Args>` if `Alloc` is
-a class template instantiation of the form `Alloc<U, Args>`, where
-`Args` is zero or more type arguments; otherwise, the instantiation of
-`rebind_alloc` is ill-formed.
+`Alloc::rebind<T>::other` if the *qualified-id*
+`Alloc::rebind<T>::other` is valid and denotes a type\[temp.deduct\];
+otherwise, `Alloc<T, Args>` if `Alloc` is a class template instantiation
+of the form `Alloc<U, Args>`, where `Args` is zero or more type
+arguments; otherwise, the instantiation of `rebind_alloc` is ill-formed.
 
 #### Static member functions <a id="allocator.traits.members">[allocator.traits.members]</a>
 
@@ -1429,6 +1432,8 @@ namespace std {
   };
 }
 ```
+
+`allocator_traits<allocator<T>>::is_always_equal::value`
 
 is `true` for any `T`.
 
@@ -1610,8 +1615,9 @@ is considered completed.
 Each object of a type `U` instantiated from the `unique_ptr` template
 specified in [unique.ptr] has the strict ownership semantics, specified
 above, of a unique pointer. In partial satisfaction of these semantics,
-each such `U` is and , but is not nor . The template parameter `T` of
-`unique_ptr` may be an incomplete type.
+each such `U` is *Cpp17MoveConstructible* and *Cpp17MoveAssignable*, but
+is not *Cpp17CopyConstructible* nor *Cpp17CopyAssignable*. The template
+parameter `T` of `unique_ptr` may be an incomplete type.
 
 \[*Note 1*: The uses of `unique_ptr` include providing exception safety
 for dynamically allocated memory, passing ownership of dynamically
@@ -1760,14 +1766,15 @@ is valid and has the effect of disposing of the pointer as appropriate
 for that deleter.
 
 If the deleter’s type `D` is not a reference type, `D` shall meet the
-requirements ( [cpp17.destructible]).
+*Cpp17Destructible* requirements ( [cpp17.destructible]).
 
 If the *qualified-id* `remove_reference_t<D>::pointer` is valid and
 denotes a type [temp.deduct], then `unique_ptr<T,
 D>::pointer` shall be a synonym for `remove_reference_t<D>::pointer`.
 Otherwise `unique_ptr<T, D>::pointer` shall be a synonym for
 `element_type*`. The type `unique_ptr<T,
-D>::pointer` shall meet the requirements ( [cpp17.nullablepointer]).
+D>::pointer` shall meet the *Cpp17NullablePointer* requirements (
+[cpp17.nullablepointer]).
 
 \[*Example 1*: Given an allocator type `X`
 [allocator.requirements.general] and letting `A` be a synonym for
@@ -1787,7 +1794,7 @@ constexpr unique_ptr(nullptr_t) noexcept;
 
 ***Preconditions:***
 
-`D` meets the *DefaultConstructible* requirements
+`D` meets the *Cpp17DefaultConstructible* requirements
 (\[cpp17.defaultconstructible\]), and that construction does not throw
 an exception.
 
@@ -1810,7 +1817,7 @@ constexpr explicit unique_ptr(type_identity_t<pointer> p) noexcept;
 
 ***Preconditions:***
 
-`D` meets the *DefaultConstructible* requirements
+`D` meets the *Cpp17DefaultConstructible* requirements
 (\[cpp17.defaultconstructible\]), and that construction does not throw
 an exception.
 
@@ -1833,10 +1840,10 @@ constexpr unique_ptr(type_identity_t<pointer> p, remove_reference_t<D>&& d) noex
 ***Preconditions:***
 
 For the first constructor, if `D` is not a reference type, `D` meets the
-*CopyConstructible* requirements and such construction does not exit via
-an exception. For the second constructor, if `D` is not a reference
-type, `D` meets the *MoveConstructible* requirements and such
-construction does not exit via an exception.
+*Cpp17CopyConstructible* requirements and such construction does not
+exit via an exception. For the second constructor, if `D` is not a
+reference type, `D` meets the *Cpp17MoveConstructible* requirements and
+such construction does not exit via an exception.
 
 ***Effects:***
 
@@ -1858,8 +1865,8 @@ deleted.
 \[*Example 2*:
 
     D d;
-    unique_ptr<int, D> p1(new int, D());        // \texttt{D} must be \textit{MoveConstructible}
-    unique_ptr<int, D> p2(new int, d);          // \texttt{D} must be \textit{CopyConstructible}
+    unique_ptr<int, D> p1(new int, D());        // \texttt{D} must be \textit{Cpp17MoveConstructible}
+    unique_ptr<int, D> p2(new int, d);          // \texttt{D} must be \textit{Cpp17CopyConstructible}
     unique_ptr<int, D&> p3(new int, d);         // \texttt{p3} holds a reference to \texttt{d}
     unique_ptr<int, const D&> p4(new int, D()); // error: rvalue deleter object combined
                                                 // with reference deleter type
@@ -1874,7 +1881,7 @@ constexpr unique_ptr(unique_ptr&& u) noexcept;
 
 ***Preconditions:***
 
-If `D` is not a reference type, `D` meets the *MoveConstructible*
+If `D` is not a reference type, `D` meets the *Cpp17MoveConstructible*
 requirements (\[cpp17.moveconstructible\]). Construction of the deleter
 from an rvalue of type `D` does not throw an exception.
 
@@ -1956,12 +1963,12 @@ constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
 
 ***Preconditions:***
 
-If `D` is not a reference type, `D` meets the *MoveAssignable*
+If `D` is not a reference type, `D` meets the *Cpp17MoveAssignable*
 requirements (\[cpp17.moveassignable\]) and assignment of the deleter
 from an rvalue of type `D` does not throw an exception. Otherwise, `D`
-is a reference type; `remove_reference_t<D>` meets the *CopyAssignable*
-requirements and assignment of the deleter from an lvalue of type `D`
-does not throw an exception.
+is a reference type; `remove_reference_t<D>` meets the
+*Cpp17CopyAssignable* requirements and assignment of the deleter from an
+lvalue of type `D` does not throw an exception.
 
 ***Effects:***
 
@@ -2583,7 +2590,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 #### Class template `shared_ptr` <a id="util.smartptr.shared">[util.smartptr.shared]</a>
 
@@ -2673,9 +2680,10 @@ namespace std {
 }
 ```
 
-Specializations of `shared_ptr` shall be , , and , allowing their use in
-standard containers. Specializations of `shared_ptr` shall be
-contextually convertible to `bool`, allowing their use in boolean
+Specializations of `shared_ptr` shall be *Cpp17CopyConstructible*,
+*Cpp17CopyAssignable*, and *Cpp17\\Less\\Than\\Comparable*, allowing
+their use in standard containers. Specializations of `shared_ptr` shall
+be contextually convertible to `bool`, allowing their use in boolean
 expressions and declarations in conditions.
 
 The template parameter `T` of `shared_ptr` may be an incomplete type.
@@ -2763,8 +2771,8 @@ exception is thrown, `delete p` is called when `T` is not an array type,
 
 ***Throws:***
 
-`bad_alloc`, or an exception when a resource other than memory cannot be
-obtained.
+`bad_alloc`, or an *implementation-defined* exception when a resource
+other than memory cannot be obtained.
 
 ``` cpp
 template<class Y, class D> shared_ptr(Y* p, D d);
@@ -2787,7 +2795,7 @@ expression. For the first two overloads:
 Construction of `d` and a deleter of type `D` initialized with
 `std::move(d)` do not throw exceptions. The expression `d(p)` has
 well-defined behavior and does not throw exceptions. `A` meets the
-*Allocator* requirements\[allocator.requirements.general\].
+*Cpp17Allocator* requirements\[allocator.requirements.general\].
 
 ***Effects:***
 
@@ -2803,8 +2811,8 @@ use. If an exception is thrown, `d(p)` is called.
 
 ***Throws:***
 
-`bad_alloc`, or an exception when a resource other than memory cannot be
-obtained.
+`bad_alloc`, or an *implementation-defined* exception when a resource
+other than memory cannot be obtained.
 
 ``` cpp
 template<class Y> shared_ptr(const shared_ptr<Y>& r, element_type* p) noexcept;
@@ -3153,7 +3161,7 @@ template<class T, class A, ...>
 
 ***Preconditions:***
 
-`A` meets the *Allocator*
+`A` meets the *Cpp17Allocator*
 requirements\[allocator.requirements.general\].
 
 ***Effects:***
@@ -3683,9 +3691,9 @@ namespace std {
 }
 ```
 
-Specializations of `weak_ptr` shall be and , allowing their use in
-standard containers. The template parameter `T` of `weak_ptr` may be an
-incomplete type.
+Specializations of `weak_ptr` shall be *Cpp17CopyConstructible* and
+*Cpp17CopyAssignable*, allowing their use in standard containers. The
+template parameter `T` of `weak_ptr` may be an incomplete type.
 
 ##### Constructors <a id="util.smartptr.weak.const">[util.smartptr.weak.const]</a>
 
@@ -4068,8 +4076,9 @@ namespace std {
 }
 ```
 
-`Pointer` shall meet the requirements. If `Smart` is a specialization of
-`shared_ptr` and `sizeof...(Args) == 0`, the program is ill-formed.
+`Pointer` shall meet the *Cpp17NullablePointer* requirements. If `Smart`
+is a specialization of `shared_ptr` and `sizeof...(Args) == 0`, the
+program is ill-formed.
 
 \[*Note 27*: It is typically a user error to reset a `shared_ptr`
 without specifying a deleter, as `shared_ptr` will replace a custom
@@ -4257,8 +4266,8 @@ namespace std {
 }
 ```
 
-`Pointer` shall meet the requirements. If `Smart` is a specialization of
-`shared_ptr`, the program is ill-formed.
+`Pointer` shall meet the *Cpp17NullablePointer* requirements. If `Smart`
+is a specialization of `shared_ptr`, the program is ill-formed.
 
 \[*Note 30*: It is impossible to properly acquire unique ownership of
 the managed resource from a `shared_ptr` given its shared ownership
@@ -4574,13 +4583,14 @@ bool operator==(const memory_resource& a, const memory_resource& b) noexcept;
 #### General <a id="mem.poly.allocator.class.general">[mem.poly.allocator.class.general]</a>
 
 A specialization of class template `pmr::polymorphic_allocator` meets
-the requirements [allocator.requirements.general] if its template
-argument is a cv-unqualified object type. Constructed with different
-memory resources, different instances of the same specialization of
-`pmr::polymorphic_allocator` can exhibit entirely different allocation
-behavior. This runtime polymorphism allows objects that use
-`polymorphic_allocator` to behave as if they used different allocator
-types at run time even though they use the same static allocator type.
+the *Cpp17Allocator* requirements [allocator.requirements.general] if
+its template argument is a cv-unqualified object type. Constructed with
+different memory resources, different instances of the same
+specialization of `pmr::polymorphic_allocator` can exhibit entirely
+different allocation behavior. This runtime polymorphism allows objects
+that use `polymorphic_allocator` to behave as if they used different
+allocator types at run time even though they use the same static
+allocator type.
 
 A specialization of class template `pmr::polymorphic_allocator` meets
 the allocator completeness requirements
@@ -5018,9 +5028,9 @@ size_t max_blocks_per_chunk;
 The maximum number of blocks that will be allocated at once from the
 upstream memory resource\[mem.res.monotonic.buffer\] to replenish a
 pool. If the value of `max_blocks_per_chunk` is zero or is greater than
-an limit, that limit is used instead. The implementation may choose to
-use a smaller value than is specified in this field and may use
-different values for different pools.
+an *implementation-defined* limit, that limit is used instead. The
+implementation may choose to use a smaller value than is specified in
+this field and may use different values for different pools.
 
 ``` cpp
 size_t largest_required_pool_block;
@@ -5029,9 +5039,10 @@ size_t largest_required_pool_block;
 The largest allocation size that is required to be fulfilled using the
 pooling mechanism. Attempts to allocate a single block larger than this
 threshold will be allocated directly from the upstream memory resource.
-If `largest_required_pool_block` is zero or is greater than an limit,
-that limit is used instead. The implementation may choose a pass-through
-threshold larger than specified in this field.
+If `largest_required_pool_block` is zero or is greater than an
+*implementation-defined* limit, that limit is used instead. The
+implementation may choose a pass-through threshold larger than specified
+in this field.
 
 #### Constructors and destructors <a id="mem.res.pool.ctor">[mem.res.pool.ctor]</a>
 
@@ -5106,7 +5117,8 @@ pool_options options() const;
 The options that control the pooling behavior of this resource. The
 values in the returned struct may differ from those supplied to the pool
 resource constructor in that values of zero will be replaced with
-defaults, and sizes may be rounded to unspecified granularity.
+*implementation-defined* defaults, and sizes may be rounded to
+unspecified granularity.
 
 ``` cpp
 void* do_allocate(size_t bytes, size_t alignment) override;
@@ -5215,7 +5227,8 @@ specified, is greater than zero.
 
 Sets `upstream_rsrc` to `upstream` and `current_buffer` to . If
 `initial_size` is specified, sets `next_buffer_size` to at least
-`initial_size`; otherwise sets `next_buffer_size` to an size.
+`initial_size`; otherwise sets `next_buffer_size` to an
+*implementation-defined* size.
 
 ``` cpp
 monotonic_buffer_resource(void* buffer, size_t buffer_size, memory_resource* upstream);
@@ -5230,8 +5243,8 @@ no larger than the number of bytes in `buffer`.
 
 Sets `upstream_rsrc` to `upstream`, `current_buffer` to `buffer`, and
 `next_buffer_size` to `buffer_size` (but not less than 1), then
-increases `next_buffer_size` by an growth factor (which need not be
-integral).
+increases `next_buffer_size` by an *implementation-defined* growth
+factor (which need not be integral).
 
 ``` cpp
 ~monotonic_buffer_resource();
@@ -5276,9 +5289,9 @@ specified `bytes` and `alignment`, then allocate the return block from
 `current_buffer`; otherwise set `current_buffer` to
 `upstream_rsrc->allocate(n, m)`, where `n` is not less than
 `max(bytes, next_buffer_size)` and `m` is not less than `alignment`, and
-increase `next_buffer_size` by an growth factor (which need not be
-integral), then allocate the return block from the newly-allocated
-`current_buffer`.
+increase `next_buffer_size` by an *implementation-defined* growth factor
+(which need not be integral), then allocate the return block from the
+newly-allocated `current_buffer`.
 
 ***Returns:***
 

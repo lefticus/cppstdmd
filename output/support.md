@@ -1469,9 +1469,10 @@ nonzero if it fails.
   removed.
 
 - Finally, control is returned to the host environment. If `status` is
-  zero or `EXIT_SUCCESS`, an form of the status is returned. If `status`
-  is `EXIT_FAILURE`, an form of the status is returned. Otherwise the
-  status returned is .
+  zero or `EXIT_SUCCESS`, an *implementation-defined* form of the status
+  is returned. If `status` is `EXIT_FAILURE`, an
+  *implementation-defined* form of the status is returned. Otherwise the
+  status returned is *implementation-defined*.
 
   The macros `EXIT_FAILURE` and `EXIT_SUCCESS` are defined in .
 
@@ -1624,9 +1625,9 @@ functions is not a valid alignment value, the behavior is undefined.
 ***Effects:***
 
 The allocation functions\[basic.stc.dynamic.allocation\] called by a
-\[expr.new\] to allocate `size` bytes of storage. The second form is
-called for a type with new-extended alignment, and the first form is
-called otherwise.
+*new-expression*\[expr.new\] to allocate `size` bytes of storage. The
+second form is called for a type with new-extended alignment, and the
+first form is called otherwise.
 
 A program may define functions with either of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1662,8 +1663,8 @@ functions.
 ***Effects:***
 
 Same as above, except that these are called by a placement version of a
-when a program prefers a null pointer result as an error indication,
-instead of a `bad_alloc` exception.
+*new-expression* when a program prefers a null pointer result as an
+error indication, instead of a `bad_alloc` exception.
 
 A program may define functions with either of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1712,7 +1713,7 @@ returned `ptr`.
 ***Effects:***
 
 The deallocation functions\[basic.stc.dynamic.deallocation\] called by a
-\[expr.delete\] to render the value of `ptr` invalid.
+*delete-expression*\[expr.delete\] to render the value of `ptr` invalid.
 
 A program may define functions with any of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1771,8 +1772,8 @@ allocation function that returned `ptr`.
 
 The deallocation functions\[basic.stc.dynamic.deallocation\] called by
 the implementation to render the value of `ptr` invalid when the
-constructor invoked from a nothrow placement version of the throws an
-exception.
+constructor invoked from a nothrow placement version of the
+*new-expression* throws an exception.
 
 A program may define functions with either of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1791,9 +1792,9 @@ respectively.
 ***Effects:***
 
 The allocation functions\[basic.stc.dynamic.allocation\] called by the
-array form of a \[expr.new\] to allocate `size` bytes of storage. The
-second form is called for a type with new-extended alignment, and the
-first form is called otherwise.
+array form of a *new-expression*\[expr.new\] to allocate `size` bytes of
+storage. The second form is called for a type with new-extended
+alignment, and the first form is called otherwise.
 
 It is not the direct responsibility of `operator new[]` or
 `operator delete[]` to note the repetition count or element size of the
@@ -1821,8 +1822,8 @@ respectively.
 ***Effects:***
 
 Same as above, except that these are called by a placement version of a
-when a program prefers a null pointer result as an error indication,
-instead of a `bad_alloc` exception.
+*new-expression* when a program prefers a null pointer result as an
+error indication, instead of a `bad_alloc` exception.
 
 A program may define functions with either of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1864,7 +1865,8 @@ returned `ptr`.
 ***Effects:***
 
 The deallocation functions\[basic.stc.dynamic.deallocation\] called by
-the array form of a to render the value of `ptr` invalid.
+the array form of a *delete-expression* to render the value of `ptr`
+invalid.
 
 A program may define functions with any of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1914,8 +1916,8 @@ allocation function that returned `ptr`.
 
 The deallocation functions\[basic.stc.dynamic.deallocation\] called by
 the implementation to render the value of `ptr` invalid when the
-constructor invoked from a nothrow placement version of the array throws
-an exception.
+constructor invoked from a nothrow placement version of the array
+*new-expression* throws an exception.
 
 A program may define functions with either of these function signatures,
 and thereby displace the default versions defined by the standard
@@ -1975,8 +1977,8 @@ Intentionally performs no action.
 ***Remarks:***
 
 Default function called when any part of the initialization in a
-placement that invokes the library’s non-array placement operator new
-terminates by throwing an exception\[expr.new\].
+placement *new-expression* that invokes the library’s non-array
+placement operator new terminates by throwing an exception\[expr.new\].
 
 ``` cpp
 void operator delete[](void* ptr, void*) noexcept;
@@ -1989,8 +1991,8 @@ Intentionally performs no action.
 ***Remarks:***
 
 Default function called when any part of the initialization in a
-placement that invokes the library’s array placement operator new
-terminates by throwing an exception\[expr.new\].
+placement *new-expression* that invokes the library’s array placement
+operator new terminates by throwing an exception\[expr.new\].
 
 #### Data races <a id="new.delete.dataraces">[new.delete.dataraces]</a>
 
@@ -2028,7 +2030,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 #### Class `bad_array_new_length` <a id="new.badlength">[new.badlength]</a>
 
@@ -2053,7 +2055,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 #### Type `new_handler` <a id="new.handler">[new.handler]</a>
 
@@ -2288,7 +2290,7 @@ const char* name() const noexcept;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 ***Remarks:***
 
@@ -2318,7 +2320,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 ### Class `bad_typeid` <a id="bad.typeid">[bad.typeid]</a>
 
@@ -2342,7 +2344,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 ## Source location <a id="support.srcloc">[support.srcloc]</a>
 
@@ -2384,15 +2386,15 @@ namespace std {
 }
 ```
 
-The type `source_location` meets the , , , , and requirements
+The type `source_location` meets the *Cpp17DefaultConstructible*,
+*Cpp17CopyConstructible*, *Cpp17Copy\\Assignable*, *Cpp17Swappable*, and
+*Cpp17Destructible* requirements
 [utility.arg.requirements,swappable.requirements]. All of the following
 conditions are `true`:
 
-- 
-
-- 
-
-- 
+- `is_nothrow_move_constructible_v<source_location>`
+- `is_nothrow_move_assignable_v<source_location>`
+- `is_nothrow_swappable_v<source_location>`
 
 \[*Note 1*: The intent of `source_location` is to have a small size and
 efficient copying. It is unspecified whether the copy/move constructors
@@ -2400,7 +2402,7 @@ and the copy/move assignment operators are trivial and/or
 constexpr. — *end note*\]
 
 The data members `file_name_` and `function_name_` always each refer to
-an .
+an NTBS.
 
 The copy/move constructors and the copy/move assignment operators of
 `source_location` meet the following postconditions: Given two objects
@@ -2409,13 +2411,10 @@ result of `rhs`, and where `rhs_p` is a value denoting the state of
 `rhs` before the corresponding copy/move operation, then each of the
 following conditions is `true`:
 
-- 
-
-- 
-
-- 
-
-- 
+- `strcmp(lhs.file_name(), rhs_p.file_name()) == 0`
+- `strcmp(lhs.function_name(), rhs_p.function_name()) == 0`
+- `lhs.line() == rhs_p.line()`
+- `lhs.column() == rhs_p.column()`
 
 #### Creation <a id="support.srcloc.cons">[support.srcloc.cons]</a>
 
@@ -2425,11 +2424,13 @@ static consteval source_location current() noexcept;
 
 ***Returns:***
 
-- When invoked by a function call whose is a (possibly parenthesized)
-  naming `current`, returns a `source_location` with an value. The value
+- When invoked by a function call whose *postfix-expression* is a
+  (possibly parenthesized) *id-expression* naming `current`, returns a
+  `source_location` with an *implementation-defined* value. The value
   should be affected by `#line`\[cpp.line\] in the same manner as for
-  and . The values of the exposition-only data members of the returned
-  `source_location` object are indicated in \[support.srcloc.current\].
+  \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only data
+  members of the returned `source_location` object are indicated in
+  \[support.srcloc.current\].
 
   <div class="libefftabvalue">
 
@@ -2437,14 +2438,15 @@ static consteval source_location current() noexcept;
   A presumed line number\[cpp.predefined\]. Line numbers are presumed to
   be 1-indexed; however, an implementation is encouraged to use 0 when
   the line number is unknown.  
-  `column_` & An value denoting some offset from the start of the line
-  denoted by `line_`. Column numbers are presumed to be 1-indexed;
-  however, an implementation is encouraged to use 0 when the column
-  number is unknown.  
+  `column_` & An *implementation-defined* value denoting some offset
+  from the start of the line denoted by `line_`. Column numbers are
+  presumed to be 1-indexed; however, an implementation is encouraged to
+  use 0 when the column number is unknown.  
   `file_name_` & A presumed name of the current source
   file\[cpp.predefined\] as an .  
   `function_name_` & A name of the current function such as in
-  \[dcl.fct.def.general\] if any, an empty string otherwise.  
+  \_\_func\_\_\[dcl.fct.def.general\] if any, an empty string
+  otherwise.  
 
   </div>
 
@@ -2626,7 +2628,7 @@ virtual const char* what() const noexcept;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 ***Remarks:***
 
@@ -2658,7 +2660,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An .
+An *implementation-defined* .
 
 ### Abnormal termination <a id="exception.terminate">[exception.terminate]</a>
 
@@ -2753,7 +2755,7 @@ using exception_ptr = unspecified;
 
 The type `exception_ptr` can be used to refer to an exception object.
 
-`exception_ptr` meets the requirements of *NullablePointer*
+`exception_ptr` meets the requirements of *Cpp17NullablePointer*
 (\[cpp17.nullablepointer\]).
 
 Two non-null values of type `exception_ptr` are equivalent and compare
@@ -2913,7 +2915,7 @@ Let `U` be `decay_t<T>`.
 
 ***Preconditions:***
 
-`U` meets the *CopyConstructible* requirements.
+`U` meets the *Cpp17CopyConstructible* requirements.
 
 ***Throws:***
 
@@ -3129,6 +3131,8 @@ shall be selected by the implementation such that these parameters can
 accept literal `0` as a corresponding argument.
 
 \[*Example 1*:
+
+`nullptr_t`
 
 meets this requirement.
 
@@ -3459,9 +3463,9 @@ struct common_comparison_category {
 
 ***Remarks:***
 
-The member `type` denotes the common comparison type\[class.spaceship\]
-of `Ts...`, the expanded parameter pack, or if any element of `Ts` is
-not a comparison category type.
+The member *typedef-name* `type` denotes the common comparison
+type\[class.spaceship\] of `Ts...`, the expanded parameter pack, or if
+any element of `Ts` is not a comparison category type.
 
 \[*Note 3*: This is `std::strong_ordering` if the expansion is
 empty. — *end note*\]

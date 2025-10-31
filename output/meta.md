@@ -81,24 +81,27 @@ All functions specified in [type.traits] are signal-safe
 
 A describes a property of a type. It shall be a class template that
 takes one template type argument and, optionally, additional arguments
-that help define the property being described. It shall be , , and
-publicly and unambiguously derived, directly or indirectly, from its
+that help define the property being described. It shall be
+*Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and publicly and
+unambiguously derived, directly or indirectly, from its
 *base characteristic*, which is a specialization of the template
 `integral_constant` [meta.help], with the arguments to the template
 `integral_constant` determined by the requirements for the particular
 property being described. The member names of the base characteristic
-shall not be hidden and shall be unambiguously available in the .
+shall not be hidden and shall be unambiguously available in the
+*Cpp17UnaryTypeTrait*.
 
 A describes a relationship between two types. It shall be a class
 template that takes two template type arguments and, optionally,
 additional arguments that help define the relationship being described.
-It shall be , , and publicly and unambiguously derived, directly or
-indirectly, from its *base characteristic*, which is a specialization of
-the template `integral_constant` [meta.help], with the arguments to the
-template `integral_constant` determined by the requirements for the
-particular relationship being described. The member names of the base
+It shall be *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and
+publicly and unambiguously derived, directly or indirectly, from its
+*base characteristic*, which is a specialization of the template
+`integral_constant` [meta.help], with the arguments to the template
+`integral_constant` determined by the requirements for the particular
+relationship being described. The member names of the base
 characteristic shall not be hidden and shall be unambiguously available
-in the .
+in the *Cpp17BinaryTypeTrait*.
 
 A modifies a property of a type. It shall be a class template that takes
 one template type argument and, optionally, additional arguments that
@@ -582,9 +585,9 @@ as base classes to define the interface for various type traits.
 Subclause [meta.unary] contains templates that may be used to query the
 properties of a type at compile time.
 
-Each of these templates shall be a [meta.rqmts] with a base
-characteristic of `true_type` if the corresponding condition is `true`,
-otherwise `false_type`.
+Each of these templates shall be a *Cpp17UnaryTypeTrait* [meta.rqmts]
+with a base characteristic of `true_type` if the corresponding condition
+is `true`, otherwise `false_type`.
 
 #### Primary type categories <a id="meta.unary.cat">[meta.unary.cat]</a>
 
@@ -723,8 +726,8 @@ otherwise, the condition holds true for integral types. — *end note*\]
 This subclause contains templates that may be used to query properties
 of types at compile time.
 
-Each of these templates shall be a [meta.rqmts] with a base
-characteristic of `integral_constant<size_t, Value>`.
+Each of these templates shall be a *Cpp17UnaryTypeTrait* [meta.rqmts]
+with a base characteristic of `integral_constant<size_t, Value>`.
 
 \[*Example 4*:
 
@@ -758,9 +761,9 @@ assert((extent_v<int[][4], 1>) == 4);
 This subclause contains templates that may be used to query
 relationships between types at compile time.
 
-Each of these templates shall be a [meta.rqmts] with a base
-characteristic of `true_type` if the corresponding condition is true,
-otherwise `false_type`.
+Each of these templates shall be a *Cpp17BinaryTypeTrait* [meta.rqmts]
+with a base characteristic of `true_type` if the corresponding condition
+is true, otherwise `false_type`.
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
@@ -817,7 +820,8 @@ in the program being ill-formed. — *end note*\]
 
 #### General <a id="meta.trans.general">[meta.trans.general]</a>
 
-Each of the templates in [meta.trans] shall be a [meta.rqmts].
+Each of the templates in [meta.trans] shall be a
+*Cpp17TransformationTrait* [meta.rqmts].
 
 #### Const-volatile modifications <a id="meta.trans.cv">[meta.trans.cv]</a>
 
@@ -1152,8 +1156,8 @@ template<class B> struct negation : see below { };
 ```
 
 The class template `negation` forms the logical negation of its template
-type argument. The type `negation<B>` is a *UnaryTypeTrait* with a base
-characteristic of `bool_constant<!bool(B::value)>`.
+type argument. The type `negation<B>` is a *Cpp17UnaryTypeTrait* with a
+base characteristic of `bool_constant<!bool(B::value)>`.
 
 ### Member relationships <a id="meta.member">[meta.member]</a>
 

@@ -909,7 +909,7 @@ namespace std::chrono {
 }
 ```
 
-##  requirements <a id="time.clock.req">[time.clock.req]</a>
+## *Cpp17Clock* requirements <a id="time.clock.req">[time.clock.req]</a>
 
 A clock is a bundle consisting of a `duration`, a `time_point`, and a
 function `now()` to get the current `time_point`. The origin of the
@@ -928,21 +928,23 @@ calls occur before `C1::time_point::max()`.
 by a given clock and the SI definition is a measure of the quality of
 implementation. — *end note*\]
 
-A type `TC` meets the requirements if:
+A type `TC` meets the *Cpp17TrivialClock* requirements if:
 
-- `TC` meets the requirements,
+- `TC` meets the *Cpp17Clock* requirements,
 
-- the types `TC::rep`, `TC::duration`, and `TC::time_point` meet the (
-  [cpp17.equalitycomparable]) and ( [cpp17.lessthancomparable]) and
-  [swappable.requirements] requirements and the requirements of numeric
-  types [numeric.requirements],
+- the types `TC::rep`, `TC::duration`, and `TC::time_point` meet the
+  *Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) and
+  *Cpp17LessThanComparable* ( [cpp17.lessthancomparable]) and
+  *Cpp17Swappable* [swappable.requirements] requirements and the
+  requirements of numeric types [numeric.requirements],
 
   \[*Note 1*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*\]
 
 - the function `TC::now()` does not throw exceptions, and
 
-- the type `TC::time_point::clock` meets the requirements, recursively.
+- the type `TC::time_point::clock` meets the *Cpp17TrivialClock*
+  requirements, recursively.
 
 ## Time-related traits <a id="time.traits">[time.traits]</a>
 
@@ -1064,12 +1066,13 @@ same clock as the two types and the common type of their two
 template<class T> struct is_clock;
 ```
 
-`is_clock` is a [meta.rqmts] with a base characteristic of `true_type`
-if `T` meets the requirements [time.clock.req], otherwise `false_type`.
-For the purposes of the specification of this trait, the extent to which
-an implementation determines that a type cannot meet the requirements is
+`is_clock` is a *Cpp17UnaryTypeTrait* [meta.rqmts] with a base
+characteristic of `true_type` if `T` meets the *Cpp17Clock* requirements
+[time.clock.req], otherwise `false_type`. For the purposes of the
+specification of this trait, the extent to which an implementation
+determines that a type cannot meet the *Cpp17Clock* requirements is
 unspecified, except that as a minimum a type `T` shall not qualify as a
-unless it meets all of the following conditions:
+*Cpp17Clock* unless it meets all of the following conditions:
 
 - the *qualified-id*s `T::rep`, `T::period`, `T::duration`, and
   `T::time_point` are valid and each denotes a type [temp.deduct],
@@ -1757,8 +1760,9 @@ where *`units-suffix`* depends on the type `Period::type` as follows:
 
 - Otherwise, if `Period::type` is `nano`, *`units-suffix`* is `"ns"`.
 
-- Otherwise, if `Period::type` is `micro`, it is whether
-  *`units-suffix`* is `"s"` (`"\u00b5\u0073"`) or `"us"`.
+- Otherwise, if `Period::type` is `micro`, it is
+  *implementation-defined* whether *`units-suffix`* is `"s"`
+  (`"\u00b5\u0073"`) or `"us"`.
 
 - Otherwise, if `Period::type` is `milli`, *`units-suffix`* is `"ms"`.
 
@@ -2160,8 +2164,8 @@ template<class ToDuration, class Clock, class Duration>
 
 ### General <a id="time.clock.general">[time.clock.general]</a>
 
-The types defined in [time.clock] meet the requirements [time.clock.req]
-unless otherwise specified.
+The types defined in [time.clock] meet the *Cpp17TrivialClock*
+requirements [time.clock.req] unless otherwise specified.
 
 ### Class `system_clock` <a id="time.clock.system">[time.clock.system]</a>
 
@@ -2218,8 +2222,8 @@ static time_t to_time_t(const time_point& t) noexcept;
 
 A `time_t` object that represents the same point in time as `t` when
 both values are restricted to the coarser of the precisions of `time_t`
-and `time_point`. It is whether values are rounded or truncated to the
-required precision.
+and `time_point`. It is *implementation-defined* whether values are
+rounded or truncated to the required precision.
 
 ``` cpp
 static time_point from_time_t(time_t t) noexcept;
@@ -2229,8 +2233,8 @@ static time_point from_time_t(time_t t) noexcept;
 
 A `time_point` object that represents the same point in time as `t` when
 both values are restricted to the coarser of the precisions of `time_t`
-and `time_point`. It is whether values are rounded or truncated to the
-required precision.
+and `time_point`. It is *implementation-defined* whether values are
+rounded or truncated to the required precision.
 
 #### Non-member functions <a id="time.clock.system.nonmembers">[time.clock.system.nonmembers]</a>
 
@@ -2341,8 +2345,8 @@ is `946'684'822s`,
 which is `10'957 * 86'400s + 22s`.  
  — *end example*\]
 
-`utc_clock` is not a unless the implementation can guarantee that
-`utc_clock::now()` does not propagate an exception.
+`utc_clock` is not a *Cpp17TrivialClock* unless the implementation can
+guarantee that `utc_clock::now()` does not propagate an exception.
 
 \[*Note 3*: `noexcept(from_sys(system_clock::now()))` is
 `false`. — *end note*\]
@@ -2522,8 +2526,8 @@ there had been 22 positive and 0 negative leap seconds inserted so
 2000-01-01 00:00:00 UTC is equivalent to 2000-01-01 00:00:32 TAI (22s
 plus the initial 10s offset).
 
-`tai_clock` is not a unless the implementation can guarantee that
-`tai_clock::now()` does not propagate an exception.
+`tai_clock` is not a *Cpp17TrivialClock* unless the implementation can
+guarantee that `tai_clock::now()` does not propagate an exception.
 
 \[*Note 4*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
@@ -2665,8 +2669,8 @@ another second with respect to GPS. Aside from the offset from
 due to the 10s offset between 1958 and 1970 and the additional 9 leap
 seconds inserted between 1970 and 1980.
 
-`gps_clock` is not a unless the implementation can guarantee that
-`gps_clock::now()` does not propagate an exception.
+`gps_clock` is not a *Cpp17TrivialClock* unless the implementation can
+guarantee that `gps_clock::now()` does not propagate an exception.
 
 \[*Note 7*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
@@ -2784,8 +2788,8 @@ namespace std::chrono {
 }
 ```
 
-`file_clock` is an alias for a type meeting the requirements
-[time.clock.req], and using a signed arithmetic type for
+`file_clock` is an alias for a type meeting the *Cpp17TrivialClock*
+requirements [time.clock.req], and using a signed arithmetic type for
 `file_clock::rep`. `file_clock` is used to create the `time_point`
 system used for `file_time_type` [filesystems]. Its epoch is
 unspecified, and `noexcept(file_clock::now())` is `true`.
@@ -3285,9 +3289,10 @@ namespace std::chrono {
 1 to 31, but may hold non-negative values outside this range. It can be
 constructed with any `unsigned` value, which will be subsequently
 truncated to fit into `day`’s unspecified internal storage. `day` meets
-the ( [cpp17.equalitycomparable]) and ( [cpp17.lessthancomparable])
-requirements, and participates in basic arithmetic with `days` objects,
-which represent a difference between two `day` objects.
+the *Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) and
+*Cpp17LessThanComparable* ( [cpp17.lessthancomparable]) requirements,
+and participates in basic arithmetic with `days` objects, which
+represent a difference between two `day` objects.
 
 `day` is a trivially copyable and standard-layout class type.
 
@@ -3517,10 +3522,10 @@ namespace std::chrono {
 range 1 to 12, but may hold non-negative values outside this range. It
 can be constructed with any `unsigned` value, which will be subsequently
 truncated to fit into `month`’s unspecified internal storage. `month`
-meets the ( [cpp17.equalitycomparable]) and (
-[cpp17.lessthancomparable]) requirements, and participates in basic
-arithmetic with `months` objects, which represent a difference between
-two `month` objects.
+meets the *Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) and
+*Cpp17LessThanComparable* ( [cpp17.lessthancomparable]) requirements,
+and participates in basic arithmetic with `months` objects, which
+represent a difference between two `month` objects.
 
 `month` is a trivially copyable and standard-layout class type.
 
@@ -3767,7 +3772,8 @@ namespace std::chrono {
 `year` represents a year in the civil calendar. It can represent values
 in the range . It can be constructed with any `int` value, which will be
 subsequently truncated to fit into `year`’s unspecified internal
-storage. `year` meets the ( [cpp17.equalitycomparable]) and (
+storage. `year` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
 [cpp17.lessthancomparable]) requirements, and participates in basic
 arithmetic with `years` objects, which represent a difference between
 two `year` objects.
@@ -4047,12 +4053,13 @@ normally holds values in the range `0` to `6`, corresponding to Sunday
 through Saturday, but it may hold non-negative values outside this
 range. It can be constructed with any `unsigned` value, which will be
 subsequently truncated to fit into `weekday`’s unspecified internal
-storage. `weekday` meets the ( [cpp17.equalitycomparable]) requirements.
+storage. `weekday` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) requirements.
 
-\[*Note 2*: `weekday` is not because there is no universal consensus on
-which day is the first day of the week. `weekday`’s arithmetic
-operations treat the days of the week as a circular range, with no
-beginning and no end. — *end note*\]
+\[*Note 2*: `weekday` is not *Cpp17LessThanComparable* because there is
+no universal consensus on which day is the first day of the week.
+`weekday`’s arithmetic operations treat the days of the week as a
+circular range, with no beginning and no end. — *end note*\]
 
 `weekday` is a trivially copyable and standard-layout class type.
 
@@ -4515,8 +4522,9 @@ namespace std::chrono {
 ```
 
 `month_day` represents a specific day of a specific month, but with an
-unspecified year. `month_day` meets the ( [cpp17.equalitycomparable])
-and ( [cpp17.lessthancomparable]) requirements.
+unspecified year. `month_day` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
+[cpp17.lessthancomparable]) requirements.
 
 `month_day` is a trivially copyable and standard-layout class type.
 
@@ -4926,9 +4934,9 @@ namespace std::chrono {
 
 `year_month` represents a specific month of a specific year, but with an
 unspecified day. `year_month` is a field-based time point with a
-resolution of `months`. `year_month` meets the (
-[cpp17.equalitycomparable]) and ( [cpp17.lessthancomparable])
-requirements.
+resolution of `months`. `year_month` meets the *Cpp17EqualityComparable*
+( [cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
+[cpp17.lessthancomparable]) requirements.
 
 `year_month` is a trivially copyable and standard-layout class type.
 
@@ -5207,7 +5215,8 @@ arithmetic, but not `days`-oriented arithmetic. For the latter, there is
 a conversion to `sys_days`, which efficiently supports `days`-oriented
 arithmetic. — *end note*\]
 
-`year_month_day` meets the ( [cpp17.equalitycomparable]) and (
+`year_month_day` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
 [cpp17.lessthancomparable]) requirements.
 
 `year_month_day` is a trivially copyable and standard-layout class type.
@@ -5558,7 +5567,8 @@ last day of a year and month.
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
 
-`year_month_day_last` meets the ( [cpp17.equalitycomparable]) and (
+`year_month_day_last` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
 [cpp17.lessthancomparable]) requirements.
 
 `year_month_day_last` is a trivially copyable and standard-layout class
@@ -5846,8 +5856,8 @@ field-based time point with a resolution of `days`.
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
 
-`year_month_weekday` meets the ( [cpp17.equalitycomparable])
-requirements.
+`year_month_weekday` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) requirements.
 
 `year_month_weekday` is a trivially copyable and standard-layout class
 type.
@@ -6145,8 +6155,8 @@ pointing to the last weekday of a year and month.
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
 
-`year_month_weekday_last` meets the ( [cpp17.equalitycomparable])
-requirements.
+`year_month_weekday_last` meets the *Cpp17EqualityComparable* (
+[cpp17.equalitycomparable]) requirements.
 
 `year_month_weekday_last` is a trivially copyable and standard-layout
 class type.
@@ -7151,7 +7161,7 @@ this list via the read-only namespace scope functions `get_tzdb()`,
 The `tzdb_list` object contains a list of `tzdb` objects.
 
 `tzdb_list::const_iterator` is a constant iterator which meets the
-requirements and has a value type of `tzdb`.
+*Cpp17ForwardIterator* requirements and has a value type of `tzdb`.
 
 ``` cpp
 const tzdb& front() const noexcept;

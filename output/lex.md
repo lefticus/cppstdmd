@@ -1415,6 +1415,8 @@ kind, it is treated as the latter.
 
 \[*Example 5*:
 
+`123_km`
+
 is a *user-defined-literal*, but `12LL` is an *integer-literal*.
 
 — *end example*\]

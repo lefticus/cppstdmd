@@ -77,10 +77,11 @@ using state_type = see below;
 
 ***Preconditions:***
 
-`state_type` meets the *Destructible* (\[cpp17.destructible\]),
-*CopyAssignable* (\[cpp17.copyassignable\]), *CopyConstructible*
-(\[cpp17.copyconstructible\]), and *DefaultConstructible*
-(\[cpp17.defaultconstructible\]) requirements.
+`state_type` meets the *Cpp17Destructible* (\[cpp17.destructible\]),
+*Cpp17CopyAssignable* (\[cpp17.copyassignable\]),
+*Cpp17CopyConstructible* (\[cpp17.copyconstructible\]), and
+*Cpp17DefaultConstructible* (\[cpp17.defaultconstructible\])
+requirements.
 
 ### `char_traits` specializations <a id="char.traits.specializations">[char.traits.specializations]</a>
 
@@ -657,7 +658,7 @@ using const_iterator = \impdefx{type of basic_string_view::const_iterator};
 ```
 
 A type that meets the requirements of a constant
-*RandomAccessIterator*\[random.access.iterators\], models
+*Cpp17RandomAccessIterator*\[random.access.iterators\], models
 `contiguous_iterator`\[iterator.concept.contiguous\], and meets the
 constexpr iterator requirements\[iterator.requirements.general\], whose
 `value_type` is the template parameter `charT`.
@@ -808,10 +809,11 @@ constexpr const_pointer data() const noexcept;
 
 `data_`.
 
-\[*Note 4*: Unlike `basic_string::data()` and s, `data()` can return a
-pointer to a buffer that is not null-terminated. Therefore it is
-typically a mistake to pass `data()` to a function that takes just a
-`const charT*` and expects a null-terminated string. — *end note*\]
+\[*Note 4*: Unlike `basic_string::data()` and *string-literal*s,
+`data()` can return a pointer to a buffer that is not null-terminated.
+Therefore it is typically a mistake to pass `data()` to a function that
+takes just a `const charT*` and expects a null-terminated
+string. — *end note*\]
 
 #### Modifiers <a id="string.view.modifiers">[string.view.modifiers]</a>
 
@@ -1242,8 +1244,9 @@ template<class charT, class traits>
             \itcorr                      basic_string_view<charT, traits> rhs) noexcept;
 ```
 
-Let `R` denote the type `traits::comparison_category` if that is valid
-and denotes a type\[temp.deduct\], otherwise `R` is `weak_ordering`.
+Let `R` denote the type `traits::comparison_category` if that
+*qualified-id* is valid and denotes a type\[temp.deduct\], otherwise `R`
+is `weak_ordering`.
 
 ***Mandates:***
 

@@ -2090,29 +2090,21 @@ The macro `NULL`, defined in any of , , , , , , or , is an
 
 Header : The following functions have different declarations:
 
-- 
-
-- 
-
-- 
-
-- 
-
-- 
+- `strchr`
+- `strpbrk`
+- `strrchr`
+- `strstr`
+- `memchr`
 
 Subclause [cstring.syn] describes the changes.
 
 Header : The following functions have different declarations:
 
-- 
-
-- 
-
-- 
-
-- 
-
-- 
+- `wcschr`
+- `wcspbrk`
+- `wcsrchr`
+- `wcsstr`
+- `wmemchr`
 
 Subclause [cwchar.syn] describes the changes.
 
@@ -2126,17 +2118,15 @@ to the names declared in in the C standard library.
 
 Header : The following functions have different behavior:
 
-- 
-
-- 
-
-- 
+- `atexit`
+- `exit`
+- `abort`
 
 Subclause [support.start.term] describes the changes.
 
 Header : The following functions have different behavior:
 
-- 
+- `longjmp`
 
 Subclause [csetjmp.syn] describes the changes.
 

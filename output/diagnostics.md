@@ -1419,7 +1419,7 @@ constexpr stacktrace_entry() noexcept;
 constexpr native_handle_type native_handle() const noexcept;
 ```
 
-The semantics of this function are .
+The semantics of this function are *implementation-defined*.
 
 ***Remarks:***
 
@@ -1685,7 +1685,7 @@ using const_iterator = \impdef;
 
 The type models
 `random_access_iterator`\[iterator.concept.random.access\] and meets the
-*RandomAccessIterator* requirements\[random.access.iterators\].
+*Cpp17RandomAccessIterator* requirements\[random.access.iterators\].
 
 ``` cpp
 allocator_type get_allocator() const noexcept;

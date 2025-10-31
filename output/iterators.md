@@ -584,8 +584,8 @@ are not associated with any sequence. Results of most expressions are
 undefined for singular values; the only exceptions are destroying an
 iterator that holds a singular value, the assignment of a non-singular
 value to an iterator that holds a singular value, and, for iterators
-that meet the requirements, using a value-initialized iterator as the
-source of a copy or move operation.
+that meet the *Cpp17DefaultConstructible* requirements, using a
+value-initialized iterator as the source of a copy or move operation.
 
 \[*Note 2*: This guarantee is not offered for default-initialization,
 although the distinction only matters for types with trivial default
@@ -688,7 +688,8 @@ namespace std {
 Let $R_\tcode{I}$ be `remove_cvref_t<I>`. The type
 `iter_difference_t<I>` denotes
 
-- if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
+- `incrementable_traits<$R_\tcode{I}$>::difference_type`
+  if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
   from the primary template, and
 
 - `iterator_traits<$R_\tcode{I}$>::difference_type` otherwise.
@@ -763,7 +764,8 @@ template<class T> using iter_value_t = see below;
 Let $R_\tcode{I}$ be `remove_cvref_t<I>`. The type `iter_value_t<I>`
 denotes
 
-- if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
+- `indirectly_readable_traits<$R_\tcode{I}$>::value_type`
+  if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
   from the primary template, and
 
 - `iterator_traits<$R_\tcode{I}$>::value_type` otherwise.
@@ -914,7 +916,8 @@ The members of a specialization `iterator_traits<I>` generated from the
     type, `iterator_category` names that type. Otherwise,
     `iterator_category` names:
 
-    - if `I` satisfies `cpp17-random-access-iterator`, or otherwise
+    - `random_access_iterator_tag`
+      if `I` satisfies `cpp17-random-access-iterator`, or otherwise
 
     - `bidirectional_iterator_tag` if `I` satisfies
       `cpp17-bidirectional-iterator`, or otherwise
@@ -948,9 +951,9 @@ member type `iterator_concept` that is used to indicate conformance to
 the iterator concepts [iterator.concepts].
 
 \[*Example 1*: To indicate conformance to the `input_iterator` concept
-but a lack of conformance to the requirements [input.iterators], an
-`iterator_traits` specialization might have `iterator_concept` denote
-`input_iterator_tag` but not define
+but a lack of conformance to the *Cpp17InputIter\\ator* requirements
+[input.iterators], an `iterator_traits` specialization might have
+`iterator_concept` denote `input_iterator_tag` but not define
 `iterator_category`. — *end example*\]
 
 `iterator_traits` is specialized for pointers as
@@ -1411,8 +1414,9 @@ template<class I>
     weakly_incrementable<I>;
 ```
 
-\[*Note 14*: Unlike the requirements, the `input_or_output_iterator`
-concept does not require copyability. — *end note*\]
+\[*Note 14*: Unlike the *Cpp17Iterator* requirements, the
+`input_or_output_iterator` concept does not require
+copyability. — *end note*\]
 
 #### Concept  <a id="iterator.concept.sentinel">[iterator.concept.sentinel]</a>
 
@@ -1501,9 +1505,10 @@ referenced values can be read (from the requirement for
 `indirectly_readable` [iterator.concept.readable]) and which can be both
 pre- and post-incremented.
 
-\[*Note 16*: Unlike the requirements [input.iterators], the
-`input_iterator` concept does not need equality comparison since
-iterators are typically compared to sentinels. — *end note*\]
+\[*Note 16*: Unlike the *Cpp17InputIterator* requirements
+[input.iterators], the `input_iterator` concept does not need equality
+comparison since iterators are typically compared to
+sentinels. — *end note*\]
 
 ``` cpp
 template<class I>
@@ -1612,14 +1617,14 @@ Let `a` and `b` be equal objects of type `I`. `I` models
 - If `a` and `b` are decrementable, then all of the following are
   `true`:
 
-  - 
+  - `addressof(--a) == addressof(a)`
 
-  - 
+  - `bool(a-- == b)`
 
   - after evaluating both `a--` and `--b`, `bool(a == b)` is still
     `true`
 
-  - 
+  - `bool(++(--a) == b)`
 
 - If `a` and `b` are incrementable, then `bool(--(++a) == b)`.
 
@@ -1729,19 +1734,20 @@ value of some type that is writable to the output iterator.
 \[*Note 20*: For an iterator type `X` there must be an instantiation of
 `iterator_traits<X>` [iterator.traits]. — *end note*\]
 
-####  <a id="iterator.iterators">[iterator.iterators]</a>
+#### *Cpp17Iterator* <a id="iterator.iterators">[iterator.iterators]</a>
 
-The requirements form the basis of the iterator taxonomy; every iterator
-meets the requirements. This set of requirements specifies operations
-for dereferencing and incrementing an iterator. Most algorithms will
-require additional operations to read [input.iterators] or write
-[output.iterators] values, or to provide a richer set of iterator
-movements [forward.iterators,
+The *Cpp17Iterator* requirements form the basis of the iterator
+taxonomy; every iterator meets the *Cpp17\\Iterator* requirements. This
+set of requirements specifies operations for dereferencing and
+incrementing an iterator. Most algorithms will require additional
+operations to read [input.iterators] or write [output.iterators] values,
+or to provide a richer set of iterator movements [forward.iterators,
 bidirectional.iterators,random.access.iterators].
 
 A type `X` meets the requirements if:
 
-- `X` meets the , , , and requirements
+- `X` meets the *Cpp17CopyConstructible*, *Cpp17CopyAssignable*,
+  *Cpp17Swappable*, and *Cpp17Destructible* requirements
   [utility.arg.requirements,swappable.requirements], and
 
 - `iterator_traits<X>::difference_type` is a signed integer type or
@@ -1753,7 +1759,8 @@ A type `X` meets the requirements if:
 #### Input iterators <a id="input.iterators">[input.iterators]</a>
 
 A class or pointer type `X` meets the requirements of an input iterator
-for the value type `T` if `X` meets the [iterator.iterators] and (
+for the value type `T` if `X` meets the *Cpp17Iterator*
+[iterator.iterators] and *Cpp17EqualityComparable* (
 [cpp17.equalitycomparable]) requirements and the expressions in
 [inputiterator] are valid and have the indicated semantics.
 
@@ -1775,16 +1782,17 @@ should be a single pass algorithm.
 
 \[*Note 21*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
-transparency.) Value type `T` is not required to be a type (
-[cpp17.copyassignable]). Such an algorithm can be used with istreams as
-the source of the input data through the `istream_iterator` class
-template. — *end note*\]
+transparency.) Value type `T` is not required to be a
+*Cpp17CopyAssignable* type ( [cpp17.copyassignable]). Such an algorithm
+can be used with istreams as the source of the input data through the
+`istream_iterator` class template. — *end note*\]
 
 #### Output iterators <a id="output.iterators">[output.iterators]</a>
 
 A class or pointer type `X` meets the requirements of an output iterator
-if `X` meets the requirements [iterator.iterators] and the expressions
-in [outputiterator] are valid and have the indicated semantics.
+if `X` meets the *Cpp17Iterator* requirements [iterator.iterators] and
+the expressions in [outputiterator] are valid and have the indicated
+semantics.
 
 The implementation of an algorithm on output iterators should never
 attempt to pass through the same iterator twice; such an algorithm
@@ -1800,9 +1808,10 @@ defined. — *end note*\]
 A class or pointer type `X` meets the requirements of a forward iterator
 if
 
-- `X` meets the requirements [input.iterators],
+- `X` meets the *Cpp17InputIterator* requirements [input.iterators],
 
-- `X` meets the requirements [utility.arg.requirements],
+- `X` meets the *Cpp17DefaultConstructible* requirements
+  [utility.arg.requirements],
 
 - if `X` is a mutable iterator, `reference` is a reference to `T`; if
   `X` is a constant iterator, `reference` is a reference to `const T`,
@@ -1843,8 +1852,9 @@ If `a` and `b` are both dereferenceable, then `a == b` if and only if
 #### Bidirectional iterators <a id="bidirectional.iterators">[bidirectional.iterators]</a>
 
 A class or pointer type `X` meets the requirements of a bidirectional
-iterator if, in addition to meeting the requirements, the following
-expressions are valid as shown in [bidirectionaliterator].
+iterator if, in addition to meeting the *Cpp17ForwardIterator*
+requirements, the following expressions are valid as shown in
+[bidirectionaliterator].
 
 \[*Note 25*: Bidirectional iterators allow algorithms to move iterators
 backward as well as forward. — *end note*\]
@@ -1852,8 +1862,9 @@ backward as well as forward. — *end note*\]
 #### Random access iterators <a id="random.access.iterators">[random.access.iterators]</a>
 
 A class or pointer type `X` meets the requirements of a random access
-iterator if, in addition to meeting the requirements, the following
-expressions are valid as shown in [randomaccessiterator].
+iterator if, in addition to meeting the *Cpp17BidirectionalIterator*
+requirements, the following expressions are valid as shown in
+[randomaccessiterator].
 
 ### Indirect callable requirements <a id="indirectcallable">[indirectcallable]</a>
 
@@ -1868,7 +1879,8 @@ To implement algorithms taking projections, it is necessary to determine
 the projected type of an iterator’s value type. For the exposition-only
 alias template *indirect-value-t*, `indirect-value-t<T>` denotes
 
-- if `T` names `projected<I, Proj>`, and
+- `invoke_result_t<Proj&, \exposid{indirect-value-t}<I>>`
+  if `T` names `projected<I, Proj>`, and
 
 - `iter_value_t<T>&` otherwise.
 
@@ -2251,12 +2263,12 @@ template<class InputIterator>
 ***Preconditions:***
 
 `last` is reachable from `first`, or `InputIterator` meets the
-*RandomAccessIterator* requirements and `first` is reachable from
+*Cpp17RandomAccessIterator* requirements and `first` is reachable from
 `last`.
 
 ***Effects:***
 
-If `InputIterator` meets the *RandomAccessIterator* requirements,
+If `InputIterator` meets the *Cpp17RandomAccessIterator* requirements,
 returns `(last - first)`; otherwise, increments `first` until `last` is
 reached and returns the number of increments.
 
@@ -2586,13 +2598,13 @@ The member *typedef-name* `iterator_category` denotes
 #### Requirements <a id="reverse.iter.requirements">[reverse.iter.requirements]</a>
 
 The template parameter `Iterator` shall either meet the requirements of
-a [bidirectional.iterators] or model `bidirectional_iterator`
-[iterator.concept.bidir].
+a *Cpp17BidirectionalIterator* [bidirectional.iterators] or model
+`bidirectional_iterator` [iterator.concept.bidir].
 
 Additionally, `Iterator` shall either meet the requirements of a
-[random.access.iterators] or model `random_access_iterator`
-[iterator.concept.random.access] if the definitions of any of the
-members
+*Cpp17RandomAccessIterator* [random.access.iterators] or model
+`random_access_iterator` [iterator.concept.random.access] if the
+definitions of any of the members
 
 - `operator+`, `operator-`, `operator+=`, `operator-=`
   [reverse.iter.nav], or
@@ -3846,15 +3858,16 @@ valid and denotes a type. In that case, `iterator_category` denotes
 
 #### Requirements <a id="move.iter.requirements">[move.iter.requirements]</a>
 
-The template parameter `Iterator` shall either meet the requirements
-[input.iterators] or model `input_iterator` [iterator.concept.input].
-Additionally, if any of the bidirectional traversal functions are
-instantiated, the template parameter shall either meet the requirements
-[bidirectional.iterators] or model `bidirectional_iterator`
+The template parameter `Iterator` shall either meet the
+*Cpp17InputIterator* requirements [input.iterators] or model
+`input_iterator` [iterator.concept.input]. Additionally, if any of the
+bidirectional traversal functions are instantiated, the template
+parameter shall either meet the *Cpp17BidirectionalIterator*
+requirements [bidirectional.iterators] or model `bidirectional_iterator`
 [iterator.concept.bidir]. If any of the random access traversal
 functions are instantiated, the template parameter shall either meet the
-requirements [random.access.iterators] or model `random_access_iterator`
-[iterator.concept.random.access].
+*Cpp17RandomAccessIterator* requirements [random.access.iterators] or
+model `random_access_iterator` [iterator.concept.random.access].
 
 #### Construction and assignment <a id="move.iter.cons">[move.iter.cons]</a>
 
@@ -4454,7 +4467,7 @@ constexpr auto operator->() const
   requires see below;
 ```
 
-The expression in the is equivalent to:
+The expression in the *requires-clause* is equivalent to:
 
 ``` cpp
 indirectly_readable<const I> &&
@@ -5240,7 +5253,8 @@ namespace std {
 }
 ```
 
-The type `T` shall meet the , , and requirements.
+The type `T` shall meet the *Cpp17DefaultConstructible*,
+*Cpp17CopyConstructible*, and *Cpp17CopyAssignable* requirements.
 
 #### Constructors and destructor <a id="istream.iterator.cons">[istream.iterator.cons]</a>
 

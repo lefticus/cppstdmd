@@ -1900,9 +1900,10 @@ following manner:
 
     - `common_range``<R>` is `true`,
 
-    - the `iterator_traits<iterator_t<R>>::iterator_category` is valid
-      and denotes a type that models
-      `derived_from``<input_iterator_tag>`, and
+    - the *qualified-id*
+      `iterator_traits<iterator_t<R>>::iterator_category` is valid and
+      denotes a type that models `derived_from``<input_iterator_tag>`,
+      and
 
     - `constructible_from``<C, iterator_t<R>, sentinel_t<R>, Args...>`
       is `true`:
@@ -1955,7 +1956,7 @@ struct input-iterator {                        // exposition only
 ```
 
 \[*Note 2*: *input-iterator* meets the syntactic requirements of
-*InputIterator*. — *end note*\]
+*Cpp17InputIterator*. — *end note*\]
 
 Let *`DEDUCE_EXPR`* be defined as follows:
 
@@ -2425,7 +2426,7 @@ else
 
 ***Remarks:***
 
-The expression in the is equivalent to:
+The expression in the *requires-clause* is equivalent to:
 
 ``` cpp
 (same_as<W, Bound> && advanceable<W>) || (is-integer-like<W> && is-integer-like<Bound>) ||
@@ -3736,7 +3737,7 @@ void FUN(R&);
 void FUN(R&&) = delete;
 ```
 
-The expression in the is equivalent to:
+The expression in the *requires-clause* is equivalent to:
 
 ``` cpp
 convertible_to<T, R&> && requires { FUN(declval<T>()); }
@@ -8907,7 +8908,8 @@ The name `views::zip` denotes a customization point object
 [customization.point.object]. Given a pack of subexpressions `Es...`,
 the expression `views::zip(Es...)` is expression-equivalent to
 
-- if `Es` is an empty pack,
+- `auto(views::empty<tuple<>>)`
+  if `Es` is an empty pack,
 
 - otherwise, `zip_view<views::all_t<decltype((Es))>...>(Es...)`.
 
@@ -9951,7 +9953,8 @@ The name `views::adjacent<N>` denotes a range adaptor object
 expression `N`, the expression `views::adjacent<N>(E)` is
 expression-equivalent to
 
-- if `N` is equal to `0`,
+- `((void)E, auto(views::empty<tuple<>>))`
+  if `N` is equal to `0`,
 
 - otherwise, `adjacent_view<views::all_t<decltype((E))>, N>(E)`.
 
@@ -13305,7 +13308,8 @@ The name `views::cartesian_product` denotes a customization point object
 [customization.point.object]. Given a pack of subexpressions `Es`, the
 expression `views::cartesian_product(Es...)` is expression-equivalent to
 
-- if `Es` is an empty pack,
+- `views::single(tuple())`
+  if `Es` is an empty pack,
 
 - otherwise,
   `cartesian_product_view<views::all_t<decltype((Es))>...>(Es...)`.
@@ -13489,7 +13493,8 @@ constexpr see below size() const
   requires cartesian-product-is-sized<const First, const Vs...>;
 ```
 
-The return type is an unsigned-integer-like type.
+The return type is an *implementation-defined* unsigned-integer-like
+type.
 
 The return type should be the smallest unsigned-integer-like type that
 is sufficiently wide to store the product of the maximum sizes of all
@@ -14070,7 +14075,7 @@ namespace std {
 
   - `common_reference_with<reference&&, RRef&&>`, and
 
-  - 
+  - `\libconcept{common_reference_with}<RRef&&, const \exposid{value}&>`
 
   is modeled.
 
@@ -14078,7 +14083,8 @@ namespace std {
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*\]
 
-If `Allocator` is not `void`, it shall meet the requirements.
+If `Allocator` is not `void`, it shall meet the *Cpp17Allocator*
+requirements.
 
 Specializations of `generator` model `view` and `input_range`.
 
@@ -14286,7 +14292,8 @@ Any exception thrown by the initialization of the stored object.
 
 ***Remarks:***
 
-A that calls this function has type `void`\[expr.yield\].
+A *yield-expression* that calls this function has type
+`void`\[expr.yield\].
 
 ``` cpp
 template<class R2, class V2, class Alloc2, class Unused>
@@ -14314,7 +14321,8 @@ effects.
 
 ***Remarks:***
 
-A that calls this function has type `void`\[expr.yield\].
+A *yield-expression* that calls this function has type
+`void`\[expr.yield\].
 
 ``` cpp
 template<ranges::input_range R, class Alloc>
@@ -14337,7 +14345,7 @@ return yield_value(ranges::elements_of(nested(
   allocator_arg, r.allocator, ranges::begin(r.range), ranges::end(r.range))));
 ```
 
-\[*Note 5*: A that calls this function has type
+\[*Note 5*: A *yield-expression* that calls this function has type
 `void`\[expr.yield\]. — *end note*\]
 
 ``` cpp
@@ -14378,7 +14386,8 @@ Let `A` be
 - `allocator<void>` otherwise.
 
 Let `B` be `allocator_traits<A>::template rebind_alloc<U>` where `U` is
-an unspecified type whose size and alignment are both .
+an unspecified type whose size and alignment are both
+\_\_STDCPP_DEFAULT_NEW_ALIGNMENT\_\_.
 
 ***Mandates:***
 

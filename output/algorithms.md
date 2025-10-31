@@ -66,17 +66,18 @@ requirements.
 
 - If an algorithm’s template parameter is named `InputIterator`,
   `InputIterator1`, or `Input\-Iterator2`, the template argument shall
-  meet the requirements [input.iterators].
+  meet the *Cpp17InputIterator* requirements [input.iterators].
 
 - If an algorithm’s template parameter is named `OutputIterator`,
   `OutputIterator1`, or `Output\-Iterator2`, the template argument shall
-  meet the requirements [output.iterators].
+  meet the *Cpp17OutputIterator* requirements [output.iterators].
 
 - If an algorithm’s template parameter is named `ForwardIterator`,
   `ForwardIterator1`, `ForwardItera\-tor2`, or `NoThrowForwardIterator`,
-  the template argument shall meet the requirements [forward.iterators]
-  if it is required to be a mutable iterator, or model
-  `forward_iterator` [iterator.concept.forward] otherwise.
+  the template argument shall meet the *Cpp17ForwardIterator*
+  requirements [forward.iterators] if it is required to be a mutable
+  iterator, or model `forward_iterator` [iterator.concept.forward]
+  otherwise.
 
 - If an algorithm’s template parameter is named
   `NoThrowForwardIterator`, the template argument is also required to
@@ -85,15 +86,16 @@ requirements.
 
 - If an algorithm’s template parameter is named `BidirectionalIterator`,
   `Bidirectional\-Iterator1`, or `BidirectionalIterator2`, the template
-  argument shall meet the requirements [bidirectional.iterators] if it
-  is required to be a mutable iterator, or model
-  `bidirectional_iterator` [iterator.concept.bidir] otherwise.
+  argument shall meet the *Cpp17BidirectionalIterator* requirements
+  [bidirectional.iterators] if it is required to be a mutable iterator,
+  or model `bidirectional_iterator` [iterator.concept.bidir] otherwise.
 
 - If an algorithm’s template parameter is named `RandomAccessIterator`,
   `Random\-AccessIterator1`, or `RandomAccessIterator2`, the template
-  argument shall meet the requirements [random.access.iterators] if it
-  is required to be a mutable iterator, or model
-  `random_access_iterator` [iterator.concept.random.access] otherwise.
+  argument shall meet the *Cpp17RandomAccessIterator* requirements
+  [random.access.iterators] if it is required to be a mutable iterator,
+  or model `random_access_iterator` [iterator.concept.random.access]
+  otherwise.
 
 \[*Note 1*: These requirements do not affect iterator arguments that are
 constrained, for which iterator category and mutability requirements are
@@ -3254,11 +3256,11 @@ template<class InputIterator, class Function>
 
 ***Preconditions:***
 
-`Function` meets the *MoveConstructible* requirements
+`Function` meets the *Cpp17MoveConstructible* requirements
 (\[cpp17.moveconstructible\]).
 
 \[*Note 1*: `Function` need not meet the requirements of
-*CopyConstructible* (\[cpp17.copyconstructible\]). — *end note*\]
+*Cpp17CopyConstructible* (\[cpp17.copyconstructible\]). — *end note*\]
 
 ***Effects:***
 
@@ -3290,7 +3292,7 @@ template<class ExecutionPolicy, class ForwardIterator, class Function>
 
 ***Preconditions:***
 
-`Function` meets the *CopyConstructible* requirements.
+`Function` meets the *Cpp17CopyConstructible* requirements.
 
 ***Effects:***
 
@@ -3361,11 +3363,11 @@ type\[conv.integral,class.conv\].
 
 ***Preconditions:***
 
-`n >= 0` is `true`. `Function` meets the *MoveConstructible*
+`n >= 0` is `true`. `Function` meets the *Cpp17MoveConstructible*
 requirements.
 
 \[*Note 7*: `Function` need not meet the requirements of
-*CopyConstructible*. — *end note*\]
+*Cpp17CopyConstructible*. — *end note*\]
 
 ***Effects:***
 
@@ -3397,7 +3399,7 @@ type\[conv.integral,class.conv\].
 
 ***Preconditions:***
 
-`n >= 0` is `true`. `Function` meets the *CopyConstructible*
+`n >= 0` is `true`. `Function` meets the *Cpp17CopyConstructible*
 requirements.
 
 ***Effects:***
@@ -3990,8 +3992,8 @@ If `last1 - first1 != last2 - first2`, return `false`. Otherwise return
 If
 
 - the types of `first1`, `last1`, `first2`, and `last2` meet the
-  *RandomAccessIterator* requirements\[random.access.iterators\] and
-  `last1 - first1 != last2 - first2` for the overloads in namespace
+  *Cpp17RandomAccessIterator* requirements\[random.access.iterators\]
+  and `last1 - first1 != last2 - first2` for the overloads in namespace
   `std`;
 
 - the types of `first1`, `last1`, `first2`, and `last2` pairwise model
@@ -4266,7 +4268,7 @@ Equivalent to: `return searcher(first, last).first;`
 
 ***Remarks:***
 
-`Searcher` need not meet the *CopyConstructible* requirements.
+`Searcher` need not meet the *Cpp17CopyConstructible* requirements.
 
 ### Starts with <a id="alg.starts.with">[alg.starts.with]</a>
 
@@ -4621,7 +4623,8 @@ do not overlap.
 
 \[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
 performance cost if `iterator_traits<ForwardIterator1>::value_type` is
-not *MoveConstructible* (\[cpp17.moveconstructible\]). — *end note*\]
+not *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]). — *end note*\]
 
 ***Effects:***
 
@@ -5309,7 +5312,7 @@ Let E be
 ***Preconditions:***
 
 For the algorithms in namespace `std`, the type of `*first` meets the
-*MoveAssignable* requirements (\[cpp17.moveassignable\]).
+*Cpp17MoveAssignable* requirements (\[cpp17.moveassignable\]).
 
 ***Effects:***
 
@@ -5408,7 +5411,7 @@ do not overlap.
 
 \[*Note 3*: For the overloads with an `ExecutionPolicy`, there might be
 a performance cost if `iterator_traits<ForwardIterator1>::value_type`
-does not meet the *MoveConstructible* (\[cpp17.moveconstructible\])
+does not meet the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\])
 requirements. — *end note*\]
 
 ***Effects:***
@@ -5469,7 +5472,7 @@ and let E be
 ***Preconditions:***
 
 For the overloads in namespace `std`, `pred` is an equivalence relation
-and the type of `*first` meets the *MoveAssignable* requirements
+and the type of `*first` meets the *Cpp17MoveAssignable* requirements
 (\[cpp17.moveassignable\]).
 
 ***Effects:***
@@ -5558,15 +5561,15 @@ parameter `pred`, and let E be
     type of `InputIterator`. If `InputIterator` models
     `forward_iterator`\[iterator.concept.forward\], then there are no
     additional requirements for `T`. Otherwise, if `OutputIterator`
-    meets the *ForwardIterator* requirements and its value type is the
-    same as `T`, then `T` meets the *CopyAssignable*
+    meets the *Cpp17ForwardIterator* requirements and its value type is
+    the same as `T`, then `T` meets the *Cpp17CopyAssignable*
     (\[cpp17.copyassignable\]) requirements. Otherwise, `T` meets both
-    the *CopyConstructible* (\[cpp17.copyconstructible\]) and
-    *CopyAssignable* requirements.
+    the *Cpp17CopyConstructible* (\[cpp17.copyconstructible\]) and
+    *Cpp17CopyAssignable* requirements.
 
     \[*Note 2*: For the overloads with an `ExecutionPolicy`, there might
     be a performance cost if the value type of `ForwardIterator1` does
-    not meet both the *CopyConstructible* and *CopyAssignable*
+    not meet both the *Cpp17CopyConstructible* and *Cpp17CopyAssignable*
     requirements. — *end note*\]
 
 ***Effects:***
@@ -5606,7 +5609,7 @@ template<bidirectional_range R>
 ***Preconditions:***
 
 For the overloads in namespace `std`, `BidirectionalIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\].
+*Cpp17ValueSwappable* requirements\[swappable.requirements\].
 
 ***Effects:***
 
@@ -5686,9 +5689,10 @@ template<permutable I, sentinel_for<I> S>
 
 \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. For the
 overloads in namespace `std`, `ForwardIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\], and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\], and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -5807,13 +5811,13 @@ For the overload in namespace `std`, `Distance` is an integer type and
 `out` is not in the range \[`first`, `last`). For the overload in
 namespace `std`:
 
-- `PopulationIterator` meets the *InputIterator*
+- `PopulationIterator` meets the *Cpp17InputIterator*
   requirements\[input.iterators\].
 
-- `SampleIterator` meets the *OutputIterator*
+- `SampleIterator` meets the *Cpp17OutputIterator*
   requirements\[output.iterators\].
 
-- `SampleIterator` meets the *RandomAccessIterator*
+- `SampleIterator` meets the *Cpp17RandomAccessIterator*
   requirements\[random.access.iterators\] unless `PopulationIterator`
   models `forward_iterator`\[iterator.concept.forward\].
 
@@ -5870,7 +5874,7 @@ template<random_access_range R, class Gen>
 
 For the overload in namespace `std`:
 
-- `RandomAccessIterator` meets the *ValueSwappable*
+- `RandomAccessIterator` meets the *Cpp17ValueSwappable*
   requirements\[swappable.requirements\].
 
 - The type `remove_reference_t<UniformRandomBitGenerator>` meets the
@@ -5918,7 +5922,7 @@ template<forward_range R>
 ***Preconditions:***
 
 `n >= 0` is `true`. For the overloads in namespace `std`, the type of
-`*first` meets the *MoveAssignable* requirements.
+`*first` meets the *Cpp17MoveAssignable* requirements.
 
 ***Effects:***
 
@@ -5961,9 +5965,9 @@ template<forward_range R>
 ***Preconditions:***
 
 `n >= 0` is `true`. For the overloads in namespace `std`, the type of
-`*first` meets the *MoveAssignable* requirements, and `ForwardIterator`
-meets the *BidirectionalIterator*
-requirements\[bidirectional.iterators\] or the *ValueSwappable*
+`*first` meets the *Cpp17MoveAssignable* requirements, and
+`ForwardIterator` meets the *Cpp17BidirectionalIterator*
+requirements\[bidirectional.iterators\] or the *Cpp17ValueSwappable*
 requirements.
 
 ***Effects:***
@@ -5975,7 +5979,7 @@ from `i = (last - first) - n - 1` and proceeding to `i = 0` if:
 
 - for the overload in namespace `std` without an `ExecutionPolicy`
   template parameter, `ForwardIterator` meets the
-  *BidirectionalIterator* requirements,
+  *Cpp17BidirectionalIterator* requirements,
 
 - for the overloads in namespace `ranges`, `I` models
   `bidirectional_iterator`.
@@ -6101,9 +6105,10 @@ no parameters by those names.
 ***Preconditions:***
 
 For the overloads in namespace `std`, `RandomAccessIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\] and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\] and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -6151,9 +6156,10 @@ no parameters by those names.
 ***Preconditions:***
 
 For the overloads in namespace `std`, `RandomAccessIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\] and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\] and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -6213,9 +6219,10 @@ no parameters by those names.
 
 \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. For the
 overloads in namespace `std`, `RandomAccessIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\] and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\] and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -6310,9 +6317,9 @@ writable\[iterator.requirements.general\] to `result_first`.
 ***Preconditions:***
 
 For the overloads in namespace `std`, `RandomAccessIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\], the type of
-`*result_first` meets the *MoveConstructible*
-(\[cpp17.moveconstructible\]) and *MoveAssignable*
+*Cpp17ValueSwappable* requirements\[swappable.requirements\], the type
+of `*result_first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
 (\[cpp17.moveassignable\]) requirements.
 
 For iterators `a1` and `b1` in \[`first`, `last`), and iterators `x2`
@@ -6486,9 +6493,10 @@ no parameters by those names.
 
 \[`first`, `nth`) and \[`nth`, `last`) are valid ranges. For the
 overloads in namespace `std`, `RandomAccessIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\], and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\], and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -6781,7 +6789,7 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 ***Preconditions:***
 
 For the overloads in namespace `std`, `ForwardIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\].
+*Cpp17ValueSwappable* requirements\[swappable.requirements\].
 
 ***Effects:***
 
@@ -6804,7 +6812,7 @@ Let $N = \texttt{last - first}$:
 
 - For the overload with no `ExecutionPolicy`, exactly N applications of
   the predicate and projection. At most N / 2 swaps if the type of
-  `first` meets the *BidirectionalIterator* requirements for the
+  `first` meets the *Cpp17BidirectionalIterator* requirements for the
   overloads in namespace `std` or models `bidirectional_iterator` for
   the overloads in namespace `ranges`, and at most N swaps otherwise.
 
@@ -6836,9 +6844,10 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 ***Preconditions:***
 
 For the overloads in namespace `std`, `BidirectionalIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\] and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\] and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -6908,7 +6917,7 @@ The input range and output ranges do not overlap.
 
 \[*Note 3*: For the overload with an `ExecutionPolicy`, there might be a
 performance cost if `first`’s value type does not meet the
-*CopyConstructible* requirements. — *end note*\]
+*Cpp17CopyConstructible* requirements. — *end note*\]
 
 ***Effects:***
 
@@ -7078,10 +7087,10 @@ no parameters by those names.
 
 \[`first`, `middle`) and \[`middle`, `last`) are valid ranges sorted
 with respect to `comp` and `proj`. For the overloads in namespace `std`,
-`BidirectionalIterator` meets the *ValueSwappable*
+`BidirectionalIterator` meets the *Cpp17ValueSwappable*
 requirements\[swappable.requirements\] and the type of `*first` meets
-the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\]) and
+*Cpp17MoveAssignable* (\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -7570,9 +7579,9 @@ no parameters by those names.
 
 The range \[`first`, `last - 1`) is a valid heap with respect to `comp`
 and `proj`. For the overloads in namespace `std`, `RandomAccessIterator`
-meets the *ValueSwappable* requirements\[swappable.requirements\] and
-the type of `*first` meets the *MoveConstructible* requirements
-(\[cpp17.moveconstructible\]) and the *MoveAssignable* requirements
+meets the *Cpp17ValueSwappable* requirements\[swappable.requirements\]
+and the type of `*first` meets the *Cpp17MoveConstructible* requirements
+(\[cpp17.moveconstructible\]) and the *Cpp17MoveAssignable* requirements
 (\[cpp17.moveassignable\]).
 
 ***Effects:***
@@ -7617,10 +7626,10 @@ no parameters by those names.
 
 The range \[`first`, `last`) is a valid non-empty heap with respect to
 `comp` and `proj`. For the overloads in namespace `std`,
-`RandomAccessIterator` meets the *ValueSwappable*
+`RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements\[swappable.requirements\] and the type of `*first` meets
-the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\]) and
+*Cpp17MoveAssignable* (\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -7664,9 +7673,10 @@ no parameters by those names.
 ***Preconditions:***
 
 For the overloads in namespace `std`, `RandomAccessIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\] and the type of
-`*first` meets the *MoveConstructible* (\[cpp17.moveconstructible\]) and
-*MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+*Cpp17ValueSwappable* requirements\[swappable.requirements\] and the
+type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
+(\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
 
@@ -7710,9 +7720,9 @@ no parameters by those names.
 
 The range \[`first`, `last`) is a valid heap with respect to `comp` and
 `proj`. For the overloads in namespace `std`, `RandomAccessIterator`
-meets the *ValueSwappable* requirements\[swappable.requirements\] and
-the type of `*first` meets the *MoveConstructible*
-(\[cpp17.moveconstructible\]) and *MoveAssignable*
+meets the *Cpp17ValueSwappable* requirements\[swappable.requirements\]
+and the type of `*first` meets the *Cpp17MoveConstructible*
+(\[cpp17.moveconstructible\]) and *Cpp17MoveAssignable*
 (\[cpp17.moveassignable\]) requirements.
 
 ***Effects:***
@@ -7848,7 +7858,7 @@ template<class T, class Proj = identity,
 
 ***Preconditions:***
 
-For the first form, `T` meets the *LessThanComparable* requirements
+For the first form, `T` meets the *Cpp17LessThanComparable* requirements
 (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
@@ -7884,8 +7894,8 @@ template<input_range R, class Proj = identity,
 ***Preconditions:***
 
 `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
-meets the *CopyConstructible* requirements. For the first form, `T`
-meets the *LessThanComparable* requirements
+meets the *Cpp17CopyConstructible* requirements. For the first form, `T`
+meets the *Cpp17LessThanComparable* requirements
 (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
@@ -7916,7 +7926,7 @@ template<class T, class Proj = identity,
 
 ***Preconditions:***
 
-For the first form, `T` meets the *LessThanComparable* requirements
+For the first form, `T` meets the *Cpp17LessThanComparable* requirements
 (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
@@ -7952,8 +7962,8 @@ template<input_range R, class Proj = identity,
 ***Preconditions:***
 
 `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
-meets the *CopyConstructible* requirements. For the first form, `T`
-meets the *LessThanComparable* requirements
+meets the *Cpp17CopyConstructible* requirements. For the first form, `T`
+meets the *Cpp17LessThanComparable* requirements
 (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
@@ -7985,7 +7995,7 @@ template<class T, class Proj = identity,
 
 ***Preconditions:***
 
-For the first form, `T` meets the *LessThanComparable* requirements
+For the first form, `T` meets the *Cpp17LessThanComparable* requirements
 (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
@@ -8021,8 +8031,8 @@ template<input_range R, class Proj = identity,
 ***Preconditions:***
 
 `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
-meets the *CopyConstructible* requirements. For the first form, type `T`
-meets the *LessThanComparable* requirements
+meets the *Cpp17CopyConstructible* requirements. For the first form,
+type `T` meets the *Cpp17LessThanComparable* requirements
 (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
@@ -8192,8 +8202,8 @@ let `proj` be `identity{}` for the overloads with no parameter `proj`.
 ***Preconditions:***
 
 `bool(invoke(comp, invoke(proj, hi), invoke(proj, lo)))` is `false`. For
-the first form, type `T` meets the *LessThanComparable* requirements
-(\[cpp17.lessthancomparable\]).
+the first form, type `T` meets the *Cpp17LessThanComparable*
+requirements (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
 
@@ -8359,7 +8369,7 @@ parameters by those names.
 ***Preconditions:***
 
 For the overloads in namespace `std`, `BidirectionalIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\].
+*Cpp17ValueSwappable* requirements\[swappable.requirements\].
 
 ***Effects:***
 
@@ -8410,7 +8420,7 @@ parameters by those names.
 ***Preconditions:***
 
 For the overloads in namespace `std`, `BidirectionalIterator` meets the
-*ValueSwappable* requirements\[swappable.requirements\].
+*Cpp17ValueSwappable* requirements\[swappable.requirements\].
 
 ***Effects:***
 
@@ -8699,9 +8709,9 @@ template<class InputIterator, class T, class BinaryOperation>
 
 ***Preconditions:***
 
-`T` meets the *CopyConstructible* (\[cpp17.copyconstructible\]) and
-*CopyAssignable* (\[cpp17.copyassignable\]) requirements. In the range
-\[`first`, `last`\], `binary_op` neither modifies elements nor
+`T` meets the *Cpp17CopyConstructible* (\[cpp17.copyconstructible\]) and
+*Cpp17CopyAssignable* (\[cpp17.copyassignable\]) requirements. In the
+range \[`first`, `last`\], `binary_op` neither modifies elements nor
 invalidates iterators or subranges.
 
 The use of fully closed ranges is intentional.
@@ -8803,7 +8813,7 @@ are convertible to `T`.
 
 ***Preconditions:***
 
-- `T` meets the *MoveConstructible* (\[cpp17.moveconstructible\])
+- `T` meets the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\])
   requirements.
 
 - `binary_op` neither invalidates iterators or subranges, nor modifies
@@ -8839,11 +8849,11 @@ template<class InputIterator1, class InputIterator2, class T,
 
 ***Preconditions:***
 
-`T` meets the *CopyConstructible* (\[cpp17.copyconstructible\]) and
-*CopyAssignable* (\[cpp17.copyassignable\]) requirements. In the ranges
-\[`first1`, `last1`\] and \[`first2`, `first2 + (last1 - first1)`\]
-`binary_op1` and `binary_op2` neither modifies elements nor invalidates
-iterators or subranges.
+`T` meets the *Cpp17CopyConstructible* (\[cpp17.copyconstructible\]) and
+*Cpp17CopyAssignable* (\[cpp17.copyassignable\]) requirements. In the
+ranges \[`first1`, `last1`\] and \[`first2`,
+`first2 + (last1 - first1)`\] `binary_op1` and `binary_op2` neither
+modifies elements nor invalidates iterators or subranges.
 
 The use of fully closed ranges is intentional.
 
@@ -8926,7 +8936,7 @@ are convertible to `T`.
 
 ***Preconditions:***
 
-- `T` meets the *MoveConstructible* (\[cpp17.moveconstructible\])
+- `T` meets the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\])
   requirements.
 
 - Neither `binary_op1` nor `binary_op2` invalidates subranges, nor
@@ -8974,7 +8984,7 @@ are convertible to `T`.
 
 ***Preconditions:***
 
-- `T` meets the *MoveConstructible* (\[cpp17.moveconstructible\])
+- `T` meets the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\])
   requirements.
 
 - Neither `unary_op` nor `binary_op` invalidates subranges, nor modifies
@@ -9106,7 +9116,7 @@ are convertible to `T`.
 
 ***Preconditions:***
 
-- `T` meets the *MoveConstructible* (\[cpp17.moveconstructible\])
+- `T` meets the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\])
   requirements.
 
 - `binary_op` neither invalidates iterators or subranges, nor modifies
@@ -9214,9 +9224,9 @@ convertible to `U`.
 
 ***Preconditions:***
 
-- If `init` is provided, `T` meets the *MoveConstructible*
+- If `init` is provided, `T` meets the *Cpp17MoveConstructible*
   (\[cpp17.moveconstructible\]) requirements; otherwise, `U` meets the
-  *MoveConstructible* requirements.
+  *Cpp17MoveConstructible* requirements.
 
 - `binary_op` neither invalidates iterators or subranges, nor modifies
   elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -9285,7 +9295,7 @@ are convertible to `T`.
 
 ***Preconditions:***
 
-- `T` meets the *MoveConstructible* (\[cpp17.moveconstructible\])
+- `T` meets the *Cpp17MoveConstructible* (\[cpp17.moveconstructible\])
   requirements.
 
 - Neither `unary_op` nor `binary_op` invalidates iterators or subranges,
@@ -9375,9 +9385,9 @@ are convertible to `T`; otherwise,
 
 ***Preconditions:***
 
-- If `init` is provided, `T` meets the *MoveConstructible*
+- If `init` is provided, `T` meets the *Cpp17MoveConstructible*
   (\[cpp17.moveconstructible\]) requirements; otherwise, `U` meets the
-  *MoveConstructible* requirements.
+  *Cpp17MoveConstructible* requirements.
 
 - Neither `unary_op` nor `binary_op` invalidates iterators or subranges,
   nor modifies elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -9461,7 +9471,7 @@ denotes an object of type `minus<>`.
 ***Preconditions:***
 
 - For the overloads with no `ExecutionPolicy`, `T` meets the
-  *MoveAssignable* (\[cpp17.moveassignable\]) requirements.
+  *Cpp17MoveAssignable* (\[cpp17.moveassignable\]) requirements.
 
 - For all overloads, in the ranges \[`first`, `last`\] and \[`result`,
   `result + (last - first)`\], `binary_op` neither modifies elements nor

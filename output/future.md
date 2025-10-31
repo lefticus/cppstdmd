@@ -274,7 +274,7 @@ the following:
 template<class T> bool operator!=(const T& x, const T& y);
 ```
 
-Type `T` is *EqualityComparable* (\[cpp17.equalitycomparable\]).
+Type `T` is *Cpp17EqualityComparable* (\[cpp17.equalitycomparable\]).
 
 ***Returns:***
 
@@ -284,7 +284,7 @@ Type `T` is *EqualityComparable* (\[cpp17.equalitycomparable\]).
 template<class T> bool operator>(const T& x, const T& y);
 ```
 
-Type `T` is *LessThanComparable* (\[cpp17.lessthancomparable\]).
+Type `T` is *Cpp17LessThanComparable* (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
 
@@ -294,7 +294,7 @@ Type `T` is *LessThanComparable* (\[cpp17.lessthancomparable\]).
 template<class T> bool operator<=(const T& x, const T& y);
 ```
 
-Type `T` is *LessThanComparable* (\[cpp17.lessthancomparable\]).
+Type `T` is *Cpp17LessThanComparable* (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
 
@@ -304,7 +304,7 @@ Type `T` is *LessThanComparable* (\[cpp17.lessthancomparable\]).
 template<class T> bool operator>=(const T& x, const T& y);
 ```
 
-Type `T` is *LessThanComparable* (\[cpp17.lessthancomparable\]).
+Type `T` is *Cpp17LessThanComparable* (\[cpp17.lessthancomparable\]).
 
 ***Returns:***
 
@@ -761,7 +761,8 @@ streambuf<char>* setbuf(char* s, streamsize n) override;
 
 ***Effects:***
 
-Behavior is , except that `setbuf(0, 0)` has no effect.
+Behavior is *implementation-defined*, except that `setbuf(0, 0)` has no
+effect.
 
 ### Class `istrstream` <a id="depr.istrstream">[depr.istrstream]</a>
 
@@ -1135,7 +1136,7 @@ template<class T> struct is_pod;
 
 `remove_all_extents_t<T>` shall be a complete type or .
 
-`is_pod<T>` is a *UnaryTypeTrait*\[meta.rqmts\] with a base
+`is_pod<T>` is a *Cpp17UnaryTypeTrait*\[meta.rqmts\] with a base
 characteristic of `true_type` if `T` is a POD type, and `false_type`
 otherwise. A POD class is a class that is both a trivial class and a
 standard-layout class, and has no non-static data members of type
@@ -1219,9 +1220,9 @@ template<class T> struct tuple_size<const volatile T>;
 Let `TS` denote `tuple_size<T>` of the cv-unqualified type `T`. If the
 expression `TS::value` is well-formed when treated as an unevaluated
 operand\[term.unevaluated.operand\], then specializations of each of the
-two templates meet the *TransformationTrait* requirements with a base
-characteristic of `integral_constant<size_t, TS::value>`. Otherwise,
-they have no member `value`.
+two templates meet the *Cpp17TransformationTrait* requirements with a
+base characteristic of `integral_constant<size_t, TS::value>`.
+Otherwise, they have no member `value`.
 
 Access checking is performed as if in a context unrelated to `TS` and
 `T`. Only the validity of the immediate context of the expression is
@@ -1237,8 +1238,8 @@ template<size_t I, class T> struct tuple_element<I, const volatile T>;
 
 Let `TE` denote `tuple_element_t<I, T>` of the cv-unqualified type `T`.
 Then specializations of each of the two templates meet the
-*TransformationTrait* requirements with a member typedef `type` that
-names the following type:
+*Cpp17TransformationTrait* requirements with a member typedef `type`
+that names the following type:
 
 - for the first specialization, `add_volatile_t<TE>`, and
 
@@ -1267,8 +1268,8 @@ template<class T> struct variant_size<const volatile T>;
 ```
 
 Let `VS` denote `variant_size<T>` of the cv-unqualified type `T`. Then
-specializations of each of the two templates meet the *UnaryTypeTrait*
-requirements with a base characteristic of
+specializations of each of the two templates meet the
+*Cpp17UnaryTypeTrait* requirements with a base characteristic of
 `integral_constant<size_t, VS::value>`.
 
 ``` cpp
@@ -1278,8 +1279,8 @@ template<size_t I, class T> struct variant_alternative<I, const volatile T>;
 
 Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
 `T`. Then specializations of each of the two templates meet the
-*TransformationTrait* requirements with a member typedef `type` that
-names the following type:
+*Cpp17TransformationTrait* requirements with a member typedef `type`
+that names the following type:
 
 - for the first specialization, `add_volatile_t<VA::type>`, and
 

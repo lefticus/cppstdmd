@@ -1406,7 +1406,7 @@ void swap(sub_match& s) noexcept(see below);
 
 ***Preconditions:***
 
-`BidirectionalIterator` meets the *Swappable*
+`BidirectionalIterator` meets the *Cpp17Swappable*
 requirements\[swappable.requirements\].
 
 ***Effects:***
@@ -1875,7 +1875,7 @@ template<class OutputIter>
 ***Preconditions:***
 
 `ready() == true` and `OutputIter` meets the requirements for a
-*OutputIterator*\[output.iterators\].
+*Cpp17OutputIterator*\[output.iterators\].
 
 ***Effects:***
 

@@ -5129,10 +5129,11 @@ function parameter is called `argv`, where `argc` shall be the number of
 arguments passed to the program from the environment in which the
 program is run. If `argc` is nonzero these arguments shall be supplied
 in `argv[0]` through `argv[argc-1]` as pointers to the initial
-characters of null-terminated multibyte strings (s) [multibyte.strings]
-and `argv[0]` shall be the pointer to the initial character of a that
-represents the name used to invoke the program or `""`. The value of
-`argc` shall be non-negative. The value of `argv[argc]` shall be 0.
+characters of null-terminated multibyte strings (NTMBSs)
+[multibyte.strings] and `argv[0]` shall be the pointer to the initial
+character of a NTMBS that represents the name used to invoke the program
+or `""`. The value of `argc` shall be non-negative. The value of
+`argv[argc]` shall be 0.
 
 Any further (optional) parameters should be added after `argv`.
 

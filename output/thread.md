@@ -34,7 +34,7 @@ Then the expression `pred()` shall be well-formed and the type
 `bool`, yields `true` if the corresponding test condition is satisfied,
 and `false` otherwise. If a template parameter is named `Clock`, the
 corresponding template argument shall be a type `C` that meets the
-requirements [time.clock.req]; the program is ill-formed if
+*Cpp17Clock* requirements [time.clock.req]; the program is ill-formed if
 `is_clock_v<C>` is `false`.
 
 ### Exceptions <a id="thread.req.exception">[thread.req.exception]</a>
@@ -134,7 +134,7 @@ operating system and hardware. The finest resolution provided by an
 implementation is called the *native resolution*.
 
 Implementation-provided clocks that are used for these functions meet
-the requirements [time.clock.req].
+the *Cpp17TrivialClock* requirements [time.clock.req].
 
 A function that takes an argument which specifies a timeout will throw
 if, during its execution, a clock, time point, or time duration throws
@@ -145,7 +145,7 @@ an exception. Such exceptions are referred to as
 supplied by the implementation as specified in  [time.clock] do not
 throw exceptions. — *end note*\]
 
-### Requirements for  types <a id="thread.req.lockable">[thread.req.lockable]</a>
+### Requirements for *Cpp17Lockable* types <a id="thread.req.lockable">[thread.req.lockable]</a>
 
 #### In general <a id="thread.req.lockable.general">[thread.req.lockable.general]</a>
 
@@ -167,10 +167,12 @@ The standard library templates `unique_lock` [thread.lock.unique],
 `lock_guard` [thread.lock.guard], `lock`, `try_lock`
 [thread.lock.algorithm], and `condition_variable_any`
 [thread.condition.condvarany] all operate on user-supplied lockable
-objects. The requirements, the requirements, the requirements, the
-requirements, and the requirements list the requirements imposed by
-these library types in order to acquire or release ownership of a `lock`
-by a given execution agent.
+objects. The *Cpp17BasicLockable* requirements, the *Cpp17Lockable*
+requirements, the *Cpp17TimedLockable* requirements, the
+*Cpp17SharedLockable* requirements, and the *Cpp17SharedTimedLock\\able*
+requirements list the requirements imposed by these library types in
+order to acquire or release ownership of a `lock` by a given execution
+agent.
 
 \[*Note 6*: The nature of any lock ownership and any synchronization it
 entails are not part of these requirements. — *end note*\]
@@ -188,11 +190,11 @@ A lock on an object `m` is said to be
 nature of any lock ownership is not part of these
 definitions. — *end note*\]
 
-####  requirements <a id="thread.req.lockable.basic">[thread.req.lockable.basic]</a>
+#### *Cpp17BasicLockable* requirements <a id="thread.req.lockable.basic">[thread.req.lockable.basic]</a>
 
-A type `L` meets the requirements if the following expressions are
-well-formed and have the specified semantics (`m` denotes a value of
-type `L`).
+A type `L` meets the *Cpp17BasicLockable* requirements if the following
+expressions are well-formed and have the specified semantics (`m`
+denotes a value of type `L`).
 
 ``` cpp
 m.lock()
@@ -220,11 +222,12 @@ Releases a non-shared lock on `m` held by the current execution agent.
 
 Nothing.
 
-####  requirements <a id="thread.req.lockable.req">[thread.req.lockable.req]</a>
+#### *Cpp17Lockable* requirements <a id="thread.req.lockable.req">[thread.req.lockable.req]</a>
 
-A type `L` meets the requirements if it meets the requirements and the
-following expressions are well-formed and have the specified semantics
-(`m` denotes a value of type `L`).
+A type `L` meets the *Cpp17Lockable* requirements if it meets the
+*Cpp17BasicLockable* requirements and the following expressions are
+well-formed and have the specified semantics (`m` denotes a value of
+type `L`).
 
 ``` cpp
 m.try_lock()
@@ -242,13 +245,14 @@ acquired for the current execution agent.
 
 `true` if the lock was acquired, otherwise `false`.
 
-####  requirements <a id="thread.req.lockable.timed">[thread.req.lockable.timed]</a>
+#### *Cpp17TimedLockable* requirements <a id="thread.req.lockable.timed">[thread.req.lockable.timed]</a>
 
-A type `L` meets the requirements if it meets the requirements and the
-following expressions are well-formed and have the specified semantics
-(`m` denotes a value of type `L`, `rel_time` denotes a value of an
-instantiation of `duration` [time.duration], and `abs_time` denotes a
-value of an instantiation of `time_point` [time.point]).
+A type `L` meets the *Cpp17TimedLockable* requirements if it meets the
+*Cpp17Lockable* requirements and the following expressions are
+well-formed and have the specified semantics (`m` denotes a value of
+type `L`, `rel_time` denotes a value of an instantiation of `duration`
+[time.duration], and `abs_time` denotes a value of an instantiation of
+`time_point` [time.point]).
 
 ``` cpp
 m.try_lock_for(rel_time)
@@ -288,11 +292,12 @@ execution agent.
 
 `true` if the lock was acquired, otherwise `false`.
 
-####  requirements <a id="thread.req.lockable.shared">[thread.req.lockable.shared]</a>
+#### *Cpp17SharedLockable* requirements <a id="thread.req.lockable.shared">[thread.req.lockable.shared]</a>
 
-A type `L` meets the requirements if the following expressions are
-well-formed, have the specified semantics, and the expression
-`m.try_lock_shared()` has type `bool` (`m` denotes a value of type `L`):
+A type `L` meets the *Cpp17SharedLockable* requirements if the following
+expressions are well-formed, have the specified semantics, and the
+expression `m.try_lock_shared()` has type `bool` (`m` denotes a value of
+type `L`):
 
 ``` cpp
 m.lock_shared()
@@ -334,13 +339,14 @@ Releases a shared lock on `m` held by the current execution agent.
 
 Nothing.
 
-####  requirements <a id="thread.req.lockable.shared.timed">[thread.req.lockable.shared.timed]</a>
+#### *Cpp17SharedTimedLockable* requirements <a id="thread.req.lockable.shared.timed">[thread.req.lockable.shared.timed]</a>
 
-A type `L` meets the requirements if it meets the requirements, and the
-following expressions are well-formed, have type `bool`, and have the
-specified semantics (`m` denotes a value of type `L`, `rel_time` denotes
-a value of a specialization of `chrono::duration`, and `abs_time`
-denotes a value of a specialization of `chrono::time_point`).
+A type `L` meets the *Cpp17SharedTimedLockable* requirements if it meets
+the *Cpp17SharedLockable* requirements, and the following expressions
+are well-formed, have type `bool`, and have the specified semantics (`m`
+denotes a value of type `L`, `rel_time` denotes a value of a
+specialization of `chrono::duration`, and `abs_time` denotes a value of
+a specialization of `chrono::time_point`).
 
 ``` cpp
 m.try_lock_shared_for(rel_time)
@@ -3008,8 +3014,9 @@ namespace std {
 }
 ```
 
-The template argument for `T` shall meet the and requirements. The
-program is ill-formed if any of
+The template argument for `T` shall meet the *Cpp17CopyConstructible*
+and *Cpp17CopyAssignable* requirements. The program is ill-formed if any
+of
 
 - `is_trivially_copyable_v<T>`,
 
@@ -3019,7 +3026,7 @@ program is ill-formed if any of
 
 - `is_copy_assignable_v<T>`, or
 
-- 
+- `is_move_assignable_v<T>`
 
 is `false`.
 
@@ -4962,12 +4969,13 @@ The *mutex types* are the standard library types `mutex`,
 out in [thread.mutex.requirements.mutex]. In this description, `m`
 denotes an object of a mutex type.
 
-\[*Note 1*: The mutex types meet the requirements
+\[*Note 1*: The mutex types meet the *Cpp17Lockable* requirements
 [thread.req.lockable.req]. — *end note*\]
 
-The mutex types meet and . If initialization of an object of a mutex
-type fails, an exception of type `system_error` is thrown. The mutex
-types are neither copyable nor movable.
+The mutex types meet *Cpp17DefaultConstructible* and
+*Cpp17Destructible*. If initialization of an object of a mutex type
+fails, an exception of type `system_error` is thrown. The mutex types
+are neither copyable nor movable.
 
 The error conditions for error codes, if any, reported by member
 functions of the mutex types are as follows:
@@ -5196,8 +5204,8 @@ of a mutex type, `rel_time` denotes an object of an instantiation of
 `duration` [time.duration], and `abs_time` denotes an object of an
 instantiation of `time_point` [time.point].
 
-\[*Note 8*: The timed mutex types meet the requirements
-[thread.req.lockable.timed]. — *end note*\]
+\[*Note 8*: The timed mutex types meet the *Cpp17TimedLockable*
+requirements [thread.req.lockable.timed]. — *end note*\]
 
 The expression `m.try_lock_for(rel_time)` is well-formed and has the
 following semantics:
@@ -5381,8 +5389,8 @@ types [thread.mutex.requirements.mutex] and additionally meet the
 requirements set out below. In this description, `m` denotes an object
 of a shared mutex type.
 
-\[*Note 11*: The shared mutex types meet the requirements
-[thread.req.lockable.shared]. — *end note*\]
+\[*Note 11*: The shared mutex types meet the *Cpp17SharedLockable*
+requirements [thread.req.lockable.shared]. — *end note*\]
 
 In addition to the exclusive lock ownership mode specified in 
 [thread.mutex.requirements.mutex], shared mutex types provide a
@@ -5538,7 +5546,8 @@ object of a shared timed mutex type, `rel_time` denotes an object of an
 instantiation of `duration` [time.duration], and `abs_time` denotes an
 object of an instantiation of `time_point` [time.point].
 
-\[*Note 12*: The shared timed mutex types meet the requirements
+\[*Note 12*: The shared timed mutex types meet the
+*Cpp17SharedTimedLockable* requirements
 [thread.req.lockable.shared.timed]. — *end note*\]
 
 The expression `m.try_lock_shared_for(rel_time)` is well-formed and has
@@ -5725,7 +5734,7 @@ lockable object throughout the `lock_guard` object’s lifetime
 [basic.life]. The behavior of a program is undefined if the lockable
 object referenced by `pm` does not exist for the entire lifetime of the
 `lock_guard` object. The supplied `Mutex` type shall meet the
-requirements [thread.req.lockable.basic].
+*Cpp17BasicLockable* requirements [thread.req.lockable.basic].
 
 ``` cpp
 explicit lock_guard(mutex_type& m);
@@ -5790,12 +5799,12 @@ objects referenced by `pm` do not exist for the entire lifetime of the
 
 - If `sizeof...(MutexTypes)` is one, let `Mutex` denote the sole type
   constituting the pack `MutexTypes`. `Mutex` shall meet the
-  requirements [thread.req.lockable.basic]. The member *typedef-name*
-  `mutex_type` denotes the same type as `Mutex`.
+  *Cpp17BasicLockable* requirements [thread.req.lockable.basic]. The
+  member *typedef-name* `mutex_type` denotes the same type as `Mutex`.
 
 - Otherwise, all types in the template parameter pack `MutexTypes` shall
-  meet the requirements [thread.req.lockable.req] and there is no member
-  `mutex_type`.
+  meet the *Cpp17Lockable* requirements [thread.req.lockable.req] and
+  there is no member `mutex_type`.
 
 ``` cpp
 explicit scoped_lock(MutexTypes&... m);
@@ -5895,14 +5904,15 @@ acquisition, to another `unique_lock` object. Objects of type
 program is undefined if the contained pointer `pm` is not null and the
 lockable object pointed to by `pm` does not exist for the entire
 remaining lifetime [basic.life] of the `unique_lock` object. The
-supplied `Mutex` type shall meet the requirements
+supplied `Mutex` type shall meet the *Cpp17BasicLockable* requirements
 [thread.req.lockable.basic].
 
-\[*Note 16*: `unique_lock<Mutex>` meets the requirements. If `Mutex`
-meets the requirements [thread.req.lockable.req], `unique_lock<Mutex>`
-also meets the requirements; if `Mutex` meets the requirements
-[thread.req.lockable.timed], `unique_lock<Mutex>` also meets the
-requirements. — *end note*\]
+\[*Note 16*: `unique_lock<Mutex>` meets the *Cpp17BasicLockable*
+requirements. If `Mutex` meets the *Cpp17Lockable* requirements
+[thread.req.lockable.req], `unique_lock<Mutex>` also meets the
+*Cpp17Lockable* requirements; if `Mutex` meets the *Cpp17TimedLockable*
+requirements [thread.req.lockable.timed], `unique_lock<Mutex>` also
+meets the *Cpp17TimedLockable* requirements. — *end note*\]
 
 ##### Constructors, destructor, and assignment <a id="thread.lock.unique.cons">[thread.lock.unique.cons]</a>
 
@@ -5940,7 +5950,7 @@ unique_lock(mutex_type& m, try_to_lock_t);
 
 ***Preconditions:***
 
-The supplied `Mutex` type meets the *Lockable*
+The supplied `Mutex` type meets the *Cpp17Lockable*
 requirements\[thread.req.lockable.req\].
 
 ***Effects:***
@@ -5975,7 +5985,7 @@ template<class Clock, class Duration>
 
 ***Preconditions:***
 
-The supplied `Mutex` type meets the *TimedLockable*
+The supplied `Mutex` type meets the *Cpp17TimedLockable*
 requirements\[thread.req.lockable.timed\].
 
 ***Effects:***
@@ -5994,7 +6004,7 @@ template<class Rep, class Period>
 
 ***Preconditions:***
 
-The supplied `Mutex` type meets the *TimedLockable*
+The supplied `Mutex` type meets the *Cpp17TimedLockable*
 requirements\[thread.req.lockable.timed\].
 
 ***Effects:***
@@ -6075,7 +6085,7 @@ bool try_lock();
 
 ***Preconditions:***
 
-The supplied `Mutex` meets the *Lockable*
+The supplied `Mutex` meets the *Cpp17Lockable*
 requirements\[thread.req.lockable.req\].
 
 ***Effects:***
@@ -6108,7 +6118,7 @@ template<class Clock, class Duration>
 
 ***Preconditions:***
 
-The supplied `Mutex` type meets the *TimedLockable*
+The supplied `Mutex` type meets the *Cpp17TimedLockable*
 requirements\[thread.req.lockable.timed\].
 
 ***Effects:***
@@ -6142,7 +6152,7 @@ template<class Rep, class Period>
 
 ***Preconditions:***
 
-The supplied `Mutex` type meets the *TimedLockable*
+The supplied `Mutex` type meets the *Cpp17TimedLockable*
 requirements\[thread.req.lockable.timed\].
 
 ***Effects:***
@@ -6308,13 +6318,15 @@ of type `shared_lock` are not copyable but are movable. The behavior of
 a program is undefined if the contained pointer `pm` is not null and the
 lockable object pointed to by `pm` does not exist for the entire
 remaining lifetime [basic.life] of the `shared_lock` object. The
-supplied `Mutex` type shall meet the requirements
+supplied `Mutex` type shall meet the *Cpp17SharedLockable* requirements
 [thread.req.lockable.shared].
 
-\[*Note 18*: `shared_lock<Mutex>` meets the requirements
-[thread.req.lockable.req]. If `Mutex` meets the requirements
+\[*Note 18*: `shared_lock<Mutex>` meets the *Cpp17Lockable* requirements
+[thread.req.lockable.req]. If `Mutex` meets the
+*Cpp17Shared\\TimedLockable* requirements
 [thread.req.lockable.shared.timed], `shared_lock<Mutex>` also meets the
-requirements [thread.req.lockable.timed]. — *end note*\]
+*Cpp17TimedLockable* requirements
+[thread.req.lockable.timed]. — *end note*\]
 
 ##### Constructors, destructor, and assignment <a id="thread.lock.shared.cons">[thread.lock.shared.cons]</a>
 
@@ -6379,7 +6391,7 @@ template<class Clock, class Duration>
 
 ***Preconditions:***
 
-`Mutex` meets the *SharedTimedLockable*
+`Mutex` meets the *Cpp17SharedTimedLockable*
 requirements\[thread.req.lockable.shared.timed\].
 
 ***Effects:***
@@ -6399,7 +6411,7 @@ template<class Rep, class Period>
 
 ***Preconditions:***
 
-`Mutex` meets the *SharedTimedLockable*
+`Mutex` meets the *Cpp17SharedTimedLockable*
 requirements\[thread.req.lockable.shared.timed\].
 
 ***Effects:***
@@ -6503,7 +6515,7 @@ template<class Clock, class Duration>
 
 ***Preconditions:***
 
-`Mutex` meets the *SharedTimedLockable*
+`Mutex` meets the *Cpp17SharedTimedLockable*
 requirements\[thread.req.lockable.shared.timed\].
 
 ***Effects:***
@@ -6537,7 +6549,7 @@ template<class Rep, class Period>
 
 ***Preconditions:***
 
-`Mutex` meets the *SharedTimedLockable*
+`Mutex` meets the *Cpp17SharedTimedLockable*
 requirements\[thread.req.lockable.shared.timed\].
 
 ***Effects:***
@@ -6649,7 +6661,7 @@ template<class L1, class L2, class... L3> int try_lock(L1&, L2&, L3&...);
 
 ***Preconditions:***
 
-Each template parameter type meets the *Lockable* requirements.
+Each template parameter type meets the *Cpp17Lockable* requirements.
 
 \[*Note 19*: The `unique_lock` class template meets these requirements
 when suitably instantiated. — *end note*\]
@@ -6674,7 +6686,7 @@ template<class L1, class L2, class... L3> void lock(L1&, L2&, L3&...);
 
 ***Preconditions:***
 
-Each template parameter type meets the *Lockable* requirements.
+Each template parameter type meets the *Cpp17Lockable* requirements.
 
 \[*Note 20*: The `unique_lock` class template meets these requirements
 when suitably instantiated. — *end note*\]
@@ -7259,8 +7271,8 @@ exception. — *end note*\]
 #### General <a id="thread.condition.condvarany.general">[thread.condition.condvarany.general]</a>
 
 In this subclause [thread.condition.condvarany], template arguments for
-template parameters named `Lock` shall meet the requirements
-[thread.req.lockable.basic].
+template parameters named `Lock` shall meet the *Cpp17Basic\\Lockable*
+requirements [thread.req.lockable.basic].
 
 \[*Note 13*: All of the standard mutex types meet this requirement. If a
 type other than one of the standard mutex types or a `unique_lock`
@@ -8053,18 +8065,21 @@ Concurrent invocations of the member functions of `barrier`, other than
 its destructor, do not introduce data races. The member functions
 `arrive` and `arrive_and_drop` execute atomically.
 
-`CompletionFunction` shall meet the ( [cpp17.moveconstructible]) and (
+`CompletionFunction` shall meet the *Cpp17MoveConstructible* (
+[cpp17.moveconstructible]) and *Cpp17Destructible* (
 [cpp17.destructible]) requirements.
 `is_nothrow_invocable_v<CompletionFunction&>` shall be `true`.
 
 The default value of the `CompletionFunction` template parameter is an
 unspecified type, such that, in addition to satisfying the requirements
-of `CompletionFunction`, it meets the requirements (
-[cpp17.defaultconstructible]) and `completion()` has no effects.
+of `CompletionFunction`, it meets the *Cpp17DefaultConstructible*
+requirements ( [cpp17.defaultconstructible]) and `completion()` has no
+effects.
 
 `barrier::arrival_token` is an unspecified type, such that it meets the
-( [cpp17.moveconstructible]), ( [cpp17.moveassignable]), and (
-[cpp17.destructible]) requirements.
+*Cpp17MoveConstructible* ( [cpp17.moveconstructible]),
+*Cpp17MoveAssignable* ( [cpp17.moveassignable]), and *Cpp17Destructible*
+( [cpp17.destructible]) requirements.
 
 ``` cpp
 static constexpr ptrdiff_t max() noexcept;
@@ -8491,7 +8506,7 @@ namespace std {
 ```
 
 For the primary template, `R` shall be an object type that meets the
-requirements.
+*Cpp17Destructible* requirements.
 
 The implementation provides the template `promise` and two
 specializations, `promise<R&>` and `promise<void>`. These differ only in
@@ -8511,7 +8526,7 @@ template<class R, class Alloc>
 
 ***Preconditions:***
 
-`Alloc` meets the *Allocator*
+`Alloc` meets the *Cpp17Allocator*
 requirements\[allocator.requirements.general\].
 
 ``` cpp
@@ -8776,7 +8791,7 @@ namespace std {
 ```
 
 For the primary template, `R` shall be an object type that meets the
-requirements.
+*Cpp17Destructible* requirements.
 
 The implementation provides the template `future` and two
 specializations, `future<R&>` and `future<void>`. These differ only in
@@ -9009,7 +9024,7 @@ namespace std {
 ```
 
 For the primary template, `R` shall be an object type that meets the
-requirements.
+*Cpp17Destructible* requirements.
 
 The implementation provides the template `shared_future` and two
 specializations, `shared_future<R&>` and `shared_future<void>`. These

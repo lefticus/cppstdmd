@@ -320,13 +320,14 @@ these functions.
 
 In declarations of facets, a template parameter with name
 `InputIterator` or `OutputIterator` indicates the set of all possible
-specializations on parameters that meet the requirements or
-requirements, respectively [iterator.requirements]. A template parameter
-with name `C` represents the set of types containing `char`, `wchar_t`,
-and any other *implementation-defined* character types that meet the
-requirements for a character on which any of the iostream components can
-be instantiated. A template parameter with name `International`
-represents the set of all possible specializations on a bool parameter.
+specializations on parameters that meet the *Cpp17InputIterator*
+requirements or *Cpp17OutputIterator* requirements, respectively
+[iterator.requirements]. A template parameter with name `C` represents
+the set of types containing `char`, `wchar_t`, and any other
+*implementation-defined* character types that meet the requirements for
+a character on which any of the iostream components can be instantiated.
+A template parameter with name `International` represents the set of all
+possible specializations on a bool parameter.
 
 ##### Class `locale::facet` <a id="locale.facet">[locale.facet]</a>
 
@@ -440,7 +441,8 @@ name.
 
 ***Remarks:***
 
-The set of valid string argument values is `"C"`, `""`, and any values.
+The set of valid string argument values is `"C"`, `""`, and any
+*implementation-defined* values.
 
 ``` cpp
 explicit locale(const string& std_name);
@@ -620,7 +622,8 @@ has a name, does
 setlocale(LC_ALL, loc.name().c_str());
 ```
 
-otherwise, the effect on the C locale, if any, is .
+otherwise, the effect on the C locale, if any, is
+*implementation-defined*.
 
 ***Returns:***
 
@@ -990,7 +993,7 @@ Applies the simplest reasonable transformation from a `char` value or
 sequence of `char` values to the corresponding `charT` value or values.
 
 The parameter `c` of `do_widen` is intended to accept values derived
-from s for conversion to the locale’s encoding.
+from *character-literal*s for conversion to the locale’s encoding.
 
 The only characters for which unique transformations are required are
 those in the basic character set\[lex.charset\].
@@ -2836,7 +2839,8 @@ The format depends on the value returned by `date_order()` as shown in
 
 </div>
 
-An implementation may also accept additional formats.
+An implementation may also accept additional *implementation-defined*
+formats.
 
 ***Returns:***
 
@@ -2871,9 +2875,9 @@ iter_type do_get_year(iter_type s, iter_type end, ios_base& str,
 ***Effects:***
 
 Reads characters starting at `s` until it has extracted an unambiguous
-year identifier. It is whether two-digit year numbers are accepted, and
-(if so) what century they are assumed to lie in. Sets the `t->tm_year`
-member accordingly.
+year identifier. It is *implementation-defined* whether two-digit year
+numbers are accepted, and (if so) what century they are assumed to lie
+in. Sets the `t->tm_year` member accordingly.
 
 ***Returns:***
 
@@ -3025,7 +3029,8 @@ output sequence `s`. Formatting is controlled by the parameters `format`
 and `modifier`, interpreted identically as the format specifiers in the
 string argument to the standard library function `strftime()`, except
 that the sequence of characters produced for those specifiers that are
-described as depending on the C locale are instead .
+described as depending on the C locale are instead
+*implementation-defined*.
 
 \[*Note 5*: Interpretation of the `modifier` argument is
 implementation-defined. — *end note*\]
@@ -3642,8 +3647,9 @@ catalog do_open(const string& name, const locale& loc) const;
 ***Returns:***
 
 A value that may be passed to `get()` to retrieve a message from the
-message catalog identified by the string `name` according to an mapping.
-The result can be used until it is passed to `close()`.
+message catalog identified by the string `name` according to an
+*implementation-defined* mapping. The result can be used until it is
+passed to `close()`.
 
 Returns a value less than 0 if no such catalog can be opened.
 
@@ -3663,8 +3669,8 @@ string_type do_get(catalog cat, int set, int msgid, const string_type& dfault) c
 ***Returns:***
 
 A message identified by arguments `set`, `msgid`, and `dfault`,
-according to an mapping. If no such message can be found, returns
-`dfault`.
+according to an *implementation-defined* mapping. If no such message can
+be found, returns `dfault`.
 
 ``` cpp
 void do_close(catalog cat) const;
@@ -3680,7 +3686,7 @@ Releases unspecified resources associated with `cat`.
 
 ***Remarks:***
 
-The limit on such resources, if any, is .
+The limit on such resources, if any, is *implementation-defined*.
 
 #### Class template `messages_byname` <a id="locale.messages.byname">[locale.messages.byname]</a>
 
