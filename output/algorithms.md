@@ -10,6 +10,20 @@ operations, mutating sequence operations, sorting and related
 operations, and algorithms from the ISO C library, as summarized in
 [algorithms.summary].
 
+**Table: Algorithms library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{algorithms.requirements} | Algorithms requirements |  |
+| \ref{algorithms.parallel} | Parallel algorithms |  |
+| \ref{algorithms.results} | Algorithm result types | `<algorithm>` |
+| \ref{alg.nonmodifying} | Non-modifying sequence operations |  |
+| \ref{alg.modifying.operations} | Mutating sequence operations |  |
+| \ref{alg.sorting} | Sorting and related operations |  |
+| \ref{numeric.ops} | Generalized numeric operations | `<numeric>` |
+| \ref{specialized.algorithms} | Specialized `<memory>` algorithms | `<memory>` |
+| \ref{alg.c.library} | C library algorithms | `<cstdlib>` |
+
 ## Algorithms requirements <a id="algorithms.requirements">[algorithms.requirements]</a>
 
 The entities defined in the `std::ranges` namespace in this Clause are
@@ -45,9 +59,9 @@ Throughout this Clause, where the template parameters are not
 constrained, the names of template parameters are used to express type
 requirements.
 
-- If an algorithm’s element specifies that a value pointed to by any
-  iterator passed as an argument is modified, then the type of that
-  argument shall meet the requirements of a mutable iterator
+- If an algorithm’s *Effects* element specifies that a value pointed to
+  by any iterator passed as an argument is modified, then the type of
+  that argument shall meet the requirements of a mutable iterator
   [iterator.requirements].
 
 - If an algorithm’s template parameter is named `InputIterator`,
@@ -6024,10 +6038,10 @@ Under these conditions, it can be shown that
 
 — *end note*\]
 
-A sequence is `comp} and \tcode{proj}` for a comparator and projection
-`comp` and `proj` if for every iterator `i` pointing to the sequence and
-every non-negative integer `n` such that `i + n` is a valid iterator
-pointing to an element of the sequence,
+A sequence is *sorted with respect to a `comp` and `proj`* for a
+comparator and projection `comp` and `proj` if for every iterator `i`
+pointing to the sequence and every non-negative integer `n` such that
+`i + n` is a valid iterator pointing to an element of the sequence,
 
 ``` cpp
 bool(invoke(comp, invoke(proj, *(i + n)), invoke(proj, *i)))
@@ -6035,8 +6049,9 @@ bool(invoke(comp, invoke(proj, *(i + n)), invoke(proj, *i)))
 
 is `false`.
 
-A sequence is `comp}` for a comparator `comp` if it is sorted with
-respect to `comp` and `identity\{\}` (the identity projection).
+A sequence is *sorted with respect to a comparator `comp`* for a
+comparator `comp` if it is sorted with respect to `comp` and
+`identity\{\}` (the identity projection).
 
 A sequence is *partitioned with respect to an expression* `f(e)` if
 there exists an integer `n` such that for all

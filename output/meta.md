@@ -5,6 +5,14 @@
 This Clause describes metaprogramming facilities. These facilities are
 summarized in [meta.summary].
 
+**Table: Metaprogramming library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{intseq} | Integer sequences | `<utility>` |
+| \ref{type.traits} | Type traits | `<type_traits>` |
+| \ref{ratio} | Rational arithmetic | `<ratio>` |
+
 ## Compile-time integer sequences <a id="intseq">[intseq]</a>
 
 ### In general <a id="intseq.general">[intseq.general]</a>

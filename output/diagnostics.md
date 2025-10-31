@@ -10,6 +10,16 @@ of exceptional conditions, documenting program assertions, obtaining
 stacktraces, and a global variable for error number codes, as summarized
 in [diagnostics.summary].
 
+**Table: Diagnostics library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{std.exceptions} | Exception classes | `<stdexcept>` |
+| \ref{assertions} | Assertions | `<cassert>` |
+| \ref{errno} | Error numbers | `<cerrno>` |
+| \ref{syserr} | System error support | `<system_error>` |
+| \ref{stacktrace} | Stacktrace | `<stacktrace>` |
+
 ## Exception classes <a id="std.exceptions">[std.exceptions]</a>
 
 ### General <a id="std.exceptions.general">[std.exceptions.general]</a>

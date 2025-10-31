@@ -311,17 +311,21 @@ appropriate):
 
 - the error conditions for error codes reported by the function.
 
-Whenever the element specifies that the semantics of some function `F`
-are *Equivalent to* some code sequence, then the various elements are
-interpreted as follows. If `F`’s semantics specifies any or elements,
-then those requirements are logically imposed prior to the
-*equivalent-to* semantics. Next, the semantics of the code sequence are
-determined by the , , , , , , , , , , and specified for the function
-invocations contained in the code sequence. The value returned from `F`
-is specified by `F`’s element, or if `F` has no element, a non-`void`
+Whenever the *Effects* element specifies that the semantics of some
+function `F` are *Equivalent to* some code sequence, then the various
+elements are interpreted as follows. If `F`’s semantics specifies any
+*Constraints* or *Mandates* elements, then those requirements are
+logically imposed prior to the *equivalent-to* semantics. Next, the
+semantics of the code sequence are determined by the *Constraints*,
+*Mandates*, *Preconditions*, *Effects*, *Synchronization*,
+*Postconditions*, *Returns*, *Throws*, *Complexity*, *Remarks*, and
+*Error conditions* specified for the function invocations contained in
+the code sequence. The value returned from `F` is specified by `F`’s
+*Returns* element, or if `F` has no *Returns* element, a non-`void`
 return from `F` is specified by the `return` statements [stmt.return] in
-the code sequence. If `F`’s semantics contains a , , or element, then
-that supersedes any occurrences of that element in the code sequence.
+the code sequence. If `F`’s semantics contains a *Throws*,
+*Postconditions*, or *Complexity* element, then that supersedes any
+occurrences of that element in the code sequence.
 
 For non-reserved replacement and handler functions, [support] specifies
 two behaviors for the functions in question: their required and default
@@ -547,13 +551,13 @@ highest-addressed element with defined content has the value zero (the
 *terminating null character*); no other element in the sequence has the
 value zero.
 
-The is the number of elements that precede the terminating null
-character. An has a length of zero.
+The \*length of an \ntbs{}\* is the number of elements that precede the
+terminating null character. An \*empty \ntbs{}\* has a length of zero.
 
-The is the sequence of values of the elements up to and including the
-terminating null character.
+The \*value of an \ntbs{}\* is the sequence of values of the elements up
+to and including the terminating null character.
 
-A is an with static storage duration.
+A \*static \ntbs{}\* is an with static storage duration.
 
 ###### Multibyte strings <a id="multibyte.strings">[multibyte.strings]</a>
 
@@ -565,7 +569,7 @@ A *null-terminated multibyte string*, or , is an that constitutes a
 sequence of valid multibyte characters, beginning and ending in the
 initial shift state.
 
-A is an with static storage duration.
+A \*static \ntmbs{}\* is an with static storage duration.
 
 ##### Customization Point Object types <a id="customization.point.object">[customization.point.object]</a>
 
@@ -887,6 +891,33 @@ A freestanding implementation has an *implementation-defined* set of
 headers. This set shall include at least the headers shown in
 [headers.cpp.fs].
 
+**Table: C++ headers for freestanding implementations**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{support.types} | Common definitions | `<cstddef>` |
+| `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
+| \ref{cstdint.syn} | Integer types | `<cstdint>` |
+| \ref{support.start.term} | Start and termination | `<cstdlib>` |
+| \ref{support.dynamic} | Dynamic memory management | `<new>` |
+| \ref{support.rtti} | Type identification | `<typeinfo>` |
+| \ref{support.srcloc} | Source location | `<source_location>` |
+| \ref{support.exception} | Exception handling | `<exception>` |
+| \ref{support.initlist} | Initializer lists | `<initializer_list>` |
+| \ref{cmp} | Comparisons | `<compare>` |
+| \ref{support.coroutine} | Coroutines support | `<coroutine>` |
+| \ref{support.runtime} | Other runtime support | `<cstdarg>` |
+| \ref{concepts} | Concepts library | `<concepts>` |
+| \ref{type.traits} | Type traits | `<type_traits>` |
+| \ref{bit} | Bit manipulation | `<bit>` |
+| \ref{atomics} | Atomics | `<atomic>` |
+| \ref{utility} | Utility components | `<utility>` |
+| \ref{tuple} | Tuples | `<tuple>` |
+| \ref{memory} | Memory | `<memory>` |
+| \ref{function.objects} | Function objects | `<functional>` |
+| \ref{ratio} | Compile-time rational arithmetic | `<ratio>` |
+| \ref{iterators} | Iterators library | `<iterator>` |
+| \ref{ranges} | Ranges library | `<ranges>` |
 For each of the headers listed in [headers.cpp.fs], a freestanding
 implementation provides at least the freestanding items
 [freestanding.item] declared in the header.

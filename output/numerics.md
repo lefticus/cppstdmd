@@ -10,6 +10,18 @@ random number generation, numeric ( *n*-at-a-time) arrays, generalized
 numeric algorithms, and mathematical constants and functions for
 floating-point types, as summarized in [numerics.summary].
 
+**Table: Numerics library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{numeric.requirements} | Requirements |  |
+| \ref{cfenv} | Floating-point environment | `<cfenv>` |
+| \ref{complex.numbers} | Complex numbers | `<complex>` |
+| \ref{rand} | Random number generation | `<random>` |
+| \ref{numarray} | Numeric arrays | `<valarray>` |
+| `<cmath>`, `<cstdlib>` |
+| \ref{numbers} | Numbers | `<numbers>` |
+
 ## Numeric type requirements <a id="numeric.requirements">[numeric.requirements]</a>
 
 The `complex` and `valarray` components are parameterized by the type of

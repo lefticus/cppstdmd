@@ -11,6 +11,23 @@ iostreams objects, base iostreams classes, stream buffering, stream
 formatting and manipulators, string streams, and file streams, as
 summarized in [iostreams.summary].
 
+**Table: Input/output library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{iostreams.requirements} | Requirements |  |
+| \ref{iostream.forward} | Forward declarations | `<iosfwd>` |
+| \ref{iostream.objects} | Standard iostream objects | `<iostream>` |
+| \ref{iostreams.base} | Iostreams base classes | `<ios>` |
+| \ref{stream.buffers} | Stream buffers | `<streambuf>` |
+| `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
+| \ref{string.streams} | String streams | `<sstream>` |
+| \ref{span.streams} | Span-based streams | `<spanstream>` |
+| \ref{file.streams} | File streams | `<fstream>` |
+| \ref{syncstream} | Synchronized output streams | `<syncstream>` |
+| \ref{filesystems} | File systems | `<filesystem>` |
+| `<cstdio>`, `<cinttypes>` |
+
 ## Iostreams requirements <a id="iostreams.requirements">[iostreams.requirements]</a>
 
 ### Imbue limitations <a id="iostream.limits.imbue">[iostream.limits.imbue]</a>
@@ -9803,6 +9820,8 @@ A *pathname* is a character string that represents the name of a path.
 Pathnames are formatted according to the generic pathname format grammar
 [fs.path.generic] or according to an operating system dependent
 *native pathname format* accepted by the host operating system.
+
+*Pathname resolution*
 
 is the operating system dependent mechanism for resolving a pathname to
 a particular file in a file hierarchy. There may be multiple pathnames

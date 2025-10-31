@@ -8,6 +8,17 @@ The following subclauses describe range and view requirements, and
 components for range primitives and range generators as summarized in
 [range.summary].
 
+**Table: Ranges library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{range.access} | Range access | `<ranges>` |
+| \ref{range.req} | Requirements |  |
+| \ref{range.utility} | Range utilities |  |
+| \ref{range.factories} | Range factories |  |
+| \ref{range.adaptors} | Range adaptors |  |
+| \ref{coro.generator} | Range generators | `<generator>` |
+
 ## Header `<ranges>` synopsis <a id="ranges.syn">[ranges.syn]</a>
 
 ``` cpp

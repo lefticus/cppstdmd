@@ -9,6 +9,17 @@ The following subclauses describe container requirements, and components
 for sequence containers and associative containers, as summarized in
 [containers.summary].
 
+**Table: Containers library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{container.requirements} | Requirements |  |
+| `<list>`, `<vector>` |
+| `<map>`, `<set>` |
+| `<unordered_map>`, `<unordered_set>` |
+| `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>` |
+| `<span>`, `<mdspan>` |
+
 ## Requirements <a id="container.requirements">[container.requirements]</a>
 
 ### Preamble <a id="container.requirements.pre">[container.requirements.pre]</a>

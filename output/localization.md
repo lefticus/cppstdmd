@@ -12,6 +12,14 @@ The following subclauses describe components for locales themselves, the
 standard facets, and facilities from the ISO C library, as summarized in
 [localization.summary].
 
+**Table: Localization library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{locales} | Locales | `<locale>` |
+| \ref{locale.categories} | Standard `locale` categories |  |
+| \ref{c.locales} | C library locales | `<clocale>` |
+
 ## Header `<locale>` synopsis <a id="locale.syn">[locale.syn]</a>
 
 ``` cpp

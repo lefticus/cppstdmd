@@ -8,6 +8,15 @@ The following subclauses describe general memory management facilities,
 smart pointers, memory resources, and scoped allocators, as summarized
 in [mem.summary].
 
+**Table: Memory management library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{memory} | Memory | `<cstdlib>`, `<memory>` |
+| \ref{smartptr} | Smart pointers | `<memory>` |
+| \ref{mem.res} | Memory resources | `<memory_resource>` |
+| \ref{allocator.adaptor} | Scoped allocators | `<scoped_allocator>` |
+
 ## Memory <a id="memory">[memory]</a>
 
 ### In general <a id="memory.general">[memory.general]</a>
@@ -890,6 +899,8 @@ constructed with an allocator where either:
 - the last argument of a constructor has type `Alloc`.
 
 #### Uses-allocator construction <a id="allocator.uses.construction">[allocator.uses.construction]</a>
+
+*Uses-allocator construction*
 
 with allocator `alloc` and constructor arguments `args...` refers to the
 construction of an object of type `T` such that `alloc` is passed to the

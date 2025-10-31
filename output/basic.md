@@ -1459,6 +1459,8 @@ scope of the derived class. Template parameter scopes that are
 associated with one scope in the chain of parents are also considered
 [temp.local]. — *end note*\]
 
+*Unqualified name lookup*
+
 from a program point performs an unqualified search in its immediate
 scope.
 
@@ -1807,6 +1809,8 @@ In
 `m`, and `f`.
 
 — *end example*\]
+
+*Qualified name lookup*
 
 in a class, namespace, or enumeration performs a search of the scope
 associated with it [class.member.lookup] except as specified below.

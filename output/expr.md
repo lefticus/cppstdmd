@@ -6042,9 +6042,10 @@ initializers if the underlying type is fixed [dcl.enum], as array bounds
 [dcl.array], and as non-type template arguments
 [temp.arg]. — *end note*\]
 
-A `bool}` is an expression, contextually converted to `bool` [conv],
-where the converted expression is a constant expression and the
-conversion sequence contains only the conversions above.
+A *contextually converted constant expression of type `bool`* is an
+expression, contextually converted to `bool` [conv], where the converted
+expression is a constant expression and the conversion sequence contains
+only the conversions above.
 
 A *constant expression* is either a glvalue core constant expression
 that refers to an entity that is a permitted result of a constant

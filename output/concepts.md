@@ -12,6 +12,16 @@ The following subclauses describe language-related concepts, comparison
 concepts, object concepts, and callable concepts as summarized in
 [concepts.summary].
 
+**Table: Fundamental concepts library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{concepts.equality} | Equality preservation |  |
+| \ref{concepts.lang} | Language-related concepts | `<concepts>` |
+| \ref{concepts.compare} | Comparison concepts |  |
+| \ref{concepts.object} | Object concepts |  |
+| \ref{concepts.callable} | Callable concepts |  |
+
 ## Equality preservation <a id="concepts.equality">[concepts.equality]</a>
 
 An expression is *equality-preserving* if, given equal inputs, the

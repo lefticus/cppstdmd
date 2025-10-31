@@ -10,6 +10,16 @@ The following subclauses describe iterator requirements, and components
 for iterator primitives, predefined iterators, and stream iterators, as
 summarized in [iterators.summary].
 
+**Table: Iterators library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{iterator.requirements} | Iterator requirements | `<iterator>` |
+| \ref{iterator.primitives} | Iterator primitives |  |
+| \ref{predef.iterators} | Iterator adaptors |  |
+| \ref{stream.iterators} | Stream iterators |  |
+| \ref{iterator.range} | Range access |  |
+
 ## Header `<iterator>` synopsis <a id="iterator.synopsis">[iterator.synopsis]</a>
 
 ``` cpp
@@ -1747,12 +1757,12 @@ for the value type `T` if `X` meets the [iterator.iterators] and (
 [cpp17.equalitycomparable]) requirements and the expressions in
 [inputiterator] are valid and have the indicated semantics.
 
-In [inputiterator], the term `==}` is used in the ordinary mathematical
-sense to denote the set of values over which `==` is (required to be)
-defined. This set can change over time. Each algorithm places additional
-requirements on the domain of `==` for the iterator values it uses.
-These requirements can be inferred from the uses that algorithm makes of
-`==` and `!=`.
+In [inputiterator], the term *the domain of `==`* is used in the
+ordinary mathematical sense to denote the set of values over which `==`
+is (required to be) defined. This set can change over time. Each
+algorithm places additional requirements on the domain of `==` for the
+iterator values it uses. These requirements can be inferred from the
+uses that algorithm makes of `==` and `!=`.
 
 \[*Example 5*: The call `find(a,b,x)` is defined only if the value of
 `a` has the property *p* defined as follows: `b` has property *p* and a

@@ -7,6 +7,20 @@ threads [intro.multithread], perform mutual exclusion, and communicate
 conditions and values between threads, as summarized in
 [thread.summary].
 
+**Table: Concurrency support library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{thread.req} | Requirements |  |
+| \ref{thread.stoptoken} | Stop tokens | `<stop_token>` |
+| \ref{thread.threads} | Threads | `<thread>` |
+| `<atomic>`, `<stdatomic.h>` |
+| `<mutex>`, `<shared_mutex>` |
+| \ref{thread.condition} | Condition variables | `<condition_variable>` |
+| \ref{thread.sema} | Semaphores | `<semaphore>` |
+| \ref{thread.coord} | Coordination types | `<latch>` `<barrier>` |
+| \ref{futures} | Futures | `<future>` |
+
 ## Requirements <a id="thread.req">[thread.req]</a>
 
 ### Template parameter names <a id="thread.req.paramname">[thread.req.paramname]</a>
@@ -2198,6 +2212,8 @@ mapped into a process more than once and by memory that is shared
 between two processes. — *end note*\]
 
 ### Waiting and notifying <a id="atomics.wait">[atomics.wait]</a>
+
+*Atomic waiting operations*
 
 and *atomic notifying operations* provide a mechanism to wait for the
 value of an atomic object to change more efficiently than can be

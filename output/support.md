@@ -14,6 +14,23 @@ dynamic memory management, support for dynamic type identification,
 support for exception processing, support for initializer lists, and
 other runtime support, as summarized in [support.summary].
 
+**Table: Language support library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| `<cstddef>`, `<cstdlib>` |
+| `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
+| \ref{support.arith.types} | Arithmetic types | `<cstdint>`, `<stdfloat>` |
+| \ref{support.start.term} | Start and termination | `<cstdlib>` |
+| \ref{support.dynamic} | Dynamic memory management | `<new>` |
+| \ref{support.rtti} | Type identification | `<typeinfo>` |
+| \ref{support.srcloc} | Source location | `<source_location>` |
+| \ref{support.exception} | Exception handling | `<exception>` |
+| \ref{support.initlist} | Initializer lists | `<initializer_list>` |
+| \ref{cmp} | Comparisons | `<compare>` |
+| \ref{support.coroutine} | Coroutines | `<coroutine>` |
+| `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
+
 ## Common definitions <a id="support.types">[support.types]</a>
 
 ### Header `<cstddef>` synopsis <a id="cstddef.syn">[cstddef.syn]</a>

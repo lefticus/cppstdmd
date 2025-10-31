@@ -6,6 +6,22 @@ This Clause describes the chrono library [time.syn] and various C
 functions [ctime.syn] that provide generally useful time utilities, as
 summarized in [time.summary].
 
+**Table: Time library summary**
+
+| Subclause |  | Header |
+| --- | --- | --- |
+| \ref{time.clock.req} | \oldconcept{Clock} requirements |  |
+| \ref{time.traits} | Time-related traits | `<chrono>` |
+| \ref{time.duration} | Class template `duration` |  |
+| \ref{time.point} | Class template `time_point` |  |
+| \ref{time.clock} | Clocks |  |
+| \ref{time.cal} | Civil calendar |  |
+| \ref{time.hms} | Class template `hh_mm_ss` |  |
+| \ref{time.12} | 12/24 hour functions |  |
+| \ref{time.zone} | Time zones |  |
+| \ref{time.format} | Formatting |  |
+| \ref{time.parse} | Parsing |  |
+| \ref{ctime.syn} | C library time utilities | `<ctime>` |
 Let *STATICALLY-WIDEN*`<charT>("...")` be `"..."` if `charT` is `char`
 and `L"..."` if `charT` is `wchar_t`.
 
