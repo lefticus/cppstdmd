@@ -14,11 +14,11 @@ summarized in [iterators.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{iterator.requirements} | Iterator requirements | `<iterator>` |
-| \ref{iterator.primitives} | Iterator primitives |  |
-| \ref{predef.iterators} | Iterator adaptors |  |
-| \ref{stream.iterators} | Stream iterators |  |
-| \ref{iterator.range} | Range access |  |
+| [iterator.requirements] | Iterator requirements | `<iterator>` |
+| [iterator.primitives] | Iterator primitives |  |
+| [predef.iterators] | Iterator adaptors |  |
+| [stream.iterators] | Stream iterators |  |
+| [iterator.range] | Range access |  |
 
 ## Header `<iterator>` synopsis <a id="iterator.synopsis">[iterator.synopsis]</a>
 

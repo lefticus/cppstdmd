@@ -15,17 +15,17 @@ summarized in [iostreams.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{iostreams.requirements} | Requirements |  |
-| \ref{iostream.forward} | Forward declarations | `<iosfwd>` |
-| \ref{iostream.objects} | Standard iostream objects | `<iostream>` |
-| \ref{iostreams.base} | Iostreams base classes | `<ios>` |
-| \ref{stream.buffers} | Stream buffers | `<streambuf>` |
+| [iostreams.requirements] | Requirements |  |
+| [iostream.forward] | Forward declarations | `<iosfwd>` |
+| [iostream.objects] | Standard iostream objects | `<iostream>` |
+| [iostreams.base] | Iostreams base classes | `<ios>` |
+| [stream.buffers] | Stream buffers | `<streambuf>` |
 | `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
-| \ref{string.streams} | String streams | `<sstream>` |
-| \ref{span.streams} | Span-based streams | `<spanstream>` |
-| \ref{file.streams} | File streams | `<fstream>` |
-| \ref{syncstream} | Synchronized output streams | `<syncstream>` |
-| \ref{filesystems} | File systems | `<filesystem>` |
+| [string.streams] | String streams | `<sstream>` |
+| [span.streams] | Span-based streams | `<spanstream>` |
+| [file.streams] | File streams | `<fstream>` |
+| [syncstream] | Synchronized output streams | `<syncstream>` |
+| [filesystems] | File systems | `<filesystem>` |
 | `<cstdio>`, `<cinttypes>` |
 
 ## Iostreams requirements <a id="iostreams.requirements">[iostreams.requirements]</a>
@@ -11442,7 +11442,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An that incorporates the `what_arg` argument supplied to the
+An NTBS that incorporates the `what_arg` argument supplied to the
 constructor. The exact format is unspecified. Implementations should
 include the `system_error::what()` string and the pathnames of `path1`
 and `path2` in the native format in the returned string.

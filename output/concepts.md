@@ -16,11 +16,11 @@ concepts, object concepts, and callable concepts as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{concepts.equality} | Equality preservation |  |
-| \ref{concepts.lang} | Language-related concepts | `<concepts>` |
-| \ref{concepts.compare} | Comparison concepts |  |
-| \ref{concepts.object} | Object concepts |  |
-| \ref{concepts.callable} | Callable concepts |  |
+| [concepts.equality] | Equality preservation |  |
+| [concepts.lang] | Language-related concepts | `<concepts>` |
+| [concepts.compare] | Comparison concepts |  |
+| [concepts.object] | Object concepts |  |
+| [concepts.callable] | Callable concepts |  |
 
 ## Equality preservation <a id="concepts.equality">[concepts.equality]</a>
 

@@ -9,9 +9,9 @@ summarized in [meta.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{intseq} | Integer sequences | `<utility>` |
-| \ref{type.traits} | Type traits | `<type_traits>` |
-| \ref{ratio} | Rational arithmetic | `<ratio>` |
+| [intseq] | Integer sequences | `<utility>` |
+| [type.traits] | Type traits | `<type_traits>` |
+| [ratio] | Rational arithmetic | `<ratio>` |
 
 ## Compile-time integer sequences <a id="intseq">[intseq]</a>
 

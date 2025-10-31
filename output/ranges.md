@@ -12,12 +12,12 @@ components for range primitives and range generators as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{range.access} | Range access | `<ranges>` |
-| \ref{range.req} | Requirements |  |
-| \ref{range.utility} | Range utilities |  |
-| \ref{range.factories} | Range factories |  |
-| \ref{range.adaptors} | Range adaptors |  |
-| \ref{coro.generator} | Range generators | `<generator>` |
+| [range.access] | Range access | `<ranges>` |
+| [range.req] | Requirements |  |
+| [range.utility] | Range utilities |  |
+| [range.factories] | Range factories |  |
+| [range.adaptors] | Range adaptors |  |
+| [coro.generator] | Range generators | `<generator>` |
 
 ## Header `<ranges>` synopsis <a id="ranges.syn">[ranges.syn]</a>
 

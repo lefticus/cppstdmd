@@ -16,9 +16,9 @@ standard facets, and facilities from the ISO C library, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{locales} | Locales | `<locale>` |
-| \ref{locale.categories} | Standard `locale` categories |  |
-| \ref{c.locales} | C library locales | `<clocale>` |
+| [locales] | Locales | `<locale>` |
+| [locale.categories] | Standard `locale` categories |  |
+| [c.locales] | C library locales | `<clocale>` |
 
 ## Header `<locale>` synopsis <a id="locale.syn">[locale.syn]</a>
 

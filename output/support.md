@@ -20,15 +20,15 @@ other runtime support, as summarized in [support.summary].
 | --- | --- | --- |
 | `<cstddef>`, `<cstdlib>` |
 | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
-| \ref{support.arith.types} | Arithmetic types | `<cstdint>`, `<stdfloat>` |
-| \ref{support.start.term} | Start and termination | `<cstdlib>` |
-| \ref{support.dynamic} | Dynamic memory management | `<new>` |
-| \ref{support.rtti} | Type identification | `<typeinfo>` |
-| \ref{support.srcloc} | Source location | `<source_location>` |
-| \ref{support.exception} | Exception handling | `<exception>` |
-| \ref{support.initlist} | Initializer lists | `<initializer_list>` |
-| \ref{cmp} | Comparisons | `<compare>` |
-| \ref{support.coroutine} | Coroutines | `<coroutine>` |
+| [support.arith.types] | Arithmetic types | `<cstdint>`, `<stdfloat>` |
+| [support.start.term] | Start and termination | `<cstdlib>` |
+| [support.dynamic] | Dynamic memory management | `<new>` |
+| [support.rtti] | Type identification | `<typeinfo>` |
+| [support.srcloc] | Source location | `<source_location>` |
+| [support.exception] | Exception handling | `<exception>` |
+| [support.initlist] | Initializer lists | `<initializer_list>` |
+| [cmp] | Comparisons | `<compare>` |
+| [support.coroutine] | Coroutines | `<coroutine>` |
 | `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
 
 ## Common definitions <a id="support.types">[support.types]</a>
@@ -1362,19 +1362,19 @@ floating-point types that are specified in [basic.extended.fp].
 ``` cpp
 namespace std {
   #if defined(__STDCPP_FLOAT16_T__)
-    using float16_t  = \UNSP{\impldef{type of std::float16_t}};  // see [basic.extended.fp]
+    using float16_t  = implementation-defined;  // see [basic.extended.fp]
   #endif
   #if defined(__STDCPP_FLOAT32_T__)
-    using float32_t  = \UNSP{\impldef{type of std::float32_t}};  // see [basic.extended.fp]
+    using float32_t  = implementation-defined;  // see [basic.extended.fp]
   #endif
   #if defined(__STDCPP_FLOAT64_T__)
-    using float64_t  = \UNSP{\impldef{type of std::float64_t}};  // see [basic.extended.fp]
+    using float64_t  = implementation-defined;  // see [basic.extended.fp]
   #endif
   #if defined(__STDCPP_FLOAT128_T__)
-    using float128_t = \UNSP{\impldef{type of std::float128_t}}; // see [basic.extended.fp]
+    using float128_t = implementation-defined; // see [basic.extended.fp]
   #endif
   #if defined(__STDCPP_BFLOAT16_T__)
-    using bfloat16_t = \UNSP{\impldef{type of std::bfloat16_t}}; // see [basic.extended.fp]
+    using bfloat16_t = implementation-defined; // see [basic.extended.fp]
   #endif
 }
 ```
@@ -2030,7 +2030,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 #### Class `bad_array_new_length` <a id="new.badlength">[new.badlength]</a>
 
@@ -2055,7 +2055,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 #### Type `new_handler` <a id="new.handler">[new.handler]</a>
 
@@ -2290,7 +2290,7 @@ const char* name() const noexcept;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 ***Remarks:***
 
@@ -2320,7 +2320,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 ### Class `bad_typeid` <a id="bad.typeid">[bad.typeid]</a>
 
@@ -2344,7 +2344,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 ## Source location <a id="support.srcloc">[support.srcloc]</a>
 
@@ -2443,7 +2443,7 @@ static consteval source_location current() noexcept;
   presumed to be 1-indexed; however, an implementation is encouraged to
   use 0 when the column number is unknown.  
   `file_name_` & A presumed name of the current source
-  file\[cpp.predefined\] as an .  
+  file\[cpp.predefined\] as an NTBS.  
   `function_name_` & A name of the current function such as in
   \_\_func\_\_\[dcl.fct.def.general\] if any, an empty string
   otherwise.  
@@ -2628,7 +2628,7 @@ virtual const char* what() const noexcept;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 ***Remarks:***
 
@@ -2660,7 +2660,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 ### Abnormal termination <a id="exception.terminate">[exception.terminate]</a>
 

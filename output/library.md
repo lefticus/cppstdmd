@@ -19,23 +19,23 @@ Detailed specifications for each of the components in the library are in
 **Table: Library categories**
 
 | \hdstyle{Clause} | \hdstyle{Category} |
-| \ref{support} | Language support library |
-| \ref{concepts} | Concepts library |
-| \ref{diagnostics} | Diagnostics library |
-| \ref{mem} | Memory management library |
-| \ref{meta} | Metaprogramming library |
-| \ref{utilities} | General utilities library |
-| \ref{strings} | Strings library |
-| \ref{containers} | Containers library |
-| \ref{iterators} | Iterators library |
-| \ref{ranges} | Ranges library |
-| \ref{algorithms} | Algorithms library |
-| \ref{numerics} | Numerics library |
-| \ref{time} | Time library |
-| \ref{localization} | Localization library |
-| \ref{input.output} | Input/output library |
-| \ref{re} | Regular expressions library |
-| \ref{thread} | Concurrency support library |
+| [support] | Language support library |
+| [concepts] | Concepts library |
+| [diagnostics] | Diagnostics library |
+| [mem] | Memory management library |
+| [meta] | Metaprogramming library |
+| [utilities] | General utilities library |
+| [strings] | Strings library |
+| [containers] | Containers library |
+| [iterators] | Iterators library |
+| [ranges] | Ranges library |
+| [algorithms] | Algorithms library |
+| [numerics] | Numerics library |
+| [time] | Time library |
+| [localization] | Localization library |
+| [input.output] | Input/output library |
+| [re] | Regular expressions library |
+| [thread] | Concurrency support library |
 The language support library [support] provides components that are
 required by certain parts of the C++ language, such as memory allocation
 [expr.new,expr.delete] and exception processing [except].
@@ -892,29 +892,29 @@ headers. This set shall include at least the headers shown in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{support.types} | Common definitions | `<cstddef>` |
+| [support.types] | Common definitions | `<cstddef>` |
 | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
-| \ref{cstdint.syn} | Integer types | `<cstdint>` |
-| \ref{support.start.term} | Start and termination | `<cstdlib>` |
-| \ref{support.dynamic} | Dynamic memory management | `<new>` |
-| \ref{support.rtti} | Type identification | `<typeinfo>` |
-| \ref{support.srcloc} | Source location | `<source_location>` |
-| \ref{support.exception} | Exception handling | `<exception>` |
-| \ref{support.initlist} | Initializer lists | `<initializer_list>` |
-| \ref{cmp} | Comparisons | `<compare>` |
-| \ref{support.coroutine} | Coroutines support | `<coroutine>` |
-| \ref{support.runtime} | Other runtime support | `<cstdarg>` |
-| \ref{concepts} | Concepts library | `<concepts>` |
-| \ref{type.traits} | Type traits | `<type_traits>` |
-| \ref{bit} | Bit manipulation | `<bit>` |
-| \ref{atomics} | Atomics | `<atomic>` |
-| \ref{utility} | Utility components | `<utility>` |
-| \ref{tuple} | Tuples | `<tuple>` |
-| \ref{memory} | Memory | `<memory>` |
-| \ref{function.objects} | Function objects | `<functional>` |
-| \ref{ratio} | Compile-time rational arithmetic | `<ratio>` |
-| \ref{iterators} | Iterators library | `<iterator>` |
-| \ref{ranges} | Ranges library | `<ranges>` |
+| [cstdint.syn] | Integer types | `<cstdint>` |
+| [support.start.term] | Start and termination | `<cstdlib>` |
+| [support.dynamic] | Dynamic memory management | `<new>` |
+| [support.rtti] | Type identification | `<typeinfo>` |
+| [support.srcloc] | Source location | `<source_location>` |
+| [support.exception] | Exception handling | `<exception>` |
+| [support.initlist] | Initializer lists | `<initializer_list>` |
+| [cmp] | Comparisons | `<compare>` |
+| [support.coroutine] | Coroutines support | `<coroutine>` |
+| [support.runtime] | Other runtime support | `<cstdarg>` |
+| [concepts] | Concepts library | `<concepts>` |
+| [type.traits] | Type traits | `<type_traits>` |
+| [bit] | Bit manipulation | `<bit>` |
+| [atomics] | Atomics | `<atomic>` |
+| [utility] | Utility components | `<utility>` |
+| [tuple] | Tuples | `<tuple>` |
+| [memory] | Memory | `<memory>` |
+| [function.objects] | Function objects | `<functional>` |
+| [ratio] | Compile-time rational arithmetic | `<ratio>` |
+| [iterators] | Iterators library | `<iterator>` |
+| [ranges] | Ranges library | `<ranges>` |
 For each of the headers listed in [headers.cpp.fs], a freestanding
 implementation provides at least the freestanding items
 [freestanding.item] declared in the header.

@@ -12,10 +12,10 @@ in [mem.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{memory} | Memory | `<cstdlib>`, `<memory>` |
-| \ref{smartptr} | Smart pointers | `<memory>` |
-| \ref{mem.res} | Memory resources | `<memory_resource>` |
-| \ref{allocator.adaptor} | Scoped allocators | `<scoped_allocator>` |
+| [memory] | Memory | `<cstdlib>`, `<memory>` |
+| [smartptr] | Smart pointers | `<memory>` |
+| [mem.res] | Memory resources | `<memory_resource>` |
+| [allocator.adaptor] | Scoped allocators | `<scoped_allocator>` |
 
 ## Memory <a id="memory">[memory]</a>
 
@@ -2590,7 +2590,7 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An *implementation-defined* .
+An *implementation-defined* NTBS.
 
 #### Class template `shared_ptr` <a id="util.smartptr.shared">[util.smartptr.shared]</a>
 

@@ -11,15 +11,15 @@ conditions and values between threads, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{thread.req} | Requirements |  |
-| \ref{thread.stoptoken} | Stop tokens | `<stop_token>` |
-| \ref{thread.threads} | Threads | `<thread>` |
+| [thread.req] | Requirements |  |
+| [thread.stoptoken] | Stop tokens | `<stop_token>` |
+| [thread.threads] | Threads | `<thread>` |
 | `<atomic>`, `<stdatomic.h>` |
 | `<mutex>`, `<shared_mutex>` |
-| \ref{thread.condition} | Condition variables | `<condition_variable>` |
-| \ref{thread.sema} | Semaphores | `<semaphore>` |
-| \ref{thread.coord} | Coordination types | `<latch>` `<barrier>` |
-| \ref{futures} | Futures | `<future>` |
+| [thread.condition] | Condition variables | `<condition_variable>` |
+| [thread.sema] | Semaphores | `<semaphore>` |
+| [thread.coord] | Coordination types | `<latch>` `<barrier>` |
+| [futures] | Futures | `<future>` |
 
 ## Requirements <a id="thread.req">[thread.req]</a>
 
@@ -8374,7 +8374,7 @@ const char* what() const noexcept;
 
 ***Returns:***
 
-An incorporating `code().message()`.
+An NTBS incorporating `code().message()`.
 
 ### Shared state <a id="futures.state">[futures.state]</a>
 

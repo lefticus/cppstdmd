@@ -803,7 +803,7 @@ explicit istrstream(char* s);
 ***Effects:***
 
 Initializes the base class with `istream(&sb)` and `sb` with
-`strstreambuf(s, 0)`. `s` shall designate the first element of an .
+`strstreambuf(s, 0)`. `s` shall designate the first element of an NTBS.
 
 ``` cpp
 istrstream(const char* s, streamsize n);
@@ -889,7 +889,7 @@ constructors:
   The constructor is `strstreambuf(s, n, s)`.
 
 - If `(mode & app) != 0`, then `s` shall designate the first element of
-  an array of `n` elements that contains an whose first element is
+  an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
   `strstreambuf(s, n, s + std::strlen(s))`.
 
@@ -993,7 +993,7 @@ the two constructors:
   an array of `n` elements. The constructor is `strstreambuf(s,n,s)`.
 
 - If `(mode & app) != 0`, then `s` shall designate the first element of
-  an array of `n` elements that contains an whose first element is
+  an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
   `strstreambuf(s,n,s + std::strlen(s))`.
 

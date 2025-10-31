@@ -14,11 +14,11 @@ in [diagnostics.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{std.exceptions} | Exception classes | `<stdexcept>` |
-| \ref{assertions} | Assertions | `<cassert>` |
-| \ref{errno} | Error numbers | `<cerrno>` |
-| \ref{syserr} | System error support | `<system_error>` |
-| \ref{stacktrace} | Stacktrace | `<stacktrace>` |
+| [std.exceptions] | Exception classes | `<stdexcept>` |
+| [assertions] | Assertions | `<cassert>` |
+| [errno] | Error numbers | `<cerrno>` |
+| [syserr] | System error support | `<system_error>` |
+| [stacktrace] | Stacktrace | `<stacktrace>` |
 
 ## Exception classes <a id="std.exceptions">[std.exceptions]</a>
 
@@ -1296,9 +1296,9 @@ const char* what() const noexcept override;
 
 ***Returns:***
 
-An incorporating the arguments supplied in the constructor.
+An NTBS incorporating the arguments supplied in the constructor.
 
-\[*Note 7*: The returned might be the contents of
+\[*Note 7*: The returned NTBS might be the contents of
 `what_arg + ": " + code.message()`. — *end note*\]
 
 ## Stacktrace <a id="stacktrace">[stacktrace]</a>

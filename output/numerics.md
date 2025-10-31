@@ -14,13 +14,13 @@ floating-point types, as summarized in [numerics.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{numeric.requirements} | Requirements |  |
-| \ref{cfenv} | Floating-point environment | `<cfenv>` |
-| \ref{complex.numbers} | Complex numbers | `<complex>` |
-| \ref{rand} | Random number generation | `<random>` |
-| \ref{numarray} | Numeric arrays | `<valarray>` |
+| [numeric.requirements] | Requirements |  |
+| [cfenv] | Floating-point environment | `<cfenv>` |
+| [complex.numbers] | Complex numbers | `<complex>` |
+| [rand] | Random number generation | `<random>` |
+| [numarray] | Numeric arrays | `<valarray>` |
 | `<cmath>`, `<cstdlib>` |
-| \ref{numbers} | Numbers | `<numbers>` |
+| [numbers] | Numbers | `<numbers>` |
 
 ## Numeric type requirements <a id="numeric.requirements">[numeric.requirements]</a>
 

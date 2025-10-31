@@ -18,16 +18,16 @@ summarized in [re.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{re.req} | Requirements |  |
-| \ref{re.const} | Constants | `<regex>` |
-| \ref{re.badexp} | Exception type |  |
-| \ref{re.traits} | Traits |  |
-| \ref{re.regex} | Regular expression template |  |
-| \ref{re.submatch} | Submatches |  |
-| \ref{re.results} | Match results |  |
-| \ref{re.alg} | Algorithms |  |
-| \ref{re.iter} | Iterators |  |
-| \ref{re.grammar} | Grammar |  |
+| [re.req] | Requirements |  |
+| [re.const] | Constants | `<regex>` |
+| [re.badexp] | Exception type |  |
+| [re.traits] | Traits |  |
+| [re.regex] | Regular expression template |  |
+| [re.submatch] | Submatches |  |
+| [re.results] | Match results |  |
+| [re.alg] | Algorithms |  |
+| [re.iter] | Iterators |  |
+| [re.grammar] | Grammar |  |
 
 ## Requirements <a id="re.req">[re.req]</a>
 

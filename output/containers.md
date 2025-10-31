@@ -13,7 +13,7 @@ for sequence containers and associative containers, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{container.requirements} | Requirements |  |
+| [container.requirements] | Requirements |  |
 | `<list>`, `<vector>` |
 | `<map>`, `<set>` |
 | `<unordered_map>`, `<unordered_set>` |

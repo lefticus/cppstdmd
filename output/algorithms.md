@@ -14,15 +14,15 @@ operations, and algorithms from the ISO C library, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| \ref{algorithms.requirements} | Algorithms requirements |  |
-| \ref{algorithms.parallel} | Parallel algorithms |  |
-| \ref{algorithms.results} | Algorithm result types | `<algorithm>` |
-| \ref{alg.nonmodifying} | Non-modifying sequence operations |  |
-| \ref{alg.modifying.operations} | Mutating sequence operations |  |
-| \ref{alg.sorting} | Sorting and related operations |  |
-| \ref{numeric.ops} | Generalized numeric operations | `<numeric>` |
-| \ref{specialized.algorithms} | Specialized `<memory>` algorithms | `<memory>` |
-| \ref{alg.c.library} | C library algorithms | `<cstdlib>` |
+| [algorithms.requirements] | Algorithms requirements |  |
+| [algorithms.parallel] | Parallel algorithms |  |
+| [algorithms.results] | Algorithm result types | `<algorithm>` |
+| [alg.nonmodifying] | Non-modifying sequence operations |  |
+| [alg.modifying.operations] | Mutating sequence operations |  |
+| [alg.sorting] | Sorting and related operations |  |
+| [numeric.ops] | Generalized numeric operations | `<numeric>` |
+| [specialized.algorithms] | Specialized `<memory>` algorithms | `<memory>` |
+| [alg.c.library] | C library algorithms | `<cstdlib>` |
 
 ## Algorithms requirements <a id="algorithms.requirements">[algorithms.requirements]</a>
 
