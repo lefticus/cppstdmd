@@ -1,3 +1,8 @@
+---
+current_file: numerics
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Numerics library <a id="numerics">[numerics]</a>
 
 ## General <a id="numerics.general">[numerics.general]</a>

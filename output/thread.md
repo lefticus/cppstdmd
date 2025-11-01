@@ -1,3 +1,8 @@
+---
+current_file: thread
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Concurrency support library <a id="thread">[thread]</a>
 
 ## General <a id="thread.general">[thread.general]</a>
@@ -9643,7 +9648,7 @@ As if by `x.swap(y)`.
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.moveassignable]: #cpp17.moveassignable
 [cpp17.moveconstructible]: #cpp17.moveconstructible
-[function.objects]: #function.objects
+[function.objects]: utilities.md#function.objects
 [futures]: #futures
 [futures.shared.future]: #futures.shared.future
 [futures.state]: #futures.state

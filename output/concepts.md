@@ -1,3 +1,8 @@
+---
+current_file: concepts
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Concepts library <a id="concepts">[concepts]</a>
 
 ## General <a id="concepts.general">[concepts.general]</a>
@@ -1125,22 +1130,22 @@ Under these conditions, it can be shown that
 [concepts.summary]: #concepts.summary
 [customization.point.object]: library.md#customization.point.object
 [dcl.meaning]: dcl.md#dcl.meaning
-[declval]: #declval
-[defns.const.subexpr]: intro.md#defns.const.subexpr
+[declval]: utilities.md#declval
+[defns.const.subexpr]: #defns.const.subexpr
 [expr.log.and]: expr.md#expr.log.and
 [expr.log.or]: expr.md#expr.log.or
 [expr.prim.id]: expr.md#expr.prim.id
 [expr.unary.op]: expr.md#expr.unary.op
-[forward]: #forward
-[func.def]: #func.def
-[func.invoke]: #func.invoke
-[function.objects]: #function.objects
+[forward]: utilities.md#forward
+[func.def]: utilities.md#func.def
+[func.invoke]: utilities.md#func.invoke
+[function.objects]: utilities.md#function.objects
 [meta.type.synop]: meta.md#meta.type.synop
 [over.best.ics]: over.md#over.best.ics
 [temp.deduct.call]: temp.md#temp.deduct.call
 [temp.deduct.type]: temp.md#temp.deduct.type
 [temp.func.order]: temp.md#temp.func.order
-[template.bitset]: #template.bitset
+[template.bitset]: utilities.md#template.bitset
 [term.literal.type]: #term.literal.type
 
 <!-- Link reference definitions -->

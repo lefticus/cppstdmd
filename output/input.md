@@ -1,3 +1,8 @@
+---
+current_file: input
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Input/output library <a id="input.output">[input.output]</a>
 
 ## General <a id="input.output.general">[input.output.general]</a>

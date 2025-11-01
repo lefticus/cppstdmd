@@ -1,3 +1,8 @@
+---
+current_file: future
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 ## General <a id="depr.general">[depr.general]</a>
 
 This Annex describes features of the C++ Standard that are specified for

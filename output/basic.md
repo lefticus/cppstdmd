@@ -1,3 +1,8 @@
+---
+current_file: basic
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Basics <a id="basic">[basic]</a>
 
 ## Preamble <a id="basic.pre">[basic.pre]</a>
@@ -5479,7 +5484,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [basic.type.qualifier.rel]: #basic.type.qualifier.rel
 [basic.types]: #basic.types
 [basic.types.general]: #basic.types.general
-[bit.cast]: #bit.cast
+[bit.cast]: utilities.md#bit.cast
 [c.malloc]: mem.md#c.malloc
 [class]: class.md#class
 [class.abstract]: class.md#class.abstract
@@ -5554,7 +5559,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [dcl.type.decltype]: dcl.md#dcl.type.decltype
 [dcl.type.elab]: dcl.md#dcl.type.elab
 [dcl.typedef]: dcl.md#dcl.typedef
-[defns.block]: intro.md#defns.block
+[defns.block]: #defns.block
 [depr.local]: future.md#depr.local
 [depr.static.constexpr]: future.md#depr.static.constexpr
 [diff.cpp11.basic]: compatibility.md#diff.cpp11.basic
@@ -5668,7 +5673,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [temp.over]: temp.md#temp.over
 [temp.over.link]: temp.md#temp.over.link
 [temp.param]: temp.md#temp.param
-[temp.point]: #temp.point
+[temp.point]: temp.md#temp.point
 [temp.pre]: temp.md#temp.pre
 [temp.res]: temp.md#temp.res
 [temp.spec]: temp.md#temp.spec

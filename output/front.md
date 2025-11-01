@@ -1,3 +1,8 @@
+---
+current_file: front
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 |                      |                     |
 |:---------------------|:--------------------|
 | **Document Number:** |                     |

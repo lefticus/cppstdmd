@@ -1,3 +1,8 @@
+---
+current_file: meta
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Metaprogramming library <a id="meta">[meta]</a>
 
 ## General <a id="meta.general">[meta.general]</a>
@@ -1444,13 +1449,13 @@ representable by `intmax_t`, the typedef is not defined.
 [dcl.enum]: dcl.md#dcl.enum
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
 [dcl.ref]: dcl.md#dcl.ref
-[declval]: #declval
-[defns.referenceable]: intro.md#defns.referenceable
+[declval]: utilities.md#declval
+[defns.referenceable]: #defns.referenceable
 [expr.alignof]: expr.md#expr.alignof
 [expr.type]: expr.md#expr.type
 [expr.unary.noexcept]: expr.md#expr.unary.noexcept
-[func.require]: #func.require
-[functional.syn]: #functional.syn
+[func.require]: utilities.md#func.require
+[functional.syn]: utilities.md#functional.syn
 [meta.help]: #meta.help
 [meta.rqmts]: #meta.rqmts
 [meta.summary]: #meta.summary
@@ -1472,7 +1477,7 @@ representable by `intmax_t`, the typedef is not defined.
 [term.trivial.type]: #term.trivial.type
 [term.trivially.copyable.type]: #term.trivially.copyable.type
 [term.unevaluated.operand]: #term.unevaluated.operand
-[tuple.apply]: #tuple.apply
+[tuple.apply]: utilities.md#tuple.apply
 [type.traits]: #type.traits
 
 <!-- Link reference definitions -->

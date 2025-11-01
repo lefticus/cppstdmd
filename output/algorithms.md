@@ -1,3 +1,8 @@
+---
+current_file: algorithms
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Algorithms library <a id="algorithms">[algorithms]</a>
 
 ## General <a id="algorithms.general">[algorithms.general]</a>
@@ -10305,11 +10310,11 @@ Any exception thrown by `compar`\[res.on.exception.handling\].
 [bidirectional.iterators]: iterators.md#bidirectional.iterators
 [concept.booleantestable]: concepts.md#concept.booleantestable
 [containers]: containers.md#containers
-[execpol]: #execpol
+[execpol]: utilities.md#execpol
 [expr.call]: expr.md#expr.call
 [expr.new]: expr.md#expr.new
 [forward.iterators]: iterators.md#forward.iterators
-[function.objects]: #function.objects
+[function.objects]: utilities.md#function.objects
 [input.iterators]: iterators.md#input.iterators
 [intro.execution]: basic.md#intro.execution
 [intro.progress]: basic.md#intro.progress
@@ -10322,7 +10327,7 @@ Any exception thrown by `compar`\[res.on.exception.handling\].
 [output.iterators]: iterators.md#output.iterators
 [random.access.iterators]: iterators.md#random.access.iterators
 [range.range]: ranges.md#range.range
-[refwrap]: #refwrap
+[refwrap]: utilities.md#refwrap
 [sort]: #sort
 [specialized.algorithms]: #specialized.algorithms
 [temp.func.order]: temp.md#temp.func.order

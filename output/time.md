@@ -1,3 +1,8 @@
+---
+current_file: time
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Time library <a id="time">[time]</a>
 
 ## General <a id="time.general">[time.general]</a>
@@ -8956,9 +8961,9 @@ required to avoid data races [res.on.data.races].
 [ctime.syn]: #ctime.syn
 [dcl.constexpr]: dcl.md#dcl.constexpr
 [filesystems]: input.md#filesystems
-[format.formatter]: #format.formatter
-[format.string]: #format.string
-[formatter.requirements]: #formatter.requirements
+[format.formatter]: utilities.md#format.formatter
+[format.string]: utilities.md#format.string
+[formatter.requirements]: utilities.md#formatter.requirements
 [intro.multithread]: basic.md#intro.multithread
 [lex.charset]: lex.md#lex.charset
 [meta.rqmts]: meta.md#meta.rqmts

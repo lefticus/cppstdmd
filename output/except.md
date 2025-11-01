@@ -1,3 +1,8 @@
+---
+current_file: except
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Exception handling <a id="except">[except]</a>
 
 ## Preamble <a id="except.pre">[except.pre]</a>
@@ -856,9 +861,9 @@ current thread.
 [except.throw]: #except.throw
 [except.uncaught]: #except.uncaught
 [exception.terminate]: support.md#exception.terminate
-[execpol.par]: #execpol.par
-[execpol.parunseq]: #execpol.parunseq
-[execpol.seq]: #execpol.seq
+[execpol.par]: utilities.md#execpol.par
+[execpol.parunseq]: utilities.md#execpol.parunseq
+[execpol.seq]: utilities.md#execpol.seq
 [expr.call]: expr.md#expr.call
 [expr.const]: expr.md#expr.const
 [expr.dynamic.cast]: expr.md#expr.dynamic.cast

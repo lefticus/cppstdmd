@@ -1,3 +1,8 @@
+---
+current_file: module
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Modules <a id="module">[module]</a>
 
 ## Module units and purviews <a id="module.unit">[module.unit]</a>
@@ -652,5 +657,5 @@ cannot be found by name lookup. — *end note*\]
 [special]: class.md#special
 [temp.decls.general]: temp.md#temp.decls.general
 [temp.dep]: temp.md#temp.dep
-[temp.point]: #temp.point
+[temp.point]: temp.md#temp.point
 [temp.pre]: temp.md#temp.pre

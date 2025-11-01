@@ -1,3 +1,8 @@
+---
+current_file: library
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Library introduction <a id="library">[library]</a>
 
 ## General <a id="library.general">[library.general]</a>
@@ -2618,7 +2623,7 @@ such an assignment places the object in a valid but unspecified state.
 [dcl.link]: dcl.md#dcl.link
 [dcl.pre]: dcl.md#dcl.pre
 [dcl.typedef]: dcl.md#dcl.typedef
-[defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
+[defns.nonconst.libcall]: #defns.nonconst.libcall
 [depr]: #depr
 [derivation]: #derivation
 [derived.classes]: #derived.classes
@@ -2629,7 +2634,7 @@ such an assignment places the object in a valid but unspecified state.
 [expr.new]: expr.md#expr.new
 [expr.unary.op]: expr.md#expr.unary.op
 [freestanding.item]: #freestanding.item
-[function.objects]: #function.objects
+[function.objects]: utilities.md#function.objects
 [functions.within.classes]: #functions.within.classes
 [global.functions]: #global.functions
 [handler.functions]: #handler.functions
@@ -2705,7 +2710,7 @@ such an assignment places the object in a valid but unspecified state.
 [temp.concept]: temp.md#temp.concept
 [temp.constr.decl]: temp.md#temp.constr.decl
 [temp.deduct.call]: temp.md#temp.deduct.call
-[template.bitset]: #template.bitset
+[template.bitset]: utilities.md#template.bitset
 [term.incomplete.type]: #term.incomplete.type
 [term.object.type]: #term.object.type
 [terminate.handler]: support.md#terminate.handler
@@ -2715,45 +2720,45 @@ such an assignment places the object in a valid but unspecified state.
 [using]: #using
 [using.headers]: #using.headers
 [using.linkage]: #using.linkage
-[utilities]: #utilities
+[utilities]: utilities.md#utilities
 [utility.arg.requirements]: #utility.arg.requirements
 [utility.requirements]: #utility.requirements
 
 <!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[atomics]: thread.md#atomics
+[algorithms]: #algorithms
+[atomics]: #atomics
 [bit]: #bit
-[cmp]: support.md#cmp
-[concepts]: concepts.md#concepts
-[containers]: containers.md#containers
-[cstdint.syn]: support.md#cstdint.syn
-[diagnostics]: diagnostics.md#diagnostics
+[cmp]: #cmp
+[concepts]: #concepts
+[containers]: #containers
+[cstdint.syn]: #cstdint.syn
+[diagnostics]: #diagnostics
 [function.objects]: #function.objects
-[input.output]: input.md#input.output
-[iterators]: iterators.md#iterators
-[localization]: localization.md#localization
-[mem]: mem.md#mem
-[memory]: mem.md#memory
-[meta]: meta.md#meta
-[numerics]: numerics.md#numerics
-[ranges]: ranges.md#ranges
-[ratio]: meta.md#ratio
-[re]: re.md#re
-[strings]: strings.md#strings
-[support]: support.md#support
-[support.coroutine]: support.md#support.coroutine
-[support.dynamic]: support.md#support.dynamic
-[support.exception]: support.md#support.exception
-[support.initlist]: support.md#support.initlist
-[support.limits]: support.md#support.limits
-[support.rtti]: support.md#support.rtti
-[support.runtime]: support.md#support.runtime
-[support.srcloc]: support.md#support.srcloc
-[support.start.term]: support.md#support.start.term
-[support.types]: support.md#support.types
-[thread]: thread.md#thread
-[time]: time.md#time
+[input.output]: #input.output
+[iterators]: #iterators
+[localization]: #localization
+[mem]: #mem
+[memory]: #memory
+[meta]: #meta
+[numerics]: #numerics
+[ranges]: #ranges
+[ratio]: #ratio
+[re]: #re
+[strings]: #strings
+[support]: #support
+[support.coroutine]: #support.coroutine
+[support.dynamic]: #support.dynamic
+[support.exception]: #support.exception
+[support.initlist]: #support.initlist
+[support.limits]: #support.limits
+[support.rtti]: #support.rtti
+[support.runtime]: #support.runtime
+[support.srcloc]: #support.srcloc
+[support.start.term]: #support.start.term
+[support.types]: #support.types
+[thread]: #thread
+[time]: #time
 [tuple]: #tuple
-[type.traits]: meta.md#type.traits
+[type.traits]: #type.traits
 [utilities]: #utilities
 [utility]: #utility

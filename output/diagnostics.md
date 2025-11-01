@@ -1,3 +1,8 @@
+---
+current_file: diagnostics
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Diagnostics library <a id="diagnostics">[diagnostics]</a>
 
 ## General <a id="diagnostics.general">[diagnostics.general]</a>
@@ -1918,7 +1923,7 @@ The specializations are enabled\[unord.hash\].
 [container.alloc.reqmts]: containers.md#container.alloc.reqmts
 [container.rev.reqmts]: containers.md#container.rev.reqmts
 [conv]: expr.md#conv
-[defns.const.subexpr]: intro.md#defns.const.subexpr
+[defns.const.subexpr]: #defns.const.subexpr
 [diagnostics.summary]: #diagnostics.summary
 [errno]: #errno
 [intro.execution]: basic.md#intro.execution

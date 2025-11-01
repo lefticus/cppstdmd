@@ -1,3 +1,8 @@
+---
+current_file: class
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Classes <a id="class">[class]</a>
 
 ## Preamble <a id="class.pre">[class.pre]</a>

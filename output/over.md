@@ -1,3 +1,8 @@
+---
+current_file: over
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Overloading <a id="over">[over]</a>
 
 ## Preamble <a id="over.pre">[over.pre]</a>
@@ -3195,8 +3200,8 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [usrlit.suffix]: library.md#usrlit.suffix
 
 <!-- Link reference definitions -->
-[conv.integral]: expr.md#conv.integral
-[conv.prom]: expr.md#conv.prom
+[conv.integral]: #conv.integral
+[conv.prom]: #conv.prom
 [over.ass]: #over.ass
 [over.ref]: #over.ref
 [over.sub]: #over.sub

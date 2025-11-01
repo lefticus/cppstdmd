@@ -1,3 +1,8 @@
+---
+current_file: strings
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Strings library <a id="strings">[strings]</a>
 
 ## General <a id="strings.general">[strings.general]</a>
@@ -4609,7 +4614,7 @@ pointer argument for `s`.
 [char.traits.typedefs]: #char.traits.typedefs
 [container.reqmts]: containers.md#container.reqmts
 [container.requirements.general]: containers.md#container.requirements.general
-[defns.character.container]: intro.md#defns.character.container
+[defns.character.container]: #defns.character.container
 [input.output]: input.md#input.output
 [intro.object]: basic.md#intro.object
 [iostreams.limits.pos]: input.md#iostreams.limits.pos
@@ -4627,4 +4632,4 @@ pointer argument for `s`.
 [support.signal]: support.md#support.signal
 [term.standard.layout.type]: #term.standard.layout.type
 [term.trivially.copyable.type]: #term.trivially.copyable.type
-[utility.swap]: #utility.swap
+[utility.swap]: utilities.md#utility.swap

@@ -1,3 +1,8 @@
+---
+current_file: compatibility
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 ## C++ and ISO C++20 <a id="diff.cpp20">[diff.cpp20]</a>
 
 ### General <a id="diff.cpp20.general">[diff.cpp20.general]</a>
@@ -2220,4 +2225,4 @@ restricted in C++. Subclause [c.malloc] describes the changes.
 [temp.concept]: temp.md#temp.concept
 [temp.pre]: temp.md#temp.pre
 [thread]: thread.md#thread
-[utilities]: #utilities
+[utilities]: utilities.md#utilities

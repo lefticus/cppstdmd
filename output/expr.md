@@ -1,3 +1,8 @@
+---
+current_file: expr
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Expressions <a id="expr">[expr]</a>
 
 ## Preamble <a id="expr.pre">[expr.pre]</a>
@@ -6386,8 +6391,8 @@ A function or variable is *needed for constant evaluation* if it is:
 [dcl.type.decltype]: dcl.md#dcl.type.decltype
 [dcl.type.elab]: dcl.md#dcl.type.elab
 [dcl.type.simple]: dcl.md#dcl.type.simple
-[defns.access]: intro.md#defns.access
-[defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
+[defns.access]: #defns.access
+[defns.nonconst.libcall]: #defns.nonconst.libcall
 [depr.arith.conv.enum]: future.md#depr.arith.conv.enum
 [depr.array.comp]: future.md#depr.array.comp
 [depr.capture.this]: future.md#depr.capture.this
@@ -6446,7 +6451,7 @@ A function or variable is *needed for constant evaluation* if it is:
 [expr.unary.noexcept]: #expr.unary.noexcept
 [expr.unary.op]: #expr.unary.op
 [expr.yield]: #expr.yield
-[function.objects]: #function.objects
+[function.objects]: utilities.md#function.objects
 [implimits]: #implimits
 [intro]: intro.md#intro
 [intro.execution]: basic.md#intro.execution

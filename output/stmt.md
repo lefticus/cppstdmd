@@ -1,3 +1,8 @@
+---
+current_file: stmt
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Statements <a id="stmt.stmt">[stmt.stmt]</a>
 
 ## Preamble <a id="stmt.pre">[stmt.pre]</a>

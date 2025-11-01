@@ -1,3 +1,8 @@
+---
+current_file: iterators
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Iterators library <a id="iterators">[iterators]</a>
 
 ## General <a id="iterators.general">[iterators.general]</a>
@@ -6002,11 +6007,11 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [cpp17.copyassignable]: #cpp17.copyassignable
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [customization.point.object]: library.md#customization.point.object
-[defns.projection]: intro.md#defns.projection
+[defns.projection]: #defns.projection
 [expr.call]: expr.md#expr.call
 [forward.iterators]: #forward.iterators
 [forwarditerator]: #forwarditerator
-[func.def]: #func.def
+[func.def]: utilities.md#func.def
 [input.iterators]: #input.iterators
 [inputiterator]: #inputiterator
 [iostream.format]: input.md#iostream.format
@@ -6035,7 +6040,7 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [outputiterator]: #outputiterator
 [random.access.iterators]: #random.access.iterators
 [randomaccessiterator]: #randomaccessiterator
-[range.cmp]: #range.cmp
+[range.cmp]: utilities.md#range.cmp
 [range.iter.ops]: #range.iter.ops
 [ranges]: ranges.md#ranges
 [reverse.iter.cmp]: #reverse.iter.cmp

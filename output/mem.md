@@ -1,3 +1,8 @@
+---
+current_file: mem
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Memory management library <a id="mem">[mem]</a>
 
 ## General <a id="mem.general">[mem.general]</a>
@@ -5694,7 +5699,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [allocator.requirements.general]: library.md#allocator.requirements.general
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.nullablepointer]: #cpp17.nullablepointer
-[function.objects]: #function.objects
+[function.objects]: utilities.md#function.objects
 [intro.multithread]: basic.md#intro.multithread
 [intro.races]: basic.md#intro.races
 [mem.summary]: #mem.summary
@@ -5706,7 +5711,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [specialized.algorithms]: algorithms.md#specialized.algorithms
 [stmt.dcl]: stmt.md#stmt.dcl
 [temp.deduct]: temp.md#temp.deduct
-[tuple]: #tuple
+[tuple]: utilities.md#tuple
 [unique.ptr]: #unique.ptr
 [util.smartptr.enab]: #util.smartptr.enab
 [util.smartptr.shared.mod]: #util.smartptr.shared.mod

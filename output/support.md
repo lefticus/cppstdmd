@@ -1,3 +1,8 @@
+---
+current_file: support
+label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+---
+
 # Language support library <a id="support">[support]</a>
 
 ## General <a id="support.general">[support.general]</a>
@@ -4565,7 +4570,7 @@ names within the namespace `std`. — *end example*\]
 [cstdlib.syn]: #cstdlib.syn
 [customization.point.object]: library.md#customization.point.object
 [dcl.init.list]: dcl.md#dcl.init.list
-[defns.expression.equivalent]: intro.md#defns.expression.equivalent
+[defns.expression.equivalent]: #defns.expression.equivalent
 [except.spec]: except.md#except.spec
 [expr.add]: expr.md#expr.add
 [expr.await]: expr.md#expr.await
