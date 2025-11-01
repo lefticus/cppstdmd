@@ -6830,7 +6830,7 @@ namespace std {
 The class template `basic_stringstream<charT, traits>` supports reading
 and writing from objects of class
 `basic_string<charT, traits, Allocator>`. It uses a
-`basic_stringbuf<charT, traits, Alloca\-tor>` object to control the
+`basic_stringbuf<charT, traits, Allocator>` object to control the
 associated sequence. For the sake of exposition, the maintained data is
 presented here as
 

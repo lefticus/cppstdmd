@@ -4814,9 +4814,9 @@ object with a pair of pointers.
 — *end example*\]
 
 The array has the same lifetime as any other temporary object
-[class.temporary], except that initializing an `initiali\-zer_list`
-object from the array extends the lifetime of the array exactly like
-binding a reference to a temporary.
+[class.temporary], except that initializing an `initializer_list` object
+from the array extends the lifetime of the array exactly like binding a
+reference to a temporary.
 
 \[*Example 16*:
 

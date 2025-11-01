@@ -1003,8 +1003,8 @@ void reverse(BI first, BI last) {
 #### `ranges::iter_move` <a id="iterator.cust.move">[iterator.cust.move]</a>
 
 The name `ranges::iter_move` denotes a customization point object
-[customization.point.object]. The expression `ranges::\-iter_move(E)`
-for a subexpression `E` is expression-equivalent to:
+[customization.point.object]. The expression `ranges::iter_move(E)` for
+a subexpression `E` is expression-equivalent to:
 
 - `iter_move(E)`, if `E` has class or enumeration type and
   `iter_move(E)` is a well-formed expression when treated as an
@@ -1159,7 +1159,7 @@ template<class In>
 
 ``` cpp
 template<class In>
-  concept \deflibconcept{indirectly_readable} =
+  concept indirectly_readable =
     indirectly-readable-impl<remove_cvref_t<In>>;
 ```
 
@@ -1173,7 +1173,7 @@ a value into an iterator’s referenced object.
 
 ``` cpp
 template<class Out, class T>
-  concept \deflibconcept{indirectly_writable} =
+  concept indirectly_writable =
     requires(Out&& o, T&& t) {
       *o = std::forward<T>(t);  // not required to be equality-preserving
       *std::forward<Out>(o) = std::forward<T>(t);   // not required to be equality-preserving
@@ -1225,7 +1225,7 @@ template<class T>
   constexpr bool is-signed-integer-like = see below; \itcorr[-2]           // exposition only
 
 template<class I>
-  concept \deflibconcept{weakly_incrementable} =
+  concept weakly_incrementable =
     movable<I> &&
     requires(I i) {
       typename iter_difference_t<I>;
@@ -1376,7 +1376,7 @@ expressions in the definition of `weakly_incrementable`. — *end note*\]
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{incrementable} =
+  concept incrementable =
     regular<I> &&
     weakly_incrementable<I> &&
     requires(I i) {
@@ -1409,7 +1409,7 @@ to provide a richer set of iterator movements
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{input_or_output_iterator} =
+  concept input_or_output_iterator =
     requires(I i) {
       { *i } -> can-reference;
     } &&
@@ -1428,7 +1428,7 @@ denote a range.
 
 ``` cpp
 template<class S, class I>
-  concept \deflibconcept{sentinel_for} =
+  concept sentinel_for =
     semiregular<S> &&
     input_or_output_iterator<I> &&
     weakly-equality-comparable-with<S, I>;      // see [concept.equalitycomparable]
@@ -1458,7 +1458,7 @@ distance between them in constant time.
 
 ``` cpp
 template<class S, class I>
-  concept \deflibconcept{sized_sentinel_for} =
+  concept sized_sentinel_for =
     sentinel_for<S, I> &&
     !disable_sized_sentinel_for<remove_cv_t<S>, remove_cv_t<I>> &&
     requires(const I& i, const S& s) {
@@ -1514,7 +1514,7 @@ sentinels. — *end note*\]
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{input_iterator} =
+  concept input_iterator =
     input_or_output_iterator<I> &&
     indirectly_readable<I> &&
     requires { typename ITER_CONCEPT(I); } &&
@@ -1533,7 +1533,7 @@ post-incremented.
 
 ``` cpp
 template<class I, class T>
-  concept \deflibconcept{output_iterator} =
+  concept output_iterator =
     input_or_output_iterator<I> &&
     indirectly_writable<I, T> &&
     requires(I i, T&& t) {
@@ -1561,7 +1561,7 @@ and the multi-pass guarantee, specified below.
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{forward_iterator} =
+  concept forward_iterator =
     input_iterator<I> &&
     derived_from<ITER_CONCEPT(I), forward_iterator_tag> &&
     incrementable<I> &&
@@ -1600,7 +1600,7 @@ iterator backward as well as forward.
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{bidirectional_iterator} =
+  concept bidirectional_iterator =
     forward_iterator<I> &&
     derived_from<ITER_CONCEPT(I), bidirectional_iterator_tag> &&
     requires(I i) {
@@ -1639,7 +1639,7 @@ array notation via subscripting.
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{random_access_iterator} =
+  concept random_access_iterator =
     bidirectional_iterator<I> &&
     derived_from<ITER_CONCEPT(I), random_access_iterator_tag> &&
     totally_ordered<I> &&
@@ -1693,7 +1693,7 @@ elements are stored contiguously in memory.
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{contiguous_iterator} =
+  concept contiguous_iterator =
     random_access_iterator<I> &&
     derived_from<ITER_CONCEPT(I), contiguous_iterator_tag> &&
     is_lvalue_reference_v<iter_reference_t<I>> &&
@@ -1894,7 +1894,7 @@ that accept callable objects [func.def] as arguments.
 ``` cpp
 namespace std {
   template<class F, class I>
-    concept \deflibconcept{indirectly_unary_invocable} =
+    concept indirectly_unary_invocable =
       indirectly_readable<I> &&
       copy_constructible<F> &&
       invocable<F&, exposition onlyidnc{indirect-value-t}<I>> &&
@@ -1905,7 +1905,7 @@ namespace std {
         invoke_result_t<F&, iter_reference_t<I>>>;
 
   template<class F, class I>
-    concept \deflibconcept{indirectly_regular_unary_invocable} =
+    concept indirectly_regular_unary_invocable =
       indirectly_readable<I> &&
       copy_constructible<F> &&
       regular_invocable<F&, exposition onlyidnc{indirect-value-t}<I>> &&
@@ -1916,7 +1916,7 @@ namespace std {
         invoke_result_t<F&, iter_reference_t<I>>>;
 
   template<class F, class I>
-    concept \deflibconcept{indirect_unary_predicate} =
+    concept indirect_unary_predicate =
       indirectly_readable<I> &&
       copy_constructible<F> &&
       predicate<F&, exposition onlyidnc{indirect-value-t}<I>> &&
@@ -1924,7 +1924,7 @@ namespace std {
       predicate<F&, iter_common_reference_t<I>>;
 
   template<class F, class I1, class I2>
-    concept \deflibconcept{indirect_binary_predicate} =
+    concept indirect_binary_predicate =
       indirectly_readable<I1> && indirectly_readable<I2> &&
       copy_constructible<F> &&
       predicate<F&, exposition onlyidnc{indirect-value-t}<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
@@ -1934,7 +1934,7 @@ namespace std {
       predicate<F&, iter_common_reference_t<I1>, iter_common_reference_t<I2>>;
 
   template<class F, class I1, class I2 = I1>
-    concept \deflibconcept{indirect_equivalence_relation} =
+    concept indirect_equivalence_relation =
       indirectly_readable<I1> && indirectly_readable<I2> &&
       copy_constructible<F> &&
       equivalence_relation<F&, exposition onlyidnc{indirect-value-t}<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
@@ -1944,7 +1944,7 @@ namespace std {
       equivalence_relation<F&, iter_common_reference_t<I1>, iter_common_reference_t<I2>>;
 
   template<class F, class I1, class I2 = I1>
-    concept \deflibconcept{indirect_strict_weak_order} =
+    concept indirect_strict_weak_order =
       indirectly_readable<I1> && indirectly_readable<I2> &&
       copy_constructible<F> &&
       strict_weak_order<F&, exposition onlyidnc{indirect-value-t}<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
@@ -2005,7 +2005,7 @@ which values may be moved.
 
 ``` cpp
 template<class In, class Out>
-  concept \deflibconcept{indirectly_movable} =
+  concept indirectly_movable =
     indirectly_readable<In> &&
     indirectly_writable<Out, iter_rvalue_reference_t<In>>;
 ```
@@ -2017,7 +2017,7 @@ type.
 
 ``` cpp
 template<class In, class Out>
-  concept \deflibconcept{indirectly_movable_storable} =
+  concept indirectly_movable_storable =
     indirectly_movable<In, Out> &&
     indirectly_writable<Out, iter_value_t<In>> &&
     movable<iter_value_t<In>> &&
@@ -2046,7 +2046,7 @@ which values may be copied.
 
 ``` cpp
 template<class In, class Out>
-  concept \deflibconcept{indirectly_copyable} =
+  concept indirectly_copyable =
     indirectly_readable<In> &&
     indirectly_writable<Out, iter_reference_t<In>>;
 ```
@@ -2059,7 +2059,7 @@ to make copies of values.
 
 ``` cpp
 template<class In, class Out>
-  concept \deflibconcept{indirectly_copyable_storable} =
+  concept indirectly_copyable_storable =
     indirectly_copyable<In, Out> &&
     indirectly_writable<Out, iter_value_t<In>&> &&
     indirectly_writable<Out, const iter_value_t<In>&> &&
@@ -2090,7 +2090,7 @@ between the values referenced by two `indirectly_readable` types.
 
 ``` cpp
 template<class I1, class I2 = I1>
-  concept \deflibconcept{indirectly_swappable} =
+  concept indirectly_swappable =
     indirectly_readable<I1> && indirectly_readable<I2> &&
     requires(const I1 i1, const I2 i2) {
       ranges::iter_swap(i1, i1);
@@ -2108,7 +2108,7 @@ algorithms that compare values from two different sequences.
 ``` cpp
 template<class I1, class I2, class R, class P1 = identity,
          class P2 = identity>
-  concept \deflibconcept{indirectly_comparable} =
+  concept indirectly_comparable =
     indirect_binary_predicate<R, projected<I1, P1>, projected<I2, P2>>;
 ```
 
@@ -2119,7 +2119,7 @@ that reorder elements in place by moving or swapping them.
 
 ``` cpp
 template<class I>
-  concept \deflibconcept{permutable} =
+  concept permutable =
     forward_iterator<I> &&
     indirectly_movable_storable<I, I> &&
     indirectly_swappable<I, I>;
@@ -2133,7 +2133,7 @@ merge sorted sequences into an output sequence by copying elements.
 ``` cpp
 template<class I1, class I2, class Out, class R = ranges::less,
          class P1 = identity, class P2 = identity>
-  concept \deflibconcept{mergeable} =
+  concept mergeable =
     input_iterator<I1> &&
     input_iterator<I2> &&
     weakly_incrementable<Out> &&
@@ -2149,7 +2149,7 @@ that permute sequences into ordered sequences (e.g., `sort`).
 
 ``` cpp
 template<class I, class R = ranges::less, class P = identity>
-  concept \deflibconcept{sortable} =
+  concept sortable =
     permutable<I> &&
     indirect_strict_weak_order<R, projected<I, P>>;
 ```
@@ -2171,9 +2171,9 @@ used as compile time tags for algorithm selection. They are:
 `output_iterator_tag`, `input_iterator_tag`, `forward_iterator_tag`,
 `bidirectional_iterator_tag`, `random_access_iterator_tag`, and
 `contiguous_iterator_tag`. For every iterator of type `I`,
-`iterator_traits<I>::it\-er\-a\-tor_ca\-te\-go\-ry` shall be defined to
-be a category tag that describes the iterator’s behavior. Additionally,
-`iterator_traits<I>::it\-er\-a\-tor_con\-cept` may be used to indicate
+`iterator_traits<I>::iterator_category` shall be defined to be a
+category tag that describes the iterator’s behavior. Additionally,
+`iterator_traits<I>::iterator_concept` may be used to indicate
 conformance to the iterator concepts [iterator.concepts].
 
 ``` cpp
@@ -3478,10 +3478,10 @@ follows:
   `iterator_concept` denotes `random_access_iterator_tag`.
 
 - Otherwise, if `Iterator` models `bidirectional_iterator`, then
-  `iterator_concept` denotes `bidirec\-tional_iterator_tag`.
+  `iterator_concept` denotes `bidirectional_iterator_tag`.
 
 - Otherwise, if `Iterator` models `forward_iterator`, then
-  `iterator_concept` denotes `forward_itera\-tor_tag`.
+  `iterator_concept` denotes `forward_iterator_tag`.
 
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
@@ -3841,15 +3841,15 @@ The member *typedef-name* `iterator_concept` is defined as follows:
   denotes `random_access_iterator_tag`.
 
 - Otherwise, if `Iterator` models `bidirectional_iterator`, then
-  `iterator_concept` denotes `bidirec\-tional_iterator_tag`.
+  `iterator_concept` denotes `bidirectional_iterator_tag`.
 
 - Otherwise, if `Iterator` models `forward_iterator`, then
-  `iterator_concept` denotes `forward_itera\-tor_tag`.
+  `iterator_concept` denotes `forward_iterator_tag`.
 
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
-the *qualified-id* `iterator_traits<It\-erator>::iterator_category` is
+the *qualified-id* `iterator_traits<Iterator>::iterator_category` is
 valid and denotes a type. In that case, `iterator_category` denotes
 
 - `random_access_iterator_tag` if the type
@@ -4382,7 +4382,7 @@ for `common_iterator<I, S>` are defined as follows.
   `forward_iterator`; otherwise it denotes `input_iterator_tag`.
 
 - `iterator_category` denotes `forward_iterator_tag` if the
-  *qualified-id* `iterator_traits<I>::iter\-ator_category` is valid and
+  *qualified-id* `iterator_traits<I>::iterator_category` is valid and
   denotes a type that models `derived_from<forward_iterator_tag>`;
   otherwise it denotes `input_iterator_tag`.
 

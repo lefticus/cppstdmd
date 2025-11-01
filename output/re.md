@@ -2925,7 +2925,7 @@ follows:
 
   - if `(flags() & regex_constants::icase)` the two characters are equal
     if
-    `traits_inst.trans\-late_nocase(c) == traits_inst.translate_nocase(d)`;
+    `traits_inst.translate_nocase(c) == traits_inst.translate_nocase(d)`;
 
   - otherwise, if `flags() & regex_constants::collate` the two
     characters are equal if

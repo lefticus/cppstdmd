@@ -5563,11 +5563,10 @@ In the `construct` member functions, `OUTERMOST(x)` is
 is valid  [temp.deduct] and `x` otherwise; `OUTERMOST_ALLOC_TRAITS(x)`
 is `allocator_traits<remove_reference_t<decltype(OUTERMOST(x))>>`.
 
-\[*Note 2*: `OUTERMOST(x)` and `OUTERMOST_ALL\-OC_TRAITS(x)` are
-recursive operations. It is incumbent upon the definition of
-`outer_allocator()` to ensure that the recursion terminates. It will
-terminate for all instantiations of
-`scoped_allocator_adaptor`. — *end note*\]
+\[*Note 2*: `OUTERMOST(x)` and `OUTERMOST_ALLOC_TRAITS(x)` are recursive
+operations. It is incumbent upon the definition of `outer_allocator()`
+to ensure that the recursion terminates. It will terminate for all
+instantiations of `scoped_allocator_adaptor`. — *end note*\]
 
 ``` cpp
 inner_allocator_type& inner_allocator() noexcept;

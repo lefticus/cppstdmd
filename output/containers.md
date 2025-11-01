@@ -427,7 +427,7 @@ memory using an allocator (see  [allocator.requirements]).
 \[*Note 3*: In particular, containers and iterators do not store
 references to allocated elements other than through the allocator’s
 pointer type, i.e., as objects of type `P` or
-`pointer_traits<P>::template re\-bind<\unspec>`, where `P` is
+`pointer_traits<P>::template rebind<\unspec>`, where `P` is
 `allocator_traits<allocator_type>::pointer`. — *end note*\]
 
 Copy constructors for these container types obtain an allocator by
@@ -9646,7 +9646,7 @@ namespace std {
     using iterator             = \impdefx{type of unordered_multimap::iterator}; // see [container.requirements]
     using const_iterator       = \impdefx{type of unordered_multimap::const_iterator}; // see [container.requirements]
     using local_iterator       = \impdefx{type of unordered_multimap::local_iterator}; // see [container.requirements]
-    using const_local_iterator = \impdefx{type of unordered_multimap::const_local_it\-erator}; // see [container.requirements]
+    using const_local_iterator = \impdefx{type of unordered_multimap::const_local_iterator}; // see [container.requirements]
     using node_type            = unspecified;
 
     // [unord.multimap.cnstr], construct/copy/destroy
@@ -10384,7 +10384,7 @@ namespace std {
     using iterator             = \impdefx{type of unordered_multiset::iterator}; // see [container.requirements]
     using const_iterator       = \impdefx{type of unordered_multiset::const_iterator}; // see [container.requirements]
     using local_iterator       = \impdefx{type of unordered_multiset::local_iterator}; // see [container.requirements]
-    using const_local_iterator = \impdefx{type of unordered_multiset::const_local_it\-erator}; // see [container.requirements]
+    using const_local_iterator = \impdefx{type of unordered_multiset::const_local_iterator}; // see [container.requirements]
     using node_type            = unspecified;
 
     // [unord.multiset.cnstr], construct/copy/destroy
@@ -10746,7 +10746,7 @@ overload resolution if any of the following are true:
   `uses_allocator_v<Container, Allocator>` is `false`.
 
 - It has both `KeyContainer` and `Allocator` template parameters, and
-  `uses_allocator_v<KeyContai\-ner, Allocator>` is `false`.
+  `uses_allocator_v<KeyContainer, Allocator>` is `false`.
 
 - It has both `KeyContainer` and `Compare` template parameters, and
 
@@ -10759,7 +10759,7 @@ overload resolution if any of the following are true:
   is not a valid expression or is `false`.
 
 - It has both `MappedContainer` and `Allocator` template parameters, and
-  `uses_allocator_v<Mapped\-Container, Allocator>` is `false`.
+  `uses_allocator_v<MappedContainer, Allocator>` is `false`.
 
 The exposition-only alias template *iter-value-type* defined in
 [sequences.general] and the exposition-only alias templates

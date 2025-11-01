@@ -277,7 +277,7 @@ template<class T, class U>
   concept same-as-impl = is_same_v<T, U>;       // exposition only
 
 template<class T, class U>
-  concept \deflibconcept{same_as} = same-as-impl<T, U> && same-as-impl<U, T>;
+  concept same_as = same-as-impl<T, U> && same-as-impl<U, T>;
 ```
 
 \[*Note 1*: `same_as``<T, U>` subsumes `same_as``<U, T>` and vice
@@ -287,7 +287,7 @@ versa. — *end note*\]
 
 ``` cpp
 template<class Derived, class Base>
-  concept \deflibconcept{derived_from} =
+  concept derived_from =
     is_base_of_v<Base, Derived> &&
     is_convertible_v<const volatile Derived*, const volatile Base*>;
 ```
@@ -307,7 +307,7 @@ conversions are required to produce equal results.
 
 ``` cpp
 template<class From, class To>
-  concept \deflibconcept{convertible_to} =
+  concept convertible_to =
     is_convertible_v<From, To> &&
     requires {
       static_cast<To>(declval<From>());
@@ -351,7 +351,7 @@ type. `C` can be a reference type. — *end note*\]
 
 ``` cpp
 template<class T, class U>
-  concept \deflibconcept{common_reference_with} =
+  concept common_reference_with =
     same_as<common_reference_t<T, U>, common_reference_t<U, T>> &&
     convertible_to<T, common_reference_t<T, U>> &&
     convertible_to<U, common_reference_t<T, U>>;
@@ -382,7 +382,7 @@ type. `C` is not necessarily unique. — *end note*\]
 
 ``` cpp
 template<class T, class U>
-  concept \deflibconcept{common_with} =
+  concept common_with =
     same_as<common_type_t<T, U>, common_type_t<U, T>> &&
     requires {
       static_cast<common_type_t<T, U>>(declval<T>());
@@ -417,13 +417,13 @@ template\[meta.trans.other\]. — *end note*\]
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{integral} = is_integral_v<T>;
+  concept integral = is_integral_v<T>;
 template<class T>
-  concept \deflibconcept{signed_integral} = integral<T> && is_signed_v<T>;
+  concept signed_integral = integral<T> && is_signed_v<T>;
 template<class T>
-  concept \deflibconcept{unsigned_integral} = integral<T> && !signed_integral<T>;
+  concept unsigned_integral = integral<T> && !signed_integral<T>;
 template<class T>
-  concept \deflibconcept{floating_point} = is_floating_point_v<T>;
+  concept floating_point = is_floating_point_v<T>;
 ```
 
 \[*Note 7*: `signed_integral` can be modeled even by types that are not
@@ -438,7 +438,7 @@ not unsigned integer types\[basic.fundamental\]; for example,
 
 ``` cpp
 template<class LHS, class RHS>
-  concept \deflibconcept{assignable_from} =
+  concept assignable_from =
     is_lvalue_reference_v<LHS> &&
     common_reference_with<const remove_reference_t<LHS>&, const remove_reference_t<RHS>&> &&
     requires(LHS lhs, RHS&& rhs) {
@@ -546,7 +546,7 @@ subexpressions `E1` and `E2` is expression-equivalent to an expression
     are constant subexpressions.
 
   `noexcept(S)` is equal to
-  `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable\-_v<T>`.
+  `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>`.
 
 - Otherwise, `ranges::swap(E1, E2)` is ill-formed.
 
@@ -560,12 +560,12 @@ exchanges the values denoted by `E1` and `E2` and has type
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{swappable} = requires(T& a, T& b) { ranges::swap(a, b); };
+  concept swappable = requires(T& a, T& b) { ranges::swap(a, b); };
 ```
 
 ``` cpp
 template<class T, class U>
-  concept \deflibconcept{swappable_with} =
+  concept swappable_with =
     common_reference_with<T, U> &&
     requires(T&& t, U&& u) {
       ranges::swap(std::forward<T>(t), std::forward<T>(t));
@@ -634,7 +634,7 @@ types.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{destructible} = is_nothrow_destructible_v<T>;
+  concept destructible = is_nothrow_destructible_v<T>;
 ```
 
 \[*Note 13*: Unlike the *Cpp17Destructible*
@@ -649,7 +649,7 @@ variable of a given type with a particular set of argument types.
 
 ``` cpp
 template<class T, class... Args>
-  concept \deflibconcept{constructible_from} = destructible<T> && is_constructible_v<T, Args...>;
+  concept constructible_from = destructible<T> && is_constructible_v<T, Args...>;
 ```
 
 ### Concept  <a id="concept.default.init">[concept.default.init]</a>
@@ -659,7 +659,7 @@ template<class T>
   constexpr bool is-default-initializable = see below;         // exposition only
 
 template<class T>
-  concept \deflibconcept{default_initializable} = constructible_from<T> &&
+  concept default_initializable = constructible_from<T> &&
                                   requires { T{}; } &&
                                   is-default-initializable<T>;
 ```
@@ -680,7 +680,7 @@ considered.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{move_constructible} = constructible_from<T, T> && convertible_to<T, T>;
+  concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 ```
 
 If `T` is an object type, then let `rv` be an rvalue of type `T` and
@@ -698,7 +698,7 @@ If `T` is an object type, then let `rv` be an rvalue of type `T` and
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{copy_constructible} =
+  concept copy_constructible =
     move_constructible<T> &&
     constructible_from<T, T&> && convertible_to<T&, T> &&
     constructible_from<T, const T&> && convertible_to<const T&, T> &&
@@ -886,7 +886,7 @@ respectively. `T` and `U` model
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{equality_comparable} = weakly-equality-comparable-with<T, T>;
+  concept equality_comparable = weakly-equality-comparable-with<T, T>;
 ```
 
 Let `a` and `b` be objects of type `T`. `T` models `equality_comparable`
@@ -899,7 +899,7 @@ symmetric. — *end note*\]
 
 ``` cpp
 template<class T, class U>
-  concept \deflibconcept{equality_comparable_with} =
+  concept equality_comparable_with =
     equality_comparable<T> && equality_comparable<U> &&
     comparison-common-type-with<T, U> &&
     equality_comparable<
@@ -929,7 +929,7 @@ bool(t == u) == bool(CONVERT_TO_LVALUE<C>(t2) == CONVERT_TO_LVALUE<C>(u2))
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{totally_ordered} =
+  concept totally_ordered =
     equality_comparable<T> && partially-ordered-with<T, T>;
 ```
 
@@ -947,7 +947,7 @@ Given a type `T`, let `a`, `b`, and `c` be lvalues of type
 
 ``` cpp
 template<class T, class U>
-  concept \deflibconcept{totally_ordered_with} =
+  concept totally_ordered_with =
     totally_ordered<T> && totally_ordered<U> &&
     equality_comparable_with<T, U> &&
     totally_ordered<
@@ -992,15 +992,15 @@ value-oriented programming style on which the library is based.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{movable} = is_object_v<T> && move_constructible<T> &&
+  concept movable = is_object_v<T> && move_constructible<T> &&
                     assignable_from<T&, T> && swappable<T>;
 template<class T>
-  concept \deflibconcept{copyable} = copy_constructible<T> && movable<T> && assignable_from<T&, T&> &&
+  concept copyable = copy_constructible<T> && movable<T> && assignable_from<T&, T&> &&
                      assignable_from<T&, const T&> && assignable_from<T&, const T>;
 template<class T>
-  concept \deflibconcept{semiregular} = copyable<T> && default_initializable<T>;
+  concept semiregular = copyable<T> && default_initializable<T>;
 template<class T>
-  concept \deflibconcept{regular} = semiregular<T> && equality_comparable<T>;
+  concept regular = semiregular<T> && equality_comparable<T>;
 ```
 
 \[*Note 1*: The `semiregular` concept is modeled by types that behave
@@ -1026,7 +1026,7 @@ evaluated by the library function `invoke` [func.invoke].
 
 ``` cpp
 template<class F, class... Args>
-  concept \deflibconcept{invocable} = requires(F&& f, Args&&... args) {
+  concept invocable = requires(F&& f, Args&&... args) {
     invoke(std::forward<F>(f), std::forward<Args>(args)...); // not required to be equality-preserving
   };
 ```
@@ -1039,7 +1039,7 @@ to be equality-preserving\[concepts.equality\]. — *end example*\]
 
 ``` cpp
 template<class F, class... Args>
-  concept \deflibconcept{regular_invocable} = invocable<F, Args...>;
+  concept regular_invocable = invocable<F, Args...>;
 ```
 
 The `invoke` function call expression shall be
@@ -1059,7 +1059,7 @@ is purely semantic. — *end note*\]
 
 ``` cpp
 template<class F, class... Args>
-  concept \deflibconcept{predicate} =
+  concept predicate =
     regular_invocable<F, Args...> && boolean-testable<invoke_result_t<F, Args...>>;
 ```
 
@@ -1067,7 +1067,7 @@ template<class F, class... Args>
 
 ``` cpp
 template<class R, class T, class U>
-  concept \deflibconcept{relation} =
+  concept relation =
     predicate<R, T, T> && predicate<R, U, U> &&
     predicate<R, T, U> && predicate<R, U, T>;
 ```
@@ -1076,7 +1076,7 @@ template<class R, class T, class U>
 
 ``` cpp
 template<class R, class T, class U>
-  concept \deflibconcept{equivalence_relation} = relation<R, T, U>;
+  concept equivalence_relation = relation<R, T, U>;
 ```
 
 A `relation` models `equivalence_relation` only if it imposes an
@@ -1086,7 +1086,7 @@ equivalence relation on its arguments.
 
 ``` cpp
 template<class R, class T, class U>
-  concept \deflibconcept{strict_weak_order} = relation<R, T, U>;
+  concept strict_weak_order = relation<R, T, U>;
 ```
 
 A `relation` models `strict_weak_order` only if it imposes a on its

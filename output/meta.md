@@ -868,7 +868,7 @@ context” and can result in the program being ill-formed. — *end note*\]
 In addition to being available via inclusion of the `<type_traits>`
 header, the templates `unwrap_reference`, `unwrap_ref_decay`,
 `unwrap_reference_t`, and `unwrap_ref_decay_t` are available when the
-header `<func\-tional>` [functional.syn] is included.
+header `<functional>` [functional.syn] is included.
 
 Let:
 

@@ -313,7 +313,7 @@ templates identified as members of a category, and for those shown in
 |  | `time_put_byname<wchar_t, OutputIterator>` |
 | messages | `messages_byname<char>`, `messages_byname<wchar_t>` |
 The provided implementation of members of facets `num_get<charT>` and
-`num_put<charT>` calls `use_fac\-et<F>(l)` only for facet `F` of types
+`num_put<charT>` calls `use_facet<F>(l)` only for facet `F` of types
 `numpunct<charT>` and `ctype<charT>`, and for locale `l` the value
 obtained by calling member `getloc()` on the `ios_base&` argument to
 these functions.
@@ -2663,7 +2663,7 @@ sequence; otherwise either an error is reported or unspecified values
 are assigned.
 
 If the end iterator is reached during parsing by any of the `get()`
-member functions, the member sets `ios_base::eof\-bit` in `err`.
+member functions, the member sets `ios_base::eofbit` in `err`.
 
 ##### Members <a id="locale.time.get.members">[locale.time.get.members]</a>
 
@@ -3078,8 +3078,8 @@ All specifications of member functions for `money_put` and `money_get`
 in the subclauses of  [category.monetary] only apply to the
 specializations required in Tables  [tab:locale.category.facets] and 
 [tab:locale.spec] [locale.category]. Their members use their
-`ios_base&`, `ios_base::io\-state&`, and `fill` arguments as described
-in  [locale.categories], and the `moneypunct<>` and `ctype<>` facets, to
+`ios_base&`, `ios_base::iostate&`, and `fill` arguments as described in 
+[locale.categories], and the `moneypunct<>` and `ctype<>` facets, to
 determine formatting details.
 
 #### Class template `money_get` <a id="locale.money.get">[locale.money.get]</a>

@@ -956,7 +956,7 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
   `false`, `ranges::cdata(E)` is ill-formed.
 
 - Otherwise, `ranges::cdata(E)` is expression-equivalent to
-  `as-const-pointer(ranges::data(possi\-bly-const-range(t)))`.
+  `as-const-pointer(ranges::data(possibly-const-range(t)))`.
 
 \[*Note 19*: Whenever `ranges::cdata(E)` is a valid expression, it has
 pointer to constant object type. — *end note*\]
@@ -997,7 +997,7 @@ denote the elements of the range.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{range} =
+  concept range =
     requires(T& t) {
       ranges::begin(t);         // sometimes equality-preserving (see below)
       ranges::end(t);
@@ -1030,7 +1030,7 @@ well-defined. — *end note*\]
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{borrowed_range} =
+  concept borrowed_range =
     range<T> && (is_lvalue_reference_v<T> || enable_borrowed_range<remove_cvref_t<T>>);
 ```
 
@@ -1077,7 +1077,7 @@ time using `ranges::size`.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{sized_range} =
+  concept sized_range =
     range<T> && requires(T& t) { ranges::size(t); };
 ```
 
@@ -1120,7 +1120,7 @@ constructing range adaptor pipelines [range.adaptors].
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{view} =
+  concept view =
     range<T> && movable<T> && enable_view<T>;
 ```
 
@@ -1193,23 +1193,23 @@ which `ranges::begin` returns a model of `output_iterator`
 
 ``` cpp
 template<class R, class T>
-  concept \deflibconcept{output_range} =
+  concept output_range =
     range<R> && output_iterator<iterator_t<R>, T>;
 
 template<class T>
-  concept \deflibconcept{input_range} =
+  concept input_range =
     range<T> && input_iterator<iterator_t<T>>;
 
 template<class T>
-  concept \deflibconcept{forward_range} =
+  concept forward_range =
     input_range<T> && forward_iterator<iterator_t<T>>;
 
 template<class T>
-  concept \deflibconcept{bidirectional_range} =
+  concept bidirectional_range =
     forward_range<T> && bidirectional_iterator<iterator_t<T>>;
 
 template<class T>
-  concept \deflibconcept{random_access_range} =
+  concept random_access_range =
     bidirectional_range<T> && random_access_iterator<iterator_t<T>>;
 ```
 
@@ -1218,7 +1218,7 @@ customization point object [range.prim.data] is usable with the range.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{contiguous_range} =
+  concept contiguous_range =
     random_access_range<T> && contiguous_iterator<iterator_t<T>> &&
     requires(T& t) {
       { ranges::data(t) } -> same_as<add_pointer_t<range_reference_t<T>>>;
@@ -1237,7 +1237,7 @@ which `ranges::begin` and `ranges::end` return objects of the same type.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{common_range} =
+  concept common_range =
     range<T> && same_as<iterator_t<T>, sentinel_t<T>>;
 ```
 
@@ -1254,7 +1254,7 @@ type that can be converted to a view safely.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{viewable_range} =
+  concept viewable_range =
     range<T> &&
     ((view<remove_cvref_t<T>> && constructible_from<remove_cvref_t<T>, T>) ||
      (!view<remove_cvref_t<T>> &&
@@ -1266,7 +1266,7 @@ type whose elements are not modifiable.
 
 ``` cpp
 template<class T>
-  concept \deflibconcept{constant_range} =
+  concept constant_range =
     input_range<T> && constant-iterator<iterator_t<T>>;
 ```
 
@@ -4051,7 +4051,7 @@ is defined as follows:
   `iterator_traits<iterator_t<V>>::iterator_category`.
 
 - If `C` models `derived_from<bidirectional_iterator_tag>`, then
-  `iterator_category` denotes `bi\-directional_iterator_tag`.
+  `iterator_category` denotes `bidirectional_iterator_tag`.
 
 - Otherwise, if `C` models `derived_from<forward_iterator_tag>`, then
   `iterator_category` denotes `forward_iterator_tag`.
@@ -4914,9 +4914,8 @@ expression `views::take(E, F)` is expression-equivalent to:
   is a specialization of `span` [views.span], `basic_string_view`
   [string.view], or `subrange` [range.subrange], then
   `U(ranges::begin(E),
-  ranges::be\-gin(E) + std::min<D>(ranges::distance(E), F))`, except
-  that `E` is evaluated only once, where `U` is a type determined as
-  follows:
+  ranges::begin(E) + std::min<D>(ranges::distance(E), F))`, except that
+  `E` is evaluated only once, where `U` is a type determined as follows:
 
   - if `T` is a specialization of `span`, then `U` is
     `span<typename T::element_type>`;
@@ -5147,7 +5146,8 @@ Equivalent to: `return y.count() == 0 || y.base() == x.`*`end_`*`;`
 #### Overview <a id="range.take.while.overview">[range.take.while.overview]</a>
 
 Given a unary predicate `pred` and a view `r`, `take_while_view`
-produces a view of the range .
+produces a view of the range
+\range{ranges::begin(r)}{ranges::find_if_not(r, pred)}.
 
 The name `views::take_while` denotes a range adaptor object
 [range.adaptor.object]. Given subexpressions `E` and `F`, the expression
@@ -5741,18 +5741,19 @@ namespace std::ranges {
 - If *ref-is-glvalue* is `true`, *Base* models `bidirectional_range`,
   and `range_reference_t<Base>` models both `bidirectional_range` and
   `common_range`, then `iterator_concept` denotes
-  `bidirectio\-nal_iterator_tag`.
+  `bidirectional_iterator_tag`.
 
 - Otherwise, if *ref-is-glvalue* is `true` and *Base* and
-  `range_reference_t<Base>` each model , then `iterator_concept` denotes
-  `forward_iterator_tag`.
+  `range_reference_t<Base>` each model
+  \libconceptx{forward_range}{forward_range}, then `iterator_concept`
+  denotes `forward_iterator_tag`.
 
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
 *ref-is-glvalue* is `true`, *Base* models `forward_range`, and
 `range_reference_t<Base>` models `forward_range`. In that case,
-`iterator::iter\-ator_category` is defined as follows:
+`iterator::iterator_category` is defined as follows:
 
 - Let *OUTERC* denote
   `iterator_traits<iterator_t<Base>>::iterator_category`, and let
@@ -5765,7 +5766,7 @@ The member *typedef-name* `iterator_category` is defined if and only if
   denotes `bidirectional_iterator_tag`.
 
 - Otherwise, if *OUTERC* and *INNERC* each model
-  `derived_from<forward_iterator_tag>`, `iter\-ator_category` denotes
+  `derived_from<forward_iterator_tag>`, `iterator_category` denotes
   `forward_iterator_tag`.
 
 - Otherwise, `iterator_category` denotes `input_iterator_tag`.
@@ -6304,7 +6305,7 @@ as follows:
 
 - Otherwise, if *OUTERC*, *INNERC*, and *PATTERNC* each model
   `derived_from<bidirectional_iterator_category>` and *InnerBase* and
-  *PatternBase* each model `common_range`, `iterator_cate\-gory` denotes
+  *PatternBase* each model `common_range`, `iterator_category` denotes
   `bidirectional_iterator_tag`.
 
 - Otherwise, if *OUTERC*, *INNERC*, and *PATTERNC* each model
@@ -9104,7 +9105,7 @@ namespace std::ranges {
   `iterator_concept` denotes `bidirectional_iterator_tag`.
 
 - Otherwise, if `all-forward<Const, Views...>` is modeled, then
-  `iterator_concept` denotes `for\-ward_iterator_tag`.
+  `iterator_concept` denotes `forward_iterator_tag`.
 
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
@@ -9493,7 +9494,7 @@ The name `views::zip_transform` denotes a customization point object
     ```
 
 - Otherwise, the expression `views::zip_transform(F, Es...)` is
-  expression-equivalent to `zip_trans\-form_view(F, Es...)`.
+  expression-equivalent to `zip_transform_view(F, Es...)`.
 
 \[*Example 21*:
 
@@ -9667,10 +9668,10 @@ and only if *Base* models `forward_range`. In that case,
 
   - Otherwise, if
     `(derived_from<Cs, bidirectional_iterator_tag> && ...)` is `true`,
-    `iterator\-_category` denotes `bidirectional_iterator_tag`.
+    `iterator_category` denotes `bidirectional_iterator_tag`.
 
   - Otherwise, if `(derived_from<Cs, forward_iterator_tag> && ...)` is
-    `true`, `iterator_cate\-gory` denotes `forward_iterator_tag`.
+    `true`, `iterator_category` denotes `forward_iterator_tag`.
 
   - Otherwise, `iterator_category` denotes `input_iterator_tag`.
 
@@ -10528,7 +10529,7 @@ expression `N`:
 
 - Otherwise, the expression `views::adjacent_transform<N>(E, F)` is
   expression-equivalent to
-  `adja\-cent_transform_view<views::all_t<decltype((E))>, decay_t<decltype((F))>, N>(E, F)`.
+  `adjacent_transform_view<views::all_t<decltype((E))>, decay_t<decltype((F))>, N>(E, F)`.
 
 \[*Example 23*:
 
@@ -10696,7 +10697,7 @@ follows:
   `iterator_traits<iterator_t<Base>>::iterator_category`.
 
   - If `derived_from<C, random_access_iterator_tag>` is `true`,
-    `iterator_category` denotes `ran\-dom_access_iterator_tag`.
+    `iterator_category` denotes `random_access_iterator_tag`.
 
   - Otherwise, if `derived_from<C, bidirectional_iterator_tag>` is
     `true`, `iterator_category` denotes `bidirectional_iterator_tag`.
@@ -12952,7 +12953,7 @@ The member *typedef-name* `iterator_category` is defined if and only if
   `iterator_traits<iterator_t<Base>>::iterator_category`.
 
 - If `C` models `derived_from<random_access_iterator_tag>`, then
-  `iterator_category` denotes `ran\-dom_access_iterator_tag`.
+  `iterator_category` denotes `random_access_iterator_tag`.
 
 - Otherwise, `iterator_category` denotes `C`.
 
@@ -13603,12 +13604,11 @@ namespace std::ranges {
 `iterator::iterator_concept` is defined as follows:
 
 - If `cartesian-product-is-random-access<Const, First, Vs...>` is
-  modeled, then `iterator_con\-cept` denotes
-  `random_access_iterator_tag`.
+  modeled, then `iterator_concept` denotes `random_access_iterator_tag`.
 
 - Otherwise, if
   `cartesian-product-is-bidirectional<Const, First, Vs...>` is modeled,
-  then `it\-erator_concept` denotes `bidirectional_iterator_tag`.
+  then `iterator_concept` denotes `bidirectional_iterator_tag`.
 
 - Otherwise, if `maybe-const<Const, First>` models `forward_range`, then
   `iterator_concept` denotes `forward_iterator_tag`.

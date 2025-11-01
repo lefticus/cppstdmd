@@ -1276,10 +1276,11 @@ comprehensive list of identifiers used by the C++ standard library can
 be found in the Index of Library Names in this document.
 
 New headers. New functionality. The following C++ headers are new: , , ,
-, , , , , , , , , , , , , , , , and . In addition the following C
-compatibility headers are new: , , , and . Valid C++03 code that
-`#include}{s` headers with these names may be invalid in this revision
-of C++.
+, , , , , , , , , , , , ,
+\libheaderrefx{typeindex}{type.index.synopsis}, , , and . In addition
+the following C compatibility headers are new: , , , and . Valid C++03
+code that `#include}{s` headers with these names may be invalid in this
+revision of C++.
 
 Function `swap` moved to a different header Remove dependency on for
 `swap`. Valid C++03 code that has been compiled expecting swap to be in

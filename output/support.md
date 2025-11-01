@@ -3508,7 +3508,7 @@ Let `t` and `u` be lvalues of types `const remove_reference_t<T>` and
 
 ``` cpp
 template<class T, class Cat = partial_ordering>
-  concept \deflibconcept{three_way_comparable} =
+  concept three_way_comparable =
     weakly-equality-comparable-with<T, T> &&
     partially-ordered-with<T, T> &&
     requires(const remove_reference_t<T>& a, const remove_reference_t<T>& b) {
@@ -3538,7 +3538,7 @@ and `Cat` model `three_way_comparable<T, Cat>` only if:
 
 ``` cpp
 template<class T, class U, class Cat = partial_ordering>
-  concept \deflibconcept{three_way_comparable_with} =
+  concept three_way_comparable_with =
     three_way_comparable<T, Cat> &&
     three_way_comparable<U, Cat> &&
     comparison-common-type-with<T, U> &&

@@ -1900,8 +1900,8 @@ exception, that function or operator has no other effect on the
 `basic_string` object.
 
 In every specialization `basic_string<charT, traits, Allocator>`, the
-type `allocator_traits<All\-ocator>::value_type` shall name the same
-type as `charT`. Every object of type
+type `allocator_traits<Allocator>::value_type` shall name the same type
+as `charT`. Every object of type
 `basic_string<charT, traits, Allocator>` uses an object of type
 `Allocator` to allocate and free storage for the contained `charT`
 objects as needed. The `Allocator` object used is obtained as described

@@ -65,15 +65,15 @@ requirements.
   [iterator.requirements].
 
 - If an algorithm’s template parameter is named `InputIterator`,
-  `InputIterator1`, or `Input\-Iterator2`, the template argument shall
+  `InputIterator1`, or `InputIterator2`, the template argument shall
   meet the *Cpp17InputIterator* requirements [input.iterators].
 
 - If an algorithm’s template parameter is named `OutputIterator`,
-  `OutputIterator1`, or `Output\-Iterator2`, the template argument shall
+  `OutputIterator1`, or `OutputIterator2`, the template argument shall
   meet the *Cpp17OutputIterator* requirements [output.iterators].
 
 - If an algorithm’s template parameter is named `ForwardIterator`,
-  `ForwardIterator1`, `ForwardItera\-tor2`, or `NoThrowForwardIterator`,
+  `ForwardIterator1`, `ForwardIterator2`, or `NoThrowForwardIterator`,
   the template argument shall meet the *Cpp17ForwardIterator*
   requirements [forward.iterators] if it is required to be a mutable
   iterator, or model `forward_iterator` [iterator.concept.forward]
@@ -85,13 +85,13 @@ requirements.
   assignment, or comparison of, or indirection through, valid iterators.
 
 - If an algorithm’s template parameter is named `BidirectionalIterator`,
-  `Bidirectional\-Iterator1`, or `BidirectionalIterator2`, the template
+  `BidirectionalIterator1`, or `BidirectionalIterator2`, the template
   argument shall meet the *Cpp17BidirectionalIterator* requirements
   [bidirectional.iterators] if it is required to be a mutable iterator,
   or model `bidirectional_iterator` [iterator.concept.bidir] otherwise.
 
 - If an algorithm’s template parameter is named `RandomAccessIterator`,
-  `Random\-AccessIterator1`, or `RandomAccessIterator2`, the template
+  `RandomAccessIterator1`, or `RandomAccessIterator2`, the template
   argument shall meet the *Cpp17RandomAccessIterator* requirements
   [random.access.iterators] if it is required to be a mutable iterator,
   or model `random_access_iterator` [iterator.concept.random.access]

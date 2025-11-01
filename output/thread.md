@@ -2731,7 +2731,7 @@ Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 *floating-point-type* There are specializations of the `atomic_ref`
 class template for all cv-unqualified floating-point types. For each
 such type `floating-point-type`, the specialization
-`atomic_ref<floating-\-point>` provides additional atomic operations
+`atomic_ref<floating-point>` provides additional atomic operations
 appropriate to floating-point types.
 
 ``` cpp

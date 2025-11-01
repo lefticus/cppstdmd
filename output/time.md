@@ -2795,8 +2795,7 @@ system used for `file_time_type` [filesystems]. Its epoch is
 unspecified, and `noexcept(file_clock::now())` is `true`.
 
 \[*Note 10*: The type that `file_clock` denotes can be in a different
-namespace than `std::chrono`, such as
-`std::file\-sys\-tem`. — *end note*\]
+namespace than `std::chrono`, such as `std::filesystem`. — *end note*\]
 
 #### Member functions <a id="time.clock.file.members">[time.clock.file.members]</a>
 
@@ -8544,8 +8543,8 @@ day elapsed since midnight.
 | `\%Z` | The time zone abbreviation. If the time zone abbreviation is not available, an exception of type `format_error` is thrown. |
 | `\%\%` | A `\%` character. |
 If the is omitted, the chrono object is formatted as if by streaming it
-to `basic_ostring\-stream<charT> os` with the formatting locale imbued
-and copying `os.str()` through the output iterator of the context with
+to `basic_ostringstream<charT> os` with the formatting locale imbued and
+copying `os.str()` through the output iterator of the context with
 additional padding and adjustments as specified by the format
 specifiers.
 
