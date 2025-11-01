@@ -1182,7 +1182,7 @@ template<class S, class M>
 >
 > `true` if and only if `S` is a standard-layout type, `M` is an object
 > type, `m` is not null, and each object `s` of type `S` is
-> pointer-interconvertible[[basic.compound]] with its subobject `s.*m`.
+> pointer-interconvertible [[basic.compound]] with its subobject `s.*m`.
 
 ``` cpp
 template<class S1, class S2, class M1, class M2>
@@ -1196,9 +1196,9 @@ template<class S1, class S2, class M1, class M2>
 > *Returns:*
 >
 > `true` if and only if `S1` and `S2` are standard-layout
-> struct[[class.prop]] types, `M1` and `M2` are object types, `m1` and
+> struct [[class.prop]] types, `M1` and `M2` are object types, `m1` and
 > `m2` are not null, and `m1` and `m2` point to corresponding members of
-> the common initial sequence[[class.mem]] of `S1` and `S2`.
+> the common initial sequence [[class.mem]] of `S1` and `S2`.
 
 \[*Note 10*:
 

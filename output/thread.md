@@ -266,7 +266,7 @@ m.try_lock_for(rel_time)
 > *Effects:*
 >
 > Attempts to acquire a lock for the current execution agent within the
-> relative timeout[[thread.req.timing]] specified by `rel_time`. The
+> relative timeout [[thread.req.timing]] specified by `rel_time`. The
 > function will not return within the timeout specified by `rel_time`
 > unless it has obtained a lock on `m` for the current execution agent.
 > If an exception is thrown then a lock has not been acquired for the
@@ -285,7 +285,7 @@ m.try_lock_until(abs_time)
 > *Effects:*
 >
 > Attempts to acquire a lock for the current execution agent before the
-> absolute timeout[[thread.req.timing]] specified by `abs_time`. The
+> absolute timeout [[thread.req.timing]] specified by `abs_time`. The
 > function will not return before the timeout specified by `abs_time`
 > unless it has obtained a lock on `m` for the current execution agent.
 > If an exception is thrown then a lock has not been acquired for the
@@ -360,7 +360,7 @@ m.try_lock_shared_for(rel_time)
 > *Effects:*
 >
 > Attempts to acquire a lock for the current execution agent within the
-> relative timeout[[thread.req.timing]] specified by `rel_time`. The
+> relative timeout [[thread.req.timing]] specified by `rel_time`. The
 > function will not return within the timeout specified by `rel_time`
 > unless it has obtained a lock on `m` for the current execution agent.
 > If an exception is thrown then a lock has not been acquired for the
@@ -377,7 +377,7 @@ m.try_lock_shared_until(abs_time)
 > *Effects:*
 >
 > Attempts to acquire a lock for the current execution agent before the
-> absolute timeout[[thread.req.timing]] specified by `abs_time`. The
+> absolute timeout [[thread.req.timing]] specified by `abs_time`. The
 > function will not return before the timeout specified by `abs_time`
 > unless it has obtained a lock on `m` for the current execution agent.
 > If an exception is thrown then a lock has not been acquired for the
@@ -772,14 +772,14 @@ bool request_stop() noexcept;
 > Otherwise, atomically determines whether the owned stop state has
 > received a stop request, and if not, makes a stop request. The
 > determination and making of the stop request are an atomic
-> read-modify-write operation[[intro.races]]. If the request was made,
+> read-modify-write operation [[intro.races]]. If the request was made,
 > the callbacks registered by associated `stop_callback` objects are
 > synchronously called. If an invocation of a callback exits via an
-> exception then `terminate` is invoked[[except.terminate]].
+> exception then `terminate` is invoked [[except.terminate]].
 >
 > \[*Note 6*: A stop request includes notifying all condition variables
 > of type `condition_variable_any` temporarily registered during an
-> interruptible wait[[thread.condvarany.intwait]]. — *end note*\]
+> interruptible wait [[thread.condvarany.intwait]]. — *end note*\]
 >
 > *Ensures:*
 >
@@ -885,7 +885,7 @@ explicit stop_callback(stop_token&& st, C&& cb)
 > *Remarks:*
 >
 > If evaluating `std::forward<Callback>(callback)()` exits via an
-> exception, then `terminate` is invoked[[except.terminate]].
+> exception, then `terminate` is invoked [[except.terminate]].
 
 ``` cpp
 ~stop_callback();
@@ -897,9 +897,9 @@ explicit stop_callback(stop_token&& st, C&& cb)
 > destructor does not block waiting for the execution of another
 > callback registered by an associated `stop_callback`. If `callback` is
 > concurrently executing on another thread, then the return from the
-> invocation of `callback` strongly happens before[[intro.races]]
+> invocation of `callback` strongly happens before [[intro.races]]
 > `callback` is destroyed. If `callback` is executing on the current
-> thread, then the destructor does not block[[defns.block]] waiting for
+> thread, then the destructor does not block [[defns.block]] waiting for
 > the return from the invocation of `callback`. Releases ownership of
 > the stop state, if any.
 
@@ -1103,7 +1103,7 @@ template<class charT> struct formatter<thread::id, charT>;
 template<> struct hash<thread::id>;
 ```
 
-> The specialization is enabled[[unord.hash]].
+> The specialization is enabled [[unord.hash]].
 
 #### Constructors <a id="thread.thread.constr">[[thread.thread.constr]]</a>
 
@@ -1144,7 +1144,7 @@ template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 >        auto(std::forward<Args>(args))...)
 > ```
 >
-> with the values produced by `auto` being materialized[[conv.rval]] in
+> with the values produced by `auto` being materialized [[conv.rval]] in
 > the constructing thread. Any return value from this invocation is
 > ignored.
 >
@@ -1153,7 +1153,7 @@ template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 > thread, not the new thread. — *end note*\]
 >
 > If the invocation of `invoke` terminates with an uncaught exception,
-> `terminate` is invoked[[except.terminate]].
+> `terminate` is invoked [[except.terminate]].
 >
 > The completion of the invocation of the constructor synchronizes with
 > the beginning of the invocation of the copy of `f`.
@@ -1247,7 +1247,7 @@ void join();
 > Blocks until the thread represented by `*this` has completed.
 >
 > The completion of the thread represented by `*this` synchronizes
-> with[[intro.multithread]] the corresponding successful `join()`
+> with [[intro.multithread]] the corresponding successful `join()`
 > return.
 >
 > \[*Note 10*: Operations on `*this` are not
@@ -1259,7 +1259,7 @@ void join();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -1288,7 +1288,7 @@ void detach();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -1431,7 +1431,7 @@ template<class F, class... Args> explicit jthread(F&& f, Args&&... args);
 > invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)
 > ```
 >
-> with the values produced by `auto` being materialized[[conv.rval]] in
+> with the values produced by `auto` being materialized [[conv.rval]] in
 > the constructing thread. Any return value from this invocation is
 > ignored.
 >
@@ -1532,7 +1532,7 @@ void join();
 > Blocks until the thread represented by `*this` has completed.
 >
 > The completion of the thread represented by `*this` synchronizes
-> with[[intro.multithread]] the corresponding successful `join()`
+> with [[intro.multithread]] the corresponding successful `join()`
 > return.
 >
 > \[*Note 15*: Operations on `*this` are not
@@ -1544,7 +1544,7 @@ void join();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -1573,7 +1573,7 @@ void detach();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -1680,13 +1680,13 @@ template<class Clock, class Duration>
 > *Effects:*
 >
 > Blocks the calling thread for the absolute
-> timeout[[thread.req.timing]] specified by `abs_time`.
+> timeout [[thread.req.timing]] specified by `abs_time`.
 >
 > None.
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 
 ``` cpp
 template<class Rep, class Period>
@@ -1696,13 +1696,13 @@ template<class Rep, class Period>
 > *Effects:*
 >
 > Blocks the calling thread for the relative
-> timeout[[thread.req.timing]] specified by `rel_time`.
+> timeout [[thread.req.timing]] specified by `rel_time`.
 >
 > None.
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 
 ## Atomic operations <a id="atomics">[[atomics]]</a>
 
@@ -2173,7 +2173,7 @@ template<class T>
 > *Effects:*
 >
 > The argument does not carry a dependency to the return
-> value[[intro.multithread]].
+> value [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -2363,7 +2363,7 @@ static constexpr size_t required_alignment;
 > reference, which is at least `alignof(T)`.
 >
 > \[*Note 17*: Hardware could require an object referenced by an
-> `atomic_ref` to have stricter alignment[[basic.align]] than other
+> `atomic_ref` to have stricter alignment [[basic.align]] than other
 > objects of type `T`. Further, whether operations on an `atomic_ref`
 > are lock-free could depend on the alignment of the referenced object.
 > For example, lock-free operations on `std::complex<double>` could be
@@ -2488,7 +2488,7 @@ T exchange(T desired, memory_order order = memory_order::seq_cst) const noexcept
 >
 > Atomically replaces the value referenced by `*ptr` with `desired`.
 > Memory is affected according to the value of `order`. This operation
-> is an atomic read-modify-write operation[[intro.multithread]].
+> is an atomic read-modify-write operation [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -2535,7 +2535,7 @@ bool compare_exchange_strong(T& expected, T desired,
 > `expected` is replaced by the value read from the value referenced by
 > `*ptr` during the atomic comparison. If the operation returns `true`,
 > these operations are atomic read-modify-write
-> operations[[intro.races]] on the value referenced by `*ptr`.
+> operations [[intro.races]] on the value referenced by `*ptr`.
 > Otherwise, these operations are atomic load operations on that memory.
 >
 > *Returns:*
@@ -2581,8 +2581,8 @@ void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
 >
 > *Remarks:*
 >
-> This function is an atomic waiting operation[[atomics.wait]] on atomic
-> object `*ptr`.
+> This function is an atomic waiting operation [[atomics.wait]] on
+> atomic object `*ptr`.
 
 ``` cpp
 void notify_one() const noexcept;
@@ -2591,12 +2591,12 @@ void notify_one() const noexcept;
 > *Effects:*
 >
 > Unblocks the execution of at least one atomic waiting operation on
-> `*ptr` that is eligible to be unblocked[[atomics.wait]] by this call,
+> `*ptr` that is eligible to be unblocked [[atomics.wait]] by this call,
 > if any such atomic waiting operations exist.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]] on
+> This function is an atomic notifying operation [[atomics.wait]] on
 > atomic object `*ptr`.
 
 ``` cpp
@@ -2606,11 +2606,11 @@ void notify_all() const noexcept;
 > *Effects:*
 >
 > Unblocks the execution of all atomic waiting operations on `*ptr` that
-> are eligible to be unblocked[[atomics.wait]] by this call.
+> are eligible to be unblocked [[atomics.wait]] by this call.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]] on
+> This function is an atomic notifying operation [[atomics.wait]] on
 > atomic object `*ptr`.
 
 #### Specializations for integral types <a id="atomics.ref.int">[[atomics.ref.int]]</a>
@@ -2710,7 +2710,7 @@ integral-type fetch_key(integral-type operand,
 > the computation applied to the value referenced by `*ptr` and the
 > given operand. Memory is affected according to the value of `order`.
 > These operations are atomic read-modify-write
-> operations[[intro.races]].
+> operations [[intro.races]].
 >
 > *Returns:*
 >
@@ -2815,7 +2815,7 @@ floating-point-type fetch_key(floating-point-type operand,
 > the computation applied to the value referenced by `*ptr` and the
 > given operand. Memory is affected according to the value of `order`.
 > These operations are atomic read-modify-write
-> operations[[intro.races]].
+> operations [[intro.races]].
 >
 > *Returns:*
 >
@@ -2824,13 +2824,13 @@ floating-point-type fetch_key(floating-point-type operand,
 >
 > *Remarks:*
 >
-> If the result is not a representable value for its type[[expr.pre]],
+> If the result is not a representable value for its type [[expr.pre]],
 > the result is unspecified, but the operations otherwise have no
 > undefined behavior. Atomic arithmetic operations on
 > *`floating-point-type`* should conform to the
 > `std::numeric_limits<`*`floating-point-type`*`>` traits associated
-> with the floating-point type[[limits.syn]]. The floating-point
-> environment[[cfenv]] for atomic arithmetic operations on
+> with the floating-point type [[limits.syn]]. The floating-point
+> environment [[cfenv]] for atomic arithmetic operations on
 > *`floating-point-type`* may be different than the calling thread’s
 > floating-point environment.
 
@@ -2917,7 +2917,7 @@ T* fetch_key(difference_type operand, memory_order order = memory_order::seq_cst
 > the computation applied to the value referenced by `*ptr` and the
 > given operand. Memory is affected according to the value of `order`.
 > These operations are atomic read-modify-write
-> operations[[intro.races]].
+> operations [[intro.races]].
 >
 > *Returns:*
 >
@@ -3069,7 +3069,7 @@ constexpr atomic() noexcept(is_nothrow_default_constructible_v<T>);
 > *Effects:*
 >
 > Initializes the atomic object with the value of `T()`. Initialization
-> is not an atomic operation[[intro.multithread]].
+> is not an atomic operation [[intro.multithread]].
 
 *integral-type* *floating-point-type*
 
@@ -3080,7 +3080,7 @@ constexpr atomic(T desired) noexcept;
 > *Effects:*
 >
 > Initializes the object with the value `desired`. Initialization is not
-> an atomic operation[[intro.multithread]].
+> an atomic operation [[intro.multithread]].
 >
 > \[*Note 20*: It is possible to have an access to an atomic object `A`
 > race with its construction, for example by communicating the address
@@ -3206,7 +3206,7 @@ T exchange(T desired, memory_order order = memory_order::seq_cst) noexcept;
 >
 > Atomically replaces the value pointed to by with `desired`. Memory is
 > affected according to the value of `order`. These operations are
-> atomic read-modify-write operations[[intro.multithread]].
+> atomic read-modify-write operations [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -3260,7 +3260,7 @@ bool compare_exchange_strong(T& expected, T desired,
 > after the atomic operation, the value in `expected` is replaced by the
 > value pointed to by during the atomic comparison. If the operation
 > returns `true`, these operations are atomic read-modify-write
-> operations[[intro.multithread]] on the memory pointed to by .
+> operations [[intro.multithread]] on the memory pointed to by .
 > Otherwise, these operations are atomic load operations on that memory.
 >
 > *Returns:*
@@ -3270,7 +3270,7 @@ bool compare_exchange_strong(T& expected, T desired,
 > \[*Note 23*:
 >
 > For example, the effect of `compare_exchange_strong` on objects
-> without padding bits[[term.padding.bits]] is
+> without padding bits [[term.padding.bits]] is
 >
 >     if (memcmp(this, &expected, sizeof(*this)) == 0)
 >       memcpy(this, &desired, sizeof(*this));
@@ -3405,7 +3405,7 @@ void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
 >
 > *Remarks:*
 >
-> This function is an atomic waiting operation[[atomics.wait]].
+> This function is an atomic waiting operation [[atomics.wait]].
 
 *integral-type* *floating-point-type*
 
@@ -3417,12 +3417,12 @@ void notify_one() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of at least one atomic waiting operation that
-> is eligible to be unblocked[[atomics.wait]] by this call, if any such
+> is eligible to be unblocked [[atomics.wait]] by this call, if any such
 > atomic waiting operations exist.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 *integral-type* *floating-point-type*
 
@@ -3434,11 +3434,11 @@ void notify_all() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of all atomic waiting operations that are
-> eligible to be unblocked[[atomics.wait]] by this call.
+> eligible to be unblocked [[atomics.wait]] by this call.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 #### Specializations for integers <a id="atomics.types.int">[[atomics.types.int]]</a>
 
@@ -3577,7 +3577,7 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 > computation applied to the value pointed to by and the given
 > `operand`. Memory is affected according to the value of `order`. These
 > operations are atomic read-modify-write
-> operations[[intro.multithread]].
+> operations [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -3712,7 +3712,7 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 > computation applied to the value pointed to by and the given
 > `operand`. Memory is affected according to the value of `order`. These
 > operations are atomic read-modify-write
-> operations[[intro.multithread]].
+> operations [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -3720,13 +3720,13 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 >
 > *Remarks:*
 >
-> If the result is not a representable value for its type[[expr.pre]]
+> If the result is not a representable value for its type [[expr.pre]]
 > the result is unspecified, but the operations otherwise have no
 > undefined behavior. Atomic arithmetic operations on
 > *`floating-point-type`* should conform to the
 > `std::numeric_limits<`*`floating-point-type`*`>` traits associated
-> with the floating-point type[[limits.syn]]. The floating-point
-> environment[[cfenv]] for atomic arithmetic operations on
+> with the floating-point type [[limits.syn]]. The floating-point
+> environment [[cfenv]] for atomic arithmetic operations on
 > *`floating-point-type`* may be different than the calling thread’s
 > floating-point environment.
 
@@ -3746,13 +3746,13 @@ T operator op=(T operand) noexcept;
 >
 > *Remarks:*
 >
-> If the result is not a representable value for its type[[expr.pre]]
+> If the result is not a representable value for its type [[expr.pre]]
 > the result is unspecified, but the operations otherwise have no
 > undefined behavior. Atomic arithmetic operations on
 > *`floating-point-type`* should conform to the
 > `std::numeric_limits<`*`floating-point-type`*`>` traits associated
-> with the floating-point type[[limits.syn]]. The floating-point
-> environment[[cfenv]] for atomic arithmetic operations on
+> with the floating-point type [[limits.syn]]. The floating-point
+> environment [[cfenv]] for atomic arithmetic operations on
 > *`floating-point-type`* may be different than the calling thread’s
 > floating-point environment.
 
@@ -3858,7 +3858,7 @@ T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) noex
 > computation applied to the value pointed to by and the given
 > `operand`. Memory is affected according to the value of `order`. These
 > operations are atomic read-modify-write
-> operations[[intro.multithread]].
+> operations [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -4053,7 +4053,7 @@ atomic(shared_ptr<T> desired) noexcept;
 > *Effects:*
 >
 > Initializes the object with the value `desired`. Initialization is not
-> an atomic operation[[intro.multithread]].
+> an atomic operation [[intro.multithread]].
 >
 > \[*Note 30*: It is possible to have an access to an atomic object `A`
 > race with its construction, for example, by communicating the address
@@ -4118,7 +4118,7 @@ shared_ptr<T> exchange(shared_ptr<T> desired, memory_order order = memory_order:
 >
 > Atomically replaces `p` with `desired` as if by `p.swap(desired)`.
 > Memory is affected according to the value of `order`. This is an
-> atomic read-modify-write operation[[intro.races]].
+> atomic read-modify-write operation [[intro.races]].
 >
 > *Returns:*
 >
@@ -4155,7 +4155,7 @@ bool compare_exchange_strong(shared_ptr<T>& expected, shared_ptr<T> desired,
 >
 > If the operation returns `true`, `expected` is not accessed after the
 > atomic update and the operation is an atomic read-modify-write
-> operation[[intro.multithread]] on the memory pointed to by .
+> operation [[intro.multithread]] on the memory pointed to by .
 > Otherwise, the operation is an atomic load operation on that memory,
 > and `expected` is updated with the existing value read from the atomic
 > object in the attempted atomic update. The `use_count` update
@@ -4223,7 +4223,7 @@ void wait(shared_ptr<T> old, memory_order order = memory_order::seq_cst) const n
 >
 > Two `shared_ptr` objects are equivalent if they store the same pointer
 > and either share ownership or are both empty. This function is an
-> atomic waiting operation[[atomics.wait]].
+> atomic waiting operation [[atomics.wait]].
 
 ``` cpp
 void notify_one() noexcept;
@@ -4232,12 +4232,12 @@ void notify_one() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of at least one atomic waiting operation that
-> is eligible to be unblocked[[atomics.wait]] by this call, if any such
+> is eligible to be unblocked [[atomics.wait]] by this call, if any such
 > atomic waiting operations exist.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 ``` cpp
 void notify_all() noexcept;
@@ -4246,11 +4246,11 @@ void notify_all() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of all atomic waiting operations that are
-> eligible to be unblocked[[atomics.wait]] by this call.
+> eligible to be unblocked [[atomics.wait]] by this call.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 ##### Partial specialization for `weak_ptr` <a id="util.smartptr.atomic.weak">[[util.smartptr.atomic.weak]]</a>
 
@@ -4308,7 +4308,7 @@ atomic(weak_ptr<T> desired) noexcept;
 > *Effects:*
 >
 > Initializes the object with the value `desired`. Initialization is not
-> an atomic operation[[intro.multithread]].
+> an atomic operation [[intro.multithread]].
 >
 > \[*Note 31*: It is possible to have an access to an atomic object `A`
 > race with its construction, for example, by communicating the address
@@ -4373,7 +4373,7 @@ weak_ptr<T> exchange(weak_ptr<T> desired, memory_order order = memory_order::seq
 >
 > Atomically replaces `p` with `desired` as if by `p.swap(desired)`.
 > Memory is affected according to the value of `order`. This is an
-> atomic read-modify-write operation[[intro.races]].
+> atomic read-modify-write operation [[intro.races]].
 >
 > *Returns:*
 >
@@ -4410,7 +4410,7 @@ bool compare_exchange_strong(weak_ptr<T>& expected, weak_ptr<T> desired,
 >
 > If the operation returns `true`, `expected` is not accessed after the
 > atomic update and the operation is an atomic read-modify-write
-> operation[[intro.multithread]] on the memory pointed to by .
+> operation [[intro.multithread]] on the memory pointed to by .
 > Otherwise, the operation is an atomic load operation on that memory,
 > and `expected` is updated with the existing value read from the atomic
 > object in the attempted atomic update. The `use_count` update
@@ -4478,7 +4478,7 @@ void wait(weak_ptr<T> old, memory_order order = memory_order::seq_cst) const noe
 >
 > Two `weak_ptr` objects are equivalent if they store the same pointer
 > and either share ownership or are both empty. This function is an
-> atomic waiting operation[[atomics.wait]].
+> atomic waiting operation [[atomics.wait]].
 
 ``` cpp
 void notify_one() noexcept;
@@ -4487,12 +4487,12 @@ void notify_one() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of at least one atomic waiting operation that
-> is eligible to be unblocked[[atomics.wait]] by this call, if any such
+> is eligible to be unblocked [[atomics.wait]] by this call, if any such
 > atomic waiting operations exist.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 ``` cpp
 void notify_all() noexcept;
@@ -4501,11 +4501,11 @@ void notify_all() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of all atomic waiting operations that are
-> eligible to be unblocked[[atomics.wait]] by this call.
+> eligible to be unblocked [[atomics.wait]] by this call.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 ### Non-member functions <a id="atomics.nonmembers">[[atomics.nonmembers]]</a>
 
@@ -4605,7 +4605,7 @@ bool atomic_flag::test_and_set(memory_order order = memory_order::seq_cst) noexc
 >
 > Atomically sets the value pointed to by `object` or by to `true`.
 > Memory is affected according to the value of `order`. These operations
-> are atomic read-modify-write operations[[intro.multithread]].
+> are atomic read-modify-write operations [[intro.multithread]].
 >
 > *Returns:*
 >
@@ -4665,7 +4665,7 @@ void atomic_flag::wait(bool old, memory_order order =
 >
 > *Remarks:*
 >
-> This function is an atomic waiting operation[[atomics.wait]].
+> This function is an atomic waiting operation [[atomics.wait]].
 
 ``` cpp
 void atomic_flag_notify_one(volatile atomic_flag* object) noexcept;
@@ -4677,12 +4677,12 @@ void atomic_flag::notify_one() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of at least one atomic waiting operation that
-> is eligible to be unblocked[[atomics.wait]] by this call, if any such
+> is eligible to be unblocked [[atomics.wait]] by this call, if any such
 > atomic waiting operations exist.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 ``` cpp
 void atomic_flag_notify_all(volatile atomic_flag* object) noexcept;
@@ -4694,11 +4694,11 @@ void atomic_flag::notify_all() noexcept;
 > *Effects:*
 >
 > Unblocks the execution of all atomic waiting operations that are
-> eligible to be unblocked[[atomics.wait]] by this call.
+> eligible to be unblocked [[atomics.wait]] by this call.
 >
 > *Remarks:*
 >
-> This function is an atomic notifying operation[[atomics.wait]].
+> This function is an atomic notifying operation [[atomics.wait]].
 
 ``` cpp
 #define ATOMIC_FLAG_INIT see below
@@ -5056,7 +5056,7 @@ semantics:
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -5083,7 +5083,7 @@ semantics:
 >
 > \[*Note 33*: This spurious failure is normally uncommon, but allows
 > interesting implementations based on a simple compare and
-> exchange[[atomics]]. — *end note*\]
+> exchange [[atomics]]. — *end note*\]
 >
 > An implementation should ensure that `try_lock()` does not
 > consistently return `false` in the absence of contending mutex
@@ -5120,7 +5120,7 @@ semantics:
 >
 > .
 >
-> This operation synchronizes with[[intro.multithread]] subsequent lock
+> This operation synchronizes with [[intro.multithread]] subsequent lock
 > operations that obtain ownership on the same object.
 >
 > *Throws:*
@@ -5251,7 +5251,7 @@ following semantics:
 > *Effects:*
 >
 > The function attempts to obtain ownership of the mutex within the
-> relative timeout[[thread.req.timing]] specified by `rel_time`. If the
+> relative timeout [[thread.req.timing]] specified by `rel_time`. If the
 > time specified by `rel_time` is less than or equal to
 > `rel_time.zero()`, the function attempts to obtain ownership without
 > blocking (as if by calling `try_lock()`). The function returns within
@@ -5274,7 +5274,7 @@ following semantics:
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 
 The expression `m.try_lock_until(abs_time)` is well-formed and has the
 following semantics:
@@ -5289,8 +5289,8 @@ following semantics:
 > The function attempts to obtain ownership of the mutex. If `abs_time`
 > has already passed, the function attempts to obtain ownership without
 > blocking (as if by calling `try_lock()`). The function returns before
-> the absolute timeout[[thread.req.timing]] specified by `abs_time` only
-> if it has obtained ownership of the mutex object.
+> the absolute timeout [[thread.req.timing]] specified by `abs_time`
+> only if it has obtained ownership of the mutex object.
 >
 > \[*Note 36*: As with `try_lock()`, there is no guarantee that
 > ownership will be obtained if the lock is available, but
@@ -5308,7 +5308,7 @@ following semantics:
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 
 ##### Class `timed_mutex` <a id="thread.timedmutex.class">[[thread.timedmutex.class]]</a>
 
@@ -5455,7 +5455,7 @@ semantics:
 > shared lock has not been acquired for the current thread.
 >
 > Prior `unlock()` operations on the same object synchronize
-> with[[intro.multithread]] this operation.
+> with [[intro.multithread]] this operation.
 >
 > *Ensures:*
 >
@@ -5465,7 +5465,7 @@ semantics:
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -5488,7 +5488,7 @@ semantics:
 >
 > .
 >
-> This operation synchronizes with[[intro.multithread]] subsequent
+> This operation synchronizes with [[intro.multithread]] subsequent
 > `lock()` operations that obtain ownership on the same object.
 >
 > *Throws:*
@@ -5511,7 +5511,7 @@ following semantics:
 > any other thread.
 >
 > If `try_lock_shared()` returns `true`, prior `unlock()` operations on
-> the same object synchronize with[[intro.multithread]] this operation.
+> the same object synchronize with [[intro.multithread]] this operation.
 >
 > `bool`.
 >
@@ -5597,7 +5597,7 @@ the following semantics:
 > *Effects:*
 >
 > Attempts to obtain shared lock ownership for the calling thread within
-> the relative timeout[[thread.req.timing]] specified by `rel_time`. If
+> the relative timeout [[thread.req.timing]] specified by `rel_time`. If
 > the time specified by `rel_time` is less than or equal to
 > `rel_time.zero()`, the function attempts to obtain ownership without
 > blocking (as if by calling `try_lock_shared()`). The function returns
@@ -5613,7 +5613,7 @@ the following semantics:
 > the current thread.
 >
 > If `try_lock_shared_for()` returns `true`, prior `unlock()` operations
-> on the same object synchronize with[[intro.multithread]] this
+> on the same object synchronize with [[intro.multithread]] this
 > operation.
 >
 > `bool`.
@@ -5624,7 +5624,7 @@ the following semantics:
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 
 The expression `m.try_lock_shared_until(abs_time)` is well-formed and
 has the following semantics:
@@ -5638,7 +5638,7 @@ has the following semantics:
 > The function attempts to obtain shared ownership of the mutex. If
 > `abs_time` has already passed, the function attempts to obtain shared
 > ownership without blocking (as if by calling `try_lock_shared()`). The
-> function returns before the absolute timeout[[thread.req.timing]]
+> function returns before the absolute timeout [[thread.req.timing]]
 > specified by `abs_time` only if it has obtained shared ownership of
 > the mutex object.
 >
@@ -5651,7 +5651,7 @@ has the following semantics:
 > the current thread.
 >
 > If `try_lock_shared_until()` returns `true`, prior `unlock()`
-> operations on the same object synchronize with[[intro.multithread]]
+> operations on the same object synchronize with [[intro.multithread]]
 > this operation.
 >
 > `bool`.
@@ -5662,7 +5662,7 @@ has the following semantics:
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 
 ##### Class `shared_timed_mutex` <a id="thread.sharedtimedmutex.class">[[thread.sharedtimedmutex.class]]</a>
 
@@ -5992,7 +5992,7 @@ unique_lock(mutex_type& m, try_to_lock_t);
 > *Preconditions:*
 >
 > The supplied `Mutex` type meets the *Cpp17Lockable*
-> requirements[[thread.req.lockable.req]].
+> requirements [[thread.req.lockable.req]].
 >
 > *Effects:*
 >
@@ -6027,7 +6027,7 @@ template<class Clock, class Duration>
 > *Preconditions:*
 >
 > The supplied `Mutex` type meets the *Cpp17TimedLockable*
-> requirements[[thread.req.lockable.timed]].
+> requirements [[thread.req.lockable.timed]].
 >
 > *Effects:*
 >
@@ -6046,7 +6046,7 @@ template<class Rep, class Period>
 > *Preconditions:*
 >
 > The supplied `Mutex` type meets the *Cpp17TimedLockable*
-> requirements[[thread.req.lockable.timed]].
+> requirements [[thread.req.lockable.timed]].
 >
 > *Effects:*
 >
@@ -6113,7 +6113,7 @@ void lock();
 > *Throws:*
 >
 > Any exception thrown by `pm->lock()`. `system_error` when an exception
-> is required[[thread.req.exception]].
+> is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6128,7 +6128,7 @@ bool try_lock();
 > *Preconditions:*
 >
 > The supplied `Mutex` meets the *Cpp17Lockable*
-> requirements[[thread.req.lockable.req]].
+> requirements [[thread.req.lockable.req]].
 >
 > *Effects:*
 >
@@ -6145,7 +6145,7 @@ bool try_lock();
 > *Throws:*
 >
 > Any exception thrown by `pm->try_lock()`. `system_error` when an
-> exception is required[[thread.req.exception]].
+> exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6161,7 +6161,7 @@ template<class Clock, class Duration>
 > *Preconditions:*
 >
 > The supplied `Mutex` type meets the *Cpp17TimedLockable*
-> requirements[[thread.req.lockable.timed]].
+> requirements [[thread.req.lockable.timed]].
 >
 > *Effects:*
 >
@@ -6179,7 +6179,7 @@ template<class Clock, class Duration>
 > *Throws:*
 >
 > Any exception thrown by `pm->try_lock_until(abstime)`. `system_error`
-> when an exception is required[[thread.req.exception]].
+> when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6195,7 +6195,7 @@ template<class Rep, class Period>
 > *Preconditions:*
 >
 > The supplied `Mutex` type meets the *Cpp17TimedLockable*
-> requirements[[thread.req.lockable.timed]].
+> requirements [[thread.req.lockable.timed]].
 >
 > *Effects:*
 >
@@ -6213,7 +6213,7 @@ template<class Rep, class Period>
 > *Throws:*
 >
 > Any exception thrown by `pm->try_lock_for(rel_time)`. `system_error`
-> when an exception is required[[thread.req.exception]].
+> when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6235,7 +6235,7 @@ void unlock();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6434,7 +6434,7 @@ template<class Clock, class Duration>
 > *Preconditions:*
 >
 > `Mutex` meets the *Cpp17SharedTimedLockable*
-> requirements[[thread.req.lockable.shared.timed]].
+> requirements [[thread.req.lockable.shared.timed]].
 >
 > *Effects:*
 >
@@ -6454,7 +6454,7 @@ template<class Rep, class Period>
 > *Preconditions:*
 >
 > `Mutex` meets the *Cpp17SharedTimedLockable*
-> requirements[[thread.req.lockable.shared.timed]].
+> requirements [[thread.req.lockable.shared.timed]].
 >
 > *Effects:*
 >
@@ -6514,7 +6514,7 @@ void lock();
 > *Throws:*
 >
 > Any exception thrown by `pm->lock_shared()`. `system_error` when an
-> exception is required[[thread.req.exception]].
+> exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6542,7 +6542,7 @@ bool try_lock();
 > *Throws:*
 >
 > Any exception thrown by `pm->try_lock_shared()`. `system_error` when
-> an exception is required[[thread.req.exception]].
+> an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6558,7 +6558,7 @@ template<class Clock, class Duration>
 > *Preconditions:*
 >
 > `Mutex` meets the *Cpp17SharedTimedLockable*
-> requirements[[thread.req.lockable.shared.timed]].
+> requirements [[thread.req.lockable.shared.timed]].
 >
 > *Effects:*
 >
@@ -6577,7 +6577,7 @@ template<class Clock, class Duration>
 > *Throws:*
 >
 > Any exception thrown by `pm->try_lock_shared_until(abs_time)`.
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6593,7 +6593,7 @@ template<class Rep, class Period>
 > *Preconditions:*
 >
 > `Mutex` meets the *Cpp17SharedTimedLockable*
-> requirements[[thread.req.lockable.shared.timed]].
+> requirements [[thread.req.lockable.shared.timed]].
 >
 > *Effects:*
 >
@@ -6611,7 +6611,7 @@ template<class Rep, class Period>
 > *Throws:*
 >
 > Any exception thrown by `pm->try_lock_shared_for(rel_time)`.
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6633,7 +6633,7 @@ void unlock();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -6793,7 +6793,7 @@ template<class Callable, class... Args>
 >
 > An execution of `call_once` that does not call its `func` is a
 > execution. An execution of `call_once` that calls its `func` is an
-> execution. An active execution calls *INVOKE*([[func.require]]. If
+> execution. An active execution calls *INVOKE*( [[func.require]]. If
 > such a call to `func` throws an exception the execution is , otherwise
 > it is . An exceptional execution propagates the exception to the
 > caller of `call_once`. Among all executions of `call_once` for any
@@ -6807,13 +6807,13 @@ template<class Callable, class... Args>
 >
 > For any given `once_flag`: all active executions occur in a total
 > order; completion of an active execution synchronizes
-> with[[intro.multithread]] the start of the next one in this total
+> with [[intro.multithread]] the start of the next one in this total
 > order; and the returning execution synchronizes with the return from
 > all passive executions.
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]],
+> `system_error` when an exception is required [[thread.req.exception]],
 > or any exception thrown by `func`.
 >
 > \[*Example 3*:
@@ -6986,7 +6986,7 @@ condition_variable();
 
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -7065,7 +7065,7 @@ void wait(unique_lock<mutex>& lock);
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 47*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7107,7 +7107,7 @@ template<class Predicate>
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 48*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7138,7 +7138,7 @@ template<class Clock, class Duration>
 >
 > - The function will unblock when signaled by a call to `notify_one()`,
 >   a call to `notify_all()`, expiration of the absolute
->   timeout@@REF:thread.req.timing@@ specified by `abs_time`, or
+>   timeout [[thread.req.timing]] specified by `abs_time`, or
 >   spuriously.
 >
 > - If the function exits via an exception, `lock.lock()` is called
@@ -7151,17 +7151,17 @@ template<class Clock, class Duration>
 >
 > *Returns:*
 >
-> `cv_status::timeout` if the absolute timeout[[thread.req.timing]]
+> `cv_status::timeout` if the absolute timeout [[thread.req.timing]]
 > specified by `abs_time` expired, otherwise `cv_status::no_timeout`.
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 >
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 49*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7198,17 +7198,17 @@ template<class Rep, class Period>
 >
 > *Returns:*
 >
-> `cv_status::timeout` if the relative timeout[[thread.req.timing]]
+> `cv_status::timeout` if the relative timeout [[thread.req.timing]]
 > specified by `rel_time` expired, otherwise `cv_status::no_timeout`.
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 >
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 50*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7253,13 +7253,13 @@ template<class Clock, class Duration, class Predicate>
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]] or any exception
+> Timeout-related exceptions [[thread.req.timing]] or any exception
 > thrown by `pred`.
 >
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 52*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7304,13 +7304,13 @@ template<class Rep, class Period, class Predicate>
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]] or any exception
+> Timeout-related exceptions [[thread.req.timing]] or any exception
 > thrown by `pred`.
 >
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 55*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7379,7 +7379,7 @@ condition_variable_any();
 > *Throws:*
 >
 > `bad_alloc` or `system_error` when an exception is
-> required[[thread.req.exception]].
+> required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
@@ -7452,7 +7452,7 @@ template<class Lock>
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 57*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7485,7 +7485,7 @@ template<class Lock, class Clock, class Duration>
 >
 > - The function will unblock when signaled by a call to `notify_one()`,
 >   a call to `notify_all()`, expiration of the absolute
->   timeout@@REF:thread.req.timing@@ specified by `abs_time`, or
+>   timeout [[thread.req.timing]] specified by `abs_time`, or
 >   spuriously.
 >
 > - If the function exits via an exception, `lock.lock()` is called
@@ -7497,17 +7497,17 @@ template<class Lock, class Clock, class Duration>
 >
 > *Returns:*
 >
-> `cv_status::timeout` if the absolute timeout[[thread.req.timing]]
+> `cv_status::timeout` if the absolute timeout [[thread.req.timing]]
 > specified by `abs_time` expired, otherwise `cv_status::no_timeout`.
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 >
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate()` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 58*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7531,17 +7531,17 @@ template<class Lock, class Rep, class Period>
 >
 > *Returns:*
 >
-> `cv_status::timeout` if the relative timeout[[thread.req.timing]]
+> `cv_status::timeout` if the relative timeout [[thread.req.timing]]
 > specified by `rel_time` expired, otherwise `cv_status::no_timeout`.
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]].
+> Timeout-related exceptions [[thread.req.timing]].
 >
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate` is
-> invoked[[except.terminate]].
+> invoked [[except.terminate]].
 >
 > \[*Note 59*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7622,7 +7622,7 @@ template<class Lock, class Predicate>
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate` is
-> called[[except.terminate]].
+> called [[except.terminate]].
 >
 > \[*Note 63*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7668,7 +7668,7 @@ template<class Lock, class Clock, class Duration, class Predicate>
 > *Remarks:*
 >
 > If the function fails to meet the postcondition, `terminate` is
-> called[[except.terminate]].
+> called [[except.terminate]].
 >
 > \[*Note 66*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
@@ -7799,12 +7799,12 @@ void release(ptrdiff_t update = 1);
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 
 ``` cpp
 bool try_acquire() noexcept;
@@ -7819,7 +7819,7 @@ bool try_acquire() noexcept;
 >
 > \[*Note 67*: This spurious failure is normally uncommon, but allows
 > interesting implementations based on a simple compare and
-> exchange[[atomics]]. — *end note*\]
+> exchange [[atomics]]. — *end note*\]
 >
 > An implementation should ensure that `try_acquire` does not
 > consistently return `false` in the absence of contending semaphore
@@ -7843,12 +7843,12 @@ void acquire();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 
 ``` cpp
 template<class Rep, class Period>
@@ -7867,20 +7867,20 @@ template<class Clock, class Duration>
 >   timeout expires. If it is unblocked by the timeout expiring, returns
 >   `false`.
 >
-> The timeout expires[[thread.req.timing]] when the current time is
+> The timeout expires [[thread.req.timing]] when the current time is
 > after `abs_time` (for `try_acquire_until`) or when at least `rel_time`
 > has passed from the start of the function (for `try_acquire_for`).
 >
 > *Throws:*
 >
-> Timeout-related exceptions[[thread.req.timing]], or `system_error`
+> Timeout-related exceptions [[thread.req.timing]], or `system_error`
 > when a non-timeout-related exception is
-> required[[thread.req.exception]].
+> required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 
 ## Coordination types <a id="thread.coord">[[thread.coord]]</a>
 
@@ -7982,12 +7982,12 @@ void count_down(ptrdiff_t update = 1);
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 
 ``` cpp
 bool try_wait() const noexcept;
@@ -8009,12 +8009,12 @@ void wait() const;
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 
 ``` cpp
 void arrive_and_wait(ptrdiff_t update = 1);
@@ -8188,12 +8188,12 @@ constexpr explicit barrier(ptrdiff_t expected,
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 >
 > \[*Note 69*: This call can cause the completion step for the current
 > phase to start. — *end note*\]
@@ -8219,12 +8219,12 @@ void wait(arrival_token&& arrival) const;
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 
 ``` cpp
 void arrive_and_wait();
@@ -8252,12 +8252,12 @@ void arrive_and_drop();
 >
 > *Throws:*
 >
-> `system_error` when an exception is required[[thread.req.exception]].
+> `system_error` when an exception is required [[thread.req.exception]].
 >
 > *Error conditions:*
 >
 > Any of the error conditions allowed for mutex
-> types[[thread.mutex.requirements.mutex]].
+> types [[thread.mutex.requirements.mutex]].
 >
 > \[*Note 71*: This call can cause the completion step for the current
 > phase to start. — *end note*\]
@@ -8581,7 +8581,7 @@ template<class R, class Alloc>
 > *Preconditions:*
 >
 > `Alloc` meets the *Cpp17Allocator*
-> requirements[[allocator.requirements.general]].
+> requirements [[allocator.requirements.general]].
 
 ``` cpp
 promise();
@@ -8613,7 +8613,7 @@ promise(promise&& rhs) noexcept;
 
 > *Effects:*
 >
-> Abandons any shared state[[futures.state]].
+> Abandons any shared state [[futures.state]].
 
 ``` cpp
 promise& operator=(promise&& rhs) noexcept;
@@ -8621,7 +8621,7 @@ promise& operator=(promise&& rhs) noexcept;
 
 > *Effects:*
 >
-> Abandons any shared state[[futures.state]] and then as if
+> Abandons any shared state [[futures.state]] and then as if
 > `promise(std::move(rhs)).swap(*this)`.
 >
 > *Returns:*
@@ -8647,7 +8647,7 @@ future<R> get_future();
 ```
 
 > Calls to this function do not introduce data
-> races [[intro.multithread]] with calls to `set_value`,
+> races  [[intro.multithread]] with calls to `set_value`,
 > `set_exception`, `set_value_at_thread_exit`, or
 > `set_exception_at_thread_exit`.
 >
@@ -8681,7 +8681,7 @@ void promise<void>::set_value();
 > *Effects:*
 >
 > Atomically stores the value `r` in the shared state and makes that
-> state ready[[futures.state]].
+> state ready [[futures.state]].
 >
 > *Throws:*
 >
@@ -8712,7 +8712,7 @@ void set_exception(exception_ptr p);
 > *Effects:*
 >
 > Atomically stores the exception pointer `p` in the shared state and
-> makes that state ready[[futures.state]].
+> makes that state ready [[futures.state]].
 >
 > *Throws:*
 >
@@ -8887,7 +8887,7 @@ future(future&& rhs) noexcept;
 
 > *Effects:*
 >
-> - Releases any shared state@@REF:futures.state@@;
+> - Releases any shared state [[futures.state]];
 >
 > - destroys `*this`.
 
@@ -8900,7 +8900,7 @@ future& operator=(future&& rhs) noexcept;
 > If `addressof(rhs) == this` is `true`, there are no effects.
 > Otherwise:
 >
-> - Releases any shared state@@REF:futures.state@@.
+> - Releases any shared state [[futures.state]].
 >
 > - move assigns the contents of `rhs` to `*this`.
 >
@@ -8938,7 +8938,7 @@ void future<void>::get();
 > - `wait()`s until the shared state is ready, then retrieves the value
 >   stored in the shared state;
 >
-> - releases any shared state@@REF:futures.state@@.
+> - releases any shared state [[futures.state]].
 >
 > *Ensures:*
 >
@@ -8982,8 +8982,8 @@ template<class Rep, class Period>
 > *Effects:*
 >
 > None if the shared state contains a deferred
-> function[[futures.async]], otherwise blocks until the shared state is
-> ready or until the relative timeout[[thread.req.timing]] specified by
+> function [[futures.async]], otherwise blocks until the shared state is
+> ready or until the relative timeout [[thread.req.timing]] specified by
 > `rel_time` has expired.
 >
 > *Returns:*
@@ -8994,12 +8994,12 @@ template<class Rep, class Period>
 > - `future_status::ready` if the shared state is ready.
 >
 > - `future_status::timeout` if the function is returning because the
->   relative timeout@@REF:thread.req.timing@@ specified by `rel_time`
->   has expired.
+>   relative timeout [[thread.req.timing]] specified by `rel_time` has
+>   expired.
 >
 > *Throws:*
 >
-> timeout-related exceptions[[thread.req.timing]].
+> timeout-related exceptions [[thread.req.timing]].
 
 ``` cpp
 template<class Clock, class Duration>
@@ -9009,8 +9009,8 @@ template<class Clock, class Duration>
 > *Effects:*
 >
 > None if the shared state contains a deferred
-> function[[futures.async]], otherwise blocks until the shared state is
-> ready or until the absolute timeout[[thread.req.timing]] specified by
+> function [[futures.async]], otherwise blocks until the shared state is
+> ready or until the absolute timeout [[thread.req.timing]] specified by
 > `abs_time` has expired.
 >
 > *Returns:*
@@ -9021,12 +9021,12 @@ template<class Clock, class Duration>
 > - `future_status::ready` if the shared state is ready.
 >
 > - `future_status::timeout` if the function is returning because the
->   absolute timeout@@REF:thread.req.timing@@ specified by `abs_time`
->   has expired.
+>   absolute timeout [[thread.req.timing]] specified by `abs_time` has
+>   expired.
 >
 > *Throws:*
 >
-> timeout-related exceptions[[thread.req.timing]].
+> timeout-related exceptions [[thread.req.timing]].
 
 ### Class template `shared_future` <a id="futures.shared.future">[[futures.shared.future]]</a>
 
@@ -9136,7 +9136,7 @@ shared_future(shared_future&& rhs) noexcept;
 
 > *Effects:*
 >
-> - Releases any shared state@@REF:futures.state@@;
+> - Releases any shared state [[futures.state]];
 >
 > - destroys `*this`.
 
@@ -9149,7 +9149,7 @@ shared_future& operator=(shared_future&& rhs) noexcept;
 > If `addressof(rhs) == this` is `true`, there are no effects.
 > Otherwise:
 >
-> - Releases any shared state@@REF:futures.state@@;
+> - Releases any shared state [[futures.state]];
 >
 > - move assigns the contents of `rhs` to `*this`.
 >
@@ -9169,7 +9169,7 @@ shared_future& operator=(const shared_future& rhs) noexcept;
 > If `addressof(rhs) == this` is `true`, there are no effects.
 > Otherwise:
 >
-> - Releases any shared state@@REF:futures.state@@;
+> - Releases any shared state [[futures.state]];
 >
 > - assigns the contents of `rhs` to `*this`.
 >
@@ -9192,7 +9192,7 @@ void shared_future<void>::get() const;
 >
 > \[*Note 77*: Access to a value object stored in the shared state is
 > unsynchronized, so operations on `R` might introduce a data
-> race[[intro.multithread]]. — *end note*\]
+> race [[intro.multithread]]. — *end note*\]
 >
 > *Effects:*
 >
@@ -9243,8 +9243,8 @@ template<class Rep, class Period>
 > *Effects:*
 >
 > None if the shared state contains a deferred
-> function[[futures.async]], otherwise blocks until the shared state is
-> ready or until the relative timeout[[thread.req.timing]] specified by
+> function [[futures.async]], otherwise blocks until the shared state is
+> ready or until the relative timeout [[thread.req.timing]] specified by
 > `rel_time` has expired.
 >
 > *Returns:*
@@ -9255,12 +9255,12 @@ template<class Rep, class Period>
 > - `future_status::ready` if the shared state is ready.
 >
 > - `future_status::timeout` if the function is returning because the
->   relative timeout@@REF:thread.req.timing@@ specified by `rel_time`
->   has expired.
+>   relative timeout [[thread.req.timing]] specified by `rel_time` has
+>   expired.
 >
 > *Throws:*
 >
-> timeout-related exceptions[[thread.req.timing]].
+> timeout-related exceptions [[thread.req.timing]].
 
 ``` cpp
 template<class Clock, class Duration>
@@ -9270,8 +9270,8 @@ template<class Clock, class Duration>
 > *Effects:*
 >
 > None if the shared state contains a deferred
-> function[[futures.async]], otherwise blocks until the shared state is
-> ready or until the absolute timeout[[thread.req.timing]] specified by
+> function [[futures.async]], otherwise blocks until the shared state is
+> ready or until the absolute timeout [[thread.req.timing]] specified by
 > `abs_time` has expired.
 >
 > *Returns:*
@@ -9282,12 +9282,12 @@ template<class Clock, class Duration>
 > - `future_status::ready` if the shared state is ready.
 >
 > - `future_status::timeout` if the function is returning because the
->   absolute timeout@@REF:thread.req.timing@@ specified by `abs_time`
->   has expired.
+>   absolute timeout [[thread.req.timing]] specified by `abs_time` has
+>   expired.
 >
 > *Throws:*
 >
-> timeout-related exceptions[[thread.req.timing]].
+> timeout-related exceptions [[thread.req.timing]].
 
 ### Function template `async` <a id="futures.async">[[futures.async]]</a>
 
@@ -9325,12 +9325,12 @@ template<class F, class... Args>
 > implementation may choose any of the corresponding policies):
 >
 > - If `launch::async` is set in `policy`, calls
->   `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`@@REF:func.invoke,thread.thread.constr@@
+>   `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`[[func.invoke,thread.thread.constr]]
 >   as if in a new thread of execution represented by a `thread` object
->   with the values produced by `auto` being
->   materialized@@REF:conv.rval@@ in the thread that called `async`. Any
->   return value is stored as the result in the shared state. Any
->   exception propagated from the execution of
+>   with the values produced by `auto` being materialized [[conv.rval]]
+>   in the thread that called `async`. Any return value is stored as the
+>   result in the shared state. Any exception propagated from the
+>   execution of
 >   `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`
 >   is stored as the exceptional result in the shared state. The
 >   `thread` object is stored in the shared state and affects the
@@ -9348,7 +9348,7 @@ template<class F, class... Args>
 >   execution of the deferred function is stored as the exceptional
 >   result in the shared state. The shared state is not made ready until
 >   the function has completed. The first call to a non-timed waiting
->   function@@REF:futures.state@@ on an asynchronous return object
+>   function [[futures.state]] on an asynchronous return object
 >   referring to this shared state invokes the deferred function in the
 >   thread that called the waiting function. Once evaluation of
 >   `invoke(std::move(g), std::move(xyz))` begins, the function is no
@@ -9377,13 +9377,13 @@ template<class F, class... Args>
 > - a call to a waiting function on an asynchronous return object that
 >   shares the shared state created by this `async` call shall block
 >   until the associated thread has completed, as if joined, or else
->   time out@@REF:thread.thread.member@@;
+>   time out [[thread.thread.member]];
 >
 > - the associated thread completion synchronizes
->   with@@REF:intro.multithread@@ the return from the first function
->   that successfully detects the ready status of the shared state or
->   with the return from the last function that releases the shared
->   state, whichever happens first.
+>   with [[intro.multithread]] the return from the first function that
+>   successfully detects the ready status of the shared state or with
+>   the return from the last function that releases the shared state,
+>   whichever happens first.
 >
 > *Returns:*
 >
@@ -9508,7 +9508,7 @@ template<class F> packaged_task(F) -> packaged_task<see below>;
 ```
 
 > `&F::operator()` is well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]] and either
+> operand [[term.unevaluated.operand]] and either
 >
 > - `F::operator()` is a non-static member function and
 >   `decltype(&F::operator())` is either of the form
@@ -9541,7 +9541,7 @@ packaged_task& operator=(packaged_task&& rhs) noexcept;
 
 > *Effects:*
 >
-> - Releases any shared state@@REF:futures.state@@;
+> - Releases any shared state [[futures.state]];
 >
 > - calls `packaged_task(std::move(rhs)).swap(*this)`.
 
@@ -9551,7 +9551,7 @@ packaged_task& operator=(packaged_task&& rhs) noexcept;
 
 > *Effects:*
 >
-> Abandons any shared state[[futures.state]].
+> Abandons any shared state [[futures.state]].
 
 ``` cpp
 void swap(packaged_task& other) noexcept;
@@ -9580,7 +9580,7 @@ future<R> get_future();
 ```
 
 > Calls to this function do not introduce data
-> races [[intro.multithread]] with calls to `operator()` or
+> races  [[intro.multithread]] with calls to `operator()` or
 > `make_ready_at_thread_exit`.
 >
 > \[*Note 80*: Such calls need not synchronize with each
@@ -9607,7 +9607,7 @@ void operator()(ArgTypes... args);
 
 > *Effects:*
 >
-> As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N)[[func.require]],
+> As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N) [[func.require]],
 > where `f` is the stored task of `*this` and
 > `t`_1`, t`_2`, `$\dotsc$`, t`_N are the values in `args...`. If the
 > task returns normally, the return value is stored as the asynchronous
@@ -9634,13 +9634,13 @@ void make_ready_at_thread_exit(ArgTypes... args);
 
 > *Effects:*
 >
-> As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N)[[func.require]],
+> As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N) [[func.require]],
 > where `f` is the stored task and `t`_1`, t`_2`, `$\dotsc$`, t`_N are
 > the values in `args...`. If the task returns normally, the return
 > value is stored as the asynchronous result in the shared state of
 > `*this`, otherwise the exception thrown by the task is stored. In
 > either case, this is done without making that state
-> ready[[futures.state]] immediately. Schedules the shared state to be
+> ready [[futures.state]] immediately. Schedules the shared state to be
 > made ready when the current thread exits, after all objects of thread
 > storage duration associated with the current thread have been
 > destroyed.
@@ -9666,7 +9666,7 @@ void reset();
 > stored in `*this`.
 >
 > \[*Note 81*: This constructs a new shared state for `*this`. The old
-> state is abandoned[[futures.state]]. — *end note*\]
+> state is abandoned [[futures.state]]. — *end note*\]
 >
 > *Throws:*
 >

@@ -1494,7 +1494,7 @@ template<class S, class I>
 > Pursuant to [[namespace.std]], users may specialize
 > `disable_sized_sentinel_for` for cv-unqualified non-array object types
 > `S` and `I` if `S` and/or `I` is a program-defined type. Such
-> specializations shall be usable in constant expressions[[expr.const]]
+> specializations shall be usable in constant expressions [[expr.const]]
 > and have type `const bool`.
 >
 > \[*Note 4*: `disable_sized_sentinel_for` allows use of sentinels and
@@ -1502,9 +1502,9 @@ template<class S, class I>
 > `sized_sentinel_for`. — *end note*\]
 >
 > \[*Example 1*: The `sized_sentinel_for` concept is modeled by pairs of
-> `random_access_iterator`s[[iterator.concept.random.access]] and by
+> `random_access_iterator`s [[iterator.concept.random.access]] and by
 > counted iterators and their
-> sentinels[[counted.iterator]]. — *end example*\]
+> sentinels [[counted.iterator]]. — *end example*\]
 
 #### Concept  <a id="iterator.concept.input">[[iterator.concept.input]]</a>
 
@@ -5056,7 +5056,7 @@ template<common_with<I> I2>
 > *Preconditions:*
 >
 > `x` and `y` refer to elements of the same
-> sequence[[counted.iterator]].
+> sequence [[counted.iterator]].
 >
 > *Effects:*
 >
@@ -5110,7 +5110,7 @@ template<common_with<I> I2>
 > *Preconditions:*
 >
 > `x` and `y` refer to elements of the same
-> sequence[[counted.iterator]].
+> sequence [[counted.iterator]].
 >
 > *Effects:*
 >
@@ -5134,7 +5134,7 @@ template<common_with<I> I2>
 > *Preconditions:*
 >
 > `x` and `y` refer to elements of the same
-> sequence[[counted.iterator]].
+> sequence [[counted.iterator]].
 >
 > *Effects:*
 >
@@ -5292,7 +5292,7 @@ constexpr istream_iterator(default_sentinel_t);
 > *Remarks:*
 >
 > If the initializer `T()` in the declaration `auto x = T();` is a
-> constant initializer[[expr.const]], then these constructors are
+> constant initializer [[expr.const]], then these constructors are
 > constructors.
 
 ``` cpp
@@ -5317,7 +5317,7 @@ constexpr istream_iterator(const istream_iterator& x) noexcept(see below);
 >
 > An invocation of this constructor may be used in a core constant
 > expression if and only if the initialization of `value` from `x.value`
-> is a constant subexpression[[defns.const.subexpr]]. The exception
+> is a constant subexpression [[defns.const.subexpr]]. The exception
 > specification is equivalent to `is_nothrow_copy_constructible_v<T>`.
 
 ``` cpp

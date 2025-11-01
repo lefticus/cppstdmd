@@ -102,7 +102,7 @@ typename X::value_type
 >
 > *Preconditions:*
 >
-> `T` is *Cpp17Erasable* from `X` (see [[container.alloc.reqmts]],
+> `T` is *Cpp17Erasable* from `X` (see  [[container.alloc.reqmts]],
 > below).
 
 ``` cpp
@@ -128,7 +128,7 @@ typename X::iterator
 > *Returns:*
 >
 > A type that meets the forward iterator
-> requirements[[forward.iterators]] with value type `T`. The type
+> requirements [[forward.iterators]] with value type `T`. The type
 > `X::iterator` is convertible to `X::const_iterator`.
 
 ``` cpp
@@ -1078,7 +1078,7 @@ X u(i, j);
 >
 > `T` is *Cpp17EmplaceConstructible* into `X` from `*i`. For `vector`,
 > if the iterator does not meet the *Cpp17ForwardIterator*
-> requirements[[forward.iterators]], `T` is also *Cpp17MoveInsertable*
+> requirements [[forward.iterators]], `T` is also *Cpp17MoveInsertable*
 > into `X`.
 >
 > *Effects:*
@@ -1362,7 +1362,7 @@ a.assign(i, j)
 >
 > `T` is *Cpp17EmplaceConstructible* into `X` from `*i` and assignable
 > from `*i`. For `vector`, if the iterator does not meet the forward
-> iterator requirements[[forward.iterators]], `T` is also
+> iterator requirements [[forward.iterators]], `T` is also
 > *Cpp17MoveInsertable* into `X`. Neither `i` nor `j` are iterators into
 > `a`.
 >
@@ -2214,7 +2214,7 @@ typename X::node_type
 > *Returns:*
 >
 > A specialization of the *node-handle* class
-> template[[container.node]], such that the public nested types are the
+> template [[container.node]], such that the public nested types are the
 > same types as the corresponding types in `X`.
 
 ``` cpp
@@ -3451,7 +3451,7 @@ typename X::node_type
 
 > *Returns:*
 >
-> A specialization of a *node-handle* class template[[container.node]],
+> A specialization of a *node-handle* class template [[container.node]],
 > such that the public nested types are the same types as the
 > corresponding types in `X`.
 
@@ -3719,7 +3719,7 @@ X(b)
 > *Effects:*
 >
 > In addition to the container
-> requirements[[container.requirements.general]], copies the hash
+> requirements [[container.requirements.general]], copies the hash
 > function, predicate, and maximum load factor.
 >
 > *Complexity:*
@@ -6280,7 +6280,7 @@ template<class Predicate> size_type remove_if(Predicate pred);
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ``` cpp
 size_type unique();
@@ -6347,7 +6347,7 @@ template<class Compare> void merge(forward_list&& x, Compare comp);
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If `addressof(x) != this`, `x` is empty
+> Stable [[algorithm.stable]]. If `addressof(x) != this`, `x` is empty
 > after the merge. No elements are copied by this operation. If an
 > exception is thrown other than by a comparison, there are no effects.
 
@@ -6370,7 +6370,7 @@ template<class Compare> void sort(Compare comp);
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ``` cpp
 void reverse() noexcept;
@@ -6880,7 +6880,7 @@ template<class Predicate> size_type remove_if(Predicate pred);
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ``` cpp
 size_type unique();
@@ -6945,7 +6945,7 @@ template<class Compare> void merge(list&& x, Compare comp);
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If `addressof(x) != this`, `x` is empty
+> Stable [[algorithm.stable]]. If `addressof(x) != this`, `x` is empty
 > after the merge. No elements are copied by this operation. If an
 > exception is thrown other than by a comparison there are no effects.
 
@@ -6980,7 +6980,7 @@ template<class Compare> void sort(Compare comp);
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 #### Erasure <a id="list.erasure">[[list.erasure]]</a>
 
@@ -7679,7 +7679,7 @@ static constexpr void swap(reference x, reference y) noexcept;
 template<class Allocator> struct hash<vector<bool, Allocator>>;
 ```
 
-> The specialization is enabled[[unord.hash]].
+> The specialization is enabled [[unord.hash]].
 
 *is-vector-bool-reference*
 
@@ -11699,7 +11699,7 @@ priority_queue(const Compare& x, Container&& y);
 
 > *Preconditions:*
 >
-> `x` defines a strict weak ordering[[alg.sorting]].
+> `x` defines a strict weak ordering [[alg.sorting]].
 >
 > *Effects:*
 >
@@ -11714,7 +11714,7 @@ template<class InputIterator>
 
 > *Preconditions:*
 >
-> `x` defines a strict weak ordering[[alg.sorting]].
+> `x` defines a strict weak ordering [[alg.sorting]].
 >
 > *Effects:*
 >
@@ -11731,7 +11731,7 @@ template<class InputIterator>
 
 > *Preconditions:*
 >
-> `x` defines a strict weak ordering[[alg.sorting]].
+> `x` defines a strict weak ordering [[alg.sorting]].
 >
 > *Effects:*
 >
@@ -11747,7 +11747,7 @@ template<container-compatible-range<T> R>
 
 > *Preconditions:*
 >
-> `x` defines a strict weak ordering[[alg.sorting]].
+> `x` defines a strict weak ordering [[alg.sorting]].
 >
 > *Effects:*
 >
@@ -12710,7 +12710,7 @@ template<class Allocator>
 > Equivalent to `flat_map(key_cont, mapped_cont)` and
 > `flat_map(key_cont, mapped_cont, comp)`, respectively, except that
 > `c.keys` and `c.values` are constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -12749,7 +12749,7 @@ template<class Allocator>
 > Equivalent to `flat_map(s, key_cont, mapped_cont)` and
 > `flat_map(s, key_cont, mapped_cont, comp)`, respectively, except that
 > `c.keys` and `c.values` are constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -12791,7 +12791,7 @@ template<class Allocator>
 >
 > Equivalent to the corresponding non-allocator constructors except that
 > `c.keys` and `c.values` are constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 
 #### Capacity <a id="flat.map.capacity">[[flat.map.capacity]]</a>
 
@@ -13286,8 +13286,8 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state[[defns.valid]].
+> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
+> an exception, `c` is in a valid but unspecified state [[defns.valid]].
 >
 > \[*Note 16*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -13718,7 +13718,7 @@ template<class Allocator>
 > Equivalent to `flat_multimap(key_cont, mapped_cont)` and
 > `flat_multimap(key_cont, mapped_cont, comp)`, respectively, except
 > that `c.keys` and `c.values` are constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -13757,7 +13757,7 @@ template<class Allocator>
 > Equivalent to `flat_multimap(s, key_cont, mapped_cont)` and
 > `flat_multimap(s, key_cont, mapped_cont, comp)`, respectively, except
 > that `c.keys` and `c.values` are constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -13801,7 +13801,7 @@ template<class Allocator>
 >
 > Equivalent to the corresponding non-allocator constructors except that
 > `c.keys` and `c.values` are constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 
 #### Erasure <a id="flat.multimap.erasure">[[flat.multimap.erasure]]</a>
 
@@ -13831,8 +13831,8 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state[[defns.valid]].
+> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
+> an exception, `c` is in a valid but unspecified state [[defns.valid]].
 >
 > \[*Note 17*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -14190,7 +14190,7 @@ template<class Allocator>
 >
 > Equivalent to `flat_set(cont)` and `flat_set(cont, comp)`,
 > respectively, except that *c* is constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -14210,7 +14210,7 @@ template<class Allocator>
 >
 > Equivalent to `flat_set(s, cont)` and `flat_set(s, cont, comp)`,
 > respectively, except that *c* is constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -14251,7 +14251,7 @@ template<class Allocator>
 >
 > Equivalent to the corresponding non-allocator constructors except that
 > *c* is constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 
 #### Modifiers <a id="flat.set.modifiers">[[flat.set.modifiers]]</a>
 
@@ -14418,8 +14418,8 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state[[defns.valid]].
+> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
+> an exception, `c` is in a valid but unspecified state [[defns.valid]].
 >
 > \[*Note 18*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -14779,7 +14779,7 @@ template<class Allocator>
 >
 > Equivalent to `flat_multiset(cont)` and `flat_multiset(cont, comp)`,
 > respectively, except that *c* is constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -14801,7 +14801,7 @@ template<class Allocator>
 > Equivalent to `flat_multiset(s, cont)` and
 > `flat_multiset(s, cont, comp)`, respectively, except that *c* is
 > constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 >
 > *Complexity:*
 >
@@ -14843,7 +14843,7 @@ template<class Allocator>
 >
 > Equivalent to the corresponding non-allocator constructors except that
 > *c* is constructed with uses-allocator
-> construction[[allocator.uses.construction]].
+> construction [[allocator.uses.construction]].
 
 #### Modifiers <a id="flat.multiset.modifiers">[[flat.multiset.modifiers]]</a>
 
@@ -14971,8 +14971,8 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state[[defns.valid]].
+> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
+> an exception, `c` is in a valid but unspecified state [[defns.valid]].
 >
 > \[*Note 19*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -15592,11 +15592,11 @@ using iterator = \impdefx{type of span::iterator};
 
 > The type models `contiguous_iterator`[[iterator.concept.contiguous]],
 > meets the *Cpp17RandomAccessIterator*
-> requirements[[random.access.iterators]], and meets the requirements
-> for constexpr iterators[[iterator.requirements.general]], whose value
+> requirements [[random.access.iterators]], and meets the requirements
+> for constexpr iterators [[iterator.requirements.general]], whose value
 > type is `value_type` and whose reference type is `reference`.
 >
-> All requirements on container iterators[[container.reqmts]] apply to
+> All requirements on container iterators [[container.reqmts]] apply to
 > `span::iterator` as well.
 
 ``` cpp
@@ -16117,7 +16117,7 @@ typename M::layout_type
 > *Returns:*
 >
 > A type `MP` that meets the layout mapping policy
-> requirements[[mdspan.layout.policy.reqmts]] and for which
+> requirements [[mdspan.layout.policy.reqmts]] and for which
 > *`is-mapping-of`*`<MP, M>` is `true`.
 
 ``` cpp
@@ -16246,7 +16246,7 @@ M::is_always_unique()
 
 > *Returns:*
 >
-> A constant expression[[expr.const]] of type `bool`.
+> A constant expression [[expr.const]] of type `bool`.
 >
 > *Returns:*
 >
@@ -16263,7 +16263,7 @@ M::is_always_exhaustive()
 
 > *Returns:*
 >
-> A constant expression[[expr.const]] of type `bool`.
+> A constant expression [[expr.const]] of type `bool`.
 >
 > *Returns:*
 >
@@ -16280,7 +16280,7 @@ M::is_always_strided()
 
 > *Returns:*
 >
-> A constant expression[[expr.const]] of type `bool`.
+> A constant expression [[expr.const]] of type `bool`.
 >
 > *Returns:*
 >
@@ -16459,7 +16459,7 @@ template<class OtherExtents>
 >   `other.extents().`*`fwd-prod-of-extents`*`(`r`)`, and
 >
 > - `other.required_span_size()` is representable as a value of type
->   `index_type`@@REF:basic.fundamental@@.
+>   `index_type`[[basic.fundamental]].
 >
 > *Effects:*
 >
@@ -16668,7 +16668,7 @@ template<class OtherExtents>
 >   `other.extents().`*`rev-prod-of-extents`*`(`r`)`.
 >
 > - `other.required_span_size()` is representable as a value of type
->   `index_type`@@REF:basic.fundamental@@.
+>   `index_type`[[basic.fundamental]].
 >
 > *Effects:*
 >
@@ -16903,7 +16903,7 @@ template<class OtherIndexType>
 > - `s[`i`] > 0` is `true` for all i in the range $[0, \textit{rank_})$.
 >
 > - *`REQUIRED-SPAN-SIZE`*`(e, s)` is representable as a value of type
->   `index_type`@@REF:basic.fundamental@@.
+>   `index_type`[[basic.fundamental]].
 >
 > - If *rank\_* is greater than 0, then there exists a permutation P of
 >   the integers in the range $[0, \textit{rank_})$, such that
@@ -16939,13 +16939,13 @@ template<class StridedLayoutMapping>
 > *Preconditions:*
 >
 > - `StridedLayoutMapping` meets the layout mapping
->   requirements@@REF:mdspan.layout.policy.reqmts@@,
+>   requirements [[mdspan.layout.policy.reqmts]],
 >
 > - `other.stride(`r`) > 0` is `true` for every rank index r of
 >   `extents()`,
 >
 > - `other.required_span_size()` is representable as a value of type
->   `index_type`@@REF:basic.fundamental@@, and
+>   `index_type`[[basic.fundamental]], and
 >
 > - *`OFFSET`*`(other) == 0` is `true`.
 >
@@ -17037,7 +17037,7 @@ template<class OtherMapping>
 > *Preconditions:*
 >
 > `OtherMapping` meets the layout mapping
-> requirements[[mdspan.layout.policy.reqmts]].
+> requirements [[mdspan.layout.policy.reqmts]].
 >
 > *Returns:*
 >

@@ -82,10 +82,10 @@ using state_type = see below;
 
 > *Preconditions:*
 >
-> `state_type` meets the *Cpp17Destructible* ([[cpp17.destructible]]),
-> *Cpp17CopyAssignable* ([[cpp17.copyassignable]]),
-> *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]), and
-> *Cpp17DefaultConstructible* ([[cpp17.defaultconstructible]])
+> `state_type` meets the *Cpp17Destructible* ( [[cpp17.destructible]]),
+> *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]),
+> *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]), and
+> *Cpp17DefaultConstructible* ( [[cpp17.defaultconstructible]])
 > requirements.
 
 ### `char_traits` specializations <a id="char.traits.specializations">[[char.traits.specializations]]</a>
@@ -665,10 +665,10 @@ using const_iterator = \impdefx{type of basic_string_view::const_iterator};
 > A type that meets the requirements of a constant
 > *Cpp17RandomAccessIterator*[[random.access.iterators]], models
 > `contiguous_iterator`[[iterator.concept.contiguous]], and meets the
-> constexpr iterator requirements[[iterator.requirements.general]],
+> constexpr iterator requirements [[iterator.requirements.general]],
 > whose `value_type` is the template parameter `charT`.
 >
-> All requirements on container iterators[[container.requirements]]
+> All requirements on container iterators [[container.requirements]]
 > apply to `basic_string_view::const_iterator` as well.
 
 ``` cpp
@@ -1252,12 +1252,12 @@ template<class charT, class traits>
 ```
 
 > Let `R` denote the type `traits::comparison_category` if that
-> *qualified-id* is valid and denotes a type[[temp.deduct]], otherwise
+> *qualified-id* is valid and denotes a type [[temp.deduct]], otherwise
 > `R` is `weak_ordering`.
 >
 > *Mandates:*
 >
-> `R` denotes a comparison category type[[cmp.categories]].
+> `R` denotes a comparison category type [[cmp.categories]].
 >
 > *Returns:*
 >
@@ -1273,11 +1273,11 @@ template<class charT, class traits>
 
 > *Effects:*
 >
-> Behaves as a formatted output function[[ostream.formatted.reqmts]] of
+> Behaves as a formatted output function [[ostream.formatted.reqmts]] of
 > `os`. Forms a character sequence `seq`, initially consisting of the
 > elements defined by the range \[`str.begin()`, `str.end()`).
 > Determines padding for `seq` as described
-> in [[ostream.formatted.reqmts]]. Then inserts `seq` as if by calling
+> in  [[ostream.formatted.reqmts]]. Then inserts `seq` as if by calling
 > `os.rdbuf()->sputn(seq, n)`, where `n` is the larger of `os.width()`
 > and `str.size()`; then calls `os.width(0)`.
 >
@@ -1295,11 +1295,11 @@ template<> struct hash<u32string_view>;
 template<> struct hash<wstring_view>;
 ```
 
-> The specialization is enabled[[unord.hash]].
+> The specialization is enabled [[unord.hash]].
 >
 > \[*Note 3*: The hash value of a string view object is equal to the
 > hash value of the corresponding string
-> object[[basic.string.hash]]. — *end note*\]
+> object [[basic.string.hash]]. — *end note*\]
 
 ### Suffix for `basic_string_view` literals <a id="string.view.literals">[[string.view.literals]]</a>
 
@@ -2049,7 +2049,7 @@ constexpr basic_string(const charT* s, const Allocator& a = Allocator());
 ```
 
 > `Allocator` is a type that qualifies as an
-> allocator[[container.requirements.general]].
+> allocator [[container.requirements.general]].
 >
 > \[*Note 4*: This affects class template argument
 > deduction. — *end note*\]
@@ -2063,7 +2063,7 @@ constexpr basic_string(size_type n, charT c, const Allocator& a = Allocator());
 ```
 
 > `Allocator` is a type that qualifies as an
-> allocator[[container.requirements.general]].
+> allocator [[container.requirements.general]].
 >
 > \[*Note 5*: This affects class template argument
 > deduction. — *end note*\]
@@ -2078,7 +2078,7 @@ template<class InputIterator>
 ```
 
 > `InputIterator` is a type that qualifies as an input
-> iterator[[container.requirements.general]].
+> iterator [[container.requirements.general]].
 >
 > *Effects:*
 >
@@ -2129,7 +2129,7 @@ template<class InputIterator,
 
 > `InputIterator` is a type that qualifies as an input iterator, and
 > `Allocator` is a type that qualifies as an
-> allocator[[container.requirements.general]].
+> allocator [[container.requirements.general]].
 
 ``` cpp
 template<class charT,
@@ -2148,7 +2148,7 @@ template<class charT,
 ```
 
 > `Allocator` is a type that qualifies as an
-> allocator[[container.requirements.general]].
+> allocator [[container.requirements.general]].
 
 ``` cpp
 constexpr basic_string& operator=(const basic_string& str);
@@ -2171,8 +2171,8 @@ constexpr basic_string& operator=(basic_string&& str)
 
 > *Effects:*
 >
-> Move assigns as a sequence container[[container.requirements]], except
-> that iterators, pointers and references may be invalidated.
+> Move assigns as a sequence container [[container.requirements]],
+> except that iterators, pointers and references may be invalidated.
 >
 > *Returns:*
 >
@@ -2334,7 +2334,7 @@ template<class Operation> constexpr void resize_and_overwrite(size_type n, Opera
 > - `p` be a value of type `charT*` or `charT* const`, such that the
 >   range \[`p`, `p + n`\] is valid and `this->compare(0, k, p, k) == 0`
 >   is `true` before the call. The values in the range \[`p + k`,
->   `p + n`\] may be indeterminate@@REF:basic.indet@@.
+>   `p + n`\] may be indeterminate [[basic.indet]].
 >
 > - `m` be a value of type `size_type` or `const size_type` equal to
 >   `n`.
@@ -2345,7 +2345,7 @@ template<class Operation> constexpr void resize_and_overwrite(size_type n, Opera
 >
 > *Mandates:*
 >
-> *`OP`* has an integer-like type[[iterator.concept.winc]].
+> *`OP`* has an integer-like type [[iterator.concept.winc]].
 >
 > *Preconditions:*
 >
@@ -2664,7 +2664,7 @@ template<class InputIterator>
 ```
 
 > `InputIterator` is a type that qualifies as an input
-> iterator[[container.requirements.general]].
+> iterator [[container.requirements.general]].
 >
 > *Effects:*
 >
@@ -2820,7 +2820,7 @@ template<class InputIterator>
 ```
 
 > `InputIterator` is a type that qualifies as an input
-> iterator[[container.requirements.general]].
+> iterator [[container.requirements.general]].
 >
 > *Effects:*
 >
@@ -2993,7 +2993,7 @@ template<class InputIterator>
 ```
 
 > `InputIterator` is a type that qualifies as an input
-> iterator[[container.requirements.general]].
+> iterator [[container.requirements.general]].
 >
 > *Preconditions:*
 >
@@ -3310,7 +3310,7 @@ template<class InputIterator>
 ```
 
 > `InputIterator` is a type that qualifies as an input
-> iterator[[container.requirements.general]].
+> iterator [[container.requirements.general]].
 >
 > *Effects:*
 >
@@ -3912,7 +3912,7 @@ template<class charT, class traits, class Allocator>
 
 > *Effects:*
 >
-> Behaves as a formatted input function[[istream.formatted.reqmts]].
+> Behaves as a formatted input function [[istream.formatted.reqmts]].
 > After constructing a `sentry` object, if the `sentry` object returns
 > `true` when converted to a value of type `bool`, calls `str.erase()`
 > and then extracts characters from `is` and appends them to `str` as if
@@ -3964,7 +3964,7 @@ template<class charT, class traits, class Allocator>
 
 > *Effects:*
 >
-> Behaves as an unformatted input function[[istream.unformatted]],
+> Behaves as an unformatted input function [[istream.unformatted]],
 > except that it does not affect the value returned by subsequent calls
 > to `basic_istream<>::gcount()`. After constructing a `sentry` object,
 > if the `sentry` object returns `true` when converted to a value of
@@ -4522,7 +4522,7 @@ int wctomb(char* s, wchar_t wchar);
 > *Remarks:*
 >
 > Calls to these functions may introduce a data
-> race[[res.on.data.races]] with other calls to the same function.
+> race [[res.on.data.races]] with other calls to the same function.
 
 ``` cpp
 size_t mbrlen(const char* s, size_t n, mbstate_t* ps);
@@ -4540,7 +4540,7 @@ size_t wcsrtombs(char* dst, const wchar_t** src, size_t len, mbstate_t* ps);
 > *Remarks:*
 >
 > Calling these functions with an `mbstate_t*` argument that is a null
-> pointer value may introduce a data race[[res.on.data.races]] with
+> pointer value may introduce a data race [[res.on.data.races]] with
 > other calls to the same function with an `mbstate_t*` argument that is
 > a null pointer value.
 
@@ -4619,7 +4619,7 @@ size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);
 > *Remarks:*
 >
 > Calls to `c8rtomb` with a null pointer argument for `s` may introduce
-> a data race[[res.on.data.races]] with other calls to `c8rtomb` with a
+> a data race [[res.on.data.races]] with other calls to `c8rtomb` with a
 > null pointer argument for `s`.
 
 <!-- Section link definitions -->

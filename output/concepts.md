@@ -339,8 +339,7 @@ template<class From, class To>
 >
 >   - If `FromR` is an rvalue reference to a non const-qualified type,
 >     the resulting state of the object referenced by `f()` after either
->     above expression is valid but
->     unspecified@@REF:lib.types.movedfrom@@.
+>     above expression is valid but unspecified [[lib.types.movedfrom]].
 >
 >   - Otherwise, the object referred to by `f()` is not modified by
 >     either above expression.
@@ -364,7 +363,7 @@ template<class T, class U>
 ```
 
 > Let `C` be `common_reference_t<T, U>`. Let `t1` and `t2` be
-> equality-preserving expressions[[concepts.equality]] such that
+> equality-preserving expressions [[concepts.equality]] such that
 > `decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
 > `u2` be equality-preserving expressions such that `decltype((u1))` and
 > `decltype((u2))` are each `U`. `T` and `U` model
@@ -376,7 +375,7 @@ template<class T, class U>
 >
 > \[*Note 3*: Users can customize the behavior of
 > `common_reference_with` by specializing the `basic_common_reference`
-> class template[[meta.trans.other]]. — *end note*\]
+> class template [[meta.trans.other]]. — *end note*\]
 
 ### Concept  <a id="concept.common">[[concept.common]]</a>
 
@@ -405,7 +404,7 @@ template<class T, class U>
 ```
 
 > Let `C` be `common_type_t<T, U>`. Let `t1` and `t2` be
-> equality-preserving expressions[[concepts.equality]] such that
+> equality-preserving expressions [[concepts.equality]] such that
 > `decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
 > `u2` be equality-preserving expressions such that `decltype((u1))` and
 > `decltype((u2))` are each `U`. `T` and `U` model `common_with``<T, U>`
@@ -417,7 +416,7 @@ template<class T, class U>
 >
 > \[*Note 4*: Users can customize the behavior of `common_with` by
 > specializing the `common_type` class
-> template[[meta.trans.other]]. — *end note*\]
+> template [[meta.trans.other]]. — *end note*\]
 
 ### Arithmetic concepts <a id="concepts.arithmetic">[[concepts.arithmetic]]</a>
 
@@ -433,11 +432,11 @@ template<class T>
 ```
 
 > \[*Note 5*: `signed_integral` can be modeled even by types that are
-> not signed integer types[[basic.fundamental]]; for example,
+> not signed integer types [[basic.fundamental]]; for example,
 > `char`. — *end note*\]
 >
 > \[*Note 6*: `unsigned_integral` can be modeled even by types that are
-> not unsigned integer types[[basic.fundamental]]; for example,
+> not unsigned integer types [[basic.fundamental]]; for example,
 > `bool`. — *end note*\]
 
 ### Concept  <a id="concept.assignable">[[concept.assignable]]</a>
@@ -471,16 +470,15 @@ template<class LHS, class RHS>
 >     refers to `lcopy`.
 >
 >   - If `rhs` is a non- xvalue, the resulting state of the object to
->     which it refers is valid but
->     unspecified@@REF:lib.types.movedfrom@@.
+>     which it refers is valid but unspecified [[lib.types.movedfrom]].
 >
 >   - Otherwise, if `rhs` is a glvalue, the object to which it refers is
 >     not modified.
 >
 > \[*Note 7*: Assignment need not be a total
-> function[[structure.requirements]]; in particular, if assignment to an
-> object `x` can result in a modification of some other object `y`, then
-> `x = y` is likely not in the domain of `=`. — *end note*\]
+> function [[structure.requirements]]; in particular, if assignment to
+> an object `x` can result in a modification of some other object `y`,
+> then `x = y` is likely not in the domain of `=`. — *end note*\]
 
 ### Concept  <a id="concept.swappable">[[concept.swappable]]</a>
 
@@ -645,7 +643,7 @@ template<class T>
 ```
 
 > \[*Note 10*: Unlike the *Cpp17Destructible*
-> requirements ([[cpp17.destructible]]), this concept forbids
+> requirements ( [[cpp17.destructible]]), this concept forbids
 > destructors that are potentially throwing, even if a particular
 > invocation of the destructor does not actually throw. — *end note*\]
 
@@ -699,7 +697,7 @@ template<class T>
 > - `T(rv)` is equal to `u2`.
 >
 > - If `T` is not , `rv`’s resulting state is valid but
->   unspecified@@REF:lib.types.movedfrom@@; otherwise, it is unchanged.
+>   unspecified [[lib.types.movedfrom]]; otherwise, it is unchanged.
 
 ### Concept  <a id="concept.copyconstructible">[[concept.copyconstructible]]</a>
 
@@ -717,7 +715,7 @@ template<class T>
 > if
 >
 > - After the definition `T u = v;`, `u` is equal to
->   `v`@@REF:concepts.equality@@ and `v` is not modified.
+>   `v`[[concepts.equality]] and `v` is not modified.
 >
 > - `T(v)` is equal to `v` and does not modify `v`.
 
@@ -1044,7 +1042,7 @@ template<class F, class... Args>
 > \[*Example 1*: A function that generates random numbers can model
 > `invocable`, since the `invoke` function call expression is not
 > required to be
-> equality-preserving[[concepts.equality]]. — *end example*\]
+> equality-preserving [[concepts.equality]]. — *end example*\]
 
 ### Concept  <a id="concept.regularinvocable">[[concept.regularinvocable]]</a>
 
@@ -1054,7 +1052,7 @@ template<class F, class... Args>
 ```
 
 > The `invoke` function call expression shall be
-> equality-preserving[[concepts.equality]] and shall not modify the
+> equality-preserving [[concepts.equality]] and shall not modify the
 > function object or the arguments.
 >
 > \[*Note 14*: This requirement supersedes the annotation in the

@@ -3266,10 +3266,11 @@ template<class InputIterator, class Function>
 > *Preconditions:*
 >
 > `Function` meets the *Cpp17MoveConstructible* requirements
-> ([[cpp17.moveconstructible]]).
+> ( [[cpp17.moveconstructible]]).
 >
 > \[*Note 2*: `Function` need not meet the requirements of
-> *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]). — *end note*\]
+> *Cpp17CopyConstructible*
+> ( [[cpp17.copyconstructible]]). — *end note*\]
 >
 > *Effects:*
 >
@@ -3370,7 +3371,7 @@ template<class InputIterator, class Size, class Function>
 > *Mandates:*
 >
 > The type `Size` is convertible to an integral
-> type[[conv.integral,class.conv]].
+> type [[conv.integral,class.conv]].
 >
 > *Preconditions:*
 >
@@ -3406,7 +3407,7 @@ template<class ExecutionPolicy, class ForwardIterator, class Size, class Functio
 > *Mandates:*
 >
 > The type `Size` is convertible to an integral
-> type[[conv.integral,class.conv]].
+> type [[conv.integral,class.conv]].
 >
 > *Preconditions:*
 >
@@ -4003,13 +4004,12 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to,
 > If
 >
 > - the types of `first1`, `last1`, `first2`, and `last2` meet the
->   *Cpp17RandomAccessIterator*
->   requirements@@REF:random.access.iterators@@ and
->   `last1 - first1 != last2 - first2` for the overloads in namespace
->   `std`;
+>   *Cpp17RandomAccessIterator* requirements [[random.access.iterators]]
+>   and `last1 - first1 != last2 - first2` for the overloads in
+>   namespace `std`;
 >
 > - the types of `first1`, `last1`, `first2`, and `last2` pairwise model
->   `sized_sentinel_for`@@REF:iterator.concept.sizedsentinel@@ and
+>   `sized_sentinel_for`[[iterator.concept.sizedsentinel]] and
 >   `last1 - first1 != last2 - first2` for the first overload in
 >   namespace `ranges`,
 >
@@ -4227,7 +4227,7 @@ template<class ExecutionPolicy, class ForwardIterator, class Size, class T,
 > *Mandates:*
 >
 > The type `Size` is convertible to an integral
-> type[[conv.integral,class.conv]].
+> type [[conv.integral,class.conv]].
 >
 > *Returns:*
 >
@@ -4580,7 +4580,7 @@ template<input_iterator I, weakly_incrementable O>
 > *Mandates:*
 >
 > The type `Size` is convertible to an integral
-> type[[conv.integral,class.conv]].
+> type [[conv.integral,class.conv]].
 >
 > *Effects:*
 >
@@ -4638,7 +4638,8 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > \[*Note 13*: For the overload with an `ExecutionPolicy`, there might
 > be a performance cost if
 > `iterator_traits<ForwardIterator1>::value_type` is not
-> *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]). — *end note*\]
+> *Cpp17MoveConstructible*
+> ( [[cpp17.moveconstructible]]). — *end note*\]
 >
 > *Effects:*
 >
@@ -4658,7 +4659,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ``` cpp
 template<class BidirectionalIterator1, class BidirectionalIterator2>
@@ -4864,7 +4865,7 @@ template<input_range R1, input_range R2>
 >
 > The two ranges \[`first1`, `last1`) and \[`first2`, `last2`) do not
 > overlap. For the overloads in namespace `std`, `*(first1 + `n`)` is
-> swappable with[[swappable.requirements]] `*(first2 + `n`)`.
+> swappable with [[swappable.requirements]] `*(first2 + `n`)`.
 >
 > *Effects:*
 >
@@ -4895,7 +4896,7 @@ template<class ForwardIterator1, class ForwardIterator2>
 > *Preconditions:*
 >
 > `a` and `b` are dereferenceable. `*a` is swappable
-> with[[swappable.requirements]] `*b`.
+> with [[swappable.requirements]] `*b`.
 >
 > *Effects:*
 >
@@ -5070,7 +5071,7 @@ template<input_range R, class T, class Proj = identity,
 >
 > *Mandates:*
 >
-> `new_value` is writable[[iterator.requirements.general]] to `first`.
+> `new_value` is writable [[iterator.requirements.general]] to `first`.
 >
 > *Effects:*
 >
@@ -5156,7 +5157,7 @@ template<input_range R, class T, output_iterator<const T&> O, class Proj = ident
 > *Mandates:*
 >
 > The results of the expressions `*first` and `new_value` are
-> writable[[iterator.requirements.general]] to `result`.
+> writable [[iterator.requirements.general]] to `result`.
 >
 > *Preconditions:*
 >
@@ -5212,9 +5213,9 @@ template<class T, output_iterator<const T&> O>
 >
 > *Mandates:*
 >
-> The expression `value` is writable[[iterator.requirements.general]] to
-> the output iterator. The type `Size` is convertible to an integral
-> type[[conv.integral,class.conv]].
+> The expression `value` is writable [[iterator.requirements.general]]
+> to the output iterator. The type `Size` is convertible to an integral
+> type [[conv.integral,class.conv]].
 >
 > *Effects:*
 >
@@ -5262,7 +5263,8 @@ template<input_or_output_iterator O, copy_constructible F>
 >
 > *Mandates:*
 >
-> `Size` is convertible to an integral type[[conv.integral,class.conv]].
+> `Size` is convertible to an integral
+> type [[conv.integral,class.conv]].
 >
 > *Effects:*
 >
@@ -5327,7 +5329,7 @@ template<forward_range R, class Proj = identity,
 > *Preconditions:*
 >
 > For the algorithms in namespace `std`, the type of `*first` meets the
-> *Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]).
+> *Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]).
 >
 > *Effects:*
 >
@@ -5349,7 +5351,7 @@ template<forward_range R, class Proj = identity,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 >
 > \[*Note 14*: Each element in the range \[`ret`, `last`), where `ret`
 > is the returned value, has a valid but unspecified state, because the
@@ -5417,7 +5419,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > *Mandates:*
 >
-> `*first` is writable[[iterator.requirements.general]] to `result`.
+> `*first` is writable [[iterator.requirements.general]] to `result`.
 >
 > *Preconditions:*
 >
@@ -5427,7 +5429,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > \[*Note 15*: For the overloads with an `ExecutionPolicy`, there might
 > be a performance cost if
 > `iterator_traits<ForwardIterator1>::value_type` does not meet the
-> *Cpp17MoveConstructible* ([[cpp17.moveconstructible]])
+> *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
 > requirements. — *end note*\]
 >
 > *Effects:*
@@ -5448,7 +5450,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ### Unique <a id="alg.unique">[[alg.unique]]</a>
 
@@ -5489,7 +5491,7 @@ template<forward_range R, class Proj = identity,
 >
 > For the overloads in namespace `std`, `pred` is an equivalence
 > relation and the type of `*first` meets the *Cpp17MoveAssignable*
-> requirements ([[cpp17.moveassignable]]).
+> requirements ( [[cpp17.moveassignable]]).
 >
 > *Effects:*
 >
@@ -5562,7 +5564,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > *Mandates:*
 >
-> `*first` is writable[[iterator.requirements.general]] to `result`.
+> `*first` is writable [[iterator.requirements.general]] to `result`.
 >
 > *Preconditions:*
 >
@@ -5575,14 +5577,13 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 >   - For the overloads with no `ExecutionPolicy`, let `T` be the value
 >     type of `InputIterator`. If `InputIterator` models
->     `forward_iterator`@@REF:iterator.concept.forward@@, then there are
->     no additional requirements for `T`. Otherwise, if `OutputIterator`
+>     `forward_iterator`[[iterator.concept.forward]], then there are no
+>     additional requirements for `T`. Otherwise, if `OutputIterator`
 >     meets the *Cpp17ForwardIterator* requirements and its value type
 >     is the same as `T`, then `T` meets the *Cpp17CopyAssignable*
->     (@@REF:cpp17.copyassignable@@) requirements. Otherwise, `T` meets
->     both the *Cpp17CopyConstructible*
->     (@@REF:cpp17.copyconstructible@@) and *Cpp17CopyAssignable*
->     requirements.
+>     ( [[cpp17.copyassignable]]) requirements. Otherwise, `T` meets
+>     both the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
+>     and *Cpp17CopyAssignable* requirements.
 >
 >     \[*Note 16*: For the overloads with an `ExecutionPolicy`, there
 >     might be a performance cost if the value type of
@@ -5626,7 +5627,7 @@ template<bidirectional_range R>
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements[[swappable.requirements]].
+> the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
 >
 > *Effects:*
 >
@@ -5707,10 +5708,10 @@ template<permutable I, sentinel_for<I> S>
 >
 > \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. For the
 > overloads in namespace `std`, `ForwardIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]], and the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]], and the
 > type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -5823,7 +5824,7 @@ template<input_range R, weakly_incrementable O, class Gen>
 > *Mandates:*
 >
 > For the overload in namespace `std`, `Distance` is an integer type and
-> `*first` is writable[[iterator.requirements.general]] to `out`.
+> `*first` is writable [[iterator.requirements.general]] to `out`.
 >
 > *Preconditions:*
 >
@@ -5831,19 +5832,18 @@ template<input_range R, weakly_incrementable O, class Gen>
 > namespace `std`:
 >
 > - `PopulationIterator` meets the *Cpp17InputIterator*
->   requirements@@REF:input.iterators@@.
+>   requirements [[input.iterators]].
 >
 > - `SampleIterator` meets the *Cpp17OutputIterator*
->   requirements@@REF:output.iterators@@.
+>   requirements [[output.iterators]].
 >
 > - `SampleIterator` meets the *Cpp17RandomAccessIterator*
->   requirements@@REF:random.access.iterators@@ unless
->   `PopulationIterator` models
->   `forward_iterator`@@REF:iterator.concept.forward@@.
+>   requirements [[random.access.iterators]] unless `PopulationIterator`
+>   models `forward_iterator`[[iterator.concept.forward]].
 >
 > - `remove_reference_t<UniformRandomBitGenerator>` meets the
 >   requirements of a uniform random bit generator
->   type@@REF:rand.req.urng@@.
+>   type [[rand.req.urng]].
 >
 > *Effects:*
 >
@@ -5896,10 +5896,10 @@ template<random_access_range R, class Gen>
 > For the overload in namespace `std`:
 >
 > - `RandomAccessIterator` meets the *Cpp17ValueSwappable*
->   requirements@@REF:swappable.requirements@@.
+>   requirements [[swappable.requirements]].
 >
 > - The type `remove_reference_t<UniformRandomBitGenerator>` meets the
->   uniform random bit generator@@REF:rand.req.urng@@ requirements.
+>   uniform random bit generator [[rand.req.urng]] requirements.
 >
 > *Effects:*
 >
@@ -5988,7 +5988,7 @@ template<forward_range R>
 > `n >= 0` is `true`. For the overloads in namespace `std`, the type of
 > `*first` meets the *Cpp17MoveAssignable* requirements, and
 > `ForwardIterator` meets the *Cpp17BidirectionalIterator*
-> requirements[[bidirectional.iterators]] or the *Cpp17ValueSwappable*
+> requirements [[bidirectional.iterators]] or the *Cpp17ValueSwappable*
 > requirements.
 >
 > *Effects:*
@@ -6128,10 +6128,10 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]] and the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
 > type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -6179,10 +6179,10 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]] and the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
 > type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -6202,7 +6202,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 #### `partial_sort` <a id="partial.sort">[[partial.sort]]</a>
 
@@ -6243,10 +6243,10 @@ template<random_access_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 >
 > \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. For the
 > overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]] and the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
 > type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -6336,15 +6336,15 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
 > *Mandates:*
 >
 > For the overloads in namespace `std`, the expression `*first` is
-> writable[[iterator.requirements.general]] to `result_first`.
+> writable [[iterator.requirements.general]] to `result_first`.
 >
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]], the type
-> of `*result_first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]], the
+> type of `*result_first` meets the *Cpp17MoveConstructible*
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > For iterators `a1` and `b1` in \[`first`, `last`), and iterators `x2`
 > and `y2` in \[`result_first`, `result_last`), after evaluating the
@@ -6518,10 +6518,10 @@ template<random_access_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 >
 > \[`first`, `nth`) and \[`nth`, `last`) are valid ranges. For the
 > overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]], and the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]], and the
 > type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -6814,7 +6814,7 @@ template<forward_range R, class Proj = identity,
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `ForwardIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]].
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]].
 >
 > *Effects:*
 >
@@ -6869,10 +6869,10 @@ template<bidirectional_range R, class Proj = identity,
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements[[swappable.requirements]] and
+> the *Cpp17ValueSwappable* requirements [[swappable.requirements]] and
 > the type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -6934,7 +6934,7 @@ template<input_range R, weakly_incrementable O1, weakly_incrementable O2,
 > *Mandates:*
 >
 > For the overloads in namespace `std`, the expression `*first` is
-> writable[[iterator.requirements.general]] to `out_true` and
+> writable [[iterator.requirements.general]] to `out_true` and
 > `out_false`.
 >
 > *Preconditions:*
@@ -7079,7 +7079,7 @@ template<input_range R1, input_range R2, weakly_incrementable O, class Comp = ra
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ``` cpp
 template<class BidirectionalIterator>
@@ -7116,9 +7116,9 @@ template<bidirectional_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 > \[`first`, `middle`) and \[`middle`, `last`) are valid ranges sorted
 > with respect to `comp` and `proj`. For the overloads in namespace
 > `std`, `BidirectionalIterator` meets the *Cpp17ValueSwappable*
-> requirements[[swappable.requirements]] and the type of `*first` meets
-> the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
-> *Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -7144,7 +7144,7 @@ template<bidirectional_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]].
+> Stable [[algorithm.stable]].
 
 ``` cpp
 template<bidirectional_range R, class Comp = ranges::less, class Proj = identity>
@@ -7303,7 +7303,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If \[`first1`, `last1`) contains m
+> Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains m
 > elements that are equivalent to each other and \[`first2`, `last2`)
 > contains n elements that are equivalent to them, then all m elements
 > from the first range are copied to the output range, in order, and
@@ -7386,7 +7386,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If \[`first1`, `last1`) contains m
+> Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains m
 > elements that are equivalent to each other and \[`first2`, `last2`)
 > contains n elements that are equivalent to them, the first
 > $\min(m, n)$ elements are copied from the first range to the output
@@ -7554,7 +7554,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 >
 > *Remarks:*
 >
-> Stable[[algorithm.stable]]. If \[`first1`, `last1`) contains m
+> Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains m
 > elements that are equivalent to each other and \[`first2`, `last2`)
 > contains n elements that are equivalent to them, then |m - n| of those
 > elements shall be copied to the output range: the last m - n of these
@@ -7612,10 +7612,10 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > The range \[`first`, `last - 1`) is a valid heap with respect to
 > `comp` and `proj`. For the overloads in namespace `std`,
 > `RandomAccessIterator` meets the *Cpp17ValueSwappable*
-> requirements[[swappable.requirements]] and the type of `*first` meets
+> requirements [[swappable.requirements]] and the type of `*first` meets
 > the *Cpp17MoveConstructible* requirements
-> ([[cpp17.moveconstructible]]) and the *Cpp17MoveAssignable*
-> requirements ([[cpp17.moveassignable]]).
+> ( [[cpp17.moveconstructible]]) and the *Cpp17MoveAssignable*
+> requirements ( [[cpp17.moveassignable]]).
 >
 > *Effects:*
 >
@@ -7660,9 +7660,9 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > The range \[`first`, `last`) is a valid non-empty heap with respect to
 > `comp` and `proj`. For the overloads in namespace `std`,
 > `RandomAccessIterator` meets the *Cpp17ValueSwappable*
-> requirements[[swappable.requirements]] and the type of `*first` meets
-> the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
-> *Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -7706,10 +7706,10 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements[[swappable.requirements]] and the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
 > type of `*first` meets the *Cpp17MoveConstructible*
-> ([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ([[cpp17.moveassignable]]) requirements.
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -7754,9 +7754,9 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > The range \[`first`, `last`) is a valid heap with respect to `comp`
 > and `proj`. For the overloads in namespace `std`,
 > `RandomAccessIterator` meets the *Cpp17ValueSwappable*
-> requirements[[swappable.requirements]] and the type of `*first` meets
-> the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
-> *Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
 > *Effects:*
 >
@@ -7892,7 +7892,7 @@ template<class T, class Proj = identity,
 > *Preconditions:*
 >
 > For the first form, `T` meets the *Cpp17LessThanComparable*
-> requirements ([[cpp17.lessthancomparable]]).
+> requirements ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -7929,7 +7929,7 @@ template<input_range R, class Proj = identity,
 > `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
 > meets the *Cpp17CopyConstructible* requirements. For the first form,
 > `T` meets the *Cpp17LessThanComparable* requirements
-> ([[cpp17.lessthancomparable]]).
+> ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -7960,7 +7960,7 @@ template<class T, class Proj = identity,
 > *Preconditions:*
 >
 > For the first form, `T` meets the *Cpp17LessThanComparable*
-> requirements ([[cpp17.lessthancomparable]]).
+> requirements ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -7997,7 +7997,7 @@ template<input_range R, class Proj = identity,
 > `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
 > meets the *Cpp17CopyConstructible* requirements. For the first form,
 > `T` meets the *Cpp17LessThanComparable* requirements
-> ([[cpp17.lessthancomparable]]).
+> ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -8029,7 +8029,7 @@ template<class T, class Proj = identity,
 > *Preconditions:*
 >
 > For the first form, `T` meets the *Cpp17LessThanComparable*
-> requirements ([[cpp17.lessthancomparable]]).
+> requirements ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -8066,7 +8066,7 @@ template<input_range R, class Proj = identity,
 > `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
 > meets the *Cpp17CopyConstructible* requirements. For the first form,
 > type `T` meets the *Cpp17LessThanComparable* requirements
-> ([[cpp17.lessthancomparable]]).
+> ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -8236,7 +8236,7 @@ template<class T, class Proj = identity,
 >
 > `bool(invoke(comp, invoke(proj, hi), invoke(proj, lo)))` is `false`.
 > For the first form, type `T` meets the *Cpp17LessThanComparable*
-> requirements ([[cpp17.lessthancomparable]]).
+> requirements ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -8405,7 +8405,7 @@ template<bidirectional_range R, class Comp = ranges::less,
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements[[swappable.requirements]].
+> the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
 >
 > *Effects:*
 >
@@ -8456,7 +8456,7 @@ template<bidirectional_range R, class Comp = ranges::less,
 > *Preconditions:*
 >
 > For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements[[swappable.requirements]].
+> the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
 >
 > *Effects:*
 >
@@ -8745,8 +8745,8 @@ template<class InputIterator, class T, class BinaryOperation>
 
 > *Preconditions:*
 >
-> `T` meets the *Cpp17CopyConstructible* ([[cpp17.copyconstructible]])
-> and *Cpp17CopyAssignable* ([[cpp17.copyassignable]]) requirements. In
+> `T` meets the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
+> and *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]) requirements. In
 > the range \[`first`, `last`\], `binary_op` neither modifies elements
 > nor invalidates iterators or subranges.
 >
@@ -8851,7 +8851,7 @@ template<class ExecutionPolicy, class ForwardIterator, class T, class BinaryOper
 > *Preconditions:*
 >
 > - `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements.
+>   ( [[cpp17.moveconstructible]]) requirements.
 >
 > - `binary_op` neither invalidates iterators or subranges, nor modifies
 >   elements in the range \[`first`, `last`\].
@@ -8886,8 +8886,8 @@ template<class InputIterator1, class InputIterator2, class T,
 
 > *Preconditions:*
 >
-> `T` meets the *Cpp17CopyConstructible* ([[cpp17.copyconstructible]])
-> and *Cpp17CopyAssignable* ([[cpp17.copyassignable]]) requirements. In
+> `T` meets the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
+> and *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]) requirements. In
 > the ranges \[`first1`, `last1`\] and \[`first2`,
 > `first2 + (last1 - first1)`\] `binary_op1` and `binary_op2` neither
 > modifies elements nor invalidates iterators or subranges.
@@ -8974,7 +8974,7 @@ template<class ExecutionPolicy,
 > *Preconditions:*
 >
 > - `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements.
+>   ( [[cpp17.moveconstructible]]) requirements.
 >
 > - Neither `binary_op1` nor `binary_op2` invalidates subranges, nor
 >   modifies elements in the ranges \[`first1`, `last1`\] and
@@ -9023,7 +9023,7 @@ template<class ExecutionPolicy,
 > *Preconditions:*
 >
 > - `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements.
+>   ( [[cpp17.moveconstructible]]) requirements.
 >
 > - Neither `unary_op` nor `binary_op` invalidates subranges, nor
 >   modifies elements in the range \[`first`, `last`\].
@@ -9062,7 +9062,7 @@ template<class InputIterator, class OutputIterator, class BinaryOperation>
 > result of the expression `std::move(acc) + *i` or
 > `binary_op(std::move(acc), *i)` is implicitly convertible to
 > `InputIterator`’s value type. `acc` is
-> writable[[iterator.requirements.general]] to `result`.
+> writable [[iterator.requirements.general]] to `result`.
 >
 > *Preconditions:*
 >
@@ -9155,7 +9155,7 @@ template<class ExecutionPolicy,
 > *Preconditions:*
 >
 > - `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements.
+>   ( [[cpp17.moveconstructible]]) requirements.
 >
 > - `binary_op` neither invalidates iterators or subranges, nor modifies
 >   elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -9264,7 +9264,7 @@ template<class ExecutionPolicy,
 > *Preconditions:*
 >
 > - If `init` is provided, `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements; otherwise, `U` meets
+>   ( [[cpp17.moveconstructible]]) requirements; otherwise, `U` meets
 >   the *Cpp17MoveConstructible* requirements.
 >
 > - `binary_op` neither invalidates iterators or subranges, nor modifies
@@ -9336,7 +9336,7 @@ template<class ExecutionPolicy,
 > *Preconditions:*
 >
 > - `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements.
+>   ( [[cpp17.moveconstructible]]) requirements.
 >
 > - Neither `unary_op` nor `binary_op` invalidates iterators or
 >   subranges, nor modifies elements in the ranges \[`first`, `last`\]
@@ -9426,7 +9426,7 @@ template<class ExecutionPolicy,
 > *Preconditions:*
 >
 > - If `init` is provided, `T` meets the *Cpp17MoveConstructible*
->   (@@REF:cpp17.moveconstructible@@) requirements; otherwise, `U` meets
+>   ( [[cpp17.moveconstructible]]) requirements; otherwise, `U` meets
 >   the *Cpp17MoveConstructible* requirements.
 >
 > - Neither `unary_op` nor `binary_op` invalidates iterators or
@@ -9500,7 +9500,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 >
 > - For the overloads with no `ExecutionPolicy`, `T` is constructible
 >   from `*first`. `acc` (defined below) is
->   writable@@REF:iterator.requirements.general@@ to the `result` output
+>   writable [[iterator.requirements.general]] to the `result` output
 >   iterator. The result of the expression
 >   `binary_op(val, std::move(acc))` is writable to `result`.
 >
@@ -9511,7 +9511,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 > *Preconditions:*
 >
 > - For the overloads with no `ExecutionPolicy`, `T` meets the
->   *Cpp17MoveAssignable* (@@REF:cpp17.moveassignable@@) requirements.
+>   *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
 > - For all overloads, in the ranges \[`first`, `last`\] and \[`result`,
 >   `result + (last - first)`\], `binary_op` neither modifies elements
@@ -10215,7 +10215,7 @@ namespace ranges {
 
 > The expression `::new (declval<void*>()) T(declval<Args>()...)` is
 > well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]].
+> operand [[term.unevaluated.operand]].
 >
 > *Effects:*
 >

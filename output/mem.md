@@ -646,14 +646,14 @@ using difference_type = see below;
 ```
 
 > `Ptr::difference_type` if the *qualified-id* `Ptr::difference_type` is
-> valid and denotes a type[[temp.deduct]]; otherwise, `ptrdiff_t`.
+> valid and denotes a type [[temp.deduct]]; otherwise, `ptrdiff_t`.
 
 ``` cpp
 template<class U> using rebind = see below;
 ```
 
 > `Ptr::rebind<U>` if the *qualified-id* `Ptr::rebind<U>` is valid and
-> denotes a type[[temp.deduct]]; otherwise, `SomePointer<U, Args>` if
+> denotes a type [[temp.deduct]]; otherwise, `SomePointer<U, Args>` if
 > `Ptr` is a class template instantiation of the form
 > `SomePointer<T, Args>`, where `Args` is zero or more type arguments;
 > otherwise, the instantiation of `rebind` is ill-formed.
@@ -769,7 +769,7 @@ template<size_t N, class T>
 >
 > *Preconditions:*
 >
-> `ptr` points to an object `X` of a type similar[[conv.qual]] to `T`,
+> `ptr` points to an object `X` of a type similar [[conv.qual]] to `T`,
 > where `X` has alignment `N`[[basic.align]].
 >
 > *Returns:*
@@ -803,18 +803,18 @@ template<class T>
 
 > *Mandates:*
 >
-> `T` is an implicit-lifetime type[[basic.types.general]] and not an
-> incomplete type[[term.incomplete.type]].
+> `T` is an implicit-lifetime type [[basic.types.general]] and not an
+> incomplete type [[term.incomplete.type]].
 >
 > *Preconditions:*
 >
 > \[`p`, `(char*)p + sizeof(T)`) denotes a region of allocated storage
 > that is a subset of the region of storage reachable
-> through[[basic.compound]] `p` and suitably aligned for the type `T`.
+> through [[basic.compound]] `p` and suitably aligned for the type `T`.
 >
 > *Effects:*
 >
-> Implicitly creates objects[[intro.object]] within the denoted region
+> Implicitly creates objects [[intro.object]] within the denoted region
 > consisting of an object *a* of type `T` whose address is `p`, and
 > objects nested within *a*, as follows: The object representation of
 > *a* is the contents of the storage prior to the call to
@@ -851,7 +851,7 @@ template<class T>
 > `n <= size_t(-1) / sizeof(T)` is `true`. If `n > 0` is `true`,
 > \[`(char*)p`, `(char*)p + (n * sizeof(T))`) denotes a region of
 > allocated storage that is a subset of the region of storage reachable
-> through[[basic.compound]] `p`.
+> through [[basic.compound]] `p`.
 >
 > *Effects:*
 >
@@ -891,9 +891,9 @@ template<class T, class Alloc> struct uses_allocator;
 >
 > Automatically detects whether `T` has a nested `allocator_type` that
 > is convertible from `Alloc`. Meets the *Cpp17BinaryTypeTrait*
-> requirements[[meta.rqmts]]. The implementation shall provide a
+> requirements [[meta.rqmts]]. The implementation shall provide a
 > definition that is derived from `true_type` if the *qualified-id*
-> `T::allocator_type` is valid and denotes a type[[temp.deduct]] and
+> `T::allocator_type` is valid and denotes a type [[temp.deduct]] and
 > `is_convertible_v<Alloc, T::allocator_type> != false`, otherwise it
 > shall be derived from `false_type`. A program may specialize this
 > template to derive from `true_type` for a program-defined type `T`
@@ -1240,14 +1240,14 @@ using pointer = see below;
 ```
 
 > `Alloc::pointer` if the *qualified-id* `Alloc::pointer` is valid and
-> denotes a type[[temp.deduct]]; otherwise, `value_type*`.
+> denotes a type [[temp.deduct]]; otherwise, `value_type*`.
 
 ``` cpp
 using const_pointer = see below;
 ```
 
 > `Alloc::const_pointer` if the *qualified-id* `Alloc::const_pointer` is
-> valid and denotes a type[[temp.deduct]]; otherwise,
+> valid and denotes a type [[temp.deduct]]; otherwise,
 > `pointer_traits<pointer>::rebind<const value_type>`.
 
 ``` cpp
@@ -1255,7 +1255,7 @@ using void_pointer = see below;
 ```
 
 > `Alloc::void_pointer` if the *qualified-id* `Alloc::void_pointer` is
-> valid and denotes a type[[temp.deduct]]; otherwise,
+> valid and denotes a type [[temp.deduct]]; otherwise,
 > `pointer_traits<pointer>::rebind<void>`.
 
 ``` cpp
@@ -1264,7 +1264,7 @@ using const_void_pointer = see below;
 
 > `Alloc::const_void_pointer` if the *qualified-id*
 > `Alloc::const_void_pointer` is valid and denotes a
-> type[[temp.deduct]]; otherwise,
+> type [[temp.deduct]]; otherwise,
 > `pointer_traits<pointer>::rebind<const void>`.
 
 ``` cpp
@@ -1272,7 +1272,7 @@ using difference_type = see below;
 ```
 
 > `Alloc::difference_type` if the *qualified-id*
-> `Alloc::difference_type` is valid and denotes a type[[temp.deduct]];
+> `Alloc::difference_type` is valid and denotes a type [[temp.deduct]];
 > otherwise, `pointer_traits<pointer>::difference_type`.
 
 ``` cpp
@@ -1280,7 +1280,7 @@ using size_type = see below;
 ```
 
 > `Alloc::size_type` if the *qualified-id* `Alloc::size_type` is valid
-> and denotes a type[[temp.deduct]]; otherwise,
+> and denotes a type [[temp.deduct]]; otherwise,
 > `make_unsigned_t<difference_type>`.
 
 ``` cpp
@@ -1289,7 +1289,7 @@ using propagate_on_container_copy_assignment = see below;
 
 > `Alloc::propagate_on_container_copy_assignment` if the *qualified-id*
 > `Alloc::propagate_on_container_copy_assignment` is valid and denotes a
-> type[[temp.deduct]]; otherwise `false_type`.
+> type [[temp.deduct]]; otherwise `false_type`.
 
 ``` cpp
 using propagate_on_container_move_assignment = see below;
@@ -1297,7 +1297,7 @@ using propagate_on_container_move_assignment = see below;
 
 > `Alloc::propagate_on_container_move_assignment` if the *qualified-id*
 > `Alloc::propagate_on_container_move_assignment` is valid and denotes a
-> type[[temp.deduct]]; otherwise `false_type`.
+> type [[temp.deduct]]; otherwise `false_type`.
 
 ``` cpp
 using propagate_on_container_swap = see below;
@@ -1305,14 +1305,14 @@ using propagate_on_container_swap = see below;
 
 > `Alloc::propagate_on_container_swap` if the *qualified-id*
 > `Alloc::propagate_on_container_swap` is valid and denotes a
-> type[[temp.deduct]]; otherwise `false_type`.
+> type [[temp.deduct]]; otherwise `false_type`.
 
 ``` cpp
 using is_always_equal = see below;
 ```
 
 > `Alloc::is_always_equal` if the *qualified-id*
-> `Alloc::is_always_equal` is valid and denotes a type[[temp.deduct]];
+> `Alloc::is_always_equal` is valid and denotes a type [[temp.deduct]];
 > otherwise `is_empty<Alloc>::type`.
 
 ``` cpp
@@ -1320,7 +1320,7 @@ template<class T> using rebind_alloc = see below;
 ```
 
 > `Alloc::rebind<T>::other` if the *qualified-id*
-> `Alloc::rebind<T>::other` is valid and denotes a type[[temp.deduct]];
+> `Alloc::rebind<T>::other` is valid and denotes a type [[temp.deduct]];
 > otherwise, `Alloc<T, Args>` if `Alloc` is a class template
 > instantiation of the form `Alloc<U, Args>`, where `Args` is zero or
 > more type arguments; otherwise, the instantiation of `rebind_alloc` is
@@ -1460,7 +1460,7 @@ call shall happen before the next allocation (if any) in this order.
 
 > *Mandates:*
 >
-> `T` is not an incomplete type[[term.incomplete.type]].
+> `T` is not an incomplete type [[term.incomplete.type]].
 >
 > *Returns:*
 >
@@ -1485,7 +1485,7 @@ call shall happen before the next allocation (if any) in this order.
 
 > *Mandates:*
 >
-> `T` is not an incomplete type[[term.incomplete.type]].
+> `T` is not an incomplete type [[term.incomplete.type]].
 >
 > *Returns:*
 >
@@ -1556,7 +1556,7 @@ template<class T> constexpr T* addressof(T& r) noexcept;
 > *Remarks:*
 >
 > An expression `addressof(E)` is a constant
-> subexpression[[defns.const.subexpr]] if `E` is an lvalue constant
+> subexpression [[defns.const.subexpr]] if `E` is an lvalue constant
 > subexpression.
 
 ### C library memory allocation <a id="c.malloc">[[c.malloc]]</a>
@@ -1581,7 +1581,7 @@ void* realloc(void* ptr, size_t size);
 > These functions do not attempt to allocate storage by calling
 > `::operator new()`[[new.delete]].
 >
-> These functions implicitly create objects[[intro.object]] in the
+> These functions implicitly create objects [[intro.object]] in the
 > returned region of storage and return a pointer to a suitable created
 > object. In the case of `calloc` and `realloc`, the objects are created
 > before the storage is zeroed or copied, respectively.
@@ -1805,8 +1805,8 @@ constexpr unique_ptr(nullptr_t) noexcept;
 > *Preconditions:*
 >
 > `D` meets the *Cpp17DefaultConstructible* requirements
-> ([[cpp17.defaultconstructible]]), and that construction does not throw
-> an exception.
+> ( [[cpp17.defaultconstructible]]), and that construction does not
+> throw an exception.
 >
 > *Effects:*
 >
@@ -1828,8 +1828,8 @@ constexpr explicit unique_ptr(type_identity_t<pointer> p) noexcept;
 > *Preconditions:*
 >
 > `D` meets the *Cpp17DefaultConstructible* requirements
-> ([[cpp17.defaultconstructible]]), and that construction does not throw
-> an exception.
+> ( [[cpp17.defaultconstructible]]), and that construction does not
+> throw an exception.
 >
 > *Effects:*
 >
@@ -1893,7 +1893,7 @@ constexpr unique_ptr(unique_ptr&& u) noexcept;
 > *Preconditions:*
 >
 > If `D` is not a reference type, `D` meets the *Cpp17MoveConstructible*
-> requirements ([[cpp17.moveconstructible]]). Construction of the
+> requirements ( [[cpp17.moveconstructible]]). Construction of the
 > deleter from an rvalue of type `D` does not throw an exception.
 >
 > *Effects:*
@@ -1977,7 +1977,7 @@ constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
 > *Preconditions:*
 >
 > If `D` is not a reference type, `D` meets the *Cpp17MoveAssignable*
-> requirements ([[cpp17.moveassignable]]) and assignment of the deleter
+> requirements ( [[cpp17.moveassignable]]) and assignment of the deleter
 > from an rvalue of type `D` does not throw an exception. Otherwise, `D`
 > is a reference type; `remove_reference_t<D>` meets the
 > *Cpp17CopyAssignable* requirements and assignment of the deleter from
@@ -2143,7 +2143,7 @@ constexpr void swap(unique_ptr& u) noexcept;
 
 > *Preconditions:*
 >
-> `get_deleter()` is swappable[[swappable.requirements]] and does not
+> `get_deleter()` is swappable [[swappable.requirements]] and does not
 > throw an exception under `swap`.
 >
 > *Effects:*
@@ -2433,8 +2433,8 @@ template<class T1, class D1, class T2, class D2>
 > *Preconditions:*
 >
 > The specialization `less<CT>` is a function object
-> type[[function.objects]] that induces a strict weak
-> ordering[[alg.sorting]] on the pointer values.
+> type [[function.objects]] that induces a strict weak
+> ordering [[alg.sorting]] on the pointer values.
 >
 > *Returns:*
 >
@@ -2499,8 +2499,8 @@ template<class T, class D>
 > *Preconditions:*
 >
 > The specialization `less<unique_ptr<T, D>::pointer>` is a function
-> object type[[function.objects]] that induces a strict weak
-> ordering[[alg.sorting]] on the pointer values.
+> object type [[function.objects]] that induces a strict weak
+> ordering [[alg.sorting]] on the pointer values.
 >
 > *Returns:*
 >
@@ -2810,7 +2810,7 @@ template<class D, class A> shared_ptr(nullptr_t p, D d, A a);
 > Construction of `d` and a deleter of type `D` initialized with
 > `std::move(d)` do not throw exceptions. The expression `d(p)` has
 > well-defined behavior and does not throw exceptions. `A` meets the
-> *Cpp17Allocator* requirements[[allocator.requirements.general]].
+> *Cpp17Allocator* requirements [[allocator.requirements.general]].
 >
 > *Effects:*
 >
@@ -3149,7 +3149,7 @@ template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 > An unspecified value such that
 >
 > - `x.owner_before(y)` defines a strict weak ordering as defined
->   in @@REF:alg.sorting@@;
+>   in  [[alg.sorting]];
 >
 > - under the equivalence relation defined by `owner_before`,
 >   `!a.owner_before(b) && !b.owner_before(a)`, two `shared_ptr` or
@@ -3177,7 +3177,7 @@ template<class T, class A, ...>
 > *Preconditions:*
 >
 > `A` meets the *Cpp17Allocator*
-> requirements[[allocator.requirements.general]].
+> requirements [[allocator.requirements.general]].
 >
 > *Effects:*
 >
@@ -3867,7 +3867,7 @@ template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 > An unspecified value such that
 >
 > - `x.owner_before(y)` defines a strict weak ordering as defined
->   in @@REF:alg.sorting@@;
+>   in  [[alg.sorting]];
 >
 > - under the equivalence relation defined by `owner_before`,
 >   `!a.owner_before(b) && !b.owner_before(a)`, two `shared_ptr` or
@@ -4026,7 +4026,7 @@ template<class T, class D> struct hash<unique_ptr<T, D>>;
 ```
 
 > Letting `UP` be `unique_ptr<T, D>`, the specialization `hash<UP>` is
-> enabled[[unord.hash]] if and only if `hash<typename UP::pointer>` is
+> enabled [[unord.hash]] if and only if `hash<typename UP::pointer>` is
 > enabled. When enabled, for an object `p` of type `UP`, `hash<UP>()(p)`
 > evaluates to the same value as
 > `hash<typename UP::pointer>()(p.get())`. The member functions are not
@@ -4513,7 +4513,7 @@ namespace std::pmr {
 >
 > *Returns:*
 >
-> A pointer to a suitable created object[[intro.object]] in the
+> A pointer to a suitable created object [[intro.object]] in the
 > allocated region of storage.
 >
 > *Throws:*
@@ -4549,7 +4549,7 @@ virtual void* do_allocate(size_t bytes, size_t alignment) = 0;
 > *Returns:*
 >
 > A derived class shall implement this function to return a pointer to
-> allocated storage[[basic.stc.dynamic.allocation]] with a size of at
+> allocated storage [[basic.stc.dynamic.allocation]] with a size of at
 > least `bytes`, aligned to the specified `alignment`.
 >
 > *Throws:*
@@ -4832,7 +4832,7 @@ template<class T, class... Args>
 > *Mandates:*
 >
 > Uses-allocator construction of `T` with allocator `*this`
-> (see [[allocator.uses.construction]]) and constructor arguments
+> (see  [[allocator.uses.construction]]) and constructor arguments
 > `std::forward<Args>(args)...` is well-formed.
 >
 > *Effects:*
@@ -5051,7 +5051,7 @@ size_t max_blocks_per_chunk;
 ```
 
 > The maximum number of blocks that will be allocated at once from the
-> upstream memory resource[[mem.res.monotonic.buffer]] to replenish a
+> upstream memory resource [[mem.res.monotonic.buffer]] to replenish a
 > pool. If the value of `max_blocks_per_chunk` is zero or is greater
 > than an *implementation-defined* limit, that limit is used instead.
 > The implementation may choose to use a smaller value than is specified
@@ -5159,7 +5159,7 @@ void* do_allocate(size_t bytes, size_t alignment) override;
 >
 > *Returns:*
 >
-> A pointer to allocated storage[[basic.stc.dynamic.allocation]] with a
+> A pointer to allocated storage [[basic.stc.dynamic.allocation]] with a
 > size of at least `bytes`. The size and alignment of the allocated
 > memory shall meet the requirements for a class derived from
 > `memory_resource`[[mem.res.class]].
@@ -5320,7 +5320,7 @@ void* do_allocate(size_t bytes, size_t alignment) override;
 >
 > *Returns:*
 >
-> A pointer to allocated storage[[basic.stc.dynamic.allocation]] with a
+> A pointer to allocated storage [[basic.stc.dynamic.allocation]] with a
 > size of at least `bytes`. The size and alignment of the allocated
 > memory shall meet the requirements for a class derived from
 > `memory_resource`[[mem.res.class]].

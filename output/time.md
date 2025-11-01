@@ -6867,7 +6867,7 @@ static constexpr unsigned fractional_width = see below;
 >
 > \[*Example 14*:
 >
-> See [[time.hms.width]] for some durations, the resulting
+> See  [[time.hms.width]] for some durations, the resulting
 > `fractional_width`, and the formatted fractional second output of
 > `Duration{1}`.
 >
@@ -8756,7 +8756,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]].
+> operand [[term.unevaluated.operand]].
 >
 > *Returns:*
 >
@@ -8784,7 +8784,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]].
+> operand [[term.unevaluated.operand]].
 >
 > *Returns:*
 >
@@ -8816,7 +8816,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]].
+> operand [[term.unevaluated.operand]].
 >
 > *Returns:*
 >
@@ -8852,7 +8852,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]].
+> operand [[term.unevaluated.operand]].
 >
 > *Returns:*
 >

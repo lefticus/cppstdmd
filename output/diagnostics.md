@@ -1205,7 +1205,7 @@ template<> struct hash<error_code>;
 template<> struct hash<error_condition>;
 ```
 
-> The specializations are enabled[[unord.hash]].
+> The specializations are enabled [[unord.hash]].
 
 ### Class `system_error` <a id="syserr.syserr">[[syserr.syserr]]</a>
 
@@ -1468,7 +1468,7 @@ string source_file() const;
 
 > *Returns:*
 >
-> The presumed or actual name of the source file[[cpp.predefined]] that
+> The presumed or actual name of the source file [[cpp.predefined]] that
 > lexically contains the expression or statement whose evaluation is
 > represented by `*this`, or an empty string.
 >
@@ -1682,7 +1682,7 @@ basic_stacktrace& operator=(basic_stacktrace&& other)
 > *Remarks:*
 >
 > Implementations may strengthen the exception specification for these
-> functions[[res.on.exception.handling]] by ensuring that `empty()` is
+> functions [[res.on.exception.handling]] by ensuring that `empty()` is
 > `true` on failed allocation.
 
 #### Observers <a id="stacktrace.basic.obs">[[stacktrace.basic.obs]]</a>
@@ -1694,7 +1694,7 @@ using const_iterator = \impdef;
 > The type models
 > `random_access_iterator`[[iterator.concept.random.access]] and meets
 > the *Cpp17RandomAccessIterator*
-> requirements[[random.access.iterators]].
+> requirements [[random.access.iterators]].
 
 ``` cpp
 allocator_type get_allocator() const noexcept;
@@ -1918,7 +1918,7 @@ template<> struct hash<stacktrace_entry>;
 template<class Allocator> struct hash<basic_stacktrace<Allocator>>;
 ```
 
-> The specializations are enabled[[unord.hash]].
+> The specializations are enabled [[unord.hash]].
 
 <!-- Section link definitions -->
 [assertions]: #assertions

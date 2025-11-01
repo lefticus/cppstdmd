@@ -118,7 +118,7 @@ typename X::char_class_type
 
 > *Returns:*
 >
-> A bitmask type[[bitmask.types]] representing a particular character
+> A bitmask type [[bitmask.types]] representing a particular character
 > classification.
 
 ``` cpp
@@ -1445,7 +1445,7 @@ void swap(sub_match& s) noexcept(see below);
 > *Preconditions:*
 >
 > `BidirectionalIterator` meets the *Cpp17Swappable*
-> requirements[[swappable.requirements]].
+> requirements [[swappable.requirements]].
 >
 > *Effects:*
 >
@@ -1776,8 +1776,9 @@ size_type size() const;
 >
 > \[*Note 3*: The state of a `match_results` object can be modified only
 > by passing that object to `regex_match` or `regex_search`.
-> Subclauses [[re.alg.match]] and [[re.alg.search]] specify the effects
-> of those algorithms on their `match_results` arguments. — *end note*\]
+> Subclauses  [[re.alg.match]] and  [[re.alg.search]] specify the
+> effects of those algorithms on their `match_results`
+> arguments. — *end note*\]
 
 ``` cpp
 size_type max_size() const;

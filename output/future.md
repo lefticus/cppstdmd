@@ -281,7 +281,7 @@ the following:
 template<class T> bool operator!=(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]).
+> Type `T` is *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]).
 >
 > *Returns:*
 >
@@ -291,7 +291,7 @@ template<class T> bool operator!=(const T& x, const T& y);
 template<class T> bool operator>(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]).
+> Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -301,7 +301,7 @@ template<class T> bool operator>(const T& x, const T& y);
 template<class T> bool operator<=(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]).
+> Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -311,7 +311,7 @@ template<class T> bool operator<=(const T& x, const T& y);
 template<class T> bool operator>=(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]).
+> Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -530,7 +530,7 @@ virtual ~strstreambuf();
 > Destroys an object of class `strstreambuf`. The function frees the
 > dynamically allocated array object only if
 > `(strmode & allocated) != 0` and `(strmode & frozen) == 0`.
-> ([[depr.strstreambuf.virtuals]] describes how a dynamically allocated
+> ( [[depr.strstreambuf.virtuals]] describes how a dynamically allocated
 > array object is freed.)
 
 #### Member functions <a id="depr.strstreambuf.members">[[depr.strstreambuf.members]]</a>
@@ -1159,7 +1159,7 @@ template<class T> struct is_pod;
 > these types.
 >
 > \[*Note 1*: It is unspecified whether a closure
-> type[[expr.prim.lambda.closure]] is a POD type. — *end note*\]
+> type [[expr.prim.lambda.closure]] is a POD type. — *end note*\]
 
 ``` cpp
 template<size_t Len, size_t Align = default-alignment>
@@ -1233,7 +1233,7 @@ template<class T> struct tuple_size<const volatile T>;
 
 > Let `TS` denote `tuple_size<T>` of the cv-unqualified type `T`. If the
 > expression `TS::value` is well-formed when treated as an unevaluated
-> operand[[term.unevaluated.operand]], then specializations of each of
+> operand [[term.unevaluated.operand]], then specializations of each of
 > the two templates meet the *Cpp17TransformationTrait* requirements
 > with a base characteristic of `integral_constant<size_t, TS::value>`.
 > Otherwise, they have no member `value`.
@@ -1580,7 +1580,7 @@ template<class T>
 >
 > Two `shared_ptr` objects are equivalent if they store the same pointer
 > value and share ownership. The weak form may fail spuriously.
-> See [[atomics.types.operations]].
+> See  [[atomics.types.operations]].
 
 ## Deprecated `basic_string` capacity <a id="depr.string.capacity">[[depr.string.capacity]]</a>
 
@@ -2078,7 +2078,7 @@ template<class InputIterator>
 > *Returns:*
 >
 > - If `value_type` is `char` and the current native narrow
->   encoding@@REF:fs.path.type.cvt@@ is UTF-8, return `path(source)` or
+>   encoding [[fs.path.type.cvt]] is UTF-8, return `path(source)` or
 >   `path(first, last)`; otherwise,
 >
 > - if `value_type` is and the native wide encoding is UTF-16, or if
@@ -2091,9 +2091,9 @@ template<class InputIterator>
 >
 > *Remarks:*
 >
-> Argument format conversion[[fs.path.fmt.cvt]] applies to the arguments
-> for these functions. How Unicode encoding conversions are performed is
-> unspecified.
+> Argument format conversion [[fs.path.fmt.cvt]] applies to the
+> arguments for these functions. How Unicode encoding conversions are
+> performed is unspecified.
 >
 > \[*Example 1*:
 >

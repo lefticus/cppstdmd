@@ -463,7 +463,7 @@ locale(const locale& other, const char* std_name, category cats);
 
 > *Preconditions:*
 >
-> `cats` is a valid `category` value[[locale.category]].
+> `cats` is a valid `category` value [[locale.category]].
 >
 > *Effects:*
 >
@@ -600,12 +600,12 @@ template<class charT, class traits, class Allocator>
 >
 > This member operator template (and therefore `locale` itself) meets
 > the requirements for a comparator predicate template
-> argument[[algorithms]] applied to strings.
+> argument [[algorithms]] applied to strings.
 >
 > \[*Example 1*:
 >
 > A vector of strings `v` can be collated according to collation rules
-> in locale `loc` simply by[[alg.sort,vector]]:
+> in locale `loc` simply by [[alg.sort,vector]]:
 >
 >     std::sort(v.begin(), v.end(), loc);
 >
@@ -639,7 +639,7 @@ static locale global(const locale& loc);
 > No library function other than `locale::global()` affects the value
 > returned by `locale()`.
 >
-> \[*Note 2*: See [[c.locales]] for data race considerations when
+> \[*Note 2*: See  [[c.locales]] for data race considerations when
 > `setlocale` is invoked. — *end note*\]
 
 ``` cpp
@@ -667,7 +667,7 @@ template<class Facet> const Facet& use_facet(const locale& loc);
 > *Mandates:*
 >
 > `Facet` is a facet class whose definition contains the public static
-> member `id` as defined in [[locale.facet]].
+> member `id` as defined in  [[locale.facet]].
 >
 > *Returns:*
 >
@@ -1006,7 +1006,7 @@ const char*  do_widen(const char* low, const char* high, charT* dest) const;
 > from *character-literal*s for conversion to the locale’s encoding.
 >
 > The only characters for which unique transformations are required are
-> those in the basic character set[[lex.charset]].
+> those in the basic character set [[lex.charset]].
 >
 > For any named `ctype` category with a `ctype<charT>` facet `ctc` and
 > valid `ctype_base::mask` value `M`,
@@ -1034,7 +1034,7 @@ const charT* do_narrow(const charT* low, const charT* high, char dfault, char* d
 > sequence of `charT` values to the corresponding `char` value or
 > values.
 >
-> For any character `c` in the basic character set[[lex.charset]] the
+> For any character `c` in the basic character set [[lex.charset]] the
 > transformation is such that
 >
 > ``` cpp
@@ -1824,9 +1824,9 @@ iter_type do_get(iter_type in, iter_type end, ios_base& str,
 >     fmtflags boolalpha = (flags & ios_base::boolalpha);
 >
 > For conversion to an integral type, the function determines the
-> integral conversion specifier as indicated in
-> @@REF:facet.num.get.int@@. The table is ordered. That is, the first
-> line whose condition is true applies.
+> integral conversion specifier as indicated in [[facet.num.get.int]].
+> The table is ordered. That is, the first line whose condition is true
+> applies.
 >
 > <div class="floattable">
 >
@@ -1844,7 +1844,7 @@ iter_type do_get(iter_type in, iter_type end, ios_base& str,
 > For conversions to `void*` the specifier is `%p`.
 >
 > A length modifier is added to the conversion specification, if needed,
-> as indicated in @@REF:facet.num.get.length@@.
+> as indicated in [[facet.num.get.length]].
 >
 > <div class="floattable">
 >
@@ -1967,7 +1967,7 @@ iter_type do_get(iter_type in, iter_type end, ios_base& str,
 > Otherwise target sequences are determined “as if” by calling the
 > members `falsename()` and `truename()` of the facet obtained by
 > `use_facet<numpunct<charT>>(str.getloc())`. Successive characters in
-> the range \[`in`, `end`) (see [[sequence.reqmts]]) are obtained and
+> the range \[`in`, `end`) (see  [[sequence.reqmts]]) are obtained and
 > matched against corresponding positions in the target sequences only
 > as necessary to identify a unique match. The input iterator `in` is
 > compared to `end` only when necessary to obtain a character. If a
@@ -2079,7 +2079,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 >
 > - Stage 1: Determine a printf conversion specifier `spec` and
 >   determine the characters that would be printed by
->   `printf`@@REF:c.files@@ given this conversion specifier for
+>   `printf`[[c.files]] given this conversion specifier for
 >
 >       printf(spec, val)
 >
@@ -2119,7 +2119,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 >
 > For conversion from an integral type other than a character type, the
 > function determines the integral conversion specifier as indicated in
-> @@REF:facet.num.put.int@@.
+> [[facet.num.put.int]].
 >
 > <div class="floattable">
 >
@@ -2134,7 +2134,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 >
 > For conversion from a floating-point type, the function determines the
 > floating-point conversion specifier as indicated in
-> @@REF:facet.num.put.fp@@.
+> [[facet.num.put.fp]].
 >
 > <div class="floattable">
 >
@@ -2152,7 +2152,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 >
 > For conversions from an integral or floating-point type a length
 > modifier is added to the conversion specifier as indicated in
-> @@REF:facet.num.put.length@@.
+> [[facet.num.put.length]].
 >
 > <div class="floattable">
 >
@@ -2167,7 +2167,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 > </div>
 >
 > The conversion specifier has the following optional additional
-> qualifiers prepended as indicated in @@REF:facet.num.put.conv@@.
+> qualifiers prepended as indicated in [[facet.num.put.conv]].
 >
 > <div class="floattable">
 >
@@ -2202,7 +2202,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 > For arithmetic types, `punct.thousands_sep()` characters are inserted
 > into the sequence as determined by the value returned by
 > `punct.do_grouping()` using the method described
-> in @@REF:facet.numpunct.virtuals@@.
+> in  [[facet.numpunct.virtuals]].
 >
 > Decimal point characters(.) are replaced by `punct.decimal_point()`.
 >
@@ -2215,7 +2215,7 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, const void* val) 
 > The conversion specification `#o` generates a leading `0` which is
 > *not* a padding character.
 >
-> is determined according to @@REF:facet.num.put.fill@@.
+> is determined according to [[facet.num.put.fill]].
 >
 > <div class="floattable">
 >
@@ -2552,7 +2552,7 @@ int do_compare(const charT* low1, const charT* high1,
 > otherwise. The specializations required in
 > [[locale.category.facets]][[locale.category]], namely `collate<char>`
 > and `collate<wchar_t>`, implement a lexicographical
-> comparison[[alg.lex.comparison]].
+> comparison [[alg.lex.comparison]].
 
 ``` cpp
 string_type do_transform(const charT* low, const charT* high) const;

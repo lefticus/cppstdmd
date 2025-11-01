@@ -525,7 +525,7 @@ template<class T, class charT, class traits>
 >
 > Extracts a complex number `x` of the form: `u`, `(u)`, or `(u,v)`,
 > where `u` is the real part and `v` is the imaginary
-> part[[istream.formatted]].
+> part [[istream.formatted]].
 >
 > If bad input is encountered, calls `is.setstate(ios_base::failbit)`
 > (which may throw `ios_base::failure`[[iostate.flags]]).
@@ -2329,7 +2329,7 @@ template<class InputIterator>
 > *Preconditions:*
 >
 > `InputIterator` meets the *Cpp17InputIterator*
-> requirements[[input.iterators]].
+> requirements [[input.iterators]].
 >
 > *Effects:*
 >
@@ -2353,7 +2353,7 @@ template<class RandomAccessIterator>
 > *Preconditions:*
 >
 > `RandomAccessIterator` meets the *Cpp17RandomAccessIterator*
-> requirements[[random.access.iterators]] and the requirements of a
+> requirements [[random.access.iterators]] and the requirements of a
 > mutable iterator.
 >
 > *Effects:*
@@ -2433,12 +2433,12 @@ template<class OutputIterator>
 > *Mandates:*
 >
 > Values of type `result_type` are
-> writable[[iterator.requirements.general]] to `dest`.
+> writable [[iterator.requirements.general]] to `dest`.
 >
 > *Preconditions:*
 >
 > `OutputIterator` meets the *Cpp17OutputIterator*
-> requirements[[output.iterators]].
+> requirements [[output.iterators]].
 >
 > *Effects:*
 >
@@ -3922,7 +3922,7 @@ template<class InputIterator>
 > *Preconditions:*
 >
 > `InputIterator` meets the *Cpp17InputIterator*
-> requirements[[input.iterators]]. If `firstW == lastW`, let n = 1 and
+> requirements [[input.iterators]]. If `firstW == lastW`, let n = 1 and
 > w₀ = 1. Otherwise, $\bigl[\texttt{firstW}, \texttt{lastW}\bigr)$ forms
 > a sequence w of length n > 0.
 >
@@ -4072,7 +4072,7 @@ template<class InputIteratorB, class InputIteratorW>
 > *Preconditions:*
 >
 > `InputIteratorB` and `InputIteratorW` each meet the
-> *Cpp17InputIterator* requirements[[input.iterators]]. If
+> *Cpp17InputIterator* requirements [[input.iterators]]. If
 > `firstB == lastB` or `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0,
 > and b₁ = 1. Otherwise, $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$
 > forms a sequence b of length n+1, the length of the sequence w
@@ -4243,7 +4243,7 @@ template<class InputIteratorB, class InputIteratorW>
 > *Preconditions:*
 >
 > `InputIteratorB` and `InputIteratorW` each meet the
-> *Cpp17InputIterator* requirements[[input.iterators]]. If
+> *Cpp17InputIterator* requirements [[input.iterators]]. If
 > `firstB == lastB` or `++firstB == lastB`, let n = 1,
 > $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1. Otherwise,
 > $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a sequence b of
@@ -4342,10 +4342,10 @@ void srand(unsigned int seed);
 >
 > The implementation may specify that particular library functions may
 > call `rand`. It is *implementation-defined* whether the `rand`
-> function may introduce data races[[res.on.data.races]].
+> function may introduce data races [[res.on.data.races]].
 >
 > \[*Note 8*: The other random number generation facilities in this
-> document[[rand]] are often preferable to `rand`, because `rand`’s
+> document [[rand]] are often preferable to `rand`, because `rand`’s
 > underlying algorithm is unspecified. Use of `rand` therefore continues
 > to be non-portable, with unpredictable and oft-questionable quality
 > and performance. — *end note*\]
@@ -4667,7 +4667,7 @@ explicit valarray(size_t n);
 > *Effects:*
 >
 > Constructs a `valarray` that has length `n`. Each element of the array
-> is value-initialized[[dcl.init]].
+> is value-initialized [[dcl.init]].
 
 ``` cpp
 valarray(const T& v, size_t n);
@@ -5209,7 +5209,7 @@ valarray shift(int n) const;
 > fill. — *end note*\]
 >
 > \[*Example 9*: If the argument has the value -2, the first two
-> elements of the result will be value-initialized[[dcl.init]]; the
+> elements of the result will be value-initialized [[dcl.init]]; the
 > third element of the result will be assigned the value of the first
 > element of `*this`; etc. — *end example*\]
 
@@ -6463,7 +6463,7 @@ constexpr long long int abs(long long int j);
 >
 > If `abs` is called with an argument of type `X` for which
 > `is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int`
-> by integral promotion[[conv.prom]], the program is ill-formed.
+> by integral promotion [[conv.prom]], the program is ill-formed.
 >
 > \[*Note 12*: Arguments that can be promoted to `int` are permitted for
 > compatibility with C. — *end note*\]
