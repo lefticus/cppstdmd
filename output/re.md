@@ -18,16 +18,16 @@ summarized in [re.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [re.req] | Requirements |  |
+| [re.req] | Requirements |
 | [re.const] | Constants | `<regex>` |
-| [re.badexp] | Exception type |  |
-| [re.traits] | Traits |  |
-| [re.regex] | Regular expression template |  |
-| [re.submatch] | Submatches |  |
-| [re.results] | Match results |  |
-| [re.alg] | Algorithms |  |
-| [re.iter] | Iterators |  |
-| [re.grammar] | Grammar |  |
+| [re.badexp] | Exception type |
+| [re.traits] | Traits |
+| [re.regex] | Regular expression template |
+| [re.submatch] | Submatches |
+| [re.results] | Match results |
+| [re.alg] | Algorithms |
+| [re.iter] | Iterators |
+| [re.grammar] | Grammar |
 
 ## Requirements <a id="re.req">[re.req]</a>
 
@@ -866,6 +866,8 @@ argument passed to `imbue`.
 
 **Table: Character class names and corresponding `ctype` masks**
 
+|  |  |  |
+| --- | --- | --- |
 | `"alnum"` | `L"alnum"` | `ctype_base::alnum` |
 | `"alpha"` | `L"alpha"` | `ctype_base::alpha` |
 | `"blank"` | `L"blank"` | `ctype_base::blank` |
@@ -2989,3 +2991,15 @@ ECMA-262 15.10
 [re.traits]: #re.traits
 [sequence.reqmts]: containers.md#sequence.reqmts
 [strings.general]: strings.md#strings.general
+
+<!-- Link reference definitions -->
+[re.alg]: #re.alg
+[re.badexp]: #re.badexp
+[re.const]: #re.const
+[re.grammar]: #re.grammar
+[re.iter]: #re.iter
+[re.regex]: #re.regex
+[re.req]: #re.req
+[re.results]: #re.results
+[re.submatch]: #re.submatch
+[re.traits]: #re.traits

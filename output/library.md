@@ -18,7 +18,8 @@ Detailed specifications for each of the components in the library are in
 
 **Table: Library categories**
 
-| \hdstyle{Clause} | \hdstyle{Category} |
+|  |  |
+| --- | --- |
 | [support] | Language support library |
 | [concepts] | Concepts library |
 | [diagnostics] | Diagnostics library |
@@ -893,7 +894,7 @@ headers. This set shall include at least the headers shown in
 | Subclause |  | Header |
 | --- | --- | --- |
 | [support.types] | Common definitions | `<cstddef>` |
-| `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
+| [support.limits] | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
 | [cstdint.syn] | Integer types | `<cstdint>` |
 | [support.start.term] | Start and termination | `<cstdlib>` |
 | [support.dynamic] | Dynamic memory management | `<new>` |
@@ -2717,3 +2718,42 @@ such an assignment places the object in a valid but unspecified state.
 [utilities]: #utilities
 [utility.arg.requirements]: #utility.arg.requirements
 [utility.requirements]: #utility.requirements
+
+<!-- Link reference definitions -->
+[algorithms]: algorithms.md#algorithms
+[atomics]: thread.md#atomics
+[bit]: #bit
+[cmp]: support.md#cmp
+[concepts]: concepts.md#concepts
+[containers]: containers.md#containers
+[cstdint.syn]: support.md#cstdint.syn
+[diagnostics]: diagnostics.md#diagnostics
+[function.objects]: #function.objects
+[input.output]: input.md#input.output
+[iterators]: iterators.md#iterators
+[localization]: localization.md#localization
+[mem]: mem.md#mem
+[memory]: mem.md#memory
+[meta]: meta.md#meta
+[numerics]: numerics.md#numerics
+[ranges]: ranges.md#ranges
+[ratio]: meta.md#ratio
+[re]: re.md#re
+[strings]: strings.md#strings
+[support]: support.md#support
+[support.coroutine]: support.md#support.coroutine
+[support.dynamic]: support.md#support.dynamic
+[support.exception]: support.md#support.exception
+[support.initlist]: support.md#support.initlist
+[support.limits]: support.md#support.limits
+[support.rtti]: support.md#support.rtti
+[support.runtime]: support.md#support.runtime
+[support.srcloc]: support.md#support.srcloc
+[support.start.term]: support.md#support.start.term
+[support.types]: support.md#support.types
+[thread]: thread.md#thread
+[time]: time.md#time
+[tuple]: #tuple
+[type.traits]: meta.md#type.traits
+[utilities]: #utilities
+[utility]: #utility

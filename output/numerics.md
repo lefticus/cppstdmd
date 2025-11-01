@@ -14,12 +14,12 @@ floating-point types, as summarized in [numerics.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [numeric.requirements] | Requirements |  |
+| [numeric.requirements] | Requirements |
 | [cfenv] | Floating-point environment | `<cfenv>` |
 | [complex.numbers] | Complex numbers | `<complex>` |
 | [rand] | Random number generation | `<random>` |
 | [numarray] | Numeric arrays | `<valarray>` |
-| `<cmath>`, `<cstdlib>` |
+| [c.math] | Mathematical functions for floating-point types | `<cmath>`, `<cstdlib>` |
 | [numbers] | Numbers | `<numbers>` |
 
 ## Numeric type requirements <a id="numeric.requirements">[numeric.requirements]</a>
@@ -7150,3 +7150,12 @@ constant variable template is ill-formed.
 [utility.arg.requirements]: library.md#utility.arg.requirements
 [valarray.members]: #valarray.members
 [valarray.range]: #valarray.range
+
+<!-- Link reference definitions -->
+[c.math]: #c.math
+[cfenv]: #cfenv
+[complex.numbers]: #complex.numbers
+[numarray]: #numarray
+[numbers]: #numbers
+[numeric.requirements]: #numeric.requirements
+[rand]: #rand

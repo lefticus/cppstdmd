@@ -18,8 +18,8 @@ other runtime support, as summarized in [support.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| `<cstddef>`, `<cstdlib>` |
-| `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
+| [support.types] | Common definitions | `<cstddef>`, `<cstdlib>` |
+| [support.limits] | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
 | [support.arith.types] | Arithmetic types | `<cstdint>`, `<stdfloat>` |
 | [support.start.term] | Start and termination | `<cstdlib>` |
 | [support.dynamic] | Dynamic memory management | `<new>` |
@@ -29,7 +29,7 @@ other runtime support, as summarized in [support.summary].
 | [support.initlist] | Initializer lists | `<initializer_list>` |
 | [cmp] | Comparisons | `<compare>` |
 | [support.coroutine] | Coroutines | `<coroutine>` |
-| `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
+| [support.runtime] | Other runtime support | `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
 
 ## Common definitions <a id="support.types">[support.types]</a>
 
@@ -4598,3 +4598,17 @@ names within the namespace `std`. — *end example*\]
 [temp.variadic]: temp.md#temp.variadic
 [term.odr.use]: #term.odr.use
 [utility.arg.requirements]: library.md#utility.arg.requirements
+
+<!-- Link reference definitions -->
+[cmp]: #cmp
+[support.arith.types]: #support.arith.types
+[support.coroutine]: #support.coroutine
+[support.dynamic]: #support.dynamic
+[support.exception]: #support.exception
+[support.initlist]: #support.initlist
+[support.limits]: #support.limits
+[support.rtti]: #support.rtti
+[support.runtime]: #support.runtime
+[support.srcloc]: #support.srcloc
+[support.start.term]: #support.start.term
+[support.types]: #support.types

@@ -14,12 +14,12 @@ operations, and algorithms from the ISO C library, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [algorithms.requirements] | Algorithms requirements |  |
-| [algorithms.parallel] | Parallel algorithms |  |
+| [algorithms.requirements] | Algorithms requirements |
+| [algorithms.parallel] | Parallel algorithms |
 | [algorithms.results] | Algorithm result types | `<algorithm>` |
-| [alg.nonmodifying] | Non-modifying sequence operations |  |
-| [alg.modifying.operations] | Mutating sequence operations |  |
-| [alg.sorting] | Sorting and related operations |  |
+| [alg.nonmodifying] | Non-modifying sequence operations |
+| [alg.modifying.operations] | Mutating sequence operations |
+| [alg.sorting] | Sorting and related operations |
 | [numeric.ops] | Generalized numeric operations | `<numeric>` |
 | [specialized.algorithms] | Specialized `<memory>` algorithms | `<memory>` |
 | [alg.c.library] | C library algorithms | `<cstdlib>` |
@@ -10328,3 +10328,14 @@ Any exception thrown by `compar`\[res.on.exception.handling\].
 [temp.func.order]: temp.md#temp.func.order
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class
+
+<!-- Link reference definitions -->
+[alg.c.library]: #alg.c.library
+[alg.modifying.operations]: #alg.modifying.operations
+[alg.nonmodifying]: #alg.nonmodifying
+[alg.sorting]: #alg.sorting
+[algorithms.parallel]: #algorithms.parallel
+[algorithms.requirements]: #algorithms.requirements
+[algorithms.results]: #algorithms.results
+[numeric.ops]: #numeric.ops
+[specialized.algorithms]: #specialized.algorithms

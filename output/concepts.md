@@ -16,11 +16,11 @@ concepts, object concepts, and callable concepts as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [concepts.equality] | Equality preservation |  |
+| [concepts.equality] | Equality preservation |
 | [concepts.lang] | Language-related concepts | `<concepts>` |
-| [concepts.compare] | Comparison concepts |  |
-| [concepts.object] | Object concepts |  |
-| [concepts.callable] | Callable concepts |  |
+| [concepts.compare] | Comparison concepts |
+| [concepts.object] | Object concepts |
+| [concepts.callable] | Callable concepts |
 
 ## Equality preservation <a id="concepts.equality">[concepts.equality]</a>
 
@@ -1142,3 +1142,10 @@ Under these conditions, it can be shown that
 [temp.func.order]: temp.md#temp.func.order
 [template.bitset]: #template.bitset
 [term.literal.type]: #term.literal.type
+
+<!-- Link reference definitions -->
+[concepts.callable]: #concepts.callable
+[concepts.compare]: #concepts.compare
+[concepts.equality]: #concepts.equality
+[concepts.lang]: #concepts.lang
+[concepts.object]: #concepts.object

@@ -15,18 +15,18 @@ summarized in [iostreams.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [iostreams.requirements] | Requirements |  |
+| [iostreams.requirements] | Requirements |
 | [iostream.forward] | Forward declarations | `<iosfwd>` |
 | [iostream.objects] | Standard iostream objects | `<iostream>` |
 | [iostreams.base] | Iostreams base classes | `<ios>` |
 | [stream.buffers] | Stream buffers | `<streambuf>` |
-| `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
+| [iostream.format] | Formatting and manipulators | `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
 | [string.streams] | String streams | `<sstream>` |
 | [span.streams] | Span-based streams | `<spanstream>` |
 | [file.streams] | File streams | `<fstream>` |
 | [syncstream] | Synchronized output streams | `<syncstream>` |
 | [filesystems] | File systems | `<filesystem>` |
-| `<cstdio>`, `<cinttypes>` |
+| [c.files] | C library files | `<cstdio>`, `<cinttypes>` |
 
 ## Iostreams requirements <a id="iostreams.requirements">[iostreams.requirements]</a>
 
@@ -14186,3 +14186,17 @@ modifier for the type.
 [string.streams]: #string.streams
 [temp.deduct]: temp.md#temp.deduct
 [views.span]: containers.md#views.span
+
+<!-- Link reference definitions -->
+[c.files]: #c.files
+[file.streams]: #file.streams
+[filesystems]: #filesystems
+[iostream.format]: #iostream.format
+[iostream.forward]: #iostream.forward
+[iostream.objects]: #iostream.objects
+[iostreams.base]: #iostreams.base
+[iostreams.requirements]: #iostreams.requirements
+[span.streams]: #span.streams
+[stream.buffers]: #stream.buffers
+[string.streams]: #string.streams
+[syncstream]: #syncstream

@@ -17,7 +17,7 @@ standard facets, and facilities from the ISO C library, as summarized in
 | Subclause |  | Header |
 | --- | --- | --- |
 | [locales] | Locales | `<locale>` |
-| [locale.categories] | Standard `locale` categories |  |
+| [locale.categories] | Standard `locale` categories |
 | [c.locales] | C library locales | `<clocale>` |
 
 ## Header `<locale>` synopsis <a id="locale.syn">[locale.syn]</a>
@@ -3761,3 +3761,8 @@ functions listed in [setlocale.data.races].
 [setlocale.data.races]: #setlocale.data.races
 [tab:locale.category.facets]: #tab:locale.category.facets
 [tab:locale.spec]: #tab:locale.spec
+
+<!-- Link reference definitions -->
+[c.locales]: #c.locales
+[locale.categories]: #locale.categories
+[locales]: #locales

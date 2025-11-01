@@ -1928,3 +1928,10 @@ The specializations are enabled\[unord.hash\].
 [syserr]: #syserr
 [syserr.errcat]: #syserr.errcat
 [syserr.errcode]: #syserr.errcode
+
+<!-- Link reference definitions -->
+[assertions]: #assertions
+[errno]: #errno
+[stacktrace]: #stacktrace
+[std.exceptions]: #std.exceptions
+[syserr]: #syserr

@@ -3879,11 +3879,11 @@ type. — *end example*\]
 
 | Type | Minimum width $N$ |
 | --- | --- |
-| `\texttt{signed` `char`} | 8 |
-| `\texttt{short` `int`} | 16 |
+| `signed char` | 8 |
+| `short int` | 16 |
 | `int` | 16 |
-| `\texttt{long` `int`} | 32 |
-| `\texttt{long` `long` `int`} | 64 |
+| `long int` | 32 |
+| `long long int` | 64 |
 The width of each signed integer type shall not be less than the values
 specified in [basic.fundamental.width]. The value representation of a
 signed or unsigned integer type comprises N bits, where N is the
@@ -4253,11 +4253,13 @@ the relations that constitute this ordering.
 
 **Table: Relations on `const` and `volatile`**
 
+|  |  |  |
+| --- | --- | --- |
 | \cvqual{no cv-qualifier} | < | `const` |
 | \cvqual{no cv-qualifier} | < | `volatile` |
-| \cvqual{no cv-qualifier} | < | `\texttt{const` `volatile`} |
-| `const` | < | `\texttt{const` `volatile`} |
-| `volatile` | < | `\texttt{const` `volatile`} |
+| \cvqual{no cv-qualifier} | < | `const volatile` |
+| `const` | < | `const volatile` |
+| `volatile` | < | `const volatile` |
 In this document, the notation cv (or , , etc.), used in the description
 of types, represents an arbitrary set of cv-qualifiers, i.e., one of
 {`const`}, {`volatile`}, {`const`, `volatile`}, or the empty set. For a

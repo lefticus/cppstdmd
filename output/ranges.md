@@ -13,10 +13,10 @@ components for range primitives and range generators as summarized in
 | Subclause |  | Header |
 | --- | --- | --- |
 | [range.access] | Range access | `<ranges>` |
-| [range.req] | Requirements |  |
-| [range.utility] | Range utilities |  |
-| [range.factories] | Range factories |  |
-| [range.adaptors] | Range adaptors |  |
+| [range.req] | Requirements |
+| [range.utility] | Range utilities |
+| [range.factories] | Range factories |
+| [range.adaptors] | Range adaptors |
 | [coro.generator] | Range generators | `<generator>` |
 
 ## Header `<ranges>` synopsis <a id="ranges.syn">[ranges.syn]</a>
@@ -14556,3 +14556,11 @@ Equivalent to: `return i.`*`coroutine_`*`.done();`
 [term.array.type]: #term.array.type
 [term.perfect.forwarding.call.wrapper]: #term.perfect.forwarding.call.wrapper
 [views.span]: containers.md#views.span
+
+<!-- Link reference definitions -->
+[coro.generator]: #coro.generator
+[range.access]: #range.access
+[range.adaptors]: #range.adaptors
+[range.factories]: #range.factories
+[range.req]: #range.req
+[range.utility]: #range.utility

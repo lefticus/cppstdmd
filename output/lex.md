@@ -176,10 +176,12 @@ context. — *end note*\]
 
 **Table: Basic character set**
 
-| \ucode{0009} | \uname{character tabulation} |  |
-| \ucode{000b} | \uname{line tabulation} |  |
-| \ucode{000c} | \uname{form feed} |  |
-| \ucode{0020} | \uname{space} |  |
+|  |  |
+| --- | --- |
+| \ucode{0009} | \uname{character tabulation} |
+| \ucode{000b} | \uname{line tabulation} |
+| \ucode{000c} | \uname{form feed} |
+| \ucode{0020} | \uname{space} |
 | \ucode{000a} | \uname{line feed} | new-line |
 | \ucode{0021} | \uname{exclamation mark} | `!` |
 | \ucode{0022} | \uname{quotation mark} | `"` |
@@ -211,7 +213,7 @@ context. — *end note*\]
 | \ucode{005f} | \uname{low line} | `_` |
 | \ucode{0061} .. \ucode{007a} | \uname{latin small letter a .. z} | `a b c d e f g h i j k l m` |
 |  |  | `n o p q r s t u v w x y z` |
-| \ucode{007b} | \uname{left curly bracket} | `\{` |
+| \ucode{007b} | \uname{left curly bracket} | \texttt{\{} |
 | \ucode{007c} | \uname{vertical line} | `|` |
 | \ucode{007d} | \uname{right curly bracket} | `\`} |
 | \ucode{007e} | \uname{tilde} | `\textasciitilde` |
@@ -286,7 +288,8 @@ basic character set, plus the control characters specified in
 
 **Table: Additional control characters in the basic literal character set**
 
-| \ohdrx{2}{character} |
+|  |  |
+| --- | --- |
 | \ucode{0000} | \uname{null} |
 | \ucode{0007} | \uname{alert} |
 | \ucode{0008} | \uname{backspace} |
@@ -629,8 +632,10 @@ shall not be used otherwise.
 
 **Table: Alternative representations**
 
+|  |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- |
 | `and` | `and_eq` | `bitand` | `bitor` | `compl` | `not` |
-| `not_eq` | `or` | `or_eq` | `xor` | `xor_eq` |  |
+| `not_eq` | `or` | `or_eq` | `xor` | `xor_eq` |
 
 ## Operators and punctuators <a id="lex.operators">[lex.operators]</a>
 
@@ -805,30 +810,32 @@ its value can be represented.
 
 **Table: Types of *integer-literal*s**
 
-| `int` |
-| `unsigned int` |
-| `long int` |
-| `unsigned long int` |
-| `long long int` |
-| `unsigned long long int`\ |
-| `unsigned int` |
-| `unsigned long int` |
-| `unsigned long long int`\ |
-| `long int` |
-| `unsigned long int` |
-| `long long int` |
-| `unsigned long long int`\ |
-| `unsigned long int` |
-| `unsigned long long int`\ |
-| `long long int` |
-| `unsigned long long int`\ |
-| `unsigned long long int` |
-| \ |
-| the signed integer type |
-| \qquad corresponding to `std::size_t` |
-| `std::size_t`\ |
-| `std::size_t` |
-|  |
+|  |  |  |
+| --- | --- | --- |
+| none | `int` | `int` |
+|  | `long int` | `unsigned int` |
+|  | `long long int` | `long int` |
+|  |  | `unsigned long int` |
+|  |  | `long long int` |
+|  |  | `unsigned long long int` |
+| `u` or `U` | `unsigned int` | `unsigned int` |
+|  | `unsigned long int` | `unsigned long int` |
+|  | `unsigned long long int` | `unsigned long long int` |
+| `l` or `L` | `long int` | `long int` |
+|  | `long long int` | `unsigned long int` |
+|  |  | `long long int` |
+|  |  | `unsigned long long int` |
+| Both `u` or `U` | `unsigned long int` | `unsigned long int` |
+| and `l` or `L` | `unsigned long long int` | `unsigned long long int` |
+| `ll` or `LL` | `long long int` | `long long int` |
+|  |  | `unsigned long long int` |
+| Both `u` or `U` | `unsigned long long int` | `unsigned long long int` |
+| and `ll` or `LL` |  |
+| `z` or `Z` | the signed integer type corresponding | the signed integer type |
+|  | \qquad to `std::size_t` [support.types.layout] | \qquad corresponding to `std::size_t` |
+|  |  | `std::size_t` |
+| Both `u` or `U` | `std::size_t` | `std::size_t` |
+| and `z` or `Z` |  |
 If an *integer-literal* cannot be represented by any type in its list
 and an extended integer type [basic.fundamental] can represent its
 value, it may have that extended integer type. If all of the types in
@@ -950,16 +957,14 @@ character would require more than one code unit. — *end note*\]
 
 **Table: Character literals**
 
-| Encoding | Kind | Type | Associated char- | Example |
-| prefix |  |  | acter encoding |  |
-| `'v'` |
-| `'\ U0001F525'` |
-| `'abcd'` |
-| `L'w'` |
-|  |  |  | encoding |  |
-| `u8'x'` |
-| `u'y'` |
-| `U'z'` |
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| none | *ordinary character literal* | `char` | ordinary | `'v'` |
+| `L` | *wide character literal* | `wchar_t` | wide literal | `L'w'` |
+|  |  |  | encoding |
+| `u8` | *UTF-8 character literal* | `char8_t` | UTF-8 | `u8'x'` |
+| `u` | *UTF-16 character literal* | `char16_t` | UTF-16 | `u'y'` |
+| `U` | *UTF-32 character literal* | `char32_t` | UTF-32 | `U'z'` |
 In translation phase 4, the value of a *character-literal* is determined
 using the range of representable values of the *character-literal*’s
 type in translation phase 7. A non-encodable character literal or a
@@ -1008,6 +1013,8 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 
 **Table: Simple escape sequences**
 
+|  |  |  |
+| --- | --- | --- |
 | \ucode{000a} | \uname{line feed} | `\ n` |
 | \ucode{0009} | \uname{character tabulation} | `\ t` |
 | \ucode{000b} | \uname{line tabulation} | `\ v` |
@@ -1015,7 +1022,7 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 | \ucode{000d} | \uname{carriage return} | `\ r` |
 | \ucode{000c} | \uname{form feed} | `\ f` |
 | \ucode{0007} | \uname{alert} | `\ a` |
-| \ucode{005c} | \uname{reverse solidus} | `\\` |
+| \ucode{005c} | \uname{reverse solidus} | `` |
 | \ucode{003f} | \uname{question mark} | `\ ?` |
 | \ucode{0027} | \uname{apostrophe} | `\ '` |
 | \ucode{0022} | \uname{quotation mark} | `\ "` |
@@ -1182,14 +1189,13 @@ where n is the number of encoded code units as described below.
 
 **Table: String literals**
 
-| Encoding | Kind | Type | Associated | Examples |
-| prefix |  |  | character |  |
-|  |  |  | encoding |  |
-| `R"(ordinary raw string)"` |
-| `LR"w(wide raw string)w"` |
-| `u8R"x(UTF-8 raw string)x"` |
-| `uR"y(UTF-16 raw string)y"` |
-| `UR"z(UTF-32 raw string)z"` |
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| none | *ordinary string literal* | array of $n$\newline `const char` | ordinary literal encoding | `"ordinary string"`\newline `R"(ordinary raw string)"` |
+| `L` | *wide string literal* | array of $n$\newline `const wchar_t` | wide literal\newline encoding | `L"wide string"`\newline `LR"w(wide raw string)w"` |
+| `u8` | *UTF-8 string literal* | array of $n$\newline `const char8_t` | UTF-8 | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
+| `u` | *UTF-16 string literal* | array of $n$\newline `const char16_t` | UTF-16 | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
+| `U` | *UTF-32 string literal* | array of $n$\newline `const char32_t` | UTF-32 | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
 A *string-literal* that has an `R` in the prefix is a
 *raw string literal*. The *d-char-sequence* serves as a delimiter. The
 terminating *d-char-sequence* of a *raw-string* is the same sequence of
@@ -1276,10 +1282,12 @@ digit `1` (and not the single character `'A'` specified by a
 
 **Table: String literal concatenations**
 
-| Means |
-| `L"a"` | `L"b"` | `L"ab"` |
-| `L"a"` | `"b"` | `L"ab"` |
-| `"a"` | `L"b"` | `L"ab"` |
+|  |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- |
+| \multicolumn{2}{|c}{Source} | Means | \multicolumn{2}{c}{Source} | Means | \multicolumn{2}{c}{Source} | Means |
+| `u"a"` | `u"b"` | `u"ab"` | `U"a"` | `U"b"` | `U"ab"` | `L"a"` | `L"b"` | `L"ab"` |
+| `u"a"` | `"b"` | `u"ab"` | `U"a"` | `"b"` | `U"ab"` | `L"a"` | `"b"` | `L"ab"` |
+| `"a"` | `u"b"` | `u"ab"` | `"a"` | `U"b"` | `U"ab"` | `"a"` | `L"b"` | `L"ab"` |
 Evaluating a *string-literal* results in a string literal object with
 static storage duration [basic.stc]. Whether all *string-literal*s are
 distinct (that is, are stored in nonoverlapping objects) and whether

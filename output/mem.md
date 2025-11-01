@@ -5711,3 +5711,9 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [unique.ptr]: #unique.ptr
 [util.smartptr.enab]: #util.smartptr.enab
 [util.smartptr.shared.mod]: #util.smartptr.shared.mod
+
+<!-- Link reference definitions -->
+[allocator.adaptor]: #allocator.adaptor
+[mem.res]: #mem.res
+[memory]: #memory
+[smartptr]: #smartptr

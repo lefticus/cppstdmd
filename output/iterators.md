@@ -15,10 +15,10 @@ summarized in [iterators.summary].
 | Subclause |  | Header |
 | --- | --- | --- |
 | [iterator.requirements] | Iterator requirements | `<iterator>` |
-| [iterator.primitives] | Iterator primitives |  |
-| [predef.iterators] | Iterator adaptors |  |
-| [stream.iterators] | Stream iterators |  |
-| [iterator.range] | Range access |  |
+| [iterator.primitives] | Iterator primitives |
+| [predef.iterators] | Iterator adaptors |
+| [stream.iterators] | Stream iterators |
+| [iterator.range] | Range access |
 
 ## Header `<iterator>` synopsis <a id="iterator.synopsis">[iterator.synopsis]</a>
 
@@ -533,8 +533,10 @@ according to the operations defined on them: *input iterators*,
 
 **Table: Relations among iterator categories**
 
-| $\rightarrow$ \textbf{Input} |
-| $\rightarrow$ \textbf{Output} |
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| \textbf{Contiguous} | $\rightarrow$ \textbf{Random Access} | $\rightarrow$ \textbf{Bidirectional} | $\rightarrow$ \textbf{Forward} | $\rightarrow$ \textbf{Input} |
+|  |  |  |  | $\rightarrow$ \textbf{Output} |
 The six categories of iterators correspond to the iterator concepts
 
 - `input_iterator` [iterator.concept.input],
@@ -6044,3 +6046,10 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [temp.func.order]: temp.md#temp.func.order
 [temp.inst]: temp.md#temp.inst
 [utility.arg.requirements]: library.md#utility.arg.requirements
+
+<!-- Link reference definitions -->
+[iterator.primitives]: #iterator.primitives
+[iterator.range]: #iterator.range
+[iterator.requirements]: #iterator.requirements
+[predef.iterators]: #predef.iterators
+[stream.iterators]: #stream.iterators

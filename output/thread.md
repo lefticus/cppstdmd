@@ -11,11 +11,11 @@ conditions and values between threads, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [thread.req] | Requirements |  |
+| [thread.req] | Requirements |
 | [thread.stoptoken] | Stop tokens | `<stop_token>` |
 | [thread.threads] | Threads | `<thread>` |
-| `<atomic>`, `<stdatomic.h>` |
-| `<mutex>`, `<shared_mutex>` |
+| [atomics] | Atomic operations | `<atomic>`, `<stdatomic.h>` |
+| [thread.mutex] | Mutual exclusion | `<mutex>`, `<shared_mutex>` |
 | [thread.condition] | Condition variables | `<condition_variable>` |
 | [thread.sema] | Semaphores | `<semaphore>` |
 | [thread.coord] | Coordination types | `<latch>` `<barrier>` |
@@ -9687,3 +9687,14 @@ As if by `x.swap(y)`.
 [time.point]: time.md#time.point
 [util.sharedptr]: mem.md#util.sharedptr
 [util.smartptr.atomic]: #util.smartptr.atomic
+
+<!-- Link reference definitions -->
+[atomics]: #atomics
+[futures]: #futures
+[thread.condition]: #thread.condition
+[thread.coord]: #thread.coord
+[thread.mutex]: #thread.mutex
+[thread.req]: #thread.req
+[thread.sema]: #thread.sema
+[thread.stoptoken]: #thread.stoptoken
+[thread.threads]: #thread.threads

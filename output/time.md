@@ -10,17 +10,17 @@ summarized in [time.summary].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [time.clock.req] | \oldconcept{Clock} requirements |  |
+| [time.clock.req] | \oldconcept{Clock} requirements |
 | [time.traits] | Time-related traits | `<chrono>` |
-| [time.duration] | Class template `duration` |  |
-| [time.point] | Class template `time_point` |  |
-| [time.clock] | Clocks |  |
-| [time.cal] | Civil calendar |  |
-| [time.hms] | Class template `hh_mm_ss` |  |
-| [time.12] | 12/24 hour functions |  |
-| [time.zone] | Time zones |  |
-| [time.format] | Formatting |  |
-| [time.parse] | Parsing |  |
+| [time.duration] | Class template `duration` |
+| [time.point] | Class template `time_point` |
+| [time.clock] | Clocks |
+| [time.cal] | Civil calendar |
+| [time.hms] | Class template `hh_mm_ss` |
+| [time.12] | 12/24 hour functions |
+| [time.zone] | Time zones |
+| [time.format] | Formatting |
+| [time.parse] | Parsing |
 | [ctime.syn] | C library time utilities | `<ctime>` |
 Let *STATICALLY-WIDEN*`<charT>("...")` be `"..."` if `charT` is `char`
 and `L"..."` if `charT` is `wchar_t`.
@@ -8504,6 +8504,45 @@ day elapsed since midnight.
 
 | Specifier | Replacement |
 | --- | --- |
+| `\%a` | The locale's abbreviated weekday name. If the value does not contain a valid weekday, an exception of type `format_error` is thrown. |
+| `\%A` | The locale's full weekday name. If the value does not contain a valid weekday, an exception of type `format_error` is thrown. |
+| `\%b` | The locale's abbreviated month name. If the value does not contain a valid month, an exception of type `format_error` is thrown. |
+| `\%B` | The locale's full month name. If the value does not contain a valid month, an exception of type `format_error` is thrown. |
+| `\%c` | The locale's date and time representation. The modified command `\%Ec` produces the locale's alternate date and time representation. |
+| `\%C` | The year divided by 100 using floored division. If the result is a single decimal digit, it is prefixed with `0`. The modified command `\%EC` produces the locale's alternative representation of the century. |
+| `\%d` | The day of month as a decimal number. If the result is a single decimal digit, it is prefixed with `0`. The modified command `\%Od` produces the locale's alternative representation. |
+| `\%D` | Equivalent to `\%m/\%d/\%y`. |
+| `\%e` | The day of month as a decimal number. If the result is a single decimal digit, it is prefixed with a space. The modified command `\%Oe` produces the locale's alternative representation. |
+| `\%F` | Equivalent to `\%Y-\%m-\%d`. |
+| `\%g` | The last two decimal digits of the ISO week-based year. If the result is a single digit it is prefixed by `0`. |
+| `\%G` | The ISO week-based year as a decimal number. If the result is less than four digits it is left-padded with `0` to four digits. |
+| `\%h` | Equivalent to `\%b`. |
+| `\%H` | The hour (24-hour clock) as a decimal number. If the result is a single digit, it is prefixed with `0`. The modified command `\%OH` produces the locale's alternative representation. |
+| `\%I` | The hour (12-hour clock) as a decimal number. If the result is a single digit, it is prefixed with `0`. The modified command `\%OI` produces the locale's alternative representation. |
+| `\%j` | If the type being formatted is a specialization of `duration`, the decimal number of `days` without padding. Otherwise, the day of the year as a decimal number. Jan 1 is `001`. If the result is less than three digits, it is left-padded with `0` to three digits. |
+| `\%m` | The month as a decimal number. Jan is `01`. If the result is a single digit, it is prefixed with `0`. The modified command `\%Om` produces the locale's alternative representation. |
+| `\%M` | The minute as a decimal number. If the result is a single digit, it is prefixed with `0`. The modified command `\%OM` produces the locale's alternative representation. |
+| `\%n` | A new-line character. |
+| `\%p` | The locale's equivalent of the AM/PM designations associated with a 12-hour clock. |
+| `\%q` | The duration's unit suffix as specified in [time.duration.io]. |
+| `\%Q` | The duration's numeric value (as if extracted via `.count()`). |
+| `\%r` | The locale's 12-hour clock time. |
+| `\%R` | Equivalent to `\%H:\%M`. |
+| `\%S` | Seconds as a decimal number. If the number of seconds is less than `10`, the result is prefixed with `0`. If the precision of the input cannot be exactly represented with seconds, then the format is a decimal floating-point number with a fixed format and a precision matching that of the precision of the input (or to a microseconds precision if the conversion to floating-point decimal seconds cannot be made within 18 fractional digits). The character for the decimal point is localized according to the locale. The modified command `\%OS` produces the locale's alternative representation. |
+| `\%t` | A horizontal-tab character. |
+| `\%T` | Equivalent to `\%H:\%M:\%S`. |
+| `\%u` | The ISO weekday as a decimal number (`1`-`7`), where Monday is `1`. The modified command `\%Ou` produces the locale's alternative representation. |
+| `\%U` | The week number of the year as a decimal number. The first Sunday of the year is the first day of week `01`. Days of the same year prior to that are in week `00`. If the result is a single digit, it is prefixed with `0`. The modified command `\%OU` produces the locale's alternative representation. |
+| `\%V` | The ISO week-based week number as a decimal number. If the result is a single digit, it is prefixed with `0`. The modified command `\%OV` produces the locale's alternative representation. |
+| `\%w` | The weekday as a decimal number (`0`-`6`), where Sunday is `0`. The modified command `\%Ow` produces the locale's alternative representation. |
+| `\%W` | The week number of the year as a decimal number. The first Monday of the year is the first day of week `01`. Days of the same year prior to that are in week `00`. If the result is a single digit, it is prefixed with `0`. The modified command `\%OW` produces the locale's alternative representation. |
+| `\%x` | The locale's date representation. The modified command `\%Ex` produces the locale's alternate date representation. |
+| `\%X` | The locale's time representation. The modified command `\%EX` produces the locale's alternate time representation. |
+| `\%y` | The last two decimal digits of the year. If the result is a single digit it is prefixed by `0`. The modified command `\%Oy` produces the locale's alternative representation. The modified command `\%Ey` produces the locale's alternative representation of offset from `\%EC` (year only). |
+| `\%Y` | The year as a decimal number. If the result is less than four digits it is left-padded with `0` to four digits. The modified command `\%EY` produces the locale's alternative full year representation. |
+| . If the offset is zero, `+0000` is used. The modified commands `\%Ez` and `\%Oz` insert a `:` between the hours and minutes: `-04:30`. If the offset information is not available, an exception of type `format_error` is thrown. |
+| `\%Z` | The time zone abbreviation. If the time zone abbreviation is not available, an exception of type `format_error` is thrown. |
+| `\%\%` | A `\%` character. |
 If the is omitted, the chrono object is formatted as if by streaming it
 to `basic_ostring\-stream<charT> os` with the formatting locale imbued
 and copying `os.str()` through the output iterator of the context with
@@ -8840,6 +8879,43 @@ complete duration, time point, or calendrical data structure,
 
 | Flag | Parsed value |
 | --- | --- |
+| `\%a` | The locale's full or abbreviated case-insensitive weekday name. |
+| `\%A` | Equivalent to `\%a`. |
+| `\%b` | The locale's full or abbreviated case-insensitive month name. |
+| `\%B` | Equivalent to `\%b`. |
+| `\%c` | The locale's date and time representation. The modified command `\%Ec` interprets the locale's alternate date and time representation. |
+| `\%C` | The century as a decimal number. The modified command `\%*N*C` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%EC` interprets the locale's alternative representation of the century. |
+| `\%d` | The day of the month as a decimal number. The modified command `\%*N*d` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%Od` interprets the locale's alternative representation of the day of the month. |
+| `\%D` | Equivalent to `\%m/\%d/\%y`. |
+| `\%e` | Equivalent to `\%d` and can be modified like `\%d`. |
+| `\%F` | Equivalent to `\%Y-\%m-\%d`. If modified with a width `*N*`, the width is applied to only `\%Y`. |
+| `\%g` | The last two decimal digits of the ISO week-based year. The modified command `\%*N*g` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. |
+| `\%G` | The ISO week-based year as a decimal number. The modified command `\%*N*G` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 4. Leading zeroes are permitted but not required. |
+| `\%h` | Equivalent to `\%b`. |
+| `\%H` | The hour (24-hour clock) as a decimal number. The modified command `\%*N*H` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%OH` interprets the locale's alternative representation. |
+| `\%I` | The hour (12-hour clock) as a decimal number. The modified command `\%*N*I` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%OI` interprets the locale's alternative representation. |
+| `\%j` | If the type being parsed is a specialization of `duration`, a decimal number of `days`. Otherwise, the day of the year as a decimal number. Jan 1 is `1`. In either case, the modified command `\%*N*j` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 3. Leading zeroes are permitted but not required. |
+| `\%m` | The month as a decimal number. Jan is `1`. The modified command `\%*N*m` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%Om` interprets the locale's alternative representation. |
+| `\%M` | The minutes as a decimal number. The modified command `\%*N*M` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%OM` interprets the locale's alternative representation. |
+| `\%n` | Matches one whitespace character. \begin{tailnote} `\%n`, `\%t`, and a space can be combined to match a wide range of whitespace patterns. For example, `"\%n "` matches one or more whitespace characters, and `"\%n\%t\%t"` matches one to three whitespace characters. \end{tailnote} |
+| `\%p` | The locale's equivalent of the AM/PM designations associated with a 12-hour clock. |
+| `\%r` | The locale's 12-hour clock time. |
+| `\%R` | Equivalent to `\%H:\%M`. |
+| `\%S` | The seconds as a decimal number. The modified command `\%*N*S` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2 if the input time has a precision convertible to seconds. Otherwise the default width is determined by the decimal precision of the input and the field is interpreted as a `long double` in a fixed format. If encountered, the locale determines the decimal point character. Leading zeroes are permitted but not required. The modified command `\%OS` interprets the locale's alternative representation. |
+| `\%t` | Matches zero or one whitespace characters. |
+| `\%T` | Equivalent to `\%H:\%M:\%S`. |
+| `\%u` | The ISO weekday as a decimal number (`1`-`7`), where Monday is `1`. The modified command `\%*N*u` specifies the maximum number of characters to read. If `*N*` is not specified, the default is `1`. Leading zeroes are permitted but not required. |
+| `\%U` | The week number of the year as a decimal number. The first Sunday of the year is the first day of week `01`. Days of the same year prior to that are in week `00`. The modified command `\%*N*U` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%OU` interprets the locale's alternative representation. |
+| `\%V` | The ISO week-based week number as a decimal number. The modified command `\%*N*V` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. |
+| `\%w` | The weekday as a decimal number (`0`-`6`), where Sunday is `0`. The modified command `\%*N*w` specifies the maximum number of characters to read. If `*N*` is not specified, the default is `1`. Leading zeroes are permitted but not required. The modified command `\%Ow` interprets the locale's alternative representation. |
+| `\%W` | The week number of the year as a decimal number. The first Monday of the year is the first day of week `01`. Days of the same year prior to that are in week `00`. The modified command `\%*N*W` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%OW` interprets the locale's alternative representation. |
+| `\%x` | The locale's date representation. The modified command `\%Ex` interprets the locale's alternate date representation. |
+| `\%X` | The locale's time representation. The modified command `\%EX` interprets the locale's alternate time representation. |
+| `\%y` | The last two decimal digits of the year. If the century is not otherwise specified (e.g., with `\%C`), values in the range \crange{69}{99} are presumed to refer to the years 1969 to 1999, and values in the range \crange{00}{68} are presumed to refer to the years 2000 to 2068. The modified command `\%*N*y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified commands `\%Ey` and `\%Oy` interpret the locale's alternative representation. |
+| `\%Y` | The year as a decimal number. The modified command `\%*N*Y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 4. Leading zeroes are permitted but not required. The modified command `\%EY` interprets the locale's alternative representation. |
+| . The modified commands `\%Ez` and `\%Oz` parse a `:` between the hours and minutes and render leading zeroes on the hour field optional: `[+|-]h[h][:mm]`. For example `-04:30` refers to 4 hours 30 minutes behind UTC, and `4` refers to 4 hours ahead of UTC. |
+| `\%Z` | The time zone abbreviation or name. A single word is parsed. This word can only contain characters from the basic character set [lex.charset] that are alphanumeric, or one of `'_'`, `'/'`, `'-'`, or `'+'`. |
+| `\%\%` | A `\%` character is extracted. |
 ## Header `<ctime>` synopsis <a id="ctime.syn">[ctime.syn]</a>
 
 ``` cpp
@@ -8904,4 +8980,19 @@ required to avoid data races [res.on.data.races].
 [time.parse.spec]: #time.parse.spec
 [time.summary]: #time.summary
 [time.syn]: #time.syn
+[time.zone]: #time.zone
+
+<!-- Link reference definitions -->
+[ctime.syn]: #ctime.syn
+[time.12]: #time.12
+[time.cal]: #time.cal
+[time.clock]: #time.clock
+[time.clock.req]: #time.clock.req
+[time.duration]: #time.duration
+[time.duration.io]: #time.duration.io
+[time.format]: #time.format
+[time.hms]: #time.hms
+[time.parse]: #time.parse
+[time.point]: #time.point
+[time.traits]: #time.traits
 [time.zone]: #time.zone

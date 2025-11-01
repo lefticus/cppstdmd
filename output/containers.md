@@ -13,12 +13,12 @@ for sequence containers and associative containers, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [container.requirements] | Requirements |  |
-| `<list>`, `<vector>` |
-| `<map>`, `<set>` |
-| `<unordered_map>`, `<unordered_set>` |
-| `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>` |
-| `<span>`, `<mdspan>` |
+| [container.requirements] | Requirements |
+| [sequences] | Sequence containers | `<array>`, `<deque>`, `<forward_list>`, `<list>`, `<vector>` |
+| [associative] | Associative containers | `<map>`, `<set>` |
+| [unord] | Unordered associative containers | `<unordered_map>`, `<unordered_set>` |
+| [container.adaptors] | Container adaptors | `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>` |
+| [views] | Views | `<span>`, `<mdspan>` |
 
 ## Requirements <a id="container.requirements">[container.requirements]</a>
 
@@ -1635,6 +1635,8 @@ of [container.node.compat].
 
 **Table: Container types with compatible nodes**
 
+|  |  |
+| --- | --- |
 | `map<K, T, C1, A>` | `map<K, T, C2, A>` |
 | `map<K, T, C1, A>` | `multimap<K, T, C2, A>` |
 | `set<K, C1, A>` | `set<K, C2, A>` |
@@ -17341,4 +17343,12 @@ swap(x.acc_, y.acc_);
 [unord.set]: #unord.set
 [vector]: #vector
 [vector.modifiers]: #vector.modifiers
+[views]: #views
+
+<!-- Link reference definitions -->
+[associative]: #associative
+[container.adaptors]: #container.adaptors
+[container.requirements]: #container.requirements
+[sequences]: #sequences
+[unord]: #unord
 [views]: #views

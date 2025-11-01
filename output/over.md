@@ -491,13 +491,14 @@ built-in operator [expr.compound].
 
 **Table: Relationship between operator and function call notation**
 
-| \hdstyle{Subclause} | \hdstyle{Expression} | \hdstyle{As member function} | \hdstyle{As non-member function} |
-| [over.unary] | `@a` | `(a).\texttt{operator`@ (\,)} | `\texttt{operator`@(a)} |
-| [over.binary] | `a@b` | `(a).\texttt{operator`@ (b)} | `\texttt{operator`@(a, b)} |
-| [over.ass] | `a=b` | `(a).\texttt{operator`= (b)} |  |
-| [over.sub] | `a[b]` | `(a).\texttt{operator`[](b)} |  |
-| [over.ref] | `a->` | `(a).\texttt{operator`->(\,)} |  |
-| [over.inc] | `a@` | `(a).\texttt{operator`@ (0)} | `\texttt{operator`@(a, 0)} |
+|  |
+| --- |
+| (a)} |
+| (a, b)} |
+| [over.ass] | `a=b` | `(a).operator= (b)` |
+| [over.sub] | `a[b]` | `(a).operator[](b)` |
+| [over.ref] | `a->` | `(a).operator->(\,)` |
+| (a, 0)} |
 For a unary operator `@` with an operand of type `T1`, and for a binary
 operator `@` with a left operand of type `T1` and a right operand of
 type `T2`, four sets of candidate functions, designated
@@ -1698,21 +1699,11 @@ the sequence has Exact Match rank.
 
 **Table: Conversions**
 
-| \hdstyle{Conversion} | \hdstyle{Category} | \hdstyle{Rank} | \hdstyle{Subclause} |
-| No conversions required | Identity |  |  |
-| Lvalue-to-rvalue conversion |  |  | [conv.lval] |
-| Array-to-pointer conversion | Lvalue Transformation |  | [conv.array] |
-| Function-to-pointer conversion |  | \rb{Exact Match} | [conv.func] |
-| Qualification conversions |  |  | [conv.qual] |
-| Function pointer conversion | \rb{Qualification Adjustment} |  | [conv.fctptr] |
+|  |  |  |
+| --- | --- | --- |
+| No conversions required | Identity |  |
 | Integral promotions |  |  | [conv.prom] |
-| Floating-point promotion | \rb{Promotion} | \rb{Promotion} | [conv.fpprom] |
 | Integral conversions |  |  | [conv.integral] |
-| Floating-point conversions |  |  | [conv.double] |
-| Floating-integral conversions |  |  | [conv.fpint] |
-| Pointer conversions | \rb{Conversion} | \rb{Conversion} | [conv.ptr] |
-| Pointer-to-member conversions |  |  | [conv.mem] |
-| Boolean conversions |  |  | [conv.bool] |
 
 ##### User-defined conversion sequences <a id="over.ics.user">[over.ics.user]</a>
 
@@ -3202,3 +3193,10 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [temp.over]: temp.md#temp.over
 [temp.variadic]: temp.md#temp.variadic
 [usrlit.suffix]: library.md#usrlit.suffix
+
+<!-- Link reference definitions -->
+[conv.integral]: expr.md#conv.integral
+[conv.prom]: expr.md#conv.prom
+[over.ass]: #over.ass
+[over.ref]: #over.ref
+[over.sub]: #over.sub

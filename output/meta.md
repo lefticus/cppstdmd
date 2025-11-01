@@ -1352,12 +1352,14 @@ yields correct values of `U` and `V`.
 
 **Table: Expressions used to perform ratio arithmetic**
 
-| `R1::den * R2::den` |
-|  |
-| `R1::den * R2::den` |
-|  |
-| `R1::den * R2::den` |
-| `R1::den * R2::num` |
+|  |  |  |
+| --- | --- | --- |
+| `ratio_add<R1, R2>` | `R1::num * R2::den +` | `R1::den * R2::den` |
+|  | `R2::num * R1::den` |
+| `ratio_subtract<R1, R2>` | `R1::num * R2::den -` | `R1::den * R2::den` |
+|  | `R2::num * R1::den` |
+| `ratio_multiply<R1, R2>` | `R1::num * R2::num` | `R1::den * R2::den` |
+| `ratio_divide<R1, R2>` | `R1::num * R2::den` | `R1::den * R2::num` |
 \[*Example 1*:
 
 ``` cpp
@@ -1471,4 +1473,9 @@ representable by `intmax_t`, the typedef is not defined.
 [term.trivially.copyable.type]: #term.trivially.copyable.type
 [term.unevaluated.operand]: #term.unevaluated.operand
 [tuple.apply]: #tuple.apply
+[type.traits]: #type.traits
+
+<!-- Link reference definitions -->
+[intseq]: #intseq
+[ratio]: #ratio
 [type.traits]: #type.traits
