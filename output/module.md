@@ -474,7 +474,7 @@ affects:
 - whether a declaration is required not to be an exposure [basic.link],
 
 - where definitions for inline functions and templates must appear
-  [basic.def.odr,dcl.inline,temp.pre],
+  [basic.def.odr], [dcl.inline], [temp.pre],
 
 - the instantiation contexts of templates instantiated before it
   [module.context], and
@@ -517,9 +517,9 @@ lookup [basic.lookup.argdep] and which are reachable [module.reach] in
 the context of a particular declaration or template instantiation.
 
 During the implicit definition of a defaulted function
-[special,class.compare.default], the instantiation context is the union
-of the instantiation context from the definition of the class and the
-instantiation context of the program construct that resulted in the
+[special], [class.compare.default], the instantiation context is the
+union of the instantiation context from the definition of the class and
+the instantiation context of the program construct that resulted in the
 implicit definition of the defaulted function.
 
 During the implicit instantiation of a template whose point of
@@ -627,6 +627,30 @@ cannot be found by name lookup. — *end note*\]
 — *end example*\]
 
 <!-- Link reference definitions -->
+[basic.def.odr]: basic.md#basic.def.odr
 [basic.link]: basic.md#basic.link
+[basic.lookup]: basic.md#basic.lookup
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[class.compare.default]: class.md#class.compare.default
 [cpp.import]: cpp.md#cpp.import
+[cpp.include]: cpp.md#cpp.include
+[cpp.pre]: cpp.md#cpp.pre
+[dcl.inline]: dcl.md#dcl.inline
+[dcl.link]: dcl.md#dcl.link
+[dcl.spec.auto]: dcl.md#dcl.spec.auto
+[headers]: library.md#headers
+[lex.name]: lex.md#lex.name
+[lex.phases]: lex.md#lex.phases
+[module.context]: #module.context
+[module.global.frag]: #module.global.frag
+[module.import]: #module.import
+[module.interface]: #module.interface
 [module.reach]: #module.reach
+[module.unit]: #module.unit
+[namespace.udecl]: dcl.md#namespace.udecl
+[over.over]: over.md#over.over
+[special]: class.md#special
+[temp.decls.general]: temp.md#temp.decls.general
+[temp.dep]: temp.md#temp.dep
+[temp.point]: #temp.point
+[temp.pre]: temp.md#temp.pre

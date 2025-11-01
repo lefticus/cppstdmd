@@ -5691,12 +5691,23 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 
 <!-- Link reference definitions -->
 [alg.sorting]: algorithms.md#alg.sorting
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.requirements.general]: library.md#allocator.requirements.general
+[cpp17.destructible]: #cpp17.destructible
+[cpp17.nullablepointer]: #cpp17.nullablepointer
+[function.objects]: #function.objects
+[intro.multithread]: basic.md#intro.multithread
+[intro.races]: basic.md#intro.races
+[mem.summary]: #mem.summary
 [memory]: #memory
 [pointer.traits]: #pointer.traits
 [pointer.traits.functions]: #pointer.traits.functions
 [smartptr]: #smartptr
 [specialized.addressof]: #specialized.addressof
 [specialized.algorithms]: algorithms.md#specialized.algorithms
+[stmt.dcl]: stmt.md#stmt.dcl
+[temp.deduct]: temp.md#temp.deduct
 [tuple]: #tuple
 [unique.ptr]: #unique.ptr
+[util.smartptr.enab]: #util.smartptr.enab
 [util.smartptr.shared.mod]: #util.smartptr.shared.mod

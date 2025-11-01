@@ -120,12 +120,13 @@ struct X {
 subobjects and members declared with the `no_unique_address` attribute
 [dcl.attr.nouniqueaddr] are not so constrained. — *end note*\]
 
-\[*Note 4*: Class objects can be assigned [over.ass,class.copy.assign],
-passed as arguments to functions [dcl.init,class.copy.ctor], and
-returned by functions (except objects of classes for which copying or
-moving has been restricted; see  [dcl.fct.def.delete] and
-[class.access]). Other plausible operators, such as equality comparison,
-can be defined by the user; see  [over.oper]. — *end note*\]
+\[*Note 4*: Class objects can be assigned
+[over.ass], [class.copy.assign], passed as arguments to functions
+[dcl.init], [class.copy.ctor], and returned by functions (except objects
+of classes for which copying or moving has been restricted; see 
+[dcl.fct.def.delete] and [class.access]). Other plausible operators,
+such as equality comparison, can be defined by the user; see 
+[over.oper]. — *end note*\]
 
 ## Properties of classes <a id="class.prop">[class.prop]</a>
 
@@ -133,7 +134,7 @@ A *trivially copyable class* is a class:
 
 - that has at least one eligible copy constructor, move constructor,
   copy assignment operator, or move assignment operator
-  [special,class.copy.ctor,class.copy.assign],
+  [special], [class.copy.ctor], [class.copy.assign],
 
 - where each eligible copy constructor, move constructor, copy
   assignment operator, and move assignment operator is trivial, and
@@ -435,7 +436,7 @@ the class or declare at least one unnamed bit-field.
 
 A *data member* is a non-function member introduced by a
 *member-declarator*. A *member function* is a member that is a function.
-Nested types are classes [class.name,class.nest] and enumerations
+Nested types are classes [class.name], [class.nest] and enumerations
 [dcl.enum] declared in the class and arbitrary types declared as members
 by use of a typedef declaration [dcl.typedef] or *alias-declaration*.
 The enumerators of an unscoped enumeration [dcl.enum] defined in the
@@ -467,7 +468,7 @@ their types are sufficiently different
 
 A redeclaration of a class member outside its class definition shall be
 a definition, an explicit specialization, or an explicit instantiation
-[temp.expl.spec,temp.explicit]. The member shall not be a non-static
+[temp.expl.spec], [temp.explicit]. The member shall not be a non-static
 data member.
 
 A *complete-class context* of a class (template) is a
@@ -717,7 +718,7 @@ alignment. — *end note*\]
 
 \[*Note 11*: The object and its first subobject are
 pointer-interconvertible
-[basic.compound,expr.static.cast]. — *end note*\]
+[basic.compound], [expr.static.cast]. — *end note*\]
 
 ### Member functions <a id="class.mfct">[class.mfct]</a>
 
@@ -778,11 +779,11 @@ Also see  [temp.arg].
 
 A non-static member function may be called for an object of its class
 type, or for an object of a class derived [class.derived] from its class
-type, using the class member access syntax [expr.ref,over.match.call]. A
-non-static member function may also be called directly using the
-function call syntax [expr.call,over.match.call] from within its class
-or a class derived from its class, or a member thereof, as described
-below.
+type, using the class member access syntax
+[expr.ref], [over.match.call]. A non-static member function may also be
+called directly using the function call syntax
+[expr.call], [over.match.call] from within its class or a class derived
+from its class, or a member thereof, as described below.
 
 When an *id-expression* [expr.prim.id] that is neither part of a class
 member access syntax [expr.ref] nor the unparenthesized operand of the
@@ -1244,7 +1245,7 @@ defined as deleted [dcl.fct.def.delete] if `X` has:
   type.
 
 \[*Note 30*: A defaulted move constructor that is defined as deleted is
-ignored by overload resolution [over.match,over.over]. Such a
+ignored by overload resolution [over.match], [over.over]. Such a
 constructor would otherwise interfere with initialization from an rvalue
 which can use the copy constructor instead. — *end note*\]
 
@@ -1265,7 +1266,7 @@ otherwise the copy/move constructor is *non-trivial*.
 
 \[*Note 31*: The copy/move constructor is implicitly defined even if the
 implementation elided its odr-use
-[term.odr.use,class.temporary]. — *end note*\]
+[term.odr.use], [class.temporary]. — *end note*\]
 
 If an implicitly-defined [dcl.fct.def.default] constructor would be
 constexpr-suitable [dcl.constexpr], the implicitly-defined constructor
@@ -1440,7 +1441,7 @@ deleted if `X` has:
 
 \[*Note 39*: A defaulted move assignment operator that is defined as
 deleted is ignored by overload resolution
-[over.match,over.over]. — *end note*\]
+[over.match], [over.over]. — *end note*\]
 
 Because a copy/move assignment operator is implicitly declared for a
 class if not declared by the user, a base class copy/move assignment
@@ -1664,7 +1665,7 @@ A destructor is invoked implicitly
   [stmt.dcl],
 
 - for a constructed temporary object when its lifetime ends
-  [conv.rval,class.temporary].
+  [conv.rval], [class.temporary].
 
 In each case, the context of the invocation is the context of the
 construction of the object. A destructor may also be invoked implicitly
@@ -1794,11 +1795,10 @@ Type conversions of class objects can be specified by constructors and
 by conversion functions. These conversions are called
 *user-defined conversions* and are used for implicit type conversions
 [conv], for initialization [dcl.init], and for explicit type conversions
-[expr.type.conv,expr.cast,
-expr.static.cast].
+[expr.type.conv], [expr.cast], [expr.static.cast].
 
 User-defined conversions are applied only where they are unambiguous
-[class.member.lookup,class.conv.fct]. Conversions obey the access
+[class.member.lookup], [class.conv.fct]. Conversions obey the access
 control rules [class.access]. Access control is applied after ambiguity
 resolution [basic.lookup].
 
@@ -1856,7 +1856,7 @@ void f(X arg) {
 
 An explicit constructor constructs objects just like non-explicit
 constructors, but does so only where the direct-initialization syntax
-[dcl.init] or where casts [expr.static.cast,expr.cast] are explicitly
+[dcl.init] or where casts [expr.static.cast], [expr.cast] are explicitly
 used; see also  [over.match.copy]. A default constructor can be an
 explicit constructor; such a constructor will be used to perform
 default-initialization or value-initialization [dcl.init].
@@ -2405,7 +2405,7 @@ non-static data members. Each non-static data member is allocated as if
 it were the sole member of a non-union class.
 
 \[*Note 2*: A union object and its non-static data members are
-pointer-interconvertible [basic.compound,expr.static.cast]. As a
+pointer-interconvertible [basic.compound], [expr.static.cast]. As a
 consequence, all non-static data members of a union object have the same
 address. — *end note*\]
 
@@ -2772,7 +2772,7 @@ class D : public A, public B, public C { ... };
 \[*Note 7*: The order of derivation is not significant except as
 specified by the semantics of initialization by constructor
 [class.base.init], cleanup [class.dtor], and storage layout
-[class.mem,class.access.spec]. — *end note*\]
+[class.mem], [class.access.spec]. — *end note*\]
 
 A class shall not be specified as a direct base class of a derived class
 more than once.
@@ -3235,7 +3235,7 @@ function.
 \[*Note 18*: An abstract class can be used only as a base class of some
 other class; no objects of an abstract class can be created except as
 subobjects of a class derived from it
-[basic.def,class.mem]. — *end note*\]
+[basic.def], [class.mem]. — *end note*\]
 
 A pure virtual function need be defined only if called with, or as if
 with [class.dtor], the *qualified-id* syntax [expr.prim.id.qual].
@@ -3273,11 +3273,10 @@ struct C {
 return type of a function being defined [dcl.fct] or called [expr.call],
 except as specified in [dcl.type.simple]. Further, an abstract class
 type cannot be used as the type of an explicit type conversion
-[expr.static.cast,
-expr.reinterpret.cast,expr.const.cast], because the resulting prvalue
-would be of abstract class type [basic.lval]. However, pointers and
-references to abstract class types can appear in such
-contexts. — *end note*\]
+[expr.static.cast], [expr.reinterpret.cast], [expr.const.cast], because
+the resulting prvalue would be of abstract class type [basic.lval].
+However, pointers and references to abstract class types can appear in
+such contexts. — *end note*\]
 
 A class is abstract if it has at least one pure virtual function for
 which the final overrider is pure virtual.
@@ -3612,10 +3611,10 @@ Here `B` is a public base of `D2`, `D4`, and `D6`, a private base of
 A member of a private base class can be inaccessible as inherited, but
 accessible directly. Because of the rules on pointer conversions
 [conv.ptr] and explicit casts
-[expr.type.conv,expr.static.cast,expr.cast], a conversion from a pointer
-to a derived class to a pointer to an inaccessible base class can be
-ill-formed if an implicit conversion is used, but well-formed if an
-explicit cast is used. For example,
+[expr.type.conv], [expr.static.cast], [expr.cast], a conversion from a
+pointer to a derived class to a pointer to an inaccessible base class
+can be ill-formed if an implicit conversion is used, but well-formed if
+an explicit cast is used. For example,
 
 ``` cpp
 class B {
@@ -3682,7 +3681,7 @@ class N: private S {
 — *end example*\]
 
 If a base class is accessible, one can implicitly convert a pointer to a
-derived class to a pointer to that base class [conv.ptr,conv.mem].
+derived class to a pointer to that base class [conv.ptr], [conv.mem].
 
 \[*Note 8*: It follows that members and friends of a class `X` can
 implicitly convert an `X*` to a pointer to a private or protected
@@ -3827,7 +3826,7 @@ the following forms:
 ```
 
 \[*Note 11*: A friend declaration can be the *declaration* in a
-*template-declaration* [temp.pre,temp.friend]. — *end note*\]
+*template-declaration* [temp.pre], [temp.friend]. — *end note*\]
 
 If the type specifier in a `friend` declaration designates a (possibly
 cv-qualified) class type, that class is declared as a friend; otherwise,
@@ -3930,7 +3929,7 @@ class D : public B  {
 — *end example*\]
 
 \[*Note 14*: A friend declaration never binds any names
-[dcl.meaning,dcl.type.elab]. — *end note*\]
+[dcl.meaning], [dcl.type.elab]. — *end note*\]
 
 \[*Example 17*:
 
@@ -5373,45 +5372,164 @@ struct C {
 — *end example*\]
 
 <!-- Link reference definitions -->
+[basic.align]: basic.md#basic.align
+[basic.compound]: basic.md#basic.compound
+[basic.def]: basic.md#basic.def
+[basic.def.odr]: basic.md#basic.def.odr
 [basic.life]: basic.md#basic.life
+[basic.link]: basic.md#basic.link
+[basic.lookup]: basic.md#basic.lookup
+[basic.lookup.elab]: basic.md#basic.lookup.elab
 [basic.lval]: expr.md#basic.lval
+[basic.scope.class]: basic.md#basic.scope.class
+[basic.scope.pdecl]: basic.md#basic.scope.pdecl
+[basic.scope.scope]: basic.md#basic.scope.scope
 [basic.start.dynamic]: basic.md#basic.start.dynamic
 [basic.start.static]: basic.md#basic.start.static
 [basic.start.term]: basic.md#basic.start.term
+[basic.stc.auto]: basic.md#basic.stc.auto
+[basic.stc.static]: basic.md#basic.stc.static
+[basic.stc.thread]: basic.md#basic.stc.thread
+[basic.types]: basic.md#basic.types
+[class.abstract]: #class.abstract
 [class.access]: #class.access
 [class.access.base]: #class.access.base
+[class.access.spec]: #class.access.spec
 [class.base.init]: #class.base.init
+[class.bit]: #class.bit
 [class.cdtor]: #class.cdtor
+[class.compare.default]: #class.compare.default
+[class.conv.fct]: #class.conv.fct
+[class.copy.assign]: #class.copy.assign
+[class.copy.ctor]: #class.copy.ctor
+[class.ctor]: #class.ctor
+[class.default.ctor]: #class.default.ctor
+[class.derived]: #class.derived
+[class.dtor]: #class.dtor
 [class.expl.init]: #class.expl.init
+[class.free]: #class.free
 [class.friend]: #class.friend
 [class.init]: #class.init
+[class.local]: #class.local
 [class.mem]: #class.mem
+[class.member.lookup]: basic.md#class.member.lookup
 [class.mfct]: #class.mfct
+[class.mfct.non.static]: #class.mfct.non.static
+[class.mi]: #class.mi
+[class.name]: #class.name
+[class.nest]: #class.nest
+[class.pre]: #class.pre
+[class.prop]: #class.prop
 [class.protected]: #class.protected
+[class.qual]: basic.md#class.qual
 [class.static]: #class.static
 [class.static.data]: #class.static.data
+[class.static.mfct]: #class.static.mfct
 [class.temporary]: basic.md#class.temporary
+[class.union]: #class.union
+[class.union.anon]: #class.union.anon
 [class.virtual]: #class.virtual
+[cmp.categories]: support.md#cmp.categories
+[cmp.categories.pre]: support.md#cmp.categories.pre
+[cmp.partialord]: support.md#cmp.partialord
+[cmp.strongord]: support.md#cmp.strongord
+[cmp.weakord]: support.md#cmp.weakord
+[conv]: expr.md#conv
+[conv.mem]: expr.md#conv.mem
+[conv.ptr]: expr.md#conv.ptr
+[conv.rval]: expr.md#conv.rval
 [dcl.array]: dcl.md#dcl.array
+[dcl.attr.nouniqueaddr]: dcl.md#dcl.attr.nouniqueaddr
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[dcl.decl]: dcl.md#dcl.decl
+[dcl.enum]: dcl.md#dcl.enum
 [dcl.fct]: dcl.md#dcl.fct
 [dcl.fct.def]: dcl.md#dcl.fct.def
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
+[dcl.fct.def.default]: dcl.md#dcl.fct.def.default
 [dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
+[dcl.fct.def.general]: dcl.md#dcl.fct.def.general
+[dcl.fct.default]: dcl.md#dcl.fct.default
+[dcl.fct.spec]: dcl.md#dcl.fct.spec
 [dcl.init]: dcl.md#dcl.init
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
+[dcl.init.general]: dcl.md#dcl.init.general
 [dcl.init.list]: dcl.md#dcl.init.list
 [dcl.init.ref]: dcl.md#dcl.init.ref
+[dcl.inline]: dcl.md#dcl.inline
+[dcl.meaning]: dcl.md#dcl.meaning
+[dcl.name]: dcl.md#dcl.name
+[dcl.spec.auto]: dcl.md#dcl.spec.auto
+[dcl.stc]: dcl.md#dcl.stc
+[dcl.type.cv]: dcl.md#dcl.type.cv
+[dcl.type.elab]: dcl.md#dcl.type.elab
 [dcl.type.simple]: dcl.md#dcl.type.simple
+[dcl.typedef]: dcl.md#dcl.typedef
+[depr.impldec]: future.md#depr.impldec
 [depr.static.constexpr]: future.md#depr.static.constexpr
 [diff.class]: compatibility.md#diff.class
+[except.ctor]: except.md#except.ctor
+[except.handle]: except.md#except.handle
+[except.pre]: except.md#except.pre
+[except.spec]: except.md#except.spec
 [except.throw]: except.md#except.throw
+[expr.ass]: expr.md#expr.ass
+[expr.call]: expr.md#expr.call
+[expr.cast]: expr.md#expr.cast
+[expr.const]: expr.md#expr.const
+[expr.const.cast]: expr.md#expr.const.cast
 [expr.delete]: expr.md#expr.delete
+[expr.dynamic.cast]: expr.md#expr.dynamic.cast
+[expr.eq]: expr.md#expr.eq
 [expr.new]: expr.md#expr.new
 [expr.prim.id]: expr.md#expr.prim.id
+[expr.prim.id.dtor]: expr.md#expr.prim.id.dtor
+[expr.prim.id.qual]: expr.md#expr.prim.id.qual
+[expr.prim.this]: expr.md#expr.prim.this
+[expr.ref]: expr.md#expr.ref
+[expr.reinterpret.cast]: expr.md#expr.reinterpret.cast
+[expr.rel]: expr.md#expr.rel
+[expr.static.cast]: expr.md#expr.static.cast
+[expr.sub]: expr.md#expr.sub
+[expr.throw]: expr.md#expr.throw
+[expr.type.conv]: expr.md#expr.type.conv
+[expr.typeid]: expr.md#expr.typeid
+[expr.unary.op]: expr.md#expr.unary.op
+[intro.execution]: basic.md#intro.execution
+[intro.object]: basic.md#intro.object
+[namespace.udecl]: dcl.md#namespace.udecl
+[over]: over.md#over
 [over.ass]: over.md#over.ass
+[over.best.ics]: over.md#over.best.ics
+[over.binary]: over.md#over.binary
+[over.ics.ref]: over.md#over.ics.ref
 [over.match]: over.md#over.match
+[over.match.best]: over.md#over.match.best
+[over.match.call]: over.md#over.match.call
 [over.match.copy]: over.md#over.match.copy
+[over.match.funcs]: over.md#over.match.funcs
 [over.oper]: over.md#over.oper
+[over.over]: over.md#over.over
+[special]: #special
 [stmt.dcl]: stmt.md#stmt.dcl
 [stmt.return]: stmt.md#stmt.return
+[string.classes]: strings.md#string.classes
 [temp.arg]: temp.md#temp.arg
+[temp.constr]: temp.md#temp.constr
+[temp.constr.order]: temp.md#temp.constr.order
+[temp.deduct.guide]: temp.md#temp.deduct.guide
+[temp.dep.type]: temp.md#temp.dep.type
+[temp.expl.spec]: temp.md#temp.expl.spec
+[temp.explicit]: temp.md#temp.explicit
+[temp.friend]: temp.md#temp.friend
 [temp.inst]: temp.md#temp.inst
+[temp.mem]: temp.md#temp.mem
+[temp.param]: temp.md#temp.param
+[temp.pre]: temp.md#temp.pre
+[temp.spec.partial]: temp.md#temp.spec.partial
+[temp.variadic]: temp.md#temp.variadic
+[term.incomplete.type]: #term.incomplete.type
+[term.layout.compatible.type]: #term.layout.compatible.type
+[term.object.representation]: #term.object.representation
+[term.odr.use]: #term.odr.use
+[term.padding.bits]: #term.padding.bits

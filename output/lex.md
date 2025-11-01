@@ -108,8 +108,8 @@ following phases.
 
     It is *implementation-defined* whether the sources for module units
     and header units on which the current translation unit has an
-    interface dependency [module.unit,module.import] are required to be
-    available.
+    interface dependency [module.unit], [module.import] are required to
+    be available.
 
     \[*Note 3*: Source files, translation units and translated
     translation units need not necessarily be stored as files, nor need
@@ -295,9 +295,9 @@ A *code unit* is an integer value of character type [basic.fundamental].
 Characters in a *character-literal* other than a multicharacter or
 non-encodable character literal or in a *string-literal* are encoded as
 a sequence of one or more code units, as determined by the
-*encoding-prefix* [lex.ccon,lex.string]; this is termed the respective
-*literal encoding*. The *ordinary literal encoding* is the encoding
-applied to an ordinary character or string literal. The
+*encoding-prefix* [lex.ccon], [lex.string]; this is termed the
+respective *literal encoding*. The *ordinary literal encoding* is the
+encoding applied to an ordinary character or string literal. The
 *wide literal encoding* is the encoding applied to a wide character or
 string literal.
 
@@ -1081,7 +1081,7 @@ floating-point-suffix: one of
 ```
 
 The type of a *floating-point-literal*
-[basic.fundamental,basic.extended.fp] is determined by its
+[basic.fundamental], [basic.extended.fp] is determined by its
 *floating-point-suffix* as specified in [lex.fcon.type].
 
 \[*Note 5*: The floating-point suffixes `f16`, `f32`, `f64`, `f128`,
@@ -1555,9 +1555,48 @@ int main() {
 
 <!-- Link reference definitions -->
 [basic.extended.fp]: basic.md#basic.extended.fp
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.link]: basic.md#basic.link
+[basic.lookup.unqual]: basic.md#basic.lookup.unqual
+[basic.stc]: basic.md#basic.stc
+[character.seq]: library.md#character.seq
 [conv.mem]: expr.md#conv.mem
 [conv.ptr]: expr.md#conv.ptr
 [cpp]: cpp.md#cpp
+[cpp.cond]: cpp.md#cpp.cond
+[cpp.import]: cpp.md#cpp.import
 [cpp.include]: cpp.md#cpp.include
+[cpp.module]: cpp.md#cpp.module
+[cpp.stringize]: cpp.md#cpp.stringize
+[dcl.attr.grammar]: dcl.md#dcl.attr.grammar
+[expr.prim.literal]: expr.md#expr.prim.literal
+[headers]: library.md#headers
+[lex.ccon]: #lex.ccon
+[lex.ccon.esc]: #lex.ccon.esc
+[lex.ccon.literal]: #lex.ccon.literal
+[lex.charset]: #lex.charset
+[lex.charset.basic]: #lex.charset.basic
+[lex.charset.literal]: #lex.charset.literal
+[lex.comment]: #lex.comment
+[lex.digraph]: #lex.digraph
+[lex.fcon]: #lex.fcon
+[lex.fcon.type]: #lex.fcon.type
+[lex.header]: #lex.header
+[lex.icon]: #lex.icon
+[lex.icon.base]: #lex.icon.base
+[lex.icon.type]: #lex.icon.type
+[lex.key]: #lex.key
+[lex.key.digraph]: #lex.key.digraph
+[lex.name.special]: #lex.name.special
+[lex.phases]: #lex.phases
 [lex.pptoken]: #lex.pptoken
 [lex.string]: #lex.string
+[lex.string.concat]: #lex.string.concat
+[lex.string.literal]: #lex.string.literal
+[lex.token]: #lex.token
+[module.import]: module.md#module.import
+[module.unit]: module.md#module.unit
+[over.literal]: over.md#over.literal
+[support.types.layout]: support.md#support.types.layout
+[temp.explicit]: temp.md#temp.explicit
+[temp.names]: temp.md#temp.names

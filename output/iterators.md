@@ -1402,8 +1402,8 @@ concept specifies operations for dereferencing and incrementing an
 iterator. Most algorithms will require additional operations to compare
 iterators with sentinels [iterator.concept.sentinel], to read
 [iterator.concept.input] or write [iterator.concept.output] values, or
-to provide a richer set of iterator movements [iterator.concept.forward,
-iterator.concept.bidir,iterator.concept.random.access].
+to provide a richer set of iterator movements
+[iterator.concept.forward], [iterator.concept.bidir], [iterator.concept.random.access].
 
 ``` cpp
 template<class I>
@@ -1741,14 +1741,14 @@ taxonomy; every iterator meets the *Cpp17\\Iterator* requirements. This
 set of requirements specifies operations for dereferencing and
 incrementing an iterator. Most algorithms will require additional
 operations to read [input.iterators] or write [output.iterators] values,
-or to provide a richer set of iterator movements [forward.iterators,
-bidirectional.iterators,random.access.iterators].
+or to provide a richer set of iterator movements
+[forward.iterators], [bidirectional.iterators], [random.access.iterators].
 
 A type `X` meets the requirements if:
 
 - `X` meets the *Cpp17CopyConstructible*, *Cpp17CopyAssignable*,
   *Cpp17Swappable*, and *Cpp17Destructible* requirements
-  [utility.arg.requirements,swappable.requirements], and
+  [utility.arg.requirements], [swappable.requirements], and
 
 - `iterator_traits<X>::difference_type` is a signed integer type or
   `void`, and
@@ -5984,6 +5984,63 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 `il.begin()`.
 
 <!-- Link reference definitions -->
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[basic.lookup.unqual]: basic.md#basic.lookup.unqual
+[basic.lval]: expr.md#basic.lval
+[bidirectional.iterators]: #bidirectional.iterators
+[bidirectionaliterator]: #bidirectionaliterator
+[cmp.concept]: support.md#cmp.concept
+[concept.swappable]: concepts.md#concept.swappable
+[concepts.object]: concepts.md#concepts.object
+[containers]: containers.md#containers
+[counted.iterator]: #counted.iterator
+[cpp17.copyassignable]: #cpp17.copyassignable
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[customization.point.object]: library.md#customization.point.object
+[defns.projection]: intro.md#defns.projection
+[expr.call]: expr.md#expr.call
+[forward.iterators]: #forward.iterators
+[forwarditerator]: #forwarditerator
+[func.def]: #func.def
+[input.iterators]: #input.iterators
+[inputiterator]: #inputiterator
+[iostream.format]: input.md#iostream.format
+[iterator]: #iterator
+[iterator.concept.bidir]: #iterator.concept.bidir
+[iterator.concept.contiguous]: #iterator.concept.contiguous
+[iterator.concept.forward]: #iterator.concept.forward
+[iterator.concept.input]: #iterator.concept.input
+[iterator.concept.iterator]: #iterator.concept.iterator
+[iterator.concept.output]: #iterator.concept.output
+[iterator.concept.random.access]: #iterator.concept.random.access
+[iterator.concept.readable]: #iterator.concept.readable
+[iterator.concept.sentinel]: #iterator.concept.sentinel
+[iterator.concept.winc]: #iterator.concept.winc
+[iterator.concept.writable]: #iterator.concept.writable
+[iterator.concepts]: #iterator.concepts
+[iterator.iterators]: #iterator.iterators
 [iterator.range]: #iterator.range
+[iterator.requirements]: #iterator.requirements
 [iterator.traits]: #iterator.traits
+[iterators.relations]: #iterators.relations
+[iterators.summary]: #iterators.summary
+[lib.types.movedfrom]: library.md#lib.types.movedfrom
+[numeric.limits]: support.md#numeric.limits
+[output.iterators]: #output.iterators
+[outputiterator]: #outputiterator
+[random.access.iterators]: #random.access.iterators
+[randomaccessiterator]: #randomaccessiterator
+[range.cmp]: #range.cmp
 [range.iter.ops]: #range.iter.ops
+[ranges]: ranges.md#ranges
+[reverse.iter.cmp]: #reverse.iter.cmp
+[reverse.iter.elem]: #reverse.iter.elem
+[reverse.iter.nav]: #reverse.iter.nav
+[reverse.iter.nonmember]: #reverse.iter.nonmember
+[stream.buffers]: input.md#stream.buffers
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[temp.func.order]: temp.md#temp.func.order
+[temp.inst]: temp.md#temp.inst
+[utility.arg.requirements]: library.md#utility.arg.requirements

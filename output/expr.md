@@ -147,8 +147,7 @@ An expression is an xvalue if it is:
   whose return type is an rvalue reference to object type [expr.call],
 
 - a cast to an rvalue reference to object type
-  [expr.type.conv,expr.dynamic.cast,expr.static.cast,
-  expr.reinterpret.cast,expr.const.cast,expr.cast],
+  [expr.type.conv], [expr.dynamic.cast], [expr.static.cast], [expr.reinterpret.cast], [expr.const.cast], [expr.cast],
 
 - a subscripting operation with an xvalue array operand [expr.sub],
 
@@ -240,7 +239,7 @@ function type.
 
 \[*Note 9*: A program that attempts to modify an object through a
 nonmodifiable lvalue or through an rvalue is ill-formed
-[expr.ass,expr.post.incr,expr.pre.incr]. — *end note*\]
+[expr.ass], [expr.post.incr], [expr.pre.incr]. — *end note*\]
 
 If a program attempts to access [defns.access] the stored value of an
 object through a glvalue whose type is not similar [conv.qual] to one of
@@ -265,10 +264,10 @@ object of class type through an lvalue of class type. — *end note*\]
 ### Type <a id="expr.type">[expr.type]</a>
 
 If an expression initially has the type “reference to `T`”
-[dcl.ref,dcl.init.ref], the type is adjusted to `T` prior to any further
-analysis. The expression designates the object or function denoted by
-the reference, and the expression is an lvalue or an xvalue, depending
-on the expression.
+[dcl.ref], [dcl.init.ref], the type is adjusted to `T` prior to any
+further analysis. The expression designates the object or function
+denoted by the reference, and the expression is an lvalue or an xvalue,
+depending on the expression.
 
 \[*Note 11*: Before the lifetime of the reference has started or after
 it has ended, the behavior is undefined (see 
@@ -338,13 +337,9 @@ pointer to `const int`”.
 
 ### Context dependence <a id="expr.context">[expr.context]</a>
 
-In some contexts, *unevaluated operands* appear [expr.prim.req,
-expr.typeid,
-expr.sizeof,
-expr.unary.noexcept,
-dcl.type.decltype,
-temp.pre,
-temp.concept]. An unevaluated operand is not evaluated.
+In some contexts, *unevaluated operands* appear
+[expr.prim.req], [expr.typeid], [expr.sizeof], [expr.unary.noexcept], [dcl.type.decltype], [temp.pre], [temp.concept].
+An unevaluated operand is not evaluated.
 
 \[*Note 12*: In an unevaluated operand, a non-static class member can be
 named [expr.prim.id] and naming of objects or functions does not, by
@@ -1059,7 +1054,7 @@ object member function of a class can only be used:
   — *end example*\]
 
 For an *id-expression* that denotes an overload set, overload resolution
-is performed to select a unique function [over.match,over.over].
+is performed to select a unique function [over.match], [over.over].
 
 \[*Note 5*:
 
@@ -1104,8 +1099,7 @@ A *component name* of an *unqualified-id* U is
 
 \[*Note 7*: Other constructs that contain names to look up can have
 several component names
-[expr.prim.id.qual,dcl.type.simple,dcl.type.elab,
-dcl.mptr,namespace.udecl,temp.param,temp.names,temp.res]. — *end note*\]
+[expr.prim.id.qual], [dcl.type.simple], [dcl.type.elab], [dcl.mptr], [namespace.udecl], [temp.param], [temp.names], [temp.res]. — *end note*\]
 
 The *terminal name* of a construct is the component name of that
 construct that appears lexically last.
@@ -1290,7 +1284,7 @@ class member access [expr.ref] that forms the *postfix-expression* of a
 function call [expr.call].
 
 \[*Note 10*: Such a call ends the lifetime of the object
-[expr.call,basic.life]. — *end note*\]
+[expr.call], [basic.life]. — *end note*\]
 
 \[*Example 3*:
 
@@ -1848,7 +1842,7 @@ within a default member initializer and its innermost enclosing scope is
 the corresponding class scope [basic.scope.class].
 
 The *identifier* in a *simple-capture* shall denote a local entity
-[basic.lookup.unqual,basic.pre]. The *simple-capture* `this` and
+[basic.lookup.unqual], [basic.pre]. The *simple-capture* `this` and
 `* this` denote the local entity `*this`. An entity that is designated
 by a *simple-capture* is said to be *explicitly captured*.
 
@@ -2666,7 +2660,7 @@ keyword), even if the type of the function actually called is different.
 If the *postfix-expression* names a pseudo-destructor (in which case the
 *postfix-expression* is a possibly-parenthesized class member access),
 the function call destroys the object of scalar type denoted by the
-object expression of the class member access [expr.ref,basic.life].
+object expression of the class member access [expr.ref], [basic.life].
 
 Calling a function through an expression whose function type `E` is
 different from the function type `F` of the called function’s definition
@@ -2680,7 +2674,7 @@ non-throwing exception specification, and the function types are
 otherwise the same. — *end note*\]
 
 When a function is called, each parameter [dcl.fct] is initialized
-[dcl.init,class.copy.ctor] with its corresponding argument. If the
+[dcl.init], [class.copy.ctor] with its corresponding argument. If the
 function is an explicit object member function and there is an implied
 object argument [over.call.func], the list of provided arguments is
 preceded by the implied object argument for the purposes of this
@@ -2783,8 +2777,8 @@ reference is to a const-qualified type, `const_cast` is required to be
 used to cast away the constness in order to modify the argument’s value.
 Where a parameter is of `const` reference type a temporary object is
 introduced if needed
-[dcl.type,lex.literal,lex.string,dcl.array,class.temporary]. In
-addition, it is possible to modify the values of non-constant objects
+[dcl.type], [lex.literal], [lex.string], [dcl.array], [class.temporary].
+In addition, it is possible to modify the values of non-constant objects
 through pointer parameters. — *end note*\]
 
 A function can be declared to accept fewer arguments (by declaring
@@ -3182,9 +3176,9 @@ typeid(D)  == typeid(const D&); // yields true
 — *end example*\]
 
 The type `std::type_info` [type.info] is not predefined; if a standard
-library declaration [typeinfo.syn,std.modules] of `std::type_info` does
-not precede [basic.lookup.general] a `typeid` expression, the program is
-ill-formed.
+library declaration [typeinfo.syn], [std.modules] of `std::type_info`
+does not precede [basic.lookup.general] a `typeid` expression, the
+program is ill-formed.
 
 \[*Note 24*: Subclause [class.cdtor] describes the behavior of `typeid`
 applied to an object under construction or destruction. — *end note*\]
@@ -3951,7 +3945,7 @@ The result of `sizeof` and `sizeof...` is a prvalue of type
 
 \[*Note 53*: A `sizeof` expression is an integral constant expression
 [expr.const]. The type `std::size_t` is defined in the standard header
-`<cstddef>` [cstddef.syn,support.types.layout]. — *end note*\]
+`<cstddef>` [cstddef.syn], [support.types.layout]. — *end note*\]
 
 #### Alignof <a id="expr.alignof">[expr.alignof]</a>
 
@@ -3963,7 +3957,7 @@ The result is a prvalue of type `std::size_t`.
 
 \[*Note 54*: An `alignof` expression is an integral constant expression
 [expr.const]. The type `std::size_t` is defined in the standard header
-`<cstddef>` [cstddef.syn,support.types.layout]. — *end note*\]
+`<cstddef>` [cstddef.syn], [support.types.layout]. — *end note*\]
 
 When `alignof` is applied to a reference type, the result is the
 alignment of the referenced type. When `alignof` is applied to an array
@@ -4101,7 +4095,7 @@ If the *type-id* or *new-type-id* denotes an array type of unknown bound
 [dcl.array], the *new-initializer* shall not be omitted; the allocated
 object is an array with `n` elements, where `n` is determined from the
 number of initial elements supplied in the *new-initializer*
-[dcl.init.aggr,dcl.init.string].
+[dcl.init.aggr], [dcl.init.string].
 
 If the *expression* in a *noptr-new-declarator* is present, it is
 implicitly converted to `std::size_t`. The *expression* is erroneous if:
@@ -4169,8 +4163,8 @@ the deallocation function’s name is `operator delete[]`.
 
 \[*Note 62*: An implementation is required to provide default
 definitions for the global allocation functions
-[basic.stc.dynamic,new.delete.single,new.delete.array]. A C++ program
-can provide alternative definitions of these functions
+[basic.stc.dynamic], [new.delete.single], [new.delete.array]. A C++
+program can provide alternative definitions of these functions
 [replacement.functions] and/or class-specific versions [class.free]. The
 set of allocation and deallocation functions that can be called by a
 *new-expression* can include functions that do not perform allocation or
@@ -4183,9 +4177,9 @@ performed for the allocation function’s name in the scope of `T`
 function’s name is looked up by searching for it in the global scope.
 
 An implementation is allowed to omit a call to a replaceable global
-allocation function [new.delete.single,new.delete.array]. When it does
-so, the storage is instead provided by the implementation or provided by
-extending the allocation of another *new-expression*.
+allocation function [new.delete.single], [new.delete.array]. When it
+does so, the storage is instead provided by the implementation or
+provided by extending the allocation of another *new-expression*.
 
 During an evaluation of a constant expression, a call to an allocation
 function is always omitted.
@@ -4320,10 +4314,11 @@ from one invocation of `new` to another.
 \[*Note 65*: Unless an allocation function has a non-throwing exception
 specification [except.spec], it indicates failure to allocate storage by
 throwing a `std::bad_alloc` exception
-[basic.stc.dynamic.allocation,except,bad.alloc]; it returns a non-null
-pointer otherwise. If the allocation function has a non-throwing
-exception specification, it returns null to indicate failure to allocate
-storage and a non-null pointer otherwise. — *end note*\]
+[basic.stc.dynamic.allocation], [except], [bad.alloc]; it returns a
+non-null pointer otherwise. If the allocation function has a
+non-throwing exception specification, it returns null to indicate
+failure to allocate storage and a non-null pointer
+otherwise. — *end note*\]
 
 If the allocation function is a non-allocating form
 [new.delete.placement] that returns null, the behavior is undefined.
@@ -4525,7 +4520,7 @@ single-object delete expression or `operator delete[]` for an array
 delete expression.
 
 \[*Note 71*:  An implementation provides default definitions of the
-global deallocation functions [new.delete.single,new.delete.array]. A
+global deallocation functions [new.delete.single], [new.delete.array]. A
 C++ program can provide alternative definitions of these functions
 [replacement.functions], and/or class-specific versions
 [class.free]. — *end note*\]
@@ -4610,10 +4605,10 @@ passed as the corresponding argument.
 function, and either the first argument was not the result of a prior
 call to a replaceable allocation function or the second or third
 argument was not the corresponding argument in said call, the behavior
-is undefined [new.delete.single,new.delete.array]. — *end note*\]
+is undefined [new.delete.single], [new.delete.array]. — *end note*\]
 
 Access and ambiguity control are done for both the deallocation function
-and the destructor [class.dtor,class.free].
+and the destructor [class.dtor], [class.free].
 
 ### Explicit type conversion (cast notation) <a id="expr.cast">[expr.cast]</a>
 
@@ -4998,7 +4993,7 @@ Otherwise, the program is ill-formed.
 The three comparison category types [cmp.categories] (the types
 `std::strong_ordering`, `std::weak_ordering`, and
 `std::partial_ordering`) are not predefined; if a standard library
-declaration [compare.syn,std.modules] of such a class type does not
+declaration [compare.syn], [std.modules] of such a class type does not
 precede [basic.lookup.general] a use of that type — even an implicit use
 in which the type is not named (e.g., via the `auto` specifier
 [dcl.spec.auto] in a defaulted three-way comparison [class.spaceship] or
@@ -5372,7 +5367,7 @@ or if both are bit-fields.
 Otherwise, the result is a prvalue. If the second and third operands do
 not have the same type, and either has (possibly cv-qualified) class
 type, overload resolution is used to determine the conversions (if any)
-to be applied to the operands [over.match.oper,over.built]. If the
+to be applied to the operands [over.match.oper], [over.built]. If the
 overload resolution fails, the program is ill-formed. Otherwise, the
 conversions thus determined are applied, and the converted operands are
 used in place of the original operands for the remainder of this
@@ -5573,7 +5568,7 @@ A *braced-init-list* may appear on the right-hand side of
 
 - an assignment to an object of class type, in which case the
   initializer list is passed as the argument to the assignment operator
-  function selected by overload resolution [over.ass,over.match].
+  function selected by overload resolution [over.ass], [over.match].
 
 \[*Example 29*:
 
@@ -5742,7 +5737,7 @@ evaluate one of the following:
 - in a *lambda-expression*, a reference to `this` or to a variable with
   automatic storage duration defined outside that *lambda-expression*,
   where the reference would be an odr-use
-  [term.odr.use,expr.prim.lambda];
+  [term.odr.use], [expr.prim.lambda];
 
   \[*Example 8*:
 
@@ -5772,10 +5767,10 @@ evaluate one of the following:
 
 - a `reinterpret_cast` [expr.reinterpret.cast];
 
-- a modification of an object [expr.ass,expr.post.incr,expr.pre.incr]
-  unless it is applied to a non-volatile lvalue of literal type that
-  refers to a non-volatile object whose lifetime began within the
-  evaluation of E;
+- a modification of an object
+  [expr.ass], [expr.post.incr], [expr.pre.incr] unless it is applied to
+  a non-volatile lvalue of literal type that refers to a non-volatile
+  object whose lifetime began within the evaluation of E;
 
 - an invocation of a destructor [class.dtor] or a function call whose
   *postfix-expression* names a pseudo-destructor [expr.call], in either
@@ -5784,7 +5779,7 @@ evaluate one of the following:
 
 - a *new-expression* [expr.new], unless the selected allocation function
   is a replaceable global allocation function
-  [new.delete.single,new.delete.array] and the allocated storage is
+  [new.delete.single], [new.delete.array] and the allocated storage is
   deallocated within the evaluation of E;
 
 - a *delete-expression* [expr.delete], unless it deallocates a region of
@@ -6283,62 +6278,238 @@ A function or variable is *needed for constant evaluation* if it is:
 <!-- Link reference definitions -->
 [\lastlibchapter]: #\lastlibchapter
 [allocator.members]: mem.md#allocator.members
+[bad.alloc]: support.md#bad.alloc
+[bad.cast]: support.md#bad.cast
+[bad.typeid]: support.md#bad.typeid
+[basic.align]: basic.md#basic.align
+[basic.compound]: basic.md#basic.compound
+[basic.def.odr]: basic.md#basic.def.odr
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.indet]: basic.md#basic.indet
 [basic.life]: basic.md#basic.life
+[basic.lookup]: basic.md#basic.lookup
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[basic.lookup.general]: basic.md#basic.lookup.general
 [basic.lookup.qual]: basic.md#basic.lookup.qual
+[basic.lookup.unqual]: basic.md#basic.lookup.unqual
 [basic.lval]: #basic.lval
+[basic.pre]: basic.md#basic.pre
+[basic.scope.block]: basic.md#basic.scope.block
+[basic.scope.class]: basic.md#basic.scope.class
+[basic.scope.lambda]: basic.md#basic.scope.lambda
+[basic.start.main]: basic.md#basic.start.main
+[basic.start.static]: basic.md#basic.start.static
+[basic.stc.dynamic]: basic.md#basic.stc.dynamic
+[basic.stc.dynamic.allocation]: basic.md#basic.stc.dynamic.allocation
+[basic.stc.dynamic.deallocation]: basic.md#basic.stc.dynamic.deallocation
+[basic.stc.static]: basic.md#basic.stc.static
+[basic.stc.thread]: basic.md#basic.stc.thread
 [basic.type.qualifier]: basic.md#basic.type.qualifier
+[class]: class.md#class
+[class.abstract]: class.md#class.abstract
+[class.access]: class.md#class.access
 [class.access.base]: class.md#class.access.base
 [class.base.init]: class.md#class.base.init
+[class.bit]: class.md#class.bit
 [class.cdtor]: class.md#class.cdtor
 [class.conv]: class.md#class.conv
 [class.conv.fct]: class.md#class.conv.fct
+[class.copy.assign]: class.md#class.copy.assign
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.copy.elision]: class.md#class.copy.elision
+[class.ctor]: class.md#class.ctor
+[class.derived]: class.md#class.derived
 [class.dtor]: class.md#class.dtor
+[class.free]: class.md#class.free
+[class.friend]: class.md#class.friend
+[class.mem]: class.md#class.mem
 [class.member.lookup]: basic.md#class.member.lookup
+[class.mfct]: class.md#class.mfct
+[class.mfct.non.static]: class.md#class.mfct.non.static
+[class.mi]: class.md#class.mi
+[class.prop]: class.md#class.prop
+[class.spaceship]: class.md#class.spaceship
+[class.static.mfct]: class.md#class.static.mfct
 [class.temporary]: basic.md#class.temporary
+[class.union]: class.md#class.union
+[class.union.anon]: class.md#class.union.anon
+[class.virtual]: class.md#class.virtual
+[cmp.categories]: support.md#cmp.categories
+[compare.syn]: support.md#compare.syn
 [conv]: #conv
+[conv.array]: #conv.array
 [conv.bool]: #conv.bool
+[conv.fctptr]: #conv.fctptr
+[conv.fpint]: #conv.fpint
+[conv.fpprom]: #conv.fpprom
+[conv.func]: #conv.func
+[conv.integral]: #conv.integral
 [conv.lval]: #conv.lval
+[conv.mem]: #conv.mem
+[conv.prom]: #conv.prom
 [conv.ptr]: #conv.ptr
+[conv.qual]: #conv.qual
+[conv.rank]: basic.md#conv.rank
+[conv.rval]: #conv.rval
 [cpp]: cpp.md#cpp
+[cstdarg.syn]: support.md#cstdarg.syn
+[cstddef.syn]: support.md#cstddef.syn
+[dcl.align]: dcl.md#dcl.align
 [dcl.array]: dcl.md#dcl.array
+[dcl.asm]: dcl.md#dcl.asm
 [dcl.attr.assume]: dcl.md#dcl.attr.assume
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[dcl.dcl]: dcl.md#dcl.dcl
 [dcl.decl]: dcl.md#dcl.decl
+[dcl.enum]: dcl.md#dcl.enum
+[dcl.fct]: dcl.md#dcl.fct
+[dcl.fct.def]: dcl.md#dcl.fct.def
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
 [dcl.fct.def.general]: dcl.md#dcl.fct.def.general
+[dcl.fct.default]: dcl.md#dcl.fct.default
 [dcl.init]: dcl.md#dcl.init
+[dcl.init.aggr]: dcl.md#dcl.init.aggr
+[dcl.init.list]: dcl.md#dcl.init.list
 [dcl.init.ref]: dcl.md#dcl.init.ref
+[dcl.init.string]: dcl.md#dcl.init.string
+[dcl.link]: dcl.md#dcl.link
+[dcl.mptr]: dcl.md#dcl.mptr
+[dcl.name]: dcl.md#dcl.name
+[dcl.ptr]: dcl.md#dcl.ptr
+[dcl.ref]: dcl.md#dcl.ref
 [dcl.spec.auto]: dcl.md#dcl.spec.auto
+[dcl.stc]: dcl.md#dcl.stc
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
+[dcl.type]: dcl.md#dcl.type
+[dcl.type.auto.deduct]: dcl.md#dcl.type.auto.deduct
+[dcl.type.cv]: dcl.md#dcl.type.cv
+[dcl.type.decltype]: dcl.md#dcl.type.decltype
+[dcl.type.elab]: dcl.md#dcl.type.elab
+[dcl.type.simple]: dcl.md#dcl.type.simple
+[defns.access]: intro.md#defns.access
+[defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
+[depr.arith.conv.enum]: future.md#depr.arith.conv.enum
+[depr.array.comp]: future.md#depr.array.comp
 [depr.capture.this]: future.md#depr.capture.this
 [depr.volatile.type]: future.md#depr.volatile.type
+[except]: except.md#except
+[except.handle]: except.md#except.handle
+[except.pre]: except.md#except.pre
+[except.spec]: except.md#except.spec
+[except.terminate]: except.md#except.terminate
+[except.throw]: except.md#except.throw
 [expr]: #expr
 [expr.add]: #expr.add
+[expr.arith.conv]: #expr.arith.conv
 [expr.ass]: #expr.ass
+[expr.await]: #expr.await
+[expr.call]: #expr.call
+[expr.cast]: #expr.cast
+[expr.comma]: #expr.comma
 [expr.compound]: #expr.compound
+[expr.cond]: #expr.cond
+[expr.const]: #expr.const
+[expr.const.cast]: #expr.const.cast
 [expr.context]: #expr.context
+[expr.delete]: #expr.delete
+[expr.dynamic.cast]: #expr.dynamic.cast
+[expr.eq]: #expr.eq
 [expr.mptr.oper]: #expr.mptr.oper
+[expr.mul]: #expr.mul
+[expr.new]: #expr.new
 [expr.post.incr]: #expr.post.incr
+[expr.pre]: #expr.pre
 [expr.pre.incr]: #expr.pre.incr
+[expr.prim.id]: #expr.prim.id
 [expr.prim.id.dtor]: #expr.prim.id.dtor
+[expr.prim.id.qual]: #expr.prim.id.qual
+[expr.prim.id.unqual]: #expr.prim.id.unqual
+[expr.prim.lambda]: #expr.prim.lambda
+[expr.prim.lambda.capture]: #expr.prim.lambda.capture
+[expr.prim.paren]: #expr.prim.paren
+[expr.prim.req]: #expr.prim.req
+[expr.prim.this]: #expr.prim.this
 [expr.prop]: #expr.prop
 [expr.ref]: #expr.ref
+[expr.reinterpret.cast]: #expr.reinterpret.cast
+[expr.rel]: #expr.rel
 [expr.shift]: #expr.shift
+[expr.sizeof]: #expr.sizeof
+[expr.spaceship]: #expr.spaceship
+[expr.static.cast]: #expr.static.cast
+[expr.sub]: #expr.sub
+[expr.throw]: #expr.throw
 [expr.type]: #expr.type
 [expr.type.conv]: #expr.type.conv
+[expr.typeid]: #expr.typeid
 [expr.unary]: #expr.unary
+[expr.unary.noexcept]: #expr.unary.noexcept
+[expr.unary.op]: #expr.unary.op
+[expr.yield]: #expr.yield
+[function.objects]: #function.objects
 [implimits]: #implimits
 [intro]: intro.md#intro
 [intro.execution]: basic.md#intro.execution
 [intro.memory]: basic.md#intro.memory
+[intro.object]: basic.md#intro.object
 [lex.ext]: lex.md#lex.ext
+[lex.icon]: lex.md#lex.icon
 [lex.literal]: lex.md#lex.literal
+[lex.string]: lex.md#lex.string
 [library]: library.md#library
+[meta.const.eval]: meta.md#meta.const.eval
+[namespace.udecl]: dcl.md#namespace.udecl
+[new.badlength]: support.md#new.badlength
+[new.delete.array]: support.md#new.delete.array
 [new.delete.placement]: support.md#new.delete.placement
+[new.delete.single]: support.md#new.delete.single
+[over]: over.md#over
+[over.ass]: over.md#over.ass
+[over.best.ics]: over.md#over.best.ics
 [over.built]: over.md#over.built
+[over.call]: over.md#over.call
+[over.call.func]: over.md#over.call.func
+[over.ics.user]: over.md#over.ics.user
 [over.literal]: over.md#over.literal
 [over.match]: over.md#over.match
+[over.match.class.deduct]: over.md#over.match.class.deduct
 [over.match.oper]: over.md#over.match.oper
+[over.match.viable]: over.md#over.match.viable
 [over.oper]: over.md#over.oper
 [over.over]: over.md#over.over
+[over.sub]: over.md#over.sub
+[replacement.functions]: library.md#replacement.functions
+[special]: class.md#special
+[std.modules]: library.md#std.modules
+[stmt.goto]: stmt.md#stmt.goto
+[stmt.if]: stmt.md#stmt.if
+[stmt.iter]: stmt.md#stmt.iter
+[stmt.jump]: stmt.md#stmt.jump
+[stmt.pre]: stmt.md#stmt.pre
+[stmt.return]: stmt.md#stmt.return
+[stmt.return.coroutine]: stmt.md#stmt.return.coroutine
+[stmt.switch]: stmt.md#stmt.switch
+[support.runtime]: support.md#support.runtime
+[support.types.layout]: support.md#support.types.layout
+[temp.arg]: temp.md#temp.arg
+[temp.concept]: temp.md#temp.concept
+[temp.constr.atomic]: temp.md#temp.constr.atomic
 [temp.constr.constr]: temp.md#temp.constr.constr
+[temp.constr.decl]: temp.md#temp.constr.decl
+[temp.dep.constexpr]: temp.md#temp.dep.constexpr
+[temp.expl.spec]: temp.md#temp.expl.spec
+[temp.explicit]: temp.md#temp.explicit
+[temp.mem]: temp.md#temp.mem
 [temp.names]: temp.md#temp.names
+[temp.over.link]: temp.md#temp.over.link
+[temp.param]: temp.md#temp.param
+[temp.pre]: temp.md#temp.pre
+[temp.res]: temp.md#temp.res
+[temp.spec.partial]: temp.md#temp.spec.partial
+[temp.variadic]: temp.md#temp.variadic
+[term.incomplete.type]: #term.incomplete.type
 [term.object.representation]: #term.object.representation
+[term.odr.use]: #term.odr.use
+[term.unevaluated.operand]: #term.unevaluated.operand
 [type.info]: support.md#type.info
+[typeinfo.syn]: support.md#typeinfo.syn

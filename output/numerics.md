@@ -7114,9 +7114,23 @@ A program that instantiates a primary template of a mathematical
 constant variable template is ill-formed.
 
 <!-- Link reference definitions -->
+[bad.alloc]: support.md#bad.alloc
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.stc.thread]: basic.md#basic.stc.thread
+[c.math.hypot3]: #c.math.hypot3
+[c.math.lerp]: #c.math.lerp
+[cpp.pragma]: cpp.md#cpp.pragma
+[cpp17.copyassignable]: #cpp17.copyassignable
+[cpp17.copyconstructible]: #cpp17.copyconstructible
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [input.output]: input.md#input.output
+[iostate.flags]: input.md#iostate.flags
+[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
+[library.c]: library.md#library.c
 [namespace.std]: library.md#namespace.std
 [numarray]: #numarray
+[numerics.summary]: #numerics.summary
+[over.match.general]: over.md#over.match.general
 [rand]: #rand
 [rand.adapt]: #rand.adapt
 [rand.dist]: #rand.dist
@@ -7126,5 +7140,13 @@ constant variable template is ill-formed.
 [rand.req.dist]: #rand.req.dist
 [rand.req.eng]: #rand.req.eng
 [rand.req.seedseq]: #rand.req.seedseq
+[rand.req.urng]: #rand.req.urng
+[random.access.iterators]: iterators.md#random.access.iterators
 [sf.cmath]: #sf.cmath
 [strings]: strings.md#strings
+[term.literal.type]: #term.literal.type
+[thread.jthread.class]: thread.md#thread.jthread.class
+[thread.thread.class]: thread.md#thread.thread.class
+[utility.arg.requirements]: library.md#utility.arg.requirements
+[valarray.members]: #valarray.members
+[valarray.range]: #valarray.range

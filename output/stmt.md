@@ -713,7 +713,7 @@ converted to a move operation if an automatic storage duration variable
 is returned [class.copy.elision]. — *end note*\]
 
 The destructor for the result object is potentially invoked
-[class.dtor,except.ctor].
+[class.dtor], [except.ctor].
 
 \[*Example 1*:
 
@@ -919,9 +919,46 @@ void f() {
 — *end example*\]
 
 <!-- Link reference definitions -->
+[basic.life]: basic.md#basic.life
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[basic.lookup.unqual]: basic.md#basic.lookup.unqual
+[basic.scope]: basic.md#basic.scope
+[basic.scope.block]: basic.md#basic.scope.block
+[basic.start.main]: basic.md#basic.start.main
 [basic.start.term]: basic.md#basic.start.term
+[basic.stc.auto]: basic.md#basic.stc.auto
+[basic.stc.static]: basic.md#basic.stc.static
+[basic.stc.thread]: basic.md#basic.stc.thread
+[class.copy.elision]: class.md#class.copy.elision
+[class.ctor]: class.md#class.ctor
+[class.dtor]: class.md#class.dtor
+[class.member.lookup]: basic.md#class.member.lookup
 [class.temporary]: basic.md#class.temporary
+[conv]: expr.md#conv
+[conv.prom]: expr.md#conv.prom
+[dcl.dcl]: dcl.md#dcl.dcl
 [dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
+[dcl.init]: dcl.md#dcl.init
 [dcl.meaning]: dcl.md#dcl.meaning
 [dcl.spec.auto]: dcl.md#dcl.spec.auto
+[dcl.type]: dcl.md#dcl.type
+[except.ctor]: except.md#except.ctor
+[expr.await]: expr.md#expr.await
+[expr.const]: expr.md#expr.const
+[expr.context]: expr.md#expr.context
+[expr.type.conv]: expr.md#expr.type.conv
 [stmt.break]: #stmt.break
+[stmt.dcl]: #stmt.dcl
+[stmt.goto]: #stmt.goto
+[stmt.if]: #stmt.if
+[stmt.iter]: #stmt.iter
+[stmt.jump]: #stmt.jump
+[stmt.label]: #stmt.label
+[stmt.pre]: #stmt.pre
+[stmt.return]: #stmt.return
+[stmt.select]: #stmt.select
+[stmt.switch]: #stmt.switch
+[stmt.while]: #stmt.while
+[support.start.term]: support.md#support.start.term
+[temp.pre]: temp.md#temp.pre
+[term.odr.use]: #term.odr.use

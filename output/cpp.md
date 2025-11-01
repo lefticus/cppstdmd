@@ -903,8 +903,8 @@ is treated as if it were a parameter, and the preprocessing token
 sequence for the corresponding argument is defined as follows. If the
 substitution of \_\_VA_ARGS\_\_ as neither an operand of `#` nor `##`
 consists of no preprocessing tokens, the argument consists of a single
-placemarker preprocessing token [cpp.concat,cpp.rescan]. Otherwise, the
-argument consists of the results of the expansion of the contained
+placemarker preprocessing token [cpp.concat], [cpp.rescan]. Otherwise,
+the argument consists of the results of the expansion of the contained
 *pp-tokens* as the replacement list of the current function-like macro
 before removal of placemarker tokens, rescanning, and further
 replacement.
@@ -1534,9 +1534,26 @@ LISTING( ..\listing.dir )
 — *end example*\]
 
 <!-- Link reference definitions -->
+[basic.extended.fp]: basic.md#basic.extended.fp
+[cpp.concat]: #cpp.concat
+[cpp.cond]: #cpp.cond
+[cpp.cond.ha]: #cpp.cond.ha
+[cpp.import]: #cpp.import
 [cpp.pragma.op]: #cpp.pragma.op
+[cpp.predefined]: #cpp.predefined
+[cpp.replace]: #cpp.replace
+[cpp.rescan]: #cpp.rescan
 [cpp.stringize]: #cpp.stringize
+[cstdint.syn]: support.md#cstdint.syn
 [expr.const]: expr.md#expr.const
+[expr.new]: expr.md#expr.new
+[intro.compliance]: intro.md#intro.compliance
+[intro.multithread]: basic.md#intro.multithread
 [lex.ccon]: lex.md#lex.ccon
+[lex.digraph]: lex.md#lex.digraph
+[lex.key]: lex.md#lex.key
+[lex.name]: lex.md#lex.name
 [lex.phases]: lex.md#lex.phases
+[lex.token]: lex.md#lex.token
+[module.import]: module.md#module.import
 [support.limits]: support.md#support.limits

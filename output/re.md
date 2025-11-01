@@ -1539,11 +1539,11 @@ template<class charT, class ST, class BiIter>
 
 The class template `match_results` meets the requirements of an
 allocator-aware container and of a sequence container
-[container.requirements.general,sequence.reqmts] except that only copy
-assignment, move assignment, and operations defined for const-qualified
-sequence containers are supported and that the semantics of the
-comparison operator functions are different from those required for a
-container.
+[container.requirements.general], [sequence.reqmts] except that only
+copy assignment, move assignment, and operations defined for
+const-qualified sequence containers are supported and that the semantics
+of the comparison operator functions are different from those required
+for a container.
 
 A default-constructed `match_results` object has no fully established
 result state. A match result is *ready* when, as a consequence of a
@@ -2971,6 +2971,21 @@ follows:
 ECMA-262 15.10
 
 <!-- Link reference definitions -->
+[bitmask.types]: library.md#bitmask.types
+[container.requirements.general]: containers.md#container.requirements.general
+[enumerated.types]: library.md#enumerated.types
+[forward.iterators]: iterators.md#forward.iterators
+[input.iterators]: iterators.md#input.iterators
+[re.alg]: #re.alg
+[re.err]: #re.err
 [re.grammar]: #re.grammar
+[re.iter]: #re.iter
+[re.matchflag]: #re.matchflag
 [re.regex]: #re.regex
+[re.req]: #re.req
+[re.results.const]: #re.results.const
+[re.summary]: #re.summary
+[re.synopt]: #re.synopt
 [re.traits]: #re.traits
+[sequence.reqmts]: containers.md#sequence.reqmts
+[strings.general]: strings.md#strings.general

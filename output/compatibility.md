@@ -1241,7 +1241,7 @@ throw exceptions will call `std::terminate` (without calling
 
 ###  [temp]: templates <a id="diff.cpp03.temp">[diff.cpp03.temp]</a>
 
-Repurpose `export` for modules [module,cpp.module,cpp.import]. No
+Repurpose `export` for modules [module], [cpp.module], [cpp.import]. No
 implementation consensus for the C++03 meaning of `export`. A valid
 C++03 program containing `export` is ill-formed in this revision of C++.
 
@@ -2146,15 +2146,25 @@ restricted in C++. Subclause [c.malloc] describes the changes.
 [basic]: basic.md#basic
 [basic.link]: basic.md#basic.link
 [basic.scope]: basic.md#basic.scope
+[basic.stc.dynamic]: basic.md#basic.stc.dynamic
 [c.malloc]: mem.md#c.malloc
 [class]: class.md#class
+[class.temporary]: basic.md#class.temporary
 [concepts]: concepts.md#concepts
 [containers]: containers.md#containers
+[conv.array]: expr.md#conv.array
+[conv.func]: expr.md#conv.func
+[conv.lval]: expr.md#conv.lval
 [cpp]: cpp.md#cpp
+[cpp.import]: cpp.md#cpp.import
+[cpp.module]: cpp.md#cpp.module
 [csetjmp.syn]: support.md#csetjmp.syn
 [cstring.syn]: strings.md#cstring.syn
 [cwchar.syn]: strings.md#cwchar.syn
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[dcl.constinit]: dcl.md#dcl.constinit
 [dcl.dcl]: dcl.md#dcl.dcl
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
 [dcl.type]: dcl.md#dcl.type
 [dcl.typedef]: dcl.md#dcl.typedef
 [depr]: #depr
@@ -2168,14 +2178,20 @@ restricted in C++. Subclause [c.malloc] describes the changes.
 [diff.library]: #diff.library
 [except]: except.md#except
 [expr]: expr.md#expr
+[expr.eq]: expr.md#expr.eq
+[expr.new]: expr.md#expr.new
+[expr.prim.req]: expr.md#expr.prim.req
 [expr.sizeof]: expr.md#expr.sizeof
 [input.output]: input.md#input.output
 [iterators]: iterators.md#iterators
 [lex]: lex.md#lex
 [lex.key]: lex.md#lex.key
+[lex.name]: lex.md#lex.name
+[lex.string]: lex.md#lex.string
 [library]: library.md#library
 [localization]: localization.md#localization
 [mem]: mem.md#mem
+[module]: module.md#module
 [numerics]: numerics.md#numerics
 [over]: over.md#over
 [stmt.stmt]: stmt.md#stmt.stmt
@@ -2183,7 +2199,11 @@ restricted in C++. Subclause [c.malloc] describes the changes.
 [support]: support.md#support
 [support.c.headers]: support.md#support.c.headers
 [support.start.term]: support.md#support.start.term
+[support.types]: support.md#support.types
+[support.types.byteops]: support.md#support.types.byteops
 [support.types.layout]: support.md#support.types.layout
 [temp]: temp.md#temp
+[temp.concept]: temp.md#temp.concept
+[temp.pre]: temp.md#temp.pre
 [thread]: thread.md#thread
 [utilities]: #utilities

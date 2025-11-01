@@ -8875,11 +8875,33 @@ The functions `asctime`, `ctime`, `gmtime`, and `localtime` are not
 required to avoid data races [res.on.data.races].
 
 <!-- Link reference definitions -->
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
+[ctime.syn]: #ctime.syn
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[filesystems]: input.md#filesystems
+[format.formatter]: #format.formatter
 [format.string]: #format.string
+[formatter.requirements]: #formatter.requirements
+[intro.multithread]: basic.md#intro.multithread
+[lex.charset]: lex.md#lex.charset
+[meta.rqmts]: meta.md#meta.rqmts
+[numeric.requirements]: numerics.md#numeric.requirements
+[over.match.class.deduct]: over.md#over.match.class.deduct
+[res.on.data.races]: library.md#res.on.data.races
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[term.unevaluated.operand]: #term.unevaluated.operand
 [time.cal]: #time.cal
 [time.clock]: #time.clock
 [time.clock.cast.id]: #time.clock.cast.id
 [time.clock.cast.sys]: #time.clock.cast.sys
 [time.clock.cast.sys.utc]: #time.clock.cast.sys.utc
 [time.clock.cast.utc]: #time.clock.cast.utc
+[time.clock.req]: #time.clock.req
+[time.format.spec]: #time.format.spec
+[time.parse.spec]: #time.parse.spec
+[time.summary]: #time.summary
+[time.syn]: #time.syn
 [time.zone]: #time.zone

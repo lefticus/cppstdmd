@@ -34,7 +34,7 @@ largest subexpressions that include only:
 - an *id-expression* [expr.prim.id], and
 
 - invocations of the library function templates `std::move`,
-  `std::forward`, and `std::declval` [forward,declval].
+  `std::forward`, and `std::declval` [forward], [declval].
 
 \[*Example 1*: The operands of the expression `a = std::move(b)` are `a`
 and `std::move(b)`. — *end example*\]
@@ -733,8 +733,8 @@ be:
 
 The exposition-only `boolean-testable` concept specifies the
 requirements on expressions that are convertible to `bool` and for which
-the logical operators [expr.log.and,expr.log.or,expr.unary.op] have the
-conventional semantics.
+the logical operators [expr.log.and], [expr.log.or], [expr.unary.op]
+have the conventional semantics.
 
 ``` cpp
 template<class T>
@@ -1117,6 +1117,28 @@ Under these conditions, it can be shown that
 — *end note*\]
 
 <!-- Link reference definitions -->
+[basic.compound]: basic.md#basic.compound
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
 [concepts.callable]: #concepts.callable
 [concepts.compare]: #concepts.compare
 [concepts.lang]: #concepts.lang
+[concepts.summary]: #concepts.summary
+[customization.point.object]: library.md#customization.point.object
+[dcl.meaning]: dcl.md#dcl.meaning
+[declval]: #declval
+[defns.const.subexpr]: intro.md#defns.const.subexpr
+[expr.log.and]: expr.md#expr.log.and
+[expr.log.or]: expr.md#expr.log.or
+[expr.prim.id]: expr.md#expr.prim.id
+[expr.unary.op]: expr.md#expr.unary.op
+[forward]: #forward
+[func.def]: #func.def
+[func.invoke]: #func.invoke
+[function.objects]: #function.objects
+[meta.type.synop]: meta.md#meta.type.synop
+[over.best.ics]: over.md#over.best.ics
+[temp.deduct.call]: temp.md#temp.deduct.call
+[temp.deduct.type]: temp.md#temp.deduct.type
+[temp.func.order]: temp.md#temp.func.order
+[template.bitset]: #template.bitset
+[term.literal.type]: #term.literal.type

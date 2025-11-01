@@ -185,7 +185,7 @@ handler for which the *compound-statement* or *ctor-initializer*
 following the `try` keyword was most recently entered by the thread of
 control and not yet exited.
 
-Throwing an exception copy-initializes [dcl.init,class.copy.ctor] a
+Throwing an exception copy-initializes [dcl.init], [class.copy.ctor] a
 temporary object, called the *exception object*. If the type of the
 exception object would be an incomplete type, an abstract class type
 [class.abstract], or a pointer to an incomplete type other than
@@ -643,7 +643,7 @@ constructor [except.ctor], their exception specifications do not
 contribute to the exception specification of the constructor, because an
 exception thrown from such a destructor would call the function
 `std::terminate` rather than escape the constructor
-[except.throw,except.terminate]. — *end note*\]
+[except.throw], [except.terminate]. — *end note*\]
 
 The exception specification for an implicitly-declared destructor, or a
 destructor without a *noexcept-specifier*, is potentially-throwing if
@@ -702,7 +702,7 @@ if the base class function has a non-throwing exception specification.
 An exception specification is considered to be *needed* when:
 
 - in an expression, the function is selected by overload resolution
-  [over.match,over.over];
+  [over.match], [over.over];
 
 - the function is odr-used [term.odr.use] or, if it appears in an
   unevaluated operand, would be odr-used if the expression were
@@ -782,18 +782,19 @@ These situations are:
   exception [thread.thread.constr], or
 
 - for a parallel algorithm whose `ExecutionPolicy` specifies such
-  behavior [execpol.seq,execpol.par,execpol.parunseq], when execution of
-  an element access function [algorithms.parallel.defns] of the parallel
-  algorithm exits via an exception [algorithms.parallel.exceptions], or
+  behavior [execpol.seq], [execpol.par], [execpol.parunseq], when
+  execution of an element access function [algorithms.parallel.defns] of
+  the parallel algorithm exits via an exception
+  [algorithms.parallel.exceptions], or
 
 - when the destructor or the move assignment operator is invoked on an
   object of type `std::thread` that refers to a joinable thread
-  [thread.thread.destr,thread.thread.assign], or
+  [thread.thread.destr], [thread.thread.assign], or
 
 - when a call to a `wait()`, `wait_until()`, or `wait_for()` function on
   a condition variable
-  [thread.condition.condvar,thread.condition.condvarany] fails to meet a
-  postcondition.
+  [thread.condition.condvar], [thread.condition.condvarany] fails to
+  meet a postcondition.
 
 — *end note*\]
 
@@ -820,19 +821,69 @@ of a handler for the exception [except.handle].
 \[*Note 2*: As a consequence, an exception is considered uncaught during
 any stack unwinding resulting from it being thrown. — *end note*\]
 
-If an exception is rethrown [expr.throw,propagation], it is considered
-uncaught from the point of rethrow until the rethrown exception is
-caught. The function `std::uncaught_exceptions` [uncaught.exceptions]
-returns the number of uncaught exceptions in the current thread.
+If an exception is rethrown [expr.throw], [propagation], it is
+considered uncaught from the point of rethrow until the rethrown
+exception is caught. The function `std::uncaught_exceptions`
+[uncaught.exceptions] returns the number of uncaught exceptions in the
+current thread.
 
 <!-- Link reference definitions -->
+[algorithms.parallel.defns]: algorithms.md#algorithms.parallel.defns
+[algorithms.parallel.exceptions]: algorithms.md#algorithms.parallel.exceptions
+[basic.start.dynamic]: basic.md#basic.start.dynamic
+[basic.start.main]: basic.md#basic.start.main
+[basic.start.term]: basic.md#basic.start.term
 [basic.stc.dynamic.allocation]: basic.md#basic.stc.dynamic.allocation
+[basic.stc.dynamic.deallocation]: basic.md#basic.stc.dynamic.deallocation
+[class.abstract]: class.md#class.abstract
 [class.base.init]: class.md#class.base.init
 [class.copy.ctor]: class.md#class.copy.ctor
+[class.copy.elision]: class.md#class.copy.elision
+[class.dtor]: class.md#class.dtor
 [class.inhctor.init]: class.md#class.inhctor.init
+[conv.fctptr]: expr.md#conv.fctptr
+[conv.ptr]: expr.md#conv.ptr
+[conv.qual]: expr.md#conv.qual
+[dcl.fct]: dcl.md#dcl.fct
+[dcl.init]: dcl.md#dcl.init
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
 [dcl.init.general]: dcl.md#dcl.init.general
+[except.ctor]: #except.ctor
+[except.handle]: #except.handle
+[except.nested]: support.md#except.nested
+[except.spec]: #except.spec
+[except.terminate]: #except.terminate
+[except.throw]: #except.throw
+[except.uncaught]: #except.uncaught
+[exception.terminate]: support.md#exception.terminate
+[execpol.par]: #execpol.par
+[execpol.parunseq]: #execpol.parunseq
+[execpol.seq]: #execpol.seq
+[expr.call]: expr.md#expr.call
+[expr.const]: expr.md#expr.const
+[expr.dynamic.cast]: expr.md#expr.dynamic.cast
+[expr.new]: expr.md#expr.new
 [expr.prim.lambda.capture]: expr.md#expr.prim.lambda.capture
+[expr.throw]: expr.md#expr.throw
+[expr.typeid]: expr.md#expr.typeid
 [futures]: thread.md#futures
+[intro.execution]: basic.md#intro.execution
+[intro.races]: basic.md#intro.races
+[over.binary]: over.md#over.binary
+[over.match]: over.md#over.match
+[over.over]: over.md#over.over
 [propagation]: support.md#propagation
+[stmt.jump]: stmt.md#stmt.jump
+[stmt.label]: stmt.md#stmt.label
+[stmt.pre]: stmt.md#stmt.pre
 [stmt.return]: stmt.md#stmt.return
+[structure.specifications]: library.md#structure.specifications
+[support.start.term]: support.md#support.start.term
+[temp.explicit]: temp.md#temp.explicit
+[term.odr.use]: #term.odr.use
+[thread.condition.condvar]: thread.md#thread.condition.condvar
+[thread.condition.condvarany]: thread.md#thread.condition.condvarany
+[thread.thread.assign]: thread.md#thread.thread.assign
+[thread.thread.constr]: thread.md#thread.thread.constr
+[thread.thread.destr]: thread.md#thread.thread.destr
+[uncaught.exceptions]: support.md#uncaught.exceptions

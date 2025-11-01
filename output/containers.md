@@ -4740,7 +4740,7 @@ namespace std {
 
 The conditions for an aggregate [dcl.init.aggr] shall be met. Class
 `array` relies on the implicitly-declared special member functions
-[class.default.ctor,class.dtor,class.copy.ctor] to conform to the
+[class.default.ctor], [class.dtor], [class.copy.ctor] to conform to the
 container requirements table in  [container.requirements]. In addition
 to the requirements specified in the container requirements table, the
 implicit move constructor and move assignment operator for `array`
@@ -17284,30 +17284,61 @@ swap(x.acc_, y.acc_);
 [alg.sorting]: algorithms.md#alg.sorting
 [algorithms.requirements]: algorithms.md#algorithms.requirements
 [allocator.requirements]: library.md#allocator.requirements
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.traits.members]: mem.md#allocator.traits.members
 [associative.general]: #associative.general
 [associative.reqmts]: #associative.reqmts
 [associative.reqmts.except]: #associative.reqmts.except
 [basic.string]: strings.md#basic.string
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.default.ctor]: class.md#class.default.ctor
+[class.dtor]: class.md#class.dtor
 [container.alloc.reqmts]: #container.alloc.reqmts
 [container.gen.reqmts]: #container.gen.reqmts
+[container.node]: #container.node
+[container.node.compat]: #container.node.compat
+[container.node.overview]: #container.node.overview
+[container.opt.reqmts]: #container.opt.reqmts
+[container.reqmts]: #container.reqmts
 [container.requirements]: #container.requirements
+[container.requirements.general]: #container.requirements.general
+[container.rev.reqmts]: #container.rev.reqmts
 [containers]: #containers
+[containers.summary]: #containers.summary
+[dcl.init.aggr]: dcl.md#dcl.init.aggr
+[deque]: #deque
 [deque.modifiers]: #deque.modifiers
 [flat.map.defn]: #flat.map.defn
 [flat.multimap.defn]: #flat.multimap.defn
 [flat.multiset.defn]: #flat.multiset.defn
 [flat.set.defn]: #flat.set.defn
+[hash.requirements]: library.md#hash.requirements
+[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
+[iterator.requirements]: iterators.md#iterator.requirements
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[list]: #list
 [mdspan.accessor.reqmts]: #mdspan.accessor.reqmts
 [mdspan.layout.policy.reqmts]: #mdspan.layout.policy.reqmts
 [mdspan.layout.reqmts]: #mdspan.layout.reqmts
 [mdspan.layout.stride]: #mdspan.layout.stride
+[mdspan.overview]: #mdspan.overview
+[random.access.iterators]: iterators.md#random.access.iterators
 [res.on.data.races]: library.md#res.on.data.races
+[sequence.reqmts]: #sequence.reqmts
 [sequences.general]: #sequences.general
 [strings]: strings.md#strings
 [swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[temp.param]: temp.md#temp.param
+[temp.type]: temp.md#temp.type
+[term.trivially.copyable.type]: #term.trivially.copyable.type
 [unord.map]: #unord.map
 [unord.multimap]: #unord.multimap
 [unord.multiset]: #unord.multiset
+[unord.req]: #unord.req
 [unord.req.except]: #unord.req.except
 [unord.set]: #unord.set
+[vector]: #vector
 [vector.modifiers]: #vector.modifiers
+[views]: #views

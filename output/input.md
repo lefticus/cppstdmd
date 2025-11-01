@@ -83,7 +83,7 @@ be instantiated.
 
 ### Thread safety <a id="iostreams.threadsafety">[iostreams.threadsafety]</a>
 
-Concurrent access to a stream object [string.streams,file.streams],
+Concurrent access to a stream object [string.streams], [file.streams],
 stream buffer object [stream.buffers], or C Library stream [c.files] by
 multiple threads may result in a data race [intro.multithread] unless
 otherwise specified [iostream.objects].
@@ -14127,15 +14127,62 @@ defined if and only if the implementation defines the corresponding
 modifier for the type.
 
 <!-- Link reference definitions -->
+[allocator.requirements.general]: library.md#allocator.requirements.general
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.start.dynamic]: basic.md#basic.start.dynamic
+[basic.start.main]: basic.md#basic.start.main
+[bidirectional.iterators]: iterators.md#bidirectional.iterators
+[bitmask.types]: library.md#bitmask.types
+[c.files]: #c.files
+[char.traits]: strings.md#char.traits
 [char.traits.specializations]: strings.md#char.traits.specializations
+[character.seq]: library.md#character.seq
+[cpp17.copyassignable]: #cpp17.copyassignable
+[cpp17.copyconstructible]: #cpp17.copyconstructible
+[cpp17.defaultconstructible]: #cpp17.defaultconstructible
+[cpp17.destructible]: #cpp17.destructible
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [cstdint.syn]: support.md#cstdint.syn
 [file.streams]: #file.streams
 [filebuf]: #filebuf
 [filesystems]: #filesystems
+[fpos.operations]: #fpos.operations
 [fs.class.directory.entry]: #fs.class.directory.entry
+[fs.class.directory.iterator]: #fs.class.directory.iterator
+[fs.class.path]: #fs.class.path
+[fs.class.rec.dir.itr]: #fs.class.rec.dir.itr
+[fs.conform.os]: #fs.conform.os
+[fs.enum.copy.opts]: #fs.enum.copy.opts
+[fs.enum.dir.opts]: #fs.enum.dir.opts
+[fs.enum.file.type]: #fs.enum.file.type
+[fs.enum.path.format]: #fs.enum.path.format
+[fs.enum.perm.opts]: #fs.enum.perm.opts
+[fs.enum.perms]: #fs.enum.perms
 [fs.err.report]: #fs.err.report
+[fs.op.funcs]: #fs.op.funcs
+[fs.path.cvt]: #fs.path.cvt
+[fs.path.generic]: #fs.path.generic
+[fs.path.native.obs]: #fs.path.native.obs
+[fs.race.behavior]: #fs.race.behavior
+[fs.req]: #fs.req
+[input.iterators]: iterators.md#input.iterators
 [input.output]: #input.output
+[intro.multithread]: basic.md#intro.multithread
+[ios.fmtflags.const]: #ios.fmtflags.const
+[ios.members.static]: #ios.members.static
+[iostream.objects]: #iostream.objects
+[iostreams.summary]: #iostreams.summary
+[istream]: #istream
+[namespace.std]: library.md#namespace.std
+[ostream]: #ostream
+[res.on.data.races]: library.md#res.on.data.races
 [res.on.exception.handling]: library.md#res.on.exception.handling
 [span.streams]: #span.streams
+[std.modules]: library.md#std.modules
+[stream.buffers]: #stream.buffers
+[streambuf.get.area]: #streambuf.get.area
+[streambuf.put.area]: #streambuf.put.area
 [string.classes]: strings.md#string.classes
+[string.streams]: #string.streams
+[temp.deduct]: temp.md#temp.deduct
 [views.span]: containers.md#views.span

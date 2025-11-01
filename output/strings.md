@@ -4604,12 +4604,27 @@ pointer argument for `s`.
 <!-- Link reference definitions -->
 [basic.string]: #basic.string
 [char.traits]: #char.traits
+[char.traits.req]: #char.traits.req
 [char.traits.require]: #char.traits.require
 [char.traits.typedefs]: #char.traits.typedefs
+[container.reqmts]: containers.md#container.reqmts
 [container.requirements.general]: containers.md#container.requirements.general
+[defns.character.container]: intro.md#defns.character.container
 [input.output]: input.md#input.output
+[intro.object]: basic.md#intro.object
 [iostreams.limits.pos]: input.md#iostreams.limits.pos
 [iterator.range]: iterators.md#iterator.range
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[library.c]: library.md#library.c
+[res.on.data.races]: library.md#res.on.data.races
 [string.classes]: #string.classes
+[string.io]: #string.io
+[string.special]: #string.special
 [string.view]: #string.view
+[string.view.comparison.overloads]: #string.view.comparison.overloads
+[strings.general]: #strings.general
+[strings.summary]: #strings.summary
+[support.signal]: support.md#support.signal
+[term.standard.layout.type]: #term.standard.layout.type
+[term.trivially.copyable.type]: #term.trivially.copyable.type
 [utility.swap]: #utility.swap

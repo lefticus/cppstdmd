@@ -2389,8 +2389,8 @@ namespace std {
 The type `source_location` meets the *Cpp17DefaultConstructible*,
 *Cpp17CopyConstructible*, *Cpp17Copy\\Assignable*, *Cpp17Swappable*, and
 *Cpp17Destructible* requirements
-[utility.arg.requirements,swappable.requirements]. All of the following
-conditions are `true`:
+[utility.arg.requirements], [swappable.requirements]. All of the
+following conditions are `true`:
 
 - `is_nothrow_move_constructible_v<source_location>`
 - `is_nothrow_move_assignable_v<source_location>`
@@ -3150,7 +3150,7 @@ that is accessible via the argument’s public const members.
 
 The `partial_ordering` type is typically used as the result type of a
 three-way comparison operator [expr.spaceship] for a type that admits
-all of the six two-way comparison operators [expr.rel,expr.eq], for
+all of the six two-way comparison operators [expr.rel], [expr.eq], for
 which equality need not imply substitutability, and that permits two
 values to be incomparable.
 
@@ -3239,8 +3239,8 @@ constexpr partial_ordering operator<=>(unspecified, partial_ordering v) noexcept
 
 The `weak_ordering` type is typically used as the result type of a
 three-way comparison operator [expr.spaceship] for a type that admits
-all of the six two-way comparison operators [expr.rel,expr.eq] and for
-which equality need not imply substitutability.
+all of the six two-way comparison operators [expr.rel], [expr.eq] and
+for which equality need not imply substitutability.
 
 ``` cpp
 namespace std {
@@ -3336,8 +3336,8 @@ constexpr weak_ordering operator<=>(unspecified, weak_ordering v) noexcept;
 
 The `strong_ordering` type is typically used as the result type of a
 three-way comparison operator [expr.spaceship] for a type that admits
-all of the six two-way comparison operators [expr.rel,expr.eq] and for
-which equality does imply substitutability.
+all of the six two-way comparison operators [expr.rel], [expr.eq] and
+for which equality does imply substitutability.
 
 ``` cpp
 namespace std {
@@ -4412,7 +4412,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - control entering a *try-block* or *function-try-block*;
 
 - initialization of a variable with static storage duration requiring
-  dynamic initialization [basic.start.dynamic,stmt.dcl]
+  dynamic initialization [basic.start.dynamic], [stmt.dcl]
 
   ; or
 
@@ -4534,23 +4534,67 @@ names within the namespace `std`. — *end example*\]
 <!-- Link reference definitions -->
 [alg.c.library]: algorithms.md#alg.c.library
 [atomics]: thread.md#atomics
+[basic.align]: basic.md#basic.align
 [basic.extended.fp]: basic.md#basic.extended.fp
 [basic.fundamental]: basic.md#basic.fundamental
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[basic.scope.namespace]: basic.md#basic.scope.namespace
+[basic.start.dynamic]: basic.md#basic.start.dynamic
 [basic.stc.dynamic]: basic.md#basic.stc.dynamic
+[c.headers]: #c.headers
+[c.locales]: localization.md#c.locales
 [c.malloc]: mem.md#c.malloc
 [c.math.abs]: numerics.md#c.math.abs
+[c.math.lerp]: numerics.md#c.math.lerp
 [c.math.rand]: numerics.md#c.math.rand
 [c.mb.wcs]: strings.md#c.mb.wcs
+[class.prop]: class.md#class.prop
 [cmp.categories]: #cmp.categories
+[complex]: numerics.md#complex
+[concept.totallyordered]: concepts.md#concept.totallyordered
 [concepts.compare.general]: concepts.md#concepts.compare.general
+[constraints]: library.md#constraints
+[conv.prom]: expr.md#conv.prom
 [conv.ptr]: expr.md#conv.ptr
+[conv.rank]: basic.md#conv.rank
 [coroutine.traits]: #coroutine.traits
+[cstddef.syn]: #cstddef.syn
+[cstdlib.syn]: #cstdlib.syn
+[customization.point.object]: library.md#customization.point.object
 [dcl.init.list]: dcl.md#dcl.init.list
+[defns.expression.equivalent]: intro.md#defns.expression.equivalent
+[except.spec]: except.md#except.spec
 [expr.add]: expr.md#expr.add
+[expr.await]: expr.md#expr.await
 [expr.call]: expr.md#expr.call
+[expr.context]: expr.md#expr.context
+[expr.dynamic.cast]: expr.md#expr.dynamic.cast
+[expr.eq]: expr.md#expr.eq
+[expr.new]: expr.md#expr.new
+[expr.prim.lambda]: expr.md#expr.prim.lambda
+[expr.rel]: expr.md#expr.rel
+[expr.sizeof]: expr.md#expr.sizeof
+[expr.spaceship]: expr.md#expr.spaceship
+[expr.typeid]: expr.md#expr.typeid
+[intro.multithread]: basic.md#intro.multithread
+[lex.key]: lex.md#lex.key
+[library.c]: library.md#library.c
+[namespace.udecl]: dcl.md#namespace.udecl
+[propagation]: #propagation
+[res.on.data.races]: library.md#res.on.data.races
 [sf.cmath]: numerics.md#sf.cmath
+[stmt.dcl]: stmt.md#stmt.dcl
 [support.initlist]: #support.initlist
+[support.signal]: #support.signal
 [support.start.term]: #support.start.term
+[support.summary]: #support.summary
 [support.types.byteops]: #support.types.byteops
 [support.types.layout]: #support.types.layout
 [support.types.nullptr]: #support.types.nullptr
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[temp.dep.constexpr]: temp.md#temp.dep.constexpr
+[temp.dep.expr]: temp.md#temp.dep.expr
+[temp.variadic]: temp.md#temp.variadic
+[term.odr.use]: #term.odr.use
+[utility.arg.requirements]: library.md#utility.arg.requirements

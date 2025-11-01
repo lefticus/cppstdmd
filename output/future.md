@@ -52,7 +52,7 @@ struct X {
 
 ## Array comparisons <a id="depr.array.comp">[depr.array.comp]</a>
 
-Equality and relational comparisons [expr.eq,expr.rel] between two
+Equality and relational comparisons [expr.eq], [expr.rel] between two
 operands of array type are deprecated.
 
 \[*Note 1*: Three-way comparisons [expr.spaceship] between such operands
@@ -2185,15 +2185,35 @@ operation, constitutes a data race.
 
 <!-- Link reference definitions -->
 [atomics.order]: thread.md#atomics.order
+[atomics.types.generic]: thread.md#atomics.types.generic
+[basic.link]: basic.md#basic.link
 [cerrno.syn]: diagnostics.md#cerrno.syn
+[class.copy.assign]: class.md#class.copy.assign
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.dtor]: class.md#class.dtor
+[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
+[dcl.fct]: dcl.md#dcl.fct
+[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
 [default.allocator]: mem.md#default.allocator
+[expr.arith.conv]: expr.md#expr.arith.conv
 [expr.ass]: expr.md#expr.ass
+[expr.eq]: expr.md#expr.eq
+[expr.post.incr]: expr.md#expr.post.incr
+[expr.pre.incr]: expr.md#expr.pre.incr
+[expr.prim.lambda.capture]: expr.md#expr.prim.lambda.capture
+[expr.rel]: expr.md#expr.rel
+[expr.spaceship]: expr.md#expr.spaceship
 [locale.category]: localization.md#locale.category
+[locale.category.facets]: #locale.category.facets
 [locale.codecvt]: localization.md#locale.codecvt
+[locale.spec]: #locale.spec
 [mem.poly.allocator.mem]: mem.md#mem.poly.allocator.mem
 [move.iter.elem]: iterators.md#move.iter.elem
 [numeric.limits.general]: support.md#numeric.limits.general
 [numeric.special]: support.md#numeric.special
+[over.literal]: over.md#over.literal
 [string.capacity]: strings.md#string.capacity
 [structure.specifications]: library.md#structure.specifications
 [system.error.syn]: diagnostics.md#system.error.syn
+[temp.names]: temp.md#temp.names

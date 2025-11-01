@@ -2544,7 +2544,7 @@ The template argument list of a partial specialization is the
 
 A partial specialization may be declared in any scope in which the
 corresponding primary template may be defined
-[dcl.meaning,class.mem,temp.mem].
+[dcl.meaning], [class.mem], [temp.mem].
 
 \[*Example 27*:
 
@@ -2834,17 +2834,17 @@ int main() {
 If a member template of a class template is partially specialized, the
 member template partial specializations are member templates of the
 enclosing class template; if the enclosing class template is
-instantiated [temp.inst,temp.explicit], a declaration for every member
-template partial specialization is also instantiated as part of creating
-the members of the class template specialization. If the primary member
-template is explicitly specialized for a given (implicit) specialization
-of the enclosing class template, the partial specializations of the
-member template are ignored for this specialization of the enclosing
-class template. If a partial specialization of the member template is
-explicitly specialized for a given (implicit) specialization of the
-enclosing class template, the primary member template and its other
-partial specializations are still considered for this specialization of
-the enclosing class template.
+instantiated [temp.inst], [temp.explicit], a declaration for every
+member template partial specialization is also instantiated as part of
+creating the members of the class template specialization. If the
+primary member template is explicitly specialized for a given (implicit)
+specialization of the enclosing class template, the partial
+specializations of the member template are ignored for this
+specialization of the enclosing class template. If a partial
+specialization of the member template is explicitly specialized for a
+given (implicit) specialization of the enclosing class template, the
+primary member template and its other partial specializations are still
+considered for this specialization of the enclosing class template.
 
 \[*Example 35*:
 
@@ -3119,7 +3119,7 @@ specialization refers:
 
 - when a placement operator delete that is a function template
   specialization is selected to match a placement operator new
-  [basic.stc.dynamic.deallocation,expr.new];
+  [basic.stc.dynamic.deallocation], [expr.new];
 
 - when a friend function declaration [temp.friend], an explicit
   instantiation [temp.explicit] or an explicit specialization
@@ -3456,7 +3456,7 @@ template parameter.
 \[*Note 1*: Some dependent names are also looked up during parsing to
 determine that they are dependent or to interpret following `<` tokens.
 Uses of other names might be type-dependent or value-dependent
-[temp.dep.expr,temp.dep.constexpr]. A *using-declarator* is never
+[temp.dep.expr], [temp.dep.constexpr]. A *using-declarator* is never
 dependent in a specialization and is therefore replaced during lookup
 for that specialization [basic.lookup]. — *end note*\]
 
@@ -3776,8 +3776,8 @@ a *template-name* or a *type-name*. When it is used with a
 is a *template-name* that refers to the class template itself.
 Otherwise, it is a *type-name* equivalent to the *template-name*
 followed by the template argument list
-[temp.decls.general,temp.arg.general] of the class template enclosed in
-`<>`.
+[temp.decls.general], [temp.arg.general] of the class template enclosed
+in `<>`.
 
 When the injected-class-name of a class template specialization or
 partial specialization is used as a *type-name*, it is equivalent to the
@@ -3885,8 +3885,8 @@ with the template declared (even if its parent scope does not contain
 the *template-parameter-list*).
 
 \[*Note 7*: The scope of a class template, including its non-dependent
-base classes [temp.dep.type,class.member.lookup], is searched before its
-template parameter scope. — *end note*\]
+base classes [temp.dep.type], [class.member.lookup], is searched before
+its template parameter scope. — *end note*\]
 
 \[*Example 13*:
 
@@ -5119,8 +5119,8 @@ definition) of each of its direct non-template members that has not been
 previously explicitly specialized in the translation unit containing the
 explicit instantiation, provided that the associated constraints, if
 any, of that member are satisfied by the template arguments of the
-explicit instantiation [temp.constr.decl,temp.constr.constr], except as
-described below.
+explicit instantiation [temp.constr.decl], [temp.constr.constr], except
+as described below.
 
 \[*Note 11*: In addition, it will typically be an explicit instantiation
 of certain implementation-dependent data about the class. — *end note*\]
@@ -5222,7 +5222,7 @@ The *declaration* in an *explicit-specialization* shall not be an
 
 An explicit specialization may be declared in any scope in which the
 corresponding primary template may be defined
-[dcl.meaning,class.mem,temp.mem].
+[dcl.meaning], [class.mem], [temp.mem].
 
 An explicit specialization does not introduce a name
 [basic.scope.scope]. A declaration of a function template, class
@@ -5647,7 +5647,7 @@ void g(double d) {
 — *end example*\]
 
 Template arguments shall not be specified when referring to a
-specialization of a constructor template [class.ctor,class.qual].
+specialization of a constructor template [class.ctor], [class.qual].
 
 A template argument list may be specified when referring to a
 specialization of a function template
@@ -7139,7 +7139,7 @@ is done for explicit instantiations [temp.explicit], explicit
 specializations [temp.expl.spec], and certain friend declarations
 [temp.friend]. This is also done to determine whether a deallocation
 function template specialization matches a placement `operator new`
-[basic.stc.dynamic.deallocation,expr.new]. In all these cases, `P` is
+[basic.stc.dynamic.deallocation], [expr.new]. In all these cases, `P` is
 the type of the function template being considered as a potential match
 and `A` is either the function type from the declaration or the type of
 the deallocation function that would match the placement `operator new`
@@ -7258,25 +7258,136 @@ in some translation unit [temp.pre].
 — *end example*\]
 
 <!-- Link reference definitions -->
+[basic.def]: basic.md#basic.def
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.link]: basic.md#basic.link
+[basic.lookup]: basic.md#basic.lookup
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[basic.lookup.qual]: basic.md#basic.lookup.qual
+[basic.scope.namespace]: basic.md#basic.scope.namespace
+[basic.scope.scope]: basic.md#basic.scope.scope
+[basic.stc.dynamic.deallocation]: basic.md#basic.stc.dynamic.deallocation
+[basic.types]: basic.md#basic.types
+[class.access]: class.md#class.access
+[class.base.init]: class.md#class.base.init
+[class.conv.fct]: class.md#class.conv.fct
+[class.ctor]: class.md#class.ctor
+[class.default.ctor]: class.md#class.default.ctor
+[class.derived]: class.md#class.derived
+[class.dtor]: class.md#class.dtor
+[class.local]: class.md#class.local
 [class.mem]: class.md#class.mem
+[class.member.lookup]: basic.md#class.member.lookup
+[class.pre]: class.md#class.pre
+[class.qual]: basic.md#class.qual
+[class.temporary]: basic.md#class.temporary
+[conv]: expr.md#conv
+[conv.array]: expr.md#conv.array
+[conv.fctptr]: expr.md#conv.fctptr
+[conv.func]: expr.md#conv.func
+[conv.lval]: expr.md#conv.lval
+[conv.qual]: expr.md#conv.qual
+[dcl.align]: dcl.md#dcl.align
+[dcl.attr.grammar]: dcl.md#dcl.attr.grammar
+[dcl.decl]: dcl.md#dcl.decl
 [dcl.fct]: dcl.md#dcl.fct
+[dcl.fct.def.general]: dcl.md#dcl.fct.def.general
+[dcl.fct.default]: dcl.md#dcl.fct.default
+[dcl.init]: dcl.md#dcl.init
+[dcl.init.list]: dcl.md#dcl.init.list
+[dcl.meaning]: dcl.md#dcl.meaning
+[dcl.pre]: dcl.md#dcl.pre
+[dcl.spec.auto]: dcl.md#dcl.spec.auto
+[dcl.stc]: dcl.md#dcl.stc
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
+[dcl.type.class.deduct]: dcl.md#dcl.type.class.deduct
+[dcl.type.elab]: dcl.md#dcl.type.elab
+[dcl.type.simple]: dcl.md#dcl.type.simple
+[depr.template.template]: future.md#depr.template.template
 [except.spec]: except.md#except.spec
+[expr.const]: expr.md#expr.const
+[expr.context]: expr.md#expr.context
+[expr.log.and]: expr.md#expr.log.and
+[expr.log.or]: expr.md#expr.log.or
 [expr.new]: expr.md#expr.new
+[expr.prim.fold]: expr.md#expr.prim.fold
+[expr.prim.id]: expr.md#expr.prim.id
+[expr.prim.id.qual]: expr.md#expr.prim.id.qual
+[expr.prim.id.unqual]: expr.md#expr.prim.id.unqual
+[expr.prim.lambda.capture]: expr.md#expr.prim.lambda.capture
+[expr.prim.lambda.closure]: expr.md#expr.prim.lambda.closure
+[expr.prim.this]: expr.md#expr.prim.this
+[expr.ref]: expr.md#expr.ref
+[expr.sizeof]: expr.md#expr.sizeof
+[expr.type.conv]: expr.md#expr.type.conv
+[expr.typeid]: expr.md#expr.typeid
+[expr.unary.op]: expr.md#expr.unary.op
+[implimits]: #implimits
 [intro.defs]: intro.md#intro.defs
+[intro.object]: basic.md#intro.object
+[lex.string]: lex.md#lex.string
+[module.unit]: module.md#module.unit
+[namespace.udecl]: dcl.md#namespace.udecl
+[over.match]: over.md#over.match
 [over.match.best]: over.md#over.match.best
+[over.match.class.deduct]: over.md#over.match.class.deduct
+[over.match.funcs]: over.md#over.match.funcs
+[over.match.oper]: over.md#over.match.oper
+[over.match.viable]: over.md#over.match.viable
+[over.over]: over.md#over.over
+[special]: class.md#special
+[stmt.if]: stmt.md#stmt.if
 [support.types]: support.md#support.types
+[temp.alias]: #temp.alias
+[temp.arg]: #temp.arg
+[temp.arg.explicit]: #temp.arg.explicit
+[temp.arg.general]: #temp.arg.general
+[temp.arg.nontype]: #temp.arg.nontype
+[temp.arg.template]: #temp.arg.template
+[temp.concept]: #temp.concept
 [temp.constr]: #temp.constr
 [temp.constr.atomic]: #temp.constr.atomic
 [temp.constr.constr]: #temp.constr.constr
 [temp.constr.decl]: #temp.constr.decl
+[temp.constr.normal]: #temp.constr.normal
+[temp.constr.op]: #temp.constr.op
 [temp.constr.order]: #temp.constr.order
+[temp.decls]: #temp.decls
+[temp.decls.general]: #temp.decls.general
 [temp.deduct]: #temp.deduct
 [temp.deduct.call]: #temp.deduct.call
+[temp.deduct.decl]: #temp.deduct.decl
+[temp.deduct.funcaddr]: #temp.deduct.funcaddr
+[temp.deduct.guide]: #temp.deduct.guide
 [temp.deduct.partial]: #temp.deduct.partial
 [temp.deduct.type]: #temp.deduct.type
 [temp.dep]: #temp.dep
+[temp.dep.candidate]: #temp.dep.candidate
+[temp.dep.constexpr]: #temp.dep.constexpr
+[temp.dep.expr]: #temp.dep.expr
+[temp.dep.temp]: #temp.dep.temp
+[temp.dep.type]: #temp.dep.type
+[temp.expl.spec]: #temp.expl.spec
+[temp.explicit]: #temp.explicit
+[temp.fct]: #temp.fct
+[temp.fold.empty]: #temp.fold.empty
+[temp.friend]: #temp.friend
 [temp.func.order]: #temp.func.order
+[temp.inst]: #temp.inst
+[temp.mem]: #temp.mem
+[temp.names]: #temp.names
+[temp.over]: #temp.over
 [temp.over.link]: #temp.over.link
+[temp.param]: #temp.param
 [temp.point]: #temp.point
+[temp.pre]: #temp.pre
+[temp.res]: #temp.res
+[temp.spec]: #temp.spec
+[temp.spec.partial]: #temp.spec.partial
+[temp.spec.partial.match]: #temp.spec.partial.match
+[temp.spec.partial.order]: #temp.spec.partial.order
+[temp.static]: #temp.static
+[temp.type]: #temp.type
+[temp.variadic]: #temp.variadic
+[term.incomplete.type]: #term.incomplete.type
+[term.odr.use]: #term.odr.use
