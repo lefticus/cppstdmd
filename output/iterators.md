@@ -1047,15 +1047,15 @@ template<class X, class Y>
              noexcept(*x = iter_move(y)));
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-iter_value_t<X> old_value(iter_move(x));
-*x = iter_move(y);
-return old_value;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> iter_value_t<X> old_value(iter_move(x));
+> *x = iter_move(y);
+> return old_value;
+> ```
 
 The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
 `E2` is expression-equivalent to:
@@ -1439,15 +1439,16 @@ template<class S, class I>
     weakly-equality-comparable-with<S, I>;      // see [concept.equalitycomparable]
 ```
 
-Let `s` and `i` be values of type `S` and `I` such that \[`i`, `s`)
-denotes a range. Types `S` and `I` model `sentinel_for``<S, I>` only if
-
-- `i == s` is well-defined.
-
-- If `bool(i != s)` then `i` is dereferenceable and \[`++i`, `s`)
-  denotes a range.
-
-- `assignable_from``<I&, S>` is either modeled or not satisfied.
+> Let `s` and `i` be values of type `S` and `I` such that \[`i`, `s`)
+> denotes a range. Types `S` and `I` model `sentinel_for``<S, I>` only
+> if
+>
+> - `i == s` is well-defined.
+>
+> - If `bool(i != s)` then `i` is dereferenceable and \[`++i`, `s`)
+>   denotes a range.
+>
+> - `assignable_from``<I&, S>` is either modeled or not satisfied.
 
 The domain of `==` is not static. Given an iterator `i` and sentinel `s`
 such that denotes a range and `i != s`, `i` and `s` are not required to
@@ -1472,38 +1473,38 @@ template<class S, class I>
     };
 ```
 
-Let `i` be an iterator of type `I`, and `s` a sentinel of type `S` such
-that \[`i`, `s`) denotes a range. Let N be the smallest number of
-applications of `++i` necessary to make `bool(i == s)` be `true`. `S`
-and `I` model `sized_sentinel_for``<S, I>` only if
-
-- If N is representable by `iter_difference_t<I>`, then `s - i` is
-  well-defined and equals N.
-
-- If -N is representable by `iter_difference_t<I>`, then `i - s` is
-  well-defined and equals -N.
+> Let `i` be an iterator of type `I`, and `s` a sentinel of type `S`
+> such that \[`i`, `s`) denotes a range. Let N be the smallest number of
+> applications of `++i` necessary to make `bool(i == s)` be `true`. `S`
+> and `I` model `sized_sentinel_for``<S, I>` only if
+>
+> - If N is representable by `iter_difference_t<I>`, then `s - i` is
+>   well-defined and equals N.
+>
+> - If -N is representable by `iter_difference_t<I>`, then `i - s` is
+>   well-defined and equals -N.
 
 ``` cpp
 template<class S, class I>
   constexpr bool disable_sized_sentinel_for = false;
 ```
 
-***Remarks:***
-
-Pursuant to \[namespace.std\], users may specialize
-`disable_sized_sentinel_for` for cv-unqualified non-array object types
-`S` and `I` if `S` and/or `I` is a program-defined type. Such
-specializations shall be usable in constant expressions\[expr.const\]
-and have type `const bool`.
-
-\[*Note 15*: `disable_sized_sentinel_for` allows use of sentinels and
-iterators with the library that satisfy but do not in fact model
-`sized_sentinel_for`. — *end note*\]
-
-\[*Example 4*: The `sized_sentinel_for` concept is modeled by pairs of
-`random_access_iterator`s\[iterator.concept.random.access\] and by
-counted iterators and their
-sentinels\[counted.iterator\]. — *end example*\]
+> *Remarks:*
+>
+> Pursuant to \[namespace.std\], users may specialize
+> `disable_sized_sentinel_for` for cv-unqualified non-array object types
+> `S` and `I` if `S` and/or `I` is a program-defined type. Such
+> specializations shall be usable in constant expressions\[expr.const\]
+> and have type `const bool`.
+>
+> \[*Note 4*: `disable_sized_sentinel_for` allows use of sentinels and
+> iterators with the library that satisfy but do not in fact model
+> `sized_sentinel_for`. — *end note*\]
+>
+> \[*Example 1*: The `sized_sentinel_for` concept is modeled by pairs of
+> `random_access_iterator`s\[iterator.concept.random.access\] and by
+> counted iterators and their
+> sentinels\[counted.iterator\]. — *end example*\]
 
 #### Concept  <a id="iterator.concept.input">[iterator.concept.input]</a>
 
@@ -1512,7 +1513,7 @@ referenced values can be read (from the requirement for
 `indirectly_readable` [iterator.concept.readable]) and which can be both
 pre- and post-incremented.
 
-\[*Note 16*: Unlike the *Cpp17InputIterator* requirements
+\[*Note 15*: Unlike the *Cpp17InputIterator* requirements
 [input.iterators], the `input_iterator` concept does not need equality
 comparison since iterators are typically compared to
 sentinels. — *end note*\]
@@ -1533,7 +1534,7 @@ be used to write values (from the requirement for `indirectly_writable`
 [iterator.concept.writable]) and which can be both pre- and
 post-incremented.
 
-\[*Note 17*: Output iterators are not required to model
+\[*Note 16*: Output iterators are not required to model
 `equality_comparable`. — *end note*\]
 
 ``` cpp
@@ -1578,7 +1579,7 @@ same underlying sequence. However, value-initialized iterators of the
 same type may be compared and shall compare equal to other
 value-initialized iterators of the same type.
 
-\[*Note 18*: Value-initialized iterators behave as if they refer past
+\[*Note 17*: Value-initialized iterators behave as if they refer past
 the end of the same empty sequence. — *end note*\]
 
 Pointers and references obtained from a forward iterator into a range
@@ -1592,7 +1593,7 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 - the expression `((void)[](X x)\{++x;\}(a), *a)` is equivalent to the
   expression `*a`.
 
-\[*Note 19*: The requirement that `a == b` implies `++a == ++b` and the
+\[*Note 18*: The requirement that `a == b` implies `++a == ++b` and the
 removal of the restrictions on the number of assignments through a
 mutable iterator (which applies to output iterators) allow the use of
 multi-pass one-directional algorithms with forward
@@ -1738,7 +1739,7 @@ In the following sections, `a` and `b` denote values of type `X` or
 value of `X&`, `t` denotes a value of value type `T`, `o` denotes a
 value of some type that is writable to the output iterator.
 
-\[*Note 20*: For an iterator type `X` there must be an instantiation of
+\[*Note 19*: For an iterator type `X` there must be an instantiation of
 `iterator_traits<X>` [iterator.traits]. — *end note*\]
 
 #### *Cpp17Iterator* <a id="iterator.iterators">[iterator.iterators]</a>
@@ -1778,7 +1779,7 @@ algorithm places additional requirements on the domain of `==` for the
 iterator values it uses. These requirements can be inferred from the
 uses that algorithm makes of `==` and `!=`.
 
-\[*Example 5*: The call `find(a,b,x)` is defined only if the value of
+\[*Example 4*: The call `find(a,b,x)` is defined only if the value of
 `a` has the property *p* defined as follows: `b` has property *p* and a
 value `i` has property *p* if (`*i==x`) or if (`*i!=x` and `++i` has
 property *p*). — *end example*\]
@@ -1787,7 +1788,7 @@ The implementation of an algorithm on input iterators should never
 attempt to pass through the same iterator twice; such an algorithm
 should be a single pass algorithm.
 
-\[*Note 21*: For input iterators, `a == b` does not imply `++a == ++b`.
+\[*Note 20*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
 transparency.) Value type `T` is not required to be a
 *Cpp17CopyAssignable* type ( [cpp17.copyassignable]). Such an algorithm
@@ -1805,7 +1806,7 @@ The implementation of an algorithm on output iterators should never
 attempt to pass through the same iterator twice; such an algorithm
 should be a single-pass algorithm.
 
-\[*Note 22*: The only valid use of an `operator*` is on the left side of
+\[*Note 21*: The only valid use of an `operator*` is on the left side of
 the assignment statement. Assignment through the same value of the
 iterator happens only once. Equality and inequality are not necessarily
 defined. — *end note*\]
@@ -1833,7 +1834,7 @@ same underlying sequence. However, value-initialized iterators may be
 compared and shall compare equal to other value-initialized iterators of
 the same type.
 
-\[*Note 23*: Value-initialized iterators behave as if they refer past
+\[*Note 22*: Value-initialized iterators behave as if they refer past
 the end of the same empty sequence. — *end note*\]
 
 Two dereferenceable iterators `a` and `b` of type `X` offer the
@@ -1844,7 +1845,7 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 - `X` is a pointer type or the expression `(void)++X(a), *a` is
   equivalent to the expression `*a`.
 
-\[*Note 24*: The requirement that `a == b` implies `++a == ++b` (which
+\[*Note 23*: The requirement that `a == b` implies `++a == ++b` (which
 is not true for input and output iterators) and the removal of the
 restrictions on the number of the assignments through a mutable iterator
 (which applies to output iterators) allows the use of multi-pass
@@ -1863,7 +1864,7 @@ iterator if, in addition to meeting the *Cpp17ForwardIterator*
 requirements, the following expressions are valid as shown in
 [bidirectionaliterator].
 
-\[*Note 25*: Bidirectional iterators allow algorithms to move iterators
+\[*Note 24*: Bidirectional iterators allow algorithms to move iterators
 backward as well as forward. — *end note*\]
 
 #### Random access iterators <a id="random.access.iterators">[random.access.iterators]</a>
@@ -1997,7 +1998,7 @@ relational concepts for rearrangements: `permutable`, `mergeable`, and
 `sortable`. There is one relational concept for comparing values from
 different sequences: `indirectly_comparable`.
 
-\[*Note 26*: The `ranges::less` function object type used in the
+\[*Note 25*: The `ranges::less` function object type used in the
 concepts below imposes constraints on the concepts’ arguments in
 addition to those that appear in the concepts’ bodies
 [range.cmp]. — *end note*\]
@@ -2252,14 +2253,14 @@ template<class InputIterator, class Distance>
   constexpr void advance(InputIterator& i, Distance n);
 ```
 
-***Preconditions:***
-
-`n` is negative only for bidirectional iterators.
-
-***Effects:***
-
-Increments `i` by `n` if `n` is non-negative, and decrements `i` by `-n`
-otherwise.
+> *Preconditions:*
+>
+> `n` is negative only for bidirectional iterators.
+>
+> *Effects:*
+>
+> Increments `i` by `n` if `n` is non-negative, and decrements `i` by
+> `-n` otherwise.
 
 ``` cpp
 template<class InputIterator>
@@ -2267,17 +2268,17 @@ template<class InputIterator>
     distance(InputIterator first, InputIterator last);
 ```
 
-***Preconditions:***
-
-`last` is reachable from `first`, or `InputIterator` meets the
-*Cpp17RandomAccessIterator* requirements and `first` is reachable from
-`last`.
-
-***Effects:***
-
-If `InputIterator` meets the *Cpp17RandomAccessIterator* requirements,
-returns `(last - first)`; otherwise, increments `first` until `last` is
-reached and returns the number of increments.
+> *Preconditions:*
+>
+> `last` is reachable from `first`, or `InputIterator` meets the
+> *Cpp17RandomAccessIterator* requirements and `first` is reachable from
+> `last`.
+>
+> *Effects:*
+>
+> If `InputIterator` meets the *Cpp17RandomAccessIterator* requirements,
+> returns `(last - first)`; otherwise, increments `first` until `last`
+> is reached and returns the number of increments.
 
 ``` cpp
 template<class InputIterator>
@@ -2285,9 +2286,9 @@ template<class InputIterator>
     typename iterator_traits<InputIterator>::difference_type n = 1);
 ```
 
-***Effects:***
-
-Equivalent to: `advance(x, n); return x;`
+> *Effects:*
+>
+> Equivalent to: `advance(x, n); return x;`
 
 ``` cpp
 template<class BidirectionalIterator>
@@ -2295,9 +2296,9 @@ template<class BidirectionalIterator>
     typename iterator_traits<BidirectionalIterator>::difference_type n = 1);
 ```
 
-***Effects:***
-
-Equivalent to: `advance(x, -n); return x;`
+> *Effects:*
+>
+> Equivalent to: `advance(x, -n); return x;`
 
 ### Range iterator operations <a id="range.iter.ops">[range.iter.ops]</a>
 
@@ -2351,71 +2352,71 @@ template<input_or_output_iterator I>
   constexpr void ranges::advance(I& i, iter_difference_t<I> n);
 ```
 
-***Preconditions:***
-
-If `I` does not model `bidirectional_iterator`, `n` is not negative.
-
-***Effects:***
-
-- If `I` models `random_access_iterator`, equivalent to `i += n`.
-
-- Otherwise, if `n` is non-negative, increments `i` by `n`.
-
-- Otherwise, decrements `i` by `-n`.
+> *Preconditions:*
+>
+> If `I` does not model `bidirectional_iterator`, `n` is not negative.
+>
+> *Effects:*
+>
+> - If `I` models `random_access_iterator`, equivalent to `i += n`.
+>
+> - Otherwise, if `n` is non-negative, increments `i` by `n`.
+>
+> - Otherwise, decrements `i` by `-n`.
 
 ``` cpp
 template<input_or_output_iterator I, sentinel_for<I> S>
   constexpr void ranges::advance(I& i, S bound);
 ```
 
-***Preconditions:***
-
-Either `assignable_from``<I&, S> || ``sized_sentinel_for``<S, I>` is
-modeled, or \[`i`, `bound`) denotes a range.
-
-***Effects:***
-
-- If `I` and `S` model `assignable_from``<I&, S>`, equivalent to
-  `i = std::move(bound)`.
-
-- Otherwise, if `S` and `I` model `sized_sentinel_for``<S, I>`,
-  equivalent to `ranges::advance(i, bound - i)`.
-
-- Otherwise, while `bool(i != bound)` is `true`, increments `i`.
+> *Preconditions:*
+>
+> Either `assignable_from``<I&, S> || ``sized_sentinel_for``<S, I>` is
+> modeled, or \[`i`, `bound`) denotes a range.
+>
+> *Effects:*
+>
+> - If `I` and `S` model `assignable_from``<I&, S>`, equivalent to
+>   `i = std::move(bound)`.
+>
+> - Otherwise, if `S` and `I` model `sized_sentinel_for``<S, I>`,
+>   equivalent to `ranges::advance(i, bound - i)`.
+>
+> - Otherwise, while `bool(i != bound)` is `true`, increments `i`.
 
 ``` cpp
 template<input_or_output_iterator I, sentinel_for<I> S>
   constexpr iter_difference_t<I> ranges::advance(I& i, iter_difference_t<I> n, S bound);
 ```
 
-***Preconditions:***
-
-If `n > 0`, \[`i`, `bound`) denotes a range. If `n == 0`, \[`i`,
-`bound`) or \[`bound`, `i`) denotes a range. If `n < 0`, \[`bound`, `i`)
-denotes a range, `I` models `bidirectional_iterator`, and `I` and `S`
-model `same_as``<I, S>`.
-
-***Effects:***
-
-- If `S` and `I` model `sized_sentinel_for``<S, I>`:
-
-  - If $|\texttt{n}| \ge |\texttt{bound - i}|$, equivalent to
-    `ranges::advance(i, bound)`.
-
-  - Otherwise, equivalent to `ranges::advance(i, n)`.
-
-- Otherwise,
-
-  - if `n` is non-negative, while `bool(i != bound)` is `true`,
-    increments `i` but at most `n` times.
-
-  - Otherwise, while `bool(i != bound)` is `true`, decrements `i` but at
-    most `-n` times.
-
-***Returns:***
-
-`n - `M, where M is the difference between the ending and starting
-positions of `i`.
+> *Preconditions:*
+>
+> If `n > 0`, \[`i`, `bound`) denotes a range. If `n == 0`, \[`i`,
+> `bound`) or \[`bound`, `i`) denotes a range. If `n < 0`, \[`bound`,
+> `i`) denotes a range, `I` models `bidirectional_iterator`, and `I` and
+> `S` model `same_as``<I, S>`.
+>
+> *Effects:*
+>
+> - If `S` and `I` model `sized_sentinel_for``<S, I>`:
+>
+>   - If $|\texttt{n}| \ge |\texttt{bound - i}|$, equivalent to
+>     `ranges::advance(i, bound)`.
+>
+>   - Otherwise, equivalent to `ranges::advance(i, n)`.
+>
+> - Otherwise,
+>
+>   - if `n` is non-negative, while `bool(i != bound)` is `true`,
+>     increments `i` but at most `n` times.
+>
+>   - Otherwise, while `bool(i != bound)` is `true`, decrements `i` but
+>     at most `-n` times.
+>
+> *Returns:*
+>
+> `n - `M, where M is the difference between the ending and starting
+> positions of `i`.
 
 #### `ranges::distance` <a id="range.iter.op.distance">[range.iter.op.distance]</a>
 
@@ -2425,42 +2426,42 @@ template<class I, sentinel_for<I> S>
   constexpr iter_difference_t<I> ranges::distance(I first, S last);
 ```
 
-***Preconditions:***
-
-\[`first`, `last`) denotes a range.
-
-***Effects:***
-
-Increments `first` until `last` is reached and returns the number of
-increments.
+> *Preconditions:*
+>
+> \[`first`, `last`) denotes a range.
+>
+> *Effects:*
+>
+> Increments `first` until `last` is reached and returns the number of
+> increments.
 
 ``` cpp
 template<class I, sized_sentinel_for<decay_t<I>> S>
   constexpr iter_difference_t<decay_t<I>> ranges::distance(I&& first, S last);
 ```
 
-***Effects:***
-
-Equivalent to: `return last - static_cast<const decay_t<I>&>(first);`
+> *Effects:*
+>
+> Equivalent to: `return last - static_cast<const decay_t<I>&>(first);`
 
 ``` cpp
 template<range R>
   constexpr range_difference_t<R> ranges::distance(R&& r);
 ```
 
-***Effects:***
-
-If `R` models `sized_range`, equivalent to:
-
-``` cpp
-return static_cast<range_difference_t<R>>(ranges::size(r));     // [range.prim.size]
-```
-
-Otherwise, equivalent to:
-
-``` cpp
-return ranges::distance(ranges::begin(r), ranges::end(r));      // [range.access]
-```
+> *Effects:*
+>
+> If `R` models `sized_range`, equivalent to:
+>
+> ``` cpp
+> return static_cast<range_difference_t<R>>(ranges::size(r));     // [range.prim.size]
+> ```
+>
+> Otherwise, equivalent to:
+>
+> ``` cpp
+> return ranges::distance(ranges::begin(r), ranges::end(r));      // [range.access]
+> ```
 
 #### `ranges::next` <a id="range.iter.op.next">[range.iter.op.next]</a>
 
@@ -2469,36 +2470,36 @@ template<input_or_output_iterator I>
   constexpr I ranges::next(I x);
 ```
 
-***Effects:***
-
-Equivalent to: `++x; return x;`
+> *Effects:*
+>
+> Equivalent to: `++x; return x;`
 
 ``` cpp
 template<input_or_output_iterator I>
   constexpr I ranges::next(I x, iter_difference_t<I> n);
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::advance(x, n); return x;`
+> *Effects:*
+>
+> Equivalent to: `ranges::advance(x, n); return x;`
 
 ``` cpp
 template<input_or_output_iterator I, sentinel_for<I> S>
   constexpr I ranges::next(I x, S bound);
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::advance(x, bound); return x;`
+> *Effects:*
+>
+> Equivalent to: `ranges::advance(x, bound); return x;`
 
 ``` cpp
 template<input_or_output_iterator I, sentinel_for<I> S>
   constexpr I ranges::next(I x, iter_difference_t<I> n, S bound);
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::advance(x, n, bound); return x;`
+> *Effects:*
+>
+> Equivalent to: `ranges::advance(x, n, bound); return x;`
 
 #### `ranges::prev` <a id="range.iter.op.prev">[range.iter.op.prev]</a>
 
@@ -2507,27 +2508,27 @@ template<bidirectional_iterator I>
   constexpr I ranges::prev(I x);
 ```
 
-***Effects:***
-
-Equivalent to: `–x; return x;`
+> *Effects:*
+>
+> Equivalent to: `–x; return x;`
 
 ``` cpp
 template<bidirectional_iterator I>
   constexpr I ranges::prev(I x, iter_difference_t<I> n);
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::advance(x, -n); return x;`
+> *Effects:*
+>
+> Equivalent to: `ranges::advance(x, -n); return x;`
 
 ``` cpp
 template<bidirectional_iterator I>
   constexpr I ranges::prev(I x, iter_difference_t<I> n, I bound);
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::advance(x, -n, bound); return x;`
+> *Effects:*
+>
+> Equivalent to: `ranges::advance(x, -n, bound); return x;`
 
 ## Iterator adaptors <a id="predef.iterators">[predef.iterators]</a>
 
@@ -2631,31 +2632,31 @@ are instantiated [temp.inst].
 constexpr reverse_iterator();
 ```
 
-***Effects:***
-
-Value-initializes `current`. Iterator operations applied to the
-resulting iterator have defined behavior if and only if the
-corresponding operations are defined on a value-initialized iterator of
-type `Iterator`.
+> *Effects:*
+>
+> Value-initializes `current`. Iterator operations applied to the
+> resulting iterator have defined behavior if and only if the
+> corresponding operations are defined on a value-initialized iterator
+> of type `Iterator`.
 
 ``` cpp
 constexpr explicit reverse_iterator(Iterator x);
 ```
 
-***Effects:***
-
-Initializes `current` with `x`.
+> *Effects:*
+>
+> Initializes `current` with `x`.
 
 ``` cpp
 template<class U> constexpr reverse_iterator(const reverse_iterator<U>& u);
 ```
 
-`is_same_v<U, Iterator>` is `false` and `const U&` models
-`convertible_to``<Iterator>`.
-
-***Effects:***
-
-Initializes `current` with `u.current`.
+> `is_same_v<U, Iterator>` is `false` and `const U&` models
+> `convertible_to``<Iterator>`.
+>
+> *Effects:*
+>
+> Initializes `current` with `u.current`.
 
 ``` cpp
 template<class U>
@@ -2663,17 +2664,17 @@ template<class U>
     operator=(const reverse_iterator<U>& u);
 ```
 
-`is_same_v<U, Iterator>` is `false`, `const U&` models
-`convertible_to``<Iterator>`, and
-`assignable_from``<Iterator&, const U&>` is modeled.
-
-***Effects:***
-
-Assigns `u.current` to `current`.
-
-***Returns:***
-
-`*this`.
+> `is_same_v<U, Iterator>` is `false`, `const U&` models
+> `convertible_to``<Iterator>`, and
+> `assignable_from``<Iterator&, const U&>` is modeled.
+>
+> *Effects:*
+>
+> Assigns `u.current` to `current`.
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Conversion <a id="reverse.iter.conv">[reverse.iter.conv]</a>
 
@@ -2681,9 +2682,9 @@ Assigns `u.current` to `current`.
 constexpr Iterator base() const;
 ```
 
-***Returns:***
-
-`current`.
+> *Returns:*
+>
+> `current`.
 
 #### Element access <a id="reverse.iter.elem">[reverse.iter.elem]</a>
 
@@ -2691,14 +2692,14 @@ constexpr Iterator base() const;
 constexpr reference operator*() const;
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-Iterator tmp = current;
-return *--tmp;
-```
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> Iterator tmp = current;
+> return *--tmp;
+> ```
 
 ``` cpp
 constexpr pointer operator->() const
@@ -2706,20 +2707,20 @@ constexpr pointer operator->() const
             requires(const Iterator i) { i.operator->(); });
 ```
 
-***Effects:***
-
-- If `Iterator` is a pointer type, equivalent to:
-  `return prev(current);`
-
-- Otherwise, equivalent to: `return prev(current).operator->();`
+> *Effects:*
+>
+> - If `Iterator` is a pointer type, equivalent to:
+>   `return prev(current);`
+>
+> - Otherwise, equivalent to: `return prev(current).operator->();`
 
 ``` cpp
 constexpr unspecified operator[](difference_type n) const;
 ```
 
-***Returns:***
-
-`current[-n-1]`.
+> *Returns:*
+>
+> `current[-n-1]`.
 
 #### Navigation <a id="reverse.iter.nav">[reverse.iter.nav]</a>
 
@@ -2727,93 +2728,93 @@ constexpr unspecified operator[](difference_type n) const;
 constexpr reverse_iterator operator+(difference_type n) const;
 ```
 
-***Returns:***
-
-`reverse_iterator(current-n)`.
+> *Returns:*
+>
+> `reverse_iterator(current-n)`.
 
 ``` cpp
 constexpr reverse_iterator operator-(difference_type n) const;
 ```
 
-***Returns:***
-
-`reverse_iterator(current+n)`.
+> *Returns:*
+>
+> `reverse_iterator(current+n)`.
 
 ``` cpp
 constexpr reverse_iterator& operator++();
 ```
 
-***Effects:***
-
-As if by: `–current;`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `–current;`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr reverse_iterator operator++(int);
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-reverse_iterator tmp = *this;
---current;
-return tmp;
-```
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> reverse_iterator tmp = *this;
+> --current;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr reverse_iterator& operator--();
 ```
 
-***Effects:***
-
-As if by `++current`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by `++current`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr reverse_iterator operator--(int);
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-reverse_iterator tmp = *this;
-++current;
-return tmp;
-```
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> reverse_iterator tmp = *this;
+> ++current;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr reverse_iterator& operator+=(difference_type n);
 ```
 
-***Effects:***
-
-As if by: `current -= n;`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `current -= n;`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr reverse_iterator& operator-=(difference_type n);
 ```
 
-***Effects:***
-
-As if by: `current += n;`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `current += n;`
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Comparisons <a id="reverse.iter.cmp">[reverse.iter.cmp]</a>
 
@@ -2824,11 +2825,11 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
-`x.base() == y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() == y.base()`.
+> `x.base() == y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() == y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2837,11 +2838,11 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
-`x.base() != y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() != y.base()`.
+> `x.base() != y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() != y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2850,11 +2851,11 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
-`x.base() > y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() > y.base()`.
+> `x.base() > y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() > y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2863,11 +2864,11 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
-`x.base() < y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() < y.base()`.
+> `x.base() < y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() < y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2876,11 +2877,11 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
-`x.base() >= y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() >= y.base()`.
+> `x.base() >= y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() >= y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2889,11 +2890,11 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
-`x.base() <= y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() <= y.base()`.
+> `x.base() <= y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() <= y.base()`.
 
 ``` cpp
 template<class Iterator1, three_way_comparable_with<Iterator1> Iterator2>
@@ -2902,12 +2903,12 @@ template<class Iterator1, three_way_comparable_with<Iterator1> Iterator2>
                 const reverse_iterator<Iterator2>& y);
 ```
 
-***Returns:***
-
-`y.base() <=> x.base()`.
-
-\[*Note 1*: The argument order in the ***Returns:*** element is reversed
-because this is a reverse iterator. — *end note*\]
+> *Returns:*
+>
+> `y.base() <=> x.base()`.
+>
+> \[*Note 5*: The argument order in the *Returns:* element is reversed
+> because this is a reverse iterator. — *end note*\]
 
 #### Non-member functions <a id="reverse.iter.nonmember">[reverse.iter.nonmember]</a>
 
@@ -2918,9 +2919,9 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y) -> decltype(y.base() - x.base());
 ```
 
-***Returns:***
-
-`y.base() - x.base()`.
+> *Returns:*
+>
+> `y.base() - x.base()`.
 
 ``` cpp
 template<class Iterator>
@@ -2929,32 +2930,32 @@ template<class Iterator>
     const reverse_iterator<Iterator>& x);
 ```
 
-***Returns:***
-
-`reverse_iterator<Iterator>(x.base() - n)`.
+> *Returns:*
+>
+> `reverse_iterator<Iterator>(x.base() - n)`.
 
 ``` cpp
 friend constexpr iter_rvalue_reference_t<Iterator>
   iter_move(const reverse_iterator& i) noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = i.base();
-return ranges::iter_move(--tmp);
-```
-
-***Remarks:***
-
-The exception specification is equivalent to:
-
-``` cpp
-is_nothrow_copy_constructible_v<Iterator> &&
-noexcept(ranges::iter_move(--declval<Iterator&>()))
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = i.base();
+> return ranges::iter_move(--tmp);
+> ```
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to:
+>
+> ``` cpp
+> is_nothrow_copy_constructible_v<Iterator> &&
+> noexcept(ranges::iter_move(--declval<Iterator&>()))
+> ```
 
 ``` cpp
 template<indirectly_swappable<Iterator> Iterator2>
@@ -2963,34 +2964,34 @@ template<indirectly_swappable<Iterator> Iterator2>
               const reverse_iterator<Iterator2>& y) noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto xtmp = x.base();
-auto ytmp = y.base();
-ranges::iter_swap(--xtmp, --ytmp);
-```
-
-***Remarks:***
-
-The exception specification is equivalent to:
-
-``` cpp
-is_nothrow_copy_constructible_v<Iterator> &&
-is_nothrow_copy_constructible_v<Iterator2> &&
-noexcept(ranges::iter_swap(--declval<Iterator&>(), --declval<Iterator2&>()))
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto xtmp = x.base();
+> auto ytmp = y.base();
+> ranges::iter_swap(--xtmp, --ytmp);
+> ```
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to:
+>
+> ``` cpp
+> is_nothrow_copy_constructible_v<Iterator> &&
+> is_nothrow_copy_constructible_v<Iterator2> &&
+> noexcept(ranges::iter_swap(--declval<Iterator&>(), --declval<Iterator2&>()))
+> ```
 
 ``` cpp
 template<class Iterator>
   constexpr reverse_iterator<Iterator> make_reverse_iterator(Iterator i);
 ```
 
-***Returns:***
-
-`reverse_iterator<Iterator>(i)`.
+> *Returns:*
+>
+> `reverse_iterator<Iterator>(i)`.
 
 ### Insert iterators <a id="insert.iterators">[insert.iterators]</a>
 
@@ -3060,50 +3061,50 @@ namespace std {
 constexpr explicit back_insert_iterator(Container& x);
 ```
 
-***Effects:***
-
-Initializes `container` with `addressof(x)`.
+> *Effects:*
+>
+> Initializes `container` with `addressof(x)`.
 
 ``` cpp
 constexpr back_insert_iterator& operator=(const typename Container::value_type& value);
 ```
 
-***Effects:***
-
-As if by: `container->push_back(value);`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `container->push_back(value);`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr back_insert_iterator& operator=(typename Container::value_type&& value);
 ```
 
-***Effects:***
-
-As if by: `container->push_back(std::move(value));`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `container->push_back(std::move(value));`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr back_insert_iterator& operator*();
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr back_insert_iterator& operator++();
 constexpr back_insert_iterator  operator++(int);
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 #####  `back_inserter` <a id="back.inserter">[back.inserter]</a>
 
@@ -3112,9 +3113,9 @@ template<class Container>
   constexpr back_insert_iterator<Container> back_inserter(Container& x);
 ```
 
-***Returns:***
-
-`back_insert_iterator<Container>(x)`.
+> *Returns:*
+>
+> `back_insert_iterator<Container>(x)`.
 
 #### Class template `front_insert_iterator` <a id="front.insert.iterator">[front.insert.iterator]</a>
 
@@ -3150,50 +3151,50 @@ namespace std {
 constexpr explicit front_insert_iterator(Container& x);
 ```
 
-***Effects:***
-
-Initializes `container` with `addressof(x)`.
+> *Effects:*
+>
+> Initializes `container` with `addressof(x)`.
 
 ``` cpp
 constexpr front_insert_iterator& operator=(const typename Container::value_type& value);
 ```
 
-***Effects:***
-
-As if by: `container->push_front(value);`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `container->push_front(value);`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr front_insert_iterator& operator=(typename Container::value_type&& value);
 ```
 
-***Effects:***
-
-As if by: `container->push_front(std::move(value));`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `container->push_front(std::move(value));`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr front_insert_iterator& operator*();
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr front_insert_iterator& operator++();
 constexpr front_insert_iterator  operator++(int);
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ##### `front_inserter` <a id="front.inserter">[front.inserter]</a>
 
@@ -3202,9 +3203,9 @@ template<class Container>
   constexpr front_insert_iterator<Container> front_inserter(Container& x);
 ```
 
-***Returns:***
-
-`front_insert_iterator<Container>(x)`.
+> *Returns:*
+>
+> `front_insert_iterator<Container>(x)`.
 
 #### Class template `insert_iterator` <a id="insert.iterator">[insert.iterator]</a>
 
@@ -3241,60 +3242,60 @@ namespace std {
 constexpr insert_iterator(Container& x, ranges::iterator_t<Container> i);
 ```
 
-***Effects:***
-
-Initializes `container` with `addressof(x)` and `iter` with `i`.
+> *Effects:*
+>
+> Initializes `container` with `addressof(x)` and `iter` with `i`.
 
 ``` cpp
 constexpr insert_iterator& operator=(const typename Container::value_type& value);
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-iter = container->insert(iter, value);
-++iter;
-```
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> iter = container->insert(iter, value);
+> ++iter;
+> ```
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr insert_iterator& operator=(typename Container::value_type&& value);
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-iter = container->insert(iter, std::move(value));
-++iter;
-```
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> iter = container->insert(iter, std::move(value));
+> ++iter;
+> ```
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr insert_iterator& operator*();
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr insert_iterator& operator++();
 constexpr insert_iterator& operator++(int);
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ##### `inserter` <a id="inserter">[inserter]</a>
 
@@ -3304,9 +3305,9 @@ template<class Container>
     inserter(Container& x, ranges::iterator_t<Container> i);
 ```
 
-***Returns:***
-
-`insert_iterator<Container>(x, i)`.
+> *Returns:*
+>
+> `insert_iterator<Container>(x, i)`.
 
 ### Constant iterators and sentinels <a id="const.iterators">[const.iterators]</a>
 
@@ -3336,15 +3337,19 @@ template<input_iterator I>
   using \libglobal{const_iterator} = see below;
 ```
 
-If `I` models `constant-iterator`, `I`. Otherwise,
-`basic_const_iterator<I>`.
+> *Returns:*
+>
+> If `I` models `constant-iterator`, `I`. Otherwise,
+> `basic_const_iterator<I>`.
 
 ``` cpp
 template<semiregular S>
   using \libglobal{const_sentinel} = see below;
 ```
 
-If `S` models `input_iterator`, `const_iterator<S>`. Otherwise, `S`.
+> *Returns:*
+>
+> If `S` models `input_iterator`, `const_iterator<S>`. Otherwise, `S`.
 
 #### Class template `basic_const_iterator` <a id="const.iterators.iterator">[const.iterators.iterator]</a>
 
@@ -3501,18 +3506,18 @@ The member *typedef-name* `iterator_category` is defined if and only if
 constexpr basic_const_iterator(Iterator current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)`.
 
 ``` cpp
 template<convertible_to<Iterator> U>
   constexpr basic_const_iterator(basic_const_iterator<U> current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current.`*`current_`*`)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current.`*`current_`*`)`.
 
 ``` cpp
 template<different-from<basic_const_iterator> T>
@@ -3520,33 +3525,33 @@ template<different-from<basic_const_iterator> T>
   constexpr basic_const_iterator(T&& current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::forward<T>(current)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::forward<T>(current)`.
 
 ``` cpp
 constexpr const Iterator& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*`;`
 
 ``` cpp
 constexpr Iterator base() &&;
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`current_`*`);`
 
 ``` cpp
 constexpr reference operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return static_cast<`*`reference`*`>(*`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return static_cast<`*`reference`*`>(*`*`current_`*`);`
 
 ``` cpp
 constexpr const auto* operator->() const
@@ -3554,72 +3559,72 @@ constexpr const auto* operator->() const
            same_as<remove_cvref_t<iter_reference_t<Iterator>>, value_type>;
 ```
 
-***Returns:***
-
-If `Iterator` models `contiguous_iterator`,
-`to_address(`*`current_`*`)`; otherwise, `addressof(*`*`current_`*`)`.
+> *Returns:*
+>
+> If `Iterator` models `contiguous_iterator`,
+> `to_address(`*`current_`*`)`; otherwise, `addressof(*`*`current_`*`)`.
 
 ``` cpp
 constexpr basic_const_iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++current_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to: `++`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `++`*`current_`*`;`
 
 ``` cpp
 constexpr basic_const_iterator operator++(int) requires forward_iterator<Iterator>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr basic_const_iterator& operator--() requires bidirectional_iterator<Iterator>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --current_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr basic_const_iterator operator--(int) requires bidirectional_iterator<Iterator>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr basic_const_iterator& operator+=(difference_type n)
@@ -3628,33 +3633,34 @@ constexpr basic_const_iterator& operator-=(difference_type n)
   requires random_access_iterator<Iterator>;
 ```
 
-Let *`op`* be the operator.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ op n;
-return *this;
-```
+> Let *`op`* be the operator.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ op n;
+> return *this;
+> ```
 
 ``` cpp
 constexpr reference operator[](difference_type n) const requires random_access_iterator<Iterator>
 ```
 
-***Effects:***
-
-Equivalent to: `return static_cast<`*`reference`*`>(`*`current_`*`[n]);`
+> *Effects:*
+>
+> Equivalent to:
+> `return static_cast<`*`reference`*`>(`*`current_`*`[n]);`
 
 ``` cpp
 template<sentinel_for<Iterator> S>
   constexpr bool operator==(const S& s) const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*` == s;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*` == s;`
 
 ``` cpp
 constexpr bool operator<(const basic_const_iterator& y) const
@@ -3669,11 +3675,11 @@ constexpr auto operator<=>(const basic_const_iterator& y) const
   requires random_access_iterator<Iterator> && three_way_comparable<Iterator>;
 ```
 
-Let *`op`* be the operator.
-
-***Effects:***
-
-Equivalent to: `return `*`current_`*` `*`op`*` `*`y.current_`*`;`
+> Let *`op`* be the operator.
+>
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*` `*`op`*` `*`y.current_`*`;`
 
 ``` cpp
 template<different-from<basic_const_iterator> I>
@@ -3694,11 +3700,11 @@ template<different-from<basic_const_iterator> I>
              three_way_comparable_with<Iterator, I>;
 ```
 
-Let *`op`* be the operator.
-
-***Effects:***
-
-Equivalent to: `return `*`current_`*` `*`op`*` y;`
+> Let *`op`* be the operator.
+>
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*` `*`op`*` y;`
 
 ``` cpp
 template<not-a-const-iterator I>
@@ -3715,11 +3721,11 @@ template<not-a-const-iterator I>
     requires random_access_iterator<Iterator> && totally_ordered_with<Iterator, I>;
 ```
 
-Let *`op`* be the operator.
-
-***Returns:***
-
-Equivalent to: `return x `*`op`*` y.`*`current_`*`;`
+> Let *`op`* be the operator.
+>
+> *Returns:*
+>
+> Equivalent to: `return x `*`op`*` y.`*`current_`*`;`
 
 ``` cpp
 friend constexpr basic_const_iterator operator+(const basic_const_iterator& i, difference_type n)
@@ -3728,27 +3734,27 @@ friend constexpr basic_const_iterator operator+(difference_type n, const basic_c
   requires random_access_iterator<Iterator>;
 ```
 
-***Effects:***
-
-Equivalent to: `return basic_const_iterator(i.`*`current_`*` + n);`
+> *Effects:*
+>
+> Equivalent to: `return basic_const_iterator(i.`*`current_`*` + n);`
 
 ``` cpp
 friend constexpr basic_const_iterator operator-(const basic_const_iterator& i, difference_type n)
   requires random_access_iterator<Iterator>;
 ```
 
-***Effects:***
-
-Equivalent to: `return basic_const_iterator(i.`*`current_`*` - n);`
+> *Effects:*
+>
+> Equivalent to: `return basic_const_iterator(i.`*`current_`*` - n);`
 
 ``` cpp
 template<sized_sentinel_for<Iterator> S>
   constexpr difference_type operator-(const S& y) const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*` - y;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*` - y;`
 
 ``` cpp
 template<not-a-const-iterator S>
@@ -3756,9 +3762,9 @@ template<not-a-const-iterator S>
   friend constexpr difference_type operator-(const S& x, const basic_const_iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x - y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x - y.`*`current_`*`;`
 
 ### Move iterators and sentinels <a id="move.iterators">[move.iterators]</a>
 
@@ -3882,44 +3888,44 @@ model `random_access_iterator` [iterator.concept.random.access].
 constexpr move_iterator();
 ```
 
-***Effects:***
-
-Value-initializes `current`.
+> *Effects:*
+>
+> Value-initializes `current`.
 
 ``` cpp
 constexpr explicit move_iterator(Iterator i);
 ```
 
-***Effects:***
-
-Initializes `current` with `std::move(i)`.
+> *Effects:*
+>
+> Initializes `current` with `std::move(i)`.
 
 ``` cpp
 template<class U> constexpr move_iterator(const move_iterator<U>& u);
 ```
 
-`is_same_v<U, Iterator>` is `false` and `const U&` models
-`convertible_to``<Iterator>`.
-
-***Effects:***
-
-Initializes `current` with `u.current`.
+> `is_same_v<U, Iterator>` is `false` and `const U&` models
+> `convertible_to``<Iterator>`.
+>
+> *Effects:*
+>
+> Initializes `current` with `u.current`.
 
 ``` cpp
 template<class U> constexpr move_iterator& operator=(const move_iterator<U>& u);
 ```
 
-`is_same_v<U, Iterator>` is `false`, `const U&` models
-`convertible_to``<Iterator>`, and
-`assignable_from``<Iterator&, const U&>` is modeled.
-
-***Effects:***
-
-Assigns `u.current` to `current`.
-
-***Returns:***
-
-`*this`.
+> `is_same_v<U, Iterator>` is `false`, `const U&` models
+> `convertible_to``<Iterator>`, and
+> `assignable_from``<Iterator&, const U&>` is modeled.
+>
+> *Effects:*
+>
+> Assigns `u.current` to `current`.
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Conversion <a id="move.iter.op.conv">[move.iter.op.conv]</a>
 
@@ -3927,17 +3933,17 @@ Assigns `u.current` to `current`.
 constexpr const Iterator& base() const & noexcept;
 ```
 
-***Returns:***
-
-`current`.
+> *Returns:*
+>
+> `current`.
 
 ``` cpp
 constexpr Iterator base() &&;
 ```
 
-***Returns:***
-
-`std::move(current)`.
+> *Returns:*
+>
+> `std::move(current)`.
 
 #### Element access <a id="move.iter.elem">[move.iter.elem]</a>
 
@@ -3945,17 +3951,17 @@ constexpr Iterator base() &&;
 constexpr reference operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(current);`
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(current);`
 
 ``` cpp
 constexpr reference operator[](difference_type n) const;
 ```
 
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(current + n);`
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(current + n);`
 
 #### Navigation <a id="move.iter.nav">[move.iter.nav]</a>
 
@@ -3963,95 +3969,95 @@ Equivalent to: `return ranges::iter_move(current + n);`
 constexpr move_iterator& operator++();
 ```
 
-***Effects:***
-
-As if by `++current`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by `++current`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr auto operator++(int);
 ```
 
-***Effects:***
-
-If `Iterator` models `forward_iterator`, equivalent to:
-
-``` cpp
-move_iterator tmp = *this;
-++current;
-return tmp;
-```
-
-Otherwise, equivalent to `++current`.
+> *Effects:*
+>
+> If `Iterator` models `forward_iterator`, equivalent to:
+>
+> ``` cpp
+> move_iterator tmp = *this;
+> ++current;
+> return tmp;
+> ```
+>
+> Otherwise, equivalent to `++current`.
 
 ``` cpp
 constexpr move_iterator& operator--();
 ```
 
-***Effects:***
-
-As if by `–current`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by `–current`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr move_iterator operator--(int);
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-move_iterator tmp = *this;
---current;
-return tmp;
-```
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> move_iterator tmp = *this;
+> --current;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr move_iterator operator+(difference_type n) const;
 ```
 
-***Returns:***
-
-`move_iterator(current + n)`.
+> *Returns:*
+>
+> `move_iterator(current + n)`.
 
 ``` cpp
 constexpr move_iterator& operator+=(difference_type n);
 ```
 
-***Effects:***
-
-As if by: `current += n;`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `current += n;`
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr move_iterator operator-(difference_type n) const;
 ```
 
-***Returns:***
-
-`move_iterator(current - n)`.
+> *Returns:*
+>
+> `move_iterator(current - n)`.
 
 ``` cpp
 constexpr move_iterator& operator-=(difference_type n);
 ```
 
-***Effects:***
-
-As if by: `current -= n;`
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by: `current -= n;`
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Comparisons <a id="move.iter.op.comp">[move.iter.op.comp]</a>
 
@@ -4064,55 +4070,55 @@ template<sentinel_for<Iterator> S>
                                    const move_sentinel<S>& y);
 ```
 
-`x.base() == y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() == y.base()`.
+> `x.base() == y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() == y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
 constexpr bool operator<(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
-`x.base() < y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`x.base() < y.base()`.
+> `x.base() < y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `x.base() < y.base()`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
 constexpr bool operator>(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
-`y.base() < x.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`y < x`.
+> `y.base() < x.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `y < x`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
 constexpr bool operator<=(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
-`y.base() < x.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`!(y < x)`.
+> `y.base() < x.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `!(y < x)`.
 
 ``` cpp
 template<class Iterator1, class Iterator2>
 constexpr bool operator>=(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
-`x.base() < y.base()` is well-formed and convertible to `bool`.
-
-***Returns:***
-
-`!(x < y)`.
+> `x.base() < y.base()` is well-formed and convertible to `bool`.
+>
+> *Returns:*
+>
+> `!(x < y)`.
 
 ``` cpp
 template<class Iterator1, three_way_comparable_with<Iterator1> Iterator2>
@@ -4121,9 +4127,9 @@ template<class Iterator1, three_way_comparable_with<Iterator1> Iterator2>
                 const move_iterator<Iterator2>& y);
 ```
 
-***Returns:***
-
-`x.base() <=> y.base()`.
+> *Returns:*
+>
+> `x.base() <=> y.base()`.
 
 #### Non-member functions <a id="move.iter.nonmember">[move.iter.nonmember]</a>
 
@@ -4140,9 +4146,9 @@ template<sized_sentinel_for<Iterator> S>
     operator-(const move_iterator& x, const move_sentinel<S>& y);
 ```
 
-***Returns:***
-
-`x.base() - y.base()`.
+> *Returns:*
+>
+> `x.base() - y.base()`.
 
 ``` cpp
 template<class Iterator>
@@ -4150,11 +4156,11 @@ template<class Iterator>
     operator+(iter_difference_t<Iterator> n, const move_iterator<Iterator>& x);
 ```
 
-`x.base() + n` is well-formed and has type `Iterator`.
-
-***Returns:***
-
-`x + n`.
+> `x.base() + n` is well-formed and has type `Iterator`.
+>
+> *Returns:*
+>
+> `x + n`.
 
 ``` cpp
 friend constexpr iter_rvalue_reference_t<Iterator>
@@ -4162,9 +4168,9 @@ friend constexpr iter_rvalue_reference_t<Iterator>
     noexcept(noexcept(ranges::iter_move(i.current)));
 ```
 
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(i.current);`
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(i.current);`
 
 ``` cpp
 template<indirectly_swappable<Iterator> Iterator2>
@@ -4173,18 +4179,18 @@ template<indirectly_swappable<Iterator> Iterator2>
       noexcept(noexcept(ranges::iter_swap(x.current, y.current)));
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::iter_swap(x.current, y.current)`.
+> *Effects:*
+>
+> Equivalent to: `ranges::iter_swap(x.current, y.current)`.
 
 ``` cpp
 template<class Iterator>
 constexpr move_iterator<Iterator> make_move_iterator(Iterator i);
 ```
 
-***Returns:***
-
-`move_iterator<Iterator>(std::move(i))`.
+> *Returns:*
+>
+> `move_iterator<Iterator>(std::move(i))`.
 
 #### Class template `move_sentinel` <a id="move.sentinel">[move.sentinel]</a>
 
@@ -4239,18 +4245,18 @@ namespace std {
 constexpr move_sentinel();
 ```
 
-***Effects:***
-
-Value-initializes `last`. If `is_trivially_default_constructible_v<S>`
-is `true`, then this constructor is a constructor.
+> *Effects:*
+>
+> Value-initializes `last`. If `is_trivially_default_constructible_v<S>`
+> is `true`, then this constructor is a constructor.
 
 ``` cpp
 constexpr explicit move_sentinel(S s);
 ```
 
-***Effects:***
-
-Initializes `last` with `std::move(s)`.
+> *Effects:*
+>
+> Initializes `last` with `std::move(s)`.
 
 ``` cpp
 template<class S2>
@@ -4258,9 +4264,9 @@ template<class S2>
     constexpr move_sentinel(const move_sentinel<S2>& s);
 ```
 
-***Effects:***
-
-Initializes `last` with `s.last`.
+> *Effects:*
+>
+> Initializes `last` with `s.last`.
 
 ``` cpp
 template<class S2>
@@ -4268,17 +4274,17 @@ template<class S2>
     constexpr move_sentinel& operator=(const move_sentinel<S2>& s);
 ```
 
-***Effects:***
-
-Equivalent to: `last = s.last; return *this;`
+> *Effects:*
+>
+> Equivalent to: `last = s.last; return *this;`
 
 ``` cpp
 constexpr S base() const;
 ```
 
-***Returns:***
-
-`last`.
+> *Returns:*
+>
+> `last`.
 
 ### Common iterators <a id="iterators.common">[iterators.common]</a>
 
@@ -4290,7 +4296,7 @@ of the iterator and sentinel differ) as a common range (where they are
 the same). It does this by holding either an iterator or a sentinel, and
 implementing the equality comparison operators appropriately.
 
-\[*Note 2*: The `common_iterator` type is useful for interfacing with
+\[*Note 1*: The `common_iterator` type is useful for interfacing with
 legacy code that expects the begin and end of a range to have the same
 type. — *end note*\]
 
@@ -4401,17 +4407,17 @@ for `common_iterator<I, S>` are defined as follows.
 constexpr common_iterator(I i);
 ```
 
-***Effects:***
-
-Initializes `v_` as if by `v_{in_place_type<I>, std::move(i)}`.
+> *Effects:*
+>
+> Initializes `v_` as if by `v_{in_place_type<I>, std::move(i)}`.
 
 ``` cpp
 constexpr common_iterator(S s);
 ```
 
-***Effects:***
-
-Initializes `v_` as if by `v_{in_place_type<S>, std::move(s)}`.
+> *Effects:*
+>
+> Initializes `v_` as if by `v_{in_place_type<S>, std::move(s)}`.
 
 ``` cpp
 template<class I2, class S2>
@@ -4419,14 +4425,14 @@ template<class I2, class S2>
     constexpr common_iterator(const common_iterator<I2, S2>& x);
 ```
 
-***Preconditions:***
-
-`x.v_.valueless_by_exception()` is `false`.
-
-***Effects:***
-
-Initializes `v_` as if by `v_{in_place_index<`i`>, get<`i`>(x.v_)}`,
-where i is `x.v_.index()`.
+> *Preconditions:*
+>
+> `x.v_.valueless_by_exception()` is `false`.
+>
+> *Effects:*
+>
+> Initializes `v_` as if by `v_{in_place_index<`i`>, get<`i`>(x.v_)}`,
+> where i is `x.v_.index()`.
 
 ``` cpp
 template<class I2, class S2>
@@ -4435,23 +4441,24 @@ template<class I2, class S2>
     constexpr common_iterator& operator=(const common_iterator<I2, S2>& x);
 ```
 
-***Preconditions:***
-
-`x.v_.valueless_by_exception()` is `false`.
-
-***Effects:***
-
-Equivalent to:
-
-- If `v_.index() == x.v_.index()`, then `get<`i`>(v_) = get<`i`>(x.v_)`.
-
-- Otherwise, `v_.emplace<`i`>(get<`i`>(x.v_))`.
-
-where i is `x.v_.index()`.
-
-***Returns:***
-
-`*this`
+> *Preconditions:*
+>
+> `x.v_.valueless_by_exception()` is `false`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> - If `v_.index() == x.v_.index()`, then
+>   `get<`i`>(v_) = get<`i`>(x.v_)`.
+>
+> - Otherwise, `v_.emplace<`i`>(get<`i`>(x.v_))`.
+>
+> where i is `x.v_.index()`.
+>
+> *Returns:*
+>
+> `*this`
 
 #### Accessors <a id="common.iter.access">[common.iter.access]</a>
 
@@ -4461,56 +4468,56 @@ constexpr decltype(auto) operator*() const
   requires dereferenceable<const I>;
 ```
 
-***Preconditions:***
-
-`holds_alternative<I>(v_)` is `true`.
-
-***Effects:***
-
-Equivalent to: `return *get<I>(v_);`
+> *Preconditions:*
+>
+> `holds_alternative<I>(v_)` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return *get<I>(v_);`
 
 ``` cpp
 constexpr auto operator->() const
   requires see below;
 ```
 
-The expression in the *requires-clause* is equivalent to:
-
-``` cpp
-indirectly_readable<const I> &&
-(requires(const I& i) { i.operator->(); } ||
- is_reference_v<iter_reference_t<I>> ||
- constructible_from<iter_value_t<I>, iter_reference_t<I>>)
-```
-
-***Preconditions:***
-
-`holds_alternative<I>(v_)` is `true`.
-
-***Effects:***
-
-- If `I` is a pointer type or if the expression
-  `get<I>(v_).operator->()` is well-formed, equivalent to:
-  `return get<I>(v_);`
-
-- Otherwise, if `iter_reference_t<I>` is a reference type, equivalent
-  to:
-
-      auto&& tmp = *get<I>(v_);
-      return addressof(tmp);
-
-- Otherwise, equivalent to: `return `*`proxy`*`(*get<I>(v_));` where
-  *proxy* is the exposition-only class:
-
-      class proxy {
-        iter_value_t<I> keep_;
-        constexpr proxy(iter_reference_t<I>&& x)
-          : keep_(std::move(x)) {}
-      public:
-        constexpr const iter_value_t<I>* operator->() const noexcept {
-          return addressof(keep_);
-        }
-      };
+> The expression in the *requires-clause* is equivalent to:
+>
+> ``` cpp
+> indirectly_readable<const I> &&
+> (requires(const I& i) { i.operator->(); } ||
+>  is_reference_v<iter_reference_t<I>> ||
+>  constructible_from<iter_value_t<I>, iter_reference_t<I>>)
+> ```
+>
+> *Preconditions:*
+>
+> `holds_alternative<I>(v_)` is `true`.
+>
+> *Effects:*
+>
+> - If `I` is a pointer type or if the expression
+>   `get<I>(v_).operator->()` is well-formed, equivalent to:
+>   `return get<I>(v_);`
+>
+> - Otherwise, if `iter_reference_t<I>` is a reference type, equivalent
+>   to:
+>
+>       auto&& tmp = *get<I>(v_);
+>       return addressof(tmp);
+>
+> - Otherwise, equivalent to: `return `*`proxy`*`(*get<I>(v_));` where
+>   *proxy* is the exposition-only class:
+>
+>       class proxy {
+>         iter_value_t<I> keep_;
+>         constexpr proxy(iter_reference_t<I>&& x)
+>           : keep_(std::move(x)) {}
+>       public:
+>         constexpr const iter_value_t<I>* operator->() const noexcept {
+>           return addressof(keep_);
+>         }
+>       };
 
 #### Navigation <a id="common.iter.nav">[common.iter.nav]</a>
 
@@ -4518,70 +4525,70 @@ indirectly_readable<const I> &&
 constexpr common_iterator& operator++();
 ```
 
-***Preconditions:***
-
-`holds_alternative<I>(v_)` is `true`.
-
-***Effects:***
-
-Equivalent to `++get<I>(v_)`.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> `holds_alternative<I>(v_)` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to `++get<I>(v_)`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr decltype(auto) operator++(int);
 ```
 
-***Preconditions:***
-
-`holds_alternative<I>(v_)` is `true`.
-
-***Effects:***
-
-If `I` models `forward_iterator`, equivalent to:
-
-``` cpp
-common_iterator tmp = *this;
-++*this;
-return tmp;
-```
-
-Otherwise, if `requires(I& i) { { *i++ } -> ; }` is `true` or
-
-``` cpp
-indirectly_readable<I> && constructible_from<iter_value_t<I>, iter_reference_t<I>> &&
-move_constructible<iter_value_t<I>>
-```
-
-is `false`, equivalent to:
-
-``` cpp
-return get<I>(v_)++;
-```
-
-Otherwise, equivalent to:
-
-``` cpp
-postfix-proxy p(**this);
-++*this;
-return p;
-```
-
-where *postfix-proxy* is the exposition-only class:
-
-``` cpp
-class postfix-proxy {
-  iter_value_t<I> keep_;
-  constexpr postfix-proxy(iter_reference_t<I>&& x)
-    : keep_(std::forward<iter_reference_t<I>>(x)) {}
-public:
-  constexpr const iter_value_t<I>& operator*() const noexcept {
-    return keep_;
-  }
-};
-```
+> *Preconditions:*
+>
+> `holds_alternative<I>(v_)` is `true`.
+>
+> *Effects:*
+>
+> If `I` models `forward_iterator`, equivalent to:
+>
+> ``` cpp
+> common_iterator tmp = *this;
+> ++*this;
+> return tmp;
+> ```
+>
+> Otherwise, if `requires(I& i) { { *i++ } -> ; }` is `true` or
+>
+> ``` cpp
+> indirectly_readable<I> && constructible_from<iter_value_t<I>, iter_reference_t<I>> &&
+> move_constructible<iter_value_t<I>>
+> ```
+>
+> is `false`, equivalent to:
+>
+> ``` cpp
+> return get<I>(v_)++;
+> ```
+>
+> Otherwise, equivalent to:
+>
+> ``` cpp
+> postfix-proxy p(**this);
+> ++*this;
+> return p;
+> ```
+>
+> where *postfix-proxy* is the exposition-only class:
+>
+> ``` cpp
+> class postfix-proxy {
+>   iter_value_t<I> keep_;
+>   constexpr postfix-proxy(iter_reference_t<I>&& x)
+>     : keep_(std::forward<iter_reference_t<I>>(x)) {}
+> public:
+>   constexpr const iter_value_t<I>& operator*() const noexcept {
+>     return keep_;
+>   }
+> };
+> ```
 
 #### Comparisons <a id="common.iter.cmp">[common.iter.cmp]</a>
 
@@ -4592,15 +4599,15 @@ friend constexpr bool operator==(
   const common_iterator& x, const common_iterator<I2, S2>& y);
 ```
 
-***Preconditions:***
-
-`x.v_.valueless_by_exception()` and `y.v_.valueless_by_exception()` are
-each `false`.
-
-***Returns:***
-
-`true` if i` == `j, and otherwise `get<`i`>(x.v_) == get<`j`>(y.v_)`,
-where i is `x.v_.index()` and j is `y.v_.index()`.
+> *Preconditions:*
+>
+> `x.v_.valueless_by_exception()` and `y.v_.valueless_by_exception()`
+> are each `false`.
+>
+> *Returns:*
+>
+> `true` if i` == `j, and otherwise `get<`i`>(x.v_) == get<`j`>(y.v_)`,
+> where i is `x.v_.index()` and j is `y.v_.index()`.
 
 ``` cpp
 template<class I2, sentinel_for<I> S2>
@@ -4609,16 +4616,16 @@ friend constexpr bool operator==(
   const common_iterator& x, const common_iterator<I2, S2>& y);
 ```
 
-***Preconditions:***
-
-`x.v_.valueless_by_exception()` and `y.v_.valueless_by_exception()` are
-each `false`.
-
-***Returns:***
-
-`true` if i and j are each `1`, and otherwise
-`get<`i`>(x.v_) == get<`j`>(y.v_)`, where i is `x.v_.index()` and j is
-`y.v_.index()`.
+> *Preconditions:*
+>
+> `x.v_.valueless_by_exception()` and `y.v_.valueless_by_exception()`
+> are each `false`.
+>
+> *Returns:*
+>
+> `true` if i and j are each `1`, and otherwise
+> `get<`i`>(x.v_) == get<`j`>(y.v_)`, where i is `x.v_.index()` and j is
+> `y.v_.index()`.
 
 ``` cpp
 template<sized_sentinel_for<I> I2, sized_sentinel_for<I> S2>
@@ -4627,16 +4634,16 @@ friend constexpr iter_difference_t<I2> operator-(
   const common_iterator& x, const common_iterator<I2, S2>& y);
 ```
 
-***Preconditions:***
-
-`x.v_.valueless_by_exception()` and `y.v_.valueless_by_exception()` are
-each `false`.
-
-***Returns:***
-
-`0` if i and j are each `1`, and otherwise
-`get<`i`>(x.v_) - get<`j`>(y.v_)`, where i is `x.v_.index()` and j is
-`y.v_.index()`.
+> *Preconditions:*
+>
+> `x.v_.valueless_by_exception()` and `y.v_.valueless_by_exception()`
+> are each `false`.
+>
+> *Returns:*
+>
+> `0` if i and j are each `1`, and otherwise
+> `get<`i`>(x.v_) - get<`j`>(y.v_)`, where i is `x.v_.index()` and j is
+> `y.v_.index()`.
 
 #### Customizations <a id="common.iter.cust">[common.iter.cust]</a>
 
@@ -4646,13 +4653,13 @@ friend constexpr iter_rvalue_reference_t<I> iter_move(const common_iterator& i)
     requires input_iterator<I>;
 ```
 
-***Preconditions:***
-
-`holds_alternative<I>(i.v_)` is `true`.
-
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(get<I>(i.v_));`
+> *Preconditions:*
+>
+> `holds_alternative<I>(i.v_)` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(get<I>(i.v_));`
 
 ``` cpp
 template<indirectly_swappable<I> I2, class S2>
@@ -4660,14 +4667,14 @@ template<indirectly_swappable<I> I2, class S2>
     noexcept(noexcept(ranges::iter_swap(declval<const I&>(), declval<const I2&>())));
 ```
 
-***Preconditions:***
-
-`holds_alternative<I>(x.v_)` and `holds_alternative<I2>(y.v_)` are each
-`true`.
-
-***Effects:***
-
-Equivalent to `ranges::iter_swap(get<I>(x.v_), get<I2>(y.v_))`.
+> *Preconditions:*
+>
+> `holds_alternative<I>(x.v_)` and `holds_alternative<I2>(y.v_)` are
+> each `true`.
+>
+> *Effects:*
+>
+> Equivalent to `ranges::iter_swap(get<I>(x.v_), get<I2>(y.v_))`.
 
 ### Default sentinel <a id="default.sentinel">[default.sentinel]</a>
 
@@ -4813,13 +4820,13 @@ namespace std {
 constexpr counted_iterator(I i, iter_difference_t<I> n);
 ```
 
-***Preconditions:***
-
-`n >= 0`.
-
-***Effects:***
-
-Initializes `current` with `std::move(i)` and `length` with `n`.
+> *Preconditions:*
+>
+> `n >= 0`.
+>
+> *Effects:*
+>
+> Initializes `current` with `std::move(i)` and `length` with `n`.
 
 ``` cpp
 template<class I2>
@@ -4827,9 +4834,9 @@ template<class I2>
     constexpr counted_iterator(const counted_iterator<I2>& x);
 ```
 
-***Effects:***
-
-Initializes `current` with `x.current` and `length` with `x.length`.
+> *Effects:*
+>
+> Initializes `current` with `x.current` and `length` with `x.length`.
 
 ``` cpp
 template<class I2>
@@ -4837,13 +4844,13 @@ template<class I2>
     constexpr counted_iterator& operator=(const counted_iterator<I2>& x);
 ```
 
-***Effects:***
-
-Assigns `x.current` to `current` and `x.length` to `length`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Assigns `x.current` to `current` and `x.length` to `length`.
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Accessors <a id="counted.iter.access">[counted.iter.access]</a>
 
@@ -4851,25 +4858,25 @@ Assigns `x.current` to `current` and `x.length` to `length`.
 constexpr const I& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return current;`
+> *Effects:*
+>
+> Equivalent to: `return current;`
 
 ``` cpp
 constexpr I base() &&;
 ```
 
-***Returns:***
-
-`std::move(current)`.
+> *Returns:*
+>
+> `std::move(current)`.
 
 ``` cpp
 constexpr iter_difference_t<I> count() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return length;`
+> *Effects:*
+>
+> Equivalent to: `return length;`
 
 #### Element access <a id="counted.iter.elem">[counted.iter.elem]</a>
 
@@ -4879,35 +4886,35 @@ constexpr decltype(auto) operator*() const
   requires dereferenceable<const I>;
 ```
 
-***Preconditions:***
-
-`length > 0` is `true`.
-
-***Effects:***
-
-Equivalent to: `return *current;`
+> *Preconditions:*
+>
+> `length > 0` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return *current;`
 
 ``` cpp
 constexpr auto operator->() const noexcept
   requires contiguous_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to: `return to_address(current);`
+> *Effects:*
+>
+> Equivalent to: `return to_address(current);`
 
 ``` cpp
 constexpr decltype(auto) operator[](iter_difference_t<I> n) const
   requires random_access_iterator<I>;
 ```
 
-***Preconditions:***
-
-`n < length`.
-
-***Effects:***
-
-Equivalent to: `return current[n];`
+> *Preconditions:*
+>
+> `n < length`.
+>
+> *Effects:*
+>
+> Equivalent to: `return current[n];`
 
 #### Navigation <a id="counted.iter.nav">[counted.iter.nav]</a>
 
@@ -4915,91 +4922,91 @@ Equivalent to: `return current[n];`
 constexpr counted_iterator& operator++();
 ```
 
-***Preconditions:***
-
-`length > 0`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++current;
---length;
-return *this;
-```
+> *Preconditions:*
+>
+> `length > 0`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++current;
+> --length;
+> return *this;
+> ```
 
 ``` cpp
 constexpr decltype(auto) operator++(int);
 ```
 
-***Preconditions:***
-
-`length > 0`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---length;
-try { return current++; }
-catch(...) { ++length; throw; }
-```
+> *Preconditions:*
+>
+> `length > 0`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --length;
+> try { return current++; }
+> catch(...) { ++length; throw; }
+> ```
 
 ``` cpp
 constexpr counted_iterator operator++(int)
   requires forward_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-counted_iterator tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> counted_iterator tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr counted_iterator& operator--()
   requires bidirectional_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---current;
-++length;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --current;
+> ++length;
+> return *this;
+> ```
 
 ``` cpp
 constexpr counted_iterator operator--(int)
   requires bidirectional_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-counted_iterator tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> counted_iterator tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr counted_iterator operator+(iter_difference_t<I> n) const
   requires random_access_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to: `return counted_iterator(current + n, length - n);`
+> *Effects:*
+>
+> Equivalent to: `return counted_iterator(current + n, length - n);`
 
 ``` cpp
 friend constexpr counted_iterator operator+(
@@ -5007,37 +5014,37 @@ friend constexpr counted_iterator operator+(
     requires random_access_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x + n;`
+> *Effects:*
+>
+> Equivalent to: `return x + n;`
 
 ``` cpp
 constexpr counted_iterator& operator+=(iter_difference_t<I> n)
   requires random_access_iterator<I>;
 ```
 
-***Preconditions:***
-
-`n <= length`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current += n;
-length -= n;
-return *this;
-```
+> *Preconditions:*
+>
+> `n <= length`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current += n;
+> length -= n;
+> return *this;
+> ```
 
 ``` cpp
 constexpr counted_iterator operator-(iter_difference_t<I> n) const
   requires random_access_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to: `return counted_iterator(current - n, length + n);`
+> *Effects:*
+>
+> Equivalent to: `return counted_iterator(current - n, length + n);`
 
 ``` cpp
 template<common_with<I> I2>
@@ -5045,50 +5052,51 @@ template<common_with<I> I2>
     const counted_iterator& x, const counted_iterator<I2>& y);
 ```
 
-***Preconditions:***
-
-`x` and `y` refer to elements of the same sequence\[counted.iterator\].
-
-***Effects:***
-
-Equivalent to: `return y.length - x.length;`
+> *Preconditions:*
+>
+> `x` and `y` refer to elements of the same
+> sequence\[counted.iterator\].
+>
+> *Effects:*
+>
+> Equivalent to: `return y.length - x.length;`
 
 ``` cpp
 friend constexpr iter_difference_t<I> operator-(
   const counted_iterator& x, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to: `return -x.length;`
+> *Effects:*
+>
+> Equivalent to: `return -x.length;`
 
 ``` cpp
 friend constexpr iter_difference_t<I> operator-(
   default_sentinel_t, const counted_iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return y.length;`
+> *Effects:*
+>
+> Equivalent to: `return y.length;`
 
 ``` cpp
 constexpr counted_iterator& operator-=(iter_difference_t<I> n)
   requires random_access_iterator<I>;
 ```
 
-***Preconditions:***
-
-`-n <= length`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current -= n;
-length += n;
-return *this;
-```
+> *Preconditions:*
+>
+> `-n <= length`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current -= n;
+> length += n;
+> return *this;
+> ```
 
 #### Comparisons <a id="counted.iter.cmp">[counted.iter.cmp]</a>
 
@@ -5098,22 +5106,23 @@ template<common_with<I> I2>
     const counted_iterator& x, const counted_iterator<I2>& y);
 ```
 
-***Preconditions:***
-
-`x` and `y` refer to elements of the same sequence\[counted.iterator\].
-
-***Effects:***
-
-Equivalent to: `return x.length == y.length;`
+> *Preconditions:*
+>
+> `x` and `y` refer to elements of the same
+> sequence\[counted.iterator\].
+>
+> *Effects:*
+>
+> Equivalent to: `return x.length == y.length;`
 
 ``` cpp
 friend constexpr bool operator==(
   const counted_iterator& x, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.length == 0;`
+> *Effects:*
+>
+> Equivalent to: `return x.length == 0;`
 
 ``` cpp
 template<common_with<I> I2>
@@ -5121,16 +5130,17 @@ template<common_with<I> I2>
     const counted_iterator& x, const counted_iterator<I2>& y);
 ```
 
-***Preconditions:***
-
-`x` and `y` refer to elements of the same sequence\[counted.iterator\].
-
-***Effects:***
-
-Equivalent to: `return y.length <=> x.length;`
-
-\[*Note 3*: The argument order in the ***Effects:*** element is reversed
-because `length` counts down, not up. — *end note*\]
+> *Preconditions:*
+>
+> `x` and `y` refer to elements of the same
+> sequence\[counted.iterator\].
+>
+> *Effects:*
+>
+> Equivalent to: `return y.length <=> x.length;`
+>
+> \[*Note 6*: The argument order in the *Effects:* element is reversed
+> because `length` counts down, not up. — *end note*\]
 
 #### Customizations <a id="counted.iter.cust">[counted.iter.cust]</a>
 
@@ -5141,13 +5151,13 @@ friend constexpr iter_rvalue_reference_t<I>
     requires input_iterator<I>;
 ```
 
-***Preconditions:***
-
-`i.length > 0` is `true`.
-
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(i.current);`
+> *Preconditions:*
+>
+> `i.length > 0` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(i.current);`
 
 ``` cpp
 template<indirectly_swappable<I> I2>
@@ -5156,13 +5166,13 @@ template<indirectly_swappable<I> I2>
       noexcept(noexcept(ranges::iter_swap(x.current, y.current)));
 ```
 
-***Preconditions:***
-
-Both `x.length > 0` and `y.length > 0` are `true`.
-
-***Effects:***
-
-Equivalent to `ranges::iter_swap(x.current, y.current)`.
+> *Preconditions:*
+>
+> Both `x.length > 0` and `y.length > 0` are `true`.
+>
+> *Effects:*
+>
+> Equivalent to `ranges::iter_swap(x.current, y.current)`.
 
 ### Unreachable sentinel <a id="unreachable.sentinel">[unreachable.sentinel]</a>
 
@@ -5270,53 +5280,53 @@ constexpr istream_iterator();
 constexpr istream_iterator(default_sentinel_t);
 ```
 
-***Effects:***
-
-Constructs the end-of-stream iterator, value-initializing `value`.
-
-***Ensures:***
-
-`in_stream == nullptr` is `true`.
-
-***Remarks:***
-
-If the initializer `T()` in the declaration `auto x = T();` is a
-constant initializer\[expr.const\], then these constructors are
-constructors.
+> *Effects:*
+>
+> Constructs the end-of-stream iterator, value-initializing `value`.
+>
+> *Ensures:*
+>
+> `in_stream == nullptr` is `true`.
+>
+> *Remarks:*
+>
+> If the initializer `T()` in the declaration `auto x = T();` is a
+> constant initializer\[expr.const\], then these constructors are
+> constructors.
 
 ``` cpp
 istream_iterator(istream_type& s);
 ```
 
-***Effects:***
-
-Initializes `in_stream` with `addressof(s)`, value-initializes `value`,
-and then calls `operator++()`.
+> *Effects:*
+>
+> Initializes `in_stream` with `addressof(s)`, value-initializes
+> `value`, and then calls `operator++()`.
 
 ``` cpp
 constexpr istream_iterator(const istream_iterator& x) noexcept(see below);
 ```
 
-***Effects:***
-
-Initializes `in_stream` with `x.in_stream` and initializes `value` with
-`x.value`.
-
-***Remarks:***
-
-An invocation of this constructor may be used in a core constant
-expression if and only if the initialization of `value` from `x.value`
-is a constant subexpression\[defns.const.subexpr\]. The exception
-specification is equivalent to `is_nothrow_copy_constructible_v<T>`.
+> *Effects:*
+>
+> Initializes `in_stream` with `x.in_stream` and initializes `value`
+> with `x.value`.
+>
+> *Remarks:*
+>
+> An invocation of this constructor may be used in a core constant
+> expression if and only if the initialization of `value` from `x.value`
+> is a constant subexpression\[defns.const.subexpr\]. The exception
+> specification is equivalent to `is_nothrow_copy_constructible_v<T>`.
 
 ``` cpp
 ~istream_iterator() = default;
 ```
 
-***Remarks:***
-
-If `is_trivially_destructible_v<T>` is `true`, then this destructor is
-trivial.
+> *Remarks:*
+>
+> If `is_trivially_destructible_v<T>` is `true`, then this destructor is
+> trivial.
 
 #### Operations <a id="istream.iterator.ops">[istream.iterator.ops]</a>
 
@@ -5324,64 +5334,64 @@ trivial.
 const T& operator*() const;
 ```
 
-***Preconditions:***
-
-`in_stream != nullptr` is `true`.
-
-***Returns:***
-
-`value`.
+> *Preconditions:*
+>
+> `in_stream != nullptr` is `true`.
+>
+> *Returns:*
+>
+> `value`.
 
 ``` cpp
 const T* operator->() const;
 ```
 
-***Preconditions:***
-
-`in_stream != nullptr` is `true`.
-
-***Returns:***
-
-`addressof(value)`.
+> *Preconditions:*
+>
+> `in_stream != nullptr` is `true`.
+>
+> *Returns:*
+>
+> `addressof(value)`.
 
 ``` cpp
 istream_iterator& operator++();
 ```
 
-***Preconditions:***
-
-`in_stream != nullptr` is `true`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (!(*in_stream >> value))
-  in_stream = nullptr;
-```
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> `in_stream != nullptr` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (!(*in_stream >> value))
+>   in_stream = nullptr;
+> ```
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 istream_iterator operator++(int);
 ```
 
-***Preconditions:***
-
-`in_stream != nullptr` is `true`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-istream_iterator tmp = *this;
-++*this;
-return tmp;
-```
+> *Preconditions:*
+>
+> `in_stream != nullptr` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> istream_iterator tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 template<class T, class charT, class traits, class Distance>
@@ -5389,17 +5399,17 @@ template<class T, class charT, class traits, class Distance>
                   const istream_iterator<T,charT,traits,Distance>& y);
 ```
 
-***Returns:***
-
-`x.in_stream == y.in_stream`.
+> *Returns:*
+>
+> `x.in_stream == y.in_stream`.
 
 ``` cpp
 friend bool operator==(const istream_iterator& i, default_sentinel_t);
 ```
 
-***Returns:***
-
-`!i.in_stream`.
+> *Returns:*
+>
+> `!i.in_stream`.
 
 ### Class template `ostream_iterator` <a id="ostream.iterator">[ostream.iterator]</a>
 
@@ -5448,18 +5458,18 @@ namespace std {
 ostream_iterator(ostream_type& s);
 ```
 
-***Effects:***
-
-Initializes `out_stream` with `addressof(s)` and `delim` with .
+> *Effects:*
+>
+> Initializes `out_stream` with `addressof(s)` and `delim` with .
 
 ``` cpp
 ostream_iterator(ostream_type& s, const charT* delimiter);
 ```
 
-***Effects:***
-
-Initializes `out_stream` with `addressof(s)` and `delim` with
-`delimiter`.
+> *Effects:*
+>
+> Initializes `out_stream` with `addressof(s)` and `delim` with
+> `delimiter`.
 
 #### Operations <a id="ostream.iterator.ops">[ostream.iterator.ops]</a>
 
@@ -5467,33 +5477,33 @@ Initializes `out_stream` with `addressof(s)` and `delim` with
 ostream_iterator& operator=(const T& value);
 ```
 
-***Effects:***
-
-As if by:
-
-``` cpp
-*out_stream << value;
-if (delim)
-  *out_stream << delim;
-return *this;
-```
+> *Effects:*
+>
+> As if by:
+>
+> ``` cpp
+> *out_stream << value;
+> if (delim)
+>   *out_stream << delim;
+> return *this;
+> ```
 
 ``` cpp
 ostream_iterator& operator*();
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 ostream_iterator& operator++();
 ostream_iterator& operator++(int);
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ### Class template `istreambuf_iterator` <a id="istreambuf.iterator">[istreambuf.iterator]</a>
 
@@ -5591,33 +5601,33 @@ constexpr istreambuf_iterator() noexcept;
 constexpr istreambuf_iterator(default_sentinel_t) noexcept;
 ```
 
-***Effects:***
-
-Initializes `sbuf_` with .
+> *Effects:*
+>
+> Initializes `sbuf_` with .
 
 ``` cpp
 istreambuf_iterator(istream_type& s) noexcept;
 ```
 
-***Effects:***
-
-Initializes `sbuf_` with `s.rdbuf()`.
+> *Effects:*
+>
+> Initializes `sbuf_` with `s.rdbuf()`.
 
 ``` cpp
 istreambuf_iterator(streambuf_type* s) noexcept;
 ```
 
-***Effects:***
-
-Initializes `sbuf_` with `s`.
+> *Effects:*
+>
+> Initializes `sbuf_` with `s`.
 
 ``` cpp
 istreambuf_iterator(const proxy& p) noexcept;
 ```
 
-***Effects:***
-
-Initializes `sbuf_` with `p.sbuf_`.
+> *Effects:*
+>
+> Initializes `sbuf_` with `p.sbuf_`.
 
 #### Operations <a id="istreambuf.iterator.ops">[istreambuf.iterator.ops]</a>
 
@@ -5625,38 +5635,38 @@ Initializes `sbuf_` with `p.sbuf_`.
 charT operator*() const;
 ```
 
-***Returns:***
-
-The character obtained via the `streambuf` member `sbuf_->sgetc()`.
+> *Returns:*
+>
+> The character obtained via the `streambuf` member `sbuf_->sgetc()`.
 
 ``` cpp
 istreambuf_iterator& operator++();
 ```
 
-***Effects:***
-
-As if by `sbuf_->sbumpc()`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> As if by `sbuf_->sbumpc()`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 proxy operator++(int);
 ```
 
-***Returns:***
-
-*`proxy`*`(sbuf_->sbumpc(), sbuf_)`.
+> *Returns:*
+>
+> *`proxy`*`(sbuf_->sbumpc(), sbuf_)`.
 
 ``` cpp
 bool equal(const istreambuf_iterator& b) const;
 ```
 
-***Returns:***
-
-`true` if and only if both iterators are at end-of-stream, or neither is
-at end-of-stream, regardless of what `streambuf` object they use.
+> *Returns:*
+>
+> `true` if and only if both iterators are at end-of-stream, or neither
+> is at end-of-stream, regardless of what `streambuf` object they use.
 
 ``` cpp
 template<class charT, class traits>
@@ -5664,17 +5674,17 @@ template<class charT, class traits>
                   const istreambuf_iterator<charT,traits>& b);
 ```
 
-***Returns:***
-
-`a.equal(b)`.
+> *Returns:*
+>
+> `a.equal(b)`.
 
 ``` cpp
 friend bool operator==(const istreambuf_iterator& i, default_sentinel_t s);
 ```
 
-***Returns:***
-
-`i.equal(s)`.
+> *Returns:*
+>
+> `i.equal(s)`.
 
 ### Class template `ostreambuf_iterator` <a id="ostreambuf.iterator">[ostreambuf.iterator]</a>
 
@@ -5719,25 +5729,25 @@ namespace std {
 ostreambuf_iterator(ostream_type& s) noexcept;
 ```
 
-***Preconditions:***
-
-`s.rdbuf()` is not a null pointer.
-
-***Effects:***
-
-Initializes `sbuf_` with `s.rdbuf()`.
+> *Preconditions:*
+>
+> `s.rdbuf()` is not a null pointer.
+>
+> *Effects:*
+>
+> Initializes `sbuf_` with `s.rdbuf()`.
 
 ``` cpp
 ostreambuf_iterator(streambuf_type* s) noexcept;
 ```
 
-***Preconditions:***
-
-`s` is not a null pointer.
-
-***Effects:***
-
-Initializes `sbuf_` with `s`.
+> *Preconditions:*
+>
+> `s` is not a null pointer.
+>
+> *Effects:*
+>
+> Initializes `sbuf_` with `s`.
 
 #### Operations <a id="ostreambuf.iter.ops">[ostreambuf.iter.ops]</a>
 
@@ -5745,40 +5755,40 @@ Initializes `sbuf_` with `s`.
 ostreambuf_iterator& operator=(charT c);
 ```
 
-***Effects:***
-
-If `failed()` yields `false`, calls `sbuf_->sputc(c)`; otherwise has no
-effect.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> If `failed()` yields `false`, calls `sbuf_->sputc(c)`; otherwise has
+> no effect.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 ostreambuf_iterator& operator*();
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 ostreambuf_iterator& operator++();
 ostreambuf_iterator& operator++(int);
 ```
 
-***Returns:***
-
-`*this`.
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 bool failed() const noexcept;
 ```
 
-***Returns:***
-
-`true` if in any prior use of member `operator=`, the call to
-`sbuf_->sputc()` returned `traits::eof()`; or `false` otherwise.
+> *Returns:*
+>
+> `true` if in any prior use of member `operator=`, the call to
+> `sbuf_->sputc()` returned `traits::eof()`; or `false` otherwise.
 
 ## Range access <a id="iterator.range">[iterator.range]</a>
 
@@ -5793,204 +5803,204 @@ template<class C> constexpr auto begin(C& c) -> decltype(c.begin());
 template<class C> constexpr auto begin(const C& c) -> decltype(c.begin());
 ```
 
-***Returns:***
-
-`c.begin()`.
+> *Returns:*
+>
+> `c.begin()`.
 
 ``` cpp
 template<class C> constexpr auto end(C& c) -> decltype(c.end());
 template<class C> constexpr auto end(const C& c) -> decltype(c.end());
 ```
 
-***Returns:***
-
-`c.end()`.
+> *Returns:*
+>
+> `c.end()`.
 
 ``` cpp
 template<class T, size_t N> constexpr T* begin(T (&array)[N]) noexcept;
 ```
 
-***Returns:***
-
-`array`.
+> *Returns:*
+>
+> `array`.
 
 ``` cpp
 template<class T, size_t N> constexpr T* end(T (&array)[N]) noexcept;
 ```
 
-***Returns:***
-
-`array + N`.
+> *Returns:*
+>
+> `array + N`.
 
 ``` cpp
 template<class C> constexpr auto cbegin(const C& c) noexcept(noexcept(std::begin(c)))
   -> decltype(std::begin(c));
 ```
 
-***Returns:***
-
-`std::begin(c)`.
+> *Returns:*
+>
+> `std::begin(c)`.
 
 ``` cpp
 template<class C> constexpr auto cend(const C& c) noexcept(noexcept(std::end(c)))
   -> decltype(std::end(c));
 ```
 
-***Returns:***
-
-`std::end(c)`.
+> *Returns:*
+>
+> `std::end(c)`.
 
 ``` cpp
 template<class C> constexpr auto rbegin(C& c) -> decltype(c.rbegin());
 template<class C> constexpr auto rbegin(const C& c) -> decltype(c.rbegin());
 ```
 
-***Returns:***
-
-`c.rbegin()`.
+> *Returns:*
+>
+> `c.rbegin()`.
 
 ``` cpp
 template<class C> constexpr auto rend(C& c) -> decltype(c.rend());
 template<class C> constexpr auto rend(const C& c) -> decltype(c.rend());
 ```
 
-***Returns:***
-
-`c.rend()`.
+> *Returns:*
+>
+> `c.rend()`.
 
 ``` cpp
 template<class T, size_t N> constexpr reverse_iterator<T*> rbegin(T (&array)[N]);
 ```
 
-***Returns:***
-
-`reverse_iterator<T*>(array + N)`.
+> *Returns:*
+>
+> `reverse_iterator<T*>(array + N)`.
 
 ``` cpp
 template<class T, size_t N> constexpr reverse_iterator<T*> rend(T (&array)[N]);
 ```
 
-***Returns:***
-
-`reverse_iterator<T*>(array)`.
+> *Returns:*
+>
+> `reverse_iterator<T*>(array)`.
 
 ``` cpp
 template<class E> constexpr reverse_iterator<const E*> rbegin(initializer_list<E> il);
 ```
 
-***Returns:***
-
-`reverse_iterator<const E*>(il.end())`.
+> *Returns:*
+>
+> `reverse_iterator<const E*>(il.end())`.
 
 ``` cpp
 template<class E> constexpr reverse_iterator<const E*> rend(initializer_list<E> il);
 ```
 
-***Returns:***
-
-`reverse_iterator<const E*>(il.begin())`.
+> *Returns:*
+>
+> `reverse_iterator<const E*>(il.begin())`.
 
 ``` cpp
 template<class C> constexpr auto crbegin(const C& c) -> decltype(std::rbegin(c));
 ```
 
-***Returns:***
-
-`std::rbegin(c)`.
+> *Returns:*
+>
+> `std::rbegin(c)`.
 
 ``` cpp
 template<class C> constexpr auto crend(const C& c) -> decltype(std::rend(c));
 ```
 
-***Returns:***
-
-`std::rend(c)`.
+> *Returns:*
+>
+> `std::rend(c)`.
 
 ``` cpp
 template<class C> constexpr auto size(const C& c) -> decltype(c.size());
 ```
 
-***Returns:***
-
-`c.size()`.
+> *Returns:*
+>
+> `c.size()`.
 
 ``` cpp
 template<class T, size_t N> constexpr size_t size(const T (&array)[N]) noexcept;
 ```
 
-***Returns:***
-
-`N`.
+> *Returns:*
+>
+> `N`.
 
 ``` cpp
 template<class C> constexpr auto ssize(const C& c)
   -> common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>>(c.size());
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>>(c.size());
+> ```
 
 ``` cpp
 template<class T, ptrdiff_t N> constexpr ptrdiff_t ssize(const T (&array)[N]) noexcept;
 ```
 
-***Returns:***
-
-`N`.
+> *Returns:*
+>
+> `N`.
 
 ``` cpp
 template<class C> [[nodiscard]] constexpr auto empty(const C& c) -> decltype(c.empty());
 ```
 
-***Returns:***
-
-`c.empty()`.
+> *Returns:*
+>
+> `c.empty()`.
 
 ``` cpp
 template<class T, size_t N> [[nodiscard]] constexpr bool empty(const T (&array)[N]) noexcept;
 ```
 
-***Returns:***
-
-`false`.
+> *Returns:*
+>
+> `false`.
 
 ``` cpp
 template<class E> [[nodiscard]] constexpr bool empty(initializer_list<E> il) noexcept;
 ```
 
-***Returns:***
-
-`il.size() == 0`.
+> *Returns:*
+>
+> `il.size() == 0`.
 
 ``` cpp
 template<class C> constexpr auto data(C& c) -> decltype(c.data());
 template<class C> constexpr auto data(const C& c) -> decltype(c.data());
 ```
 
-***Returns:***
-
-`c.data()`.
+> *Returns:*
+>
+> `c.data()`.
 
 ``` cpp
 template<class T, size_t N> constexpr T* data(T (&array)[N]) noexcept;
 ```
 
-***Returns:***
-
-`array`.
+> *Returns:*
+>
+> `array`.
 
 ``` cpp
 template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 ```
 
-***Returns:***
-
-`il.begin()`.
+> *Returns:*
+>
+> `il.begin()`.
 
 <!-- Link reference definitions -->
 [basic.fundamental]: basic.md#basic.fundamental

@@ -205,27 +205,27 @@ denotes a value of type `L`).
 m.lock()
 ```
 
-***Effects:***
-
-Blocks until a lock can be acquired for the current execution agent. If
-an exception is thrown then a lock shall not have been acquired for the
-current execution agent.
+> *Effects:*
+>
+> Blocks until a lock can be acquired for the current execution agent.
+> If an exception is thrown then a lock shall not have been acquired for
+> the current execution agent.
 
 ``` cpp
 m.unlock()
 ```
 
-***Preconditions:***
-
-The current execution agent holds a non-shared lock on `m`.
-
-***Effects:***
-
-Releases a non-shared lock on `m` held by the current execution agent.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The current execution agent holds a non-shared lock on `m`.
+>
+> *Effects:*
+>
+> Releases a non-shared lock on `m` held by the current execution agent.
+>
+> *Throws:*
+>
+> Nothing.
 
 #### *Cpp17Lockable* requirements <a id="thread.req.lockable.req">[thread.req.lockable.req]</a>
 
@@ -238,17 +238,17 @@ type `L`).
 m.try_lock()
 ```
 
-***Effects:***
-
-Attempts to acquire a lock for the current execution agent without
-blocking. If an exception is thrown then a lock shall not have been
-acquired for the current execution agent.
-
-`bool`.
-
-***Returns:***
-
-`true` if the lock was acquired, otherwise `false`.
+> *Effects:*
+>
+> Attempts to acquire a lock for the current execution agent without
+> blocking. If an exception is thrown then a lock shall not have been
+> acquired for the current execution agent.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if the lock was acquired, otherwise `false`.
 
 #### *Cpp17TimedLockable* requirements <a id="thread.req.lockable.timed">[thread.req.lockable.timed]</a>
 
@@ -263,39 +263,39 @@ type `L`, `rel_time` denotes a value of an instantiation of `duration`
 m.try_lock_for(rel_time)
 ```
 
-***Effects:***
-
-Attempts to acquire a lock for the current execution agent within the
-relative timeout\[thread.req.timing\] specified by `rel_time`. The
-function will not return within the timeout specified by `rel_time`
-unless it has obtained a lock on `m` for the current execution agent. If
-an exception is thrown then a lock has not been acquired for the current
-execution agent.
-
-`bool`.
-
-***Returns:***
-
-`true` if the lock was acquired, otherwise `false`.
+> *Effects:*
+>
+> Attempts to acquire a lock for the current execution agent within the
+> relative timeout\[thread.req.timing\] specified by `rel_time`. The
+> function will not return within the timeout specified by `rel_time`
+> unless it has obtained a lock on `m` for the current execution agent.
+> If an exception is thrown then a lock has not been acquired for the
+> current execution agent.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if the lock was acquired, otherwise `false`.
 
 ``` cpp
 m.try_lock_until(abs_time)
 ```
 
-***Effects:***
-
-Attempts to acquire a lock for the current execution agent before the
-absolute timeout\[thread.req.timing\] specified by `abs_time`. The
-function will not return before the timeout specified by `abs_time`
-unless it has obtained a lock on `m` for the current execution agent. If
-an exception is thrown then a lock has not been acquired for the current
-execution agent.
-
-`bool`.
-
-***Returns:***
-
-`true` if the lock was acquired, otherwise `false`.
+> *Effects:*
+>
+> Attempts to acquire a lock for the current execution agent before the
+> absolute timeout\[thread.req.timing\] specified by `abs_time`. The
+> function will not return before the timeout specified by `abs_time`
+> unless it has obtained a lock on `m` for the current execution agent.
+> If an exception is thrown then a lock has not been acquired for the
+> current execution agent.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if the lock was acquired, otherwise `false`.
 
 #### *Cpp17SharedLockable* requirements <a id="thread.req.lockable.shared">[thread.req.lockable.shared]</a>
 
@@ -308,41 +308,41 @@ type `L`):
 m.lock_shared()
 ```
 
-***Effects:***
-
-Blocks until a lock can be acquired for the current execution agent. If
-an exception is thrown then a lock shall not have been acquired for the
-current execution agent.
+> *Effects:*
+>
+> Blocks until a lock can be acquired for the current execution agent.
+> If an exception is thrown then a lock shall not have been acquired for
+> the current execution agent.
 
 ``` cpp
 m.try_lock_shared()
 ```
 
-***Effects:***
-
-Attempts to acquire a lock for the current execution agent without
-blocking. If an exception is thrown then a lock shall not have been
-acquired for the current execution agent.
-
-***Returns:***
-
-`true` if the lock was acquired, `false` otherwise.
+> *Effects:*
+>
+> Attempts to acquire a lock for the current execution agent without
+> blocking. If an exception is thrown then a lock shall not have been
+> acquired for the current execution agent.
+>
+> *Returns:*
+>
+> `true` if the lock was acquired, `false` otherwise.
 
 ``` cpp
 m.unlock_shared()
 ```
 
-***Preconditions:***
-
-The current execution agent holds a shared lock on `m`.
-
-***Effects:***
-
-Releases a shared lock on `m` held by the current execution agent.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The current execution agent holds a shared lock on `m`.
+>
+> *Effects:*
+>
+> Releases a shared lock on `m` held by the current execution agent.
+>
+> *Throws:*
+>
+> Nothing.
 
 #### *Cpp17SharedTimedLockable* requirements <a id="thread.req.lockable.shared.timed">[thread.req.lockable.shared.timed]</a>
 
@@ -357,35 +357,35 @@ a specialization of `chrono::time_point`).
 m.try_lock_shared_for(rel_time)
 ```
 
-***Effects:***
-
-Attempts to acquire a lock for the current execution agent within the
-relative timeout\[thread.req.timing\] specified by `rel_time`. The
-function will not return within the timeout specified by `rel_time`
-unless it has obtained a lock on `m` for the current execution agent. If
-an exception is thrown then a lock has not been acquired for the current
-execution agent.
-
-***Returns:***
-
-`true` if the lock was acquired, `false` otherwise.
+> *Effects:*
+>
+> Attempts to acquire a lock for the current execution agent within the
+> relative timeout\[thread.req.timing\] specified by `rel_time`. The
+> function will not return within the timeout specified by `rel_time`
+> unless it has obtained a lock on `m` for the current execution agent.
+> If an exception is thrown then a lock has not been acquired for the
+> current execution agent.
+>
+> *Returns:*
+>
+> `true` if the lock was acquired, `false` otherwise.
 
 ``` cpp
 m.try_lock_shared_until(abs_time)
 ```
 
-***Effects:***
-
-Attempts to acquire a lock for the current execution agent before the
-absolute timeout\[thread.req.timing\] specified by `abs_time`. The
-function will not return before the timeout specified by `abs_time`
-unless it has obtained a lock on `m` for the current execution agent. If
-an exception is thrown then a lock has not been acquired for the current
-execution agent.
-
-***Returns:***
-
-`true` if the lock was acquired, `false` otherwise.
+> *Effects:*
+>
+> Attempts to acquire a lock for the current execution agent before the
+> absolute timeout\[thread.req.timing\] specified by `abs_time`. The
+> function will not return before the timeout specified by `abs_time`
+> unless it has obtained a lock on `m` for the current execution agent.
+> If an exception is thrown then a lock has not been acquired for the
+> current execution agent.
+>
+> *Returns:*
+>
+> `true` if the lock was acquired, `false` otherwise.
 
 ## Stop tokens <a id="thread.stoptoken">[thread.stoptoken]</a>
 
@@ -488,73 +488,73 @@ namespace std {
 stop_token() noexcept;
 ```
 
-***Ensures:***
-
-`stop_possible()` is `false` and `stop_requested()` is `false`.
-
-\[*Note 1*: Because the created `stop_token` object can never receive a
-stop request, no resources are allocated for a stop
-state. — *end note*\]
+> *Ensures:*
+>
+> `stop_possible()` is `false` and `stop_requested()` is `false`.
+>
+> \[*Note 2*: Because the created `stop_token` object can never receive
+> a stop request, no resources are allocated for a stop
+> state. — *end note*\]
 
 ``` cpp
 stop_token(const stop_token& rhs) noexcept;
 ```
 
-***Ensures:***
-
-`*this == rhs` is `true`.
-
-\[*Note 2*: `*this` and `rhs` share the ownership of the same stop
-state, if any. — *end note*\]
+> *Ensures:*
+>
+> `*this == rhs` is `true`.
+>
+> \[*Note 3*: `*this` and `rhs` share the ownership of the same stop
+> state, if any. — *end note*\]
 
 ``` cpp
 stop_token(stop_token&& rhs) noexcept;
 ```
 
-***Ensures:***
-
-`*this` contains the value of `rhs` prior to the start of construction
-and `rhs.stop_possible()` is `false`.
+> *Ensures:*
+>
+> `*this` contains the value of `rhs` prior to the start of construction
+> and `rhs.stop_possible()` is `false`.
 
 ``` cpp
 ~stop_token();
 ```
 
-***Effects:***
-
-Releases ownership of the stop state, if any.
+> *Effects:*
+>
+> Releases ownership of the stop state, if any.
 
 ``` cpp
 stop_token& operator=(const stop_token& rhs) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `stop_token(rhs).swap(*this)`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Equivalent to: `stop_token(rhs).swap(*this)`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 stop_token& operator=(stop_token&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `stop_token(std::move(rhs)).swap(*this)`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Equivalent to: `stop_token(std::move(rhs)).swap(*this)`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 void swap(stop_token& rhs) noexcept;
 ```
 
-***Effects:***
-
-Exchanges the values of `*this` and `rhs`.
+> *Effects:*
+>
+> Exchanges the values of `*this` and `rhs`.
 
 #### Members <a id="stoptoken.mem">[stoptoken.mem]</a>
 
@@ -562,25 +562,25 @@ Exchanges the values of `*this` and `rhs`.
 [[nodiscard]] bool stop_requested() const noexcept;
 ```
 
-***Returns:***
-
-`true` if `*this` has ownership of a stop state that has received a stop
-request; otherwise, `false`.
+> *Returns:*
+>
+> `true` if `*this` has ownership of a stop state that has received a
+> stop request; otherwise, `false`.
 
 ``` cpp
 [[nodiscard]] bool stop_possible() const noexcept;
 ```
 
-***Returns:***
-
-`false` if:
-
-- `*this` does not have ownership of a stop state, or
-
-- a stop request was not made and there are no associated `stop_source`
-  objects;
-
-otherwise, `true`.
+> *Returns:*
+>
+> `false` if:
+>
+> - `*this` does not have ownership of a stop state, or
+>
+> - a stop request was not made and there are no associated
+>   `stop_source` objects;
+>
+> otherwise, `true`.
 
 #### Non-member functions <a id="stoptoken.nonmembers">[stoptoken.nonmembers]</a>
 
@@ -588,19 +588,19 @@ otherwise, `true`.
 [[nodiscard]] bool operator==(const stop_token& lhs, const stop_token& rhs) noexcept;
 ```
 
-***Returns:***
-
-`true` if `lhs` and `rhs` have ownership of the same stop state or if
-both `lhs` and `rhs` do not have ownership of a stop state; otherwise
-`false`.
+> *Returns:*
+>
+> `true` if `lhs` and `rhs` have ownership of the same stop state or if
+> both `lhs` and `rhs` do not have ownership of a stop state; otherwise
+> `false`.
 
 ``` cpp
 friend void swap(stop_token& x, stop_token& y) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `x.swap(y)`.
+> *Effects:*
+>
+> Equivalent to: `x.swap(y)`.
 
 ### Class `stop_source` <a id="stopsource">[stopsource]</a>
 
@@ -652,87 +652,87 @@ namespace std {
 stop_source();
 ```
 
-***Effects:***
-
-Initialises `*this` to have ownership of a new stop state.
-
-***Ensures:***
-
-`stop_possible()` is `true` and `stop_requested()` is `false`.
-
-***Throws:***
-
-`bad_alloc` if memory cannot be allocated for the stop state.
+> *Effects:*
+>
+> Initialises `*this` to have ownership of a new stop state.
+>
+> *Ensures:*
+>
+> `stop_possible()` is `true` and `stop_requested()` is `false`.
+>
+> *Throws:*
+>
+> `bad_alloc` if memory cannot be allocated for the stop state.
 
 ``` cpp
 explicit stop_source(nostopstate_t) noexcept;
 ```
 
-***Ensures:***
-
-`stop_possible()` is `false` and `stop_requested()` is `false`.
-
-\[*Note 3*: No resources are allocated for the state. — *end note*\]
+> *Ensures:*
+>
+> `stop_possible()` is `false` and `stop_requested()` is `false`.
+>
+> \[*Note 4*: No resources are allocated for the state. — *end note*\]
 
 ``` cpp
 stop_source(const stop_source& rhs) noexcept;
 ```
 
-***Ensures:***
-
-`*this == rhs` is `true`.
-
-\[*Note 4*: `*this` and `rhs` share the ownership of the same stop
-state, if any. — *end note*\]
+> *Ensures:*
+>
+> `*this == rhs` is `true`.
+>
+> \[*Note 5*: `*this` and `rhs` share the ownership of the same stop
+> state, if any. — *end note*\]
 
 ``` cpp
 stop_source(stop_source&& rhs) noexcept;
 ```
 
-***Ensures:***
-
-`*this` contains the value of `rhs` prior to the start of construction
-and `rhs.stop_possible()` is `false`.
+> *Ensures:*
+>
+> `*this` contains the value of `rhs` prior to the start of construction
+> and `rhs.stop_possible()` is `false`.
 
 ``` cpp
 ~stop_source();
 ```
 
-***Effects:***
-
-Releases ownership of the stop state, if any.
+> *Effects:*
+>
+> Releases ownership of the stop state, if any.
 
 ``` cpp
 stop_source& operator=(const stop_source& rhs) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `stop_source(rhs).swap(*this)`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Equivalent to: `stop_source(rhs).swap(*this)`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 stop_source& operator=(stop_source&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `stop_source(std::move(rhs)).swap(*this)`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Equivalent to: `stop_source(std::move(rhs)).swap(*this)`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 void swap(stop_source& rhs) noexcept;
 ```
 
-***Effects:***
-
-Exchanges the values of `*this` and `rhs`.
+> *Effects:*
+>
+> Exchanges the values of `*this` and `rhs`.
 
 #### Members <a id="stopsource.mem">[stopsource.mem]</a>
 
@@ -740,54 +740,54 @@ Exchanges the values of `*this` and `rhs`.
 [[nodiscard]] stop_token get_token() const noexcept;
 ```
 
-***Returns:***
-
-`stop_token()` if `stop_possible()` is `false`; otherwise a new
-associated `stop_token` object.
+> *Returns:*
+>
+> `stop_token()` if `stop_possible()` is `false`; otherwise a new
+> associated `stop_token` object.
 
 ``` cpp
 [[nodiscard]] bool stop_possible() const noexcept;
 ```
 
-***Returns:***
-
-`true` if `*this` has ownership of a stop state; otherwise, `false`.
+> *Returns:*
+>
+> `true` if `*this` has ownership of a stop state; otherwise, `false`.
 
 ``` cpp
 [[nodiscard]] bool stop_requested() const noexcept;
 ```
 
-***Returns:***
-
-`true` if `*this` has ownership of a stop state that has received a stop
-request; otherwise, `false`.
+> *Returns:*
+>
+> `true` if `*this` has ownership of a stop state that has received a
+> stop request; otherwise, `false`.
 
 ``` cpp
 bool request_stop() noexcept;
 ```
 
-***Effects:***
-
-If `*this` does not have ownership of a stop state, returns `false`.
-Otherwise, atomically determines whether the owned stop state has
-received a stop request, and if not, makes a stop request. The
-determination and making of the stop request are an atomic
-read-modify-write operation\[intro.races\]. If the request was made, the
-callbacks registered by associated `stop_callback` objects are
-synchronously called. If an invocation of a callback exits via an
-exception then `terminate` is invoked\[except.terminate\].
-
-\[*Note 5*: A stop request includes notifying all condition variables of
-type `condition_variable_any` temporarily registered during an
-interruptible wait\[thread.condvarany.intwait\]. — *end note*\]
-
-***Ensures:***
-
-`stop_possible()` is `false` or `stop_requested()` is `true`.
-
-***Returns:***
-
-`true` if this call made a stop request; otherwise `false`.
+> *Effects:*
+>
+> If `*this` does not have ownership of a stop state, returns `false`.
+> Otherwise, atomically determines whether the owned stop state has
+> received a stop request, and if not, makes a stop request. The
+> determination and making of the stop request are an atomic
+> read-modify-write operation\[intro.races\]. If the request was made,
+> the callbacks registered by associated `stop_callback` objects are
+> synchronously called. If an invocation of a callback exits via an
+> exception then `terminate` is invoked\[except.terminate\].
+>
+> \[*Note 6*: A stop request includes notifying all condition variables
+> of type `condition_variable_any` temporarily registered during an
+> interruptible wait\[thread.condvarany.intwait\]. — *end note*\]
+>
+> *Ensures:*
+>
+> `stop_possible()` is `false` or `stop_requested()` is `true`.
+>
+> *Returns:*
+>
+> `true` if this call made a stop request; otherwise `false`.
 
 #### Non-member functions <a id="stopsource.nonmembers">[stopsource.nonmembers]</a>
 
@@ -796,19 +796,19 @@ interruptible wait\[thread.condvarany.intwait\]. — *end note*\]
   operator==(const stop_source& lhs, const stop_source& rhs) noexcept;
 ```
 
-***Returns:***
-
-`true` if `lhs` and `rhs` have ownership of the same stop state or if
-both `lhs` and `rhs` do not have ownership of a stop state; otherwise
-`false`.
+> *Returns:*
+>
+> `true` if `lhs` and `rhs` have ownership of the same stop state or if
+> both `lhs` and `rhs` do not have ownership of a stop state; otherwise
+> `false`.
 
 ``` cpp
 friend void swap(stop_source& x, stop_source& y) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `x.swap(y)`.
+> *Effects:*
+>
+> Equivalent to: `x.swap(y)`.
 
 ### Class template `stop_callback` <a id="stopcallback">[stopcallback]</a>
 
@@ -861,47 +861,47 @@ explicit stop_callback(stop_token&& st, C&& cb)
   noexcept(is_nothrow_constructible_v<Callback, C>);
 ```
 
-`Callback` and `C` satisfy `constructible_from``<Callback, C>`.
-
-***Preconditions:***
-
-`Callback` and `C` model `constructible_from``<Callback, C>`.
-
-***Effects:***
-
-Initializes `callback` with `std::forward<C>(cb)`. If
-`st.stop_requested()` is `true`, then
-`std::forward<Callback>(callback)()` is evaluated in the current thread
-before the constructor returns. Otherwise, if `st` has ownership of a
-stop state, acquires shared ownership of that stop state and registers
-the callback with that stop state such that
-`std::forward<Callback>(callback)()` is evaluated by the first call to
-`request_stop()` on an associated `stop_source`.
-
-***Throws:***
-
-Any exception thrown by the initialization of `callback`.
-
-***Remarks:***
-
-If evaluating `std::forward<Callback>(callback)()` exits via an
-exception, then `terminate` is invoked\[except.terminate\].
+> `Callback` and `C` satisfy `constructible_from``<Callback, C>`.
+>
+> *Preconditions:*
+>
+> `Callback` and `C` model `constructible_from``<Callback, C>`.
+>
+> *Effects:*
+>
+> Initializes `callback` with `std::forward<C>(cb)`. If
+> `st.stop_requested()` is `true`, then
+> `std::forward<Callback>(callback)()` is evaluated in the current
+> thread before the constructor returns. Otherwise, if `st` has
+> ownership of a stop state, acquires shared ownership of that stop
+> state and registers the callback with that stop state such that
+> `std::forward<Callback>(callback)()` is evaluated by the first call to
+> `request_stop()` on an associated `stop_source`.
+>
+> *Throws:*
+>
+> Any exception thrown by the initialization of `callback`.
+>
+> *Remarks:*
+>
+> If evaluating `std::forward<Callback>(callback)()` exits via an
+> exception, then `terminate` is invoked\[except.terminate\].
 
 ``` cpp
 ~stop_callback();
 ```
 
-***Effects:***
-
-Unregisters the callback from the owned stop state, if any. The
-destructor does not block waiting for the execution of another callback
-registered by an associated `stop_callback`. If `callback` is
-concurrently executing on another thread, then the return from the
-invocation of `callback` strongly happens before\[intro.races\]
-`callback` is destroyed. If `callback` is executing on the current
-thread, then the destructor does not block\[defns.block\] waiting for
-the return from the invocation of `callback`. Releases ownership of the
-stop state, if any.
+> *Effects:*
+>
+> Unregisters the callback from the owned stop state, if any. The
+> destructor does not block waiting for the execution of another
+> callback registered by an associated `stop_callback`. If `callback` is
+> concurrently executing on another thread, then the return from the
+> invocation of `callback` strongly happens before\[intro.races\]
+> `callback` is destroyed. If `callback` is executing on the current
+> thread, then the destructor does not block\[defns.block\] waiting for
+> the return from the invocation of `callback`. Releases ownership of
+> the stop state, if any.
 
 ## Threads <a id="thread.threads">[thread.threads]</a>
 
@@ -1039,31 +1039,31 @@ as keys in associative containers. — *end note*\]
 id() noexcept;
 ```
 
-***Ensures:***
-
-The constructed object does not represent a thread of execution.
+> *Ensures:*
+>
+> The constructed object does not represent a thread of execution.
 
 ``` cpp
 bool operator==(thread::id x, thread::id y) noexcept;
 ```
 
-***Returns:***
-
-`true` only if `x` and `y` represent the same thread of execution or
-neither `x` nor `y` represents a thread of execution.
+> *Returns:*
+>
+> `true` only if `x` and `y` represent the same thread of execution or
+> neither `x` nor `y` represents a thread of execution.
 
 ``` cpp
 strong_ordering operator<=>(thread::id x, thread::id y) noexcept;
 ```
 
-Let $P(\texttt{x}, \texttt{y})$ be an unspecified total ordering over
-`thread::id` as described in \[alg.sorting\].
-
-***Returns:***
-
-`strong_ordering::less` if $P(\texttt{x}, \texttt{y})$ is `true`.
-Otherwise, `strong_ordering::greater` if $P(\texttt{y}, \texttt{x})$ is
-`true`. Otherwise, `strong_ordering::equal`.
+> Let $P(\texttt{x}, \texttt{y})$ be an unspecified total ordering over
+> `thread::id` as described in \[alg.sorting\].
+>
+> *Returns:*
+>
+> `strong_ordering::less` if $P(\texttt{x}, \texttt{y})$ is `true`.
+> Otherwise, `strong_ordering::greater` if $P(\texttt{y}, \texttt{x})$
+> is `true`. Otherwise, `strong_ordering::equal`.
 
 ``` cpp
 template<class charT, class traits>
@@ -1071,39 +1071,39 @@ template<class charT, class traits>
     operator<< (basic_ostream<charT, traits>& out, thread::id id);
 ```
 
-***Effects:***
-
-Inserts the text representation for `charT` of `id` into `out`.
-
-***Returns:***
-
-`out`.
+> *Effects:*
+>
+> Inserts the text representation for `charT` of `id` into `out`.
+>
+> *Returns:*
+>
+> `out`.
 
 ``` cpp
 template<class charT> struct formatter<thread::id, charT>;
 ```
 
-`formatter<thread::id, charT>` interprets as a . The syntax of format
-specifications is as follows:
-
-<div class="ncbnf">
-
-</div>
-
-\[*Note 4*: The productions and are described in
-\[format.string.std\]. — *end note*\]
-
-If the option is omitted it defaults to `>`.
-
-A `thread::id` object is formatted by writing its text representation
-for `charT` to the output with additional padding and adjustments as
-specified by the format specifiers.
+> `formatter<thread::id, charT>` interprets as a . The syntax of format
+> specifications is as follows:
+>
+> <div class="ncbnf">
+>
+> </div>
+>
+> \[*Note 7*: The productions and are described in
+> \[format.string.std\]. — *end note*\]
+>
+> If the option is omitted it defaults to `>`.
+>
+> A `thread::id` object is formatted by writing its text representation
+> for `charT` to the output with additional padding and adjustments as
+> specified by the format specifiers.
 
 ``` cpp
 template<> struct hash<thread::id>;
 ```
 
-The specialization is enabled\[unord.hash\].
+> The specialization is enabled\[unord.hash\].
 
 #### Constructors <a id="thread.thread.constr">[thread.thread.constr]</a>
 
@@ -1111,75 +1111,75 @@ The specialization is enabled\[unord.hash\].
 thread() noexcept;
 ```
 
-***Effects:***
-
-The object does not represent a thread of execution.
-
-***Ensures:***
-
-`get_id() == id()`.
+> *Effects:*
+>
+> The object does not represent a thread of execution.
+>
+> *Ensures:*
+>
+> `get_id() == id()`.
 
 ``` cpp
 template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 ```
 
-`remove_cvref_t<F>` is not the same type as `thread`.
-
-***Mandates:***
-
-The following are all `true`:
-
-- `is_constructible_v<decay_t<F>, F>`,
-
-- `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
-
-- `is_invocable_v<decay_t<F>, decay_t<Args>...>`.
-
-***Effects:***
-
-The new thread of execution executes
-
-``` cpp
-invoke(auto(std::forward<F>(f)),                // for \texttt{invoke}, see [func.invoke]
-       auto(std::forward<Args>(args))...)
-```
-
-with the values produced by `auto` being materialized\[conv.rval\] in
-the constructing thread. Any return value from this invocation is
-ignored.
-
-\[*Note 5*: This implies that any exceptions not thrown from the
-invocation of the copy of `f` will be thrown in the constructing thread,
-not the new thread. — *end note*\]
-
-If the invocation of `invoke` terminates with an uncaught exception,
-`terminate` is invoked\[except.terminate\].
-
-The completion of the invocation of the constructor synchronizes with
-the beginning of the invocation of the copy of `f`.
-
-***Ensures:***
-
-`get_id() != id()`. `*this` represents the newly started thread.
-
-***Throws:***
-
-`system_error` if unable to start the new thread.
-
-***Error conditions:***
-
-- `resource_unavailable_try_again` — the system lacked the necessary
-  resources to create another thread, or the system-imposed limit on the
-  number of threads in a process would be exceeded.
+> `remove_cvref_t<F>` is not the same type as `thread`.
+>
+> *Mandates:*
+>
+> The following are all `true`:
+>
+> - `is_constructible_v<decay_t<F>, F>`,
+>
+> - `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
+>
+> - `is_invocable_v<decay_t<F>, decay_t<Args>...>`.
+>
+> *Effects:*
+>
+> The new thread of execution executes
+>
+> ``` cpp
+> invoke(auto(std::forward<F>(f)),                // for \texttt{invoke}, see [func.invoke]
+>        auto(std::forward<Args>(args))...)
+> ```
+>
+> with the values produced by `auto` being materialized\[conv.rval\] in
+> the constructing thread. Any return value from this invocation is
+> ignored.
+>
+> \[*Note 8*: This implies that any exceptions not thrown from the
+> invocation of the copy of `f` will be thrown in the constructing
+> thread, not the new thread. — *end note*\]
+>
+> If the invocation of `invoke` terminates with an uncaught exception,
+> `terminate` is invoked\[except.terminate\].
+>
+> The completion of the invocation of the constructor synchronizes with
+> the beginning of the invocation of the copy of `f`.
+>
+> *Ensures:*
+>
+> `get_id() != id()`. `*this` represents the newly started thread.
+>
+> *Throws:*
+>
+> `system_error` if unable to start the new thread.
+>
+> *Error conditions:*
+>
+> - `resource_unavailable_try_again` — the system lacked the necessary
+>   resources to create another thread, or the system-imposed limit on
+>   the number of threads in a process would be exceeded.
 
 ``` cpp
 thread(thread&& x) noexcept;
 ```
 
-***Ensures:***
-
-`x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
-prior to the start of construction.
+> *Ensures:*
+>
+> `x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
+> prior to the start of construction.
 
 #### Destructor <a id="thread.thread.destr">[thread.thread.destr]</a>
 
@@ -1187,17 +1187,17 @@ prior to the start of construction.
 ~thread();
 ```
 
-***Effects:***
-
-If `joinable()`, invokes `terminate`\[except.terminate\]. Otherwise, has
-no effects.
-
-\[*Note 6*: Either implicitly detaching or joining a `joinable()` thread
-in its destructor can result in difficult to debug correctness (for
-detach) or performance (for join) bugs encountered only when an
-exception is thrown. These bugs can be avoided by ensuring that the
-destructor is never executed while the thread is still
-joinable. — *end note*\]
+> *Effects:*
+>
+> If `joinable()`, invokes `terminate`\[except.terminate\]. Otherwise,
+> has no effects.
+>
+> \[*Note 9*: Either implicitly detaching or joining a `joinable()`
+> thread in its destructor can result in difficult to debug correctness
+> (for detach) or performance (for join) bugs encountered only when an
+> exception is thrown. These bugs can be avoided by ensuring that the
+> destructor is never executed while the thread is still
+> joinable. — *end note*\]
 
 #### Assignment <a id="thread.thread.assign">[thread.thread.assign]</a>
 
@@ -1205,20 +1205,20 @@ joinable. — *end note*\]
 thread& operator=(thread&& x) noexcept;
 ```
 
-***Effects:***
-
-If `joinable()`, invokes `terminate`\[except.terminate\]. Otherwise,
-assigns the state of `x` to `*this` and sets `x` to a default
-constructed state.
-
-***Ensures:***
-
-`x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
-prior to the assignment.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> If `joinable()`, invokes `terminate`\[except.terminate\]. Otherwise,
+> assigns the state of `x` to `*this` and sets `x` to a default
+> constructed state.
+>
+> *Ensures:*
+>
+> `x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
+> prior to the assignment.
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Members <a id="thread.thread.member">[thread.thread.member]</a>
 
@@ -1226,83 +1226,85 @@ prior to the assignment.
 void swap(thread& x) noexcept;
 ```
 
-***Effects:***
-
-Swaps the state of `*this` and `x`.
+> *Effects:*
+>
+> Swaps the state of `*this` and `x`.
 
 ``` cpp
 bool joinable() const noexcept;
 ```
 
-***Returns:***
-
-`get_id() != id()`.
+> *Returns:*
+>
+> `get_id() != id()`.
 
 ``` cpp
 void join();
 ```
 
-***Effects:***
-
-Blocks until the thread represented by `*this` has completed.
-
-The completion of the thread represented by `*this` synchronizes
-with\[intro.multithread\] the corresponding successful `join()` return.
-
-\[*Note 7*: Operations on `*this` are not synchronized. — *end note*\]
-
-***Ensures:***
-
-The thread represented by `*this` has completed. `get_id() == id()`.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `resource_deadlock_would_occur` — if deadlock is detected or
-  `get_id() == this_thread::get_id()`.
-
-- `no_such_process` — if the thread is not valid.
-
-- `invalid_argument` — if the thread is not joinable.
+> *Effects:*
+>
+> Blocks until the thread represented by `*this` has completed.
+>
+> The completion of the thread represented by `*this` synchronizes
+> with\[intro.multithread\] the corresponding successful `join()`
+> return.
+>
+> \[*Note 10*: Operations on `*this` are not
+> synchronized. — *end note*\]
+>
+> *Ensures:*
+>
+> The thread represented by `*this` has completed. `get_id() == id()`.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `resource_deadlock_would_occur` — if deadlock is detected or
+>   `get_id() == this_thread::get_id()`.
+>
+> - `no_such_process` — if the thread is not valid.
+>
+> - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
 void detach();
 ```
 
-***Effects:***
-
-The thread represented by `*this` continues execution without the
-calling thread blocking. When `detach()` returns, `*this` no longer
-represents the possibly continuing thread of execution. When the thread
-previously represented by `*this` ends execution, the implementation
-releases any owned resources.
-
-***Ensures:***
-
-`get_id() == id()`.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `no_such_process` — if the thread is not valid.
-
-- `invalid_argument` — if the thread is not joinable.
+> *Effects:*
+>
+> The thread represented by `*this` continues execution without the
+> calling thread blocking. When `detach()` returns, `*this` no longer
+> represents the possibly continuing thread of execution. When the
+> thread previously represented by `*this` ends execution, the
+> implementation releases any owned resources.
+>
+> *Ensures:*
+>
+> `get_id() == id()`.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `no_such_process` — if the thread is not valid.
+>
+> - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
 id get_id() const noexcept;
 ```
 
-***Returns:***
-
-A default constructed `id` object if `*this` does not represent a
-thread, otherwise `this_thread::get_id()` for the thread of execution
-represented by `*this`.
+> *Returns:*
+>
+> A default constructed `id` object if `*this` does not represent a
+> thread, otherwise `this_thread::get_id()` for the thread of execution
+> represented by `*this`.
 
 #### Static members <a id="thread.thread.static">[thread.thread.static]</a>
 
@@ -1310,15 +1312,15 @@ represented by `*this`.
 unsigned hardware_concurrency() noexcept;
 ```
 
-***Returns:***
-
-The number of hardware thread contexts.
-
-\[*Note 8*: This value should only be considered to be a
-hint. — *end note*\]
-
-If this value is not computable or well-defined, an implementation
-should return 0.
+> *Returns:*
+>
+> The number of hardware thread contexts.
+>
+> \[*Note 11*: This value should only be considered to be a
+> hint. — *end note*\]
+>
+> If this value is not computable or well-defined, an implementation
+> should return 0.
 
 #### Specialized algorithms <a id="thread.thread.algorithm">[thread.thread.algorithm]</a>
 
@@ -1326,9 +1328,9 @@ should return 0.
 void swap(thread& x, thread& y) noexcept;
 ```
 
-***Effects:***
-
-As if by `x.swap(y)`.
+> *Effects:*
+>
+> As if by `x.swap(y)`.
 
 ### Class `jthread` <a id="thread.jthread.class">[thread.jthread.class]</a>
 
@@ -1388,119 +1390,120 @@ namespace std {
 jthread() noexcept;
 ```
 
-***Effects:***
-
-Constructs a `jthread` object that does not represent a thread of
-execution.
-
-***Ensures:***
-
-`get_id() == id()` is `true` and `ssource.stop_possible()` is `false`.
+> *Effects:*
+>
+> Constructs a `jthread` object that does not represent a thread of
+> execution.
+>
+> *Ensures:*
+>
+> `get_id() == id()` is `true` and `ssource.stop_possible()` is `false`.
 
 ``` cpp
 template<class F, class... Args> explicit jthread(F&& f, Args&&... args);
 ```
 
-`remove_cvref_t<F>` is not the same type as `jthread`.
-
-***Mandates:***
-
-The following are all `true`:
-
-- `is_constructible_v<decay_t<F>, F>`,
-
-- `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
-
-- `is_invocable_v<decay_t<F>, decay_t<Args>...> ||`  
-  `is_invocable_v<decay_t<F>, stop_token, decay_t<Args>...>`.
-
-***Effects:***
-
-Initializes `ssource`. The new thread of execution executes
-
-``` cpp
-invoke(auto(std::forward<F>(f)), get_stop_token(),  // for \texttt{invoke}, see [func.invoke]
-       auto(std::forward<Args>(args))...)
-```
-
-if that expression is well-formed, otherwise
-
-``` cpp
-invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)
-```
-
-with the values produced by `auto` being materialized\[conv.rval\] in
-the constructing thread. Any return value from this invocation is
-ignored.
-
-\[*Note 9*: This implies that any exceptions not thrown from the
-invocation of the copy of `f` will be thrown in the constructing thread,
-not the new thread. — *end note*\]
-
-If the `invoke` expression exits via an exception, `terminate` is
-called.
-
-The completion of the invocation of the constructor synchronizes with
-the beginning of the invocation of the copy of `f`.
-
-***Ensures:***
-
-`get_id() != id()` is `true` and `ssource.stop_possible()` is `true` and
-`*this` represents the newly started thread.
-
-\[*Note 10*: The calling thread can make a stop request only once,
-because it cannot replace this stop token. — *end note*\]
-
-***Throws:***
-
-`system_error` if unable to start the new thread.
-
-***Error conditions:***
-
-- `resource_unavailable_try_again` — the system lacked the necessary
-  resources to create another thread, or the system-imposed limit on the
-  number of threads in a process would be exceeded.
+> `remove_cvref_t<F>` is not the same type as `jthread`.
+>
+> *Mandates:*
+>
+> The following are all `true`:
+>
+> - `is_constructible_v<decay_t<F>, F>`,
+>
+> - `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
+>
+> - `is_invocable_v<decay_t<F>, decay_t<Args>...> ||`  
+>   `is_invocable_v<decay_t<F>, stop_token, decay_t<Args>...>`.
+>
+> *Effects:*
+>
+> Initializes `ssource`. The new thread of execution executes
+>
+> ``` cpp
+> invoke(auto(std::forward<F>(f)), get_stop_token(),  // for \texttt{invoke}, see [func.invoke]
+>        auto(std::forward<Args>(args))...)
+> ```
+>
+> if that expression is well-formed, otherwise
+>
+> ``` cpp
+> invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)
+> ```
+>
+> with the values produced by `auto` being materialized\[conv.rval\] in
+> the constructing thread. Any return value from this invocation is
+> ignored.
+>
+> \[*Note 12*: This implies that any exceptions not thrown from the
+> invocation of the copy of `f` will be thrown in the constructing
+> thread, not the new thread. — *end note*\]
+>
+> If the `invoke` expression exits via an exception, `terminate` is
+> called.
+>
+> The completion of the invocation of the constructor synchronizes with
+> the beginning of the invocation of the copy of `f`.
+>
+> *Ensures:*
+>
+> `get_id() != id()` is `true` and `ssource.stop_possible()` is `true`
+> and `*this` represents the newly started thread.
+>
+> \[*Note 13*: The calling thread can make a stop request only once,
+> because it cannot replace this stop token. — *end note*\]
+>
+> *Throws:*
+>
+> `system_error` if unable to start the new thread.
+>
+> *Error conditions:*
+>
+> - `resource_unavailable_try_again` — the system lacked the necessary
+>   resources to create another thread, or the system-imposed limit on
+>   the number of threads in a process would be exceeded.
 
 ``` cpp
 jthread(jthread&& x) noexcept;
 ```
 
-***Ensures:***
-
-`x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
-prior to the start of construction. `ssource` has the value of
-`x.ssource` prior to the start of construction and
-`x.ssource.stop_possible()` is `false`.
+> *Ensures:*
+>
+> `x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
+> prior to the start of construction. `ssource` has the value of
+> `x.ssource` prior to the start of construction and
+> `x.ssource.stop_possible()` is `false`.
 
 ``` cpp
 ~jthread();
 ```
 
-***Effects:***
-
-If `joinable()` is `true`, calls `request_stop()` and then `join()`.
-
-\[*Note 11*: Operations on `*this` are not synchronized. — *end note*\]
+> *Effects:*
+>
+> If `joinable()` is `true`, calls `request_stop()` and then `join()`.
+>
+> \[*Note 14*: Operations on `*this` are not
+> synchronized. — *end note*\]
 
 ``` cpp
 jthread& operator=(jthread&& x) noexcept;
 ```
 
-***Effects:***
-
-If `&x == this` is `true`, there are no effects. Otherwise, if
-`joinable()` is `true`, calls `request_stop()` and then `join()`, then
-assigns the state of `x` to `*this` and sets `x` to a default
-constructed state.
-
-***Ensures:***
-
-`get_id()` returns the value of `x.get_id()` prior to the assignment.
-`ssource` has the value of `x.ssource` prior to the assignment.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> If `&x == this` is `true`, there are no effects. Otherwise, if
+> `joinable()` is `true`, calls `request_stop()` and then `join()`, then
+> assigns the state of `x` to `*this` and sets `x` to a default
+> constructed state.
+>
+> *Ensures:*
+>
+> `get_id()` returns the value of `x.get_id()` prior to the assignment.
+> `ssource` has the value of `x.ssource` prior to the assignment.
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Members <a id="thread.jthread.mem">[thread.jthread.mem]</a>
 
@@ -1508,83 +1511,85 @@ constructed state.
 void swap(jthread& x) noexcept;
 ```
 
-***Effects:***
-
-Exchanges the values of `*this` and `x`.
+> *Effects:*
+>
+> Exchanges the values of `*this` and `x`.
 
 ``` cpp
 [[nodiscard]] bool joinable() const noexcept;
 ```
 
-***Returns:***
-
-`get_id() != id()`.
+> *Returns:*
+>
+> `get_id() != id()`.
 
 ``` cpp
 void join();
 ```
 
-***Effects:***
-
-Blocks until the thread represented by `*this` has completed.
-
-The completion of the thread represented by `*this` synchronizes
-with\[intro.multithread\] the corresponding successful `join()` return.
-
-\[*Note 12*: Operations on `*this` are not synchronized. — *end note*\]
-
-***Ensures:***
-
-The thread represented by `*this` has completed. `get_id() == id()`.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `resource_deadlock_would_occur` — if deadlock is detected or
-  `get_id() == this_thread::get_id()`.
-
-- `no_such_process` — if the thread is not valid.
-
-- `invalid_argument` — if the thread is not joinable.
+> *Effects:*
+>
+> Blocks until the thread represented by `*this` has completed.
+>
+> The completion of the thread represented by `*this` synchronizes
+> with\[intro.multithread\] the corresponding successful `join()`
+> return.
+>
+> \[*Note 15*: Operations on `*this` are not
+> synchronized. — *end note*\]
+>
+> *Ensures:*
+>
+> The thread represented by `*this` has completed. `get_id() == id()`.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `resource_deadlock_would_occur` — if deadlock is detected or
+>   `get_id() == this_thread::get_id()`.
+>
+> - `no_such_process` — if the thread is not valid.
+>
+> - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
 void detach();
 ```
 
-***Effects:***
-
-The thread represented by `*this` continues execution without the
-calling thread blocking. When `detach()` returns, `*this` no longer
-represents the possibly continuing thread of execution. When the thread
-previously represented by `*this` ends execution, the implementation
-releases any owned resources.
-
-***Ensures:***
-
-`get_id() == id()`.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `no_such_process` — if the thread is not valid.
-
-- `invalid_argument` — if the thread is not joinable.
+> *Effects:*
+>
+> The thread represented by `*this` continues execution without the
+> calling thread blocking. When `detach()` returns, `*this` no longer
+> represents the possibly continuing thread of execution. When the
+> thread previously represented by `*this` ends execution, the
+> implementation releases any owned resources.
+>
+> *Ensures:*
+>
+> `get_id() == id()`.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `no_such_process` — if the thread is not valid.
+>
+> - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
 id get_id() const noexcept;
 ```
 
-***Returns:***
-
-A default constructed `id` object if `*this` does not represent a
-thread, otherwise `this_thread::get_id()` for the thread of execution
-represented by `*this`.
+> *Returns:*
+>
+> A default constructed `id` object if `*this` does not represent a
+> thread, otherwise `this_thread::get_id()` for the thread of execution
+> represented by `*this`.
 
 #### Stop token handling <a id="thread.jthread.stop">[thread.jthread.stop]</a>
 
@@ -1592,25 +1597,25 @@ represented by `*this`.
 [[nodiscard]] stop_source get_stop_source() noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return ssource;`
+> *Effects:*
+>
+> Equivalent to: `return ssource;`
 
 ``` cpp
 [[nodiscard]] stop_token get_stop_token() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return ssource.get_token();`
+> *Effects:*
+>
+> Equivalent to: `return ssource.get_token();`
 
 ``` cpp
 bool request_stop() noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return ssource.request_stop();`
+> *Effects:*
+>
+> Equivalent to: `return ssource.request_stop();`
 
 #### Specialized algorithms <a id="thread.jthread.special">[thread.jthread.special]</a>
 
@@ -1618,9 +1623,9 @@ Equivalent to: `return ssource.request_stop();`
 friend void swap(jthread& x, jthread& y) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `x.swap(y)`.
+> *Effects:*
+>
+> Equivalent to: `x.swap(y)`.
 
 #### Static members <a id="thread.jthread.static">[thread.jthread.static]</a>
 
@@ -1628,9 +1633,9 @@ Equivalent to: `x.swap(y)`.
 [[nodiscard]] static unsigned int hardware_concurrency() noexcept;
 ```
 
-***Returns:***
-
-`thread::hardware_concurrency()`.
+> *Returns:*
+>
+> `thread::hardware_concurrency()`.
 
 ### Namespace `this_thread` <a id="thread.thread.this">[thread.thread.this]</a>
 
@@ -1650,54 +1655,54 @@ namespace std::this_thread {
 thread::id this_thread::get_id() noexcept;
 ```
 
-***Returns:***
-
-An object of type `thread::id` that uniquely identifies the current
-thread of execution. Every invocation from this thread of execution
-returns the same value. The object returned does not compare equal to a
-default-constructed `thread::id`.
+> *Returns:*
+>
+> An object of type `thread::id` that uniquely identifies the current
+> thread of execution. Every invocation from this thread of execution
+> returns the same value. The object returned does not compare equal to
+> a default-constructed `thread::id`.
 
 ``` cpp
 void this_thread::yield() noexcept;
 ```
 
-***Effects:***
-
-Offers the implementation the opportunity to reschedule.
-
-None.
+> *Effects:*
+>
+> Offers the implementation the opportunity to reschedule.
+>
+> None.
 
 ``` cpp
 template<class Clock, class Duration>
   void sleep_until(const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Effects:***
-
-Blocks the calling thread for the absolute timeout\[thread.req.timing\]
-specified by `abs_time`.
-
-None.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
+> *Effects:*
+>
+> Blocks the calling thread for the absolute
+> timeout\[thread.req.timing\] specified by `abs_time`.
+>
+> None.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
 
 ``` cpp
 template<class Rep, class Period>
   void sleep_for(const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Effects:***
-
-Blocks the calling thread for the relative timeout\[thread.req.timing\]
-specified by `rel_time`.
-
-None.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
+> *Effects:*
+>
+> Blocks the calling thread for the relative
+> timeout\[thread.req.timing\] specified by `rel_time`.
+>
+> None.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
 
 ## Atomic operations <a id="atomics">[atomics]</a>
 
@@ -2032,7 +2037,7 @@ enumerated values and their meanings are as follows:
 - `memory_order::consume`: a load operation performs a consume operation
   on the affected memory location.
 
-  \[*Note 2*: Prefer `memory_order::acquire`, which provides stronger
+  \[*Note 16*: Prefer `memory_order::acquire`, which provides stronger
   guarantees than `memory_order::consume`. Implementations have found it
   infeasible to provide performance better than that of
   `memory_order::acquire`. Specification revisions are under
@@ -2165,14 +2170,14 @@ template<class T>
   T kill_dependency(T y) noexcept;
 ```
 
-***Effects:***
-
-The argument does not carry a dependency to the return
-value\[intro.multithread\].
-
-***Returns:***
-
-`y`.
+> *Effects:*
+>
+> The argument does not carry a dependency to the return
+> value\[intro.multithread\].
+>
+> *Returns:*
+>
+> `y`.
 
 ### Lock-free property <a id="atomics.lockfree">[atomics.lockfree]</a>
 
@@ -2354,15 +2359,15 @@ object. — *end note*\]
 static constexpr size_t required_alignment;
 ```
 
-The alignment required for an object to be referenced by an atomic
-reference, which is at least `alignof(T)`.
-
-\[*Note 13*: Hardware could require an object referenced by an
-`atomic_ref` to have stricter alignment\[basic.align\] than other
-objects of type `T`. Further, whether operations on an `atomic_ref` are
-lock-free could depend on the alignment of the referenced object. For
-example, lock-free operations on `std::complex<double>` could be
-supported only if aligned to `2*alignof(double)`. — *end note*\]
+> The alignment required for an object to be referenced by an atomic
+> reference, which is at least `alignof(T)`.
+>
+> \[*Note 17*: Hardware could require an object referenced by an
+> `atomic_ref` to have stricter alignment\[basic.align\] than other
+> objects of type `T`. Further, whether operations on an `atomic_ref`
+> are lock-free could depend on the alignment of the referenced object.
+> For example, lock-free operations on `std::complex<double>` could be
+> supported only if aligned to `2*alignof(double)`. — *end note*\]
 
 *integral-type* *floating-point-type*
 
@@ -2370,9 +2375,9 @@ supported only if aligned to `2*alignof(double)`. — *end note*\]
 static constexpr bool is_always_lock_free;
 ```
 
-The static data member `is_always_lock_free` is `true` if the
-`atomic_ref` type’s operations are always lock-free, and `false`
-otherwise.
+> The static data member `is_always_lock_free` is `true` if the
+> `atomic_ref` type’s operations are always lock-free, and `false`
+> otherwise.
 
 *integral-type* *floating-point-type*
 
@@ -2380,10 +2385,10 @@ otherwise.
 bool is_lock_free() const noexcept;
 ```
 
-***Returns:***
-
-`true` if operations on all objects of the type `atomic_ref<T>` are
-lock-free, `false` otherwise.
+> *Returns:*
+>
+> `true` if operations on all objects of the type `atomic_ref<T>` are
+> lock-free, `false` otherwise.
 
 *integral-type* *floating-point-type*
 
@@ -2391,17 +2396,17 @@ lock-free, `false` otherwise.
 atomic_ref(T& obj);
 ```
 
-***Preconditions:***
-
-The referenced object is aligned to `required_alignment`.
-
-***Ensures:***
-
-`*this` references `obj`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The referenced object is aligned to `required_alignment`.
+>
+> *Ensures:*
+>
+> `*this` references `obj`.
+>
+> *Throws:*
+>
+> Nothing.
 
 *integral-type* *floating-point-type*
 
@@ -2409,9 +2414,9 @@ Nothing.
 atomic_ref(const atomic_ref& ref) noexcept;
 ```
 
-***Ensures:***
-
-`*this` references the object referenced by `ref`.
+> *Ensures:*
+>
+> `*this` references the object referenced by `ref`.
 
 *integral-type* *floating-point-type*
 
@@ -2419,15 +2424,15 @@ atomic_ref(const atomic_ref& ref) noexcept;
 void store(T desired, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-The `order` argument is neither `memory_order::consume`,
-`memory_order::acquire`, nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Atomically replaces the value referenced by `*ptr` with the value of
-`desired`. Memory is affected according to the value of `order`.
+> *Preconditions:*
+>
+> The `order` argument is neither `memory_order::consume`,
+> `memory_order::acquire`, nor `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Atomically replaces the value referenced by `*ptr` with the value of
+> `desired`. Memory is affected according to the value of `order`.
 
 *integral-type* *floating-point-type*
 
@@ -2435,14 +2440,14 @@ Atomically replaces the value referenced by `*ptr` with the value of
 T operator=(T desired) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-store(desired);
-return desired;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> store(desired);
+> return desired;
+> ```
 
 *integral-type* *floating-point-type*
 
@@ -2450,18 +2455,18 @@ return desired;
 T load(memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-The `order` argument is neither `memory_order::release` nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-Memory is affected according to the value of `order`.
-
-***Returns:***
-
-Atomically returns the value referenced by `*ptr`.
+> *Preconditions:*
+>
+> The `order` argument is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Memory is affected according to the value of `order`.
+>
+> *Returns:*
+>
+> Atomically returns the value referenced by `*ptr`.
 
 *type* *integral-type* *floating-point-type*
 
@@ -2469,9 +2474,9 @@ Atomically returns the value referenced by `*ptr`.
 operator T() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return load();`
+> *Effects:*
+>
+> Equivalent to: `return load();`
 
 *integral-type* *floating-point-type*
 
@@ -2479,16 +2484,16 @@ Equivalent to: `return load();`
 T exchange(T desired, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Effects:***
-
-Atomically replaces the value referenced by `*ptr` with `desired`.
-Memory is affected according to the value of `order`. This operation is
-an atomic read-modify-write operation\[intro.multithread\].
-
-***Returns:***
-
-Atomically returns the value referenced by `*ptr` immediately before the
-effects.
+> *Effects:*
+>
+> Atomically replaces the value referenced by `*ptr` with `desired`.
+> Memory is affected according to the value of `order`. This operation
+> is an atomic read-modify-write operation\[intro.multithread\].
+>
+> *Returns:*
+>
+> Atomically returns the value referenced by `*ptr` immediately before
+> the effects.
 
 *integral-type* *floating-point-type* *integral-type*
 *floating-point-type*
@@ -2507,105 +2512,106 @@ bool compare_exchange_strong(T& expected, T desired,
                              memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-The `failure` argument is neither `memory_order::release` nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-Retrieves the value in `expected`. It then atomically compares the value
-representation of the value referenced by `*ptr` for equality with that
-previously retrieved from `expected`, and if `true`, replaces the value
-referenced by `*ptr` with that in `desired`. If and only if the
-comparison is `true`, memory is affected according to the value of
-`success`, and if the comparison is `false`, memory is affected
-according to the value of `failure`. When only one `memory_order`
-argument is supplied, the value of `success` is `order`, and the value
-of `failure` is `order` except that a value of `memory_order::acq_rel`
-shall be replaced by the value `memory_order::acquire` and a value of
-`memory_order::release` shall be replaced by the value
-`memory_order::relaxed`. If and only if the comparison is `false` then,
-after the atomic operation, the value in `expected` is replaced by the
-value read from the value referenced by `*ptr` during the atomic
-comparison. If the operation returns `true`, these operations are atomic
-read-modify-write operations\[intro.races\] on the value referenced by
-`*ptr`. Otherwise, these operations are atomic load operations on that
-memory.
-
-***Returns:***
-
-The result of the comparison.
-
-***Remarks:***
-
-A weak compare-and-exchange operation may fail spuriously. That is, even
-when the contents of memory referred to by `expected` and `ptr` are
-equal, it may return `false` and store back to `expected` the same
-memory contents that were originally there.
-
-\[*Note 14*: This spurious failure enables implementation of
-compare-and-exchange on a broader class of machines, e.g., load-locked
-store-conditional machines. A consequence of spurious failure is that
-nearly all uses of weak compare-and-exchange will be in a loop. When a
-compare-and-exchange is in a loop, the weak version will yield better
-performance on some platforms. When a weak compare-and-exchange would
-require a loop and a strong one would not, the strong one is
-preferable. — *end note*\]
+> *Preconditions:*
+>
+> The `failure` argument is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Retrieves the value in `expected`. It then atomically compares the
+> value representation of the value referenced by `*ptr` for equality
+> with that previously retrieved from `expected`, and if `true`,
+> replaces the value referenced by `*ptr` with that in `desired`. If and
+> only if the comparison is `true`, memory is affected according to the
+> value of `success`, and if the comparison is `false`, memory is
+> affected according to the value of `failure`. When only one
+> `memory_order` argument is supplied, the value of `success` is
+> `order`, and the value of `failure` is `order` except that a value of
+> `memory_order::acq_rel` shall be replaced by the value
+> `memory_order::acquire` and a value of `memory_order::release` shall
+> be replaced by the value `memory_order::relaxed`. If and only if the
+> comparison is `false` then, after the atomic operation, the value in
+> `expected` is replaced by the value read from the value referenced by
+> `*ptr` during the atomic comparison. If the operation returns `true`,
+> these operations are atomic read-modify-write
+> operations\[intro.races\] on the value referenced by `*ptr`.
+> Otherwise, these operations are atomic load operations on that memory.
+>
+> *Returns:*
+>
+> The result of the comparison.
+>
+> *Remarks:*
+>
+> A weak compare-and-exchange operation may fail spuriously. That is,
+> even when the contents of memory referred to by `expected` and `ptr`
+> are equal, it may return `false` and store back to `expected` the same
+> memory contents that were originally there.
+>
+> \[*Note 18*: This spurious failure enables implementation of
+> compare-and-exchange on a broader class of machines, e.g., load-locked
+> store-conditional machines. A consequence of spurious failure is that
+> nearly all uses of weak compare-and-exchange will be in a loop. When a
+> compare-and-exchange is in a loop, the weak version will yield better
+> performance on some platforms. When a weak compare-and-exchange would
+> require a loop and a strong one would not, the strong one is
+> preferable. — *end note*\]
 
 ``` cpp
 void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `load(order)` and compares its value representation for
-  equality against that of `old`.
-
-- If they compare unequal, returns.
-
-- Blocks until it is unblocked by an atomic notifying operation or is
-  unblocked spuriously.
-
-***Remarks:***
-
-This function is an atomic waiting operation\[atomics.wait\] on atomic
-object `*ptr`.
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `load(order)` and compares its value representation for
+>   equality against that of `old`.
+>
+> - If they compare unequal, returns.
+>
+> - Blocks until it is unblocked by an atomic notifying operation or is
+>   unblocked spuriously.
+>
+> *Remarks:*
+>
+> This function is an atomic waiting operation\[atomics.wait\] on atomic
+> object `*ptr`.
 
 ``` cpp
 void notify_one() const noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of at least one atomic waiting operation on
-`*ptr` that is eligible to be unblocked\[atomics.wait\] by this call, if
-any such atomic waiting operations exist.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\] on atomic
-object `*ptr`.
+> *Effects:*
+>
+> Unblocks the execution of at least one atomic waiting operation on
+> `*ptr` that is eligible to be unblocked\[atomics.wait\] by this call,
+> if any such atomic waiting operations exist.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\] on
+> atomic object `*ptr`.
 
 ``` cpp
 void notify_all() const noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of all atomic waiting operations on `*ptr` that
-are eligible to be unblocked\[atomics.wait\] by this call.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\] on atomic
-object `*ptr`.
+> *Effects:*
+>
+> Unblocks the execution of all atomic waiting operations on `*ptr` that
+> are eligible to be unblocked\[atomics.wait\] by this call.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\] on
+> atomic object `*ptr`.
 
 #### Specializations for integral types <a id="atomics.ref.int">[atomics.ref.int]</a>
 
@@ -2618,7 +2624,7 @@ typedefs in the header `<cstdint>`. For each such type `integral-type`,
 the specialization `atomic_ref<integral-type>` provides additional
 atomic operations appropriate to integral types.
 
-\[*Note 15*: The specialization `atomic_ref<bool>` uses the primary
+\[*Note 13*: The specialization `atomic_ref<bool>` uses the primary
 template [atomics.ref.generic]. — *end note*\]
 
 ``` cpp
@@ -2698,27 +2704,28 @@ integral-type fetch_key(integral-type operand,
   memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Effects:***
-
-Atomically replaces the value referenced by `*ptr` with the result of
-the computation applied to the value referenced by `*ptr` and the given
-operand. Memory is affected according to the value of `order`. These
-operations are atomic read-modify-write operations\[intro.races\].
-
-***Returns:***
-
-Atomically, the value referenced by `*ptr` immediately before the
-effects.
-
-***Remarks:***
-
-For signed integer types, the result is as if the object value and
-parameters were converted to their corresponding unsigned types, the
-computation performed on those types, and the result converted back to
-the signed type.
-
-\[*Note 16*: There are no undefined results arising from the
-computation. — *end note*\]
+> *Effects:*
+>
+> Atomically replaces the value referenced by `*ptr` with the result of
+> the computation applied to the value referenced by `*ptr` and the
+> given operand. Memory is affected according to the value of `order`.
+> These operations are atomic read-modify-write
+> operations\[intro.races\].
+>
+> *Returns:*
+>
+> Atomically, the value referenced by `*ptr` immediately before the
+> effects.
+>
+> *Remarks:*
+>
+> For signed integer types, the result is as if the object value and
+> parameters were converted to their corresponding unsigned types, the
+> computation performed on those types, and the result converted back to
+> the signed type.
+>
+> \[*Note 19*: There are no undefined results arising from the
+> computation. — *end note*\]
 
 *integral-type* *integral-type* *integral-type* *integral-type*
 *integral-type*
@@ -2727,9 +2734,9 @@ computation. — *end note*\]
 integral-type operator op=(integral-type operand) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
+> *Effects:*
+>
+> Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
 #### Specializations for floating-point types <a id="atomics.ref.float">[atomics.ref.float]</a>
 
@@ -2802,28 +2809,30 @@ floating-point-type fetch_key(floating-point-type operand,
                           memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Effects:***
-
-Atomically replaces the value referenced by `*ptr` with the result of
-the computation applied to the value referenced by `*ptr` and the given
-operand. Memory is affected according to the value of `order`. These
-operations are atomic read-modify-write operations\[intro.races\].
-
-***Returns:***
-
-Atomically, the value referenced by `*ptr` immediately before the
-effects.
-
-***Remarks:***
-
-If the result is not a representable value for its type\[expr.pre\], the
-result is unspecified, but the operations otherwise have no undefined
-behavior. Atomic arithmetic operations on *`floating-point-type`* should
-conform to the `std::numeric_limits<`*`floating-point-type`*`>` traits
-associated with the floating-point type\[limits.syn\]. The
-floating-point environment\[cfenv\] for atomic arithmetic operations on
-*`floating-point-type`* may be different than the calling thread’s
-floating-point environment.
+> *Effects:*
+>
+> Atomically replaces the value referenced by `*ptr` with the result of
+> the computation applied to the value referenced by `*ptr` and the
+> given operand. Memory is affected according to the value of `order`.
+> These operations are atomic read-modify-write
+> operations\[intro.races\].
+>
+> *Returns:*
+>
+> Atomically, the value referenced by `*ptr` immediately before the
+> effects.
+>
+> *Remarks:*
+>
+> If the result is not a representable value for its type\[expr.pre\],
+> the result is unspecified, but the operations otherwise have no
+> undefined behavior. Atomic arithmetic operations on
+> *`floating-point-type`* should conform to the
+> `std::numeric_limits<`*`floating-point-type`*`>` traits associated
+> with the floating-point type\[limits.syn\]. The floating-point
+> environment\[cfenv\] for atomic arithmetic operations on
+> *`floating-point-type`* may be different than the calling thread’s
+> floating-point environment.
 
 *floating-point-type* *floating-point-type*
 
@@ -2831,9 +2840,9 @@ floating-point environment.
 floating-point-type operator op=(floating-point-type operand) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
+> *Effects:*
+>
+> Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
 #### Partial specialization for pointers <a id="atomics.ref.pointer">[atomics.ref.pointer]</a>
 
@@ -2898,34 +2907,35 @@ correspondence among key, operator, and computation is specified in
 T* fetch_key(difference_type operand, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Mandates:***
-
-`T` is a complete object type.
-
-***Effects:***
-
-Atomically replaces the value referenced by `*ptr` with the result of
-the computation applied to the value referenced by `*ptr` and the given
-operand. Memory is affected according to the value of `order`. These
-operations are atomic read-modify-write operations\[intro.races\].
-
-***Returns:***
-
-Atomically, the value referenced by `*ptr` immediately before the
-effects.
-
-***Remarks:***
-
-The result may be an undefined address, but the operations otherwise
-have no undefined behavior.
+> *Mandates:*
+>
+> `T` is a complete object type.
+>
+> *Effects:*
+>
+> Atomically replaces the value referenced by `*ptr` with the result of
+> the computation applied to the value referenced by `*ptr` and the
+> given operand. Memory is affected according to the value of `order`.
+> These operations are atomic read-modify-write
+> operations\[intro.races\].
+>
+> *Returns:*
+>
+> Atomically, the value referenced by `*ptr` immediately before the
+> effects.
+>
+> *Remarks:*
+>
+> The result may be an undefined address, but the operations otherwise
+> have no undefined behavior.
 
 ``` cpp
 T* operator op=(difference_type operand) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
+> *Effects:*
+>
+> Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
 #### Member operators common to integers and pointers to objects <a id="atomics.ref.memop">[atomics.ref.memop]</a>
 
@@ -2935,9 +2945,9 @@ Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 value_type operator++(int) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_add(1);`
+> *Effects:*
+>
+> Equivalent to: `return fetch_add(1);`
 
 *integral-type*
 
@@ -2945,9 +2955,9 @@ Equivalent to: `return fetch_add(1);`
 value_type operator--(int) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_sub(1);`
+> *Effects:*
+>
+> Equivalent to: `return fetch_sub(1);`
 
 *integral-type*
 
@@ -2955,9 +2965,9 @@ Equivalent to: `return fetch_sub(1);`
 value_type operator++() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_add(1) + 1;`
+> *Effects:*
+>
+> Equivalent to: `return fetch_add(1) + 1;`
 
 *integral-type*
 
@@ -2965,9 +2975,9 @@ Equivalent to: `return fetch_add(1) + 1;`
 value_type operator--() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return fetch_sub(1) - 1;`
+> *Effects:*
+>
+> Equivalent to: `return fetch_sub(1) - 1;`
 
 ### Class template `atomic` <a id="atomics.types.generic">[atomics.types.generic]</a>
 
@@ -3035,12 +3045,12 @@ of
 
 is `false`.
 
-\[*Note 17*: Type arguments that are not also statically initializable
+\[*Note 14*: Type arguments that are not also statically initializable
 can be difficult to use. — *end note*\]
 
 The specialization `atomic<bool>` is a standard-layout struct.
 
-\[*Note 18*: The representation of an atomic specialization need not
+\[*Note 15*: The representation of an atomic specialization need not
 have the same size and alignment requirement as its corresponding
 argument type. — *end note*\]
 
@@ -3052,14 +3062,14 @@ argument type. — *end note*\]
 constexpr atomic() noexcept(is_nothrow_default_constructible_v<T>);
 ```
 
-***Mandates:***
-
-`is_default_constructible_v<T>` is `true`.
-
-***Effects:***
-
-Initializes the atomic object with the value of `T()`. Initialization is
-not an atomic operation\[intro.multithread\].
+> *Mandates:*
+>
+> `is_default_constructible_v<T>` is `true`.
+>
+> *Effects:*
+>
+> Initializes the atomic object with the value of `T()`. Initialization
+> is not an atomic operation\[intro.multithread\].
 
 *integral-type* *floating-point-type*
 
@@ -3067,17 +3077,17 @@ not an atomic operation\[intro.multithread\].
 constexpr atomic(T desired) noexcept;
 ```
 
-***Effects:***
-
-Initializes the object with the value `desired`. Initialization is not
-an atomic operation\[intro.multithread\].
-
-\[*Note 19*: It is possible to have an access to an atomic object `A`
-race with its construction, for example by communicating the address of
-the just-constructed object `A` to another thread via
-`memory_order::relaxed` operations on a suitable atomic pointer
-variable, and then immediately accessing `A` in the receiving thread.
-This results in undefined behavior. — *end note*\]
+> *Effects:*
+>
+> Initializes the object with the value `desired`. Initialization is not
+> an atomic operation\[intro.multithread\].
+>
+> \[*Note 20*: It is possible to have an access to an atomic object `A`
+> race with its construction, for example by communicating the address
+> of the just-constructed object `A` to another thread via
+> `memory_order::relaxed` operations on a suitable atomic pointer
+> variable, and then immediately accessing `A` in the receiving thread.
+> This results in undefined behavior. — *end note*\]
 
 *integral-type* *floating-point-type*
 
@@ -3085,12 +3095,12 @@ This results in undefined behavior. — *end note*\]
 static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
 ```
 
-The data member `is_always_lock_free` is `true` if the atomic type’s
-operations are always lock-free, and `false` otherwise.
-
-\[*Note 20*: The value of `is_always_lock_free` is consistent with the
-value of the corresponding `ATOMIC_..._LOCK_FREE` macro, if
-defined. — *end note*\]
+> The data member `is_always_lock_free` is `true` if the atomic type’s
+> operations are always lock-free, and `false` otherwise.
+>
+> \[*Note 21*: The value of `is_always_lock_free` is consistent with the
+> value of the corresponding `ATOMIC_..._LOCK_FREE` macro, if
+> defined. — *end note*\]
 
 *integral-type* *floating-point-type*
 
@@ -3099,13 +3109,13 @@ bool is_lock_free() const volatile noexcept;
 bool is_lock_free() const noexcept;
 ```
 
-***Returns:***
-
-`true` if the object’s operations are lock-free, `false` otherwise.
-
-\[*Note 21*: The return value of the `is_lock_free` member function is
-consistent with the value of `is_always_lock_free` for the same
-type. — *end note*\]
+> *Returns:*
+>
+> `true` if the object’s operations are lock-free, `false` otherwise.
+>
+> \[*Note 22*: The return value of the `is_lock_free` member function is
+> consistent with the value of `is_always_lock_free` for the same
+> type. — *end note*\]
 
 *integral-type* *floating-point-type*
 
@@ -3114,18 +3124,18 @@ void store(T desired, memory_order order = memory_order::seq_cst) volatile noexc
 void store(T desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Preconditions:***
-
-The `order` argument is neither `memory_order::consume`,
-`memory_order::acquire`, nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Atomically replaces the value pointed to by with the value of `desired`.
-Memory is affected according to the value of `order`.
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Preconditions:*
+>
+> The `order` argument is neither `memory_order::consume`,
+> `memory_order::acquire`, nor `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with the value of
+> `desired`. Memory is affected according to the value of `order`.
 
 *integral-type* *floating-point-type*
 
@@ -3134,16 +3144,16 @@ T operator=(T desired) volatile noexcept;
 T operator=(T desired) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to `store(desired)`.
-
-***Returns:***
-
-`desired`.
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to `store(desired)`.
+>
+> *Returns:*
+>
+> `desired`.
 
 *integral-type* *floating-point-type*
 
@@ -3152,21 +3162,21 @@ T load(memory_order order = memory_order::seq_cst) const volatile noexcept;
 T load(memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Preconditions:***
-
-The `order` argument is neither `memory_order::release` nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-Memory is affected according to the value of `order`.
-
-***Returns:***
-
-Atomically returns the value pointed to by .
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Preconditions:*
+>
+> The `order` argument is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Memory is affected according to the value of `order`.
+>
+> *Returns:*
+>
+> Atomically returns the value pointed to by .
 
 *type* *integral-type* *floating-point-type*
 
@@ -3175,12 +3185,12 @@ operator T() const volatile noexcept;
 operator T() const noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return load();`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return load();`
 
 *integral-type* *floating-point-type*
 
@@ -3189,19 +3199,19 @@ T exchange(T desired, memory_order order = memory_order::seq_cst) volatile noexc
 T exchange(T desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Atomically replaces the value pointed to by with `desired`. Memory is
-affected according to the value of `order`. These operations are atomic
-read-modify-write operations\[intro.multithread\].
-
-***Returns:***
-
-Atomically returns the value pointed to by immediately before the
-effects.
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with `desired`. Memory is
+> affected according to the value of `order`. These operations are
+> atomic read-modify-write operations\[intro.multithread\].
+>
+> *Returns:*
+>
+> Atomically returns the value pointed to by immediately before the
+> effects.
 
 *integral-type* *floating-point-type* *integral-type*
 *floating-point-type*
@@ -3225,148 +3235,149 @@ bool compare_exchange_strong(T& expected, T desired,
                              memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Preconditions:***
-
-The `failure` argument is neither `memory_order::release` nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-Retrieves the value in `expected`. It then atomically compares the value
-representation of the value pointed to by for equality with that
-previously retrieved from `expected`, and if true, replaces the value
-pointed to by with that in `desired`. If and only if the comparison is
-`true`, memory is affected according to the value of `success`, and if
-the comparison is false, memory is affected according to the value of
-`failure`. When only one `memory_order` argument is supplied, the value
-of `success` is `order`, and the value of `failure` is `order` except
-that a value of `memory_order::acq_rel` shall be replaced by the value
-`memory_order::acquire` and a value of `memory_order::release` shall be
-replaced by the value `memory_order::relaxed`. If and only if the
-comparison is false then, after the atomic operation, the value in
-`expected` is replaced by the value pointed to by during the atomic
-comparison. If the operation returns `true`, these operations are atomic
-read-modify-write operations\[intro.multithread\] on the memory pointed
-to by . Otherwise, these operations are atomic load operations on that
-memory.
-
-***Returns:***
-
-The result of the comparison.
-
-\[*Note 22*:
-
-For example, the effect of `compare_exchange_strong` on objects without
-padding bits\[term.padding.bits\] is
-
-    if (memcmp(this, &expected, sizeof(*this)) == 0)
-      memcpy(this, &desired, sizeof(*this));
-    else
-      memcpy(&expected, this, sizeof(*this));
-
-— *end note*\]
-
-\[*Example 1*:
-
-The expected use of the compare-and-exchange operations is as follows.
-The compare-and-exchange operations will update `expected` when another
-iteration of the loop is needed.
-
-    expected = current.load();
-    do {
-      desired = function(expected);
-    } while (!current.compare_exchange_weak(expected, desired));
-
-— *end example*\]
-
-\[*Example 2*:
-
-Because the expected value is updated only on failure, code releasing
-the memory containing the `expected` value on success will work. For
-example, list head insertion will act atomically and would not introduce
-a data race in the following code:
-
-    do {
-      p->next = head;                                   // make new list node point to the current head
-    } while (!head.compare_exchange_weak(p->next, p));  // try to insert
-
-— *end example*\]
-
-Implementations should ensure that weak compare-and-exchange operations
-do not consistently return `false` unless either the atomic object has
-value different from `expected` or there are concurrent modifications to
-the atomic object.
-
-***Remarks:***
-
-A weak compare-and-exchange operation may fail spuriously. That is, even
-when the contents of memory referred to by `expected` and are equal, it
-may return `false` and store back to `expected` the same memory contents
-that were originally there.
-
-\[*Note 23*: This spurious failure enables implementation of
-compare-and-exchange on a broader class of machines, e.g., load-locked
-store-conditional machines. A consequence of spurious failure is that
-nearly all uses of weak compare-and-exchange will be in a loop. When a
-compare-and-exchange is in a loop, the weak version will yield better
-performance on some platforms. When a weak compare-and-exchange would
-require a loop and a strong one would not, the strong one is
-preferable. — *end note*\]
-
-\[*Note 24*: Under cases where the `memcpy` and `memcmp` semantics of
-the compare-and-exchange operations apply, the comparisons can fail for
-values that compare equal with `operator==` if the value representation
-has trap bits or alternate representations of the same value. Notably,
-on implementations conforming to ISO/IEC/IEEE 60559, floating-point
-`-0.0` and `+0.0` will not compare equal with `memcmp` but will compare
-equal with `operator==`, and NaNs with the same payload will compare
-equal with `memcmp` but will not compare equal with
-`operator==`. — *end note*\]
-
-\[*Note 25*:
-
-Because compare-and-exchange acts on an object’s value representation,
-padding bits that never participate in the object’s value representation
-are ignored. As a consequence, the following code is guaranteed to avoid
-spurious failure:
-
-    struct padded {
-      char clank = 0x42;
-      // Padding here.
-      unsigned biff = 0xC0DEFEFE;
-    };
-    atomic<padded> pad = {};
-
-    bool zap() {
-      padded expected, desired{0, 0};
-      return pad.compare_exchange_strong(expected, desired);
-    }
-
-— *end note*\]
-
-\[*Note 26*:
-
-For a union with bits that participate in the value representation of
-some members but not others, compare-and-exchange might always fail.
-This is because such padding bits have an indeterminate value when they
-do not participate in the value representation of the active member. As
-a consequence, the following code is not guaranteed to ever succeed:
-
-    union pony {
-      double celestia = 0.;
-      short luna;       // padded
-    };
-    atomic<pony> princesses = {};
-
-    bool party(pony desired) {
-      pony expected;
-      return princesses.compare_exchange_strong(expected, desired);
-    }
-
-— *end note*\]
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Preconditions:*
+>
+> The `failure` argument is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Retrieves the value in `expected`. It then atomically compares the
+> value representation of the value pointed to by for equality with that
+> previously retrieved from `expected`, and if true, replaces the value
+> pointed to by with that in `desired`. If and only if the comparison is
+> `true`, memory is affected according to the value of `success`, and if
+> the comparison is false, memory is affected according to the value of
+> `failure`. When only one `memory_order` argument is supplied, the
+> value of `success` is `order`, and the value of `failure` is `order`
+> except that a value of `memory_order::acq_rel` shall be replaced by
+> the value `memory_order::acquire` and a value of
+> `memory_order::release` shall be replaced by the value
+> `memory_order::relaxed`. If and only if the comparison is false then,
+> after the atomic operation, the value in `expected` is replaced by the
+> value pointed to by during the atomic comparison. If the operation
+> returns `true`, these operations are atomic read-modify-write
+> operations\[intro.multithread\] on the memory pointed to by .
+> Otherwise, these operations are atomic load operations on that memory.
+>
+> *Returns:*
+>
+> The result of the comparison.
+>
+> \[*Note 23*:
+>
+> For example, the effect of `compare_exchange_strong` on objects
+> without padding bits\[term.padding.bits\] is
+>
+>     if (memcmp(this, &expected, sizeof(*this)) == 0)
+>       memcpy(this, &desired, sizeof(*this));
+>     else
+>       memcpy(&expected, this, sizeof(*this));
+>
+> — *end note*\]
+>
+> \[*Example 1*:
+>
+> The expected use of the compare-and-exchange operations is as follows.
+> The compare-and-exchange operations will update `expected` when
+> another iteration of the loop is needed.
+>
+>     expected = current.load();
+>     do {
+>       desired = function(expected);
+>     } while (!current.compare_exchange_weak(expected, desired));
+>
+> — *end example*\]
+>
+> \[*Example 2*:
+>
+> Because the expected value is updated only on failure, code releasing
+> the memory containing the `expected` value on success will work. For
+> example, list head insertion will act atomically and would not
+> introduce a data race in the following code:
+>
+>     do {
+>       p->next = head;                                   // make new list node point to the current head
+>     } while (!head.compare_exchange_weak(p->next, p));  // try to insert
+>
+> — *end example*\]
+>
+> Implementations should ensure that weak compare-and-exchange
+> operations do not consistently return `false` unless either the atomic
+> object has value different from `expected` or there are concurrent
+> modifications to the atomic object.
+>
+> *Remarks:*
+>
+> A weak compare-and-exchange operation may fail spuriously. That is,
+> even when the contents of memory referred to by `expected` and are
+> equal, it may return `false` and store back to `expected` the same
+> memory contents that were originally there.
+>
+> \[*Note 24*: This spurious failure enables implementation of
+> compare-and-exchange on a broader class of machines, e.g., load-locked
+> store-conditional machines. A consequence of spurious failure is that
+> nearly all uses of weak compare-and-exchange will be in a loop. When a
+> compare-and-exchange is in a loop, the weak version will yield better
+> performance on some platforms. When a weak compare-and-exchange would
+> require a loop and a strong one would not, the strong one is
+> preferable. — *end note*\]
+>
+> \[*Note 25*: Under cases where the `memcpy` and `memcmp` semantics of
+> the compare-and-exchange operations apply, the comparisons can fail
+> for values that compare equal with `operator==` if the value
+> representation has trap bits or alternate representations of the same
+> value. Notably, on implementations conforming to ISO/IEC/IEEE 60559,
+> floating-point `-0.0` and `+0.0` will not compare equal with `memcmp`
+> but will compare equal with `operator==`, and NaNs with the same
+> payload will compare equal with `memcmp` but will not compare equal
+> with `operator==`. — *end note*\]
+>
+> \[*Note 26*:
+>
+> Because compare-and-exchange acts on an object’s value representation,
+> padding bits that never participate in the object’s value
+> representation are ignored. As a consequence, the following code is
+> guaranteed to avoid spurious failure:
+>
+>     struct padded {
+>       char clank = 0x42;
+>       // Padding here.
+>       unsigned biff = 0xC0DEFEFE;
+>     };
+>     atomic<padded> pad = {};
+>
+>     bool zap() {
+>       padded expected, desired{0, 0};
+>       return pad.compare_exchange_strong(expected, desired);
+>     }
+>
+> — *end note*\]
+>
+> \[*Note 27*:
+>
+> For a union with bits that participate in the value representation of
+> some members but not others, compare-and-exchange might always fail.
+> This is because such padding bits have an indeterminate value when
+> they do not participate in the value representation of the active
+> member. As a consequence, the following code is not guaranteed to ever
+> succeed:
+>
+>     union pony {
+>       double celestia = 0.;
+>       short luna;       // padded
+>     };
+>     atomic<pony> princesses = {};
+>
+>     bool party(pony desired) {
+>       pony expected;
+>       return princesses.compare_exchange_strong(expected, desired);
+>     }
+>
+> — *end note*\]
 
 *integral-type* *floating-point-type*
 
@@ -3375,25 +3386,26 @@ void wait(T old, memory_order order = memory_order::seq_cst) const volatile noex
 void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `load(order)` and compares its value representation for
-  equality against that of `old`.
-
-- If they compare unequal, returns.
-
-- Blocks until it is unblocked by an atomic notifying operation or is
-  unblocked spuriously.
-
-***Remarks:***
-
-This function is an atomic waiting operation\[atomics.wait\].
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `load(order)` and compares its value representation for
+>   equality against that of `old`.
+>
+> - If they compare unequal, returns.
+>
+> - Blocks until it is unblocked by an atomic notifying operation or is
+>   unblocked spuriously.
+>
+> *Remarks:*
+>
+> This function is an atomic waiting operation\[atomics.wait\].
 
 *integral-type* *floating-point-type*
 
@@ -3402,15 +3414,15 @@ void notify_one() volatile noexcept;
 void notify_one() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of at least one atomic waiting operation that is
-eligible to be unblocked\[atomics.wait\] by this call, if any such
-atomic waiting operations exist.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of at least one atomic waiting operation that
+> is eligible to be unblocked\[atomics.wait\] by this call, if any such
+> atomic waiting operations exist.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 *integral-type* *floating-point-type*
 
@@ -3419,14 +3431,14 @@ void notify_all() volatile noexcept;
 void notify_all() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of all atomic waiting operations that are
-eligible to be unblocked\[atomics.wait\] by this call.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of all atomic waiting operations that are
+> eligible to be unblocked\[atomics.wait\] by this call.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 #### Specializations for integers <a id="atomics.types.int">[atomics.types.int]</a>
 
@@ -3439,7 +3451,7 @@ for the integral types `char`, `signed char`, `unsigned char`, `short`,
 `atomic<integral-type>` provides additional atomic operations
 appropriate to integral types.
 
-\[*Note 27*: The specialization `atomic<bool>` uses the primary template
+\[*Note 16*: The specialization `atomic<bool>` uses the primary template
 [atomics.types.generic]. — *end note*\]
 
 ``` cpp
@@ -3556,29 +3568,30 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) volatile noex
 T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Atomically replaces the value pointed to by with the result of the
-computation applied to the value pointed to by and the given `operand`.
-Memory is affected according to the value of `order`. These operations
-are atomic read-modify-write operations\[intro.multithread\].
-
-***Returns:***
-
-Atomically, the value pointed to by immediately before the effects.
-
-***Remarks:***
-
-For signed integer types, the result is as if the object value and
-parameters were converted to their corresponding unsigned types, the
-computation performed on those types, and the result converted back to
-the signed type.
-
-\[*Note 28*: There are no undefined results arising from the
-computation. — *end note*\]
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with the result of the
+> computation applied to the value pointed to by and the given
+> `operand`. Memory is affected according to the value of `order`. These
+> operations are atomic read-modify-write
+> operations\[intro.multithread\].
+>
+> *Returns:*
+>
+> Atomically, the value pointed to by immediately before the effects.
+>
+> *Remarks:*
+>
+> For signed integer types, the result is as if the object value and
+> parameters were converted to their corresponding unsigned types, the
+> computation performed on those types, and the result converted back to
+> the signed type.
+>
+> \[*Note 28*: There are no undefined results arising from the
+> computation. — *end note*\]
 
 *integral-type* *integral-type* *integral-type* *integral-type*
 *integral-type*
@@ -3588,12 +3601,12 @@ T operator op=(T operand) volatile noexcept;
 T operator op=(T operand) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
 #### Specializations for floating-point types <a id="atomics.types.float">[atomics.types.float]</a>
 
@@ -3690,30 +3703,32 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) volatile noex
 T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Atomically replaces the value pointed to by with the result of the
-computation applied to the value pointed to by and the given `operand`.
-Memory is affected according to the value of `order`. These operations
-are atomic read-modify-write operations\[intro.multithread\].
-
-***Returns:***
-
-Atomically, the value pointed to by immediately before the effects.
-
-***Remarks:***
-
-If the result is not a representable value for its type\[expr.pre\] the
-result is unspecified, but the operations otherwise have no undefined
-behavior. Atomic arithmetic operations on *`floating-point-type`* should
-conform to the `std::numeric_limits<`*`floating-point-type`*`>` traits
-associated with the floating-point type\[limits.syn\]. The
-floating-point environment\[cfenv\] for atomic arithmetic operations on
-*`floating-point-type`* may be different than the calling thread’s
-floating-point environment.
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with the result of the
+> computation applied to the value pointed to by and the given
+> `operand`. Memory is affected according to the value of `order`. These
+> operations are atomic read-modify-write
+> operations\[intro.multithread\].
+>
+> *Returns:*
+>
+> Atomically, the value pointed to by immediately before the effects.
+>
+> *Remarks:*
+>
+> If the result is not a representable value for its type\[expr.pre\]
+> the result is unspecified, but the operations otherwise have no
+> undefined behavior. Atomic arithmetic operations on
+> *`floating-point-type`* should conform to the
+> `std::numeric_limits<`*`floating-point-type`*`>` traits associated
+> with the floating-point type\[limits.syn\]. The floating-point
+> environment\[cfenv\] for atomic arithmetic operations on
+> *`floating-point-type`* may be different than the calling thread’s
+> floating-point environment.
 
 *floating-point-type* *floating-point-type*
 
@@ -3722,23 +3737,24 @@ T operator op=(T operand) volatile noexcept;
 T operator op=(T operand) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
-
-***Remarks:***
-
-If the result is not a representable value for its type\[expr.pre\] the
-result is unspecified, but the operations otherwise have no undefined
-behavior. Atomic arithmetic operations on *`floating-point-type`* should
-conform to the `std::numeric_limits<`*`floating-point-type`*`>` traits
-associated with the floating-point type\[limits.syn\]. The
-floating-point environment\[cfenv\] for atomic arithmetic operations on
-*`floating-point-type`* may be different than the calling thread’s
-floating-point environment.
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
+>
+> *Remarks:*
+>
+> If the result is not a representable value for its type\[expr.pre\]
+> the result is unspecified, but the operations otherwise have no
+> undefined behavior. Atomic arithmetic operations on
+> *`floating-point-type`* should conform to the
+> `std::numeric_limits<`*`floating-point-type`*`>` traits associated
+> with the floating-point type\[limits.syn\]. The floating-point
+> environment\[cfenv\] for atomic arithmetic operations on
+> *`floating-point-type`* may be different than the calling thread’s
+> floating-point environment.
 
 #### Partial specialization for pointers <a id="atomics.types.pointer">[atomics.types.pointer]</a>
 
@@ -3826,43 +3842,44 @@ T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) vola
 T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Mandates:***
-
-`T` is a complete object type.
-
-\[*Note 29*: Pointer arithmetic on `void*` or function pointers is
-ill-formed. — *end note*\]
-
-***Effects:***
-
-Atomically replaces the value pointed to by with the result of the
-computation applied to the value pointed to by and the given `operand`.
-Memory is affected according to the value of `order`. These operations
-are atomic read-modify-write operations\[intro.multithread\].
-
-***Returns:***
-
-Atomically, the value pointed to by immediately before the effects.
-
-***Remarks:***
-
-The result may be an undefined address, but the operations otherwise
-have no undefined behavior.
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Mandates:*
+>
+> `T` is a complete object type.
+>
+> \[*Note 29*: Pointer arithmetic on `void*` or function pointers is
+> ill-formed. — *end note*\]
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with the result of the
+> computation applied to the value pointed to by and the given
+> `operand`. Memory is affected according to the value of `order`. These
+> operations are atomic read-modify-write
+> operations\[intro.multithread\].
+>
+> *Returns:*
+>
+> Atomically, the value pointed to by immediately before the effects.
+>
+> *Remarks:*
+>
+> The result may be an undefined address, but the operations otherwise
+> have no undefined behavior.
 
 ``` cpp
 T* operator op=(ptrdiff_t operand) volatile noexcept;
 T* operator op=(ptrdiff_t operand) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
 #### Member operators common to integers and pointers to objects <a id="atomics.types.memop">[atomics.types.memop]</a>
 
@@ -3873,12 +3890,12 @@ value_type operator++(int) volatile noexcept;
 value_type operator++(int) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_add(1);`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_add(1);`
 
 *integral-type*
 
@@ -3887,12 +3904,12 @@ value_type operator--(int) volatile noexcept;
 value_type operator--(int) noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_sub(1);`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_sub(1);`
 
 *integral-type*
 
@@ -3901,12 +3918,12 @@ value_type operator++() volatile noexcept;
 value_type operator++() noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_add(1) + 1;`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_add(1) + 1;`
 
 *integral-type*
 
@@ -3915,12 +3932,12 @@ value_type operator--() volatile noexcept;
 value_type operator--() noexcept;
 ```
 
-For the `volatile` overload of this function, `is_always_lock_free` is
-`true`.
-
-***Effects:***
-
-Equivalent to: `return fetch_sub(1) - 1;`
+> For the `volatile` overload of this function, `is_always_lock_free` is
+> `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return fetch_sub(1) - 1;`
 
 #### Partial specializations for smart pointers <a id="util.smartptr.atomic">[util.smartptr.atomic]</a>
 
@@ -3929,7 +3946,7 @@ Equivalent to: `return fetch_sub(1) - 1;`
 The library provides partial specializations of the `atomic` template
 for shared-ownership smart pointers [util.sharedptr].
 
-\[*Note 30*: The partial specializations are declared in header
+\[*Note 17*: The partial specializations are declared in header
 `<memory>`. — *end note*\]
 
 The behavior of all operations is as specified in
@@ -3944,12 +3961,12 @@ atomic operation, but are not required to be part of it. Any associated
 deletion and deallocation are sequenced after the atomic update step and
 are not part of the atomic operation.
 
-\[*Note 31*: If the atomic operation uses locks, locks acquired by the
+\[*Note 18*: If the atomic operation uses locks, locks acquired by the
 implementation will be held when any `use_count` adjustments are
 performed, and will not be held when any destruction or deallocation
 resulting from this is performed. — *end note*\]
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 template<typename T> class atomic_list {
@@ -4025,86 +4042,87 @@ namespace std {
 constexpr atomic() noexcept;
 ```
 
-***Effects:***
-
-Initializes `p{}`.
+> *Effects:*
+>
+> Initializes `p{}`.
 
 ``` cpp
 atomic(shared_ptr<T> desired) noexcept;
 ```
 
-***Effects:***
-
-Initializes the object with the value `desired`. Initialization is not
-an atomic operation\[intro.multithread\].
-
-\[*Note 32*: It is possible to have an access to an atomic object `A`
-race with its construction, for example, by communicating the address of
-the just-constructed object `A` to another thread via
-`memory_order::relaxed` operations on a suitable atomic pointer
-variable, and then immediately accessing `A` in the receiving thread.
-This results in undefined behavior. — *end note*\]
+> *Effects:*
+>
+> Initializes the object with the value `desired`. Initialization is not
+> an atomic operation\[intro.multithread\].
+>
+> \[*Note 30*: It is possible to have an access to an atomic object `A`
+> race with its construction, for example, by communicating the address
+> of the just-constructed object `A` to another thread via
+> `memory_order::relaxed` operations on a suitable atomic pointer
+> variable, and then immediately accessing `A` in the receiving thread.
+> This results in undefined behavior. — *end note*\]
 
 ``` cpp
 void store(shared_ptr<T> desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::consume`, `memory_order::acquire`, nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-Atomically replaces the value pointed to by with the value of `desired`
-as if by `p.swap(desired)`. Memory is affected according to the value of
-`order`.
+> *Preconditions:*
+>
+> `order` is neither `memory_order::consume`, `memory_order::acquire`,
+> nor `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with the value of
+> `desired` as if by `p.swap(desired)`. Memory is affected according to
+> the value of `order`.
 
 ``` cpp
 void operator=(shared_ptr<T> desired) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to `store(desired)`.
+> *Effects:*
+>
+> Equivalent to `store(desired)`.
 
 ``` cpp
 shared_ptr<T> load(memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Memory is affected according to the value of `order`.
-
-***Returns:***
-
-Atomically returns `p`.
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Memory is affected according to the value of `order`.
+>
+> *Returns:*
+>
+> Atomically returns `p`.
 
 ``` cpp
 operator shared_ptr<T>() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return load();`
+> *Effects:*
+>
+> Equivalent to: `return load();`
 
 ``` cpp
 shared_ptr<T> exchange(shared_ptr<T> desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Atomically replaces `p` with `desired` as if by `p.swap(desired)`.
-Memory is affected according to the value of `order`. This is an atomic
-read-modify-write operation\[intro.races\].
-
-***Returns:***
-
-Atomically returns the value of `p` immediately before the effects.
+> *Effects:*
+>
+> Atomically replaces `p` with `desired` as if by `p.swap(desired)`.
+> Memory is affected according to the value of `order`. This is an
+> atomic read-modify-write operation\[intro.races\].
+>
+> *Returns:*
+>
+> Atomically returns the value of `p` immediately before the effects.
 
 ``` cpp
 bool compare_exchange_weak(shared_ptr<T>& expected, shared_ptr<T> desired,
@@ -4113,124 +4131,126 @@ bool compare_exchange_strong(shared_ptr<T>& expected, shared_ptr<T> desired,
                              memory_order success, memory_order failure) noexcept;
 ```
 
-***Preconditions:***
-
-`failure` is neither `memory_order::release` nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-If `p` is equivalent to `expected`, assigns `desired` to `p` and has
-synchronization semantics corresponding to the value of `success`,
-otherwise assigns `p` to `expected` and has synchronization semantics
-corresponding to the value of `failure`.
-
-***Returns:***
-
-`true` if `p` was equivalent to `expected`, `false` otherwise.
-
-***Remarks:***
-
-Two `shared_ptr` objects are equivalent if they store the same pointer
-value and either share ownership or are both empty. The weak form may
-fail spuriously. See \[atomics.types.operations\].
-
-If the operation returns `true`, `expected` is not accessed after the
-atomic update and the operation is an atomic read-modify-write
-operation\[intro.multithread\] on the memory pointed to by . Otherwise,
-the operation is an atomic load operation on that memory, and `expected`
-is updated with the existing value read from the atomic object in the
-attempted atomic update. The `use_count` update corresponding to the
-write to `expected` is part of the atomic operation. The write to
-`expected` itself is not required to be part of the atomic operation.
+> *Preconditions:*
+>
+> `failure` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> If `p` is equivalent to `expected`, assigns `desired` to `p` and has
+> synchronization semantics corresponding to the value of `success`,
+> otherwise assigns `p` to `expected` and has synchronization semantics
+> corresponding to the value of `failure`.
+>
+> *Returns:*
+>
+> `true` if `p` was equivalent to `expected`, `false` otherwise.
+>
+> *Remarks:*
+>
+> Two `shared_ptr` objects are equivalent if they store the same pointer
+> value and either share ownership or are both empty. The weak form may
+> fail spuriously. See \[atomics.types.operations\].
+>
+> If the operation returns `true`, `expected` is not accessed after the
+> atomic update and the operation is an atomic read-modify-write
+> operation\[intro.multithread\] on the memory pointed to by .
+> Otherwise, the operation is an atomic load operation on that memory,
+> and `expected` is updated with the existing value read from the atomic
+> object in the attempted atomic update. The `use_count` update
+> corresponding to the write to `expected` is part of the atomic
+> operation. The write to `expected` itself is not required to be part
+> of the atomic operation.
 
 ``` cpp
 bool compare_exchange_weak(shared_ptr<T>& expected, shared_ptr<T> desired,
                            memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return compare_exchange_weak(expected, desired, order, fail_order);
-```
-
-where `fail_order` is the same as `order` except that a value of
-`memory_order::acq_rel` shall be replaced by the value
-`memory_order::acquire` and a value of `memory_order::release` shall be
-replaced by the value `memory_order::relaxed`.
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return compare_exchange_weak(expected, desired, order, fail_order);
+> ```
+>
+> where `fail_order` is the same as `order` except that a value of
+> `memory_order::acq_rel` shall be replaced by the value
+> `memory_order::acquire` and a value of `memory_order::release` shall
+> be replaced by the value `memory_order::relaxed`.
 
 ``` cpp
 bool compare_exchange_strong(shared_ptr<T>& expected, shared_ptr<T> desired,
                              memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return compare_exchange_strong(expected, desired, order, fail_order);
-```
-
-where `fail_order` is the same as `order` except that a value of
-`memory_order::acq_rel` shall be replaced by the value
-`memory_order::acquire` and a value of `memory_order::release` shall be
-replaced by the value `memory_order::relaxed`.
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return compare_exchange_strong(expected, desired, order, fail_order);
+> ```
+>
+> where `fail_order` is the same as `order` except that a value of
+> `memory_order::acq_rel` shall be replaced by the value
+> `memory_order::acquire` and a value of `memory_order::release` shall
+> be replaced by the value `memory_order::relaxed`.
 
 ``` cpp
 void wait(shared_ptr<T> old, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `load(order)` and compares it to `old`.
-
-- If the two are not equivalent, returns.
-
-- Blocks until it is unblocked by an atomic notifying operation or is
-  unblocked spuriously.
-
-***Remarks:***
-
-Two `shared_ptr` objects are equivalent if they store the same pointer
-and either share ownership or are both empty. This function is an atomic
-waiting operation\[atomics.wait\].
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `load(order)` and compares it to `old`.
+>
+> - If the two are not equivalent, returns.
+>
+> - Blocks until it is unblocked by an atomic notifying operation or is
+>   unblocked spuriously.
+>
+> *Remarks:*
+>
+> Two `shared_ptr` objects are equivalent if they store the same pointer
+> and either share ownership or are both empty. This function is an
+> atomic waiting operation\[atomics.wait\].
 
 ``` cpp
 void notify_one() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of at least one atomic waiting operation that is
-eligible to be unblocked\[atomics.wait\] by this call, if any such
-atomic waiting operations exist.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of at least one atomic waiting operation that
+> is eligible to be unblocked\[atomics.wait\] by this call, if any such
+> atomic waiting operations exist.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 ``` cpp
 void notify_all() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of all atomic waiting operations that are
-eligible to be unblocked\[atomics.wait\] by this call.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of all atomic waiting operations that are
+> eligible to be unblocked\[atomics.wait\] by this call.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 ##### Partial specialization for `weak_ptr` <a id="util.smartptr.atomic.weak">[util.smartptr.atomic.weak]</a>
 
@@ -4277,86 +4297,87 @@ namespace std {
 constexpr atomic() noexcept;
 ```
 
-***Effects:***
-
-Initializes `p{}`.
+> *Effects:*
+>
+> Initializes `p{}`.
 
 ``` cpp
 atomic(weak_ptr<T> desired) noexcept;
 ```
 
-***Effects:***
-
-Initializes the object with the value `desired`. Initialization is not
-an atomic operation\[intro.multithread\].
-
-\[*Note 33*: It is possible to have an access to an atomic object `A`
-race with its construction, for example, by communicating the address of
-the just-constructed object `A` to another thread via
-`memory_order::relaxed` operations on a suitable atomic pointer
-variable, and then immediately accessing `A` in the receiving thread.
-This results in undefined behavior. — *end note*\]
+> *Effects:*
+>
+> Initializes the object with the value `desired`. Initialization is not
+> an atomic operation\[intro.multithread\].
+>
+> \[*Note 31*: It is possible to have an access to an atomic object `A`
+> race with its construction, for example, by communicating the address
+> of the just-constructed object `A` to another thread via
+> `memory_order::relaxed` operations on a suitable atomic pointer
+> variable, and then immediately accessing `A` in the receiving thread.
+> This results in undefined behavior. — *end note*\]
 
 ``` cpp
 void store(weak_ptr<T> desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::consume`, `memory_order::acquire`, nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-Atomically replaces the value pointed to by with the value of `desired`
-as if by `p.swap(desired)`. Memory is affected according to the value of
-`order`.
+> *Preconditions:*
+>
+> `order` is neither `memory_order::consume`, `memory_order::acquire`,
+> nor `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Atomically replaces the value pointed to by with the value of
+> `desired` as if by `p.swap(desired)`. Memory is affected according to
+> the value of `order`.
 
 ``` cpp
 void operator=(weak_ptr<T> desired) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to `store(desired)`.
+> *Effects:*
+>
+> Equivalent to `store(desired)`.
 
 ``` cpp
 weak_ptr<T> load(memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Memory is affected according to the value of `order`.
-
-***Returns:***
-
-Atomically returns `p`.
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Memory is affected according to the value of `order`.
+>
+> *Returns:*
+>
+> Atomically returns `p`.
 
 ``` cpp
 operator weak_ptr<T>() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return load();`
+> *Effects:*
+>
+> Equivalent to: `return load();`
 
 ``` cpp
 weak_ptr<T> exchange(weak_ptr<T> desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Atomically replaces `p` with `desired` as if by `p.swap(desired)`.
-Memory is affected according to the value of `order`. This is an atomic
-read-modify-write operation\[intro.races\].
-
-***Returns:***
-
-Atomically returns the value of `p` immediately before the effects.
+> *Effects:*
+>
+> Atomically replaces `p` with `desired` as if by `p.swap(desired)`.
+> Memory is affected according to the value of `order`. This is an
+> atomic read-modify-write operation\[intro.races\].
+>
+> *Returns:*
+>
+> Atomically returns the value of `p` immediately before the effects.
 
 ``` cpp
 bool compare_exchange_weak(weak_ptr<T>& expected, weak_ptr<T> desired,
@@ -4365,124 +4386,126 @@ bool compare_exchange_strong(weak_ptr<T>& expected, weak_ptr<T> desired,
                              memory_order success, memory_order failure) noexcept;
 ```
 
-***Preconditions:***
-
-`failure` is neither `memory_order::release` nor
-`memory_order::acq_rel`.
-
-***Effects:***
-
-If `p` is equivalent to `expected`, assigns `desired` to `p` and has
-synchronization semantics corresponding to the value of `success`,
-otherwise assigns `p` to `expected` and has synchronization semantics
-corresponding to the value of `failure`.
-
-***Returns:***
-
-`true` if `p` was equivalent to `expected`, `false` otherwise.
-
-***Remarks:***
-
-Two `weak_ptr` objects are equivalent if they store the same pointer
-value and either share ownership or are both empty. The weak form may
-fail spuriously. See \[atomics.types.operations\].
-
-If the operation returns `true`, `expected` is not accessed after the
-atomic update and the operation is an atomic read-modify-write
-operation\[intro.multithread\] on the memory pointed to by . Otherwise,
-the operation is an atomic load operation on that memory, and `expected`
-is updated with the existing value read from the atomic object in the
-attempted atomic update. The `use_count` update corresponding to the
-write to `expected` is part of the atomic operation. The write to
-`expected` itself is not required to be part of the atomic operation.
+> *Preconditions:*
+>
+> `failure` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> If `p` is equivalent to `expected`, assigns `desired` to `p` and has
+> synchronization semantics corresponding to the value of `success`,
+> otherwise assigns `p` to `expected` and has synchronization semantics
+> corresponding to the value of `failure`.
+>
+> *Returns:*
+>
+> `true` if `p` was equivalent to `expected`, `false` otherwise.
+>
+> *Remarks:*
+>
+> Two `weak_ptr` objects are equivalent if they store the same pointer
+> value and either share ownership or are both empty. The weak form may
+> fail spuriously. See \[atomics.types.operations\].
+>
+> If the operation returns `true`, `expected` is not accessed after the
+> atomic update and the operation is an atomic read-modify-write
+> operation\[intro.multithread\] on the memory pointed to by .
+> Otherwise, the operation is an atomic load operation on that memory,
+> and `expected` is updated with the existing value read from the atomic
+> object in the attempted atomic update. The `use_count` update
+> corresponding to the write to `expected` is part of the atomic
+> operation. The write to `expected` itself is not required to be part
+> of the atomic operation.
 
 ``` cpp
 bool compare_exchange_weak(weak_ptr<T>& expected, weak_ptr<T> desired,
                            memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return compare_exchange_weak(expected, desired, order, fail_order);
-```
-
-where `fail_order` is the same as `order` except that a value of
-`memory_order::acq_rel` shall be replaced by the value
-`memory_order::acquire` and a value of `memory_order::release` shall be
-replaced by the value `memory_order::relaxed`.
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return compare_exchange_weak(expected, desired, order, fail_order);
+> ```
+>
+> where `fail_order` is the same as `order` except that a value of
+> `memory_order::acq_rel` shall be replaced by the value
+> `memory_order::acquire` and a value of `memory_order::release` shall
+> be replaced by the value `memory_order::relaxed`.
 
 ``` cpp
 bool compare_exchange_strong(weak_ptr<T>& expected, weak_ptr<T> desired,
                              memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return compare_exchange_strong(expected, desired, order, fail_order);
-```
-
-where `fail_order` is the same as `order` except that a value of
-`memory_order::acq_rel` shall be replaced by the value
-`memory_order::acquire` and a value of `memory_order::release` shall be
-replaced by the value `memory_order::relaxed`.
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return compare_exchange_strong(expected, desired, order, fail_order);
+> ```
+>
+> where `fail_order` is the same as `order` except that a value of
+> `memory_order::acq_rel` shall be replaced by the value
+> `memory_order::acquire` and a value of `memory_order::release` shall
+> be replaced by the value `memory_order::relaxed`.
 
 ``` cpp
 void wait(weak_ptr<T> old, memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `load(order)` and compares it to `old`.
-
-- If the two are not equivalent, returns.
-
-- Blocks until it is unblocked by an atomic notifying operation or is
-  unblocked spuriously.
-
-***Remarks:***
-
-Two `weak_ptr` objects are equivalent if they store the same pointer and
-either share ownership or are both empty. This function is an atomic
-waiting operation\[atomics.wait\].
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `load(order)` and compares it to `old`.
+>
+> - If the two are not equivalent, returns.
+>
+> - Blocks until it is unblocked by an atomic notifying operation or is
+>   unblocked spuriously.
+>
+> *Remarks:*
+>
+> Two `weak_ptr` objects are equivalent if they store the same pointer
+> and either share ownership or are both empty. This function is an
+> atomic waiting operation\[atomics.wait\].
 
 ``` cpp
 void notify_one() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of at least one atomic waiting operation that is
-eligible to be unblocked\[atomics.wait\] by this call, if any such
-atomic waiting operations exist.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of at least one atomic waiting operation that
+> is eligible to be unblocked\[atomics.wait\] by this call, if any such
+> atomic waiting operations exist.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 ``` cpp
 void notify_all() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of all atomic waiting operations that are
-eligible to be unblocked\[atomics.wait\] by this call.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of all atomic waiting operations that are
+> eligible to be unblocked\[atomics.wait\] by this call.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 ### Non-member functions <a id="atomics.nonmembers">[atomics.nonmembers]</a>
 
@@ -4495,7 +4518,7 @@ function call, in order. An argument for a parameter of type
 function call. If no such member function exists, the program is
 ill-formed.
 
-\[*Note 34*: The non-member functions enable programmers to write code
+\[*Note 19*: The non-member functions enable programmers to write code
 that can be compiled as either C or C++, for example in a shared header
 file. — *end note*\]
 
@@ -4539,9 +4562,9 @@ destructor.
 constexpr atomic_flag::atomic_flag() noexcept;
 ```
 
-***Effects:***
-
-Initializes `*this` to the clear state.
+> *Effects:*
+>
+> Initializes `*this` to the clear state.
 
 ``` cpp
 bool atomic_flag_test(const volatile atomic_flag* object) noexcept;
@@ -4554,19 +4577,20 @@ bool atomic_flag::test(memory_order order = memory_order::seq_cst) const volatil
 bool atomic_flag::test(memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
-For `atomic_flag_test`, let `order` be `memory_order::seq_cst`.
-
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Memory is affected according to the value of `order`.
-
-***Returns:***
-
-Atomically returns the value pointed to by `object` or .
+> For `atomic_flag_test`, let `order` be `memory_order::seq_cst`.
+>
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Memory is affected according to the value of `order`.
+>
+> *Returns:*
+>
+> Atomically returns the value pointed to by `object` or .
 
 ``` cpp
 bool atomic_flag_test_and_set(volatile atomic_flag* object) noexcept;
@@ -4577,15 +4601,15 @@ bool atomic_flag::test_and_set(memory_order order = memory_order::seq_cst) volat
 bool atomic_flag::test_and_set(memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Effects:***
-
-Atomically sets the value pointed to by `object` or by to `true`. Memory
-is affected according to the value of `order`. These operations are
-atomic read-modify-write operations\[intro.multithread\].
-
-***Returns:***
-
-Atomically, the value of the object immediately before the effects.
+> *Effects:*
+>
+> Atomically sets the value pointed to by `object` or by to `true`.
+> Memory is affected according to the value of `order`. These operations
+> are atomic read-modify-write operations\[intro.multithread\].
+>
+> *Returns:*
+>
+> Atomically, the value of the object immediately before the effects.
 
 ``` cpp
 void atomic_flag_clear(volatile atomic_flag* object) noexcept;
@@ -4596,15 +4620,15 @@ void atomic_flag::clear(memory_order order = memory_order::seq_cst) volatile noe
 void atomic_flag::clear(memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-***Preconditions:***
-
-The `order` argument is neither `memory_order::consume`,
-`memory_order::acquire`, nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Atomically sets the value pointed to by `object` or by to `false`.
-Memory is affected according to the value of `order`.
+> *Preconditions:*
+>
+> The `order` argument is neither `memory_order::consume`,
+> `memory_order::acquire`, nor `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Atomically sets the value pointed to by `object` or by to `false`.
+> Memory is affected according to the value of `order`.
 
 ``` cpp
 void atomic_flag_wait(const volatile atomic_flag* object, bool old) noexcept;
@@ -4619,28 +4643,29 @@ void atomic_flag::wait(bool old, memory_order order =
                                    memory_order::seq_cst) const noexcept;
 ```
 
-For `atomic_flag_wait`, let `order` be `memory_order::seq_cst`. Let
-`flag` be `object` for the non-member functions and for the member
-functions.
-
-***Preconditions:***
-
-`order` is neither `memory_order::release` nor `memory_order::acq_rel`.
-
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `flag->test(order) != old`.
-
-- If the result of that evaluation is `true`, returns.
-
-- Blocks until it is unblocked by an atomic notifying operation or is
-  unblocked spuriously.
-
-***Remarks:***
-
-This function is an atomic waiting operation\[atomics.wait\].
+> For `atomic_flag_wait`, let `order` be `memory_order::seq_cst`. Let
+> `flag` be `object` for the non-member functions and for the member
+> functions.
+>
+> *Preconditions:*
+>
+> `order` is neither `memory_order::release` nor
+> `memory_order::acq_rel`.
+>
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `flag->test(order) != old`.
+>
+> - If the result of that evaluation is `true`, returns.
+>
+> - Blocks until it is unblocked by an atomic notifying operation or is
+>   unblocked spuriously.
+>
+> *Remarks:*
+>
+> This function is an atomic waiting operation\[atomics.wait\].
 
 ``` cpp
 void atomic_flag_notify_one(volatile atomic_flag* object) noexcept;
@@ -4649,15 +4674,15 @@ void atomic_flag::notify_one() volatile noexcept;
 void atomic_flag::notify_one() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of at least one atomic waiting operation that is
-eligible to be unblocked\[atomics.wait\] by this call, if any such
-atomic waiting operations exist.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of at least one atomic waiting operation that
+> is eligible to be unblocked\[atomics.wait\] by this call, if any such
+> atomic waiting operations exist.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 ``` cpp
 void atomic_flag_notify_all(volatile atomic_flag* object) noexcept;
@@ -4666,32 +4691,32 @@ void atomic_flag::notify_all() volatile noexcept;
 void atomic_flag::notify_all() noexcept;
 ```
 
-***Effects:***
-
-Unblocks the execution of all atomic waiting operations that are
-eligible to be unblocked\[atomics.wait\] by this call.
-
-***Remarks:***
-
-This function is an atomic notifying operation\[atomics.wait\].
+> *Effects:*
+>
+> Unblocks the execution of all atomic waiting operations that are
+> eligible to be unblocked\[atomics.wait\] by this call.
+>
+> *Remarks:*
+>
+> This function is an atomic notifying operation\[atomics.wait\].
 
 ``` cpp
 #define ATOMIC_FLAG_INIT see below
 ```
 
-***Remarks:***
-
-The macro `ATOMIC_FLAG_INIT` is defined in such a way that it can be
-used to initialize an object of type `atomic_flag` to the clear state.
-The macro can be used in the form:
-
-``` cpp
-atomic_flag guard = ATOMIC_FLAG_INIT;
-```
-
-It is unspecified whether the macro can be used in other initialization
-contexts. For a complete static-duration object, that initialization
-shall be static.
+> *Remarks:*
+>
+> The macro `ATOMIC_FLAG_INIT` is defined in such a way that it can be
+> used to initialize an object of type `atomic_flag` to the clear state.
+> The macro can be used in the form:
+>
+> ``` cpp
+> atomic_flag guard = ATOMIC_FLAG_INIT;
+> ```
+>
+> It is unspecified whether the macro can be used in other
+> initialization contexts. For a complete static-duration object, that
+> initialization shall be static.
 
 ### Fences <a id="atomics.fences">[atomics.fences]</a>
 
@@ -4725,39 +4750,39 @@ sequence headed by A.
 extern "C" void atomic_thread_fence(memory_order order) noexcept;
 ```
 
-***Effects:***
-
-Depending on the value of `order`, this operation:
-
-- has no effects, if `order == memory_order::relaxed`;
-
-- is an acquire fence, if `order == memory_order::acquire` or
-  `order == memory_order::consume`;
-
-- is a release fence, if `order == memory_order::release`;
-
-- is both an acquire fence and a release fence, if
-  `order == memory_order::acq_rel`;
-
-- is a sequentially consistent acquire and release fence, if
-  `order == memory_order::seq_cst`.
+> *Effects:*
+>
+> Depending on the value of `order`, this operation:
+>
+> - has no effects, if `order == memory_order::relaxed`;
+>
+> - is an acquire fence, if `order == memory_order::acquire` or
+>   `order == memory_order::consume`;
+>
+> - is a release fence, if `order == memory_order::release`;
+>
+> - is both an acquire fence and a release fence, if
+>   `order == memory_order::acq_rel`;
+>
+> - is a sequentially consistent acquire and release fence, if
+>   `order == memory_order::seq_cst`.
 
 ``` cpp
 extern "C" void atomic_signal_fence(memory_order order) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to `atomic_thread_fence(order)`, except that the resulting
-ordering constraints are established only between a thread and a signal
-handler executed in the same thread.
-
-\[*Note 35*: `atomic_signal_fence` can be used to specify the order in
-which actions performed by the thread become visible to the signal
-handler. Compiler optimizations and reorderings of loads and stores are
-inhibited in the same way as with `atomic_thread_fence`, but the
-hardware fence instructions that `atomic_thread_fence` would have
-inserted are not emitted. — *end note*\]
+> *Effects:*
+>
+> Equivalent to `atomic_thread_fence(order)`, except that the resulting
+> ordering constraints are established only between a thread and a
+> signal handler executed in the same thread.
+>
+> \[*Note 32*: `atomic_signal_fence` can be used to specify the order in
+> which actions performed by the thread become visible to the signal
+> handler. Compiler optimizations and reorderings of loads and stores
+> are inhibited in the same way as with `atomic_thread_fence`, but the
+> hardware fence instructions that `atomic_thread_fence` would have
+> inserted are not emitted. — *end note*\]
 
 ### C compatibility <a id="stdatomic.h.syn">[stdatomic.h.syn]</a>
 
@@ -5010,96 +5035,97 @@ threads. — *end note*\]
 The expression `m.lock()` is well-formed and has the following
 semantics:
 
-***Preconditions:***
-
-If `m` is of type `mutex`, `timed_mutex`, `shared_mutex`, or
-`shared_timed_mutex`, the calling thread does not own the mutex.
-
-***Effects:***
-
-Blocks the calling thread until ownership of the mutex can be obtained
-for the calling thread.
-
-Prior `unlock()` operations on the same object \[intro.multithread\]
-this operation.
-
-***Ensures:***
-
-The calling thread owns the mutex.
-
-.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if the thread does not have the privilege
-  to perform the operation.
-
-- `resource_deadlock_would_occur` — if the implementation detects that a
-  deadlock would occur.
+> *Preconditions:*
+>
+> If `m` is of type `mutex`, `timed_mutex`, `shared_mutex`, or
+> `shared_timed_mutex`, the calling thread does not own the mutex.
+>
+> *Effects:*
+>
+> Blocks the calling thread until ownership of the mutex can be obtained
+> for the calling thread.
+>
+> Prior `unlock()` operations on the same object \[intro.multithread\]
+> this operation.
+>
+> *Ensures:*
+>
+> The calling thread owns the mutex.
+>
+> .
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if the thread does not have the
+>   privilege to perform the operation.
+>
+> - `resource_deadlock_would_occur` — if the implementation detects that
+>   a deadlock would occur.
 
 The expression `m.try_lock()` is well-formed and has the following
 semantics:
 
-***Preconditions:***
-
-If `m` is of type `mutex`, `timed_mutex`, `shared_mutex`, or
-`shared_timed_mutex`, the calling thread does not own the mutex.
-
-***Effects:***
-
-Attempts to obtain ownership of the mutex for the calling thread without
-blocking. If ownership is not obtained, there is no effect and
-`try_lock()` immediately returns. An implementation may fail to obtain
-the lock even if it is not held by any other thread.
-
-\[*Note 4*: This spurious failure is normally uncommon, but allows
-interesting implementations based on a simple compare and
-exchange\[atomics\]. — *end note*\]
-
-An implementation should ensure that `try_lock()` does not consistently
-return `false` in the absence of contending mutex acquisitions.
-
-If `try_lock()` returns `true`, prior `unlock()` operations on the same
-object \[intro.multithread\] this operation.
-
-\[*Note 5*: Since `lock()` does not synchronize with a failed subsequent
-`try_lock()`, the visibility rules are weak enough that little would be
-known about the state after a failure, even in the absence of spurious
-failures. — *end note*\]
-
-`bool`.
-
-***Returns:***
-
-`true` if ownership was obtained, otherwise `false`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> If `m` is of type `mutex`, `timed_mutex`, `shared_mutex`, or
+> `shared_timed_mutex`, the calling thread does not own the mutex.
+>
+> *Effects:*
+>
+> Attempts to obtain ownership of the mutex for the calling thread
+> without blocking. If ownership is not obtained, there is no effect and
+> `try_lock()` immediately returns. An implementation may fail to obtain
+> the lock even if it is not held by any other thread.
+>
+> \[*Note 33*: This spurious failure is normally uncommon, but allows
+> interesting implementations based on a simple compare and
+> exchange\[atomics\]. — *end note*\]
+>
+> An implementation should ensure that `try_lock()` does not
+> consistently return `false` in the absence of contending mutex
+> acquisitions.
+>
+> If `try_lock()` returns `true`, prior `unlock()` operations on the
+> same object \[intro.multithread\] this operation.
+>
+> \[*Note 34*: Since `lock()` does not synchronize with a failed
+> subsequent `try_lock()`, the visibility rules are weak enough that
+> little would be known about the state after a failure, even in the
+> absence of spurious failures. — *end note*\]
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if ownership was obtained, otherwise `false`.
+>
+> *Throws:*
+>
+> Nothing.
 
 The expression `m.unlock()` is well-formed and has the following
 semantics:
 
-***Preconditions:***
-
-The calling thread owns the mutex.
-
-***Effects:***
-
-Releases the calling thread’s ownership of the mutex.
-
-.
-
-This operation synchronizes with\[intro.multithread\] subsequent lock
-operations that obtain ownership on the same object.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The calling thread owns the mutex.
+>
+> *Effects:*
+>
+> Releases the calling thread’s ownership of the mutex.
+>
+> .
+>
+> This operation synchronizes with\[intro.multithread\] subsequent lock
+> operations that obtain ownership on the same object.
+>
+> *Throws:*
+>
+> Nothing.
 
 ##### Class `mutex` <a id="thread.mutex.class">[thread.mutex.class]</a>
 
@@ -5129,7 +5155,7 @@ another thread to acquire ownership of that object will fail (for
 `try_lock()`) or block (for `lock()`) until the owning thread has
 released ownership with a call to `unlock()`.
 
-\[*Note 6*: After a thread `A` has called `unlock()`, releasing a mutex,
+\[*Note 4*: After a thread `A` has called `unlock()`, releasing a mutex,
 it is possible for another thread `B` to lock the same mutex, observe
 that it is no longer in use, unlock it, and destroy it, before thread
 `A` appears to have returned from its unlock call. Implementations are
@@ -5141,7 +5167,7 @@ used to protect the reference count. — *end note*\]
 The class `mutex` meets all of the mutex requirements
 [thread.mutex.requirements]. It is a standard-layout class [class.prop].
 
-\[*Note 7*: A program can deadlock if the thread that owns a `mutex`
+\[*Note 5*: A program can deadlock if the thread that owns a `mutex`
 object calls `lock()` on that object. If the implementation can detect
 the deadlock, a `resource_deadlock_would_occur` error condition might be
 observed. — *end note*\]
@@ -5209,75 +5235,78 @@ of a mutex type, `rel_time` denotes an object of an instantiation of
 `duration` [time.duration], and `abs_time` denotes an object of an
 instantiation of `time_point` [time.point].
 
-\[*Note 8*: The timed mutex types meet the *Cpp17TimedLockable*
+\[*Note 6*: The timed mutex types meet the *Cpp17TimedLockable*
 requirements [thread.req.lockable.timed]. — *end note*\]
 
 The expression `m.try_lock_for(rel_time)` is well-formed and has the
 following semantics:
 
-***Preconditions:***
-
-If `m` is of type `timed_mutex` or `shared_timed_mutex`, the calling
-thread does not own the mutex.
-
-***Effects:***
-
-The function attempts to obtain ownership of the mutex within the
-relative timeout\[thread.req.timing\] specified by `rel_time`. If the
-time specified by `rel_time` is less than or equal to `rel_time.zero()`,
-the function attempts to obtain ownership without blocking (as if by
-calling `try_lock()`). The function returns within the timeout specified
-by `rel_time` only if it has obtained ownership of the mutex object.
-
-\[*Note 9*: As with `try_lock()`, there is no guarantee that ownership
-will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
-
-If `try_lock_for()` returns `true`, prior `unlock()` operations on the
-same object \[intro.multithread\] this operation.
-
-`bool`.
-
-***Returns:***
-
-`true` if ownership was obtained, otherwise `false`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
+> *Preconditions:*
+>
+> If `m` is of type `timed_mutex` or `shared_timed_mutex`, the calling
+> thread does not own the mutex.
+>
+> *Effects:*
+>
+> The function attempts to obtain ownership of the mutex within the
+> relative timeout\[thread.req.timing\] specified by `rel_time`. If the
+> time specified by `rel_time` is less than or equal to
+> `rel_time.zero()`, the function attempts to obtain ownership without
+> blocking (as if by calling `try_lock()`). The function returns within
+> the timeout specified by `rel_time` only if it has obtained ownership
+> of the mutex object.
+>
+> \[*Note 35*: As with `try_lock()`, there is no guarantee that
+> ownership will be obtained if the lock is available, but
+> implementations are expected to make a strong effort to do
+> so. — *end note*\]
+>
+> If `try_lock_for()` returns `true`, prior `unlock()` operations on the
+> same object \[intro.multithread\] this operation.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if ownership was obtained, otherwise `false`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
 
 The expression `m.try_lock_until(abs_time)` is well-formed and has the
 following semantics:
 
-***Preconditions:***
-
-If `m` is of type `timed_mutex` or `shared_timed_mutex`, the calling
-thread does not own the mutex.
-
-***Effects:***
-
-The function attempts to obtain ownership of the mutex. If `abs_time`
-has already passed, the function attempts to obtain ownership without
-blocking (as if by calling `try_lock()`). The function returns before
-the absolute timeout\[thread.req.timing\] specified by `abs_time` only
-if it has obtained ownership of the mutex object.
-
-\[*Note 10*: As with `try_lock()`, there is no guarantee that ownership
-will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
-
-If `try_lock_until()` returns `true`, prior `unlock()` operations on the
-same object \[intro.multithread\] this operation.
-
-`bool`.
-
-***Returns:***
-
-`true` if ownership was obtained, otherwise `false`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
+> *Preconditions:*
+>
+> If `m` is of type `timed_mutex` or `shared_timed_mutex`, the calling
+> thread does not own the mutex.
+>
+> *Effects:*
+>
+> The function attempts to obtain ownership of the mutex. If `abs_time`
+> has already passed, the function attempts to obtain ownership without
+> blocking (as if by calling `try_lock()`). The function returns before
+> the absolute timeout\[thread.req.timing\] specified by `abs_time` only
+> if it has obtained ownership of the mutex object.
+>
+> \[*Note 36*: As with `try_lock()`, there is no guarantee that
+> ownership will be obtained if the lock is available, but
+> implementations are expected to make a strong effort to do
+> so. — *end note*\]
+>
+> If `try_lock_until()` returns `true`, prior `unlock()` operations on
+> the same object \[intro.multithread\] this operation.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if ownership was obtained, otherwise `false`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
 
 ##### Class `timed_mutex` <a id="thread.timedmutex.class">[thread.timedmutex.class]</a>
 
@@ -5394,7 +5423,7 @@ types [thread.mutex.requirements.mutex] and additionally meet the
 requirements set out below. In this description, `m` denotes an object
 of a shared mutex type.
 
-\[*Note 11*: The shared mutex types meet the *Cpp17SharedLockable*
+\[*Note 7*: The shared mutex types meet the *Cpp17SharedLockable*
 requirements [thread.req.lockable.shared]. — *end note*\]
 
 In addition to the exclusive lock ownership mode specified in 
@@ -5413,83 +5442,84 @@ agents releasing their shared lock.
 The expression `m.lock_shared()` is well-formed and has the following
 semantics:
 
-***Preconditions:***
-
-The calling thread has no ownership of the mutex.
-
-***Effects:***
-
-Blocks the calling thread until shared ownership of the mutex can be
-obtained for the calling thread. If an exception is thrown then a shared
-lock has not been acquired for the current thread.
-
-Prior `unlock()` operations on the same object synchronize
-with\[intro.multithread\] this operation.
-
-***Ensures:***
-
-The calling thread has a shared lock on the mutex.
-
-.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if the thread does not have the privilege
-  to perform the operation.
-
-- `resource_deadlock_would_occur` — if the implementation detects that a
-  deadlock would occur.
+> *Preconditions:*
+>
+> The calling thread has no ownership of the mutex.
+>
+> *Effects:*
+>
+> Blocks the calling thread until shared ownership of the mutex can be
+> obtained for the calling thread. If an exception is thrown then a
+> shared lock has not been acquired for the current thread.
+>
+> Prior `unlock()` operations on the same object synchronize
+> with\[intro.multithread\] this operation.
+>
+> *Ensures:*
+>
+> The calling thread has a shared lock on the mutex.
+>
+> .
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if the thread does not have the
+>   privilege to perform the operation.
+>
+> - `resource_deadlock_would_occur` — if the implementation detects that
+>   a deadlock would occur.
 
 The expression `m.unlock_shared()` is well-formed and has the following
 semantics:
 
-***Preconditions:***
-
-The calling thread holds a shared lock on the mutex.
-
-***Effects:***
-
-Releases a shared lock on the mutex held by the calling thread.
-
-.
-
-This operation synchronizes with\[intro.multithread\] subsequent
-`lock()` operations that obtain ownership on the same object.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The calling thread holds a shared lock on the mutex.
+>
+> *Effects:*
+>
+> Releases a shared lock on the mutex held by the calling thread.
+>
+> .
+>
+> This operation synchronizes with\[intro.multithread\] subsequent
+> `lock()` operations that obtain ownership on the same object.
+>
+> *Throws:*
+>
+> Nothing.
 
 The expression `m.try_lock_shared()` is well-formed and has the
 following semantics:
 
-***Preconditions:***
-
-The calling thread has no ownership of the mutex.
-
-***Effects:***
-
-Attempts to obtain shared ownership of the mutex for the calling thread
-without blocking. If shared ownership is not obtained, there is no
-effect and `try_lock_shared()` immediately returns. An implementation
-may fail to obtain the lock even if it is not held by any other thread.
-
-If `try_lock_shared()` returns `true`, prior `unlock()` operations on
-the same object synchronize with\[intro.multithread\] this operation.
-
-`bool`.
-
-***Returns:***
-
-`true` if the shared lock was acquired, otherwise `false`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The calling thread has no ownership of the mutex.
+>
+> *Effects:*
+>
+> Attempts to obtain shared ownership of the mutex for the calling
+> thread without blocking. If shared ownership is not obtained, there is
+> no effect and `try_lock_shared()` immediately returns. An
+> implementation may fail to obtain the lock even if it is not held by
+> any other thread.
+>
+> If `try_lock_shared()` returns `true`, prior `unlock()` operations on
+> the same object synchronize with\[intro.multithread\] this operation.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if the shared lock was acquired, otherwise `false`.
+>
+> *Throws:*
+>
+> Nothing.
 
 ##### Class `shared_mutex` <a id="thread.sharedmutex.class">[thread.sharedmutex.class]</a>
 
@@ -5551,82 +5581,86 @@ object of a shared timed mutex type, `rel_time` denotes an object of an
 instantiation of `duration` [time.duration], and `abs_time` denotes an
 object of an instantiation of `time_point` [time.point].
 
-\[*Note 12*: The shared timed mutex types meet the
+\[*Note 8*: The shared timed mutex types meet the
 *Cpp17SharedTimedLockable* requirements
 [thread.req.lockable.shared.timed]. — *end note*\]
 
 The expression `m.try_lock_shared_for(rel_time)` is well-formed and has
 the following semantics:
 
-***Preconditions:***
-
-The calling thread has no ownership of the mutex.
-
-***Effects:***
-
-Attempts to obtain shared lock ownership for the calling thread within
-the relative timeout\[thread.req.timing\] specified by `rel_time`. If
-the time specified by `rel_time` is less than or equal to
-`rel_time.zero()`, the function attempts to obtain ownership without
-blocking (as if by calling `try_lock_shared()`). The function returns
-within the timeout specified by `rel_time` only if it has obtained
-shared ownership of the mutex object.
-
-\[*Note 13*: As with `try_lock()`, there is no guarantee that ownership
-will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
-
-If an exception is thrown then a shared lock has not been acquired for
-the current thread.
-
-If `try_lock_shared_for()` returns `true`, prior `unlock()` operations
-on the same object synchronize with\[intro.multithread\] this operation.
-
-`bool`.
-
-***Returns:***
-
-`true` if the shared lock was acquired, otherwise `false`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
+> *Preconditions:*
+>
+> The calling thread has no ownership of the mutex.
+>
+> *Effects:*
+>
+> Attempts to obtain shared lock ownership for the calling thread within
+> the relative timeout\[thread.req.timing\] specified by `rel_time`. If
+> the time specified by `rel_time` is less than or equal to
+> `rel_time.zero()`, the function attempts to obtain ownership without
+> blocking (as if by calling `try_lock_shared()`). The function returns
+> within the timeout specified by `rel_time` only if it has obtained
+> shared ownership of the mutex object.
+>
+> \[*Note 37*: As with `try_lock()`, there is no guarantee that
+> ownership will be obtained if the lock is available, but
+> implementations are expected to make a strong effort to do
+> so. — *end note*\]
+>
+> If an exception is thrown then a shared lock has not been acquired for
+> the current thread.
+>
+> If `try_lock_shared_for()` returns `true`, prior `unlock()` operations
+> on the same object synchronize with\[intro.multithread\] this
+> operation.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if the shared lock was acquired, otherwise `false`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
 
 The expression `m.try_lock_shared_until(abs_time)` is well-formed and
 has the following semantics:
 
-***Preconditions:***
-
-The calling thread has no ownership of the mutex.
-
-***Effects:***
-
-The function attempts to obtain shared ownership of the mutex. If
-`abs_time` has already passed, the function attempts to obtain shared
-ownership without blocking (as if by calling `try_lock_shared()`). The
-function returns before the absolute timeout\[thread.req.timing\]
-specified by `abs_time` only if it has obtained shared ownership of the
-mutex object.
-
-\[*Note 14*: As with `try_lock()`, there is no guarantee that ownership
-will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
-
-If an exception is thrown then a shared lock has not been acquired for
-the current thread.
-
-If `try_lock_shared_until()` returns `true`, prior `unlock()` operations
-on the same object synchronize with\[intro.multithread\] this operation.
-
-`bool`.
-
-***Returns:***
-
-`true` if the shared lock was acquired, otherwise `false`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
+> *Preconditions:*
+>
+> The calling thread has no ownership of the mutex.
+>
+> *Effects:*
+>
+> The function attempts to obtain shared ownership of the mutex. If
+> `abs_time` has already passed, the function attempts to obtain shared
+> ownership without blocking (as if by calling `try_lock_shared()`). The
+> function returns before the absolute timeout\[thread.req.timing\]
+> specified by `abs_time` only if it has obtained shared ownership of
+> the mutex object.
+>
+> \[*Note 38*: As with `try_lock()`, there is no guarantee that
+> ownership will be obtained if the lock is available, but
+> implementations are expected to make a strong effort to do
+> so. — *end note*\]
+>
+> If an exception is thrown then a shared lock has not been acquired for
+> the current thread.
+>
+> If `try_lock_shared_until()` returns `true`, prior `unlock()`
+> operations on the same object synchronize with\[intro.multithread\]
+> this operation.
+>
+> `bool`.
+>
+> *Returns:*
+>
+> `true` if the shared lock was acquired, otherwise `false`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
 
 ##### Class `shared_timed_mutex` <a id="thread.sharedtimedmutex.class">[thread.sharedtimedmutex.class]</a>
 
@@ -5690,7 +5724,7 @@ lock is said to *own* a lockable object if it is currently managing the
 ownership of that lockable object for an execution agent. A lock does
 not manage the lifetime of the lockable object it references.
 
-\[*Note 15*: Locks are intended to ease the burden of unlocking the
+\[*Note 9*: Locks are intended to ease the burden of unlocking the
 lockable object under both normal and exceptional
 circumstances. — *end note*\]
 
@@ -5745,33 +5779,33 @@ object referenced by `pm` does not exist for the entire lifetime of the
 explicit lock_guard(mutex_type& m);
 ```
 
-***Effects:***
-
-Initializes `pm` with `m`. Calls `m.lock()`.
+> *Effects:*
+>
+> Initializes `pm` with `m`. Calls `m.lock()`.
 
 ``` cpp
 lock_guard(mutex_type& m, adopt_lock_t);
 ```
 
-***Preconditions:***
-
-The calling thread holds a non-shared lock on `m`.
-
-***Effects:***
-
-Initializes `pm` with `m`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The calling thread holds a non-shared lock on `m`.
+>
+> *Effects:*
+>
+> Initializes `pm` with `m`.
+>
+> *Throws:*
+>
+> Nothing.
 
 ``` cpp
 ~lock_guard();
 ```
 
-***Effects:***
-
-Equivalent to: `pm.unlock()`
+> *Effects:*
+>
+> Equivalent to: `pm.unlock()`
 
 #### Class template `scoped_lock` <a id="thread.lock.scoped">[thread.lock.scoped]</a>
 
@@ -5815,35 +5849,35 @@ objects referenced by `pm` do not exist for the entire lifetime of the
 explicit scoped_lock(MutexTypes&... m);
 ```
 
-***Effects:***
-
-Initializes `pm` with `tie(m...)`. Then if `sizeof...(MutexTypes)` is
-`0`, no effects. Otherwise if `sizeof...(MutexTypes)` is `1`, then
-`m.lock()`. Otherwise, `lock(m...)`.
+> *Effects:*
+>
+> Initializes `pm` with `tie(m...)`. Then if `sizeof...(MutexTypes)` is
+> `0`, no effects. Otherwise if `sizeof...(MutexTypes)` is `1`, then
+> `m.lock()`. Otherwise, `lock(m...)`.
 
 ``` cpp
 explicit scoped_lock(adopt_lock_t, MutexTypes&... m);
 ```
 
-***Preconditions:***
-
-The calling thread holds a non-shared lock on each element of `m`.
-
-***Effects:***
-
-Initializes `pm` with `tie(m...)`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The calling thread holds a non-shared lock on each element of `m`.
+>
+> *Effects:*
+>
+> Initializes `pm` with `tie(m...)`.
+>
+> *Throws:*
+>
+> Nothing.
 
 ``` cpp
 ~scoped_lock();
 ```
 
-***Effects:***
-
-For all `i` in \[`0`, `sizeof...(MutexTypes)`), `get<i>(pm).unlock()`.
+> *Effects:*
+>
+> For all `i` in \[`0`, `sizeof...(MutexTypes)`), `get<i>(pm).unlock()`.
 
 #### Class template `unique_lock` <a id="thread.lock.unique">[thread.lock.unique]</a>
 
@@ -5912,7 +5946,7 @@ remaining lifetime [basic.life] of the `unique_lock` object. The
 supplied `Mutex` type shall meet the *Cpp17BasicLockable* requirements
 [thread.req.lockable.basic].
 
-\[*Note 16*: `unique_lock<Mutex>` meets the *Cpp17BasicLockable*
+\[*Note 10*: `unique_lock<Mutex>` meets the *Cpp17BasicLockable*
 requirements. If `Mutex` meets the *Cpp17Lockable* requirements
 [thread.req.lockable.req], `unique_lock<Mutex>` also meets the
 *Cpp17Lockable* requirements; if `Mutex` meets the *Cpp17TimedLockable*
@@ -5925,139 +5959,140 @@ meets the *Cpp17TimedLockable* requirements. — *end note*\]
 unique_lock() noexcept;
 ```
 
-***Ensures:***
-
-`pm == nullptr` and `owns == false`.
+> *Ensures:*
+>
+> `pm == nullptr` and `owns == false`.
 
 ``` cpp
 explicit unique_lock(mutex_type& m);
 ```
 
-***Effects:***
-
-Calls `m.lock()`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == true`.
+> *Effects:*
+>
+> Calls `m.lock()`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == true`.
 
 ``` cpp
 unique_lock(mutex_type& m, defer_lock_t) noexcept;
 ```
 
-***Ensures:***
-
-`pm == addressof(m)` and `owns == false`.
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == false`.
 
 ``` cpp
 unique_lock(mutex_type& m, try_to_lock_t);
 ```
 
-***Preconditions:***
-
-The supplied `Mutex` type meets the *Cpp17Lockable*
-requirements\[thread.req.lockable.req\].
-
-***Effects:***
-
-Calls `m.try_lock()`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == res`, where `res` is the value
-returned by the call to `m.try_lock()`.
+> *Preconditions:*
+>
+> The supplied `Mutex` type meets the *Cpp17Lockable*
+> requirements\[thread.req.lockable.req\].
+>
+> *Effects:*
+>
+> Calls `m.try_lock()`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == res`, where `res` is the value
+> returned by the call to `m.try_lock()`.
 
 ``` cpp
 unique_lock(mutex_type& m, adopt_lock_t);
 ```
 
-***Preconditions:***
-
-The calling thread holds a non-shared lock on `m`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == true`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> The calling thread holds a non-shared lock on `m`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == true`.
+>
+> *Throws:*
+>
+> Nothing.
 
 ``` cpp
 template<class Clock, class Duration>
   unique_lock(mutex_type& m, const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Preconditions:***
-
-The supplied `Mutex` type meets the *Cpp17TimedLockable*
-requirements\[thread.req.lockable.timed\].
-
-***Effects:***
-
-Calls `m.try_lock_until(abs_time)`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == res`, where `res` is the value
-returned by the call to `m.try_lock_until(abs_time)`.
+> *Preconditions:*
+>
+> The supplied `Mutex` type meets the *Cpp17TimedLockable*
+> requirements\[thread.req.lockable.timed\].
+>
+> *Effects:*
+>
+> Calls `m.try_lock_until(abs_time)`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == res`, where `res` is the value
+> returned by the call to `m.try_lock_until(abs_time)`.
 
 ``` cpp
 template<class Rep, class Period>
   unique_lock(mutex_type& m, const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Preconditions:***
-
-The supplied `Mutex` type meets the *Cpp17TimedLockable*
-requirements\[thread.req.lockable.timed\].
-
-***Effects:***
-
-Calls `m.try_lock_for(rel_time)`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == res`, where `res` is the value
-returned by the call to `m.try_lock_for(rel_time)`.
+> *Preconditions:*
+>
+> The supplied `Mutex` type meets the *Cpp17TimedLockable*
+> requirements\[thread.req.lockable.timed\].
+>
+> *Effects:*
+>
+> Calls `m.try_lock_for(rel_time)`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == res`, where `res` is the value
+> returned by the call to `m.try_lock_for(rel_time)`.
 
 ``` cpp
 unique_lock(unique_lock&& u) noexcept;
 ```
 
-***Ensures:***
-
-`pm == u_p.pm` and `owns == u_p.owns` (where `u_p` is the state of `u`
-just prior to this construction), `u.pm == 0` and `u.owns == false`.
+> *Ensures:*
+>
+> `pm == u_p.pm` and `owns == u_p.owns` (where `u_p` is the state of `u`
+> just prior to this construction), `u.pm == 0` and `u.owns == false`.
 
 ``` cpp
 unique_lock& operator=(unique_lock&& u);
 ```
 
-***Effects:***
-
-If `owns` calls `pm->unlock()`.
-
-***Ensures:***
-
-`pm == u_p.pm` and `owns == u_p.owns` (where `u_p` is the state of `u`
-just prior to this construction), `u.pm == 0` and `u.owns == false`.
-
-\[*Note 17*: With a recursive mutex it is possible for both `*this` and
-`u` to own the same mutex before the assignment. In this case, `*this`
-will own the mutex after the assignment and `u` will not. — *end note*\]
-
-***Throws:***
-
-Nothing.
+> *Effects:*
+>
+> If `owns` calls `pm->unlock()`.
+>
+> *Ensures:*
+>
+> `pm == u_p.pm` and `owns == u_p.owns` (where `u_p` is the state of `u`
+> just prior to this construction), `u.pm == 0` and `u.owns == false`.
+>
+> \[*Note 39*: With a recursive mutex it is possible for both `*this`
+> and `u` to own the same mutex before the assignment. In this case,
+> `*this` will own the mutex after the assignment and `u` will
+> not. — *end note*\]
+>
+> *Throws:*
+>
+> Nothing.
 
 ``` cpp
 ~unique_lock();
 ```
 
-***Effects:***
-
-If `owns` calls `pm->unlock()`.
+> *Effects:*
+>
+> If `owns` calls `pm->unlock()`.
 
 ##### Locking <a id="thread.lock.unique.locking">[thread.lock.unique.locking]</a>
 
@@ -6065,144 +6100,144 @@ If `owns` calls `pm->unlock()`.
 void lock();
 ```
 
-***Effects:***
-
-As if by `pm->lock()`.
-
-***Ensures:***
-
-`owns == true`.
-
-***Throws:***
-
-Any exception thrown by `pm->lock()`. `system_error` when an exception
-is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Effects:*
+>
+> As if by `pm->lock()`.
+>
+> *Ensures:*
+>
+> `owns == true`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->lock()`. `system_error` when an exception
+> is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 bool try_lock();
 ```
 
-***Preconditions:***
-
-The supplied `Mutex` meets the *Cpp17Lockable*
-requirements\[thread.req.lockable.req\].
-
-***Effects:***
-
-As if by `pm->try_lock()`.
-
-***Ensures:***
-
-`owns == res`, where `res` is the value returned by `pm->try_lock()`.
-
-***Returns:***
-
-The value returned by `pm->try_lock()`.
-
-***Throws:***
-
-Any exception thrown by `pm->try_lock()`. `system_error` when an
-exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Preconditions:*
+>
+> The supplied `Mutex` meets the *Cpp17Lockable*
+> requirements\[thread.req.lockable.req\].
+>
+> *Effects:*
+>
+> As if by `pm->try_lock()`.
+>
+> *Ensures:*
+>
+> `owns == res`, where `res` is the value returned by `pm->try_lock()`.
+>
+> *Returns:*
+>
+> The value returned by `pm->try_lock()`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->try_lock()`. `system_error` when an
+> exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 template<class Clock, class Duration>
   bool try_lock_until(const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Preconditions:***
-
-The supplied `Mutex` type meets the *Cpp17TimedLockable*
-requirements\[thread.req.lockable.timed\].
-
-***Effects:***
-
-As if by `pm->try_lock_until(abs_time)`.
-
-***Ensures:***
-
-`owns == res`, where `res` is the value returned by
-`pm->try_lock_until(abs_time)`.
-
-***Returns:***
-
-The value returned by `pm->try_lock_until(abs_time)`.
-
-***Throws:***
-
-Any exception thrown by `pm->try_lock_until(abstime)`. `system_error`
-when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Preconditions:*
+>
+> The supplied `Mutex` type meets the *Cpp17TimedLockable*
+> requirements\[thread.req.lockable.timed\].
+>
+> *Effects:*
+>
+> As if by `pm->try_lock_until(abs_time)`.
+>
+> *Ensures:*
+>
+> `owns == res`, where `res` is the value returned by
+> `pm->try_lock_until(abs_time)`.
+>
+> *Returns:*
+>
+> The value returned by `pm->try_lock_until(abs_time)`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->try_lock_until(abstime)`. `system_error`
+> when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 template<class Rep, class Period>
   bool try_lock_for(const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Preconditions:***
-
-The supplied `Mutex` type meets the *Cpp17TimedLockable*
-requirements\[thread.req.lockable.timed\].
-
-***Effects:***
-
-As if by `pm->try_lock_for(rel_time)`.
-
-***Ensures:***
-
-`owns == res`, where `res` is the value returned by
-`pm->try_lock_for(rel_time)`.
-
-***Returns:***
-
-The value returned by `pm->try_lock_for(rel_time)`.
-
-***Throws:***
-
-Any exception thrown by `pm->try_lock_for(rel_time)`. `system_error`
-when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Preconditions:*
+>
+> The supplied `Mutex` type meets the *Cpp17TimedLockable*
+> requirements\[thread.req.lockable.timed\].
+>
+> *Effects:*
+>
+> As if by `pm->try_lock_for(rel_time)`.
+>
+> *Ensures:*
+>
+> `owns == res`, where `res` is the value returned by
+> `pm->try_lock_for(rel_time)`.
+>
+> *Returns:*
+>
+> The value returned by `pm->try_lock_for(rel_time)`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->try_lock_for(rel_time)`. `system_error`
+> when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 void unlock();
 ```
 
-***Effects:***
-
-As if by `pm->unlock()`.
-
-***Ensures:***
-
-`owns == false`.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if on entry `owns` is `false`.
+> *Effects:*
+>
+> As if by `pm->unlock()`.
+>
+> *Ensures:*
+>
+> `owns == false`.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if on entry `owns` is `false`.
 
 ##### Modifiers <a id="thread.lock.unique.mod">[thread.lock.unique.mod]</a>
 
@@ -6210,30 +6245,30 @@ As if by `pm->unlock()`.
 void swap(unique_lock& u) noexcept;
 ```
 
-***Effects:***
-
-Swaps the data members of `*this` and `u`.
+> *Effects:*
+>
+> Swaps the data members of `*this` and `u`.
 
 ``` cpp
 mutex_type* release() noexcept;
 ```
 
-***Ensures:***
-
-`pm == 0` and `owns == false`.
-
-***Returns:***
-
-The previous value of `pm`.
+> *Ensures:*
+>
+> `pm == 0` and `owns == false`.
+>
+> *Returns:*
+>
+> The previous value of `pm`.
 
 ``` cpp
 template<class Mutex>
   void swap(unique_lock<Mutex>& x, unique_lock<Mutex>& y) noexcept;
 ```
 
-***Effects:***
-
-As if by `x.swap(y)`.
+> *Effects:*
+>
+> As if by `x.swap(y)`.
 
 ##### Observers <a id="thread.lock.unique.obs">[thread.lock.unique.obs]</a>
 
@@ -6241,25 +6276,25 @@ As if by `x.swap(y)`.
 bool owns_lock() const noexcept;
 ```
 
-***Returns:***
-
-`owns`.
+> *Returns:*
+>
+> `owns`.
 
 ``` cpp
 explicit operator bool() const noexcept;
 ```
 
-***Returns:***
-
-`owns`.
+> *Returns:*
+>
+> `owns`.
 
 ``` cpp
 mutex_type *mutex() const noexcept;
 ```
 
-***Returns:***
-
-`pm`.
+> *Returns:*
+>
+> `pm`.
 
 #### Class template `shared_lock` <a id="thread.lock.shared">[thread.lock.shared]</a>
 
@@ -6326,7 +6361,7 @@ remaining lifetime [basic.life] of the `shared_lock` object. The
 supplied `Mutex` type shall meet the *Cpp17SharedLockable* requirements
 [thread.req.lockable.shared].
 
-\[*Note 18*: `shared_lock<Mutex>` meets the *Cpp17Lockable* requirements
+\[*Note 11*: `shared_lock<Mutex>` meets the *Cpp17Lockable* requirements
 [thread.req.lockable.req]. If `Mutex` meets the
 *Cpp17Shared\\TimedLockable* requirements
 [thread.req.lockable.shared.timed], `shared_lock<Mutex>` also meets the
@@ -6339,54 +6374,54 @@ supplied `Mutex` type shall meet the *Cpp17SharedLockable* requirements
 shared_lock() noexcept;
 ```
 
-***Ensures:***
-
-`pm == nullptr` and `owns == false`.
+> *Ensures:*
+>
+> `pm == nullptr` and `owns == false`.
 
 ``` cpp
 explicit shared_lock(mutex_type& m);
 ```
 
-***Effects:***
-
-Calls `m.lock_shared()`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == true`.
+> *Effects:*
+>
+> Calls `m.lock_shared()`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == true`.
 
 ``` cpp
 shared_lock(mutex_type& m, defer_lock_t) noexcept;
 ```
 
-***Ensures:***
-
-`pm == addressof(m)` and `owns == false`.
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == false`.
 
 ``` cpp
 shared_lock(mutex_type& m, try_to_lock_t);
 ```
 
-***Effects:***
-
-Calls `m.try_lock_shared()`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == res` where `res` is the value returned
-by the call to `m.try_lock_shared()`.
+> *Effects:*
+>
+> Calls `m.try_lock_shared()`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == res` where `res` is the value
+> returned by the call to `m.try_lock_shared()`.
 
 ``` cpp
 shared_lock(mutex_type& m, adopt_lock_t);
 ```
 
-***Preconditions:***
-
-The calling thread holds a shared lock on `m`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == true`.
+> *Preconditions:*
+>
+> The calling thread holds a shared lock on `m`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == true`.
 
 ``` cpp
 template<class Clock, class Duration>
@@ -6394,19 +6429,19 @@ template<class Clock, class Duration>
               const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Preconditions:***
-
-`Mutex` meets the *Cpp17SharedTimedLockable*
-requirements\[thread.req.lockable.shared.timed\].
-
-***Effects:***
-
-Calls `m.try_lock_shared_until(abs_time)`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == res` where `res` is the value returned
-by the call to `m.try_lock_shared_until(abs_time)`.
+> *Preconditions:*
+>
+> `Mutex` meets the *Cpp17SharedTimedLockable*
+> requirements\[thread.req.lockable.shared.timed\].
+>
+> *Effects:*
+>
+> Calls `m.try_lock_shared_until(abs_time)`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == res` where `res` is the value
+> returned by the call to `m.try_lock_shared_until(abs_time)`.
 
 ``` cpp
 template<class Rep, class Period>
@@ -6414,51 +6449,51 @@ template<class Rep, class Period>
               const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Preconditions:***
-
-`Mutex` meets the *Cpp17SharedTimedLockable*
-requirements\[thread.req.lockable.shared.timed\].
-
-***Effects:***
-
-Calls `m.try_lock_shared_for(rel_time)`.
-
-***Ensures:***
-
-`pm == addressof(m)` and `owns == res` where `res` is the value returned
-by the call to `m.try_lock_shared_for(rel_time)`.
+> *Preconditions:*
+>
+> `Mutex` meets the *Cpp17SharedTimedLockable*
+> requirements\[thread.req.lockable.shared.timed\].
+>
+> *Effects:*
+>
+> Calls `m.try_lock_shared_for(rel_time)`.
+>
+> *Ensures:*
+>
+> `pm == addressof(m)` and `owns == res` where `res` is the value
+> returned by the call to `m.try_lock_shared_for(rel_time)`.
 
 ``` cpp
 ~shared_lock();
 ```
 
-***Effects:***
-
-If `owns` calls `pm->unlock_shared()`.
+> *Effects:*
+>
+> If `owns` calls `pm->unlock_shared()`.
 
 ``` cpp
 shared_lock(shared_lock&& sl) noexcept;
 ```
 
-***Ensures:***
-
-`pm == sl_p.pm` and `owns == sl_p.owns` (where `sl_p` is the state of
-`sl` just prior to this construction), `sl.pm == nullptr` and
-`sl.owns == false`.
+> *Ensures:*
+>
+> `pm == sl_p.pm` and `owns == sl_p.owns` (where `sl_p` is the state of
+> `sl` just prior to this construction), `sl.pm == nullptr` and
+> `sl.owns == false`.
 
 ``` cpp
 shared_lock& operator=(shared_lock&& sl) noexcept;
 ```
 
-***Effects:***
-
-If `owns` calls `pm->unlock_shared()`.
-
-***Ensures:***
-
-`pm == sl_p.pm` and `owns == sl_p.owns` (where `sl_p` is the state of
-`sl` just prior to this assignment), `sl.pm == nullptr` and
-`sl.owns == false`.
+> *Effects:*
+>
+> If `owns` calls `pm->unlock_shared()`.
+>
+> *Ensures:*
+>
+> `pm == sl_p.pm` and `owns == sl_p.owns` (where `sl_p` is the state of
+> `sl` just prior to this assignment), `sl.pm == nullptr` and
+> `sl.owns == false`.
 
 ##### Locking <a id="thread.lock.shared.locking">[thread.lock.shared.locking]</a>
 
@@ -6466,140 +6501,141 @@ If `owns` calls `pm->unlock_shared()`.
 void lock();
 ```
 
-***Effects:***
-
-As if by `pm->lock_shared()`.
-
-***Ensures:***
-
-`owns == true`.
-
-***Throws:***
-
-Any exception thrown by `pm->lock_shared()`. `system_error` when an
-exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Effects:*
+>
+> As if by `pm->lock_shared()`.
+>
+> *Ensures:*
+>
+> `owns == true`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->lock_shared()`. `system_error` when an
+> exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 bool try_lock();
 ```
 
-***Effects:***
-
-As if by `pm->try_lock_shared()`.
-
-***Ensures:***
-
-`owns == res`, where `res` is the value returned by the call to
-`pm->try_lock_shared()`.
-
-***Returns:***
-
-The value returned by the call to `pm->try_lock_shared()`.
-
-***Throws:***
-
-Any exception thrown by `pm->try_lock_shared()`. `system_error` when an
-exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Effects:*
+>
+> As if by `pm->try_lock_shared()`.
+>
+> *Ensures:*
+>
+> `owns == res`, where `res` is the value returned by the call to
+> `pm->try_lock_shared()`.
+>
+> *Returns:*
+>
+> The value returned by the call to `pm->try_lock_shared()`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->try_lock_shared()`. `system_error` when
+> an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 template<class Clock, class Duration>
   bool try_lock_until(const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Preconditions:***
-
-`Mutex` meets the *Cpp17SharedTimedLockable*
-requirements\[thread.req.lockable.shared.timed\].
-
-***Effects:***
-
-As if by `pm->try_lock_shared_until(abs_time)`.
-
-***Ensures:***
-
-`owns == res`, where `res` is the value returned by the call to
-`pm->try_lock_shared_until(abs_time)`.
-
-***Returns:***
-
-The value returned by the call to `pm->try_lock_shared_until(abs_time)`.
-
-***Throws:***
-
-Any exception thrown by `pm->try_lock_shared_until(abs_time)`.
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Preconditions:*
+>
+> `Mutex` meets the *Cpp17SharedTimedLockable*
+> requirements\[thread.req.lockable.shared.timed\].
+>
+> *Effects:*
+>
+> As if by `pm->try_lock_shared_until(abs_time)`.
+>
+> *Ensures:*
+>
+> `owns == res`, where `res` is the value returned by the call to
+> `pm->try_lock_shared_until(abs_time)`.
+>
+> *Returns:*
+>
+> The value returned by the call to
+> `pm->try_lock_shared_until(abs_time)`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->try_lock_shared_until(abs_time)`.
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 template<class Rep, class Period>
   bool try_lock_for(const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Preconditions:***
-
-`Mutex` meets the *Cpp17SharedTimedLockable*
-requirements\[thread.req.lockable.shared.timed\].
-
-***Effects:***
-
-As if by `pm->try_lock_shared_for(rel_time)`.
-
-***Ensures:***
-
-`owns == res`, where `res` is the value returned by the call to
-`pm->try_lock_shared_for(rel_time)`.
-
-***Returns:***
-
-The value returned by the call to `pm->try_lock_shared_for(rel_time)`.
-
-***Throws:***
-
-Any exception thrown by `pm->try_lock_shared_for(rel_time)`.
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if `pm` is .
-
-- `resource_deadlock_would_occur` — if on entry `owns` is `true`.
+> *Preconditions:*
+>
+> `Mutex` meets the *Cpp17SharedTimedLockable*
+> requirements\[thread.req.lockable.shared.timed\].
+>
+> *Effects:*
+>
+> As if by `pm->try_lock_shared_for(rel_time)`.
+>
+> *Ensures:*
+>
+> `owns == res`, where `res` is the value returned by the call to
+> `pm->try_lock_shared_for(rel_time)`.
+>
+> *Returns:*
+>
+> The value returned by the call to `pm->try_lock_shared_for(rel_time)`.
+>
+> *Throws:*
+>
+> Any exception thrown by `pm->try_lock_shared_for(rel_time)`.
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if `pm` is .
+>
+> - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
 void unlock();
 ```
 
-***Effects:***
-
-As if by `pm->unlock_shared()`.
-
-***Ensures:***
-
-`owns == false`.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `operation_not_permitted` — if on entry `owns` is `false`.
+> *Effects:*
+>
+> As if by `pm->unlock_shared()`.
+>
+> *Ensures:*
+>
+> `owns == false`.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `operation_not_permitted` — if on entry `owns` is `false`.
 
 ##### Modifiers <a id="thread.lock.shared.mod">[thread.lock.shared.mod]</a>
 
@@ -6607,30 +6643,30 @@ As if by `pm->unlock_shared()`.
 void swap(shared_lock& sl) noexcept;
 ```
 
-***Effects:***
-
-Swaps the data members of `*this` and `sl`.
+> *Effects:*
+>
+> Swaps the data members of `*this` and `sl`.
 
 ``` cpp
 mutex_type* release() noexcept;
 ```
 
-***Ensures:***
-
-`pm == nullptr` and `owns == false`.
-
-***Returns:***
-
-The previous value of `pm`.
+> *Ensures:*
+>
+> `pm == nullptr` and `owns == false`.
+>
+> *Returns:*
+>
+> The previous value of `pm`.
 
 ``` cpp
 template<class Mutex>
   void swap(shared_lock<Mutex>& x, shared_lock<Mutex>& y) noexcept;
 ```
 
-***Effects:***
-
-As if by `x.swap(y)`.
+> *Effects:*
+>
+> As if by `x.swap(y)`.
 
 ##### Observers <a id="thread.lock.shared.obs">[thread.lock.shared.obs]</a>
 
@@ -6638,25 +6674,25 @@ As if by `x.swap(y)`.
 bool owns_lock() const noexcept;
 ```
 
-***Returns:***
-
-`owns`.
+> *Returns:*
+>
+> `owns`.
 
 ``` cpp
 explicit operator bool() const noexcept;
 ```
 
-***Returns:***
-
-`owns`.
+> *Returns:*
+>
+> `owns`.
 
 ``` cpp
 mutex_type* mutex() const noexcept;
 ```
 
-***Returns:***
-
-`pm`.
+> *Returns:*
+>
+> `pm`.
 
 ### Generic locking algorithms <a id="thread.lock.algorithm">[thread.lock.algorithm]</a>
 
@@ -6664,51 +6700,51 @@ mutex_type* mutex() const noexcept;
 template<class L1, class L2, class... L3> int try_lock(L1&, L2&, L3&...);
 ```
 
-***Preconditions:***
-
-Each template parameter type meets the *Cpp17Lockable* requirements.
-
-\[*Note 19*: The `unique_lock` class template meets these requirements
-when suitably instantiated. — *end note*\]
-
-***Effects:***
-
-Calls `try_lock()` for each argument in order beginning with the first
-until all arguments have been processed or a call to `try_lock()` fails,
-either by returning `false` or by throwing an exception. If a call to
-`try_lock()` fails, `unlock()` is called for all prior arguments with no
-further calls to `try_lock()`.
-
-***Returns:***
-
-`-1` if all calls to `try_lock()` returned `true`, otherwise a
-zero-based index value that indicates the argument for which
-`try_lock()` returned `false`.
+> *Preconditions:*
+>
+> Each template parameter type meets the *Cpp17Lockable* requirements.
+>
+> \[*Note 40*: The `unique_lock` class template meets these requirements
+> when suitably instantiated. — *end note*\]
+>
+> *Effects:*
+>
+> Calls `try_lock()` for each argument in order beginning with the first
+> until all arguments have been processed or a call to `try_lock()`
+> fails, either by returning `false` or by throwing an exception. If a
+> call to `try_lock()` fails, `unlock()` is called for all prior
+> arguments with no further calls to `try_lock()`.
+>
+> *Returns:*
+>
+> `-1` if all calls to `try_lock()` returned `true`, otherwise a
+> zero-based index value that indicates the argument for which
+> `try_lock()` returned `false`.
 
 ``` cpp
 template<class L1, class L2, class... L3> void lock(L1&, L2&, L3&...);
 ```
 
-***Preconditions:***
-
-Each template parameter type meets the *Cpp17Lockable* requirements.
-
-\[*Note 20*: The `unique_lock` class template meets these requirements
-when suitably instantiated. — *end note*\]
-
-***Effects:***
-
-All arguments are locked via a sequence of calls to `lock()`,
-`try_lock()`, or `unlock()` on each argument. The sequence of calls does
-not result in deadlock, but is otherwise unspecified.
-
-\[*Note 21*: A deadlock avoidance algorithm such as try-and-back-off can
-be used, but the specific algorithm is not specified to avoid
-over-constraining implementations. — *end note*\]
-
-If a call to `lock()` or `try_lock()` throws an exception, `unlock()` is
-called for any argument that had been locked by a call to `lock()` or
-`try_lock()`.
+> *Preconditions:*
+>
+> Each template parameter type meets the *Cpp17Lockable* requirements.
+>
+> \[*Note 41*: The `unique_lock` class template meets these requirements
+> when suitably instantiated. — *end note*\]
+>
+> *Effects:*
+>
+> All arguments are locked via a sequence of calls to `lock()`,
+> `try_lock()`, or `unlock()` on each argument. The sequence of calls
+> does not result in deadlock, but is otherwise unspecified.
+>
+> \[*Note 42*: A deadlock avoidance algorithm such as try-and-back-off
+> can be used, but the specific algorithm is not specified to avoid
+> over-constraining implementations. — *end note*\]
+>
+> If a call to `lock()` or `try_lock()` throws an exception, `unlock()`
+> is called for any argument that had been locked by a call to `lock()`
+> or `try_lock()`.
 
 ### Call once <a id="thread.once">[thread.once]</a>
 
@@ -6732,13 +6768,13 @@ to initialize data without causing a data race or deadlock.
 constexpr once_flag() noexcept;
 ```
 
-The construction of a `once_flag` object is not synchronized.
-
-***Ensures:***
-
-The object’s internal state is set to indicate to an invocation of
-`call_once` with the object as its initial argument that no function has
-been called.
+> The construction of a `once_flag` object is not synchronized.
+>
+> *Ensures:*
+>
+> The object’s internal state is set to indicate to an invocation of
+> `call_once` with the object as its initial argument that no function
+> has been called.
 
 #### Function `call_once` <a id="thread.once.callonce">[thread.once.callonce]</a>
 
@@ -6747,64 +6783,66 @@ template<class Callable, class... Args>
   void call_once(once_flag& flag, Callable&& func, Args&&... args);
 ```
 
-***Mandates:***
-
-`is_invocable_v<Callable, Args...>` is `true`.
-
-***Effects:***
-
-An execution of `call_once` that does not call its `func` is a
-execution. An execution of `call_once` that calls its `func` is an
-execution. An active execution calls *INVOKE*(\[func.require\]. If such
-a call to `func` throws an exception the execution is , otherwise it is
-. An exceptional execution propagates the exception to the caller of
-`call_once`. Among all executions of `call_once` for any given
-`once_flag`: at most one is a returning execution; if there is a
-returning execution, it is the last active execution; and there are
-passive executions only if there is a returning execution.
-
-\[*Note 22*: Passive executions allow other threads to reliably observe
-the results produced by the earlier returning execution. — *end note*\]
-
-For any given `once_flag`: all active executions occur in a total order;
-completion of an active execution synchronizes with\[intro.multithread\]
-the start of the next one in this total order; and the returning
-execution synchronizes with the return from all passive executions.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\], or
-any exception thrown by `func`.
-
-\[*Example 1*:
-
-    // global flag, regular function
-    void init();
-    std::once_flag flag;
-
-    void f() {
-      std::call_once(flag, init);
-    }
-
-    // function static flag, function object
-    struct initializer {
-      void operator()();
-    };
-
-    void g() {
-      static std::once_flag flag2;
-      std::call_once(flag2, initializer());
-    }
-
-    // object flag, member function
-    class information {
-      std::once_flag verified;
-      void verifier();
-    public:
-      void verify() { std::call_once(verified, &information::verifier, *this); }
-    };
-
-— *end example*\]
+> *Mandates:*
+>
+> `is_invocable_v<Callable, Args...>` is `true`.
+>
+> *Effects:*
+>
+> An execution of `call_once` that does not call its `func` is a
+> execution. An execution of `call_once` that calls its `func` is an
+> execution. An active execution calls *INVOKE*(\[func.require\]. If
+> such a call to `func` throws an exception the execution is , otherwise
+> it is . An exceptional execution propagates the exception to the
+> caller of `call_once`. Among all executions of `call_once` for any
+> given `once_flag`: at most one is a returning execution; if there is a
+> returning execution, it is the last active execution; and there are
+> passive executions only if there is a returning execution.
+>
+> \[*Note 43*: Passive executions allow other threads to reliably
+> observe the results produced by the earlier returning
+> execution. — *end note*\]
+>
+> For any given `once_flag`: all active executions occur in a total
+> order; completion of an active execution synchronizes
+> with\[intro.multithread\] the start of the next one in this total
+> order; and the returning execution synchronizes with the return from
+> all passive executions.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\],
+> or any exception thrown by `func`.
+>
+> \[*Example 3*:
+>
+>     // global flag, regular function
+>     void init();
+>     std::once_flag flag;
+>
+>     void f() {
+>       std::call_once(flag, init);
+>     }
+>
+>     // function static flag, function object
+>     struct initializer {
+>       void operator()();
+>     };
+>
+>     void g() {
+>       static std::once_flag flag2;
+>       std::call_once(flag2, initializer());
+>     }
+>
+>     // object flag, member function
+>     class information {
+>       std::once_flag verified;
+>       void verifier();
+>     public:
+>       void verify() { std::call_once(verified, &information::verifier, *this); }
+>     };
+>
+> — *end example*\]
 
 ## Condition variables <a id="thread.condition">[thread.condition]</a>
 
@@ -6862,40 +6900,42 @@ namespace std {
 void notify_all_at_thread_exit(condition_variable& cond, unique_lock<mutex> lk);
 ```
 
-***Preconditions:***
-
-`lk` is locked by the calling thread and either
-
-- no other thread is waiting on `cond`, or
-
-- `lk.mutex()` returns the same value for each of the lock arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-Transfers ownership of the lock associated with `lk` into internal
-storage and schedules `cond` to be notified when the current thread
-exits, after all objects of thread storage duration associated with the
-current thread have been destroyed. This notification is equivalent to:
-
-``` cpp
-lk.unlock();
-cond.notify_all();
-```
-
-The implied `lk.unlock()` call is sequenced after the destruction of all
-objects with thread storage duration associated with the current thread.
-
-\[*Note 1*: The supplied lock is held until the thread exits, which
-might cause deadlock due to lock ordering issues. — *end note*\]
-
-\[*Note 2*: It is the user’s responsibility to ensure that waiting
-threads do not erroneously assume that the thread has finished if they
-experience spurious wakeups. This typically requires that the condition
-being waited for is satisfied while holding the lock on `lk`, and that
-this lock is not released and reacquired prior to calling
-`notify_all_at_thread_exit`. — *end note*\]
+> *Preconditions:*
+>
+> `lk` is locked by the calling thread and either
+>
+> - no other thread is waiting on `cond`, or
+>
+> - `lk.mutex()` returns the same value for each of the lock arguments
+>   supplied by all concurrently waiting (via `wait`, `wait_for`, or
+>   `wait_until`) threads.
+>
+> *Effects:*
+>
+> Transfers ownership of the lock associated with `lk` into internal
+> storage and schedules `cond` to be notified when the current thread
+> exits, after all objects of thread storage duration associated with
+> the current thread have been destroyed. This notification is
+> equivalent to:
+>
+> ``` cpp
+> lk.unlock();
+> cond.notify_all();
+> ```
+>
+> The implied `lk.unlock()` call is sequenced after the destruction of
+> all objects with thread storage duration associated with the current
+> thread.
+>
+> \[*Note 44*: The supplied lock is held until the thread exits, which
+> might cause deadlock due to lock ordering issues. — *end note*\]
+>
+> \[*Note 45*: It is the user’s responsibility to ensure that waiting
+> threads do not erroneously assume that the thread has finished if they
+> experience spurious wakeups. This typically requires that the
+> condition being waited for is satisfied while holding the lock on
+> `lk`, and that this lock is not released and reacquired prior to
+> calling `notify_all_at_thread_exit`. — *end note*\]
 
 ### Class `condition_variable` <a id="thread.condition.condvar">[thread.condition.condvar]</a>
 
@@ -6941,133 +6981,133 @@ The class `condition_variable` is a standard-layout class [class.prop].
 condition_variable();
 ```
 
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `resource_unavailable_try_again` — if some non-memory resource
-  limitation prevents initialization.
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `resource_unavailable_try_again` — if some non-memory resource
+>   limitation prevents initialization.
 
 ``` cpp
 ~condition_variable();
 ```
 
-***Preconditions:***
-
-There is no thread blocked on `*this`.
-
-\[*Note 3*: That is, all threads have been notified; they can
-subsequently block on the lock specified in the wait. This relaxes the
-usual rules, which would have required all wait calls to happen before
-destruction. Only the notification to unblock the wait needs to happen
-before destruction. Undefined behavior ensues if a thread waits on
-`*this` once the destructor has been started, especially when the
-waiting threads are calling the wait functions in a loop or using the
-overloads of `wait`, `wait_for`, or `wait_until` that take a
-predicate. — *end note*\]
+> *Preconditions:*
+>
+> There is no thread blocked on `*this`.
+>
+> \[*Note 46*: That is, all threads have been notified; they can
+> subsequently block on the lock specified in the wait. This relaxes the
+> usual rules, which would have required all wait calls to happen before
+> destruction. Only the notification to unblock the wait needs to happen
+> before destruction. Undefined behavior ensues if a thread waits on
+> `*this` once the destructor has been started, especially when the
+> waiting threads are calling the wait functions in a loop or using the
+> overloads of `wait`, `wait_for`, or `wait_until` that take a
+> predicate. — *end note*\]
 
 ``` cpp
 void notify_one() noexcept;
 ```
 
-***Effects:***
-
-If any threads are blocked waiting for `*this`, unblocks one of those
-threads.
+> *Effects:*
+>
+> If any threads are blocked waiting for `*this`, unblocks one of those
+> threads.
 
 ``` cpp
 void notify_all() noexcept;
 ```
 
-***Effects:***
-
-Unblocks all threads that are blocked waiting for `*this`.
+> *Effects:*
+>
+> Unblocks all threads that are blocked waiting for `*this`.
 
 ``` cpp
 void wait(unique_lock<mutex>& lock);
 ```
 
-***Preconditions:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread, and either
-
-- no other thread is waiting on this `condition_variable` object or
-
-- `lock.mutex()` returns the same value for each of the `lock` arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-- Atomically calls `lock.unlock()` and blocks on `*this`.
-
-- When unblocked, calls `lock.lock()` (possibly blocking on the lock),
-  then returns.
-
-- The function will unblock when signaled by a call to `notify_one()` or
-  a call to `notify_all()`, or spuriously.
-
-***Ensures:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread.
-
-***Throws:***
-
-Nothing.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 4*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Preconditions:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread, and either
+>
+> - no other thread is waiting on this `condition_variable` object or
+>
+> - `lock.mutex()` returns the same value for each of the `lock`
+>   arguments supplied by all concurrently waiting (via `wait`,
+>   `wait_for`, or `wait_until`) threads.
+>
+> *Effects:*
+>
+> - Atomically calls `lock.unlock()` and blocks on `*this`.
+>
+> - When unblocked, calls `lock.lock()` (possibly blocking on the lock),
+>   then returns.
+>
+> - The function will unblock when signaled by a call to `notify_one()`
+>   or a call to `notify_all()`, or spuriously.
+>
+> *Ensures:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread.
+>
+> *Throws:*
+>
+> Nothing.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 47*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Predicate>
   void wait(unique_lock<mutex>& lock, Predicate pred);
 ```
 
-***Preconditions:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread, and either
-
-- no other thread is waiting on this `condition_variable` object or
-
-- `lock.mutex()` returns the same value for each of the `lock` arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-while (!pred())
-  wait(lock);
-```
-
-***Ensures:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread.
-
-***Throws:***
-
-Any exception thrown by `pred`.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 5*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Preconditions:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread, and either
+>
+> - no other thread is waiting on this `condition_variable` object or
+>
+> - `lock.mutex()` returns the same value for each of the `lock`
+>   arguments supplied by all concurrently waiting (via `wait`,
+>   `wait_for`, or `wait_until`) threads.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> while (!pred())
+>   wait(lock);
+> ```
+>
+> *Ensures:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread.
+>
+> *Throws:*
+>
+> Any exception thrown by `pred`.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 48*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Clock, class Duration>
@@ -7075,52 +7115,52 @@ template<class Clock, class Duration>
                        const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Preconditions:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread, and either
-
-- no other thread is waiting on this `condition_variable` object or
-
-- `lock.mutex()` returns the same value for each of the `lock` arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-- Atomically calls `lock.unlock()` and blocks on `*this`.
-
-- When unblocked, calls `lock.lock()` (possibly blocking on the lock),
-  then returns.
-
-- The function will unblock when signaled by a call to `notify_one()`, a
-  call to `notify_all()`, expiration of the absolute
-  timeout\[thread.req.timing\] specified by `abs_time`, or spuriously.
-
-- If the function exits via an exception, `lock.lock()` is called prior
-  to exiting the function.
-
-***Ensures:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread.
-
-***Returns:***
-
-`cv_status::timeout` if the absolute timeout\[thread.req.timing\]
-specified by `abs_time` expired, otherwise `cv_status::no_timeout`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 6*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Preconditions:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread, and either
+>
+> - no other thread is waiting on this `condition_variable` object or
+>
+> - `lock.mutex()` returns the same value for each of the `lock`
+>   arguments supplied by all concurrently waiting (via `wait`,
+>   `wait_for`, or `wait_until`) threads.
+>
+> *Effects:*
+>
+> - Atomically calls `lock.unlock()` and blocks on `*this`.
+>
+> - When unblocked, calls `lock.lock()` (possibly blocking on the lock),
+>   then returns.
+>
+> - The function will unblock when signaled by a call to `notify_one()`,
+>   a call to `notify_all()`, expiration of the absolute
+>   timeout\[thread.req.timing\] specified by `abs_time`, or spuriously.
+>
+> - If the function exits via an exception, `lock.lock()` is called
+>   prior to exiting the function.
+>
+> *Ensures:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread.
+>
+> *Returns:*
+>
+> `cv_status::timeout` if the absolute timeout\[thread.req.timing\]
+> specified by `abs_time` expired, otherwise `cv_status::no_timeout`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 49*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Rep, class Period>
@@ -7128,46 +7168,46 @@ template<class Rep, class Period>
                      const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Preconditions:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread, and either
-
-- no other thread is waiting on this `condition_variable` object or
-
-- `lock.mutex()` returns the same value for each of the `lock` arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return wait_until(lock, chrono::steady_clock::now() + rel_time);
-```
-
-***Ensures:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread.
-
-***Returns:***
-
-`cv_status::timeout` if the relative timeout\[thread.req.timing\]
-specified by `rel_time` expired, otherwise `cv_status::no_timeout`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate` is
-invoked\[except.terminate\].
-
-\[*Note 7*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Preconditions:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread, and either
+>
+> - no other thread is waiting on this `condition_variable` object or
+>
+> - `lock.mutex()` returns the same value for each of the `lock`
+>   arguments supplied by all concurrently waiting (via `wait`,
+>   `wait_for`, or `wait_until`) threads.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return wait_until(lock, chrono::steady_clock::now() + rel_time);
+> ```
+>
+> *Ensures:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread.
+>
+> *Returns:*
+>
+> `cv_status::timeout` if the relative timeout\[thread.req.timing\]
+> specified by `rel_time` expired, otherwise `cv_status::no_timeout`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate` is
+> invoked\[except.terminate\].
+>
+> \[*Note 50*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Clock, class Duration, class Predicate>
@@ -7176,49 +7216,49 @@ template<class Clock, class Duration, class Predicate>
                   Predicate pred);
 ```
 
-***Preconditions:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread, and either
-
-- no other thread is waiting on this `condition_variable` object or
-
-- `lock.mutex()` returns the same value for each of the `lock` arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-while (!pred())
-  if (wait_until(lock, abs_time) == cv_status::timeout)
-    return pred();
-return true;
-```
-
-***Ensures:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread.
-
-\[*Note 8*: The returned value indicates whether the predicate evaluated
-to `true` regardless of whether the timeout was
-triggered. — *end note*\]
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\] or any exception thrown
-by `pred`.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 9*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Preconditions:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread, and either
+>
+> - no other thread is waiting on this `condition_variable` object or
+>
+> - `lock.mutex()` returns the same value for each of the `lock`
+>   arguments supplied by all concurrently waiting (via `wait`,
+>   `wait_for`, or `wait_until`) threads.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> while (!pred())
+>   if (wait_until(lock, abs_time) == cv_status::timeout)
+>     return pred();
+> return true;
+> ```
+>
+> *Ensures:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread.
+>
+> \[*Note 51*: The returned value indicates whether the predicate
+> evaluated to `true` regardless of whether the timeout was
+> triggered. — *end note*\]
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\] or any exception
+> thrown by `pred`.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 52*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Rep, class Period, class Predicate>
@@ -7227,49 +7267,49 @@ template<class Rep, class Period, class Predicate>
                 Predicate pred);
 ```
 
-***Preconditions:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread, and either
-
-- no other thread is waiting on this `condition_variable` object or
-
-- `lock.mutex()` returns the same value for each of the `lock` arguments
-  supplied by all concurrently waiting (via `wait`, `wait_for`, or
-  `wait_until`) threads.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred));
-```
-
-\[*Note 10*: There is no blocking if `pred()` is initially `true`, even
-if the timeout has already expired. — *end note*\]
-
-***Ensures:***
-
-`lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
-thread.
-
-\[*Note 11*: The returned value indicates whether the predicate
-evaluates to `true` regardless of whether the timeout was
-triggered. — *end note*\]
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\] or any exception thrown
-by `pred`.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 12*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Preconditions:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread, and either
+>
+> - no other thread is waiting on this `condition_variable` object or
+>
+> - `lock.mutex()` returns the same value for each of the `lock`
+>   arguments supplied by all concurrently waiting (via `wait`,
+>   `wait_for`, or `wait_until`) threads.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred));
+> ```
+>
+> \[*Note 53*: There is no blocking if `pred()` is initially `true`,
+> even if the timeout has already expired. — *end note*\]
+>
+> *Ensures:*
+>
+> `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the
+> calling thread.
+>
+> \[*Note 54*: The returned value indicates whether the predicate
+> evaluates to `true` regardless of whether the timeout was
+> triggered. — *end note*\]
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\] or any exception
+> thrown by `pred`.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 55*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ### Class `condition_variable_any` <a id="thread.condition.condvarany">[thread.condition.condvarany]</a>
 
@@ -7279,7 +7319,7 @@ In this subclause [thread.condition.condvarany], template arguments for
 template parameters named `Lock` shall meet the *Cpp17Basic\\Lockable*
 requirements [thread.req.lockable.basic].
 
-\[*Note 13*: All of the standard mutex types meet this requirement. If a
+\[*Note 1*: All of the standard mutex types meet this requirement. If a
 type other than one of the standard mutex types or a `unique_lock`
 wrapper for a standard mutex type is used with `condition_variable_any`,
 any necessary synchronization is assumed to be in place with respect to
@@ -7332,53 +7372,53 @@ namespace std {
 condition_variable_any();
 ```
 
-***Throws:***
-
-`bad_alloc` or `system_error` when an exception is
-required\[thread.req.exception\].
-
-***Error conditions:***
-
-- `resource_unavailable_try_again` — if some non-memory resource
-  limitation prevents initialization.
-
-- `operation_not_permitted` — if the thread does not have the privilege
-  to perform the operation.
+> *Throws:*
+>
+> `bad_alloc` or `system_error` when an exception is
+> required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> - `resource_unavailable_try_again` — if some non-memory resource
+>   limitation prevents initialization.
+>
+> - `operation_not_permitted` — if the thread does not have the
+>   privilege to perform the operation.
 
 ``` cpp
 ~condition_variable_any();
 ```
 
-***Preconditions:***
-
-There is no thread blocked on `*this`.
-
-\[*Note 14*: That is, all threads have been notified; they can
-subsequently block on the lock specified in the wait. This relaxes the
-usual rules, which would have required all wait calls to happen before
-destruction. Only the notification to unblock the wait needs to happen
-before destruction. Undefined behavior ensues if a thread waits on
-`*this` once the destructor has been started, especially when the
-waiting threads are calling the wait functions in a loop or using the
-overloads of `wait`, `wait_for`, or `wait_until` that take a
-predicate. — *end note*\]
+> *Preconditions:*
+>
+> There is no thread blocked on `*this`.
+>
+> \[*Note 56*: That is, all threads have been notified; they can
+> subsequently block on the lock specified in the wait. This relaxes the
+> usual rules, which would have required all wait calls to happen before
+> destruction. Only the notification to unblock the wait needs to happen
+> before destruction. Undefined behavior ensues if a thread waits on
+> `*this` once the destructor has been started, especially when the
+> waiting threads are calling the wait functions in a loop or using the
+> overloads of `wait`, `wait_for`, or `wait_until` that take a
+> predicate. — *end note*\]
 
 ``` cpp
 void notify_one() noexcept;
 ```
 
-***Effects:***
-
-If any threads are blocked waiting for `*this`, unblocks one of those
-threads.
+> *Effects:*
+>
+> If any threads are blocked waiting for `*this`, unblocks one of those
+> threads.
 
 ``` cpp
 void notify_all() noexcept;
 ```
 
-***Effects:***
-
-Unblocks all threads that are blocked waiting for `*this`.
+> *Effects:*
+>
+> Unblocks all threads that are blocked waiting for `*this`.
 
 #### Noninterruptible waits <a id="thread.condvarany.wait">[thread.condvarany.wait]</a>
 
@@ -7387,155 +7427,155 @@ template<class Lock>
   void wait(Lock& lock);
 ```
 
-***Effects:***
-
-- Atomically calls `lock.unlock()` and blocks on `*this`.
-
-- When unblocked, calls `lock.lock()` (possibly blocking on the lock)
-  and returns.
-
-- The function will unblock when signaled by a call to `notify_one()`, a
-  call to `notify_all()`, or spuriously.
-
-***Ensures:***
-
-`lock` is locked by the calling thread.
-
-***Throws:***
-
-Nothing.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 15*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Effects:*
+>
+> - Atomically calls `lock.unlock()` and blocks on `*this`.
+>
+> - When unblocked, calls `lock.lock()` (possibly blocking on the lock)
+>   and returns.
+>
+> - The function will unblock when signaled by a call to `notify_one()`,
+>   a call to `notify_all()`, or spuriously.
+>
+> *Ensures:*
+>
+> `lock` is locked by the calling thread.
+>
+> *Throws:*
+>
+> Nothing.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 57*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Lock, class Predicate>
   void wait(Lock& lock, Predicate pred);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-while (!pred())
-  wait(lock);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> while (!pred())
+>   wait(lock);
+> ```
 
 ``` cpp
 template<class Lock, class Clock, class Duration>
   cv_status wait_until(Lock& lock, const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Effects:***
-
-- Atomically calls `lock.unlock()` and blocks on `*this`.
-
-- When unblocked, calls `lock.lock()` (possibly blocking on the lock)
-  and returns.
-
-- The function will unblock when signaled by a call to `notify_one()`, a
-  call to `notify_all()`, expiration of the absolute
-  timeout\[thread.req.timing\] specified by `abs_time`, or spuriously.
-
-- If the function exits via an exception, `lock.lock()` is called prior
-  to exiting the function.
-
-***Ensures:***
-
-`lock` is locked by the calling thread.
-
-***Returns:***
-
-`cv_status::timeout` if the absolute timeout\[thread.req.timing\]
-specified by `abs_time` expired, otherwise `cv_status::no_timeout`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate()` is
-invoked\[except.terminate\].
-
-\[*Note 16*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Effects:*
+>
+> - Atomically calls `lock.unlock()` and blocks on `*this`.
+>
+> - When unblocked, calls `lock.lock()` (possibly blocking on the lock)
+>   and returns.
+>
+> - The function will unblock when signaled by a call to `notify_one()`,
+>   a call to `notify_all()`, expiration of the absolute
+>   timeout\[thread.req.timing\] specified by `abs_time`, or spuriously.
+>
+> - If the function exits via an exception, `lock.lock()` is called
+>   prior to exiting the function.
+>
+> *Ensures:*
+>
+> `lock` is locked by the calling thread.
+>
+> *Returns:*
+>
+> `cv_status::timeout` if the absolute timeout\[thread.req.timing\]
+> specified by `abs_time` expired, otherwise `cv_status::no_timeout`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate()` is
+> invoked\[except.terminate\].
+>
+> \[*Note 58*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Lock, class Rep, class Period>
   cv_status wait_for(Lock& lock, const chrono::duration<Rep, Period>& rel_time);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return wait_until(lock, chrono::steady_clock::now() + rel_time);
-```
-
-***Ensures:***
-
-`lock` is locked by the calling thread.
-
-***Returns:***
-
-`cv_status::timeout` if the relative timeout\[thread.req.timing\]
-specified by `rel_time` expired, otherwise `cv_status::no_timeout`.
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\].
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate` is
-invoked\[except.terminate\].
-
-\[*Note 17*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return wait_until(lock, chrono::steady_clock::now() + rel_time);
+> ```
+>
+> *Ensures:*
+>
+> `lock` is locked by the calling thread.
+>
+> *Returns:*
+>
+> `cv_status::timeout` if the relative timeout\[thread.req.timing\]
+> specified by `rel_time` expired, otherwise `cv_status::no_timeout`.
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\].
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate` is
+> invoked\[except.terminate\].
+>
+> \[*Note 59*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Lock, class Clock, class Duration, class Predicate>
   bool wait_until(Lock& lock, const chrono::time_point<Clock, Duration>& abs_time, Predicate pred);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-while (!pred())
-  if (wait_until(lock, abs_time) == cv_status::timeout)
-    return pred();
-return true;
-```
-
-\[*Note 18*: There is no blocking if `pred()` is initially `true`, or if
-the timeout has already expired. — *end note*\]
-
-\[*Note 19*: The returned value indicates whether the predicate
-evaluates to `true` regardless of whether the timeout was
-triggered. — *end note*\]
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> while (!pred())
+>   if (wait_until(lock, abs_time) == cv_status::timeout)
+>     return pred();
+> return true;
+> ```
+>
+> \[*Note 60*: There is no blocking if `pred()` is initially `true`, or
+> if the timeout has already expired. — *end note*\]
+>
+> \[*Note 61*: The returned value indicates whether the predicate
+> evaluates to `true` regardless of whether the timeout was
+> triggered. — *end note*\]
 
 ``` cpp
 template<class Lock, class Rep, class Period, class Predicate>
   bool wait_for(Lock& lock, const chrono::duration<Rep, Period>& rel_time, Predicate pred);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred));
+> ```
 
 #### Interruptible waits <a id="thread.condvarany.intwait">[thread.condvarany.intwait]</a>
 
@@ -7548,39 +7588,39 @@ template<class Lock, class Predicate>
   bool wait(Lock& lock, stop_token stoken, Predicate pred);
 ```
 
-***Effects:***
-
-Registers for the duration of this call `*this` to get notified on a
-stop request on `stoken` during this call and then equivalent to:
-
-``` cpp
-while (!stoken.stop_requested()) {
-  if (pred())
-    return true;
-  wait(lock);
-}
-return pred();
-```
-
-\[*Note 20*: The returned value indicates whether the predicate
-evaluated to `true` regardless of whether there was a stop
-request. — *end note*\]
-
-***Ensures:***
-
-`lock` is locked by the calling thread.
-
-***Throws:***
-
-Any exception thrown by `pred`.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate` is
-called\[except.terminate\].
-
-\[*Note 21*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Effects:*
+>
+> Registers for the duration of this call `*this` to get notified on a
+> stop request on `stoken` during this call and then equivalent to:
+>
+> ``` cpp
+> while (!stoken.stop_requested()) {
+>   if (pred())
+>     return true;
+>   wait(lock);
+> }
+> return pred();
+> ```
+>
+> \[*Note 62*: The returned value indicates whether the predicate
+> evaluated to `true` regardless of whether there was a stop
+> request. — *end note*\]
+>
+> *Ensures:*
+>
+> `lock` is locked by the calling thread.
+>
+> *Throws:*
+>
+> Any exception thrown by `pred`.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate` is
+> called\[except.terminate\].
+>
+> \[*Note 63*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Lock, class Clock, class Duration, class Predicate>
@@ -7588,45 +7628,45 @@ template<class Lock, class Clock, class Duration, class Predicate>
                   const chrono::time_point<Clock, Duration>& abs_time, Predicate pred);
 ```
 
-***Effects:***
-
-Registers for the duration of this call `*this` to get notified on a
-stop request on `stoken` during this call and then equivalent to:
-
-``` cpp
-while (!stoken.stop_requested()) {
-  if (pred())
-    return true;
-  if (wait_until(lock, abs_time) == cv_status::timeout)
-    return pred();
-}
-return pred();
-```
-
-\[*Note 22*: There is no blocking if `pred()` is initially `true`,
-`stoken.stop_requested()` was already `true` or the timeout has already
-expired. — *end note*\]
-
-\[*Note 23*: The returned value indicates whether the predicate
-evaluated to `true` regardless of whether the timeout was triggered or a
-stop request was made. — *end note*\]
-
-***Ensures:***
-
-`lock` is locked by the calling thread.
-
-***Throws:***
-
-Timeout-related exceptions \[thread.req.timing\], or any exception
-thrown by `pred`.
-
-***Remarks:***
-
-If the function fails to meet the postcondition, `terminate` is
-called\[except.terminate\].
-
-\[*Note 24*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+> *Effects:*
+>
+> Registers for the duration of this call `*this` to get notified on a
+> stop request on `stoken` during this call and then equivalent to:
+>
+> ``` cpp
+> while (!stoken.stop_requested()) {
+>   if (pred())
+>     return true;
+>   if (wait_until(lock, abs_time) == cv_status::timeout)
+>     return pred();
+> }
+> return pred();
+> ```
+>
+> \[*Note 64*: There is no blocking if `pred()` is initially `true`,
+> `stoken.stop_requested()` was already `true` or the timeout has
+> already expired. — *end note*\]
+>
+> \[*Note 65*: The returned value indicates whether the predicate
+> evaluated to `true` regardless of whether the timeout was triggered or
+> a stop request was made. — *end note*\]
+>
+> *Ensures:*
+>
+> `lock` is locked by the calling thread.
+>
+> *Throws:*
+>
+> Timeout-related exceptions \[thread.req.timing\], or any exception
+> thrown by `pred`.
+>
+> *Remarks:*
+>
+> If the function fails to meet the postcondition, `terminate` is
+> called\[except.terminate\].
+>
+> \[*Note 66*: This can happen if the re-locking of the mutex throws an
+> exception. — *end note*\]
 
 ``` cpp
 template<class Lock, class Rep, class Period, class Predicate>
@@ -7634,14 +7674,14 @@ template<class Lock, class Rep, class Period, class Predicate>
                 const chrono::duration<Rep, Period>& rel_time, Predicate pred);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return wait_until(lock, std::move(stoken), chrono::steady_clock::now() + rel_time,
-                  std::move(pred));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return wait_until(lock, std::move(stoken), chrono::steady_clock::now() + rel_time,
+>                   std::move(pred));
+> ```
 
 ## Semaphore <a id="thread.sema">[thread.sema]</a>
 
@@ -7715,94 +7755,95 @@ other than its destructor, do not introduce data races.
 static constexpr ptrdiff_t max() noexcept;
 ```
 
-***Returns:***
-
-The maximum value of `counter`. This value is greater than or equal to
-`least_max_value`.
+> *Returns:*
+>
+> The maximum value of `counter`. This value is greater than or equal to
+> `least_max_value`.
 
 ``` cpp
 constexpr explicit counting_semaphore(ptrdiff_t desired);
 ```
 
-***Preconditions:***
-
-`desired >= 0` is `true`, and `desired <= max()` is `true`.
-
-***Effects:***
-
-Initializes `counter` with `desired`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> `desired >= 0` is `true`, and `desired <= max()` is `true`.
+>
+> *Effects:*
+>
+> Initializes `counter` with `desired`.
+>
+> *Throws:*
+>
+> Nothing.
 
 ``` cpp
 void release(ptrdiff_t update = 1);
 ```
 
-***Preconditions:***
-
-`update >= 0` is `true`, and `update <= max() - counter` is `true`.
-
-***Effects:***
-
-Atomically execute `counter += update`. Then, unblocks any threads that
-are waiting for `counter` to be greater than zero.
-
-Strongly happens before invocations of `try_acquire` that observe the
-result of the effects.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
+> *Preconditions:*
+>
+> `update >= 0` is `true`, and `update <= max() - counter` is `true`.
+>
+> *Effects:*
+>
+> Atomically execute `counter += update`. Then, unblocks any threads
+> that are waiting for `counter` to be greater than zero.
+>
+> Strongly happens before invocations of `try_acquire` that observe the
+> result of the effects.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
 
 ``` cpp
 bool try_acquire() noexcept;
 ```
 
-***Effects:***
-
-Attempts to atomically decrement `counter` if it is positive, without
-blocking. If `counter` is not decremented, there is no effect and
-`try_acquire` immediately returns. An implementation may fail to
-decrement `counter` even if it is positive.
-
-\[*Note 1*: This spurious failure is normally uncommon, but allows
-interesting implementations based on a simple compare and
-exchange\[atomics\]. — *end note*\]
-
-An implementation should ensure that `try_acquire` does not consistently
-return `false` in the absence of contending semaphore operations.
-
-***Returns:***
-
-`true` if `counter` was decremented, otherwise `false`.
+> *Effects:*
+>
+> Attempts to atomically decrement `counter` if it is positive, without
+> blocking. If `counter` is not decremented, there is no effect and
+> `try_acquire` immediately returns. An implementation may fail to
+> decrement `counter` even if it is positive.
+>
+> \[*Note 67*: This spurious failure is normally uncommon, but allows
+> interesting implementations based on a simple compare and
+> exchange\[atomics\]. — *end note*\]
+>
+> An implementation should ensure that `try_acquire` does not
+> consistently return `false` in the absence of contending semaphore
+> operations.
+>
+> *Returns:*
+>
+> `true` if `counter` was decremented, otherwise `false`.
 
 ``` cpp
 void acquire();
 ```
 
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `try_acquire()`. If the result is `true`, returns.
-
-- Blocks on `*this` until `counter` is greater than zero.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `try_acquire()`. If the result is `true`, returns.
+>
+> - Blocks on `*this` until `counter` is greater than zero.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
 
 ``` cpp
 template<class Rep, class Period>
@@ -7811,29 +7852,30 @@ template<class Clock, class Duration>
   bool try_acquire_until(const chrono::time_point<Clock, Duration>& abs_time);
 ```
 
-***Effects:***
-
-Repeatedly performs the following steps, in order:
-
-- Evaluates `try_acquire()`. If the result is `true`, returns `true`.
-
-- Blocks on `*this` until `counter` is greater than zero or until the
-  timeout expires. If it is unblocked by the timeout expiring, returns
-  `false`.
-
-The timeout expires\[thread.req.timing\] when the current time is after
-`abs_time` (for `try_acquire_until`) or when at least `rel_time` has
-passed from the start of the function (for `try_acquire_for`).
-
-***Throws:***
-
-Timeout-related exceptions\[thread.req.timing\], or `system_error` when
-a non-timeout-related exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
+> *Effects:*
+>
+> Repeatedly performs the following steps, in order:
+>
+> - Evaluates `try_acquire()`. If the result is `true`, returns `true`.
+>
+> - Blocks on `*this` until `counter` is greater than zero or until the
+>   timeout expires. If it is unblocked by the timeout expiring, returns
+>   `false`.
+>
+> The timeout expires\[thread.req.timing\] when the current time is
+> after `abs_time` (for `try_acquire_until`) or when at least `rel_time`
+> has passed from the start of the function (for `try_acquire_for`).
+>
+> *Throws:*
+>
+> Timeout-related exceptions\[thread.req.timing\], or `system_error`
+> when a non-timeout-related exception is
+> required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
 
 ## Coordination types <a id="thread.coord">[thread.coord]</a>
 
@@ -7898,88 +7940,89 @@ its destructor, do not introduce data races.
 static constexpr ptrdiff_t max() noexcept;
 ```
 
-***Returns:***
-
-The maximum value of `counter` that the implementation supports.
+> *Returns:*
+>
+> The maximum value of `counter` that the implementation supports.
 
 ``` cpp
 constexpr explicit latch(ptrdiff_t expected);
 ```
 
-***Preconditions:***
-
-`expected >= 0` is `true` and `expected <= max()` is `true`.
-
-***Effects:***
-
-Initializes `counter` with `expected`.
-
-***Throws:***
-
-Nothing.
+> *Preconditions:*
+>
+> `expected >= 0` is `true` and `expected <= max()` is `true`.
+>
+> *Effects:*
+>
+> Initializes `counter` with `expected`.
+>
+> *Throws:*
+>
+> Nothing.
 
 ``` cpp
 void count_down(ptrdiff_t update = 1);
 ```
 
-***Preconditions:***
-
-`update >= 0` is `true`, and `update <= counter` is `true`.
-
-***Effects:***
-
-Atomically decrements `counter` by `update`. If `counter` is equal to
-zero, unblocks all threads blocked on `*this`.
-
-Strongly happens before the returns from all calls that are unblocked.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
+> *Preconditions:*
+>
+> `update >= 0` is `true`, and `update <= counter` is `true`.
+>
+> *Effects:*
+>
+> Atomically decrements `counter` by `update`. If `counter` is equal to
+> zero, unblocks all threads blocked on `*this`.
+>
+> Strongly happens before the returns from all calls that are unblocked.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
 
 ``` cpp
 bool try_wait() const noexcept;
 ```
 
-***Returns:***
-
-With very low probability `false`. Otherwise `counter == 0`.
+> *Returns:*
+>
+> With very low probability `false`. Otherwise `counter == 0`.
 
 ``` cpp
 void wait() const;
 ```
 
-***Effects:***
-
-If `counter` equals zero, returns immediately. Otherwise, blocks on
-`*this` until a call to `count_down` that decrements `counter` to zero.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
+> *Effects:*
+>
+> If `counter` equals zero, returns immediately. Otherwise, blocks on
+> `*this` until a call to `count_down` that decrements `counter` to
+> zero.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
 
 ``` cpp
 void arrive_and_wait(ptrdiff_t update = 1);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-count_down(update);
-wait();
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> count_down(update);
+> wait();
+> ```
 
 ### Barriers <a id="thread.barrier">[thread.barrier]</a>
 
@@ -8090,129 +8133,129 @@ effects.
 static constexpr ptrdiff_t max() noexcept;
 ```
 
-***Returns:***
-
-The maximum expected count that the implementation supports.
+> *Returns:*
+>
+> The maximum expected count that the implementation supports.
 
 ``` cpp
 constexpr explicit barrier(ptrdiff_t expected,
                            CompletionFunction f = CompletionFunction());
 ```
 
-***Preconditions:***
-
-`expected >= 0` is `true` and `expected <= max()` is `true`.
-
-***Effects:***
-
-Sets both the initial expected count for each barrier phase and the
-current expected count for the first phase to `expected`. Initializes
-`completion` with `std::move(f)`. Starts the first phase.
-
-\[*Note 2*: If `expected` is 0 this object can only be
-destroyed. — *end note*\]
-
-***Throws:***
-
-Any exception thrown by `CompletionFunction`’s move constructor.
+> *Preconditions:*
+>
+> `expected >= 0` is `true` and `expected <= max()` is `true`.
+>
+> *Effects:*
+>
+> Sets both the initial expected count for each barrier phase and the
+> current expected count for the first phase to `expected`. Initializes
+> `completion` with `std::move(f)`. Starts the first phase.
+>
+> \[*Note 68*: If `expected` is 0 this object can only be
+> destroyed. — *end note*\]
+>
+> *Throws:*
+>
+> Any exception thrown by `CompletionFunction`’s move constructor.
 
 ``` cpp
 [[nodiscard]] arrival_token arrive(ptrdiff_t update = 1);
 ```
 
-***Preconditions:***
-
-`update > 0` is `true`, and `update` is less than or equal to the
-expected count for the current barrier phase.
-
-***Effects:***
-
-Constructs an object of type `arrival_token` that is associated with the
-phase synchronization point for the current phase. Then, decrements the
-expected count by `update`.
-
-The call to `arrive` strongly happens before the start of the phase
-completion step for the current phase.
-
-***Returns:***
-
-The constructed `arrival_token` object.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
-
-\[*Note 3*: This call can cause the completion step for the current
-phase to start. — *end note*\]
+> *Preconditions:*
+>
+> `update > 0` is `true`, and `update` is less than or equal to the
+> expected count for the current barrier phase.
+>
+> *Effects:*
+>
+> Constructs an object of type `arrival_token` that is associated with
+> the phase synchronization point for the current phase. Then,
+> decrements the expected count by `update`.
+>
+> The call to `arrive` strongly happens before the start of the phase
+> completion step for the current phase.
+>
+> *Returns:*
+>
+> The constructed `arrival_token` object.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
+>
+> \[*Note 69*: This call can cause the completion step for the current
+> phase to start. — *end note*\]
 
 ``` cpp
 void wait(arrival_token&& arrival) const;
 ```
 
-***Preconditions:***
-
-`arrival` is associated with the phase synchronization point for the
-current phase or the immediately preceding phase of the same barrier
-object.
-
-***Effects:***
-
-Blocks at the synchronization point associated with `std::move(arrival)`
-until the phase completion step of the synchronization point’s phase is
-run.
-
-\[*Note 4*: If `arrival` is associated with the synchronization point
-for a previous phase, the call returns immediately. — *end note*\]
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
+> *Preconditions:*
+>
+> `arrival` is associated with the phase synchronization point for the
+> current phase or the immediately preceding phase of the same barrier
+> object.
+>
+> *Effects:*
+>
+> Blocks at the synchronization point associated with
+> `std::move(arrival)` until the phase completion step of the
+> synchronization point’s phase is run.
+>
+> \[*Note 70*: If `arrival` is associated with the synchronization point
+> for a previous phase, the call returns immediately. — *end note*\]
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
 
 ``` cpp
 void arrive_and_wait();
 ```
 
-***Effects:***
-
-Equivalent to: `wait(arrive())`.
+> *Effects:*
+>
+> Equivalent to: `wait(arrive())`.
 
 ``` cpp
 void arrive_and_drop();
 ```
 
-***Preconditions:***
-
-The expected count for the current barrier phase is greater than zero.
-
-***Effects:***
-
-Decrements the initial expected count for all subsequent phases by one.
-Then decrements the expected count for the current phase by one.
-
-The call to `arrive_and_drop` strongly happens before the start of the
-phase completion step for the current phase.
-
-***Throws:***
-
-`system_error` when an exception is required\[thread.req.exception\].
-
-***Error conditions:***
-
-Any of the error conditions allowed for mutex
-types\[thread.mutex.requirements.mutex\].
-
-\[*Note 5*: This call can cause the completion step for the current
-phase to start. — *end note*\]
+> *Preconditions:*
+>
+> The expected count for the current barrier phase is greater than zero.
+>
+> *Effects:*
+>
+> Decrements the initial expected count for all subsequent phases by
+> one. Then decrements the expected count for the current phase by one.
+>
+> The call to `arrive_and_drop` strongly happens before the start of the
+> phase completion step for the current phase.
+>
+> *Throws:*
+>
+> `system_error` when an exception is required\[thread.req.exception\].
+>
+> *Error conditions:*
+>
+> Any of the error conditions allowed for mutex
+> types\[thread.mutex.requirements.mutex\].
+>
+> \[*Note 71*: This call can cause the completion step for the current
+> phase to start. — *end note*\]
 
 ## Futures <a id="futures">[futures]</a>
 
@@ -8315,30 +8358,31 @@ The enum values of `future_errc` are distinct and not zero.
 const error_category& future_category() noexcept;
 ```
 
-***Returns:***
-
-A reference to an object of a type derived from class `error_category`.
-
-The object’s `default_error_condition` and `equivalent` virtual
-functions shall behave as specified for the class `error_category`. The
-object’s `name` virtual function returns a pointer to the string
-`"future"`.
+> *Returns:*
+>
+> A reference to an object of a type derived from class
+> `error_category`.
+>
+> The object’s `default_error_condition` and `equivalent` virtual
+> functions shall behave as specified for the class `error_category`.
+> The object’s `name` virtual function returns a pointer to the string
+> `"future"`.
 
 ``` cpp
 error_code make_error_code(future_errc e) noexcept;
 ```
 
-***Returns:***
-
-`error_code(static_cast<int>(e), future_category())`.
+> *Returns:*
+>
+> `error_code(static_cast<int>(e), future_category())`.
 
 ``` cpp
 error_condition make_error_condition(future_errc e) noexcept;
 ```
 
-***Returns:***
-
-`error_condition(static_cast<int>(e), future_category())`.
+> *Returns:*
+>
+> `error_condition(static_cast<int>(e), future_category())`.
 
 ### Class `future_error` <a id="futures.future.error">[futures.future.error]</a>
 
@@ -8361,25 +8405,25 @@ namespace std {
 explicit future_error(future_errc e);
 ```
 
-***Effects:***
-
-Initializes `ec_` with `make_error_code(e)`.
+> *Effects:*
+>
+> Initializes `ec_` with `make_error_code(e)`.
 
 ``` cpp
 const error_code& code() const noexcept;
 ```
 
-***Returns:***
-
-`ec_`.
+> *Returns:*
+>
+> `ec_`.
 
 ``` cpp
 const char* what() const noexcept;
 ```
 
-***Returns:***
-
-An NTBS incorporating `code().message()`.
+> *Returns:*
+>
+> An NTBS incorporating `code().message()`.
 
 ### Shared state <a id="futures.state">[futures.state]</a>
 
@@ -8529,10 +8573,10 @@ template<class R, class Alloc>
     : true_type { };
 ```
 
-***Preconditions:***
-
-`Alloc` meets the *Cpp17Allocator*
-requirements\[allocator.requirements.general\].
+> *Preconditions:*
+>
+> `Alloc` meets the *Cpp17Allocator*
+> requirements\[allocator.requirements.general\].
 
 ``` cpp
 promise();
@@ -8540,86 +8584,87 @@ template<class Allocator>
   promise(allocator_arg_t, const Allocator& a);
 ```
 
-***Effects:***
-
-Creates a shared state. The second constructor uses the allocator `a` to
-allocate memory for the shared state.
+> *Effects:*
+>
+> Creates a shared state. The second constructor uses the allocator `a`
+> to allocate memory for the shared state.
 
 ``` cpp
 promise(promise&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Transfers ownership of the shared state of `rhs` (if any) to the
-newly-constructed object.
-
-***Ensures:***
-
-`rhs` has no shared state.
+> *Effects:*
+>
+> Transfers ownership of the shared state of `rhs` (if any) to the
+> newly-constructed object.
+>
+> *Ensures:*
+>
+> `rhs` has no shared state.
 
 ``` cpp
 ~promise();
 ```
 
-***Effects:***
-
-Abandons any shared state\[futures.state\].
+> *Effects:*
+>
+> Abandons any shared state\[futures.state\].
 
 ``` cpp
 promise& operator=(promise&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Abandons any shared state\[futures.state\] and then as if
-`promise(std::move(rhs)).swap(*this)`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Abandons any shared state\[futures.state\] and then as if
+> `promise(std::move(rhs)).swap(*this)`.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 void swap(promise& other) noexcept;
 ```
 
-***Effects:***
-
-Exchanges the shared state of `*this` and `other`.
-
-***Ensures:***
-
-`*this` has the shared state (if any) that `other` had prior to the call
-to `swap`. `other` has the shared state (if any) that `*this` had prior
-to the call to `swap`.
+> *Effects:*
+>
+> Exchanges the shared state of `*this` and `other`.
+>
+> *Ensures:*
+>
+> `*this` has the shared state (if any) that `other` had prior to the
+> call to `swap`. `other` has the shared state (if any) that `*this` had
+> prior to the call to `swap`.
 
 ``` cpp
 future<R> get_future();
 ```
 
-Calls to this function do not introduce data races \[intro.multithread\]
-with calls to `set_value`, `set_exception`, `set_value_at_thread_exit`,
-or `set_exception_at_thread_exit`.
-
-\[*Note 7*: Such calls need not synchronize with each
-other. — *end note*\]
-
-***Returns:***
-
-A `future<R>` object with the same shared state as `*this`.
-
-***Throws:***
-
-`future_error` if `*this` has no shared state or if `get_future` has
-already been called on a `promise` with the same shared state as
-`*this`.
-
-***Error conditions:***
-
-- `future_already_retrieved` if `get_future` has already been called on
-  a `promise` with the same shared state as `*this`.
-
-- `no_state` if `*this` has no shared state.
+> Calls to this function do not introduce data
+> races \[intro.multithread\] with calls to `set_value`,
+> `set_exception`, `set_value_at_thread_exit`, or
+> `set_exception_at_thread_exit`.
+>
+> \[*Note 72*: Such calls need not synchronize with each
+> other. — *end note*\]
+>
+> *Returns:*
+>
+> A `future<R>` object with the same shared state as `*this`.
+>
+> *Throws:*
+>
+> `future_error` if `*this` has no shared state or if `get_future` has
+> already been called on a `promise` with the same shared state as
+> `*this`.
+>
+> *Error conditions:*
+>
+> - `future_already_retrieved` if `get_future` has already been called
+>   on a `promise` with the same shared state as `*this`.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void promise::set_value(const R& r);
@@ -8628,53 +8673,53 @@ void promise<R&>::set_value(R& r);
 void promise<void>::set_value();
 ```
 
-***Effects:***
-
-Atomically stores the value `r` in the shared state and makes that state
-ready\[futures.state\].
-
-***Throws:***
-
-- `future_error` if its shared state already has a stored value or
-  exception, or
-
-- for the first version, any exception thrown by the constructor
-  selected to copy an object of `R`, or
-
-- for the second version, any exception thrown by the constructor
-  selected to move an object of `R`.
-
-***Error conditions:***
-
-- `promise_already_satisfied` if its shared state already has a stored
-  value or exception.
-
-- `no_state` if `*this` has no shared state.
+> *Effects:*
+>
+> Atomically stores the value `r` in the shared state and makes that
+> state ready\[futures.state\].
+>
+> *Throws:*
+>
+> - `future_error` if its shared state already has a stored value or
+>   exception, or
+>
+> - for the first version, any exception thrown by the constructor
+>   selected to copy an object of `R`, or
+>
+> - for the second version, any exception thrown by the constructor
+>   selected to move an object of `R`.
+>
+> *Error conditions:*
+>
+> - `promise_already_satisfied` if its shared state already has a stored
+>   value or exception.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void set_exception(exception_ptr p);
 ```
 
-***Preconditions:***
-
-`p` is not null.
-
-***Effects:***
-
-Atomically stores the exception pointer `p` in the shared state and
-makes that state ready\[futures.state\].
-
-***Throws:***
-
-`future_error` if its shared state already has a stored value or
-exception.
-
-***Error conditions:***
-
-- `promise_already_satisfied` if its shared state already has a stored
-  value or exception.
-
-- `no_state` if `*this` has no shared state.
+> *Preconditions:*
+>
+> `p` is not null.
+>
+> *Effects:*
+>
+> Atomically stores the exception pointer `p` in the shared state and
+> makes that state ready\[futures.state\].
+>
+> *Throws:*
+>
+> `future_error` if its shared state already has a stored value or
+> exception.
+>
+> *Error conditions:*
+>
+> - `promise_already_satisfied` if its shared state already has a stored
+>   value or exception.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void promise::set_value_at_thread_exit(const R& r);
@@ -8683,65 +8728,65 @@ void promise<R&>::set_value_at_thread_exit(R& r);
 void promise<void>::set_value_at_thread_exit();
 ```
 
-***Effects:***
-
-Stores the value `r` in the shared state without making that state ready
-immediately. Schedules that state to be made ready when the current
-thread exits, after all objects of thread storage duration associated
-with the current thread have been destroyed.
-
-***Throws:***
-
-- `future_error` if its shared state already has a stored value or
-  exception, or
-
-- for the first version, any exception thrown by the constructor
-  selected to copy an object of `R`, or
-
-- for the second version, any exception thrown by the constructor
-  selected to move an object of `R`.
-
-***Error conditions:***
-
-- `promise_already_satisfied` if its shared state already has a stored
-  value or exception.
-
-- `no_state` if `*this` has no shared state.
+> *Effects:*
+>
+> Stores the value `r` in the shared state without making that state
+> ready immediately. Schedules that state to be made ready when the
+> current thread exits, after all objects of thread storage duration
+> associated with the current thread have been destroyed.
+>
+> *Throws:*
+>
+> - `future_error` if its shared state already has a stored value or
+>   exception, or
+>
+> - for the first version, any exception thrown by the constructor
+>   selected to copy an object of `R`, or
+>
+> - for the second version, any exception thrown by the constructor
+>   selected to move an object of `R`.
+>
+> *Error conditions:*
+>
+> - `promise_already_satisfied` if its shared state already has a stored
+>   value or exception.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void set_exception_at_thread_exit(exception_ptr p);
 ```
 
-***Preconditions:***
-
-`p` is not null.
-
-***Effects:***
-
-Stores the exception pointer `p` in the shared state without making that
-state ready immediately. Schedules that state to be made ready when the
-current thread exits, after all objects of thread storage duration
-associated with the current thread have been destroyed.
-
-***Throws:***
-
-`future_error` if an error condition occurs.
-
-***Error conditions:***
-
-- `promise_already_satisfied` if its shared state already has a stored
-  value or exception.
-
-- `no_state` if `*this` has no shared state.
+> *Preconditions:*
+>
+> `p` is not null.
+>
+> *Effects:*
+>
+> Stores the exception pointer `p` in the shared state without making
+> that state ready immediately. Schedules that state to be made ready
+> when the current thread exits, after all objects of thread storage
+> duration associated with the current thread have been destroyed.
+>
+> *Throws:*
+>
+> `future_error` if an error condition occurs.
+>
+> *Error conditions:*
+>
+> - `promise_already_satisfied` if its shared state already has a stored
+>   value or exception.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 template<class R>
   void swap(promise<R>& x, promise<R>& y) noexcept;
 ```
 
-***Effects:***
-
-As if by `x.swap(y)`.
+> *Effects:*
+>
+> As if by `x.swap(y)`.
 
 ### Class template `future` <a id="futures.unique.future">[futures.unique.future]</a>
 
@@ -8754,14 +8799,14 @@ shares its shared state with the original asynchronous provider. The
 result (value or exception) of a `future` object can be set by calling a
 respective function on an object that shares the same shared state.
 
-\[*Note 8*: Member functions of `future` do not synchronize with
+\[*Note 7*: Member functions of `future` do not synchronize with
 themselves or with member functions of `shared_future`. — *end note*\]
 
 The effect of calling any member function other than the destructor, the
 move-assignment operator, `share`, or `valid` on a `future` object for
 which `valid() == false` is undefined.
 
-\[*Note 9*: It is valid to move from a future object for which
+\[*Note 8*: It is valid to move from a future object for which
 `valid() == false`. — *end note*\]
 
 Implementations should detect this case and throw an object of type
@@ -8807,70 +8852,71 @@ out in its description, below.
 future() noexcept;
 ```
 
-***Effects:***
-
-The object does not refer to a shared state.
-
-***Ensures:***
-
-`valid() == false`.
+> *Effects:*
+>
+> The object does not refer to a shared state.
+>
+> *Ensures:*
+>
+> `valid() == false`.
 
 ``` cpp
 future(future&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Move constructs a `future` object that refers to the shared state that
-was originally referred to by `rhs` (if any).
-
-***Ensures:***
-
-- `valid()` returns the same value as `rhs.valid()` prior to the
-  constructor invocation.
-
-- `rhs.valid() == false`.
+> *Effects:*
+>
+> Move constructs a `future` object that refers to the shared state that
+> was originally referred to by `rhs` (if any).
+>
+> *Ensures:*
+>
+> - `valid()` returns the same value as `rhs.valid()` prior to the
+>   constructor invocation.
+>
+> - `rhs.valid() == false`.
 
 ``` cpp
 ~future();
 ```
 
-***Effects:***
-
-- Releases any shared state\[futures.state\];
-
-- destroys `*this`.
+> *Effects:*
+>
+> - Releases any shared state\[futures.state\];
+>
+> - destroys `*this`.
 
 ``` cpp
 future& operator=(future&& rhs) noexcept;
 ```
 
-***Effects:***
-
-If `addressof(rhs) == this` is `true`, there are no effects. Otherwise:
-
-- Releases any shared state\[futures.state\].
-
-- move assigns the contents of `rhs` to `*this`.
-
-***Ensures:***
-
-- `valid()` returns the same value as `rhs.valid()` prior to the
-  assignment.
-
-- If `addressof(rhs) == this` is `false`, `rhs.valid() == false`.
+> *Effects:*
+>
+> If `addressof(rhs) == this` is `true`, there are no effects.
+> Otherwise:
+>
+> - Releases any shared state\[futures.state\].
+>
+> - move assigns the contents of `rhs` to `*this`.
+>
+> *Ensures:*
+>
+> - `valid()` returns the same value as `rhs.valid()` prior to the
+>   assignment.
+>
+> - If `addressof(rhs) == this` is `false`, `rhs.valid() == false`.
 
 ``` cpp
 shared_future<R> share() noexcept;
 ```
 
-***Ensures:***
-
-`valid() == false`.
-
-***Returns:***
-
-`shared_future<R>(std::move(*this))`.
+> *Ensures:*
+>
+> `valid() == false`.
+>
+> *Returns:*
+>
+> `shared_future<R>(std::move(*this))`.
 
 ``` cpp
 R future::get();
@@ -8878,102 +8924,104 @@ R& future<R&>::get();
 void future<void>::get();
 ```
 
-\[*Note 10*: As described above, the template and its two required
-specializations differ only in the return type and return value of the
-member function `get`. — *end note*\]
-
-***Effects:***
-
-- `wait()`s until the shared state is ready, then retrieves the value
-  stored in the shared state;
-
-- releases any shared state\[futures.state\].
-
-***Ensures:***
-
-`valid() == false`.
-
-***Returns:***
-
-- `future::get()` returns the value `v` stored in the object’s shared
-  state as `std::move(v)`.
-
-- `future<R&>::get()` returns the reference stored as value in the
-  object’s shared state.
-
-- `future<void>::get()` returns nothing.
-
-***Throws:***
-
-The stored exception, if an exception was stored in the shared state.
+> \[*Note 73*: As described above, the template and its two required
+> specializations differ only in the return type and return value of the
+> member function `get`. — *end note*\]
+>
+> *Effects:*
+>
+> - `wait()`s until the shared state is ready, then retrieves the value
+>   stored in the shared state;
+>
+> - releases any shared state\[futures.state\].
+>
+> *Ensures:*
+>
+> `valid() == false`.
+>
+> *Returns:*
+>
+> - `future::get()` returns the value `v` stored in the object’s shared
+>   state as `std::move(v)`.
+>
+> - `future<R&>::get()` returns the reference stored as value in the
+>   object’s shared state.
+>
+> - `future<void>::get()` returns nothing.
+>
+> *Throws:*
+>
+> The stored exception, if an exception was stored in the shared state.
 
 ``` cpp
 bool valid() const noexcept;
 ```
 
-***Returns:***
-
-`true` only if `*this` refers to a shared state.
+> *Returns:*
+>
+> `true` only if `*this` refers to a shared state.
 
 ``` cpp
 void wait() const;
 ```
 
-***Effects:***
-
-Blocks until the shared state is ready.
+> *Effects:*
+>
+> Blocks until the shared state is ready.
 
 ``` cpp
 template<class Rep, class Period>
   future_status wait_for(const chrono::duration<Rep, Period>& rel_time) const;
 ```
 
-***Effects:***
-
-None if the shared state contains a deferred function\[futures.async\],
-otherwise blocks until the shared state is ready or until the relative
-timeout\[thread.req.timing\] specified by `rel_time` has expired.
-
-***Returns:***
-
-- `future_status::deferred` if the shared state contains a deferred
-  function.
-
-- `future_status::ready` if the shared state is ready.
-
-- `future_status::timeout` if the function is returning because the
-  relative timeout\[thread.req.timing\] specified by `rel_time` has
-  expired.
-
-***Throws:***
-
-timeout-related exceptions\[thread.req.timing\].
+> *Effects:*
+>
+> None if the shared state contains a deferred
+> function\[futures.async\], otherwise blocks until the shared state is
+> ready or until the relative timeout\[thread.req.timing\] specified by
+> `rel_time` has expired.
+>
+> *Returns:*
+>
+> - `future_status::deferred` if the shared state contains a deferred
+>   function.
+>
+> - `future_status::ready` if the shared state is ready.
+>
+> - `future_status::timeout` if the function is returning because the
+>   relative timeout\[thread.req.timing\] specified by `rel_time` has
+>   expired.
+>
+> *Throws:*
+>
+> timeout-related exceptions\[thread.req.timing\].
 
 ``` cpp
 template<class Clock, class Duration>
   future_status wait_until(const chrono::time_point<Clock, Duration>& abs_time) const;
 ```
 
-***Effects:***
-
-None if the shared state contains a deferred function\[futures.async\],
-otherwise blocks until the shared state is ready or until the absolute
-timeout\[thread.req.timing\] specified by `abs_time` has expired.
-
-***Returns:***
-
-- `future_status::deferred` if the shared state contains a deferred
-  function.
-
-- `future_status::ready` if the shared state is ready.
-
-- `future_status::timeout` if the function is returning because the
-  absolute timeout\[thread.req.timing\] specified by `abs_time` has
-  expired.
-
-***Throws:***
-
-timeout-related exceptions\[thread.req.timing\].
+> *Effects:*
+>
+> None if the shared state contains a deferred
+> function\[futures.async\], otherwise blocks until the shared state is
+> ready or until the absolute timeout\[thread.req.timing\] specified by
+> `abs_time` has expired.
+>
+> *Returns:*
+>
+> - `future_status::deferred` if the shared state contains a deferred
+>   function.
+>
+> - `future_status::ready` if the shared state is ready.
+>
+> - `future_status::timeout` if the function is returning because the
+>   absolute timeout\[thread.req.timing\] specified by `abs_time` has
+>   expired.
+>
+> *Throws:*
+>
+> timeout-related exceptions\[thread.req.timing\].
 
 ### Class template `shared_future` <a id="futures.shared.future">[futures.shared.future]</a>
 
@@ -8987,14 +9035,14 @@ the shared state. The result (value or exception) of a `shared_future`
 object can be set by calling a respective function on an object that
 shares the same shared state.
 
-\[*Note 11*: Member functions of `shared_future` do not synchronize with
+\[*Note 9*: Member functions of `shared_future` do not synchronize with
 themselves, but they synchronize with the shared state. — *end note*\]
 
 The effect of calling any member function other than the destructor, the
 move-assignment operator, the copy-assignment operator, or `valid()` on
 a `shared_future` object for which `valid() == false` is undefined.
 
-\[*Note 12*: It is valid to copy or move from a `shared_future` object
+\[*Note 10*: It is valid to copy or move from a `shared_future` object
 for which `valid()` is `false`. — *end note*\]
 
 Implementations should detect this case and throw an object of type
@@ -9040,90 +9088,92 @@ differ only in the return type and return value of the member function
 shared_future() noexcept;
 ```
 
-***Effects:***
-
-The object does not refer to a shared state.
-
-***Ensures:***
-
-`valid() == false`.
+> *Effects:*
+>
+> The object does not refer to a shared state.
+>
+> *Ensures:*
+>
+> `valid() == false`.
 
 ``` cpp
 shared_future(const shared_future& rhs) noexcept;
 ```
 
-***Effects:***
-
-The object refers to the same shared state as `rhs` (if any).
-
-***Ensures:***
-
-`valid()` returns the same value as `rhs.valid()`.
+> *Effects:*
+>
+> The object refers to the same shared state as `rhs` (if any).
+>
+> *Ensures:*
+>
+> `valid()` returns the same value as `rhs.valid()`.
 
 ``` cpp
 shared_future(future<R>&& rhs) noexcept;
 shared_future(shared_future&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Move constructs a `shared_future` object that refers to the shared state
-that was originally referred to by `rhs` (if any).
-
-***Ensures:***
-
-- `valid()` returns the same value as `rhs.valid()` returned prior to
-  the constructor invocation.
-
-- `rhs.valid() == false`.
+> *Effects:*
+>
+> Move constructs a `shared_future` object that refers to the shared
+> state that was originally referred to by `rhs` (if any).
+>
+> *Ensures:*
+>
+> - `valid()` returns the same value as `rhs.valid()` returned prior to
+>   the constructor invocation.
+>
+> - `rhs.valid() == false`.
 
 ``` cpp
 ~shared_future();
 ```
 
-***Effects:***
-
-- Releases any shared state\[futures.state\];
-
-- destroys `*this`.
+> *Effects:*
+>
+> - Releases any shared state\[futures.state\];
+>
+> - destroys `*this`.
 
 ``` cpp
 shared_future& operator=(shared_future&& rhs) noexcept;
 ```
 
-***Effects:***
-
-If `addressof(rhs) == this` is `true`, there are no effects. Otherwise:
-
-- Releases any shared state\[futures.state\];
-
-- move assigns the contents of `rhs` to `*this`.
-
-***Ensures:***
-
-- `valid()` returns the same value as `rhs.valid()` returned prior to
-  the assignment.
-
-- If `addressof(rhs) == this` is `false`, `rhs.valid() == false`.
+> *Effects:*
+>
+> If `addressof(rhs) == this` is `true`, there are no effects.
+> Otherwise:
+>
+> - Releases any shared state\[futures.state\];
+>
+> - move assigns the contents of `rhs` to `*this`.
+>
+> *Ensures:*
+>
+> - `valid()` returns the same value as `rhs.valid()` returned prior to
+>   the assignment.
+>
+> - If `addressof(rhs) == this` is `false`, `rhs.valid() == false`.
 
 ``` cpp
 shared_future& operator=(const shared_future& rhs) noexcept;
 ```
 
-***Effects:***
-
-If `addressof(rhs) == this` is `true`, there are no effects. Otherwise:
-
-- Releases any shared state\[futures.state\];
-
-- assigns the contents of `rhs` to `*this`.
-
-  \[*Note 3*: As a result, `*this` refers to the same shared state as
-  `rhs` (if any). — *end note*\]
-
-***Ensures:***
-
-`valid() == rhs.valid()`.
+> *Effects:*
+>
+> If `addressof(rhs) == this` is `true`, there are no effects.
+> Otherwise:
+>
+> - Releases any shared state\[futures.state\];
+>
+> - assigns the contents of `rhs` to `*this`.
+>
+>   \[*Note 74*: As a result, `*this` refers to the same shared state as
+>   `rhs` (if any). — *end note*\]
+>
+> *Ensures:*
+>
+> `valid() == rhs.valid()`.
 
 ``` cpp
 const R& shared_future::get() const;
@@ -9131,105 +9181,108 @@ R& shared_future<R&>::get() const;
 void shared_future<void>::get() const;
 ```
 
-\[*Note 13*: As described above, the template and its two required
-specializations differ only in the return type and return value of the
-member function `get`. — *end note*\]
-
-\[*Note 14*: Access to a value object stored in the shared state is
-unsynchronized, so operations on `R` might introduce a data
-race\[intro.multithread\]. — *end note*\]
-
-***Effects:***
-
-`wait()`s until the shared state is ready, then retrieves the value
-stored in the shared state.
-
-***Returns:***
-
-- `shared_future::get()` returns a const reference to the value stored
-  in the object’s shared state.
-
-  \[*Note 4*: Access through that reference after the shared state has
-  been destroyed produces undefined behavior; this can be avoided by not
-  storing the reference in any storage with a greater lifetime than the
-  `shared_future` object that returned the reference. — *end note*\]
-
-- `shared_future<R&>::get()` returns the reference stored as value in
-  the object’s shared state.
-
-- `shared_future<void>::get()` returns nothing.
-
-***Throws:***
-
-The stored exception, if an exception was stored in the shared state.
+> \[*Note 76*: As described above, the template and its two required
+> specializations differ only in the return type and return value of the
+> member function `get`. — *end note*\]
+>
+> \[*Note 77*: Access to a value object stored in the shared state is
+> unsynchronized, so operations on `R` might introduce a data
+> race\[intro.multithread\]. — *end note*\]
+>
+> *Effects:*
+>
+> `wait()`s until the shared state is ready, then retrieves the value
+> stored in the shared state.
+>
+> *Returns:*
+>
+> - `shared_future::get()` returns a const reference to the value stored
+>   in the object’s shared state.
+>
+>   \[*Note 75*: Access through that reference after the shared state
+>   has been destroyed produces undefined behavior; this can be avoided
+>   by not storing the reference in any storage with a greater lifetime
+>   than the `shared_future` object that returned the
+>   reference. — *end note*\]
+>
+> - `shared_future<R&>::get()` returns the reference stored as value in
+>   the object’s shared state.
+>
+> - `shared_future<void>::get()` returns nothing.
+>
+> *Throws:*
+>
+> The stored exception, if an exception was stored in the shared state.
 
 ``` cpp
 bool valid() const noexcept;
 ```
 
-***Returns:***
-
-`true` only if `*this` refers to a shared state.
+> *Returns:*
+>
+> `true` only if `*this` refers to a shared state.
 
 ``` cpp
 void wait() const;
 ```
 
-***Effects:***
-
-Blocks until the shared state is ready.
+> *Effects:*
+>
+> Blocks until the shared state is ready.
 
 ``` cpp
 template<class Rep, class Period>
   future_status wait_for(const chrono::duration<Rep, Period>& rel_time) const;
 ```
 
-***Effects:***
-
-None if the shared state contains a deferred function\[futures.async\],
-otherwise blocks until the shared state is ready or until the relative
-timeout\[thread.req.timing\] specified by `rel_time` has expired.
-
-***Returns:***
-
-- `future_status::deferred` if the shared state contains a deferred
-  function.
-
-- `future_status::ready` if the shared state is ready.
-
-- `future_status::timeout` if the function is returning because the
-  relative timeout\[thread.req.timing\] specified by `rel_time` has
-  expired.
-
-***Throws:***
-
-timeout-related exceptions\[thread.req.timing\].
+> *Effects:*
+>
+> None if the shared state contains a deferred
+> function\[futures.async\], otherwise blocks until the shared state is
+> ready or until the relative timeout\[thread.req.timing\] specified by
+> `rel_time` has expired.
+>
+> *Returns:*
+>
+> - `future_status::deferred` if the shared state contains a deferred
+>   function.
+>
+> - `future_status::ready` if the shared state is ready.
+>
+> - `future_status::timeout` if the function is returning because the
+>   relative timeout\[thread.req.timing\] specified by `rel_time` has
+>   expired.
+>
+> *Throws:*
+>
+> timeout-related exceptions\[thread.req.timing\].
 
 ``` cpp
 template<class Clock, class Duration>
   future_status wait_until(const chrono::time_point<Clock, Duration>& abs_time) const;
 ```
 
-***Effects:***
-
-None if the shared state contains a deferred function\[futures.async\],
-otherwise blocks until the shared state is ready or until the absolute
-timeout\[thread.req.timing\] specified by `abs_time` has expired.
-
-***Returns:***
-
-- `future_status::deferred` if the shared state contains a deferred
-  function.
-
-- `future_status::ready` if the shared state is ready.
-
-- `future_status::timeout` if the function is returning because the
-  absolute timeout\[thread.req.timing\] specified by `abs_time` has
-  expired.
-
-***Throws:***
-
-timeout-related exceptions\[thread.req.timing\].
+> *Effects:*
+>
+> None if the shared state contains a deferred
+> function\[futures.async\], otherwise blocks until the shared state is
+> ready or until the absolute timeout\[thread.req.timing\] specified by
+> `abs_time` has expired.
+>
+> *Returns:*
+>
+> - `future_status::deferred` if the shared state contains a deferred
+>   function.
+>
+> - `future_status::ready` if the shared state is ready.
+>
+> - `future_status::timeout` if the function is returning because the
+>   absolute timeout\[thread.req.timing\] specified by `abs_time` has
+>   expired.
+>
+> *Throws:*
+>
+> timeout-related exceptions\[thread.req.timing\].
 
 ### Function template `async` <a id="futures.async">[futures.async]</a>
 
@@ -9246,108 +9299,109 @@ template<class F, class... Args>
     async(launch policy, F&& f, Args&&... args);
 ```
 
-***Mandates:***
+> *Mandates:*
+>
+> The following are all `true`:
+>
+> - `is_constructible_v<decay_t<F>, F>`,
+>
+> - `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
+>
+> - `is_invocable_v<decay_t<F>, decay_t<Args>...>`.
+>
+> *Effects:*
+>
+> The first function behaves the same as a call to the second function
+> with a `policy` argument of `launch::async | launch::deferred` and the
+> same arguments for `F` and `Args`. The second function creates a
+> shared state that is associated with the returned `future` object. The
+> further behavior of the second function depends on the `policy`
+> argument as follows (if more than one of these conditions applies, the
+> implementation may choose any of the corresponding policies):
+>
+> - If `launch::async` is set in `policy`, calls
+>   `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`\[func.invoke,thread.thread.constr\]
+>   as if in a new thread of execution represented by a `thread` object
+>   with the values produced by `auto` being materialized\[conv.rval\]
+>   in the thread that called `async`. Any return value is stored as the
+>   result in the shared state. Any exception propagated from the
+>   execution of
+>   `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`
+>   is stored as the exceptional result in the shared state. The
+>   `thread` object is stored in the shared state and affects the
+>   behavior of any asynchronous return objects that reference that
+>   state.
+>
+> - If `launch::deferred` is set in `policy`, stores
+>   `auto(std::forward<F>(f))` and `auto(std::forward<Args>(args))...`
+>   in the shared state. These copies of `f` and `args` constitute a .
+>   Invocation of the deferred function evaluates
+>   `invoke(std::move(g), std::move(xyz))` where `g` is the stored value
+>   of `auto(std::forward<F>(f))` and `xyz` is the stored copy of
+>   `auto(std::forward<Args>(args))...`. Any return value is stored as
+>   the result in the shared state. Any exception propagated from the
+>   execution of the deferred function is stored as the exceptional
+>   result in the shared state. The shared state is not made ready until
+>   the function has completed. The first call to a non-timed waiting
+>   function\[futures.state\] on an asynchronous return object referring
+>   to this shared state invokes the deferred function in the thread
+>   that called the waiting function. Once evaluation of
+>   `invoke(std::move(g), std::move(xyz))` begins, the function is no
+>   longer considered deferred.
+>
+>   If this policy is specified together with other policies, such as
+>   when using a `policy` value of `launch::async | launch::deferred`,
+>   implementations should defer invocation or the selection of the
+>   policy when no more concurrency can be effectively exploited.
+>
+> - If no value is set in the launch policy, or a value is set that is
+>   neither specified in this document nor by the implementation, the
+>   behavior is undefined.
+>
+> The invocation of `async` synchronizes with the invocation of `f`. The
+> completion of the function `f` is sequenced before the shared state is
+> made ready.
+>
+> \[*Note 78*: These apply regardless of the provided `policy` argument,
+> and even if the corresponding `future` object is moved to another
+> thread. However, it is possible for `f` not to be called at all, in
+> which case its completion never happens. — *end note*\]
+>
+> If the implementation chooses the `launch::async` policy,
+>
+> - a call to a waiting function on an asynchronous return object that
+>   shares the shared state created by this `async` call shall block
+>   until the associated thread has completed, as if joined, or else
+>   time out\[thread.thread.member\];
+>
+> - the associated thread completion synchronizes
+>   with\[intro.multithread\] the return from the first function that
+>   successfully detects the ready status of the shared state or with
+>   the return from the last function that releases the shared state,
+>   whichever happens first.
+>
+> *Returns:*
+>
+> An object of type
+> `future<invoke_result_t<decay_t<F>, decay_t<Args>...>>` that refers to
+> the shared state created by this call to `async`.
+>
+> \[*Note 79*: If a future obtained from `async` is moved outside the
+> local scope, the future’s destructor can block for the shared state to
+> become ready. — *end note*\]
+>
+> *Throws:*
+>
+> `system_error` if `policy == launch::async` and the implementation is
+> unable to start a new thread, or `std::bad_alloc` if memory for the
+> internal data structures cannot be allocated.
+>
+> *Error conditions:*
+>
+> - `resource_unavailable_try_again` — if `policy == launch::async` and
+>   the system is unable to start a new thread.
 
-The following are all `true`:
-
-- `is_constructible_v<decay_t<F>, F>`,
-
-- `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
-
-- `is_invocable_v<decay_t<F>, decay_t<Args>...>`.
-
-***Effects:***
-
-The first function behaves the same as a call to the second function
-with a `policy` argument of `launch::async | launch::deferred` and the
-same arguments for `F` and `Args`. The second function creates a shared
-state that is associated with the returned `future` object. The further
-behavior of the second function depends on the `policy` argument as
-follows (if more than one of these conditions applies, the
-implementation may choose any of the corresponding policies):
-
-- If `launch::async` is set in `policy`, calls
-  `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`\[func.invoke,thread.thread.constr\]
-  as if in a new thread of execution represented by a `thread` object
-  with the values produced by `auto` being materialized\[conv.rval\] in
-  the thread that called `async`. Any return value is stored as the
-  result in the shared state. Any exception propagated from the
-  execution of
-  `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`
-  is stored as the exceptional result in the shared state. The `thread`
-  object is stored in the shared state and affects the behavior of any
-  asynchronous return objects that reference that state.
-
-- If `launch::deferred` is set in `policy`, stores
-  `auto(std::forward<F>(f))` and `auto(std::forward<Args>(args))...` in
-  the shared state. These copies of `f` and `args` constitute a .
-  Invocation of the deferred function evaluates
-  `invoke(std::move(g), std::move(xyz))` where `g` is the stored value
-  of `auto(std::forward<F>(f))` and `xyz` is the stored copy of
-  `auto(std::forward<Args>(args))...`. Any return value is stored as the
-  result in the shared state. Any exception propagated from the
-  execution of the deferred function is stored as the exceptional result
-  in the shared state. The shared state is not made ready until the
-  function has completed. The first call to a non-timed waiting
-  function\[futures.state\] on an asynchronous return object referring
-  to this shared state invokes the deferred function in the thread that
-  called the waiting function. Once evaluation of
-  `invoke(std::move(g), std::move(xyz))` begins, the function is no
-  longer considered deferred.
-
-  If this policy is specified together with other policies, such as when
-  using a `policy` value of `launch::async | launch::deferred`,
-  implementations should defer invocation or the selection of the policy
-  when no more concurrency can be effectively exploited.
-
-- If no value is set in the launch policy, or a value is set that is
-  neither specified in this document nor by the implementation, the
-  behavior is undefined.
-
-The invocation of `async` synchronizes with the invocation of `f`. The
-completion of the function `f` is sequenced before the shared state is
-made ready.
-
-\[*Note 15*: These apply regardless of the provided `policy` argument,
-and even if the corresponding `future` object is moved to another
-thread. However, it is possible for `f` not to be called at all, in
-which case its completion never happens. — *end note*\]
-
-If the implementation chooses the `launch::async` policy,
-
-- a call to a waiting function on an asynchronous return object that
-  shares the shared state created by this `async` call shall block until
-  the associated thread has completed, as if joined, or else time
-  out\[thread.thread.member\];
-
-- the associated thread completion synchronizes
-  with\[intro.multithread\] the return from the first function that
-  successfully detects the ready status of the shared state or with the
-  return from the last function that releases the shared state,
-  whichever happens first.
-
-***Returns:***
-
-An object of type
-`future<invoke_result_t<decay_t<F>, decay_t<Args>...>>` that refers to
-the shared state created by this call to `async`.
-
-\[*Note 16*: If a future obtained from `async` is moved outside the
-local scope, the future’s destructor can block for the shared state to
-become ready. — *end note*\]
-
-***Throws:***
-
-`system_error` if `policy == launch::async` and the implementation is
-unable to start a new thread, or `std::bad_alloc` if memory for the
-internal data structures cannot be allocated.
-
-***Error conditions:***
-
-- `resource_unavailable_try_again` — if `policy == launch::async` and
-  the system is unable to start a new thread.
-
-\[*Note 17*: Line \#1 might not result in concurrency because the
+\[*Note 11*: Line \#1 might not result in concurrency because the
 `async` call uses the default policy, which might use
 `launch::deferred`, in which case the lambda might not be invoked until
 the `get()` call; in that case, `work1` and `work2` are called on the
@@ -9413,208 +9467,211 @@ namespace std {
 packaged_task() noexcept;
 ```
 
-***Effects:***
-
-The object has no shared state and no stored task.
+> *Effects:*
+>
+> The object has no shared state and no stored task.
 
 ``` cpp
 template<class F>
   explicit packaged_task(F&& f);
 ```
 
-`remove_cvref_t<F>` is not the same type as
-`packaged_task<R(ArgTypes...)>`.
-
-***Mandates:***
-
-`is_invocable_r_v<R, F&, ArgTypes...>` is `true`.
-
-***Preconditions:***
-
-Invoking a copy of `f` behaves the same as invoking `f`.
-
-***Effects:***
-
-Constructs a new `packaged_task` object with a shared state and
-initializes the object’s stored task with `std::forward<F>(f)`.
-
-***Throws:***
-
-Any exceptions thrown by the copy or move constructor of `f`, or
-`bad_alloc` if memory for the internal data structures cannot be
-allocated.
+> `remove_cvref_t<F>` is not the same type as
+> `packaged_task<R(ArgTypes...)>`.
+>
+> *Mandates:*
+>
+> `is_invocable_r_v<R, F&, ArgTypes...>` is `true`.
+>
+> *Preconditions:*
+>
+> Invoking a copy of `f` behaves the same as invoking `f`.
+>
+> *Effects:*
+>
+> Constructs a new `packaged_task` object with a shared state and
+> initializes the object’s stored task with `std::forward<F>(f)`.
+>
+> *Throws:*
+>
+> Any exceptions thrown by the copy or move constructor of `f`, or
+> `bad_alloc` if memory for the internal data structures cannot be
+> allocated.
 
 ``` cpp
 template<class F> packaged_task(F) -> packaged_task<see below>;
 ```
 
-`&F::operator()` is well-formed when treated as an unevaluated
-operand\[term.unevaluated.operand\] and either
-
-- `F::operator()` is a non-static member function and
-  `decltype(&F::operator())` is either of the form `R(G::*)(A...)`  ` `
-  or of the form `R(*)(G, A...) ` for a type `G`, or
-
-- `F::operator()` is a static member function and
-  `decltype(&F::operator())` is of the form `R(*)(A...) `.
-
-***Remarks:***
-
-The deduced type is `packaged_task<R(A...)>`.
+> `&F::operator()` is well-formed when treated as an unevaluated
+> operand\[term.unevaluated.operand\] and either
+>
+> - `F::operator()` is a non-static member function and
+>   `decltype(&F::operator())` is either of the form
+>   `R(G::*)(A...)`  ` ` or of the form `R(*)(G, A...) ` for a type `G`,
+>   or
+>
+> - `F::operator()` is a static member function and
+>   `decltype(&F::operator())` is of the form `R(*)(A...) `.
+>
+> *Remarks:*
+>
+> The deduced type is `packaged_task<R(A...)>`.
 
 ``` cpp
 packaged_task(packaged_task&& rhs) noexcept;
 ```
 
-***Effects:***
-
-Transfers ownership of `rhs`’s shared state to `*this`, leaving `rhs`
-with no shared state. Moves the stored task from `rhs` to `*this`.
-
-***Ensures:***
-
-`rhs` has no shared state.
+> *Effects:*
+>
+> Transfers ownership of `rhs`’s shared state to `*this`, leaving `rhs`
+> with no shared state. Moves the stored task from `rhs` to `*this`.
+>
+> *Ensures:*
+>
+> `rhs` has no shared state.
 
 ``` cpp
 packaged_task& operator=(packaged_task&& rhs) noexcept;
 ```
 
-***Effects:***
-
-- Releases any shared state\[futures.state\];
-
-- calls `packaged_task(std::move(rhs)).swap(*this)`.
+> *Effects:*
+>
+> - Releases any shared state\[futures.state\];
+>
+> - calls `packaged_task(std::move(rhs)).swap(*this)`.
 
 ``` cpp
 ~packaged_task();
 ```
 
-***Effects:***
-
-Abandons any shared state\[futures.state\].
+> *Effects:*
+>
+> Abandons any shared state\[futures.state\].
 
 ``` cpp
 void swap(packaged_task& other) noexcept;
 ```
 
-***Effects:***
-
-Exchanges the shared states and stored tasks of `*this` and `other`.
-
-***Ensures:***
-
-`*this` has the same shared state and stored task (if any) as `other`
-prior to the call to `swap`. `other` has the same shared state and
-stored task (if any) as `*this` prior to the call to `swap`.
+> *Effects:*
+>
+> Exchanges the shared states and stored tasks of `*this` and `other`.
+>
+> *Ensures:*
+>
+> `*this` has the same shared state and stored task (if any) as `other`
+> prior to the call to `swap`. `other` has the same shared state and
+> stored task (if any) as `*this` prior to the call to `swap`.
 
 ``` cpp
 bool valid() const noexcept;
 ```
 
-***Returns:***
-
-`true` only if `*this` has a shared state.
+> *Returns:*
+>
+> `true` only if `*this` has a shared state.
 
 ``` cpp
 future<R> get_future();
 ```
 
-Calls to this function do not introduce data races \[intro.multithread\]
-with calls to `operator()` or `make_ready_at_thread_exit`.
-
-\[*Note 18*: Such calls need not synchronize with each
-other. — *end note*\]
-
-***Returns:***
-
-A `future` object that shares the same shared state as `*this`.
-
-***Throws:***
-
-A `future_error` object if an error occurs.
-
-***Error conditions:***
-
-- `future_already_retrieved` if `get_future` has already been called on
-  a `packaged_task` object with the same shared state as `*this`.
-
-- `no_state` if `*this` has no shared state.
+> Calls to this function do not introduce data
+> races \[intro.multithread\] with calls to `operator()` or
+> `make_ready_at_thread_exit`.
+>
+> \[*Note 80*: Such calls need not synchronize with each
+> other. — *end note*\]
+>
+> *Returns:*
+>
+> A `future` object that shares the same shared state as `*this`.
+>
+> *Throws:*
+>
+> A `future_error` object if an error occurs.
+>
+> *Error conditions:*
+>
+> - `future_already_retrieved` if `get_future` has already been called
+>   on a `packaged_task` object with the same shared state as `*this`.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void operator()(ArgTypes... args);
 ```
 
-***Effects:***
-
-As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N)\[func.require\],
-where `f` is the stored task of `*this` and
-`t`_1`, t`_2`, `$\dotsc$`, t`_N are the values in `args...`. If the task
-returns normally, the return value is stored as the asynchronous result
-in the shared state of `*this`, otherwise the exception thrown by the
-task is stored. The shared state of `*this` is made ready, and any
-threads blocked in a function waiting for the shared state of `*this` to
-become ready are unblocked.
-
-***Throws:***
-
-A `future_error` exception object if there is no shared state or the
-stored task has already been invoked.
-
-***Error conditions:***
-
-- `promise_already_satisfied` if the stored task has already been
-  invoked.
-
-- `no_state` if `*this` has no shared state.
+> *Effects:*
+>
+> As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N)\[func.require\],
+> where `f` is the stored task of `*this` and
+> `t`_1`, t`_2`, `$\dotsc$`, t`_N are the values in `args...`. If the
+> task returns normally, the return value is stored as the asynchronous
+> result in the shared state of `*this`, otherwise the exception thrown
+> by the task is stored. The shared state of `*this` is made ready, and
+> any threads blocked in a function waiting for the shared state of
+> `*this` to become ready are unblocked.
+>
+> *Throws:*
+>
+> A `future_error` exception object if there is no shared state or the
+> stored task has already been invoked.
+>
+> *Error conditions:*
+>
+> - `promise_already_satisfied` if the stored task has already been
+>   invoked.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void make_ready_at_thread_exit(ArgTypes... args);
 ```
 
-***Effects:***
-
-As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N)\[func.require\],
-where `f` is the stored task and `t`_1`, t`_2`, `$\dotsc$`, t`_N are the
-values in `args...`. If the task returns normally, the return value is
-stored as the asynchronous result in the shared state of `*this`,
-otherwise the exception thrown by the task is stored. In either case,
-this is done without making that state ready\[futures.state\]
-immediately. Schedules the shared state to be made ready when the
-current thread exits, after all objects of thread storage duration
-associated with the current thread have been destroyed.
-
-***Throws:***
-
-`future_error` if an error condition occurs.
-
-***Error conditions:***
-
-- `promise_already_satisfied` if the stored task has already been
-  invoked.
-
-- `no_state` if `*this` has no shared state.
+> *Effects:*
+>
+> As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$, t_N)\[func.require\],
+> where `f` is the stored task and `t`_1`, t`_2`, `$\dotsc$`, t`_N are
+> the values in `args...`. If the task returns normally, the return
+> value is stored as the asynchronous result in the shared state of
+> `*this`, otherwise the exception thrown by the task is stored. In
+> either case, this is done without making that state
+> ready\[futures.state\] immediately. Schedules the shared state to be
+> made ready when the current thread exits, after all objects of thread
+> storage duration associated with the current thread have been
+> destroyed.
+>
+> *Throws:*
+>
+> `future_error` if an error condition occurs.
+>
+> *Error conditions:*
+>
+> - `promise_already_satisfied` if the stored task has already been
+>   invoked.
+>
+> - `no_state` if `*this` has no shared state.
 
 ``` cpp
 void reset();
 ```
 
-***Effects:***
-
-As if `*this = packaged_task(std::move(f))`, where `f` is the task
-stored in `*this`.
-
-\[*Note 19*: This constructs a new shared state for `*this`. The old
-state is abandoned\[futures.state\]. — *end note*\]
-
-***Throws:***
-
-- `bad_alloc` if memory for the new shared state cannot be allocated.
-
-- Any exception thrown by the move constructor of the task stored in the
-  shared state.
-
-- `future_error` with an error condition of `no_state` if `*this` has no
-  shared state.
+> *Effects:*
+>
+> As if `*this = packaged_task(std::move(f))`, where `f` is the task
+> stored in `*this`.
+>
+> \[*Note 81*: This constructs a new shared state for `*this`. The old
+> state is abandoned\[futures.state\]. — *end note*\]
+>
+> *Throws:*
+>
+> - `bad_alloc` if memory for the new shared state cannot be allocated.
+>
+> - Any exception thrown by the move constructor of the task stored in
+>   the shared state.
+>
+> - `future_error` with an error condition of `no_state` if `*this` has
+>   no shared state.
 
 #### Globals <a id="futures.task.nonmembers">[futures.task.nonmembers]</a>
 
@@ -9623,9 +9680,9 @@ template<class R, class... ArgTypes>
   void swap(packaged_task<R(ArgTypes...)>& x, packaged_task<R(ArgTypes...)>& y) noexcept;
 ```
 
-***Effects:***
-
-As if by `x.swap(y)`.
+> *Effects:*
+>
+> As if by `x.swap(y)`.
 
 <!-- Link reference definitions -->
 [atomic.types.int.comp]: #atomic.types.int.comp

@@ -1009,29 +1009,29 @@ template<class T>
     };
 ```
 
-The required expressions `ranges::begin(t)` and `ranges::end(t)` of the
-`range` concept do not require implicit expression
-variations\[concepts.equality\].
-
-Given an expression `t` such that `decltype((t))` is `T&`, `T` models
-`range` only if
-
-- ,
-
-- both `ranges::begin(t)` and `ranges::end(t)` are amortized constant
-  time and non-modifying, and
-
-- if the type of `ranges::begin(t)` models `forward_iterator`,
-  `ranges::begin(t)` is equality-preserving.
-
-\[*Note 1*: Equality preservation of both `ranges::begin` and
-`ranges::end` enables passing a range whose iterator type models
-`forward_iterator` to multiple algorithms and making multiple passes
-over the range by repeated calls to `ranges::begin` and `ranges::end`.
-Since `ranges::begin` is not required to be equality-preserving when the
-return type does not model `forward_iterator`, it is possible for
-repeated calls to not return equal values or to not be
-well-defined. — *end note*\]
+> The required expressions `ranges::begin(t)` and `ranges::end(t)` of
+> the `range` concept do not require implicit expression
+> variations\[concepts.equality\].
+>
+> Given an expression `t` such that `decltype((t))` is `T&`, `T` models
+> `range` only if
+>
+> - ,
+>
+> - both `ranges::begin(t)` and `ranges::end(t)` are amortized constant
+>   time and non-modifying, and
+>
+> - if the type of `ranges::begin(t)` models `forward_iterator`,
+>   `ranges::begin(t)` is equality-preserving.
+>
+> \[*Note 1*: Equality preservation of both `ranges::begin` and
+> `ranges::end` enables passing a range whose iterator type models
+> `forward_iterator` to multiple algorithms and making multiple passes
+> over the range by repeated calls to `ranges::begin` and `ranges::end`.
+> Since `ranges::begin` is not required to be equality-preserving when
+> the return type does not model `forward_iterator`, it is possible for
+> repeated calls to not return equal values or to not be
+> well-defined. — *end note*\]
 
 ``` cpp
 template<class T>
@@ -1039,40 +1039,40 @@ template<class T>
     range<T> && (is_lvalue_reference_v<T> || enable_borrowed_range<remove_cvref_t<T>>);
 ```
 
-Let `U` be `remove_reference_t<T>` if `T` is an rvalue reference type,
-and `T` otherwise. Given a variable `u` of type `U`, `T` models
-`borrowed_range` only if the validity of iterators obtained from `u` is
-not tied to the lifetime of that variable.
-
-\[*Note 2*: Since the validity of iterators is not tied to the lifetime
-of a variable whose type models `borrowed_range`, a function with a
-parameter of such a type can return iterators obtained from it without
-danger of dangling. — *end note*\]
+> Let `U` be `remove_reference_t<T>` if `T` is an rvalue reference type,
+> and `T` otherwise. Given a variable `u` of type `U`, `T` models
+> `borrowed_range` only if the validity of iterators obtained from `u`
+> is not tied to the lifetime of that variable.
+>
+> \[*Note 2*: Since the validity of iterators is not tied to the
+> lifetime of a variable whose type models `borrowed_range`, a function
+> with a parameter of such a type can return iterators obtained from it
+> without danger of dangling. — *end note*\]
 
 ``` cpp
 template<class>
   constexpr bool enable_borrowed_range = false;
 ```
 
-***Remarks:***
-
-Pursuant to \[namespace.std\], users may specialize
-`enable_borrowed_range` for cv-unqualified program-defined types. Such
-specializations shall be usable in constant expressions\[expr.const\]
-and have type `const bool`.
-
-\[*Example 1*:
-
-Each specialization `S` of class template `subrange`\[range.subrange\]
-models `borrowed_range` because
-
-- `enable_borrowed_range<S>` is specialized to have the value `true`,
-  and
-
-- `S`’s iterators do not have validity tied to the lifetime of an `S`
-  object because they are “borrowed” from some other range.
-
-— *end example*\]
+> *Remarks:*
+>
+> Pursuant to \[namespace.std\], users may specialize
+> `enable_borrowed_range` for cv-unqualified program-defined types. Such
+> specializations shall be usable in constant expressions\[expr.const\]
+> and have type `const bool`.
+>
+> \[*Example 1*:
+>
+> Each specialization `S` of class template `subrange`\[range.subrange\]
+> models `borrowed_range` because
+>
+> - `enable_borrowed_range<S>` is specialized to have the value `true`,
+>   and
+>
+> - `S`’s iterators do not have validity tied to the lifetime of an `S`
+>   object because they are “borrowed” from some other range.
+>
+> — *end example*\]
 
 ### Sized ranges <a id="range.sized">[range.sized]</a>
 
@@ -1086,36 +1086,37 @@ template<class T>
     range<T> && requires(T& t) { ranges::size(t); };
 ```
 
-Given an lvalue `t` of type `remove_reference_t<T>`, `T` models
-`sized_range` only if
-
-- `ranges::size(t)` is amortized 𝑂(1), does not modify `t`, and is equal
-  to `ranges::distance(ranges::begin(t), ranges::end(t))`, and
-
-- if `iterator_t<T>` models `forward_iterator`, `ranges::size(t)` is
-  well-defined regardless of the evaluation of `ranges::begin(t)`.
-
-  \[*Note 1*: `ranges::size(t)` is otherwise not required to be
-  well-defined after evaluating `ranges::begin(t)`. For example, it is
-  possible for `ranges::size(t)` to be well-defined for a `sized_range`
-  whose iterator type does not model `forward_iterator` only if
-  evaluated before the first call to `ranges::begin(t)`. — *end note*\]
+> Given an lvalue `t` of type `remove_reference_t<T>`, `T` models
+> `sized_range` only if
+>
+> - `ranges::size(t)` is amortized 𝑂(1), does not modify `t`, and is
+>   equal to `ranges::distance(ranges::begin(t), ranges::end(t))`, and
+>
+> - if `iterator_t<T>` models `forward_iterator`, `ranges::size(t)` is
+>   well-defined regardless of the evaluation of `ranges::begin(t)`.
+>
+>   \[*Note 3*: `ranges::size(t)` is otherwise not required to be
+>   well-defined after evaluating `ranges::begin(t)`. For example, it is
+>   possible for `ranges::size(t)` to be well-defined for a
+>   `sized_range` whose iterator type does not model `forward_iterator`
+>   only if evaluated before the first call to
+>   `ranges::begin(t)`. — *end note*\]
 
 ``` cpp
 template<class>
   constexpr bool disable_sized_range = false;
 ```
 
-***Remarks:***
-
-Pursuant to \[namespace.std\], users may specialize
-`disable_sized_range` for cv-unqualified program-defined types. Such
-specializations shall be usable in constant expressions\[expr.const\]
-and have type `const bool`.
-
-\[*Note 3*: `disable_sized_range` allows use of range types with the
-library that satisfy but do not in fact model
-`sized_range`. — *end note*\]
+> *Remarks:*
+>
+> Pursuant to \[namespace.std\], users may specialize
+> `disable_sized_range` for cv-unqualified program-defined types. Such
+> specializations shall be usable in constant expressions\[expr.const\]
+> and have type `const bool`.
+>
+> \[*Note 4*: `disable_sized_range` allows use of range types with the
+> library that satisfy but do not in fact model
+> `sized_range`. — *end note*\]
 
 ### Views <a id="range.view">[range.view]</a>
 
@@ -1129,42 +1130,43 @@ template<class T>
     range<T> && movable<T> && enable_view<T>;
 ```
 
-`T` models `view` only if:
-
-- `T` has 𝑂(1) move construction; and
-
-- move assignment of an object of type `T` is no more complex than
-  destruction followed by move construction; and
-
-- if N copies and/or moves are made from an object of type `T` that
-  contained M elements, then those N objects have 𝑂(N+M) destruction;
-  and
-
-- `copy_constructible``<T>` is `false`, or `T` has 𝑂(1) copy
-  construction; and
-
-- `copyable``<T>` is `false`, or copy assignment of an object of type
-  `T` is no more complex than destruction followed by copy construction.
-
-\[*Note 4*: The constraints on copying and moving imply that a
-moved-from object of type `T` has 𝑂(1) destruction. — *end note*\]
-
-\[*Example 2*:
-
-Examples of views are:
-
-- A `range` type that wraps a pair of iterators.
-
-- A `range` type that holds its elements by `shared_ptr` and shares
-  ownership with all its copies.
-
-- A `range` type that generates its elements on demand.
-
-A container such as `vector<string>` does not meet the semantic
-requirements of `view` since copying the container copies all of the
-elements, which cannot be done in constant time.
-
-— *end example*\]
+> `T` models `view` only if:
+>
+> - `T` has 𝑂(1) move construction; and
+>
+> - move assignment of an object of type `T` is no more complex than
+>   destruction followed by move construction; and
+>
+> - if N copies and/or moves are made from an object of type `T` that
+>   contained M elements, then those N objects have 𝑂(N+M) destruction;
+>   and
+>
+> - `copy_constructible``<T>` is `false`, or `T` has 𝑂(1) copy
+>   construction; and
+>
+> - `copyable``<T>` is `false`, or copy assignment of an object of type
+>   `T` is no more complex than destruction followed by copy
+>   construction.
+>
+> \[*Note 5*: The constraints on copying and moving imply that a
+> moved-from object of type `T` has 𝑂(1) destruction. — *end note*\]
+>
+> \[*Example 2*:
+>
+> Examples of views are:
+>
+> - A `range` type that wraps a pair of iterators.
+>
+> - A `range` type that holds its elements by `shared_ptr` and shares
+>   ownership with all its copies.
+>
+> - A `range` type that generates its elements on demand.
+>
+> A container such as `vector<string>` does not meet the semantic
+> requirements of `view` since copying the container copies all of the
+> elements, which cannot be done in constant time.
+>
+> — *end example*\]
 
 Since the difference between `range` and `view` is largely semantic, the
 two are differentiated with the help of `enable_view`.
@@ -1177,17 +1179,18 @@ template<class T>
     derived_from<T, view_base> || is-derived-from-view-interface<T>;
 ```
 
-For a type `T`, *`is-derived-from-view-interface`*`<T>` is `true` if and
-only if `T` has exactly one public base class `view_interface<U>` for
-some type `U` and `T` has no base classes of type `view_interface<V>`
-for any other type `V`.
-
-***Remarks:***
-
-Pursuant to \[namespace.std\], users may specialize `enable_view` to
-`true` for cv-unqualified program-defined types which model `view`, and
-`false` for types which do not. Such specializations shall be usable in
-constant expressions\[expr.const\] and have type `const bool`.
+> For a type `T`, *`is-derived-from-view-interface`*`<T>` is `true` if
+> and only if `T` has exactly one public base class `view_interface<U>`
+> for some type `U` and `T` has no base classes of type
+> `view_interface<V>` for any other type `V`.
+>
+> *Remarks:*
+>
+> Pursuant to \[namespace.std\], users may specialize `enable_view` to
+> `true` for cv-unqualified program-defined types which model `view`,
+> and `false` for types which do not. Such specializations shall be
+> usable in constant expressions\[expr.const\] and have type
+> `const bool`.
 
 ### Other range refinements <a id="range.refinements">[range.refinements]</a>
 
@@ -1237,7 +1240,7 @@ Given an expression `t` such that `decltype((t))` is `T&`, `T` models
 The `common_range` concept specifies requirements of a `range` type for
 which `ranges::begin` and `ranges::end` return objects of the same type.
 
-\[*Example 3*: The standard containers [containers] model
+\[*Example 1*: The standard containers [containers] model
 `common_range`. — *end example*\]
 
 ``` cpp
@@ -1251,8 +1254,8 @@ template<class R>
   constexpr bool exposition onlyidnc{is-initializer-list} = see below;               // exposition only
 ```
 
-For a type `R`, *`is-initializer-list`*`<R>` is `true` if and only if
-`remove_cvref_t<R>` is a specialization of `initializer_list`.
+> For a type `R`, *`is-initializer-list`*`<R>` is `true` if and only if
+> `remove_cvref_t<R>` is a specialization of `initializer_list`.
 
 The `viewable_range` concept specifies the requirements of a `range`
 type that can be converted to a view safely.
@@ -1414,13 +1417,13 @@ constexpr decltype(auto) front() requires forward_range<D>;
 constexpr decltype(auto) front() const requires forward_range<const D>;
 ```
 
-***Preconditions:***
-
-`!empty()` is `true`.
-
-***Effects:***
-
-Equivalent to: `return *ranges::begin(`*`derived`*`());`
+> *Preconditions:*
+>
+> `!empty()` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return *ranges::begin(`*`derived`*`());`
 
 ``` cpp
 constexpr decltype(auto) back() requires bidirectional_range<D> && common_range<D>;
@@ -1428,13 +1431,13 @@ constexpr decltype(auto) back() const
   requires bidirectional_range<const D> && common_range<const D>;
 ```
 
-***Preconditions:***
-
-`!empty()` is `true`.
-
-***Effects:***
-
-Equivalent to: `return *ranges::prev(ranges::end(`*`derived`*`()));`
+> *Preconditions:*
+>
+> `!empty()` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return *ranges::prev(ranges::end(`*`derived`*`()));`
 
 ### Sub-ranges <a id="range.subrange">[range.subrange]</a>
 
@@ -1542,13 +1545,13 @@ namespace std::ranges {
 constexpr subrange(convertible-to-non-slicing<I> auto i, S s) requires (!StoreSize);
 ```
 
-***Preconditions:***
-
-\[`i`, `s`) is a valid range.
-
-***Effects:***
-
-Initializes *begin\_* with `std::move(i)` and *end\_* with `s`.
+> *Preconditions:*
+>
+> \[`i`, `s`) is a valid range.
+>
+> *Effects:*
+>
+> Initializes *begin\_* with `std::move(i)` and *end\_* with `s`.
 
 ``` cpp
 constexpr subrange(convertible-to-non-slicing<I> auto i, S s,
@@ -1556,20 +1559,20 @@ constexpr subrange(convertible-to-non-slicing<I> auto i, S s,
   requires (K == subrange_kind::sized);
 ```
 
-***Preconditions:***
-
-\[`i`, `s`) is a valid range, and
-`n == `*`to-unsigned-like`*`(ranges::distance(i, s))` is `true`.
-
-***Effects:***
-
-Initializes *begin\_* with `std::move(i)` and *end\_* with `s`. If
-*StoreSize* is `true`, initializes *size\_* with `n`.
-
-\[*Note 1*: Accepting the length of the range and storing it to later
-return from `size()` enables `subrange` to model `sized_range` even when
-it stores an iterator and sentinel that do not model
-`sized_sentinel_for`. — *end note*\]
+> *Preconditions:*
+>
+> \[`i`, `s`) is a valid range, and
+> `n == `*`to-unsigned-like`*`(ranges::distance(i, s))` is `true`.
+>
+> *Effects:*
+>
+> Initializes *begin\_* with `std::move(i)` and *end\_* with `s`. If
+> *StoreSize* is `true`, initializes *size\_* with `n`.
+>
+> \[*Note 6*: Accepting the length of the range and storing it to later
+> return from `size()` enables `subrange` to model `sized_range` even
+> when it stores an iterator and sentinel that do not model
+> `sized_sentinel_for`. — *end note*\]
 
 ``` cpp
 template<different-from<subrange> R>
@@ -1579,14 +1582,14 @@ template<different-from<subrange> R>
 constexpr subrange(R&& r) requires (!StoreSize || sized_range<R>);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-- If *StoreSize* is `true`,
-  `subrange(r, static_cast<decltype(`*`size_`*`)>(ranges::size(r)))`.
-
-- Otherwise, `subrange(ranges::begin(r), ranges::end(r))`.
+> *Effects:*
+>
+> Equivalent to:
+>
+> - If *StoreSize* is `true`,
+>   `subrange(r, static_cast<decltype(`*`size_`*`)>(ranges::size(r)))`.
+>
+> - Otherwise, `subrange(ranges::begin(r), ranges::end(r))`.
 
 *PairLike*
 
@@ -1596,9 +1599,9 @@ template<different-from<subrange> PairLike>
 constexpr operator PairLike() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return PairLike(`*`begin_`*`, `*`end_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return PairLike(`*`begin_`*`, `*`end_`*`);`
 
 #### Accessors <a id="range.subrange.access">[range.subrange.access]</a>
 
@@ -1606,112 +1609,112 @@ Equivalent to: `return PairLike(`*`begin_`*`, `*`end_`*`);`
 constexpr I begin() const requires copyable<I>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`begin_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`begin_`*`;`
 
 ``` cpp
 [[nodiscard]] constexpr I begin() requires (!copyable<I>);
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`begin_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`begin_`*`);`
 
 ``` cpp
 constexpr S end() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`end_`*`;`
 
 ``` cpp
 constexpr bool empty() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`begin_`*` == `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`begin_`*` == `*`end_`*`;`
 
 ``` cpp
 constexpr make-unsigned-like-t<iter_difference_t<I>> size() const
   requires (K == subrange_kind::sized);
 ```
 
-***Effects:***
-
-- If *StoreSize* is `true`, equivalent to: `return `*`size_`*`;`
-
-- Otherwise, equivalent to:
-  `return `*`to-unsigned-like`*`(`*`end_`*` - `*`begin_`*`);`
+> *Effects:*
+>
+> - If *StoreSize* is `true`, equivalent to: `return `*`size_`*`;`
+>
+> - Otherwise, equivalent to:
+>   `return `*`to-unsigned-like`*`(`*`end_`*` - `*`begin_`*`);`
 
 ``` cpp
 [[nodiscard]] constexpr subrange next(iter_difference_t<I> n = 1) const &
   requires forward_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-tmp.advance(n);
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> tmp.advance(n);
+> return tmp;
+> ```
 
 ``` cpp
 [[nodiscard]] constexpr subrange next(iter_difference_t<I> n = 1) &&;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-advance(n);
-return std::move(*this);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> advance(n);
+> return std::move(*this);
+> ```
 
 ``` cpp
 [[nodiscard]] constexpr subrange prev(iter_difference_t<I> n = 1) const
   requires bidirectional_iterator<I>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-tmp.advance(-n);
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> tmp.advance(-n);
+> return tmp;
+> ```
 
 ``` cpp
 constexpr subrange& advance(iter_difference_t<I> n);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (bidirectional_iterator<I>) {
-  if (n < 0) {
-    ranges::advance(begin_, n);
-    if constexpr (StoreSize)
-      size_ += to-unsigned-like(-n);
-    return *this;
-  }
-}
-
-auto d = n - ranges::advance(begin_, n, end_);
-if constexpr (StoreSize)
-  size_ -= to-unsigned-like(d);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (bidirectional_iterator<I>) {
+>   if (n < 0) {
+>     ranges::advance(begin_, n);
+>     if constexpr (StoreSize)
+>       size_ += to-unsigned-like(-n);
+>     return *this;
+>   }
+> }
+>
+> auto d = n - ranges::advance(begin_, n, end_);
+> if constexpr (StoreSize)
+>   size_ -= to-unsigned-like(d);
+> return *this;
+> ```
 
 ``` cpp
 template<size_t N, class I, class S, subrange_kind K>
@@ -1722,16 +1725,16 @@ template<size_t N, class I, class S, subrange_kind K>
   constexpr auto get(subrange<I, S, K>&& r);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (N == 0)
-  return r.begin();
-else
-  return r.end();
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (N == 0)
+>   return r.begin();
+> else
+>   return r.end();
+> ```
 
 ### Dangling iterator handling <a id="range.dangling">[range.dangling]</a>
 
@@ -1880,107 +1883,108 @@ template<class C, input_range R, class... Args> requires (!view<C>)
   constexpr C to(R&& r, Args&&... args);
 ```
 
-***Mandates:***
-
-`C` is a cv-unqualified class type.
-
-***Returns:***
-
-An object of type `C` constructed from the elements of `r` in the
-following manner:
-
-- If `C` does not satisfy `input_range` or
-  `convertible_to``<range_reference_t<R>, range_value_t<C>>` is `true`:
-
-  - If `constructible_from``<C, R, Args...>` is `true`:
-
-        C(std::forward<R>(r), std::forward<Args>(args)...)
-
-  - Otherwise, if `constructible_from``<C, from_range_t, R, Args...>` is
-    `true`:
-
-        C(from_range, std::forward<R>(r), std::forward<Args>(args)...)
-
-  - Otherwise, if
-
-    - `common_range``<R>` is `true`,
-
-    - the *qualified-id*
-      `iterator_traits<iterator_t<R>>::iterator_category` is valid and
-      denotes a type that models `derived_from``<input_iterator_tag>`,
-      and
-
-    - `constructible_from``<C, iterator_t<R>, sentinel_t<R>, Args...>`
-      is `true`:
-
-    <!-- -->
-
-        C(ranges::begin(r), ranges::end(r), std::forward<Args>(args)...)
-
-  - Otherwise, if
-
-    - `constructible_from``<C, Args...>` is `true`, and
-
-    - *`container-insertable`*`<C, range_reference_t<R>>` is `true`:
-
-    <!-- -->
-
-        C c(std::forward<Args>(args)...);
-        if constexpr (sized_range<R> && reservable-container<C>)
-          c.reserve(static_cast<range_size_t<C>>(ranges::size(r)));
-        ranges::copy(r, container-inserter<range_reference_t<R>>(c));
-
-- Otherwise, if `input_range``<range_reference_t<R>>` is `true`:
-
-      to<C>(r | views::transform([](auto&& elem) {
-        return to<range_value_t<C>>(std::forward<decltype(elem)>(elem));
-      }), std::forward<Args>(args)...);
-
-- Otherwise, the program is ill-formed.
+> *Mandates:*
+>
+> `C` is a cv-unqualified class type.
+>
+> *Returns:*
+>
+> An object of type `C` constructed from the elements of `r` in the
+> following manner:
+>
+> - If `C` does not satisfy `input_range` or
+>   `convertible_to``<range_reference_t<R>, range_value_t<C>>` is
+>   `true`:
+>
+>   - If `constructible_from``<C, R, Args...>` is `true`:
+>
+>         C(std::forward<R>(r), std::forward<Args>(args)...)
+>
+>   - Otherwise, if `constructible_from``<C, from_range_t, R, Args...>`
+>     is `true`:
+>
+>         C(from_range, std::forward<R>(r), std::forward<Args>(args)...)
+>
+>   - Otherwise, if
+>
+>     - `common_range``<R>` is `true`,
+>
+>     - the *qualified-id*
+>       `iterator_traits<iterator_t<R>>::iterator_category` is valid and
+>       denotes a type that models `derived_from``<input_iterator_tag>`,
+>       and
+>
+>     - `constructible_from``<C, iterator_t<R>, sentinel_t<R>, Args...>`
+>       is `true`:
+>
+>     <!-- -->
+>
+>         C(ranges::begin(r), ranges::end(r), std::forward<Args>(args)...)
+>
+>   - Otherwise, if
+>
+>     - `constructible_from``<C, Args...>` is `true`, and
+>
+>     - *`container-insertable`*`<C, range_reference_t<R>>` is `true`:
+>
+>     <!-- -->
+>
+>         C c(std::forward<Args>(args)...);
+>         if constexpr (sized_range<R> && reservable-container<C>)
+>           c.reserve(static_cast<range_size_t<C>>(ranges::size(r)));
+>         ranges::copy(r, container-inserter<range_reference_t<R>>(c));
+>
+> - Otherwise, if `input_range``<range_reference_t<R>>` is `true`:
+>
+>       to<C>(r | views::transform([](auto&& elem) {
+>         return to<range_value_t<C>>(std::forward<decltype(elem)>(elem));
+>       }), std::forward<Args>(args)...);
+>
+> - Otherwise, the program is ill-formed.
 
 ``` cpp
 template<template<class...> class C, input_range R, class... Args>
   constexpr auto to(R&& r, Args&&... args);
 ```
 
-Let *input-iterator* be an exposition-only type:
-
-``` cpp
-struct input-iterator {                        // exposition only
-  using iterator_category = input_iterator_tag;
-  using value_type = range_value_t<R>;
-  using difference_type = ptrdiff_t;
-  using pointer = add_pointer_t<range_reference_t<R>>;
-  using reference = range_reference_t<R>;
-  reference operator*() const;
-  pointer operator->() const;
-  input-iterator& operator++();
-  input-iterator operator++(int);
-  bool operator==(const input-iterator&) const;
-};
-```
-
-\[*Note 2*: *input-iterator* meets the syntactic requirements of
-*Cpp17InputIterator*. — *end note*\]
-
-Let *`DEDUCE_EXPR`* be defined as follows:
-
-- `C(declval<R>(), declval<Args>()...)` if that is a valid expression,
-
-- otherwise, `C(from_range, declval<R>(), declval<Args>()...)` if that
-  is a valid expression,
-
-- otherwise,
-
-      C(declval<input-iterator>(), declval<input-iterator>(), declval<Args>()...)
-
-  if that is a valid expression,
-
-- otherwise, the program is ill-formed.
-
-***Returns:***
-
-`to<decltype(`*`DEDUCE_EXPR`*`)>(std::forward<R>(r), std::forward<Args>(args)...)`.
+> Let *input-iterator* be an exposition-only type:
+>
+> ``` cpp
+> struct input-iterator {                        // exposition only
+>   using iterator_category = input_iterator_tag;
+>   using value_type = range_value_t<R>;
+>   using difference_type = ptrdiff_t;
+>   using pointer = add_pointer_t<range_reference_t<R>>;
+>   using reference = range_reference_t<R>;
+>   reference operator*() const;
+>   pointer operator->() const;
+>   input-iterator& operator++();
+>   input-iterator operator++(int);
+>   bool operator==(const input-iterator&) const;
+> };
+> ```
+>
+> \[*Note 7*: *input-iterator* meets the syntactic requirements of
+> *Cpp17InputIterator*. — *end note*\]
+>
+> Let *`DEDUCE_EXPR`* be defined as follows:
+>
+> - `C(declval<R>(), declval<Args>()...)` if that is a valid expression,
+>
+> - otherwise, `C(from_range, declval<R>(), declval<Args>()...)` if that
+>   is a valid expression,
+>
+> - otherwise,
+>
+>       C(declval<input-iterator>(), declval<input-iterator>(), declval<Args>()...)
+>
+>   if that is a valid expression,
+>
+> - otherwise, the program is ill-formed.
+>
+> *Returns:*
+>
+> `to<decltype(`*`DEDUCE_EXPR`*`)>(std::forward<R>(r), std::forward<Args>(args)...)`.
 
 #### `ranges::to` adaptors <a id="range.utility.conv.adaptors">[range.utility.conv.adaptors]</a>
 
@@ -1991,24 +1995,25 @@ template<template<class...> class C, class... Args>
   constexpr auto to(Args&&... args);
 ```
 
-***Mandates:***
-
-For the first overload, `C` is a cv-unqualified class type.
-
-***Returns:***
-
-A range adaptor closure object\[range.adaptor.object\] `f` that is a
-perfect forwarding call wrapper\[term.perfect.forwarding.call.wrapper\]
-with the following properties:
-
-- It has no target object.
-
-- Its bound argument entities `bound_args` consist of objects of types
-  `decay_t<Args>...` direct-non-list-initialized with
-  `std::forward<Args>(args)...`, respectively.
-
-- Its call pattern is `to<C>(r, bound_args...)`, where `r` is the
-  argument used in a function call expression of `f`.
+> *Mandates:*
+>
+> For the first overload, `C` is a cv-unqualified class type.
+>
+> *Returns:*
+>
+> A range adaptor closure object\[range.adaptor.object\] `f` that is a
+> perfect forwarding call
+> wrapper\[term.perfect.forwarding.call.wrapper\] with the following
+> properties:
+>
+> - It has no target object.
+>
+> - Its bound argument entities `bound_args` consist of objects of types
+>   `decay_t<Args>...` direct-non-list-initialized with
+>   `std::forward<Args>(args)...`, respectively.
+>
+> - Its call pattern is `to<C>(r, bound_args...)`, where `r` is the
+>   argument used in a function call expression of `f`.
 
 ## Range factories <a id="range.factories">[range.factories]</a>
 
@@ -2109,17 +2114,17 @@ namespace std::ranges {
 constexpr explicit single_view(const T& t) requires copy_constructible<T>;
 ```
 
-***Effects:***
-
-Initializes *value\_* with `t`.
+> *Effects:*
+>
+> Initializes *value\_* with `t`.
 
 ``` cpp
 constexpr explicit single_view(T&& t);
 ```
 
-***Effects:***
-
-Initializes *value\_* with `std::move(t)`.
+> *Effects:*
+>
+> Initializes *value\_* with `std::move(t)`.
 
 ``` cpp
 template<class... Args>
@@ -2127,45 +2132,45 @@ template<class... Args>
 constexpr explicit single_view(in_place_t, Args&&... args);
 ```
 
-***Effects:***
-
-Initializes *value\_* as if by
-*`value_`*`{in_place, std::forward<Args>(args)...}`.
+> *Effects:*
+>
+> Initializes *value\_* as if by
+> *`value_`*`{in_place, std::forward<Args>(args)...}`.
 
 ``` cpp
 constexpr T* begin() noexcept;
 constexpr const T* begin() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return data();`
+> *Effects:*
+>
+> Equivalent to: `return data();`
 
 ``` cpp
 constexpr T* end() noexcept;
 constexpr const T* end() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return data() + 1;`
+> *Effects:*
+>
+> Equivalent to: `return data() + 1;`
 
 ``` cpp
 static constexpr size_t size() noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return 1;`
+> *Effects:*
+>
+> Equivalent to: `return 1;`
 
 ``` cpp
 constexpr T* data() noexcept;
 constexpr const T* data() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`value_`*`.operator->();`
+> *Effects:*
+>
+> Equivalent to: `return `*`value_`*`.operator->();`
 
 ### Iota view <a id="range.iota">[range.iota]</a>
 
@@ -2244,7 +2249,7 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
   [iterator.concept.winc] of width not less than the width of `W`.
 
-  \[*Note 2*: It is unspecified whether this type satisfies
+  \[*Note 8*: It is unspecified whether this type satisfies
   `weakly_incrementable`. — *end note*\]
 
 The exposition-only *decrementable* concept is equivalent to:
@@ -2258,23 +2263,23 @@ template<class I>
     };
 ```
 
-When an object is in the domain of both pre- and post-decrement, the
-object is said to be .
-
-Let `a` and `b` be equal objects of type `I`. `I` models `decrementable`
-only if
-
-- If `a` and `b` are decrementable, then the following are all true:
-
-  - `addressof(–a) == addressof(a)`
-
-  - `bool(a– == b)`
-
-  - `bool(((void)a–, a) == –b)`
-
-  - `bool(++(–a) == b)`.
-
-- If `a` and `b` are incrementable, then `bool(–(++a) == b)`.
+> When an object is in the domain of both pre- and post-decrement, the
+> object is said to be .
+>
+> Let `a` and `b` be equal objects of type `I`. `I` models
+> `decrementable` only if
+>
+> - If `a` and `b` are decrementable, then the following are all true:
+>
+>   - `addressof(–a) == addressof(a)`
+>
+>   - `bool(a– == b)`
+>
+>   - `bool(((void)a–, a) == –b)`
+>
+>   - `bool(++(–a) == b)`.
+>
+> - If `a` and `b` are incrementable, then `bool(–(++a) == b)`.
 
 The exposition-only *advanceable* concept is equivalent to:
 
@@ -2329,114 +2334,114 @@ value `n` of type `D`. `I` models `advanceable` only if
 constexpr explicit iota_view(W value);
 ```
 
-***Preconditions:***
-
-`Bound` denotes `unreachable_sentinel_t` or `Bound()` is reachable from
-`value`. When `W` and `Bound` model `totally_ordered_with`, then
-`bool(value <= Bound())` is `true`.
-
-***Effects:***
-
-Initializes *value\_* with `value`.
+> *Preconditions:*
+>
+> `Bound` denotes `unreachable_sentinel_t` or `Bound()` is reachable
+> from `value`. When `W` and `Bound` model `totally_ordered_with`, then
+> `bool(value <= Bound())` is `true`.
+>
+> *Effects:*
+>
+> Initializes *value\_* with `value`.
 
 ``` cpp
 constexpr explicit iota_view(type_identity_t<W> value, type_identity_t<Bound> bound);
 ```
 
-***Preconditions:***
-
-`Bound` denotes `unreachable_sentinel_t` or `bound` is reachable from
-`value`. When `W` and `Bound` model `totally_ordered_with`, then
-`bool(value <= bound)` is `true`.
-
-***Effects:***
-
-Initializes *value\_* with `value` and *bound\_* with `bound`.
+> *Preconditions:*
+>
+> `Bound` denotes `unreachable_sentinel_t` or `bound` is reachable from
+> `value`. When `W` and `Bound` model `totally_ordered_with`, then
+> `bool(value <= bound)` is `true`.
+>
+> *Effects:*
+>
+> Initializes *value\_* with `value` and *bound\_* with `bound`.
 
 ``` cpp
 constexpr explicit iota_view(iterator first, see below last);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-- If `same_as``<W, Bound>` is `true`,
-  `iota_view(first.`*`value_`*`, last.`*`value_`*`)`.
-
-- Otherwise, if `Bound` denotes `unreachable_sentinel_t`,
-  `iota_view(first.`*`value_`*`, last)`.
-
-- Otherwise, `iota_view(first.`*`value_`*`, last.`*`bound_`*`)`.
-
-***Remarks:***
-
-The type of `last` is:
-
-- If `same_as``<W, Bound>` is `true`, *iterator*.
-
-- Otherwise, if `Bound` denotes `unreachable_sentinel_t`, `Bound`.
-
-- Otherwise, *sentinel*.
+> *Effects:*
+>
+> Equivalent to:
+>
+> - If `same_as``<W, Bound>` is `true`,
+>   `iota_view(first.`*`value_`*`, last.`*`value_`*`)`.
+>
+> - Otherwise, if `Bound` denotes `unreachable_sentinel_t`,
+>   `iota_view(first.`*`value_`*`, last)`.
+>
+> - Otherwise, `iota_view(first.`*`value_`*`, last.`*`bound_`*`)`.
+>
+> *Remarks:*
+>
+> The type of `last` is:
+>
+> - If `same_as``<W, Bound>` is `true`, *iterator*.
+>
+> - Otherwise, if `Bound` denotes `unreachable_sentinel_t`, `Bound`.
+>
+> - Otherwise, *sentinel*.
 
 ``` cpp
 constexpr iterator begin() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`{`*`value_`*`};`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`{`*`value_`*`};`
 
 ``` cpp
 constexpr auto end() const;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (same_as<Bound, unreachable_sentinel_t>)
-  return unreachable_sentinel;
-else
-  return sentinel{bound_};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (same_as<Bound, unreachable_sentinel_t>)
+>   return unreachable_sentinel;
+> else
+>   return sentinel{bound_};
+> ```
 
 ``` cpp
 constexpr iterator end() const requires same_as<W, Bound>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`{`*`bound_`*`};`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`{`*`bound_`*`};`
 
 ``` cpp
 constexpr auto size() const requires see below;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (is-integer-like<W> && is-integer-like<Bound>)
-  return (value_ < 0)
-    ? ((bound_ < 0)
-      ? to-unsigned-like(-value_) - to-unsigned-like(-bound_)
-      : to-unsigned-like(bound_) + to-unsigned-like(-value_))
-    : to-unsigned-like(bound_) - to-unsigned-like(value_);
-else
-  return to-unsigned-like(bound_ - value_);
-```
-
-***Remarks:***
-
-The expression in the *requires-clause* is equivalent to:
-
-``` cpp
-(same_as<W, Bound> && advanceable<W>) || (is-integer-like<W> && is-integer-like<Bound>) ||
-  sized_sentinel_for<Bound, W>
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (is-integer-like<W> && is-integer-like<Bound>)
+>   return (value_ < 0)
+>     ? ((bound_ < 0)
+>       ? to-unsigned-like(-value_) - to-unsigned-like(-bound_)
+>       : to-unsigned-like(bound_) + to-unsigned-like(-value_))
+>     : to-unsigned-like(bound_) - to-unsigned-like(value_);
+> else
+>   return to-unsigned-like(bound_ - value_);
+> ```
+>
+> *Remarks:*
+>
+> The expression in the *requires-clause* is equivalent to:
+>
+> ``` cpp
+> (same_as<W, Bound> && advanceable<W>) || (is-integer-like<W> && is-integer-like<Bound>) ||
+>   sized_sentinel_for<Bound, W>
+> ```
 
 #### Class `iota_view::iterator` <a id="range.iota.iterator">[range.iota.iterator]</a>
 
@@ -2521,247 +2526,247 @@ intentionally. — *end note*\]
 constexpr explicit iterator(W value);
 ```
 
-***Effects:***
-
-Initializes *value\_* with `value`.
+> *Effects:*
+>
+> Initializes *value\_* with `value`.
 
 ``` cpp
 constexpr W operator*() const noexcept(is_nothrow_copy_constructible_v<W>);
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`value_`*`;`
-
-\[*Note 2*: The clause is needed by the default `iter_move`
-implementation. — *end note*\]
+> *Effects:*
+>
+> Equivalent to: `return `*`value_`*`;`
+>
+> \[*Note 9*: The clause is needed by the default `iter_move`
+> implementation. — *end note*\]
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++value_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++value_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 ``` cpp
 constexpr iterator operator++(int) requires incrementable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires decrementable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---value_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --value_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int) requires decrementable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type n)
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (is-integer-like<W> && !is-signed-integer-like<W>) {
-  if (n >= difference_type(0))
-    value_ += static_cast<W>(n);
-  else
-    value_ -= static_cast<W>(-n);
-} else {
-  value_ += n;
-}
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (is-integer-like<W> && !is-signed-integer-like<W>) {
+>   if (n >= difference_type(0))
+>     value_ += static_cast<W>(n);
+>   else
+>     value_ -= static_cast<W>(-n);
+> } else {
+>   value_ += n;
+> }
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator& operator-=(difference_type n)
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (is-integer-like<W> && !is-signed-integer-like<W>) {
-  if (n >= difference_type(0))
-    value_ -= static_cast<W>(n);
-  else
-    value_ += static_cast<W>(-n);
-} else {
-  value_ -= n;
-}
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (is-integer-like<W> && !is-signed-integer-like<W>) {
+>   if (n >= difference_type(0))
+>     value_ -= static_cast<W>(n);
+>   else
+>     value_ += static_cast<W>(-n);
+> } else {
+>   value_ -= n;
+> }
+> return *this;
+> ```
 
 ``` cpp
 constexpr W operator[](difference_type n) const
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return W(`*`value_`*` + n);`
+> *Effects:*
+>
+> Equivalent to: `return W(`*`value_`*` + n);`
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y)
   requires equality_comparable<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`value_`*` == y.`*`value_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`value_`*` == y.`*`value_`*`;`
 
 ``` cpp
 friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires totally_ordered<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`value_`*` < y.`*`value_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`value_`*` < y.`*`value_`*`;`
 
 ``` cpp
 friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires totally_ordered<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 ``` cpp
 friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires totally_ordered<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 ``` cpp
 friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires totally_ordered<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires totally_ordered<W> && three_way_comparable<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`value_`*` <=> y.`*`value_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`value_`*` <=> y.`*`value_`*`;`
 
 ``` cpp
 friend constexpr iterator operator+(iterator i, difference_type n)
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-i += n;
-return i;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> i += n;
+> return i;
+> ```
 
 ``` cpp
 friend constexpr iterator operator+(difference_type n, iterator i)
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return i + n;`
+> *Effects:*
+>
+> Equivalent to: `return i + n;`
 
 ``` cpp
 friend constexpr iterator operator-(iterator i, difference_type n)
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-i -= n;
-return i;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> i -= n;
+> return i;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires advanceable<W>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-using D = difference_type;
-if constexpr (is-integer-like<W>) {
-  if constexpr (is-signed-integer-like<W>)
-    return D(D(x.value_) - D(y.value_));
-  else
-    return (y.value_ > x.value_)
-      ? D(-D(y.value_ - x.value_))
-      : D(x.value_ - y.value_);
-} else {
-  return x.value_ - y.value_;
-}
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> using D = difference_type;
+> if constexpr (is-integer-like<W>) {
+>   if constexpr (is-signed-integer-like<W>)
+>     return D(D(x.value_) - D(y.value_));
+>   else
+>     return (y.value_ > x.value_)
+>       ? D(-D(y.value_ - x.value_))
+>       : D(x.value_ - y.value_);
+> } else {
+>   return x.value_ - y.value_;
+> }
+> ```
 
 #### Class `iota_view::sentinel` <a id="range.iota.sentinel">[range.iota.sentinel]</a>
 
@@ -2791,35 +2796,35 @@ namespace std::ranges {
 constexpr explicit sentinel(Bound bound);
 ```
 
-***Effects:***
-
-Initializes *bound\_* with `bound`.
+> *Effects:*
+>
+> Initializes *bound\_* with `bound`.
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`value_`*` == y.`*`bound_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`value_`*` == y.`*`bound_`*`;`
 
 ``` cpp
 friend constexpr iter_difference_t<W> operator-(const iterator& x, const sentinel& y)
   requires sized_sentinel_for<Bound, W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`value_`*` - y.`*`bound_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`value_`*` - y.`*`bound_`*`;`
 
 ``` cpp
 friend constexpr iter_difference_t<W> operator-(const sentinel& x, const iterator& y)
   requires sized_sentinel_for<Bound, W>;
 ```
 
-***Effects:***
-
-Equivalent to: `return -(y - x);`
+> *Effects:*
+>
+> Equivalent to: `return -(y - x);`
 
 ### Repeat view <a id="range.repeat">[range.repeat]</a>
 
@@ -2893,26 +2898,26 @@ constexpr explicit repeat_view(const T& value, Bound bound = Bound())
   requires copy_constructible<T>;
 ```
 
-***Preconditions:***
-
-If `Bound` is not `unreachable_sentinel_t`, $\texttt{bound} \ge 0$.
-
-***Effects:***
-
-Initializes *value\_* with `value` and *bound\_* with `bound`.
+> *Preconditions:*
+>
+> If `Bound` is not `unreachable_sentinel_t`, $\texttt{bound} \ge 0$.
+>
+> *Effects:*
+>
+> Initializes *value\_* with `value` and *bound\_* with `bound`.
 
 ``` cpp
 constexpr explicit repeat_view(T&& value, Bound bound = Bound());
 ```
 
-***Preconditions:***
-
-If `Bound` is not `unreachable_sentinel_t`, $\texttt{bound} \ge 0$.
-
-***Effects:***
-
-Initializes *value\_* with `std::move(value)` and *bound\_* with
-`bound`.
+> *Preconditions:*
+>
+> If `Bound` is not `unreachable_sentinel_t`, $\texttt{bound} \ge 0$.
+>
+> *Effects:*
+>
+> Initializes *value\_* with `std::move(value)` and *bound\_* with
+> `bound`.
 
 ``` cpp
 template<class... TArgs, class... BoundArgs>
@@ -2922,46 +2927,46 @@ constexpr explicit repeat_view(piecewise_construct_t,
   tuple<TArgs...> value_args, tuple<BoundArgs...> bound_args = tuple<>{});
 ```
 
-***Effects:***
-
-Initializes *value\_* with `make_from_tuple<T>(std::move(value_args))`
-and initializes *bound\_* with
-`make_from_tuple<Bound>(std::move(bound_args))`. The behavior is
-undefined if `Bound` is not `unreachable_sentinel_t` and *bound\_* is
-negative.
+> *Effects:*
+>
+> Initializes *value\_* with `make_from_tuple<T>(std::move(value_args))`
+> and initializes *bound\_* with
+> `make_from_tuple<Bound>(std::move(bound_args))`. The behavior is
+> undefined if `Bound` is not `unreachable_sentinel_t` and *bound\_* is
+> negative.
 
 ``` cpp
 constexpr iterator begin() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`(addressof(*`*`value_`*`));`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`(addressof(*`*`value_`*`));`
 
 ``` cpp
 constexpr iterator end() const requires (!same_as<Bound, unreachable_sentinel_t>);
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`(addressof(*`*`value_`*`), `*`bound_`*`);`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`(addressof(*`*`value_`*`), `*`bound_`*`);`
 
 ``` cpp
 constexpr unreachable_sentinel_t end() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return unreachable_sentinel;`
+> *Effects:*
+>
+> Equivalent to: `return unreachable_sentinel;`
 
 ``` cpp
 constexpr auto size() const requires (!same_as<Bound, unreachable_sentinel_t>);
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`to-unsigned-like`*`(`*`bound_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return `*`to-unsigned-like`*`(`*`bound_`*`);`
 
 #### Class `repeat_view::iterator` <a id="range.repeat.iterator">[range.repeat.iterator]</a>
 
@@ -3022,13 +3027,13 @@ denotes `IOTA-DIFF-T(index-type)` [range.iota.view].
 constexpr explicit iterator(const T* value, index-type b = index-type());
 ```
 
-***Preconditions:***
-
-If `Bound` is not `unreachable_sentinel_t`, $\texttt{b} \ge 0$.
-
-***Effects:***
-
-Initializes *value\_* with `value` and *current\_* with `b`.
+> *Preconditions:*
+>
+> If `Bound` is not `unreachable_sentinel_t`, $\texttt{b} \ge 0$.
+>
+> *Effects:*
+>
+> Initializes *value\_* with `value` and *current\_* with `b`.
 
 *iterator*
 
@@ -3036,9 +3041,9 @@ Initializes *value\_* with `value` and *current\_* with `b`.
 constexpr const T& operator*() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`value_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`value_`*`;`
 
 *iterator*
 
@@ -3046,14 +3051,14 @@ Equivalent to: `return *`*`value_`*`;`
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++current_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -3061,15 +3066,15 @@ return *this;
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -3077,18 +3082,18 @@ return tmp;
 constexpr iterator& operator--();
 ```
 
-***Preconditions:***
-
-If `Bound` is not `unreachable_sentinel_t`, $\textit{current_} > 0$.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---current_;
-return *this;
-```
+> *Preconditions:*
+>
+> If `Bound` is not `unreachable_sentinel_t`, $\textit{current_} > 0$.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --current_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -3096,15 +3101,15 @@ return *this;
 constexpr iterator operator--(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -3112,19 +3117,19 @@ return tmp;
 constexpr iterator& operator+=(difference_type n);
 ```
 
-***Preconditions:***
-
-If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} + \texttt{n} \ge 0$.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ += n;
-return *this;
-```
+> *Preconditions:*
+>
+> If `Bound` is not `unreachable_sentinel_t`,
+> $\textit{current_} + \texttt{n} \ge 0$.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ += n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -3132,19 +3137,19 @@ return *this;
 constexpr iterator& operator-=(difference_type n);
 ```
 
-***Preconditions:***
-
-If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} - \texttt{n} \ge 0$.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ -= n;
-return *this;
-```
+> *Preconditions:*
+>
+> If `Bound` is not `unreachable_sentinel_t`,
+> $\textit{current_} - \texttt{n} \ge 0$.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ -= n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -3152,9 +3157,9 @@ return *this;
 constexpr const T& operator[](difference_type n) const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return *(*this + n);`
+> *Effects:*
+>
+> Equivalent to: `return *(*this + n);`
 
 *iterator*
 
@@ -3162,9 +3167,9 @@ Equivalent to: `return *(*this + n);`
 friend constexpr bool operator==(const iterator& x, const iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
 
 *iterator*
 
@@ -3172,9 +3177,9 @@ Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
 friend constexpr auto operator<=>(const iterator& x, const iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
 
 *iterator*
 
@@ -3183,14 +3188,14 @@ friend constexpr iterator operator+(iterator i, difference_type n);
 friend constexpr iterator operator+(difference_type n, iterator i);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-i += n;
-return i;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> i += n;
+> return i;
+> ```
 
 *iterator*
 
@@ -3198,14 +3203,14 @@ return i;
 friend constexpr iterator operator-(iterator i, difference_type n);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-i -= n;
-return i;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> i -= n;
+> return i;
+> ```
 
 *iterator*
 
@@ -3213,13 +3218,13 @@ return i;
 friend constexpr difference_type operator-(const iterator& x, const iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<difference_type>(x.current_) - static_cast<difference_type>(y.current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<difference_type>(x.current_) - static_cast<difference_type>(y.current_);
+> ```
 
 ### Istream view <a id="range.istream">[range.istream]</a>
 
@@ -3285,17 +3290,17 @@ namespace std::ranges {
 constexpr explicit basic_istream_view(basic_istream<CharT, Traits>& stream);
 ```
 
-***Effects:***
-
-Initializes *stream\_* with `addressof(stream)`.
+> *Effects:*
+>
+> Initializes *stream\_* with `addressof(stream)`.
 
 ``` cpp
 constexpr default_sentinel_t end() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return default_sentinel;`
+> *Effects:*
+>
+> Equivalent to: `return default_sentinel;`
 
 #### Class `basic_istream_view::iterator` <a id="range.istream.iterator">[range.istream.iterator]</a>
 
@@ -3337,9 +3342,9 @@ namespace std::ranges {
 constexpr explicit iterator(basic_istream_view& parent) noexcept;
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`.
 
 *iterator*
 
@@ -3347,14 +3352,14 @@ Initializes *parent\_* with `addressof(parent)`.
 iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-*parent_->stream_ >> parent_->value_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> *parent_->stream_ >> parent_->value_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -3362,9 +3367,9 @@ return *this;
 void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 *iterator*
 
@@ -3372,9 +3377,9 @@ Equivalent to `++*this`.
 Val& operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`parent_`*`->`*`value_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`parent_`*`->`*`value_`*`;`
 
 *iterator*
 
@@ -3382,9 +3387,9 @@ Equivalent to: `return `*`parent_`*`->`*`value_`*`;`
 friend bool operator==(const iterator& x, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to: `return !*x.`*`parent_`*`->`*`stream_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return !*x.`*`parent_`*`->`*`stream_`*`;`
 
 ## Range adaptors <a id="range.adaptors">[range.adaptors]</a>
 
@@ -3609,36 +3614,36 @@ following differences:
     constexpr T& emplace-deref(const I& i);    // exposition only
   ```
 
-  ***Mandates:***
-
-  The declaration `T t(*i);` is well-formed for some invented variable
-  `t`.
-
-  \[*Note 3*: If `*i` is a prvalue of type `T`, there is no requirement
-  that it is movable\[dcl.init.general\]. — *end note*\]
-
-  ***Effects:***
-
-  Calls `reset()`. Then direct-non-list-initializes the contained value
-  with `*i`.
-
-  ***Ensures:***
-
-  `*this` contains a value.
-
-  ***Returns:***
-
-  A reference to the new contained value.
-
-  ***Throws:***
-
-  Any exception thrown by the initialization of the contained value.
-
-  ***Remarks:***
-
-  If an exception is thrown during the initialization of `T`, `*this`
-  does not contain a value, and the previous value (if any) has been
-  destroyed.
+  > *Mandates:*
+  >
+  > The declaration `T t(*i);` is well-formed for some invented variable
+  > `t`.
+  >
+  > \[*Note 10*: If `*i` is a prvalue of type `T`, there is no
+  > requirement that it is movable\[dcl.init.general\]. — *end note*\]
+  >
+  > *Effects:*
+  >
+  > Calls `reset()`. Then direct-non-list-initializes the contained
+  > value with `*i`.
+  >
+  > *Ensures:*
+  >
+  > `*this` contains a value.
+  >
+  > *Returns:*
+  >
+  > A reference to the new contained value.
+  >
+  > *Throws:*
+  >
+  > Any exception thrown by the initialization of the contained value.
+  >
+  > *Remarks:*
+  >
+  > If an exception is thrown during the initialization of `T`, `*this`
+  > does not contain a value, and the previous value (if any) has been
+  > destroyed.
 
 \[*Note 1*: *non-propagating-cache* enables an input view to temporarily
 cache values as it is iterated over. — *end note*\]
@@ -3729,24 +3734,25 @@ template<different-from<ref_view> T>
 constexpr ref_view(T&& t);
 ```
 
-***Effects:***
-
-Initializes *r\_* with `addressof(static_cast<R&>(std::forward<T>(t)))`.
-
-***Remarks:***
-
-Let *`FUN`* denote the exposition-only functions
-
-``` cpp
-void FUN(R&);
-void FUN(R&&) = delete;
-```
-
-The expression in the *requires-clause* is equivalent to:
-
-``` cpp
-convertible_to<T, R&> && requires { FUN(declval<T>()); }
-```
+> *Effects:*
+>
+> Initializes *r\_* with
+> `addressof(static_cast<R&>(std::forward<T>(t)))`.
+>
+> *Remarks:*
+>
+> Let *`FUN`* denote the exposition-only functions
+>
+> ``` cpp
+> void FUN(R&);
+> void FUN(R&&) = delete;
+> ```
+>
+> The expression in the *requires-clause* is equivalent to:
+>
+> ``` cpp
+> convertible_to<T, R&> && requires { FUN(declval<T>()); }
+> ```
 
 #### Class template `owning_view` <a id="range.owning.view">[range.owning.view]</a>
 
@@ -3802,9 +3808,9 @@ namespace std::ranges {
 constexpr owning_view(R&& t);
 ```
 
-***Effects:***
-
-Initializes *r\_* with `std::move(t)`.
+> *Effects:*
+>
+> Initializes *r\_* with `std::move(t)`.
 
 ### As rvalue view <a id="range.as.rvalue">[range.as.rvalue]</a>
 
@@ -3886,9 +3892,9 @@ namespace std::ranges {
 constexpr explicit as_rvalue_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 ### Filter view <a id="range.filter">[range.filter]</a>
 
@@ -3956,37 +3962,37 @@ namespace std::ranges {
 constexpr explicit filter_view(V base, Pred pred);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and initializes *pred\_*
-with `std::move(pred)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and initializes *pred\_*
+> with `std::move(pred)`.
 
 ``` cpp
 constexpr const Pred& pred() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`pred_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`pred_`*`;`
 
 ``` cpp
 constexpr iterator begin();
 ```
 
-***Preconditions:***
-
-*`pred_`*`.has_value()` is `true`.
-
-***Returns:***
-
-`{*this, ranges::find_if(`*`base_`*`, ref(*`*`pred_`*`))}`.
-
-***Remarks:***
-
-In order to provide the amortized constant time complexity required by
-the `range` concept when `filter_view` models `forward_range`, this
-function caches the result within the `filter_view` for use on
-subsequent calls.
+> *Preconditions:*
+>
+> *`pred_`*`.has_value()` is `true`.
+>
+> *Returns:*
+>
+> `{*this, ranges::find_if(`*`base_`*`, ref(*`*`pred_`*`))}`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant time complexity required by
+> the `range` concept when `filter_view` models `forward_range`, this
+> function caches the result within the `filter_view` for use on
+> subsequent calls.
 
 #### Class `filter_view::iterator` <a id="range.filter.iterator">[range.filter.iterator]</a>
 
@@ -4069,10 +4075,10 @@ is defined as follows:
 constexpr iterator(filter_view& parent, iterator_t<V> current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)` and *parent\_* with
-`addressof(parent)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)` and *parent\_* with
+> `addressof(parent)`.
 
 *iterator*
 
@@ -4080,9 +4086,9 @@ Initializes *current\_* with `std::move(current)` and *parent\_* with
 constexpr const iterator_t<V>& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*`;`
 
 *iterator*
 
@@ -4090,9 +4096,9 @@ Equivalent to: `return `*`current_`*`;`
 constexpr iterator_t<V> base() &&;
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`current_`*`);`
 
 *iterator*
 
@@ -4100,9 +4106,9 @@ Equivalent to: `return std::move(`*`current_`*`);`
 constexpr range_reference_t<V> operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`current_`*`;`
 
 *iterator*
 
@@ -4111,9 +4117,9 @@ constexpr iterator_t<V> operator->() const
   requires has-arrow<iterator_t<V>> && copyable<iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*`;`
 
 *iterator*
 
@@ -4121,15 +4127,15 @@ Equivalent to: `return `*`current_`*`;`
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ = ranges::find_if(std::move(++current_), ranges::end(parent_->base_),
-                           ref(*parent_->pred_));
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ = ranges::find_if(std::move(++current_), ranges::end(parent_->base_),
+>                            ref(*parent_->pred_));
+> return *this;
+> ```
 
 *iterator*
 
@@ -4137,9 +4143,9 @@ return *this;
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 *iterator*
 
@@ -4147,15 +4153,15 @@ Equivalent to `++*this`.
 constexpr iterator operator++(int) requires forward_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -4163,16 +4169,16 @@ return tmp;
 constexpr iterator& operator--() requires bidirectional_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-do
-  --current_;
-while (!invoke(*parent_->pred_, *current_));
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> do
+>   --current_;
+> while (!invoke(*parent_->pred_, *current_));
+> return *this;
+> ```
 
 *iterator*
 
@@ -4180,15 +4186,15 @@ return *this;
 constexpr iterator operator--(int) requires bidirectional_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -4197,9 +4203,9 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
   requires equality_comparable<iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
 
 *iterator*
 
@@ -4208,9 +4214,9 @@ friend constexpr range_rvalue_reference_t<V> iter_move(const iterator& i)
   noexcept(noexcept(ranges::iter_move(i.current_)));
 ```
 
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(i.`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(i.`*`current_`*`);`
 
 *iterator*
 
@@ -4220,9 +4226,9 @@ friend constexpr void iter_swap(const iterator& x, const iterator& y)
   requires indirectly_swappable<iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to `ranges::iter_swap(x.`*`current_`*`, y.`*`current_`*`)`.
+> *Effects:*
+>
+> Equivalent to `ranges::iter_swap(x.`*`current_`*`, y.`*`current_`*`)`.
 
 #### Class `filter_view::sentinel` <a id="range.filter.sentinel">[range.filter.sentinel]</a>
 
@@ -4251,9 +4257,9 @@ namespace std::ranges {
 constexpr explicit sentinel(filter_view& parent);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
 
 *sentinel*
 
@@ -4261,9 +4267,9 @@ Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
 constexpr sentinel_t<V> base() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`end_`*`;`
 
 *sentinel*
 
@@ -4271,9 +4277,9 @@ Equivalent to: `return `*`end_`*`;`
 friend constexpr bool operator==(const iterator& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
 
 ### Transform view <a id="range.transform">[range.transform]</a>
 
@@ -4352,22 +4358,22 @@ namespace std::ranges {
 constexpr explicit transform_view(V base, F fun);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *fun\_* with
-`std::move(fun)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *fun\_* with
+> `std::move(fun)`.
 
 ``` cpp
 constexpr iterator<false> begin();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return iterator<false>{*this, ranges::begin(base_)};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return iterator<false>{*this, ranges::begin(base_)};
+> ```
 
 ``` cpp
 constexpr iterator<true> begin() const
@@ -4375,37 +4381,37 @@ constexpr iterator<true> begin() const
            regular_invocable<const F&, range_reference_t<const V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return iterator<true>{*this, ranges::begin(base_)};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return iterator<true>{*this, ranges::begin(base_)};
+> ```
 
 ``` cpp
 constexpr sentinel<false> end();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return sentinel<false>{ranges::end(base_)};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return sentinel<false>{ranges::end(base_)};
+> ```
 
 ``` cpp
 constexpr iterator<false> end() requires common_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return iterator<false>{*this, ranges::end(base_)};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return iterator<false>{*this, ranges::end(base_)};
+> ```
 
 ``` cpp
 constexpr sentinel<true> end() const
@@ -4413,13 +4419,13 @@ constexpr sentinel<true> end() const
            regular_invocable<const F&, range_reference_t<const V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return sentinel<true>{ranges::end(base_)};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return sentinel<true>{ranges::end(base_)};
+> ```
 
 ``` cpp
 constexpr iterator<true> end() const
@@ -4427,13 +4433,13 @@ constexpr iterator<true> end() const
            regular_invocable<const F&, range_reference_t<const V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return iterator<true>{*this, ranges::end(base_)};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return iterator<true>{*this, ranges::end(base_)};
+> ```
 
 #### Class template `transform_view::iterator` <a id="range.transform.iterator">[range.transform.iterator]</a>
 
@@ -4548,10 +4554,10 @@ type `iterator_traits<iterator_t<Base>>::iterator_category`.
 constexpr iterator(Parent& parent, iterator_t<Base> current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)` and *parent\_* with
-`addressof(parent)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)` and *parent\_* with
+> `addressof(parent)`.
 
 *iterator*
 
@@ -4560,10 +4566,10 @@ constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<iterator_t<V>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)` and
-*parent\_* with `i.`*`parent_`*.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)` and
+> *parent\_* with `i.`*`parent_`*.
 
 *iterator*
 
@@ -4571,9 +4577,9 @@ Initializes *current\_* with `std::move(i.`*`current_`*`)` and
 constexpr const iterator_t<Base>& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*`;`
 
 *iterator*
 
@@ -4581,9 +4587,9 @@ Equivalent to: `return `*`current_`*`;`
 constexpr iterator_t<Base> base() &&;
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`current_`*`);`
 
 *iterator*
 
@@ -4591,14 +4597,14 @@ Equivalent to: `return std::move(`*`current_`*`);`
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++current_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -4606,9 +4612,9 @@ return *this;
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++`*`current_`*.
+> *Effects:*
+>
+> Equivalent to `++`*`current_`*.
 
 *iterator*
 
@@ -4616,15 +4622,15 @@ Equivalent to `++`*`current_`*.
 constexpr iterator operator++(int) requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -4632,14 +4638,14 @@ return tmp;
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --current_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -4647,15 +4653,15 @@ return *this;
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -4664,14 +4670,14 @@ constexpr iterator& operator+=(difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ += n;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ += n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -4680,14 +4686,14 @@ constexpr iterator& operator-=(difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ -= n;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ -= n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -4696,9 +4702,9 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
   requires equality_comparable<iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
 
 *iterator*
 
@@ -4707,9 +4713,9 @@ friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` < y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` < y.`*`current_`*`;`
 
 *iterator*
 
@@ -4718,9 +4724,9 @@ friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 *iterator*
 
@@ -4729,9 +4735,9 @@ friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 *iterator*
 
@@ -4740,9 +4746,9 @@ friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 *iterator*
 
@@ -4751,9 +4757,9 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires random_access_range<Base> && three_way_comparable<iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
 
 *iterator*
 
@@ -4764,10 +4770,10 @@ friend constexpr iterator operator+(difference_type n, iterator i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`{*i.`*`parent_`*`, i.`*`current_`*` + n};`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`{*i.`*`parent_`*`, i.`*`current_`*` + n};`
 
 *iterator*
 
@@ -4776,10 +4782,10 @@ friend constexpr iterator operator-(iterator i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`{*i.`*`parent_`*`, i.`*`current_`*` - n};`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`{*i.`*`parent_`*`, i.`*`current_`*` - n};`
 
 *iterator*
 
@@ -4788,9 +4794,9 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<iterator_t<Base>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` - y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` - y.`*`current_`*`;`
 
 #### Class template `transform_view::sentinel` <a id="range.transform.sentinel">[range.transform.sentinel]</a>
 
@@ -4838,9 +4844,9 @@ namespace std::ranges {
 constexpr explicit sentinel(sentinel_t<Base> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end`.
+> *Effects:*
+>
+> Initializes *end\_* with `end`.
 
 *sentinel*
 
@@ -4849,17 +4855,17 @@ constexpr sentinel(sentinel<!Const> i)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(i.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(i.`*`end_`*`)`.
 
 ``` cpp
 constexpr sentinel_t<Base> base() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`end_`*`;`
 
 ``` cpp
 template<bool OtherConst>
@@ -4867,9 +4873,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
 
 *sentinel*
 
@@ -4880,9 +4886,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` - y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` - y.`*`end_`*`;`
 
 *sentinel*
 
@@ -4893,9 +4899,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const sentinel& y, const iterator<OtherConst>& x);
 ```
 
-***Effects:***
-
-Equivalent to: `return y.`*`end_`*` - x.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return y.`*`end_`*` - x.`*`current_`*`;`
 
 ### Take view <a id="range.take">[range.take]</a>
 
@@ -5063,13 +5069,14 @@ namespace std::ranges {
 constexpr explicit take_view(V base, range_difference_t<V> count);
 ```
 
-***Preconditions:***
-
-`count >= 0` is `true`.
-
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *count\_* with `count`.
+> *Preconditions:*
+>
+> `count >= 0` is `true`.
+>
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *count\_* with
+> `count`.
 
 #### Class template `take_view::sentinel` <a id="range.take.sentinel">[range.take.sentinel]</a>
 
@@ -5107,9 +5114,9 @@ namespace std::ranges {
 constexpr explicit sentinel(sentinel_t<Base> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end`.
+> *Effects:*
+>
+> Initializes *end\_* with `end`.
 
 *sentinel*
 
@@ -5118,9 +5125,9 @@ constexpr sentinel(sentinel<!Const> s)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(s.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(s.`*`end_`*`)`.
 
 *sentinel*
 
@@ -5128,9 +5135,9 @@ Initializes *end\_* with `std::move(s.`*`end_`*`)`.
 constexpr sentinel_t<Base> base() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`end_`*`;`
 
 *sentinel*
 
@@ -5142,9 +5149,9 @@ template<bool OtherConst = !Const>
 friend constexpr bool operator==(const CI<OtherConst>& y, const sentinel& x);
 ```
 
-***Effects:***
-
-Equivalent to: `return y.count() == 0 || y.base() == x.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return y.count() == 0 || y.base() == x.`*`end_`*`;`
 
 ### Take while view <a id="range.take.while">[range.take.while]</a>
 
@@ -5224,18 +5231,18 @@ namespace std::ranges {
 constexpr explicit take_while_view(V base, Pred pred);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *pred\_* with
-`std::move(pred)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *pred\_* with
+> `std::move(pred)`.
 
 ``` cpp
 constexpr const Pred& pred() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`pred_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`pred_`*`;`
 
 #### Class template `take_while_view::sentinel` <a id="range.take.while.sentinel">[range.take.while.sentinel]</a>
 
@@ -5275,9 +5282,9 @@ namespace std::ranges {
 constexpr explicit sentinel(sentinel_t<Base> end, const Pred* pred);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end` and *pred\_* with `pred`.
+> *Effects:*
+>
+> Initializes *end\_* with `end` and *pred\_* with `pred`.
 
 *sentinel*
 
@@ -5286,10 +5293,10 @@ constexpr sentinel(sentinel<!Const> s)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(s.`*`end_`*`)` and *pred\_* with
-`s.`*`pred_`*.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(s.`*`end_`*`)` and *pred\_* with
+> `s.`*`pred_`*.
 
 *sentinel*
 
@@ -5302,10 +5309,10 @@ friend constexpr bool operator==(const iterator_t<maybe-const<OtherConst, V>>& x
                                  const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to:
-`return y.`*`end_`*` == x || !invoke(*y.`*`pred_`*`, *x);`
+> *Effects:*
+>
+> Equivalent to:
+> `return y.`*`end_`*` == x || !invoke(*y.`*`pred_`*`, *x);`
 
 ### Drop view <a id="range.drop">[range.drop]</a>
 
@@ -5429,13 +5436,14 @@ namespace std::ranges {
 constexpr explicit drop_view(V base, range_difference_t<V> count);
 ```
 
-***Preconditions:***
-
-`count >= 0` is `true`.
-
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *count\_* with `count`.
+> *Preconditions:*
+>
+> `count >= 0` is `true`.
+>
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *count\_* with
+> `count`.
 
 ``` cpp
 constexpr auto begin()
@@ -5445,19 +5453,19 @@ constexpr auto begin() const
   requires random_access_range<const V> && sized_range<const V>;
 ```
 
-***Returns:***
-
-`ranges::next(ranges::begin(`*`base_`*`), `*`count_`*`, ranges::end(`*`base_`*`))`.
-
-***Remarks:***
-
-In order to provide the amortized constant-time complexity required by
-the `range` concept when `drop_view` models `forward_range`, the first
-overload caches the result within the `drop_view` for use on subsequent
-calls.
-
-\[*Note 2*: Without this, applying a `reverse_view` over a `drop_view`
-would have quadratic iteration complexity. — *end note*\]
+> *Returns:*
+>
+> `ranges::next(ranges::begin(`*`base_`*`), `*`count_`*`, ranges::end(`*`base_`*`))`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant-time complexity required by
+> the `range` concept when `drop_view` models `forward_range`, the first
+> overload caches the result within the `drop_view` for use on
+> subsequent calls.
+>
+> \[*Note 11*: Without this, applying a `reverse_view` over a
+> `drop_view` would have quadratic iteration complexity. — *end note*\]
 
 ### Drop while view <a id="range.drop.while">[range.drop.while]</a>
 
@@ -5519,41 +5527,41 @@ namespace std::ranges {
 constexpr explicit drop_while_view(V base, Pred pred);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *pred\_* with
-`std::move(pred)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *pred\_* with
+> `std::move(pred)`.
 
 ``` cpp
 constexpr const Pred& pred() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`pred_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`pred_`*`;`
 
 ``` cpp
 constexpr auto begin();
 ```
 
-***Preconditions:***
-
-*`pred_`*`.has_value()` is `true`.
-
-***Returns:***
-
-`ranges::find_if_not(`*`base_`*`, cref(*`*`pred_`*`))`.
-
-***Remarks:***
-
-In order to provide the amortized constant-time complexity required by
-the `range` concept when `drop_while_view` models `forward_range`, the
-first call caches the result within the `drop_while_view` for use on
-subsequent calls.
-
-\[*Note 3*: Without this, applying a `reverse_view` over a
-`drop_while_view` would have quadratic iteration
-complexity. — *end note*\]
+> *Preconditions:*
+>
+> *`pred_`*`.has_value()` is `true`.
+>
+> *Returns:*
+>
+> `ranges::find_if_not(`*`base_`*`, cref(*`*`pred_`*`))`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant-time complexity required by
+> the `range` concept when `drop_while_view` models `forward_range`, the
+> first call caches the result within the `drop_while_view` for use on
+> subsequent calls.
+>
+> \[*Note 12*: Without this, applying a `reverse_view` over a
+> `drop_while_view` would have quadratic iteration
+> complexity. — *end note*\]
 
 ### Join view <a id="range.join">[range.join]</a>
 
@@ -5656,9 +5664,9 @@ namespace std::ranges {
 constexpr explicit join_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 #### Class template `join_view::iterator` <a id="range.join.iterator">[range.join.iterator]</a>
 
@@ -5792,36 +5800,36 @@ constexpr OuterIter& outer();
 constexpr const OuterIter& outer() const;
 ```
 
-***Returns:***
-
-*outer\_* if *Base* models `forward_range`; otherwise,
-`*`*`parent_`*`->`*`outer_`*.
+> *Returns:*
+>
+> *outer\_* if *Base* models `forward_range`; otherwise,
+> `*`*`parent_`*`->`*`outer_`*.
 
 ``` cpp
 constexpr void satisfy();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto update_inner = [this](const iterator_t<Base>& x) -> auto&& {
-  if constexpr (ref-is-glvalue)     // \texttt{*x} is a reference
-    return *x;
-  else
-    return parent_->inner_.emplace-deref(x);
-};
-
-for (; outer() != ranges::end(parent_->base_); ++outer()) {
-  auto&& inner = update_inner(outer());
-  inner_ = ranges::begin(inner);
-  if (*inner_ != ranges::end(inner))
-    return;
-}
-if constexpr (ref-is-glvalue)
-  inner_.reset();
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto update_inner = [this](const iterator_t<Base>& x) -> auto&& {
+>   if constexpr (ref-is-glvalue)     // \texttt{*x} is a reference
+>     return *x;
+>   else
+>     return parent_->inner_.emplace-deref(x);
+> };
+>
+> for (; outer() != ranges::end(parent_->base_); ++outer()) {
+>   auto&& inner = update_inner(outer());
+>   inner_ = ranges::begin(inner);
+>   if (*inner_ != ranges::end(inner))
+>     return;
+> }
+> if constexpr (ref-is-glvalue)
+>   inner_.reset();
+> ```
 
 *iterator*
 
@@ -5830,10 +5838,10 @@ constexpr iterator(Parent& parent, OuterIter outer)
   requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Initializes *outer\_* with `std::move(outer)` and *parent\_* with
-`addressof(parent)`; then calls *`satisfy`*`()`.
+> *Effects:*
+>
+> Initializes *outer\_* with `std::move(outer)` and *parent\_* with
+> `addressof(parent)`; then calls *`satisfy`*`()`.
 
 *iterator*
 
@@ -5842,10 +5850,10 @@ constexpr explicit iterator(Parent& parent)
   requires (!forward_range<Base>);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`; then calls
-*`satisfy`*`()`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`; then calls
+> *`satisfy`*`()`.
 
 *iterator*
 
@@ -5856,13 +5864,13 @@ constexpr iterator(iterator<!Const> i)
            convertible_to<iterator_t<InnerRng>, InnerIter>;
 ```
 
-***Effects:***
-
-Initializes *outer\_* with `std::move(i.`*`outer_`*`)`, *inner\_* with
-`std::move(i.`*`inner_`*`)`, and *parent\_* with `i.`*`parent_`*.
-
-\[*Note 4*: `Const` can only be `true` when *Base* models
-`forward_range`. — *end note*\]
+> *Effects:*
+>
+> Initializes *outer\_* with `std::move(i.`*`outer_`*`)`, *inner\_* with
+> `std::move(i.`*`inner_`*`)`, and *parent\_* with `i.`*`parent_`*.
+>
+> \[*Note 13*: `Const` can only be `true` when *Base* models
+> `forward_range`. — *end note*\]
 
 *iterator*
 
@@ -5871,9 +5879,9 @@ constexpr InnerIter operator->() const
   requires has-arrow<InnerIter> && copyable<InnerIter>;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`inner_`*`;`
 
 *iterator*
 
@@ -5881,23 +5889,23 @@ Equivalent to: `return *`*`inner_`*`;`
 constexpr iterator& operator++();
 ```
 
-Let *`inner-range`* be:
-
-- If *ref-is-glvalue* is `true`, `*`*`outer`*`()`.
-
-- Otherwise, `*`*`parent_`*`->`*`inner_`*.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (++*inner_ == ranges::end(as-lvalue(inner-range))) {
-  ++outer();
-  satisfy();
-}
-return *this;
-```
+> Let *`inner-range`* be:
+>
+> - If *ref-is-glvalue* is `true`, `*`*`outer`*`()`.
+>
+> - Otherwise, `*`*`parent_`*`->`*`inner_`*.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (++*inner_ == ranges::end(as-lvalue(inner-range))) {
+>   ++outer();
+>   satisfy();
+> }
+> return *this;
+> ```
 
 *iterator*
 
@@ -5905,9 +5913,9 @@ return *this;
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to: `++*this`.
+> *Effects:*
+>
+> Equivalent to: `++*this`.
 
 *iterator*
 
@@ -5917,15 +5925,15 @@ constexpr iterator operator++(int)
            forward_range<range_reference_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -5936,18 +5944,18 @@ constexpr iterator& operator--()
            common_range<range_reference_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (outer_ == ranges::end(parent_->base_))
-  inner_ = ranges::end(as-lvalue(*--outer_));
-while (*inner_ == ranges::begin(as-lvalue(*outer_)))
-  *inner_ = ranges::end(as-lvalue(*--outer_));
---*inner_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (outer_ == ranges::end(parent_->base_))
+>   inner_ = ranges::end(as-lvalue(*--outer_));
+> while (*inner_ == ranges::begin(as-lvalue(*outer_)))
+>   *inner_ = ranges::end(as-lvalue(*--outer_));
+> --*inner_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -5958,15 +5966,15 @@ constexpr iterator operator--(int)
            common_range<range_reference_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -5976,10 +5984,10 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
            equality_comparable<iterator_t<range_reference_t<Base>>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return x.`*`outer_`*` == y.`*`outer_`*` && x.`*`inner_`*` == y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to:
+> `return x.`*`outer_`*` == y.`*`outer_`*` && x.`*`inner_`*` == y.`*`inner_`*`;`
 
 *iterator*
 
@@ -5989,10 +5997,10 @@ friend constexpr void iter_swap(const iterator& x, const iterator& y)
   requires indirectly_swappable<InnerIter>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return ranges::iter_swap(*x.`*`inner_`*`, *y.`*`inner_`*`);`
+> *Effects:*
+>
+> Equivalent to:
+> `return ranges::iter_swap(*x.`*`inner_`*`, *y.`*`inner_`*`);`
 
 #### Class template `join_view::sentinel` <a id="range.join.sentinel">[range.join.sentinel]</a>
 
@@ -6027,9 +6035,9 @@ namespace std::ranges {
 constexpr explicit sentinel(Parent& parent);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
 
 *sentinel*
 
@@ -6038,9 +6046,9 @@ constexpr sentinel(sentinel<!Const> s)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(s.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(s.`*`end_`*`)`.
 
 *sentinel*
 
@@ -6050,9 +6058,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`outer`*`() == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`outer`*`() == y.`*`end_`*`;`
 
 ### Join with view <a id="range.join.with">[range.join.with]</a>
 
@@ -6179,10 +6187,10 @@ namespace std::ranges {
 constexpr explicit join_with_view(V base, Pattern pattern);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *pattern\_* with
-`std::move(pattern)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *pattern\_* with
+> `std::move(pattern)`.
 
 ``` cpp
 template<input_range R>
@@ -6191,10 +6199,10 @@ template<input_range R>
 constexpr explicit join_with_view(R&& r, range_value_t<InnerRng> e);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `views::all(std::forward<R>(r))` and
-*pattern\_* with `views::single(std::move(e))`.
+> *Effects:*
+>
+> Initializes *base\_* with `views::all(std::forward<R>(r))` and
+> *pattern\_* with `views::single(std::move(e))`.
 
 #### Class template `join_with_view::iterator` <a id="range.join.with.iterator">[range.join.with.iterator]</a>
 
@@ -6339,70 +6347,70 @@ constexpr OuterIter& outer();
 constexpr const OuterIter& outer() const;
 ```
 
-***Returns:***
-
-*outer_it\_* if *Base* models `forward_range`; otherwise,
-`*`*`parent_`*`->`*`outer_it_`*.
+> *Returns:*
+>
+> *outer_it\_* if *Base* models `forward_range`; otherwise,
+> `*`*`parent_`*`->`*`outer_it_`*.
 
 ``` cpp
 constexpr auto& update-inner();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (ref-is-glvalue)
-  return as-lvalue(*outer());
-else
-  return parent_->inner_.emplace-deref(outer());
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (ref-is-glvalue)
+>   return as-lvalue(*outer());
+> else
+>   return parent_->inner_.emplace-deref(outer());
+> ```
 
 ``` cpp
 constexpr auto& get-inner();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (ref-is-glvalue)
-  return as-lvalue(*outer());
-else
-  return *parent_->inner_;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (ref-is-glvalue)
+>   return as-lvalue(*outer());
+> else
+>   return *parent_->inner_;
+> ```
 
 ``` cpp
 constexpr void satisfy();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-while (true) {
-  if (inner_it_.index() == 0) {
-    if (std::get<0>(inner_it_) != ranges::end(parent_->pattern_))
-      break;
-    inner_it_.emplace<1>(ranges::begin(update-inner()));
-  } else {
-    if (std::get<1>(inner_it_) != ranges::end(get-inner()))
-      break;
-    if (++outer() == ranges::end(parent_->base_)) {
-      if constexpr (ref-is-glvalue)
-        inner_it_.emplace<0>();
-      break;
-    }
-    inner_it_.emplace<0>(ranges::begin(parent_->pattern_));
-  }
-}
-```
-
-\[*Note 5*: `join_with_view` iterators use the *satisfy* function to
-skip over empty inner ranges. — *end note*\]
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> while (true) {
+>   if (inner_it_.index() == 0) {
+>     if (std::get<0>(inner_it_) != ranges::end(parent_->pattern_))
+>       break;
+>     inner_it_.emplace<1>(ranges::begin(update-inner()));
+>   } else {
+>     if (std::get<1>(inner_it_) != ranges::end(get-inner()))
+>       break;
+>     if (++outer() == ranges::end(parent_->base_)) {
+>       if constexpr (ref-is-glvalue)
+>         inner_it_.emplace<0>();
+>       break;
+>     }
+>     inner_it_.emplace<0>(ranges::begin(parent_->pattern_));
+>   }
+> }
+> ```
+>
+> \[*Note 14*: `join_with_view` iterators use the *satisfy* function to
+> skip over empty inner ranges. — *end note*\]
 
 ``` cpp
 constexpr iterator(Parent& parent, OuterIter outer)
@@ -6411,18 +6419,18 @@ constexpr explicit iterator(Parent& parent)
   requires (!forward_range<Base>);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`. For the first overload,
-also initializes *outer_it\_* with `std::move(outer)`. Then, equivalent
-to:
-
-``` cpp
-if (outer() != ranges::end(parent_->base_)) {
-  inner_it_.emplace<1>(ranges::begin(update-inner()));
-  exposition onlyidnc{satisfy}();
-}
-```
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`. For the first
+> overload, also initializes *outer_it\_* with `std::move(outer)`. Then,
+> equivalent to:
+>
+> ``` cpp
+> if (outer() != ranges::end(parent_->base_)) {
+>   inner_it_.emplace<1>(ranges::begin(update-inner()));
+>   exposition onlyidnc{satisfy}();
+> }
+> ```
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
@@ -6431,71 +6439,71 @@ constexpr iterator(iterator<!Const> i)
              convertible_to<iterator_t<Pattern>, PatternIter>;
 ```
 
-***Effects:***
-
-Initializes *outer_it\_* with `std::move(i.`*`outer_it_`*`)` and
-*parent\_* with `i.`*`parent_`*. Then, equivalent to:
-
-``` cpp
-if (i.inner_it_.index() == 0)
-  inner_it_.emplace<0>(std::get<0>(std::move(i.inner_it_)));
-else
-  inner_it_.emplace<1>(std::get<1>(std::move(i.inner_it_)));
-```
-
-\[*Note 6*: `Const` can only be `true` when *Base* models
-`forward_range`. — *end note*\]
+> *Effects:*
+>
+> Initializes *outer_it\_* with `std::move(i.`*`outer_it_`*`)` and
+> *parent\_* with `i.`*`parent_`*. Then, equivalent to:
+>
+> ``` cpp
+> if (i.inner_it_.index() == 0)
+>   inner_it_.emplace<0>(std::get<0>(std::move(i.inner_it_)));
+> else
+>   inner_it_.emplace<1>(std::get<1>(std::move(i.inner_it_)));
+> ```
+>
+> \[*Note 15*: `Const` can only be `true` when *Base* models
+> `forward_range`. — *end note*\]
 
 ``` cpp
 constexpr decltype(auto) operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-using reference =
-  common_reference_t<iter_reference_t<InnerIter>, iter_reference_t<PatternIter>>;
-return visit([](auto& it) -> reference { return *it; }, inner_it_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> using reference =
+>   common_reference_t<iter_reference_t<InnerIter>, iter_reference_t<PatternIter>>;
+> return visit([](auto& it) -> reference { return *it; }, inner_it_);
+> ```
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-visit([](auto& it){ ++it; }, inner_it_);
-exposition onlyidnc{satisfy}();
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> visit([](auto& it){ ++it; }, inner_it_);
+> exposition onlyidnc{satisfy}();
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 ``` cpp
 constexpr iterator operator++(int)
   requires ref-is-glvalue && forward_iterator<OuterIter> && forward_iterator<InnerIter>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-iterator tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> iterator tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--()
@@ -6503,38 +6511,38 @@ constexpr iterator& operator--()
            bidirectional-common<InnerBase> && bidirectional-common<PatternBase>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (outer_it_ == ranges::end(parent_->base_)) {
-  auto&& inner = *--outer_it_;
-  inner_it_.emplace<1>(ranges::end(inner));
-}
-
-while (true) {
-  if (inner_it_.index() == 0) {
-    auto& it = std::get<0>(inner_it_);
-    if (it == ranges::begin(parent_->pattern_)) {
-      auto&& inner = *--outer_it_;
-      inner_it_.emplace<1>(ranges::end(inner));
-    } else {
-      break;
-    }
-  } else {
-    auto& it = std::get<1>(inner_it_);
-    auto&& inner = *outer_it_;
-    if (it == ranges::begin(inner)) {
-      inner_it_.emplace<0>(ranges::end(parent_->pattern_));
-    } else {
-      break;
-    }
-  }
-}
-visit([](auto& it){ --it; }, inner_it_);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (outer_it_ == ranges::end(parent_->base_)) {
+>   auto&& inner = *--outer_it_;
+>   inner_it_.emplace<1>(ranges::end(inner));
+> }
+>
+> while (true) {
+>   if (inner_it_.index() == 0) {
+>     auto& it = std::get<0>(inner_it_);
+>     if (it == ranges::begin(parent_->pattern_)) {
+>       auto&& inner = *--outer_it_;
+>       inner_it_.emplace<1>(ranges::end(inner));
+>     } else {
+>       break;
+>     }
+>   } else {
+>     auto& it = std::get<1>(inner_it_);
+>     auto&& inner = *outer_it_;
+>     if (it == ranges::begin(inner)) {
+>       inner_it_.emplace<0>(ranges::end(parent_->pattern_));
+>     } else {
+>       break;
+>     }
+>   }
+> }
+> visit([](auto& it){ --it; }, inner_it_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int)
@@ -6542,15 +6550,15 @@ constexpr iterator operator--(int)
            bidirectional-common<InnerBase> && bidirectional-common<PatternBase>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-iterator tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> iterator tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y)
@@ -6558,13 +6566,13 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
            equality_comparable<InnerIter>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return x.outer_it_ == y.outer_it_ && x.inner_it_ == y.inner_it_;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return x.outer_it_ == y.outer_it_ && x.inner_it_ == y.inner_it_;
+> ```
 
 #### Class template `join_with_view::sentinel` <a id="range.join.with.sentinel">[range.join.with.sentinel]</a>
 
@@ -6597,18 +6605,18 @@ namespace std::ranges {
 constexpr explicit sentinel(Parent& parent);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
 
 ``` cpp
 constexpr sentinel(sentinel<!Const> s)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(s.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(s.`*`end_`*`)`.
 
 ``` cpp
 template<bool OtherConst>
@@ -6616,9 +6624,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`outer`*`() == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`outer`*`() == y.`*`end_`*`;`
 
 ### Lazy split view <a id="range.lazy.split">[range.lazy.split]</a>
 
@@ -6730,10 +6738,10 @@ namespace std::ranges {
 constexpr explicit lazy_split_view(V base, Pattern pattern);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`, and *pattern\_* with
-`std::move(pattern)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`, and *pattern\_* with
+> `std::move(pattern)`.
 
 ``` cpp
 template<input_range R>
@@ -6742,10 +6750,10 @@ template<input_range R>
 constexpr explicit lazy_split_view(R&& r, range_value_t<R> e);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `views::all(std::forward<R>(r))`, and
-*pattern\_* with `views::single(std::move(e))`.
+> *Effects:*
+>
+> Initializes *base\_* with `views::all(std::forward<R>(r))`, and
+> *pattern\_* with `views::single(std::move(e))`.
 
 #### Class template `lazy_split_view::outer-iterator` <a id="range.lazy.split.outer">[range.lazy.split.outer]</a>
 
@@ -6820,9 +6828,9 @@ constexpr explicit outer-iterator(Parent& parent)
   requires (!forward_range<Base>);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`.
 
 *outer-iterator*
 
@@ -6831,10 +6839,10 @@ constexpr outer-iterator(Parent& parent, iterator_t<Base> current)
   requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)` and *current\_* with
-`std::move(current)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)` and *current\_* with
+> `std::move(current)`.
 
 *outer-iterator*
 
@@ -6843,10 +6851,10 @@ constexpr outer-iterator(outer-iterator<!Const> i)
   requires Const && convertible_to<iterator_t<V>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `i.`*`parent_`* and *current\_* with
-`std::move(i.`*`current_`*`)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `i.`*`parent_`* and *current\_* with
+> `std::move(i.`*`current_`*`)`.
 
 *outer-iterator*
 
@@ -6854,9 +6862,9 @@ Initializes *parent\_* with `i.`*`parent_`* and *current\_* with
 constexpr value_type operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return value_type{*this};`
+> *Effects:*
+>
+> Equivalent to: `return value_type{*this};`
 
 *outer-iterator*
 
@@ -6864,39 +6872,39 @@ Equivalent to: `return value_type{*this};`
 constexpr outer-iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-const auto end = ranges::end(parent_->base_);
-if (current == end) {
-  trailing_empty_ = false;
-  return *this;
-}
-const auto [pbegin, pend] = subrange{parent_->pattern_};
-if (pbegin == pend) ++current;
-else if constexpr (tiny-range<Pattern>) {
-  current = ranges::find(std::move(current), end, *pbegin);
-  if (current != end) {
-    ++current;
-    if (current == end)
-      trailing_empty_ = true;
-  }
-}
-else {
-  do {
-    auto [b, p] = ranges::mismatch(current, end, pbegin, pend);
-    if (p == pend) {
-      current = b;
-      if (current == end)
-        trailing_empty_ = true;
-      break;            // The pattern matched; skip it
-    }
-  } while (++current != end);
-}
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> const auto end = ranges::end(parent_->base_);
+> if (current == end) {
+>   trailing_empty_ = false;
+>   return *this;
+> }
+> const auto [pbegin, pend] = subrange{parent_->pattern_};
+> if (pbegin == pend) ++current;
+> else if constexpr (tiny-range<Pattern>) {
+>   current = ranges::find(std::move(current), end, *pbegin);
+>   if (current != end) {
+>     ++current;
+>     if (current == end)
+>       trailing_empty_ = true;
+>   }
+> }
+> else {
+>   do {
+>     auto [b, p] = ranges::mismatch(current, end, pbegin, pend);
+>     if (p == pend) {
+>       current = b;
+>       if (current == end)
+>         trailing_empty_ = true;
+>       break;            // The pattern matched; skip it
+>     }
+>   } while (++current != end);
+> }
+> return *this;
+> ```
 
 *outer-iterator*
 
@@ -6905,13 +6913,13 @@ friend constexpr bool operator==(const outer-iterator& x, const outer-iterator& 
   requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return x.current_ == y.current_ && x.trailing_empty_ == y.trailing_empty_;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return x.current_ == y.current_ && x.trailing_empty_ == y.trailing_empty_;
+> ```
 
 *outer-iterator*
 
@@ -6919,13 +6927,13 @@ return x.current_ == y.current_ && x.trailing_empty_ == y.trailing_empty_;
 friend constexpr bool operator==(const outer-iterator& x, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return x.current == ranges::end(x.parent_->base_) && !x.trailing_empty_;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return x.current == ranges::end(x.parent_->base_) && !x.trailing_empty_;
+> ```
 
 #### Class `lazy_split_view::outer-iterator::value_type` <a id="range.lazy.split.outer.value">[range.lazy.split.outer.value]</a>
 
@@ -6959,9 +6967,9 @@ namespace std::ranges {
 constexpr explicit value_type(outer-iterator i);
 ```
 
-***Effects:***
-
-Initializes *i\_* with `std::move(i)`.
+> *Effects:*
+>
+> Initializes *i\_* with `std::move(i)`.
 
 *outer-iterator*
 
@@ -6969,9 +6977,9 @@ Initializes *i\_* with `std::move(i)`.
 constexpr inner-iterator<Const> begin() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`inner-iterator`*`<Const>{`*`i_`*`};`
+> *Effects:*
+>
+> Equivalent to: `return `*`inner-iterator`*`<Const>{`*`i_`*`};`
 
 *outer-iterator*
 
@@ -6979,9 +6987,9 @@ Equivalent to: `return `*`inner-iterator`*`<Const>{`*`i_`*`};`
 constexpr default_sentinel_t end() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return default_sentinel;`
+> *Effects:*
+>
+> Equivalent to: `return default_sentinel;`
 
 #### Class template `lazy_split_view::inner-iterator` <a id="range.lazy.split.inner">[range.lazy.split.inner]</a>
 
@@ -7059,9 +7067,9 @@ denotes:
 constexpr explicit inner-iterator(outer-iterator<Const> i);
 ```
 
-***Effects:***
-
-Initializes *i\_* with `std::move(i)`.
+> *Effects:*
+>
+> Initializes *i\_* with `std::move(i)`.
 
 *inner-iterator*
 
@@ -7069,9 +7077,9 @@ Initializes *i\_* with `std::move(i)`.
 constexpr const iterator_t<Base>& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`i_`*`.`*`current`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`i_`*`.`*`current`*`;`
 
 *inner-iterator*
 
@@ -7079,9 +7087,9 @@ Equivalent to: `return `*`i_`*`.`*`current`*`;`
 constexpr iterator_t<Base> base() && requires forward_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`i_`*`.`*`current`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`i_`*`.`*`current`*`);`
 
 *inner-iterator*
 
@@ -7089,20 +7097,20 @@ Equivalent to: `return std::move(`*`i_`*`.`*`current`*`);`
 constexpr inner-iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-incremented_ = true;
-if constexpr (!forward_range<Base>) {
-  if constexpr (Pattern::size() == 0) {
-    return *this;
-  }
-}
-++i_.current;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> incremented_ = true;
+> if constexpr (!forward_range<Base>) {
+>   if constexpr (Pattern::size() == 0) {
+>     return *this;
+>   }
+> }
+> ++i_.current;
+> return *this;
+> ```
 
 *inner-iterator*
 
@@ -7111,10 +7119,10 @@ friend constexpr bool operator==(const inner-iterator& x, const inner-iterator& 
   requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return x.`*`i_`*`.`*`current`*` == y.`*`i_`*`.`*`current`*`;`
+> *Effects:*
+>
+> Equivalent to:
+> `return x.`*`i_`*`.`*`current`*` == y.`*`i_`*`.`*`current`*`;`
 
 *inner-iterator*
 
@@ -7122,29 +7130,29 @@ Equivalent to:
 friend constexpr bool operator==(const inner-iterator& x, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto [pcur, pend] = subrange{x.i_.parent_->pattern_};
-auto end = ranges::end(x.i_.parent_->base_);
-if constexpr (tiny-range<Pattern>) {
-  const auto & cur = x.i_.current;
-  if (cur == end) return true;
-  if (pcur == pend) return x.incremented_;
-  return *cur == *pcur;
-} else {
-  auto cur = x.i_.current;
-  if (cur == end) return true;
-  if (pcur == pend) return x.incremented_;
-  do {
-    if (*cur != *pcur) return false;
-    if (++pcur == pend) return true;
-  } while (++cur != end);
-  return false;
-}
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto [pcur, pend] = subrange{x.i_.parent_->pattern_};
+> auto end = ranges::end(x.i_.parent_->base_);
+> if constexpr (tiny-range<Pattern>) {
+>   const auto & cur = x.i_.current;
+>   if (cur == end) return true;
+>   if (pcur == pend) return x.incremented_;
+>   return *cur == *pcur;
+> } else {
+>   auto cur = x.i_.current;
+>   if (cur == end) return true;
+>   if (pcur == pend) return x.incremented_;
+>   do {
+>     if (*cur != *pcur) return false;
+>     if (++pcur == pend) return true;
+>   } while (++cur != end);
+>   return false;
+> }
+> ```
 
 *inner-iterator*
 
@@ -7154,10 +7162,10 @@ friend constexpr void iter_swap(const inner-iterator& x, const inner-iterator& y
   requires indirectly_swappable<iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to
-`ranges::iter_swap(x.`*`i_`*`.`*`current`*`, y.`*`i_`*`.`*`current`*`)`.
+> *Effects:*
+>
+> Equivalent to
+> `ranges::iter_swap(x.`*`i_`*`.`*`current`*`, y.`*`i_`*`.`*`current`*`)`.
 
 ### Split view <a id="range.split">[range.split]</a>
 
@@ -7240,10 +7248,10 @@ namespace std::ranges {
 constexpr explicit split_view(V base, Pattern pattern);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`, and *pattern\_* with
-`std::move(pattern)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`, and *pattern\_* with
+> `std::move(pattern)`.
 
 ``` cpp
 template<forward_range R>
@@ -7252,41 +7260,41 @@ template<forward_range R>
 constexpr explicit split_view(R&& r, range_value_t<R> e);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `views::all(std::forward<R>(r))`, and
-*pattern\_* with `views::single(std::move(e))`.
+> *Effects:*
+>
+> Initializes *base\_* with `views::all(std::forward<R>(r))`, and
+> *pattern\_* with `views::single(std::move(e))`.
 
 ``` cpp
 constexpr iterator begin();
 ```
 
-***Returns:***
-
-`{*this, ranges::begin(`*`base_`*`), `*`find-next`*`(ranges::begin(`*`base_`*`))}`.
-
-***Remarks:***
-
-In order to provide the amortized constant time complexity required by
-the `range` concept, this function caches the result within the
-`split_view` for use on subsequent calls.
+> *Returns:*
+>
+> `{*this, ranges::begin(`*`base_`*`), `*`find-next`*`(ranges::begin(`*`base_`*`))}`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant time complexity required by
+> the `range` concept, this function caches the result within the
+> `split_view` for use on subsequent calls.
 
 ``` cpp
 constexpr subrange<iterator_t<V>> find-next(iterator_t<V> it);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto [b, e] = ranges::search(subrange(it, ranges::end(base_)), pattern_);
-if (b != ranges::end(base_) && ranges::empty(pattern_)) {
-  ++b;
-  ++e;
-}
-return {b, e};
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto [b, e] = ranges::search(subrange(it, ranges::end(base_)), pattern_);
+> if (b != ranges::end(base_) && ranges::empty(pattern_)) {
+>   ++b;
+>   ++e;
+> }
+> return {b, e};
+> ```
 
 #### Class `split_view::iterator` <a id="range.split.iterator">[range.split.iterator]</a>
 
@@ -7326,76 +7334,76 @@ namespace std::ranges {
 constexpr iterator(split_view& parent, iterator_t<V> current, subrange<iterator_t<V>> next);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`, *cur\_* with
-`std::move(current)`, and *next\_* with `std::move(next)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`, *cur\_* with
+> `std::move(current)`, and *next\_* with `std::move(next)`.
 
 ``` cpp
 constexpr iterator_t<V> base() const;
 ```
 
-***Effects:***
-
-Equivalent to `return `*`cur_`*`;`
+> *Effects:*
+>
+> Equivalent to `return `*`cur_`*`;`
 
 ``` cpp
 constexpr value_type operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to `return {`*`cur_`*`, `*`next_`*`.begin()};`
+> *Effects:*
+>
+> Equivalent to `return {`*`cur_`*`, `*`next_`*`.begin()};`
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-cur_ = next_.begin();
-if (cur_ != ranges::end(parent_->base_)) {
-  cur_ = next_.end();
-  if (cur_ == ranges::end(parent_->base_)) {
-    trailing_empty_ = true;
-    next_ = {cur_, cur_};
-  } else {
-    next_ = parent_->find-next(cur_);
-  }
-} else {
-  trailing_empty_ = false;
-}
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> cur_ = next_.begin();
+> if (cur_ != ranges::end(parent_->base_)) {
+>   cur_ = next_.end();
+>   if (cur_ == ranges::end(parent_->base_)) {
+>     trailing_empty_ = true;
+>     next_ = {cur_, cur_};
+>   } else {
+>     next_ = parent_->find-next(cur_);
+>   }
+> } else {
+>   trailing_empty_ = false;
+> }
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return x.cur_ == y.cur_ && x.trailing_empty_ == y.trailing_empty_;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return x.cur_ == y.cur_ && x.trailing_empty_ == y.trailing_empty_;
+> ```
 
 #### Class `split_view::sentinel` <a id="range.split.sentinel">[range.split.sentinel]</a>
 
@@ -7421,18 +7429,18 @@ namespace std::ranges {
 constexpr explicit sentinel(split_view& parent);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `ranges::end(parent.`*`base_`*`)`.
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to:
-`return x.`*`cur_`*` == y.`*`end_`*` && !x.`*`trailing_empty_`*`;`
+> *Effects:*
+>
+> Equivalent to:
+> `return x.`*`cur_`*` == y.`*`end_`*` && !x.`*`trailing_empty_`*`;`
 
 ### Counted view <a id="range.counted">[range.counted]</a>
 
@@ -7446,7 +7454,7 @@ The name `views::counted` denotes a customization point object
 `decltype((F))` does not model `convertible_to<D>`,
 `views::counted(E, F)` is ill-formed.
 
-\[*Note 7*: This case can result in substitution failure when
+\[*Note 2*: This case can result in substitution failure when
 `views::counted(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -7469,7 +7477,7 @@ Otherwise, `views::counted(E, F)` is expression-equivalent to:
 and sentinel and turns it into a view of the same elements with an
 iterator and sentinel of the same type.
 
-\[*Note 8*: `common_view` is useful for calling legacy algorithms that
+\[*Note 3*: `common_view` is useful for calling legacy algorithms that
 expect a range’s iterator and sentinel types to be the
 same. — *end note*\]
 
@@ -7562,9 +7570,9 @@ namespace std::ranges {
 constexpr explicit common_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 ### Reverse view <a id="range.reverse">[range.reverse]</a>
 
@@ -7653,44 +7661,45 @@ namespace std::ranges {
 constexpr explicit reverse_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 ``` cpp
 constexpr reverse_iterator<iterator_t<V>> begin();
 ```
 
-***Returns:***
-
-``` cpp
-make_reverse_iterator(ranges::next(ranges::begin(base_), ranges::end(base_)))
-```
-
-***Remarks:***
-
-In order to provide the amortized constant time complexity required by
-the `range` concept, this function caches the result within the
-`reverse_view` for use on subsequent calls.
+> *Returns:*
+>
+> ``` cpp
+> make_reverse_iterator(ranges::next(ranges::begin(base_), ranges::end(base_)))
+> ```
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant time complexity required by
+> the `range` concept, this function caches the result within the
+> `reverse_view` for use on subsequent calls.
 
 ``` cpp
 constexpr reverse_iterator<iterator_t<V>> begin() requires common_range<V>;
 constexpr auto begin() const requires common_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to: `return make_reverse_iterator(ranges::end(`*`base_`*`));`
+> *Effects:*
+>
+> Equivalent to:
+> `return make_reverse_iterator(ranges::end(`*`base_`*`));`
 
 ``` cpp
 constexpr reverse_iterator<iterator_t<V>> end();
 constexpr auto end() const requires common_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return make_reverse_iterator(ranges::begin(`*`base_`*`));`
+> *Effects:*
+>
+> Equivalent to:
+> `return make_reverse_iterator(ranges::begin(`*`base_`*`));`
 
 ### As const view <a id="range.as.const">[range.as.const]</a>
 
@@ -7769,9 +7778,9 @@ namespace std::ranges {
 constexpr explicit as_const_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 ### Elements view <a id="range.elements">[range.elements]</a>
 
@@ -7900,9 +7909,9 @@ namespace std::ranges {
 constexpr explicit elements_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 #### Class template `elements_view::iterator` <a id="range.elements.iterator">[range.elements.iterator]</a>
 
@@ -8009,18 +8018,18 @@ defined as follows: Let `C` denote the type
 static constexpr decltype(auto) get-element(const iterator_t<Base>& i);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (is_reference_v<range_reference_t<Base>>) {
-  return std::get<N>(*i);
-} else {
-  using E = remove_cv_t<tuple_element_t<N, range_reference_t<Base>>>;
-  return static_cast<E>(std::get<N>(*i));
-}
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (is_reference_v<range_reference_t<Base>>) {
+>   return std::get<N>(*i);
+> } else {
+>   using E = remove_cv_t<tuple_element_t<N, range_reference_t<Base>>>;
+>   return static_cast<E>(std::get<N>(*i));
+> }
+> ```
 
 *iterator*
 
@@ -8028,9 +8037,9 @@ if constexpr (is_reference_v<range_reference_t<Base>>) {
 constexpr explicit iterator(iterator_t<Base> current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)`.
 
 *iterator*
 
@@ -8039,9 +8048,9 @@ constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<iterator_t<V>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)`.
 
 *iterator*
 
@@ -8049,9 +8058,9 @@ Initializes *current\_* with `std::move(i.`*`current_`*`)`.
 constexpr const iterator_t<Base>& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*`;`
 
 *iterator*
 
@@ -8059,9 +8068,9 @@ Equivalent to: `return `*`current_`*`;`
 constexpr iterator_t<Base> base() &&;
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`current_`*`);`
 
 *iterator*
 
@@ -8069,14 +8078,14 @@ Equivalent to: `return std::move(`*`current_`*`);`
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++current_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8084,9 +8093,9 @@ return *this;
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to: `++`*`current_`*.
+> *Effects:*
+>
+> Equivalent to: `++`*`current_`*.
 
 *iterator*
 
@@ -8094,15 +8103,15 @@ Equivalent to: `++`*`current_`*.
 constexpr iterator operator++(int) requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto temp = *this;
-++current_;
-return temp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto temp = *this;
+> ++current_;
+> return temp;
+> ```
 
 *iterator*
 
@@ -8110,14 +8119,14 @@ return temp;
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---current_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --current_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8125,15 +8134,15 @@ return *this;
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto temp = *this;
---current_;
-return temp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto temp = *this;
+> --current_;
+> return temp;
+> ```
 
 *iterator*
 
@@ -8142,14 +8151,14 @@ constexpr iterator& operator+=(difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ += n;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ += n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8158,14 +8167,14 @@ constexpr iterator& operator-=(difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ -= n;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ -= n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8174,9 +8183,9 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
   requires equality_comparable<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
 
 *iterator*
 
@@ -8185,9 +8194,9 @@ friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` < y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` < y.`*`current_`*`;`
 
 *iterator*
 
@@ -8196,9 +8205,9 @@ friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 *iterator*
 
@@ -8207,9 +8216,9 @@ friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 *iterator*
 
@@ -8218,9 +8227,9 @@ friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 *iterator*
 
@@ -8229,9 +8238,9 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires random_access_range<Base> && three_way_comparable<iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
 
 *iterator*
 
@@ -8240,9 +8249,9 @@ friend constexpr iterator operator+(const iterator& x, difference_type y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`{x} += y;`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`{x} += y;`
 
 *iterator*
 
@@ -8251,9 +8260,9 @@ friend constexpr iterator operator+(difference_type x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y + x;`
+> *Effects:*
+>
+> Equivalent to: `return y + x;`
 
 *iterator*
 
@@ -8262,9 +8271,9 @@ friend constexpr iterator operator-(const iterator& x, difference_type y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`{x} -= y;`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`{x} -= y;`
 
 *iterator*
 
@@ -8273,9 +8282,9 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<iterator_t<Base>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` - y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` - y.`*`current_`*`;`
 
 #### Class template `elements_view::sentinel` <a id="range.elements.sentinel">[range.elements.sentinel]</a>
 
@@ -8322,9 +8331,9 @@ namespace std::ranges {
 constexpr explicit sentinel(sentinel_t<Base> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end`.
+> *Effects:*
+>
+> Initializes *end\_* with `end`.
 
 *sentinel*
 
@@ -8333,9 +8342,9 @@ constexpr sentinel(sentinel<!Const> other)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(other.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(other.`*`end_`*`)`.
 
 *sentinel*
 
@@ -8343,9 +8352,9 @@ Initializes *end\_* with `std::move(other.`*`end_`*`)`.
 constexpr sentinel_t<Base> base() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`end_`*`;`
 
 *sentinel*
 
@@ -8355,9 +8364,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
 
 *sentinel*
 
@@ -8368,9 +8377,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` - y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` - y.`*`end_`*`;`
 
 *sentinel*
 
@@ -8381,9 +8390,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const sentinel& x, const iterator<OtherConst>& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
 
 ### Enumerate view <a id="range.enumerate">[range.enumerate]</a>
 
@@ -8464,9 +8473,9 @@ namespace std::ranges {
 constexpr explicit enumerate_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 #### Class template `enumerate_view::iterator` <a id="range.enumerate.iterator">[range.enumerate.iterator]</a>
 
@@ -8566,10 +8575,10 @@ follows:
 constexpr explicit iterator(iterator_t<Base> current, difference_type pos);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)` and *pos\_* with
-`pos`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)` and *pos\_* with
+> `pos`.
 
 *iterator*
 
@@ -8578,10 +8587,10 @@ constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<iterator_t<V>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)` and *pos\_*
-with `i.`*`pos_`*.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)` and *pos\_*
+> with `i.`*`pos_`*.
 
 *iterator*
 
@@ -8589,9 +8598,9 @@ with `i.`*`pos_`*.
 constexpr const iterator_t<Base>& base() const & noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`current_`*`;`
 
 *iterator*
 
@@ -8599,9 +8608,9 @@ Equivalent to: `return `*`current_`*`;`
 constexpr iterator_t<Base> base() &&;
 ```
 
-***Effects:***
-
-Equivalent to: `return std::move(`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return std::move(`*`current_`*`);`
 
 *iterator*
 
@@ -8609,9 +8618,9 @@ Equivalent to: `return std::move(`*`current_`*`);`
 constexpr difference_type index() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`pos_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`pos_`*`;`
 
 *iterator*
 
@@ -8619,15 +8628,15 @@ Equivalent to: `return `*`pos_`*`;`
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++current_;
-++pos_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++current_;
+> ++pos_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8635,9 +8644,9 @@ return *this;
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 *iterator*
 
@@ -8645,15 +8654,15 @@ Equivalent to `++*this`.
 constexpr iterator operator++(int) requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto temp = *this;
-++*this;
-return temp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto temp = *this;
+> ++*this;
+> return temp;
+> ```
 
 *iterator*
 
@@ -8661,15 +8670,15 @@ return temp;
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---current_;
---pos_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --current_;
+> --pos_;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8677,15 +8686,15 @@ return *this;
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto temp = *this;
---*this;
-return temp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto temp = *this;
+> --*this;
+> return temp;
+> ```
 
 *iterator*
 
@@ -8694,15 +8703,15 @@ constexpr iterator& operator+=(difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ += n;
-pos_ += n;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ += n;
+> pos_ += n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8711,15 +8720,15 @@ constexpr iterator& operator-=(difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ -= n;
-pos_ -= n;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ -= n;
+> pos_ -= n;
+> return *this;
+> ```
 
 *iterator*
 
@@ -8727,9 +8736,9 @@ return *this;
 friend constexpr bool operator==(const iterator& x, const iterator& y) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`pos_`*` == y.`*`pos_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`pos_`*` == y.`*`pos_`*`;`
 
 *iterator*
 
@@ -8737,9 +8746,9 @@ Equivalent to: `return x.`*`pos_`*` == y.`*`pos_`*`;`
 friend constexpr strong_ordering operator<=>(const iterator& x, const iterator& y) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`pos_`*` <=> y.`*`pos_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`pos_`*` <=> y.`*`pos_`*`;`
 
 *iterator*
 
@@ -8748,15 +8757,15 @@ friend constexpr iterator operator+(const iterator& x, difference_type y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto temp = x;
-temp += y;
-return temp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto temp = x;
+> temp += y;
+> return temp;
+> ```
 
 *iterator*
 
@@ -8765,9 +8774,9 @@ friend constexpr iterator operator+(difference_type x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y + x;`
+> *Effects:*
+>
+> Equivalent to: `return y + x;`
 
 *iterator*
 
@@ -8776,15 +8785,15 @@ friend constexpr iterator operator-(const iterator& x, difference_type y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto temp = x;
-temp -= y;
-return temp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto temp = x;
+> temp -= y;
+> return temp;
+> ```
 
 *iterator*
 
@@ -8792,9 +8801,9 @@ return temp;
 friend constexpr difference_type operator-(const iterator& x, const iterator& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`pos_`*` - y.`*`pos_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`pos_`*` - y.`*`pos_`*`;`
 
 #### Class template `enumerate_view::sentinel` <a id="range.enumerate.sentinel">[range.enumerate.sentinel]</a>
 
@@ -8840,9 +8849,9 @@ namespace std::ranges {
 constexpr explicit sentinel(sentinel_t<Base> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(end)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(end)`.
 
 *sentinel*
 
@@ -8851,9 +8860,9 @@ constexpr sentinel(sentinel<!Const> other)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(other.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(other.`*`end_`*`)`.
 
 *sentinel*
 
@@ -8861,9 +8870,9 @@ Initializes *end\_* with `std::move(other.`*`end_`*`)`.
 constexpr sentinel_t<Base> base() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return `*`end_`*`;`
 
 *sentinel*
 
@@ -8873,9 +8882,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
 
 *sentinel*
 
@@ -8886,9 +8895,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` - y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` - y.`*`end_`*`;`
 
 *sentinel*
 
@@ -8899,9 +8908,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const sentinel& x, const iterator<OtherConst>& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
 
 ### Zip view <a id="range.zip">[range.zip]</a>
 
@@ -9001,7 +9010,7 @@ Two `zip_view` objects have the same underlying sequence if and only if
 the corresponding elements of *views\_* are equal [concepts.equality]
 and have the same underlying sequence.
 
-\[*Note 9*: In particular, comparison of iterators obtained from
+\[*Note 4*: In particular, comparison of iterators obtained from
 `zip_view` objects that do not have the same underlying sequence is not
 required to produce meaningful results
 [iterator.concept.forward]. — *end note*\]
@@ -9010,25 +9019,25 @@ required to produce meaningful results
 constexpr explicit zip_view(Views... views);
 ```
 
-***Effects:***
-
-Initializes *views\_* with `std::move(views)...`.
+> *Effects:*
+>
+> Initializes *views\_* with `std::move(views)...`.
 
 ``` cpp
 constexpr auto size() requires (sized_range<Views> && ...);
 constexpr auto size() const requires (sized_range<const Views> && ...);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return apply([](auto... sizes) {
-  using CT = make-unsigned-like-t<common_type_t<decltype(sizes)...>>;
-  return ranges::min({CT(sizes)...});
-}, tuple-transform(ranges::size, views_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return apply([](auto... sizes) {
+>   using CT = make-unsigned-like-t<common_type_t<decltype(sizes)...>>;
+>   return ranges::min({CT(sizes)...});
+> }, tuple-transform(ranges::size, views_));
+> ```
 
 #### Class template `zip_view::iterator` <a id="range.zip.iterator">[range.zip.iterator]</a>
 
@@ -9124,164 +9133,164 @@ via an exception, the iterator acquires a singular value.
 constexpr explicit iterator(tuple<iterator_t<maybe-const<Const, Views>>...> current);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
   requires Const && (convertible_to<iterator_t<Views>, iterator_t<const Views>> && ...);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)`.
 
 ``` cpp
 constexpr auto operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return tuple-transform([](auto& i) -> decltype(auto) { return *i; }, current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return tuple-transform([](auto& i) -> decltype(auto) { return *i; }, current_);
+> ```
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-tuple-for-each([](auto& i) { ++i; }, current_);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> tuple-for-each([](auto& i) { ++i; }, current_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 ``` cpp
 constexpr iterator operator++(int) requires all-forward<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires all-bidirectional<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-tuple-for-each([](auto& i) { --i; }, current_);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> tuple-for-each([](auto& i) { --i; }, current_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int) requires all-bidirectional<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x)
   requires all-random-access<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-tuple-for-each([&]<class I>(I& i) { i += iter_difference_t<I>(x); }, current_);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> tuple-for-each([&]<class I>(I& i) { i += iter_difference_t<I>(x); }, current_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x)
   requires all-random-access<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-tuple-for-each([&]<class I>(I& i) { i -= iter_difference_t<I>(x); }, current_);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> tuple-for-each([&]<class I>(I& i) { i -= iter_difference_t<I>(x); }, current_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr auto operator[](difference_type n) const
   requires all-random-access<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return tuple-transform([&]<class I>(I& i) -> decltype(auto) {
-  return i[iter_difference_t<I>(n)];
-}, current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return tuple-transform([&]<class I>(I& i) -> decltype(auto) {
+>   return i[iter_difference_t<I>(n)];
+> }, current_);
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y)
   requires (equality_comparable<iterator_t<maybe-const<Const, Views>>> && ...);
 ```
 
-***Returns:***
-
-- `x.`*`current_`*` == y.`*`current_`* if
-  `all-bidirectional``<Const, Views...>` is `true`.
-
-- Otherwise, `true` if there exists an integer
-  $0 \leq i < \texttt{sizeof...(Views)}$ such that
-  `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
-  is `true`.
-
-  \[*Note 4*: This allows `zip_view` to model `common_range` when all
-  constituent views model `common_range`. — *end note*\]
-
-- Otherwise, `false`.
+> *Returns:*
+>
+> - `x.`*`current_`*` == y.`*`current_`* if
+>   `all-bidirectional``<Const, Views...>` is `true`.
+>
+> - Otherwise, `true` if there exists an integer
+>   $0 \leq i < \texttt{sizeof...(Views)}$ such that
+>   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
+>   is `true`.
+>
+>   \[*Note 16*: This allows `zip_view` to model `common_range` when all
+>   constituent views model `common_range`. — *end note*\]
+>
+> - Otherwise, `false`.
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires all-random-access<Const, Views...>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` <=> y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` <=> y.`*`current_`*.
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& i, difference_type n)
@@ -9290,30 +9299,30 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires all-random-access<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r += n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r += n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires all-random-access<Const, Views...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r -= n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r -= n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
@@ -9321,60 +9330,60 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
                                iterator_t<maybe-const<Const, Views>>> && ...);
 ```
 
-Let *`DIST`*`(`i`)` be
-`difference_type(std::get<`i`>(x.`*`current_`*`) - std::get<`i`>(y.`*`current_`*`))`.
-
-***Returns:***
-
-The value with the smallest absolute value among *`DIST`*`(`n`)` for all
-integers $0 \leq n < \texttt{sizeof...(Views)}$.
+> Let *`DIST`*`(`i`)` be
+> `difference_type(std::get<`i`>(x.`*`current_`*`) - std::get<`i`>(y.`*`current_`*`))`.
+>
+> *Returns:*
+>
+> The value with the smallest absolute value among *`DIST`*`(`n`)` for
+> all integers $0 \leq n < \texttt{sizeof...(Views)}$.
 
 ``` cpp
 friend constexpr auto iter_move(const iterator& i) noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return tuple-transform(ranges::iter_move, i.current_);
-```
-
-***Remarks:***
-
-The exception specification is equivalent to:
-
-``` cpp
-(noexcept(ranges::iter_move(declval<const iterator_t<maybe-const<Const,
-                                                            Views>>&>())) && ...) &&
-(is_nothrow_move_constructible_v<range_rvalue_reference_t<maybe-const<Const,
-                                                                      Views>>> && ...)
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return tuple-transform(ranges::iter_move, i.current_);
+> ```
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to:
+>
+> ``` cpp
+> (noexcept(ranges::iter_move(declval<const iterator_t<maybe-const<Const,
+>                                                             Views>>&>())) && ...) &&
+> (is_nothrow_move_constructible_v<range_rvalue_reference_t<maybe-const<Const,
+>                                                                       Views>>> && ...)
+> ```
 
 ``` cpp
 friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(see below)
   requires (indirectly_swappable<iterator_t<maybe-const<Const, Views>>> && ...);
 ```
 
-***Effects:***
-
-For every integer $0 \leq i < \texttt{sizeof...(Views)}$, performs:
-
-``` cpp
-ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
-```
-
-***Remarks:***
-
-The exception specification is equivalent to the logical of the
-following expressions:
-
-``` cpp
-noexcept(ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_)))
-```
-
-for every integer $0 \leq i < \texttt{sizeof...(Views)}$.
+> *Effects:*
+>
+> For every integer $0 \leq i < \texttt{sizeof...(Views)}$, performs:
+>
+> ``` cpp
+> ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
+> ```
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to the logical of the
+> following expressions:
+>
+> ``` cpp
+> noexcept(ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_)))
+> ```
+>
+> for every integer $0 \leq i < \texttt{sizeof...(Views)}$.
 
 #### Class template `zip_view::sentinel` <a id="range.zip.sentinel">[range.zip.sentinel]</a>
 
@@ -9416,18 +9425,18 @@ namespace std::ranges {
 constexpr explicit sentinel(tuple<sentinel_t<maybe-const<Const, Views>>...> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end`.
+> *Effects:*
+>
+> Initializes *end\_* with `end`.
 
 ``` cpp
 constexpr sentinel(sentinel<!Const> i)
   requires Const && (convertible_to<sentinel_t<Views>, sentinel_t<const Views>> && ...);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(i.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(i.`*`end_`*`)`.
 
 ``` cpp
 template<bool OtherConst>
@@ -9436,12 +9445,12 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Returns:***
-
-`true` if there exists an integer $0 \leq i < \texttt{sizeof...(Views)}$
-such that
-`bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`end_`*`))`
-is `true`. Otherwise, `false`.
+> *Returns:*
+>
+> `true` if there exists an integer
+> $0 \leq i < \texttt{sizeof...(Views)}$ such that
+> `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`end_`*`))`
+> is `true`. Otherwise, `false`.
 
 ``` cpp
 template<bool OtherConst>
@@ -9451,13 +9460,13 @@ friend constexpr common_type_t<range_difference_t<maybe-const<OtherConst, Views>
   operator-(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-Let `D` be the return type. Let *`DIST`*`(`i`)` be
-`D(std::get<`i`>(x.`*`current_`*`) - std::get<`i`>(y.`*`end_`*`))`.
-
-***Returns:***
-
-The value with the smallest absolute value among *`DIST`*`(`n`)` for all
-integers $0 \leq n < \texttt{sizeof...(Views)}$.
+> Let `D` be the return type. Let *`DIST`*`(`i`)` be
+> `D(std::get<`i`>(x.`*`current_`*`) - std::get<`i`>(y.`*`end_`*`))`.
+>
+> *Returns:*
+>
+> The value with the smallest absolute value among *`DIST`*`(`n`)` for
+> all integers $0 \leq n < \texttt{sizeof...(Views)}$.
 
 ``` cpp
 template<bool OtherConst>
@@ -9467,9 +9476,9 @@ friend constexpr common_type_t<range_difference_t<maybe-const<OtherConst, Views>
   operator-(const sentinel& y, const iterator<OtherConst>& x);
 ```
 
-***Effects:***
-
-Equivalent to `return -(x - y);`
+> *Effects:*
+>
+> Equivalent to `return -(x - y);`
 
 ### Zip transform view <a id="range.zip.transform">[range.zip.transform]</a>
 
@@ -9587,10 +9596,10 @@ namespace std::ranges {
 constexpr explicit zip_transform_view(F fun, Views... views);
 ```
 
-***Effects:***
-
-Initializes *fun\_* with `std::move(fun)` and *zip\_* with
-`std::move(views)...`.
+> *Effects:*
+>
+> Initializes *fun\_* with `std::move(fun)` and *zip\_* with
+> `std::move(views)...`.
 
 #### Class template `zip_transform_view::iterator` <a id="range.zip.transform.iterator">[range.zip.transform.iterator]</a>
 
@@ -9684,145 +9693,145 @@ and only if *Base* models `forward_range`. In that case,
 constexpr iterator(Parent& parent, ziperator<Const> inner);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)` and *inner\_* with
-`std::move(inner)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)` and *inner\_* with
+> `std::move(inner)`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<ziperator<false>, ziperator<Const>>;
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `i.`*`parent_`* and *inner\_* with
-`std::move(i.`*`inner_`*`)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `i.`*`parent_`* and *inner\_* with
+> `std::move(i.`*`inner_`*`)`.
 
 ``` cpp
 constexpr decltype(auto) operator*() const noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return apply([&](const auto&... iters) -> decltype(auto) {
-  return invoke(*parent_->fun_, *iters...);
-}, inner_.current_);
-```
-
-***Remarks:***
-
-Let `Is` be the pack `0, 1, …, ``(sizeof...(Views)-1)`. The exception
-specification is equivalent to:
-`noexcept(invoke(*`*`parent_`*`->`*`fun_`*`, *std::get<Is>(`*`inner_`*`.`*`current_`*`)...))`.
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return apply([&](const auto&... iters) -> decltype(auto) {
+>   return invoke(*parent_->fun_, *iters...);
+> }, inner_.current_);
+> ```
+>
+> *Remarks:*
+>
+> Let `Is` be the pack `0, 1, …, ``(sizeof...(Views)-1)`. The exception
+> specification is equivalent to:
+> `noexcept(invoke(*`*`parent_`*`->`*`fun_`*`, *std::get<Is>(`*`inner_`*`.`*`current_`*`)...))`.
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++inner_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++inner_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to: `++*this`.
+> *Effects:*
+>
+> Equivalent to: `++*this`.
 
 ``` cpp
 constexpr iterator operator++(int) requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---inner_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --inner_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-inner_ += x;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> inner_ += x;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-inner_ -= x;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> inner_ -= x;
+> return *this;
+> ```
 
 ``` cpp
 constexpr decltype(auto) operator[](difference_type n) const
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return apply([&]<class... Is>(const Is&... iters) -> decltype(auto) {
-  return invoke(*parent_->fun_, iters[iter_difference_t<Is>(n)]...);
-}, inner_.current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return apply([&]<class... Is>(const Is&... iters) -> decltype(auto) {
+>   return invoke(*parent_->fun_, iters[iter_difference_t<Is>(n)]...);
+> }, inner_.current_);
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y)
@@ -9831,11 +9840,11 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-Let *op* be the operator.
-
-***Effects:***
-
-Equivalent to: `return x.`*`inner_`*` `*`op`*` y.`*`inner_`*`;`
+> Let *op* be the operator.
+>
+> *Effects:*
+>
+> Equivalent to: `return x.`*`inner_`*` `*`op`*` y.`*`inner_`*`;`
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& i, difference_type n)
@@ -9844,29 +9853,29 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` + n);`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` + n);`
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` - n);`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` - n);`
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<ziperator<Const>, ziperator<Const>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
 #### Class template `zip_transform_view::sentinel` <a id="range.zip.transform.sentinel">[range.zip.transform.sentinel]</a>
 
@@ -9907,18 +9916,18 @@ namespace std::ranges {
 constexpr explicit sentinel(zentinel<Const> inner);
 ```
 
-***Effects:***
-
-Initializes *inner\_* with `inner`.
+> *Effects:*
+>
+> Initializes *inner\_* with `inner`.
 
 ``` cpp
 constexpr sentinel(sentinel<!Const> i)
   requires Const && convertible_to<zentinel<false>, zentinel<Const>>;
 ```
 
-***Effects:***
-
-Initializes *inner\_* with `std::move(i.`*`inner_`*`)`.
+> *Effects:*
+>
+> Initializes *inner\_* with `std::move(i.`*`inner_`*`)`.
 
 ``` cpp
 template<bool OtherConst>
@@ -9926,9 +9935,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`inner_`*` == y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`inner_`*` == y.`*`inner_`*`;`
 
 ``` cpp
 template<bool OtherConst>
@@ -9941,9 +9950,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, InnerView>>
   operator-(const sentinel& x, const iterator<OtherConst>& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
 ### Adjacent view <a id="range.adjacent">[range.adjacent]</a>
 
@@ -10037,26 +10046,26 @@ namespace std::ranges {
 constexpr explicit adjacent_view(V base);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)`.
 
 ``` cpp
 constexpr auto size() requires sized_range<V>;
 constexpr auto size() const requires sized_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-using ST = decltype(ranges::size(base_));
-using CT = common_type_t<ST, size_t>;
-auto sz = static_cast<CT>(ranges::size(base_));
-sz -= std::min<CT>(sz, N - 1);
-return static_cast<ST>(sz);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> using ST = decltype(ranges::size(base_));
+> using CT = common_type_t<ST, size_t>;
+> auto sz = static_cast<CT>(ranges::size(base_));
+> sz -= std::min<CT>(sz, N - 1);
+> return static_cast<ST>(sz);
+> ```
 
 #### Class template `adjacent_view::iterator` <a id="range.adjacent.iterator">[range.adjacent.iterator]</a>
 
@@ -10142,201 +10151,201 @@ via an exception, the *iterator* acquires a singular value.
 constexpr iterator(iterator_t<Base> first, sentinel_t<Base> last);
 ```
 
-***Ensures:***
-
-*`current_`*`[0] == first` is `true`, and for every integer
-$1 \leq i < \texttt{N}$,
-*`current_`*`[`i`] == ranges::next(`*`current_`*`[`i`-1], 1, last)` is
-`true`.
+> *Ensures:*
+>
+> *`current_`*`[0] == first` is `true`, and for every integer
+> $1 \leq i < \texttt{N}$,
+> *`current_`*`[`i`] == ranges::next(`*`current_`*`[`i`-1], 1, last)` is
+> `true`.
 
 ``` cpp
 constexpr iterator(as-sentinel, iterator_t<Base> first, iterator_t<Base> last);
 ```
 
-***Ensures:***
-
-If *Base* does not model `bidirectional_range`, each element of
-*current\_* is equal to *last*. Otherwise, *`current_`*`[N-1] == last`
-is `true`, and for every integer $0 \leq i < (\texttt{N} - 1)$,
-*`current_`*`[`i`] == ranges::prev(`*`current_`*`[`i`+1], 1, first)` is
-`true`.
+> *Ensures:*
+>
+> If *Base* does not model `bidirectional_range`, each element of
+> *current\_* is equal to *last*. Otherwise, *`current_`*`[N-1] == last`
+> is `true`, and for every integer $0 \leq i < (\texttt{N} - 1)$,
+> *`current_`*`[`i`] == ranges::prev(`*`current_`*`[`i`+1], 1, first)`
+> is `true`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<iterator_t<V>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes each element of *current\_* with the corresponding element
-of `i.`*`current_`* as an xvalue.
+> *Effects:*
+>
+> Initializes each element of *current\_* with the corresponding element
+> of `i.`*`current_`* as an xvalue.
 
 ``` cpp
 constexpr auto operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return tuple-transform([](auto& i) -> decltype(auto) { return *i; }, current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return tuple-transform([](auto& i) -> decltype(auto) { return *i; }, current_);
+> ```
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Preconditions:***
-
-*`current_`*`.back()` is incrementable.
-
-***Ensures:***
-
-Each element of *current\_* is equal to `ranges::next(i)`, where `i` is
-the value of that element before the call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *`current_`*`.back()` is incrementable.
+>
+> *Ensures:*
+>
+> Each element of *current\_* is equal to `ranges::next(i)`, where `i`
+> is the value of that element before the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Preconditions:***
-
-*`current_`*`.front()` is decrementable.
-
-***Ensures:***
-
-Each element of *current\_* is equal to `ranges::prev(i)`, where `i` is
-the value of that element before the call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *`current_`*`.front()` is decrementable.
+>
+> *Ensures:*
+>
+> Each element of *current\_* is equal to `ranges::prev(i)`, where `i`
+> is the value of that element before the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Preconditions:***
-
-*`current_`*`.back() + x` has well-defined behavior.
-
-***Ensures:***
-
-Each element of *current\_* is equal to `i + x`, where `i` is the value
-of that element before the call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *`current_`*`.back() + x` has well-defined behavior.
+>
+> *Ensures:*
+>
+> Each element of *current\_* is equal to `i + x`, where `i` is the
+> value of that element before the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Preconditions:***
-
-*`current_`*`.front() - x` has well-defined behavior.
-
-***Ensures:***
-
-Each element of *current\_* is equal to `i - x`, where `i` is the value
-of that element before the call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *`current_`*`.front() - x` has well-defined behavior.
+>
+> *Ensures:*
+>
+> Each element of *current\_* is equal to `i - x`, where `i` is the
+> value of that element before the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr auto operator[](difference_type n) const
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return tuple-transform([&](auto& i) -> decltype(auto) { return i[n]; }, current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return tuple-transform([&](auto& i) -> decltype(auto) { return i[n]; }, current_);
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y);
 ```
 
-***Returns:***
-
-`x.`*`current_`*`.back() == y.`*`current_`*`.back()`.
+> *Returns:*
+>
+> `x.`*`current_`*`.back() == y.`*`current_`*`.back()`.
 
 ``` cpp
 friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*`.back() < y.`*`current_`*`.back()`.
+> *Returns:*
+>
+> `x.`*`current_`*`.back() < y.`*`current_`*`.back()`.
 
 ``` cpp
 friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 ``` cpp
 friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 ``` cpp
 friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
@@ -10344,9 +10353,9 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
            three_way_comparable<iterator_t<Base>>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*`.back() <=> y.`*`current_`*`.back()`.
+> *Returns:*
+>
+> `x.`*`current_`*`.back() <=> y.`*`current_`*`.back()`.
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& i, difference_type n)
@@ -10355,81 +10364,81 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r += n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r += n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r -= n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r -= n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<iterator_t<Base>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return x.`*`current_`*`.back() - y.`*`current_`*`.back();`
+> *Effects:*
+>
+> Equivalent to:
+> `return x.`*`current_`*`.back() - y.`*`current_`*`.back();`
 
 ``` cpp
 friend constexpr auto iter_move(const iterator& i) noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`tuple-transform`*`(ranges::iter_move, i.`*`current_`*`);`
-
-***Remarks:***
-
-The exception specification is equivalent to:
-
-``` cpp
-noexcept(ranges::iter_move(declval<const iterator_t<Base>&>())) &&
-is_nothrow_move_constructible_v<range_rvalue_reference_t<Base>>
-```
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`tuple-transform`*`(ranges::iter_move, i.`*`current_`*`);`
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to:
+>
+> ``` cpp
+> noexcept(ranges::iter_move(declval<const iterator_t<Base>&>())) &&
+> is_nothrow_move_constructible_v<range_rvalue_reference_t<Base>>
+> ```
 
 ``` cpp
 friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(see below)
   requires indirectly_swappable<iterator_t<Base>>;
 ```
 
-***Preconditions:***
-
-None of the iterators in `l.`*`current_`* is equal to an iterator in
-`r.`*`current_`*.
-
-***Effects:***
-
-For every integer $0 \leq i < \texttt{N}$, performs
-`ranges::iter_swap(l.`*`current_`*`[`i`], r.`*`current_`*`[`i`])`.
-
-***Remarks:***
-
-The exception specification is equivalent to:
-
-``` cpp
-noexcept(ranges::iter_swap(declval<iterator_t<Base>>(), declval<iterator_t<Base>>()))
-```
+> *Preconditions:*
+>
+> None of the iterators in `l.`*`current_`* is equal to an iterator in
+> `r.`*`current_`*.
+>
+> *Effects:*
+>
+> For every integer $0 \leq i < \texttt{N}$, performs
+> `ranges::iter_swap(l.`*`current_`*`[`i`], r.`*`current_`*`[`i`])`.
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to:
+>
+> ``` cpp
+> noexcept(ranges::iter_swap(declval<iterator_t<Base>>(), declval<iterator_t<Base>>()))
+> ```
 
 #### Class template `adjacent_view::sentinel` <a id="range.adjacent.sentinel">[range.adjacent.sentinel]</a>
 
@@ -10469,18 +10478,18 @@ namespace std::ranges {
 constexpr explicit sentinel(sentinel_t<Base> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end`.
+> *Effects:*
+>
+> Initializes *end\_* with `end`.
 
 ``` cpp
 constexpr sentinel(sentinel<!Const> i)
   requires Const && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *end\_* with `std::move(i.`*`end_`*`)`.
+> *Effects:*
+>
+> Initializes *end\_* with `std::move(i.`*`end_`*`)`.
 
 ``` cpp
 template<bool OtherConst>
@@ -10488,9 +10497,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*`.back() == y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*`.back() == y.`*`end_`*`;`
 
 ``` cpp
 template<bool OtherConst>
@@ -10499,9 +10508,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*`.back() - y.`*`end_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*`.back() - y.`*`end_`*`;`
 
 ``` cpp
 template<bool OtherConst>
@@ -10510,9 +10519,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
   operator-(const sentinel& y, const iterator<OtherConst>& x);
 ```
 
-***Effects:***
-
-Equivalent to: `return y.`*`end_`*` - x.`*`current_`*`.back();`
+> *Effects:*
+>
+> Equivalent to: `return y.`*`end_`*` - x.`*`current_`*`.back();`
 
 ### Adjacent transform view <a id="range.adjacent.transform">[range.adjacent.transform]</a>
 
@@ -10622,10 +10631,10 @@ namespace std::ranges {
 constexpr explicit adjacent_transform_view(V base, F fun);
 ```
 
-***Effects:***
-
-Initializes *fun\_* with `std::move(fun)` and *inner\_* with
-`std::move(base)`.
+> *Effects:*
+>
+> Initializes *fun\_* with `std::move(fun)` and *inner\_* with
+> `std::move(base)`.
 
 #### Class template `adjacent_transform_view::iterator` <a id="range.adjacent.transform.iterator">[range.adjacent.transform.iterator]</a>
 
@@ -10716,138 +10725,138 @@ follows:
 constexpr iterator(Parent& parent, inner-iterator<Const> inner);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)` and *inner\_* with
-`std::move(inner)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)` and *inner\_* with
+> `std::move(inner)`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<inner-iterator<false>, inner-iterator<Const>>;
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `i.`*`parent_`* and *inner\_* with
-`std::move(i.`*`inner_`*`)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `i.`*`parent_`* and *inner\_* with
+> `std::move(i.`*`inner_`*`)`.
 
 ``` cpp
 constexpr decltype(auto) operator*() const noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return apply([&](const auto&... iters) -> decltype(auto) {
-  return invoke(*parent_->fun_, *iters...);
-}, inner_.current_);
-```
-
-***Remarks:***
-
-Let `Is` be the pack `0, 1, …, (N-1)`. The exception specification is
-equivalent to:
-
-``` cpp
-noexcept(invoke(*parent_->fun_, *std::get<Is>(inner_.current_)...))
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return apply([&](const auto&... iters) -> decltype(auto) {
+>   return invoke(*parent_->fun_, *iters...);
+> }, inner_.current_);
+> ```
+>
+> *Remarks:*
+>
+> Let `Is` be the pack `0, 1, …, (N-1)`. The exception specification is
+> equivalent to:
+>
+> ``` cpp
+> noexcept(invoke(*parent_->fun_, *std::get<Is>(inner_.current_)...))
+> ```
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++inner_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++inner_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
---inner_;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> --inner_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x) requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-inner_ += x;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> inner_ += x;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x) requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-inner_ -= x;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> inner_ -= x;
+> return *this;
+> ```
 
 ``` cpp
 constexpr decltype(auto) operator[](difference_type n) const
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return apply([&](const auto&... iters) -> decltype(auto) {
-  return invoke(*parent_->fun_, iters[n]...);
-}, inner_.current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return apply([&](const auto&... iters) -> decltype(auto) {
+>   return invoke(*parent_->fun_, iters[n]...);
+> }, inner_.current_);
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y);
@@ -10863,11 +10872,11 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires random_access_range<Base> && three_way_comparable<inner-iterator<Const>>;
 ```
 
-Let *op* be the operator.
-
-***Effects:***
-
-Equivalent to: `return x.`*`inner_`*` `*`op`*` y.`*`inner_`*`;`
+> Let *op* be the operator.
+>
+> *Effects:*
+>
+> Equivalent to: `return x.`*`inner_`*` `*`op`*` y.`*`inner_`*`;`
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& i, difference_type n)
@@ -10876,29 +10885,29 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` + n);`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` + n);`
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` - n);`
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`iterator`*`(*i.`*`parent_`*`, i.`*`inner_`*` - n);`
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<inner-iterator<Const>, inner-iterator<Const>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
 #### Class template `adjacent_transform_view::sentinel` <a id="range.adjacent.transform.sentinel">[range.adjacent.transform.sentinel]</a>
 
@@ -10939,18 +10948,18 @@ namespace std::ranges {
 constexpr explicit sentinel(inner-sentinel<Const> inner);
 ```
 
-***Effects:***
-
-Initializes *inner\_* with `inner`.
+> *Effects:*
+>
+> Initializes *inner\_* with `inner`.
 
 ``` cpp
 constexpr sentinel(sentinel<!Const> i)
   requires Const && convertible_to<inner-sentinel<false>, inner-sentinel<Const>>;
 ```
 
-***Effects:***
-
-Initializes *inner\_* with `std::move(i.`*`inner_`*`)`.
+> *Effects:*
+>
+> Initializes *inner\_* with `std::move(i.`*`inner_`*`)`.
 
 ``` cpp
 template<bool OtherConst>
@@ -10958,9 +10967,9 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-***Effects:***
-
-Equivalent to `return x.`*`inner_`*` == y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to `return x.`*`inner_`*` == y.`*`inner_`*`;`
 
 ``` cpp
 template<bool OtherConst>
@@ -10974,9 +10983,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, InnerView>>
   operator-(const sentinel& x, const iterator<OtherConst>& y);
 ```
 
-***Effects:***
-
-Equivalent to `return x.`*`inner_`*` - y.`*`inner_`*`;`
+> *Effects:*
+>
+> Equivalent to `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
 ### Chunk view <a id="range.chunk">[range.chunk]</a>
 
@@ -11059,48 +11068,48 @@ namespace std::ranges {
 constexpr explicit chunk_view(V base, range_difference_t<V> n);
 ```
 
-***Preconditions:***
-
-`n > 0` is `true`.
-
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *n\_* with `n`.
+> *Preconditions:*
+>
+> `n > 0` is `true`.
+>
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *n\_* with `n`.
 
 ``` cpp
 constexpr outer-iterator begin();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ = ranges::begin(base_);
-remainder_ = n_;
-return outer-iterator(*this);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ = ranges::begin(base_);
+> remainder_ = n_;
+> return outer-iterator(*this);
+> ```
 
 ``` cpp
 constexpr default_sentinel_t end() const noexcept;
 ```
 
-***Returns:***
-
-`default_sentinel`.
+> *Returns:*
+>
+> `default_sentinel`.
 
 ``` cpp
 constexpr auto size() requires sized_range<V>;
 constexpr auto size() const requires sized_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return to-unsigned-like(exposition onlyidnc{div-ceil}(ranges::distance(base_), n_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return to-unsigned-like(exposition onlyidnc{div-ceil}(ranges::distance(base_), n_));
+> ```
 
 #### Class `chunk_view::outer-iterator` <a id="range.chunk.outer.iter">[range.chunk.outer.iter]</a>
 
@@ -11141,85 +11150,85 @@ namespace std::ranges {
 constexpr explicit outer-iterator(chunk_view& parent);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`.
 
 ``` cpp
 constexpr value_type operator*() const;
 ```
 
-***Preconditions:***
-
-`*this == default_sentinel` is `false`.
-
-***Returns:***
-
-`value_type(*`*`parent_`*`)`.
+> *Preconditions:*
+>
+> `*this == default_sentinel` is `false`.
+>
+> *Returns:*
+>
+> `value_type(*`*`parent_`*`)`.
 
 ``` cpp
 constexpr outer-iterator& operator++();
 ```
 
-***Preconditions:***
-
-`*this == default_sentinel` is `false`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-ranges::advance(*parent_->current_, parent_->remainder_, ranges::end(parent_->base_));
-parent_->remainder_ = parent_->n_;
-return *this;
-```
+> *Preconditions:*
+>
+> `*this == default_sentinel` is `false`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ranges::advance(*parent_->current_, parent_->remainder_, ranges::end(parent_->base_));
+> parent_->remainder_ = parent_->n_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 ``` cpp
 friend constexpr bool operator==(const outer-iterator& x, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return *x.parent_->current_ == ranges::end(x.parent_->base_) && x.parent_->remainder_ != 0;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return *x.parent_->current_ == ranges::end(x.parent_->base_) && x.parent_->remainder_ != 0;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(default_sentinel_t y, const outer-iterator& x)
   requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-const auto dist = ranges::end(x.parent_->base_) - *x.parent_->current_;
-if (dist < x.parent_->remainder_) {
-  return dist == 0 ? 0 : 1;
-}
-return exposition onlyidnc{div-ceil}(dist - x.parent_->remainder_, x.parent_->n_) + 1;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> const auto dist = ranges::end(x.parent_->base_) - *x.parent_->current_;
+> if (dist < x.parent_->remainder_) {
+>   return dist == 0 ? 0 : 1;
+> }
+> return exposition onlyidnc{div-ceil}(dist - x.parent_->remainder_, x.parent_->n_) + 1;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const outer-iterator& x, default_sentinel_t y)
   requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return -(y - x);`
+> *Effects:*
+>
+> Equivalent to: `return -(y - x);`
 
 #### Class `chunk_view::outer-iterator::value_type` <a id="range.chunk.outer.value">[range.chunk.outer.value]</a>
 
@@ -11247,39 +11256,39 @@ namespace std::ranges {
 constexpr explicit value_type(chunk_view& parent);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`.
 
 ``` cpp
 constexpr inner-iterator begin() const noexcept;
 ```
 
-***Returns:***
-
-*`inner-iterator`*`(*`*`parent_`*`)`.
+> *Returns:*
+>
+> *`inner-iterator`*`(*`*`parent_`*`)`.
 
 ``` cpp
 constexpr default_sentinel_t end() const noexcept;
 ```
 
-***Returns:***
-
-`default_sentinel`.
+> *Returns:*
+>
+> `default_sentinel`.
 
 ``` cpp
 constexpr auto size() const
   requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return to-unsigned-like(ranges::min(parent_->remainder_,
-                                ranges::end(parent_->base_) - *parent_->current_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return to-unsigned-like(ranges::min(parent_->remainder_,
+>                                 ranges::end(parent_->base_) - *parent_->current_));
+> ```
 
 #### Class `chunk_view::inner-iterator` <a id="range.chunk.inner.iter">[range.chunk.inner.iter]</a>
 
@@ -11327,99 +11336,99 @@ namespace std::ranges {
 constexpr explicit inner-iterator(chunk_view& parent) noexcept;
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`.
 
 ``` cpp
 constexpr const iterator_t<V>& base() const &;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`parent_`*`->`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`parent_`*`->`*`current_`*`;`
 
 ``` cpp
 constexpr range_reference_t<V> operator*() const;
 ```
 
-***Preconditions:***
-
-`*this == default_sentinel` is `false`.
-
-***Effects:***
-
-Equivalent to: `return **`*`parent_`*`->`*`current_`*`;`
+> *Preconditions:*
+>
+> `*this == default_sentinel` is `false`.
+>
+> *Effects:*
+>
+> Equivalent to: `return **`*`parent_`*`->`*`current_`*`;`
 
 ``` cpp
 constexpr inner-iterator& operator++();
 ```
 
-***Preconditions:***
-
-`*this == default_sentinel` is `false`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-++*parent_->current_;
-if (*parent_->current_ == ranges::end(parent_->base_))
-  parent_->remainder_ = 0;
-else
-  --parent_->remainder_;
-return *this;
-```
+> *Preconditions:*
+>
+> `*this == default_sentinel` is `false`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ++*parent_->current_;
+> if (*parent_->current_ == ranges::end(parent_->base_))
+>   parent_->remainder_ = 0;
+> else
+>   --parent_->remainder_;
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 ``` cpp
 friend constexpr bool operator==(const inner-iterator& x, default_sentinel_t);
 ```
 
-***Returns:***
-
-`x.`*`parent_`*`->`*`remainder_`*` == 0`.
+> *Returns:*
+>
+> `x.`*`parent_`*`->`*`remainder_`*` == 0`.
 
 ``` cpp
 friend constexpr difference_type operator-(default_sentinel_t y, const inner-iterator& x)
   requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return ranges::min(x.parent_->remainder_,
-                   ranges::end(x.parent_->base_) - *x.parent_->current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return ranges::min(x.parent_->remainder_,
+>                    ranges::end(x.parent_->base_) - *x.parent_->current_);
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const inner-iterator& x, default_sentinel_t y)
   requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return -(y - x);`
+> *Effects:*
+>
+> Equivalent to: `return -(y - x);`
 
 ``` cpp
 friend constexpr range_rvalue_reference_t<V> iter_move(const inner-iterator& i)
   noexcept(noexcept(ranges::iter_move(*i.parent_->current_)));
 ```
 
-***Effects:***
-
-Equivalent to:
-`return ranges::iter_move(*i.`*`parent_`*`->`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to:
+> `return ranges::iter_move(*i.`*`parent_`*`->`*`current_`*`);`
 
 ``` cpp
 friend constexpr void iter_swap(const inner-iterator& x, const inner-iterator& y)
@@ -11427,10 +11436,10 @@ friend constexpr void iter_swap(const inner-iterator& x, const inner-iterator& y
   requires indirectly_swappable<iterator_t<V>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-`ranges::iter_swap(*x.`*`parent_`*`->`*`current_`*`, *y.`*`parent_`*`->`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to:
+> `ranges::iter_swap(*x.`*`parent_`*`->`*`current_`*`, *y.`*`parent_`*`->`*`current_`*`);`
 
 #### Class template `chunk_view` for forward ranges <a id="range.chunk.view.fwd">[range.chunk.view.fwd]</a>
 
@@ -11491,26 +11500,26 @@ namespace std::ranges {
 constexpr explicit chunk_view(V base, range_difference_t<V> n);
 ```
 
-***Preconditions:***
-
-`n > 0` is `true`.
-
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *n\_* with `n`.
+> *Preconditions:*
+>
+> `n > 0` is `true`.
+>
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *n\_* with `n`.
 
 ``` cpp
 constexpr auto size() requires sized_range<V>;
 constexpr auto size() const requires sized_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return to-unsigned-like(div-ceil(ranges::distance(base_), n_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return to-unsigned-like(div-ceil(ranges::distance(base_), n_));
+> ```
 
 #### Class template `chunk_view::iterator` for forward ranges <a id="range.chunk.fwd.iter">[range.chunk.fwd.iter]</a>
 
@@ -11606,11 +11615,11 @@ constexpr iterator(Parent* parent, iterator_t<Base> current,
                    range_difference_t<Base> missing = 0);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `current`, *end\_* with
-`ranges::end(parent->`*`base_`*`)`, *n\_* with `parent->`*`n_`*, and
-*missing\_* with `missing`.
+> *Effects:*
+>
+> Initializes *current\_* with `current`, *end\_* with
+> `ranges::end(parent->`*`base_`*`)`, *n\_* with `parent->`*`n_`*, and
+> *missing\_* with `missing`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
@@ -11618,189 +11627,189 @@ constexpr iterator(iterator<!Const> i)
                  && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)`, *end\_* with
-`std::move(i.`*`end_`*`)`, *n\_* with `i.`*`n_`*, and *missing\_* with
-`i.`*`missing_`*.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)`, *end\_*
+> with `std::move(i.`*`end_`*`)`, *n\_* with `i.`*`n_`*, and *missing\_*
+> with `i.`*`missing_`*.
 
 ``` cpp
 constexpr iterator_t<Base> base() const;
 ```
 
-***Returns:***
-
-*current\_*.
+> *Returns:*
+>
+> *current\_*.
 
 ``` cpp
 constexpr value_type operator*() const;
 ```
 
-***Preconditions:***
-
-*`current_`*` != `*`end_`* is `true`.
-
-***Returns:***
-
-`views::take(subrange(`*`current_`*`, `*`end_`*`), `*`n_`*`)`.
+> *Preconditions:*
+>
+> *`current_`*` != `*`end_`* is `true`.
+>
+> *Returns:*
+>
+> `views::take(subrange(`*`current_`*`, `*`end_`*`), `*`n_`*`)`.
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Preconditions:***
-
-*`current_`*` != `*`end_`* is `true`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-missing_ = ranges::advance(current_, n_, end_);
-return *this;
-```
+> *Preconditions:*
+>
+> *`current_`*` != `*`end_`* is `true`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> missing_ = ranges::advance(current_, n_, end_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-ranges::advance(current_, missing_ - n_);
-missing_ = 0;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ranges::advance(current_, missing_ - n_);
+> missing_ = 0;
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Preconditions:***
-
-If `x` is positive,
-`ranges::distance(`*`current_`*`, `*`end_`*`) > `*`n_`*` * (x - 1)` is
-`true`.
-
-\[*Note 10*: If `x` is negative, the paragraph implies a
-precondition. — *end note*\]
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (x > 0) {
-  ranges::advance(current_, n_ * (x - 1));
-  missing_ = ranges::advance(current_, n_, end_);
-} else if (x < 0) {
-  ranges::advance(current_, n_ * x + missing_);
-  missing_ = 0;
-}
-return *this;
-```
+> *Preconditions:*
+>
+> If `x` is positive,
+> `ranges::distance(`*`current_`*`, `*`end_`*`) > `*`n_`*` * (x - 1)` is
+> `true`.
+>
+> \[*Note 17*: If `x` is negative, the paragraph implies a
+> precondition. — *end note*\]
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (x > 0) {
+>   ranges::advance(current_, n_ * (x - 1));
+>   missing_ = ranges::advance(current_, n_, end_);
+> } else if (x < 0) {
+>   ranges::advance(current_, n_ * x + missing_);
+>   missing_ = 0;
+> }
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return *this += -x;`
+> *Effects:*
+>
+> Equivalent to: `return *this += -x;`
 
 ``` cpp
 constexpr value_type operator[](difference_type n) const
   requires random_access_range<Base>;
 ```
 
-***Returns:***
-
-`*(*this + n)`.
+> *Returns:*
+>
+> `*(*this + n)`.
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y);
 ```
 
-***Returns:***
-
-`x.`*`current_`*` == y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` == y.`*`current_`*.
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 ```
 
-***Returns:***
-
-`x.`*`current_`*` == x.`*`end_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` == x.`*`end_`*.
 
 ``` cpp
 friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` < y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` < y.`*`current_`*.
 
 ``` cpp
 friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 ``` cpp
 friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 ``` cpp
 friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
@@ -11808,9 +11817,9 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
            three_way_comparable<iterator_t<Base>>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` <=> y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` <=> y.`*`current_`*.
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& i, difference_type n)
@@ -11819,57 +11828,57 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r += n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r += n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r -= n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r -= n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<iterator_t<Base>, iterator_t<Base>>;
 ```
 
-***Returns:***
-
-`(x.`*`current_`*` - y.`*`current_`*` + x.`*`missing_`*` - y.`*`missing_`*`) / x.`*`n_`*.
+> *Returns:*
+>
+> `(x.`*`current_`*` - y.`*`current_`*` + x.`*`missing_`*` - y.`*`missing_`*`) / x.`*`n_`*.
 
 ``` cpp
 friend constexpr difference_type operator-(default_sentinel_t y, const iterator& x)
   requires sized_sentinel_for<sentinel_t<Base>, iterator_t<Base>>;
 ```
 
-***Returns:***
-
-*`div-ceil`*`(x.`*`end_`*` - x.`*`current_`*`, x.`*`n_`*`)`.
+> *Returns:*
+>
+> *`div-ceil`*`(x.`*`end_`*` - x.`*`current_`*`, x.`*`n_`*`)`.
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, default_sentinel_t y)
   requires sized_sentinel_for<sentinel_t<Base>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return -(y - x);`
+> *Effects:*
+>
+> Equivalent to: `return -(y - x);`
 
 ### Slide view <a id="range.slide">[range.slide]</a>
 
@@ -11950,94 +11959,94 @@ namespace std::ranges {
 constexpr explicit slide_view(V base, range_difference_t<V> n);
 ```
 
-***Preconditions:***
-
-`n > 0` is `true`.
-
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *n\_* with `n`.
+> *Preconditions:*
+>
+> `n > 0` is `true`.
+>
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *n\_* with `n`.
 
 ``` cpp
 constexpr auto begin()
   requires (!(simple-view<V> && slide-caches-nothing<const V>));
 ```
 
-***Returns:***
-
-- If `V` models `slide-caches-first`,
-
-      iterator<false>(ranges::begin(base_),
-                      ranges::next(ranges::begin(base_), n_ - 1, ranges::end(base_)), n_)
-
-- Otherwise,
-  *`iterator`*`<false>(ranges::begin(`*`base_`*`), `*`n_`*`)`.
-
-***Remarks:***
-
-In order to provide the amortized constant-time complexity required by
-the `range` concept, this function caches the result within the
-`slide_view` for use on subsequent calls when `V` models
-`slide-caches-first`.
+> *Returns:*
+>
+> - If `V` models `slide-caches-first`,
+>
+>       iterator<false>(ranges::begin(base_),
+>                       ranges::next(ranges::begin(base_), n_ - 1, ranges::end(base_)), n_)
+>
+> - Otherwise,
+>   *`iterator`*`<false>(ranges::begin(`*`base_`*`), `*`n_`*`)`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant-time complexity required by
+> the `range` concept, this function caches the result within the
+> `slide_view` for use on subsequent calls when `V` models
+> `slide-caches-first`.
 
 ``` cpp
 constexpr auto begin() const requires slide-caches-nothing<const V>;
 ```
 
-***Returns:***
-
-*`iterator`*`<true>(ranges::begin(`*`base_`*`), `*`n_`*`)`.
+> *Returns:*
+>
+> *`iterator`*`<true>(ranges::begin(`*`base_`*`), `*`n_`*`)`.
 
 ``` cpp
 constexpr auto end()
   requires (!(simple-view<V> && slide-caches-nothing<const V>));
 ```
 
-***Returns:***
-
-- If `V` models `slide-caches-nothing`,
-
-      iterator<false>(ranges::begin(base_) + range_difference_t<V>(size()), n_)
-
-- Otherwise, if `V` models `slide-caches-last`,
-
-      iterator<false>(ranges::prev(ranges::end(base_), n_ - 1, ranges::begin(base_)), n_)
-
-- Otherwise, if `V` models `common_range`,
-
-      iterator<false>(ranges::end(base_), ranges::end(base_), n_)
-
-- Otherwise, *`sentinel`*`(ranges::end(`*`base_`*`))`.
-
-***Remarks:***
-
-In order to provide the amortized constant-time complexity required by
-the `range` concept, this function caches the result within the
-`slide_view` for use on subsequent calls when `V` models
-`slide-caches-last`.
+> *Returns:*
+>
+> - If `V` models `slide-caches-nothing`,
+>
+>       iterator<false>(ranges::begin(base_) + range_difference_t<V>(size()), n_)
+>
+> - Otherwise, if `V` models `slide-caches-last`,
+>
+>       iterator<false>(ranges::prev(ranges::end(base_), n_ - 1, ranges::begin(base_)), n_)
+>
+> - Otherwise, if `V` models `common_range`,
+>
+>       iterator<false>(ranges::end(base_), ranges::end(base_), n_)
+>
+> - Otherwise, *`sentinel`*`(ranges::end(`*`base_`*`))`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant-time complexity required by
+> the `range` concept, this function caches the result within the
+> `slide_view` for use on subsequent calls when `V` models
+> `slide-caches-last`.
 
 ``` cpp
 constexpr auto end() const requires slide-caches-nothing<const V>;
 ```
 
-***Returns:***
-
-`begin() + range_difference_t<const V>(size())`.
+> *Returns:*
+>
+> `begin() + range_difference_t<const V>(size())`.
 
 ``` cpp
 constexpr auto size() requires sized_range<V>;
 constexpr auto size() const requires sized_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto sz = ranges::distance(base_) - n_ + 1;
-if (sz < 0) sz = 0;
-return to-unsigned-like(sz);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto sz = ranges::distance(base_) - n_ + 1;
+> if (sz < 0) sz = 0;
+> return to-unsigned-like(sz);
+> ```
 
 #### Class template `slide_view::iterator` <a id="range.slide.iterator">[range.slide.iterator]</a>
 
@@ -12129,9 +12138,9 @@ constexpr iterator(iterator_t<Base> current, range_difference_t<Base> n)
   requires (!slide-caches-first<Base>);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `current` and *n\_* with `n`.
+> *Effects:*
+>
+> Initializes *current\_* with `current` and *n\_* with `n`.
 
 ``` cpp
 constexpr iterator(iterator_t<Base> current, iterator_t<Base> last_ele,
@@ -12139,188 +12148,188 @@ constexpr iterator(iterator_t<Base> current, iterator_t<Base> last_ele,
   requires slide-caches-first<Base>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `current`, *last_ele\_* with `last_ele`,
-and *n\_* with `n`.
+> *Effects:*
+>
+> Initializes *current\_* with `current`, *last_ele\_* with `last_ele`,
+> and *n\_* with `n`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i)
   requires Const && convertible_to<iterator_t<V>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)` and *n\_*
-with `i.`*`n_`*.
-
-\[*Note 11*: *`iterator`*`<true>` can only be formed when *Base* models
-`slide-caches-nothing`, in which case *last_ele\_* is not
-present. — *end note*\]
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)` and *n\_*
+> with `i.`*`n_`*.
+>
+> \[*Note 18*: *`iterator`*`<true>` can only be formed when *Base*
+> models `slide-caches-nothing`, in which case *last_ele\_* is not
+> present. — *end note*\]
 
 ``` cpp
 constexpr auto operator*() const;
 ```
 
-***Returns:***
-
-`views::counted(`*`current_`*`, `*`n_`*`)`.
+> *Returns:*
+>
+> `views::counted(`*`current_`*`, `*`n_`*`)`.
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Preconditions:***
-
-*current\_* and *last_ele\_* (if present) are incrementable.
-
-***Ensures:***
-
-*current\_* and *last_ele\_* (if present) are each equal to
-`ranges::next(i)`, where `i` is the value of that data member before the
-call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *current\_* and *last_ele\_* (if present) are incrementable.
+>
+> *Ensures:*
+>
+> *current\_* and *last_ele\_* (if present) are each equal to
+> `ranges::next(i)`, where `i` is the value of that data member before
+> the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Preconditions:***
-
-*current\_* and *last_ele\_* (if present) are decrementable.
-
-***Ensures:***
-
-*current\_* and *last_ele\_* (if present) are each equal to
-`ranges::prev(i)`, where `i` is the value of that data member before the
-call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *current\_* and *last_ele\_* (if present) are decrementable.
+>
+> *Ensures:*
+>
+> *current\_* and *last_ele\_* (if present) are each equal to
+> `ranges::prev(i)`, where `i` is the value of that data member before
+> the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Preconditions:***
-
-*`current_`*` + x` and *`last_ele_`*` + x` (if *last_ele\_* is present)
-have well-defined behavior.
-
-***Ensures:***
-
-*current\_* and *last_ele\_* (if present) are each equal to `i + x`,
-where `i` is the value of that data member before the call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *`current_`*` + x` and *`last_ele_`*` + x` (if *last_ele\_* is
+> present) have well-defined behavior.
+>
+> *Ensures:*
+>
+> *current\_* and *last_ele\_* (if present) are each equal to `i + x`,
+> where `i` is the value of that data member before the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Preconditions:***
-
-*`current_`*` - x` and *`last_ele_`*` - x` (if *last_ele\_* is present)
-have well-defined behavior.
-
-***Ensures:***
-
-*current\_* and *last_ele\_* (if present) are each equal to `i - x`,
-where `i` is the value of that data member before the call.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> *`current_`*` - x` and *`last_ele_`*` - x` (if *last_ele\_* is
+> present) have well-defined behavior.
+>
+> *Ensures:*
+>
+> *current\_* and *last_ele\_* (if present) are each equal to `i - x`,
+> where `i` is the value of that data member before the call.
+>
+> *Returns:*
+>
+> `*this`.
 
 ``` cpp
 constexpr auto operator[](difference_type n) const
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return views::counted(`*`current_`*` + n, `*`n_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return views::counted(`*`current_`*` + n, `*`n_`*`);`
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y);
 ```
 
-***Returns:***
-
-If *last_ele\_* is present, `x.`*`last_ele_`*` == y.`*`last_ele_`*;
-otherwise, `x.`*`current_`*` == y.`*`current_`*.
+> *Returns:*
+>
+> If *last_ele\_* is present, `x.`*`last_ele_`*` == y.`*`last_ele_`*;
+> otherwise, `x.`*`current_`*` == y.`*`current_`*.
 
 ``` cpp
 friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` < y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` < y.`*`current_`*.
 
 ``` cpp
 friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 ``` cpp
 friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 ``` cpp
 friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
@@ -12328,9 +12337,9 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
            three_way_comparable<iterator_t<Base>>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` <=> y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` <=> y.`*`current_`*.
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& i, difference_type n)
@@ -12339,40 +12348,40 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r += n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r += n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r -= n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r -= n;
+> return r;
+> ```
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<iterator_t<Base>, iterator_t<Base>>;
 ```
 
-***Returns:***
-
-If *last_ele\_* is present, `x.`*`last_ele_`*` - y.`*`last_ele_`*;
-otherwise, `x.`*`current_`*` - y.`*`current_`*.
+> *Returns:*
+>
+> If *last_ele\_* is present, `x.`*`last_ele_`*` - y.`*`last_ele_`*;
+> otherwise, `x.`*`current_`*` - y.`*`current_`*.
 
 #### Class `slide_view::sentinel` <a id="range.slide.sentinel">[range.slide.sentinel]</a>
 
@@ -12400,24 +12409,24 @@ namespace std::ranges {
 }
 ```
 
-\[*Note 12*: *sentinel* is used only when `slide-caches-first<V>` is
+\[*Note 5*: *sentinel* is used only when `slide-caches-first<V>` is
 `true`. — *end note*\]
 
 ``` cpp
 constexpr explicit sentinel(sentinel_t<V> end);
 ```
 
-***Effects:***
-
-Initializes *end\_* with `end`.
+> *Effects:*
+>
+> Initializes *end\_* with `end`.
 
 ``` cpp
 friend constexpr bool operator==(const iterator<false>& x, const sentinel& y);
 ```
 
-***Returns:***
-
-`x.`*`last_ele_`*` == y.`*`end_`*.
+> *Returns:*
+>
+> `x.`*`last_ele_`*` == y.`*`end_`*.
 
 ``` cpp
 friend constexpr range_difference_t<V>
@@ -12425,9 +12434,9 @@ friend constexpr range_difference_t<V>
     requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Returns:***
-
-`x.`*`last_ele_`*` - y.`*`end_`*.
+> *Returns:*
+>
+> `x.`*`last_ele_`*` - y.`*`end_`*.
 
 ``` cpp
 friend constexpr range_difference_t<V>
@@ -12435,9 +12444,9 @@ friend constexpr range_difference_t<V>
     requires sized_sentinel_for<sentinel_t<V>, iterator_t<V>>;
 ```
 
-***Returns:***
-
-`y.`*`end_`*` - x.`*`last_ele_`*.
+> *Returns:*
+>
+> `y.`*`end_`*` - x.`*`last_ele_`*.
 
 ### Chunk by view <a id="range.chunk.by">[range.chunk.by]</a>
 
@@ -12510,87 +12519,87 @@ namespace std::ranges {
 constexpr explicit chunk_by_view(V base, Pred pred);
 ```
 
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *pred\_* with
-`std::move(pred)`.
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *pred\_* with
+> `std::move(pred)`.
 
 ``` cpp
 constexpr const Pred& pred() const;
 ```
 
-***Effects:***
-
-Equivalent to: `return *`*`pred_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return *`*`pred_`*`;`
 
 ``` cpp
 constexpr iterator begin();
 ```
 
-***Preconditions:***
-
-*`pred_`*`.has_value()` is `true`.
-
-***Returns:***
-
-*`iterator`*`(*this, ranges::begin(`*`base_`*`), `*`find-next`*`(ranges::begin(`*`base_`*`)))`.
-
-***Remarks:***
-
-In order to provide the amortized constant-time complexity required by
-the `range` concept, this function caches the result within the
-`chunk_by_view` for use on subsequent calls.
+> *Preconditions:*
+>
+> *`pred_`*`.has_value()` is `true`.
+>
+> *Returns:*
+>
+> *`iterator`*`(*this, ranges::begin(`*`base_`*`), `*`find-next`*`(ranges::begin(`*`base_`*`)))`.
+>
+> *Remarks:*
+>
+> In order to provide the amortized constant-time complexity required by
+> the `range` concept, this function caches the result within the
+> `chunk_by_view` for use on subsequent calls.
 
 ``` cpp
 constexpr auto end();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if constexpr (common_range<V>) {
-  return iterator(*this, ranges::end(base_), ranges::end(base_));
-} else {
-  return default_sentinel;
-}
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if constexpr (common_range<V>) {
+>   return iterator(*this, ranges::end(base_), ranges::end(base_));
+> } else {
+>   return default_sentinel;
+> }
+> ```
 
 ``` cpp
 constexpr iterator_t<V> find-next(iterator_t<V> current);
 ```
 
-***Preconditions:***
-
-*`pred_`*`.has_value()` is `true`.
-
-***Returns:***
-
-``` cpp
-ranges::next(ranges::adjacent_find(current, ranges::end(base_), not_fn(ref(*pred_))),
-             1, ranges::end(base_))
-```
+> *Preconditions:*
+>
+> *`pred_`*`.has_value()` is `true`.
+>
+> *Returns:*
+>
+> ``` cpp
+> ranges::next(ranges::adjacent_find(current, ranges::end(base_), not_fn(ref(*pred_))),
+>              1, ranges::end(base_))
+> ```
 
 ``` cpp
 constexpr iterator_t<V> find-prev(iterator_t<V> current) requires bidirectional_range<V>;
 ```
 
-***Preconditions:***
-
-- `current` is not equal to `ranges::begin(`*`base_`*`)`.
-
-- *`pred_`*`.has_value()` is `true`.
-
-***Returns:***
-
-An iterator `i` in the range such that:
-
-- `ranges::adjacent_find(i, current, not_fn(ref(*`*`pred_`*`)))` is
-  equal to `current`; and
-
-- if `i` is not equal to `ranges::begin(`*`base_`*`)`, then
-  `bool(invoke(*`*`pred_`*`, *ranges::prev(i), *i))` is `false`.
+> *Preconditions:*
+>
+> - `current` is not equal to `ranges::begin(`*`base_`*`)`.
+>
+> - *`pred_`*`.has_value()` is `true`.
+>
+> *Returns:*
+>
+> An iterator `i` in the range such that:
+>
+> - `ranges::adjacent_find(i, current, not_fn(ref(*`*`pred_`*`)))` is
+>   equal to `current`; and
+>
+> - if `i` is not equal to `ranges::begin(`*`base_`*`)`, then
+>   `bool(invoke(*`*`pred_`*`, *ranges::prev(i), *i))` is `false`.
 
 #### Class `chunk_by_view::iterator` <a id="range.chunk.by.iter">[range.chunk.by.iter]</a>
 
@@ -12638,98 +12647,98 @@ namespace std::ranges {
 constexpr iterator(chunk_by_view& parent, iterator_t<V> current, iterator_t<V> next);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)`, *current\_* with
-`current`, and *next\_* with `next`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)`, *current\_* with
+> `current`, and *next\_* with `next`.
 
 ``` cpp
 constexpr value_type operator*() const;
 ```
 
-***Preconditions:***
-
-*current\_* is not equal to *next\_*.
-
-***Returns:***
-
-`subrange(`*`current_`*`, `*`next_`*`)`.
+> *Preconditions:*
+>
+> *current\_* is not equal to *next\_*.
+>
+> *Returns:*
+>
+> `subrange(`*`current_`*`, `*`next_`*`)`.
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Preconditions:***
-
-*current\_* is not equal to *next\_*.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-current_ = next_;
-next_ = parent_->find-next(current_);
-return *this;
-```
+> *Preconditions:*
+>
+> *current\_* is not equal to *next\_*.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> current_ = next_;
+> next_ = parent_->find-next(current_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--() requires bidirectional_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-next_ = current_;
-current_ = parent_->find-prev(next_);
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> next_ = current_;
+> current_ = parent_->find-prev(next_);
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int) requires bidirectional_range<V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y);
 ```
 
-***Returns:***
-
-`x.`*`current_`*` == y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` == y.`*`current_`*.
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 ```
 
-***Returns:***
-
-`x.`*`current_`*` == x.`*`next_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` == x.`*`next_`*.
 
 ### Stride view <a id="range.stride">[range.stride]</a>
 
@@ -12814,35 +12823,35 @@ namespace std::ranges {
 constexpr stride_view(V base, range_difference_t<V> stride);
 ```
 
-***Preconditions:***
-
-`stride > 0` is `true`.
-
-***Effects:***
-
-Initializes *base\_* with `std::move(base)` and *stride\_* with
-`stride`.
+> *Preconditions:*
+>
+> `stride > 0` is `true`.
+>
+> *Effects:*
+>
+> Initializes *base\_* with `std::move(base)` and *stride\_* with
+> `stride`.
 
 ``` cpp
 constexpr range_difference_t<V> stride() const noexcept;
 ```
 
-***Returns:***
-
-*stride\_*.
+> *Returns:*
+>
+> *stride\_*.
 
 ``` cpp
 constexpr auto size() requires sized_range<V>;
 constexpr auto size() const requires sized_range<const V>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return to-unsigned-like(div-ceil(ranges::distance(base_), stride_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return to-unsigned-like(div-ceil(ranges::distance(base_), stride_));
+> ```
 
 #### Class template `stride_view::iterator` <a id="range.stride.iterator">[range.stride.iterator]</a>
 
@@ -12969,11 +12978,11 @@ constexpr iterator(Parent* parent, iterator_t<Base> current,
                    range_difference_t<Base> missing = 0);
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(current)`, *end\_* with
-`ranges::end(parent->`*`base_`*`)`, *stride\_* with
-`parent->`*`stride_`*, and *missing\_* with `missing`.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(current)`, *end\_* with
+> `ranges::end(parent->`*`base_`*`)`, *stride\_* with
+> `parent->`*`stride_`*, and *missing\_* with `missing`.
 
 *iterator*
 
@@ -12983,11 +12992,11 @@ constexpr iterator(iterator<!Const> i)
                  && convertible_to<sentinel_t<V>, sentinel_t<Base>>;
 ```
 
-***Effects:***
-
-Initializes *current\_* with `std::move(i.`*`current_`*`)`, *end\_* with
-`std::move(i.`*`end_`*`)`, *stride\_* with `i.`*`stride_`*, and
-*missing\_* with `i.`*`missing_`*.
+> *Effects:*
+>
+> Initializes *current\_* with `std::move(i.`*`current_`*`)`, *end\_*
+> with `std::move(i.`*`end_`*`)`, *stride\_* with `i.`*`stride_`*, and
+> *missing\_* with `i.`*`missing_`*.
 
 *iterator*
 
@@ -12995,9 +13004,9 @@ Initializes *current\_* with `std::move(i.`*`current_`*`)`, *end\_* with
 constexpr iterator_t<Base> base() &&;
 ```
 
-***Returns:***
-
-`std::move(`*`current_`*`)`.
+> *Returns:*
+>
+> `std::move(`*`current_`*`)`.
 
 *iterator*
 
@@ -13005,9 +13014,9 @@ constexpr iterator_t<Base> base() &&;
 constexpr const iterator_t<Base>& base() const & noexcept;
 ```
 
-***Returns:***
-
-*current\_*.
+> *Returns:*
+>
+> *current\_*.
 
 *iterator*
 
@@ -13015,18 +13024,18 @@ constexpr const iterator_t<Base>& base() const & noexcept;
 constexpr iterator& operator++();
 ```
 
-***Preconditions:***
-
-*`current_`*` != `*`end_`* is `true`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-missing_ = ranges::advance(current_, stride_, end_);
-return *this;
-```
+> *Preconditions:*
+>
+> *`current_`*` != `*`end_`* is `true`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> missing_ = ranges::advance(current_, stride_, end_);
+> return *this;
+> ```
 
 *iterator*
 
@@ -13034,9 +13043,9 @@ return *this;
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to: `++*this;`
+> *Effects:*
+>
+> Equivalent to: `++*this;`
 
 *iterator*
 
@@ -13044,15 +13053,15 @@ Equivalent to: `++*this;`
 constexpr iterator operator++(int) requires forward_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -13060,15 +13069,15 @@ return tmp;
 constexpr iterator& operator--() requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-ranges::advance(current_, missing_ - stride_);
-missing_ = 0;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> ranges::advance(current_, missing_ - stride_);
+> missing_ = 0;
+> return *this;
+> ```
 
 *iterator*
 
@@ -13076,15 +13085,15 @@ return *this;
 constexpr iterator operator--(int) requires bidirectional_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 *iterator*
 
@@ -13092,29 +13101,29 @@ return tmp;
 constexpr iterator& operator+=(difference_type n) requires random_access_range<Base>;
 ```
 
-***Preconditions:***
-
-If `n` is positive,
-`ranges::distance(`*`current_`*`, `*`end_`*`) > `*`stride_`*` * (n - 1)`
-is `true`.
-
-\[*Note 13*: If `n` is negative, the paragraph implies a
-precondition. — *end note*\]
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (n > 0) {
-  ranges::advance(current_, stride_ * (n - 1));
-  missing_ = ranges::advance(current_, stride_, end_);
-} else if (n < 0) {
-  ranges::advance(current_, stride_ * n + missing_);
-  missing_ = 0;
-}
-return *this;
-```
+> *Preconditions:*
+>
+> If `n` is positive,
+> `ranges::distance(`*`current_`*`, `*`end_`*`) > `*`stride_`*` * (n - 1)`
+> is `true`.
+>
+> \[*Note 19*: If `n` is negative, the paragraph implies a
+> precondition. — *end note*\]
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (n > 0) {
+>   ranges::advance(current_, stride_ * (n - 1));
+>   missing_ = ranges::advance(current_, stride_, end_);
+> } else if (n < 0) {
+>   ranges::advance(current_, stride_ * n + missing_);
+>   missing_ = 0;
+> }
+> return *this;
+> ```
 
 *iterator*
 
@@ -13123,9 +13132,9 @@ constexpr iterator& operator-=(difference_type x)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return *this += -x;`
+> *Effects:*
+>
+> Equivalent to: `return *this += -x;`
 
 *iterator*
 
@@ -13133,9 +13142,9 @@ Equivalent to: `return *this += -x;`
 friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 ```
 
-***Returns:***
-
-`x.`*`current_`*` == x.`*`end_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` == x.`*`end_`*.
 
 *iterator*
 
@@ -13144,9 +13153,9 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
       requires equality_comparable<iterator_t<Base>>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` == y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` == y.`*`current_`*.
 
 *iterator*
 
@@ -13155,9 +13164,9 @@ friend constexpr bool operator<(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` < y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` < y.`*`current_`*.
 
 *iterator*
 
@@ -13166,9 +13175,9 @@ friend constexpr bool operator>(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y < x;`
+> *Effects:*
+>
+> Equivalent to: `return y < x;`
 
 *iterator*
 
@@ -13177,9 +13186,9 @@ friend constexpr bool operator<=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(y < x);`
+> *Effects:*
+>
+> Equivalent to: `return !(y < x);`
 
 *iterator*
 
@@ -13188,9 +13197,9 @@ friend constexpr bool operator>=(const iterator& x, const iterator& y)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to: `return !(x < y);`
+> *Effects:*
+>
+> Equivalent to: `return !(x < y);`
 
 *iterator*
 
@@ -13199,9 +13208,9 @@ friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires random_access_range<Base> && three_way_comparable<iterator_t<Base>>;
 ```
 
-***Returns:***
-
-`x.`*`current_`*` <=> y.`*`current_`*.
+> *Returns:*
+>
+> `x.`*`current_`*` <=> y.`*`current_`*.
 
 *iterator*
 
@@ -13212,15 +13221,15 @@ friend constexpr iterator operator+(difference_type n, const iterator& i)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r += n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r += n;
+> return r;
+> ```
 
 *iterator*
 
@@ -13229,15 +13238,15 @@ friend constexpr iterator operator-(const iterator& i, difference_type n)
   requires random_access_range<Base>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto r = i;
-r -= n;
-return r;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto r = i;
+> r -= n;
+> return r;
+> ```
 
 *iterator*
 
@@ -13246,16 +13255,17 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires sized_sentinel_for<iterator_t<Base>, iterator_t<Base>>;
 ```
 
-***Returns:***
-
-Let `N` be `(x.`*`current_`*` - y.`*`current_`*`)`.
-
-- If *Base* models `forward_range`,
-  `(N + x.`*`missing_`*` - y.`*`missing_`*`) / x.`*`stride_`*.
-
-- Otherwise, if `N` is negative, `-`*`div-ceil`*`(-N, x.`*`stride_`*`)`.
-
-- Otherwise, *`div-ceil`*`(N, x.`*`stride_`*`)`.
+> *Returns:*
+>
+> Let `N` be `(x.`*`current_`*` - y.`*`current_`*`)`.
+>
+> - If *Base* models `forward_range`,
+>   `(N + x.`*`missing_`*` - y.`*`missing_`*`) / x.`*`stride_`*.
+>
+> - Otherwise, if `N` is negative,
+>   `-`*`div-ceil`*`(-N, x.`*`stride_`*`)`.
+>
+> - Otherwise, *`div-ceil`*`(N, x.`*`stride_`*`)`.
 
 *iterator*
 
@@ -13264,9 +13274,9 @@ friend constexpr difference_type operator-(default_sentinel_t y, const iterator&
   requires sized_sentinel_for<sentinel_t<Base>, iterator_t<Base>>;
 ```
 
-***Returns:***
-
-*`div-ceil`*`(x.`*`end_`*` - x.`*`current_`*`, x.`*`stride_`*`)`.
+> *Returns:*
+>
+> *`div-ceil`*`(x.`*`end_`*` - x.`*`current_`*`, x.`*`stride_`*`)`.
 
 *iterator*
 
@@ -13275,9 +13285,9 @@ friend constexpr difference_type operator-(const iterator& x, default_sentinel_t
   requires sized_sentinel_for<sentinel_t<Base>, iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return -(y - x);`
+> *Effects:*
+>
+> Equivalent to: `return -(y - x);`
 
 *iterator*
 
@@ -13286,9 +13296,9 @@ friend constexpr range_rvalue_reference_t<Base> iter_move(const iterator& i)
   noexcept(noexcept(ranges::iter_move(i.current_)));
 ```
 
-***Effects:***
-
-Equivalent to: `return ranges::iter_move(i.`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return ranges::iter_move(i.`*`current_`*`);`
 
 *iterator*
 
@@ -13298,9 +13308,10 @@ friend constexpr void iter_swap(const iterator& x, const iterator& y)
   requires indirectly_swappable<iterator_t<Base>>;
 ```
 
-***Effects:***
-
-Equivalent to: `ranges::iter_swap(x.`*`current_`*`, y.`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to:
+> `ranges::iter_swap(x.`*`current_`*`, y.`*`current_`*`);`
 
 ### Cartesian product view <a id="range.cartesian">[range.cartesian]</a>
 
@@ -13422,35 +13433,36 @@ namespace std::ranges {
 constexpr explicit cartesian_product_view(First first_base, Vs... bases);
 ```
 
-***Effects:***
-
-Initializes *bases\_* with `std::move(first_base), std::move(bases)...`.
+> *Effects:*
+>
+> Initializes *bases\_* with
+> `std::move(first_base), std::move(bases)...`.
 
 ``` cpp
 constexpr iterator<false> begin()
   requires (!simple-view<First> || ... || !simple-view<Vs>);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return iterator<false>(*this, tuple-transform(ranges::begin, bases_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return iterator<false>(*this, tuple-transform(ranges::begin, bases_));
+> ```
 
 ``` cpp
 constexpr iterator<true> begin() const
   requires (range<const First> && ... && range<const Vs>);
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return iterator<true>(*this, tuple-transform(ranges::begin, bases_));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return iterator<true>(*this, tuple-transform(ranges::begin, bases_));
+> ```
 
 ``` cpp
 constexpr iterator<false> end()
@@ -13460,37 +13472,37 @@ constexpr iterator<true> end() const
   requires cartesian-product-is-common<const First, const Vs...>;
 ```
 
-Let:
-
-- *is-const* be `true` for the const-qualified overload, and `false`
-  otherwise;
-
-- *is-empty* be `true` if the expression `ranges::empty(rng)` is `true`
-  for any `rng` among the underlying ranges except the first one and
-  `false` otherwise; and
-
-- *`begin-or-first-end`*`(rng)` be expression-equivalent to
-  *`is-empty`*` ? ranges::begin(rng) : `*`cartesian-common-arg-end`*`(rng)`
-  if `rng` is the first underlying range and `ranges::begin(rng)`
-  otherwise.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-iterator<is-const> it(*this, tuple-transform(
-  [](auto& rng){ return begin-or-first-end(rng); }, bases_));
-return it;
-```
+> Let:
+>
+> - *is-const* be `true` for the const-qualified overload, and `false`
+>   otherwise;
+>
+> - *is-empty* be `true` if the expression `ranges::empty(rng)` is
+>   `true` for any `rng` among the underlying ranges except the first
+>   one and `false` otherwise; and
+>
+> - *`begin-or-first-end`*`(rng)` be expression-equivalent to
+>   *`is-empty`*` ? ranges::begin(rng) : `*`cartesian-common-arg-end`*`(rng)`
+>   if `rng` is the first underlying range and `ranges::begin(rng)`
+>   otherwise.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> iterator<is-const> it(*this, tuple-transform(
+>   [](auto& rng){ return begin-or-first-end(rng); }, bases_));
+> return it;
+> ```
 
 ``` cpp
 constexpr default_sentinel_t end() const noexcept;
 ```
 
-***Returns:***
-
-`default_sentinel`.
+> *Returns:*
+>
+> `default_sentinel`.
 
 ``` cpp
 constexpr see below size()
@@ -13499,22 +13511,22 @@ constexpr see below size() const
   requires cartesian-product-is-sized<const First, const Vs...>;
 ```
 
-The return type is an *implementation-defined* unsigned-integer-like
-type.
-
-The return type should be the smallest unsigned-integer-like type that
-is sufficiently wide to store the product of the maximum sizes of all
-the underlying ranges, if such a type exists.
-
-Let p be the product of the sizes of all the ranges in *bases\_*.
-
-***Preconditions:***
-
-p can be represented by the return type.
-
-***Returns:***
-
-p.
+> The return type is an *implementation-defined* unsigned-integer-like
+> type.
+>
+> The return type should be the smallest unsigned-integer-like type that
+> is sufficiently wide to store the product of the maximum sizes of all
+> the underlying ranges, if such a type exists.
+>
+> Let p be the product of the sizes of all the ranges in *bases\_*.
+>
+> *Preconditions:*
+>
+> p can be represented by the return type.
+>
+> *Returns:*
+>
+> p.
 
 #### Class template `cartesian_product_view::iterator` <a id="range.cartesian.iterator">[range.cartesian.iterator]</a>
 
@@ -13632,77 +13644,77 @@ template<size_t N = sizeof...(Vs)>
   constexpr void next();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto& it = std::get<N>(current_);
-++it;
-if constexpr (N > 0) {
-  if (it == ranges::end(std::get<N>(parent_->bases_))) {
-    it = ranges::begin(std::get<N>(parent_->bases_));
-    next<N - 1>();
-  }
-}
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto& it = std::get<N>(current_);
+> ++it;
+> if constexpr (N > 0) {
+>   if (it == ranges::end(std::get<N>(parent_->bases_))) {
+>     it = ranges::begin(std::get<N>(parent_->bases_));
+>     next<N - 1>();
+>   }
+> }
+> ```
 
 ``` cpp
 template<size_t N = sizeof...(Vs)>
   constexpr void prev();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto& it = std::get<N>(current_);
-if constexpr (N > 0) {
-  if (it == ranges::begin(std::get<N>(parent_->bases_))) {
-    it = cartesian-common-arg-end(std::get<N>(parent_->bases_));
-    prev<N - 1>();
-  }
-}
---it;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto& it = std::get<N>(current_);
+> if constexpr (N > 0) {
+>   if (it == ranges::begin(std::get<N>(parent_->bases_))) {
+>     it = cartesian-common-arg-end(std::get<N>(parent_->bases_));
+>     prev<N - 1>();
+>   }
+> }
+> --it;
+> ```
 
 ``` cpp
 template<class Tuple>
   constexpr difference_type distance-from(const Tuple& t) const;
 ```
 
-Let:
-
-- $\textit{scaled-size}(N)$ be the product of
-  `static_cast<difference_type>(ranges::size(std::get<`N`>(`*`parent_`*`->`*`bases_`*`)))`
-  and $\textit{scaled-size}(N+1)$ if $N \le \texttt{sizeof...(Vs)}$,
-  otherwise `static_cast<difference_type>(1)`;
-
-- $\textit{scaled-distance}(N)$ be the product of
-  `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
-  and $\textit{scaled-size}(N+1)$; and
-
-- *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
-  integer $0 \le N \le \texttt{sizeof...(Vs)}$.
-
-***Preconditions:***
-
-*scaled-sum* can be represented by `difference_type`.
-
-***Returns:***
-
-*scaled-sum*.
+> Let:
+>
+> - $\textit{scaled-size}(N)$ be the product of
+>   `static_cast<difference_type>(ranges::size(std::get<`N`>(`*`parent_`*`->`*`bases_`*`)))`
+>   and $\textit{scaled-size}(N+1)$ if $N \le \texttt{sizeof...(Vs)}$,
+>   otherwise `static_cast<difference_type>(1)`;
+>
+> - $\textit{scaled-distance}(N)$ be the product of
+>   `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
+>   and $\textit{scaled-size}(N+1)$; and
+>
+> - *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
+>   integer $0 \le N \le \texttt{sizeof...(Vs)}$.
+>
+> *Preconditions:*
+>
+> *scaled-sum* can be represented by `difference_type`.
+>
+> *Returns:*
+>
+> *scaled-sum*.
 
 ``` cpp
 constexpr iterator(Parent& parent, tuple<iterator_t<maybe-const<Const, First>>,
   iterator_t<maybe-const<Const, Vs>>...> current);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `addressof(parent)` and *current\_* with
-`std::move(current)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `addressof(parent)` and *current\_* with
+> `std::move(current)`.
 
 ``` cpp
 constexpr iterator(iterator<!Const> i) requires Const &&
@@ -13710,256 +13722,256 @@ constexpr iterator(iterator<!Const> i) requires Const &&
     ... && convertible_to<iterator_t<Vs>, iterator_t<const Vs>>);
 ```
 
-***Effects:***
-
-Initializes *parent\_* with `i.`*`parent_`* and *current\_* with
-`std::move(i.`*`current_`*`)`.
+> *Effects:*
+>
+> Initializes *parent\_* with `i.`*`parent_`* and *current\_* with
+> `std::move(i.`*`current_`*`)`.
 
 ``` cpp
 constexpr auto operator*() const;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return tuple-transform([](auto& i) -> decltype(auto) { return *i; }, current_);
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return tuple-transform([](auto& i) -> decltype(auto) { return *i; }, current_);
+> ```
 
 ``` cpp
 constexpr iterator& operator++();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-next();
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> next();
+> return *this;
+> ```
 
 ``` cpp
 constexpr void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 ``` cpp
 constexpr iterator operator++(int) requires forward_range<maybe-const<Const, First>>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
-++*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> ++*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator--()
   requires cartesian-product-is-bidirectional<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-prev();
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> prev();
+> return *this;
+> ```
 
 ``` cpp
 constexpr iterator operator--(int)
   requires cartesian-product-is-bidirectional<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto tmp = *this;
---*this;
-return tmp;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto tmp = *this;
+> --*this;
+> return tmp;
+> ```
 
 ``` cpp
 constexpr iterator& operator+=(difference_type x)
   requires cartesian-product-is-random-access<Const, First, Vs...>;
 ```
 
-Let `orig` be the value of `*this` before the call.
-
-Let `ret` be:
-
-- If `x > 0`, the value of `*this` had *next* been called `x` times.
-
-- Otherwise, if `x < 0`, the value of `*this` had *prev* been called
-  `-x` times.
-
-- Otherwise, `orig`.
-
-***Preconditions:***
-
-`x` is in the range
-$[\texttt{ranges::distance(*this, ranges::begin(*\textit{parent_}))},$
-$\texttt{ranges::distance(*this, ranges::end(*\textit{parent_}))}]$.
-
-***Effects:***
-
-Sets the value of `*this` to `ret`.
-
-***Returns:***
-
-`*this`.
-
-***Complexity:***
-
-Constant.
+> Let `orig` be the value of `*this` before the call.
+>
+> Let `ret` be:
+>
+> - If `x > 0`, the value of `*this` had *next* been called `x` times.
+>
+> - Otherwise, if `x < 0`, the value of `*this` had *prev* been called
+>   `-x` times.
+>
+> - Otherwise, `orig`.
+>
+> *Preconditions:*
+>
+> `x` is in the range
+> $[\texttt{ranges::distance(*this, ranges::begin(*\textit{parent_}))},$
+> $\texttt{ranges::distance(*this, ranges::end(*\textit{parent_}))}]$.
+>
+> *Effects:*
+>
+> Sets the value of `*this` to `ret`.
+>
+> *Returns:*
+>
+> `*this`.
+>
+> *Complexity:*
+>
+> Constant.
 
 ``` cpp
 constexpr iterator& operator-=(difference_type x)
   requires cartesian-product-is-random-access<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-*this += -x;
-return *this;
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> *this += -x;
+> return *this;
+> ```
 
 ``` cpp
 constexpr reference operator[](difference_type n) const
   requires cartesian-product-is-random-access<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return *((*this) + n);`
+> *Effects:*
+>
+> Equivalent to: `return *((*this) + n);`
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, const iterator& y)
   requires equality_comparable<iterator_t<maybe-const<Const, First>>>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` == y.`*`current_`*`;`
 
 ``` cpp
 friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 ```
 
-***Returns:***
-
-`true` if
-`std::get<`i`>(x.`*`current_`*`) == ranges::end(std::get<`i`>(x.`*`parent_`*`->`*`bases_`*`))`
-is `true` for any integer $0 \le i \le \texttt{sizeof...(Vs)}$;
-otherwise, `false`.
+> *Returns:*
+>
+> `true` if
+> `std::get<`i`>(x.`*`current_`*`) == ranges::end(std::get<`i`>(x.`*`parent_`*`->`*`bases_`*`))`
+> is `true` for any integer $0 \le i \le \texttt{sizeof...(Vs)}$;
+> otherwise, `false`.
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
   requires all-random-access<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`current_`*` <=> y.`*`current_`*`;`
 
 ``` cpp
 friend constexpr iterator operator+(const iterator& x, difference_type y)
   requires cartesian-product-is-random-access<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`(x) += y;`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`(x) += y;`
 
 ``` cpp
 friend constexpr iterator operator+(difference_type x, const iterator& y)
   requires cartesian-product-is-random-access<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return y + x;`
+> *Effects:*
+>
+> Equivalent to: `return y + x;`
 
 ``` cpp
 friend constexpr iterator operator-(const iterator& x, difference_type y)
   requires cartesian-product-is-random-access<Const, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return `*`iterator`*`(x) -= y;`
+> *Effects:*
+>
+> Equivalent to: `return `*`iterator`*`(x) -= y;`
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   requires cartesian-is-sized-sentinel<Const, iterator_t, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return x.`*`distance-from`*`(y.`*`current_`*`);`
+> *Effects:*
+>
+> Equivalent to: `return x.`*`distance-from`*`(y.`*`current_`*`);`
 
 ``` cpp
 friend constexpr difference_type operator-(const iterator& i, default_sentinel_t)
   requires cartesian-is-sized-sentinel<Const, sentinel_t, First, Vs...>;
 ```
 
-Let *end-tuple* be an object of a type that is a specialization of
-`tuple`, such that:
-
-- `std::get<0>(`*`end-tuple`*`)` has the same value as
-  `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
-
-- `std::get<`N`>(`*`end-tuple`*`)` has the same value as
-  `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
-  every integer $1 \le N \le \texttt{sizeof...(Vs)}$.
-
-***Effects:***
-
-Equivalent to: `return i.`*`distance-from`*`(`*`end-tuple`*`);`
+> Let *end-tuple* be an object of a type that is a specialization of
+> `tuple`, such that:
+>
+> - `std::get<0>(`*`end-tuple`*`)` has the same value as
+>   `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
+>
+> - `std::get<`N`>(`*`end-tuple`*`)` has the same value as
+>   `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
+>   every integer $1 \le N \le \texttt{sizeof...(Vs)}$.
+>
+> *Effects:*
+>
+> Equivalent to: `return i.`*`distance-from`*`(`*`end-tuple`*`);`
 
 ``` cpp
 friend constexpr difference_type operator-(default_sentinel_t s, const iterator& i)
   requires cartesian-is-sized-sentinel<Const, sentinel_t, First, Vs...>;
 ```
 
-***Effects:***
-
-Equivalent to: `return -(i - s);`
+> *Effects:*
+>
+> Equivalent to: `return -(i - s);`
 
 ``` cpp
 friend constexpr auto iter_move(const iterator& i) noexcept(see below);
 ```
 
-***Effects:***
-
-Equivalent to:
-`return `*`tuple-transform`*`(ranges::iter_move, i.`*`current_`*`);`
-
-***Remarks:***
-
-The exception specification is equivalent to the logical of the
-following expressions:
-
-- `noexcept(ranges::iter_move(std::get<`N`>(i.`*`current_`*`)))` for
-  every integer$0 \le N \le \texttt{sizeof...(Vs)}$,
-
-- `is_nothrow_move_constructible_v<range_rvalue_reference_t<`*`maybe-const`*`<Const, T>>>`
-  for every type `T` in `First, Vs...`.
+> *Effects:*
+>
+> Equivalent to:
+> `return `*`tuple-transform`*`(ranges::iter_move, i.`*`current_`*`);`
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to the logical of the
+> following expressions:
+>
+> - `noexcept(ranges::iter_move(std::get<`N`>(i.`*`current_`*`)))` for
+>   every integer$0 \le N \le \texttt{sizeof...(Vs)}$,
+>
+> - `is_nothrow_move_constructible_v<range_rvalue_reference_t<`*`maybe-const`*`<Const, T>>>`
+>   for every type `T` in `First, Vs...`.
 
 ``` cpp
 friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(see below)
@@ -13967,21 +13979,21 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
         indirectly_swappable<iterator_t<maybe-const<Const, Vs>>>);
 ```
 
-***Effects:***
-
-For every integer $0 \le i \le \texttt{sizeof...(Vs)}$, performs:
-
-``` cpp
-ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
-```
-
-***Remarks:***
-
-The exception specification is equivalent to the logical of the
-following expressions:
-
-- `noexcept(ranges::iter_swap(std::get<`i`>(l.`*`current_`*`), std::get<`i`>(r.`*`current_`*`)))`
-  forevery integer $0 \le i \le \texttt{sizeof...(Vs)}$.
+> *Effects:*
+>
+> For every integer $0 \le i \le \texttt{sizeof...(Vs)}$, performs:
+>
+> ``` cpp
+> ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
+> ```
+>
+> *Remarks:*
+>
+> The exception specification is equivalent to the logical of the
+> following expressions:
+>
+> - `noexcept(ranges::iter_swap(std::get<`i`>(l.`*`current_`*`), std::get<`i`>(r.`*`current_`*`)))`
+>   forevery integer $0 \le i \le \texttt{sizeof...(Vs)}$.
 
 ## Range generators <a id="coro.generator">[coro.generator]</a>
 
@@ -14084,7 +14096,7 @@ namespace std {
 
   is modeled.
 
-  \[*Note 5*: These requirements ensure the exposition-only *iterator*
+  \[*Note 20*: These requirements ensure the exposition-only *iterator*
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*\]
 
@@ -14102,82 +14114,82 @@ undefined.
 generator(generator&& other) noexcept;
 ```
 
-***Effects:***
-
-Initializes *coroutine\_* with `exchange(other.`*`coroutine_`*`, {})`
-and *active\_* with `exchange(other.active_, nullptr)`.
-
-\[*Note 1*: Iterators previously obtained from `other` are not
-invalidated; they become iterators into `*this`. — *end note*\]
+> *Effects:*
+>
+> Initializes *coroutine\_* with `exchange(other.`*`coroutine_`*`, {})`
+> and *active\_* with `exchange(other.active_, nullptr)`.
+>
+> \[*Note 21*: Iterators previously obtained from `other` are not
+> invalidated; they become iterators into `*this`. — *end note*\]
 
 ``` cpp
 ~generator();
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-if (coroutine_) {
-  coroutine_.destroy();
-}
-```
-
-\[*Note 2*: Ownership of recursively yielded generators is held in
-awaitable objects in the coroutine frame of the yielding generator, so
-destroying the root generator effectively destroys the entire stack of
-yielded generators. — *end note*\]
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> if (coroutine_) {
+>   coroutine_.destroy();
+> }
+> ```
+>
+> \[*Note 22*: Ownership of recursively yielded generators is held in
+> awaitable objects in the coroutine frame of the yielding generator, so
+> destroying the root generator effectively destroys the entire stack of
+> yielded generators. — *end note*\]
 
 ``` cpp
 generator& operator=(generator other) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-swap(coroutine_, other.coroutine_);
-swap(active_, other.active_);
-```
-
-***Returns:***
-
-`*this`.
-
-\[*Note 3*: Iterators previously obtained from `other` are not
-invalidated; they become iterators into `*this`. — *end note*\]
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> swap(coroutine_, other.coroutine_);
+> swap(active_, other.active_);
+> ```
+>
+> *Returns:*
+>
+> `*this`.
+>
+> \[*Note 23*: Iterators previously obtained from `other` are not
+> invalidated; they become iterators into `*this`. — *end note*\]
 
 ``` cpp
 iterator begin();
 ```
 
-***Preconditions:***
-
-*coroutine\_* refers to a coroutine suspended at its initial suspend
-point\[dcl.fct.def.coroutine\].
-
-***Effects:***
-
-Pushes *coroutine\_* into `*`*`active_`*, then evaluates
-*`coroutine_`*`.resume()`.
-
-***Returns:***
-
-An *iterator* object whose member *coroutine\_* refers to the same
-coroutine as does *coroutine\_*.
-
-\[*Note 4*: A program that calls `begin` more than once on the same
-generator has undefined behavior. — *end note*\]
+> *Preconditions:*
+>
+> *coroutine\_* refers to a coroutine suspended at its initial suspend
+> point\[dcl.fct.def.coroutine\].
+>
+> *Effects:*
+>
+> Pushes *coroutine\_* into `*`*`active_`*, then evaluates
+> *`coroutine_`*`.resume()`.
+>
+> *Returns:*
+>
+> An *iterator* object whose member *coroutine\_* refers to the same
+> coroutine as does *coroutine\_*.
+>
+> \[*Note 24*: A program that calls `begin` more than once on the same
+> generator has undefined behavior. — *end note*\]
 
 ``` cpp
 default_sentinel_t end() const noexcept;
 ```
 
-***Returns:***
-
-`default_sentinel`.
+> *Returns:*
+>
+> `default_sentinel`.
 
 ### Class `generator::promise_type` <a id="coro.generator.promise">[coro.generator.promise]</a>
 
@@ -14235,43 +14247,43 @@ namespace std {
 generator get_return_object() noexcept;
 ```
 
-***Returns:***
-
-A `generator` object whose member *coroutine\_* is
-`coroutine_handle<promise_type>::from_promise(*this)`, and whose member
-*active\_* points to an empty stack.
+> *Returns:*
+>
+> A `generator` object whose member *coroutine\_* is
+> `coroutine_handle<promise_type>::from_promise(*this)`, and whose
+> member *active\_* points to an empty stack.
 
 ``` cpp
 auto final_suspend() noexcept;
 ```
 
-***Preconditions:***
-
-A handle referring to the coroutine whose promise object is `*this` is
-at the top of `*`*`active_`* of some `generator` object `x`. This
-function is called by that coroutine upon reaching its final suspend
-point\[dcl.fct.def.coroutine\].
-
-***Returns:***
-
-An awaitable object of unspecified type\[expr.await\] whose member
-functions arrange for the calling coroutine to be suspended, pop the
-coroutine handle from the top of `*x.`*`active_`*, and resume execution
-of the coroutine referred to by `x.`*`active_`*`->top()` if
-`*x.`*`active_`* is not empty. If it is empty, control flow returns to
-the current coroutine caller or resumer\[dcl.fct.def.coroutine\].
+> *Preconditions:*
+>
+> A handle referring to the coroutine whose promise object is `*this` is
+> at the top of `*`*`active_`* of some `generator` object `x`. This
+> function is called by that coroutine upon reaching its final suspend
+> point\[dcl.fct.def.coroutine\].
+>
+> *Returns:*
+>
+> An awaitable object of unspecified type\[expr.await\] whose member
+> functions arrange for the calling coroutine to be suspended, pop the
+> coroutine handle from the top of `*x.`*`active_`*, and resume
+> execution of the coroutine referred to by `x.`*`active_`*`->top()` if
+> `*x.`*`active_`* is not empty. If it is empty, control flow returns to
+> the current coroutine caller or resumer\[dcl.fct.def.coroutine\].
 
 ``` cpp
 suspend_always yield_value(yielded val) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to *`value_`*` = addressof(val)`.
-
-***Returns:***
-
-`{}`.
+> *Effects:*
+>
+> Equivalent to *`value_`*` = addressof(val)`.
+>
+> *Returns:*
+>
+> `{}`.
 
 ``` cpp
 auto yield_value(const remove_reference_t<yielded>& lval)
@@ -14279,26 +14291,27 @@ auto yield_value(const remove_reference_t<yielded>& lval)
     constructible_from<remove_cvref_t<yielded>, const remove_reference_t<yielded>&>;
 ```
 
-***Preconditions:***
-
-A handle referring to the coroutine whose promise object is `*this` is
-at the top of `*`*`active_`* of some `generator` object.
-
-***Returns:***
-
-An awaitable object of an unspecified type\[expr.await\] that stores an
-object of type `remove_cvref_t<yielded>` direct-non-list-initialized
-with `lval`, whose member functions arrange for *value\_* to point to
-that stored object and then suspend the coroutine.
-
-***Throws:***
-
-Any exception thrown by the initialization of the stored object.
-
-***Remarks:***
-
-A *yield-expression* that calls this function has type
-`void`\[expr.yield\].
+> *Preconditions:*
+>
+> A handle referring to the coroutine whose promise object is `*this` is
+> at the top of `*`*`active_`* of some `generator` object.
+>
+> *Returns:*
+>
+> An awaitable object of an unspecified type\[expr.await\] that stores
+> an object of type `remove_cvref_t<yielded>`
+> direct-non-list-initialized with `lval`, whose member functions
+> arrange for *value\_* to point to that stored object and then suspend
+> the coroutine.
+>
+> *Throws:*
+>
+> Any exception thrown by the initialization of the stored object.
+>
+> *Remarks:*
+>
+> A *yield-expression* that calls this function has type
+> `void`\[expr.yield\].
 
 ``` cpp
 template<class R2, class V2, class Alloc2, class Unused>
@@ -14306,28 +14319,28 @@ template<class R2, class V2, class Alloc2, class Unused>
   auto yield_value(ranges::elements_of<generator<R2, V2, Alloc2>&&, Unused> g) noexcept;
 ```
 
-***Preconditions:***
-
-A handle referring to the coroutine whose promise object is `*this` is
-at the top of `*`*`active_`* of some `generator` object `x`. The
-coroutine referred to by `g.range.`*`coroutine_`* is suspended at its
-initial suspend point.
-
-***Returns:***
-
-An awaitable object of an unspecified type\[expr.await\] into which
-`g.range` is moved, whose member `await_ready` returns `false`, whose
-member `await_suspend` pushes `g.range.`*coroutine\_* into
-`*x.`*`active_`* and resumes execution of the coroutine referred to by
-`g.range.`*`coroutine_`*, and whose member `await_resume` evaluates
-`rethrow_exception(`*`except_`*`)` if `bool(`*`except_`*`)` is `true`.
-If `bool(`*`except_`*`)` is `false`, the `await_resume` member has no
-effects.
-
-***Remarks:***
-
-A *yield-expression* that calls this function has type
-`void`\[expr.yield\].
+> *Preconditions:*
+>
+> A handle referring to the coroutine whose promise object is `*this` is
+> at the top of `*`*`active_`* of some `generator` object `x`. The
+> coroutine referred to by `g.range.`*`coroutine_`* is suspended at its
+> initial suspend point.
+>
+> *Returns:*
+>
+> An awaitable object of an unspecified type\[expr.await\] into which
+> `g.range` is moved, whose member `await_ready` returns `false`, whose
+> member `await_suspend` pushes `g.range.`*coroutine\_* into
+> `*x.`*`active_`* and resumes execution of the coroutine referred to by
+> `g.range.`*`coroutine_`*, and whose member `await_resume` evaluates
+> `rethrow_exception(`*`except_`*`)` if `bool(`*`except_`*`)` is `true`.
+> If `bool(`*`except_`*`)` is `false`, the `await_resume` member has no
+> effects.
+>
+> *Remarks:*
+>
+> A *yield-expression* that calls this function has type
+> `void`\[expr.yield\].
 
 ``` cpp
 template<ranges::input_range R, class Alloc>
@@ -14335,38 +14348,38 @@ template<ranges::input_range R, class Alloc>
   auto yield_value(ranges::elements_of<R, Alloc> r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-auto nested = [](allocator_arg_t, Alloc, ranges::iterator_t<R> i, ranges::sentinel_t<R> s)
-  -> generator<yielded, ranges::range_value_t<R>, Alloc> {
-    for (; i != s; ++i) {
-      co_yield static_cast<yielded>(*i);
-    }
-  };
-return yield_value(ranges::elements_of(nested(
-  allocator_arg, r.allocator, ranges::begin(r.range), ranges::end(r.range))));
-```
-
-\[*Note 5*: A *yield-expression* that calls this function has type
-`void`\[expr.yield\]. — *end note*\]
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> auto nested = [](allocator_arg_t, Alloc, ranges::iterator_t<R> i, ranges::sentinel_t<R> s)
+>   -> generator<yielded, ranges::range_value_t<R>, Alloc> {
+>     for (; i != s; ++i) {
+>       co_yield static_cast<yielded>(*i);
+>     }
+>   };
+> return yield_value(ranges::elements_of(nested(
+>   allocator_arg, r.allocator, ranges::begin(r.range), ranges::end(r.range))));
+> ```
+>
+> \[*Note 25*: A *yield-expression* that calls this function has type
+> `void`\[expr.yield\]. — *end note*\]
 
 ``` cpp
 void unhandled_exception();
 ```
 
-***Preconditions:***
-
-A handle referring to the coroutine whose promise object is `*this` is
-at the top of `*`*`active_`* of some `generator` object `x`.
-
-***Effects:***
-
-If the handle referring to the coroutine whose promise object is `*this`
-is the sole element of `*x.`*`active_`*, equivalent to `throw`,
-otherwise, assigns `current_exception()` to *except\_*.
+> *Preconditions:*
+>
+> A handle referring to the coroutine whose promise object is `*this` is
+> at the top of `*`*`active_`* of some `generator` object `x`.
+>
+> *Effects:*
+>
+> If the handle referring to the coroutine whose promise object is
+> `*this` is the sole element of `*x.`*`active_`*, equivalent to
+> `throw`, otherwise, assigns `current_exception()` to *except\_*.
 
 ``` cpp
 void* operator new(size_t size)
@@ -14382,48 +14395,49 @@ template<class This, class Alloc, class... Args>
                      const Args&...);
 ```
 
-Let `A` be
-
-- `Allocator`, if it is not `void`,
-
-- `Alloc` for the overloads with a template parameter `Alloc`, or
-
-- `allocator<void>` otherwise.
-
-Let `B` be `allocator_traits<A>::template rebind_alloc<U>` where `U` is
-an unspecified type whose size and alignment are both
-\_\_STDCPP_DEFAULT_NEW_ALIGNMENT\_\_.
-
-***Mandates:***
-
-`allocator_traits<B>::pointer` is a pointer type.
-
-***Effects:***
-
-Initializes an allocator `b` of type `B` with `A(alloc)`, for the
-overloads with a function parameter `alloc`, and with `A()` otherwise.
-Uses `b` to allocate storage for the smallest array of `U` sufficient to
-provide storage for a coroutine state of size `size`, and unspecified
-additional state necessary to ensure that `operator delete` can later
-deallocate this memory block with an allocator equal to `b`.
-
-***Returns:***
-
-A pointer to the allocated storage.
+> Let `A` be
+>
+> - `Allocator`, if it is not `void`,
+>
+> - `Alloc` for the overloads with a template parameter `Alloc`, or
+>
+> - `allocator<void>` otherwise.
+>
+> Let `B` be `allocator_traits<A>::template rebind_alloc<U>` where `U`
+> is an unspecified type whose size and alignment are both
+> \_\_STDCPP_DEFAULT_NEW_ALIGNMENT\_\_.
+>
+> *Mandates:*
+>
+> `allocator_traits<B>::pointer` is a pointer type.
+>
+> *Effects:*
+>
+> Initializes an allocator `b` of type `B` with `A(alloc)`, for the
+> overloads with a function parameter `alloc`, and with `A()` otherwise.
+> Uses `b` to allocate storage for the smallest array of `U` sufficient
+> to provide storage for a coroutine state of size `size`, and
+> unspecified additional state necessary to ensure that
+> `operator delete` can later deallocate this memory block with an
+> allocator equal to `b`.
+>
+> *Returns:*
+>
+> A pointer to the allocated storage.
 
 ``` cpp
 void operator delete(void* pointer, size_t size) noexcept;
 ```
 
-***Preconditions:***
-
-`pointer` was returned from an invocation of one of the above overloads
-of `operator new` with a `size` argument equal to `size`.
-
-***Effects:***
-
-Deallocates the storage pointed to by `pointer` using an allocator
-equivalent to that used to allocate it.
+> *Preconditions:*
+>
+> `pointer` was returned from an invocation of one of the above
+> overloads of `operator new` with a `size` argument equal to `size`.
+>
+> *Effects:*
+>
+> Deallocates the storage pointed to by `pointer` using an allocator
+> equivalent to that used to allocate it.
 
 ### Class `generator::iterator` <a id="coro.generator.iterator">[coro.generator.iterator]</a>
 
@@ -14456,9 +14470,9 @@ namespace std {
 iterator(iterator&& other) noexcept;
 ```
 
-***Effects:***
-
-Initializes *coroutine\_* with `exchange(other.`*`coroutine_`*`, {})`.
+> *Effects:*
+>
+> Initializes *coroutine\_* with `exchange(other.`*`coroutine_`*`, {})`.
 
 *iterator*
 
@@ -14466,13 +14480,13 @@ Initializes *coroutine\_* with `exchange(other.`*`coroutine_`*`, {})`.
 iterator& operator=(iterator&& other) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to *`coroutine_`*` = exchange(other.`*`coroutine_`*`, {})`.
-
-***Returns:***
-
-`*this`.
+> *Effects:*
+>
+> Equivalent to *`coroutine_`*` = exchange(other.`*`coroutine_`*`, {})`.
+>
+> *Returns:*
+>
+> `*this`.
 
 *iterator*
 
@@ -14480,15 +14494,15 @@ Equivalent to *`coroutine_`*` = exchange(other.`*`coroutine_`*`, {})`.
 reference operator*() const noexcept(is_nothrow_copy_constructible_v<reference>);
 ```
 
-***Preconditions:***
-
-For some `generator` object `x`, *coroutine\_* is in `*x.`*`active_`*
-and `x.`*`active_`*`->top()` refers to a suspended coroutine with
-promise object `p`.
-
-***Effects:***
-
-Equivalent to: `return static_cast<`*`reference`*`>(*p.`*`value_`*`);`
+> *Preconditions:*
+>
+> For some `generator` object `x`, *coroutine\_* is in `*x.`*`active_`*
+> and `x.`*`active_`*`->top()` refers to a suspended coroutine with
+> promise object `p`.
+>
+> *Effects:*
+>
+> Equivalent to: `return static_cast<`*`reference`*`>(*p.`*`value_`*`);`
 
 *iterator*
 
@@ -14496,17 +14510,17 @@ Equivalent to: `return static_cast<`*`reference`*`>(*p.`*`value_`*`);`
 iterator& operator++();
 ```
 
-***Preconditions:***
-
-For some `generator` object `x`, *coroutine\_* is in `*x.`*`active_`*.
-
-***Effects:***
-
-Equivalent to `x.`*`active_`*`->top().resume()`.
-
-***Returns:***
-
-`*this`.
+> *Preconditions:*
+>
+> For some `generator` object `x`, *coroutine\_* is in `*x.`*`active_`*.
+>
+> *Effects:*
+>
+> Equivalent to `x.`*`active_`*`->top().resume()`.
+>
+> *Returns:*
+>
+> `*this`.
 
 *iterator*
 
@@ -14514,9 +14528,9 @@ Equivalent to `x.`*`active_`*`->top().resume()`.
 void operator++(int);
 ```
 
-***Effects:***
-
-Equivalent to `++*this`.
+> *Effects:*
+>
+> Equivalent to `++*this`.
 
 *iterator*
 
@@ -14524,9 +14538,9 @@ Equivalent to `++*this`.
 friend bool operator==(const iterator& i, default_sentinel_t);
 ```
 
-***Effects:***
-
-Equivalent to: `return i.`*`coroutine_`*`.done();`
+> *Effects:*
+>
+> Equivalent to: `return i.`*`coroutine_`*`.done();`
 
 <!-- Link reference definitions -->
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep

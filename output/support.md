@@ -233,135 +233,135 @@ template<class IntType>
   constexpr byte& operator<<=(byte& b, IntType shift) noexcept;
 ```
 
-`is_integral_v<IntType>` is `true`.
-
-***Effects:***
-
-Equivalent to: `return b = b << shift;`
+> `is_integral_v<IntType>` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return b = b << shift;`
 
 ``` cpp
 template<class IntType>
   constexpr byte operator<<(byte b, IntType shift) noexcept;
 ```
 
-`is_integral_v<IntType>` is `true`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<byte>(static_cast<unsigned int>(b) << shift);
-```
+> `is_integral_v<IntType>` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<byte>(static_cast<unsigned int>(b) << shift);
+> ```
 
 ``` cpp
 template<class IntType>
   constexpr byte& operator>>=(byte& b, IntType shift) noexcept;
 ```
 
-`is_integral_v<IntType>` is `true`.
-
-***Effects:***
-
-Equivalent to: `return b = b >> shift;`
+> `is_integral_v<IntType>` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return b = b >> shift;`
 
 ``` cpp
 template<class IntType>
   constexpr byte operator>>(byte b, IntType shift) noexcept;
 ```
 
-`is_integral_v<IntType>` is `true`.
-
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<byte>(static_cast<unsigned int>(b) >> shift);
-```
+> `is_integral_v<IntType>` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<byte>(static_cast<unsigned int>(b) >> shift);
+> ```
 
 ``` cpp
 constexpr byte& operator|=(byte& l, byte r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return l = l | r;`
+> *Effects:*
+>
+> Equivalent to: `return l = l | r;`
 
 ``` cpp
 constexpr byte operator|(byte l, byte r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<byte>(static_cast<unsigned int>(l) | static_cast<unsigned int>(r));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<byte>(static_cast<unsigned int>(l) | static_cast<unsigned int>(r));
+> ```
 
 ``` cpp
 constexpr byte& operator&=(byte& l, byte r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return l = l & r;`
+> *Effects:*
+>
+> Equivalent to: `return l = l & r;`
 
 ``` cpp
 constexpr byte operator&(byte l, byte r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<byte>(static_cast<unsigned int>(l) & static_cast<unsigned int>(r));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<byte>(static_cast<unsigned int>(l) & static_cast<unsigned int>(r));
+> ```
 
 ``` cpp
 constexpr byte& operator^=(byte& l, byte r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return l = l r;`
+> *Effects:*
+>
+> Equivalent to: `return l = l r;`
 
 ``` cpp
 constexpr byte operator^(byte l, byte r) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<byte>(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<byte>(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
+> ```
 
 ``` cpp
 constexpr byte operator~(byte b) noexcept;
 ```
 
-***Effects:***
-
-Equivalent to:
-
-``` cpp
-return static_cast<byte>(~static_cast<unsigned int>(b));
-```
+> *Effects:*
+>
+> Equivalent to:
+>
+> ``` cpp
+> return static_cast<byte>(~static_cast<unsigned int>(b));
+> ```
 
 ``` cpp
 template<class IntType>
   constexpr IntType to_integer(byte b) noexcept;
 ```
 
-`is_integral_v<IntType>` is `true`.
-
-***Effects:***
-
-Equivalent to: `return static_cast<IntType>(b);`
+> `is_integral_v<IntType>` is `true`.
+>
+> *Effects:*
+>
+> Equivalent to: `return static_cast<IntType>(b);`
 
 ## Implementation properties <a id="support.limits">[support.limits]</a>
 
@@ -739,334 +739,339 @@ Each member function defined in this subclause is signal-safe
 static constexpr T min() noexcept;
 ```
 
-Minimum finite value.
-
-Equivalent to `CHAR_MIN`, `SHRT_MIN`, `FLT_MIN`, `DBL_MIN`, etc.
-
-For floating-point types with subnormal numbers, returns the minimum
-positive normalized value.
-
-Meaningful for all specializations in which `is_bounded != false`, or
-`is_bounded == false && is_signed == false`.
+> Minimum finite value.
+>
+> Equivalent to `CHAR_MIN`, `SHRT_MIN`, `FLT_MIN`, `DBL_MIN`, etc.
+>
+> For floating-point types with subnormal numbers, returns the minimum
+> positive normalized value.
+>
+> Meaningful for all specializations in which `is_bounded != false`, or
+> `is_bounded == false && is_signed == false`.
 
 ``` cpp
 static constexpr T max() noexcept;
 ```
 
-Maximum finite value.
-
-Equivalent to `CHAR_MAX`, `SHRT_MAX`, `FLT_MAX`, `DBL_MAX`, etc.
-
-Meaningful for all specializations in which `is_bounded != false`.
+> Maximum finite value.
+>
+> Equivalent to `CHAR_MAX`, `SHRT_MAX`, `FLT_MAX`, `DBL_MAX`, etc.
+>
+> Meaningful for all specializations in which `is_bounded != false`.
 
 ``` cpp
 static constexpr T lowest() noexcept;
 ```
 
-A finite value `x` such that there is no other finite value `y` where
-`y < x`.
-
-`lowest()` is necessary because not all floating-point representations
-have a smallest (most negative) value that is the negative of the
-largest (most positive) finite value.
-
-Meaningful for all specializations in which `is_bounded != false`.
+> A finite value `x` such that there is no other finite value `y` where
+> `y < x`.
+>
+> `lowest()` is necessary because not all floating-point representations
+> have a smallest (most negative) value that is the negative of the
+> largest (most positive) finite value.
+>
+> Meaningful for all specializations in which `is_bounded != false`.
 
 ``` cpp
 static constexpr int digits;
 ```
 
-Number of `radix` digits that can be represented without change.
-
-For integer types, the number of non-sign bits in the representation.
-
-For floating-point types, the number of `radix` digits in the mantissa.
-
-Equivalent to `FLT_MANT_DIG`, `DBL_MANT_DIG`, `LDBL_MANT_DIG`.
+> Number of `radix` digits that can be represented without change.
+>
+> For integer types, the number of non-sign bits in the representation.
+>
+> For floating-point types, the number of `radix` digits in the
+> mantissa.
+>
+> Equivalent to `FLT_MANT_DIG`, `DBL_MANT_DIG`, `LDBL_MANT_DIG`.
 
 ``` cpp
 static constexpr int digits10;
 ```
 
-Number of base 10 digits that can be represented without change.
-
-Equivalent to `FLT_DIG`, `DBL_DIG`, `LDBL_DIG`.
-
-Meaningful for all specializations in which `is_bounded != false`.
+> Number of base 10 digits that can be represented without change.
+>
+> Equivalent to `FLT_DIG`, `DBL_DIG`, `LDBL_DIG`.
+>
+> Meaningful for all specializations in which `is_bounded != false`.
 
 ``` cpp
 static constexpr int max_digits10;
 ```
 
-Number of base 10 digits required to ensure that values which differ are
-always differentiated.
-
-Meaningful for all floating-point types.
+> Number of base 10 digits required to ensure that values which differ
+> are always differentiated.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr bool is_signed;
 ```
 
-`true` if the type is signed.
-
-Meaningful for all specializations.
+> `true` if the type is signed.
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr bool is_integer;
 ```
 
-`true` if the type is integer.
-
-Meaningful for all specializations.
+> `true` if the type is integer.
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr bool is_exact;
 ```
 
-`true` if the type uses an exact representation. All integer types are
-exact, but not all exact types are integer. For example, rational and
-fixed-exponent representations are exact but not integer.
-
-Meaningful for all specializations.
+> `true` if the type uses an exact representation. All integer types are
+> exact, but not all exact types are integer. For example, rational and
+> fixed-exponent representations are exact but not integer.
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr int radix;
 ```
 
-For floating-point types, specifies the base or radix of the exponent
-representation (often 2).
-
-Equivalent to `FLT_RADIX`.
-
-For integer types, specifies the base of the representation.
-
-Distinguishes types with bases other than 2 (e.g., BCD).
-
-Meaningful for all specializations.
+> For floating-point types, specifies the base or radix of the exponent
+> representation (often 2).
+>
+> Equivalent to `FLT_RADIX`.
+>
+> For integer types, specifies the base of the representation.
+>
+> Distinguishes types with bases other than 2 (e.g., BCD).
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr T epsilon() noexcept;
 ```
 
-Machine epsilon: the difference between 1 and the least value greater
-than 1 that is representable.
-
-Equivalent to `FLT_EPSILON`, `DBL_EPSILON`, `LDBL_EPSILON`.
-
-Meaningful for all floating-point types.
+> Machine epsilon: the difference between 1 and the least value greater
+> than 1 that is representable.
+>
+> Equivalent to `FLT_EPSILON`, `DBL_EPSILON`, `LDBL_EPSILON`.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr T round_error() noexcept;
 ```
 
-Measure of the maximum rounding error.
-
-Rounding error is described in LIA-1 Section 5.2.4 and Annex C Rationale
-Section C.5.2.4 — Rounding and rounding constants.
+> Measure of the maximum rounding error.
+>
+> Rounding error is described in LIA-1 Section 5.2.4 and Annex C
+> Rationale Section C.5.2.4 — Rounding and rounding constants.
 
 ``` cpp
 static constexpr int  min_exponent;
 ```
 
-Minimum negative integer such that `radix` raised to the power of one
-less than that integer is a normalized floating-point number.
-
-Equivalent to `FLT_MIN_EXP`, `DBL_MIN_EXP`, `LDBL_MIN_EXP`.
-
-Meaningful for all floating-point types.
+> Minimum negative integer such that `radix` raised to the power of one
+> less than that integer is a normalized floating-point number.
+>
+> Equivalent to `FLT_MIN_EXP`, `DBL_MIN_EXP`, `LDBL_MIN_EXP`.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr int  min_exponent10;
 ```
 
-Minimum negative integer such that 10 raised to that power is in the
-range of normalized floating-point numbers.
-
-Equivalent to `FLT_MIN_10_EXP`, `DBL_MIN_10_EXP`, `LDBL_MIN_10_EXP`.
-
-Meaningful for all floating-point types.
+> Minimum negative integer such that 10 raised to that power is in the
+> range of normalized floating-point numbers.
+>
+> Equivalent to `FLT_MIN_10_EXP`, `DBL_MIN_10_EXP`, `LDBL_MIN_10_EXP`.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr int  max_exponent;
 ```
 
-Maximum positive integer such that `radix` raised to the power one less
-than that integer is a representable finite floating-point number.
-
-Equivalent to `FLT_MAX_EXP`, `DBL_MAX_EXP`, `LDBL_MAX_EXP`.
-
-Meaningful for all floating-point types.
+> Maximum positive integer such that `radix` raised to the power one
+> less than that integer is a representable finite floating-point
+> number.
+>
+> Equivalent to `FLT_MAX_EXP`, `DBL_MAX_EXP`, `LDBL_MAX_EXP`.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr int  max_exponent10;
 ```
 
-Maximum positive integer such that 10 raised to that power is in the
-range of representable finite floating-point numbers.
-
-Equivalent to `FLT_MAX_10_EXP`, `DBL_MAX_10_EXP`, `LDBL_MAX_10_EXP`.
-
-Meaningful for all floating-point types.
+> Maximum positive integer such that 10 raised to that power is in the
+> range of representable finite floating-point numbers.
+>
+> Equivalent to `FLT_MAX_10_EXP`, `DBL_MAX_10_EXP`, `LDBL_MAX_10_EXP`.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr bool has_infinity;
 ```
 
-`true` if the type has a representation for positive infinity.
-
-Meaningful for all floating-point types.
-
-Shall be `true` for all specializations in which `is_iec559 != false`.
+> `true` if the type has a representation for positive infinity.
+>
+> Meaningful for all floating-point types.
+>
+> Shall be `true` for all specializations in which `is_iec559 != false`.
 
 ``` cpp
 static constexpr bool has_quiet_NaN;
 ```
 
-`true` if the type has a representation for a quiet (non-signaling) “Not
-a Number”.
-
-Required by LIA-1.
-
-Meaningful for all floating-point types.
-
-Shall be `true` for all specializations in which `is_iec559 != false`.
+> `true` if the type has a representation for a quiet (non-signaling)
+> “Not a Number”.
+>
+> Required by LIA-1.
+>
+> Meaningful for all floating-point types.
+>
+> Shall be `true` for all specializations in which `is_iec559 != false`.
 
 ``` cpp
 static constexpr bool has_signaling_NaN;
 ```
 
-`true` if the type has a representation for a signaling “Not a Number”.
-
-Required by LIA-1.
-
-Meaningful for all floating-point types.
-
-Shall be `true` for all specializations in which `is_iec559 != false`.
+> `true` if the type has a representation for a signaling “Not a
+> Number”.
+>
+> Required by LIA-1.
+>
+> Meaningful for all floating-point types.
+>
+> Shall be `true` for all specializations in which `is_iec559 != false`.
 
 ``` cpp
 static constexpr T infinity() noexcept;
 ```
 
-Representation of positive infinity, if available.
-
-Required by LIA-1.
-
-Meaningful for all specializations for which `has_infinity != false`.
-Required in specializations for which `is_iec559 != false`.
+> Representation of positive infinity, if available.
+>
+> Required by LIA-1.
+>
+> Meaningful for all specializations for which `has_infinity != false`.
+> Required in specializations for which `is_iec559 != false`.
 
 ``` cpp
 static constexpr T quiet_NaN() noexcept;
 ```
 
-Representation of a quiet “Not a Number”, if available.
-
-Required by LIA-1.
-
-Meaningful for all specializations for which `has_quiet_NaN != false`.
-Required in specializations for which `is_iec559 != false`.
+> Representation of a quiet “Not a Number”, if available.
+>
+> Required by LIA-1.
+>
+> Meaningful for all specializations for which `has_quiet_NaN != false`.
+> Required in specializations for which `is_iec559 != false`.
 
 ``` cpp
 static constexpr T signaling_NaN() noexcept;
 ```
 
-Representation of a signaling “Not a Number”, if available.
-
-Required by LIA-1.
-
-Meaningful for all specializations for which
-`has_signaling_NaN != false`. Required in specializations for which
-`is_iec559 != false`.
+> Representation of a signaling “Not a Number”, if available.
+>
+> Required by LIA-1.
+>
+> Meaningful for all specializations for which
+> `has_signaling_NaN != false`. Required in specializations for which
+> `is_iec559 != false`.
 
 ``` cpp
 static constexpr T denorm_min() noexcept;
 ```
 
-Minimum positive subnormal value, if available.
-
-Required by LIA-1.
-
-Otherwise, minimum positive normalized value.
-
-Meaningful for all floating-point types.
+> Minimum positive subnormal value, if available.
+>
+> Required by LIA-1.
+>
+> Otherwise, minimum positive normalized value.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr bool is_iec559;
 ```
 
-`true` if and only if the type adheres to ISO/IEC/IEEE 60559.
-
-ISO/IEC/IEEE 60559:2020 is the same as IEEE 754-2019.
-
-\[*Note 3*: The value is `true` for any of the types `float16_t`,
-`float32_t`, `float64_t`, or `float128_t`, if
-present\[basic.extended.fp\]. — *end note*\]
-
-Meaningful for all floating-point types.
+> `true` if and only if the type adheres to ISO/IEC/IEEE 60559.
+>
+> ISO/IEC/IEEE 60559:2020 is the same as IEEE 754-2019.
+>
+> \[*Note 1*: The value is `true` for any of the types `float16_t`,
+> `float32_t`, `float64_t`, or `float128_t`, if
+> present\[basic.extended.fp\]. — *end note*\]
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr bool is_bounded;
 ```
 
-`true` if the set of values representable by the type is finite.
-
-Required by LIA-1.
-
-\[*Note 4*: All fundamental types\[basic.fundamental\] are bounded. This
-member would be `false` for arbitrary precision types. — *end note*\]
-
-Meaningful for all specializations.
+> `true` if the set of values representable by the type is finite.
+>
+> Required by LIA-1.
+>
+> \[*Note 2*: All fundamental types\[basic.fundamental\] are bounded.
+> This member would be `false` for arbitrary precision
+> types. — *end note*\]
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr bool is_modulo;
 ```
 
-`true` if the type is modulo.
-
-Required by LIA-1.
-
-A type is modulo if, for any operation involving `+`, `-`, or `*` on
-values of that type whose result would fall outside the range \[`min()`,
-`max()`\], the value returned differs from the true value by an integer
-multiple of `max() - min() + 1`.
-
-\[*Example 1*: `is_modulo` is `false` for signed integer
-types\[basic.fundamental\] unless an implementation, as an extension to
-this document, defines signed integer overflow to
-wrap. — *end example*\]
-
-Meaningful for all specializations.
+> `true` if the type is modulo.
+>
+> Required by LIA-1.
+>
+> A type is modulo if, for any operation involving `+`, `-`, or `*` on
+> values of that type whose result would fall outside the range
+> \[`min()`, `max()`\], the value returned differs from the true value
+> by an integer multiple of `max() - min() + 1`.
+>
+> \[*Example 1*: `is_modulo` is `false` for signed integer
+> types\[basic.fundamental\] unless an implementation, as an extension
+> to this document, defines signed integer overflow to
+> wrap. — *end example*\]
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr bool traps;
 ```
 
-`true` if, at the start of the program, there exists a value of the type
-that would cause an arithmetic operation using that value to trap.
-
-Required by LIA-1.
-
-Meaningful for all specializations.
+> `true` if, at the start of the program, there exists a value of the
+> type that would cause an arithmetic operation using that value to
+> trap.
+>
+> Required by LIA-1.
+>
+> Meaningful for all specializations.
 
 ``` cpp
 static constexpr bool tinyness_before;
 ```
 
-`true` if tinyness is detected before rounding.
-
-Refer to ISO/IEC/IEEE 60559. Required by LIA-1.
-
-Meaningful for all floating-point types.
+> `true` if tinyness is detected before rounding.
+>
+> Refer to ISO/IEC/IEEE 60559. Required by LIA-1.
+>
+> Meaningful for all floating-point types.
 
 ``` cpp
 static constexpr float_round_style round_style;
 ```
 
-The rounding style for the type.
-
-Equivalent to `FLT_ROUNDS`. Required by LIA-1.
-
-Meaningful for all floating-point types. Specializations for integer
-types shall return `round_toward_zero`.
+> The rounding style for the type.
+>
+> Equivalent to `FLT_ROUNDS`. Required by LIA-1.
+>
+> Meaningful for all floating-point types. Specializations for integer
+> types shall return `round_toward_zero`.
 
 #### `numeric_limits` specializations <a id="numeric.special">[numeric.special]</a>
 
@@ -1075,7 +1080,7 @@ values are only required to be meaningful under certain conditions (for
 example, `epsilon()` is only meaningful if `is_integer` is `false`). Any
 value that is not “meaningful” shall be set to 0 or `false`.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 namespace std {
@@ -1200,7 +1205,7 @@ namespace std {
 The header `<climits>` defines all macros the same as the C standard
 library header `<limits.h>`.
 
-\[*Note 5*: Except for `CHAR_BIT` and `MB_LEN_MAX`, a macro referring to
+\[*Note 3*: Except for `CHAR_BIT` and `MB_LEN_MAX`, a macro referring to
 an integer type `T` defines a constant whose type is the promoted type
 of `T` [conv.prom]. — *end note*\]
 
@@ -1394,149 +1399,150 @@ this subclause. — *end note*\]
 [[noreturn]] void _Exit(int status) noexcept;
 ```
 
-***Effects:***
-
-This function has the semantics specified in the C standard library.
-
-***Remarks:***
-
-The program is terminated without executing destructors for objects of
-automatic, thread, or static storage duration and without calling
-functions passed to `atexit()`\[basic.start.term\]. The function `_Exit`
-is signal-safe\[support.signal\].
+> *Effects:*
+>
+> This function has the semantics specified in the C standard library.
+>
+> *Remarks:*
+>
+> The program is terminated without executing destructors for objects of
+> automatic, thread, or static storage duration and without calling
+> functions passed to `atexit()`\[basic.start.term\]. The function
+> `_Exit` is signal-safe\[support.signal\].
 
 ``` cpp
 [[noreturn]] void abort() noexcept;
 ```
 
-***Effects:***
-
-This function has the semantics specified in the C standard library.
-
-***Remarks:***
-
-The program is terminated without executing destructors for objects of
-automatic, thread, or static storage duration and without calling
-functions passed to `atexit()`\[basic.start.term\]. The function `abort`
-is signal-safe\[support.signal\].
+> *Effects:*
+>
+> This function has the semantics specified in the C standard library.
+>
+> *Remarks:*
+>
+> The program is terminated without executing destructors for objects of
+> automatic, thread, or static storage duration and without calling
+> functions passed to `atexit()`\[basic.start.term\]. The function
+> `abort` is signal-safe\[support.signal\].
 
 ``` cpp
 int atexit(c-atexit-handler* f) noexcept;
 int atexit(atexit-handler* f) noexcept;
 ```
 
-***Effects:***
-
-The `atexit()` functions register the function pointed to by `f` to be
-called without arguments at normal program termination. It is
-unspecified whether a call to `atexit()` that does not happen
-before\[intro.multithread\] a call to `exit()` will succeed.
-
-\[*Note 2*: The `atexit()` functions do not introduce a data
-race\[res.on.data.races\]. — *end note*\]
-
-The implementation shall support the registration of at least 32
-functions.
-
-***Returns:***
-
-The `atexit()` function returns zero if the registration succeeds,
-nonzero if it fails.
+> *Effects:*
+>
+> The `atexit()` functions register the function pointed to by `f` to be
+> called without arguments at normal program termination. It is
+> unspecified whether a call to `atexit()` that does not happen
+> before\[intro.multithread\] a call to `exit()` will succeed.
+>
+> \[*Note 3*: The `atexit()` functions do not introduce a data
+> race\[res.on.data.races\]. — *end note*\]
+>
+> The implementation shall support the registration of at least 32
+> functions.
+>
+> *Returns:*
+>
+> The `atexit()` function returns zero if the registration succeeds,
+> nonzero if it fails.
 
 ``` cpp
 [[noreturn]] void exit(int status);
 ```
 
-***Effects:***
-
-- First, objects with thread storage duration and associated with the
-  current thread are destroyed. Next, objects with static storage
-  duration are destroyed and functions registered by calling `atexit`
-  are called.
-
-  A function is called for every time it is registered.
-
-  See \[basic.start.term\] for the order of destructions and calls.
-  (Objects with automatic storage duration are not destroyed as a result
-  of calling `exit()`.)
-
-  Objects with automatic storage duration are all destroyed in a program
-  whose `main` function\[basic.start.main\] contains no objects with
-  automatic storage duration and executes the call to `exit()`. Control
-  can be transferred directly to such a `main` function by throwing an
-  exception that is caught in `main`.
-
-  If a registered function invoked by `exit` exits via an exception, the
-  function `std::terminate` is invoked\[except.terminate\].
-
-- Next, all open C streams (as mediated by the function signatures
-  declared in ) with unwritten buffered data are flushed, all open C
-  streams are closed, and all files created by calling `tmpfile()` are
-  removed.
-
-- Finally, control is returned to the host environment. If `status` is
-  zero or `EXIT_SUCCESS`, an *implementation-defined* form of the status
-  is returned. If `status` is `EXIT_FAILURE`, an
-  *implementation-defined* form of the status is returned. Otherwise the
-  status returned is *implementation-defined*.
-
-  The macros `EXIT_FAILURE` and `EXIT_SUCCESS` are defined in .
+> *Effects:*
+>
+> - First, objects with thread storage duration and associated with the
+>   current thread are destroyed. Next, objects with static storage
+>   duration are destroyed and functions registered by calling `atexit`
+>   are called.
+>
+>   A function is called for every time it is registered.
+>
+>   See \[basic.start.term\] for the order of destructions and calls.
+>   (Objects with automatic storage duration are not destroyed as a
+>   result of calling `exit()`.)
+>
+>   Objects with automatic storage duration are all destroyed in a
+>   program whose `main` function\[basic.start.main\] contains no
+>   objects with automatic storage duration and executes the call to
+>   `exit()`. Control can be transferred directly to such a `main`
+>   function by throwing an exception that is caught in `main`.
+>
+>   If a registered function invoked by `exit` exits via an exception,
+>   the function `std::terminate` is invoked\[except.terminate\].
+>
+> - Next, all open C streams (as mediated by the function signatures
+>   declared in ) with unwritten buffered data are flushed, all open C
+>   streams are closed, and all files created by calling `tmpfile()` are
+>   removed.
+>
+> - Finally, control is returned to the host environment. If `status` is
+>   zero or `EXIT_SUCCESS`, an *implementation-defined* form of the
+>   status is returned. If `status` is `EXIT_FAILURE`, an
+>   *implementation-defined* form of the status is returned. Otherwise
+>   the status returned is *implementation-defined*.
+>
+>   The macros `EXIT_FAILURE` and `EXIT_SUCCESS` are defined in .
 
 ``` cpp
 int at_quick_exit(c-atexit-handler* f) noexcept;
 int at_quick_exit(atexit-handler* f) noexcept;
 ```
 
-***Effects:***
-
-The `at_quick_exit()` functions register the function pointed to by `f`
-to be called without arguments when `quick_exit` is called. It is
-unspecified whether a call to `at_quick_exit()` that does not happen
-before\[intro.multithread\] all calls to `quick_exit` will succeed.
-
-\[*Note 3*: The `at_quick_exit()` functions do not introduce a data
-race\[res.on.data.races\]. — *end note*\]
-
-\[*Note 4*: The order of registration could be indeterminate if
-`at_quick_exit` was called from more than one thread. — *end note*\]
-
-\[*Note 5*: The `at_quick_exit` registrations are distinct from the
-`atexit` registrations, and applications might need to call both
-registration functions with the same argument. — *end note*\]
-
-The implementation shall support the registration of at least 32
-functions.
-
-***Returns:***
-
-Zero if the registration succeeds, nonzero if it fails.
+> *Effects:*
+>
+> The `at_quick_exit()` functions register the function pointed to by
+> `f` to be called without arguments when `quick_exit` is called. It is
+> unspecified whether a call to `at_quick_exit()` that does not happen
+> before\[intro.multithread\] all calls to `quick_exit` will succeed.
+>
+> \[*Note 4*: The `at_quick_exit()` functions do not introduce a data
+> race\[res.on.data.races\]. — *end note*\]
+>
+> \[*Note 5*: The order of registration could be indeterminate if
+> `at_quick_exit` was called from more than one thread. — *end note*\]
+>
+> \[*Note 6*: The `at_quick_exit` registrations are distinct from the
+> `atexit` registrations, and applications might need to call both
+> registration functions with the same argument. — *end note*\]
+>
+> The implementation shall support the registration of at least 32
+> functions.
+>
+> *Returns:*
+>
+> Zero if the registration succeeds, nonzero if it fails.
 
 ``` cpp
 [[noreturn]] void quick_exit(int status) noexcept;
 ```
 
-***Effects:***
-
-Functions registered by calls to `at_quick_exit` are called in the
-reverse order of their registration, except that a function shall be
-called after any previously registered functions that had already been
-called at the time it was registered. Objects shall not be destroyed as
-a result of calling `quick_exit`. If a registered function invoked by
-`quick_exit` exits via an exception, the function `std::terminate` is
-invoked\[except.terminate\].
-
-\[*Note 6*: A function registered via `at_quick_exit` is invoked by the
-thread that calls `quick_exit`, which can be a different thread than the
-one that registered it, so registered functions cannot rely on the
-identity of objects with thread storage duration. — *end note*\]
-
-After calling registered functions, `quick_exit` shall call
-`_Exit(status)`.
-
-***Remarks:***
-
-The function `quick_exit` is signal-safe\[support.signal\] when the
-functions registered with `at_quick_exit` are.
+> *Effects:*
+>
+> Functions registered by calls to `at_quick_exit` are called in the
+> reverse order of their registration, except that a function shall be
+> called after any previously registered functions that had already been
+> called at the time it was registered. Objects shall not be destroyed
+> as a result of calling `quick_exit`. If a registered function invoked
+> by `quick_exit` exits via an exception, the function `std::terminate`
+> is invoked\[except.terminate\].
+>
+> \[*Note 7*: A function registered via `at_quick_exit` is invoked by
+> the thread that calls `quick_exit`, which can be a different thread
+> than the one that registered it, so registered functions cannot rely
+> on the identity of objects with thread storage
+> duration. — *end note*\]
+>
+> After calling registered functions, `quick_exit` shall call
+> `_Exit(status)`.
+>
+> *Remarks:*
+>
+> The function `quick_exit` is signal-safe\[support.signal\] when the
+> functions registered with `at_quick_exit` are.
 
 ## Dynamic memory management <a id="support.dynamic">[support.dynamic]</a>
 
@@ -1628,37 +1634,39 @@ functions is not a valid alignment value, the behavior is undefined.
 [[nodiscard]] void* operator new(std::size_t size, std::align_val_t alignment);
 ```
 
-***Effects:***
-
-The allocation functions\[basic.stc.dynamic.allocation\] called by a
-*new-expression*\[expr.new\] to allocate `size` bytes of storage. The
-second form is called for a type with new-extended alignment, and the
-first form is called otherwise.
-
-A program may define functions with either of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-Return a non-null pointer to suitably aligned
-storage\[basic.stc.dynamic\], or else throw a `bad_alloc` exception.
-This requirement is binding on any replacement versions of these
-functions.
-
-- Executes a loop: Within the loop, the function first attempts to
-  allocate the requested storage. Whether the attempt involves a call to
-  the C standard library functions `malloc` or `aligned_alloc` is
-  unspecified.
-
-- Returns a pointer to the allocated storage if the attempt is
-  successful. Otherwise, if the current `new_handler`\[get.new.handler\]
-  is a null pointer value, throws `bad_alloc`.
-
-- Otherwise, the function calls the current `new_handler`
-  function\[new.handler\]. If the called function returns, the loop
-  repeats.
-
-- The loop terminates when an attempt to allocate the requested storage
-  is successful or when a called `new_handler` function does not return.
+> *Effects:*
+>
+> The allocation functions\[basic.stc.dynamic.allocation\] called by a
+> *new-expression*\[expr.new\] to allocate `size` bytes of storage. The
+> second form is called for a type with new-extended alignment, and the
+> first form is called otherwise.
+>
+> A program may define functions with either of these function
+> signatures, and thereby displace the default versions defined by the
+> standard library.
+>
+> Return a non-null pointer to suitably aligned
+> storage\[basic.stc.dynamic\], or else throw a `bad_alloc` exception.
+> This requirement is binding on any replacement versions of these
+> functions.
+>
+> - Executes a loop: Within the loop, the function first attempts to
+>   allocate the requested storage. Whether the attempt involves a call
+>   to the C standard library functions `malloc` or `aligned_alloc` is
+>   unspecified.
+>
+> - Returns a pointer to the allocated storage if the attempt is
+>   successful. Otherwise, if the current
+>   `new_handler`\[get.new.handler\] is a null pointer value, throws
+>   `bad_alloc`.
+>
+> - Otherwise, the function calls the current `new_handler`
+>   function\[new.handler\]. If the called function returns, the loop
+>   repeats.
+>
+> - The loop terminates when an attempt to allocate the requested
+>   storage is successful or when a called `new_handler` function does
+>   not return.
 
 ``` cpp
 [[nodiscard]] void* operator new(std::size_t size, const std::nothrow_t&) noexcept;
@@ -1666,33 +1674,33 @@ functions.
                                  const std::nothrow_t&) noexcept;
 ```
 
-***Effects:***
-
-Same as above, except that these are called by a placement version of a
-*new-expression* when a program prefers a null pointer result as an
-error indication, instead of a `bad_alloc` exception.
-
-A program may define functions with either of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-Return a non-null pointer to suitably aligned
-storage\[basic.stc.dynamic\], or else return a null pointer. Each of
-these nothrow versions of `operator new` returns a pointer obtained as
-if acquired from the (possibly replaced) corresponding non-placement
-function. This requirement is binding on any replacement versions of
-these functions.
-
-Calls `operator new(size)`, or `operator new(size, alignment)`,
-respectively. If the call returns normally, returns the result of that
-call. Otherwise, returns a null pointer.
-
-\[*Example 1*:
-
-    T* p1 = new T;                  // throws \texttt{bad_alloc} if it fails
-    T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
-
-— *end example*\]
+> *Effects:*
+>
+> Same as above, except that these are called by a placement version of
+> a *new-expression* when a program prefers a null pointer result as an
+> error indication, instead of a `bad_alloc` exception.
+>
+> A program may define functions with either of these function
+> signatures, and thereby displace the default versions defined by the
+> standard library.
+>
+> Return a non-null pointer to suitably aligned
+> storage\[basic.stc.dynamic\], or else return a null pointer. Each of
+> these nothrow versions of `operator new` returns a pointer obtained as
+> if acquired from the (possibly replaced) corresponding non-placement
+> function. This requirement is binding on any replacement versions of
+> these functions.
+>
+> Calls `operator new(size)`, or `operator new(size, alignment)`,
+> respectively. If the call returns normally, returns the result of that
+> call. Otherwise, returns a null pointer.
+>
+> \[*Example 2*:
+>
+>     T* p1 = new T;                  // throws \texttt{bad_alloc} if it fails
+>     T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
+>
+> — *end example*\]
 
 ``` cpp
 void operator delete(void* ptr) noexcept;
@@ -1701,92 +1709,93 @@ void operator delete(void* ptr, std::align_val_t alignment) noexcept;
 void operator delete(void* ptr, std::size_t size, std::align_val_t alignment) noexcept;
 ```
 
-***Preconditions:***
-
-`ptr` is a null pointer or its value represents the address of a block
-of memory allocated by an earlier call to a (possibly replaced)
-`operator new(std::size_t)` or
-`operator new(std::size_t, std::align_val_t)` which has not been
-invalidated by an intervening call to `operator delete`.
-
-If the `alignment` parameter is not present, `ptr` was returned by an
-allocation function without an `alignment` parameter. If present, the
-`alignment` argument is equal to the `alignment` argument passed to the
-allocation function that returned `ptr`. If present, the `size` argument
-is equal to the `size` argument passed to the allocation function that
-returned `ptr`.
-
-***Effects:***
-
-The deallocation functions\[basic.stc.dynamic.deallocation\] called by a
-*delete-expression*\[expr.delete\] to render the value of `ptr` invalid.
-
-A program may define functions with any of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-If a function without a `size` parameter is defined, the program should
-also define the corresponding function with a `size` parameter. If a
-function with a `size` parameter is defined, the program shall also
-define the corresponding version without the `size` parameter.
-
-\[*Note 1*: The default behavior below might change in the future, which
-will require replacing both deallocation functions when replacing the
-allocation function. — *end note*\]
-
-A call to an `operator delete` with a `size` parameter may be changed to
-a call to the corresponding `operator delete` without a `size`
-parameter, without affecting memory allocation.
-
-\[*Note 2*: A conforming implementation is for
-`operator delete(void* ptr, std::size_t size)` to simply call
-`operator delete(ptr)`. — *end note*\]
-
-The functions that have a `size` parameter forward their other
-parameters to the corresponding function without a `size` parameter.
-
-\[*Note 3*: See the note in the above paragraph. — *end note*\]
-
-If `ptr` is null, does nothing. Otherwise, reclaims the storage
-allocated by the earlier call to `operator new`.
-
-***Remarks:***
-
-It is unspecified under what conditions part or all of such reclaimed
-storage will be allocated by subsequent calls to `operator new` or any
-of `aligned_alloc`, `calloc`, `malloc`, or `realloc`, declared in .
+> *Preconditions:*
+>
+> `ptr` is a null pointer or its value represents the address of a block
+> of memory allocated by an earlier call to a (possibly replaced)
+> `operator new(std::size_t)` or
+> `operator new(std::size_t, std::align_val_t)` which has not been
+> invalidated by an intervening call to `operator delete`.
+>
+> If the `alignment` parameter is not present, `ptr` was returned by an
+> allocation function without an `alignment` parameter. If present, the
+> `alignment` argument is equal to the `alignment` argument passed to
+> the allocation function that returned `ptr`. If present, the `size`
+> argument is equal to the `size` argument passed to the allocation
+> function that returned `ptr`.
+>
+> *Effects:*
+>
+> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> a *delete-expression*\[expr.delete\] to render the value of `ptr`
+> invalid.
+>
+> A program may define functions with any of these function signatures,
+> and thereby displace the default versions defined by the standard
+> library.
+>
+> If a function without a `size` parameter is defined, the program
+> should also define the corresponding function with a `size` parameter.
+> If a function with a `size` parameter is defined, the program shall
+> also define the corresponding version without the `size` parameter.
+>
+> \[*Note 8*: The default behavior below might change in the future,
+> which will require replacing both deallocation functions when
+> replacing the allocation function. — *end note*\]
+>
+> A call to an `operator delete` with a `size` parameter may be changed
+> to a call to the corresponding `operator delete` without a `size`
+> parameter, without affecting memory allocation.
+>
+> \[*Note 9*: A conforming implementation is for
+> `operator delete(void* ptr, std::size_t size)` to simply call
+> `operator delete(ptr)`. — *end note*\]
+>
+> The functions that have a `size` parameter forward their other
+> parameters to the corresponding function without a `size` parameter.
+>
+> \[*Note 10*: See the note in the above paragraph. — *end note*\]
+>
+> If `ptr` is null, does nothing. Otherwise, reclaims the storage
+> allocated by the earlier call to `operator new`.
+>
+> *Remarks:*
+>
+> It is unspecified under what conditions part or all of such reclaimed
+> storage will be allocated by subsequent calls to `operator new` or any
+> of `aligned_alloc`, `calloc`, `malloc`, or `realloc`, declared in .
 
 ``` cpp
 void operator delete(void* ptr, const std::nothrow_t&) noexcept;
 void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t&) noexcept;
 ```
 
-***Preconditions:***
-
-`ptr` is a null pointer or its value represents the address of a block
-of memory allocated by an earlier call to a (possibly replaced)
-`operator new(std::size_t)` or
-`operator new(std::size_t, std::align_val_t)` which has not been
-invalidated by an intervening call to `operator delete`.
-
-If the `alignment` parameter is not present, `ptr` was returned by an
-allocation function without an `alignment` parameter. If present, the
-`alignment` argument is equal to the `alignment` argument passed to the
-allocation function that returned `ptr`.
-
-***Effects:***
-
-The deallocation functions\[basic.stc.dynamic.deallocation\] called by
-the implementation to render the value of `ptr` invalid when the
-constructor invoked from a nothrow placement version of the
-*new-expression* throws an exception.
-
-A program may define functions with either of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-Calls `operator delete(ptr)`, or `operator delete(ptr, alignment)`,
-respectively.
+> *Preconditions:*
+>
+> `ptr` is a null pointer or its value represents the address of a block
+> of memory allocated by an earlier call to a (possibly replaced)
+> `operator new(std::size_t)` or
+> `operator new(std::size_t, std::align_val_t)` which has not been
+> invalidated by an intervening call to `operator delete`.
+>
+> If the `alignment` parameter is not present, `ptr` was returned by an
+> allocation function without an `alignment` parameter. If present, the
+> `alignment` argument is equal to the `alignment` argument passed to
+> the allocation function that returned `ptr`.
+>
+> *Effects:*
+>
+> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> the implementation to render the value of `ptr` invalid when the
+> constructor invoked from a nothrow placement version of the
+> *new-expression* throws an exception.
+>
+> A program may define functions with either of these function
+> signatures, and thereby displace the default versions defined by the
+> standard library.
+>
+> Calls `operator delete(ptr)`, or `operator delete(ptr, alignment)`,
+> respectively.
 
 #### Array forms <a id="new.delete.array">[new.delete.array]</a>
 
@@ -1795,29 +1804,29 @@ respectively.
 [[nodiscard]] void* operator new[](std::size_t size, std::align_val_t alignment);
 ```
 
-***Effects:***
-
-The allocation functions\[basic.stc.dynamic.allocation\] called by the
-array form of a *new-expression*\[expr.new\] to allocate `size` bytes of
-storage. The second form is called for a type with new-extended
-alignment, and the first form is called otherwise.
-
-It is not the direct responsibility of `operator new[]` or
-`operator delete[]` to note the repetition count or element size of the
-array. Those operations are performed elsewhere in the array and
-expressions. The array expression, can, however, increase the `size`
-argument to `operator new[]` to obtain space to store supplemental
-information.
-
-A program may define functions with either of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-Same as for the corresponding single-object forms. This requirement is
-binding on any replacement versions of these functions.
-
-Returns `operator new(size)`, or `operator new(size, alignment)`,
-respectively.
+> *Effects:*
+>
+> The allocation functions\[basic.stc.dynamic.allocation\] called by the
+> array form of a *new-expression*\[expr.new\] to allocate `size` bytes
+> of storage. The second form is called for a type with new-extended
+> alignment, and the first form is called otherwise.
+>
+> It is not the direct responsibility of `operator new[]` or
+> `operator delete[]` to note the repetition count or element size of
+> the array. Those operations are performed elsewhere in the array and
+> expressions. The array expression, can, however, increase the `size`
+> argument to `operator new[]` to obtain space to store supplemental
+> information.
+>
+> A program may define functions with either of these function
+> signatures, and thereby displace the default versions defined by the
+> standard library.
+>
+> Same as for the corresponding single-object forms. This requirement is
+> binding on any replacement versions of these functions.
+>
+> Returns `operator new(size)`, or `operator new(size, alignment)`,
+> respectively.
 
 ``` cpp
 [[nodiscard]] void* operator new[](std::size_t size, const std::nothrow_t&) noexcept;
@@ -1825,26 +1834,26 @@ respectively.
                                    const std::nothrow_t&) noexcept;
 ```
 
-***Effects:***
-
-Same as above, except that these are called by a placement version of a
-*new-expression* when a program prefers a null pointer result as an
-error indication, instead of a `bad_alloc` exception.
-
-A program may define functions with either of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-Return a non-null pointer to suitably aligned
-storage\[basic.stc.dynamic\], or else return a null pointer. Each of
-these nothrow versions of `operator new[]` returns a pointer obtained as
-if acquired from the (possibly replaced) corresponding non-placement
-function. This requirement is binding on any replacement versions of
-these functions.
-
-Calls `operator new[](size)`, or `operator new[](size, alignment)`,
-respectively. If the call returns normally, returns the result of that
-call. Otherwise, returns a null pointer.
+> *Effects:*
+>
+> Same as above, except that these are called by a placement version of
+> a *new-expression* when a program prefers a null pointer result as an
+> error indication, instead of a `bad_alloc` exception.
+>
+> A program may define functions with either of these function
+> signatures, and thereby displace the default versions defined by the
+> standard library.
+>
+> Return a non-null pointer to suitably aligned
+> storage\[basic.stc.dynamic\], or else return a null pointer. Each of
+> these nothrow versions of `operator new[]` returns a pointer obtained
+> as if acquired from the (possibly replaced) corresponding
+> non-placement function. This requirement is binding on any replacement
+> versions of these functions.
+>
+> Calls `operator new[](size)`, or `operator new[](size, alignment)`,
+> respectively. If the call returns normally, returns the result of that
+> call. Otherwise, returns a null pointer.
 
 ``` cpp
 void operator delete[](void* ptr) noexcept;
@@ -1853,84 +1862,85 @@ void operator delete[](void* ptr, std::align_val_t alignment) noexcept;
 void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) noexcept;
 ```
 
-***Preconditions:***
-
-`ptr` is a null pointer or its value represents the address of a block
-of memory allocated by an earlier call to a (possibly replaced)
-`operator new[](std::size_t)` or
-`operator new[](std::size_t, std::align_val_t)` which has not been
-invalidated by an intervening call to `operator delete[]`.
-
-If the `alignment` parameter is not present, `ptr` was returned by an
-allocation function without an `alignment` parameter. If present, the
-`alignment` argument is equal to the `alignment` argument passed to the
-allocation function that returned `ptr`. If present, the `size` argument
-is equal to the `size` argument passed to the allocation function that
-returned `ptr`.
-
-***Effects:***
-
-The deallocation functions\[basic.stc.dynamic.deallocation\] called by
-the array form of a *delete-expression* to render the value of `ptr`
-invalid.
-
-A program may define functions with any of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-If a function without a `size` parameter is defined, the program should
-also define the corresponding function with a `size` parameter. If a
-function with a `size` parameter is defined, the program shall also
-define the corresponding version without the `size` parameter.
-
-\[*Note 4*: The default behavior below might change in the future, which
-will require replacing both deallocation functions when replacing the
-allocation function. — *end note*\]
-
-A call to an `operator delete[]` with a `size` parameter may be changed
-to a call to the corresponding `operator delete[]` without a `size`
-parameter, without affecting memory allocation.
-
-\[*Note 5*: A conforming implementation is for
-`operator delete[](void* ptr, std::size_t size)` to simply call
-`operator delete[](ptr)`. — *end note*\]
-
-The functions that have a `size` parameter forward their other
-parameters to the corresponding function without a `size` parameter. The
-functions that do not have a `size` parameter forward their parameters
-to the corresponding `operator delete` (single-object) function.
+> *Preconditions:*
+>
+> `ptr` is a null pointer or its value represents the address of a block
+> of memory allocated by an earlier call to a (possibly replaced)
+> `operator new[](std::size_t)` or
+> `operator new[](std::size_t, std::align_val_t)` which has not been
+> invalidated by an intervening call to `operator delete[]`.
+>
+> If the `alignment` parameter is not present, `ptr` was returned by an
+> allocation function without an `alignment` parameter. If present, the
+> `alignment` argument is equal to the `alignment` argument passed to
+> the allocation function that returned `ptr`. If present, the `size`
+> argument is equal to the `size` argument passed to the allocation
+> function that returned `ptr`.
+>
+> *Effects:*
+>
+> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> the array form of a *delete-expression* to render the value of `ptr`
+> invalid.
+>
+> A program may define functions with any of these function signatures,
+> and thereby displace the default versions defined by the standard
+> library.
+>
+> If a function without a `size` parameter is defined, the program
+> should also define the corresponding function with a `size` parameter.
+> If a function with a `size` parameter is defined, the program shall
+> also define the corresponding version without the `size` parameter.
+>
+> \[*Note 11*: The default behavior below might change in the future,
+> which will require replacing both deallocation functions when
+> replacing the allocation function. — *end note*\]
+>
+> A call to an `operator delete[]` with a `size` parameter may be
+> changed to a call to the corresponding `operator delete[]` without a
+> `size` parameter, without affecting memory allocation.
+>
+> \[*Note 12*: A conforming implementation is for
+> `operator delete[](void* ptr, std::size_t size)` to simply call
+> `operator delete[](ptr)`. — *end note*\]
+>
+> The functions that have a `size` parameter forward their other
+> parameters to the corresponding function without a `size` parameter.
+> The functions that do not have a `size` parameter forward their
+> parameters to the corresponding `operator delete` (single-object)
+> function.
 
 ``` cpp
 void operator delete[](void* ptr, const std::nothrow_t&) noexcept;
 void operator delete[](void* ptr, std::align_val_t alignment, const std::nothrow_t&) noexcept;
 ```
 
-***Preconditions:***
-
-`ptr` is a null pointer or its value represents the address of a block
-of memory allocated by an earlier call to a (possibly replaced)
-`operator new[](std::size_t)` or
-`operator new[](std::size_t, std::align_val_t)` which has not been
-invalidated by an intervening call to `operator delete[]`.
-
-If the `alignment` parameter is not present, `ptr` was returned by an
-allocation function without an `alignment` parameter. If present, the
-`alignment` argument is equal to the `alignment` argument passed to the
-allocation function that returned `ptr`.
-
-***Effects:***
-
-The deallocation functions\[basic.stc.dynamic.deallocation\] called by
-the implementation to render the value of `ptr` invalid when the
-constructor invoked from a nothrow placement version of the array
-*new-expression* throws an exception.
-
-A program may define functions with either of these function signatures,
-and thereby displace the default versions defined by the standard
-library.
-
-Calls `operator delete[](ptr)`, or `operator delete[](ptr, alignment)`,
-respectively.
+> *Preconditions:*
+>
+> `ptr` is a null pointer or its value represents the address of a block
+> of memory allocated by an earlier call to a (possibly replaced)
+> `operator new[](std::size_t)` or
+> `operator new[](std::size_t, std::align_val_t)` which has not been
+> invalidated by an intervening call to `operator delete[]`.
+>
+> If the `alignment` parameter is not present, `ptr` was returned by an
+> allocation function without an `alignment` parameter. If present, the
+> `alignment` argument is equal to the `alignment` argument passed to
+> the allocation function that returned `ptr`.
+>
+> *Effects:*
+>
+> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> the implementation to render the value of `ptr` invalid when the
+> constructor invoked from a nothrow placement version of the array
+> *new-expression* throws an exception.
+>
+> A program may define functions with either of these function
+> signatures, and thereby displace the default versions defined by the
+> standard library.
+>
+> Calls `operator delete[](ptr)`, or
+> `operator delete[](ptr, alignment)`, respectively.
 
 #### Non-allocating forms <a id="new.delete.placement">[new.delete.placement]</a>
 
@@ -1943,62 +1953,63 @@ placement forms of `operator new` and `operator delete`.
 [[nodiscard]] void* operator new(std::size_t size, void* ptr) noexcept;
 ```
 
-***Returns:***
-
-`ptr`.
-
-***Remarks:***
-
-Intentionally performs no other action.
-
-\[*Example 2*:
-
-This can be useful for constructing an object at a known address:
-
-    void* place = operator new(sizeof(Something));
-    Something* p = new (place) Something();
-
-— *end example*\]
+> *Returns:*
+>
+> `ptr`.
+>
+> *Remarks:*
+>
+> Intentionally performs no other action.
+>
+> \[*Example 3*:
+>
+> This can be useful for constructing an object at a known address:
+>
+>     void* place = operator new(sizeof(Something));
+>     Something* p = new (place) Something();
+>
+> — *end example*\]
 
 ``` cpp
 [[nodiscard]] void* operator new[](std::size_t size, void* ptr) noexcept;
 ```
 
-***Returns:***
-
-`ptr`.
-
-***Remarks:***
-
-Intentionally performs no other action.
+> *Returns:*
+>
+> `ptr`.
+>
+> *Remarks:*
+>
+> Intentionally performs no other action.
 
 ``` cpp
 void operator delete(void* ptr, void*) noexcept;
 ```
 
-***Effects:***
-
-Intentionally performs no action.
-
-***Remarks:***
-
-Default function called when any part of the initialization in a
-placement *new-expression* that invokes the library’s non-array
-placement operator new terminates by throwing an exception\[expr.new\].
+> *Effects:*
+>
+> Intentionally performs no action.
+>
+> *Remarks:*
+>
+> Default function called when any part of the initialization in a
+> placement *new-expression* that invokes the library’s non-array
+> placement operator new terminates by throwing an
+> exception\[expr.new\].
 
 ``` cpp
 void operator delete[](void* ptr, void*) noexcept;
 ```
 
-***Effects:***
-
-Intentionally performs no action.
-
-***Remarks:***
-
-Default function called when any part of the initialization in a
-placement *new-expression* that invokes the library’s array placement
-operator new terminates by throwing an exception\[expr.new\].
+> *Effects:*
+>
+> Intentionally performs no action.
+>
+> *Remarks:*
+>
+> Default function called when any part of the initialization in a
+> placement *new-expression* that invokes the library’s array placement
+> operator new terminates by throwing an exception\[expr.new\].
 
 #### Data races <a id="new.delete.dataraces">[new.delete.dataraces]</a>
 
@@ -2034,9 +2045,9 @@ by the implementation to report a failure to allocate storage.
 const char* what() const noexcept override;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
 
 #### Class `bad_array_new_length` <a id="new.badlength">[new.badlength]</a>
 
@@ -2059,9 +2070,9 @@ limit [expr.new].
 const char* what() const noexcept override;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
 
 #### Type `new_handler` <a id="new.handler">[new.handler]</a>
 
@@ -2069,18 +2080,18 @@ An *implementation-defined* NTBS.
 using new_handler = void (*)();
 ```
 
-The type of a to be called by `operator new()` or
-`operator new[]()`\[new.delete\] when they cannot satisfy a request for
-additional storage.
-
-A `new_handler` shall perform one of the following:
-
-- make more storage available for allocation and then return;
-
-- throw an exception of type `bad_alloc` or a class derived from
-  `bad_alloc`;
-
-- terminate execution of the program without returning to the caller.
+> The type of a to be called by `operator new()` or
+> `operator new[]()`\[new.delete\] when they cannot satisfy a request
+> for additional storage.
+>
+> A `new_handler` shall perform one of the following:
+>
+> - make more storage available for allocation and then return;
+>
+> - throw an exception of type `bad_alloc` or a class derived from
+>   `bad_alloc`;
+>
+> - terminate execution of the program without returning to the caller.
 
 #### `set_new_handler` <a id="set.new.handler">[set.new.handler]</a>
 
@@ -2088,18 +2099,18 @@ A `new_handler` shall perform one of the following:
 new_handler set_new_handler(new_handler new_p) noexcept;
 ```
 
-***Effects:***
-
-Establishes the function designated by `new_p` as the current
-`new_handler`.
-
-***Returns:***
-
-The previous `new_handler`.
-
-***Remarks:***
-
-The initial `new_handler` is a null pointer.
+> *Effects:*
+>
+> Establishes the function designated by `new_p` as the current
+> `new_handler`.
+>
+> *Returns:*
+>
+> The previous `new_handler`.
+>
+> *Remarks:*
+>
+> The initial `new_handler` is a null pointer.
 
 #### `get_new_handler` <a id="get.new.handler">[get.new.handler]</a>
 
@@ -2107,11 +2118,11 @@ The initial `new_handler` is a null pointer.
 new_handler get_new_handler() noexcept;
 ```
 
-***Returns:***
-
-The current `new_handler`.
-
-\[*Note 6*: This can be a null pointer value. — *end note*\]
+> *Returns:*
+>
+> The current `new_handler`.
+>
+> \[*Note 13*: This can be a null pointer value. — *end note*\]
 
 ### Pointer optimization barrier <a id="ptr.launder">[ptr.launder]</a>
 
@@ -2119,45 +2130,45 @@ The current `new_handler`.
 template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
 ```
 
-***Mandates:***
-
-`!is_function_v<T> && !is_void_v<T>` is `true`.
-
-***Preconditions:***
-
-`p` represents the address *A* of a byte in memory. An object *X* that
-is within its lifetime\[basic.life\] and whose type is
-similar\[conv.qual\] to `T` is located at the address *A*. All bytes of
-storage that would be reachable through\[basic.compound\] the result are
-reachable through `p`.
-
-***Returns:***
-
-A value of type `T*` that points to *X*.
-
-***Remarks:***
-
-An invocation of this function may be used in a core constant expression
-if and only if the (converted) value of its argument may be used in
-place of the function invocation.
-
-\[*Note 7*: If a new object is created in storage occupied by an
-existing object of the same type, a pointer to the original object can
-be used to refer to the new object unless its complete object is a const
-object or it is a base class subobject; in the latter cases, this
-function can be used to obtain a usable pointer to the new object.
-See \[basic.life\]. — *end note*\]
-
-\[*Example 3*:
-
-    struct X { int n; };
-    const X *p = new const X{3};
-    const int a = p->n;
-    new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new object[basic.life] because its type is \keyword{const}
-    const int b = p->n;                 // undefined behavior
-    const int c = std::launder(p)->n;   // OK
-
-— *end example*\]
+> *Mandates:*
+>
+> `!is_function_v<T> && !is_void_v<T>` is `true`.
+>
+> *Preconditions:*
+>
+> `p` represents the address *A* of a byte in memory. An object *X* that
+> is within its lifetime\[basic.life\] and whose type is
+> similar\[conv.qual\] to `T` is located at the address *A*. All bytes
+> of storage that would be reachable through\[basic.compound\] the
+> result are reachable through `p`.
+>
+> *Returns:*
+>
+> A value of type `T*` that points to *X*.
+>
+> *Remarks:*
+>
+> An invocation of this function may be used in a core constant
+> expression if and only if the (converted) value of its argument may be
+> used in place of the function invocation.
+>
+> \[*Note 14*: If a new object is created in storage occupied by an
+> existing object of the same type, a pointer to the original object can
+> be used to refer to the new object unless its complete object is a
+> const object or it is a base class subobject; in the latter cases,
+> this function can be used to obtain a usable pointer to the new
+> object. See \[basic.life\]. — *end note*\]
+>
+> \[*Example 4*:
+>
+>     struct X { int n; };
+>     const X *p = new const X{3};
+>     const int a = p->n;
+>     new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new object[basic.life] because its type is \keyword{const}
+>     const int b = p->n;                 // undefined behavior
+>     const int c = std::launder(p)->n;   // OK
+>
+> — *end example*\]
 
 ### Hardware interference size <a id="hardware.interference">[hardware.interference]</a>
 
@@ -2170,7 +2181,7 @@ concurrently-accessed objects to avoid additional performance
 degradation due to contention introduced by the implementation. It shall
 be at least `alignof(max_align_t)`.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 struct keep_apart {
@@ -2189,7 +2200,7 @@ This number is the maximum recommended size of contiguous memory
 occupied by two objects accessed with temporal locality by concurrent
 threads. It shall be at least `alignof(max_align_t)`.
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 struct together {
@@ -2254,55 +2265,55 @@ differ between programs.
 constexpr bool operator==(const type_info& rhs) const noexcept;
 ```
 
-***Effects:***
-
-Compares the current object with `rhs`.
-
-***Returns:***
-
-`true` if the two values describe the same type.
+> *Effects:*
+>
+> Compares the current object with `rhs`.
+>
+> *Returns:*
+>
+> `true` if the two values describe the same type.
 
 ``` cpp
 bool before(const type_info& rhs) const noexcept;
 ```
 
-***Effects:***
-
-Compares the current object with `rhs`.
-
-***Returns:***
-
-`true` if `*this` precedes `rhs` in the implementation’s collation
-order.
+> *Effects:*
+>
+> Compares the current object with `rhs`.
+>
+> *Returns:*
+>
+> `true` if `*this` precedes `rhs` in the implementation’s collation
+> order.
 
 ``` cpp
 size_t hash_code() const noexcept;
 ```
 
-***Returns:***
-
-An unspecified value, except that within a single execution of the
-program, it shall return the same value for any two `type_info` objects
-which compare equal.
-
-***Remarks:***
-
-An implementation should return different values for two `type_info`
-objects which do not compare equal.
+> *Returns:*
+>
+> An unspecified value, except that within a single execution of the
+> program, it shall return the same value for any two `type_info`
+> objects which compare equal.
+>
+> *Remarks:*
+>
+> An implementation should return different values for two `type_info`
+> objects which do not compare equal.
 
 ``` cpp
 const char* name() const noexcept;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
-
-***Remarks:***
-
-The message may be a null-terminated multibyte
-string\[multibyte.strings\], suitable for conversion and display as a
-`wstring`\[string.classes,locale.codecvt\].
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
+>
+> *Remarks:*
+>
+> The message may be a null-terminated multibyte
+> string\[multibyte.strings\], suitable for conversion and display as a
+> `wstring`\[string.classes,locale.codecvt\].
 
 ### Class `bad_cast` <a id="bad.cast">[bad.cast]</a>
 
@@ -2324,9 +2335,9 @@ expression [expr.dynamic.cast].
 const char* what() const noexcept override;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
 
 ### Class `bad_typeid` <a id="bad.typeid">[bad.typeid]</a>
 
@@ -2348,9 +2359,9 @@ by the implementation to report a null pointer in a `typeid` expression
 const char* what() const noexcept override;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
 
 ## Source location <a id="support.srcloc">[support.srcloc]</a>
 
@@ -2428,46 +2439,48 @@ following conditions is `true`:
 static consteval source_location current() noexcept;
 ```
 
-***Returns:***
-
-- When invoked by a function call whose *postfix-expression* is a
-  (possibly parenthesized) *id-expression* naming `current`, returns a
-  `source_location` with an *implementation-defined* value. The value
-  should be affected by `#line`\[cpp.line\] in the same manner as for
-  \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only data
-  members of the returned `source_location` object are indicated in
-  \[support.srcloc.current\].
-
-  <div class="libefftabvalue">
-
-  Value of object returned by `current` support.srcloc.current `line_` &
-  A presumed line number\[cpp.predefined\]. Line numbers are presumed to
-  be 1-indexed; however, an implementation is encouraged to use 0 when
-  the line number is unknown.  
-  `column_` & An *implementation-defined* value denoting some offset
-  from the start of the line denoted by `line_`. Column numbers are
-  presumed to be 1-indexed; however, an implementation is encouraged to
-  use 0 when the column number is unknown.  
-  `file_name_` & A presumed name of the current source
-  file\[cpp.predefined\] as an NTBS.  
-  `function_name_` & A name of the current function such as in
-  \_\_func\_\_\[dcl.fct.def.general\] if any, an empty string
-  otherwise.  
-
-  </div>
-
-- Otherwise, when invoked in some other way, returns a `source_location`
-  whose data members are initialized with valid but unspecified values.
-
-***Remarks:***
-
-Any call to `current` that appears as a default member
-initializer\[class.mem\], or as a subexpression thereof, should
-correspond to the location of the constructor definition or aggregate
-initialization that uses the default member initializer. Any call to
-`current` that appears as a default argument\[dcl.fct.default\], or as a
-subexpression thereof, should correspond to the location of the
-invocation of the function that uses the default argument\[expr.call\].
+> *Returns:*
+>
+> - When invoked by a function call whose *postfix-expression* is a
+>   (possibly parenthesized) *id-expression* naming `current`, returns a
+>   `source_location` with an *implementation-defined* value. The value
+>   should be affected by `#line`\[cpp.line\] in the same manner as for
+>   \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only
+>   data members of the returned `source_location` object are indicated
+>   in \[support.srcloc.current\].
+>
+>   <div class="libefftabvalue">
+>
+>   Value of object returned by `current` support.srcloc.current `line_`
+>   & A presumed line number\[cpp.predefined\]. Line numbers are
+>   presumed to be 1-indexed; however, an implementation is encouraged
+>   to use 0 when the line number is unknown.  
+>   `column_` & An *implementation-defined* value denoting some offset
+>   from the start of the line denoted by `line_`. Column numbers are
+>   presumed to be 1-indexed; however, an implementation is encouraged
+>   to use 0 when the column number is unknown.  
+>   `file_name_` & A presumed name of the current source
+>   file\[cpp.predefined\] as an NTBS.  
+>   `function_name_` & A name of the current function such as in
+>   \_\_func\_\_\[dcl.fct.def.general\] if any, an empty string
+>   otherwise.  
+>
+>   </div>
+>
+> - Otherwise, when invoked in some other way, returns a
+>   `source_location` whose data members are initialized with valid but
+>   unspecified values.
+>
+> *Remarks:*
+>
+> Any call to `current` that appears as a default member
+> initializer\[class.mem\], or as a subexpression thereof, should
+> correspond to the location of the constructor definition or aggregate
+> initialization that uses the default member initializer. Any call to
+> `current` that appears as a default argument\[dcl.fct.default\], or as
+> a subexpression thereof, should correspond to the location of the
+> invocation of the function that uses the default
+> argument\[expr.call\].
 
 \[*Example 1*:
 
@@ -2502,9 +2515,9 @@ void g() {
 constexpr source_location() noexcept;
 ```
 
-***Effects:***
-
-The data members are initialized with valid but unspecified values.
+> *Effects:*
+>
+> The data members are initialized with valid but unspecified values.
 
 #### Observers <a id="support.srcloc.obs">[support.srcloc.obs]</a>
 
@@ -2512,33 +2525,33 @@ The data members are initialized with valid but unspecified values.
 constexpr uint_least32_t line() const noexcept;
 ```
 
-***Returns:***
-
-`line_`.
+> *Returns:*
+>
+> `line_`.
 
 ``` cpp
 constexpr uint_least32_t column() const noexcept;
 ```
 
-***Returns:***
-
-`column_`.
+> *Returns:*
+>
+> `column_`.
 
 ``` cpp
 constexpr const char* file_name() const noexcept;
 ```
 
-***Returns:***
-
-`file_name_`.
+> *Returns:*
+>
+> `file_name_`.
 
 ``` cpp
 constexpr const char* function_name() const noexcept;
 ```
 
-***Returns:***
-
-`function_name_`.
+> *Returns:*
+>
+> `function_name_`.
 
 ## Exception handling <a id="support.exception">[support.exception]</a>
 
@@ -2615,34 +2628,34 @@ exception(const exception& rhs) noexcept;
 exception& operator=(const exception& rhs) noexcept;
 ```
 
-***Ensures:***
-
-If `*this` and `rhs` both have dynamic type `exception` then the value
-of the expression `strcmp(what(), rhs.what())` shall equal 0.
+> *Ensures:*
+>
+> If `*this` and `rhs` both have dynamic type `exception` then the value
+> of the expression `strcmp(what(), rhs.what())` shall equal 0.
 
 ``` cpp
 virtual ~exception();
 ```
 
-***Effects:***
-
-Destroys an object of class `exception`.
+> *Effects:*
+>
+> Destroys an object of class `exception`.
 
 ``` cpp
 virtual const char* what() const noexcept;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
-
-***Remarks:***
-
-The message may be a null-terminated multibyte
-string\[multibyte.strings\], suitable for conversion and display as a
-`wstring`\[string.classes,locale.codecvt\]. The return value remains
-valid until the exception object from which it is obtained is destroyed
-or a non- member function of the exception object is called.
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
+>
+> *Remarks:*
+>
+> The message may be a null-terminated multibyte
+> string\[multibyte.strings\], suitable for conversion and display as a
+> `wstring`\[string.classes,locale.codecvt\]. The return value remains
+> valid until the exception object from which it is obtained is
+> destroyed or a non- member function of the exception object is called.
 
 ### Class `bad_exception` <a id="bad.exception">[bad.exception]</a>
 
@@ -2664,9 +2677,9 @@ the `exception_ptr` returned from a call to `current_exception`
 const char* what() const noexcept override;
 ```
 
-***Returns:***
-
-An *implementation-defined* NTBS.
+> *Returns:*
+>
+> An *implementation-defined* NTBS.
 
 ### Abnormal termination <a id="exception.terminate">[exception.terminate]</a>
 
@@ -2676,13 +2689,13 @@ An *implementation-defined* NTBS.
 using terminate_handler = void (*)();
 ```
 
-The type of a to be invoked by `terminate` when terminating exception
-processing.
-
-A `terminate_handler` shall terminate execution of the program without
-returning to the caller.
-
-The implementation’s default `terminate_handler` calls `abort()`.
+> The type of a to be invoked by `terminate` when terminating exception
+> processing.
+>
+> A `terminate_handler` shall terminate execution of the program without
+> returning to the caller.
+>
+> The implementation’s default `terminate_handler` calls `abort()`.
 
 #### `set_terminate` <a id="set.terminate">[set.terminate]</a>
 
@@ -2690,19 +2703,19 @@ The implementation’s default `terminate_handler` calls `abort()`.
 terminate_handler set_terminate(terminate_handler f) noexcept;
 ```
 
-***Effects:***
-
-Establishes the function designated by `f` as the current handler
-function for terminating exception processing.
-
-***Returns:***
-
-The previous `terminate_handler`.
-
-***Remarks:***
-
-It is unspecified whether a null pointer value designates the default
-`terminate_handler`.
+> *Effects:*
+>
+> Establishes the function designated by `f` as the current handler
+> function for terminating exception processing.
+>
+> *Returns:*
+>
+> The previous `terminate_handler`.
+>
+> *Remarks:*
+>
+> It is unspecified whether a null pointer value designates the default
+> `terminate_handler`.
 
 #### `get_terminate` <a id="get.terminate">[get.terminate]</a>
 
@@ -2710,11 +2723,11 @@ It is unspecified whether a null pointer value designates the default
 terminate_handler get_terminate() noexcept;
 ```
 
-***Returns:***
-
-The current `terminate_handler`.
-
-\[*Note 1*: This can be a null pointer value. — *end note*\]
+> *Returns:*
+>
+> The current `terminate_handler`.
+>
+> \[*Note 15*: This can be a null pointer value. — *end note*\]
 
 #### `terminate` <a id="terminate">[terminate]</a>
 
@@ -2722,21 +2735,21 @@ The current `terminate_handler`.
 [[noreturn]] void terminate() noexcept;
 ```
 
-***Effects:***
-
-Calls a `terminate_handler` function. It is unspecified which
-`terminate_handler` function will be called if an exception is active
-during a call to `set_terminate`. Otherwise calls the current
-`terminate_handler` function.
-
-\[*Note 2*: A default `terminate_handler` is always considered a
-callable handler in this context. — *end note*\]
-
-***Remarks:***
-
-Called by the implementation when exception handling must be abandoned
-for any of several reasons\[except.terminate\]. May also be called
-directly by the program.
+> *Effects:*
+>
+> Calls a `terminate_handler` function. It is unspecified which
+> `terminate_handler` function will be called if an exception is active
+> during a call to `set_terminate`. Otherwise calls the current
+> `terminate_handler` function.
+>
+> \[*Note 16*: A default `terminate_handler` is always considered a
+> callable handler in this context. — *end note*\]
+>
+> *Remarks:*
+>
+> Called by the implementation when exception handling must be abandoned
+> for any of several reasons\[except.terminate\]. May also be called
+> directly by the program.
 
 ### `uncaught_exceptions` <a id="uncaught.exceptions">[uncaught.exceptions]</a>
 
@@ -2744,14 +2757,14 @@ directly by the program.
 int uncaught_exceptions() noexcept;
 ```
 
-***Returns:***
-
-The number of uncaught exceptions\[except.uncaught\].
-
-***Remarks:***
-
-When `uncaught_exceptions() > 0`, throwing an exception can result in a
-call of the function `std::terminate`\[except.terminate\].
+> *Returns:*
+>
+> The number of uncaught exceptions\[except.uncaught\].
+>
+> *Remarks:*
+>
+> When `uncaught_exceptions() > 0`, throwing an exception can result in
+> a call of the function `std::terminate`\[except.terminate\].
 
 ### Exception propagation <a id="propagation">[propagation]</a>
 
@@ -2759,103 +2772,103 @@ call of the function `std::terminate`\[except.terminate\].
 using exception_ptr = unspecified;
 ```
 
-The type `exception_ptr` can be used to refer to an exception object.
-
-`exception_ptr` meets the requirements of *Cpp17NullablePointer*
-(\[cpp17.nullablepointer\]).
-
-Two non-null values of type `exception_ptr` are equivalent and compare
-equal if and only if they refer to the same exception.
-
-The default constructor of `exception_ptr` produces the null value of
-the type.
-
-`exception_ptr` shall not be implicitly convertible to any arithmetic,
-enumeration, or pointer type.
-
-\[*Note 3*: An implementation can use a reference-counted smart pointer
-as `exception_ptr`. — *end note*\]
-
-For purposes of determining the presence of a data race, operations on
-`exception_ptr` objects shall access and modify only the `exception_ptr`
-objects themselves and not the exceptions they refer to. Use of
-`rethrow_exception` on `exception_ptr` objects that refer to the same
-exception object shall not introduce a data race.
-
-\[*Note 4*: If `rethrow_exception` rethrows the same exception object
-(rather than a copy), concurrent access to that rethrown exception
-object can introduce a data race. Changes in the number of
-`exception_ptr` objects that refer to a particular exception do not
-introduce a data race. — *end note*\]
+> The type `exception_ptr` can be used to refer to an exception object.
+>
+> `exception_ptr` meets the requirements of *Cpp17NullablePointer*
+> (\[cpp17.nullablepointer\]).
+>
+> Two non-null values of type `exception_ptr` are equivalent and compare
+> equal if and only if they refer to the same exception.
+>
+> The default constructor of `exception_ptr` produces the null value of
+> the type.
+>
+> `exception_ptr` shall not be implicitly convertible to any arithmetic,
+> enumeration, or pointer type.
+>
+> \[*Note 17*: An implementation can use a reference-counted smart
+> pointer as `exception_ptr`. — *end note*\]
+>
+> For purposes of determining the presence of a data race, operations on
+> `exception_ptr` objects shall access and modify only the
+> `exception_ptr` objects themselves and not the exceptions they refer
+> to. Use of `rethrow_exception` on `exception_ptr` objects that refer
+> to the same exception object shall not introduce a data race.
+>
+> \[*Note 18*: If `rethrow_exception` rethrows the same exception object
+> (rather than a copy), concurrent access to that rethrown exception
+> object can introduce a data race. Changes in the number of
+> `exception_ptr` objects that refer to a particular exception do not
+> introduce a data race. — *end note*\]
 
 ``` cpp
 exception_ptr current_exception() noexcept;
 ```
 
-***Returns:***
-
-An `exception_ptr` object that refers to the currently handled
-exception\[except.handle\] or a copy of the currently handled exception,
-or a null `exception_ptr` object if no exception is being handled. The
-referenced object shall remain valid at least as long as there is an
-`exception_ptr` object that refers to it. If the function needs to
-allocate memory and the attempt fails, it returns an `exception_ptr`
-object that refers to an instance of `bad_alloc`. It is unspecified
-whether the return values of two successive calls to `current_exception`
-refer to the same exception object.
-
-\[*Note 5*: That is, it is unspecified whether `current_exception`
-creates a new copy each time it is called. — *end note*\]
-
-If the attempt to copy the current exception object throws an exception,
-the function returns an `exception_ptr` object that refers to the thrown
-exception or, if this is not possible, to an instance of
-`bad_exception`.
-
-\[*Note 6*: The copy constructor of the thrown exception can also fail,
-so the implementation is allowed to substitute a `bad_exception` object
-to avoid infinite recursion. — *end note*\]
+> *Returns:*
+>
+> An `exception_ptr` object that refers to the currently handled
+> exception\[except.handle\] or a copy of the currently handled
+> exception, or a null `exception_ptr` object if no exception is being
+> handled. The referenced object shall remain valid at least as long as
+> there is an `exception_ptr` object that refers to it. If the function
+> needs to allocate memory and the attempt fails, it returns an
+> `exception_ptr` object that refers to an instance of `bad_alloc`. It
+> is unspecified whether the return values of two successive calls to
+> `current_exception` refer to the same exception object.
+>
+> \[*Note 19*: That is, it is unspecified whether `current_exception`
+> creates a new copy each time it is called. — *end note*\]
+>
+> If the attempt to copy the current exception object throws an
+> exception, the function returns an `exception_ptr` object that refers
+> to the thrown exception or, if this is not possible, to an instance of
+> `bad_exception`.
+>
+> \[*Note 20*: The copy constructor of the thrown exception can also
+> fail, so the implementation is allowed to substitute a `bad_exception`
+> object to avoid infinite recursion. — *end note*\]
 
 ``` cpp
 [[noreturn]] void rethrow_exception(exception_ptr p);
 ```
 
-***Preconditions:***
-
-`p` is not a null pointer.
-
-***Effects:***
-
-Let u be the exception object to which `p` refers, or a copy of that
-exception object. It is unspecified whether a copy is made, and memory
-for the copy is allocated in an unspecified way.
-
-- If allocating memory to form u fails, throws an instance of
-  `bad_alloc`;
-
-- otherwise, if copying the exception to which `p` refers to form u
-  throws an exception, throws that exception;
-
-- otherwise, throws u.
+> *Preconditions:*
+>
+> `p` is not a null pointer.
+>
+> *Effects:*
+>
+> Let u be the exception object to which `p` refers, or a copy of that
+> exception object. It is unspecified whether a copy is made, and memory
+> for the copy is allocated in an unspecified way.
+>
+> - If allocating memory to form u fails, throws an instance of
+>   `bad_alloc`;
+>
+> - otherwise, if copying the exception to which `p` refers to form u
+>   throws an exception, throws that exception;
+>
+> - otherwise, throws u.
 
 ``` cpp
 template<class E> exception_ptr make_exception_ptr(E e) noexcept;
 ```
 
-***Effects:***
-
-Creates an `exception_ptr` object that refers to a copy of `e`, as if:
-
-``` cpp
-try {
-  throw e;
-} catch(...) {
-  return current_exception();
-}
-```
-
-\[*Note 7*: This function is provided for convenience and efficiency
-reasons. — *end note*\]
+> *Effects:*
+>
+> Creates an `exception_ptr` object that refers to a copy of `e`, as if:
+>
+> ``` cpp
+> try {
+>   throw e;
+> } catch(...) {
+>   return current_exception();
+> }
+> ```
+>
+> \[*Note 21*: This function is provided for convenience and efficiency
+> reasons. — *end note*\]
 
 ### `nested_exception` <a id="except.nested">[except.nested]</a>
 
@@ -2882,7 +2895,7 @@ The class `nested_exception` is designed for use as a mixin through
 multiple inheritance. It captures the currently handled exception and
 stores it for later use.
 
-\[*Note 8*: `nested_exception` has a virtual destructor to make it a
+\[*Note 1*: `nested_exception` has a virtual destructor to make it a
 polymorphic class. Its presence can be tested for with
 `dynamic_cast`. — *end note*\]
 
@@ -2890,61 +2903,61 @@ polymorphic class. Its presence can be tested for with
 nested_exception() noexcept;
 ```
 
-***Effects:***
-
-The constructor calls `current_exception()` and stores the returned
-value.
+> *Effects:*
+>
+> The constructor calls `current_exception()` and stores the returned
+> value.
 
 ``` cpp
 [[noreturn]] void rethrow_nested() const;
 ```
 
-***Effects:***
-
-If `nested_ptr()` returns a null pointer, the function calls the
-function `std::terminate`. Otherwise, it throws the stored exception
-captured by `*this`.
+> *Effects:*
+>
+> If `nested_ptr()` returns a null pointer, the function calls the
+> function `std::terminate`. Otherwise, it throws the stored exception
+> captured by `*this`.
 
 ``` cpp
 exception_ptr nested_ptr() const noexcept;
 ```
 
-***Returns:***
-
-The stored exception captured by this `nested_exception` object.
+> *Returns:*
+>
+> The stored exception captured by this `nested_exception` object.
 
 ``` cpp
 template<class T> [[noreturn]] void throw_with_nested(T&& t);
 ```
 
-Let `U` be `decay_t<T>`.
-
-***Preconditions:***
-
-`U` meets the *Cpp17CopyConstructible* requirements.
-
-***Throws:***
-
-If
-`is_class_v<U> && !is_final_v<U> && !is_base_of_v<nested_exception, U>`
-is `true`, an exception of unspecified type that is publicly derived
-from both `U` and `nested_exception` and constructed from
-`std::forward<T>(t)`, otherwise `std::forward<T>(t)`.
+> Let `U` be `decay_t<T>`.
+>
+> *Preconditions:*
+>
+> `U` meets the *Cpp17CopyConstructible* requirements.
+>
+> *Throws:*
+>
+> If
+> `is_class_v<U> && !is_final_v<U> && !is_base_of_v<nested_exception, U>`
+> is `true`, an exception of unspecified type that is publicly derived
+> from both `U` and `nested_exception` and constructed from
+> `std::forward<T>(t)`, otherwise `std::forward<T>(t)`.
 
 ``` cpp
 template<class E> void rethrow_if_nested(const E& e);
 ```
 
-***Effects:***
-
-If `E` is not a polymorphic class type, or if `nested_exception` is an
-inaccessible or ambiguous base class of `E`, there is no effect.
-Otherwise, performs:
-
-``` cpp
-if (auto p = dynamic_cast<const nested_exception*>(addressof(e)))
-  p->rethrow_nested();
-```
+> *Effects:*
+>
+> If `E` is not a polymorphic class type, or if `nested_exception` is an
+> inaccessible or ambiguous base class of `E`, there is no effect.
+> Otherwise, performs:
+>
+> ``` cpp
+> if (auto p = dynamic_cast<const nested_exception*>(addressof(e)))
+>   p->rethrow_nested();
+> ```
 
 ## Initializer lists <a id="support.initlist">[support.initlist]</a>
 
@@ -3001,9 +3014,9 @@ If an explicit specialization or partial specialization of
 constexpr initializer_list() noexcept;
 ```
 
-***Ensures:***
-
-`size() == 0`.
+> *Ensures:*
+>
+> `size() == 0`.
 
 ### Initializer list access <a id="support.initlist.access">[support.initlist.access]</a>
 
@@ -3011,30 +3024,30 @@ constexpr initializer_list() noexcept;
 constexpr const E* begin() const noexcept;
 ```
 
-***Returns:***
-
-A pointer to the beginning of the array. If `size() == 0` the values of
-`begin()` and `end()` are unspecified but they shall be identical.
+> *Returns:*
+>
+> A pointer to the beginning of the array. If `size() == 0` the values
+> of `begin()` and `end()` are unspecified but they shall be identical.
 
 ``` cpp
 constexpr const E* end() const noexcept;
 ```
 
-***Returns:***
-
-`begin() + size()`.
+> *Returns:*
+>
+> `begin() + size()`.
 
 ``` cpp
 constexpr size_t size() const noexcept;
 ```
 
-***Returns:***
-
-The number of elements in the array.
-
-***Complexity:***
-
-Constant time.
+> *Returns:*
+>
+> The number of elements in the array.
+>
+> *Complexity:*
+>
+> Constant time.
 
 ### Initializer list range access <a id="support.initlist.range">[support.initlist.range]</a>
 
@@ -3042,17 +3055,17 @@ Constant time.
 template<class E> constexpr const E* begin(initializer_list<E> il) noexcept;
 ```
 
-***Returns:***
-
-`il.begin()`.
+> *Returns:*
+>
+> `il.begin()`.
 
 ``` cpp
 template<class E> constexpr const E* end(initializer_list<E> il) noexcept;
 ```
 
-***Returns:***
-
-`il.end()`.
+> *Returns:*
+>
+> `il.end()`.
 
 ## Comparisons <a id="cmp">[cmp]</a>
 
@@ -3210,9 +3223,9 @@ constexpr bool operator<=(partial_ordering v, unspecified) noexcept;
 constexpr bool operator>=(partial_ordering v, unspecified) noexcept;
 ```
 
-***Returns:***
-
-For `operator`, `v.is_ordered && v.value 0`.
+> *Returns:*
+>
+> For `operator`, `v.is_ordered && v.value 0`.
 
 ``` cpp
 constexpr bool operator< (unspecified, partial_ordering v) noexcept;
@@ -3221,25 +3234,25 @@ constexpr bool operator<=(unspecified, partial_ordering v) noexcept;
 constexpr bool operator>=(unspecified, partial_ordering v) noexcept;
 ```
 
-***Returns:***
-
-For `operator`, `v.is_ordered && 0 v.value`.
+> *Returns:*
+>
+> For `operator`, `v.is_ordered && 0 v.value`.
 
 ``` cpp
 constexpr partial_ordering operator<=>(partial_ordering v, unspecified) noexcept;
 ```
 
-***Returns:***
-
-`v`.
+> *Returns:*
+>
+> `v`.
 
 ``` cpp
 constexpr partial_ordering operator<=>(unspecified, partial_ordering v) noexcept;
 ```
 
-***Returns:***
-
-`v < 0 ? partial_ordering::greater : v > 0 ? partial_ordering::less : v`.
+> *Returns:*
+>
+> `v < 0 ? partial_ordering::greater : v > 0 ? partial_ordering::less : v`.
 
 #### Class `weak_ordering` <a id="cmp.weakord">[cmp.weakord]</a>
 
@@ -3291,13 +3304,13 @@ namespace std {
 constexpr operator partial_ordering() const noexcept;
 ```
 
-***Returns:***
-
-``` cpp
-value == 0 ? partial_ordering::equivalent :
-value < 0  ? partial_ordering::less :
-             partial_ordering::greater
-```
+> *Returns:*
+>
+> ``` cpp
+> value == 0 ? partial_ordering::equivalent :
+> value < 0  ? partial_ordering::less :
+>              partial_ordering::greater
+> ```
 
 ``` cpp
 constexpr bool operator==(weak_ordering v, unspecified) noexcept;
@@ -3307,9 +3320,9 @@ constexpr bool operator<=(weak_ordering v, unspecified) noexcept;
 constexpr bool operator>=(weak_ordering v, unspecified) noexcept;
 ```
 
-***Returns:***
-
-`v.value 0` for `operator`.
+> *Returns:*
+>
+> `v.value 0` for `operator`.
 
 ``` cpp
 constexpr bool operator< (unspecified, weak_ordering v) noexcept;
@@ -3318,25 +3331,25 @@ constexpr bool operator<=(unspecified, weak_ordering v) noexcept;
 constexpr bool operator>=(unspecified, weak_ordering v) noexcept;
 ```
 
-***Returns:***
-
-`0 v.value` for `operator`.
+> *Returns:*
+>
+> `0 v.value` for `operator`.
 
 ``` cpp
 constexpr weak_ordering operator<=>(weak_ordering v, unspecified) noexcept;
 ```
 
-***Returns:***
-
-`v`.
+> *Returns:*
+>
+> `v`.
 
 ``` cpp
 constexpr weak_ordering operator<=>(unspecified, weak_ordering v) noexcept;
 ```
 
-***Returns:***
-
-`v < 0 ? weak_ordering::greater : v > 0 ? weak_ordering::less : v`.
+> *Returns:*
+>
+> `v < 0 ? weak_ordering::greater : v > 0 ? weak_ordering::less : v`.
 
 #### Class `strong_ordering` <a id="cmp.strongord">[cmp.strongord]</a>
 
@@ -3391,25 +3404,25 @@ namespace std {
 constexpr operator partial_ordering() const noexcept;
 ```
 
-***Returns:***
-
-``` cpp
-value == 0 ? partial_ordering::equivalent :
-value < 0  ? partial_ordering::less :
-             partial_ordering::greater
-```
+> *Returns:*
+>
+> ``` cpp
+> value == 0 ? partial_ordering::equivalent :
+> value < 0  ? partial_ordering::less :
+>              partial_ordering::greater
+> ```
 
 ``` cpp
 constexpr operator weak_ordering() const noexcept;
 ```
 
-***Returns:***
-
-``` cpp
-value == 0 ? weak_ordering::equivalent :
-value < 0  ? weak_ordering::less :
-             weak_ordering::greater
-```
+> *Returns:*
+>
+> ``` cpp
+> value == 0 ? weak_ordering::equivalent :
+> value < 0  ? weak_ordering::less :
+>              weak_ordering::greater
+> ```
 
 ``` cpp
 constexpr bool operator==(strong_ordering v, unspecified) noexcept;
@@ -3419,9 +3432,9 @@ constexpr bool operator<=(strong_ordering v, unspecified) noexcept;
 constexpr bool operator>=(strong_ordering v, unspecified) noexcept;
 ```
 
-***Returns:***
-
-`v.value 0` for `operator`.
+> *Returns:*
+>
+> `v.value 0` for `operator`.
 
 ``` cpp
 constexpr bool operator< (unspecified, strong_ordering v) noexcept;
@@ -3430,25 +3443,25 @@ constexpr bool operator<=(unspecified, strong_ordering v) noexcept;
 constexpr bool operator>=(unspecified, strong_ordering v) noexcept;
 ```
 
-***Returns:***
-
-`0 v.value` for `operator`.
+> *Returns:*
+>
+> `0 v.value` for `operator`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(strong_ordering v, unspecified) noexcept;
 ```
 
-***Returns:***
-
-`v`.
+> *Returns:*
+>
+> `v`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(unspecified, strong_ordering v) noexcept;
 ```
 
-***Returns:***
-
-`v < 0 ? strong_ordering::greater : v > 0 ? strong_ordering::less : v`.
+> *Returns:*
+>
+> `v < 0 ? strong_ordering::greater : v > 0 ? strong_ordering::less : v`.
 
 ### Class template `common_comparison_category` <a id="cmp.common">[cmp.common]</a>
 
@@ -3467,14 +3480,14 @@ struct common_comparison_category {
 };
 ```
 
-***Remarks:***
-
-The member *typedef-name* `type` denotes the common comparison
-type\[class.spaceship\] of `Ts...`, the expanded parameter pack, or if
-any element of `Ts` is not a comparison category type.
-
-\[*Note 3*: This is `std::strong_ordering` if the expansion is
-empty. — *end note*\]
+> *Remarks:*
+>
+> The member *typedef-name* `type` denotes the common comparison
+> type\[class.spaceship\] of `Ts...`, the expanded parameter pack, or if
+> any element of `Ts` is not a comparison category type.
+>
+> \[*Note 22*: This is `std::strong_ordering` if the expansion is
+> empty. — *end note*\]
 
 ### Concept  <a id="cmp.concept">[cmp.concept]</a>
 
@@ -3630,7 +3643,7 @@ expression `strong_order(E, F)` is expression-equivalent
 
 - Otherwise, `strong_order(E, F)` is ill-formed.
 
-\[*Note 4*: Ill-formed cases above result in substitution failure when
+\[*Note 3*: Ill-formed cases above result in substitution failure when
 `strong_order(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -3679,7 +3692,7 @@ expression `weak_order(E, F)` is expression-equivalent
 
 - Otherwise, `weak_order(E, F)` is ill-formed.
 
-\[*Note 5*: Ill-formed cases above result in substitution failure when
+\[*Note 4*: Ill-formed cases above result in substitution failure when
 `weak_order(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -3704,7 +3717,7 @@ expression `partial_order(E, F)` is expression-equivalent
 
 - Otherwise, `partial_order(E, F)` is ill-formed.
 
-\[*Note 6*: Ill-formed cases above result in substitution failure when
+\[*Note 5*: Ill-formed cases above result in substitution failure when
 `partial_order(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -3732,7 +3745,7 @@ expression-equivalent [defns.expression.equivalent] to:
 
 - Otherwise, `compare_strong_order_fallback(E, F)` is ill-formed.
 
-\[*Note 7*: Ill-formed cases above result in substitution failure when
+\[*Note 6*: Ill-formed cases above result in substitution failure when
 `compare_strong_order_fallback(E, F)` appears in the immediate context
 of a template instantiation. — *end note*\]
 
@@ -3760,7 +3773,7 @@ expression-equivalent [defns.expression.equivalent] to:
 
 - Otherwise, `compare_weak_order_fallback(E, F)` is ill-formed.
 
-\[*Note 8*: Ill-formed cases above result in substitution failure when
+\[*Note 7*: Ill-formed cases above result in substitution failure when
 `compare_weak_order_fallback(E, F)` appears in the immediate context of
 a template instantiation. — *end note*\]
 
@@ -3789,7 +3802,7 @@ expression-equivalent [defns.expression.equivalent] to:
 
 - Otherwise, `compare_partial_order_fallback(E, F)` is ill-formed.
 
-\[*Note 9*: Ill-formed cases above result in substitution failure when
+\[*Note 8*: Ill-formed cases above result in substitution failure when
 `compare_partial_order_fallback(E, F)` appears in the immediate context
 of a template instantiation. — *end note*\]
 
@@ -3944,37 +3957,37 @@ constexpr coroutine_handle() noexcept;
 constexpr coroutine_handle(nullptr_t) noexcept;
 ```
 
-***Ensures:***
-
-`address() == nullptr`.
+> *Ensures:*
+>
+> `address() == nullptr`.
 
 ``` cpp
 static coroutine_handle from_promise(Promise& p);
 ```
 
-***Preconditions:***
-
-`p` is a reference to a promise object of a coroutine.
-
-***Ensures:***
-
-`addressof(h.promise()) == addressof(p)`.
-
-***Returns:***
-
-A coroutine handle `h` referring to the coroutine.
+> *Preconditions:*
+>
+> `p` is a reference to a promise object of a coroutine.
+>
+> *Ensures:*
+>
+> `addressof(h.promise()) == addressof(p)`.
+>
+> *Returns:*
+>
+> A coroutine handle `h` referring to the coroutine.
 
 ``` cpp
 coroutine_handle& operator=(nullptr_t) noexcept;
 ```
 
-***Ensures:***
-
-`address() == nullptr`.
-
-***Returns:***
-
-`*this`.
+> *Ensures:*
+>
+> `address() == nullptr`.
+>
+> *Returns:*
+>
+> `*this`.
 
 #### Conversion <a id="coroutine.handle.conv">[coroutine.handle.conv]</a>
 
@@ -3982,9 +3995,9 @@ coroutine_handle& operator=(nullptr_t) noexcept;
 constexpr operator coroutine_handle<>() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return coroutine_handle<>::from_address(address());`
+> *Effects:*
+>
+> Equivalent to: `return coroutine_handle<>::from_address(address());`
 
 #### Export/import <a id="coroutine.handle.export.import">[coroutine.handle.export.import]</a>
 
@@ -3992,35 +4005,35 @@ Equivalent to: `return coroutine_handle<>::from_address(address());`
 constexpr void* address() const noexcept;
 ```
 
-***Returns:***
-
-`ptr`.
+> *Returns:*
+>
+> `ptr`.
 
 ``` cpp
 static constexpr coroutine_handle<> coroutine_handle<>::from_address(void* addr);
 ```
 
-***Preconditions:***
-
-`addr` was obtained via a prior call to `address` on an object whose
-type is a specialization of `coroutine_handle`.
-
-***Ensures:***
-
-`from_address(address()) == *this`.
+> *Preconditions:*
+>
+> `addr` was obtained via a prior call to `address` on an object whose
+> type is a specialization of `coroutine_handle`.
+>
+> *Ensures:*
+>
+> `from_address(address()) == *this`.
 
 ``` cpp
 static constexpr coroutine_handle<Promise> coroutine_handle<Promise>::from_address(void* addr);
 ```
 
-***Preconditions:***
-
-`addr` was obtained via a prior call to `address` on an object of type
- `coroutine_handle<Promise>`.
-
-***Ensures:***
-
-`from_address(address()) == *this`.
+> *Preconditions:*
+>
+> `addr` was obtained via a prior call to `address` on an object of type
+>  `coroutine_handle<Promise>`.
+>
+> *Ensures:*
+>
+> `from_address(address()) == *this`.
 
 #### Observers <a id="coroutine.handle.observers">[coroutine.handle.observers]</a>
 
@@ -4028,22 +4041,22 @@ static constexpr coroutine_handle<Promise> coroutine_handle<Promise>::from_addre
 constexpr explicit operator bool() const noexcept;
 ```
 
-***Returns:***
-
-`address() != nullptr`.
+> *Returns:*
+>
+> `address() != nullptr`.
 
 ``` cpp
 bool done() const;
 ```
 
-***Preconditions:***
-
-`*this` refers to a suspended coroutine.
-
-***Returns:***
-
-`true` if the coroutine is suspended at its final suspend point,
-otherwise `false`.
+> *Preconditions:*
+>
+> `*this` refers to a suspended coroutine.
+>
+> *Returns:*
+>
+> `true` if the coroutine is suspended at its final suspend point,
+> otherwise `false`.
 
 #### Resumption <a id="coroutine.handle.resumption">[coroutine.handle.resumption]</a>
 
@@ -4065,26 +4078,26 @@ void operator()() const;
 void resume() const;
 ```
 
-***Preconditions:***
-
-`*this` refers to a suspended coroutine. The coroutine is not suspended
-at its final suspend point.
-
-***Effects:***
-
-Resumes the execution of the coroutine.
+> *Preconditions:*
+>
+> `*this` refers to a suspended coroutine. The coroutine is not
+> suspended at its final suspend point.
+>
+> *Effects:*
+>
+> Resumes the execution of the coroutine.
 
 ``` cpp
 void destroy() const;
 ```
 
-***Preconditions:***
-
-`*this` refers to a suspended coroutine.
-
-***Effects:***
-
-Destroys the coroutine\[dcl.fct.def.coroutine\].
+> *Preconditions:*
+>
+> `*this` refers to a suspended coroutine.
+>
+> *Effects:*
+>
+> Destroys the coroutine\[dcl.fct.def.coroutine\].
 
 #### Promise access <a id="coroutine.handle.promise">[coroutine.handle.promise]</a>
 
@@ -4092,13 +4105,13 @@ Destroys the coroutine\[dcl.fct.def.coroutine\].
 Promise& promise() const;
 ```
 
-***Preconditions:***
-
-`*this` refers to a coroutine.
-
-***Returns:***
-
-A reference to the promise of the coroutine.
+> *Preconditions:*
+>
+> `*this` refers to a coroutine.
+>
+> *Returns:*
+>
+> A reference to the promise of the coroutine.
 
 #### Comparison operators <a id="coroutine.handle.compare">[coroutine.handle.compare]</a>
 
@@ -4106,17 +4119,17 @@ A reference to the promise of the coroutine.
 constexpr bool operator==(coroutine_handle<> x, coroutine_handle<> y) noexcept;
 ```
 
-***Returns:***
-
-`x.address() == y.address()`.
+> *Returns:*
+>
+> `x.address() == y.address()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(coroutine_handle<> x, coroutine_handle<> y) noexcept;
 ```
 
-***Returns:***
-
-`compare_three_way()(x.address(), y.address())`.
+> *Returns:*
+>
+> `compare_three_way()(x.address(), y.address())`.
 
 #### Hash support <a id="coroutine.handle.hash">[coroutine.handle.hash]</a>
 
@@ -4124,7 +4137,7 @@ constexpr strong_ordering operator<=>(coroutine_handle<> x, coroutine_handle<> y
 template<class P> struct hash<coroutine_handle<P>>;
 ```
 
-The specialization is enabled\[unord.hash\].
+> The specialization is enabled\[unord.hash\].
 
 ### No-op coroutines <a id="coroutine.noop">[coroutine.noop]</a>
 
@@ -4134,8 +4147,8 @@ The specialization is enabled\[unord.hash\].
 struct noop_coroutine_promise {};
 ```
 
-The class `noop_coroutine_promise` defines the promise type for the
-coroutine referred to by `noop_coroutine_handle`\[coroutine.syn\].
+> The class `noop_coroutine_promise` defines the promise type for the
+> coroutine referred to by `noop_coroutine_handle`\[coroutine.syn\].
 
 #### Class `coroutine_handle<noop_coroutine_promise>` <a id="coroutine.handle.noop">[coroutine.handle.noop]</a>
 
@@ -4174,9 +4187,9 @@ namespace std {
 constexpr operator coroutine_handle<>() const noexcept;
 ```
 
-***Effects:***
-
-Equivalent to: `return coroutine_handle<>::from_address(address());`
+> *Effects:*
+>
+> Equivalent to: `return coroutine_handle<>::from_address(address());`
 
 ##### Observers <a id="coroutine.handle.noop.observers">[coroutine.handle.noop.observers]</a>
 
@@ -4184,17 +4197,17 @@ Equivalent to: `return coroutine_handle<>::from_address(address());`
 constexpr explicit operator bool() const noexcept;
 ```
 
-***Returns:***
-
-`true`.
+> *Returns:*
+>
+> `true`.
 
 ``` cpp
 constexpr bool done() const noexcept;
 ```
 
-***Returns:***
-
-`false`.
+> *Returns:*
+>
+> `false`.
 
 ##### Resumption <a id="coroutine.handle.noop.resumption">[coroutine.handle.noop.resumption]</a>
 
@@ -4204,15 +4217,15 @@ constexpr void resume() const noexcept;
 constexpr void destroy() const noexcept;
 ```
 
-***Effects:***
-
-None.
-
-***Remarks:***
-
-If `noop_coroutine_handle` is converted to `coroutine_handle<>`, calls
-to `operator()`, `resume` and `destroy` on that handle will also have no
-observable effects.
+> *Effects:*
+>
+> None.
+>
+> *Remarks:*
+>
+> If `noop_coroutine_handle` is converted to `coroutine_handle<>`, calls
+> to `operator()`, `resume` and `destroy` on that handle will also have
+> no observable effects.
 
 ##### Promise access <a id="coroutine.handle.noop.promise">[coroutine.handle.noop.promise]</a>
 
@@ -4220,9 +4233,10 @@ observable effects.
 noop_coroutine_promise& promise() const noexcept;
 ```
 
-***Returns:***
-
-A reference to the promise object associated with this coroutine handle.
+> *Returns:*
+>
+> A reference to the promise object associated with this coroutine
+> handle.
 
 ##### Address <a id="coroutine.handle.noop.address">[coroutine.handle.noop.address]</a>
 
@@ -4230,13 +4244,13 @@ A reference to the promise object associated with this coroutine handle.
 constexpr void* address() const noexcept;
 ```
 
-***Returns:***
-
-`ptr`.
-
-***Remarks:***
-
-A `noop_coroutine_handle`’s `ptr` is always a non-null pointer value.
+> *Returns:*
+>
+> `ptr`.
+>
+> *Remarks:*
+>
+> A `noop_coroutine_handle`’s `ptr` is always a non-null pointer value.
 
 #### Function `noop_coroutine` <a id="coroutine.noop.coroutine">[coroutine.noop.coroutine]</a>
 
@@ -4244,15 +4258,15 @@ A `noop_coroutine_handle`’s `ptr` is always a non-null pointer value.
 noop_coroutine_handle noop_coroutine() noexcept;
 ```
 
-***Returns:***
-
-A handle to a coroutine that has no observable effects when resumed or
-destroyed.
-
-***Remarks:***
-
-A handle returned from `noop_coroutine` may or may not compare equal to
-a handle returned from another invocation of `noop_coroutine`.
+> *Returns:*
+>
+> A handle to a coroutine that has no observable effects when resumed or
+> destroyed.
+>
+> *Remarks:*
+>
+> A handle returned from `noop_coroutine` may or may not compare equal
+> to a handle returned from another invocation of `noop_coroutine`.
 
 ### Trivial awaitables <a id="coroutine.trivial.awaitables">[coroutine.trivial.awaitables]</a>
 
@@ -4405,7 +4419,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - a call to any standard library function, except for plain lock-free
   atomic operations and functions explicitly identified as signal-safe;
 
-  \[*Note 1*: This implicitly excludes the use of `new` and `delete`
+  \[*Note 23*: This implicitly excludes the use of `new` and `delete`
   expressions that rely on a library-provided memory
   allocator. — *end note*\]
 
