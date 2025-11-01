@@ -3,9 +3,9 @@ current_file: concepts
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Concepts library <a id="concepts">[concepts]</a>
+# Concepts library <a id="concepts">[[concepts]]</a>
 
-## General <a id="concepts.general">[concepts.general]</a>
+## General <a id="concepts.general">[[concepts.general]]</a>
 
 This Clause describes library components that C++ programs may use to
 perform compile-time validation of template arguments and perform
@@ -15,19 +15,19 @@ programs.
 
 The following subclauses describe language-related concepts, comparison
 concepts, object concepts, and callable concepts as summarized in
-[concepts.summary].
+[[concepts.summary]].
 
 **Table: Fundamental concepts library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [concepts.equality] | Equality preservation |
-| [concepts.lang] | Language-related concepts | `<concepts>` |
-| [concepts.compare] | Comparison concepts |
-| [concepts.object] | Object concepts |
-| [concepts.callable] | Callable concepts |
+| [[concepts.equality]] | Equality preservation |
+| [[concepts.lang]] | Language-related concepts | `<concepts>` |
+| [[concepts.compare]] | Comparison concepts |
+| [[concepts.object]] | Object concepts |
+| [[concepts.callable]] | Callable concepts |
 
-## Equality preservation <a id="concepts.equality">[concepts.equality]</a>
+## Equality preservation <a id="concepts.equality">[[concepts.equality]]</a>
 
 An expression is *equality-preserving* if, given equal inputs, the
 expression results in equal outputs. The inputs to an expression are the
@@ -36,10 +36,10 @@ expression’s result and all operands modified by the expression. For the
 purposes of this subclause, the operands of an expression are the
 largest subexpressions that include only:
 
-- an *id-expression* [expr.prim.id], and
+- an *id-expression* [[expr.prim.id]], and
 
 - invocations of the library function templates `std::move`,
-  `std::forward`, and `std::declval` [forward], [declval].
+  `std::forward`, and `std::declval` [[forward]], [[declval]].
 
 \[*Example 1*: The operands of the expression `a = std::move(b)` are `a`
 and `std::move(b)`. — *end example*\]
@@ -146,7 +146,7 @@ implementation diagnoses as ill-formed a program that requires `C<T>`.
 
 — *end example*\]
 
-## Header `<concepts>` synopsis <a id="concepts.syn">[concepts.syn]</a>
+## Header `<concepts>` synopsis <a id="concepts.syn">[[concepts.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -267,15 +267,15 @@ namespace std {
 }
 ```
 
-## Language-related concepts <a id="concepts.lang">[concepts.lang]</a>
+## Language-related concepts <a id="concepts.lang">[[concepts.lang]]</a>
 
-### General <a id="concepts.lang.general">[concepts.lang.general]</a>
+### General <a id="concepts.lang.general">[[concepts.lang.general]]</a>
 
-Subclause [concepts.lang] contains the definition of concepts
+Subclause [[concepts.lang]] contains the definition of concepts
 corresponding to language features. These concepts express relationships
 between types, type classifications, and fundamental type properties.
 
-### Concept  <a id="concept.same">[concept.same]</a>
+### Concept  <a id="concept.same">[[concept.same]]</a>
 
 ``` cpp
 template<class T, class U>
@@ -288,7 +288,7 @@ template<class T, class U>
 > \[*Note 1*: `same_as``<T, U>` subsumes `same_as``<U, T>` and vice
 > versa. — *end note*\]
 
-### Concept  <a id="concept.derived">[concept.derived]</a>
+### Concept  <a id="concept.derived">[[concept.derived]]</a>
 
 ``` cpp
 template<class Derived, class Base>
@@ -302,7 +302,7 @@ template<class Derived, class Base>
 > `Derived` and `Base` are the same class type ignoring
 > cv-qualifiers. — *end note*\]
 
-### Concept  <a id="concept.convertible">[concept.convertible]</a>
+### Concept  <a id="concept.convertible">[[concept.convertible]]</a>
 
 Given types `From` and `To` and an expression `E` whose type and value
 category are the same as those of `declval<From>()`,
@@ -344,7 +344,7 @@ template<class From, class To>
 >   - Otherwise, the object referred to by `f()` is not modified by
 >     either above expression.
 
-### Concept  <a id="concept.commonref">[concept.commonref]</a>
+### Concept  <a id="concept.commonref">[[concept.commonref]]</a>
 
 For two types `T` and `U`, if `common_reference_t<T, U>` is well-formed
 and denotes a type `C` such that both `convertible_to<T, C>` and
@@ -377,7 +377,7 @@ template<class T, class U>
 > `common_reference_with` by specializing the `basic_common_reference`
 > class template\[meta.trans.other\]. — *end note*\]
 
-### Concept  <a id="concept.common">[concept.common]</a>
+### Concept  <a id="concept.common">[[concept.common]]</a>
 
 If `T` and `U` can both be explicitly converted to some third type, `C`,
 then `T` and `U` share a *common type*, `C`.
@@ -418,7 +418,7 @@ template<class T, class U>
 > specializing the `common_type` class
 > template\[meta.trans.other\]. — *end note*\]
 
-### Arithmetic concepts <a id="concepts.arithmetic">[concepts.arithmetic]</a>
+### Arithmetic concepts <a id="concepts.arithmetic">[[concepts.arithmetic]]</a>
 
 ``` cpp
 template<class T>
@@ -439,7 +439,7 @@ template<class T>
 > not unsigned integer types\[basic.fundamental\]; for example,
 > `bool`. — *end note*\]
 
-### Concept  <a id="concept.assignable">[concept.assignable]</a>
+### Concept  <a id="concept.assignable">[[concept.assignable]]</a>
 
 ``` cpp
 template<class LHS, class RHS>
@@ -480,7 +480,7 @@ template<class LHS, class RHS>
 > object `x` can result in a modification of some other object `y`, then
 > `x = y` is likely not in the domain of `=`. — *end note*\]
 
-### Concept  <a id="concept.swappable">[concept.swappable]</a>
+### Concept  <a id="concept.swappable">[[concept.swappable]]</a>
 
 Let `t1` and `t2` be equality-preserving expressions that denote
 distinct equal objects of type `T`, and let `u1` and `u2` similarly
@@ -502,13 +502,13 @@ if the operation modifies neither `t2` nor `u2` and:
   `common_reference_t<decltype((t1)), decltype((u1))>`.
 
 The name `ranges::swap` denotes a customization point object
-[customization.point.object]. The expression `ranges::swap(E1, E2)` for
-subexpressions `E1` and `E2` is expression-equivalent to an expression
-`S` determined as follows:
+[[customization.point.object]]. The expression `ranges::swap(E1, E2)`
+for subexpressions `E1` and `E2` is expression-equivalent to an
+expression `S` determined as follows:
 
 - `S` is `(void)swap(E1, E2)`
 
-  if `E1` or `E2` has class or enumeration type [basic.compound] and
+  if `E1` or `E2` has class or enumeration type [[basic.compound]] and
   that expression is valid, with overload resolution performed in a
   context that includes the declaration
 
@@ -524,10 +524,10 @@ subexpressions `E1` and `E2` is expression-equivalent to an expression
   \[*Note 8*: This precludes calling unconstrained program-defined
   overloads of `swap`. When the deleted overload is viable,
   program-defined overloads need to be more specialized
-  [temp.func.order] to be selected. — *end note*\]
+  [[temp.func.order]] to be selected. — *end note*\]
 
 - Otherwise, if `E1` and `E2` are lvalues of array types
-  [basic.compound] with equal extent and `ranges::swap(*E1, *E2)` is a
+  [[basic.compound]] with equal extent and `ranges::swap(*E1, *E2)` is a
   valid expression, `S` is `(void)ranges::swap_ranges(E1, E2)`, except
   that `noexcept(S)` is equal to `noexcept(ranges::swap(*E1, *E2))`.
 
@@ -536,10 +536,10 @@ subexpressions `E1` and `E2` is expression-equivalent to an expression
   expression that exchanges the denoted values. `S` is a constant
   expression if
 
-  - `T` is a literal type [term.literal.type],
+  - `T` is a literal type [[term.literal.type]],
 
   - both `E1 = std::move(E2)` and `E2 = std::move(E1)` are constant
-    subexpressions [defns.const.subexpr], and
+    subexpressions [[defns.const.subexpr]], and
 
   - the full-expressions of the initializers in the declarations
 
@@ -631,7 +631,7 @@ int main() {
 
 — *end example*\]
 
-### Concept  <a id="concept.destructible">[concept.destructible]</a>
+### Concept  <a id="concept.destructible">[[concept.destructible]]</a>
 
 The `destructible` concept specifies properties of all types, instances
 of which can be destroyed at the end of their lifetime, or reference
@@ -647,7 +647,7 @@ template<class T>
 > destructors that are potentially throwing, even if a particular
 > invocation of the destructor does not actually throw. — *end note*\]
 
-### Concept  <a id="concept.constructible">[concept.constructible]</a>
+### Concept  <a id="concept.constructible">[[concept.constructible]]</a>
 
 The `constructible_from` concept constrains the initialization of a
 variable of a given type with a particular set of argument types.
@@ -657,7 +657,7 @@ template<class T, class... Args>
   concept constructible_from = destructible<T> && is_constructible_v<T, Args...>;
 ```
 
-### Concept  <a id="concept.default.init">[concept.default.init]</a>
+### Concept  <a id="concept.default.init">[[concept.default.init]]</a>
 
 ``` cpp
 template<class T>
@@ -681,7 +681,7 @@ template<class T>
 > `T`. Only the validity of the immediate context of the variable
 > initialization is considered.
 
-### Concept  <a id="concept.moveconstructible">[concept.moveconstructible]</a>
+### Concept  <a id="concept.moveconstructible">[[concept.moveconstructible]]</a>
 
 ``` cpp
 template<class T>
@@ -699,7 +699,7 @@ template<class T>
 > - If `T` is not , `rv`’s resulting state is valid but
 >   unspecified\[lib.types.movedfrom\]; otherwise, it is unchanged.
 
-### Concept  <a id="concept.copyconstructible">[concept.copyconstructible]</a>
+### Concept  <a id="concept.copyconstructible">[[concept.copyconstructible]]</a>
 
 ``` cpp
 template<class T>
@@ -719,11 +719,11 @@ template<class T>
 >
 > - `T(v)` is equal to `v` and does not modify `v`.
 
-## Comparison concepts <a id="concepts.compare">[concepts.compare]</a>
+## Comparison concepts <a id="concepts.compare">[[concepts.compare]]</a>
 
-### General <a id="concepts.compare.general">[concepts.compare.general]</a>
+### General <a id="concepts.compare.general">[[concepts.compare.general]]</a>
 
-Subclause [concepts.compare] describes concepts that establish
+Subclause [[concepts.compare]] describes concepts that establish
 relationships and orderings on values of possibly differing object
 types.
 
@@ -735,12 +735,13 @@ be:
 
 - `static_cast<const C&>(std::move(E))` otherwise.
 
-### Boolean testability <a id="concept.booleantestable">[concept.booleantestable]</a>
+### Boolean testability <a id="concept.booleantestable">[[concept.booleantestable]]</a>
 
 The exposition-only `boolean-testable` concept specifies the
 requirements on expressions that are convertible to `bool` and for which
-the logical operators [expr.log.and], [expr.log.or], [expr.unary.op]
-have the conventional semantics.
+the logical operators
+[[expr.log.and]], [[expr.log.or]], [[expr.unary.op]] have the
+conventional semantics.
 
 ``` cpp
 template<class T>
@@ -754,7 +755,7 @@ Let `e` be an expression such that `decltype((e))` is `T`. `T` models
   names `operator&&` and `operator||` in the scope of
   `remove_cvref_t<T>` finds nothing; and
 
-- argument-dependent lookup [basic.lookup.argdep] for the names
+- argument-dependent lookup [[basic.lookup.argdep]] for the names
   `operator&&` and `operator||` with `T` as the only argument type finds
   no disqualifying declaration (defined below).
 
@@ -762,15 +763,15 @@ A *disqualifying parameter* is a function parameter whose declared type
 `P`
 
 - is not dependent on a template parameter, and there exists an implicit
-  conversion sequence [over.best.ics] from `e` to `P`; or
+  conversion sequence [[over.best.ics]] from `e` to `P`; or
 
 - is dependent on one or more template parameters, and either
 
   - `P` contains no template parameter that participates in template
-    argument deduction [temp.deduct.type], or
+    argument deduction [[temp.deduct.type]], or
 
   - template argument deduction using the rules for deducing template
-    arguments in a function call [temp.deduct.call] and `e` as the
+    arguments in a function call [[temp.deduct.call]] and `e` as the
     argument succeeds.
 
 A *key parameter* of a function template `D` is a function parameter of
@@ -811,7 +812,7 @@ A *disqualifying declaration* is
   - the declaration contains no key parameters; or
 
   - the declaration declares a function template to which no name is
-    bound [dcl.meaning].
+    bound [[dcl.meaning]].
 
 \[*Note 1*: The intention is to ensure that given two types `T1` and
 `T2` that each model `boolean-testable-impl`, the `&&` and `||`
@@ -830,11 +831,11 @@ template<class T>
 Let `e` be an expression such that `decltype((e))` is `T`. `T` models
 `boolean-testable` only if `bool(e) == !bool(!e)`.
 
-\[*Example 2*: The types `bool`, `true_type` [meta.type.synop], `int*`,
-and `bitset<N>::reference` [template.bitset] model
+\[*Example 2*: The types `bool`, `true_type` [[meta.type.synop]],
+`int*`, and `bitset<N>::reference` [[template.bitset]] model
 `boolean-testable`. — *end example*\]
 
-### Comparison common types <a id="concept.comparisoncommontype">[concept.comparisoncommontype]</a>
+### Comparison common types <a id="concept.comparisoncommontype">[[concept.comparisoncommontype]]</a>
 
 ``` cpp
 template<class T, class U, class C = common_reference_t<const T&, const U&>>
@@ -863,7 +864,7 @@ model `comparison-common-type-with<T, U>` only if:
 - `CONVERT_TO_LVALUE<C>(u1)` equals `CONVERT_TO_LVALUE<C>(u2)` if and
   only if `u1` equals `u2`
 
-### Concept  <a id="concept.equalitycomparable">[concept.equalitycomparable]</a>
+### Concept  <a id="concept.equalitycomparable">[[concept.equalitycomparable]]</a>
 
 ``` cpp
 template<class T, class U>
@@ -931,7 +932,7 @@ template<class T, class U>
 > bool(t == u) == bool(CONVERT_TO_LVALUE<C>(t2) == CONVERT_TO_LVALUE<C>(u2))
 > ```
 
-### Concept  <a id="concept.totallyordered">[concept.totallyordered]</a>
+### Concept  <a id="concept.totallyordered">[[concept.totallyordered]]</a>
 
 ``` cpp
 template<class T>
@@ -991,7 +992,7 @@ template<class T, class U>
 >
 > - `bool(u >= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) >= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
 
-## Object concepts <a id="concepts.object">[concepts.object]</a>
+## Object concepts <a id="concepts.object">[[concepts.object]]</a>
 
 This subclause describes concepts that specify the basis of the
 value-oriented programming style on which the library is based.
@@ -1017,18 +1018,19 @@ template<class T>
 > similarly to fundamental types like `int` and that are comparable with
 > `==`. — *end note*\]
 
-## Callable concepts <a id="concepts.callable">[concepts.callable]</a>
+## Callable concepts <a id="concepts.callable">[[concepts.callable]]</a>
 
-### General <a id="concepts.callable.general">[concepts.callable.general]</a>
+### General <a id="concepts.callable.general">[[concepts.callable.general]]</a>
 
-The concepts in subclause [concepts.callable] describe the requirements
-on function objects [function.objects] and their arguments.
+The concepts in subclause [[concepts.callable]] describe the
+requirements on function objects [[function.objects]] and their
+arguments.
 
-### Concept  <a id="concept.invocable">[concept.invocable]</a>
+### Concept  <a id="concept.invocable">[[concept.invocable]]</a>
 
 The `invocable` concept specifies a relationship between a callable type
-[func.def] `F` and a set of argument types `Args...` which can be
-evaluated by the library function `invoke` [func.invoke].
+[[func.def]] `F` and a set of argument types `Args...` which can be
+evaluated by the library function `invoke` [[func.invoke]].
 
 ``` cpp
 template<class F, class... Args>
@@ -1042,7 +1044,7 @@ template<class F, class... Args>
 > required to be
 > equality-preserving\[concepts.equality\]. — *end example*\]
 
-### Concept  <a id="concept.regularinvocable">[concept.regularinvocable]</a>
+### Concept  <a id="concept.regularinvocable">[[concept.regularinvocable]]</a>
 
 ``` cpp
 template<class F, class... Args>
@@ -1062,7 +1064,7 @@ template<class F, class... Args>
 > \[*Note 15*: The distinction between `invocable` and
 > `regular_invocable` is purely semantic. — *end note*\]
 
-### Concept  <a id="concept.predicate">[concept.predicate]</a>
+### Concept  <a id="concept.predicate">[[concept.predicate]]</a>
 
 ``` cpp
 template<class F, class... Args>
@@ -1070,7 +1072,7 @@ template<class F, class... Args>
     regular_invocable<F, Args...> && boolean-testable<invoke_result_t<F, Args...>>;
 ```
 
-### Concept  <a id="concept.relation">[concept.relation]</a>
+### Concept  <a id="concept.relation">[[concept.relation]]</a>
 
 ``` cpp
 template<class R, class T, class U>
@@ -1079,7 +1081,7 @@ template<class R, class T, class U>
     predicate<R, T, U> && predicate<R, U, T>;
 ```
 
-### Concept  <a id="concept.equiv">[concept.equiv]</a>
+### Concept  <a id="concept.equiv">[[concept.equiv]]</a>
 
 ``` cpp
 template<class R, class T, class U>
@@ -1089,7 +1091,7 @@ template<class R, class T, class U>
 > A `relation` models `equivalence_relation` only if it imposes an
 > equivalence relation on its arguments.
 
-### Concept  <a id="concept.strictweakorder">[concept.strictweakorder]</a>
+### Concept  <a id="concept.strictweakorder">[[concept.strictweakorder]]</a>
 
 ``` cpp
 template<class R, class T, class U>
@@ -1124,35 +1126,35 @@ template<class R, class T, class U>
 > — *end note*\]
 
 <!-- Link reference definitions -->
-[basic.compound]: basic.md#basic.compound
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[concepts.callable]: #concepts.callable
-[concepts.compare]: #concepts.compare
-[concepts.lang]: #concepts.lang
-[concepts.summary]: #concepts.summary
-[customization.point.object]: library.md#customization.point.object
-[dcl.meaning]: dcl.md#dcl.meaning
-[declval]: utilities.md#declval
-[defns.const.subexpr]: #defns.const.subexpr
-[expr.log.and]: expr.md#expr.log.and
-[expr.log.or]: expr.md#expr.log.or
-[expr.prim.id]: expr.md#expr.prim.id
-[expr.unary.op]: expr.md#expr.unary.op
-[forward]: utilities.md#forward
-[func.def]: utilities.md#func.def
-[func.invoke]: utilities.md#func.invoke
-[function.objects]: utilities.md#function.objects
-[meta.type.synop]: meta.md#meta.type.synop
-[over.best.ics]: over.md#over.best.ics
-[temp.deduct.call]: temp.md#temp.deduct.call
-[temp.deduct.type]: temp.md#temp.deduct.type
-[temp.func.order]: temp.md#temp.func.order
-[template.bitset]: utilities.md#template.bitset
-[term.literal.type]: #term.literal.type
+[[basic.compound]]: basic.md#basic.compound
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[concepts.callable]]: #concepts.callable
+[[concepts.compare]]: #concepts.compare
+[[concepts.lang]]: #concepts.lang
+[[concepts.summary]]: #concepts.summary
+[[customization.point.object]]: library.md#customization.point.object
+[[dcl.meaning]]: dcl.md#dcl.meaning
+[[declval]]: utilities.md#declval
+[[defns.const.subexpr]]: #defns.const.subexpr
+[[expr.log.and]]: expr.md#expr.log.and
+[[expr.log.or]]: expr.md#expr.log.or
+[[expr.prim.id]]: expr.md#expr.prim.id
+[[expr.unary.op]]: expr.md#expr.unary.op
+[[forward]]: utilities.md#forward
+[[func.def]]: utilities.md#func.def
+[[func.invoke]]: utilities.md#func.invoke
+[[function.objects]]: utilities.md#function.objects
+[[meta.type.synop]]: meta.md#meta.type.synop
+[[over.best.ics]]: over.md#over.best.ics
+[[temp.deduct.call]]: temp.md#temp.deduct.call
+[[temp.deduct.type]]: temp.md#temp.deduct.type
+[[temp.func.order]]: temp.md#temp.func.order
+[[template.bitset]]: utilities.md#template.bitset
+[[term.literal.type]]: #term.literal.type
 
 <!-- Link reference definitions -->
-[concepts.callable]: #concepts.callable
-[concepts.compare]: #concepts.compare
-[concepts.equality]: #concepts.equality
-[concepts.lang]: #concepts.lang
-[concepts.object]: #concepts.object
+[[concepts.callable]]: #concepts.callable
+[[concepts.compare]]: #concepts.compare
+[[concepts.equality]]: #concepts.equality
+[[concepts.lang]]: #concepts.lang
+[[concepts.object]]: #concepts.object

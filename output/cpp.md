@@ -3,9 +3,9 @@ current_file: cpp
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Preprocessing directives <a id="cpp">[cpp]</a>
+# Preprocessing directives <a id="cpp">[[cpp]]</a>
 
-## Preamble <a id="cpp.pre">[cpp.pre]</a>
+## Preamble <a id="cpp.pre">[[cpp.pre]]</a>
 
 ``` bnf
 preprocessing-file:
@@ -196,7 +196,7 @@ At the start of phase 4 of translation, the *group* of a
 *pp-global-module-fragment* shall contain neither a *text-line* nor a
 *pp-import*.
 
-When in a group that is skipped [cpp.cond], the directive syntax is
+When in a group that is skipped [[cpp.cond]], the directive syntax is
 relaxed to allow any sequence of preprocessing tokens to occur between
 the directive name and the following new-line character.
 
@@ -232,7 +232,7 @@ start of translation phase 4, even though it will do so after the macro
 
 — *end example*\]
 
-## Conditional inclusion <a id="cpp.cond">[cpp.cond]</a>
+## Conditional inclusion <a id="cpp.cond">[[cpp.cond]]</a>
 
 ``` bnf
 defined-macro-expression:
@@ -278,7 +278,7 @@ operator expressions.
 
 A *defined-macro-expression* evaluates to `1` if the identifier is
 currently defined as a macro name (that is, if it is predefined or if it
-has one or more active macro definitions [cpp.import], for example
+has one or more active macro definitions [[cpp.import]], for example
 because it has been the subject of a `#define` preprocessing directive
 without an intervening `#undef` directive with the same subject
 identifier), `0` if it is not.
@@ -304,7 +304,7 @@ The program is ill-formed if the *pp-tokens* do not match the form of an
 *attribute-token*.
 
 For an attribute specified in this document, the value of the
-*has-attribute-expression* is given by [cpp.cond.ha]. For other
+*has-attribute-expression* is given by [[cpp.cond.ha]]. For other
 attributes recognized by the implementation, the value is
 *implementation-defined*.
 
@@ -334,7 +334,7 @@ appear in any context not mentioned in this subclause.
 Each preprocessing token that remains (in the list of preprocessing
 tokens that will become the controlling expression) after all macro
 replacements have occurred shall be in the lexical form of a token
-[lex.token].
+[[lex.token]].
 
 Preprocessing directives of the forms
 
@@ -360,26 +360,26 @@ identifiers and keywords, except for `true` and `false`, are replaced
 with the *pp-number* `0`, and then each preprocessing token is converted
 into a token.
 
-\[*Note 2*: An alternative token [lex.digraph] is not an identifier,
+\[*Note 2*: An alternative token [[lex.digraph]] is not an identifier,
 even when its spelling consists entirely of letters and underscores.
 Therefore it is not subject to this replacement. — *end note*\]
 
 The resulting tokens comprise the controlling constant expression which
-is evaluated according to the rules of  [expr.const] using arithmetic
-that has at least the ranges specified in  [support.limits]. For the
+is evaluated according to the rules of  [[expr.const]] using arithmetic
+that has at least the ranges specified in  [[support.limits]]. For the
 purposes of this token conversion and evaluation all signed and unsigned
 integer types act as if they have the same representation as,
-respectively, `intmax_t` or `uintmax_t` [cstdint.syn].
+respectively, `intmax_t` or `uintmax_t` [[cstdint.syn]].
 
 \[*Note 3*: Thus on an implementation where
 `std::numeric_limits<int>::max()` is `0x7FFF` and
 `std::numeric_limits<unsigned int>::max()` is `0xFFFF`, the integer
 literal `0x8000` is signed and positive within a `#if` expression even
 though it is unsigned in translation phase 7
-[lex.phases]. — *end note*\]
+[[lex.phases]]. — *end note*\]
 
 This includes interpreting *character-literal*s according to the rules
-in [lex.ccon].
+in [[lex.ccon]].
 
 \[*Note 4*: The associated character encodings of literals are the same
 in `#if` and `#elif` directives and in any expression. — *end note*\]
@@ -455,7 +455,7 @@ ATTR_DEPRECATED("This function is deprecated") void anvil();
 
 — *end example*\]
 
-## Source file inclusion <a id="cpp.include">[cpp.include]</a>
+## Source file inclusion <a id="cpp.include">[[cpp.include]]</a>
 
 A `#include` directive shall identify a header or source file that can
 be processed by the implementation.
@@ -510,9 +510,9 @@ into a single header name preprocessing token is
 *implementation-defined*.
 
 The implementation shall provide unique mappings for sequences
-consisting of one or more *nondigit* or *digit* [lex.name] followed by a
-period (`.`) and a single *nondigit*. The first character shall not be a
-*digit*. The implementation may ignore distinctions of alphabetical
+consisting of one or more *nondigit* or *digit* [[lex.name]] followed by
+a period (`.`) and a single *nondigit*. The first character shall not be
+a *digit*. The implementation may ignore distinctions of alphabetical
 case.
 
 A `#include` preprocessing directive may appear in a source file that
@@ -520,9 +520,9 @@ has been read because of a `#include` directive in another file, up to
 an *implementation-defined* nesting limit.
 
 If the header identified by the *header-name* denotes an importable
-header [module.import], it is *implementation-defined* whether the
+header [[module.import]], it is *implementation-defined* whether the
 `#include` preprocessing directive is instead replaced by an `import`
-directive [cpp.import] of the form
+directive [[cpp.import]] of the form
 
 ``` bnf
 'import' header-name ';' new-line
@@ -562,7 +562,7 @@ This illustrates macro-replaced `#include` directives:
 
 — *end example*\]
 
-## Module directive <a id="cpp.module">[cpp.module]</a>
+## Module directive <a id="cpp.module">[[cpp.module]]</a>
 
 ``` bnf
 pp-module:
@@ -586,7 +586,7 @@ tokens respectively.
 \[*Note 2*: This makes the line no longer a directive so it is not
 removed at the end of phase 4. — *end note*\]
 
-## Header unit importation <a id="cpp.import">[cpp.import]</a>
+## Header unit importation <a id="cpp.import">[[cpp.import]]</a>
 
 ``` bnf
 pp-import:
@@ -606,7 +606,7 @@ replacement list of preprocessing tokens).
 
 \[*Note 1*: An `import` directive matching the first two forms of a
 *pp-import* instructs the preprocessor to import macros from the header
-unit [module.import] denoted by the *header-name*, as described
+unit [[module.import]] denoted by the *header-name*, as described
 below. — *end note*\]
 
 The *point of macro import* for the first two forms of *pp-import* is
@@ -637,7 +637,7 @@ preprocessor and later phases of translation. — *end note*\]
 Each `#define` directive encountered when preprocessing each translation
 unit in a program results in a distinct *macro definition*.
 
-\[*Note 4*: A predefined macro name [cpp.predefined] is not introduced
+\[*Note 4*: A predefined macro name [[cpp.predefined]] is not introduced
 by a `#define` directive. Implementations providing mechanisms to
 predefine additional macros are encouraged to not treat them as being
 introduced by a `#define` directive. — *end note*\]
@@ -651,10 +651,10 @@ translation unit and at most one point of undefinition, as follows:
   - if the `#define` directive of the macro definition occurs within T,
     the point at which that directive occurs, or otherwise,
 
-  - if the macro name is not lexically identical to a keyword [lex.key]
-    or to the *identifier* `module` or `import`, the first point of
-    macro import in T of a header unit containing a point of definition
-    for the macro definition, if any.
+  - if the macro name is not lexically identical to a keyword
+    [[lex.key]] or to the *identifier* `module` or `import`, the first
+    point of macro import in T of a header unit containing a point of
+    definition for the macro definition, if any.
 
   In the latter case, the macro is said to be *imported* from the header
   unit.
@@ -673,7 +673,7 @@ location.
 
 If a macro would be replaced or redefined, and multiple macro
 definitions are active for that macro name, the active macro definitions
-shall all be valid redefinitions of the same macro [cpp.replace].
+shall all be valid redefinitions of the same macro [[cpp.replace]].
 
 \[*Note 5*: The relative order of *pp-import* has no bearing on whether
 a particular macro definition is active. — *end note*\]
@@ -682,9 +682,9 @@ a particular macro definition is active. — *end note*\]
 
 — *end example*\]
 
-## Macro replacement <a id="cpp.replace">[cpp.replace]</a>
+## Macro replacement <a id="cpp.replace">[[cpp.replace]]</a>
 
-### General <a id="cpp.replace.general">[cpp.replace.general]</a>
+### General <a id="cpp.replace.general">[[cpp.replace.general]]</a>
 
 Two replacement lists are identical if and only if the preprocessing
 tokens in both have the same number, ordering, spelling, and whitespace
@@ -834,7 +834,7 @@ that, following merger, the number of arguments is either equal to or
 one more than the number of parameters in the macro definition
 (excluding the `...`).
 
-### Argument substitution <a id="cpp.subst">[cpp.subst]</a>
+### Argument substitution <a id="cpp.subst">[[cpp.subst]]</a>
 
 ``` bnf
 va-opt-replacement:
@@ -908,14 +908,15 @@ if it were a parameter, and the preprocessing token sequence for the
 corresponding argument is defined as follows. If the substitution of
 `__VA_ARGS__` as neither an operand of `#` nor `##` consists of no
 preprocessing tokens, the argument consists of a single placemarker
-preprocessing token [cpp.concat], [cpp.rescan]. Otherwise, the argument
-consists of the results of the expansion of the contained *pp-tokens* as
-the replacement list of the current function-like macro before removal
-of placemarker tokens, rescanning, and further replacement.
+preprocessing token [[cpp.concat]], [[cpp.rescan]]. Otherwise, the
+argument consists of the results of the expansion of the contained
+*pp-tokens* as the replacement list of the current function-like macro
+before removal of placemarker tokens, rescanning, and further
+replacement.
 
 \[*Note 1*: The placemarker tokens are removed before stringization
-[cpp.stringize], and can be removed by rescanning and further
-replacement [cpp.rescan]. — *end note*\]
+[[cpp.stringize]], and can be removed by rescanning and further
+replacement [[cpp.rescan]]. — *end note*\]
 
 \[*Example 6*:
 
@@ -956,7 +957,7 @@ H5C(H5A())          // replaced by ab
 
 — *end example*\]
 
-### The `#` operator <a id="cpp.stringize">[cpp.stringize]</a>
+### The `#` operator <a id="cpp.stringize">[[cpp.stringize]]</a>
 
 Each `#` preprocessing token in the replacement list for a function-like
 macro shall be followed by a parameter as the next preprocessing token
@@ -984,7 +985,7 @@ behavior is undefined. The character string literal corresponding to an
 empty stringizing argument is `""`. The order of evaluation of `#` and
 `##` operators is unspecified.
 
-### The `##` operator <a id="cpp.concat">[cpp.concat]</a>
+### The `##` operator <a id="cpp.concat">[[cpp.concat]]</a>
 
 A `##` preprocessing token shall not occur at the beginning or at the
 end of a replacement list for either form of macro definition.
@@ -1010,7 +1011,7 @@ begins with a sequence matching the syntax of
 
 \[*Note 2*: This determination does not consider the replacement of
 *universal-character-name*s in translation phase 3
-[lex.phases]. — *end note*\]
+[[lex.phases]]. — *end note*\]
 
 If the result is not a valid preprocessing token, the behavior is
 undefined. The resulting token is available for further macro
@@ -1112,7 +1113,7 @@ int j[] = { 123, 45, 67, 89,
 
 — *end example*\]
 
-### Rescanning and further replacement <a id="cpp.rescan">[cpp.rescan]</a>
+### Rescanning and further replacement <a id="cpp.rescan">[[cpp.rescan]]</a>
 
 After all parameters in the replacement list have been substituted and
 `#` and `##` processing has taken place, all placemarker preprocessing
@@ -1170,9 +1171,9 @@ would otherwise have been replaced.
 The resulting completely macro-replaced preprocessing token sequence is
 not processed as a preprocessing directive even if it resembles one, but
 all pragma unary operator expressions within it are then processed as
-specified in  [cpp.pragma.op] below.
+specified in  [[cpp.pragma.op]] below.
 
-### Scope of macro definitions <a id="cpp.scope">[cpp.scope]</a>
+### Scope of macro definitions <a id="cpp.scope">[[cpp.scope]]</a>
 
 A macro definition lasts (independent of block structure) until a
 corresponding `#undef` directive is encountered or (if none is
@@ -1189,14 +1190,14 @@ causes the specified identifier no longer to be defined as a macro name.
 It is ignored if the specified identifier is not currently defined as a
 macro name.
 
-## Line control <a id="cpp.line">[cpp.line]</a>
+## Line control <a id="cpp.line">[[cpp.line]]</a>
 
 The *string-literal* of a `#line` directive, if present, shall be a
 character string literal.
 
 The *line number* of the current source line is one greater than the
 number of new-line characters read or introduced in translation phase 1
-[lex.phases] while processing the source file to the current token.
+[[lex.phases]] while processing the source file to the current token.
 
 A preprocessing directive of the form
 
@@ -1233,7 +1234,7 @@ directive resulting after all replacements does not match one of the two
 previous forms, the behavior is undefined; otherwise, the result is
 processed as appropriate.
 
-## Diagnostic directives <a id="cpp.error">[cpp.error]</a>
+## Diagnostic directives <a id="cpp.error">[[cpp.error]]</a>
 
 A preprocessing directive of either of the following forms
 
@@ -1246,7 +1247,7 @@ causes the implementation to produce a diagnostic message that should
 include the specified sequence of preprocessing tokens; the `# error`
 directive renders the program ill-formed.
 
-## Pragma directive <a id="cpp.pragma">[cpp.pragma]</a>
+## Pragma directive <a id="cpp.pragma">[[cpp.pragma]]</a>
 
 A preprocessing directive of the form
 
@@ -1260,7 +1261,7 @@ translator or the resulting program to behave in a non-conforming
 manner. Any pragma that is not recognized by the implementation is
 ignored.
 
-## Null directive <a id="cpp.null">[cpp.null]</a>
+## Null directive <a id="cpp.null">[[cpp.null]]</a>
 
 A preprocessing directive of the form
 
@@ -1270,7 +1271,7 @@ A preprocessing directive of the form
 
 has no effect.
 
-## Predefined macro names <a id="cpp.predefined">[cpp.predefined]</a>
+## Predefined macro names <a id="cpp.predefined">[[cpp.predefined]]</a>
 
 The following macro names shall be defined by the implementation:
 
@@ -1332,7 +1333,7 @@ The presumed line number can be changed by the `#line` directive.
 
 The integer literal `1` if the implementation is a hosted implementation
 or the integer literal `0` if it is a freestanding implementation
-\[intro.compliance\].
+\[\[intro.compliance\]\].
 
 - **`__STDCPP_DEFAULT_NEW_ALIGNMENT__`**
 
@@ -1343,7 +1344,7 @@ guaranteed by a call to `operator new(std::size_t)` or
 <div class="note">
 
 Larger alignments will be passed to
-`operator new(std::size_t, std::align_val_t)`, etc. \[expr.new\].
+`operator new(std::size_t, std::align_val_t)`, etc. \[\[expr.new\]\].
 
 </div>
 
@@ -1351,7 +1352,7 @@ Larger alignments will be passed to
 
 Defined as the integer literal `1` if and only if the implementation
 supports the ISO/IEC/IEEE 60559 floating-point interchange format
-binary16 as an extended floating-point type \[basic.extended.fp\].
+binary16 as an extended floating-point type \[\[basic.extended.fp\]\].
 
 - **`__STDCPP_FLOAT32_T__`**
 
@@ -1485,7 +1486,7 @@ is, are \*implementation-defined\*.
 - **`__STDCPP_THREADS__`**
 
 Defined, and has the value integer literal 1, if and only if a program
-can have more than one thread of execution \[intro.multithread\].
+can have more than one thread of execution \[\[intro.multithread\]\].
 
 The values of the predefined macros (except for `__FILE__` and
 `__LINE__`) remain constant throughout the translation unit.
@@ -1496,7 +1497,7 @@ preprocessing directive, the behavior is undefined. Any other predefined
 macro names shall begin with a leading underscore followed by an
 uppercase letter or a second underscore.
 
-## Pragma operator <a id="cpp.pragma.op">[cpp.pragma.op]</a>
+## Pragma operator <a id="cpp.pragma.op">[[cpp.pragma.op]]</a>
 
 A unary operator expression of the form:
 
@@ -1538,26 +1539,26 @@ LISTING( ..\listing.dir )
 — *end example*\]
 
 <!-- Link reference definitions -->
-[basic.extended.fp]: basic.md#basic.extended.fp
-[cpp.concat]: #cpp.concat
-[cpp.cond]: #cpp.cond
-[cpp.cond.ha]: #cpp.cond.ha
-[cpp.import]: #cpp.import
-[cpp.pragma.op]: #cpp.pragma.op
-[cpp.predefined]: #cpp.predefined
-[cpp.replace]: #cpp.replace
-[cpp.rescan]: #cpp.rescan
-[cpp.stringize]: #cpp.stringize
-[cstdint.syn]: support.md#cstdint.syn
-[expr.const]: expr.md#expr.const
-[expr.new]: expr.md#expr.new
-[intro.compliance]: intro.md#intro.compliance
-[intro.multithread]: basic.md#intro.multithread
-[lex.ccon]: lex.md#lex.ccon
-[lex.digraph]: lex.md#lex.digraph
-[lex.key]: lex.md#lex.key
-[lex.name]: lex.md#lex.name
-[lex.phases]: lex.md#lex.phases
-[lex.token]: lex.md#lex.token
-[module.import]: module.md#module.import
-[support.limits]: support.md#support.limits
+[[basic.extended.fp]]: basic.md#basic.extended.fp
+[[cpp.concat]]: #cpp.concat
+[[cpp.cond]]: #cpp.cond
+[[cpp.cond.ha]]: #cpp.cond.ha
+[[cpp.import]]: #cpp.import
+[[cpp.pragma.op]]: #cpp.pragma.op
+[[cpp.predefined]]: #cpp.predefined
+[[cpp.replace]]: #cpp.replace
+[[cpp.rescan]]: #cpp.rescan
+[[cpp.stringize]]: #cpp.stringize
+[[cstdint.syn]]: support.md#cstdint.syn
+[[expr.const]]: expr.md#expr.const
+[[expr.new]]: expr.md#expr.new
+[[intro.compliance]]: intro.md#intro.compliance
+[[intro.multithread]]: basic.md#intro.multithread
+[[lex.ccon]]: lex.md#lex.ccon
+[[lex.digraph]]: lex.md#lex.digraph
+[[lex.key]]: lex.md#lex.key
+[[lex.name]]: lex.md#lex.name
+[[lex.phases]]: lex.md#lex.phases
+[[lex.token]]: lex.md#lex.token
+[[module.import]]: module.md#module.import
+[[support.limits]]: support.md#support.limits

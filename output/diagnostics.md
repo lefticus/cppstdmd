@@ -3,9 +3,9 @@ current_file: diagnostics
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Diagnostics library <a id="diagnostics">[diagnostics]</a>
+# Diagnostics library <a id="diagnostics">[[diagnostics]]</a>
 
-## General <a id="diagnostics.general">[diagnostics.general]</a>
+## General <a id="diagnostics.general">[[diagnostics.general]]</a>
 
 This Clause describes components that C++ programs may use to detect and
 report error conditions.
@@ -13,24 +13,24 @@ report error conditions.
 The following subclauses describe components for reporting several kinds
 of exceptional conditions, documenting program assertions, obtaining
 stacktraces, and a global variable for error number codes, as summarized
-in [diagnostics.summary].
+in [[diagnostics.summary]].
 
 **Table: Diagnostics library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [std.exceptions] | Exception classes | `<stdexcept>` |
-| [assertions] | Assertions | `<cassert>` |
-| [errno] | Error numbers | `<cerrno>` |
-| [syserr] | System error support | `<system_error>` |
-| [stacktrace] | Stacktrace | `<stacktrace>` |
+| [[std.exceptions]] | Exception classes | `<stdexcept>` |
+| [[assertions]] | Assertions | `<cassert>` |
+| [[errno]] | Error numbers | `<cerrno>` |
+| [[syserr]] | System error support | `<system_error>` |
+| [[stacktrace]] | Stacktrace | `<stacktrace>` |
 
-## Exception classes <a id="std.exceptions">[std.exceptions]</a>
+## Exception classes <a id="std.exceptions">[[std.exceptions]]</a>
 
-### General <a id="std.exceptions.general">[std.exceptions.general]</a>
+### General <a id="std.exceptions.general">[[std.exceptions.general]]</a>
 
 The C++ standard library provides classes to be used to report certain
-errors [res.on.exception.handling] in C++ programs. In the error model
+errors [[res.on.exception.handling]] in C++ programs. In the error model
 reflected in these classes, errors are divided into two broad
 categories: *logic* errors and *runtime* errors.
 
@@ -44,7 +44,7 @@ program. They cannot be easily predicted in advance. The header
 reporting errors in a C++ program. These exceptions are related by
 inheritance.
 
-### Header `<stdexcept>` synopsis <a id="stdexcept.syn">[stdexcept.syn]</a>
+### Header `<stdexcept>` synopsis <a id="stdexcept.syn">[[stdexcept.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -60,7 +60,7 @@ namespace std {
 }
 ```
 
-### Class `logic_error` <a id="logic.error">[logic.error]</a>
+### Class `logic_error` <a id="logic.error">[[logic.error]]</a>
 
 ``` cpp
 namespace std {
@@ -92,7 +92,7 @@ logic_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `domain_error` <a id="domain.error">[domain.error]</a>
+### Class `domain_error` <a id="domain.error">[[domain.error]]</a>
 
 ``` cpp
 namespace std {
@@ -123,7 +123,7 @@ domain_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `invalid_argument` <a id="invalid.argument">[invalid.argument]</a>
+### Class `invalid_argument` <a id="invalid.argument">[[invalid.argument]]</a>
 
 ``` cpp
 namespace std {
@@ -154,7 +154,7 @@ invalid_argument(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `length_error` <a id="length.error">[length.error]</a>
+### Class `length_error` <a id="length.error">[[length.error]]</a>
 
 ``` cpp
 namespace std {
@@ -186,7 +186,7 @@ length_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `out_of_range` <a id="out.of.range">[out.of.range]</a>
+### Class `out_of_range` <a id="out.of.range">[[out.of.range]]</a>
 
 ``` cpp
 namespace std {
@@ -217,7 +217,7 @@ out_of_range(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `runtime_error` <a id="runtime.error">[runtime.error]</a>
+### Class `runtime_error` <a id="runtime.error">[[runtime.error]]</a>
 
 ``` cpp
 namespace std {
@@ -249,7 +249,7 @@ runtime_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `range_error` <a id="range.error">[range.error]</a>
+### Class `range_error` <a id="range.error">[[range.error]]</a>
 
 ``` cpp
 namespace std {
@@ -280,7 +280,7 @@ range_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `overflow_error` <a id="overflow.error">[overflow.error]</a>
+### Class `overflow_error` <a id="overflow.error">[[overflow.error]]</a>
 
 ``` cpp
 namespace std {
@@ -311,7 +311,7 @@ overflow_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-### Class `underflow_error` <a id="underflow.error">[underflow.error]</a>
+### Class `underflow_error` <a id="underflow.error">[[underflow.error]]</a>
 
 ``` cpp
 namespace std {
@@ -342,14 +342,14 @@ underflow_error(const char* what_arg);
 >
 > `strcmp(what(), what_arg) == 0`.
 
-## Assertions <a id="assertions">[assertions]</a>
+## Assertions <a id="assertions">[[assertions]]</a>
 
-### General <a id="assertions.general">[assertions.general]</a>
+### General <a id="assertions.general">[[assertions.general]]</a>
 
 The header `<cassert>` provides a macro for documenting C++ program
 assertions and a mechanism for disabling the assertion checks.
 
-### Header `<cassert>` synopsis <a id="cassert.syn">[cassert.syn]</a>
+### Header `<cassert>` synopsis <a id="cassert.syn">[[cassert.syn]]</a>
 
 ``` cpp
 #define assert(E) see below
@@ -358,20 +358,20 @@ assertions and a mechanism for disabling the assertion checks.
 The contents are the same as the C standard library header `<assert.h>`,
 except that a macro named `static_assert` is not defined.
 
-### The `assert` macro <a id="assertions.assert">[assertions.assert]</a>
+### The `assert` macro <a id="assertions.assert">[[assertions.assert]]</a>
 
 An expression `assert(E)` is a constant subexpression
-[defns.const.subexpr], if
+[[defns.const.subexpr]], if
 
 - `NDEBUG` is defined at the point where `assert` is last defined or
   redefined, or
 
-- `E` contextually converted to `bool` [conv] is a constant
+- `E` contextually converted to `bool` [[conv]] is a constant
   subexpression that evaluates to the value `true`.
 
-## Error numbers <a id="errno">[errno]</a>
+## Error numbers <a id="errno">[[errno]]</a>
 
-### General <a id="errno.general">[errno.general]</a>
+### General <a id="errno.general">[[errno.general]]</a>
 
 The contents of the header `<cerrno>` are the same as the POSIX header
 `<errno.h>`, except that `errno` shall be defined as a macro.
@@ -381,7 +381,7 @@ standard. — *end note*\]
 
 A separate `errno` value is provided for each thread.
 
-### Header `<cerrno>` synopsis <a id="cerrno.syn">[cerrno.syn]</a>
+### Header `<cerrno>` synopsis <a id="cerrno.syn">[[cerrno.syn]]</a>
 
 ``` cpp
 #define errno see below
@@ -465,21 +465,21 @@ A separate `errno` value is provided for each thread.
 The meaning of the macros in this header is defined by the POSIX
 standard.
 
-## System error support <a id="syserr">[syserr]</a>
+## System error support <a id="syserr">[[syserr]]</a>
 
-### General <a id="syserr.general">[syserr.general]</a>
+### General <a id="syserr.general">[[syserr.general]]</a>
 
-Subclause [syserr] describes components that the standard library and
+Subclause [[syserr]] describes components that the standard library and
 C++ programs may use to report error conditions originating from the
 operating system or other low-level application program interfaces.
 
-Components described in [syserr] do not change the value of `errno`
-[errno].
+Components described in [[syserr]] do not change the value of `errno`
+[[errno]].
 
 Implementations should leave the error states provided by other
 libraries unchanged.
 
-### Header `<system_error>` synopsis <a id="system.error.syn">[system.error.syn]</a>
+### Header `<system_error>` synopsis <a id="system.error.syn">[[system.error.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -618,15 +618,15 @@ specialized for program-defined types to indicate that such types are
 eligible for `class error_code` and `class error_condition` implicit
 conversions, respectively.
 
-### Class `error_category` <a id="syserr.errcat">[syserr.errcat]</a>
+### Class `error_category` <a id="syserr.errcat">[[syserr.errcat]]</a>
 
-#### Overview <a id="syserr.errcat.overview">[syserr.errcat.overview]</a>
+#### Overview <a id="syserr.errcat.overview">[[syserr.errcat.overview]]</a>
 
 The class `error_category` serves as a base class for types used to
 identify the source and encoding of a particular category of error code.
 Classes may be derived from `error_category` to support categories of
 errors in addition to those defined in this document. Such classes shall
-behave as specified in subclause  [syserr.errcat].
+behave as specified in subclause  [[syserr.errcat]].
 
 \[*Note 1*: `error_category` objects are passed by reference, and two
 such objects are equal if they have the same address. If there is more
@@ -657,7 +657,7 @@ namespace std {
 }
 ```
 
-#### Virtual members <a id="syserr.errcat.virtuals">[syserr.errcat.virtuals]</a>
+#### Virtual members <a id="syserr.errcat.virtuals">[[syserr.errcat.virtuals]]</a>
 
 ``` cpp
 virtual const char* name() const noexcept = 0;
@@ -699,7 +699,7 @@ virtual string message(int ev) const = 0;
 >
 > A string that describes the error condition denoted by `ev`.
 
-#### Non-virtual members <a id="syserr.errcat.nonvirtuals">[syserr.errcat.nonvirtuals]</a>
+#### Non-virtual members <a id="syserr.errcat.nonvirtuals">[[syserr.errcat.nonvirtuals]]</a>
 
 ``` cpp
 bool operator==(const error_category& rhs) const noexcept;
@@ -720,7 +720,7 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 > \[*Note 1*: `compare_three_way`\[comparisons.three.way\] provides a
 > total ordering for pointers. — *end note*\]
 
-#### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[syserr.errcat.derived]</a>
+#### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
 
 ``` cpp
 virtual const char* name() const noexcept = 0;
@@ -756,7 +756,7 @@ virtual bool equivalent(const error_code& code, int condition) const noexcept;
 > `true` if, for the category of error represented by `*this`, `code` is
 > considered equivalent to `condition`; otherwise, `false`.
 
-#### Error category objects <a id="syserr.errcat.objects">[syserr.errcat.objects]</a>
+#### Error category objects <a id="syserr.errcat.objects">[[syserr.errcat.objects]]</a>
 
 ``` cpp
 const error_category& generic_category() noexcept;
@@ -804,9 +804,9 @@ const error_category& system_category() noexcept;
 > Thus implementations are given latitude in determining
 > correspondence. — *end note*\]
 
-### Class `error_code` <a id="syserr.errcode">[syserr.errcode]</a>
+### Class `error_code` <a id="syserr.errcode">[[syserr.errcode]]</a>
 
-#### Overview <a id="syserr.errcode.overview">[syserr.errcode.overview]</a>
+#### Overview <a id="syserr.errcode.overview">[[syserr.errcode.overview]]</a>
 
 The class `error_code` describes an object used to hold error code
 values, such as those originating from the operating system or other
@@ -852,7 +852,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="syserr.errcode.constructors">[syserr.errcode.constructors]</a>
+#### Constructors <a id="syserr.errcode.constructors">[[syserr.errcode.constructors]]</a>
 
 ``` cpp
 error_code() noexcept;
@@ -886,7 +886,7 @@ template<class ErrorCodeEnum>
 > assign(ec.value(), ec.category());
 > ```
 
-#### Modifiers <a id="syserr.errcode.modifiers">[syserr.errcode.modifiers]</a>
+#### Modifiers <a id="syserr.errcode.modifiers">[[syserr.errcode.modifiers]]</a>
 
 ``` cpp
 void assign(int val, const error_category& cat) noexcept;
@@ -924,7 +924,7 @@ void clear() noexcept;
 >
 > `value() == 0` and `category() == system_category()`.
 
-#### Observers <a id="syserr.errcode.observers">[syserr.errcode.observers]</a>
+#### Observers <a id="syserr.errcode.observers">[[syserr.errcode.observers]]</a>
 
 ``` cpp
 int value() const noexcept;
@@ -966,7 +966,7 @@ explicit operator bool() const noexcept;
 >
 > `value() != 0`.
 
-#### Non-member functions <a id="syserr.errcode.nonmembers">[syserr.errcode.nonmembers]</a>
+#### Non-member functions <a id="syserr.errcode.nonmembers">[[syserr.errcode.nonmembers]]</a>
 
 ``` cpp
 error_code make_error_code(errc e) noexcept;
@@ -986,15 +986,15 @@ template<class charT, class traits>
 > Equivalent to:
 > `return os << ec.category().name() << ’:’ << ec.value();`
 
-### Class `error_condition` <a id="syserr.errcondition">[syserr.errcondition]</a>
+### Class `error_condition` <a id="syserr.errcondition">[[syserr.errcondition]]</a>
 
-#### Overview <a id="syserr.errcondition.overview">[syserr.errcondition.overview]</a>
+#### Overview <a id="syserr.errcondition.overview">[[syserr.errcondition.overview]]</a>
 
 The class `error_condition` describes an object used to hold values
 identifying error conditions.
 
 \[*Note 3*: `error_condition` values are portable abstractions, while
-`error_code` values [syserr.errcode] are implementation
+`error_code` values [[syserr.errcode]] are implementation
 specific. — *end note*\]
 
 ``` cpp
@@ -1026,7 +1026,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="syserr.errcondition.constructors">[syserr.errcondition.constructors]</a>
+#### Constructors <a id="syserr.errcondition.constructors">[[syserr.errcondition.constructors]]</a>
 
 ``` cpp
 error_condition() noexcept;
@@ -1060,7 +1060,7 @@ template<class ErrorConditionEnum>
 > assign(ec.value(), ec.category());
 > ```
 
-#### Modifiers <a id="syserr.errcondition.modifiers">[syserr.errcondition.modifiers]</a>
+#### Modifiers <a id="syserr.errcondition.modifiers">[[syserr.errcondition.modifiers]]</a>
 
 ``` cpp
 void assign(int val, const error_category& cat) noexcept;
@@ -1098,7 +1098,7 @@ void clear() noexcept;
 >
 > `value() == 0` and `category() == generic_category()`.
 
-#### Observers <a id="syserr.errcondition.observers">[syserr.errcondition.observers]</a>
+#### Observers <a id="syserr.errcondition.observers">[[syserr.errcondition.observers]]</a>
 
 ``` cpp
 int value() const noexcept;
@@ -1132,7 +1132,7 @@ explicit operator bool() const noexcept;
 >
 > `value() != 0`.
 
-#### Non-member functions <a id="syserr.errcondition.nonmembers">[syserr.errcondition.nonmembers]</a>
+#### Non-member functions <a id="syserr.errcondition.nonmembers">[[syserr.errcondition.nonmembers]]</a>
 
 ``` cpp
 error_condition make_error_condition(errc e) noexcept;
@@ -1142,7 +1142,7 @@ error_condition make_error_condition(errc e) noexcept;
 >
 > `error_condition(static_cast<int>(e), generic_category())`.
 
-### Comparison operator functions <a id="syserr.compare">[syserr.compare]</a>
+### Comparison operator functions <a id="syserr.compare">[[syserr.compare]]</a>
 
 ``` cpp
 bool operator==(const error_code& lhs, const error_code& rhs) noexcept;
@@ -1198,7 +1198,7 @@ strong_ordering operator<=>(const error_condition& lhs, const error_condition& r
 > return lhs.value() <=> rhs.value();
 > ```
 
-### System error hash support <a id="syserr.hash">[syserr.hash]</a>
+### System error hash support <a id="syserr.hash">[[syserr.hash]]</a>
 
 ``` cpp
 template<> struct hash<error_code>;
@@ -1207,9 +1207,9 @@ template<> struct hash<error_condition>;
 
 > The specializations are enabled\[unord.hash\].
 
-### Class `system_error` <a id="syserr.syserr">[syserr.syserr]</a>
+### Class `system_error` <a id="syserr.syserr">[[syserr.syserr]]</a>
 
-#### Overview <a id="syserr.syserr.overview">[syserr.syserr.overview]</a>
+#### Overview <a id="syserr.syserr.overview">[[syserr.syserr.overview]]</a>
 
 The class `system_error` describes an exception object used to report
 error conditions that have an associated error code. Such error
@@ -1218,7 +1218,7 @@ low-level application program interfaces.
 
 \[*Note 4*: If an error represents an out-of-memory condition,
 implementations are encouraged to throw an exception object of type
-`bad_alloc` [bad.alloc] rather than `system_error`. — *end note*\]
+`bad_alloc` [[bad.alloc]] rather than `system_error`. — *end note*\]
 
 ``` cpp
 namespace std {
@@ -1236,7 +1236,7 @@ namespace std {
 }
 ```
 
-#### Members <a id="syserr.syserr.members">[syserr.syserr.members]</a>
+#### Members <a id="syserr.syserr.members">[[syserr.syserr.members]]</a>
 
 ``` cpp
 system_error(error_code ec, const string& what_arg);
@@ -1309,24 +1309,24 @@ const char* what() const noexcept override;
 > \[*Note 3*: The returned NTBS might be the contents of
 > `what_arg + ": " + code.message()`. — *end note*\]
 
-## Stacktrace <a id="stacktrace">[stacktrace]</a>
+## Stacktrace <a id="stacktrace">[[stacktrace]]</a>
 
-### General <a id="stacktrace.general">[stacktrace.general]</a>
+### General <a id="stacktrace.general">[[stacktrace.general]]</a>
 
-Subclause [stacktrace] describes components that C++ programs may use to
-store the stacktrace of the current thread of execution and query
+Subclause [[stacktrace]] describes components that C++ programs may use
+to store the stacktrace of the current thread of execution and query
 information about the stored stacktrace at runtime.
 
 The *invocation sequence* of the current evaluation x₀ in the current
 thread of execution is a sequence $(x_0, \ldots, x_n)$ of evaluations
 such that, for i ≥ 0, xᵢ is within the function invocation $x_{i+1}$
-[intro.execution].
+[[intro.execution]].
 
 A *stacktrace* is an approximate representation of an invocation
 sequence and consists of stacktrace entries. A *stacktrace entry*
 represents an evaluation in a stacktrace.
 
-### Header `<stacktrace>` synopsis <a id="stacktrace.syn">[stacktrace.syn]</a>
+### Header `<stacktrace>` synopsis <a id="stacktrace.syn">[[stacktrace.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -1371,9 +1371,9 @@ namespace std {
 }
 ```
 
-### Class `stacktrace_entry` <a id="stacktrace.entry">[stacktrace.entry]</a>
+### Class `stacktrace_entry` <a id="stacktrace.entry">[[stacktrace.entry]]</a>
 
-#### Overview <a id="stacktrace.entry.overview">[stacktrace.entry.overview]</a>
+#### Overview <a id="stacktrace.entry.overview">[[stacktrace.entry.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -1408,10 +1408,10 @@ namespace std {
 
 An object of type `stacktrace_entry` is either empty, or represents a
 stacktrace entry and provides operations for querying information about
-it. The class `stacktrace_entry` models `regular` [concepts.object] and
-`three_way_comparable<strong_ordering>` [cmp.concept].
+it. The class `stacktrace_entry` models `regular` [[concepts.object]]
+and `three_way_comparable<strong_ordering>` [[cmp.concept]].
 
-#### Constructors <a id="stacktrace.entry.cons">[stacktrace.entry.cons]</a>
+#### Constructors <a id="stacktrace.entry.cons">[[stacktrace.entry.cons]]</a>
 
 ``` cpp
 constexpr stacktrace_entry() noexcept;
@@ -1421,7 +1421,7 @@ constexpr stacktrace_entry() noexcept;
 >
 > `*this` is empty.
 
-#### Observers <a id="stacktrace.entry.obs">[stacktrace.entry.obs]</a>
+#### Observers <a id="stacktrace.entry.obs">[[stacktrace.entry.obs]]</a>
 
 ``` cpp
 constexpr native_handle_type native_handle() const noexcept;
@@ -1442,7 +1442,7 @@ constexpr explicit operator bool() const noexcept;
 >
 > `false` if and only if `*this` is empty.
 
-#### Query <a id="stacktrace.entry.query">[stacktrace.entry.query]</a>
+#### Query <a id="stacktrace.entry.query">[[stacktrace.entry.query]]</a>
 
 \[*Note 1*: All the `stacktrace_entry` query functions treat errors
 other than memory allocation errors as “no information available” and do
@@ -1494,7 +1494,7 @@ uint_least32_t source_line() const;
 > `bad_alloc` if memory for the internal data structures cannot be
 > allocated.
 
-#### Comparison <a id="stacktrace.entry.cmp">[stacktrace.entry.cmp]</a>
+#### Comparison <a id="stacktrace.entry.cmp">[[stacktrace.entry.cmp]]</a>
 
 ``` cpp
 friend constexpr bool operator==(const stacktrace_entry& x, const stacktrace_entry& y) noexcept;
@@ -1505,9 +1505,9 @@ friend constexpr bool operator==(const stacktrace_entry& x, const stacktrace_ent
 > `true` if and only if `x` and `y` represent the same stacktrace entry
 > or both `x` and `y` are empty.
 
-### Class template `basic_stacktrace` <a id="stacktrace.basic">[stacktrace.basic]</a>
+### Class template `basic_stacktrace` <a id="stacktrace.basic">[[stacktrace.basic]]</a>
 
-#### Overview <a id="stacktrace.basic.overview">[stacktrace.basic.overview]</a>
+#### Overview <a id="stacktrace.basic.overview">[[stacktrace.basic.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -1586,9 +1586,9 @@ namespace std {
 ```
 
 The class template `basic_stacktrace` satisfies the requirements of a
-reversible container [container.rev.reqmts], of an allocator-aware
-container [container.alloc.reqmts], and of a sequence container
-[sequence.reqmts], except that
+reversible container [[container.rev.reqmts]], of an allocator-aware
+container [[container.alloc.reqmts]], and of a sequence container
+[[sequence.reqmts]], except that
 
 - only move, assignment, swap, and operations defined for
   const-qualified sequence containers are supported and,
@@ -1596,7 +1596,7 @@ container [container.alloc.reqmts], and of a sequence container
 - the semantics of comparison functions are different from those
   required for a container.
 
-#### Creation and assignment <a id="stacktrace.basic.cons">[stacktrace.basic.cons]</a>
+#### Creation and assignment <a id="stacktrace.basic.cons">[[stacktrace.basic.cons]]</a>
 
 ``` cpp
 static basic_stacktrace current(const allocator_type& alloc = allocator_type()) noexcept;
@@ -1685,7 +1685,7 @@ basic_stacktrace& operator=(basic_stacktrace&& other)
 > functions\[res.on.exception.handling\] by ensuring that `empty()` is
 > `true` on failed allocation.
 
-#### Observers <a id="stacktrace.basic.obs">[stacktrace.basic.obs]</a>
+#### Observers <a id="stacktrace.basic.obs">[[stacktrace.basic.obs]]</a>
 
 ``` cpp
 using const_iterator = \impdef;
@@ -1793,7 +1793,7 @@ const_reference at(size_type frame_no) const;
 >
 > `out_of_range` if `frame_no >= size()`.
 
-#### Comparisons <a id="stacktrace.basic.cmp">[stacktrace.basic.cmp]</a>
+#### Comparisons <a id="stacktrace.basic.cmp">[[stacktrace.basic.cmp]]</a>
 
 ``` cpp
 template<class Allocator2>
@@ -1816,7 +1816,7 @@ friend strong_ordering
 > `lexicographical_compare_three_way(x.begin(), x.end(), y.begin(), y.end())`
 > otherwise.
 
-#### Modifiers <a id="stacktrace.basic.mod">[stacktrace.basic.mod]</a>
+#### Modifiers <a id="stacktrace.basic.mod">[[stacktrace.basic.mod]]</a>
 
 ``` cpp
 void swap(basic_stacktrace& other)
@@ -1828,7 +1828,7 @@ void swap(basic_stacktrace& other)
 >
 > Exchanges the contents of `*this` and `other`.
 
-#### Non-member functions <a id="stacktrace.basic.nonmem">[stacktrace.basic.nonmem]</a>
+#### Non-member functions <a id="stacktrace.basic.nonmem">[[stacktrace.basic.nonmem]]</a>
 
 ``` cpp
 template<class Allocator>
@@ -1881,7 +1881,7 @@ template<class Allocator>
 >
 > Equivalent to: `return os << to_string(st);`
 
-#### Formatting support <a id="stacktrace.format">[stacktrace.format]</a>
+#### Formatting support <a id="stacktrace.format">[[stacktrace.format]]</a>
 
 ``` cpp
 template<> struct formatter<stacktrace_entry>;
@@ -1911,7 +1911,7 @@ template<class Allocator> struct formatter<basic_stacktrace<Allocator>>;
 > A `basic_stacktrace<Allocator>` object `s` is formatted as if by
 > copying `to_string(s)` through the output iterator of the context.
 
-#### Hash support <a id="stacktrace.basic.hash">[stacktrace.basic.hash]</a>
+#### Hash support <a id="stacktrace.basic.hash">[[stacktrace.basic.hash]]</a>
 
 ``` cpp
 template<> struct hash<stacktrace_entry>;
@@ -1921,26 +1921,26 @@ template<class Allocator> struct hash<basic_stacktrace<Allocator>>;
 > The specializations are enabled\[unord.hash\].
 
 <!-- Link reference definitions -->
-[bad.alloc]: support.md#bad.alloc
-[cmp.concept]: support.md#cmp.concept
-[concepts.object]: concepts.md#concepts.object
-[container.alloc.reqmts]: containers.md#container.alloc.reqmts
-[container.rev.reqmts]: containers.md#container.rev.reqmts
-[conv]: expr.md#conv
-[defns.const.subexpr]: #defns.const.subexpr
-[diagnostics.summary]: #diagnostics.summary
-[errno]: #errno
-[intro.execution]: basic.md#intro.execution
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[sequence.reqmts]: containers.md#sequence.reqmts
-[stacktrace]: #stacktrace
-[syserr]: #syserr
-[syserr.errcat]: #syserr.errcat
-[syserr.errcode]: #syserr.errcode
+[[bad.alloc]]: support.md#bad.alloc
+[[cmp.concept]]: support.md#cmp.concept
+[[concepts.object]]: concepts.md#concepts.object
+[[container.alloc.reqmts]]: containers.md#container.alloc.reqmts
+[[container.rev.reqmts]]: containers.md#container.rev.reqmts
+[[conv]]: expr.md#conv
+[[defns.const.subexpr]]: #defns.const.subexpr
+[[diagnostics.summary]]: #diagnostics.summary
+[[errno]]: #errno
+[[intro.execution]]: basic.md#intro.execution
+[[res.on.exception.handling]]: library.md#res.on.exception.handling
+[[sequence.reqmts]]: containers.md#sequence.reqmts
+[[stacktrace]]: #stacktrace
+[[syserr]]: #syserr
+[[syserr.errcat]]: #syserr.errcat
+[[syserr.errcode]]: #syserr.errcode
 
 <!-- Link reference definitions -->
-[assertions]: #assertions
-[errno]: #errno
-[stacktrace]: #stacktrace
-[std.exceptions]: #std.exceptions
-[syserr]: #syserr
+[[assertions]]: #assertions
+[[errno]]: #errno
+[[stacktrace]]: #stacktrace
+[[std.exceptions]]: #std.exceptions
+[[syserr]]: #syserr

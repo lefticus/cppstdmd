@@ -3,38 +3,38 @@ current_file: algorithms
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Algorithms library <a id="algorithms">[algorithms]</a>
+# Algorithms library <a id="algorithms">[[algorithms]]</a>
 
-## General <a id="algorithms.general">[algorithms.general]</a>
+## General <a id="algorithms.general">[[algorithms.general]]</a>
 
 This Clause describes components that C++ programs may use to perform
-algorithmic operations on containers [containers] and other sequences.
+algorithmic operations on containers [[containers]] and other sequences.
 
 The following subclauses describe components for non-modifying sequence
 operations, mutating sequence operations, sorting and related
 operations, and algorithms from the ISO C library, as summarized in
-[algorithms.summary].
+[[algorithms.summary]].
 
 **Table: Algorithms library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [algorithms.requirements] | Algorithms requirements |
-| [algorithms.parallel] | Parallel algorithms |
-| [algorithms.results] | Algorithm result types | `<algorithm>` |
-| [alg.nonmodifying] | Non-modifying sequence operations |
-| [alg.modifying.operations] | Mutating sequence operations |
-| [alg.sorting] | Sorting and related operations |
-| [numeric.ops] | Generalized numeric operations | `<numeric>` |
-| [specialized.algorithms] | Specialized `<memory>` algorithms | `<memory>` |
-| [alg.c.library] | C library algorithms | `<cstdlib>` |
+| [[algorithms.requirements]] | Algorithms requirements |
+| [[algorithms.parallel]] | Parallel algorithms |
+| [[algorithms.results]] | Algorithm result types | `<algorithm>` |
+| [[alg.nonmodifying]] | Non-modifying sequence operations |
+| [[alg.modifying.operations]] | Mutating sequence operations |
+| [[alg.sorting]] | Sorting and related operations |
+| [[numeric.ops]] | Generalized numeric operations | `<numeric>` |
+| [[specialized.algorithms]] | Specialized `<memory>` algorithms | `<memory>` |
+| [[alg.c.library]] | C library algorithms | `<cstdlib>` |
 
-## Algorithms requirements <a id="algorithms.requirements">[algorithms.requirements]</a>
+## Algorithms requirements <a id="algorithms.requirements">[[algorithms.requirements]]</a>
 
 The entities defined in the `std::ranges` namespace in this Clause are
-not found by argument-dependent name lookup [basic.lookup.argdep]. When
-found by unqualified [basic.lookup.unqual] name lookup for the
-*postfix-expression* in a function call [expr.call], they inhibit
+not found by argument-dependent name lookup [[basic.lookup.argdep]].
+When found by unqualified [[basic.lookup.unqual]] name lookup for the
+*postfix-expression* in a function call [[expr.call]], they inhibit
 argument-dependent name lookup.
 
 \[*Example 1*:
@@ -50,7 +50,7 @@ void foo() {
 The function call expression at `#1` invokes `std::ranges::find`, not
 `std::find`, despite that (a) the iterator type returned from
 `begin(vec)` and `end(vec)` may be associated with namespace `std` and
-(b) `std::find` is more specialized [temp.func.order] than
+(b) `std::find` is more specialized [[temp.func.order]] than
 `std::ranges::find` since the former requires its first two parameters
 to have the same type.
 
@@ -67,21 +67,21 @@ requirements.
 - If an algorithm’s *Effects* element specifies that a value pointed to
   by any iterator passed as an argument is modified, then the type of
   that argument shall meet the requirements of a mutable iterator
-  [iterator.requirements].
+  [[iterator.requirements]].
 
 - If an algorithm’s template parameter is named `InputIterator`,
   `InputIterator1`, or `InputIterator2`, the template argument shall
-  meet the *Cpp17InputIterator* requirements [input.iterators].
+  meet the *Cpp17InputIterator* requirements [[input.iterators]].
 
 - If an algorithm’s template parameter is named `OutputIterator`,
   `OutputIterator1`, or `OutputIterator2`, the template argument shall
-  meet the *Cpp17OutputIterator* requirements [output.iterators].
+  meet the *Cpp17OutputIterator* requirements [[output.iterators]].
 
 - If an algorithm’s template parameter is named `ForwardIterator`,
   `ForwardIterator1`, `ForwardIterator2`, or `NoThrowForwardIterator`,
   the template argument shall meet the *Cpp17ForwardIterator*
-  requirements [forward.iterators] if it is required to be a mutable
-  iterator, or model `forward_iterator` [iterator.concept.forward]
+  requirements [[forward.iterators]] if it is required to be a mutable
+  iterator, or model `forward_iterator` [[iterator.concept.forward]]
   otherwise.
 
 - If an algorithm’s template parameter is named
@@ -92,15 +92,16 @@ requirements.
 - If an algorithm’s template parameter is named `BidirectionalIterator`,
   `BidirectionalIterator1`, or `BidirectionalIterator2`, the template
   argument shall meet the *Cpp17BidirectionalIterator* requirements
-  [bidirectional.iterators] if it is required to be a mutable iterator,
-  or model `bidirectional_iterator` [iterator.concept.bidir] otherwise.
+  [[bidirectional.iterators]] if it is required to be a mutable
+  iterator, or model `bidirectional_iterator` [[iterator.concept.bidir]]
+  otherwise.
 
 - If an algorithm’s template parameter is named `RandomAccessIterator`,
   `RandomAccessIterator1`, or `RandomAccessIterator2`, the template
   argument shall meet the *Cpp17RandomAccessIterator* requirements
-  [random.access.iterators] if it is required to be a mutable iterator,
-  or model `random_access_iterator` [iterator.concept.random.access]
-  otherwise.
+  [[random.access.iterators]] if it is required to be a mutable
+  iterator, or model `random_access_iterator`
+  [[iterator.concept.random.access]] otherwise.
 
 \[*Note 1*: These requirements do not affect iterator arguments that are
 constrained, for which iterator category and mutability requirements are
@@ -113,13 +114,13 @@ When such a version is provided for *algorithm* it is called
 `_if` (which follows the suffix `_copy`).
 
 When not otherwise constrained, the `Predicate` parameter is used
-whenever an algorithm expects a function object [function.objects] that,
-when applied to the result of dereferencing the corresponding iterator,
-returns a value testable as `true`. If an algorithm takes
+whenever an algorithm expects a function object [[function.objects]]
+that, when applied to the result of dereferencing the corresponding
+iterator, returns a value testable as `true`. If an algorithm takes
 `Predicate pred` as its argument and `first` as its iterator argument
 with value type `T`, the expression `pred(*first)` shall be well-formed
 and the type `decltype(pred(*first))` shall model `boolean-testable`
-[concept.booleantestable]. The function object `pred` shall not apply
+[[concept.booleantestable]]. The function object `pred` shall not apply
 any non-constant function through its argument. Given a glvalue `u` of
 type (possibly const) `T` that designates the same object as `*first`,
 `pred(u)` shall be a valid expression that is equal to `pred(*first)`.
@@ -149,13 +150,13 @@ valid expression that is equal to `binary_pred(*first1, value)`.
 
 The parameters `UnaryOperation`, `BinaryOperation`, `BinaryOperation1`,
 and `BinaryOperation2` are used whenever an algorithm expects a function
-object [function.objects].
+object [[function.objects]].
 
 \[*Note 2*: Unless otherwise specified, algorithms that take function
 objects as arguments can copy those function objects freely. If object
 identity is important, a wrapper class that points to a non-copied
-implementation object such as `reference_wrapper<T>` [refwrap], or some
-equivalent solution, can be used. — *end note*\]
+implementation object such as `reference_wrapper<T>` [[refwrap]], or
+some equivalent solution, can be used. — *end note*\]
 
 When the description of an algorithm gives an expression such as
 `*first == value` for a condition, the expression shall evaluate to
@@ -200,10 +201,10 @@ denoting the end of a range is sometimes returned where an iterator is
 expected. In these cases, the semantics are as if the sentinel is
 converted into an iterator using `ranges::next(i, s)`.
 
-Overloads of algorithms that take `range` arguments [range.range] behave
-as if they are implemented by calling `ranges::begin` and `ranges::end`
-on the `range`(s) and dispatching to the overload in namespace `ranges`
-that takes separate iterator and sentinel arguments.
+Overloads of algorithms that take `range` arguments [[range.range]]
+behave as if they are implemented by calling `ranges::begin` and
+`ranges::end` on the `range`(s) and dispatching to the overload in
+namespace `ranges` that takes separate iterator and sentinel arguments.
 
 The well-formedness and behavior of a call to an algorithm with an
 explicitly-specified template argument list is unspecified, except where
@@ -212,9 +213,9 @@ explicitly stated otherwise.
 \[*Note 3*: Consequently, an implementation can declare an algorithm
 with different template parameters than those presented. — *end note*\]
 
-## Parallel algorithms <a id="algorithms.parallel">[algorithms.parallel]</a>
+## Parallel algorithms <a id="algorithms.parallel">[[algorithms.parallel]]</a>
 
-### Preamble <a id="algorithms.parallel.defns">[algorithms.parallel.defns]</a>
+### Preamble <a id="algorithms.parallel.defns">[[algorithms.parallel.defns]]</a>
 
 A *parallel algorithm* is a function template listed in this document
 with a template parameter named `ExecutionPolicy`.
@@ -233,7 +234,7 @@ arguments by invoking the following functions:
 
 - Operations on those function objects required by the specification.
 
-  \[*Note 1*: See  [algorithms.requirements]. — *end note*\]
+  \[*Note 1*: See  [[algorithms.requirements]]. — *end note*\]
 
 These functions are herein called *element access functions*.
 
@@ -242,11 +243,11 @@ These functions are herein called *element access functions*.
 The `sort` function may invoke the following element access functions:
 
 - Operations of the random-access iterator of the actual template
-  argument (as per [random.access.iterators]), as implied by the name of
-  the template parameter `RandomAccessIterator`.
+  argument (as per [[random.access.iterators]]), as implied by the name
+  of the template parameter `RandomAccessIterator`.
 
 - The `swap` function on the elements of the sequence (as per the
-  preconditions specified in [sort]).
+  preconditions specified in [[sort]]).
 
 - The user-provided `Compare` function object.
 
@@ -283,7 +284,7 @@ different threads of execution.
 
 — *end example*\]
 
-### Requirements on user-provided function objects <a id="algorithms.parallel.user">[algorithms.parallel.user]</a>
+### Requirements on user-provided function objects <a id="algorithms.parallel.user">[[algorithms.parallel.user]]</a>
 
 Unless otherwise specified, function objects passed into parallel
 algorithms as objects of type `Predicate`, `BinaryPredicate`, `Compare`,
@@ -294,10 +295,10 @@ specified default predicate or operation (where applicable) shall not
 directly or indirectly modify objects via their arguments, nor shall
 they rely on the identity of the provided objects.
 
-### Effect of execution policies on algorithm execution <a id="algorithms.parallel.exec">[algorithms.parallel.exec]</a>
+### Effect of execution policies on algorithm execution <a id="algorithms.parallel.exec">[[algorithms.parallel.exec]]</a>
 
 Parallel algorithms have template parameters named `ExecutionPolicy`
-[execpol] which describe the manner in which the execution of these
+[[execpol]] which describe the manner in which the execution of these
 algorithms may be parallelized and the manner in which they apply the
 element access functions.
 
@@ -319,8 +320,8 @@ elements (with type `T`) from sequences where
 on object identity of arguments for such input sequences. If object
 identity of the arguments to these function objects is important, a
 wrapping iterator that returns a non-copied implementation object such
-as `reference_wrapper<T>` [refwrap], or some equivalent solution, can be
-used. — *end note*\]
+as `reference_wrapper<T>` [[refwrap]], or some equivalent solution, can
+be used. — *end note*\]
 
 The invocations of element access functions in parallel algorithms
 invoked with an execution policy object of type
@@ -328,7 +329,7 @@ invoked with an execution policy object of type
 execution.
 
 \[*Note 4*: The invocations are not interleaved; see 
-[intro.execution]. — *end note*\]
+[[intro.execution]]. — *end note*\]
 
 The invocations of element access functions in parallel algorithms
 invoked with an execution policy object of type
@@ -338,8 +339,8 @@ one another in the calling thread of execution.
 
 \[*Note 5*: This means that multiple function object invocations can be
 interleaved on a single thread of execution, which overrides the usual
-guarantee from [intro.execution] that function executions do not overlap
-with one another. — *end note*\]
+guarantee from [[intro.execution]] that function executions do not
+overlap with one another. — *end note*\]
 
 The behavior of a program is undefined if it invokes a
 vectorization-unsafe standard library function from user code called
@@ -355,9 +356,9 @@ invoked with an execution policy object of type
 `execution::parallel_policy` are permitted to execute either in the
 invoking thread of execution or in a thread of execution implicitly
 created by the library to support parallel algorithm execution. If the
-threads of execution created by `thread` [thread.thread.class] or
-`jthread` [thread.jthread.class] provide concurrent forward progress
-guarantees [intro.progress], then a thread of execution implicitly
+threads of execution created by `thread` [[thread.thread.class]] or
+`jthread` [[thread.jthread.class]] provide concurrent forward progress
+guarantees [[intro.progress]], then a thread of execution implicitly
 created by the library will provide parallel forward progress
 guarantees; otherwise, the provided forward progress guarantee is
 *implementation-defined*. Any such invocations executing in the same
@@ -428,8 +429,8 @@ provide weakly parallel forward progress guarantees.
 
 \[*Note 8*: This means that multiple function object invocations can be
 interleaved on a single thread of execution, which overrides the usual
-guarantee from [intro.execution] that function executions do not overlap
-with one another. — *end note*\]
+guarantee from [[intro.execution]] that function executions do not
+overlap with one another. — *end note*\]
 
 The behavior of a program is undefined if it invokes a
 vectorization-unsafe standard library function from user code called
@@ -451,8 +452,8 @@ implicitly created by the library, then the invoking thread of execution
 will either
 
 - temporarily block with forward progress guarantee delegation
-  [intro.progress] on the completion of these library-managed threads of
-  execution, or
+  [[intro.progress]] on the completion of these library-managed threads
+  of execution, or
 
 - eventually execute an element access function;
 
@@ -468,7 +469,7 @@ execution logically depends on. — *end note*\]
 The semantics of parallel algorithms invoked with an execution policy
 object of *implementation-defined* type are *implementation-defined*.
 
-### Parallel algorithm exceptions <a id="algorithms.parallel.exceptions">[algorithms.parallel.exceptions]</a>
+### Parallel algorithm exceptions <a id="algorithms.parallel.exceptions">[[algorithms.parallel.exceptions]]</a>
 
 During the execution of a parallel algorithm, if temporary memory
 resources are required for parallelization and none are available, the
@@ -478,7 +479,7 @@ During the execution of a parallel algorithm, if the invocation of an
 element access function exits via an uncaught exception, the behavior is
 determined by the `ExecutionPolicy`.
 
-### `ExecutionPolicy` algorithm overloads <a id="algorithms.parallel.overloads">[algorithms.parallel.overloads]</a>
+### `ExecutionPolicy` algorithm overloads <a id="algorithms.parallel.overloads">[[algorithms.parallel.overloads]]</a>
 
 Parallel algorithms are algorithm overloads. Each parallel algorithm
 overload has an additional template type parameter named
@@ -502,7 +503,7 @@ notation, the complexity of the algorithm shall be *expr*.
 Parallel algorithms shall not participate in overload resolution unless
 `is_execution_policy_v<remove_cvref_t<ExecutionPolicy>>` is `true`.
 
-## Header `<algorithm>` synopsis <a id="algorithm.syn">[algorithm.syn]</a>
+## Header `<algorithm>` synopsis <a id="algorithm.syn">[[algorithm.syn]]</a>
 
 ``` cpp
 #include <initializer_list>     // see [initializer.list.syn]
@@ -2937,7 +2938,7 @@ namespace std {
 }
 ```
 
-## Algorithm result types <a id="algorithms.results">[algorithms.results]</a>
+## Algorithm result types <a id="algorithms.results">[[algorithms.results]]</a>
 
 Each of the class templates specified in this subclause has the template
 parameters, data members, and special members specified below, and has
@@ -3118,9 +3119,9 @@ namespace std::ranges {
 }
 ```
 
-## Non-modifying sequence operations <a id="alg.nonmodifying">[alg.nonmodifying]</a>
+## Non-modifying sequence operations <a id="alg.nonmodifying">[[alg.nonmodifying]]</a>
 
-### All of <a id="alg.all.of">[alg.all.of]</a>
+### All of <a id="alg.all.of">[[alg.all.of]]</a>
 
 ``` cpp
 template<class InputIterator, class Predicate>
@@ -3154,7 +3155,7 @@ template<input_range R, class Proj = identity,
 > At most `last - first` applications of the predicate and any
 > projection.
 
-### Any of <a id="alg.any.of">[alg.any.of]</a>
+### Any of <a id="alg.any.of">[[alg.any.of]]</a>
 
 ``` cpp
 template<class InputIterator, class Predicate>
@@ -3188,7 +3189,7 @@ template<input_range R, class Proj = identity,
 > At most `last - first` applications of the predicate and any
 > projection.
 
-### None of <a id="alg.none.of">[alg.none.of]</a>
+### None of <a id="alg.none.of">[[alg.none.of]]</a>
 
 ``` cpp
 template<class InputIterator, class Predicate>
@@ -3222,7 +3223,7 @@ template<input_range R, class Proj = identity,
 > At most `last - first` applications of the predicate and any
 > projection.
 
-### Contains <a id="alg.contains">[alg.contains]</a>
+### Contains <a id="alg.contains">[[alg.contains]]</a>
 
 ``` cpp
 template<input_iterator I, sentinel_for<I> S, class T, class Proj = identity>
@@ -3255,7 +3256,7 @@ template<forward_range R1, forward_range R2,
 >
 > `first2 == last2 || !ranges::search(first1, last1, first2, last2, pred, proj1, proj2).empty()`.
 
-### For each <a id="alg.foreach">[alg.foreach]</a>
+### For each <a id="alg.foreach">[[alg.foreach]]</a>
 
 ``` cpp
 template<class InputIterator, class Function>
@@ -3461,7 +3462,7 @@ template<input_iterator I, class Proj = identity,
 > \[*Note 12*: The overload in namespace `ranges` requires `Fun` to
 > model `copy_constructible`. — *end note*\]
 
-### Find <a id="alg.find">[alg.find]</a>
+### Find <a id="alg.find">[[alg.find]]</a>
 
 ``` cpp
 template<class InputIterator, class T>
@@ -3533,7 +3534,7 @@ template<input_range R, class Proj = identity,
 > At most `last - first` applications of the corresponding predicate and
 > any projection.
 
-### Find last <a id="alg.find.last">[alg.find.last]</a>
+### Find last <a id="alg.find.last">[[alg.find.last]]</a>
 
 ``` cpp
 template<forward_iterator I, sentinel_for<I> S, class T, class Proj = identity>
@@ -3576,7 +3577,7 @@ template<forward_range R, class Proj = identity,
 > At most `last - first` applications of the corresponding predicate and
 > projection.
 
-### Find end <a id="alg.find.end">[alg.find.end]</a>
+### Find end <a id="alg.find.end">[[alg.find.end]]</a>
 
 ``` cpp
 template<class ForwardIterator1, class ForwardIterator2>
@@ -3648,7 +3649,7 @@ template<forward_range R1, forward_range R2,
 > At most `(last2 - first2) * (last1 - first1 - (last2 - first2) + 1)`
 > applications of the corresponding predicate and any projections.
 
-### Find first <a id="alg.find.first.of">[alg.find.first.of]</a>
+### Find first <a id="alg.find.first.of">[[alg.find.first.of]]</a>
 
 ``` cpp
 template<class InputIterator, class ForwardIterator>
@@ -3716,7 +3717,7 @@ template<input_range R1, forward_range R2,
 > At most `(last1-first1) * (last2-first2)` applications of the
 > corresponding predicate and any projections.
 
-### Adjacent find <a id="alg.adjacent.find">[alg.adjacent.find]</a>
+### Adjacent find <a id="alg.adjacent.find">[[alg.adjacent.find]]</a>
 
 ``` cpp
 template<class ForwardIterator>
@@ -3773,7 +3774,7 @@ template<forward_range R, class Proj = identity,
 > predicate, and no more than twice as many applications of any
 > projection.
 
-### Count <a id="alg.count">[alg.count]</a>
+### Count <a id="alg.count">[[alg.count]]</a>
 
 ``` cpp
 template<class InputIterator, class T>
@@ -3833,7 +3834,7 @@ template<input_range R, class Proj = identity,
 > Exactly `last - first` applications of the corresponding predicate and
 > any projection.
 
-### Mismatch <a id="mismatch">[mismatch]</a>
+### Mismatch <a id="mismatch">[[mismatch]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2>
@@ -3922,7 +3923,7 @@ template<input_range R1, input_range R2,
 > At most N applications of the corresponding predicate and any
 > projections.
 
-### Equal <a id="alg.equal">[alg.equal]</a>
+### Equal <a id="alg.equal">[[alg.equal]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2>
@@ -4026,7 +4027,7 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to,
 >   𝑂(min(`last1 - first1),  ``last2 - first2``)` applications of the
 >   corresponding predicate.
 
-### Is permutation <a id="alg.is.permutation">[alg.is.permutation]</a>
+### Is permutation <a id="alg.is.permutation">[[alg.is.permutation]]</a>
 
 ``` cpp
 template<class ForwardIterator1, class ForwardIterator2>
@@ -4120,7 +4121,7 @@ template<forward_range R1, forward_range R2,
 > would return `true`; otherwise, at worst 𝑂(N^2), where N has the value
 > `last1 - first1`.
 
-### Search <a id="alg.search">[alg.search]</a>
+### Search <a id="alg.search">[[alg.search]]</a>
 
 ``` cpp
 template<class ForwardIterator1, class ForwardIterator2>
@@ -4281,7 +4282,7 @@ template<class ForwardIterator, class Searcher>
 >
 > `Searcher` need not meet the *Cpp17CopyConstructible* requirements.
 
-### Starts with <a id="alg.starts.with">[alg.starts.with]</a>
+### Starts with <a id="alg.starts.with">[[alg.starts.with]]</a>
 
 ``` cpp
 template<input_iterator I1, sentinel_for<I1> S1, input_iterator I2, sentinel_for<I2> S2,
@@ -4303,7 +4304,7 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to, class Pr
 >                  pred, proj1, proj2).in2 == last2
 > ```
 
-### Ends with <a id="alg.ends.with">[alg.ends.with]</a>
+### Ends with <a id="alg.ends.with">[[alg.ends.with]]</a>
 
 ``` cpp
 template<input_iterator I1, sentinel_for<I1> S1, input_iterator I2, sentinel_for<I2> S2,
@@ -4346,7 +4347,7 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to, class Pr
 > ranges::equal(ranges::drop_view(ranges::ref_view(r1), N1 - N2), r2, pred, proj1, proj2)
 > ```
 
-### Fold <a id="alg.fold">[alg.fold]</a>
+### Fold <a id="alg.fold">[[alg.fold]]</a>
 
 ``` cpp
 template<input_iterator I, sentinel_for<I> S, class T, indirectly-binary-left-foldable<T, I> F>
@@ -4492,9 +4493,9 @@ template<input_range R, indirectly-binary-left-foldable<range_value_t<R>, iterat
 > `fold_left_first_with_iter_result<borrowed_iterator_t<R>, optional<U>>`
 > for the second overload.
 
-## Mutating sequence operations <a id="alg.modifying.operations">[alg.modifying.operations]</a>
+## Mutating sequence operations <a id="alg.modifying.operations">[[alg.modifying.operations]]</a>
 
-### Copy <a id="alg.copy">[alg.copy]</a>
+### Copy <a id="alg.copy">[[alg.copy]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator>
@@ -4703,7 +4704,7 @@ template<bidirectional_range R, bidirectional_iterator I>
 >
 > Exactly N assignments.
 
-### Move <a id="alg.move">[alg.move]</a>
+### Move <a id="alg.move">[[alg.move]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator>
@@ -4828,7 +4829,7 @@ template<bidirectional_range R, bidirectional_iterator I>
 >
 > Exactly N assignments.
 
-### Swap <a id="alg.swap">[alg.swap]</a>
+### Swap <a id="alg.swap">[[alg.swap]]</a>
 
 ``` cpp
 template<class ForwardIterator1, class ForwardIterator2>
@@ -4899,7 +4900,7 @@ template<class ForwardIterator1, class ForwardIterator2>
 >
 > As if by `swap(*a, *b)`.
 
-### Transform <a id="alg.transform">[alg.transform]</a>
+### Transform <a id="alg.transform">[[alg.transform]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator,
@@ -5016,7 +5017,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 >
 > `result` may be equal to `first1` or `first2`.
 
-### Replace <a id="alg.replace">[alg.replace]</a>
+### Replace <a id="alg.replace">[[alg.replace]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -5182,7 +5183,7 @@ template<input_range R, class T, output_iterator<const T&> O, class Proj = ident
 > Exactly `last - first` applications of the corresponding predicate and
 > any projection.
 
-### Fill <a id="alg.fill">[alg.fill]</a>
+### Fill <a id="alg.fill">[[alg.fill]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -5227,7 +5228,7 @@ template<class T, output_iterator<const T&> O>
 >
 > Exactly N assignments.
 
-### Generate <a id="alg.generate">[alg.generate]</a>
+### Generate <a id="alg.generate">[[alg.generate]]</a>
 
 ``` cpp
 template<class ForwardIterator, class Generator>
@@ -5275,7 +5276,7 @@ template<input_or_output_iterator O, copy_constructible F>
 >
 > Exactly N evaluations of `gen()` and assignments.
 
-### Remove <a id="alg.remove">[alg.remove]</a>
+### Remove <a id="alg.remove">[[alg.remove]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -5448,7 +5449,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > Stable\[algorithm.stable\].
 
-### Unique <a id="alg.unique">[alg.unique]</a>
+### Unique <a id="alg.unique">[[alg.unique]]</a>
 
 ``` cpp
 template<class ForwardIterator>
@@ -5603,7 +5604,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > Exactly `last - first - 1` applications of the corresponding predicate
 > and no more than twice as many applications of any projection.
 
-### Reverse <a id="alg.reverse">[alg.reverse]</a>
+### Reverse <a id="alg.reverse">[[alg.reverse]]</a>
 
 ``` cpp
 template<class BidirectionalIterator>
@@ -5685,7 +5686,7 @@ template<bidirectional_range R, weakly_incrementable O>
 >
 > Exactly N assignments.
 
-### Rotate <a id="alg.rotate">[alg.rotate]</a>
+### Rotate <a id="alg.rotate">[[alg.rotate]]</a>
 
 ``` cpp
 template<class ForwardIterator>
@@ -5796,7 +5797,7 @@ template<forward_range R, weakly_incrementable O>
 > return ranges::rotate_copy(ranges::begin(r), middle, ranges::end(r), std::move(result));
 > ```
 
-### Sample <a id="alg.random.sample">[alg.random.sample]</a>
+### Sample <a id="alg.random.sample">[[alg.random.sample]]</a>
 
 ``` cpp
 template<class PopulationIterator, class SampleIterator,
@@ -5869,7 +5870,7 @@ template<input_range R, weakly_incrementable O, class Gen>
 >   random numbers, the object `g` serves as the implementation’s source
 >   of randomness.
 
-### Shuffle <a id="alg.random.shuffle">[alg.random.shuffle]</a>
+### Shuffle <a id="alg.random.shuffle">[[alg.random.shuffle]]</a>
 
 ``` cpp
 template<class RandomAccessIterator, class UniformRandomBitGenerator>
@@ -5917,7 +5918,7 @@ template<random_access_range R, class Gen>
 > random numbers, the object referenced by `g` shall serve as the
 > implementation’s source of randomness.
 
-### Shift <a id="alg.shift">[alg.shift]</a>
+### Shift <a id="alg.shift">[[alg.shift]]</a>
 
 ``` cpp
 template<class ForwardIterator>
@@ -6015,17 +6016,17 @@ template<forward_range R>
 >
 > At most `(last - first) - n` assignments or swaps.
 
-## Sorting and related operations <a id="alg.sorting">[alg.sorting]</a>
+## Sorting and related operations <a id="alg.sorting">[[alg.sorting]]</a>
 
-### General <a id="alg.sorting.general">[alg.sorting.general]</a>
+### General <a id="alg.sorting.general">[[alg.sorting.general]]</a>
 
-The operations in  [alg.sorting] defined directly in namespace `std`
+The operations in  [[alg.sorting]] defined directly in namespace `std`
 have two versions: one that takes a function object of type `Compare`
 and one that uses an `operator<`.
 
-`Compare` is a function object type [function.objects] that meets the
+`Compare` is a function object type [[function.objects]] that meets the
 requirements for a template parameter named `BinaryPredicate` 
-[algorithms.requirements]. The return value of the function call
+[[algorithms.requirements]]. The return value of the function call
 operation applied to an object of type `Compare`, when converted to
 `bool`, yields `true` if the first argument of the call is less than the
 second, and `false` otherwise. `Compare comp` is used throughout for
@@ -6034,7 +6035,7 @@ algorithms assuming an ordering relation.
 For all algorithms that take `Compare`, there is a version that uses
 `operator<` instead. That is, `comp(*i, *j) != false` defaults to
 `*i < *j != false`. For algorithms other than those described in 
-[alg.binary.search], `comp` shall induce a strict weak ordering on the
+[[alg.binary.search]], `comp` shall induce a strict weak ordering on the
 values.
 
 The term *strict* refers to the requirement of an irreflexive relation
@@ -6088,9 +6089,9 @@ necessarily an `operator==`, but an equivalence relation induced by the
 strict weak ordering. That is, two elements `a` and `b` are considered
 equivalent if and only if `!(a < b) && !(b < a)`.
 
-### Sorting <a id="alg.sort">[alg.sort]</a>
+### Sorting <a id="alg.sort">[[alg.sort]]</a>
 
-#### `sort` <a id="sort">[sort]</a>
+#### `sort` <a id="sort">[[sort]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -6142,7 +6143,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 >
 > Let N be `last - first`. 𝑂(N log N) comparisons and projections.
 
-#### `stable_sort` <a id="stable.sort">[stable.sort]</a>
+#### `stable_sort` <a id="stable.sort">[[stable.sort]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -6200,7 +6201,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 >
 > Stable\[algorithm.stable\].
 
-#### `partial_sort` <a id="partial.sort">[partial.sort]</a>
+#### `partial_sort` <a id="partial.sort">[[partial.sort]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -6275,7 +6276,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > return ranges::partial_sort(ranges::begin(r), middle, ranges::end(r), comp, proj);
 > ```
 
-#### `partial_sort_copy` <a id="partial.sort.copy">[partial.sort.copy]</a>
+#### `partial_sort_copy` <a id="partial.sort.copy">[[partial.sort.copy]]</a>
 
 ``` cpp
 template<class InputIterator, class RandomAccessIterator>
@@ -6377,7 +6378,7 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
 > Approximately `(last - first) * log `N comparisons, and twice as many
 > projections.
 
-#### `is_sorted` <a id="is.sorted">[is.sorted]</a>
+#### `is_sorted` <a id="is.sorted">[[is.sorted]]</a>
 
 ``` cpp
 template<class ForwardIterator>
@@ -6481,7 +6482,7 @@ template<forward_range R, class Proj = identity,
 >
 > Linear.
 
-### Nth element <a id="alg.nth.element">[alg.nth.element]</a>
+### Nth element <a id="alg.nth.element">[[alg.nth.element]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -6553,11 +6554,11 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > return ranges::nth_element(ranges::begin(r), nth, ranges::end(r), comp, proj);
 > ```
 
-### Binary search <a id="alg.binary.search">[alg.binary.search]</a>
+### Binary search <a id="alg.binary.search">[[alg.binary.search]]</a>
 
-#### General <a id="alg.binary.search.general">[alg.binary.search.general]</a>
+#### General <a id="alg.binary.search.general">[[alg.binary.search.general]]</a>
 
-All of the algorithms in [alg.binary.search] are versions of binary
+All of the algorithms in [[alg.binary.search]] are versions of binary
 search and assume that the sequence being searched is partitioned with
 respect to an expression formed by binding the search key to an argument
 of the comparison function. They work on non-random access iterators
@@ -6567,7 +6568,7 @@ iterators, because these algorithms do a logarithmic number of steps
 through the data structure. For non-random access iterators they execute
 a linear number of steps.
 
-#### `lower_bound` <a id="lower.bound">[lower.bound]</a>
+#### `lower_bound` <a id="lower.bound">[[lower.bound]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -6611,7 +6612,7 @@ template<forward_range R, class T, class Proj = identity,
 > At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
 > projections.
 
-#### `upper_bound` <a id="upper.bound">[upper.bound]</a>
+#### `upper_bound` <a id="upper.bound">[[upper.bound]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -6654,7 +6655,7 @@ template<forward_range R, class T, class Proj = identity,
 > At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
 > projections.
 
-#### `equal_range` <a id="equal.range">[equal.range]</a>
+#### `equal_range` <a id="equal.range">[[equal.range]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -6707,7 +6708,7 @@ template<forward_range R, class T, class Proj = identity,
 > At most $2 * \log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
 > projections.
 
-#### `binary_search` <a id="binary.search">[binary.search]</a>
+#### `binary_search` <a id="binary.search">[[binary.search]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -6754,7 +6755,7 @@ template<forward_range R, class T, class Proj = identity,
 > At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
 > projections.
 
-### Partitions <a id="alg.partitions">[alg.partitions]</a>
+### Partitions <a id="alg.partitions">[[alg.partitions]]</a>
 
 ``` cpp
 template<class InputIterator, class Predicate>
@@ -6992,7 +6993,7 @@ template<forward_range R, class Proj = identity,
 >
 > 𝑂(log(`last - first))` applications of `pred` and `proj`.
 
-### Merge <a id="alg.merge">[alg.merge]</a>
+### Merge <a id="alg.merge">[[alg.merge]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2,
@@ -7157,18 +7158,18 @@ template<bidirectional_range R, class Comp = ranges::less, class Proj = identity
 > return ranges::inplace_merge(ranges::begin(r), middle, ranges::end(r), comp, proj);
 > ```
 
-### Set operations on sorted structures <a id="alg.set.operations">[alg.set.operations]</a>
+### Set operations on sorted structures <a id="alg.set.operations">[[alg.set.operations]]</a>
 
-#### General <a id="alg.set.operations.general">[alg.set.operations.general]</a>
+#### General <a id="alg.set.operations.general">[[alg.set.operations.general]]</a>
 
-Subclause [alg.set.operations] defines all the basic set operations on
-sorted structures. They also work with `multiset`s [multiset] containing
-multiple copies of equivalent elements. The semantics of the set
-operations are generalized to `multiset`s in a standard way by defining
-`set_union` to contain the maximum number of occurrences of every
-element, `set_intersection` to contain the minimum, and so on.
+Subclause [[alg.set.operations]] defines all the basic set operations on
+sorted structures. They also work with `multiset`s [[multiset]]
+containing multiple copies of equivalent elements. The semantics of the
+set operations are generalized to `multiset`s in a standard way by
+defining `set_union` to contain the maximum number of occurrences of
+every element, `set_intersection` to contain the minimum, and so on.
 
-#### `includes` <a id="includes">[includes]</a>
+#### `includes` <a id="includes">[[includes]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2>
@@ -7225,7 +7226,7 @@ template<input_range R1, input_range R2, class Proj1 = identity,
 > At most `2 * ((last1 - first1) + (last2 - first2)) - 1` comparisons
 > and applications of each projection.
 
-#### `set_union` <a id="set.union">[set.union]</a>
+#### `set_union` <a id="set.union">[[set.union]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2, class OutputIterator>
@@ -7306,7 +7307,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > then the final $\max(n - m, 0)$ elements from the second range are
 > copied to the output range, in order.
 
-#### `set_intersection` <a id="set.intersection">[set.intersection]</a>
+#### `set_intersection` <a id="set.intersection">[[set.intersection]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2,
@@ -7388,7 +7389,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > $\min(m, n)$ elements are copied from the first range to the output
 > range, in order.
 
-#### `set_difference` <a id="set.difference">[set.difference]</a>
+#### `set_difference` <a id="set.difference">[[set.difference]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2,
@@ -7469,7 +7470,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > equivalent to them, the last $\max(m - n, 0)$ elements from
 > \[`first1`, `last1`) are copied to the output range, in order.
 
-#### `set_symmetric_difference` <a id="set.symmetric.difference">[set.symmetric.difference]</a>
+#### `set_symmetric_difference` <a id="set.symmetric.difference">[[set.symmetric.difference]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2,
@@ -7558,9 +7559,9 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > these elements from \[`first2`, `last2`) if m < n. In either case, the
 > elements are copied in order.
 
-### Heap operations <a id="alg.heap.operations">[alg.heap.operations]</a>
+### Heap operations <a id="alg.heap.operations">[[alg.heap.operations]]</a>
 
-#### General <a id="alg.heap.operations.general">[alg.heap.operations.general]</a>
+#### General <a id="alg.heap.operations.general">[[alg.heap.operations.general]]</a>
 
 A random access range is a `comp} and \tcode{proj}` heap with respect to
 comp and proj@heap with respect to `comp` and `proj` for a comparator
@@ -7579,7 +7580,7 @@ These properties make heaps useful as priority queues.
 `make_heap` converts a range into a heap and `sort_heap` turns a heap
 into a sorted sequence.
 
-#### `push_heap` <a id="push.heap">[push.heap]</a>
+#### `push_heap` <a id="push.heap">[[push.heap]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -7627,7 +7628,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > At most $\log(\texttt{last - first})$ comparisons and twice as many
 > projections.
 
-#### `pop_heap` <a id="pop.heap">[pop.heap]</a>
+#### `pop_heap` <a id="pop.heap">[[pop.heap]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -7675,7 +7676,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > At most $2 \log(\texttt{last - first})$ comparisons and twice as many
 > projections.
 
-#### `make_heap` <a id="make.heap">[make.heap]</a>
+#### `make_heap` <a id="make.heap">[[make.heap]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -7721,7 +7722,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > At most $3(\texttt{last - first})$ comparisons and twice as many
 > projections.
 
-#### `sort_heap` <a id="sort.heap">[sort.heap]</a>
+#### `sort_heap` <a id="sort.heap">[[sort.heap]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -7768,7 +7769,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > At most $2N \log N$ comparisons, where $N = \texttt{last - first}$,
 > and twice as many projections.
 
-#### `is_heap` <a id="is.heap">[is.heap]</a>
+#### `is_heap` <a id="is.heap">[[is.heap]]</a>
 
 ``` cpp
 template<class RandomAccessIterator>
@@ -7872,7 +7873,7 @@ template<random_access_range R, class Proj = identity,
 >
 > Linear.
 
-### Minimum and maximum <a id="alg.min.max">[alg.min.max]</a>
+### Minimum and maximum <a id="alg.min.max">[[alg.min.max]]</a>
 
 ``` cpp
 template<class T>
@@ -8212,7 +8213,7 @@ template<forward_range R, class Proj = identity,
 > $\max(\bigl\lfloor{\frac{3}{2}} (N-1)\bigr\rfloor, 0)$ comparisons and
 > twice as many applications of the projection, if any.
 
-### Bounded value <a id="alg.clamp">[alg.clamp]</a>
+### Bounded value <a id="alg.clamp">[[alg.clamp]]</a>
 
 ``` cpp
 template<class T>
@@ -8248,7 +8249,7 @@ template<class T, class Proj = identity,
 >
 > At most two comparisons and three applications of the projection.
 
-### Lexicographical comparison <a id="alg.lex.comparison">[alg.lex.comparison]</a>
+### Lexicographical comparison <a id="alg.lex.comparison">[[alg.lex.comparison]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2>
@@ -8329,7 +8330,7 @@ template<input_range R1, input_range R2, class Proj1 = identity,
 > non-empty sequence, but not less than any empty
 > sequence. — *end note*\]
 
-### Three-way comparison algorithms <a id="alg.three.way">[alg.three.way]</a>
+### Three-way comparison algorithms <a id="alg.three.way">[[alg.three.way]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2, class Cmp>
@@ -8372,7 +8373,7 @@ template<class InputIterator1, class InputIterator2>
 > return lexicographical_compare_three_way(b1, e1, b2, e2, compare_three_way());
 > ```
 
-### Permutation generators <a id="alg.permutation.generators">[alg.permutation.generators]</a>
+### Permutation generators <a id="alg.permutation.generators">[[alg.permutation.generators]]</a>
 
 ``` cpp
 template<class BidirectionalIterator>
@@ -8476,7 +8477,7 @@ template<bidirectional_range R, class Comp = ranges::less,
 >
 > At most `(last - first) / 2` swaps.
 
-## Header `<numeric>` synopsis <a id="numeric.ops.overview">[numeric.ops.overview]</a>
+## Header `<numeric>` synopsis <a id="numeric.ops.overview">[[numeric.ops.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -8706,15 +8707,15 @@ namespace std {
 }
 ```
 
-## Generalized numeric operations <a id="numeric.ops">[numeric.ops]</a>
+## Generalized numeric operations <a id="numeric.ops">[[numeric.ops]]</a>
 
-### General <a id="numeric.ops.general">[numeric.ops.general]</a>
+### General <a id="numeric.ops.general">[[numeric.ops.general]]</a>
 
 \[*Note 1*: The use of closed ranges as well as semi-open ranges to
-specify requirements throughout [numeric.ops] is
+specify requirements throughout [[numeric.ops]] is
 intentional. — *end note*\]
 
-### Definitions <a id="numerics.defns">[numerics.defns]</a>
+### Definitions <a id="numerics.defns">[[numerics.defns]]</a>
 
 `GENERALIZED_NONCOMMUTATIVE_SUM}` Define
 `GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, ..., aN)` as follows:
@@ -8729,7 +8730,7 @@ intentional. — *end note*\]
 `GENERALIZED_NONCOMMUTATIVE_SUM(op, b1, ..., bN)`, where `b1, ..., bN`
 may be any permutation of `a1, ..., aN`.
 
-### Accumulate <a id="accumulate">[accumulate]</a>
+### Accumulate <a id="accumulate">[[accumulate]]</a>
 
 ``` cpp
 template<class InputIterator, class T>
@@ -8760,7 +8761,7 @@ template<class InputIterator, class T, class BinaryOperation>
 > of reduction on an empty sequence by always requiring an initial
 > value.
 
-### Reduce <a id="reduce">[reduce]</a>
+### Reduce <a id="reduce">[[reduce]]</a>
 
 ``` cpp
 template<class InputIterator>
@@ -8866,7 +8867,7 @@ template<class ExecutionPolicy, class ForwardIterator, class T, class BinaryOper
 > nondeterministic result for non-associative or non-commutative
 > `binary_op` such as floating-point addition. — *end note*\]
 
-### Inner product <a id="inner.product">[inner.product]</a>
+### Inner product <a id="inner.product">[[inner.product]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2, class T>
@@ -8899,7 +8900,7 @@ template<class InputIterator1, class InputIterator2, class T,
 > iterator `i1` in the range \[`first1`, `last1`) and iterator `i2` in
 > the range \[`first2`, `first2 + (last1 - first1)`) in order.
 
-### Transform reduce <a id="transform.reduce">[transform.reduce]</a>
+### Transform reduce <a id="transform.reduce">[[transform.reduce]]</a>
 
 ``` cpp
 template<class InputIterator1, class InputIterator2, class T>
@@ -9039,7 +9040,7 @@ template<class ExecutionPolicy,
 > \[*Note 25*: `transform_reduce` does not apply `unary_op` to
 > `init`. — *end note*\]
 
-### Partial sum <a id="partial.sum">[partial.sum]</a>
+### Partial sum <a id="partial.sum">[[partial.sum]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator>
@@ -9089,7 +9090,7 @@ template<class InputIterator, class OutputIterator, class BinaryOperation>
 >
 > `result` may be equal to `first`.
 
-### Exclusive scan <a id="exclusive.scan">[exclusive.scan]</a>
+### Exclusive scan <a id="exclusive.scan">[[exclusive.scan]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator, class T>
@@ -9185,7 +9186,7 @@ template<class ExecutionPolicy,
 > mathematically associative, the behavior of `exclusive_scan` can be
 > nondeterministic. — *end note*\]
 
-### Inclusive scan <a id="inclusive.scan">[inclusive.scan]</a>
+### Inclusive scan <a id="inclusive.scan">[[inclusive.scan]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator>
@@ -9298,7 +9299,7 @@ template<class ExecutionPolicy,
 > mathematically associative, the behavior of `inclusive_scan` can be
 > nondeterministic. — *end note*\]
 
-### Transform exclusive scan <a id="transform.exclusive.scan">[transform.exclusive.scan]</a>
+### Transform exclusive scan <a id="transform.exclusive.scan">[[transform.exclusive.scan]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator, class T,
@@ -9369,7 +9370,7 @@ template<class ExecutionPolicy,
 > `transform_exclusive_scan` does not apply `unary_op` to
 > `init`. — *end note*\]
 
-### Transform inclusive scan <a id="transform.inclusive.scan">[transform.inclusive.scan]</a>
+### Transform inclusive scan <a id="transform.inclusive.scan">[[transform.inclusive.scan]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator,
@@ -9464,7 +9465,7 @@ template<class ExecutionPolicy,
 > `transform_inclusive_scan` does not apply `unary_op` to
 > `init`. — *end note*\]
 
-### Adjacent difference <a id="adjacent.difference">[adjacent.difference]</a>
+### Adjacent difference <a id="adjacent.difference">[[adjacent.difference]]</a>
 
 ``` cpp
 template<class InputIterator, class OutputIterator>
@@ -9545,7 +9546,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 > \[`first`, `last`) and \[`result`, `result + (last - first)`) shall
 > not overlap.
 
-### Iota <a id="numeric.iota">[numeric.iota]</a>
+### Iota <a id="numeric.iota">[[numeric.iota]]</a>
 
 ``` cpp
 template<class ForwardIterator, class T>
@@ -9588,7 +9589,7 @@ template<weakly_incrementable T, output_range<const T&> R>
 > return {std::move(first), std::move(value)};
 > ```
 
-### Greatest common divisor <a id="numeric.ops.gcd">[numeric.ops.gcd]</a>
+### Greatest common divisor <a id="numeric.ops.gcd">[[numeric.ops.gcd]]</a>
 
 ``` cpp
 template<class M, class N>
@@ -9617,7 +9618,7 @@ template<class M, class N>
 >
 > Nothing.
 
-### Least common multiple <a id="numeric.ops.lcm">[numeric.ops.lcm]</a>
+### Least common multiple <a id="numeric.ops.lcm">[[numeric.ops.lcm]]</a>
 
 ``` cpp
 template<class M, class N>
@@ -9644,7 +9645,7 @@ template<class M, class N>
 >
 > Nothing.
 
-### Midpoint <a id="numeric.ops.midpoint">[numeric.ops.midpoint]</a>
+### Midpoint <a id="numeric.ops.midpoint">[[numeric.ops.midpoint]]</a>
 
 ``` cpp
 template<class T>
@@ -9690,19 +9691,19 @@ template<class T>
 > A pointer to array element $i+\frac{j-i}{2}$ of `x`, where the result
 > of the division is truncated towards zero.
 
-## Specialized `<memory>` algorithms <a id="specialized.algorithms">[specialized.algorithms]</a>
+## Specialized `<memory>` algorithms <a id="specialized.algorithms">[[specialized.algorithms]]</a>
 
-### General <a id="specialized.algorithms.general">[specialized.algorithms.general]</a>
+### General <a id="specialized.algorithms.general">[[specialized.algorithms.general]]</a>
 
-The contents specified in [specialized.algorithms] are declared in the
+The contents specified in [[specialized.algorithms]] are declared in the
 header `<memory>`.
 
 Unless otherwise specified, if an exception is thrown in the following
 algorithms, objects constructed by a placement *new-expression*
-[expr.new] are destroyed in an unspecified order before allowing the
+[[expr.new]] are destroyed in an unspecified order before allowing the
 exception to propagate.
 
-Some algorithms specified in [specialized.algorithms] make use of the
+Some algorithms specified in [[specialized.algorithms]] make use of the
 exposition-only function `voidify`:
 
 ``` cpp
@@ -9712,7 +9713,7 @@ template<class T>
   }
 ```
 
-### Special memory concepts <a id="special.mem.concepts">[special.mem.concepts]</a>
+### Special memory concepts <a id="special.mem.concepts">[[special.mem.concepts]]</a>
 
 Some algorithms in this subclause are constrained with the following
 exposition-only concepts:
@@ -9778,7 +9779,7 @@ concept nothrow-forward-range = // exposition only
   nothrow-forward-iterator<iterator_t<R>>;
 ```
 
-### `uninitialized_default_construct` <a id="uninitialized.construct.default">[uninitialized.construct.default]</a>
+### `uninitialized_default_construct` <a id="uninitialized.construct.default">[[uninitialized.construct.default]]</a>
 
 ``` cpp
 template<class NoThrowForwardIterator>
@@ -9849,7 +9850,7 @@ namespace ranges {
 >                                        default_sentinel).base();
 > ```
 
-### `uninitialized_value_construct` <a id="uninitialized.construct.value">[uninitialized.construct.value]</a>
+### `uninitialized_value_construct` <a id="uninitialized.construct.value">[[uninitialized.construct.value]]</a>
 
 ``` cpp
 template<class NoThrowForwardIterator>
@@ -9920,7 +9921,7 @@ namespace ranges {
 >                                      default_sentinel).base();
 > ```
 
-### `uninitialized_copy` <a id="uninitialized.copy">[uninitialized.copy]</a>
+### `uninitialized_copy` <a id="uninitialized.copy">[[uninitialized.copy]]</a>
 
 ``` cpp
 template<class InputIterator, class NoThrowForwardIterator>
@@ -10022,7 +10023,7 @@ namespace ranges {
 > return {std::move(t.in).base(), t.out};
 > ```
 
-### `uninitialized_move` <a id="uninitialized.move">[uninitialized.move]</a>
+### `uninitialized_move` <a id="uninitialized.move">[[uninitialized.move]]</a>
 
 ``` cpp
 template<class InputIterator, class NoThrowForwardIterator>
@@ -10127,7 +10128,7 @@ namespace ranges {
 > `ifirst`+\[0, `n`) are left in a valid but unspecified
 > state. — *end note*\]
 
-### `uninitialized_fill` <a id="uninitialized.fill">[uninitialized.fill]</a>
+### `uninitialized_fill` <a id="uninitialized.fill">[[uninitialized.fill]]</a>
 
 ``` cpp
 template<class NoThrowForwardIterator, class T>
@@ -10197,7 +10198,7 @@ namespace ranges {
 > return uninitialized_fill(counted_iterator(first, n), default_sentinel, x).base();
 > ```
 
-### `construct_at` <a id="specialized.construct">[specialized.construct]</a>
+### `construct_at` <a id="specialized.construct">[[specialized.construct]]</a>
 
 ``` cpp
 template<class T, class... Args>
@@ -10221,7 +10222,7 @@ namespace ranges {
 > return ::new (voidify(*location)) T(std::forward<Args>(args)...);
 > ```
 
-### `destroy` <a id="specialized.destroy">[specialized.destroy]</a>
+### `destroy` <a id="specialized.destroy">[[specialized.destroy]]</a>
 
 ``` cpp
 template<class T>
@@ -10305,7 +10306,7 @@ namespace ranges {
 > return destroy(counted_iterator(std::move(first), n), default_sentinel).base();
 > ```
 
-## C library algorithms <a id="alg.c.library">[alg.c.library]</a>
+## C library algorithms <a id="alg.c.library">[[alg.c.library]]</a>
 
 \[*Note 1*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
@@ -10334,47 +10335,47 @@ void qsort(void* base, size_t nmemb, size_t size, compare-pred* compar);
 > Any exception thrown by `compar`\[res.on.exception.handling\].
 
 <!-- Link reference definitions -->
-[alg.binary.search]: #alg.binary.search
-[alg.set.operations]: #alg.set.operations
-[alg.sorting]: #alg.sorting
-[algorithms.requirements]: #algorithms.requirements
-[algorithms.summary]: #algorithms.summary
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[basic.lookup.unqual]: basic.md#basic.lookup.unqual
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[concept.booleantestable]: concepts.md#concept.booleantestable
-[containers]: containers.md#containers
-[execpol]: utilities.md#execpol
-[expr.call]: expr.md#expr.call
-[expr.new]: expr.md#expr.new
-[forward.iterators]: iterators.md#forward.iterators
-[function.objects]: utilities.md#function.objects
-[input.iterators]: iterators.md#input.iterators
-[intro.execution]: basic.md#intro.execution
-[intro.progress]: basic.md#intro.progress
-[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
-[iterator.concept.forward]: iterators.md#iterator.concept.forward
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.requirements]: iterators.md#iterator.requirements
-[multiset]: containers.md#multiset
-[numeric.ops]: #numeric.ops
-[output.iterators]: iterators.md#output.iterators
-[random.access.iterators]: iterators.md#random.access.iterators
-[range.range]: ranges.md#range.range
-[refwrap]: utilities.md#refwrap
-[sort]: #sort
-[specialized.algorithms]: #specialized.algorithms
-[temp.func.order]: temp.md#temp.func.order
-[thread.jthread.class]: thread.md#thread.jthread.class
-[thread.thread.class]: thread.md#thread.thread.class
+[[alg.binary.search]]: #alg.binary.search
+[[alg.set.operations]]: #alg.set.operations
+[[alg.sorting]]: #alg.sorting
+[[algorithms.requirements]]: #algorithms.requirements
+[[algorithms.summary]]: #algorithms.summary
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[basic.lookup.unqual]]: basic.md#basic.lookup.unqual
+[[bidirectional.iterators]]: iterators.md#bidirectional.iterators
+[[concept.booleantestable]]: concepts.md#concept.booleantestable
+[[containers]]: containers.md#containers
+[[execpol]]: utilities.md#execpol
+[[expr.call]]: expr.md#expr.call
+[[expr.new]]: expr.md#expr.new
+[[forward.iterators]]: iterators.md#forward.iterators
+[[function.objects]]: utilities.md#function.objects
+[[input.iterators]]: iterators.md#input.iterators
+[[intro.execution]]: basic.md#intro.execution
+[[intro.progress]]: basic.md#intro.progress
+[[iterator.concept.bidir]]: iterators.md#iterator.concept.bidir
+[[iterator.concept.forward]]: iterators.md#iterator.concept.forward
+[[iterator.concept.random.access]]: iterators.md#iterator.concept.random.access
+[[iterator.requirements]]: iterators.md#iterator.requirements
+[[multiset]]: containers.md#multiset
+[[numeric.ops]]: #numeric.ops
+[[output.iterators]]: iterators.md#output.iterators
+[[random.access.iterators]]: iterators.md#random.access.iterators
+[[range.range]]: ranges.md#range.range
+[[refwrap]]: utilities.md#refwrap
+[[sort]]: #sort
+[[specialized.algorithms]]: #specialized.algorithms
+[[temp.func.order]]: temp.md#temp.func.order
+[[thread.jthread.class]]: thread.md#thread.jthread.class
+[[thread.thread.class]]: thread.md#thread.thread.class
 
 <!-- Link reference definitions -->
-[alg.c.library]: #alg.c.library
-[alg.modifying.operations]: #alg.modifying.operations
-[alg.nonmodifying]: #alg.nonmodifying
-[alg.sorting]: #alg.sorting
-[algorithms.parallel]: #algorithms.parallel
-[algorithms.requirements]: #algorithms.requirements
-[algorithms.results]: #algorithms.results
-[numeric.ops]: #numeric.ops
-[specialized.algorithms]: #specialized.algorithms
+[[alg.c.library]]: #alg.c.library
+[[alg.modifying.operations]]: #alg.modifying.operations
+[[alg.nonmodifying]]: #alg.nonmodifying
+[[alg.sorting]]: #alg.sorting
+[[algorithms.parallel]]: #algorithms.parallel
+[[algorithms.requirements]]: #algorithms.requirements
+[[algorithms.results]]: #algorithms.results
+[[numeric.ops]]: #numeric.ops
+[[specialized.algorithms]]: #specialized.algorithms

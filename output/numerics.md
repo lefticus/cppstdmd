@@ -3,9 +3,9 @@ current_file: numerics
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Numerics library <a id="numerics">[numerics]</a>
+# Numerics library <a id="numerics">[[numerics]]</a>
 
-## General <a id="numerics.general">[numerics.general]</a>
+## General <a id="numerics.general">[[numerics.general]]</a>
 
 This Clause describes components that C++ programs may use to perform
 seminumerical operations.
@@ -13,21 +13,21 @@ seminumerical operations.
 The following subclauses describe components for complex number types,
 random number generation, numeric ( *n*-at-a-time) arrays, generalized
 numeric algorithms, and mathematical constants and functions for
-floating-point types, as summarized in [numerics.summary].
+floating-point types, as summarized in [[numerics.summary]].
 
 **Table: Numerics library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [numeric.requirements] | Requirements |
-| [cfenv] | Floating-point environment | `<cfenv>` |
-| [complex.numbers] | Complex numbers | `<complex>` |
-| [rand] | Random number generation | `<random>` |
-| [numarray] | Numeric arrays | `<valarray>` |
-| [c.math] | Mathematical functions for floating-point types | `<cmath>`, `<cstdlib>` |
-| [numbers] | Numbers | `<numbers>` |
+| [[numeric.requirements]] | Requirements |
+| [[cfenv]] | Floating-point environment | `<cfenv>` |
+| [[complex.numbers]] | Complex numbers | `<complex>` |
+| [[rand]] | Random number generation | `<random>` |
+| [[numarray]] | Numeric arrays | `<valarray>` |
+| [[c.math]] | Mathematical functions for floating-point types | `<cmath>`, `<cstdlib>` |
+| [[numbers]] | Numbers | `<numbers>` |
 
-## Numeric type requirements <a id="numeric.requirements">[numeric.requirements]</a>
+## Numeric type requirements <a id="numeric.requirements">[[numeric.requirements]]</a>
 
 The `complex` and `valarray` components are parameterized by the type of
 information they contain and manipulate. A C++ program shall instantiate
@@ -35,7 +35,7 @@ these components only with a numeric type. A *numeric type* is a
 cv-unqualified object type `T` that meets the
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
 *Cpp17CopyAssignable*, and *Cpp17Destructible* requirements
-[utility.arg.requirements].
+[[utility.arg.requirements]].
 
 If any operation on `T` throws an exception the effects are undefined.
 
@@ -49,7 +49,7 @@ or related function.
 `valarray<complex>` operands, since `complex` does not have any ordering
 operators. — *end example*\]
 
-## The floating-point environment <a id="cfenv">[cfenv]</a>
+## The floating-point environment <a id="cfenv">[[cfenv]]</a>
 
 ``` cpp
 #define FE_ALL_EXCEPT see below
@@ -92,7 +92,7 @@ The contents and meaning of the header `<cfenv>` are the same as the C
 standard library header `<fenv.h>`.
 
 \[*Note 1*: This document does not require an implementation to support
-the `FENV_ACCESS` pragma; it is *implementation-defined* [cpp.pragma]
+the `FENV_ACCESS` pragma; it is *implementation-defined* [[cpp.pragma]]
 whether the pragma is supported. As a consequence, it is
 *implementation-defined* whether these functions can be used to test
 floating-point status flags, set floating-point control modes, or run
@@ -101,14 +101,14 @@ over the floating-point environment, this document does not specify the
 effect on floating-point evaluation in constant
 expressions. — *end note*\]
 
-### Threads <a id="cfenv.thread">[cfenv.thread]</a>
+### Threads <a id="cfenv.thread">[[cfenv.thread]]</a>
 
 The floating-point environment has thread storage duration
-[basic.stc.thread]. The initial state for a thread’s floating-point
+[[basic.stc.thread]]. The initial state for a thread’s floating-point
 environment is the state of the floating-point environment of the thread
-that constructs the corresponding `thread` object [thread.thread.class]
-or `jthread` object [thread.jthread.class] at the time it constructed
-the object.
+that constructs the corresponding `thread` object
+[[thread.thread.class]] or `jthread` object [[thread.jthread.class]] at
+the time it constructed the object.
 
 \[*Note 2*: That is, the child thread gets the floating-point state of
 the parent thread at the time of the child’s creation. — *end note*\]
@@ -117,18 +117,18 @@ A separate floating-point environment is maintained for each thread.
 Each function accesses the environment corresponding to its calling
 thread.
 
-## Complex numbers <a id="complex.numbers">[complex.numbers]</a>
+## Complex numbers <a id="complex.numbers">[[complex.numbers]]</a>
 
-### General <a id="complex.numbers.general">[complex.numbers.general]</a>
+### General <a id="complex.numbers.general">[[complex.numbers.general]]</a>
 
 The header `<complex>` defines a class template, and numerous functions
 for representing and manipulating complex numbers.
 
 The effect of instantiating the template `complex` for any type that is
-not a cv-unqualified floating-point type [basic.fundamental] is
+not a cv-unqualified floating-point type [[basic.fundamental]] is
 unspecified. Specializations of `complex` for cv-unqualified
 floating-point types are trivially-copyable literal types
-[term.literal.type].
+[[term.literal.type]].
 
 If the result of a function is not mathematically defined or not in the
 range of representable values for its type, the behavior is undefined.
@@ -152,7 +152,7 @@ expression `a[i]` is well-defined for an integer expression `i`, then:
 - `reinterpret_cast<\cv{} T*>(a)[2*i + 1]` designates the imaginary part
   of `a[i]`.
 
-### Header `<complex>` synopsis <a id="complex.syn">[complex.syn]</a>
+### Header `<complex>` synopsis <a id="complex.syn">[[complex.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -239,7 +239,7 @@ namespace std {
 }
 ```
 
-### Class template `complex` <a id="complex">[complex]</a>
+### Class template `complex` <a id="complex">[[complex]]</a>
 
 ``` cpp
 namespace std {
@@ -275,7 +275,7 @@ namespace std {
 The class `complex` describes an object that can store the Cartesian
 components, `real()` and `imag()`, of a complex number.
 
-### Member functions <a id="complex.members">[complex.members]</a>
+### Member functions <a id="complex.members">[[complex.members]]</a>
 
 ``` cpp
 constexpr complex(const T& re = T(), const T& im = T());
@@ -332,7 +332,7 @@ constexpr void imag(T val);
 >
 > Assigns `val` to the imaginary component.
 
-### Member operators <a id="complex.member.ops">[complex.member.ops]</a>
+### Member operators <a id="complex.member.ops">[[complex.member.ops]]</a>
 
 ``` cpp
 constexpr complex& operator+=(const T& rhs);
@@ -440,7 +440,7 @@ template<class X> constexpr complex& operator/=(const complex<X>& rhs);
 >
 > `*this`.
 
-### Non-member operations <a id="complex.ops">[complex.ops]</a>
+### Non-member operations <a id="complex.ops">[[complex.ops]]</a>
 
 ``` cpp
 template<class T> constexpr complex<T> operator+(const complex<T>& lhs);
@@ -566,7 +566,7 @@ template<class T, class charT, class traits>
 > sequences of complex numbers can be extracted
 > unambiguously. — *end note*\]
 
-### Value operations <a id="complex.value.ops">[complex.value.ops]</a>
+### Value operations <a id="complex.value.ops">[[complex.value.ops]]</a>
 
 ``` cpp
 template<class T> constexpr T real(const complex<T>& x);
@@ -641,7 +641,7 @@ template<class T> complex<T> polar(const T& rho, const T& theta = T());
 > The `complex` value corresponding to a complex number whose magnitude
 > is `rho` and whose phase angle is `theta`.
 
-### Transcendentals <a id="complex.transcendentals">[complex.transcendentals]</a>
+### Transcendentals <a id="complex.transcendentals">[[complex.transcendentals]]</a>
 
 ``` cpp
 template<class T> complex<T> acos(const complex<T>& x);
@@ -831,7 +831,7 @@ template<class T> complex<T> tanh(const complex<T>& x);
 >
 > The complex hyperbolic tangent of `x`.
 
-### Additional overloads <a id="cmplx.over">[cmplx.over]</a>
+### Additional overloads <a id="cmplx.over">[[cmplx.over]]</a>
 
 The following function templates shall have additional overloads:
 
@@ -857,7 +857,7 @@ argument of type `T2` or `complex<T2>`, both arguments are effectively
 cast to `complex<common_type_t<T1, T2>>`. If `common_type_t<T1, T2>` is
 not well-formed, then the program is ill-formed.
 
-### Suffixes for complex number literals <a id="complex.literals">[complex.literals]</a>
+### Suffixes for complex number literals <a id="complex.literals">[[complex.literals]]</a>
 
 This subclause describes literal suffixes for constructing complex
 number literals. The suffixes `i`, `il`, and `if` create complex numbers
@@ -892,11 +892,11 @@ constexpr complex<float> operator""if(unsigned long long d);
 >
 > `complex<float>{0.0f, static_cast<float>(d)}`.
 
-## Random number generation <a id="rand">[rand]</a>
+## Random number generation <a id="rand">[[rand]]</a>
 
-### General <a id="rand.general">[rand.general]</a>
+### General <a id="rand.general">[[rand.general]]</a>
 
-Subclause [rand] defines a facility for generating (pseudo-)random
+Subclause [[rand]] defines a facility for generating (pseudo-)random
 numbers.
 
 In addition to a few utilities, four categories of entities are
@@ -912,8 +912,8 @@ to any random number distribution object `d`, thus producing a
 zero-argument function object such as given by
 `bind(d,e)`. — *end note*\]
 
-Each of the entities specified in [rand] has an associated arithmetic
-type [basic.fundamental] identified as `result_type`. With `T` as the
+Each of the entities specified in [[rand]] has an associated arithmetic
+type [[basic.fundamental]] identified as `result_type`. With `T` as the
 `result_type` thus associated with such an entity, that entity is
 characterized:
 
@@ -927,10 +927,10 @@ characterized:
 If integer-valued, an entity may optionally be further characterized as
 *signed* or *unsigned*, according to `numeric_limits<T>::is_signed`.
 
-Unless otherwise specified, all descriptions of calculations in [rand]
+Unless otherwise specified, all descriptions of calculations in [[rand]]
 use mathematical real numbers.
 
-Throughout [rand], the operators , , and denote the respective
+Throughout [[rand]], the operators , , and denote the respective
 conventional bitwise operations. Further:
 
 - the operator denotes a bitwise right shift with zero-valued bits
@@ -940,7 +940,7 @@ conventional bitwise operations. Further:
   appearing in the low bits of the result, and whose result is always
   taken modulo $2^w$.
 
-### Header `<random>` synopsis <a id="rand.synopsis">[rand.synopsis]</a>
+### Header `<random>` synopsis <a id="rand.synopsis">[[rand.synopsis]]</a>
 
 ``` cpp
 #include <initializer_list>     // see [initializer.list.syn]
@@ -1081,24 +1081,24 @@ namespace std {
 }
 ```
 
-### Requirements <a id="rand.req">[rand.req]</a>
+### Requirements <a id="rand.req">[[rand.req]]</a>
 
-#### General requirements <a id="rand.req.genl">[rand.req.genl]</a>
+#### General requirements <a id="rand.req.genl">[[rand.req.genl]]</a>
 
-Throughout this subclause [rand], the effect of instantiating a
+Throughout this subclause [[rand]], the effect of instantiating a
 template:
 
 - that has a template type parameter named `Sseq` is undefined unless
   the corresponding template argument is cv-unqualified and meets the
-  requirements of seed sequence [rand.req.seedseq].
+  requirements of seed sequence [[rand.req.seedseq]].
 
 - that has a template type parameter named `URBG` is undefined unless
   the corresponding template argument is cv-unqualified and meets the
-  requirements of uniform random bit generator [rand.req.urng].
+  requirements of uniform random bit generator [[rand.req.urng]].
 
 - that has a template type parameter named `Engine` is undefined unless
   the corresponding template argument is cv-unqualified and meets the
-  requirements of random number engine [rand.req.eng].
+  requirements of random number engine [[rand.req.eng]].
 
 - that has a template type parameter named `RealType` is undefined
   unless the corresponding template argument is cv-unqualified and is
@@ -1114,16 +1114,16 @@ template:
   one of `unsigned short`, `unsigned int`, `unsigned long`, or
   `unsigned long long`.
 
-Throughout this subclause [rand], phrases of the form “`x` is an
+Throughout this subclause [[rand]], phrases of the form “`x` is an
 iterator of a specific kind” shall be interpreted as equivalent to the
 more formal requirement that “`x` is a value of a type meeting the
 requirements of the specified iterator type”.
 
-Throughout this subclause [rand], any constructor that can be called
+Throughout this subclause [[rand]], any constructor that can be called
 with a single argument and that meets a requirement specified in this
 subclause shall be declared `explicit`.
 
-#### Seed sequence requirements <a id="rand.req.seedseq">[rand.req.seedseq]</a>
+#### Seed sequence requirements <a id="rand.req.seedseq">[[rand.req.seedseq]]</a>
 
 A *seed sequence* is an object that consumes a sequence of
 integer-valued data and produces a requested number of unsigned integer
@@ -1135,9 +1135,10 @@ applications requiring large numbers of random number
 engines. — *end note*\]
 
 A class `S` meets the requirements of a seed sequence if the expressions
-shown in [rand.req.seedseq] are valid and have the indicated semantics,
-and if `S` also meets all other requirements of this subclause
-[rand.req.seedseq]. In that Table and throughout this subclause:
+shown in [[rand.req.seedseq]] are valid and have the indicated
+semantics, and if `S` also meets all other requirements of this
+subclause [[rand.req.seedseq]]. In that Table and throughout this
+subclause:
 
 - `T` is the type named by `S`’s associated `result_type`;
 
@@ -1154,7 +1155,7 @@ and if `S` also meets all other requirements of this subclause
 
 - `il` is a value of type `initializer_list<T>`.
 
-#### Uniform random bit generator requirements <a id="rand.req.urng">[rand.req.urng]</a>
+#### Uniform random bit generator requirements <a id="rand.req.urng">[[rand.req.urng]]</a>
 
 A *uniform random bit generator* `g` of type `G` is a function object
 returning unsigned integer values such that each value in the range of
@@ -1185,11 +1186,11 @@ Let `g` be an object of type `G`. `G` models
 
 A class `G` meets the *uniform random bit generator* requirements if `G`
 models `uniform_random_bit_generator`, `invoke_result_t<G&>` is an
-unsigned integer type [basic.fundamental], and `G` provides a nested
+unsigned integer type [[basic.fundamental]], and `G` provides a nested
 *typedef-name* `result_type` that denotes the same type as
 `invoke_result_t<G&>`.
 
-#### Random number engine requirements <a id="rand.req.eng">[rand.req.eng]</a>
+#### Random number engine requirements <a id="rand.req.eng">[[rand.req.eng]]</a>
 
 A *random number engine* (commonly shortened to *engine*) `e` of type
 `E` is a uniform random bit generator that additionally meets the
@@ -1213,10 +1214,10 @@ suitable `operator>>`.
   mapped to a value of type `result_type`.
 
 A class `E` that meets the requirements of a uniform random bit
-generator [rand.req.urng] also meets the requirements of a
-*random number engine* if the expressions shown in [rand.req.eng] are
+generator [[rand.req.urng]] also meets the requirements of a
+*random number engine* if the expressions shown in [[rand.req.eng]] are
 valid and have the indicated semantics, and if `E` also meets all other
-requirements of this subclause [rand.req.eng]. In that Table and
+requirements of this subclause [[rand.req.eng]]. In that Table and
 throughout this subclause:
 
 - `T` is the type named by `E`’s associated `result_type`;
@@ -1227,7 +1228,7 @@ throughout this subclause:
 - `s` is a value of `T`;
 
 - `q` is an lvalue meeting the requirements of a seed sequence
-  [rand.req.seedseq];
+  [[rand.req.seedseq]];
 
 - `z` is a value of type `unsigned long long`;
 
@@ -1237,14 +1238,15 @@ throughout this subclause:
 - `is` is an lvalue of the type of some class template specialization
   `basic_istream<charT,` `traits>`;
 
-where `charT` and `traits` are constrained according to [strings] and
-[input.output].
+where `charT` and `traits` are constrained according to [[strings]] and
+[[input.output]].
 
-`E` shall meet the *Cpp17CopyConstructible* ( [cpp17.copyconstructible])
-and *Cpp17CopyAssignable* ( [cpp17.copyassignable]) requirements. These
-operations shall each be of complexity no worse than .
+`E` shall meet the *Cpp17CopyConstructible* (
+[[cpp17.copyconstructible]]) and *Cpp17CopyAssignable* (
+[[cpp17.copyassignable]]) requirements. These operations shall each be
+of complexity no worse than .
 
-#### Random number engine adaptor requirements <a id="rand.req.adapt">[rand.req.adapt]</a>
+#### Random number engine adaptor requirements <a id="rand.req.adapt">[[rand.req.adapt]]</a>
 
 A *random number engine adaptor* (commonly shortened to *adaptor*) `a`
 of type `A` is a random number engine that takes values produced by some
@@ -1328,7 +1330,7 @@ template<class Sseq> void seed(Sseq& q);
 - The textual representation of `A` shall include the textual
   representation of its base engine.
 
-#### Random number distribution requirements <a id="rand.req.dist">[rand.req.dist]</a>
+#### Random number distribution requirements <a id="rand.req.dist">[[rand.req.dist]]</a>
 
 A *random number distribution* (commonly shortened to *distribution*)
 `d` of type `D` is a function object returning values that are
@@ -1347,10 +1349,10 @@ $P(z_i\,|\left\{\tcode{p}\right\})$, to denote a distribution’s
 parameters `p` taken as a whole.
 
 A class `D` meets the requirements of a *random number distribution* if
-the expressions shown in [rand.req.dist] are valid and have the
+the expressions shown in [[rand.req.dist]] are valid and have the
 indicated semantics, and if `D` and its associated types also meet all
-other requirements of this subclause [rand.req.dist]. In that Table and
-throughout this subclause,
+other requirements of this subclause [[rand.req.dist]]. In that Table
+and throughout this subclause,
 
 - `T` is the type named by `D`’s associated `result_type`;
 
@@ -1367,7 +1369,7 @@ throughout this subclause,
 - `p` is a (possibly const) value of `P`;
 
 - `g`, `g1`, and `g2` are lvalues of a type meeting the requirements of
-  a uniform random bit generator [rand.req.urng];
+  a uniform random bit generator [[rand.req.urng]];
 
 - `os` is an lvalue of the type of some class template specialization
   `basic_ostream<charT,` `traits>`; and
@@ -1375,11 +1377,12 @@ throughout this subclause,
 - `is` is an lvalue of the type of some class template specialization
   `basic_istream<charT,` `traits>`;
 
-where `charT` and `traits` are constrained according to [strings] and
-[input.output].
+where `charT` and `traits` are constrained according to [[strings]] and
+[[input.output]].
 
-`D` shall meet the *Cpp17CopyConstructible* ( [cpp17.copyconstructible])
-and *Cpp17CopyAssignable* ( [cpp17.copyassignable]) requirements.
+`D` shall meet the *Cpp17CopyConstructible* (
+[[cpp17.copyconstructible]]) and *Cpp17CopyAssignable* (
+[[cpp17.copyassignable]]) requirements.
 
 The sequence of numbers produced by repeated invocations of `d(g)` shall
 be independent of any invocation of `os << d` or of any `const` member
@@ -1392,14 +1395,14 @@ produce the same sequence of numbers as would repeated invocations of
 `x(g)`.
 
 It is unspecified whether `D::param_type` is declared as a (nested)
-`class` or via a `typedef`. In this subclause [rand], declarations of
+`class` or via a `typedef`. In this subclause [[rand]], declarations of
 `D::param_type` are in the form of `typedef`s for convenience of
 exposition only.
 
 `P` shall meet the *Cpp17CopyConstructible* (
-[cpp17.copyconstructible]), *Cpp17CopyAssignable* (
-[cpp17.copyassignable]), and *Cpp17Equality\\Comp\\arable* (
-[cpp17.equalitycomparable]) requirements.
+[[cpp17.copyconstructible]]), *Cpp17CopyAssignable* (
+[[cpp17.copyassignable]]), and *Cpp17Equality\\Comp\\arable* (
+[[cpp17.equalitycomparable]]) requirements.
 
 For each of the constructors of `D` taking arguments corresponding to
 parameters of the distribution, `P` shall have a corresponding
@@ -1415,37 +1418,37 @@ the identical name, type, and semantics.
 using distribution_type =  D;
 ```
 
-### Random number engine class templates <a id="rand.eng">[rand.eng]</a>
+### Random number engine class templates <a id="rand.eng">[[rand.eng]]</a>
 
-#### General <a id="rand.eng.general">[rand.eng.general]</a>
+#### General <a id="rand.eng.general">[[rand.eng.general]]</a>
 
-Each type instantiated from a class template specified in [rand.eng]
-meets the requirements of a random number engine [rand.req.eng] type.
+Each type instantiated from a class template specified in [[rand.eng]]
+meets the requirements of a random number engine [[rand.req.eng]] type.
 
 Except where specified otherwise, the complexity of each function
-specified in [rand.eng] is constant.
+specified in [[rand.eng]] is constant.
 
-Except where specified otherwise, no function described in [rand.eng]
+Except where specified otherwise, no function described in [[rand.eng]]
 throws an exception.
 
-Every function described in [rand.eng] that has a function parameter `q`
-of type `Sseq&` for a template type parameter named `Sseq` that is
+Every function described in [[rand.eng]] that has a function parameter
+`q` of type `Sseq&` for a template type parameter named `Sseq` that is
 different from type `seed_seq` throws what and when the invocation of
 `q.generate` throws.
 
-Descriptions are provided in [rand.eng] only for engine operations that
-are not described in [rand.req.eng] or for operations where there is
-additional semantic information. In particular, declarations for copy
+Descriptions are provided in [[rand.eng]] only for engine operations
+that are not described in [[rand.req.eng]] or for operations where there
+is additional semantic information. In particular, declarations for copy
 constructors, for copy assignment operators, for streaming operators,
 and for equality and inequality operators are not shown in the synopses.
 
-Each template specified in [rand.eng] requires one or more
+Each template specified in [[rand.eng]] requires one or more
 relationships, involving the value(s) of its non-type template
 parameter(s), to hold. A program instantiating any of these templates is
 ill-formed if any such required relationship fails to hold.
 
 For every random number engine and for every random number engine
-adaptor `X` defined in [rand.eng] and in [rand.adapt]:
+adaptor `X` defined in [[rand.eng]] and in [[rand.adapt]]:
 
 - if the constructor
 
@@ -1470,7 +1473,7 @@ seed sequence is unspecified, except that as a minimum a type shall not
 qualify as a seed sequence if it is implicitly convertible to
 `X::result_type`.
 
-#### Class template `linear_congruential_engine` <a id="rand.eng.lcong">[rand.eng.lcong]</a>
+#### Class template `linear_congruential_engine` <a id="rand.eng.lcong">[[rand.eng.lcong]]</a>
 
 A `linear_congruential_engine` random number engine produces unsigned
 integer random numbers. The state of a `linear_congruential_engine`
@@ -1522,8 +1525,8 @@ namespace std {
 ```
 
 If the template parameter `m` is 0, the modulus m used throughout this
-subclause  [rand.eng.lcong] is `numeric_limits<result_type>::max()` plus
-1.
+subclause  [[rand.eng.lcong]] is `numeric_limits<result_type>::max()`
+plus 1.
 
 \[*Note 4*: m need not be representable as a value of type
 `result_type`. — *end note*\]
@@ -1555,7 +1558,7 @@ template<class Sseq> explicit linear_congruential_engine(Sseq& q);
 > If $c \bmod m$ is 0 and S is 0, sets the engine’s state to 1, else
 > sets the engine’s state to S.
 
-#### Class template `mersenne_twister_engine` <a id="rand.eng.mers">[rand.eng.mers]</a>
+#### Class template `mersenne_twister_engine` <a id="rand.eng.mers">[[rand.eng.mers]]</a>
 
 A `mersenne_twister_engine` random number engine
 
@@ -1688,7 +1691,7 @@ template<class Sseq> explicit mersenne_twister_engine(Sseq& q);
 > Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
 > each of the other resulting Xᵢ is 0, changes $X_{-n}$ to $2^{w-1}$.
 
-#### Class template `subtract_with_carry_engine` <a id="rand.eng.sub">[rand.eng.sub]</a>
+#### Class template `subtract_with_carry_engine` <a id="rand.eng.sub">[[rand.eng.sub]]</a>
 
 A `subtract_with_carry_engine` random number engine produces unsigned
 integer random numbers.
@@ -1802,38 +1805,38 @@ template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
 > $\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
 > $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
-### Random number engine adaptor class templates <a id="rand.adapt">[rand.adapt]</a>
+### Random number engine adaptor class templates <a id="rand.adapt">[[rand.adapt]]</a>
 
-#### In general <a id="rand.adapt.general">[rand.adapt.general]</a>
+#### In general <a id="rand.adapt.general">[[rand.adapt.general]]</a>
 
 Each type instantiated from a class template specified in this
-subclause  [rand.adapt] meets the requirements of a random number engine
-adaptor [rand.req.adapt] type.
+subclause  [[rand.adapt]] meets the requirements of a random number
+engine adaptor [[rand.req.adapt]] type.
 
 Except where specified otherwise, the complexity of each function
-specified in this subclause  [rand.adapt] is constant.
+specified in this subclause  [[rand.adapt]] is constant.
 
 Except where specified otherwise, no function described in this
-subclause  [rand.adapt] throws an exception.
+subclause  [[rand.adapt]] throws an exception.
 
-Every function described in this subclause  [rand.adapt] that has a
+Every function described in this subclause  [[rand.adapt]] that has a
 function parameter `q` of type `Sseq&` for a template type parameter
 named `Sseq` that is different from type `seed_seq` throws what and when
 the invocation of `q.generate` throws.
 
-Descriptions are provided in this subclause  [rand.adapt] only for
-adaptor operations that are not described in subclause  [rand.req.adapt]
-or for operations where there is additional semantic information. In
-particular, declarations for copy constructors, for copy assignment
-operators, for streaming operators, and for equality and inequality
-operators are not shown in the synopses.
+Descriptions are provided in this subclause  [[rand.adapt]] only for
+adaptor operations that are not described in subclause 
+[[rand.req.adapt]] or for operations where there is additional semantic
+information. In particular, declarations for copy constructors, for copy
+assignment operators, for streaming operators, and for equality and
+inequality operators are not shown in the synopses.
 
-Each template specified in this subclause  [rand.adapt] requires one or
-more relationships, involving the value(s) of its non-type template
+Each template specified in this subclause  [[rand.adapt]] requires one
+or more relationships, involving the value(s) of its non-type template
 parameter(s), to hold. A program instantiating any of these templates is
 ill-formed if any such required relationship fails to hold.
 
-#### Class template `discard_block_engine` <a id="rand.adapt.disc">[rand.adapt.disc]</a>
+#### Class template `discard_block_engine` <a id="rand.adapt.disc">[[rand.adapt.disc]]</a>
 
 A `discard_block_engine` random number engine adaptor produces random
 numbers selected from those produced by some base engine e. The state of
@@ -1903,10 +1906,10 @@ The following relations shall hold: `0 < r` and `r <= p`.
 The textual representation consists of the textual representation of `e`
 followed by the value of `n`.
 
-In addition to its behavior pursuant to subclause  [rand.req.adapt],
+In addition to its behavior pursuant to subclause  [[rand.req.adapt]],
 each constructor that is not a copy constructor sets `n` to 0.
 
-#### Class template `independent_bits_engine` <a id="rand.adapt.ibits">[rand.adapt.ibits]</a>
+#### Class template `independent_bits_engine` <a id="rand.adapt.ibits">[[rand.adapt.ibits]]</a>
 
 An `independent_bits_engine` random number engine adaptor combines
 random numbers that are produced by some base engine e, so as to produce
@@ -2003,7 +2006,7 @@ The following relations shall hold: `0 < w` and
 The textual representation consists of the textual representation of
 `e`.
 
-#### Class template `shuffle_order_engine` <a id="rand.adapt.shuf">[rand.adapt.shuf]</a>
+#### Class template `shuffle_order_engine` <a id="rand.adapt.shuf">[[rand.adapt.shuf]]</a>
 
 A `shuffle_order_engine` random number engine adaptor produces the same
 random numbers that are produced by some base engine e, but delivers
@@ -2079,12 +2082,12 @@ The following relation shall hold: `0 < k`.
 The textual representation consists of the textual representation of
 `e`, followed by the `k` values of V, followed by the value of Y.
 
-In addition to its behavior pursuant to subclause  [rand.req.adapt],
+In addition to its behavior pursuant to subclause  [[rand.req.adapt]],
 each constructor that is not a copy constructor initializes
 $\tcode{V[0]}, \dotsc, \tcode{V[k-1]}$ and Y, in that order, with values
 returned by successive invocations of `e()`.
 
-### Engines and engine adaptors with predefined parameters <a id="rand.predef">[rand.predef]</a>
+### Engines and engine adaptors with predefined parameters <a id="rand.predef">[[rand.predef]]</a>
 
 ``` cpp
 using minstd_rand0 =
@@ -2174,7 +2177,7 @@ using default_random_engine = \textit{\impldef{type of default_random_engine}};
 > not generate identical sequences across
 > implementations. — *end note*\]
 
-### Class `random_device` <a id="rand.device">[rand.device]</a>
+### Class `random_device` <a id="rand.device">[[rand.device]]</a>
 
 A `random_device` uniform random bit generator produces nondeterministic
 random numbers.
@@ -2258,9 +2261,9 @@ result_type operator()();
 > A value of an *implementation-defined* type derived from `exception`
 > if a random number cannot be obtained.
 
-### Utilities <a id="rand.util">[rand.util]</a>
+### Utilities <a id="rand.util">[[rand.util]]</a>
 
-#### Class `seed_seq` <a id="rand.util.seedseq">[rand.util.seedseq]</a>
+#### Class `seed_seq` <a id="rand.util.seedseq">[[rand.util.seedseq]]</a>
 
 ``` cpp
 namespace std {
@@ -2450,7 +2453,7 @@ template<class OutputIterator>
 >
 > What and when `OutputIterator` operations of `dest` throw.
 
-#### Function template `generate_canonical` <a id="rand.util.canonical">[rand.util.canonical]</a>
+#### Function template `generate_canonical` <a id="rand.util.canonical">[[rand.util.canonical]]</a>
 
 ``` cpp
 template<class RealType, size_t bits, class URBG>
@@ -2493,17 +2496,17 @@ template<class RealType, size_t bits, class URBG>
 > generator into a value that can be delivered by a random number
 > distribution. — *end note*\]
 
-### Random number distribution class templates <a id="rand.dist">[rand.dist]</a>
+### Random number distribution class templates <a id="rand.dist">[[rand.dist]]</a>
 
-#### In general <a id="rand.dist.general">[rand.dist.general]</a>
+#### In general <a id="rand.dist.general">[[rand.dist.general]]</a>
 
 Each type instantiated from a class template specified in this
-subclause  [rand.dist] meets the requirements of a random number
-distribution [rand.req.dist] type.
+subclause  [[rand.dist]] meets the requirements of a random number
+distribution [[rand.req.dist]] type.
 
-Descriptions are provided in this subclause  [rand.dist] only for
-distribution operations that are not described in [rand.req.dist] or for
-operations where there is additional semantic information. In
+Descriptions are provided in this subclause  [[rand.dist]] only for
+distribution operations that are not described in [[rand.req.dist]] or
+for operations where there is additional semantic information. In
 particular, declarations for copy constructors, for copy assignment
 operators, for streaming operators, and for equality and inequality
 operators are not shown in the synopses.
@@ -2515,9 +2518,9 @@ The value of each probability density function p(z) and of each discrete
 probability function P(zᵢ) specified in this subclause is 0 everywhere
 outside its stated domain.
 
-#### Uniform distributions <a id="rand.dist.uni">[rand.dist.uni]</a>
+#### Uniform distributions <a id="rand.dist.uni">[[rand.dist.uni]]</a>
 
-##### Class template `uniform_int_distribution` <a id="rand.dist.uni.int">[rand.dist.uni.int]</a>
+##### Class template `uniform_int_distribution` <a id="rand.dist.uni.int">[[rand.dist.uni.int]]</a>
 
 A `uniform_int_distribution` random number distribution produces random
 integers i, a ≤ i ≤ b, distributed according to the constant discrete
@@ -2595,7 +2598,7 @@ result_type b() const;
 >
 > The value of the `b` parameter with which the object was constructed.
 
-##### Class template `uniform_real_distribution` <a id="rand.dist.uni.real">[rand.dist.uni.real]</a>
+##### Class template `uniform_real_distribution` <a id="rand.dist.uni.real">[[rand.dist.uni.real]]</a>
 
 A `uniform_real_distribution` random number distribution produces random
 numbers x, a ≤ x < b, distributed according to the constant probability
@@ -2678,9 +2681,9 @@ result_type b() const;
 >
 > The value of the `b` parameter with which the object was constructed.
 
-#### Bernoulli distributions <a id="rand.dist.bern">[rand.dist.bern]</a>
+#### Bernoulli distributions <a id="rand.dist.bern">[[rand.dist.bern]]</a>
 
-##### Class `bernoulli_distribution` <a id="rand.dist.bern.bernoulli">[rand.dist.bern.bernoulli]</a>
+##### Class `bernoulli_distribution` <a id="rand.dist.bern.bernoulli">[[rand.dist.bern.bernoulli]]</a>
 
 A `bernoulli_distribution` random number distribution produces `bool`
 values b distributed according to the discrete probability function
@@ -2750,7 +2753,7 @@ double p() const;
 >
 > The value of the `p` parameter with which the object was constructed.
 
-##### Class template `binomial_distribution` <a id="rand.dist.bern.bin">[rand.dist.bern.bin]</a>
+##### Class template `binomial_distribution` <a id="rand.dist.bern.bin">[[rand.dist.bern.bin]]</a>
 
 A `binomial_distribution` random number distribution produces integer
 values i ≥ 0 distributed according to the discrete probability function
@@ -2828,7 +2831,7 @@ double p() const;
 >
 > The value of the `p` parameter with which the object was constructed.
 
-##### Class template `geometric_distribution` <a id="rand.dist.bern.geo">[rand.dist.bern.geo]</a>
+##### Class template `geometric_distribution` <a id="rand.dist.bern.geo">[[rand.dist.bern.geo]]</a>
 
 A `geometric_distribution` random number distribution produces integer
 values i ≥ 0 distributed according to the discrete probability function
@@ -2896,7 +2899,7 @@ double p() const;
 >
 > The value of the `p` parameter with which the object was constructed.
 
-##### Class template `negative_binomial_distribution` <a id="rand.dist.bern.negbin">[rand.dist.bern.negbin]</a>
+##### Class template `negative_binomial_distribution` <a id="rand.dist.bern.negbin">[[rand.dist.bern.negbin]]</a>
 
 A `negative_binomial_distribution` random number distribution produces
 random integers i ≥ 0 distributed according to the discrete probability
@@ -2979,9 +2982,9 @@ double p() const;
 >
 > The value of the `p` parameter with which the object was constructed.
 
-#### Poisson distributions <a id="rand.dist.pois">[rand.dist.pois]</a>
+#### Poisson distributions <a id="rand.dist.pois">[[rand.dist.pois]]</a>
 
-##### Class template `poisson_distribution` <a id="rand.dist.pois.poisson">[rand.dist.pois.poisson]</a>
+##### Class template `poisson_distribution` <a id="rand.dist.pois.poisson">[[rand.dist.pois.poisson]]</a>
 
 A `poisson_distribution` random number distribution produces integer
 values i ≥ 0 distributed according to the discrete probability function
@@ -3050,7 +3053,7 @@ double mean() const;
 > The value of the `mean` parameter with which the object was
 > constructed.
 
-##### Class template `exponential_distribution` <a id="rand.dist.pois.exp">[rand.dist.pois.exp]</a>
+##### Class template `exponential_distribution` <a id="rand.dist.pois.exp">[[rand.dist.pois.exp]]</a>
 
 An `exponential_distribution` random number distribution produces random
 numbers x > 0 distributed according to the probability density function
@@ -3119,7 +3122,7 @@ RealType lambda() const;
 > The value of the `lambda` parameter with which the object was
 > constructed.
 
-##### Class template `gamma_distribution` <a id="rand.dist.pois.gamma">[rand.dist.pois.gamma]</a>
+##### Class template `gamma_distribution` <a id="rand.dist.pois.gamma">[[rand.dist.pois.gamma]]</a>
 
 A `gamma_distribution` random number distribution produces random
 numbers x > 0 distributed according to the probability density function
@@ -3200,7 +3203,7 @@ RealType beta() const;
 > The value of the `beta` parameter with which the object was
 > constructed.
 
-##### Class template `weibull_distribution` <a id="rand.dist.pois.weibull">[rand.dist.pois.weibull]</a>
+##### Class template `weibull_distribution` <a id="rand.dist.pois.weibull">[[rand.dist.pois.weibull]]</a>
 
 A `weibull_distribution` random number distribution produces random
 numbers x ≥ 0 distributed according to the probability density function
@@ -3281,7 +3284,7 @@ RealType b() const;
 >
 > The value of the `b` parameter with which the object was constructed.
 
-##### Class template `extreme_value_distribution` <a id="rand.dist.pois.extreme">[rand.dist.pois.extreme]</a>
+##### Class template `extreme_value_distribution` <a id="rand.dist.pois.extreme">[[rand.dist.pois.extreme]]</a>
 
 An `extreme_value_distribution` random number distribution produces
 random numbers x distributed according to the probability density
@@ -3364,9 +3367,9 @@ RealType b() const;
 >
 > The value of the `b` parameter with which the object was constructed.
 
-#### Normal distributions <a id="rand.dist.norm">[rand.dist.norm]</a>
+#### Normal distributions <a id="rand.dist.norm">[[rand.dist.norm]]</a>
 
-##### Class template `normal_distribution` <a id="rand.dist.norm.normal">[rand.dist.norm.normal]</a>
+##### Class template `normal_distribution` <a id="rand.dist.norm.normal">[[rand.dist.norm.normal]]</a>
 
 A `normal_distribution` random number distribution produces random
 numbers x distributed according to the probability density function $$%
@@ -3455,7 +3458,7 @@ RealType stddev() const;
 > The value of the `stddev` parameter with which the object was
 > constructed.
 
-##### Class template `lognormal_distribution` <a id="rand.dist.norm.lognormal">[rand.dist.norm.lognormal]</a>
+##### Class template `lognormal_distribution` <a id="rand.dist.norm.lognormal">[[rand.dist.norm.lognormal]]</a>
 
 A `lognormal_distribution` random number distribution produces random
 numbers x > 0 distributed according to the probability density function
@@ -3535,7 +3538,7 @@ RealType s() const;
 >
 > The value of the `s` parameter with which the object was constructed.
 
-##### Class template `chi_squared_distribution` <a id="rand.dist.norm.chisq">[rand.dist.norm.chisq]</a>
+##### Class template `chi_squared_distribution` <a id="rand.dist.norm.chisq">[[rand.dist.norm.chisq]]</a>
 
 A `chi_squared_distribution` random number distribution produces random
 numbers x > 0 distributed according to the probability density function
@@ -3603,7 +3606,7 @@ RealType n() const;
 >
 > The value of the `n` parameter with which the object was constructed.
 
-##### Class template `cauchy_distribution` <a id="rand.dist.norm.cauchy">[rand.dist.norm.cauchy]</a>
+##### Class template `cauchy_distribution` <a id="rand.dist.norm.cauchy">[[rand.dist.norm.cauchy]]</a>
 
 A `cauchy_distribution` random number distribution produces random
 numbers x distributed according to the probability density function
@@ -3681,7 +3684,7 @@ RealType b() const;
 >
 > The value of the `b` parameter with which the object was constructed.
 
-##### Class template `fisher_f_distribution` <a id="rand.dist.norm.f">[rand.dist.norm.f]</a>
+##### Class template `fisher_f_distribution` <a id="rand.dist.norm.f">[[rand.dist.norm.f]]</a>
 
 A `fisher_f_distribution` random number distribution produces random
 numbers $x \ge 0$ distributed according to the probability density
@@ -3764,7 +3767,7 @@ RealType n() const;
 >
 > The value of the `n` parameter with which the object was constructed.
 
-##### Class template `student_t_distribution` <a id="rand.dist.norm.t">[rand.dist.norm.t]</a>
+##### Class template `student_t_distribution` <a id="rand.dist.norm.t">[[rand.dist.norm.t]]</a>
 
 A `student_t_distribution` random number distribution produces random
 numbers x distributed according to the probability density function
@@ -3835,9 +3838,9 @@ RealType n() const;
 >
 > The value of the `n` parameter with which the object was constructed.
 
-#### Sampling distributions <a id="rand.dist.samp">[rand.dist.samp]</a>
+#### Sampling distributions <a id="rand.dist.samp">[[rand.dist.samp]]</a>
 
-##### Class template `discrete_distribution` <a id="rand.dist.samp.discrete">[rand.dist.samp.discrete]</a>
+##### Class template `discrete_distribution` <a id="rand.dist.samp.discrete">[[rand.dist.samp.discrete]]</a>
 
 A `discrete_distribution` random number distribution produces random
 integers i, 0 ≤ i < n, distributed according to the discrete probability
@@ -3972,7 +3975,7 @@ vector<double> probabilities() const;
 > `operator[]` member returns pₖ when invoked with argument k for
 > $k = 0, \dotsc, n - 1$.
 
-##### Class template `piecewise_constant_distribution` <a id="rand.dist.samp.pconst">[rand.dist.samp.pconst]</a>
+##### Class template `piecewise_constant_distribution` <a id="rand.dist.samp.pconst">[[rand.dist.samp.pconst]]</a>
 
 A `piecewise_constant_distribution` random number distribution produces
 random numbers x, b₀ ≤ x < bₙ, uniformly distributed over each
@@ -4149,7 +4152,7 @@ vector<result_type> densities() const;
 > $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
 > argument k for $k = 0, \dotsc, n - 1$.
 
-##### Class template `piecewise_linear_distribution` <a id="rand.dist.samp.plinear">[rand.dist.samp.plinear]</a>
+##### Class template `piecewise_linear_distribution` <a id="rand.dist.samp.plinear">[[rand.dist.samp.plinear]]</a>
 
 A `piecewise_linear_distribution` random number distribution produces
 random numbers x, b₀ ≤ x < bₙ, distributed over each subinterval
@@ -4320,7 +4323,7 @@ vector<result_type> densities() const;
 > $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
 > argument k for $k = 0, \dotsc, n$.
 
-### Low-quality random number generation <a id="c.math.rand">[c.math.rand]</a>
+### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
 \[*Note 9*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
@@ -4341,9 +4344,9 @@ void srand(unsigned int seed);
 > call `rand`. It is *implementation-defined* whether the `rand`
 > function may introduce data races\[res.on.data.races\].
 
-## Numeric arrays <a id="numarray">[numarray]</a>
+## Numeric arrays <a id="numarray">[[numarray]]</a>
 
-### Header `<valarray>` synopsis <a id="valarray.syn">[valarray.syn]</a>
+### Header `<valarray>` synopsis <a id="valarray.syn">[[valarray.syn]]</a>
 
 ``` cpp
 #include <initializer_list>     // see [initializer.list.syn]
@@ -4515,8 +4518,8 @@ Implementations introducing such replacement types shall provide
 additional functions and operators as follows:
 
 - for every function taking a `const valarray<T>&` other than `begin`
-  and `end` [valarray.range], identical functions taking the replacement
-  types shall be added;
+  and `end` [[valarray.range]], identical functions taking the
+  replacement types shall be added;
 
 - for every function taking two `const valarray<T>&` arguments,
   identical functions taking every combination of `const valarray<T>&`
@@ -4527,13 +4530,13 @@ constructed from such replacement types and shall allow assignments and
 compound assignments of such types to `valarray<T>`, `slice_array<T>`,
 `gslice_array<T>`, `mask_array<T>` and `indirect_array<T>` objects.
 
-These library functions are permitted to throw a `bad_alloc` [bad.alloc]
-exception if there are not sufficient resources available to carry out
-the operation. Note that the exception is not mandated.
+These library functions are permitted to throw a `bad_alloc`
+[[bad.alloc]] exception if there are not sufficient resources available
+to carry out the operation. Note that the exception is not mandated.
 
-### Class template `valarray` <a id="template.valarray">[template.valarray]</a>
+### Class template `valarray` <a id="template.valarray">[[template.valarray]]</a>
 
-#### Overview <a id="template.valarray.overview">[template.valarray.overview]</a>
+#### Overview <a id="template.valarray.overview">[[template.valarray.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -4632,12 +4635,12 @@ The class template `valarray<T>` is a one-dimensional smart array, with
 elements numbered sequentially from zero. It is a representation of the
 mathematical concept of an ordered set of values. For convenience, an
 object of type `valarray<T>` is referred to as an “array” throughout the
-remainder of  [numarray]. The illusion of higher dimensionality may be
+remainder of  [[numarray]]. The illusion of higher dimensionality may be
 produced by the familiar idiom of computed indices, together with the
 powerful subsetting capabilities provided by the generalized subscript
 operators.
 
-#### Constructors <a id="valarray.cons">[valarray.cons]</a>
+#### Constructors <a id="valarray.cons">[[valarray.cons]]</a>
 
 ``` cpp
 valarray();
@@ -4740,7 +4743,7 @@ valarray(const indirect_array<T>&);
 > The destructor is applied to every element of `*this`; an
 > implementation may return all allocated memory.
 
-#### Assignment <a id="valarray.assign">[valarray.assign]</a>
+#### Assignment <a id="valarray.assign">[[valarray.assign]]</a>
 
 ``` cpp
 valarray& operator=(const valarray& v);
@@ -4816,7 +4819,7 @@ valarray& operator=(const indirect_array<T>&);
 > These operators allow the results of a generalized subscripting
 > operation to be assigned directly to a `valarray`.
 
-#### Element access <a id="valarray.access">[valarray.access]</a>
+#### Element access <a id="valarray.access">[[valarray.access]]</a>
 
 ``` cpp
 const T&  operator[](size_t n) const;
@@ -4856,7 +4859,7 @@ T& operator[](size_t n);
 > `resize(size_t, T)`\[valarray.members\] is called for that array or
 > until the lifetime of that array ends, whichever happens first.
 
-#### Subset operations <a id="valarray.sub">[valarray.sub]</a>
+#### Subset operations <a id="valarray.sub">[[valarray.sub]]</a>
 
 The member `operator[]` is overloaded to provide several ways to select
 sequences of elements from among those controlled by `*this`. Each of
@@ -5017,7 +5020,7 @@ indirect_array<T> operator[](const valarray<size_t>& indarr);
 >
 > — *end example*\]
 
-#### Unary operators <a id="valarray.unary">[valarray.unary]</a>
+#### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
 ``` cpp
 valarray operator+() const;
@@ -5039,7 +5042,7 @@ valarray<bool> operator!() const;
 > array is initialized with the result of applying the indicated
 > operator to the corresponding element of the array.
 
-#### Compound assignment <a id="valarray.cassign">[valarray.cassign]</a>
+#### Compound assignment <a id="valarray.cassign">[[valarray.cassign]]</a>
 
 ``` cpp
 valarray& operator*= (const valarray& v);
@@ -5112,7 +5115,7 @@ valarray& operator>>=(const T& v);
 > assignment does not invalidate references or pointers to the elements
 > of the array.
 
-#### Member functions <a id="valarray.members">[valarray.members]</a>
+#### Member functions <a id="valarray.members">[[valarray.members]]</a>
 
 ``` cpp
 void swap(valarray& v) noexcept;
@@ -5236,9 +5239,9 @@ void resize(size_t sz, T c = T());
 > each element the value of the second argument. Resizing invalidates
 > all pointers and references to elements in the array.
 
-### `valarray` non-member operations <a id="valarray.nonmembers">[valarray.nonmembers]</a>
+### `valarray` non-member operations <a id="valarray.nonmembers">[[valarray.nonmembers]]</a>
 
-#### Binary operators <a id="valarray.binary">[valarray.binary]</a>
+#### Binary operators <a id="valarray.binary">[[valarray.binary]]</a>
 
 ``` cpp
 template<class T> valarray<T> operator* (const valarray<T>&, const valarray<T>&);
@@ -5326,7 +5329,7 @@ template<class T> valarray<T> operator>>(const typename valarray<T>::value_type&
 > result of applying the indicated operator to the corresponding element
 > of the array argument and the non-array argument.
 
-#### Logical operators <a id="valarray.comparison">[valarray.comparison]</a>
+#### Logical operators <a id="valarray.comparison">[[valarray.comparison]]</a>
 
 ``` cpp
 template<class T> valarray<bool> operator==(const valarray<T>&, const valarray<T>&);
@@ -5404,7 +5407,7 @@ template<class T> valarray<bool> operator||(const typename valarray<T>::value_ty
 > result of applying the indicated operator to the corresponding element
 > of the array and the non-array argument.
 
-#### Transcendentals <a id="valarray.transcend">[valarray.transcend]</a>
+#### Transcendentals <a id="valarray.transcend">[[valarray.transcend]]</a>
 
 ``` cpp
 template<class T> valarray<T> abs  (const valarray<T>&);
@@ -5435,7 +5438,7 @@ template<class T> valarray<T> tanh (const valarray<T>&);
 > to an operand of type `T`. This function returns a value of type `T`
 > or which can be unambiguously implicitly converted to type `T`.
 
-#### Specialized algorithms <a id="valarray.special">[valarray.special]</a>
+#### Specialized algorithms <a id="valarray.special">[[valarray.special]]</a>
 
 ``` cpp
 template<class T> void swap(valarray<T>& x, valarray<T>& y) noexcept;
@@ -5445,9 +5448,9 @@ template<class T> void swap(valarray<T>& x, valarray<T>& y) noexcept;
 >
 > Equivalent to `x.swap(y)`.
 
-### Class `slice` <a id="class.slice">[class.slice]</a>
+### Class `slice` <a id="class.slice">[[class.slice]]</a>
 
-#### Overview <a id="class.slice.overview">[class.slice.overview]</a>
+#### Overview <a id="class.slice.overview">[[class.slice.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -5469,7 +5472,7 @@ namespace std {
 The `slice` class represents a BLAS-like slice from an array. Such a
 slice is specified by a starting index, a length, and a stride.
 
-#### Constructors <a id="cons.slice">[cons.slice]</a>
+#### Constructors <a id="cons.slice">[[cons.slice]]</a>
 
 ``` cpp
 slice();
@@ -5484,7 +5487,7 @@ slice(size_t start, size_t length, size_t stride);
 > \[*Example 10*: `slice(3, 8, 2)` constructs a slice which selects
 > elements $3, 5, 7, \dotsc, 17$ from an array. — *end example*\]
 
-#### Access functions <a id="slice.access">[slice.access]</a>
+#### Access functions <a id="slice.access">[[slice.access]]</a>
 
 ``` cpp
 size_t start() const;
@@ -5500,7 +5503,7 @@ size_t stride() const;
 >
 > Constant time.
 
-#### Operators <a id="slice.ops">[slice.ops]</a>
+#### Operators <a id="slice.ops">[[slice.ops]]</a>
 
 ``` cpp
 friend bool operator==(const slice& x, const slice& y);
@@ -5514,9 +5517,9 @@ friend bool operator==(const slice& x, const slice& y);
 > return x.start() == y.start() && x.size() == y.size() && x.stride() == y.stride();
 > ```
 
-### Class template `slice_array` <a id="template.slice.array">[template.slice.array]</a>
+### Class template `slice_array` <a id="template.slice.array">[[template.slice.array]]</a>
 
-#### Overview <a id="template.slice.array.overview">[template.slice.array.overview]</a>
+#### Overview <a id="template.slice.array.overview">[[template.slice.array.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -5561,7 +5564,7 @@ assigning the elements of `b` to a slice of the elements in `a`. For the
 slice shown, the elements selected from `a` are
 $1, 4, \dotsc, 13$. — *end example*\]
 
-#### Assignment <a id="slice.arr.assign">[slice.arr.assign]</a>
+#### Assignment <a id="slice.arr.assign">[[slice.arr.assign]]</a>
 
 ``` cpp
 void operator=(const valarray<T>&) const;
@@ -5572,7 +5575,7 @@ const slice_array& operator=(const slice_array&) const;
 > values of the argument array elements to selected elements of the
 > `valarray<T>` object to which the `slice_array` object refers.
 
-#### Compound assignment <a id="slice.arr.comp.assign">[slice.arr.comp.assign]</a>
+#### Compound assignment <a id="slice.arr.comp.assign">[[slice.arr.comp.assign]]</a>
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -5592,7 +5595,7 @@ void operator>>=(const valarray<T>&) const;
 > elements of the `valarray<T>` object to which the `slice_array` object
 > refers.
 
-#### Fill function <a id="slice.arr.fill">[slice.arr.fill]</a>
+#### Fill function <a id="slice.arr.fill">[[slice.arr.fill]]</a>
 
 ``` cpp
 void operator=(const T&) const;
@@ -5602,9 +5605,9 @@ void operator=(const T&) const;
 > argument to the elements of the `valarray<T>` object to which the
 > `slice_array` object refers.
 
-### The `gslice` class <a id="class.gslice">[class.gslice]</a>
+### The `gslice` class <a id="class.gslice">[[class.gslice]]</a>
 
-#### Overview <a id="class.gslice.overview">[class.gslice.overview]</a>
+#### Overview <a id="class.gslice.overview">[[class.gslice.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -5663,7 +5666,7 @@ If the stride parameters in the previous example are changed to {1, 1,
 If a degenerate slice is used as the argument to the non-`const` version
 of `operator[](const gslice&)`, the behavior is undefined.
 
-#### Constructors <a id="gslice.cons">[gslice.cons]</a>
+#### Constructors <a id="gslice.cons">[[gslice.cons]]</a>
 
 ``` cpp
 gslice();
@@ -5676,7 +5679,7 @@ gslice(size_t start, const valarray<size_t>& lengths,
 > with arguments builds a `gslice` based on a specification of start,
 > lengths, and strides, as explained in the previous subclause.
 
-#### Access functions <a id="gslice.access">[gslice.access]</a>
+#### Access functions <a id="gslice.access">[[gslice.access]]</a>
 
 ``` cpp
 size_t           start()  const;
@@ -5694,9 +5697,9 @@ valarray<size_t> stride() const;
 > `start()` is constant time. `size()` and `stride()` are linear in the
 > number of strides.
 
-### Class template `gslice_array` <a id="template.gslice.array">[template.gslice.array]</a>
+### Class template `gslice_array` <a id="template.gslice.array">[[template.gslice.array]]</a>
 
-#### Overview <a id="template.gslice.array.overview">[template.gslice.array.overview]</a>
+#### Overview <a id="template.gslice.array.overview">[[template.gslice.array.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -5738,7 +5741,7 @@ It has reference semantics to a subset of an array specified by a
 has the effect of assigning the elements of `b` to a generalized slice
 of the elements in `a`.
 
-#### Assignment <a id="gslice.array.assign">[gslice.array.assign]</a>
+#### Assignment <a id="gslice.array.assign">[[gslice.array.assign]]</a>
 
 ``` cpp
 void operator=(const valarray<T>&) const;
@@ -5749,7 +5752,7 @@ const gslice_array& operator=(const gslice_array&) const;
 > values of the argument array elements to selected elements of the
 > `valarray<T>` object to which the `gslice_array` refers.
 
-#### Compound assignment <a id="gslice.array.comp.assign">[gslice.array.comp.assign]</a>
+#### Compound assignment <a id="gslice.array.comp.assign">[[gslice.array.comp.assign]]</a>
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -5769,7 +5772,7 @@ void operator>>=(const valarray<T>&) const;
 > elements of the `valarray<T>` object to which the `gslice_array`
 > object refers.
 
-#### Fill function <a id="gslice.array.fill">[gslice.array.fill]</a>
+#### Fill function <a id="gslice.array.fill">[[gslice.array.fill]]</a>
 
 ``` cpp
 void operator=(const T&) const;
@@ -5779,9 +5782,9 @@ void operator=(const T&) const;
 > argument to the elements of the `valarray<T>` object to which the
 > `gslice_array` object refers.
 
-### Class template `mask_array` <a id="template.mask.array">[template.mask.array]</a>
+### Class template `mask_array` <a id="template.mask.array">[[template.mask.array]]</a>
 
-#### Overview <a id="template.mask.array.overview">[template.mask.array.overview]</a>
+#### Overview <a id="template.mask.array.overview">[[template.mask.array.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -5822,7 +5825,7 @@ boolean mask. Thus, the expression `a[mask] = b;` has the effect of
 assigning the elements of `b` to the masked elements in `a` (those for
 which the corresponding element in `mask` is `true`).
 
-#### Assignment <a id="mask.array.assign">[mask.array.assign]</a>
+#### Assignment <a id="mask.array.assign">[[mask.array.assign]]</a>
 
 ``` cpp
 void operator=(const valarray<T>&) const;
@@ -5833,7 +5836,7 @@ const mask_array& operator=(const mask_array&) const;
 > values of the argument array elements to selected elements of the
 > `valarray<T>` object to which the `mask_array` object refers.
 
-#### Compound assignment <a id="mask.array.comp.assign">[mask.array.comp.assign]</a>
+#### Compound assignment <a id="mask.array.comp.assign">[[mask.array.comp.assign]]</a>
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -5853,7 +5856,7 @@ void operator>>=(const valarray<T>&) const;
 > elements of the `valarray<T>` object to which the `mask_array` object
 > refers.
 
-#### Fill function <a id="mask.array.fill">[mask.array.fill]</a>
+#### Fill function <a id="mask.array.fill">[[mask.array.fill]]</a>
 
 ``` cpp
 void operator=(const T&) const;
@@ -5863,9 +5866,9 @@ void operator=(const T&) const;
 > argument to the elements of the `valarray<T>` object to which the
 > `mask_array` object refers.
 
-### Class template `indirect_array` <a id="template.indirect.array">[template.indirect.array]</a>
+### Class template `indirect_array` <a id="template.indirect.array">[[template.indirect.array]]</a>
 
-#### Overview <a id="template.indirect.array.overview">[template.indirect.array.overview]</a>
+#### Overview <a id="template.indirect.array.overview">[[template.indirect.array.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -5907,7 +5910,7 @@ It has reference semantics to a subset of an array specified by an
 of assigning the elements of `b` to the elements in `a` whose indices
 appear in `indirect`.
 
-#### Assignment <a id="indirect.array.assign">[indirect.array.assign]</a>
+#### Assignment <a id="indirect.array.assign">[[indirect.array.assign]]</a>
 
 ``` cpp
 void operator=(const valarray<T>&) const;
@@ -5933,7 +5936,7 @@ const indirect_array& operator=(const indirect_array&) const;
 >
 > — *end example*\]
 
-#### Compound assignment <a id="indirect.array.comp.assign">[indirect.array.comp.assign]</a>
+#### Compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -5956,7 +5959,7 @@ void operator>>=(const valarray<T>&) const;
 > If the `indirect_array` specifies an element in the `valarray<T>`
 > object to which it refers more than once, the behavior is undefined.
 
-#### Fill function <a id="indirect.array.fill">[indirect.array.fill]</a>
+#### Fill function <a id="indirect.array.fill">[[indirect.array.fill]]</a>
 
 ``` cpp
 void operator=(const T&) const;
@@ -5966,21 +5969,21 @@ void operator=(const T&) const;
 > argument to the elements of the `valarray<T>` object to which the
 > `indirect_array` object refers.
 
-### `valarray` range access <a id="valarray.range">[valarray.range]</a>
+### `valarray` range access <a id="valarray.range">[[valarray.range]]</a>
 
 In the `begin` and `end` function templates that follow, *unspecified*
 is a type that meets the requirements of a mutable
-*Cpp17RandomAccessIterator* [random.access.iterators] and models
-`contiguous_iterator` [iterator.concept.contiguous], whose `value_type`
-is the template parameter `T` and whose `reference` type is `T&`.
-*unspecified* is a type that meets the requirements of a constant
+*Cpp17RandomAccessIterator* [[random.access.iterators]] and models
+`contiguous_iterator` [[iterator.concept.contiguous]], whose
+`value_type` is the template parameter `T` and whose `reference` type is
+`T&`. *unspecified* is a type that meets the requirements of a constant
 *Cpp17RandomAccessIterator* and models `contiguous_iterator`, whose
 `value_type` is the template parameter `T` and whose `reference` type is
 `const T&`.
 
 The iterators returned by `begin` and `end` for an array are guaranteed
 to be valid until the member function `resize(size_t, T)`
-[valarray.members] is called for that array or until the lifetime of
+[[valarray.members]] is called for that array or until the lifetime of
 that array ends, whichever happens first.
 
 ``` cpp
@@ -6001,9 +6004,9 @@ template<class T> unspecified{2} end(const valarray<T>& v);
 >
 > An iterator referencing one past the last value in the array.
 
-## Mathematical functions for floating-point types <a id="c.math">[c.math]</a>
+## Mathematical functions for floating-point types <a id="c.math">[[c.math]]</a>
 
-### Header `<cmath>` synopsis <a id="cmath.syn">[cmath.syn]</a>
+### Header `<cmath>` synopsis <a id="cmath.syn">[[cmath.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -6403,19 +6406,19 @@ namespace std {
 
 The contents and meaning of the header `<cmath>` are the same as the C
 standard library header `<math.h>`, with the addition of a
-three-dimensional hypotenuse function [c.math.hypot3], a linear
-interpolation function [c.math.lerp], and the mathematical special
-functions described in [sf.cmath].
+three-dimensional hypotenuse function [[c.math.hypot3]], a linear
+interpolation function [[c.math.lerp]], and the mathematical special
+functions described in [[sf.cmath]].
 
 \[*Note 1*: Several functions have additional overloads in this
 document, but they have the same behavior as in the C standard library
-[library.c]. — *end note*\]
+[[library.c]]. — *end note*\]
 
 For each function with at least one parameter of type
 *floating-point-type*, the implementation provides an overload for each
-cv-unqualified floating-point type [basic.fundamental] where all uses of
-*floating-point-type* in the function signature are replaced with that
-floating-point type.
+cv-unqualified floating-point type [[basic.fundamental]] where all uses
+of *floating-point-type* in the function signature are replaced with
+that floating-point type.
 
 For each function with at least one parameter of type
 *floating-point-type* other than `abs`, the implementation also provides
@@ -6427,14 +6430,14 @@ floating-point conversion subrank among the types of all such arguments,
 where arguments of integer type are considered to have the same
 floating-point conversion rank as `double`. If no such floating-point
 type with the greatest rank and subrank exists, then overload resolution
-does not result in a usable candidate [over.match.general] from the
+does not result in a usable candidate [[over.match.general]] from the
 overloads provided by the implementation.
 
 An invocation of `nexttoward` is ill-formed if the argument
 corresponding to the *floating-point-type* parameter has extended
 floating-point type.
 
-### Absolute values <a id="c.math.abs">[c.math.abs]</a>
+### Absolute values <a id="c.math.abs">[[c.math.abs]]</a>
 
 \[*Note 2*: The headers `<cstdlib>` and `<cmath>` declare the functions
 described in this subclause. — *end note*\]
@@ -6467,7 +6470,7 @@ constexpr floating-point-type abs(floating-point-type x);
 >
 > The absolute value of `x`.
 
-### Three-dimensional hypotenuse <a id="c.math.hypot3">[c.math.hypot3]</a>
+### Three-dimensional hypotenuse <a id="c.math.hypot3">[[c.math.hypot3]]</a>
 
 ``` cpp
 floating-point-type hypot(floating-point-type x, floating-point-type y, floating-point-type z);
@@ -6477,7 +6480,7 @@ floating-point-type hypot(floating-point-type x, floating-point-type y, floating
 >
 > $\sqrt{x^2+y^2+z^2}$.
 
-### Linear interpolation <a id="c.math.lerp">[c.math.lerp]</a>
+### Linear interpolation <a id="c.math.lerp">[[c.math.lerp]]</a>
 
 ``` cpp
 constexpr floating-point-type lerp(floating-point-type a, floating-point-type b,
@@ -6507,18 +6510,18 @@ constexpr floating-point-type lerp(floating-point-type a, floating-point-type b,
 > *`CMP`*`(lerp(a, b, t2), lerp(a, b, t1))`, *`CMP`*`(t2, t1)`, and
 > *`CMP`*`(b, a)` is non-negative.
 
-### Classification / comparison functions <a id="c.math.fpclass">[c.math.fpclass]</a>
+### Classification / comparison functions <a id="c.math.fpclass">[[c.math.fpclass]]</a>
 
 The classification / comparison functions behave the same as the C
 macros with the corresponding names defined in the C standard library.
 
-### Mathematical special functions <a id="sf.cmath">[sf.cmath]</a>
+### Mathematical special functions <a id="sf.cmath">[[sf.cmath]]</a>
 
-#### General <a id="sf.cmath.general">[sf.cmath.general]</a>
+#### General <a id="sf.cmath.general">[[sf.cmath.general]]</a>
 
-If any argument value to any of the functions specified in [sf.cmath] is
-a NaN (Not a Number), the function shall return a NaN but it shall not
-report a domain error. Otherwise, the function shall report a domain
+If any argument value to any of the functions specified in [[sf.cmath]]
+is a NaN (Not a Number), the function shall return a NaN but it shall
+not report a domain error. Otherwise, the function shall report a domain
 error for just those argument values for which:
 
 - the function description’s element explicitly specifies a domain and
@@ -6532,7 +6535,7 @@ error for just those argument values for which:
 Unless otherwise specified, each function is defined for all finite
 values, for negative infinity, and for positive infinity.
 
-#### Associated Laguerre polynomials <a id="sf.cmath.assoc.laguerre">[sf.cmath.assoc.laguerre]</a>
+#### Associated Laguerre polynomials <a id="sf.cmath.assoc.laguerre">[[sf.cmath.assoc.laguerre]]</a>
 
 ``` cpp
 floating-point-type assoc_laguerre(unsigned n, unsigned m, floating-point-type x);
@@ -6557,7 +6560,7 @@ long double  assoc_laguerrel(unsigned n, unsigned m, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `n >= 128` or if `m >= 128`.
 
-#### Associated Legendre functions <a id="sf.cmath.assoc.legendre">[sf.cmath.assoc.legendre]</a>
+#### Associated Legendre functions <a id="sf.cmath.assoc.legendre">[[sf.cmath.assoc.legendre]]</a>
 
 ``` cpp
 floating-point-type assoc_legendre(unsigned l, unsigned m, floating-point-type x);
@@ -6582,7 +6585,7 @@ long double  assoc_legendrel(unsigned l, unsigned m, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `l >= 128`.
 
-#### Beta function <a id="sf.cmath.beta">[sf.cmath.beta]</a>
+#### Beta function <a id="sf.cmath.beta">[[sf.cmath.beta]]</a>
 
 ``` cpp
 floating-point-type beta(floating-point-type x, floating-point-type y);
@@ -6601,7 +6604,7 @@ long double  betal(long double x, long double y);
 >    \text{ ,\quad for $x > 0$,\, $y > 0$,}$$ where x is `x` and y is
 > `y`.
 
-#### Complete elliptic integral of the first kind <a id="sf.cmath.comp.ellint.1">[sf.cmath.comp.ellint.1]</a>
+#### Complete elliptic integral of the first kind <a id="sf.cmath.comp.ellint.1">[[sf.cmath.comp.ellint.1]]</a>
 
 ``` cpp
 floating-point-type comp_ellint_1(floating-point-type k);
@@ -6621,7 +6624,7 @@ long double  comp_ellint_1l(long double k);
 >
 > See also \[sf.cmath.ellint.1\].
 
-#### Complete elliptic integral of the second kind <a id="sf.cmath.comp.ellint.2">[sf.cmath.comp.ellint.2]</a>
+#### Complete elliptic integral of the second kind <a id="sf.cmath.comp.ellint.2">[[sf.cmath.comp.ellint.2]]</a>
 
 ``` cpp
 floating-point-type comp_ellint_2(floating-point-type k);
@@ -6641,7 +6644,7 @@ long double  comp_ellint_2l(long double k);
 >
 > See also \[sf.cmath.ellint.2\].
 
-#### Complete elliptic integral of the third kind <a id="sf.cmath.comp.ellint.3">[sf.cmath.comp.ellint.3]</a>
+#### Complete elliptic integral of the third kind <a id="sf.cmath.comp.ellint.3">[[sf.cmath.comp.ellint.3]]</a>
 
 ``` cpp
 floating-point-type comp_ellint_3(floating-point-type k, floating-point-type nu);
@@ -6661,7 +6664,7 @@ long double  comp_ellint_3l(long double k, long double nu);
 >
 > See also \[sf.cmath.ellint.3\].
 
-#### Regular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.i">[sf.cmath.cyl.bessel.i]</a>
+#### Regular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.i">[[sf.cmath.cyl.bessel.i]]</a>
 
 ``` cpp
 floating-point-type cyl_bessel_i(floating-point-type nu, floating-point-type x);
@@ -6688,7 +6691,7 @@ long double  cyl_bessel_il(long double nu, long double x);
 >
 > See also \[sf.cmath.cyl.bessel.j\].
 
-#### Cylindrical Bessel functions of the first kind <a id="sf.cmath.cyl.bessel.j">[sf.cmath.cyl.bessel.j]</a>
+#### Cylindrical Bessel functions of the first kind <a id="sf.cmath.cyl.bessel.j">[[sf.cmath.cyl.bessel.j]]</a>
 
 ``` cpp
 floating-point-type cyl_bessel_j(floating-point-type nu, floating-point-type x);
@@ -6712,7 +6715,7 @@ long double  cyl_bessel_jl(long double nu, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `nu >= 128`.
 
-#### Irregular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.k">[sf.cmath.cyl.bessel.k]</a>
+#### Irregular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.k">[[sf.cmath.cyl.bessel.k]]</a>
 
 ``` cpp
 floating-point-type cyl_bessel_k(floating-point-type nu, floating-point-type x);
@@ -6758,7 +6761,7 @@ long double  cyl_bessel_kl(long double nu, long double x);
 > See also \[sf.cmath.cyl.bessel.i\], \[sf.cmath.cyl.bessel.j\],
 > \[sf.cmath.cyl.neumann\].
 
-#### Cylindrical Neumann functions <a id="sf.cmath.cyl.neumann">[sf.cmath.cyl.neumann]</a>
+#### Cylindrical Neumann functions <a id="sf.cmath.cyl.neumann">[[sf.cmath.cyl.neumann]]</a>
 
 ``` cpp
 floating-point-type cyl_neumann(floating-point-type nu, floating-point-type x);
@@ -6798,7 +6801,7 @@ long double  cyl_neumannl(long double nu, long double x);
 >
 > See also \[sf.cmath.cyl.bessel.j\].
 
-#### Incomplete elliptic integral of the first kind <a id="sf.cmath.ellint.1">[sf.cmath.ellint.1]</a>
+#### Incomplete elliptic integral of the first kind <a id="sf.cmath.ellint.1">[[sf.cmath.ellint.1]]</a>
 
 ``` cpp
 floating-point-type ellint_1(floating-point-type k, floating-point-type phi);
@@ -6819,7 +6822,7 @@ long double  ellint_1l(long double k, long double phi);
 >      \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is
 > `phi`.
 
-#### Incomplete elliptic integral of the second kind <a id="sf.cmath.ellint.2">[sf.cmath.ellint.2]</a>
+#### Incomplete elliptic integral of the second kind <a id="sf.cmath.ellint.2">[[sf.cmath.ellint.2]]</a>
 
 ``` cpp
 floating-point-type ellint_2(floating-point-type k, floating-point-type phi);
@@ -6839,7 +6842,7 @@ long double  ellint_2l(long double k, long double phi);
 >    \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is
 > `phi`.
 
-#### Incomplete elliptic integral of the third kind <a id="sf.cmath.ellint.3">[sf.cmath.ellint.3]</a>
+#### Incomplete elliptic integral of the third kind <a id="sf.cmath.ellint.3">[[sf.cmath.ellint.3]]</a>
 
 ``` cpp
 floating-point-type ellint_3(floating-point-type k, floating-point-type nu,
@@ -6860,7 +6863,7 @@ long double  ellint_3l(long double k, long double nu, long double phi);
 >    \frac{ \mathsf{d}\theta }{ (1 - \nu \, \sin^2 \theta) \sqrt{1 - k^2 \sin^2 \theta} } \text{ ,\quad for $|k| \le 1$,}$$
 > where $\nu$ is `nu`, k is `k`, and $\phi$ is `phi`.
 
-#### Exponential integral <a id="sf.cmath.expint">[sf.cmath.expint]</a>
+#### Exponential integral <a id="sf.cmath.expint">[[sf.cmath.expint]]</a>
 
 ``` cpp
 floating-point-type expint(floating-point-type x);
@@ -6881,7 +6884,7 @@ long double  expintl(long double x);
 >                           {t     } \, \mathsf{d}t
 > \;$$ where x is `x`.
 
-#### Hermite polynomials <a id="sf.cmath.hermite">[sf.cmath.hermite]</a>
+#### Hermite polynomials <a id="sf.cmath.hermite">[[sf.cmath.hermite]]</a>
 
 ``` cpp
 floating-point-type hermite(unsigned n, floating-point-type x);
@@ -6907,7 +6910,7 @@ long double  hermitel(unsigned n, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `n >= 128`.
 
-#### Laguerre polynomials <a id="sf.cmath.laguerre">[sf.cmath.laguerre]</a>
+#### Laguerre polynomials <a id="sf.cmath.laguerre">[[sf.cmath.laguerre]]</a>
 
 ``` cpp
 floating-point-type laguerre(unsigned n, floating-point-type x);
@@ -6931,7 +6934,7 @@ long double  laguerrel(unsigned n, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `n >= 128`.
 
-#### Legendre polynomials <a id="sf.cmath.legendre">[sf.cmath.legendre]</a>
+#### Legendre polynomials <a id="sf.cmath.legendre">[[sf.cmath.legendre]]</a>
 
 ``` cpp
 floating-point-type legendre(unsigned l, floating-point-type x);
@@ -6956,7 +6959,7 @@ long double  legendrel(unsigned l, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `l >= 128`.
 
-#### Riemann zeta function <a id="sf.cmath.riemann.zeta">[sf.cmath.riemann.zeta]</a>
+#### Riemann zeta function <a id="sf.cmath.riemann.zeta">[[sf.cmath.riemann.zeta]]</a>
 
 ``` cpp
 floating-point-type riemann_zeta(floating-point-type x);
@@ -6994,7 +6997,7 @@ long double  riemann_zetal(long double x);
 >   \right.
 > \;$$ where x is `x`.
 
-#### Spherical Bessel functions of the first kind <a id="sf.cmath.sph.bessel">[sf.cmath.sph.bessel]</a>
+#### Spherical Bessel functions of the first kind <a id="sf.cmath.sph.bessel">[[sf.cmath.sph.bessel]]</a>
 
 ``` cpp
 floating-point-type sph_bessel(unsigned n, floating-point-type x);
@@ -7019,7 +7022,7 @@ long double  sph_bessell(unsigned n, long double x);
 >
 > See also \[sf.cmath.cyl.bessel.j\].
 
-#### Spherical associated Legendre functions <a id="sf.cmath.sph.legendre">[sf.cmath.sph.legendre]</a>
+#### Spherical associated Legendre functions <a id="sf.cmath.sph.legendre">[[sf.cmath.sph.legendre]]</a>
 
 ``` cpp
 floating-point-type sph_legendre(unsigned l, unsigned m, floating-point-type theta);
@@ -7049,7 +7052,7 @@ long double  sph_legendrel(unsigned l, unsigned m, long double theta);
 >
 > See also \[sf.cmath.assoc.legendre\].
 
-#### Spherical Neumann functions <a id="sf.cmath.sph.neumann">[sf.cmath.sph.neumann]</a>
+#### Spherical Neumann functions <a id="sf.cmath.sph.neumann">[[sf.cmath.sph.neumann]]</a>
 
 ``` cpp
 floating-point-type sph_neumann(unsigned n, floating-point-type x);
@@ -7075,9 +7078,9 @@ long double  sph_neumannl(unsigned n, long double x);
 >
 > See also \[sf.cmath.cyl.neumann\].
 
-## Numbers <a id="numbers">[numbers]</a>
+## Numbers <a id="numbers">[[numbers]]</a>
 
-### Header `<numbers>` synopsis <a id="numbers.syn">[numbers.syn]</a>
+### Header `<numbers>` synopsis <a id="numbers.syn">[[numbers.syn]]</a>
 
 ``` cpp
 namespace std::numbers {
@@ -7125,7 +7128,7 @@ namespace std::numbers {
 }
 ```
 
-### Mathematical constants <a id="math.constants">[math.constants]</a>
+### Mathematical constants <a id="math.constants">[[math.constants]]</a>
 
 The library-defined partial specializations of mathematical constant
 variable templates are initialized with the nearest representable values
@@ -7134,7 +7137,7 @@ $\frac{1}{\sqrt{\pi}}$, $\ln 2$, $\ln 10$, $\sqrt{2}$, $\sqrt{3}$,
 $\frac{1}{\sqrt{3}}$, the Euler-Mascheroni γ constant, and the golden
 ratio $\phi$ constant $\frac{1+\sqrt{5}}{2}$, respectively.
 
-Pursuant to [namespace.std], a program may partially or explicitly
+Pursuant to [[namespace.std]], a program may partially or explicitly
 specialize a mathematical constant variable template provided that the
 specialization depends on a program-defined type.
 
@@ -7142,48 +7145,48 @@ A program that instantiates a primary template of a mathematical
 constant variable template is ill-formed.
 
 <!-- Link reference definitions -->
-[bad.alloc]: support.md#bad.alloc
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.stc.thread]: basic.md#basic.stc.thread
-[c.math.hypot3]: #c.math.hypot3
-[c.math.lerp]: #c.math.lerp
-[cpp.pragma]: cpp.md#cpp.pragma
-[cpp17.copyassignable]: #cpp17.copyassignable
-[cpp17.copyconstructible]: #cpp17.copyconstructible
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[input.output]: input.md#input.output
-[iostate.flags]: input.md#iostate.flags
-[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
-[library.c]: library.md#library.c
-[namespace.std]: library.md#namespace.std
-[numarray]: #numarray
-[numerics.summary]: #numerics.summary
-[over.match.general]: over.md#over.match.general
-[rand]: #rand
-[rand.adapt]: #rand.adapt
-[rand.dist]: #rand.dist
-[rand.eng]: #rand.eng
-[rand.eng.lcong]: #rand.eng.lcong
-[rand.req.adapt]: #rand.req.adapt
-[rand.req.dist]: #rand.req.dist
-[rand.req.eng]: #rand.req.eng
-[rand.req.seedseq]: #rand.req.seedseq
-[rand.req.urng]: #rand.req.urng
-[random.access.iterators]: iterators.md#random.access.iterators
-[sf.cmath]: #sf.cmath
-[strings]: strings.md#strings
-[term.literal.type]: #term.literal.type
-[thread.jthread.class]: thread.md#thread.jthread.class
-[thread.thread.class]: thread.md#thread.thread.class
-[utility.arg.requirements]: library.md#utility.arg.requirements
-[valarray.members]: #valarray.members
-[valarray.range]: #valarray.range
+[[bad.alloc]]: support.md#bad.alloc
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.stc.thread]]: basic.md#basic.stc.thread
+[[c.math.hypot3]]: #c.math.hypot3
+[[c.math.lerp]]: #c.math.lerp
+[[cpp.pragma]]: cpp.md#cpp.pragma
+[[cpp17.copyassignable]]: #cpp17.copyassignable
+[[cpp17.copyconstructible]]: #cpp17.copyconstructible
+[[cpp17.equalitycomparable]]: #cpp17.equalitycomparable
+[[input.output]]: input.md#input.output
+[[iostate.flags]]: input.md#iostate.flags
+[[iterator.concept.contiguous]]: iterators.md#iterator.concept.contiguous
+[[library.c]]: library.md#library.c
+[[namespace.std]]: library.md#namespace.std
+[[numarray]]: #numarray
+[[numerics.summary]]: #numerics.summary
+[[over.match.general]]: over.md#over.match.general
+[[rand]]: #rand
+[[rand.adapt]]: #rand.adapt
+[[rand.dist]]: #rand.dist
+[[rand.eng]]: #rand.eng
+[[rand.eng.lcong]]: #rand.eng.lcong
+[[rand.req.adapt]]: #rand.req.adapt
+[[rand.req.dist]]: #rand.req.dist
+[[rand.req.eng]]: #rand.req.eng
+[[rand.req.seedseq]]: #rand.req.seedseq
+[[rand.req.urng]]: #rand.req.urng
+[[random.access.iterators]]: iterators.md#random.access.iterators
+[[sf.cmath]]: #sf.cmath
+[[strings]]: strings.md#strings
+[[term.literal.type]]: #term.literal.type
+[[thread.jthread.class]]: thread.md#thread.jthread.class
+[[thread.thread.class]]: thread.md#thread.thread.class
+[[utility.arg.requirements]]: library.md#utility.arg.requirements
+[[valarray.members]]: #valarray.members
+[[valarray.range]]: #valarray.range
 
 <!-- Link reference definitions -->
-[c.math]: #c.math
-[cfenv]: #cfenv
-[complex.numbers]: #complex.numbers
-[numarray]: #numarray
-[numbers]: #numbers
-[numeric.requirements]: #numeric.requirements
-[rand]: #rand
+[[c.math]]: #c.math
+[[cfenv]]: #cfenv
+[[complex.numbers]]: #complex.numbers
+[[numarray]]: #numarray
+[[numbers]]: #numbers
+[[numeric.requirements]]: #numeric.requirements
+[[rand]]: #rand

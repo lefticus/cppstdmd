@@ -3,34 +3,34 @@ current_file: time
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Time library <a id="time">[time]</a>
+# Time library <a id="time">[[time]]</a>
 
-## General <a id="time.general">[time.general]</a>
+## General <a id="time.general">[[time.general]]</a>
 
-This Clause describes the chrono library [time.syn] and various C
-functions [ctime.syn] that provide generally useful time utilities, as
-summarized in [time.summary].
+This Clause describes the chrono library [[time.syn]] and various C
+functions [[ctime.syn]] that provide generally useful time utilities, as
+summarized in [[time.summary]].
 
 **Table: Time library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [time.clock.req] | \oldconcept{Clock} requirements |
-| [time.traits] | Time-related traits | `<chrono>` |
-| [time.duration] | Class template `duration` |
-| [time.point] | Class template `time_point` |
-| [time.clock] | Clocks |
-| [time.cal] | Civil calendar |
-| [time.hms] | Class template `hh_mm_ss` |
-| [time.12] | 12/24 hour functions |
-| [time.zone] | Time zones |
-| [time.format] | Formatting |
-| [time.parse] | Parsing |
-| [ctime.syn] | C library time utilities | `<ctime>` |
+| [[time.clock.req]] | \oldconcept{Clock} requirements |
+| [[time.traits]] | Time-related traits | `<chrono>` |
+| [[time.duration]] | Class template `duration` |
+| [[time.point]] | Class template `time_point` |
+| [[time.clock]] | Clocks |
+| [[time.cal]] | Civil calendar |
+| [[time.hms]] | Class template `hh_mm_ss` |
+| [[time.12]] | 12/24 hour functions |
+| [[time.zone]] | Time zones |
+| [[time.format]] | Formatting |
+| [[time.parse]] | Parsing |
+| [[ctime.syn]] | C library time utilities | `<ctime>` |
 Let *STATICALLY-WIDEN*`<charT>("...")` be `"..."` if `charT` is `char`
 and `L"..."` if `charT` is `wchar_t`.
 
-## Header `<chrono>` synopsis <a id="time.syn">[time.syn]</a>
+## Header `<chrono>` synopsis <a id="time.syn">[[time.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -914,16 +914,16 @@ namespace std::chrono {
 }
 ```
 
-## *Cpp17Clock* requirements <a id="time.clock.req">[time.clock.req]</a>
+## *Cpp17Clock* requirements <a id="time.clock.req">[[time.clock.req]]</a>
 
 A clock is a bundle consisting of a `duration`, a `time_point`, and a
 function `now()` to get the current `time_point`. The origin of the
 clock’s `time_point` is referred to as the clock’s *epoch*. A clock
-shall meet the requirements in [time.clock].
+shall meet the requirements in [[time.clock]].
 
-In [time.clock] `C1` and `C2` denote clock types. `t1` and `t2` are
+In [[time.clock]] `C1` and `C2` denote clock types. `t1` and `t2` are
 values returned by `C1::now()` where the call returning `t1` happens
-before [intro.multithread] the call returning `t2` and both of these
+before [[intro.multithread]] the call returning `t2` and both of these
 calls occur before `C1::time_point::max()`.
 
 \[*Note 1*: This means `C1` did not wrap around between `t1` and
@@ -938,10 +938,10 @@ A type `TC` meets the *Cpp17TrivialClock* requirements if:
 - `TC` meets the *Cpp17Clock* requirements,
 
 - the types `TC::rep`, `TC::duration`, and `TC::time_point` meet the
-  *Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) and
-  *Cpp17LessThanComparable* ( [cpp17.lessthancomparable]) and
-  *Cpp17Swappable* [swappable.requirements] requirements and the
-  requirements of numeric types [numeric.requirements],
+  *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
+  *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) and
+  *Cpp17Swappable* [[swappable.requirements]] requirements and the
+  requirements of numeric types [[numeric.requirements]],
 
   \[*Note 1*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*\]
@@ -951,9 +951,9 @@ A type `TC` meets the *Cpp17TrivialClock* requirements if:
 - the type `TC::time_point::clock` meets the *Cpp17TrivialClock*
   requirements, recursively.
 
-## Time-related traits <a id="time.traits">[time.traits]</a>
+## Time-related traits <a id="time.traits">[[time.traits]]</a>
 
-### `treat_as_floating_point` <a id="time.traits.is.fp">[time.traits.is.fp]</a>
+### `treat_as_floating_point` <a id="time.traits.is.fp">[[time.traits.is.fp]]</a>
 
 ``` cpp
 template<class Rep> struct treat_as_floating_point : is_floating_point<Rep> { };
@@ -973,7 +973,7 @@ one value by another with acceptable loss of precision. If
 it behaved like an integral type for the purpose of these
 conversions. — *end note*\]
 
-### `duration_values` <a id="time.traits.duration.values">[time.traits.duration.values]</a>
+### `duration_values` <a id="time.traits.duration.values">[[time.traits.duration.values]]</a>
 
 ``` cpp
 template<class Rep>
@@ -1032,7 +1032,7 @@ static constexpr Rep max() noexcept;
 >
 > The value returned shall compare greater than `zero()`.
 
-### Specializations of `common_type` <a id="time.traits.specializations">[time.traits.specializations]</a>
+### Specializations of `common_type` <a id="time.traits.specializations">[[time.traits.specializations]]</a>
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1066,25 +1066,25 @@ The common type of two `time_point` types is a `time_point` with the
 same clock as the two types and the common type of their two
 `duration`s.
 
-### Class template `is_clock` <a id="time.traits.is.clock">[time.traits.is.clock]</a>
+### Class template `is_clock` <a id="time.traits.is.clock">[[time.traits.is.clock]]</a>
 
 ``` cpp
 template<class T> struct is_clock;
 ```
 
-`is_clock` is a *Cpp17UnaryTypeTrait* [meta.rqmts] with a base
+`is_clock` is a *Cpp17UnaryTypeTrait* [[meta.rqmts]] with a base
 characteristic of `true_type` if `T` meets the *Cpp17Clock* requirements
-[time.clock.req], otherwise `false_type`. For the purposes of the
+[[time.clock.req]], otherwise `false_type`. For the purposes of the
 specification of this trait, the extent to which an implementation
 determines that a type cannot meet the *Cpp17Clock* requirements is
 unspecified, except that as a minimum a type `T` shall not qualify as a
 *Cpp17Clock* unless it meets all of the following conditions:
 
 - the *qualified-id*s `T::rep`, `T::period`, `T::duration`, and
-  `T::time_point` are valid and each denotes a type [temp.deduct],
+  `T::time_point` are valid and each denotes a type [[temp.deduct]],
 
 - the expression `T::is_steady` is well-formed when treated as an
-  unevaluated operand [term.unevaluated.operand],
+  unevaluated operand [[term.unevaluated.operand]],
 
 - the expression `T::now()` is well-formed when treated as an
   unevaluated operand.
@@ -1092,9 +1092,9 @@ unspecified, except that as a minimum a type `T` shall not qualify as a
 The behavior of a program that adds specializations for `is_clock` is
 undefined.
 
-## Class template `duration` <a id="time.duration">[time.duration]</a>
+## Class template `duration` <a id="time.duration">[[time.duration]]</a>
 
-### General <a id="time.duration.general">[time.duration.general]</a>
+### General <a id="time.duration.general">[[time.duration.general]]</a>
 
 A `duration` type measures time between two points in time
 (`time_point`s). A `duration` has a representation which holds a count
@@ -1163,7 +1163,7 @@ the indicated operations on their representations.
 
 The defaulted copy constructor of duration shall be a constexpr function
 if and only if the required initialization of the member `rep_` for copy
-and move, respectively, would be constexpr-suitable [dcl.constexpr].
+and move, respectively, would be constexpr-suitable [[dcl.constexpr]].
 
 \[*Example 1*:
 
@@ -1176,7 +1176,7 @@ duration<double, ratio<1, 30>>  d2; // holds a count with a tick period of $\fra
 
 — *end example*\]
 
-### Constructors <a id="time.duration.cons">[time.duration.cons]</a>
+### Constructors <a id="time.duration.cons">[[time.duration.cons]]</a>
 
 ``` cpp
 template<class Rep2>
@@ -1227,7 +1227,7 @@ template<class Rep2, class Period2>
 >
 > Initializes `rep_` with `duration_cast<duration>(d).count()`.
 
-### Observer <a id="time.duration.observer">[time.duration.observer]</a>
+### Observer <a id="time.duration.observer">[[time.duration.observer]]</a>
 
 ``` cpp
 constexpr rep count() const;
@@ -1237,7 +1237,7 @@ constexpr rep count() const;
 >
 > `rep_`.
 
-### Arithmetic <a id="time.duration.arithmetic">[time.duration.arithmetic]</a>
+### Arithmetic <a id="time.duration.arithmetic">[[time.duration.arithmetic]]</a>
 
 ``` cpp
 constexpr common_type_t<duration> operator+() const;
@@ -1367,7 +1367,7 @@ constexpr duration& operator%=(const duration& rhs);
 >
 > `*this`.
 
-### Special values <a id="time.duration.special">[time.duration.special]</a>
+### Special values <a id="time.duration.special">[[time.duration.special]]</a>
 
 ``` cpp
 static constexpr duration zero() noexcept;
@@ -1393,7 +1393,7 @@ static constexpr duration max() noexcept;
 >
 > `duration(duration_values<rep>::max())`.
 
-### Non-member arithmetic <a id="time.duration.nonmember">[time.duration.nonmember]</a>
+### Non-member arithmetic <a id="time.duration.nonmember">[[time.duration.nonmember]]</a>
 
 In the function descriptions that follow, unless stated otherwise, let
 `CD` represent the return type of the function.
@@ -1491,7 +1491,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
 >
 > `CD(CD(lhs).count() % CD(rhs).count())`.
 
-### Comparisons <a id="time.duration.comparisons">[time.duration.comparisons]</a>
+### Comparisons <a id="time.duration.comparisons">[[time.duration.comparisons]]</a>
 
 In the function descriptions that follow, `CT` represents
 `common_type_t<A, B>`, where `A` and `B` are the types of the two
@@ -1558,7 +1558,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
 >
 > `CT(lhs).count() <=> CT(rhs).count()`.
 
-### Conversions <a id="time.duration.cast">[time.duration.cast]</a>
+### Conversions <a id="time.duration.cast">[[time.duration.cast]]</a>
 
 ``` cpp
 template<class ToDuration, class Rep, class Period>
@@ -1634,7 +1634,7 @@ template<class ToDuration, class Rep, class Period>
 > The value of `ToDuration` that is closest to `d`. If there are two
 > closest values, then return the value `t` for which `t % 2 == 0`.
 
-### Suffixes for duration literals <a id="time.duration.literals">[time.duration.literals]</a>
+### Suffixes for duration literals <a id="time.duration.literals">[[time.duration.literals]]</a>
 
 This subclause describes literal suffixes for constructing duration
 literals. The suffixes `h`, `min`, `s`, `ms`, `us`, `ns` denote duration
@@ -1721,7 +1721,7 @@ constexpr chrono::duration<unspecified, nano> operator""ns(long double nsec);
 >
 > A `duration` literal representing `nsec` nanoseconds.
 
-### Algorithms <a id="time.duration.alg">[time.duration.alg]</a>
+### Algorithms <a id="time.duration.alg">[[time.duration.alg]]</a>
 
 ``` cpp
 template<class Rep, class Period>
@@ -1734,7 +1734,7 @@ template<class Rep, class Period>
 >
 > If `d >= d.zero()`, return `d`, otherwise return `-d`.
 
-### I/O <a id="time.duration.io">[time.duration.io]</a>
+### I/O <a id="time.duration.io">[[time.duration.io]]</a>
 
 ``` cpp
 template<class charT, class traits, class Rep, class Period>
@@ -1841,9 +1841,9 @@ template<class charT, class traits, class Rep, class Period, class Alloc = alloc
 >
 > `is`.
 
-## Class template `time_point` <a id="time.point">[time.point]</a>
+## Class template `time_point` <a id="time.point">[[time.point]]</a>
 
-### General <a id="time.point.general">[time.point.general]</a>
+### General <a id="time.point.general">[[time.point.general]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -1886,7 +1886,7 @@ namespace std::chrono {
 If `Duration` is not a specialization of `duration`, the program is
 ill-formed.
 
-### Constructors <a id="time.point.cons">[time.point.cons]</a>
+### Constructors <a id="time.point.cons">[[time.point.cons]]</a>
 
 ``` cpp
 constexpr time_point();
@@ -1917,7 +1917,7 @@ template<class Duration2>
 >
 > Initializes `d_` with `t.time_since_epoch()`.
 
-### Observer <a id="time.point.observer">[time.point.observer]</a>
+### Observer <a id="time.point.observer">[[time.point.observer]]</a>
 
 ``` cpp
 constexpr duration time_since_epoch() const;
@@ -1927,7 +1927,7 @@ constexpr duration time_since_epoch() const;
 >
 > `d_`.
 
-### Arithmetic <a id="time.point.arithmetic">[time.point.arithmetic]</a>
+### Arithmetic <a id="time.point.arithmetic">[[time.point.arithmetic]]</a>
 
 ``` cpp
 constexpr time_point& operator++();
@@ -1993,7 +1993,7 @@ constexpr time_point& operator-=(const duration& d);
 >
 > `*this`.
 
-### Special values <a id="time.point.special">[time.point.special]</a>
+### Special values <a id="time.point.special">[[time.point.special]]</a>
 
 ``` cpp
 static constexpr time_point min() noexcept;
@@ -2011,7 +2011,7 @@ static constexpr time_point max() noexcept;
 >
 > `time_point(duration::max())`.
 
-### Non-member arithmetic <a id="time.point.nonmember">[time.point.nonmember]</a>
+### Non-member arithmetic <a id="time.point.nonmember">[[time.point.nonmember]]</a>
 
 ``` cpp
 template<class Clock, class Duration1, class Rep2, class Period2>
@@ -2055,7 +2055,7 @@ template<class Clock, class Duration1, class Duration2>
 >
 > `lhs.time_since_epoch() - rhs.time_since_epoch()`.
 
-### Comparisons <a id="time.point.comparisons">[time.point.comparisons]</a>
+### Comparisons <a id="time.point.comparisons">[[time.point.comparisons]]</a>
 
 ``` cpp
 template<class Clock, class Duration1, class Duration2>
@@ -2118,7 +2118,7 @@ template<class Clock, class Duration1,
 >
 > `lhs.time_since_epoch() <=> rhs.time_since_epoch()`.
 
-### Conversions <a id="time.point.cast">[time.point.cast]</a>
+### Conversions <a id="time.point.cast">[[time.point.cast]]</a>
 
 ``` cpp
 template<class ToDuration, class Clock, class Duration>
@@ -2167,16 +2167,16 @@ template<class ToDuration, class Clock, class Duration>
 >
 > `time_point<Clock, ToDuration>(round<ToDuration>(tp.time_since_epoch()))`.
 
-## Clocks <a id="time.clock">[time.clock]</a>
+## Clocks <a id="time.clock">[[time.clock]]</a>
 
-### General <a id="time.clock.general">[time.clock.general]</a>
+### General <a id="time.clock.general">[[time.clock.general]]</a>
 
-The types defined in [time.clock] meet the *Cpp17TrivialClock*
-requirements [time.clock.req] unless otherwise specified.
+The types defined in [[time.clock]] meet the *Cpp17TrivialClock*
+requirements [[time.clock.req]] unless otherwise specified.
 
-### Class `system_clock` <a id="time.clock.system">[time.clock.system]</a>
+### Class `system_clock` <a id="time.clock.system">[[time.clock.system]]</a>
 
-#### Overview <a id="time.clock.system.overview">[time.clock.system.overview]</a>
+#### Overview <a id="time.clock.system.overview">[[time.clock.system.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2201,7 +2201,7 @@ Objects of type `system_clock` represent wall clock time from the
 system-wide realtime clock. Objects of type `sys_time<Duration>` measure
 time since 1970-01-01 00:00:00 UTC excluding leap seconds. This measure
 is commonly referred to as *Unix time*. This measure facilitates an
-efficient mapping between `sys_time` and calendar types [time.cal].
+efficient mapping between `sys_time` and calendar types [[time.cal]].
 
 \[*Example 1*:   
 `sys_seconds\{sys_days\{1970y/January/1\}\}.time_since_epoch()` is
@@ -2210,7 +2210,7 @@ efficient mapping between `sys_time` and calendar types [time.cal].
 `946'684'800s`, which is `10'957 * 86'400s`.  
  — *end example*\]
 
-#### Members <a id="time.clock.system.members">[time.clock.system.members]</a>
+#### Members <a id="time.clock.system.members">[[time.clock.system.members]]</a>
 
 ``` cpp
 using system_clock::rep = unspecified;
@@ -2243,7 +2243,7 @@ static time_point from_time_t(time_t t) noexcept;
 > `time_t` and `time_point`. It is *implementation-defined* whether
 > values are rounded or truncated to the required precision.
 
-#### Non-member functions <a id="time.clock.system.nonmembers">[time.clock.system.nonmembers]</a>
+#### Non-member functions <a id="time.clock.system.nonmembers">[[time.clock.system.nonmembers]]</a>
 
 ``` cpp
 template<class charT, class traits, class Duration>
@@ -2309,9 +2309,9 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > `is`.
 
-### Class `utc_clock` <a id="time.clock.utc">[time.clock.utc]</a>
+### Class `utc_clock` <a id="time.clock.utc">[[time.clock.utc]]</a>
 
-#### Overview <a id="time.clock.utc.overview">[time.clock.utc.overview]</a>
+#### Overview <a id="time.clock.utc.overview">[[time.clock.utc.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2358,7 +2358,7 @@ guarantee that `utc_clock::now()` does not propagate an exception.
 \[*Note 2*: `noexcept(from_sys(system_clock::now()))` is
 `false`. — *end note*\]
 
-#### Member functions <a id="time.clock.utc.members">[time.clock.utc.members]</a>
+#### Member functions <a id="time.clock.utc.members">[[time.clock.utc.members]]</a>
 
 ``` cpp
 static time_point now();
@@ -2414,7 +2414,7 @@ template<class Duration>
 >
 > — *end example*\]
 
-#### Non-member functions <a id="time.clock.utc.nonmembers">[time.clock.utc.nonmembers]</a>
+#### Non-member functions <a id="time.clock.utc.nonmembers">[[time.clock.utc.nonmembers]]</a>
 
 ``` cpp
 template<class charT, class traits, class Duration>
@@ -2499,9 +2499,9 @@ template<class Duration>
 > and `ut`. If `lsi.is_leap_second` is `true`, the leap second referred
 > to by `ut` is included in the sum.
 
-### Class `tai_clock` <a id="time.clock.tai">[time.clock.tai]</a>
+### Class `tai_clock` <a id="time.clock.tai">[[time.clock.tai]]</a>
 
-#### Overview <a id="time.clock.tai.overview">[time.clock.tai.overview]</a>
+#### Overview <a id="time.clock.tai.overview">[[time.clock.tai.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2540,7 +2540,7 @@ guarantee that `tai_clock::now()` does not propagate an exception.
 \[*Note 3*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
 
-#### Member functions <a id="time.clock.tai.members">[time.clock.tai.members]</a>
+#### Member functions <a id="time.clock.tai.members">[[time.clock.tai.members]]</a>
 
 ``` cpp
 static time_point now();
@@ -2586,7 +2586,7 @@ template<class Duration>
 >
 > — *end note*\]
 
-#### Non-member functions <a id="time.clock.tai.nonmembers">[time.clock.tai.nonmembers]</a>
+#### Non-member functions <a id="time.clock.tai.nonmembers">[[time.clock.tai.nonmembers]]</a>
 
 ``` cpp
 template<class charT, class traits, class Duration>
@@ -2643,9 +2643,9 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > `is`.
 
-### Class `gps_clock` <a id="time.clock.gps">[time.clock.gps]</a>
+### Class `gps_clock` <a id="time.clock.gps">[[time.clock.gps]]</a>
 
-#### Overview <a id="time.clock.gps.overview">[time.clock.gps.overview]</a>
+#### Overview <a id="time.clock.gps.overview">[[time.clock.gps.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2683,7 +2683,7 @@ guarantee that `gps_clock::now()` does not propagate an exception.
 \[*Note 4*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
 
-#### Member functions <a id="time.clock.gps.members">[time.clock.gps.members]</a>
+#### Member functions <a id="time.clock.gps.members">[[time.clock.gps.members]]</a>
 
 ``` cpp
 static time_point now();
@@ -2729,7 +2729,7 @@ template<class Duration>
 >
 > — *end note*\]
 
-#### Non-member functions <a id="time.clock.gps.nonmembers">[time.clock.gps.nonmembers]</a>
+#### Non-member functions <a id="time.clock.gps.nonmembers">[[time.clock.gps.nonmembers]]</a>
 
 ``` cpp
 template<class charT, class traits, class Duration>
@@ -2786,9 +2786,9 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > `is`.
 
-### Type `file_clock` <a id="time.clock.file">[time.clock.file]</a>
+### Type `file_clock` <a id="time.clock.file">[[time.clock.file]]</a>
 
-#### Overview <a id="time.clock.file.overview">[time.clock.file.overview]</a>
+#### Overview <a id="time.clock.file.overview">[[time.clock.file.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2797,15 +2797,15 @@ namespace std::chrono {
 ```
 
 `file_clock` is an alias for a type meeting the *Cpp17TrivialClock*
-requirements [time.clock.req], and using a signed arithmetic type for
+requirements [[time.clock.req]], and using a signed arithmetic type for
 `file_clock::rep`. `file_clock` is used to create the `time_point`
-system used for `file_time_type` [filesystems]. Its epoch is
+system used for `file_time_type` [[filesystems]]. Its epoch is
 unspecified, and `noexcept(file_clock::now())` is `true`.
 
 \[*Note 5*: The type that `file_clock` denotes can be in a different
 namespace than `std::chrono`, such as `std::filesystem`. — *end note*\]
 
-#### Member functions <a id="time.clock.file.members">[time.clock.file.members]</a>
+#### Member functions <a id="time.clock.file.members">[[time.clock.file.members]]</a>
 
 The type denoted by `file_clock` provides precisely one of the following
 two sets of static member functions:
@@ -2835,7 +2835,7 @@ with those specified by `utc_clock`, `tai_clock`, and `gps_clock`. The
 `Duration` of the resultant `time_point` is computed from the `Duration`
 of the input `time_point`.
 
-#### Non-member functions <a id="time.clock.file.nonmembers">[time.clock.file.nonmembers]</a>
+#### Non-member functions <a id="time.clock.file.nonmembers">[[time.clock.file.nonmembers]]</a>
 
 ``` cpp
 template<class charT, class traits, class Duration>
@@ -2876,7 +2876,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > `is`.
 
-### Class `steady_clock` <a id="time.clock.steady">[time.clock.steady]</a>
+### Class `steady_clock` <a id="time.clock.steady">[[time.clock.steady]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2898,7 +2898,7 @@ Objects of class `steady_clock` represent clocks for which values of
 values of `time_point` advance at a steady rate relative to real time.
 That is, the clock may not be adjusted.
 
-### Class `high_resolution_clock` <a id="time.clock.hires">[time.clock.hires]</a>
+### Class `high_resolution_clock` <a id="time.clock.hires">[[time.clock.hires]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2919,7 +2919,7 @@ Objects of class `high_resolution_clock` represent clocks with the
 shortest tick period. `high_resolution_clock` may be a synonym for
 `system_clock` or `steady_clock`.
 
-### Local time <a id="time.clock.local">[time.clock.local]</a>
+### Local time <a id="time.clock.local">[[time.clock.local]]</a>
 
 The family of time points denoted by `local_time<Duration>` are based on
 the pseudo clock `local_t`. `local_t` has no member `now()` and thus
@@ -2968,9 +2968,9 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > `is`.
 
-### `time_point` conversions <a id="time.clock.cast">[time.clock.cast]</a>
+### `time_point` conversions <a id="time.clock.cast">[[time.clock.cast]]</a>
 
-#### Class template `clock_time_conversion` <a id="time.clock.conv">[time.clock.conv]</a>
+#### Class template `clock_time_conversion` <a id="time.clock.conv">[[time.clock.conv]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -2995,10 +2995,10 @@ computed from the input `Duration` in a manner which can vary for each
 user-defined clock type.
 
 Several specializations are provided by the implementation, as described
-in [time.clock.cast.id], [time.clock.cast.sys.utc],
-[time.clock.cast.sys], and [time.clock.cast.utc].
+in [[time.clock.cast.id]], [[time.clock.cast.sys.utc]],
+[[time.clock.cast.sys]], and [[time.clock.cast.utc]].
 
-#### Identity conversions <a id="time.clock.cast.id">[time.clock.cast.id]</a>
+#### Identity conversions <a id="time.clock.cast.id">[[time.clock.cast.id]]</a>
 
 ``` cpp
 template<class Clock>
@@ -3057,7 +3057,7 @@ template<class Duration>
 >
 > `t`.
 
-#### Conversions between `system_clock` and `utc_clock` <a id="time.clock.cast.sys.utc">[time.clock.cast.sys.utc]</a>
+#### Conversions between `system_clock` and `utc_clock` <a id="time.clock.cast.sys.utc">[[time.clock.cast.sys.utc]]</a>
 
 ``` cpp
 template<>
@@ -3097,7 +3097,7 @@ template<class Duration>
 >
 > `utc_clock::to_sys(t)`.
 
-#### Conversions between `system_clock` and other clocks <a id="time.clock.cast.sys">[time.clock.cast.sys]</a>
+#### Conversions between `system_clock` and other clocks <a id="time.clock.cast.sys">[[time.clock.cast.sys]]</a>
 
 ``` cpp
 template<class SourceClock>
@@ -3151,7 +3151,7 @@ template<class Duration>
 >
 > `DestClock::from_sys(t)`.
 
-#### Conversions between `utc_clock` and other clocks <a id="time.clock.cast.utc">[time.clock.cast.utc]</a>
+#### Conversions between `utc_clock` and other clocks <a id="time.clock.cast.utc">[[time.clock.cast.utc]]</a>
 
 ``` cpp
 template<class SourceClock>
@@ -3205,7 +3205,7 @@ template<class Duration>
 >
 > `DestClock::from_utc(t)`.
 
-#### Function template `clock_cast` <a id="time.clock.cast.fn">[time.clock.cast.fn]</a>
+#### Function template `clock_cast` <a id="time.clock.cast.fn">[[time.clock.cast.fn]]</a>
 
 ``` cpp
 template<class DestClock, class SourceClock, class Duration>
@@ -3245,14 +3245,14 @@ template<class DestClock, class SourceClock, class Duration>
 > The best well-formed clock time conversion expression in the above
 > list.
 
-## The civil calendar <a id="time.cal">[time.cal]</a>
+## The civil calendar <a id="time.cal">[[time.cal]]</a>
 
-### In general <a id="time.cal.general">[time.cal.general]</a>
+### In general <a id="time.cal.general">[[time.cal.general]]</a>
 
-The types in [time.cal] describe the civil (Gregorian) calendar and its
-relationship to `sys_days` and `local_days`.
+The types in [[time.cal]] describe the civil (Gregorian) calendar and
+its relationship to `sys_days` and `local_days`.
 
-### Class `last_spec` <a id="time.cal.last">[time.cal.last]</a>
+### Class `last_spec` <a id="time.cal.last">[[time.cal.last]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -3267,9 +3267,9 @@ specify the last in a sequence. For example, depending on context, it
 can represent the last day of a month, or the last day of the week of a
 month.
 
-### Class `day` <a id="time.cal.day">[time.cal.day]</a>
+### Class `day` <a id="time.cal.day">[[time.cal.day]]</a>
 
-#### Overview <a id="time.cal.day.overview">[time.cal.day.overview]</a>
+#### Overview <a id="time.cal.day.overview">[[time.cal.day.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -3297,14 +3297,14 @@ namespace std::chrono {
 1 to 31, but may hold non-negative values outside this range. It can be
 constructed with any `unsigned` value, which will be subsequently
 truncated to fit into `day`’s unspecified internal storage. `day` meets
-the *Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) and
-*Cpp17LessThanComparable* ( [cpp17.lessthancomparable]) requirements,
+the *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
+*Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) requirements,
 and participates in basic arithmetic with `days` objects, which
 represent a difference between two `day` objects.
 
 `day` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.day.members">[time.cal.day.members]</a>
+#### Member functions <a id="time.cal.day.members">[[time.cal.day.members]]</a>
 
 ``` cpp
 constexpr explicit day(unsigned d) noexcept;
@@ -3403,7 +3403,7 @@ constexpr bool ok() const noexcept;
 >
 > `1 <= d_ && d_ <= 31`.
 
-#### Non-member functions <a id="time.cal.day.nonmembers">[time.cal.day.nonmembers]</a>
+#### Non-member functions <a id="time.cal.day.nonmembers">[[time.cal.day.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const day& x, const day& y) noexcept;
@@ -3500,9 +3500,9 @@ constexpr chrono::day operator""d(unsigned long long d) noexcept;
 >
 > `day{static_cast<unsigned>(d)}`.
 
-### Class `month` <a id="time.cal.month">[time.cal.month]</a>
+### Class `month` <a id="time.cal.month">[[time.cal.month]]</a>
 
-#### Overview <a id="time.cal.month.overview">[time.cal.month.overview]</a>
+#### Overview <a id="time.cal.month.overview">[[time.cal.month.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -3530,14 +3530,14 @@ namespace std::chrono {
 range 1 to 12, but may hold non-negative values outside this range. It
 can be constructed with any `unsigned` value, which will be subsequently
 truncated to fit into `month`’s unspecified internal storage. `month`
-meets the *Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) and
-*Cpp17LessThanComparable* ( [cpp17.lessthancomparable]) requirements,
+meets the *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
+*Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) requirements,
 and participates in basic arithmetic with `months` objects, which
 represent a difference between two `month` objects.
 
 `month` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.month.members">[time.cal.month.members]</a>
+#### Member functions <a id="time.cal.month.members">[[time.cal.month.members]]</a>
 
 ``` cpp
 constexpr explicit month(unsigned m) noexcept;
@@ -3636,7 +3636,7 @@ constexpr bool ok() const noexcept;
 >
 > `1 <= m_ && m_ <= 12`.
 
-#### Non-member functions <a id="time.cal.month.nonmembers">[time.cal.month.nonmembers]</a>
+#### Non-member functions <a id="time.cal.month.nonmembers">[[time.cal.month.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const month& x, const month& y) noexcept;
@@ -3743,9 +3743,9 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > `is`.
 
-### Class `year` <a id="time.cal.year">[time.cal.year]</a>
+### Class `year` <a id="time.cal.year">[[time.cal.year]]</a>
 
-#### Overview <a id="time.cal.year.overview">[time.cal.year.overview]</a>
+#### Overview <a id="time.cal.year.overview">[[time.cal.year.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -3781,14 +3781,14 @@ namespace std::chrono {
 in the range . It can be constructed with any `int` value, which will be
 subsequently truncated to fit into `year`’s unspecified internal
 storage. `year` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
-[cpp17.lessthancomparable]) requirements, and participates in basic
+[[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+[[cpp17.lessthancomparable]]) requirements, and participates in basic
 arithmetic with `years` objects, which represent a difference between
 two `year` objects.
 
 `year` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.year.members">[time.cal.year.members]</a>
+#### Member functions <a id="time.cal.year.members">[[time.cal.year.members]]</a>
 
 ``` cpp
 constexpr explicit year(int y) noexcept;
@@ -3927,7 +3927,7 @@ static constexpr year max() noexcept;
 >
 > `year{32767}`.
 
-#### Non-member functions <a id="time.cal.year.nonmembers">[time.cal.year.nonmembers]</a>
+#### Non-member functions <a id="time.cal.year.nonmembers">[[time.cal.year.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const year& x, const year& y) noexcept;
@@ -4024,9 +4024,9 @@ constexpr chrono::year operator""y(unsigned long long y) noexcept;
 >
 > `year{static_cast<int>(y)}`.
 
-### Class `weekday` <a id="time.cal.wd">[time.cal.wd]</a>
+### Class `weekday` <a id="time.cal.wd">[[time.cal.wd]]</a>
 
-#### Overview <a id="time.cal.wd.overview">[time.cal.wd.overview]</a>
+#### Overview <a id="time.cal.wd.overview">[[time.cal.wd.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4062,7 +4062,7 @@ through Saturday, but it may hold non-negative values outside this
 range. It can be constructed with any `unsigned` value, which will be
 subsequently truncated to fit into `weekday`’s unspecified internal
 storage. `weekday` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) requirements.
+[[cpp17.equalitycomparable]]) requirements.
 
 \[*Note 1*: `weekday` is not *Cpp17LessThanComparable* because there is
 no universal consensus on which day is the first day of the week.
@@ -4071,7 +4071,7 @@ circular range, with no beginning and no end. — *end note*\]
 
 `weekday` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.wd.members">[time.cal.wd.members]</a>
+#### Member functions <a id="time.cal.wd.members">[[time.cal.wd.members]]</a>
 
 ``` cpp
 constexpr explicit weekday(unsigned wd) noexcept;
@@ -4221,7 +4221,7 @@ constexpr weekday_last operator[](last_spec) const noexcept;
 >
 > `weekday_last{*this}`.
 
-#### Non-member functions <a id="time.cal.wd.nonmembers">[time.cal.wd.nonmembers]</a>
+#### Non-member functions <a id="time.cal.wd.nonmembers">[[time.cal.wd.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const weekday& x, const weekday& y) noexcept;
@@ -4320,9 +4320,9 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > `is`.
 
-### Class `weekday_indexed` <a id="time.cal.wdidx">[time.cal.wdidx]</a>
+### Class `weekday_indexed` <a id="time.cal.wdidx">[[time.cal.wdidx]]</a>
 
-#### Overview <a id="time.cal.wdidx.overview">[time.cal.wdidx.overview]</a>
+#### Overview <a id="time.cal.wdidx.overview">[[time.cal.wdidx.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4361,7 +4361,7 @@ static_assert(wdi.index() == 2);
 `weekday_indexed` is a trivially copyable and standard-layout class
 type.
 
-#### Member functions <a id="time.cal.wdidx.members">[time.cal.wdidx.members]</a>
+#### Member functions <a id="time.cal.wdidx.members">[[time.cal.wdidx.members]]</a>
 
 ``` cpp
 constexpr weekday_indexed(const chrono::weekday& wd, unsigned index) noexcept;
@@ -4397,7 +4397,7 @@ constexpr bool ok() const noexcept;
 >
 > `wd_.ok() && 1 <= index_ && index_ <= 5`.
 
-#### Non-member functions <a id="time.cal.wdidx.nonmembers">[time.cal.wdidx.nonmembers]</a>
+#### Non-member functions <a id="time.cal.wdidx.nonmembers">[[time.cal.wdidx.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const weekday_indexed& x, const weekday_indexed& y) noexcept;
@@ -4425,9 +4425,9 @@ template<class charT, class traits>
 >          wdi.weekday(), i));
 > ```
 
-### Class `weekday_last` <a id="time.cal.wdlast">[time.cal.wdlast]</a>
+### Class `weekday_last` <a id="time.cal.wdlast">[[time.cal.wdlast]]</a>
 
-#### Overview <a id="time.cal.wdlast.overview">[time.cal.wdlast.overview]</a>
+#### Overview <a id="time.cal.wdlast.overview">[[time.cal.wdlast.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4459,7 +4459,7 @@ static_assert(wdl.weekday() == Sunday);
 
 `weekday_last` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.wdlast.members">[time.cal.wdlast.members]</a>
+#### Member functions <a id="time.cal.wdlast.members">[[time.cal.wdlast.members]]</a>
 
 ``` cpp
 constexpr explicit weekday_last(const chrono::weekday& wd) noexcept;
@@ -4485,7 +4485,7 @@ constexpr bool ok() const noexcept;
 >
 > `wd_.ok()`.
 
-#### Non-member functions <a id="time.cal.wdlast.nonmembers">[time.cal.wdlast.nonmembers]</a>
+#### Non-member functions <a id="time.cal.wdlast.nonmembers">[[time.cal.wdlast.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const weekday_last& x, const weekday_last& y) noexcept;
@@ -4509,9 +4509,9 @@ template<class charT, class traits>
 > return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[last]"), wdl.weekday());
 > ```
 
-### Class `month_day` <a id="time.cal.md">[time.cal.md]</a>
+### Class `month_day` <a id="time.cal.md">[[time.cal.md]]</a>
 
-#### Overview <a id="time.cal.md.overview">[time.cal.md.overview]</a>
+#### Overview <a id="time.cal.md.overview">[[time.cal.md.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4532,12 +4532,12 @@ namespace std::chrono {
 
 `month_day` represents a specific day of a specific month, but with an
 unspecified year. `month_day` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
-[cpp17.lessthancomparable]) requirements.
+[[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+[[cpp17.lessthancomparable]]) requirements.
 
 `month_day` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.md.members">[time.cal.md.members]</a>
+#### Member functions <a id="time.cal.md.members">[[time.cal.md.members]]</a>
 
 ``` cpp
 constexpr month_day(const chrono::month& m, const chrono::day& d) noexcept;
@@ -4573,7 +4573,7 @@ constexpr bool ok() const noexcept;
 > equal to the number of days in month `m_`; otherwise returns `false`.
 > When `m_ == February`, the number of days is considered to be 29.
 
-#### Non-member functions <a id="time.cal.md.nonmembers">[time.cal.md.nonmembers]</a>
+#### Non-member functions <a id="time.cal.md.nonmembers">[[time.cal.md.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const month_day& x, const month_day& y) noexcept;
@@ -4634,7 +4634,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > `is`.
 
-### Class `month_day_last` <a id="time.cal.mdlast">[time.cal.mdlast]</a>
+### Class `month_day_last` <a id="time.cal.mdlast">[[time.cal.mdlast]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4721,9 +4721,9 @@ template<class charT, class traits>
 > return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/last"), mdl.month());
 > ```
 
-### Class `month_weekday` <a id="time.cal.mwd">[time.cal.mwd]</a>
+### Class `month_weekday` <a id="time.cal.mwd">[[time.cal.mwd]]</a>
 
-#### Overview <a id="time.cal.mwd.overview">[time.cal.mwd.overview]</a>
+#### Overview <a id="time.cal.mwd.overview">[[time.cal.mwd.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4757,7 +4757,7 @@ static_assert(mwd.weekday_indexed() == Tuesday[3]);
 
 `month_weekday` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.mwd.members">[time.cal.mwd.members]</a>
+#### Member functions <a id="time.cal.mwd.members">[[time.cal.mwd.members]]</a>
 
 ``` cpp
 constexpr month_weekday(const chrono::month& m, const chrono::weekday_indexed& wdi) noexcept;
@@ -4791,7 +4791,7 @@ constexpr bool ok() const noexcept;
 >
 > `m_.ok() && wdi_.ok()`.
 
-#### Non-member functions <a id="time.cal.mwd.nonmembers">[time.cal.mwd.nonmembers]</a>
+#### Non-member functions <a id="time.cal.mwd.nonmembers">[[time.cal.mwd.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const month_weekday& x, const month_weekday& y) noexcept;
@@ -4816,9 +4816,9 @@ template<class charT, class traits>
 >                     mwd.month(), mwd.weekday_indexed());
 > ```
 
-### Class `month_weekday_last` <a id="time.cal.mwdlast">[time.cal.mwdlast]</a>
+### Class `month_weekday_last` <a id="time.cal.mwdlast">[[time.cal.mwdlast]]</a>
 
-#### Overview <a id="time.cal.mwdlast.overview">[time.cal.mwdlast.overview]</a>
+#### Overview <a id="time.cal.mwdlast.overview">[[time.cal.mwdlast.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4854,7 +4854,7 @@ static_assert(mwd.weekday_last() == Tuesday[last]);
 `month_weekday_last` is a trivially copyable and standard-layout class
 type.
 
-#### Member functions <a id="time.cal.mwdlast.members">[time.cal.mwdlast.members]</a>
+#### Member functions <a id="time.cal.mwdlast.members">[[time.cal.mwdlast.members]]</a>
 
 ``` cpp
 constexpr month_weekday_last(const chrono::month& m,
@@ -4889,7 +4889,7 @@ constexpr bool ok() const noexcept;
 >
 > `m_.ok() && wdl_.ok()`.
 
-#### Non-member functions <a id="time.cal.mwdlast.nonmembers">[time.cal.mwdlast.nonmembers]</a>
+#### Non-member functions <a id="time.cal.mwdlast.nonmembers">[[time.cal.mwdlast.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const month_weekday_last& x, const month_weekday_last& y) noexcept;
@@ -4914,9 +4914,9 @@ template<class charT, class traits>
 >                     mwdl.month(), mwdl.weekday_last());
 > ```
 
-### Class `year_month` <a id="time.cal.ym">[time.cal.ym]</a>
+### Class `year_month` <a id="time.cal.ym">[[time.cal.ym]]</a>
 
-#### Overview <a id="time.cal.ym.overview">[time.cal.ym.overview]</a>
+#### Overview <a id="time.cal.ym.overview">[[time.cal.ym.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -4944,12 +4944,12 @@ namespace std::chrono {
 `year_month` represents a specific month of a specific year, but with an
 unspecified day. `year_month` is a field-based time point with a
 resolution of `months`. `year_month` meets the *Cpp17EqualityComparable*
-( [cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
-[cpp17.lessthancomparable]) requirements.
+( [[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+[[cpp17.lessthancomparable]]) requirements.
 
 `year_month` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.ym.members">[time.cal.ym.members]</a>
+#### Member functions <a id="time.cal.ym.members">[[time.cal.ym.members]]</a>
 
 ``` cpp
 constexpr year_month(const chrono::year& y, const chrono::month& m) noexcept;
@@ -5041,7 +5041,7 @@ constexpr bool ok() const noexcept;
 >
 > `y_.ok() && m_.ok()`.
 
-#### Non-member functions <a id="time.cal.ym.nonmembers">[time.cal.ym.nonmembers]</a>
+#### Non-member functions <a id="time.cal.ym.nonmembers">[[time.cal.ym.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const year_month& x, const year_month& y) noexcept;
@@ -5180,9 +5180,9 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > `is`.
 
-### Class `year_month_day` <a id="time.cal.ymd">[time.cal.ymd]</a>
+### Class `year_month_day` <a id="time.cal.ymd">[[time.cal.ymd]]</a>
 
-#### Overview <a id="time.cal.ymd.overview">[time.cal.ymd.overview]</a>
+#### Overview <a id="time.cal.ymd.overview">[[time.cal.ymd.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -5225,12 +5225,12 @@ a conversion to `sys_days`, which efficiently supports `days`-oriented
 arithmetic. — *end note*\]
 
 `year_month_day` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
-[cpp17.lessthancomparable]) requirements.
+[[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+[[cpp17.lessthancomparable]]) requirements.
 
 `year_month_day` is a trivially copyable and standard-layout class type.
 
-#### Member functions <a id="time.cal.ymd.members">[time.cal.ymd.members]</a>
+#### Member functions <a id="time.cal.ymd.members">[[time.cal.ymd.members]]</a>
 
 ``` cpp
 constexpr year_month_day(const chrono::year& y, const chrono::month& m,
@@ -5403,7 +5403,7 @@ constexpr bool ok() const noexcept;
 > range \[`1d`, `(y_/m_/last).day()`\], then returns `true`; otherwise
 > returns `false`.
 
-#### Non-member functions <a id="time.cal.ymd.nonmembers">[time.cal.ymd.nonmembers]</a>
+#### Non-member functions <a id="time.cal.ymd.nonmembers">[[time.cal.ymd.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const year_month_day& x, const year_month_day& y) noexcept;
@@ -5536,9 +5536,9 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > `is`.
 
-### Class `year_month_day_last` <a id="time.cal.ymdlast">[time.cal.ymdlast]</a>
+### Class `year_month_day_last` <a id="time.cal.ymdlast">[[time.cal.ymdlast]]</a>
 
-#### Overview <a id="time.cal.ymdlast.overview">[time.cal.ymdlast.overview]</a>
+#### Overview <a id="time.cal.ymdlast.overview">[[time.cal.ymdlast.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -5578,13 +5578,13 @@ the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
 
 `year_month_day_last` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) and *Cpp17LessThanComparable* (
-[cpp17.lessthancomparable]) requirements.
+[[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+[[cpp17.lessthancomparable]]) requirements.
 
 `year_month_day_last` is a trivially copyable and standard-layout class
 type.
 
-#### Member functions <a id="time.cal.ymdlast.members">[time.cal.ymdlast.members]</a>
+#### Member functions <a id="time.cal.ymdlast.members">[[time.cal.ymdlast.members]]</a>
 
 ``` cpp
 constexpr year_month_day_last(const chrono::year& y,
@@ -5713,7 +5713,7 @@ constexpr bool ok() const noexcept;
 >
 > `y_.ok() && mdl_.ok()`.
 
-#### Non-member functions <a id="time.cal.ymdlast.nonmembers">[time.cal.ymdlast.nonmembers]</a>
+#### Non-member functions <a id="time.cal.ymdlast.nonmembers">[[time.cal.ymdlast.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const year_month_day_last& x, const year_month_day_last& y) noexcept;
@@ -5821,9 +5821,9 @@ template<class charT, class traits>
 >                     ymdl.year(), ymdl.month_day_last());
 > ```
 
-### Class `year_month_weekday` <a id="time.cal.ymwd">[time.cal.ymwd]</a>
+### Class `year_month_weekday` <a id="time.cal.ymwd">[[time.cal.ymwd]]</a>
 
-#### Overview <a id="time.cal.ymwd.overview">[time.cal.ymwd.overview]</a>
+#### Overview <a id="time.cal.ymwd.overview">[[time.cal.ymwd.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -5867,12 +5867,12 @@ a conversion to `sys_days`, which efficiently supports `days`-oriented
 arithmetic. — *end note*\]
 
 `year_month_weekday` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) requirements.
+[[cpp17.equalitycomparable]]) requirements.
 
 `year_month_weekday` is a trivially copyable and standard-layout class
 type.
 
-#### Member functions <a id="time.cal.ymwd.members">[time.cal.ymwd.members]</a>
+#### Member functions <a id="time.cal.ymwd.members">[[time.cal.ymwd.members]]</a>
 
 ``` cpp
 constexpr year_month_weekday(const chrono::year& y, const chrono::month& m,
@@ -6034,7 +6034,7 @@ constexpr bool ok() const noexcept;
 > `false`. Otherwise, if `*this` represents a valid date, returns
 > `true`. Otherwise, returns `false`.
 
-#### Non-member functions <a id="time.cal.ymwd.nonmembers">[time.cal.ymwd.nonmembers]</a>
+#### Non-member functions <a id="time.cal.ymwd.nonmembers">[[time.cal.ymwd.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const year_month_weekday& x, const year_month_weekday& y) noexcept;
@@ -6124,9 +6124,9 @@ template<class charT, class traits>
 >                     ymwd.year(), ymwd.month(), ymwd.weekday_indexed());
 > ```
 
-### Class `year_month_weekday_last` <a id="time.cal.ymwdlast">[time.cal.ymwdlast]</a>
+### Class `year_month_weekday_last` <a id="time.cal.ymwdlast">[[time.cal.ymwdlast]]</a>
 
-#### Overview <a id="time.cal.ymwdlast.overview">[time.cal.ymwdlast.overview]</a>
+#### Overview <a id="time.cal.ymwdlast.overview">[[time.cal.ymwdlast.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -6167,12 +6167,12 @@ the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
 
 `year_month_weekday_last` meets the *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) requirements.
+[[cpp17.equalitycomparable]]) requirements.
 
 `year_month_weekday_last` is a trivially copyable and standard-layout
 class type.
 
-#### Member functions <a id="time.cal.ymwdlast.members">[time.cal.ymwdlast.members]</a>
+#### Member functions <a id="time.cal.ymwdlast.members">[[time.cal.ymwdlast.members]]</a>
 
 ``` cpp
 constexpr year_month_weekday_last(const chrono::year& y, const chrono::month& m,
@@ -6299,7 +6299,7 @@ constexpr bool ok() const noexcept;
 >
 > `y_.ok() && m_.ok() && wdl_.ok()`.
 
-#### Non-member functions <a id="time.cal.ymwdlast.nonmembers">[time.cal.ymwdlast.nonmembers]</a>
+#### Non-member functions <a id="time.cal.ymwdlast.nonmembers">[[time.cal.ymwdlast.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const year_month_weekday_last& x,
@@ -6396,7 +6396,7 @@ template<class charT, class traits>
 >                     ymwdl.year(), ymwdl.month(), ymwdl.weekday_last());
 > ```
 
-### Conventional syntax operators <a id="time.cal.operators">[time.cal.operators]</a>
+### Conventional syntax operators <a id="time.cal.operators">[[time.cal.operators]]</a>
 
 A set of overloaded `operator/` functions provides a conventional syntax
 for the creation of civil calendar dates.
@@ -6807,9 +6807,9 @@ constexpr year_month_weekday_last
 >
 > `year(y) / mwdl`.
 
-## Class template `hh_mm_ss` <a id="time.hms">[time.hms]</a>
+## Class template `hh_mm_ss` <a id="time.hms">[[time.hms]]</a>
 
-### Overview <a id="time.hms.overview">[time.hms.overview]</a>
+### Overview <a id="time.hms.overview">[[time.hms.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -6853,7 +6853,7 @@ is representing a negative duration.
 If `Duration` is not a specialization of `duration`, the program is
 ill-formed.
 
-### Members <a id="time.hms.members">[time.hms.members]</a>
+### Members <a id="time.hms.members">[[time.hms.members]]</a>
 
 ``` cpp
 static constexpr unsigned fractional_width = see below;
@@ -6997,7 +6997,7 @@ constexpr explicit operator precision() const noexcept;
 >
 > `to_duration()`.
 
-### Non-members <a id="time.hms.nonmembers">[time.hms.nonmembers]</a>
+### Non-members <a id="time.hms.nonmembers">[[time.hms.nonmembers]]</a>
 
 ``` cpp
 template<class charT, class traits, class Duration>
@@ -7030,7 +7030,7 @@ operator<<(basic_ostream<charT, traits>& os, const hh_mm_ss<Duration>& hms);
 >
 > — *end example*\]
 
-## 12/24 hours functions <a id="time.12">[time.12]</a>
+## 12/24 hours functions <a id="time.12">[[time.12]]</a>
 
 These functions aid in translating between a 12h format time of day and
 a 24h format time of day.
@@ -7072,18 +7072,18 @@ constexpr hours make24(const hours& h, bool is_pm) noexcept;
 > `23h`\], assuming `h` represents a post meridiem hour. If `h` is not
 > in the range \[`1h`, `12h`\], the value returned is unspecified.
 
-## Time zones <a id="time.zone">[time.zone]</a>
+## Time zones <a id="time.zone">[[time.zone]]</a>
 
-### In general <a id="time.zone.general">[time.zone.general]</a>
+### In general <a id="time.zone.general">[[time.zone.general]]</a>
 
-[time.zone] describes an interface for accessing the IANA Time Zone
+[[time.zone]] describes an interface for accessing the IANA Time Zone
 Database that interoperates with `sys_time` and `local_time`. This
 interface provides time zone support to both the civil calendar types
-[time.cal] and to user-defined calendars.
+[[time.cal]] and to user-defined calendars.
 
-### Time zone database <a id="time.zone.db">[time.zone.db]</a>
+### Time zone database <a id="time.zone.db">[[time.zone.db]]</a>
 
-#### Class `tzdb` <a id="time.zone.db.tzdb">[time.zone.db.tzdb]</a>
+#### Class `tzdb` <a id="time.zone.db.tzdb">[[time.zone.db.tzdb]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7134,7 +7134,7 @@ const time_zone* current_zone() const;
 > A pointer to the time zone which the computer has set as its local
 > time zone.
 
-#### Class `tzdb_list` <a id="time.zone.db.list">[time.zone.db.list]</a>
+#### Class `tzdb_list` <a id="time.zone.db.list">[[time.zone.db.list]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7249,7 +7249,7 @@ const_iterator cend() const noexcept;
 >
 > `end()`.
 
-#### Time zone database access <a id="time.zone.db.access">[time.zone.db.access]</a>
+#### Time zone database access <a id="time.zone.db.access">[[time.zone.db.access]]</a>
 
 ``` cpp
 tzdb_list& get_tzdb_list();
@@ -7299,7 +7299,7 @@ const time_zone* current_zone();
 >
 > `get_tzdb().current_zone()`.
 
-#### Remote time zone database support <a id="time.zone.db.remote">[time.zone.db.remote]</a>
+#### Remote time zone database support <a id="time.zone.db.remote">[[time.zone.db.remote]]</a>
 
 The local time zone database is that supplied by the implementation when
 the program first accesses the database, for example via
@@ -7348,9 +7348,9 @@ string remote_version();
 > discover if the local and remote databases are
 > equivalent. — *end note*\]
 
-### Exception classes <a id="time.zone.exception">[time.zone.exception]</a>
+### Exception classes <a id="time.zone.exception">[[time.zone.exception]]</a>
 
-#### Class `nonexistent_local_time` <a id="time.zone.exception.nonexist">[time.zone.exception.nonexist]</a>
+#### Class `nonexistent_local_time` <a id="time.zone.exception.nonexist">[[time.zone.exception.nonexist]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7418,7 +7418,7 @@ template<class Duration>
 >
 > — *end example*\]
 
-#### Class `ambiguous_local_time` <a id="time.zone.exception.ambig">[time.zone.exception.ambig]</a>
+#### Class `ambiguous_local_time` <a id="time.zone.exception.ambig">[[time.zone.exception.ambig]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7484,9 +7484,9 @@ template<class Duration>
 >
 > — *end example*\]
 
-### Information classes <a id="time.zone.info">[time.zone.info]</a>
+### Information classes <a id="time.zone.info">[[time.zone.info]]</a>
 
-#### Class `sys_info` <a id="time.zone.info.sys">[time.zone.info.sys]</a>
+#### Class `sys_info` <a id="time.zone.info.sys">[[time.zone.info.sys]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7552,7 +7552,7 @@ template<class charT, class traits>
 >
 > `os`.
 
-#### Class `local_info` <a id="time.zone.info.local">[time.zone.info.local]</a>
+#### Class `local_info` <a id="time.zone.info.local">[[time.zone.info.local]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7604,9 +7604,9 @@ template<class charT, class traits>
 >
 > `os`.
 
-### Class `time_zone` <a id="time.zone.timezone">[time.zone.timezone]</a>
+### Class `time_zone` <a id="time.zone.timezone">[[time.zone.timezone]]</a>
 
-#### Overview <a id="time.zone.overview">[time.zone.overview]</a>
+#### Overview <a id="time.zone.overview">[[time.zone.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7644,7 +7644,7 @@ as part of database initialization.
 \[*Note 4*: `const time_zone` objects can be accessed via functions such
 as `locate_zone`. — *end note*\]
 
-#### Member functions <a id="time.zone.members">[time.zone.members]</a>
+#### Member functions <a id="time.zone.members">[[time.zone.members]]</a>
 
 ``` cpp
 string_view name() const noexcept;
@@ -7720,7 +7720,7 @@ template<class Duration>
 >
 > The `local_time` associated with `tp` and this `time_zone`.
 
-#### Non-member functions <a id="time.zone.nonmembers">[time.zone.nonmembers]</a>
+#### Non-member functions <a id="time.zone.nonmembers">[[time.zone.nonmembers]]</a>
 
 ``` cpp
 bool operator==(const time_zone& x, const time_zone& y) noexcept;
@@ -7738,7 +7738,7 @@ strong_ordering operator<=>(const time_zone& x, const time_zone& y) noexcept;
 >
 > `x.name() <=> y.name()`.
 
-### Class template `zoned_traits` <a id="time.zone.zonedtraits">[time.zone.zonedtraits]</a>
+### Class template `zoned_traits` <a id="time.zone.zonedtraits">[[time.zone.zonedtraits]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7776,9 +7776,9 @@ static const time_zone* locate_zone(string_view name);
 >
 > `std::chrono::locate_zone(name)`.
 
-### Class template `zoned_time` <a id="time.zone.zonedtime">[time.zone.zonedtime]</a>
+### Class template `zoned_time` <a id="time.zone.zonedtime">[[time.zone.zonedtime]]</a>
 
-#### Overview <a id="time.zone.zonedtime.overview">[time.zone.zonedtime.overview]</a>
+#### Overview <a id="time.zone.zonedtime.overview">[[time.zone.zonedtime.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -7880,9 +7880,9 @@ is ill-formed.
 
 Every constructor of `zoned_time` that accepts a `string_view` as its
 first parameter does not participate in class template argument
-deduction [over.match.class.deduct].
+deduction [[over.match.class.deduct]].
 
-#### Constructors <a id="time.zone.zonedtime.ctor">[time.zone.zonedtime.ctor]</a>
+#### Constructors <a id="time.zone.zonedtime.ctor">[[time.zone.zonedtime.ctor]]</a>
 
 ``` cpp
 zoned_time();
@@ -8088,7 +8088,7 @@ template<class Duration2, class TimeZonePtr2>
 >
 > \[*Note 25*: The `choose` parameter has no effect. — *end note*\]
 
-#### Member functions <a id="time.zone.zonedtime.members">[time.zone.zonedtime.members]</a>
+#### Member functions <a id="time.zone.zonedtime.members">[[time.zone.zonedtime.members]]</a>
 
 ``` cpp
 zoned_time& operator=(const sys_time<Duration>& st);
@@ -8164,7 +8164,7 @@ sys_info get_info() const;
 >
 > `zone_->get_info(tp_)`.
 
-#### Non-member functions <a id="time.zone.zonedtime.nonmembers">[time.zone.zonedtime.nonmembers]</a>
+#### Non-member functions <a id="time.zone.zonedtime.nonmembers">[[time.zone.zonedtime.nonmembers]]</a>
 
 ``` cpp
 template<class Duration1, class Duration2, class TimeZonePtr>
@@ -8191,9 +8191,9 @@ template<class charT, class traits, class Duration, class TimeZonePtr>
 > return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T %Z}"), t);
 > ```
 
-### Class `leap_second` <a id="time.zone.leap">[time.zone.leap]</a>
+### Class `leap_second` <a id="time.zone.leap">[[time.zone.leap]]</a>
 
-#### Overview <a id="time.zone.leap.overview">[time.zone.leap.overview]</a>
+#### Overview <a id="time.zone.leap.overview">[[time.zone.leap.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -8226,7 +8226,7 @@ Produces the output:
 
 — *end example*\]
 
-#### Member functions <a id="time.zone.leap.members">[time.zone.leap.members]</a>
+#### Member functions <a id="time.zone.leap.members">[[time.zone.leap.members]]</a>
 
 ``` cpp
 constexpr sys_seconds date() const noexcept;
@@ -8248,7 +8248,7 @@ constexpr seconds value() const noexcept;
 > \[*Note 26*: All leap seconds inserted up through 2022 were positive
 > leap seconds. — *end note*\]
 
-#### Non-member functions <a id="time.zone.leap.nonmembers">[time.zone.leap.nonmembers]</a>
+#### Non-member functions <a id="time.zone.leap.nonmembers">[[time.zone.leap.nonmembers]]</a>
 
 ``` cpp
 constexpr bool operator==(const leap_second& x, const leap_second& y) noexcept;
@@ -8357,9 +8357,9 @@ template<class Duration>
 >
 > `x.date() <=> y`.
 
-### Class `time_zone_link` <a id="time.zone.link">[time.zone.link]</a>
+### Class `time_zone_link` <a id="time.zone.link">[[time.zone.link]]</a>
 
-#### Overview <a id="time.zone.link.overview">[time.zone.link.overview]</a>
+#### Overview <a id="time.zone.link.overview">[[time.zone.link.overview]]</a>
 
 ``` cpp
 namespace std::chrono {
@@ -8380,7 +8380,7 @@ A `time_zone_link` specifies an alternative name for a `time_zone`.
 `time_zone_link`s are constructed when the time zone database is
 initialized.
 
-#### Member functions <a id="time.zone.link.members">[time.zone.link.members]</a>
+#### Member functions <a id="time.zone.link.members">[[time.zone.link.members]]</a>
 
 ``` cpp
 string_view name() const noexcept;
@@ -8399,7 +8399,7 @@ string_view target() const noexcept;
 > The name of the `time_zone` for which this `time_zone_link` provides
 > an alternative name.
 
-#### Non-member functions <a id="time.zone.link.nonmembers">[time.zone.link.nonmembers]</a>
+#### Non-member functions <a id="time.zone.link.nonmembers">[[time.zone.link.nonmembers]]</a>
 
 ``` cpp
 bool operator==(const time_zone_link& x, const time_zone_link& y) noexcept;
@@ -8417,12 +8417,12 @@ strong_ordering operator<=>(const time_zone_link& x, const time_zone_link& y) no
 >
 > `x.name() <=> y.name()`.
 
-## Formatting <a id="time.format">[time.format]</a>
+## Formatting <a id="time.format">[[time.format]]</a>
 
-Each `formatter` [format.formatter] specialization in the chrono library
-[time.syn] meets the requirements [formatter.requirements]. The `parse`
-member functions of these formatters interpret the format specification
-as a according to the following syntax:
+Each `formatter` [[format.formatter]] specialization in the chrono
+library [[time.syn]] meets the requirements [[formatter.requirements]].
+The `parse` member functions of these formatters interpret the format
+specification as a according to the following syntax:
 
 ``` bnf
 \fmtnontermdef{chrono-format-spec}
@@ -8457,7 +8457,7 @@ as a according to the following syntax:
     'p q Q r R S t T u U V w W x X y Y z Z %'
 ```
 
-The productions , , and are described in [format.string]. Giving a
+The productions , , and are described in [[format.string]]. Giving a
 specification in the is valid only for types that are specializations of
 `std::chrono::duration` for which the nested *typedef-name* `rep`
 denotes a floating-point type. For all other types, an exception of type
@@ -8474,10 +8474,10 @@ function, defined as
 - the global locale.
 
 Each conversion specifier is replaced by appropriate characters as
-described in [time.format.spec]; the formats specified in ISO 8601:2004
-shall be used where so described. Some of the conversion specifiers
-depend on the formatting locale. If the string literal encoding is a
-Unicode encoding form and the locale is among an
+described in [[time.format.spec]]; the formats specified in ISO
+8601:2004 shall be used where so described. Some of the conversion
+specifiers depend on the formatting locale. If the string literal
+encoding is a Unicode encoding form and the locale is among an
 *implementation-defined* set of locales, each replacement that depends
 on the locale is performed as if the replacement character sequence is
 converted to the string literal encoding. If the formatted object does
@@ -8537,7 +8537,7 @@ day elapsed since midnight.
 | `\%M` | The minute as a decimal number. If the result is a single digit, it is prefixed with `0`. The modified command `\%OM` produces the locale's alternative representation. |
 | `\%n` | A new-line character. |
 | `\%p` | The locale's equivalent of the AM/PM designations associated with a 12-hour clock. |
-| `\%q` | The duration's unit suffix as specified in [time.duration.io]. |
+| `\%q` | The duration's unit suffix as specified in [[time.duration.io]]. |
 | `\%Q` | The duration's numeric value (as if extracted via `.count()`). |
 | `\%r` | The locale's 12-hour clock time. |
 | `\%R` | Equivalent to `\%H:\%M`. |
@@ -8723,11 +8723,11 @@ template<class FormatContext>
 >          format({tp.get_local_time(), &info.abbrev, &info.offset}, ctx);
 > ```
 
-## Parsing <a id="time.parse">[time.parse]</a>
+## Parsing <a id="time.parse">[[time.parse]]</a>
 
 Each `parse` overload specified in this subclause calls `from_stream`
 unqualified, so as to enable argument dependent lookup
-[basic.lookup.argdep]. In the following paragraphs, let `is` denote an
+[[basic.lookup.argdep]]. In the following paragraphs, let `is` denote an
 object of type `basic_istream<charT, traits>` and let `I` be
 `basic_istream<charT, traits>&`, where `charT` and `traits` are template
 parameters in that context.
@@ -8866,11 +8866,11 @@ subsequent calls to `basic_istream<>::gcount()`. Each overload takes a
 format string containing ordinary characters and flags which have
 special meaning. Each flag begins with a `%`. Some flags can be modified
 by `E` or `O`. During parsing each flag interprets characters as parts
-of date and time types according to  [time.parse.spec]. Some flags can
+of date and time types according to  [[time.parse.spec]]. Some flags can
 be modified by a width parameter given as a positive decimal integer
 called out as `N` below which governs how many characters are parsed
 from the stream in interpreting the flag. All characters in the format
-string that are not represented in  [time.parse.spec], except for
+string that are not represented in  [[time.parse.spec]], except for
 whitespace, are parsed unchanged from the stream. A whitespace character
 matches zero or more whitespace characters in the input stream.
 
@@ -8928,9 +8928,9 @@ complete duration, time point, or calendrical data structure,
 | `\%y` | The last two decimal digits of the year. If the century is not otherwise specified (e.g., with `\%C`), values in the range \crange{69}{99} are presumed to refer to the years 1969 to 1999, and values in the range \crange{00}{68} are presumed to refer to the years 2000 to 2068. The modified command `\%*N*y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified commands `\%Ey` and `\%Oy` interpret the locale's alternative representation. |
 | `\%Y` | The year as a decimal number. The modified command `\%*N*Y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 4. Leading zeroes are permitted but not required. The modified command `\%EY` interprets the locale's alternative representation. |
 | . The modified commands `\%Ez` and `\%Oz` parse a `:` between the hours and minutes and render leading zeroes on the hour field optional: `[+|-]h[h][:mm]`. For example `-04:30` refers to 4 hours 30 minutes behind UTC, and `4` refers to 4 hours ahead of UTC. |
-| `\%Z` | The time zone abbreviation or name. A single word is parsed. This word can only contain characters from the basic character set [lex.charset] that are alphanumeric, or one of `'_'`, `'/'`, `'-'`, or `'+'`. |
+| `\%Z` | The time zone abbreviation or name. A single word is parsed. This word can only contain characters from the basic character set [[lex.charset]] that are alphanumeric, or one of `'_'`, `'/'`, `'-'`, or `'+'`. |
 | `\%\%` | A `\%` character is extracted. |
-## Header `<ctime>` synopsis <a id="ctime.syn">[ctime.syn]</a>
+## Header `<ctime>` synopsis <a id="ctime.syn">[[ctime.syn]]</a>
 
 ``` cpp
 #define NULL \textit{see [support.types.nullptr]}
@@ -8962,51 +8962,51 @@ The contents of the header `<ctime>` are the same as the C standard
 library header `<time.h>`.
 
 The functions `asctime`, `ctime`, `gmtime`, and `localtime` are not
-required to avoid data races [res.on.data.races].
+required to avoid data races [[res.on.data.races]].
 
 <!-- Link reference definitions -->
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[ctime.syn]: #ctime.syn
-[dcl.constexpr]: dcl.md#dcl.constexpr
-[filesystems]: input.md#filesystems
-[format.formatter]: utilities.md#format.formatter
-[format.string]: utilities.md#format.string
-[formatter.requirements]: utilities.md#formatter.requirements
-[intro.multithread]: basic.md#intro.multithread
-[lex.charset]: lex.md#lex.charset
-[meta.rqmts]: meta.md#meta.rqmts
-[numeric.requirements]: numerics.md#numeric.requirements
-[over.match.class.deduct]: over.md#over.match.class.deduct
-[res.on.data.races]: library.md#res.on.data.races
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[term.unevaluated.operand]: #term.unevaluated.operand
-[time.cal]: #time.cal
-[time.clock]: #time.clock
-[time.clock.cast.id]: #time.clock.cast.id
-[time.clock.cast.sys]: #time.clock.cast.sys
-[time.clock.cast.sys.utc]: #time.clock.cast.sys.utc
-[time.clock.cast.utc]: #time.clock.cast.utc
-[time.clock.req]: #time.clock.req
-[time.format.spec]: #time.format.spec
-[time.parse.spec]: #time.parse.spec
-[time.summary]: #time.summary
-[time.syn]: #time.syn
-[time.zone]: #time.zone
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[cpp17.equalitycomparable]]: #cpp17.equalitycomparable
+[[cpp17.lessthancomparable]]: #cpp17.lessthancomparable
+[[ctime.syn]]: #ctime.syn
+[[dcl.constexpr]]: dcl.md#dcl.constexpr
+[[filesystems]]: input.md#filesystems
+[[format.formatter]]: utilities.md#format.formatter
+[[format.string]]: utilities.md#format.string
+[[formatter.requirements]]: utilities.md#formatter.requirements
+[[intro.multithread]]: basic.md#intro.multithread
+[[lex.charset]]: lex.md#lex.charset
+[[meta.rqmts]]: meta.md#meta.rqmts
+[[numeric.requirements]]: numerics.md#numeric.requirements
+[[over.match.class.deduct]]: over.md#over.match.class.deduct
+[[res.on.data.races]]: library.md#res.on.data.races
+[[swappable.requirements]]: library.md#swappable.requirements
+[[temp.deduct]]: temp.md#temp.deduct
+[[term.unevaluated.operand]]: #term.unevaluated.operand
+[[time.cal]]: #time.cal
+[[time.clock]]: #time.clock
+[[time.clock.cast.id]]: #time.clock.cast.id
+[[time.clock.cast.sys]]: #time.clock.cast.sys
+[[time.clock.cast.sys.utc]]: #time.clock.cast.sys.utc
+[[time.clock.cast.utc]]: #time.clock.cast.utc
+[[time.clock.req]]: #time.clock.req
+[[time.format.spec]]: #time.format.spec
+[[time.parse.spec]]: #time.parse.spec
+[[time.summary]]: #time.summary
+[[time.syn]]: #time.syn
+[[time.zone]]: #time.zone
 
 <!-- Link reference definitions -->
-[ctime.syn]: #ctime.syn
-[time.12]: #time.12
-[time.cal]: #time.cal
-[time.clock]: #time.clock
-[time.clock.req]: #time.clock.req
-[time.duration]: #time.duration
-[time.duration.io]: #time.duration.io
-[time.format]: #time.format
-[time.hms]: #time.hms
-[time.parse]: #time.parse
-[time.point]: #time.point
-[time.traits]: #time.traits
-[time.zone]: #time.zone
+[[ctime.syn]]: #ctime.syn
+[[time.12]]: #time.12
+[[time.cal]]: #time.cal
+[[time.clock]]: #time.clock
+[[time.clock.req]]: #time.clock.req
+[[time.duration]]: #time.duration
+[[time.duration.io]]: #time.duration.io
+[[time.format]]: #time.format
+[[time.hms]]: #time.hms
+[[time.parse]]: #time.parse
+[[time.point]]: #time.point
+[[time.traits]]: #time.traits
+[[time.zone]]: #time.zone

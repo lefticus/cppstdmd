@@ -3,51 +3,51 @@ current_file: re
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Regular expressions library <a id="re">[re]</a>
+# Regular expressions library <a id="re">[[re]]</a>
 
-## General <a id="re.general">[re.general]</a>
+## General <a id="re.general">[[re.general]]</a>
 
 This Clause describes components that C++ programs may use to perform
 operations involving regular expression matching and searching.
 
 The following subclauses describe a basic regular expression class
-template and its traits that can handle char-like [strings.general]
+template and its traits that can handle char-like [[strings.general]]
 template arguments, two specializations of this class template that
 handle sequences of `char` and `wchar_t`, a class template that holds
 the result of a regular expression match, a series of algorithms that
 allow a character sequence to be operated upon by a regular expression,
 and two iterator types for enumerating regular expression matches, as
-summarized in [re.summary].
+summarized in [[re.summary]].
 
 **Table: Regular expressions library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [re.req] | Requirements |
-| [re.const] | Constants | `<regex>` |
-| [re.badexp] | Exception type |
-| [re.traits] | Traits |
-| [re.regex] | Regular expression template |
-| [re.submatch] | Submatches |
-| [re.results] | Match results |
-| [re.alg] | Algorithms |
-| [re.iter] | Iterators |
-| [re.grammar] | Grammar |
+| [[re.req]] | Requirements |
+| [[re.const]] | Constants | `<regex>` |
+| [[re.badexp]] | Exception type |
+| [[re.traits]] | Traits |
+| [[re.regex]] | Regular expression template |
+| [[re.submatch]] | Submatches |
+| [[re.results]] | Match results |
+| [[re.alg]] | Algorithms |
+| [[re.iter]] | Iterators |
+| [[re.grammar]] | Grammar |
 
-## Requirements <a id="re.req">[re.req]</a>
+## Requirements <a id="re.req">[[re.req]]</a>
 
 This subclause defines requirements on classes representing regular
 expression traits.
 
-\[*Note 1*: The class template `regex_traits`, defined in [re.traits],
+\[*Note 1*: The class template `regex_traits`, defined in [[re.traits]],
 meets these requirements. — *end note*\]
 
-The class template `basic_regex`, defined in [re.regex], needs a set of
-related types and functions to complete the definition of its semantics.
-These types and functions are provided as a set of member *typedef-name*
-and functions in the template parameter `traits` used by the
-`basic_regex` class template. This subclause defines the semantics of
-these members.
+The class template `basic_regex`, defined in [[re.regex]], needs a set
+of related types and functions to complete the definition of its
+semantics. These types and functions are provided as a set of member
+*typedef-name* and functions in the template parameter `traits` used by
+the `basic_regex` class template. This subclause defines the semantics
+of these members.
 
 To specialize class template `basic_regex` for a character container
 `CharT` and its related regular expression traits class `Traits`, use
@@ -64,9 +64,9 @@ In the following requirements,
 
 - `p` is a value of type `const charT*`;
 
-- `I1` and `I2` are input iterators [input.iterators];
+- `I1` and `I2` are input iterators [[input.iterators]];
 
-- `F1` and `F2` are forward iterators [forward.iterators];
+- `F1` and `F2` are forward iterators [[forward.iterators]];
 
 - `c` is a value of type `const charT`;
 
@@ -286,9 +286,9 @@ v.getloc()
 \[*Note 2*: Class template `regex_traits` meets the requirements for a
 regular expression traits class when it is specialized for `char` or
 `wchar_t`. This class template is described in the header `<regex>`, and
-is described in [re.traits]. — *end note*\]
+is described in [[re.traits]]. — *end note*\]
 
-## Header `<regex>` synopsis <a id="re.syn">[re.syn]</a>
+## Header `<regex>` synopsis <a id="re.syn">[[re.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -529,16 +529,16 @@ namespace std {
 }
 ```
 
-## Namespace `std::regex_constants` <a id="re.const">[re.const]</a>
+## Namespace `std::regex_constants` <a id="re.const">[[re.const]]</a>
 
-### General <a id="re.const.general">[re.const.general]</a>
+### General <a id="re.const.general">[[re.const.general]]</a>
 
 The namespace `std::regex_constants` holds symbolic constants used by
 the regular expression library. This namespace provides three types,
 `syntax_option_type`, `match_flag_type`, and `error_type`, along with
 several constants of these types.
 
-### Bitmask type `syntax_option_type` <a id="re.synopt">[re.synopt]</a>
+### Bitmask type `syntax_option_type` <a id="re.synopt">[[re.synopt]]</a>
 
 ``` cpp
 namespace std::regex_constants {
@@ -558,13 +558,13 @@ namespace std::regex_constants {
 ```
 
 The type `syntax_option_type` is an *implementation-defined* bitmask
-type [bitmask.types]. Setting its elements has the effects listed in
-[re.synopt]. A valid value of type `syntax_option_type` shall have at
+type [[bitmask.types]]. Setting its elements has the effects listed in
+[[re.synopt]]. A valid value of type `syntax_option_type` shall have at
 most one of the grammar elements `ECMAScript`, `basic`, `extended`,
 `awk`, `grep`, `egrep`, set. If no grammar element is set, the default
 grammar is `ECMAScript`.
 
-### Bitmask type `match_flag_type` <a id="re.matchflag">[re.matchflag]</a>
+### Bitmask type `match_flag_type` <a id="re.matchflag">[[re.matchflag]]</a>
 
 ``` cpp
 namespace std::regex_constants {
@@ -586,15 +586,15 @@ namespace std::regex_constants {
 ```
 
 The type `match_flag_type` is an *implementation-defined* bitmask type
-[bitmask.types]. The constants of that type, except for `match_default`
-and `format_default`, are bitmask elements. The `match_default` and
-`format_default` constants are empty bitmasks. Matching a regular
-expression against a sequence of characters proceeds according to the
-rules of the grammar specified for the regular expression object,
-modified according to the effects listed in [re.matchflag] for any
-bitmask elements set.
+[[bitmask.types]]. The constants of that type, except for
+`match_default` and `format_default`, are bitmask elements. The
+`match_default` and `format_default` constants are empty bitmasks.
+Matching a regular expression against a sequence of characters proceeds
+according to the rules of the grammar specified for the regular
+expression object, modified according to the effects listed in
+[[re.matchflag]] for any bitmask elements set.
 
-### Implementation-defined `error_type` <a id="re.err">[re.err]</a>
+### Implementation-defined `error_type` <a id="re.err">[[re.err]]</a>
 
 ``` cpp
 namespace std::regex_constants {
@@ -616,10 +616,10 @@ namespace std::regex_constants {
 ```
 
 The type `error_type` is an *implementation-defined* enumerated type
-[enumerated.types]. Values of type `error_type` represent the error
-conditions described in [re.err]:
+[[enumerated.types]]. Values of type `error_type` represent the error
+conditions described in [[re.err]]:
 
-## Class `regex_error` <a id="re.badexp">[re.badexp]</a>
+## Class `regex_error` <a id="re.badexp">[[re.badexp]]</a>
 
 ``` cpp
 namespace std {
@@ -650,7 +650,7 @@ regex_constants::error_type code() const;
 >
 > The error code that was passed to the constructor.
 
-## Class template `regex_traits` <a id="re.traits">[re.traits]</a>
+## Class template `regex_traits` <a id="re.traits">[[re.traits]]</a>
 
 ``` cpp
 namespace std {
@@ -685,7 +685,7 @@ namespace std {
 ```
 
 The specializations `regex_traits<char>` and `regex_traits<wchar_t>`
-meet the requirements for a regular expression traits class [re.req].
+meet the requirements for a regular expression traits class [[re.req]].
 
 ``` cpp
 using char_class_type = \textit{bitmask_type};
@@ -920,13 +920,13 @@ locale_type getloc() const;
 | `"w"` | `L"w"` | `ctype_base::alnum` |
 | `"xdigit"` | `L"xdigit"` | `ctype_base::xdigit` |
 
-## Class template `basic_regex` <a id="re.regex">[re.regex]</a>
+## Class template `basic_regex` <a id="re.regex">[[re.regex]]</a>
 
-### General <a id="re.regex.general">[re.regex.general]</a>
+### General <a id="re.regex.general">[[re.regex.general]]</a>
 
 For a char-like type `charT`, specializations of class template
 `basic_regex` represent regular expressions constructed from character
-sequences of `charT` characters. In the rest of  [re.regex], `charT`
+sequences of `charT` characters. In the rest of  [[re.regex]], `charT`
 denotes a given char-like type. Storage for a regular expression is
 allocated and freed as necessary by the member functions of class
 `basic_regex`.
@@ -940,7 +940,7 @@ expressions.
 \[*Note 1*: Implementations will typically declare some function
 templates as friends of `basic_regex` to achieve this. — *end note*\]
 
-The functions described in [re.regex] report errors by throwing
+The functions described in [[re.regex]] report errors by throwing
 exceptions of type `regex_error`.
 
 ``` cpp
@@ -1024,7 +1024,7 @@ namespace std {
 }
 ```
 
-### Constructors <a id="re.regex.construct">[re.regex.construct]</a>
+### Constructors <a id="re.regex.construct">[[re.regex.construct]]</a>
 
 ``` cpp
 basic_regex();
@@ -1151,7 +1151,7 @@ basic_regex(initializer_list<charT> il, flag_type f = regex_constants::ECMAScrip
 >
 > Same as `basic_regex(il.begin(), il.end(), f)`.
 
-### Assignment <a id="re.regex.assign">[re.regex.assign]</a>
+### Assignment <a id="re.regex.assign">[[re.regex.assign]]</a>
 
 ``` cpp
 basic_regex& operator=(const basic_regex& e);
@@ -1273,7 +1273,7 @@ basic_regex& assign(initializer_list<charT> il,
 >
 > Equivalent to: `return assign(il.begin(), il.end(), f);`
 
-### Constant operations <a id="re.regex.operations">[re.regex.operations]</a>
+### Constant operations <a id="re.regex.operations">[[re.regex.operations]]</a>
 
 ``` cpp
 unsigned mark_count() const;
@@ -1293,7 +1293,7 @@ flag_type flags() const;
 > Returns a copy of the regular expression syntax flags that were passed
 > to the object’s constructor or to the last call to `assign`.
 
-### Locale <a id="re.regex.locale">[re.regex.locale]</a>
+### Locale <a id="re.regex.locale">[[re.regex.locale]]</a>
 
 ``` cpp
 locale_type imbue(locale_type loc);
@@ -1316,7 +1316,7 @@ locale_type getloc() const;
 > (default-initialized) instance of the template parameter `traits`
 > stored within the object.
 
-### Swap <a id="re.regex.swap">[re.regex.swap]</a>
+### Swap <a id="re.regex.swap">[[re.regex.swap]]</a>
 
 ``` cpp
 void swap(basic_regex& e);
@@ -1335,7 +1335,7 @@ void swap(basic_regex& e);
 >
 > Constant time.
 
-### Non-member functions <a id="re.regex.nonmemb">[re.regex.nonmemb]</a>
+### Non-member functions <a id="re.regex.nonmemb">[[re.regex.nonmemb]]</a>
 
 ``` cpp
 template<class charT, class traits>
@@ -1346,9 +1346,9 @@ template<class charT, class traits>
 >
 > Calls `lhs.swap(rhs)`.
 
-## Class template `sub_match` <a id="re.submatch">[re.submatch]</a>
+## Class template `sub_match` <a id="re.submatch">[[re.submatch]]</a>
 
-### General <a id="re.submatch.general">[re.submatch.general]</a>
+### General <a id="re.submatch.general">[[re.submatch.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1379,7 +1379,7 @@ namespace std {
 }
 ```
 
-### Members <a id="re.submatch.members">[re.submatch.members]</a>
+### Members <a id="re.submatch.members">[[re.submatch.members]]</a>
 
 ``` cpp
 constexpr sub_match();
@@ -1461,7 +1461,7 @@ void swap(sub_match& s) noexcept(see below);
 > The exception specification is equivalent to
 > `is_nothrow_swappable_v<BidirectionalIterator>`.
 
-### Non-member operators <a id="re.submatch.op">[re.submatch.op]</a>
+### Non-member operators <a id="re.submatch.op">[[re.submatch.op]]</a>
 
 Let `SM-CAT(I)` be
 
@@ -1571,13 +1571,13 @@ template<class charT, class ST, class BiIter>
 >
 > `os << m.str()`.
 
-## Class template `match_results` <a id="re.results">[re.results]</a>
+## Class template `match_results` <a id="re.results">[[re.results]]</a>
 
-### General <a id="re.results.general">[re.results.general]</a>
+### General <a id="re.results.general">[[re.results.general]]</a>
 
 The class template `match_results` meets the requirements of an
 allocator-aware container and of a sequence container
-[container.requirements.general], [sequence.reqmts] except that only
+[[container.requirements.general]], [[sequence.reqmts]] except that only
 copy assignment, move assignment, and operations defined for
 const-qualified sequence containers are supported and that the semantics
 of the comparison operator functions are different from those required
@@ -1682,12 +1682,12 @@ namespace std {
 }
 ```
 
-### Constructors <a id="re.results.const">[re.results.const]</a>
+### Constructors <a id="re.results.const">[[re.results.const]]</a>
 
-[re.results.const] lists the postconditions of `match_results` copy/move
-constructors and copy/move assignment operators. For move operations,
-the results of the expressions depending on the parameter `m` denote the
-values they had before the respective function calls.
+[[re.results.const]] lists the postconditions of `match_results`
+copy/move constructors and copy/move assignment operators. For move
+operations, the results of the expressions depending on the parameter
+`m` denote the values they had before the respective function calls.
 
 ``` cpp
 explicit match_results(const Allocator& a);
@@ -1751,7 +1751,7 @@ match_results& operator=(match_results&& m);
 >
 > As specified in \[re.results.const\].
 
-### State <a id="re.results.state">[re.results.state]</a>
+### State <a id="re.results.state">[[re.results.state]]</a>
 
 ``` cpp
 bool ready() const;
@@ -1762,7 +1762,7 @@ bool ready() const;
 > `true` if `*this` has a fully established result state, otherwise
 > `false`.
 
-### Size <a id="re.results.size">[re.results.size]</a>
+### Size <a id="re.results.size">[[re.results.size]]</a>
 
 ``` cpp
 size_type size() const;
@@ -1796,7 +1796,7 @@ size_type max_size() const;
 >
 > `size() == 0`.
 
-### Element access <a id="re.results.acc">[re.results.acc]</a>
+### Element access <a id="re.results.acc">[[re.results.acc]]</a>
 
 ``` cpp
 difference_type length(size_type sub = 0) const;
@@ -1900,7 +1900,7 @@ const_iterator cend() const;
 > A terminating iterator that enumerates over all the sub-expressions
 > stored in `*this`.
 
-### Formatting <a id="re.results.form">[re.results.form]</a>
+### Formatting <a id="re.results.form">[[re.results.form]]</a>
 
 ``` cpp
 template<class OutputIter>
@@ -1990,7 +1990,7 @@ string_type format(
 >
 > `result`.
 
-### Allocator <a id="re.results.all">[re.results.all]</a>
+### Allocator <a id="re.results.all">[[re.results.all]]</a>
 
 ``` cpp
 allocator_type get_allocator() const;
@@ -2002,7 +2002,7 @@ allocator_type get_allocator() const;
 > or, if that allocator has been replaced, a copy of the most recent
 > replacement.
 
-### Swap <a id="re.results.swap">[re.results.swap]</a>
+### Swap <a id="re.results.swap">[[re.results.swap]]</a>
 
 ``` cpp
 void swap(match_results& that);
@@ -2030,7 +2030,7 @@ template<class BidirectionalIterator, class Allocator>
 
 As if by `m1.swap(m2)`.
 
-### Non-member functions <a id="re.results.nonmember">[re.results.nonmember]</a>
+### Non-member functions <a id="re.results.nonmember">[[re.results.nonmember]]</a>
 
 ``` cpp
 template<class BidirectionalIterator, class Allocator>
@@ -2059,11 +2059,11 @@ bool operator==(const match_results<BidirectionalIterator, Allocator>& m1,
 > \[*Note 4*: The algorithm `equal` is defined in
 > \[algorithms\]. — *end note*\]
 
-## Regular expression algorithms <a id="re.alg">[re.alg]</a>
+## Regular expression algorithms <a id="re.alg">[[re.alg]]</a>
 
-### Exceptions <a id="re.except">[re.except]</a>
+### Exceptions <a id="re.except">[[re.except]]</a>
 
-### `regex_match` <a id="re.alg.match">[re.alg.match]</a>
+### `regex_match` <a id="re.alg.match">[[re.alg.match]]</a>
 
 ``` cpp
 template<class BidirectionalIterator, class Allocator, class charT, class traits>
@@ -2165,7 +2165,7 @@ template<class ST, class SA, class charT, class traits>
 >
 > `regex_match(s.begin(), s.end(), e, flags)`.
 
-### `regex_search` <a id="re.alg.search">[re.alg.search]</a>
+### `regex_search` <a id="re.alg.search">[[re.alg.search]]</a>
 
 ``` cpp
 template<class BidirectionalIterator, class Allocator, class charT, class traits>
@@ -2253,7 +2253,7 @@ template<class ST, class SA, class charT, class traits>
 >
 > `regex_search(s.begin(), s.end(), e, flags)`.
 
-### `regex_replace` <a id="re.alg.replace">[re.alg.replace]</a>
+### `regex_replace` <a id="re.alg.replace">[[re.alg.replace]]</a>
 
 ``` cpp
 template<class OutputIterator, class BidirectionalIterator,
@@ -2377,11 +2377,11 @@ template<class traits, class charT>
 >
 > `result`.
 
-## Regular expression iterators <a id="re.iter">[re.iter]</a>
+## Regular expression iterators <a id="re.iter">[[re.iter]]</a>
 
-### Class template `regex_iterator` <a id="re.regiter">[re.regiter]</a>
+### Class template `regex_iterator` <a id="re.regiter">[[re.regiter]]</a>
 
-#### General <a id="re.regiter.general">[re.regiter.general]</a>
+#### General <a id="re.regiter.general">[[re.regiter.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2432,7 +2432,7 @@ iterator holds a *zero-length match* if `match[0].matched == true` and
 expression that matched consists only of an assertion (such as `'^'`,
 `'$'`, `'$\backslash$b'`, `'$\backslash$B'`). — *end note*\]
 
-#### Constructors <a id="re.regiter.cnstr">[re.regiter.cnstr]</a>
+#### Constructors <a id="re.regiter.cnstr">[[re.regiter.cnstr]]</a>
 
 ``` cpp
 regex_iterator();
@@ -2456,7 +2456,7 @@ regex_iterator(BidirectionalIterator a, BidirectionalIterator b,
 > returns `false` the constructor sets `*this` to the end-of-sequence
 > iterator.
 
-#### Comparisons <a id="re.regiter.comp">[re.regiter.comp]</a>
+#### Comparisons <a id="re.regiter.comp">[[re.regiter.comp]]</a>
 
 ``` cpp
 bool operator==(const regex_iterator& right) const;
@@ -2479,7 +2479,7 @@ bool operator==(const regex_iterator& right) const;
 >
 > otherwise `false`.
 
-#### Indirection <a id="re.regiter.deref">[re.regiter.deref]</a>
+#### Indirection <a id="re.regiter.deref">[[re.regiter.deref]]</a>
 
 ``` cpp
 const value_type& operator*() const;
@@ -2497,7 +2497,7 @@ const value_type* operator->() const;
 >
 > `addressof(match)`.
 
-#### Increment <a id="re.regiter.incr">[re.regiter.incr]</a>
+#### Increment <a id="re.regiter.incr">[[re.regiter.incr]]</a>
 
 ``` cpp
 regex_iterator& operator++();
@@ -2562,9 +2562,9 @@ regex_iterator operator++(int);
 > return tmp;
 > ```
 
-### Class template `regex_token_iterator` <a id="re.tokiter">[re.tokiter]</a>
+### Class template `regex_token_iterator` <a id="re.tokiter">[[re.tokiter]]</a>
 
-#### General <a id="re.tokiter.general">[re.tokiter.general]</a>
+#### General <a id="re.tokiter.general">[[re.tokiter.general]]</a>
 
 The class template `regex_token_iterator` is an iterator adaptor; that
 is to say it represents a new view of an existing iterator sequence, by
@@ -2702,7 +2702,7 @@ same as the end of the target sequence. — *end note*\]
 The *current match* is `(*position).prefix()` if `subs[N] == -1`, or
 `(*position)[subs[N]]` for any other value of `subs[N]`.
 
-#### Constructors <a id="re.tokiter.cnstr">[re.tokiter.cnstr]</a>
+#### Constructors <a id="re.tokiter.cnstr">[[re.tokiter.cnstr]]</a>
 
 ``` cpp
 regex_token_iterator();
@@ -2755,7 +2755,7 @@ template<size_t N>
 > points to the range \[`a`, `b`), otherwise the constructor sets
 > `*this` to an end-of-sequence iterator.
 
-#### Comparisons <a id="re.tokiter.comp">[re.tokiter.comp]</a>
+#### Comparisons <a id="re.tokiter.comp">[[re.tokiter.comp]]</a>
 
 ``` cpp
 bool operator==(const regex_token_iterator& right) const;
@@ -2770,7 +2770,7 @@ bool operator==(const regex_token_iterator& right) const;
 > returns `true` if `position == right.position`, `N == right.N`, and
 > `subs == right.subs`. Otherwise returns `false`.
 
-#### Indirection <a id="re.tokiter.deref">[re.tokiter.deref]</a>
+#### Indirection <a id="re.tokiter.deref">[[re.tokiter.deref]]</a>
 
 ``` cpp
 const value_type& operator*() const;
@@ -2788,7 +2788,7 @@ const value_type* operator->() const;
 >
 > `result`.
 
-#### Increment <a id="re.tokiter.incr">[re.tokiter.incr]</a>
+#### Increment <a id="re.tokiter.incr">[[re.tokiter.incr]]</a>
 
 ``` cpp
 regex_token_iterator& operator++();
@@ -2832,7 +2832,7 @@ regex_token_iterator& operator++(int);
 >
 > `tmp`.
 
-## Modified ECMAScript regular expression grammar <a id="re.grammar">[re.grammar]</a>
+## Modified ECMAScript regular expression grammar <a id="re.grammar">[[re.grammar]]</a>
 
 The regular expression grammar recognized by `basic_regex` objects
 constructed with the ECMAScript flag is that specified by ECMA-262,
@@ -2897,7 +2897,7 @@ same features in regular expressions in POSIX.
 The regular expression grammar may be modified by any
 `regex_constants::syntax_option_type` flags specified when constructing
 an object of type specialization of `basic_regex` according to the rules
-in [re.synopt].
+in [[re.synopt]].
 
 A production, when used in , is not valid if
 `traits_inst.lookup_classname` returns zero for that name. The names
@@ -2952,10 +2952,10 @@ calling `traits_inst.value`.
 The behavior of the internal finite state machine representation when
 used to match a sequence of characters is as described in ECMA-262. The
 behavior is modified according to any `match_flag_type` flags
-[re.matchflag] specified when using the regular expression object in one
-of the regular expression algorithms [re.alg]. The behavior is also
-localized by interaction with the traits class template parameter as
-follows:
+[[re.matchflag]] specified when using the regular expression object in
+one of the regular expression algorithms [[re.alg]]. The behavior is
+also localized by interaction with the traits class template parameter
+as follows:
 
 - During matching of a regular expression finite state machine against a
   sequence of characters, two characters `c` and `d` are compared using
@@ -3011,33 +3011,33 @@ follows:
 ECMA-262 15.10
 
 <!-- Link reference definitions -->
-[bitmask.types]: library.md#bitmask.types
-[container.requirements.general]: containers.md#container.requirements.general
-[enumerated.types]: library.md#enumerated.types
-[forward.iterators]: iterators.md#forward.iterators
-[input.iterators]: iterators.md#input.iterators
-[re.alg]: #re.alg
-[re.err]: #re.err
-[re.grammar]: #re.grammar
-[re.iter]: #re.iter
-[re.matchflag]: #re.matchflag
-[re.regex]: #re.regex
-[re.req]: #re.req
-[re.results.const]: #re.results.const
-[re.summary]: #re.summary
-[re.synopt]: #re.synopt
-[re.traits]: #re.traits
-[sequence.reqmts]: containers.md#sequence.reqmts
-[strings.general]: strings.md#strings.general
+[[bitmask.types]]: library.md#bitmask.types
+[[container.requirements.general]]: containers.md#container.requirements.general
+[[enumerated.types]]: library.md#enumerated.types
+[[forward.iterators]]: iterators.md#forward.iterators
+[[input.iterators]]: iterators.md#input.iterators
+[[re.alg]]: #re.alg
+[[re.err]]: #re.err
+[[re.grammar]]: #re.grammar
+[[re.iter]]: #re.iter
+[[re.matchflag]]: #re.matchflag
+[[re.regex]]: #re.regex
+[[re.req]]: #re.req
+[[re.results.const]]: #re.results.const
+[[re.summary]]: #re.summary
+[[re.synopt]]: #re.synopt
+[[re.traits]]: #re.traits
+[[sequence.reqmts]]: containers.md#sequence.reqmts
+[[strings.general]]: strings.md#strings.general
 
 <!-- Link reference definitions -->
-[re.alg]: #re.alg
-[re.badexp]: #re.badexp
-[re.const]: #re.const
-[re.grammar]: #re.grammar
-[re.iter]: #re.iter
-[re.regex]: #re.regex
-[re.req]: #re.req
-[re.results]: #re.results
-[re.submatch]: #re.submatch
-[re.traits]: #re.traits
+[[re.alg]]: #re.alg
+[[re.badexp]]: #re.badexp
+[[re.const]]: #re.const
+[[re.grammar]]: #re.grammar
+[[re.iter]]: #re.iter
+[[re.regex]]: #re.regex
+[[re.req]]: #re.req
+[[re.results]]: #re.results
+[[re.submatch]]: #re.submatch
+[[re.traits]]: #re.traits

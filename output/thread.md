@@ -3,54 +3,54 @@ current_file: thread
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Concurrency support library <a id="thread">[thread]</a>
+# Concurrency support library <a id="thread">[[thread]]</a>
 
-## General <a id="thread.general">[thread.general]</a>
+## General <a id="thread.general">[[thread.general]]</a>
 
 The following subclauses describe components to create and manage
-threads [intro.multithread], perform mutual exclusion, and communicate
+threads [[intro.multithread]], perform mutual exclusion, and communicate
 conditions and values between threads, as summarized in
-[thread.summary].
+[[thread.summary]].
 
 **Table: Concurrency support library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [thread.req] | Requirements |
-| [thread.stoptoken] | Stop tokens | `<stop_token>` |
-| [thread.threads] | Threads | `<thread>` |
-| [atomics] | Atomic operations | `<atomic>`, `<stdatomic.h>` |
-| [thread.mutex] | Mutual exclusion | `<mutex>`, `<shared_mutex>` |
-| [thread.condition] | Condition variables | `<condition_variable>` |
-| [thread.sema] | Semaphores | `<semaphore>` |
-| [thread.coord] | Coordination types | `<latch>` `<barrier>` |
-| [futures] | Futures | `<future>` |
+| [[thread.req]] | Requirements |
+| [[thread.stoptoken]] | Stop tokens | `<stop_token>` |
+| [[thread.threads]] | Threads | `<thread>` |
+| [[atomics]] | Atomic operations | `<atomic>`, `<stdatomic.h>` |
+| [[thread.mutex]] | Mutual exclusion | `<mutex>`, `<shared_mutex>` |
+| [[thread.condition]] | Condition variables | `<condition_variable>` |
+| [[thread.sema]] | Semaphores | `<semaphore>` |
+| [[thread.coord]] | Coordination types | `<latch>` `<barrier>` |
+| [[futures]] | Futures | `<future>` |
 
-## Requirements <a id="thread.req">[thread.req]</a>
+## Requirements <a id="thread.req">[[thread.req]]</a>
 
-### Template parameter names <a id="thread.req.paramname">[thread.req.paramname]</a>
+### Template parameter names <a id="thread.req.paramname">[[thread.req.paramname]]</a>
 
 Throughout this Clause, the names of template parameters are used to
 express type requirements. `Predicate` is a function object type
-[function.objects]. Let `pred` denote an lvalue of type `Predicate`.
+[[function.objects]]. Let `pred` denote an lvalue of type `Predicate`.
 Then the expression `pred()` shall be well-formed and the type
 `decltype(pred())` shall model `boolean-testable`
-[concept.booleantestable]. The return value of `pred()`, converted to
+[[concept.booleantestable]]. The return value of `pred()`, converted to
 `bool`, yields `true` if the corresponding test condition is satisfied,
 and `false` otherwise. If a template parameter is named `Clock`, the
 corresponding template argument shall be a type `C` that meets the
-*Cpp17Clock* requirements [time.clock.req]; the program is ill-formed if
-`is_clock_v<C>` is `false`.
+*Cpp17Clock* requirements [[time.clock.req]]; the program is ill-formed
+if `is_clock_v<C>` is `false`.
 
-### Exceptions <a id="thread.req.exception">[thread.req.exception]</a>
+### Exceptions <a id="thread.req.exception">[[thread.req.exception]]</a>
 
 Some functions described in this Clause are specified to throw
-exceptions of type `system_error` [syserr.syserr]. Such exceptions are
+exceptions of type `system_error` [[syserr.syserr]]. Such exceptions are
 thrown if any of the function’s error conditions is detected or a call
 to an operating system or other underlying API results in an error that
 prevents the library function from meeting its specifications. Failure
 to allocate storage is reported as described in 
-[res.on.exception.handling].
+[[res.on.exception.handling]].
 
 \[*Example 1*: Consider a function in this Clause that is specified to
 throw exceptions of type `system_error` and specifies error conditions
@@ -60,14 +60,14 @@ execution of this function, an `errno` of `EPERM` is reported by a POSIX
 API call used by the implementation. Since POSIX specifies an `errno` of
 `EPERM` when “the caller does not have the privilege to perform the
 operation”, the implementation maps `EPERM` to an `error_condition` of
-`operation_not_permitted` [syserr] and an exception of type
+`operation_not_permitted` [[syserr]] and an exception of type
 `system_error` is thrown. — *end example*\]
 
 The `error_code` reported by such an exception’s `code()` member
 function compares equal to one of the conditions specified in the
 function’s error condition element.
 
-### Native handles <a id="thread.req.native">[thread.req.native]</a>
+### Native handles <a id="thread.req.native">[[thread.req.native]]</a>
 
 Several classes described in this Clause have members
 `native_handle_type` and `native_handle`. The presence of these members
@@ -78,11 +78,11 @@ implementation details. Their names are specified to facilitate portable
 compile-time detection. Actual use of these members is inherently
 non-portable. — *end note*\]
 
-### Timing specifications <a id="thread.req.timing">[thread.req.timing]</a>
+### Timing specifications <a id="thread.req.timing">[[thread.req.timing]]</a>
 
 Several functions described in this Clause take an argument to specify a
 timeout. These timeouts are specified as either a `duration` or a
-`time_point` type as specified in  [time].
+`time_point` type as specified in  [[time]].
 
 Implementations necessarily have some delay in returning from a timeout.
 Any overhead in interrupt response, function return, and scheduling
@@ -139,7 +139,7 @@ operating system and hardware. The finest resolution provided by an
 implementation is called the *native resolution*.
 
 Implementation-provided clocks that are used for these functions meet
-the *Cpp17TrivialClock* requirements [time.clock.req].
+the *Cpp17TrivialClock* requirements [[time.clock.req]].
 
 A function that takes an argument which specifies a timeout will throw
 if, during its execution, a clock, time point, or time duration throws
@@ -147,12 +147,12 @@ an exception. Such exceptions are referred to as
 *timeout-related exceptions*.
 
 \[*Note 3*: Instantiations of clock, time point and duration types
-supplied by the implementation as specified in  [time.clock] do not
+supplied by the implementation as specified in  [[time.clock]] do not
 throw exceptions. — *end note*\]
 
-### Requirements for *Cpp17Lockable* types <a id="thread.req.lockable">[thread.req.lockable]</a>
+### Requirements for *Cpp17Lockable* types <a id="thread.req.lockable">[[thread.req.lockable]]</a>
 
-#### In general <a id="thread.req.lockable.general">[thread.req.lockable.general]</a>
+#### In general <a id="thread.req.lockable.general">[[thread.req.lockable.general]]</a>
 
 An *execution agent* is an entity such as a thread that may perform work
 in parallel with other execution agents.
@@ -167,11 +167,11 @@ that contains the call, and so on.
 work for any execution agent model because they do not determine or
 store the agent’s ID (e.g., an ordinary spin lock). — *end note*\]
 
-The standard library templates `unique_lock` [thread.lock.unique],
-`shared_lock` [thread.lock.shared], `scoped_lock` [thread.lock.scoped],
-`lock_guard` [thread.lock.guard], `lock`, `try_lock`
-[thread.lock.algorithm], and `condition_variable_any`
-[thread.condition.condvarany] all operate on user-supplied lockable
+The standard library templates `unique_lock` [[thread.lock.unique]],
+`shared_lock` [[thread.lock.shared]], `scoped_lock`
+[[thread.lock.scoped]], `lock_guard` [[thread.lock.guard]], `lock`,
+`try_lock` [[thread.lock.algorithm]], and `condition_variable_any`
+[[thread.condition.condvarany]] all operate on user-supplied lockable
 objects. The *Cpp17BasicLockable* requirements, the *Cpp17Lockable*
 requirements, the *Cpp17TimedLockable* requirements, the
 *Cpp17SharedLockable* requirements, and the *Cpp17SharedTimedLock\\able*
@@ -195,7 +195,7 @@ A lock on an object `m` is said to be
 nature of any lock ownership is not part of these
 definitions. — *end note*\]
 
-#### *Cpp17BasicLockable* requirements <a id="thread.req.lockable.basic">[thread.req.lockable.basic]</a>
+#### *Cpp17BasicLockable* requirements <a id="thread.req.lockable.basic">[[thread.req.lockable.basic]]</a>
 
 A type `L` meets the *Cpp17BasicLockable* requirements if the following
 expressions are well-formed and have the specified semantics (`m`
@@ -227,7 +227,7 @@ m.unlock()
 >
 > Nothing.
 
-#### *Cpp17Lockable* requirements <a id="thread.req.lockable.req">[thread.req.lockable.req]</a>
+#### *Cpp17Lockable* requirements <a id="thread.req.lockable.req">[[thread.req.lockable.req]]</a>
 
 A type `L` meets the *Cpp17Lockable* requirements if it meets the
 *Cpp17BasicLockable* requirements and the following expressions are
@@ -250,14 +250,14 @@ m.try_lock()
 >
 > `true` if the lock was acquired, otherwise `false`.
 
-#### *Cpp17TimedLockable* requirements <a id="thread.req.lockable.timed">[thread.req.lockable.timed]</a>
+#### *Cpp17TimedLockable* requirements <a id="thread.req.lockable.timed">[[thread.req.lockable.timed]]</a>
 
 A type `L` meets the *Cpp17TimedLockable* requirements if it meets the
 *Cpp17Lockable* requirements and the following expressions are
 well-formed and have the specified semantics (`m` denotes a value of
 type `L`, `rel_time` denotes a value of an instantiation of `duration`
-[time.duration], and `abs_time` denotes a value of an instantiation of
-`time_point` [time.point]).
+[[time.duration]], and `abs_time` denotes a value of an instantiation of
+`time_point` [[time.point]]).
 
 ``` cpp
 m.try_lock_for(rel_time)
@@ -297,7 +297,7 @@ m.try_lock_until(abs_time)
 >
 > `true` if the lock was acquired, otherwise `false`.
 
-#### *Cpp17SharedLockable* requirements <a id="thread.req.lockable.shared">[thread.req.lockable.shared]</a>
+#### *Cpp17SharedLockable* requirements <a id="thread.req.lockable.shared">[[thread.req.lockable.shared]]</a>
 
 A type `L` meets the *Cpp17SharedLockable* requirements if the following
 expressions are well-formed, have the specified semantics, and the
@@ -344,7 +344,7 @@ m.unlock_shared()
 >
 > Nothing.
 
-#### *Cpp17SharedTimedLockable* requirements <a id="thread.req.lockable.shared.timed">[thread.req.lockable.shared.timed]</a>
+#### *Cpp17SharedTimedLockable* requirements <a id="thread.req.lockable.shared.timed">[[thread.req.lockable.shared.timed]]</a>
 
 A type `L` meets the *Cpp17SharedTimedLockable* requirements if it meets
 the *Cpp17SharedLockable* requirements, and the following expressions
@@ -387,11 +387,11 @@ m.try_lock_shared_until(abs_time)
 >
 > `true` if the lock was acquired, `false` otherwise.
 
-## Stop tokens <a id="thread.stoptoken">[thread.stoptoken]</a>
+## Stop tokens <a id="thread.stoptoken">[[thread.stoptoken]]</a>
 
-### Introduction <a id="thread.stoptoken.intro">[thread.stoptoken.intro]</a>
+### Introduction <a id="thread.stoptoken.intro">[[thread.stoptoken.intro]]</a>
 
-Subclause [thread.stoptoken] describes components that can be used to
+Subclause [[thread.stoptoken]] describes components that can be used to
 asynchronously request that an operation stops execution in a timely
 manner, typically because the result is no longer required. Such a
 request is called a *stop request*.
@@ -425,7 +425,7 @@ associated `stop_token` or `stop_source` object that returns `true`.
 Registration of a callback synchronizes with the invocation of that
 callback.
 
-### Header `<stop_token>` synopsis <a id="thread.stoptoken.syn">[thread.stoptoken.syn]</a>
+### Header `<stop_token>` synopsis <a id="thread.stoptoken.syn">[[thread.stoptoken.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -447,16 +447,16 @@ namespace std {
 }
 ```
 
-### Class `stop_token` <a id="stoptoken">[stoptoken]</a>
+### Class `stop_token` <a id="stoptoken">[[stoptoken]]</a>
 
-#### General <a id="stoptoken.general">[stoptoken.general]</a>
+#### General <a id="stoptoken.general">[[stoptoken.general]]</a>
 
 The class `stop_token` provides an interface for querying whether a stop
 request has been made (`stop_requested`) or can ever be made
-(`stop_possible`) using an associated `stop_source` object [stopsource].
-A `stop_token` can also be passed to a `stop_callback` [stopcallback]
-constructor to register a callback to be called when a stop request has
-been made from an associated `stop_source`.
+(`stop_possible`) using an associated `stop_source` object
+[[stopsource]]. A `stop_token` can also be passed to a `stop_callback`
+[[stopcallback]] constructor to register a callback to be called when a
+stop request has been made from an associated `stop_source`.
 
 ``` cpp
 namespace std {
@@ -482,7 +482,7 @@ namespace std {
 }
 ```
 
-#### Constructors, copy, and assignment <a id="stoptoken.cons">[stoptoken.cons]</a>
+#### Constructors, copy, and assignment <a id="stoptoken.cons">[[stoptoken.cons]]</a>
 
 ``` cpp
 stop_token() noexcept;
@@ -556,7 +556,7 @@ void swap(stop_token& rhs) noexcept;
 >
 > Exchanges the values of `*this` and `rhs`.
 
-#### Members <a id="stoptoken.mem">[stoptoken.mem]</a>
+#### Members <a id="stoptoken.mem">[[stoptoken.mem]]</a>
 
 ``` cpp
 [[nodiscard]] bool stop_requested() const noexcept;
@@ -582,7 +582,7 @@ void swap(stop_token& rhs) noexcept;
 >
 > otherwise, `true`.
 
-#### Non-member functions <a id="stoptoken.nonmembers">[stoptoken.nonmembers]</a>
+#### Non-member functions <a id="stoptoken.nonmembers">[[stoptoken.nonmembers]]</a>
 
 ``` cpp
 [[nodiscard]] bool operator==(const stop_token& lhs, const stop_token& rhs) noexcept;
@@ -602,13 +602,13 @@ friend void swap(stop_token& x, stop_token& y) noexcept;
 >
 > Equivalent to: `x.swap(y)`.
 
-### Class `stop_source` <a id="stopsource">[stopsource]</a>
+### Class `stop_source` <a id="stopsource">[[stopsource]]</a>
 
-#### General <a id="stopsource.general">[stopsource.general]</a>
+#### General <a id="stopsource.general">[[stopsource.general]]</a>
 
 The class `stop_source` implements the semantics of making a stop
 request. A stop request made on a `stop_source` object is visible to all
-associated `stop_source` and `stop_token` [stoptoken] objects. Once a
+associated `stop_source` and `stop_token` [[stoptoken]] objects. Once a
 stop request has been made it cannot be withdrawn (a subsequent stop
 request has no effect).
 
@@ -646,7 +646,7 @@ namespace std {
 }
 ```
 
-#### Constructors, copy, and assignment <a id="stopsource.cons">[stopsource.cons]</a>
+#### Constructors, copy, and assignment <a id="stopsource.cons">[[stopsource.cons]]</a>
 
 ``` cpp
 stop_source();
@@ -734,7 +734,7 @@ void swap(stop_source& rhs) noexcept;
 >
 > Exchanges the values of `*this` and `rhs`.
 
-#### Members <a id="stopsource.mem">[stopsource.mem]</a>
+#### Members <a id="stopsource.mem">[[stopsource.mem]]</a>
 
 ``` cpp
 [[nodiscard]] stop_token get_token() const noexcept;
@@ -789,7 +789,7 @@ bool request_stop() noexcept;
 >
 > `true` if this call made a stop request; otherwise `false`.
 
-#### Non-member functions <a id="stopsource.nonmembers">[stopsource.nonmembers]</a>
+#### Non-member functions <a id="stopsource.nonmembers">[[stopsource.nonmembers]]</a>
 
 ``` cpp
 [[nodiscard]] friend bool
@@ -810,9 +810,9 @@ friend void swap(stop_source& x, stop_source& y) noexcept;
 >
 > Equivalent to: `x.swap(y)`.
 
-### Class template `stop_callback` <a id="stopcallback">[stopcallback]</a>
+### Class template `stop_callback` <a id="stopcallback">[[stopcallback]]</a>
 
-#### General <a id="stopcallback.general">[stopcallback.general]</a>
+#### General <a id="stopcallback.general">[[stopcallback.general]]</a>
 
 ``` cpp
 namespace std {
@@ -850,7 +850,7 @@ parameter `Callback` that satisfies both `invocable` and `destructible`.
 `stop_callback` is instantiated with an argument for the template
 parameter `Callback` that models both `invocable` and `destructible`.
 
-#### Constructors and destructor <a id="stopcallback.cons">[stopcallback.cons]</a>
+#### Constructors and destructor <a id="stopcallback.cons">[[stopcallback.cons]]</a>
 
 ``` cpp
 template<class C>
@@ -903,17 +903,17 @@ explicit stop_callback(stop_token&& st, C&& cb)
 > the return from the invocation of `callback`. Releases ownership of
 > the stop state, if any.
 
-## Threads <a id="thread.threads">[thread.threads]</a>
+## Threads <a id="thread.threads">[[thread.threads]]</a>
 
-### General <a id="thread.threads.general">[thread.threads.general]</a>
+### General <a id="thread.threads.general">[[thread.threads.general]]</a>
 
-[thread.threads] describes components that can be used to create and
+[[thread.threads]] describes components that can be used to create and
 manage threads.
 
 \[*Note 1*: These threads are intended to map one-to-one with operating
 system threads. — *end note*\]
 
-### Header `<thread>` synopsis <a id="thread.syn">[thread.syn]</a>
+### Header `<thread>` synopsis <a id="thread.syn">[[thread.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -940,9 +940,9 @@ namespace std {
 }
 ```
 
-### Class `thread` <a id="thread.thread.class">[thread.thread.class]</a>
+### Class `thread` <a id="thread.thread.class">[[thread.thread.class]]</a>
 
-#### General <a id="thread.thread.class.general">[thread.thread.class.general]</a>
+#### General <a id="thread.thread.class.general">[[thread.thread.class.general]]</a>
 
 The class `thread` provides a mechanism to create a new thread of
 execution, to join with a thread (i.e., wait for a thread to complete),
@@ -990,7 +990,7 @@ namespace std {
 }
 ```
 
-#### Class `thread::id` <a id="thread.thread.id">[thread.thread.id]</a>
+#### Class `thread::id` <a id="thread.thread.id">[[thread.thread.id]]</a>
 
 ``` cpp
 namespace std {
@@ -1016,11 +1016,11 @@ namespace std {
 
 An object of type `thread::id` provides a unique identifier for each
 thread of execution and a single distinct value for all `thread` objects
-that do not represent a thread of execution [thread.thread.class]. Each
-thread of execution has an associated `thread::id` object that is not
-equal to the `thread::id` object of any other thread of execution and
-that is not equal to the `thread::id` object of any `thread` object that
-does not represent threads of execution.
+that do not represent a thread of execution [[thread.thread.class]].
+Each thread of execution has an associated `thread::id` object that is
+not equal to the `thread::id` object of any other thread of execution
+and that is not equal to the `thread::id` object of any `thread` object
+that does not represent threads of execution.
 
 The *text representation* for the character type `charT` of an object of
 type `thread::id` is an unspecified sequence of `charT` such that, for
@@ -1028,8 +1028,8 @@ two objects of type `thread::id` `x` and `y`, if `x == y` is `true`, the
 `thread::id` objects have the same text representation, and if `x != y`
 is `true`, the `thread::id` objects have distinct text representations.
 
-`thread::id` is a trivially copyable class [class.prop]. The library may
-reuse the value of a `thread::id` of a terminated thread that can no
+`thread::id` is a trivially copyable class [[class.prop]]. The library
+may reuse the value of a `thread::id` of a terminated thread that can no
 longer be joined.
 
 \[*Note 3*: Relational operators allow `thread::id` objects to be used
@@ -1105,7 +1105,7 @@ template<> struct hash<thread::id>;
 
 > The specialization is enabled\[unord.hash\].
 
-#### Constructors <a id="thread.thread.constr">[thread.thread.constr]</a>
+#### Constructors <a id="thread.thread.constr">[[thread.thread.constr]]</a>
 
 ``` cpp
 thread() noexcept;
@@ -1181,7 +1181,7 @@ thread(thread&& x) noexcept;
 > `x.get_id() == id()` and `get_id()` returns the value of `x.get_id()`
 > prior to the start of construction.
 
-#### Destructor <a id="thread.thread.destr">[thread.thread.destr]</a>
+#### Destructor <a id="thread.thread.destr">[[thread.thread.destr]]</a>
 
 ``` cpp
 ~thread();
@@ -1199,7 +1199,7 @@ thread(thread&& x) noexcept;
 > destructor is never executed while the thread is still
 > joinable. — *end note*\]
 
-#### Assignment <a id="thread.thread.assign">[thread.thread.assign]</a>
+#### Assignment <a id="thread.thread.assign">[[thread.thread.assign]]</a>
 
 ``` cpp
 thread& operator=(thread&& x) noexcept;
@@ -1220,7 +1220,7 @@ thread& operator=(thread&& x) noexcept;
 >
 > `*this`.
 
-#### Members <a id="thread.thread.member">[thread.thread.member]</a>
+#### Members <a id="thread.thread.member">[[thread.thread.member]]</a>
 
 ``` cpp
 void swap(thread& x) noexcept;
@@ -1306,7 +1306,7 @@ id get_id() const noexcept;
 > thread, otherwise `this_thread::get_id()` for the thread of execution
 > represented by `*this`.
 
-#### Static members <a id="thread.thread.static">[thread.thread.static]</a>
+#### Static members <a id="thread.thread.static">[[thread.thread.static]]</a>
 
 ``` cpp
 unsigned hardware_concurrency() noexcept;
@@ -1322,7 +1322,7 @@ unsigned hardware_concurrency() noexcept;
 > If this value is not computable or well-defined, an implementation
 > should return 0.
 
-#### Specialized algorithms <a id="thread.thread.algorithm">[thread.thread.algorithm]</a>
+#### Specialized algorithms <a id="thread.thread.algorithm">[[thread.thread.algorithm]]</a>
 
 ``` cpp
 void swap(thread& x, thread& y) noexcept;
@@ -1332,14 +1332,14 @@ void swap(thread& x, thread& y) noexcept;
 >
 > As if by `x.swap(y)`.
 
-### Class `jthread` <a id="thread.jthread.class">[thread.jthread.class]</a>
+### Class `jthread` <a id="thread.jthread.class">[[thread.jthread.class]]</a>
 
-#### General <a id="thread.jthread.class.general">[thread.jthread.class.general]</a>
+#### General <a id="thread.jthread.class.general">[[thread.jthread.class.general]]</a>
 
 The class `jthread` provides a mechanism to create a new thread of
 execution. The functionality is the same as for class `thread`
-[thread.thread.class] with the additional abilities to provide a
-`stop_token` [thread.stoptoken] to the new thread of execution, make
+[[thread.thread.class]] with the additional abilities to provide a
+`stop_token` [[thread.stoptoken]] to the new thread of execution, make
 stop requests, and automatically join.
 
 ``` cpp
@@ -1384,7 +1384,7 @@ namespace std {
 }
 ```
 
-#### Constructors, move, and assignment <a id="thread.jthread.cons">[thread.jthread.cons]</a>
+#### Constructors, move, and assignment <a id="thread.jthread.cons">[[thread.jthread.cons]]</a>
 
 ``` cpp
 jthread() noexcept;
@@ -1505,7 +1505,7 @@ jthread& operator=(jthread&& x) noexcept;
 >
 > `*this`.
 
-#### Members <a id="thread.jthread.mem">[thread.jthread.mem]</a>
+#### Members <a id="thread.jthread.mem">[[thread.jthread.mem]]</a>
 
 ``` cpp
 void swap(jthread& x) noexcept;
@@ -1591,7 +1591,7 @@ id get_id() const noexcept;
 > thread, otherwise `this_thread::get_id()` for the thread of execution
 > represented by `*this`.
 
-#### Stop token handling <a id="thread.jthread.stop">[thread.jthread.stop]</a>
+#### Stop token handling <a id="thread.jthread.stop">[[thread.jthread.stop]]</a>
 
 ``` cpp
 [[nodiscard]] stop_source get_stop_source() noexcept;
@@ -1617,7 +1617,7 @@ bool request_stop() noexcept;
 >
 > Equivalent to: `return ssource.request_stop();`
 
-#### Specialized algorithms <a id="thread.jthread.special">[thread.jthread.special]</a>
+#### Specialized algorithms <a id="thread.jthread.special">[[thread.jthread.special]]</a>
 
 ``` cpp
 friend void swap(jthread& x, jthread& y) noexcept;
@@ -1627,7 +1627,7 @@ friend void swap(jthread& x, jthread& y) noexcept;
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Static members <a id="thread.jthread.static">[thread.jthread.static]</a>
+#### Static members <a id="thread.jthread.static">[[thread.jthread.static]]</a>
 
 ``` cpp
 [[nodiscard]] static unsigned int hardware_concurrency() noexcept;
@@ -1637,7 +1637,7 @@ friend void swap(jthread& x, jthread& y) noexcept;
 >
 > `thread::hardware_concurrency()`.
 
-### Namespace `this_thread` <a id="thread.thread.this">[thread.thread.this]</a>
+### Namespace `this_thread` <a id="thread.thread.this">[[thread.thread.this]]</a>
 
 ``` cpp
 namespace std::this_thread {
@@ -1704,14 +1704,14 @@ template<class Rep, class Period>
 >
 > Timeout-related exceptions\[thread.req.timing\].
 
-## Atomic operations <a id="atomics">[atomics]</a>
+## Atomic operations <a id="atomics">[[atomics]]</a>
 
-### General <a id="atomics.general">[atomics.general]</a>
+### General <a id="atomics.general">[[atomics.general]]</a>
 
-Subclause [atomics] describes components for fine-grained atomic access.
-This access is provided via operations on atomic objects.
+Subclause [[atomics]] describes components for fine-grained atomic
+access. This access is provided via operations on atomic objects.
 
-### Header `<atomic>` synopsis <a id="atomics.syn">[atomics.syn]</a>
+### Header `<atomic>` synopsis <a id="atomics.syn">[[atomics.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -1999,7 +1999,7 @@ namespace std {
 }
 ```
 
-### Type aliases <a id="atomics.alias">[atomics.alias]</a>
+### Type aliases <a id="atomics.alias">[[atomics.alias]]</a>
 
 The type aliases `atomic_signed_lock_free` and
 `atomic_unsigned_lock_free` name specializations of `atomic` whose
@@ -2007,13 +2007,13 @@ template arguments are integral types, respectively signed and unsigned,
 and whose `is_always_lock_free` property is `true`.
 
 \[*Note 1*:  These aliases are optional in freestanding implementations
-[compliance]. — *end note*\]
+[[compliance]]. — *end note*\]
 
 Implementations should choose for these aliases the integral
 specializations of `atomic` for which the atomic waiting and notifying
-operations [atomics.wait] are most efficient.
+operations [[atomics.wait]] are most efficient.
 
-### Order and consistency <a id="atomics.order">[atomics.order]</a>
+### Order and consistency <a id="atomics.order">[[atomics.order]]</a>
 
 ``` cpp
 namespace std {
@@ -2025,7 +2025,7 @@ namespace std {
 
 The enumeration `memory_order` specifies the detailed regular
 (non-atomic) memory synchronization order as defined in
-[intro.multithread] and may provide for operation ordering. Its
+[[intro.multithread]] and may provide for operation ordering. Its
 enumerated values and their meanings are as follows:
 
 - `memory_order::relaxed`: no operation orders memory.
@@ -2100,7 +2100,7 @@ non-`memory_order::seq_cst` modification of M that does not happen
 before any modification of M that precedes A in S. — *end note*\]
 
 \[*Note 4*: We do not require that S be consistent with “happens before”
-[intro.races]. This allows more efficient implementation of
+[[intro.races]]. This allows more efficient implementation of
 `memory_order::acquire` and `memory_order::release` on some machine
 architectures. It can produce surprising results when these are mixed
 with `memory_order::seq_cst` accesses. — *end note*\]
@@ -2179,7 +2179,7 @@ template<class T>
 >
 > `y`.
 
-### Lock-free property <a id="atomics.lockfree">[atomics.lockfree]</a>
+### Lock-free property <a id="atomics.lockfree">[[atomics.lockfree]]</a>
 
 `ATOMIC_..._LOCK_FREE} macros`
 
@@ -2205,18 +2205,18 @@ indicates that the types are never lock-free. A value of 1 indicates
 that the types are sometimes lock-free. A value of 2 indicates that the
 types are always lock-free.
 
-On a hosted implementation [compliance], at least one signed integral
+On a hosted implementation [[compliance]], at least one signed integral
 specialization of the `atomic` template, along with the specialization
-for the corresponding unsigned type [basic.fundamental], is always
+for the corresponding unsigned type [[basic.fundamental]], is always
 lock-free.
 
 The functions `atomic<T>::is_lock_free` and `atomic_is_lock_free`
-[atomics.types.operations] indicate whether the object is lock-free. In
-any given program execution, the result of the lock-free query is the
+[[atomics.types.operations]] indicate whether the object is lock-free.
+In any given program execution, the result of the lock-free query is the
 same for all atomic objects of the same type.
 
 Atomic operations that are not lock-free are considered to potentially
-block [intro.progress].
+block [[intro.progress]].
 
 Operations that are lock-free should also be address-free.
 
@@ -2227,7 +2227,7 @@ per-process state.
 mapped into a process more than once and by memory that is shared
 between two processes. — *end note*\]
 
-### Waiting and notifying <a id="atomics.wait">[atomics.wait]</a>
+### Waiting and notifying <a id="atomics.wait">[[atomics.wait]]</a>
 
 *Atomic waiting operations*
 
@@ -2284,9 +2284,9 @@ A call to an atomic waiting operation on an atomic object `M` is
 
 - `Y` happens before the call to the atomic notifying operation.
 
-### Class template `atomic_ref` <a id="atomics.ref.generic">[atomics.ref.generic]</a>
+### Class template `atomic_ref` <a id="atomics.ref.generic">[[atomics.ref.generic]]</a>
 
-#### General <a id="atomics.ref.generic.general">[atomics.ref.generic.general]</a>
+#### General <a id="atomics.ref.generic.general">[[atomics.ref.generic.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2327,17 +2327,17 @@ namespace std {
 }
 ```
 
-An `atomic_ref` object applies atomic operations [atomics.general] to
-the object referenced by `*ptr` such that, for the lifetime [basic.life]
-of the `atomic_ref` object, the object referenced by `*ptr` is an atomic
-object [intro.races].
+An `atomic_ref` object applies atomic operations [[atomics.general]] to
+the object referenced by `*ptr` such that, for the lifetime
+[[basic.life]] of the `atomic_ref` object, the object referenced by
+`*ptr` is an atomic object [[intro.races]].
 
 The program is ill-formed if `is_trivially_copyable_v<T>` is `false`.
 
-The lifetime [basic.life] of an object referenced by `*ptr` shall exceed
-the lifetime of all `atomic_ref`s that reference the object. While any
-`atomic_ref` instances exist that reference the `*ptr` object, all
-accesses to that object shall exclusively occur through those
+The lifetime [[basic.life]] of an object referenced by `*ptr` shall
+exceed the lifetime of all `atomic_ref`s that reference the object.
+While any `atomic_ref` instances exist that reference the `*ptr` object,
+all accesses to that object shall exclusively occur through those
 `atomic_ref` instances. No subobject of the object referenced by
 `atomic_ref` shall be concurrently referenced by any other `atomic_ref`
 object.
@@ -2351,7 +2351,7 @@ acquire a shared resource, such as a lock associated with the referenced
 object, to enable atomic operations to be applied to the referenced
 object. — *end note*\]
 
-#### Operations <a id="atomics.ref.ops">[atomics.ref.ops]</a>
+#### Operations <a id="atomics.ref.ops">[[atomics.ref.ops]]</a>
 
 *integral-type* *floating-point-type*
 
@@ -2613,7 +2613,7 @@ void notify_all() const noexcept;
 > This function is an atomic notifying operation\[atomics.wait\] on
 > atomic object `*ptr`.
 
-#### Specializations for integral types <a id="atomics.ref.int">[atomics.ref.int]</a>
+#### Specializations for integral types <a id="atomics.ref.int">[[atomics.ref.int]]</a>
 
 *integral-type* There are specializations of the `atomic_ref` class
 template for the integral types `char`, `signed char`, `unsigned char`,
@@ -2625,7 +2625,7 @@ the specialization `atomic_ref<integral-type>` provides additional
 atomic operations appropriate to integral types.
 
 \[*Note 13*: The specialization `atomic_ref<bool>` uses the primary
-template [atomics.ref.generic]. — *end note*\]
+template [[atomics.ref.generic]]. — *end note*\]
 
 ``` cpp
 namespace std {
@@ -2694,7 +2694,7 @@ primary template.
 
 The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
-[atomic.types.int.comp].
+[[atomic.types.int.comp]].
 
 *integral-type* *integral-type* *integral-type* *integral-type*
 *integral-type*
@@ -2738,7 +2738,7 @@ integral-type operator op=(integral-type operand) const noexcept;
 >
 > Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
-#### Specializations for floating-point types <a id="atomics.ref.float">[atomics.ref.float]</a>
+#### Specializations for floating-point types <a id="atomics.ref.float">[[atomics.ref.float]]</a>
 
 *floating-point-type* There are specializations of the `atomic_ref`
 class template for all cv-unqualified floating-point types. For each
@@ -2800,7 +2800,7 @@ primary template.
 
 The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
-[atomic.types.int.comp].
+[[atomic.types.int.comp]].
 
 *floating-point-type* *floating-point-type*
 
@@ -2844,7 +2844,7 @@ floating-point-type operator op=(floating-point-type operand) const noexcept;
 >
 > Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
-#### Partial specialization for pointers <a id="atomics.ref.pointer">[atomics.ref.pointer]</a>
+#### Partial specialization for pointers <a id="atomics.ref.pointer">[[atomics.ref.pointer]]</a>
 
 ``` cpp
 namespace std {
@@ -2901,7 +2901,7 @@ primary template.
 
 The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
-[atomic.types.pointer.comp].
+[[atomic.types.pointer.comp]].
 
 ``` cpp
 T* fetch_key(difference_type operand, memory_order order = memory_order::seq_cst) const noexcept;
@@ -2937,7 +2937,7 @@ T* operator op=(difference_type operand) const noexcept;
 >
 > Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
-#### Member operators common to integers and pointers to objects <a id="atomics.ref.memop">[atomics.ref.memop]</a>
+#### Member operators common to integers and pointers to objects <a id="atomics.ref.memop">[[atomics.ref.memop]]</a>
 
 *integral-type*
 
@@ -2979,9 +2979,9 @@ value_type operator--() const noexcept;
 >
 > Equivalent to: `return fetch_sub(1) - 1;`
 
-### Class template `atomic` <a id="atomics.types.generic">[atomics.types.generic]</a>
+### Class template `atomic` <a id="atomics.types.generic">[[atomics.types.generic]]</a>
 
-#### General <a id="atomics.types.generic.general">[atomics.types.generic.general]</a>
+#### General <a id="atomics.types.generic.general">[[atomics.types.generic.general]]</a>
 
 ``` cpp
 namespace std {
@@ -3054,7 +3054,7 @@ The specialization `atomic<bool>` is a standard-layout struct.
 have the same size and alignment requirement as its corresponding
 argument type. — *end note*\]
 
-#### Operations on atomic types <a id="atomics.types.operations">[atomics.types.operations]</a>
+#### Operations on atomic types <a id="atomics.types.operations">[[atomics.types.operations]]</a>
 
 *integral-type* *floating-point-type*
 
@@ -3440,7 +3440,7 @@ void notify_all() noexcept;
 >
 > This function is an atomic notifying operation\[atomics.wait\].
 
-#### Specializations for integers <a id="atomics.types.int">[atomics.types.int]</a>
+#### Specializations for integers <a id="atomics.types.int">[[atomics.types.int]]</a>
 
 *integral-type* There are specializations of the `atomic` class template
 for the integral types `char`, `signed char`, `unsigned char`, `short`,
@@ -3452,7 +3452,7 @@ for the integral types `char`, `signed char`, `unsigned char`, `short`,
 appropriate to integral types.
 
 \[*Note 16*: The specialization `atomic<bool>` uses the primary template
-[atomics.types.generic]. — *end note*\]
+[[atomics.types.generic]]. — *end note*\]
 
 ``` cpp
 namespace std {
@@ -3558,7 +3558,7 @@ primary template.
 
 The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
-[atomic.types.int.comp].
+[[atomic.types.int.comp]].
 
 *integral-type* *integral-type* *integral-type* *integral-type*
 *integral-type*
@@ -3608,7 +3608,7 @@ T operator op=(T operand) noexcept;
 >
 > Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
-#### Specializations for floating-point types <a id="atomics.types.float">[atomics.types.float]</a>
+#### Specializations for floating-point types <a id="atomics.types.float">[[atomics.types.float]]</a>
 
 *floating-point-type* There are specializations of the `atomic` class
 template for all cv-unqualified floating-point types. For each such type
@@ -3694,7 +3694,7 @@ primary template.
 
 The following operations perform arithmetic addition and subtraction
 computations. The correspondence among key, operator, and computation is
-specified in [atomic.types.int.comp].
+specified in [[atomic.types.int.comp]].
 
 *floating-point-type* *floating-point-type*
 
@@ -3756,7 +3756,7 @@ T operator op=(T operand) noexcept;
 > *`floating-point-type`* may be different than the calling thread’s
 > floating-point environment.
 
-#### Partial specialization for pointers <a id="atomics.types.pointer">[atomics.types.pointer]</a>
+#### Partial specialization for pointers <a id="atomics.types.pointer">[[atomics.types.pointer]]</a>
 
 ``` cpp
 namespace std {
@@ -3835,7 +3835,7 @@ primary template.
 
 The following operations perform pointer arithmetic. The correspondence
 among key, operator, and computation is specified in
-[atomic.types.pointer.comp].
+[[atomic.types.pointer.comp]].
 
 ``` cpp
 T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) volatile noexcept;
@@ -3881,7 +3881,7 @@ T* operator op=(ptrdiff_t operand) noexcept;
 >
 > Equivalent to: `return fetch_`*`key`*`(operand) `*`op`*` operand;`
 
-#### Member operators common to integers and pointers to objects <a id="atomics.types.memop">[atomics.types.memop]</a>
+#### Member operators common to integers and pointers to objects <a id="atomics.types.memop">[[atomics.types.memop]]</a>
 
 *integral-type*
 
@@ -3939,22 +3939,22 @@ value_type operator--() noexcept;
 >
 > Equivalent to: `return fetch_sub(1) - 1;`
 
-#### Partial specializations for smart pointers <a id="util.smartptr.atomic">[util.smartptr.atomic]</a>
+#### Partial specializations for smart pointers <a id="util.smartptr.atomic">[[util.smartptr.atomic]]</a>
 
-##### General <a id="util.smartptr.atomic.general">[util.smartptr.atomic.general]</a>
+##### General <a id="util.smartptr.atomic.general">[[util.smartptr.atomic.general]]</a>
 
 The library provides partial specializations of the `atomic` template
-for shared-ownership smart pointers [util.sharedptr].
+for shared-ownership smart pointers [[util.sharedptr]].
 
 \[*Note 17*: The partial specializations are declared in header
 `<memory>`. — *end note*\]
 
 The behavior of all operations is as specified in
-[atomics.types.generic], unless specified otherwise. The template
+[[atomics.types.generic]], unless specified otherwise. The template
 parameter `T` of these partial specializations may be an incomplete
 type.
 
-All changes to an atomic smart pointer in [util.smartptr.atomic], and
+All changes to an atomic smart pointer in [[util.smartptr.atomic]], and
 all associated `use_count` increments, are guaranteed to be performed
 atomically. Associated `use_count` decrements are sequenced after the
 atomic operation, but are not required to be part of it. Any associated
@@ -3996,7 +3996,7 @@ public:
 
 — *end example*\]
 
-##### Partial specialization for `shared_ptr` <a id="util.smartptr.atomic.shared">[util.smartptr.atomic.shared]</a>
+##### Partial specialization for `shared_ptr` <a id="util.smartptr.atomic.shared">[[util.smartptr.atomic.shared]]</a>
 
 ``` cpp
 namespace std {
@@ -4252,7 +4252,7 @@ void notify_all() noexcept;
 >
 > This function is an atomic notifying operation\[atomics.wait\].
 
-##### Partial specialization for `weak_ptr` <a id="util.smartptr.atomic.weak">[util.smartptr.atomic.weak]</a>
+##### Partial specialization for `weak_ptr` <a id="util.smartptr.atomic.weak">[[util.smartptr.atomic.weak]]</a>
 
 ``` cpp
 namespace std {
@@ -4507,7 +4507,7 @@ void notify_all() noexcept;
 >
 > This function is an atomic notifying operation\[atomics.wait\].
 
-### Non-member functions <a id="atomics.nonmembers">[atomics.nonmembers]</a>
+### Non-member functions <a id="atomics.nonmembers">[[atomics.nonmembers]]</a>
 
 A non-member function template whose name matches the pattern `atomic_f`
 or the pattern `atomic_f_explicit` invokes the member function `f`, with
@@ -4522,7 +4522,7 @@ ill-formed.
 that can be compiled as either C or C++, for example in a shared header
 file. — *end note*\]
 
-### Flag type and operations <a id="atomics.flag">[atomics.flag]</a>
+### Flag type and operations <a id="atomics.flag">[[atomics.flag]]</a>
 
 ``` cpp
 namespace std {
@@ -4718,7 +4718,7 @@ void atomic_flag::notify_all() noexcept;
 > initialization contexts. For a complete static-duration object, that
 > initialization shall be static.
 
-### Fences <a id="atomics.fences">[atomics.fences]</a>
+### Fences <a id="atomics.fences">[[atomics.fences]]</a>
 
 This subclause introduces synchronization primitives called *fences*.
 Fences can have acquire semantics, release semantics, or both. A fence
@@ -4784,7 +4784,7 @@ extern "C" void atomic_signal_fence(memory_order order) noexcept;
 > hardware fence instructions that `atomic_thread_fence` would have
 > inserted are not emitted. — *end note*\]
 
-### C compatibility <a id="stdatomic.h.syn">[stdatomic.h.syn]</a>
+### C compatibility <a id="stdatomic.h.syn">[[stdatomic.h.syn]]</a>
 
 The header `<stdatomic.h>` provides the following definitions:
 
@@ -4902,7 +4902,7 @@ declarations in namespace `std`.
 Each of the *using-declaration*s for `int$N$_t`, `uint$N$_t`,
 `intptr_t`, and `uintptr_t` listed above is defined if and only if the
 implementation defines the corresponding *typedef-name* in
-[atomics.syn].
+[[atomics.syn]].
 
 Neither the `_Atomic` macro, nor any of the non-macro global namespace
 declarations, are provided by any C++ standard library header other than
@@ -4914,15 +4914,15 @@ an `_Atomic(T)` from C code and an `atomic<T>` from C++ code. The
 representations should be the same, and the mechanisms used to ensure
 atomicity and memory ordering should be compatible.
 
-## Mutual exclusion <a id="thread.mutex">[thread.mutex]</a>
+## Mutual exclusion <a id="thread.mutex">[[thread.mutex]]</a>
 
-### General <a id="thread.mutex.general">[thread.mutex.general]</a>
+### General <a id="thread.mutex.general">[[thread.mutex.general]]</a>
 
-Subclause [thread.mutex] provides mechanisms for mutual exclusion:
+Subclause [[thread.mutex]] provides mechanisms for mutual exclusion:
 mutexes, locks, and call once. These mechanisms ease the production of
-race-free programs [intro.multithread].
+race-free programs [[intro.multithread]].
 
-### Header `<mutex>` synopsis <a id="mutex.syn">[mutex.syn]</a>
+### Header `<mutex>` synopsis <a id="mutex.syn">[[mutex.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4962,7 +4962,7 @@ namespace std {
 }
 ```
 
-### Header `<shared_mutex>` synopsis <a id="shared.mutex.syn">[shared.mutex.syn]</a>
+### Header `<shared_mutex>` synopsis <a id="shared.mutex.syn">[[shared.mutex.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4977,30 +4977,30 @@ namespace std {
 }
 ```
 
-### Mutex requirements <a id="thread.mutex.requirements">[thread.mutex.requirements]</a>
+### Mutex requirements <a id="thread.mutex.requirements">[[thread.mutex.requirements]]</a>
 
-#### In general <a id="thread.mutex.requirements.general">[thread.mutex.requirements.general]</a>
+#### In general <a id="thread.mutex.requirements.general">[[thread.mutex.requirements.general]]</a>
 
 A mutex object facilitates protection against data races and allows safe
-synchronization of data between execution agents [thread.req.lockable].
-An execution agent *owns* a mutex from the time it successfully calls
-one of the lock functions until it calls unlock. Mutexes can be either
-recursive or non-recursive, and can grant simultaneous ownership to one
-or many execution agents. Both recursive and non-recursive mutexes are
-supplied.
+synchronization of data between execution agents
+[[thread.req.lockable]]. An execution agent *owns* a mutex from the time
+it successfully calls one of the lock functions until it calls unlock.
+Mutexes can be either recursive or non-recursive, and can grant
+simultaneous ownership to one or many execution agents. Both recursive
+and non-recursive mutexes are supplied.
 
-#### Mutex types <a id="thread.mutex.requirements.mutex">[thread.mutex.requirements.mutex]</a>
+#### Mutex types <a id="thread.mutex.requirements.mutex">[[thread.mutex.requirements.mutex]]</a>
 
-##### General <a id="thread.mutex.requirements.mutex.general">[thread.mutex.requirements.mutex.general]</a>
+##### General <a id="thread.mutex.requirements.mutex.general">[[thread.mutex.requirements.mutex.general]]</a>
 
 The *mutex types* are the standard library types `mutex`,
 `recursive_mutex`, `timed_mutex`, `recursive_timed_mutex`,
 `shared_mutex`, and `shared_timed_mutex`. They meet the requirements set
-out in [thread.mutex.requirements.mutex]. In this description, `m`
+out in [[thread.mutex.requirements.mutex]]. In this description, `m`
 denotes an object of a mutex type.
 
 \[*Note 1*: The mutex types meet the *Cpp17Lockable* requirements
-[thread.req.lockable.req]. — *end note*\]
+[[thread.req.lockable.req]]. — *end note*\]
 
 The mutex types meet *Cpp17DefaultConstructible* and
 *Cpp17Destructible*. If initialization of an object of a mutex type
@@ -5021,11 +5021,11 @@ functions of the mutex types are as follows:
 
 The implementation provides lock and unlock operations, as described
 below. For purposes of determining the existence of a data race, these
-behave as atomic operations [intro.multithread]. The lock and unlock
+behave as atomic operations [[intro.multithread]]. The lock and unlock
 operations on a single mutex appears to occur in a single total order.
 
 \[*Note 2*: This can be viewed as the modification order
-[intro.multithread] of the mutex. — *end note*\]
+[[intro.multithread]] of the mutex. — *end note*\]
 
 \[*Note 3*: Construction and destruction of an object of a mutex type
 need not be thread-safe; other synchronization can be used to ensure
@@ -5127,7 +5127,7 @@ semantics:
 >
 > Nothing.
 
-##### Class `mutex` <a id="thread.mutex.class">[thread.mutex.class]</a>
+##### Class `mutex` <a id="thread.mutex.class">[[thread.mutex.class]]</a>
 
 ``` cpp
 namespace std {
@@ -5165,7 +5165,8 @@ typically occur when a reference-counted object contains a mutex that is
 used to protect the reference count. — *end note*\]
 
 The class `mutex` meets all of the mutex requirements
-[thread.mutex.requirements]. It is a standard-layout class [class.prop].
+[[thread.mutex.requirements]]. It is a standard-layout class
+[[class.prop]].
 
 \[*Note 5*: A program can deadlock if the thread that owns a `mutex`
 object calls `lock()` on that object. If the implementation can detect
@@ -5176,7 +5177,7 @@ The behavior of a program is undefined if it destroys a `mutex` object
 owned by any thread or a thread terminates while owning a `mutex`
 object.
 
-##### Class `recursive_mutex` <a id="thread.mutex.recursive">[thread.mutex.recursive]</a>
+##### Class `recursive_mutex` <a id="thread.mutex.recursive">[[thread.mutex.recursive]]</a>
 
 ``` cpp
 namespace std {
@@ -5205,7 +5206,8 @@ attempts by another thread to acquire ownership of that object will fail
 completely released ownership.
 
 The class `recursive_mutex` meets all of the mutex requirements
-[thread.mutex.requirements]. It is a standard-layout class [class.prop].
+[[thread.mutex.requirements]]. It is a standard-layout class
+[[class.prop]].
 
 A thread that owns a `recursive_mutex` object may acquire additional
 levels of ownership by calling `lock()` or `try_lock()` on that object.
@@ -5224,19 +5226,19 @@ The behavior of a program is undefined if:
 
 - a thread terminates while owning a `recursive_mutex` object.
 
-#### Timed mutex types <a id="thread.timedmutex.requirements">[thread.timedmutex.requirements]</a>
+#### Timed mutex types <a id="thread.timedmutex.requirements">[[thread.timedmutex.requirements]]</a>
 
-##### General <a id="thread.timedmutex.requirements.general">[thread.timedmutex.requirements.general]</a>
+##### General <a id="thread.timedmutex.requirements.general">[[thread.timedmutex.requirements.general]]</a>
 
 The *timed mutex types* are the standard library types `timed_mutex`,
 `recursive_timed_mutex`, and `shared_timed_mutex`. They meet the
 requirements set out below. In this description, `m` denotes an object
 of a mutex type, `rel_time` denotes an object of an instantiation of
-`duration` [time.duration], and `abs_time` denotes an object of an
-instantiation of `time_point` [time.point].
+`duration` [[time.duration]], and `abs_time` denotes an object of an
+instantiation of `time_point` [[time.point]].
 
 \[*Note 6*: The timed mutex types meet the *Cpp17TimedLockable*
-requirements [thread.req.lockable.timed]. — *end note*\]
+requirements [[thread.req.lockable.timed]]. — *end note*\]
 
 The expression `m.try_lock_for(rel_time)` is well-formed and has the
 following semantics:
@@ -5308,7 +5310,7 @@ following semantics:
 >
 > Timeout-related exceptions\[thread.req.timing\].
 
-##### Class `timed_mutex` <a id="thread.timedmutex.class">[thread.timedmutex.class]</a>
+##### Class `timed_mutex` <a id="thread.timedmutex.class">[[thread.timedmutex.class]]</a>
 
 ``` cpp
 namespace std {
@@ -5343,8 +5345,8 @@ a call to `unlock()` or the call to `try_lock_for()` or
 `try_lock_until()` times out (having failed to obtain ownership).
 
 The class `timed_mutex` meets all of the timed mutex requirements
-[thread.timedmutex.requirements]. It is a standard-layout class
-[class.prop].
+[[thread.timedmutex.requirements]]. It is a standard-layout class
+[[class.prop]].
 
 The behavior of a program is undefined if:
 
@@ -5356,7 +5358,7 @@ The behavior of a program is undefined if:
 
 - a thread terminates while owning a `timed_mutex` object.
 
-##### Class `recursive_timed_mutex` <a id="thread.timedmutex.recursive">[thread.timedmutex.recursive]</a>
+##### Class `recursive_timed_mutex` <a id="thread.timedmutex.recursive">[[thread.timedmutex.recursive]]</a>
 
 ``` cpp
 namespace std {
@@ -5391,8 +5393,8 @@ thread has completely released ownership or the call to `try_lock_for()`
 or `try_lock_until()` times out (having failed to obtain ownership).
 
 The class `recursive_timed_mutex` meets all of the timed mutex
-requirements [thread.timedmutex.requirements]. It is a standard-layout
-class [class.prop].
+requirements [[thread.timedmutex.requirements]]. It is a standard-layout
+class [[class.prop]].
 
 A thread that owns a `recursive_timed_mutex` object may acquire
 additional levels of ownership by calling `lock()`, `try_lock()`,
@@ -5413,21 +5415,21 @@ The behavior of a program is undefined if:
 
 - a thread terminates while owning a `recursive_timed_mutex` object.
 
-#### Shared mutex types <a id="thread.sharedmutex.requirements">[thread.sharedmutex.requirements]</a>
+#### Shared mutex types <a id="thread.sharedmutex.requirements">[[thread.sharedmutex.requirements]]</a>
 
-##### General <a id="thread.sharedmutex.requirements.general">[thread.sharedmutex.requirements.general]</a>
+##### General <a id="thread.sharedmutex.requirements.general">[[thread.sharedmutex.requirements.general]]</a>
 
 The standard library types `shared_mutex` and `shared_timed_mutex` are
 *shared mutex types*. Shared mutex types meet the requirements of mutex
-types [thread.mutex.requirements.mutex] and additionally meet the
+types [[thread.mutex.requirements.mutex]] and additionally meet the
 requirements set out below. In this description, `m` denotes an object
 of a shared mutex type.
 
 \[*Note 7*: The shared mutex types meet the *Cpp17SharedLockable*
-requirements [thread.req.lockable.shared]. — *end note*\]
+requirements [[thread.req.lockable.shared]]. — *end note*\]
 
 In addition to the exclusive lock ownership mode specified in 
-[thread.mutex.requirements.mutex], shared mutex types provide a
+[[thread.mutex.requirements.mutex]], shared mutex types provide a
 *shared lock* ownership mode. Multiple execution agents can
 simultaneously hold a shared lock ownership of a shared mutex type. But
 no execution agent holds a shared lock while another execution agent
@@ -5521,7 +5523,7 @@ following semantics:
 >
 > Nothing.
 
-##### Class `shared_mutex` <a id="thread.sharedmutex.class">[thread.sharedmutex.class]</a>
+##### Class `shared_mutex` <a id="thread.sharedmutex.class">[[thread.sharedmutex.class]]</a>
 
 ``` cpp
 namespace std {
@@ -5553,8 +5555,8 @@ The class `shared_mutex` provides a non-recursive mutex with shared
 ownership semantics.
 
 The class `shared_mutex` meets all of the shared mutex requirements
-[thread.sharedmutex.requirements]. It is a standard-layout class
-[class.prop].
+[[thread.sharedmutex.requirements]]. It is a standard-layout class
+[[class.prop]].
 
 The behavior of a program is undefined if:
 
@@ -5568,22 +5570,22 @@ The behavior of a program is undefined if:
 
 `shared_mutex` may be a synonym for `shared_timed_mutex`.
 
-#### Shared timed mutex types <a id="thread.sharedtimedmutex.requirements">[thread.sharedtimedmutex.requirements]</a>
+#### Shared timed mutex types <a id="thread.sharedtimedmutex.requirements">[[thread.sharedtimedmutex.requirements]]</a>
 
-##### General <a id="thread.sharedtimedmutex.requirements.general">[thread.sharedtimedmutex.requirements.general]</a>
+##### General <a id="thread.sharedtimedmutex.requirements.general">[[thread.sharedtimedmutex.requirements.general]]</a>
 
 The standard library type `shared_timed_mutex` is a
 *shared timed mutex type*. Shared timed mutex types meet the
-requirements of timed mutex types [thread.timedmutex.requirements],
-shared mutex types [thread.sharedmutex.requirements], and additionally
+requirements of timed mutex types [[thread.timedmutex.requirements]],
+shared mutex types [[thread.sharedmutex.requirements]], and additionally
 meet the requirements set out below. In this description, `m` denotes an
 object of a shared timed mutex type, `rel_time` denotes an object of an
-instantiation of `duration` [time.duration], and `abs_time` denotes an
-object of an instantiation of `time_point` [time.point].
+instantiation of `duration` [[time.duration]], and `abs_time` denotes an
+object of an instantiation of `time_point` [[time.point]].
 
 \[*Note 8*: The shared timed mutex types meet the
 *Cpp17SharedTimedLockable* requirements
-[thread.req.lockable.shared.timed]. — *end note*\]
+[[thread.req.lockable.shared.timed]]. — *end note*\]
 
 The expression `m.try_lock_shared_for(rel_time)` is well-formed and has
 the following semantics:
@@ -5662,7 +5664,7 @@ has the following semantics:
 >
 > Timeout-related exceptions\[thread.req.timing\].
 
-##### Class `shared_timed_mutex` <a id="thread.sharedtimedmutex.class">[thread.sharedtimedmutex.class]</a>
+##### Class `shared_timed_mutex` <a id="thread.sharedtimedmutex.class">[[thread.sharedtimedmutex.class]]</a>
 
 ``` cpp
 namespace std {
@@ -5699,8 +5701,8 @@ The class `shared_timed_mutex` provides a non-recursive mutex with
 shared ownership semantics.
 
 The class `shared_timed_mutex` meets all of the shared timed mutex
-requirements [thread.sharedtimedmutex.requirements]. It is a
-standard-layout class [class.prop].
+requirements [[thread.sharedtimedmutex.requirements]]. It is a
+standard-layout class [[class.prop]].
 
 The behavior of a program is undefined if:
 
@@ -5712,9 +5714,9 @@ The behavior of a program is undefined if:
 - a thread terminates while possessing any ownership of a
   `shared_timed_mutex`.
 
-### Locks <a id="thread.lock">[thread.lock]</a>
+### Locks <a id="thread.lock">[[thread.lock]]</a>
 
-#### General <a id="thread.lock.general">[thread.lock.general]</a>
+#### General <a id="thread.lock.general">[[thread.lock.general]]</a>
 
 A *lock* is an object that holds a reference to a lockable object and
 may unlock the lockable object during the lock’s destruction (such as
@@ -5745,7 +5747,7 @@ namespace std {
 }
 ```
 
-#### Class template `lock_guard` <a id="thread.lock.guard">[thread.lock.guard]</a>
+#### Class template `lock_guard` <a id="thread.lock.guard">[[thread.lock.guard]]</a>
 
 ``` cpp
 namespace std {
@@ -5770,10 +5772,10 @@ namespace std {
 An object of type `lock_guard` controls the ownership of a lockable
 object within a scope. A `lock_guard` object maintains ownership of a
 lockable object throughout the `lock_guard` object’s lifetime
-[basic.life]. The behavior of a program is undefined if the lockable
+[[basic.life]]. The behavior of a program is undefined if the lockable
 object referenced by `pm` does not exist for the entire lifetime of the
 `lock_guard` object. The supplied `Mutex` type shall meet the
-*Cpp17BasicLockable* requirements [thread.req.lockable.basic].
+*Cpp17BasicLockable* requirements [[thread.req.lockable.basic]].
 
 ``` cpp
 explicit lock_guard(mutex_type& m);
@@ -5807,7 +5809,7 @@ lock_guard(mutex_type& m, adopt_lock_t);
 >
 > Equivalent to: `pm.unlock()`
 
-#### Class template `scoped_lock` <a id="thread.lock.scoped">[thread.lock.scoped]</a>
+#### Class template `scoped_lock` <a id="thread.lock.scoped">[[thread.lock.scoped]]</a>
 
 ``` cpp
 namespace std {
@@ -5832,17 +5834,17 @@ namespace std {
 An object of type `scoped_lock` controls the ownership of lockable
 objects within a scope. A `scoped_lock` object maintains ownership of
 lockable objects throughout the `scoped_lock` object’s lifetime
-[basic.life]. The behavior of a program is undefined if the lockable
+[[basic.life]]. The behavior of a program is undefined if the lockable
 objects referenced by `pm` do not exist for the entire lifetime of the
 `scoped_lock` object.
 
 - If `sizeof...(MutexTypes)` is one, let `Mutex` denote the sole type
   constituting the pack `MutexTypes`. `Mutex` shall meet the
-  *Cpp17BasicLockable* requirements [thread.req.lockable.basic]. The
+  *Cpp17BasicLockable* requirements [[thread.req.lockable.basic]]. The
   member *typedef-name* `mutex_type` denotes the same type as `Mutex`.
 
 - Otherwise, all types in the template parameter pack `MutexTypes` shall
-  meet the *Cpp17Lockable* requirements [thread.req.lockable.req] and
+  meet the *Cpp17Lockable* requirements [[thread.req.lockable.req]] and
   there is no member `mutex_type`.
 
 ``` cpp
@@ -5879,9 +5881,9 @@ explicit scoped_lock(adopt_lock_t, MutexTypes&... m);
 >
 > For all `i` in \[`0`, `sizeof...(MutexTypes)`), `get<i>(pm).unlock()`.
 
-#### Class template `unique_lock` <a id="thread.lock.unique">[thread.lock.unique]</a>
+#### Class template `unique_lock` <a id="thread.lock.unique">[[thread.lock.unique]]</a>
 
-##### General <a id="thread.lock.unique.general">[thread.lock.unique.general]</a>
+##### General <a id="thread.lock.unique.general">[[thread.lock.unique.general]]</a>
 
 ``` cpp
 namespace std {
@@ -5942,18 +5944,18 @@ acquisition, to another `unique_lock` object. Objects of type
 `unique_lock` are not copyable but are movable. The behavior of a
 program is undefined if the contained pointer `pm` is not null and the
 lockable object pointed to by `pm` does not exist for the entire
-remaining lifetime [basic.life] of the `unique_lock` object. The
+remaining lifetime [[basic.life]] of the `unique_lock` object. The
 supplied `Mutex` type shall meet the *Cpp17BasicLockable* requirements
-[thread.req.lockable.basic].
+[[thread.req.lockable.basic]].
 
 \[*Note 10*: `unique_lock<Mutex>` meets the *Cpp17BasicLockable*
 requirements. If `Mutex` meets the *Cpp17Lockable* requirements
-[thread.req.lockable.req], `unique_lock<Mutex>` also meets the
+[[thread.req.lockable.req]], `unique_lock<Mutex>` also meets the
 *Cpp17Lockable* requirements; if `Mutex` meets the *Cpp17TimedLockable*
-requirements [thread.req.lockable.timed], `unique_lock<Mutex>` also
+requirements [[thread.req.lockable.timed]], `unique_lock<Mutex>` also
 meets the *Cpp17TimedLockable* requirements. — *end note*\]
 
-##### Constructors, destructor, and assignment <a id="thread.lock.unique.cons">[thread.lock.unique.cons]</a>
+##### Constructors, destructor, and assignment <a id="thread.lock.unique.cons">[[thread.lock.unique.cons]]</a>
 
 ``` cpp
 unique_lock() noexcept;
@@ -6094,7 +6096,7 @@ unique_lock& operator=(unique_lock&& u);
 >
 > If `owns` calls `pm->unlock()`.
 
-##### Locking <a id="thread.lock.unique.locking">[thread.lock.unique.locking]</a>
+##### Locking <a id="thread.lock.unique.locking">[[thread.lock.unique.locking]]</a>
 
 ``` cpp
 void lock();
@@ -6239,7 +6241,7 @@ void unlock();
 >
 > - `operation_not_permitted` — if on entry `owns` is `false`.
 
-##### Modifiers <a id="thread.lock.unique.mod">[thread.lock.unique.mod]</a>
+##### Modifiers <a id="thread.lock.unique.mod">[[thread.lock.unique.mod]]</a>
 
 ``` cpp
 void swap(unique_lock& u) noexcept;
@@ -6270,7 +6272,7 @@ template<class Mutex>
 >
 > As if by `x.swap(y)`.
 
-##### Observers <a id="thread.lock.unique.obs">[thread.lock.unique.obs]</a>
+##### Observers <a id="thread.lock.unique.obs">[[thread.lock.unique.obs]]</a>
 
 ``` cpp
 bool owns_lock() const noexcept;
@@ -6296,9 +6298,9 @@ mutex_type *mutex() const noexcept;
 >
 > `pm`.
 
-#### Class template `shared_lock` <a id="thread.lock.shared">[thread.lock.shared]</a>
+#### Class template `shared_lock` <a id="thread.lock.shared">[[thread.lock.shared]]</a>
 
-##### General <a id="thread.lock.shared.general">[thread.lock.shared.general]</a>
+##### General <a id="thread.lock.shared.general">[[thread.lock.shared.general]]</a>
 
 ``` cpp
 namespace std {
@@ -6357,18 +6359,18 @@ transferred, after acquisition, to another `shared_lock` object. Objects
 of type `shared_lock` are not copyable but are movable. The behavior of
 a program is undefined if the contained pointer `pm` is not null and the
 lockable object pointed to by `pm` does not exist for the entire
-remaining lifetime [basic.life] of the `shared_lock` object. The
+remaining lifetime [[basic.life]] of the `shared_lock` object. The
 supplied `Mutex` type shall meet the *Cpp17SharedLockable* requirements
-[thread.req.lockable.shared].
+[[thread.req.lockable.shared]].
 
 \[*Note 11*: `shared_lock<Mutex>` meets the *Cpp17Lockable* requirements
-[thread.req.lockable.req]. If `Mutex` meets the
+[[thread.req.lockable.req]]. If `Mutex` meets the
 *Cpp17Shared\\TimedLockable* requirements
-[thread.req.lockable.shared.timed], `shared_lock<Mutex>` also meets the
-*Cpp17TimedLockable* requirements
-[thread.req.lockable.timed]. — *end note*\]
+[[thread.req.lockable.shared.timed]], `shared_lock<Mutex>` also meets
+the *Cpp17TimedLockable* requirements
+[[thread.req.lockable.timed]]. — *end note*\]
 
-##### Constructors, destructor, and assignment <a id="thread.lock.shared.cons">[thread.lock.shared.cons]</a>
+##### Constructors, destructor, and assignment <a id="thread.lock.shared.cons">[[thread.lock.shared.cons]]</a>
 
 ``` cpp
 shared_lock() noexcept;
@@ -6495,7 +6497,7 @@ shared_lock& operator=(shared_lock&& sl) noexcept;
 > `sl` just prior to this assignment), `sl.pm == nullptr` and
 > `sl.owns == false`.
 
-##### Locking <a id="thread.lock.shared.locking">[thread.lock.shared.locking]</a>
+##### Locking <a id="thread.lock.shared.locking">[[thread.lock.shared.locking]]</a>
 
 ``` cpp
 void lock();
@@ -6637,7 +6639,7 @@ void unlock();
 >
 > - `operation_not_permitted` — if on entry `owns` is `false`.
 
-##### Modifiers <a id="thread.lock.shared.mod">[thread.lock.shared.mod]</a>
+##### Modifiers <a id="thread.lock.shared.mod">[[thread.lock.shared.mod]]</a>
 
 ``` cpp
 void swap(shared_lock& sl) noexcept;
@@ -6668,7 +6670,7 @@ template<class Mutex>
 >
 > As if by `x.swap(y)`.
 
-##### Observers <a id="thread.lock.shared.obs">[thread.lock.shared.obs]</a>
+##### Observers <a id="thread.lock.shared.obs">[[thread.lock.shared.obs]]</a>
 
 ``` cpp
 bool owns_lock() const noexcept;
@@ -6694,7 +6696,7 @@ mutex_type* mutex() const noexcept;
 >
 > `pm`.
 
-### Generic locking algorithms <a id="thread.lock.algorithm">[thread.lock.algorithm]</a>
+### Generic locking algorithms <a id="thread.lock.algorithm">[[thread.lock.algorithm]]</a>
 
 ``` cpp
 template<class L1, class L2, class... L3> int try_lock(L1&, L2&, L3&...);
@@ -6746,9 +6748,9 @@ template<class L1, class L2, class... L3> void lock(L1&, L2&, L3&...);
 > is called for any argument that had been locked by a call to `lock()`
 > or `try_lock()`.
 
-### Call once <a id="thread.once">[thread.once]</a>
+### Call once <a id="thread.once">[[thread.once]]</a>
 
-#### Struct `once_flag` <a id="thread.once.onceflag">[thread.once.onceflag]</a>
+#### Struct `once_flag` <a id="thread.once.onceflag">[[thread.once.onceflag]]</a>
 
 ``` cpp
 namespace std {
@@ -6776,7 +6778,7 @@ constexpr once_flag() noexcept;
 > `call_once` with the object as its initial argument that no function
 > has been called.
 
-#### Function `call_once` <a id="thread.once.callonce">[thread.once.callonce]</a>
+#### Function `call_once` <a id="thread.once.callonce">[[thread.once.callonce]]</a>
 
 ``` cpp
 template<class Callable, class... Args>
@@ -6844,9 +6846,9 @@ template<class Callable, class... Args>
 >
 > — *end example*\]
 
-## Condition variables <a id="thread.condition">[thread.condition]</a>
+## Condition variables <a id="thread.condition">[[thread.condition]]</a>
 
-### General <a id="thread.condition.general">[thread.condition.general]</a>
+### General <a id="thread.condition.general">[[thread.condition.general]]</a>
 
 Condition variables provide synchronization primitives used to block a
 thread until notified by some other thread that some condition is met or
@@ -6878,7 +6880,7 @@ with the “happens before” order.
 Condition variable construction and destruction need not be
 synchronized.
 
-### Header `<condition_variable>` synopsis <a id="condition.variable.syn">[condition.variable.syn]</a>
+### Header `<condition_variable>` synopsis <a id="condition.variable.syn">[[condition.variable.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -6894,7 +6896,7 @@ namespace std {
 }
 ```
 
-### Non-member functions <a id="thread.condition.nonmember">[thread.condition.nonmember]</a>
+### Non-member functions <a id="thread.condition.nonmember">[[thread.condition.nonmember]]</a>
 
 ``` cpp
 void notify_all_at_thread_exit(condition_variable& cond, unique_lock<mutex> lk);
@@ -6937,7 +6939,7 @@ void notify_all_at_thread_exit(condition_variable& cond, unique_lock<mutex> lk);
 > `lk`, and that this lock is not released and reacquired prior to
 > calling `notify_all_at_thread_exit`. — *end note*\]
 
-### Class `condition_variable` <a id="thread.condition.condvar">[thread.condition.condvar]</a>
+### Class `condition_variable` <a id="thread.condition.condvar">[[thread.condition.condvar]]</a>
 
 ``` cpp
 namespace std {
@@ -6975,7 +6977,8 @@ namespace std {
 }
 ```
 
-The class `condition_variable` is a standard-layout class [class.prop].
+The class `condition_variable` is a standard-layout class
+[[class.prop]].
 
 ``` cpp
 condition_variable();
@@ -7311,13 +7314,13 @@ template<class Rep, class Period, class Predicate>
 > \[*Note 55*: This can happen if the re-locking of the mutex throws an
 > exception. — *end note*\]
 
-### Class `condition_variable_any` <a id="thread.condition.condvarany">[thread.condition.condvarany]</a>
+### Class `condition_variable_any` <a id="thread.condition.condvarany">[[thread.condition.condvarany]]</a>
 
-#### General <a id="thread.condition.condvarany.general">[thread.condition.condvarany.general]</a>
+#### General <a id="thread.condition.condvarany.general">[[thread.condition.condvarany.general]]</a>
 
-In this subclause [thread.condition.condvarany], template arguments for
-template parameters named `Lock` shall meet the *Cpp17Basic\\Lockable*
-requirements [thread.req.lockable.basic].
+In this subclause [[thread.condition.condvarany]], template arguments
+for template parameters named `Lock` shall meet the
+*Cpp17Basic\\Lockable* requirements [[thread.req.lockable.basic]].
 
 \[*Note 1*: All of the standard mutex types meet this requirement. If a
 type other than one of the standard mutex types or a `unique_lock`
@@ -7420,7 +7423,7 @@ void notify_all() noexcept;
 >
 > Unblocks all threads that are blocked waiting for `*this`.
 
-#### Noninterruptible waits <a id="thread.condvarany.wait">[thread.condvarany.wait]</a>
+#### Noninterruptible waits <a id="thread.condvarany.wait">[[thread.condvarany.wait]]</a>
 
 ``` cpp
 template<class Lock>
@@ -7577,7 +7580,7 @@ template<class Lock, class Rep, class Period, class Predicate>
 > return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred));
 > ```
 
-#### Interruptible waits <a id="thread.condvarany.intwait">[thread.condvarany.intwait]</a>
+#### Interruptible waits <a id="thread.condvarany.intwait">[[thread.condvarany.intwait]]</a>
 
 The following wait functions will be notified when there is a stop
 request on the passed `stop_token`. In that case the functions return
@@ -7683,9 +7686,9 @@ template<class Lock, class Rep, class Period, class Predicate>
 >                   std::move(pred));
 > ```
 
-## Semaphore <a id="thread.sema">[thread.sema]</a>
+## Semaphore <a id="thread.sema">[[thread.sema]]</a>
 
-### General <a id="thread.sema.general">[thread.sema.general]</a>
+### General <a id="thread.sema.general">[[thread.sema.general]]</a>
 
 Semaphores are lightweight synchronization primitives used to constrain
 concurrent access to a shared resource. They are widely used to
@@ -7697,7 +7700,7 @@ resource count. A binary semaphore is a semaphore object that has only
 two states. A binary semaphore should be more efficient than the default
 implementation of a counting semaphore with a unit resource count.
 
-### Header `<semaphore>` synopsis <a id="semaphore.syn">[semaphore.syn]</a>
+### Header `<semaphore>` synopsis <a id="semaphore.syn">[[semaphore.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -7709,7 +7712,7 @@ namespace std {
 }
 ```
 
-### Class template `counting_semaphore` <a id="thread.sema.cnt">[thread.sema.cnt]</a>
+### Class template `counting_semaphore` <a id="thread.sema.cnt">[[thread.sema.cnt]]</a>
 
 ``` cpp
 namespace std {
@@ -7877,18 +7880,18 @@ template<class Clock, class Duration>
 > Any of the error conditions allowed for mutex
 > types\[thread.mutex.requirements.mutex\].
 
-## Coordination types <a id="thread.coord">[thread.coord]</a>
+## Coordination types <a id="thread.coord">[[thread.coord]]</a>
 
-### General <a id="thread.coord.general">[thread.coord.general]</a>
+### General <a id="thread.coord.general">[[thread.coord.general]]</a>
 
-Subclause [thread.coord] describes various concepts related to thread
+Subclause [[thread.coord]] describes various concepts related to thread
 coordination, and defines the coordination types `latch` and `barrier`.
 These types facilitate concurrent computation performed by a number of
 threads.
 
-### Latches <a id="thread.latch">[thread.latch]</a>
+### Latches <a id="thread.latch">[[thread.latch]]</a>
 
-#### General <a id="thread.latch.general">[thread.latch.general]</a>
+#### General <a id="thread.latch.general">[[thread.latch.general]]</a>
 
 A latch is a thread coordination mechanism that allows any number of
 threads to block until an expected number of threads arrive at the latch
@@ -7896,7 +7899,7 @@ threads to block until an expected number of threads arrive at the latch
 latch is created. An individual latch is a single-use object; once the
 expected count has been reached, the latch cannot be reused.
 
-#### Header `<latch>` synopsis <a id="latch.syn">[latch.syn]</a>
+#### Header `<latch>` synopsis <a id="latch.syn">[[latch.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -7904,7 +7907,7 @@ namespace std {
 }
 ```
 
-#### Class `latch` <a id="thread.latch.class">[thread.latch.class]</a>
+#### Class `latch` <a id="thread.latch.class">[[thread.latch.class]]</a>
 
 ``` cpp
 namespace std {
@@ -8024,9 +8027,9 @@ void arrive_and_wait(ptrdiff_t update = 1);
 > wait();
 > ```
 
-### Barriers <a id="thread.barrier">[thread.barrier]</a>
+### Barriers <a id="thread.barrier">[[thread.barrier]]</a>
 
-#### General <a id="thread.barrier.general">[thread.barrier.general]</a>
+#### General <a id="thread.barrier.general">[[thread.barrier.general]]</a>
 
 A barrier is a thread coordination mechanism whose lifetime consists of
 a sequence of barrier phases, where each phase allows at most an
@@ -8036,7 +8039,7 @@ arrive at the barrier.
 \[*Note 1*: A barrier is useful for managing repeated tasks that are
 handled by multiple threads. — *end note*\]
 
-#### Header `<barrier>` synopsis <a id="barrier.syn">[barrier.syn]</a>
+#### Header `<barrier>` synopsis <a id="barrier.syn">[[barrier.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -8045,7 +8048,7 @@ namespace std {
 }
 ```
 
-#### Class template `barrier` <a id="thread.barrier.class">[thread.barrier.class]</a>
+#### Class template `barrier` <a id="thread.barrier.class">[[thread.barrier.class]]</a>
 
 ``` cpp
 namespace std {
@@ -8114,20 +8117,20 @@ its destructor, do not introduce data races. The member functions
 `arrive` and `arrive_and_drop` execute atomically.
 
 `CompletionFunction` shall meet the *Cpp17MoveConstructible* (
-[cpp17.moveconstructible]) and *Cpp17Destructible* (
-[cpp17.destructible]) requirements.
+[[cpp17.moveconstructible]]) and *Cpp17Destructible* (
+[[cpp17.destructible]]) requirements.
 `is_nothrow_invocable_v<CompletionFunction&>` shall be `true`.
 
 The default value of the `CompletionFunction` template parameter is an
 unspecified type, such that, in addition to satisfying the requirements
 of `CompletionFunction`, it meets the *Cpp17DefaultConstructible*
-requirements ( [cpp17.defaultconstructible]) and `completion()` has no
+requirements ( [[cpp17.defaultconstructible]]) and `completion()` has no
 effects.
 
 `barrier::arrival_token` is an unspecified type, such that it meets the
-*Cpp17MoveConstructible* ( [cpp17.moveconstructible]),
-*Cpp17MoveAssignable* ( [cpp17.moveassignable]), and *Cpp17Destructible*
-( [cpp17.destructible]) requirements.
+*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]),
+*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]), and
+*Cpp17Destructible* ( [[cpp17.destructible]]) requirements.
 
 ``` cpp
 static constexpr ptrdiff_t max() noexcept;
@@ -8257,19 +8260,19 @@ void arrive_and_drop();
 > \[*Note 71*: This call can cause the completion step for the current
 > phase to start. — *end note*\]
 
-## Futures <a id="futures">[futures]</a>
+## Futures <a id="futures">[[futures]]</a>
 
-### Overview <a id="futures.overview">[futures.overview]</a>
+### Overview <a id="futures.overview">[[futures.overview]]</a>
 
-[futures] describes components that a C++ program can use to retrieve in
-one thread the result (value or exception) from a function that has run
-in the same thread or another thread.
+[[futures]] describes components that a C++ program can use to retrieve
+in one thread the result (value or exception) from a function that has
+run in the same thread or another thread.
 
 \[*Note 1*: These components are not restricted to multi-threaded
 programs but can be useful in single-threaded programs as
 well. — *end note*\]
 
-### Header `<future>` synopsis <a id="future.syn">[future.syn]</a>
+### Header `<future>` synopsis <a id="future.syn">[[future.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -8341,8 +8344,8 @@ namespace std {
 }
 ```
 
-The `enum` type `launch` is a bitmask type [bitmask.types] with elements
-`launch::async` and `launch::deferred`.
+The `enum` type `launch` is a bitmask type [[bitmask.types]] with
+elements `launch::async` and `launch::deferred`.
 
 \[*Note 2*: Implementations can provide bitmasks to specify restrictions
 on task interaction by functions launched by `async()` applicable to a
@@ -8352,7 +8355,7 @@ extensions to the launch policy under the “as if” rule. — *end note*\]
 
 The enum values of `future_errc` are distinct and not zero.
 
-### Error handling <a id="futures.errors">[futures.errors]</a>
+### Error handling <a id="futures.errors">[[futures.errors]]</a>
 
 ``` cpp
 const error_category& future_category() noexcept;
@@ -8384,7 +8387,7 @@ error_condition make_error_condition(future_errc e) noexcept;
 >
 > `error_condition(static_cast<int>(e), future_category())`.
 
-### Class `future_error` <a id="futures.future.error">[futures.future.error]</a>
+### Class `future_error` <a id="futures.future.error">[[futures.future.error]]</a>
 
 ``` cpp
 namespace std {
@@ -8425,10 +8428,10 @@ const char* what() const noexcept;
 >
 > An NTBS incorporating `code().message()`.
 
-### Shared state <a id="futures.state">[futures.state]</a>
+### Shared state <a id="futures.state">[[futures.state]]</a>
 
-Many of the classes introduced in subclause  [futures] use some state to
-communicate results. This *shared state* consists of some state
+Many of the classes introduced in subclause  [[futures]] use some state
+to communicate results. This *shared state* consists of some state
 information and some (possibly not yet evaluated) *result*, which can be
 a (possibly void) value or an exception.
 
@@ -8443,7 +8446,7 @@ An *asynchronous return object* is an object that reads results from a
 shared state. A *waiting function* of an asynchronous return object is
 one that potentially blocks to wait for the shared state to be made
 ready. If a waiting function can return before the state is made ready
-because of a timeout [thread.req.lockable], then it is a
+because of a timeout [[thread.req.lockable]], then it is a
 *timed waiting function*, otherwise it is a
 *non-timed waiting function*.
 
@@ -8497,28 +8500,28 @@ code to compute the result on the waiting thread if so specified in the
 description of the class or function that creates the state object.
 
 Calls to functions that successfully set the stored result of a shared
-state synchronize with [intro.multithread] calls to functions
+state synchronize with [[intro.multithread]] calls to functions
 successfully detecting the ready state resulting from that setting. The
 storage of the result (whether normal or exceptional) into the shared
-state synchronizes with [intro.multithread] the successful return from a
-call to a waiting function on the shared state.
+state synchronizes with [[intro.multithread]] the successful return from
+a call to a waiting function on the shared state.
 
 Some functions (e.g., `promise::set_value_at_thread_exit`) delay making
 the shared state ready until the calling thread exits. The destruction
 of each of that thread’s objects with thread storage duration
-[basic.stc.thread] is sequenced before making that shared state ready.
+[[basic.stc.thread]] is sequenced before making that shared state ready.
 
 Access to the result of the same shared state may conflict
-[intro.multithread].
+[[intro.multithread]].
 
 \[*Note 6*: This explicitly specifies that the result of the shared
 state is visible in the objects that reference this state in the sense
-of data race avoidance [res.on.data.races]. For example, concurrent
+of data race avoidance [[res.on.data.races]]. For example, concurrent
 accesses through references returned by `shared_future::get()`
-[futures.shared.future] must either use read-only operations or provide
-additional synchronization. — *end note*\]
+[[futures.shared.future]] must either use read-only operations or
+provide additional synchronization. — *end note*\]
 
-### Class template `promise` <a id="futures.promise">[futures.promise]</a>
+### Class template `promise` <a id="futures.promise">[[futures.promise]]</a>
 
 ``` cpp
 namespace std {
@@ -8788,14 +8791,14 @@ template<class R>
 >
 > As if by `x.swap(y)`.
 
-### Class template `future` <a id="futures.unique.future">[futures.unique.future]</a>
+### Class template `future` <a id="futures.unique.future">[[futures.unique.future]]</a>
 
 The class template `future` defines a type for asynchronous return
 objects which do not share their shared state with other asynchronous
 return objects. A default-constructed `future` object has no shared
 state. A `future` object with shared state can be created by functions
-on asynchronous providers [futures.state] or by the move constructor and
-shares its shared state with the original asynchronous provider. The
+on asynchronous providers [[futures.state]] or by the move constructor
+and shares its shared state with the original asynchronous provider. The
 result (value or exception) of a `future` object can be set by calling a
 respective function on an object that shares the same shared state.
 
@@ -9023,17 +9026,17 @@ template<class Clock, class Duration>
 >
 > timeout-related exceptions\[thread.req.timing\].
 
-### Class template `shared_future` <a id="futures.shared.future">[futures.shared.future]</a>
+### Class template `shared_future` <a id="futures.shared.future">[[futures.shared.future]]</a>
 
 The class template `shared_future` defines a type for asynchronous
 return objects which may share their shared state with other
 asynchronous return objects. A default-constructed `shared_future`
 object has no shared state. A `shared_future` object with shared state
 can be created by conversion from a `future` object and shares its
-shared state with the original asynchronous provider [futures.state] of
-the shared state. The result (value or exception) of a `shared_future`
-object can be set by calling a respective function on an object that
-shares the same shared state.
+shared state with the original asynchronous provider [[futures.state]]
+of the shared state. The result (value or exception) of a
+`shared_future` object can be set by calling a respective function on an
+object that shares the same shared state.
 
 \[*Note 9*: Member functions of `shared_future` do not synchronize with
 themselves, but they synchronize with the shared state. — *end note*\]
@@ -9284,7 +9287,7 @@ template<class Clock, class Duration>
 >
 > timeout-related exceptions\[thread.req.timing\].
 
-### Function template `async` <a id="futures.async">[futures.async]</a>
+### Function template `async` <a id="futures.async">[[futures.async]]</a>
 
 The function template `async` provides a mechanism to launch a function
 potentially in a new thread and provides the result of the function in a
@@ -9407,9 +9410,9 @@ template<class F, class... Args>
 the `get()` call; in that case, `work1` and `work2` are called on the
 same thread and there is no concurrency. — *end note*\]
 
-### Class template `packaged_task` <a id="futures.task">[futures.task]</a>
+### Class template `packaged_task` <a id="futures.task">[[futures.task]]</a>
 
-#### General <a id="futures.task.general">[futures.task.general]</a>
+#### General <a id="futures.task.general">[[futures.task.general]]</a>
 
 The class template `packaged_task` defines a type for wrapping a
 function or callable object so that the return value of the function or
@@ -9461,7 +9464,7 @@ namespace std {
 }
 ```
 
-#### Member functions <a id="futures.task.members">[futures.task.members]</a>
+#### Member functions <a id="futures.task.members">[[futures.task.members]]</a>
 
 ``` cpp
 packaged_task() noexcept;
@@ -9673,7 +9676,7 @@ void reset();
 > - `future_error` with an error condition of `no_state` if `*this` has
 >   no shared state.
 
-#### Globals <a id="futures.task.nonmembers">[futures.task.nonmembers]</a>
+#### Globals <a id="futures.task.nonmembers">[[futures.task.nonmembers]]</a>
 
 ``` cpp
 template<class R, class... ArgTypes>
@@ -9685,78 +9688,78 @@ template<class R, class... ArgTypes>
 > As if by `x.swap(y)`.
 
 <!-- Link reference definitions -->
-[atomic.types.int.comp]: #atomic.types.int.comp
-[atomic.types.pointer.comp]: #atomic.types.pointer.comp
-[atomics]: #atomics
-[atomics.general]: #atomics.general
-[atomics.ref.generic]: #atomics.ref.generic
-[atomics.syn]: #atomics.syn
-[atomics.types.generic]: #atomics.types.generic
-[atomics.types.operations]: #atomics.types.operations
-[atomics.wait]: #atomics.wait
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.life]: basic.md#basic.life
-[basic.stc.thread]: basic.md#basic.stc.thread
-[bitmask.types]: library.md#bitmask.types
-[class.prop]: class.md#class.prop
-[compliance]: library.md#compliance
-[concept.booleantestable]: concepts.md#concept.booleantestable
-[cpp17.defaultconstructible]: #cpp17.defaultconstructible
-[cpp17.destructible]: #cpp17.destructible
-[cpp17.moveassignable]: #cpp17.moveassignable
-[cpp17.moveconstructible]: #cpp17.moveconstructible
-[function.objects]: utilities.md#function.objects
-[futures]: #futures
-[futures.shared.future]: #futures.shared.future
-[futures.state]: #futures.state
-[intro.multithread]: basic.md#intro.multithread
-[intro.progress]: basic.md#intro.progress
-[intro.races]: basic.md#intro.races
-[res.on.data.races]: library.md#res.on.data.races
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[stopcallback]: #stopcallback
-[stopsource]: #stopsource
-[stoptoken]: #stoptoken
-[syserr]: diagnostics.md#syserr
-[syserr.syserr]: diagnostics.md#syserr.syserr
-[thread.condition.condvarany]: #thread.condition.condvarany
-[thread.coord]: #thread.coord
-[thread.lock.algorithm]: #thread.lock.algorithm
-[thread.lock.guard]: #thread.lock.guard
-[thread.lock.scoped]: #thread.lock.scoped
-[thread.lock.shared]: #thread.lock.shared
-[thread.lock.unique]: #thread.lock.unique
-[thread.mutex]: #thread.mutex
-[thread.mutex.requirements]: #thread.mutex.requirements
-[thread.mutex.requirements.mutex]: #thread.mutex.requirements.mutex
-[thread.req.lockable]: #thread.req.lockable
-[thread.req.lockable.basic]: #thread.req.lockable.basic
-[thread.req.lockable.req]: #thread.req.lockable.req
-[thread.req.lockable.shared]: #thread.req.lockable.shared
-[thread.req.lockable.shared.timed]: #thread.req.lockable.shared.timed
-[thread.req.lockable.timed]: #thread.req.lockable.timed
-[thread.sharedmutex.requirements]: #thread.sharedmutex.requirements
-[thread.sharedtimedmutex.requirements]: #thread.sharedtimedmutex.requirements
-[thread.stoptoken]: #thread.stoptoken
-[thread.summary]: #thread.summary
-[thread.thread.class]: #thread.thread.class
-[thread.threads]: #thread.threads
-[thread.timedmutex.requirements]: #thread.timedmutex.requirements
-[time]: time.md#time
-[time.clock]: time.md#time.clock
-[time.clock.req]: time.md#time.clock.req
-[time.duration]: time.md#time.duration
-[time.point]: time.md#time.point
-[util.sharedptr]: mem.md#util.sharedptr
-[util.smartptr.atomic]: #util.smartptr.atomic
+[[atomic.types.int.comp]]: #atomic.types.int.comp
+[[atomic.types.pointer.comp]]: #atomic.types.pointer.comp
+[[atomics]]: #atomics
+[[atomics.general]]: #atomics.general
+[[atomics.ref.generic]]: #atomics.ref.generic
+[[atomics.syn]]: #atomics.syn
+[[atomics.types.generic]]: #atomics.types.generic
+[[atomics.types.operations]]: #atomics.types.operations
+[[atomics.wait]]: #atomics.wait
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.life]]: basic.md#basic.life
+[[basic.stc.thread]]: basic.md#basic.stc.thread
+[[bitmask.types]]: library.md#bitmask.types
+[[class.prop]]: class.md#class.prop
+[[compliance]]: library.md#compliance
+[[concept.booleantestable]]: concepts.md#concept.booleantestable
+[[cpp17.defaultconstructible]]: #cpp17.defaultconstructible
+[[cpp17.destructible]]: #cpp17.destructible
+[[cpp17.moveassignable]]: #cpp17.moveassignable
+[[cpp17.moveconstructible]]: #cpp17.moveconstructible
+[[function.objects]]: utilities.md#function.objects
+[[futures]]: #futures
+[[futures.shared.future]]: #futures.shared.future
+[[futures.state]]: #futures.state
+[[intro.multithread]]: basic.md#intro.multithread
+[[intro.progress]]: basic.md#intro.progress
+[[intro.races]]: basic.md#intro.races
+[[res.on.data.races]]: library.md#res.on.data.races
+[[res.on.exception.handling]]: library.md#res.on.exception.handling
+[[stopcallback]]: #stopcallback
+[[stopsource]]: #stopsource
+[[stoptoken]]: #stoptoken
+[[syserr]]: diagnostics.md#syserr
+[[syserr.syserr]]: diagnostics.md#syserr.syserr
+[[thread.condition.condvarany]]: #thread.condition.condvarany
+[[thread.coord]]: #thread.coord
+[[thread.lock.algorithm]]: #thread.lock.algorithm
+[[thread.lock.guard]]: #thread.lock.guard
+[[thread.lock.scoped]]: #thread.lock.scoped
+[[thread.lock.shared]]: #thread.lock.shared
+[[thread.lock.unique]]: #thread.lock.unique
+[[thread.mutex]]: #thread.mutex
+[[thread.mutex.requirements]]: #thread.mutex.requirements
+[[thread.mutex.requirements.mutex]]: #thread.mutex.requirements.mutex
+[[thread.req.lockable]]: #thread.req.lockable
+[[thread.req.lockable.basic]]: #thread.req.lockable.basic
+[[thread.req.lockable.req]]: #thread.req.lockable.req
+[[thread.req.lockable.shared]]: #thread.req.lockable.shared
+[[thread.req.lockable.shared.timed]]: #thread.req.lockable.shared.timed
+[[thread.req.lockable.timed]]: #thread.req.lockable.timed
+[[thread.sharedmutex.requirements]]: #thread.sharedmutex.requirements
+[[thread.sharedtimedmutex.requirements]]: #thread.sharedtimedmutex.requirements
+[[thread.stoptoken]]: #thread.stoptoken
+[[thread.summary]]: #thread.summary
+[[thread.thread.class]]: #thread.thread.class
+[[thread.threads]]: #thread.threads
+[[thread.timedmutex.requirements]]: #thread.timedmutex.requirements
+[[time]]: time.md#time
+[[time.clock]]: time.md#time.clock
+[[time.clock.req]]: time.md#time.clock.req
+[[time.duration]]: time.md#time.duration
+[[time.point]]: time.md#time.point
+[[util.sharedptr]]: mem.md#util.sharedptr
+[[util.smartptr.atomic]]: #util.smartptr.atomic
 
 <!-- Link reference definitions -->
-[atomics]: #atomics
-[futures]: #futures
-[thread.condition]: #thread.condition
-[thread.coord]: #thread.coord
-[thread.mutex]: #thread.mutex
-[thread.req]: #thread.req
-[thread.sema]: #thread.sema
-[thread.stoptoken]: #thread.stoptoken
-[thread.threads]: #thread.threads
+[[atomics]]: #atomics
+[[futures]]: #futures
+[[thread.condition]]: #thread.condition
+[[thread.coord]]: #thread.coord
+[[thread.mutex]]: #thread.mutex
+[[thread.req]]: #thread.req
+[[thread.sema]]: #thread.sema
+[[thread.stoptoken]]: #thread.stoptoken
+[[thread.threads]]: #thread.threads

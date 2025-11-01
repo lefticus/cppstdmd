@@ -3,9 +3,9 @@ current_file: over
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Overloading <a id="over">[over]</a>
+# Overloading <a id="over">[[over]]</a>
 
-## Preamble <a id="over.pre">[over.pre]</a>
+## Preamble <a id="over.pre">[[over.pre]]</a>
 
 \[*Note 1*: Each of two or more entities with the same name in the same
 scope, which must be functions or function templates, is commonly called
@@ -16,7 +16,7 @@ referenced and the validity of the call are determined by comparing the
 types of the arguments at the point of use with the types of the
 parameters in the declarations in the overload set. This function
 selection process is called *overload resolution* and is defined in 
-[over.match].
+[[over.match]].
 
 \[*Example 1*:
 
@@ -30,9 +30,9 @@ abs(1.0);           // calls abs(double);
 
 — *end example*\]
 
-## Overload resolution <a id="over.match">[over.match]</a>
+## Overload resolution <a id="over.match">[[over.match]]</a>
 
-### General <a id="over.match.general">[over.match.general]</a>
+### General <a id="over.match.general">[[over.match.general]]</a>
 
 Overload resolution is a mechanism for selecting the best function to
 call given a list of expressions that are to be the arguments of the
@@ -52,28 +52,28 @@ Overload resolution selects the function to call in seven distinct
 contexts within the language:
 
 - invocation of a function named in the function call syntax
-  [over.call.func];
+  [[over.call.func]];
 
 - invocation of a function call operator, a pointer-to-function
   conversion function, a reference-to-pointer-to-function conversion
   function, or a reference-to-function conversion function on a class
-  object named in the function call syntax [over.call.object];
+  object named in the function call syntax [[over.call.object]];
 
 - invocation of the operator referenced in an expression
-  [over.match.oper];
+  [[over.match.oper]];
 
 - invocation of a constructor for default- or direct-initialization
-  [dcl.init] of a class object [over.match.ctor];
+  [[dcl.init]] of a class object [[over.match.ctor]];
 
 - invocation of a user-defined conversion for copy-initialization
-  [dcl.init] of a class object [over.match.copy];
+  [[dcl.init]] of a class object [[over.match.copy]];
 
 - invocation of a conversion function for initialization of an object of
-  a non-class type from an expression of class type [over.match.conv];
+  a non-class type from an expression of class type [[over.match.conv]];
   and
 
 - invocation of a conversion function for conversion in which a
-  reference [dcl.init.ref] will be directly bound [over.match.ref].
+  reference [[dcl.init.ref]] will be directly bound [[over.match.ref]].
 
 Each of these contexts defines the set of candidate functions and the
 list of arguments in its own unique way. But, once the candidate
@@ -82,28 +82,29 @@ best function is the same in all cases:
 
 - First, a subset of the candidate functions (those that have the proper
   number of arguments and meet certain other conditions) is selected to
-  form a set of viable functions [over.match.viable].
+  form a set of viable functions [[over.match.viable]].
 
 - Then the best viable function is selected based on the implicit
-  conversion sequences [over.best.ics] needed to match each argument to
-  the corresponding parameter of each viable function.
+  conversion sequences [[over.best.ics]] needed to match each argument
+  to the corresponding parameter of each viable function.
 
 If a best viable function exists and is unique, overload resolution
 succeeds and produces it as the result. Otherwise overload resolution
 fails and the invocation is ill-formed. When overload resolution
-succeeds, and the best viable function is not accessible [class.access]
-in the context in which it is used, the program is ill-formed.
+succeeds, and the best viable function is not accessible
+[[class.access]] in the context in which it is used, the program is
+ill-formed.
 
 Overload resolution results in a *usable candidate* if overload
 resolution succeeds and the selected candidate is either not a function
-[over.built], or is a function that is not deleted and is accessible
+[[over.built]], or is a function that is not deleted and is accessible
 from the context in which overload resolution was performed.
 
-### Candidate functions and argument lists <a id="over.match.funcs">[over.match.funcs]</a>
+### Candidate functions and argument lists <a id="over.match.funcs">[[over.match.funcs]]</a>
 
-#### General <a id="over.match.funcs.general">[over.match.funcs.general]</a>
+#### General <a id="over.match.funcs.general">[[over.match.funcs.general]]</a>
 
-The subclauses of  [over.match.funcs] describe the set of candidate
+The subclauses of  [[over.match.funcs]] describe the set of candidate
 functions and the argument list submitted to overload resolution in each
 context in which overload resolution is used. The source transformations
 and constructions defined in these subclauses are only for the purpose
@@ -157,7 +158,7 @@ discarded).
 \[*Note 2*: No actual type is established for the implicit object
 parameter of a static member function, and no attempt will be made to
 determine a conversion sequence for that parameter
-[over.match.best]. — *end note*\]
+[[over.match.best]]. — *end note*\]
 
 During overload resolution, the implied object argument is
 indistinguishable from other arguments. The implicit object parameter,
@@ -170,12 +171,12 @@ to the type of the implicit object parameter.
 
 \[*Note 3*: The fact that such an argument is an rvalue does not affect
 the ranking of implicit conversion sequences
-[over.ics.rank]. — *end note*\]
+[[over.ics.rank]]. — *end note*\]
 
 Because other than in list-initialization only one user-defined
 conversion is allowed in an implicit conversion sequence, special rules
 apply when selecting the best user-defined conversion
-[over.match.best], [over.best.ics].
+[[over.match.best]], [[over.best.ics]].
 
 \[*Example 2*:
 
@@ -200,7 +201,7 @@ functions include the result of a search for the
 *conversion-function-id* `operator T` in `S`.
 
 \[*Note 4*: This search can find a specialization of a conversion
-function template [basic.lookup]. — *end note*\]
+function template [[basic.lookup]]. — *end note*\]
 
 Each such case also defines sets of *permissible types* for explicit and
 non-explicit conversion functions; each (non-template) conversion
@@ -219,12 +220,12 @@ is empty, any candidates that are explicit are discarded.
 
 In each case where a candidate is a function template, candidate
 function template specializations are generated using template argument
-deduction [temp.over], [temp.deduct]. If a constructor template or
+deduction [[temp.over]], [[temp.deduct]]. If a constructor template or
 conversion function template has an *explicit-specifier* whose
-*constant-expression* is value-dependent [temp.dep], template argument
+*constant-expression* is value-dependent [[temp.dep]], template argument
 deduction is performed first and then, if the context admits only
 candidates that are not explicit and the generated specialization is
-explicit [dcl.fct.spec], it will be removed from the candidate set.
+explicit [[dcl.fct.spec]], it will be removed from the candidate set.
 Those candidates are then handled as candidate functions in the usual
 way.
 
@@ -234,10 +235,10 @@ case, the candidate functions generated from each function template are
 combined with the set of non-template candidate functions.
 
 A defaulted move special member function
-[class.copy.ctor], [class.copy.assign] that is defined as deleted is
+[[class.copy.ctor]], [[class.copy.assign]] that is defined as deleted is
 excluded from the set of candidate functions in all contexts. A
-constructor inherited from class type `C` [class.inhctor.init] that has
-a first parameter of type “reference to `P`” (including such a
+constructor inherited from class type `C` [[class.inhctor.init]] that
+has a first parameter of type “reference to `P`” (including such a
 constructor instantiated from a template) is excluded from the set of
 candidate functions when constructing an object of type `D` if the
 argument list has exactly one argument and `C` is reference-related to
@@ -266,11 +267,11 @@ B b3 = C();                             // calls \#4
 
 — *end example*\]
 
-#### Function call syntax <a id="over.match.call">[over.match.call]</a>
+#### Function call syntax <a id="over.match.call">[[over.match.call]]</a>
 
-##### General <a id="over.match.call.general">[over.match.call.general]</a>
+##### General <a id="over.match.call.general">[[over.match.call.general]]</a>
 
-In a function call [expr.call]
+In a function call [[expr.call]]
 
 ``` bnf
 postfix-expression '(' [expression-list] ')'
@@ -278,8 +279,9 @@ postfix-expression '(' [expression-list] ')'
 
 if the *postfix-expression* names at least one function or function
 template, overload resolution is applied as specified in
-[over.call.func]. If the *postfix-expression* denotes an object of class
-type, overload resolution is applied as specified in [over.call.object].
+[[over.call.func]]. If the *postfix-expression* denotes an object of
+class type, overload resolution is applied as specified in
+[[over.call.object]].
 
 If the *postfix-expression* is the address of an overload set, overload
 resolution is applied using that set as described above.
@@ -291,13 +293,13 @@ If the function selected by overload resolution is an implicit object
 member function, the program is ill-formed.
 
 \[*Note 6*: The resolution of the address of an overload set in other
-contexts is described in [over.over]. — *end note*\]
+contexts is described in [[over.over]]. — *end note*\]
 
-##### Call to named function <a id="over.call.func">[over.call.func]</a>
+##### Call to named function <a id="over.call.func">[[over.call.func]]</a>
 
-Of interest in  [over.call.func] are only those function calls in which
-the *postfix-expression* ultimately contains an *id-expression* that
-denotes one or more functions. Such a *postfix-expression*, perhaps
+Of interest in  [[over.call.func]] are only those function calls in
+which the *postfix-expression* ultimately contains an *id-expression*
+that denotes one or more functions. Such a *postfix-expression*, perhaps
 nested arbitrarily deep in parentheses, has one of the following forms:
 
 ``` bnf
@@ -312,29 +314,29 @@ function calls and unqualified function calls.
 
 In qualified function calls, the function is named by an *id-expression*
 preceded by an `->` or `.` operator. Since the construct `A->B` is
-generally equivalent to `(*A).B`, the rest of [over] assumes, without
+generally equivalent to `(*A).B`, the rest of [[over]] assumes, without
 loss of generality, that all member function calls have been normalized
 to the form that uses an object and the `.` operator. Furthermore,
-[over] assumes that the *postfix-expression* that is the left operand of
-the `.` operator has type “cv `T`” where `T` denotes a class.
+[[over]] assumes that the *postfix-expression* that is the left operand
+of the `.` operator has type “cv `T`” where `T` denotes a class.
 
-The function declarations found by name lookup [class.member.lookup]
+The function declarations found by name lookup [[class.member.lookup]]
 constitute the set of candidate functions. The argument list is the
 *expression-list* in the call augmented by the addition of the left
 operand of the `.` operator in the normalized member function call as
-the implied object argument [over.match.funcs].
+the implied object argument [[over.match.funcs]].
 
 In unqualified function calls, the function is named by a
 *primary-expression*. The function declarations found by name lookup
-[basic.lookup] constitute the set of candidate functions. Because of the
-rules for name lookup, the set of candidate functions consists either
-entirely of non-member functions or entirely of member functions of some
-class `T`. In the former case or if the *primary-expression* is the
-address of an overload set, the argument list is the same as the
+[[basic.lookup]] constitute the set of candidate functions. Because of
+the rules for name lookup, the set of candidate functions consists
+either entirely of non-member functions or entirely of member functions
+of some class `T`. In the former case or if the *primary-expression* is
+the address of an overload set, the argument list is the same as the
 *expression-list* in the call. Otherwise, the argument list is the
 *expression-list* in the call augmented by the addition of an implied
 object argument as in a qualified function call. If the current class
-is, or is derived from, `T`, and the keyword `this` [expr.prim.this]
+is, or is derived from, `T`, and the keyword `this` [[expr.prim.this]]
 refers to it, then the implied object argument is `(*this)`. Otherwise,
 a contrived object of type `T` becomes the implied object argument;
 
@@ -387,7 +389,7 @@ void d() {
 
 — *end example*\]
 
-##### Call to object of class type <a id="over.call.object">[over.call.object]</a>
+##### Call to object of class type <a id="over.call.object">[[over.call.object]]</a>
 
 If the *postfix-expression* `E` in the function call syntax evaluates to
 a class object of type “cv `T`”, then the set of candidate functions
@@ -449,18 +451,18 @@ int i = a(1);                   // calls f1 via pointer returned from conversion
 
 — *end example*\]
 
-#### Operators in expressions <a id="over.match.oper">[over.match.oper]</a>
+#### Operators in expressions <a id="over.match.oper">[[over.match.oper]]</a>
 
 If no operand of an operator in an expression has a type that is a class
 or an enumeration, the operator is assumed to be a built-in operator and
-interpreted according to [expr.compound].
+interpreted according to [[expr.compound]].
 
 \[*Note 8*: Because `.`, `.*`, and `::` cannot be overloaded, these
 operators are always built-in operators interpreted according to
-[expr.compound]. `?:` cannot be overloaded, but the rules in this
+[[expr.compound]]. `?:` cannot be overloaded, but the rules in this
 subclause are used to determine the conversions to be applied to the
 second and third operands when they have class or enumeration type
-[expr.cond]. — *end note*\]
+[[expr.cond]]. — *end note*\]
 
 \[*Example 6*:
 
@@ -489,10 +491,10 @@ operand to a type that is appropriate for a built-in operator. In this
 case, overload resolution is used to determine which operator function
 or built-in operator is to be invoked to implement the operator.
 Therefore, the operator notation is first transformed to the equivalent
-function-call notation as summarized in [over.match.oper] (where `@`
+function-call notation as summarized in [[over.match.oper]] (where `@`
 denotes one of the operators covered in the specified subclause).
 However, the operands are sequenced in the order prescribed for the
-built-in operator [expr.compound].
+built-in operator [[expr.compound]].
 
 **Table: Relationship between operator and function call notation**
 
@@ -500,9 +502,9 @@ built-in operator [expr.compound].
 | --- |
 | (a)} |
 | (a, b)} |
-| [over.ass] | `a=b` | `(a).operator= (b)` |
-| [over.sub] | `a[b]` | `(a).operator[](b)` |
-| [over.ref] | `a->` | `(a).operator->(\,)` |
+| [[over.ass]] | `a=b` | `(a).operator= (b)` |
+| [[over.sub]] | `a[b]` | `(a).operator[](b)` |
+| [[over.ref]] | `a->` | `(a).operator->(\,)` |
 | (a, 0)} |
 For a unary operator `@` with an operand of type `T1`, and for a binary
 operator `@` with a left operand of type `T1` and a right operand of
@@ -518,7 +520,7 @@ type `T2`, four sets of candidate functions, designated
 - For the operators `=`, `[]`, or `->`, the set of non-member candidates
   is empty; otherwise, it includes the result of unqualified lookup for
   `operator@` in the rewritten function call
-  [basic.lookup.unqual], [basic.lookup.argdep], ignoring all member
+  [[basic.lookup.unqual]], [[basic.lookup.argdep]], ignoring all member
   functions. However, if no operand has a class type, only those
   non-member functions in the lookup set that have a first parameter of
   type `T1` or “reference to cv `T1`”, when `T1` is an enumeration type,
@@ -529,14 +531,14 @@ type `T2`, four sets of candidate functions, designated
 - For the operator `,`, the unary operator `&`, or the operator `->`,
   the built-in candidates set is empty. For all other operators, the
   built-in candidates include all of the candidate operator functions
-  defined in  [over.built] that, compared to the given operator,
+  defined in  [[over.built]] that, compared to the given operator,
 
   - have the same operator name, and
 
   - accept the same number of operands, and
 
   - accept operand types to which the given operand or operands can be
-    converted according to [over.best.ics], and
+    converted according to [[over.best.ics]], and
 
   - do not have the same parameter-type-list as any non-member candidate
     or rewritten non-member candidate that is not a function template
@@ -544,16 +546,16 @@ type `T2`, four sets of candidate functions, designated
 
 - The rewritten candidate set is determined as follows:
 
-  - For the relational [expr.rel] operators, the rewritten candidates
+  - For the relational [[expr.rel]] operators, the rewritten candidates
     include all non-rewritten candidates for the expression `x <=> y`.
 
-  - For the relational [expr.rel] and three-way comparison
-    [expr.spaceship] operators, the rewritten candidates also include a
-    synthesized candidate, with the order of the two parameters
+  - For the relational [[expr.rel]] and three-way comparison
+    [[expr.spaceship]] operators, the rewritten candidates also include
+    a synthesized candidate, with the order of the two parameters
     reversed, for each non-rewritten candidate for the expression
     `y <=> x`.
 
-  - For the `!=` operator [expr.eq], the rewritten candidates include
+  - For the `!=` operator [[expr.eq]], the rewritten candidates include
     all non-rewritten candidates for the expression `x == y` that are
     rewrite targets with first operand `x` (see below).
 
@@ -573,7 +575,7 @@ A non-template function or function template `F` named `operator==` is a
 rewrite target with first operand `o` unless a search for the name
 `operator!=` in the scope S from the instantiation context of the
 operator expression finds a function or function template that would
-correspond [basic.scope.scope] to `F` if its name were `operator==`,
+correspond [[basic.scope.scope]] to `F` if its name were `operator==`,
 where S is the scope of the class type of `o` if `F` is a class member,
 and the namespace scope of which `F` is a member otherwise. A function
 template specialization named `operator==` is a rewrite target if its
@@ -628,7 +630,7 @@ the built-in candidates, and the rewritten candidates for that operator
 
 The argument list contains all of the operands of the operator. The best
 function from the set of candidate functions is selected according to 
-[over.match.viable] and  [over.match.best].
+[[over.match.viable]] and  [[over.match.best]].
 
 \[*Example 8*:
 
@@ -670,9 +672,9 @@ If a built-in candidate is selected by overload resolution, the operands
 of class type are converted to the types of the corresponding parameters
 of the selected operation function, except that the second standard
 conversion sequence of a user-defined conversion sequence
-[over.ics.user] is not applied. Then the operator is treated as the
+[[over.ics.user]] is not applied. Then the operator is treated as the
 corresponding built-in operator and interpreted according to
-[expr.compound].
+[[expr.compound]].
 
 \[*Example 9*:
 
@@ -699,7 +701,7 @@ applied to the value returned, with the original second operand.
 If the operator is the operator `,`, the unary operator `&`, or the
 operator `->`, and there are no viable functions, then the operator is
 assumed to be the built-in operator and interpreted according to
-[expr.compound].
+[[expr.compound]].
 
 \[*Note 9*:
 
@@ -726,23 +728,23 @@ void B::f() {
 
 — *end note*\]
 
-#### Initialization by constructor <a id="over.match.ctor">[over.match.ctor]</a>
+#### Initialization by constructor <a id="over.match.ctor">[[over.match.ctor]]</a>
 
-When objects of class type are direct-initialized [dcl.init],
+When objects of class type are direct-initialized [[dcl.init]],
 copy-initialized from an expression of the same or a derived class type
-[dcl.init], or default-initialized [dcl.init], overload resolution
+[[dcl.init]], or default-initialized [[dcl.init]], overload resolution
 selects the constructor. For direct-initialization or
 default-initialization that is not in the context of
 copy-initialization, the candidate functions are all the constructors of
 the class of the object being initialized. For copy-initialization
 (including default initialization in the context of
 copy-initialization), the candidate functions are all the converting
-constructors [class.conv.ctor] of that class. The argument list is the
+constructors [[class.conv.ctor]] of that class. The argument list is the
 *expression-list* or *assignment-expression* of the *initializer*.
 
-#### Copy-initialization of class by user-defined conversion <a id="over.match.copy">[over.match.copy]</a>
+#### Copy-initialization of class by user-defined conversion <a id="over.match.copy">[[over.match.copy]]</a>
 
-Under the conditions specified in  [dcl.init], as part of a
+Under the conditions specified in  [[dcl.init]], as part of a
 copy-initialization of an object of class type, a user-defined
 conversion can be invoked to convert an initializer expression to the
 type of the object being initialized. Overload resolution is used to
@@ -755,13 +757,13 @@ of a corresponding non-reference copy-initialization. — *end note*\]
 Assuming that “ `T`” is the type of the object being initialized, with
 `T` a class type, the candidate functions are selected as follows:
 
-- The converting constructors [class.conv.ctor] of `T` are candidate
+- The converting constructors [[class.conv.ctor]] of `T` are candidate
   functions.
 
 - When the type of the initializer expression is a class type “cv `S`”,
   conversion functions are considered. The permissible types for
   non-explicit conversion functions are `T` and any class derived from
-  `T`. When initializing a temporary object [class.mem] to be bound to
+  `T`. When initializing a temporary object [[class.mem]] to be bound to
   the first parameter of a constructor where the parameter is of type
   “reference to `T`” and the constructor is called with a single
   argument in the context of direct-initialization of an object of type
@@ -775,9 +777,9 @@ initializer expression.
 of the constructors and against the object parameter of the conversion
 functions. — *end note*\]
 
-#### Initialization by conversion function <a id="over.match.conv">[over.match.conv]</a>
+#### Initialization by conversion function <a id="over.match.conv">[[over.match.conv]]</a>
 
-Under the conditions specified in  [dcl.init], as part of an
+Under the conditions specified in  [[dcl.init]], as part of an
 initialization of an object of non-class type, a conversion function can
 be invoked to convert an initializer expression of class type to the
 type of the object being initialized. Overload resolution is used to
@@ -787,9 +789,9 @@ selected as follows:
 
 - The permissible types for non-explicit conversion functions are those
   that can be converted to type `T` via a standard conversion sequence
-  [over.ics.scs]. For direct-initialization, the permissible types for
+  [[over.ics.scs]]. For direct-initialization, the permissible types for
   explicit conversion functions are those that can be converted to type
-  `T` with a (possibly trivial) qualification conversion [conv.qual];
+  `T` with a (possibly trivial) qualification conversion [[conv.qual]];
   otherwise there are none.
 
 The argument list has one argument, which is the initializer expression.
@@ -797,9 +799,9 @@ The argument list has one argument, which is the initializer expression.
 \[*Note 12*: This argument will be compared against the object parameter
 of the conversion functions. — *end note*\]
 
-#### Initialization by conversion function for direct reference binding <a id="over.match.ref">[over.match.ref]</a>
+#### Initialization by conversion function for direct reference binding <a id="over.match.ref">[[over.match.ref]]</a>
 
-Under the conditions specified in  [dcl.init.ref], a reference can be
+Under the conditions specified in  [[dcl.init.ref]], a reference can be
 bound directly to the result of applying a conversion function to an
 initializer expression. Overload resolution is used to select the
 conversion function to be invoked. Assuming that “reference to `T`” is
@@ -816,29 +818,29 @@ selected as follows:
 
   for any `T2`. The permissible types for non-explicit conversion
   functions are the members of R where “ `T`” is reference-compatible
-  [dcl.init.ref] with “ `T2`”. For direct-initialization, the
+  [[dcl.init.ref]] with “ `T2`”. For direct-initialization, the
   permissible types for explicit conversion functions are the members of
   R where `T2` can be converted to type `T` with a (possibly trivial)
-  qualification conversion [conv.qual]; otherwise there are none.
+  qualification conversion [[conv.qual]]; otherwise there are none.
 
 The argument list has one argument, which is the initializer expression.
 
 \[*Note 13*: This argument will be compared against the object parameter
 of the conversion functions. — *end note*\]
 
-#### Initialization by list-initialization <a id="over.match.list">[over.match.list]</a>
+#### Initialization by list-initialization <a id="over.match.list">[[over.match.list]]</a>
 
 When objects of non-aggregate class type `T` are list-initialized such
-that [dcl.init.list] specifies that overload resolution is performed
+that [[dcl.init.list]] specifies that overload resolution is performed
 according to the rules in this subclause or when forming a
-list-initialization sequence according to [over.ics.list], overload
+list-initialization sequence according to [[over.ics.list]], overload
 resolution selects the constructor in two phases:
 
 - If the initializer list is not empty or `T` has no default
   constructor, overload resolution is first performed where the
   candidate functions are the initializer-list constructors
-  [dcl.init.list] of the class `T` and the argument list consists of the
-  initializer list as a single argument.
+  [[dcl.init.list]] of the class `T` and the argument list consists of
+  the initializer list as a single argument.
 
 - Otherwise, or if no viable initializer-list constructor is found,
   overload resolution is performed again, where the candidate functions
@@ -849,17 +851,17 @@ In copy-list-initialization, if an explicit constructor is chosen, the
 initialization is ill-formed.
 
 \[*Note 14*: This differs from other situations
-[over.match.ctor], [over.match.copy], where only converting constructors
-are considered for copy-initialization. This restriction only applies if
-this initialization is part of the final result of overload
-resolution. — *end note*\]
+[[over.match.ctor]], [[over.match.copy]], where only converting
+constructors are considered for copy-initialization. This restriction
+only applies if this initialization is part of the final result of
+overload resolution. — *end note*\]
 
-#### Class template argument deduction <a id="over.match.class.deduct">[over.match.class.deduct]</a>
+#### Class template argument deduction <a id="over.match.class.deduct">[[over.match.class.deduct]]</a>
 
 When resolving a placeholder for a deduced class type
-[dcl.type.class.deduct] where the *template-name* names a primary class
-template `C`, a set of functions and function templates, called the
-guides of `C`, is formed comprising:
+[[dcl.type.class.deduct]] where the *template-name* names a primary
+class template `C`, a set of functions and function templates, called
+the guides of `C`, is formed comprising:
 
 - If `C` is defined, for each constructor of `C`, a function template
   with the following properties:
@@ -891,7 +893,7 @@ guides of `C`, is formed comprising:
     *deduction-guide*.
 
 In addition, if `C` is defined and its definition satisfies the
-conditions for an aggregate class [dcl.init.aggr] with the assumption
+conditions for an aggregate class [[dcl.init.aggr]] with the assumption
 that any dependent base class has no virtual functions and no virtual
 base classes, and the initializer is a non-empty *braced-init-list* or
 parenthesized *expression-list*, and there are no *deduction-guide* for
@@ -901,7 +903,7 @@ $x_1, \dotsc, x_n$ be the elements of the *initializer-list* or
 *designated-initializer-list* of the *braced-init-list*, or of the
 *expression-list*. For each xᵢ, let eᵢ be the corresponding aggregate
 element of `C` or of one of its (possibly recursive) subaggregates that
-would be initialized by xᵢ [dcl.init.aggr] if
+would be initialized by xᵢ [[dcl.init.aggr]] if
 
 - brace elision is not considered for any aggregate element that has
 
@@ -938,13 +940,14 @@ aggregate element of type $\tcode{P}_j$ that was skipped because it was
 a parameter pack, and the trailing sequence of parameters corresponding
 to a trailing aggregate element that is a pack expansion (if any) is
 replaced by a single parameter of the form $\tcode{T}_n \tcode{...}$. In
-addition, if `C` is defined and inherits constructors [namespace.udecl]
-from a direct base class denoted in the *base-specifier-list* by a
-*class-or-decltype* `B`, let `A` be an alias template whose template
-parameter list is that of `C` and whose *defining-type-id* is `B`. If
-`A` is a deducible template [dcl.type.simple], the set contains the
-guides of `A` with the return type `R` of each guide replaced with
-`typename CC<R>::type` given a class template
+addition, if `C` is defined and inherits constructors
+[[namespace.udecl]] from a direct base class denoted in the
+*base-specifier-list* by a *class-or-decltype* `B`, let `A` be an alias
+template whose template parameter list is that of `C` and whose
+*defining-type-id* is `B`. If `A` is a deducible template
+[[dcl.type.simple]], the set contains the guides of `A` with the return
+type `R` of each guide replaced with `typename CC<R>::type` given a
+class template
 
 ``` cpp
 template <typename> class CC;
@@ -953,7 +956,7 @@ template <typename> class CC;
 whose primary template is not defined and with a single partial
 specialization whose template parameter list is that of `A` and whose
 template argument list is a specialization of `A` with the template
-argument list of `A` [temp.dep.type] having a member typedef `type`
+argument list of `A` [[temp.dep.type]] having a member typedef `type`
 designating a template specialization with the template argument list of
 `A` but with `C` as the template.
 
@@ -1013,20 +1016,20 @@ J j = { "ghi" };    // error: cannot bind reference to array of unsigned char to
 
 — *end example*\]
 
-When resolving a placeholder for a deduced class type [dcl.type.simple]
-where the *template-name* names an alias template `A`, the
-*defining-type-id* of `A` must be of the form
+When resolving a placeholder for a deduced class type
+[[dcl.type.simple]] where the *template-name* names an alias template
+`A`, the *defining-type-id* of `A` must be of the form
 
 ``` bnf
 [\texttt{typename]} [nested-name-specifier] [\texttt{template]} simple-template-id
 ```
 
-as specified in [dcl.type.simple]. The guides of `A` are the set of
+as specified in [[dcl.type.simple]]. The guides of `A` are the set of
 functions or function templates formed as follows. For each function or
 function template `f` in the guides of the template named by the
 *simple-template-id* of the *defining-type-id*, the template arguments
 of the return type of `f` are deduced from the *defining-type-id* of `A`
-according to the process in [temp.deduct.type] with the exception that
+according to the process in [[temp.deduct.type]] with the exception that
 deduction does not fail if not all template arguments are deduced. If
 deduction fails for another reason, proceed with an empty set of deduced
 template arguments. Let `g` denote the result of substituting these
@@ -1044,7 +1047,7 @@ set of guides of `A`:
   (including their default template arguments), otherwise `f'` is not a
   function template.
 
-- The associated constraints [temp.constr.decl] are the conjunction of
+- The associated constraints [[temp.constr.decl]] are the conjunction of
   the associated constraints of `g` and a constraint that is satisfied
   if and only if the arguments of `A` are deducible (see below) from the
   return type.
@@ -1052,7 +1055,7 @@ set of guides of `A`:
 - If `f` is a copy deduction candidate, then `f'` is considered to be so
   as well.
 
-- If `f` was generated from a *deduction-guide* [temp.deduct.guide],
+- If `f` was generated from a *deduction-guide* [[temp.deduct.guide]],
   then `f'` is considered to be so as well.
 
 - The *explicit-specifier* of `f'` is the *explicit-specifier* of `g`
@@ -1067,12 +1070,12 @@ template <typename> class AA;
 
 with a single partial specialization whose template parameter list is
 that of `A` and whose template argument list is a specialization of `A`
-with the template argument list of `A` [temp.dep.type], `AA<T>` matches
-the partial specialization.
+with the template argument list of `A` [[temp.dep.type]], `AA<T>`
+matches the partial specialization.
 
 Initialization and overload resolution are performed as described in
-[dcl.init] and [over.match.ctor], [over.match.copy], or
-[over.match.list] (as appropriate for the type of initialization
+[[dcl.init]] and [[over.match.ctor]], [[over.match.copy]], or
+[[over.match.list]] (as appropriate for the type of initialization
 performed) for an object of a hypothetical class type, where the guides
 of the template named by the placeholder are considered to be the
 constructors of that class type for the purpose of forming an overload
@@ -1080,7 +1083,7 @@ set, and the initializer is provided by the context in which class
 template argument deduction was performed. The following exceptions
 apply:
 
-- The first phase in [over.match.list] (considering initializer-list
+- The first phase in [[over.match.list]] (considering initializer-list
   constructors) is omitted if the initializer list consists of a single
   expression of type cv `U`, where `U` is, or is derived from, a
   specialization of the class template directly or indirectly named by
@@ -1245,13 +1248,13 @@ template<std::integral W, class U>
 
 — *end example*\]
 
-### Viable functions <a id="over.match.viable">[over.match.viable]</a>
+### Viable functions <a id="over.match.viable">[[over.match.viable]]</a>
 
 From the set of candidate functions constructed for a given context
-[over.match.funcs], a set of viable functions is chosen, from which the
-best function will be selected by comparing argument conversion
-sequences and associated constraints [temp.constr.decl] for the best fit
-[over.match.best]. The selection of viable functions considers
+[[over.match.funcs]], a set of viable functions is chosen, from which
+the best function will be selected by comparing argument conversion
+sequences and associated constraints [[temp.constr.decl]] for the best
+fit [[over.match.best]]. The selection of viable functions considers
 associated constraints, if any, and relationships between arguments and
 function parameters other than the ranking of conversion sequences.
 
@@ -1262,40 +1265,40 @@ parameters to agree in number with the arguments in the list.
   exactly m parameters are viable.
 
 - A candidate function having fewer than m parameters is viable only if
-  it has an ellipsis in its parameter list [dcl.fct]. For the purposes
+  it has an ellipsis in its parameter list [[dcl.fct]]. For the purposes
   of overload resolution, any argument for which there is no
   corresponding parameter is considered to “match the ellipsis”
-  [over.ics.ellipsis].
+  [[over.ics.ellipsis]].
 
 - A candidate function having more than m parameters is viable only if
   all parameters following the $m^\text{th}$ have default arguments
-  [dcl.fct.default]. For the purposes of overload resolution, the
+  [[dcl.fct.default]]. For the purposes of overload resolution, the
   parameter list is truncated on the right, so that there are exactly m
   parameters.
 
 Second, for a function to be viable, if it has associated constraints
-[temp.constr.decl], those constraints shall be satisfied
-[temp.constr.constr].
+[[temp.constr.decl]], those constraints shall be satisfied
+[[temp.constr.constr]].
 
 Third, for `F` to be a viable function, there shall exist for each
-argument an implicit conversion sequence [over.best.ics] that converts
+argument an implicit conversion sequence [[over.best.ics]] that converts
 that argument to the corresponding parameter of `F`. If the parameter
 has reference type, the implicit conversion sequence includes the
 operation of binding the reference, and the fact that an lvalue
 reference to non-`const` cannot bind to an rvalue and that an rvalue
 reference cannot bind to an lvalue can affect the viability of the
-function (see  [over.ics.ref]).
+function (see  [[over.ics.ref]]).
 
-### Best viable function <a id="over.match.best">[over.match.best]</a>
+### Best viable function <a id="over.match.best">[[over.match.best]]</a>
 
-#### General <a id="over.match.best.general">[over.match.best.general]</a>
+#### General <a id="over.match.best.general">[[over.match.best.general]]</a>
 
 Define $\text{ICS}^i(\tcode{F})$ as the implicit conversion sequence
 that converts the $i^\text{th}$ argument in the list to the type of the
-$i^\text{th}$ parameter of viable function `F`. [over.best.ics] defines
-the implicit conversion sequences and [over.ics.rank] defines what it
-means for one implicit conversion sequence to be a better conversion
-sequence or worse conversion sequence than another.
+$i^\text{th}$ parameter of viable function `F`. [[over.best.ics]]
+defines the implicit conversion sequences and [[over.ics.rank]] defines
+what it means for one implicit conversion sequence to be a better
+conversion sequence or worse conversion sequence than another.
 
 Given these definitions, a viable function $\tcode{F}_1$ is defined to
 be a *better* function than another viable function $\tcode{F}_2$ if for
@@ -1306,11 +1309,11 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   conversion sequence than $\text{ICS}^j(\tcode{F}_2)$, or, if not that,
 
 - the context is an initialization by user-defined conversion (see 
-  [dcl.init], [over.match.conv], and  [over.match.ref]) and the standard
-  conversion sequence from the return type of $\tcode{F}_1$ to the
-  destination type (i.e., the type of the entity being initialized) is a
-  better conversion sequence than the standard conversion sequence from
-  the return type of $\tcode{F}_2$ to the destination type
+  [[dcl.init]], [[over.match.conv]], and  [[over.match.ref]]) and the
+  standard conversion sequence from the return type of $\tcode{F}_1$ to
+  the destination type (i.e., the type of the entity being initialized)
+  is a better conversion sequence than the standard conversion sequence
+  from the return type of $\tcode{F}_2$ to the destination type
 
   \[*Example 1*:
 
@@ -1331,7 +1334,7 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   or, if not that,
 
 - the context is an initialization by conversion function for direct
-  reference binding [over.match.ref] of a reference to function type,
+  reference binding [[over.match.ref]] of a reference to function type,
   the return type of `F1` is the same kind of reference (lvalue or
   rvalue) as the reference being initialized, and the return type of
   `F2` is not
@@ -1361,12 +1364,12 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   and `F2` are function template specializations, and the function
   template for `F1` is more specialized than the template for `F2`
   according to the partial ordering rules described in 
-  [temp.func.order], or, if not that,
+  [[temp.func.order]], or, if not that,
 
 - `F1` and `F2` are non-template functions with the same
   parameter-type-lists, and `F1` is more constrained than `F2` according
   to the partial ordering of constraints described in
-  [temp.constr.order], or if not that,
+  [[temp.constr.order]], or if not that,
 
 - `F1` is a constructor for a class `D`, `F2` is a constructor for a
   base class `B` of `D`, and for all arguments the corresponding
@@ -1393,7 +1396,7 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
 
   or, if not that,
 
-- `F2` is a rewritten candidate [over.match.oper] and `F1` is not
+- `F2` is a rewritten candidate [[over.match.oper]] and `F1` is not
 
   \[*Example 4*:
 
@@ -1427,16 +1430,16 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   or, if not that
 
 - `F1` and `F2` are generated from class template argument deduction
-  [over.match.class.deduct] for a class `D`, and `F2` is generated from
-  inheriting constructors from a base class of `D` while `F1` is not,
-  and for each explicit function argument, the corresponding parameters
-  of `F1` and `F2` are either both ellipses or have the same type, or,
-  if not that,
+  [[over.match.class.deduct]] for a class `D`, and `F2` is generated
+  from inheriting constructors from a base class of `D` while `F1` is
+  not, and for each explicit function argument, the corresponding
+  parameters of `F1` and `F2` are either both ellipses or have the same
+  type, or, if not that,
 
-- `F1` is generated from a *deduction-guide* [over.match.class.deduct]
+- `F1` is generated from a *deduction-guide* [[over.match.class.deduct]]
   and `F2` is not, or, if not that,
 
-- `F1` is the copy deduction candidate [over.match.class.deduct] and
+- `F1` is the copy deduction candidate [[over.match.class.deduct]] and
   `F2` is not, or, if not that,
 
 - `F1` is generated from a non-template constructor and `F2` is
@@ -1524,16 +1527,16 @@ void use() {
 
 — *end example*\]
 
-#### Implicit conversion sequences <a id="over.best.ics">[over.best.ics]</a>
+#### Implicit conversion sequences <a id="over.best.ics">[[over.best.ics]]</a>
 
-##### General <a id="over.best.ics.general">[over.best.ics.general]</a>
+##### General <a id="over.best.ics.general">[[over.best.ics.general]]</a>
 
 An *implicit conversion sequence* is a sequence of conversions used to
 convert an argument in a function call to the type of the corresponding
 parameter of the function being called. The sequence of conversions is
-an implicit conversion as defined in [conv], which means it is governed
-by the rules for initialization of an object or reference by a single
-expression [dcl.init], [dcl.init.ref].
+an implicit conversion as defined in [[conv]], which means it is
+governed by the rules for initialization of an object or reference by a
+single expression [[dcl.init]], [[dcl.init.ref]].
 
 Implicit conversion sequences are concerned only with the type,
 cv-qualification, and value category of the argument and how these are
@@ -1541,7 +1544,7 @@ converted to match the corresponding properties of the parameter.
 
 \[*Note 16*: Other properties, such as the lifetime, storage class,
 alignment, accessibility of the argument, whether the argument is a
-bit-field, and whether a function is deleted [dcl.fct.def.delete], are
+bit-field, and whether a function is deleted [[dcl.fct.def.delete]], are
 ignored. So, although an implicit conversion sequence can be defined for
 a given argument-parameter pair, the conversion from the argument to the
 parameter might still be ill-formed in the final
@@ -1550,11 +1553,11 @@ analysis. — *end note*\]
 A well-formed implicit conversion sequence is one of the following
 forms:
 
-- a standard conversion sequence [over.ics.scs],
+- a standard conversion sequence [[over.ics.scs]],
 
-- a user-defined conversion sequence [over.ics.user], or
+- a user-defined conversion sequence [[over.ics.user]], or
 
-- an ellipsis conversion sequence [over.ics.ellipsis].
+- an ellipsis conversion sequence [[over.ics.ellipsis]].
 
 However, if the target is
 
@@ -1565,13 +1568,13 @@ However, if the target is
 and the constructor or user-defined conversion function is a candidate
 by
 
--  [over.match.ctor], when the argument is the temporary in the second
+-  [[over.match.ctor]], when the argument is the temporary in the second
   step of a class copy-initialization,
 
--  [over.match.copy], [over.match.conv], or [over.match.ref] (in all
-  cases), or
+-  [[over.match.copy]], [[over.match.conv]], or [[over.match.ref]] (in
+  all cases), or
 
-- the second phase of [over.match.list] when the initializer list has
+- the second phase of [[over.match.list]] when the initializer list has
   exactly one element that is itself an initializer list, and the target
   is the first parameter of a constructor of class `X`, and the
   conversion is to `X` or reference to cv `X`,
@@ -1598,7 +1601,7 @@ X x{{b}};           // error: B::operator X() is not a candidate
 — *end example*\]
 
 For the case where the parameter type is a reference, see 
-[over.ics.ref].
+[[over.ics.ref]].
 
 When the parameter type is not a reference, the implicit conversion
 sequence models a copy-initialization of the parameter from the argument
@@ -1607,8 +1610,8 @@ convert the argument expression to a prvalue of the type of the
 parameter.
 
 \[*Note 18*: When the parameter has a class type, this is a conceptual
-conversion defined for the purposes of [over]; the actual initialization
-is defined in terms of constructors and is not a
+conversion defined for the purposes of [[over]]; the actual
+initialization is defined in terms of constructors and is not a
 conversion. — *end note*\]
 
 Any difference in top-level cv-qualification is subsumed by the
@@ -1624,7 +1627,7 @@ same type, the implicit conversion sequence is an identity conversion.
 When the parameter has a class type and the argument expression has a
 derived class type, the implicit conversion sequence is a
 derived-to-base conversion from the derived class to the base class. A
-derived-to-base conversion has Conversion rank [over.ics.scs].
+derived-to-base conversion has Conversion rank [[over.ics.scs]].
 
 \[*Note 19*: There is no such standard conversion; this derived-to-base
 conversion exists only in the description of implicit conversion
@@ -1644,7 +1647,7 @@ user-defined conversion sequences are allowed. — *end note*\]
 
 If no conversions are required to match an argument to a parameter type,
 the implicit conversion sequence is the standard conversion sequence
-consisting of the identity conversion [over.ics.scs].
+consisting of the identity conversion [[over.ics.scs]].
 
 If no sequence of conversions can be found to convert an argument to a
 parameter type, an implicit conversion sequence cannot be formed.
@@ -1654,7 +1657,7 @@ converting the argument to the parameter type, the implicit conversion
 sequence associated with the parameter is defined to be the unique
 conversion sequence designated the *ambiguous conversion sequence*. For
 the purpose of ranking implicit conversion sequences as described in 
-[over.ics.rank], the ambiguous conversion sequence is treated as a
+[[over.ics.rank]], the ambiguous conversion sequence is treated as a
 user-defined conversion sequence that is indistinguishable from any
 other user-defined conversion sequence.
 
@@ -1672,9 +1675,9 @@ conversion of one of the arguments in the call is ambiguous.
 The three forms of implicit conversion sequences mentioned above are
 defined in the following subclauses.
 
-##### Standard conversion sequences <a id="over.ics.scs">[over.ics.scs]</a>
+##### Standard conversion sequences <a id="over.ics.scs">[[over.ics.scs]]</a>
 
-summarizes the conversions defined in [conv] and partitions them into
+summarizes the conversions defined in [[conv]] and partitions them into
 four disjoint categories: Lvalue Transformation, Qualification
 Adjustment, Promotion, and Conversion.
 
@@ -1686,41 +1689,41 @@ the value category or data representation of the type; and the
 Promotions and Conversions do not change the value category or
 cv-qualification of the type. — *end note*\]
 
-\[*Note 23*: As described in [conv], a standard conversion sequence
+\[*Note 23*: As described in [[conv]], a standard conversion sequence
 either is the Identity conversion by itself (that is, no conversion) or
 consists of one to three conversions from the other four categories. If
 there are two or more conversions in the sequence, the conversions are
 applied in the canonical order: **Lvalue Transformation**, **Promotion**
 or **Conversion**, **Qualification Adjustment**. — *end note*\]
 
-Each conversion in [over.ics.scs] also has an associated rank (Exact
+Each conversion in [[over.ics.scs]] also has an associated rank (Exact
 Match, Promotion, or Conversion). These are used to rank standard
-conversion sequences [over.ics.rank]. The rank of a conversion sequence
-is determined by considering the rank of each conversion in the sequence
-and the rank of any reference binding [over.ics.ref]. If any of those
-has Conversion rank, the sequence has Conversion rank; otherwise, if any
-of those has Promotion rank, the sequence has Promotion rank; otherwise,
-the sequence has Exact Match rank.
+conversion sequences [[over.ics.rank]]. The rank of a conversion
+sequence is determined by considering the rank of each conversion in the
+sequence and the rank of any reference binding [[over.ics.ref]]. If any
+of those has Conversion rank, the sequence has Conversion rank;
+otherwise, if any of those has Promotion rank, the sequence has
+Promotion rank; otherwise, the sequence has Exact Match rank.
 
 **Table: Conversions**
 
 |  |  |  |
 | --- | --- | --- |
 | No conversions required | Identity |  |
-| Integral promotions |  |  | [conv.prom] |
-| Integral conversions |  |  | [conv.integral] |
+| Integral promotions |  |  | [[conv.prom]] |
+| Integral conversions |  |  | [[conv.integral]] |
 
-##### User-defined conversion sequences <a id="over.ics.user">[over.ics.user]</a>
+##### User-defined conversion sequences <a id="over.ics.user">[[over.ics.user]]</a>
 
 A *user-defined conversion sequence* consists of an initial standard
-conversion sequence followed by a user-defined conversion [class.conv]
+conversion sequence followed by a user-defined conversion [[class.conv]]
 followed by a second standard conversion sequence. If the user-defined
-conversion is specified by a constructor [class.conv.ctor], the initial
-standard conversion sequence converts the source type to the type of the
-first parameter of that constructor. If the user-defined conversion is
-specified by a conversion function [class.conv.fct], the initial
-standard conversion sequence converts the source type to the type of the
-object parameter of that conversion function.
+conversion is specified by a constructor [[class.conv.ctor]], the
+initial standard conversion sequence converts the source type to the
+type of the first parameter of that constructor. If the user-defined
+conversion is specified by a conversion function [[class.conv.fct]], the
+initial standard conversion sequence converts the source type to the
+type of the object parameter of that conversion function.
 
 The second standard conversion sequence converts the result of the
 user-defined conversion to the target type for the sequence; any
@@ -1728,7 +1731,7 @@ reference binding is included in the second standard conversion
 sequence. Since an implicit conversion sequence is an initialization,
 the special rules for initialization by user-defined conversion apply
 when selecting the best user-defined conversion for a user-defined
-conversion sequence (see  [over.match.best] and  [over.best.ics]).
+conversion sequence (see  [[over.match.best]] and  [[over.best.ics]]).
 
 If the user-defined conversion is specified by a specialization of a
 conversion function template, the second standard conversion sequence
@@ -1740,19 +1743,19 @@ to a base class of that type is given Conversion rank, in spite of the
 fact that a constructor (i.e., a user-defined conversion function) is
 called for those cases.
 
-##### Ellipsis conversion sequences <a id="over.ics.ellipsis">[over.ics.ellipsis]</a>
+##### Ellipsis conversion sequences <a id="over.ics.ellipsis">[[over.ics.ellipsis]]</a>
 
 An ellipsis conversion sequence occurs when an argument in a function
 call is matched with the ellipsis parameter specification of the
-function called (see  [expr.call]).
+function called (see  [[expr.call]]).
 
-##### Reference binding <a id="over.ics.ref">[over.ics.ref]</a>
+##### Reference binding <a id="over.ics.ref">[[over.ics.ref]]</a>
 
-When a parameter of reference type binds directly [dcl.init.ref] to an
+When a parameter of reference type binds directly [[dcl.init.ref]] to an
 argument expression, the implicit conversion sequence is the identity
 conversion, unless the argument expression has a type that is a derived
 class of the parameter type, in which case the implicit conversion
-sequence is a derived-to-base conversion [over.best.ics].
+sequence is a derived-to-base conversion [[over.best.ics]].
 
 \[*Example 17*:
 
@@ -1768,22 +1771,22 @@ int i = f(b);       // calls f(B\&), an exact match, rather than f(A\&), a conve
 
 If the parameter binds directly to the result of applying a conversion
 function to the argument expression, the implicit conversion sequence is
-a user-defined conversion sequence [over.ics.user] whose second standard
-conversion sequence is either an identity conversion or, if the
+a user-defined conversion sequence [[over.ics.user]] whose second
+standard conversion sequence is either an identity conversion or, if the
 conversion function returns an entity of a type that is a derived class
 of the parameter type, a derived-to-base conversion.
 
 When a parameter of reference type is not bound directly to an argument
 expression, the conversion sequence is the one required to convert the
 argument expression to the referenced type according to 
-[over.best.ics]. Conceptually, this conversion sequence corresponds to
+[[over.best.ics]]. Conceptually, this conversion sequence corresponds to
 copy-initializing a temporary of the referenced type with the argument
 expression. Any difference in top-level cv-qualification is subsumed by
 the initialization itself and does not constitute a conversion.
 
 Except for an implicit object parameter, for which see 
-[over.match.funcs], an implicit conversion sequence cannot be formed if
-it requires binding an lvalue reference other than a reference to a
+[[over.match.funcs]], an implicit conversion sequence cannot be formed
+if it requires binding an lvalue reference other than a reference to a
 non-volatile `const` type to an rvalue or binding an rvalue reference to
 an lvalue other than a function lvalue.
 
@@ -1791,7 +1794,7 @@ an lvalue other than a function lvalue.
 be a viable function if it has a non-`const` lvalue reference parameter
 (other than the implicit object parameter) and the corresponding
 argument would require a temporary to be created to initialize the
-lvalue reference (see  [dcl.init.ref]). — *end note*\]
+lvalue reference (see  [[dcl.init.ref]]). — *end note*\]
 
 Other restrictions on binding a reference to a particular argument that
 are not based on the types of the reference and the argument do not
@@ -1804,18 +1807,18 @@ bit-field. The formation of implicit conversion sequences treats the
 parameter. If the function is selected by overload resolution, the call
 will nonetheless be ill-formed because of the prohibition on binding a
 non-`const` lvalue reference to a bit-field
-[dcl.init.ref]. — *end example*\]
+[[dcl.init.ref]]. — *end example*\]
 
-##### List-initialization sequence <a id="over.ics.list">[over.ics.list]</a>
+##### List-initialization sequence <a id="over.ics.list">[[over.ics.list]]</a>
 
-When an argument is an initializer list [dcl.init.list], it is not an
+When an argument is an initializer list [[dcl.init.list]], it is not an
 expression and special rules apply for converting it to a parameter
 type.
 
 If the initializer list is a *designated-initializer-list*, a conversion
 is only possible if the parameter has an aggregate type that can be
 initialized from the initializer list according to the rules for
-aggregate initialization [dcl.init.aggr], in which case the implicit
+aggregate initialization [[dcl.init.aggr]], in which case the implicit
 conversion sequence is a user-defined conversion sequence whose second
 standard conversion sequence is an identity conversion.
 
@@ -1824,7 +1827,7 @@ standard conversion sequence is an identity conversion.
 Aggregate initialization does not require that the members are declared
 in designation order. If, after overload resolution, the order does not
 match for the selected overload, the initialization of the parameter
-will be ill-formed [dcl.init.list].
+will be ill-formed [[dcl.init.list]].
 
 — *end note*\]
 
@@ -1836,7 +1839,7 @@ required to convert the element to the parameter type.
 Otherwise, if the parameter type is a character array
 
 and the initializer list has a single element that is an
-appropriately-typed *string-literal* [dcl.init.string], the implicit
+appropriately-typed *string-literal* [[dcl.init.string]], the implicit
 conversion sequence is the identity conversion.
 
 Otherwise, if the parameter type is `std::initializer_list<X>` and all
@@ -1881,9 +1884,9 @@ case if `N` exceeds the number of elements in the initializer list) to
 conversion sequence.
 
 Otherwise, if the parameter is a non-aggregate class `X` and overload
-resolution per  [over.match.list] chooses a single best constructor `C`
-of `X` to perform the initialization of an object of type `X` from the
-argument initializer list:
+resolution per  [[over.match.list]] chooses a single best constructor
+`C` of `X` to perform the initialization of an object of type `X` from
+the argument initializer list:
 
 - If `C` is not an initializer-list constructor and the initializer list
   has a single element of type cv `U`, where `U` is `X` or a class
@@ -1898,7 +1901,7 @@ If multiple constructors are viable but none is better than the others,
 the implicit conversion sequence is the ambiguous conversion sequence.
 User-defined conversions are allowed for conversion of the initializer
 list elements to the constructor parameter types except as noted in 
-[over.best.ics].
+[[over.best.ics]].
 
 \[*Example 20*:
 
@@ -1936,7 +1939,7 @@ i({ {1,2}, {"bar"} });  // OK, i(D(A(std::initializer_list<int>\{1,2\), C(std::s
 
 Otherwise, if the parameter has an aggregate type which can be
 initialized from the initializer list according to the rules for
-aggregate initialization [dcl.init.aggr], the implicit conversion
+aggregate initialization [[dcl.init.aggr]], the implicit conversion
 sequence is a user-defined conversion sequence whose second standard
 conversion sequence is an identity conversion.
 
@@ -1955,7 +1958,7 @@ f( {1.0} );             // error: narrowing
 
 — *end example*\]
 
-Otherwise, if the parameter is a reference, see  [over.ics.ref].
+Otherwise, if the parameter is a reference, see  [[over.ics.ref]].
 
 \[*Note 26*: The rules in this subclause will apply for initializing the
 underlying temporary for the reference. — *end note*\]
@@ -2009,7 +2012,7 @@ Otherwise, if the parameter type is not a class:
 In all cases other than those enumerated above, no conversion is
 possible.
 
-#### Ranking implicit conversion sequences <a id="over.ics.rank">[over.ics.rank]</a>
+#### Ranking implicit conversion sequences <a id="over.ics.rank">[[over.ics.rank]]</a>
 
 This subclause defines a partial ordering of implicit conversion
 sequences based on the relationships *better conversion sequence* and
@@ -2020,15 +2023,15 @@ sequence S1 is neither better than nor worse than conversion sequence
 S2, S1 and S2 are said to be *indistinguishable conversion sequences*.
 
 When comparing the basic forms of implicit conversion sequences (as
-defined in  [over.best.ics])
+defined in  [[over.best.ics]])
 
-- a standard conversion sequence [over.ics.scs] is a better conversion
+- a standard conversion sequence [[over.ics.scs]] is a better conversion
   sequence than a user-defined conversion sequence or an ellipsis
   conversion sequence, and
 
-- a user-defined conversion sequence [over.ics.user] is a better
+- a user-defined conversion sequence [[over.ics.user]] is a better
   conversion sequence than an ellipsis conversion sequence
-  [over.ics.ellipsis].
+  [[over.ics.ellipsis]].
 
 Two implicit conversion sequences of the same form are indistinguishable
 conversion sequences unless one of the following rules applies:
@@ -2081,7 +2084,7 @@ conversion sequences unless one of the following rules applies:
   standard conversion sequence `S2` if
 
   -  `S1` is a proper subsequence of `S2` (comparing the conversion
-    sequences in the canonical form defined by  [over.ics.scs],
+    sequences in the canonical form defined by  [[over.ics.scs]],
     excluding any Lvalue Transformation; the identity conversion
     sequence is considered to be a subsequence of any non-identity
     conversion sequence) or, if not that,
@@ -2090,10 +2093,10 @@ conversion sequences unless one of the following rules applies:
     have the same rank and are distinguishable by the rules in the
     paragraph below, or, if not that,
 
-  - `S1` and `S2` include reference bindings [dcl.init.ref] and neither
-    refers to an implicit object parameter of a non-static member
-    function declared without a *ref-qualifier*, and `S1` binds an
-    rvalue reference to an rvalue and `S2` binds an lvalue reference
+  - `S1` and `S2` include reference bindings [[dcl.init.ref]] and
+    neither refers to an implicit object parameter of a non-static
+    member function declared without a *ref-qualifier*, and `S1` binds
+    an rvalue reference to an rvalue and `S2` binds an lvalue reference
 
     \[*Example 11*:
 
@@ -2126,7 +2129,7 @@ conversion sequences unless one of the following rules applies:
 
     or, if not that,
 
-  - `S1` and `S2` include reference bindings [dcl.init.ref] and `S1`
+  - `S1` and `S2` include reference bindings [[dcl.init.ref]] and `S1`
     binds an lvalue reference to a function lvalue and `S2` binds an
     rvalue reference to a function lvalue
 
@@ -2144,7 +2147,7 @@ conversion sequences unless one of the following rules applies:
     or, if not that,
 
   - `S1` and `S2` differ only in their qualification conversion
-    [conv.qual] and yield similar types `T1` and `T2`, respectively,
+    [[conv.qual]] and yield similar types `T1` and `T2`, respectively,
     where `T1` can be converted to `T2` by a qualification conversion.
 
     \[*Example 13*:
@@ -2161,8 +2164,8 @@ conversion sequences unless one of the following rules applies:
     or, if not that,
 
   - `S1`
-    and `S2` include reference bindings [dcl.init.ref], and the types to
-    which the references refer are the same type except for top-level
+    and `S2` include reference bindings [[dcl.init.ref]], and the types
+    to which the references refer are the same type except for top-level
     cv-qualifiers, and the type to which the reference initialized by
     `S2` refers is more cv-qualified than the type to which the
     reference initialized by `S1` refers.
@@ -2228,13 +2231,13 @@ indistinguishable unless one of the following rules applies:
   floating-point type `FP2` is better than a conversion in the same
   direction between `FP1` and arithmetic type `T3` if
 
-  - the floating-point conversion rank [conv.rank] of `FP1` is equal to
-    the rank of `FP2`, and
+  - the floating-point conversion rank [[conv.rank]] of `FP1` is equal
+    to the rank of `FP2`, and
 
   - `T3` is not a floating-point type, or `T3` is a floating-point type
     whose rank is not equal to the rank of `FP1`, or the floating-point
-    conversion subrank [conv.rank] of `FP2` is greater than the subrank
-    of `T3`.
+    conversion subrank [[conv.rank]] of `FP2` is greater than the
+    subrank of `T3`.
 
     \[*Example 16*:
 
@@ -2300,10 +2303,10 @@ indistinguishable unless one of the following rules applies:
   \[*Note 2*: Compared conversion sequences will have different source
   types only in the context of comparing the second standard conversion
   sequence of an initialization by user-defined conversion (see 
-  [over.match.best]); in all other contexts, the source types will be
+  [[over.match.best]]); in all other contexts, the source types will be
   the same and the target types will be different. — *end note*\]
 
-## Address of an overload set <a id="over.over">[over.over]</a>
+## Address of an overload set <a id="over.over">[[over.over]]</a>
 
 An *id-expression* whose terminal name refers to an overload set S and
 that appears without arguments is resolved to a function, a pointer to
@@ -2313,37 +2316,37 @@ the target type required in the context (if any), as described below.
 The target can be
 
 - an object or reference being initialized
-  [dcl.init], [dcl.init.ref], [dcl.init.list],
+  [[dcl.init]], [[dcl.init.ref]], [[dcl.init.list]],
 
-- the left side of an assignment [expr.ass],
+- the left side of an assignment [[expr.ass]],
 
-- a parameter of a function [expr.call],
+- a parameter of a function [[expr.call]],
 
-- a parameter of a user-defined operator [over.oper],
+- a parameter of a user-defined operator [[over.oper]],
 
 - the return value of a function, operator function, or conversion
-  [stmt.return],
+  [[stmt.return]],
 
 - an explicit type conversion
-  [expr.type.conv], [expr.static.cast], [expr.cast], or
+  [[expr.type.conv]], [[expr.static.cast]], [[expr.cast]], or
 
-- a non-type *template-parameter* [temp.arg.nontype].
+- a non-type *template-parameter* [[temp.arg.nontype]].
 
 The *id-expression* can be preceded by the `&` operator.
 
 \[*Note 1*: Any redundant set of parentheses surrounding the function
-name is ignored [expr.prim.paren]. — *end note*\]
+name is ignored [[expr.prim.paren]]. — *end note*\]
 
 If there is no target, all non-template functions named are selected.
 Otherwise, a non-template function with type `F` is selected for the
 function type `FT` of the target type if `F` (after possibly applying
-the function pointer conversion [conv.fctptr]) is identical to `FT`.
+the function pointer conversion [[conv.fctptr]]) is identical to `FT`.
 
 \[*Note 2*: That is, the class of which the function is a member is
 ignored when matching a pointer-to-member-function type. — *end note*\]
 
 The specialization, if any, generated by template argument deduction
-[temp.over], [temp.deduct.funcaddr], [temp.arg.explicit] for each
+[[temp.over]], [[temp.deduct.funcaddr]], [[temp.arg.explicit]] for each
 function template named is added to the set of selected functions
 considered.
 
@@ -2354,20 +2357,20 @@ pointer-to-member-function type.
 
 \[*Note 3*: If an implicit object member function is chosen, the result
 can be used only to form a pointer to member
-[expr.unary.op]. — *end note*\]
+[[expr.unary.op]]. — *end note*\]
 
 All functions with associated constraints that are not satisfied
-[temp.constr.decl] are eliminated from the set of selected functions. If
-more than one function in the set remains, all function template
+[[temp.constr.decl]] are eliminated from the set of selected functions.
+If more than one function in the set remains, all function template
 specializations in the set are eliminated if the set also contains a
 function that is not a function template specialization. Any given
 non-template function `F0` is eliminated if the set contains a second
 non-template function that is more constrained than `F0` according to
-the partial ordering rules of [temp.constr.order]. Any given function
+the partial ordering rules of [[temp.constr.order]]. Any given function
 template specialization `F1` is eliminated if the set contains a second
 function template specialization whose function template is more
 specialized than the function template of `F1` according to the partial
-ordering rules of  [temp.func.order]. After such eliminations, if any,
+ordering rules of  [[temp.func.order]]. After such eliminations, if any,
 there shall remain exactly one selected function.
 
 \[*Example 1*:
@@ -2424,9 +2427,9 @@ void (*p2)(B*) = &g;            // error
 
 — *end note*\]
 
-## Overloaded operators <a id="over.oper">[over.oper]</a>
+## Overloaded operators <a id="over.oper">[[over.oper]]</a>
 
-### General <a id="over.oper.general">[over.oper.general]</a>
+### General <a id="over.oper.general">[[over.oper.general]]</a>
 
 A declaration whose *declarator-id* is an *operator-function-id* shall
 declare a function or function template or an explicit instantiation or
@@ -2453,7 +2456,7 @@ operator: one of
 
 \[*Note 1*: The operators `new[]`, `delete[]`, `()`, and `[]` are formed
 from more than one token. The latter two operators are function call
-[expr.call] and subscripting [expr.sub]. — *end note*\]
+[[expr.call]] and subscripting [[expr.sub]]. — *end note*\]
 
 Both the unary and binary forms of
 
@@ -2471,16 +2474,16 @@ The following operators cannot be overloaded:
 '.      .*     ::     ?:'
 ```
 
-nor can the preprocessing symbols `#` [cpp.stringize] and `##`
-[cpp.concat].
+nor can the preprocessing symbols `#` [[cpp.stringize]] and `##`
+[[cpp.concat]].
 
 — *end note*\]
 
 Operator functions are usually not called directly; instead they are
-invoked to evaluate the operators they implement ( [over.unary] –
-[over.inc]). They can be explicitly called, however, using the
+invoked to evaluate the operators they implement ( [[over.unary]] –
+[[over.inc]]). They can be explicitly called, however, using the
 *operator-function-id* as the name of the function in the function call
-syntax [expr.call].
+syntax [[expr.call]].
 
 \[*Example 1*:
 
@@ -2493,13 +2496,13 @@ void* p = operator new(sizeof(int)*n);
 
 The allocation and deallocation functions, `operator` `new`, `operator`
 `new[]`, `operator` `delete`, and `operator` `delete[]`, are described
-completely in  [basic.stc.dynamic]. The attributes and restrictions
-found in the rest of [over.oper] do not apply to them unless explicitly
-stated in  [basic.stc.dynamic].
+completely in  [[basic.stc.dynamic]]. The attributes and restrictions
+found in the rest of [[over.oper]] do not apply to them unless
+explicitly stated in  [[basic.stc.dynamic]].
 
-The `co_await` operator is described completely in  [expr.await]. The
-attributes and restrictions found in the rest of [over.oper] do not
-apply to it unless explicitly stated in  [expr.await].
+The `co_await` operator is described completely in  [[expr.await]]. The
+attributes and restrictions found in the rest of [[over.oper]] do not
+apply to it unless explicitly stated in  [[expr.await]].
 
 An operator function shall either
 
@@ -2528,24 +2531,24 @@ operator functions. Some predefined operators, such as `+=`, require an
 operand to be an lvalue when applied to basic types; this is not
 required by operator functions. — *end note*\]
 
-An operator function cannot have default arguments [dcl.fct.default],
+An operator function cannot have default arguments [[dcl.fct.default]],
 except where explicitly stated below. Operator functions cannot have
 more or fewer parameters than the number required for the corresponding
-operator, as described in the rest of [over.oper].
+operator, as described in the rest of [[over.oper]].
 
-Operators not mentioned explicitly in subclauses  [over.ass] through 
-[over.inc] act as ordinary unary and binary operators obeying the rules
-of  [over.unary] or  [over.binary].
+Operators not mentioned explicitly in subclauses  [[over.ass]] through 
+[[over.inc]] act as ordinary unary and binary operators obeying the
+rules of  [[over.unary]] or  [[over.binary]].
 
-### Unary operators <a id="over.unary">[over.unary]</a>
+### Unary operators <a id="over.unary">[[over.unary]]</a>
 
 A *prefix unary operator function* is a function named `operator@` for a
-prefix *unary-operator* `@` [expr.unary.op] that is either a non-static
-member function [class.mfct] with no non-object parameters or a
-non-member function with one parameter. For a *unary-expression* of the
-form `@ cast-expression`, the operator function is selected by overload
-resolution [over.match.oper]. If a member function is selected, the
-expression is interpreted as
+prefix *unary-operator* `@` [[expr.unary.op]] that is either a
+non-static member function [[class.mfct]] with no non-object parameters
+or a non-member function with one parameter. For a *unary-expression* of
+the form `@ cast-expression`, the operator function is selected by
+overload resolution [[over.match.oper]]. If a member function is
+selected, the expression is interpreted as
 
 ``` bnf
 cast-expression '.' \texttt{operator} '@' '('')'
@@ -2558,23 +2561,23 @@ interpreted as
 \texttt{operator} '@' '(' cast-expression ')'
 ```
 
-\[*Note 4*: The operators `++` and `--` [expr.pre.incr] are described
-in  [over.inc]. — *end note*\]
+\[*Note 4*: The operators `++` and `--` [[expr.pre.incr]] are described
+in  [[over.inc]]. — *end note*\]
 
 \[*Note 5*: The unary and binary forms of the same operator have the
 same name. Consequently, a unary operator can hide a binary operator
 from an enclosing scope, and vice versa. — *end note*\]
 
-### Binary operators <a id="over.binary">[over.binary]</a>
+### Binary operators <a id="over.binary">[[over.binary]]</a>
 
-#### General <a id="over.binary.general">[over.binary.general]</a>
+#### General <a id="over.binary.general">[[over.binary.general]]</a>
 
 A *binary operator function* is a function named `operator@` for a
 binary operator `@` that is either a non-static member function
-[class.mfct] with one non-object parameter or a non-member function with
-two parameters. For an expression `$x$ @ $y$` with subexpressions x and
-y, the operator function is selected by overload resolution
-[over.match.oper]. If a member function is selected, the expression is
+[[class.mfct]] with one non-object parameter or a non-member function
+with two parameters. For an expression `$x$ @ $y$` with subexpressions x
+and y, the operator function is selected by overload resolution
+[[over.match.oper]]. If a member function is selected, the expression is
 interpreted as
 
 ``` bnf
@@ -2589,15 +2592,15 @@ interpreted as
 ```
 
 An *equality operator function* is an operator function for an equality
-operator [expr.eq]. A *relational operator function* is an operator
-function for a relational operator [expr.rel]. A
+operator [[expr.eq]]. A *relational operator function* is an operator
+function for a relational operator [[expr.rel]]. A
 *three-way comparison operator function* is an operator function for the
-three-way comparison operator [expr.spaceship]. A
+three-way comparison operator [[expr.spaceship]]. A
 *comparison operator function* is an equality operator function, a
 relational operator function, or a three-way comparison operator
 function.
 
-#### Simple assignment <a id="over.ass">[over.ass]</a>
+#### Simple assignment <a id="over.ass">[[over.ass]]</a>
 
 A *simple assignment operator function* is a binary operator function
 named `operator=`. A simple assignment operator function shall be a
@@ -2605,11 +2608,11 @@ non-static member function.
 
 \[*Note 6*: Because only standard conversion sequences are considered
 when converting to the left operand of an assignment operation
-[over.best.ics], an expression `$x$ = $y$` with a subexpression x of
+[[over.best.ics]], an expression `$x$ = $y$` with a subexpression x of
 class type is always interpreted as `$x$.operator=($y$)`. — *end note*\]
 
 \[*Note 7*: Since a copy assignment operator is implicitly declared for
-a class if not declared by the user [class.copy.assign], a base class
+a class if not declared by the user [[class.copy.assign]], a base class
 assignment operator function is always hidden by the copy assignment
 operator function of the derived class. — *end note*\]
 
@@ -2623,7 +2626,7 @@ copy/move assignment operator.
 
 — *end note*\]
 
-### Function call <a id="over.call">[over.call]</a>
+### Function call <a id="over.call">[[over.call]]</a>
 
 A *function call operator function* is a function named `operator()`
 that is a member function with an arbitrary number of parameters. It may
@@ -2634,7 +2637,7 @@ postfix-expression '(' [expression-list] ')'
 ```
 
 where the *postfix-expression* is of class type, the operator function
-is selected by overload resolution [over.call.object]. If a surrogate
+is selected by overload resolution [[over.call.object]]. If a surrogate
 call function is selected, let e be the result of invoking the
 corresponding conversion operator function on the *postfix-expression*;
 
@@ -2650,7 +2653,7 @@ Otherwise, the expression is interpreted as
 postfix-expression '.' \texttt{operator} '('')' '(' [expression-list] ')'
 ```
 
-### Subscripting <a id="over.sub">[over.sub]</a>
+### Subscripting <a id="over.sub">[[over.sub]]</a>
 
 A *subscripting operator function* is a member function named
 `operator[]` with an arbitrary number of parameters. It may have default
@@ -2661,7 +2664,7 @@ postfix-expression '[' [expression-list] ']'
 ```
 
 the operator function is selected by overload resolution
-[over.match.oper]. If a member function is selected, the expression is
+[[over.match.oper]]. If a member function is selected, the expression is
 interpreted as
 
 ``` bnf
@@ -2685,7 +2688,7 @@ a[1,2,3] = 7;                   // error: built-in subscript operator
 
 — *end example*\]
 
-### Class member access <a id="over.ref">[over.ref]</a>
+### Class member access <a id="over.ref">[[over.ref]]</a>
 
 A *class member access operator function* is a function named
 `operator->` that is a non-static member function taking no non-object
@@ -2696,13 +2699,13 @@ postfix-expression '->' [\texttt{template]} id-expression
 ```
 
 the operator function is selected by overload resolution
-[over.match.oper], and the expression is interpreted as
+[[over.match.oper]], and the expression is interpreted as
 
 ``` bnf
 '(' postfix-expression . \texttt{operator} '->' '('')' ')' '->' [\texttt{template]} id-expression
 ```
 
-### Increment and decrement <a id="over.inc">[over.inc]</a>
+### Increment and decrement <a id="over.inc">[[over.inc]]</a>
 
 An *increment operator function* is a function named `operator++`. If
 this function is a non-static member function with no non-object
@@ -2745,12 +2748,12 @@ void f(X a, Y b) {
 A *decrement operator function* is a function named `operator--` and is
 handled analogously to an increment operator function.
 
-## Built-in operators <a id="over.built">[over.built]</a>
+## Built-in operators <a id="over.built">[[over.built]]</a>
 
 The candidate operator functions that represent the built-in operators
-defined in [expr.compound] are specified in this subclause. These
+defined in [[expr.compound]] are specified in this subclause. These
 candidate functions participate in the operator overload resolution
-process as described in  [over.match.oper] and are used for no other
+process as described in  [[over.match.oper]] and are used for no other
 purpose.
 
 \[*Note 1*: Because built-in operators take only operands with non-class
@@ -2762,9 +2765,9 @@ appropriate for the operator, or when an operand has an enumeration type
 that can be converted to a type appropriate for the operator. Also note
 that some of the candidate operator functions given in this subclause
 are more permissive than the built-in operators themselves. As described
-in  [over.match.oper], after a built-in operator is selected by overload
-resolution the expression is subject to the requirements for the
-built-in operator given in [expr.compound], and therefore to any
+in  [[over.match.oper]], after a built-in operator is selected by
+overload resolution the expression is subject to the requirements for
+the built-in operator given in [[expr.compound]], and therefore to any
 additional semantic constraints given there. In some cases, user-written
 candidates with the same name and parameter types as a built-in
 candidate operator function cause the built-in operator function to not
@@ -2772,7 +2775,7 @@ be included in the set of candidate functions. — *end note*\]
 
 In this subclause, the term *promoted integral type* is used to refer to
 those cv-unqualified integral types which are preserved by integral
-promotion [conv.prom] (including e.g. `int` and `long` but excluding
+promotion [[conv.prom]] (including e.g. `int` and `long` but excluding
 e.g. `char`).
 
 \[*Note 2*: In all cases where a promoted integral type is required, an
@@ -2832,7 +2835,7 @@ functions of the form
 ```
 
 where is the union of and . The return type is shown for exposition
-only; see  [expr.mptr.oper] for the determination of the operator’s
+only; see  [[expr.mptr.oper]] for the determination of the operator’s
 result type.
 
 For every pair of types `L` and `R`, where each of `L` and `R` is a
@@ -2853,7 +2856,7 @@ bool    operator>=(L, R);
 ```
 
 where `LR` is the result of the usual arithmetic conversions
-[expr.arith.conv] between types `L` and `R`.
+[[expr.arith.conv]] between types `L` and `R`.
 
 For every integral type `T` there exists a candidate operator function
 of the form
@@ -2900,7 +2903,7 @@ bool    operator>=(T, T);
 R       operator<=>(T, T);
 ```
 
-where `R` is the result type specified in [expr.spaceship].
+where `R` is the result type specified in [[expr.spaceship]].
 
 For every `T`, where `T` is a pointer-to-member type or
 `std::nullptr_t`, there exist candidate operator functions of the form
@@ -2923,7 +2926,7 @@ L       operator>>(L, R);
 ```
 
 where `LR` is the result of the usual arithmetic conversions
-[expr.arith.conv] between types `L` and `R`.
+[[expr.arith.conv]] between types `L` and `R`.
 
 For every triple (`L`, , `R`), where `L` is an arithmetic type, and `R`
 is a floating-point or promoted integral type, there exist candidate
@@ -2989,7 +2992,7 @@ LR      operator?:(bool, L, R);
 ```
 
 where `LR` is the result of the usual arithmetic conversions
-[expr.arith.conv] between types `L` and `R`.
+[[expr.arith.conv]] between types `L` and `R`.
 
 \[*Note 3*: As with all these descriptions of candidate functions, this
 declaration serves only to describe the built-in operator for purposes
@@ -3003,7 +3006,7 @@ enumeration type, there exist candidate operator functions of the form
 T       operator?:(bool, T, T);
 ```
 
-## User-defined literals <a id="over.literal">[over.literal]</a>
+## User-defined literals <a id="over.literal">[[over.literal]]</a>
 
 ``` bnf
 literal-operator-id:
@@ -3016,16 +3019,16 @@ The *string-literal* or *user-defined-string-literal* in a
 no characters other than the implicit terminating `'\ 0'`. The
 *ud-suffix* of the *user-defined-string-literal* or the *identifier* in
 a *literal-operator-id* is called a *literal suffix identifier*. The
-first form of *literal-operator-id* is deprecated [depr.lit]. Some
+first form of *literal-operator-id* is deprecated [[depr.lit]]. Some
 literal suffix identifiers are reserved for future standardization; see 
-[usrlit.suffix]. A declaration whose *literal-operator-id* uses such a
+[[usrlit.suffix]]. A declaration whose *literal-operator-id* uses such a
 literal suffix identifier is ill-formed, no diagnostic required.
 
 A declaration whose *declarator-id* is a *literal-operator-id* shall
 declare a function or function template that belongs to a namespace (it
-could be a friend function [class.friend]) or an explicit instantiation
-or specialization of a function template. A function declared with a
-*literal-operator-id* is a *literal
+could be a friend function [[class.friend]]) or an explicit
+instantiation or specialization of a function template. A function
+declared with a *literal-operator-id* is a *literal
 operator*. A function template declared with a *literal-operator-id* is
 a *literal operator template*.
 
@@ -3048,16 +3051,16 @@ const char16_t*, std::size_t
 const char32_t*, std::size_t
 ```
 
-If a parameter has a default argument [dcl.fct.default], the program is
-ill-formed.
+If a parameter has a default argument [[dcl.fct.default]], the program
+is ill-formed.
 
 A *raw literal operator* is a literal operator with a single parameter
 whose type is `const char*`.
 
 A *numeric literal operator template* is a literal operator template
 whose *template-parameter-list* has a single *template-parameter* that
-is a non-type template parameter pack [temp.variadic] with element type
-`char`. A *string literal operator template* is a literal operator
+is a non-type template parameter pack [[temp.variadic]] with element
+type `char`. A *string literal operator template* is a literal operator
 template whose *template-parameter-list* comprises a single non-type
 *template-parameter* of class type. The declaration of a literal
 operator template shall have an empty *parameter-declaration-clause* and
@@ -3068,7 +3071,7 @@ Literal operators and literal operator templates shall not have C
 language linkage.
 
 \[*Note 1*: Literal operators and literal operator templates are usually
-invoked implicitly through user-defined literals [lex.ext]. However,
+invoked implicitly through user-defined literals [[lex.ext]]. However,
 except for the constraints described above, they are ordinary
 namespace-scope functions and function templates. In particular, they
 are looked up like ordinary functions and function templates and they
@@ -3099,109 +3102,109 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 — *end example*\]
 
 <!-- Link reference definitions -->
-[basic.lookup]: basic.md#basic.lookup
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[basic.lookup.unqual]: basic.md#basic.lookup.unqual
-[basic.scope.scope]: basic.md#basic.scope.scope
-[basic.stc.dynamic]: basic.md#basic.stc.dynamic
-[class.access]: class.md#class.access
-[class.conv]: class.md#class.conv
-[class.conv.ctor]: class.md#class.conv.ctor
-[class.conv.fct]: class.md#class.conv.fct
-[class.copy.assign]: class.md#class.copy.assign
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.friend]: class.md#class.friend
-[class.inhctor.init]: class.md#class.inhctor.init
-[class.mem]: class.md#class.mem
-[class.member.lookup]: basic.md#class.member.lookup
-[class.mfct]: class.md#class.mfct
-[conv]: expr.md#conv
-[conv.fctptr]: expr.md#conv.fctptr
-[conv.prom]: expr.md#conv.prom
-[conv.qual]: expr.md#conv.qual
-[conv.rank]: basic.md#conv.rank
-[cpp.concat]: cpp.md#cpp.concat
-[cpp.stringize]: cpp.md#cpp.stringize
-[dcl.fct]: dcl.md#dcl.fct
-[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
-[dcl.fct.default]: dcl.md#dcl.fct.default
-[dcl.fct.spec]: dcl.md#dcl.fct.spec
-[dcl.init]: dcl.md#dcl.init
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[dcl.init.list]: dcl.md#dcl.init.list
-[dcl.init.ref]: dcl.md#dcl.init.ref
-[dcl.init.string]: dcl.md#dcl.init.string
-[dcl.type.class.deduct]: dcl.md#dcl.type.class.deduct
-[dcl.type.simple]: dcl.md#dcl.type.simple
-[depr.lit]: future.md#depr.lit
-[expr.arith.conv]: expr.md#expr.arith.conv
-[expr.ass]: expr.md#expr.ass
-[expr.await]: expr.md#expr.await
-[expr.call]: expr.md#expr.call
-[expr.cast]: expr.md#expr.cast
-[expr.compound]: expr.md#expr.compound
-[expr.cond]: expr.md#expr.cond
-[expr.eq]: expr.md#expr.eq
-[expr.mptr.oper]: expr.md#expr.mptr.oper
-[expr.pre.incr]: expr.md#expr.pre.incr
-[expr.prim.paren]: expr.md#expr.prim.paren
-[expr.prim.this]: expr.md#expr.prim.this
-[expr.rel]: expr.md#expr.rel
-[expr.spaceship]: expr.md#expr.spaceship
-[expr.static.cast]: expr.md#expr.static.cast
-[expr.sub]: expr.md#expr.sub
-[expr.type.conv]: expr.md#expr.type.conv
-[expr.unary.op]: expr.md#expr.unary.op
-[lex.ext]: lex.md#lex.ext
-[namespace.udecl]: dcl.md#namespace.udecl
-[over]: #over
-[over.ass]: #over.ass
-[over.best.ics]: #over.best.ics
-[over.binary]: #over.binary
-[over.built]: #over.built
-[over.call.func]: #over.call.func
-[over.call.object]: #over.call.object
-[over.ics.ellipsis]: #over.ics.ellipsis
-[over.ics.list]: #over.ics.list
-[over.ics.rank]: #over.ics.rank
-[over.ics.ref]: #over.ics.ref
-[over.ics.scs]: #over.ics.scs
-[over.ics.user]: #over.ics.user
-[over.inc]: #over.inc
-[over.match]: #over.match
-[over.match.best]: #over.match.best
-[over.match.class.deduct]: #over.match.class.deduct
-[over.match.conv]: #over.match.conv
-[over.match.copy]: #over.match.copy
-[over.match.ctor]: #over.match.ctor
-[over.match.funcs]: #over.match.funcs
-[over.match.list]: #over.match.list
-[over.match.oper]: #over.match.oper
-[over.match.ref]: #over.match.ref
-[over.match.viable]: #over.match.viable
-[over.oper]: #over.oper
-[over.over]: #over.over
-[over.unary]: #over.unary
-[stmt.return]: stmt.md#stmt.return
-[temp.arg.explicit]: temp.md#temp.arg.explicit
-[temp.arg.nontype]: temp.md#temp.arg.nontype
-[temp.constr.constr]: temp.md#temp.constr.constr
-[temp.constr.decl]: temp.md#temp.constr.decl
-[temp.constr.order]: temp.md#temp.constr.order
-[temp.deduct]: temp.md#temp.deduct
-[temp.deduct.funcaddr]: temp.md#temp.deduct.funcaddr
-[temp.deduct.guide]: temp.md#temp.deduct.guide
-[temp.deduct.type]: temp.md#temp.deduct.type
-[temp.dep]: temp.md#temp.dep
-[temp.dep.type]: temp.md#temp.dep.type
-[temp.func.order]: temp.md#temp.func.order
-[temp.over]: temp.md#temp.over
-[temp.variadic]: temp.md#temp.variadic
-[usrlit.suffix]: library.md#usrlit.suffix
+[[basic.lookup]]: basic.md#basic.lookup
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[basic.lookup.unqual]]: basic.md#basic.lookup.unqual
+[[basic.scope.scope]]: basic.md#basic.scope.scope
+[[basic.stc.dynamic]]: basic.md#basic.stc.dynamic
+[[class.access]]: class.md#class.access
+[[class.conv]]: class.md#class.conv
+[[class.conv.ctor]]: class.md#class.conv.ctor
+[[class.conv.fct]]: class.md#class.conv.fct
+[[class.copy.assign]]: class.md#class.copy.assign
+[[class.copy.ctor]]: class.md#class.copy.ctor
+[[class.friend]]: class.md#class.friend
+[[class.inhctor.init]]: class.md#class.inhctor.init
+[[class.mem]]: class.md#class.mem
+[[class.member.lookup]]: basic.md#class.member.lookup
+[[class.mfct]]: class.md#class.mfct
+[[conv]]: expr.md#conv
+[[conv.fctptr]]: expr.md#conv.fctptr
+[[conv.prom]]: expr.md#conv.prom
+[[conv.qual]]: expr.md#conv.qual
+[[conv.rank]]: basic.md#conv.rank
+[[cpp.concat]]: cpp.md#cpp.concat
+[[cpp.stringize]]: cpp.md#cpp.stringize
+[[dcl.fct]]: dcl.md#dcl.fct
+[[dcl.fct.def.delete]]: dcl.md#dcl.fct.def.delete
+[[dcl.fct.default]]: dcl.md#dcl.fct.default
+[[dcl.fct.spec]]: dcl.md#dcl.fct.spec
+[[dcl.init]]: dcl.md#dcl.init
+[[dcl.init.aggr]]: dcl.md#dcl.init.aggr
+[[dcl.init.list]]: dcl.md#dcl.init.list
+[[dcl.init.ref]]: dcl.md#dcl.init.ref
+[[dcl.init.string]]: dcl.md#dcl.init.string
+[[dcl.type.class.deduct]]: dcl.md#dcl.type.class.deduct
+[[dcl.type.simple]]: dcl.md#dcl.type.simple
+[[depr.lit]]: future.md#depr.lit
+[[expr.arith.conv]]: expr.md#expr.arith.conv
+[[expr.ass]]: expr.md#expr.ass
+[[expr.await]]: expr.md#expr.await
+[[expr.call]]: expr.md#expr.call
+[[expr.cast]]: expr.md#expr.cast
+[[expr.compound]]: expr.md#expr.compound
+[[expr.cond]]: expr.md#expr.cond
+[[expr.eq]]: expr.md#expr.eq
+[[expr.mptr.oper]]: expr.md#expr.mptr.oper
+[[expr.pre.incr]]: expr.md#expr.pre.incr
+[[expr.prim.paren]]: expr.md#expr.prim.paren
+[[expr.prim.this]]: expr.md#expr.prim.this
+[[expr.rel]]: expr.md#expr.rel
+[[expr.spaceship]]: expr.md#expr.spaceship
+[[expr.static.cast]]: expr.md#expr.static.cast
+[[expr.sub]]: expr.md#expr.sub
+[[expr.type.conv]]: expr.md#expr.type.conv
+[[expr.unary.op]]: expr.md#expr.unary.op
+[[lex.ext]]: lex.md#lex.ext
+[[namespace.udecl]]: dcl.md#namespace.udecl
+[[over]]: #over
+[[over.ass]]: #over.ass
+[[over.best.ics]]: #over.best.ics
+[[over.binary]]: #over.binary
+[[over.built]]: #over.built
+[[over.call.func]]: #over.call.func
+[[over.call.object]]: #over.call.object
+[[over.ics.ellipsis]]: #over.ics.ellipsis
+[[over.ics.list]]: #over.ics.list
+[[over.ics.rank]]: #over.ics.rank
+[[over.ics.ref]]: #over.ics.ref
+[[over.ics.scs]]: #over.ics.scs
+[[over.ics.user]]: #over.ics.user
+[[over.inc]]: #over.inc
+[[over.match]]: #over.match
+[[over.match.best]]: #over.match.best
+[[over.match.class.deduct]]: #over.match.class.deduct
+[[over.match.conv]]: #over.match.conv
+[[over.match.copy]]: #over.match.copy
+[[over.match.ctor]]: #over.match.ctor
+[[over.match.funcs]]: #over.match.funcs
+[[over.match.list]]: #over.match.list
+[[over.match.oper]]: #over.match.oper
+[[over.match.ref]]: #over.match.ref
+[[over.match.viable]]: #over.match.viable
+[[over.oper]]: #over.oper
+[[over.over]]: #over.over
+[[over.unary]]: #over.unary
+[[stmt.return]]: stmt.md#stmt.return
+[[temp.arg.explicit]]: temp.md#temp.arg.explicit
+[[temp.arg.nontype]]: temp.md#temp.arg.nontype
+[[temp.constr.constr]]: temp.md#temp.constr.constr
+[[temp.constr.decl]]: temp.md#temp.constr.decl
+[[temp.constr.order]]: temp.md#temp.constr.order
+[[temp.deduct]]: temp.md#temp.deduct
+[[temp.deduct.funcaddr]]: temp.md#temp.deduct.funcaddr
+[[temp.deduct.guide]]: temp.md#temp.deduct.guide
+[[temp.deduct.type]]: temp.md#temp.deduct.type
+[[temp.dep]]: temp.md#temp.dep
+[[temp.dep.type]]: temp.md#temp.dep.type
+[[temp.func.order]]: temp.md#temp.func.order
+[[temp.over]]: temp.md#temp.over
+[[temp.variadic]]: temp.md#temp.variadic
+[[usrlit.suffix]]: library.md#usrlit.suffix
 
 <!-- Link reference definitions -->
-[conv.integral]: #conv.integral
-[conv.prom]: #conv.prom
-[over.ass]: #over.ass
-[over.ref]: #over.ref
-[over.sub]: #over.sub
+[[conv.integral]]: #conv.integral
+[[conv.prom]]: #conv.prom
+[[over.ass]]: #over.ass
+[[over.ref]]: #over.ref
+[[over.sub]]: #over.sub

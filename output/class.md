@@ -3,11 +3,11 @@ current_file: class
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Classes <a id="class">[class]</a>
+# Classes <a id="class">[[class]]</a>
 
-## Preamble <a id="class.pre">[class.pre]</a>
+## Preamble <a id="class.pre">[[class.pre]]</a>
 
-A class is a type. Its name becomes a *class-name* [class.name] within
+A class is a type. Its name becomes a *class-name* [[class.name]] within
 its scope.
 
 ``` bnf
@@ -16,8 +16,8 @@ class-name:
     simple-template-id
 ```
 
-A *class-specifier* or an *elaborated-type-specifier* [dcl.type.elab] is
-used to make a *class-name*. An object of a class consists of a
+A *class-specifier* or an *elaborated-type-specifier* [[dcl.type.elab]]
+is used to make a *class-name*. An object of a class consists of a
 (possibly empty) sequence of members and base class objects.
 
 ``` bnf
@@ -50,7 +50,7 @@ class-key:
 
 A class declaration where the *class-name* in the *class-head-name* is a
 *simple-template-id* shall be an explicit specialization
-[temp.expl.spec] or a partial specialization [temp.spec.partial]. A
+[[temp.expl.spec]] or a partial specialization [[temp.spec.partial]]. A
 *class-specifier* whose *class-head* omits the *class-head-name* defines
 an unnamed class.
 
@@ -95,13 +95,13 @@ template<> struct A<void> {};           // OK
 — *end example*\]
 
 \[*Note 2*: The *class-key* determines whether the class is a union
-[class.union] and whether access is public or private by default
-[class.access]. A union holds the value of at most one data member at a
-time. — *end note*\]
+[[class.union]] and whether access is public or private by default
+[[class.access]]. A union holds the value of at most one data member at
+a time. — *end note*\]
 
 If a class is marked with the *class-virt-specifier* `final` and it
-appears as a *class-or-decltype* in a *base-clause* [class.derived], the
-program is ill-formed. Whenever a *class-key* is followed by a
+appears as a *class-or-decltype* in a *base-clause* [[class.derived]],
+the program is ill-formed. Whenever a *class-key* is followed by a
 *class-head-name*, the *identifier* `final`, and a colon or left brace,
 `final` is interpreted as a *class-virt-specifier*.
 
@@ -123,31 +123,31 @@ struct X {
 
 \[*Note 3*: Complete objects of class type have nonzero size. Base class
 subobjects and members declared with the `no_unique_address` attribute
-[dcl.attr.nouniqueaddr] are not so constrained. — *end note*\]
+[[dcl.attr.nouniqueaddr]] are not so constrained. — *end note*\]
 
 \[*Note 4*: Class objects can be assigned
-[over.ass], [class.copy.assign], passed as arguments to functions
-[dcl.init], [class.copy.ctor], and returned by functions (except objects
-of classes for which copying or moving has been restricted; see 
-[dcl.fct.def.delete] and [class.access]). Other plausible operators,
+[[over.ass]], [[class.copy.assign]], passed as arguments to functions
+[[dcl.init]], [[class.copy.ctor]], and returned by functions (except
+objects of classes for which copying or moving has been restricted; see 
+[[dcl.fct.def.delete]] and [[class.access]]). Other plausible operators,
 such as equality comparison, can be defined by the user; see 
-[over.oper]. — *end note*\]
+[[over.oper]]. — *end note*\]
 
-## Properties of classes <a id="class.prop">[class.prop]</a>
+## Properties of classes <a id="class.prop">[[class.prop]]</a>
 
 A *trivially copyable class* is a class:
 
 - that has at least one eligible copy constructor, move constructor,
   copy assignment operator, or move assignment operator
-  [special], [class.copy.ctor], [class.copy.assign],
+  [[special]], [[class.copy.ctor]], [[class.copy.assign]],
 
 - where each eligible copy constructor, move constructor, copy
   assignment operator, and move assignment operator is trivial, and
 
-- that has a trivial, non-deleted destructor [class.dtor].
+- that has a trivial, non-deleted destructor [[class.dtor]].
 
 A *trivial class* is a class that is trivially copyable and has one or
-more eligible default constructors [class.default.ctor], all of which
+more eligible default constructors [[class.default.ctor]], all of which
 are trivial.
 
 \[*Note 1*: In particular, a trivially copyable or trivial class does
@@ -158,10 +158,10 @@ A class `S` is a *standard-layout class* if it:
 - has no non-static data members of type non-standard-layout class (or
   array of such types) or reference,
 
-- has no virtual functions [class.virtual] and no virtual base classes
-  [class.mi],
+- has no virtual functions [[class.virtual]] and no virtual base classes
+  [[class.mi]],
 
-- has the same access control [class.access] for all non-static data
+- has the same access control [[class.access]] for all non-static data
   members,
 
 - has no non-standard-layout base classes,
@@ -217,7 +217,7 @@ A *standard-layout struct* is a standard-layout class defined with the
 
 \[*Note 2*: Standard-layout classes are useful for communicating with
 code written in other programming languages. Their layout is specified
-in  [class.mem]. — *end note*\]
+in  [[class.mem]]. — *end note*\]
 
 \[*Example 2*:
 
@@ -249,7 +249,7 @@ struct POD {        // both trivial and standard-layout
 — *end example*\]
 
 \[*Note 3*: Aggregates of class type are described in 
-[dcl.init.aggr]. — *end note*\]
+[[dcl.init.aggr]]. — *end note*\]
 
 A class `S` is an *implicit-lifetime class* if
 
@@ -258,7 +258,7 @@ A class `S` is an *implicit-lifetime class* if
 - it has at least one trivial eligible constructor and a trivial,
   non-deleted destructor.
 
-## Class names <a id="class.name">[class.name]</a>
+## Class names <a id="class.name">[[class.name]]</a>
 
 A class definition introduces a new type.
 
@@ -286,8 +286,8 @@ int f(X);
 int f(Y);
 ```
 
-declare overloads [over] named `f` and not simply a single function `f`
-twice. For the same reason,
+declare overloads [[over]] named `f` and not simply a single function
+`f` twice. For the same reason,
 
 ``` cpp
 struct S { int a; };
@@ -302,7 +302,7 @@ is ill-formed because it defines `S` twice.
 
 It can be necessary to use an *elaborated-type-specifier* to refer to a
 class that belongs to a scope in which its name is also bound to a
-variable, function, or enumerator [basic.lookup.elab].
+variable, function, or enumerator [[basic.lookup.elab]].
 
 An *elaborated-type-specifier* can also be used to declare an
 *identifier* as a *class-name*.
@@ -311,7 +311,7 @@ Such declarations allow definition of classes that refer to each other.
 
 — *end note*\]
 
-\[*Note 2*: An *elaborated-type-specifier* [dcl.type.elab] can also be
+\[*Note 2*: An *elaborated-type-specifier* [[dcl.type.elab]] can also be
 used as a *type-specifier* as part of a declaration. It differs from a
 class declaration in that it can refer to an existing class of the given
 name. — *end note*\]
@@ -349,9 +349,9 @@ artistry with names can be confusing and is best avoided.
 A *simple-template-id* is only a *class-name* if its *template-name*
 names a class template.
 
-## Class members <a id="class.mem">[class.mem]</a>
+## Class members <a id="class.mem">[[class.mem]]</a>
 
-### General <a id="class.mem.general">[class.mem.general]</a>
+### General <a id="class.mem.general">[[class.mem.general]]</a>
 
 ``` bnf
 member-specification:
@@ -409,10 +409,10 @@ The *member-specification* in a class definition declares the full set
 of members of the class; no member can be added elsewhere. A
 *direct member* of a class `X` is a member of `X` that was first
 declared within the *member-specification* of `X`, including anonymous
-union members [class.union.anon] and direct members thereof. Members of
-a class are data members, member functions [class.mfct], nested types,
-enumerators, and member templates [temp.mem] and specializations
-thereof.
+union members [[class.union.anon]] and direct members thereof. Members
+of a class are data members, member functions [[class.mfct]], nested
+types, enumerators, and member templates [[temp.mem]] and
+specializations thereof.
 
 \[*Note 1*: A specialization of a static data member template is a
 static data member. A specialization of a member function template is a
@@ -422,41 +422,41 @@ class. — *end note*\]
 A *member-declaration* does not declare new members of the class if it
 is
 
-- a friend declaration [class.friend],
+- a friend declaration [[class.friend]],
 
-- a *deduction-guide* [temp.deduct.guide],
+- a *deduction-guide* [[temp.deduct.guide]],
 
 - a *template-declaration* whose *declaration* is one of the above,
 
 - a *static_assert-declaration*,
 
-- a *using-declaration* [namespace.udecl], or
+- a *using-declaration* [[namespace.udecl]], or
 
 - an *empty-declaration*.
 
 For any other *member-declaration*, each declared entity that is not an
-unnamed bit-field [class.bit] is a member of the class, and each such
+unnamed bit-field [[class.bit]] is a member of the class, and each such
 *member-declaration* shall either declare at least one member name of
 the class or declare at least one unnamed bit-field.
 
 A *data member* is a non-function member introduced by a
 *member-declarator*. A *member function* is a member that is a function.
-Nested types are classes [class.name], [class.nest] and enumerations
-[dcl.enum] declared in the class and arbitrary types declared as members
-by use of a typedef declaration [dcl.typedef] or *alias-declaration*.
-The enumerators of an unscoped enumeration [dcl.enum] defined in the
-class are members of the class.
+Nested types are classes [[class.name]], [[class.nest]] and enumerations
+[[dcl.enum]] declared in the class and arbitrary types declared as
+members by use of a typedef declaration [[dcl.typedef]] or
+*alias-declaration*. The enumerators of an unscoped enumeration
+[[dcl.enum]] defined in the class are members of the class.
 
 A data member or member function may be declared `static` in its
 *member-declaration*, in which case it is a *static member* (see 
-[class.static]) (a *static data member* [class.static.data] or
-*static member function* [class.static.mfct], respectively) of the
+[[class.static]]) (a *static data member* [[class.static.data]] or
+*static member function* [[class.static.mfct]], respectively) of the
 class. Any other data member or member function is a *non-static member*
 (a *non-static data member* or *non-static member function*
-[class.mfct.non.static], respectively).
+[[class.mfct.non.static]], respectively).
 
 \[*Note 2*: A non-static data member of non-reference type is a member
-subobject of a class object [intro.object]. — *end note*\]
+subobject of a class object [[intro.object]]. — *end note*\]
 
 A member shall not be declared twice in the *member-specification*,
 except that
@@ -469,22 +469,22 @@ except that
 
 \[*Note 3*: A single name can denote several member functions provided
 their types are sufficiently different
-[basic.scope.scope]. — *end note*\]
+[[basic.scope.scope]]. — *end note*\]
 
 A redeclaration of a class member outside its class definition shall be
 a definition, an explicit specialization, or an explicit instantiation
-[temp.expl.spec], [temp.explicit]. The member shall not be a non-static
-data member.
+[[temp.expl.spec]], [[temp.explicit]]. The member shall not be a
+non-static data member.
 
 A *complete-class context* of a class (template) is a
 
-- function body [dcl.fct.def.general],
+- function body [[dcl.fct.def.general]],
 
-- default argument [dcl.fct.default],
+- default argument [[dcl.fct.default]],
 
-- default template argument [temp.param],
+- default template argument [[temp.param]],
 
-- *noexcept-specifier* [except.spec], or
+- *noexcept-specifier* [[except.spec]], or
 
 - default member initializer
 
@@ -538,16 +538,17 @@ struct S {
 — *end example*\]
 
 A *brace-or-equal-initializer* shall appear only in the declaration of a
-data member. (For static data members, see  [class.static.data]; for
-non-static data members, see  [class.base.init] and  [dcl.init.aggr]). A
-*brace-or-equal-initializer* for a non-static data member specifies a
-*default member initializer* for the member, and shall not directly or
-indirectly cause the implicit definition of a defaulted default
-constructor for the enclosing class or the exception specification of
-that constructor. An immediate invocation [expr.const] that is a
-potentially-evaluated subexpression [intro.execution] of a default
-member initializer is neither evaluated nor checked for whether it is a
-constant expression at the point where the subexpression appears.
+data member. (For static data members, see  [[class.static.data]]; for
+non-static data members, see  [[class.base.init]] and 
+[[dcl.init.aggr]]). A *brace-or-equal-initializer* for a non-static data
+member specifies a *default member initializer* for the member, and
+shall not directly or indirectly cause the implicit definition of a
+defaulted default constructor for the enclosing class or the exception
+specification of that constructor. An immediate invocation
+[[expr.const]] that is a potentially-evaluated subexpression
+[[intro.execution]] of a default member initializer is neither evaluated
+nor checked for whether it is a constant expression at the point where
+the subexpression appears.
 
 A member shall not be declared with the `extern`
 *storage-class-specifier*. Within a class definition, a member shall not
@@ -559,9 +560,9 @@ conversion function declarations only; when declaring another kind of
 member the *decl-specifier-seq* shall contain a *type-specifier* that is
 not a *cv-qualifier*. The *member-declarator-list* can be omitted only
 after a *class-specifier* or an *enum-specifier* or in a friend
-declaration [class.friend]. A *pure-specifier* shall be used only in the
-declaration of a virtual function [class.virtual] that is not a friend
-declaration.
+declaration [[class.friend]]. A *pure-specifier* shall be used only in
+the declaration of a virtual function [[class.virtual]] that is not a
+friend declaration.
 
 The optional *attribute-specifier-seq* in a *member-declaration*
 appertains to each of the entities declared by the *member-declarator*;
@@ -569,17 +570,17 @@ it shall not appear if the optional *member-declarator-list* is omitted.
 
 A *virt-specifier-seq* shall contain at most one of each
 *virt-specifier*. A *virt-specifier-seq* shall appear only in the first
-declaration of a virtual member function [class.virtual].
+declaration of a virtual member function [[class.virtual]].
 
 The type of a non-static data member shall not be an incomplete type
-[term.incomplete.type], an abstract class type [class.abstract], or a
-(possibly multidimensional) array thereof.
+[[term.incomplete.type]], an abstract class type [[class.abstract]], or
+a (possibly multidimensional) array thereof.
 
 \[*Note 5*: In particular, a class `C` cannot contain a non-static
 member of class `C`, but it can contain a pointer or reference to an
 object of class `C`. — *end note*\]
 
-\[*Note 6*: See  [expr.prim.id] for restrictions on the use of
+\[*Note 6*: See  [[expr.prim.id]] for restrictions on the use of
 non-static data members and non-static member functions. — *end note*\]
 
 \[*Note 7*: The type of a non-static member function is an ordinary
@@ -617,11 +618,12 @@ character of the `tword` member of the `right` subtree of `s`.
 — *end example*\]
 
 \[*Note 8*:  Non-variant non-static data members of non-zero size
-[intro.object] are allocated so that later members have higher addresses
-within a class object [expr.rel]. Implementation alignment requirements
-can cause two adjacent members not to be allocated immediately after
-each other; so can requirements for space for managing virtual functions
-[class.virtual] and virtual base classes [class.mi]. — *end note*\]
+[[intro.object]] are allocated so that later members have higher
+addresses within a class object [[expr.rel]]. Implementation alignment
+requirements can cause two adjacent members not to be allocated
+immediately after each other; so can requirements for space for managing
+virtual functions [[class.virtual]] and virtual base classes
+[[class.mi]]. — *end note*\]
 
 If `T` is the name of a class, then each of the following shall have a
 name different from `T`:
@@ -631,7 +633,7 @@ name different from `T`:
 - every member function of class `T`;
 
   \[*Note 2*: This restriction does not apply to constructors, which do
-  not have names [class.ctor] — *end note*\]
+  not have names [[class.ctor]] — *end note*\]
 
 - every member of class `T` that is itself a type;
 
@@ -642,22 +644,22 @@ name different from `T`:
 
 - every member of every anonymous union that is a member of class `T`.
 
-In addition, if class `T` has a user-declared constructor [class.ctor],
-every non-static data member of class `T` shall have a name different
-from `T`.
+In addition, if class `T` has a user-declared constructor
+[[class.ctor]], every non-static data member of class `T` shall have a
+name different from `T`.
 
-The *common initial sequence* of two standard-layout struct [class.prop]
-types is the longest sequence of non-static data members and bit-fields
-in declaration order, starting with the first such entity in each of the
-structs, such that
+The *common initial sequence* of two standard-layout struct
+[[class.prop]] types is the longest sequence of non-static data members
+and bit-fields in declaration order, starting with the first such entity
+in each of the structs, such that
 
-- corresponding entities have layout-compatible types [basic.types],
+- corresponding entities have layout-compatible types [[basic.types]],
 
 - corresponding entities have the same alignment requirements
-  [basic.align],
+  [[basic.align]],
 
 - either both entities are declared with the `no_unique_address`
-  attribute [dcl.attr.nouniqueaddr] or neither is, and
+  attribute [[dcl.attr.nouniqueaddr]] or neither is, and
 
 - either both entities are bit-fields with the same width or neither is
   a bit-field.
@@ -679,18 +681,18 @@ of `A` and `E` is empty.
 
 — *end example*\]
 
-Two standard-layout struct [class.prop] types are
+Two standard-layout struct [[class.prop]] types are
 *layout-compatible classes* if their common initial sequence comprises
-all members and bit-fields of both classes [basic.types].
+all members and bit-fields of both classes [[basic.types]].
 
 Two standard-layout unions are layout-compatible if they have the same
 number of non-static data members and corresponding non-static data
 members (in any order) have layout-compatible types
-[term.layout.compatible.type].
+[[term.layout.compatible.type]].
 
-In a standard-layout union with an active member [class.union] of struct
-type `T1`, it is permitted to read a non-static data member `m` of
-another union member of struct type `T2` provided `m` is part of the
+In a standard-layout union with an active member [[class.union]] of
+struct type `T1`, it is permitted to read a non-static data member `m`
+of another union member of struct type `T2` provided `m` is part of the
 common initial sequence of `T1` and `T2`; the behavior is as if the
 corresponding member of `T1` were nominated.
 
@@ -709,7 +711,7 @@ int f() {
 — *end example*\]
 
 \[*Note 9*: Reading a volatile object through a glvalue of non-volatile
-type has undefined behavior [dcl.type.cv]. — *end note*\]
+type has undefined behavior [[dcl.type.cv]]. — *end note*\]
 
 If a standard-layout class object has any non-static data members, its
 address is the same as the address of its first non-static data member
@@ -723,12 +725,12 @@ alignment. — *end note*\]
 
 \[*Note 11*: The object and its first subobject are
 pointer-interconvertible
-[basic.compound], [expr.static.cast]. — *end note*\]
+[[basic.compound]], [[expr.static.cast]]. — *end note*\]
 
-### Member functions <a id="class.mfct">[class.mfct]</a>
+### Member functions <a id="class.mfct">[[class.mfct]]</a>
 
 If a member function is attached to the global module and is defined
-[dcl.fct.def] in its class definition, it is inline [dcl.inline].
+[[dcl.fct.def]] in its class definition, it is inline [[dcl.inline]].
 
 \[*Note 12*: A member function is also inline if it is declared
 `inline`, `constexpr`, or `consteval`. — *end note*\]
@@ -761,7 +763,7 @@ definition, if they are defined at all.
 A member function can be declared (but not defined) using a typedef for
 a function type. The resulting member function has exactly the same type
 as it would have if the function declarator were provided explicitly,
-see  [dcl.fct]. For example,
+see  [[dcl.fct]]. For example,
 
 ``` cpp
 typedef void fv();
@@ -776,35 +778,35 @@ fv  S::* pmfv2 = &S::memfunc2;
 fvc S::* pmfv3 = &S::memfunc3;
 ```
 
-Also see  [temp.arg].
+Also see  [[temp.arg]].
 
 — *end note*\]
 
-### Non-static member functions <a id="class.mfct.non.static">[class.mfct.non.static]</a>
+### Non-static member functions <a id="class.mfct.non.static">[[class.mfct.non.static]]</a>
 
 A non-static member function may be called for an object of its class
-type, or for an object of a class derived [class.derived] from its class
-type, using the class member access syntax
-[expr.ref], [over.match.call]. A non-static member function may also be
-called directly using the function call syntax
-[expr.call], [over.match.call] from within its class or a class derived
-from its class, or a member thereof, as described below.
+type, or for an object of a class derived [[class.derived]] from its
+class type, using the class member access syntax
+[[expr.ref]], [[over.match.call]]. A non-static member function may also
+be called directly using the function call syntax
+[[expr.call]], [[over.match.call]] from within its class or a class
+derived from its class, or a member thereof, as described below.
 
-When an *id-expression* [expr.prim.id] that is neither part of a class
-member access syntax [expr.ref] nor the unparenthesized operand of the
-unary `&` operator [expr.unary.op] is used where the current class is
-`X` [expr.prim.this], if name lookup [basic.lookup] resolves the name in
-the *id-expression* to a non-static non-type member of some class `C`,
-and if either the *id-expression* is potentially evaluated or `C` is `X`
-or a base class of `X`, the *id-expression* is transformed into a class
-member access expression [expr.ref] using `(*this)` as the
-*postfix-expression* to the left of the `.` operator.
+When an *id-expression* [[expr.prim.id]] that is neither part of a class
+member access syntax [[expr.ref]] nor the unparenthesized operand of the
+unary `&` operator [[expr.unary.op]] is used where the current class is
+`X` [[expr.prim.this]], if name lookup [[basic.lookup]] resolves the
+name in the *id-expression* to a non-static non-type member of some
+class `C`, and if either the *id-expression* is potentially evaluated or
+`C` is `X` or a base class of `X`, the *id-expression* is transformed
+into a class member access expression [[expr.ref]] using `(*this)` as
+the *postfix-expression* to the left of the `.` operator.
 
 \[*Note 14*: If `C` is not `X` or a base class of `X`, the class member
 access expression is ill-formed. — *end note*\]
 
 This transformation does not apply in the template definition context
-[temp.dep.type].
+[[temp.dep.type]].
 
 \[*Example 7*:
 
@@ -843,23 +845,23 @@ not members of the class `tnode` and should be declared elsewhere.
 
 \[*Note 15*: An implicit object member function can be declared with
 *cv-qualifier*, which affect the type of the `this` pointer
-[expr.prim.this], and/or a *ref-qualifier* [dcl.fct]; both affect
-overload resolution [over.match.funcs] — *end note*\]
+[[expr.prim.this]], and/or a *ref-qualifier* [[dcl.fct]]; both affect
+overload resolution [[over.match.funcs]] — *end note*\]
 
 An implicit object member function may be declared virtual
-[class.virtual] or pure virtual [class.abstract].
+[[class.virtual]] or pure virtual [[class.abstract]].
 
-### Special member functions <a id="special">[special]</a>
+### Special member functions <a id="special">[[special]]</a>
 
-Default constructors [class.default.ctor], copy constructors, move
-constructors [class.copy.ctor], copy assignment operators, move
-assignment operators [class.copy.assign], and prospective destructors
-[class.dtor] are *special member functions*.
+Default constructors [[class.default.ctor]], copy constructors, move
+constructors [[class.copy.ctor]], copy assignment operators, move
+assignment operators [[class.copy.assign]], and prospective destructors
+[[class.dtor]] are *special member functions*.
 
 \[*Note 16*: The implementation will implicitly declare these member
 functions for some class types when the program does not explicitly
 declare them. The implementation will implicitly define them as needed
-[dcl.fct.def.default]. — *end note*\]
+[[dcl.fct.def.default]]. — *end note*\]
 
 An implicitly-declared special member function is declared at the
 closing `\}` of the *class-specifier*. Programs shall not define
@@ -891,7 +893,7 @@ class type are created, copied, moved, and destroyed, and how values can
 be converted to values of other types. Often such special member
 functions are called implicitly. — *end note*\]
 
-Special member functions obey the usual access rules [class.access].
+Special member functions obey the usual access rules [[class.access]].
 
 \[*Example 9*: Declaring a constructor protected ensures that only
 derived classes and friends can create objects using
@@ -913,21 +915,22 @@ which:
 
 - the function is not deleted,
 
-- the associated constraints [temp.constr], if any, are satisfied, and
+- the associated constraints [[temp.constr]], if any, are satisfied, and
 
 - no special member function of the same kind is more constrained
-  [temp.constr.order].
+  [[temp.constr.order]].
 
 For a class, its non-static data members, its non-virtual direct base
-classes, and, if the class is not abstract [class.abstract], its virtual
-base classes are called its *potentially constructed subobjects*.
+classes, and, if the class is not abstract [[class.abstract]], its
+virtual base classes are called its
+*potentially constructed subobjects*.
 
-### Constructors <a id="class.ctor">[class.ctor]</a>
+### Constructors <a id="class.ctor">[[class.ctor]]</a>
 
-#### General <a id="class.ctor.general">[class.ctor.general]</a>
+#### General <a id="class.ctor.general">[[class.ctor.general]]</a>
 
 A *declarator* declares a *constructor* if it is a function declarator
-[dcl.fct] of the form
+[[dcl.fct]] of the form
 
 ``` bnf
 ptr-declarator '(' parameter-declaration-clause ')' [noexcept-specifier] [attribute-specifier-seq]
@@ -937,12 +940,12 @@ where the *ptr-declarator* consists solely of an *id-expression*, an
 optional *attribute-specifier-seq*, and optional surrounding
 parentheses, and the *id-expression* has one of the following forms:
 
-- in a friend declaration [class.friend], the *id-expression* is a
-  *qualified-id* that names a constructor [class.qual];
+- in a friend declaration [[class.friend]], the *id-expression* is a
+  *qualified-id* that names a constructor [[class.qual]];
 
 - otherwise, in a *member-declaration* that belongs to the
   *member-specification* of a class or class template, the
-  *id-expression* is the injected-class-name [class.pre] of the
+  *id-expression* is the injected-class-name [[class.pre]] of the
   immediately-enclosing entity;
 
 - otherwise, the *id-expression* is a *qualified-id* whose
@@ -968,7 +971,7 @@ A constructor is used to initialize objects of its class type.
 
 \[*Note 18*: Because constructors do not have names, they are never
 found during unqualified name lookup; however an explicit type
-conversion using the functional notation [expr.type.conv] will cause a
+conversion using the functional notation [[expr.type.conv]] will cause a
 constructor to be called to initialize an object. The syntax looks like
 an explicit call of the constructor. — *end note*\]
 
@@ -982,42 +985,42 @@ cprint( complex(7.8,1.2) );
 — *end example*\]
 
 \[*Note 19*: For initialization of objects of class type see 
-[class.init]. — *end note*\]
+[[class.init]]. — *end note*\]
 
 An object created in this way is unnamed.
 
-\[*Note 20*:  [class.temporary] describes the lifetime of temporary
+\[*Note 20*:  [[class.temporary]] describes the lifetime of temporary
 objects. — *end note*\]
 
 \[*Note 21*: Explicit constructor calls do not yield lvalues, see 
-[basic.lval]. — *end note*\]
+[[basic.lval]]. — *end note*\]
 
 \[*Note 22*:  Some language constructs have special semantics when used
-during construction; see  [class.base.init] and 
-[class.cdtor]. — *end note*\]
+during construction; see  [[class.base.init]] and 
+[[class.cdtor]]. — *end note*\]
 
 A constructor can be invoked for a `const`, `volatile` or `const`
-`volatile` object. `const` and `volatile` semantics [dcl.type.cv] are
+`volatile` object. `const` and `volatile` semantics [[dcl.type.cv]] are
 not applied on an object under construction. They come into effect when
-the constructor for the most derived object [intro.object] ends.
+the constructor for the most derived object [[intro.object]] ends.
 
 The address of a constructor shall not be taken.
 
 \[*Note 23*: A `return` statement in the body of a constructor cannot
-specify a return value [stmt.return]. — *end note*\]
+specify a return value [[stmt.return]]. — *end note*\]
 
 A constructor shall not be a coroutine.
 
-A constructor shall not have an explicit object parameter [dcl.fct].
+A constructor shall not have an explicit object parameter [[dcl.fct]].
 
-#### Default constructors <a id="class.default.ctor">[class.default.ctor]</a>
+#### Default constructors <a id="class.default.ctor">[[class.default.ctor]]</a>
 
 A *default constructor* for a class `X` is a constructor of class `X`
 for which each parameter that is not a function parameter pack has a
 default argument (including the case of a constructor with no
 parameters). If there is no user-declared constructor for class `X`, a
 non-explicit constructor having no parameters is implicitly declared as
-defaulted [dcl.fct.def]. An implicitly-declared default constructor is
+defaulted [[dcl.fct.def]]. An implicitly-declared default constructor is
 an inline public member of its class.
 
 A defaulted default constructor for class `X` is defined as deleted if:
@@ -1031,11 +1034,11 @@ A defaulted default constructor for class `X` is defined as deleted if:
   union containing `M` has a default member initializer,
 
 - any non-static data member with no default member initializer
-  [class.mem] is of reference type,
+  [[class.mem]] is of reference type,
 
 - any non-variant non-static data member of const-qualified type (or
   array thereof) with no *brace-or-equal-initializer* is not
-  const-default-constructible [dcl.init],
+  const-default-constructible [[dcl.init]],
 
 - `X` is a union and all of its variant members are of const-qualified
   type (or array thereof),
@@ -1046,7 +1049,7 @@ A defaulted default constructor for class `X` is defined as deleted if:
 - any potentially constructed subobject, except for a non-static data
   member with a *brace-or-equal-initializer*, has class type `M` (or
   array thereof) and either `M` has no default constructor or overload
-  resolution [over.match] as applied to find `M`’s corresponding
+  resolution [[over.match]] as applied to find `M`’s corresponding
   constructor results in an ambiguity or in a function that is deleted
   or inaccessible from the defaulted default constructor, or
 
@@ -1056,11 +1059,11 @@ A defaulted default constructor for class `X` is defined as deleted if:
 
 A default constructor is *trivial* if it is not user-provided and if:
 
-- its class has no virtual functions [class.virtual] and no virtual base
-  classes [class.mi], and
+- its class has no virtual functions [[class.virtual]] and no virtual
+  base classes [[class.mi]], and
 
 - no non-static data member of its class has a default member
-  initializer [class.mem], and
+  initializer [[class.mem]], and
 
 - all the direct base classes of its class have trivial default
   constructors, and
@@ -1071,39 +1074,39 @@ A default constructor is *trivial* if it is not user-provided and if:
 
 Otherwise, the default constructor is *non-trivial*.
 
-An implicitly-defined [dcl.fct.def.default] default constructor performs
-the set of initializations of the class that would be performed by a
-user-written default constructor for that class with no
-*ctor-initializer* [class.base.init] and an empty *compound-statement*.
-If that user-written default constructor would be ill-formed, the
-program is ill-formed. If that user-written default constructor would be
-constexpr-suitable [dcl.constexpr], the implicitly-defined default
-constructor is `constexpr`. Before the defaulted default constructor for
-a class is implicitly defined, all the non-user-provided default
-constructors for its base classes and its non-static data members are
-implicitly defined.
+An implicitly-defined [[dcl.fct.def.default]] default constructor
+performs the set of initializations of the class that would be performed
+by a user-written default constructor for that class with no
+*ctor-initializer* [[class.base.init]] and an empty
+*compound-statement*. If that user-written default constructor would be
+ill-formed, the program is ill-formed. If that user-written default
+constructor would be constexpr-suitable [[dcl.constexpr]], the
+implicitly-defined default constructor is `constexpr`. Before the
+defaulted default constructor for a class is implicitly defined, all the
+non-user-provided default constructors for its base classes and its
+non-static data members are implicitly defined.
 
 \[*Note 24*: An implicitly-declared default constructor has an exception
-specification [except.spec]. An explicitly-defaulted definition might
+specification [[except.spec]]. An explicitly-defaulted definition might
 have an implicit exception specification, see 
-[dcl.fct.def]. — *end note*\]
+[[dcl.fct.def]]. — *end note*\]
 
 \[*Note 25*:  A default constructor is implicitly invoked to initialize
-a class object when no initializer is specified [dcl.init.general]. Such
-a default constructor is required to be accessible
-[class.access]. — *end note*\]
+a class object when no initializer is specified [[dcl.init.general]].
+Such a default constructor is required to be accessible
+[[class.access]]. — *end note*\]
 
-\[*Note 26*:  [class.base.init] describes the order in which
+\[*Note 26*:  [[class.base.init]] describes the order in which
 constructors for base classes and non-static data members are called and
 describes how arguments can be specified for the calls to these
 constructors. — *end note*\]
 
-#### Copy/move constructors <a id="class.copy.ctor">[class.copy.ctor]</a>
+#### Copy/move constructors <a id="class.copy.ctor">[[class.copy.ctor]]</a>
 
 A non-template constructor for class `X` is a copy constructor if its
 first parameter is of type `X&`, `const X&`, `volatile X&` or
 `const volatile X&`, and either there are no other parameters or else
-all other parameters have default arguments [dcl.fct.default].
+all other parameters have default arguments [[dcl.fct.default]].
 
 \[*Example 12*:
 
@@ -1126,7 +1129,7 @@ X c = b;            // calls X(const X\&, int);
 A non-template constructor for class `X` is a move constructor if its
 first parameter is of type `X&&`, `const X&&`, `volatile X&&`, or
 `const volatile X&&`, and either there are no other parameters or else
-all other parameters have default arguments [dcl.fct.default].
+all other parameters have default arguments [[dcl.fct.default]].
 
 \[*Example 13*:
 
@@ -1186,9 +1189,9 @@ If the class definition does not explicitly declare a copy constructor,
 a non-explicit one is declared *implicitly*. If the class definition
 declares a move constructor or move assignment operator, the implicitly
 declared copy constructor is defined as deleted; otherwise, it is
-defaulted [dcl.fct.def]. The latter case is deprecated if the class has
-a user-declared copy assignment operator or a user-declared destructor
-[depr.impldec].
+defaulted [[dcl.fct.def]]. The latter case is deprecated if the class
+has a user-declared copy assignment operator or a user-declared
+destructor [[depr.impldec]].
 
 The implicitly-declared copy constructor for a class `X` will have the
 form
@@ -1232,13 +1235,13 @@ X::X(X&&)
 
 An implicitly-declared copy/move constructor is an inline public member
 of its class. A defaulted copy/move constructor for a class `X` is
-defined as deleted [dcl.fct.def.delete] if `X` has:
+defined as deleted [[dcl.fct.def.delete]] if `X` has:
 
 - a potentially constructed subobject of type `M` (or array thereof)
-  that cannot be copied/moved because overload resolution [over.match],
-  as applied to find `M`’s corresponding constructor, results in an
-  ambiguity or a function that is deleted or inaccessible from the
-  defaulted constructor,
+  that cannot be copied/moved because overload resolution
+  [[over.match]], as applied to find `M`’s corresponding constructor,
+  results in an ambiguity or a function that is deleted or inaccessible
+  from the defaulted constructor,
 
 - a variant member whose corresponding constructor as selected by
   overload resolution is non-trivial,
@@ -1250,15 +1253,15 @@ defined as deleted [dcl.fct.def.delete] if `X` has:
   type.
 
 \[*Note 30*: A defaulted move constructor that is defined as deleted is
-ignored by overload resolution [over.match], [over.over]. Such a
+ignored by overload resolution [[over.match]], [[over.over]]. Such a
 constructor would otherwise interfere with initialization from an rvalue
 which can use the copy constructor instead. — *end note*\]
 
 A copy/move constructor for class `X` is trivial if it is not
 user-provided and if:
 
-- class `X` has no virtual functions [class.virtual] and no virtual base
-  classes [class.mi], and
+- class `X` has no virtual functions [[class.virtual]] and no virtual
+  base classes [[class.mi]], and
 
 - the constructor selected to copy/move each direct base class subobject
   is trivial, and
@@ -1271,10 +1274,10 @@ otherwise the copy/move constructor is *non-trivial*.
 
 \[*Note 31*: The copy/move constructor is implicitly defined even if the
 implementation elided its odr-use
-[term.odr.use], [class.temporary]. — *end note*\]
+[[term.odr.use]], [[class.temporary]]. — *end note*\]
 
-If an implicitly-defined [dcl.fct.def.default] constructor would be
-constexpr-suitable [dcl.constexpr], the implicitly-defined constructor
+If an implicitly-defined [[dcl.fct.def.default]] constructor would be
+constexpr-suitable [[dcl.constexpr]], the implicitly-defined constructor
 is `constexpr`.
 
 Before the defaulted copy/move constructor for a class is implicitly
@@ -1282,17 +1285,17 @@ defined, all non-user-provided copy/move constructors for its
 potentially constructed subobjects are implicitly defined.
 
 \[*Note 32*: An implicitly-declared copy/move constructor has an implied
-exception specification [except.spec]. — *end note*\]
+exception specification [[except.spec]]. — *end note*\]
 
 The implicitly-defined copy/move constructor for a non-union class `X`
 performs a memberwise copy/move of its bases and members.
 
 \[*Note 33*: Default member initializers of non-static data members are
-ignored. See also the example in  [class.base.init]. — *end note*\]
+ignored. See also the example in  [[class.base.init]]. — *end note*\]
 
 The order of initialization is the same as the order of initialization
 of bases and members in a user-defined constructor (see 
-[class.base.init]). Let `x` be either the parameter of the constructor
+[[class.base.init]]). Let `x` be either the parameter of the constructor
 or, for the move constructor, an xvalue referring to the parameter. Each
 base or non-static data member is copied/moved in the manner appropriate
 to its type:
@@ -1307,16 +1310,16 @@ to its type:
   corresponding base or member of `x`.
 
 Virtual base class subobjects shall be initialized only once by the
-implicitly-defined copy/move constructor (see  [class.base.init]).
+implicitly-defined copy/move constructor (see  [[class.base.init]]).
 
 The implicitly-defined copy/move constructor for a union `X` copies the
-object representation [term.object.representation] of `X`. For each
-object nested within [intro.object] the object that is the source of the
-copy, a corresponding object o nested within the destination is
+object representation [[term.object.representation]] of `X`. For each
+object nested within [[intro.object]] the object that is the source of
+the copy, a corresponding object o nested within the destination is
 identified (if the object is a subobject) or created (otherwise), and
 the lifetime of o begins before the copy is performed.
 
-### Copy/move assignment operator <a id="class.copy.assign">[class.copy.assign]</a>
+### Copy/move assignment operator <a id="class.copy.assign">[[class.copy.assign]]</a>
 
 A user-declared *copy* assignment operator `X::operator=` is a
 non-static non-template member function of class `X` with exactly one
@@ -1324,7 +1327,7 @@ non-object parameter of type `X`, `X&`, `const X&`, `volatile X&`, or
 `const volatile X&`.
 
 \[*Note 34*: An overloaded assignment operator must be declared to have
-only one parameter; see  [over.ass]. — *end note*\]
+only one parameter; see  [[over.ass]]. — *end note*\]
 
 \[*Note 35*: More than one form of copy assignment operator can be
 declared for a class. — *end note*\]
@@ -1341,9 +1344,9 @@ If the class definition does not explicitly declare a copy assignment
 operator, one is declared *implicitly*. If the class definition declares
 a move constructor or move assignment operator, the implicitly declared
 copy assignment operator is defined as deleted; otherwise, it is
-defaulted [dcl.fct.def]. The latter case is deprecated if the class has
-a user-declared copy constructor or a user-declared destructor
-[depr.impldec]. The implicitly-declared copy assignment operator for a
+defaulted [[dcl.fct.def]]. The latter case is deprecated if the class
+has a user-declared copy constructor or a user-declared destructor
+[[depr.impldec]]. The implicitly-declared copy assignment operator for a
 class `X` will have the form
 
 ``` cpp
@@ -1373,7 +1376,7 @@ parameter of type `X&&`, `const X&&`, `volatile X&&`, or
 `const volatile X&&`.
 
 \[*Note 37*: An overloaded assignment operator must be declared to have
-only one parameter; see  [over.ass]. — *end note*\]
+only one parameter; see  [[over.ass]]. — *end note*\]
 
 \[*Note 38*: More than one form of move assignment operator can be
 declared for a class. — *end note*\]
@@ -1439,19 +1442,19 @@ deleted if `X` has:
 
 - a direct non-static data member of class type `M` (or array thereof)
   or a direct base class `M` that cannot be copied/moved because
-  overload resolution [over.match], as applied to find `M`’s
+  overload resolution [[over.match]], as applied to find `M`’s
   corresponding assignment operator, results in an ambiguity or a
   function that is deleted or inaccessible from the defaulted assignment
   operator.
 
 \[*Note 39*: A defaulted move assignment operator that is defined as
 deleted is ignored by overload resolution
-[over.match], [over.over]. — *end note*\]
+[[over.match]], [[over.over]]. — *end note*\]
 
 Because a copy/move assignment operator is implicitly declared for a
 class if not declared by the user, a base class copy/move assignment
 operator is always hidden by the corresponding assignment operator of a
-derived class [over.ass].
+derived class [[over.ass]].
 
 \[*Note 40*: A *using-declaration* in a derived class `C` that names an
 assignment operator from a base class never suppresses the implicit
@@ -1462,8 +1465,8 @@ declared as a member of `C`. — *end note*\]
 A copy/move assignment operator for class `X` is trivial if it is not
 user-provided and if:
 
-- class `X` has no virtual functions [class.virtual] and no virtual base
-  classes [class.mi], and
+- class `X` has no virtual functions [[class.virtual]] and no virtual
+  base classes [[class.mi]], and
 
 - the assignment operator selected to copy/move each direct base class
   subobject is trivial, and
@@ -1474,7 +1477,7 @@ user-provided and if:
 
 otherwise the copy/move assignment operator is *non-trivial*.
 
-An implicitly-defined [dcl.fct.def.default] copy/move assignment
+An implicitly-defined [[dcl.fct.def.default]] copy/move assignment
 operator is `constexpr`.
 
 Before the defaulted copy/move assignment operator for a class is
@@ -1483,7 +1486,7 @@ for its direct base classes and its non-static data members are
 implicitly defined.
 
 \[*Note 41*: An implicitly-declared copy/move assignment operator has an
-implied exception specification [except.spec]. — *end note*\]
+implied exception specification [[except.spec]]. — *end note*\]
 
 The implicitly-defined copy/move assignment operator for a non-union
 class `X` performs memberwise copy/move assignment of its subobjects.
@@ -1527,10 +1530,10 @@ for `C`.
 — *end example*\]
 
 The implicitly-defined copy/move assignment operator for a union `X`
-copies the object representation [term.object.representation] of `X`. If
-the source and destination of the assignment are not the same object,
-then for each object nested within [intro.object] the object that is the
-source of the copy, a corresponding object o nested within the
+copies the object representation [[term.object.representation]] of `X`.
+If the source and destination of the assignment are not the same object,
+then for each object nested within [[intro.object]] the object that is
+the source of the copy, a corresponding object o nested within the
 destination is created, and the lifetime of o begins before the copy is
 performed.
 
@@ -1538,7 +1541,7 @@ The implicitly-defined copy/move assignment operator for a class returns
 the object for which the assignment operator is invoked, that is, the
 object assigned to.
 
-### Destructors <a id="class.dtor">[class.dtor]</a>
+### Destructors <a id="class.dtor">[[class.dtor]]</a>
 
 ``` bnf
 ptr-declarator '(' parameter-declaration-clause ')' [noexcept-specifier] [attribute-specifier-seq]
@@ -1550,21 +1553,21 @@ parentheses, and the *id-expression* has one of the following forms:
 
 - in a *member-declaration* that belongs to the *member-specification*
   of a class or class template but is not a friend declaration
-  [class.friend], the *id-expression* is `~`*class-name* and the
-  *class-name* is the injected-class-name [class.pre] of the
+  [[class.friend]], the *id-expression* is `~`*class-name* and the
+  *class-name* is the injected-class-name [[class.pre]] of the
   immediately-enclosing entity or
 
 - otherwise, the *id-expression* is *nested-name-specifier*
   `~`*class-name* and the *class-name* is the injected-class-name of the
   class nominated by the *nested-name-specifier*.
 
-A prospective destructor shall take no arguments [dcl.fct]. Each
+A prospective destructor shall take no arguments [[dcl.fct]]. Each
 *decl-specifier* of the *decl-specifier-seq* of a prospective destructor
 declaration (if any) shall be `friend`, `inline`, `virtual`,
 `constexpr`, or `consteval`.
 
 If a class has no user-declared prospective destructor, a prospective
-destructor is implicitly declared as defaulted [dcl.fct.def]. An
+destructor is implicitly declared as defaulted [[dcl.fct.def]]. An
 implicitly-declared prospective destructor is an inline public member of
 its class.
 
@@ -1580,23 +1583,23 @@ performed among the prospective destructors declared in that class with
 an empty argument list to select the *destructor* for the class, also
 known as the *selected destructor*. The program is ill-formed if
 overload resolution fails. Destructor selection does not constitute a
-reference to, or odr-use [term.odr.use] of, the selected destructor, and
-in particular, the selected destructor may be deleted
-[dcl.fct.def.delete].
+reference to, or odr-use [[term.odr.use]] of, the selected destructor,
+and in particular, the selected destructor may be deleted
+[[dcl.fct.def.delete]].
 
 The address of a destructor shall not be taken.
 
 \[*Note 42*: A `return` statement in the body of a destructor cannot
-specify a return value [stmt.return]. — *end note*\]
+specify a return value [[stmt.return]]. — *end note*\]
 
 A destructor can be invoked for a `const`, `volatile` or `const`
-`volatile` object. `const` and `volatile` semantics [dcl.type.cv] are
+`volatile` object. `const` and `volatile` semantics [[dcl.type.cv]] are
 not applied on an object under destruction. They stop being in effect
-when the destructor for the most derived object [intro.object] starts.
+when the destructor for the most derived object [[intro.object]] starts.
 
 \[*Note 43*: A declaration of a destructor that does not have a
 *noexcept-specifier* has the same exception specification as if it had
-been implicitly declared [except.spec]. — *end note*\]
+been implicitly declared [[except.spec]]. — *end note*\]
 
 A defaulted destructor for a class `X` is defined as deleted if:
 
@@ -1624,90 +1627,91 @@ A destructor is trivial if it is not user-provided and if:
 Otherwise, the destructor is *non-trivial*.
 
 A defaulted destructor is a constexpr destructor if it is
-constexpr-suitable [dcl.constexpr].
+constexpr-suitable [[dcl.constexpr]].
 
 Before a defaulted destructor for a class is implicitly defined, all the
 non-user-provided destructors for its base classes and its non-static
 data members are implicitly defined.
 
-A prospective destructor can be declared `virtual` [class.virtual] and
-with a *pure-specifier* [class.abstract]. If the destructor of a class
+A prospective destructor can be declared `virtual` [[class.virtual]] and
+with a *pure-specifier* [[class.abstract]]. If the destructor of a class
 is virtual and any objects of that class or any derived class are
 created in the program, the destructor shall be defined.
 
 \[*Note 44*:  Some language constructs have special semantics when used
-during destruction; see  [class.cdtor]. — *end note*\]
+during destruction; see  [[class.cdtor]]. — *end note*\]
 
 After executing the body of the destructor and destroying any objects
 with automatic storage duration allocated within the body, a destructor
 for class `X` calls the destructors for `X`’s direct non-variant
 non-static data members, the destructors for `X`’s non-virtual direct
-base classes and, if `X` is the most derived class [class.base.init],
+base classes and, if `X` is the most derived class [[class.base.init]],
 its destructor calls the destructors for `X`’s virtual base classes. All
 destructors are called as if they were referenced with a qualified name,
 that is, ignoring any possible virtual overriding destructors in more
 derived classes. Bases and members are destroyed in the reverse order of
-the completion of their constructor (see  [class.base.init]).
+the completion of their constructor (see  [[class.base.init]]).
 
-\[*Note 45*: A `return` statement [stmt.return] in a destructor might
+\[*Note 45*: A `return` statement [[stmt.return]] in a destructor might
 not directly return to the caller; before transferring control to the
 caller, the destructors for the members and bases are
 called. — *end note*\]
 
 Destructors for elements of an array are called in reverse order of
-their construction (see  [class.init]).
+their construction (see  [[class.init]]).
 
 A destructor is invoked implicitly
 
 - for a constructed object with static storage duration
-  [basic.stc.static] at program termination [basic.start.term],
+  [[basic.stc.static]] at program termination [[basic.start.term]],
 
 - for a constructed object with thread storage duration
-  [basic.stc.thread] at thread exit,
+  [[basic.stc.thread]] at thread exit,
 
 - for a constructed object with automatic storage duration
-  [basic.stc.auto] when the block in which an object is created exits
-  [stmt.dcl],
+  [[basic.stc.auto]] when the block in which an object is created exits
+  [[stmt.dcl]],
 
 - for a constructed temporary object when its lifetime ends
-  [conv.rval], [class.temporary].
+  [[conv.rval]], [[class.temporary]].
 
 In each case, the context of the invocation is the context of the
 construction of the object. A destructor may also be invoked implicitly
-through use of a *delete-expression* [expr.delete] for a constructed
-object allocated by a *new-expression* [expr.new]; the context of the
+through use of a *delete-expression* [[expr.delete]] for a constructed
+object allocated by a *new-expression* [[expr.new]]; the context of the
 invocation is the *delete-expression*.
 
 \[*Note 46*: An array of class type contains several subobjects for each
 of which the destructor is invoked. — *end note*\]
 
 A destructor can also be invoked explicitly. A destructor is
-*potentially invoked* if it is invoked or as specified in  [expr.new],
-[stmt.return], [dcl.init.aggr], [class.base.init], and  [except.throw].
-A program is ill-formed if a destructor that is potentially invoked is
-deleted or not accessible from the context of the invocation.
+*potentially invoked* if it is invoked or as specified in  [[expr.new]],
+[[stmt.return]], [[dcl.init.aggr]], [[class.base.init]], and 
+[[except.throw]]. A program is ill-formed if a destructor that is
+potentially invoked is deleted or not accessible from the context of the
+invocation.
 
 At the point of definition of a virtual destructor (including an
 implicit definition), the non-array deallocation function is determined
 as if for the expression `delete this` appearing in a non-virtual
-destructor of the destructor’s class (see  [expr.delete]). If the lookup
-fails or if the deallocation function has a deleted definition
-[dcl.fct.def], the program is ill-formed.
+destructor of the destructor’s class (see  [[expr.delete]]). If the
+lookup fails or if the deallocation function has a deleted definition
+[[dcl.fct.def]], the program is ill-formed.
 
 \[*Note 47*: This assures that a deallocation function corresponding to
 the dynamic type of an object is available for the *delete-expression*
-[class.free]. — *end note*\]
+[[class.free]]. — *end note*\]
 
 In an explicit destructor call, the destructor is specified by a `~{}`
 followed by a *type-name* or *decltype-specifier* that denotes the
 destructor’s class type. The invocation of a destructor is subject to
-the usual rules for member functions [class.mfct]; that is, if the
+the usual rules for member functions [[class.mfct]]; that is, if the
 object is not of the destructor’s class type and not of a class derived
 from the destructor’s class type (including when the destructor is
 invoked via a null pointer value), the program has undefined behavior.
 
 \[*Note 48*: Invoking `delete` on a null pointer does not call the
-destructor; see [expr.delete]. — *end note*\]
+destructor; see [[expr.delete]]. — *end note*\]
 
 \[*Example 17*:
 
@@ -1735,10 +1739,10 @@ void f() {
 — *end example*\]
 
 \[*Note 49*: An explicit destructor call must always be written using a
-member access operator [expr.ref] or a *qualified-id*
-[expr.prim.id.qual]; in particular, the *unary-expression* `~{}X()` in a
-member function is not an explicit destructor call
-[expr.unary.op]. — *end note*\]
+member access operator [[expr.ref]] or a *qualified-id*
+[[expr.prim.id.qual]]; in particular, the *unary-expression* `~{}X()` in
+a member function is not an explicit destructor call
+[[expr.unary.op]]. — *end note*\]
 
 \[*Note 50*:
 
@@ -1768,7 +1772,7 @@ void g() {                      // rare, specialized use:
 
 Once a destructor is invoked for an object, the object’s lifetime ends;
 the behavior is undefined if the destructor is invoked for an object
-whose lifetime has ended [basic.life].
+whose lifetime has ended [[basic.life]].
 
 \[*Example 18*: If the destructor for an object with automatic storage
 duration is explicitly invoked, and the block is subsequently left in a
@@ -1778,8 +1782,8 @@ the behavior is undefined. — *end example*\]
 \[*Note 51*:
 
 The notation for explicit call of a destructor can be used for any
-scalar type name [expr.prim.id.dtor]. Allowing this makes it possible to
-write code without having to know if a destructor exists for a given
+scalar type name [[expr.prim.id.dtor]]. Allowing this makes it possible
+to write code without having to know if a destructor exists for a given
 type. For example:
 
 ``` cpp
@@ -1792,22 +1796,22 @@ p->I::~I();
 
 A destructor shall not be a coroutine.
 
-### Conversions <a id="class.conv">[class.conv]</a>
+### Conversions <a id="class.conv">[[class.conv]]</a>
 
-#### General <a id="class.conv.general">[class.conv.general]</a>
+#### General <a id="class.conv.general">[[class.conv.general]]</a>
 
 Type conversions of class objects can be specified by constructors and
 by conversion functions. These conversions are called
 *user-defined conversions* and are used for implicit type conversions
-[conv], for initialization [dcl.init], and for explicit type conversions
-[expr.type.conv], [expr.cast], [expr.static.cast].
+[[conv]], for initialization [[dcl.init]], and for explicit type
+conversions [[expr.type.conv]], [[expr.cast]], [[expr.static.cast]].
 
 User-defined conversions are applied only where they are unambiguous
-[class.member.lookup], [class.conv.fct]. Conversions obey the access
-control rules [class.access]. Access control is applied after ambiguity
-resolution [basic.lookup].
+[[class.member.lookup]], [[class.conv.fct]]. Conversions obey the access
+control rules [[class.access]]. Access control is applied after
+ambiguity resolution [[basic.lookup]].
 
-\[*Note 52*: See  [over.match] for a discussion of the use of
+\[*Note 52*: See  [[over.match]] for a discussion of the use of
 conversions in function calls as well as examples below. — *end note*\]
 
 At most one user-defined conversion (constructor or conversion function)
@@ -1831,11 +1835,11 @@ int c = X(a);       // OK, a.operator X().operator int()
 
 — *end example*\]
 
-#### Conversion by constructor <a id="class.conv.ctor">[class.conv.ctor]</a>
+#### Conversion by constructor <a id="class.conv.ctor">[[class.conv.ctor]]</a>
 
-A constructor that is not explicit [dcl.fct.spec] specifies a conversion
-from the types of its parameters (if any) to the type of its class. Such
-a constructor is called a *converting constructor*.
+A constructor that is not explicit [[dcl.fct.spec]] specifies a
+conversion from the types of its parameters (if any) to the type of its
+class. Such a constructor is called a *converting constructor*.
 
 \[*Example 20*:
 
@@ -1861,21 +1865,21 @@ void f(X arg) {
 
 An explicit constructor constructs objects just like non-explicit
 constructors, but does so only where the direct-initialization syntax
-[dcl.init] or where casts [expr.static.cast], [expr.cast] are explicitly
-used; see also  [over.match.copy]. A default constructor can be an
-explicit constructor; such a constructor will be used to perform
-default-initialization or value-initialization [dcl.init].
+[[dcl.init]] or where casts [[expr.static.cast]], [[expr.cast]] are
+explicitly used; see also  [[over.match.copy]]. A default constructor
+can be an explicit constructor; such a constructor will be used to
+perform default-initialization or value-initialization [[dcl.init]].
 
 — *end note*\]
 
-A non-explicit copy/move constructor [class.copy.ctor] is a converting
+A non-explicit copy/move constructor [[class.copy.ctor]] is a converting
 constructor.
 
 \[*Note 54*: An implicitly-declared copy/move constructor is not an
 explicit constructor; it can be called for implicit type
 conversions. — *end note*\]
 
-#### Conversion functions <a id="class.conv.fct">[class.conv.fct]</a>
+#### Conversion functions <a id="class.conv.fct">[[class.conv.fct]]</a>
 
 ``` bnf
 conversion-function-id:
@@ -1894,7 +1898,7 @@ conversion-declarator:
 
 A declaration whose *declarator-id* has an *unqualified-id* that is a
 *conversion-function-id* declares a *conversion function*; its
-*declarator* shall be a function declarator [dcl.fct] of the form
+*declarator* shall be a function declarator [[dcl.fct]] of the form
 
 ``` bnf
 ptr-declarator '(' parameter-declaration-clause ')' [cv-qualifier-seq]
@@ -1907,7 +1911,7 @@ parentheses, and the *id-expression* has one of the following forms:
 
 - in a *member-declaration* that belongs to the *member-specification*
   of a class or class template but is not a friend declaration
-  [class.friend], the *id-expression* is a *conversion-function-id*;
+  [[class.friend]], the *id-expression* is a *conversion-function-id*;
 
 - otherwise, the *id-expression* is a *qualified-id* whose
   *unqualified-id* is a *conversion-function-id*.
@@ -1915,7 +1919,7 @@ parentheses, and the *id-expression* has one of the following forms:
 A conversion function shall have no non-object parameters and shall be a
 non-static member function of a class or class template `X`; it
 specifies a conversion from `X` to the type specified by the
-*conversion-type-id*, interpreted as a *type-id* [dcl.name]. A
+*conversion-type-id*, interpreted as a *type-id* [[dcl.name]]. A
 *decl-specifier* in the *decl-specifier-seq* of a conversion function
 (if any) shall not be a *defining-type-specifier*.
 
@@ -1948,9 +1952,9 @@ In all three cases the value assigned will be converted by
 
 — *end example*\]
 
-A conversion function may be explicit [dcl.fct.spec], in which case it
+A conversion function may be explicit [[dcl.fct.spec]], in which case it
 is only considered as a user-defined conversion for
-direct-initialization [dcl.init]. Otherwise, user-defined conversions
+direct-initialization [[dcl.init]]. Otherwise, user-defined conversions
 are not restricted to use in assignments and initializations.
 
 \[*Example 22*:
@@ -1996,17 +2000,17 @@ This rule also prevents ambiguities for attributes.
 A conversion function in a derived class hides only conversion functions
 in base classes that convert to the same type. A conversion function
 template with a dependent return type hides only templates in base
-classes that correspond to it [class.member.lookup]; otherwise, it hides
-and is hidden as a non-template function. Function overload resolution
-[over.match.best] selects the best conversion function to perform the
-conversion.
+classes that correspond to it [[class.member.lookup]]; otherwise, it
+hides and is hidden as a non-template function. Function overload
+resolution [[over.match.best]] selects the best conversion function to
+perform the conversion.
 
 — *end note*\]
 
 Conversion functions can be virtual.
 
 A conversion function template shall not have a deduced return type
-[dcl.spec.auto].
+[[dcl.spec.auto]].
 
 \[*Example 23*:
 
@@ -2020,13 +2024,13 @@ struct S {
 
 — *end example*\]
 
-### Static members <a id="class.static">[class.static]</a>
+### Static members <a id="class.static">[[class.static]]</a>
 
-#### General <a id="class.static.general">[class.static.general]</a>
+#### General <a id="class.static.general">[[class.static.general]]</a>
 
 A static member `s` of class `X` may be referred to using the
 *qualified-id* expression `X::s`; it is not necessary to use the class
-member access syntax [expr.ref] to refer to a static member. A static
+member access syntax [[expr.ref]] to refer to a static member. A static
 member may be referred to using the class member access syntax, in which
 case the object expression is evaluated.
 
@@ -2046,24 +2050,24 @@ void f() {
 
 — *end example*\]
 
-Static members obey the usual class member access rules [class.access].
-When used in the declaration of a class member, the `static` specifier
-shall only be used in the member declarations that appear within the
-*member-specification* of the class definition.
+Static members obey the usual class member access rules
+[[class.access]]. When used in the declaration of a class member, the
+`static` specifier shall only be used in the member declarations that
+appear within the *member-specification* of the class definition.
 
 \[*Note 57*: It cannot be specified in member declarations that appear
 in namespace scope. — *end note*\]
 
-#### Static member functions <a id="class.static.mfct">[class.static.mfct]</a>
+#### Static member functions <a id="class.static.mfct">[[class.static.mfct]]</a>
 
-\[*Note 58*: The rules described in  [class.mfct] apply to static member
-functions. — *end note*\]
+\[*Note 58*: The rules described in  [[class.mfct]] apply to static
+member functions. — *end note*\]
 
 \[*Note 59*: A static member function does not have a `this` pointer
-[expr.prim.this]. A static member function cannot be qualified with
-`const`, `volatile`, or `virtual` [dcl.fct]. — *end note*\]
+[[expr.prim.this]]. A static member function cannot be qualified with
+`const`, `volatile`, or `virtual` [[dcl.fct]]. — *end note*\]
 
-#### Static data members <a id="class.static.data">[class.static.data]</a>
+#### Static data members <a id="class.static.data">[[class.static.data]]</a>
 
 A static data member is not part of the subobjects of a class. If a
 static data member is declared `thread_local` there is one copy of the
@@ -2071,17 +2075,17 @@ member per thread. If a static data member is not declared
 `thread_local` there is one copy of the data member that is shared by
 all the objects of the class.
 
-A static data member shall not be `mutable` [dcl.stc]. A static data
-member shall not be a direct member [class.mem] of an unnamed
-[class.pre] or local [class.local] class or of a (possibly indirectly)
-nested class [class.nest] thereof.
+A static data member shall not be `mutable` [[dcl.stc]]. A static data
+member shall not be a direct member [[class.mem]] of an unnamed
+[[class.pre]] or local [[class.local]] class or of a (possibly
+indirectly) nested class [[class.nest]] thereof.
 
 The declaration of a non-inline static data member in its class
 definition is not a definition and may be of an incomplete type other
 than cv `void`.
 
 \[*Note 60*: The *initializer* in the definition of a static data member
-is in the scope of its class [basic.scope.class]. — *end note*\]
+is in the scope of its class [[basic.scope.class]]. — *end note*\]
 
 \[*Example 25*:
 
@@ -2110,31 +2114,32 @@ Once the static data member has been defined, it exists even if no
 objects of its class have been created.
 
 The initialization and destruction of static data members is described
-in [basic.start.static], [basic.start.dynamic], and [basic.start.term].
+in [[basic.start.static]], [[basic.start.dynamic]], and
+[[basic.start.term]].
 
 — *end note*\]
 
 If a non-volatile non-inline `const` static data member is of integral
 or enumeration type, its declaration in the class definition can specify
 a *brace-or-equal-initializer* in which every *initializer-clause* that
-is an *assignment-expression* is a constant expression [expr.const]. The
-member shall still be defined in a namespace scope if it is odr-used
-[term.odr.use] in the program and the namespace scope definition shall
+is an *assignment-expression* is a constant expression [[expr.const]].
+The member shall still be defined in a namespace scope if it is odr-used
+[[term.odr.use]] in the program and the namespace scope definition shall
 not contain an *initializer*. The declaration of an inline static data
 member (which is a definition) may specify a
 *brace-or-equal-initializer*. If the member is declared with the
 `constexpr` specifier, it may be redeclared in namespace scope with no
-initializer (this usage is deprecated; see [depr.static.constexpr]).
+initializer (this usage is deprecated; see [[depr.static.constexpr]]).
 Declarations of other static data members shall not specify a
 *brace-or-equal-initializer*.
 
 \[*Note 62*: There is exactly one definition of a static data member
-that is odr-used [term.odr.use] in a valid program. — *end note*\]
+that is odr-used [[term.odr.use]] in a valid program. — *end note*\]
 
 \[*Note 63*: Static data members of a class in namespace scope have the
-linkage of the name of the class [basic.link]. — *end note*\]
+linkage of the name of the class [[basic.link]]. — *end note*\]
 
-### Bit-fields <a id="class.bit">[class.bit]</a>
+### Bit-fields <a id="class.bit">[[class.bit]]</a>
 
 A *member-declarator* of the form
 
@@ -2151,7 +2156,7 @@ expression with a value greater than or equal to zero and is called the
 *width* of the bit-field. If the width of a bit-field is larger than the
 width of the bit-field’s type (or, in case of an enumeration type, of
 its underlying type), the extra bits are padding bits
-[term.padding.bits]. Allocation of bit-fields within a class object is
+[[term.padding.bits]]. Allocation of bit-fields within a class object is
 *implementation-defined*. Alignment of bit-fields is
 *implementation-defined*. Bit-fields are packed into some addressable
 allocation unit.
@@ -2174,13 +2179,13 @@ when declaring an unnamed bit-field may the width be zero.
 
 The address-of operator `&` shall not be applied to a bit-field, so
 there are no pointers to bit-fields. A non-const reference shall not
-bind to a bit-field [dcl.init.ref].
+bind to a bit-field [[dcl.init.ref]].
 
 \[*Note 66*: If the initializer for a reference of type `const` `T&` is
 an lvalue that refers to a bit-field, the reference is bound to a
 temporary initialized to hold the value of the bit-field; the reference
 is not bound to the bit-field directly. See 
-[dcl.init.ref]. — *end note*\]
+[[dcl.init.ref]]. — *end note*\]
 
 If a value of integral type (other than `bool`) is stored into a
 bit-field of width N and the value would be representable in a
@@ -2191,7 +2196,7 @@ into a bit-field of type `bool` of any size (including a one bit
 bit-field), the original `bool` value and the value of the bit-field
 compare equal. If a value of an enumeration type is stored into a
 bit-field of the same type and the width is large enough to hold all the
-values of that enumeration type [dcl.enum], the original value and the
+values of that enumeration type [[dcl.enum]], the original value and the
 value of the bit-field compare equal.
 
 \[*Example 26*:
@@ -2211,7 +2216,7 @@ void f() {
 
 — *end example*\]
 
-### Allocation and deallocation functions <a id="class.free">[class.free]</a>
+### Allocation and deallocation functions <a id="class.free">[[class.free]]</a>
 
 Any allocation function for a class `T` is a static member (even if not
 explicitly declared `static`).
@@ -2334,14 +2339,14 @@ have been ill-formed. — *end example*\]
 
 \[*Note 69*: If a deallocation function has no explicit
 *noexcept-specifier*, it has a non-throwing exception specification
-[except.spec]. — *end note*\]
+[[except.spec]]. — *end note*\]
 
-### Nested class declarations <a id="class.nest">[class.nest]</a>
+### Nested class declarations <a id="class.nest">[[class.nest]]</a>
 
 A class can be declared within another class. A class declared within
 another is called a *nested class*.
 
-\[*Note 70*: See  [expr.prim.id] for restrictions on the use of
+\[*Note 70*: See  [[expr.prim.id]] for restrictions on the use of
 non-static data members and non-static member functions. — *end note*\]
 
 \[*Example 30*:
@@ -2382,58 +2387,58 @@ enclosing namespace scope.
 
 — *end note*\]
 
-A friend function [class.friend] defined within a nested class has no
+A friend function [[class.friend]] defined within a nested class has no
 special access rights to members of an enclosing class.
 
-## Unions <a id="class.union">[class.union]</a>
+## Unions <a id="class.union">[[class.union]]</a>
 
-### General <a id="class.union.general">[class.union.general]</a>
+### General <a id="class.union.general">[[class.union.general]]</a>
 
 A *union* is a class defined with the *class-key* `union`.
 
 In a union, a non-static data member is *active* if its name refers to
-an object whose lifetime has begun and has not ended [basic.life]. At
+an object whose lifetime has begun and has not ended [[basic.life]]. At
 most one of the non-static data members of an object of union type can
 be active at any time, that is, the value of at most one of the
 non-static data members can be stored in a union at any time.
 
 \[*Note 1*: One special guarantee is made in order to simplify the use
 of unions: If a standard-layout union contains several standard-layout
-structs that share a common initial sequence [class.mem], and if a
+structs that share a common initial sequence [[class.mem]], and if a
 non-static data member of an object of this standard-layout union type
 is active and is one of the standard-layout structs, it is permitted to
 inspect the common initial sequence of any of the standard-layout struct
-members; see  [class.mem]. — *end note*\]
+members; see  [[class.mem]]. — *end note*\]
 
 The size of a union is sufficient to contain the largest of its
 non-static data members. Each non-static data member is allocated as if
 it were the sole member of a non-union class.
 
 \[*Note 2*: A union object and its non-static data members are
-pointer-interconvertible [basic.compound], [expr.static.cast]. As a
+pointer-interconvertible [[basic.compound]], [[expr.static.cast]]. As a
 consequence, all non-static data members of a union object have the same
 address. — *end note*\]
 
 A union can have member functions (including constructors and
-destructors), but it shall not have virtual [class.virtual] functions. A
-union shall not have base classes. A union shall not be used as a base
+destructors), but it shall not have virtual [[class.virtual]] functions.
+A union shall not have base classes. A union shall not be used as a base
 class. If a union contains a non-static data member of reference type
 the program is ill-formed.
 
 \[*Note 3*:
 
-Absent default member initializers [class.mem], if any non-static data
+Absent default member initializers [[class.mem]], if any non-static data
 member of a union has a non-trivial default constructor
-[class.default.ctor], copy constructor, move constructor
-[class.copy.ctor], copy assignment operator, move assignment operator
-[class.copy.assign], or destructor [class.dtor], the corresponding
+[[class.default.ctor]], copy constructor, move constructor
+[[class.copy.ctor]], copy assignment operator, move assignment operator
+[[class.copy.assign]], or destructor [[class.dtor]], the corresponding
 member function of the union must be user-provided or it will be
-implicitly deleted [dcl.fct.def.delete] for the union.
+implicitly deleted [[dcl.fct.def.delete]] for the union.
 
 — *end note*\]
 
 When the left operand of an assignment operator involves a member access
-expression [expr.ref] that nominates a union member, it may begin the
+expression [[expr.ref]] that nominates a union member, it may begin the
 lifetime of that union member, as described below. For an expression
 `E`, define the set S(E) of subexpressions of `E` as follows:
 
@@ -2449,16 +2454,16 @@ lifetime of that union member, as described below. For an expression
 - Otherwise, S(E) is empty.
 
 In an assignment expression of the form `E1 = E2` that uses either the
-built-in assignment operator [expr.ass] or a trivial assignment operator
-[class.copy.assign], for each element `X` of S(`E1`), if modification of
-`X` would have undefined behavior under  [basic.life], an object of the
-type of `X` is implicitly created in the nominated storage; no
-initialization is performed and the beginning of its lifetime is
-sequenced after the value computation of the left and right operands and
-before the assignment.
+built-in assignment operator [[expr.ass]] or a trivial assignment
+operator [[class.copy.assign]], for each element `X` of S(`E1`), if
+modification of `X` would have undefined behavior under  [[basic.life]],
+an object of the type of `X` is implicitly created in the nominated
+storage; no initialization is performed and the beginning of its
+lifetime is sequenced after the value computation of the left and right
+operands and before the assignment.
 
 \[*Note 4*: This ends the lifetime of the previously-active member of
-the union, if any [basic.life]. — *end note*\]
+the union, if any [[basic.life]]. — *end note*\]
 
 \[*Example 1*:
 
@@ -2507,7 +2512,7 @@ new (&u.n) N;
 
 — *end example*\]
 
-### Anonymous unions <a id="class.union.anon">[class.union.anon]</a>
+### Anonymous unions <a id="class.union.anon">[[class.union.anon]]</a>
 
 A union of the form
 
@@ -2554,7 +2559,7 @@ an anonymous union.
 — *end note*\]
 
 \[*Note 7*: Initialization of unions with no user-declared constructors
-is described in  [dcl.init.aggr]. — *end note*\]
+is described in  [[dcl.init.aggr]]. — *end note*\]
 
 A *union-like class* is a union or a class that has an anonymous union
 as a direct member. A union-like class `X` has a set of
@@ -2581,13 +2586,13 @@ union U {
 
 — *end example*\]
 
-## Local class declarations <a id="class.local">[class.local]</a>
+## Local class declarations <a id="class.local">[[class.local]]</a>
 
 A class can be declared within a function definition; such a class is
 called a *local class*.
 
-\[*Note 1*: A declaration in a local class cannot odr-use [term.odr.use]
-a local entity from an enclosing scope. — *end note*\]
+\[*Note 1*: A declaration in a local class cannot odr-use
+[[term.odr.use]] a local entity from an enclosing scope. — *end note*\]
 
 \[*Example 1*:
 
@@ -2618,9 +2623,9 @@ local* p = 0;                   // error: local not found
 — *end example*\]
 
 An enclosing function has no special access to members of the local
-class; it obeys the usual access rules [class.access]. Member functions
-of a local class shall be defined within their class definition, if they
-are defined at all.
+class; it obeys the usual access rules [[class.access]]. Member
+functions of a local class shall be defined within their class
+definition, if they are defined at all.
 
 If class `X` is a local class a nested class `Y` may be declared in
 class `X` and later defined in the definition of class `X` or be later
@@ -2628,11 +2633,11 @@ defined in the same scope as the definition of class `X`. A class nested
 within a local class is a local class.
 
 \[*Note 2*: A local class cannot have static data members
-[class.static.data]. — *end note*\]
+[[class.static.data]]. — *end note*\]
 
-## Derived classes <a id="class.derived">[class.derived]</a>
+## Derived classes <a id="class.derived">[[class.derived]]</a>
 
-### General <a id="class.derived.general">[class.derived.general]</a>
+### General <a id="class.derived.general">[[class.derived.general]]</a>
 
 A list of base classes can be specified in a class definition using the
 notation:
@@ -2675,34 +2680,34 @@ The optional *attribute-specifier-seq* appertains to the
 The component names of a *class-or-decltype* are those of its
 *nested-name-specifier*, *type-name*, and/or *simple-template-id*. A
 *class-or-decltype* shall denote a (possibly cv-qualified) class type
-that is not an incompletely defined class [class.mem]; any cv-qualifiers
-are ignored. The class denoted by the *class-or-decltype* of a
-*base-specifier* is called a *direct base class* for the class being
-defined. The lookup for the component name of the *type-name* or
-*simple-template-id* is type-only [basic.lookup]. A class `B` is a base
-class of a class `D` if it is a direct base class of `D` or a direct
-base class of one of `D`’s base classes. A class is an
+that is not an incompletely defined class [[class.mem]]; any
+cv-qualifiers are ignored. The class denoted by the *class-or-decltype*
+of a *base-specifier* is called a *direct base class* for the class
+being defined. The lookup for the component name of the *type-name* or
+*simple-template-id* is type-only [[basic.lookup]]. A class `B` is a
+base class of a class `D` if it is a direct base class of `D` or a
+direct base class of one of `D`’s base classes. A class is an
 *indirect base class* of another if it is a base class but not a direct
 base class. A class is said to be (directly or indirectly) *derived*
 from its (direct or indirect) base classes.
 
-\[*Note 1*: See [class.access] for the meaning of
+\[*Note 1*: See [[class.access]] for the meaning of
 *access-specifier*. — *end note*\]
 
 Members of a base class are also members of the derived class.
 
 \[*Note 2*: Constructors of a base class can be explicitly inherited
-[namespace.udecl]. Base class members can be referred to in expressions
-in the same manner as other members of the derived class, unless their
-names are hidden or ambiguous [class.member.lookup]. The scope
-resolution operator `::` [expr.prim.id.qual] can be used to refer to a
-direct or indirect base member explicitly, even if it is hidden in the
-derived class. A derived class can itself serve as a base class subject
-to access control; see  [class.access.base]. A pointer to a derived
-class can be implicitly converted to a pointer to an accessible
-unambiguous base class [conv.ptr]. An lvalue of a derived class type can
-be bound to a reference to an accessible unambiguous base class
-[dcl.init.ref]. — *end note*\]
+[[namespace.udecl]]. Base class members can be referred to in
+expressions in the same manner as other members of the derived class,
+unless their names are hidden or ambiguous [[class.member.lookup]]. The
+scope resolution operator `::` [[expr.prim.id.qual]] can be used to
+refer to a direct or indirect base member explicitly, even if it is
+hidden in the derived class. A derived class can itself serve as a base
+class subject to access control; see  [[class.access.base]]. A pointer
+to a derived class can be implicitly converted to a pointer to an
+accessible unambiguous base class [[conv.ptr]]. An lvalue of a derived
+class type can be bound to a reference to an accessible unambiguous base
+class [[dcl.init.ref]]. — *end note*\]
 
 The *base-specifier-list* specifies the type of the
 *base class subobjects* contained in an object of the derived class
@@ -2734,10 +2739,10 @@ Here, an object of class `Derived2` will have a subobject of class
 — *end example*\]
 
 A *base-specifier* followed by an ellipsis is a pack expansion
-[temp.variadic].
+[[temp.variadic]].
 
 The order in which the base class subobjects are allocated in the most
-derived object [intro.object] is unspecified.
+derived object [[intro.object]] is unspecified.
 
 \[*Note 3*:  A derived class and its base class subobjects can be
 represented by a directed acyclic graph (DAG) where an arrow means
@@ -2746,17 +2751,17 @@ representation in memory. A DAG of subobjects is often referred to as a
 “subobject lattice”. — *end note*\]
 
 \[*Note 4*: Initialization of objects representing base classes can be
-specified in constructors; see  [class.base.init]. — *end note*\]
+specified in constructors; see  [[class.base.init]]. — *end note*\]
 
 \[*Note 5*: A base class subobject can have a layout different from the
 layout of a most derived object of the same type. A base class subobject
-can have a polymorphic behavior [class.cdtor] different from the
+can have a polymorphic behavior [[class.cdtor]] different from the
 polymorphic behavior of a most derived object of the same type. A base
 class subobject can be of zero size; however, two subobjects that have
 the same class type and that belong to the same most derived object
-cannot be allocated at the same address [intro.object]. — *end note*\]
+cannot be allocated at the same address [[intro.object]]. — *end note*\]
 
-### Multiple base classes <a id="class.mi">[class.mi]</a>
+### Multiple base classes <a id="class.mi">[[class.mi]]</a>
 
 A class can be derived from any number of base classes.
 
@@ -2776,8 +2781,8 @@ class D : public A, public B, public C { ... };
 
 \[*Note 7*: The order of derivation is not significant except as
 specified by the semantics of initialization by constructor
-[class.base.init], cleanup [class.dtor], and storage layout
-[class.mem], [class.access.spec]. — *end note*\]
+[[class.base.init]], cleanup [[class.dtor]], and storage layout
+[[class.mem]], [[class.access.spec]]. — *end note*\]
 
 A class shall not be specified as a direct base class of a derived class
 more than once.
@@ -2811,7 +2816,7 @@ specifies a *non-virtual base class*. A base class specifier that
 contains the keyword `virtual` specifies a *virtual base class*. For
 each distinct occurrence of a non-virtual base class in the class
 lattice of the most derived class, the most derived object
-[intro.object] shall contain a corresponding distinct base class
+[[intro.object]] shall contain a corresponding distinct base class
 subobject of that type. For each distinct base class that is specified
 virtual, the most derived object shall contain a single base class
 subobject of that type.
@@ -2833,7 +2838,7 @@ void C::f() { A::next = B::next; }      // well-formed
 ```
 
 Without the `A::` or `B::` qualifiers, the definition of `C::f` above
-would be ill-formed because of ambiguity [class.member.lookup].
+would be ill-formed because of ambiguity [[class.member.lookup]].
 
 — *end note*\]
 
@@ -2878,7 +2883,7 @@ a distinct `B` subobject within the object of type `AA`. Given the class
 
 — *end note*\]
 
-### Virtual functions <a id="class.virtual">[class.virtual]</a>
+### Virtual functions <a id="class.virtual">[[class.virtual]]</a>
 
 A non-static member function is a *virtual function* if it is first
 declared with the keyword `virtual` or if it overrides a virtual member
@@ -2891,15 +2896,16 @@ A class with a virtual member function is called a *polymorphic class*.
 
 If a virtual member function F is declared in a class B, and, in a class
 D derived (directly or indirectly) from B, a declaration of a member
-function G corresponds [basic.scope.scope] to a declaration of F,
+function G corresponds [[basic.scope.scope]] to a declaration of F,
 ignoring trailing *requires-clause*s, then G *overrides*
 
 F. For convenience we say that any virtual function overrides itself. A
 virtual member function V of a class object S is a *final
-overrider* unless the most derived class [intro.object] of which S is a
-base class subobject (if any) has another member function that overrides
-V. In a derived class, if a virtual member function of a base class
-subobject has more than one final overrider the program is ill-formed.
+overrider* unless the most derived class [[intro.object]] of which S is
+a base class subobject (if any) has another member function that
+overrides V. In a derived class, if a virtual member function of a base
+class subobject has more than one final overrider the program is
+ill-formed.
 
 \[*Example 4*:
 
@@ -2998,7 +3004,7 @@ struct D : B {
 — *end example*\]
 
 A virtual function shall not have a trailing *requires-clause*
-[dcl.decl].
+[[dcl.decl]].
 
 \[*Example 8*:
 
@@ -3035,11 +3041,11 @@ the following criteria:
 
 If the class type in the covariant return type of `D::f` differs from
 that of `B::f`, the class type in the return type of `D::f` shall be
-complete at the locus [basic.scope.pdecl] of the overriding declaration
-or shall be the class type `D`. When the overriding function is called
-as the final overrider of the overridden function, its result is
-converted to the type returned by the (statically chosen) overridden
-function [expr.call].
+complete at the locus [[basic.scope.pdecl]] of the overriding
+declaration or shall be the class type `D`. When the overriding function
+is called as the final overrider of the overridden function, its result
+is converted to the type returned by the (statically chosen) overridden
+function [[expr.call]].
 
 \[*Example 9*:
 
@@ -3091,18 +3097,18 @@ void g() {
 depends on the type of the object for which it is called (the dynamic
 type), whereas the interpretation of a call of a non-virtual member
 function depends only on the type of the pointer or reference denoting
-that object (the static type) [expr.call]. — *end note*\]
+that object (the static type) [[expr.call]]. — *end note*\]
 
 \[*Note 15*: The `virtual` specifier implies membership, so a virtual
-function cannot be a non-member [dcl.fct.spec] function. Nor can a
+function cannot be a non-member [[dcl.fct.spec]] function. Nor can a
 virtual function be a static member, since a virtual function call
 relies on a specific object for determining which function to invoke. A
 virtual function declared in one class can be declared a friend
-[class.friend] in another class. — *end note*\]
+[[class.friend]] in another class. — *end note*\]
 
 A virtual function declared in a class shall be defined, or declared
-pure [class.abstract] in that class, or both; no diagnostic is required
-[basic.def.odr].
+pure [[class.abstract]] in that class, or both; no diagnostic is
+required [[basic.def.odr]].
 
 \[*Example 10*:
 
@@ -3194,7 +3200,7 @@ void foe() {
 
 — *end example*\]
 
-Explicit qualification with the scope operator [expr.prim.id.qual]
+Explicit qualification with the scope operator [[expr.prim.id.qual]]
 suppresses the virtual call mechanism.
 
 \[*Example 13*:
@@ -3211,7 +3217,7 @@ Here, the function call in `D::f` really does call `B::f` and not
 
 — *end example*\]
 
-A deleted function [dcl.fct.def] shall not override a function that is
+A deleted function [[dcl.fct.def]] shall not override a function that is
 not deleted. Likewise, a function that is not deleted shall not override
 a deleted function.
 
@@ -3219,7 +3225,7 @@ A `consteval` virtual function shall not override a virtual function
 that is not `consteval`. A `consteval` virtual function shall not be
 overridden by a virtual function that is not `consteval`.
 
-### Abstract classes <a id="class.abstract">[class.abstract]</a>
+### Abstract classes <a id="class.abstract">[[class.abstract]]</a>
 
 \[*Note 16*: The abstract class mechanism supports the notion of a
 general concept, such as a `shape`, of which only more concrete
@@ -3228,7 +3234,7 @@ abstract class can also be used to define an interface for which derived
 classes provide a variety of implementations. — *end note*\]
 
 A virtual function is specified as a *pure virtual function* by using a
-*pure-specifier* [class.mem] in the function declaration in the class
+*pure-specifier* [[class.mem]] in the function declaration in the class
 definition.
 
 \[*Note 17*: Such a function might be inherited: see
@@ -3240,10 +3246,10 @@ function.
 \[*Note 18*: An abstract class can be used only as a base class of some
 other class; no objects of an abstract class can be created except as
 subobjects of a class derived from it
-[basic.def], [class.mem]. — *end note*\]
+[[basic.def]], [[class.mem]]. — *end note*\]
 
 A pure virtual function need be defined only if called with, or as if
-with [class.dtor], the *qualified-id* syntax [expr.prim.id.qual].
+with [[class.dtor]], the *qualified-id* syntax [[expr.prim.id.qual]].
 
 \[*Example 14*:
 
@@ -3275,13 +3281,14 @@ struct C {
 — *end example*\]
 
 \[*Note 20*: An abstract class type cannot be used as a parameter or
-return type of a function being defined [dcl.fct] or called [expr.call],
-except as specified in [dcl.type.simple]. Further, an abstract class
-type cannot be used as the type of an explicit type conversion
-[expr.static.cast], [expr.reinterpret.cast], [expr.const.cast], because
-the resulting prvalue would be of abstract class type [basic.lval].
-However, pointers and references to abstract class types can appear in
-such contexts. — *end note*\]
+return type of a function being defined [[dcl.fct]] or called
+[[expr.call]], except as specified in [[dcl.type.simple]]. Further, an
+abstract class type cannot be used as the type of an explicit type
+conversion
+[[expr.static.cast]], [[expr.reinterpret.cast]], [[expr.const.cast]],
+because the resulting prvalue would be of abstract class type
+[[basic.lval]]. However, pointers and references to abstract class types
+can appear in such contexts. — *end note*\]
 
 A class is abstract if it has at least one pure virtual function for
 which the final overrider is pure virtual.
@@ -3319,14 +3326,14 @@ abstract, and a pure virtual function can override a virtual function
 which is not pure. — *end note*\]
 
 Member functions can be called from a constructor (or destructor) of an
-abstract class; the effect of making a virtual call [class.virtual] to a
-pure virtual function directly or indirectly for the object being
+abstract class; the effect of making a virtual call [[class.virtual]] to
+a pure virtual function directly or indirectly for the object being
 created (or destroyed) from such a constructor (or destructor) is
 undefined.
 
-## Member access control <a id="class.access">[class.access]</a>
+## Member access control <a id="class.access">[[class.access]]</a>
 
-### General <a id="class.access.general">[class.access.general]</a>
+### General <a id="class.access.general">[[class.access.general]]</a>
 
 A member of a class can be
 
@@ -3335,12 +3342,12 @@ A member of a class can be
 
 -  protected, that is, it can be named only by members and friends of
   the class in which it is declared, by classes derived from that class,
-  and by their friends (see  [class.protected]); or
+  and by their friends (see  [[class.protected]]); or
 
 -  public, that is, it can be named anywhere without access restriction.
 
 \[*Note 1*: A constructor or destructor can be named by an expression
-[basic.def.odr] even though it has no name. — *end note*\]
+[[basic.def.odr]] even though it has no name. — *end note*\]
 
 A member of a class can also access all the members to which the class
 has access. A local class of a member function may access the same
@@ -3367,8 +3374,8 @@ struct S {
 Access control is applied uniformly to declarations and expressions.
 
 \[*Note 2*: Access control applies to members nominated by friend
-declarations [class.friend] and *using-declaration*
-[namespace.udecl]. — *end note*\]
+declarations [[class.friend]] and *using-declaration*
+[[namespace.udecl]]. — *end note*\]
 
 When a *using-declarator* is named, access control is applied to it, not
 to the declarations that replace it. For an overload set, access control
@@ -3421,11 +3428,11 @@ The interpretation of a given construct is established without regard to
 access control. If the interpretation established makes use of
 inaccessible members or base classes, the construct is ill-formed.
 
-All access controls in [class.access] affect the ability to name a class
-member from the declaration of a particular entity, including parts of
-the declaration preceding the name of the entity being declared and, if
-the entity is a class, the definitions of members of the class appearing
-outside the class’s *member-specification*
+All access controls in [[class.access]] affect the ability to name a
+class member from the declaration of a particular entity, including
+parts of the declaration preceding the name of the entity being declared
+and, if the entity is a class, the definitions of members of the class
+appearing outside the class’s *member-specification*
 
 \[*Note 5*: This access also applies to implicit references to
 constructors, conversion functions, and destructors. — *end note*\]
@@ -3465,14 +3472,14 @@ is as the return type of a member of class `A`. Similarly, the use of
 
 — *end example*\]
 
-Access is checked for a default argument [dcl.fct.default] at the point
-of declaration, rather than at any points of use of the default
+Access is checked for a default argument [[dcl.fct.default]] at the
+point of declaration, rather than at any points of use of the default
 argument. Access checking for default arguments in function templates
 and in member functions of class templates is performed as described in 
-[temp.inst].
+[[temp.inst]].
 
-Access for a default *template-argument* [temp.param] is checked in the
-context in which it appears rather than at any points of use of it.
+Access for a default *template-argument* [[temp.param]] is checked in
+the context in which it appears rather than at any points of use of it.
 
 \[*Example 4*:
 
@@ -3491,10 +3498,10 @@ D <C<B> >* d;       // access error, C::TT is protected
 
 — *end example*\]
 
-### Access specifiers <a id="class.access.spec">[class.access.spec]</a>
+### Access specifiers <a id="class.access.spec">[[class.access.spec]]</a>
 
 Member declarations can be labeled by an *access-specifier*
-[class.derived]:
+[[class.derived]]:
 
 ``` bnf
 access-specifier ':' [member-specification]
@@ -3573,9 +3580,9 @@ class C : public B {
 
 — *end example*\]
 
-### Accessibility of base classes and base class members <a id="class.access.base">[class.access.base]</a>
+### Accessibility of base classes and base class members <a id="class.access.base">[[class.access.base]]</a>
 
-If a class is declared to be a base class [class.derived] for another
+If a class is declared to be a base class [[class.derived]] for another
 class using the `public` access specifier, the public members of the
 base class are accessible as public members of the derived class and
 protected members of the base class are accessible as protected members
@@ -3615,11 +3622,11 @@ Here `B` is a public base of `D2`, `D4`, and `D6`, a private base of
 
 A member of a private base class can be inaccessible as inherited, but
 accessible directly. Because of the rules on pointer conversions
-[conv.ptr] and explicit casts
-[expr.type.conv], [expr.static.cast], [expr.cast], a conversion from a
-pointer to a derived class to a pointer to an inaccessible base class
-can be ill-formed if an implicit conversion is used, but well-formed if
-an explicit cast is used. For example,
+[[conv.ptr]] and explicit casts
+[[expr.type.conv]], [[expr.static.cast]], [[expr.cast]], a conversion
+from a pointer to a derived class to a pointer to an inaccessible base
+class can be ill-formed if an implicit conversion is used, but
+well-formed if an explicit cast is used. For example,
 
 ``` cpp
 class B {
@@ -3686,7 +3693,8 @@ class N: private S {
 — *end example*\]
 
 If a base class is accessible, one can implicitly convert a pointer to a
-derived class to a pointer to that base class [conv.ptr], [conv.mem].
+derived class to a pointer to that base class
+[[conv.ptr]], [[conv.mem]].
 
 \[*Note 8*: It follows that members and friends of a class `X` can
 implicitly convert an `X*` to a pointer to a private or protected
@@ -3697,12 +3705,12 @@ named. This naming class is the class in whose scope name lookup
 performed a search that found the member.
 
 \[*Note 9*: This class can be explicit, e.g., when a *qualified-id* is
-used, or implicit, e.g., when a class member access operator [expr.ref]
-is used (including cases where an implicit “`this->`” is added). If both
-a class member access operator and a *qualified-id* are used to name the
-member (as in `p->T::m`), the class naming the member is the class
-denoted by the *nested-name-specifier* of the *qualified-id* (that is,
-`T`). — *end note*\]
+used, or implicit, e.g., when a class member access operator
+[[expr.ref]] is used (including cases where an implicit “`this->`” is
+added). If both a class member access operator and a *qualified-id* are
+used to name the member (as in `p->T::m`), the class naming the member
+is the class denoted by the *nested-name-specifier* of the
+*qualified-id* (that is, `T`). — *end note*\]
 
 A member `m` is accessible at the point *R* when named in class `N` if
 
@@ -3747,7 +3755,7 @@ to the naming class of the right operand.
 \[*Note 10*: This requirement is in addition to the requirement that the
 member be accessible as named. — *end note*\]
 
-### Friends <a id="class.friend">[class.friend]</a>
+### Friends <a id="class.friend">[[class.friend]]</a>
 
 A friend of a class is a function or class that is given permission to
 name the private and protected members of the class. A class specifies
@@ -3831,7 +3839,7 @@ the following forms:
 ```
 
 \[*Note 11*: A friend declaration can be the *declaration* in a
-*template-declaration* [temp.pre], [temp.friend]. — *end note*\]
+*template-declaration* [[temp.pre]], [[temp.friend]]. — *end note*\]
 
 If the type specifier in a `friend` declaration designates a (possibly
 cv-qualified) class type, that class is declared as a friend; otherwise,
@@ -3864,8 +3872,8 @@ R<int> Ri;                      // OK, "friend int;" is ignored
 — *end example*\]
 
 A function first declared in a friend declaration has the linkage of the
-namespace of which it is a member [basic.link]. Otherwise, the function
-retains its previous linkage [dcl.stc].
+namespace of which it is a member [[basic.link]]. Otherwise, the
+function retains its previous linkage [[dcl.stc]].
 
 \[*Note 12*:
 
@@ -3875,8 +3883,8 @@ A member function of a class `X` can be a friend of a class `Y`.
 — *end note*\]
 
 A function may be defined in a friend declaration of a class if and only
-if the class is a non-local class [class.local] and the function name is
-unqualified.
+if the class is a non-local class [[class.local]] and the function name
+is unqualified.
 
 \[*Example 15*:
 
@@ -3889,7 +3897,7 @@ class M {
 
 — *end example*\]
 
-Such a function is implicitly an inline [dcl.inline] function if it is
+Such a function is implicitly an inline [[dcl.inline]] function if it is
 attached to the global module.
 
 \[*Note 13*: If a friend function is defined outside a class, it is not
@@ -3901,7 +3909,7 @@ a friend declaration.
 A member nominated by a friend declaration shall be accessible in the
 class containing the friend declaration. The meaning of the friend
 declaration is the same whether the friend declaration appears in the
-private, protected, or public [class.mem] portion of the class
+private, protected, or public [[class.mem]] portion of the class
 *member-specification*.
 
 Friendship is neither inherited nor transitive.
@@ -3934,7 +3942,7 @@ class D : public B  {
 — *end example*\]
 
 \[*Note 14*: A friend declaration never binds any names
-[dcl.meaning], [dcl.type.elab]. — *end note*\]
+[[dcl.meaning]], [[dcl.type.elab]]. — *end note*\]
 
 \[*Example 17*:
 
@@ -3995,19 +4003,19 @@ void f() {
 
 — *end example*\]
 
-### Protected member access <a id="class.protected">[class.protected]</a>
+### Protected member access <a id="class.protected">[[class.protected]]</a>
 
 An additional access check beyond those described earlier in
-[class.access] is applied when a non-static data member or non-static
+[[class.access]] is applied when a non-static data member or non-static
 member function is a protected member of its naming class
-[class.access.base].
+[[class.access.base]].
 
 As described earlier, access to a protected member is granted because
 the reference occurs in a friend or direct member of some class `C`. If
-the access is to form a pointer to member [expr.unary.op], the
+the access is to form a pointer to member [[expr.unary.op]], the
 *nested-name-specifier* shall denote `C` or a class derived from `C`.
 All other accesses involve a (possibly implicit) object expression
-[expr.ref]. In this case, the class of the object expression shall be
+[[expr.ref]]. In this case, the class of the object expression shall be
 `C` or a class derived from `C`.
 
 \[*Example 19*:
@@ -4058,10 +4066,10 @@ void g(B* pb, D1* p1, D2* p2) {
 
 — *end example*\]
 
-### Access to virtual functions <a id="class.access.virt">[class.access.virt]</a>
+### Access to virtual functions <a id="class.access.virt">[[class.access.virt]]</a>
 
-The access rules [class.access] for a virtual function are determined by
-its declaration and are not affected by the rules for a function that
+The access rules [[class.access]] for a virtual function are determined
+by its declaration and are not affected by the rules for a function that
 later overrides it.
 
 \[*Example 20*:
@@ -4094,7 +4102,7 @@ used to denote the object for which the member function is called (`B*`
 in the example above). The access of the member function in the class in
 which it was defined (`D` in the example above) is in general not known.
 
-### Multiple access <a id="class.paths">[class.paths]</a>
+### Multiple access <a id="class.paths">[[class.paths]]</a>
 
 If a declaration can be reached by several paths through a multiple
 inheritance graph, the access is that of the path that gives most
@@ -4116,11 +4124,11 @@ Since `W::f()` is available to `C::f()` along the public path through
 
 — *end example*\]
 
-### Nested classes <a id="class.access.nest">[class.access.nest]</a>
+### Nested classes <a id="class.access.nest">[[class.access.nest]]</a>
 
 A nested class is a member and as such has the same access rights as any
 other member. The members of an enclosing class have no special access
-to members of a nested class; the usual access rules [class.access]
+to members of a nested class; the usual access rules [[class.access]]
 shall be obeyed.
 
 \[*Example 22*:
@@ -4146,26 +4154,26 @@ class E {
 
 — *end example*\]
 
-## Initialization <a id="class.init">[class.init]</a>
+## Initialization <a id="class.init">[[class.init]]</a>
 
-### General <a id="class.init.general">[class.init.general]</a>
+### General <a id="class.init.general">[[class.init.general]]</a>
 
 When no initializer is specified for an object of (possibly
 cv-qualified) class type (or array thereof), or the initializer has the
-form `()`, the object is initialized as specified in  [dcl.init].
+form `()`, the object is initialized as specified in  [[dcl.init]].
 
 An object of class type (or array thereof) can be explicitly
-initialized; see  [class.expl.init] and  [class.base.init].
+initialized; see  [[class.expl.init]] and  [[class.base.init]].
 
 When an array of class objects is initialized (either explicitly or
 implicitly) and the elements are initialized by constructor, the
 constructor shall be called for each element of the array, following the
-subscript order; see  [dcl.array].
+subscript order; see  [[dcl.array]].
 
 \[*Note 1*: Destructors for the array elements are called in reverse
 order of their construction. — *end note*\]
 
-### Explicit initialization <a id="class.expl.init">[class.expl.init]</a>
+### Explicit initialization <a id="class.expl.init">[[class.expl.init]]</a>
 
 An object of class type can be initialized with a parenthesized
 *expression-list*, where the *expression-list* is construed as an
@@ -4173,7 +4181,7 @@ argument list for a constructor that is called to initialize the object.
 Alternatively, a single *assignment-expression* can be specified as an
 *initializer* using the `=` form of initialization. Either
 direct-initialization semantics or copy-initialization semantics apply;
-see  [dcl.init].
+see  [[dcl.init]].
 
 \[*Example 1*:
 
@@ -4197,12 +4205,12 @@ complex g = { 1, 2 };           // initialized by calling complex(double, double
 
 — *end example*\]
 
-\[*Note 2*:  Overloading of the assignment operator [over.ass] has no
+\[*Note 2*:  Overloading of the assignment operator [[over.ass]] has no
 effect on initialization. — *end note*\]
 
 An object of class type can also be initialized by a *braced-init-list*.
-List-initialization semantics apply; see  [dcl.init] and 
-[dcl.init.list].
+List-initialization semantics apply; see  [[dcl.init]] and 
+[[dcl.init.list]].
 
 \[*Example 2*:
 
@@ -4230,18 +4238,18 @@ Here, `x.i` is initialized with 99, `x.f` is initialized with 88.8, and
 
 \[*Note 3*: Braces can be elided in the *initializer-list* for any
 aggregate, even if the aggregate has members of a class type with
-user-defined type conversions; see  [dcl.init.aggr]. — *end note*\]
+user-defined type conversions; see  [[dcl.init.aggr]]. — *end note*\]
 
 \[*Note 4*: If `T` is a class type with no default constructor, any
 declaration of an object of type `T` (or array thereof) is ill-formed if
-no *initializer* is explicitly specified (see  [class.init] and 
-[dcl.init]). — *end note*\]
+no *initializer* is explicitly specified (see  [[class.init]] and 
+[[dcl.init]]). — *end note*\]
 
 \[*Note 5*:  The order in which objects with static or thread storage
-duration are initialized is described in  [basic.start.dynamic] and 
-[stmt.dcl]. — *end note*\]
+duration are initialized is described in  [[basic.start.dynamic]] and 
+[[stmt.dcl]]. — *end note*\]
 
-### Initializing bases and members <a id="class.base.init">[class.base.init]</a>
+### Initializing bases and members <a id="class.base.init">[[class.base.init]]</a>
 
 In the definition of a constructor for a class, initializers for direct
 and virtual base class subobjects and non-static data members can be
@@ -4346,7 +4354,7 @@ struct C {
 The *expression-list* or *braced-init-list* in a *mem-initializer* is
 used to initialize the designated subobject (or, in the case of a
 delegating constructor, the complete class object) according to the
-initialization rules of  [dcl.init] for direct-initialization.
+initialization rules of  [[dcl.init]] for direct-initialization.
 
 \[*Example 6*:
 
@@ -4366,7 +4374,7 @@ D d(10);
 — *end example*\]
 
 \[*Note 7*: The initialization performed by each *mem-initializer*
-constitutes a full-expression [intro.execution]. Any expression in a
+constitutes a full-expression [[intro.execution]]. Any expression in a
 *mem-initializer* is evaluated as part of the full-expression that
 performs the initialization. — *end note*\]
 
@@ -4389,15 +4397,15 @@ struct A {
 — *end example*\]
 
 In a non-delegating constructor other than an implicitly-defined
-copy/move constructor [class.copy.ctor], if a given potentially
+copy/move constructor [[class.copy.ctor]], if a given potentially
 constructed subobject is not designated by a *mem-initializer-id*
 (including the case where there is no *mem-initializer-list* because the
 constructor has no *ctor-initializer*), then
 
 - if the entity is a non-static data member that has a default member
-  initializer [class.mem] and either
+  initializer [[class.mem]] and either
 
-  - the constructor’s class is a union [class.union], and no other
+  - the constructor’s class is a union [[class.union]], and no other
     variant member of that union is designated by a *mem-initializer-id*
     or
 
@@ -4406,14 +4414,14 @@ constructor has no *ctor-initializer*), then
     designated by a *mem-initializer-id*,
 
   the entity is initialized from its default member initializer as
-  specified in  [dcl.init];
+  specified in  [[dcl.init]];
 
 - otherwise, if the entity is an anonymous union or a variant member
-  [class.union.anon], no initialization is performed;
+  [[class.union.anon]], no initialization is performed;
 
-- otherwise, the entity is default-initialized [dcl.init].
+- otherwise, the entity is default-initialized [[dcl.init]].
 
-\[*Note 8*: An abstract class [class.abstract] is never a most derived
+\[*Note 8*: An abstract class [[class.abstract]] is never a most derived
 class, thus its constructors never initialize virtual base classes,
 therefore the corresponding *mem-initializer* can be
 omitted. — *end note*\]
@@ -4491,18 +4499,19 @@ A a2(1);                // OK, unfortunately
 — *end example*\]
 
 In a non-delegating constructor, the destructor for each potentially
-constructed subobject of class type is potentially invoked [class.dtor].
+constructed subobject of class type is potentially invoked
+[[class.dtor]].
 
 \[*Note 10*: This provision ensures that destructors can be called for
 fully-constructed subobjects in case an exception is thrown
-[except.ctor]. — *end note*\]
+[[except.ctor]]. — *end note*\]
 
 In a non-delegating constructor, initialization proceeds in the
 following order:
 
 -  First, and only for the constructor of the most derived class
-  [intro.object], virtual base classes are initialized in the order they
-  appear on a depth-first left-to-right traversal of the directed
+  [[intro.object]], virtual base classes are initialized in the order
+  they appear on a depth-first left-to-right traversal of the directed
   acyclic graph of base classes, where “left-to-right” is the order of
   appearance of the base classes in the derived class
   *base-specifier-list*.
@@ -4582,14 +4591,14 @@ the constructor parameter `i`, and initializes `X::j` with the value of
 
 — *end example*\]
 
-Member functions (including virtual member functions, [class.virtual])
+Member functions (including virtual member functions, [[class.virtual]])
 can be called for an object under construction. Similarly, an object
 under construction can be the operand of the `typeid` operator
-[expr.typeid] or of a `dynamic_cast` [expr.dynamic.cast]. However, if
-these operations are performed in a *ctor-initializer* (or in a function
-called directly or indirectly from a *ctor-initializer*) before all the
-*mem-initializer* for base classes have completed, the program has
-undefined behavior.
+[[expr.typeid]] or of a `dynamic_cast` [[expr.dynamic.cast]]. However,
+if these operations are performed in a *ctor-initializer* (or in a
+function called directly or indirectly from a *ctor-initializer*) before
+all the *mem-initializer* for base classes have completed, the program
+has undefined behavior.
 
 \[*Example 13*:
 
@@ -4622,13 +4631,13 @@ public:
 
 — *end example*\]
 
-\[*Note 13*:  [class.cdtor] describes the results of virtual function
+\[*Note 13*:  [[class.cdtor]] describes the results of virtual function
 calls, `typeid` and `dynamic_cast`s during construction for the
 well-defined cases; that is, describes the polymorphic behavior of an
 object under construction. — *end note*\]
 
 A *mem-initializer* followed by an ellipsis is a pack expansion
-[temp.variadic] that initializes the base classes specified by a pack
+[[temp.variadic]] that initializes the base classes specified by a pack
 expansion in the *base-specifier-list* for the class.
 
 \[*Example 14*:
@@ -4643,11 +4652,11 @@ public:
 
 — *end example*\]
 
-### Initialization by inherited constructor <a id="class.inhctor.init">[class.inhctor.init]</a>
+### Initialization by inherited constructor <a id="class.inhctor.init">[[class.inhctor.init]]</a>
 
 When a constructor for type `B` is invoked to initialize an object of a
 different type `D` (that is, when the constructor was inherited
-[namespace.udecl]), initialization proceeds as if a defaulted default
+[[namespace.udecl]]), initialization proceeds as if a defaulted default
 constructor were used to initialize the `D` object and each base class
 subobject from which the constructor was inherited, except that the `B`
 subobject is initialized by the invocation of the inherited constructor.
@@ -4750,7 +4759,7 @@ When an object is initialized by an inherited constructor,
 initialization of the object is complete when the initialization of all
 subobjects is complete.
 
-### Construction and destruction <a id="class.cdtor">[class.cdtor]</a>
+### Construction and destruction <a id="class.cdtor">[[class.cdtor]]</a>
 
 For an object with a non-trivial constructor, referring to any
 non-static member or base class of the object before the constructor
@@ -4864,8 +4873,8 @@ struct E : C, D, X {
 
 — *end example*\]
 
-Member functions, including virtual functions [class.virtual], can be
-called during construction or destruction [class.base.init]. When a
+Member functions, including virtual functions [[class.virtual]], can be
+called during construction or destruction [[class.base.init]]. When a
 virtual function is called directly or indirectly from a constructor or
 from a destructor, including during the construction or destruction of
 the class’s non-static data members, and the object to which the call
@@ -4873,7 +4882,7 @@ applies is the object (call it `x`) under construction or destruction,
 the function called is the final overrider in the constructor’s or
 destructor’s class and not one overriding it in a more-derived class. If
 the virtual function call uses an explicit class member access
-[expr.ref] and the object expression refers to the complete object of
+[[expr.ref]] and the object expression refers to the complete object of
 `x` or one of that object’s base class subobjects but not `x` or one of
 its base class subobjects, the behavior is undefined.
 
@@ -4910,11 +4919,11 @@ B::B(V* v, A* a) {
 
 — *end example*\]
 
-The `typeid` operator [expr.typeid] can be used during construction or
-destruction [class.base.init]. When `typeid` is used in a constructor
+The `typeid` operator [[expr.typeid]] can be used during construction or
+destruction [[class.base.init]]. When `typeid` is used in a constructor
 (including the *mem-initializer* or default member initializer
-[class.mem] for a non-static data member) or in a destructor, or used in
-a function called (directly or indirectly) from a constructor or
+[[class.mem]] for a non-static data member) or in a destructor, or used
+in a function called (directly or indirectly) from a constructor or
 destructor, if the operand of `typeid` refers to the object under
 construction or destruction, `typeid` yields the `std::type_info` object
 representing the constructor or destructor’s class. If the operand of
@@ -4922,8 +4931,8 @@ representing the constructor or destructor’s class. If the operand of
 static type of the operand is neither the constructor or destructor’s
 class nor one of its bases, the behavior is undefined.
 
-`dynamic_cast`s [expr.dynamic.cast] can be used during construction or
-destruction [class.base.init]. When a `dynamic_cast` is used in a
+`dynamic_cast`s [[expr.dynamic.cast]] can be used during construction or
+destruction [[class.base.init]]. When a `dynamic_cast` is used in a
 constructor (including the *mem-initializer* or default member
 initializer for a non-static data member) or in a destructor, or used in
 a function called (directly or indirectly) from a constructor or
@@ -4963,7 +4972,7 @@ B::B(V* v, A* a) {
 
 — *end example*\]
 
-### Copy/move elision <a id="class.copy.elision">[class.copy.elision]</a>
+### Copy/move elision <a id="class.copy.elision">[[class.copy.elision]]</a>
 
 When certain criteria are met, an implementation is allowed to omit the
 copy/move construction of a class object, even if the constructor
@@ -4984,38 +4993,38 @@ eliminate multiple copies):
   the *expression* is the name of a non-volatile object with automatic
   storage duration (other than a function parameter or a variable
   introduced by the *exception-declaration* of a *handler*
-  [except.handle]) with the same type (ignoring cv-qualification) as the
-  function return type, the copy/move operation can be omitted by
+  [[except.handle]]) with the same type (ignoring cv-qualification) as
+  the function return type, the copy/move operation can be omitted by
   constructing the object directly into the function call’s return
   object
 
-- in a *throw-expression* [expr.throw], when the operand is the name of
-  a non-volatile object with automatic storage duration (other than a
+- in a *throw-expression* [[expr.throw]], when the operand is the name
+  of a non-volatile object with automatic storage duration (other than a
   function or catch-clause parameter) that belongs to a scope that does
   not contain the innermost enclosing *compound-statement* associated
   with a *try-block* (if there is one), the copy/move operation can be
   omitted by constructing the object directly into the exception object
 
-- in a coroutine [dcl.fct.def.coroutine], a copy of a coroutine
+- in a coroutine [[dcl.fct.def.coroutine]], a copy of a coroutine
   parameter can be omitted and references to that copy replaced with
   references to the corresponding parameter if the meaning of the
   program will be unchanged except for the execution of a constructor
   and destructor for the parameter copy object
 
-- when the *exception-declaration* of an exception handler [except.pre]
-  declares an object of the same type (except for cv-qualification) as
-  the exception object [except.throw], the copy operation can be omitted
-  by treating the *exception-declaration* as an alias for the exception
-  object if the meaning of the program will be unchanged except for the
-  execution of constructors and destructors for the object declared by
-  the *exception-declaration*.
+- when the *exception-declaration* of an exception handler
+  [[except.pre]] declares an object of the same type (except for
+  cv-qualification) as the exception object [[except.throw]], the copy
+  operation can be omitted by treating the *exception-declaration* as an
+  alias for the exception object if the meaning of the program will be
+  unchanged except for the execution of constructors and destructors for
+  the object declared by the *exception-declaration*.
 
   \[*Note 3*: There cannot be a move from the exception object because
   it is always an lvalue. — *end note*\]
 
 Copy elision is not permitted where an expression is evaluated in a
-context requiring a constant expression [expr.const] and in constant
-initialization [basic.start.static].
+context requiring a constant expression [[expr.const]] and in constant
+initialization [[basic.start.static]].
 
 \[*Note 14*: It is possible that copy elision is performed if the same
 expression is evaluated in another context. — *end note*\]
@@ -5145,11 +5154,11 @@ template<class T> void f() {
 
 — *end example*\]
 
-## Comparisons <a id="class.compare">[class.compare]</a>
+## Comparisons <a id="class.compare">[[class.compare]]</a>
 
-### Defaulted comparison operator functions <a id="class.compare.default">[class.compare.default]</a>
+### Defaulted comparison operator functions <a id="class.compare.default">[[class.compare.default]]</a>
 
-A defaulted comparison operator function [over.binary] for some class
+A defaulted comparison operator function [[over.binary]] for some class
 `C` shall be a non-template function that is
 
 - a non-static member or friend of `C` and
@@ -5158,19 +5167,19 @@ A defaulted comparison operator function [over.binary] for some class
   `C`, where the implicit object parameter (if any) is considered to be
   the first parameter.
 
-Name lookups in the implicit definition [dcl.fct.def.default] of a
+Name lookups in the implicit definition [[dcl.fct.def.default]] of a
 comparison operator function are performed from a context equivalent to
 its *function-body*. A definition of a comparison operator as defaulted
 that appears in a class shall be the first declaration of that function.
 
 A defaulted `<=>` or `==` operator function for class `C` is defined as
 deleted if any non-static data member of `C` is of reference type or `C`
-has variant members [class.union.anon].
+has variant members [[class.union.anon]].
 
 A binary operator expression `a @ b` is *usable* if either
 
 - `a` or `b` is of class or enumeration type and overload resolution
-  [over.match] as applied to `a @ b` results in a usable candidate, or
+  [[over.match]] as applied to `a @ b` results in a usable candidate, or
 
 - neither `a` nor `b` is of class or enumeration type and `a @ b` is a
   valid expression.
@@ -5191,9 +5200,10 @@ respective three-way comparison operator. It is declared with `friend`,
 `virtual`, `constexpr`, or `consteval` if the three-way comparison
 operator function is so declared. If the three-way comparison operator
 function has no *noexcept-specifier*, the implicitly-declared `==`
-operator function has an implicit exception specification [except.spec]
-that can differ from the implicit exception specification of the
-three-way comparison operator function. — *end note*\]
+operator function has an implicit exception specification
+[[except.spec]] that can differ from the implicit exception
+specification of the three-way comparison operator
+function. — *end note*\]
 
 \[*Example 1*:
 
@@ -5221,19 +5231,19 @@ any subobject of array type is recursively expanded to the sequence of
 its elements, in the order of increasing subscript. Let $\tcode{x}_i$ be
 an lvalue denoting the $i^\text{th}$ element in the expanded list of
 subobjects for an object `x` (of length n), where $\tcode{x}_i$ is
-formed by a sequence of derived-to-base conversions [over.best.ics],
-class member access expressions [expr.ref], and array subscript
-expressions [expr.sub] applied to `x`.
+formed by a sequence of derived-to-base conversions [[over.best.ics]],
+class member access expressions [[expr.ref]], and array subscript
+expressions [[expr.sub]] applied to `x`.
 
-### Equality operator <a id="class.eq">[class.eq]</a>
+### Equality operator <a id="class.eq">[[class.eq]]</a>
 
-A defaulted equality operator function [over.binary] shall have a
+A defaulted equality operator function [[over.binary]] shall have a
 declared return type `bool`.
 
 A defaulted `==` operator function for a class `C` is defined as deleted
 unless, for each $\tcode{x}_i$ in the expanded list of subobjects for an
 object `x` of type `C`, $\tcode{x}_i\tcode{ == }\tcode{x}_i$ is usable
-[class.compare.default].
+[[class.compare.default]].
 
 The return value `V` of a defaulted `==` operator function with
 parameters `x` and `y` is determined by comparing corresponding elements
@@ -5255,12 +5265,12 @@ struct D {
 
 — *end example*\]
 
-### Three-way comparison <a id="class.spaceship">[class.spaceship]</a>
+### Three-way comparison <a id="class.spaceship">[[class.spaceship]]</a>
 
-The *synthesized three-way comparison* of type `R` [cmp.categories] of
+The *synthesized three-way comparison* of type `R` [[cmp.categories]] of
 glvalues `a` and `b` of the same type is defined as follows:
 
-- If `a <=> b` is usable [class.compare.default] and can be explicitly
+- If `a <=> b` is usable [[class.compare.default]] and can be explicitly
   converted to `R` using `static_cast`, `static_cast<R>(a <=> b)`.
 
 - Otherwise, if overload resolution for `a <=> b` is performed and finds
@@ -5307,7 +5317,7 @@ list of subobjects for an object `x` of type `C`.
 - If `R` is `auto`, then let $\cv{}_i~\tcode{R}_i$ be the type of the
   expression $\tcode{x}_i\tcode{ <=> }\tcode{x}_i$. The operator
   function is defined as deleted if that expression is not usable or if
-  $\tcode{R}_i$ is not a comparison category type [cmp.categories.pre]
+  $\tcode{R}_i$ is not a comparison category type [[cmp.categories.pre]]
   for any i. The return type is deduced as the common comparison type
   (see below) of $\tcode{R}_0$, $\tcode{R}_1$, $\dotsc$,
   $\tcode{R}_{n-1}$.
@@ -5333,27 +5343,27 @@ comparison category types $\tcode{T}_0$, $\tcode{T}_1$, $\dotsc$,
 $\tcode{T}_{n-1}$ is defined as follows:
 
 - If at least one $\tcode{T}_i$ is `std::partial_ordering`, `U` is
-  `std::partial_ordering` [cmp.partialord].
+  `std::partial_ordering` [[cmp.partialord]].
 
 - Otherwise, if at least one $\tcode{T}_i$ is `std::weak_ordering`, `U`
-  is `std::weak_ordering` [cmp.weakord].
+  is `std::weak_ordering` [[cmp.weakord]].
 
-- Otherwise, `U` is `std::strong_ordering` [cmp.strongord].
+- Otherwise, `U` is `std::strong_ordering` [[cmp.strongord]].
 
   \[*Note 4*: In particular, this is the result when n is
   0. — *end note*\]
 
-### Secondary comparison operators <a id="class.compare.secondary">[class.compare.secondary]</a>
+### Secondary comparison operators <a id="class.compare.secondary">[[class.compare.secondary]]</a>
 
-A *secondary comparison operator* is a relational operator [expr.rel] or
-the `!=` operator. A defaulted operator function [over.binary] for a
-secondary comparison operator `@` shall have a declared return type
+A *secondary comparison operator* is a relational operator [[expr.rel]]
+or the `!=` operator. A defaulted operator function [[over.binary]] for
+a secondary comparison operator `@` shall have a declared return type
 `bool`.
 
 The operator function with parameters `x` and `y` is defined as deleted
 if
 
-- overload resolution [over.match], as applied to `x @ y`, does not
+- overload resolution [[over.match]], as applied to `x @ y`, does not
   result in a usable candidate, or
 
 - the candidate selected by overload resolution is not a rewritten
@@ -5377,164 +5387,164 @@ struct C {
 — *end example*\]
 
 <!-- Link reference definitions -->
-[basic.align]: basic.md#basic.align
-[basic.compound]: basic.md#basic.compound
-[basic.def]: basic.md#basic.def
-[basic.def.odr]: basic.md#basic.def.odr
-[basic.life]: basic.md#basic.life
-[basic.link]: basic.md#basic.link
-[basic.lookup]: basic.md#basic.lookup
-[basic.lookup.elab]: basic.md#basic.lookup.elab
-[basic.lval]: expr.md#basic.lval
-[basic.scope.class]: basic.md#basic.scope.class
-[basic.scope.pdecl]: basic.md#basic.scope.pdecl
-[basic.scope.scope]: basic.md#basic.scope.scope
-[basic.start.dynamic]: basic.md#basic.start.dynamic
-[basic.start.static]: basic.md#basic.start.static
-[basic.start.term]: basic.md#basic.start.term
-[basic.stc.auto]: basic.md#basic.stc.auto
-[basic.stc.static]: basic.md#basic.stc.static
-[basic.stc.thread]: basic.md#basic.stc.thread
-[basic.types]: basic.md#basic.types
-[class.abstract]: #class.abstract
-[class.access]: #class.access
-[class.access.base]: #class.access.base
-[class.access.spec]: #class.access.spec
-[class.base.init]: #class.base.init
-[class.bit]: #class.bit
-[class.cdtor]: #class.cdtor
-[class.compare.default]: #class.compare.default
-[class.conv.fct]: #class.conv.fct
-[class.copy.assign]: #class.copy.assign
-[class.copy.ctor]: #class.copy.ctor
-[class.ctor]: #class.ctor
-[class.default.ctor]: #class.default.ctor
-[class.derived]: #class.derived
-[class.dtor]: #class.dtor
-[class.expl.init]: #class.expl.init
-[class.free]: #class.free
-[class.friend]: #class.friend
-[class.init]: #class.init
-[class.local]: #class.local
-[class.mem]: #class.mem
-[class.member.lookup]: basic.md#class.member.lookup
-[class.mfct]: #class.mfct
-[class.mfct.non.static]: #class.mfct.non.static
-[class.mi]: #class.mi
-[class.name]: #class.name
-[class.nest]: #class.nest
-[class.pre]: #class.pre
-[class.prop]: #class.prop
-[class.protected]: #class.protected
-[class.qual]: basic.md#class.qual
-[class.static]: #class.static
-[class.static.data]: #class.static.data
-[class.static.mfct]: #class.static.mfct
-[class.temporary]: basic.md#class.temporary
-[class.union]: #class.union
-[class.union.anon]: #class.union.anon
-[class.virtual]: #class.virtual
-[cmp.categories]: support.md#cmp.categories
-[cmp.categories.pre]: support.md#cmp.categories.pre
-[cmp.partialord]: support.md#cmp.partialord
-[cmp.strongord]: support.md#cmp.strongord
-[cmp.weakord]: support.md#cmp.weakord
-[conv]: expr.md#conv
-[conv.mem]: expr.md#conv.mem
-[conv.ptr]: expr.md#conv.ptr
-[conv.rval]: expr.md#conv.rval
-[dcl.array]: dcl.md#dcl.array
-[dcl.attr.nouniqueaddr]: dcl.md#dcl.attr.nouniqueaddr
-[dcl.constexpr]: dcl.md#dcl.constexpr
-[dcl.decl]: dcl.md#dcl.decl
-[dcl.enum]: dcl.md#dcl.enum
-[dcl.fct]: dcl.md#dcl.fct
-[dcl.fct.def]: dcl.md#dcl.fct.def
-[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
-[dcl.fct.def.default]: dcl.md#dcl.fct.def.default
-[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
-[dcl.fct.def.general]: dcl.md#dcl.fct.def.general
-[dcl.fct.default]: dcl.md#dcl.fct.default
-[dcl.fct.spec]: dcl.md#dcl.fct.spec
-[dcl.init]: dcl.md#dcl.init
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[dcl.init.general]: dcl.md#dcl.init.general
-[dcl.init.list]: dcl.md#dcl.init.list
-[dcl.init.ref]: dcl.md#dcl.init.ref
-[dcl.inline]: dcl.md#dcl.inline
-[dcl.meaning]: dcl.md#dcl.meaning
-[dcl.name]: dcl.md#dcl.name
-[dcl.spec.auto]: dcl.md#dcl.spec.auto
-[dcl.stc]: dcl.md#dcl.stc
-[dcl.type.cv]: dcl.md#dcl.type.cv
-[dcl.type.elab]: dcl.md#dcl.type.elab
-[dcl.type.simple]: dcl.md#dcl.type.simple
-[dcl.typedef]: dcl.md#dcl.typedef
-[depr.impldec]: future.md#depr.impldec
-[depr.static.constexpr]: future.md#depr.static.constexpr
-[diff.class]: compatibility.md#diff.class
-[except.ctor]: except.md#except.ctor
-[except.handle]: except.md#except.handle
-[except.pre]: except.md#except.pre
-[except.spec]: except.md#except.spec
-[except.throw]: except.md#except.throw
-[expr.ass]: expr.md#expr.ass
-[expr.call]: expr.md#expr.call
-[expr.cast]: expr.md#expr.cast
-[expr.const]: expr.md#expr.const
-[expr.const.cast]: expr.md#expr.const.cast
-[expr.delete]: expr.md#expr.delete
-[expr.dynamic.cast]: expr.md#expr.dynamic.cast
-[expr.eq]: expr.md#expr.eq
-[expr.new]: expr.md#expr.new
-[expr.prim.id]: expr.md#expr.prim.id
-[expr.prim.id.dtor]: expr.md#expr.prim.id.dtor
-[expr.prim.id.qual]: expr.md#expr.prim.id.qual
-[expr.prim.this]: expr.md#expr.prim.this
-[expr.ref]: expr.md#expr.ref
-[expr.reinterpret.cast]: expr.md#expr.reinterpret.cast
-[expr.rel]: expr.md#expr.rel
-[expr.static.cast]: expr.md#expr.static.cast
-[expr.sub]: expr.md#expr.sub
-[expr.throw]: expr.md#expr.throw
-[expr.type.conv]: expr.md#expr.type.conv
-[expr.typeid]: expr.md#expr.typeid
-[expr.unary.op]: expr.md#expr.unary.op
-[intro.execution]: basic.md#intro.execution
-[intro.object]: basic.md#intro.object
-[namespace.udecl]: dcl.md#namespace.udecl
-[over]: over.md#over
-[over.ass]: over.md#over.ass
-[over.best.ics]: over.md#over.best.ics
-[over.binary]: over.md#over.binary
-[over.ics.ref]: over.md#over.ics.ref
-[over.match]: over.md#over.match
-[over.match.best]: over.md#over.match.best
-[over.match.call]: over.md#over.match.call
-[over.match.copy]: over.md#over.match.copy
-[over.match.funcs]: over.md#over.match.funcs
-[over.oper]: over.md#over.oper
-[over.over]: over.md#over.over
-[special]: #special
-[stmt.dcl]: stmt.md#stmt.dcl
-[stmt.return]: stmt.md#stmt.return
-[string.classes]: strings.md#string.classes
-[temp.arg]: temp.md#temp.arg
-[temp.constr]: temp.md#temp.constr
-[temp.constr.order]: temp.md#temp.constr.order
-[temp.deduct.guide]: temp.md#temp.deduct.guide
-[temp.dep.type]: temp.md#temp.dep.type
-[temp.expl.spec]: temp.md#temp.expl.spec
-[temp.explicit]: temp.md#temp.explicit
-[temp.friend]: temp.md#temp.friend
-[temp.inst]: temp.md#temp.inst
-[temp.mem]: temp.md#temp.mem
-[temp.param]: temp.md#temp.param
-[temp.pre]: temp.md#temp.pre
-[temp.spec.partial]: temp.md#temp.spec.partial
-[temp.variadic]: temp.md#temp.variadic
-[term.incomplete.type]: #term.incomplete.type
-[term.layout.compatible.type]: #term.layout.compatible.type
-[term.object.representation]: #term.object.representation
-[term.odr.use]: #term.odr.use
-[term.padding.bits]: #term.padding.bits
+[[basic.align]]: basic.md#basic.align
+[[basic.compound]]: basic.md#basic.compound
+[[basic.def]]: basic.md#basic.def
+[[basic.def.odr]]: basic.md#basic.def.odr
+[[basic.life]]: basic.md#basic.life
+[[basic.link]]: basic.md#basic.link
+[[basic.lookup]]: basic.md#basic.lookup
+[[basic.lookup.elab]]: basic.md#basic.lookup.elab
+[[basic.lval]]: expr.md#basic.lval
+[[basic.scope.class]]: basic.md#basic.scope.class
+[[basic.scope.pdecl]]: basic.md#basic.scope.pdecl
+[[basic.scope.scope]]: basic.md#basic.scope.scope
+[[basic.start.dynamic]]: basic.md#basic.start.dynamic
+[[basic.start.static]]: basic.md#basic.start.static
+[[basic.start.term]]: basic.md#basic.start.term
+[[basic.stc.auto]]: basic.md#basic.stc.auto
+[[basic.stc.static]]: basic.md#basic.stc.static
+[[basic.stc.thread]]: basic.md#basic.stc.thread
+[[basic.types]]: basic.md#basic.types
+[[class.abstract]]: #class.abstract
+[[class.access]]: #class.access
+[[class.access.base]]: #class.access.base
+[[class.access.spec]]: #class.access.spec
+[[class.base.init]]: #class.base.init
+[[class.bit]]: #class.bit
+[[class.cdtor]]: #class.cdtor
+[[class.compare.default]]: #class.compare.default
+[[class.conv.fct]]: #class.conv.fct
+[[class.copy.assign]]: #class.copy.assign
+[[class.copy.ctor]]: #class.copy.ctor
+[[class.ctor]]: #class.ctor
+[[class.default.ctor]]: #class.default.ctor
+[[class.derived]]: #class.derived
+[[class.dtor]]: #class.dtor
+[[class.expl.init]]: #class.expl.init
+[[class.free]]: #class.free
+[[class.friend]]: #class.friend
+[[class.init]]: #class.init
+[[class.local]]: #class.local
+[[class.mem]]: #class.mem
+[[class.member.lookup]]: basic.md#class.member.lookup
+[[class.mfct]]: #class.mfct
+[[class.mfct.non.static]]: #class.mfct.non.static
+[[class.mi]]: #class.mi
+[[class.name]]: #class.name
+[[class.nest]]: #class.nest
+[[class.pre]]: #class.pre
+[[class.prop]]: #class.prop
+[[class.protected]]: #class.protected
+[[class.qual]]: basic.md#class.qual
+[[class.static]]: #class.static
+[[class.static.data]]: #class.static.data
+[[class.static.mfct]]: #class.static.mfct
+[[class.temporary]]: basic.md#class.temporary
+[[class.union]]: #class.union
+[[class.union.anon]]: #class.union.anon
+[[class.virtual]]: #class.virtual
+[[cmp.categories]]: support.md#cmp.categories
+[[cmp.categories.pre]]: support.md#cmp.categories.pre
+[[cmp.partialord]]: support.md#cmp.partialord
+[[cmp.strongord]]: support.md#cmp.strongord
+[[cmp.weakord]]: support.md#cmp.weakord
+[[conv]]: expr.md#conv
+[[conv.mem]]: expr.md#conv.mem
+[[conv.ptr]]: expr.md#conv.ptr
+[[conv.rval]]: expr.md#conv.rval
+[[dcl.array]]: dcl.md#dcl.array
+[[dcl.attr.nouniqueaddr]]: dcl.md#dcl.attr.nouniqueaddr
+[[dcl.constexpr]]: dcl.md#dcl.constexpr
+[[dcl.decl]]: dcl.md#dcl.decl
+[[dcl.enum]]: dcl.md#dcl.enum
+[[dcl.fct]]: dcl.md#dcl.fct
+[[dcl.fct.def]]: dcl.md#dcl.fct.def
+[[dcl.fct.def.coroutine]]: dcl.md#dcl.fct.def.coroutine
+[[dcl.fct.def.default]]: dcl.md#dcl.fct.def.default
+[[dcl.fct.def.delete]]: dcl.md#dcl.fct.def.delete
+[[dcl.fct.def.general]]: dcl.md#dcl.fct.def.general
+[[dcl.fct.default]]: dcl.md#dcl.fct.default
+[[dcl.fct.spec]]: dcl.md#dcl.fct.spec
+[[dcl.init]]: dcl.md#dcl.init
+[[dcl.init.aggr]]: dcl.md#dcl.init.aggr
+[[dcl.init.general]]: dcl.md#dcl.init.general
+[[dcl.init.list]]: dcl.md#dcl.init.list
+[[dcl.init.ref]]: dcl.md#dcl.init.ref
+[[dcl.inline]]: dcl.md#dcl.inline
+[[dcl.meaning]]: dcl.md#dcl.meaning
+[[dcl.name]]: dcl.md#dcl.name
+[[dcl.spec.auto]]: dcl.md#dcl.spec.auto
+[[dcl.stc]]: dcl.md#dcl.stc
+[[dcl.type.cv]]: dcl.md#dcl.type.cv
+[[dcl.type.elab]]: dcl.md#dcl.type.elab
+[[dcl.type.simple]]: dcl.md#dcl.type.simple
+[[dcl.typedef]]: dcl.md#dcl.typedef
+[[depr.impldec]]: future.md#depr.impldec
+[[depr.static.constexpr]]: future.md#depr.static.constexpr
+[[diff.class]]: compatibility.md#diff.class
+[[except.ctor]]: except.md#except.ctor
+[[except.handle]]: except.md#except.handle
+[[except.pre]]: except.md#except.pre
+[[except.spec]]: except.md#except.spec
+[[except.throw]]: except.md#except.throw
+[[expr.ass]]: expr.md#expr.ass
+[[expr.call]]: expr.md#expr.call
+[[expr.cast]]: expr.md#expr.cast
+[[expr.const]]: expr.md#expr.const
+[[expr.const.cast]]: expr.md#expr.const.cast
+[[expr.delete]]: expr.md#expr.delete
+[[expr.dynamic.cast]]: expr.md#expr.dynamic.cast
+[[expr.eq]]: expr.md#expr.eq
+[[expr.new]]: expr.md#expr.new
+[[expr.prim.id]]: expr.md#expr.prim.id
+[[expr.prim.id.dtor]]: expr.md#expr.prim.id.dtor
+[[expr.prim.id.qual]]: expr.md#expr.prim.id.qual
+[[expr.prim.this]]: expr.md#expr.prim.this
+[[expr.ref]]: expr.md#expr.ref
+[[expr.reinterpret.cast]]: expr.md#expr.reinterpret.cast
+[[expr.rel]]: expr.md#expr.rel
+[[expr.static.cast]]: expr.md#expr.static.cast
+[[expr.sub]]: expr.md#expr.sub
+[[expr.throw]]: expr.md#expr.throw
+[[expr.type.conv]]: expr.md#expr.type.conv
+[[expr.typeid]]: expr.md#expr.typeid
+[[expr.unary.op]]: expr.md#expr.unary.op
+[[intro.execution]]: basic.md#intro.execution
+[[intro.object]]: basic.md#intro.object
+[[namespace.udecl]]: dcl.md#namespace.udecl
+[[over]]: over.md#over
+[[over.ass]]: over.md#over.ass
+[[over.best.ics]]: over.md#over.best.ics
+[[over.binary]]: over.md#over.binary
+[[over.ics.ref]]: over.md#over.ics.ref
+[[over.match]]: over.md#over.match
+[[over.match.best]]: over.md#over.match.best
+[[over.match.call]]: over.md#over.match.call
+[[over.match.copy]]: over.md#over.match.copy
+[[over.match.funcs]]: over.md#over.match.funcs
+[[over.oper]]: over.md#over.oper
+[[over.over]]: over.md#over.over
+[[special]]: #special
+[[stmt.dcl]]: stmt.md#stmt.dcl
+[[stmt.return]]: stmt.md#stmt.return
+[[string.classes]]: strings.md#string.classes
+[[temp.arg]]: temp.md#temp.arg
+[[temp.constr]]: temp.md#temp.constr
+[[temp.constr.order]]: temp.md#temp.constr.order
+[[temp.deduct.guide]]: temp.md#temp.deduct.guide
+[[temp.dep.type]]: temp.md#temp.dep.type
+[[temp.expl.spec]]: temp.md#temp.expl.spec
+[[temp.explicit]]: temp.md#temp.explicit
+[[temp.friend]]: temp.md#temp.friend
+[[temp.inst]]: temp.md#temp.inst
+[[temp.mem]]: temp.md#temp.mem
+[[temp.param]]: temp.md#temp.param
+[[temp.pre]]: temp.md#temp.pre
+[[temp.spec.partial]]: temp.md#temp.spec.partial
+[[temp.variadic]]: temp.md#temp.variadic
+[[term.incomplete.type]]: #term.incomplete.type
+[[term.layout.compatible.type]]: #term.layout.compatible.type
+[[term.object.representation]]: #term.object.representation
+[[term.odr.use]]: #term.odr.use
+[[term.padding.bits]]: #term.padding.bits

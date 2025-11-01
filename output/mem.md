@@ -3,42 +3,42 @@ current_file: mem
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Memory management library <a id="mem">[mem]</a>
+# Memory management library <a id="mem">[[mem]]</a>
 
-## General <a id="mem.general">[mem.general]</a>
+## General <a id="mem.general">[[mem.general]]</a>
 
 This Clause describes components for memory management.
 
 The following subclauses describe general memory management facilities,
 smart pointers, memory resources, and scoped allocators, as summarized
-in [mem.summary].
+in [[mem.summary]].
 
 **Table: Memory management library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [memory] | Memory | `<cstdlib>`, `<memory>` |
-| [smartptr] | Smart pointers | `<memory>` |
-| [mem.res] | Memory resources | `<memory_resource>` |
-| [allocator.adaptor] | Scoped allocators | `<scoped_allocator>` |
+| [[memory]] | Memory | `<cstdlib>`, `<memory>` |
+| [[smartptr]] | Smart pointers | `<memory>` |
+| [[mem.res]] | Memory resources | `<memory_resource>` |
+| [[allocator.adaptor]] | Scoped allocators | `<scoped_allocator>` |
 
-## Memory <a id="memory">[memory]</a>
+## Memory <a id="memory">[[memory]]</a>
 
-### In general <a id="memory.general">[memory.general]</a>
+### In general <a id="memory.general">[[memory.general]]</a>
 
-Subclause  [memory] describes the contents of the header `<memory>` and
-some of the contents of the header `<cstdlib>`.
+Subclause  [[memory]] describes the contents of the header `<memory>`
+and some of the contents of the header `<cstdlib>`.
 
-### Header `<memory>` synopsis <a id="memory.syn">[memory.syn]</a>
+### Header `<memory>` synopsis <a id="memory.syn">[[memory.syn]]</a>
 
 The header `<memory>` defines several types and function templates that
 describe properties of pointers and pointer-like types, manage memory
 for containers and other template types, destroy objects, and construct
-objects in uninitialized memory buffers ( [pointer.traits]–
-[specialized.addressof] and [specialized.algorithms]). The header also
-defines the templates `unique_ptr`, `shared_ptr`, `weak_ptr`,
+objects in uninitialized memory buffers ( [[pointer.traits]]–
+[[specialized.addressof]] and [[specialized.algorithms]]). The header
+also defines the templates `unique_ptr`, `shared_ptr`, `weak_ptr`,
 `out_ptr_t`, `inout_ptr_t`, and various function templates that operate
-on objects of these types [smartptr].
+on objects of these types [[smartptr]].
 
 Let `POINTER_OF(T)` denote a type that is
 
@@ -574,9 +574,9 @@ namespace std {
 }
 ```
 
-### Pointer traits <a id="pointer.traits">[pointer.traits]</a>
+### Pointer traits <a id="pointer.traits">[[pointer.traits]]</a>
 
-#### General <a id="pointer.traits.general">[pointer.traits.general]</a>
+#### General <a id="pointer.traits.general">[[pointer.traits.general]]</a>
 
 The class template `pointer_traits` supplies a uniform interface to
 certain attributes of pointer-like types.
@@ -599,7 +599,7 @@ namespace std {
 }
 ```
 
-#### Member types <a id="pointer.traits.types">[pointer.traits.types]</a>
+#### Member types <a id="pointer.traits.types">[[pointer.traits.types]]</a>
 
 The definitions in this subclause make use of the following
 exposition-only class template and concept:
@@ -626,7 +626,7 @@ template<class Ptr>
 If `Ptr` satisfies `has-elem-type`, a specialization
 `pointer_traits<Ptr>` generated from the `pointer_traits` primary
 template has the following members as well as those described in 
-[pointer.traits.functions]; otherwise, such a specialization has no
+[[pointer.traits.functions]]; otherwise, such a specialization has no
 members by any of those names.
 
 ``` cpp
@@ -658,7 +658,7 @@ template<class U> using rebind = see below;
 > `SomePointer<T, Args>`, where `Args` is zero or more type arguments;
 > otherwise, the instantiation of `rebind` is ill-formed.
 
-#### Member functions <a id="pointer.traits.functions">[pointer.traits.functions]</a>
+#### Member functions <a id="pointer.traits.functions">[[pointer.traits.functions]]</a>
 
 ``` cpp
 static pointer pointer_traits::pointer_to(see below r);
@@ -684,7 +684,7 @@ static constexpr pointer pointer_traits<T*>::pointer_to(see below r) noexcept;
 > If `element_type` is  , the type of `r` is unspecified; otherwise, it
 > is `element_type&`.
 
-#### Optional members <a id="pointer.traits.optmem">[pointer.traits.optmem]</a>
+#### Optional members <a id="pointer.traits.optmem">[[pointer.traits.optmem]]</a>
 
 Specializations of `pointer_traits` may define the member declared in
 this subclause to customize the behavior of the standard library. A
@@ -704,7 +704,7 @@ static element_type* to_address(pointer p) noexcept;
 > `pointer_to`. If defined, it customizes the behavior of the non-member
 > function `to_address`\[pointer.conversion\]. — *end note*\]
 
-### Pointer conversion <a id="pointer.conversion">[pointer.conversion]</a>
+### Pointer conversion <a id="pointer.conversion">[[pointer.conversion]]</a>
 
 ``` cpp
 template<class T> constexpr T* to_address(T* p) noexcept;
@@ -728,7 +728,7 @@ template<class Ptr> constexpr auto to_address(const Ptr& p) noexcept;
 > (see \[pointer.traits.optmem\]), otherwise
 > `to_address(p.operator->())`.
 
-### Pointer alignment <a id="ptr.align">[ptr.align]</a>
+### Pointer alignment <a id="ptr.align">[[ptr.align]]</a>
 
 ``` cpp
 void* align(size_t alignment, size_t size, void*& ptr, size_t& space);
@@ -788,7 +788,7 @@ template<size_t N, class T>
 > operations on `X` that access `X` through the pointer returned by
 > `assume_aligned`. — *end note*\]
 
-### Explicit lifetime management <a id="obj.lifetime">[obj.lifetime]</a>
+### Explicit lifetime management <a id="obj.lifetime">[[obj.lifetime]]</a>
 
 ``` cpp
 template<class T>
@@ -863,7 +863,7 @@ template<class T>
 > A pointer to the first element of the created array, if any;
 > otherwise, a pointer that compares equal to `p`\[expr.eq\].
 
-### Allocator argument tag <a id="allocator.tag">[allocator.tag]</a>
+### Allocator argument tag <a id="allocator.tag">[[allocator.tag]]</a>
 
 ``` cpp
 namespace std {
@@ -874,14 +874,14 @@ namespace std {
 
 The `allocator_arg_t` struct is an empty class type used as a unique
 type to disambiguate constructor and function overloading. Specifically,
-several types (see `tuple`  [tuple]) have constructors with
+several types (see `tuple`  [[tuple]]) have constructors with
 `allocator_arg_t` as the first argument, immediately followed by an
 argument of a type that meets the *Cpp17Allocator* requirements
-[allocator.requirements.general].
+[[allocator.requirements.general]].
 
-### `uses_allocator` <a id="allocator.uses">[allocator.uses]</a>
+### `uses_allocator` <a id="allocator.uses">[[allocator.uses]]</a>
 
-#### `uses_allocator` trait <a id="allocator.uses.trait">[allocator.uses.trait]</a>
+#### `uses_allocator` trait <a id="allocator.uses.trait">[[allocator.uses.trait]]</a>
 
 ``` cpp
 template<class T, class Alloc> struct uses_allocator;
@@ -905,7 +905,7 @@ template<class T, class Alloc> struct uses_allocator;
 >
 > - the last argument of a constructor has type `Alloc`.
 
-#### Uses-allocator construction <a id="allocator.uses.construction">[allocator.uses.construction]</a>
+#### Uses-allocator construction <a id="allocator.uses.construction">[[allocator.uses.construction]]</a>
 
 *Uses-allocator construction*
 
@@ -1175,9 +1175,9 @@ template<class T, class Alloc, class... Args>
 >      }, uses_allocator_construction_args<T>(alloc, std::forward<Args>(args)...));
 > ```
 
-### Allocator traits <a id="allocator.traits">[allocator.traits]</a>
+### Allocator traits <a id="allocator.traits">[[allocator.traits]]</a>
 
-#### General <a id="allocator.traits.general">[allocator.traits.general]</a>
+#### General <a id="allocator.traits.general">[[allocator.traits.general]]</a>
 
 The class template `allocator_traits` supplies a uniform interface to
 all allocator types. An allocator cannot be a non-class type, however,
@@ -1233,7 +1233,7 @@ namespace std {
 }
 ```
 
-#### Member types <a id="allocator.traits.types">[allocator.traits.types]</a>
+#### Member types <a id="allocator.traits.types">[[allocator.traits.types]]</a>
 
 ``` cpp
 using pointer = see below;
@@ -1326,7 +1326,7 @@ template<class T> using rebind_alloc = see below;
 > more type arguments; otherwise, the instantiation of `rebind_alloc` is
 > ill-formed.
 
-#### Static member functions <a id="allocator.traits.members">[allocator.traits.members]</a>
+#### Static member functions <a id="allocator.traits.members">[[allocator.traits.members]]</a>
 
 ``` cpp
 [[nodiscard]] static constexpr pointer allocate(Alloc& a, size_type n);
@@ -1406,18 +1406,18 @@ static constexpr Alloc select_on_container_copy_construction(const Alloc& rhs);
 > `rhs.select_on_container_copy_construction()` if that expression is
 > well-formed; otherwise, `rhs`.
 
-#### Other <a id="allocator.traits.other">[allocator.traits.other]</a>
+#### Other <a id="allocator.traits.other">[[allocator.traits.other]]</a>
 
 The class template `allocation_result` has the template parameters, data
 members, and special members specified above. It has no base classes or
 members other than those specified.
 
-### The default allocator <a id="default.allocator">[default.allocator]</a>
+### The default allocator <a id="default.allocator">[[default.allocator]]</a>
 
-#### General <a id="default.allocator.general">[default.allocator.general]</a>
+#### General <a id="default.allocator.general">[[default.allocator.general]]</a>
 
 All specializations of the default allocator meet the allocator
-completeness requirements [allocator.requirements.completeness].
+completeness requirements [[allocator.requirements.completeness]].
 
 ``` cpp
 namespace std {
@@ -1445,10 +1445,10 @@ namespace std {
 
 is `true` for any `T`.
 
-#### Members <a id="allocator.members">[allocator.members]</a>
+#### Members <a id="allocator.members">[[allocator.members]]</a>
 
 Except for the destructor, member functions of the default allocator
-shall not introduce data races [intro.multithread] as a result of
+shall not introduce data races [[intro.multithread]] as a result of
 concurrent calls to those member functions from different threads. Calls
 to these functions that allocate or deallocate a particular unit of
 storage shall occur in a single total order, and each such deallocation
@@ -1531,7 +1531,7 @@ constexpr void deallocate(T* p, size_t n);
 > Uses `::operator delete`\[new.delete\], but it is unspecified when
 > this function is called.
 
-#### Operators <a id="allocator.globals">[allocator.globals]</a>
+#### Operators <a id="allocator.globals">[[allocator.globals]]</a>
 
 ``` cpp
 template<class T, class U>
@@ -1542,7 +1542,7 @@ template<class T, class U>
 >
 > `true`.
 
-### `addressof` <a id="specialized.addressof">[specialized.addressof]</a>
+### `addressof` <a id="specialized.addressof">[[specialized.addressof]]</a>
 
 ``` cpp
 template<class T> constexpr T* addressof(T& r) noexcept;
@@ -1559,7 +1559,7 @@ template<class T> constexpr T* addressof(T& r) noexcept;
 > subexpression\[defns.const.subexpr\] if `E` is an lvalue constant
 > subexpression.
 
-### C library memory allocation <a id="c.malloc">[c.malloc]</a>
+### C library memory allocation <a id="c.malloc">[[c.malloc]]</a>
 
 \[*Note 3*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
@@ -1599,17 +1599,17 @@ void free(void* ptr);
 > This function does not attempt to deallocate storage by calling
 > `::operator delete()`.
 
-## Smart pointers <a id="smartptr">[smartptr]</a>
+## Smart pointers <a id="smartptr">[[smartptr]]</a>
 
-### Unique-ownership pointers <a id="unique.ptr">[unique.ptr]</a>
+### Unique-ownership pointers <a id="unique.ptr">[[unique.ptr]]</a>
 
-#### General <a id="unique.ptr.general">[unique.ptr.general]</a>
+#### General <a id="unique.ptr.general">[[unique.ptr.general]]</a>
 
 A *unique pointer* is an object that owns another object and manages
 that other object through a pointer. More precisely, a unique pointer is
 an object *u* that stores a pointer to a second object *p* and will
 dispose of *p* when *u* is itself destroyed (e.g., when leaving block
-scope [stmt.dcl]). In this context, *u* is said to *own* `p`.
+scope [[stmt.dcl]]). In this context, *u* is said to *own* `p`.
 
 The mechanism by which *u* disposes of *p* is known as *p*’s associated
 *deleter*, a function object whose correct invocation results in *p*’s
@@ -1622,20 +1622,21 @@ of its owned object via the associated deleter before such replacement
 is considered completed.
 
 Each object of a type `U` instantiated from the `unique_ptr` template
-specified in [unique.ptr] has the strict ownership semantics, specified
-above, of a unique pointer. In partial satisfaction of these semantics,
-each such `U` is *Cpp17MoveConstructible* and *Cpp17MoveAssignable*, but
-is not *Cpp17CopyConstructible* nor *Cpp17CopyAssignable*. The template
-parameter `T` of `unique_ptr` may be an incomplete type.
+specified in [[unique.ptr]] has the strict ownership semantics,
+specified above, of a unique pointer. In partial satisfaction of these
+semantics, each such `U` is *Cpp17MoveConstructible* and
+*Cpp17MoveAssignable*, but is not *Cpp17CopyConstructible* nor
+*Cpp17CopyAssignable*. The template parameter `T` of `unique_ptr` may be
+an incomplete type.
 
 \[*Note 1*: The uses of `unique_ptr` include providing exception safety
 for dynamically allocated memory, passing ownership of dynamically
 allocated memory to a function, and returning dynamically allocated
 memory from a function. — *end note*\]
 
-#### Default deleters <a id="unique.ptr.dltr">[unique.ptr.dltr]</a>
+#### Default deleters <a id="unique.ptr.dltr">[[unique.ptr.dltr]]</a>
 
-##### In general <a id="unique.ptr.dltr.general">[unique.ptr.dltr.general]</a>
+##### In general <a id="unique.ptr.dltr.general">[[unique.ptr.dltr.general]]</a>
 
 The class template `default_delete` serves as the default deleter
 (destruction policy) for the class template `unique_ptr`.
@@ -1643,7 +1644,7 @@ The class template `default_delete` serves as the default deleter
 The template parameter `T` of `default_delete` may be an incomplete
 type.
 
-##### `default_delete` <a id="unique.ptr.dltr.dflt">[unique.ptr.dltr.dflt]</a>
+##### `default_delete` <a id="unique.ptr.dltr.dflt">[[unique.ptr.dltr.dflt]]</a>
 
 ``` cpp
 namespace std {
@@ -1678,7 +1679,7 @@ constexpr void operator()(T* ptr) const;
 >
 > Calls on `ptr`.
 
-##### `default_delete<T[]>` <a id="unique.ptr.dltr.dflt1">[unique.ptr.dltr.dflt1]</a>
+##### `default_delete<T[]>` <a id="unique.ptr.dltr.dflt1">[[unique.ptr.dltr.dflt1]]</a>
 
 ``` cpp
 namespace std {
@@ -1715,9 +1716,9 @@ template<class U> constexpr void operator()(U* ptr) const;
 >
 > Calls `delete[]` on `ptr`.
 
-#### `unique_ptr` for single objects <a id="unique.ptr.single">[unique.ptr.single]</a>
+#### `unique_ptr` for single objects <a id="unique.ptr.single">[[unique.ptr.single]]</a>
 
-##### General <a id="unique.ptr.single.general">[unique.ptr.single.general]</a>
+##### General <a id="unique.ptr.single.general">[[unique.ptr.single.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1768,30 +1769,30 @@ namespace std {
 
 The default type for the template parameter `D` is `default_delete`. A
 client-supplied template argument `D` shall be a function object type
-[function.objects], lvalue reference to function, or lvalue reference to
-function object type for which, given a value `d` of type `D` and a
+[[function.objects]], lvalue reference to function, or lvalue reference
+to function object type for which, given a value `d` of type `D` and a
 value `ptr` of type `unique_ptr<T, D>::pointer`, the expression `d(ptr)`
 is valid and has the effect of disposing of the pointer as appropriate
 for that deleter.
 
 If the deleter’s type `D` is not a reference type, `D` shall meet the
-*Cpp17Destructible* requirements ( [cpp17.destructible]).
+*Cpp17Destructible* requirements ( [[cpp17.destructible]]).
 
 If the *qualified-id* `remove_reference_t<D>::pointer` is valid and
-denotes a type [temp.deduct], then `unique_ptr<T,
+denotes a type [[temp.deduct]], then `unique_ptr<T,
 D>::pointer` shall be a synonym for `remove_reference_t<D>::pointer`.
 Otherwise `unique_ptr<T, D>::pointer` shall be a synonym for
 `element_type*`. The type `unique_ptr<T,
 D>::pointer` shall meet the *Cpp17NullablePointer* requirements (
-[cpp17.nullablepointer]).
+[[cpp17.nullablepointer]]).
 
 \[*Example 1*: Given an allocator type `X`
-[allocator.requirements.general] and letting `A` be a synonym for
+[[allocator.requirements.general]] and letting `A` be a synonym for
 `allocator_traits<X>`, the types `A::pointer`, `A::const_pointer`,
 `A::void_pointer`, and `A::const_void_pointer` may be used as
 `unique_ptr<T, D>::pointer`. — *end example*\]
 
-##### Constructors <a id="unique.ptr.single.ctor">[unique.ptr.single.ctor]</a>
+##### Constructors <a id="unique.ptr.single.ctor">[[unique.ptr.single.ctor]]</a>
 
 ``` cpp
 constexpr unique_ptr() noexcept;
@@ -1947,7 +1948,7 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 > `u.get() == nullptr`. `get_deleter()` returns a reference to the
 > stored deleter that was constructed from `u.get_deleter()`.
 
-##### Destructor <a id="unique.ptr.single.dtor">[unique.ptr.single.dtor]</a>
+##### Destructor <a id="unique.ptr.single.dtor">[[unique.ptr.single.dtor]]</a>
 
 ``` cpp
 constexpr ~unique_ptr();
@@ -1965,7 +1966,7 @@ constexpr ~unique_ptr();
 > The behavior is undefined if the evaluation of `get_deleter()(get())`
 > throws an exception.
 
-##### Assignment <a id="unique.ptr.single.asgn">[unique.ptr.single.asgn]</a>
+##### Assignment <a id="unique.ptr.single.asgn">[[unique.ptr.single.asgn]]</a>
 
 ``` cpp
 constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
@@ -2043,7 +2044,7 @@ constexpr unique_ptr& operator=(nullptr_t) noexcept;
 >
 > `*this`.
 
-##### Observers <a id="unique.ptr.single.observers">[unique.ptr.single.observers]</a>
+##### Observers <a id="unique.ptr.single.observers">[[unique.ptr.single.observers]]</a>
 
 ``` cpp
 constexpr add_lvalue_reference_t<T> operator*() const noexcept(noexcept(*declval<pointer>()));
@@ -2097,7 +2098,7 @@ constexpr explicit operator bool() const noexcept;
 >
 > `get() != nullptr`.
 
-##### Modifiers <a id="unique.ptr.single.modifiers">[unique.ptr.single.modifiers]</a>
+##### Modifiers <a id="unique.ptr.single.modifiers">[[unique.ptr.single.modifiers]]</a>
 
 ``` cpp
 constexpr pointer release() noexcept;
@@ -2150,9 +2151,9 @@ constexpr void swap(unique_ptr& u) noexcept;
 > Invokes `swap` on the stored pointers and on the stored deleters of
 > `*this` and `u`.
 
-#### `unique_ptr` for array objects with a runtime length <a id="unique.ptr.runtime">[unique.ptr.runtime]</a>
+#### `unique_ptr` for array objects with a runtime length <a id="unique.ptr.runtime">[[unique.ptr.runtime]]</a>
 
-##### General <a id="unique.ptr.runtime.general">[unique.ptr.runtime.general]</a>
+##### General <a id="unique.ptr.runtime.general">[[unique.ptr.runtime.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2223,7 +2224,7 @@ primary template.
 
 The template argument `T` shall be a complete type.
 
-##### Constructors <a id="unique.ptr.runtime.ctor">[unique.ptr.runtime.ctor]</a>
+##### Constructors <a id="unique.ptr.runtime.ctor">[[unique.ptr.runtime.ctor]]</a>
 
 ``` cpp
 template<class U> constexpr explicit unique_ptr(U p) noexcept;
@@ -2276,7 +2277,7 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 > \[*Note 12*: This replaces the specification of the primary
 > template. — *end note*\]
 
-##### Assignment <a id="unique.ptr.runtime.asgn">[unique.ptr.runtime.asgn]</a>
+##### Assignment <a id="unique.ptr.runtime.asgn">[[unique.ptr.runtime.asgn]]</a>
 
 ``` cpp
 template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u) noexcept;
@@ -2299,7 +2300,7 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 > \[*Note 13*: This replaces the specification of the primary
 > template. — *end note*\]
 
-##### Observers <a id="unique.ptr.runtime.observers">[unique.ptr.runtime.observers]</a>
+##### Observers <a id="unique.ptr.runtime.observers">[[unique.ptr.runtime.observers]]</a>
 
 ``` cpp
 constexpr T& operator[](size_t i) const;
@@ -2314,7 +2315,7 @@ constexpr T& operator[](size_t i) const;
 >
 > `get()[i]`.
 
-##### Modifiers <a id="unique.ptr.runtime.modifiers">[unique.ptr.runtime.modifiers]</a>
+##### Modifiers <a id="unique.ptr.runtime.modifiers">[[unique.ptr.runtime.modifiers]]</a>
 
 ``` cpp
 constexpr void reset(nullptr_t p = nullptr) noexcept;
@@ -2336,7 +2337,7 @@ constexpr template<class U> void reset(U p) noexcept;
 > - `pointer` is the same type as `element_type*`, `U` is a pointer type
 >   `V*`, and `V(*)[]` is convertible to `element_type(*)[]`.
 
-#### Creation <a id="unique.ptr.create">[unique.ptr.create]</a>
+#### Creation <a id="unique.ptr.create">[[unique.ptr.create]]</a>
 
 ``` cpp
 template<class T, class... Args> constexpr unique_ptr<T> make_unique(Args&&... args);
@@ -2390,7 +2391,7 @@ template<class T, class... Args> unspecified make_unique_for_overwrite(Args&&...
 
 > `T` is an array of known bound.
 
-#### Specialized algorithms <a id="unique.ptr.special">[unique.ptr.special]</a>
+#### Specialized algorithms <a id="unique.ptr.special">[[unique.ptr.special]]</a>
 
 ``` cpp
 template<class T, class D> constexpr void swap(unique_ptr<T, D>& x, unique_ptr<T, D>& y) noexcept;
@@ -2564,7 +2565,7 @@ template<class T, class D>
 > compare_three_way()(x.get(), static_cast<typename unique_ptr<T, D>::pointer>(nullptr)).
 > ```
 
-#### I/O <a id="unique.ptr.io">[unique.ptr.io]</a>
+#### I/O <a id="unique.ptr.io">[[unique.ptr.io]]</a>
 
 ``` cpp
 template<class E, class T, class Y, class D>
@@ -2581,9 +2582,9 @@ template<class E, class T, class Y, class D>
 >
 > `os`.
 
-### Shared-ownership pointers <a id="util.sharedptr">[util.sharedptr]</a>
+### Shared-ownership pointers <a id="util.sharedptr">[[util.sharedptr]]</a>
 
-#### Class `bad_weak_ptr` <a id="util.smartptr.weak.bad">[util.smartptr.weak.bad]</a>
+#### Class `bad_weak_ptr` <a id="util.smartptr.weak.bad">[[util.smartptr.weak.bad]]</a>
 
 ``` cpp
 namespace std {
@@ -2606,9 +2607,9 @@ const char* what() const noexcept override;
 >
 > An *implementation-defined* NTBS.
 
-#### Class template `shared_ptr` <a id="util.smartptr.shared">[util.smartptr.shared]</a>
+#### Class template `shared_ptr` <a id="util.smartptr.shared">[[util.smartptr.shared]]</a>
 
-##### General <a id="util.smartptr.shared.general">[util.smartptr.shared.general]</a>
+##### General <a id="util.smartptr.shared.general">[[util.smartptr.shared.general]]</a>
 
 The `shared_ptr` class template stores a pointer, usually obtained via
 `new`. `shared_ptr` implements semantics of shared ownership; the last
@@ -2720,16 +2721,16 @@ objects themselves and not objects they refer to. Changes in
 `use_count()` do not reflect modifications that can introduce data
 races.
 
-For the purposes of subclause [smartptr], a pointer type `Y*` is said to
-be *compatible with* a pointer type `T*` when either `Y*` is convertible
-to `T*` or `Y` is `U[N]` and `T` is cv `U[]`.
+For the purposes of subclause [[smartptr]], a pointer type `Y*` is said
+to be *compatible with* a pointer type `T*` when either `Y*` is
+convertible to `T*` or `Y` is `U[N]` and `T` is cv `U[]`.
 
-##### Constructors <a id="util.smartptr.shared.const">[util.smartptr.shared.const]</a>
+##### Constructors <a id="util.smartptr.shared.const">[[util.smartptr.shared.const]]</a>
 
 In the constructor definitions below, enables `shared_from_this` with
 `p`, for a pointer `p` of type `Y*`, means that if `Y` has an
 unambiguous and accessible base class that is a specialization of
-`enable_shared_from_this` [util.smartptr.enab], then `remove_cv_t<Y>*`
+`enable_shared_from_this` [[util.smartptr.enab]], then `remove_cv_t<Y>*`
 shall be implicitly convertible to `T*` and the constructor evaluates
 the statement:
 
@@ -2740,7 +2741,7 @@ if (p != nullptr && p->weak_this.expired())
 
 The assignment to the `weak_this` member is not atomic and conflicts
 with any potentially concurrent access to the same object
-[intro.multithread].
+[[intro.multithread]].
 
 ``` cpp
 constexpr shared_ptr() noexcept;
@@ -2917,7 +2918,7 @@ template<class Y, class D> shared_ptr(unique_ptr<Y, D>&& r);
 > equivalent to `shared_ptr(r.release(), ref(r.get_deleter()))`. If an
 > exception is thrown, the constructor has no effect.
 
-##### Destructor <a id="util.smartptr.shared.dest">[util.smartptr.shared.dest]</a>
+##### Destructor <a id="util.smartptr.shared.dest">[[util.smartptr.shared.dest]]</a>
 
 ``` cpp
 ~shared_ptr();
@@ -2939,7 +2940,7 @@ been destroyed all `shared_ptr` instances that shared ownership with
 `*this` will report a `use_count()` that is one less than its previous
 value. — *end note*\]
 
-##### Assignment <a id="util.smartptr.shared.assign">[util.smartptr.shared.assign]</a>
+##### Assignment <a id="util.smartptr.shared.assign">[[util.smartptr.shared.assign]]</a>
 
 ``` cpp
 shared_ptr& operator=(const shared_ptr& r) noexcept;
@@ -2995,7 +2996,7 @@ template<class Y, class D> shared_ptr& operator=(unique_ptr<Y, D>&& r);
 >
 > `*this`.
 
-##### Modifiers <a id="util.smartptr.shared.mod">[util.smartptr.shared.mod]</a>
+##### Modifiers <a id="util.smartptr.shared.mod">[[util.smartptr.shared.mod]]</a>
 
 ``` cpp
 void swap(shared_ptr& r) noexcept;
@@ -3037,7 +3038,7 @@ template<class Y, class D, class A> void reset(Y* p, D d, A a);
 >
 > Equivalent to `shared_ptr(p, d, a).swap(*this)`.
 
-##### Observers <a id="util.smartptr.shared.obs">[util.smartptr.shared.obs]</a>
+##### Observers <a id="util.smartptr.shared.obs">[[util.smartptr.shared.obs]]</a>
 
 ``` cpp
 element_type* get() const noexcept;
@@ -3155,7 +3156,7 @@ template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 >   `weak_ptr` instances are equivalent if and only if they share
 >   ownership or are both empty.
 
-##### Creation <a id="util.smartptr.shared.create">[util.smartptr.shared.create]</a>
+##### Creation <a id="util.smartptr.shared.create">[[util.smartptr.shared.create]]</a>
 
 The common requirements that apply to all `make_shared`,
 `allocate_shared`, `make_shared_for_overwrite`, and
@@ -3455,7 +3456,7 @@ template<class T, class A>
 >
 > — *end example*\]
 
-##### Comparison <a id="util.smartptr.shared.cmp">[util.smartptr.shared.cmp]</a>
+##### Comparison <a id="util.smartptr.shared.cmp">[[util.smartptr.shared.cmp]]</a>
 
 ``` cpp
 template<class T, class U>
@@ -3499,7 +3500,7 @@ template<class T>
 > compare_three_way()(a.get(), static_cast<typename shared_ptr<T>::element_type*>(nullptr).
 > ```
 
-##### Specialized algorithms <a id="util.smartptr.shared.spec">[util.smartptr.shared.spec]</a>
+##### Specialized algorithms <a id="util.smartptr.shared.spec">[[util.smartptr.shared.spec]]</a>
 
 ``` cpp
 template<class T>
@@ -3510,7 +3511,7 @@ template<class T>
 >
 > Equivalent to `a.swap(b)`.
 
-##### Casts <a id="util.smartptr.shared.cast">[util.smartptr.shared.cast]</a>
+##### Casts <a id="util.smartptr.shared.cast">[[util.smartptr.shared.cast]]</a>
 
 ``` cpp
 template<class T, class U>
@@ -3621,7 +3622,7 @@ template<class T, class U>
 > in undefined behavior, attempting to delete the same object
 > twice. — *end note*\]
 
-##### `get_deleter` <a id="util.smartptr.getdeleter">[util.smartptr.getdeleter]</a>
+##### `get_deleter` <a id="util.smartptr.getdeleter">[[util.smartptr.getdeleter]]</a>
 
 ``` cpp
 template<class D, class T>
@@ -3639,7 +3640,7 @@ template<class D, class T>
 > destroy the deleter until all `weak_ptr` instances that share
 > ownership with `p` have been destroyed. — *end note*\]
 
-##### I/O <a id="util.smartptr.shared.io">[util.smartptr.shared.io]</a>
+##### I/O <a id="util.smartptr.shared.io">[[util.smartptr.shared.io]]</a>
 
 ``` cpp
 template<class E, class T, class Y>
@@ -3654,9 +3655,9 @@ template<class E, class T, class Y>
 >
 > `os`.
 
-#### Class template `weak_ptr` <a id="util.smartptr.weak">[util.smartptr.weak]</a>
+#### Class template `weak_ptr` <a id="util.smartptr.weak">[[util.smartptr.weak]]</a>
 
-##### General <a id="util.smartptr.weak.general">[util.smartptr.weak.general]</a>
+##### General <a id="util.smartptr.weak.general">[[util.smartptr.weak.general]]</a>
 
 The `weak_ptr` class template stores a weak reference to an object that
 is already managed by a `shared_ptr`. To access the object, a `weak_ptr`
@@ -3715,7 +3716,7 @@ Specializations of `weak_ptr` shall be *Cpp17CopyConstructible* and
 *Cpp17CopyAssignable*, allowing their use in standard containers. The
 template parameter `T` of `weak_ptr` may be an incomplete type.
 
-##### Constructors <a id="util.smartptr.weak.const">[util.smartptr.weak.const]</a>
+##### Constructors <a id="util.smartptr.weak.const">[[util.smartptr.weak.const]]</a>
 
 ``` cpp
 constexpr weak_ptr() noexcept;
@@ -3765,7 +3766,7 @@ template<class Y> weak_ptr(weak_ptr<Y>&& r) noexcept;
 > `*this` contains the old value of `r`. `r` is empty, stores a null
 > pointer value, and `r.use_count() == 0`.
 
-##### Destructor <a id="util.smartptr.weak.dest">[util.smartptr.weak.dest]</a>
+##### Destructor <a id="util.smartptr.weak.dest">[[util.smartptr.weak.dest]]</a>
 
 ``` cpp
 ~weak_ptr();
@@ -3776,7 +3777,7 @@ template<class Y> weak_ptr(weak_ptr<Y>&& r) noexcept;
 > Destroys this `weak_ptr` object but has no effect on the object its
 > stored pointer points to.
 
-##### Assignment <a id="util.smartptr.weak.assign">[util.smartptr.weak.assign]</a>
+##### Assignment <a id="util.smartptr.weak.assign">[[util.smartptr.weak.assign]]</a>
 
 ``` cpp
 weak_ptr& operator=(const weak_ptr& r) noexcept;
@@ -3810,7 +3811,7 @@ template<class Y> weak_ptr& operator=(weak_ptr<Y>&& r) noexcept;
 >
 > `*this`.
 
-##### Modifiers <a id="util.smartptr.weak.mod">[util.smartptr.weak.mod]</a>
+##### Modifiers <a id="util.smartptr.weak.mod">[[util.smartptr.weak.mod]]</a>
 
 ``` cpp
 void swap(weak_ptr& r) noexcept;
@@ -3828,7 +3829,7 @@ void reset() noexcept;
 >
 > Equivalent to `weak_ptr().swap(*this)`.
 
-##### Observers <a id="util.smartptr.weak.obs">[util.smartptr.weak.obs]</a>
+##### Observers <a id="util.smartptr.weak.obs">[[util.smartptr.weak.obs]]</a>
 
 ``` cpp
 long use_count() const noexcept;
@@ -3873,7 +3874,7 @@ template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 >   `weak_ptr` instances are equivalent if and only if they share
 >   ownership or are both empty.
 
-##### Specialized algorithms <a id="util.smartptr.weak.spec">[util.smartptr.weak.spec]</a>
+##### Specialized algorithms <a id="util.smartptr.weak.spec">[[util.smartptr.weak.spec]]</a>
 
 ``` cpp
 template<class T>
@@ -3884,7 +3885,7 @@ template<class T>
 >
 > Equivalent to `a.swap(b)`.
 
-#### Class template `owner_less` <a id="util.smartptr.ownerless">[util.smartptr.ownerless]</a>
+#### Class template `owner_less` <a id="util.smartptr.ownerless">[[util.smartptr.ownerless]]</a>
 
 The class template `owner_less` allows ownership-based mixed comparisons
 of shared and weak pointers.
@@ -3927,7 +3928,7 @@ namespace std {
 Note that
 
 - `operator()` defines a strict weak ordering as defined in 
-  [alg.sorting];
+  [[alg.sorting]];
 
 - two `shared_ptr` or `weak_ptr` instances are equivalent under the
   equivalence relation defined by `operator()`,
@@ -3936,7 +3937,7 @@ Note that
 
 — *end note*\]
 
-#### Class template `enable_shared_from_this` <a id="util.smartptr.enab">[util.smartptr.enab]</a>
+#### Class template `enable_shared_from_this` <a id="util.smartptr.enab">[[util.smartptr.enab]]</a>
 
 A class `T` can inherit from `enable_shared_from_this<T>` to inherit the
 `shared_from_this` member functions that obtain a `shared_ptr` instance
@@ -4018,7 +4019,7 @@ weak_ptr<T const> weak_from_this() const noexcept;
 >
 > `weak_this`.
 
-### Smart pointer hash support <a id="util.smartptr.hash">[util.smartptr.hash]</a>
+### Smart pointer hash support <a id="util.smartptr.hash">[[util.smartptr.hash]]</a>
 
 ``` cpp
 template<class T, class D> struct hash<unique_ptr<T, D>>;
@@ -4039,12 +4040,12 @@ template<class T> struct hash<shared_ptr<T>>;
 > evaluates to the same value as
 > `hash<typename shared_ptr<T>::element_type*>()(p.get())`.
 
-### Smart pointer adaptors <a id="smartptr.adapt">[smartptr.adapt]</a>
+### Smart pointer adaptors <a id="smartptr.adapt">[[smartptr.adapt]]</a>
 
-#### Class template `out_ptr_t` <a id="out.ptr.t">[out.ptr.t]</a>
+#### Class template `out_ptr_t` <a id="out.ptr.t">[[out.ptr.t]]</a>
 
 `out_ptr_t` is a class template used to adapt types such as smart
-pointers [smartptr] for functions that use output pointer parameters.
+pointers [[smartptr]] for functions that use output pointer parameters.
 
 \[*Example 4*:
 
@@ -4105,14 +4106,14 @@ program is ill-formed.
 \[*Note 5*: It is typically a user error to reset a `shared_ptr` without
 specifying a deleter, as `shared_ptr` will replace a custom deleter upon
 usage of `reset`, as specified in
-[util.smartptr.shared.mod]. — *end note*\]
+[[util.smartptr.shared.mod]]. — *end note*\]
 
 Program-defined specializations of `out_ptr_t` that depend on at least
 one program-defined type need not meet the requirements for the primary
 template.
 
 Evaluations of the conversion functions on the same object may conflict
-[intro.races].
+[[intro.races]].
 
 ``` cpp
 explicit out_ptr_t(Smart& smart, Args... args);
@@ -4216,7 +4217,7 @@ operator void**() const noexcept;
 > can be a viable implementation strategy for some
 > implementations. — *end note*\]
 
-#### Function template `out_ptr` <a id="out.ptr">[out.ptr]</a>
+#### Function template `out_ptr` <a id="out.ptr">[[out.ptr]]</a>
 
 ``` cpp
 template<class Pointer = void, class Smart, class... Args>
@@ -4230,10 +4231,10 @@ template<class Pointer = void, class Smart, class... Args>
 >
 > `out_ptr_t<Smart, P, Args&&...>(s, std::forward<Args>(args)...)`
 
-#### Class template `inout_ptr_t` <a id="inout.ptr.t">[inout.ptr.t]</a>
+#### Class template `inout_ptr_t` <a id="inout.ptr.t">[[inout.ptr.t]]</a>
 
 `inout_ptr_t` is a class template used to adapt types such as smart
-pointers [smartptr] for functions that use output pointer parameters
+pointers [[smartptr]] for functions that use output pointer parameters
 whose dereferenced values may first be deleted before being set to
 another allocated value.
 
@@ -4300,7 +4301,7 @@ one program-defined type need not meet the requirements for the primary
 template.
 
 Evaluations of the conversion functions on the same object may conflict
-[intro.races].
+[[intro.races]].
 
 ``` cpp
 explicit inout_ptr_t(Smart& smart, Args... args);
@@ -4412,7 +4413,7 @@ operator void**() const noexcept;
 > can be a viable implementation strategy for some
 > implementations. — *end note*\]
 
-#### Function template `inout_ptr` <a id="inout.ptr">[inout.ptr]</a>
+#### Function template `inout_ptr` <a id="inout.ptr">[[inout.ptr]]</a>
 
 ``` cpp
 template<class Pointer = void, class Smart, class... Args>
@@ -4426,9 +4427,9 @@ template<class Pointer = void, class Smart, class... Args>
 >
 > `inout_ptr_t<Smart, P, Args&&...>(s, std::forward<Args>(args)...)`.
 
-## Memory resources <a id="mem.res">[mem.res]</a>
+## Memory resources <a id="mem.res">[[mem.res]]</a>
 
-### Header `<memory_resource>` synopsis <a id="mem.res.syn">[mem.res.syn]</a>
+### Header `<memory_resource>` synopsis <a id="mem.res.syn">[[mem.res.syn]]</a>
 
 ``` cpp
 namespace std::pmr {
@@ -4458,9 +4459,9 @@ namespace std::pmr {
 }
 ```
 
-### Class `memory_resource` <a id="mem.res.class">[mem.res.class]</a>
+### Class `memory_resource` <a id="mem.res.class">[[mem.res.class]]</a>
 
-#### General <a id="mem.res.class.general">[mem.res.class.general]</a>
+#### General <a id="mem.res.class.general">[[mem.res.class.general]]</a>
 
 The `memory_resource` class is an abstract interface to an unbounded set
 of classes encapsulating memory resources.
@@ -4491,7 +4492,7 @@ namespace std::pmr {
 }
 ```
 
-#### Public member functions <a id="mem.res.public">[mem.res.public]</a>
+#### Public member functions <a id="mem.res.public">[[mem.res.public]]</a>
 
 ``` cpp
 ~memory_resource();
@@ -4535,7 +4536,7 @@ bool is_equal(const memory_resource& other) const noexcept;
 >
 > Equivalent to: `return do_is_equal(other);`
 
-#### Private virtual member functions <a id="mem.res.private">[mem.res.private]</a>
+#### Private virtual member functions <a id="mem.res.private">[[mem.res.private]]</a>
 
 ``` cpp
 virtual void* do_allocate(size_t bytes, size_t alignment) = 0;
@@ -4590,7 +4591,7 @@ virtual bool do_is_equal(const memory_resource& other) const noexcept = 0;
 > this function can immediately return `false` if
 > `dynamic_cast<const D*>(&other) == nullptr`. — *end note*\]
 
-#### Equality <a id="mem.res.eq">[mem.res.eq]</a>
+#### Equality <a id="mem.res.eq">[[mem.res.eq]]</a>
 
 ``` cpp
 bool operator==(const memory_resource& a, const memory_resource& b) noexcept;
@@ -4600,12 +4601,12 @@ bool operator==(const memory_resource& a, const memory_resource& b) noexcept;
 >
 > `&a == &b || a.is_equal(b)`.
 
-### Class template `polymorphic_allocator` <a id="mem.poly.allocator.class">[mem.poly.allocator.class]</a>
+### Class template `polymorphic_allocator` <a id="mem.poly.allocator.class">[[mem.poly.allocator.class]]</a>
 
-#### General <a id="mem.poly.allocator.class.general">[mem.poly.allocator.class.general]</a>
+#### General <a id="mem.poly.allocator.class.general">[[mem.poly.allocator.class.general]]</a>
 
 A specialization of class template `pmr::polymorphic_allocator` meets
-the *Cpp17Allocator* requirements [allocator.requirements.general] if
+the *Cpp17Allocator* requirements [[allocator.requirements.general]] if
 its template argument is a cv-unqualified object type. Constructed with
 different memory resources, different instances of the same
 specialization of `pmr::polymorphic_allocator` can exhibit entirely
@@ -4616,7 +4617,7 @@ allocator type.
 
 A specialization of class template `pmr::polymorphic_allocator` meets
 the allocator completeness requirements
-[allocator.requirements.completeness] if its template argument is a
+[[allocator.requirements.completeness]] if its template argument is a
 cv-unqualified object type.
 
 ``` cpp
@@ -4665,7 +4666,7 @@ namespace std::pmr {
 }
 ```
 
-#### Constructors <a id="mem.poly.allocator.ctor">[mem.poly.allocator.ctor]</a>
+#### Constructors <a id="mem.poly.allocator.ctor">[[mem.poly.allocator.ctor]]</a>
 
 ``` cpp
 polymorphic_allocator() noexcept;
@@ -4702,7 +4703,7 @@ template<class U> polymorphic_allocator(const polymorphic_allocator<U>& other) n
 >
 > Sets `memory_rsrc` to `other.resource()`.
 
-#### Member functions <a id="mem.poly.allocator.mem">[mem.poly.allocator.mem]</a>
+#### Member functions <a id="mem.poly.allocator.mem">[[mem.poly.allocator.mem]]</a>
 
 ``` cpp
 [[nodiscard]] Tp* allocate(size_t n);
@@ -4862,7 +4863,7 @@ memory_resource* resource() const;
 >
 > `memory_rsrc`.
 
-#### Equality <a id="mem.poly.allocator.eq">[mem.poly.allocator.eq]</a>
+#### Equality <a id="mem.poly.allocator.eq">[[mem.poly.allocator.eq]]</a>
 
 ``` cpp
 template<class T1, class T2>
@@ -4874,7 +4875,7 @@ template<class T1, class T2>
 >
 > `*a.resource() == *b.resource()`.
 
-### Access to program-wide `memory_resource` objects <a id="mem.res.global">[mem.res.global]</a>
+### Access to program-wide `memory_resource` objects <a id="mem.res.global">[[mem.res.global]]</a>
 
 ``` cpp
 memory_resource* new_delete_resource() noexcept;
@@ -4935,9 +4936,9 @@ memory_resource* get_default_resource() noexcept;
 >
 > The current value of the default memory resource pointer.
 
-### Pool resource classes <a id="mem.res.pool">[mem.res.pool]</a>
+### Pool resource classes <a id="mem.res.pool">[[mem.res.pool]]</a>
 
-#### Classes `synchronized_pool_resource` and `unsynchronized_pool_resource` <a id="mem.res.pool.overview">[mem.res.pool.overview]</a>
+#### Classes `synchronized_pool_resource` and `unsynchronized_pool_resource` <a id="mem.res.pool.overview">[[mem.res.pool.overview]]</a>
 
 The `synchronized_pool_resource` and `unsynchronized_pool_resource`
 classes (collectively called *pool resource classes*) are
@@ -5039,7 +5040,7 @@ namespace std::pmr {
 }
 ```
 
-#### `pool_options` data members <a id="mem.res.pool.options">[mem.res.pool.options]</a>
+#### `pool_options` data members <a id="mem.res.pool.options">[[mem.res.pool.options]]</a>
 
 The members of `pool_options` comprise a set of constructor options for
 pool resources. The effect of each option on the pool resource behavior
@@ -5068,7 +5069,7 @@ size_t largest_required_pool_block;
 > implementation may choose a pass-through threshold larger than
 > specified in this field.
 
-#### Constructors and destructors <a id="mem.res.pool.ctor">[mem.res.pool.ctor]</a>
+#### Constructors and destructors <a id="mem.res.pool.ctor">[[mem.res.pool.ctor]]</a>
 
 ``` cpp
 synchronized_pool_resource(const pool_options& opts, memory_resource* upstream);
@@ -5108,7 +5109,7 @@ virtual ~unsynchronized_pool_resource();
 >
 > Calls `release()`.
 
-#### Members <a id="mem.res.pool.mem">[mem.res.pool.mem]</a>
+#### Members <a id="mem.res.pool.mem">[[mem.res.pool.mem]]</a>
 
 ``` cpp
 void release();
@@ -5189,9 +5190,9 @@ bool do_is_equal(const memory_resource& other) const noexcept override;
 >
 > `this == &other`.
 
-### Class `monotonic_buffer_resource` <a id="mem.res.monotonic.buffer">[mem.res.monotonic.buffer]</a>
+### Class `monotonic_buffer_resource` <a id="mem.res.monotonic.buffer">[[mem.res.monotonic.buffer]]</a>
 
-#### General <a id="mem.res.monotonic.buffer.general">[mem.res.monotonic.buffer.general]</a>
+#### General <a id="mem.res.monotonic.buffer.general">[[mem.res.monotonic.buffer.general]]</a>
 
 A `monotonic_buffer_resource` is a special-purpose memory resource
 intended for very fast memory allocations in situations where memory is
@@ -5235,7 +5236,7 @@ namespace std::pmr {
 }
 ```
 
-#### Constructors and destructor <a id="mem.res.monotonic.buffer.ctor">[mem.res.monotonic.buffer.ctor]</a>
+#### Constructors and destructor <a id="mem.res.monotonic.buffer.ctor">[[mem.res.monotonic.buffer.ctor]]</a>
 
 ``` cpp
 explicit monotonic_buffer_resource(memory_resource* upstream);
@@ -5278,7 +5279,7 @@ monotonic_buffer_resource(void* buffer, size_t buffer_size, memory_resource* ups
 >
 > Calls `release()`.
 
-#### Members <a id="mem.res.monotonic.buffer.mem">[mem.res.monotonic.buffer.mem]</a>
+#### Members <a id="mem.res.monotonic.buffer.mem">[[mem.res.monotonic.buffer.mem]]</a>
 
 ``` cpp
 void release();
@@ -5353,9 +5354,9 @@ bool do_is_equal(const memory_resource& other) const noexcept override;
 >
 > `this == &other`.
 
-## Class template `scoped_allocator_adaptor` <a id="allocator.adaptor">[allocator.adaptor]</a>
+## Class template `scoped_allocator_adaptor` <a id="allocator.adaptor">[[allocator.adaptor]]</a>
 
-### Header `<scoped_allocator>` synopsis <a id="allocator.adaptor.syn">[allocator.adaptor.syn]</a>
+### Header `<scoped_allocator>` synopsis <a id="allocator.adaptor.syn">[[allocator.adaptor.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -5468,7 +5469,7 @@ namespace std {
 }
 ```
 
-### Member types <a id="allocator.adaptor.types">[allocator.adaptor.types]</a>
+### Member types <a id="allocator.adaptor.types">[[allocator.adaptor.types]]</a>
 
 ``` cpp
 using inner_allocator_type = see below;
@@ -5513,7 +5514,7 @@ using is_always_equal = see below;
 > for every `A` in the set of `OuterAlloc` and `InnerAllocs...`;
 > otherwise, `false_type`.
 
-### Constructors <a id="allocator.adaptor.cnstr">[allocator.adaptor.cnstr]</a>
+### Constructors <a id="allocator.adaptor.cnstr">[[allocator.adaptor.cnstr]]</a>
 
 ``` cpp
 scoped_allocator_adaptor();
@@ -5581,11 +5582,11 @@ template<class OuterA2>
 > Initializes each allocator within the adaptor with the corresponding
 > allocator rvalue from `other`.
 
-### Members <a id="allocator.adaptor.members">[allocator.adaptor.members]</a>
+### Members <a id="allocator.adaptor.members">[[allocator.adaptor.members]]</a>
 
 In the `construct` member functions, `OUTERMOST(x)` is
 `OUTERMOST(x.outer_allocator())` if the expression `x.outer_allocator()`
-is valid  [temp.deduct] and `x` otherwise; `OUTERMOST_ALLOC_TRAITS(x)`
+is valid  [[temp.deduct]] and `x` otherwise; `OUTERMOST_ALLOC_TRAITS(x)`
 is `allocator_traits<remove_reference_t<decltype(OUTERMOST(x))>>`.
 
 \[*Note 2*: `OUTERMOST(x)` and `OUTERMOST_ALLOC_TRAITS(x)` are recursive
@@ -5692,7 +5693,7 @@ scoped_allocator_adaptor select_on_container_copy_construction() const;
 > where `A1` is the type of `a1` and `a2` is the corresponding allocator
 > in `*this`.
 
-### Operators <a id="scoped.adaptor.operators">[scoped.adaptor.operators]</a>
+### Operators <a id="scoped.adaptor.operators">[[scoped.adaptor.operators]]</a>
 
 ``` cpp
 template<class OuterA1, class OuterA2, class... InnerAllocs>
@@ -5715,30 +5716,30 @@ template<class OuterA1, class OuterA2, class... InnerAllocs>
 > ```
 
 <!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
-[allocator.requirements.general]: library.md#allocator.requirements.general
-[cpp17.destructible]: #cpp17.destructible
-[cpp17.nullablepointer]: #cpp17.nullablepointer
-[function.objects]: utilities.md#function.objects
-[intro.multithread]: basic.md#intro.multithread
-[intro.races]: basic.md#intro.races
-[mem.summary]: #mem.summary
-[memory]: #memory
-[pointer.traits]: #pointer.traits
-[pointer.traits.functions]: #pointer.traits.functions
-[smartptr]: #smartptr
-[specialized.addressof]: #specialized.addressof
-[specialized.algorithms]: algorithms.md#specialized.algorithms
-[stmt.dcl]: stmt.md#stmt.dcl
-[temp.deduct]: temp.md#temp.deduct
-[tuple]: utilities.md#tuple
-[unique.ptr]: #unique.ptr
-[util.smartptr.enab]: #util.smartptr.enab
-[util.smartptr.shared.mod]: #util.smartptr.shared.mod
+[[alg.sorting]]: algorithms.md#alg.sorting
+[[allocator.requirements.completeness]]: library.md#allocator.requirements.completeness
+[[allocator.requirements.general]]: library.md#allocator.requirements.general
+[[cpp17.destructible]]: #cpp17.destructible
+[[cpp17.nullablepointer]]: #cpp17.nullablepointer
+[[function.objects]]: utilities.md#function.objects
+[[intro.multithread]]: basic.md#intro.multithread
+[[intro.races]]: basic.md#intro.races
+[[mem.summary]]: #mem.summary
+[[memory]]: #memory
+[[pointer.traits]]: #pointer.traits
+[[pointer.traits.functions]]: #pointer.traits.functions
+[[smartptr]]: #smartptr
+[[specialized.addressof]]: #specialized.addressof
+[[specialized.algorithms]]: algorithms.md#specialized.algorithms
+[[stmt.dcl]]: stmt.md#stmt.dcl
+[[temp.deduct]]: temp.md#temp.deduct
+[[tuple]]: utilities.md#tuple
+[[unique.ptr]]: #unique.ptr
+[[util.smartptr.enab]]: #util.smartptr.enab
+[[util.smartptr.shared.mod]]: #util.smartptr.shared.mod
 
 <!-- Link reference definitions -->
-[allocator.adaptor]: #allocator.adaptor
-[mem.res]: #mem.res
-[memory]: #memory
-[smartptr]: #smartptr
+[[allocator.adaptor]]: #allocator.adaptor
+[[mem.res]]: #mem.res
+[[memory]]: #memory
+[[smartptr]]: #smartptr

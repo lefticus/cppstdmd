@@ -3,15 +3,15 @@ current_file: compatibility
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-## C++ and ISO C++20 <a id="diff.cpp20">[diff.cpp20]</a>
+## C++ and ISO C++20 <a id="diff.cpp20">[[diff.cpp20]]</a>
 
-### General <a id="diff.cpp20.general">[diff.cpp20.general]</a>
+### General <a id="diff.cpp20.general">[[diff.cpp20.general]]</a>
 
-Subclause [diff.cpp20] lists the differences between C++ and ISO C++20
+Subclause [[diff.cpp20]] lists the differences between C++ and ISO C++20
 (ISO/IEC 14882:2020, *Programming Languages --- \Cpp{*), by the chapters
 of this document.
 
-###  [lex]: lexical conventions <a id="diff.cpp20.lex">[diff.cpp20.lex]</a>
+###  [[lex]]: lexical conventions <a id="diff.cpp20.lex">[[diff.cpp20.lex]]</a>
 
 Previously valid identifiers containing characters not present in
 properties XID_Start or XID_Continue, or not in Normalization Form C,
@@ -28,7 +28,7 @@ feature. Concatenation of *string-literal*s with different
 auto c = L"a" U"b";             // was conditionally-supported; now ill-formed
 ```
 
-###  [expr]: expressions <a id="diff.cpp20.expr">[diff.cpp20.expr]</a>
+###  [[expr]]: expressions <a id="diff.cpp20.expr">[[diff.cpp20.expr]]</a>
 
 Change move-eligible *id-expression*s from lvalues to xvalues. Simplify
 the rules for implicit move. Valid C++20 code that relies on a returned
@@ -50,12 +50,12 @@ arr[1, 2]               // was equivalent to arr[(1, 2)],
                         // now equivalent to arr.operator[](1, 2) or ill-formed
 ```
 
-###  [stmt.stmt]: statements <a id="diff.cpp20.stmt">[diff.cpp20.stmt]</a>
+###  [[stmt.stmt]]: statements <a id="diff.cpp20.stmt">[[diff.cpp20.stmt]]</a>
 
 The lifetime of temporary objects in the *for-range-initializer* is
-extended until the end of the loop [class.temporary]. Improve usability
-of the range-based `for` statement. Destructors of some temporary
-objects are invoked later. For example:
+extended until the end of the loop [[class.temporary]]. Improve
+usability of the range-based `for` statement. Destructors of some
+temporary objects are invoked later. For example:
 
 ``` cpp
 void f() {
@@ -69,7 +69,7 @@ void f() {
 }
 ```
 
-###  [dcl.dcl]: declarations <a id="diff.cpp20.dcl">[diff.cpp20.dcl]</a>
+###  [[dcl.dcl]]: declarations <a id="diff.cpp20.dcl">[[diff.cpp20.dcl]]</a>
 
 UTF-8 string literals may initialize arrays of `char` or
 `unsigned char`. Compatibility with previously written code that
@@ -94,7 +94,7 @@ int main() {
 }
 ```
 
-###  [temp]: templates <a id="diff.cpp20.temp">[diff.cpp20.temp]</a>
+###  [[temp]]: templates <a id="diff.cpp20.temp">[[diff.cpp20.temp]]</a>
 
 Deducing template arguments from exception specifications. Facilitate
 generic handling of throwing and non-throwing functions. Valid ISO C++20
@@ -109,7 +109,7 @@ void h() {
 }
 ```
 
-###  [library]: library introduction <a id="diff.cpp20.library">[diff.cpp20.library]</a>
+###  [[library]]: library introduction <a id="diff.cpp20.library">[[diff.cpp20.library]]</a>
 
 New headers. New functionality. The following C++ headers are new:
 `<expected>`, `<flat_map>`, `<flat_set>`, `<generator>`, `<print>`,
@@ -117,7 +117,7 @@ New headers. New functionality. The following C++ headers are new:
 that `#include}{s` headers with these names may be invalid in this
 revision of C++.
 
-###  [concepts]: concepts library <a id="diff.cpp20.concepts">[diff.cpp20.concepts]</a>
+###  [[concepts]]: concepts library <a id="diff.cpp20.concepts">[[diff.cpp20.concepts]]</a>
 
 Replace `common_reference_with` in `three_way_comparable_with`,
 `equality_comparable_with`, and `totally_ordered_with` with an
@@ -140,7 +140,7 @@ bool test(shared_ptr<int> p) {
 }
 ```
 
-###  [mem]: memory management library <a id="diff.cpp20.memory">[diff.cpp20.memory]</a>
+###  [[mem]]: memory management library <a id="diff.cpp20.memory">[[diff.cpp20.memory]]</a>
 
 Forbid partial and explicit program-defined specializations of
 `allocator_traits`. Allow addition of `allocate_at_least` to
@@ -148,7 +148,7 @@ Forbid partial and explicit program-defined specializations of
 C++20 code that partially or explicitly specializes `allocator_traits`
 is ill-formed with no diagnostic required in this revision of C++.
 
-###  [utilities]: general utilities library <a id="diff.cpp20.utilities">[diff.cpp20.utilities]</a>
+###  [[utilities]]: general utilities library <a id="diff.cpp20.utilities">[[diff.cpp20.utilities]]</a>
 
 Signature changes: `format`, `format_to`, `vformat_to`, `format_to_n`,
 `formatted_size`. Removal of `format_args_t`. Improve safety via
@@ -199,7 +199,7 @@ is intended to be instantiated only with cv-unqualified object types.
 Valid C++20 code that instantiated the removed specialization can become
 ill-formed.
 
-###  [strings]: strings library <a id="diff.cpp20.strings">[diff.cpp20.strings]</a>
+###  [[strings]]: strings library <a id="diff.cpp20.strings">[[diff.cpp20.strings]]</a>
 
 Additional rvalue overload for the `substr` member function and the
 corresponding constructor. Improve efficiency of operations on rvalues.
@@ -216,7 +216,7 @@ std::string s3(std::move(s2), 10, 5);
 assert(s1 == s2);       // unspecified, previously guaranteed to be true
 ```
 
-###  [containers]: containers library <a id="diff.cpp20.containers">[diff.cpp20.containers]</a>
+###  [[containers]]: containers library <a id="diff.cpp20.containers">[[diff.cpp20.containers]]</a>
 
 Heterogeneous `extract` and `erase` overloads for associative
 containers. Improve efficiency of erasing elements from associative
@@ -235,7 +235,7 @@ struct D : private B {
 };
 ```
 
-###  [thread]: concurrency support library <a id="diff.cpp20.thread">[diff.cpp20.thread]</a>
+###  [[thread]]: concurrency support library <a id="diff.cpp20.thread">[[diff.cpp20.thread]]</a>
 
 In this revision of C++, it is implementation-defined whether a
 barrier’s phase completion step runs if no thread calls `wait`.
@@ -262,15 +262,15 @@ assert(data == 1);      // implementation-defined; previously well-defined
 b1.arrive();            // implementation-defined; previously well-defined
 ```
 
-## C++ and ISO C++17 <a id="diff.cpp17">[diff.cpp17]</a>
+## C++ and ISO C++17 <a id="diff.cpp17">[[diff.cpp17]]</a>
 
-### General <a id="diff.cpp17.general">[diff.cpp17.general]</a>
+### General <a id="diff.cpp17.general">[[diff.cpp17.general]]</a>
 
-Subclause [diff.cpp17] lists the differences between C++ and ISO C++17
+Subclause [[diff.cpp17]] lists the differences between C++ and ISO C++17
 (ISO/IEC 14882:2017, *Programming Languages --- \Cpp{*), by the chapters
 of this document.
 
-###  [lex]: lexical conventions <a id="diff.cpp17.lex">[diff.cpp17.lex]</a>
+###  [[lex]]: lexical conventions <a id="diff.cpp17.lex">[[diff.cpp17.lex]]</a>
 
 New identifiers with special meaning. Required for new features. Logical
 lines beginning with `module` or `import` may be interpreted differently
@@ -299,23 +299,23 @@ import<int> f();                // ill-formed; previously well-formed
 New keywords. Required for new features.
 
 -  The `char8_t` keyword is added to differentiate the types of ordinary
-  and UTF-8 literals [lex.string].
+  and UTF-8 literals [[lex.string]].
 
 - The `concept` keyword is added to enable the definition of concepts
-  [temp.concept].
+  [[temp.concept]].
 
 - The `consteval` keyword is added to declare immediate functions
-  [dcl.constexpr].
+  [[dcl.constexpr]].
 
 - The `constinit` keyword is added to prevent unintended dynamic
-  initialization [dcl.constinit].
+  initialization [[dcl.constinit]].
 
 - The `co_await`, `co_yield`, and `co_return` keywords are added to
-  enable the definition of coroutines [dcl.fct.def.coroutine].
+  enable the definition of coroutines [[dcl.fct.def.coroutine]].
 
 - The `requires` keyword is added to introduce constraints through a
-  *requires-clause* [temp.pre] or a *requires-expression*
-  [expr.prim.req].
+  *requires-clause* [[temp.pre]] or a *requires-expression*
+  [[expr.prim.req]].
 
 Valid C++17 code using `char8_t`, `concept`, `consteval`, `constinit`,
 `co_await`, `co_yield`, `co_return`, or `requires` as an identifier is
@@ -362,7 +362,7 @@ template<> struct ct<char> {
 ct<decltype(u8'c')>::type x;    // ill-formed; previously well-formed.
 ```
 
-###  [basic]: basics <a id="diff.cpp17.basic">[diff.cpp17.basic]</a>
+###  [[basic]]: basics <a id="diff.cpp17.basic">[[diff.cpp17.basic]]</a>
 
 A pseudo-destructor call ends the lifetime of the object to which it is
 applied. Increase consistency of the language model. Valid ISO C++17
@@ -386,7 +386,7 @@ same thread, then reading the latter value with a `memory_order_acquire`
 load no longer provides any “happens before” guarantees, even in the
 absence of intervening stores by another thread.
 
-###  [expr]: expressions <a id="diff.cpp17.expr">[diff.cpp17.expr]</a>
+###  [[expr]]: expressions <a id="diff.cpp17.expr">[[diff.cpp17.expr]]</a>
 
 Implicit lambda capture may capture additional entities. Rule
 simplification, necessary to resolve interactions with constexpr if.
@@ -394,7 +394,7 @@ Lambdas with a *capture-default* may capture local entities that were
 not captured in C++17 if those entities are only referenced in contexts
 that do not result in an odr-use.
 
-###  [dcl.dcl]: declarations <a id="diff.cpp17.dcl.dcl">[diff.cpp17.dcl.dcl]</a>
+###  [[dcl.dcl]]: declarations <a id="diff.cpp17.dcl.dcl">[[diff.cpp17.dcl.dcl]]</a>
 
 Unnamed classes with a typedef name for linkage purposes can contain
 only C-compatible constructs. Necessary for implementability. Valid
@@ -470,7 +470,7 @@ in this revision of C++. For example:
 bool y[] = { "bc" };    // ill-formed; previously well-formed
 ```
 
-###  [class]: classes <a id="diff.cpp17.class">[diff.cpp17.class]</a>
+###  [[class]]: classes <a id="diff.cpp17.class">[[diff.cpp17.class]]</a>
 
 The class name can no longer be used parenthesized immediately after an
 `explicit` *decl-specifier* in a constructor declaration. The
@@ -541,7 +541,7 @@ void g() {
 }
 ```
 
-###  [over]: overloading <a id="diff.cpp17.over">[diff.cpp17.over]</a>
+###  [[over]]: overloading <a id="diff.cpp17.over">[[diff.cpp17.over]]</a>
 
 Equality and inequality expressions can now find reversed and rewritten
 candidates. Improve consistency of equality with three-way comparison
@@ -568,10 +568,11 @@ int check(A x, A y) {
 }
 ```
 
-Overload resolution may change for equality operators [expr.eq]. Support
-calling `operator==` with reversed order of arguments. Valid C++17 code
-that uses equality operators with conversion functions may be ill-formed
-or have different semantics in this revision of C++. For example:
+Overload resolution may change for equality operators [[expr.eq]].
+Support calling `operator==` with reversed order of arguments. Valid
+C++17 code that uses equality operators with conversion functions may be
+ill-formed or have different semantics in this revision of C++. For
+example:
 
 ``` cpp
 struct A {
@@ -589,7 +590,7 @@ B b1;
 bool eq = (b1 == b1);           // ambiguous; previously well-formed
 ```
 
-###  [temp]: templates <a id="diff.cpp17.temp">[diff.cpp17.temp]</a>
+###  [[temp]]: templates <a id="diff.cpp17.temp">[[diff.cpp17.temp]]</a>
 
 An *unqualified-id* that is followed by a `<` and for which name lookup
 finds nothing or finds a function will be treated as a *template-name*
@@ -611,7 +612,7 @@ int main() {
 }
 ```
 
-###  [except]: exception handling <a id="diff.cpp17.except">[diff.cpp17.except]</a>
+###  [[except]]: exception handling <a id="diff.cpp17.except">[[diff.cpp17.except]]</a>
 
 Remove `throw()` exception specification. Removal of obsolete feature
 that has been replaced by `noexcept`. A valid C++17 function
@@ -626,7 +627,7 @@ non-throwing in this revision of C++ and is also non-throwing in C++03
 except by using the preprocessor to generate a different token sequence
 in each case. — *end note*\]
 
-###  [library]: library introduction <a id="diff.cpp17.library">[diff.cpp17.library]</a>
+###  [[library]]: library introduction <a id="diff.cpp17.library">[[diff.cpp17.library]]</a>
 
 New headers. New functionality. The following C++ headers are new:
 `<barrier>`, `<bit>`, `<charconv>`, `<compare>`, `<concepts>`,
@@ -647,7 +648,7 @@ to compile: , , , , and . To retain the same behavior:
 
 - a `#include` of , , or can simply be removed.
 
-###  [containers]: containers library <a id="diff.cpp17.containers">[diff.cpp17.containers]</a>
+###  [[containers]]: containers library <a id="diff.cpp17.containers">[[diff.cpp17.containers]]</a>
 
 Return types of `remove`, `remove_if`, and `unique` changed from `void`
 to `container::size_type`. Improve efficiency and convenience of finding
@@ -657,7 +658,7 @@ compiled against this version of C++ may be incompatible with
 translation units compiled against C++17, either failing to link or
 having undefined behavior.
 
-###  [iterators]: iterators library <a id="diff.cpp17.iterators">[diff.cpp17.iterators]</a>
+###  [[iterators]]: iterators library <a id="diff.cpp17.iterators">[[diff.cpp17.iterators]]</a>
 
 The specialization of `iterator_traits` for `void*` and for function
 pointer types no longer contains any nested typedefs. Corrects an issue
@@ -665,7 +666,7 @@ misidentifying pointer types that are not incrementable as iterator
 types. A valid C++17 program that relies on the presence of the typedefs
 may fail to compile, or have different behavior.
 
-###  [algorithms]: algorithms library <a id="diff.cpp17.alg.reqs">[diff.cpp17.alg.reqs]</a>
+###  [[algorithms]]: algorithms library <a id="diff.cpp17.alg.reqs">[[diff.cpp17.alg.reqs]]</a>
 
 The number and order of deducible template parameters for algorithm
 declarations is now unspecified, instead of being as-declared. Increase
@@ -675,7 +676,7 @@ that passes explicit template arguments to algorithms not explicitly
 specified to allow such in this version of C++ may fail to compile or
 have undefined behavior.
 
-###  [input.output]: input/output library <a id="diff.cpp17.input.output">[diff.cpp17.input.output]</a>
+###  [[input.output]]: input/output library <a id="diff.cpp17.input.output">[[diff.cpp17.input.output]]</a>
 
 Character array extraction only takes array types. Increase safety via
 preventing buffer overflow at compile time. Valid C++17 code may fail to
@@ -728,7 +729,7 @@ std::string s1 = p.u8string();          // ill-formed; previously well-formed
 std::string s2 = p.generic_u8string();  // ill-formed; previously well-formed
 ```
 
-###  [depr]: compatibility features <a id="diff.cpp17.depr">[diff.cpp17.depr]</a>
+###  [[depr]]: compatibility features <a id="diff.cpp17.depr">[[diff.cpp17.depr]]</a>
 
 Remove `uncaught_exception`. The function did not have a clear
 specification when multiple exceptions were active, and has been
@@ -784,15 +785,15 @@ directly support function types. It has been superseded by the
 variable template, or on the `result_of_t` alias template may fail to
 compile.
 
-## C++ and ISO C++14 <a id="diff.cpp14">[diff.cpp14]</a>
+## C++ and ISO C++14 <a id="diff.cpp14">[[diff.cpp14]]</a>
 
-### General <a id="diff.cpp14.general">[diff.cpp14.general]</a>
+### General <a id="diff.cpp14.general">[[diff.cpp14.general]]</a>
 
-Subclause [diff.cpp14] lists the differences between C++ and ISO C++14
+Subclause [[diff.cpp14]] lists the differences between C++ and ISO C++14
 (ISO/IEC 14882:2014, *Programming Languages --- \Cpp{*), in addition to
 those listed above, by the chapters of this document.
 
-###  [lex]: lexical conventions <a id="diff.cpp14.lex">[diff.cpp14.lex]</a>
+###  [[lex]]: lexical conventions <a id="diff.cpp14.lex">[[diff.cpp14.lex]]</a>
 
 Removal of trigraph support as a required feature. Prevents accidental
 uses of trigraphs in non-raw string literals and comments. Valid C++14
@@ -814,7 +815,7 @@ C++. For example:
 int b0p = F(0p+0);  // ill-formed; equivalent to ``int b0p = b0p + 0;\!'' in C++14
 ```
 
-###  [expr]: expressions <a id="diff.cpp14.expr">[diff.cpp14.expr]</a>
+###  [[expr]]: expressions <a id="diff.cpp14.expr">[[diff.cpp14.expr]]</a>
 
 Remove increment operator with `bool` operand. Obsolete feature with
 occasionally surprising semantics. A valid C++14 expression utilizing
@@ -828,7 +829,7 @@ no allocation functions of its own, `::operator new(std::size_t)` is
 used to allocate the memory. In this revision of C++,
 `::operator new(std::size_t, std::align_val_t)` is used instead.
 
-###  [dcl.dcl]: declarations <a id="diff.cpp14.dcl.dcl">[diff.cpp14.dcl.dcl]</a>
+###  [[dcl.dcl]]: declarations <a id="diff.cpp14.dcl.dcl">[[diff.cpp14.dcl.dcl]]</a>
 
 Removal of `register` *storage-class-specifier*. Enable repurposing of
 deprecated keyword in future revisions of C++. A valid C++14 declaration
@@ -876,7 +877,7 @@ derived d1{};       // error; the code was well-formed in C++14
 derived d2;         // still OK
 ```
 
-###  [class]: classes <a id="diff.cpp14.class">[diff.cpp14.class]</a>
+###  [[class]]: classes <a id="diff.cpp14.class">[[diff.cpp14.class]]</a>
 
 Inheriting a constructor no longer injects a constructor into the
 derived class. Better interaction with other language features. Valid
@@ -900,7 +901,7 @@ B b(42L);           // now calls B(int), used to call B<long>(long),
                     // in A<long>(long).
 ```
 
-###  [temp]: templates <a id="diff.cpp14.temp">[diff.cpp14.temp]</a>
+###  [[temp]]: templates <a id="diff.cpp14.temp">[[diff.cpp14.temp]]</a>
 
 Allowance to deduce from the type of a non-type template argument. In
 combination with the ability to declare non-type template arguments with
@@ -918,7 +919,7 @@ void bar(A<0> *p) {
 }
 ```
 
-###  [except]: exception handling <a id="diff.cpp14.except">[diff.cpp14.except]</a>
+###  [[except]]: exception handling <a id="diff.cpp14.except">[[diff.cpp14.except]]</a>
 
 Remove dynamic exception specifications. Dynamic exception
 specifications were a deprecated feature that was complex and brittle in
@@ -932,7 +933,7 @@ revision of C++. Violating a non-throwing dynamic exception
 specification calls `terminate` rather than `unexpected`, and it is
 unspecified whether stack unwinding is performed prior to such a call.
 
-###  [library]: library introduction <a id="diff.cpp14.library">[diff.cpp14.library]</a>
+###  [[library]]: library introduction <a id="diff.cpp14.library">[[diff.cpp14.library]]</a>
 
 New headers. New functionality. The following C++ headers are new:
 `<any>`, `<charconv>`, `<execution>`, `<filesystem>`,
@@ -943,11 +944,11 @@ headers with these names may be invalid in this revision of C++.
 New reserved namespaces. Reserve namespaces for future revisions of the
 standard library that might otherwise be incompatible with existing
 programs. The global namespaces `std` followed by an arbitrary sequence
-of *digit* [lex.name] are reserved for future standardization. Valid
+of *digit* [[lex.name]] are reserved for future standardization. Valid
 C++14 code that uses such a top-level namespace, e.g., `std2`, may be
 invalid in this revision of C++.
 
-###  [utilities]: general utilities library <a id="diff.cpp14.utilities">[diff.cpp14.utilities]</a>
+###  [[utilities]]: general utilities library <a id="diff.cpp14.utilities">[[diff.cpp14.utilities]]</a>
 
 Constructors taking allocators removed. No implementation consensus.
 Valid C++14 code may fail to compile or may change meaning in this
@@ -966,7 +967,7 @@ std::unique_ptr<int[]> arr(new int[1]);
 std::shared_ptr<int> ptr(std::move(arr));   // error: int(*)[] is not compatible with int*
 ```
 
-###  [strings]: strings library <a id="diff.cpp14.string">[diff.cpp14.string]</a>
+###  [[strings]]: strings library <a id="diff.cpp14.string">[[diff.cpp14.string]]</a>
 
 Non-const `.data()` member added. The lack of a non-const `.data()`
 differed from the similar member of `std::vector`. This change
@@ -982,7 +983,7 @@ string s;
 int x = f(s.data());            // ill-formed; previously well-formed
 ```
 
-###  [containers]: containers library <a id="diff.cpp14.containers">[diff.cpp14.containers]</a>
+###  [[containers]]: containers library <a id="diff.cpp14.containers">[[diff.cpp14.containers]]</a>
 
 Requirements change: Increase portability, clarification of associative
 container requirements. Valid C++14 code that attempts to use
@@ -1007,7 +1008,7 @@ int main() {
 }
 ```
 
-###  [depr]: compatibility features <a id="diff.cpp14.depr">[diff.cpp14.depr]</a>
+###  [[depr]]: compatibility features <a id="diff.cpp14.depr">[[diff.cpp14.depr]]</a>
 
 The class templates `auto_ptr`, `unary_function`, and `binary_function`,
 the function templates `random_shuffle`, and the function templates (and
@@ -1021,15 +1022,15 @@ compatibility with pre-standard code has served its time. A valid C++14
 program using these identifiers may be ill-formed in this revision of
 C++.
 
-## C++ and ISO C++11 <a id="diff.cpp11">[diff.cpp11]</a>
+## C++ and ISO C++11 <a id="diff.cpp11">[[diff.cpp11]]</a>
 
-### General <a id="diff.cpp11.general">[diff.cpp11.general]</a>
+### General <a id="diff.cpp11.general">[[diff.cpp11.general]]</a>
 
-Subclause [diff.cpp11] lists the differences between C++ and ISO C++11
+Subclause [[diff.cpp11]] lists the differences between C++ and ISO C++11
 (ISO/IEC 14882:2011, *Programming Languages --- \Cpp{*), in addition to
 those listed above, by the chapters of this document.
 
-###  [lex]: lexical conventions <a id="diff.cpp11.lex">[diff.cpp11.lex]</a>
+###  [[lex]]: lexical conventions <a id="diff.cpp11.lex">[[diff.cpp11.lex]]</a>
 
 *pp-number* can contain one or more single quotes. Necessary to enable
 single quotes as digit separators. Valid C++11 code may fail to compile
@@ -1046,7 +1047,7 @@ int x[2] = { M(1'2,3'4, 5) };
 // int x[2] = \{ 3'4, 5 \;} --- this revision of \Cpp{}
 ```
 
-###  [basic]: basics <a id="diff.cpp11.basic">[diff.cpp11.basic]</a>
+###  [[basic]]: basics <a id="diff.cpp11.basic">[[diff.cpp11.basic]]</a>
 
 New usual (non-placement) deallocator. Required for sized deallocation.
 Valid C++11 code can declare a global placement allocation function and
@@ -1059,19 +1060,20 @@ void operator delete(void*, std::size_t) noexcept;
 
 In this revision of C++, however, the declaration of `operator delete`
 might match a predefined usual (non-placement) `operator delete`
-[basic.stc.dynamic]. If so, the program is ill-formed, as it was for
-class member allocation functions and deallocation functions [expr.new].
+[[basic.stc.dynamic]]. If so, the program is ill-formed, as it was for
+class member allocation functions and deallocation functions
+[[expr.new]].
 
-###  [expr]: expressions <a id="diff.cpp11.expr">[diff.cpp11.expr]</a>
+###  [[expr]]: expressions <a id="diff.cpp11.expr">[[diff.cpp11.expr]]</a>
 
 A conditional expression with a throw expression as its second or third
 operand keeps the type and value category of the other operand. Formerly
-mandated conversions (lvalue-to-rvalue [conv.lval], array-to-pointer
-[conv.array], and function-to-pointer [conv.func] standard conversions),
-especially the creation of the temporary due to lvalue-to-rvalue
-conversion, were considered gratuitous and surprising. Valid C++11 code
-that relies on the conversions may behave differently in this revision
-of C++. For example:
+mandated conversions (lvalue-to-rvalue [[conv.lval]], array-to-pointer
+[[conv.array]], and function-to-pointer [[conv.func]] standard
+conversions), especially the creation of the temporary due to
+lvalue-to-rvalue conversion, were considered gratuitous and surprising.
+Valid C++11 code that relies on the conversions may behave differently
+in this revision of C++. For example:
 
 ``` cpp
 struct S {
@@ -1095,7 +1097,7 @@ sizeof(true ? "" : throw 0)
 In C++11, the expression yields `sizeof(const char*)`. In this revision
 of C++, it yields `sizeof(const char[1])`.
 
-###  [dcl.dcl]: declarations <a id="diff.cpp11.dcl.dcl">[diff.cpp11.dcl.dcl]</a>
+###  [[dcl.dcl]]: declarations <a id="diff.cpp11.dcl.dcl">[[diff.cpp11.dcl.dcl]]</a>
 
 `constexpr` non-static member functions are not implicitly `const`
 member functions. Necessary to allow `constexpr` member functions to
@@ -1130,27 +1132,27 @@ S b{a};             // uses copy constructor in C++11,
                     // performs aggregate initialization in this revision of \Cpp{}
 ```
 
-###  [library]: library introduction <a id="diff.cpp11.library">[diff.cpp11.library]</a>
+###  [[library]]: library introduction <a id="diff.cpp11.library">[[diff.cpp11.library]]</a>
 
 New header. New functionality. The C++ header `<shared_mutex>` is new.
 Valid C++11 code that `#include}{s` a header with that name may be
 invalid in this revision of C++.
 
-###  [input.output]: input/output library <a id="diff.cpp11.input.output">[diff.cpp11.input.output]</a>
+###  [[input.output]]: input/output library <a id="diff.cpp11.input.output">[[diff.cpp11.input.output]]</a>
 
 `gets` is not defined. Use of `gets` is considered dangerous. Valid
 C++11 code that uses the `gets` function may fail to compile in this
 revision of C++.
 
-## C++ and ISO C++03 <a id="diff.cpp03">[diff.cpp03]</a>
+## C++ and ISO C++03 <a id="diff.cpp03">[[diff.cpp03]]</a>
 
-### General <a id="diff.cpp03.general">[diff.cpp03.general]</a>
+### General <a id="diff.cpp03.general">[[diff.cpp03.general]]</a>
 
-Subclause [diff.cpp03] lists the differences between C++ and ISO C++03
+Subclause [[diff.cpp03]] lists the differences between C++ and ISO C++03
 (ISO/IEC 14882:2003, *Programming Languages --- \Cpp{*), in addition to
 those listed above, by the chapters of this document.
 
-###  [lex]: lexical conventions <a id="diff.cpp03.lex">[diff.cpp03.lex]</a>
+###  [[lex]]: lexical conventions <a id="diff.cpp03.lex">[[diff.cpp03.lex]]</a>
 
 New kinds of *string-literal*s. Required for new features. Valid C++03
 code may fail to compile or produce different results in this revision
@@ -1177,7 +1179,7 @@ tokens and the macro `_x` would have been expanded. In this revision of
 C++, \#1 consists of a single preprocessing token, so the macro is not
 expanded.
 
-New keywords. Required for new features. Added to [lex.key], the
+New keywords. Required for new features. Added to [[lex.key]], the
 following identifiers are new keywords: `alignas`, `alignof`,
 `char16_t`, `char32_t`, `constexpr`, `decltype`, `noexcept`, `nullptr`,
 `static_assert`, and `thread_local`. Valid C++03 code using these
@@ -1187,7 +1189,7 @@ Type of integer literals. C99 compatibility. Certain integer literals
 larger than can be represented by `long` could change from an unsigned
 integer type to `signed long long`.
 
-###  [expr]: expressions <a id="diff.cpp03.expr">[diff.cpp03.expr]</a>
+###  [[expr]]: expressions <a id="diff.cpp03.expr">[[diff.cpp03.expr]]</a>
 
 Only literals are integer null pointer constants. Removing surprising
 interactions with templates and constant expressions. Valid C++03 code
@@ -1217,7 +1219,7 @@ struct S { operator int(); };
 bool b2 = &S::operator int && false;    // previously false, now ill-formed
 ```
 
-###  [dcl.dcl]: declarations <a id="diff.cpp03.dcl.dcl">[diff.cpp03.dcl.dcl]</a>
+###  [[dcl.dcl]]: declarations <a id="diff.cpp03.dcl.dcl">[[diff.cpp03.dcl.dcl]]</a>
 
 Remove `auto` as a storage class specifier. New feature. Valid C++03
 code that uses the keyword `auto` as a storage class specifier may be
@@ -1235,7 +1237,7 @@ int x[] = { 2.0 };
 This code is valid in C++03 but invalid in this revision of C++ because
 `double` to `int` is a narrowing conversion.
 
-###  [class]: classes <a id="diff.cpp03.class">[diff.cpp03.class]</a>
+###  [[class]]: classes <a id="diff.cpp03.class">[[diff.cpp03.class]]</a>
 
 Implicitly-declared special member functions are defined as deleted when
 the implicit definition would have been ill-formed. Improves template
@@ -1250,11 +1252,12 @@ differently in this revision of C++. In particular, destructors that
 throw exceptions will call `std::terminate` (without calling
 `std::unexpected`) if their exception specification is non-throwing.
 
-###  [temp]: templates <a id="diff.cpp03.temp">[diff.cpp03.temp]</a>
+###  [[temp]]: templates <a id="diff.cpp03.temp">[[diff.cpp03.temp]]</a>
 
-Repurpose `export` for modules [module], [cpp.module], [cpp.import]. No
-implementation consensus for the C++03 meaning of `export`. A valid
-C++03 program containing `export` is ill-formed in this revision of C++.
+Repurpose `export` for modules
+[[module]], [[cpp.module]], [[cpp.import]]. No implementation consensus
+for the C++03 meaning of `export`. A valid C++03 program containing
+`export` is ill-formed in this revision of C++.
 
 Remove whitespace requirement for nested closing template right angle
 brackets. Considered a persistent but minor annoyance. Template aliases
@@ -1277,14 +1280,14 @@ Allow dependent calls of functions with internal linkage. Overly
 constrained, simplify overload resolution rules. A valid C++03 program
 can get a different result in this revision of C++.
 
-###  [library]: library introduction <a id="diff.cpp03.library">[diff.cpp03.library]</a>
+###  [[library]]: library introduction <a id="diff.cpp03.library">[[diff.cpp03.library]]</a>
 
-**Affected:** [library] – [\lastlibchapter] New reserved identifiers.
-Required by new features. Valid C++03 code that uses any identifiers
-added to the C++ standard library by later revisions of C++ may fail to
-compile or produce different results in this revision of C++. A
-comprehensive list of identifiers used by the C++ standard library can
-be found in the Index of Library Names in this document.
+**Affected:** [[library]] – [[\lastlibchapter]] New reserved
+identifiers. Required by new features. Valid C++03 code that uses any
+identifiers added to the C++ standard library by later revisions of C++
+may fail to compile or produce different results in this revision of
+C++. A comprehensive list of identifiers used by the C++ standard
+library can be found in the Index of Library Names in this document.
 
 New headers. New functionality. The following C++ headers are new:
 `<array>`, `<atomic>`, `<chrono>`, , `<condition_variable>`,
@@ -1311,7 +1314,7 @@ as macro names. Valid C++03 code that defines `override`, `final`,
 `carries_dependency`, or `noreturn` as macros is invalid in this
 revision of C++.
 
-###  [support]: language support library <a id="diff.cpp03.language.support">[diff.cpp03.language.support]</a>
+###  [[support]]: language support library <a id="diff.cpp03.language.support">[[diff.cpp03.language.support]]</a>
 
 `operator new` may throw exceptions other than `std::bad_alloc`.
 Consistent application of `noexcept`. Valid C++03 code that assumes that
@@ -1321,13 +1324,13 @@ global replaceable `operator new` is ill-formed in this revision of C++,
 because the exception specification of `throw(std::bad_alloc)` was
 removed.
 
-###  [diagnostics]: diagnostics library <a id="diff.cpp03.diagnostics">[diff.cpp03.diagnostics]</a>
+###  [[diagnostics]]: diagnostics library <a id="diff.cpp03.diagnostics">[[diff.cpp03.diagnostics]]</a>
 
 Thread-local error numbers. Support for new thread facilities. Valid but
 implementation-specific C++03 code that relies on `errno` being the same
 across threads may change behavior in this revision of C++.
 
-###  [utilities]: general utilities library <a id="diff.cpp03.utilities">[diff.cpp03.utilities]</a>
+###  [[utilities]]: general utilities library <a id="diff.cpp03.utilities">[[diff.cpp03.utilities]]</a>
 
 Standard function object types no longer derived from
 `std::unary_function` or `std::binary_function`. Superseded by new
@@ -1336,7 +1339,7 @@ Valid C++03 code that depends on function object types being derived
 from `unary_function` or `binary_function` may fail to compile in this
 revision of C++.
 
-###  [strings]: strings library <a id="diff.cpp03.strings">[diff.cpp03.strings]</a>
+###  [[strings]]: strings library <a id="diff.cpp03.strings">[[diff.cpp03.strings]]</a>
 
 `basic_string` requirements no longer allow reference-counted strings.
 Invalidation is subtly different with reference-counted strings. This
@@ -1348,7 +1351,7 @@ optimization. Valid C++03 code may execute differently in this revision
 of C++. Some `const` member functions, such as `data` and `c_str`, no
 longer invalidate iterators.
 
-###  [containers]: containers library <a id="diff.cpp03.containers">[diff.cpp03.containers]</a>
+###  [[containers]]: containers library <a id="diff.cpp03.containers">[[diff.cpp03.containers]]</a>
 
 Complexity of `size()` member functions now constant. Lack of
 specification of complexity of `size()` resulted in divergent
@@ -1415,7 +1418,7 @@ semantics. For `vector`, `deque`, and `list` the fill value passed to
 additional overload of `resize` has been added. Valid C++03 code that
 uses this function may fail to compile with this revision of C++.
 
-###  [algorithms]: algorithms library <a id="diff.cpp03.algorithms">[diff.cpp03.algorithms]</a>
+###  [[algorithms]]: algorithms library <a id="diff.cpp03.algorithms">[[diff.cpp03.algorithms]]</a>
 
 Result state of inputs after application of some algorithms. Required by
 new feature. A valid C++03 program may detect that an object with a
@@ -1424,20 +1427,20 @@ with this revision of C++. For example, `std::remove` and
 `std::remove_if` may leave the tail of the input sequence with a
 different set of values than previously.
 
-###  [numerics]: numerics library <a id="diff.cpp03.numerics">[diff.cpp03.numerics]</a>
+###  [[numerics]]: numerics library <a id="diff.cpp03.numerics">[[diff.cpp03.numerics]]</a>
 
 Specified representation of complex numbers. Compatibility with C99.
 Valid C++03 code that uses implementation-specific knowledge about the
 binary representation of the required template specializations of
 `std::complex` may not be compatible with this revision of C++.
 
-###  [localization]: localization library <a id="diff.cpp03.locale">[diff.cpp03.locale]</a>
+###  [[localization]]: localization library <a id="diff.cpp03.locale">[[diff.cpp03.locale]]</a>
 
 The `num_get` facet recognizes hexadecimal floating point values.
 Required by new feature. Valid C++03 code may have different behavior in
 this revision of C++.
 
-###  [input.output]: input/output library <a id="diff.cpp03.input.output">[diff.cpp03.input.output]</a>
+###  [[input.output]]: input/output library <a id="diff.cpp03.input.output">[[diff.cpp03.input.output]]</a>
 
 Specify use of `explicit` in existing boolean conversion functions.
 Clarify intentions, avoid workarounds. Valid C++03 code that relies on
@@ -1476,22 +1479,22 @@ int main() {
 }
 ```
 
-## C++ and ISO C <a id="diff.iso">[diff.iso]</a>
+## C++ and ISO C <a id="diff.iso">[[diff.iso]]</a>
 
-### General <a id="diff.iso.general">[diff.iso.general]</a>
+### General <a id="diff.iso.general">[[diff.iso.general]]</a>
 
-Subclause [diff.iso] lists the differences between C++ and ISO C, in
+Subclause [[diff.iso]] lists the differences between C++ and ISO C, in
 addition to those listed above, by the chapters of this document.
 
-###  [lex]: lexical conventions <a id="diff.lex">[diff.lex]</a>
+###  [[lex]]: lexical conventions <a id="diff.lex">[[diff.lex]]</a>
 
 New Keywords  
-New keywords are added to C++; see [lex.key]. These keywords were added
-in order to implement the new semantics of C++. Change to semantics of
-well-defined feature. Any ISO C programs that used any of these keywords
-as identifiers are not valid C++ programs. Syntactic transformation.
-Converting one specific program is easy. Converting a large collection
-of related programs takes more work. Common.
+New keywords are added to C++; see [[lex.key]]. These keywords were
+added in order to implement the new semantics of C++. Change to
+semantics of well-defined feature. Any ISO C programs that used any of
+these keywords as identifiers are not valid C++ programs. Syntactic
+transformation. Converting one specific program is easy. Converting a
+large collection of related programs takes more work. Common.
 
 Type of *character-literal* is changed from `int` to `char`. This is
 needed for improved overloaded function argument type matching. For
@@ -1545,7 +1548,7 @@ void f(char*) {
 Programs that have a legitimate reason to treat string literal objects
 as potentially modifiable memory are probably rare.
 
-###  [basic]: basics <a id="diff.basic">[diff.basic]</a>
+###  [[basic]]: basics <a id="diff.basic">[[diff.basic]]</a>
 
 C++ does not have “tentative definitions” as in C.  
 E.g., at file scope,
@@ -1589,7 +1592,7 @@ extremely frequently, but the change is only noticeable when `struct`,
 enumeration, or enumerator names are referred to outside the `struct`.
 The latter is probably rare.
 
-\[also [dcl.type]\] A name of file scope that is explicitly declared
+\[also [[dcl.type]]\] A name of file scope that is explicitly declared
 `const`, and not explicitly declared `extern`, has internal linkage,
 while in C it would have external linkage. Because const objects may be
 used as values during translation in C++, this feature urges programmers
@@ -1612,7 +1615,7 @@ mechanism will find many, but not all, of such problems. Those problems
 not found by typesafe linkage will continue to function properly,
 according to the “layout compatibility rules” of this document. Common.
 
-###  [expr]: expressions <a id="diff.expr">[diff.expr]</a>
+###  [[expr]]: expressions <a id="diff.expr">[[diff.expr]]</a>
 
 Converting `void*` to a pointer-to-object type requires casting.
 
@@ -1670,7 +1673,7 @@ sizeof(0, arr)
 yields `100` in C++ and `sizeof(char*)` in C. Programs must add explicit
 casts to the appropriate rvalue. Rare.
 
-###  [stmt.stmt]: statements <a id="diff.stat">[diff.stat]</a>
+###  [[stmt.stmt]]: statements <a id="diff.stat">[[diff.stat]]</a>
 
 It is now invalid to jump past a declaration with explicit or implicit
 initializer (except across entire block not entered). Constructors used
@@ -1696,7 +1699,7 @@ Add an appropriate return value to the source code, such as zero.
 Seldom. For several years, many existing C implementations have produced
 warnings in this case.
 
-###  [dcl.dcl]: declarations <a id="diff.dcl">[diff.dcl]</a>
+###  [[dcl.dcl]]: declarations <a id="diff.dcl">[[diff.dcl]]</a>
 
 In C++, the `static` or `extern` specifiers can only be applied to names
 of objects or functions.  
@@ -1749,7 +1752,7 @@ name i;                         // i has type class name
 Deletion of semantically well-defined feature. Semantic transformation.
 One of the 2 types has to be renamed. Seldom.
 
-\[see also [basic.link]\] Const objects must be initialized in C++ but
+\[see also [[basic.link]]\] Const objects must be initialized in C++ but
 can be left uninitialized in C. A const object cannot be assigned to so
 it must be initialized to hold a useful value. Deletion of semantically
 well-defined feature. Semantic transformation. Seldom.
@@ -1789,7 +1792,7 @@ may need to be updated further if different calls to the same
 (non-prototype) function have different numbers of arguments or if the
 type of corresponding arguments differed. Common.
 
-\[see [expr.sizeof]\] In C++, types may not be defined in return or
+\[see [[expr.sizeof]]\] In C++, types may not be defined in return or
 parameter types. In C, these type definitions are allowed.
 
 Example:
@@ -1907,9 +1910,9 @@ C++ requires unambiguous placement of the *alignment-specifier*.
 Deletion of semantically well-defined feature. Syntactic transformation.
 Seldom.
 
-###  [class]: classes <a id="diff.class">[diff.class]</a>
+###  [[class]]: classes <a id="diff.class">[[diff.class]]</a>
 
-\[see also [dcl.typedef]\] In C++, a class declaration introduces the
+\[see also [[dcl.typedef]]\] In C++, a class declaration introduces the
 class name into the scope where it is declared and hides any object,
 function or other declaration of that name in an enclosing scope. In C,
 an inner scope declaration of a struct tag name never hides the name of
@@ -2008,7 +2011,7 @@ All the definitions of C struct types enclosed in other struct
 definitions and accessed outside the scope of the enclosing struct can
 be exported to the scope of the enclosing struct. Note: this is a
 consequence of the difference in scope rules, which is documented in
-[basic.scope]. Seldom.
+[[basic.scope]]. Seldom.
 
 In C++, a *typedef-name* may not be redeclared in a class definition
 after being used in that definition.
@@ -2029,7 +2032,7 @@ the meaning of `I` really is. Deletion of semantically well-defined
 feature. Semantic transformation. Either the type or the struct member
 has to be renamed. Seldom.
 
-###  [cpp]: preprocessing directives <a id="diff.cpp">[diff.cpp]</a>
+###  [[cpp]]: preprocessing directives <a id="diff.cpp">[[diff.cpp]]</a>
 
 Whether `__STDC__` is defined and if so, what its value is, are
 *implementation-defined*. C++ is not identical to ISO C. Mandating that
@@ -2038,19 +2041,19 @@ claim. Change to semantics of well-defined feature. Semantic
 transformation. Programs and headers that reference `__STDC__` are quite
 common.
 
-## C standard library <a id="diff.library">[diff.library]</a>
+## C standard library <a id="diff.library">[[diff.library]]</a>
 
-### General <a id="diff.library.general">[diff.library.general]</a>
+### General <a id="diff.library.general">[[diff.library.general]]</a>
 
-Subclause [diff.library] summarizes the explicit changes in headers,
+Subclause [[diff.library]] summarizes the explicit changes in headers,
 definitions, declarations, or behavior between the C standard library in
 the C standard and the parts of the C++ standard library that were
 included from the C standard library.
 
-### Modifications to headers <a id="diff.mods.to.headers">[diff.mods.to.headers]</a>
+### Modifications to headers <a id="diff.mods.to.headers">[[diff.mods.to.headers]]</a>
 
 For compatibility with the C standard library, the C++ standard library
-provides the C headers enumerated in  [support.c.headers].
+provides the C headers enumerated in  [[support.c.headers]].
 
 There are no C++ headers for the C standard library’s headers and , nor
 are these headers from the C standard library headers themselves part of
@@ -2060,50 +2063,50 @@ The C headers `<complex.h>` and `<tgmath.h>` do not contain any of the
 content from the C standard library and instead merely include other
 headers from the C++ standard library.
 
-### Modifications to definitions <a id="diff.mods.to.definitions">[diff.mods.to.definitions]</a>
+### Modifications to definitions <a id="diff.mods.to.definitions">[[diff.mods.to.definitions]]</a>
 
-#### Types `char16_t` and `char32_t` <a id="diff.char16">[diff.char16]</a>
+#### Types `char16_t` and `char32_t` <a id="diff.char16">[[diff.char16]]</a>
 
 The types `char16_t` and `char32_t` are distinct types rather than
 typedefs to existing integral types. The tokens `char16_t` and
-`char32_t` are keywords in C++ [lex.key]. They do not appear as macro or
-type names defined in `<cuchar>`.
+`char32_t` are keywords in C++ [[lex.key]]. They do not appear as macro
+or type names defined in `<cuchar>`.
 
-#### Type `wchar_t` <a id="diff.wchar.t">[diff.wchar.t]</a>
+#### Type `wchar_t` <a id="diff.wchar.t">[[diff.wchar.t]]</a>
 
 The type `wchar_t` is a distinct type rather than a typedef to an
 existing integral type. The token `wchar_t` is a keyword in C++
-[lex.key]. It does not appear as a macro or type name defined in any of
-`<cstddef>`, `<cstdlib>`, or `<cwchar>`.
+[[lex.key]]. It does not appear as a macro or type name defined in any
+of `<cstddef>`, `<cstdlib>`, or `<cwchar>`.
 
-#### Header `<assert.h>` <a id="diff.header.assert.h">[diff.header.assert.h]</a>
+#### Header `<assert.h>` <a id="diff.header.assert.h">[[diff.header.assert.h]]</a>
 
 The token `static_assert` is a keyword in C++. It does not appear as a
 macro name defined in `<cassert>`.
 
-#### Header `<iso646.h>` <a id="diff.header.iso646.h">[diff.header.iso646.h]</a>
+#### Header `<iso646.h>` <a id="diff.header.iso646.h">[[diff.header.iso646.h]]</a>
 
 The tokens `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not`, `not_eq`,
-`or`, `or_eq`, `xor`, and `xor_eq` are keywords in C++ [lex.key], and
+`or`, `or_eq`, `xor`, and `xor_eq` are keywords in C++ [[lex.key]], and
 are not introduced as macros by `<iso646.h>`.
 
-#### Header `<stdalign.h>` <a id="diff.header.stdalign.h">[diff.header.stdalign.h]</a>
+#### Header `<stdalign.h>` <a id="diff.header.stdalign.h">[[diff.header.stdalign.h]]</a>
 
-The token `alignas` is a keyword in C++ [lex.key], and is not introduced
-as a macro by `<stdalign.h>`.
+The token `alignas` is a keyword in C++ [[lex.key]], and is not
+introduced as a macro by `<stdalign.h>`.
 
-#### Header `<stdbool.h>` <a id="diff.header.stdbool.h">[diff.header.stdbool.h]</a>
+#### Header `<stdbool.h>` <a id="diff.header.stdbool.h">[[diff.header.stdbool.h]]</a>
 
-The tokens `bool`, `true`, and `false` are keywords in C++ [lex.key],
+The tokens `bool`, `true`, and `false` are keywords in C++ [[lex.key]],
 and are not introduced as macros by `<stdbool.h>`.
 
-#### Macro `NULL` <a id="diff.null">[diff.null]</a>
+#### Macro `NULL` <a id="diff.null">[[diff.null]]</a>
 
 The macro `NULL`, defined in any of `<clocale>`, `<cstddef>`,
 `<cstdio>`, `<cstdlib>`, `<cstring>`, `<ctime>`, or `<cwchar>`, is an
-*implementation-defined* null pointer constant in C++ [support.types].
+*implementation-defined* null pointer constant in C++ [[support.types]].
 
-### Modifications to declarations <a id="diff.mods.to.declarations">[diff.mods.to.declarations]</a>
+### Modifications to declarations <a id="diff.mods.to.declarations">[[diff.mods.to.declarations]]</a>
 
 Header `<cstring>`: The following functions have different declarations:
 
@@ -2113,7 +2116,7 @@ Header `<cstring>`: The following functions have different declarations:
 - `strstr`
 - `memchr`
 
-Subclause [cstring.syn] describes the changes.
+Subclause [[cstring.syn]] describes the changes.
 
 Header `<cwchar>`: The following functions have different declarations:
 
@@ -2123,16 +2126,16 @@ Header `<cwchar>`: The following functions have different declarations:
 - `wcsstr`
 - `wmemchr`
 
-Subclause [cwchar.syn] describes the changes.
+Subclause [[cwchar.syn]] describes the changes.
 
 Header `<cstddef>` declares the names `nullptr_t`, `byte`, and
 `to_integer`, and the operators and operator templates in
-[support.types.byteops], in addition to the names declared in
+[[support.types.byteops]], in addition to the names declared in
 `<stddef.h>` in the C standard library.
 
-### Modifications to behavior <a id="diff.mods.to.behavior">[diff.mods.to.behavior]</a>
+### Modifications to behavior <a id="diff.mods.to.behavior">[[diff.mods.to.behavior]]</a>
 
-#### General <a id="diff.mods.to.behavior.general">[diff.mods.to.behavior.general]</a>
+#### General <a id="diff.mods.to.behavior.general">[[diff.mods.to.behavior.general]]</a>
 
 Header `<cstdlib>`: The following functions have different behavior:
 
@@ -2140,89 +2143,89 @@ Header `<cstdlib>`: The following functions have different behavior:
 - `exit`
 - `abort`
 
-Subclause [support.start.term] describes the changes.
+Subclause [[support.start.term]] describes the changes.
 
 Header `<csetjmp>`: The following functions have different behavior:
 
 - `longjmp`
 
-Subclause [csetjmp.syn] describes the changes.
+Subclause [[csetjmp.syn]] describes the changes.
 
-#### Macro `offsetof(type, member-designator)` <a id="diff.offsetof">[diff.offsetof]</a>
+#### Macro `offsetof(type, member-designator)` <a id="diff.offsetof">[[diff.offsetof]]</a>
 
 The macro `offsetof`, defined in `<cstddef>`, accepts a restricted set
-of `type` arguments in C++. Subclause [support.types.layout] describes
+of `type` arguments in C++. Subclause [[support.types.layout]] describes
 the change.
 
-#### Memory allocation functions <a id="diff.malloc">[diff.malloc]</a>
+#### Memory allocation functions <a id="diff.malloc">[[diff.malloc]]</a>
 
 The functions `aligned_alloc`, `calloc`, `malloc`, and `realloc` are
-restricted in C++. Subclause [c.malloc] describes the changes.
+restricted in C++. Subclause [[c.malloc]] describes the changes.
 
 <!-- Link reference definitions -->
-[\lastlibchapter]: #\lastlibchapter
-[algorithms]: algorithms.md#algorithms
-[basic]: basic.md#basic
-[basic.link]: basic.md#basic.link
-[basic.scope]: basic.md#basic.scope
-[basic.stc.dynamic]: basic.md#basic.stc.dynamic
-[c.malloc]: mem.md#c.malloc
-[class]: class.md#class
-[class.temporary]: basic.md#class.temporary
-[concepts]: concepts.md#concepts
-[containers]: containers.md#containers
-[conv.array]: expr.md#conv.array
-[conv.func]: expr.md#conv.func
-[conv.lval]: expr.md#conv.lval
-[cpp]: cpp.md#cpp
-[cpp.import]: cpp.md#cpp.import
-[cpp.module]: cpp.md#cpp.module
-[csetjmp.syn]: support.md#csetjmp.syn
-[cstring.syn]: strings.md#cstring.syn
-[cwchar.syn]: strings.md#cwchar.syn
-[dcl.constexpr]: dcl.md#dcl.constexpr
-[dcl.constinit]: dcl.md#dcl.constinit
-[dcl.dcl]: dcl.md#dcl.dcl
-[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
-[dcl.type]: dcl.md#dcl.type
-[dcl.typedef]: dcl.md#dcl.typedef
-[depr]: #depr
-[diagnostics]: diagnostics.md#diagnostics
-[diff.cpp03]: #diff.cpp03
-[diff.cpp11]: #diff.cpp11
-[diff.cpp14]: #diff.cpp14
-[diff.cpp17]: #diff.cpp17
-[diff.cpp20]: #diff.cpp20
-[diff.iso]: #diff.iso
-[diff.library]: #diff.library
-[except]: except.md#except
-[expr]: expr.md#expr
-[expr.eq]: expr.md#expr.eq
-[expr.new]: expr.md#expr.new
-[expr.prim.req]: expr.md#expr.prim.req
-[expr.sizeof]: expr.md#expr.sizeof
-[input.output]: input.md#input.output
-[iterators]: iterators.md#iterators
-[lex]: lex.md#lex
-[lex.key]: lex.md#lex.key
-[lex.name]: lex.md#lex.name
-[lex.string]: lex.md#lex.string
-[library]: library.md#library
-[localization]: localization.md#localization
-[mem]: mem.md#mem
-[module]: module.md#module
-[numerics]: numerics.md#numerics
-[over]: over.md#over
-[stmt.stmt]: stmt.md#stmt.stmt
-[strings]: strings.md#strings
-[support]: support.md#support
-[support.c.headers]: support.md#support.c.headers
-[support.start.term]: support.md#support.start.term
-[support.types]: support.md#support.types
-[support.types.byteops]: support.md#support.types.byteops
-[support.types.layout]: support.md#support.types.layout
-[temp]: temp.md#temp
-[temp.concept]: temp.md#temp.concept
-[temp.pre]: temp.md#temp.pre
-[thread]: thread.md#thread
-[utilities]: utilities.md#utilities
+[[\lastlibchapter]]: #\lastlibchapter
+[[algorithms]]: algorithms.md#algorithms
+[[basic]]: basic.md#basic
+[[basic.link]]: basic.md#basic.link
+[[basic.scope]]: basic.md#basic.scope
+[[basic.stc.dynamic]]: basic.md#basic.stc.dynamic
+[[c.malloc]]: mem.md#c.malloc
+[[class]]: class.md#class
+[[class.temporary]]: basic.md#class.temporary
+[[concepts]]: concepts.md#concepts
+[[containers]]: containers.md#containers
+[[conv.array]]: expr.md#conv.array
+[[conv.func]]: expr.md#conv.func
+[[conv.lval]]: expr.md#conv.lval
+[[cpp]]: cpp.md#cpp
+[[cpp.import]]: cpp.md#cpp.import
+[[cpp.module]]: cpp.md#cpp.module
+[[csetjmp.syn]]: support.md#csetjmp.syn
+[[cstring.syn]]: strings.md#cstring.syn
+[[cwchar.syn]]: strings.md#cwchar.syn
+[[dcl.constexpr]]: dcl.md#dcl.constexpr
+[[dcl.constinit]]: dcl.md#dcl.constinit
+[[dcl.dcl]]: dcl.md#dcl.dcl
+[[dcl.fct.def.coroutine]]: dcl.md#dcl.fct.def.coroutine
+[[dcl.type]]: dcl.md#dcl.type
+[[dcl.typedef]]: dcl.md#dcl.typedef
+[[depr]]: #depr
+[[diagnostics]]: diagnostics.md#diagnostics
+[[diff.cpp03]]: #diff.cpp03
+[[diff.cpp11]]: #diff.cpp11
+[[diff.cpp14]]: #diff.cpp14
+[[diff.cpp17]]: #diff.cpp17
+[[diff.cpp20]]: #diff.cpp20
+[[diff.iso]]: #diff.iso
+[[diff.library]]: #diff.library
+[[except]]: except.md#except
+[[expr]]: expr.md#expr
+[[expr.eq]]: expr.md#expr.eq
+[[expr.new]]: expr.md#expr.new
+[[expr.prim.req]]: expr.md#expr.prim.req
+[[expr.sizeof]]: expr.md#expr.sizeof
+[[input.output]]: input.md#input.output
+[[iterators]]: iterators.md#iterators
+[[lex]]: lex.md#lex
+[[lex.key]]: lex.md#lex.key
+[[lex.name]]: lex.md#lex.name
+[[lex.string]]: lex.md#lex.string
+[[library]]: library.md#library
+[[localization]]: localization.md#localization
+[[mem]]: mem.md#mem
+[[module]]: module.md#module
+[[numerics]]: numerics.md#numerics
+[[over]]: over.md#over
+[[stmt.stmt]]: stmt.md#stmt.stmt
+[[strings]]: strings.md#strings
+[[support]]: support.md#support
+[[support.c.headers]]: support.md#support.c.headers
+[[support.start.term]]: support.md#support.start.term
+[[support.types]]: support.md#support.types
+[[support.types.byteops]]: support.md#support.types.byteops
+[[support.types.layout]]: support.md#support.types.layout
+[[temp]]: temp.md#temp
+[[temp.concept]]: temp.md#temp.concept
+[[temp.pre]]: temp.md#temp.pre
+[[thread]]: thread.md#thread
+[[utilities]]: utilities.md#utilities

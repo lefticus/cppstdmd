@@ -3,9 +3,9 @@ current_file: support
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Language support library <a id="support">[support]</a>
+# Language support library <a id="support">[[support]]</a>
 
-## General <a id="support.general">[support.general]</a>
+## General <a id="support.general">[[support.general]]</a>
 
 This Clause describes the function signatures that are called
 implicitly, and the types of objects generated implicitly, during the
@@ -17,28 +17,28 @@ throughout the library, characteristics of the predefined types,
 functions supporting start and termination of a C++ program, support for
 dynamic memory management, support for dynamic type identification,
 support for exception processing, support for initializer lists, and
-other runtime support, as summarized in [support.summary].
+other runtime support, as summarized in [[support.summary]].
 
 **Table: Language support library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [support.types] | Common definitions | `<cstddef>`, `<cstdlib>` |
-| [support.limits] | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
-| [support.arith.types] | Arithmetic types | `<cstdint>`, `<stdfloat>` |
-| [support.start.term] | Start and termination | `<cstdlib>` |
-| [support.dynamic] | Dynamic memory management | `<new>` |
-| [support.rtti] | Type identification | `<typeinfo>` |
-| [support.srcloc] | Source location | `<source_location>` |
-| [support.exception] | Exception handling | `<exception>` |
-| [support.initlist] | Initializer lists | `<initializer_list>` |
-| [cmp] | Comparisons | `<compare>` |
-| [support.coroutine] | Coroutines | `<coroutine>` |
-| [support.runtime] | Other runtime support | `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
+| [[support.types]] | Common definitions | `<cstddef>`, `<cstdlib>` |
+| [[support.limits]] | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
+| [[support.arith.types]] | Arithmetic types | `<cstdint>`, `<stdfloat>` |
+| [[support.start.term]] | Start and termination | `<cstdlib>` |
+| [[support.dynamic]] | Dynamic memory management | `<new>` |
+| [[support.rtti]] | Type identification | `<typeinfo>` |
+| [[support.srcloc]] | Source location | `<source_location>` |
+| [[support.exception]] | Exception handling | `<exception>` |
+| [[support.initlist]] | Initializer lists | `<initializer_list>` |
+| [[cmp]] | Comparisons | `<compare>` |
+| [[support.coroutine]] | Coroutines | `<coroutine>` |
+| [[support.runtime]] | Other runtime support | `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
 
-## Common definitions <a id="support.types">[support.types]</a>
+## Common definitions <a id="support.types">[[support.types]]</a>
 
-### Header `<cstddef>` synopsis <a id="cstddef.syn">[cstddef.syn]</a>
+### Header `<cstddef>` synopsis <a id="cstddef.syn">[[cstddef.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -77,10 +77,10 @@ namespace std {
 The contents and meaning of the header `<cstddef>` are the same as the C
 standard library header `<stddef.h>`, except that it does not declare
 the type `wchar_t`, that it also declares the type `byte` and its
-associated operations [support.types.byteops], and as noted in
-[support.types.nullptr] and [support.types.layout].
+associated operations [[support.types.byteops]], and as noted in
+[[support.types.nullptr]] and [[support.types.layout]].
 
-### Header `<cstdlib>` synopsis <a id="cstdlib.syn">[cstdlib.syn]</a>
+### Header `<cstdlib>` synopsis <a id="cstdlib.syn">[[cstdlib.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -173,19 +173,19 @@ namespace std {
 
 The contents and meaning of the header `<cstdlib>` are the same as the C
 standard library header `<stdlib.h>`, except that it does not declare
-the type `wchar_t`, and except as noted in [support.types.nullptr],
-[support.types.layout], [support.start.term], [c.malloc], [c.mb.wcs],
-[alg.c.library], [c.math.rand], and [c.math.abs].
+the type `wchar_t`, and except as noted in [[support.types.nullptr]],
+[[support.types.layout]], [[support.start.term]], [[c.malloc]],
+[[c.mb.wcs]], [[alg.c.library]], [[c.math.rand]], and [[c.math.abs]].
 
 \[*Note 1*: Several functions have additional overloads in this
 document, but they have the same behavior as in the C standard library
-[library.c]. — *end note*\]
+[[library.c]]. — *end note*\]
 
-### Null pointers <a id="support.types.nullptr">[support.types.nullptr]</a>
+### Null pointers <a id="support.types.nullptr">[[support.types.nullptr]]</a>
 
 The type `nullptr_t` is a synonym for the type of a `nullptr`
 expression, and it has the characteristics described in 
-[basic.fundamental] and  [conv.ptr].
+[[basic.fundamental]] and  [[conv.ptr]].
 
 \[*Note 2*: Although `nullptr`’s address cannot be taken, the address of
 another `nullptr_t` object that is an lvalue can be
@@ -193,17 +193,17 @@ taken. — *end note*\]
 
 The macro `NULL` is an *implementation-defined* null pointer constant.
 
-### Sizes, alignments, and offsets <a id="support.types.layout">[support.types.layout]</a>
+### Sizes, alignments, and offsets <a id="support.types.layout">[[support.types.layout]]</a>
 
 The macro `offsetof(type, member-designator)` has the same semantics as
 the corresponding macro in the C standard library header `<stddef.h>`,
 but accepts a restricted set of `type` arguments in this document. Use
 of the `offsetof` macro with a `type` other than a standard-layout class
-[class.prop] is conditionally-supported.
+[[class.prop]] is conditionally-supported.
 
 The expression `offsetof(type, member-designator)` is never
-type-dependent [temp.dep.expr] and it is value-dependent
-[temp.dep.constexpr] if and only if `type` is dependent. The result of
+type-dependent [[temp.dep.expr]] and it is value-dependent
+[[temp.dep.constexpr]] if and only if `type` is dependent. The result of
 applying the `offsetof` macro to a static data member or a function
 member is undefined. No operation invoked by the `offsetof` macro shall
 throw an exception and `noexcept(offsetof(type, member-designator))`
@@ -211,22 +211,22 @@ shall be `true`.
 
 The type `ptrdiff_t` is an *implementation-defined* signed integer type
 that can hold the difference of two subscripts in an array object, as
-described in  [expr.add].
+described in  [[expr.add]].
 
 The type `size_t` is an *implementation-defined* unsigned integer type
 that is large enough to contain the size in bytes of any object
-[expr.sizeof].
+[[expr.sizeof]].
 
 An implementation should choose types for `ptrdiff_t` and `size_t` whose
-integer conversion ranks [conv.rank] are no greater than that of
+integer conversion ranks [[conv.rank]] are no greater than that of
 `signed long int` unless a larger size is necessary to contain all the
 possible values.
 
 The type `max_align_t` is a trivial standard-layout type whose alignment
 requirement is at least as great as that of every scalar type, and whose
-alignment requirement is supported in every context [basic.align].
+alignment requirement is supported in every context [[basic.align]].
 
-### `byte` type operations <a id="support.types.byteops">[support.types.byteops]</a>
+### `byte` type operations <a id="support.types.byteops">[[support.types.byteops]]</a>
 
 ``` cpp
 template<class IntType>
@@ -363,15 +363,15 @@ template<class IntType>
 >
 > Equivalent to: `return static_cast<IntType>(b);`
 
-## Implementation properties <a id="support.limits">[support.limits]</a>
+## Implementation properties <a id="support.limits">[[support.limits]]</a>
 
-### General <a id="support.limits.general">[support.limits.general]</a>
+### General <a id="support.limits.general">[[support.limits.general]]</a>
 
 The headers `<limits>`, `<climits>`, and `<cfloat>` supply
 characteristics of implementation-dependent arithmetic types
-[basic.fundamental].
+[[basic.fundamental]].
 
-### Header `<version>` synopsis <a id="version.syn">[version.syn]</a>
+### Header `<version>` synopsis <a id="version.syn">[[version.syn]]</a>
 
 The header `<version>` supplies implementation-dependent information
 about the C++ standard library (e.g., version number and release date).
@@ -587,7 +587,7 @@ macros with greater values. — *end note*\]
 #define __cpp_lib_void_t                            201411L // also in <type_traits>
 ```
 
-### Header `<limits>` synopsis <a id="limits.syn">[limits.syn]</a>
+### Header `<limits>` synopsis <a id="limits.syn">[[limits.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -627,7 +627,7 @@ namespace std {
 }
 ```
 
-### Enum `float_round_style` <a id="round.style">[round.style]</a>
+### Enum `float_round_style` <a id="round.style">[[round.style]]</a>
 
 ``` cpp
 namespace std {
@@ -656,9 +656,9 @@ values:
 -  `round_toward_neg_infinity` if the rounding style is toward negative
   infinity
 
-### Class template `numeric_limits` <a id="numeric.limits">[numeric.limits]</a>
+### Class template `numeric_limits` <a id="numeric.limits">[[numeric.limits]]</a>
 
-#### General <a id="numeric.limits.general">[numeric.limits.general]</a>
+#### General <a id="numeric.limits.general">[[numeric.limits.general]]</a>
 
 The `numeric_limits` class template provides a C++ program with
 information about various properties of the implementation’s
@@ -727,13 +727,13 @@ The value of each member of a specialization of `numeric_limits` on a
 cv-qualified type `cv T` shall be equal to the value of the
 corresponding member of the specialization on the unqualified type `T`.
 
-Non-arithmetic standard types, such as `complex<T>` [complex], shall not
-have specializations.
+Non-arithmetic standard types, such as `complex<T>` [[complex]], shall
+not have specializations.
 
-#### `numeric_limits` members <a id="numeric.limits.members">[numeric.limits.members]</a>
+#### `numeric_limits` members <a id="numeric.limits.members">[[numeric.limits.members]]</a>
 
 Each member function defined in this subclause is signal-safe
-[support.signal].
+[[support.signal]].
 
 ``` cpp
 static constexpr T min() noexcept;
@@ -1073,7 +1073,7 @@ static constexpr float_round_style round_style;
 > Meaningful for all floating-point types. Specializations for integer
 > types shall return `round_toward_zero`.
 
-#### `numeric_limits` specializations <a id="numeric.special">[numeric.special]</a>
+#### `numeric_limits` specializations <a id="numeric.special">[[numeric.special]]</a>
 
 All members shall be provided for all specializations. However, many
 values are only required to be meaningful under certain conditions (for
@@ -1177,7 +1177,7 @@ namespace std {
 }
 ```
 
-### Header `<climits>` synopsis <a id="climits.syn">[climits.syn]</a>
+### Header `<climits>` synopsis <a id="climits.syn">[[climits.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -1207,9 +1207,9 @@ library header `<limits.h>`.
 
 \[*Note 3*: Except for `CHAR_BIT` and `MB_LEN_MAX`, a macro referring to
 an integer type `T` defines a constant whose type is the promoted type
-of `T` [conv.prom]. — *end note*\]
+of `T` [[conv.prom]]. — *end note*\]
 
-### Header `<cfloat>` synopsis <a id="cfloat.syn">[cfloat.syn]</a>
+### Header `<cfloat>` synopsis <a id="cfloat.syn">[[cfloat.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -1258,9 +1258,9 @@ of `T` [conv.prom]. — *end note*\]
 The header `<cfloat>` defines all macros the same as the C standard
 library header `<float.h>`.
 
-## Arithmetic types <a id="support.arith.types">[support.arith.types]</a>
+## Arithmetic types <a id="support.arith.types">[[support.arith.types]]</a>
 
-### Header `<cstdint>` synopsis <a id="cstdint.syn">[cstdint.syn]</a>
+### Header `<cstdint>` synopsis <a id="cstdint.syn">[[cstdint.syn]]</a>
 
 The header `<cstdint>` supplies integer types having specified widths,
 and macros that specify limits of integer types.
@@ -1365,10 +1365,10 @@ implementation defines the corresponding *typedef-name*.
 *typedef-name*s `int_leastN_t` and `uint_leastN_t`,
 respectively. — *end note*\]
 
-### Header `<stdfloat>` synopsis <a id="stdfloat.syn">[stdfloat.syn]</a>
+### Header `<stdfloat>` synopsis <a id="stdfloat.syn">[[stdfloat.syn]]</a>
 
 The header `<stdfloat>` defines type aliases for the optional extended
-floating-point types that are specified in [basic.extended.fp].
+floating-point types that are specified in [[basic.extended.fp]].
 
 ``` cpp
 namespace std {
@@ -1390,7 +1390,7 @@ namespace std {
 }
 ```
 
-## Startup and termination <a id="support.start.term">[support.start.term]</a>
+## Startup and termination <a id="support.start.term">[[support.start.term]]</a>
 
 \[*Note 1*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
@@ -1544,15 +1544,15 @@ int at_quick_exit(atexit-handler* f) noexcept;
 > The function `quick_exit` is signal-safe\[support.signal\] when the
 > functions registered with `at_quick_exit` are.
 
-## Dynamic memory management <a id="support.dynamic">[support.dynamic]</a>
+## Dynamic memory management <a id="support.dynamic">[[support.dynamic]]</a>
 
-### General <a id="support.dynamic.general">[support.dynamic.general]</a>
+### General <a id="support.dynamic.general">[[support.dynamic.general]]</a>
 
 The header `<new>` defines several functions that manage the allocation
 of dynamic storage in a program. It also defines components for
 reporting storage management errors.
 
-### Header `<new>` synopsis <a id="new.syn">[new.syn]</a>
+### Header `<new>` synopsis <a id="new.syn">[[new.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -1618,16 +1618,17 @@ void operator delete  (void* ptr, void*) noexcept;
 void operator delete[](void* ptr, void*) noexcept;
 ```
 
-### Storage allocation and deallocation <a id="new.delete">[new.delete]</a>
+### Storage allocation and deallocation <a id="new.delete">[[new.delete]]</a>
 
-#### General <a id="new.delete.general">[new.delete.general]</a>
+#### General <a id="new.delete.general">[[new.delete.general]]</a>
 
-Except where otherwise specified, the provisions of  [basic.stc.dynamic]
-apply to the library versions of `operator new` and `operator
+Except where otherwise specified, the provisions of 
+[[basic.stc.dynamic]] apply to the library versions of `operator new`
+and `operator
 delete`. If the value of an alignment argument passed to any of these
 functions is not a valid alignment value, the behavior is undefined.
 
-#### Single-object forms <a id="new.delete.single">[new.delete.single]</a>
+#### Single-object forms <a id="new.delete.single">[[new.delete.single]]</a>
 
 ``` cpp
 [[nodiscard]] void* operator new(std::size_t size);
@@ -1797,7 +1798,7 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 > Calls `operator delete(ptr)`, or `operator delete(ptr, alignment)`,
 > respectively.
 
-#### Array forms <a id="new.delete.array">[new.delete.array]</a>
+#### Array forms <a id="new.delete.array">[[new.delete.array]]</a>
 
 ``` cpp
 [[nodiscard]] void* operator new[](std::size_t size);
@@ -1942,11 +1943,11 @@ void operator delete[](void* ptr, std::align_val_t alignment, const std::nothrow
 > Calls `operator delete[](ptr)`, or
 > `operator delete[](ptr, alignment)`, respectively.
 
-#### Non-allocating forms <a id="new.delete.placement">[new.delete.placement]</a>
+#### Non-allocating forms <a id="new.delete.placement">[[new.delete.placement]]</a>
 
 These functions are reserved; a C++ program may not define functions
-that displace the versions in the C++ standard library [constraints].
-The provisions of  [basic.stc.dynamic] do not apply to these reserved
+that displace the versions in the C++ standard library [[constraints]].
+The provisions of  [[basic.stc.dynamic]] do not apply to these reserved
 placement forms of `operator new` and `operator delete`.
 
 ``` cpp
@@ -2011,7 +2012,7 @@ void operator delete[](void* ptr, void*) noexcept;
 > placement *new-expression* that invokes the library’s array placement
 > operator new terminates by throwing an exception\[expr.new\].
 
-#### Data races <a id="new.delete.dataraces">[new.delete.dataraces]</a>
+#### Data races <a id="new.delete.dataraces">[[new.delete.dataraces]]</a>
 
 For purposes of determining the existence of data races, the library
 versions of `operator new`, user replacement versions of global
@@ -2019,14 +2020,14 @@ versions of `operator new`, user replacement versions of global
 `calloc`, and `malloc`, the library versions of `operator delete`, user
 replacement versions of `operator delete`, the C standard library
 function `free`, and the C standard library function `realloc` shall not
-introduce a data race [res.on.data.races]. Calls to these functions that
-allocate or deallocate a particular unit of storage shall occur in a
-single total order, and each such deallocation call shall happen before
-[intro.multithread] the next allocation (if any) in this order.
+introduce a data race [[res.on.data.races]]. Calls to these functions
+that allocate or deallocate a particular unit of storage shall occur in
+a single total order, and each such deallocation call shall happen
+before [[intro.multithread]] the next allocation (if any) in this order.
 
-### Storage allocation errors <a id="alloc.errors">[alloc.errors]</a>
+### Storage allocation errors <a id="alloc.errors">[[alloc.errors]]</a>
 
-#### Class `bad_alloc` <a id="bad.alloc">[bad.alloc]</a>
+#### Class `bad_alloc` <a id="bad.alloc">[[bad.alloc]]</a>
 
 ``` cpp
 namespace std {
@@ -2049,7 +2050,7 @@ const char* what() const noexcept override;
 >
 > An *implementation-defined* NTBS.
 
-#### Class `bad_array_new_length` <a id="new.badlength">[new.badlength]</a>
+#### Class `bad_array_new_length` <a id="new.badlength">[[new.badlength]]</a>
 
 ``` cpp
 namespace std {
@@ -2064,7 +2065,7 @@ namespace std {
 The class `bad_array_new_length` defines the type of objects thrown as
 exceptions by the implementation to report an attempt to allocate an
 array of size less than zero or greater than an *implementation-defined*
-limit [expr.new].
+limit [[expr.new]].
 
 ``` cpp
 const char* what() const noexcept override;
@@ -2074,7 +2075,7 @@ const char* what() const noexcept override;
 >
 > An *implementation-defined* NTBS.
 
-#### Type `new_handler` <a id="new.handler">[new.handler]</a>
+#### Type `new_handler` <a id="new.handler">[[new.handler]]</a>
 
 ``` cpp
 using new_handler = void (*)();
@@ -2093,7 +2094,7 @@ using new_handler = void (*)();
 >
 > - terminate execution of the program without returning to the caller.
 
-#### `set_new_handler` <a id="set.new.handler">[set.new.handler]</a>
+#### `set_new_handler` <a id="set.new.handler">[[set.new.handler]]</a>
 
 ``` cpp
 new_handler set_new_handler(new_handler new_p) noexcept;
@@ -2112,7 +2113,7 @@ new_handler set_new_handler(new_handler new_p) noexcept;
 >
 > The initial `new_handler` is a null pointer.
 
-#### `get_new_handler` <a id="get.new.handler">[get.new.handler]</a>
+#### `get_new_handler` <a id="get.new.handler">[[get.new.handler]]</a>
 
 ``` cpp
 new_handler get_new_handler() noexcept;
@@ -2124,7 +2125,7 @@ new_handler get_new_handler() noexcept;
 >
 > \[*Note 13*: This can be a null pointer value. — *end note*\]
 
-### Pointer optimization barrier <a id="ptr.launder">[ptr.launder]</a>
+### Pointer optimization barrier <a id="ptr.launder">[[ptr.launder]]</a>
 
 ``` cpp
 template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
@@ -2170,7 +2171,7 @@ template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
 >
 > — *end example*\]
 
-### Hardware interference size <a id="hardware.interference">[hardware.interference]</a>
+### Hardware interference size <a id="hardware.interference">[[hardware.interference]]</a>
 
 ``` cpp
 inline constexpr size_t hardware_destructive_interference_size = \impdef{};
@@ -2217,15 +2218,15 @@ static_assert(sizeof(together) <= hardware_constructive_interference_size);
 
 — *end example*\]
 
-## Type identification <a id="support.rtti">[support.rtti]</a>
+## Type identification <a id="support.rtti">[[support.rtti]]</a>
 
-### General <a id="support.rtti.general">[support.rtti.general]</a>
+### General <a id="support.rtti.general">[[support.rtti.general]]</a>
 
 The header `<typeinfo>` defines a type associated with type information
 generated by the implementation. It also defines two types for reporting
 dynamic type identification errors.
 
-### Header `<typeinfo>` synopsis <a id="typeinfo.syn">[typeinfo.syn]</a>
+### Header `<typeinfo>` synopsis <a id="typeinfo.syn">[[typeinfo.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -2236,7 +2237,7 @@ namespace std {
 }
 ```
 
-### Class `type_info` <a id="type.info">[type.info]</a>
+### Class `type_info` <a id="type.info">[[type.info]]</a>
 
 ``` cpp
 namespace std {
@@ -2255,8 +2256,8 @@ namespace std {
 ```
 
 The class `type_info` describes type information generated by the
-implementation [expr.typeid]. Objects of this class effectively store a
-pointer to a name for the type, and an encoded value suitable for
+implementation [[expr.typeid]]. Objects of this class effectively store
+a pointer to a name for the type, and an encoded value suitable for
 comparing two types for equality or collating order. The names, encoding
 rule, and collating sequence for types are all unspecified and may
 differ between programs.
@@ -2315,7 +2316,7 @@ const char* name() const noexcept;
 > string\[multibyte.strings\], suitable for conversion and display as a
 > `wstring`\[string.classes,locale.codecvt\].
 
-### Class `bad_cast` <a id="bad.cast">[bad.cast]</a>
+### Class `bad_cast` <a id="bad.cast">[[bad.cast]]</a>
 
 ``` cpp
 namespace std {
@@ -2329,7 +2330,7 @@ namespace std {
 
 The class `bad_cast` defines the type of objects thrown as exceptions by
 the implementation to report the execution of an invalid `dynamic_cast`
-expression [expr.dynamic.cast].
+expression [[expr.dynamic.cast]].
 
 ``` cpp
 const char* what() const noexcept override;
@@ -2339,7 +2340,7 @@ const char* what() const noexcept override;
 >
 > An *implementation-defined* NTBS.
 
-### Class `bad_typeid` <a id="bad.typeid">[bad.typeid]</a>
+### Class `bad_typeid` <a id="bad.typeid">[[bad.typeid]]</a>
 
 ``` cpp
 namespace std {
@@ -2353,7 +2354,7 @@ namespace std {
 
 The class `bad_typeid` defines the type of objects thrown as exceptions
 by the implementation to report a null pointer in a `typeid` expression
-[expr.typeid].
+[[expr.typeid]].
 
 ``` cpp
 const char* what() const noexcept override;
@@ -2363,9 +2364,9 @@ const char* what() const noexcept override;
 >
 > An *implementation-defined* NTBS.
 
-## Source location <a id="support.srcloc">[support.srcloc]</a>
+## Source location <a id="support.srcloc">[[support.srcloc]]</a>
 
-### Header `<source_location>` synopsis <a id="source.location.syn">[source.location.syn]</a>
+### Header `<source_location>` synopsis <a id="source.location.syn">[[source.location.syn]]</a>
 
 The header `<source_location>` defines the class `source_location` that
 provides a means to obtain source location information.
@@ -2377,9 +2378,9 @@ namespace std {
 }
 ```
 
-### Class `source_location` <a id="support.srcloc.class">[support.srcloc.class]</a>
+### Class `source_location` <a id="support.srcloc.class">[[support.srcloc.class]]</a>
 
-#### General <a id="support.srcloc.class.general">[support.srcloc.class.general]</a>
+#### General <a id="support.srcloc.class.general">[[support.srcloc.class.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2406,7 +2407,7 @@ namespace std {
 The type `source_location` meets the *Cpp17DefaultConstructible*,
 *Cpp17CopyConstructible*, *Cpp17Copy\\Assignable*, *Cpp17Swappable*, and
 *Cpp17Destructible* requirements
-[utility.arg.requirements], [swappable.requirements]. All of the
+[[utility.arg.requirements]], [[swappable.requirements]]. All of the
 following conditions are `true`:
 
 - `is_nothrow_move_constructible_v<source_location>`
@@ -2433,7 +2434,7 @@ following conditions is `true`:
 - `lhs.line() == rhs_p.line()`
 - `lhs.column() == rhs_p.column()`
 
-#### Creation <a id="support.srcloc.cons">[support.srcloc.cons]</a>
+#### Creation <a id="support.srcloc.cons">[[support.srcloc.cons]]</a>
 
 ``` cpp
 static consteval source_location current() noexcept;
@@ -2519,7 +2520,7 @@ constexpr source_location() noexcept;
 >
 > The data members are initialized with valid but unspecified values.
 
-#### Observers <a id="support.srcloc.obs">[support.srcloc.obs]</a>
+#### Observers <a id="support.srcloc.obs">[[support.srcloc.obs]]</a>
 
 ``` cpp
 constexpr uint_least32_t line() const noexcept;
@@ -2553,14 +2554,14 @@ constexpr const char* function_name() const noexcept;
 >
 > `function_name_`.
 
-## Exception handling <a id="support.exception">[support.exception]</a>
+## Exception handling <a id="support.exception">[[support.exception]]</a>
 
-### General <a id="support.exception.general">[support.exception.general]</a>
+### General <a id="support.exception.general">[[support.exception.general]]</a>
 
 The header `<exception>` defines several types and functions related to
 the handling of exceptions in a C++ program.
 
-### Header `<exception>` synopsis <a id="exception.syn">[exception.syn]</a>
+### Header `<exception>` synopsis <a id="exception.syn">[[exception.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -2587,7 +2588,7 @@ namespace std {
 }
 ```
 
-### Class `exception` <a id="exception">[exception]</a>
+### Class `exception` <a id="exception">[[exception]]</a>
 
 ``` cpp
 namespace std {
@@ -2608,7 +2609,7 @@ expressions, to report errors detected during program execution.
 
 Each standard library class `T` that derives from class `exception` has
 the following publicly accessible member functions, each of them having
-a non-throwing exception specification [except.spec]:
+a non-throwing exception specification [[except.spec]]:
 
 - default constructor (unless the class synopsis shows other
   constructors)
@@ -2657,7 +2658,7 @@ virtual const char* what() const noexcept;
 > valid until the exception object from which it is obtained is
 > destroyed or a non- member function of the exception object is called.
 
-### Class `bad_exception` <a id="bad.exception">[bad.exception]</a>
+### Class `bad_exception` <a id="bad.exception">[[bad.exception]]</a>
 
 ``` cpp
 namespace std {
@@ -2671,7 +2672,8 @@ namespace std {
 
 The class `bad_exception` defines the type of the object referenced by
 the `exception_ptr` returned from a call to `current_exception`
-[propagation] when the currently active exception object fails to copy.
+[[propagation]] when the currently active exception object fails to
+copy.
 
 ``` cpp
 const char* what() const noexcept override;
@@ -2681,9 +2683,9 @@ const char* what() const noexcept override;
 >
 > An *implementation-defined* NTBS.
 
-### Abnormal termination <a id="exception.terminate">[exception.terminate]</a>
+### Abnormal termination <a id="exception.terminate">[[exception.terminate]]</a>
 
-#### Type `terminate_handler` <a id="terminate.handler">[terminate.handler]</a>
+#### Type `terminate_handler` <a id="terminate.handler">[[terminate.handler]]</a>
 
 ``` cpp
 using terminate_handler = void (*)();
@@ -2697,7 +2699,7 @@ using terminate_handler = void (*)();
 >
 > The implementation’s default `terminate_handler` calls `abort()`.
 
-#### `set_terminate` <a id="set.terminate">[set.terminate]</a>
+#### `set_terminate` <a id="set.terminate">[[set.terminate]]</a>
 
 ``` cpp
 terminate_handler set_terminate(terminate_handler f) noexcept;
@@ -2717,7 +2719,7 @@ terminate_handler set_terminate(terminate_handler f) noexcept;
 > It is unspecified whether a null pointer value designates the default
 > `terminate_handler`.
 
-#### `get_terminate` <a id="get.terminate">[get.terminate]</a>
+#### `get_terminate` <a id="get.terminate">[[get.terminate]]</a>
 
 ``` cpp
 terminate_handler get_terminate() noexcept;
@@ -2729,7 +2731,7 @@ terminate_handler get_terminate() noexcept;
 >
 > \[*Note 15*: This can be a null pointer value. — *end note*\]
 
-#### `terminate` <a id="terminate">[terminate]</a>
+#### `terminate` <a id="terminate">[[terminate]]</a>
 
 ``` cpp
 [[noreturn]] void terminate() noexcept;
@@ -2751,7 +2753,7 @@ terminate_handler get_terminate() noexcept;
 > for any of several reasons\[except.terminate\]. May also be called
 > directly by the program.
 
-### `uncaught_exceptions` <a id="uncaught.exceptions">[uncaught.exceptions]</a>
+### `uncaught_exceptions` <a id="uncaught.exceptions">[[uncaught.exceptions]]</a>
 
 ``` cpp
 int uncaught_exceptions() noexcept;
@@ -2766,7 +2768,7 @@ int uncaught_exceptions() noexcept;
 > When `uncaught_exceptions() > 0`, throwing an exception can result in
 > a call of the function `std::terminate`\[except.terminate\].
 
-### Exception propagation <a id="propagation">[propagation]</a>
+### Exception propagation <a id="propagation">[[propagation]]</a>
 
 ``` cpp
 using exception_ptr = unspecified;
@@ -2870,7 +2872,7 @@ template<class E> exception_ptr make_exception_ptr(E e) noexcept;
 > \[*Note 21*: This function is provided for convenience and efficiency
 > reasons. — *end note*\]
 
-### `nested_exception` <a id="except.nested">[except.nested]</a>
+### `nested_exception` <a id="except.nested">[[except.nested]]</a>
 
 ``` cpp
 namespace std {
@@ -2959,16 +2961,16 @@ template<class E> void rethrow_if_nested(const E& e);
 >   p->rethrow_nested();
 > ```
 
-## Initializer lists <a id="support.initlist">[support.initlist]</a>
+## Initializer lists <a id="support.initlist">[[support.initlist]]</a>
 
-### General <a id="support.initlist.general">[support.initlist.general]</a>
+### General <a id="support.initlist.general">[[support.initlist.general]]</a>
 
 The header `<initializer_list>` defines a class template and several
-support functions related to list-initialization (see [dcl.init.list]).
-All functions specified in [support.initlist] are signal-safe
-[support.signal].
+support functions related to list-initialization (see
+[[dcl.init.list]]). All functions specified in [[support.initlist]] are
+signal-safe [[support.signal]].
 
-### Header `<initializer_list>` synopsis <a id="initializer.list.syn">[initializer.list.syn]</a>
+### Header `<initializer_list>` synopsis <a id="initializer.list.syn">[[initializer.list.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -3001,14 +3003,14 @@ objects of type `const E`.
 
 \[*Note 1*: A pair of pointers or a pointer plus a length would be
 obvious representations for `initializer_list`. `initializer_list` is
-used to implement initializer lists as specified in  [dcl.init.list].
+used to implement initializer lists as specified in  [[dcl.init.list]].
 Copying an initializer list does not copy the underlying
 elements. — *end note*\]
 
 If an explicit specialization or partial specialization of
 `initializer_list` is declared, the program is ill-formed.
 
-### Initializer list constructors <a id="support.initlist.cons">[support.initlist.cons]</a>
+### Initializer list constructors <a id="support.initlist.cons">[[support.initlist.cons]]</a>
 
 ``` cpp
 constexpr initializer_list() noexcept;
@@ -3018,7 +3020,7 @@ constexpr initializer_list() noexcept;
 >
 > `size() == 0`.
 
-### Initializer list access <a id="support.initlist.access">[support.initlist.access]</a>
+### Initializer list access <a id="support.initlist.access">[[support.initlist.access]]</a>
 
 ``` cpp
 constexpr const E* begin() const noexcept;
@@ -3049,7 +3051,7 @@ constexpr size_t size() const noexcept;
 >
 > Constant time.
 
-### Initializer list range access <a id="support.initlist.range">[support.initlist.range]</a>
+### Initializer list range access <a id="support.initlist.range">[[support.initlist.range]]</a>
 
 ``` cpp
 template<class E> constexpr const E* begin(initializer_list<E> il) noexcept;
@@ -3067,13 +3069,13 @@ template<class E> constexpr const E* end(initializer_list<E> il) noexcept;
 >
 > `il.end()`.
 
-## Comparisons <a id="cmp">[cmp]</a>
+## Comparisons <a id="cmp">[[cmp]]</a>
 
-### Header `<compare>` synopsis <a id="compare.syn">[compare.syn]</a>
+### Header `<compare>` synopsis <a id="compare.syn">[[compare.syn]]</a>
 
 The header `<compare>` specifies types, objects, and functions for use
 primarily in connection with the three-way comparison operator
-[expr.spaceship].
+[[expr.spaceship]].
 
 ``` cpp
 // all freestanding
@@ -3126,9 +3128,9 @@ namespace std {
 }
 ```
 
-### Comparison category types <a id="cmp.categories">[cmp.categories]</a>
+### Comparison category types <a id="cmp.categories">[[cmp.categories]]</a>
 
-#### Preamble <a id="cmp.categories.pre">[cmp.categories.pre]</a>
+#### Preamble <a id="cmp.categories.pre">[[cmp.categories.pre]]</a>
 
 The types `partial_ordering`, `weak_ordering`, and `strong_ordering` are
 collectively termed the *comparison category types*. Each is specified
@@ -3160,17 +3162,17 @@ meets this requirement.
 In this context, the behavior of a program that supplies an argument
 other than a literal `0` is undefined.
 
-For the purposes of subclause [cmp.categories], *substitutability* is
+For the purposes of subclause [[cmp.categories]], *substitutability* is
 the property that `f(a) == f(b)` is `true` whenever `a == b` is `true`,
 where `f` denotes a function that reads only comparison-salient state
 that is accessible via the argument’s public const members.
 
-#### Class `partial_ordering` <a id="cmp.partialord">[cmp.partialord]</a>
+#### Class `partial_ordering` <a id="cmp.partialord">[[cmp.partialord]]</a>
 
 The `partial_ordering` type is typically used as the result type of a
-three-way comparison operator [expr.spaceship] for a type that admits
-all of the six two-way comparison operators [expr.rel], [expr.eq], for
-which equality need not imply substitutability, and that permits two
+three-way comparison operator [[expr.spaceship]] for a type that admits
+all of the six two-way comparison operators [[expr.rel]], [[expr.eq]],
+for which equality need not imply substitutability, and that permits two
 values to be incomparable.
 
 ``` cpp
@@ -3254,12 +3256,12 @@ constexpr partial_ordering operator<=>(unspecified, partial_ordering v) noexcept
 >
 > `v < 0 ? partial_ordering::greater : v > 0 ? partial_ordering::less : v`.
 
-#### Class `weak_ordering` <a id="cmp.weakord">[cmp.weakord]</a>
+#### Class `weak_ordering` <a id="cmp.weakord">[[cmp.weakord]]</a>
 
 The `weak_ordering` type is typically used as the result type of a
-three-way comparison operator [expr.spaceship] for a type that admits
-all of the six two-way comparison operators [expr.rel], [expr.eq] and
-for which equality need not imply substitutability.
+three-way comparison operator [[expr.spaceship]] for a type that admits
+all of the six two-way comparison operators [[expr.rel]], [[expr.eq]]
+and for which equality need not imply substitutability.
 
 ``` cpp
 namespace std {
@@ -3351,12 +3353,12 @@ constexpr weak_ordering operator<=>(unspecified, weak_ordering v) noexcept;
 >
 > `v < 0 ? weak_ordering::greater : v > 0 ? weak_ordering::less : v`.
 
-#### Class `strong_ordering` <a id="cmp.strongord">[cmp.strongord]</a>
+#### Class `strong_ordering` <a id="cmp.strongord">[[cmp.strongord]]</a>
 
 The `strong_ordering` type is typically used as the result type of a
-three-way comparison operator [expr.spaceship] for a type that admits
-all of the six two-way comparison operators [expr.rel], [expr.eq] and
-for which equality does imply substitutability.
+three-way comparison operator [[expr.spaceship]] for a type that admits
+all of the six two-way comparison operators [[expr.rel]], [[expr.eq]]
+and for which equality does imply substitutability.
 
 ``` cpp
 namespace std {
@@ -3463,7 +3465,7 @@ constexpr strong_ordering operator<=>(unspecified, strong_ordering v) noexcept;
 >
 > `v < 0 ? strong_ordering::greater : v > 0 ? strong_ordering::less : v`.
 
-### Class template `common_comparison_category` <a id="cmp.common">[cmp.common]</a>
+### Class template `common_comparison_category` <a id="cmp.common">[[cmp.common]]</a>
 
 The type `common_comparison_category` provides an alias for the
 strongest comparison category to which all of the template arguments can
@@ -3489,7 +3491,7 @@ struct common_comparison_category {
 > \[*Note 22*: This is `std::strong_ordering` if the expansion is
 > empty. — *end note*\]
 
-### Concept  <a id="cmp.concept">[cmp.concept]</a>
+### Concept  <a id="cmp.concept">[[cmp.concept]]</a>
 
 ``` cpp
 template<class T, class Cat>
@@ -3553,7 +3555,7 @@ and `Cat` model `three_way_comparable<T, Cat>` only if:
 - `(a <=> b >= 0) == bool(a >= b)` is `true`, and
 
 - if `Cat` is convertible to `strong_ordering`, `T` models
-  `totally_ordered` [concept.totallyordered].
+  `totally_ordered` [[concept.totallyordered]].
 
 ``` cpp
 template<class T, class U, class Cat = partial_ordering>
@@ -3578,7 +3580,7 @@ let `u` and `u2` be lvalues denoting distinct equal objects of types
 `C` be
 `common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>`.
 Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
-[concepts.compare.general]. `T`, `U`, and `Cat` model
+[[concepts.compare.general]]. `T`, `U`, and `Cat` model
 `three_way_comparable_with<T, U, Cat>` only if:
 
 - `t <=> u` and `u <=> t` have the same domain,
@@ -3601,9 +3603,9 @@ Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
 - `(t <=> u >= 0) == bool(t >= u)` is `true`, and
 
 - if `Cat` is convertible to `strong_ordering`, `T` and `U` model
-  `totally_ordered_with<T, U>` [concept.totallyordered].
+  `totally_ordered_with<T, U>` [[concept.totallyordered]].
 
-### Result of three-way comparison <a id="cmp.result">[cmp.result]</a>
+### Result of three-way comparison <a id="cmp.result">[[cmp.result]]</a>
 
 The behavior of a program that adds specializations for the
 `compare_three_way_result` template defined in this subclause is
@@ -3613,16 +3615,16 @@ For the `compare_three_way_result` type trait applied to the types `T`
 and `U`, let `t` and `u` denote lvalues of types
 `const remove_reference_t<T>` and `const remove_reference_t<U>`,
 respectively. If the expression `t <=> u` is well-formed when treated as
-an unevaluated operand [expr.context], the member *typedef-name* `type`
-denotes the type `decltype(t <=> u)`. Otherwise, there is no member
-`type`.
+an unevaluated operand [[expr.context]], the member *typedef-name*
+`type` denotes the type `decltype(t <=> u)`. Otherwise, there is no
+member `type`.
 
-### Comparison algorithms <a id="cmp.alg">[cmp.alg]</a>
+### Comparison algorithms <a id="cmp.alg">[[cmp.alg]]</a>
 
 The name `strong_order` denotes a customization point object
-[customization.point.object]. Given subexpressions `E` and `F`, the
+[[customization.point.object]]. Given subexpressions `E` and `F`, the
 expression `strong_order(E, F)` is expression-equivalent
-[defns.expression.equivalent] to the following:
+[[defns.expression.equivalent]] to the following:
 
 - If the decayed types of `E` and `F` differ, `strong_order(E, F)` is
   ill-formed.
@@ -3630,7 +3632,7 @@ expression `strong_order(E, F)` is expression-equivalent
 - Otherwise, `strong_ordering(strong_order(E, F))` if it is a
   well-formed expression where the meaning of `strong_order` is
   established as-if by performing argument-dependent lookup only
-  [basic.lookup.argdep].
+  [[basic.lookup.argdep]].
 
 - Otherwise, if the decayed type `T` of `E` is a floating-point type,
   yields a value of type `strong_ordering` that is consistent with the
@@ -3648,16 +3650,16 @@ expression `strong_order(E, F)` is expression-equivalent
 instantiation. — *end note*\]
 
 The name `weak_order` denotes a customization point object
-[customization.point.object]. Given subexpressions `E` and `F`, the
+[[customization.point.object]]. Given subexpressions `E` and `F`, the
 expression `weak_order(E, F)` is expression-equivalent
-[defns.expression.equivalent] to the following:
+[[defns.expression.equivalent]] to the following:
 
 - If the decayed types of `E` and `F` differ, `weak_order(E, F)` is
   ill-formed.
 
 - Otherwise, `weak_ordering(weak_order(E, F))` if it is a well-formed
   expression where the meaning of `weak_order` is established as-if by
-  performing argument-dependent lookup only [basic.lookup.argdep].
+  performing argument-dependent lookup only [[basic.lookup.argdep]].
 
 - Otherwise, if the decayed type `T` of `E` is a floating-point type,
   yields a value of type `weak_ordering` that is consistent with the
@@ -3697,9 +3699,9 @@ expression `weak_order(E, F)` is expression-equivalent
 instantiation. — *end note*\]
 
 The name `partial_order` denotes a customization point object
-[customization.point.object]. Given subexpressions `E` and `F`, the
+[[customization.point.object]]. Given subexpressions `E` and `F`, the
 expression `partial_order(E, F)` is expression-equivalent
-[defns.expression.equivalent] to the following:
+[[defns.expression.equivalent]] to the following:
 
 - If the decayed types of `E` and `F` differ, `partial_order(E, F)` is
   ill-formed.
@@ -3707,7 +3709,7 @@ expression `partial_order(E, F)` is expression-equivalent
 - Otherwise, `partial_ordering(partial_order(E, F))` if it is a
   well-formed expression where the meaning of `partial_order` is
   established as-if by performing argument-dependent lookup only
-  [basic.lookup.argdep].
+  [[basic.lookup.argdep]].
 
 - Otherwise, `partial_ordering(compare_three_way()(E, F))` if it is a
   well-formed expression.
@@ -3722,9 +3724,9 @@ expression `partial_order(E, F)` is expression-equivalent
 instantiation. — *end note*\]
 
 The name `compare_strong_order_fallback` denotes a customization point
-object [customization.point.object]. Given subexpressions `E` and `F`,
+object [[customization.point.object]]. Given subexpressions `E` and `F`,
 the expression `compare_strong_order_fallback(E, F)` is
-expression-equivalent [defns.expression.equivalent] to:
+expression-equivalent [[defns.expression.equivalent]] to:
 
 - If the decayed types of `E` and `F` differ,
   `compare_strong_order_fallback(E, F)` is ill-formed.
@@ -3750,9 +3752,9 @@ expression-equivalent [defns.expression.equivalent] to:
 of a template instantiation. — *end note*\]
 
 The name `compare_weak_order_fallback` denotes a customization point
-object [customization.point.object]. Given subexpressions `E` and `F`,
+object [[customization.point.object]]. Given subexpressions `E` and `F`,
 the expression `compare_weak_order_fallback(E, F)` is
-expression-equivalent [defns.expression.equivalent] to:
+expression-equivalent [[defns.expression.equivalent]] to:
 
 - If the decayed types of `E` and `F` differ,
   `compare_weak_order_fallback(E, F)` is ill-formed.
@@ -3778,9 +3780,9 @@ expression-equivalent [defns.expression.equivalent] to:
 a template instantiation. — *end note*\]
 
 The name `compare_partial_order_fallback` denotes a customization point
-object [customization.point.object]. Given subexpressions `E` and `F`,
+object [[customization.point.object]]. Given subexpressions `E` and `F`,
 the expression `compare_partial_order_fallback(E, F)` is
-expression-equivalent [defns.expression.equivalent] to:
+expression-equivalent [[defns.expression.equivalent]] to:
 
 - If the decayed types of `E` and `F` differ,
   `compare_partial_order_fallback(E, F)` is ill-formed.
@@ -3806,14 +3808,14 @@ expression-equivalent [defns.expression.equivalent] to:
 `compare_partial_order_fallback(E, F)` appears in the immediate context
 of a template instantiation. — *end note*\]
 
-## Coroutines <a id="support.coroutine">[support.coroutine]</a>
+## Coroutines <a id="support.coroutine">[[support.coroutine]]</a>
 
-### General <a id="support.coroutine.general">[support.coroutine.general]</a>
+### General <a id="support.coroutine.general">[[support.coroutine.general]]</a>
 
 The header `<coroutine>` defines several types providing compile and
 run-time support for coroutines in a C++ program.
 
-### Header `<coroutine>` synopsis <a id="coroutine.syn">[coroutine.syn]</a>
+### Header `<coroutine>` synopsis <a id="coroutine.syn">[[coroutine.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -3850,21 +3852,21 @@ namespace std {
 }
 ```
 
-### Coroutine traits <a id="coroutine.traits">[coroutine.traits]</a>
+### Coroutine traits <a id="coroutine.traits">[[coroutine.traits]]</a>
 
-#### General <a id="coroutine.traits.general">[coroutine.traits.general]</a>
+#### General <a id="coroutine.traits.general">[[coroutine.traits.general]]</a>
 
-Subclause [coroutine.traits] defines requirements on classes
+Subclause [[coroutine.traits]] defines requirements on classes
 representing *coroutine traits*, and defines the class template
 `coroutine_traits` that meets those requirements.
 
-#### Class template `coroutine_traits` <a id="coroutine.traits.primary">[coroutine.traits.primary]</a>
+#### Class template `coroutine_traits` <a id="coroutine.traits.primary">[[coroutine.traits.primary]]</a>
 
 The header `<coroutine>` defines the primary template `coroutine_traits`
 such that if `ArgTypes` is a parameter pack of types and if the
 *qualified-id* `R::promise_type` is valid and denotes a type
-[temp.deduct], then `coroutine_traits<R, ArgTypes...>` has the following
-publicly accessible member:
+[[temp.deduct]], then `coroutine_traits<R, ArgTypes...>` has the
+following publicly accessible member:
 
 ``` cpp
 using promise_type = typename R::promise_type;
@@ -3875,9 +3877,9 @@ Otherwise, `coroutine_traits<R, ArgTypes...>` has no members.
 Program-defined specializations of this template shall define a publicly
 accessible nested type named `promise_type`.
 
-### Class template `coroutine_handle` <a id="coroutine.handle">[coroutine.handle]</a>
+### Class template `coroutine_handle` <a id="coroutine.handle">[[coroutine.handle]]</a>
 
-#### General <a id="coroutine.handle.general">[coroutine.handle.general]</a>
+#### General <a id="coroutine.handle.general">[[coroutine.handle.general]]</a>
 
 ``` cpp
 namespace std {
@@ -3950,7 +3952,7 @@ objects refer to the same coroutine if and only if their member
 If a program declares an explicit or partial specialization of
 `coroutine_handle`, the behavior is undefined.
 
-#### Construct/reset <a id="coroutine.handle.con">[coroutine.handle.con]</a>
+#### Construct/reset <a id="coroutine.handle.con">[[coroutine.handle.con]]</a>
 
 ``` cpp
 constexpr coroutine_handle() noexcept;
@@ -3989,7 +3991,7 @@ coroutine_handle& operator=(nullptr_t) noexcept;
 >
 > `*this`.
 
-#### Conversion <a id="coroutine.handle.conv">[coroutine.handle.conv]</a>
+#### Conversion <a id="coroutine.handle.conv">[[coroutine.handle.conv]]</a>
 
 ``` cpp
 constexpr operator coroutine_handle<>() const noexcept;
@@ -3999,7 +4001,7 @@ constexpr operator coroutine_handle<>() const noexcept;
 >
 > Equivalent to: `return coroutine_handle<>::from_address(address());`
 
-#### Export/import <a id="coroutine.handle.export.import">[coroutine.handle.export.import]</a>
+#### Export/import <a id="coroutine.handle.export.import">[[coroutine.handle.export.import]]</a>
 
 ``` cpp
 constexpr void* address() const noexcept;
@@ -4035,7 +4037,7 @@ static constexpr coroutine_handle<Promise> coroutine_handle<Promise>::from_addre
 >
 > `from_address(address()) == *this`.
 
-#### Observers <a id="coroutine.handle.observers">[coroutine.handle.observers]</a>
+#### Observers <a id="coroutine.handle.observers">[[coroutine.handle.observers]]</a>
 
 ``` cpp
 constexpr explicit operator bool() const noexcept;
@@ -4058,7 +4060,7 @@ bool done() const;
 > `true` if the coroutine is suspended at its final suspend point,
 > otherwise `false`.
 
-#### Resumption <a id="coroutine.handle.resumption">[coroutine.handle.resumption]</a>
+#### Resumption <a id="coroutine.handle.resumption">[[coroutine.handle.resumption]]</a>
 
 Resuming a coroutine via `resume`, `operator()`, or `destroy` on an
 execution agent other than the one on which it was suspended has
@@ -4099,7 +4101,7 @@ void destroy() const;
 >
 > Destroys the coroutine\[dcl.fct.def.coroutine\].
 
-#### Promise access <a id="coroutine.handle.promise">[coroutine.handle.promise]</a>
+#### Promise access <a id="coroutine.handle.promise">[[coroutine.handle.promise]]</a>
 
 ``` cpp
 Promise& promise() const;
@@ -4113,7 +4115,7 @@ Promise& promise() const;
 >
 > A reference to the promise of the coroutine.
 
-#### Comparison operators <a id="coroutine.handle.compare">[coroutine.handle.compare]</a>
+#### Comparison operators <a id="coroutine.handle.compare">[[coroutine.handle.compare]]</a>
 
 ``` cpp
 constexpr bool operator==(coroutine_handle<> x, coroutine_handle<> y) noexcept;
@@ -4131,7 +4133,7 @@ constexpr strong_ordering operator<=>(coroutine_handle<> x, coroutine_handle<> y
 >
 > `compare_three_way()(x.address(), y.address())`.
 
-#### Hash support <a id="coroutine.handle.hash">[coroutine.handle.hash]</a>
+#### Hash support <a id="coroutine.handle.hash">[[coroutine.handle.hash]]</a>
 
 ``` cpp
 template<class P> struct hash<coroutine_handle<P>>;
@@ -4139,9 +4141,9 @@ template<class P> struct hash<coroutine_handle<P>>;
 
 > The specialization is enabled\[unord.hash\].
 
-### No-op coroutines <a id="coroutine.noop">[coroutine.noop]</a>
+### No-op coroutines <a id="coroutine.noop">[[coroutine.noop]]</a>
 
-#### Class `noop_coroutine_promise` <a id="coroutine.promise.noop">[coroutine.promise.noop]</a>
+#### Class `noop_coroutine_promise` <a id="coroutine.promise.noop">[[coroutine.promise.noop]]</a>
 
 ``` cpp
 struct noop_coroutine_promise {};
@@ -4150,7 +4152,7 @@ struct noop_coroutine_promise {};
 > The class `noop_coroutine_promise` defines the promise type for the
 > coroutine referred to by `noop_coroutine_handle`\[coroutine.syn\].
 
-#### Class `coroutine_handle<noop_coroutine_promise>` <a id="coroutine.handle.noop">[coroutine.handle.noop]</a>
+#### Class `coroutine_handle<noop_coroutine_promise>` <a id="coroutine.handle.noop">[[coroutine.handle.noop]]</a>
 
 ``` cpp
 namespace std {
@@ -4181,7 +4183,7 @@ namespace std {
 }
 ```
 
-##### Conversion <a id="coroutine.handle.noop.conv">[coroutine.handle.noop.conv]</a>
+##### Conversion <a id="coroutine.handle.noop.conv">[[coroutine.handle.noop.conv]]</a>
 
 ``` cpp
 constexpr operator coroutine_handle<>() const noexcept;
@@ -4191,7 +4193,7 @@ constexpr operator coroutine_handle<>() const noexcept;
 >
 > Equivalent to: `return coroutine_handle<>::from_address(address());`
 
-##### Observers <a id="coroutine.handle.noop.observers">[coroutine.handle.noop.observers]</a>
+##### Observers <a id="coroutine.handle.noop.observers">[[coroutine.handle.noop.observers]]</a>
 
 ``` cpp
 constexpr explicit operator bool() const noexcept;
@@ -4209,7 +4211,7 @@ constexpr bool done() const noexcept;
 >
 > `false`.
 
-##### Resumption <a id="coroutine.handle.noop.resumption">[coroutine.handle.noop.resumption]</a>
+##### Resumption <a id="coroutine.handle.noop.resumption">[[coroutine.handle.noop.resumption]]</a>
 
 ``` cpp
 constexpr void operator()() const noexcept;
@@ -4227,7 +4229,7 @@ constexpr void destroy() const noexcept;
 > to `operator()`, `resume` and `destroy` on that handle will also have
 > no observable effects.
 
-##### Promise access <a id="coroutine.handle.noop.promise">[coroutine.handle.noop.promise]</a>
+##### Promise access <a id="coroutine.handle.noop.promise">[[coroutine.handle.noop.promise]]</a>
 
 ``` cpp
 noop_coroutine_promise& promise() const noexcept;
@@ -4238,7 +4240,7 @@ noop_coroutine_promise& promise() const noexcept;
 > A reference to the promise object associated with this coroutine
 > handle.
 
-##### Address <a id="coroutine.handle.noop.address">[coroutine.handle.noop.address]</a>
+##### Address <a id="coroutine.handle.noop.address">[[coroutine.handle.noop.address]]</a>
 
 ``` cpp
 constexpr void* address() const noexcept;
@@ -4252,7 +4254,7 @@ constexpr void* address() const noexcept;
 >
 > A `noop_coroutine_handle`’s `ptr` is always a non-null pointer value.
 
-#### Function `noop_coroutine` <a id="coroutine.noop.coroutine">[coroutine.noop.coroutine]</a>
+#### Function `noop_coroutine` <a id="coroutine.noop.coroutine">[[coroutine.noop.coroutine]]</a>
 
 ``` cpp
 noop_coroutine_handle noop_coroutine() noexcept;
@@ -4268,7 +4270,7 @@ noop_coroutine_handle noop_coroutine() noexcept;
 > A handle returned from `noop_coroutine` may or may not compare equal
 > to a handle returned from another invocation of `noop_coroutine`.
 
-### Trivial awaitables <a id="coroutine.trivial.awaitables">[coroutine.trivial.awaitables]</a>
+### Trivial awaitables <a id="coroutine.trivial.awaitables">[[coroutine.trivial.awaitables]]</a>
 
 ``` cpp
 namespace std {
@@ -4289,27 +4291,28 @@ namespace std {
 to indicate that an *await-expression* either never suspends or always
 suspends, and in either case does not produce a value. — *end note*\]
 
-## Other runtime support <a id="support.runtime">[support.runtime]</a>
+## Other runtime support <a id="support.runtime">[[support.runtime]]</a>
 
-### General <a id="support.runtime.general">[support.runtime.general]</a>
+### General <a id="support.runtime.general">[[support.runtime.general]]</a>
 
 Headers `<csetjmp>` (nonlocal jumps), `<csignal>` (signal handling),
 `<cstdarg>` (variable arguments), and `<cstdlib>` (runtime environment
 `getenv`, `system`), provide further compatibility with C code.
 
-Calls to the function `getenv` [cstdlib.syn] shall not introduce a data
-race [res.on.data.races] provided that nothing modifies the environment.
+Calls to the function `getenv` [[cstdlib.syn]] shall not introduce a
+data race [[res.on.data.races]] provided that nothing modifies the
+environment.
 
 \[*Note 1*: Calls to the POSIX functions `setenv` and `putenv` modify
 the environment. — *end note*\]
 
-A call to the `setlocale` function [c.locales] may introduce a data race
-with other calls to the `setlocale` function or with calls to functions
-that are affected by the current C locale. The implementation shall
-behave as if no library function other than `locale::global` calls the
-`setlocale` function.
+A call to the `setlocale` function [[c.locales]] may introduce a data
+race with other calls to the `setlocale` function or with calls to
+functions that are affected by the current C locale. The implementation
+shall behave as if no library function other than `locale::global` calls
+the `setlocale` function.
 
-### Header `<cstdarg>` synopsis <a id="cstdarg.syn">[cstdarg.syn]</a>
+### Header `<cstdarg>` synopsis <a id="cstdarg.syn">[[cstdarg.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -4327,7 +4330,7 @@ The contents of the header `<cstdarg>` are the same as the C standard
 library header `<stdarg.h>`, with the following changes:
 
 - In lieu of the default argument promotions specified in ISO C 6.5.2.2,
-  the definition in  [expr.call] applies.
+  the definition in  [[expr.call]] applies.
 
 - The restrictions that ISO C places on the second parameter to the
   `va_start` macro in header `<stdarg.h>` are different in this
@@ -4335,14 +4338,14 @@ library header `<stdarg.h>`, with the following changes:
   variable parameter list of the function definition (the one just
   before the `...`).
 
-  If the parameter `parmN` is a pack expansion [temp.variadic] or an
-  entity resulting from a lambda capture [expr.prim.lambda], the program
-  is ill-formed, no diagnostic required. If the parameter `parmN` is of
-  a reference type, or of a type that is not compatible with the type
-  that results when passing an argument for which there is no parameter,
-  the behavior is undefined.
+  If the parameter `parmN` is a pack expansion [[temp.variadic]] or an
+  entity resulting from a lambda capture [[expr.prim.lambda]], the
+  program is ill-formed, no diagnostic required. If the parameter
+  `parmN` is of a reference type, or of a type that is not compatible
+  with the type that results when passing an argument for which there is
+  no parameter, the behavior is undefined.
 
-### Header `<csetjmp>` synopsis <a id="csetjmp.syn">[csetjmp.syn]</a>
+### Header `<csetjmp>` synopsis <a id="csetjmp.syn">[[csetjmp.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4362,9 +4365,9 @@ undefined behavior if replacing the `setjmp` and `longjmp` by `catch`
 and `throw` would invoke any non-trivial destructors for any objects
 with automatic storage duration. A call to `setjmp` or `longjmp` has
 undefined behavior if invoked in a suspension context of a coroutine
-[expr.await].
+[[expr.await]].
 
-### Header `<csignal>` synopsis <a id="csignal.syn">[csignal.syn]</a>
+### Header `<csignal>` synopsis <a id="csignal.syn">[[csignal.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4391,13 +4394,13 @@ namespace std {
 The contents of the header `<csignal>` are the same as the C standard
 library header `<signal.h>`.
 
-### Signal handlers <a id="support.signal">[support.signal]</a>
+### Signal handlers <a id="support.signal">[[support.signal]]</a>
 
 A call to the function `signal` synchronizes with any resulting
 invocation of the signal handler so installed.
 
 A *plain lock-free atomic operation* is an invocation of a function `f`
-from [atomics], such that:
+from [[atomics]], such that:
 
 - `f` is the function `atomic_is_lock_free()`, or
 
@@ -4432,12 +4435,12 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - control entering a *try-block* or *function-try-block*;
 
 - initialization of a variable with static storage duration requiring
-  dynamic initialization [basic.start.dynamic], [stmt.dcl]
+  dynamic initialization [[basic.start.dynamic]], [[stmt.dcl]]
 
   ; or
 
 - waiting for the completion of the initialization of a variable with
-  static storage duration [stmt.dcl].
+  static storage duration [[stmt.dcl]].
 
 A signal handler invocation has undefined behavior if it includes an
 evaluation that is not signal-safe.
@@ -4446,16 +4449,16 @@ The function `signal` is signal-safe if it is invoked with the first
 argument equal to the signal number corresponding to the signal that
 caused the invocation of the handler.
 
-## C headers <a id="support.c.headers">[support.c.headers]</a>
+## C headers <a id="support.c.headers">[[support.c.headers]]</a>
 
-### General <a id="support.c.headers.general">[support.c.headers.general]</a>
+### General <a id="support.c.headers.general">[[support.c.headers.general]]</a>
 
 For compatibility with the C standard library, the C++ standard library
-provides the *C headers* shown in [c.headers]. The intended use of these
-headers is for interoperability only. It is possible that C++ source
-files need to include one of these headers in order to be valid ISO C.
-Source files that are not intended to also be valid ISO C should not use
-any of the C headers.
+provides the *C headers* shown in [[c.headers]]. The intended use of
+these headers is for interoperability only. It is possible that C++
+source files need to include one of these headers in order to be valid
+ISO C. Source files that are not intended to also be valid ISO C should
+not use any of the C headers.
 
 \[*Note 1*: The C headers either have no effect, such as `<stdbool.h>`
 and `<stdalign.h>`, or otherwise the corresponding header of the form
@@ -4480,7 +4483,7 @@ void f(bool b[], size_t n);
 
 — *end example*\]
 
-### Header `<complex.h>` synopsis <a id="complex.h.syn">[complex.h.syn]</a>
+### Header `<complex.h>` synopsis <a id="complex.h.syn">[[complex.h.syn]]</a>
 
 ``` cpp
 #include <complex>
@@ -4492,28 +4495,28 @@ The header `<complex.h>` behaves as if it simply includes the header
 \[*Note 2*: Names introduced by `<complex>` in namespace `std` are not
 placed into the global namespace scope by `<complex.h>`. — *end note*\]
 
-### Header `<iso646.h>` synopsis <a id="iso646.h.syn">[iso646.h.syn]</a>
+### Header `<iso646.h>` synopsis <a id="iso646.h.syn">[[iso646.h.syn]]</a>
 
 The C++ header `<iso646.h>` is empty.
 
 \[*Note 3*: `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not_eq`,
 `not`, `or`, `or_eq`, `xor`, and `xor_eq` are keywords in C++
-[lex.key]. — *end note*\]
+[[lex.key]]. — *end note*\]
 
-### Header `<stdalign.h>` synopsis <a id="stdalign.h.syn">[stdalign.h.syn]</a>
+### Header `<stdalign.h>` synopsis <a id="stdalign.h.syn">[[stdalign.h.syn]]</a>
 
 The contents of the C++ header `<stdalign.h>` are the same as the C
 standard library header `<stdalign.h>`, with the following changes: The
 header `<stdalign.h>` does not define a macro named `alignas`.
 
-### Header `<stdbool.h>` synopsis <a id="stdbool.h.syn">[stdbool.h.syn]</a>
+### Header `<stdbool.h>` synopsis <a id="stdbool.h.syn">[[stdbool.h.syn]]</a>
 
 The contents of the C++ header `<stdbool.h>` are the same as the C
 standard library header `<stdbool.h>`, with the following changes: The
 header `<stdbool.h>` does not define macros named `bool`, `true`, or
 `false`.
 
-### Header `<tgmath.h>` synopsis <a id="tgmath.h.syn">[tgmath.h.syn]</a>
+### Header `<tgmath.h>` synopsis <a id="tgmath.h.syn">[[tgmath.h.syn]]</a>
 
 ``` cpp
 #include <cmath>
@@ -4531,20 +4534,20 @@ overloads. — *end note*\]
 `std` are not placed into the global namespace scope by
 `<tgmath.h>`. — *end note*\]
 
-### Other C headers <a id="support.c.headers.other">[support.c.headers.other]</a>
+### Other C headers <a id="support.c.headers.other">[[support.c.headers.other]]</a>
 
 Every C header other than `<complex.h>`, `<iso646.h>`, `<stdalign.h>`,
 `<stdatomic.h>`, `<stdbool.h>`, and `<tgmath.h>`, each of which has a
 name of the form `<name.h>`, behaves as if each name placed in the
 standard library namespace by the corresponding `<cname>` header is
 placed within the global namespace scope, except for the functions
-described in [sf.cmath], the `std::lerp` function overloads
-[c.math.lerp], the declaration of `std::byte` [cstddef.syn], and the
-functions and function templates described in [support.types.byteops].
+described in [[sf.cmath]], the `std::lerp` function overloads
+[[c.math.lerp]], the declaration of `std::byte` [[cstddef.syn]], and the
+functions and function templates described in [[support.types.byteops]].
 It is unspecified whether these names are first declared or defined
-within namespace scope [basic.scope.namespace] of the namespace `std`
+within namespace scope [[basic.scope.namespace]] of the namespace `std`
 and are then injected into the global namespace scope by explicit
-*using-declaration* [namespace.udecl].
+*using-declaration* [[namespace.udecl]].
 
 \[*Example 2*: The header `<cstdlib>` assuredly provides its
 declarations and definitions within the namespace `std`. It may also
@@ -4554,83 +4557,83 @@ global namespace, much as in the C Standard. It may also provide these
 names within the namespace `std`. — *end example*\]
 
 <!-- Link reference definitions -->
-[alg.c.library]: algorithms.md#alg.c.library
-[atomics]: thread.md#atomics
-[basic.align]: basic.md#basic.align
-[basic.extended.fp]: basic.md#basic.extended.fp
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[basic.scope.namespace]: basic.md#basic.scope.namespace
-[basic.start.dynamic]: basic.md#basic.start.dynamic
-[basic.stc.dynamic]: basic.md#basic.stc.dynamic
-[c.headers]: #c.headers
-[c.locales]: localization.md#c.locales
-[c.malloc]: mem.md#c.malloc
-[c.math.abs]: numerics.md#c.math.abs
-[c.math.lerp]: numerics.md#c.math.lerp
-[c.math.rand]: numerics.md#c.math.rand
-[c.mb.wcs]: strings.md#c.mb.wcs
-[class.prop]: class.md#class.prop
-[cmp.categories]: #cmp.categories
-[complex]: numerics.md#complex
-[concept.totallyordered]: concepts.md#concept.totallyordered
-[concepts.compare.general]: concepts.md#concepts.compare.general
-[constraints]: library.md#constraints
-[conv.prom]: expr.md#conv.prom
-[conv.ptr]: expr.md#conv.ptr
-[conv.rank]: basic.md#conv.rank
-[coroutine.traits]: #coroutine.traits
-[cstddef.syn]: #cstddef.syn
-[cstdlib.syn]: #cstdlib.syn
-[customization.point.object]: library.md#customization.point.object
-[dcl.init.list]: dcl.md#dcl.init.list
-[defns.expression.equivalent]: #defns.expression.equivalent
-[except.spec]: except.md#except.spec
-[expr.add]: expr.md#expr.add
-[expr.await]: expr.md#expr.await
-[expr.call]: expr.md#expr.call
-[expr.context]: expr.md#expr.context
-[expr.dynamic.cast]: expr.md#expr.dynamic.cast
-[expr.eq]: expr.md#expr.eq
-[expr.new]: expr.md#expr.new
-[expr.prim.lambda]: expr.md#expr.prim.lambda
-[expr.rel]: expr.md#expr.rel
-[expr.sizeof]: expr.md#expr.sizeof
-[expr.spaceship]: expr.md#expr.spaceship
-[expr.typeid]: expr.md#expr.typeid
-[intro.multithread]: basic.md#intro.multithread
-[lex.key]: lex.md#lex.key
-[library.c]: library.md#library.c
-[namespace.udecl]: dcl.md#namespace.udecl
-[propagation]: #propagation
-[res.on.data.races]: library.md#res.on.data.races
-[sf.cmath]: numerics.md#sf.cmath
-[stmt.dcl]: stmt.md#stmt.dcl
-[support.initlist]: #support.initlist
-[support.signal]: #support.signal
-[support.start.term]: #support.start.term
-[support.summary]: #support.summary
-[support.types.byteops]: #support.types.byteops
-[support.types.layout]: #support.types.layout
-[support.types.nullptr]: #support.types.nullptr
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[temp.dep.constexpr]: temp.md#temp.dep.constexpr
-[temp.dep.expr]: temp.md#temp.dep.expr
-[temp.variadic]: temp.md#temp.variadic
-[term.odr.use]: #term.odr.use
-[utility.arg.requirements]: library.md#utility.arg.requirements
+[[alg.c.library]]: algorithms.md#alg.c.library
+[[atomics]]: thread.md#atomics
+[[basic.align]]: basic.md#basic.align
+[[basic.extended.fp]]: basic.md#basic.extended.fp
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[basic.scope.namespace]]: basic.md#basic.scope.namespace
+[[basic.start.dynamic]]: basic.md#basic.start.dynamic
+[[basic.stc.dynamic]]: basic.md#basic.stc.dynamic
+[[c.headers]]: #c.headers
+[[c.locales]]: localization.md#c.locales
+[[c.malloc]]: mem.md#c.malloc
+[[c.math.abs]]: numerics.md#c.math.abs
+[[c.math.lerp]]: numerics.md#c.math.lerp
+[[c.math.rand]]: numerics.md#c.math.rand
+[[c.mb.wcs]]: strings.md#c.mb.wcs
+[[class.prop]]: class.md#class.prop
+[[cmp.categories]]: #cmp.categories
+[[complex]]: numerics.md#complex
+[[concept.totallyordered]]: concepts.md#concept.totallyordered
+[[concepts.compare.general]]: concepts.md#concepts.compare.general
+[[constraints]]: library.md#constraints
+[[conv.prom]]: expr.md#conv.prom
+[[conv.ptr]]: expr.md#conv.ptr
+[[conv.rank]]: basic.md#conv.rank
+[[coroutine.traits]]: #coroutine.traits
+[[cstddef.syn]]: #cstddef.syn
+[[cstdlib.syn]]: #cstdlib.syn
+[[customization.point.object]]: library.md#customization.point.object
+[[dcl.init.list]]: dcl.md#dcl.init.list
+[[defns.expression.equivalent]]: #defns.expression.equivalent
+[[except.spec]]: except.md#except.spec
+[[expr.add]]: expr.md#expr.add
+[[expr.await]]: expr.md#expr.await
+[[expr.call]]: expr.md#expr.call
+[[expr.context]]: expr.md#expr.context
+[[expr.dynamic.cast]]: expr.md#expr.dynamic.cast
+[[expr.eq]]: expr.md#expr.eq
+[[expr.new]]: expr.md#expr.new
+[[expr.prim.lambda]]: expr.md#expr.prim.lambda
+[[expr.rel]]: expr.md#expr.rel
+[[expr.sizeof]]: expr.md#expr.sizeof
+[[expr.spaceship]]: expr.md#expr.spaceship
+[[expr.typeid]]: expr.md#expr.typeid
+[[intro.multithread]]: basic.md#intro.multithread
+[[lex.key]]: lex.md#lex.key
+[[library.c]]: library.md#library.c
+[[namespace.udecl]]: dcl.md#namespace.udecl
+[[propagation]]: #propagation
+[[res.on.data.races]]: library.md#res.on.data.races
+[[sf.cmath]]: numerics.md#sf.cmath
+[[stmt.dcl]]: stmt.md#stmt.dcl
+[[support.initlist]]: #support.initlist
+[[support.signal]]: #support.signal
+[[support.start.term]]: #support.start.term
+[[support.summary]]: #support.summary
+[[support.types.byteops]]: #support.types.byteops
+[[support.types.layout]]: #support.types.layout
+[[support.types.nullptr]]: #support.types.nullptr
+[[swappable.requirements]]: library.md#swappable.requirements
+[[temp.deduct]]: temp.md#temp.deduct
+[[temp.dep.constexpr]]: temp.md#temp.dep.constexpr
+[[temp.dep.expr]]: temp.md#temp.dep.expr
+[[temp.variadic]]: temp.md#temp.variadic
+[[term.odr.use]]: #term.odr.use
+[[utility.arg.requirements]]: library.md#utility.arg.requirements
 
 <!-- Link reference definitions -->
-[cmp]: #cmp
-[support.arith.types]: #support.arith.types
-[support.coroutine]: #support.coroutine
-[support.dynamic]: #support.dynamic
-[support.exception]: #support.exception
-[support.initlist]: #support.initlist
-[support.limits]: #support.limits
-[support.rtti]: #support.rtti
-[support.runtime]: #support.runtime
-[support.srcloc]: #support.srcloc
-[support.start.term]: #support.start.term
-[support.types]: #support.types
+[[cmp]]: #cmp
+[[support.arith.types]]: #support.arith.types
+[[support.coroutine]]: #support.coroutine
+[[support.dynamic]]: #support.dynamic
+[[support.exception]]: #support.exception
+[[support.initlist]]: #support.initlist
+[[support.limits]]: #support.limits
+[[support.rtti]]: #support.rtti
+[[support.runtime]]: #support.runtime
+[[support.srcloc]]: #support.srcloc
+[[support.start.term]]: #support.start.term
+[[support.types]]: #support.types

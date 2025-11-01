@@ -3,9 +3,9 @@ current_file: module
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Modules <a id="module">[module]</a>
+# Modules <a id="module">[[module]]</a>
 
-## Module units and purviews <a id="module.unit">[module.unit]</a>
+## Module units and purviews <a id="module.unit">[[module.unit]]</a>
 
 ``` bnf
 module-declaration:
@@ -34,7 +34,7 @@ with the same *module-name*. The identifiers `module` and `import` shall
 not appear as *identifier* in a *module-name* or *module-partition*. All
 *module-name* either beginning with an *identifier* consisting of `std`
 followed by zero or more *digit* or containing a reserved identifier
-[lex.name] are reserved and shall not be specified in a
+[[lex.name]] are reserved and shall not be specified in a
 *module-declaration*; no diagnostic is required. If any *identifier* in
 a reserved *module-name* is a reserved identifier, the module name is
 reserved for use by C++ implementations; otherwise it is reserved for
@@ -53,7 +53,7 @@ contains a *module-partition*. A named module shall not contain multiple
 module partitions with the same *module-partition*. All module
 partitions of a module that are module interface units shall be directly
 or indirectly exported by the primary module interface unit
-[module.import]. No diagnostic is required for a violation of these
+[[module.import]]. No diagnostic is required for a violation of these
 rules.
 
 \[*Note 1*: Module partitions can be imported only by other module units
@@ -99,13 +99,13 @@ is *attached* to a module as follows:
   or *template-id* or that nominates a class other than with an
   *elaborated-type-specifier* with neither a *nested-name-specifier* nor
   a *simple-template-id*, it is attached to the module to which the
-  friend is attached [basic.link].
+  friend is attached [[basic.link]].
 
 - Otherwise, if the declaration
 
   - is a *namespace-definition* with external linkage or
 
-  - appears within a *linkage-specification* [dcl.link]
+  - appears within a *linkage-specification* [[dcl.link]]
 
   it is attached to the global module.
 
@@ -120,7 +120,7 @@ of the module as if by a *module-import-declaration*.
 
 — *end example*\]
 
-## Export declaration <a id="module.interface">[module.interface]</a>
+## Export declaration <a id="module.interface">[[module.interface]]</a>
 
 ``` bnf
 export-declaration:
@@ -136,7 +136,7 @@ not appear directly or indirectly within an unnamed namespace or a
 effects of its *name-declaration*, *declaration-seq* (if any), or
 *module-import-declaration*. The *name-declaration* of an
 *export-declaration* shall not declare a partial specialization
-[temp.decls.general]. The *declaration-seq* of an *export-declaration*
+[[temp.decls.general]]. The *declaration-seq* of an *export-declaration*
 shall not contain an *export-declaration* or
 *module-import-declaration*.
 
@@ -148,8 +148,8 @@ A declaration is *exported* if it is declared within an
 
 - a *namespace-definition* that contains an exported declaration, or
 
-- a declaration within a header unit [module.import] that introduces at
-  least one name.
+- a declaration within a header unit [[module.import]] that introduces
+  at least one name.
 
 If an exported declaration is not within a header unit, it shall not
 declare a name with internal linkage.
@@ -158,7 +158,7 @@ declare a name with internal linkage.
 
 — *end example*\]
 
-If an exported declaration is a *using-declaration* [namespace.udecl]
+If an exported declaration is a *using-declaration* [[namespace.udecl]]
 and is not within a header unit, all entities to which all of the
 *using-declarator* ultimately refer (if any) shall have been introduced
 with a name having external linkage.
@@ -191,9 +191,9 @@ export struct S;                // error: exported declaration follows non-expor
 — *end example*\]
 
 \[*Note 3*: Names introduced by exported declarations have either
-external linkage or no linkage; see [basic.link]. Namespace-scope
+external linkage or no linkage; see [[basic.link]]. Namespace-scope
 declarations exported by a module can be found by name lookup in any
-translation unit importing that module [basic.lookup]. Class and
+translation unit importing that module [[basic.lookup]]. Class and
 enumeration member names can be found by name lookup in any context in
 which a definition of the type is reachable. — *end note*\]
 
@@ -204,12 +204,12 @@ which a definition of the type is reachable. — *end note*\]
 \[*Note 4*:
 
 Declarations in an exported *namespace-definition* or in an exported
-*linkage-specification* [dcl.link] are exported and subject to the rules
-of exported declarations.
+*linkage-specification* [[dcl.link]] are exported and subject to the
+rules of exported declarations.
 
 — *end note*\]
 
-## Import declaration <a id="module.import">[module.import]</a>
+## Import declaration <a id="module.import">[[module.import]]</a>
 
 ``` bnf
 module-import-declaration:
@@ -230,9 +230,9 @@ A *module-import-declaration* *imports* a set of translation units
 determined as described below.
 
 \[*Note 1*: Namespace-scope declarations exported by the imported
-translation units can be found by name lookup [basic.lookup] in the
+translation units can be found by name lookup [[basic.lookup]] in the
 importing translation unit and declarations within the imported
-translation units become reachable [module.reach] in the importing
+translation units become reachable [[module.reach]] in the importing
 translation unit after the import declaration. — *end note*\]
 
 A *module-import-declaration* that specifies a *module-name* `M` imports
@@ -245,20 +245,21 @@ module `M`. Such a declaration imports the so-named module partition of
 
 A *module-import-declaration* that specifies a *header-name* `H` imports
 a synthesized *header unit*, which is a translation unit formed by
-applying phases 1 to 7 of translation [lex.phases] to the source file or
-header nominated by `H`, which shall not contain a *module-declaration*.
+applying phases 1 to 7 of translation [[lex.phases]] to the source file
+or header nominated by `H`, which shall not contain a
+*module-declaration*.
 
 \[*Note 2*: All declarations within a header unit are implicitly
-exported [module.interface], and are attached to the global module
-[module.unit]. — *end note*\]
+exported [[module.interface]], and are attached to the global module
+[[module.unit]]. — *end note*\]
 
 An *importable header* is a member of an *implementation-defined* set of
-headers that includes all importable C++ library headers [headers]. `H`
-shall identify an importable header. Given two such
+headers that includes all importable C++ library headers [[headers]].
+`H` shall identify an importable header. Given two such
 *module-import-declaration*:
 
 - if their *header-name* identify different headers or source files
-  [cpp.include], they import distinct header units;
+  [[cpp.include]], they import distinct header units;
 
 - otherwise, if they appear in the same translation unit, they import
   the same header unit;
@@ -272,15 +273,15 @@ shall identify an importable header. Given two such
 \[*Note 3*: A *module-import-declaration* nominating a *header-name* is
 also recognized by the preprocessor, and results in macros defined at
 the end of phase 4 of translation of the header unit being made visible
-as described in [cpp.import]. Any other *module-import-declaration* does
-not make macros visible. — *end note*\]
+as described in [[cpp.import]]. Any other *module-import-declaration*
+does not make macros visible. — *end note*\]
 
 A declaration of a name with internal linkage is permitted within a
 header unit despite all declarations being implicitly exported
-[module.interface].
+[[module.interface]].
 
 \[*Note 4*: A definition that appears in multiple translation units
-cannot in general refer to such names [basic.def.odr]. — *end note*\]
+cannot in general refer to such names [[basic.def.odr]]. — *end note*\]
 
 A header unit shall not contain a definition of a non-inline function or
 variable whose name has external linkage.
@@ -298,8 +299,8 @@ units.
 
 \[*Note 5*: Such indirect importation does not make macros available,
 because a translation unit is a sequence of tokens in translation phase
-7 [lex.phases]. Macros can be made available by directly importing
-header units as described in [cpp.import]. — *end note*\]
+7 [[lex.phases]]. Macros can be made available by directly importing
+header units as described in [[cpp.import]]. — *end note*\]
 
 A module implementation unit shall not be exported.
 
@@ -330,7 +331,7 @@ have an interface dependency on itself.
 
 — *end example*\]
 
-## Global module fragment <a id="module.global.frag">[module.global.frag]</a>
+## Global module fragment <a id="module.global.frag">[[module.global.frag]]</a>
 
 ``` bnf
 global-module-fragment:
@@ -338,7 +339,8 @@ global-module-fragment:
 ```
 
 \[*Note 1*: Prior to phase 4 of translation, only preprocessing
-directives can appear in the *declaration-seq* [cpp.pre]. — *end note*\]
+directives can appear in the *declaration-seq*
+[[cpp.pre]]. — *end note*\]
 
 A *global-module-fragment* specifies the contents of the
 *global module fragment* for a module unit. The global module fragment
@@ -353,12 +355,12 @@ translation unit if:
   *concept-name* naming D, or
 
 - D declares a function or function template that is named by an
-  expression [basic.def.odr] appearing in S, or
+  expression [[basic.def.odr]] appearing in S, or
 
-- S contains a dependent call `E` [temp.dep] and D is found by any name
-  lookup performed for an expression synthesized from `E` by replacing
-  each type-dependent argument or operand with a value of a placeholder
-  type with no associated namespaces or entities, or
+- S contains a dependent call `E` [[temp.dep]] and D is found by any
+  name lookup performed for an expression synthesized from `E` by
+  replacing each type-dependent argument or operand with a value of a
+  placeholder type with no associated namespaces or entities, or
 
   \[*Note 2*: This includes the lookup for `operator==` performed when
   considering rewriting an `!=` expression, the lookup for `operator<=>`
@@ -367,7 +369,7 @@ translation unit if:
   rewrite target. — *end note*\]
 
 - S contains an expression that takes the address of an overload set
-  [over.over] that contains D and for which the target type is
+  [[over.over]] that contains D and for which the target type is
   dependent, or
 
 - there exists a declaration M that is not a *namespace-definition* for
@@ -420,9 +422,9 @@ A declaration `D` in a global module fragment of a module unit is
 
 \[*Note 2*: A discarded declaration is neither reachable nor visible to
 name lookup outside the module unit, nor in template instantiations
-whose points of instantiation [temp.point] are outside the module unit,
-even when the instantiation context [module.context] includes the module
-unit. — *end note*\]
+whose points of instantiation [[temp.point]] are outside the module
+unit, even when the instantiation context [[module.context]] includes
+the module unit. — *end note*\]
 
 \[*Example 1*:
 
@@ -449,7 +451,7 @@ void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 
 — *end example*\]
 
-## Private module fragment <a id="module.private.frag">[module.private.frag]</a>
+## Private module fragment <a id="module.private.frag">[[module.private.frag]]</a>
 
 ``` bnf
 private-module-fragment:
@@ -457,7 +459,7 @@ private-module-fragment:
 ```
 
 A *private-module-fragment* shall appear only in a primary module
-interface unit [module.unit]. A module unit with a
+interface unit [[module.unit]]. A module unit with a
 *private-module-fragment* shall be the only module unit of its module;
 no diagnostic is required.
 
@@ -471,20 +473,21 @@ reachable to importers. The presence of a *private-module-fragment*
 affects:
 
 - the point by which the definition of an inline function or variable is
-  required [dcl.inline],
+  required [[dcl.inline]],
 
 - the point by which the definition of an exported function with a
-  placeholder return type is required [dcl.spec.auto],
+  placeholder return type is required [[dcl.spec.auto]],
 
-- whether a declaration is required not to be an exposure [basic.link],
+- whether a declaration is required not to be an exposure
+  [[basic.link]],
 
 - where definitions for inline functions and templates must appear
-  [basic.def.odr], [dcl.inline], [temp.pre],
+  [[basic.def.odr]], [[dcl.inline]], [[temp.pre]],
 
 - the instantiation contexts of templates instantiated before it
-  [module.context], and
+  [[module.context]], and
 
-- the reachability of declarations within it [module.reach].
+- the reachability of declarations within it [[module.reach]].
 
 — *end note*\]
 
@@ -514,22 +517,22 @@ void fn_s() {}
 
 — *end example*\]
 
-## Instantiation context <a id="module.context">[module.context]</a>
+## Instantiation context <a id="module.context">[[module.context]]</a>
 
 The *instantiation context* is a set of points within the program that
 determines which declarations are found by argument-dependent name
-lookup [basic.lookup.argdep] and which are reachable [module.reach] in
-the context of a particular declaration or template instantiation.
+lookup [[basic.lookup.argdep]] and which are reachable [[module.reach]]
+in the context of a particular declaration or template instantiation.
 
 During the implicit definition of a defaulted function
-[special], [class.compare.default], the instantiation context is the
+[[special]], [[class.compare.default]], the instantiation context is the
 union of the instantiation context from the definition of the class and
 the instantiation context of the program construct that resulted in the
 implicit definition of the defaulted function.
 
 During the implicit instantiation of a template whose point of
 instantiation is specified as that of an enclosing specialization
-[temp.point], the instantiation context is the union of the
+[[temp.point]], the instantiation context is the union of the
 instantiation context of the enclosing specialization and, if the
 template is defined in a module interface unit of a module M and the
 point of instantiation is not in a module interface unit of M, the point
@@ -559,7 +562,7 @@ comprises
 
 - the point of the call to `f(0)`,
 
-so the definition of `X` is reachable [module.reach].
+so the definition of `X` is reachable [[module.reach]].
 
 It is unspecified whether the call to `g(0)` is valid: the instantiation
 context of `bar<int, X>` comprises
@@ -571,21 +574,21 @@ context of `bar<int, X>` comprises
 - the point of the call to `g(0)`,
 
 so the definition of `X` need not be reachable, as described in
-[module.reach].
+[[module.reach]].
 
 — *end example*\]
 
-## Reachability <a id="module.reach">[module.reach]</a>
+## Reachability <a id="module.reach">[[module.reach]]</a>
 
 A translation unit U is *necessarily reachable* from a point P if U is a
 module interface unit on which the translation unit containing P has an
 interface dependency, or the translation unit containing P imports U, in
-either case prior to P [module.import].
+either case prior to P [[module.import]].
 
 \[*Note 1*: While module interface units are reachable even when they
 are only transitively imported via a non-exported import declaration,
 namespace-scope names from such module interface units are not found by
-name lookup [basic.lookup]. — *end note*\]
+name lookup [[basic.lookup]]. — *end note*\]
 
 All translation units that are necessarily reachable are *reachable*.
 Additional translation units on which the point within the program has
@@ -600,12 +603,12 @@ A declaration D is *reachable from* a point P if
 
 - D appears prior to P in the same translation unit, or
 
-- D is not discarded [module.global.frag], appears in a translation unit
-  that is reachable from P, and does not appear within a
+- D is not discarded [[module.global.frag]], appears in a translation
+  unit that is reachable from P, and does not appear within a
   *private-module-fragment*.
 
 A declaration is *reachable* if it is reachable from any point in the
-instantiation context [module.context].
+instantiation context [[module.context]].
 
 \[*Note 3*: Whether a declaration is exported has no bearing on whether
 it is reachable. — *end note*\]
@@ -632,30 +635,30 @@ cannot be found by name lookup. — *end note*\]
 — *end example*\]
 
 <!-- Link reference definitions -->
-[basic.def.odr]: basic.md#basic.def.odr
-[basic.link]: basic.md#basic.link
-[basic.lookup]: basic.md#basic.lookup
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[class.compare.default]: class.md#class.compare.default
-[cpp.import]: cpp.md#cpp.import
-[cpp.include]: cpp.md#cpp.include
-[cpp.pre]: cpp.md#cpp.pre
-[dcl.inline]: dcl.md#dcl.inline
-[dcl.link]: dcl.md#dcl.link
-[dcl.spec.auto]: dcl.md#dcl.spec.auto
-[headers]: library.md#headers
-[lex.name]: lex.md#lex.name
-[lex.phases]: lex.md#lex.phases
-[module.context]: #module.context
-[module.global.frag]: #module.global.frag
-[module.import]: #module.import
-[module.interface]: #module.interface
-[module.reach]: #module.reach
-[module.unit]: #module.unit
-[namespace.udecl]: dcl.md#namespace.udecl
-[over.over]: over.md#over.over
-[special]: class.md#special
-[temp.decls.general]: temp.md#temp.decls.general
-[temp.dep]: temp.md#temp.dep
-[temp.point]: temp.md#temp.point
-[temp.pre]: temp.md#temp.pre
+[[basic.def.odr]]: basic.md#basic.def.odr
+[[basic.link]]: basic.md#basic.link
+[[basic.lookup]]: basic.md#basic.lookup
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[class.compare.default]]: class.md#class.compare.default
+[[cpp.import]]: cpp.md#cpp.import
+[[cpp.include]]: cpp.md#cpp.include
+[[cpp.pre]]: cpp.md#cpp.pre
+[[dcl.inline]]: dcl.md#dcl.inline
+[[dcl.link]]: dcl.md#dcl.link
+[[dcl.spec.auto]]: dcl.md#dcl.spec.auto
+[[headers]]: library.md#headers
+[[lex.name]]: lex.md#lex.name
+[[lex.phases]]: lex.md#lex.phases
+[[module.context]]: #module.context
+[[module.global.frag]]: #module.global.frag
+[[module.import]]: #module.import
+[[module.interface]]: #module.interface
+[[module.reach]]: #module.reach
+[[module.unit]]: #module.unit
+[[namespace.udecl]]: dcl.md#namespace.udecl
+[[over.over]]: over.md#over.over
+[[special]]: class.md#special
+[[temp.decls.general]]: temp.md#temp.decls.general
+[[temp.dep]]: temp.md#temp.dep
+[[temp.point]]: temp.md#temp.point
+[[temp.pre]]: temp.md#temp.pre

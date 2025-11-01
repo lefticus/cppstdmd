@@ -3,28 +3,28 @@ current_file: ranges
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Ranges library <a id="ranges">[ranges]</a>
+# Ranges library <a id="ranges">[[ranges]]</a>
 
-## General <a id="ranges.general">[ranges.general]</a>
+## General <a id="ranges.general">[[ranges.general]]</a>
 
 This Clause describes components for dealing with ranges of elements.
 
 The following subclauses describe range and view requirements, and
 components for range primitives and range generators as summarized in
-[range.summary].
+[[range.summary]].
 
 **Table: Ranges library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [range.access] | Range access | `<ranges>` |
-| [range.req] | Requirements |
-| [range.utility] | Range utilities |
-| [range.factories] | Range factories |
-| [range.adaptors] | Range adaptors |
-| [coro.generator] | Range generators | `<generator>` |
+| [[range.access]] | Range access | `<ranges>` |
+| [[range.req]] | Requirements |
+| [[range.utility]] | Range utilities |
+| [[range.factories]] | Range factories |
+| [[range.adaptors]] | Range adaptors |
+| [[coro.generator]] | Range generators | `<generator>` |
 
-## Header `<ranges>` synopsis <a id="ranges.syn">[ranges.syn]</a>
+## Header `<ranges>` synopsis <a id="ranges.syn">[[ranges.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -573,7 +573,7 @@ namespace std {
 ```
 
 Within this Clause, for an integer-like type `X`
-[iterator.concept.winc], `make-unsigned-like-t<X>` denotes
+[[iterator.concept.winc]], `make-unsigned-like-t<X>` denotes
 `make_unsigned_t<X>` if `X` is an integer type; otherwise, it denotes a
 corresponding unspecified unsigned-integer-like type of the same width
 as `X`. For an expression `x` of type `X`, `to-unsigned-like(x)` is `x`
@@ -584,26 +584,26 @@ type `X` denotes `make_signed_t<X>` if `X` is an integer type;
 otherwise, it denotes a corresponding unspecified signed-integer-like
 type of the same width as `X`.
 
-## Range access <a id="range.access">[range.access]</a>
+## Range access <a id="range.access">[[range.access]]</a>
 
-### General <a id="range.access.general">[range.access.general]</a>
+### General <a id="range.access.general">[[range.access.general]]</a>
 
 In addition to being available via inclusion of the `<ranges>` header,
-the customization point objects in [range.access] are available when
+the customization point objects in [[range.access]] are available when
 `<iterator>` is included.
 
-Within [range.access], the *reified object* of a subexpression `E`
+Within [[range.access]], the *reified object* of a subexpression `E`
 denotes
 
 - the same object as `E` if `E` is a glvalue, or
 
 - the result of applying the temporary materialization conversion
-  [conv.rval] to `E` otherwise.
+  [[conv.rval]] to `E` otherwise.
 
-### `ranges::begin` <a id="range.access.begin">[range.access.begin]</a>
+### `ranges::begin` <a id="range.access.begin">[[range.access.begin]]</a>
 
 The name `ranges::begin` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -611,7 +611,7 @@ denotes the reified object for `E`. Then:
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::begin(E)` is ill-formed.
 
-- Otherwise, if `T` is an array type [term.array.type] and
+- Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::begin(E)` is
   ill-formed with no diagnostic required.
 
@@ -625,7 +625,7 @@ denotes the reified object for `E`. Then:
 - Otherwise, if `T` is a class or enumeration type and `auto(begin(t))`
   is a valid expression whose type models `input_or_output_iterator`
   where the meaning of `begin` is established as-if by performing
-  argument-dependent lookup only [basic.lookup.argdep], then
+  argument-dependent lookup only [[basic.lookup.argdep]], then
   `ranges::begin(E)` is expression-equivalent to that expression.
 
 - Otherwise, `ranges::begin(E)` is ill-formed.
@@ -637,10 +637,10 @@ template instantiation. — *end note*\]
 \[*Note 2*: Whenever `ranges::begin(E)` is a valid expression, its type
 models `input_or_output_iterator`. — *end note*\]
 
-### `ranges::end` <a id="range.access.end">[range.access.end]</a>
+### `ranges::end` <a id="range.access.end">[[range.access.end]]</a>
 
 The name `ranges::end` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -648,7 +648,7 @@ denotes the reified object for `E`. Then:
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::end(E)` is ill-formed.
 
-- Otherwise, if `T` is an array type [term.array.type] and
+- Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::end(E)` is
   ill-formed with no diagnostic required.
 
@@ -665,7 +665,7 @@ denotes the reified object for `E`. Then:
 - Otherwise, if `T` is a class or enumeration type and `auto(end(t))` is
   a valid expression whose type models `sentinel_for<iterator_t<T>>`
   where the meaning of `end` is established as-if by performing
-  argument-dependent lookup only [basic.lookup.argdep], then
+  argument-dependent lookup only [[basic.lookup.argdep]], then
   `ranges::end(E)` is expression-equivalent to that expression.
 
 - Otherwise, `ranges::end(E)` is ill-formed.
@@ -678,10 +678,10 @@ template instantiation. — *end note*\]
 `S` and `I` of `ranges::end(E)` and `ranges::begin(E)` model
 `sentinel_for<S, I>`. — *end note*\]
 
-### `ranges::cbegin` <a id="range.access.cbegin">[range.access.cbegin]</a>
+### `ranges::cbegin` <a id="range.access.cbegin">[[range.access.cbegin]]</a>
 
 The name `ranges::cbegin` denotes a customization point object
-[customization.point.object]. Given a subexpression `E` with type `T`,
+[[customization.point.object]]. Given a subexpression `E` with type `T`,
 let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
@@ -695,10 +695,10 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 models `input_or_output_iterator` and
 `constant-iterator`. — *end note*\]
 
-### `ranges::cend` <a id="range.access.cend">[range.access.cend]</a>
+### `ranges::cend` <a id="range.access.cend">[[range.access.cend]]</a>
 
 The name `ranges::cend` denotes a customization point object
-[customization.point.object]. Given a subexpression `E` with type `T`,
+[[customization.point.object]]. Given a subexpression `E` with type `T`,
 let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
@@ -713,10 +713,10 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 model `sentinel_for<S, I>`. If `S` models `input_iterator`, then `S`
 also models *exposition only*. — *end note*\]
 
-### `ranges::rbegin` <a id="range.access.rbegin">[range.access.rbegin]</a>
+### `ranges::rbegin` <a id="range.access.rbegin">[[range.access.rbegin]]</a>
 
 The name `ranges::rbegin` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -724,7 +724,7 @@ denotes the reified object for `E`. Then:
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::rbegin(E)` is ill-formed.
 
-- Otherwise, if `T` is an array type [term.array.type] and
+- Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::rbegin(E)`
   is ill-formed with no diagnostic required.
 
@@ -735,13 +735,13 @@ denotes the reified object for `E`. Then:
 - Otherwise, if `T` is a class or enumeration type and `auto(rbegin(t))`
   is a valid expression whose type models `input_or_output_iterator`
   where the meaning of `rbegin` is established as-if by performing
-  argument-dependent lookup only [basic.lookup.argdep], then
+  argument-dependent lookup only [[basic.lookup.argdep]], then
   `ranges::rbegin(E)` is expression-equivalent to that expression.
 
 - Otherwise, if both `ranges::begin(t)` and `ranges::end(t)` are valid
   expressions of the same type which models `bidirectional_iterator`
-  [iterator.concept.bidir], `ranges::rbegin(E)` is expression-equivalent
-  to `make_reverse_iterator(ranges::end(t))`.
+  [[iterator.concept.bidir]], `ranges::rbegin(E)` is
+  expression-equivalent to `make_reverse_iterator(ranges::end(t))`.
 
 - Otherwise, `ranges::rbegin(E)` is ill-formed.
 
@@ -752,10 +752,10 @@ template instantiation. — *end note*\]
 \[*Note 8*: Whenever `ranges::rbegin(E)` is a valid expression, its type
 models `input_or_output_iterator`. — *end note*\]
 
-### `ranges::rend` <a id="range.access.rend">[range.access.rend]</a>
+### `ranges::rend` <a id="range.access.rend">[[range.access.rend]]</a>
 
 The name `ranges::rend` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -763,7 +763,7 @@ denotes the reified object for `E`. Then:
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::rend(E)` is ill-formed.
 
-- Otherwise, if `T` is an array type [term.array.type] and
+- Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::rend(E)` is
   ill-formed with no diagnostic required.
 
@@ -775,12 +775,12 @@ denotes the reified object for `E`. Then:
   is a valid expression whose type models
   `sentinel_for<decltype(ranges::rbegin(E))>` where the meaning of
   `rend` is established as-if by performing argument-dependent lookup
-  only [basic.lookup.argdep], then `ranges::rend(E)` is
+  only [[basic.lookup.argdep]], then `ranges::rend(E)` is
   expression-equivalent to that expression.
 
 - Otherwise, if both `ranges::begin(t)` and `ranges::end(t)` are valid
   expressions of the same type which models `bidirectional_iterator`
-  [iterator.concept.bidir], then `ranges::rend(E)` is
+  [[iterator.concept.bidir]], then `ranges::rend(E)` is
   expression-equivalent to `make_reverse_iterator(ranges::begin(t))`.
 
 - Otherwise, `ranges::rend(E)` is ill-formed.
@@ -793,10 +793,10 @@ template instantiation. — *end note*\]
 `S` and `I` of the expressions `ranges::rend(E)` and `ranges::rbegin(E)`
 model `sentinel_for<S, I>`. — *end note*\]
 
-### `ranges::crbegin` <a id="range.access.crbegin">[range.access.crbegin]</a>
+### `ranges::crbegin` <a id="range.access.crbegin">[[range.access.crbegin]]</a>
 
 The name `ranges::crbegin` denotes a customization point object
-[customization.point.object]. Given a subexpression `E` with type `T`,
+[[customization.point.object]]. Given a subexpression `E` with type `T`,
 let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
@@ -810,10 +810,10 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 type models `input_or_output_iterator` and
 `constant-iterator`. — *end note*\]
 
-### `ranges::crend` <a id="range.access.crend">[range.access.crend]</a>
+### `ranges::crend` <a id="range.access.crend">[[range.access.crend]]</a>
 
 The name `ranges::crend` denotes a customization point object
-[customization.point.object]. Given a subexpression `E` with type `T`,
+[[customization.point.object]]. Given a subexpression `E` with type `T`,
 let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
@@ -828,36 +828,36 @@ types `S` and `I` of the expressions `ranges::crend(E)` and
 `ranges::crbegin(E)` model `sentinel_for<S, I>`. If `S` models
 `input_iterator`, then `S` also models *exposition only*. — *end note*\]
 
-### `ranges::size` <a id="range.prim.size">[range.prim.size]</a>
+### `ranges::size` <a id="range.prim.size">[[range.prim.size]]</a>
 
 The name `ranges::size` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
 
-- If `T` is an array of unknown bound [term.array.type],
+- If `T` is an array of unknown bound [[term.array.type]],
   `ranges::size(E)` is ill-formed.
 
 - Otherwise, if `T` is an array type, `ranges::size(E)` is
   expression-equivalent to `auto(extent_v<T>)`.
 
-- Otherwise, if `disable_sized_range<remove_cv_t<T>>` [range.sized] is
+- Otherwise, if `disable_sized_range<remove_cv_t<T>>` [[range.sized]] is
   `false` and `auto(t.size())` is a valid expression of integer-like
-  type [iterator.concept.winc], `ranges::size(E)` is
+  type [[iterator.concept.winc]], `ranges::size(E)` is
   expression-equivalent to `auto(t.size())`.
 
 - Otherwise, if `T` is a class or enumeration type,
   `disable_sized_range<remove_cv_t<T>>` is `false` and `auto(size(t))`
   is a valid expression of integer-like type where the meaning of `size`
   is established as-if by performing argument-dependent lookup only
-  [basic.lookup.argdep], then `ranges::size(E)` is expression-equivalent
-  to that expression.
+  [[basic.lookup.argdep]], then `ranges::size(E)` is
+  expression-equivalent to that expression.
 
 - Otherwise, if `to-unsigned-like(ranges::end(t) - ranges::begin(t))`
-  [ranges.syn] is a valid expression and the types `I` and `S` of
+  [[ranges.syn]] is a valid expression and the types `I` and `S` of
   `ranges::begin(t)` and `ranges::end(t)` (respectively) model both
-  `sized_sentinel_for<S, I>` [iterator.concept.sizedsentinel] and
+  `sized_sentinel_for<S, I>` [[iterator.concept.sizedsentinel]] and
   `forward_iterator<I>`, then `ranges::size(E)` is expression-equivalent
   to `to-unsigned-like(ranges::end(t) - ranges::begin(t))`.
 
@@ -870,10 +870,10 @@ template instantiation. — *end note*\]
 \[*Note 14*: Whenever `ranges::size(E)` is a valid expression, its type
 is integer-like. — *end note*\]
 
-### `ranges::ssize` <a id="range.prim.ssize">[range.prim.ssize]</a>
+### `ranges::ssize` <a id="range.prim.ssize">[[range.prim.ssize]]</a>
 
 The name `ranges::ssize` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. If `ranges::size(t)` is ill-formed,
@@ -882,15 +882,15 @@ denotes the reified object for `E`. If `ranges::size(t)` is ill-formed,
 wider than that type; `ranges::ssize(E)` is expression-equivalent to
 `static_cast<D>(ranges::size(t))`.
 
-### `ranges::empty` <a id="range.prim.empty">[range.prim.empty]</a>
+### `ranges::empty` <a id="range.prim.empty">[[range.prim.empty]]</a>
 
 The name `ranges::empty` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
 
-- If `T` is an array of unknown bound [term.array.type],
+- If `T` is an array of unknown bound [[term.array.type]],
   `ranges::empty(E)` is ill-formed.
 
 - Otherwise, if `bool(t.empty())` is a valid expression,
@@ -914,10 +914,10 @@ template instantiation. — *end note*\]
 \[*Note 16*: Whenever `ranges::empty(E)` is a valid expression, it has
 type `bool`. — *end note*\]
 
-### `ranges::data` <a id="range.prim.data">[range.prim.data]</a>
+### `ranges::data` <a id="range.prim.data">[[range.prim.data]]</a>
 
 The name `ranges::data` denotes a customization point object
-[customization.point.object].
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -925,7 +925,7 @@ denotes the reified object for `E`. Then:
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::data(E)` is ill-formed.
 
-- Otherwise, if `T` is an array type [term.array.type] and
+- Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::data(E)` is
   ill-formed with no diagnostic required.
 
@@ -946,7 +946,7 @@ template instantiation. — *end note*\]
 \[*Note 18*: Whenever `ranges::data(E)` is a valid expression, it has
 pointer to object type. — *end note*\]
 
-### `ranges::cdata` <a id="range.prim.cdata">[range.prim.cdata]</a>
+### `ranges::cdata` <a id="range.prim.cdata">[[range.prim.cdata]]</a>
 
 ``` cpp
 template<class T>
@@ -954,7 +954,7 @@ constexpr auto as-const-pointer(const T* p) { return p; }   // exposition only
 ```
 
 The name `ranges::cdata` denotes a customization point object
-[customization.point.object]. Given a subexpression `E` with type `T`,
+[[customization.point.object]]. Given a subexpression `E` with type `T`,
 let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
@@ -966,19 +966,19 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 \[*Note 19*: Whenever `ranges::cdata(E)` is a valid expression, it has
 pointer to constant object type. — *end note*\]
 
-## Range requirements <a id="range.req">[range.req]</a>
+## Range requirements <a id="range.req">[[range.req]]</a>
 
-### General <a id="range.req.general">[range.req.general]</a>
+### General <a id="range.req.general">[[range.req.general]]</a>
 
 Ranges are an abstraction that allows a C++ program to operate on
 elements of data structures uniformly. Calling `ranges::begin` on a
 range returns an object whose type models `input_or_output_iterator`
-[iterator.concept.iterator]. Calling `ranges::end` on a range returns an
-object whose type `S`, together with the type `I` of the object returned
-by `ranges::begin`, models `sentinel_for<S, I>`. The library formalizes
-the interfaces, semantics, and complexity of ranges to enable algorithms
-and range adaptors that work efficiently on different types of
-sequences.
+[[iterator.concept.iterator]]. Calling `ranges::end` on a range returns
+an object whose type `S`, together with the type `I` of the object
+returned by `ranges::begin`, models `sentinel_for<S, I>`. The library
+formalizes the interfaces, semantics, and complexity of ranges to enable
+algorithms and range adaptors that work efficiently on different types
+of sequences.
 
 The `range` concept requires that `ranges::begin` and `ranges::end`
 return an iterator and a sentinel, respectively. The `sized_range`
@@ -990,11 +990,11 @@ Several refinements of `range` group requirements that arise frequently
 in concepts and algorithms. Common ranges are ranges for which
 `ranges::begin` and `ranges::end` return objects of the same type.
 Random access ranges are ranges for which `ranges::begin` returns a type
-that models `random_access_iterator` [iterator.concept.random.access].
+that models `random_access_iterator` [[iterator.concept.random.access]].
 (Contiguous, bidirectional, forward, input, and output ranges are
 defined similarly.) Viewable ranges can be converted to views.
 
-### Ranges <a id="range.range">[range.range]</a>
+### Ranges <a id="range.range">[[range.range]]</a>
 
 The `range` concept defines the requirements of a type that allows
 iteration over its elements by providing an iterator and sentinel that
@@ -1074,7 +1074,7 @@ template<class>
 >
 > — *end example*\]
 
-### Sized ranges <a id="range.sized">[range.sized]</a>
+### Sized ranges <a id="range.sized">[[range.sized]]</a>
 
 The `sized_range` concept refines `range` with the requirement that the
 number of elements in the range can be determined in amortized constant
@@ -1118,11 +1118,11 @@ template<class>
 > library that satisfy but do not in fact model
 > `sized_range`. — *end note*\]
 
-### Views <a id="range.view">[range.view]</a>
+### Views <a id="range.view">[[range.view]]</a>
 
 The `view` concept specifies the requirements of a `range` type that has
 the semantic properties below, which make it suitable for use in
-constructing range adaptor pipelines [range.adaptors].
+constructing range adaptor pipelines [[range.adaptors]].
 
 ``` cpp
 template<class T>
@@ -1192,11 +1192,11 @@ template<class T>
 > usable in constant expressions\[expr.const\] and have type
 > `const bool`.
 
-### Other range refinements <a id="range.refinements">[range.refinements]</a>
+### Other range refinements <a id="range.refinements">[[range.refinements]]</a>
 
 The `output_range` concept specifies requirements of a `range` type for
 which `ranges::begin` returns a model of `output_iterator`
-[iterator.concept.output]. `input_range`, `forward_range`,
+[[iterator.concept.output]]. `input_range`, `forward_range`,
 `bidirectional_range`, and `random_access_range` are defined similarly.
 
 ``` cpp
@@ -1222,7 +1222,7 @@ template<class T>
 ```
 
 `contiguous_range` additionally requires that the `ranges::data`
-customization point object [range.prim.data] is usable with the range.
+customization point object [[range.prim.data]] is usable with the range.
 
 ``` cpp
 template<class T>
@@ -1240,7 +1240,7 @@ Given an expression `t` such that `decltype((t))` is `T&`, `T` models
 The `common_range` concept specifies requirements of a `range` type for
 which `ranges::begin` and `ranges::end` return objects of the same type.
 
-\[*Example 1*: The standard containers [containers] model
+\[*Example 1*: The standard containers [[containers]] model
 `common_range`. — *end example*\]
 
 ``` cpp
@@ -1278,16 +1278,16 @@ template<class T>
     input_range<T> && constant-iterator<iterator_t<T>>;
 ```
 
-## Range utilities <a id="range.utility">[range.utility]</a>
+## Range utilities <a id="range.utility">[[range.utility]]</a>
 
-### General <a id="range.utility.general">[range.utility.general]</a>
+### General <a id="range.utility.general">[[range.utility.general]]</a>
 
-The components in [range.utility] are general utilities for representing
-and manipulating ranges.
+The components in [[range.utility]] are general utilities for
+representing and manipulating ranges.
 
-### Helper concepts <a id="range.utility.helpers">[range.utility.helpers]</a>
+### Helper concepts <a id="range.utility.helpers">[[range.utility.helpers]]</a>
 
-Many of the types in subclause  [range.utility] are specified in terms
+Many of the types in subclause  [[range.utility]] are specified in terms
 of the following exposition-only concepts:
 
 ``` cpp
@@ -1311,9 +1311,9 @@ template<class R>
     move_constructible<range_rvalue_reference_t<R>>;
 ```
 
-### View interface <a id="view.interface">[view.interface]</a>
+### View interface <a id="view.interface">[[view.interface]]</a>
 
-#### General <a id="view.interface.general">[view.interface.general]</a>
+#### General <a id="view.interface.general">[[view.interface.general]]</a>
 
 The class template `view_interface` is a helper for defining view-like
 types that offer a container-like interface. It is parameterized with
@@ -1410,7 +1410,7 @@ type. Before any member of the resulting specialization of
 shall be complete, and model both `derived_from<view_interface<D>>` and
 `view`.
 
-#### Members <a id="view.interface.members">[view.interface.members]</a>
+#### Members <a id="view.interface.members">[[view.interface.members]]</a>
 
 ``` cpp
 constexpr decltype(auto) front() requires forward_range<D>;
@@ -1439,9 +1439,9 @@ constexpr decltype(auto) back() const
 >
 > Equivalent to: `return *ranges::prev(ranges::end(`*`derived`*`()));`
 
-### Sub-ranges <a id="range.subrange">[range.subrange]</a>
+### Sub-ranges <a id="range.subrange">[[range.subrange]]</a>
 
-#### General <a id="range.subrange.general">[range.subrange.general]</a>
+#### General <a id="range.subrange.general">[[range.subrange.general]]</a>
 
 The `subrange` class template combines together an iterator and a
 sentinel into a single object that models the `view` concept.
@@ -1539,7 +1539,7 @@ namespace std::ranges {
 }
 ```
 
-#### Constructors and conversions <a id="range.subrange.ctor">[range.subrange.ctor]</a>
+#### Constructors and conversions <a id="range.subrange.ctor">[[range.subrange.ctor]]</a>
 
 ``` cpp
 constexpr subrange(convertible-to-non-slicing<I> auto i, S s) requires (!StoreSize);
@@ -1603,7 +1603,7 @@ constexpr operator PairLike() const;
 >
 > Equivalent to: `return PairLike(`*`begin_`*`, `*`end_`*`);`
 
-#### Accessors <a id="range.subrange.access">[range.subrange.access]</a>
+#### Accessors <a id="range.subrange.access">[[range.subrange.access]]</a>
 
 ``` cpp
 constexpr I begin() const requires copyable<I>;
@@ -1736,13 +1736,13 @@ template<size_t N, class I, class S, subrange_kind K>
 >   return r.end();
 > ```
 
-### Dangling iterator handling <a id="range.dangling">[range.dangling]</a>
+### Dangling iterator handling <a id="range.dangling">[[range.dangling]]</a>
 
 The type `dangling` is used together with the template aliases
 `borrowed_iterator_t` and `borrowed_subrange_t`. When an algorithm that
 typically returns an iterator into, or a subrange of, a range argument
 is called with an rvalue range argument that does not model
-`borrowed_range` [range.range], the return value possibly refers to a
+`borrowed_range` [[range.range]], the return value possibly refers to a
 range whose lifetime has ended. In such cases, the type `dangling` is
 returned instead of an iterator or subrange.
 
@@ -1785,7 +1785,7 @@ For a type `R` that models `range`:
 - otherwise, both `borrowed_iterator_t<R>` and `borrowed_subrange_t<R>`
   denote `dangling`.
 
-### Class template `elements_of` <a id="range.elementsof">[range.elementsof]</a>
+### Class template `elements_of` <a id="range.elementsof">[[range.elementsof]]</a>
 
 Specializations of `elements_of` encapsulate a range and act as a tag in
 overload sets to disambiguate when a range should be treated as a
@@ -1818,9 +1818,9 @@ namespace std::ranges {
 }
 ```
 
-### Range conversions <a id="range.utility.conv">[range.utility.conv]</a>
+### Range conversions <a id="range.utility.conv">[[range.utility.conv]]</a>
 
-#### General <a id="range.utility.conv.general">[range.utility.conv.general]</a>
+#### General <a id="range.utility.conv.general">[[range.utility.conv.general]]</a>
 
 The range conversion functions construct an object (usually a container)
 from a range, by using a constructor taking a range, a `from_range_t`
@@ -1876,7 +1876,7 @@ constexpr auto container-inserter(Container& c) {                // exposition o
 }
 ```
 
-#### `ranges::to` <a id="range.utility.conv.to">[range.utility.conv.to]</a>
+#### `ranges::to` <a id="range.utility.conv.to">[[range.utility.conv.to]]</a>
 
 ``` cpp
 template<class C, input_range R, class... Args> requires (!view<C>)
@@ -1986,7 +1986,7 @@ template<template<class...> class C, input_range R, class... Args>
 >
 > `to<decltype(`*`DEDUCE_EXPR`*`)>(std::forward<R>(r), std::forward<Args>(args)...)`.
 
-#### `ranges::to` adaptors <a id="range.utility.conv.adaptors">[range.utility.conv.adaptors]</a>
+#### `ranges::to` adaptors <a id="range.utility.conv.adaptors">[[range.utility.conv.adaptors]]</a>
 
 ``` cpp
 template<class C, class... Args> requires (!view<C>)
@@ -2015,18 +2015,18 @@ template<template<class...> class C, class... Args>
 > - Its call pattern is `to<C>(r, bound_args...)`, where `r` is the
 >   argument used in a function call expression of `f`.
 
-## Range factories <a id="range.factories">[range.factories]</a>
+## Range factories <a id="range.factories">[[range.factories]]</a>
 
-### General <a id="range.factories.general">[range.factories.general]</a>
+### General <a id="range.factories.general">[[range.factories.general]]</a>
 
-Subclause [range.factories] defines *range factories*, which are
+Subclause [[range.factories]] defines *range factories*, which are
 utilities to create a view.
 
 Range factories are declared in namespace `std::ranges::views`.
 
-### Empty view <a id="range.empty">[range.empty]</a>
+### Empty view <a id="range.empty">[[range.empty]]</a>
 
-#### Overview <a id="range.empty.overview">[range.empty.overview]</a>
+#### Overview <a id="range.empty.overview">[[range.empty.overview]]</a>
 
 `empty_view` produces a view of no elements of a particular type.
 
@@ -2040,7 +2040,7 @@ static_assert(0 == e.size());
 
 — *end example*\]
 
-#### Class template `empty_view` <a id="range.empty.view">[range.empty.view]</a>
+#### Class template `empty_view` <a id="range.empty.view">[[range.empty.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -2057,16 +2057,16 @@ namespace std::ranges {
 }
 ```
 
-### Single view <a id="range.single">[range.single]</a>
+### Single view <a id="range.single">[[range.single]]</a>
 
-#### Overview <a id="range.single.overview">[range.single.overview]</a>
+#### Overview <a id="range.single.overview">[[range.single.overview]]</a>
 
 `single_view` produces a view that contains exactly one element of a
 specified value.
 
 The name `views::single` denotes a customization point object
-[customization.point.object]. Given a subexpression `E`, the expression
-`views::single(E)` is expression-equivalent to
+[[customization.point.object]]. Given a subexpression `E`, the
+expression `views::single(E)` is expression-equivalent to
 `single_view<decay_t<decltype((E))>>(E)`.
 
 \[*Example 2*:
@@ -2078,7 +2078,7 @@ for (int i : views::single(4))
 
 — *end example*\]
 
-#### Class template `single_view` <a id="range.single.view">[range.single.view]</a>
+#### Class template `single_view` <a id="range.single.view">[[range.single.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -2172,15 +2172,15 @@ constexpr const T* data() const noexcept;
 >
 > Equivalent to: `return `*`value_`*`.operator->();`
 
-### Iota view <a id="range.iota">[range.iota]</a>
+### Iota view <a id="range.iota">[[range.iota]]</a>
 
-#### Overview <a id="range.iota.overview">[range.iota.overview]</a>
+#### Overview <a id="range.iota.overview">[[range.iota.overview]]</a>
 
 `iota_view` generates a sequence of elements by repeatedly incrementing
 an initial value.
 
 The name `views::iota` denotes a customization point object
-[customization.point.object]. Given subexpressions `E` and `F`, the
+[[customization.point.object]]. Given subexpressions `E` and `F`, the
 expressions `views::iota(E)` and `views::iota(E, F)` are
 expression-equivalent to `iota_view(E)` and `iota_view(E, F)`,
 respectively.
@@ -2194,7 +2194,7 @@ for (int i : views::iota(1, 10))
 
 — *end example*\]
 
-#### Class template `iota_view` <a id="range.iota.view">[range.iota.view]</a>
+#### Class template `iota_view` <a id="range.iota.view">[[range.iota.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -2247,7 +2247,7 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
   than the width of `W` if such a type exists.
 
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
-  [iterator.concept.winc] of width not less than the width of `W`.
+  [[iterator.concept.winc]] of width not less than the width of `W`.
 
   \[*Note 8*: It is unspecified whether this type satisfies
   `weakly_incrementable`. — *end note*\]
@@ -2443,7 +2443,7 @@ constexpr auto size() const requires see below;
 >   sized_sentinel_for<Bound, W>
 > ```
 
-#### Class `iota_view::iterator` <a id="range.iota.iterator">[range.iota.iterator]</a>
+#### Class `iota_view::iterator` <a id="range.iota.iterator">[[range.iota.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -2768,7 +2768,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 > }
 > ```
 
-#### Class `iota_view::sentinel` <a id="range.iota.sentinel">[range.iota.sentinel]</a>
+#### Class `iota_view::sentinel` <a id="range.iota.sentinel">[[range.iota.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -2826,15 +2826,15 @@ friend constexpr iter_difference_t<W> operator-(const sentinel& x, const iterato
 >
 > Equivalent to: `return -(y - x);`
 
-### Repeat view <a id="range.repeat">[range.repeat]</a>
+### Repeat view <a id="range.repeat">[[range.repeat]]</a>
 
-#### Overview <a id="range.repeat.overview">[range.repeat.overview]</a>
+#### Overview <a id="range.repeat.overview">[[range.repeat.overview]]</a>
 
 `repeat_view` generates a sequence of elements by repeatedly producing
 the same value.
 
 The name `views::repeat` denotes a customization point object
-[customization.point.object]. Given subexpressions `E` and `F`, the
+[[customization.point.object]]. Given subexpressions `E` and `F`, the
 expressions `views::repeat(E)` and `views::repeat(E, F)` are
 expression-equivalent to `repeat_view(E)` and `repeat_view(E, F)`,
 respectively.
@@ -2849,7 +2849,7 @@ for (int i : views::repeat(17, 4))
 
 — *end example*\]
 
-#### Class template `repeat_view` <a id="range.repeat.view">[range.repeat.view]</a>
+#### Class template `repeat_view` <a id="range.repeat.view">[[range.repeat.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -2968,7 +2968,7 @@ constexpr auto size() const requires (!same_as<Bound, unreachable_sentinel_t>);
 >
 > Equivalent to: `return `*`to-unsigned-like`*`(`*`bound_`*`);`
 
-#### Class `repeat_view::iterator` <a id="range.repeat.iterator">[range.repeat.iterator]</a>
+#### Class `repeat_view::iterator` <a id="range.repeat.iterator">[[range.repeat.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -3019,7 +3019,7 @@ namespace std::ranges {
 
 If `is-signed-integer-like<index-type>` is `true`, the member
 *typedef-name* `difference_type` denotes *index-type*. Otherwise, it
-denotes `IOTA-DIFF-T(index-type)` [range.iota.view].
+denotes `IOTA-DIFF-T(index-type)` [[range.iota.view]].
 
 *iterator*
 
@@ -3226,15 +3226,15 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 > return static_cast<difference_type>(x.current_) - static_cast<difference_type>(y.current_);
 > ```
 
-### Istream view <a id="range.istream">[range.istream]</a>
+### Istream view <a id="range.istream">[[range.istream]]</a>
 
-#### Overview <a id="range.istream.overview">[range.istream.overview]</a>
+#### Overview <a id="range.istream.overview">[[range.istream.overview]]</a>
 
 `basic_istream_view` models `input_range` and reads (using `operator>>`)
 successive elements from its corresponding input stream.
 
 The name `views::istream<T>` denotes a customization point object
-[customization.point.object]. Given a type `T` and a subexpression `E`
+[[customization.point.object]]. Given a type `T` and a subexpression `E`
 of type `U`, if `U` models
 `derived_from<basic_istream<typename U::char_type,
 typename U::traits_type>>`, then the expression `views::istream<T>(E)`
@@ -3253,7 +3253,7 @@ ranges::copy(views::istream<int>(ints), ostream_iterator<int>{cout, "-"});
 
 — *end example*\]
 
-#### Class template `basic_istream_view` <a id="range.istream.view">[range.istream.view]</a>
+#### Class template `basic_istream_view` <a id="range.istream.view">[[range.istream.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -3302,7 +3302,7 @@ constexpr default_sentinel_t end() const noexcept;
 >
 > Equivalent to: `return default_sentinel;`
 
-#### Class `basic_istream_view::iterator` <a id="range.istream.iterator">[range.istream.iterator]</a>
+#### Class `basic_istream_view::iterator` <a id="range.istream.iterator">[[range.istream.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -3391,14 +3391,14 @@ friend bool operator==(const iterator& x, default_sentinel_t);
 >
 > Equivalent to: `return !*x.`*`parent_`*`->`*`stream_`*`;`
 
-## Range adaptors <a id="range.adaptors">[range.adaptors]</a>
+## Range adaptors <a id="range.adaptors">[[range.adaptors]]</a>
 
-### General <a id="range.adaptors.general">[range.adaptors.general]</a>
+### General <a id="range.adaptors.general">[[range.adaptors.general]]</a>
 
-Subclause [range.adaptors] defines *range adaptors*, which are utilities
-that transform a range into a view with custom behaviors. These adaptors
-can be chained to create pipelines of range transformations that
-evaluate lazily as the resulting view is iterated.
+Subclause [[range.adaptors]] defines *range adaptors*, which are
+utilities that transform a range into a view with custom behaviors.
+These adaptors can be chained to create pipelines of range
+transformations that evaluate lazily as the resulting view is iterated.
 
 Range adaptors are declared in namespace `std::ranges::views`.
 
@@ -3420,7 +3420,7 @@ assert(ranges::equal(ints | views::filter(even), views::filter(ints, even)));
 
 — *end example*\]
 
-### Range adaptor objects <a id="range.adaptor.object">[range.adaptor.object]</a>
+### Range adaptor objects <a id="range.adaptor.object">[[range.adaptor.object]]</a>
 
 A *range adaptor closure object* is a unary function object that accepts
 a range argument. For a range adaptor closure object `C` and an
@@ -3434,7 +3434,7 @@ R | C
 
 Given an additional range adaptor closure object `D`, the expression
 `C | D` produces another range adaptor closure object `E`. `E` is a
-perfect forwarding call wrapper [term.perfect.forwarding.call.wrapper]
+perfect forwarding call wrapper [[term.perfect.forwarding.call.wrapper]]
 with the following properties:
 
 - Its target object is an object `d` of type `decay_t<decltype((D))>`
@@ -3479,7 +3479,7 @@ The behavior of a program that adds a specialization for
 `range_adaptor_closure` is undefined.
 
 A *range adaptor object* is a customization point object
-[customization.point.object] that accepts a `viewable_range` as its
+[[customization.point.object]] that accepts a `viewable_range` as its
 first argument and returns a view.
 
 If a range adaptor object accepts only one argument, then it is a range
@@ -3489,10 +3489,10 @@ If a range adaptor object `adaptor` accepts more than one argument, then
 let `range` be an expression such that `decltype((range))` models
 `viewable_range`, let `args...` be arguments such that
 `adaptor(range, args...)` is a well-formed expression as specified in
-the rest of subclause  [range.adaptors], and let `BoundArgs` be a pack
+the rest of subclause  [[range.adaptors]], and let `BoundArgs` be a pack
 that denotes `decay_t<decltype((args))>...`. The expression
 `adaptor(args...)` produces a range adaptor closure object `f` that is a
-perfect forwarding call wrapper [term.perfect.forwarding.call.wrapper]
+perfect forwarding call wrapper [[term.perfect.forwarding.call.wrapper]]
 with the following properties:
 
 - Its target object is a copy of `adaptor`.
@@ -3508,7 +3508,7 @@ The expression `adaptor(args...)` is well-formed if and only if the
 initialization of the bound argument entities of the result, as
 specified above, are all well-formed.
 
-### Movable wrapper <a id="range.move.wrap">[range.move.wrap]</a>
+### Movable wrapper <a id="range.move.wrap">[[range.move.wrap]]</a>
 
 Many types in this subclause are specified in terms of an
 exposition-only class template *movable-box*. `movable-box<T>` behaves
@@ -3562,9 +3562,9 @@ exactly like `optional<T>` with the following differences:
 - Otherwise, `movable-box<T>` should store only a `T` if either `T`
   models `movable` or `is_nothrow_move_constructible_v<T>` is `true`.
 
-### Non-propagating cache <a id="range.nonprop.cache">[range.nonprop.cache]</a>
+### Non-propagating cache <a id="range.nonprop.cache">[[range.nonprop.cache]]</a>
 
-Some types in subclause [range.adaptors] are specified in terms of an
+Some types in subclause [[range.adaptors]] are specified in terms of an
 exposition-only class template *non-propagating-\brk{*.
 `non-propagating-cache<T>` behaves exactly like `optional<T>` with the
 following differences:
@@ -3648,7 +3648,7 @@ following differences:
 \[*Note 1*: *non-propagating-cache* enables an input view to temporarily
 cache values as it is iterated over. — *end note*\]
 
-### Range adaptor helpers <a id="range.adaptor.helpers">[range.adaptor.helpers]</a>
+### Range adaptor helpers <a id="range.adaptor.helpers">[[range.adaptor.helpers]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -3673,15 +3673,15 @@ namespace std::ranges {
 }
 ```
 
-### All view <a id="range.all">[range.all]</a>
+### All view <a id="range.all">[[range.all]]</a>
 
-#### General <a id="range.all.general">[range.all.general]</a>
+#### General <a id="range.all.general">[[range.all.general]]</a>
 
 `views::all` returns a view that includes all elements of its range
 argument.
 
 The name `views::all` denotes a range adaptor object
-[range.adaptor.object]. Given a subexpression `E`, the expression
+[[range.adaptor.object]]. Given a subexpression `E`, the expression
 `views::all(E)` is expression-equivalent to:
 
 - `decay-copy(E)` if the decayed type of `E` models `view`.
@@ -3690,7 +3690,7 @@ The name `views::all` denotes a range adaptor object
 
 - Otherwise, `owning_view\{E\}`.
 
-#### Class template `ref_view` <a id="range.ref.view">[range.ref.view]</a>
+#### Class template `ref_view` <a id="range.ref.view">[[range.ref.view]]</a>
 
 `ref_view` is a view of the elements of some other range.
 
@@ -3754,7 +3754,7 @@ constexpr ref_view(T&& t);
 > convertible_to<T, R&> && requires { FUN(declval<T>()); }
 > ```
 
-#### Class template `owning_view` <a id="range.owning.view">[range.owning.view]</a>
+#### Class template `owning_view` <a id="range.owning.view">[[range.owning.view]]</a>
 
 `owning_view` is a move-only view of the elements of some other range.
 
@@ -3812,9 +3812,9 @@ constexpr owning_view(R&& t);
 >
 > Initializes *r\_* with `std::move(t)`.
 
-### As rvalue view <a id="range.as.rvalue">[range.as.rvalue]</a>
+### As rvalue view <a id="range.as.rvalue">[[range.as.rvalue]]</a>
 
-#### Overview <a id="range.as.rvalue.overview">[range.as.rvalue.overview]</a>
+#### Overview <a id="range.as.rvalue.overview">[[range.as.rvalue.overview]]</a>
 
 `as_rvalue_view` presents a view of an underlying sequence with the same
 behavior as the underlying sequence except that its elements are
@@ -3822,7 +3822,7 @@ rvalues. Some generic algorithms can be called with an `as_rvalue_view`
 to replace copying with moving.
 
 The name `views::as_rvalue` denotes a range adaptor object
-[range.adaptor.object]. Let `E` be an expression and let `T` be
+[[range.adaptor.object]]. Let `E` be an expression and let `T` be
 `decltype((E))`. The expression `views::as_rvalue(E)` is
 expression-equivalent to:
 
@@ -3843,7 +3843,7 @@ ranges::copy(words | views::as_rvalue, back_inserter(new_words));
 
 — *end example*\]
 
-#### Class template `as_rvalue_view` <a id="range.as.rvalue.view">[range.as.rvalue.view]</a>
+#### Class template `as_rvalue_view` <a id="range.as.rvalue.view">[[range.as.rvalue.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -3896,16 +3896,17 @@ constexpr explicit as_rvalue_view(V base);
 >
 > Initializes *base\_* with `std::move(base)`.
 
-### Filter view <a id="range.filter">[range.filter]</a>
+### Filter view <a id="range.filter">[[range.filter]]</a>
 
-#### Overview <a id="range.filter.overview">[range.filter.overview]</a>
+#### Overview <a id="range.filter.overview">[[range.filter.overview]]</a>
 
 `filter_view` presents a view of the elements of an underlying sequence
 that satisfy a predicate.
 
 The name `views::filter` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `P`, the expression
-`views::filter(E, P)` is expression-equivalent to `filter_view(E, P)`.
+[[range.adaptor.object]]. Given subexpressions `E` and `P`, the
+expression `views::filter(E, P)` is expression-equivalent to
+`filter_view(E, P)`.
 
 \[*Example 3*:
 
@@ -3918,7 +3919,7 @@ for (int i : evens)
 
 — *end example*\]
 
-#### Class template `filter_view` <a id="range.filter.view">[range.filter.view]</a>
+#### Class template `filter_view` <a id="range.filter.view">[[range.filter.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -3994,7 +3995,7 @@ constexpr iterator begin();
 > function caches the result within the `filter_view` for use on
 > subsequent calls.
 
-#### Class `filter_view::iterator` <a id="range.filter.iterator">[range.filter.iterator]</a>
+#### Class `filter_view::iterator` <a id="range.filter.iterator">[[range.filter.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -4230,7 +4231,7 @@ friend constexpr void iter_swap(const iterator& x, const iterator& y)
 >
 > Equivalent to `ranges::iter_swap(x.`*`current_`*`, y.`*`current_`*`)`.
 
-#### Class `filter_view::sentinel` <a id="range.filter.sentinel">[range.filter.sentinel]</a>
+#### Class `filter_view::sentinel` <a id="range.filter.sentinel">[[range.filter.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -4281,16 +4282,16 @@ friend constexpr bool operator==(const iterator& x, const sentinel& y);
 >
 > Equivalent to: `return x.`*`current_`*` == y.`*`end_`*`;`
 
-### Transform view <a id="range.transform">[range.transform]</a>
+### Transform view <a id="range.transform">[[range.transform]]</a>
 
-#### Overview <a id="range.transform.overview">[range.transform.overview]</a>
+#### Overview <a id="range.transform.overview">[[range.transform.overview]]</a>
 
 `transform_view` presents a view of an underlying sequence after
 applying a transformation function to each element.
 
 The name `views::transform` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::transform(E, F)` is expression-equivalent to
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::transform(E, F)` is expression-equivalent to
 `transform_view(E, F)`.
 
 \[*Example 4*:
@@ -4304,7 +4305,7 @@ for (int i : squares)
 
 — *end example*\]
 
-#### Class template `transform_view` <a id="range.transform.view">[range.transform.view]</a>
+#### Class template `transform_view` <a id="range.transform.view">[[range.transform.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -4441,7 +4442,7 @@ constexpr iterator<true> end() const
 > return iterator<true>{*this, ranges::end(base_)};
 > ```
 
-#### Class template `transform_view::iterator` <a id="range.transform.iterator">[range.transform.iterator]</a>
+#### Class template `transform_view::iterator` <a id="range.transform.iterator">[[range.transform.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -4798,7 +4799,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 >
 > Equivalent to: `return x.`*`current_`*` - y.`*`current_`*`;`
 
-#### Class template `transform_view::sentinel` <a id="range.transform.sentinel">[range.transform.sentinel]</a>
+#### Class template `transform_view::sentinel` <a id="range.transform.sentinel">[[range.transform.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -4903,27 +4904,27 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
 >
 > Equivalent to: `return y.`*`end_`*` - x.`*`current_`*`;`
 
-### Take view <a id="range.take">[range.take]</a>
+### Take view <a id="range.take">[[range.take]]</a>
 
-#### Overview <a id="range.take.overview">[range.take.overview]</a>
+#### Overview <a id="range.take.overview">[[range.take.overview]]</a>
 
 `take_view` produces a view of the first N elements from another view,
 or all the elements if the adapted view contains fewer than N.
 
 The name `views::take` denotes a range adaptor object
-[range.adaptor.object]. Let `E` and `F` be expressions, let `T` be
+[[range.adaptor.object]]. Let `E` and `F` be expressions, let `T` be
 `remove_cvref_t<decltype((E))>`, and let `D` be
 `range_difference_t<decltype((E))>`. If `decltype((F))` does not model
 `convertible_to<D>`, `views::take(E, F)` is ill-formed. Otherwise, the
 expression `views::take(E, F)` is expression-equivalent to:
 
-- If `T` is a specialization of `empty_view` [range.empty.view], then
+- If `T` is a specialization of `empty_view` [[range.empty.view]], then
   `((void)F, decay-copy(E))`, except that the evaluations of `E` and `F`
   are indeterminately sequenced.
 
 - Otherwise, if `T` models `random_access_range` and `sized_range` and
-  is a specialization of `span` [views.span], `basic_string_view`
-  [string.view], or `subrange` [range.subrange], then
+  is a specialization of `span` [[views.span]], `basic_string_view`
+  [[string.view]], or `subrange` [[range.subrange]], then
   `U(ranges::begin(E),
   ranges::begin(E) + std::min<D>(ranges::distance(E), F))`, except that
   `E` is evaluated only once, where `U` is a type determined as follows:
@@ -4937,14 +4938,14 @@ expression `views::take(E, F)` is expression-equivalent to:
   - otherwise, `T` is a specialization of `subrange`, and `U` is
     `subrange<iterator_t<T>>`;
 
-- otherwise, if `T` is a specialization of `iota_view` [range.iota.view]
-  that models `random_access_range` and `sized_range`, then
-  `iota_view(*ranges::begin(E),
+- otherwise, if `T` is a specialization of `iota_view`
+  [[range.iota.view]] that models `random_access_range` and
+  `sized_range`, then `iota_view(*ranges::begin(E),
   *(ranges::begin(E) + std::\linebreak{}min<D>(ranges::distance(E), F)))`,
   except that `E` is evaluated only once.
 
 - Otherwise, if `T` is a specialization of `repeat_view`
-  [range.repeat.view]:
+  [[range.repeat.view]]:
 
   - if `T` models `sized_range`, then
 
@@ -4968,7 +4969,7 @@ for (int i : is | views::take(5))
 
 — *end example*\]
 
-#### Class template `take_view` <a id="range.take.view">[range.take.view]</a>
+#### Class template `take_view` <a id="range.take.view">[[range.take.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5078,7 +5079,7 @@ constexpr explicit take_view(V base, range_difference_t<V> count);
 > Initializes *base\_* with `std::move(base)` and *count\_* with
 > `count`.
 
-#### Class template `take_view::sentinel` <a id="range.take.sentinel">[range.take.sentinel]</a>
+#### Class template `take_view::sentinel` <a id="range.take.sentinel">[[range.take.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5153,17 +5154,17 @@ friend constexpr bool operator==(const CI<OtherConst>& y, const sentinel& x);
 >
 > Equivalent to: `return y.count() == 0 || y.base() == x.`*`end_`*`;`
 
-### Take while view <a id="range.take.while">[range.take.while]</a>
+### Take while view <a id="range.take.while">[[range.take.while]]</a>
 
-#### Overview <a id="range.take.while.overview">[range.take.while.overview]</a>
+#### Overview <a id="range.take.while.overview">[[range.take.while.overview]]</a>
 
 Given a unary predicate `pred` and a view `r`, `take_while_view`
 produces a view of the range
 \range{ranges::begin(r)}{ranges::find_if_not(r, pred)}.
 
 The name `views::take_while` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::take_while(E, F)` is expression-equivalent to
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::take_while(E, F)` is expression-equivalent to
 `take_while_view(E, F)`.
 
 \[*Example 6*:
@@ -5182,7 +5183,7 @@ cout << i;                                      // prints 6
 
 — *end example*\]
 
-#### Class template `take_while_view` <a id="range.take.while.view">[range.take.while.view]</a>
+#### Class template `take_while_view` <a id="range.take.while.view">[[range.take.while.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5244,7 +5245,7 @@ constexpr const Pred& pred() const;
 >
 > Equivalent to: `return *`*`pred_`*`;`
 
-#### Class template `take_while_view::sentinel` <a id="range.take.while.sentinel">[range.take.while.sentinel]</a>
+#### Class template `take_while_view::sentinel` <a id="range.take.while.sentinel">[[range.take.while.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5314,36 +5315,36 @@ friend constexpr bool operator==(const iterator_t<maybe-const<OtherConst, V>>& x
 > Equivalent to:
 > `return y.`*`end_`*` == x || !invoke(*y.`*`pred_`*`, *x);`
 
-### Drop view <a id="range.drop">[range.drop]</a>
+### Drop view <a id="range.drop">[[range.drop]]</a>
 
-#### Overview <a id="range.drop.overview">[range.drop.overview]</a>
+#### Overview <a id="range.drop.overview">[[range.drop.overview]]</a>
 
 `drop_view` produces a view excluding the first N elements from another
 view, or an empty range if the adapted view contains fewer than N
 elements.
 
 The name `views::drop` denotes a range adaptor object
-[range.adaptor.object]. Let `E` and `F` be expressions, let `T` be
+[[range.adaptor.object]]. Let `E` and `F` be expressions, let `T` be
 `remove_cvref_t<decltype((E))>`, and let `D` be
 `range_difference_t<decltype((E))>`. If `decltype((F))` does not model
 `convertible_to<D>`, `views::drop(E, F)` is ill-formed. Otherwise, the
 expression `views::drop(E, F)` is expression-equivalent to:
 
-- If `T` is a specialization of `empty_view` [range.empty.view], then
+- If `T` is a specialization of `empty_view` [[range.empty.view]], then
   `((void)F, decay-copy(E))`, except that the evaluations of `E` and `F`
   are indeterminately sequenced.
 
 - Otherwise, if `T` models `random_access_range` and `sized_range` and
   is
 
-  - a specialization of `span` [views.span],
+  - a specialization of `span` [[views.span]],
 
-  - a specialization of `basic_string_view` [string.view],
+  - a specialization of `basic_string_view` [[string.view]],
 
-  - a specialization of `iota_view` [range.iota.view], or
+  - a specialization of `iota_view` [[range.iota.view]], or
 
-  - a specialization of `subrange` [range.subrange] where `T::StoreSize`
-    is `false`,
+  - a specialization of `subrange` [[range.subrange]] where
+    `T::StoreSize` is `false`,
 
   then
   `U(ranges::begin(E) + std::min<D>(ranges::distance(E), F), ranges::end(E))`,
@@ -5351,7 +5352,7 @@ expression `views::drop(E, F)` is expression-equivalent to:
   `span<typename T::element_type>` if `T` is a specialization of `span`
   and `T` otherwise.
 
-- Otherwise, if `T` is a specialization of `subrange` [range.subrange]
+- Otherwise, if `T` is a specialization of `subrange` [[range.subrange]]
   that models `random_access_range` and `sized_range`, then
   `T(ranges::begin(E) + std::min<D>(ranges::distance(E), F), ranges::\linebreak{}end(E),
   to-unsigned-like(ranges::distance(E) -
@@ -5359,7 +5360,7 @@ expression `views::drop(E, F)` is expression-equivalent to:
   each evaluated only once.
 
 - Otherwise, if `T` is a specialization of `repeat_view`
-  [range.repeat.view]:
+  [[range.repeat.view]]:
 
   - if `T` models `sized_range`, then
 
@@ -5385,7 +5386,7 @@ for (auto i : ints | views::drop(5)) {
 
 — *end example*\]
 
-#### Class template `drop_view` <a id="range.drop.view">[range.drop.view]</a>
+#### Class template `drop_view` <a id="range.drop.view">[[range.drop.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5467,16 +5468,16 @@ constexpr auto begin() const
 > \[*Note 11*: Without this, applying a `reverse_view` over a
 > `drop_view` would have quadratic iteration complexity. — *end note*\]
 
-### Drop while view <a id="range.drop.while">[range.drop.while]</a>
+### Drop while view <a id="range.drop.while">[[range.drop.while]]</a>
 
-#### Overview <a id="range.drop.while.overview">[range.drop.while.overview]</a>
+#### Overview <a id="range.drop.while.overview">[[range.drop.while.overview]]</a>
 
 Given a unary predicate `pred` and a view `r`, `drop_while_view`
 produces a view of the range .
 
 The name `views::drop_while` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::drop_while(E, F)` is expression-equivalent to
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::drop_while(E, F)` is expression-equivalent to
 `drop_while_view(E, F)`.
 
 \[*Example 8*:
@@ -5492,7 +5493,7 @@ for (auto c : skip_ws) {
 
 — *end example*\]
 
-#### Class template `drop_while_view` <a id="range.drop.while.view">[range.drop.while.view]</a>
+#### Class template `drop_while_view` <a id="range.drop.while.view">[[range.drop.while.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5563,14 +5564,14 @@ constexpr auto begin();
 > `drop_while_view` would have quadratic iteration
 > complexity. — *end note*\]
 
-### Join view <a id="range.join">[range.join]</a>
+### Join view <a id="range.join">[[range.join]]</a>
 
-#### Overview <a id="range.join.overview">[range.join.overview]</a>
+#### Overview <a id="range.join.overview">[[range.join.overview]]</a>
 
 `join_view` flattens a view of ranges into a view.
 
 The name `views::join` denotes a range adaptor object
-[range.adaptor.object]. Given a subexpression `E`, the expression
+[[range.adaptor.object]]. Given a subexpression `E`, the expression
 `views::join(E)` is expression-equivalent to
 `join_view<views::all_t<decltype((E))>>\{E\}`.
 
@@ -5584,7 +5585,7 @@ for (char ch : ss | views::join)
 
 — *end example*\]
 
-#### Class template `join_view` <a id="range.join.view">[range.join.view]</a>
+#### Class template `join_view` <a id="range.join.view">[[range.join.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -5668,7 +5669,7 @@ constexpr explicit join_view(V base);
 >
 > Initializes *base\_* with `std::move(base)`.
 
-#### Class template `join_view::iterator` <a id="range.join.iterator">[range.join.iterator]</a>
+#### Class template `join_view::iterator` <a id="range.join.iterator">[[range.join.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -6002,7 +6003,7 @@ friend constexpr void iter_swap(const iterator& x, const iterator& y)
 > Equivalent to:
 > `return ranges::iter_swap(*x.`*`inner_`*`, *y.`*`inner_`*`);`
 
-#### Class template `join_view::sentinel` <a id="range.join.sentinel">[range.join.sentinel]</a>
+#### Class template `join_view::sentinel` <a id="range.join.sentinel">[[range.join.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -6062,17 +6063,17 @@ friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& 
 >
 > Equivalent to: `return x.`*`outer`*`() == y.`*`end_`*`;`
 
-### Join with view <a id="range.join.with">[range.join.with]</a>
+### Join with view <a id="range.join.with">[[range.join.with]]</a>
 
-#### Overview <a id="range.join.with.overview">[range.join.with.overview]</a>
+#### Overview <a id="range.join.with.overview">[[range.join.with.overview]]</a>
 
 `join_with_view` takes a view and a delimiter, and flattens the view,
 inserting every element of the delimiter in between elements of the
 view. The delimiter can be a single element or a view of elements.
 
 The name `views::join_with` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::join_with(E, F)` is expression-equivalent to
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::join_with(E, F)` is expression-equivalent to
 `join_with_view(E, F)`.
 
 \[*Example 10*:
@@ -6087,7 +6088,7 @@ for (char c : vs | views::join_with('-')) {
 
 — *end example*\]
 
-#### Class template `join_with_view` <a id="range.join.with.view">[range.join.with.view]</a>
+#### Class template `join_with_view` <a id="range.join.with.view">[[range.join.with.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -6204,7 +6205,7 @@ constexpr explicit join_with_view(R&& r, range_value_t<InnerRng> e);
 > Initializes *base\_* with `views::all(std::forward<R>(r))` and
 > *pattern\_* with `views::single(std::move(e))`.
 
-#### Class template `join_with_view::iterator` <a id="range.join.with.iterator">[range.join.with.iterator]</a>
+#### Class template `join_with_view::iterator` <a id="range.join.with.iterator">[[range.join.with.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -6574,7 +6575,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 > return x.outer_it_ == y.outer_it_ && x.inner_it_ == y.inner_it_;
 > ```
 
-#### Class template `join_with_view::sentinel` <a id="range.join.with.sentinel">[range.join.with.sentinel]</a>
+#### Class template `join_with_view::sentinel` <a id="range.join.with.sentinel">[[range.join.with.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -6628,17 +6629,17 @@ friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& 
 >
 > Equivalent to: `return x.`*`outer`*`() == y.`*`end_`*`;`
 
-### Lazy split view <a id="range.lazy.split">[range.lazy.split]</a>
+### Lazy split view <a id="range.lazy.split">[[range.lazy.split]]</a>
 
-#### Overview <a id="range.lazy.split.overview">[range.lazy.split.overview]</a>
+#### Overview <a id="range.lazy.split.overview">[[range.lazy.split.overview]]</a>
 
 `lazy_split_view` takes a view and a delimiter, and splits the view into
 subranges on the delimiter. The delimiter can be a single element or a
 view of elements.
 
 The name `views::lazy_split` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::lazy_split(E, F)` is expression-equivalent to
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::lazy_split(E, F)` is expression-equivalent to
 `lazy_split_view(E, F)`.
 
 \[*Example 11*:
@@ -6655,7 +6656,7 @@ for (auto word : str | views::lazy_split(' ')) {
 
 — *end example*\]
 
-#### Class template `lazy_split_view` <a id="range.lazy.split.view">[range.lazy.split.view]</a>
+#### Class template `lazy_split_view` <a id="range.lazy.split.view">[[range.lazy.split.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -6755,7 +6756,7 @@ constexpr explicit lazy_split_view(R&& r, range_value_t<R> e);
 > Initializes *base\_* with `views::all(std::forward<R>(r))`, and
 > *pattern\_* with `views::single(std::move(e))`.
 
-#### Class template `lazy_split_view::outer-iterator` <a id="range.lazy.split.outer">[range.lazy.split.outer]</a>
+#### Class template `lazy_split_view::outer-iterator` <a id="range.lazy.split.outer">[[range.lazy.split.outer]]</a>
 
 *outer-iterator*
 
@@ -6816,7 +6817,7 @@ namespace std::ranges {
 }
 ```
 
-Many of the specifications in [range.lazy.split] refer to the notional
+Many of the specifications in [[range.lazy.split]] refer to the notional
 member *current* of *outer-iterator*. *current* is equivalent to
 *current\_* if `V` models `forward_range`, and `*parent_->current_`
 otherwise.
@@ -6935,7 +6936,7 @@ friend constexpr bool operator==(const outer-iterator& x, default_sentinel_t);
 > return x.current == ranges::end(x.parent_->base_) && !x.trailing_empty_;
 > ```
 
-#### Class `lazy_split_view::outer-iterator::value_type` <a id="range.lazy.split.outer.value">[range.lazy.split.outer.value]</a>
+#### Class `lazy_split_view::outer-iterator::value_type` <a id="range.lazy.split.outer.value">[[range.lazy.split.outer.value]]</a>
 
 *outer-iterator*
 
@@ -6991,7 +6992,7 @@ constexpr default_sentinel_t end() const noexcept;
 >
 > Equivalent to: `return default_sentinel;`
 
-#### Class template `lazy_split_view::inner-iterator` <a id="range.lazy.split.inner">[range.lazy.split.inner]</a>
+#### Class template `lazy_split_view::inner-iterator` <a id="range.lazy.split.inner">[[range.lazy.split.inner]]</a>
 
 *inner-iterator*
 
@@ -7167,17 +7168,18 @@ friend constexpr void iter_swap(const inner-iterator& x, const inner-iterator& y
 > Equivalent to
 > `ranges::iter_swap(x.`*`i_`*`.`*`current`*`, y.`*`i_`*`.`*`current`*`)`.
 
-### Split view <a id="range.split">[range.split]</a>
+### Split view <a id="range.split">[[range.split]]</a>
 
-#### Overview <a id="range.split.overview">[range.split.overview]</a>
+#### Overview <a id="range.split.overview">[[range.split.overview]]</a>
 
 `split_view` takes a view and a delimiter, and splits the view into
 `subrange`s on the delimiter. The delimiter can be a single element or a
 view of elements.
 
 The name `views::split` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::split(E, F)` is expression-equivalent to `split_view(E, F)`.
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::split(E, F)` is expression-equivalent to
+`split_view(E, F)`.
 
 \[*Example 12*:
 
@@ -7191,7 +7193,7 @@ for (auto word : views::split(str, ' ')) {
 
 — *end example*\]
 
-#### Class template `split_view` <a id="range.split.view">[range.split.view]</a>
+#### Class template `split_view` <a id="range.split.view">[[range.split.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7296,7 +7298,7 @@ constexpr subrange<iterator_t<V>> find-next(iterator_t<V> it);
 > return {b, e};
 > ```
 
-#### Class `split_view::iterator` <a id="range.split.iterator">[range.split.iterator]</a>
+#### Class `split_view::iterator` <a id="range.split.iterator">[[range.split.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7405,7 +7407,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y);
 > return x.cur_ == y.cur_ && x.trailing_empty_ == y.trailing_empty_;
 > ```
 
-#### Class `split_view::sentinel` <a id="range.split.sentinel">[range.split.sentinel]</a>
+#### Class `split_view::sentinel` <a id="range.split.sentinel">[[range.split.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7442,15 +7444,15 @@ friend constexpr bool operator==(const iterator& x, const sentinel& y);
 > Equivalent to:
 > `return x.`*`cur_`*` == y.`*`end_`*` && !x.`*`trailing_empty_`*`;`
 
-### Counted view <a id="range.counted">[range.counted]</a>
+### Counted view <a id="range.counted">[[range.counted]]</a>
 
 A counted view presents a view of the elements of the counted range
-[iterator.requirements.general] for an iterator `i` and non-negative
+[[iterator.requirements.general]] for an iterator `i` and non-negative
 integer `n`.
 
 The name `views::counted` denotes a customization point object
-[customization.point.object]. Let `E` and `F` be expressions, let `T` be
-`decay_t<decltype((E))>`, and let `D` be `iter_difference_t<T>`. If
+[[customization.point.object]]. Let `E` and `F` be expressions, let `T`
+be `decay_t<decltype((E))>`, and let `D` be `iter_difference_t<T>`. If
 `decltype((F))` does not model `convertible_to<D>`,
 `views::counted(E, F)` is ill-formed.
 
@@ -7469,9 +7471,9 @@ Otherwise, `views::counted(E, F)` is expression-equivalent to:
 
 - Otherwise, `subrange(counted_iterator(E, F), default_sentinel)`.
 
-### Common view <a id="range.common">[range.common]</a>
+### Common view <a id="range.common">[[range.common]]</a>
 
-#### Overview <a id="range.common.overview">[range.common.overview]</a>
+#### Overview <a id="range.common.overview">[[range.common.overview]]</a>
 
 `common_view` takes a view which has different types for its iterator
 and sentinel and turns it into a view of the same elements with an
@@ -7482,7 +7484,7 @@ expect a range’s iterator and sentinel types to be the
 same. — *end note*\]
 
 The name `views::common` denotes a range adaptor object
-[range.adaptor.object]. Given a subexpression `E`, the expression
+[[range.adaptor.object]]. Given a subexpression `E`, the expression
 `views::common(E)` is expression-equivalent to:
 
 - `views::all(E)`, if `decltype((E))` models `common_range` and
@@ -7507,7 +7509,7 @@ void my_algo(R&& r) {
 
 — *end example*\]
 
-#### Class template `common_view` <a id="range.common.view">[range.common.view]</a>
+#### Class template `common_view` <a id="range.common.view">[[range.common.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7574,15 +7576,15 @@ constexpr explicit common_view(V base);
 >
 > Initializes *base\_* with `std::move(base)`.
 
-### Reverse view <a id="range.reverse">[range.reverse]</a>
+### Reverse view <a id="range.reverse">[[range.reverse]]</a>
 
-#### Overview <a id="range.reverse.overview">[range.reverse.overview]</a>
+#### Overview <a id="range.reverse.overview">[[range.reverse.overview]]</a>
 
 `reverse_view` takes a bidirectional view and produces another view that
 iterates the same elements in reverse order.
 
 The name `views::reverse` denotes a range adaptor object
-[range.adaptor.object]. Given a subexpression `E`, the expression
+[[range.adaptor.object]]. Given a subexpression `E`, the expression
 `views::reverse(E)` is expression-equivalent to:
 
 - If the type of `E` is a (possibly cv-qualified) specialization of
@@ -7618,7 +7620,7 @@ for (int i : is | views::reverse)
 
 — *end example*\]
 
-#### Class template `reverse_view` <a id="range.reverse.view">[range.reverse.view]</a>
+#### Class template `reverse_view` <a id="range.reverse.view">[[range.reverse.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7701,15 +7703,15 @@ constexpr auto end() const requires common_range<const V>;
 > Equivalent to:
 > `return make_reverse_iterator(ranges::begin(`*`base_`*`));`
 
-### As const view <a id="range.as.const">[range.as.const]</a>
+### As const view <a id="range.as.const">[[range.as.const]]</a>
 
-#### Overview <a id="range.as.const.overview">[range.as.const.overview]</a>
+#### Overview <a id="range.as.const.overview">[[range.as.const.overview]]</a>
 
 `as_const_view` presents a view of an underlying sequence as constant.
 That is, the elements of an `as_const_view` cannot be modified.
 
 The name `views::as_const` denotes a range adaptor object
-[range.adaptor.object]. Let `E` be an expression, let `T` be
+[[range.adaptor.object]]. Let `E` be an expression, let `T` be
 `decltype((E))`, and let `U` be `remove_cvref_t<T>`. The expression
 `views::as_const(E)` is expression-equivalent to:
 
@@ -7743,7 +7745,7 @@ cant_touch_this(views::as_const(beat));         // will not modify the elements 
 
 — *end example*\]
 
-#### Class template `as_const_view` <a id="range.as.const.view">[range.as.const.view]</a>
+#### Class template `as_const_view` <a id="range.as.const.view">[[range.as.const.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7782,16 +7784,16 @@ constexpr explicit as_const_view(V base);
 >
 > Initializes *base\_* with `std::move(base)`.
 
-### Elements view <a id="range.elements">[range.elements]</a>
+### Elements view <a id="range.elements">[[range.elements]]</a>
 
-#### Overview <a id="range.elements.overview">[range.elements.overview]</a>
+#### Overview <a id="range.elements.overview">[[range.elements.overview]]</a>
 
 `elements_view` takes a view of tuple-like values and a `size_t`, and
 produces a view with a value-type of the $N^\text{th}$ element of the
 adapted view’s value-type.
 
 The name `views::elements<N>` denotes a range adaptor object
-[range.adaptor.object]. Given a subexpression `E` and constant
+[[range.adaptor.object]]. Given a subexpression `E` and constant
 expression `N`, the expression `views::elements<N>(E)` is
 expression-equivalent to
 `elements_view<views::all_t<decltype((E))>, N>\{E\}`.
@@ -7845,7 +7847,7 @@ cout << ranges::count_if(historical_figures | views::values, is_even);  // print
 
 — *end example*\]
 
-#### Class template `elements_view` <a id="range.elements.view">[range.elements.view]</a>
+#### Class template `elements_view` <a id="range.elements.view">[[range.elements.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -7913,7 +7915,7 @@ constexpr explicit elements_view(V base);
 >
 > Initializes *base\_* with `std::move(base)`.
 
-#### Class template `elements_view::iterator` <a id="range.elements.iterator">[range.elements.iterator]</a>
+#### Class template `elements_view::iterator` <a id="range.elements.iterator">[[range.elements.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -8286,7 +8288,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 >
 > Equivalent to: `return x.`*`current_`*` - y.`*`current_`*`;`
 
-#### Class template `elements_view::sentinel` <a id="range.elements.sentinel">[range.elements.sentinel]</a>
+#### Class template `elements_view::sentinel` <a id="range.elements.sentinel">[[range.elements.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -8394,9 +8396,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
 >
 > Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
 
-### Enumerate view <a id="range.enumerate">[range.enumerate]</a>
+### Enumerate view <a id="range.enumerate">[[range.enumerate]]</a>
 
-#### Overview <a id="range.enumerate.overview">[range.enumerate.overview]</a>
+#### Overview <a id="range.enumerate.overview">[[range.enumerate.overview]]</a>
 
 `enumerate_view` is a view whose elements represent both the position
 and value from a sequence of elements.
@@ -8416,7 +8418,7 @@ for (auto [index, value] : views::enumerate(vec))
 
 — *end example*\]
 
-#### Class template `enumerate_view` <a id="range.enumerate.view">[range.enumerate.view]</a>
+#### Class template `enumerate_view` <a id="range.enumerate.view">[[range.enumerate.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -8477,7 +8479,7 @@ constexpr explicit enumerate_view(V base);
 >
 > Initializes *base\_* with `std::move(base)`.
 
-#### Class template `enumerate_view::iterator` <a id="range.enumerate.iterator">[range.enumerate.iterator]</a>
+#### Class template `enumerate_view::iterator` <a id="range.enumerate.iterator">[[range.enumerate.iterator]]</a>
 
 *iterator*
 
@@ -8805,7 +8807,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 >
 > Equivalent to: `return x.`*`pos_`*` - y.`*`pos_`*`;`
 
-#### Class template `enumerate_view::sentinel` <a id="range.enumerate.sentinel">[range.enumerate.sentinel]</a>
+#### Class template `enumerate_view::sentinel` <a id="range.enumerate.sentinel">[[range.enumerate.sentinel]]</a>
 
 *sentinel*
 
@@ -8912,15 +8914,15 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
 >
 > Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
 
-### Zip view <a id="range.zip">[range.zip]</a>
+### Zip view <a id="range.zip">[[range.zip]]</a>
 
-#### Overview <a id="range.zip.overview">[range.zip.overview]</a>
+#### Overview <a id="range.zip.overview">[[range.zip.overview]]</a>
 
 `zip_view` takes any number of views and produces a view of tuples of
 references to the corresponding elements of the constituent views.
 
 The name `views::zip` denotes a customization point object
-[customization.point.object]. Given a pack of subexpressions `Es...`,
+[[customization.point.object]]. Given a pack of subexpressions `Es...`,
 the expression `views::zip(Es...)` is expression-equivalent to
 
 - `auto(views::empty<tuple<>>)`
@@ -8945,7 +8947,7 @@ for (auto&& [x, y] : z) {
 
 — *end example*\]
 
-#### Class template `zip_view` <a id="range.zip.view">[range.zip.view]</a>
+#### Class template `zip_view` <a id="range.zip.view">[[range.zip.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -9007,13 +9009,13 @@ namespace std::ranges {
 ```
 
 Two `zip_view` objects have the same underlying sequence if and only if
-the corresponding elements of *views\_* are equal [concepts.equality]
+the corresponding elements of *views\_* are equal [[concepts.equality]]
 and have the same underlying sequence.
 
 \[*Note 4*: In particular, comparison of iterators obtained from
 `zip_view` objects that do not have the same underlying sequence is not
 required to produce meaningful results
-[iterator.concept.forward]. — *end note*\]
+[[iterator.concept.forward]]. — *end note*\]
 
 ``` cpp
 constexpr explicit zip_view(Views... views);
@@ -9039,7 +9041,7 @@ constexpr auto size() const requires (sized_range<const Views> && ...);
 > }, tuple-transform(ranges::size, views_));
 > ```
 
-#### Class template `zip_view::iterator` <a id="range.zip.iterator">[range.zip.iterator]</a>
+#### Class template `zip_view::iterator` <a id="range.zip.iterator">[[range.zip.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -9385,7 +9387,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 >
 > for every integer $0 \leq i < \texttt{sizeof...(Views)}$.
 
-#### Class template `zip_view::sentinel` <a id="range.zip.sentinel">[range.zip.sentinel]</a>
+#### Class template `zip_view::sentinel` <a id="range.zip.sentinel">[[range.zip.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -9480,9 +9482,9 @@ friend constexpr common_type_t<range_difference_t<maybe-const<OtherConst, Views>
 >
 > Equivalent to `return -(x - y);`
 
-### Zip transform view <a id="range.zip.transform">[range.zip.transform]</a>
+### Zip transform view <a id="range.zip.transform">[[range.zip.transform]]</a>
 
-#### Overview <a id="range.zip.transform.overview">[range.zip.transform.overview]</a>
+#### Overview <a id="range.zip.transform.overview">[[range.zip.transform.overview]]</a>
 
 `zip_transform_view` takes an invocable object and any number of views
 and produces a view whose $M^\text{th}$ element is the result of
@@ -9490,7 +9492,7 @@ applying the invocable object to the $M^\text{th}$ elements of all
 views.
 
 The name `views::zip_transform` denotes a customization point object
-[customization.point.object]. Let `F` be a subexpression, and let
+[[customization.point.object]]. Let `F` be a subexpression, and let
 `Es...` be a pack of subexpressions.
 
 - If `Es` is an empty pack, let `FD` be `decay_t<decltype((F))>`.
@@ -9523,7 +9525,7 @@ for (auto i : views::zip_transform(plus(), v1, v2)) {
 
 — *end example*\]
 
-#### Class template `zip_transform_view` <a id="range.zip.transform.view">[range.zip.transform.view]</a>
+#### Class template `zip_transform_view` <a id="range.zip.transform.view">[[range.zip.transform.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -9601,7 +9603,7 @@ constexpr explicit zip_transform_view(F fun, Views... views);
 > Initializes *fun\_* with `std::move(fun)` and *zip\_* with
 > `std::move(views)...`.
 
-#### Class template `zip_transform_view::iterator` <a id="range.zip.transform.iterator">[range.zip.transform.iterator]</a>
+#### Class template `zip_transform_view::iterator` <a id="range.zip.transform.iterator">[[range.zip.transform.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -9877,7 +9879,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 >
 > Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
-#### Class template `zip_transform_view::sentinel` <a id="range.zip.transform.sentinel">[range.zip.transform.sentinel]</a>
+#### Class template `zip_transform_view::sentinel` <a id="range.zip.transform.sentinel">[[range.zip.transform.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -9954,9 +9956,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, InnerView>>
 >
 > Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
-### Adjacent view <a id="range.adjacent">[range.adjacent]</a>
+### Adjacent view <a id="range.adjacent">[[range.adjacent]]</a>
 
-#### Overview <a id="range.adjacent.overview">[range.adjacent.overview]</a>
+#### Overview <a id="range.adjacent.overview">[[range.adjacent.overview]]</a>
 
 `adjacent_view` takes a view and produces a view whose $M^\text{th}$
 element is a tuple of references to the $M^\text{th}$ through
@@ -9964,7 +9966,7 @@ $(M + N - 1)^\text{th}$ elements of the original view. If the original
 view has fewer than N elements, the resulting view is empty.
 
 The name `views::adjacent<N>` denotes a range adaptor object
-[range.adaptor.object]. Given a subexpression `E` and a constant
+[[range.adaptor.object]]. Given a subexpression `E` and a constant
 expression `N`, the expression `views::adjacent<N>(E)` is
 expression-equivalent to
 
@@ -9988,7 +9990,7 @@ for (auto i : v | views::adjacent<2>) {
 Define `REPEAT(T, N)` as a pack of `N` types, each of which denotes the
 same type as `T`.
 
-#### Class template `adjacent_view` <a id="range.adjacent.view">[range.adjacent.view]</a>
+#### Class template `adjacent_view` <a id="range.adjacent.view">[[range.adjacent.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -10067,7 +10069,7 @@ constexpr auto size() const requires sized_range<const V>;
 > return static_cast<ST>(sz);
 > ```
 
-#### Class template `adjacent_view::iterator` <a id="range.adjacent.iterator">[range.adjacent.iterator]</a>
+#### Class template `adjacent_view::iterator` <a id="range.adjacent.iterator">[[range.adjacent.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -10440,7 +10442,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 > noexcept(ranges::iter_swap(declval<iterator_t<Base>>(), declval<iterator_t<Base>>()))
 > ```
 
-#### Class template `adjacent_view::sentinel` <a id="range.adjacent.sentinel">[range.adjacent.sentinel]</a>
+#### Class template `adjacent_view::sentinel` <a id="range.adjacent.sentinel">[[range.adjacent.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -10523,9 +10525,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
 >
 > Equivalent to: `return y.`*`end_`*` - x.`*`current_`*`.back();`
 
-### Adjacent transform view <a id="range.adjacent.transform">[range.adjacent.transform]</a>
+### Adjacent transform view <a id="range.adjacent.transform">[[range.adjacent.transform]]</a>
 
-#### Overview <a id="range.adjacent.transform.overview">[range.adjacent.transform.overview]</a>
+#### Overview <a id="range.adjacent.transform.overview">[[range.adjacent.transform.overview]]</a>
 
 `adjacent_transform_view` takes an invocable object and a view and
 produces a view whose $M^\text{th}$ element is the result of applying
@@ -10534,8 +10536,8 @@ $(M + N - 1)^\text{th}$ elements of the original view. If the original
 view has fewer than N elements, the resulting view is empty.
 
 The name `views::adjacent_transform<N>` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F` and a constant
-expression `N`:
+[[range.adaptor.object]]. Given subexpressions `E` and `F` and a
+constant expression `N`:
 
 - If `N` is equal to `0`, `views::adjacent_transform<N>(E, F)` is
   expression-equivalent to `((void)E, views::zip_transform(F))`, except
@@ -10557,7 +10559,7 @@ for (auto i : v | views::adjacent_transform<2>(std::multiplies())) {
 
 — *end example*\]
 
-#### Class template `adjacent_transform_view` <a id="range.adjacent.transform.view">[range.adjacent.transform.view]</a>
+#### Class template `adjacent_transform_view` <a id="range.adjacent.transform.view">[[range.adjacent.transform.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -10636,7 +10638,7 @@ constexpr explicit adjacent_transform_view(V base, F fun);
 > Initializes *fun\_* with `std::move(fun)` and *inner\_* with
 > `std::move(base)`.
 
-#### Class template `adjacent_transform_view::iterator` <a id="range.adjacent.transform.iterator">[range.adjacent.transform.iterator]</a>
+#### Class template `adjacent_transform_view::iterator` <a id="range.adjacent.transform.iterator">[[range.adjacent.transform.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -10909,7 +10911,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 >
 > Equivalent to: `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
-#### Class template `adjacent_transform_view::sentinel` <a id="range.adjacent.transform.sentinel">[range.adjacent.transform.sentinel]</a>
+#### Class template `adjacent_transform_view::sentinel` <a id="range.adjacent.transform.sentinel">[[range.adjacent.transform.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -10987,9 +10989,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, InnerView>>
 >
 > Equivalent to `return x.`*`inner_`*` - y.`*`inner_`*`;`
 
-### Chunk view <a id="range.chunk">[range.chunk]</a>
+### Chunk view <a id="range.chunk">[[range.chunk]]</a>
 
-#### Overview <a id="range.chunk.overview">[range.chunk.overview]</a>
+#### Overview <a id="range.chunk.overview">[[range.chunk.overview]]</a>
 
 `chunk_view` takes a view and a number N and produces a range of views
 that are N-sized non-overlapping successive chunks of the elements of
@@ -10997,8 +10999,9 @@ the original view, in order. The last view in the range can have fewer
 than N elements.
 
 The name `views::chunk` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `N`, the expression
-`views::chunk(E, N)` is expression-equivalent to `chunk_view(E, N)`.
+[[range.adaptor.object]]. Given subexpressions `E` and `N`, the
+expression `views::chunk(E, N)` is expression-equivalent to
+`chunk_view(E, N)`.
 
 \[*Example 24*:
 
@@ -11019,7 +11022,7 @@ for (auto r : v | views::chunk(2)) {
 
 — *end example*\]
 
-#### Class template `chunk_view` for input ranges <a id="range.chunk.view.input">[range.chunk.view.input]</a>
+#### Class template `chunk_view` for input ranges <a id="range.chunk.view.input">[[range.chunk.view.input]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -11111,7 +11114,7 @@ constexpr auto size() const requires sized_range<const V>;
 > return to-unsigned-like(exposition onlyidnc{div-ceil}(ranges::distance(base_), n_));
 > ```
 
-#### Class `chunk_view::outer-iterator` <a id="range.chunk.outer.iter">[range.chunk.outer.iter]</a>
+#### Class `chunk_view::outer-iterator` <a id="range.chunk.outer.iter">[[range.chunk.outer.iter]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -11230,7 +11233,7 @@ friend constexpr difference_type operator-(const outer-iterator& x, default_sent
 >
 > Equivalent to: `return -(y - x);`
 
-#### Class `chunk_view::outer-iterator::value_type` <a id="range.chunk.outer.value">[range.chunk.outer.value]</a>
+#### Class `chunk_view::outer-iterator::value_type` <a id="range.chunk.outer.value">[[range.chunk.outer.value]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -11290,7 +11293,7 @@ constexpr auto size() const
 >                                 ranges::end(parent_->base_) - *parent_->current_));
 > ```
 
-#### Class `chunk_view::inner-iterator` <a id="range.chunk.inner.iter">[range.chunk.inner.iter]</a>
+#### Class `chunk_view::inner-iterator` <a id="range.chunk.inner.iter">[[range.chunk.inner.iter]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -11441,7 +11444,7 @@ friend constexpr void iter_swap(const inner-iterator& x, const inner-iterator& y
 > Equivalent to:
 > `ranges::iter_swap(*x.`*`parent_`*`->`*`current_`*`, *y.`*`parent_`*`->`*`current_`*`);`
 
-#### Class template `chunk_view` for forward ranges <a id="range.chunk.view.fwd">[range.chunk.view.fwd]</a>
+#### Class template `chunk_view` for forward ranges <a id="range.chunk.view.fwd">[[range.chunk.view.fwd]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -11521,7 +11524,7 @@ constexpr auto size() const requires sized_range<const V>;
 > return to-unsigned-like(div-ceil(ranges::distance(base_), n_));
 > ```
 
-#### Class template `chunk_view::iterator` for forward ranges <a id="range.chunk.fwd.iter">[range.chunk.fwd.iter]</a>
+#### Class template `chunk_view::iterator` for forward ranges <a id="range.chunk.fwd.iter">[[range.chunk.fwd.iter]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -11880,9 +11883,9 @@ friend constexpr difference_type operator-(const iterator& x, default_sentinel_t
 >
 > Equivalent to: `return -(y - x);`
 
-### Slide view <a id="range.slide">[range.slide]</a>
+### Slide view <a id="range.slide">[[range.slide]]</a>
 
-#### Overview <a id="range.slide.overview">[range.slide.overview]</a>
+#### Overview <a id="range.slide.overview">[[range.slide.overview]]</a>
 
 `slide_view` takes a view and a number N and produces a view whose
 $M^\text{th}$ element is a view over the $M^\text{th}$ through
@@ -11890,8 +11893,9 @@ $(M + N - 1)^\text{th}$ elements of the original view. If the original
 view has fewer than N elements, the resulting view is empty.
 
 The name `views::slide` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `N`, the expression
-`views::slide(E, N)` is expression-equivalent to `slide_view(E, N)`.
+[[range.adaptor.object]]. Given subexpressions `E` and `N`, the
+expression `views::slide(E, N)` is expression-equivalent to
+`slide_view(E, N)`.
 
 \[*Example 25*:
 
@@ -11905,7 +11909,7 @@ for (auto i : v | views::slide(2)) {
 
 — *end example*\]
 
-#### Class template `slide_view` <a id="range.slide.view">[range.slide.view]</a>
+#### Class template `slide_view` <a id="range.slide.view">[[range.slide.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -12048,7 +12052,7 @@ constexpr auto size() const requires sized_range<const V>;
 > return to-unsigned-like(sz);
 > ```
 
-#### Class template `slide_view::iterator` <a id="range.slide.iterator">[range.slide.iterator]</a>
+#### Class template `slide_view::iterator` <a id="range.slide.iterator">[[range.slide.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -12383,7 +12387,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 > If *last_ele\_* is present, `x.`*`last_ele_`*` - y.`*`last_ele_`*;
 > otherwise, `x.`*`current_`*` - y.`*`current_`*.
 
-#### Class `slide_view::sentinel` <a id="range.slide.sentinel">[range.slide.sentinel]</a>
+#### Class `slide_view::sentinel` <a id="range.slide.sentinel">[[range.slide.sentinel]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -12448,17 +12452,17 @@ friend constexpr range_difference_t<V>
 >
 > `y.`*`end_`*` - x.`*`last_ele_`*.
 
-### Chunk by view <a id="range.chunk.by">[range.chunk.by]</a>
+### Chunk by view <a id="range.chunk.by">[[range.chunk.by]]</a>
 
-#### Overview <a id="range.chunk.by.overview">[range.chunk.by.overview]</a>
+#### Overview <a id="range.chunk.by.overview">[[range.chunk.by.overview]]</a>
 
 `chunk_by_view` takes a view and a predicate, and splits the view into
 `subrange`s between each pair of adjacent elements for which the
 predicate returns `false`.
 
 The name `views::chunk_by` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `F`, the expression
-`views::chunk_by(E, F)` is expression-equivalent to
+[[range.adaptor.object]]. Given subexpressions `E` and `F`, the
+expression `views::chunk_by(E, F)` is expression-equivalent to
 `chunk_by_view(E, F)`.
 
 \[*Example 26*:
@@ -12480,7 +12484,7 @@ for (auto r : v | views::chunk_by(ranges::less_equal{})) {
 
 — *end example*\]
 
-#### Class template `chunk_by_view` <a id="range.chunk.by.view">[range.chunk.by.view]</a>
+#### Class template `chunk_by_view` <a id="range.chunk.by.view">[[range.chunk.by.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -12601,7 +12605,7 @@ constexpr iterator_t<V> find-prev(iterator_t<V> current) requires bidirectional_
 > - if `i` is not equal to `ranges::begin(`*`base_`*`)`, then
 >   `bool(invoke(*`*`pred_`*`, *ranges::prev(i), *i))` is `false`.
 
-#### Class `chunk_by_view::iterator` <a id="range.chunk.by.iter">[range.chunk.by.iter]</a>
+#### Class `chunk_by_view::iterator` <a id="range.chunk.by.iter">[[range.chunk.by.iter]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -12740,16 +12744,17 @@ friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 >
 > `x.`*`current_`*` == x.`*`next_`*.
 
-### Stride view <a id="range.stride">[range.stride]</a>
+### Stride view <a id="range.stride">[[range.stride]]</a>
 
-#### Overview <a id="range.stride.overview">[range.stride.overview]</a>
+#### Overview <a id="range.stride.overview">[[range.stride.overview]]</a>
 
 `stride_view` presents a view of an underlying sequence, advancing over
 n elements at a time, as opposed to the usual single-step succession.
 
 The name `views::stride` denotes a range adaptor object
-[range.adaptor.object]. Given subexpressions `E` and `N`, the expression
-`views::stride(E, N)` is expression-equivalent to `stride_view(E, N)`.
+[[range.adaptor.object]]. Given subexpressions `E` and `N`, the
+expression `views::stride(E, N)` is expression-equivalent to
+`stride_view(E, N)`.
 
 \[*Example 27*:
 
@@ -12761,7 +12766,7 @@ ranges::copy(input | views::reverse, ostream_iterator<int>(cout, " ")); // print
 
 — *end example*\]
 
-#### Class template `stride_view` <a id="range.stride.view">[range.stride.view]</a>
+#### Class template `stride_view` <a id="range.stride.view">[[range.stride.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -12853,7 +12858,7 @@ constexpr auto size() const requires sized_range<const V>;
 > return to-unsigned-like(div-ceil(ranges::distance(base_), stride_));
 > ```
 
-#### Class template `stride_view::iterator` <a id="range.stride.iterator">[range.stride.iterator]</a>
+#### Class template `stride_view::iterator` <a id="range.stride.iterator">[[range.stride.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -13313,16 +13318,16 @@ friend constexpr void iter_swap(const iterator& x, const iterator& y)
 > Equivalent to:
 > `ranges::iter_swap(x.`*`current_`*`, y.`*`current_`*`);`
 
-### Cartesian product view <a id="range.cartesian">[range.cartesian]</a>
+### Cartesian product view <a id="range.cartesian">[[range.cartesian]]</a>
 
-#### Overview <a id="range.cartesian.overview">[range.cartesian.overview]</a>
+#### Overview <a id="range.cartesian.overview">[[range.cartesian.overview]]</a>
 
 `cartesian_product_view` takes any non-zero number of ranges n and
 produces a view of tuples calculated by the n-ary cartesian product of
 the provided ranges.
 
 The name `views::cartesian_product` denotes a customization point object
-[customization.point.object]. Given a pack of subexpressions `Es`, the
+[[customization.point.object]]. Given a pack of subexpressions `Es`, the
 expression `views::cartesian_product(Es...)` is expression-equivalent to
 
 - `views::single(tuple())`
@@ -13349,7 +13354,7 @@ for (auto&& [a, b, c] : views::cartesian_product(v, v, v)) {
 
 — *end example*\]
 
-#### Class template `cartesian_product_view` <a id="range.cartesian.view">[range.cartesian.view]</a>
+#### Class template `cartesian_product_view` <a id="range.cartesian.view">[[range.cartesian.view]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -13528,7 +13533,7 @@ constexpr see below size() const
 >
 > p.
 
-#### Class template `cartesian_product_view::iterator` <a id="range.cartesian.iterator">[range.cartesian.iterator]</a>
+#### Class template `cartesian_product_view::iterator` <a id="range.cartesian.iterator">[[range.cartesian.iterator]]</a>
 
 ``` cpp
 namespace std::ranges {
@@ -13995,9 +14000,9 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 > - `noexcept(ranges::iter_swap(std::get<`i`>(l.`*`current_`*`), std::get<`i`>(r.`*`current_`*`)))`
 >   forevery integer $0 \le i \le \texttt{sizeof...(Vs)}$.
 
-## Range generators <a id="coro.generator">[coro.generator]</a>
+## Range generators <a id="coro.generator">[[coro.generator]]</a>
 
-### Overview <a id="coroutine.generator.overview">[coroutine.generator.overview]</a>
+### Overview <a id="coroutine.generator.overview">[[coroutine.generator.overview]]</a>
 
 Class template `generator` presents a view of the elements yielded by
 the evaluation of a coroutine.
@@ -14025,7 +14030,7 @@ void f() {
 
 — *end example*\]
 
-### Header `<generator>` synopsis <a id="generator.syn">[generator.syn]</a>
+### Header `<generator>` synopsis <a id="generator.syn">[[generator.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -14040,7 +14045,7 @@ namespace std {
 }
 ```
 
-### Class template `generator` <a id="coro.generator.class">[coro.generator.class]</a>
+### Class template `generator` <a id="coro.generator.class">[[coro.generator.class]]</a>
 
 ``` cpp
 namespace std {
@@ -14108,7 +14113,7 @@ Specializations of `generator` model `view` and `input_range`.
 The behavior of a program that adds a specialization for `generator` is
 undefined.
 
-### Members <a id="coro.generator.members">[coro.generator.members]</a>
+### Members <a id="coro.generator.members">[[coro.generator.members]]</a>
 
 ``` cpp
 generator(generator&& other) noexcept;
@@ -14191,7 +14196,7 @@ default_sentinel_t end() const noexcept;
 >
 > `default_sentinel`.
 
-### Class `generator::promise_type` <a id="coro.generator.promise">[coro.generator.promise]</a>
+### Class `generator::promise_type` <a id="coro.generator.promise">[[coro.generator.promise]]</a>
 
 ``` cpp
 namespace std {
@@ -14439,7 +14444,7 @@ void operator delete(void* pointer, size_t size) noexcept;
 > Deallocates the storage pointed to by `pointer` using an allocator
 > equivalent to that used to allocate it.
 
-### Class `generator::iterator` <a id="coro.generator.iterator">[coro.generator.iterator]</a>
+### Class `generator::iterator` <a id="coro.generator.iterator">[[coro.generator.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -14543,43 +14548,43 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 > Equivalent to: `return i.`*`coroutine_`*`.done();`
 
 <!-- Link reference definitions -->
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[concepts.equality]: concepts.md#concepts.equality
-[containers]: containers.md#containers
-[conv.rval]: expr.md#conv.rval
-[customization.point.object]: library.md#customization.point.object
-[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
-[iterator.concept.forward]: iterators.md#iterator.concept.forward
-[iterator.concept.iterator]: iterators.md#iterator.concept.iterator
-[iterator.concept.output]: iterators.md#iterator.concept.output
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
-[iterator.concept.winc]: iterators.md#iterator.concept.winc
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[range.access]: #range.access
-[range.adaptor.object]: #range.adaptor.object
-[range.adaptors]: #range.adaptors
-[range.empty.view]: #range.empty.view
-[range.factories]: #range.factories
-[range.iota.view]: #range.iota.view
-[range.lazy.split]: #range.lazy.split
-[range.prim.data]: #range.prim.data
-[range.range]: #range.range
-[range.repeat.view]: #range.repeat.view
-[range.sized]: #range.sized
-[range.subrange]: #range.subrange
-[range.summary]: #range.summary
-[range.utility]: #range.utility
-[ranges.syn]: #ranges.syn
-[string.view]: strings.md#string.view
-[term.array.type]: #term.array.type
-[term.perfect.forwarding.call.wrapper]: #term.perfect.forwarding.call.wrapper
-[views.span]: containers.md#views.span
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[concepts.equality]]: concepts.md#concepts.equality
+[[containers]]: containers.md#containers
+[[conv.rval]]: expr.md#conv.rval
+[[customization.point.object]]: library.md#customization.point.object
+[[iterator.concept.bidir]]: iterators.md#iterator.concept.bidir
+[[iterator.concept.forward]]: iterators.md#iterator.concept.forward
+[[iterator.concept.iterator]]: iterators.md#iterator.concept.iterator
+[[iterator.concept.output]]: iterators.md#iterator.concept.output
+[[iterator.concept.random.access]]: iterators.md#iterator.concept.random.access
+[[iterator.concept.sizedsentinel]]: iterators.md#iterator.concept.sizedsentinel
+[[iterator.concept.winc]]: iterators.md#iterator.concept.winc
+[[iterator.requirements.general]]: iterators.md#iterator.requirements.general
+[[range.access]]: #range.access
+[[range.adaptor.object]]: #range.adaptor.object
+[[range.adaptors]]: #range.adaptors
+[[range.empty.view]]: #range.empty.view
+[[range.factories]]: #range.factories
+[[range.iota.view]]: #range.iota.view
+[[range.lazy.split]]: #range.lazy.split
+[[range.prim.data]]: #range.prim.data
+[[range.range]]: #range.range
+[[range.repeat.view]]: #range.repeat.view
+[[range.sized]]: #range.sized
+[[range.subrange]]: #range.subrange
+[[range.summary]]: #range.summary
+[[range.utility]]: #range.utility
+[[ranges.syn]]: #ranges.syn
+[[string.view]]: strings.md#string.view
+[[term.array.type]]: #term.array.type
+[[term.perfect.forwarding.call.wrapper]]: #term.perfect.forwarding.call.wrapper
+[[views.span]]: containers.md#views.span
 
 <!-- Link reference definitions -->
-[coro.generator]: #coro.generator
-[range.access]: #range.access
-[range.adaptors]: #range.adaptors
-[range.factories]: #range.factories
-[range.req]: #range.req
-[range.utility]: #range.utility
+[[coro.generator]]: #coro.generator
+[[range.access]]: #range.access
+[[range.adaptors]]: #range.adaptors
+[[range.factories]]: #range.factories
+[[range.req]]: #range.req
+[[range.utility]]: #range.utility

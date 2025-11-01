@@ -3,7 +3,7 @@ current_file: intro
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Scope <a id="intro.scope">[intro.scope]</a>
+# Scope <a id="intro.scope">[[intro.scope]]</a>
 
 This document specifies requirements for implementations of the C++
 programming language. The first such requirement is that they implement
@@ -19,7 +19,7 @@ classes, templates, exceptions, namespaces, operator overloading,
 function name overloading, references, free store management operators,
 and additional library facilities.
 
-# Normative references <a id="intro.refs">[intro.refs]</a>
+# Normative references <a id="intro.refs">[[intro.refs]]</a>
 
 The following documents are referred to in the text in such a way that
 some or all of their content constitutes requirements of this document.
@@ -68,7 +68,7 @@ hereinafter called *POSIX*.
 The ECMAScript Language Specification described in Standard Ecma-262 is
 hereinafter called *ECMA-262*.
 
-# Terms and definitions <a id="intro.defs">[intro.defs]</a>
+# Terms and definitions <a id="intro.defs">[[intro.defs]]</a>
 
 For the purposes of this document, the terms and definitions given in
 ISO/IEC 2382, the terms, definitions, and symbols given in ISO
@@ -215,10 +215,10 @@ direct-initialization that is not list-initialization
 
 ⟨glvalue⟩ type of the most derived object to which the glvalue refers
 
-\[*Example 1*: If a pointer [dcl.ptr] `p` whose static type is “pointer
-to class `B`” is pointing to an object of class `D`, derived from `B`
-[class.derived], the dynamic type of the expression `*p` is “`D`”.
-References [dcl.ref] are treated similarly. — *end example*\]
+\[*Example 1*: If a pointer [[dcl.ptr]] `p` whose static type is
+“pointer to class `B`” is pointing to an object of class `D`, derived
+from `B` [[class.derived]], the dynamic type of the expression `*p` is
+“`D`”. References [[dcl.ref]] are treated similarly. — *end example*\]
 
 #### 20 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
 
@@ -257,7 +257,7 @@ functions. — *end note*\]
 
 #### 25 ill-formed program <a id="defns.ill.formed">[defns.ill.formed]</a>
 
-program that is not well-formed [defns.well.formed]
+program that is not well-formed [[defns.well.formed]]
 
 #### 26 implementation-defined behavior <a id="defns.impl.defined">[defns.impl.defined]</a>
 
@@ -563,11 +563,11 @@ but unspecified state, `x.empty()` can be called unconditionally, and
 
 C++ program constructed according to the syntax and semantic rules
 
-# General principles <a id="intro">[intro]</a>
+# General principles <a id="intro">[[intro]]</a>
 
-## Implementation compliance <a id="intro.compliance">[intro.compliance]</a>
+## Implementation compliance <a id="intro.compliance">[[intro.compliance]]</a>
 
-### General <a id="intro.compliance.general">[intro.compliance.general]</a>
+### General <a id="intro.compliance.general">[[intro.compliance.general]]</a>
 
 The set of *diagnosable rules* consists of all syntactic and semantic
 rules in this document except for those rules containing an explicit
@@ -579,9 +579,9 @@ those requirements are often easier to understand if they are phrased as
 requirements on programs, parts of programs, or execution of programs.
 Such requirements have the following meaning:
 
-- If a program contains no violations of the rules in [lex] through
-  [\lastlibchapter] and [depr], a conforming implementation shall,
-  within its resource limits as described in [implimits], accept and
+- If a program contains no violations of the rules in [[lex]] through
+  [[\lastlibchapter]] and [[depr]], a conforming implementation shall,
+  within its resource limits as described in [[implimits]], accept and
   correctly execute
 
   that program.
@@ -598,46 +598,46 @@ Such requirements have the following meaning:
 
 \[*Note 1*: During template argument deduction and substitution, certain
 constructs that in other contexts require a diagnostic are treated
-differently; see  [temp.deduct]. — *end note*\]
+differently; see  [[temp.deduct]]. — *end note*\]
 
 Furthermore, a conforming implementation
 
 - shall not accept a preprocessing translation unit containing a
-  `#error` preprocessing directive [cpp.error],
+  `#error` preprocessing directive [[cpp.error]],
 
 - shall issue at least one diagnostic message for each `#warning` or
   `#error` preprocessing directive not following a `#error`
   preprocessing directive in a preprocessing translation unit, and
 
 - shall not accept a translation unit with a *static_assert-declaration*
-  that fails [dcl.pre].
+  that fails [[dcl.pre]].
 
 For classes and class templates, the library Clauses specify partial
-definitions. Private members [class.access] are not specified, but each
-implementation shall supply them to complete the definitions according
-to the description in the library Clauses.
+definitions. Private members [[class.access]] are not specified, but
+each implementation shall supply them to complete the definitions
+according to the description in the library Clauses.
 
 For functions, function templates, objects, and values, the library
 Clauses specify declarations. Implementations shall supply definitions
 consistent with the descriptions in the library Clauses.
 
-A C++ translation unit [lex.phases] obtains access to the names defined
-in the library by including the appropriate standard library header or
-importing the appropriate standard library named header unit
-[using.headers].
+A C++ translation unit [[lex.phases]] obtains access to the names
+defined in the library by including the appropriate standard library
+header or importing the appropriate standard library named header unit
+[[using.headers]].
 
 The templates, classes, functions, and objects in the library have
-external linkage [basic.link]. The implementation provides definitions
+external linkage [[basic.link]]. The implementation provides definitions
 for standard library entities, as necessary, while combining translation
-units to form a complete C++ program [lex.phases].
+units to form a complete C++ program [[lex.phases]].
 
 Two kinds of implementations are defined: a *hosted implementation* and
 a *freestanding implementation*. A freestanding implementation is one in
 which execution may take place without the benefit of an operating
 system. A hosted implementation supports all the facilities described in
 this document, while a freestanding implementation supports the entire
-C++ language described in [lex] through [cpp] and the subset of the
-library facilities described in [compliance].
+C++ language described in [[lex]] through [[cpp]] and the subset of the
+library facilities described in [[compliance]].
 
 A conforming implementation may have extensions (including additional
 library functions), provided they do not alter the behavior of any
@@ -649,7 +649,7 @@ Each implementation shall include documentation that identifies all
 conditionally-supported constructs that it does not support and defines
 all locale-specific characteristics.
 
-### Abstract machine <a id="intro.abstract">[intro.abstract]</a>
+### Abstract machine <a id="intro.abstract">[[intro.abstract]]</a>
 
 The semantic descriptions in this document define a parameterized
 nondeterministic abstract machine. This document places no requirement
@@ -670,11 +670,11 @@ that corresponds to that implementation (referred to as the
 
 Certain other aspects and operations of the abstract machine are
 described in this document as unspecified (for example, order of
-evaluation of arguments in a function call [expr.call]). Where possible,
-this document defines a set of allowable behaviors. These define the
-nondeterministic aspects of the abstract machine. An instance of the
-abstract machine can thus have more than one possible execution for a
-given program and a given input.
+evaluation of arguments in a function call [[expr.call]]). Where
+possible, this document defines a set of allowable behaviors. These
+define the nondeterministic aspects of the abstract machine. An instance
+of the abstract machine can thus have more than one possible execution
+for a given program and a given input.
 
 Certain other operations are described in this document as undefined
 (for example, the effect of attempting to modify a const object).
@@ -710,27 +710,27 @@ program.
 \[*Note 3*: More stringent correspondences between abstract and actual
 semantics can be defined by each implementation. — *end note*\]
 
-## Structure of this document <a id="intro.structure">[intro.structure]</a>
+## Structure of this document <a id="intro.structure">[[intro.structure]]</a>
 
-[lex] through [cpp] describe the C++ programming language. That
+[[lex]] through [[cpp]] describe the C++ programming language. That
 description includes detailed syntactic specifications in a form
-described in  [syntax]. For convenience, [gram] repeats all such
+described in  [[syntax]]. For convenience, [[gram]] repeats all such
 syntactic specifications.
 
-[\firstlibchapter] through [\lastlibchapter] and [depr] (the
+[[\firstlibchapter]] through [[\lastlibchapter]] and [[depr]] (the
 *library clauses*) describe the C++ standard library. That description
 includes detailed descriptions of the entities and macros that
-constitute the library, in a form described in [library].
+constitute the library, in a form described in [[library]].
 
-[implimits] recommends lower bounds on the capacity of conforming
+[[implimits]] recommends lower bounds on the capacity of conforming
 implementations.
 
-[diff] summarizes the evolution of C++ since its first published
+[[diff]] summarizes the evolution of C++ since its first published
 description, and explains in detail the differences between C++ and C.
-Certain features of C++ exist solely for compatibility purposes; [depr]
-describes those features.
+Certain features of C++ exist solely for compatibility purposes;
+[[depr]] describes those features.
 
-## Syntax notation <a id="syntax">[syntax]</a>
+## Syntax notation <a id="syntax">[[syntax]]</a>
 
 In the syntax notation used in this document, syntactic categories are
 indicated by type, and literal words and characters in `constant`
@@ -762,29 +762,29 @@ the following rules:
   *identifier-list* is a sequence of identifiers separated by commas).
 
 <!-- Link reference definitions -->
-[\firstlibchapter]: #\firstlibchapter
-[\lastlibchapter]: #\lastlibchapter
-[basic.link]: basic.md#basic.link
-[class.access]: class.md#class.access
-[class.derived]: class.md#class.derived
-[compliance]: library.md#compliance
-[cpp]: cpp.md#cpp
-[cpp.error]: cpp.md#cpp.error
-[dcl.pre]: dcl.md#dcl.pre
-[dcl.ptr]: dcl.md#dcl.ptr
-[dcl.ref]: dcl.md#dcl.ref
-[defns.well.formed]: #defns.well.formed
-[depr]: #depr
-[diff]: #diff
-[expr.call]: expr.md#expr.call
-[gram]: #gram
-[implimits]: #implimits
-[intro.abstract]: #intro.abstract
-[intro.compliance.general]: #intro.compliance.general
-[intro.execution]: basic.md#intro.execution
-[lex]: lex.md#lex
-[lex.phases]: lex.md#lex.phases
-[library]: library.md#library
-[syntax]: #syntax
-[temp.deduct]: temp.md#temp.deduct
-[using.headers]: library.md#using.headers
+[[\firstlibchapter]]: #\firstlibchapter
+[[\lastlibchapter]]: #\lastlibchapter
+[[basic.link]]: basic.md#basic.link
+[[class.access]]: class.md#class.access
+[[class.derived]]: class.md#class.derived
+[[compliance]]: library.md#compliance
+[[cpp]]: cpp.md#cpp
+[[cpp.error]]: cpp.md#cpp.error
+[[dcl.pre]]: dcl.md#dcl.pre
+[[dcl.ptr]]: dcl.md#dcl.ptr
+[[dcl.ref]]: dcl.md#dcl.ref
+[[defns.well.formed]]: #defns.well.formed
+[[depr]]: #depr
+[[diff]]: #diff
+[[expr.call]]: expr.md#expr.call
+[[gram]]: #gram
+[[implimits]]: #implimits
+[[intro.abstract]]: #intro.abstract
+[[intro.compliance.general]]: #intro.compliance.general
+[[intro.execution]]: basic.md#intro.execution
+[[lex]]: lex.md#lex
+[[lex.phases]]: lex.md#lex.phases
+[[library]]: library.md#library
+[[syntax]]: #syntax
+[[temp.deduct]]: temp.md#temp.deduct
+[[using.headers]]: library.md#using.headers

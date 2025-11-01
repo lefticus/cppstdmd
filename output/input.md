@@ -3,9 +3,9 @@ current_file: input
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Input/output library <a id="input.output">[input.output]</a>
+# Input/output library <a id="input.output">[[input.output]]</a>
 
-## General <a id="input.output.general">[input.output.general]</a>
+## General <a id="input.output.general">[[input.output.general]]</a>
 
 This Clause describes components that C++ programs may use to perform
 input/output operations.
@@ -14,37 +14,37 @@ The following subclauses describe requirements for stream parameters,
 and components for forward declarations of iostreams, predefined
 iostreams objects, base iostreams classes, stream buffering, stream
 formatting and manipulators, string streams, and file streams, as
-summarized in [iostreams.summary].
+summarized in [[iostreams.summary]].
 
 **Table: Input/output library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [iostreams.requirements] | Requirements |
-| [iostream.forward] | Forward declarations | `<iosfwd>` |
-| [iostream.objects] | Standard iostream objects | `<iostream>` |
-| [iostreams.base] | Iostreams base classes | `<ios>` |
-| [stream.buffers] | Stream buffers | `<streambuf>` |
-| [iostream.format] | Formatting and manipulators | `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
-| [string.streams] | String streams | `<sstream>` |
-| [span.streams] | Span-based streams | `<spanstream>` |
-| [file.streams] | File streams | `<fstream>` |
-| [syncstream] | Synchronized output streams | `<syncstream>` |
-| [filesystems] | File systems | `<filesystem>` |
-| [c.files] | C library files | `<cstdio>`, `<cinttypes>` |
+| [[iostreams.requirements]] | Requirements |
+| [[iostream.forward]] | Forward declarations | `<iosfwd>` |
+| [[iostream.objects]] | Standard iostream objects | `<iostream>` |
+| [[iostreams.base]] | Iostreams base classes | `<ios>` |
+| [[stream.buffers]] | Stream buffers | `<streambuf>` |
+| [[iostream.format]] | Formatting and manipulators | `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
+| [[string.streams]] | String streams | `<sstream>` |
+| [[span.streams]] | Span-based streams | `<spanstream>` |
+| [[file.streams]] | File streams | `<fstream>` |
+| [[syncstream]] | Synchronized output streams | `<syncstream>` |
+| [[filesystems]] | File systems | `<filesystem>` |
+| [[c.files]] | C library files | `<cstdio>`, `<cinttypes>` |
 
-## Iostreams requirements <a id="iostreams.requirements">[iostreams.requirements]</a>
+## Iostreams requirements <a id="iostreams.requirements">[[iostreams.requirements]]</a>
 
-### Imbue limitations <a id="iostream.limits.imbue">[iostream.limits.imbue]</a>
+### Imbue limitations <a id="iostream.limits.imbue">[[iostream.limits.imbue]]</a>
 
-No function described in [input.output] except for `ios_base::imbue` and
-`basic_filebuf::pubimbue` causes any instance of `basic_ios::imbue` or
-`basic_streambuf::imbue` to be called. If any user function called from
-a function declared in [input.output] or as an overriding virtual
-function of any class declared in [input.output] calls `imbue`, the
+No function described in [[input.output]] except for `ios_base::imbue`
+and `basic_filebuf::pubimbue` causes any instance of `basic_ios::imbue`
+or `basic_streambuf::imbue` to be called. If any user function called
+from a function declared in [[input.output]] or as an overriding virtual
+function of any class declared in [[input.output]] calls `imbue`, the
 behavior is undefined.
 
-### Types <a id="stream.types">[stream.types]</a>
+### Types <a id="stream.types">[[stream.types]]</a>
 
 ``` cpp
 using streamoff = \impdefx{type of streamoff};
@@ -67,43 +67,44 @@ using streamsize = \impdef;
 > Most places where `streamsize` is used would use `size_t` in ISO C, or
 > `ssize_t` in POSIX.
 
-### Positioning type limitations <a id="iostreams.limits.pos">[iostreams.limits.pos]</a>
+### Positioning type limitations <a id="iostreams.limits.pos">[[iostreams.limits.pos]]</a>
 
-The classes of [input.output] with template arguments `charT` and
+The classes of [[input.output]] with template arguments `charT` and
 `traits` behave as described if `traits::pos_type` and
 `traits::off_type` are `streampos` and `streamoff` respectively. Except
 as noted explicitly below, their behavior when `traits::pos_type` and
 `traits::off_type` are other types is *implementation-defined*.
 
 \[*Note 1*: For each of the specializations of `char_traits` defined in
-[char.traits.specializations], `state_type` denotes `mbstate_t`,
+[[char.traits.specializations]], `state_type` denotes `mbstate_t`,
 `pos_type` denotes `fpos<mbstate_t>`, and `off_type` denotes
 `streamoff`. — *end note*\]
 
-In the classes of [input.output], a template parameter with name `charT`
-represents a member of the set of types containing `char`, `wchar_t`,
-and any other *implementation-defined* character types that meet the
-requirements for a character on which any of the iostream components can
-be instantiated.
+In the classes of [[input.output]], a template parameter with name
+`charT` represents a member of the set of types containing `char`,
+`wchar_t`, and any other *implementation-defined* character types that
+meet the requirements for a character on which any of the iostream
+components can be instantiated.
 
-### Thread safety <a id="iostreams.threadsafety">[iostreams.threadsafety]</a>
+### Thread safety <a id="iostreams.threadsafety">[[iostreams.threadsafety]]</a>
 
-Concurrent access to a stream object [string.streams], [file.streams],
-stream buffer object [stream.buffers], or C Library stream [c.files] by
-multiple threads may result in a data race [intro.multithread] unless
-otherwise specified [iostream.objects].
+Concurrent access to a stream object
+[[string.streams]], [[file.streams]], stream buffer object
+[[stream.buffers]], or C Library stream [[c.files]] by multiple threads
+may result in a data race [[intro.multithread]] unless otherwise
+specified [[iostream.objects]].
 
 \[*Note 2*: Data races result in undefined behavior
-[intro.multithread]. — *end note*\]
+[[intro.multithread]]. — *end note*\]
 
 If one thread makes a library call *a* that writes a value to a stream
 and, as a result, another thread reads this value from the stream
 through a library call *b* such that this does not result in a data
 race, then *a*’s write synchronizes with *b*’s read.
 
-## Forward declarations <a id="iostream.forward">[iostream.forward]</a>
+## Forward declarations <a id="iostream.forward">[[iostream.forward]]</a>
 
-### Header `<iosfwd>` synopsis <a id="iosfwd.syn">[iosfwd.syn]</a>
+### Header `<iosfwd>` synopsis <a id="iosfwd.syn">[[iosfwd.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -232,7 +233,7 @@ Default template arguments are described as appearing both in `<iosfwd>`
 and in the synopsis of other headers but it is well-formed to include
 both `<iosfwd>` and one or more of the other headers.
 
-### Overview <a id="iostream.forward.overview">[iostream.forward.overview]</a>
+### Overview <a id="iostream.forward.overview">[[iostream.forward.overview]]</a>
 
 The class template specialization `basic_ios<charT, traits>` serves as a
 virtual base class for the class templates `basic_istream`,
@@ -258,7 +259,7 @@ as a base class for class templates `basic_stringstream` and
 
 \[*Note 1*: For each of the class templates above, the program is
 ill-formed if `traits::char_type` is not the same type as `charT`
-[char.traits]. — *end note*\]
+[[char.traits]]. — *end note*\]
 
 Other *typedef-name* define instances of class templates specialized for
 `char` or `wchar_t` types.
@@ -274,9 +275,9 @@ respectively. — *end example*\]
 `char_traits<char>`. An implementation can avoid this circularity by
 substituting equivalent types. — *end note*\]
 
-## Standard iostream objects <a id="iostream.objects">[iostream.objects]</a>
+## Standard iostream objects <a id="iostream.objects">[[iostream.objects]]</a>
 
-### Header `<iostream>` synopsis <a id="iostream.syn">[iostream.syn]</a>
+### Header `<iostream>` synopsis <a id="iostream.syn">[[iostream.syn]]</a>
 
 ``` cpp
 #include <ios>          // see [ios.syn]
@@ -297,7 +298,7 @@ namespace std {
 }
 ```
 
-### Overview <a id="iostream.objects.overview">[iostream.objects.overview]</a>
+### Overview <a id="iostream.objects.overview">[[iostream.objects.overview]]</a>
 
 In this Clause, the type name `FILE` refers to the type `FILE` declared
 in `<cstdio>`.
@@ -309,7 +310,7 @@ and includes all the headers necessary to use these objects.
 The objects are constructed and the associations are established at some
 time prior to or during the first time an object of class
 `ios_base::Init` is constructed, and in any case before the body of
-`main` [basic.start.main] begins execution. The objects are not
+`main` [[basic.start.main]] begins execution. The objects are not
 destroyed during program execution.
 
 If it is possible for them to do so, implementations should initialize
@@ -317,10 +318,10 @@ the objects earlier than required.
 
 The results of including `<iostream>` in a translation unit shall be as
 if `<iostream>` defined an instance of `ios_base::Init` with static
-storage duration. Each C++ library module [std.modules] in a hosted
+storage duration. Each C++ library module [[std.modules]] in a hosted
 implementation shall behave as if it contains an interface unit that
 defines an unexported `ios_base::Init` variable with ordered
-initialization [basic.start.dynamic].
+initialization [[basic.start.dynamic]].
 
 \[*Note 1*: As a result, the definition of that variable is
 appearance-ordered before any declaration following the point of
@@ -332,15 +333,15 @@ Mixing operations on corresponding wide- and narrow-character streams
 follows the same semantics as mixing such operations on `FILE`s, as
 specified in the C standard library.
 
-Concurrent access to a synchronized [ios.members.static] standard
-iostream object’s formatted and unformatted input [istream] and output
-[ostream] functions or a standard C stream by multiple threads does not
-result in a data race [intro.multithread].
+Concurrent access to a synchronized [[ios.members.static]] standard
+iostream object’s formatted and unformatted input [[istream]] and output
+[[ostream]] functions or a standard C stream by multiple threads does
+not result in a data race [[intro.multithread]].
 
 \[*Note 2*: Unsynchronized concurrent use of these objects and streams
 by multiple threads can result in interleaved characters. — *end note*\]
 
-### Narrow stream objects <a id="narrow.stream.objects">[narrow.stream.objects]</a>
+### Narrow stream objects <a id="narrow.stream.objects">[[narrow.stream.objects]]</a>
 
 ``` cpp
 istream cin;
@@ -378,7 +379,7 @@ ostream clog;
 > The object `clog` controls output to a stream buffer associated with
 > the object `stderr`, declared in .
 
-### Wide stream objects <a id="wide.stream.objects">[wide.stream.objects]</a>
+### Wide stream objects <a id="wide.stream.objects">[[wide.stream.objects]]</a>
 
 ``` cpp
 wistream wcin;
@@ -416,9 +417,9 @@ wostream wclog;
 > The object `wclog` controls output to a stream buffer associated with
 > the object `stderr`, declared in .
 
-## Iostreams base classes <a id="iostreams.base">[iostreams.base]</a>
+## Iostreams base classes <a id="iostreams.base">[[iostreams.base]]</a>
 
-### Header `<ios>` synopsis <a id="ios.syn">[ios.syn]</a>
+### Header `<ios>` synopsis <a id="ios.syn">[[ios.syn]]</a>
 
 ``` cpp
 #include <iosfwd>   // see [iosfwd.syn]
@@ -482,9 +483,9 @@ namespace std {
 }
 ```
 
-### Class `ios_base` <a id="ios.base">[ios.base]</a>
+### Class `ios_base` <a id="ios.base">[[ios.base]]</a>
 
-#### General <a id="ios.base.general">[ios.base.general]</a>
+#### General <a id="ios.base.general">[[ios.base.general]]</a>
 
 ``` cpp
 namespace std {
@@ -622,9 +623,9 @@ For the sake of exposition, the maintained data is presented here as:
 
 — *end note*\]
 
-#### Types <a id="ios.types">[ios.types]</a>
+#### Types <a id="ios.types">[[ios.types]]</a>
 
-##### Class `ios_base::failure` <a id="ios.failure">[ios.failure]</a>
+##### Class `ios_base::failure` <a id="ios.failure">[[ios.failure]]</a>
 
 ``` cpp
 namespace std {
@@ -675,7 +676,7 @@ explicit failure(const char* msg, const error_code& ec = io_errc::stream);
 >
 > Constructs the base class with `msg` and `ec`.
 
-##### Type `ios_base::fmtflags` <a id="ios.fmtflags">[ios.fmtflags]</a>
+##### Type `ios_base::fmtflags` <a id="ios.fmtflags">[[ios.fmtflags]]</a>
 
 ``` cpp
 using fmtflags = \textit{T1};
@@ -729,7 +730,7 @@ using fmtflags = \textit{T1};
 >
 > </div>
 
-##### Type `ios_base::iostate` <a id="ios.iostate">[ios.iostate]</a>
+##### Type `ios_base::iostate` <a id="ios.iostate">[[ios.iostate]]</a>
 
 ``` cpp
 using iostate = \textit{T2};
@@ -755,7 +756,7 @@ using iostate = \textit{T2};
 >
 > - `goodbit`, the value zero.
 
-##### Type `ios_base::openmode` <a id="ios.openmode">[ios.openmode]</a>
+##### Type `ios_base::openmode` <a id="ios.openmode">[[ios.openmode]]</a>
 
 ``` cpp
 using openmode = \textit{T3};
@@ -777,7 +778,7 @@ using openmode = \textit{T3};
 >
 > </div>
 
-##### Type `ios_base::seekdir` <a id="ios.seekdir">[ios.seekdir]</a>
+##### Type `ios_base::seekdir` <a id="ios.seekdir">[[ios.seekdir]]</a>
 
 ``` cpp
 using seekdir = \textit{T4};
@@ -796,7 +797,7 @@ using seekdir = \textit{T4};
 >
 > </div>
 
-##### Class `ios_base::Init` <a id="ios.init">[ios.init]</a>
+##### Class `ios_base::Init` <a id="ios.init">[[ios.init]]</a>
 
 ``` cpp
 namespace std {
@@ -815,8 +816,8 @@ namespace std {
 
 The class `Init` describes an object whose construction ensures the
 construction of the eight objects declared in `<iostream>`
-[iostream.objects] that associate file stream buffers with the standard
-C streams provided for by the functions declared in `<cstdio>`.
+[[iostream.objects]] that associate file stream buffers with the
+standard C streams provided for by the functions declared in `<cstdio>`.
 
 For the sake of exposition, the maintained data is presented here as:
 
@@ -843,7 +844,7 @@ Init();
 > `cout.flush()`, `cerr.flush()`, `clog.flush()`, `wcout.flush()`,
 > `wcerr.flush()`, `wclog.flush()`.
 
-#### State functions <a id="fmtflags.state">[fmtflags.state]</a>
+#### State functions <a id="fmtflags.state">[[fmtflags.state]]</a>
 
 ``` cpp
 fmtflags flags() const;
@@ -938,7 +939,7 @@ streamsize width(streamsize wide);
 >
 > The previous value of `width()`.
 
-#### Functions <a id="ios.base.locales">[ios.base.locales]</a>
+#### Functions <a id="ios.base.locales">[[ios.base.locales]]</a>
 
 ``` cpp
 locale imbue(const locale& loc);
@@ -970,7 +971,7 @@ locale getloc() const;
 > locale, to be used to perform locale-dependent input and output
 > operations.
 
-#### Static members <a id="ios.members.static">[ios.members.static]</a>
+#### Static members <a id="ios.members.static">[[ios.members.static]]</a>
 
 ``` cpp
 static bool sync_with_stdio(bool sync = true);
@@ -1037,7 +1038,7 @@ static bool sync_with_stdio(bool sync = true);
 > In practical terms, synchronization usually means that a standard
 > iostream object and a standard stdio object share a buffer.
 
-#### Storage functions <a id="ios.base.storage">[ios.base.storage]</a>
+#### Storage functions <a id="ios.base.storage">[[ios.base.storage]]</a>
 
 ``` cpp
 static int xalloc();
@@ -1126,7 +1127,7 @@ void*& pword(int idx);
 > After a subsequent call to `pword(int)` for the same object, the
 > earlier return value may no longer be valid.
 
-#### Callbacks <a id="ios.base.callback">[ios.base.callback]</a>
+#### Callbacks <a id="ios.base.callback">[[ios.base.callback]]</a>
 
 ``` cpp
 void register_callback(event_callback fn, int idx);
@@ -1150,7 +1151,7 @@ void register_callback(event_callback fn, int idx);
 > Identical pairs are not merged. A function registered twice will be
 > called twice.
 
-#### Constructors and destructor <a id="ios.base.cons">[ios.base.cons]</a>
+#### Constructors and destructor <a id="ios.base.cons">[[ios.base.cons]]</a>
 
 ``` cpp
 ios_base();
@@ -1174,7 +1175,7 @@ ios_base();
 > member function called from within `fn` has well-defined results.
 > Then, any memory obtained is deallocated.
 
-### Class template `fpos` <a id="fpos">[fpos]</a>
+### Class template `fpos` <a id="fpos">[[fpos]]</a>
 
 ``` cpp
 namespace std {
@@ -1190,7 +1191,7 @@ namespace std {
 }
 ```
 
-#### Members <a id="fpos.members">[fpos.members]</a>
+#### Members <a id="fpos.members">[[fpos.members]]</a>
 
 ``` cpp
 void state(stateT s);
@@ -1208,25 +1209,26 @@ stateT state() const;
 >
 > Current value of `st`.
 
-#### Requirements <a id="fpos.operations">[fpos.operations]</a>
+#### Requirements <a id="fpos.operations">[[fpos.operations]]</a>
 
 An `fpos` type specifies file position information. It holds a state
 object whose type is equal to the template parameter `stateT`. Type
 `stateT` shall meet the *Cpp17DefaultConstructible* (
-[cpp17.defaultconstructible]), *Cpp17CopyConstructible* (
-[cpp17.copyconstructible]), *Cpp17CopyAssignable* (
-[cpp17.copyassignable]), and *Cpp17Destructible* ( [cpp17.destructible])
-requirements. If `is_trivially_copy_constructible_v<stateT>` is `true`,
-then `fpos<stateT>` has a trivial copy constructor. If
+[[cpp17.defaultconstructible]]), *Cpp17CopyConstructible* (
+[[cpp17.copyconstructible]]), *Cpp17CopyAssignable* (
+[[cpp17.copyassignable]]), and *Cpp17Destructible* (
+[[cpp17.destructible]]) requirements. If
+`is_trivially_copy_constructible_v<stateT>` is `true`, then
+`fpos<stateT>` has a trivial copy constructor. If
 `is_trivially_copy_assignable_v<stateT>` is `true`, then `fpos<stateT>`
 has a trivial copy assignment operator. If
 `is_trivially_destructible_v<stateT>` is `true`, then `fpos<stateT>` has
 a trivial destructor. All specializations of `fpos` meet the
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
 *Cpp17CopyAssignable*, *Cpp17Destructible*, and
-*Cpp17EqualityComparable* ( [cpp17.equalitycomparable]) requirements. In
-addition, the expressions shown in [fpos.operations] are valid and have
-the indicated semantics. In that table,
+*Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) requirements.
+In addition, the expressions shown in [[fpos.operations]] are valid and
+have the indicated semantics. In that table,
 
 - `P` refers to a specialization of `fpos`,
 
@@ -1244,9 +1246,9 @@ as an argument to any `istream`, `ostream`, or `streambuf` member that
 accepts a value of type `traits::pos_type` then the behavior of that
 function is undefined.
 
-### Class template `basic_ios` <a id="ios">[ios]</a>
+### Class template `basic_ios` <a id="ios">[[ios]]</a>
 
-#### Overview <a id="ios.overview">[ios.overview]</a>
+#### Overview <a id="ios.overview">[[ios.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -1308,7 +1310,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="basic.ios.cons">[basic.ios.cons]</a>
+#### Constructors <a id="basic.ios.cons">[[basic.ios.cons]]</a>
 
 ``` cpp
 explicit basic_ios(basic_streambuf<charT, traits>* sb);
@@ -1363,7 +1365,7 @@ void init(basic_streambuf<charT, traits>* sb);
 >
 > </div>
 
-#### Member functions <a id="basic.ios.members">[basic.ios.members]</a>
+#### Member functions <a id="basic.ios.members">[[basic.ios.members]]</a>
 
 ``` cpp
 basic_ostream<charT, traits>* tie() const;
@@ -1575,7 +1577,7 @@ void set_rdbuf(basic_streambuf<charT, traits>* sb);
 >
 > Nothing.
 
-#### Flags functions <a id="iostate.flags">[iostate.flags]</a>
+#### Flags functions <a id="iostate.flags">[[iostate.flags]]</a>
 
 ``` cpp
 explicit operator bool() const;
@@ -1681,12 +1683,12 @@ void exceptions(iostate except);
 >
 > `except == exceptions()`.
 
-### `ios_base` manipulators <a id="std.ios.manip">[std.ios.manip]</a>
+### `ios_base` manipulators <a id="std.ios.manip">[[std.ios.manip]]</a>
 
-#### `fmtflags` manipulators <a id="fmtflags.manip">[fmtflags.manip]</a>
+#### `fmtflags` manipulators <a id="fmtflags.manip">[[fmtflags.manip]]</a>
 
 Each function specified in this subclause is a designated addressable
-function [namespace.std].
+function [[namespace.std]].
 
 ``` cpp
 ios_base& boolalpha(ios_base& str);
@@ -1856,10 +1858,10 @@ ios_base& nounitbuf(ios_base& str);
 >
 > `str`.
 
-#### `adjustfield` manipulators <a id="adjustfield.manip">[adjustfield.manip]</a>
+#### `adjustfield` manipulators <a id="adjustfield.manip">[[adjustfield.manip]]</a>
 
 Each function specified in this subclause is a designated addressable
-function [namespace.std].
+function [[namespace.std]].
 
 ``` cpp
 ios_base& internal(ios_base& str);
@@ -1897,10 +1899,10 @@ ios_base& right(ios_base& str);
 >
 > `str`.
 
-#### `basefield` manipulators <a id="basefield.manip">[basefield.manip]</a>
+#### `basefield` manipulators <a id="basefield.manip">[[basefield.manip]]</a>
 
 Each function specified in this subclause is a designated addressable
-function [namespace.std].
+function [[namespace.std]].
 
 ``` cpp
 ios_base& dec(ios_base& str);
@@ -1944,10 +1946,10 @@ ios_base& oct(ios_base& str);
 >
 > `str`.
 
-#### `floatfield` manipulators <a id="floatfield.manip">[floatfield.manip]</a>
+#### `floatfield` manipulators <a id="floatfield.manip">[[floatfield.manip]]</a>
 
 Each function specified in this subclause is a designated addressable
-function [namespace.std].
+function [[namespace.std]].
 
 ``` cpp
 ios_base& fixed(ios_base& str);
@@ -1988,7 +1990,7 @@ ios_base& hexfloat(ios_base& str);
 
 \[*Note 4*: `ios_base::hex` cannot be used to specify a hexadecimal
 floating-point format, because it is not part of `ios_base::floatfield`
-( [ios.fmtflags.const]). — *end note*\]
+( [[ios.fmtflags.const]]). — *end note*\]
 
 ``` cpp
 ios_base& defaultfloat(ios_base& str);
@@ -2002,7 +2004,7 @@ ios_base& defaultfloat(ios_base& str);
 >
 > `str`.
 
-### Error reporting <a id="error.reporting">[error.reporting]</a>
+### Error reporting <a id="error.reporting">[[error.reporting]]</a>
 
 ``` cpp
 error_code make_error_code(io_errc e) noexcept;
@@ -2034,9 +2036,9 @@ const error_category& iostream_category() noexcept;
 > The object’s `name` virtual function shall return a pointer to the
 > string `"iostream"`.
 
-## Stream buffers <a id="stream.buffers">[stream.buffers]</a>
+## Stream buffers <a id="stream.buffers">[[stream.buffers]]</a>
 
-### Header `<streambuf>` synopsis <a id="streambuf.syn">[streambuf.syn]</a>
+### Header `<streambuf>` synopsis <a id="streambuf.syn">[[streambuf.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -2050,7 +2052,7 @@ namespace std {
 The header `<streambuf>` defines types that control input from and
 output to *character* sequences.
 
-### Stream buffer requirements <a id="streambuf.reqts">[streambuf.reqts]</a>
+### Stream buffer requirements <a id="streambuf.reqts">[[streambuf.reqts]]</a>
 
 Stream buffers can impose various constraints on the sequences they
 control. Some constraints are:
@@ -2110,9 +2112,9 @@ above:
   shall have a defined value and is the next element to read (to get, or
   to obtain a character value, from the sequence).
 
-### Class template `basic_streambuf` <a id="streambuf">[streambuf]</a>
+### Class template `basic_streambuf` <a id="streambuf">[[streambuf]]</a>
 
-#### General <a id="streambuf.general">[streambuf.general]</a>
+#### General <a id="streambuf.general">[[streambuf.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2216,7 +2218,7 @@ for deriving various *stream buffers* whose objects each control two
 
 - a character *output sequence*.
 
-#### Constructors <a id="streambuf.cons">[streambuf.cons]</a>
+#### Constructors <a id="streambuf.cons">[[streambuf.cons]]</a>
 
 ``` cpp
 basic_streambuf();
@@ -2269,9 +2271,9 @@ basic_streambuf(const basic_streambuf& rhs);
 >
 > None.
 
-#### Public member functions <a id="streambuf.members">[streambuf.members]</a>
+#### Public member functions <a id="streambuf.members">[[streambuf.members]]</a>
 
-##### Locales <a id="streambuf.locales">[streambuf.locales]</a>
+##### Locales <a id="streambuf.locales">[[streambuf.locales]]</a>
 
 ``` cpp
 locale pubimbue(const locale& loc);
@@ -2301,7 +2303,7 @@ locale getloc() const;
 > called but before `pubimbue` has returned (i.e., from within the call
 > of `imbue()`) then it returns the previous value.
 
-##### Buffer management and positioning <a id="streambuf.buffer">[streambuf.buffer]</a>
+##### Buffer management and positioning <a id="streambuf.buffer">[[streambuf.buffer]]</a>
 
 ``` cpp
 basic_streambuf* pubsetbuf(char_type* s, streamsize n);
@@ -2339,7 +2341,7 @@ int pubsync();
 >
 > `sync()`.
 
-##### Get area <a id="streambuf.pub.get">[streambuf.pub.get]</a>
+##### Get area <a id="streambuf.pub.get">[[streambuf.pub.get]]</a>
 
 ``` cpp
 streamsize in_avail();
@@ -2390,7 +2392,7 @@ streamsize sgetn(char_type* s, streamsize n);
 >
 > `xsgetn(s, n)`.
 
-##### Putback <a id="streambuf.pub.pback">[streambuf.pub.pback]</a>
+##### Putback <a id="streambuf.pub.pback">[[streambuf.pub.pback]]</a>
 
 ``` cpp
 int_type sputbackc(char_type c);
@@ -2414,7 +2416,7 @@ int_type sungetc();
 > `pbackfail()`. Otherwise, decrements the next pointer for the input
 > sequence and returns `traits::to_int_type(*gptr())`.
 
-##### Put area <a id="streambuf.pub.put">[streambuf.pub.put]</a>
+##### Put area <a id="streambuf.pub.put">[[streambuf.pub.put]]</a>
 
 ``` cpp
 int_type sputc(char_type c);
@@ -2435,9 +2437,9 @@ streamsize sputn(const char_type* s, streamsize n);
 >
 > `xsputn(s, n)`.
 
-#### Protected member functions <a id="streambuf.protected">[streambuf.protected]</a>
+#### Protected member functions <a id="streambuf.protected">[[streambuf.protected]]</a>
 
-##### Assignment <a id="streambuf.assign">[streambuf.assign]</a>
+##### Assignment <a id="streambuf.assign">[[streambuf.assign]]</a>
 
 ``` cpp
 basic_streambuf& operator=(const basic_streambuf& rhs);
@@ -2471,7 +2473,7 @@ void swap(basic_streambuf& rhs);
 >
 > Swaps the data members of `rhs` and `*this`.
 
-##### Get area access <a id="streambuf.get.area">[streambuf.get.area]</a>
+##### Get area access <a id="streambuf.get.area">[[streambuf.get.area]]</a>
 
 ``` cpp
 char_type* eback() const;
@@ -2514,7 +2516,7 @@ void setg(char_type* gbeg, char_type* gnext, char_type* gend);
 > `gbeg == eback()`, `gnext == gptr()`, and `gend == egptr()` are all
 > `true`.
 
-##### Put area access <a id="streambuf.put.area">[streambuf.put.area]</a>
+##### Put area access <a id="streambuf.put.area">[[streambuf.put.area]]</a>
 
 ``` cpp
 char_type* pbase() const;
@@ -2557,9 +2559,9 @@ void setp(char_type* pbeg, char_type* pend);
 > `pbeg == pbase()`, `pbeg == pptr()`, and `pend == epptr()` are all
 > `true`.
 
-#### Virtual functions <a id="streambuf.virtuals">[streambuf.virtuals]</a>
+#### Virtual functions <a id="streambuf.virtuals">[[streambuf.virtuals]]</a>
 
-##### Locales <a id="streambuf.virt.locales">[streambuf.virt.locales]</a>
+##### Locales <a id="streambuf.virt.locales">[[streambuf.virt.locales]]</a>
 
 ``` cpp
 void imbue(const locale&);
@@ -2578,7 +2580,7 @@ void imbue(const locale&);
 >
 > Does nothing.
 
-##### Buffer management and positioning <a id="streambuf.virt.buffer">[streambuf.virt.buffer]</a>
+##### Buffer management and positioning <a id="streambuf.virt.buffer">[[streambuf.virt.buffer]]</a>
 
 ``` cpp
 basic_streambuf* setbuf(char_type* s, streamsize n);
@@ -2639,7 +2641,7 @@ int sync();
 >
 > Returns zero.
 
-##### Get area <a id="streambuf.virt.get">[streambuf.virt.get]</a>
+##### Get area <a id="streambuf.virt.get">[[streambuf.virt.get]]</a>
 
 ``` cpp
 streamsize showmanyc();
@@ -2762,7 +2764,7 @@ int_type uflow();
 >
 > `traits::eof()` to indicate failure.
 
-##### Putback <a id="streambuf.virt.pback">[streambuf.virt.pback]</a>
+##### Putback <a id="streambuf.virt.pback">[[streambuf.virt.pback]]</a>
 
 ``` cpp
 int_type pbackfail(int_type c = traits::eof());
@@ -2801,7 +2803,7 @@ int_type pbackfail(int_type c = traits::eof());
 > `traits::eq(traits::to_char_type(c), gptr()[-1])` returns `false`.
 > Other calls shall also satisfy that constraint.
 
-##### Put area <a id="streambuf.virt.put">[streambuf.virt.put]</a>
+##### Put area <a id="streambuf.virt.put">[[streambuf.virt.put]]</a>
 
 ``` cpp
 streamsize xsputn(const char_type* s, streamsize n);
@@ -2881,9 +2883,9 @@ int_type overflow(int_type c = traits::eof());
 > case that no room can be found in the put buffer enough to accommodate
 > the argument character sequence.
 
-## Formatting and manipulators <a id="iostream.format">[iostream.format]</a>
+## Formatting and manipulators <a id="iostream.format">[[iostream.format]]</a>
 
-### Header `<istream>` synopsis <a id="istream.syn">[istream.syn]</a>
+### Header `<istream>` synopsis <a id="istream.syn">[[istream.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -2907,7 +2909,7 @@ namespace std {
 }
 ```
 
-### Header `<ostream>` synopsis <a id="ostream.syn">[ostream.syn]</a>
+### Header `<ostream>` synopsis <a id="ostream.syn">[[ostream.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -2945,7 +2947,7 @@ namespace std {
 }
 ```
 
-### Header `<iomanip>` synopsis <a id="iomanip.syn">[iomanip.syn]</a>
+### Header `<iomanip>` synopsis <a id="iomanip.syn">[[iomanip.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -2977,7 +2979,7 @@ namespace std {
 }
 ```
 
-### Header `<print>` synopsis <a id="print.syn">[print.syn]</a>
+### Header `<print>` synopsis <a id="print.syn">[[print.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -3000,22 +3002,22 @@ namespace std {
 }
 ```
 
-### Input streams <a id="input.streams">[input.streams]</a>
+### Input streams <a id="input.streams">[[input.streams]]</a>
 
-#### General <a id="input.streams.general">[input.streams.general]</a>
+#### General <a id="input.streams.general">[[input.streams.general]]</a>
 
 The header `<istream>` defines two class templates and a function
 template that control input from a stream buffer, along with a function
 template that extracts from stream rvalues.
 
-#### Class template `basic_istream` <a id="istream">[istream]</a>
+#### Class template `basic_istream` <a id="istream">[[istream]]</a>
 
-##### General <a id="istream.general">[istream.general]</a>
+##### General <a id="istream.general">[[istream.general]]</a>
 
 When a function is specified with a type placeholder of
 `extended-floating-point-type`, the implementation provides overloads
-for all cv-unqualified extended floating-point types [basic.fundamental]
-in lieu of `extended-floating-point-type`.
+for all cv-unqualified extended floating-point types
+[[basic.fundamental]] in lieu of `extended-floating-point-type`.
 
 ``` cpp
 namespace std {
@@ -3122,7 +3124,7 @@ described as if they obtain (or *extract*) input *characters* by calling
 `rdbuf()->sbumpc()` or `rdbuf()->sgetc()`. They may use other public
 members of `istream`.
 
-##### Constructors <a id="istream.cons">[istream.cons]</a>
+##### Constructors <a id="istream.cons">[[istream.cons]]</a>
 
 ``` cpp
 explicit basic_istream(basic_streambuf<charT, traits>* sb);
@@ -3155,7 +3157,7 @@ virtual ~basic_istream();
 >
 > Does not perform any operations of `rdbuf()`.
 
-##### Assignment and swap <a id="istream.assign">[istream.assign]</a>
+##### Assignment and swap <a id="istream.assign">[[istream.assign]]</a>
 
 ``` cpp
 basic_istream& operator=(basic_istream&& rhs);
@@ -3178,7 +3180,7 @@ void swap(basic_istream& rhs);
 > Calls `basic_ios<charT, traits>::swap(rhs)`. Exchanges the values
 > returned by `gcount()` and `rhs.gcount()`.
 
-##### Class `basic_istream::sentry` <a id="istream.sentry">[istream.sentry]</a>
+##### Class `basic_istream::sentry` <a id="istream.sentry">[[istream.sentry]]</a>
 
 ``` cpp
 namespace std {
@@ -3269,9 +3271,9 @@ explicit operator bool() const;
 >
 > `ok_`.
 
-#### Formatted input functions <a id="istream.formatted">[istream.formatted]</a>
+#### Formatted input functions <a id="istream.formatted">[[istream.formatted]]</a>
 
-##### Common requirements <a id="istream.formatted.reqmts">[istream.formatted.reqmts]</a>
+##### Common requirements <a id="istream.formatted.reqmts">[[istream.formatted.reqmts]]</a>
 
 Each formatted input function begins execution by constructing an object
 of type `ios_base::iostate`, termed the local error state, and
@@ -3293,7 +3295,7 @@ extraction is done, the input function calls `setstate`, which sets
 exception. In any case, the formatted input function destroys the
 `sentry` object. If no exception has been thrown, it returns `*this`.
 
-##### Arithmetic extractors <a id="istream.formatted.arithmetic">[istream.formatted.arithmetic]</a>
+##### Arithmetic extractors <a id="istream.formatted.arithmetic">[[istream.formatted.arithmetic]]</a>
 
 ``` cpp
 basic_istream& operator>>(unsigned short& val);
@@ -3420,7 +3422,7 @@ basic_istream& operator>>(extended-floating-point-type& val);
 > result in inaccurate results. `from_chars` can be used in situations
 > where maximum accuracy is important. — *end note*\]
 
-##### `basic_istream::operator>>` <a id="istream.extractors">[istream.extractors]</a>
+##### `basic_istream::operator>>` <a id="istream.extractors">[[istream.extractors]]</a>
 
 ``` cpp
 basic_istream& operator>>(basic_istream& (*pf)(basic_istream&));
@@ -3555,7 +3557,7 @@ basic_istream& operator>>(basic_streambuf<charT, traits>* sb);
 >
 > `*this`.
 
-#### Unformatted input functions <a id="istream.unformatted">[istream.unformatted]</a>
+#### Unformatted input functions <a id="istream.unformatted">[[istream.unformatted]]</a>
 
 Each unformatted input function begins execution by constructing an
 object of type `ios_base::iostate`, termed the local error state, and
@@ -4002,10 +4004,10 @@ basic_istream& seekg(off_type off, ios_base::seekdir dir);
 >
 > `*this`.
 
-#### Standard `basic_istream` manipulators <a id="istream.manip">[istream.manip]</a>
+#### Standard `basic_istream` manipulators <a id="istream.manip">[[istream.manip]]</a>
 
 Each instantiation of the function template specified in this subclause
-is a designated addressable function [namespace.std].
+is a designated addressable function [[namespace.std]].
 
 ``` cpp
 template<class charT, class traits>
@@ -4029,7 +4031,7 @@ template<class charT, class traits>
 >
 > `is`.
 
-#### Rvalue stream extraction <a id="istream.rvalue">[istream.rvalue]</a>
+#### Rvalue stream extraction <a id="istream.rvalue">[[istream.rvalue]]</a>
 
 ``` cpp
 template<class Istream, class T>
@@ -4049,9 +4051,9 @@ template<class Istream, class T>
 > return std::move(is);
 > ```
 
-#### Class template `basic_iostream` <a id="iostreamclass">[iostreamclass]</a>
+#### Class template `basic_iostream` <a id="iostreamclass">[[iostreamclass]]</a>
 
-##### General <a id="iostreamclass.general">[iostreamclass.general]</a>
+##### General <a id="iostreamclass.general">[[iostreamclass.general]]</a>
 
 ``` cpp
 namespace std {
@@ -4089,7 +4091,7 @@ The class template `basic_iostream` inherits a number of functions that
 allow reading input and writing output to sequences controlled by a
 stream buffer.
 
-##### Constructors <a id="iostream.cons">[iostream.cons]</a>
+##### Constructors <a id="iostream.cons">[[iostream.cons]]</a>
 
 ``` cpp
 explicit basic_iostream(basic_streambuf<charT, traits>* sb);
@@ -4114,7 +4116,7 @@ basic_iostream(basic_iostream&& rhs);
 > Move constructs from the rvalue `rhs` by constructing the
 > `basic_istream` base class with `std::move(rhs)`.
 
-##### Destructor <a id="iostream.dest">[iostream.dest]</a>
+##### Destructor <a id="iostream.dest">[[iostream.dest]]</a>
 
 ``` cpp
 virtual ~basic_iostream();
@@ -4124,7 +4126,7 @@ virtual ~basic_iostream();
 >
 > Does not perform any operations on `rdbuf()`.
 
-##### Assignment and swap <a id="iostream.assign">[iostream.assign]</a>
+##### Assignment and swap <a id="iostream.assign">[[iostream.assign]]</a>
 
 ``` cpp
 basic_iostream& operator=(basic_iostream&& rhs);
@@ -4142,21 +4144,21 @@ void swap(basic_iostream& rhs);
 >
 > Calls `basic_istream<charT, traits>::swap(rhs)`.
 
-### Output streams <a id="output.streams">[output.streams]</a>
+### Output streams <a id="output.streams">[[output.streams]]</a>
 
-#### General <a id="output.streams.general">[output.streams.general]</a>
+#### General <a id="output.streams.general">[[output.streams.general]]</a>
 
 The header `<ostream>` defines a class template and several function
 templates that control output to a stream buffer, along with a function
 template that inserts into stream rvalues.
 
-#### Class template `basic_ostream` <a id="ostream">[ostream]</a>
+#### Class template `basic_ostream` <a id="ostream">[[ostream]]</a>
 
-##### General <a id="ostream.general">[ostream.general]</a>
+##### General <a id="ostream.general">[[ostream.general]]</a>
 
 When a function has a parameter type `extended-floating-point-type`, the
 implementation provides overloads for all cv-unqualified extended
-floating-point types [basic.fundamental].
+floating-point types [[basic.fundamental]].
 
 ``` cpp
 namespace std {
@@ -4312,7 +4314,7 @@ failure indication.
 \[*Note 1*: The deleted overloads of `operator<<` prevent formatting
 characters as integers and strings as pointers. — *end note*\]
 
-##### Constructors <a id="ostream.cons">[ostream.cons]</a>
+##### Constructors <a id="ostream.cons">[[ostream.cons]]</a>
 
 ``` cpp
 explicit basic_ostream(basic_streambuf<charT, traits>* sb);
@@ -4345,7 +4347,7 @@ virtual ~basic_ostream();
 >
 > Does not perform any operations on `rdbuf()`.
 
-##### Assignment and swap <a id="ostream.assign">[ostream.assign]</a>
+##### Assignment and swap <a id="ostream.assign">[[ostream.assign]]</a>
 
 ``` cpp
 basic_ostream& operator=(basic_ostream&& rhs);
@@ -4367,7 +4369,7 @@ void swap(basic_ostream& rhs);
 >
 > Calls `basic_ios<charT, traits>::swap(rhs)`.
 
-##### Class `basic_ostream::sentry` <a id="ostream.sentry">[ostream.sentry]</a>
+##### Class `basic_ostream::sentry` <a id="ostream.sentry">[[ostream.sentry]]</a>
 
 ``` cpp
 namespace std {
@@ -4425,7 +4427,7 @@ explicit operator bool() const;
 >
 > Returns `ok_`.
 
-##### Seek members <a id="ostream.seeks">[ostream.seeks]</a>
+##### Seek members <a id="ostream.seeks">[[ostream.seeks]]</a>
 
 Each seek member function begins execution by constructing an object of
 class `sentry`. It returns by destroying the `sentry` object.
@@ -4469,9 +4471,9 @@ basic_ostream& seekp(off_type off, ios_base::seekdir dir);
 >
 > `*this`.
 
-#### Formatted output functions <a id="ostream.formatted">[ostream.formatted]</a>
+#### Formatted output functions <a id="ostream.formatted">[[ostream.formatted]]</a>
 
-##### Common requirements <a id="ostream.formatted.reqmts">[ostream.formatted.reqmts]</a>
+##### Common requirements <a id="ostream.formatted.reqmts">[[ostream.formatted.reqmts]]</a>
 
 Each formatted output function begins execution by constructing an
 object of class `sentry`. If that object returns `true` when converted
@@ -4499,7 +4501,7 @@ If `(os.flags() & ios_base::adjustfield) == ios_base::left` is `true`,
 the fill characters are placed after the character sequence; otherwise,
 they are placed before the character sequence.
 
-##### Arithmetic inserters <a id="ostream.inserters.arithmetic">[ostream.inserters.arithmetic]</a>
+##### Arithmetic inserters <a id="ostream.inserters.arithmetic">[[ostream.inserters.arithmetic]]</a>
 
 ``` cpp
 basic_ostream& operator<<(bool val);
@@ -4643,7 +4645,7 @@ basic_ostream& operator<<(extended-floating-point-type val);
 >
 > `*this`.
 
-##### `basic_ostream::operator<<` <a id="ostream.inserters">[ostream.inserters]</a>
+##### `basic_ostream::operator<<` <a id="ostream.inserters">[[ostream.inserters]]</a>
 
 ``` cpp
 basic_ostream& operator<<(basic_ostream& (*pf)(basic_ostream&));
@@ -4734,7 +4736,7 @@ basic_ostream& operator<<(nullptr_t);
 >
 > where `s` is an *implementation-defined* NTCTS\[defns.ntcts\].
 
-##### Character inserter function templates <a id="ostream.inserters.character">[ostream.inserters.character]</a>
+##### Character inserter function templates <a id="ostream.inserters.character">[[ostream.inserters.character]]</a>
 
 ``` cpp
 template<class charT, class traits>
@@ -4812,7 +4814,7 @@ template<class traits>
 >
 > `out`.
 
-##### Print <a id="ostream.formatted.print">[ostream.formatted.print]</a>
+##### Print <a id="ostream.formatted.print">[[ostream.formatted.print]]</a>
 
 ``` cpp
 template<class... Args>
@@ -4886,7 +4888,7 @@ void vprint_nonunicode(ostream& os, string_view fmt, format_args args);
 > transcoding, implementations should substitute invalid code units with
 > per the Unicode Standard, Chapter 3.9 Substitution in Conversion.
 
-#### Unformatted output functions <a id="ostream.unformatted">[ostream.unformatted]</a>
+#### Unformatted output functions <a id="ostream.unformatted">[[ostream.unformatted]]</a>
 
 Each unformatted output function begins execution by constructing an
 object of class `sentry`. If that object returns `true`, while
@@ -4963,10 +4965,10 @@ basic_ostream& flush();
 >
 > `*this`.
 
-#### Standard manipulators <a id="ostream.manip">[ostream.manip]</a>
+#### Standard manipulators <a id="ostream.manip">[[ostream.manip]]</a>
 
 Each instantiation of any of the function templates specified in this
-subclause is a designated addressable function [namespace.std].
+subclause is a designated addressable function [[namespace.std]].
 
 ``` cpp
 template<class charT, class traits>
@@ -5063,7 +5065,7 @@ template<class charT, class traits>
 >
 > `os`.
 
-#### Rvalue stream insertion <a id="ostream.rvalue">[ostream.rvalue]</a>
+#### Rvalue stream insertion <a id="ostream.rvalue">[[ostream.rvalue]]</a>
 
 ``` cpp
 template<class Ostream, class T>
@@ -5082,7 +5084,7 @@ template<class Ostream, class T>
 >
 > `std::move(os)`.
 
-### Standard manipulators <a id="std.manip">[std.manip]</a>
+### Standard manipulators <a id="std.manip">[[std.manip]]</a>
 
 The header `<iomanip>` defines several functions that support extractors
 and inserters that alter information maintained by class `ios_base` and
@@ -5247,7 +5249,7 @@ unspecified setw(int n);
 > `in >> setw(n)` has type `basic_istream<charT, traits>&` and value
 > `in`.
 
-### Extended manipulators <a id="ext.manip">[ext.manip]</a>
+### Extended manipulators <a id="ext.manip">[[ext.manip]]</a>
 
 The header `<iomanip>` defines several functions that support extractors
 and inserters that allow for the parsing and formatting of sequences and
@@ -5397,7 +5399,7 @@ template<class charT> unspecified put_time(const tm* tmb, const charT* fmt);
 > The expression `out << put_time(tmb, fmt)` has type
 > `basic_ostream<charT, traits>&` and value `out`.
 
-### Quoted manipulators <a id="quoted.manip">[quoted.manip]</a>
+### Quoted manipulators <a id="quoted.manip">[[quoted.manip]]</a>
 
 \[*Note 2*: Quoted manipulators provide string insertion and extraction
 of quoted strings (for example, XML and CSV formats). Quoted
@@ -5489,7 +5491,7 @@ template<class charT, class traits, class Allocator>
 > - The expression `out << quoted(s, delim, escape)` has type
 >   `basic_ostream<charT, traits>&` and value `out`.
 
-### Print functions <a id="print.fun">[print.fun]</a>
+### Print functions <a id="print.fun">[[print.fun]]</a>
 
 ``` cpp
 template<class... Args>
@@ -5632,9 +5634,9 @@ void vprint_nonunicode(FILE* stream, string_view fmt, format_args args);
 > Any exception thrown by the call to `vformat`\[format.err.report\].
 > `system_error` if writing to `stream` fails. May throw `bad_alloc`.
 
-## String-based streams <a id="string.streams">[string.streams]</a>
+## String-based streams <a id="string.streams">[[string.streams]]</a>
 
-### Header `<sstream>` synopsis <a id="sstream.syn">[sstream.syn]</a>
+### Header `<sstream>` synopsis <a id="sstream.syn">[[sstream.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -5686,11 +5688,11 @@ namespace std {
 
 The header `<sstream>` defines four class templates and eight types that
 associate stream buffers with objects of class `basic_string`, as
-described in  [string.classes].
+described in  [[string.classes]].
 
-### Class template `basic_stringbuf` <a id="stringbuf">[stringbuf]</a>
+### Class template `basic_stringbuf` <a id="stringbuf">[[stringbuf]]</a>
 
-#### General <a id="stringbuf.general">[stringbuf.general]</a>
+#### General <a id="stringbuf.general">[[stringbuf.general]]</a>
 
 ``` cpp
 namespace std {
@@ -5789,11 +5791,11 @@ initialization is presented here as:
 - `basic_string<charT, traits, Allocator> buf`
   contains the underlying character sequence.
 
-- `init_buf_ptrs()` sets the base class’ get area [streambuf.get.area]
-  and put area [streambuf.put.area] pointers after initializing, moving
-  from, or assigning to `buf` accordingly.
+- `init_buf_ptrs()` sets the base class’ get area [[streambuf.get.area]]
+  and put area [[streambuf.put.area]] pointers after initializing,
+  moving from, or assigning to `buf` accordingly.
 
-#### Constructors <a id="stringbuf.cons">[stringbuf.cons]</a>
+#### Constructors <a id="stringbuf.cons">[[stringbuf.cons]]</a>
 
 ``` cpp
 explicit basic_stringbuf(ios_base::openmode which);
@@ -5919,7 +5921,7 @@ basic_stringbuf(basic_stringbuf&& rhs, const Allocator& a);
 >
 > - `rhs` is empty but usable, as if `std::move(rhs).str()` was called.
 
-#### Assignment and swap <a id="stringbuf.assign">[stringbuf.assign]</a>
+#### Assignment and swap <a id="stringbuf.assign">[[stringbuf.assign]]</a>
 
 ``` cpp
 basic_stringbuf& operator=(basic_stringbuf&& rhs);
@@ -5964,7 +5966,7 @@ template<class charT, class traits, class Allocator>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="stringbuf.members">[stringbuf.members]</a>
+#### Member functions <a id="stringbuf.members">[[stringbuf.members]]</a>
 
 The member functions getting the underlying character sequence all refer
 to a `high_mark` value, where `high_mark` represents the position one
@@ -6123,7 +6125,7 @@ void str(basic_string<charT, traits, Allocator>&& s);
 > init_buf_ptrs();
 > ```
 
-#### Overridden virtual functions <a id="stringbuf.virtuals">[stringbuf.virtuals]</a>
+#### Overridden virtual functions <a id="stringbuf.virtuals">[[stringbuf.virtuals]]</a>
 
 ``` cpp
 int_type underflow() override;
@@ -6290,9 +6292,9 @@ basic_streambuf<charT, traits>* setbuf(charT* s, streamsize n) override;
 >
 > .
 
-### Class template `basic_istringstream` <a id="istringstream">[istringstream]</a>
+### Class template `basic_istringstream` <a id="istringstream">[[istringstream]]</a>
 
-#### General <a id="istringstream.general">[istringstream.general]</a>
+#### General <a id="istringstream.general">[[istringstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -6365,7 +6367,7 @@ presented here as:
 
 - `sb`, the `stringbuf` object.
 
-#### Constructors <a id="istringstream.cons">[istringstream.cons]</a>
+#### Constructors <a id="istringstream.cons">[[istringstream.cons]]</a>
 
 ``` cpp
 explicit basic_istringstream(ios_base::openmode which);
@@ -6448,7 +6450,7 @@ basic_istringstream(basic_istringstream&& rhs);
 > calls `basic_istream<charT, traits>::set_rdbuf(addressof(sb))` to
 > install the contained `basic_stringbuf`.
 
-#### Swap <a id="istringstream.swap">[istringstream.swap]</a>
+#### Swap <a id="istringstream.swap">[[istringstream.swap]]</a>
 
 ``` cpp
 void swap(basic_istringstream& rhs);
@@ -6473,7 +6475,7 @@ template<class charT, class traits, class Allocator>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="istringstream.members">[istringstream.members]</a>
+#### Member functions <a id="istringstream.members">[[istringstream.members]]</a>
 
 ``` cpp
 basic_stringbuf<charT, traits, Allocator>* rdbuf() const;
@@ -6541,9 +6543,9 @@ void str(basic_string<charT, traits, Allocator>&& s);
 >
 > Equivalent to: `rdbuf()->str(std::move(s));`
 
-### Class template `basic_ostringstream` <a id="ostringstream">[ostringstream]</a>
+### Class template `basic_ostringstream` <a id="ostringstream">[[ostringstream]]</a>
 
-#### General <a id="ostringstream.general">[ostringstream.general]</a>
+#### General <a id="ostringstream.general">[[ostringstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -6616,7 +6618,7 @@ the sake of exposition, the maintained data is presented here as:
 
 - `sb`, the `stringbuf` object.
 
-#### Constructors <a id="ostringstream.cons">[ostringstream.cons]</a>
+#### Constructors <a id="ostringstream.cons">[[ostringstream.cons]]</a>
 
 ``` cpp
 explicit basic_ostringstream(ios_base::openmode which);
@@ -6701,7 +6703,7 @@ basic_ostringstream(basic_ostringstream&& rhs);
 > calls `basic_ostream<charT, traits>::set_rdbuf(addressof(sb))` to
 > install the contained `basic_stringbuf`.
 
-#### Swap <a id="ostringstream.swap">[ostringstream.swap]</a>
+#### Swap <a id="ostringstream.swap">[[ostringstream.swap]]</a>
 
 ``` cpp
 void swap(basic_ostringstream& rhs);
@@ -6726,7 +6728,7 @@ template<class charT, class traits, class Allocator>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="ostringstream.members">[ostringstream.members]</a>
+#### Member functions <a id="ostringstream.members">[[ostringstream.members]]</a>
 
 ``` cpp
 basic_stringbuf<charT, traits, Allocator>* rdbuf() const;
@@ -6794,9 +6796,9 @@ void str(basic_string<charT, traits, Allocator>&& s);
 >
 > Equivalent to: `rdbuf()->str(std::move(s));`
 
-### Class template `basic_stringstream` <a id="stringstream">[stringstream]</a>
+### Class template `basic_stringstream` <a id="stringstream">[[stringstream]]</a>
 
-#### General <a id="stringstream.general">[stringstream.general]</a>
+#### General <a id="stringstream.general">[[stringstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -6871,7 +6873,7 @@ presented here as
 
 - `sb`, the `stringbuf` object.
 
-#### Constructors <a id="stringstream.cons">[stringstream.cons]</a>
+#### Constructors <a id="stringstream.cons">[[stringstream.cons]]</a>
 
 ``` cpp
 explicit basic_stringstream(ios_base::openmode which);
@@ -6960,7 +6962,7 @@ basic_stringstream(basic_stringstream&& rhs);
 > calls `basic_istream<charT, traits>::set_rdbuf(addressof(sb))` to
 > install the contained `basic_stringbuf`.
 
-#### Swap <a id="stringstream.swap">[stringstream.swap]</a>
+#### Swap <a id="stringstream.swap">[[stringstream.swap]]</a>
 
 ``` cpp
 void swap(basic_stringstream& rhs);
@@ -6985,7 +6987,7 @@ template<class charT, class traits, class Allocator>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="stringstream.members">[stringstream.members]</a>
+#### Member functions <a id="stringstream.members">[[stringstream.members]]</a>
 
 ``` cpp
 basic_stringbuf<charT, traits, Allocator>* rdbuf() const;
@@ -7053,23 +7055,23 @@ void str(basic_string<charT, traits, Allocator>&& s);
 >
 > Equivalent to: `rdbuf()->str(std::move(s));`
 
-## Span-based streams <a id="span.streams">[span.streams]</a>
+## Span-based streams <a id="span.streams">[[span.streams]]</a>
 
-### Overview <a id="span.streams.overview">[span.streams.overview]</a>
+### Overview <a id="span.streams.overview">[[span.streams.overview]]</a>
 
 The header `<spanstream>` defines class templates and types that
 associate stream buffers with objects whose types are specializations of
-`span` as described in [views.span].
+`span` as described in [[views.span]].
 
 \[*Note 1*: A user of these classes is responsible for ensuring that the
 character sequence represented by the given `span` outlives the use of
-the sequence by objects of the classes in subclause [span.streams].
+the sequence by objects of the classes in subclause [[span.streams]].
 Using multiple `basic_spanbuf` objects referring to overlapping
 underlying sequences from different threads, where at least one
 `basic_spanbuf` object is used for writing to the sequence, results in a
 data race. — *end note*\]
 
-### Header `<spanstream>` synopsis <a id="spanstream.syn">[spanstream.syn]</a>
+### Header `<spanstream>` synopsis <a id="spanstream.syn">[[spanstream.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -7111,9 +7113,9 @@ namespace std {
 }
 ```
 
-### Class template `basic_spanbuf` <a id="spanbuf">[spanbuf]</a>
+### Class template `basic_spanbuf` <a id="spanbuf">[[spanbuf]]</a>
 
-#### General <a id="spanbuf.general">[spanbuf.general]</a>
+#### General <a id="spanbuf.general">[[spanbuf.general]]</a>
 
 ``` cpp
 namespace std {
@@ -7173,7 +7175,7 @@ For the sake of exposition, the maintained data is presented here as:
 - `std::span<charT> buf` is the view to the underlying character
   sequence.
 
-#### Constructors <a id="spanbuf.cons">[spanbuf.cons]</a>
+#### Constructors <a id="spanbuf.cons">[[spanbuf.cons]]</a>
 
 ``` cpp
 explicit basic_spanbuf(std::span<charT> s,
@@ -7222,7 +7224,7 @@ basic_spanbuf(basic_spanbuf&& rhs);
 >
 > - `getloc() == rhs_p.getloc()`
 
-#### Assignment and swap <a id="spanbuf.assign">[spanbuf.assign]</a>
+#### Assignment and swap <a id="spanbuf.assign">[[spanbuf.assign]]</a>
 
 ``` cpp
 basic_spanbuf& operator=(basic_spanbuf&& rhs);
@@ -7261,7 +7263,7 @@ template<class charT, class traits>
 >
 > Equivalent to `x.swap(y)`.
 
-#### Member functions <a id="spanbuf.members">[spanbuf.members]</a>
+#### Member functions <a id="spanbuf.members">[[spanbuf.members]]</a>
 
 ``` cpp
 std::span<charT> span() const noexcept;
@@ -7299,7 +7301,7 @@ void span(std::span<charT> s) noexcept;
 >   `eback() == s.data() && gptr() == eback() && egptr() == eback() + s.size()`
 >   is `true`.
 
-#### Overridden virtual functions <a id="spanbuf.virtuals">[spanbuf.virtuals]</a>
+#### Overridden virtual functions <a id="spanbuf.virtuals">[[spanbuf.virtuals]]</a>
 
 \[*Note 2*: Because the underlying buffer is of fixed size, neither
 `overflow`, `underflow`, nor `pbackfail` can provide useful
@@ -7384,9 +7386,9 @@ basic_streambuf<charT, traits>* setbuf(charT* s, streamsize n) override;
 > return this;
 > ```
 
-### Class template `basic_ispanstream` <a id="ispanstream">[ispanstream]</a>
+### Class template `basic_ispanstream` <a id="ispanstream">[[ispanstream]]</a>
 
-#### General <a id="ispanstream.general">[ispanstream.general]</a>
+#### General <a id="ispanstream.general">[[ispanstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -7430,7 +7432,7 @@ namespace std {
 includes the termination character `'\0'` in the underlying
 `spanbuf`. — *end note*\]
 
-#### Constructors <a id="ispanstream.cons">[ispanstream.cons]</a>
+#### Constructors <a id="ispanstream.cons">[[ispanstream.cons]]</a>
 
 ``` cpp
 explicit basic_ispanstream(std::span<charT> s, ios_base::openmode which = ios_base::in);
@@ -7470,7 +7472,7 @@ template<class ROS> explicit basic_ispanstream(ROS&& s)
 > basic_ispanstream(std::span<charT>(const_cast<charT*>(sp.data()), sp.size()))
 > ```
 
-#### Swap <a id="ispanstream.swap">[ispanstream.swap]</a>
+#### Swap <a id="ispanstream.swap">[[ispanstream.swap]]</a>
 
 ``` cpp
 void swap(basic_ispanstream& rhs);
@@ -7494,7 +7496,7 @@ template<class charT, class traits>
 >
 > Equivalent to `x.swap(y)`.
 
-#### Member functions <a id="ispanstream.members">[ispanstream.members]</a>
+#### Member functions <a id="ispanstream.members">[[ispanstream.members]]</a>
 
 ``` cpp
 basic_spanbuf<charT, traits>* rdbuf() const noexcept;
@@ -7541,9 +7543,9 @@ template<class ROS> void span(ROS&& s) noexcept;
 > this->span(std::span<charT>(const_cast<charT*>(sp.data()), sp.size()))
 > ```
 
-### Class template `basic_ospanstream` <a id="ospanstream">[ospanstream]</a>
+### Class template `basic_ospanstream` <a id="ospanstream">[[ospanstream]]</a>
 
-#### General <a id="ospanstream.general">[ospanstream.general]</a>
+#### General <a id="ospanstream.general">[[ospanstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -7581,7 +7583,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="ospanstream.cons">[ospanstream.cons]</a>
+#### Constructors <a id="ospanstream.cons">[[ospanstream.cons]]</a>
 
 ``` cpp
 explicit basic_ospanstream(std::span<charT> s,
@@ -7605,7 +7607,7 @@ basic_ospanstream(basic_ospanstream&& rhs) noexcept;
 > `basic_ostream<charT, traits>::set_rdbuf(addressof(sb))` is called to
 > install the contained `basic_spanbuf`.
 
-#### Swap <a id="ospanstream.swap">[ospanstream.swap]</a>
+#### Swap <a id="ospanstream.swap">[[ospanstream.swap]]</a>
 
 ``` cpp
 void swap(basic_ospanstream& rhs);
@@ -7629,7 +7631,7 @@ template<class charT, class traits>
 >
 > Equivalent to `x.swap(y)`.
 
-#### Member functions <a id="ospanstream.members">[ospanstream.members]</a>
+#### Member functions <a id="ospanstream.members">[[ospanstream.members]]</a>
 
 ``` cpp
 basic_spanbuf<charT, traits>* rdbuf() const noexcept;
@@ -7659,9 +7661,9 @@ void span(std::span<charT> s) noexcept;
 >
 > Equivalent to `rdbuf()->span(s)`.
 
-### Class template `basic_spanstream` <a id="spanstream">[spanstream]</a>
+### Class template `basic_spanstream` <a id="spanstream">[[spanstream]]</a>
 
-#### General <a id="spanstream.general">[spanstream.general]</a>
+#### General <a id="spanstream.general">[[spanstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -7699,7 +7701,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="spanstream.cons">[spanstream.cons]</a>
+#### Constructors <a id="spanstream.cons">[[spanstream.cons]]</a>
 
 ``` cpp
 explicit basic_spanstream(std::span<charT> s,
@@ -7723,7 +7725,7 @@ basic_spanstream(basic_spanstream&& rhs);
 > `basic_iostream<charT, traits>::set_rdbuf(addressof(sb))` is called to
 > install the contained `basic_spanbuf`.
 
-#### Swap <a id="spanstream.swap">[spanstream.swap]</a>
+#### Swap <a id="spanstream.swap">[[spanstream.swap]]</a>
 
 ``` cpp
 void swap(basic_spanstream& rhs);
@@ -7747,7 +7749,7 @@ template<class charT, class traits>
 >
 > Equivalent to `x.swap(y)`.
 
-#### Member functions <a id="spanstream.members">[spanstream.members]</a>
+#### Member functions <a id="spanstream.members">[[spanstream.members]]</a>
 
 ``` cpp
 basic_spanbuf<charT, traits>* rdbuf() const noexcept;
@@ -7777,9 +7779,9 @@ void span(std::span<charT> s) noexcept;
 >
 > Equivalent to `rdbuf()->span(s)`.
 
-## File-based streams <a id="file.streams">[file.streams]</a>
+## File-based streams <a id="file.streams">[[file.streams]]</a>
 
-### Header `<fstream>` synopsis <a id="fstream.syn">[fstream.syn]</a>
+### Header `<fstream>` synopsis <a id="fstream.syn">[[fstream.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -7831,16 +7833,16 @@ file typically holds multibyte character sequences and the
 `basic_filebuf` object converts those multibyte sequences into wide
 character sequences. — *end note*\]
 
-In subclause  [file.streams], member functions taking arguments of
+In subclause  [[file.streams]], member functions taking arguments of
 `const filesystem::path::value_type*` are only provided on systems where
-`filesystem::path::value_type` [fs.class.path] is not `char`.
+`filesystem::path::value_type` [[fs.class.path]] is not `char`.
 
 \[*Note 2*: These functions enable class `path` support for systems with
 a wide native path character type, such as `wchar_t`. — *end note*\]
 
-### Class template `basic_filebuf` <a id="filebuf">[filebuf]</a>
+### Class template `basic_filebuf` <a id="filebuf">[[filebuf]]</a>
 
-#### General <a id="filebuf.general">[filebuf.general]</a>
+#### General <a id="filebuf.general">[[filebuf.general]]</a>
 
 ``` cpp
 namespace std {
@@ -7914,7 +7916,7 @@ In particular:
 - A joint file position is maintained for both the input sequence and
   the output sequence.
 
-An instance of `basic_filebuf` behaves as described in  [filebuf]
+An instance of `basic_filebuf` behaves as described in  [[filebuf]]
 provided `traits::pos_type` is `fpos<traits::state_type>`. Otherwise the
 behavior is undefined.
 
@@ -7927,7 +7929,7 @@ const codecvt<charT, char, typename traits::state_type>& a_codecvt =
   use_facet<codecvt<charT, char, typename traits::state_type>>(getloc());
 ```
 
-#### Constructors <a id="filebuf.cons">[filebuf.cons]</a>
+#### Constructors <a id="filebuf.cons">[[filebuf.cons]]</a>
 
 ``` cpp
 basic_filebuf();
@@ -7997,7 +7999,7 @@ virtual ~basic_filebuf();
 > object, including the call to `close()`, the exception is caught but
 > not rethrown (see \[res.on.exception.handling\]).
 
-#### Assignment and swap <a id="filebuf.assign">[filebuf.assign]</a>
+#### Assignment and swap <a id="filebuf.assign">[[filebuf.assign]]</a>
 
 ``` cpp
 basic_filebuf& operator=(basic_filebuf&& rhs);
@@ -8030,7 +8032,7 @@ template<class charT, class traits>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="filebuf.members">[filebuf.members]</a>
+#### Member functions <a id="filebuf.members">[[filebuf.members]]</a>
 
 ``` cpp
 bool is_open() const;
@@ -8143,7 +8145,7 @@ basic_filebuf* close();
 >
 > on success, a null pointer otherwise.
 
-#### Overridden virtual functions <a id="filebuf.virtuals">[filebuf.virtuals]</a>
+#### Overridden virtual functions <a id="filebuf.virtuals">[[filebuf.virtuals]]</a>
 
 ``` cpp
 streamsize showmanyc() override;
@@ -8402,9 +8404,9 @@ void imbue(const locale& loc) override;
 > in turn may require the implementation to be able to reconstruct the
 > original contents of the file.
 
-### Class template `basic_ifstream` <a id="ifstream">[ifstream]</a>
+### Class template `basic_ifstream` <a id="ifstream">[[ifstream]]</a>
 
-#### General <a id="ifstream.general">[ifstream.general]</a>
+#### General <a id="ifstream.general">[[ifstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -8460,7 +8462,7 @@ presented here as:
 
 - `sb`, the `filebuf` object.
 
-#### Constructors <a id="ifstream.cons">[ifstream.cons]</a>
+#### Constructors <a id="ifstream.cons">[[ifstream.cons]]</a>
 
 ``` cpp
 basic_ifstream();
@@ -8517,7 +8519,7 @@ basic_ifstream(basic_ifstream&& rhs);
 > Then calls `basic_istream<charT, traits>::set_rdbuf(addressof(sb))` to
 > install the contained `basic_filebuf`.
 
-#### Swap <a id="ifstream.swap">[ifstream.swap]</a>
+#### Swap <a id="ifstream.swap">[[ifstream.swap]]</a>
 
 ``` cpp
 void swap(basic_ifstream& rhs);
@@ -8537,7 +8539,7 @@ template<class charT, class traits>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="ifstream.members">[ifstream.members]</a>
+#### Member functions <a id="ifstream.members">[[ifstream.members]]</a>
 
 ``` cpp
 basic_filebuf<charT, traits>* rdbuf() const;
@@ -8587,9 +8589,9 @@ void close();
 > calls `setstate(failbit)` (which may throw
 > `ios_base::failure`)\[iostate.flags\].
 
-### Class template `basic_ofstream` <a id="ofstream">[ofstream]</a>
+### Class template `basic_ofstream` <a id="ofstream">[[ofstream]]</a>
 
-#### General <a id="ofstream.general">[ofstream.general]</a>
+#### General <a id="ofstream.general">[[ofstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -8645,7 +8647,7 @@ presented here as:
 
 - `sb`, the `filebuf` object.
 
-#### Constructors <a id="ofstream.cons">[ofstream.cons]</a>
+#### Constructors <a id="ofstream.cons">[[ofstream.cons]]</a>
 
 ``` cpp
 basic_ofstream();
@@ -8702,7 +8704,7 @@ basic_ofstream(basic_ofstream&& rhs);
 > Then calls `basic_ostream<charT, traits>::set_rdbuf(addressof(sb))` to
 > install the contained `basic_filebuf`.
 
-#### Swap <a id="ofstream.swap">[ofstream.swap]</a>
+#### Swap <a id="ofstream.swap">[[ofstream.swap]]</a>
 
 ``` cpp
 void swap(basic_ofstream& rhs);
@@ -8722,7 +8724,7 @@ template<class charT, class traits>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="ofstream.members">[ofstream.members]</a>
+#### Member functions <a id="ofstream.members">[[ofstream.members]]</a>
 
 ``` cpp
 basic_filebuf<charT, traits>* rdbuf() const;
@@ -8772,9 +8774,9 @@ void open(const filesystem::path& s, ios_base::openmode mode = ios_base::out);
 >
 > Calls `open(s.c_str(), mode)`.
 
-### Class template `basic_fstream` <a id="fstream">[fstream]</a>
+### Class template `basic_fstream` <a id="fstream">[[fstream]]</a>
 
-#### General <a id="fstream.general">[fstream.general]</a>
+#### General <a id="fstream.general">[[fstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -8839,7 +8841,7 @@ the maintained data is presented here as:
 
 - `sb`, the `basic_filebuf` object.
 
-#### Constructors <a id="fstream.cons">[fstream.cons]</a>
+#### Constructors <a id="fstream.cons">[[fstream.cons]]</a>
 
 ``` cpp
 basic_fstream();
@@ -8899,7 +8901,7 @@ basic_fstream(basic_fstream&& rhs);
 > Then calls `basic_istream<charT, traits>::set_rdbuf(addressof(sb))` to
 > install the contained `basic_filebuf`.
 
-#### Swap <a id="fstream.swap">[fstream.swap]</a>
+#### Swap <a id="fstream.swap">[[fstream.swap]]</a>
 
 ``` cpp
 void swap(basic_fstream& rhs);
@@ -8920,7 +8922,7 @@ template<class charT, class traits>
 >
 > Equivalent to: `x.swap(y)`.
 
-#### Member functions <a id="fstream.members">[fstream.members]</a>
+#### Member functions <a id="fstream.members">[[fstream.members]]</a>
 
 ``` cpp
 basic_filebuf<charT, traits>* rdbuf() const;
@@ -8976,9 +8978,9 @@ void close();
 > calls `setstate(failbit)` (which may throw
 > `ios_base::failure`)\[iostate.flags\].
 
-## Synchronized output streams <a id="syncstream">[syncstream]</a>
+## Synchronized output streams <a id="syncstream">[[syncstream]]</a>
 
-### Header `<syncstream>` synopsis <a id="syncstream.syn">[syncstream.syn]</a>
+### Header `<syncstream>` synopsis <a id="syncstream.syn">[[syncstream.syn]]</a>
 
 ``` cpp
 #include <ostream>  // see [ostream.syn]
@@ -9006,9 +9008,9 @@ namespace std {
 The header `<syncstream>` provides a mechanism to synchronize execution
 agents writing to the same stream.
 
-### Class template `basic_syncbuf` <a id="syncstream.syncbuf">[syncstream.syncbuf]</a>
+### Class template `basic_syncbuf` <a id="syncstream.syncbuf">[[syncstream.syncbuf]]</a>
 
-#### Overview <a id="syncstream.syncbuf.overview">[syncstream.syncbuf.overview]</a>
+#### Overview <a id="syncstream.syncbuf.overview">[[syncstream.syncbuf.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -9062,7 +9064,7 @@ the `basic_syncbuf` object is destroyed. Such transfers are atomic with
 respect to transfers by other `basic_syncbuf` objects with the same
 wrapped stream buffer object.
 
-#### Construction and destruction <a id="syncstream.syncbuf.cons">[syncstream.syncbuf.cons]</a>
+#### Construction and destruction <a id="syncstream.syncbuf.cons">[[syncstream.syncbuf.cons]]</a>
 
 ``` cpp
 basic_syncbuf(streambuf_type* obuf, const Allocator& allocator);
@@ -9116,7 +9118,7 @@ basic_syncbuf(basic_syncbuf&& other);
 > Nothing. If an exception is thrown from `emit()`, the destructor
 > catches and ignores that exception.
 
-#### Assignment and swap <a id="syncstream.syncbuf.assign">[syncstream.syncbuf.assign]</a>
+#### Assignment and swap <a id="syncstream.syncbuf.assign">[[syncstream.syncbuf.assign]]</a>
 
 ``` cpp
 basic_syncbuf& operator=(basic_syncbuf&& rhs);
@@ -9161,7 +9163,7 @@ void swap(basic_syncbuf& other);
 >
 > Exchanges the state of `*this` and `other`.
 
-#### Member functions <a id="syncstream.syncbuf.members">[syncstream.syncbuf.members]</a>
+#### Member functions <a id="syncstream.syncbuf.members">[[syncstream.syncbuf.members]]</a>
 
 ``` cpp
 bool emit();
@@ -9225,7 +9227,7 @@ void set_emit_on_sync(bool b) noexcept;
 >
 > `emit_on_sync = b`.
 
-#### Overridden virtual functions <a id="syncstream.syncbuf.virtuals">[syncstream.syncbuf.virtuals]</a>
+#### Overridden virtual functions <a id="syncstream.syncbuf.virtuals">[[syncstream.syncbuf.virtuals]]</a>
 
 ``` cpp
 int sync() override;
@@ -9244,7 +9246,7 @@ int sync() override;
 > If `emit()` was called and returned `false`, returns `-1`; otherwise
 > `0`.
 
-#### Specialized algorithms <a id="syncstream.syncbuf.special">[syncstream.syncbuf.special]</a>
+#### Specialized algorithms <a id="syncstream.syncbuf.special">[[syncstream.syncbuf.special]]</a>
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -9256,9 +9258,9 @@ template<class charT, class traits, class Allocator>
 >
 > Equivalent to `a.swap(b)`.
 
-### Class template `basic_osyncstream` <a id="syncstream.osyncstream">[syncstream.osyncstream]</a>
+### Class template `basic_osyncstream` <a id="syncstream.osyncstream">[[syncstream.osyncstream]]</a>
 
-#### Overview <a id="syncstream.osyncstream.overview">[syncstream.osyncstream.overview]</a>
+#### Overview <a id="syncstream.osyncstream.overview">[[syncstream.osyncstream.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -9301,7 +9303,7 @@ namespace std {
 ```
 
 `Allocator` shall meet the *Cpp17Allocator* requirements
-[allocator.requirements.general].
+[[allocator.requirements.general]].
 
 \[*Example 1*:
 
@@ -9331,7 +9333,7 @@ In this example, `cout` is not flushed.
 
 — *end example*\]
 
-#### Construction and destruction <a id="syncstream.osyncstream.cons">[syncstream.osyncstream.cons]</a>
+#### Construction and destruction <a id="syncstream.osyncstream.cons">[[syncstream.osyncstream.cons]]</a>
 
 ``` cpp
 basic_osyncstream(streambuf_type* buf, const Allocator& allocator);
@@ -9366,7 +9368,7 @@ basic_osyncstream(basic_osyncstream&& other) noexcept;
 > `other.get_wrapped()` prior to calling this constructor.
 > `nullptr == other.get_wrapped()` is `true`.
 
-#### Member functions <a id="syncstream.osyncstream.members">[syncstream.osyncstream.members]</a>
+#### Member functions <a id="syncstream.osyncstream.members">[[syncstream.osyncstream.members]]</a>
 
 ``` cpp
 void emit();
@@ -9442,12 +9444,12 @@ streambuf_type* get_wrapped() const noexcept;
 >
 > — *end example*\]
 
-## File systems <a id="filesystems">[filesystems]</a>
+## File systems <a id="filesystems">[[filesystems]]</a>
 
-### General <a id="fs.general">[fs.general]</a>
+### General <a id="fs.general">[[fs.general]]</a>
 
-Subclause  [filesystems] describes operations on file systems and their
-components, such as paths, regular files, and directories.
+Subclause  [[filesystems]] describes operations on file systems and
+their components, such as paths, regular files, and directories.
 
 A *file system* is a collection of files and their attributes.
 
@@ -9461,7 +9463,7 @@ A *directory* is a file within a file system that acts as a container of
 directory entries that contain information about other files, possibly
 including other directory files. The *parent directory* of a directory
 is the directory that both contains a directory entry for the given
-directory and is represented by the dot-dot filename [fs.path.generic]
+directory and is represented by the dot-dot filename [[fs.path.generic]]
 in the given directory. The *parent directory* of other types of files
 is a directory containing a directory entry for the file under
 discussion.
@@ -9476,7 +9478,7 @@ removed.
 pointer to a file. — *end note*\]
 
 A *symbolic link* is a type of file with the property that when the file
-is encountered during pathname resolution [fs.class.path], a string
+is encountered during pathname resolution [[fs.class.path]], a string
 stored by the file is used to modify the pathname resolution.
 
 \[*Note 2*: Symbolic links are often called symlinks. A symbolic link
@@ -9484,15 +9486,15 @@ can be thought of as a raw pointer to a file. If the file pointed to
 does not exist, the symbolic link is said to be a “dangling” symbolic
 link. — *end note*\]
 
-### Conformance <a id="fs.conformance">[fs.conformance]</a>
+### Conformance <a id="fs.conformance">[[fs.conformance]]</a>
 
-#### General <a id="fs.conformance.general">[fs.conformance.general]</a>
+#### General <a id="fs.conformance.general">[[fs.conformance.general]]</a>
 
 Conformance is specified in terms of behavior. Ideal behavior is not
 always implementable, so the conformance subclauses take that into
 account.
 
-#### POSIX conformance <a id="fs.conform.9945">[fs.conform.9945]</a>
+#### POSIX conformance <a id="fs.conform.9945">[[fs.conform.9945]]</a>
 
 \[*Note 3*: This constitutes an “as if” rule allowing implementations to
 call native operating system or other APIs. — *end note*\]
@@ -9504,7 +9506,7 @@ POSIX behavior should provide behavior as close to POSIX behavior as is
 reasonable given the limitations of actual operating systems and file
 systems. If an implementation cannot provide any reasonable behavior,
 the implementation shall report an error as specified in 
-[fs.err.report].
+[[fs.err.report]].
 
 \[*Note 4*: This allows users to rely on an exception being thrown or an
 error code being set when an implementation cannot provide any
@@ -9519,18 +9521,18 @@ other features of more capable file systems, so implementations are not
 required to support those features on the FAT file system but instead
 are required to report an error as described above. — *end example*\]
 
-#### Operating system dependent behavior conformance <a id="fs.conform.os">[fs.conform.os]</a>
+#### Operating system dependent behavior conformance <a id="fs.conform.os">[[fs.conform.os]]</a>
 
 It is permissible for an implementation to be dependent upon an
 operating system emulator rather than the actual underlying operating
 system.
 
-#### File system race behavior <a id="fs.race.behavior">[fs.race.behavior]</a>
+#### File system race behavior <a id="fs.race.behavior">[[fs.race.behavior]]</a>
 
 A *file system race* is the condition that occurs when multiple threads,
 processes, or computers interleave access and modification of the same
 object within a file system. Behavior is undefined if calls to functions
-provided by subclause  [filesystems] introduce a file system race.
+provided by subclause  [[filesystems]] introduce a file system race.
 
 If the possibility of a file system race would make it unreliable for a
 program to test for a precondition before calling a function described
@@ -9540,9 +9542,9 @@ herein, is not specified for the function.
 it is unreasonable for a program to detect them prior to calling the
 function. — *end note*\]
 
-### Requirements <a id="fs.req">[fs.req]</a>
+### Requirements <a id="fs.req">[[fs.req]]</a>
 
-Throughout subclause  [filesystems], `char`, `wchar_t`, `char8_t`,
+Throughout subclause  [[filesystems]], `char`, `wchar_t`, `char8_t`,
 `char16_t`, and `char32_t` are collectively called
 *encoded character types*.
 
@@ -9551,7 +9553,7 @@ in overload resolution unless `EcharT` is one of the encoded character
 types.
 
 Template parameters named `InputIterator` shall meet the
-*Cpp17InputIterator* requirements [input.iterators] and shall have a
+*Cpp17InputIterator* requirements [[input.iterators]] and shall have a
 value type that is one of the encoded character types.
 
 \[*Note 6*: Use of an encoded character type implies an associated
@@ -9560,9 +9562,9 @@ no implied character set and encoding, they are not included as
 permitted types. — *end note*\]
 
 Template parameters named `Allocator` shall meet the *Cpp17Allocator*
-requirements [allocator.requirements.general].
+requirements [[allocator.requirements.general]].
 
-### Header `<filesystem>` synopsis <a id="fs.filesystem.syn">[fs.filesystem.syn]</a>
+### Header `<filesystem>` synopsis <a id="fs.filesystem.syn">[[fs.filesystem.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -9787,7 +9789,7 @@ Implementations should ensure that the resolution and range of
 `file_time_type` reflect the operating system dependent resolution and
 range of file time values.
 
-### Error reporting <a id="fs.err.report">[fs.err.report]</a>
+### Error reporting <a id="fs.err.report">[[fs.err.report]]</a>
 
 Filesystem library functions often provide two overloads, one that
 throws an exception to report file system errors, and another that sets
@@ -9823,7 +9825,7 @@ follows, unless otherwise specified:
   system dependent error.
 
 - Failure to allocate storage is reported by throwing an exception as
-  described in  [res.on.exception.handling].
+  described in  [[res.on.exception.handling]].
 
 - Destructors throw nothing.
 
@@ -9836,9 +9838,9 @@ follows, unless otherwise specified:
   appropriate for the specific operating system dependent error.
   Otherwise, `clear()` is called on the `error_code&` argument.
 
-### Class `path` <a id="fs.class.path">[fs.class.path]</a>
+### Class `path` <a id="fs.class.path">[[fs.class.path]]</a>
 
-#### General <a id="fs.class.path.general">[fs.class.path.general]</a>
+#### General <a id="fs.class.path.general">[[fs.class.path.general]]</a>
 
 An object of class `path` represents a path and contains a pathname.
 Such an object is concerned only with the lexical and syntactic aspects
@@ -9853,9 +9855,9 @@ necessary. — *end note*\]
 
 A *path* is a sequence of elements that identify the location of a file
 within a filesystem. The elements are the *root-name*, *root-directory*,
-and an optional sequence of *filename* [fs.path.generic]. The maximum
+and an optional sequence of *filename* [[fs.path.generic]]. The maximum
 number of elements in the sequence is operating system dependent
-[fs.conform.os].
+[[fs.conform.os]].
 
 An *absolute path* is a path that unambiguously identifies the location
 of a file without reference to an additional starting location. The
@@ -9869,7 +9871,7 @@ determine if it is relative are operating system dependent.
 
 A *pathname* is a character string that represents the name of a path.
 Pathnames are formatted according to the generic pathname format grammar
-[fs.path.generic] or according to an operating system dependent
+[[fs.path.generic]] or according to an operating system dependent
 *native pathname format* accepted by the host operating system.
 
 *Pathname resolution*
@@ -10039,7 +10041,7 @@ namespace std::filesystem {
 character type used to represent pathnames.
 
 The value of the `preferred_separator` member is the operating system
-dependent *preferred-separator* character [fs.path.generic].
+dependent *preferred-separator* character [[fs.path.generic]].
 
 \[*Example 3*: For POSIX-based operating systems, `value_type` is `char`
 and `preferred_separator` is the slash character (`'/'`). For
@@ -10047,7 +10049,7 @@ Windows-based operating systems, `value_type` is `wchar_t` and
 `preferred_separator` is the backslash character
 (`L'\\'`). — *end example*\]
 
-#### Generic pathname format <a id="fs.path.generic">[fs.path.generic]</a>
+#### Generic pathname format <a id="fs.path.generic">[[fs.path.generic]]</a>
 
 ``` bnf
 pathname:
@@ -10131,8 +10133,9 @@ the dot-dot filename refers to relative to *root-directory* is
 for a particular operating system.
 
 A *root-name* identifies the starting location for pathname resolution
-[fs.class.path]. If there are no operating system dependent *root-name*,
-at least one *implementation-defined* *root-name* is required.
+[[fs.class.path]]. If there are no operating system dependent
+*root-name*, at least one *implementation-defined* *root-name* is
+required.
 
 \[*Note 10*: Many operating systems define a name beginning with two
 *directory-separator* characters as a *root-name* that identifies
@@ -10181,9 +10184,9 @@ a *root-name* and a *relative-path* without an intervening
 The result of normalization is a path in *normal form*, which is said to
 be *normalized*.
 
-#### Conversions <a id="fs.path.cvt">[fs.path.cvt]</a>
+#### Conversions <a id="fs.path.cvt">[[fs.path.cvt]]</a>
 
-##### Argument format conversions <a id="fs.path.fmt.cvt">[fs.path.fmt.cvt]</a>
+##### Argument format conversions <a id="fs.path.fmt.cvt">[[fs.path.fmt.cvt]]</a>
 
 \[*Note 12*:
 
@@ -10202,10 +10205,11 @@ POSIX-based operating systems because on these systems:
 
 Several functions are defined to accept *detected-format* arguments,
 which are character sequences. A detected-format argument represents a
-path using either a pathname in the generic format [fs.path.generic] or
-a pathname in the native format [fs.class.path]. Such an argument is
-taken to be in the generic format if and only if it matches the generic
-format and is not acceptable to the operating system as a native path.
+path using either a pathname in the generic format [[fs.path.generic]]
+or a pathname in the native format [[fs.class.path]]. Such an argument
+is taken to be in the generic format if and only if it matches the
+generic format and is not acceptable to the operating system as a native
+path.
 
 \[*Note 13*: Some operating systems have no unambiguous way to
 distinguish between native format and generic format arguments. This is
@@ -10228,11 +10232,11 @@ differently from paths for directories, the path shall be treated as a
 directory path if its last element is a *directory-separator*, otherwise
 it shall be treated as a path to a regular file.
 
-\[*Note 15*: A path stores a native format pathname [fs.path.native.obs]
-and acts as if it also stores a generic format pathname, related as
-given below. The implementation can generate the generic format pathname
-based on the native format pathname (and possibly other information)
-when requested. — *end note*\]
+\[*Note 15*: A path stores a native format pathname
+[[fs.path.native.obs]] and acts as if it also stores a generic format
+pathname, related as given below. The implementation can generate the
+generic format pathname based on the native format pathname (and
+possibly other information) when requested. — *end note*\]
 
 When a path is constructed from or is assigned a single representation
 separate from any path, the other representation is selected by the
@@ -10246,13 +10250,13 @@ as appropriate) if any such value does so; *q* is otherwise unspecified.
 \[*Note 16*: If *q* is the result of converting any path at all, it is
 the result of converting *p*. — *end note*\]
 
-##### Type and encoding conversions <a id="fs.path.type.cvt">[fs.path.type.cvt]</a>
+##### Type and encoding conversions <a id="fs.path.type.cvt">[[fs.path.type.cvt]]</a>
 
 The *native encoding* of an ordinary character string is the operating
-system dependent current encoding for pathnames [fs.class.path]. The
+system dependent current encoding for pathnames [[fs.class.path]]. The
 *native encoding* for wide character strings is the
 implementation-defined execution wide-character set encoding
-[character.seq].
+[[character.seq]].
 
 For member function arguments that take character sequences representing
 paths and for member functions returning strings, value type and
@@ -10296,9 +10300,9 @@ characters, the resulting converted characters, if any, are unspecified.
 Implementations should not modify member function arguments if already
 of type `path::value_type`.
 
-#### Requirements <a id="fs.path.req">[fs.path.req]</a>
+#### Requirements <a id="fs.path.req">[[fs.path.req]]</a>
 
-In addition to the requirements [fs.req], function template parameters
+In addition to the requirements [[fs.req]], function template parameters
 named `Source` shall be one of:
 
 - `basic_string<EcharT, traits, Allocator>`. A function argument
@@ -10329,17 +10333,17 @@ than `path`, and either
 
 - the *qualified-id* `iterator_traits<decay_t<Source>>::value_type` is
   valid and denotes a possibly const encoded character type
-  [temp.deduct].
+  [[temp.deduct]].
 
-\[*Note 17*: See path conversions [fs.path.cvt] for how the value types
-above and their encodings convert to `path::value_type` and its
+\[*Note 17*: See path conversions [[fs.path.cvt]] for how the value
+types above and their encodings convert to `path::value_type` and its
 encoding. — *end note*\]
 
 Arguments of type `Source` shall not be null pointers.
 
-#### Members <a id="fs.path.member">[fs.path.member]</a>
+#### Members <a id="fs.path.member">[[fs.path.member]]</a>
 
-##### Constructors <a id="fs.path.construct">[fs.path.construct]</a>
+##### Constructors <a id="fs.path.construct">[[fs.path.construct]]</a>
 
 ``` cpp
 path() noexcept;
@@ -10444,7 +10448,7 @@ template<class InputIterator>
 >
 > — *end example*\]
 
-##### Assignments <a id="fs.path.assign">[fs.path.assign]</a>
+##### Assignments <a id="fs.path.assign">[[fs.path.assign]]</a>
 
 ``` cpp
 path& operator=(const path& p);
@@ -10510,7 +10514,7 @@ template<class InputIterator>
 >
 > `*this`.
 
-##### Appends <a id="fs.path.append">[fs.path.append]</a>
+##### Appends <a id="fs.path.append">[[fs.path.append]]</a>
 
 The append operations use `operator/=` to denote their semantic effect
 of appending *preferred-separator* when needed.
@@ -10585,7 +10589,7 @@ template<class InputIterator>
 >
 > Equivalent to: `return operator/=(path(first, last));`
 
-##### Concatenation <a id="fs.path.concat">[fs.path.concat]</a>
+##### Concatenation <a id="fs.path.concat">[[fs.path.concat]]</a>
 
 ``` cpp
 path& operator+=(const path& x);
@@ -10628,7 +10632,7 @@ template<class InputIterator>
 >
 > Equivalent to: `return *this += path(first, last);`
 
-##### Modifiers <a id="fs.path.modifiers">[fs.path.modifiers]</a>
+##### Modifiers <a id="fs.path.modifiers">[[fs.path.modifiers]]</a>
 
 ``` cpp
 void clear() noexcept;
@@ -10753,10 +10757,10 @@ void swap(path& rhs) noexcept;
 >
 > Constant time.
 
-##### Native format observers <a id="fs.path.native.obs">[fs.path.native.obs]</a>
+##### Native format observers <a id="fs.path.native.obs">[[fs.path.native.obs]]</a>
 
 The string returned by all native format observers is in the native
-pathname format [fs.class.path].
+pathname format [[fs.class.path]].
 
 ``` cpp
 const string_type& native() const noexcept;
@@ -10814,10 +10818,10 @@ std::u32string u32string() const;
 >
 > Conversion, if any, is performed as specified by \[fs.path.cvt\].
 
-##### Generic format observers <a id="fs.path.generic.obs">[fs.path.generic.obs]</a>
+##### Generic format observers <a id="fs.path.generic.obs">[[fs.path.generic.obs]]</a>
 
 Generic format observer functions return strings formatted according to
-the generic pathname format [fs.path.generic]. A single slash (`'/'`)
+the generic pathname format [[fs.path.generic]]. A single slash (`'/'`)
 character is used as the *directory-separator*.
 
 \[*Example 4*:
@@ -10864,7 +10868,7 @@ std::u32string generic_u32string() const;
 >
 > Conversion, if any, is specified by \[fs.path.cvt\].
 
-##### Compare <a id="fs.path.compare">[fs.path.compare]</a>
+##### Compare <a id="fs.path.compare">[[fs.path.compare]]</a>
 
 ``` cpp
 int compare(const path& p) const noexcept;
@@ -10902,7 +10906,7 @@ int compare(const value_type* s) const;
 >
 > Equivalent to: `return compare(path(s));`
 
-##### Decomposition <a id="fs.path.decompose">[fs.path.decompose]</a>
+##### Decomposition <a id="fs.path.decompose">[[fs.path.decompose]]</a>
 
 ``` cpp
 path root_name() const;
@@ -11023,7 +11027,7 @@ path extension() const;
 > possible that `p.stem() + p.extension() == p.filename()` is `false`,
 > even though the generic format pathnames are the same. — *end note*\]
 
-##### Query <a id="fs.path.query">[fs.path.query]</a>
+##### Query <a id="fs.path.query">[[fs.path.query]]</a>
 
 ``` cpp
 [[nodiscard]] bool empty() const noexcept;
@@ -11119,7 +11123,7 @@ bool is_relative() const;
 >
 > `!is_absolute()`.
 
-##### Generation <a id="fs.path.gen">[fs.path.gen]</a>
+##### Generation <a id="fs.path.gen">[[fs.path.gen]]</a>
 
 ``` cpp
 path lexically_normal() const;
@@ -11234,13 +11238,13 @@ path lexically_proximate(const path& base) const;
 > consistent matching of elements, apply `lexically_normal()` to
 > `*this`, `base`, or both. — *end note*\]
 
-#### Iterators <a id="fs.path.itr">[fs.path.itr]</a>
+#### Iterators <a id="fs.path.itr">[[fs.path.itr]]</a>
 
 Path iterators iterate over the elements of the pathname in the generic
-format [fs.path.generic].
+format [[fs.path.generic]].
 
 A `path::iterator` is a constant iterator meeting all the requirements
-of a bidirectional iterator [bidirectional.iterators] except that, for
+of a bidirectional iterator [[bidirectional.iterators]] except that, for
 dereferenceable iterators `a` and `b` of type `path::iterator` with
 `a == b`, there is no requirement that `*a` and `*b` are bound to the
 same object. Its `value_type` is `path`.
@@ -11282,7 +11286,7 @@ iterator end() const;
 >
 > The end iterator.
 
-#### Inserter and extractor <a id="fs.path.io">[fs.path.io]</a>
+#### Inserter and extractor <a id="fs.path.io">[[fs.path.io]]</a>
 
 ``` cpp
 template<class charT, class traits>
@@ -11321,7 +11325,7 @@ template<class charT, class traits>
 >
 > `is`.
 
-#### Non-member functions <a id="fs.path.nonmember">[fs.path.nonmember]</a>
+#### Non-member functions <a id="fs.path.nonmember">[[fs.path.nonmember]]</a>
 
 ``` cpp
 void swap(path& lhs, path& rhs) noexcept;
@@ -11383,7 +11387,7 @@ friend path operator/(const path& lhs, const path& rhs);
 >
 > Equivalent to: `return path(lhs) /= rhs;`
 
-#### Hash support <a id="fs.path.hash">[fs.path.hash]</a>
+#### Hash support <a id="fs.path.hash">[[fs.path.hash]]</a>
 
 ``` cpp
 template<> struct hash<filesystem::path>;
@@ -11393,9 +11397,9 @@ template<> struct hash<filesystem::path>;
 > `hash<filesystem::path>()(p)` evaluates to the same result as
 > `filesystem::hash_value(p)`.
 
-### Class `filesystem_error` <a id="fs.class.filesystem.error">[fs.class.filesystem.error]</a>
+### Class `filesystem_error` <a id="fs.class.filesystem.error">[[fs.class.filesystem.error]]</a>
 
-#### General <a id="fs.class.filesystem.error.general">[fs.class.filesystem.error.general]</a>
+#### General <a id="fs.class.filesystem.error.general">[[fs.class.filesystem.error.general]]</a>
 
 ``` cpp
 namespace std::filesystem {
@@ -11416,9 +11420,9 @@ namespace std::filesystem {
 
 The class `filesystem_error` defines the type of objects thrown as
 exceptions to report file system errors from functions described in
-subclause  [filesystems].
+subclause  [[filesystems]].
 
-#### Members <a id="fs.filesystem.error.members">[fs.filesystem.error.members]</a>
+#### Members <a id="fs.filesystem.error.members">[[fs.filesystem.error.members]]</a>
 
 Constructors are provided that store zero, one, or two paths associated
 with an error.
@@ -11494,54 +11498,55 @@ const char* what() const noexcept override;
 > include the `system_error::what()` string and the pathnames of `path1`
 > and `path2` in the native format in the returned string.
 
-### Enumerations <a id="fs.enum">[fs.enum]</a>
+### Enumerations <a id="fs.enum">[[fs.enum]]</a>
 
-#### Enum `path::format` <a id="fs.enum.path.format">[fs.enum.path.format]</a>
+#### Enum `path::format` <a id="fs.enum.path.format">[[fs.enum.path.format]]</a>
 
 This enum specifies constants used to identify the format of the
-character sequence, with the meanings listed in [fs.enum.path.format].
+character sequence, with the meanings listed in [[fs.enum.path.format]].
 
-#### Enum class `file_type` <a id="fs.enum.file.type">[fs.enum.file.type]</a>
+#### Enum class `file_type` <a id="fs.enum.file.type">[[fs.enum.file.type]]</a>
 
 This enum class specifies constants used to identify file types, with
-the meanings listed in [fs.enum.file.type]. The values of the constants
-are distinct.
+the meanings listed in [[fs.enum.file.type]]. The values of the
+constants are distinct.
 
-#### Enum class `copy_options` <a id="fs.enum.copy.opts">[fs.enum.copy.opts]</a>
+#### Enum class `copy_options` <a id="fs.enum.copy.opts">[[fs.enum.copy.opts]]</a>
 
-The `enum class` type `copy_options` is a bitmask type [bitmask.types]
+The `enum class` type `copy_options` is a bitmask type [[bitmask.types]]
 that specifies bitmask constants used to control the semantics of copy
 operations. The constants are specified in option groups with the
-meanings listed in [fs.enum.copy.opts]. The constant `none` represents
+meanings listed in [[fs.enum.copy.opts]]. The constant `none` represents
 the empty bitmask, and is shown in each option group for purposes of
 exposition; implementations shall provide only a single definition.
 Every other constant in the table represents a distinct bitmask element.
 
-#### Enum class `perms` <a id="fs.enum.perms">[fs.enum.perms]</a>
+#### Enum class `perms` <a id="fs.enum.perms">[[fs.enum.perms]]</a>
 
-The `enum class` type `perms` is a bitmask type [bitmask.types] that
+The `enum class` type `perms` is a bitmask type [[bitmask.types]] that
 specifies bitmask constants used to identify file permissions, with the
-meanings listed in [fs.enum.perms].
+meanings listed in [[fs.enum.perms]].
 
-#### Enum class `perm_options` <a id="fs.enum.perm.opts">[fs.enum.perm.opts]</a>
+#### Enum class `perm_options` <a id="fs.enum.perm.opts">[[fs.enum.perm.opts]]</a>
 
-The `enum class` type `perm_options` is a bitmask type [bitmask.types]
+The `enum class` type `perm_options` is a bitmask type [[bitmask.types]]
 that specifies bitmask constants used to control the semantics of
-permissions operations, with the meanings listed in [fs.enum.perm.opts].
-The bitmask constants are bitmask elements. In [fs.enum.perm.opts]
-`perm` denotes a value of type `perms` passed to `permissions`.
+permissions operations, with the meanings listed in
+[[fs.enum.perm.opts]]. The bitmask constants are bitmask elements. In
+[[fs.enum.perm.opts]] `perm` denotes a value of type `perms` passed to
+`permissions`.
 
-#### Enum class `directory_options` <a id="fs.enum.dir.opts">[fs.enum.dir.opts]</a>
+#### Enum class `directory_options` <a id="fs.enum.dir.opts">[[fs.enum.dir.opts]]</a>
 
 The `enum class` type `directory_options` is a bitmask type
-[bitmask.types] that specifies bitmask constants used to identify
+[[bitmask.types]] that specifies bitmask constants used to identify
 directory traversal options, with the meanings listed in
-[fs.enum.dir.opts]. The constant `none` represents the empty bitmask;
+[[fs.enum.dir.opts]]. The constant `none` represents the empty bitmask;
 every other constant in the table represents a distinct bitmask element.
 
-### Class `file_status` <a id="fs.class.file.status">[fs.class.file.status]</a>
+### Class `file_status` <a id="fs.class.file.status">[[fs.class.file.status]]</a>
 
-#### General <a id="fs.class.file.status.general">[fs.class.file.status.general]</a>
+#### General <a id="fs.class.file.status.general">[[fs.class.file.status.general]]</a>
 
 ``` cpp
 namespace std::filesystem {
@@ -11584,7 +11589,7 @@ explicit file_status(file_type ft, perms prms = perms::unknown) noexcept;
 >
 > `type() == ft` and `permissions() == prms`.
 
-#### Observers <a id="fs.file.status.obs">[fs.file.status.obs]</a>
+#### Observers <a id="fs.file.status.obs">[[fs.file.status.obs]]</a>
 
 ``` cpp
 file_type type() const noexcept;
@@ -11606,7 +11611,7 @@ perms permissions() const noexcept;
 > most recent call to a constructor, `operator=`, or
 > `permissions(perms)` function.
 
-#### Modifiers <a id="fs.file.status.mods">[fs.file.status.mods]</a>
+#### Modifiers <a id="fs.file.status.mods">[[fs.file.status.mods]]</a>
 
 ``` cpp
 void type(file_type ft) noexcept;
@@ -11624,9 +11629,9 @@ void permissions(perms prms) noexcept;
 >
 > `permissions() == prms`.
 
-### Class `directory_entry` <a id="fs.class.directory.entry">[fs.class.directory.entry]</a>
+### Class `directory_entry` <a id="fs.class.directory.entry">[[fs.class.directory.entry]]</a>
 
-#### General <a id="fs.class.directory.entry.general">[fs.class.directory.entry.general]</a>
+#### General <a id="fs.class.directory.entry.general">[[fs.class.directory.entry.general]]</a>
 
 ``` cpp
 namespace std::filesystem {
@@ -11706,11 +11711,11 @@ symlink status, file size, and last write time.
 Implementations should store such additional file attributes during
 directory iteration if their values are available and storing the values
 would allow the implementation to eliminate file system accesses by
-`directory_entry` observer functions [fs.op.funcs]. Such stored file
+`directory_entry` observer functions [[fs.op.funcs]]. Such stored file
 attribute values are said to be *cached*.
 
 \[*Note 18*: For purposes of exposition, class `directory_iterator`
-[fs.class.directory.iterator] is shown above as a friend of class
+[[fs.class.directory.iterator]] is shown above as a friend of class
 `directory_entry`. Friendship allows the `directory_iterator`
 implementation to cache already available attribute values directly into
 a `directory_entry` object without the cost of an unneeded call to
@@ -11746,7 +11751,7 @@ implementation, regardless of whether or not it employs caching.
 
 — *end example*\]
 
-#### Constructors <a id="fs.dir.entry.cons">[fs.dir.entry.cons]</a>
+#### Constructors <a id="fs.dir.entry.cons">[[fs.dir.entry.cons]]</a>
 
 ``` cpp
 explicit directory_entry(const filesystem::path& p);
@@ -11766,7 +11771,7 @@ directory_entry(const filesystem::path& p, error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-#### Modifiers <a id="fs.dir.entry.mods">[fs.dir.entry.mods]</a>
+#### Modifiers <a id="fs.dir.entry.mods">[[fs.dir.entry.mods]]</a>
 
 ``` cpp
 void assign(const filesystem::path& p);
@@ -11818,7 +11823,7 @@ void refresh(error_code& ec) noexcept;
 > from directly or indirectly calling the `refresh` function as
 > described in \[fs.class.directory.iterator.general\]. — *end note*\]
 
-#### Observers <a id="fs.dir.entry.obs">[fs.dir.entry.obs]</a>
+#### Observers <a id="fs.dir.entry.obs">[[fs.dir.entry.obs]]</a>
 
 Unqualified function names in the elements of the `directory_entry`
 observers described below refer to members of the `std::filesystem`
@@ -12047,7 +12052,7 @@ strong_ordering operator<=>(const directory_entry& rhs) const noexcept;
 >
 > `pathobject <=> rhs.pathobject`.
 
-#### Inserter <a id="fs.dir.entry.io">[fs.dir.entry.io]</a>
+#### Inserter <a id="fs.dir.entry.io">[[fs.dir.entry.io]]</a>
 
 ``` cpp
 template<class charT, class traits>
@@ -12059,17 +12064,17 @@ template<class charT, class traits>
 >
 > Equivalent to: `return os << d.path();`
 
-### Class `directory_iterator` <a id="fs.class.directory.iterator">[fs.class.directory.iterator]</a>
+### Class `directory_iterator` <a id="fs.class.directory.iterator">[[fs.class.directory.iterator]]</a>
 
-#### General <a id="fs.class.directory.iterator.general">[fs.class.directory.iterator.general]</a>
+#### General <a id="fs.class.directory.iterator.general">[[fs.class.directory.iterator.general]]</a>
 
 An object of type `directory_iterator` provides an iterator for a
 sequence of `directory_entry` elements representing the path and any
-cached attribute values [fs.class.directory.entry] for each file in a
+cached attribute values [[fs.class.directory.entry]] for each file in a
 directory or in an *implementation-defined* directory-like file type.
 
 \[*Note 19*: For iteration into subdirectories, see class
-`recursive_directory_iterator` [fs.class.rec.dir.itr]. — *end note*\]
+`recursive_directory_iterator` [[fs.class.rec.dir.itr]]. — *end note*\]
 
 ``` cpp
 namespace std::filesystem {
@@ -12110,7 +12115,7 @@ namespace std::filesystem {
 ```
 
 `directory_iterator` meets the *Cpp17InputIterator* requirements
-[input.iterators].
+[[input.iterators]].
 
 If an iterator of type `directory_iterator` reports an error or is
 advanced past the last directory element, that iterator shall become
@@ -12136,14 +12141,14 @@ The order of directory entries obtained by dereferencing successive
 increments of a `directory_iterator` is unspecified.
 
 Constructors and non-const `directory_iterator` member functions store
-the values of any cached attributes [fs.class.directory.entry] in the
+the values of any cached attributes [[fs.class.directory.entry]] in the
 `directory_entry` element returned by `operator*()`.
 `directory_iterator` member functions shall not directly or indirectly
 call any `directory_entry` `refresh` function.
 
 \[*Note 20*: The exact mechanism for storing cached attribute values is
 not exposed to users. For exposition, class `directory_iterator` is
-shown in [fs.class.directory.entry] as a friend of class
+shown in [[fs.class.directory.entry]] as a friend of class
 `directory_entry`. — *end note*\]
 
 \[*Note 21*: A path obtained by dereferencing a directory iterator might
@@ -12158,7 +12163,7 @@ unspecified whether or not subsequently incrementing the iterator will
 ever result in an iterator referencing the removed or added directory
 entry. See POSIX `readdir`. — *end note*\]
 
-#### Members <a id="fs.dir.itr.members">[fs.dir.itr.members]</a>
+#### Members <a id="fs.dir.itr.members">[[fs.dir.itr.members]]</a>
 
 ``` cpp
 directory_iterator() noexcept;
@@ -12242,7 +12247,7 @@ directory_iterator& increment(error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-#### Non-member functions <a id="fs.dir.itr.nonmembers">[fs.dir.itr.nonmembers]</a>
+#### Non-member functions <a id="fs.dir.itr.nonmembers">[[fs.dir.itr.nonmembers]]</a>
 
 These functions enable range access for `directory_iterator`.
 
@@ -12262,9 +12267,9 @@ directory_iterator end(directory_iterator) noexcept;
 >
 > `directory_iterator()`.
 
-### Class `recursive_directory_iterator` <a id="fs.class.rec.dir.itr">[fs.class.rec.dir.itr]</a>
+### Class `recursive_directory_iterator` <a id="fs.class.rec.dir.itr">[[fs.class.rec.dir.itr]]</a>
 
-#### General <a id="fs.class.rec.dir.itr.general">[fs.class.rec.dir.itr.general]</a>
+#### General <a id="fs.class.rec.dir.itr.general">[[fs.class.rec.dir.itr.general]]</a>
 
 An object of type `recursive_directory_iterator` provides an iterator
 for a sequence of `directory_entry` elements representing the files in a
@@ -12333,7 +12338,7 @@ The behavior of a `recursive_directory_iterator` is the same as a
 cycles then it is possible that the end iterator is
 unreachable. — *end note*\]
 
-#### Members <a id="fs.rec.dir.itr.members">[fs.rec.dir.itr.members]</a>
+#### Members <a id="fs.rec.dir.itr.members">[[fs.rec.dir.itr.members]]</a>
 
 ``` cpp
 recursive_directory_iterator() noexcept;
@@ -12549,7 +12554,7 @@ void disable_recursion_pending();
 > \[*Note 38*: `disable_recursion_pending``()` is used to prevent
 > unwanted recursion into a directory. — *end note*\]
 
-#### Non-member functions <a id="fs.rec.dir.itr.nonmembers">[fs.rec.dir.itr.nonmembers]</a>
+#### Non-member functions <a id="fs.rec.dir.itr.nonmembers">[[fs.rec.dir.itr.nonmembers]]</a>
 
 These functions enable use of `recursive_directory_iterator` with
 range-based `for` statements.
@@ -12570,20 +12575,20 @@ recursive_directory_iterator end(recursive_directory_iterator) noexcept;
 >
 > `recursive_directory_iterator()`.
 
-### Filesystem operation functions <a id="fs.op.funcs">[fs.op.funcs]</a>
+### Filesystem operation functions <a id="fs.op.funcs">[[fs.op.funcs]]</a>
 
-#### General <a id="fs.op.funcs.general">[fs.op.funcs.general]</a>
+#### General <a id="fs.op.funcs.general">[[fs.op.funcs.general]]</a>
 
 Filesystem operation functions query or modify files, including
 directories, in external storage.
 
 \[*Note 24*: Because hardware failures, network failures, file system
-races [fs.race.behavior], and many other kinds of errors occur
+races [[fs.race.behavior]], and many other kinds of errors occur
 frequently in file system operations, any filesystem operation function,
 no matter how apparently innocuous, can encounter an error; see 
-[fs.err.report]. — *end note*\]
+[[fs.err.report]]. — *end note*\]
 
-#### Absolute <a id="fs.op.absolute">[fs.op.absolute]</a>
+#### Absolute <a id="fs.op.absolute">[[fs.op.absolute]]</a>
 
 ``` cpp
 path filesystem::absolute(const path& p);
@@ -12620,7 +12625,7 @@ path filesystem::absolute(const path& p, error_code& ec);
 > `absolute` might have the same semantics as
 > `GetFullPathNameW`. — *end example*\]
 
-#### Canonical <a id="fs.op.canonical">[fs.op.canonical]</a>
+#### Canonical <a id="fs.op.canonical">[[fs.op.canonical]]</a>
 
 ``` cpp
 path filesystem::canonical(const path& p);
@@ -12645,7 +12650,7 @@ path filesystem::canonical(const path& p, error_code& ec);
 >
 > `!exists(p)` is an error.
 
-#### Copy <a id="fs.op.copy">[fs.op.copy]</a>
+#### Copy <a id="fs.op.copy">[[fs.op.copy]]</a>
 
 ``` cpp
 void filesystem::copy(const path& from, const path& to);
@@ -12822,7 +12827,7 @@ void filesystem::copy(const path& from, const path& to, copy_options options,
 >
 > — *end example*\]
 
-#### Copy file <a id="fs.op.copy.file">[fs.op.copy.file]</a>
+#### Copy file <a id="fs.op.copy.file">[[fs.op.copy.file]]</a>
 
 ``` cpp
 bool filesystem::copy_file(const path& from, const path& to);
@@ -12894,7 +12899,7 @@ bool filesystem::copy_file(const path& from, const path& to, copy_options option
 >
 > At most one direct or indirect invocation of `status(to)`.
 
-#### Copy symlink <a id="fs.op.copy.symlink">[fs.op.copy.symlink]</a>
+#### Copy symlink <a id="fs.op.copy.symlink">[[fs.op.copy.symlink]]</a>
 
 ``` cpp
 void filesystem::copy_symlink(const path& existing_symlink, const path& new_symlink);
@@ -12914,7 +12919,7 @@ void filesystem::copy_symlink(const path& existing_symlink, const path& new_syml
 >
 > As specified in \[fs.err.report\].
 
-#### Create directories <a id="fs.op.create.directories">[fs.op.create.directories]</a>
+#### Create directories <a id="fs.op.create.directories">[[fs.op.create.directories]]</a>
 
 ``` cpp
 bool filesystem::create_directories(const path& p);
@@ -12939,7 +12944,7 @@ bool filesystem::create_directories(const path& p, error_code& ec);
 >
 > 𝑂(n) where *n* is the number of elements of `p`.
 
-#### Create directory <a id="fs.op.create.directory">[fs.op.create.directory]</a>
+#### Create directory <a id="fs.op.create.directory">[[fs.op.create.directory]]</a>
 
 ``` cpp
 bool filesystem::create_directory(const path& p);
@@ -12990,7 +12995,7 @@ bool filesystem::create_directory(const path& p, const path& existing_p, error_c
 >
 > As specified in \[fs.err.report\].
 
-#### Create directory symlink <a id="fs.op.create.dir.symlk">[fs.op.create.dir.symlk]</a>
+#### Create directory symlink <a id="fs.op.create.dir.symlk">[[fs.op.create.dir.symlk]]</a>
 
 ``` cpp
 void filesystem::create_directory_symlink(const path& to, const path& new_symlink);
@@ -13021,7 +13026,7 @@ void filesystem::create_directory_symlink(const path& to, const path& new_symlin
 > the FAT file system) do not support symbolic links regardless of the
 > operating system. — *end note*\]
 
-#### Create hard link <a id="fs.op.create.hard.lk">[fs.op.create.hard.lk]</a>
+#### Create hard link <a id="fs.op.create.hard.lk">[[fs.op.create.hard.lk]]</a>
 
 ``` cpp
 void filesystem::create_hard_link(const path& to, const path& new_hard_link);
@@ -13050,7 +13055,7 @@ void filesystem::create_hard_link(const path& to, const path& new_hard_link,
 > system. Some file systems limit the number of links per
 > file. — *end note*\]
 
-#### Create symlink <a id="fs.op.create.symlink">[fs.op.create.symlink]</a>
+#### Create symlink <a id="fs.op.create.symlink">[[fs.op.create.symlink]]</a>
 
 ``` cpp
 void filesystem::create_symlink(const path& to, const path& new_symlink);
@@ -13076,7 +13081,7 @@ void filesystem::create_symlink(const path& to, const path& new_symlink,
 > the FAT file system) do not support symbolic links regardless of the
 > operating system. — *end note*\]
 
-#### Current path <a id="fs.op.current.path">[fs.op.current.path]</a>
+#### Current path <a id="fs.op.current.path">[[fs.op.current.path]]</a>
 
 ``` cpp
 path filesystem::current_path();
@@ -13129,7 +13134,7 @@ void filesystem::current_path(const path& p, error_code& ec) noexcept;
 > dangerous global state and can be changed unexpectedly by third-party
 > or system library functions, or by another thread. — *end note*\]
 
-#### Equivalent <a id="fs.op.equivalent">[fs.op.equivalent]</a>
+#### Equivalent <a id="fs.op.equivalent">[[fs.op.equivalent]]</a>
 
 ``` cpp
 bool filesystem::equivalent(const path& p1, const path& p2);
@@ -13158,7 +13163,7 @@ bool filesystem::equivalent(const path& p1, const path& p2, error_code& ec) noex
 >
 > `!exists(p1) || !exists(p2)` is an error.
 
-#### Exists <a id="fs.op.exists">[fs.op.exists]</a>
+#### Exists <a id="fs.op.exists">[[fs.op.exists]]</a>
 
 ``` cpp
 bool filesystem::exists(file_status s) noexcept;
@@ -13189,7 +13194,7 @@ bool filesystem::exists(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### File size <a id="fs.op.file.size">[fs.op.file.size]</a>
+#### File size <a id="fs.op.file.size">[[fs.op.file.size]]</a>
 
 ``` cpp
 uintmax_t filesystem::file_size(const path& p);
@@ -13215,7 +13220,7 @@ uintmax_t filesystem::file_size(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Hard link count <a id="fs.op.hard.lk.ct">[fs.op.hard.lk.ct]</a>
+#### Hard link count <a id="fs.op.hard.lk.ct">[[fs.op.hard.lk.ct]]</a>
 
 ``` cpp
 uintmax_t filesystem::hard_link_count(const path& p);
@@ -13231,7 +13236,7 @@ uintmax_t filesystem::hard_link_count(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is block file <a id="fs.op.is.block.file">[fs.op.is.block.file]</a>
+#### Is block file <a id="fs.op.is.block.file">[[fs.op.is.block.file]]</a>
 
 ``` cpp
 bool filesystem::is_block_file(file_status s) noexcept;
@@ -13256,7 +13261,7 @@ bool filesystem::is_block_file(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is character file <a id="fs.op.is.char.file">[fs.op.is.char.file]</a>
+#### Is character file <a id="fs.op.is.char.file">[[fs.op.is.char.file]]</a>
 
 ``` cpp
 bool filesystem::is_character_file(file_status s) noexcept;
@@ -13281,7 +13286,7 @@ bool filesystem::is_character_file(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is directory <a id="fs.op.is.directory">[fs.op.is.directory]</a>
+#### Is directory <a id="fs.op.is.directory">[[fs.op.is.directory]]</a>
 
 ``` cpp
 bool filesystem::is_directory(file_status s) noexcept;
@@ -13306,7 +13311,7 @@ bool filesystem::is_directory(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is empty <a id="fs.op.is.empty">[fs.op.is.empty]</a>
+#### Is empty <a id="fs.op.is.empty">[[fs.op.is.empty]]</a>
 
 ``` cpp
 bool filesystem::is_empty(const path& p);
@@ -13345,7 +13350,7 @@ bool filesystem::is_empty(const path& p, error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-#### Is fifo <a id="fs.op.is.fifo">[fs.op.is.fifo]</a>
+#### Is fifo <a id="fs.op.is.fifo">[[fs.op.is.fifo]]</a>
 
 ``` cpp
 bool filesystem::is_fifo(file_status s) noexcept;
@@ -13369,7 +13374,7 @@ bool filesystem::is_fifo(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is other <a id="fs.op.is.other">[fs.op.is.other]</a>
+#### Is other <a id="fs.op.is.other">[[fs.op.is.other]]</a>
 
 ``` cpp
 bool filesystem::is_other(file_status s) noexcept;
@@ -13393,7 +13398,7 @@ bool filesystem::is_other(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is regular file <a id="fs.op.is.regular.file">[fs.op.is.regular.file]</a>
+#### Is regular file <a id="fs.op.is.regular.file">[[fs.op.is.regular.file]]</a>
 
 ``` cpp
 bool filesystem::is_regular_file(file_status s) noexcept;
@@ -13431,7 +13436,7 @@ bool filesystem::is_regular_file(const path& p, error_code& ec) noexcept;
 >
 > `is_regular_file(status(p, ec))`. Returns `false` if an error occurs.
 
-#### Is socket <a id="fs.op.is.socket">[fs.op.is.socket]</a>
+#### Is socket <a id="fs.op.is.socket">[[fs.op.is.socket]]</a>
 
 ``` cpp
 bool filesystem::is_socket(file_status s) noexcept;
@@ -13455,7 +13460,7 @@ bool filesystem::is_socket(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Is symlink <a id="fs.op.is.symlink">[fs.op.is.symlink]</a>
+#### Is symlink <a id="fs.op.is.symlink">[[fs.op.is.symlink]]</a>
 
 ``` cpp
 bool filesystem::is_symlink(file_status s) noexcept;
@@ -13480,7 +13485,7 @@ bool filesystem::is_symlink(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Last write time <a id="fs.op.last.write.time">[fs.op.last.write.time]</a>
+#### Last write time <a id="fs.op.last.write.time">[[fs.op.last.write.time]]</a>
 
 ``` cpp
 file_time_type filesystem::last_write_time(const path& p);
@@ -13517,7 +13522,7 @@ void filesystem::last_write_time(const path& p, file_time_type new_time,
 > not specified because it does not necessarily hold for file systems
 > with coarse time granularity. — *end note*\]
 
-#### Permissions <a id="fs.op.permissions">[fs.op.permissions]</a>
+#### Permissions <a id="fs.op.permissions">[[fs.op.permissions]]</a>
 
 ``` cpp
 void filesystem::permissions(const path& p, perms prms, perm_options opts=perm_options::replace);
@@ -13549,7 +13554,7 @@ void filesystem::permissions(const path& p, perms prms, perm_options opts, error
 > The second signature behaves as if it had an additional parameter
 > `perm_options` `opts` with an argument of `perm_options::replace`.
 
-#### Proximate <a id="fs.op.proximate">[fs.op.proximate]</a>
+#### Proximate <a id="fs.op.proximate">[[fs.op.proximate]]</a>
 
 ``` cpp
 path filesystem::proximate(const path& p, error_code& ec);
@@ -13588,7 +13593,7 @@ path filesystem::proximate(const path& p, const path& base, error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-#### Read symlink <a id="fs.op.read.symlink">[fs.op.read.symlink]</a>
+#### Read symlink <a id="fs.op.read.symlink">[[fs.op.read.symlink]]</a>
 
 ``` cpp
 path filesystem::read_symlink(const path& p);
@@ -13608,7 +13613,7 @@ path filesystem::read_symlink(const path& p, error_code& ec);
 > \[*Note 54*: It is an error if `p` does not resolve to a symbolic
 > link. — *end note*\]
 
-#### Relative <a id="fs.op.relative">[fs.op.relative]</a>
+#### Relative <a id="fs.op.relative">[[fs.op.relative]]</a>
 
 ``` cpp
 path filesystem::relative(const path& p, error_code& ec);
@@ -13647,7 +13652,7 @@ path filesystem::relative(const path& p, const path& base, error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-#### Remove <a id="fs.op.remove">[fs.op.remove]</a>
+#### Remove <a id="fs.op.remove">[[fs.op.remove]]</a>
 
 ``` cpp
 bool filesystem::remove(const path& p);
@@ -13675,7 +13680,7 @@ bool filesystem::remove(const path& p, error_code& ec) noexcept;
 >
 > As specified in \[fs.err.report\].
 
-#### Remove all <a id="fs.op.remove.all">[fs.op.remove.all]</a>
+#### Remove all <a id="fs.op.remove.all">[[fs.op.remove.all]]</a>
 
 ``` cpp
 uintmax_t filesystem::remove_all(const path& p);
@@ -13703,7 +13708,7 @@ uintmax_t filesystem::remove_all(const path& p, error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-#### Rename <a id="fs.op.rename">[fs.op.rename]</a>
+#### Rename <a id="fs.op.rename">[[fs.op.rename]]</a>
 
 ``` cpp
 void filesystem::rename(const path& old_p, const path& new_p);
@@ -13737,7 +13742,7 @@ void filesystem::rename(const path& old_p, const path& new_p, error_code& ec) no
 >
 > As specified in \[fs.err.report\].
 
-#### Resize file <a id="fs.op.resize.file">[fs.op.resize.file]</a>
+#### Resize file <a id="fs.op.resize.file">[[fs.op.resize.file]]</a>
 
 ``` cpp
 void filesystem::resize_file(const path& p, uintmax_t new_size);
@@ -13753,7 +13758,7 @@ void filesystem::resize_file(const path& p, uintmax_t new_size, error_code& ec) 
 >
 > As specified in \[fs.err.report\].
 
-#### Space <a id="fs.op.space">[fs.op.space]</a>
+#### Space <a id="fs.op.space">[[fs.op.space]]</a>
 
 ``` cpp
 space_info filesystem::space(const path& p);
@@ -13783,7 +13788,7 @@ space_info filesystem::space(const path& p, error_code& ec) noexcept;
 >
 > \[*Note 58*: `available` might be less than `free`. — *end note*\]
 
-#### Status <a id="fs.op.status">[fs.op.status]</a>
+#### Status <a id="fs.op.status">[[fs.op.status]]</a>
 
 ``` cpp
 file_status filesystem::status(const path& p);
@@ -13895,7 +13900,7 @@ file_status filesystem::status(const path& p, error_code& ec) noexcept;
 > If a symbolic link is encountered during pathname resolution, pathname
 > resolution continues using the contents of the symbolic link.
 
-#### Status known <a id="fs.op.status.known">[fs.op.status.known]</a>
+#### Status known <a id="fs.op.status.known">[[fs.op.status.known]]</a>
 
 ``` cpp
 bool filesystem::status_known(file_status s) noexcept;
@@ -13905,7 +13910,7 @@ bool filesystem::status_known(file_status s) noexcept;
 >
 > `s.type() != file_type::none`.
 
-#### Symlink status <a id="fs.op.symlink.status">[fs.op.symlink.status]</a>
+#### Symlink status <a id="fs.op.symlink.status">[[fs.op.symlink.status]]</a>
 
 ``` cpp
 file_status filesystem::symlink_status(const path& p);
@@ -13937,7 +13942,7 @@ file_status filesystem::symlink_status(const path& p, error_code& ec) noexcept;
 >
 > Pathname resolution terminates if `p` names a symbolic link.
 
-#### Temporary directory path <a id="fs.op.temp.dir.path">[fs.op.temp.dir.path]</a>
+#### Temporary directory path <a id="fs.op.temp.dir.path">[[fs.op.temp.dir.path]]</a>
 
 ``` cpp
 path filesystem::temp_directory_path();
@@ -13967,7 +13972,7 @@ path filesystem::temp_directory_path(error_code& ec);
 > return the path reported by the Windows `GetTempPath` API
 > function. — *end example*\]
 
-#### Weakly canonical <a id="fs.op.weakly.canonical">[fs.op.weakly.canonical]</a>
+#### Weakly canonical <a id="fs.op.weakly.canonical">[[fs.op.weakly.canonical]]</a>
 
 ``` cpp
 path filesystem::weakly_canonical(const path& p);
@@ -13998,9 +14003,9 @@ path filesystem::weakly_canonical(const path& p, error_code& ec);
 >
 > As specified in \[fs.err.report\].
 
-## C library files <a id="c.files">[c.files]</a>
+## C library files <a id="c.files">[[c.files]]</a>
 
-### Header `<cstdio>` synopsis <a id="cstdio.syn">[cstdio.syn]</a>
+### Header `<cstdio>` synopsis <a id="cstdio.syn">[[cstdio.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -14079,10 +14084,10 @@ The contents and meaning of the header `<cstdio>` are the same as the C
 standard library header `<stdio.h>`.
 
 Calls to the function `tmpnam` with an argument that is a null pointer
-value may introduce a data race [res.on.data.races] with other calls to
-`tmpnam` with an argument that is a null pointer value.
+value may introduce a data race [[res.on.data.races]] with other calls
+to `tmpnam` with an argument that is a null pointer value.
 
-### Header `<cinttypes>` synopsis <a id="cinttypes.syn">[cinttypes.syn]</a>
+### Header `<cinttypes>` synopsis <a id="cinttypes.syn">[[cinttypes.syn]]</a>
 
 ``` cpp
 #include <cstdint>  // see [cstdint.syn]
@@ -14169,7 +14174,7 @@ C standard library header `<inttypes.h>`, with the following changes:
   `unsigned long long`, respectively, and
 
 - if and only if the type `intmax_t` designates an extended integer type
-  [basic.fundamental], the following function signatures are added:
+  [[basic.fundamental]], the following function signatures are added:
 
   ``` cpp
   constexpr intmax_t abs(intmax_t);
@@ -14182,82 +14187,82 @@ C standard library header `<inttypes.h>`, with the following changes:
 
 Each of the `PRI` macros listed in this subclause is defined if and only
 if the implementation defines the corresponding *typedef-name* in 
-[cstdint.syn]. Each of the `SCN` macros listed in this subclause is
+[[cstdint.syn]]. Each of the `SCN` macros listed in this subclause is
 defined if and only if the implementation defines the corresponding
-*typedef-name* in  [cstdint.syn] and has a suitable `fscanf` length
+*typedef-name* in  [[cstdint.syn]] and has a suitable `fscanf` length
 modifier for the type.
 
 <!-- Link reference definitions -->
-[allocator.requirements.general]: library.md#allocator.requirements.general
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.start.dynamic]: basic.md#basic.start.dynamic
-[basic.start.main]: basic.md#basic.start.main
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[bitmask.types]: library.md#bitmask.types
-[c.files]: #c.files
-[char.traits]: strings.md#char.traits
-[char.traits.specializations]: strings.md#char.traits.specializations
-[character.seq]: library.md#character.seq
-[cpp17.copyassignable]: #cpp17.copyassignable
-[cpp17.copyconstructible]: #cpp17.copyconstructible
-[cpp17.defaultconstructible]: #cpp17.defaultconstructible
-[cpp17.destructible]: #cpp17.destructible
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cstdint.syn]: support.md#cstdint.syn
-[file.streams]: #file.streams
-[filebuf]: #filebuf
-[filesystems]: #filesystems
-[fpos.operations]: #fpos.operations
-[fs.class.directory.entry]: #fs.class.directory.entry
-[fs.class.directory.iterator]: #fs.class.directory.iterator
-[fs.class.path]: #fs.class.path
-[fs.class.rec.dir.itr]: #fs.class.rec.dir.itr
-[fs.conform.os]: #fs.conform.os
-[fs.enum.copy.opts]: #fs.enum.copy.opts
-[fs.enum.dir.opts]: #fs.enum.dir.opts
-[fs.enum.file.type]: #fs.enum.file.type
-[fs.enum.path.format]: #fs.enum.path.format
-[fs.enum.perm.opts]: #fs.enum.perm.opts
-[fs.enum.perms]: #fs.enum.perms
-[fs.err.report]: #fs.err.report
-[fs.op.funcs]: #fs.op.funcs
-[fs.path.cvt]: #fs.path.cvt
-[fs.path.generic]: #fs.path.generic
-[fs.path.native.obs]: #fs.path.native.obs
-[fs.race.behavior]: #fs.race.behavior
-[fs.req]: #fs.req
-[input.iterators]: iterators.md#input.iterators
-[input.output]: #input.output
-[intro.multithread]: basic.md#intro.multithread
-[ios.fmtflags.const]: #ios.fmtflags.const
-[ios.members.static]: #ios.members.static
-[iostream.objects]: #iostream.objects
-[iostreams.summary]: #iostreams.summary
-[istream]: #istream
-[namespace.std]: library.md#namespace.std
-[ostream]: #ostream
-[res.on.data.races]: library.md#res.on.data.races
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[span.streams]: #span.streams
-[std.modules]: library.md#std.modules
-[stream.buffers]: #stream.buffers
-[streambuf.get.area]: #streambuf.get.area
-[streambuf.put.area]: #streambuf.put.area
-[string.classes]: strings.md#string.classes
-[string.streams]: #string.streams
-[temp.deduct]: temp.md#temp.deduct
-[views.span]: containers.md#views.span
+[[allocator.requirements.general]]: library.md#allocator.requirements.general
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.start.dynamic]]: basic.md#basic.start.dynamic
+[[basic.start.main]]: basic.md#basic.start.main
+[[bidirectional.iterators]]: iterators.md#bidirectional.iterators
+[[bitmask.types]]: library.md#bitmask.types
+[[c.files]]: #c.files
+[[char.traits]]: strings.md#char.traits
+[[char.traits.specializations]]: strings.md#char.traits.specializations
+[[character.seq]]: library.md#character.seq
+[[cpp17.copyassignable]]: #cpp17.copyassignable
+[[cpp17.copyconstructible]]: #cpp17.copyconstructible
+[[cpp17.defaultconstructible]]: #cpp17.defaultconstructible
+[[cpp17.destructible]]: #cpp17.destructible
+[[cpp17.equalitycomparable]]: #cpp17.equalitycomparable
+[[cstdint.syn]]: support.md#cstdint.syn
+[[file.streams]]: #file.streams
+[[filebuf]]: #filebuf
+[[filesystems]]: #filesystems
+[[fpos.operations]]: #fpos.operations
+[[fs.class.directory.entry]]: #fs.class.directory.entry
+[[fs.class.directory.iterator]]: #fs.class.directory.iterator
+[[fs.class.path]]: #fs.class.path
+[[fs.class.rec.dir.itr]]: #fs.class.rec.dir.itr
+[[fs.conform.os]]: #fs.conform.os
+[[fs.enum.copy.opts]]: #fs.enum.copy.opts
+[[fs.enum.dir.opts]]: #fs.enum.dir.opts
+[[fs.enum.file.type]]: #fs.enum.file.type
+[[fs.enum.path.format]]: #fs.enum.path.format
+[[fs.enum.perm.opts]]: #fs.enum.perm.opts
+[[fs.enum.perms]]: #fs.enum.perms
+[[fs.err.report]]: #fs.err.report
+[[fs.op.funcs]]: #fs.op.funcs
+[[fs.path.cvt]]: #fs.path.cvt
+[[fs.path.generic]]: #fs.path.generic
+[[fs.path.native.obs]]: #fs.path.native.obs
+[[fs.race.behavior]]: #fs.race.behavior
+[[fs.req]]: #fs.req
+[[input.iterators]]: iterators.md#input.iterators
+[[input.output]]: #input.output
+[[intro.multithread]]: basic.md#intro.multithread
+[[ios.fmtflags.const]]: #ios.fmtflags.const
+[[ios.members.static]]: #ios.members.static
+[[iostream.objects]]: #iostream.objects
+[[iostreams.summary]]: #iostreams.summary
+[[istream]]: #istream
+[[namespace.std]]: library.md#namespace.std
+[[ostream]]: #ostream
+[[res.on.data.races]]: library.md#res.on.data.races
+[[res.on.exception.handling]]: library.md#res.on.exception.handling
+[[span.streams]]: #span.streams
+[[std.modules]]: library.md#std.modules
+[[stream.buffers]]: #stream.buffers
+[[streambuf.get.area]]: #streambuf.get.area
+[[streambuf.put.area]]: #streambuf.put.area
+[[string.classes]]: strings.md#string.classes
+[[string.streams]]: #string.streams
+[[temp.deduct]]: temp.md#temp.deduct
+[[views.span]]: containers.md#views.span
 
 <!-- Link reference definitions -->
-[c.files]: #c.files
-[file.streams]: #file.streams
-[filesystems]: #filesystems
-[iostream.format]: #iostream.format
-[iostream.forward]: #iostream.forward
-[iostream.objects]: #iostream.objects
-[iostreams.base]: #iostreams.base
-[iostreams.requirements]: #iostreams.requirements
-[span.streams]: #span.streams
-[stream.buffers]: #stream.buffers
-[string.streams]: #string.streams
-[syncstream]: #syncstream
+[[c.files]]: #c.files
+[[file.streams]]: #file.streams
+[[filesystems]]: #filesystems
+[[iostream.format]]: #iostream.format
+[[iostream.forward]]: #iostream.forward
+[[iostream.objects]]: #iostream.objects
+[[iostreams.base]]: #iostreams.base
+[[iostreams.requirements]]: #iostreams.requirements
+[[span.streams]]: #span.streams
+[[stream.buffers]]: #stream.buffers
+[[string.streams]]: #string.streams
+[[syncstream]]: #syncstream

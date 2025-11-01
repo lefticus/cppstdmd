@@ -3,15 +3,15 @@ current_file: lex
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Lexical conventions <a id="lex">[lex]</a>
+# Lexical conventions <a id="lex">[[lex]]</a>
 
-## Separate translation <a id="lex.separate">[lex.separate]</a>
+## Separate translation <a id="lex.separate">[[lex.separate]]</a>
 
 The text of the program is kept in units called *source files* in this
-document. A source file together with all the headers [headers] and
-source files included [cpp.include] via the preprocessing directive
+document. A source file together with all the headers [[headers]] and
+source files included [[cpp.include]] via the preprocessing directive
 `#include`, less any source lines skipped by any of the conditional
-inclusion [cpp.cond] preprocessing directives, is called a
+inclusion [[cpp.cond]] preprocessing directives, is called a
 *preprocessing translation unit*.
 
 \[*Note 1*: A C++ program need not all be translated at the same
@@ -19,14 +19,14 @@ time. — *end note*\]
 
 \[*Note 2*: Previously translated translation units and instantiation
 units can be preserved individually or in libraries. The separate
-translation units of a program communicate [basic.link] by (for example)
-calls to functions whose identifiers have external or module linkage,
-manipulation of objects whose identifiers have external or module
-linkage, or manipulation of data files. Translation units can be
+translation units of a program communicate [[basic.link]] by (for
+example) calls to functions whose identifiers have external or module
+linkage, manipulation of objects whose identifiers have external or
+module linkage, or manipulation of data files. Translation units can be
 separately translated and then later linked to produce an executable
-program [basic.link]. — *end note*\]
+program [[basic.link]]. — *end note*\]
 
-## Phases of translation <a id="lex.phases">[lex.phases]</a>
+## Phases of translation <a id="lex.phases">[[lex.phases]]</a>
 
 The precedence among the syntax rules of translation is specified by the
 following phases.
@@ -52,7 +52,7 @@ following phases.
 
     For any other kind of input file supported by the implementation,
     characters are mapped, in an *implementation-defined* manner, to a
-    sequence of translation character set elements [lex.charset],
+    sequence of translation character set elements [[lex.charset]],
     representing end-of-line indicators as new-line characters.
 
 2.   If the first translation character is , it is deleted. Each
@@ -69,7 +69,7 @@ following phases.
     new-line character were appended to the file.
 
 3.  The source file is decomposed into preprocessing tokens
-    [lex.pptoken] and sequences of whitespace characters (including
+    [[lex.pptoken]] and sequences of whitespace characters (including
     comments). A source file shall not end in a partial preprocessing
     token or in a partial comment.
 
@@ -96,25 +96,25 @@ following phases.
     preprocessing directives are then deleted.
 
 5.  For a sequence of two or more adjacent *string-literal* tokens, a
-    common *encoding-prefix* is determined as specified in [lex.string].
-    Each such *string-literal* token is then considered to have that
-    common *encoding-prefix*.
+    common *encoding-prefix* is determined as specified in
+    [[lex.string]]. Each such *string-literal* token is then considered
+    to have that common *encoding-prefix*.
 
-6.  Adjacent *string-literal* tokens are concatenated [lex.string].
+6.  Adjacent *string-literal* tokens are concatenated [[lex.string]].
 
 7.  Whitespace characters separating tokens are no longer significant.
-    Each preprocessing token is converted into a token [lex.token]. The
-    resulting tokens constitute a *translation unit* and are
+    Each preprocessing token is converted into a token [[lex.token]].
+    The resulting tokens constitute a *translation unit* and are
     syntactically and semantically analyzed and translated.
 
     \[*Note 2*: The process of analyzing and translating the tokens can
     occasionally result in one token being replaced by a sequence of
-    other tokens [temp.names]. — *end note*\]
+    other tokens [[temp.names]]. — *end note*\]
 
     It is *implementation-defined* whether the sources for module units
     and header units on which the current translation unit has an
-    interface dependency [module.unit], [module.import] are required to
-    be available.
+    interface dependency [[module.unit]], [[module.import]] are required
+    to be available.
 
     \[*Note 3*: Source files, translation units and translated
     translation units need not necessarily be stored as files, nor need
@@ -132,7 +132,7 @@ following phases.
     required instantiations.
 
     \[*Note 5*: This can include instantiations which have been
-    explicitly requested [temp.explicit]. — *end note*\]
+    explicitly requested [[temp.explicit]]. — *end note*\]
 
     The definitions of the required templates are located. It is
     *implementation-defined* whether the source of the translation units
@@ -157,7 +157,7 @@ following phases.
     program image which contains information needed for execution in its
     execution environment.
 
-## Character sets <a id="lex.charset">[lex.charset]</a>
+## Character sets <a id="lex.charset">[[lex.charset]]</a>
 
 The *translation character set* consists of the following elements:
 
@@ -173,7 +173,7 @@ The *translation character set* consists of the following elements:
 that is not a surrogate code point. — *end note*\]
 
 The *basic character set* is a subset of the translation character set,
-consisting of 96 characters as specified in [lex.charset.basic].
+consisting of 96 characters as specified in [[lex.charset.basic]].
 
 \[*Note 2*: Unicode short names are given only as a means to identifying
 the character; the numerical value has no other meaning in this
@@ -284,12 +284,12 @@ If a *universal-character-name* outside the *c-char-sequence*,
 character in the basic character set, the program is ill-formed.
 
 \[*Note 4*: A sequence of characters resembling a
-*universal-character-name* in an *r-char-sequence* [lex.string] does not
-form a *universal-character-name*. — *end note*\]
+*universal-character-name* in an *r-char-sequence* [[lex.string]] does
+not form a *universal-character-name*. — *end note*\]
 
 The *basic literal character set* consists of all characters of the
 basic character set, plus the control characters specified in
-[lex.charset.literal].
+[[lex.charset.literal]].
 
 **Table: Additional control characters in the basic literal character set**
 
@@ -299,20 +299,20 @@ basic character set, plus the control characters specified in
 | \ucode{0007} | \uname{alert} |
 | \ucode{0008} | \uname{backspace} |
 | \ucode{000d} | \uname{carriage return} |
-A *code unit* is an integer value of character type [basic.fundamental].
-Characters in a *character-literal* other than a multicharacter or
-non-encodable character literal or in a *string-literal* are encoded as
-a sequence of one or more code units, as determined by the
-*encoding-prefix* [lex.ccon], [lex.string]; this is termed the
-respective *literal encoding*. The *ordinary literal encoding* is the
-encoding applied to an ordinary character or string literal. The
-*wide literal encoding* is the encoding applied to a wide character or
-string literal.
+A *code unit* is an integer value of character type
+[[basic.fundamental]]. Characters in a *character-literal* other than a
+multicharacter or non-encodable character literal or in a
+*string-literal* are encoded as a sequence of one or more code units, as
+determined by the *encoding-prefix* [[lex.ccon]], [[lex.string]]; this
+is termed the respective *literal encoding*. The
+*ordinary literal encoding* is the encoding applied to an ordinary
+character or string literal. The *wide literal encoding* is the encoding
+applied to a wide character or string literal.
 
 A literal encoding or a locale-specific encoding of one of the execution
-character sets [character.seq] encodes each element of the basic literal
-character set as a single code unit with non-negative value, distinct
-from the code unit for any other such element.
+character sets [[character.seq]] encodes each element of the basic
+literal character set as a single code unit with non-negative value,
+distinct from the code unit for any other such element.
 
 \[*Note 5*: A character not in the basic literal character set can be
 encoded with more than one code unit; the value of such a code unit can
@@ -329,7 +329,7 @@ to each character of the translation character set is encoded as
 specified in the Unicode Standard for the respective Unicode encoding
 form.
 
-## Preprocessing tokens <a id="lex.pptoken">[lex.pptoken]</a>
+## Preprocessing tokens <a id="lex.pptoken">[[lex.pptoken]]</a>
 
 ``` bnf
 preprocessing-token:
@@ -347,13 +347,13 @@ preprocessing-token:
     each non-whitespace character that cannot be one of the above
 ```
 
-Each preprocessing token that is converted to a token [lex.token] shall
-have the lexical form of a keyword, an identifier, a literal, or an
-operator or punctuator.
+Each preprocessing token that is converted to a token [[lex.token]]
+shall have the lexical form of a keyword, an identifier, a literal, or
+an operator or punctuator.
 
 A preprocessing token is the minimal lexical element of the language in
 translation phases 3 through 6. In this document, glyphs are used to
-identify elements of the basic character set [lex.charset]. The
+identify elements of the basic character set [[lex.charset]]. The
 categories of preprocessing token are: header names, placeholder tokens
 produced by preprocessing `import` and `module` directives
 (*import-keyword*, *module-keyword*, and *export-keyword*), identifiers,
@@ -365,8 +365,8 @@ preprocessing token categories. If a or a character matches the last
 category, the behavior is undefined. If any character not in the basic
 character set matches the last category, the program is ill-formed.
 Preprocessing tokens can be separated by whitespace; this consists of
-comments [lex.comment], or whitespace characters (, , new-line, , and ),
-or both. As described in [cpp], in certain circumstances during
+comments [[lex.comment]], or whitespace characters (, , new-line, , and
+), or both. As described in [[cpp]], in certain circumstances during
 translation phase 4, whitespace (or the absence thereof) serves as more
 than preprocessing token separation. Whitespace can appear within a
 preprocessing token only as part of a header name or between the
@@ -397,10 +397,10 @@ given character:
 - Otherwise, the next preprocessing token is the longest sequence of
   characters that could constitute a preprocessing token, even if that
   would cause further lexical analysis to fail, except that a
-  *header-name* [lex.header] is only formed
+  *header-name* [[lex.header]] is only formed
 
   - after the `include` or `import` preprocessing token in an `#include`
-    [cpp.include] or `import` [cpp.import] directive, or
+    [[cpp.include]] or `import` [[cpp.import]] directive, or
 
   - within a *has-include-expression*.
 
@@ -414,9 +414,9 @@ const char* s = R"y";           // ill-formed raw string, not "x" "y"
 — *end example*\]
 
 The *import-keyword* is produced by processing an `import` directive
-[cpp.import], the *module-keyword* is produced by preprocessing a
-`module` directive [cpp.module], and the *export-keyword* is produced by
-preprocessing either of the previous two directives.
+[[cpp.import]], the *module-keyword* is produced by preprocessing a
+`module` directive [[cpp.module]], and the *export-keyword* is produced
+by preprocessing either of the previous two directives.
 
 \[*Note 1*: None has any observable spelling. — *end note*\]
 
@@ -434,7 +434,7 @@ macro name. — *end example*\]
 constraint on increment operators, even though the parse `x ++ + ++ y`
 can yield a correct expression. — *end example*\]
 
-## Alternative tokens <a id="lex.digraph">[lex.digraph]</a>
+## Alternative tokens <a id="lex.digraph">[[lex.digraph]]</a>
 
 Alternative token representations are provided for some operators and
 punctuators.
@@ -442,9 +442,9 @@ punctuators.
 In all respects of the language, each alternative token behaves the
 same, respectively, as its primary token, except for its spelling.
 
-The set of alternative tokens is defined in [lex.digraph].
+The set of alternative tokens is defined in [[lex.digraph]].
 
-## Tokens <a id="lex.token">[lex.token]</a>
+## Tokens <a id="lex.token">[[lex.token]]</a>
 
 ``` bnf
 token:
@@ -464,7 +464,7 @@ described below, are ignored except as they serve to separate tokens.
 identifiers, keywords, numeric literals, and alternative tokens
 containing alphabetic characters. — *end note*\]
 
-## Comments <a id="lex.comment">[lex.comment]</a>
+## Comments <a id="lex.comment">[[lex.comment]]</a>
 
 The characters `/*` start a comment, which terminates with the
 characters `*/`. These comments do not nest. The characters `//` start a
@@ -478,7 +478,7 @@ meaning within a `//` comment and are treated just like other
 characters. Similarly, the comment characters `//` and `/*` have no
 special meaning within a `/*` comment. — *end note*\]
 
-## Header names <a id="lex.header">[lex.header]</a>
+## Header names <a id="lex.header">[[lex.header]]</a>
 
 ``` bnf
 header-name:
@@ -511,11 +511,11 @@ q-char:
 \[*Note 1*: Header name preprocessing tokens only appear within a
 `#include` preprocessing directive, a `__has_include` preprocessing
 expression, or after certain occurrences of an `import` token (see 
-[lex.pptoken]). — *end note*\]
+[[lex.pptoken]]). — *end note*\]
 
 The sequences in both forms of *header-name* are mapped in an
 *implementation-defined* manner to headers or to external source file
-names as specified in  [cpp.include].
+names as specified in  [[cpp.include]].
 
 The appearance of either of the characters `'` or `\` or of either of
 the character sequences `/*` or `//` in a *q-char-sequence* or an
@@ -523,7 +523,7 @@ the character sequences `/*` or `//` in a *q-char-sequence* or an
 *implementation-defined* semantics, as is the appearance of the
 character `"` in an *h-char-sequence*.
 
-## Preprocessing numbers <a id="lex.ppnumber">[lex.ppnumber]</a>
+## Preprocessing numbers <a id="lex.ppnumber">[[lex.ppnumber]]</a>
 
 ``` bnf
 pp-number:
@@ -540,13 +540,14 @@ pp-number:
 ```
 
 Preprocessing number tokens lexically include all *integer-literal*
-tokens [lex.icon] and all *floating-point-literal* tokens [lex.fcon].
+tokens [[lex.icon]] and all *floating-point-literal* tokens
+[[lex.fcon]].
 
 A preprocessing number does not have a type or a value; it acquires both
 after a successful conversion to an *integer-literal* token or a
 *floating-point-literal* token.
 
-## Identifiers <a id="lex.name">[lex.name]</a>
+## Identifiers <a id="lex.name">[[lex.name]]</a>
 
 ``` bnf
 identifier:
@@ -593,10 +594,11 @@ Normalization Form C as specified in the Unicode Standard.
 \[*Note 2*: Identifiers are case-sensitive. — *end note*\]
 
 \[*Note 3*: In translation phase 4, *identifier* also includes those
-*preprocessing-token*s [lex.pptoken] differentiated as keywords
-[lex.key] in the later translation phase 7 [lex.token]. — *end note*\]
+*preprocessing-token*s [[lex.pptoken]] differentiated as keywords
+[[lex.key]] in the later translation phase 7
+[[lex.token]]. — *end note*\]
 
-The identifiers in [lex.name.special] have a special meaning when
+The identifiers in [[lex.name.special]] have a special meaning when
 appearing in a certain context. When referred to in the grammar, these
 identifiers are used explicitly rather than using the *identifier*
 grammar production. Unless otherwise specified, any ambiguity as to
@@ -614,7 +616,7 @@ shall not be used otherwise; no diagnostic is required.
 - Each identifier that begins with an underscore is reserved to the
   implementation for use as a name in the global namespace.
 
-## Keywords <a id="lex.key">[lex.key]</a>
+## Keywords <a id="lex.key">[[lex.key]]</a>
 
 ``` bnf
 keyword:
@@ -624,16 +626,16 @@ keyword:
     *export-keyword*
 ```
 
-The identifiers shown in [lex.key] are reserved for use as keywords
+The identifiers shown in [[lex.key]] are reserved for use as keywords
 (that is, they are unconditionally treated as keywords in phase 7)
-except in an *attribute-token* [dcl.attr.grammar].
+except in an *attribute-token* [[dcl.attr.grammar]].
 
 \[*Note 1*: The `register` keyword is unused but is reserved for future
 use. — *end note*\]
 
-Furthermore, the alternative representations shown in [lex.key.digraph]
-for certain operators and punctuators [lex.digraph] are reserved and
-shall not be used otherwise.
+Furthermore, the alternative representations shown in
+[[lex.key.digraph]] for certain operators and punctuators
+[[lex.digraph]] are reserved and shall not be used otherwise.
 
 **Table: Alternative representations**
 
@@ -642,7 +644,7 @@ shall not be used otherwise.
 | `and` | `and_eq` | `bitand` | `bitor` | `compl` | `not` |
 | `not_eq` | `or` | `or_eq` | `xor` | `xor_eq` |
 
-## Operators and punctuators <a id="lex.operators">[lex.operators]</a>
+## Operators and punctuators <a id="lex.operators">[[lex.operators]]</a>
 
 The lexical representation of C++ programs includes a number of
 preprocessing tokens that are used in the syntax of the preprocessor or
@@ -674,11 +676,11 @@ operator-or-punctuator: one of
 ```
 
 Each *operator-or-punctuator* is converted to a single token in
-translation phase 7 [lex.phases].
+translation phase 7 [[lex.phases]].
 
-## Literals <a id="lex.literal">[lex.literal]</a>
+## Literals <a id="lex.literal">[[lex.literal]]</a>
 
-### Kinds of literals <a id="lex.literal.kinds">[lex.literal.kinds]</a>
+### Kinds of literals <a id="lex.literal.kinds">[[lex.literal.kinds]]</a>
 
 There are several kinds of literals.
 
@@ -694,9 +696,9 @@ literal:
 ```
 
 \[*Note 1*: When appearing as an *expression*, a literal has a type and
-a value category [expr.prim.literal]. — *end note*\]
+a value category [[expr.prim.literal]]. — *end note*\]
 
-### Integer literals <a id="lex.icon">[lex.icon]</a>
+### Integer literals <a id="lex.icon">[[lex.icon]]</a>
 
 ``` bnf
 integer-literal:
@@ -795,7 +797,7 @@ size-suffix: one of
 
 In an *integer-literal*, the sequence of *binary-digit*s,
 *octal-digit*s, *digit*s, or *hexadecimal-digit*s is interpreted as a
-base N integer as shown in table [lex.icon.base]; the lexically first
+base N integer as shown in table [[lex.icon.base]]; the lexically first
 digit of the sequence of digits is the most significant.
 
 \[*Note 2*: The prefix and any optional separating single quotes are
@@ -810,8 +812,8 @@ decimal values ten through fifteen.
 value. — *end example*\]
 
 The type of an *integer-literal* is the first type in the list in
-[lex.icon.type] corresponding to its optional *integer-suffix* in which
-its value can be represented.
+[[lex.icon.type]] corresponding to its optional *integer-suffix* in
+which its value can be represented.
 
 **Table: Types of *integer-literal*s**
 
@@ -837,12 +839,12 @@ its value can be represented.
 | Both `u` or `U` | `unsigned long long int` | `unsigned long long int` |
 | and `ll` or `LL` |  |
 | `z` or `Z` | the signed integer type corresponding | the signed integer type |
-|  | \qquad to `std::size_t` [support.types.layout] | \qquad corresponding to `std::size_t` |
+|  | \qquad to `std::size_t` [[support.types.layout]] | \qquad corresponding to `std::size_t` |
 |  |  | `std::size_t` |
 | Both `u` or `U` | `std::size_t` | `std::size_t` |
 | and `z` or `Z` |  |
 If an *integer-literal* cannot be represented by any type in its list
-and an extended integer type [basic.fundamental] can represent its
+and an extended integer type [[basic.fundamental]] can represent its
 value, it may have that extended integer type. If all of the types in
 the list for the *integer-literal* are signed, the extended integer type
 shall be signed. If all of the types in the list for the
@@ -852,7 +854,7 @@ extended integer type may be signed or unsigned. A program is ill-formed
 if one of its translation units contains an *integer-literal* that
 cannot be represented by any of the allowed types.
 
-### Character literals <a id="lex.ccon">[lex.ccon]</a>
+### Character literals <a id="lex.ccon">[[lex.ccon]]</a>
 
 ``` bnf
 character-literal:
@@ -947,16 +949,16 @@ or a multicharacter literal shall be absent. Such *character-literal*s
 are conditionally-supported.
 
 The kind of a *character-literal*, its type, and its associated
-character encoding [lex.charset] are determined by its *encoding-prefix*
-and its *c-char-sequence* as defined by [lex.ccon.literal]. The special
-cases for non-encodable character literals and multicharacter literals
-take precedence over the base kind.
+character encoding [[lex.charset]] are determined by its
+*encoding-prefix* and its *c-char-sequence* as defined by
+[[lex.ccon.literal]]. The special cases for non-encodable character
+literals and multicharacter literals take precedence over the base kind.
 
 \[*Note 3*: The associated character encoding for ordinary character
 literals determines encodability, but does not determine the value of
 non-encodable ordinary character literals or ordinary multicharacter
-literals. The examples in [lex.ccon.literal] for non-encodable ordinary
-character literals assume that the specified character lacks
+literals. The examples in [[lex.ccon.literal]] for non-encodable
+ordinary character literals assume that the specified character lacks
 representation in the ordinary literal encoding or that encoding the
 character would require more than one code unit. — *end note*\]
 
@@ -1011,7 +1013,7 @@ of any other kind of *character-literal* is determined as follows:
   *implementation-defined* value.
 
 The character specified by a *simple-escape-sequence* is specified in
-[lex.ccon.esc].
+[[lex.ccon.esc]].
 
 \[*Note 4*: Using an escape sequence for a question mark is supported
 for compatibility with ISO C++14 and ISO C. — *end note*\]
@@ -1032,7 +1034,7 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 | \ucode{0027} | \uname{apostrophe} | `\ '` |
 | \ucode{0022} | \uname{quotation mark} | `\ "` |
 
-### Floating-point literals <a id="lex.fcon">[lex.fcon]</a>
+### Floating-point literals <a id="lex.fcon">[[lex.fcon]]</a>
 
 ``` bnf
 floating-point-literal:
@@ -1093,12 +1095,12 @@ floating-point-suffix: one of
 ```
 
 The type of a *floating-point-literal*
-[basic.fundamental], [basic.extended.fp] is determined by its
-*floating-point-suffix* as specified in [lex.fcon.type].
+[[basic.fundamental]], [[basic.extended.fp]] is determined by its
+*floating-point-suffix* as specified in [[lex.fcon.type]].
 
 \[*Note 5*: The floating-point suffixes `f16`, `f32`, `f64`, `f128`,
 `bf16`, `F16`, `F32`, `F64`, `F128`, and `BF16` are
-conditionally-supported. See [basic.extended.fp]. — *end note*\]
+conditionally-supported. See [[basic.extended.fp]]. — *end note*\]
 
 The *significand* of a *floating-point-literal* is the
 *fractional-constant* or *digit-sequence* of a
@@ -1130,7 +1132,7 @@ type, the program is ill-formed. Otherwise, the value of a
 larger or smaller representable value nearest the scaled value, chosen
 in an *implementation-defined* manner.
 
-### String literals <a id="lex.string">[lex.string]</a>
+### String literals <a id="lex.string">[[lex.string]]</a>
 
 ``` bnf
 string-literal:
@@ -1188,8 +1190,8 @@ d-char:
 ```
 
 The kind of a *string-literal*, its type, and its associated character
-encoding [lex.charset] are determined by its encoding prefix and
-sequence of *s-char*s or *r-char*s as defined by [lex.string.literal]
+encoding [[lex.charset]] are determined by its encoding prefix and
+sequence of *s-char*s or *r-char*s as defined by [[lex.string.literal]]
 where n is the number of encoded code units as described below.
 
 **Table: String literals**
@@ -1260,7 +1262,7 @@ no *encoding-prefix*, the common *encoding-prefix* is that of the other
 \[*Note 9*: A *string-literal*’s rawness has no effect on the
 determination of the common *encoding-prefix*. — *end note*\]
 
-In translation phase 6 [lex.phases], adjacent *string-literal*s are
+In translation phase 6 [[lex.phases]], adjacent *string-literal*s are
 concatenated. The lexical structure and grouping of the contents of the
 individual *string-literal*s is retained.
 
@@ -1281,7 +1283,7 @@ represents six characters, starting with a backslash and ending with the
 digit `1` (and not the single character `'A'` specified by a
 *universal-character-name*).
 
-[lex.string.concat] has some examples of valid concatenations.
+[[lex.string.concat]] has some examples of valid concatenations.
 
 — *end example*\]
 
@@ -1294,7 +1296,7 @@ digit `1` (and not the single character `'A'` specified by a
 | `u"a"` | `"b"` | `u"ab"` | `U"a"` | `"b"` | `U"ab"` | `L"a"` | `"b"` | `L"ab"` |
 | `"a"` | `u"b"` | `u"ab"` | `"a"` | `U"b"` | `U"ab"` | `"a"` | `L"b"` | `L"ab"` |
 Evaluating a *string-literal* results in a string literal object with
-static storage duration [basic.stc]. Whether all *string-literal*s are
+static storage duration [[basic.stc]]. Whether all *string-literal*s are
 distinct (that is, are stored in nonoverlapping objects) and whether
 successive evaluations of a *string-literal* yield the same or a
 different object is unspecified.
@@ -1308,12 +1310,13 @@ values corresponding to the *string-literal*’s sequence of *s-char*s
 raw string literals), plus a terminating character, in order as follows:
 
 - The sequence of characters denoted by each contiguous sequence of
-  *basic-s-char*s, *r-char*s, *simple-escape-sequence*s [lex.ccon], and
-  *universal-character-name*s [lex.charset] is encoded to a code unit
-  sequence using the *string-literal*’s associated character encoding.
-  If a character lacks representation in the associated character
-  encoding, then the *string-literal* is conditionally-supported and an
-  *implementation-defined* code unit sequence is encoded.
+  *basic-s-char*s, *r-char*s, *simple-escape-sequence*s [[lex.ccon]],
+  and *universal-character-name*s [[lex.charset]] is encoded to a code
+  unit sequence using the *string-literal*’s associated character
+  encoding. If a character lacks representation in the associated
+  character encoding, then the *string-literal* is
+  conditionally-supported and an *implementation-defined* code unit
+  sequence is encoded.
 
   \[*Note 9*: No character lacks representation in any Unicode encoding
   form. — *end note*\]
@@ -1327,7 +1330,7 @@ raw string literals), plus a terminating character, in order as follows:
   sequence of code units that would be obtained by encoding each
   character independently. — *end note*\]
 
-- Each *numeric-escape-sequence* [lex.ccon] contributes a single code
+- Each *numeric-escape-sequence* [[lex.ccon]] contributes a single code
   unit with a value as follows:
 
   - Let v be the integer value represented by the octal number
@@ -1350,12 +1353,12 @@ raw string literals), plus a terminating character, in order as follows:
   When encoding a stateful character encoding, these sequences should
   have no effect on encoding state.
 
-- Each *conditional-escape-sequence* [lex.ccon] contributes an
+- Each *conditional-escape-sequence* [[lex.ccon]] contributes an
   *implementation-defined* code unit sequence. When encoding a stateful
   character encoding, it is *implementation-defined* what effect these
   sequences have on encoding state.
 
-### Boolean literals <a id="lex.bool">[lex.bool]</a>
+### Boolean literals <a id="lex.bool">[[lex.bool]]</a>
 
 ``` bnf
 boolean-literal:
@@ -1366,7 +1369,7 @@ boolean-literal:
 The Boolean literals are the keywords `false` and `true`. Such literals
 have type `bool`.
 
-### Pointer literals <a id="lex.nullptr">[lex.nullptr]</a>
+### Pointer literals <a id="lex.nullptr">[[lex.nullptr]]</a>
 
 ``` bnf
 pointer-literal:
@@ -1379,10 +1382,10 @@ The pointer literal is the keyword `nullptr`. It has type
 \[*Note 11*: `std::nullptr_t` is a distinct type that is neither a
 pointer type nor a pointer-to-member type; rather, a prvalue of this
 type is a null pointer constant and can be converted to a null pointer
-value or null member pointer value. See  [conv.ptr] and 
-[conv.mem]. — *end note*\]
+value or null member pointer value. See  [[conv.ptr]] and 
+[[conv.mem]]. — *end note*\]
 
-### User-defined literals <a id="lex.ext">[lex.ext]</a>
+### User-defined literals <a id="lex.ext">[[lex.ext]]</a>
 
 ``` bnf
 user-defined-literal:
@@ -1439,11 +1442,11 @@ The syntactic non-terminal preceding the *ud-suffix* in a
 that could match that non-terminal.
 
 A *user-defined-literal* is treated as a call to a literal operator or
-literal operator template [over.literal]. To determine the form of this
-call for a given *user-defined-literal* *L* with *ud-suffix* *X*, first
-let *S* be the set of declarations found by unqualified lookup for the
-*literal-operator-id* whose literal suffix identifier is *X*
-[basic.lookup.unqual]. *S* shall not be empty.
+literal operator template [[over.literal]]. To determine the form of
+this call for a given *user-defined-literal* *L* with *ud-suffix* *X*,
+first let *S* be the set of declarations found by unqualified lookup for
+the *literal-operator-id* whose literal suffix identifier is *X*
+[[basic.lookup.unqual]]. *S* shall not be empty.
 
 If *L* is a *user-defined-integer-literal*, let *n* be the literal
 without its *ud-suffix*. If *S* contains a literal operator with
@@ -1455,7 +1458,7 @@ operator ""X(nULL)
 ```
 
 Otherwise, *S* shall contain a raw literal operator or a numeric literal
-operator template [over.literal] but not both. If *S* contains a raw
+operator template [[over.literal]] but not both. If *S* contains a raw
 literal operator, the literal *L* is treated as a call of the form
 
 ``` cpp
@@ -1484,7 +1487,7 @@ operator ""X(fL)
 ```
 
 Otherwise, *S* shall contain a raw literal operator or a numeric literal
-operator template [over.literal] but not both. If *S* contains a raw
+operator template [[over.literal]] but not both. If *S* contains a raw
 literal operator, the *literal* *L* is treated as a call of the form
 
 ``` cpp
@@ -1522,8 +1525,8 @@ operator ""X(str{}, len{})
 
 If *L* is a *user-defined-character-literal*, let *ch* be the literal
 without its *ud-suffix*. *S* shall contain a literal operator
-[over.literal] whose only parameter has the type of *ch* and the literal
-*L* is treated as a call of the form
+[[over.literal]] whose only parameter has the type of *ch* and the
+literal *L* is treated as a call of the form
 
 ``` cpp
 operator ""X(ch{})
@@ -1545,12 +1548,12 @@ int main() {
 
 — *end example*\]
 
-In translation phase 6 [lex.phases], adjacent *string-literal*s are
+In translation phase 6 [[lex.phases]], adjacent *string-literal*s are
 concatenated and *user-defined-string-literal* are considered
 *string-literal*s for that purpose. During concatenation, *ud-suffix*
 are removed and ignored and the concatenation process occurs as
-described in  [lex.string]. At the end of phase 6, if a *string-literal*
-is the result of a concatenation involving at least one
+described in  [[lex.string]]. At the end of phase 6, if a
+*string-literal* is the result of a concatenation involving at least one
 *user-defined-string-literal*, all the participating
 *user-defined-string-literal* shall have the same *ud-suffix* and that
 suffix is applied to the result of the concatenation.
@@ -1567,49 +1570,49 @@ int main() {
 — *end example*\]
 
 <!-- Link reference definitions -->
-[basic.extended.fp]: basic.md#basic.extended.fp
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.link]: basic.md#basic.link
-[basic.lookup.unqual]: basic.md#basic.lookup.unqual
-[basic.stc]: basic.md#basic.stc
-[character.seq]: library.md#character.seq
-[conv.mem]: expr.md#conv.mem
-[conv.ptr]: expr.md#conv.ptr
-[cpp]: cpp.md#cpp
-[cpp.cond]: cpp.md#cpp.cond
-[cpp.import]: cpp.md#cpp.import
-[cpp.include]: cpp.md#cpp.include
-[cpp.module]: cpp.md#cpp.module
-[cpp.stringize]: cpp.md#cpp.stringize
-[dcl.attr.grammar]: dcl.md#dcl.attr.grammar
-[expr.prim.literal]: expr.md#expr.prim.literal
-[headers]: library.md#headers
-[lex.ccon]: #lex.ccon
-[lex.ccon.esc]: #lex.ccon.esc
-[lex.ccon.literal]: #lex.ccon.literal
-[lex.charset]: #lex.charset
-[lex.charset.basic]: #lex.charset.basic
-[lex.charset.literal]: #lex.charset.literal
-[lex.comment]: #lex.comment
-[lex.digraph]: #lex.digraph
-[lex.fcon]: #lex.fcon
-[lex.fcon.type]: #lex.fcon.type
-[lex.header]: #lex.header
-[lex.icon]: #lex.icon
-[lex.icon.base]: #lex.icon.base
-[lex.icon.type]: #lex.icon.type
-[lex.key]: #lex.key
-[lex.key.digraph]: #lex.key.digraph
-[lex.name.special]: #lex.name.special
-[lex.phases]: #lex.phases
-[lex.pptoken]: #lex.pptoken
-[lex.string]: #lex.string
-[lex.string.concat]: #lex.string.concat
-[lex.string.literal]: #lex.string.literal
-[lex.token]: #lex.token
-[module.import]: module.md#module.import
-[module.unit]: module.md#module.unit
-[over.literal]: over.md#over.literal
-[support.types.layout]: support.md#support.types.layout
-[temp.explicit]: temp.md#temp.explicit
-[temp.names]: temp.md#temp.names
+[[basic.extended.fp]]: basic.md#basic.extended.fp
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.link]]: basic.md#basic.link
+[[basic.lookup.unqual]]: basic.md#basic.lookup.unqual
+[[basic.stc]]: basic.md#basic.stc
+[[character.seq]]: library.md#character.seq
+[[conv.mem]]: expr.md#conv.mem
+[[conv.ptr]]: expr.md#conv.ptr
+[[cpp]]: cpp.md#cpp
+[[cpp.cond]]: cpp.md#cpp.cond
+[[cpp.import]]: cpp.md#cpp.import
+[[cpp.include]]: cpp.md#cpp.include
+[[cpp.module]]: cpp.md#cpp.module
+[[cpp.stringize]]: cpp.md#cpp.stringize
+[[dcl.attr.grammar]]: dcl.md#dcl.attr.grammar
+[[expr.prim.literal]]: expr.md#expr.prim.literal
+[[headers]]: library.md#headers
+[[lex.ccon]]: #lex.ccon
+[[lex.ccon.esc]]: #lex.ccon.esc
+[[lex.ccon.literal]]: #lex.ccon.literal
+[[lex.charset]]: #lex.charset
+[[lex.charset.basic]]: #lex.charset.basic
+[[lex.charset.literal]]: #lex.charset.literal
+[[lex.comment]]: #lex.comment
+[[lex.digraph]]: #lex.digraph
+[[lex.fcon]]: #lex.fcon
+[[lex.fcon.type]]: #lex.fcon.type
+[[lex.header]]: #lex.header
+[[lex.icon]]: #lex.icon
+[[lex.icon.base]]: #lex.icon.base
+[[lex.icon.type]]: #lex.icon.type
+[[lex.key]]: #lex.key
+[[lex.key.digraph]]: #lex.key.digraph
+[[lex.name.special]]: #lex.name.special
+[[lex.phases]]: #lex.phases
+[[lex.pptoken]]: #lex.pptoken
+[[lex.string]]: #lex.string
+[[lex.string.concat]]: #lex.string.concat
+[[lex.string.literal]]: #lex.string.literal
+[[lex.token]]: #lex.token
+[[module.import]]: module.md#module.import
+[[module.unit]]: module.md#module.unit
+[[over.literal]]: over.md#over.literal
+[[support.types.layout]]: support.md#support.types.layout
+[[temp.explicit]]: temp.md#temp.explicit
+[[temp.names]]: temp.md#temp.names

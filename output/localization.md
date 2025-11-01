@@ -3,9 +3,9 @@ current_file: localization
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Localization library <a id="localization">[localization]</a>
+# Localization library <a id="localization">[[localization]]</a>
 
-## General <a id="localization.general">[localization.general]</a>
+## General <a id="localization.general">[[localization.general]]</a>
 
 This Clause describes components that C++ programs may use to
 encapsulate (and therefore be more portable when confronting) cultural
@@ -15,17 +15,17 @@ and date/time formatting and parsing, and message retrieval.
 
 The following subclauses describe components for locales themselves, the
 standard facets, and facilities from the ISO C library, as summarized in
-[localization.summary].
+[[localization.summary]].
 
 **Table: Localization library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [locales] | Locales | `<locale>` |
-| [locale.categories] | Standard `locale` categories |
-| [c.locales] | C library locales | `<clocale>` |
+| [[locales]] | Locales | `<locale>` |
+| [[locale.categories]] | Standard `locale` categories |
+| [[c.locales]] | C library locales | `<clocale>` |
 
-## Header `<locale>` synopsis <a id="locale.syn">[locale.syn]</a>
+## Header `<locale>` synopsis <a id="locale.syn">[[locale.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -105,11 +105,11 @@ namespace std {
 The header `<locale>` defines classes and declares functions that
 encapsulate and manipulate the information peculiar to a locale.
 
-## Locales <a id="locales">[locales]</a>
+## Locales <a id="locales">[[locales]]</a>
 
-### Class `locale` <a id="locale">[locale]</a>
+### Class `locale` <a id="locale">[[locale]]</a>
 
-#### General <a id="locale.general">[locale.general]</a>
+#### General <a id="locale.general">[[locale.general]]</a>
 
 ``` cpp
 namespace std {
@@ -208,7 +208,7 @@ except that:
 - Convenient global interfaces are provided for traditional `ctype`
   functions such as `isdigit()` and `isspace()`, so that given a locale
   object `loc` a C++ program can call `isspace(c, loc)`. (This eases
-  upgrading existing extractors [istream.formatted].)
+  upgrading existing extractors [[istream.formatted]].)
 
 — *end note*\]
 
@@ -231,11 +231,11 @@ global locale object per thread is *implementation-defined*.
 Implementations should provide one global locale object per thread. If
 there is a single global locale object for the entire program,
 implementations are not required to avoid data races on it
-[res.on.data.races].
+[[res.on.data.races]].
 
-#### Types <a id="locale.types">[locale.types]</a>
+#### Types <a id="locale.types">[[locale.types]]</a>
 
-##### Type `locale::category` <a id="locale.category">[locale.category]</a>
+##### Type `locale::category` <a id="locale.category">[[locale.category]]</a>
 
 ``` cpp
 using category = int;
@@ -260,7 +260,7 @@ category, represents the union of the two categories.
 the `category` values defined above, or the union of two or more such
 values. Such a `category` value identifies a set of locale categories.
 Each locale category, in turn, identifies a set of locale facets,
-including at least those shown in [locale.category.facets].
+including at least those shown in [[locale.category.facets]].
 
 **Table: Locale category facets**
 
@@ -284,13 +284,13 @@ including at least those shown in [locale.category.facets].
 | messages | `messages<char>`, `messages<wchar_t>` |
 For any locale `loc` either constructed, or returned by
 `locale::classic()`, and any facet `Facet` shown in
-[locale.category.facets], `has_facet<Facet>(loc)` is `true`. Each
+[[locale.category.facets]], `has_facet<Facet>(loc)` is `true`. Each
 `locale` member function which takes a `locale::category` argument
 operates on the corresponding set of facets.
 
 An implementation is required to provide those specializations for facet
 templates identified as members of a category, and for those shown in
-[locale.spec].
+[[locale.spec]].
 
 **Table: Required specializations**
 
@@ -327,14 +327,14 @@ In declarations of facets, a template parameter with name
 `InputIterator` or `OutputIterator` indicates the set of all possible
 specializations on parameters that meet the *Cpp17InputIterator*
 requirements or *Cpp17OutputIterator* requirements, respectively
-[iterator.requirements]. A template parameter with name `C` represents
+[[iterator.requirements]]. A template parameter with name `C` represents
 the set of types containing `char`, `wchar_t`, and any other
 *implementation-defined* character types that meet the requirements for
 a character on which any of the iostream components can be instantiated.
 A template parameter with name `International` represents the set of all
 possible specializations on a bool parameter.
 
-##### Class `locale::facet` <a id="locale.facet">[locale.facet]</a>
+##### Class `locale::facet` <a id="locale.facet">[[locale.facet]]</a>
 
 ``` cpp
 namespace std {
@@ -388,7 +388,7 @@ arguments `str.c_str()` and `refs`. If there is no “$\ldots$`_byname`”
 version of a facet, the base class implements named locale semantics
 itself by reference to other facets.
 
-##### Class `locale::id` <a id="locale.id">[locale.id]</a>
+##### Class `locale::id` <a id="locale.id">[[locale.id]]</a>
 
 ``` cpp
 namespace std {
@@ -411,9 +411,9 @@ programmed static initialization. One initialization strategy is for
 `locale` to initialize each facet’s `id` member the first time an
 instance of the facet is installed into a locale. This depends only on
 static storage being zero before constructors run
-[basic.start.static]. — *end note*\]
+[[basic.start.static]]. — *end note*\]
 
-#### Constructors and destructor <a id="locale.cons">[locale.cons]</a>
+#### Constructors and destructor <a id="locale.cons">[[locale.cons]]</a>
 
 ``` cpp
 locale() noexcept;
@@ -536,7 +536,7 @@ const locale& operator=(const locale& other) noexcept;
 >
 > `*this`.
 
-#### Members <a id="locale.members">[locale.members]</a>
+#### Members <a id="locale.members">[[locale.members]]</a>
 
 ``` cpp
 template<class Facet> locale combine(const locale& other) const;
@@ -567,7 +567,7 @@ string name() const;
 >
 > The name of `*this`, if it has one; otherwise, the string `"*"`.
 
-#### Operators <a id="locale.operators">[locale.operators]</a>
+#### Operators <a id="locale.operators">[[locale.operators]]</a>
 
 ``` cpp
 bool operator==(const locale& other) const;
@@ -611,7 +611,7 @@ template<class charT, class traits, class Allocator>
 >
 > — *end example*\]
 
-#### Static members <a id="locale.statics">[locale.statics]</a>
+#### Static members <a id="locale.statics">[[locale.statics]]</a>
 
 ``` cpp
 static locale global(const locale& loc);
@@ -658,7 +658,7 @@ static const locale& classic();
 > This locale, its facets, and their member functions, do not change
 > with time.
 
-### `locale` globals <a id="locale.global.templates">[locale.global.templates]</a>
+### `locale` globals <a id="locale.global.templates">[[locale.global.templates]]</a>
 
 ``` cpp
 template<class Facet> const Facet& use_facet(const locale& loc);
@@ -690,9 +690,9 @@ template<class Facet> bool has_facet(const locale& loc) noexcept;
 >
 > `true` if the facet requested is present in `loc`; otherwise `false`.
 
-### Convenience interfaces <a id="locale.convenience">[locale.convenience]</a>
+### Convenience interfaces <a id="locale.convenience">[[locale.convenience]]</a>
 
-#### Character classification <a id="classification">[classification]</a>
+#### Character classification <a id="classification">[[classification]]</a>
 
 ``` cpp
 template<class charT> bool isspace (charT c, const locale& loc);
@@ -716,9 +716,9 @@ use_facet<ctype<charT>>(loc).is(ctype_base::F, c)
 ```
 
 where `F` is the `ctype_base::mask` value corresponding to that function
-[category.ctype].
+[[category.ctype]].
 
-#### Character conversions <a id="conversions.character">[conversions.character]</a>
+#### Character conversions <a id="conversions.character">[[conversions.character]]</a>
 
 ``` cpp
 template<class charT> charT toupper(charT c, const locale& loc);
@@ -736,19 +736,19 @@ template<class charT> charT tolower(charT c, const locale& loc);
 >
 > `use_facet<ctype<charT>>(loc).tolower(c)`.
 
-## Standard `locale` categories <a id="locale.categories">[locale.categories]</a>
+## Standard `locale` categories <a id="locale.categories">[[locale.categories]]</a>
 
-### General <a id="locale.categories.general">[locale.categories.general]</a>
+### General <a id="locale.categories.general">[[locale.categories.general]]</a>
 
 Each of the standard categories includes a family of facets. Some of
 these implement formatting or parsing of a datum, for use by standard or
 users’ iostream operators `<<` and `>>`, as members `put()` and `get()`,
 respectively. Each such member function takes an `ios_base&` argument
 whose members `flags()`, `precision()`, and `width()`, specify the
-format of the corresponding datum [ios.base]. Those functions which need
-to use other facets call its member `getloc()` to retrieve the locale
-imbued there. Formatting facets use the character argument `fill` to
-fill out the specified width where necessary.
+format of the corresponding datum [[ios.base]]. Those functions which
+need to use other facets call its member `getloc()` to retrieve the
+locale imbued there. Formatting facets use the character argument `fill`
+to fill out the specified width where necessary.
 
 The `put()` members make no provision for error reporting. (Any failures
 of the OutputIterator argument can be extracted from the returned
@@ -756,12 +756,12 @@ iterator.) The `get()` members take an `ios_base::iostate&` argument
 whose value they ignore, but set to `ios_base::failbit` in case of a
 parse error.
 
-Within subclause [locale.categories] it is unspecified whether one
+Within subclause [[locale.categories]] it is unspecified whether one
 virtual function calls another virtual function.
 
-### The `ctype` category <a id="category.ctype">[category.ctype]</a>
+### The `ctype` category <a id="category.ctype">[[category.ctype]]</a>
 
-#### General <a id="category.ctype.general">[category.ctype.general]</a>
+#### General <a id="category.ctype.general">[[category.ctype.general]]</a>
 
 ``` cpp
 namespace std {
@@ -786,11 +786,11 @@ namespace std {
 }
 ```
 
-The type `mask` is a bitmask type [bitmask.types].
+The type `mask` is a bitmask type [[bitmask.types]].
 
-#### Class template `ctype` <a id="locale.ctype">[locale.ctype]</a>
+#### Class template `ctype` <a id="locale.ctype">[[locale.ctype]]</a>
 
-##### General <a id="locale.ctype.general">[locale.ctype.general]</a>
+##### General <a id="locale.ctype.general">[[locale.ctype.general]]</a>
 
 ``` cpp
 namespace std {
@@ -840,12 +840,12 @@ Class `ctype` encapsulates the C library `<cctype>` features. `istream`
 members are required to use `ctype<>` for character classing during
 input parsing.
 
-The specializations required in [locale.category.facets]
-[locale.category], namely `ctype<char>` and `ctype<wchar_t>`, implement
-character classing appropriate to the implementation’s native character
-set.
+The specializations required in [[locale.category.facets]]
+[[locale.category]], namely `ctype<char>` and `ctype<wchar_t>`,
+implement character classing appropriate to the implementation’s native
+character set.
 
-##### `ctype` members <a id="locale.ctype.members">[locale.ctype.members]</a>
+##### `ctype` members <a id="locale.ctype.members">[[locale.ctype.members]]</a>
 
 ``` cpp
 bool         is(mask m, charT c) const;
@@ -908,7 +908,7 @@ const charT* narrow(const charT* low, const charT* high, char dfault, char* to) 
 >
 > `do_narrow(c, dfault)` or `do_narrow(low, high, dfault, to)`.
 
-##### `ctype` virtual functions <a id="locale.ctype.virtuals">[locale.ctype.virtuals]</a>
+##### `ctype` virtual functions <a id="locale.ctype.virtuals">[[locale.ctype.virtuals]]</a>
 
 ``` cpp
 bool         do_is(mask m, charT c) const;
@@ -1060,7 +1060,7 @@ const charT* do_narrow(const charT* low, const charT* high, char dfault, char* d
 > The first form returns the transformed value; or `dfault` if no
 > mapping is readily available. The second form returns `high`.
 
-#### Class template `ctype_byname` <a id="locale.ctype.byname">[locale.ctype.byname]</a>
+#### Class template `ctype_byname` <a id="locale.ctype.byname">[[locale.ctype.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -1077,9 +1077,9 @@ namespace std {
 }
 ```
 
-#### `ctype<char>` specialization <a id="facet.ctype.special">[facet.ctype.special]</a>
+#### `ctype<char>` specialization <a id="facet.ctype.special">[[facet.ctype.special]]</a>
 
-##### General <a id="facet.ctype.special.general">[facet.ctype.special.general]</a>
+##### General <a id="facet.ctype.special.general">[[facet.ctype.special.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1133,7 +1133,7 @@ on type `char` can be implemented inline.
 The *implementation-defined* value of member `table_size` is at least
 256.
 
-##### Destructor <a id="facet.ctype.char.dtor">[facet.ctype.char.dtor]</a>
+##### Destructor <a id="facet.ctype.char.dtor">[[facet.ctype.char.dtor]]</a>
 
 ``` cpp
 ~ctype();
@@ -1144,7 +1144,7 @@ The *implementation-defined* value of member `table_size` is at least
 > If the constructor’s first argument was nonzero, and its second
 > argument was `true`, does `delete [] table()`.
 
-##### Members <a id="facet.ctype.char.members">[facet.ctype.char.members]</a>
+##### Members <a id="facet.ctype.char.members">[[facet.ctype.char.members]]</a>
 
 In the following member descriptions, for `unsigned char` values `v`
 where `v >= table_size`, `table()[v]` is assumed to have an
@@ -1253,7 +1253,7 @@ const mask* table() const noexcept;
 > The first constructor argument, if it was nonzero, otherwise
 > `classic_table()`.
 
-##### Static members <a id="facet.ctype.char.statics">[facet.ctype.char.statics]</a>
+##### Static members <a id="facet.ctype.char.statics">[[facet.ctype.char.statics]]</a>
 
 ``` cpp
 static const mask* classic_table() noexcept;
@@ -1265,7 +1265,7 @@ static const mask* classic_table() noexcept;
 > which represents the classifications of characters in the `"C"`
 > locale.
 
-##### Virtual functions <a id="facet.ctype.char.virtuals">[facet.ctype.char.virtuals]</a>
+##### Virtual functions <a id="facet.ctype.char.virtuals">[[facet.ctype.char.virtuals]]</a>
 
 ``` cpp
 char        do_toupper(char) const;
@@ -1281,11 +1281,11 @@ virtual const char* do_narrow(const char* low, const char* high,
 ```
 
 These functions are described identically as those members of the same
-name in the `ctype` class template [locale.ctype.members].
+name in the `ctype` class template [[locale.ctype.members]].
 
-#### Class template `codecvt` <a id="locale.codecvt">[locale.codecvt]</a>
+#### Class template `codecvt` <a id="locale.codecvt">[[locale.codecvt]]</a>
 
-##### General <a id="locale.codecvt.general">[locale.codecvt.general]</a>
+##### General <a id="locale.codecvt.general">[[locale.codecvt.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1354,8 +1354,8 @@ and EUC.
 The `stateT` argument selects the pair of character encodings being
 mapped between.
 
-The specializations required in [locale.category.facets]
-[locale.category] convert the implementation-defined native character
+The specializations required in [[locale.category.facets]]
+[[locale.category]] convert the implementation-defined native character
 set. `codecvt<char, char, mbstate_t>` implements a degenerate
 conversion; it does not convert at all. The specialization
 `codecvt<char16_t, char8_t, mbstate_t>` converts between the UTF-16 and
@@ -1369,7 +1369,7 @@ specializing on a program-defined `stateT` type. Objects of type
 `stateT` can contain any state that is useful to communicate to or from
 the specialized `do_in` or `do_out` members.
 
-##### Members <a id="locale.codecvt.members">[locale.codecvt.members]</a>
+##### Members <a id="locale.codecvt.members">[[locale.codecvt.members]]</a>
 
 ``` cpp
 result out(
@@ -1433,7 +1433,7 @@ int max_length() const noexcept;
 >
 > `do_max_length()`.
 
-##### Virtual functions <a id="locale.codecvt.virtuals">[locale.codecvt.virtuals]</a>
+##### Virtual functions <a id="locale.codecvt.virtuals">[[locale.codecvt.virtuals]]</a>
 
 ``` cpp
 result do_out(
@@ -1630,7 +1630,7 @@ int do_max_length() const noexcept;
 > `state`. The specialization
 > `codecvt<char, char, mbstate_t>::do_max_length()` returns 1.
 
-#### Class template `codecvt_byname` <a id="locale.codecvt.byname">[locale.codecvt.byname]</a>
+#### Class template `codecvt_byname` <a id="locale.codecvt.byname">[[locale.codecvt.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -1646,9 +1646,9 @@ namespace std {
 }
 ```
 
-### The numeric category <a id="category.numeric">[category.numeric]</a>
+### The numeric category <a id="category.numeric">[[category.numeric]]</a>
 
-#### General <a id="category.numeric.general">[category.numeric.general]</a>
+#### General <a id="category.numeric.general">[[category.numeric.general]]</a>
 
 The classes `num_get<>` and `num_put<>` handle numeric formatting and
 parsing. Virtual functions are provided for several numeric types.
@@ -1656,23 +1656,23 @@ Implementations may (but are not required to) delegate extraction of
 smaller types to extractors for larger types.
 
 All specifications of member functions for `num_put` and `num_get` in
-the subclauses of  [category.numeric] only apply to the specializations
-required in Tables  [tab:locale.category.facets] and  [tab:locale.spec]
-[locale.category], namely `num_get<char>`, `num_get<wchar_t>`,
-`num_get<C, InputIterator>`, `num_put<char>`, `num_put<wchar_t>`, and
-`num_put<C, OutputIterator>`. These specializations refer to the
-`ios_base&` argument for formatting specifications [locale.categories],
-and to its imbued locale for the `numpunct<>` facet to identify all
-numeric punctuation preferences, and also for the `ctype<>` facet to
-perform character classification.
+the subclauses of  [[category.numeric]] only apply to the
+specializations required in Tables  [[tab:locale.category.facets]] and 
+[[tab:locale.spec]] [[locale.category]], namely `num_get<char>`,
+`num_get<wchar_t>`, `num_get<C, InputIterator>`, `num_put<char>`,
+`num_put<wchar_t>`, and `num_put<C, OutputIterator>`. These
+specializations refer to the `ios_base&` argument for formatting
+specifications [[locale.categories]], and to its imbued locale for the
+`numpunct<>` facet to identify all numeric punctuation preferences, and
+also for the `ctype<>` facet to perform character classification.
 
 Extractor and inserter members of the standard iostreams use `num_get<>`
 and `num_put<>` member functions for formatting and parsing numeric
-values [istream.formatted.reqmts], [ostream.formatted.reqmts].
+values [[istream.formatted.reqmts]], [[ostream.formatted.reqmts]].
 
-#### Class template `num_get` <a id="locale.num.get">[locale.num.get]</a>
+#### Class template `num_get` <a id="locale.num.get">[[locale.num.get]]</a>
 
-##### General <a id="locale.num.get.general">[locale.num.get.general]</a>
+##### General <a id="locale.num.get.general">[[locale.num.get.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1740,7 +1740,7 @@ namespace std {
 The facet `num_get` is used to parse numeric values from an input
 sequence such as an istream.
 
-##### Members <a id="facet.num.get.members">[facet.num.get.members]</a>
+##### Members <a id="facet.num.get.members">[[facet.num.get.members]]</a>
 
 ``` cpp
 iter_type get(iter_type in, iter_type end, ios_base& str,
@@ -1771,7 +1771,7 @@ iter_type get(iter_type in, iter_type end, ios_base& str,
 >
 > `do_get(in, end, str, err, val)`.
 
-##### Virtual functions <a id="facet.num.get.virtuals">[facet.num.get.virtuals]</a>
+##### Virtual functions <a id="facet.num.get.virtuals">[[facet.num.get.virtuals]]</a>
 
 ``` cpp
 iter_type do_get(iter_type in, iter_type end, ios_base& str,
@@ -1994,9 +1994,9 @@ iter_type do_get(iter_type in, iter_type end, ios_base& str,
 >
 > `in`.
 
-#### Class template `num_put` <a id="locale.nm.put">[locale.nm.put]</a>
+#### Class template `num_put` <a id="locale.nm.put">[[locale.nm.put]]</a>
 
-##### General <a id="locale.nm.put.general">[locale.nm.put.general]</a>
+##### General <a id="locale.nm.put.general">[[locale.nm.put.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2036,7 +2036,7 @@ namespace std {
 The facet `num_put` is used to format numeric values to a character
 sequence such as an ostream.
 
-##### Members <a id="facet.num.put.members">[facet.num.put.members]</a>
+##### Members <a id="facet.num.put.members">[[facet.num.put.members]]</a>
 
 ``` cpp
 iter_type put(iter_type out, ios_base& str, char_type fill, bool val) const;
@@ -2053,7 +2053,7 @@ iter_type put(iter_type out, ios_base& str, char_type fill, const void* val) con
 >
 > `do_put(out, str, fill, val)`.
 
-##### Virtual functions <a id="facet.num.put.virtuals">[facet.num.put.virtuals]</a>
+##### Virtual functions <a id="facet.num.put.virtuals">[[facet.num.put.virtuals]]</a>
 
 ``` cpp
 iter_type do_put(iter_type out, ios_base& str, char_type fill, long val) const;
@@ -2262,11 +2262,11 @@ iter_type do_put(iter_type out, ios_base& str, char_type fill, bool val) const;
 > and then inserts each character `c` of `s` into `out` via `*out++ = c`
 > and returns `out`.
 
-### The numeric punctuation facet <a id="facet.numpunct">[facet.numpunct]</a>
+### The numeric punctuation facet <a id="facet.numpunct">[[facet.numpunct]]</a>
 
-#### Class template `numpunct` <a id="locale.numpunct">[locale.numpunct]</a>
+#### Class template `numpunct` <a id="locale.numpunct">[[locale.numpunct]]</a>
 
-##### General <a id="locale.numpunct.general">[locale.numpunct.general]</a>
+##### General <a id="locale.numpunct.general">[[locale.numpunct.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2298,7 +2298,7 @@ namespace std {
 ```
 
 `numpunct<>` specifies numeric punctuation. The specializations required
-in [locale.category.facets] [locale.category], namely
+in [[locale.category.facets]] [[locale.category]], namely
 `numpunct<wchar_t>` and `numpunct<char>`, provide classic `"C"` numeric
 formats, i.e., they contain information equivalent to that contained in
 the `"C"` locale or their wide character counterparts as if obtained by
@@ -2359,7 +2359,7 @@ where the number of digits between is as specified by `do_grouping()`.
 For parsing, if the portion contains no thousands-separators, no
 grouping constraint is applied.
 
-##### Members <a id="facet.numpunct.members">[facet.numpunct.members]</a>
+##### Members <a id="facet.numpunct.members">[[facet.numpunct.members]]</a>
 
 ``` cpp
 char_type decimal_point() const;
@@ -2394,7 +2394,7 @@ string_type falsename() const;
 >
 > `do_truename()` or `do_falsename()`, respectively.
 
-##### Virtual functions <a id="facet.numpunct.virtuals">[facet.numpunct.virtuals]</a>
+##### Virtual functions <a id="facet.numpunct.virtuals">[[facet.numpunct.virtuals]]</a>
 
 ``` cpp
 char_type do_decimal_point() const;
@@ -2448,7 +2448,7 @@ string_type do_falsename() const;
 > In the base class implementation these names are `"true"` and
 > `"false"`, or `L"true"` and `L"false"`.
 
-#### Class template `numpunct_byname` <a id="locale.numpunct.byname">[locale.numpunct.byname]</a>
+#### Class template `numpunct_byname` <a id="locale.numpunct.byname">[[locale.numpunct.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -2468,11 +2468,11 @@ namespace std {
 }
 ```
 
-### The collate category <a id="category.collate">[category.collate]</a>
+### The collate category <a id="category.collate">[[category.collate]]</a>
 
-#### Class template `collate` <a id="locale.collate">[locale.collate]</a>
+#### Class template `collate` <a id="locale.collate">[[locale.collate]]</a>
 
-##### General <a id="locale.collate.general">[locale.collate.general]</a>
+##### General <a id="locale.collate.general">[[locale.collate.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2504,14 +2504,15 @@ namespace std {
 The class `collate<charT>` provides features for use in the collation
 (comparison) and hashing of strings. A locale member function template,
 `operator()`, uses the collate facet to allow a locale to act directly
-as the predicate argument for standard algorithms [algorithms] and
+as the predicate argument for standard algorithms [[algorithms]] and
 containers operating on strings. The specializations required in
-[locale.category.facets] [locale.category], namely `collate<char>` and
-`collate<wchar_t>`, apply lexicographical ordering [alg.lex.comparison].
+[[locale.category.facets]] [[locale.category]], namely `collate<char>`
+and `collate<wchar_t>`, apply lexicographical ordering
+[[alg.lex.comparison]].
 
 Each function compares a string of characters `*p` in the range .
 
-##### Members <a id="locale.collate.members">[locale.collate.members]</a>
+##### Members <a id="locale.collate.members">[[locale.collate.members]]</a>
 
 ``` cpp
 int compare(const charT* low1, const charT* high1,
@@ -2538,7 +2539,7 @@ long hash(const charT* low, const charT* high) const;
 >
 > `do_hash(low, high)`.
 
-##### Virtual functions <a id="locale.collate.virtuals">[locale.collate.virtuals]</a>
+##### Virtual functions <a id="locale.collate.virtuals">[[locale.collate.virtuals]]</a>
 
 ``` cpp
 int do_compare(const charT* low1, const charT* high1,
@@ -2580,7 +2581,7 @@ long do_hash(const charT* low, const charT* high) const;
 > does not compare equal should be very small, approaching
 > `(1.0/numeric_limits<unsigned long>::max())`.
 
-#### Class template `collate_byname` <a id="locale.collate.byname">[locale.collate.byname]</a>
+#### Class template `collate_byname` <a id="locale.collate.byname">[[locale.collate.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -2598,23 +2599,23 @@ namespace std {
 }
 ```
 
-### The time category <a id="category.time">[category.time]</a>
+### The time category <a id="category.time">[[category.time]]</a>
 
-#### General <a id="category.time.general">[category.time.general]</a>
+#### General <a id="category.time.general">[[category.time.general]]</a>
 
 Templates `time_get<charT, InputIterator>` and
 `time_put<charT, OutputIterator>` provide date and time formatting and
 parsing. All specifications of member functions for `time_put` and
-`time_get` in the subclauses of  [category.time] only apply to the
-specializations required in Tables  [tab:locale.category.facets] and 
-[tab:locale.spec] [locale.category]. Their members use their
+`time_get` in the subclauses of  [[category.time]] only apply to the
+specializations required in Tables  [[tab:locale.category.facets]] and 
+[[tab:locale.spec]] [[locale.category]]. Their members use their
 `ios_base&`, `ios_base::iostate&`, and `fill` arguments as described in 
-[locale.categories], and the `ctype<>` facet, to determine formatting
+[[locale.categories]], and the `ctype<>` facet, to determine formatting
 details.
 
-#### Class template `time_get` <a id="locale.time.get">[locale.time.get]</a>
+#### Class template `time_get` <a id="locale.time.get">[[locale.time.get]]</a>
 
-##### General <a id="locale.time.get.general">[locale.time.get.general]</a>
+##### General <a id="locale.time.get.general">[[locale.time.get.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2680,7 +2681,7 @@ are assigned.
 If the end iterator is reached during parsing by any of the `get()`
 member functions, the member sets `ios_base::eofbit` in `err`.
 
-##### Members <a id="locale.time.get.members">[locale.time.get.members]</a>
+##### Members <a id="locale.time.get.members">[[locale.time.get.members]]</a>
 
 ``` cpp
 dateorder date_order() const;
@@ -2797,7 +2798,7 @@ iter_type get(iter_type s, iter_type end, ios_base& f, ios_base::iostate& err,
 >
 > `s`.
 
-##### Virtual functions <a id="locale.time.get.virtuals">[locale.time.get.virtuals]</a>
+##### Virtual functions <a id="locale.time.get.virtuals">[[locale.time.get.virtuals]]</a>
 
 ``` cpp
 dateorder do_date_order() const;
@@ -2943,7 +2944,7 @@ iter_type do_get(iter_type s, iter_type end, ios_base& f,
 > the object or simply overwrite its members. Portable programs should
 > zero out the object before invoking the function.
 
-#### Class template `time_get_byname` <a id="locale.time.get.byname">[locale.time.get.byname]</a>
+#### Class template `time_get_byname` <a id="locale.time.get.byname">[[locale.time.get.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -2962,7 +2963,7 @@ namespace std {
 }
 ```
 
-#### Class template `time_put` <a id="locale.time.put">[locale.time.put]</a>
+#### Class template `time_put` <a id="locale.time.put">[[locale.time.put]]</a>
 
 ``` cpp
 namespace std {
@@ -2990,7 +2991,7 @@ namespace std {
 }
 ```
 
-##### Members <a id="locale.time.put.members">[locale.time.put.members]</a>
+##### Members <a id="locale.time.put.members">[[locale.time.put.members]]</a>
 
 ``` cpp
 iter_type put(iter_type s, ios_base& str, char_type fill, const tm* t,
@@ -3031,7 +3032,7 @@ iter_type put(iter_type s, ios_base& str, char_type fill, const tm* t,
 >
 > An iterator pointing immediately after the last character produced.
 
-##### Virtual functions <a id="locale.time.put.virtuals">[locale.time.put.virtuals]</a>
+##### Virtual functions <a id="locale.time.put.virtuals">[[locale.time.put.virtuals]]</a>
 
 ``` cpp
 iter_type do_put(iter_type s, ios_base&, char_type fill, const tm* t,
@@ -3064,7 +3065,7 @@ iter_type do_put(iter_type s, ios_base&, char_type fill, const tm* t,
 > specification of the character sequences produced for those specifiers
 > described as depending on the C locale.
 
-#### Class template `time_put_byname` <a id="locale.time.put.byname">[locale.time.put.byname]</a>
+#### Class template `time_put_byname` <a id="locale.time.put.byname">[[locale.time.put.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -3083,22 +3084,22 @@ namespace std {
 }
 ```
 
-### The monetary category <a id="category.monetary">[category.monetary]</a>
+### The monetary category <a id="category.monetary">[[category.monetary]]</a>
 
-#### General <a id="category.monetary.general">[category.monetary.general]</a>
+#### General <a id="category.monetary.general">[[category.monetary.general]]</a>
 
 These templates handle monetary formats. A template parameter indicates
 whether local or international monetary formats are to be used.
 
 All specifications of member functions for `money_put` and `money_get`
-in the subclauses of  [category.monetary] only apply to the
-specializations required in Tables  [tab:locale.category.facets] and 
-[tab:locale.spec] [locale.category]. Their members use their
+in the subclauses of  [[category.monetary]] only apply to the
+specializations required in Tables  [[tab:locale.category.facets]] and 
+[[tab:locale.spec]] [[locale.category]]. Their members use their
 `ios_base&`, `ios_base::iostate&`, and `fill` arguments as described in 
-[locale.categories], and the `moneypunct<>` and `ctype<>` facets, to
+[[locale.categories]], and the `moneypunct<>` and `ctype<>` facets, to
 determine formatting details.
 
-#### Class template `money_get` <a id="locale.money.get">[locale.money.get]</a>
+#### Class template `money_get` <a id="locale.money.get">[[locale.money.get]]</a>
 
 ``` cpp
 namespace std {
@@ -3130,7 +3131,7 @@ namespace std {
 }
 ```
 
-##### Members <a id="locale.money.get.members">[locale.money.get.members]</a>
+##### Members <a id="locale.money.get.members">[[locale.money.get.members]]</a>
 
 ``` cpp
 iter_type get(iter_type s, iter_type end, bool intl, ios_base& f,
@@ -3143,7 +3144,7 @@ iter_type get(iter_type s, iter_type end, bool intl, ios_base& f,
 >
 > `do_get(s, end, intl, f, err, quant)`.
 
-##### Virtual functions <a id="locale.money.get.virtuals">[locale.money.get.virtuals]</a>
+##### Virtual functions <a id="locale.money.get.virtuals">[[locale.money.get.virtuals]]</a>
 
 ``` cpp
 iter_type do_get(iter_type s, iter_type end, bool intl, ios_base& str,
@@ -3237,7 +3238,7 @@ iter_type do_get(iter_type s, iter_type end, bool intl, ios_base& str,
 > An iterator pointing immediately beyond the last character recognized
 > as part of a valid monetary quantity.
 
-#### Class template `money_put` <a id="locale.money.put">[locale.money.put]</a>
+#### Class template `money_put` <a id="locale.money.put">[[locale.money.put]]</a>
 
 ``` cpp
 namespace std {
@@ -3267,7 +3268,7 @@ namespace std {
 }
 ```
 
-##### Members <a id="locale.money.put.members">[locale.money.put.members]</a>
+##### Members <a id="locale.money.put.members">[[locale.money.put.members]]</a>
 
 ``` cpp
 iter_type put(iter_type s, bool intl, ios_base& f, char_type fill, long double quant) const;
@@ -3278,7 +3279,7 @@ iter_type put(iter_type s, bool intl, ios_base& f, char_type fill, const string_
 >
 > `do_put(s, intl, f, loc, quant)`.
 
-##### Virtual functions <a id="locale.money.put.virtuals">[locale.money.put.virtuals]</a>
+##### Virtual functions <a id="locale.money.put.virtuals">[[locale.money.put.virtuals]]</a>
 
 ``` cpp
 iter_type do_put(iter_type s, bool intl, ios_base& str,
@@ -3333,9 +3334,9 @@ iter_type do_put(iter_type s, bool intl, ios_base& str,
 > and flag values, to produce output that cannot be parsed using
 > `num_get<>::get`. — *end note*\]
 
-#### Class template `moneypunct` <a id="locale.moneypunct">[locale.moneypunct]</a>
+#### Class template `moneypunct` <a id="locale.moneypunct">[[locale.moneypunct]]</a>
 
-##### General <a id="locale.moneypunct.general">[locale.moneypunct.general]</a>
+##### General <a id="locale.moneypunct.general">[[locale.moneypunct.general]]</a>
 
 ``` cpp
 namespace std {
@@ -3452,7 +3453,7 @@ The placement of thousands-separator characters (if any) is determined
 by the value returned by `grouping()`, defined identically as the member
 `numpunct<>::do_grouping()`.
 
-##### Members <a id="locale.moneypunct.members">[locale.moneypunct.members]</a>
+##### Members <a id="locale.moneypunct.members">[[locale.moneypunct.members]]</a>
 
 ``` cpp
 charT        decimal_point() const;
@@ -3469,7 +3470,7 @@ pattern      neg_format()    const;
 Each of these functions `F` returns the result of calling the
 corresponding virtual member function `do_F()`.
 
-##### Virtual functions <a id="locale.moneypunct.virtuals">[locale.moneypunct.virtuals]</a>
+##### Virtual functions <a id="locale.moneypunct.virtuals">[[locale.moneypunct.virtuals]]</a>
 
 ``` cpp
 charT do_decimal_point() const;
@@ -3565,7 +3566,7 @@ pattern do_neg_format() const;
 > Note that the international symbol returned by `do_curr_symbol()`
 > usually contains a space, itself; for example, `"USD "`.
 
-#### Class template `moneypunct_byname` <a id="locale.moneypunct.byname">[locale.moneypunct.byname]</a>
+#### Class template `moneypunct_byname` <a id="locale.moneypunct.byname">[[locale.moneypunct.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -3584,16 +3585,16 @@ namespace std {
 }
 ```
 
-### The message retrieval category <a id="category.messages">[category.messages]</a>
+### The message retrieval category <a id="category.messages">[[category.messages]]</a>
 
-#### General <a id="category.messages.general">[category.messages.general]</a>
+#### General <a id="category.messages.general">[[category.messages.general]]</a>
 
 Class `messages<charT>` implements retrieval of strings from message
 catalogs.
 
-#### Class template `messages` <a id="locale.messages">[locale.messages]</a>
+#### Class template `messages` <a id="locale.messages">[[locale.messages]]</a>
 
-##### General <a id="locale.messages.general">[locale.messages.general]</a>
+##### General <a id="locale.messages.general">[[locale.messages.general]]</a>
 
 ``` cpp
 namespace std {
@@ -3630,7 +3631,7 @@ namespace std {
 Values of type `messages_base::catalog` usable as arguments to members
 `get` and `close` can be obtained only by calling member `open`.
 
-##### Members <a id="locale.messages.members">[locale.messages.members]</a>
+##### Members <a id="locale.messages.members">[[locale.messages.members]]</a>
 
 ``` cpp
 catalog open(const string& name, const locale& loc) const;
@@ -3656,7 +3657,7 @@ void close(catalog cat) const;
 >
 > Calls `do_close(cat)`.
 
-##### Virtual functions <a id="locale.messages.virtuals">[locale.messages.virtuals]</a>
+##### Virtual functions <a id="locale.messages.virtuals">[[locale.messages.virtuals]]</a>
 
 ``` cpp
 catalog do_open(const string& name, const locale& loc) const;
@@ -3706,7 +3707,7 @@ void do_close(catalog cat) const;
 >
 > The limit on such resources, if any, is *implementation-defined*.
 
-#### Class template `messages_byname` <a id="locale.messages.byname">[locale.messages.byname]</a>
+#### Class template `messages_byname` <a id="locale.messages.byname">[[locale.messages.byname]]</a>
 
 ``` cpp
 namespace std {
@@ -3725,9 +3726,9 @@ namespace std {
 }
 ```
 
-## C library locales <a id="c.locales">[c.locales]</a>
+## C library locales <a id="c.locales">[[c.locales]]</a>
 
-### Header `<clocale>` synopsis <a id="clocale.syn">[clocale.syn]</a>
+### Header `<clocale>` synopsis <a id="clocale.syn">[[clocale.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -3749,38 +3750,38 @@ namespace std {
 The contents and meaning of the header `<clocale>` are the same as the C
 standard library header `<locale.h>`.
 
-### Data races <a id="clocale.data.races">[clocale.data.races]</a>
+### Data races <a id="clocale.data.races">[[clocale.data.races]]</a>
 
 Calls to the function `setlocale` may introduce a data race
-[res.on.data.races] with other calls to `setlocale` or with calls to the
-functions listed in [setlocale.data.races].
+[[res.on.data.races]] with other calls to `setlocale` or with calls to
+the functions listed in [[setlocale.data.races]].
 
 <!-- Link reference definitions -->
-[alg.lex.comparison]: algorithms.md#alg.lex.comparison
-[algorithms]: algorithms.md#algorithms
-[basic.start.static]: basic.md#basic.start.static
-[bitmask.types]: library.md#bitmask.types
-[category.ctype]: #category.ctype
-[category.monetary]: #category.monetary
-[category.numeric]: #category.numeric
-[category.time]: #category.time
-[ios.base]: input.md#ios.base
-[istream.formatted]: input.md#istream.formatted
-[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
-[iterator.requirements]: iterators.md#iterator.requirements
-[locale.categories]: #locale.categories
-[locale.category]: #locale.category
-[locale.category.facets]: #locale.category.facets
-[locale.ctype.members]: #locale.ctype.members
-[locale.spec]: #locale.spec
-[localization.summary]: #localization.summary
-[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
-[res.on.data.races]: library.md#res.on.data.races
-[setlocale.data.races]: #setlocale.data.races
-[tab:locale.category.facets]: #tab:locale.category.facets
-[tab:locale.spec]: #tab:locale.spec
+[[alg.lex.comparison]]: algorithms.md#alg.lex.comparison
+[[algorithms]]: algorithms.md#algorithms
+[[basic.start.static]]: basic.md#basic.start.static
+[[bitmask.types]]: library.md#bitmask.types
+[[category.ctype]]: #category.ctype
+[[category.monetary]]: #category.monetary
+[[category.numeric]]: #category.numeric
+[[category.time]]: #category.time
+[[ios.base]]: input.md#ios.base
+[[istream.formatted]]: input.md#istream.formatted
+[[istream.formatted.reqmts]]: input.md#istream.formatted.reqmts
+[[iterator.requirements]]: iterators.md#iterator.requirements
+[[locale.categories]]: #locale.categories
+[[locale.category]]: #locale.category
+[[locale.category.facets]]: #locale.category.facets
+[[locale.ctype.members]]: #locale.ctype.members
+[[locale.spec]]: #locale.spec
+[[localization.summary]]: #localization.summary
+[[ostream.formatted.reqmts]]: input.md#ostream.formatted.reqmts
+[[res.on.data.races]]: library.md#res.on.data.races
+[[setlocale.data.races]]: #setlocale.data.races
+[[tab:locale.category.facets]]: #tab:locale.category.facets
+[[tab:locale.spec]]: #tab:locale.spec
 
 <!-- Link reference definitions -->
-[c.locales]: #c.locales
-[locale.categories]: #locale.categories
-[locales]: #locales
+[[c.locales]]: #c.locales
+[[locale.categories]]: #locale.categories
+[[locales]]: #locales

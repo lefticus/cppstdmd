@@ -3,24 +3,24 @@ current_file: meta
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Metaprogramming library <a id="meta">[meta]</a>
+# Metaprogramming library <a id="meta">[[meta]]</a>
 
-## General <a id="meta.general">[meta.general]</a>
+## General <a id="meta.general">[[meta.general]]</a>
 
 This Clause describes metaprogramming facilities. These facilities are
-summarized in [meta.summary].
+summarized in [[meta.summary]].
 
 **Table: Metaprogramming library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [intseq] | Integer sequences | `<utility>` |
-| [type.traits] | Type traits | `<type_traits>` |
-| [ratio] | Rational arithmetic | `<ratio>` |
+| [[intseq]] | Integer sequences | `<utility>` |
+| [[type.traits]] | Type traits | `<type_traits>` |
+| [[ratio]] | Rational arithmetic | `<ratio>` |
 
-## Compile-time integer sequences <a id="intseq">[intseq]</a>
+## Compile-time integer sequences <a id="intseq">[[intseq]]</a>
 
-### In general <a id="intseq.general">[intseq.general]</a>
+### In general <a id="intseq.general">[[intseq.general]]</a>
 
 The library provides a class template that can represent an integer
 sequence. When used as an argument to a function template the template
@@ -29,9 +29,9 @@ expansion.
 
 \[*Note 1*: The `index_sequence` alias template is provided for the
 common case of an integer sequence of type `size_t`; see also
-[tuple.apply]. — *end note*\]
+[[tuple.apply]]. — *end note*\]
 
-### Class template `integer_sequence` <a id="intseq.intseq">[intseq.intseq]</a>
+### Class template `integer_sequence` <a id="intseq.intseq">[[intseq.intseq]]</a>
 
 ``` cpp
 namespace std {
@@ -44,7 +44,7 @@ namespace std {
 
 `T` is an integer type.
 
-### Alias template `make_integer_sequence` <a id="intseq.make">[intseq.make]</a>
+### Alias template `make_integer_sequence` <a id="intseq.make">[[intseq.make]]</a>
 
 ``` cpp
 template<class T, T N>
@@ -63,11 +63,11 @@ template<class T, T N>
 > \[*Note 1*: `make_integer_sequence<int, 0>` is an alias for the type
 > `integer_sequence<int>`. — *end note*\]
 
-## Metaprogramming and type traits <a id="type.traits">[type.traits]</a>
+## Metaprogramming and type traits <a id="type.traits">[[type.traits]]</a>
 
-### General <a id="type.traits.general">[type.traits.general]</a>
+### General <a id="type.traits.general">[[type.traits.general]]</a>
 
-Subclause [type.traits] describes components used by C++ programs,
+Subclause [[type.traits]] describes components used by C++ programs,
 particularly in templates, to support the widest possible range of
 types, optimize template code usage, detect type related user errors,
 and perform type inference and transformation at compile time. It
@@ -79,10 +79,10 @@ important characteristics of types or of combinations of types to be
 inspected. The type transformations allow certain properties of types to
 be manipulated.
 
-All functions specified in [type.traits] are signal-safe
-[support.signal].
+All functions specified in [[type.traits]] are signal-safe
+[[support.signal]].
 
-### Requirements <a id="meta.rqmts">[meta.rqmts]</a>
+### Requirements <a id="meta.rqmts">[[meta.rqmts]]</a>
 
 A describes a property of a type. It shall be a class template that
 takes one template type argument and, optionally, additional arguments
@@ -90,7 +90,7 @@ that help define the property being described. It shall be
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and publicly and
 unambiguously derived, directly or indirectly, from its
 *base characteristic*, which is a specialization of the template
-`integral_constant` [meta.help], with the arguments to the template
+`integral_constant` [[meta.help]], with the arguments to the template
 `integral_constant` determined by the requirements for the particular
 property being described. The member names of the base characteristic
 shall not be hidden and shall be unambiguously available in the
@@ -102,7 +102,7 @@ additional arguments that help define the relationship being described.
 It shall be *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and
 publicly and unambiguously derived, directly or indirectly, from its
 *base characteristic*, which is a specialization of the template
-`integral_constant` [meta.help], with the arguments to the template
+`integral_constant` [[meta.help]], with the arguments to the template
 `integral_constant` determined by the requirements for the particular
 relationship being described. The member names of the base
 characteristic shall not be hidden and shall be unambiguously available
@@ -115,20 +115,20 @@ nested type named `type`, which shall be a synonym for the modified
 type.
 
 Unless otherwise specified, the behavior of a program that adds
-specializations for any of the templates specified in [type.traits] is
+specializations for any of the templates specified in [[type.traits]] is
 undefined.
 
 Unless otherwise specified, an incomplete type may be used to
-instantiate a template specified in [type.traits]. The behavior of a
+instantiate a template specified in [[type.traits]]. The behavior of a
 program is undefined if:
 
-- an instantiation of a template specified in [type.traits] directly or
-  indirectly depends on an incompletely-defined object type `T`, and
+- an instantiation of a template specified in [[type.traits]] directly
+  or indirectly depends on an incompletely-defined object type `T`, and
 
 - that instantiation could yield a different result were `T`
   hypothetically completed.
 
-### Header `<type_traits>` synopsis <a id="meta.type.synop">[meta.type.synop]</a>
+### Header `<type_traits>` synopsis <a id="meta.type.synop">[[meta.type.synop]]</a>
 
 ``` cpp
 // all freestanding
@@ -563,7 +563,7 @@ namespace std {
 }
 ```
 
-### Helper classes <a id="meta.help">[meta.help]</a>
+### Helper classes <a id="meta.help">[[meta.help]]</a>
 
 ``` cpp
 namespace std {
@@ -583,21 +583,21 @@ The class template `integral_constant`, alias template `bool_constant`,
 and its associated *typedef-name* `true_type` and `false_type` are used
 as base classes to define the interface for various type traits.
 
-### Unary type traits <a id="meta.unary">[meta.unary]</a>
+### Unary type traits <a id="meta.unary">[[meta.unary]]</a>
 
-#### General <a id="meta.unary.general">[meta.unary.general]</a>
+#### General <a id="meta.unary.general">[[meta.unary.general]]</a>
 
-Subclause [meta.unary] contains templates that may be used to query the
-properties of a type at compile time.
+Subclause [[meta.unary]] contains templates that may be used to query
+the properties of a type at compile time.
 
-Each of these templates shall be a *Cpp17UnaryTypeTrait* [meta.rqmts]
+Each of these templates shall be a *Cpp17UnaryTypeTrait* [[meta.rqmts]]
 with a base characteristic of `true_type` if the corresponding condition
 is `true`, otherwise `false_type`.
 
-#### Primary type categories <a id="meta.unary.cat">[meta.unary.cat]</a>
+#### Primary type categories <a id="meta.unary.cat">[[meta.unary.cat]]</a>
 
 The primary type categories correspond to the descriptions given in
-subclause  [basic.types] of the C++ standard.
+subclause  [[basic.types]] of the C++ standard.
 
 For any given type `T`, the result of applying one of these templates to
 `T` and to cv `T` shall yield the same result.
@@ -605,16 +605,16 @@ For any given type `T`, the result of applying one of these templates to
 \[*Note 1*: For any given type `T`, exactly one of the primary type
 categories has a `value` member that evaluates to `true`. — *end note*\]
 
-#### Composite type traits <a id="meta.unary.comp">[meta.unary.comp]</a>
+#### Composite type traits <a id="meta.unary.comp">[[meta.unary.comp]]</a>
 
 These templates provide convenient compositions of the primary type
 categories, corresponding to the descriptions given in subclause 
-[basic.types].
+[[basic.types]].
 
 For any given type `T`, the result of applying one of these templates to
 `T` and to cv `T` shall yield the same result.
 
-#### Type properties <a id="meta.unary.prop">[meta.unary.prop]</a>
+#### Type properties <a id="meta.unary.prop">[[meta.unary.prop]]</a>
 
 These templates provide access to some of the more important properties
 of types.
@@ -630,9 +630,10 @@ argument is a complete type.
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
-trivial [term.trivial.type], [special] function call that is not an
-odr-use [term.odr.use] of `declval` in the context of the corresponding
-definition notwithstanding the restrictions of  [declval].
+trivial [[term.trivial.type]], [[special]] function call that is not an
+odr-use [[term.odr.use]] of `declval` in the context of the
+corresponding definition notwithstanding the restrictions of 
+[[declval]].
 
 For the purpose of defining the templates in this subclause, let
 `VAL<T>` for some type `T` be an expression defined as follows:
@@ -643,7 +644,7 @@ For the purpose of defining the templates in this subclause, let
 - Otherwise, `VAL<T>` is a prvalue that initially has type `T`.
 
   \[*Note 2*: If `T` is cv-qualified, the cv-qualification is subject to
-  adjustment [expr.type]. — *end note*\]
+  adjustment [[expr.type]]. — *end note*\]
 
 \[*Example 1*:
 
@@ -726,12 +727,12 @@ The set of scalar types for which this condition holds is
 \[*Note 4*: If a type has padding bits, the condition does not hold;
 otherwise, the condition holds true for integral types. — *end note*\]
 
-### Type property queries <a id="meta.unary.prop.query">[meta.unary.prop.query]</a>
+### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
 
 This subclause contains templates that may be used to query properties
 of types at compile time.
 
-Each of these templates shall be a *Cpp17UnaryTypeTrait* [meta.rqmts]
+Each of these templates shall be a *Cpp17UnaryTypeTrait* [[meta.rqmts]]
 with a base characteristic of `integral_constant<size_t, Value>`.
 
 \[*Example 4*:
@@ -761,20 +762,21 @@ assert((extent_v<int[][4], 1>) == 4);
 
 — *end example*\]
 
-### Relationships between types <a id="meta.rel">[meta.rel]</a>
+### Relationships between types <a id="meta.rel">[[meta.rel]]</a>
 
 This subclause contains templates that may be used to query
 relationships between types at compile time.
 
-Each of these templates shall be a *Cpp17BinaryTypeTrait* [meta.rqmts]
+Each of these templates shall be a *Cpp17BinaryTypeTrait* [[meta.rqmts]]
 with a base characteristic of `true_type` if the corresponding condition
 is true, otherwise `false_type`.
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
-trivial [term.trivial.type], [special] function call that is not an
-odr-use [term.odr.use] of `declval` in the context of the corresponding
-definition notwithstanding the restrictions of  [declval].
+trivial [[term.trivial.type]], [[special]] function call that is not an
+odr-use [[term.odr.use]] of `declval` in the context of the
+corresponding definition notwithstanding the restrictions of 
+[[declval]].
 
 \[*Example 6*:
 
@@ -812,7 +814,7 @@ types, array types, function types, and cv `void`. — *end note*\]
 
 Access checking is performed in a context unrelated to `To` and `From`.
 Only the validity of the immediate context of the *expression* of the
-`return` statement [stmt.return] (including initialization of the
+`return` statement [[stmt.return]] (including initialization of the
 returned object or reference) is considered.
 
 \[*Note 6*: The initialization can result in side effects such as the
@@ -821,20 +823,20 @@ specializations, the generation of implicitly-defined functions, and so
 on. Such side effects are not in the “immediate context” and can result
 in the program being ill-formed. — *end note*\]
 
-### Transformations between types <a id="meta.trans">[meta.trans]</a>
+### Transformations between types <a id="meta.trans">[[meta.trans]]</a>
 
-#### General <a id="meta.trans.general">[meta.trans.general]</a>
+#### General <a id="meta.trans.general">[[meta.trans.general]]</a>
 
-Each of the templates in [meta.trans] shall be a
-*Cpp17TransformationTrait* [meta.rqmts].
+Each of the templates in [[meta.trans]] shall be a
+*Cpp17TransformationTrait* [[meta.rqmts]].
 
-#### Const-volatile modifications <a id="meta.trans.cv">[meta.trans.cv]</a>
+#### Const-volatile modifications <a id="meta.trans.cv">[[meta.trans.cv]]</a>
 
-#### Reference modifications <a id="meta.trans.ref">[meta.trans.ref]</a>
+#### Reference modifications <a id="meta.trans.ref">[[meta.trans.ref]]</a>
 
-#### Sign modifications <a id="meta.trans.sign">[meta.trans.sign]</a>
+#### Sign modifications <a id="meta.trans.sign">[[meta.trans.sign]]</a>
 
-#### Array modifications <a id="meta.trans.arr">[meta.trans.arr]</a>
+#### Array modifications <a id="meta.trans.arr">[[meta.trans.arr]]</a>
 
 \[*Example 7*:
 
@@ -860,9 +862,9 @@ assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 
 — *end example*\]
 
-#### Pointer modifications <a id="meta.trans.ptr">[meta.trans.ptr]</a>
+#### Pointer modifications <a id="meta.trans.ptr">[[meta.trans.ptr]]</a>
 
-#### Other transformations <a id="meta.trans.other">[meta.trans.other]</a>
+#### Other transformations <a id="meta.trans.other">[[meta.trans.other]]</a>
 
 \[*Note 7*: The compilation of the expression can result in side effects
 such as the instantiation of class template specializations and function
@@ -873,7 +875,7 @@ context” and can result in the program being ill-formed. — *end note*\]
 In addition to being available via inclusion of the `<type_traits>`
 header, the templates `unwrap_reference`, `unwrap_ref_decay`,
 `unwrap_reference_t`, and `unwrap_ref_decay_t` are available when the
-header `<functional>` [functional.syn] is included.
+header `<functional>` [[functional.syn]] is included.
 
 Let:
 
@@ -961,8 +963,8 @@ as follows:
   *typedef-name* `type` shall denote the same type, if any, as
   `common_type_t<C, R...>`. Otherwise, there shall be no member `type`.
 
-Note B: Notwithstanding the provisions of [meta.type.synop], and
-pursuant to [namespace.std], a program may specialize
+Note B: Notwithstanding the provisions of [[meta.type.synop]], and
+pursuant to [[namespace.std]], a program may specialize
 `common_type<T1, T2>` for types `T1` and `T2` such that
 `is_same_v<T1, decay_t<T1>>` and `is_same_v<T2, decay_t<T2>>` are each
 `true`.
@@ -1018,8 +1020,8 @@ follows:
 
   - Otherwise, there shall be no member `type`.
 
-Note D: Notwithstanding the provisions of [meta.type.synop], and
-pursuant to [namespace.std], a program may partially specialize
+Note D: Notwithstanding the provisions of [[meta.type.synop]], and
+pursuant to [[namespace.std]], a program may partially specialize
 `basic_common_reference<T, U, TQual, UQual>` for types `T` and `U` such
 that `is_same_v<T, decay_t<T>>` and `is_same_v<U, decay_t<U>>` are each
 `true`.
@@ -1069,7 +1071,7 @@ static_assert(is_same_v<invoke_result_t<PMD, const S*>, const char&>);
 
 — *end example*\]
 
-### Logical operator traits <a id="meta.logical">[meta.logical]</a>
+### Logical operator traits <a id="meta.logical">[[meta.logical]]</a>
 
 This subclause describes type traits for applying logical operators to
 other type traits.
@@ -1165,7 +1167,7 @@ template<class B> struct negation : see below { };
 > *Cpp17UnaryTypeTrait* with a base characteristic of
 > `bool_constant<!bool(B::value)>`.
 
-### Member relationships <a id="meta.member">[meta.member]</a>
+### Member relationships <a id="meta.member">[[meta.member]]</a>
 
 ``` cpp
 template<class S, class M>
@@ -1206,7 +1208,7 @@ using these functions in conjunction with inheritance.
 
 — *end note*\]
 
-### Constant evaluation context <a id="meta.const.eval">[meta.const.eval]</a>
+### Constant evaluation context <a id="meta.const.eval">[[meta.const.eval]]</a>
 
 ``` cpp
 constexpr bool is_constant_evaluated() noexcept;
@@ -1236,21 +1238,21 @@ constexpr bool is_constant_evaluated() noexcept;
 >
 > — *end example*\]
 
-## Compile-time rational arithmetic <a id="ratio">[ratio]</a>
+## Compile-time rational arithmetic <a id="ratio">[[ratio]]</a>
 
-### In general <a id="ratio.general">[ratio.general]</a>
+### In general <a id="ratio.general">[[ratio.general]]</a>
 
-Subclause  [ratio] describes the ratio library. It provides a class
+Subclause  [[ratio]] describes the ratio library. It provides a class
 template `ratio` which exactly represents any finite rational number
 with a numerator and denominator representable by compile-time constants
 of type `intmax_t`.
 
-Throughout subclause  [ratio], the names of template parameters are used
-to express type requirements. If a template parameter is named `R1` or
-`R2`, and the template argument is not a specialization of the `ratio`
-template, the program is ill-formed.
+Throughout subclause  [[ratio]], the names of template parameters are
+used to express type requirements. If a template parameter is named `R1`
+or `R2`, and the template argument is not a specialization of the
+`ratio` template, the program is ill-formed.
 
-### Header `<ratio>` synopsis <a id="ratio.syn">[ratio.syn]</a>
+### Header `<ratio>` synopsis <a id="ratio.syn">[[ratio.syn]]</a>
 
 ``` cpp
 // all freestanding
@@ -1309,7 +1311,7 @@ namespace std {
 }
 ```
 
-### Class template `ratio` <a id="ratio.ratio">[ratio.ratio]</a>
+### Class template `ratio` <a id="ratio.ratio">[[ratio.ratio]]</a>
 
 ``` cpp
 namespace std {
@@ -1340,14 +1342,14 @@ values of `N` and `D`:
 
 - `den` shall have the value `abs(D) / gcd`.
 
-### Arithmetic on `ratio}{s` <a id="ratio.arithmetic">[ratio.arithmetic]</a>
+### Arithmetic on `ratio}{s` <a id="ratio.arithmetic">[[ratio.arithmetic]]</a>
 
 Each of the alias templates `ratio_add`, `ratio_subtract`,
 `ratio_multiply`, and `ratio_divide` denotes the result of an arithmetic
 computation on two `ratio}{s` `R1` and `R2`. With `X` and `Y` computed
 (in the absence of arithmetic overflow) as specified by
-[ratio.arithmetic], each alias denotes a `ratio<U, V>` such that `U` is
-the same as `ratio<X, Y>::num` and `V` is the same as
+[[ratio.arithmetic]], each alias denotes a `ratio<U, V>` such that `U`
+is the same as `ratio<X, Y>::num` and `V` is the same as
 `ratio<X, Y>::den`.
 
 If it is not possible to represent `U` or `V` with `intmax_t`, the
@@ -1387,7 +1389,7 @@ static_assert(ratio_multiply<ratio<1, INT_MAX>, ratio<INT_MAX, 2>>::den == 2,
 
 — *end example*\]
 
-### Comparison of `ratio}{s` <a id="ratio.comparison">[ratio.comparison]</a>
+### Comparison of `ratio}{s` <a id="ratio.comparison">[[ratio.comparison]]</a>
 
 ``` cpp
 template<class R1, class R2>
@@ -1425,7 +1427,7 @@ template<class R1, class R2>
   struct ratio_greater_equal : bool_constant<!ratio_less_v<R1, R2>> { };
 ```
 
-### SI types for `ratio` <a id="ratio.si">[ratio.si]</a>
+### SI types for `ratio` <a id="ratio.si">[[ratio.si]]</a>
 
 For each of the *typedef-name* `yocto`, `zepto`, `zetta`, and `yotta`,
 if both of the constants used in its specification are representable by
@@ -1433,55 +1435,55 @@ if both of the constants used in its specification are representable by
 representable by `intmax_t`, the typedef is not defined.
 
 <!-- Link reference definitions -->
-[array]: containers.md#array
-[basic.compound]: basic.md#basic.compound
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.type.qualifier]: basic.md#basic.type.qualifier
-[basic.types]: basic.md#basic.types
-[basic.types.general]: basic.md#basic.types.general
-[class.abstract]: class.md#class.abstract
-[class.derived]: class.md#class.derived
-[class.dtor]: class.md#class.dtor
-[class.pre]: class.md#class.pre
-[class.temporary]: basic.md#class.temporary
-[class.virtual]: class.md#class.virtual
-[conv.rank]: basic.md#conv.rank
-[dcl.array]: dcl.md#dcl.array
-[dcl.enum]: dcl.md#dcl.enum
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[dcl.ref]: dcl.md#dcl.ref
-[declval]: utilities.md#declval
-[defns.referenceable]: #defns.referenceable
-[expr.alignof]: expr.md#expr.alignof
-[expr.type]: expr.md#expr.type
-[expr.unary.noexcept]: expr.md#expr.unary.noexcept
-[func.require]: utilities.md#func.require
-[functional.syn]: utilities.md#functional.syn
-[meta.help]: #meta.help
-[meta.rqmts]: #meta.rqmts
-[meta.summary]: #meta.summary
-[meta.trans]: #meta.trans
-[meta.type.synop]: #meta.type.synop
-[meta.unary]: #meta.unary
-[namespace.std]: library.md#namespace.std
-[ratio]: #ratio
-[ratio.arithmetic]: #ratio.arithmetic
-[special]: class.md#special
-[stmt.return]: stmt.md#stmt.return
-[support.signal]: support.md#support.signal
-[swappable.requirements]: library.md#swappable.requirements
-[term.layout.compatible.type]: #term.layout.compatible.type
-[term.object.type]: #term.object.type
-[term.odr.use]: #term.odr.use
-[term.scalar.type]: #term.scalar.type
-[term.standard.layout.type]: #term.standard.layout.type
-[term.trivial.type]: #term.trivial.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
-[term.unevaluated.operand]: #term.unevaluated.operand
-[tuple.apply]: utilities.md#tuple.apply
-[type.traits]: #type.traits
+[[array]]: containers.md#array
+[[basic.compound]]: basic.md#basic.compound
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.type.qualifier]]: basic.md#basic.type.qualifier
+[[basic.types]]: basic.md#basic.types
+[[basic.types.general]]: basic.md#basic.types.general
+[[class.abstract]]: class.md#class.abstract
+[[class.derived]]: class.md#class.derived
+[[class.dtor]]: class.md#class.dtor
+[[class.pre]]: class.md#class.pre
+[[class.temporary]]: basic.md#class.temporary
+[[class.virtual]]: class.md#class.virtual
+[[conv.rank]]: basic.md#conv.rank
+[[dcl.array]]: dcl.md#dcl.array
+[[dcl.enum]]: dcl.md#dcl.enum
+[[dcl.init.aggr]]: dcl.md#dcl.init.aggr
+[[dcl.ref]]: dcl.md#dcl.ref
+[[declval]]: utilities.md#declval
+[[defns.referenceable]]: #defns.referenceable
+[[expr.alignof]]: expr.md#expr.alignof
+[[expr.type]]: expr.md#expr.type
+[[expr.unary.noexcept]]: expr.md#expr.unary.noexcept
+[[func.require]]: utilities.md#func.require
+[[functional.syn]]: utilities.md#functional.syn
+[[meta.help]]: #meta.help
+[[meta.rqmts]]: #meta.rqmts
+[[meta.summary]]: #meta.summary
+[[meta.trans]]: #meta.trans
+[[meta.type.synop]]: #meta.type.synop
+[[meta.unary]]: #meta.unary
+[[namespace.std]]: library.md#namespace.std
+[[ratio]]: #ratio
+[[ratio.arithmetic]]: #ratio.arithmetic
+[[special]]: class.md#special
+[[stmt.return]]: stmt.md#stmt.return
+[[support.signal]]: support.md#support.signal
+[[swappable.requirements]]: library.md#swappable.requirements
+[[term.layout.compatible.type]]: #term.layout.compatible.type
+[[term.object.type]]: #term.object.type
+[[term.odr.use]]: #term.odr.use
+[[term.scalar.type]]: #term.scalar.type
+[[term.standard.layout.type]]: #term.standard.layout.type
+[[term.trivial.type]]: #term.trivial.type
+[[term.trivially.copyable.type]]: #term.trivially.copyable.type
+[[term.unevaluated.operand]]: #term.unevaluated.operand
+[[tuple.apply]]: utilities.md#tuple.apply
+[[type.traits]]: #type.traits
 
 <!-- Link reference definitions -->
-[intseq]: #intseq
-[ratio]: #ratio
-[type.traits]: #type.traits
+[[intseq]]: #intseq
+[[ratio]]: #ratio
+[[type.traits]]: #type.traits

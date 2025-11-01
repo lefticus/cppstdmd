@@ -3,31 +3,31 @@ current_file: containers
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Containers library <a id="containers">[containers]</a>
+# Containers library <a id="containers">[[containers]]</a>
 
-## General <a id="containers.general">[containers.general]</a>
+## General <a id="containers.general">[[containers.general]]</a>
 
 This Clause describes components that C++ programs may use to organize
 collections of information.
 
 The following subclauses describe container requirements, and components
 for sequence containers and associative containers, as summarized in
-[containers.summary].
+[[containers.summary]].
 
 **Table: Containers library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [container.requirements] | Requirements |
-| [sequences] | Sequence containers | `<array>`, `<deque>`, `<forward_list>`, `<list>`, `<vector>` |
-| [associative] | Associative containers | `<map>`, `<set>` |
-| [unord] | Unordered associative containers | `<unordered_map>`, `<unordered_set>` |
-| [container.adaptors] | Container adaptors | `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>` |
-| [views] | Views | `<span>`, `<mdspan>` |
+| [[container.requirements]] | Requirements |
+| [[sequences]] | Sequence containers | `<array>`, `<deque>`, `<forward_list>`, `<list>`, `<vector>` |
+| [[associative]] | Associative containers | `<map>`, `<set>` |
+| [[unord]] | Unordered associative containers | `<unordered_map>`, `<unordered_set>` |
+| [[container.adaptors]] | Container adaptors | `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>` |
+| [[views]] | Views | `<span>`, `<mdspan>` |
 
-## Requirements <a id="container.requirements">[container.requirements]</a>
+## Requirements <a id="container.requirements">[[container.requirements]]</a>
 
-### Preamble <a id="container.requirements.pre">[container.requirements.pre]</a>
+### Preamble <a id="container.requirements.pre">[[container.requirements.pre]]</a>
 
 Containers are objects that store other objects. They control allocation
 and deallocation of these objects through constructors, destructors,
@@ -40,12 +40,12 @@ terms of the number of operations on the contained objects.
 linear complexity, even though the complexity of copying each contained
 `vector<int>` is itself linear. — *end example*\]
 
-Allocator-aware containers [container.alloc.reqmts] other than
+Allocator-aware containers [[container.alloc.reqmts]] other than
 `basic_string` construct elements using the function
 `allocator_traits<allocator_type>::rebind_traits<U>::construct` and
 destroy elements using the function
 `allocator_traits<allocator_type>::rebind_traits<U>::destroy`
-[allocator.traits.members], where `U` is either
+[[allocator.traits.members]], where `U` is either
 `allocator_type::value_type` or an internal type used by the container.
 These functions are called only for the container’s element type, not
 for internal types used by the container.
@@ -54,11 +54,11 @@ for internal types used by the container.
 need to construct nodes containing aligned buffers and call `construct`
 to place the element into the buffer. — *end note*\]
 
-### General containers <a id="container.gen.reqmts">[container.gen.reqmts]</a>
+### General containers <a id="container.gen.reqmts">[[container.gen.reqmts]]</a>
 
-#### General <a id="container.requirements.general">[container.requirements.general]</a>
+#### General <a id="container.requirements.general">[[container.requirements.general]]</a>
 
-In subclause [container.gen.reqmts],
+In subclause [[container.gen.reqmts]],
 
 - `X` denotes a container class containing objects of type `T`,
 
@@ -86,7 +86,7 @@ concept container-compatible-range =    // exposition only
   ranges::input_range<R> && convertible_to<ranges::range_reference_t<R>, T>;
 ```
 
-#### Containers <a id="container.reqmts">[container.reqmts]</a>
+#### Containers <a id="container.reqmts">[[container.reqmts]]</a>
 
 A type `X` meets the *container* requirements if the following types,
 statements, and expressions are well-formed and have the specified
@@ -468,7 +468,7 @@ either or both may be replaced by an object of the container’s
 semantics.
 
 Unless otherwise specified, all containers defined in this Clause obtain
-memory using an allocator (see  [allocator.requirements]).
+memory using an allocator (see  [[allocator.requirements]]).
 
 \[*Note 2*: In particular, containers and iterators do not store
 references to allocated elements other than through the allocator’s
@@ -515,20 +515,20 @@ container type other than `array`, shall exchange the values of `a` and
 individual container elements. Any `Compare`, `Pred`, or `Hash` types
 belonging to `a` and `b` shall meet the *Cpp17Swappable* requirements
 and shall be exchanged by calling `swap` as described in 
-[swappable.requirements]. If
+[[swappable.requirements]]. If
 `allocator_traits<allocator_type>::propagate_on_container_swap::value`
 is `true`, then `allocator_type` shall meet the *Cpp17Swap\\pable*
 requirements and the allocators of `a` and `b` shall also be exchanged
-by calling `swap` as described in  [swappable.requirements]. Otherwise,
-the allocators shall not be swapped, and the behavior is undefined
-unless `a.get_allocator() == b.get_allocator()`. Every iterator
-referring to an element in one container before the swap shall refer to
-the same element in the other container after the swap. It is
+by calling `swap` as described in  [[swappable.requirements]].
+Otherwise, the allocators shall not be swapped, and the behavior is
+undefined unless `a.get_allocator() == b.get_allocator()`. Every
+iterator referring to an element in one container before the swap shall
+refer to the same element in the other container after the swap. It is
 unspecified whether an iterator with value `a.end()` before the swap
 will have value `b.end()` after the swap.
 
-Unless otherwise specified (see  [associative.reqmts.except],
-[unord.req.except], [deque.modifiers], and [vector.modifiers]) all
+Unless otherwise specified (see  [[associative.reqmts.except]],
+[[unord.req.except]], [[deque.modifiers]], and [[vector.modifiers]]) all
 container types defined in this Clause meet the following additional
 requirements:
 
@@ -561,8 +561,8 @@ container.
 
 A *contiguous container* is a container whose member types `iterator`
 and `const_iterator` meet the *Cpp17RandomAccessIterator* requirements
-[random.access.iterators] and model `contiguous_iterator`
-[iterator.concept.contiguous].
+[[random.access.iterators]] and model `contiguous_iterator`
+[[iterator.concept.contiguous]].
 
 The behavior of certain container member functions and deduction guides
 depends on whether types qualify as input iterators or allocators. The
@@ -574,17 +574,17 @@ unspecified, except that as a minimum a type `A` shall not qualify as an
 allocator unless it meets both of the following conditions:
 
 - The *qualified-id* `A::value_type` is valid and denotes a type
-  [temp.deduct].
+  [[temp.deduct]].
 
 - The expression `declval<A&>().allocate(size_t\{\})` is well-formed
   when treated as an unevaluated operand.
 
-#### Reversible container requirements <a id="container.rev.reqmts">[container.rev.reqmts]</a>
+#### Reversible container requirements <a id="container.rev.reqmts">[[container.rev.reqmts]]</a>
 
 A type `X` meets the *reversible container* requirements if `X` meets
 the container requirements, the iterator type of `X` belongs to the
 bidirectional or random access iterator categories
-[iterator.requirements], and the following types and expressions are
+[[iterator.requirements]], and the following types and expressions are
 well-formed and have the specified semantics.
 
 ``` cpp
@@ -669,15 +669,15 @@ a.crend()
 >
 > Constant.
 
-#### Optional container requirements <a id="container.opt.reqmts">[container.opt.reqmts]</a>
+#### Optional container requirements <a id="container.opt.reqmts">[[container.opt.reqmts]]</a>
 
 The following operations are provided for some types of containers but
 not others. Those containers for which the listed operations are
 provided shall implement the semantics as described unless otherwise
 stated. If the iterators passed to `lexicographical_compare_three_way`
-meet the constexpr iterator requirements [iterator.requirements.general]
-then the operations described below are implemented by constexpr
-functions.
+meet the constexpr iterator requirements
+[[iterator.requirements.general]] then the operations described below
+are implemented by constexpr functions.
 
 ``` cpp
 a <=> b
@@ -704,9 +704,9 @@ a <=> b
 >
 > Linear.
 
-#### Allocator-aware containers <a id="container.alloc.reqmts">[container.alloc.reqmts]</a>
+#### Allocator-aware containers <a id="container.alloc.reqmts">[[container.alloc.reqmts]]</a>
 
-All of the containers defined in [containers] and in  [basic.string]
+All of the containers defined in [[containers]] and in  [[basic.string]]
 except `array` meet the additional requirements of an
 *allocator-aware container*, as described below.
 
@@ -967,15 +967,15 @@ a.swap(b)
 >
 > Constant.
 
-### Container data races <a id="container.requirements.dataraces">[container.requirements.dataraces]</a>
+### Container data races <a id="container.requirements.dataraces">[[container.requirements.dataraces]]</a>
 
-For purposes of avoiding data races [res.on.data.races], implementations
-shall consider the following functions to be `const`: `begin`, `end`,
-`rbegin`, `rend`, `front`, `back`, `data`, `find`, `lower_bound`,
-`upper_bound`, `equal_range`, `at` and, except in associative or
-unordered associative containers, `operator[]`.
+For purposes of avoiding data races [[res.on.data.races]],
+implementations shall consider the following functions to be `const`:
+`begin`, `end`, `rbegin`, `rend`, `front`, `back`, `data`, `find`,
+`lower_bound`, `upper_bound`, `equal_range`, `at` and, except in
+associative or unordered associative containers, `operator[]`.
 
-Notwithstanding  [res.on.data.races], implementations are required to
+Notwithstanding  [[res.on.data.races]], implementations are required to
 avoid data races when the contents of the contained object in different
 elements in the same container, excepting `vector<bool>`, are modified
 concurrently.
@@ -987,7 +987,7 @@ can result in a data race. As an exception to the general rule, for a
 `vector<bool> y`, `y[0] = true` can race with
 `y[1] = true`. — *end note*\]
 
-### Sequence containers <a id="sequence.reqmts">[sequence.reqmts]</a>
+### Sequence containers <a id="sequence.reqmts">[[sequence.reqmts]]</a>
 
 A sequence container organizes a finite set of objects, all of the same
 type, into a strictly linear arrangement. The library provides four
@@ -1018,7 +1018,7 @@ In this subclause,
 - `u` denotes the name of a variable being declared,
 
 - `A` denotes `X::allocator_type` if the *qualified-id*
-  `X::allocator_type` is valid and denotes a type [temp.deduct] and
+  `X::allocator_type` is valid and denotes a type [[temp.deduct]] and
   `allocator<T>` if it doesn’t,
 
 - `i` and `j` denote iterators that meet the *Cpp17InputIterator*
@@ -1423,7 +1423,7 @@ a.assign(n, t)
 > references, pointers and iterators referring to the elements of `a`.
 > For `vector` and `deque`, also invalidates the past-the-end iterator.
 
-For every sequence container defined in this Clause and in [strings]:
+For every sequence container defined in this Clause and in [[strings]]:
 
 - If the constructor
 
@@ -1746,17 +1746,17 @@ a.at(n)
 >
 > Required for `basic_string`, `array`, `deque`, and `vector`.
 
-### Node handles <a id="container.node">[container.node]</a>
+### Node handles <a id="container.node">[[container.node]]</a>
 
-#### Overview <a id="container.node.overview">[container.node.overview]</a>
+#### Overview <a id="container.node.overview">[[container.node.overview]]</a>
 
 A *node handle* is an object that accepts ownership of a single element
-from an associative container [associative.reqmts] or an unordered
-associative container [unord.req]. It may be used to transfer that
+from an associative container [[associative.reqmts]] or an unordered
+associative container [[unord.req]]. It may be used to transfer that
 ownership to another container with compatible nodes. Containers with
 compatible nodes have the same node handle type. Elements may be
 transferred in either direction between container types in the same row
-of [container.node.compat].
+of [[container.node.compat]].
 
 **Table: Container types with compatible nodes**
 
@@ -1828,7 +1828,7 @@ public:
 };
 ```
 
-#### Constructors, copy, and assignment <a id="container.node.cons">[container.node.cons]</a>
+#### Constructors, copy, and assignment <a id="container.node.cons">[[container.node.cons]]</a>
 
 ``` cpp
 node-handle(node-handle&& nh) noexcept;
@@ -1873,7 +1873,7 @@ node-handle& operator=(node-handle&& nh);
 >
 > Nothing.
 
-#### Destructor <a id="container.node.dtor">[container.node.dtor]</a>
+#### Destructor <a id="container.node.dtor">[[container.node.dtor]]</a>
 
 ``` cpp
 ~node-handle();
@@ -1886,7 +1886,7 @@ node-handle& operator=(node-handle&& nh);
 > `ator_traits::destroy`, then deallocates `ptr_` by calling
 > `ator_traits::template rebind_traits<container_node_type>::deallocate`.
 
-#### Observers <a id="container.node.observers">[container.node.observers]</a>
+#### Observers <a id="container.node.observers">[[container.node.observers]]</a>
 
 ``` cpp
 value_type& value() const;
@@ -1975,7 +1975,7 @@ explicit operator bool() const noexcept;
 >
 > `ptr_ == nullptr`.
 
-#### Modifiers <a id="container.node.modifiers">[container.node.modifiers]</a>
+#### Modifiers <a id="container.node.modifiers">[[container.node.modifiers]]</a>
 
 ``` cpp
 void swap(node-handle& nh)
@@ -1995,7 +1995,7 @@ void swap(node-handle& nh)
 > `ator_traits::propagate_on_container_swap::value` is `true` calls
 > `swap(alloc_, nh.alloc_)`.
 
-### Insert return type <a id="container.insert.return">[container.insert.return]</a>
+### Insert return type <a id="container.insert.return">[[container.insert.return]]</a>
 
 The associative containers with unique keys and the unordered containers
 with unique keys have a member function `insert` that returns a nested
@@ -2016,9 +2016,9 @@ The name *insert-return-type* is exposition only. *insert-return-type*
 has the template parameters, data members, and special members specified
 above. It has no base classes or members other than those specified.
 
-### Associative containers <a id="associative.reqmts">[associative.reqmts]</a>
+### Associative containers <a id="associative.reqmts">[[associative.reqmts]]</a>
 
-#### General <a id="associative.reqmts.general">[associative.reqmts.general]</a>
+#### General <a id="associative.reqmts.general">[[associative.reqmts.general]]</a>
 
 Associative containers provide fast retrieval of data based on keys. The
 library provides four basic kinds of associative containers: `set`,
@@ -2029,8 +2029,8 @@ the basic sequence container kinds (or out of other program-defined
 sequence containers).
 
 Each associative container is parameterized on `Key` and an ordering
-relation `Compare` that induces a strict weak ordering [alg.sorting] on
-elements of `Key`. In addition, `map` and `multimap` associate an
+relation `Compare` that induces a strict weak ordering [[alg.sorting]]
+on elements of `Key`. In addition, `map` and `multimap` associate an
 arbitrary *mapped type* `T` with the `Key`. The object of type `Compare`
 is called the *comparison object* of a container.
 
@@ -2075,7 +2075,7 @@ In this subclause,
 - `a` denotes a value of type `X`,
 
 - `a2` denotes a value of a type with nodes compatible with type `X` (
-  [container.node.compat]),
+  [[container.node.compat]]),
 
 - `b` denotes a value or type `X` or `const X`,
 
@@ -2087,7 +2087,7 @@ In this subclause,
 
 - `a_tran` denotes a value of type `X` or `const X` when the
   *qualified-id* `X::key_compare::is_transparent` is valid and denotes a
-  type [temp.deduct],
+  type [[temp.deduct]],
 
 - `i` and `j` meet the *Cpp17InputIterator* requirements and refer to
   elements implicitly convertible to `value_type`,
@@ -2114,7 +2114,7 @@ In this subclause,
 - `c` denotes a value of type `X::key_compare` or
   `const X::key_compare`;
 
-- `kl` is a value such that `a` is partitioned [alg.sorting] with
+- `kl` is a value such that `a` is partitioned [[alg.sorting]] with
   respect to `c(x, kl)`, with `x` the key value of `e` and `e` in `a`;
 
 - `ku` is a value such that `a` is partitioned with respect to
@@ -2141,10 +2141,10 @@ In this subclause,
 
 A type `X` meets the *associative container* requirements if `X` meets
 all the requirements of an allocator-aware container
-[container.requirements.general] and the following types, statements,
+[[container.requirements.general]] and the following types, statements,
 and expressions are well-formed and have the specified semantics, except
 that for `map` and `multimap`, the requirements placed on `value_type`
-in [container.alloc.reqmts] apply instead to `key_type` and
+in [[container.alloc.reqmts]] apply instead to `key_type` and
 `mapped_type`.
 
 \[*Note 9*: For example, in some cases `key_type` and `mapped_type` are
@@ -3158,7 +3158,7 @@ been passed to the target container in its constructor.
 The member function templates `find`, `count`, `contains`,
 `lower_bound`, `upper_bound`, `equal_range`, `erase`, and `extract`
 shall not participate in overload resolution unless the *qualified-id*
-`Compare::is_transparent` is valid and denotes a type [temp.deduct].
+`Compare::is_transparent` is valid and denotes a type [[temp.deduct]].
 Additionally, the member function templates `extract` and `erase` shall
 not participate in overload resolution if
 `is_convertible_v<K&&, iterator> || is_convertible_v<K&&, const_iterator>`
@@ -3177,7 +3177,7 @@ overload resolution if any of the following are true:
 - It has a `Compare` template parameter and a type that qualifies as an
   allocator is deduced for that parameter.
 
-#### Exception safety guarantees <a id="associative.reqmts.except">[associative.reqmts.except]</a>
+#### Exception safety guarantees <a id="associative.reqmts.except">[[associative.reqmts.except]]</a>
 
 For associative containers, no `clear()` function throws an exception.
 `erase(k)` does not throw an exception unless that exception is thrown
@@ -3191,9 +3191,9 @@ For associative containers, no `swap` function throws an exception
 unless that exception is thrown by the swap of the container’s `Compare`
 object (if any).
 
-### Unordered associative containers <a id="unord.req">[unord.req]</a>
+### Unordered associative containers <a id="unord.req">[[unord.req]]</a>
 
-#### General <a id="unord.req.general">[unord.req.general]</a>
+#### General <a id="unord.req.general">[[unord.req.general]]</a>
 
 Unordered associative containers provide an ability for fast retrieval
 of data based on keys. The worst-case complexity for most operations is
@@ -3202,13 +3202,13 @@ unordered associative containers: `unordered_set`, `unordered_map`,
 `unordered_multiset`, and `unordered_multimap`.
 
 Unordered associative containers conform to the requirements for
-Containers [container.requirements], except that the expressions
+Containers [[container.requirements]], except that the expressions
 `a == b` and `a != b` have different semantics than for the other
 container types.
 
 Each unordered associative container is parameterized by `Key`, by a
 function object type `Hash` that meets the *Cpp17Hash* requirements
-[hash.requirements] and acts as a hash function for argument values of
+[[hash.requirements]] and acts as a hash function for argument values of
 type `Key`, and by a binary predicate `Pred` that induces an equivalence
 relation on values of type `Key`. Additionally, `unordered_map` and
 `unordered_multimap` associate an arbitrary *mapped type* `T` with the
@@ -3277,7 +3277,7 @@ In this subclause,
 - `a` denotes a value of type `X`,
 
 - `a2` denotes a value of a type with nodes compatible with type `X` (
-  [container.node.compat]),
+  [[container.node.compat]]),
 
 - `b` denotes a value of type `X` or `const X`,
 
@@ -3288,7 +3288,7 @@ In this subclause,
 - `a_tran` denotes a value of type `X` or `const X` when the
   *qualified-id*s `X::key_equal::is_transparent` and
   `X::hasher::is_transparent` are both valid and denote types
-  [temp.deduct],
+  [[temp.deduct]],
 
 - `i` and `j` denote input iterators that refer to `value_type`,
 
@@ -3347,10 +3347,10 @@ In this subclause,
 
 A type `X` meets the *unordered associative container* requirements if
 `X` meets all the requirements of an allocator-aware container
-[container.requirements.general] and the following types, statements,
+[[container.requirements.general]] and the following types, statements,
 and expressions are well-formed and have the specified semantics, except
 that for `unordered_map` and `unordered_multimap`, the requirements
-placed on `value_type` in [container.alloc.reqmts] apply instead to
+placed on `value_type` in [[container.alloc.reqmts]] apply instead to
 `key_type` and `mapped_type`.
 
 \[*Note 12*: For example, `key_type` and `mapped_type` are sometimes
@@ -4711,7 +4711,7 @@ invalidated if the element is successfully inserted.
 The member function templates `find`, `count`, `equal_range`,
 `contains`, `extract`, and `erase` shall not participate in overload
 resolution unless the *qualified-id*s `Pred::is_transparent` and
-`Hash::is_transparent` are both valid and denote types [temp.deduct].
+`Hash::is_transparent` are both valid and denote types [[temp.deduct]].
 Additionally, the member function templates `extract` and `erase` shall
 not participate in overload resolution if
 `is_convertible_v<K&&, iterator> || is_convertible_v<K&&, const_iterator>`
@@ -4733,7 +4733,7 @@ participate in overload resolution if any of the following are true:
 - It has a `Pred` template parameter and a type that qualifies as an
   allocator is deduced for that parameter.
 
-#### Exception safety guarantees <a id="unord.req.except">[unord.req.except]</a>
+#### Exception safety guarantees <a id="unord.req.except">[[unord.req.except]]</a>
 
 For unordered associative containers, no `clear()` function throws an
 exception. `erase(k)` does not throw an exception unless that exception
@@ -4752,9 +4752,9 @@ For unordered associative containers, if an exception is thrown from
 within a `rehash()` function other than by the container’s hash function
 or comparison function, the `rehash()` function has no effect.
 
-## Sequence containers <a id="sequences">[sequences]</a>
+## Sequence containers <a id="sequences">[[sequences]]</a>
 
-### In general <a id="sequences.general">[sequences.general]</a>
+### In general <a id="sequences.general">[[sequences.general]]</a>
 
 The headers `<array>`, `<deque>`, `<forward_list>`, `<list>`, and
 `<vector>` define class templates that meet the requirements for
@@ -4768,7 +4768,7 @@ template<class InputIterator>
   using iter-value-type = typename iterator_traits<InputIterator>::value_type;  // exposition only
 ```
 
-### Header `<array>` synopsis <a id="array.syn">[array.syn]</a>
+### Header `<array>` synopsis <a id="array.syn">[[array.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -4812,7 +4812,7 @@ namespace std {
 }
 ```
 
-### Header `<deque>` synopsis <a id="deque.syn">[deque.syn]</a>
+### Header `<deque>` synopsis <a id="deque.syn">[[deque.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -4847,7 +4847,7 @@ namespace std {
 }
 ```
 
-### Header `<forward_list>` synopsis <a id="forward.list.syn">[forward.list.syn]</a>
+### Header `<forward_list>` synopsis <a id="forward.list.syn">[[forward.list.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -4882,7 +4882,7 @@ namespace std {
 }
 ```
 
-### Header `<list>` synopsis <a id="list.syn">[list.syn]</a>
+### Header `<list>` synopsis <a id="list.syn">[[list.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -4917,7 +4917,7 @@ namespace std {
 }
 ```
 
-### Header `<vector>` synopsis <a id="vector.syn">[vector.syn]</a>
+### Header `<vector>` synopsis <a id="vector.syn">[[vector.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -4968,34 +4968,36 @@ namespace std {
 }
 ```
 
-### Class template `array` <a id="array">[array]</a>
+### Class template `array` <a id="array">[[array]]</a>
 
-#### Overview <a id="array.overview">[array.overview]</a>
+#### Overview <a id="array.overview">[[array.overview]]</a>
 
 The header `<array>` defines a class template for storing fixed-size
 sequences of objects. An `array` is a contiguous container
-[container.reqmts]. An instance of `array<T, N>` stores `N` elements of
-type `T`, so that `size() == N` is an invariant.
+[[container.reqmts]]. An instance of `array<T, N>` stores `N` elements
+of type `T`, so that `size() == N` is an invariant.
 
-An `array` is an aggregate [dcl.init.aggr] that can be list-initialized
-with up to `N` elements whose types are convertible to `T`.
+An `array` is an aggregate [[dcl.init.aggr]] that can be
+list-initialized with up to `N` elements whose types are convertible to
+`T`.
 
 An `array` meets all of the requirements of a container
-[container.reqmts] and of a reversible container [container.rev.reqmts],
-except that a default constructed `array` object is not empty if
-$\tcode{N} > 0$. An `array` meets some of the requirements of a sequence
-container [sequence.reqmts]. Descriptions are provided here only for
-operations on `array` that are not described in one of these tables and
-for operations where there is additional semantic information.
+[[container.reqmts]] and of a reversible container
+[[container.rev.reqmts]], except that a default constructed `array`
+object is not empty if $\tcode{N} > 0$. An `array` meets some of the
+requirements of a sequence container [[sequence.reqmts]]. Descriptions
+are provided here only for operations on `array` that are not described
+in one of these tables and for operations where there is additional
+semantic information.
 
-`array<T, N>` is a structural type [temp.param] if `T` is a structural
+`array<T, N>` is a structural type [[temp.param]] if `T` is a structural
 type. Two values `a1` and `a2` of type `array<T, N>` are
-template-argument-equivalent [temp.type] if and only if each pair of
+template-argument-equivalent [[temp.type]] if and only if each pair of
 corresponding elements in `a1` and `a2` are
 template-argument-equivalent.
 
 The types `iterator` and `const_iterator` meet the constexpr iterator
-requirements [iterator.requirements.general].
+requirements [[iterator.requirements.general]].
 
 ``` cpp
 namespace std {
@@ -5059,16 +5061,16 @@ namespace std {
 }
 ```
 
-#### Constructors, copy, and assignment <a id="array.cons">[array.cons]</a>
+#### Constructors, copy, and assignment <a id="array.cons">[[array.cons]]</a>
 
-The conditions for an aggregate [dcl.init.aggr] shall be met. Class
+The conditions for an aggregate [[dcl.init.aggr]] shall be met. Class
 `array` relies on the implicitly-declared special member functions
-[class.default.ctor], [class.dtor], [class.copy.ctor] to conform to the
-container requirements table in  [container.requirements]. In addition
-to the requirements specified in the container requirements table, the
-implicit move constructor and move assignment operator for `array`
-require that `T` be *Cpp17MoveConstructible* or *Cpp17MoveAssignable*,
-respectively.
+[[class.default.ctor]], [[class.dtor]], [[class.copy.ctor]] to conform
+to the container requirements table in  [[container.requirements]]. In
+addition to the requirements specified in the container requirements
+table, the implicit move constructor and move assignment operator for
+`array` require that `T` be *Cpp17MoveConstructible* or
+*Cpp17MoveAssignable*, respectively.
 
 ``` cpp
 template<class T, class... U>
@@ -5079,7 +5081,7 @@ template<class T, class... U>
 >
 > `(is_same_v<T, U> && ...)` is `true`.
 
-#### Member functions <a id="array.members">[array.members]</a>
+#### Member functions <a id="array.members">[[array.members]]</a>
 
 ``` cpp
 constexpr size_type size() const noexcept;
@@ -5120,7 +5122,7 @@ constexpr void swap(array& y) noexcept(is_nothrow_swappable_v<T>);
 > not cause iterators to become associated with the other
 > container. — *end note*\]
 
-#### Specialized algorithms <a id="array.special">[array.special]</a>
+#### Specialized algorithms <a id="array.special">[[array.special]]</a>
 
 ``` cpp
 template<class T, size_t N>
@@ -5137,7 +5139,7 @@ template<class T, size_t N>
 >
 > Linear in `N`.
 
-#### Zero-sized arrays <a id="array.zero">[array.zero]</a>
+#### Zero-sized arrays <a id="array.zero">[[array.zero]]</a>
 
 `array` shall provide support for the special case `N == 0`.
 
@@ -5150,7 +5152,7 @@ undefined.
 Member function `swap()` shall have a non-throwing exception
 specification.
 
-#### Array creation functions <a id="array.creation">[array.creation]</a>
+#### Array creation functions <a id="array.creation">[[array.creation]]</a>
 
 ``` cpp
 template<class T, size_t N>
@@ -5186,7 +5188,7 @@ template<class T, size_t N>
 >
 > `{{ std::move(a[0]), `$\dotsc$`, std::move(a[N - 1]) }}`.
 
-#### Tuple interface <a id="array.tuple">[array.tuple]</a>
+#### Tuple interface <a id="array.tuple">[[array.tuple]]</a>
 
 ``` cpp
 template<class T, size_t N>
@@ -5224,24 +5226,25 @@ template<size_t I, class T, size_t N>
 > A reference to the $\texttt{I}^\text{th}$ element of `a`, where
 > indexing is zero-based.
 
-### Class template `deque` <a id="deque">[deque]</a>
+### Class template `deque` <a id="deque">[[deque]]</a>
 
-#### Overview <a id="deque.overview">[deque.overview]</a>
+#### Overview <a id="deque.overview">[[deque.overview]]</a>
 
 A `deque` is a sequence container that supports random access iterators
-[random.access.iterators]. In addition, it supports constant time insert
-and erase operations at the beginning or the end; insert and erase in
-the middle take linear time. That is, a deque is especially optimized
-for pushing and popping elements at the beginning and end. Storage
-management is handled automatically.
+[[random.access.iterators]]. In addition, it supports constant time
+insert and erase operations at the beginning or the end; insert and
+erase in the middle take linear time. That is, a deque is especially
+optimized for pushing and popping elements at the beginning and end.
+Storage management is handled automatically.
 
 A `deque` meets all of the requirements of a container
-[container.reqmts], of a reversible container [container.rev.reqmts], of
-an allocator-aware container [container.alloc.reqmts], and of a sequence
-container, including the optional sequence container requirements
-[sequence.reqmts]. Descriptions are provided here only for operations on
-`deque` that are not described in one of these tables or for operations
-where there is additional semantic information.
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], and of a sequence container, including the
+optional sequence container requirements [[sequence.reqmts]].
+Descriptions are provided here only for operations on `deque` that are
+not described in one of these tables or for operations where there is
+additional semantic information.
 
 ``` cpp
 namespace std {
@@ -5366,7 +5369,7 @@ namespace std {
 }
 ```
 
-#### Constructors, copy, and assignment <a id="deque.cons">[deque.cons]</a>
+#### Constructors, copy, and assignment <a id="deque.cons">[[deque.cons]]</a>
 
 ``` cpp
 explicit deque(const Allocator&);
@@ -5442,7 +5445,7 @@ template<container-compatible-range<T> R>
 >
 > Linear in `ranges::distance(rg)`.
 
-#### Capacity <a id="deque.capacity">[deque.capacity]</a>
+#### Capacity <a id="deque.capacity">[[deque.capacity]]</a>
 
 ``` cpp
 void resize(size_type sz);
@@ -5504,7 +5507,7 @@ void shrink_to_fit();
 > references, pointers, and iterators referring to the elements in the
 > sequence, as well as the past-the-end iterator.
 
-#### Modifiers <a id="deque.modifiers">[deque.modifiers]</a>
+#### Modifiers <a id="deque.modifiers">[[deque.modifiers]]</a>
 
 ``` cpp
 iterator insert(const_iterator position, const T& x);
@@ -5587,7 +5590,7 @@ void pop_back();
 > of `T` is no more than the lesser of the number of elements before the
 > erased elements and the number of elements after the erased elements.
 
-#### Erasure <a id="deque.erasure">[deque.erasure]</a>
+#### Erasure <a id="deque.erasure">[[deque.erasure]]</a>
 
 ``` cpp
 template<class T, class Allocator, class U>
@@ -5623,9 +5626,9 @@ template<class T, class Allocator, class Predicate>
 > return r;
 > ```
 
-### Class template `forward_list` <a id="forward.list">[forward.list]</a>
+### Class template `forward_list` <a id="forward.list">[[forward.list]]</a>
 
-#### Overview <a id="forward.list.overview">[forward.list.overview]</a>
+#### Overview <a id="forward.list.overview">[[forward.list.overview]]</a>
 
 A `forward_list` is a container that supports forward iterators and
 allows constant time insert and erase operations anywhere within the
@@ -5637,14 +5640,14 @@ overhead relative to a hand-written C-style singly linked list. Features
 that would conflict with that goal have been omitted. — *end note*\]
 
 A `forward_list` meets all of the requirements of a container
-[container.reqmts], except that the `size()` member function is not
+[[container.reqmts]], except that the `size()` member function is not
 provided and `operator==` has linear complexity, A `forward_list` also
 meets all of the requirements for an allocator-aware container
-[container.alloc.reqmts]. In addition, a `forward_list` provides the
+[[container.alloc.reqmts]]. In addition, a `forward_list` provides the
 `assign` member functions and several of the optional sequence container
-requirements [sequence.reqmts]. Descriptions are provided here only for
-operations on `forward_list` that are not described in that table or for
-operations where there is additional semantic information.
+requirements [[sequence.reqmts]]. Descriptions are provided here only
+for operations on `forward_list` that are not described in that table or
+for operations where there is additional semantic information.
 
 \[*Note 2*: Modifying any list requires access to the element preceding
 the first element of interest, but in a `forward_list` there is no
@@ -5783,10 +5786,11 @@ namespace std {
 
 An incomplete type `T` may be used when instantiating `forward_list` if
 the allocator meets the allocator completeness requirements
-[allocator.requirements.completeness]. `T` shall be complete before any
-member of the resulting specialization of `forward_list` is referenced.
+[[allocator.requirements.completeness]]. `T` shall be complete before
+any member of the resulting specialization of `forward_list` is
+referenced.
 
-#### Constructors, copy, and assignment <a id="forward.list.cons">[forward.list.cons]</a>
+#### Constructors, copy, and assignment <a id="forward.list.cons">[[forward.list.cons]]</a>
 
 ``` cpp
 explicit forward_list(const Allocator&);
@@ -5863,7 +5867,7 @@ template<container-compatible-range<T> R>
 >
 > Linear in `ranges::distance(rg)`.
 
-#### Iterators <a id="forward.list.iter">[forward.list.iter]</a>
+#### Iterators <a id="forward.list.iter">[[forward.list.iter]]</a>
 
 ``` cpp
 iterator before_begin() noexcept;
@@ -5885,7 +5889,7 @@ const_iterator cbefore_begin() const noexcept;
 >
 > `before_begin() == end()` shall equal `false`.
 
-#### Element access <a id="forward.list.access">[forward.list.access]</a>
+#### Element access <a id="forward.list.access">[[forward.list.access]]</a>
 
 ``` cpp
 reference front();
@@ -5896,7 +5900,7 @@ const_reference front() const;
 >
 > `*begin()`
 
-#### Modifiers <a id="forward.list.modifiers">[forward.list.modifiers]</a>
+#### Modifiers <a id="forward.list.modifiers">[[forward.list.modifiers]]</a>
 
 None of the overloads of `insert_after` shall affect the validity of
 iterators and references, and `erase_after` shall invalidate only
@@ -6153,16 +6157,16 @@ void clear() noexcept;
 >
 > Does not invalidate past-the-end iterators.
 
-#### Operations <a id="forward.list.ops">[forward.list.ops]</a>
+#### Operations <a id="forward.list.ops">[[forward.list.ops]]</a>
 
 In this subclause, arguments for a template parameter named `Predicate`
 or `BinaryPredicate` shall meet the corresponding requirements in
-[algorithms.requirements]. The semantics of `i + n`, where `i` is an
+[[algorithms.requirements]]. The semantics of `i + n`, where `i` is an
 iterator into the list and `n` is an integer, are the same as those of
 `next(i, n)`. The expression `i - n`, where `i` is an iterator into the
 list and `n` is an integer, means an iterator `j` such that `j + n == i`
 is `true`. For `merge` and `sort`, the definitions and requirements in
-[alg.sorting] apply.
+[[alg.sorting]] apply.
 
 ``` cpp
 void splice_after(const_iterator position, forward_list& x);
@@ -6381,7 +6385,7 @@ void reverse() noexcept;
 >
 > Linear time.
 
-#### Erasure <a id="forward.list.erasure">[forward.list.erasure]</a>
+#### Erasure <a id="forward.list.erasure">[[forward.list.erasure]]</a>
 
 ``` cpp
 template<class T, class Allocator, class U>
@@ -6404,22 +6408,23 @@ template<class T, class Allocator, class Predicate>
 >
 > Equivalent to: `return c.remove_if(pred);`
 
-### Class template `list` <a id="list">[list]</a>
+### Class template `list` <a id="list">[[list]]</a>
 
-#### Overview <a id="list.overview">[list.overview]</a>
+#### Overview <a id="list.overview">[[list.overview]]</a>
 
 A `list` is a sequence container that supports bidirectional iterators
 and allows constant time insert and erase operations anywhere within the
 sequence, with storage management handled automatically. Unlike vectors
-[vector] and deques [deque], fast random access to list elements is not
-supported, but many algorithms only need sequential access anyway.
+[[vector]] and deques [[deque]], fast random access to list elements is
+not supported, but many algorithms only need sequential access anyway.
 
 A `list` meets all of the requirements of a container
-[container.reqmts], of a reversible container [container.rev.reqmts], of
-an allocator-aware container [container.alloc.reqmts], and of a sequence
-container, including most of the optional sequence container
-requirements [sequence.reqmts]. The exceptions are the `operator[]` and
-`at` member functions, which are not provided.
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], and of a sequence container, including most
+of the optional sequence container requirements [[sequence.reqmts]]. The
+exceptions are the `operator[]` and `at` member functions, which are not
+provided.
 
 Descriptions are provided here only for operations on `list` that are
 not described in one of these tables or for operations where there is
@@ -6566,10 +6571,10 @@ namespace std {
 
 An incomplete type `T` may be used when instantiating `list` if the
 allocator meets the allocator completeness requirements
-[allocator.requirements.completeness]. `T` shall be complete before any
-member of the resulting specialization of `list` is referenced.
+[[allocator.requirements.completeness]]. `T` shall be complete before
+any member of the resulting specialization of `list` is referenced.
 
-#### Constructors, copy, and assignment <a id="list.cons">[list.cons]</a>
+#### Constructors, copy, and assignment <a id="list.cons">[[list.cons]]</a>
 
 ``` cpp
 explicit list(const Allocator&);
@@ -6643,7 +6648,7 @@ template<container-compatible-range<T> R>
 >
 > Linear in `ranges::distance(rg)`.
 
-#### Capacity <a id="list.capacity">[list.capacity]</a>
+#### Capacity <a id="list.capacity">[[list.capacity]]</a>
 
 ``` cpp
 void resize(size_type sz);
@@ -6688,7 +6693,7 @@ void resize(size_type sz, const T& c);
 >   ;                 // do nothing
 > ```
 
-#### Modifiers <a id="list.modifiers">[list.modifiers]</a>
+#### Modifiers <a id="list.modifiers">[[list.modifiers]]</a>
 
 ``` cpp
 iterator insert(const_iterator position, const T& x);
@@ -6751,17 +6756,17 @@ void clear() noexcept;
 > time in the size of the range and the number of calls to the
 > destructor of type `T` is exactly equal to the size of the range.
 
-#### Operations <a id="list.ops">[list.ops]</a>
+#### Operations <a id="list.ops">[[list.ops]]</a>
 
 Since lists allow fast insertion and erasing from the middle of a list,
 certain operations are provided specifically for them.
 
 In this subclause, arguments for a template parameter named `Predicate`
 or `BinaryPredicate` shall meet the corresponding requirements in
-[algorithms.requirements]. The semantics of `i + n` and `i - n`, where
+[[algorithms.requirements]]. The semantics of `i + n` and `i - n`, where
 `i` is an iterator into the list and `n` is an integer, are the same as
 those of `next(i, n)` and `prev(i, n)`, respectively. For `merge` and
-`sort`, the definitions and requirements in [alg.sorting] apply.
+`sort`, the definitions and requirements in [[alg.sorting]] apply.
 
 `list` provides three splice operations that destructively move elements
 from one list to another. The behavior of splice operations is undefined
@@ -6977,7 +6982,7 @@ template<class Compare> void sort(Compare comp);
 >
 > Stable\[algorithm.stable\].
 
-#### Erasure <a id="list.erasure">[list.erasure]</a>
+#### Erasure <a id="list.erasure">[[list.erasure]]</a>
 
 ``` cpp
 template<class T, class Allocator, class U>
@@ -7000,9 +7005,9 @@ template<class T, class Allocator, class Predicate>
 >
 > Equivalent to: `return c.remove_if(pred);`
 
-### Class template `vector` <a id="vector">[vector]</a>
+### Class template `vector` <a id="vector">[[vector]]</a>
 
-#### Overview <a id="vector.overview">[vector.overview]</a>
+#### Overview <a id="vector.overview">[[vector.overview]]</a>
 
 A `vector` is a sequence container that supports (amortized) constant
 time insert and erase operations at the end; insert and erase in the
@@ -7010,18 +7015,19 @@ middle take linear time. Storage management is handled automatically,
 though hints can be given to improve efficiency.
 
 A `vector` meets all of the requirements of a container
-[container.reqmts], of a reversible container [container.rev.reqmts], of
-an allocator-aware container [container.alloc.reqmts], of a sequence
-container, including most of the optional sequence container
-requirements [sequence.reqmts], and, for an element type other than
-`bool`, of a contiguous container [container.reqmts]. The exceptions are
-the `push_front`, `prepend_range`, `pop_front`, and `emplace_front`
-member functions, which are not provided. Descriptions are provided here
-only for operations on `vector` that are not described in one of these
-tables or for operations where there is additional semantic information.
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], of a sequence container, including most of
+the optional sequence container requirements [[sequence.reqmts]], and,
+for an element type other than `bool`, of a contiguous container
+[[container.reqmts]]. The exceptions are the `push_front`,
+`prepend_range`, `pop_front`, and `emplace_front` member functions,
+which are not provided. Descriptions are provided here only for
+operations on `vector` that are not described in one of these tables or
+for operations where there is additional semantic information.
 
 The types `iterator` and `const_iterator` meet the constexpr iterator
-requirements [iterator.requirements.general].
+requirements [[iterator.requirements.general]].
 
 ``` cpp
 namespace std {
@@ -7147,10 +7153,10 @@ namespace std {
 
 An incomplete type `T` may be used when instantiating `vector` if the
 allocator meets the allocator completeness requirements
-[allocator.requirements.completeness]. `T` shall be complete before any
-member of the resulting specialization of `vector` is referenced.
+[[allocator.requirements.completeness]]. `T` shall be complete before
+any member of the resulting specialization of `vector` is referenced.
 
-#### Constructors <a id="vector.cons">[vector.cons]</a>
+#### Constructors <a id="vector.cons">[[vector.cons]]</a>
 
 ``` cpp
 constexpr explicit vector(const Allocator&) noexcept;
@@ -7237,7 +7243,7 @@ template<container-compatible-range<T> R>
 > reallocations and order N calls to the copy or move constructor of
 > `T`.
 
-#### Capacity <a id="vector.capacity">[vector.capacity]</a>
+#### Capacity <a id="vector.capacity">[[vector.capacity]]</a>
 
 ``` cpp
 constexpr size_type capacity() const noexcept;
@@ -7381,7 +7387,7 @@ constexpr void resize(size_type sz, const T& c);
 >
 > If an exception is thrown there are no effects.
 
-#### Data <a id="vector.data">[vector.data]</a>
+#### Data <a id="vector.data">[[vector.data]]</a>
 
 ``` cpp
 constexpr T*         data() noexcept;
@@ -7397,7 +7403,7 @@ constexpr const T*   data() const noexcept;
 >
 > Constant time.
 
-#### Modifiers <a id="vector.modifiers">[vector.modifiers]</a>
+#### Modifiers <a id="vector.modifiers">[[vector.modifiers]]</a>
 
 ``` cpp
 constexpr iterator insert(const_iterator position, const T& x);
@@ -7463,7 +7469,7 @@ constexpr void pop_back();
 > called the number of times equal to the number of elements in the
 > vector after the erased elements.
 
-#### Erasure <a id="vector.erasure">[vector.erasure]</a>
+#### Erasure <a id="vector.erasure">[[vector.erasure]]</a>
 
 ``` cpp
 template<class T, class Allocator, class U>
@@ -7499,9 +7505,9 @@ template<class T, class Allocator, class Predicate>
 > return r;
 > ```
 
-### Specialization of `vector` for `bool` <a id="vector.bool">[vector.bool]</a>
+### Specialization of `vector` for `bool` <a id="vector.bool">[[vector.bool]]</a>
 
-#### Partial class template specialization `vector<bool, Allocator>` <a id="vector.bool.pspc">[vector.bool.pspc]</a>
+#### Partial class template specialization `vector<bool, Allocator>` <a id="vector.bool.pspc">[[vector.bool.pspc]]</a>
 
 To optimize space allocation, a partial specialization of `vector` for
 `bool` elements is provided:
@@ -7632,8 +7638,8 @@ namespace std {
 Unless described below, all operations have the same requirements and
 semantics as the primary `vector` template, except that operations
 dealing with the `bool` value type map to bit values in the container
-storage and `allocator_traits::construct` [allocator.traits.members] is
-not used to construct these values.
+storage and `allocator_traits::construct` [[allocator.traits.members]]
+is not used to construct these values.
 
 There is no requirement that the data be stored as a contiguous
 allocation of `bool` values. A space-optimized representation of bits is
@@ -7687,7 +7693,7 @@ template<class T>
 > `Alloc` and `vector<bool, Alloc>` is not a program-defined
 > specialization.
 
-#### Formatter specialization for `vector<bool>` <a id="vector.bool.fmt">[vector.bool.fmt]</a>
+#### Formatter specialization for `vector<bool>` <a id="vector.bool.fmt">[[vector.bool.fmt]]</a>
 
 ``` cpp
 namespace std {
@@ -7725,9 +7731,9 @@ template<class FormatContext>
 
 > Equivalent to: `return `*`underlying_`*`.format(ref, ctx);`
 
-## Associative containers <a id="associative">[associative]</a>
+## Associative containers <a id="associative">[[associative]]</a>
 
-### In general <a id="associative.general">[associative.general]</a>
+### In general <a id="associative.general">[[associative.general]]</a>
 
 The header `<map>` defines the class templates `map` and `multimap`; the
 header `<set>` defines the class templates `set` and `multiset`.
@@ -7760,7 +7766,7 @@ template<ranges::input_range Range>
          typename ranges::range_value_t<Range>::second_type>;           // exposition only
 ```
 
-### Header `<map>` synopsis <a id="associative.map.syn">[associative.map.syn]</a>
+### Header `<map>` synopsis <a id="associative.map.syn">[[associative.map.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -7825,7 +7831,7 @@ namespace std {
 }
 ```
 
-### Header `<set>` synopsis <a id="associative.set.syn">[associative.set.syn]</a>
+### Header `<set>` synopsis <a id="associative.set.syn">[[associative.set.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -7884,21 +7890,22 @@ namespace std {
 }
 ```
 
-### Class template `map` <a id="map">[map]</a>
+### Class template `map` <a id="map">[[map]]</a>
 
-#### Overview <a id="map.overview">[map.overview]</a>
+#### Overview <a id="map.overview">[[map.overview]]</a>
 
 A `map` is an associative container that supports unique keys (i.e.,
 contains at most one of each key value) and provides for fast retrieval
 of values of another type `T` based on the keys. The `map` class
 supports bidirectional iterators.
 
-A `map` meets all of the requirements of a container [container.reqmts],
-of a reversible container [container.rev.reqmts], of an allocator-aware
-container [container.alloc.reqmts]. and of an associative container
-[associative.reqmts]. A `map` also provides most operations described
-in  [associative.reqmts] for unique keys. This means that a `map`
-supports the `a_uniq` operations in  [associative.reqmts] but not the
+A `map` meets all of the requirements of a container
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]]. and of an associative container
+[[associative.reqmts]]. A `map` also provides most operations described
+in  [[associative.reqmts]] for unique keys. This means that a `map`
+supports the `a_uniq` operations in  [[associative.reqmts]] but not the
 `a_eq` operations. For a `map<Key,T>` the `key_type` is `Key` and the
 `value_type` is `pair<const Key,T>`. Descriptions are provided here only
 for operations on `map` that are not described in one of those tables or
@@ -8121,7 +8128,7 @@ namespace std {
 }
 ```
 
-#### Constructors, copy, and assignment <a id="map.cons">[map.cons]</a>
+#### Constructors, copy, and assignment <a id="map.cons">[[map.cons]]</a>
 
 ``` cpp
 explicit map(const Compare& comp, const Allocator& = Allocator());
@@ -8167,7 +8174,7 @@ template<container-compatible-range<value_type> R>
 > Linear in N if `rg` is already sorted with respect to `comp` and
 > otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
-#### Element access <a id="map.access">[map.access]</a>
+#### Element access <a id="map.access">[[map.access]]</a>
 
 ``` cpp
 mapped_type& operator[](const key_type& x);
@@ -8203,7 +8210,7 @@ const mapped_type& at(const key_type& x) const;
 >
 > Logarithmic.
 
-#### Modifiers <a id="map.modifiers">[map.modifiers]</a>
+#### Modifiers <a id="map.modifiers">[[map.modifiers]]</a>
 
 ``` cpp
 template<class P>
@@ -8347,7 +8354,7 @@ template<class M>
 >
 > The same as `emplace` and `emplace_hint`, respectively.
 
-#### Erasure <a id="map.erasure">[map.erasure]</a>
+#### Erasure <a id="map.erasure">[[map.erasure]]</a>
 
 ``` cpp
 template<class Key, class T, class Compare, class Allocator, class Predicate>
@@ -8371,9 +8378,9 @@ template<class Key, class T, class Compare, class Allocator, class Predicate>
 > return original_size - c.size();
 > ```
 
-### Class template `multimap` <a id="multimap">[multimap]</a>
+### Class template `multimap` <a id="multimap">[[multimap]]</a>
 
-#### Overview <a id="multimap.overview">[multimap.overview]</a>
+#### Overview <a id="multimap.overview">[[multimap.overview]]</a>
 
 A `multimap` is an associative container that supports equivalent keys
 (i.e., possibly containing multiple copies of the same key value) and
@@ -8381,16 +8388,17 @@ provides for fast retrieval of values of another type `T` based on the
 keys. The `multimap` class supports bidirectional iterators.
 
 A `multimap` meets all of the requirements of a container
-[container.reqmts], of a reversible container [container.rev.reqmts], of
-an allocator-aware container [container.alloc.reqmts], and of an
-associative container [associative.reqmts]. A `multimap` also provides
-most operations described in  [associative.reqmts] for equal keys. This
-means that a `multimap` supports the `a_eq` operations in 
-[associative.reqmts] but not the `a_uniq` operations. For a
-`multimap<Key,T>` the `key_type` is `Key` and the `value_type` is
-`pair<const Key,T>`. Descriptions are provided here only for operations
-on `multimap` that are not described in one of those tables or for
-operations where there is additional semantic information.
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], and of an associative container
+[[associative.reqmts]]. A `multimap` also provides most operations
+described in  [[associative.reqmts]] for equal keys. This means that a
+`multimap` supports the `a_eq` operations in  [[associative.reqmts]] but
+not the `a_uniq` operations. For a `multimap<Key,T>` the `key_type` is
+`Key` and the `value_type` is `pair<const Key,T>`. Descriptions are
+provided here only for operations on `multimap` that are not described
+in one of those tables or for operations where there is additional
+semantic information.
 
 ``` cpp
 namespace std {
@@ -8588,7 +8596,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="multimap.cons">[multimap.cons]</a>
+#### Constructors <a id="multimap.cons">[[multimap.cons]]</a>
 
 ``` cpp
 explicit multimap(const Compare& comp, const Allocator& = Allocator());
@@ -8635,7 +8643,7 @@ template<container-compatible-range<value_type> R>
 > Linear in N if `rg` is already sorted with respect to `comp` and
 > otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
-#### Modifiers <a id="multimap.modifiers">[multimap.modifiers]</a>
+#### Modifiers <a id="multimap.modifiers">[[multimap.modifiers]]</a>
 
 ``` cpp
 template<class P> iterator insert(P&& x);
@@ -8650,7 +8658,7 @@ template<class P> iterator insert(const_iterator position, P&& x);
 > The second form is equivalent to
 > `return emplace_hint(position, std::forward<P>(x))`.
 
-#### Erasure <a id="multimap.erasure">[multimap.erasure]</a>
+#### Erasure <a id="multimap.erasure">[[multimap.erasure]]</a>
 
 ``` cpp
 template<class Key, class T, class Compare, class Allocator, class Predicate>
@@ -8674,21 +8682,22 @@ template<class Key, class T, class Compare, class Allocator, class Predicate>
 > return original_size - c.size();
 > ```
 
-### Class template `set` <a id="set">[set]</a>
+### Class template `set` <a id="set">[[set]]</a>
 
-#### Overview <a id="set.overview">[set.overview]</a>
+#### Overview <a id="set.overview">[[set.overview]]</a>
 
 A `set` is an associative container that supports unique keys (i.e.,
 contains at most one of each key value) and provides for fast retrieval
 of the keys themselves. The `set` class supports bidirectional
 iterators.
 
-A `set` meets all of the requirements of a container [container.reqmts],
-of a reversible container [container.rev.reqmts], of an allocator-aware
-container [container.alloc.reqmts]. and of an associative container
-[associative.reqmts]. A `set` also provides most operations described
-in  [associative.reqmts] for unique keys. This means that a `set`
-supports the `a_uniq` operations in  [associative.reqmts] but not the
+A `set` meets all of the requirements of a container
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]]. and of an associative container
+[[associative.reqmts]]. A `set` also provides most operations described
+in  [[associative.reqmts]] for unique keys. This means that a `set`
+supports the `a_uniq` operations in  [[associative.reqmts]] but not the
 `a_eq` operations. For a `set<Key>` both the `key_type` and `value_type`
 are `Key`. Descriptions are provided here only for operations on `set`
 that are not described in one of these tables and for operations where
@@ -8874,7 +8883,7 @@ namespace std {
 }
 ```
 
-#### Constructors, copy, and assignment <a id="set.cons">[set.cons]</a>
+#### Constructors, copy, and assignment <a id="set.cons">[[set.cons]]</a>
 
 ``` cpp
 explicit set(const Compare& comp, const Allocator& = Allocator());
@@ -8920,7 +8929,7 @@ template<container-compatible-range<value_type> R>
 > Linear in N if `rg` is already sorted with respect to `comp` and
 > otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
-#### Erasure <a id="set.erasure">[set.erasure]</a>
+#### Erasure <a id="set.erasure">[[set.erasure]]</a>
 
 ``` cpp
 template<class Key, class Compare, class Allocator, class Predicate>
@@ -8944,9 +8953,9 @@ template<class Key, class Compare, class Allocator, class Predicate>
 > return original_size - c.size();
 > ```
 
-### Class template `multiset` <a id="multiset">[multiset]</a>
+### Class template `multiset` <a id="multiset">[[multiset]]</a>
 
-#### Overview <a id="multiset.overview">[multiset.overview]</a>
+#### Overview <a id="multiset.overview">[[multiset.overview]]</a>
 
 A `multiset` is an associative container that supports equivalent keys
 (i.e., possibly contains multiple copies of the same key value) and
@@ -8954,15 +8963,17 @@ provides for fast retrieval of the keys themselves. The `multiset` class
 supports bidirectional iterators.
 
 A `multiset` meets all of the requirements of a container
-[container.reqmts], of a reversible container [container.rev.reqmts], of
-an allocator-aware container [container.alloc.reqmts], of an associative
-container [associative.reqmts]. `multiset` also provides most operations
-described in  [associative.reqmts] for duplicate keys. This means that a
-`multiset` supports the `a_eq` operations in  [associative.reqmts] but
-not the `a_uniq` operations. For a `multiset<Key>` both the `key_type`
-and `value_type` are `Key`. Descriptions are provided here only for
-operations on `multiset` that are not described in one of these tables
-and for operations where there is additional semantic information.
+[[container.reqmts]], of a reversible container
+[[container.rev.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], of an associative container
+[[associative.reqmts]]. `multiset` also provides most operations
+described in  [[associative.reqmts]] for duplicate keys. This means that
+a `multiset` supports the `a_eq` operations in  [[associative.reqmts]]
+but not the `a_uniq` operations. For a `multiset<Key>` both the
+`key_type` and `value_type` are `Key`. Descriptions are provided here
+only for operations on `multiset` that are not described in one of these
+tables and for operations where there is additional semantic
+information.
 
 ``` cpp
 namespace std {
@@ -9144,7 +9155,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="multiset.cons">[multiset.cons]</a>
+#### Constructors <a id="multiset.cons">[[multiset.cons]]</a>
 
 ``` cpp
 explicit multiset(const Compare& comp, const Allocator& = Allocator());
@@ -9190,7 +9201,7 @@ template<container-compatible-range<value_type> R>
 > Linear in N if `rg` is already sorted with respect to `comp` and
 > otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
-#### Erasure <a id="multiset.erasure">[multiset.erasure]</a>
+#### Erasure <a id="multiset.erasure">[[multiset.erasure]]</a>
 
 ``` cpp
 template<class Key, class Compare, class Allocator, class Predicate>
@@ -9214,9 +9225,9 @@ template<class Key, class Compare, class Allocator, class Predicate>
 > return original_size - c.size();
 > ```
 
-## Unordered associative containers <a id="unord">[unord]</a>
+## Unordered associative containers <a id="unord">[[unord]]</a>
 
-### In general <a id="unord.general">[unord.general]</a>
+### In general <a id="unord.general">[[unord.general]]</a>
 
 The header `<unordered_map>` defines the class templates `unordered_map`
 and `unordered_multimap`; the header `<unordered_set>` defines the class
@@ -9225,10 +9236,10 @@ templates `unordered_set` and `unordered_multiset`.
 The exposition-only alias templates *iter-value-type*, *iter-key-type*,
 *iter-mapped-type*, *iter-to\\-alloc-type*, *range-key-type*,
 *range-mapped-type*, and *range-to-alloc-type* defined in
-[associative.general] may appear in deduction guides for unordered
+[[associative.general]] may appear in deduction guides for unordered
 containers.
 
-### Header `<unordered_map>` synopsis <a id="unord.map.syn">[unord.map.syn]</a>
+### Header `<unordered_map>` synopsis <a id="unord.map.syn">[[unord.map.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -9299,7 +9310,7 @@ namespace std {
 }
 ```
 
-### Header `<unordered_set>` synopsis <a id="unord.set.syn">[unord.set.syn]</a>
+### Header `<unordered_set>` synopsis <a id="unord.set.syn">[[unord.set.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -9364,9 +9375,9 @@ namespace std {
 }
 ```
 
-### Class template `unordered_map` <a id="unord.map">[unord.map]</a>
+### Class template `unordered_map` <a id="unord.map">[[unord.map]]</a>
 
-#### Overview <a id="unord.map.overview">[unord.map.overview]</a>
+#### Overview <a id="unord.map.overview">[[unord.map.overview]]</a>
 
 An `unordered_map` is an unordered associative container that supports
 unique keys (an `unordered_map` contains at most one of each key value)
@@ -9374,17 +9385,17 @@ and that associates values of another type `mapped_type` with the keys.
 The `unordered_map` class supports forward iterators.
 
 An `unordered_map` meets all of the requirements of a container
-[container.reqmts], of an allocator-aware container
-[container.alloc.reqmts], and of an unordered associative container
-[unord.req]. It provides the operations described in the preceding
+[[container.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], and of an unordered associative container
+[[unord.req]]. It provides the operations described in the preceding
 requirements table for unique keys; that is, an `unordered_map` supports
 the `a_uniq` operations in that table, not the `a_eq` operations. For an
 `unordered_map<Key, T>` the `key_type` is `Key`, the `mapped_type` is
 `T`, and the `value_type` is `pair<const Key, T>`.
 
-Subclause  [unord.map] only describes operations on `unordered_map` that
-are not described in one of the requirement tables, or for which there
-is additional semantic information.
+Subclause  [[unord.map]] only describes operations on `unordered_map`
+that are not described in one of the requirement tables, or for which
+there is additional semantic information.
 
 ``` cpp
 namespace std {
@@ -9669,7 +9680,7 @@ A `size_type` parameter type in an `unordered_map` deduction guide
 refers to the `size_type` member type of the type deduced by the
 deduction guide.
 
-#### Constructors <a id="unord.map.cnstr">[unord.map.cnstr]</a>
+#### Constructors <a id="unord.map.cnstr">[[unord.map.cnstr]]</a>
 
 ``` cpp
 unordered_map() : unordered_map(size_type(see below)) { }
@@ -9722,7 +9733,7 @@ unordered_map(initializer_list<value_type> il,
 >
 > Average case linear, worst case quadratic.
 
-#### Element access <a id="unord.map.elem">[unord.map.elem]</a>
+#### Element access <a id="unord.map.elem">[[unord.map.elem]]</a>
 
 ``` cpp
 mapped_type& operator[](const key_type& k);
@@ -9755,7 +9766,7 @@ const mapped_type& at(const key_type& k) const;
 > An exception object of type `out_of_range` if no such element is
 > present.
 
-#### Modifiers <a id="unord.map.modifiers">[unord.map.modifiers]</a>
+#### Modifiers <a id="unord.map.modifiers">[[unord.map.modifiers]]</a>
 
 ``` cpp
 template<class P>
@@ -9906,7 +9917,7 @@ template<class M>
 >
 > The same as `emplace` and `emplace_hint`, respectively.
 
-#### Erasure <a id="unord.map.erasure">[unord.map.erasure]</a>
+#### Erasure <a id="unord.map.erasure">[[unord.map.erasure]]</a>
 
 ``` cpp
 template<class K, class T, class H, class P, class A, class Predicate>
@@ -9930,9 +9941,9 @@ template<class K, class T, class H, class P, class A, class Predicate>
 > return original_size - c.size();
 > ```
 
-### Class template `unordered_multimap` <a id="unord.multimap">[unord.multimap]</a>
+### Class template `unordered_multimap` <a id="unord.multimap">[[unord.multimap]]</a>
 
-#### Overview <a id="unord.multimap.overview">[unord.multimap.overview]</a>
+#### Overview <a id="unord.multimap.overview">[[unord.multimap.overview]]</a>
 
 An `unordered_multimap` is an unordered associative container that
 supports equivalent keys (an instance of `unordered_multimap` may
@@ -9941,15 +9952,15 @@ another type `mapped_type` with the keys. The `unordered_multimap` class
 supports forward iterators.
 
 An `unordered_multimap` meets all of the requirements of a container
-[container.reqmts], of an allocator-aware container
-[container.alloc.reqmts], and of an unordered associative container
-[unord.req]. It provides the operations described in the preceding
+[[container.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], and of an unordered associative container
+[[unord.req]]. It provides the operations described in the preceding
 requirements table for equivalent keys; that is, an `unordered_multimap`
 supports the `a_eq` operations in that table, not the `a_uniq`
 operations. For an `unordered_multimap<Key, T>` the `key_type` is `Key`,
 the `mapped_type` is `T`, and the `value_type` is `pair<const Key, T>`.
 
-Subclause  [unord.multimap] only describes operations on
+Subclause  [[unord.multimap]] only describes operations on
 `unordered_multimap` that are not described in one of the requirement
 tables, or for which there is additional semantic information.
 
@@ -10218,7 +10229,7 @@ A `size_type` parameter type in an `unordered_multimap` deduction guide
 refers to the `size_type` member type of the type deduced by the
 deduction guide.
 
-#### Constructors <a id="unord.multimap.cnstr">[unord.multimap.cnstr]</a>
+#### Constructors <a id="unord.multimap.cnstr">[[unord.multimap.cnstr]]</a>
 
 ``` cpp
 unordered_multimap() : unordered_multimap(size_type(see below)) { }
@@ -10271,7 +10282,7 @@ unordered_multimap(initializer_list<value_type> il,
 >
 > Average case linear, worst case quadratic.
 
-#### Modifiers <a id="unord.multimap.modifiers">[unord.multimap.modifiers]</a>
+#### Modifiers <a id="unord.multimap.modifiers">[[unord.multimap.modifiers]]</a>
 
 ``` cpp
 template<class P>
@@ -10295,7 +10306,7 @@ template<class P>
 >
 > Equivalent to: `return emplace_hint(hint, std::forward<P>(obj));`
 
-#### Erasure <a id="unord.multimap.erasure">[unord.multimap.erasure]</a>
+#### Erasure <a id="unord.multimap.erasure">[[unord.multimap.erasure]]</a>
 
 ``` cpp
 template<class K, class T, class H, class P, class A, class Predicate>
@@ -10319,9 +10330,9 @@ template<class K, class T, class H, class P, class A, class Predicate>
 > return original_size - c.size();
 > ```
 
-### Class template `unordered_set` <a id="unord.set">[unord.set]</a>
+### Class template `unordered_set` <a id="unord.set">[[unord.set]]</a>
 
-#### Overview <a id="unord.set.overview">[unord.set.overview]</a>
+#### Overview <a id="unord.set.overview">[[unord.set.overview]]</a>
 
 An `unordered_set` is an unordered associative container that supports
 unique keys (an `unordered_set` contains at most one of each key value)
@@ -10329,18 +10340,18 @@ and in which the elements’ keys are the elements themselves. The
 `unordered_set` class supports forward iterators.
 
 An `unordered_set` meets all of the requirements of a container
-[container.reqmts], of an allocator-aware container
-[container.alloc.reqmts], of an unordered associative container
-[unord.req]. It provides the operations described in the preceding
+[[container.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], of an unordered associative container
+[[unord.req]]. It provides the operations described in the preceding
 requirements table for unique keys; that is, an `unordered_set` supports
 the `a_uniq` operations in that table, not the `a_eq` operations. For an
 `unordered_set<Key>` the `key_type` and the `value_type` are both `Key`.
 The `iterator` and `const_iterator` types are both constant iterator
 types. It is unspecified whether they are the same type.
 
-Subclause  [unord.set] only describes operations on `unordered_set` that
-are not described in one of the requirement tables, or for which there
-is additional semantic information.
+Subclause  [[unord.set]] only describes operations on `unordered_set`
+that are not described in one of the requirement tables, or for which
+there is additional semantic information.
 
 ``` cpp
 namespace std {
@@ -10591,7 +10602,7 @@ A `size_type` parameter type in an `unordered_set` deduction guide
 refers to the `size_type` member type of the type deduced by the
 deduction guide.
 
-#### Constructors <a id="unord.set.cnstr">[unord.set.cnstr]</a>
+#### Constructors <a id="unord.set.cnstr">[[unord.set.cnstr]]</a>
 
 ``` cpp
 unordered_set() : unordered_set(size_type(see below)) { }
@@ -10644,7 +10655,7 @@ unordered_set(initializer_list<value_type> il,
 >
 > Average case linear, worst case quadratic.
 
-#### Erasure <a id="unord.set.erasure">[unord.set.erasure]</a>
+#### Erasure <a id="unord.set.erasure">[[unord.set.erasure]]</a>
 
 ``` cpp
 template<class K, class H, class P, class A, class Predicate>
@@ -10668,9 +10679,9 @@ template<class K, class H, class P, class A, class Predicate>
 > return original_size - c.size();
 > ```
 
-### Class template `unordered_multiset` <a id="unord.multiset">[unord.multiset]</a>
+### Class template `unordered_multiset` <a id="unord.multiset">[[unord.multiset]]</a>
 
-#### Overview <a id="unord.multiset.overview">[unord.multiset.overview]</a>
+#### Overview <a id="unord.multiset.overview">[[unord.multiset.overview]]</a>
 
 An `unordered_multiset` is an unordered associative container that
 supports equivalent keys (an instance of `unordered_multiset` may
@@ -10679,9 +10690,9 @@ element’s key is the element itself. The `unordered_multiset` class
 supports forward iterators.
 
 An `unordered_multiset` meets all of the requirements of a container
-[container.reqmts], of an allocator-aware container
-[container.alloc.reqmts], and of an unordered associative container
-[unord.req]. It provides the operations described in the preceding
+[[container.reqmts]], of an allocator-aware container
+[[container.alloc.reqmts]], and of an unordered associative container
+[[unord.req]]. It provides the operations described in the preceding
 requirements table for equivalent keys; that is, an `unordered_multiset`
 supports the `a_eq` operations in that table, not the `a_uniq`
 operations. For an `unordered_multiset<Key>` the `key_type` and the
@@ -10689,7 +10700,7 @@ operations. For an `unordered_multiset<Key>` the `key_type` and the
 are both constant iterator types. It is unspecified whether they are the
 same type.
 
-Subclause  [unord.multiset] only describes operations on
+Subclause  [[unord.multiset]] only describes operations on
 `unordered_multiset` that are not described in one of the requirement
 tables, or for which there is additional semantic information.
 
@@ -10943,7 +10954,7 @@ A `size_type` parameter type in an `unordered_multiset` deduction guide
 refers to the `size_type` member type of the type deduced by the
 deduction guide.
 
-#### Constructors <a id="unord.multiset.cnstr">[unord.multiset.cnstr]</a>
+#### Constructors <a id="unord.multiset.cnstr">[[unord.multiset.cnstr]]</a>
 
 ``` cpp
 unordered_multiset() : unordered_multiset(size_type(see below)) { }
@@ -10996,7 +11007,7 @@ unordered_multiset(initializer_list<value_type> il,
 >
 > Average case linear, worst case quadratic.
 
-#### Erasure <a id="unord.multiset.erasure">[unord.multiset.erasure]</a>
+#### Erasure <a id="unord.multiset.erasure">[[unord.multiset.erasure]]</a>
 
 ``` cpp
 template<class K, class H, class P, class A, class Predicate>
@@ -11020,9 +11031,9 @@ template<class K, class H, class P, class A, class Predicate>
 > return original_size - c.size();
 > ```
 
-## Container adaptors <a id="container.adaptors">[container.adaptors]</a>
+## Container adaptors <a id="container.adaptors">[[container.adaptors]]</a>
 
-### In general <a id="container.adaptors.general">[container.adaptors.general]</a>
+### In general <a id="container.adaptors.general">[[container.adaptors.general]]</a>
 
 The headers `<queue>`, `<stack>`, `<flat_map>`, and `<flat_set>` define
 the container adaptors `queue` and `priority_queue`, `stack`, `flat_map`
@@ -11095,9 +11106,9 @@ overload resolution if any of the following are true:
   `uses_allocator_v<MappedContainer, Allocator>` is `false`.
 
 The exposition-only alias template *iter-value-type* defined in
-[sequences.general] and the exposition-only alias templates
+[[sequences.general]] and the exposition-only alias templates
 *iter-key-type*, *iter-mapped-type*, *range-key-type*, and
-*range-mapped-type* defined in [associative.general] may appear in
+*range-mapped-type* defined in [[associative.general]] may appear in
 deduction guides for container adaptors.
 
 The following exposition-only alias template may appear in deduction
@@ -11109,7 +11120,7 @@ template<class Allocator, class T>
     typename allocator_traits<Allocator>::template rebind_alloc<T>;
 ```
 
-### Header `<queue>` synopsis <a id="queue.syn">[queue.syn]</a>
+### Header `<queue>` synopsis <a id="queue.syn">[[queue.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -11153,7 +11164,7 @@ namespace std {
 }
 ```
 
-### Header `<stack>` synopsis <a id="stack.syn">[stack.syn]</a>
+### Header `<stack>` synopsis <a id="stack.syn">[[stack.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -11186,7 +11197,7 @@ namespace std {
 }
 ```
 
-### Header `<flat_map>` synopsis <a id="flat.map.syn">[flat.map.syn]</a>
+### Header `<flat_map>` synopsis <a id="flat.map.syn">[[flat.map.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -11233,7 +11244,7 @@ namespace std {
 }
 ```
 
-### Header `<flat_set>` synopsis <a id="flat.set.syn">[flat.set.syn]</a>
+### Header `<flat_set>` synopsis <a id="flat.set.syn">[[flat.set.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -11272,13 +11283,13 @@ namespace std {
 }
 ```
 
-### Class template `queue` <a id="queue">[queue]</a>
+### Class template `queue` <a id="queue">[[queue]]</a>
 
-#### Definition <a id="queue.defn">[queue.defn]</a>
+#### Definition <a id="queue.defn">[[queue.defn]]</a>
 
 Any sequence container supporting operations `front()`, `back()`,
 `push_back()` and `pop_front()` can be used to instantiate `queue`. In
-particular, `list` [list] and `deque` [deque] can be used.
+particular, `list` [[list]] and `deque` [[deque]] can be used.
 
 ``` cpp
 namespace std {
@@ -11354,7 +11365,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="queue.cons">[queue.cons]</a>
+#### Constructors <a id="queue.cons">[[queue.cons]]</a>
 
 ``` cpp
 explicit queue(const Container& cont);
@@ -11391,7 +11402,7 @@ template<container-compatible-range<T> R>
 >
 > Initializes `c` with `ranges::to<Container>(std::forward<R>(rg))`.
 
-#### Constructors with allocators <a id="queue.cons.alloc">[queue.cons.alloc]</a>
+#### Constructors with allocators <a id="queue.cons.alloc">[[queue.cons.alloc]]</a>
 
 If `uses_allocator_v<container_type, Alloc>` is `false` the constructors
 in this subclause shall not participate in overload resolution.
@@ -11459,7 +11470,7 @@ template<container-compatible-range<T> R, class Alloc>
 >
 > Initializes `c` with `ranges::to<Container>(std::forward<R>(rg), a)`.
 
-#### Modifiers <a id="queue.mod">[queue.mod]</a>
+#### Modifiers <a id="queue.mod">[[queue.mod]]</a>
 
 ``` cpp
 template<container-compatible-range<T> R>
@@ -11471,7 +11482,7 @@ template<container-compatible-range<T> R>
 > Equivalent to `c.append_range(std::forward<R>(rg))` if that is a valid
 > expression, otherwise `ranges::copy(rg, back_inserter(c))`.
 
-#### Operators <a id="queue.ops">[queue.ops]</a>
+#### Operators <a id="queue.ops">[[queue.ops]]</a>
 
 ``` cpp
 template<class T, class Container>
@@ -11538,7 +11549,7 @@ template<class T, three_way_comparable Container>
 >
 > `x.c <=> y.c`.
 
-#### Specialized algorithms <a id="queue.special">[queue.special]</a>
+#### Specialized algorithms <a id="queue.special">[[queue.special]]</a>
 
 ``` cpp
 template<class T, class Container>
@@ -11551,17 +11562,17 @@ template<class T, class Container>
 >
 > As if by `x.swap(y)`.
 
-### Class template `priority_queue` <a id="priority.queue">[priority.queue]</a>
+### Class template `priority_queue` <a id="priority.queue">[[priority.queue]]</a>
 
-#### Overview <a id="priqueue.overview">[priqueue.overview]</a>
+#### Overview <a id="priqueue.overview">[[priqueue.overview]]</a>
 
 Any sequence container with random access iterator and supporting
 operations `front()`, `push_back()` and `pop_back()` can be used to
-instantiate `priority_queue`. In particular, `vector` [vector] and
-`deque` [deque] can be used. Instantiating `priority_queue` also
+instantiate `priority_queue`. In particular, `vector` [[vector]] and
+`deque` [[deque]] can be used. Instantiating `priority_queue` also
 involves supplying a function or function object for making priority
 comparisons; the library assumes that the function or function object
-defines a strict weak ordering [alg.sorting].
+defines a strict weak ordering [[alg.sorting]].
 
 ``` cpp
 namespace std {
@@ -11679,7 +11690,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="priqueue.cons">[priqueue.cons]</a>
+#### Constructors <a id="priqueue.cons">[[priqueue.cons]]</a>
 
 ``` cpp
 priority_queue(const Compare& x, const Container& y);
@@ -11744,7 +11755,7 @@ template<container-compatible-range<T> R>
 > `ranges::to<Container>(std::forward<R>(rg))` and finally calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
-#### Constructors with allocators <a id="priqueue.cons.alloc">[priqueue.cons.alloc]</a>
+#### Constructors with allocators <a id="priqueue.cons.alloc">[[priqueue.cons.alloc]]</a>
 
 If `uses_allocator_v<container_type, Alloc>` is `false` the constructors
 in this subclause shall not participate in overload resolution.
@@ -11874,7 +11885,7 @@ template<container-compatible-range<T> R, class Alloc>
 > Initializes `c` with `ranges::to<Container>(std::forward<R>(rg), a)`;
 > calls `make_heap(c.begin(), c.end(), comp)`.
 
-#### Members <a id="priqueue.members">[priqueue.members]</a>
+#### Members <a id="priqueue.members">[[priqueue.members]]</a>
 
 ``` cpp
 void push(const value_type& x);
@@ -11944,7 +11955,7 @@ void pop();
 > c.pop_back();
 > ```
 
-#### Specialized algorithms <a id="priqueue.special">[priqueue.special]</a>
+#### Specialized algorithms <a id="priqueue.special">[[priqueue.special]]</a>
 
 ``` cpp
 template<class T, class Container, class Compare>
@@ -11959,15 +11970,15 @@ template<class T, class Container, class Compare>
 >
 > As if by `x.swap(y)`.
 
-### Class template `stack` <a id="stack">[stack]</a>
+### Class template `stack` <a id="stack">[[stack]]</a>
 
-#### General <a id="stack.general">[stack.general]</a>
+#### General <a id="stack.general">[[stack.general]]</a>
 
 Any sequence container supporting operations `back()`, `push_back()` and
 `pop_back()` can be used to instantiate `stack`. In particular, `vector`
-[vector], `list` [list] and `deque` [deque] can be used.
+[[vector]], `list` [[list]] and `deque` [[deque]] can be used.
 
-#### Definition <a id="stack.defn">[stack.defn]</a>
+#### Definition <a id="stack.defn">[[stack.defn]]</a>
 
 ``` cpp
 namespace std {
@@ -12042,7 +12053,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="stack.cons">[stack.cons]</a>
+#### Constructors <a id="stack.cons">[[stack.cons]]</a>
 
 ``` cpp
 explicit stack(const Container& cont);
@@ -12079,7 +12090,7 @@ template<container-compatible-range<T> R>
 >
 > Initializes `c` with `ranges::to<Container>(std::forward<R>(rg))`.
 
-#### Constructors with allocators <a id="stack.cons.alloc">[stack.cons.alloc]</a>
+#### Constructors with allocators <a id="stack.cons.alloc">[[stack.cons.alloc]]</a>
 
 If `uses_allocator_v<container_type, Alloc>` is `false` the constructors
 in this subclause shall not participate in overload resolution.
@@ -12147,7 +12158,7 @@ template<container-compatible-range<T> R, class Alloc>
 >
 > Initializes `c` with `ranges::to<Container>(std::forward<R>(rg), a)`.
 
-#### Modifiers <a id="stack.mod">[stack.mod]</a>
+#### Modifiers <a id="stack.mod">[[stack.mod]]</a>
 
 ``` cpp
 template<container-compatible-range<T> R>
@@ -12159,7 +12170,7 @@ template<container-compatible-range<T> R>
 > Equivalent to `c.append_range(std::forward<R>(rg))` if that is a valid
 > expression, otherwise `ranges::copy(rg, back_inserter(c))`.
 
-#### Operators <a id="stack.ops">[stack.ops]</a>
+#### Operators <a id="stack.ops">[[stack.ops]]</a>
 
 ``` cpp
 template<class T, class Container>
@@ -12225,7 +12236,7 @@ template<class T, three_way_comparable Container>
 >
 > `x.c <=> y.c`.
 
-#### Specialized algorithms <a id="stack.special">[stack.special]</a>
+#### Specialized algorithms <a id="stack.special">[[stack.special]]</a>
 
 ``` cpp
 template<class T, class Container>
@@ -12238,25 +12249,25 @@ template<class T, class Container>
 >
 > As if by `x.swap(y)`.
 
-### Class template `flat_map` <a id="flat.map">[flat.map]</a>
+### Class template `flat_map` <a id="flat.map">[[flat.map]]</a>
 
-#### Overview <a id="flat.map.overview">[flat.map.overview]</a>
+#### Overview <a id="flat.map.overview">[[flat.map.overview]]</a>
 
 A `flat_map` is a container adaptor that provides an associative
 container interface that supports unique keys (i.e., contains at most
 one of each key value) and provides for fast retrieval of values of
 another type `T` based on the keys. `flat_map` supports iterators that
 meet the *Cpp17InputIterator* requirements and model the
-`random_access_iterator` concept [iterator.concept.random.access].
+`random_access_iterator` concept [[iterator.concept.random.access]].
 
 A `flat_map` meets all of the requirements of a container
-[container.reqmts] and of a reversible container [container.rev.reqmts],
-plus the optional container requirements [container.opt.reqmts].
-`flat_map` meets the requirements of an associative container
-[associative.reqmts], except that:
+[[container.reqmts]] and of a reversible container
+[[container.rev.reqmts]], plus the optional container requirements
+[[container.opt.reqmts]]. `flat_map` meets the requirements of an
+associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
-  [container.node],
+  [[container.node]],
 
 - it does not meet the requirements related to iterator invalidation,
   and
@@ -12266,11 +12277,11 @@ plus the optional container requirements [container.opt.reqmts].
   insertion position iterator.
 
 \[*Note 1*: A `flat_map` does not meet the additional requirements of an
-allocator-aware container [container.alloc.reqmts]. — *end note*\]
+allocator-aware container [[container.alloc.reqmts]]. — *end note*\]
 
 A `flat_map` also provides most operations described in
-[associative.reqmts] for unique keys. This means that a `flat_map`
-supports the `a_uniq` operations in [associative.reqmts] but not the
+[[associative.reqmts]] for unique keys. This means that a `flat_map`
+supports the `a_uniq` operations in [[associative.reqmts]] but not the
 `a_eq` operations. For a `flat_map<Key, T>` the `key_type` is `Key` and
 the `value_type` is `pair<Key, T>`.
 
@@ -12287,18 +12298,18 @@ A `flat_map` maintains the following invariants:
 - the value at offset `off` within the value container is the value
   associated with the key at offset `off` within the key container.
 
-If any member function in [flat.map.defn] exits via an exception the
+If any member function in [[flat.map.defn]] exits via an exception the
 invariants are restored.
 
 \[*Note 2*: This can result in the `flat_map` being
 emptied. — *end note*\]
 
 Any type `C` that meets the sequence container requirements
-[sequence.reqmts] can be used to instantiate `flat_map`, as long as
+[[sequence.reqmts]] can be used to instantiate `flat_map`, as long as
 `C::iterator` meets the *Cpp17RandomAccessIterator* requirements and
 invocations of member functions `C::size` and `C::max_size` do not exit
-via an exception. In particular, `vector` [vector] and `deque` [deque]
-can be used.
+via an exception. In particular, `vector` [[vector]] and `deque`
+[[deque]] can be used.
 
 \[*Note 3*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -12315,7 +12326,7 @@ The effect of calling a constructor or member function that takes a
 is not sorted with respect to `key_comp()`, or that contains equal
 elements, is undefined.
 
-#### Definition <a id="flat.map.defn">[flat.map.defn]</a>
+#### Definition <a id="flat.map.defn">[[flat.map.defn]]</a>
 
 ``` cpp
 namespace std {
@@ -12654,7 +12665,7 @@ The member type `containers` has the data members and special members
 specified above. It has no base classes or members other than those
 specified.
 
-#### Constructors <a id="flat.map.cons">[flat.map.cons]</a>
+#### Constructors <a id="flat.map.cons">[[flat.map.cons]]</a>
 
 ``` cpp
 flat_map(key_container_type key_cont, mapped_container_type mapped_cont,
@@ -12782,7 +12793,7 @@ template<class Allocator>
 > `c.keys` and `c.values` are constructed with uses-allocator
 > construction\[allocator.uses.construction\].
 
-#### Capacity <a id="flat.map.capacity">[flat.map.capacity]</a>
+#### Capacity <a id="flat.map.capacity">[[flat.map.capacity]]</a>
 
 ``` cpp
 size_type size() const noexcept;
@@ -12800,7 +12811,7 @@ size_type max_size() const noexcept;
 >
 > `min<size_type>(c.keys.max_size(), c.values.max_size())`.
 
-#### Access <a id="flat.map.access">[flat.map.access]</a>
+#### Access <a id="flat.map.access">[[flat.map.access]]</a>
 
 ``` cpp
 mapped_type& operator[](const key_type& x);
@@ -12872,7 +12883,7 @@ template<class K> const mapped_type& at(const K& x) const;
 >
 > Logarithmic.
 
-#### Modifiers <a id="flat.map.modifiers">[flat.map.modifiers]</a>
+#### Modifiers <a id="flat.map.modifiers">[[flat.map.modifiers]]</a>
 
 ``` cpp
 template<class... Args> pair<iterator, bool> emplace(Args&&... args);
@@ -13247,7 +13258,7 @@ void replace(key_container_type&& key_cont, mapped_container_type&& mapped_cont)
 > c.values = std::move(mapped_cont);
 > ```
 
-#### Erasure <a id="flat.map.erasure">[flat.map.erasure]</a>
+#### Erasure <a id="flat.map.erasure">[[flat.map.erasure]]</a>
 
 ``` cpp
 template<class Key, class T, class Compare, class KeyContainer, class MappedContainer,
@@ -13281,9 +13292,9 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
 > \[*Note 16*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
 
-### Class template `flat_multimap` <a id="flat.multimap">[flat.multimap]</a>
+### Class template `flat_multimap` <a id="flat.multimap">[[flat.multimap]]</a>
 
-#### Overview <a id="flat.multimap.overview">[flat.multimap.overview]</a>
+#### Overview <a id="flat.multimap.overview">[[flat.multimap.overview]]</a>
 
 A `flat_multimap` is a container adaptor that provides an associative
 container interface that supports equivalent keys (i.e., possibly
@@ -13291,16 +13302,16 @@ containing multiple copies of the same key value) and provides for fast
 retrieval of values of another type `T` based on the keys.
 `flat_multimap` supports iterators that meet the *Cpp17InputIterator*
 requirements and model the `random_access_iterator` concept
-[iterator.concept.random.access].
+[[iterator.concept.random.access]].
 
 A `flat_multimap` meets all of the requirements for a container
-[container.reqmts] and for a reversible container
-[container.rev.reqmts], plus the optional container requirements
-[container.opt.reqmts]. `flat_multimap` meets the requirements of an
-associative container [associative.reqmts], except that:
+[[container.reqmts]] and for a reversible container
+[[container.rev.reqmts]], plus the optional container requirements
+[[container.opt.reqmts]]. `flat_multimap` meets the requirements of an
+associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
-  [container.node],
+  [[container.node]],
 
 - it does not meet the requirements related to iterator invalidation,
   and
@@ -13310,11 +13321,12 @@ associative container [associative.reqmts], except that:
   insertion position iterator.
 
 \[*Note 4*: A `flat_multimap` does not meet the additional requirements
-of an allocator-aware container [container.alloc.reqmts]. — *end note*\]
+of an allocator-aware container
+[[container.alloc.reqmts]]. — *end note*\]
 
 A `flat_multimap` also provides most operations described in
-[associative.reqmts] for equal keys. This means that a `flat_multimap`
-supports the `a_eq` operations in [associative.reqmts] but not the
+[[associative.reqmts]] for equal keys. This means that a `flat_multimap`
+supports the `a_eq` operations in [[associative.reqmts]] but not the
 `a_uniq` operations. For a `flat_multimap<Key, T>` the `key_type` is
 `Key` and the `value_type` is `pair<Key, T>`.
 
@@ -13334,18 +13346,18 @@ A `flat_multimap` maintains the following invariants:
 - the value at offset `off` within the value container is the value
   associated with the key at offset `off` within the key container.
 
-If any member function in [flat.multimap.defn] exits via an exception,
+If any member function in [[flat.multimap.defn]] exits via an exception,
 the invariants are restored.
 
 \[*Note 5*: This can result in the `flat_multimap` being
 emptied. — *end note*\]
 
 Any type `C` that meets the sequence container requirements
-[sequence.reqmts] can be used to instantiate `flat_multimap`, as long as
-`C::iterator` meets the *Cpp17RandomAccessIterator* requirements and
+[[sequence.reqmts]] can be used to instantiate `flat_multimap`, as long
+as `C::iterator` meets the *Cpp17RandomAccessIterator* requirements and
 invocations of member functions `C::size` and `C::max_size` do not exit
-via an exception. In particular, `vector` [vector] and `deque` [deque]
-can be used.
+via an exception. In particular, `vector` [[vector]] and `deque`
+[[deque]] can be used.
 
 \[*Note 6*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -13361,7 +13373,7 @@ The effect of calling a constructor or member function that takes a
 `sorted_equivalent_t` argument with a container, containers, or range
 that are not sorted with respect to `key_comp()` is undefined.
 
-#### Definition <a id="flat.multimap.defn">[flat.multimap.defn]</a>
+#### Definition <a id="flat.multimap.defn">[[flat.multimap.defn]]</a>
 
 ``` cpp
 namespace std {
@@ -13670,7 +13682,7 @@ The member type `containers` has the data members and special members
 specified above. It has no base classes or members other than those
 specified.
 
-#### Constructors <a id="flat.multimap.cons">[flat.multimap.cons]</a>
+#### Constructors <a id="flat.multimap.cons">[[flat.multimap.cons]]</a>
 
 ``` cpp
 flat_multimap(key_container_type key_cont, mapped_container_type mapped_cont,
@@ -13791,7 +13803,7 @@ template<class Allocator>
 > `c.keys` and `c.values` are constructed with uses-allocator
 > construction\[allocator.uses.construction\].
 
-#### Erasure <a id="flat.multimap.erasure">[flat.multimap.erasure]</a>
+#### Erasure <a id="flat.multimap.erasure">[[flat.multimap.erasure]]</a>
 
 ``` cpp
 template<class Key, class T, class Compare, class KeyContainer, class MappedContainer,
@@ -13825,24 +13837,24 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
 > \[*Note 17*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
 
-### Class template `flat_set` <a id="flat.set">[flat.set]</a>
+### Class template `flat_set` <a id="flat.set">[[flat.set]]</a>
 
-#### Overview <a id="flat.set.overview">[flat.set.overview]</a>
+#### Overview <a id="flat.set.overview">[[flat.set.overview]]</a>
 
 A `flat_set` is a container adaptor that provides an associative
 container interface that supports unique keys (i.e., contains at most
 one of each key value) and provides for fast retrieval of the keys
 themselves. `flat_set` supports iterators that model the
-`random_access_iterator` concept [iterator.concept.random.access].
+`random_access_iterator` concept [[iterator.concept.random.access]].
 
 A `flat_set` meets all of the requirements for a container
-[container.reqmts] and for a reversible container
-[container.rev.reqmts], plus the optional container requirements
-[container.opt.reqmts]. `flat_set` meets the requirements of an
-associative container [associative.reqmts], except that:
+[[container.reqmts]] and for a reversible container
+[[container.rev.reqmts]], plus the optional container requirements
+[[container.opt.reqmts]]. `flat_set` meets the requirements of an
+associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
-  [container.node.overview],
+  [[container.node.overview]],
 
 - it does not meet the requirements related to iterator invalidation,
   and
@@ -13853,11 +13865,11 @@ associative container [associative.reqmts], except that:
 
 \[*Note 7*: A `flat_set` does not meet the additional requirements of an
 allocator-aware container, as described in
-[container.alloc.reqmts]. — *end note*\]
+[[container.alloc.reqmts]]. — *end note*\]
 
 A `flat_set` also provides most operations described in
-[associative.reqmts] for unique keys. This means that a `flat_set`
-supports the `a_uniq` operations in [associative.reqmts] but not the
+[[associative.reqmts]] for unique keys. This means that a `flat_set`
+supports the `a_uniq` operations in [[associative.reqmts]] but not the
 `a_eq` operations. For a `flat_set<Key>`, both the `key_type` and
 `value_type` are `Key`.
 
@@ -13868,15 +13880,15 @@ where there is additional semantic information.
 A `flat_set` maintains the invariant that the keys are sorted with
 respect to the comparison object.
 
-If any member function in [flat.set.defn] exits via an exception, the
+If any member function in [[flat.set.defn]] exits via an exception, the
 invariant is restored.
 
 \[*Note 8*: This can result in the `flat_set`’s being
 emptied. — *end note*\]
 
-Any sequence container [sequence.reqmts] supporting
+Any sequence container [[sequence.reqmts]] supporting
 *Cpp17RandomAccessIterator* can be used to instantiate `flat_set`. In
-particular, `vector` [vector] and `deque` [deque] can be used.
+particular, `vector` [[vector]] and `deque` [[deque]] can be used.
 
 \[*Note 9*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -13887,7 +13899,7 @@ The effect of calling a constructor or member function that takes a
 `sorted_unique_t` argument with a range that is not sorted with respect
 to `key_comp()`, or that contains equal elements, is undefined.
 
-#### Definition <a id="flat.set.defn">[flat.set.defn]</a>
+#### Definition <a id="flat.set.defn">[[flat.set.defn]]</a>
 
 ``` cpp
 namespace std {
@@ -14146,7 +14158,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="flat.set.cons">[flat.set.cons]</a>
+#### Constructors <a id="flat.set.cons">[[flat.set.cons]]</a>
 
 ``` cpp
 explicit flat_set(container_type cont, const key_compare& comp = key_compare());
@@ -14241,7 +14253,7 @@ template<class Allocator>
 > *c* is constructed with uses-allocator
 > construction\[allocator.uses.construction\].
 
-#### Modifiers <a id="flat.set.modifiers">[flat.set.modifiers]</a>
+#### Modifiers <a id="flat.set.modifiers">[[flat.set.modifiers]]</a>
 
 ``` cpp
 template<class K> pair<iterator, bool> insert(K&& x);
@@ -14379,7 +14391,7 @@ void replace(container_type&& cont);
 >
 > Equivalent to: *`c`*` = std::move(cont);`
 
-#### Erasure <a id="flat.set.erasure">[flat.set.erasure]</a>
+#### Erasure <a id="flat.set.erasure">[[flat.set.erasure]]</a>
 
 ``` cpp
 template<class Key, class Compare, class KeyContainer, class Predicate>
@@ -14412,25 +14424,25 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
 > \[*Note 18*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
 
-### Class template `flat_multiset` <a id="flat.multiset">[flat.multiset]</a>
+### Class template `flat_multiset` <a id="flat.multiset">[[flat.multiset]]</a>
 
-#### Overview <a id="flat.multiset.overview">[flat.multiset.overview]</a>
+#### Overview <a id="flat.multiset.overview">[[flat.multiset.overview]]</a>
 
 A `flat_multiset` is a container adaptor that provides an associative
 container interface that supports equivalent keys (i.e., possibly
 containing multiple copies of the same key value) and provides for fast
 retrieval of the keys themselves. `flat_multiset` supports iterators
 that model the `random_access_iterator` concept
-[iterator.concept.random.access].
+[[iterator.concept.random.access]].
 
 A `flat_multiset` meets all of the requirements for a container
-[container.reqmts] and for a reversible container
-[container.rev.reqmts], plus the optional container requirements
-[container.opt.reqmts]. `flat_multiset` meets the requirements of an
-associative container [associative.reqmts], except that:
+[[container.reqmts]] and for a reversible container
+[[container.rev.reqmts]], plus the optional container requirements
+[[container.opt.reqmts]]. `flat_multiset` meets the requirements of an
+associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
-  [container.node.overview],
+  [[container.node.overview]],
 
 - it does not meet the requirements related to iterator invalidation,
   and
@@ -14441,11 +14453,11 @@ associative container [associative.reqmts], except that:
 
 \[*Note 10*: A `flat_multiset` does not meet the additional requirements
 of an allocator-aware container, as described in
-[container.alloc.reqmts]. — *end note*\]
+[[container.alloc.reqmts]]. — *end note*\]
 
 A `flat_multiset` also provides most operations described in
-[associative.reqmts] for equal keys. This means that a `flat_multiset`
-supports the `a_eq` operations in [associative.reqmts] but not the
+[[associative.reqmts]] for equal keys. This means that a `flat_multiset`
+supports the `a_eq` operations in [[associative.reqmts]] but not the
 `a_uniq` operations. For a `flat_multiset<Key>`, both the `key_type` and
 `value_type` are `Key`.
 
@@ -14456,15 +14468,15 @@ where there is additional semantic information.
 A `flat_multiset` maintains the invariant that the keys are sorted with
 respect to the comparison object.
 
-If any member function in [flat.multiset.defn] exits via an exception,
+If any member function in [[flat.multiset.defn]] exits via an exception,
 the invariant is restored.
 
 \[*Note 11*: This can result in the `flat_multiset`’s being
 emptied. — *end note*\]
 
-Any sequence container [sequence.reqmts] supporting
+Any sequence container [[sequence.reqmts]] supporting
 *Cpp17RandomAccessIterator* can be used to instantiate `flat_multiset`.
-In particular, `vector` [vector] and `deque` [deque] can be used.
+In particular, `vector` [[vector]] and `deque` [[deque]] can be used.
 
 \[*Note 12*: `vector<bool>` is not a sequence container. — *end note*\]
 
@@ -14475,7 +14487,7 @@ The effect of calling a constructor or member function that takes a
 `sorted_equivalent_t` argument with a range that is not sorted with
 respect to `key_comp()` is undefined.
 
-#### Definition <a id="flat.multiset.defn">[flat.multiset.defn]</a>
+#### Definition <a id="flat.multiset.defn">[[flat.multiset.defn]]</a>
 
 ``` cpp
 namespace std {
@@ -14737,7 +14749,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="flat.multiset.cons">[flat.multiset.cons]</a>
+#### Constructors <a id="flat.multiset.cons">[[flat.multiset.cons]]</a>
 
 ``` cpp
 explicit flat_multiset(container_type cont, const key_compare& comp = key_compare());
@@ -14833,7 +14845,7 @@ template<class Allocator>
 > *c* is constructed with uses-allocator
 > construction\[allocator.uses.construction\].
 
-#### Modifiers <a id="flat.multiset.modifiers">[flat.multiset.modifiers]</a>
+#### Modifiers <a id="flat.multiset.modifiers">[[flat.multiset.modifiers]]</a>
 
 ``` cpp
 template<class... Args> iterator emplace(Args&&... args);
@@ -14932,7 +14944,7 @@ void replace(container_type&& cont);
 >
 > Equivalent to: `c = std::move(cont);`
 
-#### Erasure <a id="flat.multiset.erasure">[flat.multiset.erasure]</a>
+#### Erasure <a id="flat.multiset.erasure">[[flat.multiset.erasure]]</a>
 
 ``` cpp
 template<class Key, class Compare, class KeyContainer, class Predicate>
@@ -14965,7 +14977,7 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
 > \[*Note 19*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
 
-### Container adaptors formatting <a id="container.adaptors.format">[container.adaptors.format]</a>
+### Container adaptors formatting <a id="container.adaptors.format">[[container.adaptors.format]]</a>
 
 For each of `queue`, `priority_queue`, and `stack`, the library provides
 the following formatter specialization where `adaptor-type` is the name
@@ -15015,17 +15027,17 @@ template<class FormatContext>
 >
 > Equivalent to: `return `*`underlying_`*`.format(r.c, ctx);`
 
-## Views <a id="views">[views]</a>
+## Views <a id="views">[[views]]</a>
 
-### General <a id="views.general">[views.general]</a>
+### General <a id="views.general">[[views.general]]</a>
 
 The header `<span>` defines the view `span`. The header `<mdspan>`
 defines the class template `mdspan` and other facilities for interacting
 with these multidimensional views.
 
-### Contiguous access <a id="views.contiguous">[views.contiguous]</a>
+### Contiguous access <a id="views.contiguous">[[views.contiguous]]</a>
 
-#### Header `<span>` synopsis <a id="span.syn">[span.syn]</a>
+#### Header `<span>` synopsis <a id="span.syn">[[span.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -15052,9 +15064,9 @@ namespace std {
 }
 ```
 
-#### Class template `span` <a id="views.span">[views.span]</a>
+#### Class template `span` <a id="views.span">[[views.span]]</a>
 
-##### Overview <a id="span.overview">[span.overview]</a>
+##### Overview <a id="span.overview">[[span.overview]]</a>
 
 A `span` is a view over a contiguous sequence of objects, the storage of
 which is owned by some other object.
@@ -15156,12 +15168,12 @@ namespace std {
 ```
 
 `span<ElementType, Extent>` is a trivially copyable type
-[term.trivially.copyable.type].
+[[term.trivially.copyable.type]].
 
 `ElementType` is required to be a complete object type that is not an
 abstract class type.
 
-##### Constructors, copy, and assignment <a id="span.cons">[span.cons]</a>
+##### Constructors, copy, and assignment <a id="span.cons">[[span.cons]]</a>
 
 ``` cpp
 constexpr span() noexcept;
@@ -15363,7 +15375,7 @@ constexpr span& operator=(const span& other) noexcept = default;
 >
 > `size() == other.size() && data() == other.data()`.
 
-##### Deduction guides <a id="span.deduct">[span.deduct]</a>
+##### Deduction guides <a id="span.deduct">[[span.deduct]]</a>
 
 ``` cpp
 template<class It, class EndOrSize>
@@ -15379,7 +15391,7 @@ template<class R>
 
 > `R` satisfies `ranges::``contiguous_range`.
 
-##### Subviews <a id="span.sub">[span.sub]</a>
+##### Subviews <a id="span.sub">[[span.sub]]</a>
 
 ``` cpp
 template<size_t Count> constexpr span<element_type, Count> first() const;
@@ -15500,7 +15512,7 @@ constexpr span<element_type, dynamic_extent> subspan(
 > return {data() + offset, count == dynamic_extent ? size() - offset : count};
 > ```
 
-##### Observers <a id="span.obs">[span.obs]</a>
+##### Observers <a id="span.obs">[[span.obs]]</a>
 
 ``` cpp
 constexpr size_type size() const noexcept;
@@ -15526,7 +15538,7 @@ constexpr size_type size_bytes() const noexcept;
 >
 > Equivalent to: `return size() == 0;`
 
-##### Element access <a id="span.elem">[span.elem]</a>
+##### Element access <a id="span.elem">[[span.elem]]</a>
 
 ``` cpp
 constexpr reference operator[](size_type idx) const;
@@ -15572,7 +15584,7 @@ constexpr pointer data() const noexcept;
 >
 > Equivalent to: `return `*`data_`*`;`
 
-##### Iterator support <a id="span.iterators">[span.iterators]</a>
+##### Iterator support <a id="span.iterators">[[span.iterators]]</a>
 
 ``` cpp
 using iterator = \impdefx{type of span::iterator};
@@ -15620,7 +15632,7 @@ constexpr reverse_iterator rend() const noexcept;
 >
 > Equivalent to: `return reverse_iterator(begin());`
 
-#### Views of object representation <a id="span.objectrep">[span.objectrep]</a>
+#### Views of object representation <a id="span.objectrep">[[span.objectrep]]</a>
 
 ``` cpp
 template<class ElementType, size_t Extent>
@@ -15648,9 +15660,9 @@ template<class ElementType, size_t Extent>
 > `return R{reinterpret_cast<byte*>(s.data()), s.size_bytes()};` where
 > `R` is the return type.
 
-### Multidimensional access <a id="views.multidim">[views.multidim]</a>
+### Multidimensional access <a id="views.multidim">[[views.multidim]]</a>
 
-#### Overview <a id="mdspan.overview">[mdspan.overview]</a>
+#### Overview <a id="mdspan.overview">[[mdspan.overview]]</a>
 
 A *multidimensional index space* is a Cartesian product of integer
 intervals. Each interval can be represented by a half-open range
@@ -15672,7 +15684,7 @@ the following are true:
 - for every rank index i of S, the $i^\text{th}$ value of `idx` is an
   integer in the interval [Lᵢ, Uᵢ) of S.
 
-#### Header `<mdspan>` synopsis <a id="mdspan.syn">[mdspan.syn]</a>
+#### Header `<mdspan>` synopsis <a id="mdspan.syn">[[mdspan.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -15700,12 +15712,12 @@ namespace std {
 }
 ```
 
-#### Class template `extents` <a id="mdspan.extents">[mdspan.extents]</a>
+#### Class template `extents` <a id="mdspan.extents">[[mdspan.extents]]</a>
 
-##### Overview <a id="mdspan.extents.overview">[mdspan.extents.overview]</a>
+##### Overview <a id="mdspan.extents.overview">[[mdspan.extents.overview]]</a>
 
 The class template `extents` represents a multidimensional index space
-of rank equal to `sizeof...(Extents)`. In subclause [views], `extents`
+of rank equal to `sizeof...(Extents)`. In subclause [[views]], `extents`
 is used synonymously with multidimensional index space.
 
 ``` cpp
@@ -15778,7 +15790,7 @@ otherwise $E_r$.
 The $r^\text{th}$ interval of the multidimensional index space
 represented by an `extents` object is $[0, D_r)$.
 
-##### Exposition-only helpers <a id="mdspan.extents.expo">[mdspan.extents.expo]</a>
+##### Exposition-only helpers <a id="mdspan.extents.expo">[[mdspan.extents.expo]]</a>
 
 ``` cpp
 static constexpr rank_type dynamic-index(rank_type i) noexcept;
@@ -15850,7 +15862,7 @@ template<class OtherIndexType>
 > types can use the `static_cast` branch without loss of
 > precision. — *end note*\]
 
-##### Constructors <a id="mdspan.extents.cons">[mdspan.extents.cons]</a>
+##### Constructors <a id="mdspan.extents.cons">[[mdspan.extents.cons]]</a>
 
 ``` cpp
 template<class OtherIndexType, size_t... OtherExtents>
@@ -15972,7 +15984,7 @@ template<class... Integrals>
 >
 > The deduced type is `dextents<size_t, sizeof...(Integrals)>`.
 
-##### Observers of the multidimensional index space <a id="mdspan.extents.obs">[mdspan.extents.obs]</a>
+##### Observers of the multidimensional index space <a id="mdspan.extents.obs">[[mdspan.extents.obs]]</a>
 
 ``` cpp
 static constexpr size_t static_extent(rank_type i) noexcept;
@@ -15998,7 +16010,7 @@ constexpr index_type extent(rank_type i) const noexcept;
 >
 > $D_\texttt{i}$.
 
-##### Comparison operators <a id="mdspan.extents.cmp">[mdspan.extents.cmp]</a>
+##### Comparison operators <a id="mdspan.extents.cmp">[[mdspan.extents.cmp]]</a>
 
 ``` cpp
 template<class OtherIndexType, size_t... OtherExtents>
@@ -16012,7 +16024,7 @@ template<class OtherIndexType, size_t... OtherExtents>
 > equals `rhs.extent(r)` for every rank index `r` of `rhs`, otherwise
 > `false`.
 
-##### Alias template `dextents` <a id="mdspan.extents.dextents">[mdspan.extents.dextents]</a>
+##### Alias template `dextents` <a id="mdspan.extents.dextents">[[mdspan.extents.dextents]]</a>
 
 ``` cpp
 template<class IndexType, size_t Rank>
@@ -16025,18 +16037,19 @@ template<class IndexType, size_t Rank>
 > `E::rank() == Rank && E::rank() == E::rank_dynamic()` is `true`, and
 > `E::index_type` denotes `IndexType`.
 
-#### Layout mapping <a id="mdspan.layout">[mdspan.layout]</a>
+#### Layout mapping <a id="mdspan.layout">[[mdspan.layout]]</a>
 
-##### General <a id="mdspan.layout.general">[mdspan.layout.general]</a>
+##### General <a id="mdspan.layout.general">[[mdspan.layout.general]]</a>
 
-In subclauses [mdspan.layout.reqmts] and [mdspan.layout.policy.reqmts]:
+In subclauses [[mdspan.layout.reqmts]] and
+[[mdspan.layout.policy.reqmts]]:
 
 - `M` denotes a layout mapping class.
 
 - `m` denotes a (possibly const) value of type `M`.
 
 - `i` and `j` are packs of (possibly const) integers that are
-  multidimensional indices in `m.extents()` [mdspan.overview].
+  multidimensional indices in `m.extents()` [[mdspan.overview]].
 
   \[*Note 28*: The type of each element of the packs can be a different
   integer type. — *end note*\]
@@ -16048,8 +16061,8 @@ In subclauses [mdspan.layout.reqmts] and [mdspan.layout.policy.reqmts]:
   $r^\text{th}$ element is equal to 1, and all other elements are equal
   to 0.
 
-In subclauses [mdspan.layout.reqmts] through [mdspan.layout.stride], let
-*is-mapping-of* be the exposition-only variable template defined as
+In subclauses [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]],
+let *is-mapping-of* be the exposition-only variable template defined as
 follows:
 
 ``` cpp
@@ -16058,7 +16071,7 @@ constexpr bool is-mapping-of =  // exposition only
   is_same_v<typename Layout::template mapping<typename Mapping::extents_type>, Mapping>;
 ```
 
-##### Requirements <a id="mdspan.layout.reqmts">[mdspan.layout.reqmts]</a>
+##### Requirements <a id="mdspan.layout.reqmts">[[mdspan.layout.reqmts]]</a>
 
 A type `M` meets the *layout mapping* requirements if
 
@@ -16278,16 +16291,16 @@ M::is_always_strided()
 > is met. For certain layout mappings, it is possibly not feasible to
 > determine whether every instance is strided. — *end note*\]
 
-##### Layout mapping policy requirements <a id="mdspan.layout.policy.reqmts">[mdspan.layout.policy.reqmts]</a>
+##### Layout mapping policy requirements <a id="mdspan.layout.policy.reqmts">[[mdspan.layout.policy.reqmts]]</a>
 
 A type `MP` meets the *layout mapping policy* requirements if for a type
 `E` that is a specialization of `extents`, `MP::mapping<E>` is valid and
 denotes a type `X` that meets the layout mapping requirements
-[mdspan.layout.reqmts], and for which the *qualified-id*
+[[mdspan.layout.reqmts]], and for which the *qualified-id*
 `X::layout_type` is valid and denotes the type `MP` and the
 *qualified-id* `X::extents_type` denotes `E`.
 
-##### Layout mapping policies <a id="mdspan.layout.policy.overview">[mdspan.layout.policy.overview]</a>
+##### Layout mapping policies <a id="mdspan.layout.policy.overview">[[mdspan.layout.policy.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -16309,9 +16322,9 @@ namespace std {
 Each of `layout_left`, `layout_right`, and `layout_stride` meets the
 layout mapping policy requirements and is a trivial type.
 
-##### Class template `layout_left::mapping` <a id="mdspan.layout.left">[mdspan.layout.left]</a>
+##### Class template `layout_left::mapping` <a id="mdspan.layout.left">[[mdspan.layout.left]]</a>
 
-###### Overview <a id="mdspan.layout.left.overview">[mdspan.layout.left.overview]</a>
+###### Overview <a id="mdspan.layout.left.overview">[[mdspan.layout.left.overview]]</a>
 
 `layout_left` provides a layout mapping where the leftmost extent has
 stride 1, and strides increase left-to-right as the product of extents.
@@ -16380,7 +16393,7 @@ If `Extents::rank_dynamic() == 0` is `true`, then the size of the
 multidimensional index space `Extents()` is representable as a value of
 type `typename Extents::index_type`.
 
-###### Constructors <a id="mdspan.layout.left.cons">[mdspan.layout.left.cons]</a>
+###### Constructors <a id="mdspan.layout.left.cons">[[mdspan.layout.left.cons]]</a>
 
 ``` cpp
 constexpr mapping(const extents_type& e) noexcept;
@@ -16452,7 +16465,7 @@ template<class OtherExtents>
 >
 > Direct-non-list-initializes *extents\_* with `other.extents()`.
 
-###### Observers <a id="mdspan.layout.left.obs">[mdspan.layout.left.obs]</a>
+###### Observers <a id="mdspan.layout.left.obs">[[mdspan.layout.left.obs]]</a>
 
 ``` cpp
 constexpr index_type required_span_size() const noexcept;
@@ -16518,9 +16531,9 @@ template<class OtherExtents>
 >
 > Equivalent to: `return x.extents() == y.extents();`
 
-##### Class template `layout_right::mapping` <a id="mdspan.layout.right">[mdspan.layout.right]</a>
+##### Class template `layout_right::mapping` <a id="mdspan.layout.right">[[mdspan.layout.right]]</a>
 
-###### Overview <a id="mdspan.layout.right.overview">[mdspan.layout.right.overview]</a>
+###### Overview <a id="mdspan.layout.right.overview">[[mdspan.layout.right.overview]]</a>
 
 `layout_right` provides a layout mapping where the rightmost extent is
 stride 1, and strides increase right-to-left as the product of extents.
@@ -16589,7 +16602,7 @@ If `Extents::rank_dynamic() == 0` is `true`, then the size of the
 multidimensional index space `Extents()` is representable as a value of
 type `typename Extents::index_type`.
 
-###### Constructors <a id="mdspan.layout.right.cons">[mdspan.layout.right.cons]</a>
+###### Constructors <a id="mdspan.layout.right.cons">[[mdspan.layout.right.cons]]</a>
 
 ``` cpp
 constexpr mapping(const extents_type& e) noexcept;
@@ -16661,7 +16674,7 @@ template<class OtherExtents>
 >
 > Direct-non-list-initializes *extents\_* with `other.extents()`.
 
-###### Observers <a id="mdspan.layout.right.obs">[mdspan.layout.right.obs]</a>
+###### Observers <a id="mdspan.layout.right.obs">[[mdspan.layout.right.obs]]</a>
 
 ``` cpp
 index_type required_span_size() const noexcept;
@@ -16727,9 +16740,9 @@ template<class OtherExtents>
 >
 > Equivalent to: `return x.extents() == y.extents();`
 
-##### Class template `layout_stride::mapping` <a id="mdspan.layout.stride">[mdspan.layout.stride]</a>
+##### Class template `layout_stride::mapping` <a id="mdspan.layout.stride">[[mdspan.layout.stride]]</a>
 
-###### Overview <a id="mdspan.layout.stride.overview">[mdspan.layout.stride.overview]</a>
+###### Overview <a id="mdspan.layout.stride.overview">[[mdspan.layout.stride.overview]]</a>
 
 `layout_stride` provides a layout mapping where the strides are
 user-defined.
@@ -16801,7 +16814,7 @@ If `Extents::rank_dynamic() == 0` is `true`, then the size of the
 multidimensional index space `Extents()` is representable as a value of
 type `typename Extents::index_type`.
 
-###### Exposition-only helpers <a id="mdspan.layout.stride.expo">[mdspan.layout.stride.expo]</a>
+###### Exposition-only helpers <a id="mdspan.layout.stride.expo">[[mdspan.layout.stride.expo]]</a>
 
 Let `REQUIRED-SPAN-SIZE(e, strides)` be:
 
@@ -16855,7 +16868,7 @@ concept layout-mapping-alike = requires {                         // exposition 
 `M::is_always_unique()` exist, are constant expressions, and have a
 return type of `bool`. — *end note*\]
 
-###### Constructors <a id="mdspan.layout.stride.cons">[mdspan.layout.stride.cons]</a>
+###### Constructors <a id="mdspan.layout.stride.cons">[[mdspan.layout.stride.cons]]</a>
 
 ``` cpp
 constexpr mapping() noexcept;
@@ -16952,7 +16965,7 @@ template<class StridedLayoutMapping>
 >    is-mapping-of<layout_stride, LayoutStrideMapping>))
 > ```
 
-###### Observers <a id="mdspan.layout.stride.obs">[mdspan.layout.stride.obs]</a>
+###### Observers <a id="mdspan.layout.stride.obs">[[mdspan.layout.stride.obs]]</a>
 
 ``` cpp
 constexpr index_type required_span_size() const noexcept;
@@ -17032,9 +17045,9 @@ template<class OtherMapping>
 > is `true`, and each of `x.stride(`r`) == y.stride(`r`)` is `true` for
 > r in the range $[0, \texttt{x.extents().rank()})$. Otherwise, `false`.
 
-#### Accessor policy <a id="mdspan.accessor">[mdspan.accessor]</a>
+#### Accessor policy <a id="mdspan.accessor">[[mdspan.accessor]]</a>
 
-##### General <a id="mdspan.accessor.general">[mdspan.accessor.general]</a>
+##### General <a id="mdspan.accessor.general">[[mdspan.accessor.general]]</a>
 
 An *accessor policy* defines types and operations by which a reference
 to a single object is created from an abstract data handle to a number
@@ -17044,7 +17057,7 @@ A range of indices [0, N) is an *accessible range* of a given data
 handle and an accessor if, for each i in the range, the accessor
 policy’s `access` function produces a valid reference to an object.
 
-In subclause [mdspan.accessor.reqmts],
+In subclause [[mdspan.accessor.reqmts]],
 
 - `A` denotes an accessor policy.
 
@@ -17058,7 +17071,7 @@ In subclause [mdspan.accessor.reqmts],
 
 - `n`, `i`, and `j` each denote values of type `size_t`.
 
-##### Requirements <a id="mdspan.accessor.reqmts">[mdspan.accessor.reqmts]</a>
+##### Requirements <a id="mdspan.accessor.reqmts">[[mdspan.accessor.reqmts]]</a>
 
 A type `A` meets the accessor policy requirements if
 
@@ -17164,9 +17177,9 @@ a.offset(p, i)
 >
 > The expression is equality-preserving.
 
-##### Class template `default_accessor` <a id="mdspan.accessor.default">[mdspan.accessor.default]</a>
+##### Class template `default_accessor` <a id="mdspan.accessor.default">[[mdspan.accessor.default]]</a>
 
-###### Overview <a id="mdspan.accessor.default.overview">[mdspan.accessor.default.overview]</a>
+###### Overview <a id="mdspan.accessor.default.overview">[[mdspan.accessor.default.overview]]</a>
 
 ``` cpp
 namespace std {
@@ -17198,7 +17211,7 @@ that models `semiregular`.
 `data_handle_type` and an object of type `default_accessor` if and only
 if is a valid range.
 
-###### Members <a id="mdspan.accessor.default.members">[mdspan.accessor.default.members]</a>
+###### Members <a id="mdspan.accessor.default.members">[[mdspan.accessor.default.members]]</a>
 
 ``` cpp
 template<class OtherElementType>
@@ -17224,9 +17237,9 @@ constexpr data_handle_type offset(data_handle_type p, size_t i) const noexcept;
 >
 > Equivalent to: `return p + i;`
 
-#### Class template `mdspan` <a id="mdspan.mdspan">[mdspan.mdspan]</a>
+#### Class template `mdspan` <a id="mdspan.mdspan">[[mdspan.mdspan]]</a>
 
-##### Overview <a id="mdspan.mdspan.overview">[mdspan.mdspan.overview]</a>
+##### Overview <a id="mdspan.mdspan.overview">[[mdspan.mdspan.overview]]</a>
 
 `mdspan` is a view of a multidimensional array of elements.
 
@@ -17369,8 +17382,8 @@ namespace std {
   is `true`.
 
 `LayoutPolicy` shall meet the layout mapping policy requirements
-[mdspan.layout.policy.reqmts], and `AccessorPolicy` shall meet the
-accessor policy requirements [mdspan.accessor.reqmts].
+[[mdspan.layout.policy.reqmts]], and `AccessorPolicy` shall meet the
+accessor policy requirements [[mdspan.accessor.reqmts]].
 
 Each specialization `MDS` of `mdspan` models `copyable` and
 
@@ -17384,7 +17397,7 @@ A specialization of `mdspan` is a trivially copyable type if its
 `accessor_type`, `mapping_type`, and `data_handle_type` are trivially
 copyable types.
 
-##### Constructors <a id="mdspan.mdspan.cons">[mdspan.mdspan.cons]</a>
+##### Constructors <a id="mdspan.mdspan.cons">[[mdspan.mdspan.cons]]</a>
 
 ``` cpp
 constexpr mdspan();
@@ -17582,7 +17595,7 @@ template<class OtherElementType, class OtherExtents,
 > || !is_convertible_v<const OtherAccessor&, accessor_type>
 > ```
 
-##### Members <a id="mdspan.mdspan.members">[mdspan.mdspan.members]</a>
+##### Members <a id="mdspan.mdspan.members">[[mdspan.mdspan.members]]</a>
 
 ``` cpp
 template<class... OtherIndexTypes>
@@ -17677,72 +17690,72 @@ friend constexpr void swap(mdspan& x, mdspan& y) noexcept;
 > ```
 
 <!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[algorithms.requirements]: algorithms.md#algorithms.requirements
-[allocator.requirements]: library.md#allocator.requirements
-[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
-[allocator.traits.members]: mem.md#allocator.traits.members
-[associative.general]: #associative.general
-[associative.reqmts]: #associative.reqmts
-[associative.reqmts.except]: #associative.reqmts.except
-[basic.string]: strings.md#basic.string
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.default.ctor]: class.md#class.default.ctor
-[class.dtor]: class.md#class.dtor
-[container.alloc.reqmts]: #container.alloc.reqmts
-[container.gen.reqmts]: #container.gen.reqmts
-[container.node]: #container.node
-[container.node.compat]: #container.node.compat
-[container.node.overview]: #container.node.overview
-[container.opt.reqmts]: #container.opt.reqmts
-[container.reqmts]: #container.reqmts
-[container.requirements]: #container.requirements
-[container.requirements.general]: #container.requirements.general
-[container.rev.reqmts]: #container.rev.reqmts
-[containers]: #containers
-[containers.summary]: #containers.summary
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[deque]: #deque
-[deque.modifiers]: #deque.modifiers
-[flat.map.defn]: #flat.map.defn
-[flat.multimap.defn]: #flat.multimap.defn
-[flat.multiset.defn]: #flat.multiset.defn
-[flat.set.defn]: #flat.set.defn
-[hash.requirements]: library.md#hash.requirements
-[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.requirements]: iterators.md#iterator.requirements
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[list]: #list
-[mdspan.accessor.reqmts]: #mdspan.accessor.reqmts
-[mdspan.layout.policy.reqmts]: #mdspan.layout.policy.reqmts
-[mdspan.layout.reqmts]: #mdspan.layout.reqmts
-[mdspan.layout.stride]: #mdspan.layout.stride
-[mdspan.overview]: #mdspan.overview
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: #sequence.reqmts
-[sequences.general]: #sequences.general
-[strings]: strings.md#strings
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[temp.param]: temp.md#temp.param
-[temp.type]: temp.md#temp.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
-[unord.map]: #unord.map
-[unord.multimap]: #unord.multimap
-[unord.multiset]: #unord.multiset
-[unord.req]: #unord.req
-[unord.req.except]: #unord.req.except
-[unord.set]: #unord.set
-[vector]: #vector
-[vector.modifiers]: #vector.modifiers
-[views]: #views
+[[alg.sorting]]: algorithms.md#alg.sorting
+[[algorithms.requirements]]: algorithms.md#algorithms.requirements
+[[allocator.requirements]]: library.md#allocator.requirements
+[[allocator.requirements.completeness]]: library.md#allocator.requirements.completeness
+[[allocator.traits.members]]: mem.md#allocator.traits.members
+[[associative.general]]: #associative.general
+[[associative.reqmts]]: #associative.reqmts
+[[associative.reqmts.except]]: #associative.reqmts.except
+[[basic.string]]: strings.md#basic.string
+[[class.copy.ctor]]: class.md#class.copy.ctor
+[[class.default.ctor]]: class.md#class.default.ctor
+[[class.dtor]]: class.md#class.dtor
+[[container.alloc.reqmts]]: #container.alloc.reqmts
+[[container.gen.reqmts]]: #container.gen.reqmts
+[[container.node]]: #container.node
+[[container.node.compat]]: #container.node.compat
+[[container.node.overview]]: #container.node.overview
+[[container.opt.reqmts]]: #container.opt.reqmts
+[[container.reqmts]]: #container.reqmts
+[[container.requirements]]: #container.requirements
+[[container.requirements.general]]: #container.requirements.general
+[[container.rev.reqmts]]: #container.rev.reqmts
+[[containers]]: #containers
+[[containers.summary]]: #containers.summary
+[[dcl.init.aggr]]: dcl.md#dcl.init.aggr
+[[deque]]: #deque
+[[deque.modifiers]]: #deque.modifiers
+[[flat.map.defn]]: #flat.map.defn
+[[flat.multimap.defn]]: #flat.multimap.defn
+[[flat.multiset.defn]]: #flat.multiset.defn
+[[flat.set.defn]]: #flat.set.defn
+[[hash.requirements]]: library.md#hash.requirements
+[[iterator.concept.contiguous]]: iterators.md#iterator.concept.contiguous
+[[iterator.concept.random.access]]: iterators.md#iterator.concept.random.access
+[[iterator.requirements]]: iterators.md#iterator.requirements
+[[iterator.requirements.general]]: iterators.md#iterator.requirements.general
+[[list]]: #list
+[[mdspan.accessor.reqmts]]: #mdspan.accessor.reqmts
+[[mdspan.layout.policy.reqmts]]: #mdspan.layout.policy.reqmts
+[[mdspan.layout.reqmts]]: #mdspan.layout.reqmts
+[[mdspan.layout.stride]]: #mdspan.layout.stride
+[[mdspan.overview]]: #mdspan.overview
+[[random.access.iterators]]: iterators.md#random.access.iterators
+[[res.on.data.races]]: library.md#res.on.data.races
+[[sequence.reqmts]]: #sequence.reqmts
+[[sequences.general]]: #sequences.general
+[[strings]]: strings.md#strings
+[[swappable.requirements]]: library.md#swappable.requirements
+[[temp.deduct]]: temp.md#temp.deduct
+[[temp.param]]: temp.md#temp.param
+[[temp.type]]: temp.md#temp.type
+[[term.trivially.copyable.type]]: #term.trivially.copyable.type
+[[unord.map]]: #unord.map
+[[unord.multimap]]: #unord.multimap
+[[unord.multiset]]: #unord.multiset
+[[unord.req]]: #unord.req
+[[unord.req.except]]: #unord.req.except
+[[unord.set]]: #unord.set
+[[vector]]: #vector
+[[vector.modifiers]]: #vector.modifiers
+[[views]]: #views
 
 <!-- Link reference definitions -->
-[associative]: #associative
-[container.adaptors]: #container.adaptors
-[container.requirements]: #container.requirements
-[sequences]: #sequences
-[unord]: #unord
-[views]: #views
+[[associative]]: #associative
+[[container.adaptors]]: #container.adaptors
+[[container.requirements]]: #container.requirements
+[[sequences]]: #sequences
+[[unord]]: #unord
+[[views]]: #views

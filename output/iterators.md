@@ -3,29 +3,29 @@ current_file: iterators
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Iterators library <a id="iterators">[iterators]</a>
+# Iterators library <a id="iterators">[[iterators]]</a>
 
-## General <a id="iterators.general">[iterators.general]</a>
+## General <a id="iterators.general">[[iterators.general]]</a>
 
 This Clause describes components that C++ programs may use to perform
-iterations over containers [containers], streams [iostream.format],
-stream buffers [stream.buffers], and other ranges [ranges].
+iterations over containers [[containers]], streams [[iostream.format]],
+stream buffers [[stream.buffers]], and other ranges [[ranges]].
 
 The following subclauses describe iterator requirements, and components
 for iterator primitives, predefined iterators, and stream iterators, as
-summarized in [iterators.summary].
+summarized in [[iterators.summary]].
 
 **Table: Iterators library summary**
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [iterator.requirements] | Iterator requirements | `<iterator>` |
-| [iterator.primitives] | Iterator primitives |
-| [predef.iterators] | Iterator adaptors |
-| [stream.iterators] | Stream iterators |
-| [iterator.range] | Range access |
+| [[iterator.requirements]] | Iterator requirements | `<iterator>` |
+| [[iterator.primitives]] | Iterator primitives |
+| [[predef.iterators]] | Iterator adaptors |
+| [[stream.iterators]] | Stream iterators |
+| [[iterator.range]] | Range access |
 
-## Header `<iterator>` synopsis <a id="iterator.synopsis">[iterator.synopsis]</a>
+## Header `<iterator>` synopsis <a id="iterator.synopsis">[[iterator.synopsis]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -509,9 +509,9 @@ namespace std {
 }
 ```
 
-## Iterator requirements <a id="iterator.requirements">[iterator.requirements]</a>
+## Iterator requirements <a id="iterator.requirements">[[iterator.requirements]]</a>
 
-### In general <a id="iterator.requirements.general">[iterator.requirements.general]</a>
+### In general <a id="iterator.requirements.general">[[iterator.requirements.general]]</a>
 
 Iterators are a generalization of pointers that allow a C++ program to
 work with different data structures (for example, containers and ranges)
@@ -524,7 +524,7 @@ called the *value type* of the iterator. An output iterator `i` has a
 non-empty set of types that are `indirectly_writable` to the iterator;
 for each such type `T`, the expression `*i = o` is valid where `o` is a
 value of type `T`. For every iterator type `X`, there is a corresponding
-signed integer-like type [iterator.concept.winc] called the
+signed integer-like type [[iterator.concept.winc]] called the
 *difference type* of the iterator.
 
 Since iterators are an abstraction of pointers, their semantics are a
@@ -534,7 +534,7 @@ regular pointers. This document defines six categories of iterators,
 according to the operations defined on them: *input iterators*,
 *output iterators*, *forward iterators*, *bidirectional iterators*,
 *random access iterators*, and *contiguous iterators*, as shown in
-[iterators.relations].
+[[iterators.relations]].
 
 **Table: Relations among iterator categories**
 
@@ -544,20 +544,20 @@ according to the operations defined on them: *input iterators*,
 |  |  |  |  | $\rightarrow$ \textbf{Output} |
 The six categories of iterators correspond to the iterator concepts
 
-- `input_iterator` [iterator.concept.input],
+- `input_iterator` [[iterator.concept.input]],
 
-- `output_iterator` [iterator.concept.output],
+- `output_iterator` [[iterator.concept.output]],
 
-- `forward_iterator` [iterator.concept.forward],
+- `forward_iterator` [[iterator.concept.forward]],
 
-- `bidirectional_iterator` [iterator.concept.bidir],
+- `bidirectional_iterator` [[iterator.concept.bidir]],
 
-- `random_access_iterator` [iterator.concept.random.access], and
+- `random_access_iterator` [[iterator.concept.random.access]], and
 
-- `contiguous_iterator` [iterator.concept.contiguous],
+- `contiguous_iterator` [[iterator.concept.contiguous]],
 
 respectively. The generic term *iterator* refers to any type that models
-the `input_or_output_iterator` concept [iterator.concept.iterator].
+the `input_or_output_iterator` concept [[iterator.concept.iterator]].
 
 Forward iterators meet all the requirements of input iterators and can
 be used whenever an input iterator is specified; Bidirectional iterators
@@ -573,8 +573,8 @@ called *mutable iterators*. Nonmutable iterators are referred to as
 *constant iterators*.
 
 In addition to the requirements in this subclause, the nested
-*typedef-name* specified in [iterator.traits] shall be provided for the
-iterator type.
+*typedef-name* specified in [[iterator.traits]] shall be provided for
+the iterator type.
 
 \[*Note 1*: Either the iterator type must provide the *typedef-name*
 directly (in which case `iterator_traits` pick them up automatically),
@@ -644,15 +644,15 @@ meet iterator category requirements are constexpr functions.
 \[*Note 3*: For example, the types “pointer to `int`” and
 `reverse_iterator<int*>` are constexpr iterators. — *end note*\]
 
-### Associated types <a id="iterator.assoc.types">[iterator.assoc.types]</a>
+### Associated types <a id="iterator.assoc.types">[[iterator.assoc.types]]</a>
 
-#### Incrementable traits <a id="incrementable.traits">[incrementable.traits]</a>
+#### Incrementable traits <a id="incrementable.traits">[[incrementable.traits]]</a>
 
 To implement algorithms only in terms of incrementable types, it is
 often necessary to determine the difference type that corresponds to a
 particular incrementable type. Accordingly, it is required that if `WI`
 is the name of a type that models the `weakly_incrementable` concept
-[iterator.concept.winc], the type
+[[iterator.concept.winc]], the type
 
 ``` cpp
 iter_difference_t<WI>
@@ -703,13 +703,13 @@ Let $R_\tcode{I}$ be `remove_cvref_t<I>`. The type
 
 Users may specialize `incrementable_traits` on program-defined types.
 
-#### Indirectly readable traits <a id="readable.traits">[readable.traits]</a>
+#### Indirectly readable traits <a id="readable.traits">[[readable.traits]]</a>
 
 To implement algorithms only in terms of indirectly readable types, it
 is often necessary to determine the value type that corresponds to a
 particular indirectly readable type. Accordingly, it is required that if
 `R` is the name of a type that models the `indirectly_readable` concept
-[iterator.concept.readable], the type
+[[iterator.concept.readable]], the type
 
 ``` cpp
 iter_value_t<R>
@@ -789,7 +789,7 @@ program-defined types.
 pointer like `shared_ptr<void>` is not `indirectly_readable` and has no
 associated value type. — *end note*\]
 
-#### Iterator traits <a id="iterator.traits">[iterator.traits]</a>
+#### Iterator traits <a id="iterator.traits">[[iterator.traits]]</a>
 
 To implement algorithms only in terms of iterators, it is sometimes
 necessary to determine the iterator category that corresponds to a
@@ -882,7 +882,7 @@ concept cpp17-random-access-iterator =
 The members of a specialization `iterator_traits<I>` generated from the
 `iterator_traits` primary template are computed as follows:
 
-- If `I` has valid [temp.deduct] member types `difference_type`,
+- If `I` has valid [[temp.deduct]] member types `difference_type`,
   `value_type`, `reference`, and `iterator_category`, then
   `iterator_traits<I>` has the following publicly accessible members:
 
@@ -955,11 +955,11 @@ The members of a specialization `iterator_traits<I>` generated from the
 
 Explicit or partial specializations of `iterator_traits` may have a
 member type `iterator_concept` that is used to indicate conformance to
-the iterator concepts [iterator.concepts].
+the iterator concepts [[iterator.concepts]].
 
 \[*Example 1*: To indicate conformance to the `input_iterator` concept
 but a lack of conformance to the *Cpp17InputIter\\ator* requirements
-[input.iterators], an `iterator_traits` specialization might have
+[[input.iterators]], an `iterator_traits` specialization might have
 `iterator_concept` denote `input_iterator_tag` but not define
 `iterator_category`. — *end example*\]
 
@@ -1003,19 +1003,19 @@ void reverse(BI first, BI last) {
 
 — *end example*\]
 
-### Customization point objects <a id="iterator.cust">[iterator.cust]</a>
+### Customization point objects <a id="iterator.cust">[[iterator.cust]]</a>
 
-#### `ranges::iter_move` <a id="iterator.cust.move">[iterator.cust.move]</a>
+#### `ranges::iter_move` <a id="iterator.cust.move">[[iterator.cust.move]]</a>
 
 The name `ranges::iter_move` denotes a customization point object
-[customization.point.object]. The expression `ranges::iter_move(E)` for
-a subexpression `E` is expression-equivalent to:
+[[customization.point.object]]. The expression `ranges::iter_move(E)`
+for a subexpression `E` is expression-equivalent to:
 
 - `iter_move(E)`, if `E` has class or enumeration type and
   `iter_move(E)` is a well-formed expression when treated as an
   unevaluated operand, where the meaning of `iter_move` is established
   as-if by performing argument-dependent lookup only
-  [basic.lookup.argdep].
+  [[basic.lookup.argdep]].
 
 - Otherwise, if the expression `*E` is well-formed:
 
@@ -1032,11 +1032,11 @@ a subexpression `E` is expression-equivalent to:
 If `ranges::iter_move(E)` is not equal to `*E`, the program is
 ill-formed, no diagnostic required.
 
-#### `ranges::iter_swap` <a id="iterator.cust.swap">[iterator.cust.swap]</a>
+#### `ranges::iter_swap` <a id="iterator.cust.swap">[[iterator.cust.swap]]</a>
 
 The name `ranges::iter_swap` denotes a customization point object
-[customization.point.object] that exchanges the values
-[concept.swappable] denoted by its arguments.
+[[customization.point.object]] that exchanges the values
+[[concept.swappable]] denoted by its arguments.
 
 Let *iter-exchange-move* be the exposition-only function:
 
@@ -1077,11 +1077,11 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
 
   \[*Note 2*: This precludes calling unconstrained `std::iter_swap`.
   When the deleted overload is viable, program-defined overloads need to
-  be more specialized [temp.func.order] to be selected. — *end note*\]
+  be more specialized [[temp.func.order]] to be selected. — *end note*\]
 
 - Otherwise, if the types of `E1` and `E2` each model
   `indirectly_readable`, and if the reference types of `E1` and `E2`
-  model `swappable_with` [concept.swappable], then
+  model `swappable_with` [[concept.swappable]], then
   `ranges::swap(*E1, *E2)`.
 
 - Otherwise, if the types `T1` and `T2` of `E1` and `E2` model
@@ -1096,9 +1096,9 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   `ranges::iter_swap(E1, E2)` appears in the immediate context of a
   template instantiation. — *end note*\]
 
-### Iterator concepts <a id="iterator.concepts">[iterator.concepts]</a>
+### Iterator concepts <a id="iterator.concepts">[[iterator.concepts]]</a>
 
-#### General <a id="iterator.concepts.general">[iterator.concepts.general]</a>
+#### General <a id="iterator.concepts.general">[[iterator.concepts.general]]</a>
 
 For a type `I`, let `ITER_TRAITS(I)` denote the type `I` if
 `iterator_traits<I>` names a specialization generated from the primary
@@ -1141,7 +1141,7 @@ and `ITER_CONCEPT(I)` denotes `random_access_iterator_tag`.
 
 — *end example*\]
 
-#### Concept  <a id="iterator.concept.readable">[iterator.concept.readable]</a>
+#### Concept  <a id="iterator.concept.readable">[[iterator.concept.readable]]</a>
 
 Types that are indirectly readable by applying `operator*` model the
 `indirectly_readable` concept, including pointers, smart pointers, and
@@ -1171,7 +1171,7 @@ template<class In>
 Given a value `i` of type `I`, `I` models `indirectly_readable` only if
 the expression `*i` is equality-preserving.
 
-#### Concept  <a id="iterator.concept.writable">[iterator.concept.writable]</a>
+#### Concept  <a id="iterator.concept.writable">[[iterator.concept.writable]]</a>
 
 The `indirectly_writable` concept specifies the requirements for writing
 a value into an iterator’s referenced object.
@@ -1201,8 +1201,8 @@ be a dereferenceable object of type `Out`. `Out` and `T` model
 After evaluating any above assignment expression, `o` is not required to
 be dereferenceable.
 
-If `E` is an xvalue [basic.lval], the resulting state of the object it
-denotes is valid but unspecified [lib.types.movedfrom].
+If `E` is an xvalue [[basic.lval]], the resulting state of the object it
+denotes is valid but unspecified [[lib.types.movedfrom]].
 
 \[*Note 7*: The only valid use of an `operator*` is on the left side of
 the assignment statement. Assignment through the same value of the
@@ -1215,7 +1215,7 @@ assignment. Consequently, an iterator type `I` that returns
 `std::string` by value does not model
 `indirectly_writable<I, std::string>`. — *end note*\]
 
-#### Concept  <a id="iterator.concept.winc">[iterator.concept.winc]</a>
+#### Concept  <a id="iterator.concept.winc">[[iterator.concept.winc]]</a>
 
 The `weakly_incrementable` concept specifies the requirements on types
 that can be incremented with the pre- and post-increment operators. The
@@ -1266,11 +1266,11 @@ an unsigned-integer-class type.
 
 For every integer-class type `I`, let `B(I)` be a unique hypothetical
 extended integer type of the same signedness with the same width
-[basic.fundamental] as `I`.
+[[basic.fundamental]] as `I`.
 
 \[*Note 10*: The corresponding hypothetical specialization
 `numeric_limits<B(I)>` meets the requirements on `numeric_limits`
-specializations for integral types [numeric.limits]. — *end note*\]
+specializations for integral types [[numeric.limits]]. — *end note*\]
 
 For every integral type `J`, let `B(J)` be the same type as `J`.
 
@@ -1327,8 +1327,8 @@ convertible to `I`, let `x` and `y` be, respectively, objects of type
 An expression `E` of integer-class type `I` is contextually convertible
 to `bool` as if by `bool(E != I(0))`.
 
-All integer-class types model `regular` [concepts.object] and
-`three_way_comparable<strong_ordering>` [cmp.concept].
+All integer-class types model `regular` [[concepts.object]] and
+`three_way_comparable<strong_ordering>` [[cmp.concept]].
 
 A value-initialized object of integer-class type has value 0.
 
@@ -1369,7 +1369,7 @@ substitution property or referential transparency.) Such algorithms can
 be used with istreams as the source of the input data through the
 `istream_iterator` class template. — *end note*\]
 
-#### Concept  <a id="iterator.concept.inc">[iterator.concept.inc]</a>
+#### Concept  <a id="iterator.concept.inc">[[iterator.concept.inc]]</a>
 
 The `incrementable` concept specifies requirements on types that can be
 incremented with the pre- and post-increment operators. The increment
@@ -1401,16 +1401,16 @@ Let `a` and `b` be incrementable objects of type `I`. `I` models
 of multi-pass one-directional algorithms with types that model
 `incrementable`. — *end note*\]
 
-#### Concept  <a id="iterator.concept.iterator">[iterator.concept.iterator]</a>
+#### Concept  <a id="iterator.concept.iterator">[[iterator.concept.iterator]]</a>
 
 The `input_or_output_iterator` concept forms the basis of the iterator
 concept taxonomy; every iterator models `input_or_output_iterator`. This
 concept specifies operations for dereferencing and incrementing an
 iterator. Most algorithms will require additional operations to compare
-iterators with sentinels [iterator.concept.sentinel], to read
-[iterator.concept.input] or write [iterator.concept.output] values, or
-to provide a richer set of iterator movements
-[iterator.concept.forward], [iterator.concept.bidir], [iterator.concept.random.access].
+iterators with sentinels [[iterator.concept.sentinel]], to read
+[[iterator.concept.input]] or write [[iterator.concept.output]] values,
+or to provide a richer set of iterator movements
+[[iterator.concept.forward]], [[iterator.concept.bidir]], [[iterator.concept.random.access]].
 
 ``` cpp
 template<class I>
@@ -1425,7 +1425,7 @@ template<class I>
 `input_or_output_iterator` concept does not require
 copyability. — *end note*\]
 
-#### Concept  <a id="iterator.concept.sentinel">[iterator.concept.sentinel]</a>
+#### Concept  <a id="iterator.concept.sentinel">[[iterator.concept.sentinel]]</a>
 
 The `sentinel_for` concept specifies the relationship between an
 `input_or_output_iterator` type and a `semiregular` type whose values
@@ -1455,7 +1455,7 @@ such that denotes a range and `i != s`, `i` and `s` are not required to
 continue to denote a range after incrementing any other iterator equal
 to `i`. Consequently, `i == s` is no longer required to be well-defined.
 
-#### Concept  <a id="iterator.concept.sizedsentinel">[iterator.concept.sizedsentinel]</a>
+#### Concept  <a id="iterator.concept.sizedsentinel">[[iterator.concept.sizedsentinel]]</a>
 
 The `sized_sentinel_for` concept specifies requirements on an
 `input_or_output_iterator` type `I` and a corresponding
@@ -1506,15 +1506,15 @@ template<class S, class I>
 > counted iterators and their
 > sentinels\[counted.iterator\]. — *end example*\]
 
-#### Concept  <a id="iterator.concept.input">[iterator.concept.input]</a>
+#### Concept  <a id="iterator.concept.input">[[iterator.concept.input]]</a>
 
 The `input_iterator` concept defines requirements for a type whose
 referenced values can be read (from the requirement for
-`indirectly_readable` [iterator.concept.readable]) and which can be both
-pre- and post-incremented.
+`indirectly_readable` [[iterator.concept.readable]]) and which can be
+both pre- and post-incremented.
 
 \[*Note 15*: Unlike the *Cpp17InputIterator* requirements
-[input.iterators], the `input_iterator` concept does not need equality
+[[input.iterators]], the `input_iterator` concept does not need equality
 comparison since iterators are typically compared to
 sentinels. — *end note*\]
 
@@ -1527,11 +1527,11 @@ template<class I>
     derived_from<ITER_CONCEPT(I), input_iterator_tag>;
 ```
 
-#### Concept  <a id="iterator.concept.output">[iterator.concept.output]</a>
+#### Concept  <a id="iterator.concept.output">[[iterator.concept.output]]</a>
 
 The `output_iterator` concept defines requirements for a type that can
 be used to write values (from the requirement for `indirectly_writable`
-[iterator.concept.writable]) and which can be both pre- and
+[[iterator.concept.writable]]) and which can be both pre- and
 post-incremented.
 
 \[*Note 16*: Output iterators are not required to model
@@ -1560,7 +1560,7 @@ The implementation of an algorithm on output iterators should never
 attempt to pass through the same iterator twice; such an algorithm
 should be a single-pass algorithm.
 
-#### Concept  <a id="iterator.concept.forward">[iterator.concept.forward]</a>
+#### Concept  <a id="iterator.concept.forward">[[iterator.concept.forward]]</a>
 
 The `forward_iterator` concept adds copyability, equality comparison,
 and the multi-pass guarantee, specified below.
@@ -1599,7 +1599,7 @@ mutable iterator (which applies to output iterators) allow the use of
 multi-pass one-directional algorithms with forward
 iterators. — *end note*\]
 
-#### Concept  <a id="iterator.concept.bidir">[iterator.concept.bidir]</a>
+#### Concept  <a id="iterator.concept.bidir">[[iterator.concept.bidir]]</a>
 
 The `bidirectional_iterator` concept adds the ability to move an
 iterator backward as well as forward.
@@ -1636,7 +1636,7 @@ Let `a` and `b` be equal objects of type `I`. `I` models
 
 - If `a` and `b` are incrementable, then `bool(--(++a) == b)`.
 
-#### Concept  <a id="iterator.concept.random.access">[iterator.concept.random.access]</a>
+#### Concept  <a id="iterator.concept.random.access">[[iterator.concept.random.access]]</a>
 
 The `random_access_iterator` concept adds support for constant-time
 advancement with `+=`, `+`, `-=`, and `-`, as well as the computation of
@@ -1692,7 +1692,7 @@ models `random_access_iterator` only if
 
 - `bool(a <= b)` is `true`.
 
-#### Concept  <a id="iterator.concept.contiguous">[iterator.concept.contiguous]</a>
+#### Concept  <a id="iterator.concept.contiguous">[[iterator.concept.contiguous]]</a>
 
 The `contiguous_iterator` concept provides a guarantee that the denoted
 elements are stored contiguously in memory.
@@ -1727,9 +1727,9 @@ if
 - if `ranges::iter_swap(a, b)` is well-formed, it has effects equivalent
   to `ranges::swap(*a, *b)`.
 
-### C++17 iterator requirements <a id="iterator.cpp17">[iterator.cpp17]</a>
+### C++17 iterator requirements <a id="iterator.cpp17">[[iterator.cpp17]]</a>
 
-#### General <a id="iterator.cpp17.general">[iterator.cpp17.general]</a>
+#### General <a id="iterator.cpp17.general">[[iterator.cpp17.general]]</a>
 
 In the following sections, `a` and `b` denote values of type `X` or
 `const X`, `difference_type` and `reference` refer to the types
@@ -1740,39 +1740,39 @@ value of `X&`, `t` denotes a value of value type `T`, `o` denotes a
 value of some type that is writable to the output iterator.
 
 \[*Note 19*: For an iterator type `X` there must be an instantiation of
-`iterator_traits<X>` [iterator.traits]. — *end note*\]
+`iterator_traits<X>` [[iterator.traits]]. — *end note*\]
 
-#### *Cpp17Iterator* <a id="iterator.iterators">[iterator.iterators]</a>
+#### *Cpp17Iterator* <a id="iterator.iterators">[[iterator.iterators]]</a>
 
 The *Cpp17Iterator* requirements form the basis of the iterator
 taxonomy; every iterator meets the *Cpp17\\Iterator* requirements. This
 set of requirements specifies operations for dereferencing and
 incrementing an iterator. Most algorithms will require additional
-operations to read [input.iterators] or write [output.iterators] values,
-or to provide a richer set of iterator movements
-[forward.iterators], [bidirectional.iterators], [random.access.iterators].
+operations to read [[input.iterators]] or write [[output.iterators]]
+values, or to provide a richer set of iterator movements
+[[forward.iterators]], [[bidirectional.iterators]], [[random.access.iterators]].
 
 A type `X` meets the requirements if:
 
 - `X` meets the *Cpp17CopyConstructible*, *Cpp17CopyAssignable*,
   *Cpp17Swappable*, and *Cpp17Destructible* requirements
-  [utility.arg.requirements], [swappable.requirements], and
+  [[utility.arg.requirements]], [[swappable.requirements]], and
 
 - `iterator_traits<X>::difference_type` is a signed integer type or
   `void`, and
 
-- the expressions in [iterator] are valid and have the indicated
+- the expressions in [[iterator]] are valid and have the indicated
   semantics.
 
-#### Input iterators <a id="input.iterators">[input.iterators]</a>
+#### Input iterators <a id="input.iterators">[[input.iterators]]</a>
 
 A class or pointer type `X` meets the requirements of an input iterator
 for the value type `T` if `X` meets the *Cpp17Iterator*
-[iterator.iterators] and *Cpp17EqualityComparable* (
-[cpp17.equalitycomparable]) requirements and the expressions in
-[inputiterator] are valid and have the indicated semantics.
+[[iterator.iterators]] and *Cpp17EqualityComparable* (
+[[cpp17.equalitycomparable]]) requirements and the expressions in
+[[inputiterator]] are valid and have the indicated semantics.
 
-In [inputiterator], the term *the domain of `==`* is used in the
+In [[inputiterator]], the term *the domain of `==`* is used in the
 ordinary mathematical sense to denote the set of values over which `==`
 is (required to be) defined. This set can change over time. Each
 algorithm places additional requirements on the domain of `==` for the
@@ -1791,15 +1791,15 @@ should be a single pass algorithm.
 \[*Note 20*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
 transparency.) Value type `T` is not required to be a
-*Cpp17CopyAssignable* type ( [cpp17.copyassignable]). Such an algorithm
-can be used with istreams as the source of the input data through the
-`istream_iterator` class template. — *end note*\]
+*Cpp17CopyAssignable* type ( [[cpp17.copyassignable]]). Such an
+algorithm can be used with istreams as the source of the input data
+through the `istream_iterator` class template. — *end note*\]
 
-#### Output iterators <a id="output.iterators">[output.iterators]</a>
+#### Output iterators <a id="output.iterators">[[output.iterators]]</a>
 
 A class or pointer type `X` meets the requirements of an output iterator
-if `X` meets the *Cpp17Iterator* requirements [iterator.iterators] and
-the expressions in [outputiterator] are valid and have the indicated
+if `X` meets the *Cpp17Iterator* requirements [[iterator.iterators]] and
+the expressions in [[outputiterator]] are valid and have the indicated
 semantics.
 
 The implementation of an algorithm on output iterators should never
@@ -1811,21 +1811,21 @@ the assignment statement. Assignment through the same value of the
 iterator happens only once. Equality and inequality are not necessarily
 defined. — *end note*\]
 
-#### Forward iterators <a id="forward.iterators">[forward.iterators]</a>
+#### Forward iterators <a id="forward.iterators">[[forward.iterators]]</a>
 
 A class or pointer type `X` meets the requirements of a forward iterator
 if
 
-- `X` meets the *Cpp17InputIterator* requirements [input.iterators],
+- `X` meets the *Cpp17InputIterator* requirements [[input.iterators]],
 
 - `X` meets the *Cpp17DefaultConstructible* requirements
-  [utility.arg.requirements],
+  [[utility.arg.requirements]],
 
 - if `X` is a mutable iterator, `reference` is a reference to `T`; if
   `X` is a constant iterator, `reference` is a reference to `const T`,
 
-- the expressions in [forwarditerator] are valid and have the indicated
-  semantics, and
+- the expressions in [[forwarditerator]] are valid and have the
+  indicated semantics, and
 
 - objects of type `X` offer the multi-pass guarantee, described below.
 
@@ -1857,31 +1857,31 @@ dereferenceable or else neither is dereferenceable.
 If `a` and `b` are both dereferenceable, then `a == b` if and only if
 `*a` and `*b` are bound to the same object.
 
-#### Bidirectional iterators <a id="bidirectional.iterators">[bidirectional.iterators]</a>
+#### Bidirectional iterators <a id="bidirectional.iterators">[[bidirectional.iterators]]</a>
 
 A class or pointer type `X` meets the requirements of a bidirectional
 iterator if, in addition to meeting the *Cpp17ForwardIterator*
 requirements, the following expressions are valid as shown in
-[bidirectionaliterator].
+[[bidirectionaliterator]].
 
 \[*Note 24*: Bidirectional iterators allow algorithms to move iterators
 backward as well as forward. — *end note*\]
 
-#### Random access iterators <a id="random.access.iterators">[random.access.iterators]</a>
+#### Random access iterators <a id="random.access.iterators">[[random.access.iterators]]</a>
 
 A class or pointer type `X` meets the requirements of a random access
 iterator if, in addition to meeting the *Cpp17BidirectionalIterator*
 requirements, the following expressions are valid as shown in
-[randomaccessiterator].
+[[randomaccessiterator]].
 
-### Indirect callable requirements <a id="indirectcallable">[indirectcallable]</a>
+### Indirect callable requirements <a id="indirectcallable">[[indirectcallable]]</a>
 
-#### General <a id="indirectcallable.general">[indirectcallable.general]</a>
+#### General <a id="indirectcallable.general">[[indirectcallable.general]]</a>
 
 There are several concepts that group requirements of algorithms that
-take callable objects [func.def] as arguments.
+take callable objects [[func.def]] as arguments.
 
-#### Indirect callable traits <a id="indirectcallable.traits">[indirectcallable.traits]</a>
+#### Indirect callable traits <a id="indirectcallable.traits">[[indirectcallable.traits]]</a>
 
 To implement algorithms taking projections, it is necessary to determine
 the projected type of an iterator’s value type. For the exposition-only
@@ -1892,10 +1892,10 @@ alias template *indirect-value-t*, `indirect-value-t<T>` denotes
 
 - `iter_value_t<T>&` otherwise.
 
-#### Indirect callables <a id="indirectcallable.indirectinvocable">[indirectcallable.indirectinvocable]</a>
+#### Indirect callables <a id="indirectcallable.indirectinvocable">[[indirectcallable.indirectinvocable]]</a>
 
 The indirect callable concepts are used to constrain those algorithms
-that accept callable objects [func.def] as arguments.
+that accept callable objects [[func.def]] as arguments.
 
 ``` cpp
 namespace std {
@@ -1961,10 +1961,10 @@ namespace std {
 }
 ```
 
-#### Class template `projected` <a id="projected">[projected]</a>
+#### Class template `projected` <a id="projected">[[projected]]</a>
 
 Class template `projected` is used to constrain algorithms that accept
-callable objects and projections [defns.projection]. It combines an
+callable objects and projections [[defns.projection]]. It combines an
 `indirectly_readable` type `I` and a callable object type `Proj` into a
 new `indirectly_readable` type whose `reference` type is the result of
 applying `Proj` to the `iter_reference_t` of `I`.
@@ -1984,9 +1984,9 @@ namespace std {
 }
 ```
 
-### Common algorithm requirements <a id="alg.req">[alg.req]</a>
+### Common algorithm requirements <a id="alg.req">[[alg.req]]</a>
 
-#### General <a id="alg.req.general">[alg.req.general]</a>
+#### General <a id="alg.req.general">[[alg.req.general]]</a>
 
 There are several additional iterator concepts that are commonly applied
 to families of algorithms. These group together iterator requirements of
@@ -2001,9 +2001,9 @@ different sequences: `indirectly_comparable`.
 \[*Note 25*: The `ranges::less` function object type used in the
 concepts below imposes constraints on the concepts’ arguments in
 addition to those that appear in the concepts’ bodies
-[range.cmp]. — *end note*\]
+[[range.cmp]]. — *end note*\]
 
-#### Concept  <a id="alg.req.ind.move">[alg.req.ind.move]</a>
+#### Concept  <a id="alg.req.ind.move">[[alg.req.ind.move]]</a>
 
 The `indirectly_movable` concept specifies the relationship between an
 `indirectly_readable` type and an `indirectly_writable` type between
@@ -2042,9 +2042,9 @@ iter_value_t<In> obj(ranges::iter_move(i));
 `obj` is equal to the value previously denoted by `*i`. If
 `iter_rvalue_reference_t<In>` is an rvalue reference type, the resulting
 state of the value denoted by `*i` is valid but unspecified
-[lib.types.movedfrom].
+[[lib.types.movedfrom]].
 
-#### Concept  <a id="alg.req.ind.copy">[alg.req.ind.copy]</a>
+#### Concept  <a id="alg.req.ind.copy">[[alg.req.ind.copy]]</a>
 
 The `indirectly_copyable` concept specifies the relationship between an
 `indirectly_readable` type and an `indirectly_writable` type between
@@ -2087,9 +2087,9 @@ iter_value_t<In> obj(*i);
 `obj` is equal to the value previously denoted by `*i`. If
 `iter_reference_t<In>` is an rvalue reference type, the resulting state
 of the value denoted by `*i` is valid but unspecified
-[lib.types.movedfrom].
+[[lib.types.movedfrom]].
 
-#### Concept  <a id="alg.req.ind.swap">[alg.req.ind.swap]</a>
+#### Concept  <a id="alg.req.ind.swap">[[alg.req.ind.swap]]</a>
 
 The `indirectly_swappable` concept specifies a swappable relationship
 between the values referenced by two `indirectly_readable` types.
@@ -2106,7 +2106,7 @@ template<class I1, class I2 = I1>
     };
 ```
 
-#### Concept  <a id="alg.req.ind.cmp">[alg.req.ind.cmp]</a>
+#### Concept  <a id="alg.req.ind.cmp">[[alg.req.ind.cmp]]</a>
 
 The `indirectly_comparable` concept specifies the common requirements of
 algorithms that compare values from two different sequences.
@@ -2118,7 +2118,7 @@ template<class I1, class I2, class R, class P1 = identity,
     indirect_binary_predicate<R, projected<I1, P1>, projected<I2, P2>>;
 ```
 
-#### Concept  <a id="alg.req.permutable">[alg.req.permutable]</a>
+#### Concept  <a id="alg.req.permutable">[[alg.req.permutable]]</a>
 
 The `permutable` concept specifies the common requirements of algorithms
 that reorder elements in place by moving or swapping them.
@@ -2131,7 +2131,7 @@ template<class I>
     indirectly_swappable<I, I>;
 ```
 
-#### Concept  <a id="alg.req.mergeable">[alg.req.mergeable]</a>
+#### Concept  <a id="alg.req.mergeable">[[alg.req.mergeable]]</a>
 
 The `mergeable` concept specifies the requirements of algorithms that
 merge sorted sequences into an output sequence by copying elements.
@@ -2148,7 +2148,7 @@ template<class I1, class I2, class Out, class R = ranges::less,
     indirect_strict_weak_order<R, projected<I1, P1>, projected<I2, P2>>;
 ```
 
-#### Concept  <a id="alg.req.sortable">[alg.req.sortable]</a>
+#### Concept  <a id="alg.req.sortable">[[alg.req.sortable]]</a>
 
 The `sortable` concept specifies the common requirements of algorithms
 that permute sequences into ordered sequences (e.g., `sort`).
@@ -2160,14 +2160,14 @@ template<class I, class R = ranges::less, class P = identity>
     indirect_strict_weak_order<R, projected<I, P>>;
 ```
 
-## Iterator primitives <a id="iterator.primitives">[iterator.primitives]</a>
+## Iterator primitives <a id="iterator.primitives">[[iterator.primitives]]</a>
 
-### General <a id="iterator.primitives.general">[iterator.primitives.general]</a>
+### General <a id="iterator.primitives.general">[[iterator.primitives.general]]</a>
 
 To simplify the use of iterators, the library provides several classes
 and functions.
 
-### Standard iterator tags <a id="std.iterator.tags">[std.iterator.tags]</a>
+### Standard iterator tags <a id="std.iterator.tags">[[std.iterator.tags]]</a>
 
 It is often desirable for a function template specialization to find out
 what is the most specific category of its iterator argument, so that the
@@ -2180,7 +2180,7 @@ used as compile time tags for algorithm selection. They are:
 `iterator_traits<I>::iterator_category` shall be defined to be a
 category tag that describes the iterator’s behavior. Additionally,
 `iterator_traits<I>::iterator_concept` may be used to indicate
-conformance to the iterator concepts [iterator.concepts].
+conformance to the iterator concepts [[iterator.concepts]].
 
 ``` cpp
 namespace std {
@@ -2240,7 +2240,7 @@ void evolve(RandomAccessIterator first, RandomAccessIterator last,
 
 — *end example*\]
 
-### Iterator operations <a id="iterator.operations">[iterator.operations]</a>
+### Iterator operations <a id="iterator.operations">[[iterator.operations]]</a>
 
 Since only random access iterators provide `+` and `-` operators, the
 library provides two function templates `advance` and `distance`. These
@@ -2300,9 +2300,9 @@ template<class BidirectionalIterator>
 >
 > Equivalent to: `advance(x, -n); return x;`
 
-### Range iterator operations <a id="range.iter.ops">[range.iter.ops]</a>
+### Range iterator operations <a id="range.iter.ops">[[range.iter.ops]]</a>
 
-#### General <a id="range.iter.ops.general">[range.iter.ops.general]</a>
+#### General <a id="range.iter.ops.general">[[range.iter.ops.general]]</a>
 
 The library includes the function templates `ranges::advance`,
 `ranges::distance`, `ranges::next`, and `ranges::prev` to manipulate
@@ -2316,10 +2316,10 @@ iterator type that does not model `random_access_iterator`,
 `ranges::advance` instead performs `n` individual increments with the
 `++` operator. — *end example*\]
 
-The function templates defined in [range.iter.ops] are not found by
-argument-dependent name lookup [basic.lookup.argdep]. When found by
-unqualified [basic.lookup.unqual] name lookup for the
-*postfix-expression* in a function call [expr.call], they inhibit
+The function templates defined in [[range.iter.ops]] are not found by
+argument-dependent name lookup [[basic.lookup.argdep]]. When found by
+unqualified [[basic.lookup.unqual]] name lookup for the
+*postfix-expression* in a function call [[expr.call]], they inhibit
 argument-dependent name lookup.
 
 \[*Example 4*:
@@ -2335,17 +2335,17 @@ void foo() {
 The function call expression at `#1` invokes `std::ranges::distance`,
 not `std::distance`, despite that (a) the iterator type returned from
 `begin(vec)` and `end(vec)` may be associated with namespace `std` and
-(b) `std::distance` is more specialized [temp.func.order] than
+(b) `std::distance` is more specialized [[temp.func.order]] than
 `std::ranges::distance` since the former requires its first two
 parameters to have the same type.
 
 — *end example*\]
 
 The number and order of deducible template parameters for the function
-templates defined in [range.iter.ops] is unspecified, except where
+templates defined in [[range.iter.ops]] is unspecified, except where
 explicitly stated otherwise.
 
-#### `ranges::advance` <a id="range.iter.op.advance">[range.iter.op.advance]</a>
+#### `ranges::advance` <a id="range.iter.op.advance">[[range.iter.op.advance]]</a>
 
 ``` cpp
 template<input_or_output_iterator I>
@@ -2418,7 +2418,7 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 > `n - `M, where M is the difference between the ending and starting
 > positions of `i`.
 
-#### `ranges::distance` <a id="range.iter.op.distance">[range.iter.op.distance]</a>
+#### `ranges::distance` <a id="range.iter.op.distance">[[range.iter.op.distance]]</a>
 
 ``` cpp
 template<class I, sentinel_for<I> S>
@@ -2463,7 +2463,7 @@ template<range R>
 > return ranges::distance(ranges::begin(r), ranges::end(r));      // [range.access]
 > ```
 
-#### `ranges::next` <a id="range.iter.op.next">[range.iter.op.next]</a>
+#### `ranges::next` <a id="range.iter.op.next">[[range.iter.op.next]]</a>
 
 ``` cpp
 template<input_or_output_iterator I>
@@ -2501,7 +2501,7 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 >
 > Equivalent to: `ranges::advance(x, n, bound); return x;`
 
-#### `ranges::prev` <a id="range.iter.op.prev">[range.iter.op.prev]</a>
+#### `ranges::prev` <a id="range.iter.op.prev">[[range.iter.op.prev]]</a>
 
 ``` cpp
 template<bidirectional_iterator I>
@@ -2530,17 +2530,17 @@ template<bidirectional_iterator I>
 >
 > Equivalent to: `ranges::advance(x, -n, bound); return x;`
 
-## Iterator adaptors <a id="predef.iterators">[predef.iterators]</a>
+## Iterator adaptors <a id="predef.iterators">[[predef.iterators]]</a>
 
-### Reverse iterators <a id="reverse.iterators">[reverse.iterators]</a>
+### Reverse iterators <a id="reverse.iterators">[[reverse.iterators]]</a>
 
-#### General <a id="reverse.iterators.general">[reverse.iterators.general]</a>
+#### General <a id="reverse.iterators.general">[[reverse.iterators.general]]</a>
 
 Class template `reverse_iterator` is an iterator adaptor that iterates
 from the end of the sequence defined by its underlying iterator to the
 beginning of that sequence.
 
-#### Class template `reverse_iterator` <a id="reverse.iterator">[reverse.iterator]</a>
+#### Class template `reverse_iterator` <a id="reverse.iterator">[[reverse.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -2603,30 +2603,30 @@ The member *typedef-name* `iterator_category` denotes
 
 - `iterator_traits<Iterator>::iterator_category` otherwise.
 
-#### Requirements <a id="reverse.iter.requirements">[reverse.iter.requirements]</a>
+#### Requirements <a id="reverse.iter.requirements">[[reverse.iter.requirements]]</a>
 
 The template parameter `Iterator` shall either meet the requirements of
-a *Cpp17BidirectionalIterator* [bidirectional.iterators] or model
-`bidirectional_iterator` [iterator.concept.bidir].
+a *Cpp17BidirectionalIterator* [[bidirectional.iterators]] or model
+`bidirectional_iterator` [[iterator.concept.bidir]].
 
 Additionally, `Iterator` shall either meet the requirements of a
-*Cpp17RandomAccessIterator* [random.access.iterators] or model
-`random_access_iterator` [iterator.concept.random.access] if the
+*Cpp17RandomAccessIterator* [[random.access.iterators]] or model
+`random_access_iterator` [[iterator.concept.random.access]] if the
 definitions of any of the members
 
 - `operator+`, `operator-`, `operator+=`, `operator-=`
-  [reverse.iter.nav], or
+  [[reverse.iter.nav]], or
 
-- `operator[]` [reverse.iter.elem],
+- `operator[]` [[reverse.iter.elem]],
 
-or the non-member operators [reverse.iter.cmp]
+or the non-member operators [[reverse.iter.cmp]]
 
 - `operator<`, `operator>`, `operator<=`, `operator>=`, `operator-`, or
-  `operator+` [reverse.iter.nonmember]
+  `operator+` [[reverse.iter.nonmember]]
 
-are instantiated [temp.inst].
+are instantiated [[temp.inst]].
 
-#### Construction and assignment <a id="reverse.iter.cons">[reverse.iter.cons]</a>
+#### Construction and assignment <a id="reverse.iter.cons">[[reverse.iter.cons]]</a>
 
 ``` cpp
 constexpr reverse_iterator();
@@ -2676,7 +2676,7 @@ template<class U>
 >
 > `*this`.
 
-#### Conversion <a id="reverse.iter.conv">[reverse.iter.conv]</a>
+#### Conversion <a id="reverse.iter.conv">[[reverse.iter.conv]]</a>
 
 ``` cpp
 constexpr Iterator base() const;
@@ -2686,7 +2686,7 @@ constexpr Iterator base() const;
 >
 > `current`.
 
-#### Element access <a id="reverse.iter.elem">[reverse.iter.elem]</a>
+#### Element access <a id="reverse.iter.elem">[[reverse.iter.elem]]</a>
 
 ``` cpp
 constexpr reference operator*() const;
@@ -2722,7 +2722,7 @@ constexpr unspecified operator[](difference_type n) const;
 >
 > `current[-n-1]`.
 
-#### Navigation <a id="reverse.iter.nav">[reverse.iter.nav]</a>
+#### Navigation <a id="reverse.iter.nav">[[reverse.iter.nav]]</a>
 
 ``` cpp
 constexpr reverse_iterator operator+(difference_type n) const;
@@ -2816,7 +2816,7 @@ constexpr reverse_iterator& operator-=(difference_type n);
 >
 > `*this`.
 
-#### Comparisons <a id="reverse.iter.cmp">[reverse.iter.cmp]</a>
+#### Comparisons <a id="reverse.iter.cmp">[[reverse.iter.cmp]]</a>
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2910,7 +2910,7 @@ template<class Iterator1, three_way_comparable_with<Iterator1> Iterator2>
 > \[*Note 5*: The argument order in the *Returns:* element is reversed
 > because this is a reverse iterator. — *end note*\]
 
-#### Non-member functions <a id="reverse.iter.nonmember">[reverse.iter.nonmember]</a>
+#### Non-member functions <a id="reverse.iter.nonmember">[[reverse.iter.nonmember]]</a>
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -2993,9 +2993,9 @@ template<class Iterator>
 >
 > `reverse_iterator<Iterator>(i)`.
 
-### Insert iterators <a id="insert.iterators">[insert.iterators]</a>
+### Insert iterators <a id="insert.iterators">[[insert.iterators]]</a>
 
-#### General <a id="insert.iterators.general">[insert.iterators.general]</a>
+#### General <a id="insert.iterators.general">[[insert.iterators.general]]</a>
 
 To make it possible to deal with insertion in the same way as writing
 into an array, a special kind of iterator adaptors, called
@@ -3027,7 +3027,7 @@ the iterator points to in a container. `back_inserter`,
 `front_inserter`, and `inserter` are three functions making the insert
 iterators out of a container.
 
-#### Class template `back_insert_iterator` <a id="back.insert.iterator">[back.insert.iterator]</a>
+#### Class template `back_insert_iterator` <a id="back.insert.iterator">[[back.insert.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -3055,7 +3055,7 @@ namespace std {
 }
 ```
 
-##### Operations <a id="back.insert.iter.ops">[back.insert.iter.ops]</a>
+##### Operations <a id="back.insert.iter.ops">[[back.insert.iter.ops]]</a>
 
 ``` cpp
 constexpr explicit back_insert_iterator(Container& x);
@@ -3106,7 +3106,7 @@ constexpr back_insert_iterator  operator++(int);
 >
 > `*this`.
 
-#####  `back_inserter` <a id="back.inserter">[back.inserter]</a>
+#####  `back_inserter` <a id="back.inserter">[[back.inserter]]</a>
 
 ``` cpp
 template<class Container>
@@ -3117,7 +3117,7 @@ template<class Container>
 >
 > `back_insert_iterator<Container>(x)`.
 
-#### Class template `front_insert_iterator` <a id="front.insert.iterator">[front.insert.iterator]</a>
+#### Class template `front_insert_iterator` <a id="front.insert.iterator">[[front.insert.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -3145,7 +3145,7 @@ namespace std {
 }
 ```
 
-##### Operations <a id="front.insert.iter.ops">[front.insert.iter.ops]</a>
+##### Operations <a id="front.insert.iter.ops">[[front.insert.iter.ops]]</a>
 
 ``` cpp
 constexpr explicit front_insert_iterator(Container& x);
@@ -3196,7 +3196,7 @@ constexpr front_insert_iterator  operator++(int);
 >
 > `*this`.
 
-##### `front_inserter` <a id="front.inserter">[front.inserter]</a>
+##### `front_inserter` <a id="front.inserter">[[front.inserter]]</a>
 
 ``` cpp
 template<class Container>
@@ -3207,7 +3207,7 @@ template<class Container>
 >
 > `front_insert_iterator<Container>(x)`.
 
-#### Class template `insert_iterator` <a id="insert.iterator">[insert.iterator]</a>
+#### Class template `insert_iterator` <a id="insert.iterator">[[insert.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -3236,7 +3236,7 @@ namespace std {
 }
 ```
 
-##### Operations <a id="insert.iter.ops">[insert.iter.ops]</a>
+##### Operations <a id="insert.iter.ops">[[insert.iter.ops]]</a>
 
 ``` cpp
 constexpr insert_iterator(Container& x, ranges::iterator_t<Container> i);
@@ -3297,7 +3297,7 @@ constexpr insert_iterator& operator++(int);
 >
 > `*this`.
 
-##### `inserter` <a id="inserter">[inserter]</a>
+##### `inserter` <a id="inserter">[[inserter]]</a>
 
 ``` cpp
 template<class Container>
@@ -3309,20 +3309,20 @@ template<class Container>
 >
 > `insert_iterator<Container>(x, i)`.
 
-### Constant iterators and sentinels <a id="const.iterators">[const.iterators]</a>
+### Constant iterators and sentinels <a id="const.iterators">[[const.iterators]]</a>
 
-#### General <a id="const.iterators.general">[const.iterators.general]</a>
+#### General <a id="const.iterators.general">[[const.iterators.general]]</a>
 
 Class template `basic_const_iterator` is an iterator adaptor with the
 same behavior as the underlying iterator except that its indirection
 operator implicitly converts the value returned by the underlying
 iterator’s indirection operator to a type such that the adapted iterator
-is a constant iterator [iterator.requirements]. Some generic algorithms
-can be called with constant iterators to avoid mutation.
+is a constant iterator [[iterator.requirements]]. Some generic
+algorithms can be called with constant iterators to avoid mutation.
 
 Specializations of `basic_const_iterator` are constant iterators.
 
-#### Alias templates <a id="const.iterators.alias">[const.iterators.alias]</a>
+#### Alias templates <a id="const.iterators.alias">[[const.iterators.alias]]</a>
 
 ``` cpp
 template<indirectly_readable It>
@@ -3351,7 +3351,7 @@ template<semiregular S>
 >
 > If `S` models `input_iterator`, `const_iterator<S>`. Otherwise, `S`.
 
-#### Class template `basic_const_iterator` <a id="const.iterators.iterator">[const.iterators.iterator]</a>
+#### Class template `basic_const_iterator` <a id="const.iterators.iterator">[[const.iterators.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -3476,7 +3476,7 @@ Given some type `I`, the concept *not-a-const-iterator* is defined as
 `false` if `I` is a specialization of `basic_const_iterator` and `true`
 otherwise.
 
-#### Member types <a id="const.iterators.types">[const.iterators.types]</a>
+#### Member types <a id="const.iterators.types">[[const.iterators.types]]</a>
 
 `basic_const_iterator<Iterator>::iterator_concept` is defined as
 follows:
@@ -3500,7 +3500,7 @@ The member *typedef-name* `iterator_category` is defined if and only if
 `basic_const_iterator<Iterator>::iterator_category` denotes the type
 `iterator_traits<Iterator>::iterator_category`.
 
-#### Operations <a id="const.iterators.ops">[const.iterators.ops]</a>
+#### Operations <a id="const.iterators.ops">[[const.iterators.ops]]</a>
 
 ``` cpp
 constexpr basic_const_iterator(Iterator current);
@@ -3766,9 +3766,9 @@ template<not-a-const-iterator S>
 >
 > Equivalent to: `return x - y.`*`current_`*`;`
 
-### Move iterators and sentinels <a id="move.iterators">[move.iterators]</a>
+### Move iterators and sentinels <a id="move.iterators">[[move.iterators]]</a>
 
-#### General <a id="move.iterators.general">[move.iterators.general]</a>
+#### General <a id="move.iterators.general">[[move.iterators.general]]</a>
 
 Class template `move_iterator` is an iterator adaptor with the same
 behavior as the underlying iterator except that its indirection operator
@@ -3788,7 +3788,7 @@ vector<string> v2(make_move_iterator(s.begin()),
 
 — *end example*\]
 
-#### Class template `move_iterator` <a id="move.iterator">[move.iterator]</a>
+#### Class template `move_iterator` <a id="move.iterator">[[move.iterator]]</a>
 
 ``` cpp
 namespace std {
@@ -3869,20 +3869,21 @@ valid and denotes a type. In that case, `iterator_category` denotes
 
 - `iterator_traits<Iterator>::iterator_category` otherwise.
 
-#### Requirements <a id="move.iter.requirements">[move.iter.requirements]</a>
+#### Requirements <a id="move.iter.requirements">[[move.iter.requirements]]</a>
 
 The template parameter `Iterator` shall either meet the
-*Cpp17InputIterator* requirements [input.iterators] or model
-`input_iterator` [iterator.concept.input]. Additionally, if any of the
+*Cpp17InputIterator* requirements [[input.iterators]] or model
+`input_iterator` [[iterator.concept.input]]. Additionally, if any of the
 bidirectional traversal functions are instantiated, the template
 parameter shall either meet the *Cpp17BidirectionalIterator*
-requirements [bidirectional.iterators] or model `bidirectional_iterator`
-[iterator.concept.bidir]. If any of the random access traversal
-functions are instantiated, the template parameter shall either meet the
-*Cpp17RandomAccessIterator* requirements [random.access.iterators] or
-model `random_access_iterator` [iterator.concept.random.access].
+requirements [[bidirectional.iterators]] or model
+`bidirectional_iterator` [[iterator.concept.bidir]]. If any of the
+random access traversal functions are instantiated, the template
+parameter shall either meet the *Cpp17RandomAccessIterator* requirements
+[[random.access.iterators]] or model `random_access_iterator`
+[[iterator.concept.random.access]].
 
-#### Construction and assignment <a id="move.iter.cons">[move.iter.cons]</a>
+#### Construction and assignment <a id="move.iter.cons">[[move.iter.cons]]</a>
 
 ``` cpp
 constexpr move_iterator();
@@ -3927,7 +3928,7 @@ template<class U> constexpr move_iterator& operator=(const move_iterator<U>& u);
 >
 > `*this`.
 
-#### Conversion <a id="move.iter.op.conv">[move.iter.op.conv]</a>
+#### Conversion <a id="move.iter.op.conv">[[move.iter.op.conv]]</a>
 
 ``` cpp
 constexpr const Iterator& base() const & noexcept;
@@ -3945,7 +3946,7 @@ constexpr Iterator base() &&;
 >
 > `std::move(current)`.
 
-#### Element access <a id="move.iter.elem">[move.iter.elem]</a>
+#### Element access <a id="move.iter.elem">[[move.iter.elem]]</a>
 
 ``` cpp
 constexpr reference operator*() const;
@@ -3963,7 +3964,7 @@ constexpr reference operator[](difference_type n) const;
 >
 > Equivalent to: `return ranges::iter_move(current + n);`
 
-#### Navigation <a id="move.iter.nav">[move.iter.nav]</a>
+#### Navigation <a id="move.iter.nav">[[move.iter.nav]]</a>
 
 ``` cpp
 constexpr move_iterator& operator++();
@@ -4059,7 +4060,7 @@ constexpr move_iterator& operator-=(difference_type n);
 >
 > `*this`.
 
-#### Comparisons <a id="move.iter.op.comp">[move.iter.op.comp]</a>
+#### Comparisons <a id="move.iter.op.comp">[[move.iter.op.comp]]</a>
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -4131,7 +4132,7 @@ template<class Iterator1, three_way_comparable_with<Iterator1> Iterator2>
 >
 > `x.base() <=> y.base()`.
 
-#### Non-member functions <a id="move.iter.nonmember">[move.iter.nonmember]</a>
+#### Non-member functions <a id="move.iter.nonmember">[[move.iter.nonmember]]</a>
 
 ``` cpp
 template<class Iterator1, class Iterator2>
@@ -4192,7 +4193,7 @@ constexpr move_iterator<Iterator> make_move_iterator(Iterator i);
 >
 > `move_iterator<Iterator>(std::move(i))`.
 
-#### Class template `move_sentinel` <a id="move.sentinel">[move.sentinel]</a>
+#### Class template `move_sentinel` <a id="move.sentinel">[[move.sentinel]]</a>
 
 Class template `move_sentinel` is a sentinel adaptor useful for denoting
 ranges together with `move_iterator`. When an input iterator type `I`
@@ -4239,7 +4240,7 @@ namespace std {
 }
 ```
 
-#### Operations <a id="move.sent.ops">[move.sent.ops]</a>
+#### Operations <a id="move.sent.ops">[[move.sent.ops]]</a>
 
 ``` cpp
 constexpr move_sentinel();
@@ -4286,9 +4287,9 @@ constexpr S base() const;
 >
 > `last`.
 
-### Common iterators <a id="iterators.common">[iterators.common]</a>
+### Common iterators <a id="iterators.common">[[iterators.common]]</a>
 
-#### Class template `common_iterator` <a id="common.iterator">[common.iterator]</a>
+#### Class template `common_iterator` <a id="common.iterator">[[common.iterator]]</a>
 
 Class template `common_iterator` is an iterator/sentinel adaptor that is
 capable of representing a non-common range of elements (where the types
@@ -4384,7 +4385,7 @@ namespace std {
 }
 ```
 
-#### Associated types <a id="common.iter.types">[common.iter.types]</a>
+#### Associated types <a id="common.iter.types">[[common.iter.types]]</a>
 
 The nested *typedef-name*s of the specialization of `iterator_traits`
 for `common_iterator<I, S>` are defined as follows.
@@ -4401,7 +4402,7 @@ for `common_iterator<I, S>` are defined as follows.
   expression `a.operator->()` is well-formed, then `pointer` denotes
   `decltype(a.operator->())`. Otherwise, `pointer` denotes `void`.
 
-#### Constructors and conversions <a id="common.iter.const">[common.iter.const]</a>
+#### Constructors and conversions <a id="common.iter.const">[[common.iter.const]]</a>
 
 ``` cpp
 constexpr common_iterator(I i);
@@ -4460,7 +4461,7 @@ template<class I2, class S2>
 >
 > `*this`
 
-#### Accessors <a id="common.iter.access">[common.iter.access]</a>
+#### Accessors <a id="common.iter.access">[[common.iter.access]]</a>
 
 ``` cpp
 constexpr decltype(auto) operator*();
@@ -4519,7 +4520,7 @@ constexpr auto operator->() const
 >         }
 >       };
 
-#### Navigation <a id="common.iter.nav">[common.iter.nav]</a>
+#### Navigation <a id="common.iter.nav">[[common.iter.nav]]</a>
 
 ``` cpp
 constexpr common_iterator& operator++();
@@ -4590,7 +4591,7 @@ constexpr decltype(auto) operator++(int);
 > };
 > ```
 
-#### Comparisons <a id="common.iter.cmp">[common.iter.cmp]</a>
+#### Comparisons <a id="common.iter.cmp">[[common.iter.cmp]]</a>
 
 ``` cpp
 template<class I2, sentinel_for<I> S2>
@@ -4645,7 +4646,7 @@ friend constexpr iter_difference_t<I2> operator-(
 > `get<`i`>(x.v_) - get<`j`>(y.v_)`, where i is `x.v_.index()` and j is
 > `y.v_.index()`.
 
-#### Customizations <a id="common.iter.cust">[common.iter.cust]</a>
+#### Customizations <a id="common.iter.cust">[[common.iter.cust]]</a>
 
 ``` cpp
 friend constexpr iter_rvalue_reference_t<I> iter_move(const common_iterator& i)
@@ -4676,7 +4677,7 @@ template<indirectly_swappable<I> I2, class S2>
 >
 > Equivalent to `ranges::iter_swap(get<I>(x.v_), get<I2>(y.v_))`.
 
-### Default sentinel <a id="default.sentinel">[default.sentinel]</a>
+### Default sentinel <a id="default.sentinel">[[default.sentinel]]</a>
 
 ``` cpp
 namespace std {
@@ -4686,11 +4687,11 @@ namespace std {
 
 Class `default_sentinel_t` is an empty type used to denote the end of a
 range. It can be used together with iterator types that know the bound
-of their range (e.g., `counted_iterator` [counted.iterator]).
+of their range (e.g., `counted_iterator` [[counted.iterator]]).
 
-### Counted iterators <a id="iterators.counted">[iterators.counted]</a>
+### Counted iterators <a id="iterators.counted">[[iterators.counted]]</a>
 
-#### Class template `counted_iterator` <a id="counted.iterator">[counted.iterator]</a>
+#### Class template `counted_iterator` <a id="counted.iterator">[[counted.iterator]]</a>
 
 Class template `counted_iterator` is an iterator adaptor with the same
 behavior as the underlying iterator except that it keeps track of the
@@ -4814,7 +4815,7 @@ namespace std {
 }
 ```
 
-#### Constructors and conversions <a id="counted.iter.const">[counted.iter.const]</a>
+#### Constructors and conversions <a id="counted.iter.const">[[counted.iter.const]]</a>
 
 ``` cpp
 constexpr counted_iterator(I i, iter_difference_t<I> n);
@@ -4852,7 +4853,7 @@ template<class I2>
 >
 > `*this`.
 
-#### Accessors <a id="counted.iter.access">[counted.iter.access]</a>
+#### Accessors <a id="counted.iter.access">[[counted.iter.access]]</a>
 
 ``` cpp
 constexpr const I& base() const & noexcept;
@@ -4878,7 +4879,7 @@ constexpr iter_difference_t<I> count() const noexcept;
 >
 > Equivalent to: `return length;`
 
-#### Element access <a id="counted.iter.elem">[counted.iter.elem]</a>
+#### Element access <a id="counted.iter.elem">[[counted.iter.elem]]</a>
 
 ``` cpp
 constexpr decltype(auto) operator*();
@@ -4916,7 +4917,7 @@ constexpr decltype(auto) operator[](iter_difference_t<I> n) const
 >
 > Equivalent to: `return current[n];`
 
-#### Navigation <a id="counted.iter.nav">[counted.iter.nav]</a>
+#### Navigation <a id="counted.iter.nav">[[counted.iter.nav]]</a>
 
 ``` cpp
 constexpr counted_iterator& operator++();
@@ -5098,7 +5099,7 @@ constexpr counted_iterator& operator-=(iter_difference_t<I> n)
 > return *this;
 > ```
 
-#### Comparisons <a id="counted.iter.cmp">[counted.iter.cmp]</a>
+#### Comparisons <a id="counted.iter.cmp">[[counted.iter.cmp]]</a>
 
 ``` cpp
 template<common_with<I> I2>
@@ -5142,7 +5143,7 @@ template<common_with<I> I2>
 > \[*Note 6*: The argument order in the *Effects:* element is reversed
 > because `length` counts down, not up. — *end note*\]
 
-#### Customizations <a id="counted.iter.cust">[counted.iter.cust]</a>
+#### Customizations <a id="counted.iter.cust">[[counted.iter.cust]]</a>
 
 ``` cpp
 friend constexpr iter_rvalue_reference_t<I>
@@ -5174,7 +5175,7 @@ template<indirectly_swappable<I> I2>
 >
 > Equivalent to `ranges::iter_swap(x.current, y.current)`.
 
-### Unreachable sentinel <a id="unreachable.sentinel">[unreachable.sentinel]</a>
+### Unreachable sentinel <a id="unreachable.sentinel">[[unreachable.sentinel]]</a>
 
 Class `unreachable_sentinel_t` can be used with any
 `weakly_incrementable` type to denote the “upper bound” of an unbounded
@@ -5205,9 +5206,9 @@ namespace std {
 }
 ```
 
-## Stream iterators <a id="stream.iterators">[stream.iterators]</a>
+## Stream iterators <a id="stream.iterators">[[stream.iterators]]</a>
 
-### General <a id="stream.iterators.general">[stream.iterators.general]</a>
+### General <a id="stream.iterators.general">[[stream.iterators.general]]</a>
 
 To make it possible for algorithmic templates to work directly with
 input/output streams, appropriate iterator-like class templates are
@@ -5226,12 +5227,12 @@ the partial sums onto `cout`.
 
 — *end example*\]
 
-### Class template `istream_iterator` <a id="istream.iterator">[istream.iterator]</a>
+### Class template `istream_iterator` <a id="istream.iterator">[[istream.iterator]]</a>
 
-#### General <a id="istream.iterator.general">[istream.iterator.general]</a>
+#### General <a id="istream.iterator.general">[[istream.iterator.general]]</a>
 
 The class template `istream_iterator` is an input iterator
-[input.iterators] that reads successive elements from the input stream
+[[input.iterators]] that reads successive elements from the input stream
 for which it was constructed.
 
 ``` cpp
@@ -5273,7 +5274,7 @@ namespace std {
 The type `T` shall meet the *Cpp17DefaultConstructible*,
 *Cpp17CopyConstructible*, and *Cpp17CopyAssignable* requirements.
 
-#### Constructors and destructor <a id="istream.iterator.cons">[istream.iterator.cons]</a>
+#### Constructors and destructor <a id="istream.iterator.cons">[[istream.iterator.cons]]</a>
 
 ``` cpp
 constexpr istream_iterator();
@@ -5328,7 +5329,7 @@ constexpr istream_iterator(const istream_iterator& x) noexcept(see below);
 > If `is_trivially_destructible_v<T>` is `true`, then this destructor is
 > trivial.
 
-#### Operations <a id="istream.iterator.ops">[istream.iterator.ops]</a>
+#### Operations <a id="istream.iterator.ops">[[istream.iterator.ops]]</a>
 
 ``` cpp
 const T& operator*() const;
@@ -5411,9 +5412,9 @@ friend bool operator==(const istream_iterator& i, default_sentinel_t);
 >
 > `!i.in_stream`.
 
-### Class template `ostream_iterator` <a id="ostream.iterator">[ostream.iterator]</a>
+### Class template `ostream_iterator` <a id="ostream.iterator">[[ostream.iterator]]</a>
 
-#### General <a id="ostream.iterator.general">[ostream.iterator.general]</a>
+#### General <a id="ostream.iterator.general">[[ostream.iterator.general]]</a>
 
 `ostream_iterator` writes (using `operator<<`) successive elements onto
 the output stream from which it was constructed. If it was constructed
@@ -5452,7 +5453,7 @@ namespace std {
 }
 ```
 
-#### Constructors and destructor <a id="ostream.iterator.cons.des">[ostream.iterator.cons.des]</a>
+#### Constructors and destructor <a id="ostream.iterator.cons.des">[[ostream.iterator.cons.des]]</a>
 
 ``` cpp
 ostream_iterator(ostream_type& s);
@@ -5471,7 +5472,7 @@ ostream_iterator(ostream_type& s, const charT* delimiter);
 > Initializes `out_stream` with `addressof(s)` and `delim` with
 > `delimiter`.
 
-#### Operations <a id="ostream.iterator.ops">[ostream.iterator.ops]</a>
+#### Operations <a id="ostream.iterator.ops">[[ostream.iterator.ops]]</a>
 
 ``` cpp
 ostream_iterator& operator=(const T& value);
@@ -5505,22 +5506,23 @@ ostream_iterator& operator++(int);
 >
 > `*this`.
 
-### Class template `istreambuf_iterator` <a id="istreambuf.iterator">[istreambuf.iterator]</a>
+### Class template `istreambuf_iterator` <a id="istreambuf.iterator">[[istreambuf.iterator]]</a>
 
-#### General <a id="istreambuf.iterator.general">[istreambuf.iterator.general]</a>
+#### General <a id="istreambuf.iterator.general">[[istreambuf.iterator.general]]</a>
 
 The class template `istreambuf_iterator` defines an input iterator
-[input.iterators] that reads successive *characters* from the streambuf
-for which it was constructed. `operator*` provides access to the current
-input character, if any. Each time `operator++` is evaluated, the
-iterator advances to the next input character. If the end of stream is
-reached (`streambuf_type::sgetc()` returns `traits::eof()`), the
-iterator becomes equal to the *end-of-stream* iterator value. The
-default constructor `istreambuf_iterator()` and the constructor
-`istreambuf_iterator(nullptr)` both construct an end-of-stream iterator
-object suitable for use as an end-of-range. All specializations of
-`istreambuf_iterator` shall have a trivial copy constructor, a
-`constexpr` default constructor, and a trivial destructor.
+[[input.iterators]] that reads successive *characters* from the
+streambuf for which it was constructed. `operator*` provides access to
+the current input character, if any. Each time `operator++` is
+evaluated, the iterator advances to the next input character. If the end
+of stream is reached (`streambuf_type::sgetc()` returns
+`traits::eof()`), the iterator becomes equal to the *end-of-stream*
+iterator value. The default constructor `istreambuf_iterator()` and the
+constructor `istreambuf_iterator(nullptr)` both construct an
+end-of-stream iterator object suitable for use as an end-of-range. All
+specializations of `istreambuf_iterator` shall have a trivial copy
+constructor, a `constexpr` default constructor, and a trivial
+destructor.
 
 The result of `operator*()` on an end-of-stream iterator is undefined.
 For any other iterator value a `char_type` value is returned. It is
@@ -5566,7 +5568,7 @@ namespace std {
 }
 ```
 
-#### Class `istreambuf_iterator::proxy` <a id="istreambuf.iterator.proxy">[istreambuf.iterator.proxy]</a>
+#### Class `istreambuf_iterator::proxy` <a id="istreambuf.iterator.proxy">[[istreambuf.iterator.proxy]]</a>
 
 Class `istreambuf_iterator<charT,traits>::proxy` is for exposition only.
 An implementation is permitted to provide equivalent functionality
@@ -5590,7 +5592,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="istreambuf.iterator.cons">[istreambuf.iterator.cons]</a>
+#### Constructors <a id="istreambuf.iterator.cons">[[istreambuf.iterator.cons]]</a>
 
 For each `istreambuf_iterator` constructor in this subclause, an
 end-of-stream iterator is constructed if and only if the exposition-only
@@ -5629,7 +5631,7 @@ istreambuf_iterator(const proxy& p) noexcept;
 >
 > Initializes `sbuf_` with `p.sbuf_`.
 
-#### Operations <a id="istreambuf.iterator.ops">[istreambuf.iterator.ops]</a>
+#### Operations <a id="istreambuf.iterator.ops">[[istreambuf.iterator.ops]]</a>
 
 ``` cpp
 charT operator*() const;
@@ -5686,9 +5688,9 @@ friend bool operator==(const istreambuf_iterator& i, default_sentinel_t s);
 >
 > `i.equal(s)`.
 
-### Class template `ostreambuf_iterator` <a id="ostreambuf.iterator">[ostreambuf.iterator]</a>
+### Class template `ostreambuf_iterator` <a id="ostreambuf.iterator">[[ostreambuf.iterator]]</a>
 
-#### General <a id="ostreambuf.iterator.general">[ostreambuf.iterator.general]</a>
+#### General <a id="ostreambuf.iterator.general">[[ostreambuf.iterator.general]]</a>
 
 The class template `ostreambuf_iterator` writes successive *characters*
 onto the output stream from which it was constructed.
@@ -5723,7 +5725,7 @@ namespace std {
 }
 ```
 
-#### Constructors <a id="ostreambuf.iter.cons">[ostreambuf.iter.cons]</a>
+#### Constructors <a id="ostreambuf.iter.cons">[[ostreambuf.iter.cons]]</a>
 
 ``` cpp
 ostreambuf_iterator(ostream_type& s) noexcept;
@@ -5749,7 +5751,7 @@ ostreambuf_iterator(streambuf_type* s) noexcept;
 >
 > Initializes `sbuf_` with `s`.
 
-#### Operations <a id="ostreambuf.iter.ops">[ostreambuf.iter.ops]</a>
+#### Operations <a id="ostreambuf.iter.ops">[[ostreambuf.iter.ops]]</a>
 
 ``` cpp
 ostreambuf_iterator& operator=(charT c);
@@ -5790,13 +5792,14 @@ bool failed() const noexcept;
 > `true` if in any prior use of member `operator=`, the call to
 > `sbuf_->sputc()` returned `traits::eof()`; or `false` otherwise.
 
-## Range access <a id="iterator.range">[iterator.range]</a>
+## Range access <a id="iterator.range">[[iterator.range]]</a>
 
 In addition to being available via inclusion of the `<iterator>` header,
-the function templates in [iterator.range] are available when any of the
-following headers are included: `<array>`, `<deque>`, `<forward_list>`,
-`<list>`, `<map>`, `<regex>`, `<set>`, `<span>`, `<string>`,
-`<string_view>`, `<unordered_map>`, `<unordered_set>`, and `<vector>`.
+the function templates in [[iterator.range]] are available when any of
+the following headers are included: `<array>`, `<deque>`,
+`<forward_list>`, `<list>`, `<map>`, `<regex>`, `<set>`, `<span>`,
+`<string>`, `<string_view>`, `<unordered_map>`, `<unordered_set>`, and
+`<vector>`.
 
 ``` cpp
 template<class C> constexpr auto begin(C& c) -> decltype(c.begin());
@@ -6003,70 +6006,70 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 > `il.begin()`.
 
 <!-- Link reference definitions -->
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[basic.lookup.unqual]: basic.md#basic.lookup.unqual
-[basic.lval]: expr.md#basic.lval
-[bidirectional.iterators]: #bidirectional.iterators
-[bidirectionaliterator]: #bidirectionaliterator
-[cmp.concept]: support.md#cmp.concept
-[concept.swappable]: concepts.md#concept.swappable
-[concepts.object]: concepts.md#concepts.object
-[containers]: containers.md#containers
-[counted.iterator]: #counted.iterator
-[cpp17.copyassignable]: #cpp17.copyassignable
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[customization.point.object]: library.md#customization.point.object
-[defns.projection]: #defns.projection
-[expr.call]: expr.md#expr.call
-[forward.iterators]: #forward.iterators
-[forwarditerator]: #forwarditerator
-[func.def]: utilities.md#func.def
-[input.iterators]: #input.iterators
-[inputiterator]: #inputiterator
-[iostream.format]: input.md#iostream.format
-[iterator]: #iterator
-[iterator.concept.bidir]: #iterator.concept.bidir
-[iterator.concept.contiguous]: #iterator.concept.contiguous
-[iterator.concept.forward]: #iterator.concept.forward
-[iterator.concept.input]: #iterator.concept.input
-[iterator.concept.iterator]: #iterator.concept.iterator
-[iterator.concept.output]: #iterator.concept.output
-[iterator.concept.random.access]: #iterator.concept.random.access
-[iterator.concept.readable]: #iterator.concept.readable
-[iterator.concept.sentinel]: #iterator.concept.sentinel
-[iterator.concept.winc]: #iterator.concept.winc
-[iterator.concept.writable]: #iterator.concept.writable
-[iterator.concepts]: #iterator.concepts
-[iterator.iterators]: #iterator.iterators
-[iterator.range]: #iterator.range
-[iterator.requirements]: #iterator.requirements
-[iterator.traits]: #iterator.traits
-[iterators.relations]: #iterators.relations
-[iterators.summary]: #iterators.summary
-[lib.types.movedfrom]: library.md#lib.types.movedfrom
-[numeric.limits]: support.md#numeric.limits
-[output.iterators]: #output.iterators
-[outputiterator]: #outputiterator
-[random.access.iterators]: #random.access.iterators
-[randomaccessiterator]: #randomaccessiterator
-[range.cmp]: utilities.md#range.cmp
-[range.iter.ops]: #range.iter.ops
-[ranges]: ranges.md#ranges
-[reverse.iter.cmp]: #reverse.iter.cmp
-[reverse.iter.elem]: #reverse.iter.elem
-[reverse.iter.nav]: #reverse.iter.nav
-[reverse.iter.nonmember]: #reverse.iter.nonmember
-[stream.buffers]: input.md#stream.buffers
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[temp.func.order]: temp.md#temp.func.order
-[temp.inst]: temp.md#temp.inst
-[utility.arg.requirements]: library.md#utility.arg.requirements
+[[basic.fundamental]]: basic.md#basic.fundamental
+[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
+[[basic.lookup.unqual]]: basic.md#basic.lookup.unqual
+[[basic.lval]]: expr.md#basic.lval
+[[bidirectional.iterators]]: #bidirectional.iterators
+[[bidirectionaliterator]]: #bidirectionaliterator
+[[cmp.concept]]: support.md#cmp.concept
+[[concept.swappable]]: concepts.md#concept.swappable
+[[concepts.object]]: concepts.md#concepts.object
+[[containers]]: containers.md#containers
+[[counted.iterator]]: #counted.iterator
+[[cpp17.copyassignable]]: #cpp17.copyassignable
+[[cpp17.equalitycomparable]]: #cpp17.equalitycomparable
+[[customization.point.object]]: library.md#customization.point.object
+[[defns.projection]]: #defns.projection
+[[expr.call]]: expr.md#expr.call
+[[forward.iterators]]: #forward.iterators
+[[forwarditerator]]: #forwarditerator
+[[func.def]]: utilities.md#func.def
+[[input.iterators]]: #input.iterators
+[[inputiterator]]: #inputiterator
+[[iostream.format]]: input.md#iostream.format
+[[iterator]]: #iterator
+[[iterator.concept.bidir]]: #iterator.concept.bidir
+[[iterator.concept.contiguous]]: #iterator.concept.contiguous
+[[iterator.concept.forward]]: #iterator.concept.forward
+[[iterator.concept.input]]: #iterator.concept.input
+[[iterator.concept.iterator]]: #iterator.concept.iterator
+[[iterator.concept.output]]: #iterator.concept.output
+[[iterator.concept.random.access]]: #iterator.concept.random.access
+[[iterator.concept.readable]]: #iterator.concept.readable
+[[iterator.concept.sentinel]]: #iterator.concept.sentinel
+[[iterator.concept.winc]]: #iterator.concept.winc
+[[iterator.concept.writable]]: #iterator.concept.writable
+[[iterator.concepts]]: #iterator.concepts
+[[iterator.iterators]]: #iterator.iterators
+[[iterator.range]]: #iterator.range
+[[iterator.requirements]]: #iterator.requirements
+[[iterator.traits]]: #iterator.traits
+[[iterators.relations]]: #iterators.relations
+[[iterators.summary]]: #iterators.summary
+[[lib.types.movedfrom]]: library.md#lib.types.movedfrom
+[[numeric.limits]]: support.md#numeric.limits
+[[output.iterators]]: #output.iterators
+[[outputiterator]]: #outputiterator
+[[random.access.iterators]]: #random.access.iterators
+[[randomaccessiterator]]: #randomaccessiterator
+[[range.cmp]]: utilities.md#range.cmp
+[[range.iter.ops]]: #range.iter.ops
+[[ranges]]: ranges.md#ranges
+[[reverse.iter.cmp]]: #reverse.iter.cmp
+[[reverse.iter.elem]]: #reverse.iter.elem
+[[reverse.iter.nav]]: #reverse.iter.nav
+[[reverse.iter.nonmember]]: #reverse.iter.nonmember
+[[stream.buffers]]: input.md#stream.buffers
+[[swappable.requirements]]: library.md#swappable.requirements
+[[temp.deduct]]: temp.md#temp.deduct
+[[temp.func.order]]: temp.md#temp.func.order
+[[temp.inst]]: temp.md#temp.inst
+[[utility.arg.requirements]]: library.md#utility.arg.requirements
 
 <!-- Link reference definitions -->
-[iterator.primitives]: #iterator.primitives
-[iterator.range]: #iterator.range
-[iterator.requirements]: #iterator.requirements
-[predef.iterators]: #predef.iterators
-[stream.iterators]: #stream.iterators
+[[iterator.primitives]]: #iterator.primitives
+[[iterator.range]]: #iterator.range
+[[iterator.requirements]]: #iterator.requirements
+[[predef.iterators]]: #predef.iterators
+[[stream.iterators]]: #stream.iterators

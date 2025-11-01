@@ -3,7 +3,7 @@ current_file: future
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-## General <a id="depr.general">[depr.general]</a>
+## General <a id="depr.general">[[depr.general]]</a>
 
 This Annex describes features of the C++ Standard that are specified for
 compatibility with existing implementations.
@@ -12,16 +12,17 @@ These are deprecated features, where *deprecated* is defined as:
 Normative for the current revision of C++, but having been identified as
 a candidate for removal from future revisions. An implementation may
 declare library names and entities described in this Clause with the
-`deprecated` attribute [dcl.attr.deprecated].
+`deprecated` attribute [[dcl.attr.deprecated]].
 
-## Arithmetic conversion on enumerations <a id="depr.arith.conv.enum">[depr.arith.conv.enum]</a>
+## Arithmetic conversion on enumerations <a id="depr.arith.conv.enum">[[depr.arith.conv.enum]]</a>
 
-The ability to apply the usual arithmetic conversions [expr.arith.conv]
-on operands where one is of enumeration type and the other is of a
-different enumeration type or a floating-point type is deprecated.
+The ability to apply the usual arithmetic conversions
+[[expr.arith.conv]] on operands where one is of enumeration type and the
+other is of a different enumeration type or a floating-point type is
+deprecated.
 
-\[*Note 1*: Three-way comparisons [expr.spaceship] between such operands
-are ill-formed. — *end note*\]
+\[*Note 1*: Three-way comparisons [[expr.spaceship]] between such
+operands are ill-formed. — *end note*\]
 
 \[*Example 1*:
 
@@ -35,10 +36,10 @@ auto cmp = e <=> f;             // error
 
 — *end example*\]
 
-## Implicit capture of `*this` by reference <a id="depr.capture.this">[depr.capture.this]</a>
+## Implicit capture of `*this` by reference <a id="depr.capture.this">[[depr.capture.this]]</a>
 
 For compatibility with prior revisions of C++, a *lambda-expression*
-with *capture-default* `=` [expr.prim.lambda.capture] may implicitly
+with *capture-default* `=` [[expr.prim.lambda.capture]] may implicitly
 capture `*this` by reference.
 
 \[*Example 1*:
@@ -55,13 +56,13 @@ struct X {
 
 — *end example*\]
 
-## Array comparisons <a id="depr.array.comp">[depr.array.comp]</a>
+## Array comparisons <a id="depr.array.comp">[[depr.array.comp]]</a>
 
-Equality and relational comparisons [expr.eq], [expr.rel] between two
-operands of array type are deprecated.
+Equality and relational comparisons [[expr.eq]], [[expr.rel]] between
+two operands of array type are deprecated.
 
-\[*Note 1*: Three-way comparisons [expr.spaceship] between such operands
-are ill-formed. — *end note*\]
+\[*Note 1*: Three-way comparisons [[expr.spaceship]] between such
+operands are ill-formed. — *end note*\]
 
 \[*Example 1*:
 
@@ -75,10 +76,10 @@ auto cmp = arr1 <=> arr2;       // error
 
 — *end example*\]
 
-## Deprecated `volatile` types <a id="depr.volatile.type">[depr.volatile.type]</a>
+## Deprecated `volatile` types <a id="depr.volatile.type">[[depr.volatile.type]]</a>
 
-Postfix `++` and `--` expressions [expr.post.incr] and prefix `++` and
-`--` expressions [expr.pre.incr] of volatile-qualified arithmetic and
+Postfix `++` and `--` expressions [[expr.post.incr]] and prefix `++` and
+`--` expressions [[expr.pre.incr]] of volatile-qualified arithmetic and
 pointer types are deprecated.
 
 \[*Example 1*:
@@ -91,7 +92,7 @@ volatile int velociraptor;
 — *end example*\]
 
 Certain assignments where the left operand is a volatile-qualified
-non-class type are deprecated; see  [expr.ass].
+non-class type are deprecated; see  [[expr.ass]].
 
 \[*Example 2*:
 
@@ -106,8 +107,8 @@ brachiosaur += neck;                // OK
 
 — *end example*\]
 
-A function type [dcl.fct] with a parameter with volatile-qualified type
-or with a volatile-qualified return type is deprecated.
+A function type [[dcl.fct]] with a parameter with volatile-qualified
+type or with a volatile-qualified return type is deprecated.
 
 \[*Example 3*:
 
@@ -119,7 +120,7 @@ void fly(volatile struct pterosaur* pteranodon);                // OK
 
 — *end example*\]
 
-A structured binding [dcl.struct.bind] of a volatile-qualified type is
+A structured binding [[dcl.struct.bind]] of a volatile-qualified type is
 deprecated.
 
 \[*Example 4*:
@@ -134,7 +135,7 @@ void park(linhenykus alvarezsauroid) {
 
 — *end example*\]
 
-## Redeclaration of `static constexpr` data members <a id="depr.static.constexpr">[depr.static.constexpr]</a>
+## Redeclaration of `static constexpr` data members <a id="depr.static.constexpr">[[depr.static.constexpr]]</a>
 
 For compatibility with prior revisions of C++, a `constexpr` static data
 member may be redundantly redeclared outside the class with no
@@ -152,10 +153,10 @@ constexpr int A::n;             // redundant declaration (definition in C++14)
 
 — *end example*\]
 
-## Non-local use of TU-local entities <a id="depr.local">[depr.local]</a>
+## Non-local use of TU-local entities <a id="depr.local">[[depr.local]]</a>
 
-A declaration of a non-TU-local entity that is an exposure [basic.link]
-is deprecated.
+A declaration of a non-TU-local entity that is an exposure
+[[basic.link]] is deprecated.
 
 \[*Note 1*: Such a declaration in an importable module unit is
 ill-formed. — *end note*\]
@@ -174,20 +175,20 @@ inline void g() {A().f();}      // deprecated: inline and not internal linkage
 
 — *end example*\]
 
-## Implicit declaration of copy functions <a id="depr.impldec">[depr.impldec]</a>
+## Implicit declaration of copy functions <a id="depr.impldec">[[depr.impldec]]</a>
 
-The implicit definition of a copy constructor [class.copy.ctor] as
+The implicit definition of a copy constructor [[class.copy.ctor]] as
 defaulted is deprecated if the class has a user-declared copy assignment
-operator or a user-declared destructor [class.dtor]. The implicit
-definition of a copy assignment operator [class.copy.assign] as
+operator or a user-declared destructor [[class.dtor]]. The implicit
+definition of a copy assignment operator [[class.copy.assign]] as
 defaulted is deprecated if the class has a user-declared copy
 constructor or a user-declared destructor. It is possible that future
 versions of C++ will specify that these implicit definitions are deleted
-[dcl.fct.def.delete].
+[[dcl.fct.def.delete]].
 
-## Literal operator function declarations using an identifier <a id="depr.lit">[depr.lit]</a>
+## Literal operator function declarations using an identifier <a id="depr.lit">[[depr.lit]]</a>
 
-A *literal-operator-id* [over.literal] of the form
+A *literal-operator-id* [[over.literal]] of the form
 
 ``` cpp
 operator string-literal identifier
@@ -195,15 +196,15 @@ operator string-literal identifier
 
 is deprecated.
 
-## `template` keyword before qualified names <a id="depr.template.template">[depr.template.template]</a>
+## `template` keyword before qualified names <a id="depr.template.template">[[depr.template.template]]</a>
 
 The use of the keyword `template` before the qualified name of a class
 or alias template without a template argument list is deprecated
-[temp.names].
+[[temp.names]].
 
-## Requires paragraph <a id="depr.res.on.required">[depr.res.on.required]</a>
+## Requires paragraph <a id="depr.res.on.required">[[depr.res.on.required]]</a>
 
-In addition to the elements specified in [structure.specifications],
+In addition to the elements specified in [[structure.specifications]],
 descriptions of function semantics may also contain a element to denote
 the preconditions for calling a function.
 
@@ -211,7 +212,7 @@ Violation of any preconditions specified in a function’s element results
 in undefined behavior unless the function’s element specifies throwing
 an exception when the precondition is violated.
 
-## `has_denorm` members in `numeric_limits` <a id="depr.numeric.limits.has.denorm">[depr.numeric.limits.has.denorm]</a>
+## `has_denorm` members in `numeric_limits` <a id="depr.numeric.limits.has.denorm">[[depr.numeric.limits.has.denorm]]</a>
 
 The following type is defined in addition to those specified in
 `<limits>`:
@@ -227,7 +228,7 @@ namespace std {
 ```
 
 The following members are defined in addition to those specified in
-[numeric.limits.general]:
+[[numeric.limits.general]]:
 
 ``` cpp
 static constexpr float_denorm_style has_denorm = denorm_absent;
@@ -238,14 +239,14 @@ The values of `has_denorm` and `has_denorm_loss` of specializations of
 `numeric_limits` are unspecified.
 
 The following members of the specialization `numeric_limits<bool>` are
-defined in addition to those specified in [numeric.special]:
+defined in addition to those specified in [[numeric.special]]:
 
 ``` cpp
 static constexpr float_denorm_style has_denorm = denorm_absent;
 static constexpr bool has_denorm_loss = false;
 ```
 
-## Deprecated C macros <a id="depr.c.macros">[depr.c.macros]</a>
+## Deprecated C macros <a id="depr.c.macros">[[depr.c.macros]]</a>
 
 The header `<stdalign.h>` has the following macro:
 
@@ -259,7 +260,7 @@ The header `<stdbool.h>` has the following macro:
 #define __bool_true_false_are_defined 1
 ```
 
-## Relational operators <a id="depr.relops">[depr.relops]</a>
+## Relational operators <a id="depr.relops">[[depr.relops]]</a>
 
 The header `<utility>` has the following additions:
 
@@ -316,9 +317,9 @@ template<class T> bool operator>=(const T& x, const T& y);
 >
 > `!(x < y)`.
 
-## `char*` streams <a id="depr.str.strstreams">[depr.str.strstreams]</a>
+## `char*` streams <a id="depr.str.strstreams">[[depr.str.strstreams]]</a>
 
-### Header `<strstream>` synopsis <a id="depr.strstream.syn">[depr.strstream.syn]</a>
+### Header `<strstream>` synopsis <a id="depr.strstream.syn">[[depr.strstream.syn]]</a>
 
 The header `<strstream>` defines types that associate stream buffers
 with character array objects and assist reading and writing such
@@ -333,9 +334,9 @@ namespace std {
 }
 ```
 
-### Class `strstreambuf` <a id="depr.strstreambuf">[depr.strstreambuf]</a>
+### Class `strstreambuf` <a id="depr.strstreambuf">[[depr.strstreambuf]]</a>
 
-#### General <a id="depr.strstreambuf.general">[depr.strstreambuf.general]</a>
+#### General <a id="depr.strstreambuf.general">[[depr.strstreambuf.general]]</a>
 
 ``` cpp
 namespace std {
@@ -431,7 +432,7 @@ the pointers `seeklow` and `seekhigh`. If `gnext` is a null pointer, the
 seekable area is undefined. Otherwise, `seeklow` equals `gbeg` and
 `seekhigh` is either `pend`, if `pend` is not a null pointer, or `gend`.
 
-#### `strstreambuf` constructors <a id="depr.strstreambuf.cons">[depr.strstreambuf.cons]</a>
+#### `strstreambuf` constructors <a id="depr.strstreambuf.cons">[[depr.strstreambuf.cons]]</a>
 
 ``` cpp
 explicit strstreambuf(streamsize alsize_arg);
@@ -532,7 +533,7 @@ virtual ~strstreambuf();
 > (\[depr.strstreambuf.virtuals\] describes how a dynamically allocated
 > array object is freed.)
 
-#### Member functions <a id="depr.strstreambuf.members">[depr.strstreambuf.members]</a>
+#### Member functions <a id="depr.strstreambuf.members">[[depr.strstreambuf.members]]</a>
 
 ``` cpp
 void freeze(bool freezefl = true);
@@ -571,7 +572,7 @@ int pcount() const;
 > of the array object as the next pointer minus the beginning pointer
 > for the output sequence, `pnext - pbeg`.
 
-#### `strstreambuf` overridden virtual functions <a id="depr.strstreambuf.virtuals">[depr.strstreambuf.virtuals]</a>
+#### `strstreambuf` overridden virtual functions <a id="depr.strstreambuf.virtuals">[[depr.strstreambuf.virtuals]]</a>
 
 ``` cpp
 int_type overflow(int_type c = EOF) override;
@@ -774,9 +775,9 @@ streambuf<char>* setbuf(char* s, streamsize n) override;
 > Behavior is *implementation-defined*, except that `setbuf(0, 0)` has
 > no effect.
 
-### Class `istrstream` <a id="depr.istrstream">[depr.istrstream]</a>
+### Class `istrstream` <a id="depr.istrstream">[[depr.istrstream]]</a>
 
-#### General <a id="depr.istrstream.general">[depr.istrstream.general]</a>
+#### General <a id="depr.istrstream.general">[[depr.istrstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -803,7 +804,7 @@ is presented here as:
 
 - `sb`, the `strstreambuf` object.
 
-#### `istrstream` constructors <a id="depr.istrstream.cons">[depr.istrstream.cons]</a>
+#### `istrstream` constructors <a id="depr.istrstream.cons">[[depr.istrstream.cons]]</a>
 
 ``` cpp
 explicit istrstream(const char* s);
@@ -828,7 +829,7 @@ istrstream(char* s, streamsize n);
 > array whose length is `n` elements, and `n` shall be greater than
 > zero.
 
-#### Member functions <a id="depr.istrstream.members">[depr.istrstream.members]</a>
+#### Member functions <a id="depr.istrstream.members">[[depr.istrstream.members]]</a>
 
 ``` cpp
 strstreambuf* rdbuf() const;
@@ -846,9 +847,9 @@ char* str();
 >
 > `rdbuf()->str()`.
 
-### Class `ostrstream` <a id="depr.ostrstream">[depr.ostrstream]</a>
+### Class `ostrstream` <a id="depr.ostrstream">[[depr.ostrstream]]</a>
 
-#### General <a id="depr.ostrstream.general">[depr.ostrstream.general]</a>
+#### General <a id="depr.ostrstream.general">[[depr.ostrstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -875,7 +876,7 @@ is presented here as:
 
 - `sb`, the `strstreambuf` object.
 
-#### `ostrstream` constructors <a id="depr.ostrstream.cons">[depr.ostrstream.cons]</a>
+#### `ostrstream` constructors <a id="depr.ostrstream.cons">[[depr.ostrstream.cons]]</a>
 
 ``` cpp
 ostrstream();
@@ -907,7 +908,7 @@ ostrstream(char* s, int n, ios_base::openmode mode = ios_base::out);
 >
 >   The function signature `strlen(const char*)` is declared in .
 
-#### Member functions <a id="depr.ostrstream.members">[depr.ostrstream.members]</a>
+#### Member functions <a id="depr.ostrstream.members">[[depr.ostrstream.members]]</a>
 
 ``` cpp
 strstreambuf* rdbuf() const;
@@ -941,9 +942,9 @@ int pcount() const;
 >
 > `rdbuf()->pcount()`.
 
-### Class `strstream` <a id="depr.strstream">[depr.strstream]</a>
+### Class `strstream` <a id="depr.strstream">[[depr.strstream]]</a>
 
-#### General <a id="depr.strstream.general">[depr.strstream.general]</a>
+#### General <a id="depr.strstream.general">[[depr.strstream.general]]</a>
 
 ``` cpp
 namespace std {
@@ -981,7 +982,7 @@ is presented here as:
 
 - `sb`, the `strstreambuf` object.
 
-#### `strstream` constructors <a id="depr.strstream.cons">[depr.strstream.cons]</a>
+#### `strstream` constructors <a id="depr.strstream.cons">[[depr.strstream.cons]]</a>
 
 ``` cpp
 strstream();
@@ -1010,7 +1011,7 @@ strstream(char* s, int n,
 >   element is designated by `s`. The constructor is
 >   `strstreambuf(s,n,s + std::strlen(s))`.
 
-#### `strstream` destructor <a id="depr.strstream.dest">[depr.strstream.dest]</a>
+#### `strstream` destructor <a id="depr.strstream.dest">[[depr.strstream.dest]]</a>
 
 ``` cpp
 virtual ~strstream();
@@ -1020,7 +1021,7 @@ virtual ~strstream();
 >
 > Destroys an object of class `strstream`.
 
-#### `strstream` operations <a id="depr.strstream.oper">[depr.strstream.oper]</a>
+#### `strstream` operations <a id="depr.strstream.oper">[[depr.strstream.oper]]</a>
 
 ``` cpp
 strstreambuf* rdbuf() const;
@@ -1054,10 +1055,10 @@ int pcount() const;
 >
 > `rdbuf()->pcount()`.
 
-## Deprecated error numbers <a id="depr.cerrno">[depr.cerrno]</a>
+## Deprecated error numbers <a id="depr.cerrno">[[depr.cerrno]]</a>
 
 The following macros are defined in addition to those specified in
-[cerrno.syn]:
+[[cerrno.syn]]:
 
 ``` cpp
 #define ENODATA see below
@@ -1069,7 +1070,7 @@ The following macros are defined in addition to those specified in
 The meaning of these macros is defined by the POSIX standard.
 
 The following `enum errc` enumerators are defined in addition to those
-specified in [system.error.syn]:
+specified in [[system.error.syn]]:
 
 ``` cpp
 no_message_available,               // ENODATA
@@ -1081,10 +1082,10 @@ stream_timeout,                     // ETIME
 The value of each `enum errc` enumerator above is the same as the value
 of the `<cerrno>` macro shown in the above synopsis.
 
-## The default allocator <a id="depr.default.allocator">[depr.default.allocator]</a>
+## The default allocator <a id="depr.default.allocator">[[depr.default.allocator]]</a>
 
 The following member is defined in addition to those specified in
-[default.allocator]:
+[[default.allocator]]:
 
 ``` cpp
 namespace std {
@@ -1095,10 +1096,10 @@ namespace std {
 }
 ```
 
-## Deprecated `polymorphic_allocator` member function <a id="depr.mem.poly.allocator.mem">[depr.mem.poly.allocator.mem]</a>
+## Deprecated `polymorphic_allocator` member function <a id="depr.mem.poly.allocator.mem">[[depr.mem.poly.allocator.mem]]</a>
 
 The following member is declared in addition to those members specified
-in [mem.poly.allocator.mem]:
+in [[mem.poly.allocator.mem]]:
 
 ``` cpp
 namespace std::pmr {
@@ -1120,7 +1121,7 @@ template<class T>
 >
 > As if by `p->T̃()`.
 
-## Deprecated type traits <a id="depr.meta.types">[depr.meta.types]</a>
+## Deprecated type traits <a id="depr.meta.types">[[depr.meta.types]]</a>
 
 The header `<type_traits>` has the following addition:
 
@@ -1211,7 +1212,7 @@ template<size_t Len, class... Types>
 > `alignment_value` is an integral constant of type `size_t` whose value
 > is the strictest alignment of all types listed in `Types`.
 
-## Tuple <a id="depr.tuple">[depr.tuple]</a>
+## Tuple <a id="depr.tuple">[[depr.tuple]]</a>
 
 The header `<tuple>` has the following additions:
 
@@ -1261,7 +1262,7 @@ template<size_t I, class T> struct tuple_element<I, const volatile T>;
 > In addition to being available via inclusion of the header, the two
 > templates are available when any of the headers , , or are included.
 
-## Variant <a id="depr.variant">[depr.variant]</a>
+## Variant <a id="depr.variant">[[depr.variant]]</a>
 
 The header `<variant>` has the following additions:
 
@@ -1299,7 +1300,7 @@ template<size_t I, class T> struct variant_alternative<I, const volatile T>;
 >
 > - for the second specialization, `add_cv_t<VA::type>`.
 
-## Deprecated `iterator` class template <a id="depr.iterator">[depr.iterator]</a>
+## Deprecated `iterator` class template <a id="depr.iterator">[[depr.iterator]]</a>
 
 The header `<iterator>` has the following addition:
 
@@ -1339,10 +1340,10 @@ class MyIterator :
 
 — *end example*\]
 
-## Deprecated `move_iterator` access <a id="depr.move.iter.elem">[depr.move.iter.elem]</a>
+## Deprecated `move_iterator` access <a id="depr.move.iter.elem">[[depr.move.iter.elem]]</a>
 
 The following member is declared in addition to those members specified
-in [move.iter.elem]:
+in [[move.iter.elem]]:
 
 ``` cpp
 namespace std {
@@ -1362,7 +1363,7 @@ constexpr pointer operator->() const;
 >
 > `current`.
 
-## Deprecated `shared_ptr` atomic access <a id="depr.util.smartptr.shared.atomic">[depr.util.smartptr.shared.atomic]</a>
+## Deprecated `shared_ptr` atomic access <a id="depr.util.smartptr.shared.atomic">[[depr.util.smartptr.shared.atomic]]</a>
 
 The header `<memory>` has the following additions:
 
@@ -1407,7 +1408,7 @@ functions in this subclause and the instance is passed as their first
 argument.
 
 The meaning of the arguments of type `memory_order` is explained in 
-[atomics.order].
+[[atomics.order]].
 
 ``` cpp
 template<class T> bool atomic_is_lock_free(const shared_ptr<T>* p);
@@ -1581,10 +1582,10 @@ template<class T>
 > value and share ownership. The weak form may fail spuriously.
 > See \[atomics.types.operations\].
 
-## Deprecated `basic_string` capacity <a id="depr.string.capacity">[depr.string.capacity]</a>
+## Deprecated `basic_string` capacity <a id="depr.string.capacity">[[depr.string.capacity]]</a>
 
 The following member is declared in addition to those members specified
-in [string.capacity]:
+in [[string.capacity]]:
 
 ``` cpp
 namespace std {
@@ -1609,14 +1610,14 @@ void reserve();
 > \[*Note 4*: This is a non-binding shrink to fit
 > request. — *end note*\]
 
-## Deprecated standard code conversion facets <a id="depr.locale.stdcvt">[depr.locale.stdcvt]</a>
+## Deprecated standard code conversion facets <a id="depr.locale.stdcvt">[[depr.locale.stdcvt]]</a>
 
-### General <a id="depr.locale.stdcvt.general">[depr.locale.stdcvt.general]</a>
+### General <a id="depr.locale.stdcvt.general">[[depr.locale.stdcvt.general]]</a>
 
 The header `<codecvt>` provides code conversion facets for various
 character encodings.
 
-### Header `<codecvt>` synopsis <a id="depr.codecvt.syn">[depr.codecvt.syn]</a>
+### Header `<codecvt>` synopsis <a id="depr.codecvt.syn">[[depr.codecvt.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -1649,7 +1650,7 @@ namespace std {
 }
 ```
 
-### Requirements <a id="depr.locale.stdcvt.req">[depr.locale.stdcvt.req]</a>
+### Requirements <a id="depr.locale.stdcvt.req">[[depr.locale.stdcvt.req]]</a>
 
 For each of the three code conversion facets `codecvt_utf8`,
 `codecvt_utf16`, and `codecvt_utf8_utf16`:
@@ -1709,9 +1710,9 @@ For the facet `codecvt_utf8_utf16`:
 - The multibyte sequences may be written as either a text or a binary
   file.
 
-## Deprecated convenience conversion interfaces <a id="depr.conversions">[depr.conversions]</a>
+## Deprecated convenience conversion interfaces <a id="depr.conversions">[[depr.conversions]]</a>
 
-### General <a id="depr.conversions.general">[depr.conversions.general]</a>
+### General <a id="depr.conversions.general">[[depr.conversions.general]]</a>
 
 The header `<locale>` has the following additions:
 
@@ -1728,7 +1729,7 @@ namespace std {
 }
 ```
 
-### Class template `wstring_convert` <a id="depr.conversions.string">[depr.conversions.string]</a>
+### Class template `wstring_convert` <a id="depr.conversions.string">[[depr.conversions.string]]</a>
 
 Class template `wstring_convert` performs conversions between a wide
 string and a byte string. It lets you specify a code conversion facet
@@ -1929,7 +1930,7 @@ explicit wstring_convert(const byte_string& byte_err,
 >
 > The destructor shall delete `cvtptr`.
 
-### Class template `wbuffer_convert` <a id="depr.conversions.buffer">[depr.conversions.buffer]</a>
+### Class template `wbuffer_convert` <a id="depr.conversions.buffer">[[depr.conversions.buffer]]</a>
 
 Class template `wbuffer_convert` looks like a wide stream buffer, but
 performs all its I/O through an underlying byte stream buffer that you
@@ -2035,10 +2036,11 @@ explicit wbuffer_convert(
 >
 > The destructor shall delete `cvtptr`.
 
-## Deprecated locale category facets <a id="depr.locale.category">[depr.locale.category]</a>
+## Deprecated locale category facets <a id="depr.locale.category">[[depr.locale.category]]</a>
 
 The `ctype` locale category includes the following facets as if they
-were specified in table [locale.category.facets] of [locale.category].
+were specified in table [[locale.category.facets]] of
+[[locale.category]].
 
 ``` cpp
 codecvt<char16_t, char, mbstate_t>
@@ -2046,7 +2048,7 @@ codecvt<char32_t, char, mbstate_t>
 ```
 
 The `ctype` locale category includes the following facets as if they
-were specified in table [locale.spec] of [locale.category].
+were specified in table [[locale.spec]] of [[locale.category]].
 
 ``` cpp
 codecvt_byname<char16_t, char, mbstate_t>
@@ -2054,13 +2056,13 @@ codecvt_byname<char32_t, char, mbstate_t>
 ```
 
 The following class template specializations are required in addition to
-those specified in  [locale.codecvt]. The specialization
+those specified in  [[locale.codecvt]]. The specialization
 `codecvt<char16_t, char, mbstate_t>` converts between the UTF-16 and
 UTF-8 encoding forms, and the specialization
 `codecvt<char32_t, char, mbstate_t>` converts between the UTF-32 and
 UTF-8 encoding forms.
 
-## Deprecated filesystem path factory functions <a id="depr.fs.path.factory">[depr.fs.path.factory]</a>
+## Deprecated filesystem path factory functions <a id="depr.fs.path.factory">[[depr.fs.path.factory]]</a>
 
 ``` cpp
 template<class Source>
@@ -2120,9 +2122,9 @@ template<class InputIterator>
 > `std::u8string` to `path`’s constructor is preferred as it is
 > consistent with `path`’s handling of other encodings. — *end note*\]
 
-## Deprecated atomic operations <a id="depr.atomics">[depr.atomics]</a>
+## Deprecated atomic operations <a id="depr.atomics">[[depr.atomics]]</a>
 
-### General <a id="depr.atomics.general">[depr.atomics.general]</a>
+### General <a id="depr.atomics.general">[[depr.atomics.general]]</a>
 
 The header `<atomic>` has the following additions.
 
@@ -2137,9 +2139,9 @@ namespace std {
 }
 ```
 
-### Volatile access <a id="depr.atomics.volatile">[depr.atomics.volatile]</a>
+### Volatile access <a id="depr.atomics.volatile">[[depr.atomics.volatile]]</a>
 
-If an `atomic` [atomics.types.generic] specialization has one of the
+If an `atomic` [[atomics.types.generic]] specialization has one of the
 following overloads, then that overload participates in overload
 resolution even if `atomic<T>::is_always_lock_free` is `false`:
 
@@ -2162,7 +2164,7 @@ T operator op=(T operand) volatile noexcept;
 T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) volatile noexcept;
 ```
 
-### Non-member functions <a id="depr.atomics.nonmembers">[depr.atomics.nonmembers]</a>
+### Non-member functions <a id="depr.atomics.nonmembers">[[depr.atomics.nonmembers]]</a>
 
 ``` cpp
 template<class T>
@@ -2176,7 +2178,7 @@ template<class T>
 > Equivalent to:
 > `atomic_store_explicit(object, desired, memory_order::relaxed);`
 
-### Operations on atomic types <a id="depr.atomics.types.operations">[depr.atomics.types.operations]</a>
+### Operations on atomic types <a id="depr.atomics.types.operations">[[depr.atomics.types.operations]]</a>
 
 ``` cpp
 #define ATOMIC_VAR_INIT(value) see below
@@ -2199,36 +2201,36 @@ template<class T>
 > — *end example*\]
 
 <!-- Link reference definitions -->
-[atomics.order]: thread.md#atomics.order
-[atomics.types.generic]: thread.md#atomics.types.generic
-[basic.link]: basic.md#basic.link
-[cerrno.syn]: diagnostics.md#cerrno.syn
-[class.copy.assign]: class.md#class.copy.assign
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.dtor]: class.md#class.dtor
-[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
-[dcl.fct]: dcl.md#dcl.fct
-[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
-[dcl.struct.bind]: dcl.md#dcl.struct.bind
-[default.allocator]: mem.md#default.allocator
-[expr.arith.conv]: expr.md#expr.arith.conv
-[expr.ass]: expr.md#expr.ass
-[expr.eq]: expr.md#expr.eq
-[expr.post.incr]: expr.md#expr.post.incr
-[expr.pre.incr]: expr.md#expr.pre.incr
-[expr.prim.lambda.capture]: expr.md#expr.prim.lambda.capture
-[expr.rel]: expr.md#expr.rel
-[expr.spaceship]: expr.md#expr.spaceship
-[locale.category]: localization.md#locale.category
-[locale.category.facets]: #locale.category.facets
-[locale.codecvt]: localization.md#locale.codecvt
-[locale.spec]: #locale.spec
-[mem.poly.allocator.mem]: mem.md#mem.poly.allocator.mem
-[move.iter.elem]: iterators.md#move.iter.elem
-[numeric.limits.general]: support.md#numeric.limits.general
-[numeric.special]: support.md#numeric.special
-[over.literal]: over.md#over.literal
-[string.capacity]: strings.md#string.capacity
-[structure.specifications]: library.md#structure.specifications
-[system.error.syn]: diagnostics.md#system.error.syn
-[temp.names]: temp.md#temp.names
+[[atomics.order]]: thread.md#atomics.order
+[[atomics.types.generic]]: thread.md#atomics.types.generic
+[[basic.link]]: basic.md#basic.link
+[[cerrno.syn]]: diagnostics.md#cerrno.syn
+[[class.copy.assign]]: class.md#class.copy.assign
+[[class.copy.ctor]]: class.md#class.copy.ctor
+[[class.dtor]]: class.md#class.dtor
+[[dcl.attr.deprecated]]: dcl.md#dcl.attr.deprecated
+[[dcl.fct]]: dcl.md#dcl.fct
+[[dcl.fct.def.delete]]: dcl.md#dcl.fct.def.delete
+[[dcl.struct.bind]]: dcl.md#dcl.struct.bind
+[[default.allocator]]: mem.md#default.allocator
+[[expr.arith.conv]]: expr.md#expr.arith.conv
+[[expr.ass]]: expr.md#expr.ass
+[[expr.eq]]: expr.md#expr.eq
+[[expr.post.incr]]: expr.md#expr.post.incr
+[[expr.pre.incr]]: expr.md#expr.pre.incr
+[[expr.prim.lambda.capture]]: expr.md#expr.prim.lambda.capture
+[[expr.rel]]: expr.md#expr.rel
+[[expr.spaceship]]: expr.md#expr.spaceship
+[[locale.category]]: localization.md#locale.category
+[[locale.category.facets]]: #locale.category.facets
+[[locale.codecvt]]: localization.md#locale.codecvt
+[[locale.spec]]: #locale.spec
+[[mem.poly.allocator.mem]]: mem.md#mem.poly.allocator.mem
+[[move.iter.elem]]: iterators.md#move.iter.elem
+[[numeric.limits.general]]: support.md#numeric.limits.general
+[[numeric.special]]: support.md#numeric.special
+[[over.literal]]: over.md#over.literal
+[[string.capacity]]: strings.md#string.capacity
+[[structure.specifications]]: library.md#structure.specifications
+[[system.error.syn]]: diagnostics.md#system.error.syn
+[[temp.names]]: temp.md#temp.names

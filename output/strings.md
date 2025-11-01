@@ -3,54 +3,54 @@ current_file: strings
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 ---
 
-# Strings library <a id="strings">[strings]</a>
+# Strings library <a id="strings">[[strings]]</a>
 
-## General <a id="strings.general">[strings.general]</a>
+## General <a id="strings.general">[[strings.general]]</a>
 
 This Clause describes components for manipulating sequences of any
-non-array trivial standard-layout [term.standard.layout.type] type. Such
-types are called *char-like types*, and objects of char-like types are
-called *char-like objects* or simply *characters*.
+non-array trivial standard-layout [[term.standard.layout.type]] type.
+Such types are called *char-like types*, and objects of char-like types
+are called *char-like objects* or simply *characters*.
 
 The following subclauses describe a character traits class, string
 classes, and null-terminated sequence utilities, as summarized in
-[strings.summary].
+[[strings.summary]].
 
-## Character traits <a id="char.traits">[char.traits]</a>
+## Character traits <a id="char.traits">[[char.traits]]</a>
 
-### General <a id="char.traits.general">[char.traits.general]</a>
+### General <a id="char.traits.general">[[char.traits.general]]</a>
 
-Subclause [char.traits] defines requirements on classes representing
+Subclause [[char.traits]] defines requirements on classes representing
 *character traits*, and defines a class template `char_traits<charT>`,
 along with five specializations, `char_traits<char>`,
 `char_traits<char8_t>`, `char_traits<char16_t>`,
 `char_traits<char32_t>`, and `char_traits<wchar_t>`, that meet those
 requirements.
 
-Most classes specified in [string.classes], [string.view], and
-[input.output] need a set of related types and functions to complete the
-definition of their semantics. These types and functions are provided as
-a set of member *typedef-name* and functions in the template parameter
-`traits` used by each such template. Subclause [char.traits] defines the
-semantics of these members.
+Most classes specified in [[string.classes]], [[string.view]], and
+[[input.output]] need a set of related types and functions to complete
+the definition of their semantics. These types and functions are
+provided as a set of member *typedef-name* and functions in the template
+parameter `traits` used by each such template. Subclause [[char.traits]]
+defines the semantics of these members.
 
 To specialize those templates to generate a string, string view, or
 iostream class to handle a particular character container type
-[defns.character.container] `C`, that and its related character traits
+[[defns.character.container]] `C`, that and its related character traits
 class `X` are passed as a pair of parameters to the string, string view,
 or iostream template as parameters `charT` and `traits`. If
 `X::char_type` is not the same type as `C`, the program is ill-formed.
 
-### Character traits requirements <a id="char.traits.require">[char.traits.require]</a>
+### Character traits requirements <a id="char.traits.require">[[char.traits.require]]</a>
 
-In [char.traits.req], `X` denotes a traits class defining types and
+In [[char.traits.req]], `X` denotes a traits class defining types and
 functions for the character container type `C`; `c` and `d` denote
 values of type `C`; `p` and `q` denote values of type `const C*`; `s`
 denotes a value of type `C*`; `n`, `i` and `j` denote values of type
 `size_t`; `e` and `f` denote values of type `X::int_type`; `pos` denotes
 a value of type `X::pos_type`; and `r` denotes an lvalue of type `C`. No
 expression which is part of the character traits requirements specified
-in this subclause [char.traits.require] shall exit via an exception.
+in this subclause [[char.traits.require]] shall exit via an exception.
 
 The class template
 
@@ -61,7 +61,7 @@ template<class charT> struct char_traits;
 is provided in the header `<string>` as a basis for explicit
 specializations.
 
-### Traits typedefs <a id="char.traits.typedefs">[char.traits.typedefs]</a>
+### Traits typedefs <a id="char.traits.typedefs">[[char.traits.typedefs]]</a>
 
 ``` cpp
 using int_type = see below;
@@ -88,9 +88,9 @@ using state_type = see below;
 > *Cpp17DefaultConstructible* (\[cpp17.defaultconstructible\])
 > requirements.
 
-### `char_traits` specializations <a id="char.traits.specializations">[char.traits.specializations]</a>
+### `char_traits` specializations <a id="char.traits.specializations">[[char.traits.specializations]]</a>
 
-#### General <a id="char.traits.specializations.general">[char.traits.specializations.general]</a>
+#### General <a id="char.traits.specializations.general">[[char.traits.specializations.general]]</a>
 
 ``` cpp
 namespace std {
@@ -107,7 +107,7 @@ The header `<string>` defines five specializations of the class template
 `char_traits<char16_t>`, `char_traits<char32_t>`, and
 `char_traits<wchar_t>`.
 
-#### `struct char_traits<char>` <a id="char.traits.specializations.char">[char.traits.specializations.char]</a>
+#### `struct char_traits<char>` <a id="char.traits.specializations.char">[[char.traits.specializations.char]]</a>
 
 ``` cpp
 namespace std {
@@ -151,7 +151,7 @@ identically to the built-in operators `==` and `<` for type
 
 The member `eof()` returns `EOF`.
 
-#### `struct char_traits<char8_t>` <a id="char.traits.specializations.char8.t">[char.traits.specializations.char8.t]</a>
+#### `struct char_traits<char8_t>` <a id="char.traits.specializations.char8.t">[[char.traits.specializations.char8.t]]</a>
 
 ``` cpp
 namespace std {
@@ -189,7 +189,7 @@ identically to the built-in operators `=`, `==`, and `<` respectively.
 The member `eof()` returns an *implementation-defined* constant that
 cannot appear as a valid UTF-8 code unit.
 
-#### `struct char_traits<char16_t>` <a id="char.traits.specializations.char16.t">[char.traits.specializations.char16.t]</a>
+#### `struct char_traits<char16_t>` <a id="char.traits.specializations.char16.t">[[char.traits.specializations.char16.t]]</a>
 
 ``` cpp
 namespace std {
@@ -228,7 +228,7 @@ identically to the built-in operators `=`, `==`, and `<`, respectively.
 The member `eof()` returns an *implementation-defined* constant that
 cannot appear as a valid UTF-16 code unit.
 
-#### `struct char_traits<char32_t>` <a id="char.traits.specializations.char32.t">[char.traits.specializations.char32.t]</a>
+#### `struct char_traits<char32_t>` <a id="char.traits.specializations.char32.t">[[char.traits.specializations.char32.t]]</a>
 
 ``` cpp
 namespace std {
@@ -267,7 +267,7 @@ identically to the built-in operators `=`, `==`, and `<`, respectively.
 The member `eof()` returns an *implementation-defined* constant that
 cannot appear as a Unicode code point.
 
-#### `struct char_traits<wchar_t>` <a id="char.traits.specializations.wchar.t">[char.traits.specializations.wchar.t]</a>
+#### `struct char_traits<wchar_t>` <a id="char.traits.specializations.wchar.t">[[char.traits.specializations.wchar.t]]</a>
 
 ``` cpp
 namespace std {
@@ -305,14 +305,14 @@ identically to the built-in operators `=`, `==`, and `<`, respectively.
 
 The member `eof()` returns `WEOF`.
 
-## String view classes <a id="string.view">[string.view]</a>
+## String view classes <a id="string.view">[[string.view]]</a>
 
-### General <a id="string.view.general">[string.view.general]</a>
+### General <a id="string.view.general">[[string.view.general]]</a>
 
 The class template `basic_string_view` describes an object that can
-refer to a constant contiguous sequence of char-like [strings.general]
+refer to a constant contiguous sequence of char-like [[strings.general]]
 objects with the first element of the sequence at position zero. In the
-rest of [string.view], the type of the char-like objects held in a
+rest of [[string.view]], the type of the char-like objects held in a
 `basic_string_view` object is designated by `charT`.
 
 \[*Note 1*: The library provides implicit conversions from
@@ -323,7 +323,7 @@ sequence of characters is expected. User-defined types can define their
 own implicit conversions to `std::basic_string_view<charT>` in order to
 interoperate with these functions. — *end note*\]
 
-### Header `<string_view>` synopsis <a id="string.view.synop">[string.view.synop]</a>
+### Header `<string_view>` synopsis <a id="string.view.synop">[[string.view.synop]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -382,12 +382,12 @@ namespace std {
 }
 ```
 
-The function templates defined in [utility.swap] and [iterator.range]
-are available when `<string_view>` is included.
+The function templates defined in [[utility.swap]] and
+[[iterator.range]] are available when `<string_view>` is included.
 
-### Class template `basic_string_view` <a id="string.view.template">[string.view.template]</a>
+### Class template `basic_string_view` <a id="string.view.template">[[string.view.template]]</a>
 
-#### General <a id="string.view.template.general">[string.view.template.general]</a>
+#### General <a id="string.view.template.general">[[string.view.template.general]]</a>
 
 ``` cpp
 namespace std {
@@ -520,7 +520,7 @@ Because basic_string_view refers to a constant sequence, iterator and const_iter
 ```
 
 In every specialization `basic_string_view<charT, traits>`, the type
-`traits` shall meet the character traits requirements [char.traits].
+`traits` shall meet the character traits requirements [[char.traits]].
 
 \[*Note 2*: The program is ill-formed if `traits::char_type` is not the
 same type as `charT`. — *end note*\]
@@ -539,9 +539,9 @@ The complexity of `basic_string_view` member functions is unless
 otherwise specified.
 
 `basic_string_view<charT, traits>` is a trivially copyable type
-[term.trivially.copyable.type].
+[[term.trivially.copyable.type]].
 
-#### Construction and assignment <a id="string.view.cons">[string.view.cons]</a>
+#### Construction and assignment <a id="string.view.cons">[[string.view.cons]]</a>
 
 ``` cpp
 constexpr basic_string_view() noexcept;
@@ -638,7 +638,7 @@ template<class R>
 >
 > Any exception thrown by `ranges::data(r)` and `ranges::size(r)`.
 
-#### Deduction guides <a id="string.view.deduct">[string.view.deduct]</a>
+#### Deduction guides <a id="string.view.deduct">[[string.view.deduct]]</a>
 
 ``` cpp
 template<class It, class End>
@@ -656,7 +656,7 @@ template<class R>
 
 > `R` satisfies `ranges::``contiguous_range`.
 
-#### Iterator support <a id="string.view.iterators">[string.view.iterators]</a>
+#### Iterator support <a id="string.view.iterators">[[string.view.iterators]]</a>
 
 ``` cpp
 using const_iterator = \impdefx{type of basic_string_view::const_iterator};
@@ -712,7 +712,7 @@ constexpr const_reverse_iterator crend() const noexcept;
 >
 > `const_reverse_iterator(begin())`.
 
-#### Capacity <a id="string.view.capacity">[string.view.capacity]</a>
+#### Capacity <a id="string.view.capacity">[[string.view.capacity]]</a>
 
 ``` cpp
 constexpr size_type size() const noexcept;
@@ -740,7 +740,7 @@ constexpr size_type max_size() const noexcept;
 >
 > `size_ == 0`.
 
-#### Element access <a id="string.view.access">[string.view.access]</a>
+#### Element access <a id="string.view.access">[[string.view.access]]</a>
 
 ``` cpp
 constexpr const_reference operator[](size_type pos) const;
@@ -820,7 +820,7 @@ constexpr const_pointer data() const noexcept;
 > that takes just a `const charT*` and expects a null-terminated
 > string. — *end note*\]
 
-#### Modifiers <a id="string.view.modifiers">[string.view.modifiers]</a>
+#### Modifiers <a id="string.view.modifiers">[[string.view.modifiers]]</a>
 
 ``` cpp
 constexpr void remove_prefix(size_type n);
@@ -854,7 +854,7 @@ constexpr void swap(basic_string_view& s) noexcept;
 >
 > Exchanges the values of `*this` and `s`.
 
-#### String operations <a id="string.view.ops">[string.view.ops]</a>
+#### String operations <a id="string.view.ops">[[string.view.ops]]</a>
 
 ``` cpp
 constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
@@ -1036,7 +1036,7 @@ constexpr bool contains(const charT* x) const;
 >
 > Equivalent to: `return find(x) != npos;`
 
-#### Searching <a id="string.view.find">[string.view.find]</a>
+#### Searching <a id="string.view.find">[[string.view.find]]</a>
 
 Member functions in this subclause have complexity
 `size() * str.size()}` at worst, although implementations should do
@@ -1208,13 +1208,13 @@ constexpr size_type find_last_not_of(basic_string_view str, size_type pos = npos
 > `xpos` if the function can determine such a value for `xpos`.
 > Otherwise, returns `npos`.
 
-### Non-member comparison functions <a id="string.view.comparison">[string.view.comparison]</a>
+### Non-member comparison functions <a id="string.view.comparison">[[string.view.comparison]]</a>
 
 Let `S` be `basic_string_view<charT, traits>`, and `sv` be an instance
 of `S`. Implementations shall provide sufficient additional overloads
 marked `constexpr` and `noexcept` so that an object `t` with an implicit
 conversion to `S` can be compared according to
-[string.view.comparison.overloads].
+[[string.view.comparison.overloads]].
 
 \[*Example 1*:
 
@@ -1263,7 +1263,7 @@ template<class charT, class traits>
 >
 > `static_cast<R>(lhs.compare(rhs) <=> 0)`.
 
-### Inserters and extractors <a id="string.view.io">[string.view.io]</a>
+### Inserters and extractors <a id="string.view.io">[[string.view.io]]</a>
 
 ``` cpp
 template<class charT, class traits>
@@ -1285,7 +1285,7 @@ template<class charT, class traits>
 >
 > `os`
 
-### Hash support <a id="string.view.hash">[string.view.hash]</a>
+### Hash support <a id="string.view.hash">[[string.view.hash]]</a>
 
 ``` cpp
 template<> struct hash<string_view>;
@@ -1301,7 +1301,7 @@ template<> struct hash<wstring_view>;
 > hash value of the corresponding string
 > object\[basic.string.hash\]. — *end note*\]
 
-### Suffix for `basic_string_view` literals <a id="string.view.literals">[string.view.literals]</a>
+### Suffix for `basic_string_view` literals <a id="string.view.literals">[[string.view.literals]]</a>
 
 ``` cpp
 constexpr string_view operator""sv(const char* str, size_t len) noexcept;
@@ -1343,9 +1343,9 @@ constexpr wstring_view operator""sv(const wchar_t* str, size_t len) noexcept;
 >
 > `wstring_view{str, len}`.
 
-## String classes <a id="string.classes">[string.classes]</a>
+## String classes <a id="string.classes">[[string.classes]]</a>
 
-### General <a id="string.classes.general">[string.classes.general]</a>
+### General <a id="string.classes.general">[[string.classes.general]]</a>
 
 The header `<string>` defines the `basic_string` class template for
 manipulating varying-length sequences of char-like objects and five
@@ -1354,7 +1354,7 @@ manipulating varying-length sequences of char-like objects and five
 `basic_string<char8_t>`, `basic_string<char16_t>`,
 `basic_string<char32_t>`, and `basic_string<wchar_t>`, respectively.
 
-### Header `<string>` synopsis <a id="string.syn">[string.syn]</a>
+### Header `<string>` synopsis <a id="string.syn">[[string.syn]]</a>
 
 ``` cpp
 #include <compare>              // see [compare.syn]
@@ -1556,20 +1556,20 @@ namespace std {
 }
 ```
 
-### Class template `basic_string` <a id="basic.string">[basic.string]</a>
+### Class template `basic_string` <a id="basic.string">[[basic.string]]</a>
 
-#### General <a id="basic.string.general">[basic.string.general]</a>
+#### General <a id="basic.string.general">[[basic.string.general]]</a>
 
 The class template `basic_string` describes objects that can store a
 sequence consisting of a varying number of arbitrary char-like objects
 with the first element of the sequence at position zero. Such a sequence
 is also called a “string” if the type of the char-like objects that it
-holds is clear from context. In the rest of [basic.string], the type of
-the char-like objects held in a `basic_string` object is designated by
-`charT`.
+holds is clear from context. In the rest of [[basic.string]], the type
+of the char-like objects held in a `basic_string` object is designated
+by `charT`.
 
 A specialization of `basic_string` is a contiguous container
-[container.reqmts].
+[[container.reqmts]].
 
 In all cases, is a valid range, `data() + size()` points at an object
 with value `charT()` (a “null terminator”), and `size() <= capacity()`
@@ -1896,9 +1896,9 @@ to the `size_type` member type of the type deduced by the deduction
 guide.
 
 The types `iterator` and `const_iterator` meet the constexpr iterator
-requirements [iterator.requirements.general].
+requirements [[iterator.requirements.general]].
 
-#### General requirements <a id="string.require">[string.require]</a>
+#### General requirements <a id="string.require">[[string.require]]</a>
 
 If any operation would cause `size()` to exceed `max_size()`, that
 operation throws an exception object of type `length_error`.
@@ -1913,14 +1913,14 @@ as `charT`. Every object of type
 `basic_string<charT, traits, Allocator>` uses an object of type
 `Allocator` to allocate and free storage for the contained `charT`
 objects as needed. The `Allocator` object used is obtained as described
-in [container.requirements.general]. In every specialization
+in [[container.requirements.general]]. In every specialization
 `basic_string<charT, traits, Allocator>`, the type `traits` shall meet
-the character traits requirements [char.traits].
+the character traits requirements [[char.traits]].
 
 \[*Note 1*: Every specialization
 `basic_string<charT, traits, Allocator>` is an allocator-aware
 container, but does not use the allocator’s `construct` and `destroy`
-member functions [container.requirements.general]. — *end note*\]
+member functions [[container.requirements.general]]. — *end note*\]
 
 \[*Note 2*: The program is ill-formed if `traits::char_type` is not the
 same type as `charT`. — *end note*\]
@@ -1935,7 +1935,7 @@ References, pointers, and iterators referring to the elements of a
 - Calling non-const member functions, except `operator[]`, `at`, `data`,
   `front`, `back`, `begin`, `rbegin`, `end`, and `rend`.
 
-#### Constructors and assignment operators <a id="string.cons">[string.cons]</a>
+#### Constructors and assignment operators <a id="string.cons">[[string.cons]]</a>
 
 ``` cpp
 constexpr explicit basic_string(const Allocator& a) noexcept;
@@ -2229,7 +2229,7 @@ constexpr basic_string& operator=(initializer_list<charT> il);
 > return *this = basic_string_view<charT, traits>(il.begin(), il.size());
 > ```
 
-#### Iterator support <a id="string.iterators">[string.iterators]</a>
+#### Iterator support <a id="string.iterators">[[string.iterators]]</a>
 
 ``` cpp
 constexpr iterator       begin() noexcept;
@@ -2273,7 +2273,7 @@ constexpr const_reverse_iterator crend() const noexcept;
 > An iterator which is semantically equivalent to
 > `reverse_iterator(begin())`.
 
-#### Capacity <a id="string.capacity">[string.capacity]</a>
+#### Capacity <a id="string.capacity">[[string.capacity]]</a>
 
 ``` cpp
 constexpr size_type size() const noexcept;
@@ -2443,7 +2443,7 @@ constexpr void clear() noexcept;
 >
 > Equivalent to: `return size() == 0;`
 
-#### Element access <a id="string.access">[string.access]</a>
+#### Element access <a id="string.access">[[string.access]]</a>
 
 ``` cpp
 constexpr const_reference operator[](size_type pos) const;
@@ -2507,9 +2507,9 @@ constexpr charT& back();
 >
 > Equivalent to: `return operator[](size() - 1);`
 
-#### Modifiers <a id="string.modifiers">[string.modifiers]</a>
+#### Modifiers <a id="string.modifiers">[[string.modifiers]]</a>
 
-##### `basic_string::operator+=` <a id="string.op.append">[string.op.append]</a>
+##### `basic_string::operator+=` <a id="string.op.append">[[string.op.append]]</a>
 
 ``` cpp
 constexpr basic_string& operator+=(const basic_string& str);
@@ -2562,7 +2562,7 @@ constexpr basic_string& operator+=(initializer_list<charT> il);
 >
 > Equivalent to: `return append(il);`
 
-##### `basic_string::append` <a id="string.append">[string.append]</a>
+##### `basic_string::append` <a id="string.append">[[string.append]]</a>
 
 ``` cpp
 constexpr basic_string& append(const basic_string& str);
@@ -2697,7 +2697,7 @@ constexpr void push_back(charT c);
 >
 > Equivalent to `append(size_type{1}, c)`.
 
-##### `basic_string::assign` <a id="string.assign">[string.assign]</a>
+##### `basic_string::assign` <a id="string.assign">[[string.assign]]</a>
 
 ``` cpp
 constexpr basic_string& assign(const basic_string& str);
@@ -2837,7 +2837,7 @@ template<container-compatible-range<charT> R>
 > Equivalent to:
 > `return assign(basic_string(from_range, std::forward<R>(rg), get_allocator()));`
 
-##### `basic_string::insert` <a id="string.insert">[string.insert]</a>
+##### `basic_string::insert` <a id="string.insert">[[string.insert]]</a>
 
 ``` cpp
 constexpr basic_string& insert(size_type pos, const basic_string& str);
@@ -3036,7 +3036,7 @@ constexpr iterator insert(const_iterator p, initializer_list<charT> il);
 >
 > Equivalent to: `return insert(p, il.begin(), il.end());`
 
-##### `basic_string::erase` <a id="string.erase">[string.erase]</a>
+##### `basic_string::erase` <a id="string.erase">[[string.erase]]</a>
 
 ``` cpp
 constexpr basic_string& erase(size_type pos = 0, size_type n = npos);
@@ -3117,7 +3117,7 @@ constexpr void pop_back();
 >
 > Nothing.
 
-##### `basic_string::replace` <a id="string.replace">[string.replace]</a>
+##### `basic_string::replace` <a id="string.replace">[[string.replace]]</a>
 
 ``` cpp
 constexpr basic_string& replace(size_type pos1, size_type n1, const basic_string& str);
@@ -3338,7 +3338,7 @@ constexpr basic_string& replace(const_iterator i1, const_iterator i2, initialize
 >
 > Equivalent to: `return replace(i1, i2, il.begin(), il.size());`
 
-##### `basic_string::copy` <a id="string.copy">[string.copy]</a>
+##### `basic_string::copy` <a id="string.copy">[[string.copy]]</a>
 
 ``` cpp
 constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
@@ -3352,7 +3352,7 @@ constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
 > \[*Note 8*: This does not terminate `s` with a null
 > object. — *end note*\]
 
-##### `basic_string::swap` <a id="string.swap">[string.swap]</a>
+##### `basic_string::swap` <a id="string.swap">[[string.swap]]</a>
 
 ``` cpp
 constexpr void swap(basic_string& s)
@@ -3378,9 +3378,9 @@ constexpr void swap(basic_string& s)
 >
 > Constant time.
 
-#### String operations <a id="string.ops">[string.ops]</a>
+#### String operations <a id="string.ops">[[string.ops]]</a>
 
-##### Accessors <a id="string.accessors">[string.accessors]</a>
+##### Accessors <a id="string.accessors">[[string.accessors]]</a>
 
 ``` cpp
 constexpr const charT* c_str() const noexcept;
@@ -3438,7 +3438,7 @@ constexpr allocator_type get_allocator() const noexcept;
 > that allocator has been replaced, a copy of the most recent
 > replacement.
 
-##### Searching <a id="string.find">[string.find]</a>
+##### Searching <a id="string.find">[[string.find]]</a>
 
 Let *F* be one of `find`, `rfind`, `find_first_of`, `find_last_of`,
 `find_first_not_of`, and `find_last_not_of`.
@@ -3516,7 +3516,7 @@ template<class T>
 > The exception specification is equivalent to
 > `is_nothrow_convertible_v<const T&, basic_string_view<charT, traits>>`.
 
-##### `basic_string::substr` <a id="string.substr">[string.substr]</a>
+##### `basic_string::substr` <a id="string.substr">[[string.substr]]</a>
 
 ``` cpp
 constexpr basic_string substr(size_type pos = 0, size_type n = npos) const &;
@@ -3534,7 +3534,7 @@ constexpr basic_string substr(size_type pos = 0, size_type n = npos) &&;
 >
 > Equivalent to: `return basic_string(std::move(*this), pos, n);`
 
-##### `basic_string::compare` <a id="string.compare">[string.compare]</a>
+##### `basic_string::compare` <a id="string.compare">[[string.compare]]</a>
 
 ``` cpp
 template<class T>
@@ -3651,7 +3651,7 @@ constexpr int compare(size_type pos, size_type n1, const charT* s, size_type n2)
 > Equivalent to:
 > `return compare(pos, n1, basic_string_view<charT, traits>(s, n2));`
 
-##### `basic_string::starts_with` <a id="string.starts.with">[string.starts.with]</a>
+##### `basic_string::starts_with` <a id="string.starts.with">[[string.starts.with]]</a>
 
 ``` cpp
 constexpr bool starts_with(basic_string_view<charT, traits> x) const noexcept;
@@ -3667,7 +3667,7 @@ constexpr bool starts_with(const charT* x) const;
 > return basic_string_view<charT, traits>(data(), size()).starts_with(x);
 > ```
 
-##### `basic_string::ends_with` <a id="string.ends.with">[string.ends.with]</a>
+##### `basic_string::ends_with` <a id="string.ends.with">[[string.ends.with]]</a>
 
 ``` cpp
 constexpr bool ends_with(basic_string_view<charT, traits> x) const noexcept;
@@ -3683,7 +3683,7 @@ constexpr bool ends_with(const charT* x) const;
 > return basic_string_view<charT, traits>(data(), size()).ends_with(x);
 > ```
 
-##### `basic_string::contains` <a id="string.contains">[string.contains]</a>
+##### `basic_string::contains` <a id="string.contains">[[string.contains]]</a>
 
 ``` cpp
 constexpr bool contains(basic_string_view<charT, traits> x) const noexcept;
@@ -3699,9 +3699,9 @@ constexpr bool contains(const charT* x) const;
 > return basic_string_view<charT, traits>(data(), size()).contains(x);
 > ```
 
-### Non-member functions <a id="string.nonmembers">[string.nonmembers]</a>
+### Non-member functions <a id="string.nonmembers">[[string.nonmembers]]</a>
 
-#### `operator+` <a id="string.op.plus">[string.op.plus]</a>
+#### `operator+` <a id="string.op.plus">[[string.op.plus]]</a>
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -3861,7 +3861,7 @@ template<class charT, class traits, class Allocator>
 > return std::move(lhs);
 > ```
 
-#### Non-member comparison operator functions <a id="string.cmp">[string.cmp]</a>
+#### Non-member comparison operator functions <a id="string.cmp">[[string.cmp]]</a>
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -3888,7 +3888,7 @@ template<class charT, class traits, class Allocator>
 > return basic_string_view<charT, traits>(lhs) op basic_string_view<charT, traits>(rhs);
 > ```
 
-#### `swap` <a id="string.special">[string.special]</a>
+#### `swap` <a id="string.special">[[string.special]]</a>
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -3902,7 +3902,7 @@ template<class charT, class traits, class Allocator>
 >
 > Equivalent to `lhs.swap(rhs)`.
 
-#### Inserters and extractors <a id="string.io">[string.io]</a>
+#### Inserters and extractors <a id="string.io">[[string.io]]</a>
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -4006,7 +4006,7 @@ template<class charT, class traits, class Allocator>
 >
 > `getline(is, str, is.widen(’\n’))`.
 
-#### Erasure <a id="string.erasure">[string.erasure]</a>
+#### Erasure <a id="string.erasure">[[string.erasure]]</a>
 
 ``` cpp
 template<class charT, class traits, class Allocator, class U>
@@ -4042,7 +4042,7 @@ template<class charT, class traits, class Allocator, class Predicate>
 > return r;
 > ```
 
-### Numeric conversions <a id="string.conversions">[string.conversions]</a>
+### Numeric conversions <a id="string.conversions">[[string.conversions]]</a>
 
 ``` cpp
 int stoi(const string& str, size_t* idx = nullptr, int base = 10);
@@ -4205,7 +4205,7 @@ wstring to_wstring(long double val);
 > `L"%f"`, or `L"%Lf"`, respectively, where `buf` designates an internal
 > character buffer of sufficient size `buffsz`.
 
-### Hash support <a id="basic.string.hash">[basic.string.hash]</a>
+### Hash support <a id="basic.string.hash">[[basic.string.hash]]</a>
 
 ``` cpp
 template<class A> struct hash<basic_string<char, char_traits<char>, A>>;
@@ -4219,7 +4219,7 @@ template<class A> struct hash<basic_string<wchar_t, char_traits<wchar_t>, A>>;
 > view type, and `s` is an object of type `S`, then
 > `hash<S>()(s) == hash<SV>()(SV(s))`.
 
-### Suffix for `basic_string` literals <a id="basic.string.literals">[basic.string.literals]</a>
+### Suffix for `basic_string` literals <a id="basic.string.literals">[[basic.string.literals]]</a>
 
 ``` cpp
 constexpr string operator""s(const char* str, size_t len);
@@ -4266,9 +4266,9 @@ denoting seconds but there is no conflict, since duration suffixes apply
 to numbers and string literal suffixes apply to character array
 literals. — *end note*\]
 
-## Null-terminated sequence utilities <a id="c.strings">[c.strings]</a>
+## Null-terminated sequence utilities <a id="c.strings">[[c.strings]]</a>
 
-### Header `<cctype>` synopsis <a id="cctype.syn">[cctype.syn]</a>
+### Header `<cctype>` synopsis <a id="cctype.syn">[[cctype.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4292,7 +4292,7 @@ namespace std {
 The contents and meaning of the header `<cctype>` are the same as the C
 standard library header `<ctype.h>`.
 
-### Header `<cwctype>` synopsis <a id="cwctype.syn">[cwctype.syn]</a>
+### Header `<cwctype>` synopsis <a id="cwctype.syn">[[cwctype.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4326,7 +4326,7 @@ namespace std {
 The contents and meaning of the header `<cwctype>` are the same as the C
 standard library header `<wctype.h>`.
 
-### Header `<cstring>` synopsis <a id="cstring.syn">[cstring.syn]</a>
+### Header `<cstring>` synopsis <a id="cstring.syn">[[cstring.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4368,18 +4368,18 @@ The contents and meaning of the header `<cstring>` are the same as the C
 standard library header `<string.h>`.
 
 The functions `strerror` and `strtok` are not required to avoid data
-races [res.on.data.races].
+races [[res.on.data.races]].
 
-The functions `memcpy` and `memmove` are signal-safe [support.signal].
-Both functions implicitly create objects [intro.object] in the
+The functions `memcpy` and `memmove` are signal-safe [[support.signal]].
+Both functions implicitly create objects [[intro.object]] in the
 destination region of storage immediately prior to copying the sequence
 of characters to the destination.
 
 \[*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
 `memchr`, have different signatures in this document, but they have the
-same behavior as in the C standard library [library.c]. — *end note*\]
+same behavior as in the C standard library [[library.c]]. — *end note*\]
 
-### Header `<cwchar>` synopsis <a id="cwchar.syn">[cwchar.syn]</a>
+### Header `<cwchar>` synopsis <a id="cwchar.syn">[[cwchar.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4469,9 +4469,9 @@ type `wchar_t`.
 
 \[*Note 2*: The functions `wcschr`, `wcspbrk`, `wcsrchr`, `wcsstr`, and
 `wmemchr` have different signatures in this document, but they have the
-same behavior as in the C standard library [library.c]. — *end note*\]
+same behavior as in the C standard library [[library.c]]. — *end note*\]
 
-### Header `<cuchar>` synopsis <a id="cuchar.syn">[cuchar.syn]</a>
+### Header `<cuchar>` synopsis <a id="cuchar.syn">[[cuchar.syn]]</a>
 
 ``` cpp
 namespace std {
@@ -4492,7 +4492,7 @@ standard library header `<uchar.h>`, except that it declares the
 additional `mbrtoc8` and `c8rtomb` functions and does not declare types
 `char16_t` nor `char32_t`.
 
-### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[c.mb.wcs]</a>
+### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
 \[*Note 3*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
 the functions described in this subclause. — *end note*\]
@@ -4623,29 +4623,29 @@ size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);
 > null pointer argument for `s`.
 
 <!-- Link reference definitions -->
-[basic.string]: #basic.string
-[char.traits]: #char.traits
-[char.traits.req]: #char.traits.req
-[char.traits.require]: #char.traits.require
-[char.traits.typedefs]: #char.traits.typedefs
-[container.reqmts]: containers.md#container.reqmts
-[container.requirements.general]: containers.md#container.requirements.general
-[defns.character.container]: #defns.character.container
-[input.output]: input.md#input.output
-[intro.object]: basic.md#intro.object
-[iostreams.limits.pos]: input.md#iostreams.limits.pos
-[iterator.range]: iterators.md#iterator.range
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[library.c]: library.md#library.c
-[res.on.data.races]: library.md#res.on.data.races
-[string.classes]: #string.classes
-[string.io]: #string.io
-[string.special]: #string.special
-[string.view]: #string.view
-[string.view.comparison.overloads]: #string.view.comparison.overloads
-[strings.general]: #strings.general
-[strings.summary]: #strings.summary
-[support.signal]: support.md#support.signal
-[term.standard.layout.type]: #term.standard.layout.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
-[utility.swap]: utilities.md#utility.swap
+[[basic.string]]: #basic.string
+[[char.traits]]: #char.traits
+[[char.traits.req]]: #char.traits.req
+[[char.traits.require]]: #char.traits.require
+[[char.traits.typedefs]]: #char.traits.typedefs
+[[container.reqmts]]: containers.md#container.reqmts
+[[container.requirements.general]]: containers.md#container.requirements.general
+[[defns.character.container]]: #defns.character.container
+[[input.output]]: input.md#input.output
+[[intro.object]]: basic.md#intro.object
+[[iostreams.limits.pos]]: input.md#iostreams.limits.pos
+[[iterator.range]]: iterators.md#iterator.range
+[[iterator.requirements.general]]: iterators.md#iterator.requirements.general
+[[library.c]]: library.md#library.c
+[[res.on.data.races]]: library.md#res.on.data.races
+[[string.classes]]: #string.classes
+[[string.io]]: #string.io
+[[string.special]]: #string.special
+[[string.view]]: #string.view
+[[string.view.comparison.overloads]]: #string.view.comparison.overloads
+[[strings.general]]: #strings.general
+[[strings.summary]]: #strings.summary
+[[support.signal]]: support.md#support.signal
+[[term.standard.layout.type]]: #term.standard.layout.type
+[[term.trivially.copyable.type]]: #term.trivially.copyable.type
+[[utility.swap]]: utilities.md#utility.swap
