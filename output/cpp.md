@@ -1538,6 +1538,27 @@ LISTING( ..\listing.dir )
 
 — *end example*\]
 
+<!-- Section link definitions -->
+[cpp]: #cpp
+[cpp.concat]: #cpp.concat
+[cpp.cond]: #cpp.cond
+[cpp.error]: #cpp.error
+[cpp.import]: #cpp.import
+[cpp.include]: #cpp.include
+[cpp.line]: #cpp.line
+[cpp.module]: #cpp.module
+[cpp.null]: #cpp.null
+[cpp.pragma]: #cpp.pragma
+[cpp.pragma.op]: #cpp.pragma.op
+[cpp.pre]: #cpp.pre
+[cpp.predefined]: #cpp.predefined
+[cpp.replace]: #cpp.replace
+[cpp.replace.general]: #cpp.replace.general
+[cpp.rescan]: #cpp.rescan
+[cpp.scope]: #cpp.scope
+[cpp.stringize]: #cpp.stringize
+[cpp.subst]: #cpp.subst
+
 <!-- Link reference definitions -->
 [basic.extended.fp]: basic.md#basic.extended.fp
 [cpp.concat]: #cpp.concat

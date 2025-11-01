@@ -3010,6 +3010,60 @@ as follows:
 
 ECMA-262 15.10
 
+<!-- Section link definitions -->
+[re]: #re
+[re.alg]: #re.alg
+[re.alg.match]: #re.alg.match
+[re.alg.replace]: #re.alg.replace
+[re.alg.search]: #re.alg.search
+[re.badexp]: #re.badexp
+[re.const]: #re.const
+[re.const.general]: #re.const.general
+[re.err]: #re.err
+[re.except]: #re.except
+[re.general]: #re.general
+[re.grammar]: #re.grammar
+[re.iter]: #re.iter
+[re.matchflag]: #re.matchflag
+[re.regex]: #re.regex
+[re.regex.assign]: #re.regex.assign
+[re.regex.construct]: #re.regex.construct
+[re.regex.general]: #re.regex.general
+[re.regex.locale]: #re.regex.locale
+[re.regex.nonmemb]: #re.regex.nonmemb
+[re.regex.operations]: #re.regex.operations
+[re.regex.swap]: #re.regex.swap
+[re.regiter]: #re.regiter
+[re.regiter.cnstr]: #re.regiter.cnstr
+[re.regiter.comp]: #re.regiter.comp
+[re.regiter.deref]: #re.regiter.deref
+[re.regiter.general]: #re.regiter.general
+[re.regiter.incr]: #re.regiter.incr
+[re.req]: #re.req
+[re.results]: #re.results
+[re.results.acc]: #re.results.acc
+[re.results.all]: #re.results.all
+[re.results.const]: #re.results.const
+[re.results.form]: #re.results.form
+[re.results.general]: #re.results.general
+[re.results.nonmember]: #re.results.nonmember
+[re.results.size]: #re.results.size
+[re.results.state]: #re.results.state
+[re.results.swap]: #re.results.swap
+[re.submatch]: #re.submatch
+[re.submatch.general]: #re.submatch.general
+[re.submatch.members]: #re.submatch.members
+[re.submatch.op]: #re.submatch.op
+[re.syn]: #re.syn
+[re.synopt]: #re.synopt
+[re.tokiter]: #re.tokiter
+[re.tokiter.cnstr]: #re.tokiter.cnstr
+[re.tokiter.comp]: #re.tokiter.comp
+[re.tokiter.deref]: #re.tokiter.deref
+[re.tokiter.general]: #re.tokiter.general
+[re.tokiter.incr]: #re.tokiter.incr
+[re.traits]: #re.traits
+
 <!-- Link reference definitions -->
 [bitmask.types]: library.md#bitmask.types
 [container.requirements.general]: containers.md#container.requirements.general

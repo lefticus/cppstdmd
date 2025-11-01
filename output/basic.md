@@ -5456,6 +5456,69 @@ Calling the function `std::abort()` declared in `<cstdlib>` terminates
 the program without executing any destructors and without calling the
 functions passed to `std::atexit()` or `std::at_quick_exit()`.
 
+<!-- Section link definitions -->
+[basic]: #basic
+[basic.align]: #basic.align
+[basic.compound]: #basic.compound
+[basic.def]: #basic.def
+[basic.def.odr]: #basic.def.odr
+[basic.exec]: #basic.exec
+[basic.extended.fp]: #basic.extended.fp
+[basic.fundamental]: #basic.fundamental
+[basic.indet]: #basic.indet
+[basic.life]: #basic.life
+[basic.link]: #basic.link
+[basic.lookup]: #basic.lookup
+[basic.lookup.argdep]: #basic.lookup.argdep
+[basic.lookup.elab]: #basic.lookup.elab
+[basic.lookup.general]: #basic.lookup.general
+[basic.lookup.qual]: #basic.lookup.qual
+[basic.lookup.qual.general]: #basic.lookup.qual.general
+[basic.lookup.udir]: #basic.lookup.udir
+[basic.lookup.unqual]: #basic.lookup.unqual
+[basic.memobj]: #basic.memobj
+[basic.pre]: #basic.pre
+[basic.scope]: #basic.scope
+[basic.scope.block]: #basic.scope.block
+[basic.scope.class]: #basic.scope.class
+[basic.scope.enum]: #basic.scope.enum
+[basic.scope.lambda]: #basic.scope.lambda
+[basic.scope.namespace]: #basic.scope.namespace
+[basic.scope.param]: #basic.scope.param
+[basic.scope.pdecl]: #basic.scope.pdecl
+[basic.scope.scope]: #basic.scope.scope
+[basic.scope.temp]: #basic.scope.temp
+[basic.start]: #basic.start
+[basic.start.dynamic]: #basic.start.dynamic
+[basic.start.main]: #basic.start.main
+[basic.start.static]: #basic.start.static
+[basic.start.term]: #basic.start.term
+[basic.stc]: #basic.stc
+[basic.stc.auto]: #basic.stc.auto
+[basic.stc.dynamic]: #basic.stc.dynamic
+[basic.stc.dynamic.allocation]: #basic.stc.dynamic.allocation
+[basic.stc.dynamic.deallocation]: #basic.stc.dynamic.deallocation
+[basic.stc.dynamic.general]: #basic.stc.dynamic.general
+[basic.stc.general]: #basic.stc.general
+[basic.stc.inherit]: #basic.stc.inherit
+[basic.stc.static]: #basic.stc.static
+[basic.stc.thread]: #basic.stc.thread
+[basic.type.qualifier]: #basic.type.qualifier
+[basic.types]: #basic.types
+[basic.types.general]: #basic.types.general
+[class.member.lookup]: #class.member.lookup
+[class.qual]: #class.qual
+[class.temporary]: #class.temporary
+[conv.rank]: #conv.rank
+[intro.execution]: #intro.execution
+[intro.memory]: #intro.memory
+[intro.multithread]: #intro.multithread
+[intro.multithread.general]: #intro.multithread.general
+[intro.object]: #intro.object
+[intro.progress]: #intro.progress
+[intro.races]: #intro.races
+[namespace.qual]: #namespace.qual
+
 <!-- Link reference definitions -->
 [allocator.members]: mem.md#allocator.members
 [allocator.traits.members]: mem.md#allocator.traits.members

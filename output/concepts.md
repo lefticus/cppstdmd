@@ -1125,6 +1125,42 @@ template<class R, class T, class U>
 >
 > — *end note*\]
 
+<!-- Section link definitions -->
+[concept.assignable]: #concept.assignable
+[concept.booleantestable]: #concept.booleantestable
+[concept.common]: #concept.common
+[concept.commonref]: #concept.commonref
+[concept.comparisoncommontype]: #concept.comparisoncommontype
+[concept.constructible]: #concept.constructible
+[concept.convertible]: #concept.convertible
+[concept.copyconstructible]: #concept.copyconstructible
+[concept.default.init]: #concept.default.init
+[concept.derived]: #concept.derived
+[concept.destructible]: #concept.destructible
+[concept.equalitycomparable]: #concept.equalitycomparable
+[concept.equiv]: #concept.equiv
+[concept.invocable]: #concept.invocable
+[concept.moveconstructible]: #concept.moveconstructible
+[concept.predicate]: #concept.predicate
+[concept.regularinvocable]: #concept.regularinvocable
+[concept.relation]: #concept.relation
+[concept.same]: #concept.same
+[concept.strictweakorder]: #concept.strictweakorder
+[concept.swappable]: #concept.swappable
+[concept.totallyordered]: #concept.totallyordered
+[concepts]: #concepts
+[concepts.arithmetic]: #concepts.arithmetic
+[concepts.callable]: #concepts.callable
+[concepts.callable.general]: #concepts.callable.general
+[concepts.compare]: #concepts.compare
+[concepts.compare.general]: #concepts.compare.general
+[concepts.equality]: #concepts.equality
+[concepts.general]: #concepts.general
+[concepts.lang]: #concepts.lang
+[concepts.lang.general]: #concepts.lang.general
+[concepts.object]: #concepts.object
+[concepts.syn]: #concepts.syn
+
 <!-- Link reference definitions -->
 [basic.compound]: basic.md#basic.compound
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep

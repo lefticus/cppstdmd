@@ -1569,6 +1569,30 @@ int main() {
 
 — *end example*\]
 
+<!-- Section link definitions -->
+[lex]: #lex
+[lex.bool]: #lex.bool
+[lex.ccon]: #lex.ccon
+[lex.charset]: #lex.charset
+[lex.comment]: #lex.comment
+[lex.digraph]: #lex.digraph
+[lex.ext]: #lex.ext
+[lex.fcon]: #lex.fcon
+[lex.header]: #lex.header
+[lex.icon]: #lex.icon
+[lex.key]: #lex.key
+[lex.literal]: #lex.literal
+[lex.literal.kinds]: #lex.literal.kinds
+[lex.name]: #lex.name
+[lex.nullptr]: #lex.nullptr
+[lex.operators]: #lex.operators
+[lex.phases]: #lex.phases
+[lex.ppnumber]: #lex.ppnumber
+[lex.pptoken]: #lex.pptoken
+[lex.separate]: #lex.separate
+[lex.string]: #lex.string
+[lex.token]: #lex.token
+
 <!-- Link reference definitions -->
 [basic.extended.fp]: basic.md#basic.extended.fp
 [basic.fundamental]: basic.md#basic.fundamental

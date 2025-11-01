@@ -5386,6 +5386,64 @@ struct C {
 
 — *end example*\]
 
+<!-- Section link definitions -->
+[class]: #class
+[class.abstract]: #class.abstract
+[class.access]: #class.access
+[class.access.base]: #class.access.base
+[class.access.general]: #class.access.general
+[class.access.nest]: #class.access.nest
+[class.access.spec]: #class.access.spec
+[class.access.virt]: #class.access.virt
+[class.base.init]: #class.base.init
+[class.bit]: #class.bit
+[class.cdtor]: #class.cdtor
+[class.compare]: #class.compare
+[class.compare.default]: #class.compare.default
+[class.compare.secondary]: #class.compare.secondary
+[class.conv]: #class.conv
+[class.conv.ctor]: #class.conv.ctor
+[class.conv.fct]: #class.conv.fct
+[class.conv.general]: #class.conv.general
+[class.copy.assign]: #class.copy.assign
+[class.copy.ctor]: #class.copy.ctor
+[class.copy.elision]: #class.copy.elision
+[class.ctor]: #class.ctor
+[class.ctor.general]: #class.ctor.general
+[class.default.ctor]: #class.default.ctor
+[class.derived]: #class.derived
+[class.derived.general]: #class.derived.general
+[class.dtor]: #class.dtor
+[class.eq]: #class.eq
+[class.expl.init]: #class.expl.init
+[class.free]: #class.free
+[class.friend]: #class.friend
+[class.inhctor.init]: #class.inhctor.init
+[class.init]: #class.init
+[class.init.general]: #class.init.general
+[class.local]: #class.local
+[class.mem]: #class.mem
+[class.mem.general]: #class.mem.general
+[class.mfct]: #class.mfct
+[class.mfct.non.static]: #class.mfct.non.static
+[class.mi]: #class.mi
+[class.name]: #class.name
+[class.nest]: #class.nest
+[class.paths]: #class.paths
+[class.pre]: #class.pre
+[class.prop]: #class.prop
+[class.protected]: #class.protected
+[class.spaceship]: #class.spaceship
+[class.static]: #class.static
+[class.static.data]: #class.static.data
+[class.static.general]: #class.static.general
+[class.static.mfct]: #class.static.mfct
+[class.union]: #class.union
+[class.union.anon]: #class.union.anon
+[class.union.general]: #class.union.general
+[class.virtual]: #class.virtual
+[special]: #special
+
 <!-- Link reference definitions -->
 [basic.align]: basic.md#basic.align
 [basic.compound]: basic.md#basic.compound

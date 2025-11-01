@@ -1920,6 +1920,73 @@ template<class Allocator> struct hash<basic_stacktrace<Allocator>>;
 
 > The specializations are enabled\[unord.hash\].
 
+<!-- Section link definitions -->
+[assertions]: #assertions
+[assertions.assert]: #assertions.assert
+[assertions.general]: #assertions.general
+[cassert.syn]: #cassert.syn
+[cerrno.syn]: #cerrno.syn
+[diagnostics]: #diagnostics
+[diagnostics.general]: #diagnostics.general
+[domain.error]: #domain.error
+[errno]: #errno
+[errno.general]: #errno.general
+[invalid.argument]: #invalid.argument
+[length.error]: #length.error
+[logic.error]: #logic.error
+[out.of.range]: #out.of.range
+[overflow.error]: #overflow.error
+[range.error]: #range.error
+[runtime.error]: #runtime.error
+[stacktrace]: #stacktrace
+[stacktrace.basic]: #stacktrace.basic
+[stacktrace.basic.cmp]: #stacktrace.basic.cmp
+[stacktrace.basic.cons]: #stacktrace.basic.cons
+[stacktrace.basic.hash]: #stacktrace.basic.hash
+[stacktrace.basic.mod]: #stacktrace.basic.mod
+[stacktrace.basic.nonmem]: #stacktrace.basic.nonmem
+[stacktrace.basic.obs]: #stacktrace.basic.obs
+[stacktrace.basic.overview]: #stacktrace.basic.overview
+[stacktrace.entry]: #stacktrace.entry
+[stacktrace.entry.cmp]: #stacktrace.entry.cmp
+[stacktrace.entry.cons]: #stacktrace.entry.cons
+[stacktrace.entry.obs]: #stacktrace.entry.obs
+[stacktrace.entry.overview]: #stacktrace.entry.overview
+[stacktrace.entry.query]: #stacktrace.entry.query
+[stacktrace.format]: #stacktrace.format
+[stacktrace.general]: #stacktrace.general
+[stacktrace.syn]: #stacktrace.syn
+[std.exceptions]: #std.exceptions
+[std.exceptions.general]: #std.exceptions.general
+[stdexcept.syn]: #stdexcept.syn
+[syserr]: #syserr
+[syserr.compare]: #syserr.compare
+[syserr.errcat]: #syserr.errcat
+[syserr.errcat.derived]: #syserr.errcat.derived
+[syserr.errcat.nonvirtuals]: #syserr.errcat.nonvirtuals
+[syserr.errcat.objects]: #syserr.errcat.objects
+[syserr.errcat.overview]: #syserr.errcat.overview
+[syserr.errcat.virtuals]: #syserr.errcat.virtuals
+[syserr.errcode]: #syserr.errcode
+[syserr.errcode.constructors]: #syserr.errcode.constructors
+[syserr.errcode.modifiers]: #syserr.errcode.modifiers
+[syserr.errcode.nonmembers]: #syserr.errcode.nonmembers
+[syserr.errcode.observers]: #syserr.errcode.observers
+[syserr.errcode.overview]: #syserr.errcode.overview
+[syserr.errcondition]: #syserr.errcondition
+[syserr.errcondition.constructors]: #syserr.errcondition.constructors
+[syserr.errcondition.modifiers]: #syserr.errcondition.modifiers
+[syserr.errcondition.nonmembers]: #syserr.errcondition.nonmembers
+[syserr.errcondition.observers]: #syserr.errcondition.observers
+[syserr.errcondition.overview]: #syserr.errcondition.overview
+[syserr.general]: #syserr.general
+[syserr.hash]: #syserr.hash
+[syserr.syserr]: #syserr.syserr
+[syserr.syserr.members]: #syserr.syserr.members
+[syserr.syserr.overview]: #syserr.syserr.overview
+[system.error.syn]: #system.error.syn
+[underflow.error]: #underflow.error
+
 <!-- Link reference definitions -->
 [bad.alloc]: support.md#bad.alloc
 [cmp.concept]: support.md#cmp.concept

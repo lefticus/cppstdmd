@@ -54,6 +54,10 @@ template-name:
     identifier
 ```
 
+<!-- Section link definitions -->
+[gram.general]: #gram.general
+[gram.key]: #gram.key
+
 <!-- Link reference definitions -->
 [class]: class.md#class
 [class.member.lookup]: basic.md#class.member.lookup

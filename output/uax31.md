@@ -106,5 +106,19 @@ not apply.
 
 There are no hashtags in C++, so this requirement does not apply.
 
+<!-- Section link definitions -->
+[uaxid.def]: #uaxid.def
+[uaxid.def.general]: #uaxid.def.general
+[uaxid.def.rfmt]: #uaxid.def.rfmt
+[uaxid.def.stable]: #uaxid.def.stable
+[uaxid.eqci]: #uaxid.eqci
+[uaxid.eqn]: #uaxid.eqn
+[uaxid.filter]: #uaxid.filter
+[uaxid.filterci]: #uaxid.filterci
+[uaxid.general]: #uaxid.general
+[uaxid.hashtag]: #uaxid.hashtag
+[uaxid.immutable]: #uaxid.immutable
+[uaxid.pattern]: #uaxid.pattern
+
 <!-- Link reference definitions -->
 [lex.name]: lex.md#lex.name

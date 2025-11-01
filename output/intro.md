@@ -761,6 +761,17 @@ the following rules:
 -  is one or more ’s separated by intervening commas (e.g.,
   *identifier-list* is a sequence of identifiers separated by commas).
 
+<!-- Section link definitions -->
+[intro]: #intro
+[intro.abstract]: #intro.abstract
+[intro.compliance]: #intro.compliance
+[intro.compliance.general]: #intro.compliance.general
+[intro.defs]: #intro.defs
+[intro.refs]: #intro.refs
+[intro.scope]: #intro.scope
+[intro.structure]: #intro.structure
+[syntax]: #syntax
+
 <!-- Link reference definitions -->
 [\firstlibchapter]: #\firstlibchapter
 [\lastlibchapter]: #\lastlibchapter

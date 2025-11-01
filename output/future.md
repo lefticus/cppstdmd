@@ -2200,6 +2200,67 @@ template<class T>
 >
 > — *end example*\]
 
+<!-- Section link definitions -->
+[depr.arith.conv.enum]: #depr.arith.conv.enum
+[depr.array.comp]: #depr.array.comp
+[depr.atomics]: #depr.atomics
+[depr.atomics.general]: #depr.atomics.general
+[depr.atomics.nonmembers]: #depr.atomics.nonmembers
+[depr.atomics.types.operations]: #depr.atomics.types.operations
+[depr.atomics.volatile]: #depr.atomics.volatile
+[depr.c.macros]: #depr.c.macros
+[depr.capture.this]: #depr.capture.this
+[depr.cerrno]: #depr.cerrno
+[depr.codecvt.syn]: #depr.codecvt.syn
+[depr.conversions]: #depr.conversions
+[depr.conversions.buffer]: #depr.conversions.buffer
+[depr.conversions.general]: #depr.conversions.general
+[depr.conversions.string]: #depr.conversions.string
+[depr.default.allocator]: #depr.default.allocator
+[depr.fs.path.factory]: #depr.fs.path.factory
+[depr.general]: #depr.general
+[depr.impldec]: #depr.impldec
+[depr.istrstream]: #depr.istrstream
+[depr.istrstream.cons]: #depr.istrstream.cons
+[depr.istrstream.general]: #depr.istrstream.general
+[depr.istrstream.members]: #depr.istrstream.members
+[depr.iterator]: #depr.iterator
+[depr.lit]: #depr.lit
+[depr.local]: #depr.local
+[depr.locale.category]: #depr.locale.category
+[depr.locale.stdcvt]: #depr.locale.stdcvt
+[depr.locale.stdcvt.general]: #depr.locale.stdcvt.general
+[depr.locale.stdcvt.req]: #depr.locale.stdcvt.req
+[depr.mem.poly.allocator.mem]: #depr.mem.poly.allocator.mem
+[depr.meta.types]: #depr.meta.types
+[depr.move.iter.elem]: #depr.move.iter.elem
+[depr.numeric.limits.has.denorm]: #depr.numeric.limits.has.denorm
+[depr.ostrstream]: #depr.ostrstream
+[depr.ostrstream.cons]: #depr.ostrstream.cons
+[depr.ostrstream.general]: #depr.ostrstream.general
+[depr.ostrstream.members]: #depr.ostrstream.members
+[depr.relops]: #depr.relops
+[depr.res.on.required]: #depr.res.on.required
+[depr.static.constexpr]: #depr.static.constexpr
+[depr.str.strstreams]: #depr.str.strstreams
+[depr.string.capacity]: #depr.string.capacity
+[depr.strstream]: #depr.strstream
+[depr.strstream.cons]: #depr.strstream.cons
+[depr.strstream.dest]: #depr.strstream.dest
+[depr.strstream.general]: #depr.strstream.general
+[depr.strstream.oper]: #depr.strstream.oper
+[depr.strstream.syn]: #depr.strstream.syn
+[depr.strstreambuf]: #depr.strstreambuf
+[depr.strstreambuf.cons]: #depr.strstreambuf.cons
+[depr.strstreambuf.general]: #depr.strstreambuf.general
+[depr.strstreambuf.members]: #depr.strstreambuf.members
+[depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
+[depr.template.template]: #depr.template.template
+[depr.tuple]: #depr.tuple
+[depr.util.smartptr.shared.atomic]: #depr.util.smartptr.shared.atomic
+[depr.variant]: #depr.variant
+[depr.volatile.type]: #depr.volatile.type
+
 <!-- Link reference definitions -->
 [atomics.order]: thread.md#atomics.order
 [atomics.types.generic]: thread.md#atomics.types.generic
