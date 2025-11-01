@@ -9658,7 +9658,7 @@ the division is truncated towards zero.
 ### General <a id="specialized.algorithms.general">[specialized.algorithms.general]</a>
 
 The contents specified in [specialized.algorithms] are declared in the
-header .
+header `<memory>`.
 
 Unless otherwise specified, if an exception is thrown in the following
 algorithms, objects constructed by a placement *new-expression*
@@ -10269,8 +10269,8 @@ return destroy(counted_iterator(std::move(first), n), default_sentinel).base();
 
 ## C library algorithms <a id="alg.c.library">[alg.c.library]</a>
 
-\[*Note 1*: The header declares the functions described in this
-subclause. — *end note*\]
+\[*Note 1*: The header `<cstdlib>` declares the functions described in
+this subclause. — *end note*\]
 
 ``` cpp
 void* bsearch(const void* key, const void* base, size_t nmemb, size_t size,

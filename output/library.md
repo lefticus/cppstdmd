@@ -847,7 +847,7 @@ provided by the importable C++ library headers ( [headers.cpp] or the
 subset provided by a freestanding implementation) and the C++ headers
 for C library facilities ( [headers.cpp.c]). It additionally exports
 declarations in the global namespace for the storage allocation and
-deallocation functions that are provided by .
+deallocation functions that are provided by `<new>`.
 
 The named module `std.compat` exports the same declarations as the named
 module `std`, and additionally exports declarations in the global
@@ -939,8 +939,8 @@ appropriate `import` declaration [module.import].
 A translation unit may include library headers in any order
 [lex.separate]. Each may be included more than once, with no effect
 different from being included exactly once, except that the effect of
-including either or depends each time on the lexically current
-definition of `NDEBUG`.
+including either `<cassert>` or `<assert.h>` depends each time on the
+lexically current definition of `NDEBUG`.
 
 A translation unit shall include a header only outside of any
 declaration or definition and, in the case of a module unit, only in its
@@ -1028,7 +1028,7 @@ The context in which `swap(t, u)` and `swap(u, t)` are evaluated shall
 ensure that a binary non-member function named “swap” is selected via
 overload resolution [over.match] on a candidate set that includes:
 
-- the two `swap` function templates defined in and
+- the two `swap` function templates defined in `<utility>` and
 
 - the lookup set produced by argument-dependent lookup
   [basic.lookup.argdep].

@@ -4436,8 +4436,9 @@ or comparison function, the `rehash()` function has no effect.
 
 ### In general <a id="sequences.general">[sequences.general]</a>
 
-The headers , , , , and define class templates that meet the
-requirements for sequence containers.
+The headers `<array>`, `<deque>`, `<forward_list>`, `<list>`, and
+`<vector>` define class templates that meet the requirements for
+sequence containers.
 
 The following exposition-only alias template may appear in deduction
 guides for sequence containers:

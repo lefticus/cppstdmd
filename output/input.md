@@ -295,7 +295,7 @@ namespace std {
 ### Overview <a id="iostream.objects.overview">[iostream.objects.overview]</a>
 
 In this Clause, the type name `FILE` refers to the type `FILE` declared
-in .
+in `<cstdio>`.
 
 The header `<iostream>` declares objects that associate objects with the
 standard C streams provided for by the functions declared in `<cstdio>`,
@@ -810,7 +810,7 @@ namespace std {
 The class `Init` describes an object whose construction ensures the
 construction of the eight objects declared in `<iostream>`
 [iostream.objects] that associate file stream buffers with the standard
-C streams provided for by the functions declared in .
+C streams provided for by the functions declared in `<cstdio>`.
 
 For the sake of exposition, the maintained data is presented here as:
 
@@ -14100,8 +14100,8 @@ namespace std {
 The contents and meaning of the header `<cinttypes>` are the same as the
 C standard library header `<inttypes.h>`, with the following changes:
 
-- The header `<cinttypes>` includes the header instead of `<stdint.h>`,
-  and
+- The header `<cinttypes>` includes the header `<cstdint>` instead of
+  `<stdint.h>`, and
 
 - `intmax_t` and `uintmax_t` are not required to be able to represent
   all values of extended integer types wider than `long long` and

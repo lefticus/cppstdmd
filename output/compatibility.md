@@ -106,9 +106,11 @@ void h() {
 
 ###  [library]: library introduction <a id="diff.cpp20.library">[diff.cpp20.library]</a>
 
-New headers. New functionality. The following C++ headers are new: , , ,
-, , , , and . Valid C++20 code that `#include}{s` headers with these
-names may be invalid in this revision of C++.
+New headers. New functionality. The following C++ headers are new:
+`<expected>`, `<flat_map>`, `<flat_set>`, `<generator>`, `<print>`,
+`<spanstream>`, `<stacktrace>`, and `<stdatomic.h>`. Valid C++20 code
+that `#include}{s` headers with these names may be invalid in this
+revision of C++.
 
 ###  [concepts]: concepts library <a id="diff.cpp20.concepts">[diff.cpp20.concepts]</a>
 
@@ -621,8 +623,11 @@ in each case. — *end note*\]
 
 ###  [library]: library introduction <a id="diff.cpp17.library">[diff.cpp17.library]</a>
 
-New headers. New functionality. The following C++ headers are new: , , ,
-, , , , , , , , , , , , and . Valid C++17 code that `#include}{s`
+New headers. New functionality. The following C++ headers are new:
+`<barrier>`, `<bit>`, `<charconv>`, `<compare>`, `<concepts>`,
+`<coroutine>`, `<format>`, `<latch>`, `<numbers>`, `<ranges>`,
+`<semaphore>`, `<source_location>`, `<span>`, `<stop_token>`,
+`<syncstream>`, and `<version>`. Valid C++17 code that `#include}{s`
 headers with these names may be invalid in this revision of C++.
 
 Remove vacuous C++ header files. The empty headers implied a false
@@ -630,10 +635,10 @@ requirement to achieve C compatibility with the C++ headers. A valid
 C++17 program that `#include}{s` any of the following headers may fail
 to compile: , , , , and . To retain the same behavior:
 
-- a `#include` of can be replaced by a `#include` of ,
+- a `#include` of can be replaced by a `#include` of `<complex>`,
 
-- a `#include` of can be replaced by a `#include` of and a `#include` of
-  `<complex>`, and
+- a `#include` of can be replaced by a `#include` of `<cmath>` and a
+  `#include` of `<complex>`, and
 
 - a `#include` of , , or can simply be removed.
 
@@ -924,10 +929,11 @@ unspecified whether stack unwinding is performed prior to such a call.
 
 ###  [library]: library introduction <a id="diff.cpp14.library">[diff.cpp14.library]</a>
 
-New headers. New functionality. The following C++ headers are new: , , ,
-, , ,  
-, and . Valid C++14 code that `#include}{s` headers with these names may
-be invalid in this revision of C++.
+New headers. New functionality. The following C++ headers are new:
+`<any>`, `<charconv>`, `<execution>`, `<filesystem>`,
+`<memory_resource>`, `<optional>`,  
+`<string_view>`, and `<variant>`. Valid C++14 code that `#include}{s`
+headers with these names may be invalid in this revision of C++.
 
 New reserved namespaces. Reserve namespaces for future revisions of the
 standard library that might otherwise be incompatible with existing
@@ -1121,9 +1127,9 @@ S b{a};             // uses copy constructor in C++11,
 
 ###  [library]: library introduction <a id="diff.cpp11.library">[diff.cpp11.library]</a>
 
-New header. New functionality. The C++ header is new. Valid C++11 code
-that `#include}{s` a header with that name may be invalid in this
-revision of C++.
+New header. New functionality. The C++ header `<shared_mutex>` is new.
+Valid C++11 code that `#include}{s` a header with that name may be
+invalid in this revision of C++.
 
 ###  [input.output]: input/output library <a id="diff.cpp11.input.output">[diff.cpp11.input.output]</a>
 
@@ -1275,16 +1281,20 @@ compile or produce different results in this revision of C++. A
 comprehensive list of identifiers used by the C++ standard library can
 be found in the Index of Library Names in this document.
 
-New headers. New functionality. The following C++ headers are new: , , ,
-, , , , , , , , , , , , ,
-\libheaderrefx{typeindex}{type.index.synopsis}, , , and . In addition
-the following C compatibility headers are new: , , , and . Valid C++03
-code that `#include}{s` headers with these names may be invalid in this
-revision of C++.
+New headers. New functionality. The following C++ headers are new:
+`<array>`, `<atomic>`, `<chrono>`, , `<condition_variable>`,
+`<forward_list>`, `<future>`, `<initializer_list>`, `<mutex>`,
+`<random>`, `<ratio>`, `<regex>`, `<scoped_allocator>`,
+`<system_error>`, `<thread>`, `<tuple>`, `<type\-index>`,
+`<type_traits>`, `<unordered_map>`, and `<unordered_set>`. In addition
+the following C compatibility headers are new: `<cfenv>`, `<cinttypes>`,
+`<cstdint>`, and `<cuchar>`. Valid C++03 code that `#include}{s` headers
+with these names may be invalid in this revision of C++.
 
-Function `swap` moved to a different header Remove dependency on for
-`swap`. Valid C++03 code that has been compiled expecting swap to be in
-may have to instead include .
+Function `swap` moved to a different header Remove dependency on
+`<algorithm>` for `swap`. Valid C++03 code that has been compiled
+expecting swap to be in `<algorithm>` may have to instead include
+`<utility>`.
 
 New reserved namespace. New functionality. The global namespace `posix`
 is now reserved for standardization. Valid C++03 code that uses a
@@ -1625,8 +1635,8 @@ translators will give a warning if the cast is not used.
 
 Decrement operator is not allowed with `bool` operand. Feature with
 surprising semantics. A valid ISO C expression utilizing the decrement
-operator on a `bool` lvalue (for instance, via the C typedef in ) is
-ill-formed in C++.
+operator on a `bool` lvalue (for instance, via the C typedef in
+`<stdbool.h>`) is ill-formed in C++.
 
 In C++, types can only be defined in declarations, not in expressions.  
 In C, a `sizeof` expression or cast expression may define a new type.
@@ -2052,44 +2062,45 @@ headers from the C++ standard library.
 The types `char16_t` and `char32_t` are distinct types rather than
 typedefs to existing integral types. The tokens `char16_t` and
 `char32_t` are keywords in C++ [lex.key]. They do not appear as macro or
-type names defined in .
+type names defined in `<cuchar>`.
 
 #### Type `wchar_t` <a id="diff.wchar.t">[diff.wchar.t]</a>
 
 The type `wchar_t` is a distinct type rather than a typedef to an
 existing integral type. The token `wchar_t` is a keyword in C++
 [lex.key]. It does not appear as a macro or type name defined in any of
-, , or .
+`<cstddef>`, `<cstdlib>`, or `<cwchar>`.
 
 #### Header `<assert.h>` <a id="diff.header.assert.h">[diff.header.assert.h]</a>
 
 The token `static_assert` is a keyword in C++. It does not appear as a
-macro name defined in .
+macro name defined in `<cassert>`.
 
 #### Header `<iso646.h>` <a id="diff.header.iso646.h">[diff.header.iso646.h]</a>
 
 The tokens `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not`, `not_eq`,
 `or`, `or_eq`, `xor`, and `xor_eq` are keywords in C++ [lex.key], and
-are not introduced as macros by .
+are not introduced as macros by `<iso646.h>`.
 
 #### Header `<stdalign.h>` <a id="diff.header.stdalign.h">[diff.header.stdalign.h]</a>
 
 The token `alignas` is a keyword in C++ [lex.key], and is not introduced
-as a macro by .
+as a macro by `<stdalign.h>`.
 
 #### Header `<stdbool.h>` <a id="diff.header.stdbool.h">[diff.header.stdbool.h]</a>
 
 The tokens `bool`, `true`, and `false` are keywords in C++ [lex.key],
-and are not introduced as macros by .
+and are not introduced as macros by `<stdbool.h>`.
 
 #### Macro `NULL` <a id="diff.null">[diff.null]</a>
 
-The macro `NULL`, defined in any of , , , , , , or , is an
+The macro `NULL`, defined in any of `<clocale>`, `<cstddef>`,
+`<cstdio>`, `<cstdlib>`, `<cstring>`, `<ctime>`, or `<cwchar>`, is an
 *implementation-defined* null pointer constant in C++ [support.types].
 
 ### Modifications to declarations <a id="diff.mods.to.declarations">[diff.mods.to.declarations]</a>
 
-Header : The following functions have different declarations:
+Header `<cstring>`: The following functions have different declarations:
 
 - `strchr`
 - `strpbrk`
@@ -2099,7 +2110,7 @@ Header : The following functions have different declarations:
 
 Subclause [cstring.syn] describes the changes.
 
-Header : The following functions have different declarations:
+Header `<cwchar>`: The following functions have different declarations:
 
 - `wcschr`
 - `wcspbrk`
@@ -2109,15 +2120,16 @@ Header : The following functions have different declarations:
 
 Subclause [cwchar.syn] describes the changes.
 
-Header declares the names `nullptr_t`, `byte`, and `to_integer`, and the
-operators and operator templates in [support.types.byteops], in addition
-to the names declared in in the C standard library.
+Header `<cstddef>` declares the names `nullptr_t`, `byte`, and
+`to_integer`, and the operators and operator templates in
+[support.types.byteops], in addition to the names declared in
+`<stddef.h>` in the C standard library.
 
 ### Modifications to behavior <a id="diff.mods.to.behavior">[diff.mods.to.behavior]</a>
 
 #### General <a id="diff.mods.to.behavior.general">[diff.mods.to.behavior.general]</a>
 
-Header : The following functions have different behavior:
+Header `<cstdlib>`: The following functions have different behavior:
 
 - `atexit`
 - `exit`
@@ -2125,7 +2137,7 @@ Header : The following functions have different behavior:
 
 Subclause [support.start.term] describes the changes.
 
-Header : The following functions have different behavior:
+Header `<csetjmp>`: The following functions have different behavior:
 
 - `longjmp`
 
@@ -2133,8 +2145,9 @@ Subclause [csetjmp.syn] describes the changes.
 
 #### Macro `offsetof(type, member-designator)` <a id="diff.offsetof">[diff.offsetof]</a>
 
-The macro `offsetof`, defined in , accepts a restricted set of `type`
-arguments in C++. Subclause [support.types.layout] describes the change.
+The macro `offsetof`, defined in `<cstddef>`, accepts a restricted set
+of `type` arguments in C++. Subclause [support.types.layout] describes
+the change.
 
 #### Memory allocation functions <a id="diff.malloc">[diff.malloc]</a>
 

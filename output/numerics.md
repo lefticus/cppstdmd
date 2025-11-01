@@ -4297,8 +4297,8 @@ k for $k = 0, \dotsc, n$.
 
 ### Low-quality random number generation <a id="c.math.rand">[c.math.rand]</a>
 
-\[*Note 13*: The header declares the functions described in this
-subclause. — *end note*\]
+\[*Note 13*: The header `<cstdlib>` declares the functions described in
+this subclause. — *end note*\]
 
 ``` cpp
 int rand();
@@ -6410,8 +6410,8 @@ floating-point type.
 
 ### Absolute values <a id="c.math.abs">[c.math.abs]</a>
 
-\[*Note 2*: The headers and declare the functions described in this
-subclause. — *end note*\]
+\[*Note 2*: The headers `<cstdlib>` and `<cmath>` declare the functions
+described in this subclause. — *end note*\]
 
 ``` cpp
 constexpr int abs(int j);

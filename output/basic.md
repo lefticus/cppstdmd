@@ -3147,11 +3147,12 @@ These implicit declarations introduce only the function names
 `std::size_t`, `std::align_val_t`, or any other names that the library
 uses to declare these names. Thus, a *new-expression*,
 *delete-expression*, or function call that refers to one of these
-functions without importing or including the header or importing a C++
-library module [std.modules] is well-formed. However, referring to `std`
-or `std::size_t` or `std::align_val_t` is ill-formed unless a standard
-library declaration [cstddef.syn], [new.syn], [std.modules] of that name
-precedes [basic.lookup.general] the use of that name. — *end note*\]
+functions without importing or including the header `<new>` or importing
+a C++ library module [std.modules] is well-formed. However, referring to
+`std` or `std::size_t` or `std::align_val_t` is ill-formed unless a
+standard library declaration [cstddef.syn], [new.syn], [std.modules] of
+that name precedes [basic.lookup.general] the use of that
+name. — *end note*\]
 
 Allocation and/or deallocation functions may also be declared and
 defined for any class [class.free].
@@ -3936,7 +3937,7 @@ signed or unsigned integer type as its underlying type.
 Type `char8_t` denotes a distinct type whose underlying type is
 `unsigned char`. Types `char16_t` and `char32_t` denote distinct types
 whose underlying types are `uint_least16_t` and `uint_least32_t`,
-respectively, in .
+respectively, in `<cstdint>`.
 
 Type `bool` is a distinct type that has the same object representation,
 value representation, and alignment requirements as an
@@ -3985,7 +3986,8 @@ Integral and floating-point types are collectively termed
 
 \[*Note 15*: Properties of the arithmetic types, such as their minimum
 and maximum representable value, can be queried using the facilities in
-the standard library headers , , and . — *end note*\]
+the standard library headers `<limits>`, `<climits>`, and
+`<cfloat>`. — *end note*\]
 
 A type cv `void` is an incomplete type that cannot be completed; such a
 type has an empty set of values. It is used as the return type for
@@ -4015,10 +4017,10 @@ different types. — *end note*\]
 If the implementation supports an extended floating-point type
 [basic.fundamental] whose properties are specified by the ISO/IEC/IEEE
 60559 floating-point interchange format binary16, then the
-*typedef-name* `std::float16_t` is defined in the header and names such
-a type, the macro \_\_STDCPP_FLOAT16_T\_\_ is defined [cpp.predefined],
-and the floating-point literal suffixes `f16` and `F16` are supported
-[lex.fcon].
+*typedef-name* `std::float16_t` is defined in the header `<stdfloat>`
+and names such a type, the macro \_\_STDCPP_FLOAT16_T\_\_ is defined
+[cpp.predefined], and the floating-point literal suffixes `f16` and
+`F16` are supported [lex.fcon].
 
 If the implementation supports an extended floating-point type whose
 properties are specified by the ISO/IEC/IEEE 60559 floating-point
@@ -5429,9 +5431,9 @@ undefined behavior. Terminating every thread before a call to
 satisfy these requirements. These requirements permit thread managers as
 static-storage-duration objects. — *end note*\]
 
-Calling the function `std::abort()` declared in terminates the program
-without executing any destructors and without calling the functions
-passed to `std::atexit()` or `std::at_quick_exit()`.
+Calling the function `std::abort()` declared in `<cstdlib>` terminates
+the program without executing any destructors and without calling the
+functions passed to `std::atexit()` or `std::at_quick_exit()`.
 
 <!-- Link reference definitions -->
 [allocator.members]: mem.md#allocator.members

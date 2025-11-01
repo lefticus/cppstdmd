@@ -362,8 +362,9 @@ Equivalent to: `return static_cast<IntType>(b);`
 
 ### General <a id="support.limits.general">[support.limits.general]</a>
 
-The headers , , and supply characteristics of implementation-dependent
-arithmetic types [basic.fundamental].
+The headers `<limits>`, `<climits>`, and `<cfloat>` supply
+characteristics of implementation-dependent arithmetic types
+[basic.fundamental].
 
 ### Header `<version>` synopsis <a id="version.syn">[version.syn]</a>
 
@@ -1381,8 +1382,8 @@ namespace std {
 
 ## Startup and termination <a id="support.start.term">[support.start.term]</a>
 
-\[*Note 1*: The header declares the functions described in this
-subclause. — *end note*\]
+\[*Note 1*: The header `<cstdlib>` declares the functions described in
+this subclause. — *end note*\]
 
 ``` cpp
 [[noreturn]] void _Exit(int status) noexcept;
@@ -4437,10 +4438,10 @@ files need to include one of these headers in order to be valid ISO C.
 Source files that are not intended to also be valid ISO C should not use
 any of the C headers.
 
-\[*Note 1*: The C headers either have no effect, such as and , or
-otherwise the corresponding header of the form `<cname>` provides the
-same facilities and assuredly defines them in namespace
-`std`. — *end note*\]
+\[*Note 1*: The C headers either have no effect, such as `<stdbool.h>`
+and `<stdalign.h>`, or otherwise the corresponding header of the form
+`<cname>` provides the same facilities and assuredly defines them in
+namespace `std`. — *end note*\]
 
 \[*Example 1*:
 
@@ -4466,7 +4467,8 @@ void f(bool b[], size_t n);
 #include <complex>
 ```
 
-The header `<complex.h>` behaves as if it simply includes the header .
+The header `<complex.h>` behaves as if it simply includes the header
+`<complex>`.
 
 \[*Note 2*: Names introduced by `<complex>` in namespace `std` are not
 placed into the global namespace scope by `<complex.h>`. — *end note*\]
@@ -4499,8 +4501,8 @@ header `<stdbool.h>` does not define macros named `bool`, `true`, or
 #include <complex>
 ```
 
-The header `<tgmath.h>` behaves as if it simply includes the headers and
-.
+The header `<tgmath.h>` behaves as if it simply includes the headers
+`<cmath>` and `<complex>`.
 
 \[*Note 4*: The overloads provided in C by type-generic macros are
 already provided in `<complex>` and `<cmath>` by “sufficient” additional
@@ -4512,17 +4514,18 @@ overloads. — *end note*\]
 
 ### Other C headers <a id="support.c.headers.other">[support.c.headers.other]</a>
 
-Every C header other than , , , , , and , each of which has a name of
-the form `<name.h>`, behaves as if each name placed in the standard
-library namespace by the corresponding `<cname>` header is placed within
-the global namespace scope, except for the functions described in
-[sf.cmath], the `std::lerp` function overloads [c.math.lerp], the
-declaration of `std::byte` [cstddef.syn], and the functions and function
-templates described in [support.types.byteops]. It is unspecified
-whether these names are first declared or defined within namespace scope
-[basic.scope.namespace] of the namespace `std` and are then injected
-into the global namespace scope by explicit *using-declaration*
-[namespace.udecl].
+Every C header other than `<complex.h>`, `<iso646.h>`, `<stdalign.h>`,
+`<stdatomic.h>`, `<stdbool.h>`, and `<tgmath.h>`, each of which has a
+name of the form `<name.h>`, behaves as if each name placed in the
+standard library namespace by the corresponding `<cname>` header is
+placed within the global namespace scope, except for the functions
+described in [sf.cmath], the `std::lerp` function overloads
+[c.math.lerp], the declaration of `std::byte` [cstddef.syn], and the
+functions and function templates described in [support.types.byteops].
+It is unspecified whether these names are first declared or defined
+within namespace scope [basic.scope.namespace] of the namespace `std`
+and are then injected into the global namespace scope by explicit
+*using-declaration* [namespace.udecl].
 
 \[*Example 2*: The header `<cstdlib>` assuredly provides its
 declarations and definitions within the namespace `std`. It may also

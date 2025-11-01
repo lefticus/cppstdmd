@@ -2774,8 +2774,8 @@ However, the first argument must be of a type that can be converted to a
 
 — *end example*\]
 
-\[*Note 17*: The standard header contains a mechanism for accessing
-arguments passed using the ellipsis (see  [expr.call] and 
+\[*Note 17*: The standard header `<cstdarg>` contains a mechanism for
+accessing arguments passed using the ellipsis (see  [expr.call] and 
 [support.runtime]). — *end note*\]
 
 The type of a function is determined using the following rules. The type

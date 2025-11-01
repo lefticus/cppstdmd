@@ -208,7 +208,8 @@ an exception when the precondition is violated.
 
 ## `has_denorm` members in `numeric_limits` <a id="depr.numeric.limits.has.denorm">[depr.numeric.limits.has.denorm]</a>
 
-The following type is defined in addition to those specified in :
+The following type is defined in addition to those specified in
+`<limits>`:
 
 ``` cpp
 namespace std {
@@ -255,7 +256,7 @@ The header `<stdbool.h>` has the following macro:
 
 ## Relational operators <a id="depr.relops">[depr.relops]</a>
 
-The header has the following additions:
+The header `<utility>` has the following additions:
 
 ``` cpp
 namespace std::rel_ops {
@@ -1109,7 +1110,7 @@ As if by `p->T̃()`.
 
 ## Deprecated type traits <a id="depr.meta.types">[depr.meta.types]</a>
 
-The header has the following addition:
+The header `<type_traits>` has the following addition:
 
 ``` cpp
 namespace std {
@@ -1200,7 +1201,7 @@ is the strictest alignment of all types listed in `Types`.
 
 ## Tuple <a id="depr.tuple">[depr.tuple]</a>
 
-The header has the following additions:
+The header `<tuple>` has the following additions:
 
 ``` cpp
 namespace std {
@@ -1250,7 +1251,7 @@ templates are available when any of the headers , , or are included.
 
 ## Variant <a id="depr.variant">[depr.variant]</a>
 
-The header has the following additions:
+The header `<variant>` has the following additions:
 
 ``` cpp
 namespace std {
@@ -1288,7 +1289,7 @@ that names the following type:
 
 ## Deprecated `iterator` class template <a id="depr.iterator">[depr.iterator]</a>
 
-The header has the following addition:
+The header `<iterator>` has the following addition:
 
 ``` cpp
 namespace std {
@@ -1351,7 +1352,7 @@ constexpr pointer operator->() const;
 
 ## Deprecated `shared_ptr` atomic access <a id="depr.util.smartptr.shared.atomic">[depr.util.smartptr.shared.atomic]</a>
 
-The header has the following additions:
+The header `<memory>` has the following additions:
 
 ``` cpp
 namespace std {
@@ -1698,7 +1699,7 @@ For the facet `codecvt_utf8_utf16`:
 
 ### General <a id="depr.conversions.general">[depr.conversions.general]</a>
 
-The header has the following additions:
+The header `<locale>` has the following additions:
 
 ``` cpp
 namespace std {
@@ -2109,7 +2110,7 @@ with `path`’s handling of other encodings. — *end note*\]
 
 ### General <a id="depr.atomics.general">[depr.atomics.general]</a>
 
-The header has the following additions.
+The header `<atomic>` has the following additions.
 
 ``` cpp
 namespace std {

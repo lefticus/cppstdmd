@@ -21,8 +21,8 @@ in [mem.summary].
 
 ### In general <a id="memory.general">[memory.general]</a>
 
-Subclause  [memory] describes the contents of the header and some of the
-contents of the header .
+Subclause  [memory] describes the contents of the header `<memory>` and
+some of the contents of the header `<cstdlib>`.
 
 ### Header `<memory>` synopsis <a id="memory.syn">[memory.syn]</a>
 
@@ -1553,8 +1553,8 @@ subexpression.
 
 ### C library memory allocation <a id="c.malloc">[c.malloc]</a>
 
-\[*Note 8*: The header declares the functions described in this
-subclause. — *end note*\]
+\[*Note 8*: The header `<cstdlib>` declares the functions described in
+this subclause. — *end note*\]
 
 ``` cpp
 void* aligned_alloc(size_t alignment, size_t size);

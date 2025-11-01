@@ -4478,8 +4478,8 @@ additional `mbrtoc8` and `c8rtomb` functions and does not declare types
 
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[c.mb.wcs]</a>
 
-\[*Note 3*: The headers , , and declare the functions described in this
-subclause. — *end note*\]
+\[*Note 3*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
+the functions described in this subclause. — *end note*\]
 
 ``` cpp
 int mbsinit(const mbstate_t* ps);

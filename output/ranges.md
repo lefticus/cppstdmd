@@ -584,8 +584,8 @@ type of the same width as `X`.
 ### General <a id="range.access.general">[range.access.general]</a>
 
 In addition to being available via inclusion of the `<ranges>` header,
-the customization point objects in [range.access] are available when is
-included.
+the customization point objects in [range.access] are available when
+`<iterator>` is included.
 
 Within [range.access], the *reified object* of a subexpression `E`
 denotes

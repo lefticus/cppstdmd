@@ -2609,9 +2609,9 @@ template for the integral types `char`, `signed char`, `unsigned char`,
 `short`, `unsigned short`, `int`, `unsigned int`, `long`,
 `unsigned long`, `long long`, `unsigned long long`, `char8_t`,
 `char16_t`, `char32_t`, `wchar_t`, and any other types needed by the
-typedefs in the header . For each such type `integral-type`, the
-specialization `atomic_ref<integral-type>` provides additional atomic
-operations appropriate to integral types.
+typedefs in the header `<cstdint>`. For each such type `integral-type`,
+the specialization `atomic_ref<integral-type>` provides additional
+atomic operations appropriate to integral types.
 
 \[*Note 15*: The specialization `atomic_ref<bool>` uses the primary
 template [atomics.ref.generic]. — *end note*\]
@@ -3429,8 +3429,8 @@ This function is an atomic notifying operation\[atomics.wait\].
 for the integral types `char`, `signed char`, `unsigned char`, `short`,
 `unsigned short`, `int`, `unsigned int`, `long`, `unsigned long`,
 `long long`, `unsigned long long`, `char8_t`, `char16_t`, `char32_t`,
-`wchar_t`, and any other types needed by the typedefs in the header .
-For each such type `integral-type`, the specialization
+`wchar_t`, and any other types needed by the typedefs in the header
+`<cstdint>`. For each such type `integral-type`, the specialization
 `atomic<integral-type>` provides additional atomic operations
 appropriate to integral types.
 
@@ -3925,7 +3925,7 @@ The library provides partial specializations of the `atomic` template
 for shared-ownership smart pointers [util.sharedptr].
 
 \[*Note 30*: The partial specializations are declared in header
-. — *end note*\]
+`<memory>`. — *end note*\]
 
 The behavior of all operations is as specified in
 [atomics.types.generic], unless specified otherwise. The template
@@ -4864,10 +4864,10 @@ using std::\libglobal{atomic_signal_fence};                          // see belo
 ```
 
 Each *using-declaration* for some name A in the synopsis above makes
-available the same entity as `std::$A$` declared in . Each macro listed
-above other than `_Atomic(T)` is defined as in `<atomic>`. It is
-unspecified whether `<stdatomic.h>` makes available any declarations in
-namespace `std`.
+available the same entity as `std::$A$` declared in `<atomic>`. Each
+macro listed above other than `_Atomic(T)` is defined as in `<atomic>`.
+It is unspecified whether `<stdatomic.h>` makes available any
+declarations in namespace `std`.
 
 Each of the *using-declaration*s for `int$N$_t`, `uint$N$_t`,
 `intptr_t`, and `uintptr_t` listed above is defined if and only if the
