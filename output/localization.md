@@ -3757,31 +3757,31 @@ Calls to the function `setlocale` may introduce a data race
 the functions listed in [[setlocale.data.races]].
 
 <!-- Link reference definitions -->
-[[alg.lex.comparison]]: algorithms.md#alg.lex.comparison
-[[algorithms]]: algorithms.md#algorithms
-[[basic.start.static]]: basic.md#basic.start.static
-[[bitmask.types]]: library.md#bitmask.types
-[[category.ctype]]: #category.ctype
-[[category.monetary]]: #category.monetary
-[[category.numeric]]: #category.numeric
-[[category.time]]: #category.time
-[[ios.base]]: input.md#ios.base
-[[istream.formatted]]: input.md#istream.formatted
-[[istream.formatted.reqmts]]: input.md#istream.formatted.reqmts
-[[iterator.requirements]]: iterators.md#iterator.requirements
-[[locale.categories]]: #locale.categories
-[[locale.category]]: #locale.category
-[[locale.category.facets]]: #locale.category.facets
-[[locale.ctype.members]]: #locale.ctype.members
-[[locale.spec]]: #locale.spec
-[[localization.summary]]: #localization.summary
-[[ostream.formatted.reqmts]]: input.md#ostream.formatted.reqmts
-[[res.on.data.races]]: library.md#res.on.data.races
-[[setlocale.data.races]]: #setlocale.data.races
-[[tab:locale.category.facets]]: #tab:locale.category.facets
-[[tab:locale.spec]]: #tab:locale.spec
+[alg.lex.comparison]: algorithms.md#alg.lex.comparison
+[algorithms]: algorithms.md#algorithms
+[basic.start.static]: basic.md#basic.start.static
+[bitmask.types]: library.md#bitmask.types
+[category.ctype]: #category.ctype
+[category.monetary]: #category.monetary
+[category.numeric]: #category.numeric
+[category.time]: #category.time
+[ios.base]: input.md#ios.base
+[istream.formatted]: input.md#istream.formatted
+[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
+[iterator.requirements]: iterators.md#iterator.requirements
+[locale.categories]: #locale.categories
+[locale.category]: #locale.category
+[locale.category.facets]: #locale.category.facets
+[locale.ctype.members]: #locale.ctype.members
+[locale.spec]: #locale.spec
+[localization.summary]: #localization.summary
+[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
+[res.on.data.races]: library.md#res.on.data.races
+[setlocale.data.races]: #setlocale.data.races
+[tab:locale.category.facets]: #tab:locale.category.facets
+[tab:locale.spec]: #tab:locale.spec
 
 <!-- Link reference definitions -->
-[[c.locales]]: #c.locales
-[[locale.categories]]: #locale.categories
-[[locales]]: #locales
+[c.locales]: #c.locales
+[locale.categories]: #locale.categories
+[locales]: #locales

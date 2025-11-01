@@ -5716,30 +5716,30 @@ template<class OuterA1, class OuterA2, class... InnerAllocs>
 > ```
 
 <!-- Link reference definitions -->
-[[alg.sorting]]: algorithms.md#alg.sorting
-[[allocator.requirements.completeness]]: library.md#allocator.requirements.completeness
-[[allocator.requirements.general]]: library.md#allocator.requirements.general
-[[cpp17.destructible]]: #cpp17.destructible
-[[cpp17.nullablepointer]]: #cpp17.nullablepointer
-[[function.objects]]: utilities.md#function.objects
-[[intro.multithread]]: basic.md#intro.multithread
-[[intro.races]]: basic.md#intro.races
-[[mem.summary]]: #mem.summary
-[[memory]]: #memory
-[[pointer.traits]]: #pointer.traits
-[[pointer.traits.functions]]: #pointer.traits.functions
-[[smartptr]]: #smartptr
-[[specialized.addressof]]: #specialized.addressof
-[[specialized.algorithms]]: algorithms.md#specialized.algorithms
-[[stmt.dcl]]: stmt.md#stmt.dcl
-[[temp.deduct]]: temp.md#temp.deduct
-[[tuple]]: utilities.md#tuple
-[[unique.ptr]]: #unique.ptr
-[[util.smartptr.enab]]: #util.smartptr.enab
-[[util.smartptr.shared.mod]]: #util.smartptr.shared.mod
+[alg.sorting]: algorithms.md#alg.sorting
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.requirements.general]: library.md#allocator.requirements.general
+[cpp17.destructible]: #cpp17.destructible
+[cpp17.nullablepointer]: #cpp17.nullablepointer
+[function.objects]: utilities.md#function.objects
+[intro.multithread]: basic.md#intro.multithread
+[intro.races]: basic.md#intro.races
+[mem.summary]: #mem.summary
+[memory]: #memory
+[pointer.traits]: #pointer.traits
+[pointer.traits.functions]: #pointer.traits.functions
+[smartptr]: #smartptr
+[specialized.addressof]: #specialized.addressof
+[specialized.algorithms]: algorithms.md#specialized.algorithms
+[stmt.dcl]: stmt.md#stmt.dcl
+[temp.deduct]: temp.md#temp.deduct
+[tuple]: utilities.md#tuple
+[unique.ptr]: #unique.ptr
+[util.smartptr.enab]: #util.smartptr.enab
+[util.smartptr.shared.mod]: #util.smartptr.shared.mod
 
 <!-- Link reference definitions -->
-[[allocator.adaptor]]: #allocator.adaptor
-[[mem.res]]: #mem.res
-[[memory]]: #memory
-[[smartptr]]: #smartptr
+[allocator.adaptor]: #allocator.adaptor
+[mem.res]: #mem.res
+[memory]: #memory
+[smartptr]: #smartptr

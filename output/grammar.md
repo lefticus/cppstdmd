@@ -55,11 +55,11 @@ template-name:
 ```
 
 <!-- Link reference definitions -->
-[[class]]: class.md#class
-[[class.member.lookup]]: basic.md#class.member.lookup
-[[dcl.enum]]: dcl.md#dcl.enum
-[[dcl.spec]]: dcl.md#dcl.spec
-[[dcl.typedef]]: dcl.md#dcl.typedef
-[[namespace.def]]: dcl.md#namespace.def
-[[stmt.ambig]]: stmt.md#stmt.ambig
-[[temp]]: temp.md#temp
+[class]: class.md#class
+[class.member.lookup]: basic.md#class.member.lookup
+[dcl.enum]: dcl.md#dcl.enum
+[dcl.spec]: dcl.md#dcl.spec
+[dcl.typedef]: dcl.md#dcl.typedef
+[namespace.def]: dcl.md#namespace.def
+[stmt.ambig]: stmt.md#stmt.ambig
+[temp]: temp.md#temp

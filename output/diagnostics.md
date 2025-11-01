@@ -1921,26 +1921,26 @@ template<class Allocator> struct hash<basic_stacktrace<Allocator>>;
 > The specializations are enabled\[unord.hash\].
 
 <!-- Link reference definitions -->
-[[bad.alloc]]: support.md#bad.alloc
-[[cmp.concept]]: support.md#cmp.concept
-[[concepts.object]]: concepts.md#concepts.object
-[[container.alloc.reqmts]]: containers.md#container.alloc.reqmts
-[[container.rev.reqmts]]: containers.md#container.rev.reqmts
-[[conv]]: expr.md#conv
-[[defns.const.subexpr]]: #defns.const.subexpr
-[[diagnostics.summary]]: #diagnostics.summary
-[[errno]]: #errno
-[[intro.execution]]: basic.md#intro.execution
-[[res.on.exception.handling]]: library.md#res.on.exception.handling
-[[sequence.reqmts]]: containers.md#sequence.reqmts
-[[stacktrace]]: #stacktrace
-[[syserr]]: #syserr
-[[syserr.errcat]]: #syserr.errcat
-[[syserr.errcode]]: #syserr.errcode
+[bad.alloc]: support.md#bad.alloc
+[cmp.concept]: support.md#cmp.concept
+[concepts.object]: concepts.md#concepts.object
+[container.alloc.reqmts]: containers.md#container.alloc.reqmts
+[container.rev.reqmts]: containers.md#container.rev.reqmts
+[conv]: expr.md#conv
+[defns.const.subexpr]: #defns.const.subexpr
+[diagnostics.summary]: #diagnostics.summary
+[errno]: #errno
+[intro.execution]: basic.md#intro.execution
+[res.on.exception.handling]: library.md#res.on.exception.handling
+[sequence.reqmts]: containers.md#sequence.reqmts
+[stacktrace]: #stacktrace
+[syserr]: #syserr
+[syserr.errcat]: #syserr.errcat
+[syserr.errcode]: #syserr.errcode
 
 <!-- Link reference definitions -->
-[[assertions]]: #assertions
-[[errno]]: #errno
-[[stacktrace]]: #stacktrace
-[[std.exceptions]]: #std.exceptions
-[[syserr]]: #syserr
+[assertions]: #assertions
+[errno]: #errno
+[stacktrace]: #stacktrace
+[std.exceptions]: #std.exceptions
+[syserr]: #syserr

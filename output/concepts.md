@@ -1126,35 +1126,35 @@ template<class R, class T, class U>
 > — *end note*\]
 
 <!-- Link reference definitions -->
-[[basic.compound]]: basic.md#basic.compound
-[[basic.lookup.argdep]]: basic.md#basic.lookup.argdep
-[[concepts.callable]]: #concepts.callable
-[[concepts.compare]]: #concepts.compare
-[[concepts.lang]]: #concepts.lang
-[[concepts.summary]]: #concepts.summary
-[[customization.point.object]]: library.md#customization.point.object
-[[dcl.meaning]]: dcl.md#dcl.meaning
-[[declval]]: utilities.md#declval
-[[defns.const.subexpr]]: #defns.const.subexpr
-[[expr.log.and]]: expr.md#expr.log.and
-[[expr.log.or]]: expr.md#expr.log.or
-[[expr.prim.id]]: expr.md#expr.prim.id
-[[expr.unary.op]]: expr.md#expr.unary.op
-[[forward]]: utilities.md#forward
-[[func.def]]: utilities.md#func.def
-[[func.invoke]]: utilities.md#func.invoke
-[[function.objects]]: utilities.md#function.objects
-[[meta.type.synop]]: meta.md#meta.type.synop
-[[over.best.ics]]: over.md#over.best.ics
-[[temp.deduct.call]]: temp.md#temp.deduct.call
-[[temp.deduct.type]]: temp.md#temp.deduct.type
-[[temp.func.order]]: temp.md#temp.func.order
-[[template.bitset]]: utilities.md#template.bitset
-[[term.literal.type]]: #term.literal.type
+[basic.compound]: basic.md#basic.compound
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[concepts.callable]: #concepts.callable
+[concepts.compare]: #concepts.compare
+[concepts.lang]: #concepts.lang
+[concepts.summary]: #concepts.summary
+[customization.point.object]: library.md#customization.point.object
+[dcl.meaning]: dcl.md#dcl.meaning
+[declval]: utilities.md#declval
+[defns.const.subexpr]: #defns.const.subexpr
+[expr.log.and]: expr.md#expr.log.and
+[expr.log.or]: expr.md#expr.log.or
+[expr.prim.id]: expr.md#expr.prim.id
+[expr.unary.op]: expr.md#expr.unary.op
+[forward]: utilities.md#forward
+[func.def]: utilities.md#func.def
+[func.invoke]: utilities.md#func.invoke
+[function.objects]: utilities.md#function.objects
+[meta.type.synop]: meta.md#meta.type.synop
+[over.best.ics]: over.md#over.best.ics
+[temp.deduct.call]: temp.md#temp.deduct.call
+[temp.deduct.type]: temp.md#temp.deduct.type
+[temp.func.order]: temp.md#temp.func.order
+[template.bitset]: utilities.md#template.bitset
+[term.literal.type]: #term.literal.type
 
 <!-- Link reference definitions -->
-[[concepts.callable]]: #concepts.callable
-[[concepts.compare]]: #concepts.compare
-[[concepts.equality]]: #concepts.equality
-[[concepts.lang]]: #concepts.lang
-[[concepts.object]]: #concepts.object
+[concepts.callable]: #concepts.callable
+[concepts.compare]: #concepts.compare
+[concepts.equality]: #concepts.equality
+[concepts.lang]: #concepts.lang
+[concepts.object]: #concepts.object

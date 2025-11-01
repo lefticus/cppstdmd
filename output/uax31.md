@@ -107,4 +107,4 @@ not apply.
 There are no hashtags in C++, so this requirement does not apply.
 
 <!-- Link reference definitions -->
-[[lex.name]]: lex.md#lex.name
+[lex.name]: lex.md#lex.name
