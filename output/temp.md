@@ -990,7 +990,7 @@ or pointer value shall not refer to or be the address of (respectively):
 
 - the result of a `typeid` expression [expr.typeid],
 
-- a predefined \_\_func\_\_ variable [dcl.fct.def.general], or
+- a predefined `__func__` variable [dcl.fct.def.general], or
 
 - a subobject [intro.object] of one of the above.
 
@@ -4239,9 +4239,9 @@ not a concept-id and is dependent; or if its terminal name is
   [expr.prim.lambda.capture] in a *lambda-expression* that has an
   explicit object parameter whose type is dependent [dcl.fct],
 
-- the *identifier* \_\_func\_\_ [dcl.fct.def.general], where any
-  enclosing function is a template, a member of a class template, or a
-  generic lambda,
+- the *identifier* `__func__` [dcl.fct.def.general], where any enclosing
+  function is a template, a member of a class template, or a generic
+  lambda,
 
 - a *conversion-function-id* that specifies a dependent type, or
 

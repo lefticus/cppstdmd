@@ -250,13 +250,13 @@ static constexpr bool has_denorm_loss = false;
 The header `<stdalign.h>` has the following macro:
 
 ``` cpp
-#define \xname{alignas_is_defined} 1
+#define __alignas_is_defined 1
 ```
 
 The header `<stdbool.h>` has the following macro:
 
 ``` cpp
-#define \xname{bool_true_false_are_defined} 1
+#define __bool_true_false_are_defined 1
 ```
 
 ## Relational operators <a id="depr.relops">[depr.relops]</a>

@@ -2031,12 +2031,12 @@ has to be renamed. Seldom.
 
 ###  [cpp]: preprocessing directives <a id="diff.cpp">[diff.cpp]</a>
 
-Whether \_\_STDC\_\_ is defined and if so, what its value is, are
+Whether `__STDC__` is defined and if so, what its value is, are
 *implementation-defined*. C++ is not identical to ISO C. Mandating that
-\_\_STDC\_\_ be defined would require that translators make an incorrect
+`__STDC__` be defined would require that translators make an incorrect
 claim. Change to semantics of well-defined feature. Semantic
-transformation. Programs and headers that reference \_\_STDC\_\_ are
-quite common.
+transformation. Programs and headers that reference `__STDC__` are quite
+common.
 
 ## C standard library <a id="diff.library">[diff.library]</a>
 

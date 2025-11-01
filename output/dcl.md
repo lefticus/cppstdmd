@@ -4984,7 +4984,7 @@ void print(int a, int) {
 A *function-local predefined variable* is a variable with static storage
 duration that is implicitly defined in a function parameter scope.
 
-The function-local predefined variable \_\_func\_\_ is defined as if a
+The function-local predefined variable `__func__` is defined as if a
 definition of the form
 
 ``` cpp

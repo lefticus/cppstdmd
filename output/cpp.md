@@ -735,8 +735,8 @@ there shall be at least as many arguments in the invocation as there are
 parameters in the macro definition (excluding the `...`). There shall
 exist a `)` preprocessing token that terminates the invocation.
 
-The identifiers \_\_VA_ARGS\_\_ and \_\_VA_OPT\_\_ shall occur only in
-the *replacement-list* of a function-like macro that uses the ellipsis
+The identifiers `__VA_ARGS__` and `__VA_OPT__` shall occur only in the
+*replacement-list* of a function-like macro that uses the ellipsis
 notation in the parameters.
 
 A parameter identifier in a function-like macro shall be uniquely
@@ -870,9 +870,9 @@ int x = F(LPAREN(), 0, <:-);    // replaced by int x = 42;
 
 — *end example*\]
 
-An identifier \_\_VA_ARGS\_\_ that occurs in the replacement list shall
-be treated as if it were a parameter, and the variable arguments shall
-form the preprocessing tokens used to replace it.
+An identifier `__VA_ARGS__` that occurs in the replacement list shall be
+treated as if it were a parameter, and the variable arguments shall form
+the preprocessing tokens used to replace it.
 
 \[*Example 5*:
 
@@ -897,22 +897,21 @@ puts("The first, second, and third items.");
 
 — *end example*\]
 
-The identifier \_\_VA_OPT\_\_ shall always occur as part of the
+The identifier `__VA_OPT__` shall always occur as part of the
 preprocessing token sequence *va-opt-replacement*; its closing `)` is
 determined by skipping intervening pairs of matching left and right
 parentheses in its *pp-tokens*. The *pp-tokens* of a
-*va-opt-replacement* shall not contain \_\_VA_OPT\_\_. If the
-*pp-tokens* would be ill-formed as the replacement list of the current
-function-like macro, the program is ill-formed. A *va-opt-replacement*
-is treated as if it were a parameter, and the preprocessing token
-sequence for the corresponding argument is defined as follows. If the
-substitution of \_\_VA_ARGS\_\_ as neither an operand of `#` nor `##`
-consists of no preprocessing tokens, the argument consists of a single
-placemarker preprocessing token [cpp.concat], [cpp.rescan]. Otherwise,
-the argument consists of the results of the expansion of the contained
-*pp-tokens* as the replacement list of the current function-like macro
-before removal of placemarker tokens, rescanning, and further
-replacement.
+*va-opt-replacement* shall not contain `__VA_OPT__`. If the *pp-tokens*
+would be ill-formed as the replacement list of the current function-like
+macro, the program is ill-formed. A *va-opt-replacement* is treated as
+if it were a parameter, and the preprocessing token sequence for the
+corresponding argument is defined as follows. If the substitution of
+`__VA_ARGS__` as neither an operand of `#` nor `##` consists of no
+preprocessing tokens, the argument consists of a single placemarker
+preprocessing token [cpp.concat], [cpp.rescan]. Otherwise, the argument
+consists of the results of the expansion of the contained *pp-tokens* as
+the replacement list of the current function-like macro before removal
+of placemarker tokens, rescanning, and further replacement.
 
 \[*Note 1*: The placemarker tokens are removed before stringization
 [cpp.stringize], and can be removed by rescanning and further
@@ -1488,8 +1487,8 @@ is, are \*implementation-defined\*.
 Defined, and has the value integer literal 1, if and only if a program
 can have more than one thread of execution \[intro.multithread\].
 
-The values of the predefined macros (except for \_\_FILE\_\_ and
-\_\_LINE\_\_) remain constant throughout the translation unit.
+The values of the predefined macros (except for `__FILE__` and
+`__LINE__`) remain constant throughout the translation unit.
 
 If any of the pre-defined macro names in this subclause, or the
 identifier `defined`, is the subject of a `#define` or a `#undef`

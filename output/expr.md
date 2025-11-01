@@ -1745,9 +1745,9 @@ struct S1 {
 
 — *end example*\]
 
-Further, a variable \_\_func\_\_ is implicitly defined at the beginning
-of the *compound-statement* of the *lambda-expression*, with semantics
-as described in  [dcl.fct.def.general].
+Further, a variable `__func__` is implicitly defined at the beginning of
+the *compound-statement* of the *lambda-expression*, with semantics as
+described in  [dcl.fct.def.general].
 
 The closure type associated with a *lambda-expression* has no default
 constructor if the *lambda-expression* has a *lambda-capture* and a

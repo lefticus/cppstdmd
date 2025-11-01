@@ -3336,7 +3336,7 @@ which extended alignment applies (possibly through a non-static data
 member). — *end note*\]
 
 A *new-extended alignment* is represented by an alignment greater than
-\_\_STDCPP_DEFAULT_NEW_ALIGNMENT\_\_ [cpp.predefined].
+`__STDCPP_DEFAULT_NEW_ALIGNMENT__` [cpp.predefined].
 
 Alignments are represented as values of the type `std::size_t`. Valid
 alignments include only those values returned by an `alignof` expression
@@ -4023,7 +4023,7 @@ If the implementation supports an extended floating-point type
 [basic.fundamental] whose properties are specified by the ISO/IEC/IEEE
 60559 floating-point interchange format binary16, then the
 *typedef-name* `std::float16_t` is defined in the header `<stdfloat>`
-and names such a type, the macro \_\_STDCPP_FLOAT16_T\_\_ is defined
+and names such a type, the macro `__STDCPP_FLOAT16_T__` is defined
 [cpp.predefined], and the floating-point literal suffixes `f16` and
 `F16` are supported [lex.fcon].
 
@@ -4031,21 +4031,21 @@ If the implementation supports an extended floating-point type whose
 properties are specified by the ISO/IEC/IEEE 60559 floating-point
 interchange format binary32, then the *typedef-name* `std::float32_t` is
 defined in the header `<stdfloat>` and names such a type, the macro
-\_\_STDCPP_FLOAT32_T\_\_ is defined, and the floating-point literal
+`__STDCPP_FLOAT32_T__` is defined, and the floating-point literal
 suffixes `f32` and `F32` are supported.
 
 If the implementation supports an extended floating-point type whose
 properties are specified by the ISO/IEC/IEEE 60559 floating-point
 interchange format binary64, then the *typedef-name* `std::float64_t` is
 defined in the header `<stdfloat>` and names such a type, the macro
-\_\_STDCPP_FLOAT64_T\_\_ is defined, and the floating-point literal
+`__STDCPP_FLOAT64_T__` is defined, and the floating-point literal
 suffixes `f64` and `F64` are supported.
 
 If the implementation supports an extended floating-point type whose
 properties are specified by the ISO/IEC/IEEE 60559 floating-point
 interchange format binary128, then the *typedef-name* `std::float128_t`
 is defined in the header `<stdfloat>` and names such a type, the macro
-\_\_STDCPP_FLOAT128_T\_\_ is defined, and the floating-point literal
+`__STDCPP_FLOAT128_T__` is defined, and the floating-point literal
 suffixes `f128` and `F128` are supported.
 
 If the implementation supports an extended floating-point type with the
@@ -4053,9 +4053,9 @@ properties, as specified by ISO/IEC/IEEE 60559, of radix (b) of 2,
 storage width in bits (k) of 16, precision in bits (p) of 8, maximum
 exponent (emax) of 127, and exponent field width in bits (w) of 8, then
 the *typedef-name* `std::bfloat16_t` is defined in the header
-`<stdfloat>` and names such a type, the macro \_\_STDCPP_BFLOAT16_T\_\_
-is defined, and the floating-point literal suffixes `bf16` and `BF16`
-are supported.
+`<stdfloat>` and names such a type, the macro `__STDCPP_BFLOAT16_T__` is
+defined, and the floating-point literal suffixes `bf16` and `BF16` are
+supported.
 
 \[*Note 17*: A summary of the parameters for each type is given in
 [basic.extended.fp]. The precision p includes the implicit 1 bit at the
