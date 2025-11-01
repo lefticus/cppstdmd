@@ -1715,7 +1715,7 @@ typename X::propagate_on_container_copy_assignment
 >
 > `true_type` only if an allocator of type `X` should be copied when the
 > client container is copy-assigned; if so, `X` shall meet the
-> *Cpp17CopyAssignable* requirements (\[cpp17.copyassignable\]) and the
+> *Cpp17CopyAssignable* requirements ([[cpp17.copyassignable]]) and the
 > copy operation shall not throw exceptions.
 >
 > *Remarks:*
@@ -1734,7 +1734,7 @@ typename X::propagate_on_container_move_assignment
 >
 > `true_type` only if an allocator of type `X` should be moved when the
 > client container is move-assigned; if so, `X` shall meet the
-> *Cpp17MoveAssignable* requirements (\[cpp17.moveassignable\]) and the
+> *Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]) and the
 > move operation shall not throw exceptions.
 >
 > *Remarks:*
@@ -1753,7 +1753,7 @@ typename X::propagate_on_container_swap
 >
 > `true_type` only if an allocator of type `X` should be swapped when
 > the client container is swapped; if so, `X` shall meet the
-> *Cpp17Swappable* requirements\[swappable.requirements\] and the `swap`
+> *Cpp17Swappable* requirements[[swappable.requirements]] and the `swap`
 > operation shall not throw exceptions.
 >
 > *Remarks:*

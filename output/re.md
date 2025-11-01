@@ -118,7 +118,7 @@ typename X::char_class_type
 
 > *Returns:*
 >
-> A bitmask type\[bitmask.types\] representing a particular character
+> A bitmask type[[bitmask.types]] representing a particular character
 > classification.
 
 ``` cpp
@@ -789,9 +789,9 @@ template<class ForwardIterator>
 > *Remarks:*
 >
 > For `regex_traits<char>`, at least the narrow character names in
-> \[re.traits.classnames\] shall be recognized. For
+> [[re.traits.classnames]] shall be recognized. For
 > `regex_traits<wchar_t>`, at least the wide character names in
-> \[re.traits.classnames\] shall be recognized.
+> [[re.traits.classnames]] shall be recognized.
 
 ``` cpp
 bool isctype(charT c, char_class_type f) const;
@@ -813,7 +813,7 @@ bool isctype(charT c, char_class_type f) const;
 > ```
 >
 > that returns a value in which each `ctype_base::mask` value
-> corresponding to a value in `f` named in \[re.traits.classnames\] is
+> corresponding to a value in `f` named in [[re.traits.classnames]] is
 > set, then the result is determined as if by:
 >
 > ``` cpp
@@ -1445,7 +1445,7 @@ void swap(sub_match& s) noexcept(see below);
 > *Preconditions:*
 >
 > `BidirectionalIterator` meets the *Cpp17Swappable*
-> requirements\[swappable.requirements\].
+> requirements[[swappable.requirements]].
 >
 > *Effects:*
 >
@@ -1709,12 +1709,12 @@ match_results(const match_results& m, const Allocator& a);
 > *Effects:*
 >
 > For the first form, the stored `Allocator` value is obtained as
-> specified in \[container.reqmts\]. For the second form, the stored
+> specified in [[container.reqmts]]. For the second form, the stored
 > `Allocator` value is constructed from `a`.
 >
 > *Ensures:*
 >
-> As specified in \[re.results.const\].
+> As specified in [[re.results.const]].
 
 ``` cpp
 match_results(match_results&& m) noexcept;
@@ -1729,7 +1729,7 @@ match_results(match_results&& m, const Allocator& a);
 >
 > *Ensures:*
 >
-> As specified in \[re.results.const\].
+> As specified in [[re.results.const]].
 >
 > *Throws:*
 >
@@ -1741,7 +1741,7 @@ match_results& operator=(const match_results& m);
 
 > *Ensures:*
 >
-> As specified in \[re.results.const\].
+> As specified in [[re.results.const]].
 
 ``` cpp
 match_results& operator=(match_results&& m);
@@ -1749,7 +1749,7 @@ match_results& operator=(match_results&& m);
 
 > *Ensures:*
 >
-> As specified in \[re.results.const\].
+> As specified in [[re.results.const]].
 
 ### State <a id="re.results.state">[[re.results.state]]</a>
 
@@ -1776,7 +1776,7 @@ size_type size() const;
 >
 > \[*Note 3*: The state of a `match_results` object can be modified only
 > by passing that object to `regex_match` or `regex_search`.
-> Subclauses \[re.alg.match\] and \[re.alg.search\] specify the effects
+> Subclauses [[re.alg.match]] and [[re.alg.search]] specify the effects
 > of those algorithms on their `match_results` arguments. — *end note*\]
 
 ``` cpp
@@ -1913,7 +1913,7 @@ template<class OutputIter>
 > *Preconditions:*
 >
 > `ready() == true` and `OutputIter` meets the requirements for a
-> *Cpp17OutputIterator*\[output.iterators\].
+> *Cpp17OutputIterator*[[output.iterators]].
 >
 > *Effects:*
 >
@@ -2057,7 +2057,7 @@ bool operator==(const match_results<BidirectionalIterator, Allocator>& m1,
 >   - `m1.suffix() == m2.suffix()`.
 >
 > \[*Note 4*: The algorithm `equal` is defined in
-> \[algorithms\]. — *end note*\]
+> [[algorithms]]. — *end note*\]
 
 ## Regular expression algorithms <a id="re.alg">[[re.alg]]</a>
 
@@ -2076,7 +2076,7 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
 > *Preconditions:*
 >
 > `BidirectionalIterator` models
-> `bidirectional_iterator`\[iterator.concept.bidir\].
+> `bidirectional_iterator`[[iterator.concept.bidir]].
 >
 > *Effects:*
 >
@@ -2103,7 +2103,7 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
 > `m.ready() == true` in all cases. If the function returns `false`,
 > then the effect on parameter `m` is unspecified except that `m.size()`
 > returns `0` and `m.empty()` returns `true`. Otherwise the effects on
-> parameter `m` are given in \[re.alg.match\].
+> parameter `m` are given in [[re.alg.match]].
 
 ``` cpp
 template<class BidirectionalIterator, class charT, class traits>
@@ -2178,7 +2178,7 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
 > *Preconditions:*
 >
 > `BidirectionalIterator` models
-> `bidirectional_iterator`\[iterator.concept.bidir\].
+> `bidirectional_iterator`[[iterator.concept.bidir]].
 >
 > *Effects:*
 >
@@ -2192,7 +2192,7 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
 > `m.ready() == true` in all cases. If the function returns `false`,
 > then the effect on parameter `m` is unspecified except that `m.size()`
 > returns `0` and `m.empty()` returns `true`. Otherwise the effects on
-> parameter `m` are given in \[re.alg.search\].
+> parameter `m` are given in [[re.alg.search]].
 
 ``` cpp
 template<class charT, class Allocator, class traits>

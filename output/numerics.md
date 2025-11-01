@@ -525,10 +525,10 @@ template<class T, class charT, class traits>
 >
 > Extracts a complex number `x` of the form: `u`, `(u)`, or `(u,v)`,
 > where `u` is the real part and `v` is the imaginary
-> part\[istream.formatted\].
+> part[[istream.formatted]].
 >
 > If bad input is encountered, calls `is.setstate(ios_base::failbit)`
-> (which may throw `ios_base::failure`\[iostate.flags\]).
+> (which may throw `ios_base::failure`[[iostate.flags]]).
 >
 > *Returns:*
 >
@@ -2329,7 +2329,7 @@ template<class InputIterator>
 > *Preconditions:*
 >
 > `InputIterator` meets the *Cpp17InputIterator*
-> requirements\[input.iterators\].
+> requirements[[input.iterators]].
 >
 > *Effects:*
 >
@@ -2353,7 +2353,7 @@ template<class RandomAccessIterator>
 > *Preconditions:*
 >
 > `RandomAccessIterator` meets the *Cpp17RandomAccessIterator*
-> requirements\[random.access.iterators\] and the requirements of a
+> requirements[[random.access.iterators]] and the requirements of a
 > mutable iterator.
 >
 > *Effects:*
@@ -2433,12 +2433,12 @@ template<class OutputIterator>
 > *Mandates:*
 >
 > Values of type `result_type` are
-> writable\[iterator.requirements.general\] to `dest`.
+> writable[[iterator.requirements.general]] to `dest`.
 >
 > *Preconditions:*
 >
 > `OutputIterator` meets the *Cpp17OutputIterator*
-> requirements\[output.iterators\].
+> requirements[[output.iterators]].
 >
 > *Effects:*
 >
@@ -3922,7 +3922,7 @@ template<class InputIterator>
 > *Preconditions:*
 >
 > `InputIterator` meets the *Cpp17InputIterator*
-> requirements\[input.iterators\]. If `firstW == lastW`, let n = 1 and
+> requirements[[input.iterators]]. If `firstW == lastW`, let n = 1 and
 > w₀ = 1. Otherwise, $\bigl[\texttt{firstW}, \texttt{lastW}\bigr)$ forms
 > a sequence w of length n > 0.
 >
@@ -4072,7 +4072,7 @@ template<class InputIteratorB, class InputIteratorW>
 > *Preconditions:*
 >
 > `InputIteratorB` and `InputIteratorW` each meet the
-> *Cpp17InputIterator* requirements\[input.iterators\]. If
+> *Cpp17InputIterator* requirements[[input.iterators]]. If
 > `firstB == lastB` or `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0,
 > and b₁ = 1. Otherwise, $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$
 > forms a sequence b of length n+1, the length of the sequence w
@@ -4243,7 +4243,7 @@ template<class InputIteratorB, class InputIteratorW>
 > *Preconditions:*
 >
 > `InputIteratorB` and `InputIteratorW` each meet the
-> *Cpp17InputIterator* requirements\[input.iterators\]. If
+> *Cpp17InputIterator* requirements[[input.iterators]]. If
 > `firstB == lastB` or `++firstB == lastB`, let n = 1,
 > $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1. Otherwise,
 > $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a sequence b of
@@ -4342,7 +4342,13 @@ void srand(unsigned int seed);
 >
 > The implementation may specify that particular library functions may
 > call `rand`. It is *implementation-defined* whether the `rand`
-> function may introduce data races\[res.on.data.races\].
+> function may introduce data races[[res.on.data.races]].
+>
+> \[*Note 8*: The other random number generation facilities in this
+> document[[rand]] are often preferable to `rand`, because `rand`’s
+> underlying algorithm is unspecified. Use of `rand` therefore continues
+> to be non-portable, with unpredictable and oft-questionable quality
+> and performance. — *end note*\]
 
 ## Numeric arrays <a id="numarray">[[numarray]]</a>
 
@@ -4661,7 +4667,7 @@ explicit valarray(size_t n);
 > *Effects:*
 >
 > Constructs a `valarray` that has length `n`. Each element of the array
-> is value-initialized\[dcl.init\].
+> is value-initialized[[dcl.init]].
 
 ``` cpp
 valarray(const T& v, size_t n);
@@ -4834,7 +4840,7 @@ T& operator[](size_t n);
 >
 > A reference to the corresponding element of the array.
 >
-> \[*Note 8*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
+> \[*Note 9*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
 > for any non-constant `valarray<T> a`, any `T q`, and for any
 > `size_t i` such that the value of `i` is less than the length of
 > `a`. — *end note*\]
@@ -4848,7 +4854,7 @@ T& operator[](size_t n);
 > `true` for any two arrays `a` and `b` and for any `size_t i` and
 > `size_t j` such that `i < a.size()` and `j < b.size()`.
 >
-> \[*Note 9*: This property indicates an absence of aliasing and can be
+> \[*Note 10*: This property indicates an absence of aliasing and can be
 > used to advantage by optimizing compilers. Compilers can take
 > advantage of inlining, constant propagation, loop fusion, tracking of
 > pointers obtained from `operator new`, and other techniques to
@@ -4856,7 +4862,7 @@ T& operator[](size_t n);
 >
 > The reference returned by the subscript operator for an array shall be
 > valid until the member function
-> `resize(size_t, T)`\[valarray.members\] is called for that array or
+> `resize(size_t, T)`[[valarray.members]] is called for that array or
 > until the lifetime of that array ends, whichever happens first.
 
 #### Subset operations <a id="valarray.sub">[[valarray.sub]]</a>
@@ -5198,12 +5204,12 @@ valarray shift(int n) const;
 > `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
 > `size()`, otherwise `T()`.
 >
-> \[*Note 10*: If element zero is taken as the leftmost element, a
+> \[*Note 11*: If element zero is taken as the leftmost element, a
 > positive value of `n` shifts the elements left `n` places, with zero
 > fill. — *end note*\]
 >
 > \[*Example 9*: If the argument has the value -2, the first two
-> elements of the result will be value-initialized\[dcl.init\]; the
+> elements of the result will be value-initialized[[dcl.init]]; the
 > third element of the result will be assigned the value of the first
 > element of `*this`; etc. — *end example*\]
 
@@ -6457,9 +6463,9 @@ constexpr long long int abs(long long int j);
 >
 > If `abs` is called with an argument of type `X` for which
 > `is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int`
-> by integral promotion\[conv.prom\], the program is ill-formed.
+> by integral promotion[[conv.prom]], the program is ill-formed.
 >
-> \[*Note 11*: Arguments that can be promoted to `int` are permitted for
+> \[*Note 12*: Arguments that can be promoted to `int` are permitted for
 > compatibility with C. — *end note*\]
 
 ``` cpp
@@ -6622,7 +6628,7 @@ long double  comp_ellint_1l(long double k);
 > $$\mathsf{K}(k) = \mathsf{F}(k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
 > where k is `k`.
 >
-> See also \[sf.cmath.ellint.1\].
+> See also [[sf.cmath.ellint.1]].
 
 #### Complete elliptic integral of the second kind <a id="sf.cmath.comp.ellint.2">[[sf.cmath.comp.ellint.2]]</a>
 
@@ -6642,7 +6648,7 @@ long double  comp_ellint_2l(long double k);
 > $$\mathsf{E}(k) = \mathsf{E}(k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
 > where k is `k`.
 >
-> See also \[sf.cmath.ellint.2\].
+> See also [[sf.cmath.ellint.2]].
 
 #### Complete elliptic integral of the third kind <a id="sf.cmath.comp.ellint.3">[[sf.cmath.comp.ellint.3]]</a>
 
@@ -6662,7 +6668,7 @@ long double  comp_ellint_3l(long double k, long double nu);
 > $$\mathsf{\Pi}(\nu, k) = \mathsf{\Pi}(\nu, k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
 > where k is `k` and $\nu$ is `nu`.
 >
-> See also \[sf.cmath.ellint.3\].
+> See also [[sf.cmath.ellint.3]].
 
 #### Regular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.i">[[sf.cmath.cyl.bessel.i]]</a>
 
@@ -6689,7 +6695,7 @@ long double  cyl_bessel_il(long double nu, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `nu >= 128`.
 >
-> See also \[sf.cmath.cyl.bessel.j\].
+> See also [[sf.cmath.cyl.bessel.j]].
 
 #### Cylindrical Bessel functions of the first kind <a id="sf.cmath.cyl.bessel.j">[[sf.cmath.cyl.bessel.j]]</a>
 
@@ -6758,8 +6764,8 @@ long double  cyl_bessel_kl(long double nu, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `nu >= 128`.
 >
-> See also \[sf.cmath.cyl.bessel.i\], \[sf.cmath.cyl.bessel.j\],
-> \[sf.cmath.cyl.neumann\].
+> See also [[sf.cmath.cyl.bessel.i]], [[sf.cmath.cyl.bessel.j]],
+> [[sf.cmath.cyl.neumann]].
 
 #### Cylindrical Neumann functions <a id="sf.cmath.cyl.neumann">[[sf.cmath.cyl.neumann]]</a>
 
@@ -6799,7 +6805,7 @@ long double  cyl_neumannl(long double nu, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `nu >= 128`.
 >
-> See also \[sf.cmath.cyl.bessel.j\].
+> See also [[sf.cmath.cyl.bessel.j]].
 
 #### Incomplete elliptic integral of the first kind <a id="sf.cmath.ellint.1">[[sf.cmath.ellint.1]]</a>
 
@@ -7020,7 +7026,7 @@ long double  sph_bessell(unsigned n, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `n >= 128`.
 >
-> See also \[sf.cmath.cyl.bessel.j\].
+> See also [[sf.cmath.cyl.bessel.j]].
 
 #### Spherical associated Legendre functions <a id="sf.cmath.sph.legendre">[[sf.cmath.sph.legendre]]</a>
 
@@ -7050,7 +7056,7 @@ long double  sph_legendrel(unsigned l, unsigned m, long double theta);
 > The effect of calling each of these functions is
 > *implementation-defined* if `l >= 128`.
 >
-> See also \[sf.cmath.assoc.legendre\].
+> See also [[sf.cmath.assoc.legendre]].
 
 #### Spherical Neumann functions <a id="sf.cmath.sph.neumann">[[sf.cmath.sph.neumann]]</a>
 
@@ -7076,7 +7082,7 @@ long double  sph_neumannl(unsigned n, long double x);
 > The effect of calling each of these functions is
 > *implementation-defined* if `n >= 128`.
 >
-> See also \[sf.cmath.cyl.neumann\].
+> See also [[sf.cmath.cyl.neumann]].
 
 ## Numbers <a id="numbers">[[numbers]]</a>
 

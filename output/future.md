@@ -281,7 +281,7 @@ the following:
 template<class T> bool operator!=(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17EqualityComparable* (\[cpp17.equalitycomparable\]).
+> Type `T` is *Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]).
 >
 > *Returns:*
 >
@@ -291,7 +291,7 @@ template<class T> bool operator!=(const T& x, const T& y);
 template<class T> bool operator>(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17LessThanComparable* (\[cpp17.lessthancomparable\]).
+> Type `T` is *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -301,7 +301,7 @@ template<class T> bool operator>(const T& x, const T& y);
 template<class T> bool operator<=(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17LessThanComparable* (\[cpp17.lessthancomparable\]).
+> Type `T` is *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -311,7 +311,7 @@ template<class T> bool operator<=(const T& x, const T& y);
 template<class T> bool operator>=(const T& x, const T& y);
 ```
 
-> Type `T` is *Cpp17LessThanComparable* (\[cpp17.lessthancomparable\]).
+> Type `T` is *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]).
 >
 > *Returns:*
 >
@@ -441,7 +441,7 @@ explicit strstreambuf(streamsize alsize_arg);
 > *Effects:*
 >
 > Initializes the base class with `streambuf()`. The postconditions of
-> this function are indicated in \[depr.strstreambuf.cons.sz\].
+> this function are indicated in [[depr.strstreambuf.cons.sz]].
 
 ``` cpp
 strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
@@ -450,7 +450,7 @@ strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 > *Effects:*
 >
 > Initializes the base class with `streambuf()`. The postconditions of
-> this function are indicated in \[depr.strstreambuf.cons.alloc\].
+> this function are indicated in [[depr.strstreambuf.cons.alloc]].
 >
 > <div class="libtab2">
 >
@@ -473,7 +473,7 @@ strstreambuf(unsigned char* gnext_arg, streamsize n,
 > *Effects:*
 >
 > Initializes the base class with `streambuf()`. The postconditions of
-> this function are indicated in \[depr.strstreambuf.cons.ptr\].
+> this function are indicated in [[depr.strstreambuf.cons.ptr]].
 >
 > <div class="libtab2">
 >
@@ -530,7 +530,7 @@ virtual ~strstreambuf();
 > Destroys an object of class `strstreambuf`. The function frees the
 > dynamically allocated array object only if
 > `(strmode & allocated) != 0` and `(strmode & frozen) == 0`.
-> (\[depr.strstreambuf.virtuals\] describes how a dynamically allocated
+> ([[depr.strstreambuf.virtuals]] describes how a dynamically allocated
 > array object is freed.)
 
 #### Member functions <a id="depr.strstreambuf.members">[[depr.strstreambuf.members]]</a>
@@ -686,7 +686,7 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 > *Effects:*
 >
 > Alters the stream position within one of the controlled sequences, if
-> possible, as indicated in \[depr.strstreambuf.seekoff.pos\].
+> possible, as indicated in [[depr.strstreambuf.seekoff.pos]].
 >
 > <div class="libtab2">
 >
@@ -704,7 +704,7 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 > For a sequence to be positioned, if its next pointer is a null
 > pointer, the positioning operation fails. Otherwise, the function
 > determines `newoff` as indicated in
-> \[depr.strstreambuf.seekoff.newoff\].
+> [[depr.strstreambuf.seekoff.newoff]].
 >
 > <div class="libtab2">
 >
@@ -1150,7 +1150,7 @@ template<class T> struct is_pod;
 
 > `remove_all_extents_t<T>` shall be a complete type or .
 >
-> `is_pod<T>` is a *Cpp17UnaryTypeTrait*\[meta.rqmts\] with a base
+> `is_pod<T>` is a *Cpp17UnaryTypeTrait*[[meta.rqmts]] with a base
 > characteristic of `true_type` if `T` is a POD type, and `false_type`
 > otherwise. A POD class is a class that is both a trivial class and a
 > standard-layout class, and has no non-static data members of type
@@ -1159,7 +1159,7 @@ template<class T> struct is_pod;
 > these types.
 >
 > \[*Note 1*: It is unspecified whether a closure
-> type\[expr.prim.lambda.closure\] is a POD type. — *end note*\]
+> type[[expr.prim.lambda.closure]] is a POD type. — *end note*\]
 
 ``` cpp
 template<size_t Len, size_t Align = default-alignment>
@@ -1168,7 +1168,7 @@ template<size_t Len, size_t Align = default-alignment>
 
 > The value of *default-alignment* is the most stringent alignment
 > requirement for any object type whose size is no greater than
-> `Len`\[basic.types\].
+> `Len`[[basic.types]].
 >
 > *Mandates:*
 >
@@ -1233,7 +1233,7 @@ template<class T> struct tuple_size<const volatile T>;
 
 > Let `TS` denote `tuple_size<T>` of the cv-unqualified type `T`. If the
 > expression `TS::value` is well-formed when treated as an unevaluated
-> operand\[term.unevaluated.operand\], then specializations of each of
+> operand[[term.unevaluated.operand]], then specializations of each of
 > the two templates meet the *Cpp17TransformationTrait* requirements
 > with a base characteristic of `integral_constant<size_t, TS::value>`.
 > Otherwise, they have no member `value`.
@@ -1580,7 +1580,7 @@ template<class T>
 >
 > Two `shared_ptr` objects are equivalent if they store the same pointer
 > value and share ownership. The weak form may fail spuriously.
-> See \[atomics.types.operations\].
+> See [[atomics.types.operations]].
 
 ## Deprecated `basic_string` capacity <a id="depr.string.capacity">[[depr.string.capacity]]</a>
 
@@ -2073,12 +2073,12 @@ template<class InputIterator>
 
 > The `source` and \[`first`, `last`) sequences are UTF-8 encoded. The
 > value type of `Source` and `InputIterator` is `char` or . `Source`
-> meets the requirements specified in \[fs.path.req\].
+> meets the requirements specified in [[fs.path.req]].
 >
 > *Returns:*
 >
 > - If `value_type` is `char` and the current native narrow
->   encoding\[fs.path.type.cvt\] is UTF-8, return `path(source)` or
+>   encoding@@REF:fs.path.type.cvt@@ is UTF-8, return `path(source)` or
 >   `path(first, last)`; otherwise,
 >
 > - if `value_type` is and the native wide encoding is UTF-16, or if
@@ -2091,7 +2091,7 @@ template<class InputIterator>
 >
 > *Remarks:*
 >
-> Argument format conversion\[fs.path.fmt.cvt\] applies to the arguments
+> Argument format conversion[[fs.path.fmt.cvt]] applies to the arguments
 > for these functions. How Unicode encoding conversions are performed is
 > unspecified.
 >

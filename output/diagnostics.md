@@ -717,7 +717,7 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 >
 > `compare_three_way()(this, &rhs)`.
 >
-> \[*Note 1*: `compare_three_way`\[comparisons.three.way\] provides a
+> \[*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
 > total ordering for pointers. — *end note*\]
 
 #### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
@@ -1205,7 +1205,7 @@ template<> struct hash<error_code>;
 template<> struct hash<error_condition>;
 ```
 
-> The specializations are enabled\[unord.hash\].
+> The specializations are enabled[[unord.hash]].
 
 ### Class `system_error` <a id="syserr.syserr">[[syserr.syserr]]</a>
 
@@ -1468,7 +1468,7 @@ string source_file() const;
 
 > *Returns:*
 >
-> The presumed or actual name of the source file\[cpp.predefined\] that
+> The presumed or actual name of the source file[[cpp.predefined]] that
 > lexically contains the expression or statement whose evaluation is
 > represented by `*this`, or an empty string.
 >
@@ -1682,7 +1682,7 @@ basic_stacktrace& operator=(basic_stacktrace&& other)
 > *Remarks:*
 >
 > Implementations may strengthen the exception specification for these
-> functions\[res.on.exception.handling\] by ensuring that `empty()` is
+> functions[[res.on.exception.handling]] by ensuring that `empty()` is
 > `true` on failed allocation.
 
 #### Observers <a id="stacktrace.basic.obs">[[stacktrace.basic.obs]]</a>
@@ -1692,9 +1692,9 @@ using const_iterator = \impdef;
 ```
 
 > The type models
-> `random_access_iterator`\[iterator.concept.random.access\] and meets
+> `random_access_iterator`[[iterator.concept.random.access]] and meets
 > the *Cpp17RandomAccessIterator*
-> requirements\[random.access.iterators\].
+> requirements[[random.access.iterators]].
 
 ``` cpp
 allocator_type get_allocator() const noexcept;
@@ -1895,7 +1895,7 @@ template<> struct formatter<stacktrace_entry>;
 > </div>
 >
 > \[*Note 6*: The productions and are described in
-> \[format.string.std\]. — *end note*\]
+> [[format.string.std]]. — *end note*\]
 >
 > A `stacktrace_entry` object `se` is formatted as if by copying
 > `to_string(se)` through the output iterator of the context with
@@ -1918,7 +1918,7 @@ template<> struct hash<stacktrace_entry>;
 template<class Allocator> struct hash<basic_stacktrace<Allocator>>;
 ```
 
-> The specializations are enabled\[unord.hash\].
+> The specializations are enabled[[unord.hash]].
 
 <!-- Section link definitions -->
 [assertions]: #assertions

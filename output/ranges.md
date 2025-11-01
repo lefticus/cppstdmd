@@ -1011,12 +1011,13 @@ template<class T>
 
 > The required expressions `ranges::begin(t)` and `ranges::end(t)` of
 > the `range` concept do not require implicit expression
-> variations\[concepts.equality\].
+> variations[[concepts.equality]].
 >
 > Given an expression `t` such that `decltype((t))` is `T&`, `T` models
 > `range` only if
 >
-> - ,
+> - \[`ranges::begin(t)`, `ranges::end(t)`) denotes a
+>   range@@REF:iterator.requirements.general@@,
 >
 > - both `ranges::begin(t)` and `ranges::end(t)` are amortized constant
 >   time and non-modifying, and
@@ -1056,14 +1057,14 @@ template<class>
 
 > *Remarks:*
 >
-> Pursuant to \[namespace.std\], users may specialize
+> Pursuant to [[namespace.std]], users may specialize
 > `enable_borrowed_range` for cv-unqualified program-defined types. Such
-> specializations shall be usable in constant expressions\[expr.const\]
+> specializations shall be usable in constant expressions[[expr.const]]
 > and have type `const bool`.
 >
 > \[*Example 1*:
 >
-> Each specialization `S` of class template `subrange`\[range.subrange\]
+> Each specialization `S` of class template `subrange`[[range.subrange]]
 > models `borrowed_range` because
 >
 > - `enable_borrowed_range<S>` is specialized to have the value `true`,
@@ -1109,9 +1110,9 @@ template<class>
 
 > *Remarks:*
 >
-> Pursuant to \[namespace.std\], users may specialize
+> Pursuant to [[namespace.std]], users may specialize
 > `disable_sized_range` for cv-unqualified program-defined types. Such
-> specializations shall be usable in constant expressions\[expr.const\]
+> specializations shall be usable in constant expressions[[expr.const]]
 > and have type `const bool`.
 >
 > \[*Note 4*: `disable_sized_range` allows use of range types with the
@@ -1186,10 +1187,10 @@ template<class T>
 >
 > *Remarks:*
 >
-> Pursuant to \[namespace.std\], users may specialize `enable_view` to
+> Pursuant to [[namespace.std]], users may specialize `enable_view` to
 > `true` for cv-unqualified program-defined types which model `view`,
 > and `false` for types which do not. Such specializations shall be
-> usable in constant expressions\[expr.const\] and have type
+> usable in constant expressions[[expr.const]] and have type
 > `const bool`.
 
 ### Other range refinements <a id="range.refinements">[[range.refinements]]</a>
@@ -2001,9 +2002,9 @@ template<template<class...> class C, class... Args>
 >
 > *Returns:*
 >
-> A range adaptor closure object\[range.adaptor.object\] `f` that is a
+> A range adaptor closure object[[range.adaptor.object]] `f` that is a
 > perfect forwarding call
-> wrapper\[term.perfect.forwarding.call.wrapper\] with the following
+> wrapper[[term.perfect.forwarding.call.wrapper]] with the following
 > properties:
 >
 > - It has no target object.
@@ -3620,7 +3621,7 @@ following differences:
   > `t`.
   >
   > \[*Note 10*: If `*i` is a prvalue of type `T`, there is no
-  > requirement that it is movable\[dcl.init.general\]. — *end note*\]
+  > requirement that it is movable[[dcl.init.general]]. — *end note*\]
   >
   > *Effects:*
   >
@@ -14173,7 +14174,7 @@ iterator begin();
 > *Preconditions:*
 >
 > *coroutine\_* refers to a coroutine suspended at its initial suspend
-> point\[dcl.fct.def.coroutine\].
+> point[[dcl.fct.def.coroutine]].
 >
 > *Effects:*
 >
@@ -14267,16 +14268,16 @@ auto final_suspend() noexcept;
 > A handle referring to the coroutine whose promise object is `*this` is
 > at the top of `*`*`active_`* of some `generator` object `x`. This
 > function is called by that coroutine upon reaching its final suspend
-> point\[dcl.fct.def.coroutine\].
+> point[[dcl.fct.def.coroutine]].
 >
 > *Returns:*
 >
-> An awaitable object of unspecified type\[expr.await\] whose member
+> An awaitable object of unspecified type[[expr.await]] whose member
 > functions arrange for the calling coroutine to be suspended, pop the
 > coroutine handle from the top of `*x.`*`active_`*, and resume
 > execution of the coroutine referred to by `x.`*`active_`*`->top()` if
 > `*x.`*`active_`* is not empty. If it is empty, control flow returns to
-> the current coroutine caller or resumer\[dcl.fct.def.coroutine\].
+> the current coroutine caller or resumer[[dcl.fct.def.coroutine]].
 
 ``` cpp
 suspend_always yield_value(yielded val) noexcept;
@@ -14303,7 +14304,7 @@ auto yield_value(const remove_reference_t<yielded>& lval)
 >
 > *Returns:*
 >
-> An awaitable object of an unspecified type\[expr.await\] that stores
+> An awaitable object of an unspecified type[[expr.await]] that stores
 > an object of type `remove_cvref_t<yielded>`
 > direct-non-list-initialized with `lval`, whose member functions
 > arrange for *value\_* to point to that stored object and then suspend
@@ -14316,7 +14317,7 @@ auto yield_value(const remove_reference_t<yielded>& lval)
 > *Remarks:*
 >
 > A *yield-expression* that calls this function has type
-> `void`\[expr.yield\].
+> `void`[[expr.yield]].
 
 ``` cpp
 template<class R2, class V2, class Alloc2, class Unused>
@@ -14333,7 +14334,7 @@ template<class R2, class V2, class Alloc2, class Unused>
 >
 > *Returns:*
 >
-> An awaitable object of an unspecified type\[expr.await\] into which
+> An awaitable object of an unspecified type[[expr.await]] into which
 > `g.range` is moved, whose member `await_ready` returns `false`, whose
 > member `await_suspend` pushes `g.range.`*coroutine\_* into
 > `*x.`*`active_`* and resumes execution of the coroutine referred to by
@@ -14345,7 +14346,7 @@ template<class R2, class V2, class Alloc2, class Unused>
 > *Remarks:*
 >
 > A *yield-expression* that calls this function has type
-> `void`\[expr.yield\].
+> `void`[[expr.yield]].
 
 ``` cpp
 template<ranges::input_range R, class Alloc>
@@ -14369,7 +14370,7 @@ template<ranges::input_range R, class Alloc>
 > ```
 >
 > \[*Note 25*: A *yield-expression* that calls this function has type
-> `void`\[expr.yield\]. — *end note*\]
+> `void`[[expr.yield]]. — *end note*\]
 
 ``` cpp
 void unhandled_exception();

@@ -1002,7 +1002,7 @@ static constexpr bool is_iec559;
 >
 > \[*Note 1*: The value is `true` for any of the types `float16_t`,
 > `float32_t`, `float64_t`, or `float128_t`, if
-> present\[basic.extended.fp\]. — *end note*\]
+> present[[basic.extended.fp]]. — *end note*\]
 >
 > Meaningful for all floating-point types.
 
@@ -1014,7 +1014,7 @@ static constexpr bool is_bounded;
 >
 > Required by LIA-1.
 >
-> \[*Note 2*: All fundamental types\[basic.fundamental\] are bounded.
+> \[*Note 2*: All fundamental types[[basic.fundamental]] are bounded.
 > This member would be `false` for arbitrary precision
 > types. — *end note*\]
 >
@@ -1034,7 +1034,7 @@ static constexpr bool is_modulo;
 > by an integer multiple of `max() - min() + 1`.
 >
 > \[*Example 1*: `is_modulo` is `false` for signed integer
-> types\[basic.fundamental\] unless an implementation, as an extension
+> types[[basic.fundamental]] unless an implementation, as an extension
 > to this document, defines signed integer overflow to
 > wrap. — *end example*\]
 >
@@ -1407,8 +1407,8 @@ this subclause. — *end note*\]
 >
 > The program is terminated without executing destructors for objects of
 > automatic, thread, or static storage duration and without calling
-> functions passed to `atexit()`\[basic.start.term\]. The function
-> `_Exit` is signal-safe\[support.signal\].
+> functions passed to `atexit()`[[basic.start.term]]. The function
+> `_Exit` is signal-safe[[support.signal]].
 
 ``` cpp
 [[noreturn]] void abort() noexcept;
@@ -1422,8 +1422,8 @@ this subclause. — *end note*\]
 >
 > The program is terminated without executing destructors for objects of
 > automatic, thread, or static storage duration and without calling
-> functions passed to `atexit()`\[basic.start.term\]. The function
-> `abort` is signal-safe\[support.signal\].
+> functions passed to `atexit()`[[basic.start.term]]. The function
+> `abort` is signal-safe[[support.signal]].
 
 ``` cpp
 int atexit(c-atexit-handler* f) noexcept;
@@ -1435,10 +1435,10 @@ int atexit(atexit-handler* f) noexcept;
 > The `atexit()` functions register the function pointed to by `f` to be
 > called without arguments at normal program termination. It is
 > unspecified whether a call to `atexit()` that does not happen
-> before\[intro.multithread\] a call to `exit()` will succeed.
+> before[[intro.multithread]] a call to `exit()` will succeed.
 >
 > \[*Note 3*: The `atexit()` functions do not introduce a data
-> race\[res.on.data.races\]. — *end note*\]
+> race[[res.on.data.races]]. — *end note*\]
 >
 > The implementation shall support the registration of at least 32
 > functions.
@@ -1461,18 +1461,18 @@ int atexit(atexit-handler* f) noexcept;
 >
 >   A function is called for every time it is registered.
 >
->   See \[basic.start.term\] for the order of destructions and calls.
->   (Objects with automatic storage duration are not destroyed as a
->   result of calling `exit()`.)
+>   See @@REF:basic.start.term@@ for the order of destructions and
+>   calls. (Objects with automatic storage duration are not destroyed as
+>   a result of calling `exit()`.)
 >
 >   Objects with automatic storage duration are all destroyed in a
->   program whose `main` function\[basic.start.main\] contains no
+>   program whose `main` function@@REF:basic.start.main@@ contains no
 >   objects with automatic storage duration and executes the call to
 >   `exit()`. Control can be transferred directly to such a `main`
 >   function by throwing an exception that is caught in `main`.
 >
 >   If a registered function invoked by `exit` exits via an exception,
->   the function `std::terminate` is invoked\[except.terminate\].
+>   the function `std::terminate` is invoked@@REF:except.terminate@@.
 >
 > - Next, all open C streams (as mediated by the function signatures
 >   declared in ) with unwritten buffered data are flushed, all open C
@@ -1497,10 +1497,10 @@ int at_quick_exit(atexit-handler* f) noexcept;
 > The `at_quick_exit()` functions register the function pointed to by
 > `f` to be called without arguments when `quick_exit` is called. It is
 > unspecified whether a call to `at_quick_exit()` that does not happen
-> before\[intro.multithread\] all calls to `quick_exit` will succeed.
+> before[[intro.multithread]] all calls to `quick_exit` will succeed.
 >
 > \[*Note 4*: The `at_quick_exit()` functions do not introduce a data
-> race\[res.on.data.races\]. — *end note*\]
+> race[[res.on.data.races]]. — *end note*\]
 >
 > \[*Note 5*: The order of registration could be indeterminate if
 > `at_quick_exit` was called from more than one thread. — *end note*\]
@@ -1528,7 +1528,7 @@ int at_quick_exit(atexit-handler* f) noexcept;
 > called at the time it was registered. Objects shall not be destroyed
 > as a result of calling `quick_exit`. If a registered function invoked
 > by `quick_exit` exits via an exception, the function `std::terminate`
-> is invoked\[except.terminate\].
+> is invoked[[except.terminate]].
 >
 > \[*Note 7*: A function registered via `at_quick_exit` is invoked by
 > the thread that calls `quick_exit`, which can be a different thread
@@ -1541,7 +1541,7 @@ int at_quick_exit(atexit-handler* f) noexcept;
 >
 > *Remarks:*
 >
-> The function `quick_exit` is signal-safe\[support.signal\] when the
+> The function `quick_exit` is signal-safe[[support.signal]] when the
 > functions registered with `at_quick_exit` are.
 
 ## Dynamic memory management <a id="support.dynamic">[[support.dynamic]]</a>
@@ -1637,8 +1637,8 @@ functions is not a valid alignment value, the behavior is undefined.
 
 > *Effects:*
 >
-> The allocation functions\[basic.stc.dynamic.allocation\] called by a
-> *new-expression*\[expr.new\] to allocate `size` bytes of storage. The
+> The allocation functions[[basic.stc.dynamic.allocation]] called by a
+> *new-expression*[[expr.new]] to allocate `size` bytes of storage. The
 > second form is called for a type with new-extended alignment, and the
 > first form is called otherwise.
 >
@@ -1647,7 +1647,7 @@ functions is not a valid alignment value, the behavior is undefined.
 > standard library.
 >
 > Return a non-null pointer to suitably aligned
-> storage\[basic.stc.dynamic\], or else throw a `bad_alloc` exception.
+> storage[[basic.stc.dynamic]], or else throw a `bad_alloc` exception.
 > This requirement is binding on any replacement versions of these
 > functions.
 >
@@ -1658,12 +1658,12 @@ functions is not a valid alignment value, the behavior is undefined.
 >
 > - Returns a pointer to the allocated storage if the attempt is
 >   successful. Otherwise, if the current
->   `new_handler`\[get.new.handler\] is a null pointer value, throws
+>   `new_handler`@@REF:get.new.handler@@ is a null pointer value, throws
 >   `bad_alloc`.
 >
 > - Otherwise, the function calls the current `new_handler`
->   function\[new.handler\]. If the called function returns, the loop
->   repeats.
+>   function@@REF:new.handler@@. If the called function returns, the
+>   loop repeats.
 >
 > - The loop terminates when an attempt to allocate the requested
 >   storage is successful or when a called `new_handler` function does
@@ -1686,7 +1686,7 @@ functions is not a valid alignment value, the behavior is undefined.
 > standard library.
 >
 > Return a non-null pointer to suitably aligned
-> storage\[basic.stc.dynamic\], or else return a null pointer. Each of
+> storage[[basic.stc.dynamic]], or else return a null pointer. Each of
 > these nothrow versions of `operator new` returns a pointer obtained as
 > if acquired from the (possibly replaced) corresponding non-placement
 > function. This requirement is binding on any replacement versions of
@@ -1727,8 +1727,8 @@ void operator delete(void* ptr, std::size_t size, std::align_val_t alignment) no
 >
 > *Effects:*
 >
-> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
-> a *delete-expression*\[expr.delete\] to render the value of `ptr`
+> The deallocation functions[[basic.stc.dynamic.deallocation]] called by
+> a *delete-expression*[[expr.delete]] to render the value of `ptr`
 > invalid.
 >
 > A program may define functions with any of these function signatures,
@@ -1786,7 +1786,7 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 >
 > *Effects:*
 >
-> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> The deallocation functions[[basic.stc.dynamic.deallocation]] called by
 > the implementation to render the value of `ptr` invalid when the
 > constructor invoked from a nothrow placement version of the
 > *new-expression* throws an exception.
@@ -1807,8 +1807,8 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 
 > *Effects:*
 >
-> The allocation functions\[basic.stc.dynamic.allocation\] called by the
-> array form of a *new-expression*\[expr.new\] to allocate `size` bytes
+> The allocation functions[[basic.stc.dynamic.allocation]] called by the
+> array form of a *new-expression*[[expr.new]] to allocate `size` bytes
 > of storage. The second form is called for a type with new-extended
 > alignment, and the first form is called otherwise.
 >
@@ -1846,7 +1846,7 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 > standard library.
 >
 > Return a non-null pointer to suitably aligned
-> storage\[basic.stc.dynamic\], or else return a null pointer. Each of
+> storage[[basic.stc.dynamic]], or else return a null pointer. Each of
 > these nothrow versions of `operator new[]` returns a pointer obtained
 > as if acquired from the (possibly replaced) corresponding
 > non-placement function. This requirement is binding on any replacement
@@ -1880,7 +1880,7 @@ void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) 
 >
 > *Effects:*
 >
-> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> The deallocation functions[[basic.stc.dynamic.deallocation]] called by
 > the array form of a *delete-expression* to render the value of `ptr`
 > invalid.
 >
@@ -1931,7 +1931,7 @@ void operator delete[](void* ptr, std::align_val_t alignment, const std::nothrow
 >
 > *Effects:*
 >
-> The deallocation functions\[basic.stc.dynamic.deallocation\] called by
+> The deallocation functions[[basic.stc.dynamic.deallocation]] called by
 > the implementation to render the value of `ptr` invalid when the
 > constructor invoked from a nothrow placement version of the array
 > *new-expression* throws an exception.
@@ -1996,7 +1996,7 @@ void operator delete(void* ptr, void*) noexcept;
 > Default function called when any part of the initialization in a
 > placement *new-expression* that invokes the library’s non-array
 > placement operator new terminates by throwing an
-> exception\[expr.new\].
+> exception[[expr.new]].
 
 ``` cpp
 void operator delete[](void* ptr, void*) noexcept;
@@ -2010,7 +2010,7 @@ void operator delete[](void* ptr, void*) noexcept;
 >
 > Default function called when any part of the initialization in a
 > placement *new-expression* that invokes the library’s array placement
-> operator new terminates by throwing an exception\[expr.new\].
+> operator new terminates by throwing an exception[[expr.new]].
 
 #### Data races <a id="new.delete.dataraces">[[new.delete.dataraces]]</a>
 
@@ -2082,7 +2082,7 @@ using new_handler = void (*)();
 ```
 
 > The type of a to be called by `operator new()` or
-> `operator new[]()`\[new.delete\] when they cannot satisfy a request
+> `operator new[]()`[[new.delete]] when they cannot satisfy a request
 > for additional storage.
 >
 > A `new_handler` shall perform one of the following:
@@ -2138,9 +2138,9 @@ template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
 > *Preconditions:*
 >
 > `p` represents the address *A* of a byte in memory. An object *X* that
-> is within its lifetime\[basic.life\] and whose type is
-> similar\[conv.qual\] to `T` is located at the address *A*. All bytes
-> of storage that would be reachable through\[basic.compound\] the
+> is within its lifetime[[basic.life]] and whose type is
+> similar[[conv.qual]] to `T` is located at the address *A*. All bytes
+> of storage that would be reachable through[[basic.compound]] the
 > result are reachable through `p`.
 >
 > *Returns:*
@@ -2158,14 +2158,14 @@ template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
 > be used to refer to the new object unless its complete object is a
 > const object or it is a base class subobject; in the latter cases,
 > this function can be used to obtain a usable pointer to the new
-> object. See \[basic.life\]. — *end note*\]
+> object. See [[basic.life]]. — *end note*\]
 >
 > \[*Example 4*:
 >
 >     struct X { int n; };
 >     const X *p = new const X{3};
 >     const int a = p->n;
->     new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new object[basic.life] because its type is \keyword{const}
+>     new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new objectREF:basic.life because its type is \keyword{const}
 >     const int b = p->n;                 // undefined behavior
 >     const int c = std::launder(p)->n;   // OK
 >
@@ -2313,8 +2313,8 @@ const char* name() const noexcept;
 > *Remarks:*
 >
 > The message may be a null-terminated multibyte
-> string\[multibyte.strings\], suitable for conversion and display as a
-> `wstring`\[string.classes,locale.codecvt\].
+> string[[multibyte.strings]], suitable for conversion and display as a
+> `wstring`[[string.classes,locale.codecvt]].
 
 ### Class `bad_cast` <a id="bad.cast">[[bad.cast]]</a>
 
@@ -2445,15 +2445,15 @@ static consteval source_location current() noexcept;
 > - When invoked by a function call whose *postfix-expression* is a
 >   (possibly parenthesized) *id-expression* naming `current`, returns a
 >   `source_location` with an *implementation-defined* value. The value
->   should be affected by `#line`\[cpp.line\] in the same manner as for
->   \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only
+>   should be affected by `#line`@@REF:cpp.line@@ in the same manner as
+>   for \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only
 >   data members of the returned `source_location` object are indicated
->   in \[support.srcloc.current\].
+>   in @@REF:support.srcloc.current@@.
 >
 >   <div class="libefftabvalue">
 >
 >   Value of object returned by `current` support.srcloc.current `line_`
->   & A presumed line number\[cpp.predefined\]. Line numbers are
+>   & A presumed line number@@REF:cpp.predefined@@. Line numbers are
 >   presumed to be 1-indexed; however, an implementation is encouraged
 >   to use 0 when the line number is unknown.  
 >   `column_` & An *implementation-defined* value denoting some offset
@@ -2461,9 +2461,9 @@ static consteval source_location current() noexcept;
 >   presumed to be 1-indexed; however, an implementation is encouraged
 >   to use 0 when the column number is unknown.  
 >   `file_name_` & A presumed name of the current source
->   file\[cpp.predefined\] as an NTBS.  
+>   file@@REF:cpp.predefined@@ as an NTBS.  
 >   `function_name_` & A name of the current function such as in
->   \_\_func\_\_\[dcl.fct.def.general\] if any, an empty string
+>   \_\_func\_\_@@REF:dcl.fct.def.general@@ if any, an empty string
 >   otherwise.  
 >
 >   </div>
@@ -2475,13 +2475,13 @@ static consteval source_location current() noexcept;
 > *Remarks:*
 >
 > Any call to `current` that appears as a default member
-> initializer\[class.mem\], or as a subexpression thereof, should
+> initializer[[class.mem]], or as a subexpression thereof, should
 > correspond to the location of the constructor definition or aggregate
 > initialization that uses the default member initializer. Any call to
-> `current` that appears as a default argument\[dcl.fct.default\], or as
+> `current` that appears as a default argument[[dcl.fct.default]], or as
 > a subexpression thereof, should correspond to the location of the
 > invocation of the function that uses the default
-> argument\[expr.call\].
+> argument[[expr.call]].
 
 \[*Example 1*:
 
@@ -2653,8 +2653,8 @@ virtual const char* what() const noexcept;
 > *Remarks:*
 >
 > The message may be a null-terminated multibyte
-> string\[multibyte.strings\], suitable for conversion and display as a
-> `wstring`\[string.classes,locale.codecvt\]. The return value remains
+> string[[multibyte.strings]], suitable for conversion and display as a
+> `wstring`[[string.classes,locale.codecvt]]. The return value remains
 > valid until the exception object from which it is obtained is
 > destroyed or a non- member function of the exception object is called.
 
@@ -2750,7 +2750,7 @@ terminate_handler get_terminate() noexcept;
 > *Remarks:*
 >
 > Called by the implementation when exception handling must be abandoned
-> for any of several reasons\[except.terminate\]. May also be called
+> for any of several reasons[[except.terminate]]. May also be called
 > directly by the program.
 
 ### `uncaught_exceptions` <a id="uncaught.exceptions">[[uncaught.exceptions]]</a>
@@ -2761,12 +2761,12 @@ int uncaught_exceptions() noexcept;
 
 > *Returns:*
 >
-> The number of uncaught exceptions\[except.uncaught\].
+> The number of uncaught exceptions[[except.uncaught]].
 >
 > *Remarks:*
 >
 > When `uncaught_exceptions() > 0`, throwing an exception can result in
-> a call of the function `std::terminate`\[except.terminate\].
+> a call of the function `std::terminate`[[except.terminate]].
 
 ### Exception propagation <a id="propagation">[[propagation]]</a>
 
@@ -2777,7 +2777,7 @@ using exception_ptr = unspecified;
 > The type `exception_ptr` can be used to refer to an exception object.
 >
 > `exception_ptr` meets the requirements of *Cpp17NullablePointer*
-> (\[cpp17.nullablepointer\]).
+> ([[cpp17.nullablepointer]]).
 >
 > Two non-null values of type `exception_ptr` are equivalent and compare
 > equal if and only if they refer to the same exception.
@@ -2810,7 +2810,7 @@ exception_ptr current_exception() noexcept;
 > *Returns:*
 >
 > An `exception_ptr` object that refers to the currently handled
-> exception\[except.handle\] or a copy of the currently handled
+> exception[[except.handle]] or a copy of the currently handled
 > exception, or a null `exception_ptr` object if no exception is being
 > handled. The referenced object shall remain valid at least as long as
 > there is an `exception_ptr` object that refers to it. If the function
@@ -3485,7 +3485,7 @@ struct common_comparison_category {
 > *Remarks:*
 >
 > The member *typedef-name* `type` denotes the common comparison
-> type\[class.spaceship\] of `Ts...`, the expanded parameter pack, or if
+> type[[class.spaceship]] of `Ts...`, the expanded parameter pack, or if
 > any element of `Ts` is not a comparison category type.
 >
 > \[*Note 22*: This is `std::strong_ordering` if the expansion is
@@ -4099,7 +4099,7 @@ void destroy() const;
 >
 > *Effects:*
 >
-> Destroys the coroutine\[dcl.fct.def.coroutine\].
+> Destroys the coroutine[[dcl.fct.def.coroutine]].
 
 #### Promise access <a id="coroutine.handle.promise">[[coroutine.handle.promise]]</a>
 
@@ -4139,7 +4139,7 @@ constexpr strong_ordering operator<=>(coroutine_handle<> x, coroutine_handle<> y
 template<class P> struct hash<coroutine_handle<P>>;
 ```
 
-> The specialization is enabled\[unord.hash\].
+> The specialization is enabled[[unord.hash]].
 
 ### No-op coroutines <a id="coroutine.noop">[[coroutine.noop]]</a>
 
@@ -4150,7 +4150,7 @@ struct noop_coroutine_promise {};
 ```
 
 > The class `noop_coroutine_promise` defines the promise type for the
-> coroutine referred to by `noop_coroutine_handle`\[coroutine.syn\].
+> coroutine referred to by `noop_coroutine_handle`[[coroutine.syn]].
 
 #### Class `coroutine_handle<noop_coroutine_promise>` <a id="coroutine.handle.noop">[[coroutine.handle.noop]]</a>
 

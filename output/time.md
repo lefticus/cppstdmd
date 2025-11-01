@@ -1830,7 +1830,7 @@ template<class charT, class traits, class Rep, class Period, class Alloc = alloc
 >
 > Attempts to parse the input stream `is` into the duration `d` using
 > the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid duration,
+> [[time.parse]]. If the parse fails to decode a valid duration,
 > `is.setstate(ios_base::failbit)` is called and `d` is not modified. If
 > `%Z` is used and successfully parsed, that value will be assigned to
 > `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
@@ -2296,7 +2296,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > Attempts to parse the input stream `is` into the `sys_time` `tp` using
 > the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid date,
+> [[time.parse]]. If the parse fails to decode a valid date,
 > `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -2462,7 +2462,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > Attempts to parse the input stream `is` into the `utc_time` `tp` using
 > the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid date,
+> [[time.parse]]. If the parse fails to decode a valid date,
 > `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -2630,7 +2630,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > Attempts to parse the input stream `is` into the `tai_time` `tp` using
 > the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid date,
+> [[time.parse]]. If the parse fails to decode a valid date,
 > `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -2773,7 +2773,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > Attempts to parse the input stream `is` into the `gps_time` `tp` using
 > the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid date,
+> [[time.parse]]. If the parse fails to decode a valid date,
 > `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -2863,7 +2863,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > Attempts to parse the input stream `is` into the `file_time` `tp`
 > using the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid date,
+> [[time.parse]]. If the parse fails to decode a valid date,
 > `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -2957,7 +2957,7 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
 >
 > Attempts to parse the input stream `is` into the `local_time` `tp`
 > using the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid date,
+> [[time.parse]]. If the parse fails to decode a valid date,
 > `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -3119,7 +3119,7 @@ template<class Duration>
 > *Mandates:*
 >
 > `SourceClock::to_sys(t)` returns a `sys_time<Duration2>` for some type
-> `Duration2`\[time.point.general\].
+> `Duration2`[[time.point.general]].
 >
 > *Returns:*
 >
@@ -3145,7 +3145,7 @@ template<class Duration>
 > *Mandates:*
 >
 > `DestClock::from_sys(t)` returns a `time_point<DestClock, Duration2>`
-> for some type `Duration2`\[time.point.general\].
+> for some type `Duration2`[[time.point.general]].
 >
 > *Returns:*
 >
@@ -3173,7 +3173,7 @@ template<class Duration>
 > *Mandates:*
 >
 > `SourceClock::to_utc(t)` returns a `utc_time<Duration2>` for some type
-> `Duration2`\[time.point.general\].
+> `Duration2`[[time.point.general]].
 >
 > *Returns:*
 >
@@ -3199,7 +3199,7 @@ template<class Duration>
 > *Mandates:*
 >
 > `DestClock::from_utc(t)` returns a `time_point<DestClock, Duration2>`
-> for some type `Duration2`\[time.point.general\].
+> for some type `Duration2`[[time.point.general]].
 >
 > *Returns:*
 >
@@ -3480,7 +3480,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 > *Effects:*
 >
 > Attempts to parse the input stream `is` into the `day` `d` using the
-> format flags given in the NTCTS `fmt` as specified in \[time.parse\].
+> format flags given in the NTCTS `fmt` as specified in [[time.parse]].
 > If the parse fails to decode a valid day,
 > `is.setstate(ios_base::failbit)` is called and `d` is not modified. If
 > `%Z` is used and successfully parsed, that value will be assigned to
@@ -3731,7 +3731,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 > *Effects:*
 >
 > Attempts to parse the input stream `is` into the `month` `m` using the
-> format flags given in the NTCTS `fmt` as specified in \[time.parse\].
+> format flags given in the NTCTS `fmt` as specified in [[time.parse]].
 > If the parse fails to decode a valid month,
 > `is.setstate(ios_base::failbit)` is called and `m` is not modified. If
 > `%Z` is used and successfully parsed, that value will be assigned to
@@ -4004,7 +4004,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 > *Effects:*
 >
 > Attempts to parse the input stream `is` into the `year` `y` using the
-> format flags given in the NTCTS `fmt` as specified in \[time.parse\].
+> format flags given in the NTCTS `fmt` as specified in [[time.parse]].
 > If the parse fails to decode a valid year,
 > `is.setstate(ios_base::failbit)` is called and `y` is not modified. If
 > `%Z` is used and successfully parsed, that value will be assigned to
@@ -4309,7 +4309,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > Attempts to parse the input stream `is` into the `weekday` `wd` using
 > the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid weekday,
+> [[time.parse]]. If the parse fails to decode a valid weekday,
 > `is.setstate(ios_base::failbit)` is called and `wd` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -4623,7 +4623,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > Attempts to parse the input stream `is` into the `month_day` `md`
 > using the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid `month_day`,
+> [[time.parse]]. If the parse fails to decode a valid `month_day`,
 > `is.setstate(ios_base::failbit)` is called and `md` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -4982,7 +4982,7 @@ constexpr year_month& operator+=(const months& dm) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -4999,7 +4999,7 @@ constexpr year_month& operator-=(const months& dm) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -5071,7 +5071,7 @@ constexpr year_month operator+(const year_month& ym, const months& dm) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5088,7 +5088,7 @@ constexpr year_month operator+(const months& dm, const year_month& ym) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5101,7 +5101,7 @@ constexpr year_month operator-(const year_month& ym, const months& dm) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5169,7 +5169,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > Attempts to parse the input stream `is` into the `year_month` `ym`
 > using the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid `year_month`,
+> [[time.parse]]. If the parse fails to decode a valid `year_month`,
 > `is.setstate(ios_base::failbit)` is called and `ym` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -5284,7 +5284,7 @@ constexpr year_month_day& operator+=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -5301,7 +5301,7 @@ constexpr year_month_day& operator-=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -5434,7 +5434,7 @@ constexpr year_month_day operator+(const year_month_day& ymd, const months& dm) 
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5450,7 +5450,7 @@ constexpr year_month_day operator+(const months& dm, const year_month_day& ymd) 
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5463,7 +5463,7 @@ constexpr year_month_day operator-(const year_month_day& ymd, const months& dm) 
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5525,7 +5525,7 @@ template<class charT, class traits, class Alloc = allocator<charT>>
 >
 > Attempts to parse the input stream `is` into the `year_month_day`
 > `ymd` using the format flags given in the NTCTS `fmt` as specified in
-> \[time.parse\]. If the parse fails to decode a valid `year_month_day`,
+> [[time.parse]]. If the parse fails to decode a valid `year_month_day`,
 > `is.setstate(ios_base::failbit)` is called and `ymd` is not modified.
 > If `%Z` is used and successfully parsed, that value will be assigned
 > to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
@@ -5602,7 +5602,7 @@ constexpr year_month_day_last& operator+=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -5619,7 +5619,7 @@ constexpr year_month_day_last& operator-=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -5745,7 +5745,7 @@ constexpr year_month_day_last
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5759,7 +5759,7 @@ constexpr year_month_day_last
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5773,7 +5773,7 @@ constexpr year_month_day_last
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -5913,7 +5913,7 @@ constexpr year_month_weekday& operator+=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -5930,7 +5930,7 @@ constexpr year_month_weekday& operator-=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -6053,7 +6053,7 @@ constexpr year_month_weekday operator+(const year_month_weekday& ymwd, const mon
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -6066,7 +6066,7 @@ constexpr year_month_weekday operator+(const months& dm, const year_month_weekda
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -6079,7 +6079,7 @@ constexpr year_month_weekday operator-(const year_month_weekday& ymwd, const mon
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -6190,7 +6190,7 @@ constexpr year_month_weekday_last& operator+=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -6207,7 +6207,7 @@ constexpr year_month_weekday_last& operator-=(const months& m) noexcept;
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Effects:*
 >
@@ -6320,7 +6320,7 @@ constexpr year_month_weekday_last
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -6334,7 +6334,7 @@ constexpr year_month_weekday_last
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -6348,7 +6348,7 @@ constexpr year_month_weekday_last
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
-> `months`\[over.ics.rank\].
+> `months`[[over.ics.rank]].
 >
 > *Returns:*
 >
@@ -6867,7 +6867,7 @@ static constexpr unsigned fractional_width = see below;
 >
 > \[*Example 14*:
 >
-> See \[time.hms.width\] for some durations, the resulting
+> See [[time.hms.width]] for some durations, the resulting
 > `fractional_width`, and the formatted fractional second output of
 > `Duration{1}`.
 >
@@ -8756,7 +8756,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand\[term.unevaluated.operand\].
+> operand[[term.unevaluated.operand]].
 >
 > *Returns:*
 >
@@ -8784,7 +8784,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand\[term.unevaluated.operand\].
+> operand[[term.unevaluated.operand]].
 >
 > *Returns:*
 >
@@ -8816,7 +8816,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand\[term.unevaluated.operand\].
+> operand[[term.unevaluated.operand]].
 >
 > *Returns:*
 >
@@ -8852,7 +8852,7 @@ template<class charT, class traits, class Alloc, class Parsable>
 > ```
 >
 > is well-formed when treated as an unevaluated
-> operand\[term.unevaluated.operand\].
+> operand[[term.unevaluated.operand]].
 >
 > *Returns:*
 >

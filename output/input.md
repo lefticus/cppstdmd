@@ -352,7 +352,7 @@ istream cin;
 >
 > After the object `cin` is initialized, `cin.tie()` returns `&cout`.
 > Its state is otherwise the same as required for
-> `basic_ios<char>::init`\[basic.ios.cons\].
+> `basic_ios<char>::init`[[basic.ios.cons]].
 
 ``` cpp
 ostream cout;
@@ -370,7 +370,7 @@ ostream cerr;
 >
 > After the object `cerr` is initialized, `cerr.flags() & unitbuf` is
 > nonzero and `cerr.tie()` returns `&cout`. Its state is otherwise the
-> same as required for `basic_ios<char>::init`\[basic.ios.cons\].
+> same as required for `basic_ios<char>::init`[[basic.ios.cons]].
 
 ``` cpp
 ostream clog;
@@ -390,7 +390,7 @@ wistream wcin;
 >
 > After the object `wcin` is initialized, `wcin.tie()` returns `&wcout`.
 > Its state is otherwise the same as required for
-> `basic_ios<wchar_t>::init`\[basic.ios.cons\].
+> `basic_ios<wchar_t>::init`[[basic.ios.cons]].
 
 ``` cpp
 wostream wcout;
@@ -408,7 +408,7 @@ wostream wcerr;
 >
 > After the object `wcerr` is initialized, `wcerr.flags() & unitbuf` is
 > nonzero and `wcerr.tie()` returns `&wcout`. Its state is otherwise the
-> same as required for `basic_ios<wchar_t>::init`\[basic.ios.cons\].
+> same as required for `basic_ios<wchar_t>::init`[[basic.ios.cons]].
 
 ``` cpp
 wostream wclog;
@@ -682,8 +682,8 @@ explicit failure(const char* msg, const error_code& ec = io_errc::stream);
 using fmtflags = \textit{T1};
 ```
 
-> The type `fmtflags` is a bitmask type\[bitmask.types\]. Setting its
-> elements has the effects indicated in \[ios.fmtflags\].
+> The type `fmtflags` is a bitmask type[[bitmask.types]]. Setting its
+> elements has the effects indicated in [[ios.fmtflags]].
 >
 > <div class="libefftab">
 >
@@ -719,7 +719,7 @@ using fmtflags = \textit{T1};
 > </div>
 >
 > Type `fmtflags` also defines the constants indicated in
-> \[ios.fmtflags.const\].
+> [[ios.fmtflags.const]].
 >
 > <div class="floattable">
 >
@@ -736,8 +736,8 @@ using fmtflags = \textit{T1};
 using iostate = \textit{T2};
 ```
 
-> The type `iostate` is a bitmask type\[bitmask.types\] that contains
-> the elements indicated in \[ios.iostate\].
+> The type `iostate` is a bitmask type[[bitmask.types]] that contains
+> the elements indicated in [[ios.iostate]].
 >
 > <div class="libefftab">
 >
@@ -762,8 +762,8 @@ using iostate = \textit{T2};
 using openmode = \textit{T3};
 ```
 
-> The type `openmode` is a bitmask type\[bitmask.types\]. It contains
-> the elements indicated in \[ios.openmode\].
+> The type `openmode` is a bitmask type[[bitmask.types]]. It contains
+> the elements indicated in [[ios.openmode]].
 >
 > <div class="libefftab">
 >
@@ -784,8 +784,8 @@ using openmode = \textit{T3};
 using seekdir = \textit{T4};
 ```
 
-> The type `seekdir` is an enumerated type\[enumerated.types\] that
-> contains the elements indicated in \[ios.seekdir\].
+> The type `seekdir` is an enumerated type[[enumerated.types]] that
+> contains the elements indicated in [[ios.seekdir]].
 >
 > <div class="libefftabmean">
 >
@@ -947,7 +947,7 @@ locale imbue(const locale& loc);
 
 > *Effects:*
 >
-> Calls each registered callback pair `(fn, idx)`\[ios.base.callback\]
+> Calls each registered callback pair `(fn, idx)`[[ios.base.callback]]
 > as `(*fn)(imbue_event, *this, idx)` at such a time that a call to
 > `ios_base::getloc()` from within `fn` returns the new locale value
 > `loc`.
@@ -987,7 +987,7 @@ static bool sync_with_stdio(bool sync = true);
 > *Returns:*
 >
 > `true` if the previous state of the standard iostream
-> objects\[iostream.objects\] was synchronized and otherwise returns
+> objects[[iostream.objects]] was synchronized and otherwise returns
 > `false`. The first time it is called, the function returns `true`.
 >
 > *Remarks:*
@@ -1051,7 +1051,7 @@ static int xalloc();
 > *Remarks:*
 >
 > Concurrent access to this function by multiple threads does not result
-> in a data race\[intro.multithread\].
+> in a data race[[intro.multithread]].
 
 ``` cpp
 long& iword(int idx);
@@ -1140,8 +1140,8 @@ void register_callback(event_callback fn, int idx);
 > *Effects:*
 >
 > Registers the pair `(fn, idx)` such that during calls to
-> `imbue()`\[ios.base.locales\], `copyfmt()`, or
-> `~ios_base()`\[ios.base.cons\], the function `fn` is called with
+> `imbue()`[[ios.base.locales]], `copyfmt()`, or
+> `~ios_base()`[[ios.base.cons]], the function `fn` is called with
 > argument `idx`. Functions registered are called when an event occurs,
 > in opposite order of registration. Functions registered while a
 > callback function is active are not called until the next event.
@@ -1170,7 +1170,7 @@ ios_base();
 
 > *Effects:*
 >
-> Calls each registered callback pair `(fn, idx)`\[ios.base.callback\]
+> Calls each registered callback pair `(fn, idx)`[[ios.base.callback]]
 > as `(*fn)(erase_event, *this, idx)` at such time that any `ios_base`
 > member function called from within `fn` has well-defined results.
 > Then, any memory obtained is deallocated.
@@ -1346,7 +1346,7 @@ void init(basic_streambuf<charT, traits>* sb);
 > *Ensures:*
 >
 > The postconditions of this function are indicated in
-> \[basic.ios.cons\].
+> [[basic.ios.cons]].
 >
 > <div class="libefftabvalue">
 >
@@ -1423,8 +1423,8 @@ locale imbue(const locale& loc);
 
 > *Effects:*
 >
-> Calls `ios_base::imbue(loc)`\[ios.base.locales\] and if `rdbuf() != 0`
-> then `rdbuf()->pubimbue(loc)`\[streambuf.locales\].
+> Calls `ios_base::imbue(loc)`[[ios.base.locales]] and if `rdbuf() != 0`
+> then `rdbuf()->pubimbue(loc)`[[streambuf.locales]].
 >
 > *Returns:*
 >
@@ -1512,7 +1512,7 @@ basic_ios& copyfmt(const basic_ios& rhs);
 > *Ensures:*
 >
 > The postconditions of this function are indicated in
-> \[basic.ios.copyfmt\].
+> [[basic.ios.copyfmt]].
 >
 > <div class="LibEffTab">
 >
@@ -1611,7 +1611,7 @@ void clear(iostate state = goodbit);
 >
 > If `((state | (rdbuf() ? goodbit : badbit)) & exceptions()) == 0`,
 > returns. Otherwise, the function throws an object of class
-> `ios_base::failure`\[ios.failure\], constructed with
+> `ios_base::failure`[[ios.failure]], constructed with
 > *implementation-defined* argument values.
 >
 > *Ensures:*
@@ -1626,7 +1626,7 @@ void setstate(iostate state);
 > *Effects:*
 >
 > Calls `clear(rdstate() | state)` (which may throw
-> `ios_base::failure`\[ios.failure\]).
+> `ios_base::failure`[[ios.failure]]).
 
 ``` cpp
 bool good() const;
@@ -2350,7 +2350,7 @@ streamsize in_avail();
 > *Returns:*
 >
 > If a read position is available, returns `egptr() - gptr()`. Otherwise
-> returns `showmanyc()`\[streambuf.virt.get\].
+> returns `showmanyc()`[[streambuf.virt.get]].
 
 ``` cpp
 int_type snextc();
@@ -2590,7 +2590,7 @@ basic_streambuf* setbuf(char_type* s, streamsize n);
 >
 > Influences stream buffering in a way that is defined separately for
 > each class derived from `basic_streambuf` in this
-> Clause\[stringbuf.virtuals,filebuf.virtuals\].
+> Clause[[stringbuf.virtuals,filebuf.virtuals]].
 >
 > Does nothing. Returns .
 
@@ -2605,7 +2605,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 > Alters the stream positions within one or more of the controlled
 > sequences in a way that is defined separately for each class derived
 > from `basic_streambuf` in this
-> Clause\[stringbuf.virtuals,filebuf.virtuals\].
+> Clause[[stringbuf.virtuals,filebuf.virtuals]].
 >
 > Returns `pos_type(off_type(-1))`.
 
@@ -2619,7 +2619,7 @@ pos_type seekpos(pos_type sp,
 >
 > Alters the stream positions within one or more of the controlled
 > sequences in a way that is defined separately for each class derived
-> from `basic_streambuf` in this Clause\[stringbuf,filebuf\].
+> from `basic_streambuf` in this Clause[[stringbuf,filebuf]].
 >
 > Returns `pos_type(off_type(-1))`.
 
@@ -2637,7 +2637,7 @@ int sync();
 > *Returns:*
 >
 > `-1` on failure. What constitutes failure is determined by each
-> derived class\[filebuf.virtuals\].
+> derived class[[filebuf.virtuals]].
 >
 > Returns zero.
 
@@ -2847,7 +2847,7 @@ int_type overflow(int_type c = traits::eof());
 >   sequence is specified.
 >
 >   That is, for each class derived from a specialization of
->   `basic_streambuf` in this Clause\[stringbuf,filebuf\], a
+>   `basic_streambuf` in this Clause@@REF:stringbuf,filebuf@@, a
 >   specification of how consuming a character effects the associated
 >   output sequence is given. There is no requirement on a
 >   program-defined class.
@@ -3133,7 +3133,7 @@ explicit basic_istream(basic_streambuf<charT, traits>* sb);
 > *Effects:*
 >
 > Initializes the base class subobject with
-> `basic_ios::init(sb)`\[basic.ios.cons\].
+> `basic_ios::init(sb)`[[basic.ios.cons]].
 >
 > *Ensures:*
 >
@@ -3250,7 +3250,7 @@ explicit sentry(basic_istream& is, bool noskipws = false);
 > If, after any preparation is completed, `is.good()` is `true`,
 > `ok_ != false` otherwise, `ok_ == false`. During preparation, the
 > constructor may call `setstate(failbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]).
+> `ios_base::failure`[[iostate.flags]]).
 >
 > The `sentry` constructor and destructor can also perform additional
 > implementation-dependent operations.
@@ -3312,9 +3312,9 @@ basic_istream& operator>>(void*& val);
 ```
 
 > As in the case of the inserters, these extractors depend on the
-> locale’s `num_get<>`\[locale.num.get\] object to perform parsing the
+> locale’s `num_get<>`[[locale.num.get]] object to perform parsing the
 > input stream data. These extractors behave as formatted input
-> functions (as described in \[istream.formatted.reqmts\]). After a
+> functions (as described in [[istream.formatted.reqmts]]). After a
 > `sentry` object is constructed, the conversion occurs as if performed
 > by the following code fragment, where `state` represents the input
 > function’s local error state:
@@ -3431,14 +3431,14 @@ basic_istream& operator>>(basic_istream& (*pf)(basic_istream&));
 > *Effects:*
 >
 > None. This extractor does not behave as a formatted input function (as
-> described in \[istream.formatted.reqmts\]).
+> described in [[istream.formatted.reqmts]]).
 >
 > *Returns:*
 >
 > `pf(*this)`.
 >
 > See, for example, the function signature
-> `ws(basic_istream&)`\[istream.manip\].
+> `ws(basic_istream&)`@@REF:istream.manip@@.
 
 ``` cpp
 basic_istream& operator>>(basic_ios<charT, traits>& (*pf)(basic_ios<charT, traits>&));
@@ -3447,7 +3447,7 @@ basic_istream& operator>>(basic_ios<charT, traits>& (*pf)(basic_ios<charT, trait
 > *Effects:*
 >
 > Calls `pf(*this)`. This extractor does not behave as a formatted input
-> function (as described in \[istream.formatted.reqmts\]).
+> function (as described in [[istream.formatted.reqmts]]).
 >
 > *Returns:*
 >
@@ -3462,10 +3462,10 @@ basic_istream& operator>>(ios_base& (*pf)(ios_base&));
 > Calls `pf(*this)`.
 >
 > See, for example, the function signature
-> `dec(ios_base&)`\[basefield.manip\].
+> `dec(ios_base&)`@@REF:basefield.manip@@.
 >
 > This extractor does not behave as a formatted input function (as
-> described in \[istream.formatted.reqmts\]).
+> described in [[istream.formatted.reqmts]]).
 >
 > *Returns:*
 >
@@ -3483,7 +3483,7 @@ template<class traits, size_t N>
 > *Effects:*
 >
 > Behaves like a formatted input member (as described
-> in \[istream.formatted.reqmts\]) of `in`. After a `sentry` object is
+> in [[istream.formatted.reqmts]]) of `in`. After a `sentry` object is
 > constructed, `operator>>` extracts characters and stores them into
 > `s`. If `width()` is greater than zero, `n` is
 > `min(size_t(width()), N)`. Otherwise `n` is `N`. `n` is the maximum
@@ -3521,7 +3521,7 @@ template<class traits>
 > *Effects:*
 >
 > Behaves like a formatted input member (as described
-> in \[istream.formatted.reqmts\]) of `in`. A character is extracted
+> in [[istream.formatted.reqmts]]) of `in`. A character is extracted
 > from `in`, if one is available, and stored in `c`. Otherwise,
 > `ios_base::failbit` is set in the input function’s local error state
 > before `setstate` is called.
@@ -3536,9 +3536,9 @@ basic_istream& operator>>(basic_streambuf<charT, traits>* sb);
 
 > *Effects:*
 >
-> Behaves as an unformatted input function\[istream.unformatted\]. If
+> Behaves as an unformatted input function[[istream.unformatted]]. If
 > `sb` is null, calls `setstate(failbit)`, which may throw
-> `ios_base::failure`\[iostate.flags\]. After a `sentry` object is
+> `ios_base::failure`[[iostate.flags]]. After a `sentry` object is
 > constructed, extracts characters from `*this` and inserts them in the
 > output sequence controlled by `sb`. Characters are extracted and
 > inserted until any of the following occurs:
@@ -3810,12 +3810,12 @@ basic_istream& ignore(streamsize n = 1, int_type delim = traits::eof());
 > constructing a `sentry` object, extracts characters and discards them.
 > Characters are extracted until any of the following occurs:
 >
-> - `n != numeric_limits<streamsize>::max()`\[numeric.limits\] and `n`
->   characters have been extracted so far
+> - `n != numeric_limits<streamsize>::max()`@@REF:numeric.limits@@ and
+>   `n` characters have been extracted so far
 >
 > - end-of-file occurs on the input sequence (in which case the function
 >   calls `setstate(eofbit)`, which may throw
->   `ios_base::failure`\[iostate.flags\]);
+>   `ios_base::failure`@@REF:iostate.flags@@);
 >
 > - `traits::eq_int_type(traits::to_int_type(c), delim)` for the next
 >   available input character `c` (in which case `c` is extracted).
@@ -3864,7 +3864,7 @@ basic_istream& read(char_type* s, streamsize n);
 >
 > - end-of-file occurs on the input sequence (in which case the function
 >   calls `setstate(failbit | eofbit)`, which may throw
->   `ios_base::failure`\[iostate.flags\]).
+>   `ios_base::failure`@@REF:iostate.flags@@).
 >
 > *Returns:*
 >
@@ -3882,7 +3882,7 @@ streamsize readsome(char_type* s, streamsize n);
 > characters and stores them into successive locations of an array whose
 > first element is designated by `s`. If `rdbuf()->in_avail() == -1`,
 > calls `setstate(eofbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]), and extracts no characters;
+> `ios_base::failure`[[iostate.flags]]), and extracts no characters;
 >
 > - If `rdbuf()->in_avail() == 0`, extracts no characters
 >
@@ -3905,7 +3905,7 @@ basic_istream& putback(char_type c);
 > exception, and return. If `rdbuf()` is not null, calls
 > `rdbuf()->sputbackc(c)`. If `rdbuf()` is null, or if `sputbackc`
 > returns `traits::eof()`, calls `setstate(badbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]).
+> `ios_base::failure`[[iostate.flags]]).
 >
 > \[*Note 5*: This function extracts no characters, so the value
 > returned by the next call to `gcount()` is 0. — *end note*\]
@@ -3926,7 +3926,7 @@ basic_istream& unget();
 > exception, and return. If `rdbuf()` is not null, calls
 > `rdbuf()->sungetc()`. If `rdbuf()` is null, or if `sungetc` returns
 > `traits::eof()`, calls `setstate(badbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]).
+> `ios_base::failure`[[iostate.flags]]).
 >
 > \[*Note 6*: This function extracts no characters, so the value
 > returned by the next call to `gcount()` is 0. — *end note*\]
@@ -3947,7 +3947,7 @@ int sync();
 > constructing a `sentry` object, if `rdbuf()` is a null pointer,
 > returns `-1`. Otherwise, calls `rdbuf()->pubsync()` and, if that
 > function returns `-1` calls `setstate(badbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\], and returns `-1`. Otherwise,
+> `ios_base::failure`[[iostate.flags]], and returns `-1`. Otherwise,
 > returns zero.
 
 ``` cpp
@@ -4016,14 +4016,14 @@ template<class charT, class traits>
 
 > *Effects:*
 >
-> Behaves as an unformatted input function\[istream.unformatted\],
+> Behaves as an unformatted input function[[istream.unformatted]],
 > except that it does not count the number of characters extracted and
 > does not affect the value returned by subsequent calls to
 > `is.gcount()`. After constructing a `sentry` object extracts
 > characters as long as the next available character `c` is whitespace
 > or until there are no more characters in the sequence. Whitespace
 > characters are distinguished with the same criterion as used by
-> `sentry::sentry`\[istream.sentry\]. If `ws` stops extracting
+> `sentry::sentry`[[istream.sentry]]. If `ws` stops extracting
 > characters because there are no more available it sets `eofbit`, but
 > not `failbit`.
 >
@@ -4039,7 +4039,7 @@ template<class Istream, class T>
 ```
 
 > The expression `is >> std::forward<T>(x)` is well-formed when treated
-> as an unevaluated operand\[term.unevaluated.operand\] and `Istream` is
+> as an unevaluated operand[[term.unevaluated.operand]] and `Istream` is
 > publicly and unambiguously derived from `ios_base`.
 >
 > *Effects:*
@@ -4100,8 +4100,8 @@ explicit basic_iostream(basic_streambuf<charT, traits>* sb);
 > *Effects:*
 >
 > Initializes the base class subobjects with
-> `basic_istream<charT, traits>(sb)`\[istream\] and
-> `basic_ostream<charT, traits>(sb)`\[ostream\].
+> `basic_istream<charT, traits>(sb)`[[istream]] and
+> `basic_ostream<charT, traits>(sb)`[[ostream]].
 >
 > *Ensures:*
 >
@@ -4323,7 +4323,7 @@ explicit basic_ostream(basic_streambuf<charT, traits>* sb);
 > *Effects:*
 >
 > Initializes the base class subobject with
-> `basic_ios<charT, traits>::init(sb)`\[basic.ios.cons\].
+> `basic_ios<charT, traits>::init(sb)`[[basic.ios.cons]].
 >
 > *Ensures:*
 >
@@ -4405,7 +4405,7 @@ explicit sentry(basic_ostream& os);
 > If, after any preparation is completed, `os.good()` is `true`,
 > `ok_ == true` otherwise, `ok_ == false`. During preparation, the
 > constructor may call `setstate(failbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]).
+> `ios_base::failure`[[iostate.flags]]).
 >
 > The `sentry` constructor and destructor can also perform additional
 > implementation-dependent operations.
@@ -4654,14 +4654,14 @@ basic_ostream& operator<<(basic_ostream& (*pf)(basic_ostream&));
 > *Effects:*
 >
 > None. Does not behave as a formatted output function (as described
-> in \[ostream.formatted.reqmts\]).
+> in [[ostream.formatted.reqmts]]).
 >
 > *Returns:*
 >
 > `pf(*this)`.
 >
 > See, for example, the function signature
-> `endl(basic_ostream&)`\[ostream.manip\].
+> `endl(basic_ostream&)`@@REF:ostream.manip@@.
 
 ``` cpp
 basic_ostream& operator<<(basic_ios<charT, traits>& (*pf)(basic_ios<charT, traits>&));
@@ -4670,14 +4670,14 @@ basic_ostream& operator<<(basic_ios<charT, traits>& (*pf)(basic_ios<charT, trait
 > *Effects:*
 >
 > Calls `pf(*this)`. This inserter does not behave as a formatted output
-> function (as described in \[ostream.formatted.reqmts\]).
+> function (as described in [[ostream.formatted.reqmts]]).
 >
 > *Returns:*
 >
 > `*this`.
 >
 > See, for example, the function signature
-> `dec(ios_base&)`\[basefield.manip\].
+> `dec(ios_base&)`@@REF:basefield.manip@@.
 
 ``` cpp
 basic_ostream& operator<<(ios_base& (*pf)(ios_base&));
@@ -4686,7 +4686,7 @@ basic_ostream& operator<<(ios_base& (*pf)(ios_base&));
 > *Effects:*
 >
 > Calls `pf(*this)`. This inserter does not behave as a formatted output
-> function (as described in \[ostream.formatted.reqmts\]).
+> function (as described in [[ostream.formatted.reqmts]]).
 >
 > *Returns:*
 >
@@ -4698,7 +4698,7 @@ basic_ostream& operator<<(basic_streambuf<charT, traits>* sb);
 
 > *Effects:*
 >
-> Behaves as an unformatted output function\[ostream.unformatted\].
+> Behaves as an unformatted output function[[ostream.unformatted]].
 > After the `sentry` object is constructed, if `sb` is null calls
 > `setstate(badbit)` (which may throw `ios_base::failure`).
 >
@@ -4713,7 +4713,7 @@ basic_ostream& operator<<(basic_streambuf<charT, traits>* sb);
 > - an exception occurs while getting a character from `sb`.
 >
 > If the function inserts no characters, it calls `setstate(failbit)`
-> (which may throw `ios_base::failure`\[iostate.flags\]). If an
+> (which may throw `ios_base::failure`[[iostate.flags]]). If an
 > exception was thrown while extracting a character, the function sets
 > `failbit` in the error state, and if `failbit` is set in
 > `exceptions()` the caught exception is rethrown.
@@ -4734,7 +4734,7 @@ basic_ostream& operator<<(nullptr_t);
 > return *this << s;
 > ```
 >
-> where `s` is an *implementation-defined* NTCTS\[defns.ntcts\].
+> where `s` is an *implementation-defined* NTCTS[[defns.ntcts]].
 
 ##### Character inserter function templates <a id="ostream.inserters.character">[[ostream.inserters.character]]</a>
 
@@ -4755,12 +4755,12 @@ template<class traits>
 
 > *Effects:*
 >
-> Behaves as a formatted output function\[ostream.formatted.reqmts\] of
+> Behaves as a formatted output function[[ostream.formatted.reqmts]] of
 > `out`. Constructs a character sequence `seq`. If `c` has type `char`
 > and the character type of the stream is not `char`, then `seq`
 > consists of `out.widen(c)`; otherwise `seq` consists of `c`.
 > Determines padding for `seq` as described
-> in \[ostream.formatted.reqmts\]. Inserts `seq` into `out`. Calls
+> in [[ostream.formatted.reqmts]]. Inserts `seq` into `out`. Calls
 > `os.width(0)`.
 >
 > *Returns:*
@@ -4788,9 +4788,9 @@ template<class traits>
 > *Effects:*
 >
 > Behaves like a formatted inserter (as described
-> in \[ostream.formatted.reqmts\]) of `out`. Creates a character
+> in [[ostream.formatted.reqmts]]) of `out`. Creates a character
 > sequence `seq` of `n` characters starting at `s`, each widened using
-> `out.widen()`\[basic.ios.members\], where `n` is the number that would
+> `out.widen()`[[basic.ios.members]], where `n` is the number that would
 > be computed as if by:
 >
 > - `traits::length(s)` for the overload where the first argument is of
@@ -4807,7 +4807,7 @@ template<class traits>
 >   overloads.
 >
 > Determines padding for `seq` as described
-> in \[ostream.formatted.reqmts\]. Inserts `seq` into `out`. Calls
+> in [[ostream.formatted.reqmts]]. Inserts `seq` into `out`. Calls
 > `width(0)`.
 >
 > *Returns:*
@@ -4823,7 +4823,7 @@ template<class... Args>
 
 > *Effects:*
 >
-> If the ordinary literal encoding\[lex.charset\] is UTF-8, equivalent
+> If the ordinary literal encoding[[lex.charset]] is UTF-8, equivalent
 > to:
 >
 > ``` cpp
@@ -4856,7 +4856,7 @@ void vprint_nonunicode(ostream& os, string_view fmt, format_args args);
 
 > *Effects:*
 >
-> Behaves as a formatted output function\[ostream.formatted.reqmts\] of
+> Behaves as a formatted output function[[ostream.formatted.reqmts]] of
 > `os`, except that:
 >
 > - failure to generate output is reported as specified below, and
@@ -4915,7 +4915,7 @@ basic_ostream& put(char_type c);
 > `unsigned char`.
 >
 > Otherwise, calls `setstate(badbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]).
+> `ios_base::failure`[[iostate.flags]]).
 >
 > *Returns:*
 >
@@ -4941,7 +4941,7 @@ basic_ostream& write(const char_type* s, streamsize n);
 >
 > - inserting in the output sequence fails (in which case the function
 >   calls `setstate(badbit)`, which may throw
->   `ios_base::failure`\[iostate.flags\]).
+>   `ios_base::failure`@@REF:iostate.flags@@).
 >
 > *Returns:*
 >
@@ -4958,7 +4958,7 @@ basic_ostream& flush();
 > object returns `true` when converted to a value of type `bool` the
 > function calls `rdbuf()->pubsync()`. If that function returns -1 calls
 > `setstate(badbit)` (which may throw
-> `ios_base::failure`\[iostate.flags\]). Otherwise, if the `sentry`
+> `ios_base::failure`[[iostate.flags]]). Otherwise, if the `sentry`
 > object returns `false`, does nothing.
 >
 > *Returns:*
@@ -5057,7 +5057,7 @@ template<class charT, class traits>
 > Calls `os.flush()`. Then, if `os.rdbuf()` is a
 > `basic_syncbuf<charT, traits, Allocator>*`, called `buf` for the
 > purpose of exposition, behaves as an unformatted output
-> function\[ostream.unformatted\] of `os`. After constructing a `sentry`
+> function[[ostream.unformatted]] of `os`. After constructing a `sentry`
 > object, calls `buf->emit()`. If that call returns `false`, calls
 > `os.setstate(ios_base::badbit)`.
 >
@@ -5262,12 +5262,12 @@ template<class moneyT> unspecified get_money(moneyT& mon, bool intl = false);
 > *Mandates:*
 >
 > The type `moneyT` is either `long double` or a specialization of the
-> `basic_string` template\[strings\].
+> `basic_string` template[[strings]].
 >
 > *Effects:*
 >
 > The expression `in >> get_money(mon, intl)` described below behaves as
-> a formatted input function\[istream.formatted.reqmts\].
+> a formatted input function[[istream.formatted.reqmts]].
 >
 > *Returns:*
 >
@@ -5302,14 +5302,14 @@ template<class moneyT> unspecified put_money(const moneyT& mon, bool intl = fals
 > *Mandates:*
 >
 > The type `moneyT` is either `long double` or a specialization of the
-> `basic_string` template\[strings\].
+> `basic_string` template[[strings]].
 >
 > *Returns:*
 >
 > An object of unspecified type such that if `out` is an object of type
 > `basic_ostream<charT, traits>` then the expression
 > `out << put_money(mon, intl)` behaves as a formatted output
-> function\[ostream.formatted.reqmts\] that calls `f(out, mon, intl)`,
+> function[[ostream.formatted.reqmts]] that calls `f(out, mon, intl)`,
 > where the function `f` is defined as:
 >
 > ``` cpp
@@ -5425,7 +5425,7 @@ template<class charT, class traits>
 > with member type `traits_type`, which in the second and third forms is
 > the same as `traits`, then the expression
 > `out << quoted(s, delim, escape)` behaves as a formatted output
-> function\[ostream.formatted.reqmts\] of `out`. This forms a character
+> function[[ostream.formatted.reqmts]] of `out`. This forms a character
 > sequence `seq`, initially consisting of the following elements:
 >
 > - `delim`.
@@ -5437,7 +5437,7 @@ template<class charT, class traits>
 > - `delim`.
 >
 > Let `x` be the number of elements initially in `seq`. Then padding is
-> determined for `seq` as described in \[ostream.formatted.reqmts\],
+> determined for `seq` as described in [[ostream.formatted.reqmts]],
 > `seq` is inserted as if by calling `out.rdbuf()->sputn(seq, n)`, where
 > `n` is the larger of `out.width()` and `x`, and `out.width(0)` is
 > called. The expression `out << quoted(s, delim, escape)` has type
@@ -5457,8 +5457,8 @@ template<class charT, class traits, class Allocator>
 >   `char_type` and `traits_type` the same as `charT` and `traits`,
 >   respectively, then the expression `in >> quoted(s, delim, escape)`
 >   behaves as if it extracts the following characters from `in` using
->   `operator>>(basic_istream<charT, traits>&, charT&)`\[istream.extractors\]
->   which may throw `ios_base::failure`\[ios.failure\]:
+>   `operator>>(basic_istream<charT, traits>&, charT&)`@@REF:istream.extractors@@
+>   which may throw `ios_base::failure`@@REF:ios.failure@@:
 >
 >   - If the first character extracted is equal to `delim`, as
 >     determined by `traits_type::eq`, then:
@@ -5513,7 +5513,7 @@ template<class... Args>
 
 > *Effects:*
 >
-> If the ordinary literal encoding\[lex.charset\] is UTF-8, equivalent
+> If the ordinary literal encoding[[lex.charset]] is UTF-8, equivalent
 > to:
 >
 > ``` cpp
@@ -5597,7 +5597,7 @@ void vprint_unicode(FILE* stream, string_view fmt, format_args args);
 >
 > *Throws:*
 >
-> Any exception thrown by the call to `vformat`\[format.err.report\].
+> Any exception thrown by the call to `vformat`[[format.err.report]].
 > `system_error` if writing to the terminal or `stream` fails. May throw
 > `bad_alloc`.
 >
@@ -5631,7 +5631,7 @@ void vprint_nonunicode(FILE* stream, string_view fmt, format_args args);
 >
 > *Throws:*
 >
-> Any exception thrown by the call to `vformat`\[format.err.report\].
+> Any exception thrown by the call to `vformat`[[format.err.report]].
 > `system_error` if writing to `stream` fails. May throw `bad_alloc`.
 
 ## String-based streams <a id="string.streams">[[string.streams]]</a>
@@ -5803,7 +5803,7 @@ explicit basic_stringbuf(ios_base::openmode which);
 
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > and `mode` with `which`. It is *implementation-defined* whether the
 > sequence pointers (`eback()`, `gptr()`, `egptr()`, `pbase()`,
 > `pptr()`, `epptr()`) are initialized to null pointers.
@@ -5820,7 +5820,7 @@ explicit basic_stringbuf(
 
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > `mode` with `which`, and `buf` with `s`, then calls `init_buf_ptrs()`.
 
 ``` cpp
@@ -5829,7 +5829,7 @@ basic_stringbuf(ios_base::openmode which, const Allocator &a);
 
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > `mode` with `which`, and `buf` with `a`, then calls `init_buf_ptrs()`.
 >
 > *Ensures:*
@@ -5844,7 +5844,7 @@ explicit basic_stringbuf(
 
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > `mode` with `which`, and `buf` with `std::move(s)`, then calls
 > `init_buf_ptrs()`.
 
@@ -5857,7 +5857,7 @@ template<class SAlloc>
 
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > `mode` with `which`, and `buf` with `{s,a}`, then calls
 > `init_buf_ptrs()`.
 
@@ -5872,7 +5872,7 @@ template<class SAlloc>
 >
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > `mode` with `which`, and `buf` with `s`, then calls `init_buf_ptrs()`.
 
 ``` cpp
@@ -5931,7 +5931,7 @@ basic_stringbuf& operator=(basic_stringbuf&& rhs);
 >
 > After the move assignment `*this` has the observable state it would
 > have had if it had been move constructed from `rhs`
-> (see \[stringbuf.cons\]).
+> (see [[stringbuf.cons]]).
 >
 > *Returns:*
 >
@@ -6033,7 +6033,7 @@ template<class SAlloc>
 ```
 
 > `SAlloc` is a type that qualifies as an
-> allocator\[container.requirements.general\].
+> allocator[[container.requirements.general]].
 >
 > *Effects:*
 >
@@ -6222,7 +6222,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 > *Effects:*
 >
 > Alters the stream position within one of the controlled sequences, if
-> possible, as indicated in \[stringbuf.seekoff.pos\].
+> possible, as indicated in [[stringbuf.seekoff.pos]].
 >
 > <div class="libtab2">
 >
@@ -6237,7 +6237,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 > </div>
 >
 > For a sequence to be positioned, the function determines `newoff` as
-> indicated in \[stringbuf.seekoff.newoff\]. If the sequence’s next
+> indicated in [[stringbuf.seekoff.newoff]]. If the sequence’s next
 > pointer (either `gptr()` or `pptr()`) is a null pointer and `newoff`
 > is nonzero, the positioning operation fails.
 >
@@ -6253,7 +6253,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 > </div>
 >
 > If `(newoff + off) < 0`, or if `newoff + off` refers to an
-> uninitialized character\[stringbuf.members\], the positioning
+> uninitialized character[[stringbuf.members]], the positioning
 > operation fails. Otherwise, the function assigns `xbeg + newoff + off`
 > to the next pointer `xnext`.
 >
@@ -6376,8 +6376,8 @@ explicit basic_istringstream(ios_base::openmode which);
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::in)`\[stringbuf.cons\].
+> `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::in)`[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_istringstream(
@@ -6388,8 +6388,8 @@ explicit basic_istringstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`.
+> `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`:stringbuf.cons@@.
 
 ``` cpp
 basic_istringstream(ios_base::openmode which, const Allocator& a);
@@ -6398,8 +6398,8 @@ basic_istringstream(ios_base::openmode which, const Allocator& a);
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::in, a)`\[stringbuf.cons\].
+> `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::in, a)`[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_istringstream(
@@ -6410,8 +6410,8 @@ explicit basic_istringstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::in)`\[stringbuf.cons\].
+> `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::in)`[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -6423,8 +6423,8 @@ template<class SAlloc>
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`.
+> `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`:stringbuf.cons@@.
 
 ``` cpp
 template<class SAlloc>
@@ -6436,8 +6436,8 @@ template<class SAlloc>
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`\[stringbuf.cons\].
+> `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`[[stringbuf.cons]].
 
 ``` cpp
 basic_istringstream(basic_istringstream&& rhs);
@@ -6627,8 +6627,8 @@ explicit basic_ostringstream(ios_base::openmode which);
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::out)`\[stringbuf.cons\].
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::out)`[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_ostringstream(
@@ -6639,8 +6639,8 @@ explicit basic_ostringstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`.
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`:stringbuf.cons@@.
 
 ``` cpp
 basic_ostringstream(ios_base::openmode which, const Allocator& a);
@@ -6649,8 +6649,8 @@ basic_ostringstream(ios_base::openmode which, const Allocator& a);
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`.
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`:stringbuf.cons@@.
 
 ``` cpp
 explicit basic_ostringstream(
@@ -6661,8 +6661,8 @@ explicit basic_ostringstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::out)`\[stringbuf.cons\].
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::out)`[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -6674,8 +6674,8 @@ template<class SAlloc>
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`.
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`:stringbuf.cons@@.
 
 ``` cpp
 template<class SAlloc>
@@ -6689,8 +6689,8 @@ template<class SAlloc>
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream\] and `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`.
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+> `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`:stringbuf.cons@@.
 
 ``` cpp
 basic_ostringstream(basic_ostringstream&& rhs);
@@ -6882,7 +6882,7 @@ explicit basic_stringstream(ios_base::openmode which);
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with `basic_stringbuf<charT, traits, Allocator>(which)`.
 
 ``` cpp
@@ -6894,7 +6894,7 @@ explicit basic_stringstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with `basic_stringbuf<charT, traits, Allocator>(s, which)`.
 
 ``` cpp
@@ -6904,9 +6904,9 @@ basic_stringstream(ios_base::openmode which, const Allocator& a);
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(which, a)`\[stringbuf.cons\].
+> `basic_stringbuf<charT, traits, Allocator>(which, a)`[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_stringstream(
@@ -6917,9 +6917,9 @@ explicit basic_stringstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(std::move(s), which)`\[stringbuf.cons\].
+> `basic_stringbuf<charT, traits, Allocator>(std::move(s), which)`[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -6931,9 +6931,9 @@ template<class SAlloc>
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which, a)`\[stringbuf.cons\].
+> `basic_stringbuf<charT, traits, Allocator>(s, which, a)`[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -6947,9 +6947,9 @@ template<class SAlloc>
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with
-> `basic_stringbuf<charT, traits, Allocator>(s, which)`\[stringbuf.cons\].
+> `basic_stringbuf<charT, traits, Allocator>(s, which)`[[stringbuf.cons]].
 
 ``` cpp
 basic_stringstream(basic_stringstream&& rhs);
@@ -7184,7 +7184,7 @@ explicit basic_spanbuf(std::span<charT> s,
 
 > *Effects:*
 >
-> Initializes the base class with `basic_streambuf()`\[streambuf.cons\],
+> Initializes the base class with `basic_streambuf()`[[streambuf.cons]],
 > and *mode* with `which`. Initializes the internal pointers as if
 > calling `span(s)`.
 
@@ -7442,7 +7442,7 @@ explicit basic_ispanstream(std::span<charT> s, ios_base::openmode which = ios_ba
 >
 > Initializes the base class with
 > `basic_istream<charT, traits>(addressof(sb))` and `sb` with
-> `basic_spanbuf<charT, traits>(s, which | ios_base::in)`\[spanbuf.cons\].
+> `basic_spanbuf<charT, traits>(s, which | ios_base::in)`[[spanbuf.cons]].
 
 ``` cpp
 basic_ispanstream(basic_ispanstream&& rhs);
@@ -7594,7 +7594,7 @@ explicit basic_ospanstream(std::span<charT> s,
 >
 > Initializes the base class with
 > `basic_ostream<charT, traits>(addressof(sb))` and `sb` with
-> `basic_spanbuf<charT, traits>(s, which | ios_base::out)`\[spanbuf.cons\].
+> `basic_spanbuf<charT, traits>(s, which | ios_base::out)`[[spanbuf.cons]].
 
 ``` cpp
 basic_ospanstream(basic_ospanstream&& rhs) noexcept;
@@ -7712,7 +7712,7 @@ explicit basic_spanstream(std::span<charT> s,
 >
 > Initializes the base class with
 > `basic_iostream<charT, traits>(addressof(sb))` and `sb` with
-> `basic_spanbuf<charT, traits>(s, which)`\[spanbuf.cons\].
+> `basic_spanbuf<charT, traits>(s, which)`[[spanbuf.cons]].
 
 ``` cpp
 basic_spanstream(basic_spanstream&& rhs);
@@ -7938,7 +7938,7 @@ basic_filebuf();
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_streambuf<charT, traits>()`\[streambuf.cons\].
+> `basic_streambuf<charT, traits>()`[[streambuf.cons]].
 >
 > *Ensures:*
 >
@@ -7997,7 +7997,7 @@ virtual ~basic_filebuf();
 >
 > Calls `close()`. If an exception occurs during the destruction of the
 > object, including the call to `close()`, the exception is caught but
-> not rethrown (see \[res.on.exception.handling\]).
+> not rethrown (see [[res.on.exception.handling]]).
 
 #### Assignment and swap <a id="filebuf.assign">[[filebuf.assign]]</a>
 
@@ -8009,7 +8009,7 @@ basic_filebuf& operator=(basic_filebuf&& rhs);
 >
 > Calls `close()` then move assigns from `rhs`. After the move
 > assignment `*this` has the observable state it would have had if it
-> had been move constructed from `rhs` (see \[filebuf.cons\]).
+> had been move constructed from `rhs` (see [[filebuf.cons]]).
 >
 > *Returns:*
 >
@@ -8051,7 +8051,7 @@ basic_filebuf* open(const filesystem::path::value_type* s,
 
 > *Preconditions:*
 >
-> `s` points to a NTCTS\[defns.ntcts\].
+> `s` points to a NTCTS[[defns.ntcts]].
 >
 > *Effects:*
 >
@@ -8059,7 +8059,7 @@ basic_filebuf* open(const filesystem::path::value_type* s,
 > initializes the `filebuf` as required. It then opens the file to which
 > `s` resolves, if possible, as if by a call to `fopen` with the second
 > argument determined from `mode & ~ios_base::ate` as indicated in
-> \[filebuf.open.modes\]. If `mode` is not some combination of flags
+> [[filebuf.open.modes]]. If `mode` is not some combination of flags
 > shown in the table then the open fails.
 >
 > <div class="floattable">
@@ -8154,7 +8154,7 @@ streamsize showmanyc() override;
 > *Effects:*
 >
 > Behaves the same as
-> `basic_streambuf::showmanyc()`\[streambuf.virtuals\].
+> `basic_streambuf::showmanyc()`[[streambuf.virtuals]].
 >
 > *Remarks:*
 >
@@ -8330,7 +8330,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 > `a_codecvt.unshift(state, xbuf, xbuf+XSIZE, xbuf_end)` and output the
 > resulting unshift sequence. The function determines one of three
 > values for the argument `whence`, of type `int`, as indicated in
-> \[filebuf.seekoff\].
+> [[filebuf.seekoff]].
 >
 > <div class="libtab2">
 >
@@ -8390,7 +8390,7 @@ void imbue(const locale& loc) override;
 >
 > If the file is not positioned at its beginning and the encoding of the
 > current locale as determined by `a_codecvt.encoding()` is
-> state-dependent\[locale.codecvt.virtuals\] then that facet is the same
+> state-dependent[[locale.codecvt.virtuals]] then that facet is the same
 > as the corresponding facet of `loc`.
 >
 > *Effects:*
@@ -8471,8 +8471,8 @@ basic_ifstream();
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream.cons\] and `sb`
-> with `basic_filebuf<charT, traits>()`\[filebuf.cons\].
+> `basic_istream<charT, traits>(addressof(sb))`[[istream.cons]] and `sb`
+> with `basic_filebuf<charT, traits>()`[[filebuf.cons]].
 
 ``` cpp
 explicit basic_ifstream(const char* s,
@@ -8484,8 +8484,8 @@ explicit basic_ifstream(const filesystem::path::value_type* s,
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_istream<charT, traits>(addressof(sb))`\[istream.cons\] and `sb`
-> with `basic_filebuf<charT, traits>()`\[filebuf.cons\], then calls
+> `basic_istream<charT, traits>(addressof(sb))`[[istream.cons]] and `sb`
+> with `basic_filebuf<charT, traits>()`[[filebuf.cons]], then calls
 > `rdbuf()->open(s, mode | ios_base::in)`. If that function returns a
 > null pointer, calls `setstate(failbit)`.
 
@@ -8568,7 +8568,7 @@ void open(const filesystem::path::value_type* s,
 > Calls `rdbuf()->open(s, mode | ios_base::in)`. If that function does
 > not return a null pointer calls `clear()`, otherwise calls
 > `setstate(failbit)` (which may throw
-> `ios_base::failure`)\[iostate.flags\].
+> `ios_base::failure`)[[iostate.flags]].
 
 ``` cpp
 void open(const string& s, ios_base::openmode mode = ios_base::in);
@@ -8587,7 +8587,7 @@ void close();
 >
 > Calls `rdbuf()->close()` and, if that function returns a null pointer,
 > calls `setstate(failbit)` (which may throw
-> `ios_base::failure`)\[iostate.flags\].
+> `ios_base::failure`)[[iostate.flags]].
 
 ### Class template `basic_ofstream` <a id="ofstream">[[ofstream]]</a>
 
@@ -8656,8 +8656,8 @@ basic_ofstream();
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream.cons\] and `sb`
-> with `basic_filebuf<charT, traits>()`\[filebuf.cons\].
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream.cons]] and `sb`
+> with `basic_filebuf<charT, traits>()`[[filebuf.cons]].
 
 ``` cpp
 explicit basic_ofstream(const char* s,
@@ -8669,8 +8669,8 @@ explicit basic_ofstream(const filesystem::path::value_type* s,
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_ostream<charT, traits>(addressof(sb))`\[ostream.cons\] and `sb`
-> with `basic_filebuf<charT, traits>()`\[filebuf.cons\], then calls
+> `basic_ostream<charT, traits>(addressof(sb))`[[ostream.cons]] and `sb`
+> with `basic_filebuf<charT, traits>()`[[filebuf.cons]], then calls
 > `rdbuf()->open(s, mode | ios_base::out)`. If that function returns a
 > null pointer, calls `setstate(failbit)`.
 
@@ -8753,7 +8753,7 @@ void open(const filesystem::path::value_type* s,
 > Calls `rdbuf()->open(s, mode | ios_base::out)`. If that function does
 > not return a null pointer calls `clear()`, otherwise calls
 > `setstate(failbit)` (which may throw
-> `ios_base::failure`)\[iostate.flags\].
+> `ios_base::failure`)[[iostate.flags]].
 
 ``` cpp
 void close();
@@ -8763,7 +8763,7 @@ void close();
 >
 > Calls `rdbuf()->close()` and, if that function fails (returns a null
 > pointer), calls `setstate(failbit)` (which may throw
-> `ios_base::failure`)\[iostate.flags\].
+> `ios_base::failure`)[[iostate.flags]].
 
 ``` cpp
 void open(const string& s, ios_base::openmode mode = ios_base::out);
@@ -8850,7 +8850,7 @@ basic_fstream();
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with `basic_filebuf<charT, traits>()`.
 
 ``` cpp
@@ -8865,7 +8865,7 @@ explicit basic_fstream(
 > *Effects:*
 >
 > Initializes the base class with
-> `basic_iostream<charT, traits>(addressof(sb))`\[iostream.cons\] and
+> `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and
 > `sb` with `basic_filebuf<charT, traits>()`. Then calls
 > `rdbuf()->open(s, mode)`. If that function returns a null pointer,
 > calls `setstate(failbit)`.
@@ -8953,7 +8953,7 @@ void open(
 >
 > Calls `rdbuf()->open(s, mode)`. If that function does not return a
 > null pointer calls `clear()`, otherwise calls `setstate(failbit)`
-> (which may throw `ios_base::failure`)\[iostate.flags\].
+> (which may throw `ios_base::failure`)[[iostate.flags]].
 
 ``` cpp
 void open(
@@ -8976,7 +8976,7 @@ void close();
 >
 > Calls `rdbuf()->close()` and, if that function returns a null pointer,
 > calls `setstate(failbit)` (which may throw
-> `ios_base::failure`)\[iostate.flags\].
+> `ios_base::failure`)[[iostate.flags]].
 
 ## Synchronized output streams <a id="syncstream">[[syncstream]]</a>
 
@@ -9128,7 +9128,7 @@ basic_syncbuf& operator=(basic_syncbuf&& rhs);
 >
 > Calls `emit()` then move assigns from `rhs`. After the move assignment
 > `*this` has the observable state it would have had if it had been move
-> constructed from `rhs`\[syncstream.syncbuf.cons\].
+> constructed from `rhs`[[syncstream.syncbuf.cons]].
 >
 > *Ensures:*
 >
@@ -9179,7 +9179,7 @@ bool emit();
 >
 > All `emit()` calls transferring characters to the same stream buffer
 > object appear to execute in a total order consistent with the “happens
-> before” relation\[intro.races\], where each `emit()` call synchronizes
+> before” relation[[intro.races]], where each `emit()` call synchronizes
 > with subsequent `emit()` calls in that total order.
 >
 > *Ensures:*
@@ -9376,7 +9376,7 @@ void emit();
 
 > *Effects:*
 >
-> Behaves as an unformatted output function\[ostream.unformatted\].
+> Behaves as an unformatted output function[[ostream.unformatted]].
 > After constructing a `sentry` object, calls `sb.emit()`. If that call
 > returns `false`, calls `setstate(ios_base::badbit)`.
 >
@@ -10372,8 +10372,8 @@ path(string_type&& source, format fmt = auto_format);
 >
 > Constructs an object of class `path` for which the pathname in the
 > detected-format of `source` has the original value of
-> `source`\[fs.path.fmt.cvt\], converting format if
-> required\[fs.path.fmt.cvt\]. `source` is left in a valid but
+> `source`[[fs.path.fmt.cvt]], converting format if
+> required[[fs.path.fmt.cvt]]. `source` is left in a valid but
 > unspecified state.
 
 ``` cpp
@@ -10385,10 +10385,10 @@ template<class InputIterator>
 
 > *Effects:*
 >
-> Let `s` be the effective range of `source`\[fs.path.req\] or the range
+> Let `s` be the effective range of `source`[[fs.path.req]] or the range
 > \[`first`, `last`), with the encoding converted if
-> required\[fs.path.cvt\]. Finds the detected-format of
-> `s`\[fs.path.fmt.cvt\] and constructs an object of class `path` for
+> required[[fs.path.cvt]]. Finds the detected-format of
+> `s`[[fs.path.fmt.cvt]] and constructs an object of class `path` for
 > which the pathname in that format is `s`.
 
 ``` cpp
@@ -10408,14 +10408,14 @@ template<class InputIterator>
 > `last`), after converting the encoding as follows:
 >
 > - If `value_type` is , converts to the native wide
->   encoding\[fs.path.type.cvt\] using the
+>   encoding@@REF:fs.path.type.cvt@@ using the
 >   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`.
 >
 > - Otherwise a conversion is performed using the
 >   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`, and then a
 >   second conversion to the current ordinary encoding.
 >
-> Finds the detected-format of `s`\[fs.path.fmt.cvt\] and constructs an
+> Finds the detected-format of `s`[[fs.path.fmt.cvt]] and constructs an
 > object of class `path` for which the pathname in that format is `s`.
 >
 > \[*Example 6*:
@@ -10432,7 +10432,7 @@ template<class InputIterator>
 > For POSIX-based operating systems, the path is constructed by first
 > using `latin1_facet` to convert ISO/IEC 8859-1 encoded `latin1_string`
 > to a wide character string in the native wide
-> encoding\[fs.path.type.cvt\]. The resulting wide string is then
+> encoding[[fs.path.type.cvt]]. The resulting wide string is then
 > converted to an ordinary character pathname string in the current
 > native ordinary encoding. If the native wide encoding is UTF-16 or
 > UTF-32, and the current native ordinary encoding is UTF-8, all of the
@@ -10505,10 +10505,10 @@ template<class InputIterator>
 
 > *Effects:*
 >
-> Let `s` be the effective range of `source`\[fs.path.req\] or the range
+> Let `s` be the effective range of `source`[[fs.path.req]] or the range
 > \[`first`, `last`), with the encoding converted if
-> required\[fs.path.cvt\]. Finds the detected-format of
-> `s`\[fs.path.fmt.cvt\] and sets the pathname in that format to `s`.
+> required[[fs.path.cvt]]. Finds the detected-format of
+> `s`[[fs.path.fmt.cvt]] and sets the pathname in that format to `s`.
 >
 > *Returns:*
 >
@@ -10732,8 +10732,8 @@ path& replace_extension(const path& replacement = path());
 
 > *Effects:*
 >
-> - Any existing `extension()`\[fs.path.decompose\] is removed from the
->   pathname in the generic format, then
+> - Any existing `extension()`@@REF:fs.path.decompose@@ is removed from
+>   the pathname in the generic format, then
 >
 > - If `replacement` is not empty and does not begin with a dot
 >   character, a dot character is appended to the pathname in the
@@ -10800,7 +10800,7 @@ template<class EcharT, class traits = char_traits<EcharT>,
 > *Remarks:*
 >
 > All memory allocation, including for the return value, shall be
-> performed by `a`. Conversion, if any, is specified by \[fs.path.cvt\].
+> performed by `a`. Conversion, if any, is specified by [[fs.path.cvt]].
 
 ``` cpp
 std::string string() const;
@@ -10816,7 +10816,7 @@ std::u32string u32string() const;
 >
 > *Remarks:*
 >
-> Conversion, if any, is performed as specified by \[fs.path.cvt\].
+> Conversion, if any, is performed as specified by [[fs.path.cvt]].
 
 ##### Generic format observers <a id="fs.path.generic.obs">[[fs.path.generic.obs]]</a>
 
@@ -10850,7 +10850,7 @@ template<class EcharT, class traits = char_traits<EcharT>,
 > *Remarks:*
 >
 > All memory allocation, including for the return value, shall be
-> performed by `a`. Conversion, if any, is specified by \[fs.path.cvt\].
+> performed by `a`. Conversion, if any, is specified by [[fs.path.cvt]].
 
 ``` cpp
 std::string generic_string() const;
@@ -10866,7 +10866,7 @@ std::u32string generic_u32string() const;
 >
 > *Remarks:*
 >
-> Conversion, if any, is specified by \[fs.path.cvt\].
+> Conversion, if any, is specified by [[fs.path.cvt]].
 
 ##### Compare <a id="fs.path.compare">[[fs.path.compare]]</a>
 
@@ -11109,7 +11109,7 @@ bool is_absolute() const;
 > *Returns:*
 >
 > `true` if the pathname in the native format contains an absolute
-> path\[fs.class.path\], otherwise `false`.
+> path[[fs.class.path]], otherwise `false`.
 >
 > \[*Example 14*: `path("/").is_absolute()` is `true` for POSIX-based
 > operating systems, and `false` for Windows-based operating
@@ -11132,7 +11132,7 @@ path lexically_normal() const;
 > *Returns:*
 >
 > A path whose pathname in the generic format is the normal
-> form\[fs.path.generic\] of the pathname in the generic format of
+> form[[fs.path.generic]] of the pathname in the generic format of
 > `*this`.
 >
 > \[*Example 15*:
@@ -11196,8 +11196,8 @@ path lexically_relative(const path& base) const;
 >
 > *Returns:*
 >
-> `*this` made relative to `base`. Does not resolve\[fs.class.path\]
-> symlinks. Does not first normalize\[fs.path.generic\] `*this` or
+> `*this` made relative to `base`. Does not resolve[[fs.class.path]]
+> symlinks. Does not first normalize[[fs.path.generic]] `*this` or
 > `base`.
 >
 > \[*Example 16*:
@@ -11218,7 +11218,7 @@ path lexically_relative(const path& base) const;
 > \[*Note 26*: If symlink following semantics are desired, use the
 > operational function `relative()`. — *end note*\]
 >
-> \[*Note 27*: If normalization\[fs.path.generic\] is needed to ensure
+> \[*Note 27*: If normalization[[fs.path.generic]] is needed to ensure
 > consistent matching of elements, apply `lexically_normal()` to
 > `*this`, `base`, or both. — *end note*\]
 
@@ -11234,7 +11234,7 @@ path lexically_proximate(const path& base) const;
 > \[*Note 28*: If symlink following semantics are desired, use the
 > operational function `proximate()`. — *end note*\]
 >
-> \[*Note 29*: If normalization\[fs.path.generic\] is needed to ensure
+> \[*Note 29*: If normalization[[fs.path.generic]] is needed to ensure
 > consistent matching of elements, apply `lexically_normal()` to
 > `*this`, `base`, or both. — *end note*\]
 
@@ -11299,7 +11299,7 @@ template<class charT, class traits>
 > Equivalent to `os << quoted(p.string<charT, traits>())`.
 >
 > \[*Note 31*: The `quoted` function is described
-> in \[quoted.manip\]. — *end note*\]
+> in [[quoted.manip]]. — *end note*\]
 >
 > *Returns:*
 >
@@ -11363,8 +11363,8 @@ friend bool operator==(const path& lhs, const path& rhs) noexcept;
 >   `true`. — *end example*\]
 >
 > - Equivalence is determined by the `equivalent()` non-member function,
->   which determines if two paths resolve\[fs.class.path\] to the same
->   file system entity.
+>   which determines if two paths resolve@@REF:fs.class.path@@ to the
+>   same file system entity.
 >
 >   \[*Example 18*: `equivalent("foo", "bar")` will be `true` when both
 >   paths resolve to the same file. — *end example*\]
@@ -11769,7 +11769,7 @@ directory_entry(const filesystem::path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Modifiers <a id="fs.dir.entry.mods">[[fs.dir.entry.mods]]</a>
 
@@ -11786,7 +11786,7 @@ void assign(const filesystem::path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 void replace_filename(const filesystem::path& p);
@@ -11801,7 +11801,7 @@ void replace_filename(const filesystem::path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 void refresh();
@@ -11811,17 +11811,17 @@ void refresh(error_code& ec) noexcept;
 > *Effects:*
 >
 > Stores the current values of any cached attributes of the file `p`
-> resolves to. If an error occurs, an error is reported\[fs.err.report\]
+> resolves to. If an error occurs, an error is reported[[fs.err.report]]
 > and the values of any cached attributes are unspecified.
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 33*: Implementations of
-> `directory_iterator`\[fs.class.directory.iterator\] are prohibited
+> `directory_iterator`[[fs.class.directory.iterator]] are prohibited
 > from directly or indirectly calling the `refresh` function as
-> described in \[fs.class.directory.iterator.general\]. — *end note*\]
+> described in [[fs.class.directory.iterator.general]]. — *end note*\]
 
 #### Observers <a id="fs.dir.entry.obs">[[fs.dir.entry.obs]]</a>
 
@@ -11849,7 +11849,7 @@ bool exists(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_block_file() const;
@@ -11863,7 +11863,7 @@ bool is_block_file(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_character_file() const;
@@ -11877,7 +11877,7 @@ bool is_character_file(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_directory() const;
@@ -11891,7 +11891,7 @@ bool is_directory(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_fifo() const;
@@ -11905,7 +11905,7 @@ bool is_fifo(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_other() const;
@@ -11919,7 +11919,7 @@ bool is_other(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_regular_file() const;
@@ -11933,7 +11933,7 @@ bool is_regular_file(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_socket() const;
@@ -11947,7 +11947,7 @@ bool is_socket(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool is_symlink() const;
@@ -11961,7 +11961,7 @@ bool is_symlink(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 uintmax_t file_size() const;
@@ -11975,7 +11975,7 @@ uintmax_t file_size(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 uintmax_t hard_link_count() const;
@@ -11990,7 +11990,7 @@ uintmax_t hard_link_count(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 file_time_type last_write_time() const;
@@ -12005,7 +12005,7 @@ file_time_type last_write_time(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 file_status status() const;
@@ -12019,7 +12019,7 @@ file_status status(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 file_status symlink_status() const;
@@ -12034,7 +12034,7 @@ file_status symlink_status(error_code& ec) const noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool operator==(const directory_entry& rhs) const noexcept;
@@ -12197,7 +12197,7 @@ directory_iterator(const path& p, directory_options options, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 34*: To iterate over the current directory, use
 > `directory_iterator(".")` rather than
@@ -12237,7 +12237,7 @@ directory_iterator& increment(error_code& ec);
 > *Effects:*
 >
 > As specified for the prefix increment operation of Input
-> iterators\[input.iterators\].
+> iterators[[input.iterators]].
 >
 > *Returns:*
 >
@@ -12245,7 +12245,7 @@ directory_iterator& increment(error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Non-member functions <a id="fs.dir.itr.nonmembers">[[fs.dir.itr.nonmembers]]</a>
 
@@ -12376,7 +12376,7 @@ recursive_directory_iterator(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 35*: Use `recursive_directory_iterator(".")` rather than
 > `recursive_directory_iterator("")` to iterate over the current
@@ -12496,7 +12496,7 @@ recursive_directory_iterator& increment(error_code& ec);
 > *Effects:*
 >
 > As specified for the prefix increment operation of Input
-> iterators\[input.iterators\], except that:
+> iterators[[input.iterators]], except that:
 >
 > - If there are no more entries at the current depth, then if
 >   `depth() != 0` iteration over the parent directory resumes;
@@ -12523,7 +12523,7 @@ recursive_directory_iterator& increment(error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 void pop();
@@ -12538,7 +12538,7 @@ void pop(error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 Any copies of the previous value of `*this` are no longer required to be
 dereferenceable nor to be in the domain of `==`.
@@ -12598,7 +12598,7 @@ path filesystem::absolute(const path& p, error_code& ec);
 > *Effects:*
 >
 > Composes an absolute path referencing the same file system location as
-> `p` according to the operating system\[fs.conform.os\].
+> `p` according to the operating system[[fs.conform.os]].
 >
 > *Returns:*
 >
@@ -12610,11 +12610,11 @@ path filesystem::absolute(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 40*: To resolve symlinks or perform other sanitization that
 > can involve queries to secondary storage, such as hard disks, consider
-> `canonical`\[fs.op.canonical\]. — *end note*\]
+> `canonical`[[fs.op.canonical]]. — *end note*\]
 >
 > \[*Note 41*: Implementations are strongly encouraged to not query
 > secondary storage, and not consider `!exists(p)` an
@@ -12644,7 +12644,7 @@ path filesystem::canonical(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -12676,7 +12676,7 @@ void filesystem::copy(const path& from, const path& to, copy_options options,
 
 > *Preconditions:*
 >
-> At most one element from each option group\[fs.enum.copy.opts\] is set
+> At most one element from each option group[[fs.enum.copy.opts]] is set
 > in `options`.
 >
 > *Effects:*
@@ -12704,11 +12704,11 @@ void filesystem::copy(const path& from, const path& to, copy_options options,
 > Effects are then as follows:
 >
 > - If `f.type()` or `t.type()` is an implementation-defined file
->   type\[fs.enum.file.type\], then the effects are
+>   type@@REF:fs.enum.file.type@@, then the effects are
 >   *implementation-defined*.
 >
-> - Otherwise, an error is reported as specified in \[fs.err.report\]
->   if:
+> - Otherwise, an error is reported as specified
+>   in @@REF:fs.err.report@@ if:
 >
 >   - `exists(f)` is `false`, or
 >
@@ -12729,7 +12729,7 @@ void filesystem::copy(const path& from, const path& to, copy_options options,
 >
 >     then `copy_symlink(from, to)`.
 >
->   - Otherwise report an error as specified in \[fs.err.report\].
+>   - Otherwise report an error as specified in @@REF:fs.err.report@@.
 >
 > - Otherwise, if `is_regular_file(f)`, then:
 >
@@ -12775,7 +12775,7 @@ void filesystem::copy(const path& from, const path& to, copy_options options,
 >                options | copy_options::in-recursive-copy);
 >
 >     where *`in-recursive-copy`* is a bitmask element of `copy_options`
->     that is not one of the elements in \[fs.enum.copy.opts\].
+>     that is not one of the elements in @@REF:fs.enum.copy.opts@@.
 >
 > - Otherwise, for the signature with argument `ec`, `ec.clear()`.
 >
@@ -12783,7 +12783,7 @@ void filesystem::copy(const path& from, const path& to, copy_options options,
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -12841,7 +12841,7 @@ bool filesystem::copy_file(const path& from, const path& to, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool filesystem::copy_file(const path& from, const path& to, copy_options options);
@@ -12851,14 +12851,14 @@ bool filesystem::copy_file(const path& from, const path& to, copy_options option
 
 > *Preconditions:*
 >
-> At most one element from each option group\[fs.enum.copy.opts\] is set
+> At most one element from each option group[[fs.enum.copy.opts]] is set
 > in `options`.
 >
 > *Effects:*
 >
 > As follows:
 >
-> - Report an error as specified in \[fs.err.report\] if:
+> - Report an error as specified in @@REF:fs.err.report@@ if:
 >
 >   - `is_regular_file(from)` is `false`, or
 >
@@ -12882,7 +12882,7 @@ bool filesystem::copy_file(const path& from, const path& to, copy_options option
 >
 >   - `(options & copy_options::update_existing) != copy_options::none`
 >     and `from` is more recent than `to`, determined as if by use of
->     the `last_write_time` function\[fs.op.last.write.time\].
+>     the `last_write_time` function@@REF:fs.op.last.write.time@@.
 >
 > - Otherwise, no effects.
 >
@@ -12893,7 +12893,7 @@ bool filesystem::copy_file(const path& from, const path& to, copy_options option
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Complexity:*
 >
@@ -12917,7 +12917,7 @@ void filesystem::copy_symlink(const path& existing_symlink, const path& new_syml
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Create directories <a id="fs.op.create.directories">[[fs.op.create.directories]]</a>
 
@@ -12938,7 +12938,7 @@ bool filesystem::create_directories(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Complexity:*
 >
@@ -12964,7 +12964,7 @@ bool filesystem::create_directory(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 bool filesystem::create_directory(const path& p, const path& existing_p);
@@ -12993,7 +12993,7 @@ bool filesystem::create_directory(const path& p, const path& existing_p, error_c
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Create directory symlink <a id="fs.op.create.dir.symlk">[[fs.op.create.dir.symlk]]</a>
 
@@ -13014,7 +13014,7 @@ void filesystem::create_directory_symlink(const path& to, const path& new_symlin
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 43*: Some operating systems require symlink creation to
 > identify that the link is to a directory. Thus, `create_symlink()`
@@ -13047,7 +13047,7 @@ void filesystem::create_hard_link(const path& to, const path& new_hard_link,
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 45*: Some operating systems do not support hard links at all
 > or support them only for regular files. Some file systems (such as the
@@ -13074,7 +13074,7 @@ void filesystem::create_symlink(const path& to, const path& new_symlink,
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 46*: Some operating systems do not support symbolic links at
 > all or support them only for regular files. Some file systems (such as
@@ -13096,7 +13096,7 @@ path filesystem::current_path(error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -13128,7 +13128,7 @@ void filesystem::current_path(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 49*: The current path for many operating systems is a
 > dangerous global state and can be changed unexpectedly by third-party
@@ -13157,7 +13157,7 @@ bool filesystem::equivalent(const path& p1, const path& p2, error_code& ec) noex
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -13192,7 +13192,7 @@ bool filesystem::exists(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### File size <a id="fs.op.file.size">[[fs.op.file.size]]</a>
 
@@ -13203,7 +13203,7 @@ uintmax_t filesystem::file_size(const path& p, error_code& ec) noexcept;
 
 > *Effects:*
 >
-> If `exists(p)` is `false`, an error is reported\[fs.err.report\].
+> If `exists(p)` is `false`, an error is reported[[fs.err.report]].
 >
 > *Returns:*
 >
@@ -13218,7 +13218,7 @@ uintmax_t filesystem::file_size(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Hard link count <a id="fs.op.hard.lk.ct">[[fs.op.hard.lk.ct]]</a>
 
@@ -13234,7 +13234,7 @@ uintmax_t filesystem::hard_link_count(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is block file <a id="fs.op.is.block.file">[[fs.op.is.block.file]]</a>
 
@@ -13259,7 +13259,7 @@ bool filesystem::is_block_file(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is character file <a id="fs.op.is.char.file">[[fs.op.is.char.file]]</a>
 
@@ -13284,7 +13284,7 @@ bool filesystem::is_character_file(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is directory <a id="fs.op.is.directory">[[fs.op.is.directory]]</a>
 
@@ -13309,7 +13309,7 @@ bool filesystem::is_directory(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is empty <a id="fs.op.is.empty">[[fs.op.is.empty]]</a>
 
@@ -13348,7 +13348,7 @@ bool filesystem::is_empty(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is fifo <a id="fs.op.is.fifo">[[fs.op.is.fifo]]</a>
 
@@ -13372,7 +13372,7 @@ bool filesystem::is_fifo(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is other <a id="fs.op.is.other">[[fs.op.is.other]]</a>
 
@@ -13396,7 +13396,7 @@ bool filesystem::is_other(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is regular file <a id="fs.op.is.regular.file">[[fs.op.is.regular.file]]</a>
 
@@ -13458,7 +13458,7 @@ bool filesystem::is_socket(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Is symlink <a id="fs.op.is.symlink">[[fs.op.is.symlink]]</a>
 
@@ -13483,7 +13483,7 @@ bool filesystem::is_symlink(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Last write time <a id="fs.op.last.write.time">[[fs.op.last.write.time]]</a>
 
@@ -13501,7 +13501,7 @@ file_time_type filesystem::last_write_time(const path& p, error_code& ec) noexce
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 void filesystem::last_write_time(const path& p, file_time_type new_time);
@@ -13516,7 +13516,7 @@ void filesystem::last_write_time(const path& p, file_time_type new_time,
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 52*: A postcondition of `last_write_time(p) == new_time` is
 > not specified because it does not necessarily hold for file systems
@@ -13547,7 +13547,7 @@ void filesystem::permissions(const path& p, perms prms, perm_options opts, error
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -13566,7 +13566,7 @@ path filesystem::proximate(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 path filesystem::proximate(const path& p, const path& base = current_path());
@@ -13591,7 +13591,7 @@ path filesystem::proximate(const path& p, const path& base, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Read symlink <a id="fs.op.read.symlink">[[fs.op.read.symlink]]</a>
 
@@ -13608,7 +13608,7 @@ path filesystem::read_symlink(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Note 54*: It is an error if `p` does not resolve to a symbolic
 > link. — *end note*\]
@@ -13625,7 +13625,7 @@ path filesystem::relative(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ``` cpp
 path filesystem::relative(const path& p, const path& base = current_path());
@@ -13650,7 +13650,7 @@ path filesystem::relative(const path& p, const path& base, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Remove <a id="fs.op.remove">[[fs.op.remove]]</a>
 
@@ -13678,7 +13678,7 @@ bool filesystem::remove(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Remove all <a id="fs.op.remove.all">[[fs.op.remove.all]]</a>
 
@@ -13706,7 +13706,7 @@ uintmax_t filesystem::remove_all(const path& p, error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Rename <a id="fs.op.rename">[[fs.op.rename]]</a>
 
@@ -13740,7 +13740,7 @@ void filesystem::rename(const path& old_p, const path& new_p, error_code& ec) no
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Resize file <a id="fs.op.resize.file">[[fs.op.resize.file]]</a>
 
@@ -13756,7 +13756,7 @@ void filesystem::resize_file(const path& p, uintmax_t new_size, error_code& ec) 
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 #### Space <a id="fs.op.space">[[fs.op.space]]</a>
 
@@ -13779,7 +13779,7 @@ space_info filesystem::space(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -13889,7 +13889,7 @@ file_status filesystem::status(const path& p, error_code& ec) noexcept;
 >     `S_ISSOCK`, returns `file_status(file_type::socket, prms)`.
 >
 >   - Otherwise, if the attributes indicate an implementation-defined
->     file type\[fs.enum.file.type\], returns
+>     file type@@REF:fs.enum.file.type@@, returns
 >     `file_status(file_type::`*`A`*`, prms)`, where *A* is the constant
 >     for the *implementation-defined* file type.
 >
@@ -13936,7 +13936,7 @@ file_status filesystem::symlink_status(const path& p, error_code& ec) noexcept;
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > *Remarks:*
 >
@@ -13954,7 +13954,7 @@ path filesystem::temp_directory_path(error_code& ec);
 > *Effects:*
 >
 > If `exists(p)` is `false` or `is_directory(p)` is `false`, an error is
-> reported\[fs.err.report\].
+> reported[[fs.err.report]].
 >
 > *Returns:*
 >
@@ -13963,7 +13963,7 @@ path filesystem::temp_directory_path(error_code& ec);
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 >
 > \[*Example 21*: For POSIX-based operating systems, an implementation
 > might return the path supplied by the first environment variable found
@@ -13992,16 +13992,16 @@ path filesystem::weakly_canonical(const path& p, error_code& ec);
 >
 > *Ensures:*
 >
-> The returned path is in normal form\[fs.path.generic\].
+> The returned path is in normal form[[fs.path.generic]].
 >
 > *Returns:*
 >
 > `p` with symlinks resolved and the result
-> normalized\[fs.path.generic\].
+> normalized[[fs.path.generic]].
 >
 > *Throws:*
 >
-> As specified in \[fs.err.report\].
+> As specified in [[fs.err.report]].
 
 ## C library files <a id="c.files">[[c.files]]</a>
 
