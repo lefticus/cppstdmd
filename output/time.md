@@ -1,6 +1,7 @@
 ---
 current_file: time
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Time library <a id="time">[[time]]</a>
@@ -27,6 +28,8 @@ summarized in [[time.summary]].
 | [[time.format]] | Formatting |
 | [[time.parse]] | Parsing |
 | [[ctime.syn]] | C library time utilities | `<ctime>` |
+
+
 Let *STATICALLY-WIDEN*`<charT>("...")` be `"..."` if `charT` is `char`
 and `L"..."` if `charT` is `wchar_t`.
 
@@ -7504,6 +7507,8 @@ day elapsed since midnight.
 | . If the offset is zero, `+0000` is used. The modified commands `\%Ez` and `\%Oz` insert a `:` between the hours and minutes: `-04:30`. If the offset information is not available, an exception of type `format_error` is thrown. |
 | `\%Z` | The time zone abbreviation. If the time zone abbreviation is not available, an exception of type `format_error` is thrown. |
 | `\%\%` | A `\%` character. |
+
+
 If the *chrono-specs* is omitted, the chrono object is formatted as if
 by streaming it to `basic_ostringstream<charT> os` with the formatting
 locale imbued and copying `os.str()` through the output iterator of the
@@ -7852,6 +7857,8 @@ complete duration, time point, or calendrical data structure,
 | . The modified commands `\%Ez` and `\%Oz` parse a `:` between the hours and minutes and render leading zeroes on the hour field optional: `[+|-]h[h][:mm]`. For example `-04:30` refers to 4 hours 30 minutes behind UTC, and `4` refers to 4 hours ahead of UTC. |
 | `\%Z` | The time zone abbreviation or name. A single word is parsed. This word can only contain characters from the basic character set [[lex.charset]] that are alphanumeric, or one of `'_'`, `'/'`, `'-'`, or `'+'`. |
 | `\%\%` | A `\%` character is extracted. |
+
+
 ## Header `<ctime>` synopsis <a id="ctime.syn">[[ctime.syn]]</a>
 
 ``` cpp

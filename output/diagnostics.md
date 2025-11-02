@@ -1,6 +1,7 @@
 ---
 current_file: diagnostics
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Diagnostics library <a id="diagnostics">[[diagnostics]]</a>
@@ -24,6 +25,7 @@ in [[diagnostics.summary]].
 | [[errno]] | Error numbers | `<cerrno>` |
 | [[syserr]] | System error support | `<system_error>` |
 | [[stacktrace]] | Stacktrace | `<stacktrace>` |
+
 
 ## Exception classes <a id="std.exceptions">[[std.exceptions]]</a>
 

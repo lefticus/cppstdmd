@@ -1,6 +1,7 @@
 ---
 current_file: numerics
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Numerics library <a id="numerics">[[numerics]]</a>
@@ -26,6 +27,7 @@ floating-point types, as summarized in [[numerics.summary]].
 | [[numarray]] | Numeric arrays | `<valarray>` |
 | [[c.math]] | Mathematical functions for floating-point types | `<cmath>`, `<cstdlib>` |
 | [[numbers]] | Numbers | `<numbers>` |
+
 
 ## Numeric type requirements <a id="numeric.requirements">[[numeric.requirements]]</a>
 

@@ -1,6 +1,7 @@
 ---
 current_file: intro
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Scope <a id="intro.scope">[[intro.scope]]</a>
@@ -580,9 +581,9 @@ requirements on programs, parts of programs, or execution of programs.
 Such requirements have the following meaning:
 
 - If a program contains no violations of the rules in [[lex]] through
-  [[\lastlibchapter]] and [[depr]], a conforming implementation shall,
-  within its resource limits as described in [[implimits]], accept and
-  correctly execute
+  [[thread]] and [[depr]], a conforming implementation shall, within its
+  resource limits as described in [[implimits]], accept and correctly
+  execute
 
   that program.
 
@@ -717,10 +718,10 @@ description includes detailed syntactic specifications in a form
 described in  [[syntax]]. For convenience, [[gram]] repeats all such
 syntactic specifications.
 
-[[\firstlibchapter]] through [[\lastlibchapter]] and [[depr]] (the
-*library clauses*) describe the C++ standard library. That description
-includes detailed descriptions of the entities and macros that
-constitute the library, in a form described in [[library]].
+[[support]] through [[thread]] and [[depr]] (the *library clauses*)
+describe the C++ standard library. That description includes detailed
+descriptions of the entities and macros that constitute the library, in
+a form described in [[library]].
 
 [[implimits]] recommends lower bounds on the capacity of conforming
 implementations.
@@ -774,8 +775,6 @@ the following rules:
 [syntax]: #syntax
 
 <!-- Link reference definitions -->
-[\firstlibchapter]: #\firstlibchapter
-[\lastlibchapter]: #\lastlibchapter
 [basic.link]: basic.md#basic.link
 [class.access]: class.md#class.access
 [class.derived]: class.md#class.derived
@@ -797,6 +796,8 @@ the following rules:
 [lex]: lex.md#lex
 [lex.phases]: lex.md#lex.phases
 [library]: library.md#library
+[support]: support.md#support
 [syntax]: #syntax
 [temp.deduct]: temp.md#temp.deduct
+[thread]: thread.md#thread
 [using.headers]: library.md#using.headers

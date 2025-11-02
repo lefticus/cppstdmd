@@ -1,6 +1,7 @@
 ---
 current_file: input
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Input/output library <a id="input.output">[[input.output]]</a>
@@ -32,6 +33,7 @@ summarized in [[iostreams.summary]].
 | [[syncstream]] | Synchronized output streams | `<syncstream>` |
 | [[filesystems]] | File systems | `<filesystem>` |
 | [[c.files]] | C library files | `<cstdio>`, `<cinttypes>` |
+
 
 ## Iostreams requirements <a id="iostreams.requirements">[[iostreams.requirements]]</a>
 

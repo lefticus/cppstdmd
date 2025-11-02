@@ -1,6 +1,7 @@
 ---
 current_file: localization
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Localization library <a id="localization">[[localization]]</a>
@@ -24,6 +25,7 @@ standard facets, and facilities from the ISO C library, as summarized in
 | [[locales]] | Locales | `<locale>` |
 | [[locale.categories]] | Standard `locale` categories |
 | [[c.locales]] | C library locales | `<clocale>` |
+
 
 ## Header `<locale>` synopsis <a id="locale.syn">[[locale.syn]]</a>
 
@@ -282,6 +284,8 @@ including at least those shown in [[locale.category.facets]].
 | time | `time_get<char>`, `time_get<wchar_t>` |
 |  | `time_put<char>`, `time_put<wchar_t>` |
 | messages | `messages<char>`, `messages<wchar_t>` |
+
+
 For any locale `loc` either constructed, or returned by
 `locale::classic()`, and any facet `Facet` shown in
 [[locale.category.facets]], `has_facet<Facet>(loc)` is `true`. Each
@@ -317,6 +321,8 @@ templates identified as members of a category, and for those shown in
 |  | `time_put<wchar_t, OutputIterator>` |
 |  | `time_put_byname<wchar_t, OutputIterator>` |
 | messages | `messages_byname<char>`, `messages_byname<wchar_t>` |
+
+
 The provided implementation of members of facets `num_get<charT>` and
 `num_put<charT>` calls `use_facet<F>(l)` only for facet `F` of types
 `numpunct<charT>` and `ctype<charT>`, and for locale `l` the value

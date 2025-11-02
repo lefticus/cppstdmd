@@ -1,6 +1,7 @@
 ---
 current_file: algorithms
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Algorithms library <a id="algorithms">[[algorithms]]</a>
@@ -28,6 +29,7 @@ operations, and algorithms from the ISO C library, as summarized in
 | [[numeric.ops]] | Generalized numeric operations | `<numeric>` |
 | [[specialized.algorithms]] | Specialized `<memory>` algorithms | `<memory>` |
 | [[alg.c.library]] | C library algorithms | `<cstdlib>` |
+
 
 ## Algorithms requirements <a id="algorithms.requirements">[[algorithms.requirements]]</a>
 

@@ -1,6 +1,7 @@
 ---
 current_file: over
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Overloading <a id="over">[[over]]</a>
@@ -499,14 +500,16 @@ built-in operator [[expr.compound]].
 
 **Table: Relationship between operator and function call notation**
 
-|  |
-| --- |
+| Subclause | Expression |
+| --- | --- |
 | (a)} |
 | (a, b)} |
 | [[over.ass]] | `a=b` | `(a).operator= (b)` |
 | [[over.sub]] | `a[b]` | `(a).operator[](b)` |
 | [[over.ref]] | `a->` | `(a).operator->(\,)` |
 | (a, 0)} |
+
+
 For a unary operator `@` with an operand of type cv-qualifier{cv1} `T1`,
 and for a binary operator `@` with a left operand of type
 cv-qualifier{cv1} `T1` and a right operand of type cv-qualifier{cv2}
@@ -1712,11 +1715,12 @@ Promotion rank; otherwise, the sequence has Exact Match rank.
 
 **Table: Conversions**
 
-|  |  |  |
-| --- | --- | --- |
+| Conversion | Category |
+| --- | --- |
 | No conversions required | Identity |  |
 | Integral promotions |  |  | [[conv.prom]] |
 | Integral conversions |  |  | [[conv.integral]] |
+
 
 ##### User-defined conversion sequences <a id="over.ics.user">[[over.ics.user]]</a>
 

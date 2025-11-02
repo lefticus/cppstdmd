@@ -1,6 +1,7 @@
 ---
 current_file: iterators
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Iterators library <a id="iterators">[[iterators]]</a>
@@ -24,6 +25,7 @@ summarized in [[iterators.summary]].
 | [[predef.iterators]] | Iterator adaptors |
 | [[stream.iterators]] | Stream iterators |
 | [[iterator.range]] | Range access |
+
 
 ## Header `<iterator>` synopsis <a id="iterator.synopsis">[[iterator.synopsis]]</a>
 
@@ -542,6 +544,8 @@ according to the operations defined on them: *input iterators*,
 | --- | --- | --- | --- | --- |
 | \textbf{Contiguous} | $\rightarrow$ \textbf{Random Access} | $\rightarrow$ \textbf{Bidirectional} | $\rightarrow$ \textbf{Forward} | $\rightarrow$ \textbf{Input} |
 |  |  |  |  | $\rightarrow$ \textbf{Output} |
+
+
 The six categories of iterators correspond to the iterator concepts
 
 - `input_iterator` [[iterator.concept.input]],

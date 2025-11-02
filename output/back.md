@@ -1,6 +1,7 @@
 ---
 current_file: back
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: /tmp
 ---
 
 # Bibliography

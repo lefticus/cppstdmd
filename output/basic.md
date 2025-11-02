@@ -1,6 +1,7 @@
 ---
 current_file: basic
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Basics <a id="basic">[[basic]]</a>
@@ -3902,6 +3903,8 @@ type. — *end example*\]
 | `int` | 16 |
 | `long int` | 32 |
 | `long long int` | 64 |
+
+
 The width of each signed integer type shall not be less than the values
 specified in [[basic.fundamental.width]]. The value representation of a
 signed or unsigned integer type comprises N bits, where N is the
@@ -4280,6 +4283,8 @@ shows the relations that constitute this ordering.
 | cv-qualifier{no cv-qualifier} | < | `const volatile` |
 | `const` | < | `const volatile` |
 | `volatile` | < | `const volatile` |
+
+
 In this document, the notation cv (or cv-qualifier{cv1},
 cv-qualifier{cv2}, etc.), used in the description of types, represents
 an arbitrary set of cv-qualifiers, i.e., one of {`const`}, {`volatile`},

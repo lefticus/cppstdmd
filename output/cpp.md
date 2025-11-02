@@ -1,6 +1,7 @@
 ---
 current_file: cpp
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Preprocessing directives <a id="cpp">[[cpp]]</a>
@@ -325,6 +326,8 @@ detected by any non-zero result. — *end note*\]
 | `nodiscard` | `201907L` |
 | `noreturn` | `200809L` |
 | `unlikely` | `201803L` |
+
+
 The `#ifdef`, `#ifndef`, `#elifdef`, and `#elifndef` directives, and the
 `defined` conditional inclusion operator, shall treat `__has_include`
 and `__has_cpp_attribute` as if they were the names of defined macros.
@@ -1457,6 +1460,8 @@ function. If the time of translation is not available, an
 | __cpp_variable_templates__ | `201304L` |
 | __cpp_variadic_templates__ | `200704L` |
 | __cpp_variadic_using__ | `201611L` |
+
+
 The following macro names are conditionally defined by the
 implementation:
 

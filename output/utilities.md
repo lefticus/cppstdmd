@@ -1,6 +1,7 @@
 ---
 current_file: utilities
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # General utilities library <a id="utilities">[[utilities]]</a>
@@ -30,6 +31,7 @@ standard library. These utilities are summarized in
 | [[charconv]] | Primitive numeric conversions | `<charconv>` |
 | [[format]] | Formatting | `<format>` |
 | [[bit]] | Bit manipulation | `<bit>` |
+
 
 ## Utility components <a id="utility">[[utility]]</a>
 
@@ -10925,6 +10927,8 @@ argument. — *end note*\]
 | `<` | Forces the formatted argument to be aligned to the start of the field by inserting $n$ fill characters after the formatted argument where $n$ is the padding width. This is the default for non-arithmetic non-pointer types, `charT`, and `bool`, unless an integer presentation type is specified. |
 | % `>` | Forces the formatted argument to be aligned to the end of the field by inserting $n$ fill characters before the formatted argument where $n$ is the padding width. This is the default for arithmetic types other than `charT` and `bool`, pointer types, or when an integer presentation type is specified. |
 | % `\caret` | Forces the formatted argument to be centered within the field by inserting $\bigl\lfloor \frac{n}{2} \bigr\rfloor$ fill characters before and $\bigl\lceil \frac{n}{2} \bigr\rceil$ fill characters after the formatted argument, where $n$ is the padding width. |
+
+
 The *sign* option is only valid for arithmetic types other than `charT`
 and `bool` or when an integer presentation type is specified. The
 meaning of the various options is as specified in [[format.sign]].
@@ -10936,6 +10940,8 @@ meaning of the various options is as specified in [[format.sign]].
 | `+` | Indicates that a sign should be used for both non-negative and negative numbers. The `+` sign is inserted before the output of `to_chars` for non-negative numbers other than negative zero. \begin{tailnote} For negative numbers and negative zero the output of `to_chars` will already contain the sign so no additional transformation is performed. \end{tailnote} |
 | % `-` | Indicates that a sign should be used for negative numbers and negative zero only (this is the default behavior). |
 | % space | Indicates that a leading space should be used for non-negative numbers other than negative zero, and a minus sign for negative numbers and negative zero. |
+
+
 The *sign* option applies to floating-point infinity and NaN.
 
 \[*Example 2*:
@@ -11068,6 +11074,8 @@ The available string presentation types are specified in
 | --- | --- |
 | none, `s` | Copies the string to the output. |
 | % `?` | Copies the escaped string [[format.string.escaped]] to the output. |
+
+
 The meaning of some non-string presentation types is defined in terms of
 a call to `to_chars`. In such cases, let be a range large enough to hold
 the `to_chars` output and `value` be the formatting argument value.
@@ -11105,6 +11113,8 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 | % `x` | `to_chars(first, last, value, 16)`; \indextext{base prefix}% the base prefix is `0x`. |
 | % `X` | The same as `x`, except that it uses uppercase letters for digits above 9 and \indextext{base prefix}% the base prefix is `0X`. |
 | % none | The same as `d`. \begin{tailnote} If the formatting argument type is `charT` or `bool`, the default is instead `c` or `s`, respectively. \end{tailnote} |
+
+
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
@@ -11115,6 +11125,8 @@ The available `charT` presentation types are specified in
 | none, `c` | Copies the character to the output. |
 | % `b`, `B`, `d`, `o`, `x`, `X` | As specified in [[format.type.int]]. |
 | % `?` | Copies the escaped character [[format.string.escaped]] to the output. |
+
+
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
@@ -11124,6 +11136,8 @@ The available `bool` presentation types are specified in
 | --- | --- |
 | none, `s` | Copies textual representation, either `true` or `false`, to the output. |
 | % `b`, `B`, `d`, `o`, `x`, `X` | As specified in [[format.type.int]] for the value `static_cast<unsigned char>(value)`. |
+
+
 The available floating-point presentation types and their meanings for
 values other than infinity and NaN are specified in
 [[format.type.float]]. For lower-case presentation types, infinity and
@@ -11146,6 +11160,8 @@ respectively.
 | % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
 | % `G` | The same as `g`, except that it uses `E` to indicate exponent. |
 | % none | If *precision* is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
+
+
 The available pointer presentation types and their mapping to `to_chars`
 are specified in [[format.type.ptr]].
 
@@ -11157,6 +11173,7 @@ are specified in [[format.type.ptr]].
 | Type | Meaning |
 | --- | --- |
 | none, `p` | If `uintptr_t` is defined, \begin{codeblock} to_chars(first, last, reinterpret_cast<uintptr_t>(value), 16) \end{codeblock} with the prefix `0x` inserted immediately before the output of `to_chars`; otherwise, implementation-defined. |
+
 
 ### Error reporting <a id="format.err.report">[[format.err.report]]</a>
 
@@ -11649,6 +11666,8 @@ interpret *S* and construct *E*.
 | % \unicode{000d}{carriage return} | `\ r` |
 | % \unicode{0022}{quotation mark} | `\ "` |
 | % \unicode{005c}{reverse solidus} | `` |
+
+
 The escaped string representation of a character *C* is equivalent to
 the escaped string representation of a string of *C*, except that:
 

@@ -1,6 +1,7 @@
 ---
 current_file: re
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Regular expressions library <a id="re">[[re]]</a>
@@ -33,6 +34,7 @@ summarized in [[re.summary]].
 | [[re.alg]] | Algorithms |
 | [[re.iter]] | Iterators |
 | [[re.grammar]] | Grammar |
+
 
 ## Requirements <a id="re.req">[[re.req]]</a>
 
@@ -829,6 +831,7 @@ the last argument passed to `imbue`.
 | `"upper"` | `L"upper"` | `ctype_base::upper` |
 | `"w"` | `L"w"` | `ctype_base::alnum` |
 | `"xdigit"` | `L"xdigit"` | `ctype_base::xdigit` |
+
 
 ## Class template `basic_regex` <a id="re.regex">[[re.regex]]</a>
 

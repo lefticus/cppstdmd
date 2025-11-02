@@ -1,6 +1,7 @@
 ---
 current_file: meta
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Metaprogramming library <a id="meta">[[meta]]</a>
@@ -17,6 +18,7 @@ summarized in [[meta.summary]].
 | [[intseq]] | Integer sequences | `<utility>` |
 | [[type.traits]] | Type traits | `<type_traits>` |
 | [[ratio]] | Rational arithmetic | `<ratio>` |
+
 
 ## Compile-time integer sequences <a id="intseq">[[intseq]]</a>
 
@@ -1355,6 +1357,8 @@ yields correct values of `U` and `V`.
 |  | `R2::num * R1::den` |
 | `ratio_multiply<R1, R2>` | `R1::num * R2::num` | `R1::den * R2::den` |
 | `ratio_divide<R1, R2>` | `R1::num * R2::den` | `R1::den * R2::num` |
+
+
 \[*Example 1*:
 
 ``` cpp

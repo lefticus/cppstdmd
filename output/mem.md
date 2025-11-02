@@ -1,6 +1,7 @@
 ---
 current_file: mem
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Memory management library <a id="mem">[[mem]]</a>
@@ -21,6 +22,7 @@ in [[mem.summary]].
 | [[smartptr]] | Smart pointers | `<memory>` |
 | [[mem.res]] | Memory resources | `<memory_resource>` |
 | [[allocator.adaptor]] | Scoped allocators | `<scoped_allocator>` |
+
 
 ## Memory <a id="memory">[[memory]]</a>
 

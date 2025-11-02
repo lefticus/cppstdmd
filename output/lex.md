@@ -1,6 +1,7 @@
 ---
 current_file: lex
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Lexical conventions <a id="lex">[[lex]]</a>
@@ -222,6 +223,8 @@ context. — *end note*\]
 | `U+007c` | \uname{vertical line} | `|` |
 | `U+007d` | \uname{right curly bracket} | `\`} |
 | `U+007e` | \uname{tilde} | `\textasciitilde` |
+
+
 The *universal-character-name* construct provides a way to name other
 characters.
 
@@ -299,6 +302,8 @@ basic character set, plus the control characters specified in
 | `U+0007` | \uname{alert} |
 | `U+0008` | \uname{backspace} |
 | `U+000d` | \uname{carriage return} |
+
+
 A *code unit* is an integer value of character type
 [[basic.fundamental]]. Characters in a *character-literal* other than a
 multicharacter or non-encodable character literal or in a
@@ -843,6 +848,8 @@ which its value can be represented.
 |  |  | `std::size_t` |
 | Both `u` or `U` | `std::size_t` | `std::size_t` |
 | and `z` or `Z` |  |
+
+
 If an *integer-literal* cannot be represented by any type in its list
 and an extended integer type [[basic.fundamental]] can represent its
 value, it may have that extended integer type. If all of the types in
@@ -972,6 +979,8 @@ character would require more than one code unit. — *end note*\]
 | `u8` | \defnx{UTF-8 character literal}{literal!character!UTF-8} | `char8_t` | UTF-8 | `u8'x'` |
 | `u` | \defnx{UTF-16 character literal}{literal!character!UTF-16} | `char16_t` | UTF-16 | `u'y'` |
 | `U` | \defnx{UTF-32 character literal}{literal!character!UTF-32} | `char32_t` | UTF-32 | `U'z'` |
+
+
 In translation phase 4, the value of a *character-literal* is determined
 using the range of representable values of the *character-literal*’s
 type in translation phase 7. A non-encodable character literal or a
@@ -1033,6 +1042,7 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 | `U+003f` | \uname{question mark} | `\ ?` |
 | `U+0027` | \uname{apostrophe} | `\ '` |
 | `U+0022` | \uname{quotation mark} | `\ "` |
+
 
 ### Floating-point literals <a id="lex.fcon">[[lex.fcon]]</a>
 
@@ -1203,6 +1213,8 @@ where n is the number of encoded code units as described below.
 | `u8` | \defnx{UTF-8 string literal}{literal!string!UTF-8} | array of $n$\newline `const char8_t` | UTF-8 | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
 | `u` | \defnx{UTF-16 string literal}{literal!string!UTF-16} | array of $n$\newline `const char16_t` | UTF-16 | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
 | `U` | \defnx{UTF-32 string literal}{literal!string!UTF-32} | array of $n$\newline `const char32_t` | UTF-32 | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
+
+
 A *string-literal* that has an `R` in the prefix is a
 *raw string literal*. The *d-char-sequence* serves as a delimiter. The
 terminating *d-char-sequence* of a *raw-string* is the same sequence of
@@ -1295,6 +1307,8 @@ digit `1` (and not the single character `'A'` specified by a
 | `u"a"` | `u"b"` | `u"ab"` | `U"a"` | `U"b"` | `U"ab"` | `L"a"` | `L"b"` | `L"ab"` |
 | `u"a"` | `"b"` | `u"ab"` | `U"a"` | `"b"` | `U"ab"` | `L"a"` | `"b"` | `L"ab"` |
 | `"a"` | `u"b"` | `u"ab"` | `"a"` | `U"b"` | `U"ab"` | `"a"` | `L"b"` | `L"ab"` |
+
+
 Evaluating a *string-literal* results in a string literal object with
 static storage duration [[basic.stc]]. Whether all *string-literal*s are
 distinct (that is, are stored in nonoverlapping objects) and whether

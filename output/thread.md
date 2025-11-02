@@ -1,6 +1,7 @@
 ---
 current_file: thread
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Concurrency support library <a id="thread">[[thread]]</a>
@@ -25,6 +26,7 @@ conditions and values between threads, as summarized in
 | [[thread.sema]] | Semaphores | `<semaphore>` |
 | [[thread.coord]] | Coordination types | `<latch>` `<barrier>` |
 | [[futures]] | Futures | `<future>` |
+
 
 ## Requirements <a id="thread.req">[[thread.req]]</a>
 

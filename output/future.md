@@ -1,6 +1,7 @@
 ---
 current_file: future
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 ## General <a id="depr.general">[[depr.general]]</a>

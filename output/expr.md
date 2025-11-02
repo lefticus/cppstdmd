@@ -1,6 +1,7 @@
 ---
 current_file: expr
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Expressions <a id="expr">[[expr]]</a>
@@ -5863,7 +5864,7 @@ the constraints of a core constant expression, but evaluation of E would
 evaluate
 
 - an operation that has undefined behavior as specified in [[library]]
-  through [[\lastlibchapter]],
+  through [[thread]],
 
 - an invocation of the `va_start` macro [[cstdarg.syn]], or
 
@@ -6408,7 +6409,6 @@ A function or variable is *needed for constant evaluation* if it is:
 [expr.yield]: #expr.yield
 
 <!-- Link reference definitions -->
-[\lastlibchapter]: #\lastlibchapter
 [allocator.members]: mem.md#allocator.members
 [bad.alloc]: support.md#bad.alloc
 [bad.cast]: support.md#bad.cast
@@ -6643,5 +6643,6 @@ A function or variable is *needed for constant evaluation* if it is:
 [term.object.representation]: #term.object.representation
 [term.odr.use]: #term.odr.use
 [term.unevaluated.operand]: #term.unevaluated.operand
+[thread]: thread.md#thread
 [type.info]: support.md#type.info
 [typeinfo.syn]: support.md#typeinfo.syn

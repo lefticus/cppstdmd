@@ -1,6 +1,7 @@
 ---
 current_file: ranges
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Ranges library <a id="ranges">[[ranges]]</a>
@@ -23,6 +24,7 @@ components for range primitives and range generators as summarized in
 | [[range.factories]] | Range factories |
 | [[range.adaptors]] | Range adaptors |
 | [[coro.generator]] | Range generators | `<generator>` |
+
 
 ## Header `<ranges>` synopsis <a id="ranges.syn">[[ranges.syn]]</a>
 

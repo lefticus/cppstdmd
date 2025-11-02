@@ -1,6 +1,7 @@
 ---
 current_file: dcl
 label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
+source_dir: ../../cplusplus-draft/source
 ---
 
 # Declarations <a id="dcl.dcl">[[dcl.dcl]]</a>
