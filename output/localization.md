@@ -201,12 +201,9 @@ All locale semantics are accessed via `use_facet<>` and `has_facet<>`,
 except that:
 
 - A member operator template
-
   \_\_CODEBLOCK_1\_\_
-
   is provided so that a locale can be used as a predicate argument to
   the standard collections, to collate strings.
-
 - Convenient global interfaces are provided for traditional `ctype`
   functions such as `isdigit()` and `isspace()`, so that given a locale
   object `loc` a C++ program can call `isspace(c, loc)`. (This eases
@@ -1635,11 +1632,9 @@ iter_type do_get(iter_type in, iter_type end, ios_base& str,
 The details of this operation occur in three stages
 
 - Stage 1: Determine a conversion specifier
-
 - Stage 2: Extract characters from `in` and determine a corresponding
   `char` value for the format expected by the conversion specification
   determined in stage 1.
-
 - Stage 3: Store results
 
 The details of the stages are presented below.
@@ -1725,10 +1720,8 @@ Given an input sequence of `"0x1a.bp+07p"`,
 
 - if the conversion specifier returned by Stage 1 is `%d`, `"0"` is
   accumulated;
-
 - if the conversion specifier returned by Stage 1 is `%i`, `"0x1a"` are
   accumulated;
-
 - if the conversion specifier returned by Stage 1 is `%g`,
   `"0x1a.bp+07"` are accumulated.
 
@@ -1741,27 +1734,20 @@ to a numeric value by the rules of one of the functions declared in the
 header :
 
 - For a signed integer value, the function `strtoll`.
-
 - For an unsigned integer value, the function `strtoull`.
-
 - For a `float` value, the function `strtof`.
-
 - For a `double` value, the function `strtod`.
-
 - For a `long double` value, the function `strtold`.
 
 The numeric value to be stored can be one of:
 
 - zero, if the conversion function does not convert the entire field.
-
 - the most positive (or negative) representable value, if the field to
   be converted to a signed integer type represents a value too large
   positive (or negative) to be represented in `val`.
-
 - the most positive representable value, if the field to be converted to
   an unsigned integer type represents a value that cannot be represented
   in `val`.
-
 - the converted value, otherwise.
 
 The resultant numeric value is stored in `val`. If the conversion
@@ -1901,17 +1887,13 @@ The details of this operation occur in several stages:
 - Stage 1: Determine a printf conversion specifier `spec` and determine
   the characters that would be printed by `printf`[[c.files]] given this
   conversion specifier for
-
       printf(spec, val)
 
   assuming that the current locale is the `"C"` locale.
-
 - Stage 2: Adjust the representation by converting each `char`
   determined by stage 1 to a `charT` using a conversion and values
   returned by members of `use_facet<numpunct<charT>>(loc)`.
-
 - Stage 3: Determine where padding is required.
-
 - Stage 4: Insert the sequence into the `out`.
 
 Detailed descriptions of each stage follow.
@@ -2530,12 +2512,9 @@ iteration. Unless otherwise specified below, the loop terminates when
 the first of the following conditions holds:
 
 - The expression `fmt == fmtend` evaluates to `true`.
-
 - The expression `err == ios_base::goodbit` evaluates to `false`.
-
 - The expression `s == end` evaluates to `true`, in which case the
   function evaluates `err = ios_base::eofbit | ios_base::failbit`.
-
 - The next element of `fmt` is equal to `’%’`, optionally followed by a
   modifier character, followed by a conversion specifier character,
   `format`, together forming a conversion specification valid for the
@@ -2549,13 +2528,11 @@ the first of the following conditions holds:
   after the evaluation of the expression, the function increments `fmt`
   to point just past the end of the conversion specification and
   continues looping.
-
 - The expression `isspace(*fmt, f.getloc())` evaluates to `true`, in
   which case the function first increments `fmt` until
   `fmt == fmtend || !isspace(*fmt, f.getloc())` evaluates to `true`,
   then advances `s` until `s == end || !isspace(*s, f.getloc())` is
   `true`, and finally resumes looping.
-
 - The next character read from `s` matches the element pointed to by
   `fmt` in a case-insensitive comparison, in which case the function
   evaluates `++fmt, ++s` and continues looping. Otherwise, the function
@@ -3265,11 +3242,8 @@ pattern do_neg_format() const;
 [[locale.spec]][[locale.category]], namely
 
 - `moneypunct<char>`,
-
 - `moneypunct<wchar_t>`,
-
 - `moneypunct<char, true>`, and
-
 - `moneypunct<wchar_t, true>`,
 
 return an object of type `pattern` initialized to

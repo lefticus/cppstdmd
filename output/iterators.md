@@ -549,15 +549,10 @@ according to the operations defined on them: *input iterators*,
 The six categories of iterators correspond to the iterator concepts
 
 - `input_iterator` [[iterator.concept.input]],
-
 - `output_iterator` [[iterator.concept.output]],
-
 - `forward_iterator` [[iterator.concept.forward]],
-
 - `bidirectional_iterator` [[iterator.concept.bidir]],
-
 - `random_access_iterator` [[iterator.concept.random.access]], and
-
 - `contiguous_iterator` [[iterator.concept.contiguous]],
 
 respectively. The generic term *iterator* refers to any type that models
@@ -702,7 +697,6 @@ Let $R_\tcode{I}$ be `remove_cvref_t<I>`. The type
 - `incrementable_traits<$R_\tcode{I}$>::difference_type`
   if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
   from the primary template, and
-
 - `iterator_traits<$R_\tcode{I}$>::difference_type` otherwise.
 
 Users may specialize `incrementable_traits` on program-defined types.
@@ -778,7 +772,6 @@ denotes
 - `indirectly_readable_traits<$R_\tcode{I}$>::value_type`
   if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
   from the primary template, and
-
 - `iterator_traits<$R_\tcode{I}$>::value_type` otherwise.
 
 Class template `indirectly_readable_traits` may be specialized on
@@ -889,7 +882,6 @@ The members of a specialization `iterator_traits<I>` generated from the
 - If `I` has valid [[temp.deduct]] member types `difference_type`,
   `value_type`, `reference`, and `iterator_category`, then
   `iterator_traits<I>` has the following publicly accessible members:
-
   ``` cpp
   using iterator_category = typename I::iterator_category;
   using value_type        = typename I::value_type;
@@ -901,11 +893,9 @@ The members of a specialization `iterator_traits<I>` generated from the
   If the *qualified-id* `I::pointer` is valid and denotes a type, then
   `iterator_traits<I>::pointer` names that type; otherwise, it names
   `void`.
-
 - Otherwise, if `I` satisfies the exposition-only concept
   `cpp17-input-iterator`, `iterator_traits<I>` has the following
   publicly accessible members:
-
   ``` cpp
   using iterator_category = see below;
   using value_type        = typename indirectly_readable_traits<I>::value_type;
@@ -918,30 +908,22 @@ The members of a specialization `iterator_traits<I>` generated from the
     `pointer` names that type. Otherwise, if
     `decltype(declval<I&>().operator->())` is well-formed, then
     `pointer` names that type. Otherwise, `pointer` names `void`.
-
   - If the *qualified-id* `I::reference` is valid and denotes a type,
     `reference` names that type. Otherwise, `reference` names
     `iter_reference_t<I>`.
-
   - If the *qualified-id* `I::iterator_category` is valid and denotes a
     type, `iterator_category` names that type. Otherwise,
     `iterator_category` names:
-
     - `random_access_iterator_tag`
       if `I` satisfies `cpp17-random-access-iterator`, or otherwise
-
     - `bidirectional_iterator_tag` if `I` satisfies
       `cpp17-bidirectional-iterator`, or otherwise
-
     - `forward_iterator_tag` if `I` satisfies `cpp17-forward-iterator`,
       or otherwise
-
     - `input_iterator_tag`.
-
 - Otherwise, if `I` satisfies the exposition-only concept
   `cpp17-iterator`, then `iterator_traits<I>` has the following publicly
   accessible members:
-
   ``` cpp
   using iterator_category = output_iterator_tag;
   using value_type        = void;
@@ -953,7 +935,6 @@ The members of a specialization `iterator_traits<I>` generated from the
   If the *qualified-id* `incrementable_traits<I>::difference_type` is
   valid and denotes a type, then `difference_type` names that type;
   otherwise, it names `void`.
-
 - Otherwise, `iterator_traits<I>` has no members by any of the above
   names.
 
@@ -1020,15 +1001,10 @@ for a subexpression `E` is expression-equivalent to:
   unevaluated operand, where the meaning of `iter_move` is established
   as-if by performing argument-dependent lookup only
   [[basic.lookup.argdep]].
-
 - Otherwise, if the expression `*E` is well-formed:
-
   - if `*E` is an lvalue, `std::move(*E)`;
-
   - otherwise, `*E`.
-
 - Otherwise, `ranges::iter_move(E)` is ill-formed.
-
   \[*Note 1*: This case can result in substitution failure when
   `ranges::iter_move(E)` appears in the immediate context of a template
   instantiation. — *end note*\]
@@ -1066,7 +1042,6 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   enumeration type and `iter_swap(E1, E2)` is a well-formed expression
   with overload resolution performed in a context that includes the
   declaration
-
   ``` cpp
   template<class I1, class I2>
     void iter_swap(I1, I2) = delete;
@@ -1076,24 +1051,19 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   function selected by overload resolution does not exchange the values
   denoted by `E1` and `E2`, the program is ill-formed, no diagnostic
   required.
-
   \[*Note 2*: This precludes calling unconstrained `std::iter_swap`.
   When the deleted overload is viable, program-defined overloads need to
   be more specialized [[temp.func.order]] to be selected. — *end note*\]
-
 - Otherwise, if the types of `E1` and `E2` each model
   `indirectly_readable`, and if the reference types of `E1` and `E2`
   model `swappable_with` [[concept.swappable]], then
   `ranges::swap(*E1, *E2)`.
-
 - Otherwise, if the types `T1` and `T2` of `E1` and `E2` model
   `indirectly_movable_storable<T1, T2>` and
   `indirectly_movable_storable<T2, T1>`, then
   `(void)(*E1 = iter-exchange-move(E2, E1))`, except that `E1` is
   evaluated only once.
-
 - Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed.
-
   \[*Note 3*: This case can result in substitution failure when
   `ranges::iter_swap(E1, E2)` appears in the immediate context of a
   template instantiation. — *end note*\]
@@ -1108,14 +1078,11 @@ template. Otherwise, `ITER_TRAITS(I)` denotes `iterator_traits<I>`.
 
 - If the *qualified-id* `ITER_TRAITS(I)::iterator_concept` is valid and
   names a type, then `ITER_CONCEPT(I)` denotes that type.
-
 - Otherwise, if the *qualified-id* `ITER_TRAITS(I)::iterator_category`
   is valid and names a type, then `ITER_CONCEPT(I)` denotes that type.
-
 - Otherwise, if `iterator_traits<I>` names a specialization generated
   from the primary template, then `ITER_CONCEPT(I)` denotes
   `random_access_iterator_tag`.
-
 - Otherwise, `ITER_CONCEPT(I)` does not denote a type.
 
 \[*Note 1*: `ITER_TRAITS` enables independent syntactic determination of
@@ -1297,26 +1264,21 @@ convertible to `I`, let `x` and `y` be, respectively, objects of type
   expressions. The expression `a++` shall modify the value of `a` by
   adding `1` to it. The expression `a--` shall modify the value of `a`
   by subtracting `1` from it.
-
 - The expressions `++a`, `--a`, and `&a` shall be expression-equivalent
   to `a += 1`, `a -= 1`, and `addressof(a)`, respectively.
-
 - For every *unary-operator* `@` other than `&` for which the expression
   `@x` is well-formed, `@a` shall also be well-formed and have the same
   value, effects, and value category as `@x`. If `@x` has type `bool`,
   so too does `@a`; if `@x` has type `B(I)`, then `@a` has type `I`.
-
 - For every assignment operator `@=` for which `c @= x` is well-formed,
   `c @= a` shall also be well-formed and shall have the same value and
   effects as `c @= x`. The expression `c @= a` shall be an lvalue
   referring to `c`.
-
 - For every assignment operator `@=` for which `x @= y` is well-formed,
   `a @= b` shall also be well-formed and shall have the same effects as
   `x @= y`, except that the value that would be stored into `x` is
   stored into `a`. The expression `a @= b` shall be an lvalue referring
   to `a`.
-
 - For every non-assignment binary operator `@` for which `x @ y` and
   `y @ x` are well-formed, `a @ b` and `b @ a` shall also be well-formed
   and shall have the same value, effects, and value category as `x @ y`
@@ -1354,10 +1316,8 @@ and post-increment, `i` is said to be *incrementable*. `I` models
 `weakly_incrementable<I>` only if
 
 - The expressions `++i` and `i++` have the same domain.
-
 - If `i` is incrementable, then both `++i` and `i++` advance `i` to the
   next element.
-
 - If `i` is incrementable, then `addressof(++i)` is equal to
   `addressof(i)`.
 
@@ -1395,7 +1355,6 @@ Let `a` and `b` be incrementable objects of type `I`. `I` models
 `incrementable` only if
 
 - If `bool(a == b)` then `bool(a++ == b)`.
-
 - If `bool(a == b)` then `bool(((void)a++, a) == ++b)`.
 
 \[*Note 2*: The requirement that `a` equals `b` implies `++a` equals
@@ -1445,10 +1404,8 @@ Let `s` and `i` be values of type `S` and `I` such that \[`i`, `s`)
 denotes a range. Types `S` and `I` model `sentinel_for``<S, I>` only if
 
 - `i == s` is well-defined.
-
 - If `bool(i != s)` then `i` is dereferenceable and \[`++i`, `s`)
   denotes a range.
-
 - `assignable_from``<I&, S>` is either modeled or not satisfied.
 
 The domain of `==` is not static. Given an iterator `i` and sentinel `s`
@@ -1481,7 +1438,6 @@ and `I` model `sized_sentinel_for``<S, I>` only if
 
 - If N is representable by `iter_difference_t<I>`, then `s - i` is
   well-defined and equals N.
-
 - If -N is representable by `iter_difference_t<I>`, then `i - s` is
   well-defined and equals -N.
 
@@ -1588,7 +1544,6 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 *multi-pass guarantee* if:
 
 - `a == b` implies `++a == ++b` and
-
 - the expression `((void)[](X x)\{++x;\}(a), *a)` is equivalent to the
   expression `*a`.
 
@@ -1623,16 +1578,11 @@ Let `a` and `b` be equal objects of type `I`. `I` models
 
 - If `a` and `b` are decrementable, then all of the following are
   `true`:
-
   - `addressof(--a) == addressof(a)`
-
   - `bool(a-- == b)`
-
   - after evaluating both `a--` and `--b`, `bool(a == b)` is still
     `true`
-
   - `bool(++(--a) == b)`
-
 - If `a` and `b` are incrementable, then `bool(--(++a) == b)`.
 
 #### Concept  <a id="iterator.concept.random.access">[[iterator.concept.random.access]]</a>
@@ -1665,30 +1615,19 @@ reachable from `a` after `n` applications of `++a`, let `D` be
 models `random_access_iterator` only if
 
 - `(a += n)` is equal to `b`.
-
 - `addressof(a += n)` is equal to `addressof(a)`.
-
 - `(a + n)` is equal to `(a += n)`.
-
 - For any two positive values `x` and `y` of type `D`, if
   `(a + D(x + y))` is valid, then `(a + D(x + y))` is equal to
   `((a + x) + y)`.
-
 - `(a + D(0))` is equal to `a`.
-
 - If `(a + D(n - 1))` is valid, then `(a + n)` is equal to
   `[](I c)\{ return ++c; \}(a + D(n - 1))`.
-
 - `(b += D(-n))` is equal to `a`.
-
 - `(b -= n)` is equal to `a`.
-
 - `addressof(b -= n)` is equal to `addressof(b)`.
-
 - `(b - n)` is equal to `(b -= n)`.
-
 - If `b` is dereferenceable, then `a[n]` is valid and is equal to `*b`.
-
 - `bool(a <= b)` is `true`.
 
 #### Concept  <a id="iterator.concept.contiguous">[[iterator.concept.contiguous]]</a>
@@ -1715,14 +1654,10 @@ non-dereferenceable iterator of type `I` such that `b` is reachable from
 if
 
 - `to_address(a) == addressof(*a)`,
-
 - `to_address(b) == to_address(a) + D(b - a)`,
-
 - `to_address(c) == to_address(a) + D(c - a)`,
-
 - `ranges::iter_move(a)` has the same type, value category, and effects
   as `std::move(*a)`, and
-
 - if `ranges::iter_swap(a, b)` is well-formed, it has effects equivalent
   to `ranges::swap(*a, *b)`.
 
@@ -1756,10 +1691,8 @@ A type `X` meets the requirements if:
 - `X` meets the *Cpp17CopyConstructible*, *Cpp17CopyAssignable*,
   *Cpp17Swappable*, and *Cpp17Destructible* requirements
   [[utility.arg.requirements]], [[swappable.requirements]], and
-
 - `iterator_traits<X>::difference_type` is a signed integer type or
   `void`, and
-
 - the expressions in [[iterator]] are valid and have the indicated
   semantics.
 
@@ -1816,16 +1749,12 @@ A class or pointer type `X` meets the requirements of a forward iterator
 if
 
 - `X` meets the *Cpp17InputIterator* requirements [[input.iterators]],
-
 - `X` meets the *Cpp17DefaultConstructible* requirements
   [[utility.arg.requirements]],
-
 - if `X` is a mutable iterator, `reference` is a reference to `T`; if
   `X` is a constant iterator, `reference` is a reference to `const T`,
-
 - the expressions in [[forwarditerator]] are valid and have the
   indicated semantics, and
-
 - objects of type `X` offer the multi-pass guarantee, described below.
 
 The domain of `==` for forward iterators is that of iterators over the
@@ -1840,7 +1769,6 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 *multi-pass guarantee* if:
 
 - `a == b` implies `++a == ++b` and
-
 - `X` is a pointer type or the expression `(void)++X(a), *a` is
   equivalent to the expression `*a`.
 
@@ -1888,7 +1816,6 @@ alias template *indirect-value-t*, `indirect-value-t<T>` denotes
 
 - `invoke_result_t<Proj&, \exposid{indirect-value-t}<I>>`
   if `T` names `projected<I, Proj>`, and
-
 - `iter_value_t<T>&` otherwise.
 
 #### Indirect callables <a id="indirectcallable.indirectinvocable">[[indirectcallable.indirectinvocable]]</a>
@@ -2343,9 +2270,7 @@ not negative.
 *Effects:*
 
 - If `I` models `random_access_iterator`, equivalent to `i += n`.
-
 - Otherwise, if `n` is non-negative, increments `i` by `n`.
-
 - Otherwise, decrements `i` by `-n`.
 
 ``` cpp
@@ -2361,10 +2286,8 @@ or \[`i`, `bound`) denotes a range.
 
 - If `I` and `S` model `assignable_from``<I&, S>`, equivalent to
   `i = std::move(bound)`.
-
 - Otherwise, if `S` and `I` model `sized_sentinel_for``<S, I>`,
   equivalent to `ranges::advance(i, bound - i)`.
-
 - Otherwise, while `bool(i != bound)` is `true`, increments `i`.
 
 ``` cpp
@@ -2380,17 +2303,12 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 *Effects:*
 
 - If `S` and `I` model `sized_sentinel_for``<S, I>`:
-
   - If $|\texttt{n}| \ge |\texttt{bound - i}|$, equivalent to
     `ranges::advance(i, bound)`.
-
   - Otherwise, equivalent to `ranges::advance(i, n)`.
-
 - Otherwise,
-
   - if `n` is non-negative, while `bool(i != bound)` is `true`,
     increments `i` but at most `n` times.
-
   - Otherwise, while `bool(i != bound)` is `true`, decrements `i` but at
     most `-n` times.
 
@@ -2550,7 +2468,6 @@ The member *typedef-name* `iterator_concept` denotes
 
 - `random_access_iterator_tag` if `Iterator` models
   `random_access_iterator`, and
-
 - `bidirectional_iterator_tag` otherwise.
 
 The member *typedef-name* `iterator_category` denotes
@@ -2558,7 +2475,6 @@ The member *typedef-name* `iterator_category` denotes
 - `random_access_iterator_tag` if the type
   `iterator_traits<Iterator>::iterator_category` models
   `derived_from<random_access_iterator_tag>`, and
-
 - `iterator_traits<Iterator>::iterator_category` otherwise.
 
 #### Requirements <a id="reverse.iter.requirements">[[reverse.iter.requirements]]</a>
@@ -2574,7 +2490,6 @@ definitions of any of the members
 
 - `operator+`, `operator-`, `operator+=`, `operator-=`
   [[reverse.iter.nav]], or
-
 - `operator[]` [[reverse.iter.elem]],
 
 or the non-member operators [[reverse.iter.cmp]]
@@ -2655,7 +2570,6 @@ constexpr pointer operator->() const
 
 - If `Iterator` is a pointer type, equivalent to:
   `return prev(current);`
-
 - Otherwise, equivalent to: `return prev(current).operator->();`
 
 ``` cpp
@@ -3329,16 +3243,12 @@ follows:
 
 - If `Iterator` models `contiguous_iterator`, then `iterator_concept`
   denotes `contiguous_iterator_tag`.
-
 - Otherwise, if `Iterator` models `random_access_iterator`, then
   `iterator_concept` denotes `random_access_iterator_tag`.
-
 - Otherwise, if `Iterator` models `bidirectional_iterator`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if `Iterator` models `forward_iterator`, then
   `iterator_concept` denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -3657,13 +3567,10 @@ The member *typedef-name* `iterator_concept` is defined as follows:
 
 - If `Iterator` models `random_access_iterator`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if `Iterator` models `bidirectional_iterator`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if `Iterator` models `forward_iterator`, then
   `iterator_concept` denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -3673,7 +3580,6 @@ valid and denotes a type. In that case, `iterator_category` denotes
 - `random_access_iterator_tag` if the type
   `iterator_traits<Iterator>::iterator_category` models
   `derived_from<random_access_iterator_tag>`, and
-
 - `iterator_traits<Iterator>::iterator_category` otherwise.
 
 #### Requirements <a id="move.iter.requirements">[[move.iter.requirements]]</a>
@@ -4131,12 +4037,10 @@ for `common_iterator<I, S>` are defined as follows.
 
 - `iterator_concept` denotes `forward_iterator_tag` if `I` models
   `forward_iterator`; otherwise it denotes `input_iterator_tag`.
-
 - `iterator_category` denotes `forward_iterator_tag` if the
   *qualified-id* `iterator_traits<I>::iterator_category` is valid and
   denotes a type that models `derived_from<forward_iterator_tag>`;
   otherwise it denotes `input_iterator_tag`.
-
 - Let `a` denote an lvalue of type `const common_iterator<I, S>`. If the
   expression `a.operator->()` is well-formed, then `pointer` denotes
   `decltype(a.operator->())`. Otherwise, `pointer` denotes `void`.
@@ -4180,7 +4084,6 @@ template<class I2, class S2>
 *Effects:* Equivalent to:
 
 - If `v_.index() == x.v_.index()`, then `get<`i`>(v_) = get<`i`>(x.v_)`.
-
 - Otherwise, `v_.emplace<`i`>(get<`i`>(x.v_))`.
 
 where i is `x.v_.index()`.
@@ -4220,16 +4123,12 @@ indirectly_readable<const I> &&
 - If `I` is a pointer type or if the expression
   `get<I>(v_).operator->()` is well-formed, equivalent to:
   `return get<I>(v_);`
-
 - Otherwise, if `iter_reference_t<I>` is a reference type, equivalent
   to:
-
       auto&& tmp = *get<I>(v_);
       return addressof(tmp);
-
 - Otherwise, equivalent to: `return `*`proxy`*`(*get<I>(v_));` where
   *proxy* is the exposition-only class:
-
       class proxy {
         iter_value_t<I> keep_;
         constexpr proxy(iter_reference_t<I>&& x)

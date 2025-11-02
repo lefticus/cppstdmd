@@ -636,9 +636,7 @@ An unnamed class with a typedef name for linkage purposes shall not
 
 - declare any members other than non-static data members, member
   enumerations, or member classes,
-
 - have any base classes or default member initializers, or
-
 - contain a *lambda-expression*,
 
 and all member classes shall also satisfy these requirements
@@ -718,7 +716,6 @@ not be declared with the `consteval` specifier.
 A function is *constexpr-suitable* if:
 
 - it is not a coroutine [[dcl.fct.def.coroutine]], and
-
 - if the function is a constructor or destructor, its class does not
   have any virtual base classes.
 
@@ -765,7 +762,6 @@ the same context in all respects except that
 
 - an invocation of a constexpr function can appear in a constant
   expression [[expr.const]] and
-
 - copy elision is not performed in a constant expression
   [[class.copy.elision]].
 
@@ -936,16 +932,11 @@ allowed in a *type-specifier-seq*. The only exceptions to this rule are
 the following:
 
 - `const` can be combined with any type specifier except itself.
-
 - `volatile` can be combined with any type specifier except itself.
-
 - `signed` or `unsigned` can be combined with `char`, `long`, `short`,
   or `int`.
-
 - `short` or `long` can be combined with `int`.
-
 - `long` can be combined with `double`.
-
 - `long` can be combined with `long`.
 
 Except in a declaration of a constructor, destructor, or conversion
@@ -1239,23 +1230,18 @@ follows:
 - if E is an unparenthesized *id-expression* naming a structured binding
   [[dcl.struct.bind]], `decltype($E$)` is the referenced type as given
   in the specification of the structured binding declaration;
-
 - otherwise, if E is an unparenthesized *id-expression* naming a
   non-type *template-parameter* [[temp.param]], `decltype($E$)` is the
   type of the *template-parameter* after performing any necessary type
   deduction [[dcl.spec.auto]], [[dcl.type.class.deduct]];
-
 - otherwise, if E is an unparenthesized *id-expression* or an
   unparenthesized class member access [[expr.ref]], `decltype($E$)` is
   the type of the entity named by E. If there is no such entity, the
   program is ill-formed;
-
 - otherwise, if E is an xvalue, `decltype($E$)` is `T&&`, where `T` is
   the type of E;
-
 - otherwise, if E is an lvalue, `decltype($E$)` is `T&`, where `T` is
   the type of E;
-
 - otherwise, `decltype($E$)` is the type of E.
 
 The operand of the `decltype` specifier is an unevaluated operand
@@ -1560,48 +1546,35 @@ A type `T` containing a placeholder type, and a corresponding
 - For a non-discarded `return` statement that occurs in a function
   declared with a return type that contains a placeholder type, `T` is
   the declared return type.
-
   - If the `return` statement has no operand, then E is `void()`.
-
   - If the operand is a *braced-init-list* [[dcl.init.list]], the
     program is ill-formed.
-
   - If the operand is an *expression* X that is not an
     *assignment-expression*, E is `($X$)`.
-
     \[*Note 1*: A comma expression [[expr.comma]] is not an
     *assignment-expression*. — *end note*\]
-
   - Otherwise, E is the operand of the `return` statement.
 
   If E has type `void`, `T` shall be either *type-constraint*
   `decltype(auto)` or cv *type-constraint* `auto`.
-
 - For a variable declared with a type that contains a placeholder type,
   `T` is the declared type of the variable.
-
   - If the initializer of the variable is a *brace-or-equal-initializer*
     of the form `= initializer-clause`, E is the *initializer-clause*.
-
   - If the initializer is a *braced-init-list*, it shall consist of a
     single brace-enclosed *assignment-expression* and E is the
     *assignment-expression*.
-
   - If the initializer is a parenthesized *expression-list*, the
     *expression-list* shall be a single *assignment-expression* and E is
     the *assignment-expression*.
-
 - For an explicit type conversion [[expr.type.conv]], `T` is the
   specified type, which shall be `auto`.
-
   - If the initializer is a *braced-init-list*, it shall consist of a
     single brace-enclosed *assignment-expression* and E is the
     *assignment-expression*.
-
   - If the initializer is a parenthesized *expression-list*, the
     *expression-list* shall be a single *assignment-expression* and E is
     the *assignment-expression*.
-
 - For a non-type template parameter declared with a type that contains a
   placeholder type, `T` is the declared type of the non-type template
   parameter and E is the corresponding template argument.
@@ -2099,28 +2072,21 @@ appertains to the entity that is declared.
 If the declaration is a friend declaration:
 
 - The *declarator* does not bind a name.
-
 - If the *id-expression* E in the *declarator-id* of the *declarator* is
   a *qualified-id* or a *template-id*:
-
   - If the friend declaration is not a template declaration, then in the
     lookup for the terminal name of E:
-
     - if the *unqualified-id* in E is a *template-id*, all function
       declarations are discarded;
-
     - otherwise, if the *declarator* corresponds [[basic.scope.scope]]
       to any declaration found of a non-template function, all function
       template declarations are discarded;
-
     - each remaining function template is replaced with the
       specialization chosen by deduction from the friend declaration
       [[temp.deduct.decl]] or discarded if deduction fails.
-
   - The *declarator* shall correspond to one or more declarations found
     by the lookup; they shall all have the same target scope, and the
     target scope of the *declarator* is that scope.
-
 - Otherwise, the terminal name of E is not looked up. The declaration’s
   target scope is the innermost enclosing namespace scope; if the
   declaration is contained by a block scope, the declaration shall
@@ -2132,19 +2098,15 @@ Otherwise:
 - If the *id-expression* in the *declarator-id* of the *declarator* is a
   *qualified-id* Q, let S be its lookup context [[basic.lookup.qual]];
   the declaration shall inhabit a namespace scope.
-
 - Otherwise, let S be the entity associated with the scope inhabited by
   the *declarator*.
-
 - If the *declarator* declares an explicit instantiation or a partial or
   explicit specialization, the *declarator* does not bind a name. If it
   declares a class member, the terminal name of the *declarator-id* is
   not looked up; otherwise, only those lookup results that are nominable
   in S are considered when identifying any function template
   specialization being declared [[temp.deduct.decl]].
-
   \[*Example 1*:
-
   ``` cpp
   namespace N {
     inline namespace O {
@@ -2162,15 +2124,12 @@ Otherwise:
   ```
 
   — *end example*\]
-
 - Otherwise, the terminal name of the *declarator-id* is not looked up.
   If it is a qualified name, the *declarator* shall correspond to one or
   more declarations nominable in S; all the declarations shall have the
   same target scope and the target scope of the *declarator* is that
   scope.
-
   \[*Example 2*:
-
   ``` cpp
   namespace Q {
     namespace V {
@@ -2189,14 +2148,11 @@ Otherwise:
   ```
 
   — *end example*\]
-
 - If the declaration inhabits a block scope S and declares a function
   [[dcl.fct]] or uses the `extern` specifier, the declaration shall not
   be attached to a named module [[module.unit]]; its target scope is the
   innermost enclosing namespace scope, but the name is bound in S.
-
   \[*Example 3*:
-
   ``` cpp
   namespace X {
     void p() {
@@ -2691,7 +2647,6 @@ returning `T`”, where
 
 - the parameter-type-list is derived from the
   *parameter-declaration-clause* as described below and
-
 - the optional `noexcept` is present if and only if the exception
   specification [[except.spec]] is non-throwing.
 
@@ -2713,9 +2668,7 @@ where
 
 - the parameter-type-list is derived from the
   *parameter-declaration-clause* as described below,
-
 - `U` is the type specified by the *trailing-return-type*, and
-
 - the optional `noexcept` is present if and only if the exception
   specification is non-throwing.
 
@@ -2830,7 +2783,6 @@ appear only as the first *parameter-declaration* of a
 
 - a *member-declarator* that declares a member function [[class.mem]],
   or
-
 - a *lambda-declarator* [[expr.prim.lambda]].
 
 A *member-declarator* with an explicit-object-parameter-declaration
@@ -2881,15 +2833,11 @@ A function type with a *cv-qualifier-seq* or a *ref-qualifier*
 [[dcl.typedef]], [[temp.param]]) shall appear only as:
 
 - the function type for a non-static member function,
-
 - the function type to which a pointer to member refers,
-
 - the top-level function type of a function typedef declaration or
   *alias-declaration*,
-
 - the *type-id* in the default argument of a *type-parameter*
   [[temp.param]], or
-
 - the *type-id* of a *template-argument* for a *type-parameter*
   [[temp.arg.type]].
 
@@ -3528,19 +3476,15 @@ To *zero-initialize* an object or reference of type `T` means:
 - if `T` is a scalar type [[term.scalar.type]], the object is
   initialized to the value obtained by converting the integer literal
   `0` (zero) to `T`;
-
 - if `T` is a (possibly cv-qualified) non-union class type, its padding
   bits [[term.padding.bits]] are initialized to zero bits and each
   non-static data member, each non-virtual base class subobject, and, if
   the object is not a base class subobject, each virtual base class
   subobject is zero-initialized;
-
 - if `T` is a (possibly cv-qualified) union type, its padding bits
   [[term.padding.bits]] are initialized to zero bits and the object’s
   first non-static named data member is zero-initialized;
-
 - if `T` is an array type, each element is zero-initialized;
-
 - if `T` is a reference type, no initialization is performed.
 
 To *default-initialize* an object of type `T` means:
@@ -3551,9 +3495,7 @@ To *default-initialize* an object of type `T` means:
   chosen through overload resolution [[over.match]]. The constructor
   thus selected is called, with an empty argument list, to initialize
   the object.
-
 - If `T` is an array type, each element is default-initialized.
-
 - Otherwise, no initialization is performed.
 
 A class type `T` is *const-default-constructible* if
@@ -3563,14 +3505,11 @@ of `T` (not inherited from a base class) or if
 - each direct non-variant non-static data member `M` of `T` has a
   default member initializer or, if `M` is of class type `X` (or array
   thereof), `X` is const-default-constructible,
-
 - if `T` is a union with at least one non-static data member, exactly
   one variant member has a default member initializer,
-
 - if `T` is not a union, for each anonymous union member with at least
   one non-static data member (if any), exactly one non-static data
   member has a default member initializer, and
-
 - each potentially constructed base class of `T` is
   const-default-constructible.
 
@@ -3581,17 +3520,13 @@ class type or array thereof.
 To *value-initialize* an object of type `T` means:
 
 - if `T` is a (possibly cv-qualified) class type [[class]], then
-
   - if `T` has either no default constructor [[class.default.ctor]] or a
     default constructor that is user-provided or deleted, then the
     object is default-initialized;
-
   - otherwise, the object is zero-initialized and the semantic
     constraints for default-initialization are checked, and if `T` has a
     non-trivial default constructor, the object is default-initialized;
-
 - if `T` is an array type, then each element is value-initialized;
-
 - otherwise, the object is zero-initialized.
 
 A program that calls for default-initialization or value-initialization
@@ -3623,13 +3558,9 @@ The initialization that occurs
 
 - for an *initializer* that is a parenthesized *expression-list* or a
   *braced-init-list*,
-
 - for a *new-initializer* [[expr.new]],
-
 - in a `static_cast` expression [[expr.static.cast]],
-
 - in a functional notation type conversion [[expr.type.conv]], and
-
 - in the *braced-init-list* form of a *condition*
 
 is called *direct-initialization*.
@@ -3643,20 +3574,14 @@ source type is not defined.
 - If the initializer is a (non-parenthesized) *braced-init-list* or is
   `=` *braced-init-list*, the object or reference is list-initialized
   [[dcl.init.list]].
-
 - If the destination type is a reference type, see  [[dcl.init.ref]].
-
 - If the destination type is an array of characters, an array of
   `char8_t`, an array of `char16_t`, an array of `char32_t`, or an array
   of `wchar_t`, and the initializer is a *string-literal*, see 
   [[dcl.init.string]].
-
 - If the initializer is `()`, the object is value-initialized.
-
   \[*Note 2*:
-
   Since `()` is not permitted by the syntax for *initializer*,
-
   ``` cpp
   X a();
   ```
@@ -3665,9 +3590,7 @@ source type is not defined.
   of a function taking no arguments and returning an `X`. The form `()`
   is permitted in certain other initialization contexts
   [[expr.new]], [[expr.type.conv]], [[class.base.init]].
-
   — *end note*\]
-
 - Otherwise, if the destination type is an array, the object is
   initialized as follows. Let x₁, $\dotsc$, xₖ be the elements of the
   *expression-list*. If the destination type is an array of unknown
@@ -3679,29 +3602,23 @@ source type is not defined.
   side effect associated with the initialization of the $i^\text{th}$
   element of the array is sequenced before those associated with the
   initialization of the $j^\text{th}$ element.
-
 - Otherwise, if the destination type is a (possibly cv-qualified) class
   type:
-
   - If the initializer expression is a prvalue and the cv-unqualified
     version of the source type is the same class as the class of the
     destination, the initializer expression is used to initialize the
     destination object.
-
     \[*Example 4*: `T x = T(T(T()));` value-initializes
     `x`. — *end example*\]
-
   - Otherwise, if the initialization is direct-initialization, or if it
     is copy-initialization where the cv-unqualified version of the
     source type is the same class as, or a derived class of, the class
     of the destination, constructors are considered. The applicable
     constructors are enumerated [[over.match.ctor]], and the best one is
     chosen through overload resolution [[over.match]]. Then:
-
     - If overload resolution is successful, the selected constructor is
       called to initialize the object, with the initializer expression
       or *expression-list* as its argument(s).
-
     - Otherwise, if no constructor is viable, the destination type is an
       aggregate class, and the initializer is a parenthesized
       *expression-list*, the object is initialized as follows. Let e₁,
@@ -3714,18 +3631,13 @@ source type is not defined.
       value computation and side effect associated with the
       initialization of eᵢ is sequenced before those associated with the
       initialization of eⱼ.
-
       \[*Note 3*:
-
       By contrast with direct-list-initialization, narrowing conversions
       [[dcl.init.list]] are permitted, designators are not permitted, a
       temporary object bound to a reference does not have its lifetime
       extended [[class.temporary]], and there is no brace elision.
-
       — *end note*\]
-
     - Otherwise, the initialization is ill-formed.
-
   - Otherwise (i.e., for the remaining copy-initialization cases),
     user-defined conversions that can convert from the source type to
     the destination type or (when a conversion function is used) to a
@@ -3739,7 +3651,6 @@ source type is not defined.
     is initialized by the constructor. The call is used to
     direct-initialize, according to the rules above, the object that is
     the destination of the copy-initialization.
-
 - Otherwise, if the source type is a (possibly cv-qualified) class type,
   conversion functions are considered. The applicable conversion
   functions are enumerated [[over.match.conv]], and the best one is
@@ -3747,11 +3658,9 @@ source type is not defined.
   conversion so selected is called to convert the initializer expression
   into the object being initialized. If the conversion cannot be done or
   is ambiguous, the initialization is ill-formed.
-
 - Otherwise, if the initialization is direct-initialization, the source
   type is `std::nullptr_t`, and the destination type is `bool`, the
   initial value of the object being initialized is `false`.
-
 - Otherwise, the initial value of the object being initialized is the
   (possibly converted) value of the initializer expression. A standard
   conversion sequence [[conv]] will be used, if necessary, to convert
@@ -3760,13 +3669,10 @@ source type is not defined.
   conversion cannot be done, the initialization is ill-formed. When
   initializing a bit-field with a value that it cannot represent, the
   resulting value of the bit-field is .
-
   \[*Note 4*:
-
   An expression of type “cv-qualifier{cv1} `T`” can initialize an object
   of type “cv-qualifier{cv2} `T`” independently of the cv-qualifiers
   cv-qualifier{cv1} and cv-qualifier{cv2}.
-
   ``` cpp
   int a;
   const int b = a;
@@ -3823,12 +3729,9 @@ it. — *end note*\]
 An *aggregate* is an array or a class [[class]] with
 
 - no user-declared or inherited constructors [[class.ctor]],
-
 - no private or protected direct non-static data members
   [[class.access]],
-
 - no private or protected direct base classes [[class.access.base]], and
-
 - no virtual functions [[class.virtual]] or virtual base classes
   [[class.mi]].
 
@@ -3838,7 +3741,6 @@ and private base class’ members or constructors. — *end note*\]
 The *elements* of an aggregate are:
 
 - for an array, the array elements in increasing subscript order, or
-
 - for a class, the direct base classes in declaration order, followed by
   the direct non-static data members [[class.mem]] that are not members
   of an anonymous union, in declaration order.
@@ -3854,12 +3756,10 @@ follows:
   the *identifier* in each *designator* shall name a direct non-static
   data member of the class, and the explicitly initialized elements of
   the aggregate are the elements that are, or contain, those members.
-
 - If the initializer list is a brace-enclosed *initializer-list*, the
   explicitly initialized elements of the aggregate are the first n
   elements of the aggregate, where n is the number of elements in the
   initializer list.
-
 - Otherwise, the initializer list must be `\{\}`, and there are no
   explicitly initialized elements.
 
@@ -3870,9 +3770,7 @@ For each explicitly initialized element:
   initialized by the *braced-init-list* `\{ `*D*` \}`, where *D* is the
   *designated-initializer-clause* naming a member of the anonymous union
   member. There shall be only one such *designated-initializer-clause*.
-
   \[*Example 5*:
-
   ``` cpp
   struct C {
     union {
@@ -3884,9 +3782,7 @@ For each explicitly initialized element:
   ```
 
   initializes `c.a` with 1 and `c.x` with 3.
-
   — *end example*\]
-
 - Otherwise, the element is copy-initialized from the corresponding
   *initializer-clause* or is initialized with the
   *brace-or-equal-initializer* of the corresponding
@@ -3894,19 +3790,15 @@ For each explicitly initialized element:
   *assignment-expression* or `= `*assignment-expression* and a narrowing
   conversion [[dcl.init.list]] is required to convert the expression,
   the program is ill-formed.
-
   \[*Note 5*: If the initialization is by
   *designated-initializer-clause*, its form determines whether
   copy-initialization or direct-initialization is
   performed. — *end note*\]
-
   \[*Note 6*: If an initializer is itself an initializer list, the
   element is list-initialized, which will result in a recursive
   application of the rules in this subclause if the element is an
   aggregate. — *end note*\]
-
   \[*Example 6*:
-
   ``` cpp
   struct A {
     int x;
@@ -3918,7 +3810,6 @@ For each explicitly initialized element:
   ```
 
   initializes `a.x` with 1, `a.b.i` with 2, `a.b.j` with 3.
-
   ``` cpp
   struct base1 { int b1, b2 = 42; };
   struct base2 {
@@ -3938,7 +3829,6 @@ For each explicitly initialized element:
   initializes `d1.b1` with 1, `d1.b2` with 2, `d1.b3` with 42, `d1.d`
   with 4, and `d2.b1` with 0, `d2.b2` with 42, `d2.b3` with 42, `d2.d`
   with 4.
-
   — *end example*\]
 
 For a non-union aggregate, each element that is not an explicitly
@@ -3946,17 +3836,14 @@ initialized element is initialized as follows:
 
 - If the element has a default member initializer [[class.mem]], the
   element is initialized from that initializer.
-
 - Otherwise, if the element is not a reference, the element is
   copy-initialized from an empty initializer list [[dcl.init.list]].
-
 - Otherwise, the program is ill-formed.
 
 If the aggregate is a union and the initializer list is empty, then
 
 - if any variant member has a default member initializer, that member is
   initialized from its default member initializer;
-
 - otherwise, the first member of the union (if any) is copy-initialized
   from an empty initializer list.
 
@@ -3990,9 +3877,7 @@ struct A {
 `A\{.c=21\}` has the following steps:
 
 - Initialize `a` with `\{\}`
-
 - Initialize `b` with `= 42`
-
 - Initialize `c` with `= 21`
 
 — *end example*\]
@@ -4346,15 +4231,12 @@ A reference to type “cv-qualifier{cv1} `T1`” is initialized by an
 expression of type “cv-qualifier{cv2} `T2`” as follows:
 
 - If the reference is an lvalue reference and the initializer expression
-
   - is an lvalue (but is not a bit-field), and “cv-qualifier{cv1} `T1`”
     is reference-compatible with “cv-qualifier{cv2} `T2`”, or
-
   - has a class type (i.e., `T2` is a class type), where `T1` is not
     reference-related to `T2`, and can be converted to an lvalue of type
     “cv-qualifier{cv3} `T3`”, where “cv-qualifier{cv1} `T1`” is
     reference-compatible with “cv-qualifier{cv3} `T3`”
-
     (this conversion is selected by enumerating the applicable
     conversion functions [[over.match.ref]] and choosing the best one
     through overload resolution [[over.match]]),
@@ -4363,14 +4245,11 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   first case and to the lvalue result of the conversion in the second
   case (or, in either case, to the appropriate base class subobject of
   the object).
-
   \[*Note 7*: The usual lvalue-to-rvalue [[conv.lval]], array-to-pointer
   [[conv.array]], and function-to-pointer [[conv.func]] standard
   conversions are not needed, and therefore are suppressed, when such
   direct bindings to lvalues are done. — *end note*\]
-
   \[*Example 7*:
-
   ``` cpp
   double d = 2.0;
   double& rd = d;                 // rd refers to d
@@ -4384,13 +4263,10 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   ```
 
   — *end example*\]
-
 - Otherwise, if the reference is an lvalue reference to a type that is
   not const-qualified or is volatile-qualified, the program is
   ill-formed.
-
   \[*Example 8*:
-
   ``` cpp
   double& rd2 = 2.0;              // error: not an lvalue and reference not const
   int  i = 2;
@@ -4398,13 +4274,10 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   ```
 
   — *end example*\]
-
 - Otherwise, if the initializer expression
-
   - is an rvalue (but not a bit-field) or function lvalue and
     “cv-qualifier{cv1} `T1`” is reference-compatible with
     “cv-qualifier{cv2} `T2`”, or
-
   - has a class type (i.e., `T2` is a class type), where `T1` is not
     reference-related to `T2`, and can be converted to an rvalue or
     function lvalue of type “cv-qualifier{cv3} `T3`”, where
@@ -4418,9 +4291,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   materialization conversion [[conv.rval]] is applied. In any case, the
   reference binds to the resulting glvalue (or to an appropriate base
   class subobject).
-
   \[*Example 9*:
-
   ``` cpp
   struct A { };
   struct B : A { } b;
@@ -4438,9 +4309,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   ```
 
   — *end example*\]
-
 - Otherwise:
-
   - If `T1` or `T2` is a class type and `T1` is not reference-related to
     `T2`, user-defined conversions are considered using the rules for
     copy-initialization of an object of type “cv-qualifier{cv1} `T1`” by
@@ -4451,25 +4320,21 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
     function, as described for the non-reference copy-initialization, is
     then used to direct-initialize the reference. For this
     direct-initialization, user-defined conversions are not considered.
-
   - Otherwise, the initializer expression is implicitly converted to a
     prvalue of type “`T1`”. The temporary materialization conversion is
     applied, considering the type of the prvalue to be
     “cv-qualifier{cv1} `T1`”, and the reference is bound to the result.
 
   If `T1` is reference-related to `T2`:
-
   - shall be the same cv-qualification as, or greater cv-qualification
     than, cv-qualifier{cv2}; and
 
   - if the reference is an rvalue reference, the initializer expression
     shall not be an lvalue.
-
     \[*Note 8*: This can be affected by whether the initializer
     expression is move-eligible [[expr.prim.id.unqual]]. — *end note*\]
 
   \[*Example 10*:
-
   ``` cpp
   struct Banana { };
   struct Enigma { operator const Banana(); };
@@ -4523,24 +4388,15 @@ list-initialization in a copy-initialization context is called
 List-initialization can be used
 
 - as the initializer in a variable definition [[dcl.init]]
-
 - as the initializer in a *new-expression* [[expr.new]]
-
 - in a `return` statement [[stmt.return]]
-
 - as a *for-range-initializer* [[stmt.iter]]
-
 - as a function argument [[expr.call]]
-
 - as a subscript [[expr.sub]]
-
 - as an argument to a constructor invocation
   [[dcl.init]], [[expr.type.conv]]
-
 - as an initializer for a non-static data member [[class.mem]]
-
 - in a *mem-initializer* [[class.base.init]]
-
 - on the right-hand side of an assignment [[expr.ass]]
 
 — *end note*\]
@@ -4574,9 +4430,7 @@ follows:
   subsequence of the ordered *identifier* in the direct non-static data
   members of `T`. Aggregate initialization is performed
   [[dcl.init.aggr]].
-
   \[*Example 11*:
-
   ``` cpp
   struct A { int x; int y; int z; };
   A a{.y = 2, .x = 1};                // error: designator order does not match declaration order
@@ -4584,23 +4438,18 @@ follows:
   ```
 
   — *end example*\]
-
 - If `T` is an aggregate class and the initializer list has a single
   element of type cv-qualifier{cv} `U`, where `U` is `T` or a class
   derived from `T`, the object is initialized from that element (by
   copy-initialization for copy-list-initialization, or by
   direct-initialization for direct-list-initialization).
-
 - Otherwise, if `T` is a character array and the initializer list has a
   single element that is an appropriately-typed *string-literal*
   [[dcl.init.string]], initialization is performed as described in that
   subclause.
-
 - Otherwise, if `T` is an aggregate, aggregate initialization is
   performed [[dcl.init.aggr]].
-
   \[*Example 12*:
-
   ``` cpp
   double ad[] = { 1, 2.0 };           // OK
   int ai[] = { 1, 2.0 };              // error: narrowing
@@ -4615,21 +4464,16 @@ follows:
   ```
 
   — *end example*\]
-
 - Otherwise, if the initializer list has no elements and `T` is a class
   type with a default constructor, the object is value-initialized.
-
 - Otherwise, if `T` is a specialization of `std::initializer_list<E>`,
   the object is constructed as described below.
-
 - Otherwise, if `T` is a class type, constructors are considered. The
   applicable constructors are enumerated and the best one is chosen
   through overload resolution [[over.match]], [[over.match.list]]. If a
   narrowing conversion (see below) is required to convert any of the
   arguments, the program is ill-formed.
-
   \[*Example 13*:
-
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // \#1
@@ -4643,9 +4487,7 @@ follows:
   ```
 
   — *end example*\]
-
   \[*Example 14*:
-
   ``` cpp
   struct Map {
     Map(std::initializer_list<std::pair<std::string,int>>);
@@ -4654,9 +4496,7 @@ follows:
   ```
 
   — *end example*\]
-
   \[*Example 15*:
-
   ``` cpp
   struct S {
     // no initializer-list constructors
@@ -4670,16 +4510,13 @@ follows:
   ```
 
   — *end example*\]
-
 - Otherwise, if `T` is an enumeration with a fixed underlying type
   [[dcl.enum]] `U`, the *initializer-list* has a single element `v`, `v`
   can be implicitly converted to `U`, and the initialization is
   direct-list-initialization, the object is initialized with the value
   `T(v)` [[expr.type.conv]]; if a narrowing conversion is required to
   convert `v` to `U`, the program is ill-formed.
-
   \[*Example 16*:
-
   ``` cpp
   enum byte : unsigned char { };
   byte b { 42 };                      // OK
@@ -4699,7 +4536,6 @@ follows:
   ```
 
   — *end example*\]
-
 - Otherwise, if the initializer list has a single element of type `E`
   and either `T` is not a reference type or its referenced type is
   reference-related to `E`, the object or reference is initialized from
@@ -4707,16 +4543,13 @@ follows:
   by direct-initialization for direct-list-initialization); if a
   narrowing conversion (see below) is required to convert the element to
   `T`, the program is ill-formed.
-
   \[*Example 17*:
-
   ``` cpp
   int x1 {2};                         // OK
   int x2 {2.0};                       // error: narrowing
   ```
 
   — *end example*\]
-
 - Otherwise, if `T` is a reference type, a prvalue is generated. The
   prvalue initializes its result object by copy-list-initialization from
   the initializer list. The prvalue is then used to direct-initialize
@@ -4724,13 +4557,10 @@ follows:
   unless `T` is “reference to array of unknown bound of `U`”, in which
   case the type of the prvalue is the type of `x` in the declaration
   `U x[] $H$`, where H is the initializer list.
-
   \[*Note 9*: As usual, the binding will fail and the program is
   ill-formed if the reference type is an lvalue reference to a non-const
   type. — *end note*\]
-
   \[*Example 18*:
-
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // \#1
@@ -4750,22 +4580,16 @@ follows:
   ```
 
   — *end example*\]
-
 - Otherwise, if the initializer list has no elements, the object is
   value-initialized.
-
   \[*Example 19*:
-
   ``` cpp
   int** pp {};                        // initialized to null pointer
   ```
 
   — *end example*\]
-
 - Otherwise, the program is ill-formed.
-
   \[*Example 20*:
-
   ``` cpp
   struct A { int i; int j; };
   A a1 { 1, 2 };                      // aggregate initialization
@@ -4877,31 +4701,25 @@ so allocated. — *end note*\]
 A *narrowing conversion* is an implicit conversion
 
 - from a floating-point type to an integer type, or
-
 - from a floating-point type `T` to another floating-point type whose
   floating-point conversion rank is neither greater than nor equal to
   that of `T`, except where the source is a constant expression and the
   actual value after conversion is within the range of values that can
   be represented (even if it cannot be represented exactly), or
-
 - from an integer type or unscoped enumeration type to a floating-point
   type, except where the source is a constant expression and the actual
   value after conversion will fit into the target type and will produce
   the original value when converted back to the original type, or
-
 - from an integer type or unscoped enumeration type to an integer type
   that cannot represent all the values of the original type, except
   where
-
   - the source is a bit-field whose width w is less than that of its
     type (or, for an enumeration type, its underlying type) and the
     target type can represent all the values of a hypothetical extended
     integer type with width w and with the same signedness as the
     original type or
-
   - the source is a constant expression whose value after integral
     promotions will fit into the target type, or
-
 - from a pointer type or a pointer-to-member type to `bool`.
 
 \[*Note 6*: As indicated above, such conversions are not allowed at the
@@ -5035,7 +4853,6 @@ explicitly defaulted shall
 
 - be a special member function or a comparison operator function
   [[over.binary]], and
-
 - not have default arguments.
 
 An explicitly defaulted special member function $\tcode{F}_1$ is allowed
@@ -5043,16 +4860,13 @@ to differ from the corresponding special member function $\tcode{F}_2$
 that would have been implicitly declared, as follows:
 
 - $\tcode{F}_1$ and $\tcode{F}_2$ may have differing *ref-qualifier*;
-
 - if $\tcode{F}_2$ has an implicit object parameter of type “reference
   to `C`”, $\tcode{F}_1$ may be an explicit object member function whose
   explicit object parameter is of type “reference to `C`”, in which case
   the type of $\tcode{F}_1$ would differ from the type of $\tcode{F}_2$
   in that the type of $\tcode{F}_1$ has an additional parameter;
-
 - $\tcode{F}_1$ and $\tcode{F}_2$ may have differing exception
   specifications; and
-
 - if $\tcode{F}_2$ has a non-object parameter of type `const C&`, the
   corresponding non-object parameter of $\tcode{F}_1$ may be of type
   `C&`.
@@ -5064,10 +4878,8 @@ way other than as allowed by the preceding rules, then:
   $\tcode{F}_1$ differs from the return type of $\tcode{F}_2$ or
   $\tcode{F}_1$’s non-object parameter type is not a reference, the
   program is ill-formed;
-
 - otherwise, if $\tcode{F}_1$ is explicitly defaulted on its first
   declaration, it is defined as deleted;
-
 - otherwise, the program is ill-formed.
 
 A function explicitly defaulted on its first declaration is implicitly
@@ -5342,9 +5154,7 @@ where
   suspended at the initial await expression, and
 
 - a coroutine is suspended at a *final suspend point* if it is suspended
-
   - at a final await expression or
-
   - due to an exception exiting from `unhandled_exception()`.
 
 If searches for the names `return_void` and `return_value` in the scope
@@ -5382,7 +5192,6 @@ looked up by searching for it in the scope of the promise type.
   [[over.match.viable]], overload resolution is performed again on a
   function call created by passing just the amount of space required as
   a prvalue of type `std::size_t`.
-
 - If the search finds no declarations, a search is performed in the
   global scope. Overload resolution is performed on a function call
   created by passing the amount of space required as a prvalue of type
@@ -5762,10 +5571,8 @@ the closing brace is determined as follows:
   [[expr.const]]. If the expression has unscoped enumeration type, the
   enumerator has the underlying type of that enumeration type, otherwise
   it has the same type as the expression.
-
 - If no initializer is specified for the first enumerator, its type is
   an unspecified signed integral type.
-
 - Otherwise the type of the enumerator is the same as that of the
   preceding enumerator unless the incremented value is not representable
   in that type, in which case the type is an unspecified integral type
@@ -7057,7 +6864,6 @@ An *attribute-token* is reserved for future standardization if
 
 - it is not an *attribute-scoped-token* and is not specified in this
   document, or
-
 - it is an *attribute-scoped-token* and its *attribute-namespace* is
   `std` followed by zero or more digits.
 
@@ -7101,7 +6907,6 @@ When the *alignment-specifier* is of the form `alignas(`
 *constant-expression* `)`:
 
 - the *constant-expression* shall be an integral constant expression
-
 - if the constant expression does not evaluate to an alignment value
   [[basic.align]], or evaluates to an extended alignment and the
   implementation does not support that alignment in the context of the
@@ -7496,7 +7301,6 @@ is either
 - a function call expression [[expr.call]] that calls a function
   declared `nodiscard` in a reachable declaration or whose return type
   is a nodiscard type, or
-
 - an explicit type conversion
   [[expr.type.conv]], [[expr.static.cast]], [[expr.cast]] that
   constructs an object through a constructor declared `nodiscard` in a

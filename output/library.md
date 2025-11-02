@@ -149,11 +149,8 @@ other editorial conventions.
 Each library clause contains the following elements, as applicable:
 
 - Summary
-
 - Requirements
-
 - Detailed specifications
-
 - References to the C standard library
 
 #### Summary <a id="structure.summary">[[structure.summary]]</a>
@@ -166,17 +163,11 @@ in each header.
 The contents of the summary and the detailed specifications include:
 
 - macros
-
 - values
-
 - types and alias templates
-
 - classes and class templates
-
 - functions and function templates
-
 - objects and variable templates
-
 - concepts
 
 #### Requirements <a id="structure.requirements">[[structure.requirements]]</a>
@@ -186,9 +177,7 @@ that extends the standard library. Such extensions are generally one of
 the following:
 
 - Template arguments
-
 - Derived classes
-
 - Containers, iterators, and algorithms that meet an interface
   convention or model a concept
 
@@ -248,28 +237,19 @@ that concept are additionally imposed on the use of the declaration.
 The detailed specifications each contain the following elements:
 
 - name and brief description
-
 - synopsis (class definition or function declaration, as appropriate)
-
 - restrictions on template arguments, if any
-
 - description of class invariants
-
 - description of function semantics
 
 Descriptions of class member functions follow the order (as
 appropriate):
 
 - constructor(s) and destructor
-
 - copying, moving & assignment functions
-
 - comparison operator functions
-
 - modifier functions
-
 - observer functions
-
 - operators and other non-member functions
 
 Descriptions of function semantics contain the following elements (as
@@ -277,15 +257,12 @@ appropriate):
 
 - the conditions for the function’s participation in overload resolution
   [[over.match]].
-
   \[*Note 1*: Failure to meet such a condition results in the function’s
   silent non-viability. — *end note*\]
-
   \[*Example 1*: An implementation can express such a condition via a
   *constraint-expression* [[temp.constr.decl]]. — *end example*\]
 
 - the conditions that, if not met, render the program ill-formed.
-
   \[*Example 2*: An implementation can express such a condition via the
   *constant-expression* in a *static_assert-declaration* [[dcl.pre]]. If
   the diagnostic is to be emitted only after the function has been
@@ -506,10 +483,8 @@ The following terms apply to objects and values of bitmask types:
 
 - To *set* a value *Y* in an object *X* is to evaluate the expression
   *X* `|=` *Y*.
-
 - To *clear* a value *Y* in an object *X* is to evaluate the expression
   *X* `&= ~`*Y*.
-
 - The value *Y* *is set* in the object *X* if the expression *X* `&` *Y*
   is nonzero.
 
@@ -524,20 +499,16 @@ sequences that follow a few uniform conventions:
   execution by a call to `setlocale(int, const char*)` [[clocale.syn]],
   or by a change to a `locale` object, as described in [[locales]] and
   [[input.output]].
-
 - The *execution character set* and the *execution wide-character set*
   are supersets of the basic literal character set [[lex.charset]]. The
   encodings of the execution character sets and the sets of additional
   elements (if any) are locale-specific. Each element of the execution
   wide-character set is encoded as a single code unit representable by a
   value of type `wchar_t`.
-
   \[*Note 2*: The encodings of the execution character sets can be
   unrelated to any literal encoding. — *end note*\]
-
 - A *letter* is any of the 26 lowercase or 26 uppercase letters in the
   basic character set.
-
 - The *decimal-point character* is the locale-specific (single-byte)
   character used by functions that convert between a (single-byte)
   character sequence and a value of one of the floating-point types. It
@@ -545,7 +516,6 @@ sequences that follow a few uniform conventions:
   fractional part. It is represented in [[support]] through [[thread]]
   and [[depr]] by a period, `'.'`, which is also its value in the `"C"`
   locale.
-
 - A *character sequence* is an array object [[dcl.array]] `A` that can
   be declared as `T\;A[N]`, where `T` is any of the types `char`,
   `unsigned char`, or `signed char` [[basic.fundamental]], optionally
@@ -670,27 +640,21 @@ implementations and hosted implementations. — *end note*\]
 A declaration in a header synopsis is a freestanding item if
 
 - it is followed by a comment that includes *freestanding*, or
-
 - the header synopsis begins with a comment that includes *all
   freestanding*.
 
 An entity or *typedef-name* is a freestanding item if it is:
 
 - introduced by a declaration that is a freestanding item,
-
 - an enclosing namespace of a freestanding item,
-
 - a friend of a freestanding item,
-
 - denoted by a *typedef-name* that is a freestanding item, or
-
 - denoted by an alias template that is a freestanding item.
 
 A macro is a freestanding item if it is defined in a header synopsis and
 
 - the definition is followed by a comment that includes *freestanding*,
   or
-
 - the header synopsis begins with a comment that includes *all
   freestanding*.
 
@@ -1000,15 +964,10 @@ tables,
 
 - `T` denotes an object or reference type to be supplied by a C++
   program instantiating a template,
-
 - `a`, `b`, and `c` denote values of type (possibly const) `T`,
-
 - `s` and `t` denote modifiable lvalues of type `T`,
-
 - `u` denotes an identifier,
-
 - `rv` denotes an rvalue of type `T`, and
-
 - `v` denotes an lvalue of type (possibly const) `T` or an rvalue of
   type `const T`.
 
@@ -1027,12 +986,9 @@ An object `t` is *swappable with* an object `u` if and only if:
 
 - the expressions `swap(t, u)` and `swap(u, t)` are valid when evaluated
   in the context described below, and
-
 - these expressions have the following effects:
-
   - the object referred to by `t` has the value originally held by `u`
     and
-
   - the object referred to by `u` has the value originally held by `t`.
 
 The context in which `swap(t, u)` and `swap(u, t)` are evaluated shall
@@ -1040,7 +996,6 @@ ensure that a binary non-member function named “swap” is selected via
 overload resolution [[over.match]] on a candidate set that includes:
 
 - the two `swap` function templates defined in `<utility>` and
-
 - the lookup set produced by argument-dependent lookup
   [[basic.lookup.argdep]].
 
@@ -1121,10 +1076,8 @@ values. A type `P` meets the *Cpp17\\Nullable\\Pointer* requirements if:
 - `P` meets the *Cpp17EqualityComparable*, *Cpp17DefaultConstructible*,
   *Cpp17CopyConstructible*, *Cpp17\\Copy\\Assign\\able*,
   *Cpp17Swappable*, and *Cpp17Destructible* requirements,
-
 - the expressions shown in [[cpp17.nullablepointer]] are valid and have
   the indicated semantics, and
-
 - `P` meets all the other requirements of this subclause.
 
 A value-initialized object of type `P` produces the null value of the
@@ -1151,10 +1104,8 @@ non-`const` lvalue of type `P`, `a` and `b` denote values of type
 A type `H` meets the requirements if:
 
 - it is a function object type [[function.objects]],
-
 - it meets the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
   and *Cpp17Destructible* ( [[cpp17.destructible]]) requirements, and
-
 - the expressions shown in [[cpp17.hash]] are valid and have the
   indicated semantics.
 
@@ -1185,45 +1136,28 @@ In subclause [[allocator.requirements]],
 
 - `T`, `U`, `C` denote any cv-unqualified object type
   [[term.object.type]],
-
 - `X` denotes an allocator class for type `T`,
-
 - `Y` denotes the corresponding allocator class for type `U`,
-
 - `XX` denotes the type `allocator_traits<X>`,
-
 - `YY` denotes the type `allocator_traits<Y>`,
-
 - `a`, `a1`, `a2` denote lvalues of type `X`,
-
 - `u` denotes the name of a variable being declared,
-
 - `b` denotes a value of type `Y`,
-
 - `c` denotes a pointer of type `C*` through which indirection is valid,
-
 - `p` denotes a value of type `XX::pointer` obtained by calling
   `a1.allocate`, where `a1 == a`,
-
 - `q` denotes a value of type `XX::const_pointer` obtained by conversion
   from a value `p`,
-
 - `r` denotes a value of type `T&` obtained by the expression `*p`,
-
 - `w` denotes a value of type `XX::void_pointer` obtained by conversion
   from a value `p`,
-
 - `x` denotes a value of type `XX::const_void_pointer` obtained by
   conversion from a value `q` or a value `w`,
-
 - `y` denotes a value of type `XX::const_void_pointer` obtained by
   conversion from a result value of `YY::allocate`, or else a value of
   type (possibly const) `std::nullptr_t`,
-
 - `n` denotes a value of type `XX::size_type`,
-
 - `Args` denotes a template parameter pack, and
-
 - `args` denotes a function parameter pack with the pattern `Args&&`.
 
 The class template `allocator_traits` [[allocator.traits]] supplies a
@@ -1439,7 +1373,6 @@ a.deallocate(p, n)
   first argument of that call. `p` is equal to `ret.ptr` and `n` is a
   value such that
   $\texttt{req} \leq \texttt{n} \leq \texttt{ret.count}$.
-
 - Otherwise, `p` is a pointer value obtained from `allocate`. `n` equals
   the value passed as the first argument to the invocation of `allocate`
   which returned `p`.
@@ -1708,7 +1641,6 @@ allocator completeness requirements if, whether or not `T` is a complete
 type:
 
 - `X` is a complete type, and
-
 - all the member types of `allocator_traits<X>` [[allocator.traits]]
   other than `value_type` are complete types.
 
@@ -1752,13 +1684,10 @@ The behavior of a C++ program is undefined if it declares
 
 - an explicit specialization of any member function of a standard
   library class template, or
-
 - an explicit specialization of any member function template of a
   standard library class or class template, or
-
 - an explicit or partial specialization of any member class template of
   a standard library class or class template, or
-
 - a deduction guide for any standard library class template.
 
 A program may explicitly instantiate a class template defined in the
@@ -1811,9 +1740,7 @@ future revisions of this International Standard. — *end example*\]
 The C++ standard library reserves the following kinds of names:
 
 - macros
-
 - global names
-
 - names with external linkage
 
 If a program declares or defines a name in a context where it is
@@ -1826,91 +1753,48 @@ In namespace `std`, the following names are reserved for previous
 standardization:
 
 -  `auto_ptr`,
-
 -  `auto_ptr_ref`,
-
 -  `binary_function`,
-
 -  `binary_negate`,
-
 -  `bind1st`,
-
 -  `bind2nd`,
-
 -  `binder1st`,
-
 -  `binder2nd`,
-
 -  `const_mem_fun1_ref_t`,
-
 -  `const_mem_fun1_t`,
-
 -  `const_mem_fun_ref_t`,
-
 -  `const_mem_fun_t`,
-
 -  `declare_no_pointers`,
-
 -  `declare_reachable`,
-
 -  `get_pointer_safety`,
-
 -  `get_temporary_buffer`,
-
 -  `get_unexpected`,
-
 -  `gets`,
-
 -  `is_literal_type`,
-
 -  `is_literal_type_v`,
-
 -  `mem_fun1_ref_t`,
-
 -  `mem_fun1_t`,
-
 -  `mem_fun_ref_t`,
-
 -  `mem_fun_ref`,
-
 -  `mem_fun_t`,
-
 -  `mem_fun`,
-
 -  `not1`,
-
 -  `not2`,
-
 -  `pointer_safety`,
-
 -  `pointer_to_binary_function`,
-
 -  `pointer_to_unary_function`,
-
 -  `ptr_fun`,
-
 -  `random_shuffle`,
-
 -  `raw_storage_iterator`,
-
 -  `result_of`,
-
 -  `result_of_t`,
-
 -  `return_temporary_buffer`,
-
 -  `set_unexpected`,
-
 -  `unary_function`,
-
 -  `unary_negate`,
-
 -  `uncaught_exception`,
-
 -  `undeclare_no_pointers`,
-
 -  `undeclare_reachable`, and
-
 -  `unexpected_handler`.
 
 The following names are reserved as members for previous
@@ -1918,19 +1802,12 @@ standardization, and may not be used as a name for object-like macros in
 portable code:
 
 -  `argument_type`,
-
 -  `first_argument_type`,
-
 -  `io_state`,
-
 -  `open_mode`,
-
 -  `preferred`,
-
 -  `second_argument_type`,
-
 -  `seek_dir`, and.
-
 -  `strict`.
 
 The name `stossc` is reserved as a member function for previous
@@ -2090,22 +1967,18 @@ In particular, the behavior is undefined in the following cases:
 
 - For replacement functions [[new.delete]], if the installed replacement
   function does not implement the semantics of the applicable paragraph.
-
 - For handler functions [[new.handler]], [[terminate.handler]], if the
   installed handler function does not implement the semantics of the
   applicable paragraph.
-
 - For types used as template arguments when instantiating a template
   component, if the operations on the type do not implement the
   semantics of the applicable *Requirements* subclause
   [[allocator.requirements]], [[container.requirements]], [[iterator.requirements]], [[algorithms.requirements]], [[numeric.requirements]].
   Operations on such types can report a failure by throwing an exception
   unless otherwise specified.
-
 - If any replacement function or handler function or destructor
   operation exits via an exception, unless specifically allowed in the
   applicable paragraph.
-
 - If an incomplete type [[term.incomplete.type]] is used as a template
   argument when instantiating a template component or evaluating a
   concept, unless specifically allowed for that component.
@@ -2118,22 +1991,18 @@ the C++ standard library, unless explicitly stated otherwise.
 - If an argument to a function has an invalid value (such as a value
   outside the domain of the function or a pointer invalid for its
   intended use), the behavior is undefined.
-
 - If a function argument is described as being an array, the pointer
   actually passed to the function shall have a value such that all
   address computations and accesses to objects (that would be valid if
   the pointer did point to the first element of such an array) are in
   fact valid.
-
 - If a function argument is bound to an rvalue reference parameter, the
   implementation may assume that this parameter is a unique reference to
   this argument, except that the argument passed to a move-assignment
   operator may be a reference to `*this` [[lib.types.movedfrom]].
-
   \[*Note 3*: If the type of a parameter is a forwarding reference
   [[temp.deduct.call]] that is deduced to an lvalue reference type, then
   the argument is not bound to an rvalue reference. — *end note*\]
-
   \[*Note 4*: If a program casts an lvalue to an xvalue while passing
   that lvalue to a library function (e.g., by calling the function with
   the argument `std::move(x)`), the program is effectively asking that
@@ -2296,10 +2165,8 @@ further elaboration, it means:
 
 - For the sort algorithms the relative order of equivalent elements is
   preserved.
-
 - For the remove and copy algorithms the relative order of the elements
   that are not removed is preserved.
-
 - For the merge algorithms, for equivalent elements in the original two
   ranges, the elements from the first range (preserving their original
   order) precede the elements from the second range (preserving their
@@ -2378,12 +2245,9 @@ the implementation.
 In any case:
 
 - Every base class described as `virtual` shall be virtual;
-
 - Every base class not specified as `virtual` shall not be virtual;
-
 - Unless explicitly stated otherwise, types with distinct names shall be
   distinct types.
-
   \[*Note 5*: There is an implicit exception to this rule for types that
   are described as synonyms [[dcl.typedef]], [[namespace.udecl]], such
   as `size_t` [[support.types]] and `streamoff`

@@ -124,7 +124,6 @@ program is undefined if:
 
 - an instantiation of a template specified in [[type.traits]] directly
   or indirectly depends on an incompletely-defined object type `T`, and
-
 - that instantiation could yield a different result were `T`
   hypothetically completed.
 
@@ -640,9 +639,7 @@ For the purpose of defining the templates in this subclause, let
 
 - If `T` is a reference or function type, `VAL<T>` is an expression with
   the same type and value category as `declval<T>()`.
-
 - Otherwise, `VAL<T>` is a prvalue that initially has type `T`.
-
   \[*Note 1*: If `T` is cv-qualified, the cv-qualification is subject to
   adjustment [[expr.type]]. — *end note*\]
 
@@ -713,7 +710,6 @@ The predicate condition for a template specialization
 if:
 
 - `T` is trivially copyable, and
-
 - any two objects of type `T` with the same value have the same object
   representation, where two objects of array or non-union class type are
   considered to have the same value if their respective sequences of
@@ -880,17 +876,13 @@ header `<functional>` [[functional.syn]] is included.
 Let:
 
 - `CREF(A)` be `add_lvalue_reference_t<const remove_reference_t<A>{}>`,
-
 - `XREF(A)` denote a unary alias template `T` such that `T<U>` denotes
   the same type as `U` with the addition of `A`’s cv and reference
   qualifiers, for a non-reference cv-unqualified type `U`,
-
 - `COPYCV(FROM, TO)` be an alias for type `TO` with the addition of
   `FROM`’s top-level cv-qualifiers,
-
   \[*Example 1*: `COPYCV(const int, volatile short)` is an alias for
   `const volatile short`. — *end example*\]
-
 - `COND-RES(X, Y)` be
   `decltype(false ?\ declval<X(&)()>()() :\ declval<Y(&)()>()())`.
 
@@ -900,19 +892,15 @@ Given types `A` and `B`, let `X` be `remove_reference_t<A>`, let `Y` be
 - If `A` and `B` are both lvalue reference types, `COMMON-REF(A, B)` is
   `COND-RES(COPYCV(X, Y) &,
       COPYCV(Y, X) &)` if that type exists and is a reference type.
-
 - Otherwise, let `C` be `remove_reference_t<COMMON-REF(X&, Y&)>&&`. If
   `A` and `B` are both rvalue reference types, `C` is well-formed, and
   `is_convertible_v<A, C> && is_convertible_v<B, C>` is `true`, then
   `COMMON-REF(A, B)` is `C`.
-
 - Otherwise, let `D` be `COMMON-REF(const X&, Y&)`. If `A` is an rvalue
   reference and `B` is an lvalue reference and `D` is well-formed and
   `is_convertible_v<A, D>` is `true`, then `COMMON-REF(A, B)` is `D`.
-
 - Otherwise, if `A` is an lvalue reference and `B` is an rvalue
   reference, then `COMMON-REF(A, B)` is `COMMON-REF(B, A)`.
-
 - Otherwise, `COMMON-REF(A, B)` is ill-formed.
 
 If any of the types computed above is ill-formed, then
@@ -923,31 +911,24 @@ Note A: For the `common_type` trait applied to a template parameter pack
 as follows:
 
 - If `sizeof...(T)` is zero, there shall be no member `type`.
-
 - If `sizeof...(T)` is one, let `T0` denote the sole type constituting
   the pack `T`. The member *typedef-name* `type` shall denote the same
   type, if any, as `common_type_t<T0, T0>`; otherwise there shall be no
   member `type`.
-
 - If `sizeof...(T)` is two, let the first and second types constituting
   `T` be denoted by `T1` and `T2`, respectively, and let `D1` and `D2`
   denote the same types as `decay_t<T1>` and `decay_t<T2>`,
   respectively.
-
   - If `is_same_v<T1, D1>` is `false` or `is_same_v<T2, D2>` is `false`,
     let `C` denote the same type, if any, as `common_type_t<D1, D2>`.
-
   - \[*Note 2*: None of the following will apply if there is a
     specialization `common_type<D1, D2>`. — *end note*\]
-
   - Otherwise, if
-
     ``` cpp
     decay_t<decltype(false ? declval<D1>() : declval<D2>())>
     ```
 
     denotes a valid type, let `C` denote that type.
-
   - Otherwise, if `COND-RES(CREF(D1),
           CREF(D2))` denotes a type, let `C` denote the type
     `decay_t<COND-RES(CREF(D1),
@@ -955,7 +936,6 @@ as follows:
 
   In either case, the member *typedef-name* `type` shall denote the same
   type, if any, as `C`. Otherwise, there shall be no member `type`.
-
 - If `sizeof...(T)` is greater than two, let `T1`, `T2`, and `R`,
   respectively, denote the first, second, and (pack of) remaining types
   constituting `T`. Let `C` denote the same type, if any, as
@@ -984,40 +964,30 @@ of types, the member `type` shall be either defined or not present as
 follows:
 
 - If `sizeof...(T)` is zero, there shall be no member `type`.
-
 - Otherwise, if `sizeof...(T)` is one, let `T0` denote the sole type in
   the pack `T`. The member typedef `type` shall denote the same type as
   `T0`.
-
 - Otherwise, if `sizeof...(T)` is two, let `T1` and `T2` denote the two
   types in the pack `T`. Then
-
   - Let `R` be `COMMON-REF(T1, T2)`. If `T1` and `T2` are reference
     types, `R` is well-formed, and
     `is_convertible_v<add_pointer_t<T1>, add_pointer_t<R>> && is_convertible_v<add_poin\linebreak{}ter_t<T2>, add_pointer_t<R>>`
     is `true`, then the member typedef `type` denotes `R`.
-
   - Otherwise, if
     `basic_common_reference<remove_cvref_t<T1>, remove_cvref_t<T2>,
           XREF(T1), XREF(T2)>::type` is well-formed, then the member
     typedef `type` denotes that type.
-
   - Otherwise, if `COND-RES(T1, T2)` is well-formed, then the member
     typedef `type` denotes that type.
-
   - Otherwise, if `common_type_t<T1, T2>` is well-formed, then the
     member typedef `type` denotes that type.
-
   - Otherwise, there shall be no member `type`.
-
 - Otherwise, if `sizeof...(T)` is greater than two, let `T1`, `T2`, and
   `Rest`, respectively, denote the first, second, and (pack of)
   remaining types comprising `T`. Let `C` be the type
   `common_reference_t<T1, T2>`. Then:
-
   - If there is such a type `C`, the member typedef `type` shall denote
     the same type, if any, as `common_reference_t<C, Rest...>`.
-
   - Otherwise, there shall be no member `type`.
 
 Note D: Notwithstanding the provisions of [[meta.type.synop]], and
@@ -1106,7 +1076,6 @@ public and unambiguous base that is either
 - the first type $\texttt{B}_{i}$ in the list
   `true_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
   which `bool(`$\texttt{B}_{i}$`::value)` is `false`, or
-
 - if there is no such $\texttt{B}_{i}$, the last type in the list.
 
 \[*Note 2*: This means a specialization of `conjunction` does not
@@ -1147,7 +1116,6 @@ public and unambiguous base that is either
 - the first type $\texttt{B}_{i}$ in the list
   `false_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
   which `bool(`$\texttt{B}_{i}$`::value)` is `true`, or
-
 - if there is no such $\texttt{B}_{i}$, the last type in the list.
 
 \[*Note 4*: This means a specialization of `disjunction` does not
@@ -1328,7 +1296,6 @@ values of `N` and `D`:
 
 - `num` shall have the value
   `$\operatorname{sgn}(\tcode{N})$ * $\operatorname{sgn}(\tcode{D})$ * abs(N) / gcd`.
-
 - `den` shall have the value `abs(D) / gcd`.
 
 ### Arithmetic on `ratio}{s` <a id="ratio.arithmetic">[[ratio.arithmetic]]</a>

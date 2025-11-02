@@ -140,14 +140,11 @@ characters) or follows whitespace containing at least one new-line
 character, and is
 
 - a `#` preprocessing token, or
-
 - an `import` preprocessing token immediately followed on the same
   logical line by a *header-name*, `<`, *identifier*, *string-literal*,
   or `:` preprocessing token, or
-
 - a `module` preprocessing token immediately followed on the same
   logical line by an *identifier*, `:`, or `;` preprocessing token, or
-
 - an `export` preprocessing token immediately followed on the same
   logical line by one of the two preceding forms.
 
@@ -650,10 +647,8 @@ translation unit and at most one point of undefinition, as follows:
 
 -  The *point of definition* of a macro definition within a translation
   unit T is
-
   - if the `#define` directive of the macro definition occurs within T,
     the point at which that directive occurs, or otherwise,
-
   - if the macro name is not lexically identical to a keyword
     [[lex.key]] or to the *identifier* `module` or `import`, the first
     point of macro import in T of a header unit containing a point of
@@ -661,7 +656,6 @@ translation unit and at most one point of undefinition, as follows:
 
   In the latter case, the macro is said to be *imported* from the header
   unit.
-
 -  The *point of undefinition* of a macro definition within a
   translation unit is the first point at which a `#undef` directive
   naming the macro occurs after its point of definition, or the first
@@ -854,7 +848,6 @@ sequence determined as follows:
 - If the parameter is of the form *va-opt-replacement*, the replacement
   preprocessing tokens are the preprocessing token sequence for the
   corresponding argument, as specified below.
-
 - Otherwise, the replacement preprocessing tokens are the preprocessing
   tokens of corresponding argument after all macros contained therein
   have been expanded. The argument’s preprocessing tokens are completely

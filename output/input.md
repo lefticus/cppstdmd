@@ -592,20 +592,15 @@ defines several member types:
 
 - a type `failure`, defined as either a class derived from
   `system_error` or a synonym for a class derived from `system_error`;
-
 - a class `Init`;
-
 - three bitmask types, `fmtflags`, `iostate`, and `openmode`;
-
 - an enumerated type, `seekdir`.
 
 It maintains several kinds of data:
 
 - state information that reflects the integrity of the stream buffer;
-
 - control information that influences how to interpret (format) input
   sequences and how to generate (format) output sequences;
-
 - additional information that is stored by the program for its private
   use.
 
@@ -616,10 +611,8 @@ For the sake of exposition, the maintained data is presented here as:
 - `static int index`, specifies the next available unique index for the
   integer or pointer arrays maintained for the private use of the
   program, initialized to an unspecified value;
-
 - `long* iarray`, points to the first element of an arbitrary-length
   `long` array maintained for the private use of the program;
-
 - `void** parray`, points to the first element of an arbitrary-length
   pointer array maintained for the private use of the program.
 
@@ -1151,13 +1144,9 @@ In addition, the expressions shown in [[fpos.operations]] are valid and
 have the indicated semantics. In that table,
 
 - `P` refers to a specialization of `fpos`,
-
 - `p` and `q` refer to values of type `P` or `const P`,
-
 - `pl` and `ql` refer to modifiable lvalues of type `P`,
-
 - `O` refers to type `streamoff`, and
-
 - `o` and `o2` refer to values of type `streamoff` or `const streamoff`.
 
 Stream operations that return a value of type `traits::pos_type` return
@@ -1361,28 +1350,20 @@ member objects of `rhs` as follows:
 
 - calls each registered callback pair `(fn, idx)` as
   `(*fn)(erase_event, *this, idx)`;
-
 - then, assigns to the member objects of `*this` the corresponding
   member objects of `rhs`, except that
-
   - `rdstate()`, `rdbuf()`, and `exceptions()` are left unchanged;
-
   - the contents of arrays pointed at by `pword` and `iword` are copied,
     not the pointers themselves;
-
     This suggests an infinite amount of copying, but the implementation
     can keep track of the maximum element of the arrays that is nonzero.
-
     and
-
   - if any newly stored pointer values in `*this` point at objects
     stored outside the object `rhs` and those objects are destroyed when
     `rhs` is destroyed, the newly stored pointer values are altered to
     point at newly constructed copies of the objects;
-
 - then, calls each callback pair that was copied from `rhs` as
   `(*fn)(copyfmt_event, *this, idx)`;
-
 - then, calls `exceptions(rhs.exceptions())`.
 
 \[*Note 1*: The second pass through the callback pairs permits a copied
@@ -1794,15 +1775,11 @@ Stream buffers can impose various constraints on the sequences they
 control. Some constraints are:
 
 - The controlled input sequence can be not readable.
-
 - The controlled output sequence can be not writable.
-
 - The controlled sequences can be associated with the contents of other
   representations for character sequences, such as external files.
-
 - The controlled sequences can support operations *directly* to or from
   associated sequences.
-
 - The controlled sequences can impose limitations on how the program can
   read characters from a sequence, write characters to a sequence, put
   characters back into an input sequence, or alter the stream position.
@@ -1818,10 +1795,8 @@ are:
 
 - the *beginning pointer*, or lowest element address in the array
   (called `xbeg` here);
-
 - the *next pointer*, or next element address that is a current
   candidate for reading or writing (called `xnext` here);
-
 - the *end pointer*, or first element address beyond the end of the
   array (called `xend` here).
 
@@ -1832,17 +1807,14 @@ above:
 - If `xnext` is not a null pointer, then `xbeg` and `xend` shall also be
   non-null pointers into the same `charT` array, as described above;
   otherwise, `xbeg` and `xend` shall also be null.
-
 - If `xnext` is not a null pointer and `xnext < xend` for an output
   sequence, then a *write position* is available. In this case, `*xnext`
   shall be assignable as the next element to write (to put, or to store
   a character value, into the sequence).
-
 - If `xnext` is not a null pointer and `xbeg < xnext` for an input
   sequence, then a *putback position* is available. In this case,
   `xnext[-1]` shall have a defined value and is the next (preceding)
   element to store a character that is put back into the input sequence.
-
 - If `xnext` is not a null pointer and `xnext < xend` for an input
   sequence, then a *read position* is available. In this case, `*xnext`
   shall have a defined value and is the next element to read (to get, or
@@ -1951,7 +1923,6 @@ for deriving various *stream buffers* whose objects each control two
 *character sequences*:
 
 - a character *input sequence*;
-
 - a character *output sequence*.
 
 #### Constructors <a id="streambuf.cons">[[streambuf.cons]]</a>
@@ -1967,7 +1938,6 @@ assure that only objects for classes derived from this class can be
 constructed.
 
 - all pointer member objects to null pointers,
-
 - the `getloc()` member to a copy of the global locale, `locale()`, at
   the time of construction.
 
@@ -1982,17 +1952,11 @@ basic_streambuf(const basic_streambuf& rhs);
 *Ensures:*
 
 - `eback() == rhs.eback()`
-
 - `gptr() == rhs.gptr()`
-
 - `egptr() == rhs.egptr()`
-
 - `pbase() == rhs.pbase()`
-
 - `pptr() == rhs.pptr()`
-
 - `epptr() == rhs.epptr()`
-
 - `getloc() == rhs.getloc()`
 
 ``` cpp
@@ -2142,17 +2106,11 @@ basic_streambuf& operator=(const basic_streambuf& rhs);
 *Ensures:*
 
 - `eback() == rhs.eback()`
-
 - `gptr() == rhs.gptr()`
-
 - `egptr() == rhs.egptr()`
-
 - `pbase() == rhs.pbase()`
-
 - `pptr() == rhs.pptr()`
-
 - `epptr() == rhs.epptr()`
-
 - `getloc() == rhs.getloc()`
 
 *Returns:* `*this`.
@@ -2347,7 +2305,6 @@ The of characters is defined as the concatenation of
 
 - the empty sequence if `gptr()` is null, otherwise the characters in
   \[`gptr()`, `egptr()`), followed by
-
 - some (possibly empty) sequence of characters read from the input
   sequence.
 
@@ -2369,7 +2326,6 @@ that either
 - the backup sequence contains at least `gptr() - eback()` characters,
   in which case the characters in \[`eback()`, `gptr()`) agree with the
   last `gptr() - eback()` characters of the backup sequence, or
-
 - the characters in \[`gptr() - n`, `gptr()`) agree with the backup
   sequence (where `n` is the length of the backup sequence).
 
@@ -2410,7 +2366,6 @@ The is defined as for `underflow()`, with the modifications that
 - If `traits::eq_int_type(c, traits::eof())` returns `true`, then the
   input sequence is backed up one character before the pending sequence
   is determined.
-
 - If `traits::eq_int_type(c, traits::eof())` returns `false`, then `c`
   is prepended. Whether the input sequence is backed up or modified in
   any other way is unspecified.
@@ -2457,7 +2412,6 @@ The pending sequence is defined as the concatenation of
 
 - the empty sequence if `pbase()` is null, otherwise the
   `pptr() - pbase()` characters beginning at `pbase()`, followed by
-
 - the empty sequence if `traits::eq_int_type(c, traits::eof())` returns
   `true`, otherwise the sequence consisting of `c`.
 
@@ -2466,13 +2420,11 @@ obeys the following constraints:
 
 - The effect of consuming a character on the associated output sequence
   is specified.
-
   That is, for each class derived from a specialization of
   `basic_streambuf` in this Clause [[stringbuf,filebuf]], a
   specification of how consuming a character effects the associated
   output sequence is given. There is no requirement on a program-defined
   class.
-
 - Let `r` be the number of characters in the pending sequence not
   consumed. If `r` is nonzero then `pbase()` and `pptr()` are set so
   that: `pptr() - pbase() == r` and the `r` characters starting at
@@ -2480,7 +2432,6 @@ obeys the following constraints:
   characters of the pending sequence have been consumed) then either
   `pbase()` is set to , or `pbase()` and `pptr()` are both set to the
   same non-null value.
-
 - The function may fail if either appending some character to the
   associated output stream fails or if it is unable to establish
   `pbase()` and `pptr()` according to the above rules.
@@ -2986,11 +2937,9 @@ Otherwise, let `FP` be a standard floating-point type:
 - if the floating-point conversion rank of
   *`extended-floating-point-type`* is less than or equal to that of
   `float`, then `FP` is `float`,
-
 - otherwise, if the floating-point conversion rank of
   *`extended-floating-point-type`* is less than or equal to that of
   `double`, then `FP` is `double`,
-
 - otherwise, `FP` is `long double`.
 
 The conversion occurs as if performed by the following code fragment
@@ -3073,9 +3022,7 @@ Otherwise `n` is `N`. `n` is the maximum number of characters stored.
 Characters are extracted and stored until any of the following occurs:
 
 - `n-1` characters are stored;
-
 - end of file occurs on the input sequence;
-
 - letting `ct` be `use_facet<ctype<charT>>(in.getloc())`,
   `ct.is(ct.space, c)` is `true`.
 
@@ -3118,10 +3065,8 @@ output sequence controlled by `sb`. Characters are extracted and
 inserted until any of the following occurs:
 
 - end-of-file occurs on the input sequence;
-
 - inserting in the output sequence fails (in which case the character to
   be inserted is not extracted);
-
 - an exception occurs (in which case the exception is caught).
 
 If the function inserts no characters, `ios_base::failbit` is set in the
@@ -3209,9 +3154,7 @@ Note that this function is not overloaded on types `signed char` and
 Characters are extracted and stored until any of the following occurs:
 
 - `n` is less than one or `n - 1` characters are stored;
-
 - end-of-file occurs on the input sequence;
-
 - `traits::eq(c, delim)` for the next available input character `c` (in
   which case `c` is not extracted).
 
@@ -3240,13 +3183,10 @@ inserts them in the output sequence controlled by `sb`. Characters are
 extracted and inserted until any of the following occurs:
 
 - end-of-file occurs on the input sequence;
-
 - inserting in the output sequence fails (in which case the character to
   be inserted is not extracted);
-
 - `traits::eq(c, delim)` for the next available input character `c` (in
   which case `c` is not extracted);
-
 - an exception occurs (in which case, the exception is caught but not
   rethrown).
 
@@ -3278,13 +3218,10 @@ Note that this function is not overloaded on types `signed char` and
 Characters are extracted and stored until one of the following occurs:
 
 1.  end-of-file occurs on the input sequence;
-
 2.  `traits::eq(c, delim)` for the next available input character `c`
     (in which case the input character is extracted but not stored);
-
     Since the final input character is “extracted”, it is counted in the
     `gcount()`, even though it is not stored.
-
 3.  `n` is less than one or `n - 1` characters are stored (in which case
     the function calls `setstate(failbit)`).
 
@@ -3349,11 +3286,9 @@ occurs:
 
 - `n != numeric_limits<streamsize>::max()`[[numeric.limits]] and `n`
   characters have been extracted so far
-
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(eofbit)`, which may throw
   `ios_base::failure`[[iostate.flags]]);
-
 - `traits::eq_int_type(traits::to_int_type(c), delim)` for the next
   available input character `c` (in which case `c` is extracted).
 
@@ -3390,7 +3325,6 @@ Characters are extracted and stored until either of the following
 occurs:
 
 - `n` characters are stored;
-
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(failbit | eofbit)`, which may throw
   `ios_base::failure`[[iostate.flags]]).
@@ -3410,7 +3344,6 @@ array whose first element is designated by `s`. If
 `ios_base::failure`[[iostate.flags]]), and extracts no characters;
 
 - If `rdbuf()->in_avail() == 0`, extracts no characters
-
 - If `rdbuf()->in_avail() > 0`, extracts `min(rdbuf()->in_avail(), n))`.
 
 *Returns:* The number of characters extracted.
@@ -4140,10 +4073,8 @@ Gets characters from `sb` and inserts them in `*this`. Characters are
 read from `sb` and inserted until any of the following occurs:
 
 - end-of-file occurs on the input sequence;
-
 - inserting in the output sequence fails (in which case the character to
   be inserted is not extracted);
-
 - an exception occurs while getting a character from `sb`.
 
 If the function inserts no characters, it calls `setstate(failbit)`
@@ -4220,11 +4151,9 @@ be computed as if by:
   `const charT*`, and also for the overload where the first argument is
   of type `basic_ostream<char, traits>&` and the second is of type
   `const char*`,
-
 - `char_traits<char>::length(s)` for the overload where the first
   argument is of type `basic_ostream<charT, traits>&` and the second is
   of type `const char*`,
-
 - `traits::length(reinterpret_cast<const char*>(s))` for the other two
   overloads.
 
@@ -4274,7 +4203,6 @@ void vprint_nonunicode(ostream& os, string_view fmt, format_args args);
 function [[ostream.formatted.reqmts]] of `os`, except that:
 
 - failure to generate output is reported as specified below, and
-
 - any exception thrown by the call to `vformat` is propagated without
   regard to the value of `os.exceptions()` and without turning on
   `ios_base::badbit` in the error state of `os`.
@@ -4347,7 +4275,6 @@ Note that this function is not overloaded on types `signed char` and
 Characters are inserted until either of the following occurs:
 
 - `n` characters are inserted;
-
 - inserting in the output sequence fails (in which case the function
   calls `setstate(badbit)`, which may throw
   `ios_base::failure`[[iostate.flags]]).
@@ -4772,11 +4699,9 @@ function [[ostream.formatted.reqmts]] of `out`. This forms a character
 sequence `seq`, initially consisting of the following elements:
 
 - `delim`.
-
 - Each character in `s`. If the character to be output is equal to
   `escape` or `delim`, as determined by `traits_type::eq`, first output
   `escape`.
-
 - `delim`.
 
 Let `x` be the number of elements initially in `seq`. Then padding is
@@ -4800,35 +4725,25 @@ template<class charT, class traits, class Allocator>
   behaves as if it extracts the following characters from `in` using
   `operator>>(basic_istream<charT, traits>&, charT&)`[[istream.extractors]]
   which may throw `ios_base::failure`[[ios.failure]]:
-
   - If the first character extracted is equal to `delim`, as determined
     by `traits_type::eq`, then:
-
     - Turn off the `skipws` flag.
-
     - `s.clear()`
-
     - Until an unescaped `delim` character is reached or `!in`, extract
       characters from `in` and append them to `s`, except that if an
       `escape` is reached, ignore it and append the next character to
       `s`.
-
     - Discard the final `delim` character.
-
     - Restore the `skipws` flag to its original value.
-
   - Otherwise, `in >> s`.
-
 - If `out` is an instance of `basic_ostream` with member types
   `char_type` and `traits_type` the same as `charT` and `traits`,
   respectively, then the expression `out << quoted(s, delim, escape)`
   behaves as specified for the
   `const basic_string<charT, traits, Allocator>&` overload of the
   `quoted` function.
-
 - The expression `in >> quoted(s, delim, escape)` has type
   `basic_istream<charT, traits>&` and value `in`.
-
 - The expression `out << quoted(s, delim, escape)` has type
   `basic_ostream<charT, traits>&` and value `out`.
 
@@ -5105,10 +5020,8 @@ initialization is presented here as:
 
 - `ios_base::openmode mode`, has `in` set if the input sequence can be
   read, and `out` set if the output sequence can be written.
-
 - `basic_string<charT, traits, Allocator> buf`
   contains the underlying character sequence.
-
 - `init_buf_ptrs()` sets the base class’ get area [[streambuf.get.area]]
   and put area [[streambuf.put.area]] pointers after initializing,
   moving from, or assigning to `buf` accordingly.
@@ -5198,29 +5111,17 @@ construction and let `rhs_a` refer to the state of `rhs` just after this
 construction.
 
 - `str() == rhs_p.str()`
-
 - `gptr() - eback() == rhs_p.gptr() - rhs_p.eback()`
-
 - `egptr() - eback() == rhs_p.egptr() - rhs_p.eback()`
-
 - `pptr() - pbase() == rhs_p.pptr() - rhs_p.pbase()`
-
 - `epptr() - pbase() == rhs_p.epptr() - rhs_p.pbase()`
-
 - `if (eback()) eback() != rhs_a.eback()`
-
 - `if (gptr()) gptr() != rhs_a.gptr()`
-
 - `if (egptr()) egptr() != rhs_a.egptr()`
-
 - `if (pbase()) pbase() != rhs_a.pbase()`
-
 - `if (pptr()) pptr() != rhs_a.pptr()`
-
 - `if (epptr()) epptr() != rhs_a.epptr()`
-
 - `getloc() == rhs_p.getloc()`
-
 - `rhs` is empty but usable, as if `std::move(rhs).str()` was called.
 
 #### Assignment and swap <a id="stringbuf.assign">[[stringbuf.assign]]</a>
@@ -5280,12 +5181,9 @@ according to `mode`.
 
 - If `ios_base::out` is set in `mode`, `pbase()` points to `buf.front()`
   and `epptr() >= pbase() + buf.size()` is `true`;
-
   - in addition, if `ios_base::ate` is set in `mode`,
     `pptr() == pbase() + buf.size()` is `true`,
-
   - otherwise `pptr() == pbase()` is `true`.
-
 - If `ios_base::in` is set in `mode`, `eback()` points to `buf.front()`,
   and `(gptr() == eback() && egptr() == eback() + buf.size())` is
   `true`.
@@ -5350,10 +5248,8 @@ character sequence in `buf`:
 
 - If `ios_base::out` is set in `mode`, then
   `sv(pbase(), high_mark-pbase())` is returned.
-
 - Otherwise, if `ios_base::in` is set in `mode`, then
   `sv(eback(), egptr()-eback())` is returned.
-
 - Otherwise, `sv()` is returned.
 
 \[*Note 2*: Using the returned `sv` object after destruction or
@@ -5418,19 +5314,14 @@ sequence, if possible, in one of three ways:
   input sequence has a putback position available, and if
   `traits::eq(to_char_type(c), gptr()[-1])` returns `true`, assigns
   `gptr() - 1` to `gptr()`.
-
   Returns: `c`.
-
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if the
   input sequence has a putback position available, and if `mode` `&`
   `ios_base::out` is nonzero, assigns `c` to `*–gptr()`.
-
   Returns: `c`.
-
 - If `traits::eq_int_type(c, traits::eof())` returns `true` and if the
   input sequence has a putback position available, assigns `gptr() - 1`
   to `gptr()`.
-
   Returns: `traits::not_eof(c)`.
 
 *Returns:* As specified above, or `traits::eof()` to indicate failure.
@@ -5449,12 +5340,9 @@ sequence, if possible, in one of two ways:
   either the output sequence has a write position available or the
   function makes a write position available (as described below), the
   function calls `sputc(c)`.
-
   Signals success by returning `c`.
-
 - If `traits::eq_int_type(c, traits::eof())` returns `true`, there is no
   character to append.
-
   Signals success by returning a value other than `traits::eof()`.
 
 *Returns:* As specified above, or `traits::eof()` to indicate failure.
@@ -6321,7 +6209,6 @@ For the sake of exposition, the maintained data is presented here as:
 
 - `ios_base::openmode mode`, has `in` set if the input sequence can be
   read, and `out` set if the output sequence can be written.
-
 - `std::span<charT> buf` is the view to the underlying character
   sequence.
 
@@ -6351,21 +6238,13 @@ which `rhs` had. It is *implementation-defined* whether
 construction.
 
 - `span().data() == rhs_p.span().data()`
-
 - `span().size() == rhs_p.span().size()`
-
 - `eback() == rhs_p.eback()`
-
 - `gptr() == rhs_p.gptr()`
-
 - `egptr() == rhs_p.egptr()`
-
 - `pbase() == rhs_p.pbase()`
-
 - `pptr() == rhs_p.pptr()`
-
 - `epptr() == rhs_p.epptr()`
-
 - `getloc() == rhs_p.getloc()`
 
 #### Assignment and swap <a id="spanbuf.assign">[[spanbuf.assign]]</a>
@@ -6425,12 +6304,9 @@ according to *mode*.
 
 - If `ios_base::out` is set in *mode*,
   `pbase() == s.data() && epptr() == pbase() + s.size()` is `true`;
-
   - in addition, if `ios_base::ate` is set in *mode*,
     `pptr() == pbase() + s.size()` is `true`,
-
   - otherwise `pptr() == pbase()` is `true`.
-
 - If `ios_base::in` is set in *mode*,
   `eback() == s.data() && gptr() == eback() && egptr() == eback() + s.size()`
   is `true`.
@@ -6451,7 +6327,6 @@ controlled sequences, if possible, as follows:
 
 - If `ios_base::in` is set in `which`, positions the input sequence;
   `xnext` is `gptr()`, `xbeg` is `eback()`.
-
 - If `ios_base::out` is set in `which`, positions the output sequence;
   `xnext` is `pptr()`, `xbeg` is `pbase()`.
 
@@ -6465,15 +6340,11 @@ the function determines `baseoff` as a value of type `off_type` as
 follows:
 
 - `0` when `way` is `ios_base::beg`;
-
 - `(pptr() - pbase())` for the output sequence, or `(gptr() - eback())`
   for the input sequence when `way` is `ios_base::cur`;
-
 - when `way` is `ios_base::end` :
-
   - `(pptr() - pbase())` if `ios_base::out` is set in *mode* and
     `ios_base::in` is not set in *mode*,
-
   - `buf.size()` otherwise.
 
 If $\texttt{baseoff} + \texttt{off}$ would overflow, or if
@@ -6988,10 +6859,8 @@ reading and writing with the C standard library `FILE`s.
 In particular:
 
 - If the file is not open for reading the input sequence cannot be read.
-
 - If the file is not open for writing the output sequence cannot be
   written.
-
 - A joint file position is maintained for both the input sequence and
   the output sequence.
 
@@ -7037,27 +6906,16 @@ construction and let `rhs_a` refer to the state of `rhs` just after this
 construction.
 
 - `is_open() == rhs_p.is_open()`
-
 - `rhs_a.is_open() == false`
-
 - `gptr() - eback() == rhs_p.gptr() - rhs_p.eback()`
-
 - `egptr() - eback() == rhs_p.egptr() - rhs_p.eback()`
-
 - `pptr() - pbase() == rhs_p.pptr() - rhs_p.pbase()`
-
 - `epptr() - pbase() == rhs_p.epptr() - rhs_p.pbase()`
-
 - `if (eback()) eback() != rhs_a.eback()`
-
 - `if (gptr()) gptr() != rhs_a.gptr()`
-
 - `if (egptr()) egptr() != rhs_a.egptr()`
-
 - `if (pbase()) pbase() != rhs_a.pbase()`
-
 - `if (pptr()) pptr() != rhs_a.pptr()`
-
 - `if (epptr()) epptr() != rhs_a.epptr()`
 
 ``` cpp
@@ -7249,21 +7107,16 @@ sequence, if possible, in one of three ways:
   function makes a putback position available and if
   `traits::eq(to_char_type(c), gptr()[-1])` returns `true`, decrements
   the next pointer for the input sequence, `gptr()`.
-
   Returns: `c`.
-
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if the
   function makes a putback position available and if the function is
   permitted to assign to the putback position, decrements the next
   pointer for the input sequence, and stores `c` there.
-
   Returns: `c`.
-
 - If `traits::eq_int_type(c, traits::eof())` returns `true`, and if
   either the input sequence has a putback position available or the
   function makes a putback position available, decrements the next
   pointer for the input sequence, `gptr()`.
-
   Returns: `traits::not_eof(c)`.
 
 *Returns:* As specified above, or `traits::eof()` to indicate failure.
@@ -7298,14 +7151,11 @@ codecvt_base::result r =
 and then
 
 - If `r == codecvt_base::error` then fail.
-
 - If `r == codecvt_base::noconv` then output characters from `b` up to
   (and not including) `p`.
-
 - If `r == codecvt_base::partial` then output to the file characters
   from `xbuf` up to `xbuf_end`, and repeat using characters from `end`
   to `p`. If output fails, fail (without repeating).
-
 - Otherwise output from `xbuf` to `xbuf_end`, and fail if output fails.
   At this point if `b != p` and `b == end` (`xbuf` isn’t large enough)
   then increase `XSIZE` and repeat from the beginning.
@@ -7371,9 +7221,7 @@ as follows:
 
 1.  if `(om & ios_base::out) != 0`, then update the output sequence and
     write any unshift sequence;
-
 2.  set the file position to `sp` as if by a call to `fsetpos`;
-
 3.  if `(om & ios_base::in) != 0`, then update the input sequence;
 
 where `om` is the open mode passed to the last call to `open()`. The
@@ -8056,9 +7904,7 @@ been move constructed from `rhs`[[syncstream.syncbuf.cons]].
 *Ensures:*
 
 - `rhs.get_wrapped() == nullptr` is `true`.
-
 - `this->get_allocator() == rhs.get_allocator()` is `true` when
-
       allocator_traits<Allocator>::propagate_on_container_move_assignment::value
 
   is `true`; otherwise, the allocator is unchanged.
@@ -8101,10 +7947,8 @@ call synchronizes with subsequent `emit()` calls in that total order.
 `false`:
 
 - `wrapped == nullptr` is `false`.
-
 - All of the characters in the associated output were successfully
   transferred.
-
 - The call to `wrapped->pubsync()` (if any) succeeded.
 
 *Remarks:* May call member functions of `wrapped` while holding a lock
@@ -8686,7 +8530,6 @@ This supports two common use cases:
 
 - Uses where file system errors are truly exceptional and indicate a
   serious failure. Throwing an exception is an appropriate response.
-
 - Uses where file system errors are routine and do not necessarily
   represent failure. Returning an error code is the most appropriate
   response. This allows application specific error handling, including
@@ -8708,10 +8551,8 @@ follows, unless otherwise specified:
   the `path2` argument. The `filesystem_error` constructor’s
   `error_code` argument is set as appropriate for the specific operating
   system dependent error.
-
 - Failure to allocate storage is reported by throwing an exception as
   described in  [[res.on.exception.handling]].
-
 - Destructors throw nothing.
 
 Functions having an argument of type `error_code&` handle errors as
@@ -8986,24 +8827,17 @@ special meaning. The following characteristics of filenames are
 operating system dependent:
 
 - The permitted characters.
-
   \[*Example 1*: Some operating systems prohibit the ASCII control
   characters (0x00 – 0x1F) in filenames. — *end example*\]
-
   \[*Note 1*: Wider portability can be achieved by limiting *filename*
   characters to the POSIX Portable Filename Character Set:  
   `A B C D E F G H I J K L M N O P Q R S T U V W X Y Z`  
   `a b c d e f g h i j k l m n o p q r s t u v w x y z`  
   `0 1 2 3 4 5 6 7 8 9 . _ -` — *end note*\]
-
 - The maximum permitted length.
-
 - Filenames that are not permitted.
-
 - Filenames that have special meaning.
-
 - Case awareness and sensitivity during path resolution.
-
 - Special rules that may apply to file types other than regular files,
   such as directories.
 
@@ -9038,32 +8872,23 @@ longest sequence of characters is chosen.
 *Normalization* of a generic format pathname means:
 
 1.  If the path is empty, stop.
-
 2.  Replace each slash character in the *root-name* with a
     *preferred-separator*.
-
 3.  Replace each *directory-separator* with a *preferred-separator*.
-
     \[*Note 2*: The generic pathname grammar defines
     *directory-separator* as one or more slashes and
     *preferred-separator*. — *end note*\]
-
 4.  Remove each dot filename and any immediately following
     *directory-separator*.
-
 5.  As long as any appear, remove a non-dot-dot filename immediately
     followed by a *directory-separator* and a dot-dot filename, along
     with any immediately following *directory-separator*.
-
 6.  If there is a *root-directory*, remove all dot-dot filenames and any
     *directory-separator* immediately following them.
-
     \[*Note 3*: These dot-dot filenames attempt to refer to nonexistent
     parent directories. — *end note*\]
-
 7.  If the last filename is dot-dot, remove any trailing
     *directory-separator*.
-
 8.  If the path is empty, add a dot.
 
 The result of normalization is a path in *normal form*, which is said to
@@ -9079,10 +8904,8 @@ The format conversions described in this subclause are not applied on
 POSIX-based operating systems because on these systems:
 
 - The generic format is acceptable as a native path.
-
 - There is no need to distinguish between native format and generic
   format in function arguments.
-
 - Paths for regular files and paths for directories share the same
   syntax.
 
@@ -9152,31 +8975,24 @@ determined by its value type:
 
 - `char`: The encoding is the native ordinary encoding. The method of
   conversion, if any, is operating system dependent.
-
   \[*Note 4*: For POSIX-based operating systems `path::value_type` is
   `char` so no conversion from `char` value type arguments or to `char`
   value type return values is performed. For Windows-based operating
   systems, the native ordinary encoding is determined by calling a
   Windows API function. — *end note*\]
-
   \[*Note 5*: This results in behavior identical to other C and C++
   standard library functions that perform file operations using ordinary
   character strings to identify paths. Changing this behavior would be
   surprising and error-prone. — *end note*\]
-
 - `wchar_t`: The encoding is the native wide encoding. The method of
   conversion is unspecified.
-
   \[*Note 6*: For Windows-based operating systems `path::value_type` is
   `wchar_t` so no conversion from `wchar_t` value type arguments or to
   `wchar_t` value type return values is performed. — *end note*\]
-
 -  `char8_t`: The encoding is UTF-8. The method of conversion is
   unspecified.
-
 -  `char16_t`: The encoding is UTF-16. The method of conversion is
   unspecified.
-
 -  `char32_t`: The encoding is UTF-32. The method of conversion is
   unspecified.
 
@@ -9192,16 +9008,13 @@ named `Source` shall be one of:
 
 - `basic_string<EcharT, traits, Allocator>`. A function argument
   `const Source&` `source` shall have an effective range .
-
 - `basic_string_view<EcharT, traits>`. A function argument
   `const Source&` `source` shall have an effective range .
-
 - A type meeting the *Cpp17InputIterator* requirements that iterates
   over a NTCTS. The value type shall be an encoded character type. A
   function argument `const Source&` `source` shall have an effective
   range where `end` is the first iterator value with an element value
   equal to `iterator_traits<Source>::value_type()`.
-
 - A character array that after array-to-pointer decay results in a
   pointer to the start of a NTCTS. The value type shall be an encoded
   character type. A function argument `const Source&` `source` shall
@@ -9215,7 +9028,6 @@ than `path`, and either
 
 - `Source` is a specialization of `basic_string` or `basic_string_view`,
   or
-
 - the *qualified-id* `iterator_traits<decay_t<Source>>::value_type` is
   valid and denotes a possibly const encoded character type
   [[temp.deduct]].
@@ -9284,7 +9096,6 @@ template<class InputIterator>
 - If `value_type` is , converts to the native wide
   encoding [[fs.path.type.cvt]] using the
   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`.
-
 - Otherwise a conversion is performed using the
   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`, and then a second
   conversion to the current ordinary encoding.
@@ -9393,7 +9204,6 @@ Otherwise, modifies `*this` as if by these steps:
   `!has_root_directory() && is_absolute()` is `true` or if
   `has_filename()` is `true`, then appends `path::preferred_separator`
   to the generic format pathname.
-
 - Then appends the native format pathname of `p`, omitting any
   *root-name* from its generic format pathname, to the native format
   pathname.
@@ -9561,11 +9371,9 @@ path& replace_extension(const path& replacement = path());
 
 - Any existing `extension()`[[fs.path.decompose]] is removed from the
   pathname in the generic format, then
-
 - If `replacement` is not empty and does not begin with a dot character,
   a dot character is appended to the pathname in the generic format,
   then
-
 - `operator+=(replacement);`.
 
 *Returns:* `*this`.
@@ -9681,21 +9489,16 @@ int compare(const path& p) const noexcept;
 - Let `rootNameComparison` be the result of
   `this->root_name().native().compare(p.root_name().native())`. If
   `rootNameComparison` is not `0`, `rootNameComparison`.
-
 - Otherwise, if `!this->has_root_directory()` and
   `p.has_root_directory()`, a value less than `0`.
-
 - Otherwise, if `this->has_root_directory()` and
   `!p.has_root_directory()`, a value greater than `0`.
-
 - Otherwise, if `native()` for the elements of `this->relative_path()`
   are lexicographically less than `native()` for the elements of
   `p.relative_path()`, a value less than `0`.
-
 - Otherwise, if `native()` for the elements of `this->relative_path()`
   are lexicographically greater than `native()` for the elements of
   `p.relative_path()`, a value greater than `0`.
-
 - Otherwise, `0`.
 
 ``` cpp
@@ -9772,7 +9575,6 @@ Returns a path whose pathname in the generic format is
 
 - `f`, if it contains no periods other than a leading period or consists
   solely of one or two periods;
-
 - otherwise, the prefix of `f` ending before its last period.
 
 \[*Example 8*:
@@ -9914,11 +9716,8 @@ path lexically_relative(const path& base) const;
 *Effects:* If:
 
 - `root_name() != base.root_name()` is `true`, or
-
 - `is_absolute() != base.is_absolute()` is `true`, or
-
 - `!has_root_directory() && base.has_root_directory()` is `true`, or
-
 - any *filename* in `relative_path()` or `base.relative_path()` can be
   interpreted as a *root-name*,
 
@@ -9936,19 +9735,14 @@ auto [a, b] = mismatch(begin(), end(), base.begin(), base.end());
 Then,
 
 - if `a == end()` and `b == base.end()`, returns `path(".")`; otherwise
-
 - let `n` be the number of *filename* elements in \[`b`, `base.end()`)
   that are not dot or dot-dot or empty, minus the number that are
   dot-dot. If `n<0,` returns `path()`; otherwise
-
 - if `n == 0` and `(a == end() || a->empty())`, returns `path(".")`;
   otherwise
-
 - returns an object of class `path` that is default-constructed,
   followed by
-
   - application of `operator/=(path(".."))` `n` times, and then
-
   - application of `operator/=` for each element in \[`a`, `end()`).
 
 *Returns:* `*this` made relative to `base`. Does not
@@ -10009,14 +9803,10 @@ For the elements of the pathname in the generic format, the forward
 traversal order is as follows:
 
 - The *root-name* element, if present.
-
 - The *root-directory* element, if present.
-
   \[*Note 7*: The generic format is required to ensure lexicographical
   comparison works correctly. — *end note*\]
-
 - Each successive *filename* element, if present.
-
 - An empty element, if a trailing non-root *directory-separator* is
   present.
 
@@ -10093,14 +9883,11 @@ Path equality and path equivalence have different semantics.
 
 - Equality is determined by the `path` non-member `operator==`, which
   considers the two paths’ lexical representations only.
-
   \[*Example 2*: `path("foo") == "bar"` is never
   `true`. — *end example*\]
-
 - Equivalence is determined by the `equivalent()` non-member function,
   which determines if two paths resolve [[fs.class.path]] to the same
   file system entity.
-
   \[*Example 3*: `equivalent("foo", "bar")` will be `true` when both
   paths resolve to the same file. — *end example*\]
 
@@ -10165,11 +9952,8 @@ filesystem_error(const string& what_arg, error_code ec);
 *Ensures:*
 
 - `code() == ec`,
-
 - `path1().empty() == true`,
-
 - `path2().empty() == true`, and
-
 - `string_view(what()).find(what_arg.c_str())` `!= string_view::npos`.
 
 ``` cpp
@@ -10179,11 +9963,8 @@ filesystem_error(const string& what_arg, const path& p1, error_code ec);
 *Ensures:*
 
 - `code() == ec`,
-
 - `path1()` returns a reference to the stored copy of `p1`,
-
 - `path2().empty() == true`, and
-
 - `string_view(what()).find(what_arg.c_str())` `!= string_view::npos`.
 
 ``` cpp
@@ -10193,11 +9974,8 @@ filesystem_error(const string& what_arg, const path& p1, const path& p2, error_c
 *Ensures:*
 
 - `code() == ec`,
-
 - `path1()` returns a reference to the stored copy of `p1`,
-
 - `path2()` returns a reference to the stored copy of `p2`, and
-
 - `string_view(what()).find(what_arg.c_str())` `!= string_view::npos`.
 
 ``` cpp
@@ -10996,9 +10774,7 @@ recursive_directory_iterator(const recursive_directory_iterator& rhs);
 *Ensures:*
 
 - `options() == rhs.options()`
-
 - `depth() == rhs.depth()`
-
 - `recursion_pending() == rhs.recursion_pending()`
 
 ``` cpp
@@ -11019,9 +10795,7 @@ effect.
 *Ensures:*
 
 - `options() == rhs.options()`
-
 - `depth() == rhs.depth()`
-
 - `recursion_pending() == rhs.recursion_pending()`
 
 *Returns:* `*this`.
@@ -11080,16 +10854,13 @@ iterators [[input.iterators]], except that:
 - If there are no more entries at the current depth, then if
   `depth() != 0` iteration over the parent directory resumes; otherwise
   `*this = recursive_directory_iterator()`.
-
 - Otherwise if
-
       recursion_pending() && is_directory((*this)->status()) &&
       (!is_symlink((*this)->symlink_status()) ||
        (options() & directory_options::follow_directory_symlink) != directory_options::none)
 
   then either directory `(*this)->path()` is recursively iterated into
   or, if
-
       (options() & directory_options::skip_permission_denied) != directory_options::none
 
   and an error occurs indicating that permission to access directory
@@ -11229,20 +11000,16 @@ group [[fs.enum.copy.opts]] is set in `options`.
 *Effects:* Before the first use of `f` and `t`:
 
 - If
-
       (options & copy_options::create_symlinks) != copy_options::none ||
       (options & copy_options::skip_symlinks) != copy_options::none
 
   then `auto f = symlink_status(from)` and if needed
   `auto t = symlink_status(to)`.
-
 - Otherwise, if
-
       (options & copy_options::copy_symlinks) != copy_options::none
 
   then `auto f = symlink_status(from)` and if needed
   `auto t = status(to)`.
-
 - Otherwise, `auto f = status(from)` and if needed
   `auto t = status(to)`.
 
@@ -11251,78 +11018,53 @@ Effects are then as follows:
 - If `f.type()` or `t.type()` is an implementation-defined file
   type [[fs.enum.file.type]], then the effects are
   *implementation-defined*.
-
 - Otherwise, an error is reported as specified in  [[fs.err.report]] if:
-
   - `exists(f)` is `false`, or
-
   - `equivalent(from, to)` is `true`, or
-
   - `is_other(f) || is_other(t)` is `true`, or
-
   - `is_directory(f) && is_regular_file(t)` is `true`.
-
 - Otherwise, if `is_symlink(f)`, then:
-
   - If `(options & copy_options::skip_symlinks) != copy_options::none`
     then return.
-
   - Otherwise if
-
         !exists(t) && (options & copy_options::copy_symlinks) != copy_options::none
 
     then `copy_symlink(from, to)`.
-
   - Otherwise report an error as specified in  [[fs.err.report]].
-
 - Otherwise, if `is_regular_file(f)`, then:
-
   - If
     `(options & copy_options::directories_only) != copy_options::none`,
     then return.
-
   - Otherwise, if
     `(options & copy_options::create_symlinks) != copy_options::none`,
     then create a symbolic link to the source file.
-
   - Otherwise, if
     `(options & copy_options::create_hard_links) != copy_options::none`,
     then create a hard link to the source file.
-
   - Otherwise, if `is_directory(t)`, then
     `copy_file(from, to/from.filename(), options)`.
-
   - Otherwise, `copy_file(from, to, options)`.
-
 - Otherwise, if
-
       is_directory(f) &&
       (options & copy_options::create_symlinks) != copy_options::none
 
   then report an error with an `error_code` argument equal to
   `make_error_code(errc::is_a_directory)`.
-
 - Otherwise, if
-
       is_directory(f) &&
       ((options & copy_options::recursive) != copy_options::none ||
        options == copy_options::none)
 
   then:
-
   - If `exists(t)` is `false`, then `create_directory(to, from)`.
-
   - Then, iterate over the files in `from`, as if by
-
         for (const directory_entry& x : directory_iterator(from))
           copy(x.path(), to/x.path().filename(),
                options | copy_options::in-recursive-copy);
 
     where *`in-recursive-copy`* is a bitmask element of `copy_options`
     that is not one of the elements in  [[fs.enum.copy.opts]].
-
 - Otherwise, for the signature with argument `ec`, `ec.clear()`.
-
 - Otherwise, no effects.
 
 *Throws:* As specified in  [[fs.err.report]].
@@ -11392,31 +11134,21 @@ group [[fs.enum.copy.opts]] is set in `options`.
 *Effects:* As follows:
 
 - Report an error as specified in  [[fs.err.report]] if:
-
   - `is_regular_file(from)` is `false`, or
-
   - `exists(to)` is `true` and `is_regular_file(to)` is `false`, or
-
   - `exists(to)` is `true` and `equivalent(from, to)` is `true`, or
-
   - `exists(to)` is `true` and
-
         (options & (copy_options::skip_existing |
                     copy_options::overwrite_existing |
                     copy_options::update_existing)) == copy_options::none
-
 - Otherwise, copy the contents and attributes of the file `from`
   resolves to, to the file `to` resolves to, if:
-
   - `exists(to)` is `false`, or
-
   - `(options & copy_options::overwrite_existing) != copy_options::none`,
     or
-
   - `(options & copy_options::update_existing) != copy_options::none`
     and `from` is more recent than `to`, determined as if by use of the
     `last_write_time` function [[fs.op.last.write.time]].
-
 - Otherwise, no effects.
 
 *Returns:* `true` if the `from` file was copied, otherwise `false`. The
@@ -11536,7 +11268,6 @@ void filesystem::create_hard_link(const path& to, const path& new_hard_link,
 *Ensures:*
 
 - `exists(to) && exists(new_hard_link) && equivalent(to, new_hard_link)`
-
 - The contents of the file or directory `to` resolves to are unchanged.
 
 *Throws:* As specified in  [[fs.err.report]].
@@ -11667,7 +11398,6 @@ reported [[fs.err.report]].
 - If `is_regular_file(p)`, the size in bytes of the file `p` resolves
   to, determined as if by the value of the POSIX `stat` class member
   `st_size` obtained as if by POSIX `stat()`.
-
 - Otherwise, the result is *implementation-defined*.
 
 The signature with argument `ec` returns `static_cast<uintmax_t>(-1)` if
@@ -11755,28 +11485,19 @@ bool filesystem::is_empty(const path& p, error_code& ec);
 
 - Determine `file_status s`, as if by `status(p)` or `status(p, ec)`,
   respectively.
-
 - For the signature with argument `ec`, return `false` if an error
   occurred.
-
 - Otherwise, if `is_directory(s)`:
-
   - Create a variable `itr`, as if by `directory_iterator itr(p)` or
     `directory_iterator itr(p, ec)`, respectively.
-
   - For the signature with argument `ec`, return `false` if an error
     occurred.
-
   - Otherwise, return `itr == directory_iterator()`.
-
 - Otherwise:
-
   - Determine `uintmax_t sz`, as if by `file_size(p)` or
     `file_size(p, ec)`, respectively.
-
   - For the signature with argument `ec`, return `false` if an error
     occurred.
-
   - Otherwise, return `sz == 0`.
 
 *Throws:* As specified in  [[fs.err.report]].
@@ -12073,12 +11794,9 @@ void filesystem::rename(const path& old_p, const path& new_p, error_code& ec) no
 
 - If `old_p` and `new_p` resolve to the same existing file, no action is
   taken.
-
 - Otherwise, the rename can include the following effects:
-
   - if `new_p` resolves to an existing non-directory file, `new_p` is
     removed; otherwise,
-
   - if `new_p` resolves to an existing directory, `new_p` is removed if
     empty on POSIX compliant operating systems but might be an error on
     other operating systems.
@@ -12169,57 +11887,43 @@ determined as if by converting the `st_mode` member of the obtained
 *Returns:*
 
 - If `ec != error_code()`:
-
   - If the specific error indicates that `p` cannot be resolved because
     some element of the path does not exist, returns
     `file_status(file_type::not_found)`.
-
   - Otherwise, if the specific error indicates that `p` can be resolved
     but the attributes cannot be determined, returns
     `file_status(file_type::unknown)`.
-
   - Otherwise, returns `file_status(file_type::none)`.
 
   \[*Note 8*: These semantics distinguish between `p` being known not to
   exist, `p` existing but not being able to determine its attributes,
   and there being an error that prevents even knowing if `p` exists.
   These distinctions are important to some use cases. — *end note*\]
-
 - Otherwise,
-
   - If the attributes indicate a regular file, as if by POSIX `S_ISREG`,
     returns `file_status(file_type::regular, prms)`.
-
     \[*Note 9*: `file_type::regular` implies appropriate operations
     would succeed, assuming no hardware, permission, access, or file
     system race errors. Lack of `file_type::regular` does not
     necessarily imply operations would fail on a
     directory. — *end note*\]
-
   - Otherwise, if the attributes indicate a directory, as if by POSIX
     `S_ISDIR`, returns `file_status(file_type::directory, prms)`.
-
     \[*Note 10*: `file_type::directory` implies that calling
     `directory_iterator(p)` would succeed. — *end note*\]
-
   - Otherwise, if the attributes indicate a block special file, as if by
     POSIX `S_ISBLK`, returns `file_status(file_type::block, prms)`.
-
   - Otherwise, if the attributes indicate a character special file, as
     if by POSIX `S_ISCHR`, returns
     `file_status(file_type::character, prms)`.
-
   - Otherwise, if the attributes indicate a fifo or pipe file, as if by
     POSIX `S_ISFIFO`, returns `file_status(file_type::fifo, prms)`.
-
   - Otherwise, if the attributes indicate a socket, as if by POSIX
     `S_ISSOCK`, returns `file_status(file_type::socket, prms)`.
-
   - Otherwise, if the attributes indicate an implementation-defined file
     type [[fs.enum.file.type]], returns
     `file_status(file_type::`*`A`*`, prms)`, where *A* is the constant
     for the *implementation-defined* file type.
-
   - Otherwise, returns `file_status(file_type::unknown, prms)`.
 
 *Remarks:* If a symbolic link is encountered during pathname resolution,
@@ -12469,14 +12173,11 @@ C standard library header `<inttypes.h>`, with the following changes:
 
 - The header `<cinttypes>` includes the header `<cstdint>` instead of
   `<stdint.h>`, and
-
 - `intmax_t` and `uintmax_t` are not required to be able to represent
   all values of extended integer types wider than `long long` and
   `unsigned long long`, respectively, and
-
 - if and only if the type `intmax_t` designates an extended integer type
   [[basic.fundamental]], the following function signatures are added:
-
   ``` cpp
   constexpr intmax_t abs(intmax_t);
   constexpr imaxdiv_t div(intmax_t, intmax_t);

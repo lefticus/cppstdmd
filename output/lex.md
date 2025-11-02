@@ -38,10 +38,8 @@ following phases.
     so, the kind of an input file is determined in an
     *implementation-defined* manner that includes a means of designating
     input files as UTF-8 files, independent of their content.
-
     \[*Note 1*: In other words, recognizing the is not
     sufficient. — *end note*\]
-
     If an input file is determined to be a UTF-8 file, then it shall be
     a well-formed UTF-8 code unit sequence and it is decoded to produce
     a sequence of Unicode scalar values. A sequence of translation
@@ -50,12 +48,10 @@ following phases.
     resulting sequence, each pair of characters in the input sequence
     consisting of followed by , as well as each not immediately followed
     by a , is replaced by a single new-line character.
-
     For any other kind of input file supported by the implementation,
     characters are mapped, in an *implementation-defined* manner, to a
     sequence of translation character set elements [[lex.charset]],
     representing end-of-line indicators as new-line characters.
-
 2.   If the first translation character is , it is deleted. Each
     sequence of a backslash character (\\ immediately followed by zero
     or more whitespace characters other than new-line followed by a
@@ -68,12 +64,10 @@ following phases.
     that is not empty and that does not end in a new-line character, or
     that ends in a splice, shall be processed as if an additional
     new-line character were appended to the file.
-
 3.  The source file is decomposed into preprocessing tokens
     [[lex.pptoken]] and sequences of whitespace characters (including
     comments). A source file shall not end in a partial preprocessing
     token or in a partial comment.
-
     Each comment is replaced by one space character. New-line characters
     are retained. Whether each nonempty sequence of whitespace
     characters other than new-line is retained or replaced by one space
@@ -86,72 +80,54 @@ following phases.
     designated element of the translation character set. The process of
     dividing a source file’s characters into preprocessing tokens is
     context-dependent.
-
     \[*Example 1*: See the handling of `<` within a `#include`
     preprocessing directive. — *end example*\]
-
 4.  Preprocessing directives are executed, macro invocations are
     expanded, and `_Pragma` unary operator expressions are executed. A
     `#include` preprocessing directive causes the named header or source
     file to be processed from phase 1 through phase 4, recursively. All
     preprocessing directives are then deleted.
-
 5.  For a sequence of two or more adjacent *string-literal* tokens, a
     common *encoding-prefix* is determined as specified in
     [[lex.string]]. Each such *string-literal* token is then considered
     to have that common *encoding-prefix*.
-
 6.  Adjacent *string-literal* tokens are concatenated [[lex.string]].
-
 7.  Whitespace characters separating tokens are no longer significant.
     Each preprocessing token is converted into a token [[lex.token]].
     The resulting tokens constitute a *translation unit* and are
     syntactically and semantically analyzed and translated.
-
     \[*Note 2*: The process of analyzing and translating the tokens can
     occasionally result in one token being replaced by a sequence of
     other tokens [[temp.names]]. — *end note*\]
-
     It is *implementation-defined* whether the sources for module units
     and header units on which the current translation unit has an
     interface dependency [[module.unit]], [[module.import]] are required
     to be available.
-
     \[*Note 3*: Source files, translation units and translated
     translation units need not necessarily be stored as files, nor need
     there be any one-to-one correspondence between these entities and
     any external representation. The description is conceptual only, and
     does not specify any particular implementation. — *end note*\]
-
 8.  Translated translation units and instantiation units are combined as
     follows:
-
     \[*Note 4*: Some or all of these can be supplied from a
     library. — *end note*\]
-
     Each translated translation unit is examined to produce a list of
     required instantiations.
-
     \[*Note 5*: This can include instantiations which have been
     explicitly requested [[temp.explicit]]. — *end note*\]
-
     The definitions of the required templates are located. It is
     *implementation-defined* whether the source of the translation units
     containing these definitions is required to be available.
-
     \[*Note 6*: An implementation can choose to encode sufficient
     information into the translated translation unit so as to ensure the
     source is not required here. — *end note*\]
-
     All the required instantiations are performed to produce
     *instantiation units*.
-
     \[*Note 7*: These are similar to translated translation units, but
     contain no references to uninstantiated templates and no template
     definitions. — *end note*\]
-
     The program is ill-formed if any instantiation fails.
-
 9.  All external entity references are resolved. Library components are
     linked to satisfy external references to entities not defined in the
     current translation. All such translator output is collected into a
@@ -164,7 +140,6 @@ The *translation character set* consists of the following elements:
 
 - each abstract character assigned a code point in the Unicode
   codespace, and
-
 - a distinct character for each Unicode scalar value not assigned to an
   abstract character.
 
@@ -389,24 +364,19 @@ given character:
   delimiting parenthesis is identified. The raw string literal is
   defined as the shortest sequence of characters that matches the
   raw-string pattern
-
   ``` bnf
   encoding-prefix_opt 'R' raw-string
   ```
-
 - Otherwise, if the next three characters are `<::` and the subsequent
   character is neither `:` nor `>`, the `<` is treated as a
   preprocessing token by itself and not as the first character of the
   alternative token `<:`.
-
 - Otherwise, the next preprocessing token is the longest sequence of
   characters that could constitute a preprocessing token, even if that
   would cause further lexical analysis to fail, except that a
   *header-name* [[lex.header]] is only formed
-
   - after the `include` or `import` preprocessing token in an `#include`
     [[cpp.include]] or `import` [[cpp.import]] directive, or
-
   - within a *has-include-expression*.
 
 \[*Example 1*:
@@ -617,7 +587,6 @@ shall not be used otherwise; no diagnostic is required.
 - Each identifier that contains a double underscore `\unun` or begins
   with an underscore followed by an uppercase letter is reserved to the
   implementation for any use.
-
 - Each identifier that begins with an underscore is reserved to the
   implementation for use as a name in the global namespace.
 
@@ -991,32 +960,25 @@ of any other kind of *character-literal* is determined as follows:
   *basic-c-char*, *simple-escape-sequence*, or
   *universal-character-name* is the code unit value of the specified
   character as encoded in the literal’s associated character encoding.
-
   \[*Note 8*: If the specified character lacks representation in the
   literal’s associated character encoding or if it cannot be encoded as
   a single code unit, then the literal is a non-encodable character
   literal. — *end note*\]
-
 - A *character-literal* with a *c-char-sequence* consisting of a single
   *numeric-escape-sequence* has a value as follows:
-
   - Let v be the integer value represented by the octal number
     comprising the sequence of *octal-digit* in an
     *octal-escape-sequence* or by the hexadecimal number comprising the
     sequence of *hexadecimal-digit* in a *hexadecimal-escape-sequence*.
-
   - If v does not exceed the range of representable values of the
     *character-literal*’s type, then the value is v.
-
   - Otherwise, if the *character-literal*’s *encoding-prefix* is absent
     or `L`, and v does not exceed the range of representable values of
     the corresponding unsigned type for the underlying type of the
     *character-literal*’s type, then the value is the unique value of
     the *character-literal*’s type `T` that is congruent to v modulo
     $2^N$, where N is the width of `T`.
-
   - Otherwise, the *character-literal* is ill-formed.
-
 - A *character-literal* with a *c-char-sequence* consisting of a single
   *conditional-escape-sequence* is conditionally-supported and has an
   *implementation-defined* value.
@@ -1331,42 +1293,33 @@ raw string literals), plus a terminating character, in order as follows:
   character encoding, then the *string-literal* is
   conditionally-supported and an *implementation-defined* code unit
   sequence is encoded.
-
   \[*Note 9*: No character lacks representation in any Unicode encoding
   form. — *end note*\]
-
   When encoding a stateful character encoding, implementations should
   encode the first such sequence beginning with the initial encoding
   state and encode subsequent sequences beginning with the final
   encoding state of the prior sequence.
-
   \[*Note 10*: The encoded code unit sequence can differ from the
   sequence of code units that would be obtained by encoding each
   character independently. — *end note*\]
-
 - Each *numeric-escape-sequence* [[lex.ccon]] contributes a single code
   unit with a value as follows:
-
   - Let v be the integer value represented by the octal number
     comprising the sequence of *octal-digit* in an
     *octal-escape-sequence* or by the hexadecimal number comprising the
     sequence of *hexadecimal-digit* in a *hexadecimal-escape-sequence*.
-
   - If v does not exceed the range of representable values of the
     *string-literal*’s array element type, then the value is v.
-
   - Otherwise, if the *string-literal*’s *encoding-prefix* is absent or
     `L`, and v does not exceed the range of representable values of the
     corresponding unsigned type for the underlying type of the
     *string-literal*’s array element type, then the value is the unique
     value of the *string-literal*’s array element type `T` that is
     congruent to v modulo $2^N$, where N is the width of `T`.
-
   - Otherwise, the *string-literal* is ill-formed.
 
   When encoding a stateful character encoding, these sequences should
   have no effect on encoding state.
-
 - Each *conditional-escape-sequence* [[lex.ccon]] contributes an
   *implementation-defined* code unit sequence. When encoding a stateful
   character encoding, it is *implementation-defined* what effect these

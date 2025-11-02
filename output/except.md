@@ -206,7 +206,6 @@ object are:
 - when an active handler for the exception exits by any means other than
   rethrowing, immediately after the destruction of the object (if any)
   declared in the *exception-declaration* in the handler;
-
 - when an object of type `std::exception_ptr` [[propagation]] that
   refers to the exception object is destroyed, before the destructor of
   `std::exception_ptr` returns.
@@ -322,17 +321,12 @@ A subobject is *known to be initialized* if its initialization is
 specified
 
 - in [[class.base.init]] for initialization by constructor,
-
 - in [[class.copy.ctor]] for initialization by defaulted copy/move
   constructor,
-
 - in [[class.inhctor.init]] for initialization by inherited constructor,
-
 - in [[dcl.init.aggr]] for aggregate initialization,
-
 - in [[expr.prim.lambda.capture]] for the initialization of the closure
   object when evaluating a *lambda-expression*,
-
 - in [[dcl.init.general]] for default-initialization,
   value-initialization, or direct-initialization of an array.
 
@@ -382,21 +376,15 @@ A *handler* is a match for an exception object of type `E` if
 
 - The *handler* is of type cv `T` or cv `T&` and `E` and `T` are the
   same type (ignoring the top-level *cv-qualifier*), or
-
 - the *handler* is of type cv `T` or cv `T&` and `T` is an unambiguous
   public base class of `E`, or
-
 - the *handler* is of type cv `T` or `const T&` where `T` is a pointer
   or pointer-to-member type and `E` is a pointer or pointer-to-member
   type that can be converted to `T` by one or more of
-
   - a standard pointer conversion [[conv.ptr]] not involving conversions
     to pointers to private or protected or ambiguous classes
-
   - a function pointer conversion [[conv.fctptr]]
-
   - a qualification conversion [[conv.qual]], or
-
 - the *handler* is of type cv `T` or `const T&` where `T` is a pointer
   or pointer-to-member type and `E` is `std::nullptr_t`.
 
@@ -492,7 +480,6 @@ follows:
 - if `T` is a base class of `E`, the variable is copy-initialized
   [[dcl.init]] from an lvalue of type `T` designating the corresponding
   base class subobject of the exception object;
-
 - otherwise, the variable is copy-initialized [[dcl.init]] from an
   lvalue of type `E` designating the exception object.
 
@@ -612,22 +599,17 @@ An expression E is *potentially-throwing* if
 - E is a function call [[expr.call]] whose *postfix-expression* has a
   function type, or a pointer-to-function type, with a
   potentially-throwing exception specification, or
-
 - E implicitly invokes a function (such as an overloaded operator, an
   allocation function in a *new-expression*, a constructor for a
   function argument, or a destructor if E is a full-expression
   [[intro.execution]]) that has a potentially-throwing exception
   specification, or
-
 - E is a *throw-expression* [[expr.throw]], or
-
 - E is a `dynamic_cast` expression that casts to a reference type and
   requires a runtime check [[expr.dynamic.cast]], or
-
 - E is a `typeid` expression applied to a (possibly parenthesized)
   built-in unary `*` operator applied to a pointer to a polymorphic
   class type [[expr.typeid]], or
-
 - any of the immediate subexpressions [[intro.execution]] of E is
   potentially-throwing.
 
@@ -639,10 +621,8 @@ only if any of the following constructs is potentially-throwing:
 - the invocation of a constructor selected by overload resolution in the
   implicit definition of the constructor for class `X` to initialize a
   potentially constructed subobject, or
-
 - a subexpression of such an initialization, such as a default argument
   expression, or,
-
 - for a default constructor, a default member initializer.
 
 \[*Note 2*: Even though destructors for fully-constructed subobjects are
@@ -711,19 +691,14 @@ An exception specification is considered to be *needed* when:
 
 - in an expression, the function is selected by overload resolution
   [[over.match]], [[over.over]];
-
 - the function is odr-used [[term.odr.use]] or, if it appears in an
   unevaluated operand, would be odr-used if the expression were
   potentially-evaluated;
-
 - the exception specification is compared to that of another declaration
   (e.g., an explicit specialization or an overriding virtual function);
-
 - the function is defined; or
-
 - the exception specification is needed for a defaulted function that
   calls the function.
-
   \[*Note 1*: A defaulted declaration does not require the exception
   specification of a base member function to be evaluated until the
   implicit exception specification of the derived function is needed,
@@ -759,46 +734,34 @@ These situations are:
   initialization of the exception object but before activation of a
   handler for the exception [[except.throw]], calls a function that
   exits via an exception, or
-
 - when the exception handling mechanism cannot find a handler for a
   thrown exception [[except.handle]], or
-
 - when the search for a handler [[except.handle]] encounters the
   outermost block of a function with a non-throwing exception
   specification [[except.spec]], or
-
 - when the destruction of an object during stack unwinding
   [[except.ctor]] terminates by throwing an exception, or
-
 - when initialization of a non-block variable with static or thread
   storage duration [[basic.start.dynamic]] exits via an exception, or
-
 - when destruction of an object with static or thread storage duration
   exits via an exception [[basic.start.term]], or
-
 - when execution of a function registered with `std::atexit` or
   `std::at_quick_exit` exits via an exception [[support.start.term]], or
-
 - when a *throw-expression* [[expr.throw]] with no operand attempts to
   rethrow an exception and no exception is being handled
   [[except.throw]], or
-
 - when the function `std::nested_exception::rethrow_nested` is called
   for an object that has captured no exception [[except.nested]], or
-
 - when execution of the initial function of a thread exits via an
   exception [[thread.thread.constr]], or
-
 - for a parallel algorithm whose `ExecutionPolicy` specifies such
   behavior [[execpol.seq]], [[execpol.par]], [[execpol.parunseq]], when
   execution of an element access function [[algorithms.parallel.defns]]
   of the parallel algorithm exits via an exception
   [[algorithms.parallel.exceptions]], or
-
 - when the destructor or the move assignment operator is invoked on an
   object of type `std::thread` that refers to a joinable thread
   [[thread.thread.destr]], [[thread.thread.assign]], or
-
 - when a call to a `wait()`, `wait_until()`, or `wait_for()` function on
   a condition variable
   [[thread.condition.condvar]], [[thread.condition.condvarany]] fails to

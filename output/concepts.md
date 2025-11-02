@@ -39,7 +39,6 @@ purposes of this subclause, the operands of an expression are the
 largest subexpressions that include only:
 
 - an *id-expression* [[expr.prim.id]], and
-
 - invocations of the library function templates `std::move`,
   `std::forward`, and `std::declval` [[forward]], [[declval]].
 
@@ -109,15 +108,11 @@ For the above example:
 
 - Expression \#1 does not modify either of its operands, \#2 modifies
   both of its operands, and \#3 modifies only its first operand `a`.
-
 - Expression \#1 implicitly requires additional expression variations
   that meet the requirements for `c == d` (including non-modification),
   as if the expressions
-
   \_\_CODEBLOCK_2\_\_
-
   had been declared as well.
-
 - Expression \#3 implicitly requires additional expression variations
   that meet the requirements for `a = c` (including non-modification of
   the second operand), as if the expressions `a = b` and
@@ -336,13 +331,10 @@ that `f()` is equality-preserving. Types `From` and `To` model
 
 - `To` is not an object or reference-to-object type, or
   `static_cast<To>(f())` is equal to `test(f)`.
-
 - `FromR` is not a reference-to-object type, or
-
   - If `FromR` is an rvalue reference to a non const-qualified type, the
     resulting state of the object referenced by `f()` after either above
     expression is valid but unspecified [[lib.types.movedfrom]].
-
   - Otherwise, the object referred to by `f()` is not modified by either
     above expression.
 
@@ -372,7 +364,6 @@ equality-preserving expressions [[concepts.equality]] such that
 `common_reference_with``<T, U>` only if:
 
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
-
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
 \[*Note 2*: Users can customize the behavior of `common_reference_with`
@@ -413,7 +404,6 @@ equality-preserving expressions [[concepts.equality]] such that
 only if:
 
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
-
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
 \[*Note 2*: Users can customize the behavior of `common_with` by
@@ -457,23 +447,17 @@ Let:
 
 - `lhs` be an lvalue that refers to an object `lcopy` such that
   `decltype((lhs))` is `LHS`,
-
 - `rhs` be an expression such that `decltype((rhs))` is `RHS`, and
-
 - `rcopy` be a distinct object that is equal to `rhs`.
 
 `LHS` and `RHS` model `assignable_from``<LHS, RHS>` only if
 
 - `addressof(lhs = rhs) == addressof(lcopy)`.
-
 - After evaluating `lhs = rhs`:
-
   - `lhs` is equal to `rcopy`, unless `rhs` is a non-const xvalue that
     refers to `lcopy`.
-
   - If `rhs` is a non- xvalue, the resulting state of the object to
     which it refers is valid but unspecified [[lib.types.movedfrom]].
-
   - Otherwise, if `rhs` is a glvalue, the object to which it refers is
     not modified.
 
@@ -496,7 +480,6 @@ if the operation modifies neither `t2` nor `u2` and:
 
 - If `T` and `U` are the same type, the result of the operation is that
   `t1` equals `u2` and `u1` equals `t2`.
-
 - If `T` and `U` are different types and
   `common_reference_with<decltype((t1)), decltype((u1))>` is modeled,
   the result of the operation is that `C(t1)` equals `C(u2)` and `C(u1)`
@@ -509,11 +492,9 @@ for subexpressions `E1` and `E2` is expression-equivalent to an
 expression `S` determined as follows:
 
 - `S` is `(void)swap(E1, E2)`
-
   if `E1` or `E2` has class or enumeration type [[basic.compound]] and
   that expression is valid, with overload resolution performed in a
   context that includes the declaration
-
   ``` cpp
   template<class T>
     void swap(T&, T&) = delete;
@@ -522,29 +503,22 @@ expression `S` determined as follows:
   and does not include a declaration of `ranges::swap`. If the function
   selected by overload resolution does not exchange the values denoted
   by `E1` and `E2`, the program is ill-formed, no diagnostic required.
-
   \[*Note 1*: This precludes calling unconstrained program-defined
   overloads of `swap`. When the deleted overload is viable,
   program-defined overloads need to be more specialized
   [[temp.func.order]] to be selected. — *end note*\]
-
 - Otherwise, if `E1` and `E2` are lvalues of array types
   [[basic.compound]] with equal extent and `ranges::swap(*E1, *E2)` is a
   valid expression, `S` is `(void)ranges::swap_ranges(E1, E2)`, except
   that `noexcept(S)` is equal to `noexcept(ranges::swap(*E1, *E2))`.
-
 - Otherwise, if `E1` and `E2` are lvalues of the same type `T` that
   models `move_constructible<T>` and `assignable_from<T&, T>`, `S` is an
   expression that exchanges the denoted values. `S` is a constant
   expression if
-
   - `T` is a literal type [[term.literal.type]],
-
   - both `E1 = std::move(E2)` and `E2 = std::move(E1)` are constant
     subexpressions [[defns.const.subexpr]], and
-
   - the full-expressions of the initializers in the declarations
-
     ``` cpp
     T t1(std::move(E1));
     T t2(std::move(E2));
@@ -554,9 +528,7 @@ expression `S` determined as follows:
 
   `noexcept(S)` is equal to
   `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>`.
-
 - Otherwise, `ranges::swap(E1, E2)` is ill-formed.
-
   \[*Note 2*: This case can result in substitution failure when
   `ranges::swap(E1, E2)` appears in the immediate context of a template
   instantiation. — *end note*\]
@@ -695,9 +667,7 @@ If `T` is an object type, then let `rv` be an rvalue of type `T` and
 `move_constructible` only if
 
 - After the definition `T u = rv;`, `u` is equal to `u2`.
-
 - `T(rv)` is equal to `u2`.
-
 - If `T` is not , `rv`’s resulting state is valid but
   unspecified [[lib.types.movedfrom]]; otherwise, it is unchanged.
 
@@ -717,7 +687,6 @@ or an rvalue of type ` T`. `T` models `copy_constructible` only if
 
 - After the definition `T u = v;`, `u` is equal to
   `v`[[concepts.equality]] and `v` is not modified.
-
 - `T(v)` is equal to `v` and does not modify `v`.
 
 ## Comparison concepts <a id="concepts.compare">[[concepts.compare]]</a>
@@ -733,7 +702,6 @@ be:
 
 - `static_cast<const C&>(as_const(E))` if that is a valid expression,
   and
-
 - `static_cast<const C&>(std::move(E))` otherwise.
 
 ### Boolean testability <a id="concept.booleantestable">[[concept.booleantestable]]</a>
@@ -755,7 +723,6 @@ Let `e` be an expression such that `decltype((e))` is `T`. `T` models
 - either `remove_cvref_t<T>` is not a class type, or a search for the
   names `operator&&` and `operator||` in the scope of
   `remove_cvref_t<T>` finds nothing; and
-
 - argument-dependent lookup [[basic.lookup.argdep]] for the names
   `operator&&` and `operator||` with `T` as the only argument type finds
   no disqualifying declaration (defined below).
@@ -765,12 +732,9 @@ A *disqualifying parameter* is a function parameter whose declared type
 
 - is not dependent on a template parameter, and there exists an implicit
   conversion sequence [[over.best.ics]] from `e` to `P`; or
-
 - is dependent on one or more template parameters, and either
-
   - `P` contains no template parameter that participates in template
     argument deduction [[temp.deduct.type]], or
-
   - template argument deduction using the rules for deducing template
     arguments in a function call [[temp.deduct.call]] and `e` as the
     argument succeeds.
@@ -804,14 +768,10 @@ A *disqualifying declaration* is
 
 - a (non-template) function declaration that contains at least one
   disqualifying parameter; or
-
 - a function template declaration that contains at least one
   disqualifying parameter, where
-
   - at least one disqualifying parameter is a key parameter; or
-
   - the declaration contains no key parameters; or
-
   - the declaration declares a function template to which no name is
     bound [[dcl.meaning]].
 
@@ -861,7 +821,6 @@ model `comparison-common-type-with<T, U>` only if:
 
 - `CONVERT_TO_LVALUE<C>(t1)` equals `CONVERT_TO_LVALUE<C>(t2)` if and
   only if `t1` equals `t2`, and
-
 - `CONVERT_TO_LVALUE<C>(u1)` equals `CONVERT_TO_LVALUE<C>(u2)` if and
   only if `u1` equals `u2`
 
@@ -885,11 +844,8 @@ respectively. `T` and `U` model
 `weakly-equality-comparable-with``<T, U>` only if
 
 - `t == u`, `u == t`, `t != u`, and `u != t` have the same domain.
-
 - `bool(u == t) == bool(t == u)`.
-
 - `bool(t != u) == !bool(t == u)`.
-
 - `bool(u != t) == bool(t != u)`.
 
 ``` cpp
@@ -946,11 +902,8 @@ Given a type `T`, let `a`, `b`, and `c` be lvalues of type
 
 - Exactly one of `bool(a < b)`, `bool(a > b)`, or `bool(a == b)` is
   `true`.
-
 - If `bool(a < b)` and `bool(b < c)`, then `bool(a < c)`.
-
 - `bool(a <= b) == !bool(b < a)`.
-
 - `bool(a >= b) == !bool(a < b)`.
 
 ``` cpp
@@ -978,19 +931,12 @@ common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
 `T` and `U` model `totally_ordered_with``<T, U>` only if
 
 - `bool(t < u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) < `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
-
 - `bool(t > u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) > `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
-
 - `bool(t <= u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) <= `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
-
 - `bool(t >= u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) >= `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
-
 - `bool(u < t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) < `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
-
 - `bool(u > t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) > `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
-
 - `bool(u <= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) <= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
-
 - `bool(u >= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) >= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
 
 ## Object concepts <a id="concepts.object">[[concepts.object]]</a>
@@ -1109,7 +1055,6 @@ partial ordering. If we define `equiv(a, b)` as
 `equiv` both be transitive relations:
 
 - `comp(a, b) && comp(b, c)` implies `comp(a, c)`
-
 - `equiv(a, b) && equiv(b, c)` implies `equiv(a, c)`
 
 \[*Note 1*:
@@ -1117,10 +1062,8 @@ partial ordering. If we define `equiv(a, b)` as
 Under these conditions, it can be shown that
 
 - `equiv` is an equivalence relation,
-
 - `comp` induces a well-defined relation on the equivalence classes
   determined by `equiv`, and
-
 - the induced relation is a strict total ordering.
 
 — *end note*\]

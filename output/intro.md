@@ -29,34 +29,25 @@ references, the latest edition of the referenced document (including any
 amendments) applies.
 
 - ISO/IEC 2382, *Information technology --- Vocabulary*
-
 - ISO 8601:2004, *Data elements and interchange formats ---
   Information interchange --- Representation of dates and times*
-
 - ISO/IEC 9899:2018, *Programming languages --- C*
-
 - ISO/IEC/IEEE 9945:2009, *Information Technology --- Portable
   Operating System Interface (POSIX
   \begin{footnote*
-
 - ISO/IEC/IEEE 9945:2009/Cor 1:2013,
   *Information Technology --- Portable
   Operating System Interface (POSIX), Technical Corrigendum 1*
-
 - ISO/IEC/IEEE 9945:2009/Cor 2:2017,
   *Information Technology --- Portable
   Operating System Interface (POSIX), Technical Corrigendum 2*
-
 - ISO/IEC/IEEE 60559:2020, *Information technology ---
   Microprocessor Systems --- Floating-Point arithmetic*
-
 - ISO 80000-2:2009, *Quantities and units ---
   Part 2: Mathematical signs and symbols
   to be used in the natural sciences and technology*
-
 - Ecma International, *ECMAScript
   \begin{footnote*, Standard Ecma-262, third edition, 1999.
-
 - The Unicode Consortium. *The Unicode Standard*. Available from:
   <https://www.unicode.org/versions/latest/>
 
@@ -79,7 +70,6 @@ ISO and IEC maintain terminology databases for use in standardization at
 the following addresses:
 
 - ISO Online browsing platform: available at <https://www.iso.org/obp>
-
 - IEC Electropedia: available at <https://www.electropedia.org/>
 
 Terms that are used only in a small portion of this document are defined
@@ -584,13 +574,10 @@ Such requirements have the following meaning:
   [[thread]] and [[depr]], a conforming implementation shall, within its
   resource limits as described in [[implimits]], accept and correctly
   execute
-
   that program.
-
 -  If a program contains a violation of a rule for which no diagnostic
   is required, this document places no requirement on implementations
   with respect to that program.
-
 -  Otherwise, if a program contains a violation of any diagnosable rule
   or an occurrence of a construct described in this document as
   “conditionally-supported” when the implementation does not support
@@ -605,11 +592,9 @@ Furthermore, a conforming implementation
 
 - shall not accept a preprocessing translation unit containing a
   `#error` preprocessing directive [[cpp.error]],
-
 - shall issue at least one diagnostic message for each `#warning` or
   `#error` preprocessing directive not following a `#error`
   preprocessing directive in a preprocessing translation unit, and
-
 - shall not accept a translation unit with a *static_assert-declaration*
   that fails [[dcl.pre]].
 
@@ -695,11 +680,9 @@ The least requirements on a conforming implementation are:
 
 - Accesses through volatile glvalues are evaluated strictly according to
   the rules of the abstract machine.
-
 - At program termination, all data written into files shall be identical
   to one of the possible results that execution of the program according
   to the abstract semantics would have produced.
-
 - The input and output dynamics of interactive devices shall take place
   in such a fashion that prompting output is actually delivered before a
   program waits for input. What constitutes an interactive device is
@@ -753,13 +736,10 @@ the following rules:
 
 -  is a use of an identifier in a context that determines its meaning
   (e.g., *class-name*, *typedef-name*).
-
 -  is an identifier with no context-dependent meaning (e.g.,
   *qualified-id*).
-
 -  is one or more ’s without intervening delimiters (e.g.,
   *declaration-seq* is a sequence of declarations).
-
 -  is one or more ’s separated by intervening commas (e.g.,
   *identifier-list* is a sequence of identifiers separated by commas).
 

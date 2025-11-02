@@ -59,29 +59,17 @@ In the following requirements,
 
 - `X` denotes a traits class defining types and functions for the
   character container type `charT`;
-
 - `u` is an object of type `X`;
-
 - `v` is an object of type `const X`;
-
 - `p` is a value of type `const charT*`;
-
 - `I1` and `I2` are input iterators [[input.iterators]];
-
 - `F1` and `F2` are forward iterators [[forward.iterators]];
-
 - `c` is a value of type `const charT`;
-
 - `s` is an object of type `X::string_type`;
-
 - `cs` is an object of type `const X::string_type`;
-
 - `b` is a value of type `bool`;
-
 - `I` is a value of type `int`;
-
 - `cl` is an object of type `X::char_class_type`; and
-
 - `loc` is an object of type `X::locale_type`.
 
 A traits class `X` meets the regular expression traits requirements if
@@ -1767,15 +1755,11 @@ result is ready and the other is not. If both match results are ready,
 returns `true` only if:
 
 - `m1.empty() && m2.empty()`, or
-
 - `!m1.empty() && !m2.empty()`, and the following conditions are
   satisfied:
-
   - `m1.prefix() == m2.prefix()`,
-
   - `m1.size() == m2.size() && equal(m1.begin(), m1.end(), m2.begin())`,
     and
-
   - `m1.suffix() == m2.suffix()`.
 
 \[*Note 1*: The algorithm `equal` is defined in
@@ -1986,15 +1970,11 @@ out = copy(first, last, out)
 If any matches are found then, for each such match:
 
 - If `!(flags & regex_constants::format_no_copy)`, calls
-
       out = copy(m.prefix().first, m.prefix().second, out)
-
 - Then calls
-
       out = m.format(out, fmt, flags)
 
   for the first form of the function and
-
       out = m.format(out, fmt, fmt + char_traits<charT>::length(fmt), flags)
 
   for the second.
@@ -2144,13 +2124,9 @@ bool operator==(const regex_iterator& right) const;
 iterators or if the following conditions all hold:
 
 - `begin == right.begin`,
-
 - `end == right.end`,
-
 - `pregex == right.pregex`,
-
 - `flags == right.flags`, and
-
 - `match[0] == right.match[0]`;
 
 otherwise `false`.
@@ -2609,17 +2585,13 @@ as follows:
 - During matching of a regular expression finite state machine against a
   sequence of characters, two characters `c` and `d` are compared using
   the following rules:
-
   - if `(flags() & regex_constants::icase)` the two characters are equal
     if
     `traits_inst.translate_nocase(c) == traits_inst.translate_nocase(d)`;
-
   - otherwise, if `flags() & regex_constants::collate` the two
     characters are equal if
     `traits_inst\brk.translate(c) == traits_inst\brk.translate(d)`;
-
   - otherwise, the two characters are equal if `c == d`.
-
 - During matching of a regular expression finite state machine against a
   sequence of characters, comparison of a collating element range
   `c1-c2` against a character `c` is conducted as follows: if
@@ -2627,7 +2599,6 @@ as follows:
   is matched if `c1
   <= c && c <= c2`, otherwise `c` is matched in accordance with the
   following algorithm:
-
   ``` cpp
   string_type str1 = string_type(1,
     flags() & icase ?
@@ -2643,14 +2614,12 @@ as follows:
     && traits_inst.transform(str.begin(), str.end())
         <= traits_inst.transform(str2.begin(), str2.end());
   ```
-
 - During matching of a regular expression finite state machine against a
   sequence of characters, testing whether a collating element is a
   member of a primary equivalence class is conducted by first converting
   the collating element and the equivalence class to sort keys using
   `traits::transform_primary`, and then comparing the sort keys for
   equality.
-
 - During matching of a regular expression finite state machine against a
   sequence of characters, a character `c` is a member of a character
   class designated by an iterator range if

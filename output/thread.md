@@ -114,10 +114,8 @@ follows:
   i.e., Cₐ + Dᵢ + Dₘ, since the timeout is already satisfied. This
   specification may result in the total duration of the wait decreasing
   when measured against a steady clock.
-
 - If Cₐ ≤ Cₜ, the waiting function should not time out until
   `Clock::now()` returns a time Cₙ ≥ Cₜ, i.e., waking at Cₜ + Dᵢ + Dₘ.
-
   \[*Note 1*: When the clock is adjusted backwards, this specification
   can result in the total duration of the wait increasing when measured
   against a steady clock. When the clock is adjusted forwards, this
@@ -188,7 +186,6 @@ A lock on an object `m` is said to be
 
 - a *non-shared lock* if it is acquired by a call to `lock`, `try_lock`,
   `try_lock_for`, or `try_lock_until` on `m`, or
-
 - a *shared lock* if it is acquired by a call to `lock_shared`,
   `try_lock_shared`, `try_lock_shared_for`, or `try_lock_shared_until`
   on `m`.
@@ -371,7 +368,6 @@ releases the resources associated with the stop state.
 A `stop_token` can be passed to an operation which can either
 
 - actively poll the token to check if there has been a stop request, or
-
 - register a callback using the `stop_callback` class template which
   will be called in the event that a stop request is made.
 
@@ -520,7 +516,6 @@ received a stop request; otherwise, `false`.
 *Returns:* `false` if:
 
 - `*this` does not have ownership of a stop state, or
-
 - a stop request was not made and there are no associated `stop_source`
   objects;
 
@@ -1012,9 +1007,7 @@ template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 *Mandates:* The following are all `true`:
 
 - `is_constructible_v<decay_t<F>, F>`,
-
 - `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
-
 - `is_invocable_v<decay_t<F>, decay_t<Args>...>`.
 
 *Effects:* The new thread of execution executes
@@ -1123,9 +1116,7 @@ required [[thread.req.exception]].
 
 - `resource_deadlock_would_occur` — if deadlock is detected or
   `get_id() == this_thread::get_id()`.
-
 - `no_such_process` — if the thread is not valid.
-
 - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
@@ -1146,7 +1137,6 @@ required [[thread.req.exception]].
 *Error conditions:*
 
 - `no_such_process` — if the thread is not valid.
-
 - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
@@ -1252,9 +1242,7 @@ template<class F, class... Args> explicit jthread(F&& f, Args&&... args);
 *Mandates:* The following are all `true`:
 
 - `is_constructible_v<decay_t<F>, F>`,
-
 - `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
-
 - `is_invocable_v<decay_t<F>, decay_t<Args>...> ||`  
   `is_invocable_v<decay_t<F>, stop_token, decay_t<Args>...>`.
 
@@ -1368,9 +1356,7 @@ required [[thread.req.exception]].
 
 - `resource_deadlock_would_occur` — if deadlock is detected or
   `get_id() == this_thread::get_id()`.
-
 - `no_such_process` — if the thread is not valid.
-
 - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
@@ -1391,7 +1377,6 @@ required [[thread.req.exception]].
 *Error conditions:*
 
 - `no_such_process` — if the thread is not valid.
-
 - `invalid_argument` — if the thread is not joinable.
 
 ``` cpp
@@ -1818,20 +1803,16 @@ The enumeration `memory_order` specifies the detailed regular
 enumerated values and their meanings are as follows:
 
 - `memory_order::relaxed`: no operation orders memory.
-
 - `memory_order::release`, `memory_order::acq_rel`, and
   `memory_order::seq_cst`: a store operation performs a release
   operation on the affected memory location.
-
 - `memory_order::consume`: a load operation performs a consume operation
   on the affected memory location.
-
   \[*Note 2*: Prefer `memory_order::acquire`, which provides stronger
   guarantees than `memory_order::consume`. Implementations have found it
   infeasible to provide performance better than that of
   `memory_order::acquire`. Specification revisions are under
   consideration. — *end note*\]
-
 - `memory_order::acquire`, `memory_order::acq_rel`, and
   `memory_order::seq_cst`: a load operation performs an acquire
   operation on the affected memory location.
@@ -1851,13 +1832,10 @@ An atomic operation A on some atomic object M is
 *coherence-ordered before* another atomic operation B on M if
 
 - A is a modification, and B reads the value stored by A, or
-
 - A precedes B in the modification order of M, or
-
 - A and B are not the same atomic read-modify-write operation, and there
   exists an atomic modification X of M such that A reads the value
   stored by X and X precedes B in the modification order of M, or
-
 - there exists an atomic modification X of M such that A is
   coherence-ordered before X and X is coherence-ordered before B.
 
@@ -1871,13 +1849,10 @@ S:
 
 - if A and B are both `memory_order::seq_cst` operations, then A
   precedes B in S; and
-
 - if A is a `memory_order::seq_cst` operation and B happens before a
   `memory_order::seq_cst` fence Y, then A precedes Y in S; and
-
 - if a `memory_order::seq_cst` fence X happens before A and B is a
   `memory_order::seq_cst` operation, then X precedes B in S; and
-
 - if a `memory_order::seq_cst` fence X happens before A and B happens
   before a `memory_order::seq_cst` fence Y, then X precedes Y in S.
 
@@ -2031,13 +2006,9 @@ blocking if a condition is only temporarily met. — *end note*\]
 The following functions are atomic waiting operations:
 
 - `atomic<T>::wait`,
-
 - `atomic_flag::wait`,
-
 - `atomic_wait` and `atomic_wait_explicit`,
-
 - `atomic_flag_wait` and `atomic_flag_wait_explicit`, and
-
 - `atomic_ref<T>::wait`.
 
 — *end note*\]
@@ -2047,13 +2018,9 @@ The following functions are atomic waiting operations:
 The following functions are atomic notifying operations:
 
 - `atomic<T>::notify_one` and `atomic<T>::notify_all`,
-
 - `atomic_flag::notify_one` and `atomic_flag::notify_all`,
-
 - `atomic_notify_one` and `atomic_notify_all`,
-
 - `atomic_flag_notify_one` and `atomic_flag_notify_all`, and
-
 - `atomic_ref<T>::notify_one` and `atomic_ref<T>::notify_all`.
 
 — *end note*\]
@@ -2064,9 +2031,7 @@ A call to an atomic waiting operation on an atomic object `M` is
 
 - the atomic waiting operation has blocked after observing the result of
   `X`,
-
 - `X` precedes `Y` in the modification order of `M`, and
-
 - `Y` happens before the call to the atomic notifying operation.
 
 ### Class template `atomic_ref` <a id="atomics.ref.generic">[[atomics.ref.generic]]</a>
@@ -2322,9 +2287,7 @@ void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
 
 - Evaluates `load(order)` and compares its value representation for
   equality against that of `old`.
-
 - If they compare unequal, returns.
-
 - Blocks until it is unblocked by an atomic notifying operation or is
   unblocked spuriously.
 
@@ -2742,13 +2705,9 @@ and *Cpp17CopyAssignable* requirements. The program is ill-formed if any
 of
 
 - `is_trivially_copyable_v<T>`,
-
 - `is_copy_constructible_v<T>`,
-
 - `is_move_constructible_v<T>`,
-
 - `is_copy_assignable_v<T>`, or
-
 - `is_move_assignable_v<T>`
 
 is `false`.
@@ -3066,9 +3025,7 @@ void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
 
 - Evaluates `load(order)` and compares its value representation for
   equality against that of `old`.
-
 - If they compare unequal, returns.
-
 - Blocks until it is unblocked by an atomic notifying operation or is
   unblocked spuriously.
 
@@ -3808,9 +3765,7 @@ void wait(shared_ptr<T> old, memory_order order = memory_order::seq_cst) const n
 *Effects:* Repeatedly performs the following steps, in order:
 
 - Evaluates `load(order)` and compares it to `old`.
-
 - If the two are not equivalent, returns.
-
 - Blocks until it is unblocked by an atomic notifying operation or is
   unblocked spuriously.
 
@@ -4018,9 +3973,7 @@ void wait(weak_ptr<T> old, memory_order order = memory_order::seq_cst) const noe
 *Effects:* Repeatedly performs the following steps, in order:
 
 - Evaluates `load(order)` and compares it to `old`.
-
 - If the two are not equivalent, returns.
-
 - Blocks until it is unblocked by an atomic notifying operation or is
   unblocked spuriously.
 
@@ -4182,9 +4135,7 @@ functions.
 *Effects:* Repeatedly performs the following steps, in order:
 
 - Evaluates `flag->test(order) != old`.
-
 - If the result of that evaluation is `true`, returns.
-
 - Blocks until it is unblocked by an atomic notifying operation or is
   unblocked spuriously.
 
@@ -4269,15 +4220,11 @@ extern "C" void atomic_thread_fence(memory_order order) noexcept;
 *Effects:* Depending on the value of `order`, this operation:
 
 - has no effects, if `order == memory_order::relaxed`;
-
 - is an acquire fence, if `order == memory_order::acquire` or
   `order == memory_order::consume`;
-
 - is a release fence, if `order == memory_order::release`;
-
 - is both an acquire fence and a release fence, if
   `order == memory_order::acq_rel`;
-
 - is a sequentially consistent acquire and release fence, if
   `order == memory_order::seq_cst`.
 
@@ -4524,10 +4471,8 @@ functions of the mutex types are as follows:
 
 - `resource_unavailable_try_again` — if any native handle type
   manipulated is not available.
-
 - `operation_not_permitted` — if the thread does not have the privilege
   to perform the operation.
-
 - `invalid_argument` — if any native handle type manipulated as part of
   mutex construction is incorrect.
 
@@ -4568,7 +4513,6 @@ required [[thread.req.exception]].
 
 - `operation_not_permitted` — if the thread does not have the privilege
   to perform the operation.
-
 - `resource_deadlock_would_occur` — if the implementation detects that a
   deadlock would occur.
 
@@ -4716,7 +4660,6 @@ acquired by another thread.
 The behavior of a program is undefined if:
 
 - it destroys a `recursive_mutex` object owned by any thread or
-
 - a thread terminates while owning a `recursive_mutex` object.
 
 #### Timed mutex types <a id="thread.timedmutex.requirements">[[thread.timedmutex.requirements]]</a>
@@ -4827,11 +4770,9 @@ The class `timed_mutex` meets all of the timed mutex requirements
 The behavior of a program is undefined if:
 
 - it destroys a `timed_mutex` object owned by any thread,
-
 - a thread that owns a `timed_mutex` object calls `lock()`,
   `try_lock()`, `try_lock_for()`, or `try_lock_until()` on that object,
   or
-
 - a thread terminates while owning a `timed_mutex` object.
 
 ##### Class `recursive_timed_mutex` <a id="thread.timedmutex.recursive">[[thread.timedmutex.recursive]]</a>
@@ -4888,7 +4829,6 @@ object be acquired by another thread.
 The behavior of a program is undefined if:
 
 - it destroys a `recursive_timed_mutex` object owned by any thread, or
-
 - a thread terminates while owning a `recursive_timed_mutex` object.
 
 #### Shared mutex types <a id="thread.sharedmutex.requirements">[[thread.sharedmutex.requirements]]</a>
@@ -4940,7 +4880,6 @@ required [[thread.req.exception]].
 
 - `operation_not_permitted` — if the thread does not have the privilege
   to perform the operation.
-
 - `resource_deadlock_would_occur` — if the implementation detects that a
   deadlock would occur.
 
@@ -5019,10 +4958,8 @@ The class `shared_mutex` meets all of the shared mutex requirements
 The behavior of a program is undefined if:
 
 - it destroys a `shared_mutex` object owned by any thread,
-
 - a thread attempts to recursively gain any ownership of a
   `shared_mutex`, or
-
 - a thread terminates while possessing any ownership of a
   `shared_mutex`.
 
@@ -5147,10 +5084,8 @@ standard-layout class [[class.prop]].
 The behavior of a program is undefined if:
 
 - it destroys a `shared_timed_mutex` object owned by any thread,
-
 - a thread attempts to recursively gain any ownership of a
   `shared_timed_mutex`, or
-
 - a thread terminates while possessing any ownership of a
   `shared_timed_mutex`.
 
@@ -5272,7 +5207,6 @@ objects referenced by `pm` do not exist for the entire lifetime of the
   constituting the pack `MutexTypes`. `Mutex` shall meet the
   *Cpp17BasicLockable* requirements [[thread.req.lockable.basic]]. The
   member *typedef-name* `mutex_type` denotes the same type as `Mutex`.
-
 - Otherwise, all types in the template parameter pack `MutexTypes` shall
   meet the *Cpp17Lockable* requirements [[thread.req.lockable.req]] and
   there is no member `mutex_type`.
@@ -5494,7 +5428,6 @@ exception is required [[thread.req.exception]].
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5517,7 +5450,6 @@ an exception is required [[thread.req.exception]].
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5541,7 +5473,6 @@ template<class Clock, class Duration>
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5565,7 +5496,6 @@ template<class Rep, class Period>
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5805,7 +5735,6 @@ when an exception is required [[thread.req.exception]].
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5825,7 +5754,6 @@ to `pm->try_lock_shared()`.
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5850,7 +5778,6 @@ to `pm->try_lock_shared_until(abs_time)`.
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5875,7 +5802,6 @@ to `pm->try_lock_shared_for(rel_time)`.
 *Error conditions:*
 
 - `operation_not_permitted` — if `pm` is .
-
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -6093,9 +6019,7 @@ executions of `wait`, `wait_for`, and `wait_until` are performed in
 three atomic parts:
 
 1.  the release of the mutex and entry into the waiting state;
-
 2.  the unblocking of the wait; and
-
 3.  the reacquisition of the lock.
 
 The implementation behaves as if all executions of `notify_one`,
@@ -6131,7 +6055,6 @@ void notify_all_at_thread_exit(condition_variable& cond, unique_lock<mutex> lk);
 *Preconditions:* `lk` is locked by the calling thread and either
 
 - no other thread is waiting on `cond`, or
-
 - `lk.mutex()` returns the same value for each of the lock arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6251,7 +6174,6 @@ void wait(unique_lock<mutex>& lock);
 locked by the calling thread, and either
 
 - no other thread is waiting on this `condition_variable` object or
-
 - `lock.mutex()` returns the same value for each of the `lock` arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6259,10 +6181,8 @@ locked by the calling thread, and either
 *Effects:*
 
 - Atomically calls `lock.unlock()` and blocks on `*this`.
-
 - When unblocked, calls `lock.lock()` (possibly blocking on the lock),
   then returns.
-
 - The function will unblock when signaled by a call to `notify_one()` or
   a call to `notify_all()`, or spuriously.
 
@@ -6286,7 +6206,6 @@ template<class Predicate>
 locked by the calling thread, and either
 
 - no other thread is waiting on this `condition_variable` object or
-
 - `lock.mutex()` returns the same value for each of the `lock` arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6319,7 +6238,6 @@ template<class Clock, class Duration>
 locked by the calling thread, and either
 
 - no other thread is waiting on this `condition_variable` object or
-
 - `lock.mutex()` returns the same value for each of the `lock` arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6327,14 +6245,11 @@ locked by the calling thread, and either
 *Effects:*
 
 - Atomically calls `lock.unlock()` and blocks on `*this`.
-
 - When unblocked, calls `lock.lock()` (possibly blocking on the lock),
   then returns.
-
 - The function will unblock when signaled by a call to `notify_one()`, a
   call to `notify_all()`, expiration of the absolute
   timeout [[thread.req.timing]] specified by `abs_time`, or spuriously.
-
 - If the function exits via an exception, `lock.lock()` is called prior
   to exiting the function.
 
@@ -6363,7 +6278,6 @@ template<class Rep, class Period>
 locked by the calling thread, and either
 
 - no other thread is waiting on this `condition_variable` object or
-
 - `lock.mutex()` returns the same value for each of the `lock` arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6400,7 +6314,6 @@ template<class Clock, class Duration, class Predicate>
 locked by the calling thread, and either
 
 - no other thread is waiting on this `condition_variable` object or
-
 - `lock.mutex()` returns the same value for each of the `lock` arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6441,7 +6354,6 @@ template<class Rep, class Period, class Predicate>
 locked by the calling thread, and either
 
 - no other thread is waiting on this `condition_variable` object or
-
 - `lock.mutex()` returns the same value for each of the `lock` arguments
   supplied by all concurrently waiting (via `wait`, `wait_for`, or
   `wait_until`) threads.
@@ -6539,7 +6451,6 @@ required [[thread.req.exception]].
 
 - `resource_unavailable_try_again` — if some non-memory resource
   limitation prevents initialization.
-
 - `operation_not_permitted` — if the thread does not have the privilege
   to perform the operation.
 
@@ -6582,10 +6493,8 @@ template<class Lock>
 *Effects:*
 
 - Atomically calls `lock.unlock()` and blocks on `*this`.
-
 - When unblocked, calls `lock.lock()` (possibly blocking on the lock)
   and returns.
-
 - The function will unblock when signaled by a call to `notify_one()`, a
   call to `notify_all()`, or spuriously.
 
@@ -6619,14 +6528,11 @@ template<class Lock, class Clock, class Duration>
 *Effects:*
 
 - Atomically calls `lock.unlock()` and blocks on `*this`.
-
 - When unblocked, calls `lock.lock()` (possibly blocking on the lock)
   and returns.
-
 - The function will unblock when signaled by a call to `notify_one()`, a
   call to `notify_all()`, expiration of the absolute
   timeout [[thread.req.timing]] specified by `abs_time`, or spuriously.
-
 - If the function exits via an exception, `lock.lock()` is called prior
   to exiting the function.
 
@@ -6920,7 +6826,6 @@ void acquire();
 *Effects:* Repeatedly performs the following steps, in order:
 
 - Evaluates `try_acquire()`. If the result is `true`, returns.
-
 - Blocks on `*this` until `counter` is greater than zero.
 
 *Throws:* `system_error` when an exception is
@@ -6939,7 +6844,6 @@ template<class Clock, class Duration>
 *Effects:* Repeatedly performs the following steps, in order:
 
 - Evaluates `try_acquire()`. If the result is `true`, returns `true`.
-
 - Blocks on `*this` until `counter` is greater than zero or until the
   timeout expires. If it is unblocked by the timeout expiring, returns
   `false`.
@@ -7137,12 +7041,10 @@ Each *barrier phase* consists of the following steps:
 
 - The expected count is decremented by each call to `arrive` or
   `arrive_and_drop`.
-
 - Exactly once after the expected count reaches zero, a thread executes
   the completion step during its call to `arrive`, `arrive_and_drop`, or
   `wait`, except that it is *implementation-defined* whether the step
   executes if no thread calls `wait`.
-
 - When the completion step finishes, the expected count is reset to what
   was specified by the `expected` argument to the constructor, possibly
   adjusted by calls to `arrive_and_drop`, and the next phase starts.
@@ -7156,7 +7058,6 @@ The *phase completion step* that is executed at the end of each phase
 has the following effects:
 
 - Invokes the completion function, equivalent to `completion()`.
-
 - Unblocks all threads that are blocked on the phase synchronization
   point.
 
@@ -7478,10 +7379,8 @@ to release its shared state, it means:
 
 - if the return object or provider holds the last reference to its
   shared state, the shared state is destroyed; and
-
 - the return object or provider gives up its reference to its shared
   state; and
-
 - these actions will not block for the shared state to become ready,
   except that it may block if all of the following are true: the shared
   state was created by a call to `std::async`, the shared state is not
@@ -7491,7 +7390,6 @@ When an asynchronous provider is said to make its shared state ready, it
 means:
 
 - first, the provider marks its shared state as ready; and
-
 - second, the provider unblocks any execution agents waiting for its
   shared state to become ready.
 
@@ -7499,12 +7397,9 @@ When an asynchronous provider is said to abandon its shared state, it
 means:
 
 - first, if that state is not ready, the provider
-
   - stores an exception object of type `future_error` with an error
     condition of `broken_promise` within its shared state; and then
-
   - makes its shared state ready;
-
 - second, the provider releases its shared state.
 
 A shared state is *ready* only if it holds a value or an exception ready
@@ -7656,7 +7551,6 @@ state as `*this`.
 
 - `future_already_retrieved` if `get_future` has already been called on
   a `promise` with the same shared state as `*this`.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -7673,10 +7567,8 @@ that state ready [[futures.state]].
 
 - `future_error` if its shared state already has a stored value or
   exception, or
-
 - for the first version, any exception thrown by the constructor
   selected to copy an object of `R`, or
-
 - for the second version, any exception thrown by the constructor
   selected to move an object of `R`.
 
@@ -7684,7 +7576,6 @@ that state ready [[futures.state]].
 
 - `promise_already_satisfied` if its shared state already has a stored
   value or exception.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -7703,7 +7594,6 @@ or exception.
 
 - `promise_already_satisfied` if its shared state already has a stored
   value or exception.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -7722,10 +7612,8 @@ associated with the current thread have been destroyed.
 
 - `future_error` if its shared state already has a stored value or
   exception, or
-
 - for the first version, any exception thrown by the constructor
   selected to copy an object of `R`, or
-
 - for the second version, any exception thrown by the constructor
   selected to move an object of `R`.
 
@@ -7733,7 +7621,6 @@ associated with the current thread have been destroyed.
 
 - `promise_already_satisfied` if its shared state already has a stored
   value or exception.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -7753,7 +7640,6 @@ duration associated with the current thread have been destroyed.
 
 - `promise_already_satisfied` if its shared state already has a stored
   value or exception.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -7842,7 +7728,6 @@ state that was originally referred to by `rhs` (if any).
 
 - `valid()` returns the same value as `rhs.valid()` prior to the
   constructor invocation.
-
 - `rhs.valid() == false`.
 
 ``` cpp
@@ -7852,7 +7737,6 @@ state that was originally referred to by `rhs` (if any).
 *Effects:*
 
 - Releases any shared state [[futures.state]];
-
 - destroys `*this`.
 
 ``` cpp
@@ -7863,14 +7747,12 @@ future& operator=(future&& rhs) noexcept;
 Otherwise:
 
 - Releases any shared state [[futures.state]].
-
 - move assigns the contents of `rhs` to `*this`.
 
 *Ensures:*
 
 - `valid()` returns the same value as `rhs.valid()` prior to the
   assignment.
-
 - If `addressof(rhs) == this` is `false`, `rhs.valid() == false`.
 
 ``` cpp
@@ -7895,7 +7777,6 @@ member function `get`. — *end note*\]
 
 - `wait()`s until the shared state is ready, then retrieves the value
   stored in the shared state;
-
 - releases any shared state [[futures.state]].
 
 *Ensures:* `valid() == false`.
@@ -7904,10 +7785,8 @@ member function `get`. — *end note*\]
 
 - `future::get()` returns the value `v` stored in the object’s shared
   state as `std::move(v)`.
-
 - `future<R&>::get()` returns the reference stored as value in the
   object’s shared state.
-
 - `future<void>::get()` returns nothing.
 
 *Throws:* The stored exception, if an exception was stored in the shared
@@ -7939,9 +7818,7 @@ ready or until the relative timeout [[thread.req.timing]] specified by
 
 - `future_status::deferred` if the shared state contains a deferred
   function.
-
 - `future_status::ready` if the shared state is ready.
-
 - `future_status::timeout` if the function is returning because the
   relative timeout [[thread.req.timing]] specified by `rel_time` has
   expired.
@@ -7962,9 +7839,7 @@ ready or until the absolute timeout [[thread.req.timing]] specified by
 
 - `future_status::deferred` if the shared state contains a deferred
   function.
-
 - `future_status::ready` if the shared state is ready.
-
 - `future_status::timeout` if the function is returning because the
   absolute timeout [[thread.req.timing]] specified by `abs_time` has
   expired.
@@ -8060,7 +7935,6 @@ shared state that was originally referred to by `rhs` (if any).
 
 - `valid()` returns the same value as `rhs.valid()` returned prior to
   the constructor invocation.
-
 - `rhs.valid() == false`.
 
 ``` cpp
@@ -8070,7 +7944,6 @@ shared state that was originally referred to by `rhs` (if any).
 *Effects:*
 
 - Releases any shared state [[futures.state]];
-
 - destroys `*this`.
 
 ``` cpp
@@ -8081,14 +7954,12 @@ shared_future& operator=(shared_future&& rhs) noexcept;
 Otherwise:
 
 - Releases any shared state [[futures.state]];
-
 - move assigns the contents of `rhs` to `*this`.
 
 *Ensures:*
 
 - `valid()` returns the same value as `rhs.valid()` returned prior to
   the assignment.
-
 - If `addressof(rhs) == this` is `false`, `rhs.valid() == false`.
 
 ``` cpp
@@ -8099,9 +7970,7 @@ shared_future& operator=(const shared_future& rhs) noexcept;
 Otherwise:
 
 - Releases any shared state [[futures.state]];
-
 - assigns the contents of `rhs` to `*this`.
-
   \[*Note 3*: As a result, `*this` refers to the same shared state as
   `rhs` (if any). — *end note*\]
 
@@ -8128,15 +7997,12 @@ value stored in the shared state.
 
 - `shared_future::get()` returns a const reference to the value stored
   in the object’s shared state.
-
   \[*Note 4*: Access through that reference after the shared state has
   been destroyed produces undefined behavior; this can be avoided by not
   storing the reference in any storage with a greater lifetime than the
   `shared_future` object that returned the reference. — *end note*\]
-
 - `shared_future<R&>::get()` returns the reference stored as value in
   the object’s shared state.
-
 - `shared_future<void>::get()` returns nothing.
 
 *Throws:* The stored exception, if an exception was stored in the shared
@@ -8168,9 +8034,7 @@ ready or until the relative timeout [[thread.req.timing]] specified by
 
 - `future_status::deferred` if the shared state contains a deferred
   function.
-
 - `future_status::ready` if the shared state is ready.
-
 - `future_status::timeout` if the function is returning because the
   relative timeout [[thread.req.timing]] specified by `rel_time` has
   expired.
@@ -8191,9 +8055,7 @@ ready or until the absolute timeout [[thread.req.timing]] specified by
 
 - `future_status::deferred` if the shared state contains a deferred
   function.
-
 - `future_status::ready` if the shared state is ready.
-
 - `future_status::timeout` if the function is returning because the
   absolute timeout [[thread.req.timing]] specified by `abs_time` has
   expired.
@@ -8218,9 +8080,7 @@ template<class F, class... Args>
 *Mandates:* The following are all `true`:
 
 - `is_constructible_v<decay_t<F>, F>`,
-
 - `(is_constructible_v<decay_t<Args>, Args> && ...)`, and
-
 - `is_invocable_v<decay_t<F>, decay_t<Args>...>`.
 
 *Effects:* The first function behaves the same as a call to the second
@@ -8242,7 +8102,6 @@ implementation may choose any of the corresponding policies):
   is stored as the exceptional result in the shared state. The `thread`
   object is stored in the shared state and affects the behavior of any
   asynchronous return objects that reference that state.
-
 - If `launch::deferred` is set in `policy`, stores
   `auto(std::forward<F>(f))` and `auto(std::forward<Args>(args))...` in
   the shared state. These copies of `f` and `args` constitute a .
@@ -8259,13 +8118,11 @@ implementation may choose any of the corresponding policies):
   called the waiting function. Once evaluation of
   `invoke(std::move(g), std::move(xyz))` begins, the function is no
   longer considered deferred.
-
   *Recommended practice:* If this policy is specified together with
   other policies, such as when using a `policy` value of
   `launch::async | launch::deferred`, implementations should defer
   invocation or the selection of the policy when no more concurrency can
   be effectively exploited.
-
 - If no value is set in the launch policy, or a value is set that is
   neither specified in this document nor by the implementation, the
   behavior is undefined.
@@ -8285,7 +8142,6 @@ If the implementation chooses the `launch::async` policy,
   shares the shared state created by this `async` call shall block until
   the associated thread has completed, as if joined, or else time
   out [[thread.thread.member]];
-
 - the associated thread completion synchronizes
   with [[intro.multithread]] the return from the first function that
   successfully detects the ready status of the shared state or with the
@@ -8406,7 +8262,6 @@ unevaluated operand [[term.unevaluated.operand]] and either
 - `F::operator()` is a non-static member function and
   `decltype(&F::operator())` is either of the form `R(G::*)(A...)`  ` `
   or of the form `R(*)(G, A...) ` for a type `G`, or
-
 - `F::operator()` is a static member function and
   `decltype(&F::operator())` is of the form `R(*)(A...) `.
 
@@ -8429,7 +8284,6 @@ packaged_task& operator=(packaged_task&& rhs) noexcept;
 *Effects:*
 
 - Releases any shared state [[futures.state]];
-
 - calls `packaged_task(std::move(rhs)).swap(*this)`.
 
 ``` cpp
@@ -8475,7 +8329,6 @@ other. — *end note*\]
 
 - `future_already_retrieved` if `get_future` has already been called on
   a `packaged_task` object with the same shared state as `*this`.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -8498,7 +8351,6 @@ or the stored task has already been invoked.
 
 - `promise_already_satisfied` if the stored task has already been
   invoked.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -8521,7 +8373,6 @@ storage duration associated with the current thread have been destroyed.
 
 - `promise_already_satisfied` if the stored task has already been
   invoked.
-
 - `no_state` if `*this` has no shared state.
 
 ``` cpp
@@ -8537,10 +8388,8 @@ state is abandoned [[futures.state]]. — *end note*\]
 *Throws:*
 
 - `bad_alloc` if memory for the new shared state cannot be allocated.
-
 - Any exception thrown by the move constructor of the task stored in the
   shared state.
-
 - `future_error` with an error condition of `no_state` if `*this` has no
   shared state.
 

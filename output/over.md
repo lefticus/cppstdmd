@@ -54,25 +54,19 @@ contexts within the language:
 
 - invocation of a function named in the function call syntax
   [[over.call.func]];
-
 - invocation of a function call operator, a pointer-to-function
   conversion function, a reference-to-pointer-to-function conversion
   function, or a reference-to-function conversion function on a class
   object named in the function call syntax [[over.call.object]];
-
 - invocation of the operator referenced in an expression
   [[over.match.oper]];
-
 - invocation of a constructor for default- or direct-initialization
   [[dcl.init]] of a class object [[over.match.ctor]];
-
 - invocation of a user-defined conversion for copy-initialization
   [[dcl.init]] of a class object [[over.match.copy]];
-
 - invocation of a conversion function for initialization of an object of
   a non-class type from an expression of class type [[over.match.conv]];
   and
-
 - invocation of a conversion function for conversion in which a
   reference [[dcl.init.ref]] will be directly bound [[over.match.ref]].
 
@@ -84,7 +78,6 @@ best function is the same in all cases:
 - First, a subset of the candidate functions (those that have the proper
   number of arguments and meet certain other conditions) is selected to
   form a set of viable functions [[over.match.viable]].
-
 - Then the best viable function is selected based on the implicit
   conversion sequences [[over.best.ics]] needed to match each argument
   to the corresponding parameter of each viable function.
@@ -117,7 +110,6 @@ functions to be resolved against the same argument list. If a member
 function is
 
 - an implicit object member function that is not a constructor, or
-
 - a static member function and the argument list includes an implied
   object argument,
 
@@ -134,7 +126,6 @@ parameter is
 
 - “lvalue reference to cv `X`” for functions declared without a
   *ref-qualifier* or with the `&` *ref-qualifier*
-
 - “rvalue reference to cv `X`” for functions declared with the `&&`
   *ref-qualifier*
 
@@ -209,9 +200,7 @@ non-explicit conversion functions; each (non-template) conversion
 function that
 
 - is a non-hidden member of `S`,
-
 - yields a permissible type, and,
-
 - for the former set, is non-explicit
 
 is also a candidate function. If initializing an object, for any
@@ -521,7 +510,6 @@ cv-qualifier{cv1} `T1` and a right operand of type cv-qualifier{cv2}
   the set of member candidates is the result of a search for `operator@`
   in the scope of `T1`; otherwise, the set of member candidates is
   empty.
-
 - For the operators `=`, `[]`, or `->`, the set of non-member candidates
   is empty; otherwise, it includes the result of unqualified lookup for
   `operator@` in the rewritten function call
@@ -532,43 +520,32 @@ cv-qualifier{cv1} `T1` and a right operand of type cv-qualifier{cv2}
   or (if there is a right operand) a second parameter of type `T2` or
   “reference to cv `T2`”, when `T2` is an enumeration type, are
   candidate functions.
-
 - For the operator `,`, the unary operator `&`, or the operator `->`,
   the built-in candidates set is empty. For all other operators, the
   built-in candidates include all of the candidate operator functions
   defined in  [[over.built]] that, compared to the given operator,
-
   - have the same operator name, and
-
   - accept the same number of operands, and
-
   - accept operand types to which the given operand or operands can be
     converted according to [[over.best.ics]], and
-
   - do not have the same parameter-type-list as any non-member candidate
     or rewritten non-member candidate that is not a function template
     specialization.
-
 - The rewritten candidate set is determined as follows:
-
   - For the relational [[expr.rel]] operators, the rewritten candidates
     include all non-rewritten candidates for the expression `x <=> y`.
-
   - For the relational [[expr.rel]] and three-way comparison
     [[expr.spaceship]] operators, the rewritten candidates also include
     a synthesized candidate, with the order of the two parameters
     reversed, for each non-rewritten candidate for the expression
     `y <=> x`.
-
   - For the `!=` operator [[expr.eq]], the rewritten candidates include
     all non-rewritten candidates for the expression `x == y` that are
     rewrite targets with first operand `x` (see below).
-
   - For the equality operators, the rewritten candidates also include a
     synthesized candidate, with the order of the two parameters
     reversed, for each non-rewritten candidate for the expression
     `y == x` that is a rewrite target with first operand `y`.
-
   - For all other operators, the rewritten candidate set is empty.
 
   \[*Note 1*: A candidate synthesized from a member candidate has its
@@ -622,7 +599,6 @@ For the built-in assignment operators, conversions of the left operand
 are restricted as follows:
 
 - no temporaries are introduced to hold the left operand, and
-
 - no user-defined conversions are applied to the left operand to achieve
   a type match with the left-most parameter of a built-in candidate.
 
@@ -666,9 +642,7 @@ interpreted as:
 
 - if `@` is `!=` and the selected candidate is a synthesized candidate
   with reversed order of parameters, `!(y == x)`,
-
 - otherwise, if `@` is `!=`, `!(x == y)`,
-
 - otherwise (when `@` is `==`), `y == x`,
 
 in each case using the selected rewritten `operator==` candidate.
@@ -765,7 +739,6 @@ as follows:
 
 - The converting constructors [[class.conv.ctor]] of `T` are candidate
   functions.
-
 - When the type of the initializer expression is a class type “cv `S`”,
   conversion functions are considered. The permissible types for
   non-explicit conversion functions are `T` and any class derived from
@@ -815,10 +788,8 @@ cv-qualifier{cv1} `T`” is the type of the reference being initialized,
 the candidate functions are selected as follows:
 
 - Let R be a set of types including
-
   - “lvalue reference to cv-qualifier{cv2} `T2`” (when initializing an
     lvalue reference or an rvalue reference to function) and
-
   - “cv-qualifier{cv2} `T2`” and “rvalue reference to cv-qualifier{cv2}
     `T2`” (when initializing an rvalue reference or an lvalue reference
     to function)
@@ -849,7 +820,6 @@ resolution selects the constructor in two phases:
   candidate functions are the initializer-list constructors
   [[dcl.init.list]] of the class `T` and the argument list consists of
   the initializer list as a single argument.
-
 - Otherwise, or if no viable initializer-list constructor is found,
   overload resolution is performed again, where the candidate functions
   are all the constructors of the class `T` and the argument list
@@ -873,30 +843,22 @@ the guides of `C`, is formed comprising:
 
 - If `C` is defined, for each constructor of `C`, a function template
   with the following properties:
-
   - The template parameters are the template parameters of `C` followed
     by the template parameters (including default template arguments) of
     the constructor, if any.
-
   - The types of the function parameters are those of the constructor.
-
   - The return type is the class template specialization designated by
     `C` and template arguments corresponding to the template parameters
     of `C`.
-
 - If `C` is not defined or does not declare any constructors, an
   additional function template derived as above from a hypothetical
   constructor `C()`.
-
 - An additional function template derived as above from a hypothetical
   constructor `C(C)`, called the *copy deduction candidate*.
-
 - For each *deduction-guide*, a function or function template with the
   following properties:
-
   - The template parameters, if any, and function parameters are those
     of the *deduction-guide*.
-
   - The return type is the *simple-template-id* of the
     *deduction-guide*.
 
@@ -914,17 +876,12 @@ element of `C` or of one of its (possibly recursive) subaggregates that
 would be initialized by xᵢ [[dcl.init.aggr]] if
 
 - brace elision is not considered for any aggregate element that has
-
   - a dependent non-array type,
-
   - an array type with a value-dependent bound, or
-
   - an array type with a dependent array element type and xᵢ is a string
     literal; and
-
 - each non-trailing aggregate element that is a pack expansion is
   assumed to correspond to no elements of the initializer list, and
-
 - a trailing aggregate element that is a pack expansion is assumed to
   correspond to all remaining elements of the initializer list (if any).
 
@@ -935,10 +892,8 @@ $\tcode{C}(\tcode{T}_1, \dotsc, \tcode{T}_n)$, where
 
 - if eᵢ is of array type and xᵢ is a *braced-init-list*, $\tcode{T}_i$
   is an rvalue reference to the declared type of eᵢ, and
-
 - if eᵢ is of array type and xᵢ is a *string-literal*, $\tcode{T}_i$ is
   an lvalue reference to the const-qualified declared type of eᵢ, and
-
 - otherwise, $\tcode{T}_i$ is the declared type of eᵢ,
 
 except that additional parameter packs of the form
@@ -1046,7 +1001,6 @@ function template `f'` with the following properties and add it to the
 set of guides of `A`:
 
 - The function type of `f'` is the function type of `g`.
-
 - If `f` is a function template, `f'` is a function template whose
   template parameter list consists of all the template parameters of `A`
   (including their default template arguments) that appear in the above
@@ -1054,18 +1008,14 @@ set of guides of `A`:
   followed by the template parameters of `f` that were not deduced
   (including their default template arguments), otherwise `f'` is not a
   function template.
-
 - The associated constraints [[temp.constr.decl]] are the conjunction of
   the associated constraints of `g` and a constraint that is satisfied
   if and only if the arguments of `A` are deducible (see below) from the
   return type.
-
 - If `f` is a copy deduction candidate, then `f'` is considered to be so
   as well.
-
 - If `f` was generated from a *deduction-guide* [[temp.deduct.guide]],
   then `f'` is considered to be so as well.
-
 - The *explicit-specifier* of `f'` is the *explicit-specifier* of `g`
   (if any).
 
@@ -1096,7 +1046,6 @@ apply:
   expression of type cv `U`, where `U` is, or is derived from, a
   specialization of the class template directly or indirectly named by
   the placeholder.
-
 - During template argument deduction for the aggregate deduction
   candidate, the number of elements in a trailing parameter pack is only
   deduced from the number of remaining function arguments if it is not
@@ -1271,13 +1220,11 @@ parameters to agree in number with the arguments in the list.
 
 - If there are m arguments in the list, all candidate functions having
   exactly m parameters are viable.
-
 - A candidate function having fewer than m parameters is viable only if
   it has an ellipsis in its parameter list [[dcl.fct]]. For the purposes
   of overload resolution, any argument for which there is no
   corresponding parameter is considered to “match the ellipsis”
   [[over.ics.ellipsis]].
-
 - A candidate function having more than m parameters is viable only if
   all parameters following the $m^\text{th}$ have default arguments
   [[dcl.fct.default]]. For the purposes of overload resolution, the
@@ -1315,16 +1262,13 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
 
 - for some argument j, $\text{ICS}^j(\tcode{F}_1)$ is a better
   conversion sequence than $\text{ICS}^j(\tcode{F}_2)$, or, if not that,
-
 - the context is an initialization by user-defined conversion (see 
   [[dcl.init]], [[over.match.conv]], and  [[over.match.ref]]) and the
   standard conversion sequence from the return type of $\tcode{F}_1$ to
   the destination type (i.e., the type of the entity being initialized)
   is a better conversion sequence than the standard conversion sequence
   from the return type of $\tcode{F}_2$ to the destination type
-
   \[*Example 1*:
-
   ``` cpp
   struct A {
     A();
@@ -1338,17 +1282,13 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   ```
 
   — *end example*\]
-
   or, if not that,
-
 - the context is an initialization by conversion function for direct
   reference binding [[over.match.ref]] of a reference to function type,
   the return type of `F1` is the same kind of reference (lvalue or
   rvalue) as the reference being initialized, and the return type of
   `F2` is not
-
   \[*Example 2*:
-
   ``` cpp
   template <class T> struct A {
     operator T&();    // \#1
@@ -1361,30 +1301,23 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   ```
 
   — *end example*\]
-
   or, if not that,
-
 - `F1`
   is not a function template specialization and `F2` is a function
   template specialization, or, if not that,
-
 - `F1`
   and `F2` are function template specializations, and the function
   template for `F1` is more specialized than the template for `F2`
   according to the partial ordering rules described in 
   [[temp.func.order]], or, if not that,
-
 - `F1` and `F2` are non-template functions with the same
   parameter-type-lists, and `F1` is more constrained than `F2` according
   to the partial ordering of constraints described in
   [[temp.constr.order]], or if not that,
-
 - `F1` is a constructor for a class `D`, `F2` is a constructor for a
   base class `B` of `D`, and for all arguments the corresponding
   parameters of `F1` and `F2` have the same type
-
   \[*Example 3*:
-
   ``` cpp
   struct A {
     A(int = 0);
@@ -1401,13 +1334,9 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   ```
 
   — *end example*\]
-
   or, if not that,
-
 - `F2` is a rewritten candidate [[over.match.oper]] and `F1` is not
-
   \[*Example 4*:
-
   ``` cpp
   struct S {
     friend auto operator<=>(const S&, const S&) = default;        // \#1
@@ -1417,14 +1346,10 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   ```
 
   — *end example*\]
-
   or, if not that,
-
 - `F1` and `F2` are rewritten candidates, and `F2` is a synthesized
   candidate with reversed order of parameters and `F1` is not
-
   \[*Example 5*:
-
   ``` cpp
   struct S {
     friend std::weak_ordering operator<=>(const S&, int);         // \#1
@@ -1434,27 +1359,20 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   ```
 
   — *end example*\]
-
   or, if not that
-
 - `F1` and `F2` are generated from class template argument deduction
   [[over.match.class.deduct]] for a class `D`, and `F2` is generated
   from inheriting constructors from a base class of `D` while `F1` is
   not, and for each explicit function argument, the corresponding
   parameters of `F1` and `F2` are either both ellipses or have the same
   type, or, if not that,
-
 - `F1` is generated from a *deduction-guide* [[over.match.class.deduct]]
   and `F2` is not, or, if not that,
-
 - `F1` is the copy deduction candidate [[over.match.class.deduct]] and
   `F2` is not, or, if not that,
-
 - `F1` is generated from a non-template constructor and `F2` is
   generated from a constructor template.
-
   \[*Example 6*:
-
   ``` cpp
   template <class T> struct A {
     using value_type = T;
@@ -1562,15 +1480,12 @@ A well-formed implicit conversion sequence is one of the following
 forms:
 
 - a standard conversion sequence [[over.ics.scs]],
-
 - a user-defined conversion sequence [[over.ics.user]], or
-
 - an ellipsis conversion sequence [[over.ics.ellipsis]].
 
 However, if the target is
 
 - the first parameter of a constructor or
-
 - the object parameter of a user-defined conversion function
 
 and the constructor or user-defined conversion function is a candidate
@@ -1578,10 +1493,8 @@ by
 
 -  [[over.match.ctor]], when the argument is the temporary in the second
   step of a class copy-initialization,
-
 -  [[over.match.copy]], [[over.match.conv]], or [[over.match.ref]] (in
   all cases), or
-
 - the second phase of [[over.match.list]] when the initializer list has
   exactly one element that is itself an initializer list, and the target
   is the first parameter of a constructor of class `X`, and the
@@ -1901,7 +1814,6 @@ the argument initializer list:
   has a single element of type cv `U`, where `U` is `X` or a class
   derived from `X`, the implicit conversion sequence has Exact Match
   rank if `U` is `X`, or Conversion rank if `U` is derived from `X`.
-
 - Otherwise, the implicit conversion sequence is a user-defined
   conversion sequence whose second standard conversion sequence is an
   identity conversion.
@@ -1995,9 +1907,7 @@ Otherwise, if the parameter type is not a class:
 - if the initializer list has one element that is not itself an
   initializer list, the implicit conversion sequence is the one required
   to convert the element to the parameter type;
-
   \[*Example 7*:
-
   ``` cpp
   void f(int);
   f( {'a'} );             // OK, same conversion as char to int
@@ -2005,12 +1915,9 @@ Otherwise, if the parameter type is not a class:
   ```
 
   — *end example*\]
-
 - if the initializer list has no elements, the implicit conversion
   sequence is the identity conversion.
-
   \[*Example 8*:
-
   ``` cpp
   void f(int);
   f( { } );               // OK, identity conversion
@@ -2037,7 +1944,6 @@ defined in  [[over.best.ics]])
 - a standard conversion sequence [[over.ics.scs]] is a better conversion
   sequence than a user-defined conversion sequence or an ellipsis
   conversion sequence, and
-
 - a user-defined conversion sequence [[over.ics.user]] is a better
   conversion sequence than an ellipsis conversion sequence
   [[over.ics.ellipsis]].
@@ -2047,10 +1953,8 @@ conversion sequences unless one of the following rules applies:
 
 - List-initialization sequence `L1` is a better conversion sequence than
   list-initialization sequence `L2` if
-
   - `L1` converts to `std::initializer_list<X>` for some `X` and `L2`
     does not, or, if not that,
-
   - `L1` and `L2` convert to arrays of the same element type, and either
     the number of elements n₁ initialized by `L1` is less than the
     number of elements n₂ initialized by `L2`, or n₁ = n₂ and `L2`
@@ -2058,9 +1962,7 @@ conversion sequences unless one of the following rules applies:
 
   even if one of the other rules in this paragraph would otherwise
   apply.
-
   \[*Example 9*:
-
   ``` cpp
   void f1(int);                                   // \#1
   void f1(std::initializer_list<long>);           // \#2
@@ -2072,9 +1974,7 @@ conversion sequences unless one of the following rules applies:
   ```
 
   — *end example*\]
-
   \[*Example 10*:
-
   ``` cpp
   void f(int    (&&)[] );         // \#1
   void f(double (&&)[] );         // \#2
@@ -2088,27 +1988,21 @@ conversion sequences unless one of the following rules applies:
   ```
 
   — *end example*\]
-
 - Standard conversion sequence `S1` is a better conversion sequence than
   standard conversion sequence `S2` if
-
   -  `S1` is a proper subsequence of `S2` (comparing the conversion
     sequences in the canonical form defined by  [[over.ics.scs]],
     excluding any Lvalue Transformation; the identity conversion
     sequence is considered to be a subsequence of any non-identity
     conversion sequence) or, if not that,
-
   - the rank of `S1` is better than the rank of `S2`, or `S1` and `S2`
     have the same rank and are distinguishable by the rules in the
     paragraph below, or, if not that,
-
   - `S1` and `S2` include reference bindings [[dcl.init.ref]] and
     neither refers to an implicit object parameter of a non-static
     member function declared without a *ref-qualifier*, and `S1` binds
     an rvalue reference to an rvalue and `S2` binds an lvalue reference
-
     \[*Example 11*:
-
     ``` cpp
     int i;
     int f1();
@@ -2135,15 +2029,11 @@ conversion sequences unless one of the following rules applies:
     ```
 
     — *end example*\]
-
     or, if not that,
-
   - `S1` and `S2` include reference bindings [[dcl.init.ref]] and `S1`
     binds an lvalue reference to a function lvalue and `S2` binds an
     rvalue reference to a function lvalue
-
     \[*Example 12*:
-
     ``` cpp
     int f(void(&)());               // \#1
     int f(void(&&)());              // \#2
@@ -2152,15 +2042,11 @@ conversion sequences unless one of the following rules applies:
     ```
 
     — *end example*\]
-
     or, if not that,
-
   - `S1` and `S2` differ only in their qualification conversion
     [[conv.qual]] and yield similar types `T1` and `T2`, respectively,
     where `T1` can be converted to `T2` by a qualification conversion.
-
     \[*Example 13*:
-
     ``` cpp
     int f(const volatile int *);
     int f(const int *);
@@ -2169,18 +2055,14 @@ conversion sequences unless one of the following rules applies:
     ```
 
     — *end example*\]
-
     or, if not that,
-
   - `S1`
     and `S2` include reference bindings [[dcl.init.ref]], and the types
     to which the references refer are the same type except for top-level
     cv-qualifiers, and the type to which the reference initialized by
     `S2` refers is more cv-qualified than the type to which the
     reference initialized by `S1` refers.
-
     \[*Example 14*:
-
     ``` cpp
     int f(const int &);
     int f(int &);
@@ -2202,16 +2084,13 @@ conversion sequences unless one of the following rules applies:
     ```
 
     — *end example*\]
-
 - User-defined conversion sequence `U1` is a better conversion sequence
   than another user-defined conversion sequence `U2` if they contain the
   same user-defined conversion function or constructor or they
   initialize the same class in an aggregate initialization and in either
   case the second standard conversion sequence of `U1` is better than
   the second standard conversion sequence of `U2`.
-
   \[*Example 15*:
-
   ``` cpp
   struct A {
     operator short();
@@ -2231,25 +2110,19 @@ indistinguishable unless one of the following rules applies:
 
 - A conversion that does not convert a pointer or a pointer to member to
   `bool` is better than one that does.
-
 - A conversion that promotes an enumeration whose underlying type is
   fixed to its underlying type is better than one that promotes to the
   promoted underlying type, if the two are different.
-
 - A conversion in either direction between floating-point type `FP1` and
   floating-point type `FP2` is better than a conversion in the same
   direction between `FP1` and arithmetic type `T3` if
-
   - the floating-point conversion rank [[conv.rank]] of `FP1` is equal
     to the rank of `FP2`, and
-
   - `T3` is not a floating-point type, or `T3` is a floating-point type
     whose rank is not equal to the rank of `FP1`, or the floating-point
     conversion subrank [[conv.rank]] of `FP2` is greater than the
     subrank of `T3`.
-
     \[*Example 16*:
-
     ``` cpp
     int f(std::float32_t);
     int f(std::float64_t);
@@ -2262,20 +2135,15 @@ indistinguishable unless one of the following rules applies:
     ```
 
     — *end example*\]
-
 - If class `B` is derived directly or indirectly from class `A`,
   conversion of `B*` to `A*` is better than conversion of `B*` to
   `void*`, and conversion of `A*` to `void*` is better than conversion
   of `B*` to `void*`.
-
 - If class `B` is derived directly or indirectly from class `A` and
   class `C` is derived directly or indirectly from `B`,
-
   - conversion of `C*` to `B*` is better than conversion of `C*` to
     `A*`,
-
     \[*Example 17*:
-
     ``` cpp
     struct A {};
     struct B : public A {};
@@ -2287,26 +2155,19 @@ indistinguishable unless one of the following rules applies:
     ```
 
     — *end example*\]
-
   - binding of an expression of type `C` to a reference to type `B` is
     better than binding an expression of type `C` to a reference to type
     `A`,
-
   - conversion of `A::*` to `B::*` is better than conversion of `A::*`
     to `C::*`,
-
   - conversion of `C` to `B` is better than conversion of `C` to `A`,
-
   - conversion of `B*` to `A*` is better than conversion of `C*` to
     `A*`,
-
   - binding of an expression of type `B` to a reference to type `A` is
     better than binding an expression of type `C` to a reference to type
     `A`,
-
   - conversion of `B::*` to `C::*` is better than conversion of `A::*`
     to `C::*`, and
-
   - conversion of `B` to `A` is better than conversion of `C` to `A`.
 
   \[*Note 2*: Compared conversion sequences will have different source
@@ -2326,19 +2187,13 @@ The target can be
 
 - an object or reference being initialized
   [[dcl.init]], [[dcl.init.ref]], [[dcl.init.list]],
-
 - the left side of an assignment [[expr.ass]],
-
 - a parameter of a function [[expr.call]],
-
 - a parameter of a user-defined operator [[over.oper]],
-
 - the return value of a function, operator function, or conversion
   [[stmt.return]],
-
 - an explicit type conversion
   [[expr.type.conv]], [[expr.static.cast]], [[expr.cast]], or
-
 - a non-type *template-parameter* [[temp.arg.nontype]].
 
 The *id-expression* can be preceded by the `&` operator.
@@ -2516,7 +2371,6 @@ apply to it unless explicitly stated in  [[expr.await]].
 An operator function shall either
 
 - be a member function or
-
 - be a non-member function that has at least one non-object parameter
   whose type is a class, a reference to a class, an enumeration, or a
   reference to an enumeration.

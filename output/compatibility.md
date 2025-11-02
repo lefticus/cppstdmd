@@ -302,19 +302,14 @@ New keywords. Required for new features.
 
 -  The `char8_t` keyword is added to differentiate the types of ordinary
   and UTF-8 literals [[lex.string]].
-
 - The `concept` keyword is added to enable the definition of concepts
   [[temp.concept]].
-
 - The `consteval` keyword is added to declare immediate functions
   [[dcl.constexpr]].
-
 - The `constinit` keyword is added to prevent unintended dynamic
   initialization [[dcl.constinit]].
-
 - The `co_await`, `co_yield`, and `co_return` keywords are added to
   enable the definition of coroutines [[dcl.fct.def.coroutine]].
-
 - The `requires` keyword is added to introduce constraints through a
   *requires-clause* [[temp.pre]] or a *requires-expression*
   [[expr.prim.req]].
@@ -644,10 +639,8 @@ C++17 program that `#include}{s` any of the following headers may fail
 to compile: , , , , and . To retain the same behavior:
 
 - a `#include` of can be replaced by a `#include` of `<complex>`,
-
 - a `#include` of can be replaced by a `#include` of `<cmath>` and a
   `#include` of `<complex>`, and
-
 - a `#include` of , , or can simply be removed.
 
 ###  [[containers]]: containers library <a id="diff.cpp17.containers">[[diff.cpp17.containers]]</a>
@@ -1370,9 +1363,7 @@ need to be adjusted as follows:
 
 - not all containers provide `size()`; use `empty()` instead of
   `size() == 0`;
-
 - not all containers are empty after construction (`array`);
-
 - not all containers have constant complexity for `swap()` (`array`).
 
 Requirements change: default constructible. Clarification of container
@@ -1385,11 +1376,8 @@ useful information that may be expensive to recalculate. The following
 member functions have changed:
 
 - `erase(iter)` for `set`, `multiset`, `map`, `multimap`
-
 - `erase(begin, end)` for `set`, `multiset`, `map`, `multimap`
-
 - `insert(pos, num, val)` for `vector`, `deque`, `list`, `forward_list`
-
 - `insert(pos, beg, end)` for `vector`, `deque`, `list`, `forward_list`
 
 Valid C++03 code that relies on these functions returning `void` (e.g.,
@@ -1402,13 +1390,9 @@ changed from taking an `iterator` to taking a `const_iterator`:
 
 - `insert(iter, val)` for `vector`, `deque`, `list`, `set`, `multiset`,
   `map`, `multimap`
-
 - `insert(pos, beg, end)` for `vector`, `deque`, `list`, `forward_list`
-
 - `erase(begin, end)` for `set`, `multiset`, `map`, `multimap`
-
 - all forms of `list::splice`
-
 - all forms of `list::merge`
 
 Valid C++03 code that uses these functions may fail to compile with this
@@ -1450,13 +1434,9 @@ implicit boolean conversions will fail to compile with this revision of
 C++. Such conversions occur in the following conditions:
 
 - passing a value to a function that takes an argument of type `bool`;
-
 - using `operator==` to compare to `false` or `true`;
-
 - returning a value from a function with a return type of `bool`;
-
 - initializing members of type `bool` via aggregate initialization;
-
 - initializing a `const bool&` which would bind to a temporary object.
 
 Change base class of `std::ios_base::failure`. More detailed error

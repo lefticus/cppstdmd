@@ -141,10 +141,8 @@ A *trivially copyable class* is a class:
 - that has at least one eligible copy constructor, move constructor,
   copy assignment operator, or move assignment operator
   [[special]], [[class.copy.ctor]], [[class.copy.assign]],
-
 - where each eligible copy constructor, move constructor, copy
   assignment operator, and move assignment operator is trivial, and
-
 - that has a trivial, non-deleted destructor [[class.dtor]].
 
 A *trivial class* is a class that is trivially copyable and has one or
@@ -158,41 +156,29 @@ A class `S` is a *standard-layout class* if it:
 
 - has no non-static data members of type non-standard-layout class (or
   array of such types) or reference,
-
 - has no virtual functions [[class.virtual]] and no virtual base classes
   [[class.mi]],
-
 - has the same access control [[class.access]] for all non-static data
   members,
-
 - has no non-standard-layout base classes,
-
 - has at most one base class subobject of any given type,
-
 - has all non-static data members and bit-fields in the class and its
   base classes first declared in the same class, and
-
 - has no element of the set M(S) of types as a base class, where for any
   type `X`, M(X) is defined as follows.
-
   \[*Note 1*: M(X) is the set of the types of all non-base-class
   subobjects that can be at a zero offset in `X`. — *end note*\]
-
   - If `X` is a non-union class type with no non-static data members,
     the set M(X) is empty.
-
   - If `X` is a non-union class type with a non-static data member of
     type X₀ that is either of zero size or is the first non-static data
     member of `X` (where said member may be an anonymous union), the set
     M(X) consists of X₀ and the elements of M(X₀).
-
   - If `X` is a union type, the set M(X) is the union of all M(Uᵢ) and
     the set containing all Uᵢ, where each Uᵢ is the type of the
     $i^\text{th}$ non-static data member of `X`.
-
   - If `X` is an array type with element type Xₑ, the set M(X) consists
     of Xₑ and the elements of M(Xₑ).
-
   - If `X` is a non-class, non-array type, the set M(X) is empty.
 
 \[*Example 1*:
@@ -255,7 +241,6 @@ struct POD {        // both trivial and standard-layout
 A class `S` is an *implicit-lifetime class* if
 
 - it is an aggregate whose destructor is not user-provided or
-
 - it has at least one trivial eligible constructor and a trivial,
   non-deleted destructor.
 
@@ -424,15 +409,10 @@ A *member-declaration* does not declare new members of the class if it
 is
 
 - a friend declaration [[class.friend]],
-
 - a *deduction-guide* [[temp.deduct.guide]],
-
 - a *template-declaration* whose *declaration* is one of the above,
-
 - a *static_assert-declaration*,
-
 - a *using-declaration* [[namespace.udecl]], or
-
 - an *empty-declaration*.
 
 For any other *member-declaration*, each declared entity that is not an
@@ -464,7 +444,6 @@ except that
 
 - a nested class or member class template can be declared and then later
   defined, and
-
 - an enumeration can be introduced with an *opaque-enum-declaration* and
   later redeclared with an *enum-specifier*.
 
@@ -480,13 +459,9 @@ non-static data member.
 A *complete-class context* of a class (template) is a
 
 - function body [[dcl.fct.def.general]],
-
 - default argument [[dcl.fct.default]],
-
 - default template argument [[temp.param]],
-
 - *noexcept-specifier* [[except.spec]], or
-
 - default member initializer
 
 within the *member-specification* of the class or class template.
@@ -630,19 +605,13 @@ If `T` is the name of a class, then each of the following shall have a
 name different from `T`:
 
 - every static data member of class `T`;
-
 - every member function of class `T`;
-
   \[*Note 2*: This restriction does not apply to constructors, which do
   not have names [[class.ctor]] — *end note*\]
-
 - every member of class `T` that is itself a type;
-
 - every member template of class `T`;
-
 - every enumerator of every member of class `T` that is an unscoped
   enumeration type; and
-
 - every member of every anonymous union that is a member of class `T`.
 
 In addition, if class `T` has a user-declared constructor
@@ -655,13 +624,10 @@ and bit-fields in declaration order, starting with the first such entity
 in each of the structs, such that
 
 - corresponding entities have layout-compatible types [[basic.types]],
-
 - corresponding entities have the same alignment requirements
   [[basic.align]],
-
 - either both entities are declared with the `no_unique_address`
   attribute [[dcl.attr.nouniqueaddr]] or neither is, and
-
 - either both entities are bit-fields with the same width or neither is
   a bit-field.
 
@@ -903,10 +869,8 @@ it. — *end example*\]
 Two special member functions are of the same kind if:
 
 - they are both default constructors,
-
 - they are both copy or move constructors with the same first parameter
   type, or
-
 - they are both copy or move assignment operators with the same first
   parameter type and the same *cv-qualifier*s and *ref-qualifier*, if
   any.
@@ -915,9 +879,7 @@ An *eligible special member function* is a special member function for
 which:
 
 - the function is not deleted,
-
 - the associated constraints [[temp.constr]], if any, are satisfied, and
-
 - no special member function of the same kind is more constrained
   [[temp.constr.order]].
 
@@ -943,12 +905,10 @@ parentheses, and the *id-expression* has one of the following forms:
 
 - in a friend declaration [[class.friend]], the *id-expression* is a
   *qualified-id* that names a constructor [[class.qual]];
-
 - otherwise, in a *member-declaration* that belongs to the
   *member-specification* of a class or class template, the
   *id-expression* is the injected-class-name [[class.pre]] of the
   immediately-enclosing entity;
-
 - otherwise, the *id-expression* is a *qualified-id* whose
   *unqualified-id* is the injected-class-name of its lookup context.
 
@@ -1029,31 +989,24 @@ A defaulted default constructor for class `X` is defined as deleted if:
 - `X` is a union that has a variant member with a non-trivial default
   constructor and no variant member of `X` has a default member
   initializer,
-
 - `X` is a non-union class that has a variant member `M` with a
   non-trivial default constructor and no variant member of the anonymous
   union containing `M` has a default member initializer,
-
 - any non-static data member with no default member initializer
   [[class.mem]] is of reference type,
-
 - any non-variant non-static data member of const-qualified type (or
   array thereof) with no *brace-or-equal-initializer* is not
   const-default-constructible [[dcl.init]],
-
 - `X` is a union and all of its variant members are of const-qualified
   type (or array thereof),
-
 - `X` is a non-union class and all members of any anonymous union member
   are of const-qualified type (or array thereof),
-
 - any potentially constructed subobject, except for a non-static data
   member with a *brace-or-equal-initializer*, has class type `M` (or
   array thereof) and either `M` has no default constructor or overload
   resolution [[over.match]] as applied to find `M`’s corresponding
   constructor results in an ambiguity or in a function that is deleted
   or inaccessible from the defaulted default constructor, or
-
 - any potentially constructed subobject has a type with a destructor
   that is deleted or inaccessible from the defaulted default
   constructor.
@@ -1062,13 +1015,10 @@ A default constructor is *trivial* if it is not user-provided and if:
 
 - its class has no virtual functions [[class.virtual]] and no virtual
   base classes [[class.mi]], and
-
 - no non-static data member of its class has a default member
   initializer [[class.mem]], and
-
 - all the direct base classes of its class have trivial default
   constructors, and
-
 - for all the non-static data members of its class that are of class
   type (or array thereof), each such class has a trivial default
   constructor.
@@ -1216,11 +1166,8 @@ constructor, a non-explicit one will be implicitly declared as defaulted
 if and only if
 
 - `X` does not have a user-declared copy constructor,
-
 - `X` does not have a user-declared copy assignment operator,
-
 - `X` does not have a user-declared move assignment operator, and
-
 - `X` does not have a user-declared destructor.
 
 \[*Note 3*: When the move constructor is not implicitly declared or
@@ -1243,13 +1190,10 @@ defined as deleted [[dcl.fct.def.delete]] if `X` has:
   [[over.match]], as applied to find `M`’s corresponding constructor,
   results in an ambiguity or a function that is deleted or inaccessible
   from the defaulted constructor,
-
 - a variant member whose corresponding constructor as selected by
   overload resolution is non-trivial,
-
 - any potentially constructed subobject of a type with a destructor that
   is deleted or inaccessible from the defaulted constructor, or,
-
 - for the copy constructor, a non-static data member of rvalue reference
   type.
 
@@ -1263,10 +1207,8 @@ user-provided and if:
 
 - class `X` has no virtual functions [[class.virtual]] and no virtual
   base classes [[class.mi]], and
-
 - the constructor selected to copy/move each direct base class subobject
   is trivial, and
-
 - for each non-static data member of `X` that is of class type (or array
   thereof), the constructor selected to copy/move that member is
   trivial;
@@ -1303,10 +1245,8 @@ to its type:
 
 - if the member is an array, each element is direct-initialized with the
   corresponding subobject of `x`;
-
 - if a member `m` has rvalue reference type `T&&`, it is
   direct-initialized with `static_cast<T&&>(x.m)`;
-
 - otherwise, the base or member is direct-initialized with the
   corresponding base or member of `x`.
 
@@ -1358,7 +1298,6 @@ if
 
 - each direct base class `B` of `X` has a copy assignment operator whose
   parameter is of type `const B&`, `const volatile B&`, or `B`, and
-
 - for all the non-static data members of `X` that are of a class type
   `M` (or array thereof), each such class type has a copy assignment
   operator whose parameter is of type `const M&`, `const volatile M&`,
@@ -1387,11 +1326,8 @@ assignment operator, one will be implicitly declared as defaulted if and
 only if
 
 - `X` does not have a user-declared copy constructor,
-
 - `X` does not have a user-declared move constructor,
-
 - `X` does not have a user-declared copy assignment operator, and
-
 - `X` does not have a user-declared destructor.
 
 \[*Example 1*:
@@ -1435,12 +1371,9 @@ deleted if `X` has:
 
 - a variant member with a non-trivial corresponding assignment operator
   and `X` is a union-like class, or
-
 - a non-static data member of `const` non-class type (or array thereof),
   or
-
 - a non-static data member of reference type, or
-
 - a direct non-static data member of class type `M` (or array thereof)
   or a direct base class `M` that cannot be copied/moved because
   overload resolution [[over.match]], as applied to find `M`’s
@@ -1468,10 +1401,8 @@ user-provided and if:
 
 - class `X` has no virtual functions [[class.virtual]] and no virtual
   base classes [[class.mi]], and
-
 - the assignment operator selected to copy/move each direct base class
   subobject is trivial, and
-
 - for each non-static data member of `X` that is of class type (or array
   thereof), the assignment operator selected to copy/move that member is
   trivial;
@@ -1504,10 +1435,8 @@ type:
   of `x` as a single function argument (as if by explicit qualification;
   that is, ignoring any possible virtual overriding functions in more
   derived classes);
-
 - if the subobject is an array, each element is assigned, in the manner
   appropriate to the element type;
-
 - if the subobject is of scalar type, the built-in assignment operator
   is used.
 
@@ -1557,7 +1486,6 @@ parentheses, and the *id-expression* has one of the following forms:
   [[class.friend]], the *id-expression* is `~`*class-name* and the
   *class-name* is the injected-class-name [[class.pre]] of the
   immediately-enclosing entity or
-
 - otherwise, the *id-expression* is *nested-name-specifier*
   `~`*class-name* and the *class-name* is the injected-class-name of the
   class nominated by the *nested-name-specifier*.
@@ -1606,11 +1534,9 @@ A defaulted destructor for a class `X` is defined as deleted if:
 
 - `X` is a union-like class that has a variant member with a non-trivial
   destructor,
-
 - any potentially constructed subobject has class type `M` (or array
   thereof) and `M` has a deleted destructor or a destructor that is
   inaccessible from the defaulted destructor,
-
 - or, for a virtual destructor, lookup of the non-array deallocation
   function results in an ambiguity or in a function that is deleted or
   inaccessible from the defaulted destructor.
@@ -1618,10 +1544,8 @@ A defaulted destructor for a class `X` is defined as deleted if:
 A destructor is trivial if it is not user-provided and if:
 
 - the destructor is not virtual,
-
 - all of the direct base classes of its class have trivial destructors,
   and
-
 - for all of the non-static data members of its class that are of class
   type (or array thereof), each such class has a trivial destructor.
 
@@ -1665,14 +1589,11 @@ A destructor is invoked implicitly
 
 - for a constructed object with static storage duration
   [[basic.stc.static]] at program termination [[basic.start.term]],
-
 - for a constructed object with thread storage duration
   [[basic.stc.thread]] at thread exit,
-
 - for a constructed object with automatic storage duration
   [[basic.stc.auto]] when the block in which an object is created exits
   [[stmt.dcl]],
-
 - for a constructed temporary object when its lifetime ends
   [[conv.rval]], [[class.temporary]].
 
@@ -1913,7 +1834,6 @@ parentheses, and the *id-expression* has one of the following forms:
 - in a *member-declaration* that belongs to the *member-specification*
   of a class or class template but is not a friend declaration
   [[class.friend]], the *id-expression* is a *conversion-function-id*;
-
 - otherwise, the *id-expression* is a *qualified-id* whose
   *unqualified-id* is a *conversion-function-id*.
 
@@ -2447,11 +2367,9 @@ lifetime of that union member, as described below. For an expression
   also contains `A.B` if `B` names a union member of a non-class,
   non-array type, or of a class type with a trivial default constructor
   that is not deleted, or an array of such types.
-
 - If `E` is of the form `A[B]` and is interpreted as a built-in array
   subscripting operator, S(E) is S(A) if `A` is of array type, S(B) if
   `B` is of array type, and empty otherwise.
-
 - Otherwise, S(E) is empty.
 
 In an assignment expression of the form `E1 = E2` that uses either the
@@ -3029,12 +2947,10 @@ the following criteria:
 
 - both are pointers to classes, both are lvalue references to classes,
   or both are rvalue references to classes
-
 - the class in the return type of `B::f` is the same class as the class
   in the return type of `D::f`, or is an unambiguous and accessible
   direct or indirect base class of the class in the return type of
   `D::f`
-
 - both pointers or references have the same cv-qualification and the
   class type in the return type of `D::f` has the same cv-qualification
   as or less cv-qualification than the class type in the return type of
@@ -3340,11 +3256,9 @@ A member of a class can be
 
 -  private, that is, it can be named only by members and friends of the
   class in which it is declared;
-
 -  protected, that is, it can be named only by members and friends of
   the class in which it is declared, by classes derived from that class,
   and by their friends (see  [[class.protected]]); or
-
 -  public, that is, it can be named anywhere without access restriction.
 
 \[*Note 1*: A constructor or destructor can be named by an expression
@@ -3717,21 +3631,16 @@ A member `m` is accessible at the point *R* when named in class `N` if
 
 - `m`
   as a member of `N` is public, or
-
 - `m`
   as a member of `N` is private, and *R* occurs in a direct member or
   friend of class `N`, or
-
 - `m`
   as a member of `N` is protected, and *R* occurs in a direct member or
   friend of class `N`, or in a member of a class `P` derived from `N`,
   where `m` as a member of `P` is public, private, or protected, or
-
 - there exists a base class `B` of `N` that is accessible at *R*, and
   `m` is accessible at *R* when named in class `B`.
-
   \[*Example 1*:
-
   ``` cpp
   class B;
   class A {
@@ -4405,21 +4314,17 @@ constructor has no *ctor-initializer*), then
 
 - if the entity is a non-static data member that has a default member
   initializer [[class.mem]] and either
-
   - the constructor’s class is a union [[class.union]], and no other
     variant member of that union is designated by a *mem-initializer-id*
     or
-
   - the constructor’s class is not a union, and, if the entity is a
     member of an anonymous union, no other member of that union is
     designated by a *mem-initializer-id*,
 
   the entity is initialized from its default member initializer as
   specified in  [[dcl.init]];
-
 - otherwise, if the entity is an anonymous union or a variant member
   [[class.union.anon]], no initialization is performed;
-
 - otherwise, the entity is default-initialized [[dcl.init]].
 
 \[*Note 3*: An abstract class [[class.abstract]] is never a most derived
@@ -4516,15 +4421,12 @@ following order:
   acyclic graph of base classes, where “left-to-right” is the order of
   appearance of the base classes in the derived class
   *base-specifier-list*.
-
 -  Then, direct base classes are initialized in declaration order as
   they appear in the *base-specifier-list* (regardless of the order of
   the *mem-initializer*).
-
 -  Then, non-static data members are initialized in the order they were
   declared in the class definition (again regardless of the order of the
   *mem-initializer*).
-
 - Finally, the *compound-statement* of the constructor body is executed.
 
 \[*Note 6*: The declaration order is mandated to ensure that base and
@@ -4998,20 +4900,17 @@ eliminate multiple copies):
   the function return type, the copy/move operation can be omitted by
   constructing the object directly into the function call’s return
   object
-
 - in a *throw-expression* [[expr.throw]], when the operand is the name
   of a non-volatile object with automatic storage duration (other than a
   function or catch-clause parameter) that belongs to a scope that does
   not contain the innermost enclosing *compound-statement* associated
   with a *try-block* (if there is one), the copy/move operation can be
   omitted by constructing the object directly into the exception object
-
 - in a coroutine [[dcl.fct.def.coroutine]], a copy of a coroutine
   parameter can be omitted and references to that copy replaced with
   references to the corresponding parameter if the meaning of the
   program will be unchanged except for the execution of a constructor
   and destructor for the parameter copy object
-
 - when the *exception-declaration* of an exception handler
   [[except.pre]] declares an object of the same type (except for
   cv-qualification) as the exception object [[except.throw]], the copy
@@ -5019,7 +4918,6 @@ eliminate multiple copies):
   alias for the exception object if the meaning of the program will be
   unchanged except for the execution of constructors and destructors for
   the object declared by the *exception-declaration*.
-
   \[*Note 3*: There cannot be a move from the exception object because
   it is always an lvalue. — *end note*\]
 
@@ -5163,7 +5061,6 @@ A defaulted comparison operator function [[over.binary]] for some class
 `C` shall be a non-template function that is
 
 - a non-static member or friend of `C` and
-
 - either has two parameters of type `const C&` or two parameters of type
   `C`, where the implicit object parameter (if any) is considered to be
   the first parameter.
@@ -5181,7 +5078,6 @@ A binary operator expression `a @ b` is *usable* if either
 
 - `a` or `b` is of class or enumeration type and overload resolution
   [[over.match]] as applied to `a @ b` results in a usable candidate, or
-
 - neither `a` nor `b` is of class or enumeration type and `a @ b` is a
   valid expression.
 
@@ -5273,33 +5169,25 @@ glvalues `a` and `b` of the same type is defined as follows:
 
 - If `a <=> b` is usable [[class.compare.default]] and can be explicitly
   converted to `R` using `static_cast`, `static_cast<R>(a <=> b)`.
-
 - Otherwise, if overload resolution for `a <=> b` is performed and finds
   at least one viable candidate, the synthesized three-way comparison is
   not defined.
-
 - Otherwise, if `R` is not a comparison category type, or either the
   expression `a == b` or the expression `a < b` is not usable, the
   synthesized three-way comparison is not defined.
-
 - Otherwise, if `R` is `strong_ordering`, then
-
   ``` cpp
   a == b ? strong_ordering::equal :
   a < b  ? strong_ordering::less :
            strong_ordering::greater
   ```
-
 - Otherwise, if `R` is `weak_ordering`, then
-
   ``` cpp
   a == b ? weak_ordering::equivalent :
   a < b  ? weak_ordering::less :
            weak_ordering::greater
   ```
-
 - Otherwise (when `R` is `partial_ordering`),
-
   ``` cpp
   a == b ? partial_ordering::equivalent :
   a < b  ? partial_ordering::less :
@@ -5322,7 +5210,6 @@ list of subobjects for an object `x` of type `C`.
   for any i. The return type is deduced as the common comparison type
   (see below) of $\tcode{R}_0$, $\tcode{R}_1$, $\dotsc$,
   $\tcode{R}_{n-1}$.
-
 - Otherwise, `R` shall not contain a placeholder type. If the
   synthesized three-way comparison of type `R` between any objects
   $\tcode{x}_i$ and $\tcode{x}_i$ is not defined, the operator function
@@ -5345,12 +5232,9 @@ $\tcode{T}_{n-1}$ is defined as follows:
 
 - If at least one $\tcode{T}_i$ is `std::partial_ordering`, `U` is
   `std::partial_ordering` [[cmp.partialord]].
-
 - Otherwise, if at least one $\tcode{T}_i$ is `std::weak_ordering`, `U`
   is `std::weak_ordering` [[cmp.weakord]].
-
 - Otherwise, `U` is `std::strong_ordering` [[cmp.strongord]].
-
   \[*Note 4*: In particular, this is the result when n is
   0. — *end note*\]
 
@@ -5366,7 +5250,6 @@ if
 
 - overload resolution [[over.match]], as applied to `x @ y`, does not
   result in a usable candidate, or
-
 - the candidate selected by overload resolution is not a rewritten
   candidate.
 

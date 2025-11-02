@@ -331,7 +331,6 @@ An expression `assert(E)` is a constant subexpression
 
 - `NDEBUG` is defined at the point where `assert` is last defined or
   redefined, or
-
 - `E` contextually converted to `bool` [[conv]] is a constant
   subexpression that evaluates to the value `true`.
 
@@ -1449,7 +1448,6 @@ container [[container.alloc.reqmts]], and of a sequence container
 
 - only move, assignment, swap, and operations defined for
   const-qualified sequence containers are supported and,
-
 - the semantics of comparison functions are different from those
   required for a container.
 

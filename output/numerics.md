@@ -140,10 +140,8 @@ range of representable values for its type, the behavior is undefined.
 If `z` is an lvalue of type cv `complex<T>` then:
 
 - the expression `reinterpret_cast<\cv{} T(&)[2]>(z)` is well-formed,
-
 - `reinterpret_cast<\cv{} T(&)[2]>(z)[0]` designates the real part of
   `z`, and
-
 - `reinterpret_cast<\cv{} T(&)[2]>(z)[1]` designates the imaginary part
   of `z`.
 
@@ -152,7 +150,6 @@ expression `a[i]` is well-defined for an integer expression `i`, then:
 
 - `reinterpret_cast<\cv{} T*>(a)[2*i]` designates the real part of
   `a[i]`, and
-
 - `reinterpret_cast<\cv{} T*>(a)[2*i + 1]` designates the imaginary part
   of `a[i]`.
 
@@ -705,7 +702,6 @@ The additional overloads shall be sufficient to ensure:
 
 - If the argument has a floating-point type `T`, then it is effectively
   cast to `complex<T>`.
-
 - Otherwise, if the argument has integer type, then it is effectively
   cast to `complex<double>`.
 
@@ -770,10 +766,8 @@ type [[basic.fundamental]] identified as `result_type`. With `T` as the
 characterized:
 
 - as *boolean* or equivalently as *boolean-valued*, if `T` is `bool`;
-
 - otherwise as *integral* or equivalently as *integer-valued*, if
   `numeric_limits<T>::is_integer` is `true`;
-
 - otherwise as *floating-point* or equivalently as *real-valued*.
 
 If integer-valued, an entity may optionally be further characterized as
@@ -787,7 +781,6 @@ conventional bitwise operations. Further:
 
 - the operator denotes a bitwise right shift with zero-valued bits
   appearing in the high bits of the result, and
-
 - the operator denotes a bitwise left shift with zero-valued bits
   appearing in the low bits of the result, and whose result is always
   taken modulo $2^w$.
@@ -943,24 +936,19 @@ template:
 - that has a template type parameter named `Sseq` is undefined unless
   the corresponding template argument is cv-unqualified and meets the
   requirements of seed sequence [[rand.req.seedseq]].
-
 - that has a template type parameter named `URBG` is undefined unless
   the corresponding template argument is cv-unqualified and meets the
   requirements of uniform random bit generator [[rand.req.urng]].
-
 - that has a template type parameter named `Engine` is undefined unless
   the corresponding template argument is cv-unqualified and meets the
   requirements of random number engine [[rand.req.eng]].
-
 - that has a template type parameter named `RealType` is undefined
   unless the corresponding template argument is cv-unqualified and is
   one of `float`, `double`, or `long double`.
-
 - that has a template type parameter named `IntType` is undefined unless
   the corresponding template argument is cv-unqualified and is one of
   `short`, `int`, `long`, `long long`, `unsigned short`, `unsigned int`,
   `unsigned long`, or `unsigned long long`.
-
 - that has a template type parameter named `UIntType` is undefined
   unless the corresponding template argument is cv-unqualified and is
   one of `unsigned short`, `unsigned int`, `unsigned long`, or
@@ -993,18 +981,13 @@ subclause [[rand.req.seedseq]]. In that Table and throughout this
 subclause:
 
 - `T` is the type named by `S`’s associated `result_type`;
-
 - `q` is a value of type `S` and `r` is a value of type `S` or
   `const S`;
-
 - `ib` and `ie` are input iterators with an unsigned integer
   `value_type` of at least 32 bits;
-
 - `rb` and `re` are mutable random access iterators with an unsigned
   integer `value_type` of at least 32 bits;
-
 - `ob` is an output iterator; and
-
 - `il` is a value of type `initializer_list<T>`.
 
 #### Uniform random bit generator requirements <a id="rand.req.urng">[[rand.req.urng]]</a>
@@ -1031,9 +1014,7 @@ Let `g` be an object of type `G`. `G` models
 `uniform_random_bit_generator` only if
 
 - `G::min() <= g()`,
-
 - `g() <= G::max()`, and
-
 - `g()` has amortized constant complexity.
 
 A class `G` meets the *uniform random bit generator* requirements if `G`
@@ -1058,10 +1039,8 @@ suitable `operator>>`.
 
 - the size of `E`’s state in multiples of the size of `result_type`,
   given as an integral constant expression;
-
 - the *transition algorithm* $\mathsf{TA}$ by which `e`’s state is
   advanced to its *successor state* ; and
-
 - the *generation algorithm* $\mathsf{GA}$ by which an engine’s state is
   mapped to a value of type `result_type`.
 
@@ -1073,20 +1052,14 @@ requirements of this subclause [[rand.req.eng]]. In that Table and
 throughout this subclause:
 
 - `T` is the type named by `E`’s associated `result_type`;
-
 - `e` is a value of `E`, `v` is an lvalue of `E`, `x` and `y` are
   (possibly const) values of `E`;
-
 - `s` is a value of `T`;
-
 - `q` is an lvalue meeting the requirements of a seed sequence
   [[rand.req.seedseq]];
-
 - `z` is a value of type `unsigned long long`;
-
 - `os` is an lvalue of the type of some class template specialization
   `basic_ostream<charT,` `traits>`; and
-
 - `is` is an lvalue of the type of some class template specialization
   `basic_istream<charT,` `traits>`;
 
@@ -1159,13 +1132,10 @@ template<class Sseq> void seed(Sseq& q);
 
 - The complexity of each function shall not exceed the complexity of the
   corresponding function applied to the base engine.
-
 - The state of `A` shall include the state of its base engine. The size
   of `A`’s state shall be no less than the size of the base engine.
-
 - Copying `A`’s state (e.g., during copy construction or copy
   assignment) shall include copying the state of the base engine of `A`.
-
 - The textual representation of `A` shall include the textual
   representation of its base engine.
 
@@ -1194,25 +1164,18 @@ other requirements of this subclause [[rand.req.dist]]. In that Table
 and throughout this subclause,
 
 - `T` is the type named by `D`’s associated `result_type`;
-
 - `P` is the type named by `D`’s associated `param_type`;
-
 - `d` is a value of `D`, and `x` and `y` are (possibly const) values of
   `D`;
-
 - `glb` and `lub` are values of `T` respectively corresponding to the
   greatest lower bound and the least upper bound on the values
   potentially returned by `d`’s `operator()`, as determined by the
   current values of `d`’s parameters;
-
 - `p` is a (possibly const) value of `P`;
-
 - `g`, `g1`, and `g2` are lvalues of a type meeting the requirements of
   a uniform random bit generator [[rand.req.urng]];
-
 - `os` is an lvalue of the type of some class template specialization
   `basic_ostream<charT,` `traits>`; and
-
 - `is` is an lvalue of the type of some class template specialization
   `basic_istream<charT,` `traits>`;
 
@@ -1290,16 +1253,13 @@ For every random number engine and for every random number engine
 adaptor `X` defined in [[rand.eng]] and in [[rand.adapt]]:
 
 - if the constructor
-
   ``` cpp
   template<class Sseq> explicit X(Sseq& q);
   ```
 
   is called with a type `Sseq` that does not qualify as a seed sequence,
   then this constructor shall not participate in overload resolution;
-
 - if the member function
-
   ``` cpp
   template<class Sseq> void seed(Sseq& q);
   ```
@@ -1414,7 +1374,6 @@ The state transition is performed as follows:
 
 - Concatenate the upper w-r bits of $X_{i-n}$ with the lower r bits of
   $X_{i+1-n}$ to obtain an unsigned integer value Y.
-
 - With $\alpha = a \cdot (Y \bitand 1)$, set Xᵢ to
   $X_{i+m-n} \xor (Y \rightshift 1) \xor \alpha$.
 
@@ -1425,11 +1384,8 @@ The generation algorithm determines the unsigned integer values
 z₁, z₂, z₃, z₄ as follows, then delivers z₄ as its result:
 
 - Let $z_1 = X_i \xor \bigl(( X_i \rightshift u ) \bitand d\bigr)$.
-
 - Let $z_2 = z_1 \xor \bigl( (z_1 \leftshift{w} s) \bitand b \bigr)$.
-
 - Let $z_3 = z_2 \xor \bigl( (z_2 \leftshift{w} t) \bitand c \bigr)$.
-
 - Let $z_4 = z_3 \xor ( z_3 \rightshift \ell )$.
 
 ``` cpp
@@ -1535,7 +1491,6 @@ is either 0 or 1.
 The state transition is performed as follows:
 
 - Let $Y = X_{i-s} - X_{i-r} - c$.
-
 - Set Xᵢ to $y = Y \bmod m$. Set c to 1 if Y < 0, otherwise set c to 0.
 
 \[*Note 1*: This algorithm corresponds to a modular linear function of
@@ -1745,12 +1700,10 @@ following integral constants:
 
 - Let $R = \tcode{e.max() - e.min() + 1}$ and
   $m = \left\lfloor \log_2 R \right\rfloor$.
-
 - With n as determined below, let
   $w_0 = \left\lfloor w / n \right\rfloor$, $n_0 = n - w \bmod n$,
   $y_0 = 2^{w_0} \left\lfloor R / 2^{w_0} \right\rfloor$, and
   $y_1 = 2^{w_0 + 1} \left\lfloor R / 2^{w_0 + 1} \right\rfloor$.
-
 - Let $n = \left\lceil w / m \right\rceil$ if and only if the relation
   $R - y_0 \leq \left\lfloor y_0 / n \right\rfloor$ holds as a result.
   Otherwise let $n = 1 + \left\lceil w / m \right\rceil$.
@@ -1844,7 +1797,6 @@ transition is performed as follows:
 - Calculate an integer $j = \left\lfloor \frac{k \cdot (Y - e_{\min})}
                             {e_{\max} - e_{\min} +1}
           \right\rfloor$ .
-
 - Set Y to Vⱼ and then set Vⱼ to $\tcode{e()}$.
 
 The generation algorithm yields the last value of `Y` produced while
@@ -2173,7 +2125,6 @@ modulo n, and T(x) is defined as $x \xor (x \rightshift 27)$:
   `0x8b8b8b8b`. Additionally, for use in subsequent steps, let
   p = (n - t) / 2 and let q = p + t, where $$%
        t = (n \ge 623) \mbox{ ? } 11 \mbox{ : } (n \ge 68) \mbox{ ? } 7 \mbox{ : } (n \ge 39) \mbox{ ? } 5 \mbox{ : } (n \ge 7) \mbox{ ? } 3 \mbox{ : } (n - 1)/2;$$
-
 - With m as the larger of s + 1 and n, transform the elements of the
   range: iteratively for $k = 0, \dotsc, m - 1$, calculate values
   $$\begin{aligned}
@@ -2195,7 +2146,6 @@ modulo n, and T(x) is defined as $x \xor (x \rightshift 27)$:
      
   \end{aligned}$$ and, in order, increment `begin[`k+p`]` by r₁,
   increment `begin[`k+q`]` by r₂, and set `begin[`k`]` to r₂.
-
 - Transform the elements of the range again, beginning where the
   previous step ended: iteratively for $k = m, \dotsc, m + n - 1$,
   calculate values $$\begin{aligned}
@@ -3725,7 +3675,6 @@ template<class InputIteratorB, class InputIteratorW>
 *Mandates:* Both of
 
 - `is_convertible_v<iterator_traits<InputIteratorB>::value_type, double>`
-
 - `is_convertible_v<iterator_traits<InputIteratorW>::value_type, double>`
 
 are `true`.
@@ -4142,7 +4091,6 @@ additional functions and operators as follows:
 - for every function taking a `const valarray<T>&` other than `begin`
   and `end` [[valarray.range]], identical functions taking the
   replacement types shall be added;
-
 - for every function taking two `const valarray<T>&` arguments,
   identical functions taking every combination of `const valarray<T>&`
   and replacement types shall be added.
@@ -5978,13 +5926,9 @@ constexpr floating-point-type lerp(floating-point-type a, floating-point-type b,
 `isfinite(a) && isfinite(b)`, then:
 
 - If `t == 0`, then `r == a`.
-
 - If `t == 1`, then `r == b`.
-
 - If `t >= 0 && t <= 1`, then `isfinite(r)`.
-
 - If `isfinite(t) && a == b`, then `r == a`.
-
 - If `isfinite(t) || !isnan(t) && b-a != 0`, then `!isnan(r)`.
 
 Let *`CMP`*`(x,y)` be `1` if `x > y`, `-1` if `x < y`, and `0`
@@ -6008,10 +5952,8 @@ error for just those argument values for which:
 
 - the function description’s element explicitly specifies a domain and
   those argument values fall outside the specified domain, or
-
 - the corresponding mathematical function value has a nonzero imaginary
   component, or
-
 - the corresponding mathematical function is not mathematically defined.
 
 Unless otherwise specified, each function is defined for all finite

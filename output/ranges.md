@@ -598,7 +598,6 @@ Within [[range.access]], the *reified object* of a subexpression `E`
 denotes
 
 - the same object as `E` if `E` is a glvalue, or
-
 - the result of applying the temporary materialization conversion
   [[conv.rval]] to `E` otherwise.
 
@@ -612,24 +611,19 @@ denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::begin(E)` is ill-formed.
-
 - Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::begin(E)` is
   ill-formed with no diagnostic required.
-
 - Otherwise, if `T` is an array type, `ranges::begin(E)` is
   expression-equivalent to `t + 0`.
-
 - Otherwise, if `auto(t.begin())` is a valid expression whose type
   models `input_or_output_iterator`, `ranges::begin(E)` is
   expression-equivalent to `auto(t.begin())`.
-
 - Otherwise, if `T` is a class or enumeration type and `auto(begin(t))`
   is a valid expression whose type models `input_or_output_iterator`
   where the meaning of `begin` is established as-if by performing
   argument-dependent lookup only [[basic.lookup.argdep]], then
   `ranges::begin(E)` is expression-equivalent to that expression.
-
 - Otherwise, `ranges::begin(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -649,27 +643,21 @@ denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::end(E)` is ill-formed.
-
 - Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::end(E)` is
   ill-formed with no diagnostic required.
-
 - Otherwise, if `T` is an array of unknown bound, `ranges::end(E)` is
   ill-formed.
-
 - Otherwise, if `T` is an array, `ranges::end(E)` is
   expression-equivalent to `t + extent_v<T>`.
-
 - Otherwise, if `auto(t.end())` is a valid expression whose type models
   `sentinel_for<iterator_t<T>>` then `ranges::end(E)` is
   expression-equivalent to `auto(t.end())`.
-
 - Otherwise, if `T` is a class or enumeration type and `auto(end(t))` is
   a valid expression whose type models `sentinel_for<iterator_t<T>>`
   where the meaning of `end` is established as-if by performing
   argument-dependent lookup only [[basic.lookup.argdep]], then
   `ranges::end(E)` is expression-equivalent to that expression.
-
 - Otherwise, `ranges::end(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -688,7 +676,6 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::cbegin(E)` is ill-formed.
-
 - Otherwise, let `U` be `ranges::begin(possibly-const-range(t))`.
   `ranges::cbegin(E)` is expression-equivalent to
   `const_iterator<decltype(U)>(U)`.
@@ -705,7 +692,6 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::cend(E)` is ill-formed.
-
 - Otherwise, let `U` be `ranges::end(possibly-const-range(t))`.
   `ranges::cend(E)` is expression-equivalent to
   `const_sentinel<decltype(U)>(U)`.
@@ -725,26 +711,21 @@ denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::rbegin(E)` is ill-formed.
-
 - Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::rbegin(E)`
   is ill-formed with no diagnostic required.
-
 - Otherwise, if `auto(t.rbegin())` is a valid expression whose type
   models `input_or_output_iterator`, `ranges::rbegin(E)` is
   expression-equivalent to `auto(t.rbegin())`.
-
 - Otherwise, if `T` is a class or enumeration type and `auto(rbegin(t))`
   is a valid expression whose type models `input_or_output_iterator`
   where the meaning of `rbegin` is established as-if by performing
   argument-dependent lookup only [[basic.lookup.argdep]], then
   `ranges::rbegin(E)` is expression-equivalent to that expression.
-
 - Otherwise, if both `ranges::begin(t)` and `ranges::end(t)` are valid
   expressions of the same type which models `bidirectional_iterator`
   [[iterator.concept.bidir]], `ranges::rbegin(E)` is
   expression-equivalent to `make_reverse_iterator(ranges::end(t))`.
-
 - Otherwise, `ranges::rbegin(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -764,27 +745,22 @@ denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::rend(E)` is ill-formed.
-
 - Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::rend(E)` is
   ill-formed with no diagnostic required.
-
 - Otherwise, if `auto(t.rend())` is a valid expression whose type models
   `sentinel_for<decltype(ranges::rbegin(E))>` then `ranges::rend(E)` is
   expression-equivalent to `auto(t.rend())`.
-
 - Otherwise, if `T` is a class or enumeration type and `auto(rend(t))`
   is a valid expression whose type models
   `sentinel_for<decltype(ranges::rbegin(E))>` where the meaning of
   `rend` is established as-if by performing argument-dependent lookup
   only [[basic.lookup.argdep]], then `ranges::rend(E)` is
   expression-equivalent to that expression.
-
 - Otherwise, if both `ranges::begin(t)` and `ranges::end(t)` are valid
   expressions of the same type which models `bidirectional_iterator`
   [[iterator.concept.bidir]], then `ranges::rend(E)` is
   expression-equivalent to `make_reverse_iterator(ranges::begin(t))`.
-
 - Otherwise, `ranges::rend(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -803,7 +779,6 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::crbegin(E)` is ill-formed.
-
 - Otherwise, let `U` be `ranges::rbegin(possibly-const-range(t))`.
   `ranges::crbegin(E)` is expression-equivalent to
   `const_iterator<decltype(U)>(U)`.
@@ -820,7 +795,6 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::crend(E)` is ill-formed.
-
 - Otherwise, let `U` be `ranges::rend(possibly-const-range(t))`.
   `ranges::crend(E)` is expression-equivalent to
   `const_sentinel<decltype(U)>(U)`.
@@ -840,29 +814,24 @@ denotes the reified object for `E`. Then:
 
 - If `T` is an array of unknown bound [[term.array.type]],
   `ranges::size(E)` is ill-formed.
-
 - Otherwise, if `T` is an array type, `ranges::size(E)` is
   expression-equivalent to `auto(extent_v<T>)`.
-
 - Otherwise, if `disable_sized_range<remove_cv_t<T>>` [[range.sized]] is
   `false` and `auto(t.size())` is a valid expression of integer-like
   type [[iterator.concept.winc]], `ranges::size(E)` is
   expression-equivalent to `auto(t.size())`.
-
 - Otherwise, if `T` is a class or enumeration type,
   `disable_sized_range<remove_cv_t<T>>` is `false` and `auto(size(t))`
   is a valid expression of integer-like type where the meaning of `size`
   is established as-if by performing argument-dependent lookup only
   [[basic.lookup.argdep]], then `ranges::size(E)` is
   expression-equivalent to that expression.
-
 - Otherwise, if `to-unsigned-like(ranges::end(t) - ranges::begin(t))`
   [[ranges.syn]] is a valid expression and the types `I` and `S` of
   `ranges::begin(t)` and `ranges::end(t)` (respectively) model both
   `sized_sentinel_for<S, I>` [[iterator.concept.sizedsentinel]] and
   `forward_iterator<I>`, then `ranges::size(E)` is expression-equivalent
   to `to-unsigned-like(ranges::end(t) - ranges::begin(t))`.
-
 - Otherwise, `ranges::size(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -894,19 +863,15 @@ denotes the reified object for `E`. Then:
 
 - If `T` is an array of unknown bound [[term.array.type]],
   `ranges::empty(E)` is ill-formed.
-
 - Otherwise, if `bool(t.empty())` is a valid expression,
   `ranges::empty(E)` is expression-equivalent to `bool(t.empty())`.
-
 - Otherwise, if `(ranges::size(t) == 0)` is a valid expression,
   `ranges::empty(E)` is expression-equivalent to
   `(ranges::size(t) == 0)`.
-
 - Otherwise, if `bool(ranges::begin(t) == ranges::end(t))` is a valid
   expression and the type of `ranges::begin(t)` models
   `forward_iterator`, `ranges::empty(E)` is expression-equivalent to
   `bool(ranges::begin(t) == ranges::end(t))`.
-
 - Otherwise, `ranges::empty(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -926,19 +891,15 @@ denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::data(E)` is ill-formed.
-
 - Otherwise, if `T` is an array type [[term.array.type]] and
   `remove_all_extents_t<T>` is an incomplete type, `ranges::data(E)` is
   ill-formed with no diagnostic required.
-
 - Otherwise, if `auto(t.data())` is a valid expression of pointer to
   object type, `ranges::data(E)` is expression-equivalent to
   `auto(t.data())`.
-
 - Otherwise, if `ranges::begin(t)` is a valid expression whose type
   models `contiguous_iterator`, `ranges::data(E)` is
   expression-equivalent to `to_address(ranges::begin(t))`.
-
 - Otherwise, `ranges::data(E)` is ill-formed.
 
 \[*Note 1*: Diagnosable ill-formed cases above result in substitution
@@ -961,7 +922,6 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 
 - If `E` is an rvalue and `enable_borrowed_range<remove_cv_t<T>>` is
   `false`, `ranges::cdata(E)` is ill-formed.
-
 - Otherwise, `ranges::cdata(E)` is expression-equivalent to
   `as-const-pointer(ranges::data(possibly-const-range(t)))`.
 
@@ -1020,10 +980,8 @@ Given an expression `t` such that `decltype((t))` is `T&`, `T` models
 
 - \[`ranges::begin(t)`, `ranges::end(t)`) denotes a
   range [[iterator.requirements.general]],
-
 - both `ranges::begin(t)` and `ranges::end(t)` are amortized constant
   time and non-modifying, and
-
 - if the type of `ranges::begin(t)` models `forward_iterator`,
   `ranges::begin(t)` is equality-preserving.
 
@@ -1069,7 +1027,6 @@ models `borrowed_range` because
 
 - `enable_borrowed_range<S>` is specialized to have the value `true`,
   and
-
 - `S`’s iterators do not have validity tied to the lifetime of an `S`
   object because they are “borrowed” from some other range.
 
@@ -1092,10 +1049,8 @@ Given an lvalue `t` of type `remove_reference_t<T>`, `T` models
 
 - `ranges::size(t)` is amortized 𝑂(1), does not modify `t`, and is equal
   to `ranges::distance(ranges::begin(t), ranges::end(t))`, and
-
 - if `iterator_t<T>` models `forward_iterator`, `ranges::size(t)` is
   well-defined regardless of the evaluation of `ranges::begin(t)`.
-
   \[*Note 1*: `ranges::size(t)` is otherwise not required to be
   well-defined after evaluating `ranges::begin(t)`. For example, it is
   possible for `ranges::size(t)` to be well-defined for a `sized_range`
@@ -1131,17 +1086,13 @@ template<class T>
 `T` models `view` only if:
 
 - `T` has 𝑂(1) move construction; and
-
 - move assignment of an object of type `T` is no more complex than
   destruction followed by move construction; and
-
 - if N copies and/or moves are made from an object of type `T` that
   contained M elements, then those N objects have 𝑂(N+M) destruction;
   and
-
 - `copy_constructible``<T>` is `false`, or `T` has 𝑂(1) copy
   construction; and
-
 - `copyable``<T>` is `false`, or copy assignment of an object of type
   `T` is no more complex than destruction followed by copy construction.
 
@@ -1153,10 +1104,8 @@ moved-from object of type `T` has 𝑂(1) destruction. — *end note*\]
 Examples of views are:
 
 - A `range` type that wraps a pair of iterators.
-
 - A `range` type that holds its elements by `shared_ptr` and shares
   ownership with all its copies.
-
 - A `range` type that generates its elements on demand.
 
 A container such as `vector<string>` does not meet the semantic
@@ -1567,7 +1516,6 @@ constexpr subrange(R&& r) requires (!StoreSize || sized_range<R>);
 
 - If *StoreSize* is `true`,
   `subrange(r, static_cast<decltype(`*`size_`*`)>(ranges::size(r)))`.
-
 - Otherwise, `subrange(ranges::begin(r), ranges::end(r))`.
 
 *PairLike*
@@ -1614,7 +1562,6 @@ constexpr make-unsigned-like-t<iter_difference_t<I>> size() const
 *Effects:*
 
 - If *StoreSize* is `true`, equivalent to: `return `*`size_`*`;`
-
 - Otherwise, equivalent to:
   `return `*`to-unsigned-like`*`(`*`end_`*` - `*`begin_`*`);`
 
@@ -1740,7 +1687,6 @@ For a type `R` that models `range`:
 - if `R` models `borrowed_range`, then `borrowed_iterator_t<R>` denotes
   `iterator_t<R>`, and `borrowed_subrange_t<R>` denotes
   `subrange<iterator_t<R>>`;
-
 - otherwise, both `borrowed_iterator_t<R>` and `borrowed_subrange_t<R>`
   denote `dangling`.
 
@@ -1849,36 +1795,25 @@ the following manner:
 
 - If `C` does not satisfy `input_range` or
   `convertible_to``<range_reference_t<R>, range_value_t<C>>` is `true`:
-
   - If `constructible_from``<C, R, Args...>` is `true`:
-
         C(std::forward<R>(r), std::forward<Args>(args)...)
-
   - Otherwise, if `constructible_from``<C, from_range_t, R, Args...>` is
     `true`:
-
         C(from_range, std::forward<R>(r), std::forward<Args>(args)...)
-
   - Otherwise, if
-
     - `common_range``<R>` is `true`,
-
     - the *qualified-id*
       `iterator_traits<iterator_t<R>>::iterator_category` is valid and
       denotes a type that models `derived_from``<input_iterator_tag>`,
       and
-
     - `constructible_from``<C, iterator_t<R>, sentinel_t<R>, Args...>`
       is `true`:
 
     <!-- -->
 
         C(ranges::begin(r), ranges::end(r), std::forward<Args>(args)...)
-
   - Otherwise, if
-
     - `constructible_from``<C, Args...>` is `true`, and
-
     - *`container-insertable`*`<C, range_reference_t<R>>` is `true`:
 
     <!-- -->
@@ -1887,13 +1822,10 @@ the following manner:
         if constexpr (sized_range<R> && reservable-container<C>)
           c.reserve(static_cast<range_size_t<C>>(ranges::size(r)));
         ranges::copy(r, container-inserter<range_reference_t<R>>(c));
-
 - Otherwise, if `input_range``<range_reference_t<R>>` is `true`:
-
       to<C>(r | views::transform([](auto&& elem) {
         return to<range_value_t<C>>(std::forward<decltype(elem)>(elem));
       }), std::forward<Args>(args)...);
-
 - Otherwise, the program is ill-formed.
 
 ``` cpp
@@ -1924,16 +1856,12 @@ struct input-iterator {                        // exposition only
 Let *`DEDUCE_EXPR`* be defined as follows:
 
 - `C(declval<R>(), declval<Args>()...)` if that is a valid expression,
-
 - otherwise, `C(from_range, declval<R>(), declval<Args>()...)` if that
   is a valid expression,
-
 - otherwise,
-
       C(declval<input-iterator>(), declval<input-iterator>(), declval<Args>()...)
 
   if that is a valid expression,
-
 - otherwise, the program is ill-formed.
 
 *Returns:*
@@ -1956,11 +1884,9 @@ wrapper [[term.perfect.forwarding.call.wrapper]] with the following
 properties:
 
 - It has no target object.
-
 - Its bound argument entities `bound_args` consist of objects of types
   `decay_t<Args>...` direct-non-list-initialized with
   `std::forward<Args>(args)...`, respectively.
-
 - Its call pattern is `to<C>(r, bound_args...)`, where `r` is the
   argument used in a function call expression of `f`.
 
@@ -2177,13 +2103,10 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
 - If `W` is not an integral type, or if it is an integral type and
   `sizeof(iter_difference_t<W>)` is greater than `sizeof(W)`, then
   `IOTA-DIFF-T(W)` denotes `iter_difference_t<W>`.
-
 - Otherwise, `IOTA-DIFF-T(W)` is a signed integer type of width greater
   than the width of `W` if such a type exists.
-
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
   [[iterator.concept.winc]] of width not less than the width of `W`.
-
   \[*Note 2*: It is unspecified whether this type satisfies
   `weakly_incrementable`. — *end note*\]
 
@@ -2205,15 +2128,10 @@ Let `a` and `b` be equal objects of type `I`. `I` models `decrementable`
 only if
 
 - If `a` and `b` are decrementable, then the following are all true:
-
   - `addressof(–a) == addressof(a)`
-
   - `bool(a– == b)`
-
   - `bool(((void)a–, a) == –b)`
-
   - `bool(++(–a) == b)`.
-
 - If `a` and `b` are incrementable, then `bool(–(++a) == b)`.
 
 The exposition-only *advanceable* concept is equivalent to:
@@ -2237,32 +2155,20 @@ that `b` is reachable from `a` after `n` applications of `++a`, for some
 value `n` of type `D`. `I` models `advanceable` only if
 
 - `(a += n)` is equal to `b`.
-
 - `addressof(a += n)` is equal to `addressof(a)`.
-
 - `I(a + n)` is equal to `(a += n)`.
-
 - For any two positive values `x` and `y` of type `D`, if
   `I(a + D(x + y))` is well-defined, then `I(a + D(x + y))` is equal to
   `I(I(a + x) + y)`.
-
 - `I(a + D(0))` is equal to `a`.
-
 - If `I(a + D(n - 1))` is well-defined, then `I(a + n)` is equal to
   `[](I c) \{ return ++c; \}(I(a + D(n - 1)))`.
-
 - `(b += -n)` is equal to `a`.
-
 - `(b -= n)` is equal to `a`.
-
 - `addressof(b -= n)` is equal to `addressof(b)`.
-
 - `I(b - n)` is equal to `(b -= n)`.
-
 - `D(b - a)` is equal to `n`.
-
 - `D(a - b)` is equal to `D(-n)`.
-
 - `bool(a <= b)` is `true`.
 
 ``` cpp
@@ -2294,18 +2200,14 @@ constexpr explicit iota_view(iterator first, see below last);
 
 - If `same_as``<W, Bound>` is `true`,
   `iota_view(first.`*`value_`*`, last.`*`value_`*`)`.
-
 - Otherwise, if `Bound` denotes `unreachable_sentinel_t`,
   `iota_view(first.`*`value_`*`, last)`.
-
 - Otherwise, `iota_view(first.`*`value_`*`, last.`*`bound_`*`)`.
 
 *Remarks:* The type of `last` is:
 
 - If `same_as``<W, Bound>` is `true`, *iterator*.
-
 - Otherwise, if `Bound` denotes `unreachable_sentinel_t`, `Bound`.
-
 - Otherwise, *sentinel*.
 
 ``` cpp
@@ -2424,13 +2326,10 @@ namespace std::ranges {
 
 - If `W` models `advanceable`, then `iterator_concept` is
   `random_access_iterator_tag`.
-
 - Otherwise, if `W` models `decrementable`, then `iterator_concept` is
   `bidirectional_iterator_tag`.
-
 - Otherwise, if `W` models `incrementable`, then `iterator_concept` is
   `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` is `input_iterator_tag`.
 
 \[*Note 1*: Overloads for `iter_move` and `iter_swap` are omitted
@@ -3244,10 +3143,8 @@ with the following properties:
 
 - Its target object is an object `d` of type `decay_t<decltype((D))>`
   direct-non-list-initialized with `D`.
-
 - It has one bound argument entity, an object `c` of type
   `decay_t<decltype((C))>` direct-non-list-initialized with `C`.
-
 - Its call pattern is `d(c(arg))`, where `arg` is the argument used in a
   function call expression of `E`.
 
@@ -3257,12 +3154,9 @@ of the state entities of `E` are all well-formed.
 Given an object `t` of type `T`, where
 
 - `t` is a unary function object that accepts a range argument,
-
 - `T` models `derived_from<range_adaptor_closure<T>>`,
-
 - `T` has no other base classes of type `range_adaptor_closure<U>` for
   any other type `U`, and
-
 - `T` does not model `range`
 
 then the implementation ensures that `t` is a range adaptor closure
@@ -3301,11 +3195,9 @@ perfect forwarding call wrapper [[term.perfect.forwarding.call.wrapper]]
 with the following properties:
 
 - Its target object is a copy of `adaptor`.
-
 - Its bound argument entities `bound_args` consist of objects of types
   `BoundArgs...` direct-non-list-initialized with
   `std::forward<decltype((args))>(args)...`, respectively.
-
 - Its call pattern is `adaptor(r, bound_args...)`, where `r` is the
   argument used in a function call expression of `f`.
 
@@ -3321,18 +3213,14 @@ exactly like `optional<T>` with the following differences:
 
 - `movable-box<T>` constrains its type parameter `T` with
   `move_constructible<T> && is_object_v<T>`.
-
 - The default constructor of `movable-box<T>` is equivalent to:
-
   ``` cpp
   constexpr movable-box() noexcept(is_nothrow_default_constructible_v<T>)
       requires default_initializable<T>
     : movable-box{in_place} {}
   ```
-
 - If `copyable<T>` is not modeled, the copy assignment operator is
   equivalent to:
-
   ``` cpp
   constexpr movable-box& operator=(const movable-box& that)
     noexcept(is_nothrow_copy_constructible_v<T>)
@@ -3344,10 +3232,8 @@ exactly like `optional<T>` with the following differences:
     return *this;
   }
   ```
-
 - If `movable<T>` is not modeled, the move assignment operator is
   equivalent to:
-
   ``` cpp
   constexpr movable-box& operator=(movable-box&& that)
     noexcept(is_nothrow_move_constructible_v<T>) {
@@ -3363,7 +3249,6 @@ exactly like `optional<T>` with the following differences:
   only a `T` if either `T` models `copyable`, or
   `is_nothrow_move_constructible_v<T> && is_nothrow_copy_constructible_v<T>`
   is `true`.
-
 - Otherwise, `movable-box<T>` should store only a `T` if either `T`
   models `movable` or `is_nothrow_move_constructible_v<T>` is `true`.
 
@@ -3376,23 +3261,17 @@ following differences:
 
 - `non-propagating-cache<T>` constrains its type parameter `T` with
   `is_object_v<T>`.
-
 - The copy constructor is equivalent to:
-
   ``` cpp
   constexpr non-propagating-cache(const non-propagating-cache&) noexcept {}
   ```
-
 - The move constructor is equivalent to:
-
   ``` cpp
   constexpr non-propagating-cache(non-propagating-cache&& other) noexcept {
     other.reset();
   }
   ```
-
 - The copy assignment operator is equivalent to:
-
   ``` cpp
   constexpr non-propagating-cache& operator=(const non-propagating-cache& other) noexcept {
     if (addressof(other) != this)
@@ -3400,9 +3279,7 @@ following differences:
     return *this;
   }
   ```
-
 - The move assignment operator is equivalent to:
-
   ``` cpp
   constexpr non-propagating-cache& operator=(non-propagating-cache&& other) noexcept {
     reset();
@@ -3410,10 +3287,8 @@ following differences:
     return *this;
   }
   ```
-
 - `non-propagating-cache<T>` has an additional member function template
   specified as follows:
-
   ``` cpp
   template<class I>
     constexpr T& emplace-deref(const I& i);    // exposition only
@@ -3421,20 +3296,14 @@ following differences:
 
   *Mandates:* The declaration `T t(*i);` is well-formed for some
   invented variable `t`.
-
   \[*Note 3*: If `*i` is a prvalue of type `T`, there is no requirement
   that it is movable [[dcl.init.general]]. — *end note*\]
-
   *Effects:* Calls `reset()`. Then direct-non-list-initializes the
   contained value with `*i`.
-
   *Ensures:* `*this` contains a value.
-
   *Returns:* A reference to the new contained value.
-
   *Throws:* Any exception thrown by the initialization of the contained
   value.
-
   *Remarks:* If an exception is thrown during the initialization of `T`,
   `*this` does not contain a value, and the previous value (if any) has
   been destroyed.
@@ -3479,9 +3348,7 @@ The name `views::all` denotes a range adaptor object
 `views::all(E)` is expression-equivalent to:
 
 - `decay-copy(E)` if the decayed type of `E` models `view`.
-
 - Otherwise, `ref_view\{E\}` if that expression is well-formed.
-
 - Otherwise, `owning_view\{E\}`.
 
 #### Class template `ref_view` <a id="range.ref.view">[[range.ref.view]]</a>
@@ -3617,7 +3484,6 @@ expression-equivalent to:
 - `views::all(E)` if
   `same_as<range_rvalue_reference_t<T>, range_reference_t<T>>` is
   `true`.
-
 - Otherwise, `as_rvalue_view(E)`.
 
 \[*Example 1*:
@@ -3825,10 +3691,8 @@ not satisfy the filter predicate.
 
 - If `V` models `bidirectional_range`, then `iterator_concept` denotes
   `bidirectional_iterator_tag`.
-
 - Otherwise, if `V` models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -3837,13 +3701,10 @@ is defined as follows:
 
 - Let `C` denote the type
   `iterator_traits<iterator_t<V>>::iterator_category`.
-
 - If `C` models `derived_from<bidirectional_iterator_tag>`, then
   `iterator_category` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if `C` models `derived_from<forward_iterator_tag>`, then
   `iterator_category` denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_category` denotes `C`.
 
 *iterator*
@@ -4257,13 +4118,10 @@ namespace std::ranges {
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if *Base* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -4274,12 +4132,9 @@ type `iterator_traits<iterator_t<Base>>::iterator_category`.
 - If
   `is_reference_v<invoke_result_t<\exposidnc{maybe-const}<Const, F>&, range_reference_t<Base>>>`
   is `true`, then
-
   - if `C` models `derived_from<contiguous_iterator_tag>`,
     `iterator_category` denotes `random_access_iterator_tag`;
-
   - otherwise, `iterator_category` denotes `C`.
-
 - Otherwise, `iterator_category` denotes `input_iterator_tag`.
 
 ``` cpp
@@ -4601,42 +4456,32 @@ expression `views::take(E, F)` is expression-equivalent to:
 - If `T` is a specialization of `empty_view` [[range.empty.view]], then
   `((void)F, decay-copy(E))`, except that the evaluations of `E` and `F`
   are indeterminately sequenced.
-
 - Otherwise, if `T` models `random_access_range` and `sized_range` and
   is a specialization of `span` [[views.span]], `basic_string_view`
   [[string.view]], or `subrange` [[range.subrange]], then
   `U(ranges::begin(E),
   ranges::begin(E) + std::min<D>(ranges::distance(E), F))`, except that
   `E` is evaluated only once, where `U` is a type determined as follows:
-
   - if `T` is a specialization of `span`, then `U` is
     `span<typename T::element_type>`;
-
   - otherwise, if `T` is a specialization of `basic_string_view`, then
     `U` is `T`;
-
   - otherwise, `T` is a specialization of `subrange`, and `U` is
     `subrange<iterator_t<T>>`;
-
 - otherwise, if `T` is a specialization of `iota_view`
   [[range.iota.view]] that models `random_access_range` and
   `sized_range`, then `iota_view(*ranges::begin(E),
   *(ranges::begin(E) + std::\linebreak{}min<D>(ranges::distance(E), F)))`,
   except that `E` is evaluated only once.
-
 - Otherwise, if `T` is a specialization of `repeat_view`
   [[range.repeat.view]]:
-
   - if `T` models `sized_range`, then
-
     ``` cpp
     views::repeat(*E.value_, std::min<D>(ranges::distance(E), F))
     ```
 
     except that `E` is evaluated only once;
-
   - otherwise, `views::repeat(*E.value_, static_cast<D>(F))`.
-
 - Otherwise, `take_view(E, F)`.
 
 \[*Example 1*:
@@ -4992,16 +4837,11 @@ expression `views::drop(E, F)` is expression-equivalent to:
 - If `T` is a specialization of `empty_view` [[range.empty.view]], then
   `((void)F, decay-copy(E))`, except that the evaluations of `E` and `F`
   are indeterminately sequenced.
-
 - Otherwise, if `T` models `random_access_range` and `sized_range` and
   is
-
   - a specialization of `span` [[views.span]],
-
   - a specialization of `basic_string_view` [[string.view]],
-
   - a specialization of `iota_view` [[range.iota.view]], or
-
   - a specialization of `subrange` [[range.subrange]] where
     `T::StoreSize` is `false`,
 
@@ -5010,28 +4850,22 @@ expression `views::drop(E, F)` is expression-equivalent to:
   except that `E` is evaluated only once, where `U` is
   `span<typename T::element_type>` if `T` is a specialization of `span`
   and `T` otherwise.
-
 - Otherwise, if `T` is a specialization of `subrange` [[range.subrange]]
   that models `random_access_range` and `sized_range`, then
   `T(ranges::begin(E) + std::min<D>(ranges::distance(E), F), ranges::\linebreak{}end(E),
   to-unsigned-like(ranges::distance(E) -
   std::min<D>(ranges::distance(E), F)))`, except that `E` and `F` are
   each evaluated only once.
-
 - Otherwise, if `T` is a specialization of `repeat_view`
   [[range.repeat.view]]:
-
   - if `T` models `sized_range`, then
-
     ``` cpp
     views::repeat(*E.value_, ranges::distance(E) - std::min<D>(ranges::distance(E), F))
     ```
 
     except that `E` is evaluated only once;
-
   - otherwise, `((void)F, decay-copy(E))`, except that the evaluations
     of `E` and `F` are indeterminately sequenced.
-
 - Otherwise, `drop_view(E, F)`.
 
 \[*Example 1*:
@@ -5396,12 +5230,10 @@ namespace std::ranges {
   and `range_reference_t<Base>` models both `bidirectional_range` and
   `common_range`, then `iterator_concept` denotes
   `bidirectional_iterator_tag`.
-
 - Otherwise, if *ref-is-glvalue* is `true` and *Base* and
   `range_reference_t<Base>` each model
   \libconceptx{forward_range}{forward_range}, then `iterator_concept`
   denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -5413,16 +5245,13 @@ The member *typedef-name* `iterator_category` is defined if and only if
   `iterator_traits<iterator_t<Base>>::iterator_category`, and let
   *INNERC* denote
   `iterator_traits<iterator_t<range_reference_t<Base>>>::iterator_category`.
-
 - If *OUTERC* and *INNERC* each model
   `derived_from<bidirectional_iterator_tag>` and
   `range_reference_t<Base>` models `common_range`, `iterator_category`
   denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if *OUTERC* and *INNERC* each model
   `derived_from<forward_iterator_tag>`, `iterator_category` denotes
   `forward_iterator_tag`.
-
 - Otherwise, `iterator_category` denotes `input_iterator_tag`.
 
 `iterator::difference_type` denotes the type:
@@ -5522,7 +5351,6 @@ constexpr iterator& operator++();
 Let *`inner-range`* be:
 
 - If *ref-is-glvalue* is `true`, `*`*`outer`*`()`.
-
 - Otherwise, `*`*`parent_`*`->`*`inner_`*.
 
 *Effects:* Equivalent to:
@@ -5896,11 +5724,9 @@ namespace std::ranges {
 - If *ref-is-glvalue* is `true`, *Base* models `bidirectional_range`,
   and *InnerBase* and *PatternBase* each model `bidirectional-common`,
   then `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if *ref-is-glvalue* is `true` and *Base* and *InnerBase*
   each model `forward_range`, then `iterator_concept` denotes
   `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -5912,25 +5738,20 @@ as follows:
   let *INNERC* denote `iterator_traits<InnerIter>::iterator_category`,
   and let *PATTERNC* denote
   `iterator_-\linebreak traits<PatternIter>::iterator_category`.
-
 - If
-
   ``` cpp
   is_reference_v<common_reference_t<iter_reference_t<InnerIter>,
                                     iter_reference_t<PatternIter>>>
   ```
 
   is `false`, `iterator_category` denotes `input_iterator_tag`.
-
 - Otherwise, if *OUTERC*, *INNERC*, and *PATTERNC* each model
   `derived_from<bidirectional_iterator_category>` and *InnerBase* and
   *PatternBase* each model `common_range`, `iterator_category` denotes
   `bidirectional_iterator_tag`.
-
 - Otherwise, if *OUTERC*, *INNERC*, and *PATTERNC* each model
   `derived_from<forward_iterator_tag>`, `iterator_category` denotes
   `forward_iterator_tag`.
-
 - Otherwise, `iterator_category` denotes `input_iterator_tag`.
 
 `iterator::value_type` denotes the type:
@@ -6609,7 +6430,6 @@ denotes:
 - `forward_iterator_tag` if
   `iterator_traits<iterator_t<Base>>::iterator_category` models
   `derived_from<forward_iterator_tag>`;
-
 - otherwise, `iterator_traits<iterator_t<Base>>::iterator_category`.
 
 *inner-iterator*
@@ -6975,11 +6795,9 @@ Otherwise, `views::counted(E, F)` is expression-equivalent to:
 
 - If `T` models `contiguous_iterator`, then
   `span(to_address(E), static_cast<size_t>(static_-\linebreak{}cast<D>(F)))`.
-
 - Otherwise, if `T` models `random_access_iterator`, then
   `subrange(E, E + static_cast<D>(F))`, except that `E` is evaluated
   only once.
-
 - Otherwise, `subrange(counted_iterator(E, F), default_sentinel)`.
 
 ### Common view <a id="range.common">[[range.common]]</a>
@@ -7000,7 +6818,6 @@ The name `views::common` denotes a range adaptor object
 
 - `views::all(E)`, if `decltype((E))` models `common_range` and
   `views::all(E)` is a well-formed expression.
-
 - Otherwise, `common_view\{E\}`.
 
 \[*Example 1*:
@@ -7098,25 +6915,19 @@ The name `views::reverse` denotes a range adaptor object
 
 - If the type of `E` is a (possibly cv-qualified) specialization of
   `reverse_view`, equivalent to `E.base()`.
-
 - Otherwise, if the type of `E` is cv
   `subrange<reverse_iterator<I>, reverse_iterator<I>, K>` for some
   iterator type `I` and value `K` of type `subrange_kind`,
-
   - if `K` is `subrange_kind::sized`, equivalent to:
-
     ``` cpp
     subrange<I, I, K>(E.end().base(), E.begin().base(), E.size())
     ```
-
   - otherwise, equivalent to:
-
     ``` cpp
     subrange<I, I, K>(E.end().base(), E.begin().base())
     ```
 
   However, in either case `E` is evaluated only once.
-
 - Otherwise, equivalent to `reverse_view\{E\}`.
 
 \[*Example 1*:
@@ -7217,20 +7028,15 @@ The name `views::as_const` denotes a range adaptor object
 `views::as_const(E)` is expression-equivalent to:
 
 - If `views::all_t<T>` models `constant_range`, then `views::all(E)`.
-
 - Otherwise, if `U` denotes `empty_view<X>` for some type `X`, then
   `auto(views::empty<const X>)`.
-
 - Otherwise, if `U` denotes `span<X, Extent>` for some type `X` and some
   extent `Extent`, then `span<const X, Extent>(E)`.
-
 - Otherwise, if `U` denotes `ref_view<X>` for some type `X` and
   `const X` models `constant_range`, then
   `ref_view(static_cast<const X&>(E.base()))`.
-
 - Otherwise, if `E` is an lvalue, `const U` models `constant_range`, and
   `U` does not model `view`, then `ref_view(static_cast<const U&>(E))`.
-
 - Otherwise, `as_const_view(E)`.
 
 \[*Example 1*:
@@ -7491,13 +7297,10 @@ The member *typedef-name* `iterator_concept` is defined as follows:
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if *Base* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -7507,10 +7310,8 @@ defined as follows: Let `C` denote the type
 
 - If `std::get<N>(*current_)` is an rvalue, `iterator_category` denotes
   `input_iterator_tag`.
-
 - Otherwise, if `C` models `derived_from<random_access_iterator_tag>`,
   `iterator_category` denotes `random_access_iterator_tag`.
-
 - Otherwise, `iterator_category` denotes `C`.
 
 ``` cpp
@@ -8002,13 +7803,10 @@ follows:
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if *Base* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 *iterator*
@@ -8319,7 +8117,6 @@ the expression `views::zip(Es...)` is expression-equivalent to
 
 - `auto(views::empty<tuple<>>)`
   if `Es` is an empty pack,
-
 - otherwise, `zip_view<views::all_t<decltype((Es))>...>(Es...)`.
 
 \[*Example 1*:
@@ -8504,13 +8301,10 @@ namespace std::ranges {
 
 - If `all-random-access<Const, Views...>` is modeled, then
   `iterator_concept` denotes `random_access_iterator_tag`.
-
 - Otherwise, if `all-bidirectional<Const, Views...>` is modeled, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if `all-forward<Const, Views...>` is modeled, then
   `iterator_concept` denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 `iterator::iterator_category` is present if and only if
@@ -8640,15 +8434,12 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 
 - `x.`*`current_`*` == y.`*`current_`* if
   `all-bidirectional``<Const, Views...>` is `true`.
-
 - Otherwise, `true` if there exists an integer
   $0 \leq i < \texttt{sizeof...(Views)}$ such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
   is `true`.
-
   \[*Note 4*: This allows `zip_view` to model `common_range` when all
   constituent views model `common_range`. — *end note*\]
-
 - Otherwise, `false`.
 
 ``` cpp
@@ -8837,19 +8628,15 @@ The name `views::zip_transform` denotes a customization point object
 `Es...` be a pack of subexpressions.
 
 - If `Es` is an empty pack, let `FD` be `decay_t<decltype((F))>`.
-
   - If `move_constructible<FD> &&
     regular_invocable<FD&>` is `false`, or if
     `decay_t<invoke_result_t<FD&>>` is not an object type,
     `views::zip_transform(F, Es...)` is ill-formed.
-
   - Otherwise, the expression `views::zip_transform(F, Es...)` is
     expression-equivalent to
-
     ``` cpp
     ((void)F, auto(views::empty<decay_t<invoke_result_t<FD&>>>))
     ```
-
 - Otherwise, the expression `views::zip_transform(F, Es...)` is
   expression-equivalent to `zip_transform_view(F, Es...)`.
 
@@ -9008,26 +8795,20 @@ and only if *Base* models `forward_range`. In that case,
 `iterator::iterator_category` is defined as follows:
 
 - If
-
   ``` cpp
   invoke_result_t<maybe-const<Const, F>&, range_reference_t<maybe-const<Const, Views>>...>
   ```
 
   is not a reference, `iterator_category` denotes `input_iterator_tag`.
-
 - Otherwise, let `Cs` denote the pack of types
   `iterator_traits<iterator_t<maybe-const<Const, Views>>>::iterator_category...`.
-
   - If `(derived_from<Cs, random_access_iterator_tag> && ...)` is
     `true`, `iterator_category` denotes `random_access_iterator_tag`.
-
   - Otherwise, if
     `(derived_from<Cs, bidirectional_iterator_tag> && ...)` is `true`,
     `iterator_category` denotes `bidirectional_iterator_tag`.
-
   - Otherwise, if `(derived_from<Cs, forward_iterator_tag> && ...)` is
     `true`, `iterator_category` denotes `forward_iterator_tag`.
-
   - Otherwise, `iterator_category` denotes `input_iterator_tag`.
 
 ``` cpp
@@ -9272,7 +9053,6 @@ expression-equivalent to
 
 - `((void)E, auto(views::empty<tuple<>>))`
   if `N` is equal to `0`,
-
 - otherwise, `adjacent_view<views::all_t<decltype((E))>, N>(E)`.
 
 \[*Example 1*:
@@ -9436,10 +9216,8 @@ namespace std::ranges {
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
 If the invocation of any non-const member function of *iterator* exits
@@ -9766,7 +9544,6 @@ constant expression `N`:
 - If `N` is equal to `0`, `views::adjacent_transform<N>(E, F)` is
   expression-equivalent to `((void)E, views::zip_transform(F))`, except
   that the evaluations of `E` and `F` are indeterminately sequenced.
-
 - Otherwise, the expression `views::adjacent_transform<N>(E, F)` is
   expression-equivalent to
   `adjacent_transform_view<views::all_t<decltype((E))>, decay_t<decltype((F))>, N>(E, F)`.
@@ -9930,19 +9707,14 @@ follows:
 - If `invoke_result_t<maybe-const<Const, F>&,
   REPEAT(range_reference_t<Base>, N)...>` isnot a reference,
   `iterator_category` denotes `input_iterator_tag`.
-
 - Otherwise, let `C` denote the type
   `iterator_traits<iterator_t<Base>>::iterator_category`.
-
   - If `derived_from<C, random_access_iterator_tag>` is `true`,
     `iterator_category` denotes `random_access_iterator_tag`.
-
   - Otherwise, if `derived_from<C, bidirectional_iterator_tag>` is
     `true`, `iterator_category` denotes `bidirectional_iterator_tag`.
-
   - Otherwise, if `derived_from<C, forward_iterator_tag>` is `true`,
     `iterator_category` denotes `forward_iterator_tag`.
-
   - Otherwise, `iterator_category` denotes `input_iterator_tag`.
 
 ``` cpp
@@ -10728,10 +10500,8 @@ namespace std::ranges {
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
 ``` cpp
@@ -11047,10 +10817,8 @@ constexpr auto begin()
 *Returns:*
 
 - If `V` models `slide-caches-first`,
-
       iterator<false>(ranges::begin(base_),
                       ranges::next(ranges::begin(base_), n_ - 1, ranges::end(base_)), n_)
-
 - Otherwise,
   *`iterator`*`<false>(ranges::begin(`*`base_`*`), `*`n_`*`)`.
 
@@ -11073,17 +10841,11 @@ constexpr auto end()
 *Returns:*
 
 - If `V` models `slide-caches-nothing`,
-
       iterator<false>(ranges::begin(base_) + range_difference_t<V>(size()), n_)
-
 - Otherwise, if `V` models `slide-caches-last`,
-
       iterator<false>(ranges::prev(ranges::end(base_), n_ - 1, ranges::begin(base_)), n_)
-
 - Otherwise, if `V` models `common_range`,
-
       iterator<false>(ranges::end(base_), ranges::end(base_), n_)
-
 - Otherwise, *`sentinel`*`(ranges::end(`*`base_`*`))`.
 
 *Remarks:* In order to provide the amortized constant-time complexity
@@ -11186,10 +10948,8 @@ namespace std::ranges {
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
 If the invocation of any non-const member function of *iterator* exits
@@ -11578,14 +11338,12 @@ constexpr iterator_t<V> find-prev(iterator_t<V> current) requires bidirectional_
 *Preconditions:*
 
 - `current` is not equal to `ranges::begin(`*`base_`*`)`.
-
 - *`pred_`*`.has_value()` is `true`.
 
 *Returns:* An iterator `i` in the range such that:
 
 - `ranges::adjacent_find(i, current, not_fn(ref(*`*`pred_`*`)))` is
   equal to `current`; and
-
 - if `i` is not equal to `ranges::begin(`*`base_`*`)`, then
   `bool(invoke(*`*`pred_`*`, *ranges::prev(i), *i))` is `false`.
 
@@ -11628,7 +11386,6 @@ namespace std::ranges {
 
 - If `V` models `bidirectional_range`, then `iterator_concept` denotes
   `bidirectional_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
 ``` cpp
@@ -11911,13 +11668,10 @@ namespace std::ranges {
 
 - If *Base* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-
 - Otherwise, if *Base* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if *Base* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -11926,10 +11680,8 @@ The member *typedef-name* `iterator_category` is defined if and only if
 
 - Let `C` denote the type
   `iterator_traits<iterator_t<Base>>::iterator_category`.
-
 - If `C` models `derived_from<random_access_iterator_tag>`, then
   `iterator_category` denotes `random_access_iterator_tag`.
-
 - Otherwise, `iterator_category` denotes `C`.
 
 *iterator*
@@ -12176,9 +11928,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 
 - If *Base* models `forward_range`,
   `(N + x.`*`missing_`*` - y.`*`missing_`*`) / x.`*`stride_`*.
-
 - Otherwise, if `N` is negative, `-`*`div-ceil`*`(-N, x.`*`stride_`*`)`.
-
 - Otherwise, *`div-ceil`*`(N, x.`*`stride_`*`)`.
 
 *iterator*
@@ -12234,7 +11984,6 @@ expression `views::cartesian_product(Es...)` is expression-equivalent to
 
 - `views::single(tuple())`
   if `Es` is an empty pack,
-
 - otherwise,
   `cartesian_product_view<views::all_t<decltype((Es))>...>(Es...)`.
 
@@ -12377,11 +12126,9 @@ Let:
 
 - *is-const* be `true` for the const-qualified overload, and `false`
   otherwise;
-
 - *is-empty* be `true` if the expression `ranges::empty(rng)` is `true`
   for any `rng` among the underlying ranges except the first one and
   `false` otherwise; and
-
 - *`begin-or-first-end`*`(rng)` be expression-equivalent to
   *`is-empty`*` ? ranges::begin(rng) : `*`cartesian-common-arg-end`*`(rng)`
   if `rng` is the first underlying range and `ranges::begin(rng)`
@@ -12516,14 +12263,11 @@ namespace std::ranges {
 
 - If `cartesian-product-is-random-access<Const, First, Vs...>` is
   modeled, then `iterator_concept` denotes `random_access_iterator_tag`.
-
 - Otherwise, if
   `cartesian-product-is-bidirectional<Const, First, Vs...>` is modeled,
   then `iterator_concept` denotes `bidirectional_iterator_tag`.
-
 - Otherwise, if `maybe-const<Const, First>` models `forward_range`, then
   `iterator_concept` denotes `forward_iterator_tag`.
-
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 `iterator::difference_type` is an *implementation-defined*
@@ -12580,11 +12324,9 @@ Let:
   `static_cast<difference_type>(ranges::size(std::get<`N`>(`*`parent_`*`->`*`bases_`*`)))`
   and $\textit{scaled-size}(N+1)$ if $N \le \texttt{sizeof...(Vs)}$,
   otherwise `static_cast<difference_type>(1)`;
-
 - $\textit{scaled-distance}(N)$ be the product of
   `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
   and $\textit{scaled-size}(N+1)$; and
-
 - *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
   integer $0 \le N \le \texttt{sizeof...(Vs)}$.
 
@@ -12683,10 +12425,8 @@ Let `orig` be the value of `*this` before the call.
 Let `ret` be:
 
 - If `x > 0`, the value of `*this` had *next* been called `x` times.
-
 - Otherwise, if `x < 0`, the value of `*this` had *prev* been called
   `-x` times.
-
 - Otherwise, `orig`.
 
 *Preconditions:* `x` is in the range
@@ -12781,7 +12521,6 @@ Let *end-tuple* be an object of a type that is a specialization of
 
 - `std::get<0>(`*`end-tuple`*`)` has the same value as
   `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
-
 - `std::get<`N`>(`*`end-tuple`*`)` has the same value as
   `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
   every integer $1 \le N \le \texttt{sizeof...(Vs)}$.
@@ -12808,7 +12547,6 @@ the following expressions:
 
 - `noexcept(ranges::iter_move(std::get<`N`>(i.`*`current_`*`)))` for
   every integer$0 \le N \le \texttt{sizeof...(Vs)}$,
-
 - `is_nothrow_move_constructible_v<range_rvalue_reference_t<`*`maybe-const`*`<Const, T>>>`
   for every type `T` in `First, Vs...`.
 
@@ -12915,23 +12653,16 @@ namespace std {
 
 - If `Allocator` is not `void`, `allocator_traits<Allocator>::pointer`
   is a pointer type.
-
 - *value* is a cv-unqualified object type.
-
 - *reference* is either a reference type, or a cv-unqualified object
   type that models `copy_constructible`.
-
 - Let `RRef` denote `remove_reference_t<reference>&&` if *reference* is
   a reference type, and *reference* otherwise. Each of:
-
   - `common_reference_with<reference&&, value&>`,
-
   - `common_reference_with<reference&&, RRef&&>`, and
-
   - `\libconcept{common_reference_with}<RRef&&, const \exposid{value}&>`
 
   is modeled.
-
   \[*Note 5*: These requirements ensure the exposition-only *iterator*
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*\]
@@ -13192,9 +12923,7 @@ template<class This, class Alloc, class... Args>
 Let `A` be
 
 - `Allocator`, if it is not `void`,
-
 - `Alloc` for the overloads with a template parameter `Alloc`, or
-
 - `allocator<void>` otherwise.
 
 Let `B` be `allocator_traits<A>::template rebind_alloc<U>` where `U` is

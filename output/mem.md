@@ -46,17 +46,14 @@ Let `POINTER_OF(T)` denote a type that is
 
 - `T::pointer` if the *qualified-id* `T::pointer` is valid and denotes a
   type,
-
 - otherwise, `T::element_type*` if the *qualified-id* `T::element_type`
   is valid and denotes a type,
-
 - otherwise, `pointer_traits<T>::element_type*`.
 
 Let `POINTER_OF_OR(T, U)` denote a type that is:
 
 - `\exposid{POINTER_OF}(T)`
   if `POINTER_OF(T)` is valid and denotes a type,
-
 - otherwise, `U`.
 
 ``` cpp
@@ -725,7 +722,6 @@ void* align(size_t alignment, size_t size, void*& ptr, size_t& space);
 *Preconditions:*
 
 - `alignment` is a power of two
-
 - `ptr` represents the address of contiguous storage of at least `space`
   bytes
 
@@ -863,7 +859,6 @@ constructed with an allocator where either:
 
 - the first argument of a constructor has type `allocator_arg_t` and the
   second argument has type `Alloc` or
-
 - the last argument of a constructor has type `Alloc`.
 
 #### Uses-allocator construction <a id="allocator.uses.construction">[[allocator.uses.construction]]</a>
@@ -882,11 +877,9 @@ The following utility functions support three conventions for passing
 
 - If `T` does not use an allocator compatible with `alloc`, then `alloc`
   is ignored.
-
 - Otherwise, if `T` has a constructor invocable as
   `T(allocator_arg, alloc, args...)` (leading-allocator convention),
   then uses-allocator construction chooses this constructor form.
-
 - Otherwise, if `T` has a constructor invocable as `T(args..., alloc)`
   (trailing-allocator convention), then uses-allocator construction
   chooses this constructor form.
@@ -918,18 +911,14 @@ template<class T, class Alloc, class... Args>
 - If `uses_allocator_v<remove_cv_t<T>, Alloc>` is `false` and
   `is_constructible_v<T,Args...>` is `true`, return
   `forward_as_tuple(std::forward<Args>(args)...)`.
-
 - Otherwise, if `uses_allocator_v<remove_cv_t<T>, Alloc>` is `true` and
   `is_constructible_v<T, allocator_arg_t, const Alloc&, Args...>` is
   `true`, return
-
       tuple<allocator_arg_t, const Alloc&, Args&&...>(
         allocator_arg, alloc, std::forward<Args>(args)...)
-
 - Otherwise, if `uses_allocator_v<remove_cv_t<T>, Alloc>` is `true` and
   `is_constructible_v<T, Args..., const Alloc&>` is `true`, return
   `forward_as_tuple(std::forward<Args>(args)..., alloc)`.
-
 - Otherwise, the program is ill-formed.
 
 \[*Note 2*: This definition prevents a silent failure to pass the
@@ -1061,7 +1050,6 @@ template<class A, class B>
 either:
 
 - `remove_cvref_t<U>` is a specialization of `ranges::subrange`, or
-
 - `U` does not satisfy `pair-like` and the expression *`FUN`*`(u)` is
   not well-formed when considered as an unevaluated operand.
 
@@ -1423,7 +1411,6 @@ constexpr void deallocate(T* p, size_t n);
   first argument to that call. `p` is equal to `ret.ptr` and `n` is a
   value such that
   $\texttt{req} \leq \texttt{n} \leq \texttt{ret.count}$.
-
 - Otherwise, `p` is a pointer value obtained from `allocate`. `n` equals
   the value passed as the first argument to the invocation of `allocate`
   which returned `p`.
@@ -1772,9 +1759,7 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 *Constraints:*
 
 - `unique_ptr<U, E>::pointer` is implicitly convertible to `pointer`,
-
 - `U` is not an array type, and
-
 - either `D` is a reference type and `E` is the same type as `D`, or `D`
   is not a reference type and `E` is implicitly convertible to `D`.
 
@@ -1840,9 +1825,7 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 
 - `unique_ptr<U, E>::pointer` is implicitly convertible to `pointer`,
   and
-
 - `U` is not an array type, and
-
 - `is_assignable_v<D&, E&&>` is `true`.
 
 *Preconditions:* If `E` is not a reference type, assignment of the
@@ -2006,14 +1989,10 @@ interface.
   be disallowed for the corresponding pointer-to-array types, and
   conversions to or from the non-array forms of `unique_ptr`, produce an
   ill-formed program.
-
 - Pointers to types derived from `T` are rejected by the constructors,
   and by `reset`.
-
 - The observers `operator*` and `operator->` are not provided.
-
 - The indexing observer `operator[]` is provided.
-
 - The default deleter will call `delete[]`.
 
 Descriptions are provided below only for members that differ from the
@@ -2033,7 +2012,6 @@ template that takes a single parameter of type `pointer`.
 *Constraints:*
 
 - `U` is the same type as `pointer`, or
-
 - `pointer` is the same type as `element_type*`, `U` is a pointer type
   `V*`, and `V(*)[]` is convertible to `element_type(*)[]`.
 
@@ -2048,9 +2026,7 @@ template that take a parameter of type `pointer` and a second parameter.
 *Constraints:*
 
 - `U` is the same type as `pointer`,
-
 - `U` is `nullptr_t`, or
-
 - `pointer` is the same type as `element_type*`, `U` is a pointer type
   `V*`, and `V(*)[]` is convertible to `element_type(*)[]`.
 
@@ -2063,13 +2039,9 @@ This constructor behaves the same as in the primary template.
 *Constraints:* Where `UP` is `unique_ptr<U, E>`:
 
 - `U` is an array type, and
-
 - `pointer` is the same type as `element_type*`, and
-
 - `UP::pointer` is the same type as `UP::element_type*`, and
-
 - `UP::element_type(*)[]` is convertible to `element_type(*)[]`, and
-
 - either `D` is a reference type and `E` is the same type as `D`, or `D`
   is not a reference type and `E` is implicitly convertible to `D`.
 
@@ -2087,13 +2059,9 @@ This operator behaves the same as in the primary template.
 *Constraints:* Where `UP` is `unique_ptr<U, E>`:
 
 - `U` is an array type, and
-
 - `pointer` is the same type as `element_type*`, and
-
 - `UP::pointer` is the same type as `UP::element_type*`, and
-
 - `UP::element_type(*)[]` is convertible to `element_type(*)[]`, and
-
 - `is_assignable_v<D&, E&&>` is `true`.
 
 \[*Note 2*: This replaces the *Constraints:* specification of the
@@ -2128,7 +2096,6 @@ template.
 *Constraints:*
 
 - `U` is the same type as `pointer`, or
-
 - `pointer` is the same type as `element_type*`, `U` is a pointer type
   `V*`, and `V(*)[]` is convertible to `element_type(*)[]`.
 
@@ -2210,7 +2177,6 @@ common_type_t<typename unique_ptr<T1, D1>::pointer,
 *Mandates:*
 
 - `unique_ptr<T1, D1>::pointer` is implicitly convertible to `CT` and
-
 - `unique_ptr<T2, D2>::pointer` is implicitly convertible to `CT`.
 
 *Preconditions:* The specialization `less<CT>` is a function object
@@ -2543,7 +2509,6 @@ well-formed expression. For the first two overloads:
 - If `T` is an array type, then either `T` is `U[N]` and `Y(*)[N]` is
   convertible to `T*`, or `T` is `U[]` and `Y(*)[]` is convertible to
   `T*`.
-
 - If `T` is not an array type, then `Y*` is convertible to `T*`.
 
 *Preconditions:* Construction of `d` and a deleter of type `D`
@@ -2643,10 +2608,8 @@ exception is thrown, the constructor has no effect.
 
 - If `*this` is empty or shares ownership with another `shared_ptr`
   instance (`use_count() > 1`), there are no side effects.
-
 - Otherwise, if `*this` owns an object `p` and a deleter `d`, `d(p)` is
   called.
-
 - Otherwise, `*this` owns a pointer `p`, and `delete p` is called.
 
 \[*Note 4*: Since the destruction of `*this` decreases the number of
@@ -2816,7 +2779,6 @@ template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 
 - `x.owner_before(y)` defines a strict weak ordering as defined
   in  [[alg.sorting]];
-
 - under the equivalence relation defined by `owner_before`,
   `!a.owner_before(b) && !b.owner_before(a)`, two `shared_ptr` or
   `weak_ptr` instances are equivalent if and only if they share
@@ -2863,45 +2825,36 @@ the initialization of the object.
 *Remarks:*
 
 - Implementations should perform no more than one memory allocation.
-
   \[*Note 1*: This provides efficiency equivalent to an intrusive smart
   pointer. — *end note*\]
-
 - When an object of an array type `U` is specified to have an initial
   value of `u` (of the same type), this shall be interpreted to mean
   that each array element of the object has as its initial value the
   corresponding element from `u`.
-
 - When an object of an array type is specified to have a default initial
   value, this shall be interpreted to mean that each array element of
   the object has a default initial value.
-
 - When a (sub)object of a non-array type `U` is specified to have an
   initial value of `v`, or `U(l...)`, where `l...` is a list of
   constructor arguments, `make_shared` shall initialize this (sub)object
   via the expression `::new(pv) U(v)` or `::new(pv) U(l...)`
   respectively, where `pv` has type `void*` and points to storage
   suitable to hold an object of type `U`.
-
 - When a (sub)object of a non-array type `U` is specified to have an
   initial value of `v`, or `U(l...)`, where `l...` is a list of
   constructor arguments, `allocate_shared` shall initialize this
   (sub)object via the expression
-
   - `allocator_traits<A2>::construct(a2, pv, v)` or
-
   - `allocator_traits<A2>::construct(a2, pv, l...)`
 
   respectively, where `pv` points to storage suitable to hold an object
   of type `U` and `a2` of type `A2` is a rebound copy of the allocator
   `a` passed to `allocate_shared` such that its `value_type` is
   `remove_cv_t<U>`.
-
 - When a (sub)object of non-array type `U` is specified to have a
   default initial value, `make_shared` shall initialize this (sub)object
   via the expression `::new(pv) U()`, where `pv` has type `void*` and
   points to storage suitable to hold an object of type `U`.
-
 - When a (sub)object of non-array type `U` is specified to have a
   default initial value, `allocate_shared` shall initialize this
   (sub)object via the expression
@@ -2909,23 +2862,18 @@ the initialization of the object.
   storage suitable to hold an object of type `U` and `a2` of type `A2`
   is a rebound copy of the allocator `a` passed to `allocate_shared`
   such that its `value_type` is `remove_cv_t<U>`.
-
 - When a (sub)object of non-array type `U` is initialized by
   `make_shared_for_overwrite` or `allocate_shared_for_overwrite`, it is
   initialized via the expression `::new(pv) U`, where `pv` has type
   `void*` and points to storage suitable to hold an object of type `U`.
-
 - Array elements are initialized in ascending order of their addresses.
-
 - When the lifetime of the object managed by the return value ends, or
   when the initialization of an array element throws an exception, the
   initialized elements are destroyed in the reverse order of their
   original construction.
-
 - When a (sub)object of non-array type `U` that was initialized by
   `make_shared` is to be destroyed, it is destroyed via the expression
   `pv->~U()` where `pv` points to that object of type `U`.
-
 - When a (sub)object of non-array type `U` that was initialized by
   `allocate_shared` is to be destroyed, it is destroyed via the
   expression `allocator_traits<A2>::destroy(a2, pv)` where `pv` points
@@ -3186,7 +3134,6 @@ well-defined behavior.
 - When `dynamic_cast<typename shared_ptr<T>::element_type*>(r.get())`
   returns a non-null value `p`, `shared_ptr<T>(`*`R`*`, p)`, where *`R`*
   is `r` for the first overload, and `std::move(r)` for the second.
-
 - Otherwise, `shared_ptr<T>()`.
 
 \[*Note 12*: The seemingly equivalent expression
@@ -3446,7 +3393,6 @@ template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 
 - `x.owner_before(y)` defines a strict weak ordering as defined
   in  [[alg.sorting]];
-
 - under the equivalence relation defined by `owner_before`,
   `!a.owner_before(b) && !b.owner_before(a)`, two `shared_ptr` or
   `weak_ptr` instances are equivalent if and only if they share
@@ -3505,7 +3451,6 @@ Note that
 
 - `operator()` defines a strict weak ordering as defined in 
   [[alg.sorting]];
-
 - two `shared_ptr` or `weak_ptr` instances are equivalent under the
   equivalence relation defined by `operator()`,
   `!operator()(a, b) && !operator()(b, a)`, if and only if they share
@@ -3695,7 +3640,6 @@ equivalent to:
   if the expression `s.reset()` is well-formed;
 
 - otherwise,
-
       s = Smart();
 
   if `is_constructible_v<Smart>` is `true`;
@@ -3727,7 +3671,6 @@ Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)`[[memory.general]].
   well-formed;
 
 - otherwise,
-
       if (p) {
         apply([&](auto&&... args) {
           s = Smart(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
@@ -3758,7 +3701,6 @@ operator void**() const noexcept;
 *Returns:* A pointer value `v` such that:
 
 - the initial value `*v` is equivalent to `static_cast<void*>(p)` and
-
 - any modification of `*v` that is not followed by a subsequent
   modification of `*this` affects the value of `p` during the
   destruction of `*this`, such that `static_cast<void*>(p) == *v`.
@@ -3863,7 +3805,6 @@ explicit inout_ptr_t(Smart& smart, Args... args);
 `std::forward<Args>(args)...`, and `p` to either
 
 - `smart` if `is_pointer_v<Smart>` is `true`,
-
 - otherwise, `smart.get()`.
 
 *Remarks:* An implementation can call `s.release()`.
@@ -3892,7 +3833,6 @@ call `s.release()` in the constructor. Otherwise, it is empty.
   if `is_pointer_v<Smart>` is `true`;
 
 - otherwise,
-
       release-statement;
       if (p) {
         apply([&](auto&&... args) {
@@ -3904,7 +3844,6 @@ call `s.release()` in the constructor. Otherwise, it is empty.
   well-formed;
 
 - otherwise,
-
       release-statement;
       if (p) {
         apply([&](auto&&... args) {
@@ -3936,7 +3875,6 @@ operator void**() const noexcept;
 *Returns:* A pointer value `v` such that:
 
 - the initial value `*v` is equivalent to `static_cast<void*>(p)` and
-
 - any modification of `*v` that is not followed by subsequent
   modification of `*this` affects the value of `p` during the
   destruction of `*this`, such that `static_cast<void*>(p) == *v`.
@@ -4254,9 +4192,7 @@ of type `T`, as follows:
 
 - if `numeric_limits<size_t>::max() / sizeof(T) < n`, throws
   `bad_array_new_length`,
-
 - otherwise equivalent to:
-
       return static_cast<T*>(allocate_bytes(n*sizeof(T), alignof(T)));
 
 \[*Note 2*: `T` is not deduced and must therefore be provided as a
@@ -4400,27 +4336,22 @@ general-purpose memory resources having the following qualities:
 
 - Each resource frees its allocated memory on destruction, even if
   `deallocate` has not been called for some of the allocated blocks.
-
 - A pool resource consists of a collection of *pools*, serving requests
   for different block sizes. Each individual pool manages a collection
   of *chunks* that are in turn divided into blocks of uniform size,
   returned via calls to `do_allocate`. Each call to
   `do_allocate(size, alignment)` is dispatched to the pool serving the
   smallest blocks accommodating at least `size` bytes.
-
 - When a particular pool is exhausted, allocating a block from that pool
   results in the allocation of an additional chunk of memory from the
   *upstream allocator* (supplied at construction), thus replenishing the
   pool. With each successive replenishment, the chunk size obtained
   increases geometrically.
-
   \[*Note 2*: By allocating memory in chunks, the pooling strategy
   increases the chance that consecutive allocations will be close
   together in memory. — *end note*\]
-
 - Allocation requests that exceed the largest block size of any pool are
   fulfilled directly from the upstream allocator.
-
 - A `pool_options` struct may be passed to the pool resource
   constructors to tune the largest block size and the maximum chunk
   size.

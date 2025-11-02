@@ -627,14 +627,10 @@ The rounding mode for floating-point arithmetic is characterized by the
 values:
 
 -  `round_indeterminate` if the rounding style is indeterminable
-
 -  `round_toward_zero` if the rounding style is toward zero
-
 -  `round_to_nearest` if the rounding style is to the nearest
   representable value
-
 -  `round_toward_infinity` if the rounding style is toward infinity
-
 -  `round_toward_neg_infinity` if the rounding style is toward negative
   infinity
 
@@ -1426,33 +1422,26 @@ succeeds, nonzero if it fails.
   current thread are destroyed. Next, objects with static storage
   duration are destroyed and functions registered by calling `atexit`
   are called.
-
   A function is called for every time it is registered.
-
   See  [[basic.start.term]] for the order of destructions and calls.
   (Objects with automatic storage duration are not destroyed as a result
   of calling `exit()`.)
-
   Objects with automatic storage duration are all destroyed in a program
   whose `main` function [[basic.start.main]] contains no objects with
   automatic storage duration and executes the call to `exit()`. Control
   can be transferred directly to such a `main` function by throwing an
   exception that is caught in `main`.
-
   If a registered function invoked by `exit` exits via an exception, the
   function `std::terminate` is invoked [[except.terminate]].
-
 - Next, all open C streams (as mediated by the function signatures
   declared in ) with unwritten buffered data are flushed, all open C
   streams are closed, and all files created by calling `tmpfile()` are
   removed.
-
 - Finally, control is returned to the host environment. If `status` is
   zero or `EXIT_SUCCESS`, an *implementation-defined* form of the status
   is returned. If `status` is `EXIT_FAILURE`, an
   *implementation-defined* form of the status is returned. Otherwise the
   status returned is *implementation-defined*.
-
   The macros `EXIT_FAILURE` and `EXIT_SUCCESS` are defined in .
 
 ``` cpp
@@ -1614,15 +1603,12 @@ functions.
   allocate the requested storage. Whether the attempt involves a call to
   the C standard library functions `malloc` or `aligned_alloc` is
   unspecified.
-
 - Returns a pointer to the allocated storage if the attempt is
   successful. Otherwise, if the current `new_handler`[[get.new.handler]]
   is a null pointer value, throws `bad_alloc`.
-
 - Otherwise, the function calls the current `new_handler`
   function [[new.handler]]. If the called function returns, the loop
   repeats.
-
 - The loop terminates when an attempt to allocate the requested storage
   is successful or when a called `new_handler` function does not return.
 
@@ -2008,10 +1994,8 @@ additional storage.
 *Required behavior:* A `new_handler` shall perform one of the following:
 
 - make more storage available for allocation and then return;
-
 - throw an exception of type `bad_alloc` or a class derived from
   `bad_alloc`;
-
 - terminate execution of the program without returning to the caller.
 
 #### `set_new_handler` <a id="set.new.handler">[[set.new.handler]]</a>
@@ -2333,7 +2317,6 @@ static consteval source_location current() noexcept;
   \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only data
   members of the returned `source_location` object are indicated in
   [[support.srcloc.current]].
-
   <div class="libefftabvalue">
 
   Value of object returned by `current` support.srcloc.current `line_` &
@@ -2351,7 +2334,6 @@ static consteval source_location current() noexcept;
   otherwise.  
 
   </div>
-
 - Otherwise, when invoked in some other way, returns a `source_location`
   whose data members are initialized with valid but unspecified values.
 
@@ -2484,9 +2466,7 @@ a non-throwing exception specification [[except.spec]]:
 
 - default constructor (unless the class synopsis shows other
   constructors)
-
 - copy constructor
-
 - copy assignment operator
 
 The copy constructor and the copy assignment operator meet the following
@@ -2687,10 +2667,8 @@ memory for the copy is allocated in an unspecified way.
 
 - If allocating memory to form u fails, throws an instance of
   `bad_alloc`;
-
 - otherwise, if copying the exception to which `p` refers to form u
   throws an exception, throws that exception;
-
 - otherwise, throws u.
 
 ``` cpp
@@ -3310,13 +3288,9 @@ Let `t` and `u` be lvalues of types `const remove_reference_t<T>` and
 
 - `t < u`, `t <= u`, `t > u`, `t >= u`, `u < t`, `u <= t`, `u > t`, and
   `u >= t` have the same domain.
-
 - `bool(t < u) == bool(u > t)` is `true`,
-
 - `bool(u < t) == bool(t > u)` is `true`,
-
 - `bool(t <= u) == bool(u >= t)` is `true`, and
-
 - `bool(u <= t) == bool(t >= u)` is `true`.
 
 ``` cpp
@@ -3333,19 +3307,12 @@ Let `a` and `b` be lvalues of type `const remove_reference_t<T>`. `T`
 and `Cat` model `three_way_comparable<T, Cat>` only if:
 
 - `(a <=> b == 0) == bool(a == b)` is `true`,
-
 - `(a <=> b != 0) == bool(a != b)` is `true`,
-
 - `((a <=> b) <=> 0)` and `(0 <=> (b <=> a))` are equal,
-
 - `(a <=> b < 0) == bool(a < b)` is `true`,
-
 - `(a <=> b > 0) == bool(a > b)` is `true`,
-
 - `(a <=> b <= 0) == bool(a <= b)` is `true`,
-
 - `(a <=> b >= 0) == bool(a >= b)` is `true`, and
-
 - if `Cat` is convertible to `strong_ordering`, `T` models
   `totally_ordered` [[concept.totallyordered]].
 
@@ -3376,24 +3343,15 @@ Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
 `three_way_comparable_with<T, U, Cat>` only if:
 
 - `t <=> u` and `u <=> t` have the same domain,
-
 - `((t <=> u) <=> 0)` and `(0 <=> (u <=> t))` are equal,
-
 - `(t <=> u == 0) == bool(t == u)` is `true`,
-
 - `(t <=> u != 0) == bool(t != u)` is `true`,
-
 - `Cat(t <=> u) == Cat(CONVERT_TO_LVALUE<C>(t2) <=>
   CONVERT_TO_LVALUE<C>(u2))` is `true`,
-
 - `(t <=> u < 0) == bool(t < u)` is `true`,
-
 - `(t <=> u > 0) == bool(t > u)` is `true`,
-
 - `(t <=> u <= 0) == bool(t <= u)` is `true`,
-
 - `(t <=> u >= 0) == bool(t >= u)` is `true`, and
-
 - if `Cat` is convertible to `strong_ordering`, `T` and `U` model
   `totally_ordered_with<T, U>` [[concept.totallyordered]].
 
@@ -3420,21 +3378,17 @@ expression `strong_order(E, F)` is expression-equivalent
 
 - If the decayed types of `E` and `F` differ, `strong_order(E, F)` is
   ill-formed.
-
 - Otherwise, `strong_ordering(strong_order(E, F))` if it is a
   well-formed expression where the meaning of `strong_order` is
   established as-if by performing argument-dependent lookup only
   [[basic.lookup.argdep]].
-
 - Otherwise, if the decayed type `T` of `E` is a floating-point type,
   yields a value of type `strong_ordering` that is consistent with the
   ordering observed by `T`’s comparison operators, and if
   `numeric_limits<T>::is_iec559` is `true`, is additionally consistent
   with the `totalOrder` operation as specified in ISO/IEC/IEEE 60559.
-
 - Otherwise, `strong_ordering(compare_three_way()(E, F))` if it is a
   well-formed expression.
-
 - Otherwise, `strong_order(E, F)` is ill-formed.
 
 \[*Note 1*: Ill-formed cases above result in substitution failure when
@@ -3448,42 +3402,28 @@ expression `weak_order(E, F)` is expression-equivalent
 
 - If the decayed types of `E` and `F` differ, `weak_order(E, F)` is
   ill-formed.
-
 - Otherwise, `weak_ordering(weak_order(E, F))` if it is a well-formed
   expression where the meaning of `weak_order` is established as-if by
   performing argument-dependent lookup only [[basic.lookup.argdep]].
-
 - Otherwise, if the decayed type `T` of `E` is a floating-point type,
   yields a value of type `weak_ordering` that is consistent with the
   ordering observed by `T`’s comparison operators and `strong_order`,
   and if `numeric_limits<T>::is_iec559` is `true`, is additionally
   consistent with the following equivalence classes, ordered from lesser
   to greater:
-
   - together, all negative NaN values;
-
   - negative infinity;
-
   - each normal negative value;
-
   - each subnormal negative value;
-
   - together, both zero values;
-
   - each subnormal positive value;
-
   - each normal positive value;
-
   - positive infinity;
-
   - together, all positive NaN values.
-
 - Otherwise, `weak_ordering(compare_three_way()(E, F))` if it is a
   well-formed expression.
-
 - Otherwise, `weak_ordering(strong_order(E, F))` if it is a well-formed
   expression.
-
 - Otherwise, `weak_order(E, F)` is ill-formed.
 
 \[*Note 2*: Ill-formed cases above result in substitution failure when
@@ -3497,18 +3437,14 @@ expression `partial_order(E, F)` is expression-equivalent
 
 - If the decayed types of `E` and `F` differ, `partial_order(E, F)` is
   ill-formed.
-
 - Otherwise, `partial_ordering(partial_order(E, F))` if it is a
   well-formed expression where the meaning of `partial_order` is
   established as-if by performing argument-dependent lookup only
   [[basic.lookup.argdep]].
-
 - Otherwise, `partial_ordering(compare_three_way()(E, F))` if it is a
   well-formed expression.
-
 - Otherwise, `partial_ordering(weak_order(E, F))` if it is a well-formed
   expression.
-
 - Otherwise, `partial_order(E, F)` is ill-formed.
 
 \[*Note 3*: Ill-formed cases above result in substitution failure when
@@ -3522,13 +3458,10 @@ expression-equivalent [[defns.expression.equivalent]] to:
 
 - If the decayed types of `E` and `F` differ,
   `compare_strong_order_fallback(E, F)` is ill-formed.
-
 - Otherwise, `strong_order(E, F)` if it is a well-formed expression.
-
 - Otherwise, if the expressions `E == F` and `E < F` are both
   well-formed and each of `decltype(E == F)` and `decltype(E < F)`
   models `boolean-testable`,
-
   ``` cpp
   E == F ? strong_ordering::equal :
   E < F  ? strong_ordering::less :
@@ -3536,7 +3469,6 @@ expression-equivalent [[defns.expression.equivalent]] to:
   ```
 
   except that `E` and `F` are evaluated only once.
-
 - Otherwise, `compare_strong_order_fallback(E, F)` is ill-formed.
 
 \[*Note 4*: Ill-formed cases above result in substitution failure when
@@ -3550,13 +3482,10 @@ expression-equivalent [[defns.expression.equivalent]] to:
 
 - If the decayed types of `E` and `F` differ,
   `compare_weak_order_fallback(E, F)` is ill-formed.
-
 - Otherwise, `weak_order(E, F)` if it is a well-formed expression.
-
 - Otherwise, if the expressions `E == F` and `E < F` are both
   well-formed and each of `decltype(E == F)` and `decltype(E < F)`
   models `boolean-testable`,
-
   ``` cpp
   E == F ? weak_ordering::equivalent :
   E < F  ? weak_ordering::less :
@@ -3564,7 +3493,6 @@ expression-equivalent [[defns.expression.equivalent]] to:
   ```
 
   except that `E` and `F` are evaluated only once.
-
 - Otherwise, `compare_weak_order_fallback(E, F)` is ill-formed.
 
 \[*Note 5*: Ill-formed cases above result in substitution failure when
@@ -3578,13 +3506,10 @@ expression-equivalent [[defns.expression.equivalent]] to:
 
 - If the decayed types of `E` and `F` differ,
   `compare_partial_order_fallback(E, F)` is ill-formed.
-
 - Otherwise, `partial_order(E, F)` if it is a well-formed expression.
-
 - Otherwise, if the expressions `E == F`, `E < F`, and `F < E` are all
   well-formed and each of `decltype(E == F)` and `decltype(E < F)`
   models `boolean-testable`,
-
   ``` cpp
   E == F ? partial_ordering::equivalent :
   E < F  ? partial_ordering::less :
@@ -3593,7 +3518,6 @@ expression-equivalent [[defns.expression.equivalent]] to:
   ```
 
   except that `E` and `F` are evaluated only once.
-
 - Otherwise, `compare_partial_order_fallback(E, F)` is ill-formed.
 
 \[*Note 6*: Ill-formed cases above result in substitution failure when
@@ -4061,13 +3985,11 @@ library header `<stdarg.h>`, with the following changes:
 
 - In lieu of the default argument promotions specified in ISO C 6.5.2.2,
   the definition in  [[expr.call]] applies.
-
 - The restrictions that ISO C places on the second parameter to the
   `va_start` macro in header `<stdarg.h>` are different in this
   document. The parameter `parmN` is the rightmost parameter in the
   variable parameter list of the function definition (the one just
   before the `...`).
-
   If the parameter `parmN` is a pack expansion [[temp.variadic]] or an
   entity resulting from a lambda capture [[expr.prim.lambda]], the
   program is ill-formed, no diagnostic required. If the parameter
@@ -4133,17 +4055,12 @@ A *plain lock-free atomic operation* is an invocation of a function `f`
 from [[atomics]], such that:
 
 - `f` is the function `atomic_is_lock_free()`, or
-
 - `f` is the member function `is_lock_free()`, or
-
 - `f` is a non-static member function of class `atomic_flag`, or
-
 - `f` is a non-member function, and the first parameter of `f` has type
   cv `atomic_flag*`, or
-
 - `f` is a non-static member function invoked on an object `A`, such
   that `A.is_lock_free()` yields `true`, or
-
 - `f` is a non-member function, and for every pointer-to-atomic argument
   `A` passed to `f`, `atomic_is_lock_free(A)` yields `true`.
 
@@ -4151,24 +4068,16 @@ An evaluation is *signal-safe* unless it includes one of the following:
 
 - a call to any standard library function, except for plain lock-free
   atomic operations and functions explicitly identified as signal-safe;
-
   \[*Note 1*: This implicitly excludes the use of `new` and `delete`
   expressions that rely on a library-provided memory
   allocator. — *end note*\]
-
 - an access to an object with thread storage duration;
-
 - a `dynamic_cast` expression;
-
 - throwing of an exception;
-
 - control entering a *try-block* or *function-try-block*;
-
 - initialization of a variable with static storage duration requiring
   dynamic initialization [[basic.start.dynamic]], [[stmt.dcl]]
-
   ; or
-
 - waiting for the completion of the initialization of a variable with
   static storage duration [[stmt.dcl]].
 

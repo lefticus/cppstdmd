@@ -85,12 +85,9 @@ it. The process that determines this is called *name lookup*
 Two names are *the same* if
 
 - they are *identifier* composed of the same character sequence, or
-
 - they are *operator-function-id* formed with the same operator, or
-
 - they are *conversion-function-id* formed with equivalent
   [[temp.over.link]] types, or
-
 - they are *literal-operator-id* [[over.literal]] formed with the same
   literal suffix identifier.
 
@@ -108,14 +105,10 @@ declaration of X is reachable from it [[module.reach]]. A declaration
 may also have effects including:
 
 - a static assertion [[dcl.pre]],
-
 - controlling template instantiation [[temp.explicit]],
-
 - guiding template argument deduction for constructors
   [[temp.deduct.guide]],
-
 - use of attributes [[dcl.attr]], and
-
 - nothing (in the case of an *empty-declaration*).
 
 Each entity declared by a *declaration* is also *defined* by that
@@ -123,52 +116,32 @@ declaration unless:
 
 - it declares a function without specifying the function’s body
   [[dcl.fct.def]],
-
 - it contains the `extern` specifier [[dcl.stc]] or a
   *linkage-specification*
-
   and neither an *initializer* nor a *function-body*,
-
 -  it declares a non-inline static data member in a class definition
   [[class.mem]], [[class.static]],
-
 - it declares a static data member outside a class definition and the
   variable was defined within the class with the `constexpr` specifier
   (this usage is deprecated; see [[depr.static.constexpr]]),
-
 -  it is an *elaborated-type-specifier* [[class.name]],
-
 - it is an *opaque-enum-declaration* [[dcl.enum]],
-
 - it is a *template-parameter* [[temp.param]],
-
 - it is a *parameter-declaration* [[dcl.fct]] in a function declarator
   that is not the *declarator* of a *function-definition*,
-
 - it is a `typedef` declaration [[dcl.typedef]],
-
 - it is an *alias-declaration* [[dcl.typedef]],
-
 - it is a *using-declaration* [[namespace.udecl]],
-
 - it is a *deduction-guide* [[temp.deduct.guide]],
-
 - it is a *static_assert-declaration* [[dcl.pre]],
-
 - it is an *attribute-declaration* [[dcl.pre]],
-
 - it is an *empty-declaration* [[dcl.pre]],
-
 - it is a *using-directive* [[namespace.udir]],
-
 - it is a *using-enum-declaration* [[enum.udecl]],
-
 - it is a *template-declaration* [[temp.pre]] whose *template-head* is
   not followed by either a *concept-definition* or a *declaration* that
   defines a function, a class, a variable, or a static data member.
-
 - it is an explicit instantiation declaration [[temp.explicit]], or
-
 - it is an explicit specialization [[temp.expl.spec]] whose
   *declaration* is not a definition.
 
@@ -265,18 +238,12 @@ incomplete type [[term.incomplete.type]], an abstract class type
 Each of the following is termed a *definable item*:
 
 - a class type [[class]],
-
 - an enumeration type [[dcl.enum]],
-
 - a function [[dcl.fct]],
-
 - a variable [[basic.pre]],
-
 - a templated entity [[temp.pre]],
-
 - a default argument for a parameter (for a function in a given scope)
   [[dcl.fct.default]], or
-
 - a default template argument [[temp.param]].
 
 No translation unit shall contain more than one definition of any
@@ -289,30 +256,22 @@ context. The set of *potential results* of an expression E is defined as
 follows:
 
 - If E is an *id-expression* [[expr.prim.id]], the set contains only E.
-
 - If E is a subscripting operation [[expr.sub]] with an array operand,
   the set contains the potential results of that operand.
-
 - If E is a class member access expression [[expr.ref]] of the form E₁
   `.` `template` E₂ naming a non-static data member, the set contains
   the potential results of E₁.
-
 - If E is a class member access expression naming a static data member,
   the set contains the *id-expression* designating the data member.
-
 - If E is a pointer-to-member expression [[expr.mptr.oper]] of the form
   E₁ `.*` E₂, the set contains the potential results of E₁.
-
 - If E has the form `($E_1$)`, the set contains the potential results of
   E₁.
-
 - If E is a glvalue conditional expression [[expr.cond]], the set is the
   union of the sets of potential results of the second and third
   operands.
-
 - If E is a comma expression [[expr.comma]], the set contains the
   potential results of the right operand.
-
 - Otherwise, the set is empty.
 
 \[*Note 1*:
@@ -331,7 +290,6 @@ A function is *named by* an expression or conversion as follows:
   unless it is a pure virtual function and either the expression is not
   an *id-expression* naming the function with an explicitly qualified
   name or the expression forms a pointer to member [[expr.unary.op]].
-
   \[*Note 1*: This covers taking the address of functions
   [[conv.func]], [[expr.unary.op]], calls to named functions
   [[expr.call]], operator overloading [[over]], user-defined conversions
@@ -341,12 +299,10 @@ A function is *named by* an expression or conversion as follows:
   considered to be named by an expression or conversion even if the call
   is actually elided by the implementation
   [[class.copy.elision]]. — *end note*\]
-
 - A deallocation function for a class is named by a *new-expression* if
   it is the single matching deallocation function for the allocation
   function selected by overload resolution, as specified in 
   [[expr.new]].
-
 - A deallocation function for a class is named by a *delete-expression*
   if it is the selected usual deallocation function as specified in 
   [[expr.delete]] and  [[class.free]].
@@ -357,13 +313,11 @@ potentially-evaluated expression E is *odr-used* by E unless
 
 - `x` is a reference that is usable in constant expressions
   [[expr.const]], or
-
 - `x` is a variable of non-reference type that is usable in constant
   expressions and has no mutable subobjects, and E is an element of the
   set of potential results of an expression of non-volatile-qualified
   non-class type to which the lvalue-to-rvalue conversion [[conv.lval]]
   is applied, or
-
 - `x` is a variable of non-reference type, and E is an element of the
   set of potential results of a discarded-value expression
   [[expr.context]] to which the lvalue-to-rvalue conversion is not
@@ -398,14 +352,11 @@ A local entity [[basic.pre]] is *odr-usable* in a scope
   non-lambda function parameter scope exists and, if the innermost such
   scope is a function parameter scope, it corresponds to a non-static
   member function, and
-
 - for each intervening scope [[basic.scope.scope]] between the point at
   which the entity is introduced and the scope (where `*this` is
   considered to be introduced within the innermost enclosing class or
   non-lambda function definition scope), either:
-
   - the intervening scope is a block scope, or
-
   - the intervening scope is the function parameter scope of a
     *lambda-expression* that has a *simple-capture* naming the entity or
     has a *capture-default*, and the block scope of the
@@ -485,42 +436,30 @@ The rules for declarations and expressions describe in which contexts
 complete class types are required. A class type `T` must be complete if:
 
 - an object of type `T` is defined [[basic.def]], or
-
 - a non-static class data member of type `T` is declared [[class.mem]],
   or
-
 - `T` is used as the allocated type or array element type in a
   *new-expression* [[expr.new]], or
-
 - an lvalue-to-rvalue conversion is applied to a glvalue referring to an
   object of type `T` [[conv.lval]], or
-
 - an expression is converted (either implicitly or explicitly) to type
   `T`
   [[conv]], [[expr.type.conv]], [[expr.dynamic.cast]], [[expr.static.cast]], [[expr.cast]],
   or
-
 - an expression that is not a null pointer constant, and has type other
   than cv `void*`, is converted to the type pointer to `T` or reference
   to `T` using a standard conversion [[conv]], a `dynamic_cast`
   [[expr.dynamic.cast]] or a `static_cast` [[expr.static.cast]], or
-
 - a class member access operator is applied to an expression of type `T`
   [[expr.ref]], or
-
 - the `typeid` operator [[expr.typeid]] or the `sizeof` operator
   [[expr.sizeof]] is applied to an operand of type `T`, or
-
 - a function with a return type or argument type of type `T` is defined
   [[basic.def]] or called [[expr.call]], or
-
 - a class with a base class of type `T` is defined [[class.derived]], or
-
 - an lvalue of type `T` is assigned to [[expr.ass]], or
-
 - the type `T` is the subject of an `alignof` expression
   [[expr.alignof]], or
-
 - an *exception-declaration* has type `T`, reference to `T`, or pointer
   to `T` [[except.handle]].
 
@@ -530,7 +469,6 @@ For any definable item `D` with definitions in multiple translation
 units,
 
 - if `D` is a non-inline non-templated function or variable, or
-
 - if the definitions in different translation units do not satisfy the
   following requirements,
 
@@ -543,68 +481,51 @@ point, the following requirements shall be satisfied.
 
 - Each such definition shall not be attached to a named module
   [[module.unit]].
-
 - Each such definition shall consist of the same sequence of tokens,
   where the definition of a closure type is considered to consist of the
   sequence of tokens of the corresponding *lambda-expression*.
-
 - In each such definition, corresponding names, looked up according to 
   [[basic.lookup]], shall refer to the same entity, after overload
   resolution [[over.match]] and after matching of partial template
   specialization [[temp.over]], except that a name can refer to
-
   - a non-volatile const object with internal or no linkage if the
     object
-
     - has the same literal type in all definitions of `D`,
-
     - is initialized with a constant expression [[expr.const]],
-
     - is not odr-used in any definition of `D`, and
-
     - has the same value in all definitions of `D`,
 
     or
-
   - a reference with internal or no linkage initialized with a constant
     expression such that the reference refers to the same entity in all
     definitions of `D`.
-
 - In each such definition, except within the default arguments and
   default template arguments of `D`, corresponding *lambda-expression*
   shall have the same closure type (see below).
-
 - In each such definition, corresponding entities shall have the same
   language linkage.
-
 - In each such definition, const objects with static or thread storage
   duration shall be constant-initialized if the object is
   constant-initialized in any such definition.
-
 - In each such definition, corresponding manifestly constant-evaluated
   expressions that are not value-dependent shall have the same value
   [[expr.const]], [[temp.dep.constexpr]].
-
 - In each such definition, the overloaded operators referred to, the
   implicit calls to conversion functions, constructors, operator new
   functions and operator delete functions, shall refer to the same
   function.
-
 - In each such definition, a default argument used by an (implicit or
   explicit) function call or a default template argument used by an
   (implicit or explicit) *template-id* or *simple-template-id* is
   treated as if its token sequence were present in the definition of
   `D`; that is, the default argument or default template argument is
   subject to the requirements described in this paragraph (recursively).
-
 - If `D` is a class with an implicitly-declared constructor
   [[class.default.ctor]], [[class.copy.ctor]], it is as if the
   constructor was implicitly defined in every translation unit where it
   is odr-used, and the implicit definition in every translation unit
   shall call the same constructor for a subobject of `D`.
-
   \[*Example 1*:
-
   ``` cpp
   // translation unit 1:
   struct X {
@@ -631,7 +552,6 @@ point, the following requirements shall be satisfied.
   ```
 
   — *end example*\]
-
 - If `D` is a class with a defaulted three-way comparison operator
   function [[class.spaceship]], it is as if the operator was implicitly
   defined in every translation unit where it is odr-used, and the
@@ -709,14 +629,10 @@ but does not contain P.
 Unless otherwise specified:
 
 - The smallest scope that contains a scope S is the *parent scope* of S.
-
 - No two declarations (re)introduce the same entity.
-
 - A declaration *inhabits* the immediate scope at its locus
   [[basic.scope.pdecl]].
-
 - A declaration’s *target scope* is the scope it inhabits.
-
 - Any names (re)introduced by a declaration are *bound* to it in its
   target scope.
 
@@ -729,27 +645,20 @@ Special cases include that:
 
 - Template parameter scopes are parents only to other template parameter
   scopes [[basic.scope.temp]].
-
 - Corresponding declarations with appropriate linkage declare the same
   entity [[basic.link]].
-
 - The declaration in a *template-declaration* inhabits the same scope as
   the *template-declaration*.
-
 - Friend declarations and declarations of qualified names and template
   specializations do not bind names [[dcl.meaning]]; those with
   qualified names target a specified scope, and other friend
   declarations and certain *elaborated-type-specifier*s
   [[dcl.type.elab]] target a larger enclosing scope.
-
 - Block-scope extern declarations target a larger enclosing scope but
   bind a name in their immediate scope.
-
 - The names of unscoped enumerators are bound in the two innermost
   enclosing scopes [[dcl.enum]].
-
 - A class’s name is also bound in its own scope [[class.pre]].
-
 - The names of the members of an anonymous union are bound in the
   union’s parent scope [[class.union.anon]].
 
@@ -760,7 +669,6 @@ Two non-static member functions have if:
 - exactly one is an implicit object member function with no
   *ref-qualifier* and the types of their object parameters [[dcl.fct]],
   after removing top-level references, are the same, or
-
 - their object parameters have the same type.
 
 Two non-static member function templates have if:
@@ -768,7 +676,6 @@ Two non-static member function templates have if:
 - exactly one is an implicit object member function with no
   *ref-qualifier* and the types of their object parameters, after
   removing any references, are equivalent, or
-
 - the types of their object parameters are equivalent.
 
 Two function templates have if their *template-parameter-list* have the
@@ -781,19 +688,14 @@ Two declarations *correspond* if they (re)introduce the same name, both
 declare constructors, or both declare destructors, unless
 
 - either is a *using-declarator*, or
-
 - one declares a type (not a *typedef-name*) and the other declares a
   variable, non-static data member other than of an anonymous union
   [[class.union.anon]], enumerator, function, or function template, or
-
 - each declares a function or function template, except when
-
   - both declare functions with the same non-object-parameter-type-list,
-
     equivalent [[temp.over.link]] trailing *requires-clause*s (if any,
     except as specified in [[temp.friend]]), and, if both are non-static
     members, they have corresponding object parameters, or
-
   - both declare function templates with corresponding signatures and
     equivalent *template-head*s and trailing *requires-clause*s (if
     any).
@@ -1004,11 +906,8 @@ but they do not bind names in it. — *end note*\]
 Each
 
 - selection or iteration statement [[stmt.select]], [[stmt.iter]],
-
 - substatement of such a statement,
-
 -  *handler* [[except.pre]], or
-
 - compound statement [[stmt.block]] that is not the *compound-statement*
   of a *handler*
 
@@ -1037,10 +936,8 @@ If a declaration whose target scope is the block scope S of a
 
 - *compound-statement* of a *lambda-expression*, *function-body*, or
   *function-try-block*,
-
 - substatement of a selection or iteration statement that is not itself
   a selection or iteration statement, or
-
 - *handler* of a *function-try-block*
 
 potentially conflicts with a declaration whose target scope is the
@@ -1074,19 +971,15 @@ A *parameter-declaration-clause* P introduces a
   *declarator* of a *parameter-declaration* or a
   *nodeclspec-function-declaration*, or *function-definition*, but does
   not include the locus of the associated *declarator*.
-
   \[*Note 2*: In this case, P declares the parameters of a function (or
   a function or template parameter declared with function type). A
   member function’s parameter scope is nested within its class’s
   scope. — *end note*\]
-
 - If P is associated with a *lambda-declarator*, its scope extends to
   the end of the *compound-statement* in the *lambda-expression*.
-
 - If P is associated with a *requirement-parameter-list*, its scope
   extends to the end of the *requirement-body* of the
   requires-expression.
-
 - If P is associated with a *deduction-guide*, its scope extends to the
   end of the *deduction-guide*.
 
@@ -1193,14 +1086,11 @@ appears in a translation unit D and
 
 - P follows a *module-import-declaration* or *module-declaration* that
   imports D (directly or indirectly), and
-
 - X appears after the *module-declaration* in D (if any) and before the
   *private-module-fragment* in D (if any), and
-
 - either X is exported or else D and L are part of the same module and X
   does not inhabit a namespace with internal linkage or declare a name
   with internal linkage.
-
   \[*Note 3*: Names declared by a *using-declaration* have no
   linkage. — *end note*\]
 
@@ -1275,13 +1165,11 @@ the intermediate S(N,C):
   each of the subobject members of S(N,C) is a base class subobject of
   at least one of the subobject members of S(N,Bᵢ), or if S(N,C) is
   empty, the new S(N,C) is a copy of S(N,Bᵢ).
-
 - Otherwise, if the declaration sets of S(N,Bᵢ) and S(N,C) differ, the
   merge is ambiguous: the new S(N,C) is a lookup set with an invalid
   declaration set and the union of the subobject sets. In subsequent
   merges, an invalid declaration set is considered different from any
   other.
-
 - Otherwise, the new S(N,C) is a lookup set with the shared set of
   declarations and the union of the subobject sets.
 
@@ -1456,7 +1344,6 @@ An *unqualified search* in a scope S from a program point P includes the
 results of searches from P in
 
 - S, and
-
 - for any scope U that contains P and is or is contained by S, each
   namespace contained by S that is nominated by a *using-directive* that
   is active in U at P.
@@ -1571,9 +1458,7 @@ When the *postfix-expression* in a function call [[expr.call]] is an
 name in the *unqualified-id* does not find any
 
 - declaration of a class member, or
-
 - function declaration inhabiting a block scope, or
-
 - declaration not of a function or function template
 
 then lookup for the name also includes the result of
@@ -1650,7 +1535,6 @@ template template arguments). Any *typedef-name*s and
 set. The set of entities is determined in the following way:
 
 - If `T` is a fundamental type, its associated set of entities is empty.
-
 - If `T` is a class type (including unions), its associated entities
   are: the class itself; the class of which it is a member, if any; and
   its direct and indirect base classes. Furthermore, if `T` is a class
@@ -1659,24 +1543,18 @@ set. The set of entities is determined in the following way:
   for template type parameters; the templates used as template template
   arguments; and the classes of which any member templates used as
   template template arguments are members.
-
   \[*Note 4*: Non-type template arguments do not contribute to the set
   of associated entities. — *end note*\]
-
 - If `T` is an enumeration type, its associated entities are `T` and, if
   it is a class member, the member’s class.
-
 - If `T` is a pointer to `U` or an array of `U`, its associated entities
   are those associated with `U`.
-
 - If `T` is a function type, its associated entities are those
   associated with the function parameter types and those associated with
   the return type.
-
 - If `T` is a pointer to a member function of a class `X`, its
   associated entities are those associated with the function parameter
   types and return type, together with those associated with `X`.
-
 - If `T` is a pointer to a data member of class `X`, its associated
   entities are those associated with the member type together with those
   associated with `X`.
@@ -1696,10 +1574,8 @@ namespaces. Argument-dependent lookup finds all declarations of
 functions and function templates that
 
 - are found by a search of any associated namespace, or
-
 - are declared as a friend [[class.friend]] of any class with a
   reachable definition in the set of associated entities, or
-
 - are exported, are attached to a named module `M` [[module.interface]],
   do not appear in the translation unit containing the point of the
   lookup, and have the same innermost enclosing non-inline namespace
@@ -1777,7 +1653,6 @@ A member-qualified name is the (unique) component name
 [[expr.prim.id.unqual]], if any, of
 
 - an *unqualified-id* or
-
 - a *nested-name-specifier* of the form *type-name* `::` or
   *namespace-name* `::`
 
@@ -1785,17 +1660,11 @@ in the *id-expression* of a class member access expression [[expr.ref]].
 A *qualified name* is
 
 - a member-qualified name or
-
 - the terminal name of
-
   - a *qualified-id*,
-
   - a *using-declarator*,
-
   - a *typename-specifier*,
-
   - a *qualified-namespace-specifier*, or
-
   - a *nested-name-specifier*, *elaborated-type-specifier*, or
     *class-or-decltype* that has a *nested-name-specifier*
     [[expr.prim.id.qual]].
@@ -1871,20 +1740,15 @@ If a qualified name Q follows a `~`:
 
 - If Q is a member-qualified name, it undergoes unqualified lookup as
   well as qualified lookup.
-
 - Otherwise, its *nested-name-specifier* N shall nominate a type. If N
   has another *nested-name-specifier* S, Q is looked up as if its lookup
   context were that nominated by S.
-
 - Otherwise, if the terminal name of N is a member-qualified name M, Q
   is looked up as if $\tcode{\~}Q$ appeared in place of M (as above).
-
 - Otherwise, Q undergoes unqualified lookup.
-
 - Each lookup for Q considers only types (if Q is not followed by a `<`)
   and templates whose specializations are types. If it finds nothing or
   is ambiguous, it is discarded.
-
 - The *type-name* that is or contains Q shall refer to its (original)
   lookup context (ignoring cv-qualification) under the interpretation
   established by at least one (successful) lookup performed.
@@ -1920,7 +1784,6 @@ In a lookup for a qualified name N whose lookup context is a class C in
 which function names are not ignored,
 
 - if the search finds the injected-class-name of `C` [[class.pre]], or
-
 - if N is dependent and is the terminal name of a *using-declarator*
   [[namespace.udecl]] that names a constructor,
 
@@ -2149,15 +2012,12 @@ introduced by a declaration in another scope:
 - When a name has *external linkage*, the entity it denotes can be
   referred to by names from scopes of other translation units or from
   other scopes of the same translation unit.
-
 - When a name has *module linkage*, the entity it denotes can be
   referred to by names from other scopes of the same module unit
   [[module.unit]] or from scopes of other module units of that same
   module.
-
 - When a name has *internal linkage*, the entity it denotes can be
   referred to by names from other scopes in the same translation unit.
-
 - When a name has *no linkage*, the entity it denotes cannot be referred
   to by names from other scopes.
 
@@ -2166,19 +2026,13 @@ The name of an entity that belongs to a namespace scope
 
 - a variable, variable template, function, or function template that is
   explicitly declared `static`; or
-
 - a non-template variable of non-volatile const-qualified type, unless
-
   - it is declared in the purview of a module interface unit (outside
     the *private-module-fragment*, if any) or module partition, or
-
   - it is explicitly declared `extern`, or
-
   - it is inline, or
-
   - it was previously declared and the prior declaration did not have
     internal linkage; or
-
 - a data member of an anonymous union.
 
 \[*Note 1*: An instantiated variable template that has const-qualified
@@ -2192,31 +2046,24 @@ scope that has not been given internal linkage above and that is the
 name of
 
 - a variable; or
-
 - a function; or
-
 -  a named class [[class.pre]], or an unnamed class defined in a typedef
   declaration in which the class has the typedef name for linkage
   purposes [[dcl.typedef]]; or
-
 -  a named enumeration [[dcl.enum]], or an unnamed enumeration defined
   in a typedef declaration in which the enumeration has the typedef name
   for linkage purposes [[dcl.typedef]]; or
-
 - an unnamed enumeration that has an enumerator as a name for linkage
   purposes [[dcl.enum]]; or
-
 - a template
 
 has its linkage determined as follows:
 
 - if the enclosing namespace has internal linkage, the name has internal
   linkage;
-
 - otherwise, if the declaration of the name is attached to a named
   module [[module.unit]] and is not exported [[module.interface]], the
   name has module linkage;
-
 - otherwise, the name has external linkage.
 
 In addition, a member function, a static data member, a named class or
@@ -2261,10 +2108,8 @@ purposes, if any [[dcl.typedef]], [[dcl.enum]], they correspond
 or template parameter scope, and either
 
 - they appear in the same translation unit, or
-
 - they both declare names with module linkage and are attached to the
   same module, or
-
 - they both declare names with external linkage.
 
 \[*Note 2*: There are other circumstances in which declarations declare
@@ -2293,27 +2138,19 @@ For any two declarations of an entity E:
 
 - If one declares E to be a variable or function, the other shall
   declare E as one of the same type.
-
 - If one declares E to be an enumerator, the other shall do so.
-
 - If one declares E to be a namespace, the other shall do so.
-
 - If one declares E to be a type, the other shall declare E to be a type
   of the same kind [[dcl.type.elab]].
-
 - If one declares E to be a class template, the other shall do so with
   the same kind and an equivalent *template-head* [[temp.over.link]].
-
   \[*Note 5*: The declarations can supply different default template
   arguments. — *end note*\]
-
 - If one declares E to be a function template or a (partial
   specialization of a) variable template, the other shall declare E to
   be one with an equivalent *template-head* and type.
-
 - If one declares E to be an alias template, the other shall declare E
   to be one with an equivalent *template-head* and *defining-type-id*.
-
 - If one declares E to be a concept, the other shall do so.
 
 Types are compared after all adjustments of types (during which typedefs
@@ -2341,15 +2178,12 @@ namespace h {}          // error: same entity as \#2, but not a function
 A declaration D *names* an entity E if
 
 - D contains a *lambda-expression* whose closure type is E,
-
 - E is not a function or function template and D contains an
   *id-expression*, *type-specifier*, *nested-name-specifier*,
   *template-name*, or *concept-name* denoting E, or
-
 - E is a function or function template and D contains an expression that
   names E [[basic.def.odr]] or an *id-expression* that refers to a set
   of overloads that contains E.
-
   \[*Note 6*: Non-dependent names in an instantiated declaration do not
   refer to a set of overloads [[temp.res]]. — *end note*\]
 
@@ -2360,12 +2194,9 @@ A declaration is an *exposure* if it either names a TU-local entity
   (but not the deduced return type for a (possibly instantiated)
   definition of a function with a declared return type that uses a
   placeholder type [[dcl.spec.auto]]),
-
 - the *initializer* for a variable or variable template (but not the
   variable’s type),
-
 - friend declarations in a class definition, and
-
 - any reference to a non-volatile const object or reference with
   internal or no linkage initialized with a constant expression that is
   not an odr-use [[term.odr.use]],
@@ -2380,24 +2211,17 @@ translation units. — *end note*\]
 An entity is *TU-local* if it is
 
 - a type, function, variable, or template that
-
   - has a name with internal linkage, or
-
   - does not have a name with linkage and is declared, or introduced by
     a *lambda-expression*, within the definition of a TU-local entity,
-
 - a type with no name that is defined outside a *class-specifier*,
   function body, or *initializer* or is introduced by a
   *defining-type-specifier* that is used to declare only TU-local
   entities,
-
 - a specialization of a TU-local template,
-
 - a specialization of a template with any TU-local template argument, or
-
 - a specialization of a template whose (possibly instantiated)
   declaration is an exposure.
-
   \[*Note 7*: A specialization can be produced by implicit or explicit
   instantiation. — *end note*\]
 
@@ -2405,7 +2229,6 @@ A value or object is *TU-local* if either
 
 - it is, or is a pointer to, a TU-local function or the object
   associated with a TU-local variable, or
-
 - it is an object of class or array type and any of its subobjects or
   any of the objects or functions to which its non-static data members
   of reference type refer is TU-local and is usable in constant
@@ -2528,10 +2351,8 @@ lifetime), the created object is a subobject of *e*’s containing object
 if:
 
 - the lifetime of *e*’s containing object has begun and not ended, and
-
 - the storage for the new object exactly overlays the storage location
   associated with *e*, and
-
 - the new object is of the same type as *e* (ignoring cv-qualification).
 
 If a complete object is created [[expr.new]] in storage associated with
@@ -2540,9 +2361,7 @@ another object *e* of type “array of N `unsigned char`” or of type
 for the created object if:
 
 - the lifetime of *e* has begun and not ended, and
-
 - the storage for the new object fits entirely within *e*, and
-
 - there is no array object that satisfies these constraints nested
   within *e*.
 
@@ -2579,9 +2398,7 @@ int *p = new (b->b + 4) int;            // b->b provides storage for *p
 An object *a* is *nested within* another object *b* if:
 
 - *a* is a subobject of *b*, or
-
 - *b* provides storage for *a*, or
-
 - there exists an object *c* where *a* is nested within *c*, and *c* is
   nested within *b*.
 
@@ -2590,7 +2407,6 @@ For every object `x`, there is some object called the
 
 - If `x` is a complete object, then the complete object of `x` is
   itself.
-
 - Otherwise, the complete object of `x` is the complete object of the
   (unique) object that contains `x`.
 
@@ -2603,19 +2419,15 @@ is called a *most derived object*.
 A *potentially-overlapping subobject* is either:
 
 - a base class subobject, or
-
 - a non-static data member declared with the `no_unique_address`
   attribute [[dcl.attr.nouniqueaddr]].
 
 An object has nonzero size if it
 
 - is not a potentially-overlapping subobject, or
-
 - is not of class type, or
-
 - is of a class type with virtual member functions or virtual base
   classes, or
-
 - has subobjects of nonzero size or unnamed bit-fields of nonzero
   length.
 
@@ -2720,7 +2532,6 @@ constructor. The lifetime of an object of type `T` begins when:
 
 - storage with the proper alignment and size for type `T` is obtained,
   and
-
 - its initialization (if any) is complete (including vacuous
   initialization) [[dcl.init]],
 
@@ -2732,9 +2543,7 @@ except as described in [[allocator.members]]. The lifetime of an object
 *o* of type `T` ends when:
 
 - if `T` is a non-class type, the object is destroyed, or
-
 - if `T` is a class type, the destructor call starts, or
-
 - the storage which the object occupies is released, or is reused by an
   object that is not nested within *o* [[intro.object]].
 
@@ -2784,18 +2593,14 @@ resulting lvalue may only be used in limited ways, as described below.
 The program has undefined behavior if:
 
 - the pointer is used as the operand of a *delete-expression*,
-
 - the pointer is used to access a non-static data member or call a
   non-static member function of the object, or
-
 - the pointer is implicitly converted [[conv.ptr]] to a pointer to a
   virtual base class, or
-
 - the pointer is used as the operand of a `static_cast`
   [[expr.static.cast]], except when the conversion is to pointer to
   cv `void`, or to pointer to cv `void` and subsequently to pointer to
   cv `char`, cv `unsigned char`, or cv `std::byte` [[cstddef.syn]], or
-
 - the pointer is used as the operand of a `dynamic_cast`
   [[expr.dynamic.cast]].
 
@@ -2842,13 +2647,10 @@ and using the properties of the glvalue that do not depend on its value
 is well-defined. The program has undefined behavior if:
 
 - the glvalue is used to access the object, or
-
 - the glvalue is used to call a non-static member function of the
   object, or
-
 - the glvalue is bound to a reference to a virtual base class
   [[dcl.init.ref]], or
-
 - the glvalue is used as the operand of a `dynamic_cast`
   [[expr.dynamic.cast]] or as the operand of `typeid`.
 
@@ -2864,15 +2666,11 @@ object o₁ is *transparently replaceable* by an object o₂ if:
 
 - the storage that o₂ occupies exactly overlays the storage that o₁
   occupied, and
-
 - o₁ and o₂ are of the same type (ignoring the top-level cv-qualifiers),
   and
-
 - o₁ is not a const, complete object, and
-
 - neither o₁ nor o₂ is a potentially-overlapping subobject
   [[intro.object]], and
-
 - either o₁ and o₂ are both complete objects, or o₁ and o₂ are direct
   subobjects of objects p₁ and p₂, respectively, and p₁ is transparently
   replaceable by p₂.
@@ -2979,33 +2777,26 @@ undefined except in the following cases:
 - If an indeterminate value of unsigned ordinary character type
   [[basic.fundamental]] or `std::byte` type [[cstddef.syn]] is produced
   by the evaluation of:
-
   - the second or third operand of a conditional expression
     [[expr.cond]],
-
   - the right operand of a comma expression [[expr.comma]],
-
   - the operand of a cast or conversion
     [[conv.integral]], [[expr.type.conv]], [[expr.static.cast]], [[expr.cast]]
     to an unsigned ordinary character type or `std::byte` type
     [[cstddef.syn]], or
-
   - a discarded-value expression [[expr.context]],
 
   then the result of the operation is an indeterminate value.
-
 - If an indeterminate value of unsigned ordinary character type or
   `std::byte` type is produced by the evaluation of the right operand of
   a simple assignment operator [[expr.ass]] whose first operand is an
   lvalue of unsigned ordinary character type or `std::byte` type, an
   indeterminate value replaces the value of the object referred to by
   the left operand.
-
 - If an indeterminate value of unsigned ordinary character type is
   produced by the evaluation of the initialization expression when
   initializing an object of unsigned ordinary character type, that
   object is initialized to an indeterminate value.
-
 - If an indeterminate value of unsigned ordinary character type or
   `std::byte` type is produced by the evaluation of the initialization
   expression when initializing an object of `std::byte` type, that
@@ -3034,11 +2825,8 @@ storage duration is determined by the construct used to create the
 object and is one of the following:
 
 - static storage duration
-
 - thread storage duration
-
 - automatic storage duration
-
 - dynamic storage duration
 
 Static, thread, and automatic storage durations are associated with
@@ -3061,7 +2849,6 @@ behavior.
 All variables which
 
 - do not have thread storage duration and
-
 - belong to a namespace scope [[basic.scope.namespace]] or are first
   declared with the `static` or `extern` keywords [[dcl.stc]]
 
@@ -3214,11 +3001,9 @@ call shall represent the address of storage that is aligned as follows:
 - If the allocation function takes an argument of type
   `std::align_val_t`, the storage will have the alignment specified by
   the value of this argument.
-
 - Otherwise, if the allocation function is named `operator new[]`, the
   storage is aligned for any object that does not have new-extended
   alignment [[basic.align]] and is no larger than the requested size.
-
 - Otherwise, the storage is aligned for any object that does not have
   new-extended alignment and is of the requested size.
 
@@ -3270,11 +3055,8 @@ one parameter. A *usual deallocation function* is a deallocation
 function whose parameters after the first are
 
 - optionally, a parameter of type `std::destroying_delete_t`, then
-
 - optionally, a parameter of type `std::size_t`,
-
   then
-
 - optionally, a parameter of type `std::align_val_t`.
 
 A destroying operator delete shall be a usual deallocation function. A
@@ -3371,9 +3153,7 @@ underlying type for an aligned memory area [[dcl.align]]. — *end note*\]
 Comparing alignments is meaningful and provides the obvious results:
 
 - Two alignments are equal when their numeric values are equal.
-
 - Two alignments are different when their numeric values are not equal.
-
 - When an alignment is larger than another it represents a stricter
   alignment.
 
@@ -3390,12 +3170,9 @@ not supported by an implementation, the program is ill-formed.
 Temporary objects are created
 
 - when a prvalue is converted to an xvalue [[conv.rval]],
-
 - when needed by the implementation to pass or return an object of
   trivially copyable type (see below), and
-
 - when throwing an exception [[except.throw]].
-
   \[*Note 8*: The lifetime of exception objects is described in 
   [[except.throw]]. — *end note*\]
 
@@ -3418,18 +3195,13 @@ Temporary objects are materialized:
 
 - when binding a reference to a prvalue
   [[dcl.init.ref]], [[expr.type.conv]], [[expr.dynamic.cast]], [[expr.static.cast]], [[expr.const.cast]], [[expr.cast]],
-
 - when performing member access on a class prvalue
   [[expr.ref]], [[expr.mptr.oper]],
-
 - when performing an array-to-pointer conversion or subscripting on an
   array prvalue [[conv.array]], [[expr.sub]],
-
 - when initializing an object of type `std::initializer_list<T>` from a
   *braced-init-list* [[dcl.init.list]],
-
 - for certain unevaluated operands [[expr.typeid]], [[expr.sizeof]], and
-
 - when a prvalue that has type other than cv `void` appears as a
   discarded-value expression [[expr.context]].
 
@@ -3522,22 +3294,16 @@ is bound persists for the lifetime of the reference if the glvalue to
 which the reference is bound was obtained through one of the following:
 
 - a temporary materialization conversion [[conv.rval]],
-
 - `(` *expression* `)`, where *expression* is one of these expressions,
-
 - subscripting [[expr.sub]] of an array operand, where that operand is
   one of these expressions,
-
 - a class member access [[expr.ref]] using the `.` operator where the
   left operand is one of these expressions and the right operand
   designates a non-static data member of non-reference type,
-
 - a pointer-to-member operation [[expr.mptr.oper]] using the `.*`
   operator where the left operand is one of these expressions and the
   right operand is a pointer to data member of non-reference type,
-
 - a
-
   - `const_cast` [[expr.const.cast]],
 
   - `static_cast` [[expr.static.cast]],
@@ -3550,10 +3316,8 @@ which the reference is bound was obtained through one of the following:
   is one of these expressions to a glvalue that refers to the object
   designated by the operand, or to its complete object or a subobject
   thereof,
-
 - a conditional expression [[expr.cond]] that is a glvalue where the
   second or third operand is one of these expressions, or
-
 - a comma expression [[expr.comma]] that is a glvalue where the right
   operand is one of these expressions.
 
@@ -3591,24 +3355,18 @@ The exceptions to this lifetime rule are:
 - A temporary object bound to a reference parameter in a function call
   [[expr.call]] persists until the completion of the full-expression
   containing the call.
-
 - A temporary object bound to a reference element of an aggregate of
   class type initialized from a parenthesized *expression-list*
   [[dcl.init]] persists until the completion of the full-expression
   containing the *expression-list*.
-
 - The lifetime of a temporary bound to the returned value in a function
   `return` statement [[stmt.return]] is not extended; the temporary is
   destroyed at the end of the full-expression in the `return` statement.
-
 - A temporary bound to a reference in a *new-initializer* [[expr.new]]
   persists until the completion of the full-expression containing the
   *new-initializer*.
-
   \[*Note 9*: This might introduce a dangling reference. — *end note*\]
-
   \[*Example 2*:
-
   ``` cpp
   struct S { int mi; const std::pair<int,int>& mp; };
   S a { 1, {2,3} };
@@ -3815,32 +3573,21 @@ these types are collectively called .
 A type is a *literal type* if it is:
 
 - cv `void`; or
-
 - a scalar type; or
-
 - a reference type; or
-
 - an array of literal type; or
-
 - a possibly cv-qualified class type [[class]] that has all of the
   following properties:
-
   - it has a constexpr destructor [[dcl.constexpr]],
-
   - all of its non-static non-variant data members and base classes are
     of non-volatile literal types, and
-
   - it
-
     - is a closure type [[expr.prim.lambda.closure]],
-
     - is an aggregate union type that has either no variant members or
       at least one variant member of non-volatile literal type,
-
     - is a non-union aggregate type for which each of its anonymous
       union members satisfies the above requirements for an aggregate
       union type, or
-
     - has at least one constexpr constructor or constructor template
       (possibly inherited [[namespace.udecl]] from a base class) that is
       not a copy or move constructor.
@@ -4090,33 +3837,23 @@ TS 18661-3 and with future versions of the C standard.
 Compound types can be constructed in the following ways:
 
 - *arrays* of objects of a given type, [[dcl.array]];
-
 - *functions*, which have parameters of given types and return `void` or
   references or objects of a given type, [[dcl.fct]];
-
 - *pointers* to cv `void` or objects or functions (including static
   members of classes) of a given type, [[dcl.ptr]];
-
 -  *references* to objects or functions of a given type, [[dcl.ref]].
   There are two types of references:
-
   - lvalue reference
-
   - rvalue reference
-
 - *classes* containing a sequence of objects of various types [[class]],
   a set of types, enumerations and functions for manipulating these
   objects [[class.mfct]], and a set of restrictions on the access to
   these entities [[class.access]];
-
 - *unions*, which are classes capable of containing objects of different
   types at different times, [[class.union]];
-
 - *enumerations*, which comprise a set of named constant values,
   [[dcl.enum]];
-
 -  *pointers to non-static class members*,
-
   which identify members of a given type within objects of a given
   class, [[dcl.mptr]]. Pointers to data members and pointers to member
   functions are collectively called *pointer-to-member* types.
@@ -4185,14 +3922,11 @@ the extended alignment requirement. — *end note*\]
 Two objects *a* and *b* are *pointer-interconvertible* if:
 
 - they are the same object, or
-
 - one is a union object and the other is a non-static data member of
   that object [[class.union]], or
-
 - one is a standard-layout class object and the other is the first
   non-static data member of that object or any base class subobject of
   that object [[class.mem]], or
-
 - there exists an object *c* such that *a* and *c* are
   pointer-interconvertible, and *c* and *b* are
   pointer-interconvertible.
@@ -4227,10 +3961,8 @@ A function or reference type is always cv-unqualified.
 
 - A *const object* is an object of type `const T` or a non-mutable
   subobject of a const object.
-
 - A *volatile object* is an object of type `volatile T` or a subobject
   of a volatile object.
-
 - A *const volatile object* is an object of type `const volatile T`, a
   non-mutable subobject of a const volatile object, a const subobject of
   a volatile object, or a non-mutable volatile subobject of a const
@@ -4305,34 +4037,25 @@ Every integer type has an *integer conversion rank* defined as follows:
 - No two signed integer types other than `char` and `signed
   char` (if `char` is signed) have the same rank, even if they have the
   same representation.
-
 - The rank of a signed integer type is greater than the rank of any
   signed integer type with a smaller width.
-
 - The rank of `long long int` is greater than the rank of `long int`,
   which is greater than the rank of `int`, which is greater than the
   rank of `short int`, which is greater than the rank of `signed char`.
-
 - The rank of any unsigned integer type equals the rank of the
   corresponding signed integer type.
-
 - The rank of any standard integer type is greater than the rank of any
   extended integer type with the same width.
-
 - The rank of `char` equals the rank of `signed char` and
   `unsigned char`.
-
 - The rank of `bool` is less than the rank of all standard integer
   types.
-
 -  The ranks of `char8_t`, `char16_t`, `char32_t`, and `wchar_t` equal
   the ranks of their underlying types [[basic.fundamental]].
-
 - The rank of any extended signed integer type relative to another
   extended signed integer type with the same width is
   *implementation-defined*, but still subject to the other rules for
   determining the integer conversion rank.
-
 - For all integer types `T1`, `T2`, and `T3`, if `T1` has greater rank
   than `T2` and `T2` has greater rank than `T3`, then `T1` has greater
   rank than `T3`.
@@ -4347,17 +4070,13 @@ as follows:
 - The rank of a floating point type `T` is greater than the rank of any
   floating-point type whose set of values is a proper subset of the set
   of values of `T`.
-
 - The rank of `long double` is greater than the rank of `double`, which
   is greater than the rank of `float`.
-
 - Two extended floating-point types with the same set of values have
   equal ranks.
-
 - An extended floating-point type with the same set of values as exactly
   one cv-unqualified standard floating-point type has a rank equal to
   the rank of that standard floating-point type.
-
 - An extended floating-point type with the same set of values as more
   than one cv-unqualified standard floating-point type has a rank equal
   to the rank of `double`.
@@ -4392,14 +4111,11 @@ suspension of a coroutine [[expr.await]], or receipt of a signal).
 A *constituent expression* is defined as follows:
 
 - The constituent expression of an expression is that expression.
-
 - The constituent expression of a conversion is the corresponding
   implicit function call, if any, or the converted expression otherwise.
-
 - The constituent expressions of a *braced-init-list* or of a (possibly
   parenthesized) *expression-list* are the constituent expressions of
   the elements of the respective list.
-
 - The constituent expressions of a *brace-or-equal-initializer* of the
   form `=` *initializer-clause* are the constituent expressions of the
   *initializer-clause*.
@@ -4420,17 +4136,13 @@ initialization of `b` are `5` and `1+1`.
 The *immediate subexpressions* of an expression E are
 
 - the constituent expressions of E’s operands [[expr.prop]],
-
 - any function call that E implicitly invokes,
-
 - if E is a *lambda-expression* [[expr.prim.lambda]], the initialization
   of the entities captured by copy and the constituent expressions of
   the *initializer* of the *init-capture*,
-
 - if E is a function call [[expr.call]] or implicitly invokes a
   function, the constituent expressions of each default argument
   [[dcl.fct.default]] used in the call, or
-
 - if E creates an aggregate object [[dcl.init.aggr]], the constituent
   expressions of each default member initializer [[class.mem]] used in
   the initialization.
@@ -4445,26 +4157,20 @@ or a subexpression of an immediate subexpression of E.
 The of an expression, conversion, or *initializer* E are
 
 - the constituent expressions of E and
-
 - the subexpressions thereof that are not subexpressions of a nested
   unevaluated operand [[term.unevaluated.operand]].
 
 A *full-expression* is
 
 - an unevaluated operand [[expr.context]],
-
 - a *constant-expression* [[expr.const]],
-
 - an immediate invocation [[expr.const]],
-
 - an *init-declarator* [[dcl.decl]] or a *mem-initializer*
   [[class.base.init]], including the constituent expressions of the
   initializer,
-
 - an invocation of a destructor generated at the end of the lifetime of
   an object other than a temporary object [[class.temporary]] whose
   lifetime has not been extended, or
-
 - an expression that is not a subexpression of another expression and
   that is not otherwise part of a full-expression.
 
@@ -4726,25 +4432,19 @@ last mutex release. — *end note*\]
 An evaluation A *carries a dependency* to an evaluation B if
 
 - the value of A is used as an operand of B, unless:
-
   - B is an invocation of any specialization of `std::kill_dependency`
     [[atomics.order]], or
-
   - A is the left operand of a built-in logical (`&&`, see 
     [[expr.log.and]]) or logical (`||`, see  [[expr.log.or]]) operator,
     or
-
   - A is the left operand of a conditional (`?:`, see  [[expr.cond]])
     operator, or
-
   - A is the left operand of the built-in comma (`,`) operator
     [[expr.comma]];
 
   or
-
 - A writes a scalar object or bit-field M, B reads the value written by
   A from M, and A is sequenced before B, or
-
 - for some evaluation X, A carries a dependency to X, and X carries a
   dependency to B.
 
@@ -4756,7 +4456,6 @@ An evaluation A is *dependency-ordered before* an evaluation B if
 - A performs a release operation on an atomic object M, and, in another
   thread, B performs a consume operation on M and reads the value
   written by A, or
-
 - for some evaluation X, A is dependency-ordered before X and X carries
   a dependency to B.
 
@@ -4767,15 +4466,10 @@ release/acquire. — *end note*\]
 An evaluation A *inter-thread happens before* an evaluation B if
 
 - A synchronizes with B, or
-
 - A is dependency-ordered before B, or
-
 - for some evaluation X
-
   - A synchronizes with X and X is sequenced before B, or
-
   - A is sequenced before X and X inter-thread happens before B, or
-
   - A inter-thread happens before X and X inter-thread happens before B.
 
 \[*Note 8*: The “inter-thread happens before” relation describes
@@ -4799,7 +4493,6 @@ An evaluation A *happens before* an evaluation B (or, equivalently, B
 *happens after* A) if:
 
 - A is sequenced before B, or
-
 - A inter-thread happens before B.
 
 The implementation shall ensure that no program execution demonstrates a
@@ -4811,9 +4504,7 @@ of consume operations. — *end note*\]
 An evaluation A *simply happens before* an evaluation B if either
 
 - A is sequenced before B, or
-
 - A synchronizes with B, or
-
 - A simply happens before X and X simply happens before B.
 
 \[*Note 10*: In the absence of consume operations, the happens before
@@ -4822,13 +4513,10 @@ and simply happens before relations are identical. — *end note*\]
 An evaluation A *strongly happens before* an evaluation D if, either
 
 - A is sequenced before D, or
-
 - A synchronizes with D, and both A and D are sequentially consistent
   atomic operations [[atomics.order]], or
-
 - there are evaluations B and C such that A is sequenced before B, B
   simply happens before C, and C is sequenced before D, or
-
 - there is an evaluation B such that A strongly happens before B, and B
   strongly happens before D.
 
@@ -4840,7 +4528,6 @@ A A on a scalar object or bit-field M with respect to a value
 computation B of M satisfies the conditions:
 
 - A happens before B and
-
 - there is no other side effect X to M such that A happens before X and
   X happens before B.
 
@@ -4913,7 +4600,6 @@ here. — *end note*\]
 Two actions are *potentially concurrent* if
 
 - they are performed by different threads, or
-
 - they are unsequenced, at least one is performed by a signal handler,
   and they are not both performed by the same signal handler invocation.
 
@@ -4973,11 +4659,8 @@ The implementation may assume that any thread will eventually do one of
 the following:
 
 - terminate,
-
 - make a call to a library I/O function,
-
 - perform an access through a volatile glvalue, or
-
 - perform a synchronization operation or an atomic operation.
 
 \[*Note 1*: This is intended to allow compiler transformations such as
@@ -4991,15 +4674,12 @@ Executions of atomic functions that are either defined to be lock-free
 - If there is only one thread that is not blocked [[defns.block]] in a
   standard library function, a lock-free execution in that thread shall
   complete.
-
   \[*Note 10*: Concurrently executing threads might prevent progress of
   a lock-free execution. For example, this situation can occur with
   load-locked store-conditional implementations. This property is
   sometimes termed obstruction-free. — *end note*\]
-
 - When one or more lock-free executions run concurrently, at least one
   should complete.
-
   \[*Note 11*: It is difficult for some implementations to provide
   absolute guarantees to this effect, since repeated and particularly
   inopportune interference from other threads could prevent forward
@@ -5015,9 +4695,7 @@ During the execution of a thread of execution, each of the following is
 termed an *execution step*:
 
 - termination of the thread of execution,
-
 - performing an access through a volatile glvalue, or
-
 - completion of a call to a library I/O function, a synchronization
   operation, or an atomic operation.
 
@@ -5155,7 +4833,6 @@ of type `int`, but otherwise its type is *implementation-defined*. An
 implementation shall allow both
 
 - a function of `()` returning `int` and
-
 - a function of `(int`, pointer to pointer to `char)` returning `int`
 
 as the type of `main` [[dcl.fct]]. In the latter form, for purposes of
@@ -5181,12 +4858,9 @@ shall not be declared with a *linkage-specification* [[dcl.link]]. A
 program that declares
 
 - a variable `main` that belongs to the global scope, or
-
 - a function `main` that belongs to the global scope and is attached to
   a named module, or
-
 - a function template `main` that belongs to the global scope, or
-
 - an entity named `main` with C language linkage (in any namespace)
 
 is ill-formed. The name `main` is not otherwise reserved.
@@ -5236,7 +4910,6 @@ statically, provided that
 - the dynamic version of the initialization does not change the value of
   any other object of static or thread storage duration prior to its
   initialization, and
-
 - the static version of the initialization produces the same value in
   the initialized variable as would be produced by the dynamic
   initialization if all variables not required to be initialized
@@ -5277,7 +4950,6 @@ has ordered initialization. — *end note*\]
 A declaration `D` is *appearance-ordered* before a declaration `E` if
 
 - `D` appears in the same translation unit as `E`, or
-
 - the translation unit containing `E` has an interface dependency on the
   translation unit containing `D`,
 
@@ -5292,21 +4964,17 @@ storage duration are ordered as follows:
   initialization, and for every definition `E` of `W` there exists a
   definition `D` of `V` such that `D` is appearance-ordered before `E`,
   then
-
   - if the program does not start a thread [[intro.multithread]] other
     than the main thread [[basic.start.main]] or `V` and `W` have
     ordered initialization and they are defined in the same translation
     unit, the initialization of `V` is sequenced before the
     initialization of `W`;
-
   - otherwise, the initialization of `V` strongly happens before the
     initialization of `W`.
-
 - Otherwise, if the program starts a thread other than the main thread
   before either `V` or `W` is initialized, it is unspecified in which
   threads the initializations of `V` and `W` occur; the initializations
   are unsequenced if they occur in the same thread.
-
 - Otherwise, the initializations of `V` and `W` are indeterminately
   sequenced.
 

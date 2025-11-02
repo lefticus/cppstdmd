@@ -41,12 +41,9 @@ statement.
 A *substatement* of a *statement* is one of the following:
 
 - for a *labeled-statement*, its *statement*,
-
 - for a *compound-statement*, any *statement* of its *statement-seq*,
-
 - for a *selection-statement*, any of its *statement* or
   *compound-statement* (but not its *init-statement*), or
-
 - for an *iteration-statement*, its *statement* (but not an
   *init-statement*).
 
@@ -57,13 +54,10 @@ substatement of the *statement* (if any) in which the
 A *statement* `S1` *encloses* a *statement* `S2` if
 
 - `S2` is a substatement of `S1`,
-
 - `S1` is a *selection-statement* or *iteration-statement* and `S2` is
   the *init-statement* of `S1`,
-
 - `S1` is a *try-block* and `S2` is its *compound-statement* or any of
   the *compound-statement* of its *handler*, or
-
 - `S1` encloses a statement `S3` and `S3` encloses `S2`.
 
 A statement `S1` is *enclosed by* a statement `S2` if `S2` encloses
@@ -123,7 +117,6 @@ A *control-flow-limited statement* is a statement `S` for which:
 
 - a `case` or `default` label appearing within `S` shall be associated
   with a `switch` statement [[stmt.switch]] within `S`, and
-
 - a label declared in `S` shall only be referred to by a statement
   [[stmt.goto]] in `S`.
 
@@ -565,28 +558,22 @@ where
 - if the *for-range-initializer* is an *expression*, it is regarded as
   if it were surrounded by parentheses (so that a comma operator cannot
   be reinterpreted as delimiting two *init-declarator*);
-
 - *range*, *begin*, and *end* are variables defined for exposition only;
   and
-
 - *begin-expr* and *end-expr* are determined as follows:
-
   - if the *for-range-initializer* is an expression of array type `R`,
     *begin-expr* and *end-expr* are *range* and *range* `+` `N`,
     respectively, where `N` is the array bound. If `R` is an array of
     unknown bound or an array of incomplete type, the program is
     ill-formed;
-
   - if the *for-range-initializer* is an expression of class type `C`,
     and searches in the scope of `C` [[class.member.lookup]] for the
     names `begin` and `end` each find at least one declaration,
     *begin-expr* and *end-expr* are `range.begin()` and `range.end()`,
     respectively;
-
   - otherwise, *begin-expr* and *end-expr* are `begin(range)` and
     `end(range)`, respectively, where `begin` and `end` undergo
     argument-dependent lookup [[basic.lookup.argdep]].
-
     \[*Note 1*: Ordinary unqualified lookup [[basic.lookup.unqual]] is
     not performed. — *end note*\]
 
@@ -776,7 +763,6 @@ where *final-suspend* is the exposition-only label defined in
 - If the operand is a *braced-init-list* or an expression of non-`void`
   type, *S* is *p*`.return_value(`*expr-or-braced-init-list*`)`. The
   expression *S* shall be a prvalue of type `void`.
-
 - Otherwise, *S* is the *compound-statement* `\{}{ `*expression* `;`
   *p*`.return_void()``;{ }\}`. The expression *p*`.return_void()` shall
   be a prvalue of type `void`.

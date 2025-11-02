@@ -574,19 +574,14 @@ template<class It, class End>
 *Constraints:*
 
 - `It` satisfies `contiguous_iterator`.
-
 - `End` satisfies `sized_sentinel_for``<It>`.
-
 - `is_same_v<iter_value_t<It>, charT>` is `true`.
-
 - `is_convertible_v<End, size_type>` is `false`.
 
 *Preconditions:*
 
 - \[`begin`, `end`) is a valid range.
-
 - `It` models `contiguous_iterator`.
-
 - `End` models `sized_sentinel_for``<It>`.
 
 *Effects:* Initializes `data_` with `to_address(begin)` and initializes
@@ -604,13 +599,9 @@ Let `d` be an lvalue of type `remove_cvref_t<R>`.
 *Constraints:*
 
 - `remove_cvref_t<R>` is not the same type as `basic_string_view`,
-
 - `R` models `ranges::``contiguous_range` and `ranges::``sized_range`,
-
 - `is_same_v<ranges::range_value_t<R>, charT>` is `true`,
-
 - `is_convertible_v<R, const charT*>` is `false`, and
-
 - `d.operator ::std::basic_string_view<charT, traits>()` is not a valid
   expression.
 
@@ -630,7 +621,6 @@ template<class It, class End>
 *Constraints:*
 
 - `It` satisfies `contiguous_iterator`.
-
 - `End` satisfies `sized_sentinel_for``<It>`.
 
 ``` cpp
@@ -663,7 +653,6 @@ constexpr const_iterator cbegin() const noexcept;
 *Returns:* An iterator such that
 
 - if `!empty()`, `addressof(*begin()) == data_`,
-
 - otherwise, an unspecified value such that \[`begin()`, `end()`) is a
   valid range.
 
@@ -938,23 +927,18 @@ Let *F* be one of `find`, `rfind`, `find_first_of`, `find_last_of`,
 `find_first_not_of`, and `find_last_not_of`.
 
 - Each member function of the form
-
   ``` cpp
   constexpr return-type F(const charT* s, size_type pos) const;
   ```
 
   has effects equivalent to: `return F(basic_string_view(s), pos);`
-
 - Each member function of the form
-
   ``` cpp
   constexpr return-type F(const charT* s, size_type pos, size_type n) const;
   ```
 
   has effects equivalent to: `return F(basic_string_view(s, n), pos);`
-
 - Each member function of the form
-
   ``` cpp
   constexpr return-type F(charT c, size_type pos) const noexcept;
   ```
@@ -970,9 +954,7 @@ Let `xpos` be the lowest position, if possible, such that the following
 conditions hold:
 
 - `pos <= xpos`
-
 - `xpos + str.size() <= size()`
-
 - `traits::eq(at(xpos + I), str.at(I))` for all elements `I` of the
   string referenced by `str`.
 
@@ -989,9 +971,7 @@ Let `xpos` be the highest position, if possible, such that the following
 conditions hold:
 
 - `xpos <= pos`
-
 - `xpos + str.size() <= size()`
-
 - `traits::eq(at(xpos + I), str.at(I))` for all elements `I` of the
   string referenced by `str`.
 
@@ -1008,9 +988,7 @@ Let `xpos` be the lowest position, if possible, such that the following
 conditions hold:
 
 - `pos <= xpos`
-
 - `xpos < size()`
-
 - `traits::eq(at(xpos), str.at(I))` for some element `I` of the string
   referenced by `str`.
 
@@ -1027,9 +1005,7 @@ Let `xpos` be the highest position, if possible, such that the following
 conditions hold:
 
 - `xpos <= pos`
-
 - `xpos < size()`
-
 - `traits::eq(at(xpos), str.at(I))` for some element `I` of the string
   referenced by `str`.
 
@@ -1046,9 +1022,7 @@ Let `xpos` be the lowest position, if possible, such that the following
 conditions hold:
 
 - `pos <= xpos`
-
 - `xpos < size()`
-
 - `traits::eq(at(xpos), str.at(I))` for no element `I` of the string
   referenced by `str`.
 
@@ -1065,9 +1039,7 @@ Let `xpos` be the highest position, if possible, such that the following
 conditions hold:
 
 - `xpos <= pos`
-
 - `xpos < size()`
-
 - `traits::eq(at(xpos), str.at(I))` for no element `I` of the string
   referenced by `str`.
 
@@ -1779,7 +1751,6 @@ References, pointers, and iterators referring to the elements of a
 
 - Passing as an argument to any standard library function taking a
   reference to non-const `basic_string` as an argument.
-
 - Calling non-const member functions, except `operator[]`, `at`, `data`,
   `front`, `back`, `begin`, `rbegin`, `end`, and `rend`.
 
@@ -1816,7 +1787,6 @@ constexpr basic_string(basic_string&& str, size_type pos, size_type n,
 Let
 
 - `s` be the value of `str` prior to this call and
-
 - `rlen` be `pos + min(n, s.size() - pos)` for the overloads with
   parameter `n`, and `s.size()` otherwise.
 
@@ -1857,7 +1827,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Creates a variable, `sv`, as if by
@@ -2000,7 +1969,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2101,7 +2069,6 @@ constexpr void resize(size_type n, charT c);
 *Effects:* Alters the value of `*this` as follows:
 
 - If `n <= size()`, erases the last `size() - n` elements.
-
 - If `n > size()`, appends `n - size()` copies of `c`.
 
 ``` cpp
@@ -2117,18 +2084,13 @@ template<class Operation> constexpr void resize_and_overwrite(size_type n, Opera
 Let
 
 - `o = size()` before the call to `resize_and_overwrite`.
-
 - `k` be `min(o, n)`.
-
 - `p` be a value of type `charT*` or `charT* const`, such that the range
   \[`p`, `p + n`\] is valid and `this->compare(0, k, p, k) == 0` is
   `true` before the call. The values in the range \[`p + k`, `p + n`\]
   may be indeterminate [[basic.indet]].
-
 - `m` be a value of type `size_type` or `const size_type` equal to `n`.
-
 - *`OP`* be the expression `std::move(op)(p, m)`.
-
 - `r` = *`OP`*.
 
 *Mandates:* *`OP`* has an integer-like type [[iterator.concept.winc]].
@@ -2136,11 +2098,8 @@ Let
 *Preconditions:*
 
 - *`OP`* does not throw an exception or modify `p` or `m`.
-
 - $\texttt{r} \geq 0$.
-
 - $\texttt{r} \leq \texttt{m}$.
-
 - After evaluating *`OP`* there are no indeterminate values in the range
   \[`p`, `p + r`).
 
@@ -2274,7 +2233,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2329,7 +2287,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2348,7 +2305,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2448,7 +2404,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2467,7 +2422,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2559,7 +2513,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2579,7 +2532,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2604,9 +2556,7 @@ at the end of the string.
 *Throws:*
 
 - `out_of_range` if `pos > size()`,
-
 - `length_error` if `n > max_size() - size()`, or
-
 - any exceptions thrown by `allocator_traits<Allocator>::allocate`.
 
 ``` cpp
@@ -2627,9 +2577,7 @@ constexpr basic_string& insert(size_type pos, size_type n, charT c);
 *Throws:*
 
 - `out_of_range` if `pos > size()`,
-
 - `length_error` if `n > max_size() - size()`, or
-
 - any exceptions thrown by `allocator_traits<Allocator>::allocate`.
 
 ``` cpp
@@ -2770,7 +2718,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2790,7 +2737,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -2817,10 +2763,8 @@ function replaces the characters in the range \[`begin() + pos1`,
 *Throws:*
 
 - `out_of_range` if `pos1 > size()`,
-
 - `length_error` if the length of the resulting string would exceed
   `max_size()`, or
-
 - any exceptions thrown by `allocator_traits<Allocator>::allocate`.
 
 ``` cpp
@@ -2845,10 +2789,8 @@ the function replaces the characters in the range \[`begin() + pos1`,
 *Throws:*
 
 - `out_of_range` if `pos1 > size()`,
-
 - `length_error` if the length of the resulting string would
   exceed`max_size()`, or
-
 - any exceptions thrown by `allocator_traits<Allocator>::allocate.`
 
 ``` cpp
@@ -2867,7 +2809,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Preconditions:* \[`begin()`, `i1`) and \[`i1`, `i2`) are valid ranges.
@@ -3012,40 +2953,32 @@ Let *F* be one of `find`, `rfind`, `find_first_of`, `find_last_of`,
 `find_first_not_of`, and `find_last_not_of`.
 
 - Each member function of the form
-
   ``` cpp
   constexpr size_type F(const basic_string& str, size_type pos) const noexcept;
   ```
 
   has effects equivalent to:
   `return F(basic_string_view<charT, traits>(str), pos);`
-
 - Each member function of the form
-
   ``` cpp
   constexpr size_type F(const charT* s, size_type pos) const;
   ```
 
   has effects equivalent to:
   `return F(basic_string_view<charT, traits>(s), pos);`
-
 - Each member function of the form
-
   ``` cpp
   constexpr size_type F(const charT* s, size_type pos, size_type n) const;
   ```
 
   has effects equivalent to:
   `return F(basic_string_view<charT, traits>(s, n), pos);`
-
 - Each member function of the form
-
   ``` cpp
   constexpr size_type F(charT c, size_type pos) const noexcept;
   ```
 
   has effects equivalent to:
-
   ``` cpp
   return F(basic_string_view<charT, traits>(addressof(c), 1), pos);
   ```
@@ -3069,7 +3002,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Let *G* be the name of the function. Equivalent to:
@@ -3108,7 +3040,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -3126,7 +3057,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -3145,7 +3075,6 @@ template<class T>
 
 - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
   `true` and
-
 - `is_convertible_v<const T&, const charT*>` is `false`.
 
 *Effects:* Equivalent to:
@@ -3442,9 +3371,7 @@ appended is `is.width()`; otherwise `n` is `str.max_size()`. Characters
 are extracted and appended until any of the following occurs:
 
 - *n* characters are stored;
-
 - end-of-file occurs on the input sequence;
-
 - `isspace(c, is.getloc())` is `true` for the next available input
   character *c*.
 
@@ -3488,10 +3415,8 @@ extracts characters from `is` and appends them to `str` as if by calling
 `str.append(1, c)` until any of the following occurs:
 
 - end-of-file occurs on the input sequence;
-
 - `traits::eq(c, delim)` for the next available input character *c* (in
   which case, *c* is extracted but not appended);
-
 - `str.max_size()` characters are stored (in which case,
   `ios_base::failbit` is set in the input function’s local error state).
 
@@ -4021,20 +3946,16 @@ conversion state):
 
 - `0`, if the next `n` or fewer bytes complete the multibyte character
   that corresponds to the Unicode character (which is the value stored).
-
 - between `1` and `n` (inclusive), if the next n or fewer bytes complete
   a valid multibyte character (whose first (or only) code unit is
   stored); the value returned is the number of bytes that complete the
   multibyte character.
-
 - `(size_t)(-3)`, if the next code unit resulting from a previous call
   has been stored (no bytes from the input have been consumed by this
   call).
-
 - `(size_t)(-2)`, if the next `n` bytes contribute to an incomplete (but
   potentially valid) multibyte character, and all `n` bytes have been
   processed (no value is stored).
-
 - `(size_t)(-1)`, if an encoding error occurs, in which case the next
   `n` or fewer bytes do not contribute to a complete and valid multibyte
   character (no value is stored); the value of the macro `EILSEQ` is

@@ -66,13 +66,10 @@ visible outside the module. — *end note*\]
 Module `A` contains four translation units:
 
 - a primary module interface unit,
-
 - a module partition `A:Foo`, which is a module interface unit forming
   part of the interface of module `A`,
-
 - a module partition `A:Internals`, which does not contribute to the
   external interface of module `A`, and
-
 - a module implementation unit providing a definition of `bar` and
   `baz`, which cannot be imported because it does not have a partition
   name.
@@ -101,15 +98,11 @@ is *attached* to a module as follows:
   *elaborated-type-specifier* with neither a *nested-name-specifier* nor
   a *simple-template-id*, it is attached to the module to which the
   friend is attached [[basic.link]].
-
 - Otherwise, if the declaration
-
   - is a *namespace-definition* with external linkage or
-
   - appears within a *linkage-specification* [[dcl.link]]
 
   it is attached to the global module.
-
 - Otherwise, the declaration is attached to the module in whose purview
   it appears.
 
@@ -148,7 +141,6 @@ A declaration is *exported* if it is declared within an
 *export-declaration* and inhabits a namespace scope or it is
 
 - a *namespace-definition* that contains an exported declaration, or
-
 - a declaration within a header unit [[module.import]] that introduces
   at least one name.
 
@@ -261,12 +253,9 @@ headers that includes all importable C++ library headers [[headers]].
 
 - if their *header-name* identify different headers or source files
   [[cpp.include]], they import distinct header units;
-
 - otherwise, if they appear in the same translation unit, they import
   the same header unit;
-
 - otherwise, it is unspecified whether they import the same header unit.
-
   \[*Note 1*: It is therefore possible that multiple copies exist of
   entities declared with internal linkage in an importable
   header. — *end note*\]
@@ -354,50 +343,36 @@ translation unit if:
 - D does not declare a function or function template and S contains an
   *id-expression*, *namespace-name*, *type-name*, *template-name*, or
   *concept-name* naming D, or
-
 - D declares a function or function template that is named by an
   expression [[basic.def.odr]] appearing in S, or
-
 - S contains a dependent call `E` [[temp.dep]] and D is found by any
   name lookup performed for an expression synthesized from `E` by
   replacing each type-dependent argument or operand with a value of a
   placeholder type with no associated namespaces or entities, or
-
   \[*Note 2*: This includes the lookup for `operator==` performed when
   considering rewriting an `!=` expression, the lookup for `operator<=>`
   performed when considering rewriting a relational comparison, and the
   lookup for `operator!=` when considering whether an `operator==` is a
   rewrite target. — *end note*\]
-
 - S contains an expression that takes the address of an overload set
   [[over.over]] that contains D and for which the target type is
   dependent, or
-
 - there exists a declaration M that is not a *namespace-definition* for
   which M is decl-reachable from S and either
-
   - D is decl-reachable from M, or
-
   - D redeclares the entity declared by M or M redeclares the entity
     declared by D, and D neither is a friend declaration nor inhabits a
     block scope, or
-
   - D declares a namespace N and M is a member of N, or
-
   - one of M and D declares a class or class template C and the other
     declares a member or friend of C, or
-
   - one of D and M declares an enumeration E and the other declares an
     enumerator of E, or
-
   - D declares a function or variable and M is declared in D,
-
     or
-
   - one of M and D declares a template and the other declares a partial
     or explicit specialization or an implicit or explicit instantiation
     of that template, or
-
   - one of M and D declares a class or enumeration type and the other
     introduces a typedef name for linkage purposes for that type.
 
@@ -406,14 +381,11 @@ In this determination, it is unspecified
 - whether a reference to an *alias-declaration*, `typedef` declaration,
   *using-declaration*, or *namespace-alias-definition* is replaced by
   the declarations they name prior to this determination,
-
 - whether a *simple-template-id* that does not denote a dependent type
   and whose *template-name* names an alias template is replaced by its
   denoted type prior to this determination,
-
 - whether a *decltype-specifier* that does not denote a dependent type
   is replaced by its denoted type prior to this determination, and
-
 - whether a non-value-dependent constant expression is replaced by the
   result of constant evaluation prior to this determination.
 
@@ -475,19 +447,14 @@ affects:
 
 - the point by which the definition of an inline function or variable is
   required [[dcl.inline]],
-
 - the point by which the definition of an exported function with a
   placeholder return type is required [[dcl.spec.auto]],
-
 - whether a declaration is required not to be an exposure
   [[basic.link]],
-
 - where definitions for inline functions and templates must appear
   [[basic.def.odr]], [[dcl.inline]], [[temp.pre]],
-
 - the instantiation contexts of templates instantiated before it
   [[module.context]], and
-
 - the reachability of declarations within it [[module.reach]].
 
 — *end note*\]
@@ -558,9 +525,7 @@ The call to `f(0)` is valid; the instantiation context of `foo<int, X>`
 comprises
 
 - the point at the end of translation unit \#1,
-
 - the point at the end of translation unit \#2, and
-
 - the point of the call to `f(0)`,
 
 so the definition of `X` is reachable [[module.reach]].
@@ -569,9 +534,7 @@ It is unspecified whether the call to `g(0)` is valid: the instantiation
 context of `bar<int, X>` comprises
 
 - the point at the end of translation unit \#1,
-
 - the point at the end of translation unit \#3, and
-
 - the point of the call to `g(0)`,
 
 so the definition of `X` need not be reachable, as described in
@@ -603,7 +566,6 @@ portable. — *end note*\]
 A declaration D is *reachable from* a point P if
 
 - D appears prior to P in the same translation unit, or
-
 - D is not discarded [[module.global.frag]], appears in a translation
   unit that is reachable from P, and does not appear within a
   *private-module-fragment*.

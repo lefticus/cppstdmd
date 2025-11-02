@@ -63,20 +63,13 @@ to place the element into the buffer. — *end note*\]
 In subclause [[container.gen.reqmts]],
 
 - `X` denotes a container class containing objects of type `T`,
-
 - `a` denotes a value of type `X`,
-
 - `b` and `c` denote values of type (possibly const) `X`,
-
 - `i` and `j` denote values of type (possibly const) `X::iterator`,
-
 - `u` denotes an identifier,
-
 - `v` denotes an lvalue of type (possibly const) `X` or an rvalue of
   type `const X`,
-
 - `s` and `t` denote non-const lvalues of type `X`, and
-
 - `rv` denotes a non-const rvalue of type `X`.
 
 The following exposition-only concept is used in the definition of
@@ -387,10 +380,8 @@ or `swap()`. Allocator replacement is performed by copy assignment, move
 assignment, or swapping of the allocator only if
 
 - `allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value`,
-
 - `allocator_traits<allocator_type>::propagate_on_container_move_assignment::value`,
   or
-
 - `allocator_traits<allocator_type>::propagate_on_container_swap::value`
 
 is `true` within the implementation of the corresponding container
@@ -424,22 +415,16 @@ requirements:
 
 - If an exception is thrown by an `insert()` or `emplace()` function
   while inserting a single element, that function has no effects.
-
 - If an exception is thrown by a `push_back()`, `push_front()`,
   `emplace_back()`, or `emplace_front()` function, that function has no
   effects.
-
 - No `erase()`, `clear()`, `pop_back()` or `pop_front()` function throws
   an exception.
-
 - No copy constructor or assignment operator of a returned iterator
   throws an exception.
-
 - No `swap()` function throws an exception.
-
 - No `swap()` function invalidates any references, pointers, or
   iterators referring to the elements of the containers being swapped.
-
   \[*Note 1*: The `end()` iterator does not refer to any element, so it
   can be invalidated. — *end note*\]
 
@@ -465,7 +450,6 @@ allocator unless it meets both of the following conditions:
 
 - The *qualified-id* `A::value_type` is valid and denotes a type
   [[temp.deduct]].
-
 - The expression `declval<A&>().allocate(size_t\{\})` is well-formed
   when treated as an unevaluated operand.
 
@@ -577,24 +561,19 @@ specializations of `allocator<T>` are not instantiated:
 
 - `T` is `X}` into X@*Cpp17DefaultInsertable* into `X` means that the
   following expression is well-formed:
-
   ``` cpp
   allocator_traits<A>::construct(m, p)
   ```
-
 - An element of `X` is *default-inserted* if it is initialized by
   evaluation of the expression
-
   ``` cpp
   allocator_traits<A>::construct(m, p)
   ```
 
   where `p` is the address of the uninitialized storage for the element
   allocated within `X`.
-
 - `T` is `X}` into X@*Cpp17MoveInsertable* into `X` means that the
   following expression is well-formed:
-
   ``` cpp
   allocator_traits<A>::construct(m, p, rv)
   ```
@@ -602,33 +581,26 @@ specializations of `allocator<T>` are not instantiated:
   and its evaluation causes the following postcondition to hold: The
   value of `*p` is equivalent to the value of `rv` before the
   evaluation.
-
   \[*Note 2*: `rv` remains a valid object. Its state is
   unspecified — *end note*\]
-
 - `T` is `X}` into X@*Cpp17CopyInsertable* into `X` means that, in
   addition to `T` being *Cpp17MoveInsertable* into `X`, the following
   expression is well-formed:
-
   ``` cpp
   allocator_traits<A>::construct(m, p, v)
   ```
 
   and its evaluation causes the following postcondition to hold: The
   value of `v` is unchanged and is equivalent to `*p`.
-
 - `T` is `X} from \tcode{args}` into X from
   args@*Cpp17EmplaceConstructible* into `X` from `args`, for zero or
   more arguments `args`, means that the following expression is
   well-formed:
-
   ``` cpp
   allocator_traits<A>::construct(m, p, args)
   ```
-
 - `T` is `X}` from X@*Cpp17Erasable* from `X` means that the following
   expression is well-formed:
-
   ``` cpp
   allocator_traits<A>::destroy(m, p)
   ```
@@ -643,17 +615,11 @@ In this subclause,
 
 - `X` denotes an allocator-aware container class with a `value_type` of
   `T` using an allocator of type `A`,
-
 - `u` denotes a variable,
-
 - `a` and `b` denote non-const lvalues of type `X`,
-
 - `c` denotes an lvalue of type `const X`,
-
 - `t` denotes an lvalue or a const rvalue of type `X`,
-
 - `rv` denotes a non-const rvalue of type `X`, and
-
 - `m` is a value of type `A`.
 
 A type `X` meets the allocator-aware container requirements if `X` meets
@@ -813,40 +779,25 @@ explain if you choose from the rest! — *end note*\]
 In this subclause,
 
 - `X` denotes a sequence container class,
-
 - `a` denotes a value of type `X` containing elements of type `T`,
-
 - `u` denotes the name of a variable being declared,
-
 - `A` denotes `X::allocator_type` if the *qualified-id*
   `X::allocator_type` is valid and denotes a type [[temp.deduct]] and
   `allocator<T>` if it doesn’t,
-
 - `i` and `j` denote iterators that meet the *Cpp17InputIterator*
   requirements and refer to elements implicitly convertible to
   `value_type`,
-
 - `[i, j)` denotes a valid range,
-
 - `rg` denotes a value of a type `R` that models
   `container-compatible-range<T>`,
-
 - `il` designates an object of type `initializer_list<value_type>`,
-
 - `n` denotes a value of type `X::size_type`,
-
 - `p` denotes a valid constant iterator to `a`,
-
 - `q` denotes a valid dereferenceable constant iterator to `a`,
-
 - `[q1, q2)` denotes a valid range of constant iterators in `a`,
-
 - `t` denotes an lvalue or a const rvalue of `X::value_type`, and
-
 - `rv` denotes a non-const rvalue of `X::value_type`.
-
 - `Args` denotes a template parameter pack;
-
 - `args` denotes a function parameter pack with the pattern `Args&&`.
 
 The complexities of the expressions are sequence dependent.
@@ -1117,7 +1068,6 @@ For `vector` and `deque`, also invalidates the past-the-end iterator.
 For every sequence container defined in this Clause and in [[strings]]:
 
 - If the constructor
-
   ``` cpp
   template<class InputIterator>
     X(InputIterator first, InputIterator last,
@@ -1127,9 +1077,7 @@ For every sequence container defined in this Clause and in [[strings]]:
   is called with a type `InputIterator` that does not qualify as an
   input iterator, then the constructor shall not participate in overload
   resolution.
-
 - If the member functions of the forms:
-
   ``` cpp
   template<class InputIterator>
     return-type F(const_iterator p,
@@ -1146,7 +1094,6 @@ For every sequence container defined in this Clause and in [[strings]]:
   are called with a type `InputIterator` that does not qualify as an
   input iterator, then these functions shall not participate in overload
   resolution.
-
 - A deduction guide for a sequence container shall not participate in
   overload resolution if it has an `InputIterator` template parameter
   and a type that does not qualify as an input iterator is deduced for
@@ -1455,13 +1402,10 @@ or `alloc_ == nh.alloc_`.
   `container_node_type` object pointed to by `ptr_` by calling
   `ator_traits::destroy`, then deallocates `ptr_` by calling
   `ator_traits::template rebind_traits<container_node_type>::deallocate`.
-
 - Assigns `nh.ptr_` to `ptr_`.
-
 - If `!alloc` or
   `ator_traits::propagate_on_container_move_assignment::value` is
   `true`, move assigns `nh.alloc_` to `alloc_`.
-
 - Assigns to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
 
 *Returns:* `*this`.
@@ -1632,71 +1576,45 @@ in their function parameter lists. — *end note*\]
 In this subclause,
 
 - `X` denotes an associative container class,
-
 - `a` denotes a value of type `X`,
-
 - `a2` denotes a value of a type with nodes compatible with type `X` (
   [[container.node.compat]]),
-
 - `b` denotes a value or type `X` or `const X`,
-
 - `u` denotes the name of a variable being declared,
-
 - `a_uniq` denotes a value of type `X` when `X` supports unique keys,
-
 - `a_eq` denotes a value of type `X` when `X` supports multiple keys,
-
 - `a_tran` denotes a value of type `X` or `const X` when the
   *qualified-id* `X::key_compare::is_transparent` is valid and denotes a
   type [[temp.deduct]],
-
 - `i` and `j` meet the *Cpp17InputIterator* requirements and refer to
   elements implicitly convertible to `value_type`,
-
 -  denotes a valid range,
-
 - `rg` denotes a value of a type `R` that models
   `container-compatible-range<value_type>`,
-
 - `p` denotes a valid constant iterator to `a`,
-
 - `q` denotes a valid dereferenceable constant iterator to `a`,
-
 - `r` denotes a valid dereferenceable iterator to `a`,
-
 - `[q1, q2)` denotes a valid range of constant iterators in `a`,
-
 - `il` designates an object of type `initializer_list<value_type>`,
-
 - `t` denotes a value of type `X::value_type`,
-
 - `k` denotes a value of type `X::key_type`, and
-
 - `c` denotes a value of type `X::key_compare` or
   `const X::key_compare`;
-
 - `kl` is a value such that `a` is partitioned [[alg.sorting]] with
   respect to `c(x, kl)`, with `x` the key value of `e` and `e` in `a`;
-
 - `ku` is a value such that `a` is partitioned with respect to
   `!c(ku, x)`, with `x` the key value of `e` and `e` in `a`;
-
 - `ke` is a value such that `a` is partitioned with respect to
   `c(x, ke)` and `!c(ke, x)`, with `c(x, ke)` implying `!c(ke, x)` and
   with `x` the key value of `e` and `e` in `a`;
-
 - `kx` is a value such that
-
   - `a` is partitioned with respect to `c(x, kx)` and `!c(kx, x)`, with
     `c(x, kx)` implying `!c(kx, x)` and with `x` the key value of `e`
     and `e` in `a`, and
-
   - `kx` is not convertible to either `iterator` or `const_iterator`;
     and
-
 - `A` denotes the storage allocator used by `X`, if any, or
   `allocator<X::value_type>` otherwise,
-
 - `m` denotes an allocator of a type convertible to `A`, and `nh`
   denotes a non-const rvalue of type `X::node_type`.
 
@@ -2425,10 +2343,8 @@ overload resolution if any of the following are true:
 
 - It has an `InputIterator` template parameter and a type that does not
   qualify as an input iterator is deduced for that parameter.
-
 - It has an `Allocator` template parameter and a type that does not
   qualify as an allocator is deduced for that parameter.
-
 - It has a `Compare` template parameter and a type that qualifies as an
   allocator is deduced for that parameter.
 
@@ -2528,76 +2444,46 @@ the relative ordering of equivalent elements.
 In this subclause,
 
 - `X` denotes an unordered associative container class,
-
 - `a` denotes a value of type `X`,
-
 - `a2` denotes a value of a type with nodes compatible with type `X` (
   [[container.node.compat]]),
-
 - `b` denotes a value of type `X` or `const X`,
-
 - `a_uniq` denotes a value of type `X` when `X` supports unique keys,
-
 - `a_eq` denotes a value of type `X` when `X` supports equivalent keys,
-
 - `a_tran` denotes a value of type `X` or `const X` when the
   *qualified-id*s `X::key_equal::is_transparent` and
   `X::hasher::is_transparent` are both valid and denote types
   [[temp.deduct]],
-
 - `i` and `j` denote input iterators that refer to `value_type`,
-
 - `[i, j)` denotes a valid range,
-
 - `rg` denotes a value of a type `R` that models
   `container-compatible-range<value_type>`,
-
 - `p` and `q2` denote valid constant iterators to `a`,
-
 - `q` and `q1` denote valid dereferenceable constant iterators to `a`,
-
 - `r` denotes a valid dereferenceable iterator to `a`,
-
 - `[q1, q2)` denotes a valid range in `a`,
-
 - `il` denotes a value of type `initializer_list<value_type>`,
-
 - `t` denotes a value of type `X::value_type`,
-
 - `k` denotes a value of type `key_type`,
-
 - `hf` denotes a value of type `hasher` or `const hasher`,
-
 - `eq` denotes a value of type `key_equal` or `const key_equal`,
-
 - `ke` is a value such that
-
   - `eq(r1, ke) == eq(ke, r1)`,
-
   - `hf(r1) == hf(ke)` if `eq(r1, ke)` is `true`, and
-
   - if any two of `eq(r1, ke)`, `eq(r2, ke)`, and `eq(r1, r2)` are
     `true`, then all three are `true`,
 
   where `r1` and `r2` are keys of elements in `a_tran`,
-
 - `kx` is a value such that
-
   - `eq(r1, kx) == eq(kx, r1)`,
-
   - `hf(r1) == hf(kx)` if `eq(r1, kx)` is `true`,
-
   - if any two of `eq(r1, kx)`, `eq(r2, kx)`, and `eq(r1, r2)` are
     `true`, then all three are `true`, and
-
   - `kx` is not convertible to either `iterator` or `const_iterator`,
 
   where `r1` and `r2` are keys of elements in `a_tran`,
-
 - `n` denotes a value of type `size_type`,
-
 - `z` denotes a value of type `float`, and
-
 - `nh` denotes an rvalue of type `X::node_type`.
 
 A type `X` meets the *unordered associative container* requirements if
@@ -3568,13 +3454,10 @@ participate in overload resolution if any of the following are true:
 
 - It has an `InputIterator` template parameter and a type that does not
   qualify as an input iterator is deduced for that parameter.
-
 - It has an `Allocator` template parameter and a type that does not
   qualify as an allocator is deduced for that parameter.
-
 - It has a `Hash` template parameter and an integral type or a type that
   qualifies as an allocator is deduced for that parameter.
-
 - It has a `Pred` template parameter and a type that qualifies as an
   allocator is deduced for that parameter.
 
@@ -9302,26 +9185,19 @@ overload resolution if any of the following are true:
 
 - It has an `InputIterator` template parameter and a type that does not
   qualify as an input iterator is deduced for that parameter.
-
 - It has a `Compare` template parameter and a type that qualifies as an
   allocator is deduced for that parameter.
-
 - It has a `Container`, `KeyContainer`, or `MappedContainer` template
   parameter and a type that qualifies as an allocator is deduced for
   that parameter.
-
 - It has no `Container`, `KeyContainer`, or `MappedContainer` template
   parameter, and it has an `Allocator` template parameter, and a type
   that does not qualify as an allocator is deduced for that parameter.
-
 - It has both `Container` and `Allocator` template parameters, and
   `uses_allocator_v<Container, Allocator>` is `false`.
-
 - It has both `KeyContainer` and `Allocator` template parameters, and
   `uses_allocator_v<KeyContainer, Allocator>` is `false`.
-
 - It has both `KeyContainer` and `Compare` template parameters, and
-
   ``` cpp
   is_invocable_v<const Compare&,
                 const typename KeyContainer::value_type&,
@@ -9329,7 +9205,6 @@ overload resolution if any of the following are true:
   ```
 
   is not a valid expression or is `false`.
-
 - It has both `MappedContainer` and `Allocator` template parameters, and
   `uses_allocator_v<MappedContainer, Allocator>` is `false`.
 
@@ -10369,10 +10244,8 @@ associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
   [[container.node]],
-
 - it does not meet the requirements related to iterator invalidation,
   and
-
 - the time complexity of the operations that insert or erase a single
   element from the map is linear, including the ones that take an
   insertion position iterator.
@@ -10393,9 +10266,7 @@ where there is additional semantic information.
 A `flat_map` maintains the following invariants:
 
 - it contains the same number of keys and values;
-
 - the keys are sorted with respect to the comparison object; and
-
 - the value at offset `off` within the value container is the value
   associated with the key at offset `off` within the key container.
 
@@ -11129,11 +11000,8 @@ template<class K, class... Args>
 
 - The *qualified-id* `Compare::is_transparent` is valid and denotes a
   type.
-
 - `is_constructible_v<key_type, K>` is `true`.
-
 - `is_constructible_v<mapped_type, Args...>` is `true`.
-
 - For the first overload, `is_convertible_v<K&&, const_iterator>` and
   `is_convertible_v<K&&, iterator>` are both `false`.
 
@@ -11206,11 +11074,8 @@ template<class K, class M>
 
 - The *qualified-id* `Compare::is_transparent` is valid and denotes a
   type.
-
 - `is_constructible_v<key_type, K>` is `true`.
-
 - `is_assignable_v<mapped_type&, M>` is `true`.
-
 - `is_constructible_v<mapped_type, M>` is `true`.
 
 *Preconditions:* The conversion from `k` into `key_type` constructs an
@@ -11320,10 +11185,8 @@ associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
   [[container.node]],
-
 - it does not meet the requirements related to iterator invalidation,
   and
-
 - the time complexity of the operations that insert or erase a single
   element from the map is linear, including the ones that take an
   insertion position iterator.
@@ -11348,9 +11211,7 @@ non-unique elements after sorting them. — *end example*\]
 A `flat_multimap` maintains the following invariants:
 
 - it contains the same number of keys and values;
-
 - the keys are sorted with respect to the comparison object; and
-
 - the value at offset `off` within the value container is the value
   associated with the key at offset `off` within the key container.
 
@@ -11840,10 +11701,8 @@ associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
   [[container.node.overview]],
-
 - it does not meet the requirements related to iterator invalidation,
   and
-
 - the time complexity of the operations that insert or erase a single
   element from the set is linear, including the ones that take an
   insertion position iterator.
@@ -12375,10 +12234,8 @@ associative container [[associative.reqmts]], except that:
 
 - it does not meet the requirements related to node handles
   [[container.node.overview]],
-
 - it does not meet the requirements related to iterator invalidation,
   and
-
 - the time complexity of the operations that insert or erase a single
   element from the set is linear, including the ones that take an
   insertion position iterator.
@@ -13076,18 +12933,14 @@ template<class It>
 *Constraints:* Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 
 - `It` satisfies `contiguous_iterator`.
-
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-
   \[*Note 3*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*\]
 
 *Preconditions:*
 
 - \[`first`, `first + count`) is a valid range.
-
 - `It` models `contiguous_iterator`.
-
 - If `extent` is not equal to `dynamic_extent`, then `count` is equal to
   `extent`.
 
@@ -13104,25 +12957,18 @@ template<class It, class End>
 *Constraints:* Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-
   \[*Note 4*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*\]
-
 - `It` satisfies `contiguous_iterator`.
-
 - `End` satisfies `sized_sentinel_for``<It>`.
-
 - `is_convertible_v<End, size_t>` is `false`.
 
 *Preconditions:*
 
 - If `extent` is not equal to `dynamic_extent`, then `last - first` is
   equal to `extent`.
-
 - \[`first`, `last`) is a valid range.
-
 - `It` models `contiguous_iterator`.
-
 - `End` models `sized_sentinel_for``<It>`.
 
 *Effects:* Initializes *`data_`* with `to_address(first)` and *`size_`*
@@ -13139,9 +12985,7 @@ template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 *Constraints:* Let `U` be `remove_pointer_t<decltype(data(arr))>`.
 
 - `extent == dynamic_extent || N == extent` is `true`, and
-
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-
   \[*Note 5*: The intent is to allow only qualification conversions of
   the array element type to `element_type`. — *end note*\]
 
@@ -13161,18 +13005,12 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 
 - `R` satisfies `ranges::``contiguous_range` and
   `ranges::``sized_range`.
-
 - Either `R` satisfies `ranges::``borrowed_range` or
   `is_const_v<element_type>` is `true`.
-
 - `remove_cvref_t<R>` is not a specialization of `span`.
-
 - `remove_cvref_t<R>` is not a specialization of `array`.
-
 - `is_array_v<remove_cvref_t<R>>` is `false`.
-
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-
   \[*Note 6*: The intent is to allow only qualification conversions of
   the range reference type to `element_type`. — *end note*\]
 
@@ -13180,9 +13018,7 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 
 - If `extent` is not equal to `dynamic_extent`, then `ranges::size(r)`
   is equal to `extent`.
-
 - `R` models `ranges::``contiguous_range` and `ranges::``sized_range`.
-
 - If `is_const_v<element_type>` is `false`, `R` models
   `ranges::``borrowed_range`.
 
@@ -13206,10 +13042,8 @@ template<class OtherElementType, size_t OtherExtent>
 
 - `extent == dynamic_extent` `||` `OtherExtent == dynamic_extent` `||`
   `extent == OtherExtent` is `true`, and
-
 - `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
   `true`.
-
   \[*Note 7*: The intent is to allow only qualification conversions of
   the `OtherElementType` to `element_type`. — *end note*\]
 
@@ -13480,7 +13314,6 @@ multidimensional index space S (or representation thereof) if both of
 the following are true:
 
 - `sizeof...(idx)` is equal to the rank of S, and
-
 - for every rank index i of S, the $i^\text{th}$ value of `idx` is an
   integer in the interval [Lᵢ, Uᵢ) of S.
 
@@ -13574,7 +13407,6 @@ namespace std {
 ```
 
 - `IndexType` is a signed or unsigned integer type, and
-
 - each element of `Extents` is either equal to `dynamic_extent`, or is
   representable as a value of type `IndexType`.
 
@@ -13638,7 +13470,6 @@ template<class OtherIndexType>
 
 - If `OtherIndexType` is an integral type other than `bool`, then
   equivalent to `return i;`,
-
 - otherwise, equivalent to `return static_cast<index_type>(i);`.
 
 \[*Note 1*: This function will always return an integral type other than
@@ -13658,7 +13489,6 @@ template<class OtherIndexType, size_t... OtherExtents>
 *Constraints:*
 
 - `sizeof...(OtherExtents) == rank()` is `true`.
-
 - `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents ==Extents) && ...)`
   is `true`.
 
@@ -13666,11 +13496,8 @@ template<class OtherIndexType, size_t... OtherExtents>
 
 - `other.extent(`r`)` equals $E_r$ for each r for which $E_r$ is a
   static extent, and
-
 - either
-
   - `sizeof...(OtherExtents)` is zero, or
-
   - `other.extent(`r`)` is representable as a value of type `index_type`
     for every rank index r of `other`.
 
@@ -13695,12 +13522,9 @@ Let `N` be `sizeof...(OtherIndexTypes)`, and let `exts_arr` be
 *Constraints:*
 
 - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
-
 - `(is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)` is
   `true`, and
-
 - `N == rank_dynamic() || N == rank()` is `true`.
-
   \[*Note 8*: One can construct `extents` from just dynamic extents,
   which are all the values getting stored, or from all the extents with
   a precondition. — *end note*\]
@@ -13709,11 +13533,8 @@ Let `N` be `sizeof...(OtherIndexTypes)`, and let `exts_arr` be
 
 - If `N != rank_dynamic()` is `true`, `exts_arr[`r`]` equals $E_r$ for
   each r for which $E_r$ is a static extent, and
-
 - either
-
   - `sizeof...(exts) == 0` is `true`, or
-
   - each element of `exts` is nonnegative and is representable as a
     value of type `index_type`.
 
@@ -13731,21 +13552,16 @@ template<class OtherIndexType, size_t N>
 *Constraints:*
 
 - `is_convertible_v<const OtherIndexType&, index_type>` is `true`,
-
 - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is
   `true`, and
-
 - `N == rank_dynamic() || N == rank()` is `true`.
 
 *Preconditions:*
 
 - If `N != rank_dynamic()` is `true`, `exts[`r`]` equals $E_r$ for each
   r for which $E_r$ is a static extent, and
-
 - either
-
   - `N` is zero, or
-
   - `exts[`r`]` is nonnegative and is representable as a value of type
     `index_type` for every rank index r.
 
@@ -13754,7 +13570,6 @@ template<class OtherIndexType, size_t N>
 - If `N` equals `dynamic_rank()`, for all d in the range
   $[0, \texttt{rank_dynamic()})$, direct-non-list-initializes `[`d`]`
   with `as_const(exts[`d`])`.
-
 - Otherwise, for all d in the range $[0, \texttt{rank_dynamic()})$,
   direct-non-list-initializes `[`d`]` with `as_const(exts[(`d`)])`.
 
@@ -13816,17 +13631,12 @@ In subclauses [[mdspan.layout.reqmts]] and
 [[mdspan.layout.policy.reqmts]]:
 
 - `M` denotes a layout mapping class.
-
 - `m` denotes a (possibly const) value of type `M`.
-
 - `i` and `j` are packs of (possibly const) integers that are
   multidimensional indices in `m.extents()` [[mdspan.overview]].
-
   \[*Note 9*: The type of each element of the packs can be a different
   integer type. — *end note*\]
-
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
-
 - $\tcode{d}_r$ is a pack of (possibly const) integers for which
   `sizeof...($\tcode{d}_r$) == M::extents_type::rank()` is `true`, the
   $r^\text{th}$ element is equal to 1, and all other elements are equal
@@ -13847,13 +13657,9 @@ constexpr bool is-mapping-of =  // exposition only
 A type `M` meets the *layout mapping* requirements if
 
 - `M` models `copyable` and `equality_comparable`,
-
 - `is_nothrow_move_constructible_v<M>` is `true`,
-
 - `is_nothrow_move_assignable_v<M>` is `true`,
-
 - `is_nothrow_swappable_v<M>` is `true`, and
-
 - the following types and expressions are well-formed and have the
   specified semantics.
 
@@ -14148,7 +13954,6 @@ template<class OtherExents>
 *Constraints:*
 
 - `extents_type::rank() <= 1` is `true`, and
-
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
@@ -14171,7 +13976,6 @@ template<class OtherExtents>
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
   $[0, \texttt{extents_type::rank()})$, `other.stride(`r`)` equals
   `other.extents().`*`fwd-prod-of-extents`*`(`r`)`, and
-
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
 
@@ -14194,9 +13998,7 @@ template<class... Indices>
 *Constraints:*
 
 - `sizeof...(Indices) == extents_type::rank()` is `true`,
-
 - `(is_convertible_v<Indices, index_type> && ...)` is `true`, and
-
 - `(is_nothrow_constructible_v<index_type, Indices> && ...)` is `true`.
 
 *Preconditions:* `extents_type::`*`index-cast`*`(i)` is a
@@ -14339,7 +14141,6 @@ template<class OtherExtents>
 *Constraints:*
 
 - `extents_type::rank() <= 1` is `true`, and
-
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
@@ -14362,7 +14163,6 @@ template<class OtherExtents>
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
   $[0, \texttt{extents_type::rank()})$, `other.stride(`r`)` equals
   `other.extents().`*`rev-prod-of-extents`*`(`r`)`.
-
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
 
@@ -14385,9 +14185,7 @@ template<class... Indices>
 *Constraints:*
 
 - `sizeof...(Indices) == extents_type::rank()` is `true`,
-
 - `(is_convertible_v<Indices, index_type> && ...)` is `true`, and
-
 - `(is_nothrow_constructible_v<index_type, Indices> && ...)` is `true`.
 
 *Preconditions:* `extents_type::`*`index-cast`*`(i)` is a
@@ -14503,20 +14301,16 @@ type `typename Extents::index_type`.
 Let `REQUIRED-SPAN-SIZE(e, strides)` be:
 
 - `1`, if `e.rank() == 0` is `true`,
-
 - otherwise `0`, if the size of the multidimensional index space `e` is
   0,
-
 - otherwise `1` plus the sum of products of `(e.extent($r$) - 1)` and
   `strides[$r$]` for all r in the range $[0, \tcode{e.rank()})$.
 
 Let `OFFSET(m)` be:
 
 - `m()`, if `e.rank() == 0` is `true`,
-
 - otherwise `0`, if the size of the multidimensional index space `e` is
   0,
-
 - otherwise `m(z...)` for a pack of integers `z` that is a
   multidimensional index in `m.extents()` and each element of `z` equals
   0.
@@ -14577,23 +14371,19 @@ template<class OtherIndexType>
 *Constraints:*
 
 - `is_convertible_v<const OtherIndexType&, index_type>` is `true`, and
-
 - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is
   `true`.
 
 *Preconditions:*
 
 - `s[`i`] > 0` is `true` for all i in the range $[0, \textit{rank_})$.
-
 - *`REQUIRED-SPAN-SIZE`*`(e, s)` is representable as a value of type
   `index_type`[[basic.fundamental]].
-
 - If *rank\_* is greater than 0, then there exists a permutation P of
   the integers in the range $[0, \textit{rank_})$, such that
   `s[`pᵢ`] >= s[`$p_{i-1}$`] * e.extent(p`$_{i-1}$`)` is `true` for all
   i in the range $[1, \textit{rank_})$, where pᵢ is the $i^\text{th}$
   element of P.
-
   \[*Note 10*: For `layout_stride`, this condition is necessary and
   sufficient for `is_unique()` to be `true`. — *end note*\]
 
@@ -14610,26 +14400,20 @@ template<class StridedLayoutMapping>
 *Constraints:*
 
 - `layout-mapping-alike``<StridedLayoutMapping>` is satisfied.
-
 - `is_constructible_v<extents_type, typename StridedLayoutMapping::extents_type>`
   is  
   `true`.
-
 - `StridedLayoutMapping::is_always_unique()` is `true`.
-
 - `StridedLayoutMapping::is_always_strided()` is `true`.
 
 *Preconditions:*
 
 - `StridedLayoutMapping` meets the layout mapping
   requirements [[mdspan.layout.policy.reqmts]],
-
 - `other.stride(`r`) > 0` is `true` for every rank index r of
   `extents()`,
-
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]], and
-
 - *`OFFSET`*`(other) == 0` is `true`.
 
 *Effects:* Direct-non-list-initializes *extents\_* with
@@ -14662,9 +14446,7 @@ template<class... Indices>
 *Constraints:*
 
 - `sizeof...(Indices) == `*`rank_`* is `true`,
-
 - `(is_convertible_v<Indices, index_type> && ...)` is `true`, and
-
 - `(is_nothrow_constructible_v<index_type, Indices> && ...)` is `true`.
 
 *Preconditions:* `extents_type::`*`index-cast`*`(i)` is a
@@ -14689,14 +14471,12 @@ constexpr bool is_exhaustive() const noexcept;
 *Returns:*
 
 - `true` if *rank\_* is 0.
-
 - Otherwise, `true` if there is a permutation P of the integers in the
   range $[0, \textit{rank_})$ such that `stride(`p₀`)` equals 1, and
   `stride(`pᵢ`)` equals
   `stride(`$p_{i-1}$`) * extents().extent(`$p_{i-1}$`)` for i in the
   range $[1, \textit{rank_})$, where pᵢ is the $i^\text{th}$ element of
   P.
-
 - Otherwise, `false`.
 
 ``` cpp
@@ -14707,9 +14487,7 @@ template<class OtherMapping>
 *Constraints:*
 
 - `layout-mapping-alike``<OtherMapping>` is satisfied.
-
 - *`rank_`*` == OtherMapping::extents_type::rank()` is `true`.
-
 - `OtherMapping::is_always_strided()` is `true`.
 
 *Preconditions:* `OtherMapping` meets the layout mapping
@@ -14735,15 +14513,11 @@ policy’s `access` function produces a valid reference to an object.
 In subclause [[mdspan.accessor.reqmts]],
 
 - `A` denotes an accessor policy.
-
 - `a` denotes a value of type `A` or `const A`.
-
 - `p` denotes a value of type `A::data_handle_type` or
   `const A::data_handle_type`.
-
   \[*Note 11*: The type `A::data_handle_type` need not be
   dereferenceable. — *end note*\]
-
 - `n`, `i`, and `j` each denote values of type `size_t`.
 
 ##### Requirements <a id="mdspan.accessor.reqmts">[[mdspan.accessor.reqmts]]</a>
@@ -14751,13 +14525,9 @@ In subclause [[mdspan.accessor.reqmts]],
 A type `A` meets the accessor policy requirements if
 
 - `A` models `copyable`,
-
 - `is_nothrow_move_constructible_v<A>` is `true`,
-
 - `is_nothrow_move_assignable_v<A>` is `true`,
-
 - `is_nothrow_swappable_v<A>` is `true`, and
-
 - the following types and expressions are well-formed and have the
   specified semantics.
 
@@ -14796,9 +14566,7 @@ typename A::offset_policy
 *Result:* A type `OP` such that:
 
 - `OP` meets the accessor policy requirements,
-
 - `constructible_from``<OP, const A&>` is modeled, and
-
 - `is_same_v<typename OP::element_type, typename A::element_type>` is
   `true`.
 
@@ -14828,7 +14596,6 @@ and `a`:
 
 - $[0, \texttt{n} - \texttt{i})$ is an accessible range of `q` and `b`;
   and
-
 - `b.access(q, j)` provides access to the same element as
   `a.access(p, i + j)`, for every `j` in the range
   $[0, \texttt{n} - \texttt{i})$.
@@ -15029,9 +14796,7 @@ namespace std {
 
 - `ElementType` is a complete object type that is neither an abstract
   class type nor an array type,
-
 - `Extents` is a specialization of `extents`, and
-
 - `is_same_v<ElementType, typename AccessorPolicy::element_type>`
   is `true`.
 
@@ -15042,9 +14807,7 @@ accessor policy requirements [[mdspan.accessor.reqmts]].
 Each specialization `MDS` of `mdspan` models `copyable` and
 
 - `is_nothrow_move_constructible_v<MDS>` is `true`,
-
 - `is_nothrow_move_assignable_v<MDS>` is `true`, and
-
 - `is_nothrow_swappable_v<MDS>` is `true`.
 
 A specialization of `mdspan` is a trivially copyable type if its
@@ -15060,11 +14823,8 @@ constexpr mdspan();
 *Constraints:*
 
 - `rank_dynamic() > 0` is `true`.
-
 - `is_default_constructible_v<data_handle_type>` is `true`.
-
 - `is_default_constructible_v<mapping_type>` is `true`.
-
 - `is_default_constructible_v<accessor_type>` is `true`.
 
 *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
@@ -15083,14 +14843,10 @@ Let `N` be `sizeof...(OtherIndexTypes)`.
 *Constraints:*
 
 - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
-
 - `(is_nothrow_constructible<index_type, OtherIndexTypes> && ...)` is
   `true`,
-
 - `N == rank() || N == rank_dynamic()` is `true`,
-
 - `is_constructible_v<mapping_type, extents_type>` is `true`, and
-
 - `is_default_constructible_v<accessor_type>` is `true`.
 
 *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
@@ -15100,10 +14856,8 @@ an accessible range of `p` and *acc\_* for the values of *map\_* and
 *Effects:*
 
 - Direct-non-list-initializes *ptr\_* with `std::move(p)`,
-
 - direct-non-list-initializes *map\_* with
   `extents_type(static_cast<index_type>(std::move(exts))...)`, and
-
 - value-initializes *acc\_*.
 
 ``` cpp
@@ -15118,14 +14872,10 @@ template<class OtherIndexType, size_t N>
 *Constraints:*
 
 - `is_convertible_v<const OtherIndexType&, index_type>` is `true`,
-
 - `(is_nothrow_constructible<index_type, const OtherIndexType&> && ...)`
   is `true`,
-
 - `N == rank() || N == rank_dynamic()` is `true`,
-
 - `is_constructible_v<mapping_type, extents_type>` is `true`, and
-
 - `is_default_constructible_v<accessor_type>` is `true`.
 
 *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
@@ -15135,9 +14885,7 @@ an accessible range of `p` and *acc\_* for the values of *map\_* and
 *Effects:*
 
 - Direct-non-list-initializes *ptr\_* with `std::move(p)`,
-
 - direct-non-list-initializes *map\_* with `extents_type(exts)`, and
-
 - value-initializes *acc\_*.
 
 ``` cpp
@@ -15147,7 +14895,6 @@ constexpr mdspan(data_handle_type p, const extents_type& ext);
 *Constraints:*
 
 - `is_constructible_v<mapping_type, const extents_type&>` is `true`, and
-
 - `is_default_constructible_v<accessor_type>` is `true`.
 
 *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
@@ -15157,9 +14904,7 @@ an accessible range of `p` and *acc\_* for the values of *map\_* and
 *Effects:*
 
 - Direct-non-list-initializes *ptr\_* with `std::move(p)`,
-
 - direct-non-list-initializes *map\_* with `ext`, and
-
 - value-initializes *acc\_*.
 
 ``` cpp
@@ -15175,9 +14920,7 @@ of this constructor.
 *Effects:*
 
 - Direct-non-list-initializes *ptr\_* with `std::move(p)`,
-
 - direct-non-list-initializes *map\_* with `m`, and
-
 - value-initializes *acc\_*.
 
 ``` cpp
@@ -15190,9 +14933,7 @@ range of `p` and `a`.
 *Effects:*
 
 - Direct-non-list-initializes *ptr\_* with `std::move(p)`,
-
 - direct-non-list-initializes *map\_* with `m`, and
-
 - direct-non-list-initializes *acc\_* with `a`.
 
 ``` cpp
@@ -15207,14 +14948,12 @@ template<class OtherElementType, class OtherExtents,
 
 - `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth-erExtents>&>`
   is `true`, and
-
 - `is_constructible_v<accessor_type, const OtherAccessor&>` is `true`.
 
 *Mandates:*
 
 - `is_constructible_v<data_handle_type, const OtherAccessor::data_handle_type&>`
   is`true`, and
-
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:*
@@ -15222,7 +14961,6 @@ template<class OtherElementType, class OtherExtents,
 - For each rank index `r` of `extents_type`,
   `static_extent(r) == dynamic_extent || static_extent(r) == other.extent(r)`
   is `true`.
-
 - $[0, \texttt{\textit{map_}.required_span_size()})$ is an accessible
   range of *ptr\_* and *acc\_* for values of *ptr\_*, *map\_*, and
   *acc\_* after the invocation of this constructor.
@@ -15230,9 +14968,7 @@ template<class OtherElementType, class OtherExtents,
 *Effects:*
 
 - Direct-non-list-initializes *ptr\_* with `other.`*`ptr_`*,
-
 - direct-non-list-initializes *map\_* with `other.`*`map_`*, and
-
 - direct-non-list-initializes *acc\_* with `other.`*`acc_`*.
 
 *Remarks:* The expression inside `explicit` is equivalent to:
@@ -15252,10 +14988,8 @@ template<class... OtherIndexTypes>
 *Constraints:*
 
 - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
-
 - `(is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)` is
   `true`, and
-
 - `sizeof...(OtherIndexTypes) == rank()` is `true`.
 
 Let `I` be `extents_type::`*`index-cast`*`(std::move(indices))`.
@@ -15282,7 +15016,6 @@ template<class OtherIndexType>
 *Constraints:*
 
 - `is_convertible_v<const OtherIndexType&, index_type>` is `true`, and
-
 - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is
   `true`.
 

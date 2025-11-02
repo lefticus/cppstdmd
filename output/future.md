@@ -391,13 +391,10 @@ are:
 
 - `allocated`, set when a dynamic array object has been allocated, and
   hence will be freed by the destructor for the `strstreambuf` object;
-
 - `constant`, set when the array object has `const` elements, so the
   output sequence cannot be written;
-
 - `dynamic`, set when the array object is allocated (or reallocated) as
   necessary to hold a character sequence that can change in length;
-
 - `frozen`, set when the program has requested that the array object not
   be altered, reallocated, or freed.
 
@@ -409,12 +406,9 @@ For the sake of exposition, the maintained data is presented here as:
 
 - `strstate strmode`, the attributes of the array object associated with
   the `strstreambuf` object;
-
 - `int alsize`, the suggested minimum size for a dynamic array object;
-
 - `void* (*palloc)(size_t)`, points to the function to call to allocate
   a dynamic array object;
-
 - `void (*pfree)(void*)`, points to the function to call to free a
   dynamic array object.
 
@@ -479,11 +473,8 @@ depr.strstreambuf.cons.ptr ll ElementValue `strmode` & 0
 number of elements `N` is determined as follows:
 
 - If `n > 0`, `N` is `n`.
-
 - If `n == 0`, `N` is `std::strlen(gnext_arg)`.
-
 - If `n < 0`, `N` is `INT_MAX`.
-
   The function signature `strlen(const char*)` is declared in . The
   macro `INT_MAX` is defined in .
 
@@ -529,7 +520,6 @@ void freeze(bool freezefl = true);
 of the dynamic array object as follows:
 
 - If `freezefl` is `true`, the function sets `frozen` in `strmode`.
-
 - Otherwise, it clears `frozen` in `strmode`.
 
 ``` cpp
@@ -562,11 +552,8 @@ sequence, if possible, in one of two ways:
 - If `c != EOF` and if either the output sequence has a write position
   available or the function makes a write position available (as
   described below), assigns `c` to `*pnext++`.
-
   Returns `(unsigned char)c`.
-
 - If `c == EOF`, there is no character to append.
-
   Returns a value other than `EOF`.
 
 Returns `EOF` to indicate failure.
@@ -605,17 +592,12 @@ possible, in one of three ways:
 
 - If `c != EOF`, if the input sequence has a putback position available,
   and if `(char)c == gnext[-1]`, assigns `gnext - 1` to `gnext`.
-
   Returns `c`.
-
 - If `c != EOF`, if the input sequence has a putback position available,
   and if `strmode & constant` is zero, assigns `c` to `*–gnext`.
-
   Returns `c`.
-
 - If `c == EOF` and if the input sequence has a putback position
   available, assigns `gnext - 1` to `gnext`.
-
   Returns a value other than `EOF`.
 
 Returns `EOF` to indicate failure.
@@ -633,12 +615,10 @@ stream position past it, as follows:
 
 - If the input sequence has a read position available, the function
   signals success by returning `(unsigned char)gnext`.
-
 - Otherwise, if the current write next pointer `pnext` is not a null
   pointer and is greater than the current read end pointer `gend`, makes
   a available by assigning to `gend` a value greater than `gnext` and no
   greater than `pnext`.
-
   Returns `(unsigned char)*gnext`.
 
 Returns `EOF` to indicate failure.
@@ -702,9 +682,7 @@ sequences, if possible, to correspond to the stream position stored in
 `sp` (as described below).
 
 - If `(which & ios::in) != 0`, positions the input sequence.
-
 - If `(which & ios::out) != 0`, positions the output sequence.
-
 - If the function positions neither sequence, the positioning operation
   fails.
 
@@ -715,7 +693,6 @@ the positioning operation fails. Otherwise, the function determines
 - If `newoff` is an invalid stream position, has a negative value, or
   has a value greater than (`seekhigh - seeklow`), the positioning
   operation fails
-
 - Otherwise, the function adds `newoff` to the beginning pointer `xbeg`
   and stores the result in the next pointer `xnext`.
 
@@ -841,14 +818,11 @@ one of two constructors:
 
 - If `(mode & app) == 0`, then `s` shall designate the first element of
   an array of `n` elements.
-
   The constructor is `strstreambuf(s, n, s)`.
-
 - If `(mode & app) != 0`, then `s` shall designate the first element of
   an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
   `strstreambuf(s, n, s + std::strlen(s))`.
-
   The function signature `strlen(const char*)` is declared in .
 
 #### Member functions <a id="depr.ostrstream.members">[[depr.ostrstream.members]]</a>
@@ -935,7 +909,6 @@ with one of the two constructors:
 
 - If `(mode & app) == 0`, then `s` shall designate the first element of
   an array of `n` elements. The constructor is `strstreambuf(s,n,s)`.
-
 - If `(mode & app) != 0`, then `s` shall designate the first element of
   an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
@@ -1170,7 +1143,6 @@ Then specializations of each of the two templates meet the
 that names the following type:
 
 - for the first specialization, `add_volatile_t<TE>`, and
-
 - for the second specialization, `add_cv_t<TE>`.
 
 In addition to being available via inclusion of the header, the two
@@ -1211,7 +1183,6 @@ Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
 that names the following type:
 
 - for the first specialization, `add_volatile_t<VA::type>`, and
-
 - for the second specialization, `add_cv_t<VA::type>`.
 
 ## Deprecated `iterator` class template <a id="depr.iterator">[[depr.iterator]]</a>
@@ -1527,23 +1498,18 @@ For each of the three code conversion facets `codecvt_utf8`,
 
 - `Elem` is the wide-character type, such as `wchar_t`, `char16_t`, or
   `char32_t`.
-
 - `Maxcode` is the largest wide-character code that the facet will read
   or write without reporting a conversion error.
-
 - If `(Mode & consume_header)`, the facet shall consume an initial
   header sequence, if present, when reading a multibyte sequence to
   determine the endianness of the subsequent multibyte sequence to be
   read.
-
 - If `(Mode & generate_header)`, the facet shall generate an initial
   header sequence when writing a multibyte sequence to advertise the
   endianness of the subsequent multibyte sequence to be written.
-
 - If `(Mode & little_endian)`, the facet shall generate a multibyte
   sequence in little-endian order, as opposed to the default big-endian
   order.
-
 - UCS-2 is the same encoding as UTF-16, except that it encodes scalar
   values in the range `U+0000`–`U+ffff` (Basic Multilingual Plane) only.
 
@@ -1551,10 +1517,8 @@ For the facet `codecvt_utf8`:
 
 - The facet shall convert between UTF-8 multibyte sequences and UCS-2 or
   UTF-32 (depending on the size of `Elem`).
-
 - Endianness shall not affect how multibyte sequences are read or
   written.
-
 - The multibyte sequences may be written as either a text or a binary
   file.
 
@@ -1562,10 +1526,8 @@ For the facet `codecvt_utf16`:
 
 - The facet shall convert between UTF-16 multibyte sequences and UCS-2
   or UTF-32 (depending on the size of `Elem`).
-
 - Multibyte sequences shall be read or written according to the `Mode`
   flag, as set out above.
-
 - The multibyte sequences may be written only as a binary file.
   Attempting to write to a text file produces undefined behavior.
 
@@ -1573,10 +1535,8 @@ For the facet `codecvt_utf8_utf16`:
 
 - The facet shall convert between UTF-8 multibyte sequences and UTF-16
   (one or two 16-bit codes) within the program.
-
 - Endianness shall not affect how multibyte sequences are read or
   written.
-
 - The multibyte sequences may be written as either a text or a binary
   file.
 
@@ -1680,14 +1640,10 @@ char, mbstate_t>`.
 An object of this class template stores:
 
 - `byte_err_string` — a byte string to display on errors
-
 - `wide_err_string` — a wide string to display on errors
-
 - `cvtptr` — a pointer to the allocated conversion object (which is
   freed when the `wstring_convert` object is destroyed)
-
 - `cvtstate` — a conversion state object
-
 - `cvtcount` — a conversion count
 
 ``` cpp
@@ -1715,7 +1671,6 @@ In all cases:
 - If the `cvtstate` object was not constructed with an explicit value,
   it shall be set to its default value (the initial conversion state)
   before the conversion begins. Otherwise it shall be left unchanged.
-
 - The number of input elements successfully converted shall be stored in
   `cvtcount`.
 
@@ -1750,7 +1705,6 @@ In all cases:
 - If the `cvtstate` object was not constructed with an explicit value,
   it shall be set to its default value (the initial conversion state)
   before the conversion begins. Otherwise it shall be left unchanged.
-
 - The number of input elements successfully converted shall be stored in
   `cvtcount`.
 
@@ -1833,10 +1787,8 @@ shall meet the requirements of the standard code-conversion facet
 An object of this class template stores:
 
 - `bufptr` — a pointer to its underlying byte stream buffer
-
 - `cvtptr` — a pointer to the allocated conversion object (which is
   freed when the `wbuffer_convert` object is destroyed)
-
 - `cvtstate` — a conversion state object
 
 ``` cpp
@@ -1922,12 +1874,10 @@ the requirements specified in [[fs.path.req]].
 - If `value_type` is `char` and the current native narrow
   encoding [[fs.path.type.cvt]] is UTF-8, return `path(source)` or
   `path(first, last)`; otherwise,
-
 - if `value_type` is and the native wide encoding is UTF-16, or if
   `value_type` is or , convert `source` or \[`first`, `last`) to a
   temporary, `tmp`, of type `string_type` and return `path(tmp)`;
   otherwise,
-
 - convert `source` or \[`first`, `last`) to a temporary, `tmp`, of type
   `u32string` and return `path(tmp)`.
 

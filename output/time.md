@@ -939,18 +939,14 @@ implementation. — *end note*\]
 A type `TC` meets the *Cpp17TrivialClock* requirements if:
 
 - `TC` meets the *Cpp17Clock* requirements,
-
 - the types `TC::rep`, `TC::duration`, and `TC::time_point` meet the
   *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
   *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) and
   *Cpp17Swappable* [[swappable.requirements]] requirements and the
   requirements of numeric types [[numeric.requirements]],
-
   \[*Note 1*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*\]
-
 - the function `TC::now()` does not throw exceptions, and
-
 - the type `TC::time_point::clock` meets the *Cpp17TrivialClock*
   requirements, recursively.
 
@@ -1073,10 +1069,8 @@ unspecified, except that as a minimum a type `T` shall not qualify as a
 
 - the *qualified-id*s `T::rep`, `T::period`, `T::duration`, and
   `T::time_point` are valid and each denotes a type [[temp.deduct]],
-
 - the expression `T::is_steady` is well-formed when treated as an
   unevaluated operand [[term.unevaluated.operand]],
-
 - the expression `T::now()` is well-formed when treated as an
   unevaluated operand.
 
@@ -1177,7 +1171,6 @@ template<class Rep2>
 *Constraints:* `is_convertible_v<const Rep2&, rep>` is `true` and
 
 - `treat_as_floating_point_v<rep>` is `true` or
-
 - `treat_as_floating_point_v<Rep2>` is `false`.
 
 \[*Example 1*:
@@ -1487,21 +1480,14 @@ template<class ToDuration, class Rep, class Period>
 `common_type<typename ToDuration::rep, Rep, intmax_t>::type`.
 
 - If `CF::num == 1` and `CF::den == 1`, returns
-
       ToDuration(static_cast<typename ToDuration::rep>(d.count()))
-
 - otherwise, if `CF::num != 1` and `CF::den == 1`, returns
-
       ToDuration(static_cast<typename ToDuration::rep>(
         static_cast<CR>(d.count()) * static_cast<CR>(CF::num)))
-
 - otherwise, if `CF::num == 1` and `CF::den != 1`, returns
-
       ToDuration(static_cast<typename ToDuration::rep>(
         static_cast<CR>(d.count()) / static_cast<CR>(CF::den)))
-
 - otherwise, returns
-
       ToDuration(static_cast<typename ToDuration::rep>(
         static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
 
@@ -1653,53 +1639,32 @@ return os << s.str();
 where *`units-suffix`* depends on the type `Period::type` as follows:
 
 - If `Period::type` is `atto`, *`units-suffix`* is `"as"`.
-
 - Otherwise, if `Period::type` is `femto`, *`units-suffix`* is `"fs"`.
-
 - Otherwise, if `Period::type` is `pico`, *`units-suffix`* is `"ps"`.
-
 - Otherwise, if `Period::type` is `nano`, *`units-suffix`* is `"ns"`.
-
 - Otherwise, if `Period::type` is `micro`, it is
   *implementation-defined* whether *`units-suffix`* is `"s"`
   (`"\u00b5\u0073"`) or `"us"`.
-
 - Otherwise, if `Period::type` is `milli`, *`units-suffix`* is `"ms"`.
-
 - Otherwise, if `Period::type` is `centi`, *`units-suffix`* is `"cs"`.
-
 - Otherwise, if `Period::type` is `deci`, *`units-suffix`* is `"ds"`.
-
 - Otherwise, if `Period::type` is `ratio<1>`, *`units-suffix`* is `"s"`.
-
 - Otherwise, if `Period::type` is `deca`, *`units-suffix`* is `"das"`.
-
 - Otherwise, if `Period::type` is `hecto`, *`units-suffix`* is `"hs"`.
-
 - Otherwise, if `Period::type` is `kilo`, *`units-suffix`* is `"ks"`.
-
 - Otherwise, if `Period::type` is `mega`, *`units-suffix`* is `"Ms"`.
-
 - Otherwise, if `Period::type` is `giga`, *`units-suffix`* is `"Gs"`.
-
 - Otherwise, if `Period::type` is `tera`, *`units-suffix`* is `"Ts"`.
-
 - Otherwise, if `Period::type` is `peta`, *`units-suffix`* is `"Ps"`.
-
 - Otherwise, if `Period::type` is `exa`, *`units-suffix`* is `"Es"`.
-
 - Otherwise, if `Period::type` is `ratio<60>`, *`units-suffix`* is
   `"min"`.
-
 - Otherwise, if `Period::type` is `ratio<3600>`, *`units-suffix`* is
   `"h"`.
-
 - Otherwise, if `Period::type` is `ratio<86400>`, *`units-suffix`* is
   `"d"`.
-
 - Otherwise, if `Period::type::den == 1`, *`units-suffix`* is
   `"[`*`num`*`]s"`.
-
 - Otherwise, *`units-suffix`* is `"[`*`num`*`/`*`den`*`]s"`.
 
 In the list above, the use of *`num`* and *`den`* refers to the static
@@ -6054,15 +6019,11 @@ constexpr explicit hh_mm_ss(Duration d);
 `Duration d` with precision `precision`.
 
 - Initializes `is_neg` with `d < Duration::zero()`.
-
 - Initializes `h` with `duration_cast<chrono::hours>(abs(d))`.
-
 - Initializes `m` with
   `duration_cast<chrono::minutes>(abs(d) - hours())`.
-
 - Initializes `s` with
   `duration_cast<chrono::seconds>(abs(d) - hours() - minutes())`.
-
 - If `treat_as_floating_point_v<precision::rep>` is `true`, initializes
   `ss` with `abs(d) - hours() - minutes() - seconds()`. Otherwise,
   initializes `ss` with
@@ -6222,7 +6183,6 @@ const time_zone* locate_zone(string_view tz_name) const;
 
 - If `zones` contains an element `tz` for which `tz.name() == tz_name`,
   a pointer to `tz`;
-
 - otherwise, if `links` contains an element `tz_l` for which
   `tz_l.name() == tz_name`, then a pointer to the element `tz` of
   `zones` for which `tz.name() == tz_l.target()`.
@@ -6636,13 +6596,11 @@ follows:
 - When a `local_time` to `sys_time` conversion is unique,
   `result == unique`, `first` will be filled out with the correct
   `sys_info`, and `second` will be zero-initialized.
-
 - If the conversion stems from a nonexistent `local_time` then
   `result == nonexistent`, `first` will be filled out with the
   `sys_info` that ends just prior to the `local_time`, and `second` will
   be filled out with the `sys_info` that begins just after the
   `local_time`.
-
 - If the conversion stems from an ambiguous `local_time`, then
   `result == ambiguous`, `first` will be filled out with the `sys_info`
   that ends just after the `local_time`, and `second` will be filled out
@@ -7419,9 +7377,7 @@ function, defined as
 
 - the `"C"` locale if the `L` option is not present in
   *chrono-format-spec*, otherwise
-
 - the locale passed to the formatting function if any, otherwise
-
 - the global locale.
 
 Each conversion specifier *conversion-spec* is replaced by appropriate
