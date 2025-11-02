@@ -51,6 +51,8 @@ operators. — *end example*\]
 
 ## The floating-point environment <a id="cfenv">[[cfenv]]</a>
 
+### Header `<cfenv>` synopsis <a id="cfenv.syn">[[cfenv.syn]]</a>
+
 ``` cpp
 #define FE_ALL_EXCEPT see below
 #define FE_DIVBYZERO see below    // optional
@@ -2311,6 +2313,8 @@ template<class T>
   seed_seq(initializer_list<T> il);
 ```
 
+> *Constraints:*
+>
 > `T` is an integer type.
 >
 > *Effects:*
@@ -7158,6 +7162,7 @@ constant variable template is ill-formed.
 [c.math.lerp]: #c.math.lerp
 [c.math.rand]: #c.math.rand
 [cfenv]: #cfenv
+[cfenv.syn]: #cfenv.syn
 [cfenv.thread]: #cfenv.thread
 [class.gslice]: #class.gslice
 [class.gslice.overview]: #class.gslice.overview

@@ -586,6 +586,8 @@ template<class It, class End>
   constexpr basic_string_view(It begin, End end);
 ```
 
+> *Constraints:*
+>
 > - `It` satisfies `contiguous_iterator`.
 >
 > - `End` satisfies `sized_sentinel_for``<It>`.
@@ -618,6 +620,8 @@ template<class R>
 
 > Let `d` be an lvalue of type `remove_cvref_t<R>`.
 >
+> *Constraints:*
+>
 > - `remove_cvref_t<R>` is not the same type as `basic_string_view`,
 >
 > - `R` models `ranges::``contiguous_range` and `ranges::``sized_range`,
@@ -645,6 +649,8 @@ template<class It, class End>
   basic_string_view(It, End) -> basic_string_view<iter_value_t<It>>;
 ```
 
+> *Constraints:*
+>
 > - `It` satisfies `contiguous_iterator`.
 >
 > - `End` satisfies `sized_sentinel_for``<It>`.
@@ -654,6 +660,8 @@ template<class R>
   basic_string_view(R&&) -> basic_string_view<ranges::range_value_t<R>>;
 ```
 
+> *Constraints:*
+>
 > `R` satisfies `ranges::``contiguous_range`.
 
 #### Iterator support <a id="string.view.iterators">[[string.view.iterators]]</a>
@@ -1998,6 +2006,8 @@ template<class T>
   constexpr basic_string(const T& t, size_type pos, size_type n, const Allocator& a = Allocator());
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 > `true`.
 >
@@ -2016,6 +2026,8 @@ template<class T>
   constexpr explicit basic_string(const T& t, const Allocator& a = Allocator());
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2048,6 +2060,8 @@ constexpr basic_string(const charT* s, size_type n, const Allocator& a = Allocat
 constexpr basic_string(const charT* s, const Allocator& a = Allocator());
 ```
 
+> *Constraints:*
+>
 > `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 >
@@ -2062,6 +2076,8 @@ constexpr basic_string(const charT* s, const Allocator& a = Allocator());
 constexpr basic_string(size_type n, charT c, const Allocator& a = Allocator());
 ```
 
+> *Constraints:*
+>
 > `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 >
@@ -2077,6 +2093,8 @@ template<class InputIterator>
   constexpr basic_string(InputIterator begin, InputIterator end, const Allocator& a = Allocator());
 ```
 
+> *Constraints:*
+>
 > `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
@@ -2127,6 +2145,8 @@ template<class InputIterator,
                     Allocator>;
 ```
 
+> *Constraints:*
+>
 > `InputIterator` is a type that qualifies as an input iterator, and
 > `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
@@ -2147,6 +2167,8 @@ template<class charT,
     -> basic_string<charT, traits, Allocator>;
 ```
 
+> *Constraints:*
+>
 > `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 
@@ -2183,6 +2205,8 @@ template<class T>
   constexpr basic_string& operator=(const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2524,6 +2548,8 @@ template<class T>
   constexpr basic_string& operator+=(const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2589,6 +2615,8 @@ template<class T>
   constexpr basic_string& append(const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2608,6 +2636,8 @@ template<class T>
   constexpr basic_string& append(const T& t, size_type pos, size_type n = npos);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2663,6 +2693,8 @@ template<class InputIterator>
   constexpr basic_string& append(InputIterator first, InputIterator last);
 ```
 
+> *Constraints:*
+>
 > `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
@@ -2734,6 +2766,8 @@ template<class T>
   constexpr basic_string& assign(const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2753,6 +2787,8 @@ template<class T>
   constexpr basic_string& assign(const T& t, size_type pos, size_type n = npos);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2819,6 +2855,8 @@ template<class InputIterator>
   constexpr basic_string& assign(InputIterator first, InputIterator last);
 ```
 
+> *Constraints:*
+>
 > `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
@@ -2865,6 +2903,8 @@ template<class T>
   constexpr basic_string& insert(size_type pos, const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2885,6 +2925,8 @@ template<class T>
                                  size_type pos2, size_type n = npos);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -2992,6 +3034,8 @@ template<class InputIterator>
   constexpr iterator insert(const_iterator p, InputIterator first, InputIterator last);
 ```
 
+> *Constraints:*
+>
 > `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
@@ -3145,6 +3189,8 @@ template<class T>
   constexpr basic_string& replace(size_type pos1, size_type n1, const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -3165,6 +3211,8 @@ template<class T>
                                   size_type pos2, size_type n2 = npos);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -3255,6 +3303,8 @@ template<class T>
   constexpr basic_string& replace(const_iterator i1, const_iterator i2, const T& t);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -3309,6 +3359,8 @@ template<class InputIterator>
                                   InputIterator j1, InputIterator j2);
 ```
 
+> *Constraints:*
+>
 > `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
@@ -3497,6 +3549,8 @@ template<class T>
   constexpr size_type find_last_not_of(const T& t, size_type pos = npos) const noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -3541,6 +3595,8 @@ template<class T>
   constexpr int compare(const T& t) const noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -3561,6 +3617,8 @@ template<class T>
   constexpr int compare(size_type pos1, size_type n1, const T& t) const;
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >
@@ -3580,6 +3638,8 @@ template<class T>
                         size_type pos2, size_type n2 = npos) const;
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 >   `true` and
 >

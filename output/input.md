@@ -4038,6 +4038,8 @@ template<class Istream, class T>
   Istream&& operator>>(Istream&& is, T&& x);
 ```
 
+> *Constraints:*
+>
 > The expression `is >> std::forward<T>(x)` is well-formed when treated
 > as an unevaluated operand [[term.unevaluated.operand]] and `Istream`
 > is publicly and unambiguously derived from `ios_base`.
@@ -5072,6 +5074,8 @@ template<class Ostream, class T>
   Ostream&& operator<<(Ostream&& os, const T& x);
 ```
 
+> *Constraints:*
+>
 > The expression `os << x` is well-formed when treated as an unevaluated
 > operand and `Ostream` is publicly and unambiguously derived from
 > `ios_base`.
@@ -5868,6 +5872,8 @@ template<class SAlloc>
     ios_base::openmode which = ios_base::in | ios_base::out);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<SAlloc, Allocator>` is `false`.
 >
 > *Effects:*
@@ -6032,6 +6038,8 @@ template<class SAlloc>
   basic_string<charT, traits, SAlloc> str(const SAlloc& sa) const;
 ```
 
+> *Constraints:*
+>
 > `SAlloc` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 >
@@ -6101,6 +6109,8 @@ template<class SAlloc>
   void str(const basic_string<charT, traits, SAlloc>& s);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<SAlloc,Allocator>` is `false`.
 >
 > *Effects:*
@@ -6684,6 +6694,8 @@ template<class SAlloc>
     ios_base::openmode which = ios_base::out);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<SAlloc,Allocator>` is `false`.
 >
 > *Effects:*
@@ -6942,6 +6954,8 @@ template<class SAlloc>
     ios_base::openmode which = ios_base::out | ios_base::in);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<SAlloc,Allocator>` is `false`.
 >
 > *Effects:*
@@ -7459,6 +7473,8 @@ basic_ispanstream(basic_ispanstream&& rhs);
 template<class ROS> explicit basic_ispanstream(ROS&& s)
 ```
 
+> *Constraints:*
+>
 > `ROS` models `ranges::``borrowed_range`.
 > `!``convertible_to``<ROS, std::span<charT>> && ``convertible_to``<ROS, std::span<charT const>>`
 > is `true`.
@@ -7530,6 +7546,8 @@ void span(std::span<charT> s) noexcept;
 template<class ROS> void span(ROS&& s) noexcept;
 ```
 
+> *Constraints:*
+>
 > `ROS` models `ranges::``borrowed_range`.
 > `(!``convertible_to``<ROS, std::span<charT>>) && ``convertible_to``<ROS, std::span<const charT>>`
 > is `true`.
@@ -8503,6 +8521,8 @@ template<class T>
   explicit basic_ifstream(const T& s, ios_base::openmode mode = ios_base::in);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<T, filesystem::path>` is `true`.
 >
 > *Effects:*
@@ -8688,6 +8708,8 @@ template<class T>
   explicit basic_ofstream(const T& s, ios_base::openmode mode = ios_base::out);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<T, filesystem::path>` is `true`.
 >
 > *Effects:*
@@ -8885,6 +8907,8 @@ template<class T>
   explicit basic_fstream(const T& s, ios_base::openmode mode = ios_base::in | ios_base::out);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<T, filesystem::path>` is `true`.
 >
 > *Effects:*
@@ -11578,8 +11602,7 @@ namespace std::filesystem {
 }
 ```
 
-An object of type `file_status` stores information about the type and
-permissions of a file. \[fs.file.status.cons\]Constructors
+#### Constructors <a id="fs.file.status.cons">[[fs.file.status.cons]]</a>
 
 ``` cpp
 explicit file_status(file_type ft, perms prms = perms::unknown) noexcept;
@@ -14247,6 +14270,7 @@ modifier for the type.
 [fs.enum.perm.opts]: #fs.enum.perm.opts
 [fs.enum.perms]: #fs.enum.perms
 [fs.err.report]: #fs.err.report
+[fs.file.status.cons]: #fs.file.status.cons
 [fs.file.status.mods]: #fs.file.status.mods
 [fs.file.status.obs]: #fs.file.status.obs
 [fs.filesystem.error.members]: #fs.filesystem.error.members

@@ -2651,6 +2651,8 @@ constexpr explicit reverse_iterator(Iterator x);
 template<class U> constexpr reverse_iterator(const reverse_iterator<U>& u);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<U, Iterator>` is `false` and `const U&` models
 > `convertible_to``<Iterator>`.
 >
@@ -2664,6 +2666,8 @@ template<class U>
     operator=(const reverse_iterator<U>& u);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<U, Iterator>` is `false`, `const U&` models
 > `convertible_to``<Iterator>`, and
 > `assignable_from``<Iterator&, const U&>` is modeled.
@@ -2825,6 +2829,8 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() == y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -2838,6 +2844,8 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() != y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -2851,6 +2859,8 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() > y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -2864,6 +2874,8 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() < y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -2877,6 +2889,8 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() >= y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -2890,6 +2904,8 @@ template<class Iterator1, class Iterator2>
     const reverse_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() <= y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -3905,6 +3921,8 @@ constexpr explicit move_iterator(Iterator i);
 template<class U> constexpr move_iterator(const move_iterator<U>& u);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<U, Iterator>` is `false` and `const U&` models
 > `convertible_to``<Iterator>`.
 >
@@ -3916,6 +3934,8 @@ template<class U> constexpr move_iterator(const move_iterator<U>& u);
 template<class U> constexpr move_iterator& operator=(const move_iterator<U>& u);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<U, Iterator>` is `false`, `const U&` models
 > `convertible_to``<Iterator>`, and
 > `assignable_from``<Iterator&, const U&>` is modeled.
@@ -4071,6 +4091,8 @@ template<sentinel_for<Iterator> S>
                                    const move_sentinel<S>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() == y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -4082,6 +4104,8 @@ template<class Iterator1, class Iterator2>
 constexpr bool operator<(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() < y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -4093,6 +4117,8 @@ template<class Iterator1, class Iterator2>
 constexpr bool operator>(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `y.base() < x.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -4104,6 +4130,8 @@ template<class Iterator1, class Iterator2>
 constexpr bool operator<=(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `y.base() < x.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -4115,6 +4143,8 @@ template<class Iterator1, class Iterator2>
 constexpr bool operator>=(const move_iterator<Iterator1>& x, const move_iterator<Iterator2>& y);
 ```
 
+> *Constraints:*
+>
 > `x.base() < y.base()` is well-formed and convertible to `bool`.
 >
 > *Returns:*
@@ -4157,6 +4187,8 @@ template<class Iterator>
     operator+(iter_difference_t<Iterator> n, const move_iterator<Iterator>& x);
 ```
 
+> *Constraints:*
+>
 > `x.base() + n` is well-formed and has type `Iterator`.
 >
 > *Returns:*

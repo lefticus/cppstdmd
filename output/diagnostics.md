@@ -875,6 +875,8 @@ template<class ErrorCodeEnum>
   error_code(ErrorCodeEnum e) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_error_code_enum_v<ErrorCodeEnum>` is `true`.
 >
 > *Effects:*
@@ -901,6 +903,8 @@ template<class ErrorCodeEnum>
   error_code& operator=(ErrorCodeEnum e) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_error_code_enum_v<ErrorCodeEnum>` is `true`.
 >
 > *Effects:*
@@ -1049,6 +1053,8 @@ template<class ErrorConditionEnum>
   error_condition(ErrorConditionEnum e) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_error_condition_enum_v<ErrorConditionEnum>` is `true`.
 >
 > *Effects:*
@@ -1075,6 +1081,8 @@ template<class ErrorConditionEnum>
   error_condition& operator=(ErrorConditionEnum e) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_error_condition_enum_v<ErrorConditionEnum>` is `true`.
 >
 > *Effects:*

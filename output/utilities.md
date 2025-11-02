@@ -221,6 +221,8 @@ template<class T>
   constexpr void swap(T& a, T& b) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<T>` is `true` and `is_move_assignable_v<T>`
 > is `true`.
 >
@@ -247,6 +249,8 @@ template<class T, size_t N>
   constexpr void swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable_v<T>);
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<T>` is `true`.
 >
 > *Preconditions:*
@@ -701,6 +705,8 @@ template-argument-equivalent [[temp.type]] if and only if `p1.first` and
 constexpr explicit(see below) pair();
 ```
 
+> *Constraints:*
+>
 > - `is_default_constructible_v<T1>` is `true` and
 >
 > - `is_default_constructible_v<T2>` is `true`.
@@ -722,6 +728,8 @@ constexpr explicit(see below) pair();
 constexpr explicit(see below) pair(const T1& x, const T2& y);
 ```
 
+> *Constraints:*
+>
 > - `is_copy_constructible_v<T1>` is `true` and
 >
 > - `is_copy_constructible_v<T2>` is `true`.
@@ -742,6 +750,8 @@ constexpr explicit(see below) pair(const T1& x, const T2& y);
 template<class U1 = T1, class U2 = T2> constexpr explicit(see below) pair(U1&& x, U2&& y);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<T1, U1>` is `true` and
 >
 > - `is_constructible_v<T2, U2>` is `true`.
@@ -772,6 +782,8 @@ template<pair-like P> constexpr explicit(see below) pair(P&& p);
 ```
 
 > Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
+>
+> *Constraints:*
 >
 > - For the last overload, `remove_cvref_t<P>` is not a specialization
 >   of `ranges::subrange`,
@@ -851,6 +863,8 @@ constexpr pair& operator=(const pair& p);
 constexpr const pair& operator=(const pair& p) const;
 ```
 
+> *Constraints:*
+>
 > - `is_copy_assignable_v<const T1>` is `true` and
 >
 > - `is_copy_assignable_v<const T2>` is `true`.
@@ -867,6 +881,8 @@ constexpr const pair& operator=(const pair& p) const;
 template<class U1, class U2> constexpr pair& operator=(const pair<U1, U2>& p);
 ```
 
+> *Constraints:*
+>
 > - `is_assignable_v<T1&, const U1&>` is `true` and
 >
 > - `is_assignable_v<T2&, const U2&>` is `true`.
@@ -883,6 +899,8 @@ template<class U1, class U2> constexpr pair& operator=(const pair<U1, U2>& p);
 template<class U1, class U2> constexpr const pair& operator=(const pair<U1, U2>& p) const;
 ```
 
+> *Constraints:*
+>
 > - `is_assignable_v<const T1&, const U1&>` is `true`, and
 >
 > - `is_assignable_v<const T2&, const U2&>` is `true`.
@@ -899,6 +917,8 @@ template<class U1, class U2> constexpr const pair& operator=(const pair<U1, U2>&
 constexpr pair& operator=(pair&& p) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - `is_move_assignable_v<T1>` is `true` and
 >
 > - `is_move_assignable_v<T2>` is `true`.
@@ -924,6 +944,8 @@ constexpr pair& operator=(pair&& p) noexcept(see below);
 constexpr const pair& operator=(pair&& p) const;
 ```
 
+> *Constraints:*
+>
 > - `is_assignable_v<const T1&, T1>` is `true` and
 >
 > - `is_assignable_v<const T2&, T2>` is `true`.
@@ -941,6 +963,8 @@ constexpr const pair& operator=(pair&& p) const;
 template<class U1, class U2> constexpr pair& operator=(pair<U1, U2>&& p);
 ```
 
+> *Constraints:*
+>
 > - `is_assignable_v<T1&, U1>` is `true` and
 >
 > - `is_assignable_v<T2&, U2>` is `true`.
@@ -959,6 +983,8 @@ template<class U1, class U2> constexpr pair& operator=(pair<U1, U2>&& p);
 template<pair-like P> constexpr pair& operator=(P&& p);
 ```
 
+> *Constraints:*
+>
 > - `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
 >
 > - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
@@ -982,6 +1008,8 @@ template<pair-like P> constexpr pair& operator=(P&& p);
 template<pair-like P> constexpr const pair& operator=(P&& p) const;
 ```
 
+> *Constraints:*
+>
 > - `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
 >
 > - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
@@ -1005,6 +1033,8 @@ template<pair-like P> constexpr const pair& operator=(P&& p) const;
 template<class U1, class U2> constexpr const pair& operator=(pair<U1, U2>&& p) const;
 ```
 
+> *Constraints:*
+>
 > - `is_assignable_v<const T1&, U1>` is `true`, and
 >
 > - `is_assignable_v<const T2&, U2>` is `true`.
@@ -1089,6 +1119,8 @@ template<class T1, class T2>
   constexpr void swap(const pair<T1, T2>& x, const pair<T1, T2>& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > - For the first overload, `is_swappable_v<T1>` is `true` and
 >   `is_swappable_v<T2>` is `true`.
 >
@@ -1504,6 +1536,8 @@ The default constructor of `tuple<>` is trivial.
 constexpr explicit(see below) tuple();
 ```
 
+> *Constraints:*
+>
 > `is_default_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
 >
 > *Effects:*
@@ -1524,6 +1558,8 @@ constexpr explicit(see below) tuple();
 constexpr explicit(see below) tuple(const Types&...);
 ```
 
+> *Constraints:*
+>
 > $\texttt{sizeof...(Types)} \geq 1$ and
 > `is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
 >
@@ -1555,7 +1591,7 @@ template<class... UTypes> constexpr explicit(see below) tuple(UTypes&&... u);
 >
 > - otherwise, `true_type`.
 >
-> <!-- -->
+> *Constraints:*
 >
 > - `sizeof...(Types)` equals `sizeof...(UTypes)`,
 >
@@ -1602,6 +1638,8 @@ tuple(const tuple& u) = default;
 tuple(tuple&& u) = default;
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
 >
 > *Effects:*
@@ -1618,6 +1656,8 @@ template<class... UTypes> constexpr explicit(see below) tuple(const tuple<UTypes
 
 > Let `I` be the pack `0, 1, ..., (sizeof...(Types) - 1)`. Let
 > *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
+>
+> *Constraints:*
 >
 > - `sizeof...(Types)` equals `sizeof...(UTypes)`, and
 >
@@ -1660,6 +1700,8 @@ template<class U1, class U2> constexpr explicit(see below) tuple(const pair<U1, 
 
 > Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
 >
+> *Constraints:*
+>
 > - `sizeof...(Types)` is 2,
 >
 > - `is_constructible_v<`$\texttt{T}_0$`, decltype(get<0>(`*`FWD`*`(u)))>`
@@ -1697,6 +1739,8 @@ template<tuple-like UTuple>
 ```
 
 > Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
+>
+> *Constraints:*
 >
 > - `different-from``<UTuple, tuple>`[[range.utility.helpers]] is
 >   `true`,
@@ -1810,6 +1854,8 @@ constexpr tuple& operator=(const tuple& u);
 constexpr const tuple& operator=(const tuple& u) const;
 ```
 
+> *Constraints:*
+>
 > `(is_copy_assignable_v<const Types> && ...)` is `true`.
 >
 > *Effects:*
@@ -1824,6 +1870,8 @@ constexpr const tuple& operator=(const tuple& u) const;
 constexpr tuple& operator=(tuple&& u) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
 >
 > *Effects:*
@@ -1850,6 +1898,8 @@ constexpr tuple& operator=(tuple&& u) noexcept(see below);
 constexpr const tuple& operator=(tuple&& u) const;
 ```
 
+> *Constraints:*
+>
 > `(is_assignable_v<const Types&, Types> && ...)` is `true`.
 >
 > *Effects:*
@@ -1865,6 +1915,8 @@ constexpr const tuple& operator=(tuple&& u) const;
 template<class... UTypes> constexpr tuple& operator=(const tuple<UTypes...>& u);
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` equals `sizeof...(UTypes)` and
 >
 > - `is_assignable_v<`$\texttt{T}_i$`&, const `$\texttt{U}_i$`&>` is
@@ -1882,6 +1934,8 @@ template<class... UTypes> constexpr tuple& operator=(const tuple<UTypes...>& u);
 template<class... UTypes> constexpr const tuple& operator=(const tuple<UTypes...>& u) const;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` equals `sizeof...(UTypes)` and
 >
 > - `(is_assignable_v<const Types&, const UTypes&> && ...)` is `true`.
@@ -1898,6 +1952,8 @@ template<class... UTypes> constexpr const tuple& operator=(const tuple<UTypes...
 template<class... UTypes> constexpr tuple& operator=(tuple<UTypes...>&& u);
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` equals `sizeof...(UTypes)` and
 >
 > - `is_assignable_v<`$\texttt{T}_i$`&, `$\texttt{U}_i$`>` is `true` for
@@ -1916,6 +1972,8 @@ template<class... UTypes> constexpr tuple& operator=(tuple<UTypes...>&& u);
 template<class... UTypes> constexpr const tuple& operator=(tuple<UTypes...>&& u) const;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` equals `sizeof...(UTypes)` and
 >
 > - `(is_assignable_v<const Types&, UTypes> && ...)` is `true`.
@@ -1933,6 +1991,8 @@ template<class... UTypes> constexpr const tuple& operator=(tuple<UTypes...>&& u)
 template<class U1, class U2> constexpr tuple& operator=(const pair<U1, U2>& u);
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` is 2 and
 >
 > - `is_assignable_v<`$\texttt{T}_0$`&, const U1&>` is `true`, and
@@ -1952,6 +2012,8 @@ template<class U1, class U2> constexpr tuple& operator=(const pair<U1, U2>& u);
 template<class U1, class U2> constexpr const tuple& operator=(const pair<U1, U2>& u) const;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` is 2,
 >
 > - `is_assignable_v<const `$\texttt{T}_0$`&, const U1&>` is `true`, and
@@ -1971,6 +2033,8 @@ template<class U1, class U2> constexpr const tuple& operator=(const pair<U1, U2>
 template<class U1, class U2> constexpr tuple& operator=(pair<U1, U2>&& u);
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` is 2 and
 >
 > - `is_assignable_v<`$\texttt{T}_0$`&, U1>` is `true`, and
@@ -1991,6 +2055,8 @@ template<class U1, class U2> constexpr tuple& operator=(pair<U1, U2>&& u);
 template<class U1, class U2> constexpr const tuple& operator=(pair<U1, U2>&& u) const;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Types)` is 2,
 >
 > - `is_assignable_v<const `$\texttt{T}_0$`&, U1>` is `true`, and
@@ -2011,6 +2077,8 @@ template<tuple-like UTuple>
   constexpr tuple& operator=(UTuple&& u);
 ```
 
+> *Constraints:*
+>
 > - `different-from``<UTuple, tuple>`[[range.utility.helpers]] is
 >   `true`,
 >
@@ -2037,6 +2105,8 @@ template<tuple-like UTuple>
   constexpr const tuple& operator=(UTuple&& u) const;
 ```
 
+> *Constraints:*
+>
 > - `different-from``<UTuple, tuple>`[[range.utility.helpers]] is
 >   `true`,
 >
@@ -2507,6 +2577,8 @@ struct basic_common_reference<TTuple, UTuple, TQual, UQual> {
 };
 ```
 
+> *Constraints:*
+>
 > - `TTuple` is a specialization of `tuple` or `UTuple` is a
 >   specialization of `tuple`.
 >
@@ -2529,6 +2601,8 @@ struct common_type<TTuple, UTuple> {
 };
 ```
 
+> *Constraints:*
+>
 > - `TTuple` is a specialization of `tuple` or `UTuple` is a
 >   specialization of `tuple`.
 >
@@ -2568,6 +2642,8 @@ template<class... Types>
   constexpr void swap(const tuple<Types...>& x, const tuple<Types...>& y) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - For the first overload, `(is_swappable_v<Types> && ...)` is `true`.
 >
 > - For the second overload, `(is_swappable_v<const Types> && ...)` is
@@ -2831,6 +2907,8 @@ constexpr optional(const optional& rhs);
 constexpr optional(optional&& rhs) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<T>` is `true`.
 >
 > *Effects:*
@@ -2857,6 +2935,8 @@ constexpr optional(optional&& rhs) noexcept(see below);
 template<class... Args> constexpr explicit optional(in_place_t, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, Args...>` is `true`.
 >
 > *Effects:*
@@ -2882,6 +2962,8 @@ template<class U, class... Args>
   constexpr explicit optional(in_place_t, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`.
 >
 > *Effects:*
@@ -2906,6 +2988,8 @@ template<class U, class... Args>
 template<class U = T> constexpr explicit(see below) optional(U&& v);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<T, U>` is `true`,
 >
 > - `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`,
@@ -2942,6 +3026,8 @@ template<class U = T> constexpr explicit(see below) optional(U&& v);
 template<class U> constexpr explicit(see below) optional(const optional<U>& rhs);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<T, const U&>` is `true`, and
 >
 > - if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>`
@@ -2972,6 +3058,8 @@ template<class U> constexpr explicit(see below) optional(const optional<U>& rhs)
 template<class U> constexpr explicit(see below) optional(optional<U>&& rhs);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<T, U>` is `true`, and
 >
 > - if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>`
@@ -3083,6 +3171,8 @@ constexpr optional<T>& operator=(const optional& rhs);
 constexpr optional& operator=(optional&& rhs) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<T>` is `true` and `is_move_assignable_v<T>`
 > is `true`.
 >
@@ -3136,6 +3226,8 @@ constexpr optional& operator=(optional&& rhs) noexcept(see below);
 template<class U = T> constexpr optional<T>& operator=(U&& v);
 ```
 
+> *Constraints:*
+>
 > `is_same_v<remove_cvref_t<U>, optional>` is `false`,
 > `conjunction_v<is_scalar<T>, is_same<T, decay_t<U>>>` is `false`,
 > `is_constructible_v<T, U>` is `true`, and `is_assignable_v<T&, U>` is
@@ -3169,6 +3261,8 @@ template<class U = T> constexpr optional<T>& operator=(U&& v);
 template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<T, const U&>` is `true`,
 >
 > - `is_assignable_v<T&, const U&>` is `true`,
@@ -3222,6 +3316,8 @@ template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 template<class U> constexpr optional<T>& operator=(optional<U>&& rhs);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<T, U>` is `true`,
 >
 > - `is_assignable_v<T&, U>` is `true`,
@@ -3307,6 +3403,8 @@ template<class... Args> constexpr T& emplace(Args&&... args);
 template<class U, class... Args> constexpr T& emplace(initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`.
 >
 > *Effects:*
@@ -3629,6 +3727,8 @@ template<class F> constexpr auto transform(F&& f) const &&;
 template<class F> constexpr optional or_else(F&& f) const &;
 ```
 
+> *Constraints:*
+>
 > `F` models `invocable``<>` and `T` models `copy_constructible`.
 >
 > *Mandates:*
@@ -3651,6 +3751,8 @@ template<class F> constexpr optional or_else(F&& f) const &;
 template<class F> constexpr optional or_else(F&& f) &&;
 ```
 
+> *Constraints:*
+>
 > `F` models `invocable``<>` and `T` models `move_constructible`.
 >
 > *Mandates:*
@@ -4049,6 +4151,8 @@ template<class T>
   constexpr void swap(optional<T>& x, optional<T>& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<T>` is `true` and `is_swappable_v<T>` is
 > `true`.
 >
@@ -4295,6 +4399,8 @@ $\tcode{T}_i$ be the $i^\text{th}$ type in `Types`.
 constexpr variant() noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_default_constructible_v<`$\texttt{T}_0$`>` is `true`.
 >
 > *Effects:*
@@ -4346,6 +4452,8 @@ constexpr variant(const variant& w);
 constexpr variant(variant&& w) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
 >
 > *Effects:*
@@ -4378,6 +4486,8 @@ template<class T> constexpr variant(T&& t) noexcept(see below);
 > selected by overload resolution for the expression
 > *FUN*(std::forward\<T\>(t)) defines the alternative $\texttt{T}_j$
 > which is the type of the contained value after construction.
+>
+> *Constraints:*
 >
 > - `sizeof...(Types)` is nonzero,
 >
@@ -4426,6 +4536,8 @@ template<class T> constexpr variant(T&& t) noexcept(see below);
 template<class T, class... Args> constexpr explicit variant(in_place_type_t<T>, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > - There is exactly one occurrence of `T` in `Types...` and
 >
 > - `is_constructible_v<T, Args...>` is `true`.
@@ -4453,6 +4565,8 @@ template<class T, class U, class... Args>
   constexpr explicit variant(in_place_type_t<T>, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > - There is exactly one occurrence of `T` in `Types...` and
 >
 > - `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`.
@@ -4479,6 +4593,8 @@ template<class T, class U, class... Args>
 template<size_t I, class... Args> constexpr explicit variant(in_place_index_t<I>, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > - `I` is less than `sizeof...(Types)` and
 >
 > - `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
@@ -4507,6 +4623,8 @@ template<size_t I, class U, class... Args>
   constexpr explicit variant(in_place_index_t<I>, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > - `I` is less than `sizeof...(Types)` and
 >
 > - `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
@@ -4591,6 +4709,8 @@ constexpr variant& operator=(variant&& rhs) noexcept(see below);
 
 > Let j be `rhs.index()`.
 >
+> *Constraints:*
+>
 > `is_move_constructible_v<`$\texttt{T}_i$`> &&`
 > `is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
 >
@@ -4640,6 +4760,8 @@ template<class T> constexpr variant& operator=(T&& t) noexcept(see below);
 > selected by overload resolution for the expression
 > *FUN*(std::forward\<T\>(t)) defines the alternative $\texttt{T}_j$
 > which is the type of the contained value after assignment.
+>
+> *Constraints:*
 >
 > - `is_same_v<remove_cvref_t<T>, variant>` is `false`,
 >
@@ -4704,6 +4826,8 @@ template<class T> constexpr variant& operator=(T&& t) noexcept(see below);
 template<class T, class... Args> constexpr T& emplace(Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, Args...>` is `true`, and `T` occurs exactly
 > once in `Types`.
 >
@@ -4722,6 +4846,8 @@ template<class T, class U, class... Args>
   constexpr T& emplace(initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`, and
 > `T` occurs exactly once in `Types`.
 >
@@ -4743,6 +4869,8 @@ template<size_t I, class... Args>
 > *Mandates:*
 >
 > $\texttt{I} < \texttt{sizeof...(Types)}$.
+>
+> *Constraints:*
 >
 > `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
 >
@@ -4778,6 +4906,8 @@ template<size_t I, class U, class... Args>
 > *Mandates:*
 >
 > $\texttt{I} < \texttt{sizeof...(Types)}$.
+>
+> *Constraints:*
 >
 > `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
 > is `true`.
@@ -5171,6 +5301,8 @@ template<class R, class Visitor, class... Variants>
 > denote the type
 > `decltype(`*`as-variant`*`(``std::forward<`$\texttt{Variants}_i$`>(`$\texttt{vars}_i$`)``))`.
 >
+> *Constraints:*
+>
 > $\texttt{V}_i$ is a valid type for all 0 ≤ i < n.
 >
 > Let `V` denote the pack of types $\texttt{V}_i$.
@@ -5242,6 +5374,8 @@ template<class... Types>
   constexpr void swap(variant<Types...>& v, variant<Types...>& w) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<`$\texttt{T}_i$`> && is_swappable_v<`$\texttt{T}_i$`>`
 > is `true` for all i.
 >
@@ -5471,6 +5605,8 @@ template<class T>
 
 > Let `VT` be `decay_t<T>`.
 >
+> *Constraints:*
+>
 > `VT` is not the same type as `any`, `VT` is not a specialization of
 > `in_place_type_t`, and `is_copy_constructible_v<VT>` is `true`.
 >
@@ -5493,6 +5629,8 @@ template<class T, class... Args>
 ```
 
 > Let `VT` be `decay_t<T>`.
+>
+> *Constraints:*
 >
 > `is_copy_constructible_v<VT>` is `true` and
 > `is_constructible_v<VT, Args...>` is `true`.
@@ -5520,6 +5658,8 @@ template<class T, class U, class... Args>
 ```
 
 > Let `VT` be `decay_t<T>`.
+>
+> *Constraints:*
 >
 > `is_copy_constructible_v<VT>` is `true` and
 > `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`.
@@ -5591,6 +5731,8 @@ template<class T>
 
 > Let `VT` be `decay_t<T>`.
 >
+> *Constraints:*
+>
 > `VT` is not the same type as `any` and `is_copy_constructible_v<VT>`
 > is `true`.
 >
@@ -5620,6 +5762,8 @@ template<class T, class... Args>
 ```
 
 > Let `VT` be `decay_t<T>`.
+>
+> *Constraints:*
 >
 > `is_copy_constructible_v<VT>` is `true` and
 > `is_constructible_v<VT, Args...>` is `true`.
@@ -5657,6 +5801,8 @@ template<class T, class U, class... Args>
 ```
 
 > Let `VT` be `decay_t<T>`.
+>
+> *Constraints:*
 >
 > `is_copy_constructible_v<VT>` is `true` and
 > `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`.
@@ -5927,6 +6073,8 @@ template<class Err = E>
   constexpr explicit unexpected(Err&& e);
 ```
 
+> *Constraints:*
+>
 > - `is_same_v<remove_cvref_t<Err>, unexpected>` is `false`; and
 >
 > - `is_same_v<remove_cvref_t<Err>, in_place_t>` is `false`; and
@@ -5946,6 +6094,8 @@ template<class... Args>
   constexpr explicit unexpected(in_place_t, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<E, Args...>` is `true`.
 >
 > *Effects:*
@@ -5961,6 +6111,8 @@ template<class U, class... Args>
   constexpr explicit unexpected(in_place_t, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<E, initializer_list<U>&, Args...>` is `true`.
 >
 > *Effects:*
@@ -6010,6 +6162,8 @@ constexpr void swap(unexpected& other) noexcept(is_nothrow_swappable_v<E>);
 friend constexpr void swap(unexpected& x, unexpected& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<E>` is `true`.
 >
 > *Effects:*
@@ -6269,6 +6423,8 @@ in [[optional.ctor]] is used by some constructors for `expected`.
 constexpr expected();
 ```
 
+> *Constraints:*
+>
 > `is_default_constructible_v<T>` is `true`.
 >
 > *Effects:*
@@ -6319,6 +6475,8 @@ constexpr expected(const expected& rhs);
 constexpr expected(expected&& rhs) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - `is_move_constructible_v<T>` is `true` and
 >
 > - `is_move_constructible_v<E>` is `true`.
@@ -6364,7 +6522,7 @@ template<class U, class G>
 > - `GF` be `const G&` for the first overload and `G` for the second
 >   overload.
 >
-> <!-- -->
+> *Constraints:*
 >
 > - `is_constructible_v<T, UF>` is `true`; and
 >
@@ -6408,6 +6566,8 @@ template<class U = T>
   constexpr explicit(!is_convertible_v<U, T>) expected(U&& v);
 ```
 
+> *Constraints:*
+>
 > - `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`; and
 >
 > - `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
@@ -6441,6 +6601,8 @@ template<class G>
 > Let `GF` be `const G&` for the first overload and `G` for the second
 > overload.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, GF>` is `true`.
 >
 > *Effects:*
@@ -6460,6 +6622,8 @@ template<class... Args>
   constexpr explicit expected(in_place_t, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, Args...>` is `true`.
 >
 > *Effects:*
@@ -6479,6 +6643,8 @@ template<class U, class... Args>
   constexpr explicit expected(in_place_t, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`.
 >
 > *Effects:*
@@ -6499,6 +6665,8 @@ template<class... Args>
   constexpr explicit expected(unexpect_t, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<E, Args...>` is `true`.
 >
 > *Effects:*
@@ -6518,6 +6686,8 @@ template<class U, class... Args>
   constexpr explicit expected(unexpect_t, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<E, initializer_list<U>&, Args...>` is `true`.
 >
 > *Effects:*
@@ -6621,6 +6791,8 @@ constexpr expected& operator=(const expected& rhs);
 constexpr expected& operator=(expected&& rhs) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - `is_move_constructible_v<T>` is `true` and
 >
 > - `is_move_assignable_v<T>` is `true` and
@@ -6668,6 +6840,8 @@ template<class U = T>
   constexpr expected& operator=(U&& v);
 ```
 
+> *Constraints:*
+>
 > - `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
 >
 > - `remove_cvref_t<U>` is not a specialization of `unexpected`; and
@@ -6703,6 +6877,8 @@ template<class G>
 > Let `GF` be `const G&` for the first overload and `G` for the second
 > overload.
 >
+> *Constraints:*
+>
 > - `is_constructible_v<E, GF>` is `true`; and
 >
 > - `is_assignable_v<E&, GF>` is `true`; and
@@ -6728,6 +6904,8 @@ template<class... Args>
   constexpr T& emplace(Args&&... args) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_nothrow_constructible_v<T, Args...>` is `true`.
 >
 > *Effects:*
@@ -6749,6 +6927,8 @@ template<class U, class... Args>
   constexpr T& emplace(initializer_list<U> il, Args&&... args) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_nothrow_constructible_v<T, initializer_list<U>&, Args...>` is
 > `true`.
 >
@@ -6772,6 +6952,8 @@ template<class U, class... Args>
 constexpr void swap(expected& rhs) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > - `is_swappable_v<T>` is `true` and
 >
 > - `is_swappable_v<E>` is `true` and
@@ -7021,6 +7203,8 @@ template<class F> constexpr auto and_then(F&& f) const &;
 
 > Let `U` be `remove_cvref_t<invoke_result_t<F, decltype(value())>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, decltype(error())>` is `true`.
 >
 > *Mandates:*
@@ -7047,6 +7231,8 @@ template<class F> constexpr auto and_then(F&& f) const &&;
 > Let `U` be
 > `remove_cvref_t<invoke_result_t<F, decltype(std::move(value()))>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, decltype(std::move(error()))>` is `true`.
 >
 > *Mandates:*
@@ -7071,6 +7257,8 @@ template<class F> constexpr auto or_else(F&& f) const &;
 ```
 
 > Let `G` be `remove_cvref_t<invoke_result_t<F, decltype(error())>>`.
+>
+> *Constraints:*
 >
 > `is_constructible_v<T, decltype(value())>` is `true`.
 >
@@ -7098,6 +7286,8 @@ template<class F> constexpr auto or_else(F&& f) const &&;
 > Let `G` be
 > `remove_cvref_t<invoke_result_t<F, decltype(std::move(error()))>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<T, decltype(std::move(value()))>` is `true`.
 >
 > *Mandates:*
@@ -7122,6 +7312,8 @@ template<class F> constexpr auto transform(F&& f) const &;
 ```
 
 > Let `U` be `remove_cv_t<invoke_result_t<F, decltype(value())>>`.
+>
+> *Constraints:*
 >
 > `is_constructible_v<E, decltype(error())>` is `true`.
 >
@@ -7157,6 +7349,8 @@ template<class F> constexpr auto transform(F&& f) const &&;
 > Let `U` be
 > `remove_cv_t<invoke_result_t<F, decltype(std::move(value()))>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, decltype(std::move(error()))>` is `true`.
 >
 > *Mandates:*
@@ -7191,6 +7385,8 @@ template<class F> constexpr auto transform_error(F&& f) const &;
 
 > Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<T, decltype(value())>` is `true`.
 >
 > *Mandates:*
@@ -7218,6 +7414,8 @@ template<class F> constexpr auto transform_error(F&& f) const &&;
 
 > Let `G` be
 > `remove_cv_t<invoke_result_t<F, decltype(std::move(error()))>>`.
+>
+> *Constraints:*
 >
 > `is_constructible_v<T, decltype(std::move(value()))>` is `true`.
 >
@@ -7436,6 +7634,8 @@ constexpr expected(const expected& rhs);
 constexpr expected(expected&& rhs) noexcept(is_nothrow_move_constructible_v<E>);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<E>` is `true`.
 >
 > *Effects:*
@@ -7466,6 +7666,8 @@ template<class U, class G>
 
 > Let `GF` be `const G&` for the first overload and `G` for the second
 > overload.
+>
+> *Constraints:*
 >
 > - `is_void_v<U>` is `true`; and
 >
@@ -7505,6 +7707,8 @@ template<class G>
 > Let `GF` be `const G&` for the first overload and `G` for the second
 > overload.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, GF>` is `true`.
 >
 > *Effects:*
@@ -7532,6 +7736,8 @@ template<class... Args>
   constexpr explicit expected(unexpect_t, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<E, Args...>` is `true`.
 >
 > *Effects:*
@@ -7551,6 +7757,8 @@ template<class U, class... Args>
     constexpr explicit expected(unexpect_t, initializer_list<U> il, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<E, initializer_list<U>&, Args...>` is `true`.
 >
 > *Effects:*
@@ -7649,6 +7857,8 @@ template<class G>
 > Let `GF` be `const G&` for the first overload and `G` for the second
 > overload.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, GF>` is `true` and `is_assignable_v<E&, GF>` is
 > `true`.
 >
@@ -7680,6 +7890,8 @@ constexpr void emplace() noexcept;
 constexpr void swap(expected& rhs) noexcept(see below);
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<E>` is `true` and `is_move_constructible_v<E>` is
 > `true`.
 >
@@ -7820,6 +8032,8 @@ template<class F> constexpr auto and_then(F&& f) const &;
 
 > Let `U` be `remove_cvref_t<invoke_result_t<F>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, decltype(error())>>` is `true`.
 >
 > *Mandates:*
@@ -7844,6 +8058,8 @@ template<class F> constexpr auto and_then(F&& f) const &&;
 ```
 
 > Let `U` be `remove_cvref_t<invoke_result_t<F>>`.
+>
+> *Constraints:*
 >
 > `is_constructible_v<E, decltype(std::move(error()))>` is `true`.
 >
@@ -7917,6 +8133,8 @@ template<class F> constexpr auto transform(F&& f) const &;
 
 > Let `U` be `remove_cv_t<invoke_result_t<F>>`.
 >
+> *Constraints:*
+>
 > `is_constructible_v<E, decltype(error())>` is `true`.
 >
 > *Mandates:*
@@ -7948,6 +8166,8 @@ template<class F> constexpr auto transform(F&& f) const &&;
 ```
 
 > Let `U` be `remove_cv_t<invoke_result_t<F>>`.
+>
+> *Constraints:*
 >
 > `is_constructible_v<E, decltype(std::move(error()))>` is `true`.
 >
@@ -9030,6 +9250,8 @@ template<class F, class... Args>
     noexcept(is_nothrow_invocable_v<F, Args...>);
 ```
 
+> *Constraints:*
+>
 > `is_invocable_v<F, Args...>` is `true`.
 >
 > *Returns:*
@@ -9043,6 +9265,8 @@ template<class R, class F, class... Args>
     noexcept(is_nothrow_invocable_r_v<R, F, Args...>);
 ```
 
+> *Constraints:*
+>
 > `is_invocable_r_v<R, F, Args...>` is `true`.
 >
 > *Returns:*
@@ -9107,6 +9331,8 @@ template<class U>
 > void FUN(T&) noexcept;
 > void FUN(T&&) = delete;
 > ```
+>
+> *Constraints:*
 >
 > The expression *FUN*(declval\<U\>()) is well-formed and
 > `is_same_v<remove_cvref_t<U>, reference_wrapper>` is `false`.
@@ -9699,6 +9925,8 @@ template<class T, class U>
   constexpr auto operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `three_way_comparable_with`.
 >
 > *Preconditions:*
@@ -9737,6 +9965,8 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `equality_comparable_with`.
 >
 > *Preconditions:*
@@ -9772,6 +10002,8 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `equality_comparable_with`.
 >
 > *Effects:*
@@ -9796,6 +10028,8 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `totally_ordered_with`.
 >
 > *Effects:*
@@ -9820,6 +10054,8 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `totally_ordered_with`.
 >
 > *Preconditions:*
@@ -9858,6 +10094,8 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `totally_ordered_with`.
 >
 > *Effects:*
@@ -9882,6 +10120,8 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
+> *Constraints:*
+>
 > `T` and `U` satisfy `totally_ordered_with`.
 >
 > *Effects:*
@@ -10638,6 +10878,8 @@ template<class F> function(F&& f);
 
 > Let `FD` be `decay_t<F>`.
 >
+> *Constraints:*
+>
 > - `is_same_v<remove_cvref_t<F>, function>` is `false`, and
 >
 > - `FD` is Lvalue-Callable [[func.wrap.func]] for argument types
@@ -10682,6 +10924,8 @@ template<class F> function(F&& f);
 template<class F> function(F) -> function<see below>;
 ```
 
+> *Constraints:*
+>
 > `&F::operator()` is well-formed when treated as an unevaluated operand
 > and either
 >
@@ -10750,6 +10994,8 @@ function& operator=(nullptr_t) noexcept;
 template<class F> function& operator=(F&& f);
 ```
 
+> *Constraints:*
+>
 > `decay_t<F>` is Lvalue-Callable [[func.wrap.func]] for argument types
 > `ArgTypes...` and return type `R`.
 >
@@ -10981,6 +11227,8 @@ template<class F> move_only_function(F&& f);
 
 > Let `VT` be `decay_t<F>`.
 >
+> *Constraints:*
+>
 > - `remove_cvref_t<F>` is not the same type as `move_only_function`,
 >   and
 >
@@ -11026,6 +11274,8 @@ template<class T, class... Args>
 
 > Let `VT` be `decay_t<T>`.
 >
+> *Constraints:*
+>
 > - `is_constructible_v<VT, Args...>` is `true`, and
 >
 > - *`is-callable-from`*`<VT>` is `true`.
@@ -11057,6 +11307,8 @@ template<class T, class U, class... Args>
 ```
 
 > Let `VT` be `decay_t<T>`.
+>
+> *Constraints:*
 >
 > - `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`,
 >   and
@@ -11642,6 +11894,8 @@ template<> struct hash<type_index>;
 > `index.hash_code()`.
 
 ## Execution policies <a id="execpol">[[execpol]]</a>
+
+### In general <a id="execpol.general">[[execpol.general]]</a>
 
 Subclause  [[execpol]] describes classes that are *execution policy*
 types. An object of an execution policy type indicates the kinds of
@@ -12699,6 +12953,8 @@ namespace std {
 template<class T> consteval basic_format_string(const T& s);
 ```
 
+> *Constraints:*
+>
 > `const T&` models `convertible_to``<basic_string_view<charT>>`.
 >
 > *Effects:*
@@ -12853,6 +13109,8 @@ template<class Out>
 
 > Let `charT` be `decltype(fmt)::value_type`.
 >
+> *Constraints:*
+>
 > `Out` satisfies `output_iterator``<const charT&>`.
 >
 > *Preconditions:*
@@ -12901,6 +13159,8 @@ template<class Out, class... Args>
 >   functions with a `loc` parameter, and
 >
 > - `M` be `clamp(n, 0, N)`.
+>
+> *Constraints:*
 >
 > `Out` satisfies `output_iterator``<const charT&>`.
 >
@@ -13988,6 +14248,8 @@ basic_format_arg() noexcept;
 template<class T> explicit basic_format_arg(T& v) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` satisfies `formattable-with``<Context>`.
 >
 > *Preconditions:*
@@ -14442,6 +14704,8 @@ template<class To, class From>
   constexpr To bit_cast(const From& from) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `sizeof(To) == sizeof(From)` is `true`;
 >
 > - `is_trivially_copyable_v<To>` is `true`; and
@@ -14489,6 +14753,8 @@ template<class T>
   constexpr T byteswap(T value) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` models `integral`.
 >
 > *Mandates:*
@@ -14511,6 +14777,8 @@ template<class T>
   constexpr bool has_single_bit(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14523,6 +14791,8 @@ template<class T>
 ```
 
 > Let N be the smallest power of 2 greater than or equal to `x`.
+>
+> *Constraints:*
 >
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
@@ -14549,6 +14819,8 @@ template<class T>
   constexpr T bit_floor(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14561,6 +14833,8 @@ template<class T>
   constexpr int bit_width(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14578,6 +14852,8 @@ template<class T>
   [[nodiscard]] constexpr T rotl(T x, int s) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > Let `r` be `s % N`.
@@ -14592,6 +14868,8 @@ template<class T>
   [[nodiscard]] constexpr T rotr(T x, int s) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > Let `r` be `s % N`.
@@ -14611,6 +14889,8 @@ template<class T>
   constexpr int countl_zero(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14625,6 +14905,8 @@ template<class T>
   constexpr int countl_one(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14640,6 +14922,8 @@ template<class T>
   constexpr int countr_zero(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14654,6 +14938,8 @@ template<class T>
   constexpr int countr_one(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14669,6 +14955,8 @@ template<class T>
   constexpr int popcount(T x) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an unsigned integer type [[basic.fundamental]].
 >
 > *Returns:*
@@ -14757,6 +15045,7 @@ enum class endian {
 [comparisons.three.way]: #comparisons.three.way
 [declval]: #declval
 [execpol]: #execpol
+[execpol.general]: #execpol.general
 [execpol.objects]: #execpol.objects
 [execpol.par]: #execpol.par
 [execpol.parunseq]: #execpol.parunseq

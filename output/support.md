@@ -233,6 +233,8 @@ template<class IntType>
   constexpr byte& operator<<=(byte& b, IntType shift) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_integral_v<IntType>` is `true`.
 >
 > *Effects:*
@@ -244,6 +246,8 @@ template<class IntType>
   constexpr byte operator<<(byte b, IntType shift) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_integral_v<IntType>` is `true`.
 >
 > *Effects:*
@@ -259,6 +263,8 @@ template<class IntType>
   constexpr byte& operator>>=(byte& b, IntType shift) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_integral_v<IntType>` is `true`.
 >
 > *Effects:*
@@ -270,6 +276,8 @@ template<class IntType>
   constexpr byte operator>>(byte b, IntType shift) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_integral_v<IntType>` is `true`.
 >
 > *Effects:*
@@ -357,6 +365,8 @@ template<class IntType>
   constexpr IntType to_integer(byte b) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_integral_v<IntType>` is `true`.
 >
 > *Effects:*

@@ -861,6 +861,8 @@ explicit stop_callback(stop_token&& st, C&& cb)
   noexcept(is_nothrow_constructible_v<Callback, C>);
 ```
 
+> *Constraints:*
+>
 > `Callback` and `C` satisfy `constructible_from``<Callback, C>`.
 >
 > *Preconditions:*
@@ -1123,6 +1125,8 @@ thread() noexcept;
 template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `remove_cvref_t<F>` is not the same type as `thread`.
 >
 > *Mandates:*
@@ -1403,6 +1407,8 @@ jthread() noexcept;
 template<class F, class... Args> explicit jthread(F&& f, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `remove_cvref_t<F>` is not the same type as `jthread`.
 >
 > *Mandates:*
@@ -3124,6 +3130,8 @@ void store(T desired, memory_order order = memory_order::seq_cst) volatile noexc
 void store(T desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3144,6 +3152,8 @@ T operator=(T desired) volatile noexcept;
 T operator=(T desired) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3162,6 +3172,8 @@ T load(memory_order order = memory_order::seq_cst) const volatile noexcept;
 T load(memory_order order = memory_order::seq_cst) const noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3185,6 +3197,8 @@ operator T() const volatile noexcept;
 operator T() const noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3199,6 +3213,8 @@ T exchange(T desired, memory_order order = memory_order::seq_cst) volatile noexc
 T exchange(T desired, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3235,6 +3251,8 @@ bool compare_exchange_strong(T& expected, T desired,
                              memory_order order = memory_order::seq_cst) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3568,6 +3586,8 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) volatile noex
 T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3601,6 +3621,8 @@ T operator op=(T operand) volatile noexcept;
 T operator op=(T operand) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3703,6 +3725,8 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) volatile noex
 T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3737,6 +3761,8 @@ T operator op=(T operand) volatile noexcept;
 T operator op=(T operand) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3842,6 +3868,8 @@ T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) vola
 T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3874,6 +3902,8 @@ T* operator op=(ptrdiff_t operand) volatile noexcept;
 T* operator op=(ptrdiff_t operand) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3890,6 +3920,8 @@ value_type operator++(int) volatile noexcept;
 value_type operator++(int) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3904,6 +3936,8 @@ value_type operator--(int) volatile noexcept;
 value_type operator--(int) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3918,6 +3952,8 @@ value_type operator++() volatile noexcept;
 value_type operator++() noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -3932,6 +3968,8 @@ value_type operator--() volatile noexcept;
 value_type operator--() noexcept;
 ```
 
+> *Constraints:*
+>
 > For the `volatile` overload of this function, `is_always_lock_free` is
 > `true`.
 >
@@ -9483,6 +9521,8 @@ template<class F>
   explicit packaged_task(F&& f);
 ```
 
+> *Constraints:*
+>
 > `remove_cvref_t<F>` is not the same type as
 > `packaged_task<R(ArgTypes...)>`.
 >
@@ -9509,6 +9549,8 @@ template<class F>
 template<class F> packaged_task(F) -> packaged_task<see below>;
 ```
 
+> *Constraints:*
+>
 > `&F::operator()` is well-formed when treated as an unevaluated
 > operand [[term.unevaluated.operand]] and either
 >

@@ -1183,6 +1183,8 @@ template<class Rep2>
   constexpr explicit duration(const Rep2& r);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<const Rep2&, rep>` is `true` and
 >
 > - `treat_as_floating_point_v<rep>` is `true` or
@@ -1205,6 +1207,8 @@ template<class Rep2, class Period2>
   constexpr duration(const duration<Rep2, Period2>& d);
 ```
 
+> *Constraints:*
+>
 > No overflow is induced in the conversion and
 > `treat_as_floating_point_v<rep>` is `true` or both
 > `ratio_divide<Period2, period>::den` is `1` and
@@ -1424,6 +1428,8 @@ template<class Rep1, class Period, class Rep2>
     operator*(const duration<Rep1, Period>& d, const Rep2& s);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`.
 >
 > *Returns:*
@@ -1436,6 +1442,8 @@ template<class Rep1, class Rep2, class Period>
     operator*(const Rep1& s, const duration<Rep2, Period>& d);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<const Rep1&, common_type_t<Rep1, Rep2>>` is `true`.
 >
 > *Returns:*
@@ -1448,6 +1456,8 @@ template<class Rep1, class Period, class Rep2>
     operator/(const duration<Rep1, Period>& d, const Rep2& s);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`
 > and `Rep2` is not a specialization of `duration`.
 >
@@ -1474,6 +1484,8 @@ template<class Rep1, class Period, class Rep2>
     operator%(const duration<Rep1, Period>& d, const Rep2& s);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`
 > and `Rep2` is not a specialization of `duration`.
 >
@@ -1565,6 +1577,8 @@ template<class ToDuration, class Rep, class Period>
   constexpr ToDuration duration_cast(const duration<Rep, Period>& d);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`.
 >
 > *Returns:*
@@ -1603,6 +1617,8 @@ template<class ToDuration, class Rep, class Period>
   constexpr ToDuration floor(const duration<Rep, Period>& d);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`.
 >
 > *Returns:*
@@ -1615,6 +1631,8 @@ template<class ToDuration, class Rep, class Period>
   constexpr ToDuration ceil(const duration<Rep, Period>& d);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`.
 >
 > *Returns:*
@@ -1626,6 +1644,8 @@ template<class ToDuration, class Rep, class Period>
   constexpr ToDuration round(const duration<Rep, Period>& d);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration` and
 > `treat_as_floating_point_v<typename ToDuration::rep>` is `false`.
 >
@@ -1728,6 +1748,8 @@ template<class Rep, class Period>
   constexpr duration<Rep, Period> abs(duration<Rep, Period> d);
 ```
 
+> *Constraints:*
+>
 > `numeric_limits<Rep>::is_signed` is `true`.
 >
 > *Returns:*
@@ -1911,6 +1933,8 @@ template<class Duration2>
   constexpr time_point(const time_point<clock, Duration2>& t);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<Duration2, duration>` is `true`.
 >
 > *Effects:*
@@ -2125,6 +2149,8 @@ template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> time_point_cast(const time_point<Clock, Duration>& t);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`.
 >
 > *Returns:*
@@ -2138,6 +2164,8 @@ template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> floor(const time_point<Clock, Duration>& tp);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`.
 >
 > *Returns:*
@@ -2149,6 +2177,8 @@ template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> ceil(const time_point<Clock, Duration>& tp);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`.
 >
 > *Returns:*
@@ -2160,6 +2190,8 @@ template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> round(const time_point<Clock, Duration>& tp);
 ```
 
+> *Constraints:*
+>
 > `ToDuration` is a specialization of `duration`, and
 > `treat_as_floating_point_v<typename ToDuration::rep>` is `false`.
 >
@@ -2216,6 +2248,8 @@ efficient mapping between `sys_time` and calendar types [[time.cal]].
 using system_clock::rep = unspecified;
 ```
 
+> *Constraints:*
+>
 > `system_clock::duration::min() < system_clock::duration::zero()` is
 > `true`.
 >
@@ -2251,6 +2285,8 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const sys_time<Duration>& tp);
 ```
 
+> *Constraints:*
+>
 > `treat_as_floating_point_v<typename Duration::rep>` is `false`, and
 > `Duration{1} < days{1}` is `true`.
 >
@@ -3114,6 +3150,8 @@ template<class Duration>
     -> decltype(SourceClock::to_sys(t));
 ```
 
+> *Constraints:*
+>
 > `SourceClock::to_sys(t)` is well-formed.
 >
 > *Mandates:*
@@ -3140,6 +3178,8 @@ template<class Duration>
     -> decltype(DestClock::from_sys(t));
 ```
 
+> *Constraints:*
+>
 > `DestClock::from_sys(t)` is well-formed.
 >
 > *Mandates:*
@@ -3168,6 +3208,8 @@ template<class Duration>
     -> decltype(SourceClock::to_utc(t));
 ```
 
+> *Constraints:*
+>
 > `SourceClock::to_utc(t)` is well-formed.
 >
 > *Mandates:*
@@ -3194,6 +3236,8 @@ template<class Duration>
     -> decltype(DestClock::from_utc(t));
 ```
 
+> *Constraints:*
+>
 > `DestClock::from_utc(t)` is well-formed.
 >
 > *Mandates:*
@@ -3212,6 +3256,8 @@ template<class DestClock, class SourceClock, class Duration>
   auto clock_cast(const time_point<SourceClock, Duration>& t);
 ```
 
+> *Constraints:*
+>
 > At least one of the following clock time conversion expressions is
 > well-formed:
 >
@@ -4979,6 +5025,8 @@ constexpr chrono::month month() const noexcept;
 constexpr year_month& operator+=(const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -4996,6 +5044,8 @@ constexpr year_month& operator+=(const months& dm) noexcept;
 constexpr year_month& operator-=(const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5068,6 +5118,8 @@ constexpr strong_ordering operator<=>(const year_month& x, const year_month& y) 
 constexpr year_month operator+(const year_month& ym, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5085,6 +5137,8 @@ constexpr year_month operator+(const year_month& ym, const months& dm) noexcept;
 constexpr year_month operator+(const months& dm, const year_month& ym) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5098,6 +5152,8 @@ constexpr year_month operator+(const months& dm, const year_month& ym) noexcept;
 constexpr year_month operator-(const year_month& ym, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5281,6 +5337,8 @@ constexpr explicit year_month_day(const local_days& dp) noexcept;
 constexpr year_month_day& operator+=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5298,6 +5356,8 @@ constexpr year_month_day& operator+=(const months& m) noexcept;
 constexpr year_month_day& operator-=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5431,6 +5491,8 @@ constexpr strong_ordering operator<=>(const year_month_day& x, const year_month_
 constexpr year_month_day operator+(const year_month_day& ymd, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5447,6 +5509,8 @@ constexpr year_month_day operator+(const year_month_day& ymd, const months& dm) 
 constexpr year_month_day operator+(const months& dm, const year_month_day& ymd) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5460,6 +5524,8 @@ constexpr year_month_day operator+(const months& dm, const year_month_day& ymd) 
 constexpr year_month_day operator-(const year_month_day& ymd, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5599,6 +5665,8 @@ constexpr year_month_day_last(const chrono::year& y,
 constexpr year_month_day_last& operator+=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5616,6 +5684,8 @@ constexpr year_month_day_last& operator+=(const months& m) noexcept;
 constexpr year_month_day_last& operator-=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5742,6 +5812,8 @@ constexpr year_month_day_last
   operator+(const year_month_day_last& ymdl, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5756,6 +5828,8 @@ constexpr year_month_day_last
   operator+(const months& dm, const year_month_day_last& ymdl) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5770,6 +5844,8 @@ constexpr year_month_day_last
   operator-(const year_month_day_last& ymdl, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5910,6 +5986,8 @@ constexpr explicit year_month_weekday(const local_days& dp) noexcept;
 constexpr year_month_weekday& operator+=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -5927,6 +6005,8 @@ constexpr year_month_weekday& operator+=(const months& m) noexcept;
 constexpr year_month_weekday& operator-=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6050,6 +6130,8 @@ constexpr bool operator==(const year_month_weekday& x, const year_month_weekday&
 constexpr year_month_weekday operator+(const year_month_weekday& ymwd, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6063,6 +6145,8 @@ constexpr year_month_weekday operator+(const year_month_weekday& ymwd, const mon
 constexpr year_month_weekday operator+(const months& dm, const year_month_weekday& ymwd) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6076,6 +6160,8 @@ constexpr year_month_weekday operator+(const months& dm, const year_month_weekda
 constexpr year_month_weekday operator-(const year_month_weekday& ymwd, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6187,6 +6273,8 @@ constexpr year_month_weekday_last(const chrono::year& y, const chrono::month& m,
 constexpr year_month_weekday_last& operator+=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6204,6 +6292,8 @@ constexpr year_month_weekday_last& operator+=(const months& m) noexcept;
 constexpr year_month_weekday_last& operator-=(const months& m) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6317,6 +6407,8 @@ constexpr year_month_weekday_last
   operator+(const year_month_weekday_last& ymwdl, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6331,6 +6423,8 @@ constexpr year_month_weekday_last
   operator+(const months& dm, const year_month_weekday_last& ymwdl) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -6345,6 +6439,8 @@ constexpr year_month_weekday_last
   operator-(const year_month_weekday_last& ymwdl, const months& dm) noexcept;
 ```
 
+> *Constraints:*
+>
 > If the argument supplied by the caller for the `months` parameter is
 > convertible to `years`, its implicit conversion sequence to `years` is
 > worse than its implicit conversion sequence to
@@ -7888,6 +7984,8 @@ deduction [[over.match.class.deduct]].
 zoned_time();
 ```
 
+> *Constraints:*
+>
 > `traits::default_zone()` is a well-formed expression.
 >
 > *Effects:*
@@ -7899,6 +7997,8 @@ zoned_time();
 zoned_time(const sys_time<Duration>& st);
 ```
 
+> *Constraints:*
+>
 > `traits::default_zone()` is a well-formed expression.
 >
 > *Effects:*
@@ -7921,6 +8021,8 @@ explicit zoned_time(TimeZonePtr z);
 explicit zoned_time(string_view name);
 ```
 
+> *Constraints:*
+>
 > `traits::locate_zone(string_view{})` is a well-formed expression and
 > `zoned_time` is constructible from the return type of
 > `traits::locate_zone(string_view{})`.
@@ -7935,6 +8037,8 @@ template<class Duration2>
   zoned_time(const zoned_time<Duration2, TimeZonePtr>& y);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
 >
 > *Effects:*
@@ -7957,6 +8061,8 @@ zoned_time(TimeZonePtr z, const sys_time<Duration>& st);
 zoned_time(string_view name, const sys_time<Duration>& st);
 ```
 
+> *Constraints:*
+>
 > `zoned_time` is constructible from the return type of
 > `traits::locate_zone(name)` and `st`.
 >
@@ -7968,6 +8074,8 @@ zoned_time(string_view name, const sys_time<Duration>& st);
 zoned_time(TimeZonePtr z, const local_time<Duration>& tp);
 ```
 
+> *Constraints:*
+>
 > ``` cpp
 > is_convertible_v<
 >   decltype(declval<TimeZonePtr&>()->to_sys(local_time<Duration>{})),
@@ -7989,6 +8097,8 @@ zoned_time(TimeZonePtr z, const local_time<Duration>& tp);
 zoned_time(string_view name, const local_time<Duration>& tp);
 ```
 
+> *Constraints:*
+>
 > `zoned_time` is constructible from the return type of
 > `traits::locate_zone(name)` and `tp`.
 >
@@ -8000,6 +8110,8 @@ zoned_time(string_view name, const local_time<Duration>& tp);
 zoned_time(TimeZonePtr z, const local_time<Duration>& tp, choose c);
 ```
 
+> *Constraints:*
+>
 > ``` cpp
 > is_convertible_v<
 >   decltype(declval<TimeZonePtr&>()->to_sys(local_time<Duration>{}, choose::earliest)),
@@ -8021,6 +8133,8 @@ zoned_time(TimeZonePtr z, const local_time<Duration>& tp, choose c);
 zoned_time(string_view name, const local_time<Duration>& tp, choose c);
 ```
 
+> *Constraints:*
+>
 > `zoned_time` is constructible from the return type of
 > `traits::locate_zone(name)`, `local_time<Duration>`, and `choose`.
 >
@@ -8033,6 +8147,8 @@ template<class Duration2, class TimeZonePtr2>
   zoned_time(TimeZonePtr z, const zoned_time<Duration2, TimeZonePtr2>& y);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
 >
 > *Preconditions:*
@@ -8048,6 +8164,8 @@ template<class Duration2, class TimeZonePtr2>
   zoned_time(TimeZonePtr z, const zoned_time<Duration2, TimeZonePtr2>& y, choose);
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
 >
 > *Preconditions:*
@@ -8065,6 +8183,8 @@ template<class Duration2, class TimeZonePtr2>
   zoned_time(string_view name, const zoned_time<Duration2, TimeZonePtr2>& y);
 ```
 
+> *Constraints:*
+>
 > `zoned_time` is constructible from the return type of
 > `traits::locate_zone(name)` and the type
 > `zoned_time<Duration2, TimeZonePtr2>`.
@@ -8078,6 +8198,8 @@ template<class Duration2, class TimeZonePtr2>
   zoned_time(string_view name, const zoned_time<Duration2, TimeZonePtr2>& y, choose c);
 ```
 
+> *Constraints:*
+>
 > `zoned_time` is constructible from the return type of
 > `traits::locate_zone(name)`, the type
 > `zoned_time<Duration2, TimeZonePtr2>`, and the type `choose`.
@@ -8749,6 +8871,8 @@ template<class charT, class traits, class Alloc, class Parsable>
 > Let F be `fmt` for the first overload and `fmt.c_str()` for the second
 > overload. Let `traits` be `char_traits<charT>` for the first overload.
 >
+> *Constraints:*
+>
 > The expression
 >
 > ``` cpp
@@ -8776,6 +8900,8 @@ template<class charT, class traits, class Alloc, class Parsable>
 
 > Let F be `fmt` for the first overload and `fmt.c_str()` for the second
 > overload.
+>
+> *Constraints:*
 >
 > The expression
 >
@@ -8805,6 +8931,8 @@ template<class charT, class traits, class Alloc, class Parsable>
 > Let F be `fmt` for the first overload and `fmt.c_str()` for the second
 > overload. Let `traits` be `char_traits<charT>` and `Alloc` be
 > `allocator<charT>` for the first overload.
+>
+> *Constraints:*
 >
 > The expression
 >
@@ -8843,6 +8971,8 @@ template<class charT, class traits, class Alloc, class Parsable>
 
 > Let F be `fmt` for the first overload and `fmt.c_str()` for the second
 > overload.
+>
+> *Constraints:*
 >
 > The expression
 >

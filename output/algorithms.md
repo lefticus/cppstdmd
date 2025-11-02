@@ -9658,6 +9658,8 @@ template<class T>
   constexpr T midpoint(T a, T b) noexcept;
 ```
 
+> *Constraints:*
+>
 > `T` is an arithmetic type other than `bool`.
 >
 > *Returns:*
@@ -9675,6 +9677,8 @@ template<class T>
   constexpr T* midpoint(T* a, T* b);
 ```
 
+> *Constraints:*
+>
 > `T` is an object type.
 >
 > *Mandates:*
@@ -10216,6 +10220,8 @@ namespace ranges {
 }
 ```
 
+> *Constraints:*
+>
 > The expression `::new (declval<void*>()) T(declval<Args>()...)` is
 > well-formed when treated as an unevaluated
 > operand [[term.unevaluated.operand]].

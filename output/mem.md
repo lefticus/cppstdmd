@@ -950,6 +950,8 @@ template<class T, class Alloc, class... Args>
                                                   Args&&... args) noexcept;
 ```
 
+> *Constraints:*
+>
 > `remove_cv_t<T>` is not a specialization of `pair`.
 >
 > *Returns:*
@@ -985,6 +987,8 @@ template<class T, class Alloc, class Tuple1, class Tuple2>
 
 > Let `T1` be `T::first_type`. Let `T2` be `T::second_type`.
 >
+> *Constraints:*
+>
 > `remove_cv_t<T>` is a specialization of `pair`.
 >
 > *Effects:*
@@ -1009,6 +1013,8 @@ template<class T, class Alloc>
   constexpr auto uses_allocator_construction_args(const Alloc& alloc) noexcept;
 ```
 
+> *Constraints:*
+>
 > `remove_cv_t<T>` is a specialization of `pair`.
 >
 > *Effects:*
@@ -1026,6 +1032,8 @@ template<class T, class Alloc, class U, class V>
                                                   U&& u, V&& v) noexcept;
 ```
 
+> *Constraints:*
+>
 > `remove_cv_t<T>` is a specialization of `pair`.
 >
 > *Effects:*
@@ -1047,6 +1055,8 @@ template<class T, class Alloc, class U, class V>
                                                   const pair<U, V>& pr) noexcept;
 ```
 
+> *Constraints:*
+>
 > `remove_cv_t<T>` is a specialization of `pair`.
 >
 > *Effects:*
@@ -1068,6 +1078,8 @@ template<class T, class Alloc, class U, class V>
                                                   const pair<U, V>&& pr) noexcept;
 ```
 
+> *Constraints:*
+>
 > `remove_cv_t<T>` is a specialization of `pair`.
 >
 > *Effects:*
@@ -1085,6 +1097,8 @@ template<class T, class Alloc, pair-like P>
   constexpr auto uses_allocator_construction_args(const Alloc& alloc, P&& p) noexcept;
 ```
 
+> *Constraints:*
+>
 > `remove_cv_t<T>` is a specialization of `pair` and `remove_cvref_t<P>`
 > is not a specialization of `ranges::subrange`.
 >
@@ -1109,6 +1123,8 @@ template<class T, class Alloc, class U>
 > template<class A, class B>
 >   void FUN(const pair<A, B>&);
 > ```
+>
+> *Constraints:*
 >
 > `remove_cv_t<T>` is a specialization of `pair`, and either:
 >
@@ -1660,6 +1676,8 @@ namespace std {
 template<class U> constexpr default_delete(const default_delete<U>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `U*` is implicitly convertible to `T*`.
 >
 > *Effects:*
@@ -1695,6 +1713,8 @@ namespace std {
 template<class U> constexpr default_delete(const default_delete<U[]>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `U(*)[]` is convertible to `T(*)[]`.
 >
 > *Effects:*
@@ -1706,6 +1726,8 @@ template<class U> constexpr default_delete(const default_delete<U[]>& other) noe
 template<class U> constexpr void operator()(U* ptr) const;
 ```
 
+> *Constraints:*
+>
 > `U(*)[]` is convertible to `T(*)[]`.
 >
 > *Mandates:*
@@ -1799,6 +1821,8 @@ constexpr unique_ptr() noexcept;
 constexpr unique_ptr(nullptr_t) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_pointer_v<deleter_type>` is `false` and
 > `is_default_constructible_v<deleter_type>` is `true`.
 >
@@ -1822,6 +1846,8 @@ constexpr unique_ptr(nullptr_t) noexcept;
 constexpr explicit unique_ptr(type_identity_t<pointer> p) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_pointer_v<deleter_type>` is `false` and
 > `is_default_constructible_v<deleter_type>` is `true`.
 >
@@ -1846,6 +1872,8 @@ constexpr unique_ptr(type_identity_t<pointer> p, const D& d) noexcept;
 constexpr unique_ptr(type_identity_t<pointer> p, remove_reference_t<D>&& d) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<D, decltype(d)>` is `true`.
 >
 > *Preconditions:*
@@ -1888,6 +1916,8 @@ constexpr unique_ptr(type_identity_t<pointer> p, remove_reference_t<D>&& d) noex
 constexpr unique_ptr(unique_ptr&& u) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<D>` is `true`.
 >
 > *Preconditions:*
@@ -1917,6 +1947,8 @@ constexpr unique_ptr(unique_ptr&& u) noexcept;
 template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `unique_ptr<U, E>::pointer` is implicitly convertible to `pointer`,
 >
 > - `U` is not an array type, and
@@ -1972,6 +2004,8 @@ constexpr ~unique_ptr();
 constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_move_assignable_v<D>` is `true`.
 >
 > *Preconditions:*
@@ -2001,6 +2035,8 @@ constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
 template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `unique_ptr<U, E>::pointer` is implicitly convertible to `pointer`,
 >   and
 >
@@ -2233,6 +2269,8 @@ template<class U> constexpr explicit unique_ptr(U p) noexcept;
 > This constructor behaves the same as the constructor in the primary
 > template that takes a single parameter of type `pointer`.
 >
+> *Constraints:*
+>
 > - `U` is the same type as `pointer`, or
 >
 > - `pointer` is the same type as `element_type*`, `U` is a pointer type
@@ -2247,6 +2285,8 @@ template<class U> constexpr unique_ptr(U p, see below d) noexcept;
 > template that take a parameter of type `pointer` and a second
 > parameter.
 >
+> *Constraints:*
+>
 > - `U` is the same type as `pointer`,
 >
 > - `U` is `nullptr_t`, or
@@ -2259,6 +2299,8 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 ```
 
 > This constructor behaves the same as in the primary template.
+>
+> *Constraints:*
 >
 > Where `UP` is `unique_ptr<U, E>`:
 >
@@ -2274,8 +2316,8 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 >   `D` is not a reference type and `E` is implicitly convertible to
 >   `D`.
 >
-> \[*Note 12*: This replaces the specification of the primary
-> template. — *end note*\]
+> \[*Note 12*: This replaces the *Constraints:* specification of the
+> primary template. — *end note*\]
 
 ##### Assignment <a id="unique.ptr.runtime.asgn">[[unique.ptr.runtime.asgn]]</a>
 
@@ -2284,6 +2326,8 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 ```
 
 > This operator behaves the same as in the primary template.
+>
+> *Constraints:*
 >
 > Where `UP` is `unique_ptr<U, E>`:
 >
@@ -2297,8 +2341,8 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 >
 > - `is_assignable_v<D&, E&&>` is `true`.
 >
-> \[*Note 13*: This replaces the specification of the primary
-> template. — *end note*\]
+> \[*Note 13*: This replaces the *Constraints:* specification of the
+> primary template. — *end note*\]
 
 ##### Observers <a id="unique.ptr.runtime.observers">[[unique.ptr.runtime.observers]]</a>
 
@@ -2332,6 +2376,8 @@ constexpr template<class U> void reset(U p) noexcept;
 > This function behaves the same as the `reset` member of the primary
 > template.
 >
+> *Constraints:*
+>
 > - `U` is the same type as `pointer`, or
 >
 > - `pointer` is the same type as `element_type*`, `U` is a pointer type
@@ -2343,6 +2389,8 @@ constexpr template<class U> void reset(U p) noexcept;
 template<class T, class... Args> constexpr unique_ptr<T> make_unique(Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `T` is not an array type.
 >
 > *Returns:*
@@ -2353,6 +2401,8 @@ template<class T, class... Args> constexpr unique_ptr<T> make_unique(Args&&... a
 template<class T> constexpr unique_ptr<T> make_unique(size_t n);
 ```
 
+> *Constraints:*
+>
 > `T` is an array of unknown bound.
 >
 > *Returns:*
@@ -2363,12 +2413,16 @@ template<class T> constexpr unique_ptr<T> make_unique(size_t n);
 template<class T, class... Args> unspecified make_unique(Args&&...) = delete;
 ```
 
+> *Constraints:*
+>
 > `T` is an array of known bound.
 
 ``` cpp
 template<class T> constexpr unique_ptr<T> make_unique_for_overwrite();
 ```
 
+> *Constraints:*
+>
 > `T` is not an array type.
 >
 > *Returns:*
@@ -2379,6 +2433,8 @@ template<class T> constexpr unique_ptr<T> make_unique_for_overwrite();
 template<class T> constexpr unique_ptr<T> make_unique_for_overwrite(size_t n);
 ```
 
+> *Constraints:*
+>
 > `T` is an array of unknown bound.
 >
 > *Returns:*
@@ -2389,6 +2445,8 @@ template<class T> constexpr unique_ptr<T> make_unique_for_overwrite(size_t n);
 template<class T, class... Args> unspecified make_unique_for_overwrite(Args&&...) = delete;
 ```
 
+> *Constraints:*
+>
 > `T` is an array of known bound.
 
 #### Specialized algorithms <a id="unique.ptr.special">[[unique.ptr.special]]</a>
@@ -2397,6 +2455,8 @@ template<class T, class... Args> unspecified make_unique_for_overwrite(Args&&...
 template<class T, class D> constexpr void swap(unique_ptr<T, D>& x, unique_ptr<T, D>& y) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<D>` is `true`.
 >
 > *Effects:*
@@ -2572,6 +2632,8 @@ template<class E, class T, class Y, class D>
   basic_ostream<E, T>& operator<<(basic_ostream<E, T>& os, const unique_ptr<Y, D>& p);
 ```
 
+> *Constraints:*
+>
 > `os << p.get()` is a valid expression.
 >
 > *Effects:*
@@ -2755,6 +2817,8 @@ constexpr shared_ptr() noexcept;
 template<class Y> explicit shared_ptr(Y* p);
 ```
 
+> *Constraints:*
+>
 > When `T` is an array type, the expression `delete[] p` is well-formed
 > and either `T` is `U[N]` and `Y(*)[N]` is convertible to `T*`, or `T`
 > is `U[]` and `Y(*)[]` is convertible to `T*`. When `T` is not an array
@@ -2796,6 +2860,8 @@ template<class D> shared_ptr(nullptr_t p, D d);
 template<class D, class A> shared_ptr(nullptr_t p, D d, A a);
 ```
 
+> *Constraints:*
+>
 > `is_move_constructible_v<D>` is `true`, and `d(p)` is a well-formed
 > expression. For the first two overloads:
 >
@@ -2856,6 +2922,8 @@ shared_ptr(const shared_ptr& r) noexcept;
 template<class Y> shared_ptr(const shared_ptr<Y>& r) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the second constructor, `Y*` is compatible with `T*`.
 >
 > *Effects:*
@@ -2872,6 +2940,8 @@ shared_ptr(shared_ptr&& r) noexcept;
 template<class Y> shared_ptr(shared_ptr<Y>&& r) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the second constructor, `Y*` is compatible with `T*`.
 >
 > *Effects:*
@@ -2887,6 +2957,8 @@ template<class Y> shared_ptr(shared_ptr<Y>&& r) noexcept;
 template<class Y> explicit shared_ptr(const weak_ptr<Y>& r);
 ```
 
+> *Constraints:*
+>
 > `Y*` is compatible with `T*`.
 >
 > *Effects:*
@@ -2907,6 +2979,8 @@ template<class Y> explicit shared_ptr(const weak_ptr<Y>& r);
 template<class Y, class D> shared_ptr(unique_ptr<Y, D>&& r);
 ```
 
+> *Constraints:*
+>
 > `Y*` is compatible with `T*` and `unique_ptr<Y, D>::pointer` is
 > convertible to `element_type*`.
 >
@@ -3291,6 +3365,8 @@ template<class T, class A, class... Args>
   shared_ptr<T> allocate_shared(const A& a, Args&&... args);    // T is not array
 ```
 
+> *Constraints:*
+>
 > `T` is not an array type.
 >
 > *Returns:*
@@ -3319,6 +3395,8 @@ template<class T, class A>
   shared_ptr<T> allocate_shared(const A& a, size_t N);          // T is U[]
 ```
 
+> *Constraints:*
+>
 > `T` is of the form `U[]`.
 >
 > *Returns:*
@@ -3342,6 +3420,8 @@ template<class T, class A>
   shared_ptr<T> allocate_shared(const A& a);                    // T is U[N]
 ```
 
+> *Constraints:*
+>
 > `T` is of the form `U[N]`.
 >
 > *Returns:*
@@ -3366,6 +3446,8 @@ template<class T, class A>
                                 const remove_extent_t<T>& u);   // T is U[]
 ```
 
+> *Constraints:*
+>
 > `T` is of the form `U[]`.
 >
 > *Returns:*
@@ -3393,6 +3475,8 @@ template<class T, class A>
                                 const remove_extent_t<T>& u);   // T is U[N]
 ```
 
+> *Constraints:*
+>
 > `T` is of the form `U[N]`.
 >
 > *Returns:*
@@ -3418,6 +3502,8 @@ template<class T, class A>
   shared_ptr<T> allocate_shared_for_overwrite(const A& a);
 ```
 
+> *Constraints:*
+>
 > `T` is not an array of unknown bound.
 >
 > *Returns:*
@@ -3442,6 +3528,8 @@ template<class T, class A>
   shared_ptr<T> allocate_shared_for_overwrite(const A& a, size_t N);
 ```
 
+> *Constraints:*
+>
 > `T` is an array of unknown bound.
 >
 > *Returns:*
@@ -3737,6 +3825,8 @@ template<class Y> weak_ptr(const weak_ptr<Y>& r) noexcept;
 template<class Y> weak_ptr(const shared_ptr<Y>& r) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the second and third constructors, `Y*` is compatible with `T*`.
 >
 > *Effects:*
@@ -3755,6 +3845,8 @@ weak_ptr(weak_ptr&& r) noexcept;
 template<class Y> weak_ptr(weak_ptr<Y>&& r) noexcept;
 ```
 
+> *Constraints:*
+>
 > For the second constructor, `Y*` is compatible with `T*`.
 >
 > *Effects:*
@@ -4189,6 +4281,8 @@ operator Pointer*() const noexcept;
 operator void**() const noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_same_v<Pointer, void*>` is `false`.
 >
 > *Mandates:*
@@ -4385,6 +4479,8 @@ operator Pointer*() const noexcept;
 operator void**() const noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_same_v<Pointer, void*>` is `false`.
 >
 > *Mandates:*
@@ -5530,6 +5626,8 @@ template<class OuterA2>
   scoped_allocator_adaptor(OuterA2&& outerAlloc, const InnerAllocs&... innerAllocs) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<OuterAlloc, OuterA2>` is `true`.
 >
 > *Effects:*
@@ -5563,6 +5661,8 @@ template<class OuterA2>
     const scoped_allocator_adaptor<OuterA2, InnerAllocs...>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<OuterAlloc, const OuterA2&>` is `true`.
 >
 > *Effects:*
@@ -5575,6 +5675,8 @@ template<class OuterA2>
   scoped_allocator_adaptor(scoped_allocator_adaptor<OuterA2, InnerAllocs...>&& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<OuterAlloc, OuterA2>` is `true`.
 >
 > *Effects:*

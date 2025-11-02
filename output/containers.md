@@ -326,6 +326,8 @@ i <=> j
 >
 > `strong_ordering`.
 >
+> *Constraints:*
+>
 > `X::iterator` meets the random access iterator requirements.
 >
 > *Complexity:*
@@ -5129,6 +5131,8 @@ template<class T, size_t N>
   constexpr void swap(array<T, N>& x, array<T, N>& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > `N == 0` or `is_swappable_v<T>` is `true`.
 >
 > *Effects:*
@@ -8219,6 +8223,8 @@ template<class P>
   iterator insert(const_iterator position, P&& x);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, P&&>` is `true`.
 >
 > *Effects:*
@@ -8650,6 +8656,8 @@ template<class P> iterator insert(P&& x);
 template<class P> iterator insert(const_iterator position, P&& x);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, P&&>` is `true`.
 >
 > *Effects:*
@@ -9773,6 +9781,8 @@ template<class P>
   pair<iterator, bool> insert(P&& obj);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, P&&>` is `true`.
 >
 > *Effects:*
@@ -9784,6 +9794,8 @@ template<class P>
   iterator insert(const_iterator hint, P&& obj);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, P&&>` is `true`.
 >
 > *Effects:*
@@ -10289,6 +10301,8 @@ template<class P>
   iterator insert(P&& obj);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, P&&>` is `true`.
 >
 > *Effects:*
@@ -10300,6 +10314,8 @@ template<class P>
   iterator insert(const_iterator hint, P&& obj);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, P&&>` is `true`.
 >
 > *Effects:*
@@ -11556,6 +11572,8 @@ template<class T, class Container>
   void swap(queue<T, Container>& x, queue<T, Container>& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<Container>` is `true`.
 >
 > *Effects:*
@@ -11963,6 +11981,8 @@ template<class T, class Container, class Compare>
             priority_queue<T, Container, Compare>& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<Container>` is `true` and `is_swappable_v<Compare>` is
 > `true`.
 >
@@ -12243,6 +12263,8 @@ template<class T, class Container>
   void swap(stack<T, Container>& x, stack<T, Container>& y) noexcept(noexcept(x.swap(y)));
 ```
 
+> *Constraints:*
+>
 > `is_swappable_v<Container>` is `true`.
 >
 > *Effects:*
@@ -12702,6 +12724,8 @@ template<class Allocator>
            const key_compare& comp, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<key_container_type, Allocator>` is `true` and
 > `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
 >
@@ -12741,6 +12765,8 @@ template<class Allocator>
            const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<key_container_type, Allocator>` is `true` and
 > `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
 >
@@ -12784,6 +12810,8 @@ template<class Allocator>
   flat_map(sorted_unique_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<key_container_type, Allocator>` is `true` and
 > `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
 >
@@ -12833,6 +12861,8 @@ mapped_type& operator[](key_type&& x);
 template<class K> mapped_type& operator[](K&& x);
 ```
 
+> *Constraints:*
+>
 > The *qualified-id* `Compare::is_transparent` is valid and denotes a
 > type.
 >
@@ -12863,6 +12893,8 @@ template<class K> mapped_type&       at(const K& x);
 template<class K> const mapped_type& at(const K& x) const;
 ```
 
+> *Constraints:*
+>
 > The *qualified-id* `Compare::is_transparent` is valid and denotes a
 > type.
 >
@@ -12889,6 +12921,8 @@ template<class K> const mapped_type& at(const K& x) const;
 template<class... Args> pair<iterator, bool> emplace(Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<pair<key_type, mapped_type>, Args...>` is `true`.
 >
 > *Effects:*
@@ -12916,6 +12950,8 @@ template<class P> pair<iterator, bool> insert(P&& x);
 template<class P> iterator insert(const_iterator position, P&& x);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<pair<key_type, mapped_type>, P>` is `true`.
 >
 > *Effects:*
@@ -13052,6 +13088,8 @@ template<class... Args>
   iterator try_emplace(const_iterator hint, key_type&& k, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<mapped_type, Args...>` is `true`.
 >
 > *Effects:*
@@ -13084,6 +13122,8 @@ template<class K, class... Args>
   iterator try_emplace(const_iterator hint, K&& k, Args&&... args);
 ```
 
+> *Constraints:*
+>
 > - The *qualified-id* `Compare::is_transparent` is valid and denotes a
 >   type.
 >
@@ -13132,6 +13172,8 @@ template<class M>
   iterator insert_or_assign(const_iterator hint, key_type&& k, M&& obj);
 ```
 
+> *Constraints:*
+>
 > `is_assignable_v<mapped_type&, M>` is `true` and
 > `is_constructible_v<mapped_type, M>` is `true`.
 >
@@ -13171,6 +13213,8 @@ template<class K, class M>
   iterator insert_or_assign(const_iterator hint, K&& k, M&& obj);
 ```
 
+> *Constraints:*
+>
 > - The *qualified-id* `Compare::is_transparent` is valid and denotes a
 >   type.
 >
@@ -13710,6 +13754,8 @@ template<class Allocator>
                 const key_compare& comp, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<key_container_type, Allocator>` is `true` and
 > `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
 >
@@ -13749,6 +13795,8 @@ template<class Allocator>
                 const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<key_container_type, Allocator>` is `true` and
 > `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
 >
@@ -13794,6 +13842,8 @@ template<class Allocator>
   flat_multimap(sorted_equivalent_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<key_container_type, Allocator>` is `true` and
 > `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
 >
@@ -14184,6 +14234,8 @@ template<class Allocator>
   flat_set(const container_type& cont, const key_compare& comp, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<container_type, Allocator>` is `true`.
 >
 > *Effects:*
@@ -14204,6 +14256,8 @@ template<class Allocator>
            const key_compare& comp, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<container_type, Allocator>` is `true`.
 >
 > *Effects:*
@@ -14245,6 +14299,8 @@ template<class Allocator>
   flat_set(sorted_unique_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<container_type, Allocator>` is `true`.
 >
 > *Effects:*
@@ -14260,6 +14316,8 @@ template<class K> pair<iterator, bool> insert(K&& x);
 template<class K> iterator insert(const_iterator hint, K&& x);
 ```
 
+> *Constraints:*
+>
 > The *qualified-id* `Compare::is_transparent` is valid and denotes a
 > type. `is_constructible_v<value_type, K>` is `true`.
 >
@@ -14773,6 +14831,8 @@ template<class Allocator>
   flat_multiset(const container_type& cont, const key_compare& comp, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<container_type, Allocator>` is `true`.
 >
 > *Effects:*
@@ -14794,6 +14854,8 @@ template<class Allocator>
                 const key_compare& comp, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<container_type, Allocator>` is `true`.
 >
 > *Effects:*
@@ -14837,6 +14899,8 @@ template<class Allocator>
   flat_multiset(sorted_equivalent_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
+> *Constraints:*
+>
 > `uses_allocator_v<container_type, Allocator>` is `true`.
 >
 > *Effects:*
@@ -14851,6 +14915,8 @@ template<class Allocator>
 template<class... Args> iterator emplace(Args&&... args);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<value_type, Args...>` is `true`.
 >
 > *Effects:*
@@ -15179,6 +15245,8 @@ abstract class type.
 constexpr span() noexcept;
 ```
 
+> *Constraints:*
+>
 > `Extent == dynamic_extent || Extent == 0` is `true`.
 >
 > *Ensures:*
@@ -15190,6 +15258,8 @@ template<class It>
   constexpr explicit(extent != dynamic_extent) span(It first, size_type count);
 ```
 
+> *Constraints:*
+>
 > Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 >
 > - `It` satisfies `contiguous_iterator`.
@@ -15222,6 +15292,8 @@ template<class It, class End>
   constexpr explicit(extent != dynamic_extent) span(It first, End last);
 ```
 
+> *Constraints:*
+>
 > Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 >
 > - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
@@ -15261,6 +15333,8 @@ template<class T, size_t N> constexpr span(array<T, N>& arr) noexcept;
 template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 ```
 
+> *Constraints:*
+>
 > Let `U` be `remove_pointer_t<decltype(data(arr))>`.
 >
 > - `extent == dynamic_extent || N == extent` is `true`, and
@@ -15285,6 +15359,8 @@ template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 ```
 
+> *Constraints:*
+>
 > Let `U` be `remove_reference_t<ranges::range_reference_t<R>>`.
 >
 > - `R` satisfies `ranges::``contiguous_range` and
@@ -15336,6 +15412,8 @@ template<class OtherElementType, size_t OtherExtent>
   constexpr explicit(see below) span(const span<OtherElementType, OtherExtent>& s) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `extent == dynamic_extent` `||` `OtherExtent == dynamic_extent` `||`
 >   `extent == OtherExtent` is `true`, and
 >
@@ -15382,6 +15460,8 @@ template<class It, class EndOrSize>
   span(It, EndOrSize) -> span<remove_reference_t<iter_reference_t<It>>>;
 ```
 
+> *Constraints:*
+>
 > `It` satisfies `contiguous_iterator`.
 
 ``` cpp
@@ -15389,6 +15469,8 @@ template<class R>
   span(R&&) -> span<remove_reference_t<ranges::range_reference_t<R>>>;
 ```
 
+> *Constraints:*
+>
 > `R` satisfies `ranges::``contiguous_range`.
 
 ##### Subviews <a id="span.sub">[[span.sub]]</a>
@@ -15652,6 +15734,8 @@ template<class ElementType, size_t Extent>
     as_writable_bytes(span<ElementType, Extent> s) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_const_v<ElementType>` is `false`.
 >
 > *Effects:*
@@ -15870,6 +15954,8 @@ template<class OtherIndexType, size_t... OtherExtents>
     extents(const extents<OtherIndexType, OtherExtents...>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(OtherExtents) == rank()` is `true`.
 >
 > - `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents ==Extents) && ...)`
@@ -15909,6 +15995,8 @@ template<class... OtherIndexTypes>
 > `array<index_type, N>{static_cast<`  
 > `index_type>(std::move(exts))...}`.
 >
+> *Constraints:*
+>
 > - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
 >
 > - `(is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)`
@@ -15945,6 +16033,8 @@ template<class OtherIndexType, size_t N>
     extents(const array<OtherIndexType, N>& exts) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const OtherIndexType&, index_type>` is `true`,
 >
 > - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is
@@ -15978,6 +16068,8 @@ template<class... Integrals>
   explicit extents(Integrals...) -> see below;
 ```
 
+> *Constraints:*
+>
 > `(is_convertible_v<Integrals, size_t> && ...)` is `true`.
 >
 > *Remarks:*
@@ -16414,6 +16506,8 @@ template<class OtherExtents>
     mapping(const mapping<OtherExtents>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<extents_type, OtherExtents>` is `true`.
 >
 > *Preconditions:*
@@ -16431,6 +16525,8 @@ template<class OtherExents>
     mapping(const layout_right::mapping<OtherExtents>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `extents_type::rank() <= 1` is `true`, and
 >
 > - `is_constructible_v<extents_type, OtherExtents>` is `true`.
@@ -16450,6 +16546,8 @@ template<class OtherExtents>
     mapping(const layout_stride::mapping<OtherExtents>& other);
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<extents_type, OtherExtents>` is `true`.
 >
 > *Preconditions:*
@@ -16480,6 +16578,8 @@ template<class... Indices>
   constexpr index_type operator()(Indices... i) const noexcept;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Indices) == extents_type::rank()` is `true`,
 >
 > - `(is_convertible_v<Indices, index_type> && ...)` is `true`, and
@@ -16510,6 +16610,8 @@ template<class... Indices>
 constexpr index_type stride(rank_type i) const;
 ```
 
+> *Constraints:*
+>
 > `extents_type::rank() > 0` is `true`.
 >
 > *Preconditions:*
@@ -16525,6 +16627,8 @@ template<class OtherExtents>
   friend constexpr bool operator==(const mapping& x, const mapping<OtherExtents>& y) noexcept;
 ```
 
+> *Constraints:*
+>
 > `extents_type::rank() == OtherExtents::rank()` is `true`.
 >
 > *Effects:*
@@ -16623,6 +16727,8 @@ template<class OtherExtents>
     mapping(const mapping<OtherExtents>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<extents_type, OtherExtents>` is `true`.
 >
 > *Preconditions:*
@@ -16640,6 +16746,8 @@ template<class OtherExtents>
     mapping(const layout_left::mapping<OtherExtents>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `extents_type::rank() <= 1` is `true`, and
 >
 > - `is_constructible_v<extents_type, OtherExtents>` is `true`.
@@ -16659,6 +16767,8 @@ template<class OtherExtents>
     mapping(const layout_stride::mapping<OtherExtents>& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > `is_constructible_v<extents_type, OtherExtents>` is `true`.
 >
 > *Preconditions:*
@@ -16689,6 +16799,8 @@ template<class... Indices>
   constexpr index_type operator()(Indices... i) const noexcept;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Indices) == extents_type::rank()` is `true`,
 >
 > - `(is_convertible_v<Indices, index_type> && ...)` is `true`, and
@@ -16719,6 +16831,8 @@ template<class... Indices>
 constexpr index_type stride(rank_type i) const noexcept;
 ```
 
+> *Constraints:*
+>
 > `extents_type::rank() > 0` is `true`.
 >
 > *Preconditions:*
@@ -16734,6 +16848,8 @@ template<class OtherExtents>
   friend constexpr bool operator==(const mapping& x, const mapping<OtherExtents>& y) noexcept;
 ```
 
+> *Constraints:*
+>
 > `extents_type::rank() == OtherExtents::rank()` is `true`.
 >
 > *Effects:*
@@ -16893,6 +17009,8 @@ template<class OtherIndexType>
   constexpr mapping(const extents_type& e, const array<OtherIndexType, rank_>& s) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const OtherIndexType&, index_type>` is `true`, and
 >
 > - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is
@@ -16926,6 +17044,8 @@ template<class StridedLayoutMapping>
     mapping(const StridedLayoutMapping& other) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `layout-mapping-alike``<StridedLayoutMapping>` is satisfied.
 >
 > - `is_constructible_v<extents_type, typename StridedLayoutMapping::extents_type>`
@@ -16980,6 +17100,8 @@ template<class... Indices>
   constexpr index_type operator()(Indices... i) const noexcept;
 ```
 
+> *Constraints:*
+>
 > - `sizeof...(Indices) == `*`rank_`* is `true`,
 >
 > - `(is_convertible_v<Indices, index_type> && ...)` is `true`, and
@@ -17028,6 +17150,8 @@ template<class OtherMapping>
   friend constexpr bool operator==(const mapping& x, const OtherMapping& y) noexcept;
 ```
 
+> *Constraints:*
+>
 > - `layout-mapping-alike``<OtherMapping>` is satisfied.
 >
 > - *`rank_`*` == OtherMapping::extents_type::rank()` is `true`.
@@ -17218,6 +17342,8 @@ template<class OtherElementType>
   constexpr default_accessor(default_accessor<OtherElementType>) noexcept {}
 ```
 
+> *Constraints:*
+>
 > `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
 > `true`.
 
@@ -17403,6 +17529,8 @@ copyable types.
 constexpr mdspan();
 ```
 
+> *Constraints:*
+>
 > - `rank_dynamic() > 0` is `true`.
 >
 > - `is_default_constructible_v<data_handle_type>` is `true`.
@@ -17427,6 +17555,8 @@ template<class... OtherIndexTypes>
 ```
 
 > Let `N` be `sizeof...(OtherIndexTypes)`.
+>
+> *Constraints:*
 >
 > - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
 >
@@ -17463,6 +17593,8 @@ template<class OtherIndexType, size_t N>
     mdspan(data_handle_type p, const array<OtherIndexType, N>& exts);
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const OtherIndexType&, index_type>` is `true`,
 >
 > - `(is_nothrow_constructible<index_type, const OtherIndexType&> && ...)`
@@ -17492,6 +17624,8 @@ template<class OtherIndexType, size_t N>
 constexpr mdspan(data_handle_type p, const extents_type& ext);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<mapping_type, const extents_type&>` is `true`,
 >   and
 >
@@ -17515,6 +17649,8 @@ constexpr mdspan(data_handle_type p, const extents_type& ext);
 constexpr mdspan(data_handle_type p, const mapping_type& m);
 ```
 
+> *Constraints:*
+>
 > `is_default_constructible_v<accessor_type>` is `true`.
 >
 > *Preconditions:*
@@ -17556,6 +17692,8 @@ template<class OtherElementType, class OtherExtents,
                         OtherLayoutPolicy, OtherAccessor>& other);
 ```
 
+> *Constraints:*
+>
 > - `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth-erExtents>&>`
 >   is `true`, and
 >
@@ -17602,6 +17740,8 @@ template<class... OtherIndexTypes>
   constexpr reference operator[](OtherIndexTypes... indices) const;
 ```
 
+> *Constraints:*
+>
 > - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
 >
 > - `(is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)`
@@ -17634,6 +17774,8 @@ template<class OtherIndexType>
   constexpr reference operator[](const array<OtherIndexType, rank()>& indices) const;
 ```
 
+> *Constraints:*
+>
 > - `is_convertible_v<const OtherIndexType&, index_type>` is `true`, and
 >
 > - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is

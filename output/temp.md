@@ -4396,6 +4396,8 @@ A template *template-parameter* is dependent if it names a
 
 ### Dependent name resolution <a id="temp.dep.res">[[temp.dep.res]]</a>
 
+#### Point of instantiation <a id="temp.point">[[temp.point]]</a>
+
 For a function template specialization, a member function template
 specialization, or a specialization for a member function or static data
 member of a class template, if the specialization is implicitly
@@ -7335,6 +7337,7 @@ in some translation unit [[temp.pre]].
 [temp.over]: #temp.over
 [temp.over.link]: #temp.over.link
 [temp.param]: #temp.param
+[temp.point]: #temp.point
 [temp.pre]: #temp.pre
 [temp.res]: #temp.res
 [temp.res.general]: #temp.res.general
