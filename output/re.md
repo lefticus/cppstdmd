@@ -3066,12 +3066,18 @@ ECMA-262 15.10
 [re.traits]: #re.traits
 
 <!-- Link reference definitions -->
+[algorithms]: algorithms.md#algorithms
 [bitmask.types]: library.md#bitmask.types
+[container.reqmts]: containers.md#container.reqmts
 [container.requirements.general]: containers.md#container.requirements.general
 [enumerated.types]: library.md#enumerated.types
 [forward.iterators]: iterators.md#forward.iterators
 [input.iterators]: iterators.md#input.iterators
+[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
+[output.iterators]: iterators.md#output.iterators
 [re.alg]: #re.alg
+[re.alg.match]: #re.alg.match
+[re.alg.search]: #re.alg.search
 [re.err]: #re.err
 [re.grammar]: #re.grammar
 [re.iter]: #re.iter
@@ -3082,8 +3088,10 @@ ECMA-262 15.10
 [re.summary]: #re.summary
 [re.synopt]: #re.synopt
 [re.traits]: #re.traits
+[re.traits.classnames]: #re.traits.classnames
 [sequence.reqmts]: containers.md#sequence.reqmts
 [strings.general]: strings.md#strings.general
+[swappable.requirements]: library.md#swappable.requirements
 
 <!-- Link reference definitions -->
 [re.alg]: #re.alg

@@ -6159,8 +6159,10 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [cpp17.copyassignable]: #cpp17.copyassignable
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [customization.point.object]: library.md#customization.point.object
+[defns.const.subexpr]: #defns.const.subexpr
 [defns.projection]: #defns.projection
 [expr.call]: expr.md#expr.call
+[expr.const]: expr.md#expr.const
 [forward.iterators]: #forward.iterators
 [forwarditerator]: #forwarditerator
 [func.def]: utilities.md#func.def
@@ -6187,6 +6189,7 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [iterators.relations]: #iterators.relations
 [iterators.summary]: #iterators.summary
 [lib.types.movedfrom]: library.md#lib.types.movedfrom
+[namespace.std]: library.md#namespace.std
 [numeric.limits]: support.md#numeric.limits
 [output.iterators]: #output.iterators
 [outputiterator]: #outputiterator

@@ -1163,11 +1163,14 @@ template<class R, class T, class U>
 
 <!-- Link reference definitions -->
 [basic.compound]: basic.md#basic.compound
+[basic.fundamental]: basic.md#basic.fundamental
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
 [concepts.callable]: #concepts.callable
 [concepts.compare]: #concepts.compare
+[concepts.equality]: #concepts.equality
 [concepts.lang]: #concepts.lang
 [concepts.summary]: #concepts.summary
+[cpp17.destructible]: #cpp17.destructible
 [customization.point.object]: library.md#customization.point.object
 [dcl.meaning]: dcl.md#dcl.meaning
 [declval]: utilities.md#declval
@@ -1180,8 +1183,11 @@ template<class R, class T, class U>
 [func.def]: utilities.md#func.def
 [func.invoke]: utilities.md#func.invoke
 [function.objects]: utilities.md#function.objects
+[lib.types.movedfrom]: library.md#lib.types.movedfrom
+[meta.trans.other]: meta.md#meta.trans.other
 [meta.type.synop]: meta.md#meta.type.synop
 [over.best.ics]: over.md#over.best.ics
+[structure.requirements]: library.md#structure.requirements
 [temp.deduct.call]: temp.md#temp.deduct.call
 [temp.deduct.type]: temp.md#temp.deduct.type
 [temp.func.order]: temp.md#temp.func.order

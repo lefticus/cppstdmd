@@ -2753,9 +2753,11 @@ unspecified state.
 [conventions]: #conventions
 [cpp.include]: cpp.md#cpp.include
 [cpp.replace]: cpp.md#cpp.replace
+[cpp17.copyassignable]: #cpp17.copyassignable
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.hash]: #cpp17.hash
+[cpp17.moveassignable]: #cpp17.moveassignable
 [cpp17.nullablepointer]: #cpp17.nullablepointer
 [cstdarg.syn]: support.md#cstdarg.syn
 [cstddef.syn]: support.md#cstddef.syn

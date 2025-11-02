@@ -1990,20 +1990,26 @@ template<class Allocator> struct hash<basic_stacktrace<Allocator>>;
 <!-- Link reference definitions -->
 [bad.alloc]: support.md#bad.alloc
 [cmp.concept]: support.md#cmp.concept
+[comparisons.three.way]: utilities.md#comparisons.three.way
 [concepts.object]: concepts.md#concepts.object
 [container.alloc.reqmts]: containers.md#container.alloc.reqmts
 [container.rev.reqmts]: containers.md#container.rev.reqmts
 [conv]: expr.md#conv
+[cpp.predefined]: cpp.md#cpp.predefined
 [defns.const.subexpr]: #defns.const.subexpr
 [diagnostics.summary]: #diagnostics.summary
 [errno]: #errno
+[format.string.std]: utilities.md#format.string.std
 [intro.execution]: basic.md#intro.execution
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
+[random.access.iterators]: iterators.md#random.access.iterators
 [res.on.exception.handling]: library.md#res.on.exception.handling
 [sequence.reqmts]: containers.md#sequence.reqmts
 [stacktrace]: #stacktrace
 [syserr]: #syserr
 [syserr.errcat]: #syserr.errcat
 [syserr.errcode]: #syserr.errcode
+[unord.hash]: utilities.md#unord.hash
 
 <!-- Link reference definitions -->
 [assertions]: #assertions

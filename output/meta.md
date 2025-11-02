@@ -1482,7 +1482,9 @@ representable by `intmax_t`, the typedef is not defined.
 [class.abstract]: class.md#class.abstract
 [class.derived]: class.md#class.derived
 [class.dtor]: class.md#class.dtor
+[class.mem]: class.md#class.mem
 [class.pre]: class.md#class.pre
+[class.prop]: class.md#class.prop
 [class.temporary]: basic.md#class.temporary
 [class.virtual]: class.md#class.virtual
 [conv.rank]: basic.md#conv.rank

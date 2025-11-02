@@ -17913,14 +17913,19 @@ friend constexpr void swap(mdspan& x, mdspan& y) noexcept;
 [views.span]: #views.span
 
 <!-- Link reference definitions -->
+[alg.equal]: algorithms.md#alg.equal
 [alg.sorting]: algorithms.md#alg.sorting
+[algorithm.stable]: library.md#algorithm.stable
+[algorithms]: algorithms.md#algorithms
 [algorithms.requirements]: algorithms.md#algorithms.requirements
 [allocator.requirements]: library.md#allocator.requirements
 [allocator.requirements.completeness]: library.md#allocator.requirements.completeness
 [allocator.traits.members]: mem.md#allocator.traits.members
+[allocator.uses.construction]: mem.md#allocator.uses.construction
 [associative.general]: #associative.general
 [associative.reqmts]: #associative.reqmts
 [associative.reqmts.except]: #associative.reqmts.except
+[basic.fundamental]: basic.md#basic.fundamental
 [basic.string]: strings.md#basic.string
 [class.copy.ctor]: class.md#class.copy.ctor
 [class.default.ctor]: class.md#class.default.ctor
@@ -17938,12 +17943,15 @@ friend constexpr void swap(mdspan& x, mdspan& y) noexcept;
 [containers]: #containers
 [containers.summary]: #containers.summary
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
+[defns.valid]: #defns.valid
 [deque]: #deque
 [deque.modifiers]: #deque.modifiers
+[expr.const]: expr.md#expr.const
 [flat.map.defn]: #flat.map.defn
 [flat.multimap.defn]: #flat.multimap.defn
 [flat.multiset.defn]: #flat.multiset.defn
 [flat.set.defn]: #flat.set.defn
+[forward.iterators]: iterators.md#forward.iterators
 [hash.requirements]: library.md#hash.requirements
 [iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
 [iterator.concept.random.access]: iterators.md#iterator.concept.random.access
@@ -17965,6 +17973,7 @@ friend constexpr void swap(mdspan& x, mdspan& y) noexcept;
 [temp.param]: temp.md#temp.param
 [temp.type]: temp.md#temp.type
 [term.trivially.copyable.type]: #term.trivially.copyable.type
+[unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map
 [unord.multimap]: #unord.multimap
 [unord.multiset]: #unord.multiset

@@ -14747,6 +14747,11 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [containers]: containers.md#containers
 [conv.rval]: expr.md#conv.rval
 [customization.point.object]: library.md#customization.point.object
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
+[dcl.init.general]: dcl.md#dcl.init.general
+[expr.await]: expr.md#expr.await
+[expr.const]: expr.md#expr.const
+[expr.yield]: expr.md#expr.yield
 [iterator.concept.bidir]: iterators.md#iterator.concept.bidir
 [iterator.concept.forward]: iterators.md#iterator.concept.forward
 [iterator.concept.iterator]: iterators.md#iterator.concept.iterator
@@ -14755,6 +14760,7 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
 [iterator.concept.winc]: iterators.md#iterator.concept.winc
 [iterator.requirements.general]: iterators.md#iterator.requirements.general
+[namespace.std]: library.md#namespace.std
 [range.access]: #range.access
 [range.adaptor.object]: #range.adaptor.object
 [range.adaptors]: #range.adaptors

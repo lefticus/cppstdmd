@@ -9142,6 +9142,7 @@ required to avoid data races [[res.on.data.races]].
 [lex.charset]: lex.md#lex.charset
 [meta.rqmts]: meta.md#meta.rqmts
 [numeric.requirements]: numerics.md#numeric.requirements
+[over.ics.rank]: over.md#over.ics.rank
 [over.match.class.deduct]: over.md#over.match.class.deduct
 [res.on.data.races]: library.md#res.on.data.races
 [swappable.requirements]: library.md#swappable.requirements
@@ -9155,7 +9156,10 @@ required to avoid data races [[res.on.data.races]].
 [time.clock.cast.utc]: #time.clock.cast.utc
 [time.clock.req]: #time.clock.req
 [time.format.spec]: #time.format.spec
+[time.hms.width]: #time.hms.width
+[time.parse]: #time.parse
 [time.parse.spec]: #time.parse.spec
+[time.point.general]: #time.point.general
 [time.summary]: #time.summary
 [time.syn]: #time.syn
 [time.zone]: #time.zone
