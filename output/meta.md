@@ -51,9 +51,7 @@ template<class T, T N>
   using make_integer_sequence = integer_sequence<T, see below{}>;
 ```
 
-> *Mandates:*
->
-> $\texttt{N} \geq 0$.
+> *Mandates:* $\texttt{N} \geq 0$.
 >
 > The alias template `make_integer_sequence` denotes a specialization of
 > `integer_sequence` with `N` non-type template arguments. The type
@@ -1174,14 +1172,10 @@ template<class S, class M>
   constexpr bool is_pointer_interconvertible_with_class(M S::*m) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `S` is a complete type.
 >
-> `S` is a complete type.
->
-> *Returns:*
->
-> `true` if and only if `S` is a standard-layout type, `M` is an object
-> type, `m` is not null, and each object `s` of type `S` is
+> *Returns:* `true` if and only if `S` is a standard-layout type, `M` is
+> an object type, `m` is not null, and each object `s` of type `S` is
 > pointer-interconvertible [[basic.compound]] with its subobject `s.*m`.
 
 ``` cpp
@@ -1189,13 +1183,9 @@ template<class S1, class S2, class M1, class M2>
   constexpr bool is_corresponding_member(M1 S1::*m1, M2 S2::*m2) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `S1` and `S2` are complete types.
 >
-> `S1` and `S2` are complete types.
->
-> *Returns:*
->
-> `true` if and only if `S1` and `S2` are standard-layout
+> *Returns:* `true` if and only if `S1` and `S2` are standard-layout
 > struct [[class.prop]] types, `M1` and `M2` are object types, `m1` and
 > `m2` are not null, and `m1` and `m2` point to corresponding members of
 > the common initial sequence [[class.mem]] of `S1` and `S2`.
@@ -1214,9 +1204,7 @@ using these functions in conjunction with inheritance.
 constexpr bool is_constant_evaluated() noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > if consteval {

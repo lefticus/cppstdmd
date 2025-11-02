@@ -633,30 +633,32 @@ members by any of those names.
 using pointer = see below;
 ```
 
-> `Ptr`.
+> *Type:* `Ptr`.
 
 ``` cpp
 using element_type = see below;
 ```
 
-> `typename `*`ptr-traits-elem`*`<Ptr>::type`.
+> *Type:* `typename `*`ptr-traits-elem`*`<Ptr>::type`.
 
 ``` cpp
 using difference_type = see below;
 ```
 
-> `Ptr::difference_type` if the *qualified-id* `Ptr::difference_type` is
-> valid and denotes a type [[temp.deduct]]; otherwise, `ptrdiff_t`.
+> *Type:* `Ptr::difference_type` if the *qualified-id*
+> `Ptr::difference_type` is valid and denotes a type [[temp.deduct]];
+> otherwise, `ptrdiff_t`.
 
 ``` cpp
 template<class U> using rebind = see below;
 ```
 
-> `Ptr::rebind<U>` if the *qualified-id* `Ptr::rebind<U>` is valid and
-> denotes a type [[temp.deduct]]; otherwise, `SomePointer<U, Args>` if
-> `Ptr` is a class template instantiation of the form
-> `SomePointer<T, Args>`, where `Args` is zero or more type arguments;
-> otherwise, the instantiation of `rebind` is ill-formed.
+> *Alias template:* `Ptr::rebind<U>` if the *qualified-id*
+> `Ptr::rebind<U>` is valid and denotes a type [[temp.deduct]];
+> otherwise, `SomePointer<U, Args>` if `Ptr` is a class template
+> instantiation of the form `SomePointer<T, Args>`, where `Args` is zero
+> or more type arguments; otherwise, the instantiation of `rebind` is
+> ill-formed.
 
 #### Member functions <a id="pointer.traits.functions">[[pointer.traits.functions]]</a>
 
@@ -665,24 +667,17 @@ static pointer pointer_traits::pointer_to(see below r);
 static constexpr pointer pointer_traits<T*>::pointer_to(see below r) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* For the first member function, `Ptr::pointer_to(r)` is
+> well-formed.
 >
-> For the first member function, `Ptr::pointer_to(r)` is well-formed.
+> *Preconditions:* For the first member function, `Ptr::pointer_to(r)`
+> returns a pointer to `r` through which indirection is valid.
 >
-> *Preconditions:*
+> *Returns:* The first member function returns `Ptr::pointer_to(r)`. The
+> second member function returns `addressof(r)`.
 >
-> For the first member function, `Ptr::pointer_to(r)` returns a pointer
-> to `r` through which indirection is valid.
->
-> *Returns:*
->
-> The first member function returns `Ptr::pointer_to(r)`. The second
-> member function returns `addressof(r)`.
->
-> *Remarks:*
->
-> If `element_type` is  , the type of `r` is unspecified; otherwise, it
-> is `element_type&`.
+> *Remarks:* If `element_type` is  , the type of `r` is unspecified;
+> otherwise, it is `element_type&`.
 
 #### Optional members <a id="pointer.traits.optmem">[[pointer.traits.optmem]]</a>
 
@@ -695,10 +690,8 @@ no member by this name.
 static element_type* to_address(pointer p) noexcept;
 ```
 
-> *Returns:*
->
-> A pointer of type `element_type*` that references the same location as
-> the argument `p`.
+> *Returns:* A pointer of type `element_type*` that references the same
+> location as the argument `p`.
 >
 > \[*Note 1*: This function is intended to be the inverse of
 > `pointer_to`. If defined, it customizes the behavior of the non-member
@@ -710,22 +703,16 @@ static element_type* to_address(pointer p) noexcept;
 template<class T> constexpr T* to_address(T* p) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is not a function type.
 >
-> `T` is not a function type.
->
-> *Returns:*
->
-> `p`.
+> *Returns:* `p`.
 
 ``` cpp
 template<class Ptr> constexpr auto to_address(const Ptr& p) noexcept;
 ```
 
-> *Returns:*
->
-> `pointer_traits<Ptr>::to_address(p)` if that expression is well-formed
-> (see [[pointer.traits.optmem]]), otherwise
+> *Returns:* `pointer_traits<Ptr>::to_address(p)` if that expression is
+> well-formed (see [[pointer.traits.optmem]]), otherwise
 > `to_address(p.operator->())`.
 
 ### Pointer alignment <a id="ptr.align">[[ptr.align]]</a>
@@ -741,18 +728,14 @@ void* align(size_t alignment, size_t size, void*& ptr, size_t& space);
 > - `ptr` represents the address of contiguous storage of at least
 >   `space` bytes
 >
-> *Effects:*
->
-> If it is possible to fit `size` bytes of storage aligned by
+> *Effects:* If it is possible to fit `size` bytes of storage aligned by
 > `alignment` into the buffer pointed to by `ptr` with length `space`,
 > the function updates `ptr` to represent the first possible address of
 > such storage and decreases `space` by the number of bytes used for
 > alignment. Otherwise, the function does nothing.
 >
-> *Returns:*
->
-> A null pointer if the requested aligned buffer would not fit into the
-> available space, otherwise the adjusted value of `ptr`.
+> *Returns:* A null pointer if the requested aligned buffer would not
+> fit into the available space, otherwise the adjusted value of `ptr`.
 >
 > \[*Note 2*: The function updates its `ptr` and `space` arguments so
 > that it can be called repeatedly with possibly different `alignment`
@@ -763,22 +746,15 @@ template<size_t N, class T>
   [[nodiscard]] constexpr T* assume_aligned(T* ptr);
 ```
 
-> *Mandates:*
+> *Mandates:* `N` is a power of two.
 >
-> `N` is a power of two.
+> *Preconditions:* `ptr` points to an object `X` of a type
+> similar [[conv.qual]] to `T`, where `X` has alignment
+> `N`[[basic.align]].
 >
-> *Preconditions:*
+> *Returns:* `ptr`.
 >
-> `ptr` points to an object `X` of a type similar [[conv.qual]] to `T`,
-> where `X` has alignment `N`[[basic.align]].
->
-> *Returns:*
->
-> `ptr`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 >
 > \[*Note 3*: The alignment assumption on an object `X` expressed by a
 > call to `assume_aligned` might result in generation of more efficient
@@ -801,24 +777,18 @@ template<class T>
   const volatile T* start_lifetime_as(const volatile void* p) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is an implicit-lifetime type [[basic.types.general]]
+> and not an incomplete type [[term.incomplete.type]].
 >
-> `T` is an implicit-lifetime type [[basic.types.general]] and not an
-> incomplete type [[term.incomplete.type]].
->
-> *Preconditions:*
->
-> \[`p`, `(char*)p + sizeof(T)`) denotes a region of allocated storage
-> that is a subset of the region of storage reachable
+> *Preconditions:* \[`p`, `(char*)p + sizeof(T)`) denotes a region of
+> allocated storage that is a subset of the region of storage reachable
 > through [[basic.compound]] `p` and suitably aligned for the type `T`.
 >
-> *Effects:*
->
-> Implicitly creates objects [[intro.object]] within the denoted region
-> consisting of an object *a* of type `T` whose address is `p`, and
-> objects nested within *a*, as follows: The object representation of
-> *a* is the contents of the storage prior to the call to
-> `start_lifetime_as`. The value of each created object *o* of
+> *Effects:* Implicitly creates objects [[intro.object]] within the
+> denoted region consisting of an object *a* of type `T` whose address
+> is `p`, and objects nested within *a*, as follows: The object
+> representation of *a* is the contents of the storage prior to the call
+> to `start_lifetime_as`. The value of each created object *o* of
 > trivially-copyable type `U` is determined in the same manner as for a
 > call to `bit_cast<U>(E)`[[bit.cast]], where `E` is an lvalue of type
 > `U` denoting *o*, except that the storage is not accessed. The value
@@ -826,9 +796,7 @@ template<class T>
 >
 > \[*Note 4*: The unspecified value can be indeterminate. — *end note*\]
 >
-> *Returns:*
->
-> A pointer to the *a* defined in the paragraph.
+> *Returns:* A pointer to the *a* defined in the paragraph.
 
 ``` cpp
 template<class T>
@@ -841,27 +809,20 @@ template<class T>
   const volatile T* start_lifetime_as_array(const volatile void* p, size_t n) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is a complete type.
 >
-> `T` is a complete type.
->
-> *Preconditions:*
->
-> `p` is suitably aligned for an array of `T` or is null.
-> `n <= size_t(-1) / sizeof(T)` is `true`. If `n > 0` is `true`,
+> *Preconditions:* `p` is suitably aligned for an array of `T` or is
+> null. `n <= size_t(-1) / sizeof(T)` is `true`. If `n > 0` is `true`,
 > \[`(char*)p`, `(char*)p + (n * sizeof(T))`) denotes a region of
 > allocated storage that is a subset of the region of storage reachable
 > through [[basic.compound]] `p`.
 >
-> *Effects:*
+> *Effects:* If `n > 0` is `true`, equivalent to
+> `start_lifetime_as<U>(p)` where `U` is the type “array of `n` `T`”.
+> Otherwise, there are no effects.
 >
-> If `n > 0` is `true`, equivalent to `start_lifetime_as<U>(p)` where
-> `U` is the type “array of `n` `T`”. Otherwise, there are no effects.
->
-> *Returns:*
->
-> A pointer to the first element of the created array, if any;
-> otherwise, a pointer that compares equal to `p`[[expr.eq]].
+> *Returns:* A pointer to the first element of the created array, if
+> any; otherwise, a pointer that compares equal to `p`[[expr.eq]].
 
 ### Allocator argument tag <a id="allocator.tag">[[allocator.tag]]</a>
 
@@ -887,13 +848,12 @@ argument of a type that meets the *Cpp17Allocator* requirements
 template<class T, class Alloc> struct uses_allocator;
 ```
 
-> *Remarks:*
->
-> Automatically detects whether `T` has a nested `allocator_type` that
-> is convertible from `Alloc`. Meets the *Cpp17BinaryTypeTrait*
-> requirements [[meta.rqmts]]. The implementation shall provide a
-> definition that is derived from `true_type` if the *qualified-id*
-> `T::allocator_type` is valid and denotes a type [[temp.deduct]] and
+> *Remarks:* Automatically detects whether `T` has a nested
+> `allocator_type` that is convertible from `Alloc`. Meets the
+> *Cpp17BinaryTypeTrait* requirements [[meta.rqmts]]. The implementation
+> shall provide a definition that is derived from `true_type` if the
+> *qualified-id* `T::allocator_type` is valid and denotes a
+> type [[temp.deduct]] and
 > `is_convertible_v<Alloc, T::allocator_type> != false`, otherwise it
 > shall be derived from `false_type`. A program may specialize this
 > template to derive from `true_type` for a program-defined type `T`
@@ -950,13 +910,9 @@ template<class T, class Alloc, class... Args>
                                                   Args&&... args) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is not a specialization of `pair`.
 >
-> `remove_cv_t<T>` is not a specialization of `pair`.
->
-> *Returns:*
->
-> A `tuple` value determined as follows:
+> *Returns:* A `tuple` value determined as follows:
 >
 > - If `uses_allocator_v<remove_cv_t<T>, Alloc>` is `false` and
 >   `is_constructible_v<T,Args...>` is `true`, return
@@ -987,13 +943,9 @@ template<class T, class Alloc, class Tuple1, class Tuple2>
 
 > Let `T1` be `T::first_type`. Let `T2` be `T::second_type`.
 >
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair`.
 >
-> `remove_cv_t<T>` is a specialization of `pair`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return make_tuple(
@@ -1013,13 +965,9 @@ template<class T, class Alloc>
   constexpr auto uses_allocator_construction_args(const Alloc& alloc) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair`.
 >
-> `remove_cv_t<T>` is a specialization of `pair`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uses_allocator_construction_args<T>(alloc, piecewise_construct,
@@ -1032,13 +980,9 @@ template<class T, class Alloc, class U, class V>
                                                   U&& u, V&& v) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair`.
 >
-> `remove_cv_t<T>` is a specialization of `pair`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uses_allocator_construction_args<T>(alloc, piecewise_construct,
@@ -1055,13 +999,9 @@ template<class T, class Alloc, class U, class V>
                                                   const pair<U, V>& pr) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair`.
 >
-> `remove_cv_t<T>` is a specialization of `pair`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uses_allocator_construction_args<T>(alloc, piecewise_construct,
@@ -1078,13 +1018,9 @@ template<class T, class Alloc, class U, class V>
                                                   const pair<U, V>&& pr) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair`.
 >
-> `remove_cv_t<T>` is a specialization of `pair`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uses_allocator_construction_args<T>(alloc, piecewise_construct,
@@ -1097,14 +1033,10 @@ template<class T, class Alloc, pair-like P>
   constexpr auto uses_allocator_construction_args(const Alloc& alloc, P&& p) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair` and
+> `remove_cvref_t<P>` is not a specialization of `ranges::subrange`.
 >
-> `remove_cv_t<T>` is a specialization of `pair` and `remove_cvref_t<P>`
-> is not a specialization of `ranges::subrange`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uses_allocator_construction_args<T>(alloc, piecewise_construct,
@@ -1124,9 +1056,8 @@ template<class T, class Alloc, class U>
 >   void FUN(const pair<A, B>&);
 > ```
 >
-> *Constraints:*
->
-> `remove_cv_t<T>` is a specialization of `pair`, and either:
+> *Constraints:* `remove_cv_t<T>` is a specialization of `pair`, and
+> either:
 >
 > - `remove_cvref_t<U>` is a specialization of `ranges::subrange`, or
 >
@@ -1156,20 +1087,16 @@ template<class T, class Alloc, class U>
 > };
 > ```
 >
-> *Returns:*
->
-> `make_tuple(pc)`, where `pc` is a *pair-constructor* object whose
-> *alloc\_* member is initialized with `alloc` and whose *u\_* member is
-> initialized with `u`.
+> *Returns:* `make_tuple(pc)`, where `pc` is a *pair-constructor* object
+> whose *alloc\_* member is initialized with `alloc` and whose *u\_*
+> member is initialized with `u`.
 
 ``` cpp
 template<class T, class Alloc, class... Args>
   constexpr T make_obj_using_allocator(const Alloc& alloc, Args&&... args);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return make_from_tuple<T>(uses_allocator_construction_args<T>(
@@ -1181,9 +1108,7 @@ template<class T, class Alloc, class... Args>
   constexpr T* uninitialized_construct_using_allocator(T* p, const Alloc& alloc, Args&&... args);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return apply([&]<class... U>(U&&... xs) {
@@ -1255,30 +1180,30 @@ namespace std {
 using pointer = see below;
 ```
 
-> `Alloc::pointer` if the *qualified-id* `Alloc::pointer` is valid and
-> denotes a type [[temp.deduct]]; otherwise, `value_type*`.
+> *Type:* `Alloc::pointer` if the *qualified-id* `Alloc::pointer` is
+> valid and denotes a type [[temp.deduct]]; otherwise, `value_type*`.
 
 ``` cpp
 using const_pointer = see below;
 ```
 
-> `Alloc::const_pointer` if the *qualified-id* `Alloc::const_pointer` is
-> valid and denotes a type [[temp.deduct]]; otherwise,
-> `pointer_traits<pointer>::rebind<const value_type>`.
+> *Type:* `Alloc::const_pointer` if the *qualified-id*
+> `Alloc::const_pointer` is valid and denotes a type [[temp.deduct]];
+> otherwise, `pointer_traits<pointer>::rebind<const value_type>`.
 
 ``` cpp
 using void_pointer = see below;
 ```
 
-> `Alloc::void_pointer` if the *qualified-id* `Alloc::void_pointer` is
-> valid and denotes a type [[temp.deduct]]; otherwise,
-> `pointer_traits<pointer>::rebind<void>`.
+> *Type:* `Alloc::void_pointer` if the *qualified-id*
+> `Alloc::void_pointer` is valid and denotes a type [[temp.deduct]];
+> otherwise, `pointer_traits<pointer>::rebind<void>`.
 
 ``` cpp
 using const_void_pointer = see below;
 ```
 
-> `Alloc::const_void_pointer` if the *qualified-id*
+> *Type:* `Alloc::const_void_pointer` if the *qualified-id*
 > `Alloc::const_void_pointer` is valid and denotes a
 > type [[temp.deduct]]; otherwise,
 > `pointer_traits<pointer>::rebind<const void>`.
@@ -1287,7 +1212,7 @@ using const_void_pointer = see below;
 using difference_type = see below;
 ```
 
-> `Alloc::difference_type` if the *qualified-id*
+> *Type:* `Alloc::difference_type` if the *qualified-id*
 > `Alloc::difference_type` is valid and denotes a type [[temp.deduct]];
 > otherwise, `pointer_traits<pointer>::difference_type`.
 
@@ -1295,31 +1220,31 @@ using difference_type = see below;
 using size_type = see below;
 ```
 
-> `Alloc::size_type` if the *qualified-id* `Alloc::size_type` is valid
-> and denotes a type [[temp.deduct]]; otherwise,
+> *Type:* `Alloc::size_type` if the *qualified-id* `Alloc::size_type` is
+> valid and denotes a type [[temp.deduct]]; otherwise,
 > `make_unsigned_t<difference_type>`.
 
 ``` cpp
 using propagate_on_container_copy_assignment = see below;
 ```
 
-> `Alloc::propagate_on_container_copy_assignment` if the *qualified-id*
-> `Alloc::propagate_on_container_copy_assignment` is valid and denotes a
-> type [[temp.deduct]]; otherwise `false_type`.
+> *Type:* `Alloc::propagate_on_container_copy_assignment` if the
+> *qualified-id* `Alloc::propagate_on_container_copy_assignment` is
+> valid and denotes a type [[temp.deduct]]; otherwise `false_type`.
 
 ``` cpp
 using propagate_on_container_move_assignment = see below;
 ```
 
-> `Alloc::propagate_on_container_move_assignment` if the *qualified-id*
-> `Alloc::propagate_on_container_move_assignment` is valid and denotes a
-> type [[temp.deduct]]; otherwise `false_type`.
+> *Type:* `Alloc::propagate_on_container_move_assignment` if the
+> *qualified-id* `Alloc::propagate_on_container_move_assignment` is
+> valid and denotes a type [[temp.deduct]]; otherwise `false_type`.
 
 ``` cpp
 using propagate_on_container_swap = see below;
 ```
 
-> `Alloc::propagate_on_container_swap` if the *qualified-id*
+> *Type:* `Alloc::propagate_on_container_swap` if the *qualified-id*
 > `Alloc::propagate_on_container_swap` is valid and denotes a
 > type [[temp.deduct]]; otherwise `false_type`.
 
@@ -1327,7 +1252,7 @@ using propagate_on_container_swap = see below;
 using is_always_equal = see below;
 ```
 
-> `Alloc::is_always_equal` if the *qualified-id*
+> *Type:* `Alloc::is_always_equal` if the *qualified-id*
 > `Alloc::is_always_equal` is valid and denotes a type [[temp.deduct]];
 > otherwise `is_empty<Alloc>::type`.
 
@@ -1335,7 +1260,7 @@ using is_always_equal = see below;
 template<class T> using rebind_alloc = see below;
 ```
 
-> `Alloc::rebind<T>::other` if the *qualified-id*
+> *Alias template:* `Alloc::rebind<T>::other` if the *qualified-id*
 > `Alloc::rebind<T>::other` is valid and denotes a type [[temp.deduct]];
 > otherwise, `Alloc<T, Args>` if `Alloc` is a class template
 > instantiation of the form `Alloc<U, Args>`, where `Args` is zero or
@@ -1348,50 +1273,38 @@ template<class T> using rebind_alloc = see below;
 [[nodiscard]] static constexpr pointer allocate(Alloc& a, size_type n);
 ```
 
-> *Returns:*
->
-> `a.allocate(n)`.
+> *Returns:* `a.allocate(n)`.
 
 ``` cpp
 [[nodiscard]] static constexpr pointer allocate(Alloc& a, size_type n, const_void_pointer hint);
 ```
 
-> *Returns:*
->
-> `a.allocate(n, hint)` if that expression is well-formed; otherwise,
-> `a.allocate(n)`.
+> *Returns:* `a.allocate(n, hint)` if that expression is well-formed;
+> otherwise, `a.allocate(n)`.
 
 ``` cpp
 [[nodiscard]] static constexpr allocation_result<pointer, size_type>
   allocate_at_least(Alloc& a, size_type n);
 ```
 
-> *Returns:*
->
-> `a.allocate_at_least(n)` if that expression is well-formed; otherwise,
-> `{a.allocate(n), n}`.
+> *Returns:* `a.allocate_at_least(n)` if that expression is well-formed;
+> otherwise, `{a.allocate(n), n}`.
 
 ``` cpp
 static constexpr void deallocate(Alloc& a, pointer p, size_type n);
 ```
 
-> *Effects:*
+> *Effects:* Calls `a.deallocate(p, n)`.
 >
-> Calls `a.deallocate(p, n)`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T, class... Args>
   static constexpr void construct(Alloc& a, T* p, Args&&... args);
 ```
 
-> *Effects:*
->
-> Calls `a.construct(p, std::forward<Args>(args)...)` if that call is
-> well-formed; otherwise, invokes
+> *Effects:* Calls `a.construct(p, std::forward<Args>(args)...)` if that
+> call is well-formed; otherwise, invokes
 > `construct_at(p, std::forward<Args>(args)...)`.
 
 ``` cpp
@@ -1399,28 +1312,22 @@ template<class T>
   static constexpr void destroy(Alloc& a, T* p);
 ```
 
-> *Effects:*
->
-> Calls `a.destroy(p)` if that call is well-formed; otherwise, invokes
-> `destroy_at(p)`.
+> *Effects:* Calls `a.destroy(p)` if that call is well-formed;
+> otherwise, invokes `destroy_at(p)`.
 
 ``` cpp
 static constexpr size_type max_size(const Alloc& a) noexcept;
 ```
 
-> *Returns:*
->
-> `a.max_size()` if that expression is well-formed; otherwise,
-> `numeric_limits<size_type>::max()/sizeof(value_type)`.
+> *Returns:* `a.max_size()` if that expression is well-formed;
+> otherwise, `numeric_limits<size_type>::max()/sizeof(value_type)`.
 
 ``` cpp
 static constexpr Alloc select_on_container_copy_construction(const Alloc& rhs);
 ```
 
-> *Returns:*
->
-> `rhs.select_on_container_copy_construction()` if that expression is
-> well-formed; otherwise, `rhs`.
+> *Returns:* `rhs.select_on_container_copy_construction()` if that
+> expression is well-formed; otherwise, `rhs`.
 
 #### Other <a id="allocator.traits.other">[[allocator.traits.other]]</a>
 
@@ -1474,23 +1381,15 @@ call shall happen before the next allocation (if any) in this order.
 [[nodiscard]] constexpr T* allocate(size_t n);
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is not an incomplete type [[term.incomplete.type]].
 >
-> `T` is not an incomplete type [[term.incomplete.type]].
+> *Returns:* A pointer to the initial element of an array of `n` `T`.
 >
-> *Returns:*
->
-> A pointer to the initial element of an array of `n` `T`.
->
-> *Throws:*
->
-> `bad_array_new_length` if
+> *Throws:* `bad_array_new_length` if
 > `numeric_limits<size_t>::max() / sizeof(T) < n`, or `bad_alloc` if the
 > storage cannot be obtained.
 >
-> *Remarks:*
->
-> The storage for the array is obtained by calling
+> *Remarks:* The storage for the array is obtained by calling
 > `::operator new`[[new.delete]], but it is unspecified when or how
 > often this function is called. This function starts the lifetime of
 > the array object, but not that of any of the array elements.
@@ -1499,28 +1398,20 @@ call shall happen before the next allocation (if any) in this order.
 [[nodiscard]] constexpr allocation_result<T*> allocate_at_least(size_t n);
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is not an incomplete type [[term.incomplete.type]].
 >
-> `T` is not an incomplete type [[term.incomplete.type]].
->
-> *Returns:*
->
-> `allocation_result<T*>{ptr, count}`, where `ptr` is a pointer to the
-> initial element of an array of `count` `T` and
+> *Returns:* `allocation_result<T*>{ptr, count}`, where `ptr` is a
+> pointer to the initial element of an array of `count` `T` and
 > $\texttt{count} \geq \texttt{n}$.
 >
-> *Throws:*
->
-> `bad_array_new_length` if
+> *Throws:* `bad_array_new_length` if
 > $\texttt{numeric_limits<size_t>::max() / sizeof(T)} < \texttt{n}$, or
 > `bad_alloc` if the storage cannot be obtained.
 >
-> *Remarks:*
->
-> The storage for the array is obtained by calling `::operator new`, but
-> it is unspecified when or how often this function is called. This
-> function starts the lifetime of the array object, but not that of any
-> of the array elements.
+> *Remarks:* The storage for the array is obtained by calling
+> `::operator new`, but it is unspecified when or how often this
+> function is called. This function starts the lifetime of the array
+> object, but not that of any of the array elements.
 
 ``` cpp
 constexpr void deallocate(T* p, size_t n);
@@ -1538,14 +1429,10 @@ constexpr void deallocate(T* p, size_t n);
 >   equals the value passed as the first argument to the invocation of
 >   `allocate` which returned `p`.
 >
-> *Effects:*
+> *Effects:* Deallocates the storage referenced by `p`.
 >
-> Deallocates the storage referenced by `p`.
->
-> *Remarks:*
->
-> Uses `::operator delete`[[new.delete]], but it is unspecified when
-> this function is called.
+> *Remarks:* Uses `::operator delete`[[new.delete]], but it is
+> unspecified when this function is called.
 
 #### Operators <a id="allocator.globals">[[allocator.globals]]</a>
 
@@ -1554,9 +1441,7 @@ template<class T, class U>
   constexpr bool operator==(const allocator<T>&, const allocator<U>&) noexcept;
 ```
 
-> *Returns:*
->
-> `true`.
+> *Returns:* `true`.
 
 ### `addressof` <a id="specialized.addressof">[[specialized.addressof]]</a>
 
@@ -1564,14 +1449,10 @@ template<class T, class U>
 template<class T> constexpr T* addressof(T& r) noexcept;
 ```
 
-> *Returns:*
+> *Returns:* The actual address of the object or function referenced by
+> `r`, even in the presence of an overloaded `operator&`.
 >
-> The actual address of the object or function referenced by `r`, even
-> in the presence of an overloaded `operator&`.
->
-> *Remarks:*
->
-> An expression `addressof(E)` is a constant
+> *Remarks:* An expression `addressof(E)` is a constant
 > subexpression [[defns.const.subexpr]] if `E` is an lvalue constant
 > subexpression.
 
@@ -1587,15 +1468,11 @@ void* malloc(size_t size);
 void* realloc(void* ptr, size_t size);
 ```
 
-> *Effects:*
+> *Effects:* These functions have the semantics specified in the C
+> standard library.
 >
-> These functions have the semantics specified in the C standard
-> library.
->
-> *Remarks:*
->
-> These functions do not attempt to allocate storage by calling
-> `::operator new()`[[new.delete]].
+> *Remarks:* These functions do not attempt to allocate storage by
+> calling `::operator new()`[[new.delete]].
 >
 > These functions implicitly create objects [[intro.object]] in the
 > returned region of storage and return a pointer to a suitable created
@@ -1606,14 +1483,11 @@ void* realloc(void* ptr, size_t size);
 void free(void* ptr);
 ```
 
-> *Effects:*
+> *Effects:* This function has the semantics specified in the C standard
+> library.
 >
-> This function has the semantics specified in the C standard library.
->
-> *Remarks:*
->
-> This function does not attempt to deallocate storage by calling
-> `::operator delete()`.
+> *Remarks:* This function does not attempt to deallocate storage by
+> calling `::operator delete()`.
 
 ## Smart pointers <a id="smartptr">[[smartptr]]</a>
 
@@ -1676,26 +1550,18 @@ namespace std {
 template<class U> constexpr default_delete(const default_delete<U>& other) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `U*` is implicitly convertible to `T*`.
 >
-> `U*` is implicitly convertible to `T*`.
->
-> *Effects:*
->
-> Constructs a `default_delete` object from another `default_delete<U>`
-> object.
+> *Effects:* Constructs a `default_delete` object from another
+> `default_delete<U>` object.
 
 ``` cpp
 constexpr void operator()(T* ptr) const;
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is a complete type.
 >
-> `T` is a complete type.
->
-> *Effects:*
->
-> Calls on `ptr`.
+> *Effects:* Calls on `ptr`.
 
 ##### `default_delete<T[]>` <a id="unique.ptr.dltr.dflt1">[[unique.ptr.dltr.dflt1]]</a>
 
@@ -1713,30 +1579,20 @@ namespace std {
 template<class U> constexpr default_delete(const default_delete<U[]>& other) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `U(*)[]` is convertible to `T(*)[]`.
 >
-> `U(*)[]` is convertible to `T(*)[]`.
->
-> *Effects:*
->
-> Constructs a `default_delete` object from another
+> *Effects:* Constructs a `default_delete` object from another
 > `default_delete<U[]>` object.
 
 ``` cpp
 template<class U> constexpr void operator()(U* ptr) const;
 ```
 
-> *Constraints:*
+> *Constraints:* `U(*)[]` is convertible to `T(*)[]`.
 >
-> `U(*)[]` is convertible to `T(*)[]`.
+> *Mandates:* `U` is a complete type.
 >
-> *Mandates:*
->
-> `U` is a complete type.
->
-> *Effects:*
->
-> Calls `delete[]` on `ptr`.
+> *Effects:* Calls `delete[]` on `ptr`.
 
 #### `unique_ptr` for single objects <a id="unique.ptr.single">[[unique.ptr.single]]</a>
 
@@ -1821,85 +1677,60 @@ constexpr unique_ptr() noexcept;
 constexpr unique_ptr(nullptr_t) noexcept;
 ```
 
-> *Constraints:*
->
-> `is_pointer_v<deleter_type>` is `false` and
+> *Constraints:* `is_pointer_v<deleter_type>` is `false` and
 > `is_default_constructible_v<deleter_type>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `D` meets the *Cpp17DefaultConstructible*
+> requirements ( [[cpp17.defaultconstructible]]), and that construction
+> does not throw an exception.
 >
-> `D` meets the *Cpp17DefaultConstructible* requirements
-> ( [[cpp17.defaultconstructible]]), and that construction does not
-> throw an exception.
+> *Effects:* Constructs a `unique_ptr` object that owns nothing,
+> value-initializing the stored pointer and the stored deleter.
 >
-> *Effects:*
->
-> Constructs a `unique_ptr` object that owns nothing, value-initializing
-> the stored pointer and the stored deleter.
->
-> *Ensures:*
->
-> `get() == nullptr`. `get_deleter()` returns a reference to the stored
-> deleter.
+> *Ensures:* `get() == nullptr`. `get_deleter()` returns a reference to
+> the stored deleter.
 
 ``` cpp
 constexpr explicit unique_ptr(type_identity_t<pointer> p) noexcept;
 ```
 
-> *Constraints:*
->
-> `is_pointer_v<deleter_type>` is `false` and
+> *Constraints:* `is_pointer_v<deleter_type>` is `false` and
 > `is_default_constructible_v<deleter_type>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `D` meets the *Cpp17DefaultConstructible*
+> requirements ( [[cpp17.defaultconstructible]]), and that construction
+> does not throw an exception.
 >
-> `D` meets the *Cpp17DefaultConstructible* requirements
-> ( [[cpp17.defaultconstructible]]), and that construction does not
-> throw an exception.
+> *Effects:* Constructs a `unique_ptr` which owns `p`, initializing the
+> stored pointer with `p` and value-initializing the stored deleter.
 >
-> *Effects:*
->
-> Constructs a `unique_ptr` which owns `p`, initializing the stored
-> pointer with `p` and value-initializing the stored deleter.
->
-> *Ensures:*
->
-> `get() == p`. `get_deleter()` returns a reference to the stored
-> deleter.
+> *Ensures:* `get() == p`. `get_deleter()` returns a reference to the
+> stored deleter.
 
 ``` cpp
 constexpr unique_ptr(type_identity_t<pointer> p, const D& d) noexcept;
 constexpr unique_ptr(type_identity_t<pointer> p, remove_reference_t<D>&& d) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<D, decltype(d)>` is `true`.
 >
-> `is_constructible_v<D, decltype(d)>` is `true`.
+> *Preconditions:* For the first constructor, if `D` is not a reference
+> type, `D` meets the *Cpp17CopyConstructible* requirements and such
+> construction does not exit via an exception. For the second
+> constructor, if `D` is not a reference type, `D` meets the
+> *Cpp17MoveConstructible* requirements and such construction does not
+> exit via an exception.
 >
-> *Preconditions:*
+> *Effects:* Constructs a `unique_ptr` object which owns `p`,
+> initializing the stored pointer with `p` and initializing the deleter
+> from `std::forward<decltype(d)>(d)`.
 >
-> For the first constructor, if `D` is not a reference type, `D` meets
-> the *Cpp17CopyConstructible* requirements and such construction does
-> not exit via an exception. For the second constructor, if `D` is not a
-> reference type, `D` meets the *Cpp17MoveConstructible* requirements
-> and such construction does not exit via an exception.
+> *Ensures:* `get() == p`. `get_deleter()` returns a reference to the
+> stored deleter. If `D` is a reference type then `get_deleter()`
+> returns a reference to the lvalue `d`.
 >
-> *Effects:*
->
-> Constructs a `unique_ptr` object which owns `p`, initializing the
-> stored pointer with `p` and initializing the deleter from
-> `std::forward<decltype(d)>(d)`.
->
-> *Ensures:*
->
-> `get() == p`. `get_deleter()` returns a reference to the stored
-> deleter. If `D` is a reference type then `get_deleter()` returns a
-> reference to the lvalue `d`.
->
-> *Remarks:*
->
-> If `D` is a reference type, the second constructor is defined as
-> deleted.
+> *Remarks:* If `D` is a reference type, the second constructor is
+> defined as deleted.
 >
 > \[*Example 1*:
 >
@@ -1916,32 +1747,25 @@ constexpr unique_ptr(type_identity_t<pointer> p, remove_reference_t<D>&& d) noex
 constexpr unique_ptr(unique_ptr&& u) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_move_constructible_v<D>` is `true`.
 >
-> `is_move_constructible_v<D>` is `true`.
+> *Preconditions:* If `D` is not a reference type, `D` meets the
+> *Cpp17MoveConstructible* requirements ( [[cpp17.moveconstructible]]).
+> Construction of the deleter from an rvalue of type `D` does not throw
+> an exception.
 >
-> *Preconditions:*
->
-> If `D` is not a reference type, `D` meets the *Cpp17MoveConstructible*
-> requirements ( [[cpp17.moveconstructible]]). Construction of the
-> deleter from an rvalue of type `D` does not throw an exception.
->
-> *Effects:*
->
-> Constructs a `unique_ptr` from `u`. If `D` is a reference type, this
-> deleter is copy constructed from `u`’s deleter; otherwise, this
-> deleter is move constructed from `u`’s deleter.
+> *Effects:* Constructs a `unique_ptr` from `u`. If `D` is a reference
+> type, this deleter is copy constructed from `u`’s deleter; otherwise,
+> this deleter is move constructed from `u`’s deleter.
 >
 > \[*Note 6*: The construction of the deleter can be implemented with
 > `std::forward<D>`. — *end note*\]
 >
-> *Ensures:*
->
-> `get()` yields the value `u.get()` yielded before the construction.
-> `u.get() == nullptr`. `get_deleter()` returns a reference to the
-> stored deleter that was constructed from `u.get_deleter()`. If `D` is
-> a reference type then `get_deleter()` and `u.get_deleter()` both
-> reference the same lvalue deleter.
+> *Ensures:* `get()` yields the value `u.get()` yielded before the
+> construction. `u.get() == nullptr`. `get_deleter()` returns a
+> reference to the stored deleter that was constructed from
+> `u.get_deleter()`. If `D` is a reference type then `get_deleter()` and
+> `u.get_deleter()` both reference the same lvalue deleter.
 
 ``` cpp
 template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
@@ -1957,28 +1781,23 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 >   `D` is not a reference type and `E` is implicitly convertible to
 >   `D`.
 >
-> *Preconditions:*
+> *Preconditions:* If `E` is not a reference type, construction of the
+> deleter from an rvalue of type `E` is well-formed and does not throw
+> an exception. Otherwise, `E` is a reference type and construction of
+> the deleter from an lvalue of type `E` is well-formed and does not
+> throw an exception.
 >
-> If `E` is not a reference type, construction of the deleter from an
-> rvalue of type `E` is well-formed and does not throw an exception.
-> Otherwise, `E` is a reference type and construction of the deleter
-> from an lvalue of type `E` is well-formed and does not throw an
-> exception.
->
-> *Effects:*
->
-> Constructs a `unique_ptr` from `u`. If `E` is a reference type, this
-> deleter is copy constructed from `u`’s deleter; otherwise, this
-> deleter is move constructed from `u`’s deleter.
+> *Effects:* Constructs a `unique_ptr` from `u`. If `E` is a reference
+> type, this deleter is copy constructed from `u`’s deleter; otherwise,
+> this deleter is move constructed from `u`’s deleter.
 >
 > \[*Note 7*: The deleter constructor can be implemented with
 > `std::forward<E>`. — *end note*\]
 >
-> *Ensures:*
->
-> `get()` yields the value `u.get()` yielded before the construction.
-> `u.get() == nullptr`. `get_deleter()` returns a reference to the
-> stored deleter that was constructed from `u.get_deleter()`.
+> *Ensures:* `get()` yields the value `u.get()` yielded before the
+> construction. `u.get() == nullptr`. `get_deleter()` returns a
+> reference to the stored deleter that was constructed from
+> `u.get_deleter()`.
 
 ##### Destructor <a id="unique.ptr.single.dtor">[[unique.ptr.single.dtor]]</a>
 
@@ -1986,17 +1805,13 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 constexpr ~unique_ptr();
 ```
 
-> *Effects:*
->
-> Equivalent to: `if (get()) get_deleter()(get());`
+> *Effects:* Equivalent to: `if (get()) get_deleter()(get());`
 >
 > \[*Note 8*: The use of `default_delete` requires `T` to be a complete
 > type. — *end note*\]
 >
-> *Remarks:*
->
-> The behavior is undefined if the evaluation of `get_deleter()(get())`
-> throws an exception.
+> *Remarks:* The behavior is undefined if the evaluation of
+> `get_deleter()(get())` throws an exception.
 
 ##### Assignment <a id="unique.ptr.single.asgn">[[unique.ptr.single.asgn]]</a>
 
@@ -2004,32 +1819,22 @@ constexpr ~unique_ptr();
 constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_move_assignable_v<D>` is `true`.
 >
-> `is_move_assignable_v<D>` is `true`.
+> *Preconditions:* If `D` is not a reference type, `D` meets the
+> *Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]) and
+> assignment of the deleter from an rvalue of type `D` does not throw an
+> exception. Otherwise, `D` is a reference type; `remove_reference_t<D>`
+> meets the *Cpp17CopyAssignable* requirements and assignment of the
+> deleter from an lvalue of type `D` does not throw an exception.
 >
-> *Preconditions:*
->
-> If `D` is not a reference type, `D` meets the *Cpp17MoveAssignable*
-> requirements ( [[cpp17.moveassignable]]) and assignment of the deleter
-> from an rvalue of type `D` does not throw an exception. Otherwise, `D`
-> is a reference type; `remove_reference_t<D>` meets the
-> *Cpp17CopyAssignable* requirements and assignment of the deleter from
-> an lvalue of type `D` does not throw an exception.
->
-> *Effects:*
->
-> Calls `reset(u.release())` followed by
+> *Effects:* Calls `reset(u.release())` followed by
 > `get_deleter() = std::forward<D>(u.get_deleter())`.
 >
-> *Ensures:*
+> *Ensures:* If `this != addressof(u)`, `u.get() == nullptr`, otherwise
+> `u.get()` is unchanged.
 >
-> If `this != addressof(u)`, `u.get() == nullptr`, otherwise `u.get()`
-> is unchanged.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u) noexcept;
@@ -2044,41 +1849,28 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 >
 > - `is_assignable_v<D&, E&&>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* If `E` is not a reference type, assignment of the
+> deleter from an rvalue of type `E` is well-formed and does not throw
+> an exception. Otherwise, `E` is a reference type and assignment of the
+> deleter from an lvalue of type `E` is well-formed and does not throw
+> an exception.
 >
-> If `E` is not a reference type, assignment of the deleter from an
-> rvalue of type `E` is well-formed and does not throw an exception.
-> Otherwise, `E` is a reference type and assignment of the deleter from
-> an lvalue of type `E` is well-formed and does not throw an exception.
->
-> *Effects:*
->
-> Calls `reset(u.release())` followed by
+> *Effects:* Calls `reset(u.release())` followed by
 > `get_deleter() = std::forward<E>(u.get_deleter())`.
 >
-> *Ensures:*
+> *Ensures:* `u.get() == nullptr`.
 >
-> `u.get() == nullptr`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 constexpr unique_ptr& operator=(nullptr_t) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* As if by `reset()`.
 >
-> As if by `reset()`.
+> *Ensures:* `get() == nullptr`.
 >
-> *Ensures:*
->
-> `get() == nullptr`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ##### Observers <a id="unique.ptr.single.observers">[[unique.ptr.single.observers]]</a>
 
@@ -2086,25 +1878,17 @@ constexpr unique_ptr& operator=(nullptr_t) noexcept;
 constexpr add_lvalue_reference_t<T> operator*() const noexcept(noexcept(*declval<pointer>()));
 ```
 
-> *Preconditions:*
+> *Preconditions:* `get() != nullptr`.
 >
-> `get() != nullptr`.
->
-> *Returns:*
->
-> `*get()`.
+> *Returns:* `*get()`.
 
 ``` cpp
 constexpr pointer operator->() const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `get() != nullptr`.
 >
-> `get() != nullptr`.
->
-> *Returns:*
->
-> `get()`.
+> *Returns:* `get()`.
 >
 > \[*Note 9*: The use of this function typically requires that `T` be a
 > complete type. — *end note*\]
@@ -2113,26 +1897,20 @@ constexpr pointer operator->() const noexcept;
 constexpr pointer get() const noexcept;
 ```
 
-> *Returns:*
->
-> The stored pointer.
+> *Returns:* The stored pointer.
 
 ``` cpp
 constexpr deleter_type& get_deleter() noexcept;
 constexpr const deleter_type& get_deleter() const noexcept;
 ```
 
-> *Returns:*
->
-> A reference to the stored deleter.
+> *Returns:* A reference to the stored deleter.
 
 ``` cpp
 constexpr explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `get() != nullptr`.
+> *Returns:* `get() != nullptr`.
 
 ##### Modifiers <a id="unique.ptr.single.modifiers">[[unique.ptr.single.modifiers]]</a>
 
@@ -2140,52 +1918,41 @@ constexpr explicit operator bool() const noexcept;
 constexpr pointer release() noexcept;
 ```
 
-> *Ensures:*
+> *Ensures:* `get() == nullptr`.
 >
-> `get() == nullptr`.
->
-> *Returns:*
->
-> The value `get()` had at the start of the call to `release`.
+> *Returns:* The value `get()` had at the start of the call to
+> `release`.
 
 ``` cpp
 constexpr void reset(pointer p = pointer()) noexcept;
 ```
 
-> *Effects:*
->
-> Assigns `p` to the stored pointer, and then, with the old value of the
-> stored pointer, `old_p`, evaluates `if (old_p) get_deleter()(old_p);`
+> *Effects:* Assigns `p` to the stored pointer, and then, with the old
+> value of the stored pointer, `old_p`, evaluates
+> `if (old_p) get_deleter()(old_p);`
 >
 > \[*Note 10*: The order of these operations is significant because the
 > call to `get_deleter()` might destroy `*this`. — *end note*\]
 >
-> *Ensures:*
->
-> `get() == p`.
+> *Ensures:* `get() == p`.
 >
 > \[*Note 11*: The postcondition does not hold if the call to
 > `get_deleter()` destroys `*this` since `this->get()` is no longer a
 > valid expression. — *end note*\]
 >
-> *Remarks:*
->
-> The behavior is undefined if the evaluation of `get_deleter()(old_p)`
-> throws an exception.
+> *Remarks:* The behavior is undefined if the evaluation of
+> `get_deleter()(old_p)` throws an exception.
 
 ``` cpp
 constexpr void swap(unique_ptr& u) noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `get_deleter()` is
+> swappable [[swappable.requirements]] and does not throw an exception
+> under `swap`.
 >
-> `get_deleter()` is swappable [[swappable.requirements]] and does not
-> throw an exception under `swap`.
->
-> *Effects:*
->
-> Invokes `swap` on the stored pointers and on the stored deleters of
-> `*this` and `u`.
+> *Effects:* Invokes `swap` on the stored pointers and on the stored
+> deleters of `*this` and `u`.
 
 #### `unique_ptr` for array objects with a runtime length <a id="unique.ptr.runtime">[[unique.ptr.runtime]]</a>
 
@@ -2300,9 +2067,7 @@ template<class U, class E> constexpr unique_ptr(unique_ptr<U, E>&& u) noexcept;
 
 > This constructor behaves the same as in the primary template.
 >
-> *Constraints:*
->
-> Where `UP` is `unique_ptr<U, E>`:
+> *Constraints:* Where `UP` is `unique_ptr<U, E>`:
 >
 > - `U` is an array type, and
 >
@@ -2327,9 +2092,7 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 
 > This operator behaves the same as in the primary template.
 >
-> *Constraints:*
->
-> Where `UP` is `unique_ptr<U, E>`:
+> *Constraints:* Where `UP` is `unique_ptr<U, E>`:
 >
 > - `U` is an array type, and
 >
@@ -2350,14 +2113,10 @@ template<class U, class E> constexpr unique_ptr& operator=(unique_ptr<U, E>&& u)
 constexpr T& operator[](size_t i) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* $\texttt{i} <$ the number of elements in the array to
+> which the stored pointer points.
 >
-> $\texttt{i} <$ the number of elements in the array to which the stored
-> pointer points.
->
-> *Returns:*
->
-> `get()[i]`.
+> *Returns:* `get()[i]`.
 
 ##### Modifiers <a id="unique.ptr.runtime.modifiers">[[unique.ptr.runtime.modifiers]]</a>
 
@@ -2365,9 +2124,7 @@ constexpr T& operator[](size_t i) const;
 constexpr void reset(nullptr_t p = nullptr) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to `reset(pointer())`.
+> *Effects:* Equivalent to `reset(pointer())`.
 
 ``` cpp
 constexpr template<class U> void reset(U p) noexcept;
@@ -2389,65 +2146,45 @@ constexpr template<class U> void reset(U p) noexcept;
 template<class T, class... Args> constexpr unique_ptr<T> make_unique(Args&&... args);
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is not an array type.
 >
-> `T` is not an array type.
->
-> *Returns:*
->
-> `unique_ptr<T>(new T(std::forward<Args>(args)...))`.
+> *Returns:* `unique_ptr<T>(new T(std::forward<Args>(args)...))`.
 
 ``` cpp
 template<class T> constexpr unique_ptr<T> make_unique(size_t n);
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is an array of unknown bound.
 >
-> `T` is an array of unknown bound.
->
-> *Returns:*
->
-> `unique_ptr<T>(new remove_extent_t<T>[n]())`.
+> *Returns:* `unique_ptr<T>(new remove_extent_t<T>[n]())`.
 
 ``` cpp
 template<class T, class... Args> unspecified make_unique(Args&&...) = delete;
 ```
 
-> *Constraints:*
->
-> `T` is an array of known bound.
+> *Constraints:* `T` is an array of known bound.
 
 ``` cpp
 template<class T> constexpr unique_ptr<T> make_unique_for_overwrite();
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is not an array type.
 >
-> `T` is not an array type.
->
-> *Returns:*
->
-> `unique_ptr<T>(new T)`.
+> *Returns:* `unique_ptr<T>(new T)`.
 
 ``` cpp
 template<class T> constexpr unique_ptr<T> make_unique_for_overwrite(size_t n);
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is an array of unknown bound.
 >
-> `T` is an array of unknown bound.
->
-> *Returns:*
->
-> `unique_ptr<T>(new remove_extent_t<T>[n])`.
+> *Returns:* `unique_ptr<T>(new remove_extent_t<T>[n])`.
 
 ``` cpp
 template<class T, class... Args> unspecified make_unique_for_overwrite(Args&&...) = delete;
 ```
 
-> *Constraints:*
->
-> `T` is an array of known bound.
+> *Constraints:* `T` is an array of known bound.
 
 #### Specialized algorithms <a id="unique.ptr.special">[[unique.ptr.special]]</a>
 
@@ -2455,22 +2192,16 @@ template<class T, class... Args> unspecified make_unique_for_overwrite(Args&&...
 template<class T, class D> constexpr void swap(unique_ptr<T, D>& x, unique_ptr<T, D>& y) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_swappable_v<D>` is `true`.
 >
-> `is_swappable_v<D>` is `true`.
->
-> *Effects:*
->
-> Calls `x.swap(y)`.
+> *Effects:* Calls `x.swap(y)`.
 
 ``` cpp
 template<class T1, class D1, class T2, class D2>
   constexpr bool operator==(const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y);
 ```
 
-> *Returns:*
->
-> `x.get() == y.get()`.
+> *Returns:* `x.get() == y.get()`.
 
 ``` cpp
 template<class T1, class D1, class T2, class D2>
@@ -2490,42 +2221,32 @@ template<class T1, class D1, class T2, class D2>
 >
 > - `unique_ptr<T2, D2>::pointer` is implicitly convertible to `CT`.
 >
-> *Preconditions:*
->
-> The specialization `less<CT>` is a function object
+> *Preconditions:* The specialization `less<CT>` is a function object
 > type [[function.objects]] that induces a strict weak
 > ordering [[alg.sorting]] on the pointer values.
 >
-> *Returns:*
->
-> `less<CT>()(x.get(), y.get())`.
+> *Returns:* `less<CT>()(x.get(), y.get())`.
 
 ``` cpp
 template<class T1, class D1, class T2, class D2>
   bool operator>(const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y);
 ```
 
-> *Returns:*
->
-> `y < x`.
+> *Returns:* `y < x`.
 
 ``` cpp
 template<class T1, class D1, class T2, class D2>
   bool operator<=(const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y);
 ```
 
-> *Returns:*
->
-> `!(y < x)`.
+> *Returns:* `!(y < x)`.
 
 ``` cpp
 template<class T1, class D1, class T2, class D2>
   bool operator>=(const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y);
 ```
 
-> *Returns:*
->
-> `!(x < y)`.
+> *Returns:* `!(x < y)`.
 
 ``` cpp
 template<class T1, class D1, class T2, class D2>
@@ -2536,18 +2257,14 @@ template<class T1, class D1, class T2, class D2>
     operator<=>(const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y);
 ```
 
-> *Returns:*
->
-> `compare_three_way()(x.get(), y.get())`.
+> *Returns:* `compare_three_way()(x.get(), y.get())`.
 
 ``` cpp
 template<class T, class D>
   constexpr bool operator==(const unique_ptr<T, D>& x, nullptr_t) noexcept;
 ```
 
-> *Returns:*
->
-> `!x`.
+> *Returns:* `!x`.
 
 ``` cpp
 template<class T, class D>
@@ -2556,15 +2273,11 @@ template<class T, class D>
   constexpr bool operator<(nullptr_t, const unique_ptr<T, D>& x);
 ```
 
-> *Preconditions:*
+> *Preconditions:* The specialization `less<unique_ptr<T, D>::pointer>`
+> is a function object type [[function.objects]] that induces a strict
+> weak ordering [[alg.sorting]] on the pointer values.
 >
-> The specialization `less<unique_ptr<T, D>::pointer>` is a function
-> object type [[function.objects]] that induces a strict weak
-> ordering [[alg.sorting]] on the pointer values.
->
-> *Returns:*
->
-> The first function template returns
+> *Returns:* The first function template returns
 >
 > ``` cpp
 > less<unique_ptr<T, D>::pointer>()(x.get(), nullptr)
@@ -2583,10 +2296,8 @@ template<class T, class D>
   constexpr bool operator>(nullptr_t, const unique_ptr<T, D>& x);
 ```
 
-> *Returns:*
->
-> The first function template returns `nullptr < x`. The second function
-> template returns `x < nullptr`.
+> *Returns:* The first function template returns `nullptr < x`. The
+> second function template returns `x < nullptr`.
 
 ``` cpp
 template<class T, class D>
@@ -2595,10 +2306,8 @@ template<class T, class D>
   constexpr bool operator<=(nullptr_t, const unique_ptr<T, D>& x);
 ```
 
-> *Returns:*
->
-> The first function template returns `!(nullptr < x)`. The second
-> function template returns `!(x < nullptr)`.
+> *Returns:* The first function template returns `!(nullptr < x)`. The
+> second function template returns `!(x < nullptr)`.
 
 ``` cpp
 template<class T, class D>
@@ -2607,10 +2316,8 @@ template<class T, class D>
   constexpr bool operator>=(nullptr_t, const unique_ptr<T, D>& x);
 ```
 
-> *Returns:*
->
-> The first function template returns `!(x < nullptr)`. The second
-> function template returns `!(nullptr < x)`.
+> *Returns:* The first function template returns `!(x < nullptr)`. The
+> second function template returns `!(nullptr < x)`.
 
 ``` cpp
 template<class T, class D>
@@ -2632,17 +2339,11 @@ template<class E, class T, class Y, class D>
   basic_ostream<E, T>& operator<<(basic_ostream<E, T>& os, const unique_ptr<Y, D>& p);
 ```
 
-> *Constraints:*
+> *Constraints:* `os << p.get()` is a valid expression.
 >
-> `os << p.get()` is a valid expression.
+> *Effects:* Equivalent to: `os << p.get();`
 >
-> *Effects:*
->
-> Equivalent to: `os << p.get();`
->
-> *Returns:*
->
-> `os`.
+> *Returns:* `os`.
 
 ### Shared-ownership pointers <a id="util.sharedptr">[[util.sharedptr]]</a>
 
@@ -2665,9 +2366,7 @@ constructor taking a `weak_ptr`.
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An *implementation-defined* NTBS.
+> *Returns:* An *implementation-defined* NTBS.
 
 #### Class template `shared_ptr` <a id="util.smartptr.shared">[[util.smartptr.shared]]</a>
 
@@ -2809,49 +2508,35 @@ with any potentially concurrent access to the same object
 constexpr shared_ptr() noexcept;
 ```
 
-> *Ensures:*
->
-> `use_count() == 0 && get() == nullptr`.
+> *Ensures:* `use_count() == 0 && get() == nullptr`.
 
 ``` cpp
 template<class Y> explicit shared_ptr(Y* p);
 ```
 
-> *Constraints:*
+> *Constraints:* When `T` is an array type, the expression `delete[] p`
+> is well-formed and either `T` is `U[N]` and `Y(*)[N]` is convertible
+> to `T*`, or `T` is `U[]` and `Y(*)[]` is convertible to `T*`. When `T`
+> is not an array type, the expression `delete p` is well-formed and
+> `Y*` is convertible to `T*`.
 >
-> When `T` is an array type, the expression `delete[] p` is well-formed
-> and either `T` is `U[N]` and `Y(*)[N]` is convertible to `T*`, or `T`
-> is `U[]` and `Y(*)[]` is convertible to `T*`. When `T` is not an array
-> type, the expression `delete p` is well-formed and `Y*` is convertible
-> to `T*`.
+> *Mandates:* `Y` is a complete type.
 >
-> *Mandates:*
+> *Preconditions:* The expression `delete[] p`, when `T` is an array
+> type, or `delete p`, when `T` is not an array type, has well-defined
+> behavior, and does not throw exceptions.
 >
-> `Y` is a complete type.
+> *Effects:* When `T` is not an array type, constructs a `shared_ptr`
+> object that owns the pointer `p`. Otherwise, constructs a `shared_ptr`
+> that owns `p` and a deleter of an unspecified type that calls
+> `delete[] p`. When `T` is not an array type, enables
+> `shared_from_this` with `p`. If an exception is thrown, `delete p` is
+> called when `T` is not an array type, `delete[] p` otherwise.
 >
-> *Preconditions:*
+> *Ensures:* `use_count() == 1 && get() == p`.
 >
-> The expression `delete[] p`, when `T` is an array type, or `delete p`,
-> when `T` is not an array type, has well-defined behavior, and does not
-> throw exceptions.
->
-> *Effects:*
->
-> When `T` is not an array type, constructs a `shared_ptr` object that
-> owns the pointer `p`. Otherwise, constructs a `shared_ptr` that owns
-> `p` and a deleter of an unspecified type that calls `delete[] p`. When
-> `T` is not an array type, enables `shared_from_this` with `p`. If an
-> exception is thrown, `delete p` is called when `T` is not an array
-> type, `delete[] p` otherwise.
->
-> *Ensures:*
->
-> `use_count() == 1 && get() == p`.
->
-> *Throws:*
->
-> `bad_alloc`, or an *implementation-defined* exception when a resource
-> other than memory cannot be obtained.
+> *Throws:* `bad_alloc`, or an *implementation-defined* exception when a
+> resource other than memory cannot be obtained.
 
 ``` cpp
 template<class Y, class D> shared_ptr(Y* p, D d);
@@ -2860,10 +2545,8 @@ template<class D> shared_ptr(nullptr_t p, D d);
 template<class D, class A> shared_ptr(nullptr_t p, D d, A a);
 ```
 
-> *Constraints:*
->
-> `is_move_constructible_v<D>` is `true`, and `d(p)` is a well-formed
-> expression. For the first two overloads:
+> *Constraints:* `is_move_constructible_v<D>` is `true`, and `d(p)` is a
+> well-formed expression. For the first two overloads:
 >
 > - If `T` is an array type, then either `T` is `U[N]` and `Y(*)[N]` is
 >   convertible to `T*`, or `T` is `U[]` and `Y(*)[]` is convertible to
@@ -2871,43 +2554,32 @@ template<class D, class A> shared_ptr(nullptr_t p, D d, A a);
 >
 > - If `T` is not an array type, then `Y*` is convertible to `T*`.
 >
-> *Preconditions:*
+> *Preconditions:* Construction of `d` and a deleter of type `D`
+> initialized with `std::move(d)` do not throw exceptions. The
+> expression `d(p)` has well-defined behavior and does not throw
+> exceptions. `A` meets the *Cpp17Allocator*
+> requirements [[allocator.requirements.general]].
 >
-> Construction of `d` and a deleter of type `D` initialized with
-> `std::move(d)` do not throw exceptions. The expression `d(p)` has
-> well-defined behavior and does not throw exceptions. `A` meets the
-> *Cpp17Allocator* requirements [[allocator.requirements.general]].
+> *Effects:* Constructs a `shared_ptr` object that owns the object `p`
+> and the deleter `d`. When `T` is not an array type, the first and
+> second constructors enable `shared_from_this` with `p`. The second and
+> fourth constructors shall use a copy of `a` to allocate memory for
+> internal use. If an exception is thrown, `d(p)` is called.
 >
-> *Effects:*
+> *Ensures:* `use_count() == 1 && get() == p`.
 >
-> Constructs a `shared_ptr` object that owns the object `p` and the
-> deleter `d`. When `T` is not an array type, the first and second
-> constructors enable `shared_from_this` with `p`. The second and fourth
-> constructors shall use a copy of `a` to allocate memory for internal
-> use. If an exception is thrown, `d(p)` is called.
->
-> *Ensures:*
->
-> `use_count() == 1 && get() == p`.
->
-> *Throws:*
->
-> `bad_alloc`, or an *implementation-defined* exception when a resource
-> other than memory cannot be obtained.
+> *Throws:* `bad_alloc`, or an *implementation-defined* exception when a
+> resource other than memory cannot be obtained.
 
 ``` cpp
 template<class Y> shared_ptr(const shared_ptr<Y>& r, element_type* p) noexcept;
 template<class Y> shared_ptr(shared_ptr<Y>&& r, element_type* p) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `shared_ptr` instance that stores `p` and
+> shares ownership with the initial value of `r`.
 >
-> Constructs a `shared_ptr` instance that stores `p` and shares
-> ownership with the initial value of `r`.
->
-> *Ensures:*
->
-> `get() == p`. For the second overload, `r` is empty and
+> *Ensures:* `get() == p`. For the second overload, `r` is empty and
 > `r.get() == nullptr`.
 >
 > \[*Note 14*: Use of this constructor leads to a dangling pointer
@@ -2922,72 +2594,51 @@ shared_ptr(const shared_ptr& r) noexcept;
 template<class Y> shared_ptr(const shared_ptr<Y>& r) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* For the second constructor, `Y*` is compatible with
+> `T*`.
 >
-> For the second constructor, `Y*` is compatible with `T*`.
+> *Effects:* If `r` is empty, constructs an empty `shared_ptr` object;
+> otherwise, constructs a `shared_ptr` object that shares ownership with
+> `r`.
 >
-> *Effects:*
->
-> If `r` is empty, constructs an empty `shared_ptr` object; otherwise,
-> constructs a `shared_ptr` object that shares ownership with `r`.
->
-> *Ensures:*
->
-> `get() == r.get() && use_count() == r.use_count()`.
+> *Ensures:* `get() == r.get() && use_count() == r.use_count()`.
 
 ``` cpp
 shared_ptr(shared_ptr&& r) noexcept;
 template<class Y> shared_ptr(shared_ptr<Y>&& r) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* For the second constructor, `Y*` is compatible with
+> `T*`.
 >
-> For the second constructor, `Y*` is compatible with `T*`.
+> *Effects:* Move constructs a `shared_ptr` instance from `r`.
 >
-> *Effects:*
->
-> Move constructs a `shared_ptr` instance from `r`.
->
-> *Ensures:*
->
-> `*this` contains the old value of `r`. `r` is empty, and
+> *Ensures:* `*this` contains the old value of `r`. `r` is empty, and
 > `r.get() == nullptr`.
 
 ``` cpp
 template<class Y> explicit shared_ptr(const weak_ptr<Y>& r);
 ```
 
-> *Constraints:*
+> *Constraints:* `Y*` is compatible with `T*`.
 >
-> `Y*` is compatible with `T*`.
+> *Effects:* Constructs a `shared_ptr` object that shares ownership with
+> `r` and stores a copy of the pointer stored in `r`. If an exception is
+> thrown, the constructor has no effect.
 >
-> *Effects:*
+> *Ensures:* `use_count() == r.use_count()`.
 >
-> Constructs a `shared_ptr` object that shares ownership with `r` and
-> stores a copy of the pointer stored in `r`. If an exception is thrown,
-> the constructor has no effect.
->
-> *Ensures:*
->
-> `use_count() == r.use_count()`.
->
-> *Throws:*
->
-> `bad_weak_ptr` when `r.expired()`.
+> *Throws:* `bad_weak_ptr` when `r.expired()`.
 
 ``` cpp
 template<class Y, class D> shared_ptr(unique_ptr<Y, D>&& r);
 ```
 
-> *Constraints:*
+> *Constraints:* `Y*` is compatible with `T*` and
+> `unique_ptr<Y, D>::pointer` is convertible to `element_type*`.
 >
-> `Y*` is compatible with `T*` and `unique_ptr<Y, D>::pointer` is
-> convertible to `element_type*`.
->
-> *Effects:*
->
-> If `r.get() == nullptr`, equivalent to `shared_ptr()`. Otherwise, if
-> `D` is not a reference type, equivalent to
+> *Effects:* If `r.get() == nullptr`, equivalent to `shared_ptr()`.
+> Otherwise, if `D` is not a reference type, equivalent to
 > `shared_ptr(r.release(), std::move(r.get_deleter()))`. Otherwise,
 > equivalent to `shared_ptr(r.release(), ref(r.get_deleter()))`. If an
 > exception is thrown, the constructor has no effect.
@@ -3021,13 +2672,9 @@ shared_ptr& operator=(const shared_ptr& r) noexcept;
 template<class Y> shared_ptr& operator=(const shared_ptr<Y>& r) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `shared_ptr(r).swap(*this)`.
 >
-> Equivalent to `shared_ptr(r).swap(*this)`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 >
 > \[*Note 16*:
 >
@@ -3050,25 +2697,17 @@ shared_ptr& operator=(shared_ptr&& r) noexcept;
 template<class Y> shared_ptr& operator=(shared_ptr<Y>&& r) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `shared_ptr(std::move(r)).swap(*this)`.
 >
-> Equivalent to `shared_ptr(std::move(r)).swap(*this)`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 template<class Y, class D> shared_ptr& operator=(unique_ptr<Y, D>&& r);
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `shared_ptr(std::move(r)).swap(*this)`.
 >
-> Equivalent to `shared_ptr(std::move(r)).swap(*this)`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ##### Modifiers <a id="util.smartptr.shared.mod">[[util.smartptr.shared.mod]]</a>
 
@@ -3076,41 +2715,31 @@ template<class Y, class D> shared_ptr& operator=(unique_ptr<Y, D>&& r);
 void swap(shared_ptr& r) noexcept;
 ```
 
-> *Effects:*
->
-> Exchanges the contents of `*this` and `r`.
+> *Effects:* Exchanges the contents of `*this` and `r`.
 
 ``` cpp
 void reset() noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to `shared_ptr().swap(*this)`.
+> *Effects:* Equivalent to `shared_ptr().swap(*this)`.
 
 ``` cpp
 template<class Y> void reset(Y* p);
 ```
 
-> *Effects:*
->
-> Equivalent to `shared_ptr(p).swap(*this)`.
+> *Effects:* Equivalent to `shared_ptr(p).swap(*this)`.
 
 ``` cpp
 template<class Y, class D> void reset(Y* p, D d);
 ```
 
-> *Effects:*
->
-> Equivalent to `shared_ptr(p, d).swap(*this)`.
+> *Effects:* Equivalent to `shared_ptr(p, d).swap(*this)`.
 
 ``` cpp
 template<class Y, class D, class A> void reset(Y* p, D d, A a);
 ```
 
-> *Effects:*
->
-> Equivalent to `shared_ptr(p, d, a).swap(*this)`.
+> *Effects:* Equivalent to `shared_ptr(p, d, a).swap(*this)`.
 
 ##### Observers <a id="util.smartptr.shared.obs">[[util.smartptr.shared.obs]]</a>
 
@@ -3118,81 +2747,58 @@ template<class Y, class D, class A> void reset(Y* p, D d, A a);
 element_type* get() const noexcept;
 ```
 
-> *Returns:*
->
-> The stored pointer.
+> *Returns:* The stored pointer.
 
 ``` cpp
 T& operator*() const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `get() != nullptr`.
 >
-> `get() != nullptr`.
+> *Returns:* `*get()`.
 >
-> *Returns:*
->
-> `*get()`.
->
-> *Remarks:*
->
-> When `T` is an array type or  , it is unspecified whether this member
-> function is declared. If it is declared, it is unspecified what its
-> return type is, except that the declaration (although not necessarily
-> the definition) of the function shall be well-formed.
+> *Remarks:* When `T` is an array type or  , it is unspecified whether
+> this member function is declared. If it is declared, it is unspecified
+> what its return type is, except that the declaration (although not
+> necessarily the definition) of the function shall be well-formed.
 
 ``` cpp
 T* operator->() const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `get() != nullptr`.
 >
-> `get() != nullptr`.
+> *Returns:* `get()`.
 >
-> *Returns:*
->
-> `get()`.
->
-> *Remarks:*
->
-> When `T` is an array type, it is unspecified whether this member
-> function is declared. If it is declared, it is unspecified what its
-> return type is, except that the declaration (although not necessarily
-> the definition) of the function shall be well-formed.
+> *Remarks:* When `T` is an array type, it is unspecified whether this
+> member function is declared. If it is declared, it is unspecified what
+> its return type is, except that the declaration (although not
+> necessarily the definition) of the function shall be well-formed.
 
 ``` cpp
 element_type& operator[](ptrdiff_t i) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `get() != nullptr && i >= 0`. If `T` is `U[N]`,
+> `i < N`.
 >
-> `get() != nullptr && i >= 0`. If `T` is `U[N]`, `i < N`.
+> *Returns:* `get()[i]`.
 >
-> *Returns:*
+> *Throws:* Nothing.
 >
-> `get()[i]`.
->
-> *Throws:*
->
-> Nothing.
->
-> *Remarks:*
->
-> When `T` is not an array type, it is unspecified whether this member
-> function is declared. If it is declared, it is unspecified what its
-> return type is, except that the declaration (although not necessarily
-> the definition) of the function shall be well-formed.
+> *Remarks:* When `T` is not an array type, it is unspecified whether
+> this member function is declared. If it is declared, it is unspecified
+> what its return type is, except that the declaration (although not
+> necessarily the definition) of the function shall be well-formed.
 
 ``` cpp
 long use_count() const noexcept;
 ```
 
-> None.
+> *Synchronization:* None.
 >
-> *Returns:*
->
-> The number of `shared_ptr` objects, `*this` included, that share
-> ownership with `*this`, or `0` when `*this` is empty.
+> *Returns:* The number of `shared_ptr` objects, `*this` included, that
+> share ownership with `*this`, or `0` when `*this` is empty.
 >
 > \[*Note 17*: `get() == nullptr` does not imply a specific return value
 > of `use_count()`. — *end note*\]
@@ -3209,18 +2815,14 @@ long use_count() const noexcept;
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `get() != nullptr`.
+> *Returns:* `get() != nullptr`.
 
 ``` cpp
 template<class U> bool owner_before(const shared_ptr<U>& b) const noexcept;
 template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 ```
 
-> *Returns:*
->
-> An unspecified value such that
+> *Returns:* An unspecified value such that
 >
 > - `x.owner_before(y)` defines a strict weak ordering as defined
 >   in  [[alg.sorting]];
@@ -3248,35 +2850,25 @@ template<class T, class A, ...>
   shared_ptr<T> allocate_shared_for_overwrite(const A& a, args);
 ```
 
-> *Preconditions:*
->
-> `A` meets the *Cpp17Allocator*
+> *Preconditions:* `A` meets the *Cpp17Allocator*
 > requirements [[allocator.requirements.general]].
 >
-> *Effects:*
->
-> Allocates memory for an object of type `T` (or `U[N]` when `T` is
-> `U[]`, where `N` is determined from *args* as specified by the
+> *Effects:* Allocates memory for an object of type `T` (or `U[N]` when
+> `T` is `U[]`, where `N` is determined from *args* as specified by the
 > concrete overload). The object is initialized from *args* as specified
 > by the concrete overload. The `allocate_shared` and
 > `allocate_shared_for_overwrite` templates use a copy of `a` (rebound
 > for an unspecified `value_type`) to allocate memory. If an exception
 > is thrown, the functions have no effect.
 >
-> *Ensures:*
+> *Ensures:* `r.get() != nullptr && r.use_count() == 1`, where `r` is
+> the return value.
 >
-> `r.get() != nullptr && r.use_count() == 1`, where `r` is the return
-> value.
+> *Returns:* A `shared_ptr` instance that stores and owns the address of
+> the newly constructed object.
 >
-> *Returns:*
->
-> A `shared_ptr` instance that stores and owns the address of the newly
-> constructed object.
->
-> *Throws:*
->
-> `bad_alloc`, or an exception thrown from `allocate` or from the
-> initialization of the object.
+> *Throws:* `bad_alloc`, or an exception thrown from `allocate` or from
+> the initialization of the object.
 >
 > *Remarks:*
 >
@@ -3365,20 +2957,14 @@ template<class T, class A, class... Args>
   shared_ptr<T> allocate_shared(const A& a, Args&&... args);    // T is not array
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is not an array type.
 >
-> `T` is not an array type.
+> *Returns:* A `shared_ptr` to an object of type `T` with an initial
+> value `T(std::forward<Args>(args)...)`.
 >
-> *Returns:*
->
-> A `shared_ptr` to an object of type `T` with an initial value
-> `T(std::forward<Args>(args)...)`.
->
-> *Remarks:*
->
-> The `shared_ptr` constructors called by these functions enable
-> `shared_from_this` with the address of the newly constructed object of
-> type `T`.
+> *Remarks:* The `shared_ptr` constructors called by these functions
+> enable `shared_from_this` with the address of the newly constructed
+> object of type `T`.
 >
 > \[*Example 2*:
 >
@@ -3395,14 +2981,10 @@ template<class T, class A>
   shared_ptr<T> allocate_shared(const A& a, size_t N);          // T is U[]
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is of the form `U[]`.
 >
-> `T` is of the form `U[]`.
->
-> *Returns:*
->
-> A `shared_ptr` to an object of type `U[N]` with a default initial
-> value, where `U` is `remove_extent_t<T>`.
+> *Returns:* A `shared_ptr` to an object of type `U[N]` with a default
+> initial value, where `U` is `remove_extent_t<T>`.
 >
 > \[*Example 3*:
 >
@@ -3420,13 +3002,10 @@ template<class T, class A>
   shared_ptr<T> allocate_shared(const A& a);                    // T is U[N]
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is of the form `U[N]`.
 >
-> `T` is of the form `U[N]`.
->
-> *Returns:*
->
-> A `shared_ptr` to an object of type `T` with a default initial value.
+> *Returns:* A `shared_ptr` to an object of type `T` with a default
+> initial value.
 >
 > \[*Example 4*:
 >
@@ -3446,13 +3025,9 @@ template<class T, class A>
                                 const remove_extent_t<T>& u);   // T is U[]
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is of the form `U[]`.
 >
-> `T` is of the form `U[]`.
->
-> *Returns:*
->
-> A `shared_ptr` to an object of type `U[N]`, where `U` is
+> *Returns:* A `shared_ptr` to an object of type `U[N]`, where `U` is
 > `remove_extent_t<T>` and each array element has an initial value of
 > `u`.
 >
@@ -3475,14 +3050,10 @@ template<class T, class A>
                                 const remove_extent_t<T>& u);   // T is U[N]
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is of the form `U[N]`.
 >
-> `T` is of the form `U[N]`.
->
-> *Returns:*
->
-> A `shared_ptr` to an object of type `T`, where each array element of
-> type `remove_extent_t<T>` has an initial value of `u`.
+> *Returns:* A `shared_ptr` to an object of type `T`, where each array
+> element of type `remove_extent_t<T>` has an initial value of `u`.
 >
 > \[*Example 6*:
 >
@@ -3502,13 +3073,9 @@ template<class T, class A>
   shared_ptr<T> allocate_shared_for_overwrite(const A& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is not an array of unknown bound.
 >
-> `T` is not an array of unknown bound.
->
-> *Returns:*
->
-> A `shared_ptr` to an object of type `T`.
+> *Returns:* A `shared_ptr` to an object of type `T`.
 >
 > \[*Example 7*:
 >
@@ -3528,13 +3095,9 @@ template<class T, class A>
   shared_ptr<T> allocate_shared_for_overwrite(const A& a, size_t N);
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is an array of unknown bound.
 >
-> `T` is an array of unknown bound.
->
-> *Returns:*
->
-> A `shared_ptr` to an object of type `U[N]`, where `U` is
+> *Returns:* A `shared_ptr` to an object of type `U[N]`, where `U` is
 > `remove_extent_t<T>`.
 >
 > \[*Example 8*:
@@ -3551,27 +3114,21 @@ template<class T, class U>
   bool operator==(const shared_ptr<T>& a, const shared_ptr<U>& b) noexcept;
 ```
 
-> *Returns:*
->
-> `a.get() == b.get()`.
+> *Returns:* `a.get() == b.get()`.
 
 ``` cpp
 template<class T>
   bool operator==(const shared_ptr<T>& a, nullptr_t) noexcept;
 ```
 
-> *Returns:*
->
-> `!a`.
+> *Returns:* `!a`.
 
 ``` cpp
 template<class T, class U>
   strong_ordering operator<=>(const shared_ptr<T>& a, const shared_ptr<U>& b) noexcept;
 ```
 
-> *Returns:*
->
-> `compare_three_way()(a.get(), b.get())`.
+> *Returns:* `compare_three_way()(a.get(), b.get())`.
 >
 > \[*Note 22*: Defining a comparison operator function allows
 > `shared_ptr` objects to be used as keys in associative
@@ -3595,9 +3152,7 @@ template<class T>
   void swap(shared_ptr<T>& a, shared_ptr<T>& b) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to `a.swap(b)`.
+> *Effects:* Equivalent to `a.swap(b)`.
 
 ##### Casts <a id="util.smartptr.shared.cast">[[util.smartptr.shared.cast]]</a>
 
@@ -3608,9 +3163,8 @@ template<class T, class U>
   shared_ptr<T> static_pointer_cast(shared_ptr<U>&& r) noexcept;
 ```
 
-> *Mandates:*
->
-> The expression `static_cast<T*>((U*)nullptr)` is well-formed.
+> *Mandates:* The expression `static_cast<T*>((U*)nullptr)` is
+> well-formed.
 >
 > *Returns:*
 >
@@ -3633,16 +3187,12 @@ template<class T, class U>
   shared_ptr<T> dynamic_pointer_cast(shared_ptr<U>&& r) noexcept;
 ```
 
-> *Mandates:*
->
-> The expression `dynamic_cast<T*>((U*)nullptr)` is well-formed. The
-> expression
+> *Mandates:* The expression `dynamic_cast<T*>((U*)nullptr)` is
+> well-formed. The expression
 > `dynamic_cast<typename shared_ptr<T>::element_type*>(r.get())` is
 > well-formed.
 >
-> *Preconditions:*
->
-> The expression
+> *Preconditions:* The expression
 > `dynamic_cast<typename shared_ptr<T>::element_type*>(r.get())` has
 > well-defined behavior.
 >
@@ -3667,9 +3217,8 @@ template<class T, class U>
   shared_ptr<T> const_pointer_cast(shared_ptr<U>&& r) noexcept;
 ```
 
-> *Mandates:*
->
-> The expression `const_cast<T*>((U*)nullptr)` is well-formed.
+> *Mandates:* The expression `const_cast<T*>((U*)nullptr)` is
+> well-formed.
 >
 > *Returns:*
 >
@@ -3692,9 +3241,8 @@ template<class T, class U>
   shared_ptr<T> reinterpret_pointer_cast(shared_ptr<U>&& r) noexcept;
 ```
 
-> *Mandates:*
->
-> The expression `reinterpret_cast<T*>((U*)nullptr)` is well-formed.
+> *Mandates:* The expression `reinterpret_cast<T*>((U*)nullptr)` is
+> well-formed.
 >
 > *Returns:*
 >
@@ -3717,11 +3265,10 @@ template<class D, class T>
   D* get_deleter(const shared_ptr<T>& p) noexcept;
 ```
 
-> *Returns:*
->
-> If `p` owns a deleter `d` of type cv-unqualified `D`, returns
-> `addressof(d)`; otherwise returns . The returned pointer remains valid
-> as long as there exists a `shared_ptr` instance that owns `d`.
+> *Returns:* If `p` owns a deleter `d` of type cv-unqualified `D`,
+> returns `addressof(d)`; otherwise returns . The returned pointer
+> remains valid as long as there exists a `shared_ptr` instance that
+> owns `d`.
 >
 > \[*Note 27*: It is unspecified whether the pointer remains valid
 > longer than that. This can happen if the implementation doesn’t
@@ -3735,13 +3282,9 @@ template<class E, class T, class Y>
   basic_ostream<E, T>& operator<<(basic_ostream<E, T>& os, const shared_ptr<Y>& p);
 ```
 
-> *Effects:*
+> *Effects:* As if by: `os << p.get();`
 >
-> As if by: `os << p.get();`
->
-> *Returns:*
->
-> `os`.
+> *Returns:* `os`.
 
 #### Class template `weak_ptr` <a id="util.smartptr.weak">[[util.smartptr.weak]]</a>
 
@@ -3810,14 +3353,10 @@ template parameter `T` of `weak_ptr` may be an incomplete type.
 constexpr weak_ptr() noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `weak_ptr` object that stores a null
+> pointer value.
 >
-> Constructs an empty `weak_ptr` object that stores a null pointer
-> value.
->
-> *Ensures:*
->
-> `use_count() == 0`.
+> *Ensures:* `use_count() == 0`.
 
 ``` cpp
 weak_ptr(const weak_ptr& r) noexcept;
@@ -3825,38 +3364,28 @@ template<class Y> weak_ptr(const weak_ptr<Y>& r) noexcept;
 template<class Y> weak_ptr(const shared_ptr<Y>& r) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* For the second and third constructors, `Y*` is
+> compatible with `T*`.
 >
-> For the second and third constructors, `Y*` is compatible with `T*`.
+> *Effects:* If `r` is empty, constructs an empty `weak_ptr` object that
+> stores a null pointer value; otherwise, constructs a `weak_ptr` object
+> that shares ownership with `r` and stores a copy of the pointer stored
+> in `r`.
 >
-> *Effects:*
->
-> If `r` is empty, constructs an empty `weak_ptr` object that stores a
-> null pointer value; otherwise, constructs a `weak_ptr` object that
-> shares ownership with `r` and stores a copy of the pointer stored in
-> `r`.
->
-> *Ensures:*
->
-> `use_count() == r.use_count()`.
+> *Ensures:* `use_count() == r.use_count()`.
 
 ``` cpp
 weak_ptr(weak_ptr&& r) noexcept;
 template<class Y> weak_ptr(weak_ptr<Y>&& r) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* For the second constructor, `Y*` is compatible with
+> `T*`.
 >
-> For the second constructor, `Y*` is compatible with `T*`.
+> *Effects:* Move constructs a `weak_ptr` instance from `r`.
 >
-> *Effects:*
->
-> Move constructs a `weak_ptr` instance from `r`.
->
-> *Ensures:*
->
-> `*this` contains the old value of `r`. `r` is empty, stores a null
-> pointer value, and `r.use_count() == 0`.
+> *Ensures:* `*this` contains the old value of `r`. `r` is empty, stores
+> a null pointer value, and `r.use_count() == 0`.
 
 ##### Destructor <a id="util.smartptr.weak.dest">[[util.smartptr.weak.dest]]</a>
 
@@ -3864,10 +3393,8 @@ template<class Y> weak_ptr(weak_ptr<Y>&& r) noexcept;
 ~weak_ptr();
 ```
 
-> *Effects:*
->
-> Destroys this `weak_ptr` object but has no effect on the object its
-> stored pointer points to.
+> *Effects:* Destroys this `weak_ptr` object but has no effect on the
+> object its stored pointer points to.
 
 ##### Assignment <a id="util.smartptr.weak.assign">[[util.smartptr.weak.assign]]</a>
 
@@ -3877,31 +3404,21 @@ template<class Y> weak_ptr& operator=(const weak_ptr<Y>& r) noexcept;
 template<class Y> weak_ptr& operator=(const shared_ptr<Y>& r) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `weak_ptr(r).swap(*this)`.
 >
-> Equivalent to `weak_ptr(r).swap(*this)`.
+> *Returns:* `*this`.
 >
-> *Returns:*
->
-> `*this`.
->
-> *Remarks:*
->
-> The implementation may meet the effects (and the implied guarantees)
-> via different means, without creating a temporary object.
+> *Remarks:* The implementation may meet the effects (and the implied
+> guarantees) via different means, without creating a temporary object.
 
 ``` cpp
 weak_ptr& operator=(weak_ptr&& r) noexcept;
 template<class Y> weak_ptr& operator=(weak_ptr<Y>&& r) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `weak_ptr(std::move(r)).swap(*this)`.
 >
-> Equivalent to `weak_ptr(std::move(r)).swap(*this)`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ##### Modifiers <a id="util.smartptr.weak.mod">[[util.smartptr.weak.mod]]</a>
 
@@ -3909,17 +3426,13 @@ template<class Y> weak_ptr& operator=(weak_ptr<Y>&& r) noexcept;
 void swap(weak_ptr& r) noexcept;
 ```
 
-> *Effects:*
->
-> Exchanges the contents of `*this` and `r`.
+> *Effects:* Exchanges the contents of `*this` and `r`.
 
 ``` cpp
 void reset() noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to `weak_ptr().swap(*this)`.
+> *Effects:* Equivalent to `weak_ptr().swap(*this)`.
 
 ##### Observers <a id="util.smartptr.weak.obs">[[util.smartptr.weak.obs]]</a>
 
@@ -3927,36 +3440,28 @@ void reset() noexcept;
 long use_count() const noexcept;
 ```
 
-> *Returns:*
->
-> `0` if `*this` is empty; otherwise, the number of `shared_ptr`
-> instances that share ownership with `*this`.
+> *Returns:* `0` if `*this` is empty; otherwise, the number of
+> `shared_ptr` instances that share ownership with `*this`.
 
 ``` cpp
 bool expired() const noexcept;
 ```
 
-> *Returns:*
->
-> `use_count() == 0`.
+> *Returns:* `use_count() == 0`.
 
 ``` cpp
 shared_ptr<T> lock() const noexcept;
 ```
 
-> *Returns:*
->
-> `expired() ? shared_ptr<T>() : shared_ptr<T>(*this)`, executed
-> atomically.
+> *Returns:* `expired() ? shared_ptr<T>() : shared_ptr<T>(*this)`,
+> executed atomically.
 
 ``` cpp
 template<class U> bool owner_before(const shared_ptr<U>& b) const noexcept;
 template<class U> bool owner_before(const weak_ptr<U>& b) const noexcept;
 ```
 
-> *Returns:*
->
-> An unspecified value such that
+> *Returns:* An unspecified value such that
 >
 > - `x.owner_before(y)` defines a strict weak ordering as defined
 >   in  [[alg.sorting]];
@@ -3973,9 +3478,7 @@ template<class T>
   void swap(weak_ptr<T>& a, weak_ptr<T>& b) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to `a.swap(b)`.
+> *Effects:* Equivalent to `a.swap(b)`.
 
 #### Class template `owner_less` <a id="util.smartptr.ownerless">[[util.smartptr.ownerless]]</a>
 
@@ -4079,17 +3582,13 @@ constexpr enable_shared_from_this() noexcept;
 enable_shared_from_this(const enable_shared_from_this<T>&) noexcept;
 ```
 
-> *Effects:*
->
-> Value-initializes `weak_this`.
+> *Effects:* Value-initializes `weak_this`.
 
 ``` cpp
 enable_shared_from_this<T>& operator=(const enable_shared_from_this<T>&) noexcept;
 ```
 
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 >
 > \[*Note 28*: `weak_this` is not changed. — *end note*\]
 
@@ -4098,18 +3597,14 @@ shared_ptr<T>       shared_from_this();
 shared_ptr<T const> shared_from_this() const;
 ```
 
-> *Returns:*
->
-> `shared_ptr<T>(weak_this)`.
+> *Returns:* `shared_ptr<T>(weak_this)`.
 
 ``` cpp
 weak_ptr<T>       weak_from_this() noexcept;
 weak_ptr<T const> weak_from_this() const noexcept;
 ```
 
-> *Returns:*
->
-> `weak_this`.
+> *Returns:* `weak_this`.
 
 ### Smart pointer hash support <a id="util.smartptr.hash">[[util.smartptr.hash]]</a>
 
@@ -4211,10 +3706,9 @@ Evaluations of the conversion functions on the same object may conflict
 explicit out_ptr_t(Smart& smart, Args... args);
 ```
 
-> *Effects:*
->
-> Initializes `s` with `smart`, `a` with `std::forward<Args>(args)...`,
-> and value-initializes `p`. Then, equivalent to:
+> *Effects:* Initializes `s` with `smart`, `a` with
+> `std::forward<Args>(args)...`, and value-initializes `p`. Then,
+> equivalent to:
 >
 > - s.reset();
 >
@@ -4241,9 +3735,7 @@ explicit out_ptr_t(Smart& smart, Args... args);
 
 > Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)`[[memory.general]].
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > - if (p) {
 >         apply([&](auto&&... args) {
@@ -4269,33 +3761,21 @@ explicit out_ptr_t(Smart& smart, Args... args);
 operator Pointer*() const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `operator void**()` has not been called on `*this`.
 >
-> `operator void**()` has not been called on `*this`.
->
-> *Returns:*
->
-> `addressof(const_cast<Pointer&>(p))`.
+> *Returns:* `addressof(const_cast<Pointer&>(p))`.
 
 ``` cpp
 operator void**() const noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_same_v<Pointer, void*>` is `false`.
 >
-> `is_same_v<Pointer, void*>` is `false`.
+> *Mandates:* `is_pointer_v<Pointer>` is `true`.
 >
-> *Mandates:*
+> *Preconditions:* `operator Pointer*()` has not been called on `*this`.
 >
-> `is_pointer_v<Pointer>` is `true`.
->
-> *Preconditions:*
->
-> `operator Pointer*()` has not been called on `*this`.
->
-> *Returns:*
->
-> A pointer value `v` such that:
+> *Returns:* A pointer value `v` such that:
 >
 > - the initial value `*v` is equivalent to `static_cast<void*>(p)` and
 >
@@ -4303,9 +3783,8 @@ operator void**() const noexcept;
 >   modification of `*this` affects the value of `p` during the
 >   destruction of `*this`, such that `static_cast<void*>(p) == *v`.
 >
-> *Remarks:*
->
-> Accessing `*v` outside the lifetime of `*this` has undefined behavior.
+> *Remarks:* Accessing `*v` outside the lifetime of `*this` has
+> undefined behavior.
 >
 > \[*Note 30*: `reinterpret_cast<void**>(static_cast<Pointer*>(*this))`
 > can be a viable implementation strategy for some
@@ -4322,7 +3801,6 @@ template<class Pointer = void, class Smart, class... Args>
 > *`POINTER_OF`*`(Smart)`.
 >
 > *Returns:*
->
 > `out_ptr_t<Smart, P, Args&&...>(s, std::forward<Args>(args)...)`
 
 #### Class template `inout_ptr_t` <a id="inout.ptr.t">[[inout.ptr.t]]</a>
@@ -4401,18 +3879,14 @@ Evaluations of the conversion functions on the same object may conflict
 explicit inout_ptr_t(Smart& smart, Args... args);
 ```
 
-> *Effects:*
->
-> Initializes `s` with `smart`, `a` with `std::forward<Args>(args)...`,
-> and `p` to either
+> *Effects:* Initializes `s` with `smart`, `a` with
+> `std::forward<Args>(args)...`, and `p` to either
 >
 > - `smart` if `is_pointer_v<Smart>` is `true`,
 >
 > - otherwise, `smart.get()`.
 >
-> *Remarks:*
->
-> An implementation can call `s.release()`.
+> *Remarks:* An implementation can call `s.release()`.
 >
 > \[*Note 31*: The constructor is not `noexcept` to allow for a variety
 > of non-terminating and safe implementation strategies. For example, an
@@ -4428,9 +3902,7 @@ explicit inout_ptr_t(Smart& smart, Args... args);
 > Let *release-statement* be `s.release();` if an implementation does
 > not call `s.release()` in the constructor. Otherwise, it is empty.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > - if (p) {
 >         apply([&](auto&&... args) {
@@ -4467,33 +3939,21 @@ explicit inout_ptr_t(Smart& smart, Args... args);
 operator Pointer*() const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `operator void**()` has not been called on `*this`.
 >
-> `operator void**()` has not been called on `*this`.
->
-> *Returns:*
->
-> `addressof(const_cast<Pointer&>(p))`.
+> *Returns:* `addressof(const_cast<Pointer&>(p))`.
 
 ``` cpp
 operator void**() const noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_same_v<Pointer, void*>` is `false`.
 >
-> `is_same_v<Pointer, void*>` is `false`.
+> *Mandates:* `is_pointer_v<Pointer>` is `true`.
 >
-> *Mandates:*
+> *Preconditions:* `operator Pointer*()` has not been called on `*this`.
 >
-> `is_pointer_v<Pointer>` is `true`.
->
-> *Preconditions:*
->
-> `operator Pointer*()` has not been called on `*this`.
->
-> *Returns:*
->
-> A pointer value `v` such that:
+> *Returns:* A pointer value `v` such that:
 >
 > - the initial value `*v` is equivalent to `static_cast<void*>(p)` and
 >
@@ -4501,9 +3961,8 @@ operator void**() const noexcept;
 >   modification of `*this` affects the value of `p` during the
 >   destruction of `*this`, such that `static_cast<void*>(p) == *v`.
 >
-> *Remarks:*
->
-> Accessing `*v` outside the lifetime of `*this` has undefined behavior.
+> *Remarks:* Accessing `*v` outside the lifetime of `*this` has
+> undefined behavior.
 >
 > \[*Note 32*: `reinterpret_cast<void**>(static_cast<Pointer*>(*this))`
 > can be a viable implementation strategy for some
@@ -4520,7 +3979,6 @@ template<class Pointer = void, class Smart, class... Args>
 > *`POINTER_OF`*`(Smart)`.
 >
 > *Returns:*
->
 > `inout_ptr_t<Smart, P, Args&&...>(s, std::forward<Args>(args)...)`.
 
 ## Memory resources <a id="mem.res">[[mem.res]]</a>
@@ -4594,43 +4052,32 @@ namespace std::pmr {
 ~memory_resource();
 ```
 
-> *Effects:*
->
-> Destroys this `memory_resource`.
+> *Effects:* Destroys this `memory_resource`.
 
 ``` cpp
 [[nodiscard]] void* allocate(size_t bytes, size_t alignment = max_align);
 ```
 
-> *Effects:*
+> *Effects:* Allocates storage by calling
+> `do_allocate(bytes, alignment)` and implicitly creates objects within
+> the allocated region of storage.
 >
-> Allocates storage by calling `do_allocate(bytes, alignment)` and
-> implicitly creates objects within the allocated region of storage.
+> *Returns:* A pointer to a suitable created object [[intro.object]] in
+> the allocated region of storage.
 >
-> *Returns:*
->
-> A pointer to a suitable created object [[intro.object]] in the
-> allocated region of storage.
->
-> *Throws:*
->
-> What and when the call to `do_allocate` throws.
+> *Throws:* What and when the call to `do_allocate` throws.
 
 ``` cpp
 void deallocate(void* p, size_t bytes, size_t alignment = max_align);
 ```
 
-> *Effects:*
->
-> Equivalent to `do_deallocate(p, bytes, alignment)`.
+> *Effects:* Equivalent to `do_deallocate(p, bytes, alignment)`.
 
 ``` cpp
 bool is_equal(const memory_resource& other) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return do_is_equal(other);`
+> *Effects:* Equivalent to: `return do_is_equal(other);`
 
 #### Private virtual member functions <a id="mem.res.private">[[mem.res.private]]</a>
 
@@ -4638,49 +4085,36 @@ bool is_equal(const memory_resource& other) const noexcept;
 virtual void* do_allocate(size_t bytes, size_t alignment) = 0;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `alignment` is a power of two.
 >
-> `alignment` is a power of two.
+> *Returns:* A derived class shall implement this function to return a
+> pointer to allocated storage [[basic.stc.dynamic.allocation]] with a
+> size of at least `bytes`, aligned to the specified `alignment`.
 >
-> *Returns:*
->
-> A derived class shall implement this function to return a pointer to
-> allocated storage [[basic.stc.dynamic.allocation]] with a size of at
-> least `bytes`, aligned to the specified `alignment`.
->
-> *Throws:*
->
-> A derived class implementation shall throw an appropriate exception if
-> it is unable to allocate memory with the requested size and alignment.
+> *Throws:* A derived class implementation shall throw an appropriate
+> exception if it is unable to allocate memory with the requested size
+> and alignment.
 
 ``` cpp
 virtual void do_deallocate(void* p, size_t bytes, size_t alignment) = 0;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` was returned from a prior call to
+> `allocate(bytes, alignment)` on a memory resource equal to `*this`,
+> and the storage at `p` has not yet been deallocated.
 >
-> `p` was returned from a prior call to `allocate(bytes, alignment)` on
-> a memory resource equal to `*this`, and the storage at `p` has not yet
-> been deallocated.
+> *Effects:* A derived class shall implement this function to dispose of
+> allocated storage.
 >
-> *Effects:*
->
-> A derived class shall implement this function to dispose of allocated
-> storage.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 virtual bool do_is_equal(const memory_resource& other) const noexcept = 0;
 ```
 
-> *Returns:*
->
-> A derived class shall implement this function to return `true` if
-> memory allocated from can be deallocated from `other` and vice-versa,
-> otherwise `false`.
+> *Returns:* A derived class shall implement this function to return
+> `true` if memory allocated from can be deallocated from `other` and
+> vice-versa, otherwise `false`.
 >
 > \[*Note 33*: It is possible that the most-derived type of `other` does
 > not match the type of . For a derived class `D`, an implementation of
@@ -4693,9 +4127,7 @@ virtual bool do_is_equal(const memory_resource& other) const noexcept = 0;
 bool operator==(const memory_resource& a, const memory_resource& b) noexcept;
 ```
 
-> *Returns:*
->
-> `&a == &b || a.is_equal(b)`.
+> *Returns:* `&a == &b || a.is_equal(b)`.
 
 ### Class template `polymorphic_allocator` <a id="mem.poly.allocator.class">[[mem.poly.allocator.class]]</a>
 
@@ -4768,25 +4200,17 @@ namespace std::pmr {
 polymorphic_allocator() noexcept;
 ```
 
-> *Effects:*
->
-> Sets `memory_rsrc` to `get_default_resource()`.
+> *Effects:* Sets `memory_rsrc` to `get_default_resource()`.
 
 ``` cpp
 polymorphic_allocator(memory_resource* r);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `r` is non-null.
 >
-> `r` is non-null.
+> *Effects:* Sets `memory_rsrc` to `r`.
 >
-> *Effects:*
->
-> Sets `memory_rsrc` to `r`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 >
 > \[*Note 34*: This constructor provides an implicit conversion from
 > `memory_resource*`. — *end note*\]
@@ -4795,9 +4219,7 @@ polymorphic_allocator(memory_resource* r);
 template<class U> polymorphic_allocator(const polymorphic_allocator<U>& other) noexcept;
 ```
 
-> *Effects:*
->
-> Sets `memory_rsrc` to `other.resource()`.
+> *Effects:* Sets `memory_rsrc` to `other.resource()`.
 
 #### Member functions <a id="mem.poly.allocator.mem">[[mem.poly.allocator.mem]]</a>
 
@@ -4805,9 +4227,7 @@ template<class U> polymorphic_allocator(const polymorphic_allocator<U>& other) n
 [[nodiscard]] Tp* allocate(size_t n);
 ```
 
-> *Effects:*
->
-> If `numeric_limits<size_t>::max() / sizeof(Tp) < n`, throws
+> *Effects:* If `numeric_limits<size_t>::max() / sizeof(Tp) < n`, throws
 > `bad_array_new_length`. Otherwise equivalent to:
 >
 > ``` cpp
@@ -4818,27 +4238,20 @@ template<class U> polymorphic_allocator(const polymorphic_allocator<U>& other) n
 void deallocate(Tp* p, size_t n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` was allocated from a memory resource `x`, equal
+> to `*memory_rsrc`, using `x.allocate(n * sizeof(Tp), alignof(Tp))`.
 >
-> `p` was allocated from a memory resource `x`, equal to `*memory_rsrc`,
-> using `x.allocate(n * sizeof(Tp), alignof(Tp))`.
->
-> *Effects:*
->
-> Equivalent to
+> *Effects:* Equivalent to
 > `memory_rsrc->deallocate(p, n * sizeof(Tp), alignof(Tp))`.
 >
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 [[nodiscard]] void* allocate_bytes(size_t nbytes, size_t alignment = alignof(max_align_t));
 ```
 
-> *Effects:*
->
-> Equivalent to: `return memory_rsrc->allocate(nbytes, alignment);`
+> *Effects:* Equivalent to:
+> `return memory_rsrc->allocate(nbytes, alignment);`
 >
 > \[*Note 35*: The return type is `void*` (rather than, e.g., `byte*`)
 > to support conversion to an arbitrary pointer type `U*` by
@@ -4849,19 +4262,16 @@ void deallocate(Tp* p, size_t n);
 void deallocate_bytes(void* p, size_t nbytes, size_t alignment = alignof(max_align_t));
 ```
 
-> *Effects:*
->
-> Equivalent to `memory_rsrc->deallocate(p, nbytes, alignment)`.
+> *Effects:* Equivalent to
+> `memory_rsrc->deallocate(p, nbytes, alignment)`.
 
 ``` cpp
 template<class T>
   [[nodiscard]] T* allocate_object(size_t n = 1);
 ```
 
-> *Effects:*
->
-> Allocates memory suitable for holding an array of `n` objects of type
-> `T`, as follows:
+> *Effects:* Allocates memory suitable for holding an array of `n`
+> objects of type `T`, as follows:
 >
 > - if `numeric_limits<size_t>::max() / sizeof(T) < n`, throws
 >   `bad_array_new_length`,
@@ -4878,19 +4288,16 @@ template<class T>
   void deallocate_object(T* p, size_t n = 1);
 ```
 
-> *Effects:*
->
-> Equivalent to `deallocate_bytes(p, n*sizeof(T), alignof(T))`.
+> *Effects:* Equivalent to
+> `deallocate_bytes(p, n*sizeof(T), alignof(T))`.
 
 ``` cpp
 template<class T, class... CtorArgs>
   [[nodiscard]] T* new_object(CtorArgs&&... ctor_args);
 ```
 
-> *Effects:*
->
-> Allocates and constructs an object of type `T`, as follows. Equivalent
-> to:
+> *Effects:* Allocates and constructs an object of type `T`, as follows.
+> Equivalent to:
 >
 > ``` cpp
 > T* p = allocate_object<T>();
@@ -4911,9 +4318,7 @@ template<class T>
   void delete_object(T* p);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > allocator_traits<polymorphic_allocator>::destroy(*this, p);
@@ -4925,29 +4330,21 @@ template<class T, class... Args>
   void construct(T* p, Args&&... args);
 ```
 
-> *Mandates:*
->
-> Uses-allocator construction of `T` with allocator `*this`
+> *Mandates:* Uses-allocator construction of `T` with allocator `*this`
 > (see  [[allocator.uses.construction]]) and constructor arguments
 > `std::forward<Args>(args)...` is well-formed.
 >
-> *Effects:*
+> *Effects:* Construct a `T` object in the storage whose address is
+> represented by `p` by uses-allocator construction with allocator
+> `*this` and constructor arguments `std::forward<Args>(args)...`.
 >
-> Construct a `T` object in the storage whose address is represented by
-> `p` by uses-allocator construction with allocator `*this` and
-> constructor arguments `std::forward<Args>(args)...`.
->
-> *Throws:*
->
-> Nothing unless the constructor for `T` throws.
+> *Throws:* Nothing unless the constructor for `T` throws.
 
 ``` cpp
 polymorphic_allocator select_on_container_copy_construction() const;
 ```
 
-> *Returns:*
->
-> `polymorphic_allocator()`.
+> *Returns:* `polymorphic_allocator()`.
 >
 > \[*Note 38*: The memory resource is not propagated. — *end note*\]
 
@@ -4955,9 +4352,7 @@ polymorphic_allocator select_on_container_copy_construction() const;
 memory_resource* resource() const;
 ```
 
-> *Returns:*
->
-> `memory_rsrc`.
+> *Returns:* `memory_rsrc`.
 
 #### Equality <a id="mem.poly.allocator.eq">[[mem.poly.allocator.eq]]</a>
 
@@ -4967,9 +4362,7 @@ template<class T1, class T2>
                   const polymorphic_allocator<T2>& b) noexcept;
 ```
 
-> *Returns:*
->
-> `*a.resource() == *b.resource()`.
+> *Returns:* `*a.resource() == *b.resource()`.
 
 ### Access to program-wide `memory_resource` objects <a id="mem.res.global">[[mem.res.global]]</a>
 
@@ -4977,25 +4370,21 @@ template<class T1, class T2>
 memory_resource* new_delete_resource() noexcept;
 ```
 
-> *Returns:*
->
-> A pointer to a static-duration object of a type derived from
-> `memory_resource` that can serve as a resource for allocating memory
-> using `::operator new` and `::operator delete`. The same value is
-> returned every time this function is called. For a return value `p`
+> *Returns:* A pointer to a static-duration object of a type derived
+> from `memory_resource` that can serve as a resource for allocating
+> memory using `::operator new` and `::operator delete`. The same value
+> is returned every time this function is called. For a return value `p`
 > and a memory resource `r`, `p->is_equal(r)` returns `&r == p`.
 
 ``` cpp
 memory_resource* null_memory_resource() noexcept;
 ```
 
-> *Returns:*
->
-> A pointer to a static-duration object of a type derived from
-> `memory_resource` for which `allocate()` always throws `bad_alloc` and
-> for which `deallocate()` has no effect. The same value is returned
-> every time this function is called. For a return value `p` and a
-> memory resource `r`, `p->is_equal(r)` returns `&r == p`.
+> *Returns:* A pointer to a static-duration object of a type derived
+> from `memory_resource` for which `allocate()` always throws
+> `bad_alloc` and for which `deallocate()` has no effect. The same value
+> is returned every time this function is called. For a return value `p`
+> and a memory resource `r`, `p->is_equal(r)` returns `&r == p`.
 
 The *default memory resource pointer* is a pointer to a memory resource
 that is used by certain facilities when an explicit memory resource is
@@ -5006,31 +4395,23 @@ value of `new_delete_resource()`.
 memory_resource* set_default_resource(memory_resource* r) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* If `r` is non-null, sets the value of the default memory
+> resource pointer to `r`, otherwise sets the default memory resource
+> pointer to `new_delete_resource()`.
 >
-> If `r` is non-null, sets the value of the default memory resource
-> pointer to `r`, otherwise sets the default memory resource pointer to
-> `new_delete_resource()`.
+> *Returns:* The previous value of the default memory resource pointer.
 >
-> *Returns:*
->
-> The previous value of the default memory resource pointer.
->
-> *Remarks:*
->
-> Calling the `set_default_resource` and `get_default_resource`
-> functions shall not incur a data race. A call to the
-> `set_default_resource` function shall synchronize with subsequent
-> calls to the `set_default_resource` and `get_default_resource`
-> functions.
+> *Remarks:* Calling the `set_default_resource` and
+> `get_default_resource` functions shall not incur a data race. A call
+> to the `set_default_resource` function shall synchronize with
+> subsequent calls to the `set_default_resource` and
+> `get_default_resource` functions.
 
 ``` cpp
 memory_resource* get_default_resource() noexcept;
 ```
 
-> *Returns:*
->
-> The current value of the default memory resource pointer.
+> *Returns:* The current value of the default memory resource pointer.
 
 ### Pool resource classes <a id="mem.res.pool">[[mem.res.pool]]</a>
 
@@ -5172,17 +4553,13 @@ synchronized_pool_resource(const pool_options& opts, memory_resource* upstream);
 unsynchronized_pool_resource(const pool_options& opts, memory_resource* upstream);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `upstream` is the address of a valid memory resource.
 >
-> `upstream` is the address of a valid memory resource.
->
-> *Effects:*
->
-> Constructs a pool resource object that will obtain memory from
-> `upstream` whenever the pool resource is unable to satisfy a memory
-> request from its own internal data structures. The resulting object
-> will hold a copy of `upstream`, but will not own the resource to which
-> `upstream` points.
+> *Effects:* Constructs a pool resource object that will obtain memory
+> from `upstream` whenever the pool resource is unable to satisfy a
+> memory request from its own internal data structures. The resulting
+> object will hold a copy of `upstream`, but will not own the resource
+> to which `upstream` points.
 >
 > \[*Note 40*: The intention is that calls to `upstream->allocate()`
 > will be substantially fewer than calls to `this->allocate()` in most
@@ -5191,19 +4568,16 @@ unsynchronized_pool_resource(const pool_options& opts, memory_resource* upstream
 > The behavior of the pooling mechanism is tuned according to the value
 > of the `opts` argument.
 >
-> *Throws:*
->
-> Nothing unless `upstream->allocate()` throws. It is unspecified if, or
-> under what conditions, this constructor calls `upstream->allocate()`.
+> *Throws:* Nothing unless `upstream->allocate()` throws. It is
+> unspecified if, or under what conditions, this constructor calls
+> `upstream->allocate()`.
 
 ``` cpp
 virtual ~synchronized_pool_resource();
 virtual ~unsynchronized_pool_resource();
 ```
 
-> *Effects:*
->
-> Calls `release()`.
+> *Effects:* Calls `release()`.
 
 #### Members <a id="mem.res.pool.mem">[[mem.res.pool.mem]]</a>
 
@@ -5211,10 +4585,8 @@ virtual ~unsynchronized_pool_resource();
 void release();
 ```
 
-> *Effects:*
->
-> Calls `upstream_resource()->deallocate()` as necessary to release all
-> allocated memory.
+> *Effects:* Calls `upstream_resource()->deallocate()` as necessary to
+> release all allocated memory.
 >
 > \[*Note 41*: The memory is released back to `upstream_resource()` even
 > if `deallocate` has not been called for some of the allocated
@@ -5224,67 +4596,52 @@ void release();
 memory_resource* upstream_resource() const;
 ```
 
-> *Returns:*
->
-> The value of the `upstream` argument provided to the constructor of
-> this object.
+> *Returns:* The value of the `upstream` argument provided to the
+> constructor of this object.
 
 ``` cpp
 pool_options options() const;
 ```
 
-> *Returns:*
->
-> The options that control the pooling behavior of this resource. The
-> values in the returned struct may differ from those supplied to the
-> pool resource constructor in that values of zero will be replaced with
-> *implementation-defined* defaults, and sizes may be rounded to
-> unspecified granularity.
+> *Returns:* The options that control the pooling behavior of this
+> resource. The values in the returned struct may differ from those
+> supplied to the pool resource constructor in that values of zero will
+> be replaced with *implementation-defined* defaults, and sizes may be
+> rounded to unspecified granularity.
 
 ``` cpp
 void* do_allocate(size_t bytes, size_t alignment) override;
 ```
 
-> *Effects:*
+> *Effects:* If the pool selected for a block of size `bytes` is unable
+> to satisfy the memory request from its own internal data structures,
+> it will call `upstream_resource()->allocate()` to obtain more memory.
+> If `bytes` is larger than that which the largest pool can handle, then
+> memory will be allocated using `upstream_resource()->allocate()`.
 >
-> If the pool selected for a block of size `bytes` is unable to satisfy
-> the memory request from its own internal data structures, it will call
-> `upstream_resource()->allocate()` to obtain more memory. If `bytes` is
-> larger than that which the largest pool can handle, then memory will
-> be allocated using `upstream_resource()->allocate()`.
->
-> *Returns:*
->
-> A pointer to allocated storage [[basic.stc.dynamic.allocation]] with a
-> size of at least `bytes`. The size and alignment of the allocated
-> memory shall meet the requirements for a class derived from
+> *Returns:* A pointer to allocated
+> storage [[basic.stc.dynamic.allocation]] with a size of at least
+> `bytes`. The size and alignment of the allocated memory shall meet the
+> requirements for a class derived from
 > `memory_resource`[[mem.res.class]].
 >
-> *Throws:*
->
-> Nothing unless `upstream_resource()->allocate()` throws.
+> *Throws:* Nothing unless `upstream_resource()->allocate()` throws.
 
 ``` cpp
 void do_deallocate(void* p, size_t bytes, size_t alignment) override;
 ```
 
-> *Effects:*
+> *Effects:* Returns the memory at `p` to the pool. It is unspecified
+> if, or under what circumstances, this operation will result in a call
+> to `upstream_resource()->deallocate()`.
 >
-> Returns the memory at `p` to the pool. It is unspecified if, or under
-> what circumstances, this operation will result in a call to
-> `upstream_resource()->deallocate()`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 bool do_is_equal(const memory_resource& other) const noexcept override;
 ```
 
-> *Returns:*
->
-> `this == &other`.
+> *Returns:* `this == &other`.
 
 ### Class `monotonic_buffer_resource` <a id="mem.res.monotonic.buffer">[[mem.res.monotonic.buffer]]</a>
 
@@ -5339,15 +4696,11 @@ explicit monotonic_buffer_resource(memory_resource* upstream);
 monotonic_buffer_resource(size_t initial_size, memory_resource* upstream);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `upstream` is the address of a valid memory resource.
+> `initial_size`, if specified, is greater than zero.
 >
-> `upstream` is the address of a valid memory resource. `initial_size`,
-> if specified, is greater than zero.
->
-> *Effects:*
->
-> Sets `upstream_rsrc` to `upstream` and `current_buffer` to . If
-> `initial_size` is specified, sets `next_buffer_size` to at least
+> *Effects:* Sets `upstream_rsrc` to `upstream` and `current_buffer` to
+> . If `initial_size` is specified, sets `next_buffer_size` to at least
 > `initial_size`; otherwise sets `next_buffer_size` to an
 > *implementation-defined* size.
 
@@ -5355,25 +4708,19 @@ monotonic_buffer_resource(size_t initial_size, memory_resource* upstream);
 monotonic_buffer_resource(void* buffer, size_t buffer_size, memory_resource* upstream);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `upstream` is the address of a valid memory resource.
+> `buffer_size` is no larger than the number of bytes in `buffer`.
 >
-> `upstream` is the address of a valid memory resource. `buffer_size` is
-> no larger than the number of bytes in `buffer`.
->
-> *Effects:*
->
-> Sets `upstream_rsrc` to `upstream`, `current_buffer` to `buffer`, and
-> `next_buffer_size` to `buffer_size` (but not less than 1), then
-> increases `next_buffer_size` by an *implementation-defined* growth
-> factor (which need not be integral).
+> *Effects:* Sets `upstream_rsrc` to `upstream`, `current_buffer` to
+> `buffer`, and `next_buffer_size` to `buffer_size` (but not less than
+> 1), then increases `next_buffer_size` by an *implementation-defined*
+> growth factor (which need not be integral).
 
 ``` cpp
 ~monotonic_buffer_resource();
 ```
 
-> *Effects:*
->
-> Calls `release()`.
+> *Effects:* Calls `release()`.
 
 #### Members <a id="mem.res.monotonic.buffer.mem">[[mem.res.monotonic.buffer.mem]]</a>
 
@@ -5381,11 +4728,9 @@ monotonic_buffer_resource(void* buffer, size_t buffer_size, memory_resource* ups
 void release();
 ```
 
-> *Effects:*
->
-> Calls `upstream_rsrc->deallocate()` as necessary to release all
-> allocated memory. Resets `current_buffer` and `next_buffer_size` to
-> their initial values at construction.
+> *Effects:* Calls `upstream_rsrc->deallocate()` as necessary to release
+> all allocated memory. Resets `current_buffer` and `next_buffer_size`
+> to their initial values at construction.
 >
 > \[*Note 42*: The memory is released back to `upstream_rsrc` even if
 > some blocks that were allocated from have not been deallocated from
@@ -5395,60 +4740,45 @@ void release();
 memory_resource* upstream_resource() const;
 ```
 
-> *Returns:*
->
-> The value of `upstream_rsrc`.
+> *Returns:* The value of `upstream_rsrc`.
 
 ``` cpp
 void* do_allocate(size_t bytes, size_t alignment) override;
 ```
 
-> *Effects:*
->
-> If the unused space in `current_buffer` can fit a block with the
-> specified `bytes` and `alignment`, then allocate the return block from
-> `current_buffer`; otherwise set `current_buffer` to
+> *Effects:* If the unused space in `current_buffer` can fit a block
+> with the specified `bytes` and `alignment`, then allocate the return
+> block from `current_buffer`; otherwise set `current_buffer` to
 > `upstream_rsrc->allocate(n, m)`, where `n` is not less than
 > `max(bytes, next_buffer_size)` and `m` is not less than `alignment`,
 > and increase `next_buffer_size` by an *implementation-defined* growth
 > factor (which need not be integral), then allocate the return block
 > from the newly-allocated `current_buffer`.
 >
-> *Returns:*
->
-> A pointer to allocated storage [[basic.stc.dynamic.allocation]] with a
-> size of at least `bytes`. The size and alignment of the allocated
-> memory shall meet the requirements for a class derived from
+> *Returns:* A pointer to allocated
+> storage [[basic.stc.dynamic.allocation]] with a size of at least
+> `bytes`. The size and alignment of the allocated memory shall meet the
+> requirements for a class derived from
 > `memory_resource`[[mem.res.class]].
 >
-> *Throws:*
->
-> Nothing unless `upstream_rsrc->allocate()` throws.
+> *Throws:* Nothing unless `upstream_rsrc->allocate()` throws.
 
 ``` cpp
 void do_deallocate(void* p, size_t bytes, size_t alignment) override;
 ```
 
-> *Effects:*
+> *Effects:* None.
 >
-> None.
+> *Throws:* Nothing.
 >
-> *Throws:*
->
-> Nothing.
->
-> *Remarks:*
->
-> Memory used by this resource increases monotonically until its
-> destruction.
+> *Remarks:* Memory used by this resource increases monotonically until
+> its destruction.
 
 ``` cpp
 bool do_is_equal(const memory_resource& other) const noexcept override;
 ```
 
-> *Returns:*
->
-> `this == &other`.
+> *Returns:* `this == &other`.
 
 ## Class template `scoped_allocator_adaptor` <a id="allocator.adaptor">[[allocator.adaptor]]</a>
 
@@ -5571,15 +4901,15 @@ namespace std {
 using inner_allocator_type = see below;
 ```
 
-> `scoped_allocator_adaptor<OuterAlloc>` if `sizeof...(InnerAllocs)` is
-> zero; otherwise,  
+> *Type:* `scoped_allocator_adaptor<OuterAlloc>` if
+> `sizeof...(InnerAllocs)` is zero; otherwise,  
 > `scoped_allocator_adaptor<InnerAllocs...>`.
 
 ``` cpp
 using propagate_on_container_copy_assignment = see below;
 ```
 
-> `true_type` if
+> *Type:* `true_type` if
 > `allocator_traits<A>::propagate_on_container_copy_assignment::value`
 > is `true` for any `A` in the set of `OuterAlloc` and `InnerAllocs...`;
 > otherwise, `false_type`.
@@ -5588,7 +4918,7 @@ using propagate_on_container_copy_assignment = see below;
 using propagate_on_container_move_assignment = see below;
 ```
 
-> `true_type` if
+> *Type:* `true_type` if
 > `allocator_traits<A>::propagate_on_container_move_assignment::value`
 > is `true` for any `A` in the set of `OuterAlloc` and `InnerAllocs...`;
 > otherwise, `false_type`.
@@ -5597,7 +4927,7 @@ using propagate_on_container_move_assignment = see below;
 using propagate_on_container_swap = see below;
 ```
 
-> `true_type` if
+> *Type:* `true_type` if
 > `allocator_traits<A>::propagate_on_container_swap::value` is `true`
 > for any `A` in the set of `OuterAlloc` and `InnerAllocs...`;
 > otherwise, `false_type`.
@@ -5606,9 +4936,9 @@ using propagate_on_container_swap = see below;
 using is_always_equal = see below;
 ```
 
-> `true_type` if `allocator_traits<A>::is_always_equal::value` is `true`
-> for every `A` in the set of `OuterAlloc` and `InnerAllocs...`;
-> otherwise, `false_type`.
+> *Type:* `true_type` if `allocator_traits<A>::is_always_equal::value`
+> is `true` for every `A` in the set of `OuterAlloc` and
+> `InnerAllocs...`; otherwise, `false_type`.
 
 ### Constructors <a id="allocator.adaptor.cnstr">[[allocator.adaptor.cnstr]]</a>
 
@@ -5616,23 +4946,17 @@ using is_always_equal = see below;
 scoped_allocator_adaptor();
 ```
 
-> *Effects:*
->
-> Value-initializes the `OuterAlloc` base class and the `inner`
-> allocator object.
+> *Effects:* Value-initializes the `OuterAlloc` base class and the
+> `inner` allocator object.
 
 ``` cpp
 template<class OuterA2>
   scoped_allocator_adaptor(OuterA2&& outerAlloc, const InnerAllocs&... innerAllocs) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<OuterAlloc, OuterA2>` is `true`.
 >
-> `is_constructible_v<OuterAlloc, OuterA2>` is `true`.
->
-> *Effects:*
->
-> Initializes the `OuterAlloc` base class with
+> *Effects:* Initializes the `OuterAlloc` base class with
 > `std::forward<OuterA2>(outerAlloc)` and `inner` with `innerAllocs...`
 > (hence recursively initializing each allocator within the adaptor with
 > the corresponding allocator from the argument list).
@@ -5641,18 +4965,14 @@ template<class OuterA2>
 scoped_allocator_adaptor(const scoped_allocator_adaptor& other) noexcept;
 ```
 
-> *Effects:*
->
-> Initializes each allocator within the adaptor with the corresponding
-> allocator from `other`.
+> *Effects:* Initializes each allocator within the adaptor with the
+> corresponding allocator from `other`.
 
 ``` cpp
 scoped_allocator_adaptor(scoped_allocator_adaptor&& other) noexcept;
 ```
 
-> *Effects:*
->
-> Move constructs each allocator within the adaptor with the
+> *Effects:* Move constructs each allocator within the adaptor with the
 > corresponding allocator from `other`.
 
 ``` cpp
@@ -5661,28 +4981,21 @@ template<class OuterA2>
     const scoped_allocator_adaptor<OuterA2, InnerAllocs...>& other) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<OuterAlloc, const OuterA2&>` is
+> `true`.
 >
-> `is_constructible_v<OuterAlloc, const OuterA2&>` is `true`.
->
-> *Effects:*
->
-> Initializes each allocator within the adaptor with the corresponding
-> allocator from `other`.
+> *Effects:* Initializes each allocator within the adaptor with the
+> corresponding allocator from `other`.
 
 ``` cpp
 template<class OuterA2>
   scoped_allocator_adaptor(scoped_allocator_adaptor<OuterA2, InnerAllocs...>&& other) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<OuterAlloc, OuterA2>` is `true`.
 >
-> `is_constructible_v<OuterAlloc, OuterA2>` is `true`.
->
-> *Effects:*
->
-> Initializes each allocator within the adaptor with the corresponding
-> allocator rvalue from `other`.
+> *Effects:* Initializes each allocator within the adaptor with the
+> corresponding allocator rvalue from `other`.
 
 ### Members <a id="allocator.adaptor.members">[[allocator.adaptor.members]]</a>
 
@@ -5701,32 +5014,26 @@ inner_allocator_type& inner_allocator() noexcept;
 const inner_allocator_type& inner_allocator() const noexcept;
 ```
 
-> *Returns:*
->
-> `*this` if `sizeof...(InnerAllocs)` is zero; otherwise, `inner`.
+> *Returns:* `*this` if `sizeof...(InnerAllocs)` is zero; otherwise,
+> `inner`.
 
 ``` cpp
 outer_allocator_type& outer_allocator() noexcept;
 ```
 
-> *Returns:*
->
-> `static_cast<OuterAlloc&>(*this)`.
+> *Returns:* `static_cast<OuterAlloc&>(*this)`.
 
 ``` cpp
 const outer_allocator_type& outer_allocator() const noexcept;
 ```
 
-> *Returns:*
->
-> `static_cast<const OuterAlloc&>(*this)`.
+> *Returns:* `static_cast<const OuterAlloc&>(*this)`.
 
 ``` cpp
 [[nodiscard]] pointer allocate(size_type n);
 ```
 
 > *Returns:*
->
 > `allocator_traits<OuterAlloc>::allocate(outer_allocator(), n)`.
 
 ``` cpp
@@ -5734,16 +5041,13 @@ const outer_allocator_type& outer_allocator() const noexcept;
 ```
 
 > *Returns:*
->
 > `allocator_traits<OuterAlloc>::allocate(outer_allocator(), n, hint)`.
 
 ``` cpp
 void deallocate(pointer p, size_type n) noexcept;
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 > `allocator_traits<OuterAlloc>::deallocate(outer_allocator(), p, n);`
 
 ``` cpp
@@ -5751,7 +5055,6 @@ size_type max_size() const;
 ```
 
 > *Returns:*
->
 > `allocator_traits<OuterAlloc>::max_size(outer_allocator())`.
 
 ``` cpp
@@ -5759,9 +5062,7 @@ template<class T, class... Args>
   void construct(T* p, Args&&... args);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > apply([p, this](auto&&... newargs) {
@@ -5778,19 +5079,15 @@ template<class T>
   void destroy(T* p);
 ```
 
-> *Effects:*
->
-> Calls *OUTERMOST_ALLOC_TRAITS*(\*this)::destroy(*OUTERMOST*(\*this),
-> p).
+> *Effects:* Calls
+> *OUTERMOST_ALLOC_TRAITS*(\*this)::destroy(*OUTERMOST*(\*this), p).
 
 ``` cpp
 scoped_allocator_adaptor select_on_container_copy_construction() const;
 ```
 
-> *Returns:*
->
-> A new `scoped_allocator_adaptor` object where each allocator `a1`
-> within the adaptor is initialized with
+> *Returns:* A new `scoped_allocator_adaptor` object where each
+> allocator `a1` within the adaptor is initialized with
 > `allocator_traits<A1>::select_on_container_copy_construction(a2)`,
 > where `A1` is the type of `a1` and `a2` is the corresponding allocator
 > in `*this`.
@@ -5803,9 +5100,7 @@ template<class OuterA1, class OuterA2, class... InnerAllocs>
                   const scoped_allocator_adaptor<OuterA2, InnerAllocs...>& b) noexcept;
 ```
 
-> *Returns:*
->
-> If `sizeof...(InnerAllocs)` is zero,
+> *Returns:* If `sizeof...(InnerAllocs)` is zero,
 >
 > ``` cpp
 > a.outer_allocator() == b.outer_allocator()

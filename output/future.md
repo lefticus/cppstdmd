@@ -283,9 +283,7 @@ template<class T> bool operator!=(const T& x, const T& y);
 
 > Type `T` is *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]).
 >
-> *Returns:*
->
-> `!(x == y)`.
+> *Returns:* `!(x == y)`.
 
 ``` cpp
 template<class T> bool operator>(const T& x, const T& y);
@@ -293,9 +291,7 @@ template<class T> bool operator>(const T& x, const T& y);
 
 > Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 >
-> *Returns:*
->
-> `y < x`.
+> *Returns:* `y < x`.
 
 ``` cpp
 template<class T> bool operator<=(const T& x, const T& y);
@@ -303,9 +299,7 @@ template<class T> bool operator<=(const T& x, const T& y);
 
 > Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 >
-> *Returns:*
->
-> `!(y < x)`.
+> *Returns:* `!(y < x)`.
 
 ``` cpp
 template<class T> bool operator>=(const T& x, const T& y);
@@ -313,9 +307,7 @@ template<class T> bool operator>=(const T& x, const T& y);
 
 > Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 >
-> *Returns:*
->
-> `!(x < y)`.
+> *Returns:* `!(x < y)`.
 
 ## `char*` streams <a id="depr.str.strstreams">[[depr.str.strstreams]]</a>
 
@@ -438,19 +430,17 @@ seekable area is undefined. Otherwise, `seeklow` equals `gbeg` and
 explicit strstreambuf(streamsize alsize_arg);
 ```
 
-> *Effects:*
->
-> Initializes the base class with `streambuf()`. The postconditions of
-> this function are indicated in [[depr.strstreambuf.cons.sz]].
+> *Effects:* Initializes the base class with `streambuf()`. The
+> postconditions of this function are indicated in
+> [[depr.strstreambuf.cons.sz]].
 
 ``` cpp
 strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 ```
 
-> *Effects:*
->
-> Initializes the base class with `streambuf()`. The postconditions of
-> this function are indicated in [[depr.strstreambuf.cons.alloc]].
+> *Effects:* Initializes the base class with `streambuf()`. The
+> postconditions of this function are indicated in
+> [[depr.strstreambuf.cons.alloc]].
 >
 > <div class="libtab2">
 >
@@ -470,10 +460,9 @@ strstreambuf(unsigned char* gnext_arg, streamsize n,
              unsigned char* pbeg_arg = nullptr);
 ```
 
-> *Effects:*
->
-> Initializes the base class with `streambuf()`. The postconditions of
-> this function are indicated in [[depr.strstreambuf.cons.ptr]].
+> *Effects:* Initializes the base class with `streambuf()`. The
+> postconditions of this function are indicated in
+> [[depr.strstreambuf.cons.ptr]].
 >
 > <div class="libtab2">
 >
@@ -516,19 +505,15 @@ strstreambuf(const signed char* gnext_arg, streamsize n);
 strstreambuf(const unsigned char* gnext_arg, streamsize n);
 ```
 
-> *Effects:*
->
-> Behaves the same as `strstreambuf((char*)gnext_arg,n)`, except that
-> the constructor also sets `constant` in `strmode`.
+> *Effects:* Behaves the same as `strstreambuf((char*)gnext_arg,n)`,
+> except that the constructor also sets `constant` in `strmode`.
 
 ``` cpp
 virtual ~strstreambuf();
 ```
 
-> *Effects:*
->
-> Destroys an object of class `strstreambuf`. The function frees the
-> dynamically allocated array object only if
+> *Effects:* Destroys an object of class `strstreambuf`. The function
+> frees the dynamically allocated array object only if
 > `(strmode & allocated) != 0` and `(strmode & frozen) == 0`.
 > ( [[depr.strstreambuf.virtuals]] describes how a dynamically allocated
 > array object is freed.)
@@ -539,10 +524,8 @@ virtual ~strstreambuf();
 void freeze(bool freezefl = true);
 ```
 
-> *Effects:*
->
-> If `strmode & dynamic` is nonzero, alters the freeze status of the
-> dynamic array object as follows:
+> *Effects:* If `strmode & dynamic` is nonzero, alters the freeze status
+> of the dynamic array object as follows:
 >
 > - If `freezefl` is `true`, the function sets `frozen` in `strmode`.
 >
@@ -552,25 +535,19 @@ void freeze(bool freezefl = true);
 char* str();
 ```
 
-> *Effects:*
+> *Effects:* Calls `freeze()`, then returns the beginning pointer for
+> the input sequence, `gbeg`.
 >
-> Calls `freeze()`, then returns the beginning pointer for the input
-> sequence, `gbeg`.
->
-> *Remarks:*
->
-> The return value can be a null pointer.
+> *Remarks:* The return value can be a null pointer.
 
 ``` cpp
 int pcount() const;
 ```
 
-> *Effects:*
->
-> If the next pointer for the output sequence, `pnext`, is a null
-> pointer, returns zero. Otherwise, returns the current effective length
-> of the array object as the next pointer minus the beginning pointer
-> for the output sequence, `pnext - pbeg`.
+> *Effects:* If the next pointer for the output sequence, `pnext`, is a
+> null pointer, returns zero. Otherwise, returns the current effective
+> length of the array object as the next pointer minus the beginning
+> pointer for the output sequence, `pnext - pbeg`.
 
 #### `strstreambuf` overridden virtual functions <a id="depr.strstreambuf.virtuals">[[depr.strstreambuf.virtuals]]</a>
 
@@ -578,10 +555,8 @@ int pcount() const;
 int_type overflow(int_type c = EOF) override;
 ```
 
-> *Effects:*
->
-> Appends the character designated by `c` to the output sequence, if
-> possible, in one of two ways:
+> *Effects:* Appends the character designated by `c` to the output
+> sequence, if possible, in one of two ways:
 >
 > - If `c != EOF` and if either the output sequence has a write position
 >   available or the function makes a write position available (as
@@ -595,10 +570,8 @@ int_type overflow(int_type c = EOF) override;
 >
 > Returns `EOF` to indicate failure.
 >
-> *Remarks:*
->
-> The function can alter the number of write positions available as a
-> result of any call.
+> *Remarks:* The function can alter the number of write positions
+> available as a result of any call.
 >
 > To make a write position available, the function reallocates (or
 > initially allocates) an array object with a sufficient number of
@@ -618,8 +591,9 @@ int_type overflow(int_type c = EOF) override;
 > function cannot extend the array (reallocate it with greater length)
 > to make a write position available.
 >
-> An implementation should consider `alsize` in making the decision how
-> many additional write positions to make available.
+> *Recommended practice:* An implementation should consider `alsize` in
+> making the decision how many additional write positions to make
+> available.
 
 ``` cpp
 int_type pbackfail(int_type c = EOF) override;
@@ -647,20 +621,16 @@ int_type pbackfail(int_type c = EOF) override;
 >
 > Returns `EOF` to indicate failure.
 >
-> *Remarks:*
->
-> If the function can succeed in more than one of these ways, it is
-> unspecified which way is chosen. The function can alter the number of
-> putback positions available as a result of any call.
+> *Remarks:* If the function can succeed in more than one of these ways,
+> it is unspecified which way is chosen. The function can alter the
+> number of putback positions available as a result of any call.
 
 ``` cpp
 int_type underflow() override;
 ```
 
-> *Effects:*
->
-> Reads a character from the , if possible, without moving the stream
-> position past it, as follows:
+> *Effects:* Reads a character from the , if possible, without moving
+> the stream position past it, as follows:
 >
 > - If the input sequence has a read position available, the function
 >   signals success by returning `(unsigned char)gnext`.
@@ -674,19 +644,16 @@ int_type underflow() override;
 >
 > Returns `EOF` to indicate failure.
 >
-> *Remarks:*
->
-> The function can alter the number of read positions available as a
-> result of any call.
+> *Remarks:* The function can alter the number of read positions
+> available as a result of any call.
 
 ``` cpp
 pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 ```
 
-> *Effects:*
->
-> Alters the stream position within one of the controlled sequences, if
-> possible, as indicated in [[depr.strstreambuf.seekoff.pos]].
+> *Effects:* Alters the stream position within one of the controlled
+> sequences, if possible, as indicated in
+> [[depr.strstreambuf.seekoff.pos]].
 >
 > <div class="libtab2">
 >
@@ -722,23 +689,19 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 > Otherwise, the function assigns `xbeg + newoff + off` to the next
 > pointer `xnext`.
 >
-> *Returns:*
->
-> `pos_type(newoff)`, constructed from the resultant offset `newoff` (of
-> type `off_type`), that stores the resultant stream position, if
-> possible. If the positioning operation fails, or if the constructed
-> object cannot represent the resultant stream position, the return
-> value is `pos_type(off_type(-1))`.
+> *Returns:* `pos_type(newoff)`, constructed from the resultant offset
+> `newoff` (of type `off_type`), that stores the resultant stream
+> position, if possible. If the positioning operation fails, or if the
+> constructed object cannot represent the resultant stream position, the
+> return value is `pos_type(off_type(-1))`.
 
 ``` cpp
 pos_type seekpos(pos_type sp, ios_base::openmode which = ios_base::in | ios_base::out) override;
 ```
 
-> *Effects:*
->
-> Alters the stream position within one of the controlled sequences, if
-> possible, to correspond to the stream position stored in `sp` (as
-> described below).
+> *Effects:* Alters the stream position within one of the controlled
+> sequences, if possible, to correspond to the stream position stored in
+> `sp` (as described below).
 >
 > - If `(which & ios::in) != 0`, positions the input sequence.
 >
@@ -758,22 +721,18 @@ pos_type seekpos(pos_type sp, ios_base::openmode which = ios_base::in | ios_base
 > - Otherwise, the function adds `newoff` to the beginning pointer
 >   `xbeg` and stores the result in the next pointer `xnext`.
 >
-> *Returns:*
->
-> `pos_type(newoff)`, constructed from the resultant offset `newoff` (of
-> type `off_type`), that stores the resultant stream position, if
-> possible. If the positioning operation fails, or if the constructed
-> object cannot represent the resultant stream position, the return
-> value is `pos_type(off_type(-1))`.
+> *Returns:* `pos_type(newoff)`, constructed from the resultant offset
+> `newoff` (of type `off_type`), that stores the resultant stream
+> position, if possible. If the positioning operation fails, or if the
+> constructed object cannot represent the resultant stream position, the
+> return value is `pos_type(off_type(-1))`.
 
 ``` cpp
 streambuf<char>* setbuf(char* s, streamsize n) override;
 ```
 
-> *Effects:*
->
-> Behavior is *implementation-defined*, except that `setbuf(0, 0)` has
-> no effect.
+> *Effects:* Behavior is *implementation-defined*, except that
+> `setbuf(0, 0)` has no effect.
 
 ### Class `istrstream` <a id="depr.istrstream">[[depr.istrstream]]</a>
 
@@ -811,10 +770,8 @@ explicit istrstream(const char* s);
 explicit istrstream(char* s);
 ```
 
-> *Effects:*
->
-> Initializes the base class with `istream(&sb)` and `sb` with
-> `strstreambuf(s, 0)`. `s` shall designate the first element of an
+> *Effects:* Initializes the base class with `istream(&sb)` and `sb`
+> with `strstreambuf(s, 0)`. `s` shall designate the first element of an
 > NTBS.
 
 ``` cpp
@@ -822,10 +779,8 @@ istrstream(const char* s, streamsize n);
 istrstream(char* s, streamsize n);
 ```
 
-> *Effects:*
->
-> Initializes the base class with `istream(&sb)` and `sb` with
-> `strstreambuf(s, n)`. `s` shall designate the first element of an
+> *Effects:* Initializes the base class with `istream(&sb)` and `sb`
+> with `strstreambuf(s, n)`. `s` shall designate the first element of an
 > array whose length is `n` elements, and `n` shall be greater than
 > zero.
 
@@ -835,17 +790,13 @@ istrstream(char* s, streamsize n);
 strstreambuf* rdbuf() const;
 ```
 
-> *Returns:*
->
-> `const_cast<strstreambuf*>(&sb)`.
+> *Returns:* `const_cast<strstreambuf*>(&sb)`.
 
 ``` cpp
 char* str();
 ```
 
-> *Returns:*
->
-> `rdbuf()->str()`.
+> *Returns:* `rdbuf()->str()`.
 
 ### Class `ostrstream` <a id="depr.ostrstream">[[depr.ostrstream]]</a>
 
@@ -882,19 +833,15 @@ is presented here as:
 ostrstream();
 ```
 
-> *Effects:*
->
-> Initializes the base class with `ostream(&sb)` and `sb` with
-> `strstreambuf()`.
+> *Effects:* Initializes the base class with `ostream(&sb)` and `sb`
+> with `strstreambuf()`.
 
 ``` cpp
 ostrstream(char* s, int n, ios_base::openmode mode = ios_base::out);
 ```
 
-> *Effects:*
->
-> Initializes the base class with `ostream(&sb)`, and `sb` with one of
-> two constructors:
+> *Effects:* Initializes the base class with `ostream(&sb)`, and `sb`
+> with one of two constructors:
 >
 > - If `(mode & app) == 0`, then `s` shall designate the first element
 >   of an array of `n` elements.
@@ -914,33 +861,25 @@ ostrstream(char* s, int n, ios_base::openmode mode = ios_base::out);
 strstreambuf* rdbuf() const;
 ```
 
-> *Returns:*
->
-> `(strstreambuf*)&sb`.
+> *Returns:* `(strstreambuf*)&sb`.
 
 ``` cpp
 void freeze(bool freezefl = true);
 ```
 
-> *Effects:*
->
-> Calls `rdbuf()->freeze(freezefl)`.
+> *Effects:* Calls `rdbuf()->freeze(freezefl)`.
 
 ``` cpp
 char* str();
 ```
 
-> *Returns:*
->
-> `rdbuf()->str()`.
+> *Returns:* `rdbuf()->str()`.
 
 ``` cpp
 int pcount() const;
 ```
 
-> *Returns:*
->
-> `rdbuf()->pcount()`.
+> *Returns:* `rdbuf()->pcount()`.
 
 ### Class `strstream` <a id="depr.strstream">[[depr.strstream]]</a>
 
@@ -988,19 +927,15 @@ is presented here as:
 strstream();
 ```
 
-> *Effects:*
->
-> Initializes the base class with `iostream(&sb)`.
+> *Effects:* Initializes the base class with `iostream(&sb)`.
 
 ``` cpp
 strstream(char* s, int n,
           ios_base::openmode mode = ios_base::in|ios_base::out);
 ```
 
-> *Effects:*
->
-> Initializes the base class with `iostream(&sb)`, and `sb` with one of
-> the two constructors:
+> *Effects:* Initializes the base class with `iostream(&sb)`, and `sb`
+> with one of the two constructors:
 >
 > - If `(mode & app) == 0`, then `s` shall designate the first element
 >   of an array of `n` elements. The constructor is
@@ -1017,9 +952,7 @@ strstream(char* s, int n,
 virtual ~strstream();
 ```
 
-> *Effects:*
->
-> Destroys an object of class `strstream`.
+> *Effects:* Destroys an object of class `strstream`.
 
 #### `strstream` operations <a id="depr.strstream.oper">[[depr.strstream.oper]]</a>
 
@@ -1027,33 +960,25 @@ virtual ~strstream();
 strstreambuf* rdbuf() const;
 ```
 
-> *Returns:*
->
-> `const_cast<strstreambuf*>(&sb)`.
+> *Returns:* `const_cast<strstreambuf*>(&sb)`.
 
 ``` cpp
 void freeze(bool freezefl = true);
 ```
 
-> *Effects:*
->
-> Calls `rdbuf()->freeze(freezefl)`.
+> *Effects:* Calls `rdbuf()->freeze(freezefl)`.
 
 ``` cpp
 char* str();
 ```
 
-> *Returns:*
->
-> `rdbuf()->str()`.
+> *Returns:* `rdbuf()->str()`.
 
 ``` cpp
 int pcount() const;
 ```
 
-> *Returns:*
->
-> `rdbuf()->pcount()`.
+> *Returns:* `rdbuf()->pcount()`.
 
 ## Deprecated error numbers <a id="depr.cerrno">[[depr.cerrno]]</a>
 
@@ -1117,9 +1042,7 @@ template<class T>
   void destroy(T* p);
 ```
 
-> *Effects:*
->
-> As if by `p->T̃()`.
+> *Effects:* As if by `p->T̃()`.
 
 ## Deprecated type traits <a id="depr.meta.types">[[depr.meta.types]]</a>
 
@@ -1170,10 +1093,8 @@ template<size_t Len, size_t Align = default-alignment>
 > requirement for any object type whose size is no greater than
 > `Len`[[basic.types]].
 >
-> *Mandates:*
->
-> `Len` is not zero. `Align` is equal to `alignof(T)` for some type `T`
-> or to *default-alignment*.
+> *Mandates:* `Len` is not zero. `Align` is equal to `alignof(T)` for
+> some type `T` or to *default-alignment*.
 >
 > The member typedef `type` denotes a trivial standard-layout type
 > suitable for use as uninitialized storage for any object whose size is
@@ -1201,10 +1122,8 @@ template<size_t Len, class... Types>
   struct aligned_union;
 ```
 
-> *Mandates:*
->
-> At least one type is provided. Each type in the template parameter
-> pack `Types` is a complete object type.
+> *Mandates:* At least one type is provided. Each type in the template
+> parameter pack `Types` is a complete object type.
 >
 > The member typedef `type` denotes a trivial standard-layout type
 > suitable for use as uninitialized storage for any object whose type is
@@ -1359,9 +1278,7 @@ namespace std {
 constexpr pointer operator->() const;
 ```
 
-> *Returns:*
->
-> `current`.
+> *Returns:* `current`.
 
 ## Deprecated `shared_ptr` atomic access <a id="depr.util.smartptr.shared.atomic">[[depr.util.smartptr.shared.atomic]]</a>
 
@@ -1416,13 +1333,10 @@ template<class T> bool atomic_is_lock_free(const shared_ptr<T>* p);
 
 > `p` shall not be null.
 >
-> *Returns:*
+> *Returns:* `true` if atomic access to `*p` is lock-free, `false`
+> otherwise.
 >
-> `true` if atomic access to `*p` is lock-free, `false` otherwise.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T> shared_ptr<T> atomic_load(const shared_ptr<T>* p);
@@ -1430,13 +1344,9 @@ template<class T> shared_ptr<T> atomic_load(const shared_ptr<T>* p);
 
 > `p` shall not be null.
 >
-> *Returns:*
+> *Returns:* `atomic_load_explicit(p, memory_order::seq_cst)`.
 >
-> `atomic_load_explicit(p, memory_order::seq_cst)`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T> shared_ptr<T> atomic_load_explicit(const shared_ptr<T>* p, memory_order mo);
@@ -1446,13 +1356,9 @@ template<class T> shared_ptr<T> atomic_load_explicit(const shared_ptr<T>* p, mem
 >
 > `mo` shall not be `memory_order::release` or `memory_order::acq_rel`.
 >
-> *Returns:*
+> *Returns:* `*p`.
 >
-> `*p`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T> void atomic_store(shared_ptr<T>* p, shared_ptr<T> r);
@@ -1460,13 +1366,10 @@ template<class T> void atomic_store(shared_ptr<T>* p, shared_ptr<T> r);
 
 > `p` shall not be null.
 >
-> *Effects:*
+> *Effects:* As if by
+> `atomic_store_explicit(p, r, memory_order::seq_cst)`.
 >
-> As if by `atomic_store_explicit(p, r, memory_order::seq_cst)`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T> void atomic_store_explicit(shared_ptr<T>* p, shared_ptr<T> r, memory_order mo);
@@ -1476,13 +1379,9 @@ template<class T> void atomic_store_explicit(shared_ptr<T>* p, shared_ptr<T> r, 
 >
 > `mo` shall not be `memory_order::acquire` or `memory_order::acq_rel`.
 >
-> *Effects:*
+> *Effects:* As if by `p->swap(r)`.
 >
-> As if by `p->swap(r)`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T> shared_ptr<T> atomic_exchange(shared_ptr<T>* p, shared_ptr<T> r);
@@ -1490,13 +1389,9 @@ template<class T> shared_ptr<T> atomic_exchange(shared_ptr<T>* p, shared_ptr<T> 
 
 > `p` shall not be null.
 >
-> *Returns:*
+> *Returns:* `atomic_exchange_explicit(p, r, memory_order::seq_cst)`.
 >
-> `atomic_exchange_explicit(p, r, memory_order::seq_cst)`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T>
@@ -1505,17 +1400,11 @@ template<class T>
 
 > `p` shall not be null.
 >
-> *Effects:*
+> *Effects:* As if by `p->swap(r)`.
 >
-> As if by `p->swap(r)`.
+> *Returns:* The previous value of `*p`.
 >
-> *Returns:*
->
-> The previous value of `*p`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T>
@@ -1530,9 +1419,7 @@ template<class T>
 > atomic_compare_exchange_weak_explicit(p, v, w, memory_order::seq_cst, memory_order::seq_cst)
 > ```
 >
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class T>
@@ -1561,26 +1448,18 @@ template<class T>
 > argument shall not be `memory_order::release` nor
 > `memory_order::acq_rel`.
 >
-> *Effects:*
->
-> If `*p` is equivalent to `*v`, assigns `w` to `*p` and has
+> *Effects:* If `*p` is equivalent to `*v`, assigns `w` to `*p` and has
 > synchronization semantics corresponding to the value of `success`,
 > otherwise assigns `*p` to `*v` and has synchronization semantics
 > corresponding to the value of `failure`.
 >
-> *Returns:*
+> *Returns:* `true` if `*p` was equivalent to `*v`, `false` otherwise.
 >
-> `true` if `*p` was equivalent to `*v`, `false` otherwise.
+> *Throws:* Nothing.
 >
-> *Throws:*
->
-> Nothing.
->
-> *Remarks:*
->
-> Two `shared_ptr` objects are equivalent if they store the same pointer
-> value and share ownership. The weak form may fail spuriously.
-> See  [[atomics.types.operations]].
+> *Remarks:* Two `shared_ptr` objects are equivalent if they store the
+> same pointer value and share ownership. The weak form may fail
+> spuriously. See  [[atomics.types.operations]].
 
 ## Deprecated `basic_string` capacity <a id="depr.string.capacity">[[depr.string.capacity]]</a>
 
@@ -1602,10 +1481,8 @@ namespace std {
 void reserve();
 ```
 
-> *Effects:*
->
-> After this call, `capacity()` has an unspecified value greater than or
-> equal to `size()`.
+> *Effects:* After this call, `capacity()` has an unspecified value
+> greater than or equal to `size()`.
 >
 > \[*Note 4*: This is a non-binding shrink to fit
 > request. — *end note*\]
@@ -1824,9 +1701,7 @@ An object of this class template stores:
 size_t converted() const noexcept;
 ```
 
-> *Returns:*
->
-> `cvtcount`.
+> *Returns:* `cvtcount`.
 
 ``` cpp
 wide_string from_bytes(char byte);
@@ -1835,14 +1710,12 @@ wide_string from_bytes(const byte_string& str);
 wide_string from_bytes(const char* first, const char* last);
 ```
 
-> *Effects:*
->
-> The first member function shall convert the single-element sequence
-> `byte` to a wide string. The second member function shall convert the
-> null-terminated sequence beginning at `ptr` to a wide string. The
-> third member function shall convert the sequence stored in `str` to a
-> wide string. The fourth member function shall convert the sequence
-> defined by the range \[`first`, `last`) to a wide string.
+> *Effects:* The first member function shall convert the single-element
+> sequence `byte` to a wide string. The second member function shall
+> convert the null-terminated sequence beginning at `ptr` to a wide
+> string. The third member function shall convert the sequence stored in
+> `str` to a wide string. The fourth member function shall convert the
+> sequence defined by the range \[`first`, `last`) to a wide string.
 >
 > In all cases:
 >
@@ -1853,21 +1726,17 @@ wide_string from_bytes(const char* first, const char* last);
 > - The number of input elements successfully converted shall be stored
 >   in `cvtcount`.
 >
-> *Returns:*
->
-> If no conversion error occurs, the member function shall return the
-> converted wide string. Otherwise, if the object was constructed with a
-> wide-error string, the member function shall return the wide-error
-> string. Otherwise, the member function throws an object of class
-> `range_error`.
+> *Returns:* If no conversion error occurs, the member function shall
+> return the converted wide string. Otherwise, if the object was
+> constructed with a wide-error string, the member function shall return
+> the wide-error string. Otherwise, the member function throws an object
+> of class `range_error`.
 
 ``` cpp
 state_type state() const;
 ```
 
-> *Returns:*
->
-> `cvtstate`.
+> *Returns:* `cvtstate`.
 
 ``` cpp
 byte_string to_bytes(Elem wchar);
@@ -1876,14 +1745,12 @@ byte_string to_bytes(const wide_string& wstr);
 byte_string to_bytes(const Elem* first, const Elem* last);
 ```
 
-> *Effects:*
->
-> The first member function shall convert the single-element sequence
-> `wchar` to a byte string. The second member function shall convert the
-> null-terminated sequence beginning at `wptr` to a byte string. The
-> third member function shall convert the sequence stored in `wstr` to a
-> byte string. The fourth member function shall convert the sequence
-> defined by the range \[`first`, `last`) to a byte string.
+> *Effects:* The first member function shall convert the single-element
+> sequence `wchar` to a byte string. The second member function shall
+> convert the null-terminated sequence beginning at `wptr` to a byte
+> string. The third member function shall convert the sequence stored in
+> `wstr` to a byte string. The fourth member function shall convert the
+> sequence defined by the range \[`first`, `last`) to a byte string.
 >
 > In all cases:
 >
@@ -1894,13 +1761,11 @@ byte_string to_bytes(const Elem* first, const Elem* last);
 > - The number of input elements successfully converted shall be stored
 >   in `cvtcount`.
 >
-> *Returns:*
->
-> If no conversion error occurs, the member function shall return the
-> converted byte string. Otherwise, if the object was constructed with a
-> byte-error string, the member function shall return the byte-error
-> string. Otherwise, the member function shall throw an object of class
-> `range_error`.
+> *Returns:* If no conversion error occurs, the member function shall
+> return the converted byte string. Otherwise, if the object was
+> constructed with a byte-error string, the member function shall return
+> the byte-error string. Otherwise, the member function shall throw an
+> object of class `range_error`.
 
 ``` cpp
 explicit wstring_convert(Codecvt* pcvt);
@@ -1911,24 +1776,21 @@ explicit wstring_convert(const byte_string& byte_err,
 
 > For the first and second constructors, `pcvt != nullptr`.
 >
-> *Effects:*
->
-> The first constructor shall store `pcvt` in `cvtptr` and default
-> values in `cvtstate`, `byte_err_string`, and `wide_err_string`. The
-> second constructor shall store `pcvt` in `cvtptr`, `state` in
-> `cvtstate`, and default values in `byte_err_string` and
-> `wide_err_string`; moreover the stored state shall be retained between
-> calls to `from_bytes` and `to_bytes`. The third constructor shall
-> store `new Codecvt` in `cvtptr`, `state_type()` in `cvtstate`,
-> `byte_err` in `byte_err_string`, and `wide_err` in `wide_err_string`.
+> *Effects:* The first constructor shall store `pcvt` in `cvtptr` and
+> default values in `cvtstate`, `byte_err_string`, and
+> `wide_err_string`. The second constructor shall store `pcvt` in
+> `cvtptr`, `state` in `cvtstate`, and default values in
+> `byte_err_string` and `wide_err_string`; moreover the stored state
+> shall be retained between calls to `from_bytes` and `to_bytes`. The
+> third constructor shall store `new Codecvt` in `cvtptr`,
+> `state_type()` in `cvtstate`, `byte_err` in `byte_err_string`, and
+> `wide_err` in `wide_err_string`.
 
 ``` cpp
 ~wstring_convert();
 ```
 
-> *Effects:*
->
-> The destructor shall delete `cvtptr`.
+> *Effects:* The destructor shall delete `cvtptr`.
 
 ### Class template `wbuffer_convert` <a id="depr.conversions.buffer">[[depr.conversions.buffer]]</a>
 
@@ -1989,29 +1851,21 @@ An object of this class template stores:
 state_type state() const;
 ```
 
-> *Returns:*
->
-> `cvtstate`.
+> *Returns:* `cvtstate`.
 
 ``` cpp
 streambuf* rdbuf() const;
 ```
 
-> *Returns:*
->
-> `bufptr`.
+> *Returns:* `bufptr`.
 
 ``` cpp
 streambuf* rdbuf(streambuf* bytebuf);
 ```
 
-> *Effects:*
+> *Effects:* Stores `bytebuf` in `bufptr`.
 >
-> Stores `bytebuf` in `bufptr`.
->
-> *Returns:*
->
-> The previous value of `bufptr`.
+> *Returns:* The previous value of `bufptr`.
 
 ``` cpp
 explicit wbuffer_convert(
@@ -2022,19 +1876,15 @@ explicit wbuffer_convert(
 
 > `pcvt != nullptr`.
 >
-> *Effects:*
->
-> The constructor constructs a stream buffer object, initializes
-> `bufptr` to `bytebuf`, initializes `cvtptr` to `pcvt`, and initializes
-> `cvtstate` to `state`.
+> *Effects:* The constructor constructs a stream buffer object,
+> initializes `bufptr` to `bytebuf`, initializes `cvtptr` to `pcvt`, and
+> initializes `cvtstate` to `state`.
 
 ``` cpp
 ~wbuffer_convert();
 ```
 
-> *Effects:*
->
-> The destructor shall delete `cvtptr`.
+> *Effects:* The destructor shall delete `cvtptr`.
 
 ## Deprecated locale category facets <a id="depr.locale.category">[[depr.locale.category]]</a>
 
@@ -2089,11 +1939,9 @@ template<class InputIterator>
 > - convert `source` or \[`first`, `last`) to a temporary, `tmp`, of
 >   type `u32string` and return `path(tmp)`.
 >
-> *Remarks:*
->
-> Argument format conversion [[fs.path.fmt.cvt]] applies to the
-> arguments for these functions. How Unicode encoding conversions are
-> performed is unspecified.
+> *Remarks:* Argument format conversion [[fs.path.fmt.cvt]] applies to
+> the arguments for these functions. How Unicode encoding conversions
+> are performed is unspecified.
 >
 > \[*Example 1*:
 >
@@ -2173,9 +2021,7 @@ template<class T>
   void atomic_init(atomic<T>* object, typename atomic<T>::value_type desired) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `atomic_store_explicit(object, desired, memory_order::relaxed);`
 
 ### Operations on atomic types <a id="depr.atomics.types.operations">[[depr.atomics.types.operations]]</a>

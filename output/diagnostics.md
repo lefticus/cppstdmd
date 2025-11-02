@@ -80,17 +80,13 @@ as violations of logical preconditions or class invariants.
 logic_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 logic_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `domain_error` <a id="domain.error">[[domain.error]]</a>
 
@@ -111,17 +107,13 @@ exceptions by the implementation to report domain errors.
 domain_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 domain_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `invalid_argument` <a id="invalid.argument">[[invalid.argument]]</a>
 
@@ -142,17 +134,13 @@ exceptions to report an invalid argument.
 invalid_argument(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 invalid_argument(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `length_error` <a id="length.error">[[length.error]]</a>
 
@@ -174,17 +162,13 @@ exceeds its maximum allowable size.
 length_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 length_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `out_of_range` <a id="out.of.range">[[out.of.range]]</a>
 
@@ -205,17 +189,13 @@ exceptions to report an argument value not in its expected range.
 out_of_range(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 out_of_range(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `runtime_error` <a id="runtime.error">[[runtime.error]]</a>
 
@@ -237,17 +217,13 @@ executes.
 runtime_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 runtime_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `range_error` <a id="range.error">[[range.error]]</a>
 
@@ -268,17 +244,13 @@ to report range errors in internal computations.
 range_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 range_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `overflow_error` <a id="overflow.error">[[overflow.error]]</a>
 
@@ -299,17 +271,13 @@ exceptions to report an arithmetic overflow error.
 overflow_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 overflow_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ### Class `underflow_error` <a id="underflow.error">[[underflow.error]]</a>
 
@@ -330,17 +298,13 @@ exceptions to report an arithmetic underflow error.
 underflow_error(const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg.c_str()) == 0`.
+> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 underflow_error(const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `strcmp(what(), what_arg) == 0`.
+> *Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ## Assertions <a id="assertions">[[assertions]]</a>
 
@@ -663,41 +627,32 @@ namespace std {
 virtual const char* name() const noexcept = 0;
 ```
 
-> *Returns:*
->
-> A string naming the error category.
+> *Returns:* A string naming the error category.
 
 ``` cpp
 virtual error_condition default_error_condition(int ev) const noexcept;
 ```
 
-> *Returns:*
->
-> `error_condition(ev, *this)`.
+> *Returns:* `error_condition(ev, *this)`.
 
 ``` cpp
 virtual bool equivalent(int code, const error_condition& condition) const noexcept;
 ```
 
-> *Returns:*
->
-> `default_error_condition(code) == condition`.
+> *Returns:* `default_error_condition(code) == condition`.
 
 ``` cpp
 virtual bool equivalent(const error_code& code, int condition) const noexcept;
 ```
 
-> *Returns:*
->
-> `*this == code.category() && code.value() == condition`.
+> *Returns:* `*this == code.category() && code.value() == condition`.
 
 ``` cpp
 virtual string message(int ev) const = 0;
 ```
 
-> *Returns:*
->
-> A string that describes the error condition denoted by `ev`.
+> *Returns:* A string that describes the error condition denoted by
+> `ev`.
 
 #### Non-virtual members <a id="syserr.errcat.nonvirtuals">[[syserr.errcat.nonvirtuals]]</a>
 
@@ -705,17 +660,13 @@ virtual string message(int ev) const = 0;
 bool operator==(const error_category& rhs) const noexcept;
 ```
 
-> *Returns:*
->
-> `this == &rhs`.
+> *Returns:* `this == &rhs`.
 
 ``` cpp
 strong_ordering operator<=>(const error_category& rhs) const noexcept;
 ```
 
-> *Returns:*
->
-> `compare_three_way()(this, &rhs)`.
+> *Returns:* `compare_three_way()(this, &rhs)`.
 >
 > \[*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
 > total ordering for pointers. — *end note*\]
@@ -726,35 +677,30 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 virtual const char* name() const noexcept = 0;
 ```
 
-> *Returns:*
->
-> A string naming the error category.
+> *Returns:* A string naming the error category.
 
 ``` cpp
 virtual error_condition default_error_condition(int ev) const noexcept;
 ```
 
-> *Returns:*
->
-> An object of type `error_condition` that corresponds to `ev`.
+> *Returns:* An object of type `error_condition` that corresponds to
+> `ev`.
 
 ``` cpp
 virtual bool equivalent(int code, const error_condition& condition) const noexcept;
 ```
 
-> *Returns:*
->
-> `true` if, for the category of error represented by `*this`, `code` is
-> considered equivalent to `condition`; otherwise, `false`.
+> *Returns:* `true` if, for the category of error represented by
+> `*this`, `code` is considered equivalent to `condition`; otherwise,
+> `false`.
 
 ``` cpp
 virtual bool equivalent(const error_code& code, int condition) const noexcept;
 ```
 
-> *Returns:*
->
-> `true` if, for the category of error represented by `*this`, `code` is
-> considered equivalent to `condition`; otherwise, `false`.
+> *Returns:* `true` if, for the category of error represented by
+> `*this`, `code` is considered equivalent to `condition`; otherwise,
+> `false`.
 
 #### Error category objects <a id="syserr.errcat.objects">[[syserr.errcat.objects]]</a>
 
@@ -762,34 +708,26 @@ virtual bool equivalent(const error_code& code, int condition) const noexcept;
 const error_category& generic_category() noexcept;
 ```
 
-> *Returns:*
->
-> A reference to an object of a type derived from class
+> *Returns:* A reference to an object of a type derived from class
 > `error_category`. All calls to this function shall return references
 > to the same object.
 >
-> *Remarks:*
->
-> The object’s `default_error_condition` and `equivalent` virtual
-> functions shall behave as specified for the class `error_category`.
-> The object’s `name` virtual function shall return a pointer to the
-> string `"generic"`.
+> *Remarks:* The object’s `default_error_condition` and `equivalent`
+> virtual functions shall behave as specified for the class
+> `error_category`. The object’s `name` virtual function shall return a
+> pointer to the string `"generic"`.
 
 ``` cpp
 const error_category& system_category() noexcept;
 ```
 
-> *Returns:*
->
-> A reference to an object of a type derived from class
+> *Returns:* A reference to an object of a type derived from class
 > `error_category`. All calls to this function shall return references
 > to the same object.
 >
-> *Remarks:*
->
-> The object’s `equivalent` virtual functions shall behave as specified
-> for class `error_category`. The object’s `name` virtual function shall
-> return a pointer to the string `"system"`. The object’s
+> *Remarks:* The object’s `equivalent` virtual functions shall behave as
+> specified for class `error_category`. The object’s `name` virtual
+> function shall return a pointer to the string `"system"`. The object’s
 > `default_error_condition` virtual function shall behave as follows:
 >
 > If the argument `ev` is equal to 0, the function returns
@@ -858,30 +796,23 @@ namespace std {
 error_code() noexcept;
 ```
 
-> *Effects:*
->
-> Initializes `val_` with `0` and `cat_` with `&system_category()`.
+> *Effects:* Initializes `val_` with `0` and `cat_` with
+> `&system_category()`.
 
 ``` cpp
 error_code(int val, const error_category& cat) noexcept;
 ```
 
-> *Effects:*
->
-> Initializes `val_` with `val` and `cat_` with `&cat`.
+> *Effects:* Initializes `val_` with `val` and `cat_` with `&cat`.
 
 ``` cpp
 template<class ErrorCodeEnum>
   error_code(ErrorCodeEnum e) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_error_code_enum_v<ErrorCodeEnum>` is `true`.
 >
-> `is_error_code_enum_v<ErrorCodeEnum>` is `true`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > error_code ec = make_error_code(e);
@@ -894,39 +825,29 @@ template<class ErrorCodeEnum>
 void assign(int val, const error_category& cat) noexcept;
 ```
 
-> *Ensures:*
->
-> `val_ == val` and `cat_ == &cat`.
+> *Ensures:* `val_ == val` and `cat_ == &cat`.
 
 ``` cpp
 template<class ErrorCodeEnum>
   error_code& operator=(ErrorCodeEnum e) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_error_code_enum_v<ErrorCodeEnum>` is `true`.
 >
-> `is_error_code_enum_v<ErrorCodeEnum>` is `true`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > error_code ec = make_error_code(e);
 > assign(ec.value(), ec.category());
 > ```
 >
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 void clear() noexcept;
 ```
 
-> *Ensures:*
->
-> `value() == 0` and `category() == system_category()`.
+> *Ensures:* `value() == 0` and `category() == system_category()`.
 
 #### Observers <a id="syserr.errcode.observers">[[syserr.errcode.observers]]</a>
 
@@ -934,41 +855,31 @@ void clear() noexcept;
 int value() const noexcept;
 ```
 
-> *Returns:*
->
-> `val_`.
+> *Returns:* `val_`.
 
 ``` cpp
 const error_category& category() const noexcept;
 ```
 
-> *Returns:*
->
-> `*cat_`.
+> *Returns:* `*cat_`.
 
 ``` cpp
 error_condition default_error_condition() const noexcept;
 ```
 
-> *Returns:*
->
-> `category().default_error_condition(value())`.
+> *Returns:* `category().default_error_condition(value())`.
 
 ``` cpp
 string message() const;
 ```
 
-> *Returns:*
->
-> `category().message(value())`.
+> *Returns:* `category().message(value())`.
 
 ``` cpp
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `value() != 0`.
+> *Returns:* `value() != 0`.
 
 #### Non-member functions <a id="syserr.errcode.nonmembers">[[syserr.errcode.nonmembers]]</a>
 
@@ -976,18 +887,14 @@ explicit operator bool() const noexcept;
 error_code make_error_code(errc e) noexcept;
 ```
 
-> *Returns:*
->
-> `error_code(static_cast<int>(e), generic_category())`.
+> *Returns:* `error_code(static_cast<int>(e), generic_category())`.
 
 ``` cpp
 template<class charT, class traits>
   basic_ostream<charT, traits>& operator<<(basic_ostream<charT, traits>& os, const error_code& ec);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return os << ec.category().name() << ’:’ << ec.value();`
 
 ### Class `error_condition` <a id="syserr.errcondition">[[syserr.errcondition]]</a>
@@ -1036,30 +943,24 @@ namespace std {
 error_condition() noexcept;
 ```
 
-> *Effects:*
->
-> Initializes `val_` with `0` and `cat_` with `&generic_category()`.
+> *Effects:* Initializes `val_` with `0` and `cat_` with
+> `&generic_category()`.
 
 ``` cpp
 error_condition(int val, const error_category& cat) noexcept;
 ```
 
-> *Effects:*
->
-> Initializes `val_` with `val` and `cat_` with `&cat`.
+> *Effects:* Initializes `val_` with `val` and `cat_` with `&cat`.
 
 ``` cpp
 template<class ErrorConditionEnum>
   error_condition(ErrorConditionEnum e) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_error_condition_enum_v<ErrorConditionEnum>` is
+> `true`.
 >
-> `is_error_condition_enum_v<ErrorConditionEnum>` is `true`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > error_condition ec = make_error_condition(e);
@@ -1072,39 +973,30 @@ template<class ErrorConditionEnum>
 void assign(int val, const error_category& cat) noexcept;
 ```
 
-> *Ensures:*
->
-> `val_ == val` and `cat_ == &cat`.
+> *Ensures:* `val_ == val` and `cat_ == &cat`.
 
 ``` cpp
 template<class ErrorConditionEnum>
   error_condition& operator=(ErrorConditionEnum e) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_error_condition_enum_v<ErrorConditionEnum>` is
+> `true`.
 >
-> `is_error_condition_enum_v<ErrorConditionEnum>` is `true`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > error_condition ec = make_error_condition(e);
 > assign(ec.value(), ec.category());
 > ```
 >
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 void clear() noexcept;
 ```
 
-> *Ensures:*
->
-> `value() == 0` and `category() == generic_category()`.
+> *Ensures:* `value() == 0` and `category() == generic_category()`.
 
 #### Observers <a id="syserr.errcondition.observers">[[syserr.errcondition.observers]]</a>
 
@@ -1112,33 +1004,25 @@ void clear() noexcept;
 int value() const noexcept;
 ```
 
-> *Returns:*
->
-> `val_`.
+> *Returns:* `val_`.
 
 ``` cpp
 const error_category& category() const noexcept;
 ```
 
-> *Returns:*
->
-> `*cat_`.
+> *Returns:* `*cat_`.
 
 ``` cpp
 string message() const;
 ```
 
-> *Returns:*
->
-> `category().message(value())`.
+> *Returns:* `category().message(value())`.
 
 ``` cpp
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `value() != 0`.
+> *Returns:* `value() != 0`.
 
 #### Non-member functions <a id="syserr.errcondition.nonmembers">[[syserr.errcondition.nonmembers]]</a>
 
@@ -1146,9 +1030,7 @@ explicit operator bool() const noexcept;
 error_condition make_error_condition(errc e) noexcept;
 ```
 
-> *Returns:*
->
-> `error_condition(static_cast<int>(e), generic_category())`.
+> *Returns:* `error_condition(static_cast<int>(e), generic_category())`.
 
 ### Comparison operator functions <a id="syserr.compare">[[syserr.compare]]</a>
 
@@ -1186,9 +1068,7 @@ bool operator==(const error_condition& lhs, const error_condition& rhs) noexcept
 strong_ordering operator<=>(const error_code& lhs, const error_code& rhs) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > if (auto c = lhs.category() <=> rhs.category(); c != 0) return c;
@@ -1250,27 +1130,21 @@ namespace std {
 system_error(error_code ec, const string& what_arg);
 ```
 
-> *Ensures:*
->
-> `code() == ec` and
+> *Ensures:* `code() == ec` and
 > `string_view(what()).find(what_arg.c_str()) != string_view::npos`.
 
 ``` cpp
 system_error(error_code ec, const char* what_arg);
 ```
 
-> *Ensures:*
->
-> `code() == ec` and
+> *Ensures:* `code() == ec` and
 > `string_view(what()).find(what_arg) != string_view::npos`.
 
 ``` cpp
 system_error(error_code ec);
 ```
 
-> *Ensures:*
->
-> `code() == ec`.
+> *Ensures:* `code() == ec`.
 
 ``` cpp
 system_error(int ev, const error_category& ecat, const string& what_arg);
@@ -1294,25 +1168,21 @@ system_error(int ev, const error_category& ecat, const char* what_arg);
 system_error(int ev, const error_category& ecat);
 ```
 
-> *Ensures:*
->
-> `code() == error_code(ev, ecat)`.
+> *Ensures:* `code() == error_code(ev, ecat)`.
 
 ``` cpp
 const error_code& code() const noexcept;
 ```
 
-> *Returns:*
->
-> `ec` or `error_code(ev, ecat)`, from the constructor, as appropriate.
+> *Returns:* `ec` or `error_code(ev, ecat)`, from the constructor, as
+> appropriate.
 
 ``` cpp
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An NTBS incorporating the arguments supplied in the constructor.
+> *Returns:* An NTBS incorporating the arguments supplied in the
+> constructor.
 >
 > \[*Note 3*: The returned NTBS might be the contents of
 > `what_arg + ": " + code.message()`. — *end note*\]
@@ -1425,9 +1295,7 @@ and `three_way_comparable<strong_ordering>` [[cmp.concept]].
 constexpr stacktrace_entry() noexcept;
 ```
 
-> *Ensures:*
->
-> `*this` is empty.
+> *Ensures:* `*this` is empty.
 
 #### Observers <a id="stacktrace.entry.obs">[[stacktrace.entry.obs]]</a>
 
@@ -1437,18 +1305,14 @@ constexpr native_handle_type native_handle() const noexcept;
 
 > The semantics of this function are *implementation-defined*.
 >
-> *Remarks:*
->
-> Successive invocations of the `native_handle` function for an
-> unchanged `stacktrace_entry` object return identical values.
+> *Remarks:* Successive invocations of the `native_handle` function for
+> an unchanged `stacktrace_entry` object return identical values.
 
 ``` cpp
 constexpr explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `false` if and only if `*this` is empty.
+> *Returns:* `false` if and only if `*this` is empty.
 
 #### Query <a id="stacktrace.entry.query">[[stacktrace.entry.query]]</a>
 
@@ -1460,47 +1324,36 @@ not throw in that case. — *end note*\]
 string description() const;
 ```
 
-> *Returns:*
+> *Returns:* A description of the evaluation represented by `*this`, or
+> an empty string.
 >
-> A description of the evaluation represented by `*this`, or an empty
-> string.
->
-> *Throws:*
->
-> `bad_alloc` if memory for the internal data structures or the
-> resulting string cannot be allocated.
+> *Throws:* `bad_alloc` if memory for the internal data structures or
+> the resulting string cannot be allocated.
 
 ``` cpp
 string source_file() const;
 ```
 
-> *Returns:*
+> *Returns:* The presumed or actual name of the source
+> file [[cpp.predefined]] that lexically contains the expression or
+> statement whose evaluation is represented by `*this`, or an empty
+> string.
 >
-> The presumed or actual name of the source file [[cpp.predefined]] that
-> lexically contains the expression or statement whose evaluation is
-> represented by `*this`, or an empty string.
->
-> *Throws:*
->
-> `bad_alloc` if memory for the internal data structures or the
-> resulting string cannot be allocated.
+> *Throws:* `bad_alloc` if memory for the internal data structures or
+> the resulting string cannot be allocated.
 
 ``` cpp
 uint_least32_t source_line() const;
 ```
 
-> *Returns:*
+> *Returns:* `0`, or a 1-based line number that lexically relates to the
+> evaluation represented by `*this`. If `source_file` returns the
+> presumed name of the source file, returns the presumed line number; if
+> `source_file` returns the actual name of the source file, returns the
+> actual line number.
 >
-> `0`, or a 1-based line number that lexically relates to the evaluation
-> represented by `*this`. If `source_file` returns the presumed name of
-> the source file, returns the presumed line number; if `source_file`
-> returns the actual name of the source file, returns the actual line
-> number.
->
-> *Throws:*
->
-> `bad_alloc` if memory for the internal data structures cannot be
-> allocated.
+> *Throws:* `bad_alloc` if memory for the internal data structures
+> cannot be allocated.
 
 #### Comparison <a id="stacktrace.entry.cmp">[[stacktrace.entry.cmp]]</a>
 
@@ -1508,10 +1361,8 @@ uint_least32_t source_line() const;
 friend constexpr bool operator==(const stacktrace_entry& x, const stacktrace_entry& y) noexcept;
 ```
 
-> *Returns:*
->
-> `true` if and only if `x` and `y` represent the same stacktrace entry
-> or both `x` and `y` are empty.
+> *Returns:* `true` if and only if `x` and `y` represent the same
+> stacktrace entry or both `x` and `y` are empty.
 
 ### Class template `basic_stacktrace` <a id="stacktrace.basic">[[stacktrace.basic]]</a>
 
@@ -1610,12 +1461,11 @@ container [[container.alloc.reqmts]], and of a sequence container
 static basic_stacktrace current(const allocator_type& alloc = allocator_type()) noexcept;
 ```
 
-> *Returns:*
->
-> A `basic_stacktrace` object with `frames_` storing the stacktrace of
-> the current evaluation in the current thread of execution, or an empty
-> `basic_stacktrace` object if the initialization of `frames_` failed.
-> `alloc` is passed to the constructor of the `frames_` object.
+> *Returns:* A `basic_stacktrace` object with `frames_` storing the
+> stacktrace of the current evaluation in the current thread of
+> execution, or an empty `basic_stacktrace` object if the initialization
+> of `frames_` failed. `alloc` is passed to the constructor of the
+> `frames_` object.
 >
 > \[*Note 4*: If the stacktrace was successfully obtained, then
 > `frames_.front()` is the `stacktrace_entry` representing approximately
@@ -1631,9 +1481,7 @@ static basic_stacktrace current(size_type skip,
 > Let `t` be a stacktrace as-if obtained via
 > `basic_stacktrace::current(alloc)`. Let `n` be `t.size()`.
 >
-> *Returns:*
->
-> A `basic_stacktrace` object where `frames_` is
+> *Returns:* A `basic_stacktrace` object where `frames_` is
 > direct-non-list-initialized from arguments `t.begin() + min(n, skip)`,
 > `t.end()`, and `alloc`, or an empty `basic_stacktrace` object if the
 > initialization of `frames_` failed.
@@ -1646,13 +1494,9 @@ static basic_stacktrace current(size_type skip, size_type max_depth,
 > Let `t` be a stacktrace as-if obtained via
 > `basic_stacktrace::current(alloc)`. Let `n` be `t.size()`.
 >
-> *Preconditions:*
+> *Preconditions:* `skip <= skip + max_depth` is `true`.
 >
-> `skip <= skip + max_depth` is `true`.
->
-> *Returns:*
->
-> A `basic_stacktrace` object where `frames_` is
+> *Returns:* A `basic_stacktrace` object where `frames_` is
 > direct-non-list-initialized from arguments `t.begin() + min(n, skip)`,
 > `t.begin() + min(n, skip + max_depth)`, and `alloc`, or an empty
 > `basic_stacktrace` object if the initialization of `frames_` failed.
@@ -1661,21 +1505,15 @@ static basic_stacktrace current(size_type skip, size_type max_depth,
 basic_stacktrace() noexcept(is_nothrow_default_constructible_v<allocator_type>);
 ```
 
-> *Ensures:*
->
-> `empty()` is `true`.
+> *Ensures:* `empty()` is `true`.
 
 ``` cpp
 explicit basic_stacktrace(const allocator_type& alloc) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* `alloc` is passed to the `frames_` constructor.
 >
-> `alloc` is passed to the `frames_` constructor.
->
-> *Ensures:*
->
-> `empty()` is `true`.
+> *Ensures:* `empty()` is `true`.
 
 ``` cpp
 basic_stacktrace(const basic_stacktrace& other);
@@ -1687,11 +1525,9 @@ basic_stacktrace& operator=(basic_stacktrace&& other)
     allocator_traits<Allocator>::is_always_equal::value);
 ```
 
-> *Remarks:*
->
-> Implementations may strengthen the exception specification for these
-> functions [[res.on.exception.handling]] by ensuring that `empty()` is
-> `true` on failed allocation.
+> *Remarks:* Implementations may strengthen the exception specification
+> for these functions [[res.on.exception.handling]] by ensuring that
+> `empty()` is `true` on failed allocation.
 
 #### Observers <a id="stacktrace.basic.obs">[[stacktrace.basic.obs]]</a>
 
@@ -1708,98 +1544,72 @@ using const_iterator = \impdef;
 allocator_type get_allocator() const noexcept;
 ```
 
-> *Returns:*
->
-> `frames_.get_allocator()`.
+> *Returns:* `frames_.get_allocator()`.
 
 ``` cpp
 const_iterator begin() const noexcept;
 const_iterator cbegin() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator referring to the first element in `frames_`. If `empty()`
-> is `true`, then it returns the same value as `end()`.
+> *Returns:* An iterator referring to the first element in `frames_`. If
+> `empty()` is `true`, then it returns the same value as `end()`.
 
 ``` cpp
 const_iterator end() const noexcept;
 const_iterator cend() const noexcept;
 ```
 
-> *Returns:*
->
-> The end iterator.
+> *Returns:* The end iterator.
 
 ``` cpp
 const_reverse_iterator rbegin() const noexcept;
 const_reverse_iterator crbegin() const noexcept;
 ```
 
-> *Returns:*
->
-> `reverse_iterator(cend())`.
+> *Returns:* `reverse_iterator(cend())`.
 
 ``` cpp
 const_reverse_iterator rend() const noexcept;
 const_reverse_iterator crend() const noexcept;
 ```
 
-> *Returns:*
->
-> `reverse_iterator(cbegin())`.
+> *Returns:* `reverse_iterator(cbegin())`.
 
 ``` cpp
 [[nodiscard]] bool empty() const noexcept;
 ```
 
-> *Returns:*
->
-> `frames_.empty()`.
+> *Returns:* `frames_.empty()`.
 
 ``` cpp
 size_type size() const noexcept;
 ```
 
-> *Returns:*
->
-> `frames_.size()`.
+> *Returns:* `frames_.size()`.
 
 ``` cpp
 size_type max_size() const noexcept;
 ```
 
-> *Returns:*
->
-> `frames_.max_size()`.
+> *Returns:* `frames_.max_size()`.
 
 ``` cpp
 const_reference operator[](size_type frame_no) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `frame_no < size()` is `true`.
 >
-> `frame_no < size()` is `true`.
+> *Returns:* `frames_[frame_no]`.
 >
-> *Returns:*
->
-> `frames_[frame_no]`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 const_reference at(size_type frame_no) const;
 ```
 
-> *Returns:*
+> *Returns:* `frames_[frame_no]`.
 >
-> `frames_[frame_no]`.
->
-> *Throws:*
->
-> `out_of_range` if `frame_no >= size()`.
+> *Throws:* `out_of_range` if `frame_no >= size()`.
 
 #### Comparisons <a id="stacktrace.basic.cmp">[[stacktrace.basic.cmp]]</a>
 
@@ -1808,9 +1618,7 @@ template<class Allocator2>
 friend bool operator==(const basic_stacktrace& x, const basic_stacktrace<Allocator2>& y) noexcept;
 ```
 
-> *Returns:*
->
-> `equal(x.begin(), x.end(), y.begin(), y.end())`.
+> *Returns:* `equal(x.begin(), x.end(), y.begin(), y.end())`.
 
 ``` cpp
 template<class Allocator2>
@@ -1818,9 +1626,7 @@ friend strong_ordering
   operator<=>(const basic_stacktrace& x, const basic_stacktrace<Allocator2>& y) noexcept;
 ```
 
-> *Returns:*
->
-> `x.size() <=> y.size()` if `x.size() != y.size()`;
+> *Returns:* `x.size() <=> y.size()` if `x.size() != y.size()`;
 > `lexicographical_compare_three_way(x.begin(), x.end(), y.begin(), y.end())`
 > otherwise.
 
@@ -1832,9 +1638,7 @@ void swap(basic_stacktrace& other)
     allocator_traits<Allocator>::is_always_equal::value);
 ```
 
-> *Effects:*
->
-> Exchanges the contents of `*this` and `other`.
+> *Effects:* Exchanges the contents of `*this` and `other`.
 
 #### Non-member functions <a id="stacktrace.basic.nonmem">[[stacktrace.basic.nonmem]]</a>
 
@@ -1844,30 +1648,24 @@ void swap(basic_stacktrace<Allocator>& a, basic_stacktrace<Allocator>& b)
   noexcept(noexcept(a.swap(b)));
 ```
 
-> *Effects:*
->
-> Equivalent to `a.swap(b)`.
+> *Effects:* Equivalent to `a.swap(b)`.
 
 ``` cpp
 string to_string(const stacktrace_entry& f);
 ```
 
-> *Returns:*
+> *Returns:* A string with a description of `f`.
 >
-> A string with a description of `f`.
->
-> The description should provide information about the contained
-> evaluation, including information from `f.source_file()` and
-> `f.source_line()`.
+> *Recommended practice:* The description should provide information
+> about the contained evaluation, including information from
+> `f.source_file()` and `f.source_line()`.
 
 ``` cpp
 template<class Allocator>
 string to_string(const basic_stacktrace<Allocator>& st);
 ```
 
-> *Returns:*
->
-> A string with a description of `st`.
+> *Returns:* A string with a description of `st`.
 >
 > \[*Note 5*: The number of lines is not guaranteed to be equal to
 > `st.size()`. — *end note*\]
@@ -1876,18 +1674,14 @@ string to_string(const basic_stacktrace<Allocator>& st);
 ostream& operator<<(ostream& os, const stacktrace_entry& f);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return os << to_string(f);`
+> *Effects:* Equivalent to: `return os << to_string(f);`
 
 ``` cpp
 template<class Allocator>
   ostream& operator<<(ostream& os, const basic_stacktrace<Allocator>& st);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return os << to_string(st);`
+> *Effects:* Equivalent to: `return os << to_string(st);`
 
 #### Formatting support <a id="stacktrace.format">[[stacktrace.format]]</a>
 

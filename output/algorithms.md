@@ -3145,15 +3145,11 @@ template<input_range R, class Proj = identity,
 > - `invoke(pred, invoke(proj, *i))` for the overloads in namespace
 >   `ranges`.
 >
-> *Returns:*
+> *Returns:* `false` if E is `false` for some iterator `i` in the range
+> \[`first`, `last`), and `true` otherwise.
 >
-> `false` if E is `false` for some iterator `i` in the range \[`first`,
-> `last`), and `true` otherwise.
->
-> *Complexity:*
->
-> At most `last - first` applications of the predicate and any
-> projection.
+> *Complexity:* At most `last - first` applications of the predicate and
+> any projection.
 
 ### Any of <a id="alg.any.of">[[alg.any.of]]</a>
 
@@ -3179,15 +3175,11 @@ template<input_range R, class Proj = identity,
 > - `invoke(pred, invoke(proj, *i))` for the overloads in namespace
 >   `ranges`.
 >
-> *Returns:*
+> *Returns:* `true` if E is `true` for some iterator `i` in the range
+> \[`first`, `last`), and `false` otherwise.
 >
-> `true` if E is `true` for some iterator `i` in the range \[`first`,
-> `last`), and `false` otherwise.
->
-> *Complexity:*
->
-> At most `last - first` applications of the predicate and any
-> projection.
+> *Complexity:* At most `last - first` applications of the predicate and
+> any projection.
 
 ### None of <a id="alg.none.of">[[alg.none.of]]</a>
 
@@ -3213,15 +3205,11 @@ template<input_range R, class Proj = identity,
 > - `invoke(pred, invoke(proj, *i))` for the overloads in namespace
 >   `ranges`.
 >
-> *Returns:*
+> *Returns:* `false` if E is `true` for some iterator `i` in the range
+> \[`first`, `last`), and `true` otherwise.
 >
-> `false` if E is `true` for some iterator `i` in the range \[`first`,
-> `last`), and `true` otherwise.
->
-> *Complexity:*
->
-> At most `last - first` applications of the predicate and any
-> projection.
+> *Complexity:* At most `last - first` applications of the predicate and
+> any projection.
 
 ### Contains <a id="alg.contains">[[alg.contains]]</a>
 
@@ -3235,7 +3223,6 @@ template<input_range R, class T, class Proj = identity>
 ```
 
 > *Returns:*
->
 > `ranges::find(std::move(first), last, value, proj) != last`.
 
 ``` cpp
@@ -3253,7 +3240,6 @@ template<forward_range R1, forward_range R2,
 ```
 
 > *Returns:*
->
 > `first2 == last2 || !ranges::search(first1, last1, first2, last2, pred, proj1, proj2).empty()`.
 
 ### For each <a id="alg.foreach">[[alg.foreach]]</a>
@@ -3263,36 +3249,26 @@ template<class InputIterator, class Function>
   constexpr Function for_each(InputIterator first, InputIterator last, Function f);
 ```
 
-> *Preconditions:*
->
-> `Function` meets the *Cpp17MoveConstructible* requirements
-> ( [[cpp17.moveconstructible]]).
+> *Preconditions:* `Function` meets the *Cpp17MoveConstructible*
+> requirements ( [[cpp17.moveconstructible]]).
 >
 > \[*Note 2*: `Function` need not meet the requirements of
 > *Cpp17CopyConstructible*
 > ( [[cpp17.copyconstructible]]). — *end note*\]
 >
-> *Effects:*
->
-> Applies `f` to the result of dereferencing every iterator in the range
-> \[`first`, `last`), starting from `first` and proceeding to
-> `last - 1`.
+> *Effects:* Applies `f` to the result of dereferencing every iterator
+> in the range \[`first`, `last`), starting from `first` and proceeding
+> to `last - 1`.
 >
 > \[*Note 3*: If the type of `first` meets the requirements of a mutable
 > iterator, `f` can apply non-constant functions through the
 > dereferenced iterator. — *end note*\]
 >
-> *Returns:*
+> *Returns:* `f`.
 >
-> `f`.
+> *Complexity:* Applies `f` exactly `last - first` times.
 >
-> *Complexity:*
->
-> Applies `f` exactly `last - first` times.
->
-> *Remarks:*
->
-> If `f` returns a result, the result is ignored.
+> *Remarks:* If `f` returns a result, the result is ignored.
 
 ``` cpp
 template<class ExecutionPolicy, class ForwardIterator, class Function>
@@ -3301,28 +3277,22 @@ template<class ExecutionPolicy, class ForwardIterator, class Function>
                 Function f);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `Function` meets the *Cpp17CopyConstructible*
+> requirements.
 >
-> `Function` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:*
->
-> Applies `f` to the result of dereferencing every iterator in the range
-> \[`first`, `last`).
+> *Effects:* Applies `f` to the result of dereferencing every iterator
+> in the range \[`first`, `last`).
 >
 > \[*Note 4*: If the type of `first` meets the requirements of a mutable
 > iterator, `f` can apply non-constant functions through the
 > dereferenced iterator. — *end note*\]
 >
-> *Complexity:*
+> *Complexity:* Applies `f` exactly `last - first` times.
 >
-> Applies `f` exactly `last - first` times.
->
-> *Remarks:*
->
-> If `f` returns a result, the result is ignored. Implementations do not
-> have the freedom granted under [[algorithms.parallel.exec]] to make
-> arbitrary copies of elements from the input sequence.
+> *Remarks:* If `f` returns a result, the result is ignored.
+> Implementations do not have the freedom granted under
+> [[algorithms.parallel.exec]] to make arbitrary copies of elements from
+> the input sequence.
 >
 > \[*Note 5*: Does not return a copy of its `Function` parameter, since
 > parallelization often does not permit efficient state
@@ -3339,26 +3309,18 @@ template<input_range R, class Proj = identity,
     ranges::for_each(R&& r, Fun f, Proj proj = {});
 ```
 
-> *Effects:*
->
-> Calls `invoke(f, invoke(proj, *i))` for every iterator `i` in the
-> range \[`first`, `last`), starting from `first` and proceeding to
-> `last - 1`.
+> *Effects:* Calls `invoke(f, invoke(proj, *i))` for every iterator `i`
+> in the range \[`first`, `last`), starting from `first` and proceeding
+> to `last - 1`.
 >
 > \[*Note 6*: If the result of `invoke(proj, *i)` is a mutable
 > reference, `f` can apply non-constant functions. — *end note*\]
 >
-> *Returns:*
+> *Returns:* `{last, std::move(f)}`.
 >
-> `{last, std::move(f)}`.
+> *Complexity:* Applies `f` and `proj` exactly `last - first` times.
 >
-> *Complexity:*
->
-> Applies `f` and `proj` exactly `last - first` times.
->
-> *Remarks:*
->
-> If `f` returns a result, the result is ignored.
+> *Remarks:* If `f` returns a result, the result is ignored.
 >
 > \[*Note 7*: The overloads in namespace `ranges` require `Fun` to model
 > `copy_constructible`. — *end note*\]
@@ -3368,35 +3330,25 @@ template<class InputIterator, class Size, class Function>
   constexpr InputIterator for_each_n(InputIterator first, Size n, Function f);
 ```
 
-> *Mandates:*
->
-> The type `Size` is convertible to an integral
+> *Mandates:* The type `Size` is convertible to an integral
 > type [[conv.integral,class.conv]].
 >
-> *Preconditions:*
->
-> `n >= 0` is `true`. `Function` meets the *Cpp17MoveConstructible*
-> requirements.
+> *Preconditions:* `n >= 0` is `true`. `Function` meets the
+> *Cpp17MoveConstructible* requirements.
 >
 > \[*Note 8*: `Function` need not meet the requirements of
 > *Cpp17CopyConstructible*. — *end note*\]
 >
-> *Effects:*
->
-> Applies `f` to the result of dereferencing every iterator in the range
-> \[`first`, `first + n`) in order.
+> *Effects:* Applies `f` to the result of dereferencing every iterator
+> in the range \[`first`, `first + n`) in order.
 >
 > \[*Note 9*: If the type of `first` meets the requirements of a mutable
 > iterator, `f` can apply non-constant functions through the
 > dereferenced iterator. — *end note*\]
 >
-> *Returns:*
+> *Returns:* `first + n`.
 >
-> `first + n`.
->
-> *Remarks:*
->
-> If `f` returns a result, the result is ignored.
+> *Remarks:* If `f` returns a result, the result is ignored.
 
 ``` cpp
 template<class ExecutionPolicy, class ForwardIterator, class Size, class Function>
@@ -3404,34 +3356,25 @@ template<class ExecutionPolicy, class ForwardIterator, class Size, class Functio
                              Function f);
 ```
 
-> *Mandates:*
->
-> The type `Size` is convertible to an integral
+> *Mandates:* The type `Size` is convertible to an integral
 > type [[conv.integral,class.conv]].
 >
-> *Preconditions:*
+> *Preconditions:* `n >= 0` is `true`. `Function` meets the
+> *Cpp17CopyConstructible* requirements.
 >
-> `n >= 0` is `true`. `Function` meets the *Cpp17CopyConstructible*
-> requirements.
->
-> *Effects:*
->
-> Applies `f` to the result of dereferencing every iterator in the range
-> \[`first`, `first + n`).
+> *Effects:* Applies `f` to the result of dereferencing every iterator
+> in the range \[`first`, `first + n`).
 >
 > \[*Note 10*: If the type of `first` meets the requirements of a
 > mutable iterator, `f` can apply non-constant functions through the
 > dereferenced iterator. — *end note*\]
 >
-> *Returns:*
+> *Returns:* `first + n`.
 >
-> `first + n`.
->
-> *Remarks:*
->
-> If `f` returns a result, the result is ignored. Implementations do not
-> have the freedom granted under [[algorithms.parallel.exec]] to make
-> arbitrary copies of elements from the input sequence.
+> *Remarks:* If `f` returns a result, the result is ignored.
+> Implementations do not have the freedom granted under
+> [[algorithms.parallel.exec]] to make arbitrary copies of elements from
+> the input sequence.
 
 ``` cpp
 template<input_iterator I, class Proj = identity,
@@ -3440,25 +3383,17 @@ template<input_iterator I, class Proj = identity,
     ranges::for_each_n(I first, iter_difference_t<I> n, Fun f, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* `n >= 0` is `true`.
 >
-> `n >= 0` is `true`.
->
-> *Effects:*
->
-> Calls `invoke(f, invoke(proj, *i))` for every iterator `i` in the
-> range \[`first`, `first + n`) in order.
+> *Effects:* Calls `invoke(f, invoke(proj, *i))` for every iterator `i`
+> in the range \[`first`, `first + n`) in order.
 >
 > \[*Note 11*: If the result of `invoke(proj, *i)` is a mutable
 > reference, `f` can apply non-constant functions. — *end note*\]
 >
-> *Returns:*
+> *Returns:* `{first + n, std::move(f)}`.
 >
-> `{first + n, std::move(f)}`.
->
-> *Remarks:*
->
-> If `f` returns a result, the result is ignored.
+> *Remarks:* If `f` returns a result, the result is ignored.
 >
 > \[*Note 12*: The overload in namespace `ranges` requires `Fun` to
 > model `copy_constructible`. — *end note*\]
@@ -3525,15 +3460,11 @@ template<input_range R, class Proj = identity,
 >
 > - `bool(!invoke(pred, invoke(proj, *i)))` for `ranges::find_if_not`.
 >
-> *Returns:*
+> *Returns:* The first iterator `i` in the range \[`first`, `last`) for
+> which E is `true`. Returns `last` if no such iterator is found.
 >
-> The first iterator `i` in the range \[`first`, `last`) for which E is
-> `true`. Returns `last` if no such iterator is found.
->
-> *Complexity:*
->
-> At most `last - first` applications of the corresponding predicate and
-> any projection.
+> *Complexity:* At most `last - first` applications of the corresponding
+> predicate and any projection.
 
 ### Find last <a id="alg.find.last">[[alg.find.last]]</a>
 
@@ -3567,16 +3498,12 @@ template<forward_range R, class Proj = identity,
 > - `bool(!invoke(pred, invoke(proj, *i)))` for
 >   `ranges::find_last_if_not`.
 >
-> *Returns:*
+> *Returns:* Let `i` be the last iterator in the range \[`first`,
+> `last`) for which E is `true`. Returns `{i, last}`, or `{last, last}`
+> if no such iterator is found.
 >
-> Let `i` be the last iterator in the range \[`first`, `last`) for which
-> E is `true`. Returns `{i, last}`, or `{last, last}` if no such
-> iterator is found.
->
-> *Complexity:*
->
-> At most `last - first` applications of the corresponding predicate and
-> projection.
+> *Complexity:* At most `last - first` applications of the corresponding
+> predicate and projection.
 
 ### Find end <a id="alg.find.end">[[alg.find.end]]</a>
 
@@ -3645,9 +3572,8 @@ template<forward_range R1, forward_range R2,
 > - `{i, i + (i == last1 ? 0 : last2 - first2)}` for the overloads in
 >   namespace `ranges`.
 >
-> *Complexity:*
->
-> At most `(last2 - first2) * (last1 - first1 - (last2 - first2) + 1)`
+> *Complexity:* At most
+> `(last2 - first2) * (last1 - first1 - (last2 - first2) + 1)`
 > applications of the corresponding predicate and any projections.
 
 ### Find first <a id="alg.find.first.of">[[alg.find.first.of]]</a>
@@ -3702,21 +3628,15 @@ template<input_range R1, forward_range R2,
 > - `bool(invoke(pred, invoke(proj1, *i), invoke(proj2, *j)))` for the
 >   overloads with parameters `pred` and `proj1`.
 >
-> *Effects:*
+> *Effects:* Finds an element that matches one of a set of values.
 >
-> Finds an element that matches one of a set of values.
+> *Returns:* The first iterator `i` in the range \[`first1`, `last1`)
+> such that for some iterator `j` in the range \[`first2`, `last2`) E
+> holds. Returns `last1` if \[`first2`, `last2`) is empty or if no such
+> iterator is found.
 >
-> *Returns:*
->
-> The first iterator `i` in the range \[`first1`, `last1`) such that for
-> some iterator `j` in the range \[`first2`, `last2`) E holds. Returns
-> `last1` if \[`first2`, `last2`) is empty or if no such iterator is
-> found.
->
-> *Complexity:*
->
-> At most `(last1-first1) * (last2-first2)` applications of the
-> corresponding predicate and any projections.
+> *Complexity:* At most `(last1-first1) * (last2-first2)` applications
+> of the corresponding predicate and any projections.
 
 ### Adjacent find <a id="alg.adjacent.find">[[alg.adjacent.find]]</a>
 
@@ -3759,15 +3679,11 @@ template<forward_range R, class Proj = identity,
 > - `bool(invoke(pred, invoke(proj, *i), invoke(proj, *(i + 1))))` for
 >   the overloads with both parameters `pred` and `proj`.
 >
-> *Returns:*
+> *Returns:* The first iterator `i` such that both `i` and `i + 1` are
+> in the range \[`first`, `last`) for which E holds. Returns `last` if
+> no such iterator is found.
 >
-> The first iterator `i` such that both `i` and `i + 1` are in the range
-> \[`first`, `last`) for which E holds. Returns `last` if no such
-> iterator is found.
->
-> *Complexity:*
->
-> For the overloads with no `ExecutionPolicy`, exactly
+> *Complexity:* For the overloads with no `ExecutionPolicy`, exactly
 > $$\min(\texttt{(i - first) + 1}, \ \texttt{(last - first) - 1})$$
 > applications of the corresponding predicate, where `i` is
 > `adjacent_find`’s return value. For the overloads with an
@@ -3825,15 +3741,11 @@ template<input_range R, class Proj = identity,
 > - `bool(invoke(pred, invoke(proj, *i)))` for the overloads with both
 >   parameters `proj` and `pred`.
 >
-> *Effects:*
+> *Effects:* Returns the number of iterators `i` in the range \[`first`,
+> `last`) for which E holds.
 >
-> Returns the number of iterators `i` in the range \[`first`, `last`)
-> for which E holds.
->
-> *Complexity:*
->
-> Exactly `last - first` applications of the corresponding predicate and
-> any projection.
+> *Complexity:* Exactly `last - first` applications of the corresponding
+> predicate and any projection.
 
 ### Mismatch <a id="mismatch">[[mismatch]]</a>
 
@@ -3914,15 +3826,12 @@ template<input_range R1, input_range R2,
 >
 > Let N be $\min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$.
 >
-> *Returns:*
+> *Returns:* `{ first1 + n, first2 + n }`, where `n` is the smallest
+> integer in \[`0`, N) such that E holds, or N if no such integer
+> exists.
 >
-> `{ first1 + n, first2 + n }`, where `n` is the smallest integer in
-> \[`0`, N) such that E holds, or N if no such integer exists.
->
-> *Complexity:*
->
-> At most N applications of the corresponding predicate and any
-> projections.
+> *Complexity:* At most N applications of the corresponding predicate
+> and any projections.
 
 ### Equal <a id="alg.equal">[[alg.equal]]</a>
 
@@ -3993,15 +3902,11 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to,
 >   - `invoke(pred, invoke(proj1, *i), invoke(proj2, *(first2 + (i - first1))))`
 >     for the overloads with parameter `proj1`.
 >
-> *Returns:*
->
-> If `last1 - first1 != last2 - first2`, return `false`. Otherwise
-> return `true` if E holds for every iterator `i` in the range
+> *Returns:* If `last1 - first1 != last2 - first2`, return `false`.
+> Otherwise return `true` if E holds for every iterator `i` in the range
 > \[`first1`, `last1`). Otherwise, returns `false`.
 >
-> *Complexity:*
->
-> If
+> *Complexity:* If
 >
 > - the types of `first1`, `last1`, `first2`, and `last2` meet the
 >   *Cpp17RandomAccessIterator* requirements [[random.access.iterators]]
@@ -4052,30 +3957,25 @@ template<class ForwardIterator1, class ForwardIterator2,
 > parameter named `last2`, and let `pred` be `equal_to{}` for the
 > overloads with no parameter `pred`.
 >
-> *Mandates:*
+> *Mandates:* `ForwardIterator1` and `ForwardIterator2` have the same
+> value type.
 >
-> `ForwardIterator1` and `ForwardIterator2` have the same value type.
+> *Preconditions:* The comparison function is an equivalence relation.
 >
-> *Preconditions:*
+> *Returns:* If `last1 - first1 != last2 - first2`, return `false`.
+> Otherwise return `true` if there exists a permutation of the elements
+> in the range \[`first2`, `last2`), beginning with
+> `ForwardIterator2 begin`, such that
+> `equal(first1, last1, begin, pred)` returns `true`; otherwise, returns
+> `false`.
 >
-> The comparison function is an equivalence relation.
->
-> *Returns:*
->
-> If `last1 - first1 != last2 - first2`, return `false`. Otherwise
-> return `true` if there exists a permutation of the elements in the
-> range \[`first2`, `last2`), beginning with `ForwardIterator2 begin`,
-> such that `equal(first1, last1, begin, pred)` returns `true`;
-> otherwise, returns `false`.
->
-> *Complexity:*
->
-> No applications of the corresponding predicate if `ForwardIterator1`
-> and `ForwardIterator2` meet the requirements of random access
-> iterators and `last1 - first1 != last2 - first2`. Otherwise, exactly
-> `last1 - first1` applications of the corresponding predicate if
-> `equal(first1, last1, first2, last2, pred)` would return `true`;
-> otherwise, at worst 𝑂(N^2), where N has the value `last1 - first1`.
+> *Complexity:* No applications of the corresponding predicate if
+> `ForwardIterator1` and `ForwardIterator2` meet the requirements of
+> random access iterators and `last1 - first1 != last2 - first2`.
+> Otherwise, exactly `last1 - first1` applications of the corresponding
+> predicate if `equal(first1, last1, first2, last2, pred)` would return
+> `true`; otherwise, at worst 𝑂(N^2), where N has the value
+> `last1 - first1`.
 
 ``` cpp
 template<forward_iterator I1, sentinel_for<I1> S1, forward_iterator I2,
@@ -4093,17 +3993,15 @@ template<forward_range R1, forward_range R2,
                                         Proj1 proj1 = {}, Proj2 proj2 = {});
 ```
 
-> *Returns:*
->
-> If `last1 - first1 != last2 - first2`, return `false`. Otherwise
-> return `true` if there exists a permutation of the elements in the
-> range \[`first2`, `last2`), bounded by \[`pfirst`, `plast`), such that
+> *Returns:* If `last1 - first1 != last2 - first2`, return `false`.
+> Otherwise return `true` if there exists a permutation of the elements
+> in the range \[`first2`, `last2`), bounded by \[`pfirst`, `plast`),
+> such that
 > `ranges::equal(first1, last1, pfirst, plast, pred, proj1, proj2)`
 > returns `true`; otherwise, returns `false`.
 >
-> *Complexity:*
->
-> No applications of the corresponding predicate and projections if:
+> *Complexity:* No applications of the corresponding predicate and
+> projections if:
 >
 > - for the first overload,
 >
@@ -4150,9 +4048,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
            BinaryPredicate pred);
 ```
 
-> *Returns:*
->
-> The first iterator `i` in the range \[`first1`,
+> *Returns:* The first iterator `i` in the range \[`first1`,
 > `last1 - (last2-first2)`) such that for every non-negative integer `n`
 > less than `last2 - first2` the following corresponding conditions
 > hold:
@@ -4160,10 +4056,8 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 > Returns `first1` if \[`first2`, `last2`) is empty, otherwise returns
 > `last1` if no such iterator is found.
 >
-> *Complexity:*
->
-> At most `(last1 - first1) * (last2 - first2)` applications of the
-> corresponding predicate.
+> *Complexity:* At most `(last1 - first1) * (last2 - first2)`
+> applications of the corresponding predicate.
 
 ``` cpp
 template<forward_iterator I1, sentinel_for<I1> S1, forward_iterator I2,
@@ -4193,10 +4087,8 @@ template<forward_range R1, forward_range R2, class Pred = ranges::equal_to,
 >
 > - Returns `{last1, last1}` if no such iterator exists.
 >
-> *Complexity:*
->
-> At most `(last1 - first1) * (last2 - first2)` applications of the
-> corresponding predicate and projections.
+> *Complexity:* At most `(last1 - first1) * (last2 - first2)`
+> applications of the corresponding predicate and projections.
 
 ``` cpp
 template<class ForwardIterator, class Size, class T>
@@ -4224,22 +4116,17 @@ template<class ExecutionPolicy, class ForwardIterator, class Size, class T,
              BinaryPredicate pred);
 ```
 
-> *Mandates:*
->
-> The type `Size` is convertible to an integral
+> *Mandates:* The type `Size` is convertible to an integral
 > type [[conv.integral,class.conv]].
 >
-> *Returns:*
->
-> The first iterator `i` in the range \[`first`, `last-count`) such that
-> for every non-negative integer `n` less than `count` the following
-> corresponding conditions hold:
+> *Returns:* The first iterator `i` in the range \[`first`,
+> `last-count`) such that for every non-negative integer `n` less than
+> `count` the following corresponding conditions hold:
 > `*(i + n) == value, pred(*(i + n), value) != false`. Returns `last` if
 > no such iterator is found.
 >
-> *Complexity:*
->
-> At most `last - first` applications of the corresponding predicate.
+> *Complexity:* At most `last - first` applications of the corresponding
+> predicate.
 
 ``` cpp
 template<forward_iterator I, sentinel_for<I> S, class T,
@@ -4256,18 +4143,14 @@ template<forward_range R, class T, class Pred = ranges::equal_to,
                      const T& value, Pred pred = {}, Proj proj = {});
 ```
 
-> *Returns:*
->
-> `{i, i + count}` where `i` is the first iterator in the range
-> \[`first`, `last - count`) such that for every non-negative integer
-> `n` less than `count`, the following condition holds:
+> *Returns:* `{i, i + count}` where `i` is the first iterator in the
+> range \[`first`, `last - count`) such that for every non-negative
+> integer `n` less than `count`, the following condition holds:
 > `invoke(pred, invoke(proj, *(i + n)), value)`. Returns `{last, last}`
 > if no such iterator is found.
 >
-> *Complexity:*
->
-> At most `last - first` applications of the corresponding predicate and
-> projection.
+> *Complexity:* At most `last - first` applications of the corresponding
+> predicate and projection.
 
 ``` cpp
 template<class ForwardIterator, class Searcher>
@@ -4275,13 +4158,10 @@ template<class ForwardIterator, class Searcher>
     search(ForwardIterator first, ForwardIterator last, const Searcher& searcher);
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to: `return searcher(first, last).first;`
 >
-> Equivalent to: `return searcher(first, last).first;`
->
-> *Remarks:*
->
-> `Searcher` need not meet the *Cpp17CopyConstructible* requirements.
+> *Remarks:* `Searcher` need not meet the *Cpp17CopyConstructible*
+> requirements.
 
 ### Starts with <a id="alg.starts.with">[[alg.starts.with]]</a>
 
@@ -4319,9 +4199,7 @@ template<input_iterator I1, sentinel_for<I1> S1, input_iterator I2, sentinel_for
 
 > Let `N1` be `last1 - first1` and `N2` be `last2 - first2`.
 >
-> *Returns:*
->
-> `false` if $\texttt{N1} < \texttt{N2}$, otherwise
+> *Returns:* `false` if $\texttt{N1} < \texttt{N2}$, otherwise
 >
 > ``` cpp
 > ranges::equal(std::move(first1) + (N1 - N2), last1, std::move(first2), last2,
@@ -4340,9 +4218,7 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to, class Pr
 
 > Let `N1` be `ranges::distance(r1)` and `N2` be `ranges::distance(r2)`.
 >
-> *Returns:*
->
-> `false` if $\texttt{N1} < \texttt{N2}$, otherwise
+> *Returns:* `false` if $\texttt{N1} < \texttt{N2}$, otherwise
 >
 > ``` cpp
 > ranges::equal(ranges::drop_view(ranges::ref_view(r1), N1 - N2), r2, pred, proj1, proj2)
@@ -4388,9 +4264,7 @@ template<bidirectional_range R, class T,
   constexpr auto ranges::fold_right(R&& r, T init, F f);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > using U = decay_t<invoke_result_t<F&, iter_reference_t<I>, T>>;
@@ -4417,9 +4291,7 @@ template<bidirectional_range R,
 > Let `U` be
 > `decltype(ranges::fold_right(first, last, iter_value_t<I>(*first), f))`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > if (first == last)
@@ -4439,9 +4311,7 @@ template<input_range R, class T, indirectly-binary-left-foldable<T, iterator_t<R
 
 > Let `U` be `decay_t<invoke_result_t<F&, T, iter_reference_t<I>>>`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > if (first == last)
@@ -4452,11 +4322,10 @@ template<input_range R, class T, indirectly-binary-left-foldable<T, iterator_t<R
 > return {std::move(first), std::move(accum)};
 > ```
 >
-> *Remarks:*
->
-> The return type is `fold_left_with_iter_result<I, U>` for the first
-> overload and `fold_left_with_iter_result<borrowed_iterator_t<R>, U>`
-> for the second overload.
+> *Remarks:* The return type is `fold_left_with_iter_result<I, U>` for
+> the first overload and
+> `fold_left_with_iter_result<borrowed_iterator_t<R>, U>` for the second
+> overload.
 
 ``` cpp
 template<input_iterator I, sentinel_for<I> S,
@@ -4474,9 +4343,7 @@ template<input_range R, indirectly-binary-left-foldable<range_value_t<R>, iterat
 > decltype(ranges::fold_left(std::move(first), last, iter_value_t<I>(*first), f))
 > ```
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > if (first == last)
@@ -4487,10 +4354,9 @@ template<input_range R, indirectly-binary-left-foldable<range_value_t<R>, iterat
 > return {std::move(first), std::move(init)};
 > ```
 >
-> *Remarks:*
->
-> The return type is `fold_left_first_with_iter_result<I, optional<U>>`
-> for the first overload and
+> *Remarks:* The return type is
+> `fold_left_first_with_iter_result<I, optional<U>>` for the first
+> overload and
 > `fold_left_first_with_iter_result<borrowed_iterator_t<R>, optional<U>>`
 > for the second overload.
 
@@ -4513,15 +4379,11 @@ template<input_range R, weakly_incrementable O>
 
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* `result` is not in the range \[`first`, `last`).
 >
-> `result` is not in the range \[`first`, `last`).
->
-> *Effects:*
->
-> Copies elements in the range \[`first`, `last`) into the range
-> \[`result`, `result + `N) starting from `first` and proceeding to
-> `last`. For each non-negative integer n < N, performs
+> *Effects:* Copies elements in the range \[`first`, `last`) into the
+> range \[`result`, `result + `N) starting from `first` and proceeding
+> to `last`. For each non-negative integer n < N, performs
 > `*(result + `n`) = *(first + `n`)`.
 >
 > *Returns:*
@@ -4530,9 +4392,7 @@ template<input_range R, weakly_incrementable O>
 >
 > - `{last, result + `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ``` cpp
 template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
@@ -4541,24 +4401,16 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
                         ForwardIterator2 result);
 ```
 
-> *Preconditions:*
->
-> The ranges \[`first`, `last`) and \[`result`,
+> *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 > `result + (last - first)`) do not overlap.
 >
-> *Effects:*
+> *Effects:* Copies elements in the range \[`first`, `last`) into the
+> range \[`result`, `result + (last - first)`). For each non-negative
+> integer `n < (last - first)`, performs `*(result + n) = *(first + n)`.
 >
-> Copies elements in the range \[`first`, `last`) into the range
-> \[`result`, `result + (last - first)`). For each non-negative integer
-> `n < (last - first)`, performs `*(result + n) = *(first + n)`.
+> *Returns:* `result + (last - first)`.
 >
-> *Returns:*
->
-> `result + (last - first)`.
->
-> *Complexity:*
->
-> Exactly `last - first` assignments.
+> *Complexity:* Exactly `last - first` assignments.
 
 ``` cpp
 template<class InputIterator, class Size, class OutputIterator>
@@ -4577,14 +4429,10 @@ template<input_iterator I, weakly_incrementable O>
 
 > Let N be $\max(0, \texttt{n})$.
 >
-> *Mandates:*
->
-> The type `Size` is convertible to an integral
+> *Mandates:* The type `Size` is convertible to an integral
 > type [[conv.integral,class.conv]].
 >
-> *Effects:*
->
-> For each non-negative integer i < N, performs
+> *Effects:* For each non-negative integer i < N, performs
 > `*(result + `i`) = *(first + `i`)`.
 >
 > *Returns:*
@@ -4594,9 +4442,7 @@ template<input_iterator I, weakly_incrementable O>
 > - `{first + `N`, result + `N`}` for the overload in namespace
 >   `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ``` cpp
 template<class InputIterator, class OutputIterator, class Predicate>
@@ -4630,9 +4476,7 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > and N be the number of iterators `i` in the range \[`first`, `last`)
 > for which the condition E holds.
 >
-> *Preconditions:*
->
-> The ranges \[`first`, `last`) and \[`result`,
+> *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 > `result + (last - first)`) do not overlap.
 >
 > \[*Note 13*: For the overload with an `ExecutionPolicy`, there might
@@ -4641,10 +4485,8 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > *Cpp17MoveConstructible*
 > ( [[cpp17.moveconstructible]]). — *end note*\]
 >
-> *Effects:*
->
-> Copies all of the elements referred to by the iterator `i` in the
-> range \[`first`, `last`) for which E is `true`.
+> *Effects:* Copies all of the elements referred to by the iterator `i`
+> in the range \[`first`, `last`) for which E is `true`.
 >
 > *Returns:*
 >
@@ -4652,14 +4494,10 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > - `{last, result + `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
+> *Complexity:* Exactly `last - first` applications of the corresponding
+> predicate and any projection.
 >
-> Exactly `last - first` applications of the corresponding predicate and
-> any projection.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ``` cpp
 template<class BidirectionalIterator1, class BidirectionalIterator2>
@@ -4680,15 +4518,11 @@ template<bidirectional_range R, bidirectional_iterator I>
 
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* `result` is not in the range (`first`, `last`).
 >
-> `result` is not in the range (`first`, `last`).
->
-> *Effects:*
->
-> Copies elements in the range \[`first`, `last`) into the range
-> \[`result - `N, `result`) starting from `last - 1` and proceeding to
-> `first`.
+> *Effects:* Copies elements in the range \[`first`, `last`) into the
+> range \[`result - `N, `result`) starting from `last - 1` and
+> proceeding to `first`.
 >
 > `copy_backward` can be used instead of `copy` when `last` is in the
 > range \[`result - `N, `result`).
@@ -4702,9 +4536,7 @@ template<bidirectional_range R, bidirectional_iterator I>
 >
 > - `{last, result - `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ### Move <a id="alg.move">[[alg.move]]</a>
 
@@ -4732,15 +4564,11 @@ template<input_range R, weakly_incrementable O>
 >
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* `result` is not in the range \[`first`, `last`).
 >
-> `result` is not in the range \[`first`, `last`).
->
-> *Effects:*
->
-> Moves elements in the range \[`first`, `last`) into the range
-> \[`result`, `result + `N) starting from `first` and proceeding to
-> `last`. For each non-negative integer n < N, performs
+> *Effects:* Moves elements in the range \[`first`, `last`) into the
+> range \[`result`, `result + `N) starting from `first` and proceeding
+> to `last`. For each non-negative integer n < N, performs
 > `*(result + `n`) = `E.
 >
 > *Returns:*
@@ -4749,9 +4577,7 @@ template<input_range R, weakly_incrementable O>
 >
 > - `{last, result + `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ``` cpp
 template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
@@ -4762,24 +4588,16 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
 
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
+> `result + `N) do not overlap.
 >
-> The ranges \[`first`, `last`) and \[`result`, `result + `N) do not
-> overlap.
->
-> *Effects:*
->
-> Moves elements in the range \[`first`, `last`) into the range
-> \[`result`, `result + `N). For each non-negative integer n < N,
+> *Effects:* Moves elements in the range \[`first`, `last`) into the
+> range \[`result`, `result + `N). For each non-negative integer n < N,
 > performs `*(result + `n`) = std::move(*(first + `n`))`.
 >
-> *Returns:*
+> *Returns:* `result + `N.
 >
-> `result + `N.
->
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ``` cpp
 template<class BidirectionalIterator1, class BidirectionalIterator2>
@@ -4806,15 +4624,11 @@ template<bidirectional_range R, bidirectional_iterator I>
 >
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* `result` is not in the range (`first`, `last`).
 >
-> `result` is not in the range (`first`, `last`).
->
-> *Effects:*
->
-> Moves elements in the range \[`first`, `last`) into the range
-> \[`result - `N, `result`) starting from `last - 1` and proceeding to
-> `first`.
+> *Effects:* Moves elements in the range \[`first`, `last`) into the
+> range \[`result - `N, `result`) starting from `last - 1` and
+> proceeding to `first`.
 >
 > `move_backward` can be used instead of `move` when `last` is in the
 > range \[`result - `N, `result`).
@@ -4827,9 +4641,7 @@ template<bidirectional_range R, bidirectional_iterator I>
 >
 > - `{last, result - `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ### Swap <a id="alg.swap">[[alg.swap]]</a>
 
@@ -4861,15 +4673,12 @@ template<input_range R1, input_range R2>
 >
 > - M be $\min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$.
 >
-> *Preconditions:*
+> *Preconditions:* The two ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) do not overlap. For the overloads in namespace `std`,
+> `*(first1 + `n`)` is swappable with [[swappable.requirements]]
+> `*(first2 + `n`)`.
 >
-> The two ranges \[`first1`, `last1`) and \[`first2`, `last2`) do not
-> overlap. For the overloads in namespace `std`, `*(first1 + `n`)` is
-> swappable with [[swappable.requirements]] `*(first2 + `n`)`.
->
-> *Effects:*
->
-> For each non-negative integer n < M performs:
+> *Effects:* For each non-negative integer n < M performs:
 >
 > - `swap(*(first1 + `n`), *(first2 + `n`))` for the overloads in
 >   namespace `std`;
@@ -4884,23 +4693,17 @@ template<input_range R1, input_range R2>
 > - `{first1 + `M`, first2 + `M`}` for the overloads in namespace
 >   `ranges`.
 >
-> *Complexity:*
->
-> Exactly M swaps.
+> *Complexity:* Exactly M swaps.
 
 ``` cpp
 template<class ForwardIterator1, class ForwardIterator2>
   constexpr void iter_swap(ForwardIterator1 a, ForwardIterator2 b);
 ```
 
-> *Preconditions:*
->
-> `a` and `b` are dereferenceable. `*a` is swappable
+> *Preconditions:* `a` and `b` are dereferenceable. `*a` is swappable
 > with [[swappable.requirements]] `*b`.
 >
-> *Effects:*
->
-> As if by `swap(*a, *b)`.
+> *Effects:* As if by `swap(*a, *b)`.
 
 ### Transform <a id="alg.transform">[[alg.transform]]</a>
 
@@ -4981,10 +4784,8 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 >   - `invoke(binary_op, invoke(proj1, *(first1 + (i - result))), invoke(proj2,(first2 + (i - result))))`
 >     for binary transforms defined in namespace `ranges`.
 >
-> *Preconditions:*
->
-> `op` and `binary_op` do not invalidate iterators or subranges, nor
-> modify elements in the ranges
+> *Preconditions:* `op` and `binary_op` do not invalidate iterators or
+> subranges, nor modify elements in the ranges
 >
 > - ,
 >
@@ -4994,9 +4795,7 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 >
 >   The use of fully closed ranges is intentional.
 >
-> *Effects:*
->
-> Assigns through every iterator `i` in the range \[`result`,
+> *Effects:* Assigns through every iterator `i` in the range \[`result`,
 > `result + `N) a new corresponding value equal to E.
 >
 > *Returns:*
@@ -5009,15 +4808,11 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > - `{first1 + `N`, first2 + `N`, result + `N`}` for binary transforms
 >   defined in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N applications of `op` or `binary_op`, and any projections.
-> This requirement also applies to the overload with an
+> *Complexity:* Exactly N applications of `op` or `binary_op`, and any
+> projections. This requirement also applies to the overload with an
 > `ExecutionPolicy`.
 >
-> *Remarks:*
->
-> `result` may be equal to `first1` or `first2`.
+> *Remarks:* `result` may be equal to `first1` or `first2`.
 
 ### Replace <a id="alg.replace">[[alg.replace]]</a>
 
@@ -5069,23 +4864,16 @@ template<input_range R, class T, class Proj = identity,
 >
 > - `bool(invoke(pred, invoke(proj, *i)))` for `ranges::replace_if`.
 >
-> *Mandates:*
+> *Mandates:* `new_value` is writable [[iterator.requirements.general]]
+> to `first`.
 >
-> `new_value` is writable [[iterator.requirements.general]] to `first`.
+> *Effects:* Substitutes elements referred by the iterator `i` in the
+> range \[`first`, `last`) with `new_value`, when E is `true`.
 >
-> *Effects:*
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> Substitutes elements referred by the iterator `i` in the range
-> \[`first`, `last`) with `new_value`, when E is `true`.
->
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> Exactly `last - first` applications of the corresponding predicate and
-> any projection.
+> *Complexity:* Exactly `last - first` applications of the corresponding
+> predicate and any projection.
 
 ``` cpp
 template<class InputIterator, class OutputIterator, class T>
@@ -5154,19 +4942,13 @@ template<input_range R, class T, output_iterator<const T&> O, class Proj = ident
 > - `bool(invoke(pred, invoke(proj, *(first + (i - result)))))` for
 >   `ranges::replace_copy_if`.
 >
-> *Mandates:*
+> *Mandates:* The results of the expressions `*first` and `new_value`
+> are writable [[iterator.requirements.general]] to `result`.
 >
-> The results of the expressions `*first` and `new_value` are
-> writable [[iterator.requirements.general]] to `result`.
->
-> *Preconditions:*
->
-> The ranges \[`first`, `last`) and \[`result`,
+> *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 > `result + (last - first)`) do not overlap.
 >
-> *Effects:*
->
-> Assigns through every iterator `i` in the range \[`result`,
+> *Effects:* Assigns through every iterator `i` in the range \[`result`,
 > `result + (last - first)`) a new corresponding value
 >
 > - `new_value` if E is `true` or
@@ -5180,10 +4962,8 @@ template<input_range R, class T, output_iterator<const T&> O, class Proj = ident
 > - `{last, result + (last - first)}` for the overloads in namespace
 >   `ranges`.
 >
-> *Complexity:*
->
-> Exactly `last - first` applications of the corresponding predicate and
-> any projection.
+> *Complexity:* Exactly `last - first` applications of the corresponding
+> predicate and any projection.
 
 ### Fill <a id="alg.fill">[[alg.fill]]</a>
 
@@ -5211,24 +4991,17 @@ template<class T, output_iterator<const T&> O>
 > Let N be $\max(0, \texttt{n})$ for the `fill_n` algorithms, and
 > `last - first` for the `fill` algorithms.
 >
-> *Mandates:*
->
-> The expression `value` is writable [[iterator.requirements.general]]
-> to the output iterator. The type `Size` is convertible to an integral
+> *Mandates:* The expression `value` is
+> writable [[iterator.requirements.general]] to the output iterator. The
+> type `Size` is convertible to an integral
 > type [[conv.integral,class.conv]].
 >
-> *Effects:*
+> *Effects:* Assigns `value` through all the iterators in the range
+> \[`first`, `first + `N).
 >
-> Assigns `value` through all the iterators in the range \[`first`,
-> `first + `N).
+> *Returns:* `first + `N.
 >
-> *Returns:*
->
-> `first + `N.
->
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ### Generate <a id="alg.generate">[[alg.generate]]</a>
 
@@ -5261,23 +5034,15 @@ template<input_or_output_iterator O, copy_constructible F>
 > Let N be $\max(0, \texttt{n})$ for the `generate_n` algorithms, and
 > `last - first` for the `generate` algorithms.
 >
-> *Mandates:*
->
-> `Size` is convertible to an integral
+> *Mandates:* `Size` is convertible to an integral
 > type [[conv.integral,class.conv]].
 >
-> *Effects:*
+> *Effects:* Assigns the result of successive evaluations of `gen()`
+> through each iterator in the range \[`first`, `first + `N).
 >
-> Assigns the result of successive evaluations of `gen()` through each
-> iterator in the range \[`first`, `first + `N).
+> *Returns:* `first + `N.
 >
-> *Returns:*
->
-> `first + `N.
->
-> *Complexity:*
->
-> Exactly N evaluations of `gen()` and assignments.
+> *Complexity:* Exactly N evaluations of `gen()` and assignments.
 
 ### Remove <a id="alg.remove">[[alg.remove]]</a>
 
@@ -5326,32 +5091,23 @@ template<forward_range R, class Proj = identity,
 >
 > - `bool(invoke(pred, invoke(proj, *i)))` for `ranges::remove_if`.
 >
-> *Preconditions:*
+> *Preconditions:* For the algorithms in namespace `std`, the type of
+> `*first` meets the *Cpp17MoveAssignable* requirements
+> ( [[cpp17.moveassignable]]).
 >
-> For the algorithms in namespace `std`, the type of `*first` meets the
-> *Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]).
+> *Effects:* Eliminates all the elements referred to by iterator `i` in
+> the range \[`first`, `last`) for which E holds.
 >
-> *Effects:*
->
-> Eliminates all the elements referred to by iterator `i` in the range
-> \[`first`, `last`) for which E holds.
->
-> *Returns:*
->
-> Let j be the end of the resulting range. Returns:
+> *Returns:* Let j be the end of the resulting range. Returns:
 >
 > - j for the overloads in namespace `std`.
 >
 > - `{`j`, last}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
+> *Complexity:* Exactly `last - first` applications of the corresponding
+> predicate and any projection.
 >
-> Exactly `last - first` applications of the corresponding predicate and
-> any projection.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 >
 > \[*Note 14*: Each element in the range \[`ret`, `last`), where `ret`
 > is the returned value, has a valid but unspecified state, because the
@@ -5417,13 +5173,10 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > Let N be the number of elements in \[`first`, `last`) for which E is
 > `false`.
 >
-> *Mandates:*
+> *Mandates:* `*first` is writable [[iterator.requirements.general]] to
+> `result`.
 >
-> `*first` is writable [[iterator.requirements.general]] to `result`.
->
-> *Preconditions:*
->
-> The ranges \[`first`, `last`) and \[`result`,
+> *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 > `result + (last - first)`) do not overlap.
 >
 > \[*Note 15*: For the overloads with an `ExecutionPolicy`, there might
@@ -5432,10 +5185,8 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
 > requirements. — *end note*\]
 >
-> *Effects:*
->
-> Copies all the elements referred to by the iterator `i` in the range
-> \[`first`, `last`) for which E is `false`.
+> *Effects:* Copies all the elements referred to by the iterator `i` in
+> the range \[`first`, `last`) for which E is `false`.
 >
 > *Returns:*
 >
@@ -5443,14 +5194,10 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > - `{last, result + `N`}`, for the algorithms in namespace `ranges`.
 >
-> *Complexity:*
+> *Complexity:* Exactly `last - first` applications of the corresponding
+> predicate and any projection.
 >
-> Exactly `last - first` applications of the corresponding predicate and
-> any projection.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ### Unique <a id="alg.unique">[[alg.unique]]</a>
 
@@ -5487,31 +5234,24 @@ template<forward_range R, class Proj = identity,
 > - `bool(invoke(comp, invoke(proj, *(i - 1)), invoke(proj, *i)))` for
 >   the overloads in namespace `ranges`.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`, `pred` is an
+> equivalence relation and the type of `*first` meets the
+> *Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]).
 >
-> For the overloads in namespace `std`, `pred` is an equivalence
-> relation and the type of `*first` meets the *Cpp17MoveAssignable*
-> requirements ( [[cpp17.moveassignable]]).
+> *Effects:* For a nonempty range, eliminates all but the first element
+> from every consecutive group of equivalent elements referred to by the
+> iterator `i` in the range \[`first + 1`, `last`) for which E is
+> `true`.
 >
-> *Effects:*
->
-> For a nonempty range, eliminates all but the first element from every
-> consecutive group of equivalent elements referred to by the iterator
-> `i` in the range \[`first + 1`, `last`) for which E is `true`.
->
-> *Returns:*
->
-> Let j be the end of the resulting range. Returns:
+> *Returns:* Let j be the end of the resulting range. Returns:
 >
 > - j for the overloads in namespace `std`.
 >
 > - `{`j`, last}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> For nonempty ranges, exactly `(last - first) - 1` applications of the
-> corresponding predicate and no more than twice as many applications of
-> any projection.
+> *Complexity:* For nonempty ranges, exactly `(last - first) - 1`
+> applications of the corresponding predicate and no more than twice as
+> many applications of any projection.
 
 ``` cpp
 template<class InputIterator, class OutputIterator>
@@ -5562,9 +5302,8 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 > - `bool(invoke(comp, invoke(proj, *i), invoke(proj, *(i - 1))))` for
 >   the overloads in namespace `ranges`.
 >
-> *Mandates:*
->
-> `*first` is writable [[iterator.requirements.general]] to `result`.
+> *Mandates:* `*first` is writable [[iterator.requirements.general]] to
+> `result`.
 >
 > *Preconditions:*
 >
@@ -5590,11 +5329,9 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >     `ForwardIterator1` does not meet both the *Cpp17CopyConstructible*
 >     and *Cpp17CopyAssignable* requirements. — *end note*\]
 >
-> *Effects:*
->
-> Copies only the first element from every consecutive group of equal
-> elements referred to by the iterator `i` in the range \[`first`,
-> `last`) for which E holds.
+> *Effects:* Copies only the first element from every consecutive group
+> of equal elements referred to by the iterator `i` in the range
+> \[`first`, `last`) for which E holds.
 >
 > *Returns:*
 >
@@ -5602,10 +5339,9 @@ template<input_range R, weakly_incrementable O, class Proj = identity,
 >
 > - `{last, result + `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly `last - first - 1` applications of the corresponding predicate
-> and no more than twice as many applications of any projection.
+> *Complexity:* Exactly `last - first - 1` applications of the
+> corresponding predicate and no more than twice as many applications of
+> any projection.
 
 ### Reverse <a id="alg.reverse">[[alg.reverse]]</a>
 
@@ -5624,25 +5360,18 @@ template<bidirectional_range R>
   constexpr borrowed_iterator_t<R> ranges::reverse(R&& r);
 ```
 
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `BidirectionalIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]].
 >
-> For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
->
-> *Effects:*
->
-> For each non-negative integer `i < (last - first) / 2`, applies
-> `std::iter_swap`, or `ranges::iter_swap` for the overloads in
+> *Effects:* For each non-negative integer `i < (last - first) / 2`,
+> applies `std::iter_swap`, or `ranges::iter_swap` for the overloads in
 > namespace `ranges`, to all pairs of iterators
 > `first + i, (last - i) - 1`.
 >
-> *Returns:*
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> Exactly `(last - first)/2` swaps.
+> *Complexity:* Exactly `(last - first)/2` swaps.
 
 ``` cpp
 template<class BidirectionalIterator, class OutputIterator>
@@ -5667,16 +5396,12 @@ template<bidirectional_range R, weakly_incrementable O>
 
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
+> `result + `N) do not overlap.
 >
-> The ranges \[`first`, `last`) and \[`result`, `result + `N) do not
-> overlap.
->
-> *Effects:*
->
-> Copies the range \[`first`, `last`) to the range \[`result`,
-> `result + `N) such that for every non-negative integer `i < `N the
-> following assignment takes place:
+> *Effects:* Copies the range \[`first`, `last`) to the range
+> \[`result`, `result + `N) such that for every non-negative integer
+> `i < `N the following assignment takes place:
 > `*(result + `N` - 1 - i) = *(first + i)`.
 >
 > *Returns:*
@@ -5685,9 +5410,7 @@ template<bidirectional_range R, weakly_incrementable O>
 >
 > - `{last, result + `N`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ### Rotate <a id="alg.rotate">[[alg.rotate]]</a>
 
@@ -5704,19 +5427,15 @@ template<permutable I, sentinel_for<I> S>
   constexpr subrange<I> ranges::rotate(I first, I middle, S last);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`first`, `middle`) and \[`middle`, `last`) are
+> valid ranges. For the overloads in namespace `std`, `ForwardIterator`
+> meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]], and the type of `*first`
+> meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. For the
-> overloads in namespace `std`, `ForwardIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]], and the
-> type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
->
-> *Effects:*
->
-> For each non-negative integer `i < (last - first)`, places the element
-> from the position `first + i` into position
+> *Effects:* For each non-negative integer `i < (last - first)`, places
+> the element from the position `first + i` into position
 > `first + (i + (last - middle)) % (last - first)`.
 >
 > \[*Note 17*: This is a left rotate. — *end note*\]
@@ -5728,9 +5447,7 @@ template<permutable I, sentinel_for<I> S>
 > - `{first + (last - middle), last}` for the overload in namespace
 >   `ranges`.
 >
-> *Complexity:*
->
-> At most `last - first` swaps.
+> *Complexity:* At most `last - first` swaps.
 
 ``` cpp
 template<forward_range R>
@@ -5738,9 +5455,7 @@ template<forward_range R>
   constexpr borrowed_subrange_t<R> ranges::rotate(R&& r, iterator_t<R> middle);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return ranges::rotate(ranges::begin(r), middle, ranges::end(r));`
 
 ``` cpp
@@ -5762,17 +5477,13 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
 
 > Let N be `last - first`.
 >
-> *Preconditions:*
+> *Preconditions:* \[`first`, `middle`) and \[`middle`, `last`) are
+> valid ranges. The ranges \[`first`, `last`) and \[`result`,
+> `result + `N) do not overlap.
 >
-> \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. The
-> ranges \[`first`, `last`) and \[`result`, `result + `N) do not
-> overlap.
->
-> *Effects:*
->
-> Copies the range \[`first`, `last`) to the range \[`result`,
-> `result + `N) such that for each non-negative integer i < N the
-> following assignment takes place:
+> *Effects:* Copies the range \[`first`, `last`) to the range
+> \[`result`, `result + `N) such that for each non-negative integer
+> i < N the following assignment takes place:
 > `*(result + `i`) = *(first + (`i` + (middle - first)) % `N`)`.
 >
 > *Returns:*
@@ -5781,9 +5492,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
 >
 > - `{last, result + `N`}` for the overload in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly N assignments.
+> *Complexity:* Exactly N assignments.
 
 ``` cpp
 template<forward_range R, weakly_incrementable O>
@@ -5792,9 +5501,7 @@ template<forward_range R, weakly_incrementable O>
     ranges::rotate_copy(R&& r, iterator_t<R> middle, O result);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return ranges::rotate_copy(ranges::begin(r), middle, ranges::end(r), std::move(result));
@@ -5821,15 +5528,12 @@ template<input_range R, weakly_incrementable O, class Gen>
   O ranges::sample(R&& r, O out, range_difference_t<R> n, Gen&& g);
 ```
 
-> *Mandates:*
+> *Mandates:* For the overload in namespace `std`, `Distance` is an
+> integer type and `*first` is
+> writable [[iterator.requirements.general]] to `out`.
 >
-> For the overload in namespace `std`, `Distance` is an integer type and
-> `*first` is writable [[iterator.requirements.general]] to `out`.
->
-> *Preconditions:*
->
-> `out` is not in the range \[`first`, `last`). For the overload in
-> namespace `std`:
+> *Preconditions:* `out` is not in the range \[`first`, `last`). For the
+> overload in namespace `std`:
 >
 > - `PopulationIterator` meets the *Cpp17InputIterator*
 >   requirements [[input.iterators]].
@@ -5845,22 +5549,16 @@ template<input_range R, weakly_incrementable O, class Gen>
 >   requirements of a uniform random bit generator
 >   type [[rand.req.urng]].
 >
-> *Effects:*
->
-> Copies $\min(\texttt{last - first}, \ \texttt{n})$ elements (the )
-> from \[`first`, `last`) (the ) to `out` such that each possible sample
-> has equal probability of appearance.
+> *Effects:* Copies $\min(\texttt{last - first}, \ \texttt{n})$ elements
+> (the ) from \[`first`, `last`) (the ) to `out` such that each possible
+> sample has equal probability of appearance.
 >
 > \[*Note 18*: Algorithms that obtain such effects include and
 > . — *end note*\]
 >
-> *Returns:*
+> *Returns:* The end of the resulting sample range.
 >
-> The end of the resulting sample range.
->
-> *Complexity:*
->
-> 𝑂(`last - first)`.
+> *Complexity:* 𝑂(`last - first)`.
 >
 > *Remarks:*
 >
@@ -5891,9 +5589,7 @@ template<random_access_range R, class Gen>
   borrowed_iterator_t<R> ranges::shuffle(R&& r, Gen&& g);
 ```
 
-> *Preconditions:*
->
-> For the overload in namespace `std`:
+> *Preconditions:* For the overload in namespace `std`:
 >
 > - `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 >   requirements [[swappable.requirements]].
@@ -5901,25 +5597,17 @@ template<random_access_range R, class Gen>
 > - The type `remove_reference_t<UniformRandomBitGenerator>` meets the
 >   uniform random bit generator [[rand.req.urng]] requirements.
 >
-> *Effects:*
+> *Effects:* Permutes the elements in the range \[`first`, `last`) such
+> that each possible permutation of those elements has equal probability
+> of appearance.
 >
-> Permutes the elements in the range \[`first`, `last`) such that each
-> possible permutation of those elements has equal probability of
-> appearance.
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> *Returns:*
+> *Complexity:* Exactly `(last - first) - 1` swaps.
 >
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> Exactly `(last - first) - 1` swaps.
->
-> *Remarks:*
->
-> To the extent that the implementation of this function makes use of
-> random numbers, the object referenced by `g` shall serve as the
-> implementation’s source of randomness.
+> *Remarks:* To the extent that the implementation of this function
+> makes use of random numbers, the object referenced by `g` shall serve
+> as the implementation’s source of randomness.
 
 ### Shift <a id="alg.shift">[[alg.shift]]</a>
 
@@ -5940,31 +5628,25 @@ template<forward_range R>
   constexpr borrowed_subrange_t<R> ranges::shift_left(R&& r, range_difference_t<R> n)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `n >= 0` is `true`. For the overloads in namespace
+> `std`, the type of `*first` meets the *Cpp17MoveAssignable*
+> requirements.
 >
-> `n >= 0` is `true`. For the overloads in namespace `std`, the type of
-> `*first` meets the *Cpp17MoveAssignable* requirements.
+> *Effects:* If `n == 0` or `n >= last - first`, does nothing.
+> Otherwise, moves the element from position `first + n + i` into
+> position `first + i` for each non-negative integer
+> `i < (last - first) - n`. For the overloads without an
+> `ExecutionPolicy` template parameter, does so in order starting from
+> `i = 0` and proceeding to `i = (last - first) - n - 1`.
 >
-> *Effects:*
->
-> If `n == 0` or `n >= last - first`, does nothing. Otherwise, moves the
-> element from position `first + n + i` into position `first + i` for
-> each non-negative integer `i < (last - first) - n`. For the overloads
-> without an `ExecutionPolicy` template parameter, does so in order
-> starting from `i = 0` and proceeding to `i = (last - first) - n - 1`.
->
-> *Returns:*
->
-> Let *NEW_LAST* be `first + (last - first - n)` if `n < last - first`,
-> otherwise `first`.
+> *Returns:* Let *NEW_LAST* be `first + (last - first - n)` if
+> `n < last - first`, otherwise `first`.
 >
 > - *NEW_LAST* for the overloads in namespace `std`.
 >
 > - `{first, `*`NEW_LAST`*`}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> At most `(last - first) - n` assignments.
+> *Complexity:* At most `(last - first) - n` assignments.
 
 ``` cpp
 template<class ForwardIterator>
@@ -5983,21 +5665,17 @@ template<forward_range R>
   constexpr borrowed_subrange_t<R> ranges::shift_right(R&& r, range_difference_t<R> n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `n >= 0` is `true`. For the overloads in namespace
+> `std`, the type of `*first` meets the *Cpp17MoveAssignable*
+> requirements, and `ForwardIterator` meets the
+> *Cpp17BidirectionalIterator* requirements [[bidirectional.iterators]]
+> or the *Cpp17ValueSwappable* requirements.
 >
-> `n >= 0` is `true`. For the overloads in namespace `std`, the type of
-> `*first` meets the *Cpp17MoveAssignable* requirements, and
-> `ForwardIterator` meets the *Cpp17BidirectionalIterator*
-> requirements [[bidirectional.iterators]] or the *Cpp17ValueSwappable*
-> requirements.
->
-> *Effects:*
->
-> If `n == 0` or `n >= last - first`, does nothing. Otherwise, moves the
-> element from position `first + i` into position `first + n + i` for
-> each non-negative integer `i < (last - first) - n`. Does so in order
-> starting from `i = (last - first) - n - 1` and proceeding to `i = 0`
-> if:
+> *Effects:* If `n == 0` or `n >= last - first`, does nothing.
+> Otherwise, moves the element from position `first + i` into position
+> `first + n + i` for each non-negative integer
+> `i < (last - first) - n`. Does so in order starting from
+> `i = (last - first) - n - 1` and proceeding to `i = 0` if:
 >
 > - for the overload in namespace `std` without an `ExecutionPolicy`
 >   template parameter, `ForwardIterator` meets the
@@ -6006,18 +5684,14 @@ template<forward_range R>
 > - for the overloads in namespace `ranges`, `I` models
 >   `bidirectional_iterator`.
 >
-> *Returns:*
->
-> Let *NEW_FIRST* be `first + n` if `n < last - first`, otherwise
-> `last`.
+> *Returns:* Let *NEW_FIRST* be `first + n` if `n < last - first`,
+> otherwise `last`.
 >
 > - *NEW_FIRST* for the overloads in namespace `std`.
 >
 > - `{`*`NEW_FIRST`*`, last}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> At most `(last - first) - n` assignments or swaps.
+> *Complexity:* At most `(last - first) - n` assignments or swaps.
 
 ## Sorting and related operations <a id="alg.sorting">[[alg.sorting]]</a>
 
@@ -6125,26 +5799,19 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `RandomAccessIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
-> type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
+> *Effects:* Sorts the elements in the range \[`first`, `last`) with
+> respect to `comp` and `proj`.
 >
-> *Effects:*
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> Sorts the elements in the range \[`first`, `last`) with respect to
-> `comp` and `proj`.
->
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> Let N be `last - first`. 𝑂(N log N) comparisons and projections.
+> *Complexity:* Let N be `last - first`. 𝑂(N log N) comparisons and
+> projections.
 
 #### `stable_sort` <a id="stable.sort">[[stable.sort]]</a>
 
@@ -6176,33 +5843,23 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `RandomAccessIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
-> type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
+> *Effects:* Sorts the elements in the range \[`first`, `last`) with
+> respect to `comp` and `proj`.
 >
-> *Effects:*
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> Sorts the elements in the range \[`first`, `last`) with respect to
-> `comp` and `proj`.
+> *Complexity:* Let N be `last - first`. If enough extra memory is
+> available, $N \log(N)$ comparisons. Otherwise, at most $N \log^2(N)$
+> comparisons. In either case, twice as many projections as the number
+> of comparisons.
 >
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> Let N be `last - first`. If enough extra memory is available,
-> $N \log(N)$ comparisons. Otherwise, at most $N \log^2(N)$ comparisons.
-> In either case, twice as many projections as the number of
-> comparisons.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 #### `partial_sort` <a id="partial.sort">[[partial.sort]]</a>
 
@@ -6239,30 +5896,22 @@ template<random_access_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* \[`first`, `middle`) and \[`middle`, `last`) are
+> valid ranges. For the overloads in namespace `std`,
+> `RandomAccessIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> \[`first`, `middle`) and \[`middle`, `last`) are valid ranges. For the
-> overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
-> type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
->
-> *Effects:*
->
-> Places the first `middle - first` elements from the range \[`first`,
-> `last`) as sorted with respect to `comp` and `proj` into the range
-> \[`first`, `middle`). The rest of the elements in the range
+> *Effects:* Places the first `middle - first` elements from the range
+> \[`first`, `last`) as sorted with respect to `comp` and `proj` into
+> the range \[`first`, `middle`). The rest of the elements in the range
 > \[`middle`, `last`) are placed in an unspecified order.
 >
-> *Returns:*
+> *Returns:* `last` for the overload in namespace `ranges`.
 >
-> `last` for the overload in namespace `ranges`.
->
-> *Complexity:*
->
-> Approximately `(last - first) * log(middle - first)` comparisons, and
-> twice as many projections.
+> *Complexity:* Approximately `(last - first) * log(middle - first)`
+> comparisons, and twice as many projections.
 
 ``` cpp
 template<random_access_range R, class Comp = ranges::less, class Proj = identity>
@@ -6271,9 +5920,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
     ranges::partial_sort(R&& r, iterator_t<R> middle, Comp comp = {}, Proj proj = {});
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return ranges::partial_sort(ranges::begin(r), middle, ranges::end(r), comp, proj);
@@ -6333,18 +5980,15 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
 > Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for
 > the overloads with no parameters by those names.
 >
-> *Mandates:*
+> *Mandates:* For the overloads in namespace `std`, the expression
+> `*first` is writable [[iterator.requirements.general]] to
+> `result_first`.
 >
-> For the overloads in namespace `std`, the expression `*first` is
-> writable [[iterator.requirements.general]] to `result_first`.
->
-> *Preconditions:*
->
-> For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]], the
-> type of `*result_first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
+> *Preconditions:* For the overloads in namespace `std`,
+> `RandomAccessIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]], the type of `*result_first`
+> meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
 > For iterators `a1` and `b1` in \[`first`, `last`), and iterators `x2`
 > and `y2` in \[`result_first`, `result_last`), after evaluating the
@@ -6364,10 +6008,9 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
 > range does not affect how it is ordered by `comp` and `proj1` or
 > `proj2`. — *end note*\]
 >
-> *Effects:*
->
-> Places the first N elements as sorted with respect to `comp` and
-> `proj2` into the range \[`result_first`, `result_first + `N).
+> *Effects:* Places the first N elements as sorted with respect to
+> `comp` and `proj2` into the range \[`result_first`,
+> `result_first + `N).
 >
 > *Returns:*
 >
@@ -6376,10 +6019,8 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
 > - `{last, result_first + `N`}` for the overloads in namespace
 >   `ranges`.
 >
-> *Complexity:*
->
-> Approximately `(last - first) * log `N comparisons, and twice as many
-> projections.
+> *Complexity:* Approximately `(last - first) * log `N comparisons, and
+> twice as many projections.
 
 #### `is_sorted` <a id="is.sorted">[[is.sorted]]</a>
 
@@ -6388,9 +6029,8 @@ template<class ForwardIterator>
   constexpr bool is_sorted(ForwardIterator first, ForwardIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return is_sorted_until(first, last) == last;`
+> *Effects:* Equivalent to:
+> `return is_sorted_until(first, last) == last;`
 
 ``` cpp
 template<class ExecutionPolicy, class ForwardIterator>
@@ -6398,9 +6038,7 @@ template<class ExecutionPolicy, class ForwardIterator>
                  ForwardIterator first, ForwardIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return is_sorted_until(std::forward<ExecutionPolicy>(exec), first, last) == last;
@@ -6412,9 +6050,8 @@ template<class ForwardIterator, class Compare>
                            Compare comp);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return is_sorted_until(first, last, comp) == last;`
+> *Effects:* Equivalent to:
+> `return is_sorted_until(first, last, comp) == last;`
 
 ``` cpp
 template<class ExecutionPolicy, class ForwardIterator, class Compare>
@@ -6423,9 +6060,7 @@ template<class ExecutionPolicy, class ForwardIterator, class Compare>
                  Compare comp);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return is_sorted_until(std::forward<ExecutionPolicy>(exec), first, last, comp) == last;
@@ -6440,9 +6075,7 @@ template<forward_range R, class Proj = identity,
   constexpr bool ranges::is_sorted(R&& r, Comp comp = {}, Proj proj = {});
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return ranges::is_sorted_until(first, last, comp, proj) == last;`
 
 ``` cpp
@@ -6476,14 +6109,10 @@ template<forward_range R, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Returns:*
+> *Returns:* The last iterator `i` in \[`first`, `last`\] for which the
+> range \[`first`, `i`) is sorted with respect to `comp` and `proj`.
 >
-> The last iterator `i` in \[`first`, `last`\] for which the range
-> \[`first`, `i`) is sorted with respect to `comp` and `proj`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ### Nth element <a id="alg.nth.element">[[alg.nth.element]]</a>
 
@@ -6514,33 +6143,27 @@ template<random_access_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* \[`first`, `nth`) and \[`nth`, `last`) are valid
+> ranges. For the overloads in namespace `std`, `RandomAccessIterator`
+> meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]], and the type of `*first`
+> meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> \[`first`, `nth`) and \[`nth`, `last`) are valid ranges. For the
-> overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]], and the
-> type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
+> *Effects:* After `nth_element` the element in the position pointed to
+> by `nth` is the element that would be in that position if the whole
+> range were sorted with respect to `comp` and `proj`, unless
+> `nth == last`. Also for every iterator `i` in the range \[`first`,
+> `nth`) and every iterator `j` in the range \[`nth`, `last`) it holds
+> that: `bool(invoke(comp, invoke(proj, *j), invoke(proj, *i)))` is
+> `false`.
 >
-> *Effects:*
+> *Returns:* `last` for the overload in namespace `ranges`.
 >
-> After `nth_element` the element in the position pointed to by `nth` is
-> the element that would be in that position if the whole range were
-> sorted with respect to `comp` and `proj`, unless `nth == last`. Also
-> for every iterator `i` in the range \[`first`, `nth`) and every
-> iterator `j` in the range \[`nth`, `last`) it holds that:
-> `bool(invoke(comp, invoke(proj, *j), invoke(proj, *i)))` is `false`.
->
-> *Returns:*
->
-> `last` for the overload in namespace `ranges`.
->
-> *Complexity:*
->
-> For the overloads with no `ExecutionPolicy`, linear on average. For
-> the overloads with an `ExecutionPolicy`, 𝑂(N) applications of the
-> predicate, and 𝑂(N log N) swaps, where $N = \texttt{last - first}$.
+> *Complexity:* For the overloads with no `ExecutionPolicy`, linear on
+> average. For the overloads with an `ExecutionPolicy`, 𝑂(N)
+> applications of the predicate, and 𝑂(N log N) swaps, where
+> $N = \texttt{last - first}$.
 
 ``` cpp
 template<random_access_range R, class Comp = ranges::less, class Proj = identity>
@@ -6549,9 +6172,7 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
     ranges::nth_element(R&& r, iterator_t<R> nth, Comp comp = {}, Proj proj = {});
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return ranges::nth_element(ranges::begin(r), nth, ranges::end(r), comp, proj);
@@ -6598,22 +6219,16 @@ template<forward_range R, class T, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for overloads with
 > no parameters by those names.
 >
-> *Preconditions:*
->
-> The elements `e` of \[`first`, `last`) are partitioned with respect to
-> the expression  
+> *Preconditions:* The elements `e` of \[`first`, `last`) are
+> partitioned with respect to the expression  
 > `bool(invoke(comp, invoke(proj, e), value))`.
 >
-> *Returns:*
+> *Returns:* The furthermost iterator `i` in the range \[`first`,
+> `last`\] such that for every iterator `j` in the range \[`first`,
+> `i`), `bool(invoke(comp, invoke(proj, *j), value))` is `true`.
 >
-> The furthermost iterator `i` in the range \[`first`, `last`\] such
-> that for every iterator `j` in the range \[`first`, `i`),
-> `bool(invoke(comp, invoke(proj, *j), value))` is `true`.
->
-> *Complexity:*
->
-> At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
-> projections.
+> *Complexity:* At most $\log_2(\texttt{last - first}) + 𝑂(1)$
+> comparisons and projections.
 
 #### `upper_bound` <a id="upper.bound">[[upper.bound]]</a>
 
@@ -6641,22 +6256,16 @@ template<forward_range R, class T, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for overloads with
 > no parameters by those names.
 >
-> *Preconditions:*
->
-> The elements `e` of \[`first`, `last`) are partitioned with respect to
-> the expression  
+> *Preconditions:* The elements `e` of \[`first`, `last`) are
+> partitioned with respect to the expression  
 > `!bool(invoke(comp, value, invoke(proj, e)))`.
 >
-> *Returns:*
+> *Returns:* The furthermost iterator `i` in the range \[`first`,
+> `last`\] such that for every iterator `j` in the range \[`first`,
+> `i`), `!bool(invoke(comp, value, invoke(proj, *j)))` is `true`.
 >
-> The furthermost iterator `i` in the range \[`first`, `last`\] such
-> that for every iterator `j` in the range \[`first`, `i`),
-> `!bool(invoke(comp, value, invoke(proj, *j)))` is `true`.
->
-> *Complexity:*
->
-> At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
-> projections.
+> *Complexity:* At most $\log_2(\texttt{last - first}) + 𝑂(1)$
+> comparisons and projections.
 
 #### `equal_range` <a id="equal.range">[[equal.range]]</a>
 
@@ -6686,10 +6295,9 @@ template<forward_range R, class T, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for overloads with
 > no parameters by those names.
 >
-> *Preconditions:*
->
-> The elements `e` of \[`first`, `last`) are partitioned with respect to
-> the expressions `bool(invoke(comp, invoke(proj, e), value))` and
+> *Preconditions:* The elements `e` of \[`first`, `last`) are
+> partitioned with respect to the expressions
+> `bool(invoke(comp, invoke(proj, e), value))` and
 > `!bool(invoke(comp, value, invoke(proj, e)))`. Also, for all elements
 > `e` of `[first, last)`, `bool(comp(e, value))` implies
 > `!bool(comp(value, e))` for the overloads in namespace `std`.
@@ -6706,10 +6314,8 @@ template<forward_range R, class T, class Proj = identity,
 >       {ranges::lower_bound(first, last, value, comp, proj),
 >        ranges::upper_bound(first, last, value, comp, proj)}
 >
-> *Complexity:*
->
-> At most $2 * \log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
-> projections.
+> *Complexity:* At most $2 * \log_2(\texttt{last - first}) + 𝑂(1)$
+> comparisons and projections.
 
 #### `binary_search` <a id="binary.search">[[binary.search]]</a>
 
@@ -6738,25 +6344,20 @@ template<forward_range R, class T, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for overloads with
 > no parameters by those names.
 >
-> *Preconditions:*
->
-> The elements `e` of \[`first`, `last`) are partitioned with respect to
-> the expressions `bool(invoke(comp, invoke(proj, e), value))` and
+> *Preconditions:* The elements `e` of \[`first`, `last`) are
+> partitioned with respect to the expressions
+> `bool(invoke(comp, invoke(proj, e), value))` and
 > `!bool(invoke(comp, value, invoke(proj, e)))`. Also, for all elements
 > `e` of `[first, last)`, `bool(comp(e, value))` implies
 > `!bool(comp(value, e))` for the overloads in namespace `std`.
 >
-> *Returns:*
->
-> `true` if and only if for some iterator `i` in the range \[`first`,
-> `last`),
+> *Returns:* `true` if and only if for some iterator `i` in the range
+> \[`first`, `last`),
 > `!bool(invoke(comp, invoke(proj, *i), value)) && !bool(invoke(comp, value, invoke(proj, *i)))`
 > is `true`.
 >
-> *Complexity:*
->
-> At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons and
-> projections.
+> *Complexity:* At most $\log_2(\texttt{last - first}) + 𝑂(1)$
+> comparisons and projections.
 
 ### Partitions <a id="alg.partitions">[[alg.partitions]]</a>
 
@@ -6778,15 +6379,12 @@ template<input_range R, class Proj = identity,
 > Let `proj` be `identity{}` for the overloads with no parameter named
 > `proj`.
 >
-> *Returns:*
->
-> `true` if and only if the elements `e` of \[`first`, `last`) are
-> partitioned with respect to the expression
+> *Returns:* `true` if and only if the elements `e` of \[`first`,
+> `last`) are partitioned with respect to the expression
 > `bool(invoke(pred, invoke(proj, e)))`.
 >
-> *Complexity:*
->
-> Linear. At most `last - first` applications of `pred` and `proj`.
+> *Complexity:* Linear. At most `last - first` applications of `pred`
+> and `proj`.
 
 ``` cpp
 template<class ForwardIterator, class Predicate>
@@ -6811,29 +6409,22 @@ template<forward_range R, class Proj = identity,
 > Let `proj` be `identity{}` for the overloads with no parameter named
 > `proj` and let E(x) be `bool(invoke(pred, invoke(proj, `x`)))`.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `ForwardIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]].
 >
-> For the overloads in namespace `std`, `ForwardIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]].
+> *Effects:* Places all the elements `e` in \[`first`, `last`) that
+> satisfy $E(\texttt{e})$ before all the elements that do not.
 >
-> *Effects:*
->
-> Places all the elements `e` in \[`first`, `last`) that satisfy
-> $E(\texttt{e})$ before all the elements that do not.
->
-> *Returns:*
->
-> Let `i` be an iterator such that $E(\texttt{*j})$ is `true` for every
-> iterator `j` in \[`first`, `i`) and `false` for every iterator `j` in
-> \[`i`, `last`). Returns:
+> *Returns:* Let `i` be an iterator such that $E(\texttt{*j})$ is `true`
+> for every iterator `j` in \[`first`, `i`) and `false` for every
+> iterator `j` in \[`i`, `last`). Returns:
 >
 > - `i` for the overloads in namespace `std`.
 >
 > - `{i, last}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Let $N = \texttt{last - first}$:
+> *Complexity:* Let $N = \texttt{last - first}$:
 >
 > - For the overload with no `ExecutionPolicy`, exactly N applications
 >   of the predicate and projection. At most N / 2 swaps if the type of
@@ -6866,33 +6457,25 @@ template<bidirectional_range R, class Proj = identity,
 > Let `proj` be `identity{}` for the overloads with no parameter named
 > `proj` and let E(x) be `bool(invoke(pred, invoke(proj, `x`)))`.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `BidirectionalIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements [[swappable.requirements]] and
-> the type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
+> *Effects:* Places all the elements `e` in \[`first`, `last`) that
+> satisfy $E(\texttt{e})$ before all the elements that do not. The
+> relative order of the elements in both groups is preserved.
 >
-> *Effects:*
->
-> Places all the elements `e` in \[`first`, `last`) that satisfy
-> $E(\texttt{e})$ before all the elements that do not. The relative
-> order of the elements in both groups is preserved.
->
-> *Returns:*
->
-> Let `i` be an iterator such that for every iterator `j` in \[`first`,
-> `i`), $E(\texttt{*j})$ is `true`, and for every iterator `j` in the
-> range \[`i`, `last`), $E(\texttt{*j})$ is `false`. Returns:
+> *Returns:* Let `i` be an iterator such that for every iterator `j` in
+> \[`first`, `i`), $E(\texttt{*j})$ is `true`, and for every iterator
+> `j` in the range \[`i`, `last`), $E(\texttt{*j})$ is `false`. Returns:
 >
 > - `i` for the overloads in namespace `std`.
 >
 > - `{i, last}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Let N = `last - first`:
+> *Complexity:* Let N = `last - first`:
 >
 > - For the overloads with no `ExecutionPolicy`, at most $N \log_2 N$
 >   swaps, but only 𝑂(N) swaps if there is enough extra memory. Exactly
@@ -6931,38 +6514,30 @@ template<input_range R, weakly_incrementable O1, weakly_incrementable O2,
 > Let `proj` be `identity{}` for the overloads with no parameter named
 > `proj` and let E(x) be `bool(invoke(pred, invoke(proj, `x`)))`.
 >
-> *Mandates:*
+> *Mandates:* For the overloads in namespace `std`, the expression
+> `*first` is writable [[iterator.requirements.general]] to `out_true`
+> and `out_false`.
 >
-> For the overloads in namespace `std`, the expression `*first` is
-> writable [[iterator.requirements.general]] to `out_true` and
-> `out_false`.
->
-> *Preconditions:*
->
-> The input range and output ranges do not overlap.
+> *Preconditions:* The input range and output ranges do not overlap.
 >
 > \[*Note 20*: For the overload with an `ExecutionPolicy`, there might
 > be a performance cost if `first`’s value type does not meet the
 > *Cpp17CopyConstructible* requirements. — *end note*\]
 >
-> *Effects:*
+> *Effects:* For each iterator `i` in \[`first`, `last`), copies `*i` to
+> the output range beginning with `out_true` if $E(\texttt{*i})$ is
+> `true`, or to the output range beginning with `out_false` otherwise.
 >
-> For each iterator `i` in \[`first`, `last`), copies `*i` to the output
-> range beginning with `out_true` if $E(\texttt{*i})$ is `true`, or to
-> the output range beginning with `out_false` otherwise.
->
-> *Returns:*
->
-> Let `o1` be the end of the output range beginning at `out_true`, and
-> `o2` the end of the output range beginning at `out_false`. Returns
+> *Returns:* Let `o1` be the end of the output range beginning at
+> `out_true`, and `o2` the end of the output range beginning at
+> `out_false`. Returns
 >
 > - `{o1, o2}` for the overloads in namespace `std`.
 >
 > - `{last, o1, o2}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> Exactly `last - first` applications of `pred` and `proj`.
+> *Complexity:* Exactly `last - first` applications of `pred` and
+> `proj`.
 
 ``` cpp
 template<class ForwardIterator, class Predicate>
@@ -6981,20 +6556,15 @@ template<forward_range R, class Proj = identity,
 > Let `proj` be `identity{}` for the overloads with no parameter named
 > `proj` and let E(x) be `bool(invoke(pred, invoke(proj, `x`)))`.
 >
-> *Preconditions:*
+> *Preconditions:* The elements `e` of \[`first`, `last`) are
+> partitioned with respect to $E(\texttt{e})$.
 >
-> The elements `e` of \[`first`, `last`) are partitioned with respect to
-> $E(\texttt{e})$.
+> *Returns:* An iterator `mid` such that $E(\texttt{*i})$ is `true` for
+> all iterators `i` in \[`first`, `mid`), and `false` for all iterators
+> `i` in \[`mid`, `last`).
 >
-> *Returns:*
->
-> An iterator `mid` such that $E(\texttt{*i})$ is `true` for all
-> iterators `i` in \[`first`, `mid`), and `false` for all iterators `i`
-> in \[`mid`, `last`).
->
-> *Complexity:*
->
-> 𝑂(log(`last - first))` applications of `pred` and `proj`.
+> *Complexity:* 𝑂(log(`last - first))` applications of `pred` and
+> `proj`.
 
 ### Merge <a id="alg.merge">[[alg.merge]]</a>
 
@@ -7046,22 +6616,19 @@ template<input_range R1, input_range R2, weakly_incrementable O, class Comp = ra
 > `less{}`, `proj1` be `identity{}`, and `proj2` be `identity{}`, for
 > the overloads with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
+> respectively. The resulting range does not overlap with either of the
+> original ranges.
 >
-> The ranges \[`first1`, `last1`) and \[`first2`, `last2`) are sorted
-> with respect to `comp` and `proj1` or `proj2`, respectively. The
-> resulting range does not overlap with either of the original ranges.
->
-> *Effects:*
->
-> Copies all the elements of the two ranges \[`first1`, `last1`) and
-> \[`first2`, `last2`) into the range \[`result`, `result_last`), where
-> `result_last` is `result + `N. If an element `a` precedes `b` in an
-> input range, `a` is copied into the output range before `b`. If `e1`
-> is an element of \[`first1`, `last1`) and `e2` of \[`first2`,
-> `last2`), `e2` is copied into the output range before `e1` if and only
-> if `bool(invoke(comp, invoke(proj2, e2), invoke(proj1, e1)))` is
-> `true`.
+> *Effects:* Copies all the elements of the two ranges \[`first1`,
+> `last1`) and \[`first2`, `last2`) into the range \[`result`,
+> `result_last`), where `result_last` is `result + `N. If an element `a`
+> precedes `b` in an input range, `a` is copied into the output range
+> before `b`. If `e1` is an element of \[`first1`, `last1`) and `e2` of
+> \[`first2`, `last2`), `e2` is copied into the output range before `e1`
+> if and only if
+> `bool(invoke(comp, invoke(proj2, e2), invoke(proj1, e1)))` is `true`.
 >
 > *Returns:*
 >
@@ -7077,9 +6644,7 @@ template<input_range R1, input_range R2, weakly_incrementable O, class Comp = ra
 >
 > - For the overloads with an `ExecutionPolicy`, 𝑂(N) comparisons.
 >
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ``` cpp
 template<class BidirectionalIterator>
@@ -7111,29 +6676,22 @@ template<bidirectional_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* \[`first`, `middle`) and \[`middle`, `last`) are
+> valid ranges sorted with respect to `comp` and `proj`. For the
+> overloads in namespace `std`, `BidirectionalIterator` meets the
+> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
+> type of `*first` meets the *Cpp17MoveConstructible*
+> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+> ( [[cpp17.moveassignable]]) requirements.
 >
-> \[`first`, `middle`) and \[`middle`, `last`) are valid ranges sorted
-> with respect to `comp` and `proj`. For the overloads in namespace
-> `std`, `BidirectionalIterator` meets the *Cpp17ValueSwappable*
-> requirements [[swappable.requirements]] and the type of `*first` meets
-> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+> *Effects:* Merges two sorted consecutive ranges \[`first`, `middle`)
+> and \[`middle`, `last`), putting the result of the merge into the
+> range \[`first`, `last`). The resulting range is sorted with respect
+> to `comp` and `proj`.
 >
-> *Effects:*
+> *Returns:* `last` for the overload in namespace `ranges`.
 >
-> Merges two sorted consecutive ranges \[`first`, `middle`) and
-> \[`middle`, `last`), putting the result of the merge into the range
-> \[`first`, `last`). The resulting range is sorted with respect to
-> `comp` and `proj`.
->
-> *Returns:*
->
-> `last` for the overload in namespace `ranges`.
->
-> *Complexity:*
->
-> Let $N = \texttt{last - first}$:
+> *Complexity:* Let $N = \texttt{last - first}$:
 >
 > - For the overloads with no `ExecutionPolicy`, and if enough
 >   additional memory is available, exactly N - 1 comparisons.
@@ -7142,9 +6700,7 @@ template<bidirectional_iterator I, sentinel_for<I> S, class Comp = ranges::less,
 >
 > In either case, twice as many projections as comparisons.
 >
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ``` cpp
 template<bidirectional_range R, class Comp = ranges::less, class Proj = identity>
@@ -7153,9 +6709,7 @@ template<bidirectional_range R, class Comp = ranges::less, class Proj = identity
     ranges::inplace_merge(R&& r, iterator_t<R> middle, Comp comp = {}, Proj proj = {});
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return ranges::inplace_merge(ranges::begin(r), middle, ranges::end(r), comp, proj);
@@ -7210,24 +6764,19 @@ template<input_range R1, input_range R2, class Proj1 = identity,
 > Let `comp` be `less{}`, `proj1` be `identity{}`, and `proj2` be
 > `identity{}`, for the overloads with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
+> respectively.
 >
-> The ranges \[`first1`, `last1`) and \[`first2`, `last2`) are sorted
-> with respect to `comp` and `proj1` or `proj2`, respectively.
->
-> *Returns:*
->
-> `true` if and only if \[`first2`, `last2`) is a subsequence of
-> \[`first1`, `last1`).
+> *Returns:* `true` if and only if \[`first2`, `last2`) is a subsequence
+> of \[`first1`, `last1`).
 >
 > \[*Note 21*: A sequence S is a subsequence of another sequence T if S
 > can be obtained from T by removing some, all, or none of T’s elements
 > and keeping the remaining elements in the same order. — *end note*\]
 >
-> *Complexity:*
->
-> At most `2 * ((last1 - first1) + (last2 - first2)) - 1` comparisons
-> and applications of each projection.
+> *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
+> comparisons and applications of each projection.
 
 #### `set_union` <a id="set.union">[[set.union]]</a>
 
@@ -7276,39 +6825,32 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for
 > the overloads with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
+> respectively. The resulting range does not overlap with either of the
+> original ranges.
 >
-> The ranges \[`first1`, `last1`) and \[`first2`, `last2`) are sorted
-> with respect to `comp` and `proj1` or `proj2`, respectively. The
-> resulting range does not overlap with either of the original ranges.
+> *Effects:* Constructs a sorted union of the elements from the two
+> ranges; that is, the set of elements that are present in one or both
+> of the ranges.
 >
-> *Effects:*
->
-> Constructs a sorted union of the elements from the two ranges; that
-> is, the set of elements that are present in one or both of the ranges.
->
-> *Returns:*
->
-> Let `result_last` be the end of the constructed range. Returns
+> *Returns:* Let `result_last` be the end of the constructed range.
+> Returns
 >
 > - `result_last` for the overloads in namespace `std`.
 >
 > - `{last1, last2, result_last}` for the overloads in namespace
 >   `ranges`.
 >
-> *Complexity:*
+> *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
+> comparisons and applications of each projection.
 >
-> At most `2 * ((last1 - first1) + (last2 - first2)) - 1` comparisons
-> and applications of each projection.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains m
-> elements that are equivalent to each other and \[`first2`, `last2`)
-> contains n elements that are equivalent to them, then all m elements
-> from the first range are copied to the output range, in order, and
-> then the final $\max(n - m, 0)$ elements from the second range are
-> copied to the output range, in order.
+> *Remarks:* Stable [[algorithm.stable]]. If \[`first1`, `last1`)
+> contains m elements that are equivalent to each other and \[`first2`,
+> `last2`) contains n elements that are equivalent to them, then all m
+> elements from the first range are copied to the output range, in
+> order, and then the final $\max(n - m, 0)$ elements from the second
+> range are copied to the output range, in order.
 
 #### `set_intersection` <a id="set.intersection">[[set.intersection]]</a>
 
@@ -7359,36 +6901,29 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for
 > the overloads with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
+> respectively. The resulting range does not overlap with either of the
+> original ranges.
 >
-> The ranges \[`first1`, `last1`) and \[`first2`, `last2`) are sorted
-> with respect to `comp` and `proj1` or `proj2`, respectively. The
-> resulting range does not overlap with either of the original ranges.
+> *Effects:* Constructs a sorted intersection of the elements from the
+> two ranges; that is, the set of elements that are present in both of
+> the ranges.
 >
-> *Effects:*
->
-> Constructs a sorted intersection of the elements from the two ranges;
-> that is, the set of elements that are present in both of the ranges.
->
-> *Returns:*
->
-> Let `result_last` be the end of the constructed range. Returns
+> *Returns:* Let `result_last` be the end of the constructed range.
+> Returns
 >
 > - `result_last` for the overloads in namespace `std`.
 >
 > - `{last1, last2, result_last}` for the overloads in namespace
 >   `ranges`.
 >
-> *Complexity:*
+> *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
+> comparisons and applications of each projection.
 >
-> At most `2 * ((last1 - first1) + (last2 - first2)) - 1` comparisons
-> and applications of each projection.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains m
-> elements that are equivalent to each other and \[`first2`, `last2`)
-> contains n elements that are equivalent to them, the first
+> *Remarks:* Stable [[algorithm.stable]]. If \[`first1`, `last1`)
+> contains m elements that are equivalent to each other and \[`first2`,
+> `last2`) contains n elements that are equivalent to them, the first
 > $\min(m, n)$ elements are copied from the first range to the output
 > range, in order.
 
@@ -7441,36 +6976,29 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for
 > the overloads with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
+> respectively. The resulting range does not overlap with either of the
+> original ranges.
 >
-> The ranges \[`first1`, `last1`) and \[`first2`, `last2`) are sorted
-> with respect to `comp` and `proj1` or `proj2`, respectively. The
-> resulting range does not overlap with either of the original ranges.
+> *Effects:* Copies the elements of the range \[`first1`, `last1`) which
+> are not present in the range \[`first2`, `last2`) to the range
+> beginning at `result`. The elements in the constructed range are
+> sorted.
 >
-> *Effects:*
->
-> Copies the elements of the range \[`first1`, `last1`) which are not
-> present in the range \[`first2`, `last2`) to the range beginning at
-> `result`. The elements in the constructed range are sorted.
->
-> *Returns:*
->
-> Let `result_last` be the end of the constructed range. Returns
+> *Returns:* Let `result_last` be the end of the constructed range.
+> Returns
 >
 > - `result_last` for the overloads in namespace `std`.
 >
 > - `{last1, result_last}` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
+> *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
+> comparisons and applications of each projection.
 >
-> At most `2 * ((last1 - first1) + (last2 - first2)) - 1` comparisons
-> and applications of each projection.
->
-> *Remarks:*
->
-> If \[`first1`, `last1`) contains m elements that are equivalent to
-> each other and \[`first2`, `last2`) contains n elements that are
-> equivalent to them, the last $\max(m - n, 0)$ elements from
+> *Remarks:* If \[`first1`, `last1`) contains m elements that are
+> equivalent to each other and \[`first2`, `last2`) contains n elements
+> that are equivalent to them, the last $\max(m - n, 0)$ elements from
 > \[`first1`, `last1`) are copied to the output range, in order.
 
 #### `set_symmetric_difference` <a id="set.symmetric.difference">[[set.symmetric.difference]]</a>
@@ -7524,43 +7052,35 @@ template<input_range R1, input_range R2, weakly_incrementable O,
 > Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for
 > the overloads with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
+> `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
+> respectively. The resulting range does not overlap with either of the
+> original ranges.
 >
-> The ranges \[`first1`, `last1`) and \[`first2`, `last2`) are sorted
-> with respect to `comp` and `proj1` or `proj2`, respectively. The
-> resulting range does not overlap with either of the original ranges.
->
-> *Effects:*
->
-> Copies the elements of the range \[`first1`, `last1`) that are not
-> present in the range \[`first2`, `last2`), and the elements of the
-> range \[`first2`, `last2`) that are not present in the range
+> *Effects:* Copies the elements of the range \[`first1`, `last1`) that
+> are not present in the range \[`first2`, `last2`), and the elements of
+> the range \[`first2`, `last2`) that are not present in the range
 > \[`first1`, `last1`) to the range beginning at `result`. The elements
 > in the constructed range are sorted.
 >
-> *Returns:*
->
-> Let `result_last` be the end of the constructed range. Returns
+> *Returns:* Let `result_last` be the end of the constructed range.
+> Returns
 >
 > - `result_last` for the overloads in namespace `std`.
 >
 > - `{last1, last2, result_last}` for the overloads in namespace
 >   `ranges`.
 >
-> *Complexity:*
+> *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
+> comparisons and applications of each projection.
 >
-> At most `2 * ((last1 - first1) + (last2 - first2)) - 1` comparisons
-> and applications of each projection.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains m
-> elements that are equivalent to each other and \[`first2`, `last2`)
-> contains n elements that are equivalent to them, then |m - n| of those
-> elements shall be copied to the output range: the last m - n of these
-> elements from \[`first1`, `last1`) if m > n, and the last n - m of
-> these elements from \[`first2`, `last2`) if m < n. In either case, the
-> elements are copied in order.
+> *Remarks:* Stable [[algorithm.stable]]. If \[`first1`, `last1`)
+> contains m elements that are equivalent to each other and \[`first2`,
+> `last2`) contains n elements that are equivalent to them, then |m - n|
+> of those elements shall be copied to the output range: the last m - n
+> of these elements from \[`first1`, `last1`) if m > n, and the last
+> n - m of these elements from \[`first2`, `last2`) if m < n. In either
+> case, the elements are copied in order.
 
 ### Heap operations <a id="alg.heap.operations">[[alg.heap.operations]]</a>
 
@@ -7607,29 +7127,21 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
->
-> The range \[`first`, `last - 1`) is a valid heap with respect to
-> `comp` and `proj`. For the overloads in namespace `std`,
+> *Preconditions:* The range \[`first`, `last - 1`) is a valid heap with
+> respect to `comp` and `proj`. For the overloads in namespace `std`,
 > `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 > requirements [[swappable.requirements]] and the type of `*first` meets
 > the *Cpp17MoveConstructible* requirements
 > ( [[cpp17.moveconstructible]]) and the *Cpp17MoveAssignable*
 > requirements ( [[cpp17.moveassignable]]).
 >
-> *Effects:*
+> *Effects:* Places the value in the location `last - 1` into the
+> resulting heap \[`first`, `last`).
 >
-> Places the value in the location `last - 1` into the resulting heap
-> \[`first`, `last`).
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> At most $\log(\texttt{last - first})$ comparisons and twice as many
-> projections.
+> *Complexity:* At most $\log(\texttt{last - first})$ comparisons and
+> twice as many projections.
 
 #### `pop_heap` <a id="pop.heap">[[pop.heap]]</a>
 
@@ -7655,29 +7167,21 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
->
-> The range \[`first`, `last`) is a valid non-empty heap with respect to
-> `comp` and `proj`. For the overloads in namespace `std`,
-> `RandomAccessIterator` meets the *Cpp17ValueSwappable*
+> *Preconditions:* The range \[`first`, `last`) is a valid non-empty
+> heap with respect to `comp` and `proj`. For the overloads in namespace
+> `std`, `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 > requirements [[swappable.requirements]] and the type of `*first` meets
 > the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
 > *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> *Effects:*
+> *Effects:* Swaps the value in the location `first` with the value in
+> the location `last - 1` and makes \[`first`, `last - 1`) into a heap
+> with respect to `comp` and `proj`.
 >
-> Swaps the value in the location `first` with the value in the location
-> `last - 1` and makes \[`first`, `last - 1`) into a heap with respect
-> to `comp` and `proj`.
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> At most $2 \log(\texttt{last - first})$ comparisons and twice as many
-> projections.
+> *Complexity:* At most $2 \log(\texttt{last - first})$ comparisons and
+> twice as many projections.
 
 #### `make_heap` <a id="make.heap">[[make.heap]]</a>
 
@@ -7703,27 +7207,19 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `RandomAccessIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]] and the type of `*first` meets
+> the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
+> *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> For the overloads in namespace `std`, `RandomAccessIterator` meets the
-> *Cpp17ValueSwappable* requirements [[swappable.requirements]] and the
-> type of `*first` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
+> *Effects:* Constructs a heap with respect to `comp` and `proj` out of
+> the range \[`first`, `last`).
 >
-> *Effects:*
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> Constructs a heap with respect to `comp` and `proj` out of the range
-> \[`first`, `last`).
->
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> At most $3(\texttt{last - first})$ comparisons and twice as many
-> projections.
+> *Complexity:* At most $3(\texttt{last - first})$ comparisons and twice
+> as many projections.
 
 #### `sort_heap` <a id="sort.heap">[[sort.heap]]</a>
 
@@ -7749,28 +7245,20 @@ template<random_access_range R, class Comp = ranges::less, class Proj = identity
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Preconditions:*
->
-> The range \[`first`, `last`) is a valid heap with respect to `comp`
-> and `proj`. For the overloads in namespace `std`,
+> *Preconditions:* The range \[`first`, `last`) is a valid heap with
+> respect to `comp` and `proj`. For the overloads in namespace `std`,
 > `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 > requirements [[swappable.requirements]] and the type of `*first` meets
 > the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
 > *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 >
-> *Effects:*
+> *Effects:* Sorts elements in the heap \[`first`, `last`) with respect
+> to `comp` and `proj`.
 >
-> Sorts elements in the heap \[`first`, `last`) with respect to `comp`
-> and `proj`.
+> *Returns:* `last` for the overloads in namespace `ranges`.
 >
-> *Returns:*
->
-> `last` for the overloads in namespace `ranges`.
->
-> *Complexity:*
->
-> At most $2N \log N$ comparisons, where $N = \texttt{last - first}$,
-> and twice as many projections.
+> *Complexity:* At most $2N \log N$ comparisons, where
+> $N = \texttt{last - first}$, and twice as many projections.
 
 #### `is_heap` <a id="is.heap">[[is.heap]]</a>
 
@@ -7779,9 +7267,7 @@ template<class RandomAccessIterator>
   constexpr bool is_heap(RandomAccessIterator first, RandomAccessIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return is_heap_until(first, last) == last;`
+> *Effects:* Equivalent to: `return is_heap_until(first, last) == last;`
 
 ``` cpp
 template<class ExecutionPolicy, class RandomAccessIterator>
@@ -7789,9 +7275,7 @@ template<class ExecutionPolicy, class RandomAccessIterator>
                RandomAccessIterator first, RandomAccessIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return is_heap_until(std::forward<ExecutionPolicy>(exec), first, last) == last;
@@ -7803,9 +7287,8 @@ template<class RandomAccessIterator, class Compare>
                          Compare comp);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return is_heap_until(first, last, comp) == last;`
+> *Effects:* Equivalent to:
+> `return is_heap_until(first, last, comp) == last;`
 
 ``` cpp
 template<class ExecutionPolicy, class RandomAccessIterator, class Compare>
@@ -7814,9 +7297,7 @@ template<class ExecutionPolicy, class RandomAccessIterator, class Compare>
                Compare comp);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return is_heap_until(std::forward<ExecutionPolicy>(exec), first, last, comp) == last;
@@ -7831,9 +7312,7 @@ template<random_access_range R, class Proj = identity,
   constexpr bool ranges::is_heap(R&& r, Comp comp = {}, Proj proj = {});
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return ranges::is_heap_until(first, last, comp, proj) == last;`
 
 ``` cpp
@@ -7867,14 +7346,10 @@ template<random_access_range R, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Returns:*
+> *Returns:* The last iterator `i` in \[`first`, `last`\] for which the
+> range \[`first`, `i`) is a heap with respect to `comp` and `proj`.
 >
-> The last iterator `i` in \[`first`, `last`\] for which the range
-> \[`first`, `i`) is a heap with respect to `comp` and `proj`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ### Minimum and maximum <a id="alg.min.max">[[alg.min.max]]</a>
 
@@ -7889,24 +7364,18 @@ template<class T, class Proj = identity,
   constexpr const T& ranges::min(const T& a, const T& b, Comp comp = {}, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* For the first form, `T` meets the
+> *Cpp17LessThanComparable* requirements
+> ( [[cpp17.lessthancomparable]]).
 >
-> For the first form, `T` meets the *Cpp17LessThanComparable*
-> requirements ( [[cpp17.lessthancomparable]]).
+> *Returns:* The smaller value. Returns the first argument when the
+> arguments are equivalent.
 >
-> *Returns:*
+> *Complexity:* Exactly one comparison and two applications of the
+> projection, if any.
 >
-> The smaller value. Returns the first argument when the arguments are
-> equivalent.
->
-> *Complexity:*
->
-> Exactly one comparison and two applications of the projection, if any.
->
-> *Remarks:*
->
-> An invocation may explicitly specify an argument for the template
-> parameter `T` of the overloads in namespace `std`.
+> *Remarks:* An invocation may explicitly specify an argument for the
+> template parameter `T` of the overloads in namespace `std`.
 
 ``` cpp
 template<class T>
@@ -7924,27 +7393,20 @@ template<input_range R, class Proj = identity,
     ranges::min(R&& r, Comp comp = {}, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ranges::distance(r) > 0`. For the overloads in
+> namespace `std`, `T` meets the *Cpp17CopyConstructible* requirements.
+> For the first form, `T` meets the *Cpp17LessThanComparable*
+> requirements ( [[cpp17.lessthancomparable]]).
 >
-> `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
-> meets the *Cpp17CopyConstructible* requirements. For the first form,
-> `T` meets the *Cpp17LessThanComparable* requirements
-> ( [[cpp17.lessthancomparable]]).
+> *Returns:* The smallest value in the input range. Returns a copy of
+> the leftmost element when several elements are equivalent to the
+> smallest.
 >
-> *Returns:*
+> *Complexity:* Exactly `ranges::distance(r) - 1` comparisons and twice
+> as many applications of the projection, if any.
 >
-> The smallest value in the input range. Returns a copy of the leftmost
-> element when several elements are equivalent to the smallest.
->
-> *Complexity:*
->
-> Exactly `ranges::distance(r) - 1` comparisons and twice as many
-> applications of the projection, if any.
->
-> *Remarks:*
->
-> An invocation may explicitly specify an argument for the template
-> parameter `T` of the overloads in namespace `std`.
+> *Remarks:* An invocation may explicitly specify an argument for the
+> template parameter `T` of the overloads in namespace `std`.
 
 ``` cpp
 template<class T>
@@ -7957,24 +7419,18 @@ template<class T, class Proj = identity,
   constexpr const T& ranges::max(const T& a, const T& b, Comp comp = {}, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* For the first form, `T` meets the
+> *Cpp17LessThanComparable* requirements
+> ( [[cpp17.lessthancomparable]]).
 >
-> For the first form, `T` meets the *Cpp17LessThanComparable*
-> requirements ( [[cpp17.lessthancomparable]]).
+> *Returns:* The larger value. Returns the first argument when the
+> arguments are equivalent.
 >
-> *Returns:*
+> *Complexity:* Exactly one comparison and two applications of the
+> projection, if any.
 >
-> The larger value. Returns the first argument when the arguments are
-> equivalent.
->
-> *Complexity:*
->
-> Exactly one comparison and two applications of the projection, if any.
->
-> *Remarks:*
->
-> An invocation may explicitly specify an argument for the template
-> parameter `T` of the overloads in namespace `std`.
+> *Remarks:* An invocation may explicitly specify an argument for the
+> template parameter `T` of the overloads in namespace `std`.
 
 ``` cpp
 template<class T>
@@ -7992,27 +7448,19 @@ template<input_range R, class Proj = identity,
     ranges::max(R&& r, Comp comp = {}, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ranges::distance(r) > 0`. For the overloads in
+> namespace `std`, `T` meets the *Cpp17CopyConstructible* requirements.
+> For the first form, `T` meets the *Cpp17LessThanComparable*
+> requirements ( [[cpp17.lessthancomparable]]).
 >
-> `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
-> meets the *Cpp17CopyConstructible* requirements. For the first form,
-> `T` meets the *Cpp17LessThanComparable* requirements
-> ( [[cpp17.lessthancomparable]]).
+> *Returns:* The largest value in the input range. Returns a copy of the
+> leftmost element when several elements are equivalent to the largest.
 >
-> *Returns:*
+> *Complexity:* Exactly `ranges::distance(r) - 1` comparisons and twice
+> as many applications of the projection, if any.
 >
-> The largest value in the input range. Returns a copy of the leftmost
-> element when several elements are equivalent to the largest.
->
-> *Complexity:*
->
-> Exactly `ranges::distance(r) - 1` comparisons and twice as many
-> applications of the projection, if any.
->
-> *Remarks:*
->
-> An invocation may explicitly specify an argument for the template
-> parameter `T` of the overloads in namespace `std`.
+> *Remarks:* An invocation may explicitly specify an argument for the
+> template parameter `T` of the overloads in namespace `std`.
 
 ``` cpp
 template<class T>
@@ -8026,23 +7474,18 @@ template<class T, class Proj = identity,
     ranges::minmax(const T& a, const T& b, Comp comp = {}, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* For the first form, `T` meets the
+> *Cpp17LessThanComparable* requirements
+> ( [[cpp17.lessthancomparable]]).
 >
-> For the first form, `T` meets the *Cpp17LessThanComparable*
-> requirements ( [[cpp17.lessthancomparable]]).
+> *Returns:* `{b, a}` if `b` is smaller than `a`, and `{a, b}`
+> otherwise.
 >
-> *Returns:*
+> *Complexity:* Exactly one comparison and two applications of the
+> projection, if any.
 >
-> `{b, a}` if `b` is smaller than `a`, and `{a, b}` otherwise.
->
-> *Complexity:*
->
-> Exactly one comparison and two applications of the projection, if any.
->
-> *Remarks:*
->
-> An invocation may explicitly specify an argument for the template
-> parameter `T` of the overloads in namespace `std`.
+> *Remarks:* An invocation may explicitly specify an argument for the
+> template parameter `T` of the overloads in namespace `std`.
 
 ``` cpp
 template<class T>
@@ -8061,29 +7504,21 @@ template<input_range R, class Proj = identity,
     ranges::minmax(R&& r, Comp comp = {}, Proj proj = {});
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ranges::distance(r) > 0`. For the overloads in
+> namespace `std`, `T` meets the *Cpp17CopyConstructible* requirements.
+> For the first form, type `T` meets the *Cpp17LessThanComparable*
+> requirements ( [[cpp17.lessthancomparable]]).
 >
-> `ranges::distance(r) > 0`. For the overloads in namespace `std`, `T`
-> meets the *Cpp17CopyConstructible* requirements. For the first form,
-> type `T` meets the *Cpp17LessThanComparable* requirements
-> ( [[cpp17.lessthancomparable]]).
+> *Returns:* Let `X` be the return type. Returns `X{x, y}`, where `x` is
+> a copy of the leftmost element with the smallest value and `y` a copy
+> of the rightmost element with the largest value in the input range.
 >
-> *Returns:*
->
-> Let `X` be the return type. Returns `X{x, y}`, where `x` is a copy of
-> the leftmost element with the smallest value and `y` a copy of the
-> rightmost element with the largest value in the input range.
->
-> *Complexity:*
->
-> At most $(3/2)\texttt{ranges::distance(r)}$ applications of the
-> corresponding predicate and twice as many applications of the
+> *Complexity:* At most $(3/2)\texttt{ranges::distance(r)}$ applications
+> of the corresponding predicate and twice as many applications of the
 > projection, if any.
 >
-> *Remarks:*
->
-> An invocation may explicitly specify an argument for the template
-> parameter `T` of the overloads in namespace `std`.
+> *Remarks:* An invocation may explicitly specify an argument for the
+> template parameter `T` of the overloads in namespace `std`.
 
 ``` cpp
 template<class ForwardIterator>
@@ -8112,10 +7547,8 @@ template<forward_range R, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Returns:*
->
-> The first iterator `i` in the range \[`first`, `last`) such that for
-> every iterator `j` in the range \[`first`, `last`),
+> *Returns:* The first iterator `i` in the range \[`first`, `last`) such
+> that for every iterator `j` in the range \[`first`, `last`),
 >
 > ``` cpp
 > bool(invoke(comp, invoke(proj, *j), invoke(proj, *i)))
@@ -8123,10 +7556,8 @@ template<forward_range R, class Proj = identity,
 >
 > is `false`. Returns `last` if `first == last`.
 >
-> *Complexity:*
->
-> Exactly $\max(\texttt{last - first - 1}, 0)$ comparisons and twice as
-> many projections.
+> *Complexity:* Exactly $\max(\texttt{last - first - 1}, 0)$ comparisons
+> and twice as many projections.
 
 ``` cpp
 template<class ForwardIterator>
@@ -8155,10 +7586,8 @@ template<forward_range R, class Proj = identity,
 > Let `comp` be `less{}` and `proj` be `identity{}` for the overloads
 > with no parameters by those names.
 >
-> *Returns:*
->
-> The first iterator `i` in the range \[`first`, `last`) such that for
-> every iterator `j` in the range \[`first`, `last`),
+> *Returns:* The first iterator `i` in the range \[`first`, `last`) such
+> that for every iterator `j` in the range \[`first`, `last`),
 >
 > ``` cpp
 > bool(invoke(comp, invoke(proj, *i), invoke(proj, *j)))
@@ -8166,10 +7595,8 @@ template<forward_range R, class Proj = identity,
 >
 > is `false`. Returns `last` if `first == last`.
 >
-> *Complexity:*
->
-> Exactly $\max(\texttt{last - first - 1}, 0)$ comparisons and twice as
-> many projections.
+> *Complexity:* Exactly $\max(\texttt{last - first - 1}, 0)$ comparisons
+> and twice as many projections.
 
 ``` cpp
 template<class ForwardIterator>
@@ -8198,21 +7625,17 @@ template<forward_range R, class Proj = identity,
     ranges::minmax_element(R&& r, Comp comp = {}, Proj proj = {});
 ```
 
-> *Returns:*
->
-> `{first, first}` if \[`first`, `last`) is empty, otherwise `{m, M}`,
-> where `m` is the first iterator in \[`first`, `last`) such that no
-> iterator in the range refers to a smaller element, and where `M` is
-> the last iterator
+> *Returns:* `{first, first}` if \[`first`, `last`) is empty, otherwise
+> `{m, M}`, where `m` is the first iterator in \[`first`, `last`) such
+> that no iterator in the range refers to a smaller element, and where
+> `M` is the last iterator
 >
 > This behavior intentionally differs from `max_element`.
 >
 > in \[`first`, `last`) such that no iterator in the range refers to a
 > larger element.
 >
-> *Complexity:*
->
-> Let N be `last - first`. At most
+> *Complexity:* Let N be `last - first`. At most
 > $\max(\bigl\lfloor{\frac{3}{2}} (N-1)\bigr\rfloor, 0)$ comparisons and
 > twice as many applications of the projection, if any.
 
@@ -8233,24 +7656,20 @@ template<class T, class Proj = identity,
 > let `proj` be `identity{}` for the overloads with no parameter `proj`.
 >
 > *Preconditions:*
->
 > `bool(invoke(comp, invoke(proj, hi), invoke(proj, lo)))` is `false`.
 > For the first form, type `T` meets the *Cpp17LessThanComparable*
 > requirements ( [[cpp17.lessthancomparable]]).
 >
-> *Returns:*
->
-> `lo` if `bool(invoke(comp, invoke(proj, v), invoke(proj, lo)))` is
-> `true`, `hi` if
-> `bool(invoke(comp, invoke(proj, hi), invoke(proj, v)))` is `true`,
-> otherwise `v`.
+> *Returns:* `lo` if
+> `bool(invoke(comp, invoke(proj, v), invoke(proj, lo)))` is `true`,
+> `hi` if `bool(invoke(comp, invoke(proj, hi), invoke(proj, v)))` is
+> `true`, otherwise `v`.
 >
 > \[*Note 22*: If NaN is avoided, `T` can be a floating-point
 > type. — *end note*\]
 >
-> *Complexity:*
->
-> At most two comparisons and three applications of the projection.
+> *Complexity:* At most two comparisons and three applications of the
+> projection.
 
 ### Lexicographical comparison <a id="alg.lex.comparison">[[alg.lex.comparison]]</a>
 
@@ -8294,21 +7713,16 @@ template<input_range R1, input_range R2, class Proj1 = identity,
                                     Proj1 proj1 = {}, Proj2 proj2 = {});
 ```
 
-> *Returns:*
+> *Returns:* `true` if and only if the sequence of elements defined by
+> the range \[`first1`, `last1`) is lexicographically less than the
+> sequence of elements defined by the range \[`first2`, `last2`).
 >
-> `true` if and only if the sequence of elements defined by the range
-> \[`first1`, `last1`) is lexicographically less than the sequence of
-> elements defined by the range \[`first2`, `last2`).
->
-> *Complexity:*
->
-> At most $2 \min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$
+> *Complexity:* At most
+> $2 \min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$
 > applications of the corresponding comparison and each projection, if
 > any.
 >
-> *Remarks:*
->
-> If two sequences have the same number of elements and their
+> *Remarks:* If two sequences have the same number of elements and their
 > corresponding elements (if any) are equivalent, then neither sequence
 > is lexicographically less than the other. If one sequence is a proper
 > prefix of the other, then the shorter sequence is lexicographically
@@ -8347,19 +7761,13 @@ template<class InputIterator1, class InputIterator2, class Cmp>
 > Let N be $\min(\texttt{e1 - b1}, \texttt{e2 - b2})$. Let E(n) be
 > `comp(*(b1 + `n`), *(b2 + `n`))`.
 >
-> *Mandates:*
+> *Mandates:* `decltype(comp(*b1, *b2))` is a comparison category type.
 >
-> `decltype(comp(*b1, *b2))` is a comparison category type.
+> *Returns:* E(i), where i is the smallest integer in \[`0`, N) such
+> that E(i)` != 0` is `true`, or `(e1 - b1) <=> (e2 - b2)` if no such
+> integer exists.
 >
-> *Returns:*
->
-> E(i), where i is the smallest integer in \[`0`, N) such that
-> E(i)` != 0` is `true`, or `(e1 - b1) <=> (e2 - b2)` if no such integer
-> exists.
->
-> *Complexity:*
->
-> At most N applications of `comp`.
+> *Complexity:* At most N applications of `comp`.
 
 ``` cpp
 template<class InputIterator1, class InputIterator2>
@@ -8368,9 +7776,7 @@ template<class InputIterator1, class InputIterator2>
                                       InputIterator2 b2, InputIterator2 e2);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return lexicographical_compare_three_way(b1, e1, b2, e2, compare_three_way());
@@ -8402,32 +7808,25 @@ template<bidirectional_range R, class Comp = ranges::less,
 > Let `comp` be `less{}` and `proj` be `identity{}` for overloads with
 > no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `BidirectionalIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]].
 >
-> For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
+> *Effects:* Takes a sequence defined by the range \[`first`, `last`)
+> and transforms it into the next permutation. The next permutation is
+> found by assuming that the set of all permutations is
+> lexicographically sorted with respect to `comp` and `proj`. If no such
+> permutation exists, transforms the sequence into the first
+> permutation; that is, the ascendingly-sorted one.
 >
-> *Effects:*
->
-> Takes a sequence defined by the range \[`first`, `last`) and
-> transforms it into the next permutation. The next permutation is found
-> by assuming that the set of all permutations is lexicographically
-> sorted with respect to `comp` and `proj`. If no such permutation
-> exists, transforms the sequence into the first permutation; that is,
-> the ascendingly-sorted one.
->
-> *Returns:*
->
-> Let `B` be `true` if a next permutation was found and otherwise
-> `false`. Returns:
+> *Returns:* Let `B` be `true` if a next permutation was found and
+> otherwise `false`. Returns:
 >
 > - `B` for the overloads in namespace `std`.
 >
 > - `{ last, B }` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> At most `(last - first) / 2` swaps.
+> *Complexity:* At most `(last - first) / 2` swaps.
 
 ``` cpp
 template<class BidirectionalIterator>
@@ -8453,32 +7852,25 @@ template<bidirectional_range R, class Comp = ranges::less,
 > Let `comp` be `less{}` and `proj` be `identity{}` for overloads with
 > no parameters by those names.
 >
-> *Preconditions:*
+> *Preconditions:* For the overloads in namespace `std`,
+> `BidirectionalIterator` meets the *Cpp17ValueSwappable*
+> requirements [[swappable.requirements]].
 >
-> For the overloads in namespace `std`, `BidirectionalIterator` meets
-> the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
->
-> *Effects:*
->
-> Takes a sequence defined by the range \[`first`, `last`) and
-> transforms it into the previous permutation. The previous permutation
-> is found by assuming that the set of all permutations is
+> *Effects:* Takes a sequence defined by the range \[`first`, `last`)
+> and transforms it into the previous permutation. The previous
+> permutation is found by assuming that the set of all permutations is
 > lexicographically sorted with respect to `comp` and `proj`. If no such
 > permutation exists, transforms the sequence into the last permutation;
 > that is, the descendingly-sorted one.
 >
-> *Returns:*
->
-> Let `B` be `true` if a previous permutation was found and otherwise
-> `false`. Returns:
+> *Returns:* Let `B` be `true` if a previous permutation was found and
+> otherwise `false`. Returns:
 >
 > - `B` for the overloads in namespace `std`.
 >
 > - `{ last, B }` for the overloads in namespace `ranges`.
 >
-> *Complexity:*
->
-> At most `(last - first) / 2` swaps.
+> *Complexity:* At most `(last - first) / 2` swaps.
 
 ## Header `<numeric>` synopsis <a id="numeric.ops.overview">[[numeric.ops.overview]]</a>
 
@@ -8743,19 +8135,16 @@ template<class InputIterator, class T, class BinaryOperation>
                          BinaryOperation binary_op);
 ```
 
-> *Preconditions:*
->
-> `T` meets the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
-> and *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]) requirements. In
-> the range \[`first`, `last`\], `binary_op` neither modifies elements
-> nor invalidates iterators or subranges.
+> *Preconditions:* `T` meets the *Cpp17CopyConstructible*
+> ( [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
+> ( [[cpp17.copyassignable]]) requirements. In the range \[`first`,
+> `last`\], `binary_op` neither modifies elements nor invalidates
+> iterators or subranges.
 >
 > The use of fully closed ranges is intentional.
 >
-> *Effects:*
->
-> Computes its result by initializing the accumulator `acc` with the
-> initial value `init` and then modifies it with
+> *Effects:* Computes its result by initializing the accumulator `acc`
+> with the initial value `init` and then modifies it with
 > `acc = std::move(acc) + *i` or `acc = binary_op(std::move(acc), *i)`
 > for every iterator `i` in the range \[`first`, `last`) in order.
 >
@@ -8772,9 +8161,7 @@ template<class InputIterator>
     reduce(InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return reduce(first, last,
@@ -8788,9 +8175,7 @@ template<class ExecutionPolicy, class ForwardIterator>
            ForwardIterator first, ForwardIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return reduce(std::forward<ExecutionPolicy>(exec), first, last,
@@ -8802,9 +8187,7 @@ template<class InputIterator, class T>
   constexpr T reduce(InputIterator first, InputIterator last, T init);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return reduce(first, last, init, plus<>());
@@ -8816,9 +8199,7 @@ template<class ExecutionPolicy, class ForwardIterator, class T>
            ForwardIterator first, ForwardIterator last, T init);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return reduce(std::forward<ExecutionPolicy>(exec), first, last, init, plus<>());
@@ -8834,9 +8215,7 @@ template<class ExecutionPolicy, class ForwardIterator, class T, class BinaryOper
            BinaryOperation binary_op);
 ```
 
-> *Mandates:*
->
-> All of
+> *Mandates:* All of
 >
 > - `binary_op(init, *first)`,
 >
@@ -8856,14 +8235,10 @@ template<class ExecutionPolicy, class ForwardIterator, class T, class BinaryOper
 > - `binary_op` neither invalidates iterators or subranges, nor modifies
 >   elements in the range \[`first`, `last`\].
 >
-> *Returns:*
+> *Returns:* *GENERALIZED_SUM*(binary_op, init, \*i, ...) for every `i`
+> in \[`first`, `last`).
 >
-> *GENERALIZED_SUM*(binary_op, init, \*i, ...) for every `i` in
-> \[`first`, `last`).
->
-> *Complexity:*
->
-> 𝑂(`last - first)` applications of `binary_op`.
+> *Complexity:* 𝑂(`last - first)` applications of `binary_op`.
 >
 > \[*Note 24*: The difference between `reduce` and `accumulate` is that
 > `reduce` applies `binary_op` in an unspecified order, which yields a
@@ -8884,20 +8259,17 @@ template<class InputIterator1, class InputIterator2, class T,
                             BinaryOperation2 binary_op2);
 ```
 
-> *Preconditions:*
->
-> `T` meets the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
-> and *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]) requirements. In
-> the ranges \[`first1`, `last1`\] and \[`first2`,
-> `first2 + (last1 - first1)`\] `binary_op1` and `binary_op2` neither
-> modifies elements nor invalidates iterators or subranges.
+> *Preconditions:* `T` meets the *Cpp17CopyConstructible*
+> ( [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
+> ( [[cpp17.copyassignable]]) requirements. In the ranges \[`first1`,
+> `last1`\] and \[`first2`, `first2 + (last1 - first1)`\] `binary_op1`
+> and `binary_op2` neither modifies elements nor invalidates iterators
+> or subranges.
 >
 > The use of fully closed ranges is intentional.
 >
-> *Effects:*
->
-> Computes its result by initializing the accumulator `acc` with the
-> initial value `init` and then modifying it with
+> *Effects:* Computes its result by initializing the accumulator `acc`
+> with the initial value `init` and then modifying it with
 > `acc = std::move(acc) + (*i1) * (*i2)` or
 > `acc = binary_op1(std::move(acc), binary_op2(*i1, *i2))` for every
 > iterator `i1` in the range \[`first1`, `last1`) and iterator `i2` in
@@ -8912,9 +8284,7 @@ template<class InputIterator1, class InputIterator2, class T>
                                T init);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return transform_reduce(first1, last1, first2, init, plus<>(), multiplies<>());
@@ -8929,9 +8299,7 @@ template<class ExecutionPolicy,
                      T init);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return transform_reduce(std::forward<ExecutionPolicy>(exec),
@@ -8957,9 +8325,7 @@ template<class ExecutionPolicy,
                      BinaryOperation2 binary_op2);
 ```
 
-> *Mandates:*
->
-> All of
+> *Mandates:* All of
 >
 > - `binary_op1(init, init)`,
 >
@@ -8988,10 +8354,8 @@ template<class ExecutionPolicy,
 >
 > for every iterator `i` in \[`first1`, `last1`).
 >
-> *Complexity:*
->
-> 𝑂(`last1 - first1)` applications each of `binary_op1` and
-> `binary_op2`.
+> *Complexity:* 𝑂(`last1 - first1)` applications each of `binary_op1`
+> and `binary_op2`.
 
 ``` cpp
 template<class InputIterator, class T,
@@ -9006,9 +8370,7 @@ template<class ExecutionPolicy,
                      T init, BinaryOperation binary_op, UnaryOperation unary_op);
 ```
 
-> *Mandates:*
->
-> All of
+> *Mandates:* All of
 >
 > - `binary_op(init, init)`,
 >
@@ -9036,9 +8398,8 @@ template<class ExecutionPolicy,
 >
 > for every iterator `i` in \[`first`, `last`).
 >
-> *Complexity:*
->
-> 𝑂(`last - first)` applications each of `unary_op` and `binary_op`.
+> *Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
+> `binary_op`.
 >
 > \[*Note 25*: `transform_reduce` does not apply `unary_op` to
 > `init`. — *end note*\]
@@ -9056,42 +8417,31 @@ template<class InputIterator, class OutputIterator, class BinaryOperation>
                 OutputIterator result, BinaryOperation binary_op);
 ```
 
-> *Mandates:*
->
-> `InputIterator`’s value type is constructible from `*first`. The
-> result of the expression `std::move(acc) + *i` or
+> *Mandates:* `InputIterator`’s value type is constructible from
+> `*first`. The result of the expression `std::move(acc) + *i` or
 > `binary_op(std::move(acc), *i)` is implicitly convertible to
 > `InputIterator`’s value type. `acc` is
 > writable [[iterator.requirements.general]] to `result`.
 >
-> *Preconditions:*
->
-> In the ranges \[`first`, `last`\] and \[`result`,
+> *Preconditions:* In the ranges \[`first`, `last`\] and \[`result`,
 > `result + (last - first)`\] `binary_op` neither modifies elements nor
 > invalidates iterators or subranges.
 >
 > The use of fully closed ranges is intentional.
 >
-> *Effects:*
->
-> For a non-empty range, the function creates an accumulator `acc` whose
-> type is `InputIterator`’s value type, initializes it with `*first`,
-> and assigns the result to `*result`. For every iterator `i` in
-> \[`first + 1`, `last`) in order, `acc` is then modified by
+> *Effects:* For a non-empty range, the function creates an accumulator
+> `acc` whose type is `InputIterator`’s value type, initializes it with
+> `*first`, and assigns the result to `*result`. For every iterator `i`
+> in \[`first + 1`, `last`) in order, `acc` is then modified by
 > `acc = std::move(acc) + *i` or `acc = binary_op(std::move(acc), *i)`
 > and the result is assigned to `*(result + (i - first))`.
 >
-> *Returns:*
+> *Returns:* `result + (last - first)`.
 >
-> `result + (last - first)`.
+> *Complexity:* Exactly `(last - first) - 1` applications of the binary
+> operation.
 >
-> *Complexity:*
->
-> Exactly `(last - first) - 1` applications of the binary operation.
->
-> *Remarks:*
->
-> `result` may be equal to `first`.
+> *Remarks:* `result` may be equal to `first`.
 
 ### Exclusive scan <a id="exclusive.scan">[[exclusive.scan]]</a>
 
@@ -9102,9 +8452,7 @@ template<class InputIterator, class OutputIterator, class T>
                    OutputIterator result, T init);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return exclusive_scan(first, last, result, init, plus<>());
@@ -9118,9 +8466,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2, 
                    ForwardIterator2 result, T init);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return exclusive_scan(std::forward<ExecutionPolicy>(exec),
@@ -9140,9 +8486,7 @@ template<class ExecutionPolicy,
                    ForwardIterator2 result, T init, BinaryOperation binary_op);
 ```
 
-> *Mandates:*
->
-> All of
+> *Mandates:* All of
 >
 > - `binary_op(init, init)`,
 >
@@ -9161,27 +8505,19 @@ template<class ExecutionPolicy,
 >   elements in the ranges \[`first`, `last`\] or \[`result`,
 >   `result + (last - first)`\].
 >
-> *Effects:*
->
-> For each integer `K` in \[`0`, `last - first`) assigns through
-> `result + K` the value of:
+> *Effects:* For each integer `K` in \[`0`, `last - first`) assigns
+> through `result + K` the value of:
 >
 > ``` cpp
 > GENERALIZED_NONCOMMUTATIVE_SUM(
 >     binary_op, init, *(first + 0), *(first + 1), ..., *(first + K - 1))
 > ```
 >
-> *Returns:*
+> *Returns:* The end of the resulting range beginning at `result`.
 >
-> The end of the resulting range beginning at `result`.
+> *Complexity:* 𝑂(`last - first)` applications of `binary_op`.
 >
-> *Complexity:*
->
-> 𝑂(`last - first)` applications of `binary_op`.
->
-> *Remarks:*
->
-> `result` may be equal to `first`.
+> *Remarks:* `result` may be equal to `first`.
 >
 > \[*Note 26*: The difference between `exclusive_scan` and
 > `inclusive_scan` is that `exclusive_scan` excludes the $i^\text{th}$
@@ -9198,9 +8534,7 @@ template<class InputIterator, class OutputIterator>
                    OutputIterator result);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return inclusive_scan(first, last, result, plus<>());
@@ -9214,9 +8548,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2>
                    ForwardIterator2 result);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return inclusive_scan(std::forward<ExecutionPolicy>(exec), first, last, result, plus<>());
@@ -9248,9 +8580,7 @@ template<class ExecutionPolicy,
 
 > Let `U` be the value type of `decltype(first)`.
 >
-> *Mandates:*
->
-> If `init` is provided, all of
+> *Mandates:* If `init` is provided, all of
 >
 > - `binary_op(init, init)`,
 >
@@ -9271,10 +8601,8 @@ template<class ExecutionPolicy,
 >   elements in the ranges \[`first`, `last`\] or \[`result`,
 >   `result + (last - first)`\].
 >
-> *Effects:*
->
-> For each integer `K` in \[`0`, `last - first`) assigns through
-> `result + K` the value of
+> *Effects:* For each integer `K` in \[`0`, `last - first`) assigns
+> through `result + K` the value of
 >
 > - *GENERALIZED_NONCOMMUTATIVE_SUM*(  
 >       binary_op, init, \*(first + 0), \*(first + 1), ..., \*(first +
@@ -9285,17 +8613,11 @@ template<class ExecutionPolicy,
 >       binary_op, \*(first + 0), \*(first + 1), ..., \*(first + K))  
 >   otherwise.
 >
-> *Returns:*
+> *Returns:* The end of the resulting range beginning at `result`.
 >
-> The end of the resulting range beginning at `result`.
+> *Complexity:* 𝑂(`last - first)` applications of `binary_op`.
 >
-> *Complexity:*
->
-> 𝑂(`last - first)` applications of `binary_op`.
->
-> *Remarks:*
->
-> `result` may be equal to `first`.
+> *Remarks:* `result` may be equal to `first`.
 >
 > \[*Note 27*: The difference between `exclusive_scan` and
 > `inclusive_scan` is that `inclusive_scan` includes the $i^\text{th}$
@@ -9322,9 +8644,7 @@ template<class ExecutionPolicy,
                              BinaryOperation binary_op, UnaryOperation unary_op);
 ```
 
-> *Mandates:*
->
-> All of
+> *Mandates:* All of
 >
 > - `binary_op(init, init)`,
 >
@@ -9343,10 +8663,8 @@ template<class ExecutionPolicy,
 >   subranges, nor modifies elements in the ranges \[`first`, `last`\]
 >   or \[`result`, `result + (last - first)`\].
 >
-> *Effects:*
->
-> For each integer `K` in \[`0`, `last - first`) assigns through
-> `result + K` the value of:
+> *Effects:* For each integer `K` in \[`0`, `last - first`) assigns
+> through `result + K` the value of:
 >
 > ``` cpp
 > GENERALIZED_NONCOMMUTATIVE_SUM(
@@ -9354,17 +8672,12 @@ template<class ExecutionPolicy,
 >     unary_op(*(first + 0)), unary_op(*(first + 1)), ..., unary_op(*(first + K - 1)))
 > ```
 >
-> *Returns:*
+> *Returns:* The end of the resulting range beginning at `result`.
 >
-> The end of the resulting range beginning at `result`.
+> *Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
+> `binary_op`.
 >
-> *Complexity:*
->
-> 𝑂(`last - first)` applications each of `unary_op` and `binary_op`.
->
-> *Remarks:*
->
-> `result` may be equal to `first`.
+> *Remarks:* `result` may be equal to `first`.
 >
 > \[*Note 28*: The difference between `transform_exclusive_scan` and
 > `transform_inclusive_scan` is that `transform_exclusive_scan` excludes
@@ -9411,9 +8724,7 @@ template<class ExecutionPolicy,
 
 > Let `U` be the value type of `decltype(first)`.
 >
-> *Mandates:*
->
-> If `init` is provided, all of
+> *Mandates:* If `init` is provided, all of
 >
 > - `binary_op(init, init)`,
 >
@@ -9434,10 +8745,8 @@ template<class ExecutionPolicy,
 >   subranges, nor modifies elements in the ranges \[`first`, `last`\]
 >   or \[`result`, `result + (last - first)`\].
 >
-> *Effects:*
->
-> For each integer `K` in \[`0`, `last - first`) assigns through
-> `result + K` the value of
+> *Effects:* For each integer `K` in \[`0`, `last - first`) assigns
+> through `result + K` the value of
 >
 > - *GENERALIZED_NONCOMMUTATIVE_SUM*(  
 >       binary_op, init,  
@@ -9451,17 +8760,12 @@ template<class ExecutionPolicy,
 >   unary_op(\*(first + K)))  
 >   otherwise.
 >
-> *Returns:*
+> *Returns:* The end of the resulting range beginning at `result`.
 >
-> The end of the resulting range beginning at `result`.
+> *Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
+> `binary_op`.
 >
-> *Complexity:*
->
-> 𝑂(`last - first)` applications each of `unary_op` and `binary_op`.
->
-> *Remarks:*
->
-> `result` may be equal to `first`.
+> *Remarks:* `result` may be equal to `first`.
 >
 > \[*Note 29*: The difference between `transform_exclusive_scan` and
 > `transform_inclusive_scan` is that `transform_inclusive_scan` includes
@@ -9522,13 +8826,11 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 >
 >   The use of fully closed ranges is intentional.
 >
-> *Effects:*
->
-> For the overloads with no `ExecutionPolicy` and a non-empty range, the
-> function creates an accumulator `acc` of type `T`, initializes it with
-> `*first`, and assigns the result to `*result`. For every iterator `i`
-> in \[`first + 1`, `last`) in order, creates an object `val` whose type
-> is `T`, initializes it with `*i`, computes
+> *Effects:* For the overloads with no `ExecutionPolicy` and a non-empty
+> range, the function creates an accumulator `acc` of type `T`,
+> initializes it with `*first`, and assigns the result to `*result`. For
+> every iterator `i` in \[`first + 1`, `last`) in order, creates an
+> object `val` whose type is `T`, initializes it with `*i`, computes
 > `binary_op(val, std::move(acc))`, assigns the result to
 > `*(result + (i - first))`, and move assigns from `val` to `acc`.
 >
@@ -9537,20 +8839,15 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 > `[1, last - first - 1]`, performs
 > `*(result + d) = binary_op(*(first + d), *(first + (d - 1)))`.
 >
-> *Returns:*
+> *Returns:* `result + (last - first)`.
 >
-> `result + (last - first)`.
+> *Complexity:* Exactly `(last - first) - 1` applications of the binary
+> operation.
 >
-> *Complexity:*
->
-> Exactly `(last - first) - 1` applications of the binary operation.
->
-> *Remarks:*
->
-> For the overloads with no `ExecutionPolicy`, `result` may be equal to
-> `first`. For the overloads with an `ExecutionPolicy`, the ranges
-> \[`first`, `last`) and \[`result`, `result + (last - first)`) shall
-> not overlap.
+> *Remarks:* For the overloads with no `ExecutionPolicy`, `result` may
+> be equal to `first`. For the overloads with an `ExecutionPolicy`, the
+> ranges \[`first`, `last`) and \[`result`, `result + (last - first)`)
+> shall not overlap.
 
 ### Iota <a id="numeric.iota">[[numeric.iota]]</a>
 
@@ -9559,20 +8856,14 @@ template<class ForwardIterator, class T>
   constexpr void iota(ForwardIterator first, ForwardIterator last, T value);
 ```
 
-> *Mandates:*
+> *Mandates:* `T` is convertible to `ForwardIterator`’s value type. The
+> expression `++val`, where `val` has type `T`, is well-formed.
 >
-> `T` is convertible to `ForwardIterator`’s value type. The expression
-> `++val`, where `val` has type `T`, is well-formed.
+> *Effects:* For each element referred to by the iterator `i` in the
+> range \[`first`, `last`), assigns `*i = value` and increments `value`
+> as if by `++value`.
 >
-> *Effects:*
->
-> For each element referred to by the iterator `i` in the range
-> \[`first`, `last`), assigns `*i = value` and increments `value` as if
-> by `++value`.
->
-> *Complexity:*
->
-> Exactly `last - first` increments and assignments.
+> *Complexity:* Exactly `last - first` increments and assignments.
 
 ``` cpp
 template<input_or_output_iterator O, sentinel_for<O> S, weakly_incrementable T>
@@ -9582,9 +8873,7 @@ template<weakly_incrementable T, output_range<const T&> R>
   constexpr ranges::iota_result<borrowed_iterator_t<R>, T> ranges::iota(R&& r, T value);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > while (first != last) {
@@ -9602,27 +8891,19 @@ template<class M, class N>
   constexpr common_type_t<M, N> gcd(M m, N n);
 ```
 
-> *Mandates:*
+> *Mandates:* `M` and `N` both are integer types other than  `bool`.
 >
-> `M` and `N` both are integer types other than  `bool`.
->
-> *Preconditions:*
->
-> $|\texttt{m}|$ and $|\texttt{n}|$ are representable as a value of
-> `common_type_t<M, N>`.
+> *Preconditions:* $|\texttt{m}|$ and $|\texttt{n}|$ are representable
+> as a value of `common_type_t<M, N>`.
 >
 > \[*Note 30*: These requirements ensure, for example, that
 > $\texttt{gcd(m, m)} = |\texttt{m}|$ is representable as a value of
 > type `M`. — *end note*\]
 >
-> *Returns:*
+> *Returns:* Zero when `m` and `n` are both zero. Otherwise, returns the
+> greatest common divisor of $|\texttt{m}|$ and $|\texttt{n}|$.
 >
-> Zero when `m` and `n` are both zero. Otherwise, returns the greatest
-> common divisor of $|\texttt{m}|$ and $|\texttt{n}|$.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ### Least common multiple <a id="numeric.ops.lcm">[[numeric.ops.lcm]]</a>
 
@@ -9631,25 +8912,17 @@ template<class M, class N>
   constexpr common_type_t<M, N> lcm(M m, N n);
 ```
 
-> *Mandates:*
+> *Mandates:* `M` and `N` both are integer types other than  `bool`.
 >
-> `M` and `N` both are integer types other than  `bool`.
->
-> *Preconditions:*
->
-> $|\texttt{m}|$ and $|\texttt{n}|$ are representable as a value of
-> `common_type_t<M, N>`. The least common multiple of $|\texttt{m}|$ and
-> $|\texttt{n}|$ is representable as a value of type
+> *Preconditions:* $|\texttt{m}|$ and $|\texttt{n}|$ are representable
+> as a value of `common_type_t<M, N>`. The least common multiple of
+> $|\texttt{m}|$ and $|\texttt{n}|$ is representable as a value of type
 > `common_type_t<M, N>`.
 >
-> *Returns:*
+> *Returns:* Zero when either `m` or `n` is zero. Otherwise, returns the
+> least common multiple of $|\texttt{m}|$ and $|\texttt{n}|$.
 >
-> Zero when either `m` or `n` is zero. Otherwise, returns the least
-> common multiple of $|\texttt{m}|$ and $|\texttt{n}|$.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ### Midpoint <a id="numeric.ops.midpoint">[[numeric.ops.midpoint]]</a>
 
@@ -9658,37 +8931,25 @@ template<class T>
   constexpr T midpoint(T a, T b) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is an arithmetic type other than `bool`.
 >
-> `T` is an arithmetic type other than `bool`.
+> *Returns:* Half the sum of `a` and `b`. If `T` is an integer type and
+> the sum is odd, the result is rounded towards `a`.
 >
-> *Returns:*
->
-> Half the sum of `a` and `b`. If `T` is an integer type and the sum is
-> odd, the result is rounded towards `a`.
->
-> *Remarks:*
->
-> No overflow occurs. If `T` is a floating-point type, at most one
-> inexact operation occurs.
+> *Remarks:* No overflow occurs. If `T` is a floating-point type, at
+> most one inexact operation occurs.
 
 ``` cpp
 template<class T>
   constexpr T* midpoint(T* a, T* b);
 ```
 
-> *Constraints:*
+> *Constraints:* `T` is an object type.
 >
-> `T` is an object type.
+> *Mandates:* `T` is a complete type.
 >
-> *Mandates:*
->
-> `T` is a complete type.
->
-> *Preconditions:*
->
-> `a` and `b` point to, respectively, elements i and j of the same array
-> object `x`.
+> *Preconditions:* `a` and `b` point to, respectively, elements i and j
+> of the same array object `x`.
 >
 > \[*Note 31*: As specified in [[basic.compound]], an object that is not
 > an array element is considered to belong to a single-element array for
@@ -9696,10 +8957,8 @@ template<class T>
 > elements is considered to be equivalent to a pointer to a hypothetical
 > array element n for this purpose. — *end note*\]
 >
-> *Returns:*
->
-> A pointer to array element $i+\frac{j-i}{2}$ of `x`, where the result
-> of the division is truncated towards zero.
+> *Returns:* A pointer to array element $i+\frac{j-i}{2}$ of `x`, where
+> the result of the division is truncated towards zero.
 
 ## Specialized `<memory>` algorithms <a id="specialized.algorithms">[[specialized.algorithms]]</a>
 
@@ -9796,9 +9055,7 @@ template<class NoThrowForwardIterator>
   void uninitialized_default_construct(NoThrowForwardIterator first, NoThrowForwardIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -9817,9 +9074,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -9832,9 +9087,7 @@ template<class NoThrowForwardIterator, class Size>
   NoThrowForwardIterator uninitialized_default_construct_n(NoThrowForwardIterator first, Size n);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; n > 0; (void)++first, --n)
@@ -9851,9 +9104,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uninitialized_default_construct(counted_iterator(first, n),
@@ -9867,9 +9118,7 @@ template<class NoThrowForwardIterator>
   void uninitialized_value_construct(NoThrowForwardIterator first, NoThrowForwardIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -9888,9 +9137,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -9903,9 +9150,7 @@ template<class NoThrowForwardIterator, class Size>
   NoThrowForwardIterator uninitialized_value_construct_n(NoThrowForwardIterator first, Size n);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; n > 0; (void)++first, --n)
@@ -9922,9 +9167,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uninitialized_value_construct(counted_iterator(first, n),
@@ -9939,14 +9182,10 @@ template<class InputIterator, class NoThrowForwardIterator>
                                             NoThrowForwardIterator result);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `result`+\[0, `(last - first)`) does not overlap with
+> \[`first`, `last`).
 >
-> `result`+\[0, `(last - first)`) does not overlap with \[`first`,
-> `last`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++result, (void) ++first)
@@ -9954,9 +9193,7 @@ template<class InputIterator, class NoThrowForwardIterator>
 >     typename iterator_traits<NoThrowForwardIterator>::value_type(*first);
 > ```
 >
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 ``` cpp
 namespace ranges {
@@ -9972,13 +9209,10 @@ namespace ranges {
 }
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`ofirst`, `olast`) does not overlap with
+> \[`ifirst`, `ilast`).
 >
-> \[`ofirst`, `olast`) does not overlap with \[`ifirst`, `ilast`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; ifirst != ilast && ofirst != olast; ++ofirst, (void)++ifirst)
@@ -9992,13 +9226,10 @@ template<class InputIterator, class Size, class NoThrowForwardIterator>
                                               NoThrowForwardIterator result);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `result`+\[0, `n`) does not overlap with `first`+\[0,
+> `n`).
 >
-> `result`+\[0, `n`) does not overlap with `first`+\[0, `n`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for ( ; n > 0; ++result, (void) ++first, --n)
@@ -10006,9 +9237,7 @@ template<class InputIterator, class Size, class NoThrowForwardIterator>
 >     typename iterator_traits<NoThrowForwardIterator>::value_type(*first);
 > ```
 >
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 ``` cpp
 namespace ranges {
@@ -10019,13 +9248,10 @@ namespace ranges {
 }
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`ofirst`, `olast`) does not overlap with
+> `ifirst`+\[0, `n`).
 >
-> \[`ofirst`, `olast`) does not overlap with `ifirst`+\[0, `n`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto t = uninitialized_copy(counted_iterator(std::move(ifirst), n),
@@ -10041,14 +9267,10 @@ template<class InputIterator, class NoThrowForwardIterator>
                                             NoThrowForwardIterator result);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `result`+\[0, `(last - first)`) does not overlap with
+> \[`first`, `last`).
 >
-> `result`+\[0, `(last - first)`) does not overlap with \[`first`,
-> `last`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; (void)++result, ++first)
@@ -10071,13 +9293,10 @@ namespace ranges {
 }
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`ofirst`, `olast`) does not overlap with
+> \[`ifirst`, `ilast`).
 >
-> \[`ofirst`, `olast`) does not overlap with \[`ifirst`, `ilast`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; ifirst != ilast && ofirst != olast; ++ofirst, (void)++ifirst)
@@ -10096,13 +9315,10 @@ template<class InputIterator, class Size, class NoThrowForwardIterator>
     uninitialized_move_n(InputIterator first, Size n, NoThrowForwardIterator result);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `result`+\[0, `n`) does not overlap with `first`+\[0,
+> `n`).
 >
-> `result`+\[0, `n`) does not overlap with `first`+\[0, `n`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; n > 0; ++result, (void) ++first, --n)
@@ -10120,13 +9336,10 @@ namespace ranges {
 }
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`ofirst`, `olast`) does not overlap with
+> `ifirst`+\[0, `n`).
 >
-> \[`ofirst`, `olast`) does not overlap with `ifirst`+\[0, `n`).
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto t = uninitialized_move(counted_iterator(std::move(ifirst), n),
@@ -10145,9 +9358,7 @@ template<class NoThrowForwardIterator, class T>
   void uninitialized_fill(NoThrowForwardIterator first, NoThrowForwardIterator last, const T& x);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -10166,9 +9377,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -10181,9 +9390,7 @@ template<class NoThrowForwardIterator, class Size, class T>
   NoThrowForwardIterator uninitialized_fill_n(NoThrowForwardIterator first, Size n, const T& x);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; n--; ++first)
@@ -10200,9 +9407,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return uninitialized_fill(counted_iterator(first, n), default_sentinel, x).base();
@@ -10220,15 +9425,11 @@ namespace ranges {
 }
 ```
 
-> *Constraints:*
+> *Constraints:* The expression
+> `::new (declval<void*>()) T(declval<Args>()...)` is well-formed when
+> treated as an unevaluated operand [[term.unevaluated.operand]].
 >
-> The expression `::new (declval<void*>()) T(declval<Args>()...)` is
-> well-formed when treated as an unevaluated
-> operand [[term.unevaluated.operand]].
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return ::new (voidify(*location)) T(std::forward<Args>(args)...);
@@ -10257,9 +9458,7 @@ template<class NoThrowForwardIterator>
   constexpr void destroy(NoThrowForwardIterator first, NoThrowForwardIterator last);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -10277,9 +9476,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; first != last; ++first)
@@ -10292,9 +9489,7 @@ template<class NoThrowForwardIterator, class Size>
   constexpr NoThrowForwardIterator destroy_n(NoThrowForwardIterator first, Size n);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > for (; n > 0; (void)++first, --n)
@@ -10310,9 +9505,7 @@ namespace ranges {
 }
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return destroy(counted_iterator(std::move(first), n), default_sentinel).base();
@@ -10332,19 +9525,14 @@ void qsort(void* base, size_t nmemb, size_t size, c-compare-pred* compar);
 void qsort(void* base, size_t nmemb, size_t size, compare-pred* compar);
 ```
 
-> *Preconditions:*
+> *Preconditions:* For `qsort`, the objects in the array pointed to by
+> `base` are of trivially copyable type.
 >
-> For `qsort`, the objects in the array pointed to by `base` are of
-> trivially copyable type.
+> *Effects:* These functions have the semantics specified in the C
+> standard library.
 >
-> *Effects:*
->
-> These functions have the semantics specified in the C standard
-> library.
->
-> *Throws:*
->
-> Any exception thrown by `compar`[[res.on.exception.handling]].
+> *Throws:* Any exception thrown by
+> `compar`[[res.on.exception.handling]].
 
 <!-- Section link definitions -->
 [accumulate]: #accumulate

@@ -96,38 +96,28 @@ semantics.
 typename X::value_type
 ```
 
-> *Result:*
+> *Result:* `T`
 >
-> `T`
->
-> *Preconditions:*
->
-> `T` is *Cpp17Erasable* from `X` (see  [[container.alloc.reqmts]],
-> below).
+> *Preconditions:* `T` is *Cpp17Erasable* from `X`
+> (see  [[container.alloc.reqmts]], below).
 
 ``` cpp
 typename X::reference
 ```
 
-> *Result:*
->
-> `T&`
+> *Result:* `T&`
 
 ``` cpp
 typename X::const_reference
 ```
 
-> *Result:*
->
-> `const T&`
+> *Result:* `const T&`
 
 ``` cpp
 typename X::iterator
 ```
 
-> *Result:*
->
-> A type that meets the forward iterator
+> *Result:* A type that meets the forward iterator
 > requirements [[forward.iterators]] with value type `T`. The type
 > `X::iterator` is convertible to `X::const_iterator`.
 
@@ -135,321 +125,218 @@ typename X::iterator
 typename X::const_iterator
 ```
 
-> *Result:*
->
-> A type that meets the requirements of a constant iterator and those of
-> a forward iterator with value type `T`.
+> *Result:* A type that meets the requirements of a constant iterator
+> and those of a forward iterator with value type `T`.
 
 ``` cpp
 typename X::difference_type
 ```
 
-> *Result:*
->
-> A signed integer type, identical to the difference type of
+> *Result:* A signed integer type, identical to the difference type of
 > `X::iterator` and `X::const_iterator`.
 
 ``` cpp
 typename X::size_type
 ```
 
-> *Result:*
->
-> An unsigned integer type that can represent any non-negative value of
-> `X::difference_type`.
+> *Result:* An unsigned integer type that can represent any non-negative
+> value of `X::difference_type`.
 
 ``` cpp
 X u;
 X u = X();
 ```
 
-> *Ensures:*
+> *Ensures:* `u.empty()`
 >
-> `u.empty()`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X u(v);
 X u = v;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X` (see below).
 >
-> `T` is *Cpp17CopyInsertable* into `X` (see below).
+> *Ensures:* `u == v`.
 >
-> *Ensures:*
->
-> `u == v`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 X u(rv);
 X u = rv;
 ```
 
-> *Ensures:*
+> *Ensures:* `u` is equal to the value that `rv` had before this
+> construction.
 >
-> `u` is equal to the value that `rv` had before this construction.
->
-> *Complexity:*
->
-> Linear for `array` and constant for all other standard containers.
+> *Complexity:* Linear for `array` and constant for all other standard
+> containers.
 
 ``` cpp
 t = v;
 ```
 
-> *Result:*
+> *Result:* `X&`.
 >
-> `X&`.
+> *Ensures:* `t == v`.
 >
-> *Ensures:*
->
-> `t == v`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 t = rv
 ```
 
-> *Result:*
+> *Result:* `X&`.
 >
-> `X&`.
+> *Effects:* All existing elements of `t` are either move assigned to or
+> destroyed.
 >
-> *Effects:*
+> *Ensures:* If `t` and `rv` do not refer to the same object, `t` is
+> equal to the value that `rv` had before this assignment.
 >
-> All existing elements of `t` are either move assigned to or destroyed.
->
-> *Ensures:*
->
-> If `t` and `rv` do not refer to the same object, `t` is equal to the
-> value that `rv` had before this assignment.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 a.~X()
 ```
 
-> *Result:*
+> *Result:* .
 >
-> .
+> *Effects:* Destroys every element of `a`; any memory obtained is
+> deallocated.
 >
-> *Effects:*
->
-> Destroys every element of `a`; any memory obtained is deallocated.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 b.begin()
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `b`.
 >
-> `iterator`; `const_iterator` for constant `b`.
+> *Returns:* An iterator referring to the first element in the
+> container.
 >
-> *Returns:*
->
-> An iterator referring to the first element in the container.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.end()
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `b`.
 >
-> `iterator`; `const_iterator` for constant `b`.
+> *Returns:* An iterator which is the past-the-end value for the
+> container.
 >
-> *Returns:*
->
-> An iterator which is the past-the-end value for the container.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.cbegin()
 ```
 
-> *Result:*
+> *Result:* `const_iterator`.
 >
-> `const_iterator`.
+> *Returns:* `const_cast<X const&>(b).begin()`
 >
-> *Returns:*
->
-> `const_cast<X const&>(b).begin()`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.cend()
 ```
 
-> *Result:*
+> *Result:* `const_iterator`.
 >
-> `const_iterator`.
+> *Returns:* `const_cast<X const&>(b).end()`
 >
-> *Returns:*
->
-> `const_cast<X const&>(b).end()`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 i <=> j
 ```
 
-> *Result:*
+> *Result:* `strong_ordering`.
 >
-> `strong_ordering`.
+> *Constraints:* `X::iterator` meets the random access iterator
+> requirements.
 >
-> *Constraints:*
->
-> `X::iterator` meets the random access iterator requirements.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 c == b
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` meets the *Cpp17EqualityComparable* requirements.
 >
-> `T` meets the *Cpp17EqualityComparable* requirements.
+> *Result:* `bool`.
 >
-> *Result:*
->
-> `bool`.
->
-> *Returns:*
->
-> `equal(c.begin(), c.end(), b.begin(), b.end())`
+> *Returns:* `equal(c.begin(), c.end(), b.begin(), b.end())`
 >
 > \[*Note 1*: The algorithm `equal` is defined in
 > [[alg.equal]]. — *end note*\]
 >
-> *Complexity:*
+> *Complexity:* Constant if `c.size() != b.size()`, linear otherwise.
 >
-> Constant if `c.size() != b.size()`, linear otherwise.
->
-> *Remarks:*
->
-> `==` is an equivalence relation.
+> *Remarks:* `==` is an equivalence relation.
 
 ``` cpp
 c != b
 ```
 
-> *Effects:*
->
-> Equivalent to `!(c == b)`.
+> *Effects:* Equivalent to `!(c == b)`.
 
 ``` cpp
 t.swap(s)
 ```
 
-> *Result:*
+> *Result:* .
 >
-> .
+> *Effects:* Exchanges the contents of `t` and `s`.
 >
-> *Effects:*
->
-> Exchanges the contents of `t` and `s`.
->
-> *Complexity:*
->
-> Linear for `array` and constant for all other standard containers.
+> *Complexity:* Linear for `array` and constant for all other standard
+> containers.
 
 ``` cpp
 swap(t, s)
 ```
 
-> *Effects:*
->
-> Equivalent to `t.swap(s)`.
+> *Effects:* Equivalent to `t.swap(s)`.
 
 ``` cpp
 c.size()
 ```
 
-> *Result:*
+> *Result:* `size_type`.
 >
-> `size_type`.
+> *Returns:* `distance(c.begin(), c.end())`, i.e., the number of
+> elements in the container.
 >
-> *Returns:*
+> *Complexity:* Constant.
 >
-> `distance(c.begin(), c.end())`, i.e., the number of elements in the
-> container.
->
-> *Complexity:*
->
-> Constant.
->
-> *Remarks:*
->
-> The number of elements is defined by the rules of constructors,
-> inserts, and erases.
+> *Remarks:* The number of elements is defined by the rules of
+> constructors, inserts, and erases.
 
 ``` cpp
 c.max_size()
 ```
 
-> *Result:*
+> *Result:* `size_type`.
 >
-> `size_type`.
+> *Returns:* `distance(begin(), end())` for the largest possible
+> container.
 >
-> *Returns:*
->
-> `distance(begin(), end())` for the largest possible container.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 c.empty()
 ```
 
-> *Result:*
+> *Result:* `bool`.
 >
-> `bool`.
+> *Returns:* `c.begin() == c.end()`
 >
-> *Returns:*
+> *Complexity:* Constant.
 >
-> `c.begin() == c.end()`
->
-> *Complexity:*
->
-> Constant.
->
-> *Remarks:*
->
-> If the container is empty, then `c.empty()` is `true`.
+> *Remarks:* If the container is empty, then `c.empty()` is `true`.
 
 In the expressions
 
@@ -593,83 +480,57 @@ well-formed and have the specified semantics.
 typename X::reverse_iterator
 ```
 
-> *Result:*
->
-> The type `reverse_iterator<X::iterator>`, an iterator type whose value
-> type is `T`.
+> *Result:* The type `reverse_iterator<X::iterator>`, an iterator type
+> whose value type is `T`.
 
 ``` cpp
 typename X::const_reverse_iterator
 ```
 
-> *Result:*
->
-> The type `reverse_iterator<X::const_iterator>`, a constant iterator
-> type whose value type is `T`.
+> *Result:* The type `reverse_iterator<X::const_iterator>`, a constant
+> iterator type whose value type is `T`.
 
 ``` cpp
 a.rbegin()
 ```
 
-> *Result:*
+> *Result:* `reverse_iterator`; `const_reverse_iterator` for constant
+> `a`.
 >
-> `reverse_iterator`; `const_reverse_iterator` for constant `a`.
+> *Returns:* `reverse_iterator(end())`
 >
-> *Returns:*
->
-> `reverse_iterator(end())`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a.rend()
 ```
 
-> *Result:*
+> *Result:* `reverse_iterator`; `const_reverse_iterator` for constant
+> `a`.
 >
-> `reverse_iterator`; `const_reverse_iterator` for constant `a`.
+> *Returns:* `reverse_iterator(begin())`
 >
-> *Returns:*
->
-> `reverse_iterator(begin())`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a.crbegin()
 ```
 
-> *Result:*
+> *Result:* `const_reverse_iterator`.
 >
-> `const_reverse_iterator`.
+> *Returns:* `<X &>(a).rbegin()`
 >
-> *Returns:*
->
-> `<X &>(a).rbegin()`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a.crend()
 ```
 
-> *Result:*
+> *Result:* `const_reverse_iterator`.
 >
-> `const_reverse_iterator`.
+> *Returns:* `<X &>(a).rend()`
 >
-> *Returns:*
->
-> `<X &>(a).rend()`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 #### Optional container requirements <a id="container.opt.reqmts">[[container.opt.reqmts]]</a>
 
@@ -685,26 +546,19 @@ are implemented by constexpr functions.
 a <=> b
 ```
 
-> *Result:*
+> *Result:* *`synth-three-way-result`*`<X::value_type>`.
 >
-> *`synth-three-way-result`*`<X::value_type>`.
->
-> *Preconditions:*
->
-> Either `<=>` is defined for values of type (possibly const) `T`, or
-> `<` is defined for values of type (possibly const) `T` and `<` is a
-> total ordering relationship.
+> *Preconditions:* Either `<=>` is defined for values of type (possibly
+> const) `T`, or `<` is defined for values of type (possibly const) `T`
+> and `<` is a total ordering relationship.
 >
 > *Returns:*
->
 > `lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(),)`
 >
 > \[*Note 3*: The algorithm `lexicographical_compare_three_way` is
 > defined in [[algorithms]]. — *end note*\]
 >
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 #### Allocator-aware containers <a id="container.alloc.reqmts">[[container.alloc.reqmts]]</a>
 
@@ -811,149 +665,101 @@ expressions are well-formed and have the specified semantics.
 typename X::allocator_type
 ```
 
-> *Result:*
+> *Result:* `A`
 >
-> `A`
->
-> *Mandates:*
->
-> `allocator_type::value_type` is the same as `X::value_type`.
+> *Mandates:* `allocator_type::value_type` is the same as
+> `X::value_type`.
 
 ``` cpp
 c.get_allocator()
 ```
 
-> *Result:*
+> *Result:* `A`
 >
-> `A`
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X u;
 X u = X();
 ```
 
-> *Preconditions:*
+> *Preconditions:* `A` meets the *Cpp17DefaultConstructible*
+> requirements.
 >
-> `A` meets the *Cpp17DefaultConstructible* requirements.
+> *Ensures:* `u.empty()` returns `true`, `u.get_allocator() == A()`.
 >
-> *Ensures:*
->
-> `u.empty()` returns `true`, `u.get_allocator() == A()`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X u(m);
 ```
 
-> *Ensures:*
+> *Ensures:* `u.empty()` returns `true`, `u.get_allocator() == m`.
 >
-> `u.empty()` returns `true`, `u.get_allocator() == m`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X u(t, m);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`.
 >
-> `T` is *Cpp17CopyInsertable* into `X`.
+> *Ensures:* `u == t`, `u.get_allocator() == m`
 >
-> *Ensures:*
->
-> `u == t`, `u.get_allocator() == m`
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 X u(rv);
 ```
 
-> *Ensures:*
+> *Ensures:* `u` has the same elements as `rv` had before this
+> construction; the value of `u.get_allocator()` is the same as the
+> value of `rv.get_allocator()` before this construction.
 >
-> `u` has the same elements as `rv` had before this construction; the
-> value of `u.get_allocator()` is the same as the value of
-> `rv.get_allocator()` before this construction.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X u(rv, m);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `X`.
 >
-> `T` is *Cpp17MoveInsertable* into `X`.
+> *Ensures:* `u` has the same elements, or copies of the elements, that
+> `rv` had before this construction, `u.get_allocator() == m`.
 >
-> *Ensures:*
->
-> `u` has the same elements, or copies of the elements, that `rv` had
-> before this construction, `u.get_allocator() == m`.
->
-> *Complexity:*
->
-> Constant if `m == rv.get_allocator()`, otherwise linear.
+> *Complexity:* Constant if `m == rv.get_allocator()`, otherwise linear.
 
 ``` cpp
 a = t
 ```
 
-> *Result:*
+> *Result:* `X&`.
 >
-> `X&`.
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X` and
+> *Cpp17CopyAssignable*.
 >
-> *Preconditions:*
+> *Ensures:* `a == t` is `true`.
 >
-> `T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*.
->
-> *Ensures:*
->
-> `a == t` is `true`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 a = rv
 ```
 
-> *Result:*
+> *Result:* `X&`.
 >
-> `X&`.
->
-> *Preconditions:*
->
-> If
+> *Preconditions:* If
 > `allocator_traits<allocator_type>::propagate_on_container_move_assignment::value`
 > is `false`, `T` is *Cpp17MoveInsertable* into `X` and
 > *Cpp17MoveAssignable*.
 >
-> *Effects:*
+> *Effects:* All existing elements of `a` are either move assigned to or
+> destroyed.
 >
-> All existing elements of `a` are either move assigned to or destroyed.
+> *Ensures:* If `a` and `rv` do not refer to the same object, `a` is
+> equal to the value that `rv` had before this assignment.
 >
-> *Ensures:*
->
-> If `a` and `rv` do not refer to the same object, `a` is equal to the
-> value that `rv` had before this assignment.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 a.swap(b)
@@ -961,13 +767,9 @@ a.swap(b)
 
 > *Result:*
 >
-> *Effects:*
+> *Effects:* Exchanges the contents of `a` and `b`.
 >
-> Exchanges the contents of `a` and `b`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ### Container data races <a id="container.requirements.dataraces">[[container.requirements.dataraces]]</a>
 
@@ -1060,279 +862,195 @@ well-formed and have the specified semantics.
 X u(n, t);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`.
 >
-> `T` is *Cpp17CopyInsertable* into `X`.
+> *Effects:* Constructs a sequence container with `n` copies of `t`.
 >
-> *Effects:*
->
-> Constructs a sequence container with `n` copies of `t`.
->
-> *Ensures:*
->
-> `distance(u.begin(), u.end()) == n` is `true`.
+> *Ensures:* `distance(u.begin(), u.end()) == n` is `true`.
 
 ``` cpp
 X u(i, j);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*i`. For `vector`, if the iterator does not meet the
+> *Cpp17ForwardIterator* requirements [[forward.iterators]], `T` is also
+> *Cpp17MoveInsertable* into `X`.
 >
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*i`. For `vector`,
-> if the iterator does not meet the *Cpp17ForwardIterator*
-> requirements [[forward.iterators]], `T` is also *Cpp17MoveInsertable*
-> into `X`.
+> *Effects:* Constructs a sequence container equal to the range
+> `[i, j)`. Each iterator in the range \[`i`, `j`) is dereferenced
+> exactly once.
 >
-> *Effects:*
->
-> Constructs a sequence container equal to the range `[i, j)`. Each
-> iterator in the range \[`i`, `j`) is dereferenced exactly once.
->
-> *Ensures:*
->
-> `distance(u.begin(), u.end()) == distance(i, j)` is `true`.
+> *Ensures:* `distance(u.begin(), u.end()) == distance(i, j)` is `true`.
 
 ``` cpp
 X(from_range, rg)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*ranges::begin(rg)`. For `vector`, if `R` models neither
+> `ranges::``sized_range` nor `ranges::``forward_range`, `T` is also
+> *Cpp17MoveInsertable* into `X`.
 >
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
-> For `vector`, if `R` models neither `ranges::``sized_range` nor
-> `ranges::``forward_range`, `T` is also *Cpp17MoveInsertable* into `X`.
+> *Effects:* Constructs a sequence container equal to the range `rg`.
+> Each iterator in the range `rg` is dereferenced exactly once.
 >
-> *Effects:*
->
-> Constructs a sequence container equal to the range `rg`. Each iterator
-> in the range `rg` is dereferenced exactly once.
->
-> *Ensures:*
->
-> `distance(begin(), end()) == ranges::distance(rg)` is `true`.
+> *Ensures:* `distance(begin(), end()) == ranges::distance(rg)` is
+> `true`.
 
 ``` cpp
 X(il)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end())`.
+> *Effects:* Equivalent to `X(il.begin(), il.end())`.
 
 ``` cpp
 a = il
 ```
 
-> *Result:*
+> *Result:* `X&`.
 >
-> `X&`.
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X` and
+> *Cpp17CopyAssignable*.
 >
-> *Preconditions:*
+> *Effects:* Assigns the range \[`il.begin()`, `il.end()`) into `a`. All
+> existing elements of `a` are either assigned to or destroyed.
 >
-> `T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*.
->
-> *Effects:*
->
-> Assigns the range \[`il.begin()`, `il.end()`) into `a`. All existing
-> elements of `a` are either assigned to or destroyed.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 a.emplace(p, args)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `args`. For `vector` and `deque`, `T` is also *Cpp17MoveInsertable*
+> into `X` and *Cpp17MoveAssignable*.
 >
-> *Preconditions:*
->
-> `T` is *Cpp17EmplaceConstructible* into `X` from `args`. For `vector`
-> and `deque`, `T` is also *Cpp17MoveInsertable* into `X` and
-> *Cpp17MoveAssignable*.
->
-> *Effects:*
->
-> Inserts an object of type `T` constructed with
+> *Effects:* Inserts an object of type `T` constructed with
 > `std::forward<Args>(args)...` before `p`.
 >
 > \[*Note 5*: `args` can directly or indirectly refer to a value in
 > `a`. — *end note*\]
 >
-> *Returns:*
->
-> An iterator that points to the new element constructed from `args`
-> into `a`.
+> *Returns:* An iterator that points to the new element constructed from
+> `args` into `a`.
 
 ``` cpp
 a.insert(p, t)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`. For `vector`
+> and `deque`, `T` is also *Cpp17CopyAssignable*.
 >
-> *Preconditions:*
+> *Effects:* Inserts a copy of `t` before `p`.
 >
-> `T` is *Cpp17CopyInsertable* into `X`. For `vector` and `deque`, `T`
-> is also *Cpp17CopyAssignable*.
->
-> *Effects:*
->
-> Inserts a copy of `t` before `p`.
->
-> *Returns:*
->
-> An iterator that points to the copy of `t` inserted into `a`.
+> *Returns:* An iterator that points to the copy of `t` inserted into
+> `a`.
 
 ``` cpp
 a.insert(p, rv)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `X`. For `vector`
+> and `deque`, `T` is also *Cpp17MoveAssignable*.
 >
-> *Preconditions:*
+> *Effects:* Inserts a copy of `rv` before `p`.
 >
-> `T` is *Cpp17MoveInsertable* into `X`. For `vector` and `deque`, `T`
-> is also *Cpp17MoveAssignable*.
->
-> *Effects:*
->
-> Inserts a copy of `rv` before `p`.
->
-> *Returns:*
->
-> An iterator that points to the copy of `rv` inserted into `a`.
+> *Returns:* An iterator that points to the copy of `rv` inserted into
+> `a`.
 
 ``` cpp
 a.insert(p, n, t)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X` and
+> *Cpp17CopyAssignable*.
 >
-> *Preconditions:*
+> *Effects:* Inserts `n` copies of `t` before `p`.
 >
-> `T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*.
->
-> *Effects:*
->
-> Inserts `n` copies of `t` before `p`.
->
-> *Returns:*
->
-> An iterator that points to the copy of the first element inserted into
-> `a`, or `p` if `n == 0`.
+> *Returns:* An iterator that points to the copy of the first element
+> inserted into `a`, or `p` if `n == 0`.
 
 ``` cpp
 a.insert(p, i, j)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*i`. For `vector` and `deque`, `T` is also *Cpp17MoveInsertable* into
+> `X`, and `T` meets the *Cpp17MoveConstructible*,
+> *Cpp17MoveAssignable*, and *Cpp17Swappable*[[swappable.requirements]]
+> requirements. Neither `i` nor `j` are iterators into `a`.
 >
-> *Preconditions:*
+> *Effects:* Inserts copies of elements in `[i, j)` before `p`. Each
+> iterator in the range \[`i`, `j`) shall be dereferenced exactly once.
 >
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*i`. For `vector`
-> and `deque`, `T` is also *Cpp17MoveInsertable* into `X`, and `T` meets
-> the *Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
-> *Cpp17Swappable*[[swappable.requirements]] requirements. Neither `i`
-> nor `j` are iterators into `a`.
->
-> *Effects:*
->
-> Inserts copies of elements in `[i, j)` before `p`. Each iterator in
-> the range \[`i`, `j`) shall be dereferenced exactly once.
->
-> *Returns:*
->
-> An iterator that points to the copy of the first element inserted into
-> `a`, or `p` if `i == j`.
+> *Returns:* An iterator that points to the copy of the first element
+> inserted into `a`, or `p` if `i == j`.
 
 ``` cpp
 a.insert_range(p, rg)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
->
-> *Preconditions:*
->
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
-> For `vector` and `deque`, `T` is also *Cpp17MoveInsertable* into `X`,
-> and `T` meets the *Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*ranges::begin(rg)`. For `vector` and `deque`, `T` is also
+> *Cpp17MoveInsertable* into `X`, and `T` meets the
+> *Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
 > *Cpp17Swappable*[[swappable.requirements]] requirements. `rg` and `a`
 > do not overlap.
 >
-> *Effects:*
+> *Effects:* Inserts copies of elements in `rg` before `p`. Each
+> iterator in the range `rg` is dereferenced exactly once.
 >
-> Inserts copies of elements in `rg` before `p`. Each iterator in the
-> range `rg` is dereferenced exactly once.
->
-> *Returns:*
->
-> An iterator that points to the copy of the first element inserted into
-> `a`, or `p` if `rg` is empty.
+> *Returns:* An iterator that points to the copy of the first element
+> inserted into `a`, or `p` if `rg` is empty.
 
 ``` cpp
 a.insert(p, il)
 ```
 
-> *Effects:*
->
-> Equivalent to `a.insert(p, il.begin(), il.end())`.
+> *Effects:* Equivalent to `a.insert(p, il.begin(), il.end())`.
 
 ``` cpp
 a.erase(q)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* For `vector` and `deque`, `T` is
+> *Cpp17MoveAssignable*.
 >
-> *Preconditions:*
+> *Effects:* Erases the element pointed to by `q`.
 >
-> For `vector` and `deque`, `T` is *Cpp17MoveAssignable*.
->
-> *Effects:*
->
-> Erases the element pointed to by `q`.
->
-> *Returns:*
->
-> An iterator that points to the element immediately following `q` prior
-> to the element being erased. If no such element exists, `a.end()` is
-> returned.
+> *Returns:* An iterator that points to the element immediately
+> following `q` prior to the element being erased. If no such element
+> exists, `a.end()` is returned.
 
 ``` cpp
 a.erase(q1, q2)
 ```
 
-> *Result:*
+> *Result:* `iterator`.
 >
-> `iterator`.
+> *Preconditions:* For `vector` and `deque`, `T` is
+> *Cpp17MoveAssignable*.
 >
-> *Preconditions:*
+> *Effects:* Erases the elements in the range `[q1, q2)`.
 >
-> For `vector` and `deque`, `T` is *Cpp17MoveAssignable*.
->
-> *Effects:*
->
-> Erases the elements in the range `[q1, q2)`.
->
-> *Returns:*
->
-> An iterator that points to the element pointed to by `q2` prior to any
-> elements being erased. If no such element exists, `a.end()` is
-> returned.
+> *Returns:* An iterator that points to the element pointed to by `q2`
+> prior to any elements being erased. If no such element exists,
+> `a.end()` is returned.
 
 ``` cpp
 a.clear()
@@ -1340,19 +1058,13 @@ a.clear()
 
 > *Result:*
 >
-> *Effects:*
+> *Effects:* Destroys all elements in `a`. Invalidates all references,
+> pointers, and iterators referring to the elements of `a` and may
+> invalidate the past-the-end iterator.
 >
-> Destroys all elements in `a`. Invalidates all references, pointers,
-> and iterators referring to the elements of `a` and may invalidate the
-> past-the-end iterator.
+> *Ensures:* `a.empty()` is `true`.
 >
-> *Ensures:*
->
-> `a.empty()` is `true`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 a.assign(i, j)
@@ -1360,20 +1072,17 @@ a.assign(i, j)
 
 > *Result:*
 >
-> *Preconditions:*
->
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*i` and assignable
-> from `*i`. For `vector`, if the iterator does not meet the forward
-> iterator requirements [[forward.iterators]], `T` is also
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from `*i`
+> and assignable from `*i`. For `vector`, if the iterator does not meet
+> the forward iterator requirements [[forward.iterators]], `T` is also
 > *Cpp17MoveInsertable* into `X`. Neither `i` nor `j` are iterators into
 > `a`.
 >
-> *Effects:*
->
-> Replaces elements in `a` with a copy of `[i, j)`. Invalidates all
-> references, pointers and iterators referring to the elements of `a`.
-> For `vector` and `deque`, also invalidates the past-the-end iterator.
-> Each iterator in the range \[`i`, `j`) is dereferenced exactly once.
+> *Effects:* Replaces elements in `a` with a copy of `[i, j)`.
+> Invalidates all references, pointers and iterators referring to the
+> elements of `a`. For `vector` and `deque`, also invalidates the
+> past-the-end iterator. Each iterator in the range \[`i`, `j`) is
+> dereferenced exactly once.
 
 ``` cpp
 a.assign_range(rg)
@@ -1381,22 +1090,17 @@ a.assign_range(rg)
 
 > *Result:*
 >
-> *Mandates:*
+> *Mandates:* `assignable_from``<T&, ranges::range_reference_t<R>>` is
+> modeled.
 >
-> `assignable_from``<T&, ranges::range_reference_t<R>>` is modeled.
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*ranges::begin(rg)`. For `vector`, if `R` models neither
+> `ranges::``sized_range` nor `ranges::``forward_range`, `T` is also
+> *Cpp17MoveInsertable* into `X`. `rg` and `a` do not overlap.
 >
-> *Preconditions:*
->
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
-> For `vector`, if `R` models neither `ranges::``sized_range` nor
-> `ranges::``forward_range`, `T` is also *Cpp17MoveInsertable* into `X`.
-> `rg` and `a` do not overlap.
->
-> *Effects:*
->
-> Replaces elements in `a` with a copy of each element in `rg`.
-> Invalidates all references, pointers, and iterators referring to the
-> elements of `a`. For `vector` and `deque`, also invalidates the
+> *Effects:* Replaces elements in `a` with a copy of each element in
+> `rg`. Invalidates all references, pointers, and iterators referring to
+> the elements of `a`. For `vector` and `deque`, also invalidates the
 > past-the-end iterator. Each iterator in the range `rg` is dereferenced
 > exactly once.
 
@@ -1404,9 +1108,7 @@ a.assign_range(rg)
 a.assign(il)
 ```
 
-> *Effects:*
->
-> Equivalent to `a.assign(il.begin(), il.end())`.
+> *Effects:* Equivalent to `a.assign(il.begin(), il.end())`.
 
 ``` cpp
 a.assign(n, t)
@@ -1414,16 +1116,13 @@ a.assign(n, t)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X` and
+> *Cpp17CopyAssignable*. `t` is not a reference into `a`.
 >
-> `T` is *Cpp17CopyInsertable* into `X` and *Cpp17CopyAssignable*. `t`
-> is not a reference into `a`.
->
-> *Effects:*
->
-> Replaces elements in `a` with `n` copies of `t`. Invalidates all
-> references, pointers and iterators referring to the elements of `a`.
-> For `vector` and `deque`, also invalidates the past-the-end iterator.
+> *Effects:* Replaces elements in `a` with `n` copies of `t`.
+> Invalidates all references, pointers and iterators referring to the
+> elements of `a`. For `vector` and `deque`, also invalidates the
+> past-the-end iterator.
 
 For every sequence container defined in this Clause and in [[strings]]:
 
@@ -1473,30 +1172,20 @@ containers but not others. Operations other than `prepend_range` and
 a.front()
 ```
 
-> *Result:*
+> *Result:* `reference; const_reference` for constant `a`.
 >
-> `reference; const_reference` for constant `a`.
+> *Returns:* `*a.begin()`
 >
-> *Returns:*
->
-> `*a.begin()`
->
-> *Remarks:*
->
-> Required for `basic_string`, `array`, `deque`, `forward_list`, `list`,
-> and `vector`.
+> *Remarks:* Required for `basic_string`, `array`, `deque`,
+> `forward_list`, `list`, and `vector`.
 
 ``` cpp
 a.back()
 ```
 
-> *Result:*
+> *Result:* `reference; const_reference` for constant `a`.
 >
-> `reference; const_reference` for constant `a`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto tmp = a.end();
@@ -1504,60 +1193,40 @@ a.back()
 > return *tmp;
 > ```
 >
-> *Remarks:*
->
-> Required for `basic_string`, `array`, `deque`, `list`, and `vector`.
+> *Remarks:* Required for `basic_string`, `array`, `deque`, `list`, and
+> `vector`.
 
 ``` cpp
 a.emplace_front(args)
 ```
 
-> *Result:*
+> *Result:* `reference`
 >
-> `reference`
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `args`.
 >
-> *Preconditions:*
->
-> `T` is *Cpp17EmplaceConstructible* into `X` from `args`.
->
-> *Effects:*
->
-> Prepends an object of type `T` constructed with
+> *Effects:* Prepends an object of type `T` constructed with
 > `std::forward<Args>(args)...`.
 >
-> *Returns:*
+> *Returns:* `a.front()`.
 >
-> `a.front()`.
->
-> *Remarks:*
->
-> Required for `deque`, `forward_list`, and `list`.
+> *Remarks:* Required for `deque`, `forward_list`, and `list`.
 
 ``` cpp
 a.emplace_back(args)
 ```
 
-> *Result:*
+> *Result:* `reference`
 >
-> `reference`
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `args`. For `vector`, `T` is also *Cpp17MoveInsertable* into `X`.
 >
-> *Preconditions:*
->
-> `T` is *Cpp17EmplaceConstructible* into `X` from `args`. For `vector`,
-> `T` is also *Cpp17MoveInsertable* into `X`.
->
-> *Effects:*
->
-> Appends an object of type `T` constructed with
+> *Effects:* Appends an object of type `T` constructed with
 > `std::forward<Args>(args)...`.
 >
-> *Returns:*
+> *Returns:* `a.back()`.
 >
-> `a.back()`.
->
-> *Remarks:*
->
-> Required for `deque`, `list`, and `vector`.
+> *Remarks:* Required for `deque`, `list`, and `vector`.
 
 ``` cpp
 a.push_front(t)
@@ -1565,17 +1234,11 @@ a.push_front(t)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`.
 >
-> `T` is *Cpp17CopyInsertable* into `X`.
+> *Effects:* Prepends a copy of `t`.
 >
-> *Effects:*
->
-> Prepends a copy of `t`.
->
-> *Remarks:*
->
-> Required for `deque`, `forward_list`, and `list`.
+> *Remarks:* Required for `deque`, `forward_list`, and `list`.
 
 ``` cpp
 a.push_front(rv)
@@ -1583,17 +1246,11 @@ a.push_front(rv)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `X`.
 >
-> `T` is *Cpp17MoveInsertable* into `X`.
+> *Effects:* Prepends a copy of `rv`.
 >
-> *Effects:*
->
-> Prepends a copy of `rv`.
->
-> *Remarks:*
->
-> Required for `deque`, `forward_list`, and `list`.
+> *Remarks:* Required for `deque`, `forward_list`, and `list`.
 
 ``` cpp
 a.prepend_range(rg)
@@ -1601,24 +1258,19 @@ a.prepend_range(rg)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*ranges::begin(rg)`. For `deque`, `T` is also *Cpp17MoveInsertable*
+> into `X`, and `T` meets the *Cpp17MoveConstructible*,
+> *Cpp17MoveAssignable*, and *Cpp17Swappable*[[swappable.requirements]]
+> requirements.
 >
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
-> For `deque`, `T` is also *Cpp17MoveInsertable* into `X`, and `T` meets
-> the *Cpp17MoveConstructible*, *Cpp17MoveAssignable*, and
-> *Cpp17Swappable*[[swappable.requirements]] requirements.
->
-> *Effects:*
->
-> Inserts copies of elements in `rg` before `begin()`. Each iterator in
-> the range `rg` is dereferenced exactly once.
+> *Effects:* Inserts copies of elements in `rg` before `begin()`. Each
+> iterator in the range `rg` is dereferenced exactly once.
 >
 > \[*Note 6*: The order of elements in `rg` is not
 > reversed. — *end note*\]
 >
-> *Remarks:*
->
-> Required for `deque`, `forward_list`, and `list`.
+> *Remarks:* Required for `deque`, `forward_list`, and `list`.
 
 ``` cpp
 a.push_back(t)
@@ -1626,17 +1278,11 @@ a.push_back(t)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`.
 >
-> `T` is *Cpp17CopyInsertable* into `X`.
+> *Effects:* Appends a copy of `t`.
 >
-> *Effects:*
->
-> Appends a copy of `t`.
->
-> *Remarks:*
->
-> Required for `basic_string`, `deque`, `list`, and `vector`.
+> *Remarks:* Required for `basic_string`, `deque`, `list`, and `vector`.
 
 ``` cpp
 a.push_back(rv)
@@ -1644,17 +1290,11 @@ a.push_back(rv)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `X`.
 >
-> `T` is *Cpp17MoveInsertable* into `X`.
+> *Effects:* Appends a copy of `rv`.
 >
-> *Effects:*
->
-> Appends a copy of `rv`.
->
-> *Remarks:*
->
-> Required for `basic_string`, `deque`, `list`, and `vector`.
+> *Remarks:* Required for `basic_string`, `deque`, `list`, and `vector`.
 
 ``` cpp
 a.append_range(rg)
@@ -1662,19 +1302,14 @@ a.append_range(rg)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
+> `*ranges::begin(rg)`. For `vector`, `T` is also *Cpp17MoveInsertable*
+> into `X`.
 >
-> `T` is *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
-> For `vector`, `T` is also *Cpp17MoveInsertable* into `X`.
+> *Effects:* Inserts copies of elements in `rg` before `end()`. Each
+> iterator in the range `rg` is dereferenced exactly once.
 >
-> *Effects:*
->
-> Inserts copies of elements in `rg` before `end()`. Each iterator in
-> the range `rg` is dereferenced exactly once.
->
-> *Remarks:*
->
-> Required for `deque`, `list`, and `vector`.
+> *Remarks:* Required for `deque`, `list`, and `vector`.
 
 ``` cpp
 a.pop_front()
@@ -1682,17 +1317,11 @@ a.pop_front()
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `a.empty()` is `false`.
 >
-> `a.empty()` is `false`.
+> *Effects:* Destroys the first element.
 >
-> *Effects:*
->
-> Destroys the first element.
->
-> *Remarks:*
->
-> Required for `deque`, `forward_list`, and `list`.
+> *Remarks:* Required for `deque`, `forward_list`, and `list`.
 
 ``` cpp
 a.pop_back()
@@ -1700,53 +1329,35 @@ a.pop_back()
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `a.empty()` is `false`.
 >
-> `a.empty()` is `false`.
+> *Effects:* Destroys the last element.
 >
-> *Effects:*
->
-> Destroys the last element.
->
-> *Remarks:*
->
-> Required for `basic_string`, `deque`, `list`, and `vector`.
+> *Remarks:* Required for `basic_string`, `deque`, `list`, and `vector`.
 
 ``` cpp
 a[n]
 ```
 
-> *Result:*
+> *Result:* `reference; const_reference` for constant `a`
 >
-> `reference; const_reference` for constant `a`
+> *Returns:* `*(a.begin() + n)`
 >
-> *Returns:*
->
-> `*(a.begin() + n)`
->
-> *Remarks:*
->
-> Required for `basic_string`, `array`, `deque`, and `vector`.
+> *Remarks:* Required for `basic_string`, `array`, `deque`, and
+> `vector`.
 
 ``` cpp
 a.at(n)
 ```
 
-> *Result:*
+> *Result:* `reference; const_reference` for constant `a`
 >
-> `reference; const_reference` for constant `a`
+> *Returns:* `*(a.begin() + n)`
 >
-> *Returns:*
+> *Throws:* `out_of_range` if `n >= a.size()`.
 >
-> `*(a.begin() + n)`
->
-> *Throws:*
->
-> `out_of_range` if `n >= a.size()`.
->
-> *Remarks:*
->
-> Required for `basic_string`, `array`, `deque`, and `vector`.
+> *Remarks:* Required for `basic_string`, `array`, `deque`, and
+> `vector`.
 
 ### Node handles <a id="container.node">[[container.node]]</a>
 
@@ -1836,19 +1447,15 @@ public:
 node-handle(node-handle&& nh) noexcept;
 ```
 
-> *Effects:*
->
-> Constructs a *node-handle* object initializing `ptr_` with `nh.ptr_`.
-> Move constructs `alloc_` with `nh.alloc_`. Assigns to `nh.ptr_` and
-> assigns `nullopt` to `nh.alloc_`.
+> *Effects:* Constructs a *node-handle* object initializing `ptr_` with
+> `nh.ptr_`. Move constructs `alloc_` with `nh.alloc_`. Assigns to
+> `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
 
 ``` cpp
 node-handle& operator=(node-handle&& nh);
 ```
 
-> *Preconditions:*
->
-> Either `!alloc_`, or
+> *Preconditions:* Either `!alloc_`, or
 > `ator_traits::propagate_on_container_move_assignment::value` is
 > `true`, or `alloc_ == nh.alloc_`.
 >
@@ -1867,13 +1474,9 @@ node-handle& operator=(node-handle&& nh);
 >
 > - Assigns to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
 >
-> *Returns:*
+> *Returns:* `*this`.
 >
-> `*this`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 #### Destructor <a id="container.node.dtor">[[container.node.dtor]]</a>
 
@@ -1881,10 +1484,8 @@ node-handle& operator=(node-handle&& nh);
 ~node-handle();
 ```
 
-> *Effects:*
->
-> If `ptr_ != nullptr`, destroys the `value_type` subobject in the
-> `container_node_type` object pointed to by `ptr_` by calling
+> *Effects:* If `ptr_ != nullptr`, destroys the `value_type` subobject
+> in the `container_node_type` object pointed to by `ptr_` by calling
 > `ator_traits::destroy`, then deallocates `ptr_` by calling
 > `ator_traits::template rebind_traits<container_node_type>::deallocate`.
 
@@ -1894,88 +1495,60 @@ node-handle& operator=(node-handle&& nh);
 value_type& value() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `empty() == false`.
 >
-> `empty() == false`.
+> *Returns:* A reference to the `value_type` subobject in the
+> `container_node_type` object pointed to by `ptr_`.
 >
-> *Returns:*
->
-> A reference to the `value_type` subobject in the `container_node_type`
-> object pointed to by `ptr_`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 key_type& key() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `empty() == false`.
 >
-> `empty() == false`.
+> *Returns:* A non-const reference to the `key_type` member of the
+> `value_type` subobject in the `container_node_type` object pointed to
+> by `ptr_`.
 >
-> *Returns:*
+> *Throws:* Nothing.
 >
-> A non-const reference to the `key_type` member of the `value_type`
-> subobject in the `container_node_type` object pointed to by `ptr_`.
->
-> *Throws:*
->
-> Nothing.
->
-> *Remarks:*
->
-> Modifying the key through the returned reference is permitted.
+> *Remarks:* Modifying the key through the returned reference is
+> permitted.
 
 ``` cpp
 mapped_type& mapped() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `empty() == false`.
 >
-> `empty() == false`.
+> *Returns:* A reference to the `mapped_type` member of the `value_type`
+> subobject in the `container_node_type` object pointed to by `ptr_`.
 >
-> *Returns:*
->
-> A reference to the `mapped_type` member of the `value_type` subobject
-> in the `container_node_type` object pointed to by `ptr_`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 allocator_type get_allocator() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `empty() == false`.
 >
-> `empty() == false`.
+> *Returns:* `*alloc_`.
 >
-> *Returns:*
->
-> `*alloc_`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `ptr_ != nullptr`.
+> *Returns:* `ptr_ != nullptr`.
 
 ``` cpp
 [[nodiscard]] bool empty() const noexcept;
 ```
 
-> *Returns:*
->
-> `ptr_ == nullptr`.
+> *Returns:* `ptr_ == nullptr`.
 
 #### Modifiers <a id="container.node.modifiers">[[container.node.modifiers]]</a>
 
@@ -1985,16 +1558,12 @@ void swap(node-handle& nh)
            ator_traits::is_always_equal::value);
 ```
 
-> *Preconditions:*
->
-> `!alloc_`, or `!nh.alloc_`, or
+> *Preconditions:* `!alloc_`, or `!nh.alloc_`, or
 > `ator_traits::propagate_on_container_swap::value` is `true`, or
 > `alloc_ == nh.alloc_`.
 >
-> *Effects:*
->
-> Calls `swap(ptr_, nh.ptr_)`. If `!alloc_`, or `!nh.alloc_`, or
-> `ator_traits::propagate_on_container_swap::value` is `true` calls
+> *Effects:* Calls `swap(ptr_, nh.ptr_)`. If `!alloc_`, or `!nh.alloc_`,
+> or `ator_traits::propagate_on_container_swap::value` is `true` calls
 > `swap(alloc_, nh.alloc_)`.
 
 ### Insert return type <a id="container.insert.return">[[container.insert.return]]</a>
@@ -2158,64 +1727,46 @@ required to be *Cpp17CopyAssignable* even though the associated
 typename X::key_type
 ```
 
-> *Result:*
->
-> `Key`.
+> *Result:* `Key`.
 
 ``` cpp
 typename X::mapped_type
 ```
 
-> *Result:*
+> *Result:* `T`.
 >
-> `T`.
->
-> *Remarks:*
->
-> For `map` and `multimap` only.
+> *Remarks:* For `map` and `multimap` only.
 
 ``` cpp
 typename X::value_type
 ```
 
-> *Result:*
+> *Result:* `Key` for `set` and `multiset` only; `pair<const Key, T>`
+> for `map` and `multimap` only.
 >
-> `Key` for `set` and `multiset` only; `pair<const Key, T>` for `map`
-> and `multimap` only.
->
-> *Preconditions:*
->
-> `X::value_type` is *Cpp17Erasable* from `X`.
+> *Preconditions:* `X::value_type` is *Cpp17Erasable* from `X`.
 
 ``` cpp
 typename X::key_compare
 ```
 
-> *Result:*
+> *Result:* `Compare`.
 >
-> `Compare`.
->
-> *Preconditions:*
->
-> `key_compare` is *Cpp17CopyConstructible*.
+> *Preconditions:* `key_compare` is *Cpp17CopyConstructible*.
 
 ``` cpp
 typename X::value_compare
 ```
 
-> *Result:*
->
-> A binary predicate type. It is the same as `key_compare` for `set` and
-> `multiset`; is an ordering relation on pairs induced by the first
-> component (i.e., `Key`) for `map` and `multimap`.
+> *Result:* A binary predicate type. It is the same as `key_compare` for
+> `set` and `multiset`; is an ordering relation on pairs induced by the
+> first component (i.e., `Key`) for `map` and `multimap`.
 
 ``` cpp
 typename X::node_type
 ```
 
-> *Result:*
->
-> A specialization of the *node-handle* class
+> *Result:* A specialization of the *node-handle* class
 > template [[container.node]], such that the public nested types are the
 > same types as the corresponding types in `X`.
 
@@ -2223,339 +1774,237 @@ typename X::node_type
 X(c)
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty container. Uses a copy of `c` as a
+> comparison object.
 >
-> Constructs an empty container. Uses a copy of `c` as a comparison
-> object.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X u = X();
 X u;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_compare` meets the *Cpp17DefaultConstructible*
+> requirements.
 >
-> `key_compare` meets the *Cpp17DefaultConstructible* requirements.
+> *Effects:* Constructs an empty container. Uses `Compare()` as a
+> comparison object.
 >
-> *Effects:*
->
-> Constructs an empty container. Uses `Compare()` as a comparison
-> object.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X(i, j, c)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*i`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
+> *Effects:* Constructs an empty container and inserts elements from the
+> range \[`i`, `j`) into it; uses `c` as a comparison object.
 >
-> *Effects:*
->
-> Constructs an empty container and inserts elements from the range
-> \[`i`, `j`) into it; uses `c` as a comparison object.
->
-> *Complexity:*
->
-> $N \log N$ in general, where N has the value `distance(i, j)`; linear
-> if \[`i`, `j`) is sorted with respect to `value_comp()`.
+> *Complexity:* $N \log N$ in general, where N has the value
+> `distance(i, j)`; linear if \[`i`, `j`) is sorted with respect to
+> `value_comp()`.
 
 ``` cpp
 X(i, j)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_compare` meets the *Cpp17DefaultConstructible*
+> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*i`.
 >
-> `key_compare` meets the *Cpp17DefaultConstructible* requirements.
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
+> *Effects:* Constructs an empty container and inserts elements from the
+> range \[`i`, `j`) into it; uses `Compare()` as a comparison object.
 >
-> *Effects:*
->
-> Constructs an empty container and inserts elements from the range
-> \[`i`, `j`) into it; uses `Compare()` as a comparison object.
->
-> *Complexity:*
->
-> $N \log N$ in general, where N has the value `distance(i, j)`; linear
-> if \[`i`, `j`) is sorted with respect to `value_comp()`.
+> *Complexity:* $N \log N$ in general, where N has the value
+> `distance(i, j)`; linear if \[`i`, `j`) is sorted with respect to
+> `value_comp()`.
 
 ``` cpp
 X(from_range, rg, c)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*ranges::begin(rg)`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from
-> `*ranges::begin(rg)`.
+> *Effects:* Constructs an empty container and inserts each element from
+> `rg` into it. Uses `c` as the comparison object.
 >
-> *Effects:*
->
-> Constructs an empty container and inserts each element from `rg` into
-> it. Uses `c` as the comparison object.
->
-> *Complexity:*
->
-> $N \log N$ in general, where N has the value `ranges::distance(rg)`;
-> linear if `rg` is sorted with respect to `value_comp()`.
+> *Complexity:* $N \log N$ in general, where N has the value
+> `ranges::distance(rg)`; linear if `rg` is sorted with respect to
+> `value_comp()`.
 
 ``` cpp
 X(from_range, rg)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_compare` meets the *Cpp17DefaultConstructible*
+> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*ranges::begin(rg)`.
 >
-> `key_compare` meets the *Cpp17DefaultConstructible* requirements.
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from
-> `*ranges::begin(rg)`.
+> *Effects:* Constructs an empty container and inserts each element from
+> `rg` into it. Uses `Compare()` as the comparison object.
 >
-> *Effects:*
->
-> Constructs an empty container and inserts each element from `rg` into
-> it. Uses `Compare()` as the comparison object.
->
-> *Complexity:*
->
-> Same as `X(from_range, rg, c)`.
+> *Complexity:* Same as `X(from_range, rg, c)`.
 
 ``` cpp
 X(il, c)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end(), c)`.
+> *Effects:* Equivalent to `X(il.begin(), il.end(), c)`.
 
 ``` cpp
 X(il)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end())`.
+> *Effects:* Equivalent to `X(il.begin(), il.end())`.
 
 ``` cpp
 a = il
 ```
 
-> *Result:*
+> *Result:* `X&`
 >
-> `X&`
->
-> *Preconditions:*
->
-> `value_type` is *Cpp17CopyInsertable* into `X` and
+> *Preconditions:* `value_type` is *Cpp17CopyInsertable* into `X` and
 > *Cpp17CopyAssignable*.
 >
-> *Effects:*
+> *Effects:* Assigns the range \[`il.begin()`, `il.end()`) into `a`. All
+> existing elements of `a` are either assigned to or destroyed.
 >
-> Assigns the range \[`il.begin()`, `il.end()`) into `a`. All existing
-> elements of `a` are either assigned to or destroyed.
->
-> *Complexity:*
->
-> $N \log N$ in general, where N has the value `il.size() + a.size()`;
-> linear if \[`il.begin()`, `il.end()`) is sorted with respect to
-> `value_comp()`.
+> *Complexity:* $N \log N$ in general, where N has the value
+> `il.size() + a.size()`; linear if \[`il.begin()`, `il.end()`) is
+> sorted with respect to `value_comp()`.
 
 ``` cpp
 b.key_comp()
 ```
 
-> *Result:*
+> *Result:* `X::key_compare`
 >
-> `X::key_compare`
+> *Returns:* The comparison object out of which `b` was constructed.
 >
-> *Returns:*
->
-> The comparison object out of which `b` was constructed.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.value_comp()
 ```
 
-> *Result:*
+> *Result:* `X::value_compare`
 >
-> `X::value_compare`
+> *Returns:* An object of `value_compare` constructed out of the
+> comparison object.
 >
-> *Returns:*
->
-> An object of `value_compare` constructed out of the comparison object.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a_uniq.emplace(args)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, bool>`
 >
-> `pair<iterator, bool>`
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `args`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
->
-> *Effects:*
->
-> Inserts a `value_type` object `t` constructed with
+> *Effects:* Inserts a `value_type` object `t` constructed with
 > `std::forward<Args>(args)...` if and only if there is no element in
 > the container with key equivalent to the key of `t`.
 >
-> *Returns:*
+> *Returns:* The `bool` component of the returned pair is `true` if and
+> only if the insertion takes place, and the iterator component of the
+> pair points to the element with key equivalent to the key of `t`.
 >
-> The `bool` component of the returned pair is `true` if and only if the
-> insertion takes place, and the iterator component of the pair points
-> to the element with key equivalent to the key of `t`.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a_eq.emplace(args)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `args`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
->
-> *Effects:*
->
-> Inserts a `value_type` object `t` constructed with
+> *Effects:* Inserts a `value_type` object `t` constructed with
 > `std::forward<Args>(args)...`. If a range containing elements
 > equivalent to `t` exists in `a_eq`, `t` is inserted at the end of that
 > range.
 >
-> *Returns:*
+> *Returns:* An iterator pointing to the newly inserted element.
 >
-> An iterator pointing to the newly inserted element.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a.emplace_hint(p, args)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Equivalent to `a.emplace(std::forward<Args>(args)...)`,
+> except that the element is inserted as close as possible to the
+> position just prior to `p`.
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element with the key equivalent
+> to the newly inserted element.
 >
-> Equivalent to `a.emplace(std::forward<Args>(args)...)`, except that
-> the element is inserted as close as possible to the position just
-> prior to `p`.
->
-> *Returns:*
->
-> An iterator pointing to the element with the key equivalent to the
-> newly inserted element.
->
-> *Complexity:*
->
-> Logarithmic in general, but amortized constant if the element is
-> inserted right before `p`.
+> *Complexity:* Logarithmic in general, but amortized constant if the
+> element is inserted right before `p`.
 
 ``` cpp
 a_uniq.insert(t)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, bool>`
 >
-> `pair<iterator, bool>`
+> *Preconditions:* If `t` is a non-const rvalue, `value_type` is
+> *Cpp17MoveInsertable* into `X`; otherwise, `value_type` is
+> *Cpp17CopyInsertable* into `X`.
 >
-> *Preconditions:*
+> *Effects:* Inserts `t` if and only if there is no element in the
+> container with key equivalent to the key of `t`.
 >
-> If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable*
-> into `X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
+> *Returns:* The `bool` component of the returned pair is `true` if and
+> only if the insertion takes place, and the `iterator` component of the
+> pair points to the element with key equivalent to the key of `t`.
 >
-> *Effects:*
->
-> Inserts `t` if and only if there is no element in the container with
-> key equivalent to the key of `t`.
->
-> *Returns:*
->
-> The `bool` component of the returned pair is `true` if and only if the
-> insertion takes place, and the `iterator` component of the pair points
-> to the element with key equivalent to the key of `t`.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a_eq.insert(t)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* If `t` is a non-const rvalue, `value_type` is
+> *Cpp17MoveInsertable* into `X`; otherwise, `value_type` is
+> *Cpp17CopyInsertable* into `X`.
 >
-> *Preconditions:*
+> *Effects:* Inserts `t` and returns the iterator pointing to the newly
+> inserted element. If a range containing elements equivalent to `t`
+> exists in `a_eq`, `t` is inserted at the end of that range.
 >
-> If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable*
-> into `X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
->
-> *Effects:*
->
-> Inserts `t` and returns the iterator pointing to the newly inserted
-> element. If a range containing elements equivalent to `t` exists in
-> `a_eq`, `t` is inserted at the end of that range.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a.insert(p, t)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* If `t` is a non-const rvalue, `value_type` is
+> *Cpp17MoveInsertable* into `X`; otherwise, `value_type` is
+> *Cpp17CopyInsertable* into `X`.
 >
-> *Preconditions:*
+> *Effects:* Inserts `t` if and only if there is no element with key
+> equivalent to the key of `t` in containers with unique keys; always
+> inserts `t` in containers with equivalent keys. `t` is inserted as
+> close as possible to the position just prior to `p`.
 >
-> If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable*
-> into `X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
+> *Returns:* An iterator pointing to the element with key equivalent to
+> the key of `t`.
 >
-> *Effects:*
->
-> Inserts `t` if and only if there is no element with key equivalent to
-> the key of `t` in containers with unique keys; always inserts `t` in
-> containers with equivalent keys. `t` is inserted as close as possible
-> to the position just prior to `p`.
->
-> *Returns:*
->
-> An iterator pointing to the element with key equivalent to the key of
-> `t`.
->
-> *Complexity:*
->
-> Logarithmic in general, but amortized constant if `t` is inserted
-> right before `p`.
+> *Complexity:* Logarithmic in general, but amortized constant if `t` is
+> inserted right before `p`.
 
 ``` cpp
 a.insert(i, j)
@@ -2563,21 +2012,15 @@ a.insert(i, j)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*i`. Neither `i` nor `j` are iterators into `a`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
-> Neither `i` nor `j` are iterators into `a`.
+> *Effects:* Inserts each element from the range \[`i`, `j`) if and only
+> if there is no element with key equivalent to the key of that element
+> in containers with unique keys; always inserts that element in
+> containers with equivalent keys.
 >
-> *Effects:*
->
-> Inserts each element from the range \[`i`, `j`) if and only if there
-> is no element with key equivalent to the key of that element in
-> containers with unique keys; always inserts that element in containers
-> with equivalent keys.
->
-> *Complexity:*
->
-> $N \log (\texttt{a.size()} + N)$, where N has the value
+> *Complexity:* $N \log (\texttt{a.size()} + N)$, where N has the value
 > `distance(i, j)`.
 
 ``` cpp
@@ -2586,187 +2029,128 @@ a.insert_range(rg)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*ranges::begin(rg)`. `rg` and `a` do not overlap.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from
-> `*ranges::begin(rg)`. `rg` and `a` do not overlap.
+> *Effects:* Inserts each element from `rg` if and only if there is no
+> element with key equivalent to the key of that element in containers
+> with unique keys; always inserts that element in containers with
+> equivalent keys.
 >
-> *Effects:*
->
-> Inserts each element from `rg` if and only if there is no element with
-> key equivalent to the key of that element in containers with unique
-> keys; always inserts that element in containers with equivalent keys.
->
-> *Complexity:*
->
-> $N \log (\texttt{a.size()} + N)$, where N has the value
+> *Complexity:* $N \log (\texttt{a.size()} + N)$, where N has the value
 > `ranges::distance(rg)`.
 
 ``` cpp
 a.insert(il)
 ```
 
-> *Effects:*
->
-> Equivalent to `a.insert(il.begin(), il.end())`.
+> *Effects:* Equivalent to `a.insert(il.begin(), il.end())`.
 
 ``` cpp
 a_uniq.insert(nh)
 ```
 
-> *Result:*
+> *Result:* `insert_return_type`
 >
-> `insert_return_type`
+> *Preconditions:* `nh` is empty or
+> `a_uniq.get_allocator() == nh.get_allocator()` is `true`.
 >
-> *Preconditions:*
+> *Effects:* If `nh` is empty, has no effect. Otherwise, inserts the
+> element owned by `nh` if and only if there is no element in the
+> container with a key equivalent to `nh.key()`.
 >
-> `nh` is empty or `a_uniq.get_allocator() == nh.get_allocator()` is
-> `true`.
+> *Returns:* If `nh` is empty, `inserted` is `false`, `position` is
+> `end()`, and `node` is empty. Otherwise if the insertion took place,
+> `inserted` is `true`, `position` points to the inserted element, and
+> `node` is empty; if the insertion failed, `inserted` is `false`,
+> `node` has the previous value of `nh`, and `position` points to an
+> element with a key equivalent to `nh.key()`.
 >
-> *Effects:*
->
-> If `nh` is empty, has no effect. Otherwise, inserts the element owned
-> by `nh` if and only if there is no element in the container with a key
-> equivalent to `nh.key()`.
->
-> *Returns:*
->
-> If `nh` is empty, `inserted` is `false`, `position` is `end()`, and
-> `node` is empty. Otherwise if the insertion took place, `inserted` is
-> `true`, `position` points to the inserted element, and `node` is
-> empty; if the insertion failed, `inserted` is `false`, `node` has the
-> previous value of `nh`, and `position` points to an element with a key
-> equivalent to `nh.key()`.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a_eq.insert(nh)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `nh` is empty or
+> `a_eq.get_allocator() == nh.get_allocator()` is `true`.
 >
-> *Preconditions:*
+> *Effects:* If `nh` is empty, has no effect and returns `a_eq.end()`.
+> Otherwise, inserts the element owned by `nh` and returns an iterator
+> pointing to the newly inserted element. If a range containing elements
+> with keys equivalent to `nh.key()` exists in `a_eq`, the element is
+> inserted at the end of that range.
 >
-> `nh` is empty or `a_eq.get_allocator() == nh.get_allocator()` is
-> `true`.
+> *Ensures:* `nh` is empty.
 >
-> *Effects:*
->
-> If `nh` is empty, has no effect and returns `a_eq.end()`. Otherwise,
-> inserts the element owned by `nh` and returns an iterator pointing to
-> the newly inserted element. If a range containing elements with keys
-> equivalent to `nh.key()` exists in `a_eq`, the element is inserted at
-> the end of that range.
->
-> *Ensures:*
->
-> `nh` is empty.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a.insert(p, nh)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `nh` is empty or
+> `a.get_allocator() == nh.get_allocator()` is `true`.
 >
-> *Preconditions:*
+> *Effects:* If `nh` is empty, has no effect and returns `a.end()`.
+> Otherwise, inserts the element owned by `nh` if and only if there is
+> no element with key equivalent to `nh.key()` in containers with unique
+> keys; always inserts the element owned by `nh` in containers with
+> equivalent keys. The element is inserted as close as possible to the
+> position just prior to `p`.
 >
-> `nh` is empty or `a.get_allocator() == nh.get_allocator()` is `true`.
+> *Ensures:* `nh` is empty if insertion succeeds, unchanged if insertion
+> fails.
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element with key equivalent to
+> `nh.key()`.
 >
-> If `nh` is empty, has no effect and returns `a.end()`. Otherwise,
-> inserts the element owned by `nh` if and only if there is no element
-> with key equivalent to `nh.key()` in containers with unique keys;
-> always inserts the element owned by `nh` in containers with equivalent
-> keys. The element is inserted as close as possible to the position
-> just prior to `p`.
->
-> *Ensures:*
->
-> `nh` is empty if insertion succeeds, unchanged if insertion fails.
->
-> *Returns:*
->
-> An iterator pointing to the element with key equivalent to `nh.key()`.
->
-> *Complexity:*
->
-> Logarithmic in general, but amortized constant if the element is
-> inserted right before `p`.
+> *Complexity:* Logarithmic in general, but amortized constant if the
+> element is inserted right before `p`.
 
 ``` cpp
 a.extract(k)
 ```
 
-> *Result:*
+> *Result:* `node_type`
 >
-> `node_type`
+> *Effects:* Removes the first element in the container with key
+> equivalent to `k`.
 >
-> *Effects:*
+> *Returns:* A `node_type` owning the element if found, otherwise an
+> empty `node_type`.
 >
-> Removes the first element in the container with key equivalent to `k`.
->
-> *Returns:*
->
-> A `node_type` owning the element if found, otherwise an empty
-> `node_type`.
->
-> *Complexity:*
->
-> $\log (\texttt{a.size()})$
+> *Complexity:* $\log (\texttt{a.size()})$
 
 ``` cpp
 a_tran.extract(kx)
 ```
 
-> *Result:*
+> *Result:* `node_type`
 >
-> `node_type`
+> *Effects:* Removes the first element in the container with key `r`
+> such that `!c(r, kx) && !c(kx, r)` is `true`.
 >
-> *Effects:*
+> *Returns:* A `node_type` owning the element if found, otherwise an
+> empty `node_type`.
 >
-> Removes the first element in the container with key `r` such that
-> `!c(r, kx) && !c(kx, r)` is `true`.
->
-> *Returns:*
->
-> A `node_type` owning the element if found, otherwise an empty
-> `node_type`.
->
-> *Complexity:*
->
-> $\log(\texttt{a_tran.size()})$
+> *Complexity:* $\log(\texttt{a_tran.size()})$
 
 ``` cpp
 a.extract(q)
 ```
 
-> *Result:*
+> *Result:* `node_type`
 >
-> `node_type`
+> *Effects:* Removes the element pointed to by `q`.
 >
-> *Effects:*
+> *Returns:* A `node_type` owning that element.
 >
-> Removes the element pointed to by `q`.
->
-> *Returns:*
->
-> A `node_type` owning that element.
->
-> *Complexity:*
->
-> Amortized constant.
+> *Complexity:* Amortized constant.
 
 ``` cpp
 a.merge(a2)
@@ -2774,350 +2158,231 @@ a.merge(a2)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `a.get_allocator() == a2.get_allocator()`.
 >
-> `a.get_allocator() == a2.get_allocator()`.
+> *Effects:* Attempts to extract each element in `a2` and insert it into
+> `a` using the comparison object of `a`. In containers with unique
+> keys, if there is an element in `a` with key equivalent to the key of
+> an element from `a2`, then that element is not extracted from `a2`.
 >
-> *Effects:*
+> *Ensures:* Pointers and references to the transferred elements of `a2`
+> refer to those same elements but as members of `a`. Iterators
+> referring to the transferred elements will continue to refer to their
+> elements, but they now behave as iterators into `a`, not into `a2`.
 >
-> Attempts to extract each element in `a2` and insert it into `a` using
-> the comparison object of `a`. In containers with unique keys, if there
-> is an element in `a` with key equivalent to the key of an element from
-> `a2`, then that element is not extracted from `a2`.
+> *Throws:* Nothing unless the comparison object throws.
 >
-> *Ensures:*
->
-> Pointers and references to the transferred elements of `a2` refer to
-> those same elements but as members of `a`. Iterators referring to the
-> transferred elements will continue to refer to their elements, but
-> they now behave as iterators into `a`, not into `a2`.
->
-> *Throws:*
->
-> Nothing unless the comparison object throws.
->
-> *Complexity:*
->
-> $N \log(\texttt{a.size()+} N)$, where N has the value `a2.size()`.
+> *Complexity:* $N \log(\texttt{a.size()+} N)$, where N has the value
+> `a2.size()`.
 
 ``` cpp
 a.erase(k)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Effects:* Erases all elements in the container with key equivalent to
+> `k`.
 >
-> *Effects:*
+> *Returns:* The number of erased elements.
 >
-> Erases all elements in the container with key equivalent to `k`.
->
-> *Returns:*
->
-> The number of erased elements.
->
-> *Complexity:*
->
-> $\log (\texttt{a.size()}) + \texttt{a.count(k)}$
+> *Complexity:* $\log (\texttt{a.size()}) + \texttt{a.count(k)}$
 
 ``` cpp
 a_tran.erase(kx)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
->
-> *Effects:*
->
-> Erases all elements in the container with key `r` such that
+> *Effects:* Erases all elements in the container with key `r` such that
 > `!c(r, kx) && !c(kx, r)` is `true`.
 >
-> *Returns:*
->
-> The number of erased elements.
+> *Returns:* The number of erased elements.
 >
 > *Complexity:*
->
 > $\log(\texttt{a_tran.size())} + \texttt{a_tran.count(kx)}$
 
 ``` cpp
 a.erase(q)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Erases the element pointed to by `q`.
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element immediately following
+> `q` prior to the element being erased. If no such element exists,
+> returns `a.end()`.
 >
-> Erases the element pointed to by `q`.
->
-> *Returns:*
->
-> An iterator pointing to the element immediately following `q` prior to
-> the element being erased. If no such element exists, returns
-> `a.end()`.
->
-> *Complexity:*
->
-> Amortized constant.
+> *Complexity:* Amortized constant.
 
 ``` cpp
 a.erase(r)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Erases the element pointed to by `r`.
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element immediately following
+> `r` prior to the element being erased. If no such element exists,
+> returns `a.end()`.
 >
-> Erases the element pointed to by `r`.
->
-> *Returns:*
->
-> An iterator pointing to the element immediately following `r` prior to
-> the element being erased. If no such element exists, returns
-> `a.end()`.
->
-> *Complexity:*
->
-> Amortized constant.
+> *Complexity:* Amortized constant.
 
 ``` cpp
 a.erase(q1, q2)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Erases all the elements in the range \[`q1`, `q2`).
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element pointed to by `q2`
+> prior to any elements being erased. If no such element exists,
+> `a.end()` is returned.
 >
-> Erases all the elements in the range \[`q1`, `q2`).
->
-> *Returns:*
->
-> An iterator pointing to the element pointed to by `q2` prior to any
-> elements being erased. If no such element exists, `a.end()` is
-> returned.
->
-> *Complexity:*
->
-> $\log(\texttt{a.size()}) + N$, where N has the value
+> *Complexity:* $\log(\texttt{a.size()}) + N$, where N has the value
 > `distance(q1, q2)`.
 
 ``` cpp
 a.clear()
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `a.erase(a.begin(), a.end())`.
 >
-> Equivalent to `a.erase(a.begin(), a.end())`.
+> *Ensures:* `a.empty()` is `true`.
 >
-> *Ensures:*
->
-> `a.empty()` is `true`.
->
-> *Complexity:*
->
-> Linear in `a.size()`.
+> *Complexity:* Linear in `a.size()`.
 
 ``` cpp
 b.find(k)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `b`.
 >
-> `iterator`; `const_iterator` for constant `b`.
+> *Returns:* An iterator pointing to an element with the key equivalent
+> to `k`, or `b.end()` if such an element is not found.
 >
-> *Returns:*
->
-> An iterator pointing to an element with the key equivalent to `k`, or
-> `b.end()` if such an element is not found.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a_tran.find(ke)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `a_tran`.
 >
-> `iterator`; `const_iterator` for constant `a_tran`.
->
-> *Returns:*
->
-> An iterator pointing to an element with key `r` such that
+> *Returns:* An iterator pointing to an element with key `r` such that
 > `!c(r, ke) && !c(ke, r)` is `true`, or `a_tran.end()` if such an
 > element is not found.
 >
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 b.count(k)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Returns:* The number of elements with key equivalent to `k`.
 >
-> *Returns:*
->
-> The number of elements with key equivalent to `k`.
->
-> *Complexity:*
->
-> $\log (\texttt{b.size()}) + \texttt{b.count(k)}$
+> *Complexity:* $\log (\texttt{b.size()}) + \texttt{b.count(k)}$
 
 ``` cpp
 a_tran.count(ke)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
->
-> *Returns:*
->
-> The number of elements with key `r` such that
+> *Returns:* The number of elements with key `r` such that
 > `!c(r, ke) && !c(ke, r)`.
 >
 > *Complexity:*
->
 > $\log (\texttt{a_tran.size()}) + \texttt{a_tran.count(ke)}$
 
 ``` cpp
 b.contains(k)
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Effects:*
->
-> Equivalent to: `return b.find(k) != b.end();`
+> *Effects:* Equivalent to: `return b.find(k) != b.end();`
 
 ``` cpp
 a_tran.contains(ke)
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Effects:*
->
-> Equivalent to: `return a_tran.find(ke) != a_tran.end();`
+> *Effects:* Equivalent to: `return a_tran.find(ke) != a_tran.end();`
 
 ``` cpp
 b.lower_bound(k)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `b`.
 >
-> `iterator`; `const_iterator` for constant `b`.
+> *Returns:* An iterator pointing to the first element with key not less
+> than `k`, or `b.end()` if such an element is not found.
 >
-> *Returns:*
->
-> An iterator pointing to the first element with key not less than `k`,
-> or `b.end()` if such an element is not found.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a_tran.lower_bound(kl)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `a_tran`.
 >
-> `iterator`; `const_iterator` for constant `a_tran`.
+> *Returns:* An iterator pointing to the first element with key `r` such
+> that `!c(r, kl)`, or `a_tran.end()` if such an element is not found.
 >
-> *Returns:*
->
-> An iterator pointing to the first element with key `r` such that
-> `!c(r, kl)`, or `a_tran.end()` if such an element is not found.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 b.upper_bound(k)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `b`.
 >
-> `iterator`; `const_iterator` for constant `b`.
+> *Returns:* An iterator pointing to the first element with key greater
+> than `k`, or `b.end()` if such an element is not found.
 >
-> *Returns:*
->
-> An iterator pointing to the first element with key greater than `k`,
-> or `b.end()` if such an element is not found.
->
-> *Complexity:*
->
-> Logarithmic,
+> *Complexity:* Logarithmic,
 
 ``` cpp
 a_tran.upper_bound(ku)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `a_tran`.
 >
-> `iterator`; `const_iterator` for constant `a_tran`.
+> *Returns:* An iterator pointing to the first element with key `r` such
+> that `c(ku, r)`, or `a_tran.end()` if such an element is not found.
 >
-> *Returns:*
->
-> An iterator pointing to the first element with key `r` such that
-> `c(ku, r)`, or `a_tran.end()` if such an element is not found.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 b.equal_range(k)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, iterator>`;
+> `pair<const_iterator, const_iterator>` for constant `b`.
 >
-> `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
-> constant `b`.
+> *Effects:* Equivalent to:
+> `return make_pair(b.lower_bound(k), b.upper_bound(k));`
 >
-> *Effects:*
->
-> Equivalent to: `return make_pair(b.lower_bound(k), b.upper_bound(k));`
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 a_tran.equal_range(ke)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, iterator>`;
+> `pair<const_iterator, const_iterator>` for constant `a_tran`.
 >
-> `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
-> constant `a_tran`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return make_pair(a_tran.lower_bound(ke), a_tran.upper_bound(ke));`
 >
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 The `insert`, `insert_range`, and `emplace` members shall not affect the
 validity of iterators and references to the container, and the `erase`
@@ -3364,71 +2629,51 @@ required to be *Cpp17CopyAssignable* even though the associated
 typename X::key_type
 ```
 
-> *Result:*
->
-> `Key`.
+> *Result:* `Key`.
 
 ``` cpp
 typename X::mapped_type
 ```
 
-> *Result:*
+> *Result:* `T`.
 >
-> `T`.
->
-> *Remarks:*
->
-> For `unordered_map` and `unordered_multimap` only.
+> *Remarks:* For `unordered_map` and `unordered_multimap` only.
 
 ``` cpp
 typename X::value_type
 ```
 
-> *Result:*
->
-> `Key` for `unordered_set` and `unordered_multiset` only;
+> *Result:* `Key` for `unordered_set` and `unordered_multiset` only;
 > `pair<const Key, T>` for `unordered_map` and `unordered_multimap`
 > only.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17Erasable* from `X`.
+> *Preconditions:* `value_type` is *Cpp17Erasable* from `X`.
 
 ``` cpp
 typename X::hasher
 ```
 
-> *Result:*
+> *Result:* `Hash`.
 >
-> `Hash`.
->
-> *Preconditions:*
->
-> `Hash` is a unary function object type such that the expression
-> `hf(k)` has type `size_t`.
+> *Preconditions:* `Hash` is a unary function object type such that the
+> expression `hf(k)` has type `size_t`.
 
 ``` cpp
 typename X::key_equal
 ```
 
-> *Result:*
+> *Result:* `Pred`.
 >
-> `Pred`.
->
-> *Preconditions:*
->
-> `Pred` meets the *Cpp17CopyConstructible* requirements. `Pred` is a
-> binary predicate that takes two arguments of type `Key`. `Pred` is an
-> equivalence relation.
+> *Preconditions:* `Pred` meets the *Cpp17CopyConstructible*
+> requirements. `Pred` is a binary predicate that takes two arguments of
+> type `Key`. `Pred` is an equivalence relation.
 
 ``` cpp
 typename X::local_iterator
 ```
 
-> *Result:*
->
-> An iterator type whose category, value type, difference type, and
-> pointer and reference types are the same as `X::iterator`’s.
+> *Result:* An iterator type whose category, value type, difference
+> type, and pointer and reference types are the same as `X::iterator`’s.
 >
 > \[*Note 7*: A `local_iterator` object can be used to iterate through a
 > single bucket, but cannot be used to iterate across
@@ -3438,10 +2683,9 @@ typename X::local_iterator
 typename X::const_local_iterator
 ```
 
-> *Result:*
->
-> An iterator type whose category, value type, difference type, and
-> pointer and reference types are the same as `X::const_iterator`’s.
+> *Result:* An iterator type whose category, value type, difference
+> type, and pointer and reference types are the same as
+> `X::const_iterator`’s.
 >
 > \[*Note 8*: A `const_local_iterator` object can be used to iterate
 > through a single bucket, but cannot be used to iterate across
@@ -3451,514 +2695,365 @@ typename X::const_local_iterator
 typename X::node_type
 ```
 
-> *Result:*
->
-> A specialization of a *node-handle* class template [[container.node]],
-> such that the public nested types are the same types as the
-> corresponding types in `X`.
+> *Result:* A specialization of a *node-handle* class
+> template [[container.node]], such that the public nested types are the
+> same types as the corresponding types in `X`.
 
 ``` cpp
 X(n, hf, eq)
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hf` as the hash function and `eq` as the key equality
+> predicate.
 >
-> Constructs an empty container with at least `n` buckets, using `hf` as
-> the hash function and `eq` as the key equality predicate.
->
-> *Complexity:*
->
-> 𝑂(`n)`
+> *Complexity:* 𝑂(`n)`
 
 ``` cpp
 X(n, hf)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_equal` meets the *Cpp17DefaultConstructible*
+> requirements.
 >
-> `key_equal` meets the *Cpp17DefaultConstructible* requirements.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hf` as the hash function and `key_equal()` as the key equality
+> predicate.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using `hf` as
-> the hash function and `key_equal()` as the key equality predicate.
->
-> *Complexity:*
->
-> 𝑂(`n)`
+> *Complexity:* 𝑂(`n)`
 
 ``` cpp
 X(n)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `hasher` and `key_equal` meet the
+> *Cpp17DefaultConstructible* requirements.
 >
-> `hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
-> requirements.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hasher()` as the hash function and `key_equal()` as the key
+> equality predicate.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using
-> `hasher()` as the hash function and `key_equal()` as the key equality
-> predicate.
->
-> *Complexity:*
->
-> 𝑂(`n)`
+> *Complexity:* 𝑂(`n)`
 
 ``` cpp
 X a = X();
 X a;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `hasher` and `key_equal` meet the
+> *Cpp17DefaultConstructible* requirements.
 >
-> `hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
-> requirements.
+> *Effects:* Constructs an empty container with an unspecified number of
+> buckets, using `hasher()` as the hash function and `key_equal()` as
+> the key equality predicate.
 >
-> *Effects:*
->
-> Constructs an empty container with an unspecified number of buckets,
-> using `hasher()` as the hash function and `key_equal()` as the key
-> equality predicate.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 X(i, j, n, hf, eq)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*i`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hf` as the hash function and `eq` as the key equality
+> predicate, and inserts elements from \[`i`, `j`) into it.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using `hf` as
-> the hash function and `eq` as the key equality predicate, and inserts
-> elements from \[`i`, `j`) into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `distance(i, j)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `distance(i, j)`), worst case
+> 𝑂(N^2).
 
 ``` cpp
 X(i, j, n, hf)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_equal` meets the *Cpp17DefaultConstructible*
+> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*i`.
 >
-> `key_equal` meets the *Cpp17DefaultConstructible* requirements.
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hf` as the hash function and `key_equal()` as the key equality
+> predicate, and inserts elements from \[`i`, `j`) into it.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using `hf` as
-> the hash function and `key_equal()` as the key equality predicate, and
-> inserts elements from \[`i`, `j`) into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `distance(i, j)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `distance(i, j)`), worst case
+> 𝑂(N^2).
 
 ``` cpp
 X(i, j, n)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `hasher` and `key_equal` meet the
+> *Cpp17DefaultConstructible* requirements. `value_type` is
+> *Cpp17EmplaceConstructible* into `X` from `*i`.
 >
-> `hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
-> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
-> from `*i`.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hasher()` as the hash function and `key_equal()` as the key
+> equality predicate, and inserts elements from \[`i`, `j`) into it.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using
-> `hasher()` as the hash function and `key_equal()` as the key equality
-> predicate, and inserts elements from \[`i`, `j`) into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `distance(i, j)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `distance(i, j)`), worst case
+> 𝑂(N^2).
 
 ``` cpp
 X(i, j)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `hasher` and `key_equal` meet the
+> *Cpp17DefaultConstructible* requirements. `value_type` is
+> *Cpp17EmplaceConstructible* into `X` from `*i`.
 >
-> `hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
-> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
-> from `*i`.
+> *Effects:* Constructs an empty container with an unspecified number of
+> buckets, using `hasher()` as the hash function and `key_equal()` as
+> the key equality predicate, and inserts elements from \[`i`, `j`) into
+> it.
 >
-> *Effects:*
->
-> Constructs an empty container with an unspecified number of buckets,
-> using `hasher()` as the hash function and `key_equal()` as the key
-> equality predicate, and inserts elements from \[`i`, `j`) into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `distance(i, j)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `distance(i, j)`), worst case
+> 𝑂(N^2).
 
 ``` cpp
 X(from_range, rg, n, hf, eq)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*ranges::begin(rg)`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from
-> `*ranges::begin(rg)`.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hf` as the hash function and `eq` as the key equality
+> predicate, and inserts elements from `rg` into it.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using `hf` as
-> the hash function and `eq` as the key equality predicate, and inserts
-> elements from `rg` into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `ranges::distance(rg)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `ranges::distance(rg)`), worst
+> case 𝑂(N^2).
 
 ``` cpp
 X(from_range, rg, n, hf)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_equal` meets the *Cpp17DefaultConstructible*
+> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*ranges::begin(rg)`.
 >
-> `key_equal` meets the *Cpp17DefaultConstructible* requirements.
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from
-> `*ranges::begin(rg)`.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hf` as the hash function and `key_equal()` as the key equality
+> predicate, and inserts elements from `rg` into it.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using `hf` as
-> the hash function and `key_equal()` as the key equality predicate, and
-> inserts elements from `rg` into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `ranges::distance(rg)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `ranges::distance(rg)`), worst
+> case 𝑂(N^2).
 
 ``` cpp
 X(from_range, rg, n)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `hasher` and `key_equal` meet the
+> *Cpp17DefaultConstructible* requirements. `value_type` is
+> *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
 >
-> `hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
-> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
-> from `*ranges::begin(rg)`.
+> *Effects:* Constructs an empty container with at least `n` buckets,
+> using `hasher()` as the hash function and `key_equal()` as the key
+> equality predicate, and inserts elements from `rg` into it.
 >
-> *Effects:*
->
-> Constructs an empty container with at least `n` buckets, using
-> `hasher()` as the hash function and `key_equal()` as the key equality
-> predicate, and inserts elements from `rg` into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `ranges::distance(rg)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `ranges::distance(rg)`), worst
+> case 𝑂(N^2).
 
 ``` cpp
 X(from_range, rg)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `hasher` and `key_equal` meet the
+> *Cpp17DefaultConstructible* requirements. `value_type` is
+> *Cpp17EmplaceConstructible* into `X` from `*ranges::begin(rg)`.
 >
-> `hasher` and `key_equal` meet the *Cpp17DefaultConstructible*
-> requirements. `value_type` is *Cpp17EmplaceConstructible* into `X`
-> from `*ranges::begin(rg)`.
+> *Effects:* Constructs an empty container with an unspecified number of
+> buckets, using `hasher()` as the hash function and `key_equal()` as
+> the key equality predicate, and inserts elements from `rg` into it.
 >
-> *Effects:*
->
-> Constructs an empty container with an unspecified number of buckets,
-> using `hasher()` as the hash function and `key_equal()` as the key
-> equality predicate, and inserts elements from `rg` into it.
->
-> *Complexity:*
->
-> Average case 𝑂(N) (N is `ranges::distance(rg)`), worst case 𝑂(N^2).
+> *Complexity:* Average case 𝑂(N) (N is `ranges::distance(rg)`), worst
+> case 𝑂(N^2).
 
 ``` cpp
 X(il)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end())`.
+> *Effects:* Equivalent to `X(il.begin(), il.end())`.
 
 ``` cpp
 X(il, n)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end(), n)`.
+> *Effects:* Equivalent to `X(il.begin(), il.end(), n)`.
 
 ``` cpp
 X(il, n, hf)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end(), n, hf)`.
+> *Effects:* Equivalent to `X(il.begin(), il.end(), n, hf)`.
 
 ``` cpp
 X(il, n, hf, eq)
 ```
 
-> *Effects:*
->
-> Equivalent to `X(il.begin(), il.end(), n, hf, eq)`.
+> *Effects:* Equivalent to `X(il.begin(), il.end(), n, hf, eq)`.
 
 ``` cpp
 X(b)
 ```
 
-> *Effects:*
->
-> In addition to the container
+> *Effects:* In addition to the container
 > requirements [[container.requirements.general]], copies the hash
 > function, predicate, and maximum load factor.
 >
-> *Complexity:*
->
-> Average case linear in `b.size()`, worst case quadratic.
+> *Complexity:* Average case linear in `b.size()`, worst case quadratic.
 
 ``` cpp
 a = b
 ```
 
-> *Result:*
+> *Result:* `X&`
 >
-> `X&`
+> *Effects:* In addition to the container requirements, copies the hash
+> function, predicate, and maximum load factor.
 >
-> *Effects:*
->
-> In addition to the container requirements, copies the hash function,
-> predicate, and maximum load factor.
->
-> *Complexity:*
->
-> Average case linear in `b.size()`, worst case quadratic.
+> *Complexity:* Average case linear in `b.size()`, worst case quadratic.
 
 ``` cpp
 a = il
 ```
 
-> *Result:*
+> *Result:* `X&`
 >
-> `X&`
->
-> *Preconditions:*
->
-> `value_type` is *Cpp17CopyInsertable* into `X` and
+> *Preconditions:* `value_type` is *Cpp17CopyInsertable* into `X` and
 > *Cpp17CopyAssignable*.
 >
-> *Effects:*
+> *Effects:* Assigns the range \[`il.begin()`, `il.end()`) into `a`. All
+> existing elements of `a` are either assigned to or destroyed.
 >
-> Assigns the range \[`il.begin()`, `il.end()`) into `a`. All existing
-> elements of `a` are either assigned to or destroyed.
->
-> *Complexity:*
->
-> Average case linear in `il.size()`, worst case quadratic.
+> *Complexity:* Average case linear in `il.size()`, worst case
+> quadratic.
 
 ``` cpp
 b.hash_function()
 ```
 
-> *Result:*
+> *Result:* `hasher`
 >
-> `hasher`
+> *Returns:* `b`’s hash function.
 >
-> *Returns:*
->
-> `b`’s hash function.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.key_eq()
 ```
 
-> *Result:*
+> *Result:* `key_equal`
 >
-> `key_equal`
+> *Returns:* `b`’s key equality predicate.
 >
-> *Returns:*
->
-> `b`’s key equality predicate.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a_uniq.emplace(args)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator,` `bool>`
 >
-> `pair<iterator,` `bool>`
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `args`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
->
-> *Effects:*
->
-> Inserts a `value_type` object `t` constructed with
+> *Effects:* Inserts a `value_type` object `t` constructed with
 > `std::forward<Args>(args)...` if and only if there is no element in
 > the container with key equivalent to the key of `t`.
 >
-> *Returns:*
+> *Returns:* The `bool` component of the returned pair is `true` if and
+> only if the insertion takes place, and the iterator component of the
+> pair points to the element with key equivalent to the key of `t`.
 >
-> The `bool` component of the returned pair is `true` if and only if the
-> insertion takes place, and the iterator component of the pair points
-> to the element with key equivalent to the key of `t`.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
 
 ``` cpp
 a_eq.emplace(args)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `args`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
->
-> *Effects:*
->
-> Inserts a `value_type` object `t` constructed with
+> *Effects:* Inserts a `value_type` object `t` constructed with
 > `std::forward<Args>(args)...`.
 >
-> *Returns:*
+> *Returns:* An iterator pointing to the newly inserted element.
 >
-> An iterator pointing to the newly inserted element.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
 
 ``` cpp
 a.emplace_hint(p, args)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `args`.
 >
-> *Preconditions:*
+> *Effects:* Equivalent to `a.emplace(std::forward<Args>(args)...)`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `args`.
+> *Returns:* An iterator pointing to the element with the key equivalent
+> to the newly inserted element. The `const_iterator` `p` is a hint
+> pointing to where the search should start. Implementations are
+> permitted to ignore the hint.
 >
-> *Effects:*
->
-> Equivalent to `a.emplace(std::forward<Args>(args)...)`.
->
-> *Returns:*
->
-> An iterator pointing to the element with the key equivalent to the
-> newly inserted element. The `const_iterator` `p` is a hint pointing to
-> where the search should start. Implementations are permitted to ignore
-> the hint.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a_uniq.insert(t)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, bool>`
 >
-> `pair<iterator, bool>`
+> *Preconditions:* If `t` is a non-const rvalue, `value_type` is
+> *Cpp17MoveInsertable* into `X`; otherwise, `value_type` is
+> *Cpp17CopyInsertable* into `X`.
 >
-> *Preconditions:*
+> *Effects:* Inserts `t` if and only if there is no element in the
+> container with key equivalent to the key of `t`.
 >
-> If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable*
-> into `X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
->
-> *Effects:*
->
-> Inserts `t` if and only if there is no element in the container with
-> key equivalent to the key of `t`.
->
-> *Returns:*
->
-> The `bool` component of the returned pair indicates whether the
-> insertion takes place, and the `iterator` component points to the
+> *Returns:* The `bool` component of the returned pair indicates whether
+> the insertion takes place, and the `iterator` component points to the
 > element with key equivalent to the key of `t`.
 >
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
 
 ``` cpp
 a_eq.insert(t)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* If `t` is a non-const rvalue, `value_type` is
+> *Cpp17MoveInsertable* into `X`; otherwise, `value_type` is
+> *Cpp17CopyInsertable* into `X`.
 >
-> *Preconditions:*
+> *Effects:* Inserts `t`.
 >
-> If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable*
-> into `X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
+> *Returns:* An iterator pointing to the newly inserted element.
 >
-> *Effects:*
->
-> Inserts `t`.
->
-> *Returns:*
->
-> An iterator pointing to the newly inserted element.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
 
 ``` cpp
 a.insert(p, t)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* If `t` is a non-const rvalue, `value_type` is
+> *Cpp17MoveInsertable* into `X`; otherwise, `value_type` is
+> *Cpp17CopyInsertable* into `X`.
 >
-> *Preconditions:*
+> *Effects:* Equivalent to `a.insert(t)`. The iterator `p` is a hint
+> pointing to where the search should start. Implementations are
+> permitted to ignore the hint.
 >
-> If `t` is a non-const rvalue, `value_type` is *Cpp17MoveInsertable*
-> into `X`; otherwise, `value_type` is *Cpp17CopyInsertable* into `X`.
+> *Returns:* An iterator pointing to the element with the key equivalent
+> to that of `t`.
 >
-> *Effects:*
->
-> Equivalent to `a.insert(t)`. The iterator `p` is a hint pointing to
-> where the search should start. Implementations are permitted to ignore
-> the hint.
->
-> *Returns:*
->
-> An iterator pointing to the element with the key equivalent to that of
-> `t`.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a.insert(i, j)
@@ -3966,19 +3061,13 @@ a.insert(i, j)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*i`. Neither `i` nor `j` are iterators into `a`.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from `*i`.
-> Neither `i` nor `j` are iterators into `a`.
+> *Effects:* Equivalent to `a.insert(t)` for each element in `[i,j)`.
 >
-> *Effects:*
->
-> Equivalent to `a.insert(t)` for each element in `[i,j)`.
->
-> *Complexity:*
->
-> Average case 𝑂(N), where N is `distance(i, j)`, worst case
-> 𝑂(N(`a.size()) + 1)`.
+> *Complexity:* Average case 𝑂(N), where N is `distance(i, j)`, worst
+> case 𝑂(N(`a.size()) + 1)`.
 
 ``` cpp
 a.insert_range(rg)
@@ -3986,181 +3075,122 @@ a.insert_range(rg)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
+> from `*ranges::begin(rg)`. `rg` and `a` do not overlap.
 >
-> `value_type` is *Cpp17EmplaceConstructible* into `X` from
-> `*ranges::begin(rg)`. `rg` and `a` do not overlap.
+> *Effects:* Equivalent to `a.insert(t)` for each element `t` in `rg`.
 >
-> *Effects:*
->
-> Equivalent to `a.insert(t)` for each element `t` in `rg`.
->
-> *Complexity:*
->
-> Average case 𝑂(N), where N is `ranges::distance(rg)`, worst case
-> 𝑂(N(`a.size()) + 1)`.
+> *Complexity:* Average case 𝑂(N), where N is `ranges::distance(rg)`,
+> worst case 𝑂(N(`a.size()) + 1)`.
 
 ``` cpp
 a.insert(il)
 ```
 
-> *Effects:*
->
-> Equivalent to `a.insert(il.begin(), il.end())`.
+> *Effects:* Equivalent to `a.insert(il.begin(), il.end())`.
 
 ``` cpp
 a_uniq.insert(nh)
 ```
 
-> *Result:*
+> *Result:* `insert_return_type`
 >
-> `insert_return_type`
+> *Preconditions:* `nh` is empty or
+> `a_uniq.get_allocator() == nh.get_allocator()` is `true`.
 >
-> *Preconditions:*
+> *Effects:* If `nh` is empty, has no effect. Otherwise, inserts the
+> element owned by `nh` if and only if there is no element in the
+> container with a key equivalent to `nh.key()`.
 >
-> `nh` is empty or `a_uniq.get_allocator() == nh.get_allocator()` is
-> `true`.
+> *Ensures:* If `nh` is empty, `inserted` is `false`, `position` is
+> `end()`, and `node` is empty. Otherwise if the insertion took place,
+> `inserted` is `true`, `position` points to the inserted element, and
+> `node` is empty; if the insertion failed, `inserted` is `false`,
+> `node` has the previous value of `nh`, and `position` points to an
+> element with a key equivalent to `nh.key()`.
 >
-> *Effects:*
->
-> If `nh` is empty, has no effect. Otherwise, inserts the element owned
-> by `nh` if and only if there is no element in the container with a key
-> equivalent to `nh.key()`.
->
-> *Ensures:*
->
-> If `nh` is empty, `inserted` is `false`, `position` is `end()`, and
-> `node` is empty. Otherwise if the insertion took place, `inserted` is
-> `true`, `position` points to the inserted element, and `node` is
-> empty; if the insertion failed, `inserted` is `false`, `node` has the
-> previous value of `nh`, and `position` points to an element with a key
-> equivalent to `nh.key()`.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
 
 ``` cpp
 a_eq.insert(nh)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `nh` is empty or
+> `a_eq.get_allocator() == nh.get_allocator()` is `true`.
 >
-> *Preconditions:*
+> *Effects:* If `nh` is empty, has no effect and returns `a_eq.end()`.
+> Otherwise, inserts the element owned by `nh` and returns an iterator
+> pointing to the newly inserted element.
 >
-> `nh` is empty or `a_eq.get_allocator() == nh.get_allocator()` is
-> `true`.
+> *Ensures:* `nh` is empty.
 >
-> *Effects:*
->
-> If `nh` is empty, has no effect and returns `a_eq.end()`. Otherwise,
-> inserts the element owned by `nh` and returns an iterator pointing to
-> the newly inserted element.
->
-> *Ensures:*
->
-> `nh` is empty.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
 
 ``` cpp
 a.insert(q, nh)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Preconditions:* `nh` is empty or
+> `a.get_allocator() == nh.get_allocator()` is `true`.
 >
-> *Preconditions:*
+> *Effects:* If `nh` is empty, has no effect and returns `a.end()`.
+> Otherwise, inserts the element owned by `nh` if and only if there is
+> no element with key equivalent to `nh.key()` in containers with unique
+> keys; always inserts the element owned by `nh` in containers with
+> equivalent keys. The iterator `q` is a hint pointing to where the
+> search should start. Implementations are permitted to ignore the hint.
 >
-> `nh` is empty or `a.get_allocator() == nh.get_allocator()` is `true`.
+> *Ensures:* `nh` is empty if insertion succeeds, unchanged if insertion
+> fails.
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element with key equivalent to
+> `nh.key()`.
 >
-> If `nh` is empty, has no effect and returns `a.end()`. Otherwise,
-> inserts the element owned by `nh` if and only if there is no element
-> with key equivalent to `nh.key()` in containers with unique keys;
-> always inserts the element owned by `nh` in containers with equivalent
-> keys. The iterator `q` is a hint pointing to where the search should
-> start. Implementations are permitted to ignore the hint.
->
-> *Ensures:*
->
-> `nh` is empty if insertion succeeds, unchanged if insertion fails.
->
-> *Returns:*
->
-> An iterator pointing to the element with key equivalent to `nh.key()`.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a.extract(k)
 ```
 
-> *Result:*
+> *Result:* `node_type`
 >
-> `node_type`
+> *Effects:* Removes an element in the container with key equivalent to
+> `k`.
 >
-> *Effects:*
+> *Returns:* A `node_type` owning the element if found, otherwise an
+> empty `node_type`.
 >
-> Removes an element in the container with key equivalent to `k`.
->
-> *Returns:*
->
-> A `node_type` owning the element if found, otherwise an empty
-> `node_type`.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a_tran.extract(kx)
 ```
 
-> *Result:*
+> *Result:* `node_type`
 >
-> `node_type`
+> *Effects:* Removes an element in the container with key equivalent to
+> `kx`.
 >
-> *Effects:*
+> *Returns:* A `node_type` owning the element if found, otherwise an
+> empty `node_type`.
 >
-> Removes an element in the container with key equivalent to `kx`.
->
-> *Returns:*
->
-> A `node_type` owning the element if found, otherwise an empty
-> `node_type`.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_tran.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_tran.size())`.
 
 ``` cpp
 a.extract(q)
 ```
 
-> *Result:*
+> *Result:* `node_type`
 >
-> `node_type`
+> *Effects:* Removes the element pointed to by `q`.
 >
-> *Effects:*
+> *Returns:* A `node_type` owning that element.
 >
-> Removes the element pointed to by `q`.
->
-> *Returns:*
->
-> A `node_type` owning that element.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a.merge(a2)
@@ -4168,131 +3198,87 @@ a.merge(a2)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `a.get_allocator() == a2.get_allocator()`.
 >
-> `a.get_allocator() == a2.get_allocator()`.
+> *Effects:* Attempts to extract each element in `a2` and insert it into
+> `a` using the hash function and key equality predicate of `a`. In
+> containers with unique keys, if there is an element in `a` with key
+> equivalent to the key of an element from `a2`, then that element is
+> not extracted from `a2`.
 >
-> *Effects:*
+> *Ensures:* Pointers and references to the transferred elements of `a2`
+> refer to those same elements but as members of `a`. Iterators
+> referring to the transferred elements and all iterators referring to
+> `a` will be invalidated, but iterators to elements remaining in `a2`
+> will remain valid.
 >
-> Attempts to extract each element in `a2` and insert it into `a` using
-> the hash function and key equality predicate of `a`. In containers
-> with unique keys, if there is an element in `a` with key equivalent to
-> the key of an element from `a2`, then that element is not extracted
-> from `a2`.
->
-> *Ensures:*
->
-> Pointers and references to the transferred elements of `a2` refer to
-> those same elements but as members of `a`. Iterators referring to the
-> transferred elements and all iterators referring to `a` will be
-> invalidated, but iterators to elements remaining in `a2` will remain
-> valid.
->
-> *Complexity:*
->
-> Average case 𝑂(N), where N is `a2.size()`, worst case
+> *Complexity:* Average case 𝑂(N), where N is `a2.size()`, worst case
 > 𝑂(N`*a.size() + N)`.
 
 ``` cpp
 a.erase(k)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Effects:* Erases all elements with key equivalent to `k`.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Erases all elements with key equivalent to `k`.
->
-> *Returns:*
->
-> The number of elements erased.
->
-> *Complexity:*
->
-> Average case 𝑂(`a.count(k))`, worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(`a.count(k))`, worst case 𝑂(`a.size())`.
 
 ``` cpp
 a_tran.erase(kx)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Effects:* Erases all elements with key equivalent to `kx`.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Erases all elements with key equivalent to `kx`.
->
-> *Returns:*
->
-> The number of elements erased.
->
-> *Complexity:*
->
-> Average case 𝑂(`a_tran.count(kx))`, worst case 𝑂(`a_tran.size())`.
+> *Complexity:* Average case 𝑂(`a_tran.count(kx))`, worst case
+> 𝑂(`a_tran.size())`.
 
 ``` cpp
 a.erase(q)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Erases the element pointed to by `q`.
 >
-> *Effects:*
+> *Returns:* The iterator immediately following `q` prior to the
+> erasure.
 >
-> Erases the element pointed to by `q`.
->
-> *Returns:*
->
-> The iterator immediately following `q` prior to the erasure.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a.erase(r)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Erases the element pointed to by `r`.
 >
-> *Effects:*
+> *Returns:* The iterator immediately following `r` prior to the
+> erasure.
 >
-> Erases the element pointed to by `r`.
->
-> *Returns:*
->
-> The iterator immediately following `r` prior to the erasure.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
 
 ``` cpp
 a.erase(q1, q2)
 ```
 
-> *Result:*
+> *Result:* `iterator`
 >
-> `iterator`
+> *Effects:* Erases all elements in the range `[q1, q2)`.
 >
-> *Effects:*
+> *Returns:* The iterator immediately following the erased elements
+> prior to the erasure.
 >
-> Erases all elements in the range `[q1, q2)`.
->
-> *Returns:*
->
-> The iterator immediately following the erased elements prior to the
-> erasure.
->
-> *Complexity:*
->
-> Average case linear in `distance(q1, q2)`, worst case 𝑂(`a.size())`.
+> *Complexity:* Average case linear in `distance(q1, q2)`, worst case
+> 𝑂(`a.size())`.
 
 ``` cpp
 a.clear()
@@ -4300,326 +3286,213 @@ a.clear()
 
 > *Result:*
 >
-> *Effects:*
+> *Effects:* Erases all elements in the container.
 >
-> Erases all elements in the container.
+> *Ensures:* `a.empty()` is `true`.
 >
-> *Ensures:*
->
-> `a.empty()` is `true`.
->
-> *Complexity:*
->
-> Linear in `a.size()`.
+> *Complexity:* Linear in `a.size()`.
 
 ``` cpp
 b.find(k)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `b`.
 >
-> `iterator`; `const_iterator` for constant `b`.
+> *Returns:* An iterator pointing to an element with key equivalent to
+> `k`, or `b.end()` if no such element exists.
 >
-> *Returns:*
->
-> An iterator pointing to an element with key equivalent to `k`, or
-> `b.end()` if no such element exists.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`b.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`b.size())`.
 
 ``` cpp
 a_tran.find(ke)
 ```
 
-> *Result:*
+> *Result:* `iterator`; `const_iterator` for constant `a_tran`.
 >
-> `iterator`; `const_iterator` for constant `a_tran`.
+> *Returns:* An iterator pointing to an element with key equivalent to
+> `ke`, or `a_tran.end()` if no such element exists.
 >
-> *Returns:*
->
-> An iterator pointing to an element with key equivalent to `ke`, or
-> `a_tran.end()` if no such element exists.
->
-> *Complexity:*
->
-> Average case 𝑂(1), worst case 𝑂(`a_tran.size())`.
+> *Complexity:* Average case 𝑂(1), worst case 𝑂(`a_tran.size())`.
 
 ``` cpp
 b.count(k)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Returns:* The number of elements with key equivalent to `k`.
 >
-> *Returns:*
->
-> The number of elements with key equivalent to `k`.
->
-> *Complexity:*
->
-> Average case 𝑂(`b.count(k))`, worst case 𝑂(`b.size())`.
+> *Complexity:* Average case 𝑂(`b.count(k))`, worst case 𝑂(`b.size())`.
 
 ``` cpp
 a_tran.count(ke)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Returns:* The number of elements with key equivalent to `ke`.
 >
-> *Returns:*
->
-> The number of elements with key equivalent to `ke`.
->
-> *Complexity:*
->
-> Average case 𝑂(`a_tran.count(ke))`, worst case 𝑂(`a_tran.size())`.
+> *Complexity:* Average case 𝑂(`a_tran.count(ke))`, worst case
+> 𝑂(`a_tran.size())`.
 
 ``` cpp
 b.contains(k)
 ```
 
-> *Effects:*
->
-> Equivalent to `b.find(k) != b.end()`.
+> *Effects:* Equivalent to `b.find(k) != b.end()`.
 
 ``` cpp
 a_tran.contains(ke)
 ```
 
-> *Effects:*
->
-> Equivalent to `a_tran.find(ke) != a_tran.end()`.
+> *Effects:* Equivalent to `a_tran.find(ke) != a_tran.end()`.
 
 ``` cpp
 b.equal_range(k)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, iterator>`;
+> `pair<const_iterator, const_iterator>` for constant `b`.
 >
-> `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
-> constant `b`.
+> *Returns:* A range containing all elements with keys equivalent to
+> `k`. Returns `make_pair(b.end(), b.end())` if no such elements exist.
 >
-> *Returns:*
->
-> A range containing all elements with keys equivalent to `k`. Returns
-> `make_pair(b.end(), b.end())` if no such elements exist.
->
-> *Complexity:*
->
-> Average case 𝑂(`b.count(k))`, worst case 𝑂(`b.size())`.
+> *Complexity:* Average case 𝑂(`b.count(k))`, worst case 𝑂(`b.size())`.
 
 ``` cpp
 a_tran.equal_range(ke)
 ```
 
-> *Result:*
+> *Result:* `pair<iterator, iterator>`;
+> `pair<const_iterator, const_iterator>` for constant `a_tran`.
 >
-> `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
-> constant `a_tran`.
+> *Returns:* A range containing all elements with keys equivalent to
+> `ke`. Returns `make_pair(a_tran.end(), a_tran.end())` if no such
+> elements exist.
 >
-> *Returns:*
->
-> A range containing all elements with keys equivalent to `ke`. Returns
-> `make_pair(a_tran.end(), a_tran.end())` if no such elements exist.
->
-> *Complexity:*
->
-> Average case 𝑂(`a_tran.count(ke))`, worst case 𝑂(`a_tran.size())`.
+> *Complexity:* Average case 𝑂(`a_tran.count(ke))`, worst case
+> 𝑂(`a_tran.size())`.
 
 ``` cpp
 b.bucket_count()
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Returns:* The number of buckets that `b` contains.
 >
-> *Returns:*
->
-> The number of buckets that `b` contains.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.max_bucket_count()
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Returns:* An upper bound on the number of buckets that `b` can ever
+> contain.
 >
-> *Returns:*
->
-> An upper bound on the number of buckets that `b` can ever contain.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.bucket(k)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Preconditions:* `b.bucket_count() > 0`.
 >
-> *Preconditions:*
+> *Returns:* The index of the bucket in which elements with keys
+> equivalent to `k` would be found, if any such element existed. The
+> return value is in the range `[0, b.bucket_count())`.
 >
-> `b.bucket_count() > 0`.
->
-> *Returns:*
->
-> The index of the bucket in which elements with keys equivalent to `k`
-> would be found, if any such element existed. The return value is in
-> the range `[0, b.bucket_count())`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.bucket_size(n)
 ```
 
-> *Result:*
+> *Result:* `size_type`
 >
-> `size_type`
+> *Preconditions:* `n` shall be in the range `[0, b.bucket_count())`.
 >
-> *Preconditions:*
+> *Returns:* The number of elements in the $\texttt{n}^\text{th}$
+> bucket.
 >
-> `n` shall be in the range `[0, b.bucket_count())`.
->
-> *Returns:*
->
-> The number of elements in the $\texttt{n}^\text{th}$ bucket.
->
-> *Complexity:*
->
-> 𝑂(`b.bucket_size(n))`
+> *Complexity:* 𝑂(`b.bucket_size(n))`
 
 ``` cpp
 b.begin(n)
 ```
 
-> *Result:*
+> *Result:* `local_iterator`; `const_local_iterator` for constant `b`.
 >
-> `local_iterator`; `const_local_iterator` for constant `b`.
+> *Preconditions:* `n` is in the range `[0, b.bucket_count())`.
 >
-> *Preconditions:*
+> *Returns:* An iterator referring to the first element in the bucket.
+> If the bucket is empty, then `b.begin(n) == b.end(n)`.
 >
-> `n` is in the range `[0, b.bucket_count())`.
->
-> *Returns:*
->
-> An iterator referring to the first element in the bucket. If the
-> bucket is empty, then `b.begin(n) == b.end(n)`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.end(n)
 ```
 
-> *Result:*
+> *Result:* `local_iterator`; `const_local_iterator` for constant `b`.
 >
-> `local_iterator`; `const_local_iterator` for constant `b`.
+> *Preconditions:* `n` is in the range `[0, b.bucket_count())`.
 >
-> *Preconditions:*
+> *Returns:* An iterator which is the past-the-end value for the bucket.
 >
-> `n` is in the range `[0, b.bucket_count())`.
->
-> *Returns:*
->
-> An iterator which is the past-the-end value for the bucket.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.cbegin(n)
 ```
 
-> *Result:*
+> *Result:* `const_local_iterator`
 >
-> `const_local_iterator`
+> *Preconditions:* `n` shall be in the range `[0, b.bucket_count())`.
 >
-> *Preconditions:*
+> *Returns:* An iterator referring to the first element in the bucket.
+> If the bucket is empty, then `b.cbegin(n) == b.cend(n)`.
 >
-> `n` shall be in the range `[0, b.bucket_count())`.
->
-> *Returns:*
->
-> An iterator referring to the first element in the bucket. If the
-> bucket is empty, then `b.cbegin(n) == b.cend(n)`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.cend(n)
 ```
 
-> *Result:*
+> *Result:* `const_local_iterator`
 >
-> `const_local_iterator`
+> *Preconditions:* `n` is in the range `[0, b.bucket_count())`.
 >
-> *Preconditions:*
+> *Returns:* An iterator which is the past-the-end value for the bucket.
 >
-> `n` is in the range `[0, b.bucket_count())`.
->
-> *Returns:*
->
-> An iterator which is the past-the-end value for the bucket.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.load_factor()
 ```
 
-> *Result:*
+> *Result:* `float`
 >
-> `float`
+> *Returns:* The average number of elements per bucket.
 >
-> *Returns:*
->
-> The average number of elements per bucket.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 b.max_load_factor()
 ```
 
-> *Result:*
+> *Result:* `float`
 >
-> `float`
+> *Returns:* A positive number that the container attempts to keep the
+> load factor less than or equal to. The container automatically
+> increases the number of buckets as necessary to keep the load factor
+> below this number.
 >
-> *Returns:*
->
-> A positive number that the container attempts to keep the load factor
-> less than or equal to. The container automatically increases the
-> number of buckets as necessary to keep the load factor below this
-> number.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a.max_load_factor(z)
@@ -4627,14 +3500,10 @@ a.max_load_factor(z)
 
 > *Result:*
 >
-> *Preconditions:*
+> *Preconditions:* `z` is positive. May change the container’s maximum
+> load factor, using `z` as a hint.
 >
-> `z` is positive. May change the container’s maximum load factor, using
-> `z` as a hint.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 a.rehash(n)
@@ -4642,22 +3511,16 @@ a.rehash(n)
 
 > *Result:*
 >
-> *Ensures:*
->
-> `a.bucket_count() >= a.size() / a.max_load_factor()` and
+> *Ensures:* `a.bucket_count() >= a.size() / a.max_load_factor()` and
 > `a.bucket_count() >= n`.
 >
-> *Complexity:*
->
-> Average case linear in `a.size()`, worst case quadratic.
+> *Complexity:* Average case linear in `a.size()`, worst case quadratic.
 
 ``` cpp
 a.reserve(n)
 ```
 
-> *Effects:*
->
-> Equivalent to `a.rehash(ceil(n / a.max_load_factor()))`.
+> *Effects:* Equivalent to `a.rehash(ceil(n / a.max_load_factor()))`.
 
 Two unordered containers `a` and `b` compare equal if
 `a.size() == b.size()` and, for every equivalent-key group obtained from
@@ -5079,9 +3942,7 @@ template<class T, class... U>
   array(T, U...) -> array<T, 1 + sizeof...(U)>;
 ```
 
-> *Mandates:*
->
-> `(is_same_v<T, U> && ...)` is `true`.
+> *Mandates:* `(is_same_v<T, U> && ...)` is `true`.
 
 #### Member functions <a id="array.members">[[array.members]]</a>
 
@@ -5089,35 +3950,28 @@ template<class T, class... U>
 constexpr size_type size() const noexcept;
 ```
 
-> *Returns:*
->
-> `N`.
+> *Returns:* `N`.
 
 ``` cpp
 constexpr T* data() noexcept;
 constexpr const T* data() const noexcept;
 ```
 
-> *Returns:*
->
-> A pointer such that \[`data()`, `data() + size()`) is a valid range.
-> For a non-empty array, `data()` `==` `addressof(front())`.
+> *Returns:* A pointer such that \[`data()`, `data() + size()`) is a
+> valid range. For a non-empty array, `data()` `==`
+> `addressof(front())`.
 
 ``` cpp
 constexpr void fill(const T& u);
 ```
 
-> *Effects:*
->
-> As if by `fill_n(begin(), N, u)`.
+> *Effects:* As if by `fill_n(begin(), N, u)`.
 
 ``` cpp
 constexpr void swap(array& y) noexcept(is_nothrow_swappable_v<T>);
 ```
 
-> *Effects:*
->
-> Equivalent to `swap_ranges(begin(), end(), y.begin())`.
+> *Effects:* Equivalent to `swap_ranges(begin(), end(), y.begin())`.
 >
 > \[*Note 9*: Unlike the `swap` function for other containers,
 > `array::swap` takes linear time, can exit via an exception, and does
@@ -5131,17 +3985,11 @@ template<class T, size_t N>
   constexpr void swap(array<T, N>& x, array<T, N>& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:*
+> *Constraints:* `N == 0` or `is_swappable_v<T>` is `true`.
 >
-> `N == 0` or `is_swappable_v<T>` is `true`.
+> *Effects:* As if by `x.swap(y)`.
 >
-> *Effects:*
->
-> As if by `x.swap(y)`.
->
-> *Complexity:*
->
-> Linear in `N`.
+> *Complexity:* Linear in `N`.
 
 #### Zero-sized arrays <a id="array.zero">[[array.zero]]</a>
 
@@ -5163,34 +4011,24 @@ template<class T, size_t N>
   constexpr array<remove_cv_t<T>, N> to_array(T (&a)[N]);
 ```
 
-> *Mandates:*
+> *Mandates:* `is_array_v<T>` is `false` and `is_constructible_v<T, T&>`
+> is `true`.
 >
-> `is_array_v<T>` is `false` and `is_constructible_v<T, T&>` is `true`.
+> *Preconditions:* `T` meets the *Cpp17CopyConstructible* requirements.
 >
-> *Preconditions:*
->
-> `T` meets the *Cpp17CopyConstructible* requirements.
->
-> *Returns:*
->
-> `{{ a[0], `$\dotsc$`, a[N - 1] }}`.
+> *Returns:* `{{ a[0], `$\dotsc$`, a[N - 1] }}`.
 
 ``` cpp
 template<class T, size_t N>
   constexpr array<remove_cv_t<T>, N> to_array(T (&&a)[N]);
 ```
 
-> *Mandates:*
+> *Mandates:* `is_array_v<T>` is `false` and
+> `is_move_constructible_v<T>` is `true`.
 >
-> `is_array_v<T>` is `false` and `is_move_constructible_v<T>` is `true`.
+> *Preconditions:* `T` meets the *Cpp17MoveConstructible* requirements.
 >
-> *Preconditions:*
->
-> `T` meets the *Cpp17MoveConstructible* requirements.
->
-> *Returns:*
->
-> `{{ std::move(a[0]), `$\dotsc$`, std::move(a[N - 1]) }}`.
+> *Returns:* `{{ std::move(a[0]), `$\dotsc$`, std::move(a[N - 1]) }}`.
 
 #### Tuple interface <a id="array.tuple">[[array.tuple]]</a>
 
@@ -5206,9 +4044,7 @@ template<size_t I, class T, size_t N>
   };
 ```
 
-> *Mandates:*
->
-> `I < N` is `true`.
+> *Mandates:* `I < N` is `true`.
 
 ``` cpp
 template<size_t I, class T, size_t N>
@@ -5221,14 +4057,10 @@ template<size_t I, class T, size_t N>
   constexpr const T&& get(const array<T, N>&& a) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `I < N` is `true`.
 >
-> `I < N` is `true`.
->
-> *Returns:*
->
-> A reference to the $\texttt{I}^\text{th}$ element of `a`, where
-> indexing is zero-based.
+> *Returns:* A reference to the $\texttt{I}^\text{th}$ element of `a`,
+> where indexing is zero-based.
 
 ### Class template `deque` <a id="deque">[[deque]]</a>
 
@@ -5379,75 +4211,51 @@ namespace std {
 explicit deque(const Allocator&);
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `deque`, using the specified allocator.
 >
-> Constructs an empty `deque`, using the specified allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 explicit deque(size_type n, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17DefaultInsertable* into `*this`.
+> *Effects:* Constructs a `deque` with `n` default-inserted elements
+> using the specified allocator.
 >
-> *Effects:*
->
-> Constructs a `deque` with `n` default-inserted elements using the
-> specified allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 deque(size_type n, const T& value, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
+> *Effects:* Constructs a `deque` with `n` copies of `value`, using the
+> specified allocator.
 >
-> *Effects:*
->
-> Constructs a `deque` with `n` copies of `value`, using the specified
-> allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 template<class InputIterator>
   deque(InputIterator first, InputIterator last, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `deque` equal to the range \[`first`, `last`),
+> using the specified allocator.
 >
-> Constructs a `deque` equal to the range \[`first`, `last`), using the
-> specified allocator.
->
-> *Complexity:*
->
-> Linear in `distance(first, last)`.
+> *Complexity:* Linear in `distance(first, last)`.
 
 ``` cpp
 template<container-compatible-range<T> R>
   deque(from_range_t, R&& rg, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `deque` with the elements of the range `rg`,
+> using the specified allocator.
 >
-> Constructs a `deque` with the elements of the range `rg`, using the
-> specified allocator.
->
-> *Complexity:*
->
-> Linear in `ranges::distance(rg)`.
+> *Complexity:* Linear in `ranges::distance(rg)`.
 
 #### Capacity <a id="deque.capacity">[[deque.capacity]]</a>
 
@@ -5455,43 +4263,31 @@ template<container-compatible-range<T> R>
 void resize(size_type sz);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* and
+> *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17MoveInsertable* and *Cpp17DefaultInsertable* into
-> `*this`.
->
-> *Effects:*
->
-> If `sz < size()`, erases the last `size() - sz` elements from the
-> sequence. Otherwise, appends `sz - size()` default-inserted elements
-> to the sequence.
+> *Effects:* If `sz < size()`, erases the last `size() - sz` elements
+> from the sequence. Otherwise, appends `sz - size()` default-inserted
+> elements to the sequence.
 
 ``` cpp
 void resize(size_type sz, const T& c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
->
-> *Effects:*
->
-> If `sz < size()`, erases the last `size() - sz` elements from the
-> sequence. Otherwise, appends `sz - size()` copies of `c` to the
-> sequence.
+> *Effects:* If `sz < size()`, erases the last `size() - sz` elements
+> from the sequence. Otherwise, appends `sz - size()` copies of `c` to
+> the sequence.
 
 ``` cpp
 void shrink_to_fit();
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `*this`.
 >
-> `T` is *Cpp17MoveInsertable* into `*this`.
->
-> *Effects:*
->
-> `shrink_to_fit` is a non-binding request to reduce memory use but does
-> not change the size of the sequence.
+> *Effects:* `shrink_to_fit` is a non-binding request to reduce memory
+> use but does not change the size of the sequence.
 >
 > \[*Note 10*: The request is non-binding to allow latitude for
 > implementation-specific optimizations. — *end note*\]
@@ -5500,16 +4296,12 @@ void shrink_to_fit();
 > other than by the move constructor of a non-*Cpp17CopyInsertable* `T`,
 > then there are no effects.
 >
-> *Complexity:*
+> *Complexity:* If the size is not equal to the old capacity, linear in
+> the size of the sequence; otherwise constant.
 >
-> If the size is not equal to the old capacity, linear in the size of
-> the sequence; otherwise constant.
->
-> *Remarks:*
->
-> If the size is not equal to the old capacity, then invalidates all the
-> references, pointers, and iterators referring to the elements in the
-> sequence, as well as the past-the-end iterator.
+> *Remarks:* If the size is not equal to the old capacity, then
+> invalidates all the references, pointers, and iterators referring to
+> the elements in the sequence, as well as the past-the-end iterator.
 
 #### Modifiers <a id="deque.modifiers">[[deque.modifiers]]</a>
 
@@ -5537,28 +4329,23 @@ template<container-compatible-range<T> R>
   void append_range(R&& rg);
 ```
 
-> *Effects:*
+> *Effects:* An insertion in the middle of the deque invalidates all the
+> iterators and references to elements of the deque. An insertion at
+> either end of the deque invalidates all the iterators to the deque,
+> but has no effect on the validity of references to elements of the
+> deque.
 >
-> An insertion in the middle of the deque invalidates all the iterators
-> and references to elements of the deque. An insertion at either end of
-> the deque invalidates all the iterators to the deque, but has no
-> effect on the validity of references to elements of the deque.
+> *Complexity:* The complexity is linear in the number of elements
+> inserted plus the lesser of the distances to the beginning and end of
+> the deque. Inserting a single element at either the beginning or end
+> of a deque always takes constant time and causes a single call to a
+> constructor of `T`.
 >
-> *Complexity:*
->
-> The complexity is linear in the number of elements inserted plus the
-> lesser of the distances to the beginning and end of the deque.
-> Inserting a single element at either the beginning or end of a deque
-> always takes constant time and causes a single call to a constructor
-> of `T`.
->
-> *Remarks:*
->
-> If an exception is thrown other than by the copy constructor, move
-> constructor, assignment operator, or move assignment operator of `T`
-> there are no effects. If an exception is thrown while inserting a
-> single element at either end, there are no effects. Otherwise, if an
-> exception is thrown by the move constructor of a
+> *Remarks:* If an exception is thrown other than by the copy
+> constructor, move constructor, assignment operator, or move assignment
+> operator of `T` there are no effects. If an exception is thrown while
+> inserting a single element at either end, there are no effects.
+> Otherwise, if an exception is thrown by the move constructor of a
 > non-*Cpp17CopyInsertable* `T`, the effects are unspecified.
 
 ``` cpp
@@ -5568,31 +4355,26 @@ void pop_front();
 void pop_back();
 ```
 
-> *Effects:*
->
-> An erase operation that erases the last element of a deque invalidates
-> only the past-the-end iterator and all iterators and references to the
-> erased elements. An erase operation that erases the first element of a
-> deque but not the last element invalidates only iterators and
-> references to the erased elements. An erase operation that erases
-> neither the first element nor the last element of a deque invalidates
-> the past-the-end iterator and all iterators and references to all the
-> elements of the deque.
+> *Effects:* An erase operation that erases the last element of a deque
+> invalidates only the past-the-end iterator and all iterators and
+> references to the erased elements. An erase operation that erases the
+> first element of a deque but not the last element invalidates only
+> iterators and references to the erased elements. An erase operation
+> that erases neither the first element nor the last element of a deque
+> invalidates the past-the-end iterator and all iterators and references
+> to all the elements of the deque.
 >
 > \[*Note 11*: `pop_front` and `pop_back` are erase
 > operations. — *end note*\]
 >
-> *Throws:*
+> *Throws:* Nothing unless an exception is thrown by the assignment
+> operator of `T`.
 >
-> Nothing unless an exception is thrown by the assignment operator of
-> `T`.
->
-> *Complexity:*
->
-> The number of calls to the destructor of `T` is the same as the number
-> of elements erased, but the number of calls to the assignment operator
-> of `T` is no more than the lesser of the number of elements before the
-> erased elements and the number of elements after the erased elements.
+> *Complexity:* The number of calls to the destructor of `T` is the same
+> as the number of elements erased, but the number of calls to the
+> assignment operator of `T` is no more than the lesser of the number of
+> elements before the erased elements and the number of elements after
+> the erased elements.
 
 #### Erasure <a id="deque.erasure">[[deque.erasure]]</a>
 
@@ -5602,9 +4384,7 @@ template<class T, class Allocator, class U>
     erase(deque<T, Allocator>& c, const U& value);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto it = remove(c.begin(), c.end(), value);
@@ -5619,9 +4399,7 @@ template<class T, class Allocator, class Predicate>
     erase_if(deque<T, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto it = remove_if(c.begin(), c.end(), pred);
@@ -5800,76 +4578,52 @@ referenced.
 explicit forward_list(const Allocator&);
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `forward_list` object using the
+> specified allocator.
 >
-> Constructs an empty `forward_list` object using the specified
-> allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 explicit forward_list(size_type n, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17DefaultInsertable* into `*this`.
+> *Effects:* Constructs a `forward_list` object with `n`
+> default-inserted elements using the specified allocator.
 >
-> *Effects:*
->
-> Constructs a `forward_list` object with `n` default-inserted elements
-> using the specified allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 forward_list(size_type n, const T& value, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
+> *Effects:* Constructs a `forward_list` object with `n` copies of
+> `value` using the specified allocator.
 >
-> *Effects:*
->
-> Constructs a `forward_list` object with `n` copies of `value` using
-> the specified allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 template<class InputIterator>
   forward_list(InputIterator first, InputIterator last, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `forward_list` object equal to the range
+> \[`first`, `last`).
 >
-> Constructs a `forward_list` object equal to the range \[`first`,
-> `last`).
->
-> *Complexity:*
->
-> Linear in `distance(first, last)`.
+> *Complexity:* Linear in `distance(first, last)`.
 
 ``` cpp
 template<container-compatible-range<T> R>
   forward_list(from_range_t, R&& rg, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `forward_list` object with the elements of the
+> range `rg`.
 >
-> Constructs a `forward_list` object with the elements of the range
-> `rg`.
->
-> *Complexity:*
->
-> Linear in `ranges::distance(rg)`.
+> *Complexity:* Linear in `ranges::distance(rg)`.
 
 #### Iterators <a id="forward.list.iter">[[forward.list.iter]]</a>
 
@@ -5879,19 +4633,13 @@ const_iterator before_begin() const noexcept;
 const_iterator cbefore_begin() const noexcept;
 ```
 
-> *Effects:*
->
-> `cbefore_begin()` is equivalent to
+> *Effects:* `cbefore_begin()` is equivalent to
 > `const_cast<forward_list const&>(*this).before_begin()`.
 >
-> *Returns:*
+> *Returns:* A non-dereferenceable iterator that, when incremented, is
+> equal to the iterator returned by `begin()`.
 >
-> A non-dereferenceable iterator that, when incremented, is equal to the
-> iterator returned by `begin()`.
->
-> *Remarks:*
->
-> `before_begin() == end()` shall equal `false`.
+> *Remarks:* `before_begin() == end()` shall equal `false`.
 
 #### Element access <a id="forward.list.access">[[forward.list.access]]</a>
 
@@ -5900,9 +4648,7 @@ reference front();
 const_reference front() const;
 ```
 
-> *Returns:*
->
-> `*begin()`
+> *Returns:* `*begin()`
 
 #### Modifiers <a id="forward.list.modifiers">[[forward.list.modifiers]]</a>
 
@@ -5919,9 +4665,7 @@ calls to the destructor of type `T` is exactly equal to `n`.
 template<class... Args> reference emplace_front(Args&&... args);
 ```
 
-> *Effects:*
->
-> Inserts an object of type `value_type` constructed with
+> *Effects:* Inserts an object of type `value_type` constructed with
 > `value_type(std::forward<Args>(args)...)` at the beginning of the
 > list.
 
@@ -5930,18 +4674,15 @@ void push_front(const T& x);
 void push_front(T&& x);
 ```
 
-> *Effects:*
->
-> Inserts a copy of `x` at the beginning of the list.
+> *Effects:* Inserts a copy of `x` at the beginning of the list.
 
 ``` cpp
 template<container-compatible-range<T> R>
   void prepend_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Inserts a copy of each element of `rg` at the beginning of the list.
+> *Effects:* Inserts a copy of each element of `rg` at the beginning of
+> the list.
 >
 > \[*Note 12*: The order of elements is not reversed. — *end note*\]
 
@@ -5949,187 +4690,134 @@ template<container-compatible-range<T> R>
 void pop_front();
 ```
 
-> *Effects:*
->
-> As if by `erase_after(before_begin())`.
+> *Effects:* As if by `erase_after(before_begin())`.
 
 ``` cpp
 iterator insert_after(const_iterator position, const T& x);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `forward_list`.
+> `position` is `before_begin()` or is a dereferenceable iterator in the
+> range \[`begin()`, `end()`).
 >
-> `T` is *Cpp17CopyInsertable* into `forward_list`. `position` is
-> `before_begin()` or is a dereferenceable iterator in the range
-> \[`begin()`, `end()`).
+> *Effects:* Inserts a copy of `x` after `position`.
 >
-> *Effects:*
->
-> Inserts a copy of `x` after `position`.
->
-> *Returns:*
->
-> An iterator pointing to the copy of `x`.
+> *Returns:* An iterator pointing to the copy of `x`.
 
 ``` cpp
 iterator insert_after(const_iterator position, T&& x);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `forward_list`.
+> `position` is `before_begin()` or is a dereferenceable iterator in the
+> range \[`begin()`, `end()`).
 >
-> `T` is *Cpp17MoveInsertable* into `forward_list`. `position` is
-> `before_begin()` or is a dereferenceable iterator in the range
-> \[`begin()`, `end()`).
+> *Effects:* Inserts a copy of `x` after `position`.
 >
-> *Effects:*
->
-> Inserts a copy of `x` after `position`.
->
-> *Returns:*
->
-> An iterator pointing to the copy of `x`.
+> *Returns:* An iterator pointing to the copy of `x`.
 
 ``` cpp
 iterator insert_after(const_iterator position, size_type n, const T& x);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `forward_list`.
+> `position` is `before_begin()` or is a dereferenceable iterator in the
+> range \[`begin()`, `end()`).
 >
-> `T` is *Cpp17CopyInsertable* into `forward_list`. `position` is
-> `before_begin()` or is a dereferenceable iterator in the range
-> \[`begin()`, `end()`).
+> *Effects:* Inserts `n` copies of `x` after `position`.
 >
-> *Effects:*
->
-> Inserts `n` copies of `x` after `position`.
->
-> *Returns:*
->
-> An iterator pointing to the last inserted copy of `x`, or `position`
-> if `n == 0` is `true`.
+> *Returns:* An iterator pointing to the last inserted copy of `x`, or
+> `position` if `n == 0` is `true`.
 
 ``` cpp
 template<class InputIterator>
   iterator insert_after(const_iterator position, InputIterator first, InputIterator last);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into
+> `forward_list` from `*first`. `position` is `before_begin()` or is a
+> dereferenceable iterator in the range \[`begin()`, `end()`). Neither
+> `first` nor `last` are iterators in `*this`.
 >
-> `T` is *Cpp17EmplaceConstructible* into `forward_list` from `*first`.
-> `position` is `before_begin()` or is a dereferenceable iterator in the
-> range \[`begin()`, `end()`). Neither `first` nor `last` are iterators
-> in `*this`.
+> *Effects:* Inserts copies of elements in \[`first`, `last`) after
+> `position`.
 >
-> *Effects:*
->
-> Inserts copies of elements in \[`first`, `last`) after `position`.
->
-> *Returns:*
->
-> An iterator pointing to the last inserted element, or `position` if
-> `first == last` is `true`.
+> *Returns:* An iterator pointing to the last inserted element, or
+> `position` if `first == last` is `true`.
 
 ``` cpp
 template<container-compatible-range<T> R>
   iterator insert_range_after(const_iterator position, R&& rg);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into
+> `forward_list` from `*ranges::begin(rg)`. `position` is
+> `before_begin()` or is a dereferenceable iterator in the range
+> \[`begin()`, `end()`). `rg` and `*this` do not overlap.
 >
-> `T` is *Cpp17EmplaceConstructible* into `forward_list` from
-> `*ranges::begin(rg)`. `position` is `before_begin()` or is a
-> dereferenceable iterator in the range \[`begin()`, `end()`). `rg` and
-> `*this` do not overlap.
+> *Effects:* Inserts copies of elements in the range `rg` after
+> `position`.
 >
-> *Effects:*
->
-> Inserts copies of elements in the range `rg` after `position`.
->
-> *Returns:*
->
-> An iterator pointing to the last inserted element, or `position` if
-> `rg` is empty.
+> *Returns:* An iterator pointing to the last inserted element, or
+> `position` if `rg` is empty.
 
 ``` cpp
 iterator insert_after(const_iterator position, initializer_list<T> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return insert_after(position, il.begin(), il.end());`
+> *Effects:* Equivalent to:
+> `return insert_after(position, il.begin(), il.end());`
 
 ``` cpp
 template<class... Args>
   iterator emplace_after(const_iterator position, Args&&... args);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17EmplaceConstructible* into
+> `forward_list` from `std::forward<Args>(args)...`. `position` is
+> `before_begin()` or is a dereferenceable iterator in the range
+> \[`begin()`, `end()`).
 >
-> `T` is *Cpp17EmplaceConstructible* into `forward_list` from
-> `std::forward<Args>(args)...`. `position` is `before_begin()` or is a
-> dereferenceable iterator in the range \[`begin()`, `end()`).
+> *Effects:* Inserts an object of type `value_type`
+> direct-non-list-initialized with `std::forward<Args>(args)...` after
+> `position`.
 >
-> *Effects:*
->
-> Inserts an object of type `value_type` direct-non-list-initialized
-> with `std::forward<Args>(args)...` after `position`.
->
-> *Returns:*
->
-> An iterator pointing to the new object.
+> *Returns:* An iterator pointing to the new object.
 
 ``` cpp
 iterator erase_after(const_iterator position);
 ```
 
-> *Preconditions:*
+> *Preconditions:* The iterator following `position` is dereferenceable.
 >
-> The iterator following `position` is dereferenceable.
+> *Effects:* Erases the element pointed to by the iterator following
+> `position`.
 >
-> *Effects:*
+> *Returns:* An iterator pointing to the element following the one that
+> was erased, or `end()` if no such element exists.
 >
-> Erases the element pointed to by the iterator following `position`.
->
-> *Returns:*
->
-> An iterator pointing to the element following the one that was erased,
-> or `end()` if no such element exists.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 iterator erase_after(const_iterator position, const_iterator last);
 ```
 
-> *Preconditions:*
+> *Preconditions:* All iterators in the range (`position`, `last`) are
+> dereferenceable.
 >
-> All iterators in the range are dereferenceable.
+> *Effects:* Erases the elements in the range (`position`, `last`).
 >
-> *Effects:*
+> *Returns:* `last`.
 >
-> Erases the elements in the range .
->
-> *Returns:*
->
-> `last`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 void resize(size_type sz);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17DefaultInsertable* into `*this`.
->
-> *Effects:*
->
-> If `sz < distance(begin(), end())`, erases the last
+> *Effects:* If `sz < distance(begin(), end())`, erases the last
 > `distance(begin(), end()) - sz` elements from the list. Otherwise,
 > inserts `sz - distance(begin(), end())` default-inserted elements at
 > the end of the list.
@@ -6138,13 +4826,9 @@ void resize(size_type sz);
 void resize(size_type sz, const value_type& c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
->
-> *Effects:*
->
-> If `sz < distance(begin(), end())`, erases the last
+> *Effects:* If `sz < distance(begin(), end())`, erases the last
 > `distance(begin(), end()) - sz` elements from the list. Otherwise,
 > inserts `sz - distance(begin(), end())` copies of `c` at the end of
 > the list.
@@ -6153,13 +4837,9 @@ void resize(size_type sz, const value_type& c);
 void clear() noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Erases all elements in the range \[`begin()`, `end()`).
 >
-> Erases all elements in the range \[`begin()`, `end()`).
->
-> *Remarks:*
->
-> Does not invalidate past-the-end iterators.
+> *Remarks:* Does not invalidate past-the-end iterators.
 
 #### Operations <a id="forward.list.ops">[[forward.list.ops]]</a>
 
@@ -6177,56 +4857,41 @@ void splice_after(const_iterator position, forward_list& x);
 void splice_after(const_iterator position, forward_list&& x);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `position` is `before_begin()` or is a
+> dereferenceable iterator in the range \[`begin()`, `end()`).
+> `get_allocator() == x.get_allocator()` is `true`.
+> `addressof(x) != this` is `true`.
 >
-> `position` is `before_begin()` or is a dereferenceable iterator in the
-> range \[`begin()`, `end()`). `get_allocator() == x.get_allocator()` is
-> `true`. `addressof(x) != this` is `true`.
+> *Effects:* Inserts the contents of `x` after `position`, and `x`
+> becomes empty. Pointers and references to the moved elements of `x`
+> now refer to those same elements but as members of `*this`. Iterators
+> referring to the moved elements will continue to refer to their
+> elements, but they now behave as iterators into `*this`, not into `x`.
 >
-> *Effects:*
+> *Throws:* Nothing.
 >
-> Inserts the contents of `x` after `position`, and `x` becomes empty.
-> Pointers and references to the moved elements of `x` now refer to
-> those same elements but as members of `*this`. Iterators referring to
-> the moved elements will continue to refer to their elements, but they
-> now behave as iterators into `*this`, not into `x`.
->
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> 𝑂(`distance(x.begin(), x.end()))`
+> *Complexity:* 𝑂(`distance(x.begin(), x.end()))`
 
 ``` cpp
 void splice_after(const_iterator position, forward_list& x, const_iterator i);
 void splice_after(const_iterator position, forward_list&& x, const_iterator i);
 ```
 
-> *Preconditions:*
->
-> `position` is `before_begin()` or is a dereferenceable iterator in the
-> range \[`begin()`, `end()`). The iterator following `i` is a
-> dereferenceable iterator in `x`.
+> *Preconditions:* `position` is `before_begin()` or is a
+> dereferenceable iterator in the range \[`begin()`, `end()`). The
+> iterator following `i` is a dereferenceable iterator in `x`.
 > `get_allocator() == x.get_allocator()` is `true`.
 >
-> *Effects:*
+> *Effects:* Inserts the element following `i` into `*this`, following
+> `position`, and removes it from `x`. The result is unchanged if
+> `position == i` or `position == ++i`. Pointers and references to
+> `*++i` continue to refer to the same element but as a member of
+> `*this`. Iterators to `*++i` continue to refer to the same element,
+> but now behave as iterators into `*this`, not into `x`.
 >
-> Inserts the element following `i` into `*this`, following `position`,
-> and removes it from `x`. The result is unchanged if `position == i` or
-> `position == ++i`. Pointers and references to `*++i` continue to refer
-> to the same element but as a member of `*this`. Iterators to `*++i`
-> continue to refer to the same element, but now behave as iterators
-> into `*this`, not into `x`.
+> *Throws:* Nothing.
 >
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> 𝑂(1)
+> *Complexity:* 𝑂(1)
 
 ``` cpp
 void splice_after(const_iterator position, forward_list& x,
@@ -6235,56 +4900,41 @@ void splice_after(const_iterator position, forward_list&& x,
                   const_iterator first, const_iterator last);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `position` is `before_begin()` or is a
+> dereferenceable iterator in the range \[`begin()`, `end()`). (`first`,
+> `last`) is a valid range in `x`, and all iterators in the range
+> (`first`, `last`) are dereferenceable. `position` is not an iterator
+> in the range (`first`, `last`). `get_allocator() == x.get_allocator()`
+> is `true`.
 >
-> `position` is `before_begin()` or is a dereferenceable iterator in the
-> range \[`begin()`, `end()`). is a valid range in `x`, and all
-> iterators in the range are dereferenceable. `position` is not an
-> iterator in the range . `get_allocator() == x.get_allocator()` is
-> `true`.
+> *Effects:* Inserts elements in the range (`first`, `last`) after
+> `position` and removes the elements from `x`. Pointers and references
+> to the moved elements of `x` now refer to those same elements but as
+> members of `*this`. Iterators referring to the moved elements will
+> continue to refer to their elements, but they now behave as iterators
+> into `*this`, not into `x`.
 >
-> *Effects:*
->
-> Inserts elements in the range after `position` and removes the
-> elements from `x`. Pointers and references to the moved elements of
-> `x` now refer to those same elements but as members of `*this`.
-> Iterators referring to the moved elements will continue to refer to
-> their elements, but they now behave as iterators into `*this`, not
-> into `x`.
->
-> *Complexity:*
->
-> 𝑂(`distance(first, last))`
+> *Complexity:* 𝑂(`distance(first, last))`
 
 ``` cpp
 size_type remove(const T& value);
 template<class Predicate> size_type remove_if(Predicate pred);
 ```
 
-> *Effects:*
+> *Effects:* Erases all the elements in the list referred to by a list
+> iterator `i` for which the following conditions hold: `*i == value`
+> (for `remove()`), `pred(*i)` is `true` (for `remove_if()`).
+> Invalidates only the iterators and references to the erased elements.
 >
-> Erases all the elements in the list referred to by a list iterator `i`
-> for which the following conditions hold: `*i == value` (for
-> `remove()`), `pred(*i)` is `true` (for `remove_if()`). Invalidates
-> only the iterators and references to the erased elements.
+> *Returns:* The number of elements erased.
 >
-> *Returns:*
+> *Throws:* Nothing unless an exception is thrown by the equality
+> comparison or the predicate.
 >
-> The number of elements erased.
+> *Complexity:* Exactly `distance(begin(), end())` applications of the
+> corresponding predicate.
 >
-> *Throws:*
->
-> Nothing unless an exception is thrown by the equality comparison or
-> the predicate.
->
-> *Complexity:*
->
-> Exactly `distance(begin(), end())` applications of the corresponding
-> predicate.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ``` cpp
 size_type unique();
@@ -6293,31 +4943,21 @@ template<class BinaryPredicate> size_type unique(BinaryPredicate binary_pred);
 
 > Let `binary_pred` be `equal_to<>{}` for the first overload.
 >
-> *Preconditions:*
+> *Preconditions:* `binary_pred` is an equivalence relation.
 >
-> `binary_pred` is an equivalence relation.
+> *Effects:* Erases all but the first element from every consecutive
+> group of equivalent elements. That is, for a nonempty list, erases all
+> elements referred to by the iterator `i` in the range \[`begin() + 1`,
+> `end()`) for which `binary_pred(*i, *(i - 1))` is `true`. Invalidates
+> only the iterators and references to the erased elements.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Erases all but the first element from every consecutive group of
-> equivalent elements. That is, for a nonempty list, erases all elements
-> referred to by the iterator `i` in the range \[`begin() + 1`, `end()`)
-> for which `binary_pred(*i, *(i - 1))` is `true`. Invalidates only the
-> iterators and references to the erased elements.
+> *Throws:* Nothing unless an exception is thrown by the predicate.
 >
-> *Returns:*
->
-> The number of elements erased.
->
-> *Throws:*
->
-> Nothing unless an exception is thrown by the predicate.
->
-> *Complexity:*
->
-> If `empty()` is `false`, exactly `distance(begin(), end()) - 1`
-> applications of the corresponding predicate, otherwise no applications
-> of the predicate.
+> *Complexity:* If `empty()` is `false`, exactly
+> `distance(begin(), end()) - 1` applications of the corresponding
+> predicate, otherwise no applications of the predicate.
 
 ``` cpp
 void merge(forward_list& x);
@@ -6328,66 +4968,52 @@ template<class Compare> void merge(forward_list&& x, Compare comp);
 
 > Let `comp` be `less<>` for the first two overloads.
 >
-> *Preconditions:*
+> *Preconditions:* `*this` and `x` are both sorted with respect to the
+> comparator `comp`, and `get_allocator() == x.get_allocator()` is
+> `true`.
 >
-> `*this` and `x` are both sorted with respect to the comparator `comp`,
-> and `get_allocator() == x.get_allocator()` is `true`.
+> *Effects:* If `addressof(x) == this`, there are no effects. Otherwise,
+> merges the two sorted ranges \[`begin()`, `end()`) and \[`x.begin()`,
+> `x.end()`). The result is a range that is sorted with respect to the
+> comparator `comp`. Pointers and references to the moved elements of
+> `x` now refer to those same elements but as members of `*this`.
+> Iterators referring to the moved elements will continue to refer to
+> their elements, but they now behave as iterators into `*this`, not
+> into `x`.
 >
-> *Effects:*
->
-> If `addressof(x) == this`, there are no effects. Otherwise, merges the
-> two sorted ranges \[`begin()`, `end()`) and \[`x.begin()`, `x.end()`).
-> The result is a range that is sorted with respect to the comparator
-> `comp`. Pointers and references to the moved elements of `x` now refer
-> to those same elements but as members of `*this`. Iterators referring
-> to the moved elements will continue to refer to their elements, but
-> they now behave as iterators into `*this`, not into `x`.
->
-> *Complexity:*
->
-> At most `distance(begin(), end()) + distance(x.begin(), x.end()) - 1`
+> *Complexity:* At most
+> `distance(begin(), end()) + distance(x.begin(), x.end()) - 1`
 > comparisons if `addressof(x) != this`; otherwise, no comparisons are
 > performed.
 >
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If `addressof(x) != this`, `x` is empty
-> after the merge. No elements are copied by this operation. If an
-> exception is thrown other than by a comparison, there are no effects.
+> *Remarks:* Stable [[algorithm.stable]]. If `addressof(x) != this`, `x`
+> is empty after the merge. No elements are copied by this operation. If
+> an exception is thrown other than by a comparison, there are no
+> effects.
 
 ``` cpp
 void sort();
 template<class Compare> void sort(Compare comp);
 ```
 
-> *Effects:*
+> *Effects:* Sorts the list according to the `operator<` or the `comp`
+> function object. If an exception is thrown, the order of the elements
+> in `*this` is unspecified. Does not affect the validity of iterators
+> and references.
 >
-> Sorts the list according to the `operator<` or the `comp` function
-> object. If an exception is thrown, the order of the elements in
-> `*this` is unspecified. Does not affect the validity of iterators and
-> references.
->
-> *Complexity:*
->
-> Approximately $N \log N$ comparisons, where N is
+> *Complexity:* Approximately $N \log N$ comparisons, where N is
 > `distance(begin(), end())`.
 >
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ``` cpp
 void reverse() noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Reverses the order of the elements in the list. Does not
+> affect the validity of iterators and references.
 >
-> Reverses the order of the elements in the list. Does not affect the
-> validity of iterators and references.
->
-> *Complexity:*
->
-> Linear time.
+> *Complexity:* Linear time.
 
 #### Erasure <a id="forward.list.erasure">[[forward.list.erasure]]</a>
 
@@ -6397,9 +5023,7 @@ template<class T, class Allocator, class U>
     erase(forward_list<T, Allocator>& c, const U& value);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return erase_if(c, [&](auto& elem) { return elem == value; });`
 
 ``` cpp
@@ -6408,9 +5032,7 @@ template<class T, class Allocator, class Predicate>
     erase_if(forward_list<T, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return c.remove_if(pred);`
+> *Effects:* Equivalent to: `return c.remove_if(pred);`
 
 ### Class template `list` <a id="list">[[list]]</a>
 
@@ -6584,73 +5206,50 @@ any member of the resulting specialization of `list` is referenced.
 explicit list(const Allocator&);
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty list, using the specified allocator.
 >
-> Constructs an empty list, using the specified allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 explicit list(size_type n, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17DefaultInsertable* into `*this`.
+> *Effects:* Constructs a `list` with `n` default-inserted elements
+> using the specified allocator.
 >
-> *Effects:*
->
-> Constructs a `list` with `n` default-inserted elements using the
-> specified allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 list(size_type n, const T& value, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
+> *Effects:* Constructs a `list` with `n` copies of `value`, using the
+> specified allocator.
 >
-> *Effects:*
->
-> Constructs a `list` with `n` copies of `value`, using the specified
-> allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 template<class InputIterator>
   list(InputIterator first, InputIterator last, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `list` equal to the range \[`first`, `last`).
 >
-> Constructs a `list` equal to the range \[`first`, `last`).
->
-> *Complexity:*
->
-> Linear in `distance(first, last)`.
+> *Complexity:* Linear in `distance(first, last)`.
 
 ``` cpp
 template<container-compatible-range<T> R>
   list(from_range_t, R&& rg, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `list` object with the elements of the range
+> `rg`.
 >
-> Constructs a `list` object with the elements of the range `rg`.
->
-> *Complexity:*
->
-> Linear in `ranges::distance(rg)`.
+> *Complexity:* Linear in `ranges::distance(rg)`.
 
 #### Capacity <a id="list.capacity">[[list.capacity]]</a>
 
@@ -6658,14 +5257,10 @@ template<container-compatible-range<T> R>
 void resize(size_type sz);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17DefaultInsertable* into `*this`.
->
-> *Effects:*
->
-> If `size() < sz`, appends `sz - size()` default-inserted elements to
-> the sequence. If `sz <= size()`, equivalent to:
+> *Effects:* If `size() < sz`, appends `sz - size()` default-inserted
+> elements to the sequence. If `sz <= size()`, equivalent to:
 >
 > ``` cpp
 > list<T>::iterator it = begin();
@@ -6677,13 +5272,9 @@ void resize(size_type sz);
 void resize(size_type sz, const T& c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
->
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > if (sz > size())
@@ -6723,18 +5314,15 @@ template<container-compatible-range<T> R>
   void append_range(R&& rg);
 ```
 
-> *Complexity:*
+> *Complexity:* Insertion of a single element into a list takes constant
+> time and exactly one call to a constructor of `T`. Insertion of
+> multiple elements into a list is linear in the number of elements
+> inserted, and the number of calls to the copy constructor or move
+> constructor of `T` is exactly equal to the number of elements
+> inserted.
 >
-> Insertion of a single element into a list takes constant time and
-> exactly one call to a constructor of `T`. Insertion of multiple
-> elements into a list is linear in the number of elements inserted, and
-> the number of calls to the copy constructor or move constructor of `T`
-> is exactly equal to the number of elements inserted.
->
-> *Remarks:*
->
-> Does not affect the validity of iterators and references. If an
-> exception is thrown there are no effects.
+> *Remarks:* Does not affect the validity of iterators and references.
+> If an exception is thrown there are no effects.
 
 ``` cpp
 iterator erase(const_iterator position);
@@ -6745,19 +5333,14 @@ void pop_back();
 void clear() noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Invalidates only the iterators and references to the erased
+> elements.
 >
-> Invalidates only the iterators and references to the erased elements.
+> *Throws:* Nothing.
 >
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> Erasing a single element is a constant time operation with a single
-> call to the destructor of `T`. Erasing a range in a list is linear
-> time in the size of the range and the number of calls to the
+> *Complexity:* Erasing a single element is a constant time operation
+> with a single call to the destructor of `T`. Erasing a range in a list
+> is linear time in the size of the range and the number of calls to the
 > destructor of type `T` is exactly equal to the size of the range.
 
 #### Operations <a id="list.ops">[[list.ops]]</a>
@@ -6782,51 +5365,36 @@ void splice(const_iterator position, list& x);
 void splice(const_iterator position, list&& x);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `addressof(x) != this` is `true`.
 >
-> `addressof(x) != this` is `true`.
+> *Effects:* Inserts the contents of `x` before `position` and `x`
+> becomes empty. Pointers and references to the moved elements of `x`
+> now refer to those same elements but as members of `*this`. Iterators
+> referring to the moved elements will continue to refer to their
+> elements, but they now behave as iterators into `*this`, not into `x`.
 >
-> *Effects:*
+> *Throws:* Nothing.
 >
-> Inserts the contents of `x` before `position` and `x` becomes empty.
-> Pointers and references to the moved elements of `x` now refer to
-> those same elements but as members of `*this`. Iterators referring to
-> the moved elements will continue to refer to their elements, but they
-> now behave as iterators into `*this`, not into `x`.
->
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 void splice(const_iterator position, list& x, const_iterator i);
 void splice(const_iterator position, list&& x, const_iterator i);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i` is a valid dereferenceable iterator of `x`.
 >
-> `i` is a valid dereferenceable iterator of `x`.
+> *Effects:* Inserts an element pointed to by `i` from list `x` before
+> `position` and removes the element from `x`. The result is unchanged
+> if `position == i` or `position == ++i`. Pointers and references to
+> `*i` continue to refer to this same element but as a member of
+> `*this`. Iterators to `*i` (including `i` itself) continue to refer to
+> the same element, but now behave as iterators into `*this`, not into
+> `x`.
 >
-> *Effects:*
+> *Throws:* Nothing.
 >
-> Inserts an element pointed to by `i` from list `x` before `position`
-> and removes the element from `x`. The result is unchanged if
-> `position == i` or `position == ++i`. Pointers and references to `*i`
-> continue to refer to this same element but as a member of `*this`.
-> Iterators to `*i` (including `i` itself) continue to refer to the same
-> element, but now behave as iterators into `*this`, not into `x`.
->
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 void splice(const_iterator position, list& x, const_iterator first,
@@ -6835,56 +5403,40 @@ void splice(const_iterator position, list&& x, const_iterator first,
             const_iterator last);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `[first, last)` is a valid range in `x`. `position`
+> is not an iterator in the range \[`first`, `last`).
 >
-> `[first, last)` is a valid range in `x`. `position` is not an iterator
-> in the range \[`first`, `last`).
+> *Effects:* Inserts elements in the range \[`first`, `last`) before
+> `position` and removes the elements from `x`. Pointers and references
+> to the moved elements of `x` now refer to those same elements but as
+> members of `*this`. Iterators referring to the moved elements will
+> continue to refer to their elements, but they now behave as iterators
+> into `*this`, not into `x`.
 >
-> *Effects:*
+> *Throws:* Nothing.
 >
-> Inserts elements in the range \[`first`, `last`) before `position` and
-> removes the elements from `x`. Pointers and references to the moved
-> elements of `x` now refer to those same elements but as members of
-> `*this`. Iterators referring to the moved elements will continue to
-> refer to their elements, but they now behave as iterators into
-> `*this`, not into `x`.
->
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> Constant time if `addressof(x) == this`; otherwise, linear time.
+> *Complexity:* Constant time if `addressof(x) == this`; otherwise,
+> linear time.
 
 ``` cpp
 size_type remove(const T& value);
 template<class Predicate> size_type remove_if(Predicate pred);
 ```
 
-> *Effects:*
->
-> Erases all the elements in the list referred to by a list iterator `i`
-> for which the following conditions hold: `*i == value`,
+> *Effects:* Erases all the elements in the list referred to by a list
+> iterator `i` for which the following conditions hold: `*i == value`,
 > `pred(*i) != false`. Invalidates only the iterators and references to
 > the erased elements.
 >
-> *Returns:*
+> *Returns:* The number of elements erased.
 >
-> The number of elements erased.
->
-> *Throws:*
->
-> Nothing unless an exception is thrown by `*i == value` or
+> *Throws:* Nothing unless an exception is thrown by `*i == value` or
 > `pred(*i) != false`.
 >
-> *Complexity:*
+> *Complexity:* Exactly `size()` applications of the corresponding
+> predicate.
 >
-> Exactly `size()` applications of the corresponding predicate.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 ``` cpp
 size_type unique();
@@ -6893,30 +5445,21 @@ template<class BinaryPredicate> size_type unique(BinaryPredicate binary_pred);
 
 > Let `binary_pred` be `equal_to<>{}` for the first overload.
 >
-> *Preconditions:*
+> *Preconditions:* `binary_pred` is an equivalence relation.
 >
-> `binary_pred` is an equivalence relation.
+> *Effects:* Erases all but the first element from every consecutive
+> group of equivalent elements. That is, for a nonempty list, erases all
+> elements referred to by the iterator `i` in the range \[`begin() + 1`,
+> `end()`) for which `binary_pred(*i, *(i - 1))` is `true`. Invalidates
+> only the iterators and references to the erased elements.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Erases all but the first element from every consecutive group of
-> equivalent elements. That is, for a nonempty list, erases all elements
-> referred to by the iterator `i` in the range \[`begin() + 1`, `end()`)
-> for which `binary_pred(*i, *(i - 1))` is `true`. Invalidates only the
-> iterators and references to the erased elements.
+> *Throws:* Nothing unless an exception is thrown by the predicate.
 >
-> *Returns:*
->
-> The number of elements erased.
->
-> *Throws:*
->
-> Nothing unless an exception is thrown by the predicate.
->
-> *Complexity:*
->
-> If `empty()` is `false`, exactly `size() - 1` applications of the
-> corresponding predicate, otherwise no applications of the predicate.
+> *Complexity:* If `empty()` is `false`, exactly `size() - 1`
+> applications of the corresponding predicate, otherwise no applications
+> of the predicate.
 
 ``` cpp
 void merge(list& x);
@@ -6927,64 +5470,50 @@ template<class Compare> void merge(list&& x, Compare comp);
 
 > Let `comp` be `less<>` for the first two overloads.
 >
-> *Preconditions:*
+> *Preconditions:* `*this` and `x` are both sorted with respect to the
+> comparator `comp`, and `get_allocator() == x.get_allocator()` is
+> `true`.
 >
-> `*this` and `x` are both sorted with respect to the comparator `comp`,
-> and `get_allocator() == x.get_allocator()` is `true`.
+> *Effects:* If `addressof(x) == this`, there are no effects. Otherwise,
+> merges the two sorted ranges \[`begin()`, `end()`) and \[`x.begin()`,
+> `x.end()`). The result is a range that is sorted with respect to the
+> comparator `comp`. Pointers and references to the moved elements of
+> `x` now refer to those same elements but as members of `*this`.
+> Iterators referring to the moved elements will continue to refer to
+> their elements, but they now behave as iterators into `*this`, not
+> into `x`.
 >
-> *Effects:*
+> *Complexity:* At most `size() + x.size() - 1` comparisons if
+> `addressof(x) != this`; otherwise, no comparisons are performed.
 >
-> If `addressof(x) == this`, there are no effects. Otherwise, merges the
-> two sorted ranges \[`begin()`, `end()`) and \[`x.begin()`, `x.end()`).
-> The result is a range that is sorted with respect to the comparator
-> `comp`. Pointers and references to the moved elements of `x` now refer
-> to those same elements but as members of `*this`. Iterators referring
-> to the moved elements will continue to refer to their elements, but
-> they now behave as iterators into `*this`, not into `x`.
->
-> *Complexity:*
->
-> At most `size() + x.size() - 1` comparisons if `addressof(x) != this`;
-> otherwise, no comparisons are performed.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If `addressof(x) != this`, `x` is empty
-> after the merge. No elements are copied by this operation. If an
-> exception is thrown other than by a comparison there are no effects.
+> *Remarks:* Stable [[algorithm.stable]]. If `addressof(x) != this`, `x`
+> is empty after the merge. No elements are copied by this operation. If
+> an exception is thrown other than by a comparison there are no
+> effects.
 
 ``` cpp
 void reverse() noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Reverses the order of the elements in the list. Does not
+> affect the validity of iterators and references.
 >
-> Reverses the order of the elements in the list. Does not affect the
-> validity of iterators and references.
->
-> *Complexity:*
->
-> Linear time.
+> *Complexity:* Linear time.
 
 ``` cpp
 void sort();
 template<class Compare> void sort(Compare comp);
 ```
 
-> *Effects:*
+> *Effects:* Sorts the list according to the `operator<` or a `Compare`
+> function object. If an exception is thrown, the order of the elements
+> in `*this` is unspecified. Does not affect the validity of iterators
+> and references.
 >
-> Sorts the list according to the `operator<` or a `Compare` function
-> object. If an exception is thrown, the order of the elements in
-> `*this` is unspecified. Does not affect the validity of iterators and
-> references.
+> *Complexity:* Approximately $N \log N$ comparisons, where
+> `N == size()`.
 >
-> *Complexity:*
->
-> Approximately $N \log N$ comparisons, where `N == size()`.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]].
+> *Remarks:* Stable [[algorithm.stable]].
 
 #### Erasure <a id="list.erasure">[[list.erasure]]</a>
 
@@ -6994,9 +5523,7 @@ template<class T, class Allocator, class U>
     erase(list<T, Allocator>& c, const U& value);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return erase_if(c, [&](auto& elem) { return elem == value; });`
 
 ``` cpp
@@ -7005,9 +5532,7 @@ template<class T, class Allocator, class Predicate>
     erase_if(list<T, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return c.remove_if(pred);`
+> *Effects:* Equivalent to: `return c.remove_if(pred);`
 
 ### Class template `vector` <a id="vector">[[vector]]</a>
 
@@ -7166,48 +5691,33 @@ any member of the resulting specialization of `vector` is referenced.
 constexpr explicit vector(const Allocator&) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `vector`, using the specified
+> allocator.
 >
-> Constructs an empty `vector`, using the specified allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 constexpr explicit vector(size_type n, const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17DefaultInsertable* into `*this`.
+> *Effects:* Constructs a `vector` with `n` default-inserted elements
+> using the specified allocator.
 >
-> *Effects:*
->
-> Constructs a `vector` with `n` default-inserted elements using the
-> specified allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 constexpr vector(size_type n, const T& value,
                  const Allocator& = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
+> *Effects:* Constructs a `vector` with `n` copies of `value`, using the
+> specified allocator.
 >
-> *Effects:*
->
-> Constructs a `vector` with `n` copies of `value`, using the specified
-> allocator.
->
-> *Complexity:*
->
-> Linear in `n`.
+> *Complexity:* Linear in `n`.
 
 ``` cpp
 template<class InputIterator>
@@ -7215,37 +5725,29 @@ template<class InputIterator>
                    const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `vector` equal to the range \[`first`,
+> `last`), using the specified allocator.
 >
-> Constructs a `vector` equal to the range \[`first`, `last`), using the
-> specified allocator.
->
-> *Complexity:*
->
-> Makes only N calls to the copy constructor of `T` (where N is the
-> distance between `first` and `last`) and no reallocations if iterators
-> `first` and `last` are of forward, bidirectional, or random access
-> categories. It makes order N calls to the copy constructor of `T` and
-> order $\log N$ reallocations if they are just input iterators.
+> *Complexity:* Makes only N calls to the copy constructor of `T` (where
+> N is the distance between `first` and `last`) and no reallocations if
+> iterators `first` and `last` are of forward, bidirectional, or random
+> access categories. It makes order N calls to the copy constructor of
+> `T` and order $\log N$ reallocations if they are just input iterators.
 
 ``` cpp
 template<container-compatible-range<T> R>
   constexpr vector(from_range_t, R&& rg, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs a `vector` object with the elements of the range
+> `rg`, using the specified allocator.
 >
-> Constructs a `vector` object with the elements of the range `rg`,
-> using the specified allocator.
->
-> *Complexity:*
->
-> Initializes exactly N elements from the results of dereferencing
-> successive iterators of `rg`, where N is `ranges::distance(rg)`.
-> Performs no reallocations if `R` models `ranges::``forward_range` or
-> `ranges::``sized_range`; otherwise, performs order $\log N$
-> reallocations and order N calls to the copy or move constructor of
-> `T`.
+> *Complexity:* Initializes exactly N elements from the results of
+> dereferencing successive iterators of `rg`, where N is
+> `ranges::distance(rg)`. Performs no reallocations if `R` models
+> `ranges::``forward_range` or `ranges::``sized_range`; otherwise,
+> performs order $\log N$ reallocations and order N calls to the copy or
+> move constructor of `T`.
 
 #### Capacity <a id="vector.capacity">[[vector.capacity]]</a>
 
@@ -7253,27 +5755,19 @@ template<container-compatible-range<T> R>
 constexpr size_type capacity() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* The total number of elements that the vector can hold
+> without requiring reallocation.
 >
-> The total number of elements that the vector can hold without
-> requiring reallocation.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 constexpr void reserve(size_type n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `*this`.
 >
-> `T` is *Cpp17MoveInsertable* into `*this`.
->
-> *Effects:*
->
-> A directive that informs a `vector` of a planned change in size, so
-> that it can manage the storage allocation accordingly. After
+> *Effects:* A directive that informs a `vector` of a planned change in
+> size, so that it can manage the storage allocation accordingly. After
 > `reserve()`, `capacity()` is greater or equal to the argument of
 > `reserve` if reallocation happens; and equal to the previous value of
 > `capacity()` otherwise. Reallocation happens at this point if and only
@@ -7281,23 +5775,17 @@ constexpr void reserve(size_type n);
 > an exception is thrown other than by the move constructor of a
 > non-*Cpp17CopyInsertable* type, there are no effects.
 >
-> *Throws:*
->
-> `length_error` if `n > max_size()`.
+> *Throws:* `length_error` if `n > max_size()`.
 >
 > `reserve()` uses `Allocator::allocate()` which can throw an
 > appropriate exception.
 >
-> *Complexity:*
+> *Complexity:* It does not change the size of the sequence and takes at
+> most linear time in the size of the sequence.
 >
-> It does not change the size of the sequence and takes at most linear
-> time in the size of the sequence.
->
-> *Remarks:*
->
-> Reallocation invalidates all the references, pointers, and iterators
-> referring to the elements in the sequence, as well as the past-the-end
-> iterator.
+> *Remarks:* Reallocation invalidates all the references, pointers, and
+> iterators referring to the elements in the sequence, as well as the
+> past-the-end iterator.
 >
 > \[*Note 13*: If no reallocation happens, they remain
 > valid. — *end note*\]
@@ -7310,14 +5798,10 @@ constexpr void reserve(size_type n);
 constexpr void shrink_to_fit();
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* into `*this`.
 >
-> `T` is *Cpp17MoveInsertable* into `*this`.
->
-> *Effects:*
->
-> `shrink_to_fit` is a non-binding request to reduce `capacity()` to
-> `size()`.
+> *Effects:* `shrink_to_fit` is a non-binding request to reduce
+> `capacity()` to `size()`.
 >
 > \[*Note 14*: The request is non-binding to allow latitude for
 > implementation-specific optimizations. — *end note*\]
@@ -7326,15 +5810,12 @@ constexpr void shrink_to_fit();
 > causing reallocation. If an exception is thrown other than by the move
 > constructor of a non-*Cpp17CopyInsertable* `T` there are no effects.
 >
-> *Complexity:*
+> *Complexity:* If reallocation happens, linear in the size of the
+> sequence.
 >
-> If reallocation happens, linear in the size of the sequence.
->
-> *Remarks:*
->
-> Reallocation invalidates all the references, pointers, and iterators
-> referring to the elements in the sequence as well as the past-the-end
-> iterator.
+> *Remarks:* Reallocation invalidates all the references, pointers, and
+> iterators referring to the elements in the sequence as well as the
+> past-the-end iterator.
 >
 > \[*Note 15*: If no reallocation happens, they remain
 > valid. — *end note*\]
@@ -7345,51 +5826,36 @@ constexpr void swap(vector& x)
            allocator_traits<Allocator>::is_always_equal::value);
 ```
 
-> *Effects:*
+> *Effects:* Exchanges the contents and `capacity()` of `*this` with
+> that of `x`.
 >
-> Exchanges the contents and `capacity()` of `*this` with that of `x`.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 constexpr void resize(size_type sz);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17MoveInsertable* and
+> *Cpp17DefaultInsertable* into `*this`.
 >
-> `T` is *Cpp17MoveInsertable* and *Cpp17DefaultInsertable* into
-> `*this`.
+> *Effects:* If `sz < size()`, erases the last `size() - sz` elements
+> from the sequence. Otherwise, appends `sz - size()` default-inserted
+> elements to the sequence.
 >
-> *Effects:*
->
-> If `sz < size()`, erases the last `size() - sz` elements from the
-> sequence. Otherwise, appends `sz - size()` default-inserted elements
-> to the sequence.
->
-> *Remarks:*
->
-> If an exception is thrown other than by the move constructor of a
-> non-*Cpp17CopyInsertable* `T` there are no effects.
+> *Remarks:* If an exception is thrown other than by the move
+> constructor of a non-*Cpp17CopyInsertable* `T` there are no effects.
 
 ``` cpp
 constexpr void resize(size_type sz, const T& c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `T` is *Cpp17CopyInsertable* into `*this`.
 >
-> `T` is *Cpp17CopyInsertable* into `*this`.
+> *Effects:* If `sz < size()`, erases the last `size() - sz` elements
+> from the sequence. Otherwise, appends `sz - size()` copies of `c` to
+> the sequence.
 >
-> *Effects:*
->
-> If `sz < size()`, erases the last `size() - sz` elements from the
-> sequence. Otherwise, appends `sz - size()` copies of `c` to the
-> sequence.
->
-> *Remarks:*
->
-> If an exception is thrown there are no effects.
+> *Remarks:* If an exception is thrown there are no effects.
 
 #### Data <a id="vector.data">[[vector.data]]</a>
 
@@ -7398,14 +5864,11 @@ constexpr T*         data() noexcept;
 constexpr const T*   data() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* A pointer such that \[`data()`, `data() + size()`) is a
+> valid range. For a non-empty vector, `data()` `==`
+> `addressof(front())`.
 >
-> A pointer such that \[`data()`, `data() + size()`) is a valid range.
-> For a non-empty vector, `data()` `==` `addressof(front())`.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 #### Modifiers <a id="vector.modifiers">[[vector.modifiers]]</a>
 
@@ -7427,25 +5890,21 @@ template<container-compatible-range<T> R>
   constexpr void append_range(R&& rg);
 ```
 
-> *Complexity:*
+> *Complexity:* If reallocation happens, linear in the number of
+> elements of the resulting vector; otherwise, linear in the number of
+> elements inserted plus the distance to the end of the vector.
 >
-> If reallocation happens, linear in the number of elements of the
-> resulting vector; otherwise, linear in the number of elements inserted
-> plus the distance to the end of the vector.
->
-> *Remarks:*
->
-> Causes reallocation if the new size is greater than the old capacity.
-> Reallocation invalidates all the references, pointers, and iterators
-> referring to the elements in the sequence, as well as the past-the-end
-> iterator. If no reallocation happens, then references, pointers, and
-> iterators before the insertion point remain valid but those at or
-> after the insertion point, including the past-the-end iterator, are
-> invalidated. If an exception is thrown other than by the copy
-> constructor, move constructor, assignment operator, or move assignment
-> operator of `T` or by any `InputIterator` operation there are no
-> effects. If an exception is thrown while inserting a single element at
-> the end and `T` is *Cpp17CopyInsertable* or
+> *Remarks:* Causes reallocation if the new size is greater than the old
+> capacity. Reallocation invalidates all the references, pointers, and
+> iterators referring to the elements in the sequence, as well as the
+> past-the-end iterator. If no reallocation happens, then references,
+> pointers, and iterators before the insertion point remain valid but
+> those at or after the insertion point, including the past-the-end
+> iterator, are invalidated. If an exception is thrown other than by the
+> copy constructor, move constructor, assignment operator, or move
+> assignment operator of `T` or by any `InputIterator` operation there
+> are no effects. If an exception is thrown while inserting a single
+> element at the end and `T` is *Cpp17CopyInsertable* or
 > `is_nothrow_move_constructible_v<T>` is `true`, there are no effects.
 > Otherwise, if an exception is thrown by the move constructor of a
 > non-*Cpp17CopyInsertable* `T`, the effects are unspecified.
@@ -7456,22 +5915,16 @@ constexpr iterator erase(const_iterator first, const_iterator last);
 constexpr void pop_back();
 ```
 
-> *Effects:*
+> *Effects:* Invalidates iterators and references at or after the point
+> of the erase.
 >
-> Invalidates iterators and references at or after the point of the
-> erase.
+> *Throws:* Nothing unless an exception is thrown by the assignment
+> operator or move assignment operator of `T`.
 >
-> *Throws:*
->
-> Nothing unless an exception is thrown by the assignment operator or
-> move assignment operator of `T`.
->
-> *Complexity:*
->
-> The destructor of `T` is called the number of times equal to the
-> number of the elements erased, but the assignment operator of `T` is
-> called the number of times equal to the number of elements in the
-> vector after the erased elements.
+> *Complexity:* The destructor of `T` is called the number of times
+> equal to the number of the elements erased, but the assignment
+> operator of `T` is called the number of times equal to the number of
+> elements in the vector after the erased elements.
 
 #### Erasure <a id="vector.erasure">[[vector.erasure]]</a>
 
@@ -7481,9 +5934,7 @@ template<class T, class Allocator, class U>
     erase(vector<T, Allocator>& c, const U& value);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto it = remove(c.begin(), c.end(), value);
@@ -7498,9 +5949,7 @@ template<class T, class Allocator, class Predicate>
     erase_if(vector<T, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto it = remove_if(c.begin(), c.end(), pred);
@@ -7661,17 +6110,13 @@ reverses the state of the bit.
 constexpr void flip() noexcept;
 ```
 
-> *Effects:*
->
-> Replaces each element in the container with its complement.
+> *Effects:* Replaces each element in the container with its complement.
 
 ``` cpp
 static constexpr void swap(reference x, reference y) noexcept;
 ```
 
-> *Effects:*
->
-> Exchanges the contents of `x` and `y` as if by:
+> *Effects:* Exchanges the contents of `x` and `y` as if by:
 >
 > ``` cpp
 > bool b = x;
@@ -8138,14 +6583,10 @@ namespace std {
 explicit map(const Compare& comp, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `map` using the specified comparison
+> object and allocator.
 >
-> Constructs an empty `map` using the specified comparison object and
-> allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -8153,30 +6594,24 @@ template<class InputIterator>
       const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `map` using the specified comparison
+> object and allocator, and inserts elements from the range \[`first`,
+> `last`).
 >
-> Constructs an empty `map` using the specified comparison object and
-> allocator, and inserts elements from the range \[`first`, `last`).
->
-> *Complexity:*
->
-> Linear in N if the range \[`first`, `last`) is already sorted with
-> respect to `comp` and otherwise $N \log N$, where N is `last - first`.
+> *Complexity:* Linear in N if the range \[`first`, `last`) is already
+> sorted with respect to `comp` and otherwise $N \log N$, where N is
+> `last - first`.
 
 ``` cpp
 template<container-compatible-range<value_type> R>
   map(from_range_t, R&& rg, const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `map` using the specified comparison
+> object and allocator, and inserts elements from the range `rg`.
 >
-> Constructs an empty `map` using the specified comparison object and
-> allocator, and inserts elements from the range `rg`.
->
-> *Complexity:*
->
-> Linear in N if `rg` is already sorted with respect to `comp` and
-> otherwise $N \log N$, where N is `ranges::distance(rg)`.
+> *Complexity:* Linear in N if `rg` is already sorted with respect to
+> `comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
 #### Element access <a id="map.access">[[map.access]]</a>
 
@@ -8184,35 +6619,27 @@ template<container-compatible-range<value_type> R>
 mapped_type& operator[](const key_type& x);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return try_emplace(x).first->second;`
+> *Effects:* Equivalent to: `return try_emplace(x).first->second;`
 
 ``` cpp
 mapped_type& operator[](key_type&& x);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return try_emplace(std::move(x)).first->second;`
+> *Effects:* Equivalent to:
+> `return try_emplace(std::move(x)).first->second;`
 
 ``` cpp
 mapped_type&       at(const key_type& x);
 const mapped_type& at(const key_type& x) const;
 ```
 
-> *Returns:*
+> *Returns:* A reference to the `mapped_type` corresponding to `x` in
+> `*this`.
 >
-> A reference to the `mapped_type` corresponding to `x` in `*this`.
+> *Throws:* An exception object of type `out_of_range` if no such
+> element is present.
 >
-> *Throws:*
->
-> An exception object of type `out_of_range` if no such element is
-> present.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 #### Modifiers <a id="map.modifiers">[[map.modifiers]]</a>
 
@@ -8223,14 +6650,10 @@ template<class P>
   iterator insert(const_iterator position, P&& x);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, P&&>` is `true`.
 >
-> `is_constructible_v<value_type, P&&>` is `true`.
->
-> *Effects:*
->
-> The first form is equivalent to `return emplace(std::forward<P>(x))`.
-> The second form is equivalent to
+> *Effects:* The first form is equivalent to
+> `return emplace(std::forward<P>(x))`. The second form is equivalent to
 > `return emplace_hint(position, std::forward<P>(x))`.
 
 ``` cpp
@@ -8240,28 +6663,21 @@ template<class... Args>
   iterator try_emplace(const_iterator hint, const key_type& k, Args&&... args);
 ```
 
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `map` from
-> `piecewise_construct`, `forward_as_tuple(k)`,
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `map` from `piecewise_construct`, `forward_as_tuple(k)`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Effects:*
->
-> If the map already contains an element whose key is equivalent to `k`,
-> there is no effect. Otherwise inserts an object of type `value_type`
-> constructed with `piecewise_construct`, `forward_as_tuple(k)`,
+> *Effects:* If the map already contains an element whose key is
+> equivalent to `k`, there is no effect. Otherwise inserts an object of
+> type `value_type` constructed with `piecewise_construct`,
+> `forward_as_tuple(k)`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Returns:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class... Args>
@@ -8270,29 +6686,21 @@ template<class... Args>
   iterator try_emplace(const_iterator hint, key_type&& k, Args&&... args);
 ```
 
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `map` from
-> `piecewise_construct`, `forward_as_tuple(std::move(k))`,
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `map` from `piecewise_construct`, `forward_as_tuple(std::move(k))`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Effects:*
->
-> If the map already contains an element whose key is equivalent to `k`,
-> there is no effect. Otherwise inserts an object of type `value_type`
-> constructed with `piecewise_construct`,
+> *Effects:* If the map already contains an element whose key is
+> equivalent to `k`, there is no effect. Otherwise inserts an object of
+> type `value_type` constructed with `piecewise_construct`,
 > `forward_as_tuple(std::move(k))`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Returns:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class M>
@@ -8301,31 +6709,21 @@ template<class M>
   iterator insert_or_assign(const_iterator hint, const key_type& k, M&& obj);
 ```
 
-> *Mandates:*
+> *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 >
-> `is_assignable_v<mapped_type&, M&&>` is `true`.
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `map` from `k`, `std::forward<M>(obj)`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `map` from `k`,
+> *Effects:* If the map already contains an element `e` whose key is
+> equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+> Otherwise inserts an object of type `value_type` constructed with `k`,
 > `std::forward<M>(obj)`.
 >
-> *Effects:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> If the map already contains an element `e` whose key is equivalent to
-> `k`, assigns `std::forward<M>(obj)` to `e.second`. Otherwise inserts
-> an object of type `value_type` constructed with `k`,
-> `std::forward<M>(obj)`.
->
-> *Returns:*
->
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class M>
@@ -8334,31 +6732,21 @@ template<class M>
   iterator insert_or_assign(const_iterator hint, key_type&& k, M&& obj);
 ```
 
-> *Mandates:*
+> *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 >
-> `is_assignable_v<mapped_type&, M&&>` is `true`.
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `map` from `std::move(k)`, `std::forward<M>(obj)`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `map` from
+> *Effects:* If the map already contains an element `e` whose key is
+> equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+> Otherwise inserts an object of type `value_type` constructed with
 > `std::move(k)`, `std::forward<M>(obj)`.
 >
-> *Effects:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> If the map already contains an element `e` whose key is equivalent to
-> `k`, assigns `std::forward<M>(obj)` to `e.second`. Otherwise inserts
-> an object of type `value_type` constructed with `std::move(k)`,
-> `std::forward<M>(obj)`.
->
-> *Returns:*
->
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 #### Erasure <a id="map.erasure">[[map.erasure]]</a>
 
@@ -8368,9 +6756,7 @@ template<class Key, class T, class Compare, class Allocator, class Predicate>
     erase_if(map<Key, T, Compare, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -8608,14 +6994,10 @@ namespace std {
 explicit multimap(const Compare& comp, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `multimap` using the specified
+> comparison object and allocator.
 >
-> Constructs an empty `multimap` using the specified comparison object
-> and allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -8624,30 +7006,25 @@ template<class InputIterator>
            const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `multimap` using the specified
+> comparison object and allocator, and inserts elements from the range
+> \[`first`, `last`).
 >
-> Constructs an empty `multimap` using the specified comparison object
-> and allocator, and inserts elements from the range \[`first`, `last`).
->
-> *Complexity:*
->
-> Linear in N if the range \[`first`, `last`) is already sorted with
-> respect to `comp` and otherwise $N \log N$, where N is `last - first`.
+> *Complexity:* Linear in N if the range \[`first`, `last`) is already
+> sorted with respect to `comp` and otherwise $N \log N$, where N is
+> `last - first`.
 
 ``` cpp
 template<container-compatible-range<value_type> R>
   multimap(from_range_t, R&& rg, const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `multimap` using the specified
+> comparison object and allocator, and inserts elements from the range
+> `rg`.
 >
-> Constructs an empty `multimap` using the specified comparison object
-> and allocator, and inserts elements from the range `rg`.
->
-> *Complexity:*
->
-> Linear in N if `rg` is already sorted with respect to `comp` and
-> otherwise $N \log N$, where N is `ranges::distance(rg)`.
+> *Complexity:* Linear in N if `rg` is already sorted with respect to
+> `comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
 #### Modifiers <a id="multimap.modifiers">[[multimap.modifiers]]</a>
 
@@ -8656,14 +7033,10 @@ template<class P> iterator insert(P&& x);
 template<class P> iterator insert(const_iterator position, P&& x);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, P&&>` is `true`.
 >
-> `is_constructible_v<value_type, P&&>` is `true`.
->
-> *Effects:*
->
-> The first form is equivalent to `return emplace(std::forward<P>(x))`.
-> The second form is equivalent to
+> *Effects:* The first form is equivalent to
+> `return emplace(std::forward<P>(x))`. The second form is equivalent to
 > `return emplace_hint(position, std::forward<P>(x))`.
 
 #### Erasure <a id="multimap.erasure">[[multimap.erasure]]</a>
@@ -8674,9 +7047,7 @@ template<class Key, class T, class Compare, class Allocator, class Predicate>
     erase_if(multimap<Key, T, Compare, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -8897,14 +7268,10 @@ namespace std {
 explicit set(const Compare& comp, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `set` using the specified comparison
+> object and allocator.
 >
-> Constructs an empty `set` using the specified comparison object and
-> allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -8912,30 +7279,24 @@ template<class InputIterator>
       const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `set` using the specified comparison
+> object and allocator, and inserts elements from the range \[`first`,
+> `last`).
 >
-> Constructs an empty `set` using the specified comparison object and
-> allocator, and inserts elements from the range \[`first`, `last`).
->
-> *Complexity:*
->
-> Linear in N if the range \[`first`, `last`) is already sorted with
-> respect to `comp` and otherwise $N \log N$, where N is `last - first`.
+> *Complexity:* Linear in N if the range \[`first`, `last`) is already
+> sorted with respect to `comp` and otherwise $N \log N$, where N is
+> `last - first`.
 
 ``` cpp
 template<container-compatible-range<value_type> R>
   set(from_range_t, R&& rg, const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `set` using the specified comparison
+> object and allocator, and inserts elements from the range `rg`.
 >
-> Constructs an empty `set` using the specified comparison object and
-> allocator, and inserts elements from the range `rg`.
->
-> *Complexity:*
->
-> Linear in N if `rg` is already sorted with respect to `comp` and
-> otherwise $N \log N$, where N is `ranges::distance(rg)`.
+> *Complexity:* Linear in N if `rg` is already sorted with respect to
+> `comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
 #### Erasure <a id="set.erasure">[[set.erasure]]</a>
 
@@ -8945,9 +7306,7 @@ template<class Key, class Compare, class Allocator, class Predicate>
     erase_if(set<Key, Compare, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -9169,14 +7528,10 @@ namespace std {
 explicit multiset(const Compare& comp, const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `multiset` using the specified
+> comparison object and allocator.
 >
-> Constructs an empty `multiset` using the specified comparison object
-> and allocator.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -9184,30 +7539,25 @@ template<class InputIterator>
            const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `multiset` using the specified
+> comparison object and allocator, and inserts elements from the range
+> \[`first`, `last`).
 >
-> Constructs an empty `multiset` using the specified comparison object
-> and allocator, and inserts elements from the range \[`first`, `last`).
->
-> *Complexity:*
->
-> Linear in N if the range \[`first`, `last`) is already sorted with
-> respect to `comp` and otherwise $N \log N$, where N is `last - first`.
+> *Complexity:* Linear in N if the range \[`first`, `last`) is already
+> sorted with respect to `comp` and otherwise $N \log N$, where N is
+> `last - first`.
 
 ``` cpp
 template<container-compatible-range<value_type> R>
   multiset(from_range_t, R&& rg, const Compare& comp = Compare(), const Allocator& = Allocator());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `multiset` using the specified
+> comparison object and allocator, and inserts elements from the range
+> `rg`.
 >
-> Constructs an empty `multiset` using the specified comparison object
-> and allocator, and inserts elements from the range `rg`.
->
-> *Complexity:*
->
-> Linear in N if `rg` is already sorted with respect to `comp` and
-> otherwise $N \log N$, where N is `ranges::distance(rg)`.
+> *Complexity:* Linear in N if `rg` is already sorted with respect to
+> `comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
 
 #### Erasure <a id="multiset.erasure">[[multiset.erasure]]</a>
 
@@ -9217,9 +7567,7 @@ template<class Key, class Compare, class Allocator, class Predicate>
     erase_if(multiset<Key, Compare, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -9698,16 +8046,12 @@ explicit unordered_map(size_type n,
                        const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `unordered_map` using the specified
+> hash function, key equality predicate, and allocator, and using at
+> least `n` buckets. For the default constructor, the number of buckets
+> is *implementation-defined*. `max_load_factor()` returns `1.0`.
 >
-> Constructs an empty `unordered_map` using the specified hash function,
-> key equality predicate, and allocator, and using at least `n` buckets.
-> For the default constructor, the number of buckets is
-> *implementation-defined*. `max_load_factor()` returns `1.0`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -9729,17 +8073,13 @@ unordered_map(initializer_list<value_type> il,
               const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
->
-> Constructs an empty `unordered_map` using the specified hash function,
-> key equality predicate, and allocator, and using at least `n` buckets.
-> If `n` is not provided, the number of buckets is
+> *Effects:* Constructs an empty `unordered_map` using the specified
+> hash function, key equality predicate, and allocator, and using at
+> least `n` buckets. If `n` is not provided, the number of buckets is
 > *implementation-defined*. Then inserts elements from the range \[`f`,
 > `l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
 >
-> *Complexity:*
->
-> Average case linear, worst case quadratic.
+> *Complexity:* Average case linear, worst case quadratic.
 
 #### Element access <a id="unord.map.elem">[[unord.map.elem]]</a>
 
@@ -9747,32 +8087,25 @@ unordered_map(initializer_list<value_type> il,
 mapped_type& operator[](const key_type& k);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return try_emplace(k).first->second;`
+> *Effects:* Equivalent to: `return try_emplace(k).first->second;`
 
 ``` cpp
 mapped_type& operator[](key_type&& k);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return try_emplace(std::move(k)).first->second;`
+> *Effects:* Equivalent to:
+> `return try_emplace(std::move(k)).first->second;`
 
 ``` cpp
 mapped_type& at(const key_type& k);
 const mapped_type& at(const key_type& k) const;
 ```
 
-> *Returns:*
+> *Returns:* A reference to `x.second`, where `x` is the (unique)
+> element whose key is equivalent to `k`.
 >
-> A reference to `x.second`, where `x` is the (unique) element whose key
-> is equivalent to `k`.
->
-> *Throws:*
->
-> An exception object of type `out_of_range` if no such element is
-> present.
+> *Throws:* An exception object of type `out_of_range` if no such
+> element is present.
 
 #### Modifiers <a id="unord.map.modifiers">[[unord.map.modifiers]]</a>
 
@@ -9781,26 +8114,19 @@ template<class P>
   pair<iterator, bool> insert(P&& obj);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, P&&>` is `true`.
 >
-> `is_constructible_v<value_type, P&&>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return emplace(std::forward<P>(obj));`
+> *Effects:* Equivalent to: `return emplace(std::forward<P>(obj));`
 
 ``` cpp
 template<class P>
   iterator insert(const_iterator hint, P&& obj);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, P&&>` is `true`.
 >
-> `is_constructible_v<value_type, P&&>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return emplace_hint(hint, std::forward<P>(obj));`
+> *Effects:* Equivalent to:
+> `return emplace_hint(hint, std::forward<P>(obj));`
 
 ``` cpp
 template<class... Args>
@@ -9809,28 +8135,21 @@ template<class... Args>
   iterator try_emplace(const_iterator hint, const key_type& k, Args&&... args);
 ```
 
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
-> `piecewise_construct`, `forward_as_tuple(k)`,
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `unordered_map` from `piecewise_construct`, `forward_as_tuple(k)`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Effects:*
->
-> If the map already contains an element whose key is equivalent to `k`,
-> there is no effect. Otherwise inserts an object of type `value_type`
-> constructed with `piecewise_construct`, `forward_as_tuple(k)`,
+> *Effects:* If the map already contains an element whose key is
+> equivalent to `k`, there is no effect. Otherwise inserts an object of
+> type `value_type` constructed with `piecewise_construct`,
+> `forward_as_tuple(k)`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Returns:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class... Args>
@@ -9839,29 +8158,22 @@ template<class... Args>
   iterator try_emplace(const_iterator hint, key_type&& k, Args&&... args);
 ```
 
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
-> `piecewise_construct`, `forward_as_tuple(std::move(k))`,
-> `forward_as_tuple(std::forward<Args>(args)...)`.
->
-> *Effects:*
->
-> If the map already contains an element whose key is equivalent to `k`,
-> there is no effect. Otherwise inserts an object of type `value_type`
-> constructed with `piecewise_construct`,
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `unordered_map` from `piecewise_construct`,
 > `forward_as_tuple(std::move(k))`,
 > `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> *Returns:*
+> *Effects:* If the map already contains an element whose key is
+> equivalent to `k`, there is no effect. Otherwise inserts an object of
+> type `value_type` constructed with `piecewise_construct`,
+> `forward_as_tuple(std::move(k))`,
+> `forward_as_tuple(std::forward<Args>(args)...)`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class M>
@@ -9870,31 +8182,21 @@ template<class M>
   iterator insert_or_assign(const_iterator hint, const key_type& k, M&& obj);
 ```
 
-> *Mandates:*
+> *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 >
-> `is_assignable_v<mapped_type&, M&&>` is `true`.
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `unordered_map` from `k`, `std::forward<M>(obj)`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
-> `k`, `std::forward<M>(obj)`.
->
-> *Effects:*
->
-> If the map already contains an element `e` whose key is equivalent to
-> `k`, assigns `std::forward<M>(obj)` to `e.second`. Otherwise inserts
-> an object of type `value_type` constructed with `k`,
+> *Effects:* If the map already contains an element `e` whose key is
+> equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+> Otherwise inserts an object of type `value_type` constructed with `k`,
 > `std::forward<M>(obj)`.
 >
-> *Returns:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class M>
@@ -9903,31 +8205,21 @@ template<class M>
   iterator insert_or_assign(const_iterator hint, key_type&& k, M&& obj);
 ```
 
-> *Mandates:*
+> *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 >
-> `is_assignable_v<mapped_type&, M&&>` is `true`.
+> *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
+> `unordered_map` from `std::move(k)`, `std::forward<M>(obj)`.
 >
-> *Preconditions:*
->
-> `value_type` is *Cpp17EmplaceConstructible* into `unordered_map` from
+> *Effects:* If the map already contains an element `e` whose key is
+> equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+> Otherwise inserts an object of type `value_type` constructed with
 > `std::move(k)`, `std::forward<M>(obj)`.
 >
-> *Effects:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> If the map already contains an element `e` whose key is equivalent to
-> `k`, assigns `std::forward<M>(obj)` to `e.second`. Otherwise inserts
-> an object of type `value_type` constructed with `std::move(k)`,
-> `std::forward<M>(obj)`.
->
-> *Returns:*
->
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 #### Erasure <a id="unord.map.erasure">[[unord.map.erasure]]</a>
 
@@ -9937,9 +8229,7 @@ template<class K, class T, class H, class P, class A, class Predicate>
     erase_if(unordered_map<K, T, H, P, A>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -10251,16 +8541,13 @@ explicit unordered_multimap(size_type n,
                             const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `unordered_multimap` using the
+> specified hash function, key equality predicate, and allocator, and
+> using at least `n` buckets. For the default constructor, the number of
+> buckets is *implementation-defined*. `max_load_factor()` returns
+> `1.0`.
 >
-> Constructs an empty `unordered_multimap` using the specified hash
-> function, key equality predicate, and allocator, and using at least
-> `n` buckets. For the default constructor, the number of buckets is
-> *implementation-defined*. `max_load_factor()` returns `1.0`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -10282,17 +8569,14 @@ unordered_multimap(initializer_list<value_type> il,
                    const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `unordered_multimap` using the
+> specified hash function, key equality predicate, and allocator, and
+> using at least `n` buckets. If `n` is not provided, the number of
+> buckets is *implementation-defined*. Then inserts elements from the
+> range \[`f`, `l`), `rg`, or `il`, respectively. `max_load_factor()`
+> returns `1.0`.
 >
-> Constructs an empty `unordered_multimap` using the specified hash
-> function, key equality predicate, and allocator, and using at least
-> `n` buckets. If `n` is not provided, the number of buckets is
-> *implementation-defined*. Then inserts elements from the range \[`f`,
-> `l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
->
-> *Complexity:*
->
-> Average case linear, worst case quadratic.
+> *Complexity:* Average case linear, worst case quadratic.
 
 #### Modifiers <a id="unord.multimap.modifiers">[[unord.multimap.modifiers]]</a>
 
@@ -10301,26 +8585,19 @@ template<class P>
   iterator insert(P&& obj);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, P&&>` is `true`.
 >
-> `is_constructible_v<value_type, P&&>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return emplace(std::forward<P>(obj));`
+> *Effects:* Equivalent to: `return emplace(std::forward<P>(obj));`
 
 ``` cpp
 template<class P>
   iterator insert(const_iterator hint, P&& obj);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, P&&>` is `true`.
 >
-> `is_constructible_v<value_type, P&&>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return emplace_hint(hint, std::forward<P>(obj));`
+> *Effects:* Equivalent to:
+> `return emplace_hint(hint, std::forward<P>(obj));`
 
 #### Erasure <a id="unord.multimap.erasure">[[unord.multimap.erasure]]</a>
 
@@ -10330,9 +8607,7 @@ template<class K, class T, class H, class P, class A, class Predicate>
     erase_if(unordered_multimap<K, T, H, P, A>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -10628,16 +8903,12 @@ explicit unordered_set(size_type n,
                        const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `unordered_set` using the specified
+> hash function, key equality predicate, and allocator, and using at
+> least `n` buckets. For the default constructor, the number of buckets
+> is *implementation-defined*. `max_load_factor()` returns `1.0`.
 >
-> Constructs an empty `unordered_set` using the specified hash function,
-> key equality predicate, and allocator, and using at least `n` buckets.
-> For the default constructor, the number of buckets is
-> *implementation-defined*. `max_load_factor()` returns `1.0`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -10659,17 +8930,13 @@ unordered_set(initializer_list<value_type> il,
               const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
->
-> Constructs an empty `unordered_set` using the specified hash function,
-> key equality predicate, and allocator, and using at least `n` buckets.
-> If `n` is not provided, the number of buckets is
+> *Effects:* Constructs an empty `unordered_set` using the specified
+> hash function, key equality predicate, and allocator, and using at
+> least `n` buckets. If `n` is not provided, the number of buckets is
 > *implementation-defined*. Then inserts elements from the range \[`f`,
 > `l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
 >
-> *Complexity:*
->
-> Average case linear, worst case quadratic.
+> *Complexity:* Average case linear, worst case quadratic.
 
 #### Erasure <a id="unord.set.erasure">[[unord.set.erasure]]</a>
 
@@ -10679,9 +8946,7 @@ template<class K, class H, class P, class A, class Predicate>
     erase_if(unordered_set<K, H, P, A>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -10980,16 +9245,13 @@ explicit unordered_multiset(size_type n,
                             const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `unordered_multiset` using the
+> specified hash function, key equality predicate, and allocator, and
+> using at least `n` buckets. For the default constructor, the number of
+> buckets is *implementation-defined*. `max_load_factor()` returns
+> `1.0`.
 >
-> Constructs an empty `unordered_multiset` using the specified hash
-> function, key equality predicate, and allocator, and using at least
-> `n` buckets. For the default constructor, the number of buckets is
-> *implementation-defined*. `max_load_factor()` returns `1.0`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class InputIterator>
@@ -11011,17 +9273,14 @@ unordered_multiset(initializer_list<value_type> il,
                    const allocator_type& a = allocator_type());
 ```
 
-> *Effects:*
+> *Effects:* Constructs an empty `unordered_multiset` using the
+> specified hash function, key equality predicate, and allocator, and
+> using at least `n` buckets. If `n` is not provided, the number of
+> buckets is *implementation-defined*. Then inserts elements from the
+> range \[`f`, `l`), `rg`, or `il`, respectively. `max_load_factor()`
+> returns `1.0`.
 >
-> Constructs an empty `unordered_multiset` using the specified hash
-> function, key equality predicate, and allocator, and using at least
-> `n` buckets. If `n` is not provided, the number of buckets is
-> *implementation-defined*. Then inserts elements from the range \[`f`,
-> `l`), `rg`, or `il`, respectively. `max_load_factor()` returns `1.0`.
->
-> *Complexity:*
->
-> Average case linear, worst case quadratic.
+> *Complexity:* Average case linear, worst case quadratic.
 
 #### Erasure <a id="unord.multiset.erasure">[[unord.multiset.erasure]]</a>
 
@@ -11031,9 +9290,7 @@ template<class K, class H, class P, class A, class Predicate>
     erase_if(unordered_multiset<K, H, P, A>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto original_size = c.size();
@@ -11387,36 +9644,29 @@ namespace std {
 explicit queue(const Container& cont);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `cont`.
+> *Effects:* Initializes `c` with `cont`.
 
 ``` cpp
 explicit queue(Container&& cont);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(cont)`.
+> *Effects:* Initializes `c` with `std::move(cont)`.
 
 ``` cpp
 template<class InputIterator>
   queue(InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument and `last` as the
-> second argument.
+> *Effects:* Initializes `c` with `first` as the first argument and
+> `last` as the second argument.
 
 ``` cpp
 template<container-compatible-range<T> R>
   queue(from_range_t, R&& rg);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `ranges::to<Container>(std::forward<R>(rg))`.
+> *Effects:* Initializes `c` with
+> `ranges::to<Container>(std::forward<R>(rg))`.
 
 #### Constructors with allocators <a id="queue.cons.alloc">[[queue.cons.alloc]]</a>
 
@@ -11427,64 +9677,51 @@ in this subclause shall not participate in overload resolution.
 template<class Alloc> explicit queue(const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `a`.
+> *Effects:* Initializes `c` with `a`.
 
 ``` cpp
 template<class Alloc> queue(const container_type& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `cont` as the first argument and `a` as the
-> second argument.
+> *Effects:* Initializes `c` with `cont` as the first argument and `a`
+> as the second argument.
 
 ``` cpp
 template<class Alloc> queue(container_type&& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(cont)` as the first argument and `a`
-> as the second argument.
+> *Effects:* Initializes `c` with `std::move(cont)` as the first
+> argument and `a` as the second argument.
 
 ``` cpp
 template<class Alloc> queue(const queue& q, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `q.c` as the first argument and `a` as the second
-> argument.
+> *Effects:* Initializes `c` with `q.c` as the first argument and `a` as
+> the second argument.
 
 ``` cpp
 template<class Alloc> queue(queue&& q, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(q.c)` as the first argument and `a` as
-> the second argument.
+> *Effects:* Initializes `c` with `std::move(q.c)` as the first argument
+> and `a` as the second argument.
 
 ``` cpp
 template<class InputIterator, class Alloc>
   queue(InputIterator first, InputIterator last, const Alloc& alloc);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument, `last` as the
-> second argument, and `alloc` as the third argument.
+> *Effects:* Initializes `c` with `first` as the first argument, `last`
+> as the second argument, and `alloc` as the third argument.
 
 ``` cpp
 template<container-compatible-range<T> R, class Alloc>
   queue(from_range_t, R&& rg, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `ranges::to<Container>(std::forward<R>(rg), a)`.
+> *Effects:* Initializes `c` with
+> `ranges::to<Container>(std::forward<R>(rg), a)`.
 
 #### Modifiers <a id="queue.mod">[[queue.mod]]</a>
 
@@ -11493,10 +9730,8 @@ template<container-compatible-range<T> R>
   void push_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Equivalent to `c.append_range(std::forward<R>(rg))` if that is a valid
-> expression, otherwise `ranges::copy(rg, back_inserter(c))`.
+> *Effects:* Equivalent to `c.append_range(std::forward<R>(rg))` if that
+> is a valid expression, otherwise `ranges::copy(rg, back_inserter(c))`.
 
 #### Operators <a id="queue.ops">[[queue.ops]]</a>
 
@@ -11505,45 +9740,35 @@ template<class T, class Container>
   bool operator==(const queue<T, Container>& x, const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c == y.c`.
+> *Returns:* `x.c == y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator!=(const queue<T, Container>& x,  const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c != y.c`.
+> *Returns:* `x.c != y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator< (const queue<T, Container>& x, const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c < y.c`.
+> *Returns:* `x.c < y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator> (const queue<T, Container>& x, const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c > y.c`.
+> *Returns:* `x.c > y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator<=(const queue<T, Container>& x, const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c <= y.c`.
+> *Returns:* `x.c <= y.c`.
 
 ``` cpp
 template<class T, class Container>
@@ -11551,9 +9776,7 @@ template<class T, class Container>
                     const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c >= y.c`.
+> *Returns:* `x.c >= y.c`.
 
 ``` cpp
 template<class T, three_way_comparable Container>
@@ -11561,9 +9784,7 @@ template<class T, three_way_comparable Container>
     operator<=>(const queue<T, Container>& x, const queue<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c <=> y.c`.
+> *Returns:* `x.c <=> y.c`.
 
 #### Specialized algorithms <a id="queue.special">[[queue.special]]</a>
 
@@ -11572,13 +9793,9 @@ template<class T, class Container>
   void swap(queue<T, Container>& x, queue<T, Container>& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:*
+> *Constraints:* `is_swappable_v<Container>` is `true`.
 >
-> `is_swappable_v<Container>` is `true`.
->
-> *Effects:*
->
-> As if by `x.swap(y)`.
+> *Effects:* As if by `x.swap(y)`.
 
 ### Class template `priority_queue` <a id="priority.queue">[[priority.queue]]</a>
 
@@ -11715,14 +9932,10 @@ priority_queue(const Compare& x, const Container& y);
 priority_queue(const Compare& x, Container&& y);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `x` defines a strict weak ordering [[alg.sorting]].
 >
-> `x` defines a strict weak ordering [[alg.sorting]].
->
-> *Effects:*
->
-> Initializes `comp` with `x` and `c` with `y` (copy constructing or
-> move constructing as appropriate); calls
+> *Effects:* Initializes `comp` with `x` and `c` with `y` (copy
+> constructing or move constructing as appropriate); calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
@@ -11730,15 +9943,11 @@ template<class InputIterator>
   priority_queue(InputIterator first, InputIterator last, const Compare& x = Compare());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `x` defines a strict weak ordering [[alg.sorting]].
 >
-> `x` defines a strict weak ordering [[alg.sorting]].
->
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument and `last` as the
-> second argument, and initializes `comp` with `x`; then calls
-> `make_heap(c.begin(), c.end(), comp)`.
+> *Effects:* Initializes `c` with `first` as the first argument and
+> `last` as the second argument, and initializes `comp` with `x`; then
+> calls `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
 template<class InputIterator>
@@ -11747,14 +9956,10 @@ template<class InputIterator>
   priority_queue(InputIterator first, InputIterator last, const Compare& x, Container&& y);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `x` defines a strict weak ordering [[alg.sorting]].
 >
-> `x` defines a strict weak ordering [[alg.sorting]].
->
-> *Effects:*
->
-> Initializes `comp` with `x` and `c` with `y` (copy constructing or
-> move constructing as appropriate); calls
+> *Effects:* Initializes `comp` with `x` and `c` with `y` (copy
+> constructing or move constructing as appropriate); calls
 > `c.insert(c.end(), first, last)`; and finally calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
@@ -11763,13 +9968,9 @@ template<container-compatible-range<T> R>
   priority_queue(from_range_t, R&& rg, const Compare& x = Compare());
 ```
 
-> *Preconditions:*
+> *Preconditions:* `x` defines a strict weak ordering [[alg.sorting]].
 >
-> `x` defines a strict weak ordering [[alg.sorting]].
->
-> *Effects:*
->
-> Initializes `comp` with `x` and `c` with
+> *Effects:* Initializes `comp` with `x` and `c` with
 > `ranges::to<Container>(std::forward<R>(rg))` and finally calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
@@ -11782,27 +9983,22 @@ in this subclause shall not participate in overload resolution.
 template<class Alloc> explicit priority_queue(const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `a` and value-initializes `comp`.
+> *Effects:* Initializes `c` with `a` and value-initializes `comp`.
 
 ``` cpp
 template<class Alloc> priority_queue(const Compare& compare, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `a` and initializes `comp` with `compare`.
+> *Effects:* Initializes `c` with `a` and initializes `comp` with
+> `compare`.
 
 ``` cpp
 template<class Alloc>
   priority_queue(const Compare& compare, const Container& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `cont` as the first argument and `a` as the
-> second argument, and initializes `comp` with `compare`; calls
+> *Effects:* Initializes `c` with `cont` as the first argument and `a`
+> as the second argument, and initializes `comp` with `compare`; calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
@@ -11810,51 +10006,42 @@ template<class Alloc>
   priority_queue(const Compare& compare, Container&& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(cont)` as the first argument and `a`
-> as the second argument, and initializes `comp` with `compare`; calls
-> `make_heap(c.begin(), c.end(), comp)`.
+> *Effects:* Initializes `c` with `std::move(cont)` as the first
+> argument and `a` as the second argument, and initializes `comp` with
+> `compare`; calls `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
 template<class Alloc> priority_queue(const priority_queue& q, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `q.c` as the first argument and `a` as the second
-> argument, and initializes `comp` with `q.comp`.
+> *Effects:* Initializes `c` with `q.c` as the first argument and `a` as
+> the second argument, and initializes `comp` with `q.comp`.
 
 ``` cpp
 template<class Alloc> priority_queue(priority_queue&& q, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(q.c)` as the first argument and `a` as
-> the second argument, and initializes `comp` with `std::move(q.comp)`.
+> *Effects:* Initializes `c` with `std::move(q.c)` as the first argument
+> and `a` as the second argument, and initializes `comp` with
+> `std::move(q.comp)`.
 
 ``` cpp
 template<class InputIterator, class Alloc>
   priority_queue(InputIterator first, InputIterator last, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument, `last` as the
-> second argument, and `a` as the third argument, and value-initializes
-> `comp`; calls `make_heap(c.begin(), c.end(), comp)`.
+> *Effects:* Initializes `c` with `first` as the first argument, `last`
+> as the second argument, and `a` as the third argument, and
+> value-initializes `comp`; calls `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
 template<class InputIterator, class Alloc>
   priority_queue(InputIterator first, InputIterator last, const Compare& compare, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument, `last` as the
-> second argument, and `a` as the third argument, and initializes `comp`
-> with `compare`; calls `make_heap(c.begin(), c.end(), comp)`.
+> *Effects:* Initializes `c` with `first` as the first argument, `last`
+> as the second argument, and `a` as the third argument, and initializes
+> `comp` with `compare`; calls `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
 template<class InputIterator, class Alloc>
@@ -11862,10 +10049,8 @@ template<class InputIterator, class Alloc>
                  const Container& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `cont` as the first argument and `a` as the
-> second argument, and initializes `comp` with `compare`; calls
+> *Effects:* Initializes `c` with `cont` as the first argument and `a`
+> as the second argument, and initializes `comp` with `compare`; calls
 > `c.insert(c.end(), first, last)`; and finally calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
@@ -11875,11 +10060,9 @@ template<class InputIterator, class Alloc>
                  const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(cont)` as the first argument and `a`
-> as the second argument, and initializes `comp` with `compare`; calls
-> `c.insert(c.end(), first, last)`; and finally calls
+> *Effects:* Initializes `c` with `std::move(cont)` as the first
+> argument and `a` as the second argument, and initializes `comp` with
+> `compare`; calls `c.insert(c.end(), first, last)`; and finally calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
 ``` cpp
@@ -11887,9 +10070,7 @@ template<container-compatible-range<T> R, class Alloc>
   priority_queue(from_range_t, R&& rg, const Compare& compare, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `comp` with `compare` and `c` with
+> *Effects:* Initializes `comp` with `compare` and `c` with
 > `ranges::to<Container>(std::forward<R>(rg), a)`; calls
 > `make_heap(c.begin(), c.end(), comp)`.
 
@@ -11898,10 +10079,9 @@ template<container-compatible-range<T> R, class Alloc>
   priority_queue(from_range_t, R&& rg, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `ranges::to<Container>(std::forward<R>(rg), a)`;
-> calls `make_heap(c.begin(), c.end(), comp)`.
+> *Effects:* Initializes `c` with
+> `ranges::to<Container>(std::forward<R>(rg), a)`; calls
+> `make_heap(c.begin(), c.end(), comp)`.
 
 #### Members <a id="priqueue.members">[[priqueue.members]]</a>
 
@@ -11909,9 +10089,7 @@ template<container-compatible-range<T> R, class Alloc>
 void push(const value_type& x);
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > c.push_back(x);
@@ -11922,9 +10100,7 @@ void push(const value_type& x);
 void push(value_type&& x);
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > c.push_back(std::move(x));
@@ -11936,24 +10112,18 @@ template<container-compatible-range<T> R>
   void push_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Inserts all elements of `rg` in `c` via
+> *Effects:* Inserts all elements of `rg` in `c` via
 > `c.append_range(std::forward<R>(rg))` if that is a valid expression,
 > or `ranges::copy(rg, back_inserter(c))` otherwise. Then restores the
 > heap property as if by `make_heap(c.begin(), c.end(), comp)`.
 >
-> *Ensures:*
->
-> `is_heap(c.begin(), c.end(), comp)` is `true`.
+> *Ensures:* `is_heap(c.begin(), c.end(), comp)` is `true`.
 
 ``` cpp
 template<class... Args> void emplace(Args&&... args);
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > c.emplace_back(std::forward<Args>(args)...);
@@ -11964,9 +10134,7 @@ template<class... Args> void emplace(Args&&... args);
 void pop();
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > pop_heap(c.begin(), c.end(), comp);
@@ -11981,14 +10149,10 @@ template<class T, class Container, class Compare>
             priority_queue<T, Container, Compare>& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:*
+> *Constraints:* `is_swappable_v<Container>` is `true` and
+> `is_swappable_v<Compare>` is `true`.
 >
-> `is_swappable_v<Container>` is `true` and `is_swappable_v<Compare>` is
-> `true`.
->
-> *Effects:*
->
-> As if by `x.swap(y)`.
+> *Effects:* As if by `x.swap(y)`.
 
 ### Class template `stack` <a id="stack">[[stack]]</a>
 
@@ -12079,36 +10243,29 @@ namespace std {
 explicit stack(const Container& cont);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `cont`.
+> *Effects:* Initializes `c` with `cont`.
 
 ``` cpp
 explicit stack(Container&& cont);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(cont)`.
+> *Effects:* Initializes `c` with `std::move(cont)`.
 
 ``` cpp
 template<class InputIterator>
   stack(InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument and `last` as the
-> second argument.
+> *Effects:* Initializes `c` with `first` as the first argument and
+> `last` as the second argument.
 
 ``` cpp
 template<container-compatible-range<T> R>
   stack(from_range_t, R&& rg);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `ranges::to<Container>(std::forward<R>(rg))`.
+> *Effects:* Initializes `c` with
+> `ranges::to<Container>(std::forward<R>(rg))`.
 
 #### Constructors with allocators <a id="stack.cons.alloc">[[stack.cons.alloc]]</a>
 
@@ -12119,64 +10276,51 @@ in this subclause shall not participate in overload resolution.
 template<class Alloc> explicit stack(const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `a`.
+> *Effects:* Initializes `c` with `a`.
 
 ``` cpp
 template<class Alloc> stack(const container_type& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `cont` as the first argument and `a` as the
-> second argument.
+> *Effects:* Initializes `c` with `cont` as the first argument and `a`
+> as the second argument.
 
 ``` cpp
 template<class Alloc> stack(container_type&& cont, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(cont)` as the first argument and `a`
-> as the second argument.
+> *Effects:* Initializes `c` with `std::move(cont)` as the first
+> argument and `a` as the second argument.
 
 ``` cpp
 template<class Alloc> stack(const stack& s, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `s.c` as the first argument and `a` as the second
-> argument.
+> *Effects:* Initializes `c` with `s.c` as the first argument and `a` as
+> the second argument.
 
 ``` cpp
 template<class Alloc> stack(stack&& s, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `std::move(s.c)` as the first argument and `a` as
-> the second argument.
+> *Effects:* Initializes `c` with `std::move(s.c)` as the first argument
+> and `a` as the second argument.
 
 ``` cpp
 template<class InputIterator, class Alloc>
   stack(InputIterator first, InputIterator last, const Alloc& alloc);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `first` as the first argument, `last` as the
-> second argument, and `alloc` as the third argument.
+> *Effects:* Initializes `c` with `first` as the first argument, `last`
+> as the second argument, and `alloc` as the third argument.
 
 ``` cpp
 template<container-compatible-range<T> R, class Alloc>
   stack(from_range_t, R&& rg, const Alloc& a);
 ```
 
-> *Effects:*
->
-> Initializes `c` with `ranges::to<Container>(std::forward<R>(rg), a)`.
+> *Effects:* Initializes `c` with
+> `ranges::to<Container>(std::forward<R>(rg), a)`.
 
 #### Modifiers <a id="stack.mod">[[stack.mod]]</a>
 
@@ -12185,10 +10329,8 @@ template<container-compatible-range<T> R>
   void push_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Equivalent to `c.append_range(std::forward<R>(rg))` if that is a valid
-> expression, otherwise `ranges::copy(rg, back_inserter(c))`.
+> *Effects:* Equivalent to `c.append_range(std::forward<R>(rg))` if that
+> is a valid expression, otherwise `ranges::copy(rg, back_inserter(c))`.
 
 #### Operators <a id="stack.ops">[[stack.ops]]</a>
 
@@ -12197,54 +10339,42 @@ template<class T, class Container>
   bool operator==(const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c == y.c`.
+> *Returns:* `x.c == y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c != y.c`.
+> *Returns:* `x.c != y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator< (const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c < y.c`.
+> *Returns:* `x.c < y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator> (const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c > y.c`.
+> *Returns:* `x.c > y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c <= y.c`.
+> *Returns:* `x.c <= y.c`.
 
 ``` cpp
 template<class T, class Container>
   bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c >= y.c`.
+> *Returns:* `x.c >= y.c`.
 
 ``` cpp
 template<class T, three_way_comparable Container>
@@ -12252,9 +10382,7 @@ template<class T, three_way_comparable Container>
     operator<=>(const stack<T, Container>& x, const stack<T, Container>& y);
 ```
 
-> *Returns:*
->
-> `x.c <=> y.c`.
+> *Returns:* `x.c <=> y.c`.
 
 #### Specialized algorithms <a id="stack.special">[[stack.special]]</a>
 
@@ -12263,13 +10391,9 @@ template<class T, class Container>
   void swap(stack<T, Container>& x, stack<T, Container>& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:*
+> *Constraints:* `is_swappable_v<Container>` is `true`.
 >
-> `is_swappable_v<Container>` is `true`.
->
-> *Effects:*
->
-> As if by `x.swap(y)`.
+> *Effects:* As if by `x.swap(y)`.
 
 ### Class template `flat_map` <a id="flat.map">[[flat.map]]</a>
 
@@ -12694,12 +10818,10 @@ flat_map(key_container_type key_cont, mapped_container_type mapped_cont,
          const key_compare& comp = key_compare());
 ```
 
-> *Effects:*
->
-> Initializes `c.keys` with `std::move(key_cont)`, `c.values` with
-> `std::move(mapped_cont)`, and `compare` with `comp`; sorts the range
-> \[`begin()`, `end()`) with respect to `value_comp()`; and finally
-> erases the duplicate elements as if by:
+> *Effects:* Initializes `c.keys` with `std::move(key_cont)`, `c.values`
+> with `std::move(mapped_cont)`, and `compare` with `comp`; sorts the
+> range \[`begin()`, `end()`) with respect to `value_comp()`; and
+> finally erases the duplicate elements as if by:
 >
 > ``` cpp
 > auto zv = ranges::zip_view(c.keys, c.values);
@@ -12709,11 +10831,9 @@ flat_map(key_container_type key_cont, mapped_container_type mapped_cont,
 > c.values.erase(c.values.begin() + dist, c.values.end());
 > ```
 >
-> *Complexity:*
->
-> Linear in N if the container arguments are already sorted with respect
-> to `value_comp()` and otherwise $N \log N$, where N is the value of
-> `key_cont.size()` before this call.
+> *Complexity:* Linear in N if the container arguments are already
+> sorted with respect to `value_comp()` and otherwise $N \log N$, where
+> N is the value of `key_cont.size()` before this call.
 
 ``` cpp
 template<class Allocator>
@@ -12724,21 +10844,16 @@ template<class Allocator>
            const key_compare& comp, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<key_container_type, Allocator>` is
+> `true` and `uses_allocator_v<mapped_container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<key_container_type, Allocator>` is `true` and
-> `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_map(key_cont, mapped_cont)` and
+> *Effects:* Equivalent to `flat_map(key_cont, mapped_cont)` and
 > `flat_map(key_cont, mapped_cont, comp)`, respectively, except that
 > `c.keys` and `c.values` are constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Same as `flat_map(key_cont, mapped_cont)` and
+> *Complexity:* Same as `flat_map(key_cont, mapped_cont)` and
 > `flat_map(key_cont, mapped_cont, comp)`, respectively.
 
 ``` cpp
@@ -12746,14 +10861,10 @@ flat_map(sorted_unique_t, key_container_type key_cont, mapped_container_type map
          const key_compare& comp = key_compare());
 ```
 
-> *Effects:*
+> *Effects:* Initializes `c.keys` with `std::move(key_cont)`, `c.values`
+> with `std::move(mapped_cont)`, and `compare` with `comp`.
 >
-> Initializes `c.keys` with `std::move(key_cont)`, `c.values` with
-> `std::move(mapped_cont)`, and `compare` with `comp`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class Allocator>
@@ -12765,21 +10876,16 @@ template<class Allocator>
            const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<key_container_type, Allocator>` is
+> `true` and `uses_allocator_v<mapped_container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<key_container_type, Allocator>` is `true` and
-> `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_map(s, key_cont, mapped_cont)` and
+> *Effects:* Equivalent to `flat_map(s, key_cont, mapped_cont)` and
 > `flat_map(s, key_cont, mapped_cont, comp)`, respectively, except that
 > `c.keys` and `c.values` are constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 template<class Allocator>
@@ -12810,16 +10916,13 @@ template<class Allocator>
   flat_map(sorted_unique_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<key_container_type, Allocator>` is
+> `true` and `uses_allocator_v<mapped_container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<key_container_type, Allocator>` is `true` and
-> `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to the corresponding non-allocator constructors except that
-> `c.keys` and `c.values` are constructed with uses-allocator
-> construction [[allocator.uses.construction]].
+> *Effects:* Equivalent to the corresponding non-allocator constructors
+> except that `c.keys` and `c.values` are constructed with
+> uses-allocator construction [[allocator.uses.construction]].
 
 #### Capacity <a id="flat.map.capacity">[[flat.map.capacity]]</a>
 
@@ -12827,17 +10930,13 @@ template<class Allocator>
 size_type size() const noexcept;
 ```
 
-> *Returns:*
->
-> `c.keys.size()`.
+> *Returns:* `c.keys.size()`.
 
 ``` cpp
 size_type max_size() const noexcept;
 ```
 
-> *Returns:*
->
-> `min<size_type>(c.keys.max_size(), c.values.max_size())`.
+> *Returns:* `min<size_type>(c.keys.max_size(), c.values.max_size())`.
 
 #### Access <a id="flat.map.access">[[flat.map.access]]</a>
 
@@ -12845,75 +10944,56 @@ size_type max_size() const noexcept;
 mapped_type& operator[](const key_type& x);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return try_emplace(x).first->second;`
+> *Effects:* Equivalent to: `return try_emplace(x).first->second;`
 
 ``` cpp
 mapped_type& operator[](key_type&& x);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return try_emplace(std::move(x)).first->second;`
+> *Effects:* Equivalent to:
+> `return try_emplace(std::move(x)).first->second;`
 
 ``` cpp
 template<class K> mapped_type& operator[](K&& x);
 ```
 
-> *Constraints:*
+> *Constraints:* The *qualified-id* `Compare::is_transparent` is valid
+> and denotes a type.
 >
-> The *qualified-id* `Compare::is_transparent` is valid and denotes a
-> type.
->
-> *Effects:*
->
-> Equivalent to: `return try_emplace(std::forward<K>(x)).first->second;`
+> *Effects:* Equivalent to:
+> `return try_emplace(std::forward<K>(x)).first->second;`
 
 ``` cpp
 mapped_type&       at(const key_type& x);
 const mapped_type& at(const key_type& x) const;
 ```
 
-> *Returns:*
+> *Returns:* A reference to the `mapped_type` corresponding to `x` in
+> `*this`.
 >
-> A reference to the `mapped_type` corresponding to `x` in `*this`.
+> *Throws:* An exception object of type `out_of_range` if no such
+> element is present.
 >
-> *Throws:*
->
-> An exception object of type `out_of_range` if no such element is
-> present.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 ``` cpp
 template<class K> mapped_type&       at(const K& x);
 template<class K> const mapped_type& at(const K& x) const;
 ```
 
-> *Constraints:*
+> *Constraints:* The *qualified-id* `Compare::is_transparent` is valid
+> and denotes a type.
 >
-> The *qualified-id* `Compare::is_transparent` is valid and denotes a
-> type.
+> *Preconditions:* The expression `find(x)` is well-formed and has
+> well-defined behavior.
 >
-> *Preconditions:*
+> *Returns:* A reference to the `mapped_type` corresponding to `x` in
+> `*this`.
 >
-> The expression `find(x)` is well-formed and has well-defined behavior.
+> *Throws:* An exception object of type `out_of_range` if no such
+> element is present.
 >
-> *Returns:*
->
-> A reference to the `mapped_type` corresponding to `x` in `*this`.
->
-> *Throws:*
->
-> An exception object of type `out_of_range` if no such element is
-> present.
->
-> *Complexity:*
->
-> Logarithmic.
+> *Complexity:* Logarithmic.
 
 #### Modifiers <a id="flat.map.modifiers">[[flat.map.modifiers]]</a>
 
@@ -12922,15 +11002,12 @@ template<class... Args> pair<iterator, bool> emplace(Args&&... args);
 ```
 
 > *Constraints:*
->
 > `is_constructible_v<pair<key_type, mapped_type>, Args...>` is `true`.
 >
-> *Effects:*
->
-> Initializes an object `t` of type `pair<key_type, mapped_type>` with
-> `std::forward<Args>(args)...`; if the map already contains an element
-> whose key is equivalent to `t.first`, `*this` is unchanged. Otherwise,
-> equivalent to:
+> *Effects:* Initializes an object `t` of type
+> `pair<key_type, mapped_type>` with `std::forward<Args>(args)...`; if
+> the map already contains an element whose key is equivalent to
+> `t.first`, `*this` is unchanged. Otherwise, equivalent to:
 >
 > ``` cpp
 > auto key_it = ranges::upper_bound(c.keys, t.first, compare);
@@ -12939,35 +11016,28 @@ template<class... Args> pair<iterator, bool> emplace(Args&&... args);
 > c.values.insert(value_it, std::move(t.second));
 > ```
 >
-> *Returns:*
->
-> The `bool` component of the returned pair is `true` if and only if the
-> insertion took place, and the iterator component of the pair points to
-> the element with key equivalent to `t.first`.
+> *Returns:* The `bool` component of the returned pair is `true` if and
+> only if the insertion took place, and the iterator component of the
+> pair points to the element with key equivalent to `t.first`.
 
 ``` cpp
 template<class P> pair<iterator, bool> insert(P&& x);
 template<class P> iterator insert(const_iterator position, P&& x);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<pair<key_type, mapped_type>, P>` is
+> `true`.
 >
-> `is_constructible_v<pair<key_type, mapped_type>, P>` is `true`.
->
-> *Effects:*
->
-> The first form is equivalent to `return emplace(std::forward<P>(x));`.
-> The second form is equivalent to
-> `return emplace_hint(position, std::forward<P>(x));`.
+> *Effects:* The first form is equivalent to
+> `return emplace(std::forward<P>(x));`. The second form is equivalent
+> to `return emplace_hint(position, std::forward<P>(x));`.
 
 ``` cpp
 template<class InputIterator>
   void insert(InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Adds elements to `c` as if by:
+> *Effects:* Adds elements to `c` as if by:
 >
 > ``` cpp
 > for (; first != last; ++first) {
@@ -12990,24 +11060,18 @@ template<class InputIterator>
 > c.values.erase(c.values.begin() + dist, c.values.end());
 > ```
 >
-> *Complexity:*
+> *Complexity:* N + $M \log M$, where N is `size()` before the operation
+> and M is `distance(first, last)`.
 >
-> N + $M \log M$, where N is `size()` before the operation and M is
-> `distance(first, last)`.
->
-> *Remarks:*
->
-> Since this operation performs an in-place merge, it may allocate
-> memory.
+> *Remarks:* Since this operation performs an in-place merge, it may
+> allocate memory.
 
 ``` cpp
 template<class InputIterator>
   void insert(sorted_unique_t, InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Adds elements to `c` as if by:
+> *Effects:* Adds elements to `c` as if by:
 >
 > ``` cpp
 > for (; first != last; ++first) {
@@ -13029,23 +11093,17 @@ template<class InputIterator>
 > c.values.erase(c.values.begin() + dist, c.values.end());
 > ```
 >
-> *Complexity:*
+> *Complexity:* Linear in N, where N is `size()` after the operation.
 >
-> Linear in N, where N is `size()` after the operation.
->
-> *Remarks:*
->
-> Since this operation performs an in-place merge, it may allocate
-> memory.
+> *Remarks:* Since this operation performs an in-place merge, it may
+> allocate memory.
 
 ``` cpp
 template<container-compatible-range<value_type> R>
   void insert_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Adds elements to `c` as if by:
+> *Effects:* Adds elements to `c` as if by:
 >
 > ``` cpp
 > for (const auto& e : rg) {
@@ -13067,15 +11125,11 @@ template<container-compatible-range<value_type> R>
 > c.values.erase(c.values.begin() + dist, c.values.end());
 > ```
 >
-> *Complexity:*
+> *Complexity:* N + $M \log M$, where N is `size()` before the operation
+> and M is `ranges::distance(rg)`.
 >
-> N + $M \log M$, where N is `size()` before the operation and M is
-> `ranges::distance(rg)`.
->
-> *Remarks:*
->
-> Since this operation performs an in-place merge, it may allocate
-> memory.
+> *Remarks:* Since this operation performs an in-place merge, it may
+> allocate memory.
 
 ``` cpp
 template<class... Args>
@@ -13088,14 +11142,11 @@ template<class... Args>
   iterator try_emplace(const_iterator hint, key_type&& k, Args&&... args);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<mapped_type, Args...>` is `true`.
 >
-> `is_constructible_v<mapped_type, Args...>` is `true`.
->
-> *Effects:*
->
-> If the map already contains an element whose key is equivalent to `k`,
-> `*this` and `args...` are unchanged. Otherwise equivalent to:
+> *Effects:* If the map already contains an element whose key is
+> equivalent to `k`, `*this` and `args...` are unchanged. Otherwise
+> equivalent to:
 >
 > ``` cpp
 > auto key_it = ranges::upper_bound(c.keys, k, compare);
@@ -13104,16 +11155,13 @@ template<class... Args>
 > c.values.emplace(value_it, std::forward<Args>(args)...);
 > ```
 >
-> *Returns:*
+> *Returns:* In the first two overloads, the `bool` component of the
+> returned pair is `true` if and only if the insertion took place. The
+> returned iterator points to the map element whose key is equivalent to
+> `k`.
 >
-> In the first two overloads, the `bool` component of the returned pair
-> is `true` if and only if the insertion took place. The returned
-> iterator points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` for the first two overloads, and the same as
-> `emplace_hint` for the last two overloads.
+> *Complexity:* The same as `emplace` for the first two overloads, and
+> the same as `emplace_hint` for the last two overloads.
 
 ``` cpp
 template<class K, class... Args>
@@ -13134,15 +11182,12 @@ template<class K, class... Args>
 > - For the first overload, `is_convertible_v<K&&, const_iterator>` and
 >   `is_convertible_v<K&&, iterator>` are both `false`.
 >
-> *Preconditions:*
+> *Preconditions:* The conversion from `k` into `key_type` constructs an
+> object `u`, for which `find(k) == find(u)` is `true`.
 >
-> The conversion from `k` into `key_type` constructs an object `u`, for
-> which `find(k) == find(u)` is `true`.
->
-> *Effects:*
->
-> If the map already contains an element whose key is equivalent to `k`,
-> `*this` and `args...` are unchanged. Otherwise equivalent to:
+> *Effects:* If the map already contains an element whose key is
+> equivalent to `k`, `*this` and `args...` are unchanged. Otherwise
+> equivalent to:
 >
 > ``` cpp
 > auto key_it = ranges::upper_bound(c.keys, k, compare);
@@ -13151,15 +11196,11 @@ template<class K, class... Args>
 > c.values.emplace(value_it, std::forward<Args>(args)...);
 > ```
 >
-> *Returns:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 template<class M>
@@ -13172,16 +11213,12 @@ template<class M>
   iterator insert_or_assign(const_iterator hint, key_type&& k, M&& obj);
 ```
 
-> *Constraints:*
->
-> `is_assignable_v<mapped_type&, M>` is `true` and
+> *Constraints:* `is_assignable_v<mapped_type&, M>` is `true` and
 > `is_constructible_v<mapped_type, M>` is `true`.
 >
-> *Effects:*
->
-> If the map already contains an element `e` whose key is equivalent to
-> `k`, assigns `std::forward<M>(obj)` to `e.second`. Otherwise,
-> equivalent to
+> *Effects:* If the map already contains an element `e` whose key is
+> equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+> Otherwise, equivalent to
 >
 > ``` cpp
 > try_emplace(std::forward<decltype(k)>(k), std::forward<M>(obj))
@@ -13195,16 +11232,13 @@ template<class M>
 >
 > for the last two overloads.
 >
-> *Returns:*
+> *Returns:* In the first two overloads, the `bool` component of the
+> returned pair is `true` if and only if the insertion took place. The
+> returned iterator points to the map element whose key is equivalent to
+> `k`.
 >
-> In the first two overloads, the `bool` component of the returned pair
-> is `true` if and only if the insertion took place. The returned
-> iterator points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` for the first two overloads and the same as
-> `emplace_hint` for the last two overloads.
+> *Complexity:* The same as `emplace` for the first two overloads and
+> the same as `emplace_hint` for the last two overloads.
 
 ``` cpp
 template<class K, class M>
@@ -13224,16 +11258,12 @@ template<class K, class M>
 >
 > - `is_constructible_v<mapped_type, M>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* The conversion from `k` into `key_type` constructs an
+> object `u`, for which `find(k) == find(u)` is `true`.
 >
-> The conversion from `k` into `key_type` constructs an object `u`, for
-> which `find(k) == find(u)` is `true`.
->
-> *Effects:*
->
-> If the map already contains an element `e` whose key is equivalent to
-> `k`, assigns `std::forward<M>(obj)` to `e.second`. Otherwise,
-> equivalent to
+> *Effects:* If the map already contains an element `e` whose key is
+> equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+> Otherwise, equivalent to
 >
 > ``` cpp
 > try_emplace(std::forward<K>(k), std::forward<M>(obj))
@@ -13247,23 +11277,17 @@ template<class K, class M>
 >
 > for the second overload.
 >
-> *Returns:*
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the map element whose key is equivalent to `k`.
 >
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the map element whose key is equivalent to `k`.
->
-> *Complexity:*
->
-> The same as `emplace` and `emplace_hint`, respectively.
+> *Complexity:* The same as `emplace` and `emplace_hint`, respectively.
 
 ``` cpp
 void swap(flat_map& y) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > ranges::swap(compare, y.compare);
@@ -13275,27 +11299,20 @@ void swap(flat_map& y) noexcept;
 containers extract() &&;
 ```
 
-> *Ensures:*
+> *Ensures:* `*this` is emptied, even if the function exits via an
+> exception.
 >
-> `*this` is emptied, even if the function exits via an exception.
->
-> *Returns:*
->
-> `std::move(c)`.
+> *Returns:* `std::move(c)`.
 
 ``` cpp
 void replace(key_container_type&& key_cont, mapped_container_type&& mapped_cont);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `key_cont.size() == mapped_cont.size()` is `true`,
+> the elements of `key_cont` are sorted with respect to `compare`, and
+> `key_cont` contains no equal elements.
 >
-> `key_cont.size() == mapped_cont.size()` is `true`, the elements of
-> `key_cont` are sorted with respect to `compare`, and `key_cont`
-> contains no equal elements.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > c.keys = std::move(key_cont);
@@ -13311,27 +11328,19 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
     erase_if(flat_map<Key, T, Compare, KeyContainer, MappedContainer>& c, Predicate pred);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `Key` and `T` meet the *Cpp17MoveAssignable*
+> requirements.
 >
-> `Key` and `T` meet the *Cpp17MoveAssignable* requirements.
+> *Effects:* Let E be `bool(pred(pair<const Key&, const T&>(e)))`.
+> Erases all elements `e` in `c` for which E holds.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Let E be `bool(pred(pair<const Key&, const T&>(e)))`. Erases all
-> elements `e` in `c` for which E holds.
+> *Complexity:* Exactly `c.size()` applications of the predicate.
 >
-> *Returns:*
->
-> The number of elements erased.
->
-> *Complexity:*
->
-> Exactly `c.size()` applications of the predicate.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state [[defns.valid]].
+> *Remarks:* Stable [[algorithm.stable]]. If an invocation of `erase_if`
+> exits via an exception, `c` is in a valid but unspecified
+> state [[defns.valid]].
 >
 > \[*Note 16*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -13733,17 +11742,13 @@ flat_multimap(key_container_type key_cont, mapped_container_type mapped_cont,
               const key_compare& comp = key_compare());
 ```
 
-> *Effects:*
+> *Effects:* Initializes `c.keys` with `std::move(key_cont)`, `c.values`
+> with `std::move(mapped_cont)`, and `compare` with `comp`; sorts the
+> range \[`begin()`, `end()`) with respect to `value_comp()`.
 >
-> Initializes `c.keys` with `std::move(key_cont)`, `c.values` with
-> `std::move(mapped_cont)`, and `compare` with `comp`; sorts the range
-> \[`begin()`, `end()`) with respect to `value_comp()`.
->
-> *Complexity:*
->
-> Linear in N if the container arguments are already sorted with respect
-> to `value_comp()` and otherwise $N \log N$, where N is the value of
-> `key_cont.size()` before this call.
+> *Complexity:* Linear in N if the container arguments are already
+> sorted with respect to `value_comp()` and otherwise $N \log N$, where
+> N is the value of `key_cont.size()` before this call.
 
 ``` cpp
 template<class Allocator>
@@ -13754,21 +11759,16 @@ template<class Allocator>
                 const key_compare& comp, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<key_container_type, Allocator>` is
+> `true` and `uses_allocator_v<mapped_container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<key_container_type, Allocator>` is `true` and
-> `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_multimap(key_cont, mapped_cont)` and
+> *Effects:* Equivalent to `flat_multimap(key_cont, mapped_cont)` and
 > `flat_multimap(key_cont, mapped_cont, comp)`, respectively, except
 > that `c.keys` and `c.values` are constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Same as `flat_multimap(key_cont, mapped_cont)` and
+> *Complexity:* Same as `flat_multimap(key_cont, mapped_cont)` and
 > `flat_multimap(key_cont, mapped_cont, comp)`, respectively.
 
 ``` cpp
@@ -13776,14 +11776,10 @@ flat_multimap(sorted_equivalent_t, key_container_type key_cont, mapped_container
               const key_compare& comp = key_compare());
 ```
 
-> *Effects:*
+> *Effects:* Initializes `c.keys` with `std::move(key_cont)`, `c.values`
+> with `std::move(mapped_cont)`, and `compare` with `comp`.
 >
-> Initializes `c.keys` with `std::move(key_cont)`, `c.values` with
-> `std::move(mapped_cont)`, and `compare` with `comp`.
->
-> *Complexity:*
->
-> Constant.
+> *Complexity:* Constant.
 
 ``` cpp
 template<class Allocator>
@@ -13795,21 +11791,16 @@ template<class Allocator>
                 const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<key_container_type, Allocator>` is
+> `true` and `uses_allocator_v<mapped_container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<key_container_type, Allocator>` is `true` and
-> `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_multimap(s, key_cont, mapped_cont)` and
+> *Effects:* Equivalent to `flat_multimap(s, key_cont, mapped_cont)` and
 > `flat_multimap(s, key_cont, mapped_cont, comp)`, respectively, except
 > that `c.keys` and `c.values` are constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 template<class Allocator>
@@ -13842,16 +11833,13 @@ template<class Allocator>
   flat_multimap(sorted_equivalent_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<key_container_type, Allocator>` is
+> `true` and `uses_allocator_v<mapped_container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<key_container_type, Allocator>` is `true` and
-> `uses_allocator_v<mapped_container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to the corresponding non-allocator constructors except that
-> `c.keys` and `c.values` are constructed with uses-allocator
-> construction [[allocator.uses.construction]].
+> *Effects:* Equivalent to the corresponding non-allocator constructors
+> except that `c.keys` and `c.values` are constructed with
+> uses-allocator construction [[allocator.uses.construction]].
 
 #### Erasure <a id="flat.multimap.erasure">[[flat.multimap.erasure]]</a>
 
@@ -13862,27 +11850,19 @@ template<class Key, class T, class Compare, class KeyContainer, class MappedCont
     erase_if(flat_multimap<Key, T, Compare, KeyContainer, MappedContainer>& c, Predicate pred);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `Key` and `T` meet the *Cpp17MoveAssignable*
+> requirements.
 >
-> `Key` and `T` meet the *Cpp17MoveAssignable* requirements.
+> *Effects:* Let E be `bool(pred(pair<const Key&, const T&>(e)))`.
+> Erases all elements `e` in `c` for which E holds.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Let E be `bool(pred(pair<const Key&, const T&>(e)))`. Erases all
-> elements `e` in `c` for which E holds.
+> *Complexity:* Exactly `c.size()` applications of the predicate.
 >
-> *Returns:*
->
-> The number of elements erased.
->
-> *Complexity:*
->
-> Exactly `c.size()` applications of the predicate.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state [[defns.valid]].
+> *Remarks:* Stable [[algorithm.stable]]. If an invocation of `erase_if`
+> exits via an exception, `c` is in a valid but unspecified
+> state [[defns.valid]].
 >
 > \[*Note 17*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -14214,18 +12194,14 @@ namespace std {
 explicit flat_set(container_type cont, const key_compare& comp = key_compare());
 ```
 
-> *Effects:*
+> *Effects:* Initializes *c* with `std::move(cont)` and *compare* with
+> `comp`, sorts the range \[`begin()`, `end()`) with respect to
+> *compare*, and finally erases all but the first element from each
+> group of consecutive equivalent elements.
 >
-> Initializes *c* with `std::move(cont)` and *compare* with `comp`,
-> sorts the range \[`begin()`, `end()`) with respect to *compare*, and
-> finally erases all but the first element from each group of
-> consecutive equivalent elements.
->
-> *Complexity:*
->
-> Linear in N if `cont` is sorted with respect to *compare* and
-> otherwise $N \log N$, where N is the value of `cont.size()` before
-> this call.
+> *Complexity:* Linear in N if `cont` is sorted with respect to
+> *compare* and otherwise $N \log N$, where N is the value of
+> `cont.size()` before this call.
 
 ``` cpp
 template<class Allocator>
@@ -14234,19 +12210,15 @@ template<class Allocator>
   flat_set(const container_type& cont, const key_compare& comp, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_set(cont)` and `flat_set(cont, comp)`,
+> *Effects:* Equivalent to `flat_set(cont)` and `flat_set(cont, comp)`,
 > respectively, except that *c* is constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Same as `flat_set(cont)` and `flat_set(cont, comp)`, respectively.
+> *Complexity:* Same as `flat_set(cont)` and `flat_set(cont, comp)`,
+> respectively.
 
 ``` cpp
 template<class Allocator>
@@ -14256,19 +12228,15 @@ template<class Allocator>
            const key_compare& comp, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_set(s, cont)` and `flat_set(s, cont, comp)`,
-> respectively, except that *c* is constructed with uses-allocator
+> *Effects:* Equivalent to `flat_set(s, cont)` and
+> `flat_set(s, cont, comp)`, respectively, except that *c* is
+> constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 template<class Allocator>
@@ -14299,14 +12267,11 @@ template<class Allocator>
   flat_set(sorted_unique_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to the corresponding non-allocator constructors except that
-> *c* is constructed with uses-allocator
+> *Effects:* Equivalent to the corresponding non-allocator constructors
+> except that *c* is constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 
 #### Modifiers <a id="flat.set.modifiers">[[flat.set.modifiers]]</a>
@@ -14316,36 +12281,26 @@ template<class K> pair<iterator, bool> insert(K&& x);
 template<class K> iterator insert(const_iterator hint, K&& x);
 ```
 
-> *Constraints:*
+> *Constraints:* The *qualified-id* `Compare::is_transparent` is valid
+> and denotes a type. `is_constructible_v<value_type, K>` is `true`.
 >
-> The *qualified-id* `Compare::is_transparent` is valid and denotes a
-> type. `is_constructible_v<value_type, K>` is `true`.
+> *Preconditions:* The conversion from `x` into `value_type` constructs
+> an object `u`, for which `find(x) == find(u)` is true.
 >
-> *Preconditions:*
+> *Effects:* If the set already contains an element equivalent to `x`,
+> `*this` and `x` are unchanged. Otherwise, inserts a new element as if
+> by `emplace(std::forward<K>(x))`.
 >
-> The conversion from `x` into `value_type` constructs an object `u`,
-> for which `find(x) == find(u)` is true.
->
-> *Effects:*
->
-> If the set already contains an element equivalent to `x`, `*this` and
-> `x` are unchanged. Otherwise, inserts a new element as if by
-> `emplace(std::forward<K>(x))`.
->
-> *Returns:*
->
-> In the first overload, the `bool` component of the returned pair is
-> `true` if and only if the insertion took place. The returned iterator
-> points to the element whose key is equivalent to `x`.
+> *Returns:* In the first overload, the `bool` component of the returned
+> pair is `true` if and only if the insertion took place. The returned
+> iterator points to the element whose key is equivalent to `x`.
 
 ``` cpp
 template<class InputIterator>
   void insert(InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Adds elements to *c* as if by:
+> *Effects:* Adds elements to *c* as if by:
 >
 > ``` cpp
 > c.insert(c.end(), first, last);
@@ -14357,37 +12312,27 @@ template<class InputIterator>
 > all but the first element from each group of consecutive equivalent
 > elements.
 >
-> *Complexity:*
+> *Complexity:* N + $M \log M$, where N is `size()` before the operation
+> and M is `distance(first, last)`.
 >
-> N + $M \log M$, where N is `size()` before the operation and M is
-> `distance(first, last)`.
->
-> *Remarks:*
->
-> Since this operation performs an in-place merge, it may allocate
-> memory.
+> *Remarks:* Since this operation performs an in-place merge, it may
+> allocate memory.
 
 ``` cpp
 template<class InputIterator>
   void insert(sorted_unique_t, InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `insert(first, last)`.
 >
-> Equivalent to `insert(first, last)`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 template<container-compatible-range<value_type> R>
   void insert_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Adds elements to *c* as if by:
+> *Effects:* Adds elements to *c* as if by:
 >
 > ``` cpp
 > for (const auto& e : rg) {
@@ -14401,23 +12346,17 @@ template<container-compatible-range<value_type> R>
 > all but the first element from each group of consecutive equivalent
 > elements.
 >
-> *Complexity:*
+> *Complexity:* N + $M \log M$, where N is `size()` before the operation
+> and M is `ranges::distance(rg)`.
 >
-> N + $M \log M$, where N is `size()` before the operation and M is
-> `ranges::distance(rg)`.
->
-> *Remarks:*
->
-> Since this operation performs an in-place merge, it may allocate
-> memory.
+> *Remarks:* Since this operation performs an in-place merge, it may
+> allocate memory.
 
 ``` cpp
 void swap(flat_set& y) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > ranges::swap(compare, y.compare);
@@ -14428,26 +12367,19 @@ void swap(flat_set& y) noexcept;
 container_type extract() &&;
 ```
 
-> *Ensures:*
+> *Ensures:* `*this` is emptied, even if the function exits via an
+> exception.
 >
-> `*this` is emptied, even if the function exits via an exception.
->
-> *Returns:*
->
-> `std::move(`*`c`*`)`.
+> *Returns:* `std::move(`*`c`*`)`.
 
 ``` cpp
 void replace(container_type&& cont);
 ```
 
-> *Preconditions:*
+> *Preconditions:* The elements of `cont` are sorted with respect to
+> *compare*, and `cont` contains no equal elements.
 >
-> The elements of `cont` are sorted with respect to *compare*, and
-> `cont` contains no equal elements.
->
-> *Effects:*
->
-> Equivalent to: *`c`*` = std::move(cont);`
+> *Effects:* Equivalent to: *`c`*` = std::move(cont);`
 
 #### Erasure <a id="flat.set.erasure">[[flat.set.erasure]]</a>
 
@@ -14457,27 +12389,18 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
     erase_if(flat_set<Key, Compare, KeyContainer>& c, Predicate pred);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `Key` meets the *Cpp17MoveAssignable* requirements.
 >
-> `Key` meets the *Cpp17MoveAssignable* requirements.
+> *Effects:* Let E be `bool(pred(as_const(e)))`. Erases all elements `e`
+> in `c` for which E holds.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Let E be `bool(pred(as_const(e)))`. Erases all elements `e` in `c` for
-> which E holds.
+> *Complexity:* Exactly `c.size()` applications of the predicate.
 >
-> *Returns:*
->
-> The number of elements erased.
->
-> *Complexity:*
->
-> Exactly `c.size()` applications of the predicate.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state [[defns.valid]].
+> *Remarks:* Stable [[algorithm.stable]]. If an invocation of `erase_if`
+> exits via an exception, `c` is in a valid but unspecified
+> state [[defns.valid]].
 >
 > \[*Note 18*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -14813,16 +12736,13 @@ namespace std {
 explicit flat_multiset(container_type cont, const key_compare& comp = key_compare());
 ```
 
-> *Effects:*
+> *Effects:* Initializes *c* with `std::move(cont)` and *compare* with
+> `comp`, and sorts the range \[`begin()`, `end()`) with respect to
+> *compare*.
 >
-> Initializes *c* with `std::move(cont)` and *compare* with `comp`, and
-> sorts the range \[`begin()`, `end()`) with respect to *compare*.
->
-> *Complexity:*
->
-> Linear in N if `cont` is sorted with respect to *compare* and
-> otherwise $N \log N$, where N is the value of `cont.size()` before
-> this call.
+> *Complexity:* Linear in N if `cont` is sorted with respect to
+> *compare* and otherwise $N \log N$, where N is the value of
+> `cont.size()` before this call.
 
 ``` cpp
 template<class Allocator>
@@ -14831,20 +12751,16 @@ template<class Allocator>
   flat_multiset(const container_type& cont, const key_compare& comp, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_multiset(cont)` and `flat_multiset(cont, comp)`,
-> respectively, except that *c* is constructed with uses-allocator
+> *Effects:* Equivalent to `flat_multiset(cont)` and
+> `flat_multiset(cont, comp)`, respectively, except that *c* is
+> constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Same as `flat_multiset(cont)` and `flat_multiset(cont, comp)`,
-> respectively.
+> *Complexity:* Same as `flat_multiset(cont)` and
+> `flat_multiset(cont, comp)`, respectively.
 
 ``` cpp
 template<class Allocator>
@@ -14854,20 +12770,15 @@ template<class Allocator>
                 const key_compare& comp, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to `flat_multiset(s, cont)` and
+> *Effects:* Equivalent to `flat_multiset(s, cont)` and
 > `flat_multiset(s, cont, comp)`, respectively, except that *c* is
 > constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 >
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 template<class Allocator>
@@ -14899,14 +12810,11 @@ template<class Allocator>
   flat_multiset(sorted_equivalent_t, initializer_list<value_type> il, const Allocator& a);
 ```
 
-> *Constraints:*
+> *Constraints:* `uses_allocator_v<container_type, Allocator>` is
+> `true`.
 >
-> `uses_allocator_v<container_type, Allocator>` is `true`.
->
-> *Effects:*
->
-> Equivalent to the corresponding non-allocator constructors except that
-> *c* is constructed with uses-allocator
+> *Effects:* Equivalent to the corresponding non-allocator constructors
+> except that *c* is constructed with uses-allocator
 > construction [[allocator.uses.construction]].
 
 #### Modifiers <a id="flat.multiset.modifiers">[[flat.multiset.modifiers]]</a>
@@ -14915,13 +12823,9 @@ template<class Allocator>
 template<class... Args> iterator emplace(Args&&... args);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<value_type, Args...>` is `true`.
 >
-> `is_constructible_v<value_type, Args...>` is `true`.
->
-> *Effects:*
->
-> First, initializes an object `t` of type `value_type` with
+> *Effects:* First, initializes an object `t` of type `value_type` with
 > `std::forward<Args>(args)...`, then inserts `t` as if by:
 >
 > ``` cpp
@@ -14929,18 +12833,14 @@ template<class... Args> iterator emplace(Args&&... args);
 > c.insert(it, std::move(t));
 > ```
 >
-> *Returns:*
->
-> An iterator that points to the inserted element.
+> *Returns:* An iterator that points to the inserted element.
 
 ``` cpp
 template<class InputIterator>
   void insert(InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
->
-> Adds elements to *c* as if by:
+> *Effects:* Adds elements to *c* as if by:
 >
 > ``` cpp
 > c.insert(c.end(), first, last);
@@ -14950,36 +12850,26 @@ template<class InputIterator>
 > *compare*, and merges the resulting sorted range and the sorted range
 > of pre-existing elements into a single sorted range.
 >
-> *Complexity:*
+> *Complexity:* N + $M \log M$, where N is `size()` before the operation
+> and M is `distance(first, last)`.
 >
-> N + $M \log M$, where N is `size()` before the operation and M is
-> `distance(first, last)`.
->
-> *Remarks:*
->
-> Since this operation performs an in-place merge, it may allocate
-> memory.
+> *Remarks:* Since this operation performs an in-place merge, it may
+> allocate memory.
 
 ``` cpp
 template<class InputIterator>
   void insert(sorted_equivalent_t, InputIterator first, InputIterator last);
 ```
 
-> *Effects:*
+> *Effects:* Equivalent to `insert(first, last)`.
 >
-> Equivalent to `insert(first, last)`.
->
-> *Complexity:*
->
-> Linear.
+> *Complexity:* Linear.
 
 ``` cpp
 void swap(flat_multiset& y) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > ranges::swap(compare, y.compare);
@@ -14990,25 +12880,19 @@ void swap(flat_multiset& y) noexcept;
 container_type extract() &&;
 ```
 
-> *Ensures:*
+> *Ensures:* `*this` is emptied, even if the function exits via an
+> exception.
 >
-> `*this` is emptied, even if the function exits via an exception.
->
-> *Returns:*
->
-> `std::move(c)`.
+> *Returns:* `std::move(c)`.
 
 ``` cpp
 void replace(container_type&& cont);
 ```
 
-> *Preconditions:*
+> *Preconditions:* The elements of `cont` are sorted with respect to
+> *compare*.
 >
-> The elements of `cont` are sorted with respect to *compare*.
->
-> *Effects:*
->
-> Equivalent to: `c = std::move(cont);`
+> *Effects:* Equivalent to: `c = std::move(cont);`
 
 #### Erasure <a id="flat.multiset.erasure">[[flat.multiset.erasure]]</a>
 
@@ -15018,27 +12902,18 @@ template<class Key, class Compare, class KeyContainer, class Predicate>
     erase_if(flat_multiset<Key, Compare, KeyContainer>& c, Predicate pred);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `Key` meets the *Cpp17MoveAssignable* requirements.
 >
-> `Key` meets the *Cpp17MoveAssignable* requirements.
+> *Effects:* Let E be `bool(pred(as_const(e)))`. Erases all elements `e`
+> in `c` for which E holds.
 >
-> *Effects:*
+> *Returns:* The number of elements erased.
 >
-> Let E be `bool(pred(as_const(e)))`. Erases all elements `e` in `c` for
-> which E holds.
+> *Complexity:* Exactly `c.size()` applications of the predicate.
 >
-> *Returns:*
->
-> The number of elements erased.
->
-> *Complexity:*
->
-> Exactly `c.size()` applications of the predicate.
->
-> *Remarks:*
->
-> Stable [[algorithm.stable]]. If an invocation of `erase_if` exits via
-> an exception, `c` is in a valid but unspecified state [[defns.valid]].
+> *Remarks:* Stable [[algorithm.stable]]. If an invocation of `erase_if`
+> exits via an exception, `c` is in a valid but unspecified
+> state [[defns.valid]].
 >
 > \[*Note 19*: `c` still meets its invariants, but can be
 > empty. — *end note*\]
@@ -15079,9 +12954,7 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return `*`underlying_`*`.parse(ctx);`
+> *Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
 
 ``` cpp
 template<class FormatContext>
@@ -15089,9 +12962,7 @@ template<class FormatContext>
     format(maybe-const-adaptor& r, FormatContext& ctx) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return `*`underlying_`*`.format(r.c, ctx);`
+> *Effects:* Equivalent to: `return `*`underlying_`*`.format(r.c, ctx);`
 
 ## Views <a id="views">[[views]]</a>
 
@@ -15245,22 +13116,16 @@ abstract class type.
 constexpr span() noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `Extent == dynamic_extent || Extent == 0` is `true`.
 >
-> `Extent == dynamic_extent || Extent == 0` is `true`.
->
-> *Ensures:*
->
-> `size() == 0 && data() == nullptr`.
+> *Ensures:* `size() == 0 && data() == nullptr`.
 
 ``` cpp
 template<class It>
   constexpr explicit(extent != dynamic_extent) span(It first, size_type count);
 ```
 
-> *Constraints:*
->
-> Let `U` be `remove_reference_t<iter_reference_t<It>>`.
+> *Constraints:* Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 >
 > - `It` satisfies `contiguous_iterator`.
 >
@@ -15278,23 +13143,17 @@ template<class It>
 > - If `extent` is not equal to `dynamic_extent`, then `count` is equal
 >   to `extent`.
 >
-> *Effects:*
+> *Effects:* Initializes *`data_`* with `to_address(first)` and
+> *`size_`* with `count`.
 >
-> Initializes *`data_`* with `to_address(first)` and *`size_`* with
-> `count`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 template<class It, class End>
   constexpr explicit(extent != dynamic_extent) span(It first, End last);
 ```
 
-> *Constraints:*
->
-> Let `U` be `remove_reference_t<iter_reference_t<It>>`.
+> *Constraints:* Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 >
 > - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
 >
@@ -15318,14 +13177,10 @@ template<class It, class End>
 >
 > - `End` models `sized_sentinel_for``<It>`.
 >
-> *Effects:*
+> *Effects:* Initializes *`data_`* with `to_address(first)` and
+> *`size_`* with `last - first`.
 >
-> Initializes *`data_`* with `to_address(first)` and *`size_`* with
-> `last - first`.
->
-> *Throws:*
->
-> When and what `last - first` throws.
+> *Throws:* When and what `last - first` throws.
 
 ``` cpp
 template<size_t N> constexpr span(type_identity_t<element_type> (&arr)[N]) noexcept;
@@ -15333,9 +13188,7 @@ template<class T, size_t N> constexpr span(array<T, N>& arr) noexcept;
 template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 ```
 
-> *Constraints:*
->
-> Let `U` be `remove_pointer_t<decltype(data(arr))>`.
+> *Constraints:* Let `U` be `remove_pointer_t<decltype(data(arr))>`.
 >
 > - `extent == dynamic_extent || N == extent` is `true`, and
 >
@@ -15344,24 +13197,19 @@ template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 >   \[*Note 22*: The intent is to allow only qualification conversions
 >   of the array element type to `element_type`. — *end note*\]
 >
-> *Effects:*
->
-> Constructs a `span` that is a view over the supplied array.
+> *Effects:* Constructs a `span` that is a view over the supplied array.
 >
 > \[*Note 23*: `type_identity_t` affects class template argument
 > deduction. — *end note*\]
 >
-> *Ensures:*
->
-> `size() == N && data() == data(arr)` is `true`.
+> *Ensures:* `size() == N && data() == data(arr)` is `true`.
 
 ``` cpp
 template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 ```
 
-> *Constraints:*
->
-> Let `U` be `remove_reference_t<ranges::range_reference_t<R>>`.
+> *Constraints:* Let `U` be
+> `remove_reference_t<ranges::range_reference_t<R>>`.
 >
 > - `R` satisfies `ranges::``contiguous_range` and
 >   `ranges::``sized_range`.
@@ -15390,22 +13238,16 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 > - If `is_const_v<element_type>` is `false`, `R` models
 >   `ranges::``borrowed_range`.
 >
-> *Effects:*
+> *Effects:* Initializes *`data_`* with `ranges::data(r)` and *`size_`*
+> with `ranges::size(r)`.
 >
-> Initializes *`data_`* with `ranges::data(r)` and *`size_`* with
-> `ranges::size(r)`.
->
-> *Throws:*
->
-> What and when `ranges::data(r)` and `ranges::size(r)` throw.
+> *Throws:* What and when `ranges::data(r)` and `ranges::size(r)` throw.
 
 ``` cpp
 constexpr span(const span& other) noexcept = default;
 ```
 
-> *Ensures:*
->
-> `other.size() == size() && other.data() == data()`.
+> *Ensures:* `other.size() == size() && other.data() == data()`.
 
 ``` cpp
 template<class OtherElementType, size_t OtherExtent>
@@ -15423,23 +13265,15 @@ template<class OtherElementType, size_t OtherExtent>
 >   \[*Note 25*: The intent is to allow only qualification conversions
 >   of the `OtherElementType` to `element_type`. — *end note*\]
 >
-> *Preconditions:*
+> *Preconditions:* If `extent` is not equal to `dynamic_extent`, then
+> `s.size()` is equal to `extent`.
 >
-> If `extent` is not equal to `dynamic_extent`, then `s.size()` is equal
-> to `extent`.
+> *Effects:* Constructs a `span` that is a view over the range
+> \[`s.data()`, `s.data() + s.size()`).
 >
-> *Effects:*
+> *Ensures:* `size() == s.size() && data() == s.data()`.
 >
-> Constructs a `span` that is a view over the range \[`s.data()`,
-> `s.data() + s.size()`).
->
-> *Ensures:*
->
-> `size() == s.size() && data() == s.data()`.
->
-> *Remarks:*
->
-> The expression inside is equivalent to:
+> *Remarks:* The expression inside is equivalent to:
 >
 > ``` cpp
 > extent != dynamic_extent && OtherExtent == dynamic_extent
@@ -15449,9 +13283,7 @@ template<class OtherElementType, size_t OtherExtent>
 constexpr span& operator=(const span& other) noexcept = default;
 ```
 
-> *Ensures:*
->
-> `size() == other.size() && data() == other.data()`.
+> *Ensures:* `size() == other.size() && data() == other.data()`.
 
 ##### Deduction guides <a id="span.deduct">[[span.deduct]]</a>
 
@@ -15460,18 +13292,14 @@ template<class It, class EndOrSize>
   span(It, EndOrSize) -> span<remove_reference_t<iter_reference_t<It>>>;
 ```
 
-> *Constraints:*
->
-> `It` satisfies `contiguous_iterator`.
+> *Constraints:* `It` satisfies `contiguous_iterator`.
 
 ``` cpp
 template<class R>
   span(R&&) -> span<remove_reference_t<ranges::range_reference_t<R>>>;
 ```
 
-> *Constraints:*
->
-> `R` satisfies `ranges::``contiguous_range`.
+> *Constraints:* `R` satisfies `ranges::``contiguous_range`.
 
 ##### Subviews <a id="span.sub">[[span.sub]]</a>
 
@@ -15479,35 +13307,24 @@ template<class R>
 template<size_t Count> constexpr span<element_type, Count> first() const;
 ```
 
-> *Mandates:*
+> *Mandates:* `Count <= Extent` is `true`.
 >
-> `Count <= Extent` is `true`.
+> *Preconditions:* `Count <= size()` is `true`.
 >
-> *Preconditions:*
->
-> `Count <= size()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return R{data(), Count};` where `R` is the return
-> type.
+> *Effects:* Equivalent to: `return R{data(), Count};` where `R` is the
+> return type.
 
 ``` cpp
 template<size_t Count> constexpr span<element_type, Count> last() const;
 ```
 
-> *Mandates:*
+> *Mandates:* `Count <= Extent` is `true`.
 >
-> `Count <= Extent` is `true`.
+> *Preconditions:* `Count <= size()` is `true`.
 >
-> *Preconditions:*
->
-> `Count <= size()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return R{data() + (size() - Count), Count};` where `R`
-> is the return type.
+> *Effects:* Equivalent to:
+> `return R{data() + (size() - Count), Count};` where `R` is the return
+> type.
 
 ``` cpp
 template<size_t Offset, size_t Count = dynamic_extent>
@@ -15530,18 +13347,15 @@ template<size_t Offset, size_t Count = dynamic_extent>
 >
 > is `true`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return span<ElementType, see below>(
 >   data() + Offset, Count != dynamic_extent ? Count : size() - Offset);
 > ```
 >
-> *Remarks:*
->
-> The second template argument of the returned `span` type is:
+> *Remarks:* The second template argument of the returned `span` type
+> is:
 >
 > ``` cpp
 > Count != dynamic_extent ? Count
@@ -15553,25 +13367,17 @@ template<size_t Offset, size_t Count = dynamic_extent>
 constexpr span<element_type, dynamic_extent> first(size_type count) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `count <= size()` is `true`.
 >
-> `count <= size()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return {data(), count};`
+> *Effects:* Equivalent to: `return {data(), count};`
 
 ``` cpp
 constexpr span<element_type, dynamic_extent> last(size_type count) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `count <= size()` is `true`.
 >
-> `count <= size()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return {data() + (size() - count), count};`
+> *Effects:* Equivalent to: `return {data() + (size() - count), count};`
 
 ``` cpp
 constexpr span<element_type, dynamic_extent> subspan(
@@ -15586,9 +13392,7 @@ constexpr span<element_type, dynamic_extent> subspan(
 >
 > is `true`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return {data() + offset, count == dynamic_extent ? size() - offset : count};
@@ -15600,25 +13404,19 @@ constexpr span<element_type, dynamic_extent> subspan(
 constexpr size_type size() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return `*`size_`*`;`
+> *Effects:* Equivalent to: `return `*`size_`*`;`
 
 ``` cpp
 constexpr size_type size_bytes() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return size() * sizeof(element_type);`
+> *Effects:* Equivalent to: `return size() * sizeof(element_type);`
 
 ``` cpp
 [[nodiscard]] constexpr bool empty() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return size() == 0;`
+> *Effects:* Equivalent to: `return size() == 0;`
 
 ##### Element access <a id="span.elem">[[span.elem]]</a>
 
@@ -15626,45 +13424,31 @@ constexpr size_type size_bytes() const noexcept;
 constexpr reference operator[](size_type idx) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `idx < size()` is `true`.
 >
-> `idx < size()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return *(data() + idx);`
+> *Effects:* Equivalent to: `return *(data() + idx);`
 
 ``` cpp
 constexpr reference front() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `empty()` is `false`.
 >
-> `empty()` is `false`.
->
-> *Effects:*
->
-> Equivalent to: `return *data();`
+> *Effects:* Equivalent to: `return *data();`
 
 ``` cpp
 constexpr reference back() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `empty()` is `false`.
 >
-> `empty()` is `false`.
->
-> *Effects:*
->
-> Equivalent to: `return *(data() + (size() - 1));`
+> *Effects:* Equivalent to: `return *(data() + (size() - 1));`
 
 ``` cpp
 constexpr pointer data() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return `*`data_`*`;`
+> *Effects:* Equivalent to: `return `*`data_`*`;`
 
 ##### Iterator support <a id="span.iterators">[[span.iterators]]</a>
 
@@ -15685,34 +13469,26 @@ using iterator = \impdefx{type of span::iterator};
 constexpr iterator begin() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator referring to the first element in the span. If `empty()`
-> is `true`, then it returns the same value as `end()`.
+> *Returns:* An iterator referring to the first element in the span. If
+> `empty()` is `true`, then it returns the same value as `end()`.
 
 ``` cpp
 constexpr iterator end() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator which is the past-the-end value.
+> *Returns:* An iterator which is the past-the-end value.
 
 ``` cpp
 constexpr reverse_iterator rbegin() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return reverse_iterator(end());`
+> *Effects:* Equivalent to: `return reverse_iterator(end());`
 
 ``` cpp
 constexpr reverse_iterator rend() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return reverse_iterator(begin());`
+> *Effects:* Equivalent to: `return reverse_iterator(begin());`
 
 #### Views of object representation <a id="span.objectrep">[[span.objectrep]]</a>
 
@@ -15722,9 +13498,7 @@ template<class ElementType, size_t Extent>
     as_bytes(span<ElementType, Extent> s) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return R{reinterpret_cast<const byte*>(s.data()), s.size_bytes()};`
 > where `R` is the return type.
 
@@ -15734,13 +13508,9 @@ template<class ElementType, size_t Extent>
     as_writable_bytes(span<ElementType, Extent> s) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_const_v<ElementType>` is `false`.
 >
-> `is_const_v<ElementType>` is `false`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return R{reinterpret_cast<byte*>(s.data()), s.size_bytes()};` where
 > `R` is the return type.
 
@@ -15880,53 +13650,38 @@ represented by an `extents` object is $[0, D_r)$.
 static constexpr rank_type dynamic-index(rank_type i) noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i <= rank()` is `true`.
 >
-> `i <= rank()` is `true`.
->
-> *Returns:*
->
-> The number of $E_r$ with $r < \texttt{i}$ for which $E_r$ is a dynamic
-> extent.
+> *Returns:* The number of $E_r$ with $r < \texttt{i}$ for which $E_r$
+> is a dynamic extent.
 
 ``` cpp
 static constexpr rank_type dynamic-index-inv(rank_type i) noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i < rank_dynamic()` is `true`.
 >
-> `i < rank_dynamic()` is `true`.
->
-> *Returns:*
->
-> The minimum value of r such that *`dynamic-index`*`(`r` + 1) == i + 1`
-> is `true`.
+> *Returns:* The minimum value of r such that
+> *`dynamic-index`*`(`r` + 1) == i + 1` is `true`.
 
 ``` cpp
 constexpr size_t fwd-prod-of-extents(rank_type i) const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i <= rank()` is `true`.
 >
-> `i <= rank()` is `true`.
->
-> *Returns:*
->
-> If `i > 0` is `true`, the product of `extent(`k`)` for all k in the
-> range $[0, \texttt{i})$, otherwise `1`.
+> *Returns:* If `i > 0` is `true`, the product of `extent(`k`)` for all
+> k in the range $[0, \texttt{i})$, otherwise `1`.
 
 ``` cpp
 constexpr size_t rev-prod-of-extents(rank_type i) const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i < rank()` is `true`.
 >
-> `i < rank()` is `true`.
->
-> *Returns:*
->
-> If `i + 1 < rank()` is `true`, the product of `extent(`k`)` for all k
-> in the range $[\texttt{i + 1}, \texttt{rank()})$, otherwise `1`.
+> *Returns:* If `i + 1 < rank()` is `true`, the product of `extent(`k`)`
+> for all k in the range $[\texttt{i + 1}, \texttt{rank()})$, otherwise
+> `1`.
 
 ``` cpp
 template<class OtherIndexType>
@@ -15973,13 +13728,9 @@ template<class OtherIndexType, size_t... OtherExtents>
 >   - `other.extent(`r`)` is representable as a value of type
 >     `index_type` for every rank index r of `other`.
 >
-> *Ensures:*
+> *Ensures:* `*this == other` is `true`.
 >
-> `*this == other` is `true`.
->
-> *Remarks:*
->
-> The expression inside `explicit` is equivalent to:
+> *Remarks:* The expression inside `explicit` is equivalent to:
 >
 > ``` cpp
 > (((Extents != dynamic_extent) && (OtherExtents == dynamic_extent)) || ... ) ||
@@ -16020,9 +13771,7 @@ template<class... OtherIndexTypes>
 >   - each element of `exts` is nonnegative and is representable as a
 >     value of type `index_type`.
 >
-> *Ensures:*
->
-> `*this == extents(exts_arr)` is `true`.
+> *Ensures:* `*this == extents(exts_arr)` is `true`.
 
 ``` cpp
 template<class OtherIndexType, size_t N>
@@ -16068,13 +13817,11 @@ template<class... Integrals>
   explicit extents(Integrals...) -> see below;
 ```
 
-> *Constraints:*
+> *Constraints:* `(is_convertible_v<Integrals, size_t> && ...)` is
+> `true`.
 >
-> `(is_convertible_v<Integrals, size_t> && ...)` is `true`.
->
-> *Remarks:*
->
-> The deduced type is `dextents<size_t, sizeof...(Integrals)>`.
+> *Remarks:* The deduced type is
+> `dextents<size_t, sizeof...(Integrals)>`.
 
 ##### Observers of the multidimensional index space <a id="mdspan.extents.obs">[[mdspan.extents.obs]]</a>
 
@@ -16082,25 +13829,17 @@ template<class... Integrals>
 static constexpr size_t static_extent(rank_type i) noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i < rank()` is `true`.
 >
-> `i < rank()` is `true`.
->
-> *Returns:*
->
-> $E_\texttt{i}$.
+> *Returns:* $E_\texttt{i}$.
 
 ``` cpp
 constexpr index_type extent(rank_type i) const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `i < rank()` is `true`.
 >
-> `i < rank()` is `true`.
->
-> *Returns:*
->
-> $D_\texttt{i}$.
+> *Returns:* $D_\texttt{i}$.
 
 ##### Comparison operators <a id="mdspan.extents.cmp">[[mdspan.extents.cmp]]</a>
 
@@ -16110,11 +13849,9 @@ template<class OtherIndexType, size_t... OtherExtents>
                                    const extents<OtherIndexType, OtherExtents...>& rhs) noexcept;
 ```
 
-> *Returns:*
->
-> `true` if `lhs.rank()` equals `rhs.rank()` and if `lhs.extent(r)`
-> equals `rhs.extent(r)` for every rank index `r` of `rhs`, otherwise
-> `false`.
+> *Returns:* `true` if `lhs.rank()` equals `rhs.rank()` and if
+> `lhs.extent(r)` equals `rhs.extent(r)` for every rank index `r` of
+> `rhs`, otherwise `false`.
 
 ##### Alias template `dextents` <a id="mdspan.extents.dextents">[[mdspan.extents.dextents]]</a>
 
@@ -16123,9 +13860,7 @@ template<class IndexType, size_t Rank>
   using dextents = see below;
 ```
 
-> *Result:*
->
-> A type `E` that is a specialization of `extents` such that
+> *Result:* A type `E` that is a specialization of `extents` such that
 > `E::rank() == Rank && E::rank() == E::rank_dynamic()` is `true`, and
 > `E::index_type` denotes `IndexType`.
 
@@ -16182,33 +13917,25 @@ A type `M` meets the *layout mapping* requirements if
 typename M::extents_type
 ```
 
-> *Result:*
->
-> A type that is a specialization of `extents`.
+> *Result:* A type that is a specialization of `extents`.
 
 ``` cpp
 typename M::index_type
 ```
 
-> *Result:*
->
-> `typename M::extents_type::index_type`.
+> *Result:* `typename M::extents_type::index_type`.
 
 ``` cpp
 typename M::rank_type
 ```
 
-> *Result:*
->
-> `typename M::extents_type::rank_type`.
+> *Result:* `typename M::extents_type::rank_type`.
 
 ``` cpp
 typename M::layout_type
 ```
 
-> *Result:*
->
-> A type `MP` that meets the layout mapping policy
+> *Result:* A type `MP` that meets the layout mapping policy
 > requirements [[mdspan.layout.policy.reqmts]] and for which
 > *`is-mapping-of`*`<MP, M>` is `true`.
 
@@ -16216,21 +13943,15 @@ typename M::layout_type
 m.extents()
 ```
 
-> *Result:*
->
-> `const typename M::extents_type&`
+> *Result:* `const typename M::extents_type&`
 
 ``` cpp
 m(i...)
 ```
 
-> *Result:*
+> *Result:* `typename M::index_type`
 >
-> `typename M::index_type`
->
-> *Returns:*
->
-> A nonnegative integer less than
+> *Returns:* A nonnegative integer less than
 > `numeric_limits<typename M::index_type>::max()` and less than or equal
 > to `numeric_limits<size_t>::max()`.
 
@@ -16238,39 +13959,28 @@ m(i...)
 m(i...) == m(static_cast<typename M::index_type>(i)...)
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Returns:*
->
-> `true`
+> *Returns:* `true`
 
 ``` cpp
 m.required_span_size()
 ```
 
-> *Result:*
+> *Result:* `typename M::index_type`
 >
-> `typename M::index_type`
->
-> *Returns:*
->
-> If the size of the multidimensional index space `m.extents()` is 0,
-> then `0`, else `1` plus the maximum value of `m(i...)` for all `i`.
+> *Returns:* If the size of the multidimensional index space
+> `m.extents()` is 0, then `0`, else `1` plus the maximum value of
+> `m(i...)` for all `i`.
 
 ``` cpp
 m.is_unique()
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Returns:*
->
-> `true` only if for every `i` and `j` where `(i != j || ...)` is
-> `true`, `m(i...) != m(j...)` is `true`.
+> *Returns:* `true` only if for every `i` and `j` where
+> `(i != j || ...)` is `true`, `m(i...) != m(j...)` is `true`.
 >
 > \[*Note 29*: A mapping can return `false` even if the condition is
 > met. For certain layouts, it is possibly not feasible to determine
@@ -16280,13 +13990,9 @@ m.is_unique()
 m.is_exhaustive()
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Returns:*
->
-> `true` only if for all k in the range
+> *Returns:* `true` only if for all k in the range
 > $[0, \texttt{m.required_span_size()})$ there exists an `i` such that
 > `m(i...)` equals k.
 >
@@ -16298,16 +14004,13 @@ m.is_exhaustive()
 m.is_strided()
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Returns:*
->
-> `true` only if for every rank index r of `m.extents()` there exists an
-> integer $s_r$ such that, for all `i` where $(\texttt{i}+d_r)$ is a
-> multidimensional index in `m.extents()`[[mdspan.overview]],
-> `m((i + `$d_r$`)...) - m(i...)` equals $s_r$.
+> *Returns:* `true` only if for every rank index r of `m.extents()`
+> there exists an integer $s_r$ such that, for all `i` where
+> $(\texttt{i}+d_r)$ is a multidimensional index in
+> `m.extents()`[[mdspan.overview]], `m((i + `$d_r$`)...) - m(i...)`
+> equals $s_r$.
 >
 > \[*Note 31*: This implies that for a strided layout
 > $m(i_0, \dotsc, i_k) = m(0, \dotsc, 0) + i_0 \times s_0 + \dotsb + i_k \times s_k$. — *end note*\]
@@ -16320,30 +14023,20 @@ m.is_strided()
 m.stride(r)
 ```
 
-> *Preconditions:*
+> *Preconditions:* `m.is_strided()` is `true`.
 >
-> `m.is_strided()` is `true`.
+> *Result:* `typename M::index_type`
 >
-> *Result:*
->
-> `typename M::index_type`
->
-> *Returns:*
->
-> $s_r$ as defined in `m.is_strided()` above.
+> *Returns:* $s_r$ as defined in `m.is_strided()` above.
 
 ``` cpp
 M::is_always_unique()
 ```
 
-> *Result:*
+> *Result:* A constant expression [[expr.const]] of type `bool`.
 >
-> A constant expression [[expr.const]] of type `bool`.
->
-> *Returns:*
->
-> `true` only if `m.is_unique()` is `true` for all possible objects `m`
-> of type `M`.
+> *Returns:* `true` only if `m.is_unique()` is `true` for all possible
+> objects `m` of type `M`.
 >
 > \[*Note 33*: A mapping can return `false` even if the above condition
 > is met. For certain layout mappings, it is possibly not feasible to
@@ -16353,14 +14046,10 @@ M::is_always_unique()
 M::is_always_exhaustive()
 ```
 
-> *Result:*
+> *Result:* A constant expression [[expr.const]] of type `bool`.
 >
-> A constant expression [[expr.const]] of type `bool`.
->
-> *Returns:*
->
-> `true` only if `m.is_exhaustive()` is `true` for all possible objects
-> `m` of type `M`.
+> *Returns:* `true` only if `m.is_exhaustive()` is `true` for all
+> possible objects `m` of type `M`.
 >
 > \[*Note 34*: A mapping can return `false` even if the above condition
 > is met. For certain layout mappings, it is possibly not feasible to
@@ -16370,14 +14059,10 @@ M::is_always_exhaustive()
 M::is_always_strided()
 ```
 
-> *Result:*
+> *Result:* A constant expression [[expr.const]] of type `bool`.
 >
-> A constant expression [[expr.const]] of type `bool`.
->
-> *Returns:*
->
-> `true` only if `m.is_strided()` is `true` for all possible objects `m`
-> of type `M`.
+> *Returns:* `true` only if `m.is_strided()` is `true` for all possible
+> objects `m` of type `M`.
 >
 > \[*Note 35*: A mapping can return `false` even if the above condition
 > is met. For certain layout mappings, it is possibly not feasible to
@@ -16491,14 +14176,10 @@ type `typename Extents::index_type`.
 constexpr mapping(const extents_type& e) noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* The size of the multidimensional index space `e` is
+> representable as a value of type `index_type`[[basic.fundamental]].
 >
-> The size of the multidimensional index space `e` is representable as a
-> value of type `index_type`[[basic.fundamental]].
->
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `e`.
+> *Effects:* Direct-non-list-initializes *extents\_* with `e`.
 
 ``` cpp
 template<class OtherExtents>
@@ -16506,18 +14187,14 @@ template<class OtherExtents>
     mapping(const mapping<OtherExtents>& other) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<extents_type, OtherExtents>` is
+> `true`.
 >
-> `is_constructible_v<extents_type, OtherExtents>` is `true`.
+> *Preconditions:* `other.required_span_size()` is representable as a
+> value of type `index_type`[[basic.fundamental]].
 >
-> *Preconditions:*
->
-> `other.required_span_size()` is representable as a value of type
-> `index_type`[[basic.fundamental]].
->
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`.
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`.
 
 ``` cpp
 template<class OtherExents>
@@ -16531,14 +14208,11 @@ template<class OtherExents>
 >
 > - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `other.required_span_size()` is representable as a
+> value of type `index_type`[[basic.fundamental]].
 >
-> `other.required_span_size()` is representable as a value of type
-> `index_type`[[basic.fundamental]].
->
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`.
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`.
 
 ``` cpp
 template<class OtherExtents>
@@ -16546,9 +14220,8 @@ template<class OtherExtents>
     mapping(const layout_stride::mapping<OtherExtents>& other);
 ```
 
-> *Constraints:*
->
-> `is_constructible_v<extents_type, OtherExtents>` is `true`.
+> *Constraints:* `is_constructible_v<extents_type, OtherExtents>` is
+> `true`.
 >
 > *Preconditions:*
 >
@@ -16559,9 +14232,8 @@ template<class OtherExtents>
 > - `other.required_span_size()` is representable as a value of type
 >   `index_type`[[basic.fundamental]].
 >
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`.
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`.
 
 ###### Observers <a id="mdspan.layout.left.obs">[[mdspan.layout.left.obs]]</a>
 
@@ -16570,7 +14242,6 @@ constexpr index_type required_span_size() const noexcept;
 ```
 
 > *Returns:*
->
 > `extents().`*`fwd-prod-of-extents`*`(extents_type::rank())`.
 
 ``` cpp
@@ -16587,14 +14258,10 @@ template<class... Indices>
 > - `(is_nothrow_constructible_v<index_type, Indices> && ...)` is
 >   `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `extents_type::`*`index-cast`*`(i)` is a
+> multidimensional index in *extents\_*[[mdspan.overview]].
 >
-> `extents_type::`*`index-cast`*`(i)` is a multidimensional index in
-> *extents\_*[[mdspan.overview]].
->
-> *Effects:*
->
-> Let `P` be a parameter pack such that
+> *Effects:* Let `P` be a parameter pack such that
 >
 > ``` cpp
 > is_same_v<index_sequence_for<Indices...>, index_sequence<P...>>
@@ -16610,30 +14277,21 @@ template<class... Indices>
 constexpr index_type stride(rank_type i) const;
 ```
 
-> *Constraints:*
+> *Constraints:* `extents_type::rank() > 0` is `true`.
 >
-> `extents_type::rank() > 0` is `true`.
+> *Preconditions:* `i < extents_type::rank()` is `true`.
 >
-> *Preconditions:*
->
-> `i < extents_type::rank()` is `true`.
->
-> *Returns:*
->
-> `extents().`*`fwd-prod-of-extents`*`(i)`.
+> *Returns:* `extents().`*`fwd-prod-of-extents`*`(i)`.
 
 ``` cpp
 template<class OtherExtents>
   friend constexpr bool operator==(const mapping& x, const mapping<OtherExtents>& y) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `extents_type::rank() == OtherExtents::rank()` is
+> `true`.
 >
-> `extents_type::rank() == OtherExtents::rank()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return x.extents() == y.extents();`
+> *Effects:* Equivalent to: `return x.extents() == y.extents();`
 
 ##### Class template `layout_right::mapping` <a id="mdspan.layout.right">[[mdspan.layout.right]]</a>
 
@@ -16712,14 +14370,10 @@ type `typename Extents::index_type`.
 constexpr mapping(const extents_type& e) noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* The size of the multidimensional index space `e` is
+> representable as a value of type `index_type`[[basic.fundamental]].
 >
-> The size of the multidimensional index space `e` is representable as a
-> value of type `index_type`[[basic.fundamental]].
->
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `e`.
+> *Effects:* Direct-non-list-initializes *extents\_* with `e`.
 
 ``` cpp
 template<class OtherExtents>
@@ -16727,18 +14381,14 @@ template<class OtherExtents>
     mapping(const mapping<OtherExtents>& other) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_constructible_v<extents_type, OtherExtents>` is
+> `true`.
 >
-> `is_constructible_v<extents_type, OtherExtents>` is `true`.
+> *Preconditions:* `other.required_span_size()` is representable as a
+> value of type `index_type`[[basic.fundamental]].
 >
-> *Preconditions:*
->
-> `other.required_span_size()` is representable as a value of type
-> `index_type`[[basic.fundamental]].
->
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`.
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`.
 
 ``` cpp
 template<class OtherExtents>
@@ -16752,14 +14402,11 @@ template<class OtherExtents>
 >
 > - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `other.required_span_size()` is representable as a
+> value of type `index_type`[[basic.fundamental]].
 >
-> `other.required_span_size()` is representable as a value of type
-> `index_type`[[basic.fundamental]].
->
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`.
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`.
 
 ``` cpp
 template<class OtherExtents>
@@ -16767,9 +14414,8 @@ template<class OtherExtents>
     mapping(const layout_stride::mapping<OtherExtents>& other) noexcept;
 ```
 
-> *Constraints:*
->
-> `is_constructible_v<extents_type, OtherExtents>` is `true`.
+> *Constraints:* `is_constructible_v<extents_type, OtherExtents>` is
+> `true`.
 >
 > *Preconditions:*
 >
@@ -16780,9 +14426,8 @@ template<class OtherExtents>
 > - `other.required_span_size()` is representable as a value of type
 >   `index_type`[[basic.fundamental]].
 >
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`.
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`.
 
 ###### Observers <a id="mdspan.layout.right.obs">[[mdspan.layout.right.obs]]</a>
 
@@ -16791,7 +14436,6 @@ index_type required_span_size() const noexcept;
 ```
 
 > *Returns:*
->
 > `extents().`*`fwd-prod-of-extents`*`(extents_type::rank())`.
 
 ``` cpp
@@ -16808,14 +14452,10 @@ template<class... Indices>
 > - `(is_nothrow_constructible_v<index_type, Indices> && ...)` is
 >   `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `extents_type::`*`index-cast`*`(i)` is a
+> multidimensional index in *extents\_*[[mdspan.overview]].
 >
-> `extents_type::`*`index-cast`*`(i)` is a multidimensional index in
-> *extents\_*[[mdspan.overview]].
->
-> *Effects:*
->
-> Let `P` be a parameter pack such that
+> *Effects:* Let `P` be a parameter pack such that
 >
 > ``` cpp
 > is_same_v<index_sequence_for<Indices...>, index_sequence<P...>>
@@ -16831,30 +14471,21 @@ template<class... Indices>
 constexpr index_type stride(rank_type i) const noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `extents_type::rank() > 0` is `true`.
 >
-> `extents_type::rank() > 0` is `true`.
+> *Preconditions:* `i < extents_type::rank()` is `true`.
 >
-> *Preconditions:*
->
-> `i < extents_type::rank()` is `true`.
->
-> *Returns:*
->
-> `extents().`*`rev-prod-of-extents`*`(i)`.
+> *Returns:* `extents().`*`rev-prod-of-extents`*`(i)`.
 
 ``` cpp
 template<class OtherExtents>
   friend constexpr bool operator==(const mapping& x, const mapping<OtherExtents>& y) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `extents_type::rank() == OtherExtents::rank()` is
+> `true`.
 >
-> `extents_type::rank() == OtherExtents::rank()` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return x.extents() == y.extents();`
+> *Effects:* Equivalent to: `return x.extents() == y.extents();`
 
 ##### Class template `layout_stride::mapping` <a id="mdspan.layout.stride">[[mdspan.layout.stride]]</a>
 
@@ -16991,15 +14622,12 @@ constexpr mapping() noexcept;
 ```
 
 > *Preconditions:*
->
 > `layout_right::mapping<extents_type>().required_span_size()` is
 > representable as a value of type `index_type`[[basic.fundamental]].
 >
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `extents_type()`, and for
-> all d in the range \[`0`, *`rank_`*`)`, direct-non-list-initializes
-> *`strides_`*`[`d`]` with
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `extents_type()`, and for all d in the range \[`0`, *`rank_`*`)`,
+> direct-non-list-initializes *`strides_`*`[`d`]` with
 > `layout_right::mapping<extents_type>().stride(`d`)`.
 
 ``` cpp
@@ -17032,10 +14660,8 @@ template<class OtherIndexType>
 >   \[*Note 36*: For `layout_stride`, this condition is necessary and
 >   sufficient for `is_unique()` to be `true`. — *end note*\]
 >
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `e`, and for all d in the
-> range $[0, \textit{rank_})$, direct-non-list-initializes
+> *Effects:* Direct-non-list-initializes *extents\_* with `e`, and for
+> all d in the range $[0, \textit{rank_})$, direct-non-list-initializes
 > `strides_[`d`]` with `as_const(s[`d`])`.
 
 ``` cpp
@@ -17069,10 +14695,8 @@ template<class StridedLayoutMapping>
 >
 > - *`OFFSET`*`(other) == 0` is `true`.
 >
-> *Effects:*
->
-> Direct-non-list-initializes *extents\_* with `other.extents()`, and
-> for all d in the range $[0, \textit{rank_})$,
+> *Effects:* Direct-non-list-initializes *extents\_* with
+> `other.extents()`, and for all d in the range $[0, \textit{rank_})$,
 > direct-non-list-initializes *`strides_`*`[`d`]` with
 > `other.stride(`d`)`.
 >
@@ -17091,9 +14715,7 @@ template<class StridedLayoutMapping>
 constexpr index_type required_span_size() const noexcept;
 ```
 
-> *Returns:*
->
-> *`REQUIRED-SPAN-SIZE`*`(extents(), `*`strides_`*`)`.
+> *Returns:* *`REQUIRED-SPAN-SIZE`*`(extents(), `*`strides_`*`)`.
 
 ``` cpp
 template<class... Indices>
@@ -17109,14 +14731,10 @@ template<class... Indices>
 > - `(is_nothrow_constructible_v<index_type, Indices> && ...)` is
 >   `true`.
 >
-> *Preconditions:*
+> *Preconditions:* `extents_type::`*`index-cast`*`(i)` is a
+> multidimensional index in *extents\_*[[mdspan.overview]].
 >
-> `extents_type::`*`index-cast`*`(i)` is a multidimensional index in
-> *extents\_*[[mdspan.overview]].
->
-> *Effects:*
->
-> Let `P` be a parameter pack such that
+> *Effects:* Let `P` be a parameter pack such that
 >
 > ``` cpp
 > is_same_v<index_sequence_for<Indices...>, index_sequence<P...>>
@@ -17158,16 +14776,13 @@ template<class OtherMapping>
 >
 > - `OtherMapping::is_always_strided()` is `true`.
 >
-> *Preconditions:*
->
-> `OtherMapping` meets the layout mapping
+> *Preconditions:* `OtherMapping` meets the layout mapping
 > requirements [[mdspan.layout.policy.reqmts]].
 >
-> *Returns:*
->
-> `true` if `x.extents() == y.extents()` is `true`, *`OFFSET`*`(y) == 0`
-> is `true`, and each of `x.stride(`r`) == y.stride(`r`)` is `true` for
-> r in the range $[0, \texttt{x.extents().rank()})$. Otherwise, `false`.
+> *Returns:* `true` if `x.extents() == y.extents()` is `true`,
+> *`OFFSET`*`(y) == 0` is `true`, and each of
+> `x.stride(`r`) == y.stride(`r`)` is `true` for r in the range
+> $[0, \texttt{x.extents().rank()})$. Otherwise, `false`.
 
 #### Accessor policy <a id="mdspan.accessor">[[mdspan.accessor]]</a>
 
@@ -17214,17 +14829,13 @@ A type `A` meets the accessor policy requirements if
 typename A::element_type
 ```
 
-> *Result:*
->
-> A complete object type that is not an abstract class type.
+> *Result:* A complete object type that is not an abstract class type.
 
 ``` cpp
 typename A::data_handle_type
 ```
 
-> *Result:*
->
-> A type that models `copyable`, and for which
+> *Result:* A type that models `copyable`, and for which
 > `is_nothrow_move_constructible_v<A::data_handle_type>` is `true`,
 > `is_nothrow_move_assignable_v<A::data_handle_type>` is `true`, and
 > `is_nothrow_swappable_v<A::data_handle_type>` is `true`.
@@ -17236,9 +14847,7 @@ typename A::data_handle_type
 typename A::reference
 ```
 
-> *Result:*
->
-> A type that models
+> *Result:* A type that models
 > `common_reference_with``<A::reference&&, A::element_type&>`.
 >
 > \[*Note 39*: The type of `reference` need not be
@@ -17248,9 +14857,7 @@ typename A::reference
 typename A::offset_policy
 ```
 
-> *Result:*
->
-> A type `OP` such that:
+> *Result:* A type `OP` such that:
 >
 > - `OP` meets the accessor policy requirements,
 >
@@ -17263,13 +14870,9 @@ typename A::offset_policy
 a.access(p, i)
 ```
 
-> *Result:*
+> *Result:* `A::reference`
 >
-> `A::reference`
->
-> *Remarks:*
->
-> The expression is equality preserving.
+> *Remarks:* The expression is equality preserving.
 >
 > \[*Note 40*: Concrete accessor policies can impose preconditions for
 > their `access` function. However, they might not. For example, an
@@ -17281,14 +14884,11 @@ a.access(p, i)
 a.offset(p, i)
 ```
 
-> *Result:*
+> *Result:* `A::offset_policy::data_handle_type`
 >
-> `A::offset_policy::data_handle_type`
->
-> *Returns:*
->
-> `q` such that for `b` being `A::offset_policy(a)`, and any integer `n`
-> for which $[0, \texttt{n})$ is an accessible range of `p` and `a`:
+> *Returns:* `q` such that for `b` being `A::offset_policy(a)`, and any
+> integer `n` for which $[0, \texttt{n})$ is an accessible range of `p`
+> and `a`:
 >
 > - $[0, \texttt{n} - \texttt{i})$ is an accessible range of `q` and
 >   `b`; and
@@ -17297,9 +14897,7 @@ a.offset(p, i)
 >   `a.access(p, i + j)`, for every `j` in the range
 >   $[0, \texttt{n} - \texttt{i})$.
 >
-> *Remarks:*
->
-> The expression is equality-preserving.
+> *Remarks:* The expression is equality-preserving.
 
 ##### Class template `default_accessor` <a id="mdspan.accessor.default">[[mdspan.accessor.default]]</a>
 
@@ -17343,7 +14941,6 @@ template<class OtherElementType>
 ```
 
 > *Constraints:*
->
 > `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
 > `true`.
 
@@ -17351,17 +14948,13 @@ template<class OtherElementType>
 constexpr reference access(data_handle_type p, size_t i) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return p[i];`
+> *Effects:* Equivalent to: `return p[i];`
 
 ``` cpp
 constexpr data_handle_type offset(data_handle_type p, size_t i) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return p + i;`
+> *Effects:* Equivalent to: `return p + i;`
 
 #### Class template `mdspan` <a id="mdspan.mdspan">[[mdspan.mdspan]]</a>
 
@@ -17539,15 +15132,11 @@ constexpr mdspan();
 >
 > - `is_default_constructible_v<accessor_type>` is `true`.
 >
-> *Preconditions:*
+> *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+> an accessible range of *ptr\_* and *acc\_* for the values of *map\_*
+> and *acc\_* after the invocation of this constructor.
 >
-> $[0, \texttt{\textit{map_}.required_span_size()})$ is an accessible
-> range of *ptr\_* and *acc\_* for the values of *map\_* and *acc\_*
-> after the invocation of this constructor.
->
-> *Effects:*
->
-> Value-initializes *ptr\_*, *map\_*, and *acc\_*.
+> *Effects:* Value-initializes *ptr\_*, *map\_*, and *acc\_*.
 
 ``` cpp
 template<class... OtherIndexTypes>
@@ -17569,11 +15158,9 @@ template<class... OtherIndexTypes>
 >
 > - `is_default_constructible_v<accessor_type>` is `true`.
 >
-> *Preconditions:*
->
-> $[0, \texttt{\textit{map_}.required_span_size()})$ is an accessible
-> range of `p` and *acc\_* for the values of *map\_* and *acc\_* after
-> the invocation of this constructor.
+> *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+> an accessible range of `p` and *acc\_* for the values of *map\_* and
+> *acc\_* after the invocation of this constructor.
 >
 > *Effects:*
 >
@@ -17606,11 +15193,9 @@ template<class OtherIndexType, size_t N>
 >
 > - `is_default_constructible_v<accessor_type>` is `true`.
 >
-> *Preconditions:*
->
-> $[0, \texttt{\textit{map_}.required_span_size()})$ is an accessible
-> range of `p` and *acc\_* for the values of *map\_* and *acc\_* after
-> the invocation of this constructor.
+> *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+> an accessible range of `p` and *acc\_* for the values of *map\_* and
+> *acc\_* after the invocation of this constructor.
 >
 > *Effects:*
 >
@@ -17631,11 +15216,9 @@ constexpr mdspan(data_handle_type p, const extents_type& ext);
 >
 > - `is_default_constructible_v<accessor_type>` is `true`.
 >
-> *Preconditions:*
->
-> $[0, \texttt{\textit{map_}.required_span_size()})$ is an accessible
-> range of `p` and *acc\_* for the values of *map\_* and *acc\_* after
-> the invocation of this constructor.
+> *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+> an accessible range of `p` and *acc\_* for the values of *map\_* and
+> *acc\_* after the invocation of this constructor.
 >
 > *Effects:*
 >
@@ -17649,15 +15232,11 @@ constexpr mdspan(data_handle_type p, const extents_type& ext);
 constexpr mdspan(data_handle_type p, const mapping_type& m);
 ```
 
-> *Constraints:*
+> *Constraints:* `is_default_constructible_v<accessor_type>` is `true`.
 >
-> `is_default_constructible_v<accessor_type>` is `true`.
->
-> *Preconditions:*
->
-> $[0, \texttt{m.required_span_size()})$ is an accessible range of `p`
-> and *acc\_* for the value of *acc\_* after the invocation of this
-> constructor.
+> *Preconditions:* $[0, \texttt{m.required_span_size()})$ is an
+> accessible range of `p` and *acc\_* for the value of *acc\_* after the
+> invocation of this constructor.
 >
 > *Effects:*
 >
@@ -17671,10 +15250,8 @@ constexpr mdspan(data_handle_type p, const mapping_type& m);
 constexpr mdspan(data_handle_type p, const mapping_type& m, const accessor_type& a);
 ```
 
-> *Preconditions:*
->
-> $[0, \texttt{m.required_span_size()})$ is an accessible range of `p`
-> and `a`.
+> *Preconditions:* $[0, \texttt{m.required_span_size()})$ is an
+> accessible range of `p` and `a`.
 >
 > *Effects:*
 >
@@ -17724,9 +15301,7 @@ template<class OtherElementType, class OtherExtents,
 >
 > - direct-non-list-initializes *acc\_* with `other.`*`acc_`*.
 >
-> *Remarks:*
->
-> The expression inside `explicit` is equivalent to:
+> *Remarks:* The expression inside `explicit` is equivalent to:
 >
 > ``` cpp
 > !is_convertible_v<const OtherLayoutPolicy::template mapping<OtherExtents>&, mapping_type>
@@ -17751,17 +15326,13 @@ template<class... OtherIndexTypes>
 >
 > Let `I` be `extents_type::`*`index-cast`*`(std::move(indices))`.
 >
-> *Preconditions:*
->
-> `I` is a multidimensional index in `extents()`.
+> *Preconditions:* `I` is a multidimensional index in `extents()`.
 >
 > \[*Note 41*: This implies that
 > *`map_`*`(I) < `*`map_`*`.required_span_size()` is
 > `true`. — *end note*\]
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return acc_.access(ptr_, map_(static_cast<index_type>(std::move(indices))...));
@@ -17781,9 +15352,7 @@ template<class OtherIndexType>
 > - `is_nothrow_constructible_v<index_type, const OtherIndexType&>` is
 >   `true`.
 >
-> *Effects:*
->
-> Let `P` be a parameter pack such that
+> *Effects:* Let `P` be a parameter pack such that
 >
 > ``` cpp
 > is_same_v<make_index_sequence<rank()>, index_sequence<P...>>
@@ -17799,31 +15368,24 @@ template<class OtherIndexType>
 constexpr size_type size() const noexcept;
 ```
 
-> *Preconditions:*
+> *Preconditions:* The size of the multidimensional index space
+> `extents()` is representable as a value of type
+> `size_type`[[basic.fundamental]].
 >
-> The size of the multidimensional index space `extents()` is
-> representable as a value of type `size_type`[[basic.fundamental]].
->
-> *Returns:*
->
-> `extents().`*`fwd-prod-of-extents`*`(rank())`.
+> *Returns:* `extents().`*`fwd-prod-of-extents`*`(rank())`.
 
 ``` cpp
 [[nodiscard]] constexpr bool empty() const noexcept;
 ```
 
-> *Returns:*
->
-> `true` if the size of the multidimensional index space `extents()` is
-> 0, otherwise `false`.
+> *Returns:* `true` if the size of the multidimensional index space
+> `extents()` is 0, otherwise `false`.
 
 ``` cpp
 friend constexpr void swap(mdspan& x, mdspan& y) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > swap(x.ptr_, y.ptr_);

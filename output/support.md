@@ -233,26 +233,18 @@ template<class IntType>
   constexpr byte& operator<<=(byte& b, IntType shift) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_integral_v<IntType>` is `true`.
 >
-> `is_integral_v<IntType>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return b = b << shift;`
+> *Effects:* Equivalent to: `return b = b << shift;`
 
 ``` cpp
 template<class IntType>
   constexpr byte operator<<(byte b, IntType shift) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_integral_v<IntType>` is `true`.
 >
-> `is_integral_v<IntType>` is `true`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return static_cast<byte>(static_cast<unsigned int>(b) << shift);
@@ -263,26 +255,18 @@ template<class IntType>
   constexpr byte& operator>>=(byte& b, IntType shift) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_integral_v<IntType>` is `true`.
 >
-> `is_integral_v<IntType>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return b = b >> shift;`
+> *Effects:* Equivalent to: `return b = b >> shift;`
 
 ``` cpp
 template<class IntType>
   constexpr byte operator>>(byte b, IntType shift) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_integral_v<IntType>` is `true`.
 >
-> `is_integral_v<IntType>` is `true`.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return static_cast<byte>(static_cast<unsigned int>(b) >> shift);
@@ -292,17 +276,13 @@ template<class IntType>
 constexpr byte& operator|=(byte& l, byte r) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return l = l | r;`
+> *Effects:* Equivalent to: `return l = l | r;`
 
 ``` cpp
 constexpr byte operator|(byte l, byte r) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return static_cast<byte>(static_cast<unsigned int>(l) | static_cast<unsigned int>(r));
@@ -312,17 +292,13 @@ constexpr byte operator|(byte l, byte r) noexcept;
 constexpr byte& operator&=(byte& l, byte r) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return l = l & r;`
+> *Effects:* Equivalent to: `return l = l & r;`
 
 ``` cpp
 constexpr byte operator&(byte l, byte r) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return static_cast<byte>(static_cast<unsigned int>(l) & static_cast<unsigned int>(r));
@@ -332,17 +308,13 @@ constexpr byte operator&(byte l, byte r) noexcept;
 constexpr byte& operator^=(byte& l, byte r) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return l = l r;`
+> *Effects:* Equivalent to: `return l = l r;`
 
 ``` cpp
 constexpr byte operator^(byte l, byte r) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return static_cast<byte>(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
@@ -352,9 +324,7 @@ constexpr byte operator^(byte l, byte r) noexcept;
 constexpr byte operator~(byte b) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return static_cast<byte>(~static_cast<unsigned int>(b));
@@ -365,13 +335,9 @@ template<class IntType>
   constexpr IntType to_integer(byte b) noexcept;
 ```
 
-> *Constraints:*
+> *Constraints:* `is_integral_v<IntType>` is `true`.
 >
-> `is_integral_v<IntType>` is `true`.
->
-> *Effects:*
->
-> Equivalent to: `return static_cast<IntType>(b);`
+> *Effects:* Equivalent to: `return static_cast<IntType>(b);`
 
 ## Implementation properties <a id="support.limits">[[support.limits]]</a>
 
@@ -1409,54 +1375,44 @@ this subclause. — *end note*\]
 [[noreturn]] void _Exit(int status) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* This function has the semantics specified in the C standard
+> library.
 >
-> This function has the semantics specified in the C standard library.
->
-> *Remarks:*
->
-> The program is terminated without executing destructors for objects of
-> automatic, thread, or static storage duration and without calling
-> functions passed to `atexit()`[[basic.start.term]]. The function
-> `_Exit` is signal-safe [[support.signal]].
+> *Remarks:* The program is terminated without executing destructors for
+> objects of automatic, thread, or static storage duration and without
+> calling functions passed to `atexit()`[[basic.start.term]]. The
+> function `_Exit` is signal-safe [[support.signal]].
 
 ``` cpp
 [[noreturn]] void abort() noexcept;
 ```
 
-> *Effects:*
+> *Effects:* This function has the semantics specified in the C standard
+> library.
 >
-> This function has the semantics specified in the C standard library.
->
-> *Remarks:*
->
-> The program is terminated without executing destructors for objects of
-> automatic, thread, or static storage duration and without calling
-> functions passed to `atexit()`[[basic.start.term]]. The function
-> `abort` is signal-safe [[support.signal]].
+> *Remarks:* The program is terminated without executing destructors for
+> objects of automatic, thread, or static storage duration and without
+> calling functions passed to `atexit()`[[basic.start.term]]. The
+> function `abort` is signal-safe [[support.signal]].
 
 ``` cpp
 int atexit(c-atexit-handler* f) noexcept;
 int atexit(atexit-handler* f) noexcept;
 ```
 
-> *Effects:*
->
-> The `atexit()` functions register the function pointed to by `f` to be
-> called without arguments at normal program termination. It is
-> unspecified whether a call to `atexit()` that does not happen
+> *Effects:* The `atexit()` functions register the function pointed to
+> by `f` to be called without arguments at normal program termination.
+> It is unspecified whether a call to `atexit()` that does not happen
 > before [[intro.multithread]] a call to `exit()` will succeed.
 >
 > \[*Note 3*: The `atexit()` functions do not introduce a data
 > race [[res.on.data.races]]. — *end note*\]
 >
-> The implementation shall support the registration of at least 32
-> functions.
+> *Implementation limits:* The implementation shall support the
+> registration of at least 32 functions.
 >
-> *Returns:*
->
-> The `atexit()` function returns zero if the registration succeeds,
-> nonzero if it fails.
+> *Returns:* The `atexit()` function returns zero if the registration
+> succeeds, nonzero if it fails.
 
 ``` cpp
 [[noreturn]] void exit(int status);
@@ -1502,12 +1458,11 @@ int at_quick_exit(c-atexit-handler* f) noexcept;
 int at_quick_exit(atexit-handler* f) noexcept;
 ```
 
-> *Effects:*
->
-> The `at_quick_exit()` functions register the function pointed to by
-> `f` to be called without arguments when `quick_exit` is called. It is
-> unspecified whether a call to `at_quick_exit()` that does not happen
-> before [[intro.multithread]] all calls to `quick_exit` will succeed.
+> *Effects:* The `at_quick_exit()` functions register the function
+> pointed to by `f` to be called without arguments when `quick_exit` is
+> called. It is unspecified whether a call to `at_quick_exit()` that
+> does not happen before [[intro.multithread]] all calls to `quick_exit`
+> will succeed.
 >
 > \[*Note 4*: The `at_quick_exit()` functions do not introduce a data
 > race [[res.on.data.races]]. — *end note*\]
@@ -1519,26 +1474,22 @@ int at_quick_exit(atexit-handler* f) noexcept;
 > `atexit` registrations, and applications might need to call both
 > registration functions with the same argument. — *end note*\]
 >
-> The implementation shall support the registration of at least 32
-> functions.
+> *Implementation limits:* The implementation shall support the
+> registration of at least 32 functions.
 >
-> *Returns:*
->
-> Zero if the registration succeeds, nonzero if it fails.
+> *Returns:* Zero if the registration succeeds, nonzero if it fails.
 
 ``` cpp
 [[noreturn]] void quick_exit(int status) noexcept;
 ```
 
-> *Effects:*
->
-> Functions registered by calls to `at_quick_exit` are called in the
-> reverse order of their registration, except that a function shall be
-> called after any previously registered functions that had already been
-> called at the time it was registered. Objects shall not be destroyed
-> as a result of calling `quick_exit`. If a registered function invoked
-> by `quick_exit` exits via an exception, the function `std::terminate`
-> is invoked [[except.terminate]].
+> *Effects:* Functions registered by calls to `at_quick_exit` are called
+> in the reverse order of their registration, except that a function
+> shall be called after any previously registered functions that had
+> already been called at the time it was registered. Objects shall not
+> be destroyed as a result of calling `quick_exit`. If a registered
+> function invoked by `quick_exit` exits via an exception, the function
+> `std::terminate` is invoked [[except.terminate]].
 >
 > \[*Note 7*: A function registered via `at_quick_exit` is invoked by
 > the thread that calls `quick_exit`, which can be a different thread
@@ -1549,10 +1500,8 @@ int at_quick_exit(atexit-handler* f) noexcept;
 > After calling registered functions, `quick_exit` shall call
 > `_Exit(status)`.
 >
-> *Remarks:*
->
-> The function `quick_exit` is signal-safe [[support.signal]] when the
-> functions registered with `at_quick_exit` are.
+> *Remarks:* The function `quick_exit` is signal-safe [[support.signal]]
+> when the functions registered with `at_quick_exit` are.
 
 ## Dynamic memory management <a id="support.dynamic">[[support.dynamic]]</a>
 
@@ -1645,21 +1594,21 @@ functions is not a valid alignment value, the behavior is undefined.
 [[nodiscard]] void* operator new(std::size_t size, std::align_val_t alignment);
 ```
 
-> *Effects:*
+> *Effects:* The allocation functions [[basic.stc.dynamic.allocation]]
+> called by a *new-expression*[[expr.new]] to allocate `size` bytes of
+> storage. The second form is called for a type with new-extended
+> alignment, and the first form is called otherwise.
 >
-> The allocation functions [[basic.stc.dynamic.allocation]] called by a
-> *new-expression*[[expr.new]] to allocate `size` bytes of storage. The
-> second form is called for a type with new-extended alignment, and the
-> first form is called otherwise.
+> *Replaceable:* A program may define functions with either of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
-> A program may define functions with either of these function
-> signatures, and thereby displace the default versions defined by the
-> standard library.
->
-> Return a non-null pointer to suitably aligned
+> *Required behavior:* Return a non-null pointer to suitably aligned
 > storage [[basic.stc.dynamic]], or else throw a `bad_alloc` exception.
 > This requirement is binding on any replacement versions of these
 > functions.
+>
+> *Default behavior:*
 >
 > - Executes a loop: Within the loop, the function first attempts to
 >   allocate the requested storage. Whether the attempt involves a call
@@ -1685,26 +1634,25 @@ functions is not a valid alignment value, the behavior is undefined.
                                  const std::nothrow_t&) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Same as above, except that these are called by a placement
+> version of a *new-expression* when a program prefers a null pointer
+> result as an error indication, instead of a `bad_alloc` exception.
 >
-> Same as above, except that these are called by a placement version of
-> a *new-expression* when a program prefers a null pointer result as an
-> error indication, instead of a `bad_alloc` exception.
+> *Replaceable:* A program may define functions with either of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
-> A program may define functions with either of these function
-> signatures, and thereby displace the default versions defined by the
-> standard library.
->
-> Return a non-null pointer to suitably aligned
+> *Required behavior:* Return a non-null pointer to suitably aligned
 > storage [[basic.stc.dynamic]], or else return a null pointer. Each of
 > these nothrow versions of `operator new` returns a pointer obtained as
 > if acquired from the (possibly replaced) corresponding non-placement
 > function. This requirement is binding on any replacement versions of
 > these functions.
 >
-> Calls `operator new(size)`, or `operator new(size, alignment)`,
-> respectively. If the call returns normally, returns the result of that
-> call. Otherwise, returns a null pointer.
+> *Default behavior:* Calls `operator new(size)`, or
+> `operator new(size, alignment)`, respectively. If the call returns
+> normally, returns the result of that call. Otherwise, returns a null
+> pointer.
 >
 > \[*Example 2*:
 >
@@ -1720,11 +1668,9 @@ void operator delete(void* ptr, std::align_val_t alignment) noexcept;
 void operator delete(void* ptr, std::size_t size, std::align_val_t alignment) noexcept;
 ```
 
-> *Preconditions:*
->
-> `ptr` is a null pointer or its value represents the address of a block
-> of memory allocated by an earlier call to a (possibly replaced)
-> `operator new(std::size_t)` or
+> *Preconditions:* `ptr` is a null pointer or its value represents the
+> address of a block of memory allocated by an earlier call to a
+> (possibly replaced) `operator new(std::size_t)` or
 > `operator new(std::size_t, std::align_val_t)` which has not been
 > invalidated by an intervening call to `operator delete`.
 >
@@ -1735,15 +1681,14 @@ void operator delete(void* ptr, std::size_t size, std::align_val_t alignment) no
 > argument is equal to the `size` argument passed to the allocation
 > function that returned `ptr`.
 >
-> *Effects:*
->
-> The deallocation functions [[basic.stc.dynamic.deallocation]] called
-> by a *delete-expression*[[expr.delete]] to render the value of `ptr`
+> *Effects:* The deallocation
+> functions [[basic.stc.dynamic.deallocation]] called by a
+> *delete-expression*[[expr.delete]] to render the value of `ptr`
 > invalid.
 >
-> A program may define functions with any of these function signatures,
-> and thereby displace the default versions defined by the standard
-> library.
+> *Replaceable:* A program may define functions with any of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
 > If a function without a `size` parameter is defined, the program
 > should also define the corresponding function with a `size` parameter.
@@ -1754,38 +1699,38 @@ void operator delete(void* ptr, std::size_t size, std::align_val_t alignment) no
 > which will require replacing both deallocation functions when
 > replacing the allocation function. — *end note*\]
 >
-> A call to an `operator delete` with a `size` parameter may be changed
-> to a call to the corresponding `operator delete` without a `size`
-> parameter, without affecting memory allocation.
+> *Required behavior:* A call to an `operator delete` with a `size`
+> parameter may be changed to a call to the corresponding
+> `operator delete` without a `size` parameter, without affecting memory
+> allocation.
 >
 > \[*Note 9*: A conforming implementation is for
 > `operator delete(void* ptr, std::size_t size)` to simply call
 > `operator delete(ptr)`. — *end note*\]
 >
-> The functions that have a `size` parameter forward their other
-> parameters to the corresponding function without a `size` parameter.
+> *Default behavior:* The functions that have a `size` parameter forward
+> their other parameters to the corresponding function without a `size`
+> parameter.
 >
-> \[*Note 10*: See the note in the above paragraph. — *end note*\]
+> \[*Note 10*: See the note in the above *Replaceable:*
+> paragraph. — *end note*\]
 >
-> If `ptr` is null, does nothing. Otherwise, reclaims the storage
-> allocated by the earlier call to `operator new`.
+> *Default behavior:* If `ptr` is null, does nothing. Otherwise,
+> reclaims the storage allocated by the earlier call to `operator new`.
 >
-> *Remarks:*
->
-> It is unspecified under what conditions part or all of such reclaimed
-> storage will be allocated by subsequent calls to `operator new` or any
-> of `aligned_alloc`, `calloc`, `malloc`, or `realloc`, declared in .
+> *Remarks:* It is unspecified under what conditions part or all of such
+> reclaimed storage will be allocated by subsequent calls to
+> `operator new` or any of `aligned_alloc`, `calloc`, `malloc`, or
+> `realloc`, declared in .
 
 ``` cpp
 void operator delete(void* ptr, const std::nothrow_t&) noexcept;
 void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t&) noexcept;
 ```
 
-> *Preconditions:*
->
-> `ptr` is a null pointer or its value represents the address of a block
-> of memory allocated by an earlier call to a (possibly replaced)
-> `operator new(std::size_t)` or
+> *Preconditions:* `ptr` is a null pointer or its value represents the
+> address of a block of memory allocated by an earlier call to a
+> (possibly replaced) `operator new(std::size_t)` or
 > `operator new(std::size_t, std::align_val_t)` which has not been
 > invalidated by an intervening call to `operator delete`.
 >
@@ -1794,19 +1739,18 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 > `alignment` argument is equal to the `alignment` argument passed to
 > the allocation function that returned `ptr`.
 >
-> *Effects:*
->
-> The deallocation functions [[basic.stc.dynamic.deallocation]] called
-> by the implementation to render the value of `ptr` invalid when the
+> *Effects:* The deallocation
+> functions [[basic.stc.dynamic.deallocation]] called by the
+> implementation to render the value of `ptr` invalid when the
 > constructor invoked from a nothrow placement version of the
 > *new-expression* throws an exception.
 >
-> A program may define functions with either of these function
-> signatures, and thereby displace the default versions defined by the
-> standard library.
+> *Replaceable:* A program may define functions with either of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
-> Calls `operator delete(ptr)`, or `operator delete(ptr, alignment)`,
-> respectively.
+> *Default behavior:* Calls `operator delete(ptr)`, or
+> `operator delete(ptr, alignment)`, respectively.
 
 #### Array forms <a id="new.delete.array">[[new.delete.array]]</a>
 
@@ -1815,11 +1759,9 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 [[nodiscard]] void* operator new[](std::size_t size, std::align_val_t alignment);
 ```
 
-> *Effects:*
->
-> The allocation functions [[basic.stc.dynamic.allocation]] called by
-> the array form of a *new-expression*[[expr.new]] to allocate `size`
-> bytes of storage. The second form is called for a type with
+> *Effects:* The allocation functions [[basic.stc.dynamic.allocation]]
+> called by the array form of a *new-expression*[[expr.new]] to allocate
+> `size` bytes of storage. The second form is called for a type with
 > new-extended alignment, and the first form is called otherwise.
 >
 > It is not the direct responsibility of `operator new[]` or
@@ -1829,15 +1771,16 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 > argument to `operator new[]` to obtain space to store supplemental
 > information.
 >
-> A program may define functions with either of these function
-> signatures, and thereby displace the default versions defined by the
-> standard library.
+> *Replaceable:* A program may define functions with either of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
-> Same as for the corresponding single-object forms. This requirement is
-> binding on any replacement versions of these functions.
+> *Required behavior:* Same as for the corresponding single-object
+> forms. This requirement is binding on any replacement versions of
+> these functions.
 >
-> Returns `operator new(size)`, or `operator new(size, alignment)`,
-> respectively.
+> *Default behavior:* Returns `operator new(size)`, or
+> `operator new(size, alignment)`, respectively.
 
 ``` cpp
 [[nodiscard]] void* operator new[](std::size_t size, const std::nothrow_t&) noexcept;
@@ -1845,26 +1788,25 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
                                    const std::nothrow_t&) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Same as above, except that these are called by a placement
+> version of a *new-expression* when a program prefers a null pointer
+> result as an error indication, instead of a `bad_alloc` exception.
 >
-> Same as above, except that these are called by a placement version of
-> a *new-expression* when a program prefers a null pointer result as an
-> error indication, instead of a `bad_alloc` exception.
+> *Replaceable:* A program may define functions with either of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
-> A program may define functions with either of these function
-> signatures, and thereby displace the default versions defined by the
-> standard library.
->
-> Return a non-null pointer to suitably aligned
+> *Required behavior:* Return a non-null pointer to suitably aligned
 > storage [[basic.stc.dynamic]], or else return a null pointer. Each of
 > these nothrow versions of `operator new[]` returns a pointer obtained
 > as if acquired from the (possibly replaced) corresponding
 > non-placement function. This requirement is binding on any replacement
 > versions of these functions.
 >
-> Calls `operator new[](size)`, or `operator new[](size, alignment)`,
-> respectively. If the call returns normally, returns the result of that
-> call. Otherwise, returns a null pointer.
+> *Default behavior:* Calls `operator new[](size)`, or
+> `operator new[](size, alignment)`, respectively. If the call returns
+> normally, returns the result of that call. Otherwise, returns a null
+> pointer.
 
 ``` cpp
 void operator delete[](void* ptr) noexcept;
@@ -1873,11 +1815,9 @@ void operator delete[](void* ptr, std::align_val_t alignment) noexcept;
 void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) noexcept;
 ```
 
-> *Preconditions:*
->
-> `ptr` is a null pointer or its value represents the address of a block
-> of memory allocated by an earlier call to a (possibly replaced)
-> `operator new[](std::size_t)` or
+> *Preconditions:* `ptr` is a null pointer or its value represents the
+> address of a block of memory allocated by an earlier call to a
+> (possibly replaced) `operator new[](std::size_t)` or
 > `operator new[](std::size_t, std::align_val_t)` which has not been
 > invalidated by an intervening call to `operator delete[]`.
 >
@@ -1888,15 +1828,13 @@ void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) 
 > argument is equal to the `size` argument passed to the allocation
 > function that returned `ptr`.
 >
-> *Effects:*
+> *Effects:* The deallocation
+> functions [[basic.stc.dynamic.deallocation]] called by the array form
+> of a *delete-expression* to render the value of `ptr` invalid.
 >
-> The deallocation functions [[basic.stc.dynamic.deallocation]] called
-> by the array form of a *delete-expression* to render the value of
-> `ptr` invalid.
->
-> A program may define functions with any of these function signatures,
-> and thereby displace the default versions defined by the standard
-> library.
+> *Replaceable:* A program may define functions with any of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
 > If a function without a `size` parameter is defined, the program
 > should also define the corresponding function with a `size` parameter.
@@ -1907,30 +1845,29 @@ void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) 
 > which will require replacing both deallocation functions when
 > replacing the allocation function. — *end note*\]
 >
-> A call to an `operator delete[]` with a `size` parameter may be
-> changed to a call to the corresponding `operator delete[]` without a
-> `size` parameter, without affecting memory allocation.
+> *Required behavior:* A call to an `operator delete[]` with a `size`
+> parameter may be changed to a call to the corresponding
+> `operator delete[]` without a `size` parameter, without affecting
+> memory allocation.
 >
 > \[*Note 12*: A conforming implementation is for
 > `operator delete[](void* ptr, std::size_t size)` to simply call
 > `operator delete[](ptr)`. — *end note*\]
 >
-> The functions that have a `size` parameter forward their other
-> parameters to the corresponding function without a `size` parameter.
-> The functions that do not have a `size` parameter forward their
-> parameters to the corresponding `operator delete` (single-object)
-> function.
+> *Default behavior:* The functions that have a `size` parameter forward
+> their other parameters to the corresponding function without a `size`
+> parameter. The functions that do not have a `size` parameter forward
+> their parameters to the corresponding `operator delete`
+> (single-object) function.
 
 ``` cpp
 void operator delete[](void* ptr, const std::nothrow_t&) noexcept;
 void operator delete[](void* ptr, std::align_val_t alignment, const std::nothrow_t&) noexcept;
 ```
 
-> *Preconditions:*
->
-> `ptr` is a null pointer or its value represents the address of a block
-> of memory allocated by an earlier call to a (possibly replaced)
-> `operator new[](std::size_t)` or
+> *Preconditions:* `ptr` is a null pointer or its value represents the
+> address of a block of memory allocated by an earlier call to a
+> (possibly replaced) `operator new[](std::size_t)` or
 > `operator new[](std::size_t, std::align_val_t)` which has not been
 > invalidated by an intervening call to `operator delete[]`.
 >
@@ -1939,18 +1876,17 @@ void operator delete[](void* ptr, std::align_val_t alignment, const std::nothrow
 > `alignment` argument is equal to the `alignment` argument passed to
 > the allocation function that returned `ptr`.
 >
-> *Effects:*
->
-> The deallocation functions [[basic.stc.dynamic.deallocation]] called
-> by the implementation to render the value of `ptr` invalid when the
+> *Effects:* The deallocation
+> functions [[basic.stc.dynamic.deallocation]] called by the
+> implementation to render the value of `ptr` invalid when the
 > constructor invoked from a nothrow placement version of the array
 > *new-expression* throws an exception.
 >
-> A program may define functions with either of these function
-> signatures, and thereby displace the default versions defined by the
-> standard library.
+> *Replaceable:* A program may define functions with either of these
+> function signatures, and thereby displace the default versions defined
+> by the standard library.
 >
-> Calls `operator delete[](ptr)`, or
+> *Default behavior:* Calls `operator delete[](ptr)`, or
 > `operator delete[](ptr, alignment)`, respectively.
 
 #### Non-allocating forms <a id="new.delete.placement">[[new.delete.placement]]</a>
@@ -1964,13 +1900,9 @@ placement forms of `operator new` and `operator delete`.
 [[nodiscard]] void* operator new(std::size_t size, void* ptr) noexcept;
 ```
 
-> *Returns:*
+> *Returns:* `ptr`.
 >
-> `ptr`.
->
-> *Remarks:*
->
-> Intentionally performs no other action.
+> *Remarks:* Intentionally performs no other action.
 >
 > \[*Example 3*:
 >
@@ -1985,26 +1917,18 @@ placement forms of `operator new` and `operator delete`.
 [[nodiscard]] void* operator new[](std::size_t size, void* ptr) noexcept;
 ```
 
-> *Returns:*
+> *Returns:* `ptr`.
 >
-> `ptr`.
->
-> *Remarks:*
->
-> Intentionally performs no other action.
+> *Remarks:* Intentionally performs no other action.
 
 ``` cpp
 void operator delete(void* ptr, void*) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Intentionally performs no action.
 >
-> Intentionally performs no action.
->
-> *Remarks:*
->
-> Default function called when any part of the initialization in a
-> placement *new-expression* that invokes the library’s non-array
+> *Remarks:* Default function called when any part of the initialization
+> in a placement *new-expression* that invokes the library’s non-array
 > placement operator new terminates by throwing an
 > exception [[expr.new]].
 
@@ -2012,15 +1936,12 @@ void operator delete(void* ptr, void*) noexcept;
 void operator delete[](void* ptr, void*) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Intentionally performs no action.
 >
-> Intentionally performs no action.
->
-> *Remarks:*
->
-> Default function called when any part of the initialization in a
-> placement *new-expression* that invokes the library’s array placement
-> operator new terminates by throwing an exception [[expr.new]].
+> *Remarks:* Default function called when any part of the initialization
+> in a placement *new-expression* that invokes the library’s array
+> placement operator new terminates by throwing an
+> exception [[expr.new]].
 
 #### Data races <a id="new.delete.dataraces">[[new.delete.dataraces]]</a>
 
@@ -2056,9 +1977,7 @@ by the implementation to report a failure to allocate storage.
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An *implementation-defined* NTBS.
+> *Returns:* An *implementation-defined* NTBS.
 
 #### Class `bad_array_new_length` <a id="new.badlength">[[new.badlength]]</a>
 
@@ -2081,9 +2000,7 @@ limit [[expr.new]].
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An *implementation-defined* NTBS.
+> *Returns:* An *implementation-defined* NTBS.
 
 #### Type `new_handler` <a id="new.handler">[[new.handler]]</a>
 
@@ -2095,7 +2012,8 @@ using new_handler = void (*)();
 > `operator new[]()`[[new.delete]] when they cannot satisfy a request
 > for additional storage.
 >
-> A `new_handler` shall perform one of the following:
+> *Required behavior:* A `new_handler` shall perform one of the
+> following:
 >
 > - make more storage available for allocation and then return;
 >
@@ -2110,18 +2028,12 @@ using new_handler = void (*)();
 new_handler set_new_handler(new_handler new_p) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Establishes the function designated by `new_p` as the
+> current `new_handler`.
 >
-> Establishes the function designated by `new_p` as the current
-> `new_handler`.
+> *Returns:* The previous `new_handler`.
 >
-> *Returns:*
->
-> The previous `new_handler`.
->
-> *Remarks:*
->
-> The initial `new_handler` is a null pointer.
+> *Remarks:* The initial `new_handler` is a null pointer.
 
 #### `get_new_handler` <a id="get.new.handler">[[get.new.handler]]</a>
 
@@ -2129,9 +2041,7 @@ new_handler set_new_handler(new_handler new_p) noexcept;
 new_handler get_new_handler() noexcept;
 ```
 
-> *Returns:*
->
-> The current `new_handler`.
+> *Returns:* The current `new_handler`.
 >
 > \[*Note 13*: This can be a null pointer value. — *end note*\]
 
@@ -2141,27 +2051,19 @@ new_handler get_new_handler() noexcept;
 template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
 ```
 
-> *Mandates:*
+> *Mandates:* `!is_function_v<T> && !is_void_v<T>` is `true`.
 >
-> `!is_function_v<T> && !is_void_v<T>` is `true`.
+> *Preconditions:* `p` represents the address *A* of a byte in memory.
+> An object *X* that is within its lifetime [[basic.life]] and whose
+> type is similar [[conv.qual]] to `T` is located at the address *A*.
+> All bytes of storage that would be reachable
+> through [[basic.compound]] the result are reachable through `p`.
 >
-> *Preconditions:*
+> *Returns:* A value of type `T*` that points to *X*.
 >
-> `p` represents the address *A* of a byte in memory. An object *X* that
-> is within its lifetime [[basic.life]] and whose type is
-> similar [[conv.qual]] to `T` is located at the address *A*. All bytes
-> of storage that would be reachable through [[basic.compound]] the
-> result are reachable through `p`.
->
-> *Returns:*
->
-> A value of type `T*` that points to *X*.
->
-> *Remarks:*
->
-> An invocation of this function may be used in a core constant
-> expression if and only if the (converted) value of its argument may be
-> used in place of the function invocation.
+> *Remarks:* An invocation of this function may be used in a core
+> constant expression if and only if the (converted) value of its
+> argument may be used in place of the function invocation.
 >
 > \[*Note 14*: If a new object is created in storage occupied by an
 > existing object of the same type, a pointer to the original object can
@@ -2276,53 +2178,37 @@ differ between programs.
 constexpr bool operator==(const type_info& rhs) const noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Compares the current object with `rhs`.
 >
-> Compares the current object with `rhs`.
->
-> *Returns:*
->
-> `true` if the two values describe the same type.
+> *Returns:* `true` if the two values describe the same type.
 
 ``` cpp
 bool before(const type_info& rhs) const noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Compares the current object with `rhs`.
 >
-> Compares the current object with `rhs`.
->
-> *Returns:*
->
-> `true` if `*this` precedes `rhs` in the implementation’s collation
-> order.
+> *Returns:* `true` if `*this` precedes `rhs` in the implementation’s
+> collation order.
 
 ``` cpp
 size_t hash_code() const noexcept;
 ```
 
-> *Returns:*
->
-> An unspecified value, except that within a single execution of the
-> program, it shall return the same value for any two `type_info`
+> *Returns:* An unspecified value, except that within a single execution
+> of the program, it shall return the same value for any two `type_info`
 > objects which compare equal.
 >
-> *Remarks:*
->
-> An implementation should return different values for two `type_info`
-> objects which do not compare equal.
+> *Remarks:* An implementation should return different values for two
+> `type_info` objects which do not compare equal.
 
 ``` cpp
 const char* name() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* An *implementation-defined* NTBS.
 >
-> An *implementation-defined* NTBS.
->
-> *Remarks:*
->
-> The message may be a null-terminated multibyte
+> *Remarks:* The message may be a null-terminated multibyte
 > string [[multibyte.strings]], suitable for conversion and display as a
 > `wstring`[[string.classes,locale.codecvt]].
 
@@ -2346,9 +2232,7 @@ expression [[expr.dynamic.cast]].
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An *implementation-defined* NTBS.
+> *Returns:* An *implementation-defined* NTBS.
 
 ### Class `bad_typeid` <a id="bad.typeid">[[bad.typeid]]</a>
 
@@ -2370,9 +2254,7 @@ by the implementation to report a null pointer in a `typeid` expression
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An *implementation-defined* NTBS.
+> *Returns:* An *implementation-defined* NTBS.
 
 ## Source location <a id="support.srcloc">[[support.srcloc]]</a>
 
@@ -2482,9 +2364,7 @@ static consteval source_location current() noexcept;
 >   `source_location` whose data members are initialized with valid but
 >   unspecified values.
 >
-> *Remarks:*
->
-> Any call to `current` that appears as a default member
+> *Remarks:* Any call to `current` that appears as a default member
 > initializer [[class.mem]], or as a subexpression thereof, should
 > correspond to the location of the constructor definition or aggregate
 > initialization that uses the default member initializer. Any call to
@@ -2526,9 +2406,8 @@ void g() {
 constexpr source_location() noexcept;
 ```
 
-> *Effects:*
->
-> The data members are initialized with valid but unspecified values.
+> *Effects:* The data members are initialized with valid but unspecified
+> values.
 
 #### Observers <a id="support.srcloc.obs">[[support.srcloc.obs]]</a>
 
@@ -2536,33 +2415,25 @@ constexpr source_location() noexcept;
 constexpr uint_least32_t line() const noexcept;
 ```
 
-> *Returns:*
->
-> `line_`.
+> *Returns:* `line_`.
 
 ``` cpp
 constexpr uint_least32_t column() const noexcept;
 ```
 
-> *Returns:*
->
-> `column_`.
+> *Returns:* `column_`.
 
 ``` cpp
 constexpr const char* file_name() const noexcept;
 ```
 
-> *Returns:*
->
-> `file_name_`.
+> *Returns:* `file_name_`.
 
 ``` cpp
 constexpr const char* function_name() const noexcept;
 ```
 
-> *Returns:*
->
-> `function_name_`.
+> *Returns:* `function_name_`.
 
 ## Exception handling <a id="support.exception">[[support.exception]]</a>
 
@@ -2639,30 +2510,23 @@ exception(const exception& rhs) noexcept;
 exception& operator=(const exception& rhs) noexcept;
 ```
 
-> *Ensures:*
->
-> If `*this` and `rhs` both have dynamic type `exception` then the value
-> of the expression `strcmp(what(), rhs.what())` shall equal 0.
+> *Ensures:* If `*this` and `rhs` both have dynamic type `exception`
+> then the value of the expression `strcmp(what(), rhs.what())` shall
+> equal 0.
 
 ``` cpp
 virtual ~exception();
 ```
 
-> *Effects:*
->
-> Destroys an object of class `exception`.
+> *Effects:* Destroys an object of class `exception`.
 
 ``` cpp
 virtual const char* what() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* An *implementation-defined* NTBS.
 >
-> An *implementation-defined* NTBS.
->
-> *Remarks:*
->
-> The message may be a null-terminated multibyte
+> *Remarks:* The message may be a null-terminated multibyte
 > string [[multibyte.strings]], suitable for conversion and display as a
 > `wstring`[[string.classes,locale.codecvt]]. The return value remains
 > valid until the exception object from which it is obtained is
@@ -2689,9 +2553,7 @@ copy.
 const char* what() const noexcept override;
 ```
 
-> *Returns:*
->
-> An *implementation-defined* NTBS.
+> *Returns:* An *implementation-defined* NTBS.
 
 ### Abnormal termination <a id="exception.terminate">[[exception.terminate]]</a>
 
@@ -2704,10 +2566,11 @@ using terminate_handler = void (*)();
 > The type of a to be invoked by `terminate` when terminating exception
 > processing.
 >
-> A `terminate_handler` shall terminate execution of the program without
-> returning to the caller.
+> *Required behavior:* A `terminate_handler` shall terminate execution
+> of the program without returning to the caller.
 >
-> The implementation’s default `terminate_handler` calls `abort()`.
+> *Default behavior:* The implementation’s default `terminate_handler`
+> calls `abort()`.
 
 #### `set_terminate` <a id="set.terminate">[[set.terminate]]</a>
 
@@ -2715,19 +2578,13 @@ using terminate_handler = void (*)();
 terminate_handler set_terminate(terminate_handler f) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Establishes the function designated by `f` as the current
+> handler function for terminating exception processing.
 >
-> Establishes the function designated by `f` as the current handler
-> function for terminating exception processing.
+> *Returns:* The previous `terminate_handler`.
 >
-> *Returns:*
->
-> The previous `terminate_handler`.
->
-> *Remarks:*
->
-> It is unspecified whether a null pointer value designates the default
-> `terminate_handler`.
+> *Remarks:* It is unspecified whether a null pointer value designates
+> the default `terminate_handler`.
 
 #### `get_terminate` <a id="get.terminate">[[get.terminate]]</a>
 
@@ -2735,9 +2592,7 @@ terminate_handler set_terminate(terminate_handler f) noexcept;
 terminate_handler get_terminate() noexcept;
 ```
 
-> *Returns:*
->
-> The current `terminate_handler`.
+> *Returns:* The current `terminate_handler`.
 >
 > \[*Note 15*: This can be a null pointer value. — *end note*\]
 
@@ -2747,21 +2602,17 @@ terminate_handler get_terminate() noexcept;
 [[noreturn]] void terminate() noexcept;
 ```
 
-> *Effects:*
->
-> Calls a `terminate_handler` function. It is unspecified which
-> `terminate_handler` function will be called if an exception is active
-> during a call to `set_terminate`. Otherwise calls the current
+> *Effects:* Calls a `terminate_handler` function. It is unspecified
+> which `terminate_handler` function will be called if an exception is
+> active during a call to `set_terminate`. Otherwise calls the current
 > `terminate_handler` function.
 >
 > \[*Note 16*: A default `terminate_handler` is always considered a
 > callable handler in this context. — *end note*\]
 >
-> *Remarks:*
->
-> Called by the implementation when exception handling must be abandoned
-> for any of several reasons [[except.terminate]]. May also be called
-> directly by the program.
+> *Remarks:* Called by the implementation when exception handling must
+> be abandoned for any of several reasons [[except.terminate]]. May also
+> be called directly by the program.
 
 ### `uncaught_exceptions` <a id="uncaught.exceptions">[[uncaught.exceptions]]</a>
 
@@ -2769,14 +2620,10 @@ terminate_handler get_terminate() noexcept;
 int uncaught_exceptions() noexcept;
 ```
 
-> *Returns:*
+> *Returns:* The number of uncaught exceptions [[except.uncaught]].
 >
-> The number of uncaught exceptions [[except.uncaught]].
->
-> *Remarks:*
->
-> When `uncaught_exceptions() > 0`, throwing an exception can result in
-> a call of the function `std::terminate`[[except.terminate]].
+> *Remarks:* When `uncaught_exceptions() > 0`, throwing an exception can
+> result in a call of the function `std::terminate`[[except.terminate]].
 
 ### Exception propagation <a id="propagation">[[propagation]]</a>
 
@@ -2817,10 +2664,8 @@ using exception_ptr = unspecified;
 exception_ptr current_exception() noexcept;
 ```
 
-> *Returns:*
->
-> An `exception_ptr` object that refers to the currently handled
-> exception [[except.handle]] or a copy of the currently handled
+> *Returns:* An `exception_ptr` object that refers to the currently
+> handled exception [[except.handle]] or a copy of the currently handled
 > exception, or a null `exception_ptr` object if no exception is being
 > handled. The referenced object shall remain valid at least as long as
 > there is an `exception_ptr` object that refers to it. If the function
@@ -2845,15 +2690,11 @@ exception_ptr current_exception() noexcept;
 [[noreturn]] void rethrow_exception(exception_ptr p);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` is not a null pointer.
 >
-> `p` is not a null pointer.
->
-> *Effects:*
->
-> Let u be the exception object to which `p` refers, or a copy of that
-> exception object. It is unspecified whether a copy is made, and memory
-> for the copy is allocated in an unspecified way.
+> *Effects:* Let u be the exception object to which `p` refers, or a
+> copy of that exception object. It is unspecified whether a copy is
+> made, and memory for the copy is allocated in an unspecified way.
 >
 > - If allocating memory to form u fails, throws an instance of
 >   `bad_alloc`;
@@ -2867,9 +2708,8 @@ exception_ptr current_exception() noexcept;
 template<class E> exception_ptr make_exception_ptr(E e) noexcept;
 ```
 
-> *Effects:*
->
-> Creates an `exception_ptr` object that refers to a copy of `e`, as if:
+> *Effects:* Creates an `exception_ptr` object that refers to a copy of
+> `e`, as if:
 >
 > ``` cpp
 > try {
@@ -2915,28 +2755,23 @@ polymorphic class. Its presence can be tested for with
 nested_exception() noexcept;
 ```
 
-> *Effects:*
->
-> The constructor calls `current_exception()` and stores the returned
-> value.
+> *Effects:* The constructor calls `current_exception()` and stores the
+> returned value.
 
 ``` cpp
 [[noreturn]] void rethrow_nested() const;
 ```
 
-> *Effects:*
->
-> If `nested_ptr()` returns a null pointer, the function calls the
-> function `std::terminate`. Otherwise, it throws the stored exception
-> captured by `*this`.
+> *Effects:* If `nested_ptr()` returns a null pointer, the function
+> calls the function `std::terminate`. Otherwise, it throws the stored
+> exception captured by `*this`.
 
 ``` cpp
 exception_ptr nested_ptr() const noexcept;
 ```
 
-> *Returns:*
->
-> The stored exception captured by this `nested_exception` object.
+> *Returns:* The stored exception captured by this `nested_exception`
+> object.
 
 ``` cpp
 template<class T> [[noreturn]] void throw_with_nested(T&& t);
@@ -2944,13 +2779,9 @@ template<class T> [[noreturn]] void throw_with_nested(T&& t);
 
 > Let `U` be `decay_t<T>`.
 >
-> *Preconditions:*
+> *Preconditions:* `U` meets the *Cpp17CopyConstructible* requirements.
 >
-> `U` meets the *Cpp17CopyConstructible* requirements.
->
-> *Throws:*
->
-> If
+> *Throws:* If
 > `is_class_v<U> && !is_final_v<U> && !is_base_of_v<nested_exception, U>`
 > is `true`, an exception of unspecified type that is publicly derived
 > from both `U` and `nested_exception` and constructed from
@@ -2960,11 +2791,9 @@ template<class T> [[noreturn]] void throw_with_nested(T&& t);
 template<class E> void rethrow_if_nested(const E& e);
 ```
 
-> *Effects:*
->
-> If `E` is not a polymorphic class type, or if `nested_exception` is an
-> inaccessible or ambiguous base class of `E`, there is no effect.
-> Otherwise, performs:
+> *Effects:* If `E` is not a polymorphic class type, or if
+> `nested_exception` is an inaccessible or ambiguous base class of `E`,
+> there is no effect. Otherwise, performs:
 >
 > ``` cpp
 > if (auto p = dynamic_cast<const nested_exception*>(addressof(e)))
@@ -3026,9 +2855,7 @@ If an explicit specialization or partial specialization of
 constexpr initializer_list() noexcept;
 ```
 
-> *Ensures:*
->
-> `size() == 0`.
+> *Ensures:* `size() == 0`.
 
 ### Initializer list access <a id="support.initlist.access">[[support.initlist.access]]</a>
 
@@ -3036,30 +2863,23 @@ constexpr initializer_list() noexcept;
 constexpr const E* begin() const noexcept;
 ```
 
-> *Returns:*
->
-> A pointer to the beginning of the array. If `size() == 0` the values
-> of `begin()` and `end()` are unspecified but they shall be identical.
+> *Returns:* A pointer to the beginning of the array. If `size() == 0`
+> the values of `begin()` and `end()` are unspecified but they shall be
+> identical.
 
 ``` cpp
 constexpr const E* end() const noexcept;
 ```
 
-> *Returns:*
->
-> `begin() + size()`.
+> *Returns:* `begin() + size()`.
 
 ``` cpp
 constexpr size_t size() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* The number of elements in the array.
 >
-> The number of elements in the array.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ### Initializer list range access <a id="support.initlist.range">[[support.initlist.range]]</a>
 
@@ -3067,17 +2887,13 @@ constexpr size_t size() const noexcept;
 template<class E> constexpr const E* begin(initializer_list<E> il) noexcept;
 ```
 
-> *Returns:*
->
-> `il.begin()`.
+> *Returns:* `il.begin()`.
 
 ``` cpp
 template<class E> constexpr const E* end(initializer_list<E> il) noexcept;
 ```
 
-> *Returns:*
->
-> `il.end()`.
+> *Returns:* `il.end()`.
 
 ## Comparisons <a id="cmp">[[cmp]]</a>
 
@@ -3235,9 +3051,7 @@ constexpr bool operator<=(partial_ordering v, unspecified) noexcept;
 constexpr bool operator>=(partial_ordering v, unspecified) noexcept;
 ```
 
-> *Returns:*
->
-> For `operator`, `v.is_ordered && v.value 0`.
+> *Returns:* For `operator`, `v.is_ordered && v.value 0`.
 
 ``` cpp
 constexpr bool operator< (unspecified, partial_ordering v) noexcept;
@@ -3246,24 +3060,19 @@ constexpr bool operator<=(unspecified, partial_ordering v) noexcept;
 constexpr bool operator>=(unspecified, partial_ordering v) noexcept;
 ```
 
-> *Returns:*
->
-> For `operator`, `v.is_ordered && 0 v.value`.
+> *Returns:* For `operator`, `v.is_ordered && 0 v.value`.
 
 ``` cpp
 constexpr partial_ordering operator<=>(partial_ordering v, unspecified) noexcept;
 ```
 
-> *Returns:*
->
-> `v`.
+> *Returns:* `v`.
 
 ``` cpp
 constexpr partial_ordering operator<=>(unspecified, partial_ordering v) noexcept;
 ```
 
 > *Returns:*
->
 > `v < 0 ? partial_ordering::greater : v > 0 ? partial_ordering::less : v`.
 
 #### Class `weak_ordering` <a id="cmp.weakord">[[cmp.weakord]]</a>
@@ -3332,9 +3141,7 @@ constexpr bool operator<=(weak_ordering v, unspecified) noexcept;
 constexpr bool operator>=(weak_ordering v, unspecified) noexcept;
 ```
 
-> *Returns:*
->
-> `v.value 0` for `operator`.
+> *Returns:* `v.value 0` for `operator`.
 
 ``` cpp
 constexpr bool operator< (unspecified, weak_ordering v) noexcept;
@@ -3343,24 +3150,19 @@ constexpr bool operator<=(unspecified, weak_ordering v) noexcept;
 constexpr bool operator>=(unspecified, weak_ordering v) noexcept;
 ```
 
-> *Returns:*
->
-> `0 v.value` for `operator`.
+> *Returns:* `0 v.value` for `operator`.
 
 ``` cpp
 constexpr weak_ordering operator<=>(weak_ordering v, unspecified) noexcept;
 ```
 
-> *Returns:*
->
-> `v`.
+> *Returns:* `v`.
 
 ``` cpp
 constexpr weak_ordering operator<=>(unspecified, weak_ordering v) noexcept;
 ```
 
 > *Returns:*
->
 > `v < 0 ? weak_ordering::greater : v > 0 ? weak_ordering::less : v`.
 
 #### Class `strong_ordering` <a id="cmp.strongord">[[cmp.strongord]]</a>
@@ -3444,9 +3246,7 @@ constexpr bool operator<=(strong_ordering v, unspecified) noexcept;
 constexpr bool operator>=(strong_ordering v, unspecified) noexcept;
 ```
 
-> *Returns:*
->
-> `v.value 0` for `operator`.
+> *Returns:* `v.value 0` for `operator`.
 
 ``` cpp
 constexpr bool operator< (unspecified, strong_ordering v) noexcept;
@@ -3455,24 +3255,19 @@ constexpr bool operator<=(unspecified, strong_ordering v) noexcept;
 constexpr bool operator>=(unspecified, strong_ordering v) noexcept;
 ```
 
-> *Returns:*
->
-> `0 v.value` for `operator`.
+> *Returns:* `0 v.value` for `operator`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(strong_ordering v, unspecified) noexcept;
 ```
 
-> *Returns:*
->
-> `v`.
+> *Returns:* `v`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(unspecified, strong_ordering v) noexcept;
 ```
 
 > *Returns:*
->
 > `v < 0 ? strong_ordering::greater : v > 0 ? strong_ordering::less : v`.
 
 ### Class template `common_comparison_category` <a id="cmp.common">[[cmp.common]]</a>
@@ -3492,11 +3287,9 @@ struct common_comparison_category {
 };
 ```
 
-> *Remarks:*
->
-> The member *typedef-name* `type` denotes the common comparison
-> type [[class.spaceship]] of `Ts...`, the expanded parameter pack, or
-> if any element of `Ts` is not a comparison category type.
+> *Remarks:* The member *typedef-name* `type` denotes the common
+> comparison type [[class.spaceship]] of `Ts...`, the expanded parameter
+> pack, or if any element of `Ts` is not a comparison category type.
 >
 > \[*Note 22*: This is `std::strong_ordering` if the expansion is
 > empty. — *end note*\]
@@ -3969,37 +3762,26 @@ constexpr coroutine_handle() noexcept;
 constexpr coroutine_handle(nullptr_t) noexcept;
 ```
 
-> *Ensures:*
->
-> `address() == nullptr`.
+> *Ensures:* `address() == nullptr`.
 
 ``` cpp
 static coroutine_handle from_promise(Promise& p);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` is a reference to a promise object of a
+> coroutine.
 >
-> `p` is a reference to a promise object of a coroutine.
+> *Ensures:* `addressof(h.promise()) == addressof(p)`.
 >
-> *Ensures:*
->
-> `addressof(h.promise()) == addressof(p)`.
->
-> *Returns:*
->
-> A coroutine handle `h` referring to the coroutine.
+> *Returns:* A coroutine handle `h` referring to the coroutine.
 
 ``` cpp
 coroutine_handle& operator=(nullptr_t) noexcept;
 ```
 
-> *Ensures:*
+> *Ensures:* `address() == nullptr`.
 >
-> `address() == nullptr`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 #### Conversion <a id="coroutine.handle.conv">[[coroutine.handle.conv]]</a>
 
@@ -4007,9 +3789,8 @@ coroutine_handle& operator=(nullptr_t) noexcept;
 constexpr operator coroutine_handle<>() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return coroutine_handle<>::from_address(address());`
+> *Effects:* Equivalent to:
+> `return coroutine_handle<>::from_address(address());`
 
 #### Export/import <a id="coroutine.handle.export.import">[[coroutine.handle.export.import]]</a>
 
@@ -4017,35 +3798,25 @@ constexpr operator coroutine_handle<>() const noexcept;
 constexpr void* address() const noexcept;
 ```
 
-> *Returns:*
->
-> `ptr`.
+> *Returns:* `ptr`.
 
 ``` cpp
 static constexpr coroutine_handle<> coroutine_handle<>::from_address(void* addr);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `addr` was obtained via a prior call to `address` on
+> an object whose type is a specialization of `coroutine_handle`.
 >
-> `addr` was obtained via a prior call to `address` on an object whose
-> type is a specialization of `coroutine_handle`.
->
-> *Ensures:*
->
-> `from_address(address()) == *this`.
+> *Ensures:* `from_address(address()) == *this`.
 
 ``` cpp
 static constexpr coroutine_handle<Promise> coroutine_handle<Promise>::from_address(void* addr);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `addr` was obtained via a prior call to `address` on
+> an object of type  `coroutine_handle<Promise>`.
 >
-> `addr` was obtained via a prior call to `address` on an object of type
->  `coroutine_handle<Promise>`.
->
-> *Ensures:*
->
-> `from_address(address()) == *this`.
+> *Ensures:* `from_address(address()) == *this`.
 
 #### Observers <a id="coroutine.handle.observers">[[coroutine.handle.observers]]</a>
 
@@ -4053,22 +3824,16 @@ static constexpr coroutine_handle<Promise> coroutine_handle<Promise>::from_addre
 constexpr explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `address() != nullptr`.
+> *Returns:* `address() != nullptr`.
 
 ``` cpp
 bool done() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `*this` refers to a suspended coroutine.
 >
-> `*this` refers to a suspended coroutine.
->
-> *Returns:*
->
-> `true` if the coroutine is suspended at its final suspend point,
-> otherwise `false`.
+> *Returns:* `true` if the coroutine is suspended at its final suspend
+> point, otherwise `false`.
 
 #### Resumption <a id="coroutine.handle.resumption">[[coroutine.handle.resumption]]</a>
 
@@ -4090,26 +3855,18 @@ void operator()() const;
 void resume() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `*this` refers to a suspended coroutine. The
+> coroutine is not suspended at its final suspend point.
 >
-> `*this` refers to a suspended coroutine. The coroutine is not
-> suspended at its final suspend point.
->
-> *Effects:*
->
-> Resumes the execution of the coroutine.
+> *Effects:* Resumes the execution of the coroutine.
 
 ``` cpp
 void destroy() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `*this` refers to a suspended coroutine.
 >
-> `*this` refers to a suspended coroutine.
->
-> *Effects:*
->
-> Destroys the coroutine [[dcl.fct.def.coroutine]].
+> *Effects:* Destroys the coroutine [[dcl.fct.def.coroutine]].
 
 #### Promise access <a id="coroutine.handle.promise">[[coroutine.handle.promise]]</a>
 
@@ -4117,13 +3874,9 @@ void destroy() const;
 Promise& promise() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `*this` refers to a coroutine.
 >
-> `*this` refers to a coroutine.
->
-> *Returns:*
->
-> A reference to the promise of the coroutine.
+> *Returns:* A reference to the promise of the coroutine.
 
 #### Comparison operators <a id="coroutine.handle.compare">[[coroutine.handle.compare]]</a>
 
@@ -4131,17 +3884,13 @@ Promise& promise() const;
 constexpr bool operator==(coroutine_handle<> x, coroutine_handle<> y) noexcept;
 ```
 
-> *Returns:*
->
-> `x.address() == y.address()`.
+> *Returns:* `x.address() == y.address()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(coroutine_handle<> x, coroutine_handle<> y) noexcept;
 ```
 
-> *Returns:*
->
-> `compare_three_way()(x.address(), y.address())`.
+> *Returns:* `compare_three_way()(x.address(), y.address())`.
 
 #### Hash support <a id="coroutine.handle.hash">[[coroutine.handle.hash]]</a>
 
@@ -4199,9 +3948,8 @@ namespace std {
 constexpr operator coroutine_handle<>() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return coroutine_handle<>::from_address(address());`
+> *Effects:* Equivalent to:
+> `return coroutine_handle<>::from_address(address());`
 
 ##### Observers <a id="coroutine.handle.noop.observers">[[coroutine.handle.noop.observers]]</a>
 
@@ -4209,17 +3957,13 @@ constexpr operator coroutine_handle<>() const noexcept;
 constexpr explicit operator bool() const noexcept;
 ```
 
-> *Returns:*
->
-> `true`.
+> *Returns:* `true`.
 
 ``` cpp
 constexpr bool done() const noexcept;
 ```
 
-> *Returns:*
->
-> `false`.
+> *Returns:* `false`.
 
 ##### Resumption <a id="coroutine.handle.noop.resumption">[[coroutine.handle.noop.resumption]]</a>
 
@@ -4229,15 +3973,11 @@ constexpr void resume() const noexcept;
 constexpr void destroy() const noexcept;
 ```
 
-> *Effects:*
+> *Effects:* None.
 >
-> None.
->
-> *Remarks:*
->
-> If `noop_coroutine_handle` is converted to `coroutine_handle<>`, calls
-> to `operator()`, `resume` and `destroy` on that handle will also have
-> no observable effects.
+> *Remarks:* If `noop_coroutine_handle` is converted to
+> `coroutine_handle<>`, calls to `operator()`, `resume` and `destroy` on
+> that handle will also have no observable effects.
 
 ##### Promise access <a id="coroutine.handle.noop.promise">[[coroutine.handle.noop.promise]]</a>
 
@@ -4245,10 +3985,8 @@ constexpr void destroy() const noexcept;
 noop_coroutine_promise& promise() const noexcept;
 ```
 
-> *Returns:*
->
-> A reference to the promise object associated with this coroutine
-> handle.
+> *Returns:* A reference to the promise object associated with this
+> coroutine handle.
 
 ##### Address <a id="coroutine.handle.noop.address">[[coroutine.handle.noop.address]]</a>
 
@@ -4256,13 +3994,10 @@ noop_coroutine_promise& promise() const noexcept;
 constexpr void* address() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* `ptr`.
 >
-> `ptr`.
->
-> *Remarks:*
->
-> A `noop_coroutine_handle`’s `ptr` is always a non-null pointer value.
+> *Remarks:* A `noop_coroutine_handle`’s `ptr` is always a non-null
+> pointer value.
 
 #### Function `noop_coroutine` <a id="coroutine.noop.coroutine">[[coroutine.noop.coroutine]]</a>
 
@@ -4270,15 +4005,12 @@ constexpr void* address() const noexcept;
 noop_coroutine_handle noop_coroutine() noexcept;
 ```
 
-> *Returns:*
+> *Returns:* A handle to a coroutine that has no observable effects when
+> resumed or destroyed.
 >
-> A handle to a coroutine that has no observable effects when resumed or
-> destroyed.
->
-> *Remarks:*
->
-> A handle returned from `noop_coroutine` may or may not compare equal
-> to a handle returned from another invocation of `noop_coroutine`.
+> *Remarks:* A handle returned from `noop_coroutine` may or may not
+> compare equal to a handle returned from another invocation of
+> `noop_coroutine`.
 
 ### Trivial awaitables <a id="coroutine.trivial.awaitables">[[coroutine.trivial.awaitables]]</a>
 

@@ -90,171 +90,127 @@ specified semantics.
 typename X::char_type
 ```
 
-> *Result:*
->
-> `charT`, the character container type used in the implementation of
-> class template `basic_regex`.
+> *Result:* `charT`, the character container type used in the
+> implementation of class template `basic_regex`.
 
 ``` cpp
 typename X::string_type
 ```
 
-> *Result:*
->
-> `basic_string<charT>`
+> *Result:* `basic_string<charT>`
 
 ``` cpp
 typename X::locale_type
 ```
 
-> *Result:*
->
-> A copy constructible type that represents the locale used by the
-> traits class.
+> *Result:* A copy constructible type that represents the locale used by
+> the traits class.
 
 ``` cpp
 typename X::char_class_type
 ```
 
-> *Result:*
->
-> A bitmask type [[bitmask.types]] representing a particular character
-> classification.
+> *Result:* A bitmask type [[bitmask.types]] representing a particular
+> character classification.
 
 ``` cpp
 X::length(p)
 ```
 
-> *Result:*
+> *Result:* `size_t`
 >
-> `size_t`
+> *Returns:* The smallest `i` such that `p[i] == 0`.
 >
-> *Returns:*
->
-> The smallest `i` such that `p[i] == 0`.
->
-> *Complexity:*
->
-> Linear in `i`.
+> *Complexity:* Linear in `i`.
 
 ``` cpp
 v.translate(c)
 ```
 
-> *Result:*
+> *Result:* `X::char_type`
 >
-> `X::char_type`
->
-> *Returns:*
->
-> A character such that for any character `d` that is to be considered
-> equivalent to `c` then `v.translate(c) == v.translate(d)`.
+> *Returns:* A character such that for any character `d` that is to be
+> considered equivalent to `c` then `v.translate(c) == v.translate(d)`.
 
 ``` cpp
 v.translate_nocase(c)
 ```
 
-> *Result:*
+> *Result:* `X::char_type`
 >
-> `X::char_type`
->
-> *Returns:*
->
-> For all characters `C` that are to be considered equivalent to `c`
-> when comparisons are to be performed without regard to case, then
-> `v.translate_nocase(c) == v.translate_nocase(C)`.
+> *Returns:* For all characters `C` that are to be considered equivalent
+> to `c` when comparisons are to be performed without regard to case,
+> then `v.translate_nocase(c) == v.translate_nocase(C)`.
 
 ``` cpp
 v.transform(F1, F2)
 ```
 
-> *Result:*
+> *Result:* `X::string_type`
 >
-> `X::string_type`
->
-> *Returns:*
->
-> A sort key for the character sequence designated by the iterator range
-> \[`F1`, `F2`) such that if the character sequence \[`G1`, `G2`) sorts
-> before the character sequence \[`H1`, `H2`) then
+> *Returns:* A sort key for the character sequence designated by the
+> iterator range \[`F1`, `F2`) such that if the character sequence
+> \[`G1`, `G2`) sorts before the character sequence \[`H1`, `H2`) then
 > `v.transform(G1, G2) < v.transform(H1, H2)`.
 
 ``` cpp
 v.transform_primary(F1, F2)
 ```
 
-> *Result:*
+> *Result:* `X::string_type`
 >
-> `X::string_type`
->
-> *Returns:*
->
-> A sort key for the character sequence designated by the iterator range
-> \[`F1`, `F2`) such that if the character sequence \[`G1`, `G2`) sorts
-> before the character sequence \[`H1`, `H2`) when character case is not
-> considered then
+> *Returns:* A sort key for the character sequence designated by the
+> iterator range \[`F1`, `F2`) such that if the character sequence
+> \[`G1`, `G2`) sorts before the character sequence \[`H1`, `H2`) when
+> character case is not considered then
 > `v.transform_primary(G1, G2) < v.transform_primary(H1, H2)`.
 
 ``` cpp
 v.lookup_collatename(F1, F2)
 ```
 
-> *Result:*
+> *Result:* `X::string_type`
 >
-> `X::string_type`
->
-> *Returns:*
->
-> A sequence of characters that represents the collating element
-> consisting of the character sequence designated by the iterator range
-> \[`F1`, `F2`). Returns an empty string if the character sequence is
-> not a valid collating element.
+> *Returns:* A sequence of characters that represents the collating
+> element consisting of the character sequence designated by the
+> iterator range \[`F1`, `F2`). Returns an empty string if the character
+> sequence is not a valid collating element.
 
 ``` cpp
 v.lookup_classname(F1, F2, b)
 ```
 
-> *Result:*
+> *Result:* `X::char_class_type`
 >
-> `X::char_class_type`
->
-> *Returns:*
->
-> Converts the character sequence designated by the iterator range
-> \[`F1`, `F2`) into a value of a bitmask type that can subsequently be
-> passed to `isctype`. Values returned from `lookup_classname` can be
-> bitwise ’ed together; the resulting value represents membership in
-> either of the corresponding character classes. If `b` is `true`, the
-> returned bitmask is suitable for matching characters without regard to
-> their case. Returns `0` if the character sequence is not the name of a
-> character class recognized by `X`. The value returned shall be
-> independent of the case of the characters in the sequence.
+> *Returns:* Converts the character sequence designated by the iterator
+> range \[`F1`, `F2`) into a value of a bitmask type that can
+> subsequently be passed to `isctype`. Values returned from
+> `lookup_classname` can be bitwise ’ed together; the resulting value
+> represents membership in either of the corresponding character
+> classes. If `b` is `true`, the returned bitmask is suitable for
+> matching characters without regard to their case. Returns `0` if the
+> character sequence is not the name of a character class recognized by
+> `X`. The value returned shall be independent of the case of the
+> characters in the sequence.
 
 ``` cpp
 v.isctype(c, cl)
 ```
 
-> *Result:*
+> *Result:* `bool`
 >
-> `bool`
->
-> *Returns:*
->
-> Returns `true` if character `c` is a member of one of the character
-> classes designated by `cl`, `false` otherwise.
+> *Returns:* Returns `true` if character `c` is a member of one of the
+> character classes designated by `cl`, `false` otherwise.
 
 ``` cpp
 v.value(c, I)
 ```
 
-> *Result:*
+> *Result:* `int`
 >
-> `int`
->
-> *Returns:*
->
-> Returns the value represented by the digit *c* in base *I* if the
-> character *c* is a valid digit in base *I*; otherwise returns `-1`.
+> *Returns:* Returns the value represented by the digit *c* in base *I*
+> if the character *c* is a valid digit in base *I*; otherwise returns
+> `-1`.
 >
 > \[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*\]
 
@@ -262,26 +218,18 @@ v.value(c, I)
 u.imbue(loc)
 ```
 
-> *Result:*
+> *Result:* `X::locale_type`
 >
-> `X::locale_type`
->
-> *Effects:*
->
-> Imbues `u` with the locale `loc` and returns the previous locale used
-> by `u` if any.
+> *Effects:* Imbues `u` with the locale `loc` and returns the previous
+> locale used by `u` if any.
 
 ``` cpp
 v.getloc()
 ```
 
-> *Result:*
+> *Result:* `X::locale_type`
 >
-> `X::locale_type`
->
-> *Returns:*
->
-> Returns the current locale used by `v`, if any.
+> *Returns:* Returns the current locale used by `v`, if any.
 
 \[*Note 2*: Class template `regex_traits` meets the requirements for a
 regular expression traits class when it is specialized for `char` or
@@ -638,17 +586,13 @@ to report errors from the regular expression library.
 regex_error(regex_constants::error_type ecode);
 ```
 
-> *Ensures:*
->
-> `ecode == code()`.
+> *Ensures:* `ecode == code()`.
 
 ``` cpp
 regex_constants::error_type code() const;
 ```
 
-> *Returns:*
->
-> The error code that was passed to the constructor.
+> *Returns:* The error code that was passed to the constructor.
 
 ## Class template `regex_traits` <a id="re.traits">[[re.traits]]</a>
 
@@ -699,34 +643,26 @@ using char_class_type = \textit{bitmask_type};
 static size_t length(const char_type* p);
 ```
 
-> *Returns:*
->
-> `char_traits<charT>::length(p)`.
+> *Returns:* `char_traits<charT>::length(p)`.
 
 ``` cpp
 charT translate(charT c) const;
 ```
 
-> *Returns:*
->
-> `c`.
+> *Returns:* `c`.
 
 ``` cpp
 charT translate_nocase(charT c) const;
 ```
 
-> *Returns:*
->
-> `use_facet<ctype<charT>>(getloc()).tolower(c)`.
+> *Returns:* `use_facet<ctype<charT>>(getloc()).tolower(c)`.
 
 ``` cpp
 template<class ForwardIterator>
   string_type transform(ForwardIterator first, ForwardIterator last) const;
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > string_type str(first, last);
@@ -739,9 +675,7 @@ template<class ForwardIterator>
   string_type transform_primary(ForwardIterator first, ForwardIterator last) const;
 ```
 
-> *Effects:*
->
-> If
+> *Effects:* If
 >
 > ``` cpp
 > typeid(use_facet<collate<charT>>) == typeid(collate_byname<charT>)
@@ -757,11 +691,9 @@ template<class ForwardIterator>
   string_type lookup_collatename(ForwardIterator first, ForwardIterator last) const;
 ```
 
-> *Returns:*
->
-> A sequence of one or more characters that represents the collating
-> element consisting of the character sequence designated by the
-> iterator range \[`first`, `last`). Returns an empty string if the
+> *Returns:* A sequence of one or more characters that represents the
+> collating element consisting of the character sequence designated by
+> the iterator range \[`first`, `last`). Returns an empty string if the
 > character sequence is not a valid collating element.
 
 ``` cpp
@@ -770,14 +702,12 @@ template<class ForwardIterator>
     ForwardIterator first, ForwardIterator last, bool icase = false) const;
 ```
 
-> *Returns:*
->
-> An unspecified value that represents the character classification
-> named by the character sequence designated by the iterator range
-> \[`first`, `last`). If the parameter `icase` is `true` then the
-> returned mask identifies the character classification without regard
-> to the case of the characters being matched, otherwise it does honor
-> the case of the characters being matched.
+> *Returns:* An unspecified value that represents the character
+> classification named by the character sequence designated by the
+> iterator range \[`first`, `last`). If the parameter `icase` is `true`
+> then the returned mask identifies the character classification without
+> regard to the case of the characters being matched, otherwise it does
+> honor the case of the characters being matched.
 >
 > For example, if the parameter `icase` is `true` then `[[:lower:]]` is
 > the same as `[[:alpha:]]`.
@@ -786,10 +716,8 @@ template<class ForwardIterator>
 > in the character sequence. If the name is not recognized then returns
 > `char_class_type()`.
 >
-> *Remarks:*
->
-> For `regex_traits<char>`, at least the narrow character names in
-> [[re.traits.classnames]] shall be recognized. For
+> *Remarks:* For `regex_traits<char>`, at least the narrow character
+> names in [[re.traits.classnames]] shall be recognized. For
 > `regex_traits<wchar_t>`, at least the wide character names in
 > [[re.traits.classnames]] shall be recognized.
 
@@ -797,14 +725,10 @@ template<class ForwardIterator>
 bool isctype(charT c, char_class_type f) const;
 ```
 
-> *Effects:*
+> *Effects:* Determines if the character `c` is a member of the
+> character classification represented by `f`.
 >
-> Determines if the character `c` is a member of the character
-> classification represented by `f`.
->
-> *Returns:*
->
-> Given the following function declaration:
+> *Returns:* Given the following function declaration:
 >
 > ``` cpp
 > // for exposition only
@@ -858,47 +782,35 @@ bool isctype(charT c, char_class_type f) const;
 int value(charT ch, int radix) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* The value of `radix` is 8, 10, or 16.
 >
-> The value of `radix` is 8, 10, or 16.
->
-> *Returns:*
->
-> The value represented by the digit `ch` in base `radix` if the
-> character `ch` is a valid digit in base `radix`; otherwise returns
+> *Returns:* The value represented by the digit `ch` in base `radix` if
+> the character `ch` is a valid digit in base `radix`; otherwise returns
 > `-1`.
 
 ``` cpp
 locale_type imbue(locale_type loc);
 ```
 
-> *Effects:*
->
-> Imbues with a copy of the locale `loc`.
+> *Effects:* Imbues with a copy of the locale `loc`.
 >
 > \[*Note 2*: Calling `imbue` with a different locale than the one
 > currently in use invalidates all cached data held by
 > `*this`. — *end note*\]
 >
-> *Ensures:*
+> *Ensures:* `getloc() == loc`.
 >
-> `getloc() == loc`.
->
-> *Returns:*
->
-> If no locale has been previously imbued then a copy of the global
-> locale in effect at the time of construction of `*this`, otherwise a
-> copy of the last argument passed to `imbue`.
+> *Returns:* If no locale has been previously imbued then a copy of the
+> global locale in effect at the time of construction of `*this`,
+> otherwise a copy of the last argument passed to `imbue`.
 
 ``` cpp
 locale_type getloc() const;
 ```
 
-> *Returns:*
->
-> If no locale has been imbued then a copy of the global locale in
-> effect at the time of construction of `*this`, otherwise a copy of the
-> last argument passed to `imbue`.
+> *Returns:* If no locale has been imbued then a copy of the global
+> locale in effect at the time of construction of `*this`, otherwise a
+> copy of the last argument passed to `imbue`.
 
 **Table: Character class names and corresponding `ctype` masks**
 
@@ -1030,75 +942,57 @@ namespace std {
 basic_regex();
 ```
 
-> *Ensures:*
->
-> `*this` does not match any character sequence.
+> *Ensures:* `*this` does not match any character sequence.
 
 ``` cpp
 explicit basic_regex(const charT* p, flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`p`, `p + char_traits<charT>::length(p)`) is a
+> valid range.
 >
-> \[`p`, `p + char_traits<charT>::length(p)`) is a valid range.
+> *Effects:* The object’s internal finite state machine is constructed
+> from the regular expression contained in the sequence of characters
+> \[`p`, `p + char_traits<charT>::)length(p)`, and interpreted according
+> to the flags `f`.
 >
-> *Effects:*
+> *Ensures:* `flags()` returns `f`. `mark_count()` returns the number of
+> marked sub-expressions within the expression.
 >
-> The object’s internal finite state machine is constructed from the
-> regular expression contained in the sequence of characters \[`p`,
-> `p + char_traits<charT>::)length(p)`, and interpreted according to the
-> flags `f`.
->
-> *Ensures:*
->
-> `flags()` returns `f`. `mark_count()` returns the number of marked
-> sub-expressions within the expression.
->
-> *Throws:*
->
-> `regex_error` if \[`p`, `p + char_traits<charT>::length(p)`) is not a
-> valid regular expression.
+> *Throws:* `regex_error` if \[`p`, `p + char_traits<charT>::length(p)`)
+> is not a valid regular expression.
 
 ``` cpp
 basic_regex(const charT* p, size_t len, flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`p`, `p + len`) is a valid range.
 >
-> \[`p`, `p + len`) is a valid range.
+> *Effects:* The object’s internal finite state machine is constructed
+> from the regular expression contained in the sequence of characters
+> \[`p`, `p + len`), and interpreted according the flags specified in
+> `f`.
 >
-> *Effects:*
+> *Ensures:* `flags()` returns `f`. `mark_count()` returns the number of
+> marked sub-expressions within the expression.
 >
-> The object’s internal finite state machine is constructed from the
-> regular expression contained in the sequence of characters \[`p`,
-> `p + len`), and interpreted according the flags specified in `f`.
->
-> *Ensures:*
->
-> `flags()` returns `f`. `mark_count()` returns the number of marked
-> sub-expressions within the expression.
->
-> *Throws:*
->
-> `regex_error` if \[`p`, `p + len`) is not a valid regular expression.
+> *Throws:* `regex_error` if \[`p`, `p + len`) is not a valid regular
+> expression.
 
 ``` cpp
 basic_regex(const basic_regex& e);
 ```
 
-> *Ensures:*
->
-> `flags()` and `mark_count()` return `e.flags()` and `e.mark_count()`,
-> respectively.
+> *Ensures:* `flags()` and `mark_count()` return `e.flags()` and
+> `e.mark_count()`, respectively.
 
 ``` cpp
 basic_regex(basic_regex&& e) noexcept;
 ```
 
-> *Ensures:*
->
-> `flags()` and `mark_count()` return the values that `e.flags()` and
-> `e.mark_count()`, respectively, had before construction.
+> *Ensures:* `flags()` and `mark_count()` return the values that
+> `e.flags()` and `e.mark_count()`, respectively, had before
+> construction.
 
 ``` cpp
 template<class ST, class SA>
@@ -1106,20 +1000,14 @@ template<class ST, class SA>
                        flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
+> *Effects:* The object’s internal finite state machine is constructed
+> from the regular expression contained in the string `s`, and
+> interpreted according to the flags specified in `f`.
 >
-> The object’s internal finite state machine is constructed from the
-> regular expression contained in the string `s`, and interpreted
-> according to the flags specified in `f`.
+> *Ensures:* `flags()` returns `f`. `mark_count()` returns the number of
+> marked sub-expressions within the expression.
 >
-> *Ensures:*
->
-> `flags()` returns `f`. `mark_count()` returns the number of marked
-> sub-expressions within the expression.
->
-> *Throws:*
->
-> `regex_error` if `s` is not a valid regular expression.
+> *Throws:* `regex_error` if `s` is not a valid regular expression.
 
 ``` cpp
 template<class ForwardIterator>
@@ -1127,29 +1015,22 @@ template<class ForwardIterator>
               flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
+> *Effects:* The object’s internal finite state machine is constructed
+> from the regular expression contained in the sequence of characters
+> \[`first`, `last`), and interpreted according to the flags specified
+> in `f`.
 >
-> The object’s internal finite state machine is constructed from the
-> regular expression contained in the sequence of characters \[`first`,
-> `last`), and interpreted according to the flags specified in `f`.
+> *Ensures:* `flags()` returns `f`. `mark_count()` returns the number of
+> marked sub-expressions within the expression.
 >
-> *Ensures:*
->
-> `flags()` returns `f`. `mark_count()` returns the number of marked
-> sub-expressions within the expression.
->
-> *Throws:*
->
-> `regex_error` if the sequence \[`first`, `last`) is not a valid
-> regular expression.
+> *Throws:* `regex_error` if the sequence \[`first`, `last`) is not a
+> valid regular expression.
 
 ``` cpp
 basic_regex(initializer_list<charT> il, flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
->
-> Same as `basic_regex(il.begin(), il.end(), f)`.
+> *Effects:* Same as `basic_regex(il.begin(), il.end(), f)`.
 
 ### Assignment <a id="re.regex.assign">[[re.regex.assign]]</a>
 
@@ -1157,77 +1038,59 @@ basic_regex(initializer_list<charT> il, flag_type f = regex_constants::ECMAScrip
 basic_regex& operator=(const basic_regex& e);
 ```
 
-> *Ensures:*
->
-> `flags()` and `mark_count()` return `e.flags()` and `e.mark_count()`,
-> respectively.
+> *Ensures:* `flags()` and `mark_count()` return `e.flags()` and
+> `e.mark_count()`, respectively.
 
 ``` cpp
 basic_regex& operator=(basic_regex&& e) noexcept;
 ```
 
-> *Ensures:*
->
-> `flags()` and `mark_count()` return the values that `e.flags()` and
-> `e.mark_count()`, respectively, had before assignment. `e` is in a
-> valid state with unspecified value.
+> *Ensures:* `flags()` and `mark_count()` return the values that
+> `e.flags()` and `e.mark_count()`, respectively, had before assignment.
+> `e` is in a valid state with unspecified value.
 
 ``` cpp
 basic_regex& operator=(const charT* p);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(p);`
+> *Effects:* Equivalent to: `return assign(p);`
 
 ``` cpp
 basic_regex& operator=(initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(il.begin(), il.end());`
+> *Effects:* Equivalent to: `return assign(il.begin(), il.end());`
 
 ``` cpp
 template<class ST, class SA>
   basic_regex& operator=(const basic_string<charT, ST, SA>& s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(s);`
+> *Effects:* Equivalent to: `return assign(s);`
 
 ``` cpp
 basic_regex& assign(const basic_regex& e);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return *this = e;`
+> *Effects:* Equivalent to: `return *this = e;`
 
 ``` cpp
 basic_regex& assign(basic_regex&& e) noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return *this = std::move(e);`
+> *Effects:* Equivalent to: `return *this = std::move(e);`
 
 ``` cpp
 basic_regex& assign(const charT* p, flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(string_type(p), f);`
+> *Effects:* Equivalent to: `return assign(string_type(p), f);`
 
 ``` cpp
 basic_regex& assign(const charT* p, size_t len, flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(string_type(p, len), f);`
+> *Effects:* Equivalent to: `return assign(string_type(p, len), f);`
 
 ``` cpp
 template<class ST, class SA>
@@ -1235,24 +1098,17 @@ template<class ST, class SA>
                       flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
->
-> Assigns the regular expression contained in the string `s`,
+> *Effects:* Assigns the regular expression contained in the string `s`,
 > interpreted according the flags specified in `f`. If an exception is
 > thrown, `*this` is unchanged.
 >
-> *Ensures:*
+> *Ensures:* If no exception is thrown, `flags()` returns `f` and
+> `mark_count()` returns the number of marked sub-expressions within the
+> expression.
 >
-> If no exception is thrown, `flags()` returns `f` and `mark_count()`
-> returns the number of marked sub-expressions within the expression.
+> *Returns:* `*this`.
 >
-> *Returns:*
->
-> `*this`.
->
-> *Throws:*
->
-> `regex_error` if `s` is not a valid regular expression.
+> *Throws:* `regex_error` if `s` is not a valid regular expression.
 
 ``` cpp
 template<class InputIterator>
@@ -1260,18 +1116,15 @@ template<class InputIterator>
                       flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(string_type(first, last), f);`
+> *Effects:* Equivalent to:
+> `return assign(string_type(first, last), f);`
 
 ``` cpp
 basic_regex& assign(initializer_list<charT> il,
                     flag_type f = regex_constants::ECMAScript);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(il.begin(), il.end(), f);`
+> *Effects:* Equivalent to: `return assign(il.begin(), il.end(), f);`
 
 ### Constant operations <a id="re.regex.operations">[[re.regex.operations]]</a>
 
@@ -1279,19 +1132,16 @@ basic_regex& assign(initializer_list<charT> il,
 unsigned mark_count() const;
 ```
 
-> *Effects:*
->
-> Returns the number of marked sub-expressions within the regular
-> expression.
+> *Effects:* Returns the number of marked sub-expressions within the
+> regular expression.
 
 ``` cpp
 flag_type flags() const;
 ```
 
-> *Effects:*
->
-> Returns a copy of the regular expression syntax flags that were passed
-> to the object’s constructor or to the last call to `assign`.
+> *Effects:* Returns a copy of the regular expression syntax flags that
+> were passed to the object’s constructor or to the last call to
+> `assign`.
 
 ### Locale <a id="re.regex.locale">[[re.regex.locale]]</a>
 
@@ -1299,22 +1149,18 @@ flag_type flags() const;
 locale_type imbue(locale_type loc);
 ```
 
-> *Effects:*
->
-> Returns the result of `traits_inst.imbue(loc)` where `traits_inst` is
-> a (default-initialized) instance of the template type argument
-> `traits` stored within the object. After a call to `imbue` the
-> `basic_regex` object does not match any character sequence.
+> *Effects:* Returns the result of `traits_inst.imbue(loc)` where
+> `traits_inst` is a (default-initialized) instance of the template type
+> argument `traits` stored within the object. After a call to `imbue`
+> the `basic_regex` object does not match any character sequence.
 
 ``` cpp
 locale_type getloc() const;
 ```
 
-> *Effects:*
->
-> Returns the result of `traits_inst.getloc()` where `traits_inst` is a
-> (default-initialized) instance of the template parameter `traits`
-> stored within the object.
+> *Effects:* Returns the result of `traits_inst.getloc()` where
+> `traits_inst` is a (default-initialized) instance of the template
+> parameter `traits` stored within the object.
 
 ### Swap <a id="re.regex.swap">[[re.regex.swap]]</a>
 
@@ -1322,18 +1168,12 @@ locale_type getloc() const;
 void swap(basic_regex& e);
 ```
 
-> *Effects:*
+> *Effects:* Swaps the contents of the two regular expressions.
 >
-> Swaps the contents of the two regular expressions.
+> *Ensures:* `*this` contains the regular expression that was in `e`,
+> `e` contains the regular expression that was in `*this`.
 >
-> *Ensures:*
->
-> `*this` contains the regular expression that was in `e`, `e` contains
-> the regular expression that was in `*this`.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ### Non-member functions <a id="re.regex.nonmemb">[[re.regex.nonmemb]]</a>
 
@@ -1342,9 +1182,7 @@ template<class charT, class traits>
   void swap(basic_regex<charT, traits>& lhs, basic_regex<charT, traits>& rhs);
 ```
 
-> *Effects:*
->
-> Calls `lhs.swap(rhs)`.
+> *Effects:* Calls `lhs.swap(rhs)`.
 
 ## Class template `sub_match` <a id="re.submatch">[[re.submatch]]</a>
 
@@ -1385,80 +1223,60 @@ namespace std {
 constexpr sub_match();
 ```
 
-> *Effects:*
->
-> Value-initializes the `pair` base class subobject and the member
-> `matched`.
+> *Effects:* Value-initializes the `pair` base class subobject and the
+> member `matched`.
 
 ``` cpp
 difference_type length() const;
 ```
 
-> *Returns:*
->
-> `matched ? distance(first, second) : 0`.
+> *Returns:* `matched ? distance(first, second) : 0`.
 
 ``` cpp
 operator string_type() const;
 ```
 
-> *Returns:*
->
-> `matched ? string_type(first, second) : string_type()`.
+> *Returns:* `matched ? string_type(first, second) : string_type()`.
 
 ``` cpp
 string_type str() const;
 ```
 
-> *Returns:*
->
-> `matched ? string_type(first, second) : string_type()`.
+> *Returns:* `matched ? string_type(first, second) : string_type()`.
 
 ``` cpp
 int compare(const sub_match& s) const;
 ```
 
-> *Returns:*
->
-> `str().compare(s.str())`.
+> *Returns:* `str().compare(s.str())`.
 
 ``` cpp
 int compare(const string_type& s) const;
 ```
 
-> *Returns:*
->
-> `str().compare(s)`.
+> *Returns:* `str().compare(s)`.
 
 ``` cpp
 int compare(const value_type* s) const;
 ```
 
-> *Returns:*
->
-> `str().compare(s)`.
+> *Returns:* `str().compare(s)`.
 
 ``` cpp
 void swap(sub_match& s) noexcept(see below);
 ```
 
-> *Preconditions:*
->
-> `BidirectionalIterator` meets the *Cpp17Swappable*
+> *Preconditions:* `BidirectionalIterator` meets the *Cpp17Swappable*
 > requirements [[swappable.requirements]].
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > this->pair<BidirectionalIterator, BidirectionalIterator>::swap(s);
 > std::swap(matched, s.matched);
 > ```
 >
-> *Remarks:*
->
-> The exception specification is equivalent to
+> *Remarks:* The exception specification is equivalent to
 > `is_nothrow_swappable_v<BidirectionalIterator>`.
 
 ### Non-member operators <a id="re.submatch.op">[[re.submatch.op]]</a>
@@ -1474,9 +1292,7 @@ template<class BiIter>
   bool operator==(const sub_match<BiIter>& lhs, const sub_match<BiIter>& rhs);
 ```
 
-> *Returns:*
->
-> `lhs.compare(rhs) == 0`.
+> *Returns:* `lhs.compare(rhs) == 0`.
 
 ``` cpp
 template<class BiIter>
@@ -1484,7 +1300,6 @@ template<class BiIter>
 ```
 
 > *Returns:*
->
 > `static_cast<`*`SM-CAT`*`(BiIter)>(lhs.compare(rhs) <=> 0)`.
 
 ``` cpp
@@ -1522,9 +1337,7 @@ template<class BiIter>
                   const typename iterator_traits<BiIter>::value_type* rhs);
 ```
 
-> *Returns:*
->
-> `lhs.compare(rhs) == 0`.
+> *Returns:* `lhs.compare(rhs) == 0`.
 
 ``` cpp
 template<class BiIter>
@@ -1533,7 +1346,6 @@ template<class BiIter>
 ```
 
 > *Returns:*
->
 > `static_cast<`*`SM-CAT`*`(BiIter)>(lhs.compare(rhs) <=> 0)`.
 
 ``` cpp
@@ -1543,7 +1355,6 @@ template<class BiIter>
 ```
 
 > *Returns:*
->
 > `lhs.compare(typename sub_match<BiIter>::string_type(1, rhs)) == 0`.
 
 ``` cpp
@@ -1567,9 +1378,7 @@ template<class charT, class ST, class BiIter>
     operator<<(basic_ostream<charT, ST>& os, const sub_match<BiIter>& m);
 ```
 
-> *Returns:*
->
-> `os << m.str()`.
+> *Returns:* `os << m.str()`.
 
 ## Class template `match_results` <a id="re.results">[[re.results]]</a>
 
@@ -1693,63 +1502,46 @@ operations, the results of the expressions depending on the parameter
 explicit match_results(const Allocator& a);
 ```
 
-> *Effects:*
+> *Effects:* The stored `Allocator` value is constructed from `a`.
 >
-> The stored `Allocator` value is constructed from `a`.
->
-> *Ensures:*
->
-> `ready()` returns `false`. `size()` returns `0`.
+> *Ensures:* `ready()` returns `false`. `size()` returns `0`.
 
 ``` cpp
 match_results(const match_results& m);
 match_results(const match_results& m, const Allocator& a);
 ```
 
-> *Effects:*
+> *Effects:* For the first form, the stored `Allocator` value is
+> obtained as specified in [[container.reqmts]]. For the second form,
+> the stored `Allocator` value is constructed from `a`.
 >
-> For the first form, the stored `Allocator` value is obtained as
-> specified in [[container.reqmts]]. For the second form, the stored
-> `Allocator` value is constructed from `a`.
->
-> *Ensures:*
->
-> As specified in [[re.results.const]].
+> *Ensures:* As specified in [[re.results.const]].
 
 ``` cpp
 match_results(match_results&& m) noexcept;
 match_results(match_results&& m, const Allocator& a);
 ```
 
-> *Effects:*
+> *Effects:* For the first form, the stored `Allocator` value is move
+> constructed from `m.get_allocator()`. For the second form, the stored
+> `Allocator` value is constructed from `a`.
 >
-> For the first form, the stored `Allocator` value is move constructed
-> from `m.get_allocator()`. For the second form, the stored `Allocator`
-> value is constructed from `a`.
+> *Ensures:* As specified in [[re.results.const]].
 >
-> *Ensures:*
->
-> As specified in [[re.results.const]].
->
-> *Throws:*
->
-> The second form throws nothing if `a == m.get_allocator()` is `true`.
+> *Throws:* The second form throws nothing if `a == m.get_allocator()`
+> is `true`.
 
 ``` cpp
 match_results& operator=(const match_results& m);
 ```
 
-> *Ensures:*
->
-> As specified in [[re.results.const]].
+> *Ensures:* As specified in [[re.results.const]].
 
 ``` cpp
 match_results& operator=(match_results&& m);
 ```
 
-> *Ensures:*
->
-> As specified in [[re.results.const]].
+> *Ensures:* As specified in [[re.results.const]].
 
 ### State <a id="re.results.state">[[re.results.state]]</a>
 
@@ -1757,10 +1549,8 @@ match_results& operator=(match_results&& m);
 bool ready() const;
 ```
 
-> *Returns:*
->
-> `true` if `*this` has a fully established result state, otherwise
-> `false`.
+> *Returns:* `true` if `*this` has a fully established result state,
+> otherwise `false`.
 
 ### Size <a id="re.results.size">[[re.results.size]]</a>
 
@@ -1768,11 +1558,9 @@ bool ready() const;
 size_type size() const;
 ```
 
-> *Returns:*
->
-> One plus the number of marked sub-expressions in the regular
-> expression that was matched if `*this` represents the result of a
-> successful match. Otherwise returns `0`.
+> *Returns:* One plus the number of marked sub-expressions in the
+> regular expression that was matched if `*this` represents the result
+> of a successful match. Otherwise returns `0`.
 >
 > \[*Note 3*: The state of a `match_results` object can be modified only
 > by passing that object to `regex_match` or `regex_search`.
@@ -1784,18 +1572,14 @@ size_type size() const;
 size_type max_size() const;
 ```
 
-> *Returns:*
->
-> The maximum number of `sub_match` elements that can be stored in
-> `*this`.
+> *Returns:* The maximum number of `sub_match` elements that can be
+> stored in `*this`.
 
 ``` cpp
 [[nodiscard]] bool empty() const;
 ```
 
-> *Returns:*
->
-> `size() == 0`.
+> *Returns:* `size() == 0`.
 
 ### Element access <a id="re.results.acc">[[re.results.acc]]</a>
 
@@ -1803,103 +1587,75 @@ size_type max_size() const;
 difference_type length(size_type sub = 0) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Returns:*
->
-> `(*this)[sub].length()`.
+> *Returns:* `(*this)[sub].length()`.
 
 ``` cpp
 difference_type position(size_type sub = 0) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Returns:*
->
-> The distance from the start of the target sequence to
+> *Returns:* The distance from the start of the target sequence to
 > `(*this)[sub].first`.
 
 ``` cpp
 string_type str(size_type sub = 0) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Returns:*
->
-> `string_type((*this)[sub])`.
+> *Returns:* `string_type((*this)[sub])`.
 
 ``` cpp
 const_reference operator[](size_type n) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Returns:*
->
-> A reference to the `sub_match` object representing the character
-> sequence that matched marked sub-expression `n`. If `n == 0` then
-> returns a reference to a `sub_match` object representing the character
-> sequence that matched the whole regular expression. If `n >= size()`
-> then returns a `sub_match` object representing an unmatched
-> sub-expression.
+> *Returns:* A reference to the `sub_match` object representing the
+> character sequence that matched marked sub-expression `n`. If `n == 0`
+> then returns a reference to a `sub_match` object representing the
+> character sequence that matched the whole regular expression. If
+> `n >= size()` then returns a `sub_match` object representing an
+> unmatched sub-expression.
 
 ``` cpp
 const_reference prefix() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Returns:*
->
-> A reference to the `sub_match` object representing the character
-> sequence from the start of the string being matched/searched to the
-> start of the match found.
+> *Returns:* A reference to the `sub_match` object representing the
+> character sequence from the start of the string being matched/searched
+> to the start of the match found.
 
 ``` cpp
 const_reference suffix() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Returns:*
->
-> A reference to the `sub_match` object representing the character
-> sequence from the end of the match found to the end of the string
-> being matched/searched.
+> *Returns:* A reference to the `sub_match` object representing the
+> character sequence from the end of the match found to the end of the
+> string being matched/searched.
 
 ``` cpp
 const_iterator begin() const;
 const_iterator cbegin() const;
 ```
 
-> *Returns:*
->
-> A starting iterator that enumerates over all the sub-expressions
-> stored in `*this`.
+> *Returns:* A starting iterator that enumerates over all the
+> sub-expressions stored in `*this`.
 
 ``` cpp
 const_iterator end() const;
 const_iterator cend() const;
 ```
 
-> *Returns:*
->
-> A terminating iterator that enumerates over all the sub-expressions
-> stored in `*this`.
+> *Returns:* A terminating iterator that enumerates over all the
+> sub-expressions stored in `*this`.
 
 ### Formatting <a id="re.results.form">[[re.results.form]]</a>
 
@@ -1911,23 +1667,17 @@ template<class OutputIter>
       regex_constants::match_flag_type flags = regex_constants::format_default) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true` and `OutputIter` meets the
+> requirements for a *Cpp17OutputIterator*[[output.iterators]].
 >
-> `ready() == true` and `OutputIter` meets the requirements for a
-> *Cpp17OutputIterator*[[output.iterators]].
+> *Effects:* Copies the character sequence \[`fmt_first`, `fmt_last`) to
+> OutputIter `out`. Replaces each format specifier or escape sequence in
+> the copied range with either the character(s) it represents or the
+> sequence of characters within `*this` to which it refers. The bitmasks
+> specified in `flags` determine which format specifiers and escape
+> sequences are recognized.
 >
-> *Effects:*
->
-> Copies the character sequence \[`fmt_first`, `fmt_last`) to OutputIter
-> `out`. Replaces each format specifier or escape sequence in the copied
-> range with either the character(s) it represents or the sequence of
-> characters within `*this` to which it refers. The bitmasks specified
-> in `flags` determine which format specifiers and escape sequences are
-> recognized.
->
-> *Returns:*
->
-> `out`.
+> *Returns:* `out`.
 
 ``` cpp
 template<class OutputIter, class ST, class SA>
@@ -1937,9 +1687,7 @@ template<class OutputIter, class ST, class SA>
       regex_constants::match_flag_type flags = regex_constants::format_default) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return format(out, fmt.data(), fmt.data() + fmt.size(), flags);
@@ -1952,22 +1700,16 @@ template<class ST, class SA>
       regex_constants::match_flag_type flags = regex_constants::format_default) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Effects:*
->
-> Constructs an empty string `result` of type
+> *Effects:* Constructs an empty string `result` of type
 > `basic_string<char_type, ST, SA>` and calls:
 >
 > ``` cpp
 > format(back_inserter(result), fmt, flags);
 > ```
 >
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 ``` cpp
 string_type format(
@@ -1975,21 +1717,16 @@ string_type format(
     regex_constants::match_flag_type flags = regex_constants::format_default) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `ready() == true`.
 >
-> `ready() == true`.
->
-> *Effects:*
->
-> Constructs an empty string `result` of type `string_type` and calls:
+> *Effects:* Constructs an empty string `result` of type `string_type`
+> and calls:
 >
 > ``` cpp
 > format(back_inserter(result), fmt, fmt + char_traits<char_type>::length(fmt), flags);
 > ```
 >
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 ### Allocator <a id="re.results.all">[[re.results.all]]</a>
 
@@ -1997,11 +1734,9 @@ string_type format(
 allocator_type get_allocator() const;
 ```
 
-> *Returns:*
->
-> A copy of the Allocator that was passed to the object’s constructor
-> or, if that allocator has been replaced, a copy of the most recent
-> replacement.
+> *Returns:* A copy of the Allocator that was passed to the object’s
+> constructor or, if that allocator has been replaced, a copy of the
+> most recent replacement.
 
 ### Swap <a id="re.results.swap">[[re.results.swap]]</a>
 
@@ -2009,19 +1744,13 @@ allocator_type get_allocator() const;
 void swap(match_results& that);
 ```
 
-> *Effects:*
+> *Effects:* Swaps the contents of the two sequences.
 >
-> Swaps the contents of the two sequences.
+> *Ensures:* `*this` contains the sequence of matched sub-expressions
+> that were in `that`, `that` contains the sequence of matched
+> sub-expressions that were in `*this`.
 >
-> *Ensures:*
->
-> `*this` contains the sequence of matched sub-expressions that were in
-> `that`, `that` contains the sequence of matched sub-expressions that
-> were in `*this`.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 template<class BidirectionalIterator, class Allocator>
@@ -2039,11 +1768,9 @@ bool operator==(const match_results<BidirectionalIterator, Allocator>& m1,
                 const match_results<BidirectionalIterator, Allocator>& m2);
 ```
 
-> *Returns:*
->
-> `true` if neither match result is ready, `false` if one match result
-> is ready and the other is not. If both match results are ready,
-> returns `true` only if:
+> *Returns:* `true` if neither match result is ready, `false` if one
+> match result is ready and the other is not. If both match results are
+> ready, returns `true` only if:
 >
 > - `m1.empty() && m2.empty()`, or
 >
@@ -2074,16 +1801,12 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Preconditions:*
->
-> `BidirectionalIterator` models
+> *Preconditions:* `BidirectionalIterator` models
 > `bidirectional_iterator`[[iterator.concept.bidir]].
 >
-> *Effects:*
->
-> Determines whether there is a match between the regular expression
-> `e`, and all of the character sequence \[`first`, `last`). The
-> parameter `flags` is used to control how the expression is matched
+> *Effects:* Determines whether there is a match between the regular
+> expression `e`, and all of the character sequence \[`first`, `last`).
+> The parameter `flags` is used to control how the expression is matched
 > against the character sequence. When determining if there is a match,
 > only potential matches that match the entire character sequence are
 > considered. Returns `true` if such a match exists, `false` otherwise.
@@ -2099,12 +1822,10 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
 >
 > — *end example*\]
 >
-> *Ensures:*
->
-> `m.ready() == true` in all cases. If the function returns `false`,
-> then the effect on parameter `m` is unspecified except that `m.size()`
-> returns `0` and `m.empty()` returns `true`. Otherwise the effects on
-> parameter `m` are given in [[re.alg.match]].
+> *Ensures:* `m.ready() == true` in all cases. If the function returns
+> `false`, then the effect on parameter `m` is unspecified except that
+> `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
+> effects on parameter `m` are given in [[re.alg.match]].
 
 ``` cpp
 template<class BidirectionalIterator, class charT, class traits>
@@ -2113,9 +1834,7 @@ template<class BidirectionalIterator, class charT, class traits>
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Effects:*
->
-> Behaves “as if” by constructing an instance of
+> *Effects:* Behaves “as if” by constructing an instance of
 > `match_results<BidirectionalIterator> what`, and then returning the
 > result of `regex_match(first, last, what, e, flags)`.
 
@@ -2128,7 +1847,6 @@ template<class charT, class Allocator, class traits>
 ```
 
 > *Returns:*
->
 > `regex_match(str, str + char_traits<charT>::length(str), m, e, flags)`.
 
 ``` cpp
@@ -2140,9 +1858,7 @@ template<class ST, class SA, class Allocator, class charT, class traits>
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Returns:*
->
-> `regex_match(s.begin(), s.end(), m, e, flags)`.
+> *Returns:* `regex_match(s.begin(), s.end(), m, e, flags)`.
 
 ``` cpp
 template<class charT, class traits>
@@ -2152,7 +1868,6 @@ template<class charT, class traits>
 ```
 
 > *Returns:*
->
 > `regex_match(str, str + char_traits<charT>::length(str), e, flags)`
 
 ``` cpp
@@ -2162,9 +1877,7 @@ template<class ST, class SA, class charT, class traits>
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Returns:*
->
-> `regex_match(s.begin(), s.end(), e, flags)`.
+> *Returns:* `regex_match(s.begin(), s.end(), e, flags)`.
 
 ### `regex_search` <a id="re.alg.search">[[re.alg.search]]</a>
 
@@ -2176,24 +1889,19 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Preconditions:*
->
-> `BidirectionalIterator` models
+> *Preconditions:* `BidirectionalIterator` models
 > `bidirectional_iterator`[[iterator.concept.bidir]].
 >
-> *Effects:*
+> *Effects:* Determines whether there is some sub-sequence within
+> \[`first`, `last`) that matches the regular expression `e`. The
+> parameter `flags` is used to control how the expression is matched
+> against the character sequence. Returns `true` if such a sequence
+> exists, `false` otherwise.
 >
-> Determines whether there is some sub-sequence within \[`first`,
-> `last`) that matches the regular expression `e`. The parameter `flags`
-> is used to control how the expression is matched against the character
-> sequence. Returns `true` if such a sequence exists, `false` otherwise.
->
-> *Ensures:*
->
-> `m.ready() == true` in all cases. If the function returns `false`,
-> then the effect on parameter `m` is unspecified except that `m.size()`
-> returns `0` and `m.empty()` returns `true`. Otherwise the effects on
-> parameter `m` are given in [[re.alg.search]].
+> *Ensures:* `m.ready() == true` in all cases. If the function returns
+> `false`, then the effect on parameter `m` is unspecified except that
+> `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
+> effects on parameter `m` are given in [[re.alg.search]].
 
 ``` cpp
 template<class charT, class Allocator, class traits>
@@ -2203,7 +1911,6 @@ template<class charT, class Allocator, class traits>
 ```
 
 > *Returns:*
->
 > `regex_search(str, str + char_traits<charT>::length(str), m, e, flags)`.
 
 ``` cpp
@@ -2215,9 +1922,7 @@ template<class ST, class SA, class Allocator, class charT, class traits>
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Returns:*
->
-> `regex_search(s.begin(), s.end(), m, e, flags)`.
+> *Returns:* `regex_search(s.begin(), s.end(), m, e, flags)`.
 
 ``` cpp
 template<class BidirectionalIterator, class charT, class traits>
@@ -2226,9 +1931,7 @@ template<class BidirectionalIterator, class charT, class traits>
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Effects:*
->
-> Behaves “as if” by constructing an object `what` of type
+> *Effects:* Behaves “as if” by constructing an object `what` of type
 > `match_results<BidirectionalIterator>` and returning
 > `regex_search(first, last, what, e, flags)`.
 
@@ -2240,7 +1943,6 @@ template<class charT, class traits>
 ```
 
 > *Returns:*
->
 > `regex_search(str, str + char_traits<charT>::length(str), e, flags)`.
 
 ``` cpp
@@ -2250,9 +1952,7 @@ template<class ST, class SA, class charT, class traits>
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Returns:*
->
-> `regex_search(s.begin(), s.end(), e, flags)`.
+> *Returns:* `regex_search(s.begin(), s.end(), e, flags)`.
 
 ### `regex_replace` <a id="re.alg.replace">[[re.alg.replace]]</a>
 
@@ -2274,9 +1974,7 @@ template<class OutputIterator, class BidirectionalIterator, class traits, class 
                   regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Effects:*
->
-> Constructs a `regex_iterator` object `i` as if by
+> *Effects:* Constructs a `regex_iterator` object `i` as if by
 >
 > ``` cpp
 > regex_iterator<BidirectionalIterator, charT, traits> i(first, last, e, flags)
@@ -2318,9 +2016,7 @@ template<class OutputIterator, class BidirectionalIterator, class traits, class 
 > `flags & regex_constants::format_first_only` is nonzero, then only the
 > first match found is replaced.
 >
-> *Returns:*
->
-> `out`.
+> *Returns:* `out`.
 
 ``` cpp
 template<class traits, class charT, class ST, class SA, class FST, class FSA>
@@ -2337,18 +2033,14 @@ template<class traits, class charT, class ST, class SA>
                   regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Effects:*
->
-> Constructs an empty string `result` of type
+> *Effects:* Constructs an empty string `result` of type
 > `basic_string<charT, ST, SA>` and calls:
 >
 > ``` cpp
 > regex_replace(back_inserter(result), s.begin(), s.end(), e, fmt, flags);
 > ```
 >
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 ``` cpp
 template<class traits, class charT, class ST, class SA>
@@ -2365,18 +2057,14 @@ template<class traits, class charT>
                   regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-> *Effects:*
->
-> Constructs an empty string `result` of type `basic_string<charT>` and
-> calls:
+> *Effects:* Constructs an empty string `result` of type
+> `basic_string<charT>` and calls:
 >
 > ``` cpp
 > regex_replace(back_inserter(result), s, s + char_traits<charT>::length(s), e, fmt, flags);
 > ```
 >
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 ## Regular expression iterators <a id="re.iter">[[re.iter]]</a>
 
@@ -2439,9 +2127,7 @@ expression that matched consists only of an assertion (such as `'^'`,
 regex_iterator();
 ```
 
-> *Effects:*
->
-> Constructs an end-of-sequence iterator.
+> *Effects:* Constructs an end-of-sequence iterator.
 
 ``` cpp
 regex_iterator(BidirectionalIterator a, BidirectionalIterator b,
@@ -2449,10 +2135,8 @@ regex_iterator(BidirectionalIterator a, BidirectionalIterator b,
                regex_constants::match_flag_type m = regex_constants::match_default);
 ```
 
-> *Effects:*
->
-> Initializes `begin` and `end` to `a` and `b`, respectively, sets
-> `pregex` to `addressof(re)`, sets `flags` to `m`, then calls
+> *Effects:* Initializes `begin` and `end` to `a` and `b`, respectively,
+> sets `pregex` to `addressof(re)`, sets `flags` to `m`, then calls
 > `regex_search(begin, end, match, *pregex, flags)`. If this call
 > returns `false` the constructor sets `*this` to the end-of-sequence
 > iterator.
@@ -2463,10 +2147,8 @@ regex_iterator(BidirectionalIterator a, BidirectionalIterator b,
 bool operator==(const regex_iterator& right) const;
 ```
 
-> *Returns:*
->
-> `true` if `*this` and `right` are both end-of-sequence iterators or if
-> the following conditions all hold:
+> *Returns:* `true` if `*this` and `right` are both end-of-sequence
+> iterators or if the following conditions all hold:
 >
 > - `begin == right.begin`,
 >
@@ -2486,17 +2168,13 @@ bool operator==(const regex_iterator& right) const;
 const value_type& operator*() const;
 ```
 
-> *Returns:*
->
-> `match`.
+> *Returns:* `match`.
 
 ``` cpp
 const value_type* operator->() const;
 ```
 
-> *Returns:*
->
-> `addressof(match)`.
+> *Returns:* `addressof(match)`.
 
 #### Increment <a id="re.regiter.incr">[[re.regiter.incr]]</a>
 
@@ -2504,10 +2182,9 @@ const value_type* operator->() const;
 regex_iterator& operator++();
 ```
 
-> *Effects:*
->
-> Constructs a local variable `start` of type `BidirectionalIterator`
-> and initializes it with the value of `match[0].second`.
+> *Effects:* Constructs a local variable `start` of type
+> `BidirectionalIterator` and initializes it with the value of
+> `match[0].second`.
 >
 > If the iterator holds a zero-length match and `start == end` the
 > operator sets `*this` to the end-of-sequence iterator and returns
@@ -2553,9 +2230,7 @@ regex_iterator& operator++();
 regex_iterator operator++(int);
 ```
 
-> *Effects:*
->
-> As if by:
+> *Effects:* As if by:
 >
 > ``` cpp
 > regex_iterator tmp = *this;
@@ -2709,9 +2384,7 @@ The *current match* is `(*position).prefix()` if `subs[N] == -1`, or
 regex_token_iterator();
 ```
 
-> *Effects:*
->
-> Constructs the end-of-sequence iterator.
+> *Effects:* Constructs the end-of-sequence iterator.
 
 ``` cpp
 regex_token_iterator(BidirectionalIterator a, BidirectionalIterator b,
@@ -2736,17 +2409,14 @@ template<size_t N>
                        regex_constants::match_flag_type m = regex_constants::match_default);
 ```
 
-> *Preconditions:*
+> *Preconditions:* Each of the initialization values of `submatches` is
+> `>= -1`.
 >
-> Each of the initialization values of `submatches` is `>= -1`.
->
-> *Effects:*
->
-> The first constructor initializes the member `subs` to hold the single
-> value `submatch`. The second, third, and fourth constructors
-> initialize the member `subs` to hold a copy of the sequence of integer
-> values pointed to by the iterator range \[`begin(submatches)`,
-> `end(submatches)`).
+> *Effects:* The first constructor initializes the member `subs` to hold
+> the single value `submatch`. The second, third, and fourth
+> constructors initialize the member `subs` to hold a copy of the
+> sequence of integer values pointed to by the iterator range
+> \[`begin(submatches)`, `end(submatches)`).
 >
 > Each constructor then sets `N` to 0, and `position` to
 > `position_iterator(a, b, re, m)`. If `position` is not an
@@ -2762,10 +2432,8 @@ template<size_t N>
 bool operator==(const regex_token_iterator& right) const;
 ```
 
-> *Returns:*
->
-> `true` if `*this` and `right` are both end-of-sequence iterators, or
-> if `*this` and `right` are both suffix iterators and
+> *Returns:* `true` if `*this` and `right` are both end-of-sequence
+> iterators, or if `*this` and `right` are both suffix iterators and
 > `suffix == right.suffix`; otherwise returns `false` if `*this` or
 > `right` is an end-of-sequence iterator or a suffix iterator. Otherwise
 > returns `true` if `position == right.position`, `N == right.N`, and
@@ -2777,17 +2445,13 @@ bool operator==(const regex_token_iterator& right) const;
 const value_type& operator*() const;
 ```
 
-> *Returns:*
->
-> `*result`.
+> *Returns:* `*result`.
 
 ``` cpp
 const value_type* operator->() const;
 ```
 
-> *Returns:*
->
-> `result`.
+> *Returns:* `result`.
 
 #### Increment <a id="re.tokiter.incr">[[re.tokiter.incr]]</a>
 
@@ -2795,10 +2459,8 @@ const value_type* operator->() const;
 regex_token_iterator& operator++();
 ```
 
-> *Effects:*
->
-> Constructs a local variable `prev` of type `position_iterator`,
-> initialized with the value of `position`.
+> *Effects:* Constructs a local variable `prev` of type
+> `position_iterator`, initialized with the value of `position`.
 >
 > If `*this` is a suffix iterator, sets `*this` to an end-of-sequence
 > iterator.
@@ -2817,21 +2479,15 @@ regex_token_iterator& operator++();
 >
 > Otherwise, sets `*this` to an end-of-sequence iterator.
 >
-> *Returns:*
->
-> `*this`
+> *Returns:* `*this`
 
 ``` cpp
 regex_token_iterator& operator++(int);
 ```
 
-> *Effects:*
+> *Effects:* Constructs a copy `tmp` of `*this`, then calls `++(*this)`.
 >
-> Constructs a copy `tmp` of `*this`, then calls `++(*this)`.
->
-> *Returns:*
->
-> `tmp`.
+> *Returns:* `tmp`.
 
 ## Modified ECMAScript regular expression grammar <a id="re.grammar">[[re.grammar]]</a>
 

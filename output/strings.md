@@ -67,11 +67,9 @@ specializations.
 using int_type = see below;
 ```
 
-> *Preconditions:*
->
-> `int_type` shall be able to represent all of the valid characters
-> converted from the corresponding `char_type` values, as well as an
-> end-of-file value, `eof()`.
+> *Preconditions:* `int_type` shall be able to represent all of the
+> valid characters converted from the corresponding `char_type` values,
+> as well as an end-of-file value, `eof()`.
 >
 > If `eof()` can be held in `char_type` then some iostreams operations
 > can give surprising results.
@@ -80,13 +78,11 @@ using int_type = see below;
 using state_type = see below;
 ```
 
-> *Preconditions:*
->
-> `state_type` meets the *Cpp17Destructible* ( [[cpp17.destructible]]),
-> *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]),
-> *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]), and
-> *Cpp17DefaultConstructible* ( [[cpp17.defaultconstructible]])
-> requirements.
+> *Preconditions:* `state_type` meets the *Cpp17Destructible*
+> ( [[cpp17.destructible]]), *Cpp17CopyAssignable*
+> ( [[cpp17.copyassignable]]), *Cpp17CopyConstructible*
+> ( [[cpp17.copyconstructible]]), and *Cpp17DefaultConstructible*
+> ( [[cpp17.defaultconstructible]]) requirements.
 
 ### `char_traits` specializations <a id="char.traits.specializations">[[char.traits.specializations]]</a>
 
@@ -547,39 +543,28 @@ otherwise specified.
 constexpr basic_string_view() noexcept;
 ```
 
-> *Ensures:*
->
-> `size_ == 0` and `data_ == nullptr`.
+> *Ensures:* `size_ == 0` and `data_ == nullptr`.
 
 ``` cpp
 constexpr basic_string_view(const charT* str);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`str`, `str + traits::length(str)`) is a valid
+> range.
 >
-> \[`str`, `str + traits::length(str)`) is a valid range.
+> *Effects:* Constructs a `basic_string_view`, initializing `data_` with
+> `str` and initializing `size_` with `traits::length(str)`.
 >
-> *Effects:*
->
-> Constructs a `basic_string_view`, initializing `data_` with `str` and
-> initializing `size_` with `traits::length(str)`.
->
-> *Complexity:*
->
-> 𝑂(`traits::length(str))`.
+> *Complexity:* 𝑂(`traits::length(str))`.
 
 ``` cpp
 constexpr basic_string_view(const charT* str, size_type len);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`str`, `str + len`) is a valid range.
 >
-> \[`str`, `str + len`) is a valid range.
->
-> *Effects:*
->
-> Constructs a `basic_string_view`, initializing `data_` with `str` and
-> initializing `size_` with `len`.
+> *Effects:* Constructs a `basic_string_view`, initializing `data_` with
+> `str` and initializing `size_` with `len`.
 
 ``` cpp
 template<class It, class End>
@@ -604,14 +589,10 @@ template<class It, class End>
 >
 > - `End` models `sized_sentinel_for``<It>`.
 >
-> *Effects:*
+> *Effects:* Initializes `data_` with `to_address(begin)` and
+> initializes `size_` with `end - begin`.
 >
-> Initializes `data_` with `to_address(begin)` and initializes `size_`
-> with `end - begin`.
->
-> *Throws:*
->
-> When and what `end - begin` throws.
+> *Throws:* When and what `end - begin` throws.
 
 ``` cpp
 template<class R>
@@ -633,14 +614,11 @@ template<class R>
 > - `d.operator ::std::basic_string_view<charT, traits>()` is not a
 >   valid expression.
 >
-> *Effects:*
->
-> Initializes `data_` with `ranges::data(r)` and `size_` with
+> *Effects:* Initializes `data_` with `ranges::data(r)` and `size_` with
 > `ranges::size(r)`.
 >
-> *Throws:*
->
-> Any exception thrown by `ranges::data(r)` and `ranges::size(r)`.
+> *Throws:* Any exception thrown by `ranges::data(r)` and
+> `ranges::size(r)`.
 
 #### Deduction guides <a id="string.view.deduct">[[string.view.deduct]]</a>
 
@@ -660,9 +638,7 @@ template<class R>
   basic_string_view(R&&) -> basic_string_view<ranges::range_value_t<R>>;
 ```
 
-> *Constraints:*
->
-> `R` satisfies `ranges::``contiguous_range`.
+> *Constraints:* `R` satisfies `ranges::``contiguous_range`.
 
 #### Iterator support <a id="string.view.iterators">[[string.view.iterators]]</a>
 
@@ -684,9 +660,7 @@ constexpr const_iterator begin() const noexcept;
 constexpr const_iterator cbegin() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator such that
+> *Returns:* An iterator such that
 >
 > - if `!empty()`, `addressof(*begin()) == data_`,
 >
@@ -698,27 +672,21 @@ constexpr const_iterator end() const noexcept;
 constexpr const_iterator cend() const noexcept;
 ```
 
-> *Returns:*
->
-> `begin() + size()`.
+> *Returns:* `begin() + size()`.
 
 ``` cpp
 constexpr const_reverse_iterator rbegin() const noexcept;
 constexpr const_reverse_iterator crbegin() const noexcept;
 ```
 
-> *Returns:*
->
-> `const_reverse_iterator(end())`.
+> *Returns:* `const_reverse_iterator(end())`.
 
 ``` cpp
 constexpr const_reverse_iterator rend() const noexcept;
 constexpr const_reverse_iterator crend() const noexcept;
 ```
 
-> *Returns:*
->
-> `const_reverse_iterator(begin())`.
+> *Returns:* `const_reverse_iterator(begin())`.
 
 #### Capacity <a id="string.view.capacity">[[string.view.capacity]]</a>
 
@@ -727,26 +695,20 @@ constexpr size_type size() const noexcept;
 constexpr size_type length() const noexcept;
 ```
 
-> *Returns:*
->
-> `size_`.
+> *Returns:* `size_`.
 
 ``` cpp
 constexpr size_type max_size() const noexcept;
 ```
 
-> *Returns:*
->
-> The largest possible number of char-like objects that can be referred
-> to by a `basic_string_view`.
+> *Returns:* The largest possible number of char-like objects that can
+> be referred to by a `basic_string_view`.
 
 ``` cpp
 [[nodiscard]] constexpr bool empty() const noexcept;
 ```
 
-> *Returns:*
->
-> `size_ == 0`.
+> *Returns:* `size_ == 0`.
 
 #### Element access <a id="string.view.access">[[string.view.access]]</a>
 
@@ -754,17 +716,11 @@ constexpr size_type max_size() const noexcept;
 constexpr const_reference operator[](size_type pos) const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `pos < size()`.
 >
-> `pos < size()`.
+> *Returns:* `data_[pos]`.
 >
-> *Returns:*
->
-> `data_[pos]`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 >
 > \[*Note 1*: Unlike `basic_string::operator[]`,
 > `basic_string_view::operator[](size())` has undefined behavior instead
@@ -774,53 +730,35 @@ constexpr const_reference operator[](size_type pos) const;
 constexpr const_reference at(size_type pos) const;
 ```
 
-> *Returns:*
+> *Returns:* `data_[pos]`.
 >
-> `data_[pos]`.
->
-> *Throws:*
->
-> `out_of_range` if `pos >= size()`.
+> *Throws:* `out_of_range` if `pos >= size()`.
 
 ``` cpp
 constexpr const_reference front() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `!empty()`.
 >
-> `!empty()`.
+> *Returns:* `data_[0]`.
 >
-> *Returns:*
->
-> `data_[0]`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 constexpr const_reference back() const;
 ```
 
-> *Preconditions:*
+> *Preconditions:* `!empty()`.
 >
-> `!empty()`.
+> *Returns:* `data_[size() - 1]`.
 >
-> *Returns:*
->
-> `data_[size() - 1]`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 constexpr const_pointer data() const noexcept;
 ```
 
-> *Returns:*
->
-> `data_`.
+> *Returns:* `data_`.
 >
 > \[*Note 2*: Unlike `basic_string::data()` and *string-literal*s,
 > `data()` can return a pointer to a buffer that is not null-terminated.
@@ -834,33 +772,23 @@ constexpr const_pointer data() const noexcept;
 constexpr void remove_prefix(size_type n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `n <= size()`.
 >
-> `n <= size()`.
->
-> *Effects:*
->
-> Equivalent to: `data_ += n; size_ -= n;`
+> *Effects:* Equivalent to: `data_ += n; size_ -= n;`
 
 ``` cpp
 constexpr void remove_suffix(size_type n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `n <= size()`.
 >
-> `n <= size()`.
->
-> *Effects:*
->
-> Equivalent to: `size_ -= n;`
+> *Effects:* Equivalent to: `size_ -= n;`
 
 ``` cpp
 constexpr void swap(basic_string_view& s) noexcept;
 ```
 
-> *Effects:*
->
-> Exchanges the values of `*this` and `s`.
+> *Effects:* Exchanges the values of `*this` and `s`.
 
 #### String operations <a id="string.view.ops">[[string.view.ops]]</a>
 
@@ -870,25 +798,15 @@ constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
 
 > Let `rlen` be the smaller of `n` and `size() - pos`.
 >
-> *Preconditions:*
+> *Preconditions:* \[`s`, `s + rlen`) is a valid range.
 >
-> \[`s`, `s + rlen`) is a valid range.
+> *Effects:* Equivalent to `traits::copy(s, data() + pos, rlen)`.
 >
-> *Effects:*
+> *Returns:* `rlen`.
 >
-> Equivalent to `traits::copy(s, data() + pos, rlen)`.
+> *Throws:* `out_of_range` if `pos > size()`.
 >
-> *Returns:*
->
-> `rlen`.
->
-> *Throws:*
->
-> `out_of_range` if `pos > size()`.
->
-> *Complexity:*
->
-> 𝑂(`rlen)`.
+> *Complexity:* 𝑂(`rlen)`.
 
 ``` cpp
 constexpr basic_string_view substr(size_type pos = 0, size_type n = npos) const;
@@ -896,17 +814,12 @@ constexpr basic_string_view substr(size_type pos = 0, size_type n = npos) const;
 
 > Let `rlen` be the smaller of `n` and `size() - pos`.
 >
-> *Effects:*
+> *Effects:* Determines `rlen`, the effective length of the string to
+> reference.
 >
-> Determines `rlen`, the effective length of the string to reference.
+> *Returns:* `basic_string_view(data() + pos, rlen)`.
 >
-> *Returns:*
->
-> `basic_string_view(data() + pos, rlen)`.
->
-> *Throws:*
->
-> `out_of_range` if `pos > size()`.
+> *Throws:* `out_of_range` if `pos > size()`.
 
 ``` cpp
 constexpr int compare(basic_string_view str) const noexcept;
@@ -914,16 +827,13 @@ constexpr int compare(basic_string_view str) const noexcept;
 
 > Let `rlen` be the smaller of `size()` and `str.size()`.
 >
-> *Effects:*
->
-> Determines `rlen`, the effective length of the strings to compare. The
-> function then compares the two strings by calling
+> *Effects:* Determines `rlen`, the effective length of the strings to
+> compare. The function then compares the two strings by calling
 > `traits::compare(data(), str.data(), rlen)`.
 >
-> *Returns:*
->
-> The nonzero result if the result of the comparison is nonzero.
-> Otherwise, returns a value as indicated in [[string.view.compare]].
+> *Returns:* The nonzero result if the result of the comparison is
+> nonzero. Otherwise, returns a value as indicated in
+> [[string.view.compare]].
 >
 > <div class="libtab2">
 >
@@ -934,85 +844,65 @@ constexpr int compare(basic_string_view str) const noexcept;
 >
 > </div>
 >
-> *Complexity:*
->
-> 𝑂(`rlen)`.
+> *Complexity:* 𝑂(`rlen)`.
 
 ``` cpp
 constexpr int compare(size_type pos1, size_type n1, basic_string_view str) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return substr(pos1, n1).compare(str);`
+> *Effects:* Equivalent to: `return substr(pos1, n1).compare(str);`
 
 ``` cpp
 constexpr int compare(size_type pos1, size_type n1, basic_string_view str,
                       size_type pos2, size_type n2) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return substr(pos1, n1).compare(str.substr(pos2, n2));`
 
 ``` cpp
 constexpr int compare(const charT* s) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return compare(basic_string_view(s));`
+> *Effects:* Equivalent to: `return compare(basic_string_view(s));`
 
 ``` cpp
 constexpr int compare(size_type pos1, size_type n1, const charT* s) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return substr(pos1, n1).compare(basic_string_view(s));`
 
 ``` cpp
 constexpr int compare(size_type pos1, size_type n1, const charT* s, size_type n2) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return substr(pos1, n1).compare(basic_string_view(s, n2));`
 
 ``` cpp
 constexpr bool starts_with(basic_string_view x) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return substr(0, x.size()) == x;`
+> *Effects:* Equivalent to: `return substr(0, x.size()) == x;`
 
 ``` cpp
 constexpr bool starts_with(charT x) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return !empty() && traits::eq(front(), x);`
+> *Effects:* Equivalent to: `return !empty() && traits::eq(front(), x);`
 
 ``` cpp
 constexpr bool starts_with(const charT* x) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return starts_with(basic_string_view(x));`
+> *Effects:* Equivalent to: `return starts_with(basic_string_view(x));`
 
 ``` cpp
 constexpr bool ends_with(basic_string_view x) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return size() >= x.size() && compare(size() - x.size(), npos, x) == 0;
@@ -1022,17 +912,13 @@ constexpr bool ends_with(basic_string_view x) const noexcept;
 constexpr bool ends_with(charT x) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return !empty() && traits::eq(back(), x);`
+> *Effects:* Equivalent to: `return !empty() && traits::eq(back(), x);`
 
 ``` cpp
 constexpr bool ends_with(const charT* x) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return ends_with(basic_string_view(x));`
+> *Effects:* Equivalent to: `return ends_with(basic_string_view(x));`
 
 ``` cpp
 constexpr bool contains(basic_string_view x) const noexcept;
@@ -1040,9 +926,7 @@ constexpr bool contains(charT x) const noexcept;
 constexpr bool contains(const charT* x) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return find(x) != npos;`
+> *Effects:* Equivalent to: `return find(x) != npos;`
 
 #### Searching <a id="string.view.find">[[string.view.find]]</a>
 
@@ -1092,14 +976,10 @@ constexpr size_type find(basic_string_view str, size_type pos = 0) const noexcep
 > - `traits::eq(at(xpos + I), str.at(I))` for all elements `I` of the
 >   string referenced by `str`.
 >
-> *Effects:*
+> *Effects:* Determines `xpos`.
 >
-> Determines `xpos`.
->
-> *Returns:*
->
-> `xpos` if the function can determine such a value for `xpos`.
-> Otherwise, returns `npos`.
+> *Returns:* `xpos` if the function can determine such a value for
+> `xpos`. Otherwise, returns `npos`.
 
 ``` cpp
 constexpr size_type rfind(basic_string_view str, size_type pos = npos) const noexcept;
@@ -1115,14 +995,10 @@ constexpr size_type rfind(basic_string_view str, size_type pos = npos) const noe
 > - `traits::eq(at(xpos + I), str.at(I))` for all elements `I` of the
 >   string referenced by `str`.
 >
-> *Effects:*
+> *Effects:* Determines `xpos`.
 >
-> Determines `xpos`.
->
-> *Returns:*
->
-> `xpos` if the function can determine such a value for `xpos`.
-> Otherwise, returns `npos`.
+> *Returns:* `xpos` if the function can determine such a value for
+> `xpos`. Otherwise, returns `npos`.
 
 ``` cpp
 constexpr size_type find_first_of(basic_string_view str, size_type pos = 0) const noexcept;
@@ -1138,14 +1014,10 @@ constexpr size_type find_first_of(basic_string_view str, size_type pos = 0) cons
 > - `traits::eq(at(xpos), str.at(I))` for some element `I` of the string
 >   referenced by `str`.
 >
-> *Effects:*
+> *Effects:* Determines `xpos`.
 >
-> Determines `xpos`.
->
-> *Returns:*
->
-> `xpos` if the function can determine such a value for `xpos`.
-> Otherwise, returns `npos`.
+> *Returns:* `xpos` if the function can determine such a value for
+> `xpos`. Otherwise, returns `npos`.
 
 ``` cpp
 constexpr size_type find_last_of(basic_string_view str, size_type pos = npos) const noexcept;
@@ -1161,14 +1033,10 @@ constexpr size_type find_last_of(basic_string_view str, size_type pos = npos) co
 > - `traits::eq(at(xpos), str.at(I))` for some element `I` of the string
 >   referenced by `str`.
 >
-> *Effects:*
+> *Effects:* Determines `xpos`.
 >
-> Determines `xpos`.
->
-> *Returns:*
->
-> `xpos` if the function can determine such a value for `xpos`.
-> Otherwise, returns `npos`.
+> *Returns:* `xpos` if the function can determine such a value for
+> `xpos`. Otherwise, returns `npos`.
 
 ``` cpp
 constexpr size_type find_first_not_of(basic_string_view str, size_type pos = 0) const noexcept;
@@ -1184,14 +1052,10 @@ constexpr size_type find_first_not_of(basic_string_view str, size_type pos = 0) 
 > - `traits::eq(at(xpos), str.at(I))` for no element `I` of the string
 >   referenced by `str`.
 >
-> *Effects:*
+> *Effects:* Determines `xpos`.
 >
-> Determines `xpos`.
->
-> *Returns:*
->
-> `xpos` if the function can determine such a value for `xpos`.
-> Otherwise, returns `npos`.
+> *Returns:* `xpos` if the function can determine such a value for
+> `xpos`. Otherwise, returns `npos`.
 
 ``` cpp
 constexpr size_type find_last_not_of(basic_string_view str, size_type pos = npos) const noexcept;
@@ -1207,14 +1071,10 @@ constexpr size_type find_last_not_of(basic_string_view str, size_type pos = npos
 > - `traits::eq(at(xpos), str.at(I))` for no element `I` of the string
 >   referenced by `str`.
 >
-> *Effects:*
+> *Effects:* Determines `xpos`.
 >
-> Determines `xpos`.
->
-> *Returns:*
->
-> `xpos` if the function can determine such a value for `xpos`.
-> Otherwise, returns `npos`.
+> *Returns:* `xpos` if the function can determine such a value for
+> `xpos`. Otherwise, returns `npos`.
 
 ### Non-member comparison functions <a id="string.view.comparison">[[string.view.comparison]]</a>
 
@@ -1249,9 +1109,7 @@ template<class charT, class traits>
                             basic_string_view<charT, traits> rhs) noexcept;
 ```
 
-> *Returns:*
->
-> `lhs.compare(rhs) == 0`.
+> *Returns:* `lhs.compare(rhs) == 0`.
 
 ``` cpp
 template<class charT, class traits>
@@ -1263,13 +1121,9 @@ template<class charT, class traits>
 > *qualified-id* is valid and denotes a type [[temp.deduct]], otherwise
 > `R` is `weak_ordering`.
 >
-> *Mandates:*
+> *Mandates:* `R` denotes a comparison category type [[cmp.categories]].
 >
-> `R` denotes a comparison category type [[cmp.categories]].
->
-> *Returns:*
->
-> `static_cast<R>(lhs.compare(rhs) <=> 0)`.
+> *Returns:* `static_cast<R>(lhs.compare(rhs) <=> 0)`.
 
 ### Inserters and extractors <a id="string.view.io">[[string.view.io]]</a>
 
@@ -1279,19 +1133,15 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, basic_string_view<charT, traits> str);
 ```
 
-> *Effects:*
+> *Effects:* Behaves as a formatted output
+> function [[ostream.formatted.reqmts]] of `os`. Forms a character
+> sequence `seq`, initially consisting of the elements defined by the
+> range \[`str.begin()`, `str.end()`). Determines padding for `seq` as
+> described in  [[ostream.formatted.reqmts]]. Then inserts `seq` as if
+> by calling `os.rdbuf()->sputn(seq, n)`, where `n` is the larger of
+> `os.width()` and `str.size()`; then calls `os.width(0)`.
 >
-> Behaves as a formatted output function [[ostream.formatted.reqmts]] of
-> `os`. Forms a character sequence `seq`, initially consisting of the
-> elements defined by the range \[`str.begin()`, `str.end()`).
-> Determines padding for `seq` as described
-> in  [[ostream.formatted.reqmts]]. Then inserts `seq` as if by calling
-> `os.rdbuf()->sputn(seq, n)`, where `n` is the larger of `os.width()`
-> and `str.size()`; then calls `os.width(0)`.
->
-> *Returns:*
->
-> `os`
+> *Returns:* `os`
 
 ### Hash support <a id="string.view.hash">[[string.view.hash]]</a>
 
@@ -1315,41 +1165,31 @@ template<> struct hash<wstring_view>;
 constexpr string_view operator""sv(const char* str, size_t len) noexcept;
 ```
 
-> *Returns:*
->
-> `string_view{str, len}`.
+> *Returns:* `string_view{str, len}`.
 
 ``` cpp
 constexpr u8string_view operator""sv(const char8_t* str, size_t len) noexcept;
 ```
 
-> *Returns:*
->
-> `u8string_view{str, len}`.
+> *Returns:* `u8string_view{str, len}`.
 
 ``` cpp
 constexpr u16string_view operator""sv(const char16_t* str, size_t len) noexcept;
 ```
 
-> *Returns:*
->
-> `u16string_view{str, len}`.
+> *Returns:* `u16string_view{str, len}`.
 
 ``` cpp
 constexpr u32string_view operator""sv(const char32_t* str, size_t len) noexcept;
 ```
 
-> *Returns:*
->
-> `u32string_view{str, len}`.
+> *Returns:* `u32string_view{str, len}`.
 
 ``` cpp
 constexpr wstring_view operator""sv(const wchar_t* str, size_t len) noexcept;
 ```
 
-> *Returns:*
->
-> `wstring_view{str, len}`.
+> *Returns:* `wstring_view{str, len}`.
 
 ## String classes <a id="string.classes">[[string.classes]]</a>
 
@@ -1949,22 +1789,18 @@ References, pointers, and iterators referring to the elements of a
 constexpr explicit basic_string(const Allocator& a) noexcept;
 ```
 
-> *Ensures:*
->
-> `size()` is equal to `0`.
+> *Ensures:* `size()` is equal to `0`.
 
 ``` cpp
 constexpr basic_string(const basic_string& str);
 constexpr basic_string(basic_string&& str) noexcept;
 ```
 
-> *Effects:*
+> *Effects:* Constructs an object whose value is that of `str` prior to
+> this call.
 >
-> Constructs an object whose value is that of `str` prior to this call.
->
-> *Remarks:*
->
-> In the second form, `str` is left in a valid but unspecified state.
+> *Remarks:* In the second form, `str` is left in a valid but
+> unspecified state.
 
 ``` cpp
 constexpr basic_string(const basic_string& str, size_type pos,
@@ -1984,22 +1820,17 @@ constexpr basic_string(basic_string&& str, size_type pos, size_type n,
 > - `rlen` be `pos + min(n, s.size() - pos)` for the overloads with
 >   parameter `n`, and `s.size()` otherwise.
 >
-> *Effects:*
->
-> Constructs an object whose initial value is the range
+> *Effects:* Constructs an object whose initial value is the range
 > \[`s.data() + pos`, `s.data() + rlen`).
 >
-> *Throws:*
+> *Throws:* `out_of_range` if `pos > s.size()`.
 >
-> `out_of_range` if `pos > s.size()`.
+> *Remarks:* For the overloads with a `basic_string&&` parameter, `str`
+> is left in a valid but unspecified state.
 >
-> *Remarks:*
->
-> For the overloads with a `basic_string&&` parameter, `str` is left in
-> a valid but unspecified state.
->
-> For the overloads with a `basic_string&&` parameter, implementations
-> should avoid allocation if `s.get_allocator() == a` is `true`.
+> *Recommended practice:* For the overloads with a `basic_string&&`
+> parameter, implementations should avoid allocation if
+> `s.get_allocator() == a` is `true`.
 
 ``` cpp
 template<class T>
@@ -2007,13 +1838,10 @@ template<class T>
 ```
 
 > *Constraints:*
->
 > `is_convertible_v<const T&, basic_string_view<charT, traits>>` is
 > `true`.
 >
-> *Effects:*
->
-> Creates a variable, `sv`, as if by
+> *Effects:* Creates a variable, `sv`, as if by
 > `basic_string_view<charT, traits> sv = t;` and then behaves the same
 > as:
 >
@@ -2033,9 +1861,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Creates a variable, `sv`, as if by
+> *Effects:* Creates a variable, `sv`, as if by
 > `basic_string_view<charT, traits> sv = t;` and then behaves the same
 > as `basic_string(sv.data(), sv.size(), a)`.
 
@@ -2043,98 +1869,75 @@ template<class T>
 constexpr basic_string(const charT* s, size_type n, const Allocator& a = Allocator());
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`s`, `s + n`) is a valid range.
 >
-> \[`s`, `s + n`) is a valid range.
+> *Effects:* Constructs an object whose initial value is the range
+> \[`s`, `s + n`).
 >
-> *Effects:*
->
-> Constructs an object whose initial value is the range \[`s`, `s + n`).
->
-> *Ensures:*
->
-> `size()` is equal to `n`, and `traits::compare(data(), s, n)` is equal
-> to `0`.
+> *Ensures:* `size()` is equal to `n`, and
+> `traits::compare(data(), s, n)` is equal to `0`.
 
 ``` cpp
 constexpr basic_string(const charT* s, const Allocator& a = Allocator());
 ```
 
-> *Constraints:*
->
-> `Allocator` is a type that qualifies as an
+> *Constraints:* `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 >
 > \[*Note 4*: This affects class template argument
 > deduction. — *end note*\]
 >
-> *Effects:*
->
-> Equivalent to: `basic_string(s, traits::length(s), a)`.
+> *Effects:* Equivalent to: `basic_string(s, traits::length(s), a)`.
 
 ``` cpp
 constexpr basic_string(size_type n, charT c, const Allocator& a = Allocator());
 ```
 
-> *Constraints:*
->
-> `Allocator` is a type that qualifies as an
+> *Constraints:* `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 >
 > \[*Note 5*: This affects class template argument
 > deduction. — *end note*\]
 >
-> *Effects:*
->
-> Constructs an object whose value consists of `n` copies of `c`.
+> *Effects:* Constructs an object whose value consists of `n` copies of
+> `c`.
 
 ``` cpp
 template<class InputIterator>
   constexpr basic_string(InputIterator begin, InputIterator end, const Allocator& a = Allocator());
 ```
 
-> *Constraints:*
->
-> `InputIterator` is a type that qualifies as an input
+> *Constraints:* `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
-> *Effects:*
->
-> Constructs a string from the values in the range \[`begin`, `end`), as
-> specified in [[sequence.reqmts]].
+> *Effects:* Constructs a string from the values in the range \[`begin`,
+> `end`), as specified in [[sequence.reqmts]].
 
 ``` cpp
 template<container-compatible-range<charT> R>
   constexpr basic_string(from_range_t, R&& rg, const Allocator& = Allocator());
 ```
 
-> *Effects:*
->
-> Constructs a string from the values in the range `rg`, as specified in
-> [[sequence.reqmts]].
+> *Effects:* Constructs a string from the values in the range `rg`, as
+> specified in [[sequence.reqmts]].
 
 ``` cpp
 constexpr basic_string(initializer_list<charT> il, const Allocator& a = Allocator());
 ```
 
-> *Effects:*
->
-> Equivalent to `basic_string(il.begin(), il.end(), a)`.
+> *Effects:* Equivalent to `basic_string(il.begin(), il.end(), a)`.
 
 ``` cpp
 constexpr basic_string(const basic_string& str, const Allocator& alloc);
 constexpr basic_string(basic_string&& str, const Allocator& alloc);
 ```
 
-> *Effects:*
+> *Effects:* Constructs an object whose value is that of `str` prior to
+> this call. The stored allocator is constructed from `alloc`. In the
+> second form, `str` is left in a valid but unspecified state.
 >
-> Constructs an object whose value is that of `str` prior to this call.
-> The stored allocator is constructed from `alloc`. In the second form,
-> `str` is left in a valid but unspecified state.
->
-> *Throws:*
->
-> The second form throws nothing if `alloc == str.get_allocator()`.
+> *Throws:* The second form throws nothing if
+> `alloc == str.get_allocator()`.
 
 ``` cpp
 template<class InputIterator,
@@ -2145,10 +1948,8 @@ template<class InputIterator,
                     Allocator>;
 ```
 
-> *Constraints:*
->
-> `InputIterator` is a type that qualifies as an input iterator, and
-> `Allocator` is a type that qualifies as an
+> *Constraints:* `InputIterator` is a type that qualifies as an input
+> iterator, and `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 
 ``` cpp
@@ -2167,23 +1968,17 @@ template<class charT,
     -> basic_string<charT, traits, Allocator>;
 ```
 
-> *Constraints:*
->
-> `Allocator` is a type that qualifies as an
+> *Constraints:* `Allocator` is a type that qualifies as an
 > allocator [[container.requirements.general]].
 
 ``` cpp
 constexpr basic_string& operator=(const basic_string& str);
 ```
 
-> *Effects:*
+> *Effects:* If `*this` and `str` are the same object, has no effect.
+> Otherwise, replaces the value of `*this` with a copy of `str`.
 >
-> If `*this` and `str` are the same object, has no effect. Otherwise,
-> replaces the value of `*this` with a copy of `str`.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 constexpr basic_string& operator=(basic_string&& str)
@@ -2191,14 +1986,11 @@ constexpr basic_string& operator=(basic_string&& str)
            allocator_traits<Allocator>::is_always_equal::value);
 ```
 
-> *Effects:*
+> *Effects:* Move assigns as a sequence
+> container [[container.requirements]], except that iterators, pointers
+> and references may be invalidated.
 >
-> Move assigns as a sequence container [[container.requirements]],
-> except that iterators, pointers and references may be invalidated.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 template<class T>
@@ -2212,9 +2004,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2225,17 +2015,14 @@ template<class T>
 constexpr basic_string& operator=(const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return *this = basic_string_view<charT, traits>(s);`
+> *Effects:* Equivalent to:
+> `return *this = basic_string_view<charT, traits>(s);`
 
 ``` cpp
 constexpr basic_string& operator=(charT c);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return *this = basic_string_view<charT, traits>(addressof(c), 1);
@@ -2245,9 +2032,7 @@ constexpr basic_string& operator=(charT c);
 constexpr basic_string& operator=(initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return *this = basic_string_view<charT, traits>(il.begin(), il.size());
@@ -2261,9 +2046,7 @@ constexpr const_iterator begin() const noexcept;
 constexpr const_iterator cbegin() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator referring to the first character in the string.
+> *Returns:* An iterator referring to the first character in the string.
 
 ``` cpp
 constexpr iterator       end() noexcept;
@@ -2271,9 +2054,7 @@ constexpr const_iterator end() const noexcept;
 constexpr const_iterator cend() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator which is the past-the-end value.
+> *Returns:* An iterator which is the past-the-end value.
 
 ``` cpp
 constexpr reverse_iterator       rbegin() noexcept;
@@ -2281,9 +2062,7 @@ constexpr const_reverse_iterator rbegin() const noexcept;
 constexpr const_reverse_iterator crbegin() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator which is semantically equivalent to
+> *Returns:* An iterator which is semantically equivalent to
 > `reverse_iterator(end())`.
 
 ``` cpp
@@ -2292,9 +2071,7 @@ constexpr const_reverse_iterator rend() const noexcept;
 constexpr const_reverse_iterator crend() const noexcept;
 ```
 
-> *Returns:*
->
-> An iterator which is semantically equivalent to
+> *Returns:* An iterator which is semantically equivalent to
 > `reverse_iterator(begin())`.
 
 #### Capacity <a id="string.capacity">[[string.capacity]]</a>
@@ -2304,34 +2081,25 @@ constexpr size_type size() const noexcept;
 constexpr size_type length() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* A count of the number of char-like objects currently in the
+> string.
 >
-> A count of the number of char-like objects currently in the string.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 constexpr size_type max_size() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* The largest possible number of char-like objects that can
+> be stored in a `basic_string`.
 >
-> The largest possible number of char-like objects that can be stored in
-> a `basic_string`.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 constexpr void resize(size_type n, charT c);
 ```
 
-> *Effects:*
->
-> Alters the value of `*this` as follows:
+> *Effects:* Alters the value of `*this` as follows:
 >
 > - If `n <= size()`, erases the last `size() - n` elements.
 >
@@ -2341,9 +2109,7 @@ constexpr void resize(size_type n, charT c);
 constexpr void resize(size_type n);
 ```
 
-> *Effects:*
->
-> Equivalent to `resize(n, charT())`.
+> *Effects:* Equivalent to `resize(n, charT())`.
 
 ``` cpp
 template<class Operation> constexpr void resize_and_overwrite(size_type n, Operation op);
@@ -2367,9 +2133,7 @@ template<class Operation> constexpr void resize_and_overwrite(size_type n, Opera
 >
 > - `r` = *`OP`*.
 >
-> *Mandates:*
->
-> *`OP`* has an integer-like type [[iterator.concept.winc]].
+> *Mandates:* *`OP`* has an integer-like type [[iterator.concept.winc]].
 >
 > *Preconditions:*
 >
@@ -2382,54 +2146,44 @@ template<class Operation> constexpr void resize_and_overwrite(size_type n, Opera
 > - After evaluating *`OP`* there are no indeterminate values in the
 >   range \[`p`, `p + r`).
 >
-> *Effects:*
+> *Effects:* Evaluates *`OP`*, replaces the contents of `*this` with
+> \[`p`, `p + r`), and invalidates all pointers and references to the
+> range \[`p`, `p + n`\].
 >
-> Evaluates *`OP`*, replaces the contents of `*this` with \[`p`,
-> `p + r`), and invalidates all pointers and references to the range
-> \[`p`, `p + n`\].
->
-> Implementations should avoid unnecessary copies and allocations by,
-> for example, making `p` a pointer into internal storage and by
-> restoring `*(p + r)` to `charT()` after evaluating *`OP`*.
+> *Recommended practice:* Implementations should avoid unnecessary
+> copies and allocations by, for example, making `p` a pointer into
+> internal storage and by restoring `*(p + r)` to `charT()` after
+> evaluating *`OP`*.
 
 ``` cpp
 constexpr size_type capacity() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* The size of the allocated storage in the string.
 >
-> The size of the allocated storage in the string.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 constexpr void reserve(size_type res_arg);
 ```
 
-> *Effects:*
+> *Effects:* A directive that informs a `basic_string` of a planned
+> change in size, so that the storage allocation can be managed
+> accordingly. After `reserve()`, `capacity()` is greater or equal to
+> the argument of `reserve` if reallocation happens; and equal to the
+> previous value of `capacity()` otherwise. Reallocation happens at this
+> point if and only if the current capacity is less than the argument of
+> `reserve()`.
 >
-> A directive that informs a `basic_string` of a planned change in size,
-> so that the storage allocation can be managed accordingly. After
-> `reserve()`, `capacity()` is greater or equal to the argument of
-> `reserve` if reallocation happens; and equal to the previous value of
-> `capacity()` otherwise. Reallocation happens at this point if and only
-> if the current capacity is less than the argument of `reserve()`.
->
-> *Throws:*
->
-> `length_error` if `res_arg > max_size()` or any exceptions thrown by
-> `allocator_traits` `<Allocator>::allocate`.
+> *Throws:* `length_error` if `res_arg > max_size()` or any exceptions
+> thrown by `allocator_traits` `<Allocator>::allocate`.
 
 ``` cpp
 constexpr void shrink_to_fit();
 ```
 
-> *Effects:*
->
-> `shrink_to_fit` is a non-binding request to reduce `capacity()` to
-> `size()`.
+> *Effects:* `shrink_to_fit` is a non-binding request to reduce
+> `capacity()` to `size()`.
 >
 > \[*Note 6*: The request is non-binding to allow latitude for
 > implementation-specific optimizations. — *end note*\]
@@ -2437,16 +2191,12 @@ constexpr void shrink_to_fit();
 > It does not increase `capacity()`, but may reduce `capacity()` by
 > causing reallocation.
 >
-> *Complexity:*
+> *Complexity:* If the size is not equal to the old capacity, linear in
+> the size of the sequence; otherwise constant.
 >
-> If the size is not equal to the old capacity, linear in the size of
-> the sequence; otherwise constant.
->
-> *Remarks:*
->
-> Reallocation invalidates all the references, pointers, and iterators
-> referring to the elements in the sequence, as well as the past-the-end
-> iterator.
+> *Remarks:* Reallocation invalidates all the references, pointers, and
+> iterators referring to the elements in the sequence, as well as the
+> past-the-end iterator.
 >
 > \[*Note 7*: If no reallocation happens, they remain
 > valid. — *end note*\]
@@ -2455,17 +2205,13 @@ constexpr void shrink_to_fit();
 constexpr void clear() noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `erase(begin(), end());`
+> *Effects:* Equivalent to: `erase(begin(), end());`
 
 ``` cpp
 [[nodiscard]] constexpr bool empty() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return size() == 0;`
+> *Effects:* Equivalent to: `return size() == 0;`
 
 #### Element access <a id="string.access">[[string.access]]</a>
 
@@ -2474,62 +2220,43 @@ constexpr const_reference operator[](size_type pos) const;
 constexpr reference       operator[](size_type pos);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `pos <= size()`.
 >
-> `pos <= size()`.
+> *Returns:* `*(begin() + pos)` if `pos < size()`. Otherwise, returns a
+> reference to an object of type `charT` with value `charT()`, where
+> modifying the object to any value other than `charT()` leads to
+> undefined behavior.
 >
-> *Returns:*
+> *Throws:* Nothing.
 >
-> `*(begin() + pos)` if `pos < size()`. Otherwise, returns a reference
-> to an object of type `charT` with value `charT()`, where modifying the
-> object to any value other than `charT()` leads to undefined behavior.
->
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 ``` cpp
 constexpr const_reference at(size_type pos) const;
 constexpr reference       at(size_type pos);
 ```
 
-> *Returns:*
+> *Returns:* `operator[](pos)`.
 >
-> `operator[](pos)`.
->
-> *Throws:*
->
-> `out_of_range` if `pos >= size()`.
+> *Throws:* `out_of_range` if `pos >= size()`.
 
 ``` cpp
 constexpr const charT& front() const;
 constexpr charT& front();
 ```
 
-> *Preconditions:*
+> *Preconditions:* `!empty()`.
 >
-> `!empty()`.
->
-> *Effects:*
->
-> Equivalent to: `return operator[](0);`
+> *Effects:* Equivalent to: `return operator[](0);`
 
 ``` cpp
 constexpr const charT& back() const;
 constexpr charT& back();
 ```
 
-> *Preconditions:*
+> *Preconditions:* `!empty()`.
 >
-> `!empty()`.
->
-> *Effects:*
->
-> Equivalent to: `return operator[](size() - 1);`
+> *Effects:* Equivalent to: `return operator[](size() - 1);`
 
 #### Modifiers <a id="string.modifiers">[[string.modifiers]]</a>
 
@@ -2539,9 +2266,7 @@ constexpr charT& back();
 constexpr basic_string& operator+=(const basic_string& str);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(str);`
+> *Effects:* Equivalent to: `return append(str);`
 
 ``` cpp
 template<class T>
@@ -2555,9 +2280,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2568,25 +2291,19 @@ template<class T>
 constexpr basic_string& operator+=(const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(s);`
+> *Effects:* Equivalent to: `return append(s);`
 
 ``` cpp
 constexpr basic_string& operator+=(charT c);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(size_type{1}, c);`
+> *Effects:* Equivalent to: `return append(size_type{1}, c);`
 
 ``` cpp
 constexpr basic_string& operator+=(initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(il);`
+> *Effects:* Equivalent to: `return append(il);`
 
 ##### `basic_string::append` <a id="string.append">[[string.append]]</a>
 
@@ -2594,17 +2311,13 @@ constexpr basic_string& operator+=(initializer_list<charT> il);
 constexpr basic_string& append(const basic_string& str);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(str.data(), str.size());`
+> *Effects:* Equivalent to: `return append(str.data(), str.size());`
 
 ``` cpp
 constexpr basic_string& append(const basic_string& str, size_type pos, size_type n = npos);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return append(basic_string_view<charT, traits>(str).substr(pos, n));
@@ -2622,9 +2335,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2643,9 +2354,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2656,51 +2365,35 @@ template<class T>
 constexpr basic_string& append(const charT* s, size_type n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`s`, `s + n`) is a valid range.
 >
-> \[`s`, `s + n`) is a valid range.
+> *Effects:* Appends a copy of the range \[`s`, `s + n`) to the string.
 >
-> *Effects:*
->
-> Appends a copy of the range \[`s`, `s + n`) to the string.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 constexpr basic_string& append(const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(s, traits::length(s));`
+> *Effects:* Equivalent to: `return append(s, traits::length(s));`
 
 ``` cpp
 constexpr basic_string& append(size_type n, charT c);
 ```
 
-> *Effects:*
+> *Effects:* Appends `n` copies of `c` to the string.
 >
-> Appends `n` copies of `c` to the string.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 template<class InputIterator>
   constexpr basic_string& append(InputIterator first, InputIterator last);
 ```
 
-> *Constraints:*
->
-> `InputIterator` is a type that qualifies as an input
+> *Constraints:* `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return append(basic_string(first, last, get_allocator()));`
 
 ``` cpp
@@ -2708,26 +2401,20 @@ template<container-compatible-range<charT> R>
   constexpr basic_string& append_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return append(basic_string(from_range, std::forward<R>(rg), get_allocator()));`
 
 ``` cpp
 constexpr basic_string& append(initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return append(il.begin(), il.size());`
+> *Effects:* Equivalent to: `return append(il.begin(), il.size());`
 
 ``` cpp
 constexpr void push_back(charT c);
 ```
 
-> *Effects:*
->
-> Equivalent to `append(size_type{1}, c)`.
+> *Effects:* Equivalent to `append(size_type{1}, c)`.
 
 ##### `basic_string::assign` <a id="string.assign">[[string.assign]]</a>
 
@@ -2735,9 +2422,7 @@ constexpr void push_back(charT c);
 constexpr basic_string& assign(const basic_string& str);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return *this = str;`
+> *Effects:* Equivalent to: `return *this = str;`
 
 ``` cpp
 constexpr basic_string& assign(basic_string&& str)
@@ -2745,17 +2430,13 @@ constexpr basic_string& assign(basic_string&& str)
            allocator_traits<Allocator>::is_always_equal::value);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return *this = std::move(str);`
+> *Effects:* Equivalent to: `return *this = std::move(str);`
 
 ``` cpp
 constexpr basic_string& assign(const basic_string& str, size_type pos, size_type n = npos);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return assign(basic_string_view<charT, traits>(str).substr(pos, n));
@@ -2773,9 +2454,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2794,9 +2473,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2807,42 +2484,30 @@ template<class T>
 constexpr basic_string& assign(const charT* s, size_type n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`s`, `s + n`) is a valid range.
 >
-> \[`s`, `s + n`) is a valid range.
+> *Effects:* Replaces the string controlled by `*this` with a copy of
+> the range \[`s`, `s + n`).
 >
-> *Effects:*
->
-> Replaces the string controlled by `*this` with a copy of the range
-> \[`s`, `s + n`).
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 
 ``` cpp
 constexpr basic_string& assign(const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(s, traits::length(s));`
+> *Effects:* Equivalent to: `return assign(s, traits::length(s));`
 
 ``` cpp
 constexpr basic_string& assign(initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return assign(il.begin(), il.size());`
+> *Effects:* Equivalent to: `return assign(il.begin(), il.size());`
 
 ``` cpp
 constexpr basic_string& assign(size_type n, charT c);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > clear();
@@ -2855,14 +2520,10 @@ template<class InputIterator>
   constexpr basic_string& assign(InputIterator first, InputIterator last);
 ```
 
-> *Constraints:*
->
-> `InputIterator` is a type that qualifies as an input
+> *Constraints:* `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return assign(basic_string(first, last, get_allocator()));`
 
 ``` cpp
@@ -2870,9 +2531,7 @@ template<container-compatible-range<charT> R>
   constexpr basic_string& assign_range(R&& rg);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return assign(basic_string(from_range, std::forward<R>(rg), get_allocator()));`
 
 ##### `basic_string::insert` <a id="string.insert">[[string.insert]]</a>
@@ -2881,18 +2540,15 @@ template<container-compatible-range<charT> R>
 constexpr basic_string& insert(size_type pos, const basic_string& str);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return insert(pos, str.data(), str.size());`
+> *Effects:* Equivalent to:
+> `return insert(pos, str.data(), str.size());`
 
 ``` cpp
 constexpr basic_string& insert(size_type pos1, const basic_string& str,
                                size_type pos2, size_type n = npos);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return insert(pos1, basic_string_view<charT, traits>(str), pos2, n);
@@ -2910,9 +2566,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2932,9 +2586,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -2945,19 +2597,13 @@ template<class T>
 constexpr basic_string& insert(size_type pos, const charT* s, size_type n);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`s`, `s + n`) is a valid range.
 >
-> \[`s`, `s + n`) is a valid range.
+> *Effects:* Inserts a copy of the range \[`s`, `s + n`) immediately
+> before the character at position `pos` if `pos < size()`, or otherwise
+> at the end of the string.
 >
-> *Effects:*
->
-> Inserts a copy of the range \[`s`, `s + n`) immediately before the
-> character at position `pos` if `pos < size()`, or otherwise at the end
-> of the string.
->
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 >
 > *Throws:*
 >
@@ -2971,22 +2617,16 @@ constexpr basic_string& insert(size_type pos, const charT* s, size_type n);
 constexpr basic_string& insert(size_type pos, const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return insert(pos, s, traits::length(s));`
+> *Effects:* Equivalent to: `return insert(pos, s, traits::length(s));`
 
 ``` cpp
 constexpr basic_string& insert(size_type pos, size_type n, charT c);
 ```
 
-> *Effects:*
+> *Effects:* Inserts `n` copies of `c` before the character at position
+> `pos` if `pos < size()`, or otherwise at the end of the string.
 >
-> Inserts `n` copies of `c` before the character at position `pos` if
-> `pos < size()`, or otherwise at the end of the string.
->
-> *Returns:*
->
-> `*this`
+> *Returns:* `*this`
 >
 > *Throws:*
 >
@@ -3000,85 +2640,57 @@ constexpr basic_string& insert(size_type pos, size_type n, charT c);
 constexpr iterator insert(const_iterator p, charT c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` is a valid iterator on `*this`.
 >
-> `p` is a valid iterator on `*this`.
+> *Effects:* Inserts a copy of `c` at the position `p`.
 >
-> *Effects:*
->
-> Inserts a copy of `c` at the position `p`.
->
-> *Returns:*
->
-> An iterator which refers to the inserted character.
+> *Returns:* An iterator which refers to the inserted character.
 
 ``` cpp
 constexpr iterator insert(const_iterator p, size_type n, charT c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` is a valid iterator on `*this`.
 >
-> `p` is a valid iterator on `*this`.
+> *Effects:* Inserts `n` copies of `c` at the position `p`.
 >
-> *Effects:*
->
-> Inserts `n` copies of `c` at the position `p`.
->
-> *Returns:*
->
-> An iterator which refers to the first inserted character, or `p` if
-> `n == 0`.
+> *Returns:* An iterator which refers to the first inserted character,
+> or `p` if `n == 0`.
 
 ``` cpp
 template<class InputIterator>
   constexpr iterator insert(const_iterator p, InputIterator first, InputIterator last);
 ```
 
-> *Constraints:*
->
-> `InputIterator` is a type that qualifies as an input
+> *Constraints:* `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
-> *Preconditions:*
+> *Preconditions:* `p` is a valid iterator on `*this`.
 >
-> `p` is a valid iterator on `*this`.
->
-> *Effects:*
->
-> Equivalent to
+> *Effects:* Equivalent to
 > `insert(p - begin(), basic_string(first, last, get_allocator()))`.
 >
-> *Returns:*
->
-> An iterator which refers to the first inserted character, or `p` if
-> `first == last`.
+> *Returns:* An iterator which refers to the first inserted character,
+> or `p` if `first == last`.
 
 ``` cpp
 template<container-compatible-range<charT> R>
   constexpr iterator insert_range(const_iterator p, R&& rg);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` is a valid iterator on `*this`.
 >
-> `p` is a valid iterator on `*this`.
->
-> *Effects:*
->
-> Equivalent to
+> *Effects:* Equivalent to
 > `insert(p - begin(), basic_string(from_range, std::forward<R>(rg), get_allocator()))`.
 >
-> *Returns:*
->
-> An iterator which refers to the first inserted character, or `p` if
-> `rg` is empty.
+> *Returns:* An iterator which refers to the first inserted character,
+> or `p` if `rg` is empty.
 
 ``` cpp
 constexpr iterator insert(const_iterator p, initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return insert(p, il.begin(), il.end());`
+> *Effects:* Equivalent to: `return insert(p, il.begin(), il.end());`
 
 ##### `basic_string::erase` <a id="string.erase">[[string.erase]]</a>
 
@@ -3086,80 +2698,52 @@ constexpr iterator insert(const_iterator p, initializer_list<charT> il);
 constexpr basic_string& erase(size_type pos = 0, size_type n = npos);
 ```
 
-> *Effects:*
+> *Effects:* Determines the effective length `xlen` of the string to be
+> removed as the smaller of `n` and `size() - pos`. Removes the
+> characters in the range \[`begin() + pos`, `begin() + pos + xlen`).
 >
-> Determines the effective length `xlen` of the string to be removed as
-> the smaller of `n` and `size() - pos`. Removes the characters in the
-> range \[`begin() + pos`, `begin() + pos + xlen`).
+> *Returns:* `*this`.
 >
-> *Returns:*
->
-> `*this`.
->
-> *Throws:*
->
-> `out_of_range` if `pos` `> size()`.
+> *Throws:* `out_of_range` if `pos` `> size()`.
 
 ``` cpp
 constexpr iterator erase(const_iterator p);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `p` is a valid dereferenceable iterator on `*this`.
 >
-> `p` is a valid dereferenceable iterator on `*this`.
+> *Effects:* Removes the character referred to by `p`.
 >
-> *Effects:*
+> *Returns:* An iterator which points to the element immediately
+> following `p` prior to the element being erased. If no such element
+> exists, `end()` is returned.
 >
-> Removes the character referred to by `p`.
->
-> *Returns:*
->
-> An iterator which points to the element immediately following `p`
-> prior to the element being erased. If no such element exists, `end()`
-> is returned.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 constexpr iterator erase(const_iterator first, const_iterator last);
 ```
 
-> *Preconditions:*
+> *Preconditions:* `first` and `last` are valid iterators on `*this`.
+> \[`first`, `last`) is a valid range.
 >
-> `first` and `last` are valid iterators on `*this`. \[`first`, `last`)
-> is a valid range.
+> *Effects:* Removes the characters in the range `[first, last)`.
 >
-> *Effects:*
+> *Returns:* An iterator which points to the element pointed to by
+> `last` prior to the other elements being erased. If no such element
+> exists, `end()` is returned.
 >
-> Removes the characters in the range `[first, last)`.
->
-> *Returns:*
->
-> An iterator which points to the element pointed to by `last` prior to
-> the other elements being erased. If no such element exists, `end()` is
-> returned.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ``` cpp
 constexpr void pop_back();
 ```
 
-> *Preconditions:*
+> *Preconditions:* `!empty()`.
 >
-> `!empty()`.
+> *Effects:* Equivalent to `erase(end() - 1)`.
 >
-> *Effects:*
->
-> Equivalent to `erase(end() - 1)`.
->
-> *Throws:*
->
-> Nothing.
+> *Throws:* Nothing.
 
 ##### `basic_string::replace` <a id="string.replace">[[string.replace]]</a>
 
@@ -3167,18 +2751,15 @@ constexpr void pop_back();
 constexpr basic_string& replace(size_type pos1, size_type n1, const basic_string& str);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return replace(pos1, n1, str.data(), str.size());`
+> *Effects:* Equivalent to:
+> `return replace(pos1, n1, str.data(), str.size());`
 
 ``` cpp
 constexpr basic_string& replace(size_type pos1, size_type n1, const basic_string& str,
                                 size_type pos2, size_type n2 = npos);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return replace(pos1, n1, basic_string_view<charT, traits>(str).substr(pos2, n2));
@@ -3196,9 +2777,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -3218,9 +2797,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -3231,21 +2808,15 @@ template<class T>
 constexpr basic_string& replace(size_type pos1, size_type n1, const charT* s, size_type n2);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`s`, `s + n2`) is a valid range.
 >
-> \[`s`, `s + n2`) is a valid range.
->
-> *Effects:*
->
-> Determines the effective length `xlen` of the string to be removed as
-> the smaller of `n1` and `size() - pos1`. If
+> *Effects:* Determines the effective length `xlen` of the string to be
+> removed as the smaller of `n1` and `size() - pos1`. If
 > `size() - xlen >= max_size() - n2` throws `length_error`. Otherwise,
 > the function replaces the characters in the range \[`begin() + pos1`,
 > `begin() + pos1 + xlen`) with a copy of the range \[`s`, `s + n2`).
 >
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 >
 > *Throws:*
 >
@@ -3260,25 +2831,20 @@ constexpr basic_string& replace(size_type pos1, size_type n1, const charT* s, si
 constexpr basic_string& replace(size_type pos, size_type n, const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return replace(pos, n, s, traits::length(s));`
+> *Effects:* Equivalent to:
+> `return replace(pos, n, s, traits::length(s));`
 
 ``` cpp
 constexpr basic_string& replace(size_type pos1, size_type n1, size_type n2, charT c);
 ```
 
-> *Effects:*
->
-> Determines the effective length `xlen` of the string to be removed as
-> the smaller of `n1` and `size() - pos1`. If `size() - xlen >=`
-> `max_size() - n2` throws `length_error`. Otherwise, the function
-> replaces the characters in the range \[`begin() + pos1`,
+> *Effects:* Determines the effective length `xlen` of the string to be
+> removed as the smaller of `n1` and `size() - pos1`. If
+> `size() - xlen >=` `max_size() - n2` throws `length_error`. Otherwise,
+> the function replaces the characters in the range \[`begin() + pos1`,
 > `begin() + pos1 + xlen`) with `n2` copies of `c`.
 >
-> *Returns:*
->
-> `*this`.
+> *Returns:* `*this`.
 >
 > *Throws:*
 >
@@ -3293,9 +2859,7 @@ constexpr basic_string& replace(size_type pos1, size_type n1, size_type n2, char
 constexpr basic_string& replace(const_iterator i1, const_iterator i2, const basic_string& str);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return replace(i1, i2, basic_string_view<charT, traits>(str));`
 
 ``` cpp
@@ -3310,13 +2874,10 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Preconditions:*
+> *Preconditions:* \[`begin()`, `i1`) and \[`i1`, `i2`) are valid
+> ranges.
 >
-> \[`begin()`, `i1`) and \[`i1`, `i2`) are valid ranges.
->
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> sv = t;
@@ -3327,31 +2888,25 @@ template<class T>
 constexpr basic_string& replace(const_iterator i1, const_iterator i2, const charT* s, size_type n);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return replace(i1, i2, basic_string_view<charT, traits>(s, n));`
 
 ``` cpp
 constexpr basic_string& replace(const_iterator i1, const_iterator i2, const charT* s);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return replace(i1, i2, basic_string_view<charT, traits>(s));`
 
 ``` cpp
 constexpr basic_string& replace(const_iterator i1, const_iterator i2, size_type n, charT c);
 ```
 
-> *Preconditions:*
+> *Preconditions:* \[`begin()`, `i1`) and \[`i1`, `i2`) are valid
+> ranges.
 >
-> \[`begin()`, `i1`) and \[`i1`, `i2`) are valid ranges.
->
-> *Effects:*
->
-> Equivalent to: `return replace(i1 - begin(), i2 - i1, n, c);`
+> *Effects:* Equivalent to:
+> `return replace(i1 - begin(), i2 - i1, n, c);`
 
 ``` cpp
 template<class InputIterator>
@@ -3359,14 +2914,10 @@ template<class InputIterator>
                                   InputIterator j1, InputIterator j2);
 ```
 
-> *Constraints:*
->
-> `InputIterator` is a type that qualifies as an input
+> *Constraints:* `InputIterator` is a type that qualifies as an input
 > iterator [[container.requirements.general]].
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return replace(i1, i2, basic_string(j1, j2, get_allocator()));`
 
 ``` cpp
@@ -3374,9 +2925,7 @@ template<container-compatible-range<charT> R>
   constexpr basic_string& replace_with_range(const_iterator i1, const_iterator i2, R&& rg);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return replace(i1, i2, basic_string(from_range, std::forward<R>(rg), get_allocator()));
@@ -3386,9 +2935,8 @@ template<container-compatible-range<charT> R>
 constexpr basic_string& replace(const_iterator i1, const_iterator i2, initializer_list<charT> il);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return replace(i1, i2, il.begin(), il.size());`
+> *Effects:* Equivalent to:
+> `return replace(i1, i2, il.begin(), il.size());`
 
 ##### `basic_string::copy` <a id="string.copy">[[string.copy]]</a>
 
@@ -3396,9 +2944,7 @@ constexpr basic_string& replace(const_iterator i1, const_iterator i2, initialize
 constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return basic_string_view<charT, traits>(*this).copy(s, n, pos);`
 >
 > \[*Note 8*: This does not terminate `s` with a null
@@ -3413,22 +2959,16 @@ constexpr void swap(basic_string& s)
 ```
 
 > *Preconditions:*
->
 > `allocator_traits<Allocator>::propagate_on_container_swap::value` is
 > `true` or `get_allocator() == s.get_allocator()`.
 >
-> *Ensures:*
+> *Ensures:* `*this` contains the same sequence of characters that was
+> in `s`, `s` contains the same sequence of characters that was in
+> `*this`.
 >
-> `*this` contains the same sequence of characters that was in `s`, `s`
-> contains the same sequence of characters that was in `*this`.
+> *Throws:* Nothing.
 >
-> *Throws:*
->
-> Nothing.
->
-> *Complexity:*
->
-> Constant time.
+> *Complexity:* Constant time.
 
 #### String operations <a id="string.ops">[[string.ops]]</a>
 
@@ -3439,56 +2979,41 @@ constexpr const charT* c_str() const noexcept;
 constexpr const charT* data() const noexcept;
 ```
 
-> *Returns:*
+> *Returns:* A pointer `p` such that `p + i == addressof(operator[](i))`
+> for each `i` in \[`0`, `size()`\].
 >
-> A pointer `p` such that `p + i == addressof(operator[](i))` for each
-> `i` in \[`0`, `size()`\].
+> *Complexity:* Constant time.
 >
-> *Complexity:*
->
-> Constant time.
->
-> *Remarks:*
->
-> The program shall not modify any of the values stored in the character
-> array; otherwise, the behavior is undefined.
+> *Remarks:* The program shall not modify any of the values stored in
+> the character array; otherwise, the behavior is undefined.
 
 ``` cpp
 constexpr charT* data() noexcept;
 ```
 
-> *Returns:*
+> *Returns:* A pointer `p` such that `p + i == addressof(operator[](i))`
+> for each `i` in \[`0`, `size()`\].
 >
-> A pointer `p` such that `p + i == addressof(operator[](i))` for each
-> `i` in \[`0`, `size()`\].
+> *Complexity:* Constant time.
 >
-> *Complexity:*
->
-> Constant time.
->
-> *Remarks:*
->
-> The program shall not modify the value stored at `p + size()` to any
-> value other than `charT()`; otherwise, the behavior is undefined.
+> *Remarks:* The program shall not modify the value stored at
+> `p + size()` to any value other than `charT()`; otherwise, the
+> behavior is undefined.
 
 ``` cpp
 constexpr operator basic_string_view<charT, traits>() const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return basic_string_view<charT, traits>(data(), size());`
 
 ``` cpp
 constexpr allocator_type get_allocator() const noexcept;
 ```
 
-> *Returns:*
->
-> A copy of the `Allocator` object used to construct the string or, if
-> that allocator has been replaced, a copy of the most recent
-> replacement.
+> *Returns:* A copy of the `Allocator` object used to construct the
+> string or, if that allocator has been replaced, a copy of the most
+> recent replacement.
 
 ##### Searching <a id="string.find">[[string.find]]</a>
 
@@ -3556,18 +3081,14 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Let *G* be the name of the function. Equivalent to:
+> *Effects:* Let *G* be the name of the function. Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> s = *this, sv = t;
 > return s.G(sv, pos);
 > ```
 >
-> *Remarks:*
->
-> The exception specification is equivalent to
+> *Remarks:* The exception specification is equivalent to
 > `is_nothrow_convertible_v<const T&, basic_string_view<charT, traits>>`.
 
 ##### `basic_string::substr` <a id="string.substr">[[string.substr]]</a>
@@ -3576,17 +3097,14 @@ template<class T>
 constexpr basic_string substr(size_type pos = 0, size_type n = npos) const &;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return basic_string(*this, pos, n);`
+> *Effects:* Equivalent to: `return basic_string(*this, pos, n);`
 
 ``` cpp
 constexpr basic_string substr(size_type pos = 0, size_type n = npos) &&;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return basic_string(std::move(*this), pos, n);`
+> *Effects:* Equivalent to:
+> `return basic_string(std::move(*this), pos, n);`
 
 ##### `basic_string::compare` <a id="string.compare">[[string.compare]]</a>
 
@@ -3602,14 +3120,10 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return basic_string_view<charT, traits>(*this).compare(t);`
 >
-> *Remarks:*
->
-> The exception specification is equivalent to
+> *Remarks:* The exception specification is equivalent to
 > `is_nothrow_convertible_v<const T&, basic_string_view<charT, traits>>`.
 
 ``` cpp
@@ -3624,9 +3138,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return basic_string_view<charT, traits>(*this).substr(pos1, n1).compare(t);
@@ -3645,9 +3157,7 @@ template<class T>
 >
 > - `is_convertible_v<const T&, const charT*>` is `false`.
 >
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string_view<charT, traits> s = *this, sv = t;
@@ -3658,18 +3168,14 @@ template<class T>
 constexpr int compare(const basic_string& str) const noexcept;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return compare(basic_string_view<charT, traits>(str));`
 
 ``` cpp
 constexpr int compare(size_type pos1, size_type n1, const basic_string& str) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return compare(pos1, n1, basic_string_view<charT, traits>(str));`
 
 ``` cpp
@@ -3677,9 +3183,7 @@ constexpr int compare(size_type pos1, size_type n1, const basic_string& str,
                       size_type pos2, size_type n2 = npos) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return compare(pos1, n1, basic_string_view<charT, traits>(str), pos2, n2);
@@ -3689,26 +3193,21 @@ constexpr int compare(size_type pos1, size_type n1, const basic_string& str,
 constexpr int compare(const charT* s) const;
 ```
 
-> *Effects:*
->
-> Equivalent to: `return compare(basic_string_view<charT, traits>(s));`
+> *Effects:* Equivalent to:
+> `return compare(basic_string_view<charT, traits>(s));`
 
 ``` cpp
 constexpr int compare(size_type pos, size_type n1, const charT* s) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return compare(pos, n1, basic_string_view<charT, traits>(s));`
 
 ``` cpp
 constexpr int compare(size_type pos, size_type n1, const charT* s, size_type n2) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 > `return compare(pos, n1, basic_string_view<charT, traits>(s, n2));`
 
 ##### `basic_string::starts_with` <a id="string.starts.with">[[string.starts.with]]</a>
@@ -3719,9 +3218,7 @@ constexpr bool starts_with(charT x) const noexcept;
 constexpr bool starts_with(const charT* x) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return basic_string_view<charT, traits>(data(), size()).starts_with(x);
@@ -3735,9 +3232,7 @@ constexpr bool ends_with(charT x) const noexcept;
 constexpr bool ends_with(const charT* x) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return basic_string_view<charT, traits>(data(), size()).ends_with(x);
@@ -3751,9 +3246,7 @@ constexpr bool contains(charT x) const noexcept;
 constexpr bool contains(const charT* x) const;
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > return basic_string_view<charT, traits>(data(), size()).contains(x);
@@ -3773,9 +3266,7 @@ template<class charT, class traits, class Allocator>
     operator+(const basic_string<charT, traits, Allocator>& lhs, const charT* rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string<charT, traits, Allocator> r = lhs;
@@ -3793,9 +3284,7 @@ template<class charT, class traits, class Allocator>
     operator+(basic_string<charT, traits, Allocator>&& lhs, const charT* rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > lhs.append(rhs);
@@ -3809,9 +3298,7 @@ template<class charT, class traits, class Allocator>
               basic_string<charT, traits, Allocator>&& rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > lhs.append(rhs);
@@ -3834,9 +3321,7 @@ template<class charT, class traits, class Allocator>
     operator+(const charT* lhs, basic_string<charT, traits, Allocator>&& rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > rhs.insert(0, lhs);
@@ -3849,9 +3334,7 @@ template<class charT, class traits, class Allocator>
     operator+(const charT* lhs, const basic_string<charT, traits, Allocator>& rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string<charT, traits, Allocator> r = rhs;
@@ -3865,9 +3348,7 @@ template<class charT, class traits, class Allocator>
     operator+(charT lhs, const basic_string<charT, traits, Allocator>& rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string<charT, traits, Allocator> r = rhs;
@@ -3881,9 +3362,7 @@ template<class charT, class traits, class Allocator>
     operator+(charT lhs, basic_string<charT, traits, Allocator>&& rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > rhs.insert(rhs.begin(), lhs);
@@ -3896,9 +3375,7 @@ template<class charT, class traits, class Allocator>
     operator+(const basic_string<charT, traits, Allocator>& lhs, charT rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > basic_string<charT, traits, Allocator> r = lhs;
@@ -3912,9 +3389,7 @@ template<class charT, class traits, class Allocator>
     operator+(basic_string<charT, traits, Allocator>&& lhs, charT rhs);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > lhs.push_back(rhs);
@@ -3940,9 +3415,7 @@ template<class charT, class traits, class Allocator>
             \itcorr                      const charT* rhs);
 ```
 
-> *Effects:*
->
-> Let *`op`* be the operator. Equivalent to:
+> *Effects:* Let *`op`* be the operator. Equivalent to:
 >
 > ``` cpp
 > return basic_string_view<charT, traits>(lhs) op basic_string_view<charT, traits>(rhs);
@@ -3958,9 +3431,7 @@ template<class charT, class traits, class Allocator>
       noexcept(noexcept(lhs.swap(rhs)));
 ```
 
-> *Effects:*
->
-> Equivalent to `lhs.swap(rhs)`.
+> *Effects:* Equivalent to `lhs.swap(rhs)`.
 
 #### Inserters and extractors <a id="string.io">[[string.io]]</a>
 
@@ -3970,16 +3441,15 @@ template<class charT, class traits, class Allocator>
     operator>>(basic_istream<charT, traits>& is, basic_string<charT, traits, Allocator>& str);
 ```
 
-> *Effects:*
->
-> Behaves as a formatted input function [[istream.formatted.reqmts]].
-> After constructing a `sentry` object, if the `sentry` object returns
-> `true` when converted to a value of type `bool`, calls `str.erase()`
-> and then extracts characters from `is` and appends them to `str` as if
-> by calling `str.append(1, c)`. If `is.width()` is greater than zero,
-> the maximum number `n` of characters appended is `is.width()`;
-> otherwise `n` is `str.max_size()`. Characters are extracted and
-> appended until any of the following occurs:
+> *Effects:* Behaves as a formatted input
+> function [[istream.formatted.reqmts]]. After constructing a `sentry`
+> object, if the `sentry` object returns `true` when converted to a
+> value of type `bool`, calls `str.erase()` and then extracts characters
+> from `is` and appends them to `str` as if by calling
+> `str.append(1, c)`. If `is.width()` is greater than zero, the maximum
+> number `n` of characters appended is `is.width()`; otherwise `n` is
+> `str.max_size()`. Characters are extracted and appended until any of
+> the following occurs:
 >
 > - *n* characters are stored;
 >
@@ -3994,9 +3464,7 @@ template<class charT, class traits, class Allocator>
 > If the function extracts no characters, `ios_base::failbit` is set in
 > the input function’s local error state before `setstate` is called.
 >
-> *Returns:*
->
-> `is`.
+> *Returns:* `is`.
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -4005,9 +3473,8 @@ template<class charT, class traits, class Allocator>
                const basic_string<charT, traits, Allocator>& str);
 ```
 
-> *Effects:*
->
-> Equivalent to: `return os << basic_string_view<charT, traits>(str);`
+> *Effects:* Equivalent to:
+> `return os << basic_string_view<charT, traits>(str);`
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -4022,15 +3489,13 @@ template<class charT, class traits, class Allocator>
             charT delim);
 ```
 
-> *Effects:*
->
-> Behaves as an unformatted input function [[istream.unformatted]],
-> except that it does not affect the value returned by subsequent calls
-> to `basic_istream<>::gcount()`. After constructing a `sentry` object,
-> if the `sentry` object returns `true` when converted to a value of
-> type `bool`, calls `str.erase()` and then extracts characters from
-> `is` and appends them to `str` as if by calling `str.append(1, c)`
-> until any of the following occurs:
+> *Effects:* Behaves as an unformatted input
+> function [[istream.unformatted]], except that it does not affect the
+> value returned by subsequent calls to `basic_istream<>::gcount()`.
+> After constructing a `sentry` object, if the `sentry` object returns
+> `true` when converted to a value of type `bool`, calls `str.erase()`
+> and then extracts characters from `is` and appends them to `str` as if
+> by calling `str.append(1, c)` until any of the following occurs:
 >
 > - end-of-file occurs on the input sequence;
 >
@@ -4047,9 +3512,7 @@ template<class charT, class traits, class Allocator>
 > If the function extracts no characters, `ios_base::failbit` is set in
 > the input function’s local error state before `setstate` is called.
 >
-> *Returns:*
->
-> `is`.
+> *Returns:* `is`.
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -4062,9 +3525,7 @@ template<class charT, class traits, class Allocator>
             basic_string<charT, traits, Allocator>& str);
 ```
 
-> *Returns:*
->
-> `getline(is, str, is.widen(’\n’))`.
+> *Returns:* `getline(is, str, is.widen(’\n’))`.
 
 #### Erasure <a id="string.erasure">[[string.erasure]]</a>
 
@@ -4074,9 +3535,7 @@ template<class charT, class traits, class Allocator, class U>
     erase(basic_string<charT, traits, Allocator>& c, const U& value);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto it = remove(c.begin(), c.end(), value);
@@ -4091,9 +3550,7 @@ template<class charT, class traits, class Allocator, class Predicate>
     erase_if(basic_string<charT, traits, Allocator>& c, Predicate pred);
 ```
 
-> *Effects:*
->
-> Equivalent to:
+> *Effects:* Equivalent to:
 >
 > ``` cpp
 > auto it = remove_if(c.begin(), c.end(), pred);
@@ -4112,29 +3569,23 @@ long long stoll(const string& str, size_t* idx = nullptr, int base = 10);
 unsigned long long stoull(const string& str, size_t* idx = nullptr, int base = 10);
 ```
 
-> *Effects:*
->
-> The first two functions call `strtol(str.c_str(), ptr, base)`, and the
-> last three functions call `strtoul(str.c_str(), ptr, base)`,
-> `strtoll(str.c_str(), ptr, base)`, and
-> `strtoull(str.c_str(), ptr, base)`, respectively. Each function
+> *Effects:* The first two functions call
+> `strtol(str.c_str(), ptr, base)`, and the last three functions call
+> `strtoul(str.c_str(), ptr, base)`, `strtoll(str.c_str(), ptr, base)`,
+> and `strtoull(str.c_str(), ptr, base)`, respectively. Each function
 > returns the converted result, if any. The argument `ptr` designates a
 > pointer to an object internal to the function that is used to
 > determine what to store at `*idx`. If the function does not throw an
 > exception and `idx != nullptr`, the function stores in `*idx` the
 > index of the first unconverted element of `str`.
 >
-> *Returns:*
+> *Returns:* The converted result.
 >
-> The converted result.
->
-> *Throws:*
->
-> `invalid_argument` if `strtol`, `strtoul`, `strtoll`, or `strtoull`
-> reports that no conversion can be performed. Throws `out_of_range` if
-> `strtol`, `strtoul`, `strtoll` or `strtoull` sets `errno` to `ERANGE`,
-> or if the converted value is outside the range of representable values
-> for the return type.
+> *Throws:* `invalid_argument` if `strtol`, `strtoul`, `strtoll`, or
+> `strtoull` reports that no conversion can be performed. Throws
+> `out_of_range` if `strtol`, `strtoul`, `strtoll` or `strtoull` sets
+> `errno` to `ERANGE`, or if the converted value is outside the range of
+> representable values for the return type.
 
 ``` cpp
 float stof(const string& str, size_t* idx = nullptr);
@@ -4142,9 +3593,7 @@ double stod(const string& str, size_t* idx = nullptr);
 long double stold(const string& str, size_t* idx = nullptr);
 ```
 
-> *Effects:*
->
-> These functions call `strtof(str.c_str(), ptr)`,
+> *Effects:* These functions call `strtof(str.c_str(), ptr)`,
 > `strtod(str.c_str(), ptr)`, and `strtold(str.c_str(), ptr)`,
 > respectively. Each function returns the converted result, if any. The
 > argument `ptr` designates a pointer to an object internal to the
@@ -4153,17 +3602,13 @@ long double stold(const string& str, size_t* idx = nullptr);
 > function stores in `*idx` the index of the first unconverted element
 > of `str`.
 >
-> *Returns:*
+> *Returns:* The converted result.
 >
-> The converted result.
->
-> *Throws:*
->
-> `invalid_argument` if `strtof`, `strtod`, or `strtold` reports that no
-> conversion can be performed. Throws `out_of_range` if `strtof`,
-> `strtod`, or `strtold` sets `errno` to `ERANGE` or if the converted
-> value is outside the range of representable values for the return
-> type.
+> *Throws:* `invalid_argument` if `strtof`, `strtod`, or `strtold`
+> reports that no conversion can be performed. Throws `out_of_range` if
+> `strtof`, `strtod`, or `strtold` sets `errno` to `ERANGE` or if the
+> converted value is outside the range of representable values for the
+> return type.
 
 ``` cpp
 string to_string(int val);
@@ -4177,14 +3622,12 @@ string to_string(double val);
 string to_string(long double val);
 ```
 
-> *Returns:*
->
-> Each function returns a `string` object holding the character
-> representation of the value of its argument that would be generated by
-> calling `sprintf(buf, fmt, val)` with a format specifier of `"%d"`,
-> `"%u"`, `"%ld"`, `"%lu"`, `"%lld"`, `"%llu"`, `"%f"`, `"%f"`, or
-> `"%Lf"`, respectively, where `buf` designates an internal character
-> buffer of sufficient size.
+> *Returns:* Each function returns a `string` object holding the
+> character representation of the value of its argument that would be
+> generated by calling `sprintf(buf, fmt, val)` with a format specifier
+> of `"%d"`, `"%u"`, `"%ld"`, `"%lu"`, `"%lld"`, `"%llu"`, `"%f"`,
+> `"%f"`, or `"%Lf"`, respectively, where `buf` designates an internal
+> character buffer of sufficient size.
 
 ``` cpp
 int stoi(const wstring& str, size_t* idx = nullptr, int base = 10);
@@ -4194,28 +3637,22 @@ long long stoll(const wstring& str, size_t* idx = nullptr, int base = 10);
 unsigned long long stoull(const wstring& str, size_t* idx = nullptr, int base = 10);
 ```
 
-> *Effects:*
->
-> The first two functions call `wcstol(str.c_str(), ptr, base)`, and the
-> last three functions call `wcstoul(str.c_str(), ptr, base)`,
-> `wcstoll(str.c_str(), ptr, base)`, and
-> `wcstoull(str.c_str(), ptr, base)`, respectively. Each function
+> *Effects:* The first two functions call
+> `wcstol(str.c_str(), ptr, base)`, and the last three functions call
+> `wcstoul(str.c_str(), ptr, base)`, `wcstoll(str.c_str(), ptr, base)`,
+> and `wcstoull(str.c_str(), ptr, base)`, respectively. Each function
 > returns the converted result, if any. The argument `ptr` designates a
 > pointer to an object internal to the function that is used to
 > determine what to store at `*idx`. If the function does not throw an
 > exception and `idx != nullptr`, the function stores in `*idx` the
 > index of the first unconverted element of `str`.
 >
-> *Returns:*
+> *Returns:* The converted result.
 >
-> The converted result.
->
-> *Throws:*
->
-> `invalid_argument` if `wcstol`, `wcstoul`, `wcstoll`, or `wcstoull`
-> reports that no conversion can be performed. Throws `out_of_range` if
-> the converted value is outside the range of representable values for
-> the return type.
+> *Throws:* `invalid_argument` if `wcstol`, `wcstoul`, `wcstoll`, or
+> `wcstoull` reports that no conversion can be performed. Throws
+> `out_of_range` if the converted value is outside the range of
+> representable values for the return type.
 
 ``` cpp
 float stof(const wstring& str, size_t* idx = nullptr);
@@ -4223,9 +3660,7 @@ double stod(const wstring& str, size_t* idx = nullptr);
 long double stold(const wstring& str, size_t* idx = nullptr);
 ```
 
-> *Effects:*
->
-> These functions call `wcstof(str.c_str(), ptr)`,
+> *Effects:* These functions call `wcstof(str.c_str(), ptr)`,
 > `wcstod(str.c_str(), ptr)`, and `wcstold(str.c_str(), ptr)`,
 > respectively. Each function returns the converted result, if any. The
 > argument `ptr` designates a pointer to an object internal to the
@@ -4234,15 +3669,11 @@ long double stold(const wstring& str, size_t* idx = nullptr);
 > function stores in `*idx` the index of the first unconverted element
 > of `str`.
 >
-> *Returns:*
+> *Returns:* The converted result.
 >
-> The converted result.
->
-> *Throws:*
->
-> `invalid_argument` if `wcstof`, `wcstod`, or `wcstold` reports that no
-> conversion can be performed. Throws `out_of_range` if `wcstof`,
-> `wcstod`, or `wcstold` sets `errno` to `ERANGE`.
+> *Throws:* `invalid_argument` if `wcstof`, `wcstod`, or `wcstold`
+> reports that no conversion can be performed. Throws `out_of_range` if
+> `wcstof`, `wcstod`, or `wcstold` sets `errno` to `ERANGE`.
 
 ``` cpp
 wstring to_wstring(int val);
@@ -4256,14 +3687,12 @@ wstring to_wstring(double val);
 wstring to_wstring(long double val);
 ```
 
-> *Returns:*
->
-> Each function returns a `wstring` object holding the character
-> representation of the value of its argument that would be generated by
-> calling `swprintf(buf, buffsz, fmt, val)` with a format specifier of
-> `L"%d"`, `L"%u"`, `L"%ld"`, `L"%lu"`, `L"%lld"`, `L"%llu"`, `L"%f"`,
-> `L"%f"`, or `L"%Lf"`, respectively, where `buf` designates an internal
-> character buffer of sufficient size `buffsz`.
+> *Returns:* Each function returns a `wstring` object holding the
+> character representation of the value of its argument that would be
+> generated by calling `swprintf(buf, buffsz, fmt, val)` with a format
+> specifier of `L"%d"`, `L"%u"`, `L"%ld"`, `L"%lu"`, `L"%lld"`,
+> `L"%llu"`, `L"%f"`, `L"%f"`, or `L"%Lf"`, respectively, where `buf`
+> designates an internal character buffer of sufficient size `buffsz`.
 
 ### Hash support <a id="basic.string.hash">[[basic.string.hash]]</a>
 
@@ -4285,41 +3714,31 @@ template<class A> struct hash<basic_string<wchar_t, char_traits<wchar_t>, A>>;
 constexpr string operator""s(const char* str, size_t len);
 ```
 
-> *Returns:*
->
-> `string{str, len}`.
+> *Returns:* `string{str, len}`.
 
 ``` cpp
 constexpr u8string operator""s(const char8_t* str, size_t len);
 ```
 
-> *Returns:*
->
-> `u8string{str, len}`.
+> *Returns:* `u8string{str, len}`.
 
 ``` cpp
 constexpr u16string operator""s(const char16_t* str, size_t len);
 ```
 
-> *Returns:*
->
-> `u16string{str, len}`.
+> *Returns:* `u16string{str, len}`.
 
 ``` cpp
 constexpr u32string operator""s(const char32_t* str, size_t len);
 ```
 
-> *Returns:*
->
-> `u32string{str, len}`.
+> *Returns:* `u32string{str, len}`.
 
 ``` cpp
 constexpr wstring operator""s(const wchar_t* str, size_t len);
 ```
 
-> *Returns:*
->
-> `wstring{str, len}`.
+> *Returns:* `wstring{str, len}`.
 
 \[*Note 3*: The same suffix `s` is used for `chrono::duration` literals
 denoting seconds but there is no conflict, since duration suffixes apply
@@ -4564,24 +3983,18 @@ size_t mbstowcs(wchar_t* pwcs, const char* s, size_t n);
 size_t wcstombs(char* s, const wchar_t* pwcs, size_t n);
 ```
 
-> *Effects:*
->
-> These functions have the semantics specified in the C standard
-> library.
+> *Effects:* These functions have the semantics specified in the C
+> standard library.
 
 ``` cpp
 int mbtowc(wchar_t* pwc, const char* s, size_t n);
 int wctomb(char* s, wchar_t wchar);
 ```
 
-> *Effects:*
+> *Effects:* These functions have the semantics specified in the C
+> standard library.
 >
-> These functions have the semantics specified in the C standard
-> library.
->
-> *Remarks:*
->
-> Calls to these functions may introduce a data
+> *Remarks:* Calls to these functions may introduce a data
 > race [[res.on.data.races]] with other calls to the same function.
 
 ``` cpp
@@ -4592,41 +4005,34 @@ size_t mbsrtowcs(wchar_t* dst, const char** src, size_t len, mbstate_t* ps);
 size_t wcsrtombs(char* dst, const wchar_t** src, size_t len, mbstate_t* ps);
 ```
 
-> *Effects:*
+> *Effects:* These functions have the semantics specified in the C
+> standard library.
 >
-> These functions have the semantics specified in the C standard
-> library.
->
-> *Remarks:*
->
-> Calling these functions with an `mbstate_t*` argument that is a null
-> pointer value may introduce a data race [[res.on.data.races]] with
-> other calls to the same function with an `mbstate_t*` argument that is
-> a null pointer value.
+> *Remarks:* Calling these functions with an `mbstate_t*` argument that
+> is a null pointer value may introduce a data
+> race [[res.on.data.races]] with other calls to the same function with
+> an `mbstate_t*` argument that is a null pointer value.
 
 ``` cpp
 size_t mbrtoc8(char8_t* pc8, const char* s, size_t n, mbstate_t* ps);
 ```
 
-> *Effects:*
+> *Effects:* If `s` is a null pointer, equivalent to
+> `mbrtoc8(nullptr, "", 1, ps)`. Otherwise, the function inspects at
+> most `n` bytes beginning with the byte pointed to by `s` to determine
+> the number of bytes needed to complete the next multibyte character
+> (including any shift sequences). If the function determines that the
+> next multibyte character is complete and valid, it determines the
+> values of the corresponding UTF-8 code units and then, if `pc8` is not
+> a null pointer, stores the value of the first (or only) such code unit
+> in the object pointed to by `pc8`. Subsequent calls will store
+> successive UTF-8 code units without consuming any additional input
+> until all the code units have been stored. If the corresponding
+> Unicode character is , the resulting state described is the initial
+> conversion state.
 >
-> If `s` is a null pointer, equivalent to `mbrtoc8(nullptr, "", 1, ps)`.
-> Otherwise, the function inspects at most `n` bytes beginning with the
-> byte pointed to by `s` to determine the number of bytes needed to
-> complete the next multibyte character (including any shift sequences).
-> If the function determines that the next multibyte character is
-> complete and valid, it determines the values of the corresponding
-> UTF-8 code units and then, if `pc8` is not a null pointer, stores the
-> value of the first (or only) such code unit in the object pointed to
-> by `pc8`. Subsequent calls will store successive UTF-8 code units
-> without consuming any additional input until all the code units have
-> been stored. If the corresponding Unicode character is , the resulting
-> state described is the initial conversion state.
->
-> *Returns:*
->
-> The first of the following that applies (given the current conversion
-> state):
+> *Returns:* The first of the following that applies (given the current
+> conversion state):
 >
 > - `0`, if the next `n` or fewer bytes complete the multibyte character
 >   that corresponds to the Unicode character (which is the value
@@ -4655,9 +4061,7 @@ size_t mbrtoc8(char8_t* pc8, const char* s, size_t n, mbstate_t* ps);
 size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);
 ```
 
-> *Effects:*
->
-> If `s` is a null pointer, equivalent to
+> *Effects:* If `s` is a null pointer, equivalent to
 > `c8rtomb(buf, u8’`$\backslash$`0’, ps)` where `buf` is an internal
 > buffer. Otherwise, if `c8` completes a sequence of valid UTF-8 code
 > units, determines the number of bytes needed to represent the
@@ -4668,19 +4072,15 @@ size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);
 > preceded by any shift sequence needed to restore the initial shift
 > state; the resulting state described is the initial conversion state.
 >
-> *Returns:*
+> *Returns:* The number of bytes stored in the array object (including
+> any shift sequences). If `c8` does not contribute to a sequence of
+> corresponding to a valid multibyte character, the value of the macro
+> `EILSEQ` is stored in `errno`, `(size_t) (-1)` is returned, and the
+> conversion state is unspecified.
 >
-> The number of bytes stored in the array object (including any shift
-> sequences). If `c8` does not contribute to a sequence of corresponding
-> to a valid multibyte character, the value of the macro `EILSEQ` is
-> stored in `errno`, `(size_t) (-1)` is returned, and the conversion
-> state is unspecified.
->
-> *Remarks:*
->
-> Calls to `c8rtomb` with a null pointer argument for `s` may introduce
-> a data race [[res.on.data.races]] with other calls to `c8rtomb` with a
-> null pointer argument for `s`.
+> *Remarks:* Calls to `c8rtomb` with a null pointer argument for `s` may
+> introduce a data race [[res.on.data.races]] with other calls to
+> `c8rtomb` with a null pointer argument for `s`.
 
 <!-- Section link definitions -->
 [basic.string]: #basic.string
