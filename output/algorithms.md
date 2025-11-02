@@ -9277,11 +9277,12 @@ template<class ExecutionPolicy,
 > `result + K` the value of
 >
 > - *GENERALIZED_NONCOMMUTATIVE_SUM*(  
->   `    binary_op, init, *(first + 0), *(first + 1), ..., *(first + K))`  
+>       binary_op, init, \*(first + 0), \*(first + 1), ..., \*(first +
+>   K))  
 >   if `init` is provided, or
 >
 > - *GENERALIZED_NONCOMMUTATIVE_SUM*(  
->   `    binary_op, *(first + 0), *(first + 1), ..., *(first + K))`  
+>       binary_op, \*(first + 0), \*(first + 1), ..., \*(first + K))  
 >   otherwise.
 >
 > *Returns:*
@@ -9439,13 +9440,15 @@ template<class ExecutionPolicy,
 > `result + K` the value of
 >
 > - *GENERALIZED_NONCOMMUTATIVE_SUM*(  
->   `    binary_op, init,`  
->   `    ``unary_op(*(first + 0)), unary_op(*(first + 1)), ..., unary_op(*(first + K)))`  
+>       binary_op, init,  
+>       unary_op(\*(first + 0)), unary_op(\*(first + 1)), ...,
+>   unary_op(\*(first + K)))  
 >   if `init` is provided, or
 >
 > - *GENERALIZED_NONCOMMUTATIVE_SUM*(  
->   `    binary_op,`  
->   `    ``unary_op(*(first + 0)), unary_op(*(first + 1)), ..., unary_op(*(first + K)))`  
+>       binary_op,  
+>       unary_op(\*(first + 0)), unary_op(\*(first + 1)), ...,
+>   unary_op(\*(first + K)))  
 >   otherwise.
 >
 > *Returns:*

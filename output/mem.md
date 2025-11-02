@@ -5678,8 +5678,8 @@ template<class T>
 
 > *Effects:*
 >
-> Calls *OUTERMOST_ALLOC_TRAITS*(\*this)::destroy(*OUTERMOST(\*this),
-> p)*.
+> Calls *OUTERMOST_ALLOC_TRAITS*(\*this)::destroy(*OUTERMOST*(\*this),
+> p).
 
 ``` cpp
 scoped_allocator_adaptor select_on_container_copy_construction() const;

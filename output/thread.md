@@ -6793,11 +6793,13 @@ template<class Callable, class... Args>
 >
 > An execution of `call_once` that does not call its `func` is a
 > execution. An execution of `call_once` that calls its `func` is an
-> execution. An active execution calls *INVOKE*( [[func.require]]. If
-> such a call to `func` throws an exception the execution is , otherwise
-> it is . An exceptional execution propagates the exception to the
-> caller of `call_once`. Among all executions of `call_once` for any
-> given `once_flag`: at most one is a returning execution; if there is a
+> execution. An active execution calls *INVOKE*(
+> std::forward\<Callable\>(func),
+> std::forward\<Args\>(args)...) [[func.require]]. If such a call to
+> `func` throws an exception the execution is , otherwise it is . An
+> exceptional execution propagates the exception to the caller of
+> `call_once`. Among all executions of `call_once` for any given
+> `once_flag`: at most one is a returning execution; if there is a
 > returning execution, it is the last active execution; and there are
 > passive executions only if there is a returning execution.
 >
