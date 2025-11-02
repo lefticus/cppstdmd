@@ -7353,8 +7353,7 @@ namespace std {
   template<> class shared_future<void>;
 
   // [futures.task], class template packaged_task
-  template<class> class packaged_task;  // \notdef
-  template<class R, class... ArgTypes>
+  template<class> class packaged_task;  // *not defined*   template<class R, class... ArgTypes>
     class packaged_task<R(ArgTypes...)>;
 
   template<class R, class... ArgTypes>
@@ -8331,8 +8330,7 @@ access the stored result.
 
 ``` cpp
 namespace std {
-  template<class> class packaged_task;  // \notdef
-
+  template<class> class packaged_task;  // *not defined* 
   template<class R, class... ArgTypes>
   class packaged_task<R(ArgTypes...)> {
   public:

@@ -1337,7 +1337,7 @@ void f(T);                      // \#1
 void f(int);                    // \#2
 
 void g() {
-  f(0);                         // error: expression S<int>\{\} does not have type bool
+  f(0);                         // error: expression S<int>{} does not have type bool
 }                               // while checking satisfaction of deduced arguments of \#1;
                                 // call is ill-formed even though \#2 is a better match
 ```

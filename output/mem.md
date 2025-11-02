@@ -3022,9 +3022,9 @@ template<class T, class A>
     shared_ptr<double[]> p = make_shared<double[]>(1024, 1.0);
       // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
     shared_ptr<double[][2]> q = make_shared<double[][2]>(6, {1.0, 0.0});
-      // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each \texttt{double[2]} element is \texttt{\{1.0, 0.0\}}
+      // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each \texttt{double[2]} element is \texttt{{1.0, 0.0}}
     shared_ptr<vector<int>[]> r = make_shared<vector<int>[]>(4, {1, 2});
-      // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{\{1, 2\}}
+      // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
 
 — *end example*\]
 
@@ -3046,9 +3046,9 @@ element of type `remove_extent_t<T>` has an initial value of `u`.
     shared_ptr<double[1024]> p = make_shared<double[1024]>(1.0);
       // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
     shared_ptr<double[6][2]> q = make_shared<double[6][2]>({1.0, 0.0});
-      // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each double[2] element is \texttt{\{1.0, 0.0\}}
+      // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each double[2] element is \texttt{{1.0, 0.0}}
     shared_ptr<vector<int>[4]> r = make_shared<vector<int>[4]>({1, 2});
-      // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{\{1, 2\}}
+      // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
 
 — *end example*\]
 

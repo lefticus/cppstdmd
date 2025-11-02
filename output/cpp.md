@@ -938,7 +938,7 @@ G(a, )              // replaced by f(0, a)
 G(a)                // replaced by f(0, a)
 
 SDEF(foo);          // replaced by S foo;
-SDEF(bar, 1, 2);    // replaced by S bar = \{ 1, 2 \;}
+SDEF(bar, 1, 2);    // replaced by S bar = { 1, 2 \;}
 
 #define H1(X, ...) X __VA_OPT__(##) __VA_ARGS__ // error: \#\# may not appear at
                                                 // the beginning of a replacement list[cpp.concat]

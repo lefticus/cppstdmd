@@ -2232,8 +2232,8 @@ fold-expression:
 %% Ed. note: character protrusion would misalign operators with leading `-`.
 
 fold-operator: one of
-    '+ '\quad'- '\quad'* '\quad'/ '\quad'% '\quad'\caret{' }\quad'& '\quad'| '\quad'<< '\quad'>> '
-    '+='\quad'-='\quad'*='\quad'/='\quad'%='\quad'\caret='\quad'&='\quad'|='\quad'<<='\quad'>>='\quad'='
+    '+ '\quad'- '\quad'* '\quad'/ '\quad'% '\quad'^ '\quad'& '\quad'| '\quad'<< '\quad'>> '
+    '+='\quad'-='\quad'*='\quad'/='\quad'%='\quad'^='\quad'&='\quad'|='\quad'<<='\quad'>>='\quad'='
     '=='\quad'!='\quad'< '\quad'> '\quad'<='\quad'>='\quad'&&'\quad'||'\quad',  '\quad'.* '\quad'->*'
 ```
 
@@ -4149,7 +4149,7 @@ implicitly converted to `std::size_t`. The *expression* is erroneous if:
 
 - the *new-initializer* is a *braced-init-list* and the number of array
   elements for which initializers are provided (including the
-  terminating `'\ 0'` in a *string-literal* [[lex.string]]) exceeds the
+  terminating `'\0'` in a *string-literal* [[lex.string]]) exceeds the
   number of elements to initialize.
 
 If the *expression* is erroneous after converting to `std::size_t`:
@@ -5245,7 +5245,7 @@ operands. — *end note*\]
 ``` bnf
 exclusive-or-expression:
     and-expression
-    exclusive-or-expression '\caret' and-expression
+    exclusive-or-expression '^' and-expression
 ```
 
 The `\caret` operator groups left-to-right. The operands shall be of
@@ -5565,7 +5565,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '=  *=  /=  %=   +=  -=  >>=  <<=  &=  \caret=  |='
+    '=  *=  /=  %=   +=  -=  >>=  <<=  &=  ^=  |='
 ```
 
 In simple assignment (`=`), the object referred to by the left operand
@@ -5619,8 +5619,8 @@ A *braced-init-list* may appear on the right-hand side of
 
 ``` cpp
 complex<double> z;
-z = { 1,2 };        // meaning z.operator=(\{1,2\)}
-z += { 1, 2 };      // meaning z.operator+=(\{1,2\)}
+z = { 1,2 };        // meaning z.operator=({1,2\)}
+z += { 1, 2 };      // meaning z.operator+=({1,2\)}
 int a, b;
 a = b = { 1 };      // meaning a=b=1;
 a = { 1 } = b;      // syntax error

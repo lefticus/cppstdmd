@@ -1045,8 +1045,8 @@ separators in this revision of C++. For example:
 ``` cpp
 #define M(x, ...) __VA_ARGS__
 int x[2] = { M(1'2,3'4, 5) };
-// int x[2] = \{ 5 \;\ \ \ \ \ } --- C++11
-// int x[2] = \{ 3'4, 5 \;} --- this revision of \Cpp{}
+// int x[2] = { 5 \;\ \ \ \ \ } --- C++11
+// int x[2] = { 3'4, 5 \;} --- this revision of \Cpp{}
 ```
 
 ###  [[basic]]: basics <a id="diff.cpp11.basic">[[diff.cpp11.basic]]</a>
@@ -1846,10 +1846,10 @@ Out-of-order initializers are common. The other features are seldom
 used.
 
 In C++, when initializing an array of character with a string, the
-number of characters in the string (including the terminating `'\ 0'`)
+number of characters in the string (including the terminating `'\0'`)
 must not exceed the number of elements in the array. In C, an array can
 be initialized with a string even if the array is not large enough to
-contain the string-terminating `'\ 0'`.
+contain the string-terminating `'\0'`.
 
 Example:
 
@@ -1861,7 +1861,7 @@ When these non-terminated arrays are manipulated by standard string
 functions, there is potential for major catastrophe. Deletion of
 semantically well-defined feature. Semantic transformation. The arrays
 must be declared one element bigger to contain the string terminating
-`'\ 0'`. Seldom. This style of array initialization is seen as poor
+`'\0'`. Seldom. This style of array initialization is seen as poor
 coding style.
 
 C++ objects of enumeration type can only be assigned values of the same

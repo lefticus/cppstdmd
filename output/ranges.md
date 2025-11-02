@@ -1794,7 +1794,7 @@ of ranges.
 ``` cpp
 string_view str = "the quick brown fox";
 auto words = views::split(str, ' ') | to<vector<string>>();
-// words is vector<string>\{"the", "quick", "brown", "fox"\}
+// words is vector<string>{"the", "quick", "brown", "fox"}
 ```
 
 — *end example*\]

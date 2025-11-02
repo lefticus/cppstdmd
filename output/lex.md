@@ -184,45 +184,45 @@ context. — *end note*\]
 
 |  |  |
 | --- | --- |
-| `U+0009` | \uname{character tabulation} |
-| `U+000b` | \uname{line tabulation} |
-| `U+000c` | \uname{form feed} |
-| `U+0020` | \uname{space} |
-| `U+000a` | \uname{line feed} | new-line |
-| `U+0021` | \uname{exclamation mark} | `!` |
-| `U+0022` | \uname{quotation mark} | `"` |
-| `U+0023` | \uname{number sign} | `\#` |
-| `U+0025` | \uname{percent sign} | `\%` |
-| `U+0026` | \uname{ampersand} | `\&` |
-| `U+0027` | \uname{apostrophe} | `'` |
-| `U+0028` | \uname{left parenthesis} | `(` |
-| `U+0029` | \uname{right parenthesis} | `)` |
-| `U+002a` | \uname{asterisk} | `*` |
-| `U+002b` | \uname{plus sign} | `+` |
-| `U+002c` | \uname{comma} | `,` |
-| `U+002d` | \uname{hyphen-minus} | `-` |
-| `U+002e` | \uname{full stop} | `.` |
-| `U+002f` | \uname{solidus} | `/` |
-| `U+0030` .. `U+0039` | \uname{digit zero .. nine} | `0 1 2 3 4 5 6 7 8 9` |
-| `U+003a` | \uname{colon} | `:` |
-| `U+003b` | \uname{semicolon} | `;` |
-| `U+003c` | \uname{less-than sign} | `<` |
-| `U+003d` | \uname{equals sign} | `=` |
-| `U+003e` | \uname{greater-than sign} | `>` |
-| `U+003f` | \uname{question mark} | `?` |
-| `U+0041` .. `U+005a` | \uname{latin capital letter a .. z} | `A B C D E F G H I J K L M` |
+| `U+0009` | character tabulation |
+| `U+000b` | line tabulation |
+| `U+000c` | form feed |
+| `U+0020` | space |
+| `U+000a` | line feed | new-line |
+| `U+0021` | exclamation mark | `!` |
+| `U+0022` | quotation mark | `"` |
+| `U+0023` | number sign | `#` |
+| `U+0025` | percent sign | `%` |
+| `U+0026` | ampersand | `&` |
+| `U+0027` | apostrophe | `'` |
+| `U+0028` | left parenthesis | `(` |
+| `U+0029` | right parenthesis | `)` |
+| `U+002a` | asterisk | `*` |
+| `U+002b` | plus sign | `+` |
+| `U+002c` | comma | `,` |
+| `U+002d` | hyphen-minus | `-` |
+| `U+002e` | full stop | `.` |
+| `U+002f` | solidus | `/` |
+| `U+0030` .. `U+0039` | digit zero .. nine | `0 1 2 3 4 5 6 7 8 9` |
+| `U+003a` | colon | `:` |
+| `U+003b` | semicolon | `;` |
+| `U+003c` | less-than sign | `<` |
+| `U+003d` | equals sign | `=` |
+| `U+003e` | greater-than sign | `>` |
+| `U+003f` | question mark | `?` |
+| `U+0041` .. `U+005a` | latin capital letter a .. z | `A B C D E F G H I J K L M` |
 |  |  | `N O P Q R S T U V W X Y Z` |
-| `U+005b` | \uname{left square bracket} | `[` |
-| `U+005c` | \uname{reverse solidus} | `\` |
-| `U+005d` | \uname{right square bracket} | `]` |
-| `U+005e` | \uname{circumflex accent} | `\caret` |
-| `U+005f` | \uname{low line} | `_` |
-| `U+0061` .. `U+007a` | \uname{latin small letter a .. z} | `a b c d e f g h i j k l m` |
+| `U+005b` | left square bracket | `[` |
+| `U+005c` | reverse solidus | `\` |
+| `U+005d` | right square bracket | `]` |
+| `U+005e` | circumflex accent | `^` |
+| `U+005f` | low line | `_` |
+| `U+0061` .. `U+007a` | latin small letter a .. z | `a b c d e f g h i j k l m` |
 |  |  | `n o p q r s t u v w x y z` |
-| `U+007b` | \uname{left curly bracket} | \texttt{\{} |
-| `U+007c` | \uname{vertical line} | `|` |
-| `U+007d` | \uname{right curly bracket} | `\`} |
-| `U+007e` | \uname{tilde} | `\textasciitilde` |
+| `U+007b` | left curly bracket | `{` |
+| `U+007c` | vertical line | `|` |
+| `U+007d` | right curly bracket | `}` |
+| `U+007e` | tilde | `~` |
 
 
 The *universal-character-name* construct provides a way to name other
@@ -241,7 +241,7 @@ n-char-sequence:
 
 ``` bnf
 named-universal-character:
-    '\ N{' n-char-sequence '$'}
+    '\N{' n-char-sequence '$'}
 ```
 
 ``` bnf
@@ -257,14 +257,14 @@ simple-hexadecimal-digit-sequence:
 
 ``` bnf
 universal-character-name:
-    '\ u' hex-quad
-    '\ U' hex-quad hex-quad
-    '\ u{' simple-hexadecimal-digit-sequence '$'}
+    '\u' hex-quad
+    '\U' hex-quad hex-quad
+    '\u{' simple-hexadecimal-digit-sequence '$'}
     named-universal-character
 ```
 
-A *universal-character-name* of the form `\ u` *hex-quad*, `\ U`
-*hex-quad* *hex-quad*, or `\ u\{simple-hexadecimal-digit-sequence\}`
+A *universal-character-name* of the form `\u` *hex-quad*, `\U`
+*hex-quad* *hex-quad*, or `\u\{simple-hexadecimal-digit-sequence\}`
 designates the character in the translation character set whose Unicode
 scalar value is the hexadecimal number represented by the sequence of
 *hexadecimal-digit*s in the *universal-character-name*. The program is
@@ -298,10 +298,10 @@ basic character set, plus the control characters specified in
 
 |  |  |
 | --- | --- |
-| `U+0000` | \uname{null} |
-| `U+0007` | \uname{alert} |
-| `U+0008` | \uname{backspace} |
-| `U+000d` | \uname{carriage return} |
+| `U+0000` | null |
+| `U+0007` | alert |
+| `U+0008` | backspace |
+| `U+000d` | carriage return |
 
 
 A *code unit* is an integer value of character type
@@ -672,8 +672,8 @@ operator-or-punctuator: one of
     '{        $'        [        ]        (        )}
     '<:       :>       <%       %>       ;        :        ...'
     '?        ::       .        .*       ->       ->*      \~'
-    '!        +        -        *        /        %        \caret{'        \&        |}
-    '=        +=       -=       *=       /=       %=       \caret{'=       \&=       |=}
+    '!        +        -        *        /        %        ^        &        |'
+    '=        +=       -=       *=       /=       %=       ^=       &=       |='
     '==       !=       <        >        <=       >=       <=>      &&       ||'
     '<<       >>       <<=      >>=      ++       --       ,'
     '\texttt{and'      \texttt{or}       \texttt{xor}      \texttt{not}      \texttt{bitand}   \texttt{bitor}    \texttt{compl}}
@@ -926,13 +926,13 @@ octal-escape-sequence:
     '$' octal-digit
     '$' octal-digit octal-digit
     '$' octal-digit octal-digit octal-digit
-    '\ o{' simple-octal-digit-sequence '$'}
+    '\o{' simple-octal-digit-sequence '$'}
 ```
 
 ``` bnf
 hexadecimal-escape-sequence:
-    '\ x' simple-hexadecimal-digit-sequence
-    '\ x{' simple-hexadecimal-digit-sequence '$'}
+    '\x' simple-hexadecimal-digit-sequence
+    '\x{' simple-hexadecimal-digit-sequence '$'}
 ```
 
 ``` bnf
@@ -1031,17 +1031,17 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 
 |  |  |  |
 | --- | --- | --- |
-| `U+000a` | \uname{line feed} | `\ n` |
-| `U+0009` | \uname{character tabulation} | `\ t` |
-| `U+000b` | \uname{line tabulation} | `\ v` |
-| `U+0008` | \uname{backspace} | `\ b` |
-| `U+000d` | \uname{carriage return} | `\ r` |
-| `U+000c` | \uname{form feed} | `\ f` |
-| `U+0007` | \uname{alert} | `\ a` |
-| `U+005c` | \uname{reverse solidus} | `` |
-| `U+003f` | \uname{question mark} | `\ ?` |
-| `U+0027` | \uname{apostrophe} | `\ '` |
-| `U+0022` | \uname{quotation mark} | `\ "` |
+| `U+000a` | line feed | `\n` |
+| `U+0009` | character tabulation | `\t` |
+| `U+000b` | line tabulation | `\v` |
+| `U+0008` | backspace | `\b` |
+| `U+000d` | carriage return | `\r` |
+| `U+000c` | form feed | `\f` |
+| `U+0007` | alert | `\a` |
+| `U+005c` | reverse solidus | `` |
+| `U+003f` | question mark | `\?` |
+| `U+0027` | apostrophe | `\'` |
+| `U+0022` | quotation mark | `\"` |
 
 
 ### Floating-point literals <a id="lex.fcon">[[lex.fcon]]</a>
@@ -1251,13 +1251,13 @@ a"
 )a"
 ```
 
-is equivalent to `"\ n)\ \ \ na\"\ n"`. The raw string
+is equivalent to `"\n)\\\na\"\n"`. The raw string
 
 ``` cpp
 R"(x = "\"y\"")"
 ```
 
-is equivalent to `"x = \ "\\\ "y\\\ "\ ""`.
+is equivalent to `"x = \"\\\"y\\\"\""`.
 
 — *end example*\]
 
@@ -1284,8 +1284,8 @@ individual *string-literal*s is retained.
 "\xA" "B"
 ```
 
-represents the code unit `'\ xA'` and the character `'B'` after
-concatenation (and not the single code unit `'\ xAB'`). Similarly,
+represents the code unit `'\xA'` and the character `'B'` after
+concatenation (and not the single code unit `'\xAB'`). Similarly,
 
 ``` cpp
 R"(\u00)" "41"

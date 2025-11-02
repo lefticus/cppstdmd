@@ -1941,7 +1941,7 @@ struct D {
   D(A, C);
 };
 void i(D);
-i({ {1,2}, {"bar"} });  // OK, i(D(A(std::initializer_list<int>\{1,2\), C(std::string("bar"))))}
+i({ {1,2}, {"bar"} });  // OK, i(D(A(std::initializer_list<int>{1,2\), C(std::string("bar"))))}
 ```
 
 — *end example*\]
@@ -2457,8 +2457,8 @@ operator-function-id:
 %% Ed. note: character protrusion would misalign various operators.
 operator: one of
     'new      delete   new[]    delete[] co_await (\rlap{\,)'        [\rlap{\,]}        ->       ->*}
-    '\~        !        +        -        *        /        %        \caret{'        \&}
-    '|        =        +=       -=       *=       /=       %=       \caret{'=       \&=}
+    '\~        !        +        -        *        /        %        ^        &'
+    '|        =        +=       -=       *=       /=       %=       ^=       &='
     '|=       ==       !=       <        >        <=       >=       <=>      &&'
     '||       <<       >>       <<=      >>=      ++       --       ,'
 ```
@@ -2688,7 +2688,7 @@ struct X {
   Z operator[](auto...);
 };
 X x;
-x[{1,2,3}] = 7;                 // OK, meaning x.operator[](\{1,2,3\)}
+x[{1,2,3}] = 7;                 // OK, meaning x.operator[]({1,2,3\)}
 x[1,2,3] = 7;                   // OK, meaning x.operator[](1,2,3)
 int a[10];
 a[{1,2,3}] = 7;                 // error: built-in subscript operator
@@ -3028,7 +3028,7 @@ literal-operator-id:
 
 The *string-literal* or *user-defined-string-literal* in a
 *literal-operator-id* shall have no *encoding-prefix* and shall contain
-no characters other than the implicit terminating `'\ 0'`. The
+no characters other than the implicit terminating `'\0'`. The
 *ud-suffix* of the *user-defined-string-literal* or the *identifier* in
 a *literal-operator-id* is called a *literal suffix identifier*. The
 first form of *literal-operator-id* is deprecated [[depr.lit]]. Some

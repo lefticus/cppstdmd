@@ -5660,7 +5660,7 @@ month_day md2 = 4d/April;
 
 ``` cpp
 auto a = 2015/4/4;          // a == int(125)
-auto b = 2015y/4/4;         // b == year_month_day\{year(2015), month(4), day(4)\}
+auto b = 2015y/4/4;         // b == year_month_day{year(2015), month(4), day(4)}
 auto c = 2015y/4d/April;    // error: no viable operator/ for first /
 auto d = 2015/April/4;      // error: no viable operator/ for first /
 ```
@@ -7506,7 +7506,7 @@ day elapsed since midnight.
 | `\%Y` | The year as a decimal number. If the result is less than four digits it is left-padded with `0` to four digits. The modified command `\%EY` produces the locale's alternative full year representation. |
 | . If the offset is zero, `+0000` is used. The modified commands `\%Ez` and `\%Oz` insert a `:` between the hours and minutes: `-04:30`. If the offset information is not available, an exception of type `format_error` is thrown. |
 | `\%Z` | The time zone abbreviation. If the time zone abbreviation is not available, an exception of type `format_error` is thrown. |
-| `\%\%` | A `\%` character. |
+| `\%\%` | A `%` character. |
 
 
 If the *chrono-specs* is omitted, the chrono object is formatted as if
@@ -7856,7 +7856,7 @@ complete duration, time point, or calendrical data structure,
 | `\%Y` | The year as a decimal number. The modified command `\%*N*Y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 4. Leading zeroes are permitted but not required. The modified command `\%EY` interprets the locale's alternative representation. |
 | . The modified commands `\%Ez` and `\%Oz` parse a `:` between the hours and minutes and render leading zeroes on the hour field optional: `[+|-]h[h][:mm]`. For example `-04:30` refers to 4 hours 30 minutes behind UTC, and `4` refers to 4 hours ahead of UTC. |
 | `\%Z` | The time zone abbreviation or name. A single word is parsed. This word can only contain characters from the basic character set [[lex.charset]] that are alphanumeric, or one of `'_'`, `'/'`, `'-'`, or `'+'`. |
-| `\%\%` | A `\%` character is extracted. |
+| `\%\%` | A `%` character is extracted. |
 
 
 ## Header `<ctime>` synopsis <a id="ctime.syn">[[ctime.syn]]</a>

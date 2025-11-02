@@ -1668,7 +1668,7 @@ decltype(auto) x4d = (i);       // decltype(x4d) is int\&
 auto           x5a = f();       // decltype(x5a) is int
 decltype(auto) x5d = f();       // decltype(x5d) is int\&\&
 auto           x6a = { 1, 2 };  // decltype(x6a) is std::initializer_list<int>
-decltype(auto) x6d = { 1, 2 };  // error: \{ 1, 2 \} is not an expression
+decltype(auto) x6d = { 1, 2 };  // error: { 1, 2 } is not an expression
 auto          *x7a = &i;        // decltype(x7a) is int*
 decltype(auto)*x7d = &i;        // error: declared type is not plain decltype(auto)
 auto f1(int x) -> decltype((x)) { return (x); }         // return type is int\&
@@ -2058,8 +2058,8 @@ the declaration of a parameter with redundant parentheses around the
 
 ``` cpp
 class C { };
-void f(int(C)) { }              // void f(int(*fp)(C c)) \{ \}
-                                // not: void f(int C) \{ \}
+void f(int(C)) { }              // void f(int(*fp)(C c)) { }
+                                // not: void f(int C) { }
 
 int g(C);
 
@@ -4261,8 +4261,8 @@ char msg[] = "Syntax error on line %s\n";
 ```
 
 shows a character array whose members are initialized with a
-*string-literal*. Note that because `'\ n'` is a single character and
-because a trailing `'\ 0'` is appended, `sizeof(msg)` is `25`.
+*string-literal*. Note that because `'\n'` is a single character and
+because a trailing `'\0'` is appended, `sizeof(msg)` is `25`.
 
 — *end example*\]
 
@@ -4274,7 +4274,7 @@ There shall not be more initializers than there are array elements.
 char cv[4] = "asdf";            // error
 ```
 
-is ill-formed since there is no space for the implied trailing `'\ 0'`.
+is ill-formed since there is no space for the implied trailing `'\0'`.
 
 — *end example*\]
 

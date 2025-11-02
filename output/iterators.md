@@ -542,8 +542,8 @@ according to the operations defined on them: *input iterators*,
 
 |  |  |  |  |  |
 | --- | --- | --- | --- | --- |
-| \textbf{Contiguous} | $\rightarrow$ \textbf{Random Access} | $\rightarrow$ \textbf{Bidirectional} | $\rightarrow$ \textbf{Forward} | $\rightarrow$ \textbf{Input} |
-|  |  |  |  | $\rightarrow$ \textbf{Output} |
+| **Contiguous** | $\rightarrow$ **Random Access** | $\rightarrow$ **Bidirectional** | $\rightarrow$ **Forward** | $\rightarrow$ **Input** |
+|  |  |  |  | $\rightarrow$ **Output** |
 
 
 The six categories of iterators correspond to the iterator concepts
@@ -1973,8 +1973,7 @@ namespace std {
   template<indirectly_readable I, indirectly_regular_unary_invocable<I> Proj>
   struct projected {
     using value_type = remove_cvref_t<indirect_result_t<Proj&, I>>;
-    indirect_result_t<Proj&, I> operator*() const;              // \notdef
-  };
+    indirect_result_t<Proj&, I> operator*() const;              // *not defined*   };
 
   template<weakly_incrementable I, class Proj>
   struct incrementable_traits<projected<I, Proj>> {

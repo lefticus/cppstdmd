@@ -1169,13 +1169,11 @@ namespace std {
     constexpr T make_from_tuple(Tuple&& t);
 
   // [tuple.helper], tuple helper classes
-  template<class T> struct tuple_size;                  // \notdef
-  template<class T> struct tuple_size<const T>;
+  template<class T> struct tuple_size;                  // *not defined*   template<class T> struct tuple_size<const T>;
 
   template<class... Types> struct tuple_size<tuple<Types...>>;
 
-  template<size_t I, class T> struct tuple_element;     // \notdef
-  template<size_t I, class T> struct tuple_element<I, const T>;
+  template<size_t I, class T> struct tuple_element;     // *not defined*   template<size_t I, class T> struct tuple_element<I, const T>;
 
   template<size_t I, class... Types>
     struct tuple_element<I, tuple<Types...>>;
@@ -3605,16 +3603,14 @@ namespace std {
     class variant;
 
   // [variant.helper], variant helper classes
-  template<class T> struct variant_size;                        // \notdef
-  template<class T> struct variant_size<const T>;
+  template<class T> struct variant_size;                        // *not defined*   template<class T> struct variant_size<const T>;
   template<class T>
     constexpr size_t \libglobal{variant_size_v} = variant_size<T>::value;
 
   template<class... Types>
     struct variant_size<variant<Types...>>;
 
-  template<size_t I, class T> struct variant_alternative;       // \notdef
-  template<size_t I, class T> struct variant_alternative<I, const T>;
+  template<size_t I, class T> struct variant_alternative;       // *not defined*   template<size_t I, class T> struct variant_alternative<I, const T>;
   template<size_t I, class T>
     using \libglobal{variant_alternative_t} = typename variant_alternative<I, T>::type;
 
@@ -7205,6 +7201,8 @@ constexpr bitset& operator|=(const bitset& rhs) noexcept;
 
 *Returns:* `*this`.
 
+\indexlibrarymember{operator^=}{bitset}
+
 ``` cpp
 constexpr bitset& operator^=(const bitset& rhs) noexcept;
 ```
@@ -7456,6 +7454,8 @@ template<size_t N>
 
 *Returns:* `bitset<N>(lhs) |= rhs`.
 
+\indexlibrarymember{operator^}{bitset}
+
 ``` cpp
 template<size_t N>
   constexpr bitset<N> operator^(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
@@ -7649,8 +7649,7 @@ namespace std {
   // [func.wrap], polymorphic function wrappers
   class bad_function_call;
 
-  template<class> class function;       // \notdef
-  template<class R, class... ArgTypes> class function<R(ArgTypes...)>;
+  template<class> class function;       // *not defined*   template<class R, class... ArgTypes> class function<R(ArgTypes...)>;
 
   // [func.wrap.func.alg], specialized algorithms
   template<class R, class... ArgTypes>
@@ -7661,8 +7660,7 @@ namespace std {
     bool operator==(const function<R(ArgTypes...)>&, nullptr_t) noexcept;
 
   // [func.wrap.move], move only wrapper
-  template<class... S> class move_only_function;        // \notdef
-  template<class R, class... ArgTypes>
+  template<class... S> class move_only_function;        // *not defined*   template<class R, class... ArgTypes>
     class move_only_function<R(ArgTypes...) cv ref noexcept(noex)>; // see below
 
   // [func.search], searchers
@@ -9185,8 +9183,7 @@ const char* what() const noexcept override;
 
 ``` cpp
 namespace std {
-  template<class> class function;       // \notdef
-
+  template<class> class function;       // *not defined* 
   template<class R, class... ArgTypes>
   class function<R(ArgTypes...)> {
   public:
@@ -9497,8 +9494,7 @@ above, there is a placeholder *inv-quals* defined as follows:
 
 ``` cpp
 namespace std {
-  template<class... S> class move_only_function;                // \notdef
-
+  template<class... S> class move_only_function;                // *not defined* 
   template<class R, class... ArgTypes>
   class move_only_function<R(ArgTypes...) cv ref noexcept(noex)> {
   public:
@@ -10759,7 +10755,7 @@ replacement value.
 \[*Example 1*:
 
 ``` cpp
-string s = format("{0}-{{", 8);         // value of s is "8-\{"
+string s = format("{0}-{{", 8);         // value of s is "8-{"
 ```
 
 — *end example*\]
@@ -10837,7 +10833,7 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{align} one of
-    '< > \caret'
+    '< > ^'
 ```
 
 ``` bnf
@@ -10899,7 +10895,7 @@ string s0 = format("{:6}", 42);             // value of s0 is "\ \ \ \ 42"
 string s1 = format("{:6}", 'x');            // value of s1 is "x\ \ \ \ \ "
 string s2 = format("{:*<6}", 'x');          // value of s2 is "x*****"
 string s3 = format("{:*>6}", 'x');          // value of s3 is "*****x"
-string s4 = format("{:*\caret{}6}", 'x');          // value of s4 is "**x***"
+string s4 = format("{:*^6}", 'x');          // value of s4 is "**x***"
 string s5 = format("{:6d}", c);             // value of s5 is "\ \ \ 120"
 string s6 = format("{:6}", true);           // value of s6 is "true\ \ "
 string s7 = format("{:*<6.3}", "123456");   // value of s7 is "123***"
@@ -10926,7 +10922,7 @@ argument. — *end note*\]
 | --- | --- |
 | `<` | Forces the formatted argument to be aligned to the start of the field by inserting $n$ fill characters after the formatted argument where $n$ is the padding width. This is the default for non-arithmetic non-pointer types, `charT`, and `bool`, unless an integer presentation type is specified. |
 | % `>` | Forces the formatted argument to be aligned to the end of the field by inserting $n$ fill characters before the formatted argument where $n$ is the padding width. This is the default for arithmetic types other than `charT` and `bool`, pointer types, or when an integer presentation type is specified. |
-| % `\caret` | Forces the formatted argument to be centered within the field by inserting $\bigl\lfloor \frac{n}{2} \bigr\rfloor$ fill characters before and $\bigl\lceil \frac{n}{2} \bigr\rceil$ fill characters after the formatted argument, where $n$ is the padding width. |
+| % `^` | Forces the formatted argument to be centered within the field by inserting $\bigl\lfloor \frac{n}{2} \bigr\rfloor$ fill characters before and $\bigl\lceil \frac{n}{2} \bigr\rceil$ fill characters after the formatted argument, where $n$ is the padding width. |
 
 
 The *sign* option is only valid for arithmetic types other than `charT`
@@ -11637,7 +11633,7 @@ interpret *S* and construct *E*.
         implementation-defined set of separator or non-printable
         characters
 
-      then the sequence `\ u\{hex-digit-sequence\}` is appended to *E*,
+      then the sequence `\u\{hex-digit-sequence\}` is appended to *E*,
       where `hex-digit-sequence` is the shortest hexadecimal
       representation of *C* using lower-case hexadecimal digits.
 
@@ -11651,7 +11647,7 @@ interpret *S* and construct *E*.
 
   - Otherwise (*X* is a sequence of ill-formed code units), each code
     unit *U* is appended to *E* in order as the sequence
-    `\ x\{hex-digit-sequence\}`, where `hex-digit-sequence` is the
+    `\x\{hex-digit-sequence\}`, where `hex-digit-sequence` is the
     shortest hexadecimal representation of *U* using lower-case
     hexadecimal digits.
 
@@ -11661,11 +11657,11 @@ interpret *S* and construct *E*.
 
 | Character | Escape sequence |
 | --- | --- |
-| \unicode{0009}{character tabulation} | `\ t` |
-| % \unicode{000a}{line feed} | `\ n` |
-| % \unicode{000d}{carriage return} | `\ r` |
-| % \unicode{0022}{quotation mark} | `\ "` |
-| % \unicode{005c}{reverse solidus} | `` |
+| U+0009 (character tabulation) | `\t` |
+| % U+000a (line feed) | `\n` |
+| % U+000d (carriage return) | `\r` |
+| % U+0022 (quotation mark) | `\"` |
+| % U+005c (reverse solidus) | `` |
 
 
 The escaped string representation of a character *C* is equivalent to
@@ -11673,7 +11669,7 @@ the escaped string representation of a string of *C*, except that:
 
 - the result starts and ends with (`'`) instead of (`"`), and
 
-- if *C* is , the two characters `\ '` are appended to *E*, and
+- if *C* is , the two characters `\'` are appended to *E*, and
 
 - if *C* is , then *C* is appended unchanged.
 
@@ -11686,8 +11682,8 @@ string s3 = format("[{:?}, {:?}]", '\'', '"');      // s3 has value: ['\ '', '"'
 
 // The following examples assume use of the UTF-8 encoding
 string s4 = format("[{:?}]", string("\0 \n \t \x02 \x1b", 9));
-                                                    // s4 has value: ["\ u\{0\ \ n \ t \ u\{2\} \ u\{1b\}"]}
-string s5 = format("[{:?}]", "\xc3\x28");           // invalid UTF-8, s5 has value: ["\ x\{c3\("]}
+                                                    // s4 has value: ["\ u{0\ \ n \ t \ u{2} \ u{1b}"]}
+string s5 = format("[{:?}]", "\xc3\x28");           // invalid UTF-8, s5 has value: ["\ x{c3\("]}
 string s7 = format("[{:?}]", "\u0301");             // s7 has value: ["\ u{301"]}
 string s8 = format("[{:?}]", "\\\u0301");           // s8 has value: ["\ \ \ u{301"]}
 ```
@@ -11871,7 +11867,7 @@ struct S { int value; };
 template<> struct std::formatter<S> {
   size_t width_arg_id = 0;
 
-  // Parses a width argument id in the format \{ \fmtgrammarterm{digit} \}.
+  // Parses a width argument id in the format { \fmtgrammarterm{digit} }.
   constexpr auto parse(format_parse_context& ctx) {
     auto iter = ctx.begin();
     auto get_char = [&]() { return iter != ctx.end() ? *iter : 0; };
