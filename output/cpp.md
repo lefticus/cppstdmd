@@ -859,7 +859,7 @@ sequence determined as follows:
   the preprocessing file with no other preprocessing tokens being
   available.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 #define LPAREN() (
@@ -874,7 +874,7 @@ An identifier `__VA_ARGS__` that occurs in the replacement list shall be
 treated as if it were a parameter, and the variable arguments shall form
 the preprocessing tokens used to replace it.
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 #define debug(...) fprintf(stderr, __VA_ARGS__)
@@ -918,7 +918,7 @@ replacement.
 [[cpp.stringize]], and can be removed by rescanning and further
 replacement [[cpp.rescan]]. — *end note*\]
 
-\[*Example 6*:
+\[*Example 3*:
 
 ``` cpp
 #define F(...)           f(0 __VA_OPT__(,) __VA_ARGS__)
@@ -1009,7 +1009,7 @@ token results in the non-placemarker preprocessing token. If the result
 begins with a sequence matching the syntax of
 *universal-character-name*, the behavior is undefined.
 
-\[*Note 2*: This determination does not consider the replacement of
+\[*Note 1*: This determination does not consider the replacement of
 *universal-character-name*s in translation phase 3
 [[lex.phases]]. — *end note*\]
 
@@ -1017,7 +1017,7 @@ If the result is not a valid preprocessing token, the behavior is
 undefined. The resulting token is available for further macro
 replacement. The order of evaluation of `##` operators is unspecified.
 
-\[*Example 7*:
+\[*Example 1*:
 
 The sequence
 
@@ -1065,7 +1065,7 @@ optional.
 
 — *end example*\]
 
-\[*Example 8*:
+\[*Example 2*:
 
 In the following fragment:
 
@@ -1093,7 +1093,7 @@ operator.
 
 — *end example*\]
 
-\[*Example 9*:
+\[*Example 3*:
 
 To illustrate the rules for placemarker preprocessing tokens, the
 sequence
@@ -1121,7 +1121,7 @@ tokens are removed. Then the resulting preprocessing token sequence is
 rescanned, along with all subsequent preprocessing tokens of the source
 file, for more macro names to replace.
 
-\[*Example 10*:
+\[*Example 1*:
 
 The sequence
 
@@ -1391,72 +1391,72 @@ function. If the time of translation is not available, an
 
 | Macro name | Value |
 | --- | --- |
-| *__cpp_aggregate_bases* | `201603L` |
-| *__cpp_aggregate_nsdmi* | `201304L` |
-| *__cpp_aggregate_paren_init* | `201902L` |
-| *__cpp_alias_templates* | `200704L` |
-| *__cpp_aligned_new* | `201606L` |
-| *__cpp_attributes* | `200809L` |
-| *__cpp_auto_cast* | `202110L` |
-| *__cpp_binary_literals* | `201304L` |
-| *__cpp_capture_star_this* | `201603L` |
-| *__cpp_char8_t* | `202207L` |
-| *__cpp_concepts* | `202002L` |
-| *__cpp_conditional_explicit* | `201806L` |
-| *__cpp_constexpr* | `202211L` |
-| *__cpp_constexpr_dynamic_alloc* | `201907L` |
-| *__cpp_constexpr_in_decltype* | `201711L` |
-| *__cpp_consteval* | `202211L` |
-| *__cpp_constinit* | `201907L` |
-| *__cpp_decltype* | `200707L` |
-| *__cpp_decltype_auto* | `201304L` |
-| *__cpp_deduction_guides* | `201907L` |
-| *__cpp_delegating_constructors* | `200604L` |
-| *__cpp_designated_initializers* | `201707L` |
-| *__cpp_enumerator_attributes* | `201411L` |
-| *__cpp_explicit_this_parameter* | `202110L` |
-| *__cpp_fold_expressions* | `201603L` |
-| *__cpp_generic_lambdas* | `201707L` |
-| *__cpp_guaranteed_copy_elision* | `201606L` |
-| *__cpp_hex_float* | `201603L` |
-| *__cpp_if_consteval* | `202106L` |
-| *__cpp_if_constexpr* | `201606L` |
-| *__cpp_impl_coroutine* | `201902L` |
-| *__cpp_impl_destroying_delete* | `201806L` |
-| *__cpp_impl_three_way_comparison* | `201907L` |
-| *__cpp_implicit_move* | `202207L` |
-| *__cpp_inheriting_constructors* | `201511L` |
-| *__cpp_init_captures* | `201803L` |
-| *__cpp_initializer_lists* | `200806L` |
-| *__cpp_inline_variables* | `201606L` |
-| *__cpp_lambdas* | `200907L` |
-| *__cpp_modules* | `201907L` |
-| *__cpp_multidimensional_subscript* | `202211L` |
-| *__cpp_named_character_escapes* | `202207L` |
-| *__cpp_namespace_attributes* | `201411L` |
-| *__cpp_noexcept_function_type* | `201510L` |
-| *__cpp_nontype_template_args* | `201911L` |
-| *__cpp_nontype_template_parameter_auto* | `201606L` |
-| *__cpp_nsdmi* | `200809L` |
-| *__cpp_range_based_for* | `202211L` |
-| *__cpp_raw_strings* | `200710L` |
-| *__cpp_ref_qualifiers* | `200710L` |
-| *__cpp_return_type_deduction* | `201304L` |
-| *__cpp_rvalue_references* | `200610L` |
-| *__cpp_size_t_suffix* | `202011L` |
-| *__cpp_sized_deallocation* | `201309L` |
-| *__cpp_static_assert* | `201411L` |
-| *__cpp_static_call_operator* | `202207L` |
-| *__cpp_structured_bindings* | `201606L` |
-| *__cpp_template_template_args* | `201611L` |
-| *__cpp_threadsafe_static_init* | `200806L` |
-| *__cpp_unicode_characters* | `200704L` |
-| *__cpp_unicode_literals* | `200710L` |
-| *__cpp_user_defined_literals* | `200809L` |
-| *__cpp_using_enum* | `201907L` |
-| *__cpp_variable_templates* | `201304L` |
-| *__cpp_variadic_templates* | `200704L` |
-| *__cpp_variadic_using* | `201611L` |
+| __cpp_aggregate_bases__ | `201603L` |
+| __cpp_aggregate_nsdmi__ | `201304L` |
+| __cpp_aggregate_paren_init__ | `201902L` |
+| __cpp_alias_templates__ | `200704L` |
+| __cpp_aligned_new__ | `201606L` |
+| __cpp_attributes__ | `200809L` |
+| __cpp_auto_cast__ | `202110L` |
+| __cpp_binary_literals__ | `201304L` |
+| __cpp_capture_star_this__ | `201603L` |
+| __cpp_char8_t__ | `202207L` |
+| __cpp_concepts__ | `202002L` |
+| __cpp_conditional_explicit__ | `201806L` |
+| __cpp_constexpr__ | `202211L` |
+| __cpp_constexpr_dynamic_alloc__ | `201907L` |
+| __cpp_constexpr_in_decltype__ | `201711L` |
+| __cpp_consteval__ | `202211L` |
+| __cpp_constinit__ | `201907L` |
+| __cpp_decltype__ | `200707L` |
+| __cpp_decltype_auto__ | `201304L` |
+| __cpp_deduction_guides__ | `201907L` |
+| __cpp_delegating_constructors__ | `200604L` |
+| __cpp_designated_initializers__ | `201707L` |
+| __cpp_enumerator_attributes__ | `201411L` |
+| __cpp_explicit_this_parameter__ | `202110L` |
+| __cpp_fold_expressions__ | `201603L` |
+| __cpp_generic_lambdas__ | `201707L` |
+| __cpp_guaranteed_copy_elision__ | `201606L` |
+| __cpp_hex_float__ | `201603L` |
+| __cpp_if_consteval__ | `202106L` |
+| __cpp_if_constexpr__ | `201606L` |
+| __cpp_impl_coroutine__ | `201902L` |
+| __cpp_impl_destroying_delete__ | `201806L` |
+| __cpp_impl_three_way_comparison__ | `201907L` |
+| __cpp_implicit_move__ | `202207L` |
+| __cpp_inheriting_constructors__ | `201511L` |
+| __cpp_init_captures__ | `201803L` |
+| __cpp_initializer_lists__ | `200806L` |
+| __cpp_inline_variables__ | `201606L` |
+| __cpp_lambdas__ | `200907L` |
+| __cpp_modules__ | `201907L` |
+| __cpp_multidimensional_subscript__ | `202211L` |
+| __cpp_named_character_escapes__ | `202207L` |
+| __cpp_namespace_attributes__ | `201411L` |
+| __cpp_noexcept_function_type__ | `201510L` |
+| __cpp_nontype_template_args__ | `201911L` |
+| __cpp_nontype_template_parameter_auto__ | `201606L` |
+| __cpp_nsdmi__ | `200809L` |
+| __cpp_range_based_for__ | `202211L` |
+| __cpp_raw_strings__ | `200710L` |
+| __cpp_ref_qualifiers__ | `200710L` |
+| __cpp_return_type_deduction__ | `201304L` |
+| __cpp_rvalue_references__ | `200610L` |
+| __cpp_size_t_suffix__ | `202011L` |
+| __cpp_sized_deallocation__ | `201309L` |
+| __cpp_static_assert__ | `201411L` |
+| __cpp_static_call_operator__ | `202207L` |
+| __cpp_structured_bindings__ | `201606L` |
+| __cpp_template_template_args__ | `201611L` |
+| __cpp_threadsafe_static_init__ | `200806L` |
+| __cpp_unicode_characters__ | `200704L` |
+| __cpp_unicode_literals__ | `200710L` |
+| __cpp_user_defined_literals__ | `200809L` |
+| __cpp_using_enum__ | `201907L` |
+| __cpp_variable_templates__ | `201304L` |
+| __cpp_variadic_templates__ | `200704L` |
+| __cpp_variadic_using__ | `201611L` |
 The following macro names are conditionally defined by the
 implementation:
 

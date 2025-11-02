@@ -230,7 +230,7 @@ from `B` [[class.derived]], the dynamic type of the expression `*p` is
 potentially-throwing or are all not potentially-throwing, and either are
 all constant subexpressions or are all not constant subexpressions
 
-\[*Example 2*: For a value `x` of type `int` and a function `f` that
+\[*Example 1*: For a value `x` of type `int` and a function `f` that
 accepts integer arguments, the expressions `f(x + 2)`, `f(2 + x)`, and
 `f(1 + x + 1)` are expression-equivalent. — *end example*\]
 
@@ -371,7 +371,7 @@ extensions and internal types used by the library. — *end note*\]
 ⟨library⟩ transformation that an algorithm applies before inspecting the
 values of elements
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 std::pair<int, std::string_view> pairs[] = {{2, "foo"}, {1, "bar"}, {0, "baz"}};
@@ -554,7 +554,7 @@ delineated by this document. — *end note*\]
 object’s invariants are met and operations on the object behave as
 specified for its type
 
-\[*Example 4*: If an object `x` of type `std::vector<int>` is in a valid
+\[*Example 1*: If an object `x` of type `std::vector<int>` is in a valid
 but unspecified state, `x.empty()` can be called unconditionally, and
 `x.front()` can be called only if `x.empty()` returns
 `false`. — *end example*\]
@@ -679,7 +679,7 @@ for a given program and a given input.
 Certain other operations are described in this document as undefined
 (for example, the effect of attempting to modify a const object).
 
-\[*Note 2*: This document imposes no requirements on the behavior of
+\[*Note 1*: This document imposes no requirements on the behavior of
 programs that contain undefined behavior. — *end note*\]
 
 A conforming implementation executing a well-formed program shall
@@ -707,7 +707,7 @@ The least requirements on a conforming implementation are:
 These collectively are referred to as the *observable behavior* of the
 program.
 
-\[*Note 3*: More stringent correspondences between abstract and actual
+\[*Note 2*: More stringent correspondences between abstract and actual
 semantics can be defined by each implementation. — *end note*\]
 
 ## Structure of this document <a id="intro.structure">[[intro.structure]]</a>

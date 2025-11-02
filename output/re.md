@@ -1554,7 +1554,7 @@ size_type size() const;
 expression that was matched if `*this` represents the result of a
 successful match. Otherwise returns `0`.
 
-\[*Note 2*: The state of a `match_results` object can be modified only
+\[*Note 1*: The state of a `match_results` object can be modified only
 by passing that object to `regex_match` or `regex_search`.
 Subclauses  [[re.alg.match]] and  [[re.alg.search]] specify the effects
 of those algorithms on their `match_results` arguments. — *end note*\]
@@ -1775,7 +1775,7 @@ returns `true` only if:
 
   - `m1.suffix() == m2.suffix()`.
 
-\[*Note 3*: The algorithm `equal` is defined in
+\[*Note 1*: The algorithm `equal` is defined in
 [[algorithms]]. — *end note*\]
 
 ## Regular expression algorithms <a id="re.alg">[[re.alg]]</a>
@@ -2204,14 +2204,14 @@ In all cases in which the call to `regex_search` returns `true`,
 `[0, match.size())` for which `match[i].matched` is `true`,
 `match.position(i)` shall return `distance(begin, match[i].first)`.
 
-\[*Note 2*: This means that `match.position(i)` gives the offset from
+\[*Note 1*: This means that `match.position(i)` gives the offset from
 the beginning of the target sequence, which is often not the same as the
 offset from the sequence passed in the call to
 `regex_search`. — *end note*\]
 
 It is unspecified how the implementation makes these adjustments.
 
-\[*Note 3*: This means that an implementation can call an
+\[*Note 2*: This means that an implementation can call an
 implementation-specific search function, in which case a program-defined
 specialization of `regex_search` will not be called. — *end note*\]
 
@@ -2360,7 +2360,7 @@ suffix iterator the member `result` holds a pointer to the data member
 `suffix.first` points to the beginning of the final sequence, and
 `suffix.second` points to the end of the final sequence.
 
-\[*Note 4*: For a suffix iterator, data member `suffix.first` is the
+\[*Note 1*: For a suffix iterator, data member `suffix.first` is the
 same as the end of the last match found, and `suffix\brk.second` is the
 same as the end of the target sequence. — *end note*\]
 

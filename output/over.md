@@ -155,7 +155,7 @@ static member functions, the implicit object parameter is considered to
 match any object (since if the function is selected, the object is
 discarded).
 
-\[*Note 2*: No actual type is established for the implicit object
+\[*Note 1*: No actual type is established for the implicit object
 parameter of a static member function, and no attempt will be made to
 determine a conversion sequence for that parameter
 [[over.match.best]]. — *end note*\]
@@ -169,7 +169,7 @@ object parameter is not const-qualified, an rvalue can be bound to the
 parameter as long as in all other respects the argument can be converted
 to the type of the implicit object parameter.
 
-\[*Note 3*: The fact that such an argument is an rvalue does not affect
+\[*Note 2*: The fact that such an argument is an rvalue does not affect
 the ranking of implicit conversion sequences
 [[over.ics.rank]]. — *end note*\]
 
@@ -200,7 +200,7 @@ for initializing an object or reference of type `T`, the candidate
 functions include the result of a search for the
 *conversion-function-id* `operator T` in `S`.
 
-\[*Note 4*: This search can find a specialization of a conversion
+\[*Note 3*: This search can find a specialization of a conversion
 function template [[basic.lookup]]. — *end note*\]
 
 Each such case also defines sets of *permissible types* for explicit and
@@ -287,13 +287,13 @@ class type, overload resolution is applied as specified in
 If the *postfix-expression* is the address of an overload set, overload
 resolution is applied using that set as described above.
 
-\[*Note 5*: No implied object argument is added in this
+\[*Note 1*: No implied object argument is added in this
 case. — *end note*\]
 
 If the function selected by overload resolution is an implicit object
 member function, the program is ill-formed.
 
-\[*Note 6*: The resolution of the address of an overload set in other
+\[*Note 2*: The resolution of the address of an overload set in other
 contexts is described in [[over.over]]. — *end note*\]
 
 ##### Call to named function <a id="over.call.func">[[over.call.func]]</a>
@@ -344,7 +344,7 @@ a contrived object of type `T` becomes the implied object argument;
 if overload resolution selects a non-static member function, the call is
 ill-formed.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 struct C {
@@ -430,13 +430,13 @@ The argument list submitted to overload resolution consists of the
 argument expressions present in the function call syntax preceded by the
 implied object argument `(E)`.
 
-\[*Note 7*: When comparing the call against the function call operators,
+\[*Note 3*: When comparing the call against the function call operators,
 the implied object argument is compared against the object parameter of
 the function call operator. When comparing the call against a surrogate
 call function, the implied object argument is compared against the first
 parameter of the surrogate call function. — *end note*\]
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 int f1(int);
@@ -458,14 +458,14 @@ If no operand of an operator in an expression has a type that is a class
 or an enumeration, the operator is assumed to be a built-in operator and
 interpreted according to [[expr.compound]].
 
-\[*Note 8*: Because `.`, `.*`, and `::` cannot be overloaded, these
+\[*Note 1*: Because `.`, `.*`, and `::` cannot be overloaded, these
 operators are always built-in operators interpreted according to
 [[expr.compound]]. `?:` cannot be overloaded, but the rules in this
 subclause are used to determine the conversions to be applied to the
 second and third operands when they have class or enumeration type
 [[expr.cond]]. — *end note*\]
 
-\[*Example 6*:
+\[*Example 1*:
 
 ``` cpp
 struct String {
@@ -583,7 +583,7 @@ and the namespace scope of which `F` is a member otherwise. A function
 template specialization named `operator==` is a rewrite target if its
 function template is a rewrite target.
 
-\[*Example 7*:
+\[*Example 2*:
 
 ``` cpp
 struct A {};
@@ -634,7 +634,7 @@ The argument list contains all of the operands of the operator. The best
 function from the set of candidate functions is selected according to 
 [[over.match.viable]] and  [[over.match.best]].
 
-\[*Example 8*:
+\[*Example 3*:
 
 ``` cpp
 struct A {
@@ -678,7 +678,7 @@ conversion sequence of a user-defined conversion sequence
 corresponding built-in operator and interpreted according to
 [[expr.compound]].
 
-\[*Example 9*:
+\[*Example 4*:
 
 ``` cpp
 struct X {
@@ -705,7 +705,7 @@ operator `->`, and there are no viable functions, then the operator is
 assumed to be the built-in operator and interpreted according to
 [[expr.compound]].
 
-\[*Note 9*:
+\[*Note 2*:
 
 The lookup rules for operators in expressions are different than the
 lookup rules for operator function names in a function call, as shown in
@@ -752,9 +752,9 @@ conversion can be invoked to convert an initializer expression to the
 type of the object being initialized. Overload resolution is used to
 select the user-defined conversion to be invoked.
 
-\[*Note 10*: The conversion performed for indirect binding to a
-reference to a possibly cv-qualified class type is determined in terms
-of a corresponding non-reference copy-initialization. — *end note*\]
+\[*Note 1*: The conversion performed for indirect binding to a reference
+to a possibly cv-qualified class type is determined in terms of a
+corresponding non-reference copy-initialization. — *end note*\]
 
 Assuming that “cv-qualifier{cv1} `T`” is the type of the object being
 initialized, with `T` a class type, the candidate functions are selected
@@ -776,7 +776,7 @@ as follows:
 In both cases, the argument list has one argument, which is the
 initializer expression.
 
-\[*Note 11*: This argument will be compared against the first parameter
+\[*Note 2*: This argument will be compared against the first parameter
 of the constructors and against the object parameter of the conversion
 functions. — *end note*\]
 
@@ -799,7 +799,7 @@ selected as follows:
 
 The argument list has one argument, which is the initializer expression.
 
-\[*Note 12*: This argument will be compared against the object parameter
+\[*Note 1*: This argument will be compared against the object parameter
 of the conversion functions. — *end note*\]
 
 #### Initialization by conversion function for direct reference binding <a id="over.match.ref">[[over.match.ref]]</a>
@@ -830,7 +830,7 @@ the candidate functions are selected as follows:
 
 The argument list has one argument, which is the initializer expression.
 
-\[*Note 13*: This argument will be compared against the object parameter
+\[*Note 1*: This argument will be compared against the object parameter
 of the conversion functions. — *end note*\]
 
 #### Initialization by list-initialization <a id="over.match.list">[[over.match.list]]</a>
@@ -855,7 +855,7 @@ resolution selects the constructor in two phases:
 In copy-list-initialization, if an explicit constructor is chosen, the
 initialization is ill-formed.
 
-\[*Note 14*: This differs from other situations
+\[*Note 1*: This differs from other situations
 [[over.match.ctor]], [[over.match.copy]], where only converting
 constructors are considered for copy-initialization. This restriction
 only applies if this initialization is part of the final result of
@@ -965,12 +965,12 @@ argument list of `A` [[temp.dep.type]] having a member typedef `type`
 designating a template specialization with the template argument list of
 `A` but with `C` as the template.
 
-\[*Note 15*: Equivalently, the template parameter list of the
+\[*Note 1*: Equivalently, the template parameter list of the
 specialization is that of `C`, the template argument list of the
 specialization is `B`, and the member typedef names `C` with the
 template argument list of `C`. — *end note*\]
 
-\[*Example 10*:
+\[*Example 1*:
 
 ``` cpp
 template <typename T> struct B {
@@ -1105,7 +1105,7 @@ constructor is considered to have that same *explicit-specifier*. All
 such notional constructors are considered to be public members of the
 hypothetical class type.
 
-\[*Example 11*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> struct A {
@@ -1187,7 +1187,7 @@ F f3 = {Types<X, Y, Z>{}, X{}, W{}};    // error: conflicting types deduced; ope
 
 — *end example*\]
 
-\[*Example 12*:
+\[*Example 3*:
 
 ``` cpp
 template <class T, class U> struct C {
@@ -1483,7 +1483,7 @@ If there is exactly one viable function that is a better function than
 all other viable functions, then it is the one selected by overload
 resolution; otherwise the call is ill-formed.
 
-\[*Example 13*:
+\[*Example 1*:
 
 ``` cpp
 void Fcn(const int*,  short);
@@ -1511,7 +1511,7 @@ declarations were found, and if any two of these declarations inhabit
 different scopes and specify a default argument that made the function
 viable, the program is ill-formed.
 
-\[*Example 14*:
+\[*Example 2*:
 
 ``` cpp
 namespace A {
@@ -1547,7 +1547,7 @@ Implicit conversion sequences are concerned only with the type,
 cv-qualification, and value category of the argument and how these are
 converted to match the corresponding properties of the parameter.
 
-\[*Note 16*: Other properties, such as the lifetime, storage class,
+\[*Note 1*: Other properties, such as the lifetime, storage class,
 alignment, accessibility of the argument, whether the argument is a
 bit-field, and whether a function is deleted [[dcl.fct.def.delete]], are
 ignored. So, although an implicit conversion sequence can be defined for
@@ -1586,11 +1586,11 @@ by
 
 user-defined conversion sequences are not considered.
 
-\[*Note 17*: These rules prevent more than one user-defined conversion
+\[*Note 2*: These rules prevent more than one user-defined conversion
 from being applied during overload resolution, thereby avoiding infinite
 recursion. — *end note*\]
 
-\[*Example 15*:
+\[*Example 1*:
 
 ``` cpp
 struct Y { Y(int); };
@@ -1614,7 +1614,7 @@ expression. The implicit conversion sequence is the one required to
 convert the argument expression to a prvalue of the type of the
 parameter.
 
-\[*Note 18*: When the parameter has a class type, this is a conceptual
+\[*Note 3*: When the parameter has a class type, this is a conceptual
 conversion defined for the purposes of [[over]]; the actual
 initialization is defined in terms of constructors and is not a
 conversion. — *end note*\]
@@ -1622,7 +1622,7 @@ conversion. — *end note*\]
 Any difference in top-level cv-qualification is subsumed by the
 initialization itself and does not constitute a conversion.
 
-\[*Example 16*: A parameter of type `A` can be initialized from an
+\[*Example 2*: A parameter of type `A` can be initialized from an
 argument of type `const A`. The implicit conversion sequence for that
 case is the identity sequence; it contains no “conversion” from
 `const A` to `A`. — *end example*\]
@@ -1634,7 +1634,7 @@ derived class type, the implicit conversion sequence is a
 derived-to-base conversion from the derived class to the base class. A
 derived-to-base conversion has Conversion rank [[over.ics.scs]].
 
-\[*Note 19*: There is no such standard conversion; this derived-to-base
+\[*Note 4*: There is no such standard conversion; this derived-to-base
 conversion exists only in the description of implicit conversion
 sequences. — *end note*\]
 
@@ -1647,7 +1647,7 @@ In all contexts, when converting to the implicit object parameter or
 when converting to the left operand of an assignment operation only
 standard conversion sequences are allowed.
 
-\[*Note 20*: When converting to the explicit object parameter, if any,
+\[*Note 5*: When converting to the explicit object parameter, if any,
 user-defined conversion sequences are allowed. — *end note*\]
 
 If no conversions are required to match an argument to a parameter type,
@@ -1666,7 +1666,7 @@ the purpose of ranking implicit conversion sequences as described in 
 user-defined conversion sequence that is indistinguishable from any
 other user-defined conversion sequence.
 
-\[*Note 21*:
+\[*Note 6*:
 
 This rule prevents a function from becoming non-viable because of an
 ambiguous conversion sequence for one of its parameters.
@@ -1686,7 +1686,7 @@ summarizes the conversions defined in [[conv]] and partitions them into
 four disjoint categories: Lvalue Transformation, Qualification
 Adjustment, Promotion, and Conversion.
 
-\[*Note 22*: These categories are orthogonal with respect to value
+\[*Note 7*: These categories are orthogonal with respect to value
 category, cv-qualification, and data representation: the Lvalue
 Transformations do not change the cv-qualification or data
 representation of the type; the Qualification Adjustments do not change
@@ -1694,7 +1694,7 @@ the value category or data representation of the type; and the
 Promotions and Conversions do not change the value category or
 cv-qualification of the type. — *end note*\]
 
-\[*Note 23*: As described in [[conv]], a standard conversion sequence
+\[*Note 8*: As described in [[conv]], a standard conversion sequence
 either is the Identity conversion by itself (that is, no conversion) or
 consists of one to three conversions from the other four categories. If
 there are two or more conversions in the sequence, the conversions are
@@ -1762,7 +1762,7 @@ conversion, unless the argument expression has a type that is a derived
 class of the parameter type, in which case the implicit conversion
 sequence is a derived-to-base conversion [[over.best.ics]].
 
-\[*Example 17*:
+\[*Example 3*:
 
 ``` cpp
 struct A {};
@@ -1795,8 +1795,8 @@ if it requires binding an lvalue reference other than a reference to a
 non-volatile `const` type to an rvalue or binding an rvalue reference to
 an lvalue other than a function lvalue.
 
-\[*Note 24*: This means, for example, that a candidate function cannot
-be a viable function if it has a non-`const` lvalue reference parameter
+\[*Note 9*: This means, for example, that a candidate function cannot be
+a viable function if it has a non-`const` lvalue reference parameter
 (other than the implicit object parameter) and the corresponding
 argument would require a temporary to be created to initialize the
 lvalue reference (see  [[dcl.init.ref]]). — *end note*\]
@@ -1805,7 +1805,7 @@ Other restrictions on binding a reference to a particular argument that
 are not based on the types of the reference and the argument do not
 affect the formation of an implicit conversion sequence, however.
 
-\[*Example 18*: A function with an “lvalue reference to `int`” parameter
+\[*Example 4*: A function with an “lvalue reference to `int`” parameter
 can be a viable candidate even if the corresponding argument is an `int`
 bit-field. The formation of implicit conversion sequences treats the
 `int` bit-field as an `int` lvalue and finds an exact match with the
@@ -1827,7 +1827,7 @@ aggregate initialization [[dcl.init.aggr]], in which case the implicit
 conversion sequence is a user-defined conversion sequence whose second
 standard conversion sequence is an identity conversion.
 
-\[*Note 25*:
+\[*Note 10*:
 
 Aggregate initialization does not require that the members are declared
 in designation order. If, after overload resolution, the order does not
@@ -1855,7 +1855,7 @@ elements, the identity conversion. This conversion can be a user-defined
 conversion even in the context of a call to an initializer-list
 constructor.
 
-\[*Example 19*:
+\[*Example 5*:
 
 ``` cpp
 void f(std::initializer_list<int>);
@@ -1908,7 +1908,7 @@ User-defined conversions are allowed for conversion of the initializer
 list elements to the constructor parameter types except as noted in 
 [[over.best.ics]].
 
-\[*Example 20*:
+\[*Example 6*:
 
 ``` cpp
 struct A {
@@ -1948,7 +1948,7 @@ aggregate initialization [[dcl.init.aggr]], the implicit conversion
 sequence is a user-defined conversion sequence whose second standard
 conversion sequence is an identity conversion.
 
-\[*Example 21*:
+\[*Example 7*:
 
 ``` cpp
 struct A {
@@ -1965,10 +1965,10 @@ f( {1.0} );             // error: narrowing
 
 Otherwise, if the parameter is a reference, see  [[over.ics.ref]].
 
-\[*Note 26*: The rules in this subclause will apply for initializing the
+\[*Note 11*: The rules in this subclause will apply for initializing the
 underlying temporary for the reference. — *end note*\]
 
-\[*Example 22*:
+\[*Example 8*:
 
 ``` cpp
 struct A {
@@ -2566,10 +2566,10 @@ interpreted as
 \texttt{operator} '@' '(' cast-expression ')'
 ```
 
-\[*Note 4*: The operators `++` and `--` [[expr.pre.incr]] are described
+\[*Note 1*: The operators `++` and `--` [[expr.pre.incr]] are described
 in  [[over.inc]]. — *end note*\]
 
-\[*Note 5*: The unary and binary forms of the same operator have the
+\[*Note 2*: The unary and binary forms of the same operator have the
 same name. Consequently, a unary operator can hide a binary operator
 from an enclosing scope, and vice versa. — *end note*\]
 
@@ -2611,17 +2611,17 @@ A *simple assignment operator function* is a binary operator function
 named `operator=`. A simple assignment operator function shall be a
 non-static member function.
 
-\[*Note 6*: Because only standard conversion sequences are considered
+\[*Note 1*: Because only standard conversion sequences are considered
 when converting to the left operand of an assignment operation
 [[over.best.ics]], an expression `$x$ = $y$` with a subexpression x of
 class type is always interpreted as `$x$.operator=($y$)`. — *end note*\]
 
-\[*Note 7*: Since a copy assignment operator is implicitly declared for
+\[*Note 2*: Since a copy assignment operator is implicitly declared for
 a class if not declared by the user [[class.copy.assign]], a base class
 assignment operator function is always hidden by the copy assignment
 operator function of the derived class. — *end note*\]
 
-\[*Note 8*:
+\[*Note 3*:
 
 Any assignment operator function, even the copy and move assignment
 operators, can be virtual. For a derived class `D` with a base class `B`
@@ -2676,7 +2676,7 @@ interpreted as
 postfix-expression . \texttt{operator} '['']' '(' expression-list_opt ')'
 ```
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 struct X {
@@ -2723,7 +2723,7 @@ increment operator `++` for objects of that type. When the postfix
 increment is called as a result of using the `++` operator, the `int`
 argument will have value zero.
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 struct X {

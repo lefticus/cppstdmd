@@ -780,11 +780,11 @@ denotes
 Class template `indirectly_readable_traits` may be specialized on
 program-defined types.
 
-\[*Note 4*: Some legacy output iterators define a nested type named
+\[*Note 1*: Some legacy output iterators define a nested type named
 `value_type` that is an alias for `void`. These types are not
 `indirectly_readable` and have no associated value types. — *end note*\]
 
-\[*Note 5*: Smart pointers like `shared_ptr<int>` are
+\[*Note 2*: Smart pointers like `shared_ptr<int>` are
 `indirectly_readable` and have an associated value type, but a smart
 pointer like `shared_ptr<void>` is not `indirectly_readable` and has no
 associated value type. — *end note*\]
@@ -1114,10 +1114,10 @@ template. Otherwise, `ITER_TRAITS(I)` denotes `iterator_traits<I>`.
 
 - Otherwise, `ITER_CONCEPT(I)` does not denote a type.
 
-\[*Note 6*: `ITER_TRAITS` enables independent syntactic determination of
+\[*Note 1*: `ITER_TRAITS` enables independent syntactic determination of
 an iterator’s category and concept. — *end note*\]
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 struct I {
@@ -1202,11 +1202,11 @@ be dereferenceable.
 If `E` is an xvalue [[basic.lval]], the resulting state of the object it
 denotes is valid but unspecified [[lib.types.movedfrom]].
 
-\[*Note 7*: The only valid use of an `operator*` is on the left side of
+\[*Note 1*: The only valid use of an `operator*` is on the left side of
 the assignment statement. Assignment through the same value of the
 indirectly writable type happens only once. — *end note*\]
 
-\[*Note 8*: `indirectly_writable` has the awkward `const_cast`
+\[*Note 2*: `indirectly_writable` has the awkward `const_cast`
 expressions to reject iterators with prvalue non-proxy reference types
 that permit rvalue assignment but do not also permit `const` rvalue
 assignment. Consequently, an iterator type `I` that returns
@@ -1242,7 +1242,7 @@ A type `I` is an *integer-class type* if it is in a set of
 *implementation-defined* types that behave as integer types do, as
 defined below.
 
-\[*Note 9*: An integer-class type is not necessarily a class
+\[*Note 1*: An integer-class type is not necessarily a class
 type. — *end note*\]
 
 The range of representable values of an integer-class type is the
@@ -1266,7 +1266,7 @@ For every integer-class type `I`, let `B(I)` be a unique hypothetical
 extended integer type of the same signedness with the same width
 [[basic.fundamental]] as `I`.
 
-\[*Note 10*: The corresponding hypothetical specialization
+\[*Note 2*: The corresponding hypothetical specialization
 `numeric_limits<B(I)>` meets the requirements on `numeric_limits`
 specializations for integral types [[numeric.limits]]. — *end note*\]
 
@@ -1361,7 +1361,7 @@ The implementaton of an algorithm on a weakly incrementable type should
 never attempt to pass through the same incrementable value twice; such
 an algorithm should be a single-pass algorithm.
 
-\[*Note 11*: For `weakly_incrementable` types, `a` equals `b` does not
+\[*Note 3*: For `weakly_incrementable` types, `a` equals `b` does not
 imply that `++a` equals `++b`. (Equality does not guarantee the
 substitution property or referential transparency.) Such algorithms can
 be used with istreams as the source of the input data through the
@@ -1374,8 +1374,8 @@ incremented with the pre- and post-increment operators. The increment
 operations are required to be equality-preserving, and the type is
 required to be `equality_comparable`.
 
-\[*Note 12*: This supersedes the annotations on the increment
-expressions in the definition of `weakly_incrementable`. — *end note*\]
+\[*Note 1*: This supersedes the annotations on the increment expressions
+in the definition of `weakly_incrementable`. — *end note*\]
 
 ``` cpp
 template<class I>
@@ -1394,7 +1394,7 @@ Let `a` and `b` be incrementable objects of type `I`. `I` models
 
 - If `bool(a == b)` then `bool(((void)a++, a) == ++b)`.
 
-\[*Note 13*: The requirement that `a` equals `b` implies `++a` equals
+\[*Note 2*: The requirement that `a` equals `b` implies `++a` equals
 `++b` (which is not true for weakly incrementable types) allows the use
 of multi-pass one-directional algorithms with types that model
 `incrementable`. — *end note*\]
@@ -1419,7 +1419,7 @@ template<class I>
     weakly_incrementable<I>;
 ```
 
-\[*Note 14*: Unlike the *Cpp17Iterator* requirements, the
+\[*Note 1*: Unlike the *Cpp17Iterator* requirements, the
 `input_or_output_iterator` concept does not require
 copyability. — *end note*\]
 
@@ -1492,11 +1492,11 @@ template<class S, class I>
 specializations shall be usable in constant expressions [[expr.const]]
 and have type `const bool`.
 
-\[*Note 15*: `disable_sized_sentinel_for` allows use of sentinels and
+\[*Note 1*: `disable_sized_sentinel_for` allows use of sentinels and
 iterators with the library that satisfy but do not in fact model
 `sized_sentinel_for`. — *end note*\]
 
-\[*Example 4*: The `sized_sentinel_for` concept is modeled by pairs of
+\[*Example 1*: The `sized_sentinel_for` concept is modeled by pairs of
 `random_access_iterator`s [[iterator.concept.random.access]] and by
 counted iterators and their
 sentinels [[counted.iterator]]. — *end example*\]
@@ -1508,7 +1508,7 @@ referenced values can be read (from the requirement for
 `indirectly_readable` [[iterator.concept.readable]]) and which can be
 both pre- and post-incremented.
 
-\[*Note 16*: Unlike the *Cpp17InputIterator* requirements
+\[*Note 1*: Unlike the *Cpp17InputIterator* requirements
 [[input.iterators]], the `input_iterator` concept does not need equality
 comparison since iterators are typically compared to
 sentinels. — *end note*\]
@@ -1529,7 +1529,7 @@ be used to write values (from the requirement for `indirectly_writable`
 [[iterator.concept.writable]]) and which can be both pre- and
 post-incremented.
 
-\[*Note 17*: Output iterators are not required to model
+\[*Note 1*: Output iterators are not required to model
 `equality_comparable`. — *end note*\]
 
 ``` cpp
@@ -1574,8 +1574,8 @@ same underlying sequence. However, value-initialized iterators of the
 same type may be compared and shall compare equal to other
 value-initialized iterators of the same type.
 
-\[*Note 18*: Value-initialized iterators behave as if they refer past
-the end of the same empty sequence. — *end note*\]
+\[*Note 1*: Value-initialized iterators behave as if they refer past the
+end of the same empty sequence. — *end note*\]
 
 Pointers and references obtained from a forward iterator into a range
 shall remain valid while continues to denote a range.
@@ -1588,7 +1588,7 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 - the expression `((void)[](X x)\{++x;\}(a), *a)` is equivalent to the
   expression `*a`.
 
-\[*Note 19*: The requirement that `a == b` implies `++a == ++b` and the
+\[*Note 2*: The requirement that `a == b` implies `++a == ++b` and the
 removal of the restrictions on the number of assignments through a
 mutable iterator (which applies to output iterators) allow the use of
 multi-pass one-directional algorithms with forward
@@ -1734,7 +1734,7 @@ In the following sections, `a` and `b` denote values of type `X` or
 value of `X&`, `t` denotes a value of value type `T`, `o` denotes a
 value of some type that is writable to the output iterator.
 
-\[*Note 20*: For an iterator type `X` there must be an instantiation of
+\[*Note 1*: For an iterator type `X` there must be an instantiation of
 `iterator_traits<X>` [[iterator.traits]]. — *end note*\]
 
 #### *Cpp17Iterator* <a id="iterator.iterators">[[iterator.iterators]]</a>
@@ -1774,7 +1774,7 @@ algorithm places additional requirements on the domain of `==` for the
 iterator values it uses. These requirements can be inferred from the
 uses that algorithm makes of `==` and `!=`.
 
-\[*Example 5*: The call `find(a,b,x)` is defined only if the value of
+\[*Example 1*: The call `find(a,b,x)` is defined only if the value of
 `a` has the property *p* defined as follows: `b` has property *p* and a
 value `i` has property *p* if (`*i==x`) or if (`*i!=x` and `++i` has
 property *p*). — *end example*\]
@@ -1783,7 +1783,7 @@ The implementation of an algorithm on input iterators should never
 attempt to pass through the same iterator twice; such an algorithm
 should be a single pass algorithm.
 
-\[*Note 21*: For input iterators, `a == b` does not imply `++a == ++b`.
+\[*Note 1*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
 transparency.) Value type `T` is not required to be a
 *Cpp17CopyAssignable* type ( [[cpp17.copyassignable]]). Such an
@@ -1801,7 +1801,7 @@ The implementation of an algorithm on output iterators should never
 attempt to pass through the same iterator twice; such an algorithm
 should be a single-pass algorithm.
 
-\[*Note 22*: The only valid use of an `operator*` is on the left side of
+\[*Note 1*: The only valid use of an `operator*` is on the left side of
 the assignment statement. Assignment through the same value of the
 iterator happens only once. Equality and inequality are not necessarily
 defined. — *end note*\]
@@ -1829,8 +1829,8 @@ same underlying sequence. However, value-initialized iterators may be
 compared and shall compare equal to other value-initialized iterators of
 the same type.
 
-\[*Note 23*: Value-initialized iterators behave as if they refer past
-the end of the same empty sequence. — *end note*\]
+\[*Note 1*: Value-initialized iterators behave as if they refer past the
+end of the same empty sequence. — *end note*\]
 
 Two dereferenceable iterators `a` and `b` of type `X` offer the
 *multi-pass guarantee* if:
@@ -1840,8 +1840,8 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 - `X` is a pointer type or the expression `(void)++X(a), *a` is
   equivalent to the expression `*a`.
 
-\[*Note 24*: The requirement that `a == b` implies `++a == ++b` (which
-is not true for input and output iterators) and the removal of the
+\[*Note 2*: The requirement that `a == b` implies `++a == ++b` (which is
+not true for input and output iterators) and the removal of the
 restrictions on the number of the assignments through a mutable iterator
 (which applies to output iterators) allows the use of multi-pass
 one-directional algorithms with forward iterators. — *end note*\]
@@ -1859,7 +1859,7 @@ iterator if, in addition to meeting the *Cpp17ForwardIterator*
 requirements, the following expressions are valid as shown in
 [[bidirectionaliterator]].
 
-\[*Note 25*: Bidirectional iterators allow algorithms to move iterators
+\[*Note 1*: Bidirectional iterators allow algorithms to move iterators
 backward as well as forward. — *end note*\]
 
 #### Random access iterators <a id="random.access.iterators">[[random.access.iterators]]</a>
@@ -1993,10 +1993,9 @@ relational concepts for rearrangements: `permutable`, `mergeable`, and
 `sortable`. There is one relational concept for comparing values from
 different sequences: `indirectly_comparable`.
 
-\[*Note 26*: The `ranges::less` function object type used in the
-concepts below imposes constraints on the concepts’ arguments in
-addition to those that appear in the concepts’ bodies
-[[range.cmp]]. — *end note*\]
+\[*Note 1*: The `ranges::less` function object type used in the concepts
+below imposes constraints on the concepts’ arguments in addition to
+those that appear in the concepts’ bodies [[range.cmp]]. — *end note*\]
 
 #### Concept  <a id="alg.req.ind.move">[[alg.req.ind.move]]</a>
 
@@ -2293,7 +2292,7 @@ iterators. These operations adapt to the set of operators provided by
 each iterator category to provide the most efficient implementation
 possible for a concrete iterator type.
 
-\[*Example 3*: `ranges::advance` uses the `+` operator to move a
+\[*Example 1*: `ranges::advance` uses the `+` operator to move a
 `random_access_iterator` forward `n` steps in constant time. For an
 iterator type that does not model `random_access_iterator`,
 `ranges::advance` instead performs `n` individual increments with the
@@ -2305,7 +2304,7 @@ unqualified [[basic.lookup.unqual]] name lookup for the
 *postfix-expression* in a function call [[expr.call]], they inhibit
 argument-dependent name lookup.
 
-\[*Example 4*:
+\[*Example 2*:
 
 ``` cpp
 void foo() {
@@ -3947,7 +3946,7 @@ and sentinel type `S` model `sentinel_for<S, I>`, `move_sentinel<S>` and
 `move_iterator<I>` model
 `sentinel_for<move_sentinel<S>, move_iterator<I>>` as well.
 
-\[*Example 2*:
+\[*Example 1*:
 
 A `move_if` algorithm is easily implemented with `copy_if` using
 `move_iterator` and `move_sentinel`:
@@ -4034,11 +4033,11 @@ of the iterator and sentinel differ) as a common range (where they are
 the same). It does this by holding either an iterator or a sentinel, and
 implementing the equality comparison operators appropriately.
 
-\[*Note 2*: The `common_iterator` type is useful for interfacing with
+\[*Note 1*: The `common_iterator` type is useful for interfacing with
 legacy code that expects the begin and end of a range to have the same
 type. — *end note*\]
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 template<class ForwardIterator>
@@ -4390,7 +4389,7 @@ distance to the end of its range. It can be used together with
 of N elements starting at a given position without needing to know the
 end position a priori.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 list<string> s;
@@ -4762,7 +4761,7 @@ sequence [[counted.iterator]].
 
 *Effects:* Equivalent to: `return y.length <=> x.length;`
 
-\[*Note 3*: The argument order in the *Effects:* element is reversed
+\[*Note 1*: The argument order in the *Effects:* element is reversed
 because `length` counts down, not up. — *end note*\]
 
 #### Customizations <a id="counted.iter.cust">[[counted.iter.cust]]</a>
@@ -4795,7 +4794,7 @@ Class `unreachable_sentinel_t` can be used with any
 `weakly_incrementable` type to denote the “upper bound” of an unbounded
 interval.
 
-\[*Example 5*:
+\[*Example 1*:
 
 ``` cpp
 char* p;

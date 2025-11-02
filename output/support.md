@@ -187,7 +187,7 @@ The type `nullptr_t` is a synonym for the type of a `nullptr`
 expression, and it has the characteristics described in 
 [[basic.fundamental]] and  [[conv.ptr]].
 
-\[*Note 2*: Although `nullptr`’s address cannot be taken, the address of
+\[*Note 1*: Although `nullptr`’s address cannot be taken, the address of
 another `nullptr_t` object that is an lvalue can be
 taken. — *end note*\]
 
@@ -691,7 +691,7 @@ For the `numeric_limits` primary template, all data members are
 value-initialized and all member functions return a value-initialized
 object.
 
-\[*Note 2*: This means all members have zero or `false` values unless
+\[*Note 1*: This means all members have zero or `false` values unless
 `numeric_limits` is specialized for a type. — *end note*\]
 
 Specializations shall be provided for each arithmetic type, both
@@ -973,7 +973,7 @@ static constexpr bool is_iec559;
 
 ISO/IEC/IEEE 60559:2020 is the same as IEEE 754-2019.
 
-\[*Note 3*: The value is `true` for any of the types `float16_t`,
+\[*Note 1*: The value is `true` for any of the types `float16_t`,
 `float32_t`, `float64_t`, or `float128_t`, if
 present [[basic.extended.fp]]. — *end note*\]
 
@@ -987,7 +987,7 @@ static constexpr bool is_bounded;
 
 Required by LIA-1.
 
-\[*Note 4*: All fundamental types [[basic.fundamental]] are bounded.
+\[*Note 2*: All fundamental types [[basic.fundamental]] are bounded.
 This member would be `false` for arbitrary precision
 types. — *end note*\]
 
@@ -1052,7 +1052,7 @@ values are only required to be meaningful under certain conditions (for
 example, `epsilon()` is only meaningful if `is_integer` is `false`). Any
 value that is not “meaningful” shall be set to 0 or `false`.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 namespace std {
@@ -1177,7 +1177,7 @@ namespace std {
 The header `<climits>` defines all macros the same as the C standard
 library header `<limits.h>`.
 
-\[*Note 5*: Except for `CHAR_BIT` and `MB_LEN_MAX`, a macro referring to
+\[*Note 1*: Except for `CHAR_BIT` and `MB_LEN_MAX`, a macro referring to
 an integer type `T` defines a constant whose type is the promoted type
 of `T` [[conv.prom]]. — *end note*\]
 
@@ -1831,7 +1831,7 @@ also define the corresponding function with a `size` parameter. If a
 function with a `size` parameter is defined, the program shall also
 define the corresponding version without the `size` parameter.
 
-\[*Note 4*: The default behavior below might change in the future, which
+\[*Note 1*: The default behavior below might change in the future, which
 will require replacing both deallocation functions when replacing the
 allocation function. — *end note*\]
 
@@ -1840,7 +1840,7 @@ parameter may be changed to a call to the corresponding
 `operator delete[]` without a `size` parameter, without affecting memory
 allocation.
 
-\[*Note 5*: A conforming implementation is for
+\[*Note 2*: A conforming implementation is for
 `operator delete[](void* ptr, std::size_t size)` to simply call
 `operator delete[](ptr)`. — *end note*\]
 
@@ -1893,7 +1893,7 @@ placement forms of `operator new` and `operator delete`.
 
 *Remarks:* Intentionally performs no other action.
 
-\[*Example 2*:
+\[*Example 1*:
 
 This can be useful for constructing an object at a known address:
 
@@ -2029,7 +2029,7 @@ new_handler get_new_handler() noexcept;
 
 *Returns:* The current `new_handler`.
 
-\[*Note 6*: This can be a null pointer value. — *end note*\]
+\[*Note 1*: This can be a null pointer value. — *end note*\]
 
 ### Pointer optimization barrier <a id="ptr.launder">[[ptr.launder]]</a>
 
@@ -2051,14 +2051,14 @@ are reachable through `p`.
 expression if and only if the (converted) value of its argument may be
 used in place of the function invocation.
 
-\[*Note 7*: If a new object is created in storage occupied by an
+\[*Note 1*: If a new object is created in storage occupied by an
 existing object of the same type, a pointer to the original object can
 be used to refer to the new object unless its complete object is a const
 object or it is a base class subobject; in the latter cases, this
 function can be used to obtain a usable pointer to the new object.
 See  [[basic.life]]. — *end note*\]
 
-\[*Example 3*:
+\[*Example 1*:
 
     struct X { int n; };
     const X *p = new const X{3};
@@ -2080,7 +2080,7 @@ concurrently-accessed objects to avoid additional performance
 degradation due to contention introduced by the implementation. It shall
 be at least `alignof(max_align_t)`.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 struct keep_apart {
@@ -2099,7 +2099,7 @@ This number is the maximum recommended size of contiguous memory
 occupied by two objects accessed with temporal locality by concurrent
 threads. It shall be at least `alignof(max_align_t)`.
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 struct together {
@@ -2590,7 +2590,7 @@ terminate_handler get_terminate() noexcept;
 during a call to `set_terminate`. Otherwise calls the current
 `terminate_handler` function.
 
-\[*Note 2*: A default `terminate_handler` is always considered a
+\[*Note 1*: A default `terminate_handler` is always considered a
 callable handler in this context. — *end note*\]
 
 *Remarks:* Called by the implementation when exception handling must be
@@ -2628,7 +2628,7 @@ the type.
 `exception_ptr` shall not be implicitly convertible to any arithmetic,
 enumeration, or pointer type.
 
-\[*Note 3*: An implementation can use a reference-counted smart pointer
+\[*Note 1*: An implementation can use a reference-counted smart pointer
 as `exception_ptr`. — *end note*\]
 
 For purposes of determining the presence of a data race, operations on
@@ -2637,7 +2637,7 @@ objects themselves and not the exceptions they refer to. Use of
 `rethrow_exception` on `exception_ptr` objects that refer to the same
 exception object shall not introduce a data race.
 
-\[*Note 4*: If `rethrow_exception` rethrows the same exception object
+\[*Note 2*: If `rethrow_exception` rethrows the same exception object
 (rather than a copy), concurrent access to that rethrown exception
 object can introduce a data race. Changes in the number of
 `exception_ptr` objects that refer to a particular exception do not
@@ -2657,7 +2657,7 @@ needs to allocate memory and the attempt fails, it returns an
 unspecified whether the return values of two successive calls to
 `current_exception` refer to the same exception object.
 
-\[*Note 5*: That is, it is unspecified whether `current_exception`
+\[*Note 3*: That is, it is unspecified whether `current_exception`
 creates a new copy each time it is called. — *end note*\]
 
 If the attempt to copy the current exception object throws an exception,
@@ -2665,7 +2665,7 @@ the function returns an `exception_ptr` object that refers to the thrown
 exception or, if this is not possible, to an instance of
 `bad_exception`.
 
-\[*Note 6*: The copy constructor of the thrown exception can also fail,
+\[*Note 4*: The copy constructor of the thrown exception can also fail,
 so the implementation is allowed to substitute a `bad_exception` object
 to avoid infinite recursion. — *end note*\]
 
@@ -2702,7 +2702,7 @@ try {
 }
 ```
 
-\[*Note 7*: This function is provided for convenience and efficiency
+\[*Note 5*: This function is provided for convenience and efficiency
 reasons. — *end note*\]
 
 ### `nested_exception` <a id="except.nested">[[except.nested]]</a>
@@ -2730,7 +2730,7 @@ The class `nested_exception` is designed for use as a mixin through
 multiple inheritance. It captures the currently handled exception and
 stores it for later use.
 
-\[*Note 8*: `nested_exception` has a virtual destructor to make it a
+\[*Note 1*: `nested_exception` has a virtual destructor to make it a
 polymorphic class. Its presence can be tested for with
 `dynamic_cast`. — *end note*\]
 
@@ -3259,7 +3259,7 @@ The type `common_comparison_category` provides an alias for the
 strongest comparison category to which all of the template arguments can
 be converted.
 
-\[*Note 2*: A comparison category type is stronger than another if they
+\[*Note 1*: A comparison category type is stronger than another if they
 are distinct types and an instance of the former can be converted to an
 instance of the latter. — *end note*\]
 
@@ -3274,7 +3274,7 @@ struct common_comparison_category {
 comparison type [[class.spaceship]] of `Ts...`, the expanded parameter
 pack, or if any element of `Ts` is not a comparison category type.
 
-\[*Note 3*: This is `std::strong_ordering` if the expansion is
+\[*Note 2*: This is `std::strong_ordering` if the expansion is
 empty. — *end note*\]
 
 ### Concept  <a id="cmp.concept">[[cmp.concept]]</a>
@@ -3431,7 +3431,7 @@ expression `strong_order(E, F)` is expression-equivalent
 
 - Otherwise, `strong_order(E, F)` is ill-formed.
 
-\[*Note 4*: Ill-formed cases above result in substitution failure when
+\[*Note 1*: Ill-formed cases above result in substitution failure when
 `strong_order(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -3480,7 +3480,7 @@ expression `weak_order(E, F)` is expression-equivalent
 
 - Otherwise, `weak_order(E, F)` is ill-formed.
 
-\[*Note 5*: Ill-formed cases above result in substitution failure when
+\[*Note 2*: Ill-formed cases above result in substitution failure when
 `weak_order(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -3505,7 +3505,7 @@ expression `partial_order(E, F)` is expression-equivalent
 
 - Otherwise, `partial_order(E, F)` is ill-formed.
 
-\[*Note 6*: Ill-formed cases above result in substitution failure when
+\[*Note 3*: Ill-formed cases above result in substitution failure when
 `partial_order(E, F)` appears in the immediate context of a template
 instantiation. — *end note*\]
 
@@ -3533,7 +3533,7 @@ expression-equivalent [[defns.expression.equivalent]] to:
 
 - Otherwise, `compare_strong_order_fallback(E, F)` is ill-formed.
 
-\[*Note 7*: Ill-formed cases above result in substitution failure when
+\[*Note 4*: Ill-formed cases above result in substitution failure when
 `compare_strong_order_fallback(E, F)` appears in the immediate context
 of a template instantiation. — *end note*\]
 
@@ -3561,7 +3561,7 @@ expression-equivalent [[defns.expression.equivalent]] to:
 
 - Otherwise, `compare_weak_order_fallback(E, F)` is ill-formed.
 
-\[*Note 8*: Ill-formed cases above result in substitution failure when
+\[*Note 5*: Ill-formed cases above result in substitution failure when
 `compare_weak_order_fallback(E, F)` appears in the immediate context of
 a template instantiation. — *end note*\]
 
@@ -3590,7 +3590,7 @@ expression-equivalent [[defns.expression.equivalent]] to:
 
 - Otherwise, `compare_partial_order_fallback(E, F)` is ill-formed.
 
-\[*Note 9*: Ill-formed cases above result in substitution failure when
+\[*Note 6*: Ill-formed cases above result in substitution failure when
 `compare_partial_order_fallback(E, F)` appears in the immediate context
 of a template instantiation. — *end note*\]
 
@@ -4011,7 +4011,7 @@ namespace std {
 }
 ```
 
-\[*Note 3*: The types `suspend_never` and `suspend_always` can be used
+\[*Note 1*: The types `suspend_never` and `suspend_always` can be used
 to indicate that an *await-expression* either never suspends or always
 suspends, and in either case does not produce a value. — *end note*\]
 
@@ -4216,14 +4216,14 @@ void f(bool b[], size_t n);
 The header `<complex.h>` behaves as if it simply includes the header
 `<complex>`.
 
-\[*Note 2*: Names introduced by `<complex>` in namespace `std` are not
+\[*Note 1*: Names introduced by `<complex>` in namespace `std` are not
 placed into the global namespace scope by `<complex.h>`. — *end note*\]
 
 ### Header `<iso646.h>` synopsis <a id="iso646.h.syn">[[iso646.h.syn]]</a>
 
 The C++ header `<iso646.h>` is empty.
 
-\[*Note 3*: `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not_eq`,
+\[*Note 1*: `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not_eq`,
 `not`, `or`, `or_eq`, `xor`, and `xor_eq` are keywords in C++
 [[lex.key]]. — *end note*\]
 
@@ -4250,11 +4250,11 @@ header `<stdbool.h>` does not define macros named `bool`, `true`, or
 The header `<tgmath.h>` behaves as if it simply includes the headers
 `<cmath>` and `<complex>`.
 
-\[*Note 4*: The overloads provided in C by type-generic macros are
+\[*Note 1*: The overloads provided in C by type-generic macros are
 already provided in `<complex>` and `<cmath>` by “sufficient” additional
 overloads. — *end note*\]
 
-\[*Note 5*: Names introduced by `<cmath>` or `<complex>` in namespace
+\[*Note 2*: Names introduced by `<cmath>` or `<complex>` in namespace
 `std` are not placed into the global namespace scope by
 `<tgmath.h>`. — *end note*\]
 
@@ -4273,7 +4273,7 @@ within namespace scope [[basic.scope.namespace]] of the namespace `std`
 and are then injected into the global namespace scope by explicit
 *using-declaration* [[namespace.udecl]].
 
-\[*Example 2*: The header `<cstdlib>` assuredly provides its
+\[*Example 1*: The header `<cstdlib>` assuredly provides its
 declarations and definitions within the namespace `std`. It may also
 provide these names within the global namespace. The header `<stdlib.h>`
 assuredly provides the same declarations and definitions within the

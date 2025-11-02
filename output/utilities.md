@@ -416,7 +416,7 @@ template<class T> add_rvalue_reference_t<T> declval() noexcept;    // as unevalu
 *Remarks:* The template parameter `T` of `declval` may be an incomplete
 type.
 
-\[*Example 4*:
+\[*Example 1*:
 
     template<class To, class From> decltype(static_cast<To>(declval<From>())) convert(From&&);
 
@@ -535,10 +535,10 @@ template<class T>
 
 *Preconditions:* `false` is `true`.
 
-\[*Note 2*: This precondition cannot be satisfied, thus the behavior of
+\[*Note 1*: This precondition cannot be satisfied, thus the behavior of
 calling `unreachable` is undefined. — *end note*\]
 
-\[*Example 5*:
+\[*Example 1*:
 
     int f(int x) {
       switch (x) {
@@ -2063,7 +2063,7 @@ return make-from-tuple-impl<T>(
            make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>>{});
 ```
 
-\[*Note 2*: The type of `T` must be supplied as an explicit template
+\[*Note 1*: The type of `T` must be supplied as an explicit template
 parameter, as it cannot be deduced from the argument
 list. — *end note*\]
 
@@ -2114,7 +2114,7 @@ Access checking is performed as if in a context unrelated to `TS` and
 `T`. Only the validity of the immediate context of the expression is
 considered.
 
-\[*Note 3*: The compilation of the expression can result in side effects
+\[*Note 1*: The compilation of the expression can result in side effects
 such as the instantiation of class template specializations and function
 template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
@@ -2156,11 +2156,11 @@ template<size_t I, class... Types>
 *Returns:* A reference to the $\texttt{I}^\text{th}$ element of `t`,
 where indexing is zero-based.
 
-\[*Note 4*: If a type `T` in `Types` is some reference type `X&`, the
+\[*Note 1*: If a type `T` in `Types` is some reference type `X&`, the
 return type is `X&`, not `X&&`. However, if the element type is a
 non-reference type `T`, the return type is `T&&`. — *end note*\]
 
-\[*Note 5*: Constness is shallow. If a type `T` in `Types` is some
+\[*Note 2*: Constness is shallow. If a type `T` in `Types` is some
 reference type `X&`, the return type is `X&`, not `const X&`. However,
 if the element type is a non-reference type `T`, the return type is
 `const T&`. This is consistent with how constness is defined to work for
@@ -2182,7 +2182,7 @@ template<class T, class... Types>
 *Returns:* A reference to the element of `t` corresponding to the type
 `T` in `Types`.
 
-\[*Example 3*:
+\[*Example 1*:
 
     const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
     const int& i1 = get<int>(t);                    // OK, \texttt{i1} has value \texttt{1}
@@ -2191,7 +2191,7 @@ template<class T, class... Types>
 
 — *end example*\]
 
-\[*Note 6*: The reason `get` is a non-member function is that if this
+\[*Note 3*: The reason `get` is a non-member function is that if this
 functionality had been provided as a member function, code where the
 type depended on a template parameter would have required using the
 `template` keyword. — *end note*\]
@@ -2218,7 +2218,7 @@ equals `tuple_size_v<UTuple>`.
 *Returns:* `true` if `get<i>(t) == get<i>(u)` for all `i`, otherwise
 `false`.
 
-\[*Note 7*: If `sizeof...(TTypes)` equals zero, returns
+\[*Note 1*: If `sizeof...(TTypes)` equals zero, returns
 `true`. — *end note*\]
 
 *Remarks:*
@@ -2258,7 +2258,7 @@ but the first element of `r`.
 *Remarks:* The second overload is to be found via argument-dependent
 lookup [[basic.lookup.argdep]] only.
 
-\[*Note 8*: The above definition does not require `t$_{tail}$` (or
+\[*Note 2*: The above definition does not require `t$_{tail}$` (or
 `u$_{tail}$`) to be constructed. It might not even be possible, as `t`
 and `u` are not required to be copy constructible. Also, all comparison
 operator functions are short circuited; they do not perform element
@@ -2335,7 +2335,7 @@ template<class... Types, class Alloc>
 *Preconditions:* `Alloc` meets the *Cpp17Allocator*
 requirements [[allocator.requirements.general]].
 
-\[*Note 9*: Specialization of this trait informs other library
+\[*Note 1*: Specialization of this trait informs other library
 components that `tuple` can be constructed with an allocator, even
 though it does not have a nested `allocator_type`. — *end note*\]
 
@@ -3315,7 +3315,7 @@ template<class T, class U> constexpr bool operator==(const optional<T>& x, const
 *Mandates:* The expression `*x == *y` is well-formed and its result is
 convertible to `bool`.
 
-\[*Note 3*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+\[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
 
 *Returns:* If `x.has_value() != y.has_value()`, `false`; otherwise if
 `x.has_value() == false`, `true`; otherwise `*x == *y`.
@@ -3423,7 +3423,7 @@ template<class T, class U> constexpr bool operator==(const optional<T>& x, const
 *Mandates:* The expression `*x == v` is well-formed and its result is
 convertible to `bool`.
 
-\[*Note 4*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+\[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
 
 *Effects:* Equivalent to: `return x.has_value() ? *x == v : false;`
 
@@ -3842,7 +3842,7 @@ template<class T> constexpr variant(T&& t) noexcept(see below);
 Let $\texttt{T}_j$ be a type that is determined as follows: build an
 imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
 for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is well-formed
-for some invented variable `x`. The overload *FUN*($T_j$) selected by
+for some invented variable `x`. The overload *FUN*(Tⱼ) selected by
 overload resolution for the expression *FUN*(std::forward\<T\>(t))
 defines the alternative $\texttt{T}_j$ which is the type of the
 contained value after construction.
@@ -4064,7 +4064,7 @@ template<class T> constexpr variant& operator=(T&& t) noexcept(see below);
 Let $\texttt{T}_j$ be a type that is determined as follows: build an
 imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
 for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is well-formed
-for some invented variable `x`. The overload *FUN*($T_j$) selected by
+for some invented variable `x`. The overload *FUN*(Tⱼ) selected by
 overload resolution for the expression *FUN*(std::forward\<T\>(t))
 defines the alternative $\texttt{T}_j$ which is the type of the
 contained value after assignment.
@@ -4215,7 +4215,7 @@ constexpr bool valueless_by_exception() const noexcept;
 
 *Effects:* Returns `false` if and only if the `variant` holds a value.
 
-\[*Note 2*:
+\[*Note 1*:
 
 It is possible for a `variant` to hold no value if an exception is
 thrown during a type-changing assignment or emplacement. The latter
@@ -4564,7 +4564,7 @@ constexpr strong_ordering operator<=>(monostate, monostate) noexcept
 { return strong_ordering::equal; }
 ```
 
-\[*Note 3*: `monostate` objects have only a single state; they thus
+\[*Note 1*: `monostate` objects have only a single state; they thus
 always compare equal. — *end note*\]
 
 ### Specialized algorithms <a id="variant.specalg">[[variant.specalg]]</a>
@@ -4969,7 +4969,7 @@ const type_info& type() const noexcept;
 *Returns:* `typeid(T)` if `*this` has a contained value of type `T`,
 otherwise `typeid(void)`.
 
-\[*Note 2*: Useful for querying against types known either at compile
+\[*Note 1*: Useful for querying against types known either at compile
 time or only at runtime. — *end note*\]
 
 ### Non-member functions <a id="any.nonmembers">[[any.nonmembers]]</a>
@@ -5018,7 +5018,7 @@ For the third overload, `is_constructible_v<T, U>` is `true`.
 *Throws:* `bad_any_cast` if
 `operand.type() != typeid(remove_reference_t<T>)`.
 
-\[*Example 2*:
+\[*Example 1*:
 
     any x(5);                                   // \texttt{x} holds \texttt{int}
     assert(any_cast<int>(x) == 5);              // cast to value
@@ -5055,7 +5055,7 @@ template<class T>
 *Returns:* If `operand != nullptr && operand->type() == typeid(T)`, a
 pointer to the object contained by `operand`; otherwise, .
 
-\[*Example 3*:
+\[*Example 2*:
 
     bool is_string(const any& operand) {
       return any_cast<string>(&operand) != nullptr;
@@ -8223,7 +8223,7 @@ specializations for any pointer type yield a result consistent with the
 implementation-defined strict total order over pointers
 [[defns.order.ptr]].
 
-\[*Note 3*: If `a < b` is well-defined for pointers `a` and `b` of type
+\[*Note 1*: If `a < b` is well-defined for pointers `a` and `b` of type
 `P`, then `(a < b) == less<P>()(a, b)`, `(a > b) == greater<P>()(a, b)`,
 and so forth. — *end note*\]
 
@@ -9063,7 +9063,7 @@ as specified below.
 *Throws:* Any exception thrown by the initialization of the state
 entities of `g`.
 
-\[*Note 4*: If all of `FD` and $\texttt{TD}_i$ meet the requirements of
+\[*Note 1*: If all of `FD` and $\texttt{TD}_i$ meet the requirements of
 *Cpp17CopyConstructible*, then the return type meets the requirements of
 *Cpp17CopyConstructible*. — *end note*\]
 
@@ -9241,7 +9241,7 @@ unevaluated operand [[term.unevaluated.operand]], is well-formed
 The `function` class template is a call wrapper [[func.def]] whose call
 signature [[func.def]] is `R(ArgTypes...)`.
 
-\[*Note 5*: The types deduced by the deduction guides for `function`
+\[*Note 1*: The types deduced by the deduction guides for `function`
 might change in future revisions of C++. — *end note*\]
 
 ##### Constructors and destructor <a id="func.wrap.func.con">[[func.wrap.func.con]]</a>
@@ -9346,7 +9346,7 @@ unevaluated operand and either
 
 *Remarks:* The deduced type is `function<R(A...)>`.
 
-\[*Example 3*:
+\[*Example 1*:
 
     void f() {
       int i{5};
@@ -9542,7 +9542,7 @@ call signature.
 Implementations should avoid the use of dynamically allocated memory for
 a small contained value.
 
-\[*Note 6*: Such small-object optimization can only be applied to a type
+\[*Note 1*: Such small-object optimization can only be applied to a type
 `T` for which `is_nothrow_move_constructible_v<T>` is
 `true`. — *end note*\]
 
@@ -9998,7 +9998,7 @@ default hash function.
 Each specialization of `hash` is either enabled or disabled, as
 described below.
 
-\[*Note 7*: Enabled specializations meet the *Cpp17Hash* requirements,
+\[*Note 1*: Enabled specializations meet the *Cpp17Hash* requirements,
 and disabled specializations do not. — *end note*\]
 
 Each header that declares the template `hash` provides enabled
@@ -10017,7 +10017,7 @@ If `H` is a disabled specialization of `hash`, these values are `false`:
 `is_move_assignable_v<H>`. Disabled specializations of `hash` are not
 function object types [[function.objects]].
 
-\[*Note 8*: This means that the specialization of `hash` exists, but any
+\[*Note 2*: This means that the specialization of `hash` exists, but any
 attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*\]
 
 An enabled specialization `hash<Key>` will:
@@ -10231,7 +10231,7 @@ overload resolution participation.
 characteristic of `true_type` if `T` is the type of a standard or
 *implementation-defined* execution policy, otherwise `false_type`.
 
-\[*Note 2*: This provision reserves the privilege of creating
+\[*Note 1*: This provision reserves the privilege of creating
 non-standard execution policies to the library
 implementation. — *end note*\]
 
@@ -10465,7 +10465,7 @@ is required to be a valid range. If no characters match the pattern,
 `value` is unmodified, the member `ptr` of the return value is `first`
 and the member `ec` is equal to `errc::invalid_argument`.
 
-\[*Note 2*: If the pattern allows for an optional sign, but the string
+\[*Note 1*: If the pattern allows for an optional sign, but the string
 has no digit characters following the sign, no characters match the
 pattern. — *end note*\]
 
@@ -10811,7 +10811,7 @@ Each `formatter` specialization described in [[format.formatter.spec]]
 for fundamental and string types interprets *format-spec* as a
 *std-format-spec*.
 
-\[*Note 2*: The format specification can be used to specify such details
+\[*Note 1*: The format specification can be used to specify such details
 as minimum field width, alignment, padding, and decimal precision. Some
 of the formatting options are only supported for arithmetic
 types. — *end note*\]
@@ -10871,7 +10871,7 @@ effects of the *width* option. The *padding width* is the greater of `0`
 and the difference of the minimum field width and the estimated field
 width.
 
-\[*Note 3*: The POSIX `wcswidth` function is an example of a function
+\[*Note 2*: The POSIX `wcswidth` function is an example of a function
 that, given a string, returns the number of column positions required by
 a terminal to display the string. — *end note*\]
 
@@ -10880,7 +10880,7 @@ if the *fill* option is absent, the space character. For a format
 specification in UTF-8, UTF-16, or UTF-32, the fill character
 corresponds to a single Unicode scalar value.
 
-\[*Note 4*: The presence of a *fill* option is signaled by the character
+\[*Note 3*: The presence of a *fill* option is signaled by the character
 following it, which must be one of the alignment options. If the second
 character of *std-format-spec* is not a valid alignment option, then it
 is assumed that the *fill* and *align* options are both
@@ -10889,7 +10889,7 @@ absent. — *end note*\]
 The *align* option applies to all argument types. The meaning of the
 various alignment options is as specified in [[format.align]].
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 char c = 120;
@@ -10908,7 +10908,7 @@ string sA = format("{:*<6}", "12345678");   // value of sA is "12345678"
 
 — *end example*\]
 
-\[*Note 5*: The *fill*, *align*, and `0` options have no effect when the
+\[*Note 4*: The *fill*, *align*, and `0` options have no effect when the
 minimum field width is not greater than the estimated field width
 because padding width is `0` in that case. Since fill characters are
 assumed to have a field width of `1`, use of a character with a
@@ -10938,7 +10938,7 @@ meaning of the various options is as specified in [[format.sign]].
 | % space | Indicates that a leading space should be used for non-negative numbers other than negative zero, and a minus sign for negative numbers and negative zero. |
 The *sign* option applies to floating-point infinity and NaN.
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 double inf = numeric_limits<double>::infinity();
@@ -10971,7 +10971,7 @@ pads the formatted argument by inserting the `0` character n times
 following the sign or base prefix indicators (if any) where n is `0` if
 the *align* option is present and is the padding width otherwise.
 
-\[*Example 6*:
+\[*Example 3*:
 
 ``` cpp
 char c = 120;
@@ -11001,7 +11001,7 @@ locale-independent, *implementation-defined* encoding. Implementations
 should use either UTF-8, UTF-16, or UTF-32, on platforms capable of
 displaying Unicode text in a terminal.
 
-\[*Note 6*:
+\[*Note 5*:
 
 This is the case for Windows
 
@@ -11074,14 +11074,14 @@ the `to_chars` output and `value` be the formatting argument value.
 Formatting is done as if by calling `to_chars` as specified and copying
 the output through the output iterator of the format context.
 
-\[*Note 7*: Additional padding and adjustments are performed prior to
+\[*Note 6*: Additional padding and adjustments are performed prior to
 copying the output through the output iterator as specified by the
 format specifiers. — *end note*\]
 
 The available integer presentation types for integral types other than
 `bool` and `charT` are specified in [[format.type.int]].
 
-\[*Example 7*:
+\[*Example 4*:
 
 ``` cpp
 string s0 = format("{}", 42);                           // value of s0 is "42"
@@ -11131,7 +11131,7 @@ NaN are formatted as `inf` and `nan`, respectively. For upper-case
 presentation types, infinity and NaN are formatted as `INF` and `NAN`,
 respectively.
 
-\[*Note 8*: In either case, a sign is included if indicated by the
+\[*Note 7*: In either case, a sign is included if indicated by the
 *sign* option. — *end note*\]
 
 **Table: Meaning of *type* options for floating-point types**
@@ -11149,7 +11149,7 @@ respectively.
 The available pointer presentation types and their mapping to `to_chars`
 are specified in [[format.type.ptr]].
 
-\[*Note 9*: Pointer presentation types also apply to
+\[*Note 8*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*\]
 
 **Table: Meaning of *type* options for pointer types**
@@ -11445,7 +11445,7 @@ argument type `T`, in [[formatter.basic]] and [[formatter]]:
 string. If *format-spec* is empty then either `pc.begin() == pc.end()`
 or `*pc.begin() == '\}'`.
 
-\[*Note 10*: This allows formatters to emit meaningful error
+\[*Note 1*: This allows formatters to emit meaningful error
 messages. — *end note*\]
 
 #### Concept  <a id="format.formattable">[[format.formattable]]</a>
@@ -11529,7 +11529,7 @@ The `parse` member functions of these formatters interpret the format
 specification as a *std-format-spec* as described in
 [[format.string.std]].
 
-\[*Note 11*: Specializations such as `formatter<wchar_t, char>` and
+\[*Note 1*: Specializations such as `formatter<wchar_t, char>` and
 `formatter<const char*, wchar_t>` that would require implicit multibyte
 / wide string or character conversion are disabled. — *end note*\]
 
@@ -11557,7 +11557,7 @@ If `F` is a disabled specialization of `formatter`, these values are
 An enabled specialization `formatter<T, charT>` meets the requirements
 [[formatter.requirements]].
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 #include <format>
@@ -11658,7 +11658,7 @@ the escaped string representation of a string of *C*, except that:
 
 - if *C* is , then *C* is appended unchanged.
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 string s0 = format("[{}]", "h\tllo");               // s0 has value: [h\ \ \ \ llo]
@@ -11844,7 +11844,7 @@ void advance_to(iterator it);
 
 *Effects:* Equivalent to: `out_ = std::move(it);`
 
-\[*Example 10*:
+\[*Example 1*:
 
 ``` cpp
 struct S { int value; };
@@ -12003,7 +12003,7 @@ The *range-fill-and-align* is interpreted the same way as a
 The `n` option causes the range to be formatted without the opening and
 closing brackets.
 
-\[*Note 12*: This is equivalent to invoking
+\[*Note 1*: This is equivalent to invoking
 `set_brackets(\{\}, \{\})`. — *end note*\]
 
 The *range-type* specifier changes the way a range is formatted, with
@@ -12410,7 +12410,7 @@ template<class T> explicit basic_format_arg(T& v) noexcept;
 
 - otherwise, initializes `value` with `handle(v)`.
 
-\[*Note 13*: Constructing `basic_format_arg` from a pointer to a member
+\[*Note 1*: Constructing `basic_format_arg` from a pointer to a member
 is ill-formed unless the user provides an enabled specialization of
 `formatter` for that pointer to member type. — *end note*\]
 
@@ -12541,7 +12541,7 @@ An instance of `basic_format_args` provides access to formatting
 arguments. Implementations should optimize the representation of
 `basic_format_args` for a small number of formatting arguments.
 
-\[*Note 14*: For example, by storing indices of type alternatives
+\[*Note 1*: For example, by storing indices of type alternatives
 separately from values and packing the former. — *end note*\]
 
 ``` cpp

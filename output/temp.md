@@ -932,7 +932,7 @@ A *template-argument* followed by an ellipsis is a pack expansion
 A *template-argument* for a *template-parameter* which is a type shall
 be a *type-id*.
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 template <class T> class X { };
@@ -955,7 +955,7 @@ void f() {
 
 — *end example*\]
 
-\[*Note 3*: A template type argument can be an incomplete type
+\[*Note 1*: A template type argument can be an incomplete type
 [[term.incomplete.type]]. — *end note*\]
 
 ### Template non-type arguments <a id="temp.arg.nontype">[[temp.arg.nontype]]</a>
@@ -976,7 +976,7 @@ A *template-argument* for a non-type *template-parameter* shall be a
 converted constant expression [[expr.const]] of the type of the
 *template-parameter*.
 
-\[*Note 4*: If the *template-argument* is an overload set (or the
+\[*Note 1*: If the *template-argument* is an overload set (or the
 address of such, including forming a pointer-to-member), the matching
 function is selected from the set [[over.over]]. — *end note*\]
 
@@ -995,7 +995,7 @@ or pointer value shall not refer to or be the address of (respectively):
 
 - a subobject [[intro.object]] of one of the above.
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 template<const int* pci> struct X { ... };
@@ -1027,14 +1027,14 @@ B<void(0)> b4;                  // error: template parameter type cannot be void
 
 — *end example*\]
 
-\[*Note 5*:
+\[*Note 2*:
 
 A *string-literal* [[lex.string]] is not an acceptable
 *template-argument* for a *template-parameter* of non-class type.
 
 — *end note*\]
 
-\[*Note 6*:
+\[*Note 3*:
 
 A temporary object is not an acceptable *template-argument* when the
 corresponding *template-parameter* has reference type.
@@ -1057,7 +1057,7 @@ not reachable from the point of instantiation, and it would have been
 selected had it been reachable, the program is ill-formed, no diagnostic
 required.
 
-\[*Example 10*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class A {     // primary template
@@ -1092,7 +1092,7 @@ or template parameter packs in the *template-head* of `A` with the same
 type and form as the template parameter pack in `P` (ignoring whether
 those template parameters are template parameter packs).
 
-\[*Example 11*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> class A { ... };
@@ -1114,7 +1114,7 @@ Z<D> zd;            // OK
 
 — *end example*\]
 
-\[*Example 12*:
+\[*Example 3*:
 
 ``` cpp
 template <class T> struct eval;
@@ -1137,7 +1137,7 @@ eval<E<int, float>> eE;         // error: E does not match TT in partial special
 
 — *end example*\]
 
-\[*Example 13*:
+\[*Example 4*:
 
 ``` cpp
 template<typename T> concept C = requires (T t) { t.f(); };
@@ -1209,7 +1209,7 @@ In order for a constrained template to be instantiated [[temp.spec]],
 its associated constraints [[temp.constr.decl]] shall be satisfied as
 described in the following subclauses.
 
-\[*Note 2*: Forming the name of a specialization of a class template, a
+\[*Note 1*: Forming the name of a specialization of a class template, a
 variable template, or an alias template [[temp.names]] requires the
 satisfaction of its constraints. Overload resolution
 [[over.match.viable]] requires the satisfaction of constraints on
@@ -1220,7 +1220,7 @@ functions and function templates. — *end note*\]
 There are two binary logical operations on constraints: conjunction and
 disjunction.
 
-\[*Note 3*: These logical operations have no corresponding C++ syntax.
+\[*Note 1*: These logical operations have no corresponding C++ syntax.
 For the purpose of exposition, conjunction is spelled using the symbol ∧
 and disjunction is spelled using the symbol ∨. The operands of these
 operations are called the left and right operands. In the constraint
@@ -1259,7 +1259,7 @@ operand is not checked for satisfaction.
 
 — *end example*\]
 
-\[*Note 4*:
+\[*Note 2*:
 
 A logical negation expression [[expr.unary.op]] is an atomic constraint;
 the negation operator is not treated as a logical operation on
@@ -1282,7 +1282,7 @@ therefore, can involve the unsubstituted template parameters of the
 constrained entity), called the *parameter mapping*
 [[temp.constr.decl]].
 
-\[*Note 5*: Atomic constraints are formed by constraint normalization
+\[*Note 1*: Atomic constraints are formed by constraint normalization
 [[temp.constr.normal]]. `E` is never a logical expression
 [[expr.log.and]] nor a logical expression
 [[expr.log.or]]. — *end note*\]
@@ -1297,7 +1297,7 @@ parameter mapping of e₁ is the same [[temp.type]] as a *template-id*
 naming A whose *template-argument*s are the targets of the parameter
 mapping of e₂.
 
-\[*Note 6*:
+\[*Note 2*:
 
 The comparison of parameter mappings of atomic constraints operates in a
 manner similar to that of declaration matching with alias template
@@ -1321,7 +1321,7 @@ the program, the satisfaction result is different for identical atomic
 constraints and template arguments, the program is ill-formed, no
 diagnostic required.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 template<typename T> concept C =
@@ -1390,7 +1390,7 @@ The formation of the associated constraints establishes the order in
 which constraints are instantiated when checking for satisfaction
 [[temp.constr.constr]].
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 template<typename T> concept C = true;
@@ -1430,10 +1430,10 @@ is equivalent [[temp.over.link]] to the corresponding
 is instantiated. If the instantiation results in an invalid expression,
 the *constraint-expression*s are not equivalent.
 
-\[*Note 7*: This can happen when determining which member template is
+\[*Note 1*: This can happen when determining which member template is
 specialized by an explicit specialization declaration. — *end note*\]
 
-\[*Example 4*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> concept C = true;
@@ -1497,12 +1497,12 @@ The *normal form* of an *expression* `E` is a constraint
 The process of obtaining the normal form of a *constraint-expression* is
 called *normalization*.
 
-\[*Note 8*: Normalization of *constraint-expression* is performed when
+\[*Note 1*: Normalization of *constraint-expression* is performed when
 determining the associated constraints [[temp.constr.constr]] of a
 declaration and when evaluating the value of an *id-expression* that
 names a concept specialization [[expr.prim.id]]. — *end note*\]
 
-\[*Example 5*:
+\[*Example 1*:
 
 ``` cpp
 template<typename T> concept C1 = sizeof(T) == 1;
@@ -1529,26 +1529,26 @@ mapping $\tcode{T} \mapsto \tcode{U}$).
 A constraint P *subsumes* a constraint Q if and only if, for every
 disjunctive clause Pᵢ in the disjunctive normal form
 
-of P, Pᵢ subsumes every conjunctive clause $Q_j$ in the conjunctive
-normal form
+of P, Pᵢ subsumes every conjunctive clause Qⱼ in the conjunctive normal
+form
 
 of Q, where
 
-- a disjunctive clause Pᵢ subsumes a conjunctive clause $Q_j$ if and
-  only if there exists an atomic constraint $P_{ia}$ in Pᵢ for which
-  there exists an atomic constraint $Q_{jb}$ in $Q_j$ such that $P_{ia}$
-  subsumes $Q_{jb}$, and
+- a disjunctive clause Pᵢ subsumes a conjunctive clause Qⱼ if and only
+  if there exists an atomic constraint $P_{ia}$ in Pᵢ for which there
+  exists an atomic constraint $Q_{jb}$ in Qⱼ such that $P_{ia}$ subsumes
+  $Q_{jb}$, and
 
 - an atomic constraint A subsumes another atomic constraint B if and
   only if A and B are identical using the rules described in
   [[temp.constr.atomic]].
 
-\[*Example 6*: Let A and B be atomic constraints [[temp.constr.atomic]].
+\[*Example 1*: Let A and B be atomic constraints [[temp.constr.atomic]].
 The constraint A ∧ B subsumes A, but A does not subsume A ∧ B. The
 constraint A subsumes A ∨ B, but A ∨ B does not subsume A. Also note
 that every constraint subsumes itself. — *end example*\]
 
-\[*Note 9*:
+\[*Note 1*:
 
 The subsumption relation defines a partial ordering on constraints. This
 partial ordering is used to determine
@@ -1578,7 +1578,7 @@ A declaration `D1` is *more constrained* than another declaration `D2`
 when `D1` is at least as constrained as `D2`, and `D2` is not at least
 as constrained as `D1`.
 
-\[*Example 7*:
+\[*Example 2*:
 
 ``` cpp
 template<typename T> concept C1 = requires(T t) { --t; };
@@ -1773,7 +1773,7 @@ with the original class template declaration [[dcl.type.elab]].
 A member function of a class template may be defined outside of the
 class template definition in which it is declared.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class Array {
@@ -1820,7 +1820,7 @@ The *template-argument* for a member function of a class template are
 determined by the *template-argument* of the type of the object for
 which the member function is called.
 
-\[*Example 3*:
+\[*Example 2*:
 
 The *template-argument* for `Array<T>::operator[]` will be determined by
 the `Array` to which the subscripting operation is applied.
@@ -1848,7 +1848,7 @@ deduction-guide:
     explicit-specifier_opt template-name '(' parameter-declaration-clause ')' '->' simple-template-id ';'
 ```
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 template<class T, class D = int>
@@ -1882,7 +1882,7 @@ same class template shall not have equivalent
 A member class of a class template may be defined outside the class
 template definition in which it is declared.
 
-\[*Note 2*:
+\[*Note 1*:
 
 The member class must be defined before its first use that requires an
 instantiation [[temp.inst]]. For example,
@@ -1904,7 +1904,7 @@ A definition for a static data member or static data member template may
 be provided in a namespace scope enclosing the definition of the static
 member’s class template.
 
-\[*Example 5*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class X {
@@ -1926,7 +1926,7 @@ template<class T>
 An explicit specialization of a static data member declared as an array
 of unknown bound can have a different bound from its definition, if any.
 
-\[*Example 6*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> struct A {
@@ -1943,7 +1943,7 @@ template <> int A<int>::i[] = { 1 };    // OK, 1 element
 An enumeration member of a class template may be defined outside the
 class template definition.
 
-\[*Example 7*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> struct A {
@@ -1966,7 +1966,7 @@ template definition shall be specified with a *template-head* equivalent
 to that of the class template followed by a *template-head* equivalent
 to that of the member template [[temp.over.link]].
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> struct string {
@@ -1980,7 +1980,7 @@ template<class T> template<class T2> int string<T>::compare(const T2& s) {
 
 — *end example*\]
 
-\[*Example 9*:
+\[*Example 2*:
 
 ``` cpp
 template<typename T> concept C1 = true;
@@ -2008,7 +2008,7 @@ specialization of the same type, can both be declared in a class. When
 both exist, a use of that name and type refers to the non-template
 member unless an explicit template argument list is supplied.
 
-\[*Example 10*:
+\[*Example 3*:
 
 ``` cpp
 template <class T> struct A {
@@ -2031,7 +2031,7 @@ int main() {
 
 A member function template shall not be declared `virtual`.
 
-\[*Example 11*:
+\[*Example 4*:
 
 ``` cpp
 template <class T> struct AA {
@@ -2045,7 +2045,7 @@ template <class T> struct AA {
 A specialization of a member function template does not override a
 virtual function from a base class.
 
-\[*Example 12*:
+\[*Example 5*:
 
 ``` cpp
 class B {
@@ -2060,7 +2060,7 @@ class D : public B {
 
 — *end example*\]
 
-\[*Note 3*:
+\[*Note 1*:
 
 A specialization of a conversion function template is referenced in the
 same way as a non-template conversion function that converts to the same
@@ -2077,7 +2077,7 @@ conversion function template.
 A *template parameter pack* is a template parameter that accepts zero or
 more template arguments.
 
-\[*Example 13*:
+\[*Example 1*:
 
 ``` cpp
 template<class ... Types> struct Tuple { };
@@ -2093,7 +2093,7 @@ Tuple<0> error;                 // error: 0 is not a type
 A *function parameter pack* is a function parameter that accepts zero or
 more function arguments.
 
-\[*Example 14*:
+\[*Example 2*:
 
 ``` cpp
 template<class ... Types> void f(Types ... args);
@@ -2108,7 +2108,7 @@ f(2, 1.0);                      // args contains two arguments: int and double
 An *init-capture* is a lambda capture that introduces an *init-capture*
 for each of the elements in the pack expansion of its *initializer*.
 
-\[*Example 15*:
+\[*Example 3*:
 
 ``` cpp
 template <typename... Args>
@@ -2178,7 +2178,7 @@ the following contexts:
 - In a *fold-expression* [[expr.prim.fold]]; the pattern is the
   *cast-expression* that contains an unexpanded pack.
 
-\[*Example 16*:
+\[*Example 4*:
 
 ``` cpp
 template<class ... Types> void f(Types ... rest);
@@ -2202,7 +2202,7 @@ pattern. All of the packs expanded by a pack expansion shall have the
 same number of arguments specified. An appearance of a name of a pack
 that is not expanded is ill-formed.
 
-\[*Example 17*:
+\[*Example 5*:
 
 ``` cpp
 template<typename...> struct Tuple {};
@@ -2282,7 +2282,7 @@ In each case, *op* is the *fold-operator*. For a binary fold, E is
 generated by instantiating the *cast-expression* that did not contain an
 unexpanded pack.
 
-\[*Example 18*:
+\[*Example 6*:
 
 ``` cpp
 template<typename ...Args>
@@ -2310,14 +2310,14 @@ If N is zero for a unary fold, the value of the expression is shown in
 The instantiation of any other pack expansion produces a list of
 elements $\tcode{E}_1, \tcode{E}_2, \dotsc, \tcode{E}_N$.
 
-\[*Note 4*: The variety of list varies with the context:
+\[*Note 1*: The variety of list varies with the context:
 *expression-list*, *base-specifier-list*, *template-argument-list*,
 etc. — *end note*\]
 
 When N is zero, the instantiation of the expansion produces an empty
 list.
 
-\[*Example 19*:
+\[*Example 7*:
 
 ``` cpp
 template<class... T> struct X : T... { };
@@ -2337,7 +2337,7 @@ A friend of a class or class template can be a function template or
 class template, a specialization of a function template or class
 template, or a non-template function or class.
 
-\[*Example 20*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class task;
@@ -2374,7 +2374,7 @@ declared within a class template. When a template is instantiated, its
 friend declarations are found by name lookup as if the specialization
 had been explicitly declared at its point of instantiation.
 
-\[*Note 5*: They can introduce entities that belong to an enclosing
+\[*Note 1*: They can introduce entities that belong to an enclosing
 namespace scope [[dcl.meaning]], in which case they are attached to the
 same module as the class template [[module.unit]]. — *end note*\]
 
@@ -2385,7 +2385,7 @@ class template. In these cases, all specializations of the friend class
 or friend function template are friends of the class or class template
 granting friendship.
 
-\[*Example 21*:
+\[*Example 2*:
 
 ``` cpp
 class A {
@@ -2402,7 +2402,7 @@ partially specialized [[temp.spec.partial]] or explicitly specialized
 [[temp.expl.spec]], are friends of the class containing the template
 friend declaration.
 
-\[*Example 22*:
+\[*Example 3*:
 
 ``` cpp
 class X {
@@ -2429,7 +2429,7 @@ substituting the deduced template arguments into the friend declaration
 produces a declaration that corresponds to the member of the
 specialization.
 
-\[*Example 23*:
+\[*Example 4*:
 
 ``` cpp
 template<class T> struct A {
@@ -2471,7 +2471,7 @@ A friend template shall not be declared in a local class.
 
 Friend declarations shall not declare partial specializations.
 
-\[*Example 24*:
+\[*Example 5*:
 
 ``` cpp
 template<class T> class A { };
@@ -2513,7 +2513,7 @@ are partial specializations of the same template and have equivalent
 *template-head*s and template argument lists [[temp.over.link]]. Each
 partial specialization is a distinct template.
 
-\[*Example 25*:
+\[*Example 1*:
 
 ``` cpp
 template<class T1, class T2, int I> class A             { };
@@ -2531,7 +2531,7 @@ specializations of the primary template.
 
 A partial specialization may be constrained [[temp.constr]].
 
-\[*Example 26*:
+\[*Example 2*:
 
 ``` cpp
 template<typename T> concept C = true;
@@ -2557,7 +2557,7 @@ A partial specialization may be declared in any scope in which the
 corresponding primary template may be defined
 [[dcl.meaning]], [[class.mem]], [[temp.mem]].
 
-\[*Example 27*:
+\[*Example 3*:
 
 ``` cpp
 template<class T> struct A {
@@ -2580,11 +2580,11 @@ Partial specialization declarations do not introduce a name. Instead,
 when the primary template name is used, any reachable partial
 specializations of the primary template are also considered.
 
-\[*Note 6*: One consequence is that a *using-declaration* which refers
+\[*Note 1*: One consequence is that a *using-declaration* which refers
 to a class template does not restrict the set of partial specializations
 that are found through the *using-declaration*. — *end note*\]
 
-\[*Example 28*:
+\[*Example 4*:
 
 ``` cpp
 namespace N {
@@ -2640,7 +2640,7 @@ The usual access checking rules do not apply to non-dependent names used
 to specify template arguments of the *simple-template-id* of the partial
 specialization.
 
-\[*Note 7*: The template arguments can be private types or objects that
+\[*Note 2*: The template arguments can be private types or objects that
 would normally not be accessible. Dependent names cannot be checked when
 declaring the partial specialization, but will be checked when
 substituting into the partial specialization. — *end note*\]
@@ -2673,7 +2673,7 @@ from the actual template argument list [[temp.deduct]], and the deduced
 template arguments satisfy the associated constraints of the partial
 specialization, if any [[temp.constr.decl]].
 
-\[*Example 29*:
+\[*Example 1*:
 
 ``` cpp
 template<class T1, class T2, int I> class A             { };    // \#1
@@ -2691,7 +2691,7 @@ A<int*, int*, 2> a5;                    // ambiguous: matches \#3 and \#5
 
 — *end example*\]
 
-\[*Example 30*:
+\[*Example 2*:
 
 ``` cpp
 template<typename T> concept C = requires (T t) { t.f(); };
@@ -2711,7 +2711,7 @@ If the template arguments of a partial specialization cannot be deduced
 because of the structure of its *template-parameter-list* and the
 *template-id*, the program is ill-formed.
 
-\[*Example 31*:
+\[*Example 3*:
 
 ``` cpp
 template <int I, int J> struct A {};
@@ -2749,7 +2749,7 @@ according to the ordering rules for function templates
   template argument in the *template-argument-list* of the
   *simple-template-id* of the partial specialization.
 
-\[*Example 32*:
+\[*Example 1*:
 
 ``` cpp
 template<int I, int J, class T> class X { };
@@ -2776,7 +2776,7 @@ more specialized than the partial specialization \#3.
 
 — *end example*\]
 
-\[*Example 33*:
+\[*Example 2*:
 
 ``` cpp
 template<typename T> concept C = requires (T t) { t.f(); };
@@ -2806,7 +2806,7 @@ specialization. An explicit specialization of a member of a class
 template partial specialization is declared in the same way as an
 explicit specialization of a member of the primary template.
 
-\[*Example 34*:
+\[*Example 1*:
 
 ``` cpp
 // primary class template
@@ -2857,7 +2857,7 @@ given (implicit) specialization of the enclosing class template, the
 primary member template and its other partial specializations are still
 considered for this specialization of the enclosing class template.
 
-\[*Example 35*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> struct A {
@@ -2880,7 +2880,7 @@ A<char>::B<int>  abci;                                          // uses \#1
 
 A function template defines an unbounded set of related functions.
 
-\[*Example 36*:
+\[*Example 1*:
 
 A family of sort functions can be declared like this:
 
@@ -2891,7 +2891,7 @@ template<class T> void sort(Array<T>&);
 
 — *end example*\]
 
-\[*Note 8*: A function template can have the same name as other function
+\[*Note 1*: A function template can have the same name as other function
 templates and non-template functions [[dcl.fct]] in the same
 scope. — *end note*\]
 
@@ -2905,7 +2905,7 @@ specialization.
 It is possible to overload function templates so that two different
 function template specializations have the same type.
 
-\[*Example 37*:
+\[*Example 1*:
 
 ``` cpp
 // translation unit 1:
@@ -2935,7 +2935,7 @@ names of the template parameters are significant only for establishing
 the relationship between the template parameters and the rest of the
 signature.
 
-\[*Note 9*:
+\[*Note 1*:
 
 Two distinct function templates can have identical function return types
 and function parameter lists, even if overload resolution alone cannot
@@ -2958,7 +2958,7 @@ be linked with another declaration of the function template in another
 translation unit and, conversely, to ensure that function templates that
 are intended to be distinct are not linked with one another.
 
-\[*Example 38*:
+\[*Example 2*:
 
 ``` cpp
 template <int I, int J> A<I+J> f(A<I>, A<J>);   // \#1
@@ -2968,7 +2968,7 @@ template <int I, int J> A<I-J> f(A<I>, A<J>);   // different from \#1
 
 — *end example*\]
 
-\[*Note 10*: Most expressions that use template parameters use non-type
+\[*Note 2*: Most expressions that use template parameters use non-type
 template parameters, but it is possible for an expression to reference a
 type parameter. For example, a template type parameter can be used in
 the `sizeof` operator. — *end note*\]
@@ -2987,22 +2987,22 @@ as they name the same entities, and the tokens used to form concept-ids
 [[temp.names]] may differ as long as the two *template-id* are the same
 [[temp.type]].
 
-\[*Note 11*: For instance, `A<42>` and `A<40+2>` name the same
+\[*Note 3*: For instance, `A<42>` and `A<40+2>` name the same
 type. — *end note*\]
 
 Two *lambda-expression* are never considered equivalent.
 
-\[*Note 12*: The intent is to avoid *lambda-expression* appearing in the
+\[*Note 4*: The intent is to avoid *lambda-expression* appearing in the
 signature of a function template with external linkage. — *end note*\]
 
 For determining whether two dependent names [[temp.dep]] are equivalent,
 only the name itself is considered, not the result of name lookup.
 
-\[*Note 13*: If such a dependent name is unqualified, it is looked up
+\[*Note 5*: If such a dependent name is unqualified, it is looked up
 from the first declaration of the function template
 [[temp.dep.candidate]]. — *end note*\]
 
-\[*Example 39*:
+\[*Example 3*:
 
 ``` cpp
 template <int I, int J> void f(A<I+J>);         // \#1
@@ -3034,10 +3034,10 @@ functionally equivalent if, for any given set of template arguments, the
 expressions perform the same operations in the same order with the same
 entities.
 
-\[*Note 14*: For instance, one could have redundant
+\[*Note 6*: For instance, one could have redundant
 parentheses. — *end note*\]
 
-\[*Example 40*:
+\[*Example 4*:
 
 ``` cpp
 template<int I> concept C = true;
@@ -3090,7 +3090,7 @@ Furthermore, if two function templates that do not correspond
 
 the program is ill-formed, no diagnostic required.
 
-\[*Note 15*:
+\[*Note 7*:
 
 This rule guarantees that equivalent declarations will be linked with
 one another, while not requiring implementations to use heroic efforts
@@ -3151,7 +3151,7 @@ template template parameter (including template parameter packs
 template respectively and substitute it for each occurrence of that
 parameter in the function type of the template.
 
-\[*Note 16*: The type replacing the placeholder in the type of the value
+\[*Note 1*: The type replacing the placeholder in the type of the value
 synthesized for a non-type template parameter is also a unique
 synthesized type. — *end note*\]
 
@@ -3173,11 +3173,11 @@ A:
 
 - Otherwise, X(M) is “lvalue reference to cv A”.
 
-\[*Note 17*: This allows a non-static member to be ordered with respect
+\[*Note 2*: This allows a non-static member to be ordered with respect
 to a non-member function and for the results to be equivalent to the
 ordering of two equivalent non-members. — *end note*\]
 
-\[*Example 41*:
+\[*Example 1*:
 
 ``` cpp
 struct A { };
@@ -3203,7 +3203,7 @@ Using the transformed function template’s function type, perform type
 deduction against the other template as described in 
 [[temp.deduct.partial]].
 
-\[*Example 42*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> struct A { A(); };
@@ -3232,7 +3232,7 @@ void m() {
 
 — *end example*\]
 
-\[*Note 18*:
+\[*Note 3*:
 
 Since, in a call context, such type deduction considers only parameters
 for which there are explicit call arguments, some parameters are ignored
@@ -3287,7 +3287,7 @@ templates, constraints can be considered as follows:
 
 - Otherwise, neither template is more specialized than the other.
 
-\[*Example 43*:
+\[*Example 3*:
 
 ``` cpp
 template <typename> constexpr bool True = true;
@@ -3324,9 +3324,9 @@ it is equivalent to the associated type obtained by substitution of its
 *template-argument* for the *template-parameter* in the
 *defining-type-id* of the alias template.
 
-\[*Note 19*: An alias template name is never deduced. — *end note*\]
+\[*Note 1*: An alias template name is never deduced. — *end note*\]
 
-\[*Example 44*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> struct Alloc { ... };
@@ -3356,7 +3356,7 @@ g(v);               // OK, TT = vector
 However, if the *template-id* is dependent, subsequent template argument
 substitution still applies to the *template-id*.
 
-\[*Example 45*:
+\[*Example 2*:
 
 ``` cpp
 template<typename...> using void_t = void;
@@ -3371,7 +3371,7 @@ to the alias template being declared. The type produced by an alias
 template specialization shall not directly or indirectly make use of
 that specialization.
 
-\[*Example 46*:
+\[*Example 3*:
 
 ``` cpp
 template <class T> struct A;
@@ -3388,7 +3388,7 @@ The type of a *lambda-expression* appearing in an alias template
 declaration is different between instantiations of that template, even
 when the *lambda-expression* is not dependent.
 
-\[*Example 47*:
+\[*Example 4*:
 
 ``` cpp
 template <class T>
@@ -3416,7 +3416,7 @@ A *concept-definition* declares a concept. Its *identifier* becomes a
 *concept-name* referring to that concept within its scope. The optional
 *attribute-specifier-seq* appertains to the concept.
 
-\[*Example 48*:
+\[*Example 1*:
 
 ``` cpp
 template<typename T>
@@ -3441,9 +3441,9 @@ A concept shall not have associated constraints [[temp.constr.decl]].
 
 A concept is not instantiated [[temp.spec]].
 
-\[*Note 20*: A concept-id [[temp.names]] is evaluated as an expression.
-A concept cannot be explicitly instantiated [[temp.explicit]],
-explicitly specialized [[temp.expl.spec]], or partially specialized
+\[*Note 1*: A concept-id [[temp.names]] is evaluated as an expression. A
+concept cannot be explicitly instantiated [[temp.explicit]], explicitly
+specialized [[temp.expl.spec]], or partially specialized
 [[temp.spec.partial]]. — *end note*\]
 
 The *constraint-expression* of a *concept-definition* is an unevaluated
@@ -3796,7 +3796,7 @@ partial specialization is used as a *type-name*, it is equivalent to the
 *template-name* followed by the *template-argument* of the class
 template specialization or partial specialization enclosed in `<>`.
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 template<template<class> class T> class A { };
@@ -3817,7 +3817,7 @@ The injected-class-name of a class template or class template
 specialization can be used as either a *template-name* or a *type-name*
 wherever it is named.
 
-\[*Example 9*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> struct Base {
@@ -3841,7 +3841,7 @@ found refer to specializations of the same class template, and if the
 name is used as a *template-name*, the reference refers to the class
 template itself and not a specialization thereof, and is not ambiguous.
 
-\[*Example 10*:
+\[*Example 3*:
 
 ``` cpp
 template <class T> struct Base { };
@@ -3857,7 +3857,7 @@ When the normal name of the template (i.e., the name from the enclosing
 scope, not the injected-class-name) is used, it always refers to the
 class template itself and not a specialization of the template.
 
-\[*Example 11*:
+\[*Example 4*:
 
 ``` cpp
 template<class T> class X {
@@ -3875,7 +3875,7 @@ The name of a *template-parameter* shall not be bound to any following
 declaration whose locus is contained by the scope to which the
 template-parameter belongs.
 
-\[*Example 12*:
+\[*Example 5*:
 
 ``` cpp
 template<class T, int i> class Y {
@@ -3896,11 +3896,11 @@ Unqualified name lookup considers the template parameter scope of a
 with the template declared (even if its parent scope does not contain
 the *template-parameter-list*).
 
-\[*Note 7*: The scope of a class template, including its non-dependent
+\[*Note 1*: The scope of a class template, including its non-dependent
 base classes [[temp.dep.type]], [[class.member.lookup]], is searched
 before its template parameter scope. — *end note*\]
 
-\[*Example 13*:
+\[*Example 6*:
 
 ``` cpp
 struct B { };
@@ -3967,12 +3967,12 @@ dependent if
 
 - the *unqualified-id* is the *postfix-expression* in a dependent call.
 
-\[*Note 8*: Such names are looked up only at the point of the template
+\[*Note 1*: Such names are looked up only at the point of the template
 instantiation [[temp.point]] in both the context of the template
 definition and the context of the point of instantiation
 [[temp.dep.candidate]]. — *end note*\]
 
-\[*Example 14*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> struct X : B<T> {
@@ -4028,10 +4028,10 @@ template parameter if
 - its initializer consists of a single *identifier* that names the
   template parameter or, recursively, such a variable.
 
-\[*Note 9*: Using a parenthesized variable name breaks the
+\[*Note 1*: Using a parenthesized variable name breaks the
 equivalence. — *end note*\]
 
-\[*Example 15*:
+\[*Example 1*:
 
 ``` cpp
 template <class T> class A {
@@ -4073,7 +4073,7 @@ template <class T1, class T2, int I> struct B {
 A *dependent base class* is a base class that is a dependent type and is
 not the current instantiation.
 
-\[*Note 10*:
+\[*Note 2*:
 
 A base class can be the current instantiation in the case of a nested
 class naming an enclosing class as a base.
@@ -4089,7 +4089,7 @@ A qualified [[basic.lookup.qual]] or unqualified name is a
 - lookup for it finds any member of a class that is the current
   instantiation
 
-\[*Example 16*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> class A {
@@ -4129,7 +4129,7 @@ A qualified name [[basic.lookup.qual]] is dependent if
   dependent base class, and qualified name lookup for the name finds
   nothing [[basic.lookup.qual]].
 
-\[*Example 17*:
+\[*Example 3*:
 
 ``` cpp
 struct A {
@@ -4153,7 +4153,7 @@ template instantiation context. If the result of this lookup differs
 from the result of name lookup in the template definition context, name
 lookup is ambiguous.
 
-\[*Example 18*:
+\[*Example 4*:
 
 ``` cpp
 struct A {
@@ -4208,7 +4208,7 @@ A type is dependent if it is
 - denoted by `decltype(`*expression*`)`, where *expression* is
   type-dependent [[temp.dep.expr]].
 
-\[*Note 11*: Because typedefs do not introduce new types, but instead
+\[*Note 3*: Because typedefs do not introduce new types, but instead
 simply refer to other types, a name that refers to a typedef that is a
 member of the current instantiation is dependent only if the type
 referred to is dependent. — *end note*\]
@@ -4293,7 +4293,7 @@ literal
 \texttt{noexcept} '(' expression ')'
 ```
 
-\[*Note 12*: For the standard library macro `offsetof`, see 
+\[*Note 1*: For the standard library macro `offsetof`, see 
 [[support.types]]. — *end note*\]
 
 A class member access expression [[expr.ref]] is type-dependent if the
@@ -4301,7 +4301,7 @@ terminal name of its *id-expression*, if any, is dependent or the
 expression refers to a member of the current instantiation and the type
 of the referenced member is dependent.
 
-\[*Note 13*: In an expression of the form `x.y` or `xp->y` the type of
+\[*Note 2*: In an expression of the form `x.y` or `xp->y` the type of
 the expression is usually the type of the member `y` of the class of `x`
 (or the class pointed to by `xp`). However, if `x` or `xp` refers to a
 dependent type that is not the current instantiation, the type of `y` is
@@ -4348,7 +4348,7 @@ dependent:
 \texttt{noexcept} '(' expression ')'
 ```
 
-\[*Note 14*: For the standard library macro `offsetof`, see 
+\[*Note 1*: For the standard library macro `offsetof`, see 
 [[support.types]]. — *end note*\]
 
 Expressions of the following form are value-dependent if either the
@@ -4477,19 +4477,19 @@ declarations found in the template definition and template instantiation
 contexts [[basic.lookup.argdep]], then the program is ill-formed, no
 diagnostic required.
 
-\[*Example 19*:
+\[*Example 1*:
 
 — *end example*\]
 
-\[*Example 20*:
+\[*Example 2*:
 
 — *end example*\]
 
-\[*Example 21*:
+\[*Example 3*:
 
 — *end example*\]
 
-\[*Example 22*:
+\[*Example 4*:
 
 — *end example*\]
 
@@ -4636,7 +4636,7 @@ not
 
 - a specialization of a templated class.
 
-\[*Note 2*: An implicit instantiation in an importing translation unit
+\[*Note 1*: An implicit instantiation in an importing translation unit
 cannot use names with internal linkage from an imported translation unit
 [[basic.link]]. — *end note*\]
 
@@ -4646,7 +4646,7 @@ specialization is referenced in a context that requires a
 completely-defined object type or when the completeness of the class
 type affects the semantics of the program.
 
-\[*Note 3*: In particular, if the semantics of an expression depend on
+\[*Note 2*: In particular, if the semantics of an expression depend on
 the member or base class lists of a class template specialization, the
 class template specialization is implicitly generated. For instance,
 deleting a pointer to class type depends on whether or not the class
@@ -4654,7 +4654,7 @@ declares a destructor, and a conversion between pointers to class type
 depends on the inheritance relationship between the two classes
 involved. — *end note*\]
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class B { ... };
@@ -4677,7 +4677,7 @@ If the template selected for the specialization
 point of instantiation [[temp.point]], the instantiation yields an
 incomplete class type [[term.incomplete.type]].
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> class X;
@@ -4686,7 +4686,7 @@ X<char> ch;         // error: incomplete type X<char>
 
 — *end example*\]
 
-\[*Note 4*: Within a template declaration, a local class [[class.local]]
+\[*Note 3*: Within a template declaration, a local class [[class.local]]
 or enumeration and the members of a local class are never considered to
 be entities that can be separately instantiated (this includes their
 default arguments, *noexcept-specifier*, and non-static data member
@@ -4710,7 +4710,7 @@ The implicit instantiation of a class template specialization does not
 cause the implicit instantiation of default arguments or
 *noexcept-specifier* of the class member functions.
 
-\[*Example 6*:
+\[*Example 3*:
 
 ``` cpp
 template<class T>
@@ -4729,7 +4729,7 @@ redeclaration is valid according to  [[basic.def.odr]] and
 [[class.mem]], an instantiated declaration that corresponds to a
 definition in the template is considered to be a definition.
 
-\[*Example 7*:
+\[*Example 4*:
 
 ``` cpp
 template<class T, class U>
@@ -4782,14 +4782,14 @@ argument for a function template or a member function of a class
 template is implicitly instantiated when the function is called in a
 context that requires the value of the default argument.
 
-\[*Note 5*: An inline function that is the subject of an explicit
+\[*Note 4*: An inline function that is the subject of an explicit
 instantiation declaration is not a declared specialization; the intent
 is that it still be implicitly instantiated when odr-used
 [[term.odr.use]] so that the body can be considered for inlining, but
 that no out-of-line copy of it be generated in the translation
 unit. — *end note*\]
 
-\[*Example 8*:
+\[*Example 5*:
 
 ``` cpp
 template<class T> struct Z {
@@ -4827,7 +4827,7 @@ needed for constant evaluation by an expression [[expr.const]], even if
 constant evaluation of the expression is not required or if constant
 expression evaluation does not use the definition.
 
-\[*Example 9*:
+\[*Example 6*:
 
 ``` cpp
 template<typename T> constexpr int f() { return T::value; }
@@ -4848,7 +4848,7 @@ If the function selected by overload resolution [[over.match]] can be
 determined without instantiating a class template definition, it is
 unspecified whether that instantiation actually takes place.
 
-\[*Example 10*:
+\[*Example 7*:
 
 ``` cpp
 template <class T> struct S {
@@ -4877,7 +4877,7 @@ member class or static data member of a templated class, or a
 substatement of a constexpr if statement [[stmt.if]], unless such
 instantiation is required.
 
-\[*Note 6*: The instantiation of a generic lambda does not require
+\[*Note 5*: The instantiation of a generic lambda does not require
 instantiation of substatements of a constexpr if statement within its
 *compound-statement* unless the call operator template is
 instantiated. — *end note*\]
@@ -4910,7 +4910,7 @@ then used as the argument of `f`.
 
 Each default argument is instantiated independently.
 
-\[*Example 11*:
+\[*Example 8*:
 
 ``` cpp
 template<class T> void f(T x, T y = ydef(T()), T z = zdef(T()));
@@ -4937,7 +4937,7 @@ template used in the *noexcept-specifier* is done as if it were being
 done as part of instantiating the declaration of the specialization at
 that point.
 
-\[*Note 7*:  [[temp.point]] defines the point of instantiation of a
+\[*Note 6*:  [[temp.point]] defines the point of instantiation of a
 template specialization. — *end note*\]
 
 There is an *implementation-defined* quantity that specifies the limit
@@ -4945,7 +4945,7 @@ on the total depth of recursive instantiations [[implimits]], which
 could involve more than one template. The result of an infinite
 recursion in instantiation is undefined.
 
-\[*Example 12*:
+\[*Example 9*:
 
 ``` cpp
 template<class T> class X {
@@ -4967,11 +4967,11 @@ performed as specified in [[temp.constr.decl]] and
 satisfied or as specified in [[temp.constr.decl]] when comparing
 declarations.
 
-\[*Note 8*: The satisfaction of constraints is determined during
+\[*Note 7*: The satisfaction of constraints is determined during
 template argument deduction [[temp.deduct]] and overload resolution
 [[over.match]]. — *end note*\]
 
-\[*Example 13*:
+\[*Example 10*:
 
 ``` cpp
 template<typename T> concept C = sizeof(T) > 2;
@@ -4993,7 +4993,7 @@ the implicit declaration of a default constructor for `S<char>`
 
 — *end example*\]
 
-\[*Example 14*:
+\[*Example 11*:
 
 ``` cpp
 template<typename T> struct S1 {
@@ -5050,7 +5050,7 @@ If the explicit instantiation is for a class or member class, the
 instantiation is for a variable template specialization, the
 *unqualified-id* in the *declarator* shall be a *simple-template-id*.
 
-\[*Example 15*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class Array { void mf(); };
@@ -5085,7 +5085,7 @@ The *declaration* in an *explicit-instantiation* and the *declaration*
 produced by the corresponding substitution into the templated function,
 variable, or class are two declarations of the same entity.
 
-\[*Note 9*:
+\[*Note 1*:
 
 These declarations are required to have matching types as specified in 
 [[basic.link]], except as specified in  [[except.spec]].
@@ -5111,7 +5111,7 @@ function template specialization provided it can be deduced
 [[temp.deduct.decl]]. If all template arguments can be deduced, the
 empty template argument list `<>` may be omitted.
 
-\[*Example 16*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> class Array { ... };
@@ -5123,7 +5123,7 @@ template void sort<>(Array<int>&);
 
 — *end example*\]
 
-\[*Note 10*: An explicit instantiation of a constrained template is
+\[*Note 2*: An explicit instantiation of a constrained template is
 required to satisfy that template’s associated constraints
 [[temp.constr.decl]]. The satisfaction of constraints is determined when
 forming the template name of an explicit instantiation in which all
@@ -5141,7 +5141,7 @@ any, of that member are satisfied by the template arguments of the
 explicit instantiation [[temp.constr.decl]], [[temp.constr.constr]],
 except as described below.
 
-\[*Note 11*: In addition, it will typically be an explicit instantiation
+\[*Note 3*: In addition, it will typically be an explicit instantiation
 of certain implementation-dependent data about the class. — *end note*\]
 
 An explicit instantiation definition that names a class template
@@ -5161,7 +5161,7 @@ also used in a way that would otherwise cause an implicit instantiation
 explicit instantiation definition somewhere in the program; otherwise
 the program is ill-formed, no diagnostic required.
 
-\[*Note 12*: This rule does apply to inline functions even though an
+\[*Note 4*: This rule does apply to inline functions even though an
 explicit instantiation declaration of such an entity has no other
 normative effect. This is needed to ensure that if the address of an
 inline function is taken in a translation unit in which the
@@ -5174,7 +5174,7 @@ a template with internal linkage.
 An explicit instantiation does not constitute a use of a default
 argument, so default argument instantiation is not done.
 
-\[*Example 17*:
+\[*Example 3*:
 
 ``` cpp
 char* p = 0;
@@ -5213,7 +5213,7 @@ explicit-specialization:
   \texttt{template} '<' '>' declaration
 ```
 
-\[*Example 18*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> class stream;
@@ -5248,14 +5248,14 @@ An explicit specialization does not introduce a name
 template, or variable template being explicitly specialized shall be
 reachable from the declaration of the explicit specialization.
 
-\[*Note 13*: A declaration, but not a definition of the template is
+\[*Note 1*: A declaration, but not a definition of the template is
 required. — *end note*\]
 
 The definition of a class or class template shall be reachable from the
 declaration of an explicit specialization for a member template of the
 class or class template.
 
-\[*Example 19*:
+\[*Example 2*:
 
 ``` cpp
 template<> class X<int> { ... };          // error: X not a template
@@ -5293,7 +5293,7 @@ class. However, `template<>` is used in defining a member of an
 explicitly specialized member class template that is specialized as a
 class template.
 
-\[*Example 20*:
+\[*Example 3*:
 
 ``` cpp
 template<class T> struct A {
@@ -5352,7 +5352,7 @@ the program is ill-formed, no diagnostic required. An implicit
 instantiation is never generated for an explicit specialization that is
 declared but not defined.
 
-\[*Example 21*:
+\[*Example 4*:
 
 ``` cpp
 class String { };
@@ -5404,7 +5404,7 @@ specialization that has been declared but not defined can be used
 exactly like the names of other incompletely-defined classes
 [[basic.types]].
 
-\[*Example 22*:
+\[*Example 5*:
 
 ``` cpp
 template<class T> class X;                      // X is a class template
@@ -5420,7 +5420,7 @@ A trailing *template-argument* can be left unspecified in the
 *template-id* naming an explicit function template specialization
 provided it can be deduced [[temp.deduct.decl]].
 
-\[*Example 23*:
+\[*Example 6*:
 
 ``` cpp
 template<class T> class Array { ... };
@@ -5433,7 +5433,7 @@ template<> void sort(Array<int>&);
 
 — *end example*\]
 
-\[*Note 14*: An explicit specialization of a constrained template is
+\[*Note 2*: An explicit specialization of a constrained template is
 required to satisfy that template’s associated constraints
 [[temp.constr.decl]]. The satisfaction of constraints is determined when
 forming the template name of an explicit specialization in which all
@@ -5452,7 +5452,7 @@ specialization and is independent of those properties of the template.
 Similarly, attributes appearing in the declaration of a template have no
 effect on an explicit specialization of that template.
 
-\[*Example 24*:
+\[*Example 7*:
 
 ``` cpp
 template<class T> void f(T) { ... }
@@ -5475,7 +5475,7 @@ explicit specialization of a static data member template is a definition
 if the declaration includes an initializer; otherwise, it is a
 declaration.
 
-\[*Note 15*:
+\[*Note 3*:
 
 The definition of a static data member of a template for which
 default-initialization is desired can use functional cast notation
@@ -5495,7 +5495,7 @@ even if the member or member template is defined in the class template
 definition. An explicit specialization of a member or member template is
 specified using the syntax for explicit specialization.
 
-\[*Example 25*:
+\[*Example 8*:
 
 ``` cpp
 template<class T> struct A {
@@ -5531,7 +5531,7 @@ templates. In an explicit specialization for such a member, the member
 declaration shall be preceded by a `template<>` for each enclosing class
 template that is explicitly specialized.
 
-\[*Example 26*:
+\[*Example 9*:
 
 ``` cpp
 template<class T1> class A {
@@ -5557,7 +5557,7 @@ preceding the explicit specialization declaration of the member. The
 types of the *template-parameter* in the *template-parameter-list* shall
 be the same as those specified in the primary template definition.
 
-\[*Example 27*:
+\[*Example 10*:
 
 ``` cpp
 template <class T1> class A {
@@ -5642,7 +5642,7 @@ template by qualifying the function template name with the list of
 *template-argument* in the same way as *template-argument* are specified
 in uses of a class template specialization.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> void sort(Array<T>& v);
@@ -5694,7 +5694,7 @@ If all of the template arguments can be deduced or obtained from default
 *template-argument*, they may all be omitted; in this case, the empty
 template argument list `<>` itself may also be omitted.
 
-\[*Example 3*:
+\[*Example 2*:
 
 ``` cpp
 template<class X, class Y> X f(Y);
@@ -5734,7 +5734,7 @@ template argument list shall not specify more *template-argument* than
 there are corresponding *template-parameter* unless one of the
 *template-parameter* is a template parameter pack.
 
-\[*Example 4*:
+\[*Example 3*:
 
 ``` cpp
 template<class X, class Y, class Z> X f(Y,Z);
@@ -5784,7 +5784,7 @@ Template argument deduction can extend the sequence of template
 arguments corresponding to a template parameter pack, even when the
 sequence contains explicitly specified template arguments.
 
-\[*Example 5*:
+\[*Example 4*:
 
 ``` cpp
 template<class ... Types> void f(Types ... values);
@@ -5805,7 +5805,7 @@ template arguments shall have values. The values can be explicitly
 specified or, in some cases, be deduced from the use or obtained from
 default *template-argument*.
 
-\[*Example 6*:
+\[*Example 1*:
 
 ``` cpp
 void f(Array<dcomplex>& cv, Array<int>& ci) {
@@ -5833,14 +5833,14 @@ the corresponding template parameters as specified below.
 After this substitution is performed, the function parameter type
 adjustments described in  [[dcl.fct]] are performed.
 
-\[*Example 7*: A parameter type of “`void (const int, int[5])`” becomes
+\[*Example 2*: A parameter type of “`void (const int, int[5])`” becomes
 “`void(*)(int,int*)`”. — *end example*\]
 
-\[*Note 5*: A top-level qualifier in a function parameter declaration
+\[*Note 1*: A top-level qualifier in a function parameter declaration
 does not affect the function type but still affects the type of the
 function parameter variable within the function. — *end note*\]
 
-\[*Example 8*:
+\[*Example 3*:
 
 ``` cpp
 template <class T> void f(T t);
@@ -5867,7 +5867,7 @@ int main() {
 
 — *end example*\]
 
-\[*Note 6*: `f<int>(1)` and `f<const int>(1)` call distinct functions
+\[*Note 2*: `f<int>(1)` and `f<const int>(1)` call distinct functions
 even though both of the functions called have the same function
 type. — *end note*\]
 
@@ -5879,7 +5879,7 @@ substituting the template arguments determined for preceding template
 parameters into the default argument. If the substitution results in an
 invalid type, as described above, type deduction fails.
 
-\[*Example 9*:
+\[*Example 4*:
 
 ``` cpp
 template <class T, class U = double>
@@ -5911,7 +5911,7 @@ substitution of any explicitly-specified template arguments is checked
 against its corresponding argument; if the corresponding argument cannot
 be implicitly converted to the parameter type, type deduction fails.
 
-\[*Note 7*: Overload resolution will check the other parameters,
+\[*Note 3*: Overload resolution will check the other parameters,
 including parameters with dependent types in which no template
 parameters participate in template argument deduction and parameters
 that became non-dependent due to substitution of explicitly-specified
@@ -5922,7 +5922,7 @@ parameters in the function type are replaced with the corresponding
 deduced or default argument values. If the substitution results in an
 invalid type, as described above, type deduction fails.
 
-\[*Example 10*:
+\[*Example 5*:
 
 ``` cpp
 template <class T> struct Z {
@@ -5974,12 +5974,12 @@ same function template would cause template instantiations to occur in a
 different order or not at all, the program is ill-formed; no diagnostic
 required.
 
-\[*Note 8*: The equivalent substitution in exception specifications is
+\[*Note 4*: The equivalent substitution in exception specifications is
 done only when the *noexcept-specifier* is instantiated, at which point
 a program is ill-formed if the substitution results in an invalid type
 or expression. — *end note*\]
 
-\[*Example 11*:
+\[*Example 6*:
 
 ``` cpp
 template <class T> struct A { using X = typename T::X; };
@@ -6005,14 +6005,14 @@ deduction fails. An invalid type or expression is one that would be
 ill-formed, with a diagnostic required, if written in the same context
 using the substituted arguments.
 
-\[*Note 9*: If no diagnostic is required, the program is still
+\[*Note 5*: If no diagnostic is required, the program is still
 ill-formed. Access checking is done as part of the substitution
 process. — *end note*\]
 
 Invalid types and expressions can result in a deduction failure only in
 the immediate context of the deduction substitution loci.
 
-\[*Note 10*: The substitution into types and expressions can result in
+\[*Note 6*: The substitution into types and expressions can result in
 effects such as the instantiation of class template specializations
 and/or function template specializations, the generation of
 implicitly-defined functions, etc. Such effects are not in the
@@ -6023,14 +6023,14 @@ A *lambda-expression* appearing in a function type or a template
 parameter is not considered part of the immediate context for the
 purposes of template argument deduction.
 
-\[*Note 11*:
+\[*Note 7*:
 
 The intent is to avoid requiring implementations to deal with
 substitution failure involving arbitrary statements.
 
 — *end note*\]
 
-\[*Example 12*:
+\[*Example 7*:
 
 ``` cpp
 struct X { };
@@ -6047,7 +6047,7 @@ X x3 = f(x1, x2);   // deduction fails on \#1 (cannot add X+X), calls \#2
 
 — *end example*\]
 
-\[*Note 12*:
+\[*Note 8*:
 
 Type deduction can fail for the following reasons:
 
@@ -6091,7 +6091,7 @@ Type deduction can fail for the following reasons:
 
 — *end note*\]
 
-\[*Example 13*:
+\[*Example 8*:
 
 In the following example, assuming a `signed char` cannot represent the
 value 1000, a narrowing conversion [[dcl.init.list]] would be required
@@ -6126,7 +6126,7 @@ $\tcode{P}'\tcode{[N]}$ case, if `N` is a non-type template parameter,
 initializer list argument causes the parameter to be considered a
 non-deduced context [[temp.deduct.type]].
 
-\[*Example 14*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> void f(std::initializer_list<T>);
@@ -6173,7 +6173,7 @@ in the template parameter packs expanded by the function parameter pack.
 When a function parameter pack appears in a non-deduced context
 [[temp.deduct.type]], the type of that pack is never deduced.
 
-\[*Example 15*:
+\[*Example 2*:
 
 ``` cpp
 template<class ... Types> void f(Types& ...);
@@ -6208,7 +6208,7 @@ If `P` is a cv-qualified type, the top-level cv-qualifiers of `P`’s type
 are ignored for type deduction. If `P` is a reference type, the type
 referred to by `P` is used for type deduction.
 
-\[*Example 16*:
+\[*Example 3*:
 
 ``` cpp
 template<class T> int f(const T&);
@@ -6228,7 +6228,7 @@ class template (during class template argument deduction
 argument is an lvalue, the type “lvalue reference to `A`” is used in
 place of `A` for type deduction.
 
-\[*Example 17*:
+\[*Example 4*:
 
 ``` cpp
 template <class T> int f(T&& heisenreference);
@@ -6303,11 +6303,11 @@ These alternatives are considered only if type deduction would otherwise
 fail. If they yield more than one possible deduced `A`, the type
 deduction fails.
 
-\[*Note 13*: If a *template-parameter* is not used in any of the
-function parameters of a function template, or is used only in a
-non-deduced context, its corresponding *template-argument* cannot be
-deduced from a function call and the *template-argument* must be
-explicitly specified. — *end note*\]
+\[*Note 1*: If a *template-parameter* is not used in any of the function
+parameters of a function template, or is used only in a non-deduced
+context, its corresponding *template-argument* cannot be deduced from a
+function call and the *template-argument* must be explicitly
+specified. — *end note*\]
 
 When `P` is a function type, function pointer type, or
 pointer-to-member-function type:
@@ -6322,7 +6322,7 @@ pointer-to-member-function type:
   deduction. If deduction succeeds for more than one member of the
   overload set the parameter is treated as a non-deduced context.
 
-\[*Example 18*:
+\[*Example 5*:
 
 ``` cpp
 // Only one function of an overload set matches the call so the function parameter is a deduced context.
@@ -6334,7 +6334,7 @@ int i = f(g);       // calls f(int (*)(int))
 
 — *end example*\]
 
-\[*Example 19*:
+\[*Example 6*:
 
 ``` cpp
 // Ambiguous deduction causes the second function parameter to be a non-deduced context.
@@ -6346,7 +6346,7 @@ int i = f(1, g);    // calls f(int, int (*)(int))
 
 — *end example*\]
 
-\[*Example 20*:
+\[*Example 7*:
 
 ``` cpp
 // The overload set contains a template, causing the second function parameter to be a non-deduced context.
@@ -6430,7 +6430,7 @@ Two sets of types are used to determine the partial ordering. For each
 of the templates involved there is the original function type and the
 transformed function type.
 
-\[*Note 14*: The creation of the transformed type is described in 
+\[*Note 1*: The creation of the transformed type is described in 
 [[temp.func.order]]. — *end note*\]
 
 The deduction process uses the transformed type as the argument template
@@ -6490,7 +6490,7 @@ type of the parameter template. If deduction succeeds for a given type,
 the type from the argument template is considered to be at least as
 specialized as the type from the parameter template.
 
-\[*Example 21*:
+\[*Example 1*:
 
 ``` cpp
 template<class... Args>           void f(Args... args);         // \#1
@@ -6536,10 +6536,10 @@ values, but for partial ordering purposes a template parameter may
 remain without a value provided it is not used in the types being used
 for partial ordering.
 
-\[*Note 15*: A template parameter used in a non-deduced context is
+\[*Note 2*: A template parameter used in a non-deduced context is
 considered used. — *end note*\]
 
-\[*Example 22*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> T f(int);            // \#1
@@ -6551,11 +6551,11 @@ void g() {
 
 — *end example*\]
 
-\[*Note 16*: Partial ordering of function templates containing template
+\[*Note 3*: Partial ordering of function templates containing template
 parameter packs is independent of the number of deduced arguments for
 those template parameter packs. — *end note*\]
 
-\[*Example 23*:
+\[*Example 3*:
 
 ``` cpp
 template<class ...> struct Tuple { };
@@ -6619,7 +6619,7 @@ explicitly specified. If a template parameter is used only in
 non-deduced contexts and is not explicitly specified, template argument
 deduction fails.
 
-\[*Note 17*: Under [[temp.deduct.call]], if `P` contains no
+\[*Note 1*: Under [[temp.deduct.call]], if `P` contains no
 *template-parameter* that appear in deduced contexts, no deduction is
 done, so `P` and `A` need not have the same form. — *end note*\]
 
@@ -6670,14 +6670,14 @@ context, all of the types that comprise that type name are also
 non-deduced. However, a compound type can include both deduced and
 non-deduced types.
 
-\[*Example 24*: If a type is specified as `A<T>::B<T2>`, both `T` and
+\[*Example 1*: If a type is specified as `A<T>::B<T2>`, both `T` and
 `T2` are non-deduced. Likewise, if a type is specified as
 `A<I+J>::X<T>`, `I`, `J`, and `T` are non-deduced. If a type is
 specified as `void` `f(typename` `A<T>::B,` `A<T>)`, the `T` in
 `A<T>::B` is non-deduced but the `T` in `A<T>` is
 deduced. — *end example*\]
 
-\[*Example 25*:
+\[*Example 2*:
 
 Here is an example in which different parameter/argument pairs produce
 inconsistent template argument deductions:
@@ -6797,8 +6797,8 @@ where
   *noexcept-specifier*’s operand satisfies the rules for an `\opt{i}`
   above.
 
-\[*Note 18*: If a type matches such a form but contains no `T`s, `i`s,
-or `TT`s, deduction is not possible. — *end note*\]
+\[*Note 2*: If a type matches such a form but contains no `T`s, `i`s, or
+`TT`s, deduction is not possible. — *end note*\]
 
 Similarly, `<T>` represents template argument lists where at least one
 argument contains a `T`, `<i>` represents template argument lists where
@@ -6824,7 +6824,7 @@ expansion:
 - otherwise, if $\texttt{P}_i$ is not a pack expansion, template
   argument deduction fails.
 
-\[*Example 26*:
+\[*Example 3*:
 
 ``` cpp
 template<class T1, class... Z> class S;                                 // \#1
@@ -6854,11 +6854,11 @@ $\texttt{A}_i$ is an lvalue reference, in which case the type of
 $\texttt{P}_i$ is changed to be the template parameter type (i.e., `T&&`
 is changed to simply `T`).
 
-\[*Note 19*: As a result, when $\texttt{P}_i$ is `T&&` and
-$\texttt{A}_i$ is `X&`, the adjusted $\texttt{P}_i$ will be `T`, causing
-`T` to be deduced as `X&`. — *end note*\]
+\[*Note 3*: As a result, when $\texttt{P}_i$ is `T&&` and $\texttt{A}_i$
+is `X&`, the adjusted $\texttt{P}_i$ will be `T`, causing `T` to be
+deduced as `X&`. — *end note*\]
 
-\[*Example 27*:
+\[*Example 4*:
 
 ``` cpp
 template <class T> void f(T&&);
@@ -6886,7 +6886,7 @@ $\texttt{A}_i$ was originally a function parameter pack:
 - otherwise, if $\texttt{P}_i$ is not a function parameter pack,
   template argument deduction fails.
 
-\[*Example 28*:
+\[*Example 5*:
 
 ``` cpp
 template<class T, class... U> void f(T*, U...) { }  // \#1
@@ -6899,7 +6899,7 @@ template void f(int*);                              // selects \#1
 These forms can be used in the same way as `T` is for further
 composition of types.
 
-\[*Example 29*:
+\[*Example 6*:
 
 ``` cpp
 X<int> (*)(char[6])
@@ -6929,7 +6929,7 @@ parameter `P` that is declared with a dependent type is deduced from an
 expression, the template parameters in the type of `P` are deduced from
 the type of the value.
 
-\[*Example 30*:
+\[*Example 7*:
 
 ``` cpp
 template<long n> struct A { };
@@ -6948,7 +6948,7 @@ using R = C<A<2>>::Q;           // OK; T was deduced as long from the
 
 The type of `N` in the type `T[N]` is `std::size_t`.
 
-\[*Example 31*:
+\[*Example 8*:
 
 ``` cpp
 template<typename T> struct S;
@@ -6965,7 +6965,7 @@ using V = S<int[42]>::Q;        // OK; T was deduced as std::size_t from the typ
 The type of `B` in the *noexcept-specifier* `noexcept(B)` of a function
 type is `bool`.
 
-\[*Example 32*:
+\[*Example 9*:
 
 ``` cpp
 template<bool> struct A { };
@@ -6979,7 +6979,7 @@ B<f_nothrow> bn;                // OK, type of X deduced as bool
 
 — *end example*\]
 
-\[*Example 33*:
+\[*Example 10*:
 
 ``` cpp
 template<class T, T i> void f(int (&a)[i]);
@@ -6991,7 +6991,7 @@ void g() {
 
 — *end example*\]
 
-\[*Note 20*:
+\[*Note 4*:
 
 Except for reference and pointer types, a major array bound is not part
 of a function parameter type and cannot be deduced from an argument:
@@ -7013,7 +7013,7 @@ void g() {
 
 — *end note*\]
 
-\[*Note 21*:
+\[*Note 5*:
 
 If, in the declaration of a function template with a non-type template
 parameter, the non-type template parameter is used in a subexpression in
@@ -7022,7 +7022,7 @@ specified above.
 
 — *end note*\]
 
-\[*Note 22*:
+\[*Note 6*:
 
 Template parameters do not participate in template argument deduction if
 they are used only in non-deduced contexts. For example,
@@ -7051,7 +7051,7 @@ type, deduction fails.
 If `P` has a form that includes `noexcept(i)` and the type of `i` is not
 `bool`, deduction fails.
 
-\[*Example 34*:
+\[*Example 11*:
 
 ``` cpp
 template<int i> class A { ... };
@@ -7075,7 +7075,7 @@ void k2() {
 A *template-argument* can be deduced from a function, pointer to
 function, or pointer-to-member-function type.
 
-\[*Example 35*:
+\[*Example 12*:
 
 ``` cpp
 template<class T> void f(void(*)(T,int));
@@ -7097,7 +7097,7 @@ int m() {
 A template *type-parameter* cannot be deduced from the type of a
 function default argument.
 
-\[*Example 36*:
+\[*Example 13*:
 
 ``` cpp
 template <class T> void f(T = 5, T = 7);
@@ -7114,7 +7114,7 @@ The *template-argument* corresponding to a template *template-parameter*
 is deduced from the type of the *template-argument* of a class template
 specialization used in the argument list of a function call.
 
-\[*Example 37*:
+\[*Example 14*:
 
 ``` cpp
 template <template <class T> class X> struct A { };
@@ -7126,11 +7126,11 @@ f(ab);              // calls f(A<B>)
 
 — *end example*\]
 
-\[*Note 23*: Template argument deduction involving parameter packs
+\[*Note 7*: Template argument deduction involving parameter packs
 [[temp.variadic]] can deduce zero or more arguments for each parameter
 pack. — *end note*\]
 
-\[*Example 38*:
+\[*Example 15*:
 
 ``` cpp
 template<class> struct X { };
@@ -7195,7 +7195,7 @@ the non-template functions found by name lookup. The synthesized
 declarations are treated like any other functions in the remainder of
 overload resolution, except as explicitly noted in  [[over.match.best]].
 
-\[*Example 39*:
+\[*Example 1*:
 
 ``` cpp
 template<class T> T max(T a, T b) { return a>b?a:b; }
@@ -7219,7 +7219,7 @@ conversion of `char` to `int` for `c`.
 
 — *end example*\]
 
-\[*Example 40*:
+\[*Example 2*:
 
 Here is an example involving conversions on a function argument involved
 in *template-argument* deduction:
@@ -7237,7 +7237,7 @@ void g(B<int>& bi, D<int>& di) {
 
 — *end example*\]
 
-\[*Example 41*:
+\[*Example 3*:
 
 Here is an example involving conversions on a function argument not
 involved in *template-parameter* deduction:
@@ -7262,7 +7262,7 @@ enter the specialization in a set of candidate functions. Therefore only
 the function template declaration is needed to resolve a call for which
 a template specialization is a candidate.
 
-\[*Example 42*:
+\[*Example 4*:
 
 ``` cpp
 template<class T> void f(T);    // declaration

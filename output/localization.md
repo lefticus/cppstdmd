@@ -376,17 +376,17 @@ and pass it along to their `facet` base class constructor. All
 one-argument constructors defined in this Clause are *explicit*,
 preventing their participation in implicit conversions.
 
-For some standard facets a standard “$\ldots$`_byname`” class, derived
-from it, implements the virtual function semantics equivalent to that
-facet of the locale constructed by `locale(const char*)` with the same
-name. Each such facet provides a constructor that takes a `const char*`
-argument, which names the locale, and a `refs` argument, which is passed
-to the base class constructor. Each such facet also provides a
-constructor that takes a `string` argument `str` and a `refs` argument,
-which has the same effect as calling the first constructor with the two
-arguments `str.c_str()` and `refs`. If there is no “$\ldots$`_byname`”
-version of a facet, the base class implements named locale semantics
-itself by reference to other facets.
+For some standard facets a standard “…`_byname`” class, derived from it,
+implements the virtual function semantics equivalent to that facet of
+the locale constructed by `locale(const char*)` with the same name. Each
+such facet provides a constructor that takes a `const char*` argument,
+which names the locale, and a `refs` argument, which is passed to the
+base class constructor. Each such facet also provides a constructor that
+takes a `string` argument `str` and a `refs` argument, which has the
+same effect as calling the first constructor with the two arguments
+`str.c_str()` and `refs`. If there is no “…`_byname`” version of a
+facet, the base class implements named locale semantics itself by
+reference to other facets.
 
 ##### Class `locale::id` <a id="locale.id">[[locale.id]]</a>
 
@@ -405,7 +405,7 @@ The class `locale::id` provides identification of a locale facet
 interface, used as an index for lookup and to encapsulate
 initialization.
 
-\[*Note 2*: Because facets are used by iostreams, potentially while
+\[*Note 1*: Because facets are used by iostreams, potentially while
 static constructors are running, their initialization cannot depend on
 programmed static initialization. One initialization strategy is for
 `locale` to initialize each facet’s `id` member the first time an
@@ -424,7 +424,7 @@ locale() noexcept;
 facets have virtual function semantics identical to those of
 `locale::classic()`.
 
-\[*Note 3*: This constructor yields a copy of the current global locale.
+\[*Note 1*: This constructor yields a copy of the current global locale.
 It is commonly used as a default argument for function parameters of
 type `const locale&`. — *end note*\]
 
@@ -554,7 +554,7 @@ use_facet<collate<charT>>(*this).compare(s1.data(), s1.data() + s1.size(),
 meets the requirements for a comparator predicate template
 argument [[algorithms]] applied to strings.
 
-\[*Example 2*:
+\[*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
 locale `loc` simply by [[alg.sort,vector]]:
@@ -585,7 +585,7 @@ otherwise, the effect on the C locale, if any, is
 *Remarks:* No library function other than `locale::global()` affects the
 value returned by `locale()`.
 
-\[*Note 4*: See  [[c.locales]] for data race considerations when
+\[*Note 1*: See  [[c.locales]] for data race considerations when
 `setlocale` is invoked. — *end note*\]
 
 ``` cpp
@@ -2555,7 +2555,7 @@ the first of the following conditions holds:
   evaluates `++fmt, ++s` and continues looping. Otherwise, the function
   evaluates `err = ios_base::failbit`.
 
-\[*Note 3*: The function uses the `ctype<charT>` facet installed in
+\[*Note 1*: The function uses the `ctype<charT>` facet installed in
 `f`’s locale to determine valid whitespace characters. It is unspecified
 by what means the function performs case-insensitive comparison or
 whether multi-character sequences are considered while doing
@@ -2762,7 +2762,7 @@ valid format sequence identified, calls
 
 The second form calls `do_put(s, str, fill, t, format, modifier)`.
 
-\[*Note 4*: The `fill` argument can be used in the
+\[*Note 1*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
 reasonable default for this argument. — *end note*\]
 
@@ -2784,13 +2784,13 @@ function `strftime()`, except that the sequence of characters produced
 for those specifiers that are described as depending on the C locale are
 instead *implementation-defined*.
 
-\[*Note 5*: Interpretation of the `modifier` argument is
+\[*Note 2*: Interpretation of the `modifier` argument is
 implementation-defined. — *end note*\]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
 
-\[*Note 6*: The `fill` argument can be used in the
+\[*Note 3*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
 reasonable default for this argument. — *end note*\]
 
@@ -2899,7 +2899,7 @@ preceded by a minus sign (as produced by `ct.widen(c)` where `c` is
 `’-’` or in the range from `’0’` through `’9’` (inclusive)) stored in
 `digits`.
 
-\[*Example 2*: The sequence `$1,056.23` in a common United States locale
+\[*Example 1*: The sequence `$1,056.23` in a common United States locale
 would yield, for `units`, `105623`, or, for `digits`,
 `"105623"`. — *end example*\]
 
@@ -2925,7 +2925,7 @@ If the first character (if any) in the string `pos` returned by
 in the format pattern, it is consumed and any remaining characters in
 the string are required after all the other format components.
 
-\[*Example 3*: If `showbase` is off, then for a `neg` value of `"()"`
+\[*Example 2*: If `showbase` is off, then for a `neg` value of `"()"`
 and a currency symbol of `"L"`, in `"(100 L)"` the `"L"` is consumed;
 but if `neg` is `"-"`, the `"L"` in `"-100 L"` is not
 consumed. — *end example*\]
@@ -3049,7 +3049,7 @@ in the formatting pattern; otherwise if `(af == str.left)` is `true`,
 they are placed after the other characters; otherwise, they are placed
 before the other characters.
 
-\[*Note 7*: It is possible, with some combinations of format patterns
+\[*Note 1*: It is possible, with some combinations of format patterns
 and flag values, to produce output that cannot be parsed using
 `num_get<>::get`. — *end note*\]
 
@@ -3224,7 +3224,7 @@ string_type do_curr_symbol() const;
 
 *Returns:* A string to use as the currency identifier symbol.
 
-\[*Note 8*: For specializations where the second template parameter is
+\[*Note 1*: For specializations where the second template parameter is
 `true`, this is typically four characters long: a three-letter code as
 specified by ISO 4217 followed by a space. — *end note*\]
 

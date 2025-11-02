@@ -297,7 +297,7 @@ template<class Derived, class Base>
     is_convertible_v<const volatile Derived*, const volatile Base*>;
 ```
 
-\[*Note 2*: `derived_from``<Derived, Base>` is satisfied if and only if
+\[*Note 1*: `derived_from``<Derived, Base>` is satisfied if and only if
 `Derived` is publicly and unambiguously derived from `Base`, or
 `Derived` and `Base` are the same class type ignoring
 cv-qualifiers. — *end note*\]
@@ -351,7 +351,7 @@ and denotes a type `C` such that both `convertible_to<T, C>` and
 `convertible_to<U, C>` are modeled, then `T` and `U` share a
 *common reference type*, `C`.
 
-\[*Note 3*: `C` can be the same as `T` or `U`, or can be a different
+\[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` can be a reference type. — *end note*\]
 
 ``` cpp
@@ -373,7 +373,7 @@ equality-preserving expressions [[concepts.equality]] such that
 
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
-\[*Note 4*: Users can customize the behavior of `common_reference_with`
+\[*Note 2*: Users can customize the behavior of `common_reference_with`
 by specializing the `basic_common_reference` class
 template [[meta.trans.other]]. — *end note*\]
 
@@ -382,7 +382,7 @@ template [[meta.trans.other]]. — *end note*\]
 If `T` and `U` can both be explicitly converted to some third type, `C`,
 then `T` and `U` share a *common type*, `C`.
 
-\[*Note 5*: `C` can be the same as `T` or `U`, or can be a different
+\[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` is not necessarily unique. — *end note*\]
 
 ``` cpp
@@ -414,7 +414,7 @@ only if:
 
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
-\[*Note 6*: Users can customize the behavior of `common_with` by
+\[*Note 2*: Users can customize the behavior of `common_with` by
 specializing the `common_type` class
 template [[meta.trans.other]]. — *end note*\]
 
@@ -431,11 +431,11 @@ template<class T>
   concept floating_point = is_floating_point_v<T>;
 ```
 
-\[*Note 7*: `signed_integral` can be modeled even by types that are not
+\[*Note 1*: `signed_integral` can be modeled even by types that are not
 signed integer types [[basic.fundamental]]; for example,
 `char`. — *end note*\]
 
-\[*Note 8*: `unsigned_integral` can be modeled even by types that are
+\[*Note 2*: `unsigned_integral` can be modeled even by types that are
 not unsigned integer types [[basic.fundamental]]; for example,
 `bool`. — *end note*\]
 
@@ -475,7 +475,7 @@ Let:
   - Otherwise, if `rhs` is a glvalue, the object to which it refers is
     not modified.
 
-\[*Note 9*: Assignment need not be a total
+\[*Note 1*: Assignment need not be a total
 function [[structure.requirements]]; in particular, if assignment to an
 object `x` can result in a modification of some other object `y`, then
 `x = y` is likely not in the domain of `=`. — *end note*\]
@@ -486,7 +486,7 @@ Let `t1` and `t2` be equality-preserving expressions that denote
 distinct equal objects of type `T`, and let `u1` and `u2` similarly
 denote distinct equal objects of type `U`.
 
-\[*Note 10*: `t1` and `u1` can denote distinct objects, or the same
+\[*Note 1*: `t1` and `u1` can denote distinct objects, or the same
 object. — *end note*\]
 
 An operation *exchanges the values* denoted by `t1` and `u1` if and only
@@ -559,7 +559,7 @@ expression `S` determined as follows:
   `ranges::swap(E1, E2)` appears in the immediate context of a template
   instantiation. — *end note*\]
 
-\[*Note 11*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
+\[*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type
 `void`. — *end note*\]
 
@@ -580,7 +580,7 @@ template<class T, class U>
     };
 ```
 
-\[*Note 12*: The semantics of the `swappable` and `swappable_with`
+\[*Note 3*: The semantics of the `swappable` and `swappable_with`
 concepts are fully defined by the `ranges::swap` customization point
 object. — *end note*\]
 
@@ -642,7 +642,7 @@ template<class T>
   concept destructible = is_nothrow_destructible_v<T>;
 ```
 
-\[*Note 13*: Unlike the *Cpp17Destructible*
+\[*Note 1*: Unlike the *Cpp17Destructible*
 requirements ( [[cpp17.destructible]]), this concept forbids destructors
 that are potentially throwing, even if a particular invocation of the
 destructor does not actually throw. — *end note*\]
@@ -899,7 +899,7 @@ Let `a` and `b` be objects of type `T`. `T` models `equality_comparable`
 only if `bool(a == b)` is `true` when `a` is equal to
 `b`[[concepts.equality]], and `false` otherwise.
 
-\[*Note 2*: The requirement that the expression `a == b` is
+\[*Note 1*: The requirement that the expression `a == b` is
 equality-preserving implies that `==` is transitive and
 symmetric. — *end note*\]
 
@@ -1056,7 +1056,7 @@ function object or the arguments.
 \[*Note 1*: This requirement supersedes the annotation in the definition
 of `invocable`. — *end note*\]
 
-\[*Example 2*: A random number generator does not model
+\[*Example 1*: A random number generator does not model
 `regular_invocable`. — *end example*\]
 
 \[*Note 2*: The distinction between `invocable` and `regular_invocable`
@@ -1110,7 +1110,7 @@ partial ordering. If we define `equiv(a, b)` as
 
 - `equiv(a, b) && equiv(b, c)` implies `equiv(a, c)`
 
-\[*Note 3*:
+\[*Note 1*:
 
 Under these conditions, it can be shown that
 

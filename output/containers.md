@@ -270,7 +270,7 @@ c == b
 
 *Returns:* `equal(c.begin(), c.end(), b.begin(), b.end())`
 
-\[*Note 2*: The algorithm `equal` is defined in
+\[*Note 1*: The algorithm `equal` is defined in
 [[alg.equal]]. — *end note*\]
 
 *Complexity:* Constant if `c.size() != b.size()`, linear otherwise.
@@ -358,7 +358,7 @@ semantics.
 Unless otherwise specified, all containers defined in this Clause obtain
 memory using an allocator (see  [[allocator.requirements]]).
 
-\[*Note 3*: In particular, containers and iterators do not store
+\[*Note 2*: In particular, containers and iterators do not store
 references to allocated elements other than through the allocator’s
 pointer type, i.e., as objects of type `P` or
 `pointer_traits<P>::template rebind<\unspec>`, where `P` is
@@ -373,7 +373,7 @@ belonging to the container being moved. Such move construction of the
 allocator shall not exit via an exception. All other constructors for
 these container types take a `const allocator_type&` argument.
 
-\[*Note 4*: If an invocation of a constructor uses the default value of
+\[*Note 3*: If an invocation of a constructor uses the default value of
 an optional allocator argument, then the allocator type must support
 value-initialization. — *end note*\]
 
@@ -552,7 +552,7 @@ and `<` is a total ordering relationship.
 *Returns:*
 `lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(),)`
 
-\[*Note 5*: The algorithm `lexicographical_compare_three_way` is defined
+\[*Note 1*: The algorithm `lexicographical_compare_three_way` is defined
 in [[algorithms]]. — *end note*\]
 
 *Complexity:* Linear.
@@ -631,7 +631,7 @@ specializations of `allocator<T>` are not instantiated:
   allocator_traits<A>::destroy(m, p)
   ```
 
-\[*Note 6*: A container calls
+\[*Note 1*: A container calls
 `allocator_traits<A>::construct(m, p, args)` to construct an element at
 `p` using `args`, with `m == get_allocator()`. The default `construct`
 in `allocator` will call `::new((void*)p) T(args)`, but specialized
@@ -779,7 +779,7 @@ avoid data races when the contents of the contained object in different
 elements in the same container, excepting `vector<bool>`, are modified
 concurrently.
 
-\[*Note 7*: For a `vector<int> x` with a size greater than one,
+\[*Note 1*: For a `vector<int> x` with a size greater than one,
 `x[1] = 5` and `*x.begin() = 10` can be executed concurrently without a
 data race, but `x[0] = 5` and `*x.begin() = 10` executed concurrently
 can result in a data race. As an exception to the general rule, for a
@@ -799,7 +799,7 @@ easy to construct abstract data types, such as `stack`s, `queue`s,
 the basic sequence container kinds (or out of other program-defined
 sequence containers).
 
-\[*Note 8*: The sequence containers offer the programmer different
+\[*Note 1*: The sequence containers offer the programmer different
 complexity trade-offs. `vector` is appropriate in most circumstances.
 `array` has a fixed size known during translation. `list` or
 `forward_list` support frequent insertions and deletions from the middle
@@ -924,7 +924,7 @@ a.emplace(p, args)
 *Effects:* Inserts an object of type `T` constructed with
 `std::forward<Args>(args)...` before `p`.
 
-\[*Note 9*: `args` can directly or indirectly refer to a value in
+\[*Note 2*: `args` can directly or indirectly refer to a value in
 `a`. — *end note*\]
 
 *Returns:* An iterator that points to the new element constructed from
@@ -1255,7 +1255,7 @@ requirements.
 *Effects:* Inserts copies of elements in `rg` before `begin()`. Each
 iterator in the range `rg` is dereferenced exactly once.
 
-\[*Note 10*: The order of elements in `rg` is not
+\[*Note 3*: The order of elements in `rg` is not
 reversed. — *end note*\]
 
 *Remarks:* Required for `deque`, `forward_list`, and `list`.
@@ -1596,7 +1596,7 @@ by the comparison object. That is, two keys `k1` and `k2` are considered
 to be equivalent if for the comparison object `comp`,
 `comp(k1, k2) == false && comp(k2, k1) == false`.
 
-\[*Note 11*: This is not necessarily the same as the result of
+\[*Note 1*: This is not necessarily the same as the result of
 `k1 == k2`. — *end note*\]
 
 For any two keys `k1` and `k2` in the same container, calling
@@ -1620,7 +1620,7 @@ type, both `iterator` and `const_iterator` are constant iterators. It is
 unspecified whether or not `iterator` and `const_iterator` are the same
 type.
 
-\[*Note 12*: `iterator` and `const_iterator` have identical semantics in
+\[*Note 2*: `iterator` and `const_iterator` have identical semantics in
 this case, and `iterator` is convertible to `const_iterator`. Users can
 avoid violating the one-definition rule by always using `const_iterator`
 in their function parameter lists. — *end note*\]
@@ -1704,7 +1704,7 @@ that for `map` and `multimap`, the requirements placed on `value_type`
 in [[container.alloc.reqmts]] apply instead to `key_type` and
 `mapped_type`.
 
-\[*Note 13*: For example, in some cases `key_type` and `mapped_type` are
+\[*Note 3*: For example, in some cases `key_type` and `mapped_type` are
 required to be *Cpp17CopyAssignable* even though the associated
 `value_type`, `pair<const key_type, mapped_type>`, is not
 *Cpp17CopyAssignable*. — *end note*\]
@@ -2475,7 +2475,7 @@ key equality predicate `pred(k1, k2)` is valid and returns `true` when
 passed those values. If `k1` and `k2` are equivalent, the container’s
 hash function shall return the same value for both.
 
-\[*Note 14*: Thus, when an unordered associative container is
+\[*Note 1*: Thus, when an unordered associative container is
 instantiated with a non-default `Pred` parameter it usually needs a
 non-default `Hash` parameter as well. — *end note*\]
 
@@ -2506,7 +2506,7 @@ type, both `iterator` and `const_iterator` are constant iterators. It is
 unspecified whether or not `iterator` and `const_iterator` are the same
 type.
 
-\[*Note 15*: `iterator` and `const_iterator` have identical semantics in
+\[*Note 2*: `iterator` and `const_iterator` have identical semantics in
 this case, and `iterator` is convertible to `const_iterator`. Users can
 avoid violating the one-definition rule by always using `const_iterator`
 in their function parameter lists. — *end note*\]
@@ -2604,7 +2604,7 @@ that for `unordered_map` and `unordered_multimap`, the requirements
 placed on `value_type` in [[container.alloc.reqmts]] apply instead to
 `key_type` and `mapped_type`.
 
-\[*Note 16*: For example, `key_type` and `mapped_type` are sometimes
+\[*Note 3*: For example, `key_type` and `mapped_type` are sometimes
 required to be *Cpp17CopyAssignable* even though the associated
 `value_type`, `pair<const key_type, mapped_type>`, is not
 *Cpp17CopyAssignable*. — *end note*\]
@@ -2658,7 +2658,7 @@ typename X::local_iterator
 *Result:* An iterator type whose category, value type, difference type,
 and pointer and reference types are the same as `X::iterator`’s.
 
-\[*Note 17*: A `local_iterator` object can be used to iterate through a
+\[*Note 4*: A `local_iterator` object can be used to iterate through a
 single bucket, but cannot be used to iterate across
 buckets. — *end note*\]
 
@@ -2669,7 +2669,7 @@ typename X::const_local_iterator
 *Result:* An iterator type whose category, value type, difference type,
 and pointer and reference types are the same as `X::const_iterator`’s.
 
-\[*Note 18*: A `const_local_iterator` object can be used to iterate
+\[*Note 5*: A `const_local_iterator` object can be used to iterate
 through a single bucket, but cannot be used to iterate across
 buckets. — *end note*\]
 
@@ -4264,7 +4264,7 @@ void shrink_to_fit();
 *Effects:* `shrink_to_fit` is a non-binding request to reduce memory use
 but does not change the size of the sequence.
 
-\[*Note 2*: The request is non-binding to allow latitude for
+\[*Note 1*: The request is non-binding to allow latitude for
 implementation-specific optimizations. — *end note*\]
 
 If the size is equal to the old capacity, or if an exception is thrown
@@ -4338,7 +4338,7 @@ erases neither the first element nor the last element of a deque
 invalidates the past-the-end iterator and all iterators and references
 to all the elements of the deque.
 
-\[*Note 3*: `pop_front` and `pop_back` are erase
+\[*Note 1*: `pop_front` and `pop_back` are erase
 operations. — *end note*\]
 
 *Throws:* Nothing unless an exception is thrown by the assignment
@@ -4391,7 +4391,7 @@ allows constant time insert and erase operations anywhere within the
 sequence, with storage management handled automatically. Fast random
 access to list elements is not supported.
 
-\[*Note 4*: It is intended that `forward_list` have zero space or time
+\[*Note 1*: It is intended that `forward_list` have zero space or time
 overhead relative to a hand-written C-style singly linked list. Features
 that would conflict with that goal have been omitted. — *end note*\]
 
@@ -4405,7 +4405,7 @@ requirements [[sequence.reqmts]]. Descriptions are provided here only
 for operations on `forward_list` that are not described in that table or
 for operations where there is additional semantic information.
 
-\[*Note 5*: Modifying any list requires access to the element preceding
+\[*Note 2*: Modifying any list requires access to the element preceding
 the first element of interest, but in a `forward_list` there is no
 constant-time way to access a preceding element. For this reason,
 `erase_after` and `splice_after` take fully-open ranges, not semi-open
@@ -4657,7 +4657,7 @@ template<container-compatible-range<T> R>
 *Effects:* Inserts a copy of each element of `rg` at the beginning of
 the list.
 
-\[*Note 6*: The order of elements is not reversed. — *end note*\]
+\[*Note 1*: The order of elements is not reversed. — *end note*\]
 
 ``` cpp
 void pop_front();
@@ -5748,7 +5748,7 @@ most linear time in the size of the sequence.
 iterators referring to the elements in the sequence, as well as the
 past-the-end iterator.
 
-\[*Note 7*: If no reallocation happens, they remain
+\[*Note 1*: If no reallocation happens, they remain
 valid. — *end note*\]
 
 No reallocation shall take place during insertions that happen after a
@@ -5764,7 +5764,7 @@ constexpr void shrink_to_fit();
 *Effects:* `shrink_to_fit` is a non-binding request to reduce
 `capacity()` to `size()`.
 
-\[*Note 8*: The request is non-binding to allow latitude for
+\[*Note 2*: The request is non-binding to allow latitude for
 implementation-specific optimizations. — *end note*\]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
@@ -5778,7 +5778,7 @@ sequence.
 iterators referring to the elements in the sequence as well as the
 past-the-end iterator.
 
-\[*Note 9*: If no reallocation happens, they remain
+\[*Note 3*: If no reallocation happens, they remain
 valid. — *end note*\]
 
 ``` cpp
@@ -11293,7 +11293,7 @@ all elements `e` in `c` for which E holds.
 exits via an exception, `c` is in a valid but unspecified
 state [[defns.valid]].
 
-\[*Note 4*: `c` still meets its invariants, but can be
+\[*Note 1*: `c` still meets its invariants, but can be
 empty. — *end note*\]
 
 ### Class template `flat_multimap` <a id="flat.multimap">[[flat.multimap]]</a>
@@ -11324,7 +11324,7 @@ associative container [[associative.reqmts]], except that:
   element from the map is linear, including the ones that take an
   insertion position iterator.
 
-\[*Note 5*: A `flat_multimap` does not meet the additional requirements
+\[*Note 1*: A `flat_multimap` does not meet the additional requirements
 of an allocator-aware container
 [[container.alloc.reqmts]]. — *end note*\]
 
@@ -11338,7 +11338,7 @@ Except as otherwise noted, operations on `flat_multimap` are equivalent
 to those of `flat_map`, except that `flat_multimap` operations do not
 remove or replace elements with equal keys.
 
-\[*Example 2*: `flat_multimap` constructors and emplace do not erase
+\[*Example 1*: `flat_multimap` constructors and emplace do not erase
 non-unique elements after sorting them. — *end example*\]
 
 A `flat_multimap` maintains the following invariants:
@@ -11353,7 +11353,7 @@ A `flat_multimap` maintains the following invariants:
 If any member function in [[flat.multimap.defn]] exits via an exception,
 the invariants are restored.
 
-\[*Note 6*: This can result in the `flat_multimap` being
+\[*Note 2*: This can result in the `flat_multimap` being
 emptied. — *end note*\]
 
 Any type `C` that meets the sequence container requirements
@@ -11363,7 +11363,7 @@ invocations of member functions `C::size` and `C::max_size` do not exit
 via an exception. In particular, `vector` [[vector]] and `deque`
 [[deque]] can be used.
 
-\[*Note 7*: `vector<bool>` is not a sequence container. — *end note*\]
+\[*Note 3*: `vector<bool>` is not a sequence container. — *end note*\]
 
 The program is ill-formed if `Key` is not the same type as
 `KeyContainer::value_type` or `T` is not the same type as
@@ -11815,7 +11815,7 @@ all elements `e` in `c` for which E holds.
 exits via an exception, `c` is in a valid but unspecified
 state [[defns.valid]].
 
-\[*Note 8*: `c` still meets its invariants, but can be
+\[*Note 1*: `c` still meets its invariants, but can be
 empty. — *end note*\]
 
 ### Class template `flat_set` <a id="flat.set">[[flat.set]]</a>
@@ -11844,7 +11844,7 @@ associative container [[associative.reqmts]], except that:
   element from the set is linear, including the ones that take an
   insertion position iterator.
 
-\[*Note 9*: A `flat_set` does not meet the additional requirements of an
+\[*Note 1*: A `flat_set` does not meet the additional requirements of an
 allocator-aware container, as described in
 [[container.alloc.reqmts]]. — *end note*\]
 
@@ -11864,14 +11864,14 @@ respect to the comparison object.
 If any member function in [[flat.set.defn]] exits via an exception, the
 invariant is restored.
 
-\[*Note 10*: This can result in the `flat_set`’s being
+\[*Note 2*: This can result in the `flat_set`’s being
 emptied. — *end note*\]
 
 Any sequence container [[sequence.reqmts]] supporting
 *Cpp17RandomAccessIterator* can be used to instantiate `flat_set`. In
 particular, `vector` [[vector]] and `deque` [[deque]] can be used.
 
-\[*Note 11*: `vector<bool>` is not a sequence container. — *end note*\]
+\[*Note 3*: `vector<bool>` is not a sequence container. — *end note*\]
 
 The program is ill-formed if `Key` is not the same type as
 `KeyContainer::value_type`.
@@ -12349,7 +12349,7 @@ in `c` for which E holds.
 exits via an exception, `c` is in a valid but unspecified
 state [[defns.valid]].
 
-\[*Note 12*: `c` still meets its invariants, but can be
+\[*Note 1*: `c` still meets its invariants, but can be
 empty. — *end note*\]
 
 ### Class template `flat_multiset` <a id="flat.multiset">[[flat.multiset]]</a>
@@ -12379,7 +12379,7 @@ associative container [[associative.reqmts]], except that:
   element from the set is linear, including the ones that take an
   insertion position iterator.
 
-\[*Note 13*: A `flat_multiset` does not meet the additional requirements
+\[*Note 1*: A `flat_multiset` does not meet the additional requirements
 of an allocator-aware container, as described in
 [[container.alloc.reqmts]]. — *end note*\]
 
@@ -12399,14 +12399,14 @@ respect to the comparison object.
 If any member function in [[flat.multiset.defn]] exits via an exception,
 the invariant is restored.
 
-\[*Note 14*: This can result in the `flat_multiset`’s being
+\[*Note 2*: This can result in the `flat_multiset`’s being
 emptied. — *end note*\]
 
 Any sequence container [[sequence.reqmts]] supporting
 *Cpp17RandomAccessIterator* can be used to instantiate `flat_multiset`.
 In particular, `vector` [[vector]] and `deque` [[deque]] can be used.
 
-\[*Note 15*: `vector<bool>` is not a sequence container. — *end note*\]
+\[*Note 3*: `vector<bool>` is not a sequence container. — *end note*\]
 
 The program is ill-formed if `Key` is not the same type as
 `KeyContainer::value_type`.
@@ -12859,7 +12859,7 @@ in `c` for which E holds.
 exits via an exception, `c` is in a valid but unspecified
 state [[defns.valid]].
 
-\[*Note 16*: `c` still meets its invariants, but can be
+\[*Note 1*: `c` still meets its invariants, but can be
 empty. — *end note*\]
 
 ### Container adaptors formatting <a id="container.adaptors.format">[[container.adaptors.format]]</a>
@@ -13637,7 +13637,7 @@ template<class OtherIndexType>
 
 - otherwise, equivalent to `return static_cast<index_type>(i);`.
 
-\[*Note 2*: This function will always return an integral type other than
+\[*Note 1*: This function will always return an integral type other than
 `bool`. Since this function’s call sites are constrained on
 convertibility of `OtherIndexType` to `index_type`, integer-class types
 can use the `static_cast` branch without loss of
@@ -13922,7 +13922,7 @@ m.is_unique()
 *Returns:* `true` only if for every `i` and `j` where `(i != j || ...)`
 is `true`, `m(i...) != m(j...)` is `true`.
 
-\[*Note 3*: A mapping can return `false` even if the condition is met.
+\[*Note 1*: A mapping can return `false` even if the condition is met.
 For certain layouts, it is possibly not feasible to determine
 efficiently whether the layout is unique. — *end note*\]
 
@@ -13936,7 +13936,7 @@ m.is_exhaustive()
 $[0, \texttt{m.required_span_size()})$ there exists an `i` such that
 `m(i...)` equals k.
 
-\[*Note 4*: A mapping can return `false` even if the condition is met.
+\[*Note 2*: A mapping can return `false` even if the condition is met.
 For certain layouts, it is possibly not feasible to determine
 efficiently whether the layout is exhaustive. — *end note*\]
 
@@ -13951,10 +13951,10 @@ exists an integer $s_r$ such that, for all `i` where $(\texttt{i}+d_r)$
 is a multidimensional index in `m.extents()`[[mdspan.overview]],
 `m((i + `$d_r$`)...) - m(i...)` equals $s_r$.
 
-\[*Note 5*: This implies that for a strided layout
+\[*Note 3*: This implies that for a strided layout
 $m(i_0, \dotsc, i_k) = m(0, \dotsc, 0) + i_0 \times s_0 + \dotsb + i_k \times s_k$. — *end note*\]
 
-\[*Note 6*: A mapping can return `false` even if the condition is met.
+\[*Note 4*: A mapping can return `false` even if the condition is met.
 For certain layouts, it is possibly not feasible to determine
 efficiently whether the layout is strided. — *end note*\]
 
@@ -13977,7 +13977,7 @@ M::is_always_unique()
 *Returns:* `true` only if `m.is_unique()` is `true` for all possible
 objects `m` of type `M`.
 
-\[*Note 7*: A mapping can return `false` even if the above condition is
+\[*Note 5*: A mapping can return `false` even if the above condition is
 met. For certain layout mappings, it is possibly not feasible to
 determine whether every instance is unique. — *end note*\]
 
@@ -13990,7 +13990,7 @@ M::is_always_exhaustive()
 *Returns:* `true` only if `m.is_exhaustive()` is `true` for all possible
 objects `m` of type `M`.
 
-\[*Note 8*: A mapping can return `false` even if the above condition is
+\[*Note 6*: A mapping can return `false` even if the above condition is
 met. For certain layout mappings, it is possibly not feasible to
 determine whether every instance is exhaustive. — *end note*\]
 
@@ -14003,7 +14003,7 @@ M::is_always_strided()
 *Returns:* `true` only if `m.is_strided()` is `true` for all possible
 objects `m` of type `M`.
 
-\[*Note 9*: A mapping can return `false` even if the above condition is
+\[*Note 7*: A mapping can return `false` even if the above condition is
 met. For certain layout mappings, it is possibly not feasible to
 determine whether every instance is strided. — *end note*\]
 
@@ -14543,7 +14543,7 @@ concept layout-mapping-alike = requires {                         // exposition 
 };
 ```
 
-\[*Note 10*: This concept checks that the functions
+\[*Note 8*: This concept checks that the functions
 `M::is_always_strided()`, `M::is_always_exhaustive()`, and
 `M::is_always_unique()` exist, are constant expressions, and have a
 return type of `bool`. — *end note*\]
@@ -14772,7 +14772,7 @@ typename A::data_handle_type
 `is_nothrow_move_assignable_v<A::data_handle_type>` is `true`, and
 `is_nothrow_swappable_v<A::data_handle_type>` is `true`.
 
-\[*Note 11*: The type of `data_handle_type` need not be
+\[*Note 1*: The type of `data_handle_type` need not be
 `element_type*`. — *end note*\]
 
 ``` cpp
@@ -14782,7 +14782,7 @@ typename A::reference
 *Result:* A type that models
 `common_reference_with``<A::reference&&, A::element_type&>`.
 
-\[*Note 12*: The type of `reference` need not be
+\[*Note 2*: The type of `reference` need not be
 `element_type&`. — *end note*\]
 
 ``` cpp
@@ -14806,7 +14806,7 @@ a.access(p, i)
 
 *Remarks:* The expression is equality preserving.
 
-\[*Note 13*: Concrete accessor policies can impose preconditions for
+\[*Note 3*: Concrete accessor policies can impose preconditions for
 their `access` function. However, they might not. For example, an
 accessor where `p` is `span<A::element_type, dynamic_extent>` and
 `access(p, i)` returns `p[i % p.size()]` does not need to impose a
@@ -15258,7 +15258,7 @@ Let `I` be `extents_type::`*`index-cast`*`(std::move(indices))`.
 
 *Preconditions:* `I` is a multidimensional index in `extents()`.
 
-\[*Note 14*: This implies that
+\[*Note 1*: This implies that
 *`map_`*`(I) < `*`map_`*`.required_span_size()` is
 `true`. — *end note*\]
 

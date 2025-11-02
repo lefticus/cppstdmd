@@ -998,7 +998,7 @@ static constexpr Rep zero() noexcept;
 
 *Returns:* `Rep(0)`.
 
-\[*Note 2*: `Rep(0)` is specified instead of `Rep()` because `Rep()` can
+\[*Note 1*: `Rep(0)` is specified instead of `Rep()` because `Rep()` can
 have some other meaning, such as an uninitialized value. — *end note*\]
 
 *Remarks:* The value returned shall be the additive identity.
@@ -1032,11 +1032,11 @@ template<class Rep1, class Period1, class Rep2, class Period2>
 The `period` of the `duration` indicated by this specialization of
 `common_type` is the greatest common divisor of `Period1` and `Period2`.
 
-\[*Note 3*: This can be computed by forming a ratio of the greatest
+\[*Note 1*: This can be computed by forming a ratio of the greatest
 common divisor of `Period1::num` and `Period2::num` and the least common
 multiple of `Period1::den` and `Period2::den`. — *end note*\]
 
-\[*Note 4*: The `typedef` name `type` is a synonym for the `duration`
+\[*Note 2*: The `typedef` name `type` is a synonym for the `duration`
 with the largest tick `period` possible where both `duration` arguments
 will convert to it without requiring a division operation. The
 representation of this type is intended to be able to hold any value
@@ -1177,7 +1177,7 @@ template<class Rep2>
 
 - `treat_as_floating_point_v<Rep2>` is `false`.
 
-\[*Example 2*:
+\[*Example 1*:
 
     duration<int, milli> d(3);          // OK
     duration<int, milli> d(3.5);        // error
@@ -1201,7 +1201,7 @@ converting between integral-based `duration` types. Such a construction
 could easily lead to confusion about the value of the
 `duration`. — *end note*\]
 
-\[*Example 3*:
+\[*Example 2*:
 
     duration<int, milli> ms(3);
     duration<int, micro> us = ms;       // OK
@@ -1502,7 +1502,7 @@ template<class ToDuration, class Rep, class Period>
       ToDuration(static_cast<typename ToDuration::rep>(
         static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
 
-\[*Note 2*: This function does not use any implicit conversions; all
+\[*Note 1*: This function does not use any implicit conversions; all
 conversions are done with . It avoids multiplications and divisions when
 it is known at compile time that one or more arguments is 1.
 Intermediate computations are carried out in the widest representation
@@ -1557,7 +1557,7 @@ If any of these suffixes are applied to an *integer-literal* and the
 resulting `chrono::duration` value cannot be represented in the result
 type because of overflow, the program is ill-formed.
 
-\[*Example 4*:
+\[*Example 1*:
 
 The following code shows some duration literals.
 
@@ -1591,7 +1591,7 @@ constexpr chrono::duration<unspecified> operator""s(long double sec);
 
 *Returns:* A `duration` literal representing `sec` seconds.
 
-\[*Note 3*: The same suffix `s` is used for `basic_string` but there is
+\[*Note 1*: The same suffix `s` is used for `basic_string` but there is
 no conflict, since duration suffixes apply to numbers and string literal
 suffixes apply to character array literals. — *end note*\]
 
@@ -2086,7 +2086,7 @@ template<class charT, class traits, class Duration>
 return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), tp);
 ```
 
-\[*Example 2*:
+\[*Example 1*:
 
     cout << sys_seconds{0s} << '\n';                // 1970-01-01 00:00:00
     cout << sys_seconds{946'684'800s} << '\n';      // 2000-01-01 00:00:00
@@ -2155,12 +2155,12 @@ In contrast to `sys_time`, which does not take leap seconds into
 account, `utc_clock` and its associated `time_point`, `utc_time`, count
 time, including leap seconds, since 1970-01-01 00:00:00 UTC.
 
-\[*Note 2*: The UTC time standard began on 1972-01-01 00:00:10 TAI. To
+\[*Note 1*: The UTC time standard began on 1972-01-01 00:00:10 TAI. To
 measure time since this epoch instead, one can add/subtract the constant
 `sys_days\{1972y/1/1\} - sys_days\{1970y/1/1\}` (`63'072'000s`) from the
 `utc_time`. — *end note*\]
 
-\[*Example 3*:   
+\[*Example 1*:   
 `clock_cast<utc_clock>(sys_seconds\{sys_days\{1970y/January/1\}\}).time_since_epoch()`
 is `0s`.  
 `clock_cast<utc_clock>(sys_seconds\{sys_days\{2000y/January/1\}\}).time_since_epoch()`
@@ -2171,7 +2171,7 @@ which is `10'957 * 86'400s + 22s`.
 `utc_clock` is not a *Cpp17TrivialClock* unless the implementation can
 guarantee that `utc_clock::now()` does not propagate an exception.
 
-\[*Note 3*: `noexcept(from_sys(system_clock::now()))` is
+\[*Note 2*: `noexcept(from_sys(system_clock::now()))` is
 `false`. — *end note*\]
 
 #### Member functions <a id="time.clock.utc.members">[[time.clock.utc.members]]</a>
@@ -2207,7 +2207,7 @@ leap seconds that were inserted between `t` and 1970-01-01. If `t` is
 exactly the date of leap second insertion, then the conversion counts
 that leap second as inserted.
 
-\[*Example 4*:
+\[*Example 1*:
 
     auto t = sys_days{July/1/2015} - 2ns;
     auto u = utc_clock::from_sys(t);
@@ -2238,7 +2238,7 @@ template<class charT, class traits, class Duration>
 return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
 ```
 
-\[*Example 5*:
+\[*Example 1*:
 
     auto t = sys_days{July/1/2015} - 500ms;
     auto u = clock_cast<utc_clock>(t);
@@ -2339,7 +2339,7 @@ plus the initial 10s offset).
 `tai_clock` is not a *Cpp17TrivialClock* unless the implementation can
 guarantee that `tai_clock::now()` does not propagate an exception.
 
-\[*Note 4*: `noexcept(from_utc(utc_clock::now()))` is
+\[*Note 1*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
 
 #### Member functions <a id="time.clock.tai.members">[[time.clock.tai.members]]</a>
@@ -2363,7 +2363,7 @@ template<class Duration>
 utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 378691210s
 ```
 
-\[*Note 5*:
+\[*Note 1*:
 
     378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
 
@@ -2381,7 +2381,7 @@ template<class Duration>
 tai_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 378691210s
 ```
 
-\[*Note 6*:
+\[*Note 2*:
 
     378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
 
@@ -2401,7 +2401,7 @@ template<class charT, class traits, class Duration>
 return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
 ```
 
-\[*Example 6*:
+\[*Example 1*:
 
     auto st = sys_days{2000y/January/1};
     auto tt = clock_cast<tai_clock>(st);
@@ -2475,7 +2475,7 @@ seconds inserted between 1970 and 1980.
 `gps_clock` is not a *Cpp17TrivialClock* unless the implementation can
 guarantee that `gps_clock::now()` does not propagate an exception.
 
-\[*Note 7*: `noexcept(from_utc(utc_clock::now()))` is
+\[*Note 1*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
 
 #### Member functions <a id="time.clock.gps.members">[[time.clock.gps.members]]</a>
@@ -2499,7 +2499,7 @@ template<class Duration>
 utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 315964809s
 ```
 
-\[*Note 8*:
+\[*Note 1*:
 
     315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
 
@@ -2517,7 +2517,7 @@ template<class Duration>
 gps_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 315964809s
 ```
 
-\[*Note 9*:
+\[*Note 2*:
 
     315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
 
@@ -2537,7 +2537,7 @@ template<class charT, class traits, class Duration>
 return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
 ```
 
-\[*Example 7*:
+\[*Example 1*:
 
     auto st = sys_days{2000y/January/1};
     auto gt = clock_cast<gps_clock>(st);
@@ -2590,7 +2590,7 @@ requirements [[time.clock.req]], and using a signed arithmetic type for
 system used for `file_time_type` [[filesystems]]. Its epoch is
 unspecified, and `noexcept(file_clock::now())` is `true`.
 
-\[*Note 10*: The type that `file_clock` denotes can be in a different
+\[*Note 1*: The type that `file_clock` denotes can be in a different
 namespace than `std::chrono`, such as `std::filesystem`. — *end note*\]
 
 #### Member functions <a id="time.clock.file.members">[[time.clock.file.members]]</a>
@@ -3662,7 +3662,7 @@ subsequently truncated to fit into `weekday`’s unspecified internal
 storage. `weekday` meets the *Cpp17EqualityComparable* (
 [[cpp17.equalitycomparable]]) requirements.
 
-\[*Note 2*: `weekday` is not *Cpp17LessThanComparable* because there is
+\[*Note 1*: `weekday` is not *Cpp17LessThanComparable* because there is
 no universal consensus on which day is the first day of the week.
 `weekday`’s arithmetic operations treat the days of the week as a
 circular range, with no beginning and no end. — *end note*\]
@@ -3685,7 +3685,7 @@ constexpr weekday(const sys_days& dp) noexcept;
 *Effects:* Computes what day of the week corresponds to the `sys_days`
 `dp`, and initializes that day of the week in `wd_`.
 
-\[*Example 3*: If `dp` represents 1970-01-01, the constructed `weekday`
+\[*Example 1*: If `dp` represents 1970-01-01, the constructed `weekday`
 represents Thursday by storing `4` in `wd_`. — *end example*\]
 
 ``` cpp
@@ -3799,13 +3799,13 @@ weekday{modulo(static_cast<long long>(x.wd_) + y.count(), 7)}
 where `modulo(n, 7)` computes the remainder of `n` divided by 7 using
 Euclidean division.
 
-\[*Note 3*: Given a divisor of 7, Euclidean division truncates towards
+\[*Note 1*: Given a divisor of 7, Euclidean division truncates towards
 negative infinity and always produces a remainder in the range of \[`0`,
 `6`\]. Assuming no overflow in the signed summation, this operation
 results in a `weekday` holding a value in the range \[`0`, `6`\] even if
 `!x.ok()`. — *end note*\]
 
-\[*Example 4*: `Monday + days{6} == Sunday`. — *end example*\]
+\[*Example 1*: `Monday + days{6} == Sunday`. — *end example*\]
 
 ``` cpp
 constexpr weekday operator+(const days& x, const weekday& y) noexcept;
@@ -3827,7 +3827,7 @@ constexpr days operator-(const weekday& x, const weekday& y) noexcept;
 in the range satisfying `y + d == x`. Otherwise the value returned is
 unspecified.
 
-\[*Example 5*: `Sunday - Monday == days{6}`. — *end example*\]
+\[*Example 2*: `Sunday - Monday == days{6}`. — *end example*\]
 
 ``` cpp
 template<class charT, class traits>
@@ -3888,10 +3888,10 @@ namespace std::chrono {
 1 to 5. This class is used to represent the first, second, third,
 fourth, or fifth weekday of a month.
 
-\[*Note 4*: A `weekday_indexed` object can be constructed by indexing a
+\[*Note 1*: A `weekday_indexed` object can be constructed by indexing a
 `weekday` with an `unsigned`. — *end note*\]
 
-\[*Example 6*:
+\[*Example 1*:
 
 ``` cpp
 constexpr auto wdi = Sunday[2]; // wdi is the second Sunday of an as yet unspecified month
@@ -3976,10 +3976,10 @@ namespace std::chrono {
 
 `weekday_last` represents the last weekday of a month.
 
-\[*Note 5*: A `weekday_last` object can be constructed by indexing a
+\[*Note 1*: A `weekday_last` object can be constructed by indexing a
 `weekday` with `last`. — *end note*\]
 
-\[*Example 7*:
+\[*Example 1*:
 
 ``` cpp
 constexpr auto wdl = Sunday[last];      // wdl is the last Sunday of an as yet unspecified month
@@ -4156,11 +4156,11 @@ namespace std::chrono {
 
 `month_day_last` represents the last day of a month.
 
-\[*Note 6*: A `month_day_last` object can be constructed using the
+\[*Note 1*: A `month_day_last` object can be constructed using the
 expression `m/last` or `last/m`, where `m` is an expression of type
 `month`. — *end note*\]
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 constexpr auto mdl = February/last;     // mdl is the last day of February of an as yet unspecified year
@@ -4236,7 +4236,7 @@ namespace std::chrono {
 as yet unspecified year. To do this the `month_weekday` stores a `month`
 and a `weekday_indexed`.
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 constexpr auto mwd
@@ -4321,7 +4321,7 @@ namespace std::chrono {
 yet unspecified year. To do this the `month_weekday_last` stores a
 `month` and a `weekday_last`.
 
-\[*Example 10*:
+\[*Example 1*:
 
 ``` cpp
 constexpr auto mwd
@@ -4642,7 +4642,7 @@ namespace std::chrono {
 `year_month_day` is a field-based time point with a resolution of
 `days`.
 
-\[*Note 7*: `year_month_day` supports `years`- and `months`-oriented
+\[*Note 1*: `year_month_day` supports `years`- and `months`-oriented
 arithmetic, but not `days`-oriented arithmetic. For the latter, there is
 a conversion to `sys_days`, which efficiently supports `days`-oriented
 arithmetic. — *end note*\]
@@ -4669,7 +4669,7 @@ constexpr year_month_day(const year_month_day_last& ymdl) noexcept;
 *Effects:* Initializes `y_` with `ymdl.year()`, `m_` with
 `ymdl.month()`, and `d_` with `ymdl.day()`.
 
-\[*Note 8*: This conversion from `year_month_day_last` to
+\[*Note 1*: This conversion from `year_month_day_last` to
 `year_month_day` can be more efficient than converting a
 `year_month_day_last` to a `sys_days`, and then converting that
 `sys_days` to a `year_month_day`. — *end note*\]
@@ -4765,7 +4765,7 @@ unspecified.
 *Remarks:* A `sys_days` in the range which is converted to a
 `year_month_day` has the same value when converted back to a `sys_days`.
 
-\[*Example 11*:
+\[*Example 1*:
 
     static_assert(year_month_day{sys_days{2017y/January/0}}  == 2016y/December/31);
     static_assert(year_month_day{sys_days{2017y/January/31}} == 2017y/January/31);
@@ -4819,7 +4819,7 @@ parameter is convertible to `years`, its implicit conversion sequence to
 
 *Returns:* `(ymd.year() / ymd.month() + dm) / ymd.day()`.
 
-\[*Note 9*: If `ymd.day()` is in the range \[`1d`, `28d`\], `ok()` will
+\[*Note 1*: If `ymd.day()` is in the range \[`1d`, `28d`\], `ok()` will
 return `true` for the resultant `year_month_day`. — *end note*\]
 
 ``` cpp
@@ -4850,7 +4850,7 @@ constexpr year_month_day operator+(const year_month_day& ymd, const years& dy) n
 
 *Returns:* `(ymd.year() + dy) / ymd.month() / ymd.day()`.
 
-\[*Note 10*: If `ymd.month()` is February and `ymd.day()` is not in the
+\[*Note 2*: If `ymd.month()` is February and `ymd.day()` is not in the
 range \[`1d`, `28d`\], `ok()` can return `false` for the resultant
 `year_month_day`. — *end note*\]
 
@@ -4935,7 +4935,7 @@ month. `year_month_day_last` is a field-based time point with a
 resolution of `days`, except that it is restricted to pointing to the
 last day of a year and month.
 
-\[*Note 11*: `year_month_day_last` supports `years`- and
+\[*Note 1*: `year_month_day_last` supports `years`- and
 `months`-oriented arithmetic, but not `days`-oriented arithmetic. For
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
@@ -5024,7 +5024,7 @@ constexpr chrono::day day() const noexcept;
 day of the (`year`, `month`) pair represented by `*this`. Otherwise, the
 returned value is unspecified.
 
-\[*Note 12*: This value might be computed on demand. — *end note*\]
+\[*Note 1*: This value might be computed on demand. — *end note*\]
 
 ``` cpp
 constexpr operator sys_days() const noexcept;
@@ -5175,10 +5175,10 @@ namespace std::chrono {
 $n^\text{th}$ weekday of the month. `year_month_weekday` is a
 field-based time point with a resolution of `days`.
 
-\[*Note 13*: `year_month_weekday` supports `years`- and
-`months`-oriented arithmetic, but not `days`-oriented arithmetic. For
-the latter, there is a conversion to `sys_days`, which efficiently
-supports `days`-oriented arithmetic. — *end note*\]
+\[*Note 1*: `year_month_weekday` supports `years`- and `months`-oriented
+arithmetic, but not `days`-oriented arithmetic. For the latter, there is
+a conversion to `sys_days`, which efficiently supports `days`-oriented
+arithmetic. — *end note*\]
 
 `year_month_weekday` meets the *Cpp17EqualityComparable* (
 [[cpp17.equalitycomparable]]) requirements.
@@ -5423,7 +5423,7 @@ weekday of the month. `year_month_weekday_last` is a field-based time
 point with a resolution of `days`, except that it is restricted to
 pointing to the last weekday of a year and month.
 
-\[*Note 14*: `year_month_weekday_last` supports `years`- and
+\[*Note 1*: `year_month_weekday_last` supports `years`- and
 `months`-oriented arithmetic, but not `days`-oriented arithmetic. For
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
@@ -5618,7 +5618,7 @@ return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}/{:L}"),
 A set of overloaded `operator/` functions provides a conventional syntax
 for the creation of civil calendar dates.
 
-\[*Note 15*:
+\[*Note 1*:
 
 The year, month, and day are accepted in any of the following 3 orders:
 
@@ -5639,7 +5639,7 @@ weekday[last]
 
 — *end note*\]
 
-\[*Note 16*:
+\[*Note 2*:
 
 Partial-date types such as `year_month` and `month_day` can be created
 by not applying the second division operator for any of the three
@@ -5653,7 +5653,7 @@ month_day md2 = 4d/April;
 
 — *end note*\]
 
-\[*Example 12*:
+\[*Example 1*:
 
 ``` cpp
 auto a = 2015/4/4;          // a == int(125)
@@ -6130,7 +6130,7 @@ operator<<(basic_ostream<charT, traits>& os, const hh_mm_ss<Duration>& hms);
 return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%T}"), hms);
 ```
 
-\[*Example 2*:
+\[*Example 1*:
 
     for (auto ms : {-4083007ms, 4083007ms, 65745123ms}) {
       hh_mm_ss hms{ms};
@@ -6269,7 +6269,7 @@ namespace std::chrono {
 The `tzdb_list` database is a singleton; the unique object of type
 `tzdb_list` can be accessed via the `get_tzdb_list()` function.
 
-\[*Note 3*: This access is only needed for those applications that need
+\[*Note 1*: This access is only needed for those applications that need
 to have long uptimes and have a need to update the time zone database
 while running. Other applications can implicitly access the `front()` of
 this list via the read-only namespace scope functions `get_tzdb()`,
@@ -6287,7 +6287,7 @@ const tzdb& front() const noexcept;
 *Synchronization:* This operation is thread-safe with respect to
 `reload_tzdb()`.
 
-\[*Note 4*: `reload_tzdb()` pushes a new `tzdb` onto the front of this
+\[*Note 2*: `reload_tzdb()` pushes a new `tzdb` onto the front of this
 container. — *end note*\]
 
 *Returns:* A reference to the first `tzdb` in the container.
@@ -6303,7 +6303,7 @@ const_iterator erase_after(const_iterator p);
 *Ensures:* No pointers, references, or iterators are invalidated except
 those referring to the erased `tzdb`.
 
-\[*Note 5*: It is not possible to erase the `tzdb` referred to by
+\[*Note 3*: It is not possible to erase the `tzdb` referred to by
 `begin()`. — *end note*\]
 
 *Returns:* An iterator pointing to the element following the one that
@@ -6367,7 +6367,7 @@ const time_zone* locate_zone(string_view tz_name);
 
 *Returns:* `get_tzdb().locate_zone(tz_name)`.
 
-\[*Note 6*: The time zone database will be initialized if this is the
+\[*Note 1*: The time zone database will be initialized if this is the
 first reference to the database. — *end note*\]
 
 ``` cpp
@@ -6411,7 +6411,7 @@ string remote_version();
 
 *Returns:* The latest remote database version.
 
-\[*Note 7*: This can be compared with `get_tzdb().version` to discover
+\[*Note 1*: This can be compared with `get_tzdb().version` to discover
 if the local and remote databases are equivalent. — *end note*\]
 
 ### Exception classes <a id="time.zone.exception">[[time.zone.exception]]</a>
@@ -6515,7 +6515,7 @@ os << tp << " is ambiguous.  It could be\n"
    << tp - i.second.offset  << " UTC";
 ```
 
-\[*Example 2*:
+\[*Example 1*:
 
     #include <chrono>
     #include <iostream>
@@ -6563,7 +6563,7 @@ A `sys_info` object can be obtained from the combination of a
 obtained from a `zoned_time`, which is effectively a pair of a
 `time_zone` and `sys_time`.
 
-\[*Note 8*: This type provides a low-level interface to time zone
+\[*Note 1*: This type provides a low-level interface to time zone
 information. Typical conversions from `sys_time` to `local_time` will
 use this class implicitly, not explicitly. — *end note*\]
 
@@ -6623,7 +6623,7 @@ namespace std::chrono {
 }
 ```
 
-\[*Note 9*: This type provides a low-level interface to time zone
+\[*Note 1*: This type provides a low-level interface to time zone
 information. Typical conversions from `local_time` to `sys_time` will
 use this class implicitly, not explicitly. — *end note*\]
 
@@ -6693,8 +6693,8 @@ A `time_zone` represents all time zone transitions for a specific
 geographic area. `time_zone` construction is unspecified, and performed
 as part of database initialization.
 
-\[*Note 10*: `const time_zone` objects can be accessed via functions
-such as `locate_zone`. — *end note*\]
+\[*Note 1*: `const time_zone` objects can be accessed via functions such
+as `locate_zone`. — *end note*\]
 
 #### Member functions <a id="time.zone.members">[[time.zone.members]]</a>
 
@@ -6704,7 +6704,7 @@ string_view name() const noexcept;
 
 *Returns:* The name of the `time_zone`.
 
-\[*Example 3*: `"America/New_York"`. — *end example*\]
+\[*Example 1*: `"America/New_York"`. — *end example*\]
 
 ``` cpp
 template<class Duration>
@@ -7064,7 +7064,7 @@ template<class Duration2, class TimeZonePtr2>
 
 *Effects:* Equivalent to construction with `{z, y}`.
 
-\[*Note 11*: The `choose` parameter has no effect. — *end note*\]
+\[*Note 1*: The `choose` parameter has no effect. — *end note*\]
 
 ``` cpp
 template<class Duration2, class TimeZonePtr2>
@@ -7090,7 +7090,7 @@ template<class Duration2, class TimeZonePtr2>
 *Effects:* Equivalent to construction with
 `{traits::locate_zone(name), y, c}`.
 
-\[*Note 12*: The `choose` parameter has no effect. — *end note*\]
+\[*Note 2*: The `choose` parameter has no effect. — *end note*\]
 
 #### Member functions <a id="time.zone.zonedtime.members">[[time.zone.zonedtime.members]]</a>
 
@@ -7194,7 +7194,7 @@ Objects of type `leap_second` representing the date and value of the
 leap second insertions are constructed and stored in the time zone
 database when initialized.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 for (auto& l : get_tzdb().leap_seconds)
@@ -7221,8 +7221,8 @@ constexpr seconds value() const noexcept;
 *Returns:* `+1s` to indicate a positive leap second or `-1s` to indicate
 a negative leap second.
 
-\[*Note 13*: All leap seconds inserted up through 2022 were positive
-leap seconds. — *end note*\]
+\[*Note 1*: All leap seconds inserted up through 2022 were positive leap
+seconds. — *end note*\]
 
 #### Non-member functions <a id="time.zone.leap.nonmembers">[[time.zone.leap.nonmembers]]</a>
 

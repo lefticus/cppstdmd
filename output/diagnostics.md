@@ -667,7 +667,7 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 
 *Returns:* `compare_three_way()(this, &rhs)`.
 
-\[*Note 2*: `compare_three_way`[[comparisons.three.way]] provides a
+\[*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
 total ordering for pointers. — *end note*\]
 
 #### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
@@ -733,7 +733,7 @@ to a POSIX `errno` value `pxv`, the function returns
 returns `error_condition(ev, system_category())`. What constitutes
 correspondence for any given operating system is unspecified.
 
-\[*Note 3*: The number of potential system error codes is large and
+\[*Note 1*: The number of potential system error codes is large and
 unbounded, and some might not correspond to any POSIX `errno` value.
 Thus implementations are given latitude in determining
 correspondence. — *end note*\]
@@ -746,7 +746,7 @@ The class `error_code` describes an object used to hold error code
 values, such as those originating from the operating system or other
 low-level application program interfaces.
 
-\[*Note 4*: Class `error_code` is an adjunct to error reporting by
+\[*Note 1*: Class `error_code` is an adjunct to error reporting by
 exception. — *end note*\]
 
 ``` cpp
@@ -900,7 +900,7 @@ template<class charT, class traits>
 The class `error_condition` describes an object used to hold values
 identifying error conditions.
 
-\[*Note 5*: `error_condition` values are portable abstractions, while
+\[*Note 1*: `error_condition` values are portable abstractions, while
 `error_code` values [[syserr.errcode]] are implementation
 specific. — *end note*\]
 
@@ -1100,7 +1100,7 @@ error conditions that have an associated error code. Such error
 conditions typically originate from the operating system or other
 low-level application program interfaces.
 
-\[*Note 6*: If an error represents an out-of-memory condition,
+\[*Note 1*: If an error represents an out-of-memory condition,
 implementations are encouraged to throw an exception object of type
 `bad_alloc` [[bad.alloc]] rather than `system_error`. — *end note*\]
 
@@ -1180,7 +1180,7 @@ const char* what() const noexcept override;
 *Returns:* An NTBS incorporating the arguments supplied in the
 constructor.
 
-\[*Note 7*: The returned NTBS might be the contents of
+\[*Note 1*: The returned NTBS might be the contents of
 `what_arg + ": " + code.message()`. — *end note*\]
 
 ## Stacktrace <a id="stacktrace">[[stacktrace]]</a>
@@ -1192,8 +1192,8 @@ to store the stacktrace of the current thread of execution and query
 information about the stored stacktrace at runtime.
 
 The *invocation sequence* of the current evaluation x₀ in the current
-thread of execution is a sequence $(x_0, \ldots, x_n)$ of evaluations
-such that, for i ≥ 0, xᵢ is within the function invocation $x_{i+1}$
+thread of execution is a sequence (x₀, …, xₙ) of evaluations such that,
+for i ≥ 0, xᵢ is within the function invocation $x_{i+1}$
 [[intro.execution]].
 
 A *stacktrace* is an approximate representation of an invocation
@@ -1462,7 +1462,7 @@ stacktrace of the current evaluation in the current thread of execution,
 or an empty `basic_stacktrace` object if the initialization of `frames_`
 failed. `alloc` is passed to the constructor of the `frames_` object.
 
-\[*Note 2*: If the stacktrace was successfully obtained, then
+\[*Note 1*: If the stacktrace was successfully obtained, then
 `frames_.front()` is the `stacktrace_entry` representing approximately
 the current evaluation, and `frames_.back()` is the `stacktrace_entry`
 representing approximately the initial function of the current thread of
@@ -1661,7 +1661,7 @@ string to_string(const basic_stacktrace<Allocator>& st);
 
 *Returns:* A string with a description of `st`.
 
-\[*Note 3*: The number of lines is not guaranteed to be equal to
+\[*Note 1*: The number of lines is not guaranteed to be equal to
 `st.size()`. — *end note*\]
 
 ``` cpp
@@ -1690,7 +1690,7 @@ specifications is as follows:
 
 </div>
 
-\[*Note 4*: The productions and are described in
+\[*Note 1*: The productions and are described in
 [[format.string.std]]. — *end note*\]
 
 A `stacktrace_entry` object `se` is formatted as if by copying

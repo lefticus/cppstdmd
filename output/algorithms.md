@@ -307,7 +307,7 @@ will perform no other unsynchronized accesses to that object. The
 modifying element access functions are those which are specified as
 modifying the object.
 
-\[*Note 2*: For example, `swap`, `++`, `--`, `@=`, and assignments
+\[*Note 1*: For example, `swap`, `++`, `--`, `@=`, and assignments
 modify the object. For the assignment and `@=` operators, only the left
 argument is modified. — *end note*\]
 
@@ -316,7 +316,7 @@ elements (with type `T`) from sequences where
 `is_trivially_copy_constructible_v<T>` and
 `is_trivially_destructible_v<T>` are `true`.
 
-\[*Note 3*: This implies that user-supplied function objects cannot rely
+\[*Note 2*: This implies that user-supplied function objects cannot rely
 on object identity of arguments for such input sequences. If object
 identity of the arguments to these function objects is important, a
 wrapping iterator that returns a non-copied implementation object such
@@ -328,7 +328,7 @@ invoked with an execution policy object of type
 `execution::sequenced_policy` all occur in the calling thread of
 execution.
 
-\[*Note 4*: The invocations are not interleaved; see 
+\[*Note 3*: The invocations are not interleaved; see 
 [[intro.execution]]. — *end note*\]
 
 The invocations of element access functions in parallel algorithms
@@ -337,7 +337,7 @@ invoked with an execution policy object of type
 fashion in the calling thread of execution, unsequenced with respect to
 one another in the calling thread of execution.
 
-\[*Note 5*: This means that multiple function object invocations can be
+\[*Note 4*: This means that multiple function object invocations can be
 interleaved on a single thread of execution, which overrides the usual
 guarantee from [[intro.execution]] that function executions do not
 overlap with one another. — *end note*\]
@@ -346,7 +346,7 @@ The behavior of a program is undefined if it invokes a
 vectorization-unsafe standard library function from user code called
 from an `execution::unsequenced_policy` algorithm.
 
-\[*Note 6*: Because `execution::unsequenced_policy` allows the execution
+\[*Note 5*: Because `execution::unsequenced_policy` allows the execution
 of element access functions to be interleaved on a single thread of
 execution, blocking synchronization, including the use of mutexes, risks
 deadlock. — *end note*\]
@@ -365,10 +365,10 @@ guarantees; otherwise, the provided forward progress guarantee is
 thread of execution are indeterminately sequenced with respect to each
 other.
 
-\[*Note 7*: It is the caller’s responsibility to ensure that the
+\[*Note 6*: It is the caller’s responsibility to ensure that the
 invocation does not introduce data races or deadlocks. — *end note*\]
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 int a[] = {0,1};
@@ -383,7 +383,7 @@ to the container `v`.
 
 — *end example*\]
 
-\[*Example 4*:
+\[*Example 2*:
 
 ``` cpp
 std::atomic<int> x{0};
@@ -401,7 +401,7 @@ the same thread of execution.
 
 — *end example*\]
 
-\[*Example 5*:
+\[*Example 3*:
 
 ``` cpp
 int x = 0;
@@ -427,7 +427,7 @@ threads of execution are either the invoking thread of execution or
 threads of execution implicitly created by the library; the latter will
 provide weakly parallel forward progress guarantees.
 
-\[*Note 8*: This means that multiple function object invocations can be
+\[*Note 7*: This means that multiple function object invocations can be
 interleaved on a single thread of execution, which overrides the usual
 guarantee from [[intro.execution]] that function executions do not
 overlap with one another. — *end note*\]
@@ -436,12 +436,12 @@ The behavior of a program is undefined if it invokes a
 vectorization-unsafe standard library function from user code called
 from an `execution::parallel_unsequenced_policy` algorithm.
 
-\[*Note 9*: Because `execution::parallel_unsequenced_policy` allows the
+\[*Note 8*: Because `execution::parallel_unsequenced_policy` allows the
 execution of element access functions to be interleaved on a single
 thread of execution, blocking synchronization, including the use of
 mutexes, risks deadlock. — *end note*\]
 
-\[*Note 10*: The semantics of invocation with
+\[*Note 9*: The semantics of invocation with
 `execution::unsequenced_policy`, `execution::parallel_policy`, or
 `execution::parallel_unsequenced_policy` allow the implementation to
 fall back to sequential execution if the system cannot parallelize an
@@ -460,7 +460,7 @@ will either
 the thread of execution will continue to do so until the algorithm is
 finished.
 
-\[*Note 11*: In blocking with forward progress guarantee delegation in
+\[*Note 10*: In blocking with forward progress guarantee delegation in
 this context, a thread of execution created by the library is considered
 to have finished execution as soon as it has finished the execution of
 the particular element access function that the invoking thread of
@@ -487,7 +487,7 @@ overload has an additional template type parameter named
 each parallel algorithm overload has an additional function parameter of
 type `ExecutionPolicy&&`, which is the first function parameter.
 
-\[*Note 12*: Not all algorithms have parallel algorithm
+\[*Note 1*: Not all algorithms have parallel algorithm
 overloads. — *end note*\]
 
 Unless otherwise specified, the semantics of `ExecutionPolicy` algorithm
@@ -5101,7 +5101,7 @@ predicate and any projection.
 
 *Remarks:* Stable [[algorithm.stable]].
 
-\[*Note 2*: Each element in the range \[`ret`, `last`), where `ret` is
+\[*Note 1*: Each element in the range \[`ret`, `last`), where `ret` is
 the returned value, has a valid but unspecified state, because the
 algorithms can eliminate elements by moving from elements that were
 originally in that range. — *end note*\]
@@ -5171,7 +5171,7 @@ Let N be the number of elements in \[`first`, `last`) for which E is
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + (last - first)`) do not overlap.
 
-\[*Note 3*: For the overloads with an `ExecutionPolicy`, there might be
+\[*Note 2*: For the overloads with an `ExecutionPolicy`, there might be
 a performance cost if `iterator_traits<ForwardIterator1>::value_type`
 does not meet the *Cpp17MoveConstructible*
 ( [[cpp17.moveconstructible]]) requirements. — *end note*\]
@@ -5428,7 +5428,7 @@ the type of `*first` meets the *Cpp17MoveConstructible*
 the element from the position `first + i` into position
 `first + (i + (last - middle)) % (last - first)`.
 
-\[*Note 4*: This is a left rotate. — *end note*\]
+\[*Note 1*: This is a left rotate. — *end note*\]
 
 *Returns:*
 
@@ -5542,7 +5542,7 @@ overload in namespace `std`:
 (the ) from \[`first`, `last`) (the ) to `out` such that each possible
 sample has equal probability of appearance.
 
-\[*Note 5*: Algorithms that obtain such effects include and
+\[*Note 1*: Algorithms that obtain such effects include and
 . — *end note*\]
 
 *Returns:* The end of the resulting sample range.
@@ -5993,7 +5993,7 @@ Then, after evaluating the assignment `*x2 = *a1`, E is equal to
 bool(invoke(comp, invoke(proj2, *x2), invoke(proj2, *y2))).
 ```
 
-\[*Note 2*: Writing a value from the input range into the output range
+\[*Note 1*: Writing a value from the input range into the output range
 does not affect how it is ordered by `comp` and `proj1` or
 `proj2`. — *end note*\]
 
@@ -6504,7 +6504,7 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 
 *Preconditions:* The input range and output ranges do not overlap.
 
-\[*Note 3*: For the overload with an `ExecutionPolicy`, there might be a
+\[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
 performance cost if `first`’s value type does not meet the
 *Cpp17CopyConstructible* requirements. — *end note*\]
 
@@ -6751,7 +6751,7 @@ respectively.
 *Returns:* `true` if and only if \[`first2`, `last2`) is a subsequence
 of \[`first1`, `last1`).
 
-\[*Note 4*: A sequence S is a subsequence of another sequence T if S can
+\[*Note 1*: A sequence S is a subsequence of another sequence T if S can
 be obtained from T by removing some, all, or none of T’s elements and
 keeping the remaining elements in the same order. — *end note*\]
 
@@ -7634,7 +7634,7 @@ requirements ( [[cpp17.lessthancomparable]]).
 if `bool(invoke(comp, invoke(proj, hi), invoke(proj, v)))` is `true`,
 otherwise `v`.
 
-\[*Note 5*: If NaN is avoided, `T` can be a floating-point
+\[*Note 1*: If NaN is avoided, `T` can be a floating-point
 type. — *end note*\]
 
 *Complexity:* At most two comparisons and three applications of the
@@ -7712,7 +7712,7 @@ can be implemented as:
 
 — *end example*\]
 
-\[*Note 6*: An empty sequence is lexicographically less than any
+\[*Note 1*: An empty sequence is lexicographically less than any
 non-empty sequence, but not less than any empty sequence. — *end note*\]
 
 ### Three-way comparison algorithms <a id="alg.three.way">[[alg.three.way]]</a>
@@ -8207,7 +8207,7 @@ are convertible to `T`.
 
 *Complexity:* 𝑂(`last - first)` applications of `binary_op`.
 
-\[*Note 2*: The difference between `reduce` and `accumulate` is that
+\[*Note 1*: The difference between `reduce` and `accumulate` is that
 `reduce` applies `binary_op` in an unspecified order, which yields a
 nondeterministic result for non-associative or non-commutative
 `binary_op` such as floating-point addition. — *end note*\]
@@ -8368,7 +8368,7 @@ for every iterator `i` in \[`first`, `last`).
 *Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
 `binary_op`.
 
-\[*Note 3*: `transform_reduce` does not apply `unary_op` to
+\[*Note 1*: `transform_reduce` does not apply `unary_op` to
 `init`. — *end note*\]
 
 ### Partial sum <a id="partial.sum">[[partial.sum]]</a>
@@ -8486,7 +8486,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 4*: The difference between `exclusive_scan` and `inclusive_scan`
+\[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
 is that `exclusive_scan` excludes the $i^\text{th}$ input element from
 the $i^\text{th}$ sum. If `binary_op` is not mathematically associative,
 the behavior of `exclusive_scan` can be nondeterministic. — *end note*\]
@@ -8585,7 +8585,7 @@ through `result + K` the value of
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 5*: The difference between `exclusive_scan` and `inclusive_scan`
+\[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
 is that `inclusive_scan` includes the $i^\text{th}$ input element in the
 $i^\text{th}$ sum. If `binary_op` is not mathematically associative, the
 behavior of `inclusive_scan` can be nondeterministic. — *end note*\]
@@ -8644,7 +8644,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 6*: The difference between `transform_exclusive_scan` and
+\[*Note 1*: The difference between `transform_exclusive_scan` and
 `transform_inclusive_scan` is that `transform_exclusive_scan` excludes
 the $i^\text{th}$ input element from the $i^\text{th}$ sum. If
 `binary_op` is not mathematically associative, the behavior of
@@ -8732,7 +8732,7 @@ through `result + K` the value of
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 7*: The difference between `transform_exclusive_scan` and
+\[*Note 1*: The difference between `transform_exclusive_scan` and
 `transform_inclusive_scan` is that `transform_inclusive_scan` includes
 the $i^\text{th}$ input element in the $i^\text{th}$ sum. If `binary_op`
 is not mathematically associative, the behavior of
@@ -8861,7 +8861,7 @@ template<class M, class N>
 *Preconditions:* $|\texttt{m}|$ and $|\texttt{n}|$ are representable as
 a value of `common_type_t<M, N>`.
 
-\[*Note 8*: These requirements ensure, for example, that
+\[*Note 1*: These requirements ensure, for example, that
 $\texttt{gcd(m, m)} = |\texttt{m}|$ is representable as a value of type
 `M`. — *end note*\]
 
@@ -8916,7 +8916,7 @@ template<class T>
 *Preconditions:* `a` and `b` point to, respectively, elements i and j of
 the same array object `x`.
 
-\[*Note 9*: As specified in [[basic.compound]], an object that is not an
+\[*Note 1*: As specified in [[basic.compound]], an object that is not an
 array element is considered to belong to a single-element array for this
 purpose and a pointer past the last element of an array of n elements is
 considered to be equivalent to a pointer to a hypothetical array element
@@ -9269,7 +9269,7 @@ for (; ifirst != ilast && ofirst != olast; ++ofirst, (void)++ifirst)
 return {std::move(ifirst), ofirst};
 ```
 
-\[*Note 4*: If an exception is thrown, some objects in the range
+\[*Note 1*: If an exception is thrown, some objects in the range
 \[`ifirst`, `ilast`) are left in a valid, but unspecified
 state. — *end note*\]
 
@@ -9311,7 +9311,7 @@ auto t = uninitialized_move(counted_iterator(std::move(ifirst), n),
 return {std::move(t.in).base(), t.out};
 ```
 
-\[*Note 5*: If an exception is thrown, some objects in the range
+\[*Note 2*: If an exception is thrown, some objects in the range
 `ifirst`+\[0, `n`) are left in a valid but unspecified
 state. — *end note*\]
 

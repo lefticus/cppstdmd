@@ -228,7 +228,7 @@ if constexpr (sizeof(int[2])) {}        // OK, narrowing allowed
 
 — *end example*\]
 
-\[*Note 3*: Odr-uses [[term.odr.use]] in a discarded statement do not
+\[*Note 1*: Odr-uses [[term.odr.use]] in a discarded statement do not
 require an entity to be defined. — *end note*\]
 
 \[*Example 2*:
@@ -307,7 +307,7 @@ constexpr void f(bool b) {
 If a consteval if statement is evaluated in a context that is manifestly
 constant-evaluated [[expr.const]], the first substatement is executed.
 
-\[*Note 4*: The first substatement is an immediate function
+\[*Note 2*: The first substatement is an immediate function
 context. — *end note*\]
 
 Otherwise, if the `else` part of the selection statement is present,
@@ -388,7 +388,7 @@ switch is executed.
 control, which continues unimpeded across such labels. To exit from a
 switch, see `break`, [[stmt.break]].
 
-\[*Note 5*: Usually, the substatement that is the subject of a switch is
+\[*Note 1*: Usually, the substatement that is the subject of a switch is
 compound and `case` and `default` labels appear on the top-level
 statements contained within the (compound) substatement, but this is not
 required. Declarations can appear in the substatement of a `switch`
@@ -485,7 +485,7 @@ A `while` statement is equivalent to
 '$'}
 ```
 
-\[*Note 2*:
+\[*Note 1*:
 
 The variable created in the condition is destroyed and created with each
 iteration of the loop.
@@ -526,7 +526,7 @@ except that the *init-statement* is in the same scope as the
 in another iteration statement) will execute *expression* before
 re-evaluating *condition*.
 
-\[*Note 3*: Thus the first statement specifies initialization for the
+\[*Note 1*: Thus the first statement specifies initialization for the
 loop; the condition [[stmt.pre]] specifies a test, sequenced before each
 iteration, such that the loop is exited when the condition becomes
 `false`; the expression often specifies incrementing that is sequenced
@@ -589,7 +589,7 @@ where
     \[*Note 1*: Ordinary unqualified lookup [[basic.lookup.unqual]] is
     not performed. — *end note*\]
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 int array[5] = { 1, 2, 3, 4, 5 };
@@ -599,11 +599,11 @@ for (int& x : array)
 
 — *end example*\]
 
-\[*Note 4*: The lifetime of some temporaries in the
+\[*Note 1*: The lifetime of some temporaries in the
 *for-range-initializer* is extended to cover the entire loop
 [[class.temporary]]. — *end note*\]
 
-\[*Example 3*:
+\[*Example 2*:
 
 ``` cpp
 using T = std::list<int>;
@@ -710,10 +710,10 @@ statement initializes the returned reference or prvalue result object of
 the (explicit or implicit) function call by copy-initialization
 [[dcl.init]] from the operand.
 
-\[*Note 3*: A constructor or destructor does not have a return
+\[*Note 1*: A constructor or destructor does not have a return
 type. — *end note*\]
 
-\[*Note 4*: A `return` statement can involve an invocation of a
+\[*Note 2*: A `return` statement can involve an invocation of a
 constructor to perform a copy or move of the operand if it is not a
 prvalue or if its type differs from the return type of the function. A
 copy operation associated with a `return` statement can be elided or
@@ -757,7 +757,7 @@ A coroutine returns to its caller or resumer [[dcl.fct.def.coroutine]]
 by the `co_return` statement or when suspended [[expr.await]]. A
 coroutine shall not enclose a `return` statement [[stmt.return]].
 
-\[*Note 5*: For this determination, it is irrelevant whether the
+\[*Note 1*: For this determination, it is irrelevant whether the
 `return` statement is enclosed by a discarded statement
 [[stmt.if]]. — *end note*\]
 

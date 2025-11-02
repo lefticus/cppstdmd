@@ -354,11 +354,11 @@ namespace scope [[class.union.anon]]). The *storage-class-specifier*
 applies to the name declared by each *init-declarator* in the list and
 not to any names declared by other specifiers.
 
-\[*Note 2*: See [[temp.expl.spec]] and [[temp.explicit]] for
+\[*Note 1*: See [[temp.expl.spec]] and [[temp.explicit]] for
 restrictions in explicit specializations and explicit instantiations,
 respectively. — *end note*\]
 
-\[*Note 3*: A variable declared without a *storage-class-specifier* at
+\[*Note 2*: A variable declared without a *storage-class-specifier* at
 block scope or declared as a function parameter has automatic storage
 duration by default [[basic.stc.auto]]. — *end note*\]
 
@@ -388,17 +388,17 @@ variable or function. The `extern` specifier shall not be used in the
 declaration of a class member or function parameter. For the linkage of
 a name declared with an `extern` specifier, see  [[basic.link]].
 
-\[*Note 4*: The `extern` keyword can also be used in
+\[*Note 3*: The `extern` keyword can also be used in
 *explicit-instantiation* and *linkage-specification*, but it is not a
 *storage-class-specifier* in such contexts. — *end note*\]
 
 All declarations for a given entity shall give its name the same
 linkage.
 
-\[*Note 5*: The linkage given by some declarations is affected by
+\[*Note 4*: The linkage given by some declarations is affected by
 previous declarations. Overloads are distinct entities. — *end note*\]
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 static char* f();               // f() has internal linkage
@@ -440,7 +440,7 @@ The name of a declared but undefined class can be used in an `extern`
 declaration. Such a declaration can only be used in ways that do not
 require a complete class type.
 
-\[*Example 3*:
+\[*Example 2*:
 
 ``` cpp
 struct S;
@@ -460,7 +460,7 @@ The `mutable` specifier shall appear only in the declaration of a
 non-static data member [[class.mem]] whose type is neither
 const-qualified nor a reference type.
 
-\[*Example 4*:
+\[*Example 3*:
 
 ``` cpp
 class X {
@@ -471,7 +471,7 @@ class X {
 
 — *end example*\]
 
-\[*Note 6*: The `mutable` specifier on a class data member nullifies a
+\[*Note 5*: The `mutable` specifier on a class data member nullifies a
 `const` specifier applied to the containing class object and permits
 modification of the mutable class member even though the rest of the
 object is const
@@ -509,7 +509,7 @@ function is explicit. Otherwise, the function is not explicit. A `(`
 token that follows `explicit` is parsed as part of the
 *explicit-specifier*.
 
-\[*Example 5*:
+\[*Example 1*:
 
 ``` cpp
 struct S {
@@ -545,7 +545,7 @@ thus a synonym for another type. A *typedef-name* does not introduce a
 new type the way a class declaration [[class.name]] or enum declaration
 [[dcl.enum]] does.
 
-\[*Example 6*:
+\[*Example 1*:
 
 After
 
@@ -572,7 +572,7 @@ the *identifier* appertains to that *typedef-name*. Such a
 *typedef-name* has the same semantics as if it were introduced by the
 `typedef` specifier. In particular, it does not define a new type.
 
-\[*Example 7*:
+\[*Example 2*:
 
 ``` cpp
 using handler_t = void (*)(int);
@@ -591,14 +591,14 @@ define a class or enumeration if the *alias-declaration* is the
 A *simple-template-id* is only a *typedef-name* if its *template-name*
 names an alias template or a template *template-parameter*.
 
-\[*Note 7*: A *simple-template-id* that names a class template
+\[*Note 1*: A *simple-template-id* that names a class template
 specialization is a *class-name* [[class.name]]. If a *typedef-name* is
 used to identify the subject of an *elaborated-type-specifier*
 [[dcl.type.elab]], a class definition [[class]], a constructor
 declaration [[class.ctor]], or a destructor declaration [[class.dtor]],
 the program is ill-formed. — *end note*\]
 
-\[*Example 8*:
+\[*Example 3*:
 
 ``` cpp
 struct S {
@@ -618,11 +618,11 @@ An unnamed class or enumeration C defined in a typedef declaration has
 the first *typedef-name* declared by the declaration to be of type C as
 its *typedef name for linkage purposes* [[basic.link]].
 
-\[*Note 8*: A typedef declaration involving a *lambda-expression* does
+\[*Note 2*: A typedef declaration involving a *lambda-expression* does
 not itself define the associated closure type, and so the closure type
 is not given a typedef name for linkage purposes. — *end note*\]
 
-\[*Example 9*:
+\[*Example 4*:
 
 ``` cpp
 typedef struct { } *ps, S;      // S is the typedef name for linkage purposes
@@ -643,7 +643,7 @@ An unnamed class with a typedef name for linkage purposes shall not
 and all member classes shall also satisfy these requirements
 (recursively).
 
-\[*Example 10*:
+\[*Example 5*:
 
 ``` cpp
 typedef struct {
@@ -670,14 +670,14 @@ declaration of a function or function template has a `constexpr` or
 `consteval` specifier, then all its declarations shall contain the same
 specifier.
 
-\[*Note 9*: An explicit specialization can differ from the template
+\[*Note 1*: An explicit specialization can differ from the template
 declaration with respect to the `constexpr` or `consteval`
 specifier. — *end note*\]
 
-\[*Note 10*: Function parameters cannot be declared
+\[*Note 2*: Function parameters cannot be declared
 `constexpr`. — *end note*\]
 
-\[*Example 11*:
+\[*Example 1*:
 
 ``` cpp
 constexpr void square(int &x);  // OK, declaration
@@ -708,7 +708,7 @@ extern constexpr int memsz;     // error: not a definition
 A `constexpr` or `consteval` specifier used in the declaration of a
 function declares that function to be a *constexpr function*.
 
-\[*Note 11*: A function or constructor declared with the `consteval`
+\[*Note 3*: A function or constructor declared with the `consteval`
 specifier is an immediate function [[expr.const]]. — *end note*\]
 
 A destructor, an allocation function, or a deallocation function shall
@@ -724,7 +724,7 @@ A function is *constexpr-suitable* if:
 Except for instantiated constexpr functions, non-templated constexpr
 functions shall be constexpr-suitable.
 
-\[*Example 12*:
+\[*Example 2*:
 
 ``` cpp
 constexpr int square(int x)
@@ -768,19 +768,19 @@ the same context in all respects except that
 - copy elision is not performed in a constant expression
   [[class.copy.elision]].
 
-\[*Note 12*: Declaring a function constexpr can change whether an
+\[*Note 4*: Declaring a function constexpr can change whether an
 expression is a constant expression. This can indirectly cause calls to
 `std::is_constant_evaluated` within an invocation of the function to
 produce a different value. — *end note*\]
 
-\[*Note 13*: It is possible to write a constexpr function for which no
+\[*Note 5*: It is possible to write a constexpr function for which no
 invocation satisfies the requirements of a core constant
 expression. — *end note*\]
 
 The `constexpr` and `consteval` specifiers have no effect on the type of
 a constexpr function.
 
-\[*Example 13*:
+\[*Example 3*:
 
 ``` cpp
 constexpr int bar(int x, int y)         // OK
@@ -800,7 +800,7 @@ full-expression of the initialization shall be a constant expression
 temporary to which a `constexpr` reference is bound, shall have constant
 destruction.
 
-\[*Example 14*:
+\[*Example 4*:
 
 ``` cpp
 struct pixel {
@@ -825,10 +825,10 @@ initialization [[basic.start.dynamic]], the program is ill-formed, even
 if the implementation would perform that initialization as a static
 initialization [[basic.start.static]].
 
-\[*Note 14*: The `constinit` specifier ensures that the variable is
+\[*Note 1*: The `constinit` specifier ensures that the variable is
 initialized during static initialization. — *end note*\]
 
-\[*Example 15*:
+\[*Example 1*:
 
 ``` cpp
 const char * g() { return "dynamic initialization"; }
@@ -853,7 +853,7 @@ this inline substitution at the point of call; however, even if this
 inline substitution is omitted, the other rules for inline functions
 specified in this subclause shall still be respected.
 
-\[*Note 15*: The `inline` keyword has no effect on the linkage of a
+\[*Note 1*: The `inline` keyword has no effect on the linkage of a
 function. In certain cases, an inline function cannot use names with
 internal linkage; see  [[basic.link]]. — *end note*\]
 
@@ -872,11 +872,11 @@ in one definition domain, an inline declaration of it shall be reachable
 from the end of every definition domain in which it is declared; no
 diagnostic is required.
 
-\[*Note 16*: A call to an inline function or a use of an inline variable
+\[*Note 2*: A call to an inline function or a use of an inline variable
 can be encountered before its definition becomes reachable in a
 translation unit. — *end note*\]
 
-\[*Note 17*: An inline function or variable with external or module
+\[*Note 3*: An inline function or variable with external or module
 linkage can be defined in multiple translation units [[basic.def.odr]],
 but is one entity with one address. A type or `static` variable defined
 in the body of such a function is therefore a single
@@ -885,10 +885,9 @@ entity. — *end note*\]
 If an inline function or variable that is attached to a named module is
 declared in a definition domain, it shall be defined in that domain.
 
-\[*Note 18*: A constexpr function [[dcl.constexpr]] is implicitly
-inline. In the global module, a function defined within a class
-definition is implicitly inline
-[[class.mfct]], [[class.friend]]. — *end note*\]
+\[*Note 4*: A constexpr function [[dcl.constexpr]] is implicitly inline.
+In the global module, a function defined within a class definition is
+implicitly inline [[class.mfct]], [[class.friend]]. — *end note*\]
 
 ### Type specifiers <a id="dcl.type">[[dcl.type]]</a>
 
@@ -953,7 +952,7 @@ function, at least one *defining-type-specifier* that is not a
 *cv-qualifier* shall appear in a complete *type-specifier-seq* or a
 complete *decl-specifier-seq*.
 
-\[*Note 19*: *enum-specifier*, *class-specifier*, and
+\[*Note 1*: *enum-specifier*, *class-specifier*, and
 *typename-specifier* are discussed in [[dcl.enum]], [[class]], and
 [[temp.res]], respectively. The remaining *type-specifier* are discussed
 in the rest of [[dcl.type]]. — *end note*\]
@@ -966,15 +965,15 @@ There are two *cv-qualifier*, `const` and `volatile`. Each
 *init-declarator-list* or *member-declarator-list* of the declaration
 shall not be empty.
 
-\[*Note 20*:  [[basic.type.qualifier]] and [[dcl.fct]] describe how
+\[*Note 1*:  [[basic.type.qualifier]] and [[dcl.fct]] describe how
 cv-qualifiers affect object and function types. — *end note*\]
 
 Redundant cv-qualifications are ignored.
 
-\[*Note 21*: For example, these could be introduced by
+\[*Note 2*: For example, these could be introduced by
 typedefs. — *end note*\]
 
-\[*Note 22*: Declaring a variable `const` can affect its linkage
+\[*Note 3*: Declaring a variable `const` can affect its linkage
 [[dcl.stc]] and its usability in constant expressions [[expr.const]]. As
 described in  [[dcl.init]], the definition of an object or subobject of
 const-qualified type must specify an initializer or be subject to
@@ -986,7 +985,7 @@ const-qualified access path cannot be used to modify an object even if
 the object referenced is a non-const object and can be modified through
 some other access path.
 
-\[*Note 23*: Cv-qualifiers are supported by the type system so that they
+\[*Note 4*: Cv-qualifiers are supported by the type system so that they
 cannot be subverted without casting [[expr.const.cast]]. — *end note*\]
 
 Any attempt to modify
@@ -994,7 +993,7 @@ Any attempt to modify
 [[basic.type.qualifier]] during its lifetime [[basic.life]] results in
 undefined behavior.
 
-\[*Example 16*:
+\[*Example 1*:
 
 ``` cpp
 const int ci = 3;                       // cv-qualified (initialized as required)
@@ -1041,7 +1040,7 @@ The semantics of an access through a volatile glvalue are
 defined with a volatile-qualified type through the use of a non-volatile
 glvalue, the behavior is undefined.
 
-\[*Note 24*: `volatile` is a hint to the implementation to avoid
+\[*Note 5*: `volatile` is a hint to the implementation to avoid
 aggressive optimization involving the object because the value of the
 object might be changed by means undetectable by an implementation.
 Furthermore, for some implementations, `volatile` might indicate that
@@ -1105,7 +1104,7 @@ is an alias template whose *defining-type-id* is of the form
 where the *nested-name-specifier* (if any) is non-dependent and the
 *template-name* of the *simple-template-id* names a deducible template.
 
-\[*Note 25*: An injected-class-name is never interpreted as a
+\[*Note 1*: An injected-class-name is never interpreted as a
 *template-name* in contexts where class template argument deduction
 would be performed [[temp.local]]. — *end note*\]
 
@@ -1117,7 +1116,7 @@ combinations of *simple-type-specifier* and the types they specify.
 When multiple *simple-type-specifier* are allowed, they can be freely
 intermixed with other *decl-specifier* in any order.
 
-\[*Note 26*: It is *implementation-defined* whether objects of `char`
+\[*Note 2*: It is *implementation-defined* whether objects of `char`
 type are represented as signed or unsigned quantities. The `signed`
 specifier forces `char` objects to be signed; it is redundant in other
 contexts. — *end note*\]
@@ -1173,12 +1172,12 @@ of the following forms:
 Any unqualified lookup for the *identifier* (in the first case) does not
 consider scopes that contain the target scope; no name is bound.
 
-\[*Note 27*: A *using-directive* in the target scope is ignored if it
+\[*Note 1*: A *using-directive* in the target scope is ignored if it
 refers to a namespace not contained by that scope. [[basic.lookup.elab]]
 describes how name lookup proceeds in an
 *elaborated-type-specifier*. — *end note*\]
 
-\[*Note 28*: An *elaborated-type-specifier* can be used to refer to a
+\[*Note 2*: An *elaborated-type-specifier* can be used to refer to a
 previously declared *class-name* or *enum-name* even if the name has
 been hidden by a non-type declaration. — *end note*\]
 
@@ -1190,7 +1189,7 @@ declaration the same way a *simple-type-specifier* introduces its
 [[dcl.typedef]], [[temp.names]], the *elaborated-type-specifier* is
 ill-formed.
 
-\[*Note 29*:
+\[*Note 3*:
 
 This implies that, within a class template with a template
 *type-parameter* `T`, the declaration
@@ -1215,7 +1214,7 @@ the `enum` keyword shall be used to refer to an enumeration
 [[class.union]], and either the `class` or `struct` *class-key* shall be
 used to refer to a non-union class [[class.pre]].
 
-\[*Example 17*:
+\[*Example 1*:
 
 ``` cpp
 enum class E { a, b };
@@ -1261,7 +1260,7 @@ follows:
 The operand of the `decltype` specifier is an unevaluated operand
 [[term.unevaluated.operand]].
 
-\[*Example 18*:
+\[*Example 1*:
 
 ``` cpp
 const int&& foo();
@@ -1276,7 +1275,7 @@ decltype((a->x)) x4 = x3;       // type is const double\&
 
 — *end example*\]
 
-\[*Note 30*: The rules for determining types involving `decltype(auto)`
+\[*Note 1*: The rules for determining types involving `decltype(auto)`
 are specified in  [[dcl.spec.auto]]. — *end note*\]
 
 If the operand of a *decltype-specifier* is a prvalue and is not a
@@ -1285,20 +1284,20 @@ temporary materialization conversion is not applied [[conv.rval]] and no
 result object is provided for the prvalue. The type of the prvalue may
 be incomplete or an abstract class type.
 
-\[*Note 31*: As a result, storage is not allocated for the prvalue and
-it is not destroyed. Thus, a class type is not instantiated as a result
-of being the type of a function call in this context. In this context,
-the common purpose of writing the expression is merely to refer to its
-type. In that sense, a *decltype-specifier* is analogous to a use of a
+\[*Note 2*: As a result, storage is not allocated for the prvalue and it
+is not destroyed. Thus, a class type is not instantiated as a result of
+being the type of a function call in this context. In this context, the
+common purpose of writing the expression is merely to refer to its type.
+In that sense, a *decltype-specifier* is analogous to a use of a
 *typedef-name*, so the usual reasons for requiring a complete type do
 not apply. In particular, it is not necessary to allocate storage for a
 temporary object or to enforce the semantic constraints associated with
 invoking the type’s destructor. — *end note*\]
 
-\[*Note 32*: Unlike the preceding rule, parentheses have no special
+\[*Note 3*: Unlike the preceding rule, parentheses have no special
 meaning in this context. — *end note*\]
 
-\[*Example 19*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> struct A { ~A() = delete; };
@@ -1351,7 +1350,7 @@ and, if it is not the `auto` *type-specifier* introducing a
 *generic parameter type placeholder* of the function declaration or
 *lambda-expression*.
 
-\[*Note 33*: Having a generic parameter type placeholder signifies that
+\[*Note 1*: Having a generic parameter type placeholder signifies that
 the function is an abbreviated function template [[dcl.fct]] or the
 lambda is a generic lambda [[expr.prim.lambda]]. — *end note*\]
 
@@ -1373,7 +1372,7 @@ the *decl-specifier* in the *decl-specifier-seq* and the
 *decl-specifier-seq* shall be followed by one or more *declarator*, each
 of which shall be followed by a non-empty *initializer*.
 
-\[*Example 20*:
+\[*Example 1*:
 
 ``` cpp
 auto x = 5;                     // OK, x has type int
@@ -1406,7 +1405,7 @@ variable is determined by placeholder type deduction
 [[dcl.type.auto.deduct]], and if the type that replaces the placeholder
 type is not the same in each deduction, the program is ill-formed.
 
-\[*Example 21*:
+\[*Example 2*:
 
 ``` cpp
 auto x = 5, *y = &x;            // OK, auto is int
@@ -1425,7 +1424,7 @@ has no non-discarded `return` statements, the return type is deduced as
 though from a `return` statement with no operand at the closing brace of
 the function body.
 
-\[*Example 22*:
+\[*Example 3*:
 
 ``` cpp
 auto  f() { }                   // OK, return type is void
@@ -1438,7 +1437,7 @@ An exported function with a declared return type that uses a placeholder
 type shall be defined in the translation unit containing its exported
 declaration, outside the *private-module-fragment* (if any).
 
-\[*Note 34*: The deduced return type cannot have a name with internal
+\[*Note 2*: The deduced return type cannot have a name with internal
 linkage [[basic.link]]. — *end note*\]
 
 If a variable or function with an undeduced placeholder type is named by
@@ -1447,7 +1446,7 @@ non-discarded `return` statement has been seen in a function, however,
 the return type deduced from that statement can be used in the rest of
 the function, including in other `return` statements.
 
-\[*Example 23*:
+\[*Example 4*:
 
 ``` cpp
 auto n = n;                     // error: n's initializer refers to n
@@ -1468,13 +1467,13 @@ declared type occurs when the definition is instantiated even if the
 function body contains a `return` statement with a non-type-dependent
 operand.
 
-\[*Note 35*: Therefore, any use of a specialization of the function
+\[*Note 3*: Therefore, any use of a specialization of the function
 template will cause an implicit instantiation. Any errors that arise
 from this instantiation are not in the immediate context of the function
 type and can result in the program being ill-formed
 [[temp.deduct]]. — *end note*\]
 
-\[*Example 24*:
+\[*Example 5*:
 
 ``` cpp
 template <class T> auto f(T t) { return t; }    // return type deduced at instantiation time
@@ -1491,7 +1490,7 @@ uses a placeholder type, redeclarations or specializations of F shall
 use that placeholder type, not a deduced type; otherwise, they shall not
 use a placeholder type.
 
-\[*Example 25*:
+\[*Example 6*:
 
 ``` cpp
 auto f();
@@ -1536,7 +1535,7 @@ the instantiation of an entity declared using a placeholder type, but it
 also does not prevent that entity from being instantiated as needed to
 determine its type.
 
-\[*Example 26*:
+\[*Example 7*:
 
 ``` cpp
 template <typename T> auto f(T t) { return t; }
@@ -1622,7 +1621,7 @@ where `P` is a function template parameter type and the corresponding
 argument is E. If the deduction fails, the declaration is ill-formed.
 Otherwise, T' is obtained by substituting the deduced `U` into `P`.
 
-\[*Example 27*:
+\[*Example 8*:
 
 ``` cpp
 auto x1 = { 1, 2 };             // decltype(x1) is std::initializer_list<int>
@@ -1634,7 +1633,7 @@ auto x5{ 3 };                   // decltype(x5) is int
 
 — *end example*\]
 
-\[*Example 28*:
+\[*Example 9*:
 
 ``` cpp
 const auto &i = expr;
@@ -1654,7 +1653,7 @@ If the *placeholder-type-specifier* is of the form *type-constraint*
 for `T` is determined as described in  [[dcl.type.decltype]], as though
 E had been the operand of the `decltype`.
 
-\[*Example 29*:
+\[*Example 10*:
 
 ``` cpp
 int i;
@@ -1688,7 +1687,7 @@ in the *decl-specifier-seq* of an initializing declaration [[dcl.init]]
 of a variable, the declared type of the variable shall be cv `T`, where
 `T` is the placeholder.
 
-\[*Example 30*:
+\[*Example 1*:
 
 ``` cpp
 template <class ...T> struct A {
@@ -1715,7 +1714,7 @@ the *type-specifier* in the *parameter-declaration* of a
 *template-parameter* [[temp.param]]. A placeholder for a deduced class
 type shall not appear in any other context.
 
-\[*Example 31*:
+\[*Example 2*:
 
 ``` cpp
 template<class T> struct container {
@@ -1963,7 +1962,7 @@ It is possible to identify uniquely the location in the
 construction were a declarator in a declaration. The named type is then
 the same as the type of the hypothetical identifier.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 int                 // int i
@@ -1996,12 +1995,12 @@ mentioned in  [[stmt.ambig]], the resolution is to consider any
 construct, such as the potential parameter declaration, that could
 possibly be a declaration to be a declaration.
 
-\[*Note 3*: A declaration can be explicitly disambiguated by adding
+\[*Note 1*: A declaration can be explicitly disambiguated by adding
 parentheses around the argument. The ambiguity can be avoided by use of
 copy-initialization or list-initialization syntax, or by use of a
 non-function-style cast. — *end note*\]
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 struct S {
@@ -2024,7 +2023,7 @@ and a *type-id*. The resolution is that any construct that could
 possibly be a *type-id* in its syntactic context shall be considered a
 *type-id*.
 
-\[*Example 4*:
+\[*Example 2*:
 
 ``` cpp
 template <class T> struct X {};
@@ -2054,7 +2053,7 @@ the declaration of a parameter with redundant parentheses around the
 *declarator-id*. The resolution is to consider the *type-name* as a
 *simple-type-specifier* rather than a *declarator-id*.
 
-\[*Example 5*:
+\[*Example 3*:
 
 ``` cpp
 class C { };
@@ -2089,7 +2088,7 @@ is a *template-id*, the declarator shall appear in the *declaration* of
 a *template-declaration* [[temp.decls]], *explicit-specialization*
 [[temp.expl.spec]], or *explicit-instantiation* [[temp.explicit]].
 
-\[*Note 4*: An *unqualified-id* that is not an *identifier* is used to
+\[*Note 1*: An *unqualified-id* that is not an *identifier* is used to
 declare certain functions
 [[class.conv.fct]], [[class.dtor]], [[over.oper]], [[over.literal]]. — *end note*\]
 
@@ -2243,7 +2242,7 @@ T D
 
 the *decl-specifier-seq* `T` determines the type `T`.
 
-\[*Example 6*:
+\[*Example 1*:
 
 In the declaration
 
@@ -2291,7 +2290,7 @@ pointer and not to the object pointed to. Similarly, the optional
 *attribute-specifier-seq* [[dcl.attr.grammar]] appertains to the pointer
 and not to the object pointed to.
 
-\[*Example 7*:
+\[*Example 1*:
 
 The declarations
 
@@ -2342,7 +2341,7 @@ cv-unqualified pointer later, for example:
 
 See also  [[expr.ass]] and  [[dcl.init]].
 
-\[*Note 5*: Forming a pointer to reference type is ill-formed; see 
+\[*Note 1*: Forming a pointer to reference type is ill-formed; see 
 [[dcl.ref]]. Forming a function pointer type is ill-formed if the
 function type has *cv-qualifier* or a *ref-qualifier*; see  [[dcl.fct]].
 Since the address of a bit-field [[class.bit]] cannot be taken, a
@@ -2366,7 +2365,7 @@ cv-qualifiers are introduced through the use of a *typedef-name*
 [[dcl.typedef]], [[temp.param]] or *decltype-specifier*
 [[dcl.type.decltype]], in which case the cv-qualifiers are ignored.
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 typedef int& A;
@@ -2378,7 +2377,7 @@ to `const int`”.
 
 — *end example*\]
 
-\[*Note 6*: A reference can be thought of as a name of an
+\[*Note 1*: A reference can be thought of as a name of an
 object. — *end note*\]
 
 A declarator that specifies the type “reference to cv `void`” is
@@ -2390,7 +2389,7 @@ called an *rvalue reference*. Lvalue references and rvalue references
 are distinct types. Except where explicitly noted, they are semantically
 equivalent and commonly referred to as references.
 
-\[*Example 9*:
+\[*Example 2*:
 
 ``` cpp
 void f(double& a) { a += 3.14; }
@@ -2450,7 +2449,7 @@ declaration of a parameter or a return type [[dcl.fct]]; see 
 [[basic.def]]. A reference shall be initialized to refer to a valid
 object or function.
 
-\[*Note 7*:  In particular, a null reference cannot exist in a
+\[*Note 2*:  In particular, a null reference cannot exist in a
 well-defined program, because the only way to create such a reference
 would be to bind it to the “object” obtained by indirection through a
 null pointer, which causes undefined behavior. As described in 
@@ -2463,9 +2462,9 @@ reference to a type `T`, an attempt to create the type “lvalue reference
 to cv `TR`” creates the type “lvalue reference to `T`”, while an attempt
 to create the type “rvalue reference to cv `TR`” creates the type `TR`.
 
-\[*Note 8*: This rule is known as reference collapsing. — *end note*\]
+\[*Note 3*: This rule is known as reference collapsing. — *end note*\]
 
-\[*Example 10*:
+\[*Example 3*:
 
 ``` cpp
 int i;
@@ -2485,7 +2484,7 @@ decltype(r2)&& r7 = i;          // r7 has the type int\&
 
 — *end example*\]
 
-\[*Note 9*: Forming a reference to function type is ill-formed if the
+\[*Note 4*: Forming a reference to function type is ill-formed if the
 function type has *cv-qualifier* or a *ref-qualifier*; see 
 [[dcl.fct]]. — *end note*\]
 
@@ -2508,7 +2507,7 @@ member of class *nested-name-specifier* of type `T`”. The optional
 *attribute-specifier-seq* [[dcl.attr.grammar]] appertains to the
 pointer-to-member.
 
-\[*Example 11*:
+\[*Example 1*:
 
 ``` cpp
 struct X {
@@ -2543,7 +2542,7 @@ obj.*pmi = 7;       // assign 7 to an integer member of obj
 A pointer to member shall not point to a static member of a class
 [[class.static]], a member with reference type, or “cv `void`”.
 
-\[*Note 10*: See also  [[expr.unary]] and  [[expr.mptr.oper]]. The type
+\[*Note 1*: See also  [[expr.unary]] and  [[expr.mptr.oper]]. The type
 “pointer to member” is distinct from the type “pointer”, that is, a
 pointer to member is declared only by the pointer-to-member declarator
 syntax, and never by the pointer declarator syntax. There is no
@@ -2584,12 +2583,12 @@ the array type.
 reference type, a function type, an array of unknown bound, or
 cv `void`.
 
-\[*Note 11*: An array can be constructed from one of the fundamental
+\[*Note 1*: An array can be constructed from one of the fundamental
 types (except `void`), from a pointer, from a pointer to member, from a
 class, from an enumeration type, or from an array of known
 bound. — *end note*\]
 
-\[*Example 12*:
+\[*Example 1*:
 
 ``` cpp
 float fa[17], *afp[17];
@@ -2604,7 +2603,7 @@ Any type of the form “*cv-qualifier-seq* array of `N` `U`” is adjusted
 to “array of `N` *cv-qualifier-seq* `U`”, and similarly for “array of
 unknown bound of `U`”.
 
-\[*Example 13*:
+\[*Example 2*:
 
 ``` cpp
 typedef int A[5], AA[2][3];
@@ -2614,7 +2613,7 @@ typedef const AA CAA;           // type is ``array of 2 array of 3 const int''
 
 — *end example*\]
 
-\[*Note 12*: An “array of `N` *cv-qualifier-seq* `U`” has cv-qualified
+\[*Note 2*: An “array of `N` *cv-qualifier-seq* `U`” has cv-qualified
 type; see  [[basic.type.qualifier]]. — *end note*\]
 
 An object of type “array of `N` `U`” consists of a contiguously
@@ -2636,7 +2635,7 @@ inhabits the same scope in which the bound was specified, an omitted
 array bound is taken to be the same as in that earlier declaration, and
 similarly for the definition of a static data member of a class.
 
-\[*Example 14*:
+\[*Example 3*:
 
 ``` cpp
 extern int x[10];
@@ -2655,7 +2654,7 @@ void f() {
 
 — *end example*\]
 
-\[*Note 13*:
+\[*Note 3*:
 
 When several “array of” specifications are adjacent, a multidimensional
 array type is created; only the first of the constant expressions that
@@ -2667,10 +2666,10 @@ calculations.
 
 — *end note*\]
 
-\[*Note 14*: Conversions affecting expressions of array type are
+\[*Note 4*: Conversions affecting expressions of array type are
 described in  [[conv.array]]. — *end note*\]
 
-\[*Note 15*: The subscript operator can be overloaded for a class
+\[*Note 5*: The subscript operator can be overloaded for a class
 [[over.sub]]. For the operator’s built-in meaning, see
 [[expr.sub]]. — *end note*\]
 
@@ -2749,7 +2748,7 @@ appertains to the parameter.
 The *parameter-declaration-clause* determines the arguments that can be
 specified, and their processing, when the function is called.
 
-\[*Note 16*:  The *parameter-declaration-clause* is used to convert the
+\[*Note 1*:  The *parameter-declaration-clause* is used to convert the
 arguments specified on the function call; see 
 [[expr.call]]. — *end note*\]
 
@@ -2765,7 +2764,7 @@ parameters that do not have a default argument and are not function
 parameter packs. Where syntactically correct and where “`...`” is not
 part of an *abstract-declarator*, “`, ...`” is synonymous with “`...`”.
 
-\[*Example 15*:
+\[*Example 1*:
 
 The declaration
 
@@ -2786,7 +2785,7 @@ However, the first argument must be of a type that can be converted to a
 
 — *end example*\]
 
-\[*Note 17*: The standard header `<cstdarg>` contains a mechanism for
+\[*Note 2*: The standard header `<cstdarg>` contains a mechanism for
 accessing arguments passed using the ellipsis (see  [[expr.call]] and 
 [[support.runtime]]). — *end note*\]
 
@@ -2801,11 +2800,11 @@ list of transformed parameter types and the presence or absence of the
 ellipsis or a function parameter pack is the function’s
 *parameter-type-list*.
 
-\[*Note 18*: This transformation does not affect the types of the
+\[*Note 3*: This transformation does not affect the types of the
 parameters. For example, `int(*)(const int p, decltype(p)*)` and
 `int(*)(int, const int*)` are identical types. — *end note*\]
 
-\[*Example 16*:
+\[*Example 2*:
 
 ``` cpp
 void f(char*);                  // \#1
@@ -2837,7 +2836,7 @@ A *member-declarator* with an explicit-object-parameter-declaration
 shall not include a *ref-qualifier* or a *cv-qualifier-seq* and shall
 not be declared `static` or `virtual`.
 
-\[*Example 17*:
+\[*Example 3*:
 
 ``` cpp
 struct C {
@@ -2873,7 +2872,7 @@ explicit object parameter. The *non-object-parameter-type-list* of a
 member function is the parameter-type-list of that function with the
 explicit object parameter, if any, omitted.
 
-\[*Note 19*: The non-object-parameter-type-list consists of the adjusted
+\[*Note 4*: The non-object-parameter-type-list consists of the adjusted
 types of all the non-object parameters. — *end note*\]
 
 A function type with a *cv-qualifier-seq* or a *ref-qualifier*
@@ -2893,7 +2892,7 @@ A function type with a *cv-qualifier-seq* or a *ref-qualifier*
 - the *type-id* of a *template-argument* for a *type-parameter*
   [[temp.arg.type]].
 
-\[*Example 18*:
+\[*Example 4*:
 
 ``` cpp
 typedef int FIC(int) const;
@@ -2910,11 +2909,11 @@ The effect of a *cv-qualifier-seq* in a function declarator is not the
 same as adding cv-qualification on top of the function type. In the
 latter case, the cv-qualifiers are ignored.
 
-\[*Note 20*: A function type that has a *cv-qualifier-seq* is not a
+\[*Note 5*: A function type that has a *cv-qualifier-seq* is not a
 cv-qualified type; there are no cv-qualified function
 types. — *end note*\]
 
-\[*Example 19*:
+\[*Example 5*:
 
 ``` cpp
 typedef void F();
@@ -2930,11 +2929,11 @@ The return type, the parameter-type-list, the *ref-qualifier*, the
 arguments [[dcl.fct.default]] or the trailing *requires-clause*
 [[dcl.decl]], are part of the function type.
 
-\[*Note 21*: Function types are checked during the assignments and
+\[*Note 6*: Function types are checked during the assignments and
 initializations of pointers to functions, references to functions, and
 pointers to member functions. — *end note*\]
 
-\[*Example 20*:
+\[*Example 6*:
 
 The declaration
 
@@ -2947,13 +2946,13 @@ returning `int` [[dcl.type]].
 
 — *end example*\]
 
-\[*Note 22*: A single name can be used for several different functions
-in a single scope; this is function overloading [[over]]. — *end note*\]
+\[*Note 7*: A single name can be used for several different functions in
+a single scope; this is function overloading [[over]]. — *end note*\]
 
 The return type shall be a non-array object type, a reference type, or
 cv `void`.
 
-\[*Note 23*: An array of placeholder type is considered an array
+\[*Note 8*: An array of placeholder type is considered an array
 type. — *end note*\]
 
 A volatile-qualified return type is deprecated; see 
@@ -2964,7 +2963,7 @@ Types shall not be defined in return or parameter types.
 A typedef of function type may be used to declare a function but shall
 not be used to define a function [[dcl.fct.def]].
 
-\[*Example 21*:
+\[*Example 7*:
 
 ``` cpp
 typedef void F();
@@ -2978,12 +2977,11 @@ void fv() { }       // OK, definition of fv
 An identifier can optionally be provided as a parameter name; if present
 in a function definition [[dcl.fct.def]], it names a parameter.
 
-\[*Note 24*: In particular, parameter names are also optional in
-function definitions and names used for a parameter in different
-declarations and the definition of a function need not be the
-same. — *end note*\]
+\[*Note 9*: In particular, parameter names are also optional in function
+definitions and names used for a parameter in different declarations and
+the definition of a function need not be the same. — *end note*\]
 
-\[*Example 22*:
+\[*Example 8*:
 
 The declaration
 
@@ -3013,7 +3011,7 @@ function, which is then called.
 
 — *end example*\]
 
-\[*Note 25*:
+\[*Note 10*:
 
 Typedefs and *trailing-return-type* are sometimes convenient when the
 return type of a function is complex. For example, the function `fpif`
@@ -3048,7 +3046,7 @@ template <class T, class U> decltype((*(T*)0) + (*(U*)0)) add(T t, U u);
 A *non-template function* is a function that is not a function template
 specialization.
 
-\[*Note 26*: A function template is not a function. — *end note*\]
+\[*Note 11*: A function template is not a function. — *end note*\]
 
 An *abbreviated function template* is a function declaration that has
 one or more generic parameter type placeholders [[dcl.spec.auto]]. An
@@ -3068,7 +3066,7 @@ derived from the *parameter-declaration-clause* by replacing each
 occurrence of a placeholder with the name of the corresponding invented
 *template-parameter*.
 
-\[*Example 23*:
+\[*Example 9*:
 
 ``` cpp
 template<typename T>     concept C1 = /* ... */;
@@ -3105,7 +3103,7 @@ invented *template-parameter* are appended to the
 *template-parameter-list* after the explicitly declared
 *template-parameter*.
 
-\[*Example 24*:
+\[*Example 10*:
 
 ``` cpp
 template<typename> concept C = /* ... */;
@@ -3139,7 +3137,7 @@ function parameter pack [[temp.variadic]]. Otherwise, the
 declares a template parameter pack; see  [[temp.param]]. A function
 parameter pack is a pack expansion [[temp.variadic]].
 
-\[*Example 25*:
+\[*Example 11*:
 
 ``` cpp
 template<typename... T> void f(T (* ...t)(int, int));
@@ -3166,10 +3164,10 @@ been expanded or contains `auto`; otherwise, it is parsed as part of the
 If an *initializer-clause* is specified in a *parameter-declaration*
 this *initializer-clause* is used as a default argument.
 
-\[*Note 27*: Default arguments will be used in calls where trailing
+\[*Note 1*: Default arguments will be used in calls where trailing
 arguments are missing [[expr.call]]. — *end note*\]
 
-\[*Example 26*:
+\[*Example 1*:
 
 The declaration
 
@@ -3208,11 +3206,11 @@ default argument shall have a default argument supplied in this or a
 previous declaration, unless the parameter was expanded from a parameter
 pack, or shall be a function parameter pack.
 
-\[*Note 28*: A default argument cannot be redefined by a later
+\[*Note 2*: A default argument cannot be redefined by a later
 declaration (not even to the same value)
 [[basic.def.odr]]. — *end note*\]
 
-\[*Example 27*:
+\[*Example 2*:
 
 ``` cpp
 void g(int = 0, ...);           // OK, ellipsis is not a parameter so it can follow
@@ -3261,7 +3259,7 @@ is a constant expression at that point. Name lookup and checking of
 semantic constraints for default arguments of templated functions are
 performed as described in  [[temp.inst]].
 
-\[*Example 28*:
+\[*Example 3*:
 
 In the following code, `g` will be called with the value `f(2)`:
 
@@ -3281,7 +3279,7 @@ void h() {
 
 — *end example*\]
 
-\[*Note 29*: A default argument is a complete-class context
+\[*Note 3*: A default argument is a complete-class context
 [[class.mem]]. Access checking applies to names in default arguments as
 described in [[class.access]]. — *end note*\]
 
@@ -3295,7 +3293,7 @@ constructor [[class.copy.ctor]], or copy or move assignment operator
 function of a class template shall be specified on the initial
 declaration of the member function within the class template.
 
-\[*Example 29*:
+\[*Example 4*:
 
 ``` cpp
 class C {
@@ -3309,10 +3307,10 @@ void C::g(int i = 88, int j) {} // in this translation unit, C::g can be called 
 
 — *end example*\]
 
-\[*Note 30*: A local variable cannot be odr-used [[term.odr.use]] in a
+\[*Note 4*: A local variable cannot be odr-used [[term.odr.use]] in a
 default argument. — *end note*\]
 
-\[*Example 30*:
+\[*Example 5*:
 
 ``` cpp
 void f() {
@@ -3325,7 +3323,7 @@ void f() {
 
 — *end example*\]
 
-\[*Note 31*:
+\[*Note 5*:
 
 The keyword `this` cannot appear in a default argument of a member
 function; see  [[expr.prim.this]].
@@ -3336,11 +3334,11 @@ A default argument is evaluated each time the function is called with no
 argument for the corresponding parameter. A parameter shall not appear
 as a potentially-evaluated expression in a default argument.
 
-\[*Note 32*: Parameters of a function declared before a default argument
+\[*Note 6*: Parameters of a function declared before a default argument
 are in scope and can hide namespace and class member
 names. — *end note*\]
 
-\[*Example 31*:
+\[*Example 6*:
 
 ``` cpp
 int a;
@@ -3357,7 +3355,7 @@ appears as the *id-expression* of a class member access expression
 [[expr.ref]] or unless it is used to form a pointer to member
 [[expr.unary.op]].
 
-\[*Example 32*:
+\[*Example 7*:
 
 The declaration of `X::mem1()` in the following example is ill-formed
 because no object is supplied for the non-static member `X::a` used as
@@ -3381,7 +3379,7 @@ members are described in [[class]].
 
 A default argument is not part of the type of a function.
 
-\[*Example 33*:
+\[*Example 8*:
 
 ``` cpp
 int f(int = 0);
@@ -3401,7 +3399,7 @@ When an overload set contains a declaration of a function that inhabits
 a scope S, any default argument associated with any reachable
 declaration that inhabits S is available to the call.
 
-\[*Note 33*: The candidate might have been found through a
+\[*Note 7*: The candidate might have been found through a
 *using-declarator* from which the declaration that provides the default
 argument is not reachable. — *end note*\]
 
@@ -3411,7 +3409,7 @@ the pointer or reference denoting the object. An overriding function in
 a derived class does not acquire default arguments from the function it
 overrides.
 
-\[*Example 34*:
+\[*Example 9*:
 
 ``` cpp
 struct A {
@@ -3714,7 +3712,7 @@ source type is not defined.
       otherwise are value-initialized. For each 1 ≤ i < j ≤ n, every
       value computation and side effect associated with the
       initialization of eᵢ is sequenced before those associated with the
-      initialization of $e_j$.
+      initialization of eⱼ.
 
       \[*Note 3*:
 
@@ -3833,7 +3831,7 @@ An *aggregate* is an array or a class [[class]] with
 - no virtual functions [[class.virtual]] or virtual base classes
   [[class.mi]].
 
-\[*Note 8*: Aggregate initialization does not allow accessing protected
+\[*Note 1*: Aggregate initialization does not allow accessing protected
 and private base class’ members or constructors. — *end note*\]
 
 The *elements* of an aggregate are:
@@ -3961,7 +3959,7 @@ If the aggregate is a union and the initializer list is empty, then
 - otherwise, the first member of the union (if any) is copy-initialized
   from an empty initializer list.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 struct S { int a; const char* b; int c; int d = b[a]; };
@@ -4010,7 +4008,7 @@ The destructor for each element of class type is potentially invoked
 [[class.dtor]] from the context where the aggregate initialization
 occurs.
 
-\[*Note 9*: This provision ensures that destructors can be called for
+\[*Note 2*: This provision ensures that destructors can be called for
 fully-constructed subobjects in case an exception is thrown
 [[except.ctor]]. — *end note*\]
 
@@ -4018,7 +4016,7 @@ An array of unknown bound initialized with a brace-enclosed
 *initializer-list* containing `n` *initializer-clause* is defined as
 having `n` elements [[dcl.array]].
 
-\[*Example 3*:
+\[*Example 2*:
 
 ``` cpp
 int x[] = { 1, 3, 5 };
@@ -4032,7 +4030,7 @@ elements since no size was specified and there are three initializers.
 An array of unknown bound shall not be initialized with an empty
 *braced-init-list* `\{\}`.
 
-\[*Note 10*:
+\[*Note 3*:
 
 A default member initializer does not determine the bound for a member
 array of unknown bound. Since the default member initializer is ignored
@@ -4042,7 +4040,7 @@ unknown bound.
 
 — *end note*\]
 
-\[*Note 11*:
+\[*Note 4*:
 
 Static data members, non-static data members of anonymous union members,
 and unnamed bit-fields are not considered elements of the aggregate.
@@ -4052,7 +4050,7 @@ and unnamed bit-fields are not considered elements of the aggregate.
 An *initializer-list* is ill-formed if the number of
 *initializer-clause* exceeds the number of elements of the aggregate.
 
-\[*Example 4*:
+\[*Example 3*:
 
 ``` cpp
 char cv[4] = { 'a', 's', 'd', 'f', 0 };     // error
@@ -4066,7 +4064,7 @@ If a member has a default member initializer and a potentially-evaluated
 subexpression thereof is an aggregate initialization that would use that
 default member initializer, the program is ill-formed.
 
-\[*Example 5*:
+\[*Example 4*:
 
 ``` cpp
 struct A;
@@ -4090,7 +4088,7 @@ elements, the *initializer-clause* for `e` shall not be omitted from an
 *initializer-clause* for all elements of `C` following `e` are also
 omitted.
 
-\[*Example 6*:
+\[*Example 5*:
 
 ``` cpp
 struct S { } s;
@@ -4115,7 +4113,7 @@ When initializing a multidimensional array, the *initializer-clause*
 initialize the elements with the last (rightmost) index of the array
 varying the fastest [[dcl.array]].
 
-\[*Example 7*:
+\[*Example 6*:
 
 ``` cpp
 int x[2][2] = { 3, 1, 4, 2 };
@@ -4146,7 +4144,7 @@ of the subaggregate; any remaining *initializer-clause* are left to
 initialize the next element of the aggregate of which the current
 subaggregate is an element.
 
-\[*Example 8*:
+\[*Example 7*:
 
 ``` cpp
 float y[4][3] = {
@@ -4185,11 +4183,11 @@ initialized. Otherwise, if the element is itself a subaggregate, brace
 elision is assumed and the *assignment-expression* is considered for the
 initialization of the first element of the subaggregate.
 
-\[*Note 12*: As specified above, brace elision cannot apply to
+\[*Note 5*: As specified above, brace elision cannot apply to
 subaggregates with no elements; an *initializer-clause* for the entire
 subobject is required. — *end note*\]
 
-\[*Example 9*:
+\[*Example 8*:
 
 ``` cpp
 struct A {
@@ -4210,20 +4208,19 @@ initialized with whatever `a.operator int()` returns.
 
 — *end example*\]
 
-\[*Note 13*: An aggregate array or an aggregate class can contain
+\[*Note 6*: An aggregate array or an aggregate class can contain
 elements of a class type with a user-declared constructor
 [[class.ctor]]. Initialization of these aggregate objects is described
 in  [[class.expl.init]]. — *end note*\]
 
-\[*Note 14*: Whether the initialization of aggregates with static
-storage duration is static or dynamic is specified in 
-[[basic.start.static]], [[basic.start.dynamic]], and 
-[[stmt.dcl]]. — *end note*\]
+\[*Note 7*: Whether the initialization of aggregates with static storage
+duration is static or dynamic is specified in  [[basic.start.static]],
+[[basic.start.dynamic]], and  [[stmt.dcl]]. — *end note*\]
 
 When a union is initialized with an initializer list, there shall not be
 more than one explicitly initialized element.
 
-\[*Example 10*:
+\[*Example 9*:
 
 ``` cpp
 union u { int a; const char* b; };
@@ -4238,7 +4235,7 @@ u g = { .a = 1, .b = "asdf" };  // error
 
 — *end example*\]
 
-\[*Note 15*: As described above, the braces around the
+\[*Note 8*: As described above, the braces around the
 *initializer-clause* for a union member can be omitted if the union is a
 member of another aggregate. — *end note*\]
 
@@ -4256,7 +4253,7 @@ of the *string-literal* initialize the elements of the array, with an
 integral conversion [[conv.integral]] if necessary for the source and
 destination value.
 
-\[*Example 11*:
+\[*Example 1*:
 
 ``` cpp
 char msg[] = "Syntax error on line %s\n";
@@ -4270,7 +4267,7 @@ because a trailing `'\ 0'` is appended, `sizeof(msg)` is `25`.
 
 There shall not be more initializers than there are array elements.
 
-\[*Example 12*:
+\[*Example 2*:
 
 ``` cpp
 char cv[4] = "asdf";            // error
@@ -4289,7 +4286,7 @@ element not explicitly initialized shall be zero-initialized
 A variable whose declared type is “reference to `T`” [[dcl.ref]] shall
 be initialized.
 
-\[*Example 13*:
+\[*Example 1*:
 
 ``` cpp
 int g(int) noexcept;
@@ -4312,7 +4309,7 @@ void f() {
 A reference cannot be changed to refer to another object after
 initialization.
 
-\[*Note 16*: Assignment to a reference assigns to the object referred to
+\[*Note 1*: Assignment to a reference assigns to the object referred to
 by the reference [[expr.ass]]. — *end note*\]
 
 Argument passing [[expr.call]] and function value return [[stmt.return]]
@@ -4323,7 +4320,7 @@ declaration [[dcl.fct]], in the declaration of a function return type,
 in the declaration of a class member within its class definition
 [[class.mem]], and where the `extern` specifier is explicitly used.
 
-\[*Example 14*:
+\[*Example 2*:
 
 ``` cpp
 int& r1;                        // error: initializer missing
@@ -4504,7 +4501,7 @@ In all cases except the last (i.e., implicitly converting the
 initializer expression to the referenced type), the reference is said to
 *bind directly* to the initializer expression.
 
-\[*Note 17*:  [[class.temporary]] describes the lifetime of temporaries
+\[*Note 2*:  [[class.temporary]] describes the lifetime of temporaries
 bound to references. — *end note*\]
 
 ### List-initialization <a id="dcl.init.list">[[dcl.init.list]]</a>
@@ -4520,7 +4517,7 @@ direct-initialization context is called *direct-list-initialization* and
 list-initialization in a copy-initialization context is called
 *copy-list-initialization*.
 
-\[*Note 18*:
+\[*Note 1*:
 
 List-initialization can be used
 
@@ -4553,7 +4550,7 @@ cv `std::initializer_list<E>` for some type `E`, and either there are no
 other parameters or else all other parameters have default arguments
 [[dcl.fct.default]].
 
-\[*Note 19*: Initializer-list constructors are favored over other
+\[*Note 2*: Initializer-list constructors are favored over other
 constructors in list-initialization [[over.match.list]]. Passing an
 initializer list as the argument to the constructor template
 `template<class T> C(T)` of a class `C` does not create an
@@ -4797,7 +4794,7 @@ is, every value computation and side effect associated with a given
 side effect associated with any *initializer-clause* that follows it in
 the comma-separated list of the *initializer-list*.
 
-\[*Note 20*: This evaluation ordering holds regardless of the semantics
+\[*Note 3*: This evaluation ordering holds regardless of the semantics
 of the initialization; for example, it applies when the elements of the
 *initializer-list* are interpreted as arguments of a constructor call,
 even though ordinarily there are no sequencing constraints on the
@@ -4811,14 +4808,14 @@ is copy-initialized with the corresponding element of the initializer
 list, and the `std::initializer_list<E>` object is constructed to refer
 to that array.
 
-\[*Note 21*: A constructor or conversion function selected for the copy
+\[*Note 4*: A constructor or conversion function selected for the copy
 is required to be accessible [[class.access]] in the context of the
 initializer list. — *end note*\]
 
 If a narrowing conversion is required to initialize any of the elements,
 the program is ill-formed.
 
-\[*Example 15*:
+\[*Example 1*:
 
 ``` cpp
 struct X {
@@ -4845,7 +4842,7 @@ The array has the same lifetime as any other temporary object
 object from the array extends the lifetime of the array exactly like
 binding a reference to a temporary.
 
-\[*Example 16*:
+\[*Example 2*:
 
 ``` cpp
 typedef std::complex<double> cmplx;
@@ -4872,7 +4869,7 @@ member, so the program is ill-formed [[class.base.init]].
 
 — *end example*\]
 
-\[*Note 22*: The implementation is free to allocate the array in
+\[*Note 5*: The implementation is free to allocate the array in
 read-only memory if an explicit array with the same initializer can be
 so allocated. — *end note*\]
 
@@ -4906,10 +4903,10 @@ A *narrowing conversion* is an implicit conversion
 
 - from a pointer type or a pointer-to-member type to `bool`.
 
-\[*Note 23*: As indicated above, such conversions are not allowed at the
+\[*Note 6*: As indicated above, such conversions are not allowed at the
 top level in list-initializations. — *end note*\]
 
-\[*Example 17*:
+\[*Example 3*:
 
 ``` cpp
 int x = 999;                    // x is not a constant expression
@@ -5076,7 +5073,7 @@ A function explicitly defaulted on its first declaration is implicitly
 inline [[dcl.inline]], and is implicitly constexpr [[dcl.constexpr]] if
 it is constexpr-suitable.
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 struct S {
@@ -5123,12 +5120,12 @@ explicitly defaulted in the class) that is not defined as deleted is
 implicitly defined when it is odr-used [[basic.def.odr]] or needed for
 constant evaluation [[expr.const]].
 
-\[*Note 3*: Declaring a function as defaulted after its first
+\[*Note 1*: Declaring a function as defaulted after its first
 declaration can provide efficient execution and concise definition while
 enabling a stable binary interface to an evolving code
 base. — *end note*\]
 
-\[*Example 4*:
+\[*Example 2*:
 
 ``` cpp
 struct trivial {
@@ -5159,14 +5156,14 @@ that is implicitly defined as deleted.
 A program that refers to a deleted function implicitly or explicitly,
 other than to declare it, is ill-formed.
 
-\[*Note 4*: This includes calling the function implicitly or explicitly
+\[*Note 1*: This includes calling the function implicitly or explicitly
 and forming a pointer or pointer-to-member to the function. It applies
 even for references in expressions that are not potentially-evaluated.
 For an overload set, only the function selected by overload resolution
 is referenced. The implicit odr-use [[term.odr.use]] of a virtual
 function does not, by itself, constitute a reference. — *end note*\]
 
-\[*Example 5*:
+\[*Example 1*:
 
 One can prevent default initialization and initialization by
 non-`double`s with
@@ -5182,7 +5179,7 @@ struct onlydouble {
 
 — *end example*\]
 
-\[*Example 6*:
+\[*Example 2*:
 
 One can prevent use of a class in certain *new-expression* by using
 deleted definitions of a user-declared `operator new` for that class.
@@ -5198,7 +5195,7 @@ sometype* q = new sometype[3];  // error: deleted class operator new[]
 
 — *end example*\]
 
-\[*Example 7*:
+\[*Example 3*:
 
 One can make a class uncopyable, i.e., move-only, by using deleted
 definitions of the copy constructor and copy assignment operator, and
@@ -5222,7 +5219,7 @@ moveonly q(*p);                 // error: deleted copy constructor
 
 A deleted function is implicitly an inline function [[dcl.inline]].
 
-\[*Note 5*: The one-definition rule [[basic.def.odr]] applies to deleted
+\[*Note 2*: The one-definition rule [[basic.def.odr]] applies to deleted
 definitions. — *end note*\]
 
 A deleted definition of a function shall be the first declaration of the
@@ -5231,7 +5228,7 @@ first declaration of that specialization. An implicitly declared
 allocation or deallocation function [[basic.stc.dynamic]] shall not be
 defined as deleted.
 
-\[*Example 8*:
+\[*Example 4*:
 
 ``` cpp
 struct sometype {
@@ -5251,7 +5248,7 @@ A function is a *coroutine* if its *function-body* encloses a
 shall not terminate with an ellipsis that is not part of a
 *parameter-declaration*.
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 task<int> f();
@@ -5353,7 +5350,7 @@ If searches for the names `return_void` and `return_value` in the scope
 of the promise type each find any declarations, the program is
 ill-formed.
 
-\[*Note 6*: If `return_void` is found, flowing off the end of a
+\[*Note 1*: If `return_void` is found, flowing off the end of a
 coroutine is equivalent to a `co_return` with no operand. Otherwise,
 flowing off the end of a coroutine results in undefined behavior
 [[stmt.return.coroutine]]. — *end note*\]
@@ -5403,7 +5400,7 @@ value is obtained by a call to
 `T::get_return_object_on_allocation_failure()`, where `T` is the promise
 type.
 
-\[*Example 10*:
+\[*Example 2*:
 
 ``` cpp
 #include <iostream>
@@ -5473,7 +5470,7 @@ parameter of type cv `T`, the copy is a variable of type cv `T` with
 automatic storage duration that is direct-initialized from an xvalue of
 type `T` referring to the parameter.
 
-\[*Note 7*: An original parameter object is never a const or volatile
+\[*Note 2*: An original parameter object is never a const or volatile
 object [[basic.type.qualifier]]. — *end note*\]
 
 The initialization and destruction of each parameter copy occurs in the
@@ -5483,7 +5480,7 @@ indeterminately sequenced with respect to each other. The lifetime of
 parameter copies ends immediately after the lifetime of the coroutine
 promise object ends.
 
-\[*Note 8*: If a coroutine has a parameter passed by reference, resuming
+\[*Note 3*: If a coroutine has a parameter passed by reference, resuming
 the coroutine after the lifetime of the entity referred to by that
 parameter has ended is likely to result in undefined
 behavior. — *end note*\]
@@ -5898,14 +5895,14 @@ non-dependent type with a reachable *enum-specifier*.
 A *using-enum-declaration* is equivalent to a *using-declaration* for
 each enumerator.
 
-\[*Note 4*:
+\[*Note 1*:
 
 A *using-enum-declaration* in class scope makes the enumerators of the
 named enumeration available via member lookup.
 
 — *end note*\]
 
-\[*Note 5*:
+\[*Note 2*:
 
 Two *using-enum-declaration*s that introduce two enumerators of the same
 name conflict.
@@ -6004,7 +6001,7 @@ Because a *namespace-definition* contains *declaration* in its
 *namespace-body* and a *namespace-definition* is itself a *declaration*,
 it follows that *namespace-definition* can be nested.
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 namespace Outer {
@@ -6061,7 +6058,7 @@ namespace E { \opt{inline} namespace I { B } }
 where the optional `inline` is present if and only if the *identifier*
 `I` is preceded by `inline`.
 
-\[*Example 3*:
+\[*Example 2*:
 
 ``` cpp
 namespace A::inline B::C {
@@ -6100,7 +6097,7 @@ identifier differs from all other identifiers in the translation unit.
 The optional *attribute-specifier-seq* in the
 *unnamed-namespace-definition* appertains to *unique*.
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 namespace { int i; }            // unique::i
@@ -6148,7 +6145,7 @@ The *identifier* in a *namespace-alias-definition* becomes a
 *namespace-alias* and denotes the namespace denoted by the
 *qualified-namespace-specifier*.
 
-\[*Note 3*: When looking up a *namespace-name* in a
+\[*Note 1*: When looking up a *namespace-name* in a
 *namespace-alias-definition*, only namespace names are considered, see 
 [[basic.lookup.udir]]. — *end note*\]
 
@@ -6162,24 +6159,24 @@ using-directive:
 A *using-directive* shall not appear in class scope, but may appear in
 namespace scope or in block scope.
 
-\[*Note 4*: When looking up a *namespace-name* in a *using-directive*,
+\[*Note 1*: When looking up a *namespace-name* in a *using-directive*,
 only namespace names are considered, see 
 [[basic.lookup.udir]]. — *end note*\]
 
 The optional *attribute-specifier-seq* appertains to the
 *using-directive*.
 
-\[*Note 5*: A *using-directive* makes the names in the nominated
+\[*Note 2*: A *using-directive* makes the names in the nominated
 namespace usable in the scope in which the *using-directive* appears
 after the *using-directive* [[basic.lookup.unqual]], [[namespace.qual]].
 During unqualified name lookup, the names appear as if they were
 declared in the nearest enclosing namespace which contains both the
 *using-directive* and the nominated namespace. — *end note*\]
 
-\[*Note 6*: A *using-directive* does not introduce any
+\[*Note 3*: A *using-directive* does not introduce any
 names. — *end note*\]
 
-\[*Example 5*:
+\[*Example 1*:
 
 ``` cpp
 namespace A {
@@ -6211,12 +6208,12 @@ void f4() {
 
 — *end example*\]
 
-\[*Note 7*: A *using-directive* is transitive: if a scope contains a
+\[*Note 4*: A *using-directive* is transitive: if a scope contains a
 *using-directive* that nominates a namespace that itself contains
 *using-directive*, the namespaces nominated by those *using-directive*
 are also eligible to be considered. — *end note*\]
 
-\[*Example 6*:
+\[*Example 2*:
 
 ``` cpp
 namespace M {
@@ -6261,11 +6258,11 @@ namespace B {
 
 — *end example*\]
 
-\[*Note 8*: Declarations in a namespace that appear after a
+\[*Note 5*: Declarations in a namespace that appear after a
 *using-directive* for that namespace can be found through that
 *using-directive* after they appear. — *end note*\]
 
-\[*Note 9*:
+\[*Note 6*:
 
 If name lookup finds a declaration for a name in two different
 namespaces, and the declarations do not declare the same entity and do
@@ -6297,7 +6294,7 @@ void f() {
 
 — *end note*\]
 
-\[*Note 10*:
+\[*Note 7*:
 
 The order in which namespaces are considered and the relationships among
 the namespaces implied by the *using-directive* do not affect overload
@@ -6307,7 +6304,7 @@ same signature, even if one is in a namespace reachable through
 
 — *end note*\]
 
-\[*Example 7*:
+\[*Example 3*:
 
 ``` cpp
 namespace D {
@@ -7121,7 +7118,7 @@ not specify an alignment that is less strict than the alignment that
 would be required for the entity being declared if all
 *alignment-specifier* appertaining to that entity were omitted.
 
-\[*Example 3*:
+\[*Example 1*:
 
 ``` cpp
 struct alignas(8) S {};
@@ -7140,7 +7137,7 @@ defining declaration of that entity shall specify an equivalent
 alignment. No diagnostic is required if declarations of an entity have
 different *alignment-specifier* in different translation units.
 
-\[*Example 4*:
+\[*Example 2*:
 
 ``` cpp
 // Translation unit \#1:
@@ -7153,7 +7150,7 @@ extern S* p;
 
 — *end example*\]
 
-\[*Example 5*:
+\[*Example 3*:
 
 An aligned buffer with an alignment requirement of `A` and holding `N`
 elements of type `T` can be declared as:
@@ -7168,7 +7165,7 @@ ill-formed.
 
 — *end example*\]
 
-\[*Example 6*:
+\[*Example 4*:
 
 ``` cpp
 alignas(double) void f();                           // error: alignment applied to function
@@ -7195,13 +7192,13 @@ expression is not evaluated. If the converted expression would evaluate
 to `true` at the point where the assumption appears, the assumption has
 no effect. Otherwise, the behavior is undefined.
 
-\[*Note 7*: The expression is potentially evaluated [[basic.def.odr]].
+\[*Note 1*: The expression is potentially evaluated [[basic.def.odr]].
 The use of assumptions is intended to allow implementations to analyze
 the form of the expression and deduce information used to optimize the
 program. Implementations are not required to deduce any information from
 any particular assumption. — *end note*\]
 
-\[*Example 7*:
+\[*Example 1*:
 
 ``` cpp
 int divide_by_32(int x) {
@@ -7242,11 +7239,11 @@ parameters is declared without the `carries_dependency` attribute in its
 first declaration in another translation unit, the program is
 ill-formed, no diagnostic required.
 
-\[*Note 8*: The `carries_dependency` attribute does not change the
+\[*Note 1*: The `carries_dependency` attribute does not change the
 meaning of the program, but might result in generation of more efficient
 code. — *end note*\]
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 /* Translation unit A. */
@@ -7296,7 +7293,7 @@ might need to insert a fence prior to the second call to `g`.
 The *attribute-token* `deprecated` can be used to mark names and
 entities whose use is still allowed, but is discouraged for some reason.
 
-\[*Note 9*: In particular, `deprecated` is appropriate for names and
+\[*Note 1*: In particular, `deprecated` is appropriate for names and
 entities that are deemed obsolescent or unsafe. — *end note*\]
 
 An *attribute-argument-clause* may be present and, if present, it shall
@@ -7306,7 +7303,7 @@ have the form:
 '(' string-literal ')'
 ```
 
-\[*Note 10*: The *string-literal* in the *attribute-argument-clause* can
+\[*Note 2*: The *string-literal* in the *attribute-argument-clause* can
 be used to explain the rationale for deprecation and/or to suggest a
 replacing entity. — *end note*\]
 
@@ -7318,10 +7315,10 @@ specialization.
 An entity declared without the `deprecated` attribute can later be
 redeclared with the attribute and vice-versa.
 
-\[*Note 11*: Thus, an entity initially declared without the attribute
-can be marked as deprecated by a subsequent redeclaration. However,
-after an entity is marked as deprecated, later redeclarations do not
-un-deprecate the entity. — *end note*\]
+\[*Note 3*: Thus, an entity initially declared without the attribute can
+be marked as deprecated by a subsequent redeclaration. However, after an
+entity is marked as deprecated, later redeclarations do not un-deprecate
+the entity. — *end note*\]
 
 Redeclarations using different forms of the attribute (with or without
 the *attribute-argument-clause* or with different
@@ -7354,7 +7351,7 @@ reachable from another case or default label along some path of
 execution. Implementations should issue a warning if a fallthrough
 statement is not dynamically reachable.
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 void f(int n) {
@@ -7405,10 +7402,10 @@ unlikely than any alternative path of execution that does not include
 such an attribute on a statement or label. A path of execution includes
 a label if and only if it contains a jump to that label.
 
-\[*Note 12*: Excessive usage of either of these attributes is liable to
+\[*Note 1*: Excessive usage of either of these attributes is liable to
 result in performance degradation. — *end note*\]
 
-\[*Example 10*:
+\[*Example 1*:
 
 ``` cpp
 void g(int);
@@ -7453,7 +7450,7 @@ unused. For a structured binding declaration not marked `maybe_unused`,
 implementations should not emit such a warning unless all of its
 structured bindings are unused.
 
-\[*Example 11*:
+\[*Example 1*:
 
 ``` cpp
 [[maybe_unused]] void f([[maybe_unused]] bool thing1,
@@ -7482,10 +7479,10 @@ the form:
 A name or entity declared without the `nodiscard` attribute can later be
 redeclared with the attribute and vice-versa.
 
-\[*Note 13*: Thus, an entity initially declared without the attribute
-can be marked as `nodiscard` by a subsequent redeclaration. However,
-after an entity is marked as `nodiscard`, later redeclarations do not
-remove the `nodiscard` from the entity. — *end note*\]
+\[*Note 1*: Thus, an entity initially declared without the attribute can
+be marked as `nodiscard` by a subsequent redeclaration. However, after
+an entity is marked as `nodiscard`, later redeclarations do not remove
+the `nodiscard` from the entity. — *end note*\]
 
 Redeclarations using different forms of the attribute (with or without
 the *attribute-argument-clause* or with different
@@ -7510,14 +7507,14 @@ discarded-value expression [[expr.prop]] is discouraged unless
 explicitly cast to `void`. Implementations should issue a warning in
 such cases.
 
-\[*Note 14*: This is typically because discarding the return value of a
+\[*Note 2*: This is typically because discarding the return value of a
 nodiscard call has surprising consequences. — *end note*\]
 
 The *string-literal* in a `nodiscard` *attribute-argument-clause* should
 be used in the message of the warning as the rationale for why the
 result should not be discarded.
 
-\[*Example 12*:
+\[*Example 1*:
 
 ``` cpp
 struct [[nodiscard]] my_scopeguard { ... };
@@ -7562,13 +7559,13 @@ If a function `f` is called where `f` was previously declared with the
 `noreturn` attribute and `f` eventually returns, the behavior is
 undefined.
 
-\[*Note 15*: The function may terminate by throwing an
+\[*Note 1*: The function may terminate by throwing an
 exception. — *end note*\]
 
 Implementations should issue a warning if a function marked
 `[[noreturn]]` might return.
 
-\[*Example 13*:
+\[*Example 1*:
 
 ``` cpp
 [[ noreturn ]] void f() {
@@ -7590,12 +7587,12 @@ data member is a potentially-overlapping subobject [[intro.object]]. No
 *attribute-argument-clause* shall be present. The attribute may
 appertain to a non-static data member other than a bit-field.
 
-\[*Note 16*: The non-static data member can share the address of another
+\[*Note 1*: The non-static data member can share the address of another
 non-static data member or that of a base class, and any padding that
 would normally be inserted at the end of the object can be reused as
 storage for other members. — *end note*\]
 
-\[*Example 14*:
+\[*Example 1*:
 
 ``` cpp
 template<typename Key, typename Value,

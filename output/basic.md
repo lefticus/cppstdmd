@@ -894,7 +894,7 @@ of any declarations that inhabit S.
 The *locus* of a declaration [[basic.pre]] that is a declarator is
 immediately after the complete declarator [[dcl.decl]].
 
-\[*Example 4*:
+\[*Example 1*:
 
 ``` cpp
 unsigned char x = 12;
@@ -907,7 +907,7 @@ because the initializer accesses the second `x` outside its lifetime
 
 — *end example*\]
 
-\[*Note 4*:
+\[*Note 1*:
 
 A name from an outer scope remains visible up to the locus of the
 declaration that hides it.
@@ -926,7 +926,7 @@ immediately after the *using-declarator* [[namespace.udecl]].
 
 The locus of an *enumerator-definition* is immediately after it.
 
-\[*Example 5*:
+\[*Example 2*:
 
 ``` cpp
 const int x = 12;
@@ -938,7 +938,7 @@ Here, the enumerator `x` is initialized with the value of the constant
 
 — *end example*\]
 
-\[*Note 5*:
+\[*Note 2*:
 
 After the declaration of a class member, the member name can be found in
 the scope of its class even if the class is an incomplete class.
@@ -964,7 +964,7 @@ The locus of a *for-range-declaration* of a range-based `for` statement
 
 The locus of a *template-parameter* is immediately after it.
 
-\[*Example 6*:
+\[*Example 3*:
 
 ``` cpp
 typedef unsigned char T;
@@ -979,23 +979,23 @@ template<class T
 The locus of a *concept-definition* is immediately after its
 concept-name [[temp.concept]].
 
-\[*Note 6*: The *constraint-expression* cannot use the
+\[*Note 3*: The *constraint-expression* cannot use the
 *concept-name*. — *end note*\]
 
 The locus of a *namespace-definition* with an *identifier* is
 immediately after the *identifier*.
 
-\[*Note 7*: An identifier is invented for an
+\[*Note 4*: An identifier is invented for an
 *unnamed-namespace-definition* [[namespace.unnamed]]. — *end note*\]
 
-\[*Note 8*: Friend declarations can introduce functions or classes that
+\[*Note 5*: Friend declarations can introduce functions or classes that
 belong to the nearest enclosing namespace or block scope, but they do
 not bind names anywhere [[class.friend]]. Function declarations at block
 scope and variable declarations with the `extern` specifier at block
 scope declare entities that belong to the nearest enclosing namespace,
 but they do not bind names in it. — *end note*\]
 
-\[*Note 9*: For point of instantiation of a template, see 
+\[*Note 6*: For point of instantiation of a template, see 
 [[temp.point]]. — *end note*\]
 
 ### Block scope <a id="basic.scope.block">[[basic.scope.block]]</a>
@@ -1013,12 +1013,12 @@ Each
 
 introduces a *block scope* that includes that statement or *handler*.
 
-\[*Note 10*: A substatement that is also a block has only one
+\[*Note 1*: A substatement that is also a block has only one
 scope. — *end note*\]
 
 A variable that belongs to a block scope is a *block variable*.
 
-\[*Example 7*:
+\[*Example 1*:
 
 ``` cpp
 int i = 42;
@@ -1045,7 +1045,7 @@ If a declaration whose target scope is the block scope S of a
 potentially conflicts with a declaration whose target scope is the
 parent scope of S, the program is ill-formed.
 
-\[*Example 8*:
+\[*Example 2*:
 
 ``` cpp
 if (int x = f()) {
@@ -1063,8 +1063,8 @@ else {
 A *parameter-declaration-clause* P introduces a
 *function parameter scope* that includes P.
 
-\[*Note 11*: A function parameter cannot be used for its value within
-the *parameter-declaration-clause* [[dcl.fct.default]]. — *end note*\]
+\[*Note 1*: A function parameter cannot be used for its value within the
+*parameter-declaration-clause* [[dcl.fct.default]]. — *end note*\]
 
 - If P is associated with a *declarator* and is preceded by a
   (possibly-parenthesized) *noptr-declarator* of the form
@@ -1105,7 +1105,7 @@ portion after the *declarator-id*, *class-head-name*, or
 *enum-head-name* is also included in the scope. The global scope is the
 namespace scope of the global namespace [[basic.namespace]].
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 namespace Q {
@@ -1127,7 +1127,7 @@ specialization whose target scope is or is contained by the scope, the
 portion after the *declarator-id*, *class-head-name*, or
 *enum-head-name* is also included in the scope.
 
-\[*Note 12*:
+\[*Note 1*:
 
 Lookup from a program point before the *class-specifier* of a class will
 find no bindings in the class scope.
@@ -1154,7 +1154,7 @@ the same scope as D. The parent scope of any scope S that is not a
 template parameter scope is the smallest scope that contains S and is
 not a template parameter scope.
 
-\[*Note 13*: Therefore, only template parameters belong to a template
+\[*Note 1*: Therefore, only template parameters belong to a template
 parameter scope, and only template parameter scopes have a template
 parameter scope as a parent scope. — *end note*\]
 
@@ -1238,7 +1238,7 @@ search in X for M from P unless X is the scope of a class or class
 template T, in which case the following steps define the result of the
 search.
 
-\[*Note 4*: The result differs only if M is a *conversion-function-id*
+\[*Note 1*: The result differs only if M is a *conversion-function-id*
 or if the single search would find nothing. — *end note*\]
 
 The *lookup set* for a name N in a class or class template C, called
@@ -1261,7 +1261,7 @@ lookup set for N in each direct non-dependent [[temp.dep.type]] base
 class subobject Bᵢ, and merge each such lookup set S(N,Bᵢ) in turn into
 S(N,C).
 
-\[*Note 5*: If C is incomplete, only base classes whose *base-specifier*
+\[*Note 2*: If C is incomplete, only base classes whose *base-specifier*
 appears before P are considered. If C is an instantiated class, its base
 classes are not dependent. — *end note*\]
 
@@ -1318,10 +1318,10 @@ of F [[basic.scope.scope]]. The members of the declaration set of each
 such lookup set, which shall not be an invalid set, are included in the
 result.
 
-\[*Note 6*: Overload resolution will discard those that cannot convert
+\[*Note 3*: Overload resolution will discard those that cannot convert
 to the type specified by M [[temp.over]]. — *end note*\]
 
-\[*Note 7*: A static member, a nested type or an enumerator defined in a
+\[*Note 4*: A static member, a nested type or an enumerator defined in a
 base class `T` can unambiguously be found even if an object has more
 than one base class subobject of type `T`. Two base class subobjects
 share the non-static member subobjects of their common virtual base
@@ -1352,7 +1352,7 @@ void f(D* pd) {
 
 — *end example*\]
 
-\[*Note 8*:  When virtual base classes are used, a hidden declaration
+\[*Note 5*:  When virtual base classes are used, a hidden declaration
 can be reached along a path through the subobject lattice that does not
 pass through the hiding declaration. This is not an ambiguity. The
 identical use with non-virtual base classes is an ambiguity; in that
@@ -1412,7 +1412,7 @@ void g() {
 
 — *end example*\]
 
-\[*Note 9*: Even if the result of name lookup is unambiguous, use of a
+\[*Note 6*: Even if the result of name lookup is unambiguous, use of a
 name found in multiple subobjects might still be ambiguous
 [[conv.mem]], [[expr.ref]], [[class.access.base]]. — *end note*\]
 
@@ -1464,7 +1464,7 @@ If no declarations are found, the results of the unqualified search are
 the results of an unqualified search in the parent scope of S, if any,
 from P.
 
-\[*Note 10*: When a class scope is searched, the scopes of its base
+\[*Note 1*: When a class scope is searched, the scopes of its base
 classes are also searched [[class.member.lookup]]. If it inherits from a
 single base, it is as if the scope of the base immediately contains the
 scope of the derived class. Template parameter scopes that are
@@ -1489,7 +1489,7 @@ appears. If that lookup finds nothing, it undergoes unqualified name
 lookup; in each case, only names that denote types or templates whose
 specializations are types are considered.
 
-\[*Example 6*:
+\[*Example 1*:
 
 ``` cpp
 struct T1 { struct U { int i; }; };
@@ -1525,7 +1525,7 @@ namespace S, lookup for an unqualified name that appears after the
 *declarator-id* performs a search in the scope associated with S. If
 that lookup finds nothing, it undergoes unqualified name lookup.
 
-\[*Example 7*:
+\[*Example 2*:
 
 ``` cpp
 using I = int;
@@ -1580,7 +1580,7 @@ then lookup for the name also includes the result of
 depends on the types of the arguments (and for template template
 arguments, the namespace of the template argument), as specified below.
 
-\[*Example 8*:
+\[*Example 1*:
 
 ``` cpp
 namespace N {
@@ -1597,7 +1597,7 @@ void g() {
 
 — *end example*\]
 
-\[*Note 11*:
+\[*Note 1*:
 
 For purposes of determining (during parsing) whether an expression is a
 *postfix-expression* for a function call, the usual name lookup rules
@@ -1712,14 +1712,14 @@ lookup, additionally ignoring any declaration that appears in another
 translation unit, is attached to the global module, and is either
 discarded [[module.global.frag]] or has internal linkage.
 
-\[*Example 9*:
+\[*Example 2*:
 
 — *end example*\]
 
-\[*Note 12*: The associated namespace can include namespaces already
+\[*Note 2*: The associated namespace can include namespaces already
 considered by ordinary unqualified lookup. — *end note*\]
 
-\[*Example 10*:
+\[*Example 3*:
 
 ``` cpp
 namespace NS {
@@ -1749,7 +1749,7 @@ by a `::`, it shall designate a namespace, class, enumeration, or
 dependent type, and the `::` is never interpreted as a complete
 *nested-name-specifier*.
 
-\[*Example 11*:
+\[*Example 1*:
 
 ``` cpp
 class A {
@@ -1805,11 +1805,11 @@ expression is type-dependent). The lookup context of any other qualified
 name is the type, template, or namespace nominated by the preceding
 *nested-name-specifier*.
 
-\[*Note 13*: When parsing a class member access, the name following the
+\[*Note 1*: When parsing a class member access, the name following the
 `->` or `.` is a qualified name even though it is not yet known of which
 kind. — *end note*\]
 
-\[*Example 12*:
+\[*Example 2*:
 
 In
 
@@ -1834,10 +1834,10 @@ found by qualified lookup for a member-qualified name that is the
 terminal name [[expr.prim.id.unqual]] of a *nested-name-specifier* and
 is not dependent, it undergoes unqualified lookup.
 
-\[*Note 14*: During lookup for a template specialization, no names are
+\[*Note 2*: During lookup for a template specialization, no names are
 dependent. — *end note*\]
 
-\[*Example 13*:
+\[*Example 3*:
 
 ``` cpp
 int f();
@@ -1888,7 +1888,7 @@ If a qualified name Q follows a `~`:
   lookup context (ignoring cv-qualification) under the interpretation
   established by at least one (successful) lookup performed.
 
-\[*Example 14*:
+\[*Example 4*:
 
 ``` cpp
 struct C {
@@ -1927,7 +1927,7 @@ N is instead considered to name the constructor of class `C`. Such a
 constructor name shall be used only in the *declarator-id* of a (friend)
 declaration of a constructor or in a *using-declaration*.
 
-\[*Example 15*:
+\[*Example 1*:
 
 ``` cpp
 struct A { A(); };
@@ -1952,10 +1952,10 @@ lookup in each namespace nominated by a *using-directive* that precedes
 the point of the lookup and inhabits N or an element of N’s inline
 namespace set.
 
-\[*Note 15*: If a *using-directive* refers to a namespace that has
+\[*Note 1*: If a *using-directive* refers to a namespace that has
 already been considered, it does not affect the result. — *end note*\]
 
-\[*Example 16*:
+\[*Example 1*:
 
 ``` cpp
 int x;
@@ -2011,14 +2011,14 @@ void h()
 
 — *end example*\]
 
-\[*Note 16*:
+\[*Note 2*:
 
 The same declaration found more than once is not an ambiguity (because
 it is still a unique declaration).
 
 — *end note*\]
 
-\[*Example 17*:
+\[*Example 2*:
 
 Because each referenced namespace is searched at most once, the
 following is well-defined:
@@ -2048,10 +2048,10 @@ void f()
 
 — *end example*\]
 
-\[*Note 17*: Class and enumeration declarations are not discarded
-because of other declarations found in other searches. — *end note*\]
+\[*Note 3*: Class and enumeration declarations are not discarded because
+of other declarations found in other searches. — *end note*\]
 
-\[*Example 18*:
+\[*Example 3*:
 
 ``` cpp
 namespace A {
@@ -2080,7 +2080,7 @@ If the *class-key* or `enum` keyword in an *elaborated-type-specifier*
 is followed by an *identifier* that is not followed by `::`, lookup for
 the *identifier* is type-only [[basic.lookup.general]].
 
-\[*Note 18*: In general, the recognition of an
+\[*Note 1*: In general, the recognition of an
 *elaborated-type-specifier* depends on the following tokens. If the
 *identifier* is followed by `::`, see
 [[basic.lookup.qual]]. — *end note*\]
@@ -2090,7 +2090,7 @@ name, lookup for it is type-only. If the name lookup does not find a
 previously declared *type-name*, the *elaborated-type-specifier* is
 ill-formed.
 
-\[*Example 19*:
+\[*Example 1*:
 
 ``` cpp
 struct Node {
@@ -2504,7 +2504,7 @@ of storage in its period of construction [[class.cdtor]], throughout its
 lifetime [[basic.life]], and in its period of destruction
 [[class.cdtor]].
 
-\[*Note 4*: A function is not an object, regardless of whether or not it
+\[*Note 1*: A function is not an object, regardless of whether or not it
 occupies storage in the way that objects do. — *end note*\]
 
 The properties of an object are determined when the object is created.
@@ -2512,7 +2512,7 @@ An object can have a name [[basic.pre]]. An object has a storage
 duration [[basic.stc]] which influences its lifetime [[basic.life]]. An
 object has a type [[basic.types]].
 
-\[*Note 5*: Some objects are polymorphic [[class.virtual]]; the
+\[*Note 2*: Some objects are polymorphic [[class.virtual]]; the
 implementation generates information associated with each such object
 that makes it possible to determine that object’s type during program
 execution. — *end note*\]
@@ -2545,11 +2545,11 @@ for the created object if:
 - there is no array object that satisfies these constraints nested
   within *e*.
 
-\[*Note 6*: If that portion of the array previously provided storage for
+\[*Note 3*: If that portion of the array previously provided storage for
 another object, the lifetime of that object ends because its storage was
 reused [[basic.life]]. — *end note*\]
 
-\[*Example 2*:
+\[*Example 1*:
 
 ``` cpp
 template<typename ...T>
@@ -2634,7 +2634,7 @@ address if one is nested within the other, or if at least one is a
 subobject of zero size and they are of different types; otherwise, they
 have distinct addresses and occupy disjoint bytes of storage.
 
-\[*Example 3*:
+\[*Example 2*:
 
 ``` cpp
 static const char test1 = 'x';
@@ -2659,7 +2659,7 @@ program is undefined. If multiple such sets of objects would give the
 program defined behavior, it is unspecified which such set of objects is
 created.
 
-\[*Note 7*: Such operations do not start the lifetimes of subobjects of
+\[*Note 4*: Such operations do not start the lifetimes of subobjects of
 such objects that are not themselves of implicit-lifetime
 types. — *end note*\]
 
@@ -2674,7 +2674,7 @@ behavior, the behavior of the program is undefined. If multiple such
 pointer values would give the program defined behavior, it is
 unspecified which such pointer value is produced.
 
-\[*Example 4*:
+\[*Example 3*:
 
 ``` cpp
 #include <cstdlib>
@@ -2698,14 +2698,14 @@ An operation that begins the lifetime of an array of `unsigned char` or
 `std::byte` implicitly creates objects within the region of storage
 occupied by the array.
 
-\[*Note 8*: The array object provides storage for these
+\[*Note 5*: The array object provides storage for these
 objects. — *end note*\]
 
 Any implicit or explicit invocation of a function named `operator new`
 or `operator new[]` implicitly creates objects in the returned region of
 storage and returns a pointer to a suitable created object.
 
-\[*Note 9*: Some functions in the C++ standard library implicitly create
+\[*Note 6*: Some functions in the C++ standard library implicitly create
 objects
 [[obj.lifetime]], [[allocator.traits.members]], [[c.malloc]], [[cstring.syn]], [[bit.cast]]. — *end note*\]
 
@@ -2741,13 +2741,13 @@ The lifetime of a reference begins when its initialization is complete.
 The lifetime of a reference ends as if it were a scalar object requiring
 storage.
 
-\[*Note 10*:  [[class.base.init]] describes the lifetime of base and
+\[*Note 1*:  [[class.base.init]] describes the lifetime of base and
 member subobjects. — *end note*\]
 
 The properties ascribed to objects and references throughout this
 document apply for a given object or reference only during its lifetime.
 
-\[*Note 11*: In particular, before the lifetime of an object starts and
+\[*Note 2*: In particular, before the lifetime of an object starts and
 after its lifetime ends there are significant restrictions on the use of
 the object, as described below, in  [[class.base.init]], and in 
 [[class.cdtor]]. Also, the behavior of an object under construction and
@@ -2760,12 +2760,12 @@ A program may end the lifetime of an object of class type without
 invoking the destructor, by reusing or releasing the storage as
 described above.
 
-\[*Note 12*: A *delete-expression* [[expr.delete]] invokes the
-destructor prior to releasing the storage. — *end note*\]
+\[*Note 3*: A *delete-expression* [[expr.delete]] invokes the destructor
+prior to releasing the storage. — *end note*\]
 
 In this case, the destructor is not implicitly invoked.
 
-\[*Note 13*: The correct behavior of a program often depends on the
+\[*Note 4*: The correct behavior of a program often depends on the
 destructor being invoked for each object of class type. — *end note*\]
 
 Before the lifetime of an object has started but after the storage which
@@ -2798,7 +2798,7 @@ The program has undefined behavior if:
 - the pointer is used as the operand of a `dynamic_cast`
   [[expr.dynamic.cast]].
 
-\[*Example 5*:
+\[*Example 1*:
 
 ``` cpp
 #include <cstdlib>
@@ -2876,7 +2876,7 @@ object o₁ is *transparently replaceable* by an object o₂ if:
   subobjects of objects p₁ and p₂, respectively, and p₁ is transparently
   replaceable by p₂.
 
-\[*Example 6*:
+\[*Example 2*:
 
 ``` cpp
 struct C {
@@ -2902,8 +2902,8 @@ c1.f();                         // well-defined; c1 refers to a new object of ty
 
 — *end example*\]
 
-\[*Note 14*: If these conditions are not met, a pointer to the new
-object can be obtained from a pointer that represents the address of its
+\[*Note 5*: If these conditions are not met, a pointer to the new object
+can be obtained from a pointer that represents the address of its
 storage by calling `std::launder` [[ptr.launder]]. — *end note*\]
 
 If a program ends the lifetime of an object of type `T` with static
@@ -2916,7 +2916,7 @@ storage location when the implicit destructor call takes place, the
 behavior of the program is undefined. This is true even if the block is
 exited with an exception.
 
-\[*Example 7*:
+\[*Example 3*:
 
 ``` cpp
 class T { };
@@ -2937,7 +2937,7 @@ with static, thread, or automatic storage duration occupies, or within
 the storage that such a const object used to occupy before its lifetime
 ended, results in undefined behavior.
 
-\[*Example 8*:
+\[*Example 4*:
 
 ``` cpp
 struct B {
@@ -2958,7 +2958,7 @@ void h() {
 In this subclause, “before” and “after” refer to the “happens before”
 relation [[intro.multithread]].
 
-\[*Note 15*: Therefore, undefined behavior results if an object that is
+\[*Note 6*: Therefore, undefined behavior results if an object that is
 being constructed in one thread is referenced from another thread
 without adequate synchronization. — *end note*\]
 
@@ -2969,7 +2969,7 @@ obtained, the object has an *indeterminate value*, and if no
 initialization is performed for the object, that object retains an
 indeterminate value until that value is replaced [[expr.ass]].
 
-\[*Note 16*: Objects with static or thread storage duration are
+\[*Note 1*: Objects with static or thread storage duration are
 zero-initialized, see  [[basic.start.static]]. — *end note*\]
 
 If an indeterminate value is produced by an evaluation, the behavior is
@@ -3010,7 +3010,7 @@ undefined except in the following cases:
   expression when initializing an object of `std::byte` type, that
   object is initialized to an indeterminate value.
 
-\[*Example 9*:
+\[*Example 1*:
 
 ``` cpp
 int f(bool b) {
@@ -3073,7 +3073,7 @@ destructor with side effects, it shall not be eliminated even if it
 appears to be unused, except that a class object or its copy/move may be
 eliminated as specified in  [[class.copy.elision]].
 
-\[*Note 17*:  The keyword `static` can be used to declare a block
+\[*Note 1*:  The keyword `static` can be used to declare a block
 variable [[basic.scope.block]] with static storage duration;
 [[stmt.dcl]] and [[basic.start.term]] describe the initialization and
 destruction of such variables. The keyword `static` applied to a class
@@ -3088,7 +3088,7 @@ duration of the thread in which they are created. There is a distinct
 object or reference per thread, and use of the declared name refers to
 the entity associated with the current thread.
 
-\[*Note 18*: A variable with thread storage duration is initialized as
+\[*Note 1*: A variable with thread storage duration is initialized as
 specified in  [[basic.start.static]], [[basic.start.dynamic]], and
 [[stmt.dcl]] and, if constructed, is destroyed on thread exit
 [[basic.start.term]]. — *end note*\]
@@ -3100,7 +3100,7 @@ explicitly declared `static`, `thread_local`, or `extern` have
 *automatic storage duration*. The storage for these entities lasts until
 the block in which they are created exits.
 
-\[*Note 19*: These variables are initialized and destroyed as described
+\[*Note 1*: These variables are initialized and destroyed as described
 in  [[stmt.dcl]]. — *end note*\]
 
 If a variable with automatic storage duration has initialization or a
@@ -3121,7 +3121,7 @@ access to, and management of, dynamic storage via the global
 global *deallocation functions* `operator delete` and
 `operator delete[]`.
 
-\[*Note 20*: The non-allocating forms described in
+\[*Note 1*: The non-allocating forms described in
 [[new.delete.placement]] do not perform allocation or
 deallocation. — *end note*\]
 
@@ -3157,7 +3157,7 @@ These implicit declarations introduce only the function names
 `operator new`, `operator new[]`, `operator delete`, and
 `operator delete[]`.
 
-\[*Note 21*: The implicit declarations do not introduce the names `std`,
+\[*Note 2*: The implicit declarations do not introduce the names `std`,
 `std::size_t`, `std::align_val_t`, or any other names that the library
 uses to declare these names. Thus, a *new-expression*,
 *delete-expression*, or function call that refers to one of these
@@ -3224,7 +3224,7 @@ call shall represent the address of storage that is aligned as follows:
 An allocation function that fails to allocate storage can invoke the
 currently installed new-handler function [[new.handler]], if any.
 
-\[*Note 22*:  A program-supplied allocation function can obtain the
+\[*Note 3*:  A program-supplied allocation function can obtain the
 address of the currently installed `new_handler` using the
 `std::get_new_handler` function [[get.new.handler]]. — *end note*\]
 
@@ -3241,8 +3241,8 @@ syntax [[expr.call]], or called indirectly to allocate storage for a
 coroutine state [[dcl.fct.def.coroutine]], or called indirectly through
 calls to the functions in the C++ standard library.
 
-\[*Note 23*: In particular, a global allocation function is not called
-to allocate storage for objects with static storage duration
+\[*Note 4*: In particular, a global allocation function is not called to
+allocate storage for objects with static storage duration
 [[basic.stc.static]], for objects or references with thread storage
 duration [[basic.stc.thread]], for objects of type `std::type_info`
 [[expr.typeid]], or for an exception object
@@ -3258,7 +3258,7 @@ least two parameters and its second parameter is of type
 `std::destroying_delete_t`. A destroying operator delete shall be a
 class member function named `operator delete`.
 
-\[*Note 24*: Array deletion cannot use a destroying operator
+\[*Note 5*: Array deletion cannot use a destroying operator
 delete. — *end note*\]
 
 Each deallocation function shall return `void`. If the function is a
@@ -3317,7 +3317,7 @@ contexts, which is equal to `alignof(std::max_align_t)`
 when it is used as the type of a complete object and when it is used as
 the type of a subobject.
 
-\[*Example 10*:
+\[*Example 1*:
 
 ``` cpp
 struct B { long double d; };
@@ -3341,8 +3341,8 @@ extended alignments are supported and the contexts in which they are
 supported [[dcl.align]]. A type having an extended alignment requirement
 is an *over-aligned type*.
 
-\[*Note 25*: Every over-aligned type is or contains a class type to
-which extended alignment applies (possibly through a non-static data
+\[*Note 1*: Every over-aligned type is or contains a class type to which
+extended alignment applies (possibly through a non-static data
 member). — *end note*\]
 
 A *new-extended alignment* is represented by an alignment greater than
@@ -3364,7 +3364,7 @@ The alignment requirement of a complete type can be queried using an
 types [[basic.fundamental]] shall have the weakest alignment
 requirement.
 
-\[*Note 26*: This enables the ordinary character types to be used as the
+\[*Note 2*: This enables the ordinary character types to be used as the
 underlying type for an aligned memory area [[dcl.align]]. — *end note*\]
 
 Comparing alignments is meaningful and provides the obvious results:
@@ -3376,7 +3376,7 @@ Comparing alignments is meaningful and provides the obvious results:
 - When an alignment is larger than another it represents a stricter
   alignment.
 
-\[*Note 27*: The runtime pointer alignment function [[ptr.align]] can be
+\[*Note 3*: The runtime pointer alignment function [[ptr.align]] can be
 used to obtain an aligned pointer within a buffer; an
 *alignment-specifier* [[dcl.align]] can be used to align storage
 explicitly. — *end note*\]
@@ -3402,7 +3402,7 @@ Even when the creation of the temporary object is unevaluated
 [[expr.context]], all the semantic restrictions shall be respected as if
 the temporary object had been created and later destroyed.
 
-\[*Note 28*: This includes accessibility [[class.access]] and whether it
+\[*Note 1*: This includes accessibility [[class.access]] and whether it
 is deleted, for the constructor selected and for the destructor.
 However, in the special case of the operand of a *decltype-specifier*
 [[dcl.type.decltype]], no temporary is introduced, so the foregoing does
@@ -3411,7 +3411,7 @@ not apply to such a prvalue. — *end note*\]
 The materialization of a temporary object is generally delayed as long
 as possible in order to avoid creating unnecessary temporary objects.
 
-\[*Note 29*:
+\[*Note 2*:
 
 Temporary objects are materialized:
 
@@ -3434,7 +3434,7 @@ Temporary objects are materialized:
 
 — *end note*\]
 
-\[*Example 11*:
+\[*Example 1*:
 
 Consider the following code:
 
@@ -3487,7 +3487,7 @@ temporary (even if that constructor is inaccessible or would not be
 selected by overload resolution to perform a copy or move of the
 object).
 
-\[*Note 30*: This latitude is granted to allow objects of class type to
+\[*Note 3*: This latitude is granted to allow objects of class type to
 be passed to or returned from functions in registers. — *end note*\]
 
 When an implementation introduces a temporary object of a class that has
@@ -3556,7 +3556,7 @@ which the reference is bound was obtained through one of the following:
 - a comma expression [[expr.comma]] that is a glvalue where the right
   operand is one of these expressions.
 
-\[*Example 12*:
+\[*Example 2*:
 
 ``` cpp
 template<typename T> using id = T;
@@ -3570,14 +3570,14 @@ int&& c = cond ? id<int[3]>{1, 2, 3}[i] : static_cast<int&&>(0);
 
 — *end example*\]
 
-\[*Note 31*:
+\[*Note 4*:
 
 An explicit type conversion [[expr.type.conv]], [[expr.cast]] is
 interpreted as a sequence of elementary casts, covered above.
 
 — *end note*\]
 
-\[*Note 32*:
+\[*Note 5*:
 
 If a temporary object has a reference member initialized by another
 temporary object, lifetime extension applies recursively to such a
@@ -3640,7 +3640,7 @@ destroyed before `obj1` is destroyed; if `obj2` is an object with the
 same storage duration as the temporary and created after the temporary
 is created the temporary shall be destroyed after `obj2` is destroyed.
 
-\[*Example 13*:
+\[*Example 3*:
 
 ``` cpp
 struct S {
@@ -3864,7 +3864,7 @@ types are collectively called . The range of representable values for a
 signed integer type is $-2^{N-1}$ to $2^{N-1}-1$ (inclusive), where *N*
 is called the *width* of the type.
 
-\[*Note 6*: Plain `int`s are intended to have the natural width
+\[*Note 1*: Plain `int`s are intended to have the natural width
 suggested by the architecture of the execution environment; the other
 signed integer types are provided to meet special needs. — *end note*\]
 
@@ -3879,7 +3879,7 @@ same width *N* as the corresponding signed integer type. The range of
 representable values for the unsigned type is 0 to $2^N-1$ (inclusive);
 arithmetic for the unsigned type is performed modulo $2^N$.
 
-\[*Note 7*: Unsigned arithmetic does not overflow. Overflow for signed
+\[*Note 2*: Unsigned arithmetic does not overflow. Overflow for signed
 arithmetic yields undefined behavior [[expr.pre]]. — *end note*\]
 
 An unsigned integer type has the same object representation, value
@@ -3889,7 +3889,7 @@ type, the value of the corresponding unsigned integer type congruent to
 x modulo $2^N$ has the same value of corresponding bits in its value
 representation.
 
-\[*Example 4*: The value -1 of a signed integer type has the same
+\[*Example 1*: The value -1 of a signed integer type has the same
 representation as the largest value of the corresponding unsigned
 type. — *end example*\]
 
@@ -3909,10 +3909,10 @@ respective width. Each set of values for any padding bits
 [[basic.types.general]] in the object representation are alternative
 representations of the value specified by the value representation.
 
-\[*Note 8*: Padding bits have unspecified value, but cannot cause traps.
+\[*Note 3*: Padding bits have unspecified value, but cannot cause traps.
 In contrast, see ISO C 6.2.6.2. — *end note*\]
 
-\[*Note 9*: The signed and unsigned integer types satisfy the
+\[*Note 4*: The signed and unsigned integer types satisfy the
 constraints given in ISO C 5.2.4.2.1. — *end note*\]
 
 Except as specified above, the width of a signed or unsigned integer
@@ -3941,10 +3941,10 @@ collectively called . The ordinary character types and `char8_t` are
 collectively called . For narrow character types, each possible bit
 pattern of the object representation represents a distinct value.
 
-\[*Note 10*: This requirement does not hold for other
+\[*Note 5*: This requirement does not hold for other
 types. — *end note*\]
 
-\[*Note 11*: A bit-field of narrow character type whose width is larger
+\[*Note 6*: A bit-field of narrow character type whose width is larger
 than the width of that type has padding bits; see
 [[basic.types.general]]. — *end note*\]
 
@@ -3961,7 +3961,7 @@ value representation, and alignment requirements as an
 *implementation-defined* unsigned integer type. The values of type
 `bool` are `true` and `false`.
 
-\[*Note 12*: There are no `signed`, `unsigned`, `short`, or `long bool`
+\[*Note 7*: There are no `signed`, `unsigned`, `short`, or `long bool`
 types or values. — *end note*\]
 
 The types `char`, `wchar_t`, `char8_t`, `char16_t`, and `char32_t` are
@@ -3970,7 +3970,7 @@ unsigned integer types, and cv-qualified versions
 [[basic.type.qualifier]] thereof, are collectively termed
 *integral types*. A synonym for integral type is *integer type*.
 
-\[*Note 13*: Enumerations [[dcl.enum]] are not integral; however,
+\[*Note 8*: Enumerations [[dcl.enum]] are not integral; however,
 unscoped enumerations can be promoted to integral types as specified in
 [[conv.prom]]. — *end note*\]
 
@@ -3988,7 +3988,7 @@ them (and cv-qualified versions thereof) to be
 *extended floating-point types*. The standard and extended
 floating-point types are collectively termed *floating-point types*.
 
-\[*Note 14*: Any additional implementation-specific types representing
+\[*Note 9*: Any additional implementation-specific types representing
 floating-point values that are not defined by the implementation to be
 extended floating-point types are not considered to be floating-point
 types, and this document imposes no requirements on them or their
@@ -4001,7 +4001,7 @@ representations and accuracy of operations of floating-point types are
 Integral and floating-point types are collectively termed
 *arithmetic types*.
 
-\[*Note 15*: Properties of the arithmetic types, such as their minimum
+\[*Note 10*: Properties of the arithmetic types, such as their minimum
 and maximum representable value, can be queried using the facilities in
 the standard library headers `<limits>`, `<climits>`, and
 `<cfloat>`. — *end note*\]
@@ -4025,7 +4025,7 @@ pointer-to-member conversions [[conv.ptr]], [[conv.mem]].
 
 The types described in this subclause are called *fundamental types*.
 
-\[*Note 16*: Even if the implementation defines two or more fundamental
+\[*Note 11*: Even if the implementation defines two or more fundamental
 types to have the same value representation, they are nevertheless
 different types. — *end note*\]
 
@@ -4069,7 +4069,7 @@ the *typedef-name* `std::bfloat16_t` is defined in the header
 defined, and the floating-point literal suffixes `bf16` and `BF16` are
 supported.
 
-\[*Note 17*: A summary of the parameters for each type is given in
+\[*Note 1*: A summary of the parameters for each type is given in
 [[basic.extended.fp]]. The precision p includes the implicit 1 bit at
 the beginning of the mantissa, so the storage used for the mantissa is
 p-1 bits. ISO/IEC/IEEE 60559 does not assign a name for a type having
@@ -4127,14 +4127,14 @@ is ill-formed.
 The type of a pointer to cv `void` or a pointer to an object type is
 called an *object pointer type*.
 
-\[*Note 18*: A pointer to `void` does not have a pointer-to-object type,
+\[*Note 1*: A pointer to `void` does not have a pointer-to-object type,
 however, because `void` is not an object type. — *end note*\]
 
 The type of a pointer that can designate a function is called a
 *function pointer type*. A pointer to an object of type `T` is referred
 to as a “pointer to `T`”.
 
-\[*Example 5*: A pointer to an object of type `int` is referred to as
+\[*Example 1*: A pointer to an object of type `int` is referred to as
 “pointer to `int`” and a pointer to an object of class `X` is called a
 “pointer to `X`”. — *end example*\]
 
@@ -4159,7 +4159,7 @@ object *represents the address* of the first byte in memory
 or the first byte in memory after the end of the storage occupied by the
 object, respectively.
 
-\[*Note 19*: A pointer past the end of an object [[expr.add]] is not
+\[*Note 2*: A pointer past the end of an object [[expr.add]] is not
 considered to point to an unrelated object of the object’s type, even if
 the unrelated object is located at that address. A pointer value becomes
 invalid when the storage it denotes reaches the end of its storage
@@ -4175,7 +4175,7 @@ element of type `T`. The value representation of pointer types is
 the same value representation and alignment requirements
 [[basic.align]].
 
-\[*Note 20*: Pointers to over-aligned types [[basic.align]] have no
+\[*Note 3*: Pointers to over-aligned types [[basic.align]] have no
 special representation, but their range of valid values is restricted by
 the extended alignment requirement. — *end note*\]
 
@@ -4198,7 +4198,7 @@ If two objects are pointer-interconvertible, then they have the same
 address, and it is possible to obtain a pointer to one from a pointer to
 the other via a `reinterpret_cast` [[expr.reinterpret.cast]].
 
-\[*Note 21*: An array object and its first element are not
+\[*Note 4*: An array object and its first element are not
 pointer-interconvertible, even though they have the same
 address. — *end note*\]
 
@@ -4233,7 +4233,7 @@ A function or reference type is always cv-unqualified.
   a volatile object, or a non-mutable volatile subobject of a const
   object.
 
-\[*Note 22*: The type of an object [[intro.object]] includes the
+\[*Note 1*: The type of an object [[intro.object]] includes the
 *cv-qualifier*s specified in the *decl-specifier-seq* [[dcl.spec]],
 *declarator* [[dcl.decl]], *type-id* [[dcl.name]], or *new-type-id*
 [[expr.new]] when the object is created. — *end note*\]
@@ -4245,12 +4245,12 @@ compounded.
 An array type whose elements are cv-qualified is also considered to have
 the same cv-qualifications as its elements.
 
-\[*Note 23*: Cv-qualifiers applied to an array type attach to the
+\[*Note 2*: Cv-qualifiers applied to an array type attach to the
 underlying element type, so the notation “cv `T`”, where `T` is an array
 type, refers to an array whose elements are so-qualified
 [[dcl.array]]. — *end note*\]
 
-\[*Example 6*:
+\[*Example 1*:
 
 ``` cpp
 typedef char CA[5];
@@ -4264,7 +4264,7 @@ array type is considered to be const-qualified.
 
 — *end example*\]
 
-\[*Note 24*: See  [[dcl.fct]] and  [[over.match.funcs]] regarding
+\[*Note 3*: See  [[dcl.fct]] and  [[over.match.funcs]] regarding
 function types that have *cv-qualifier*. — *end note*\]
 
 There is a partial ordering on cv-qualifiers, so that a type can be said
@@ -4286,7 +4286,7 @@ an arbitrary set of cv-qualifiers, i.e., one of {`const`}, {`volatile`},
 {`const`, `volatile`}, or the empty set. For a type cv `T`, the
 *top-level cv-qualifiers* of that type are those denoted by cv.
 
-\[*Example 7*: The type corresponding to the *type-id* `const int&` has
+\[*Example 2*: The type corresponding to the *type-id* `const int&` has
 no top-level cv-qualifiers. The type corresponding to the *type-id*
 `volatile int * const` has the top-level cv-qualifier `const`. For a
 class type `C`, the type corresponding to the *type-id*
@@ -4332,9 +4332,9 @@ Every integer type has an *integer conversion rank* defined as follows:
   than `T2` and `T2` has greater rank than `T3`, then `T1` has greater
   rank than `T3`.
 
-\[*Note 25*: The integer conversion rank is used in the definition of
-the integral promotions [[conv.prom]] and the usual arithmetic
-conversions [[expr.arith.conv]]. — *end note*\]
+\[*Note 1*: The integer conversion rank is used in the definition of the
+integral promotions [[conv.prom]] and the usual arithmetic conversions
+[[expr.arith.conv]]. — *end note*\]
 
 Every floating-point type has a *floating-point conversion rank* defined
 as follows:
@@ -4357,7 +4357,7 @@ as follows:
   than one cv-unqualified standard floating-point type has a rank equal
   to the rank of `double`.
 
-\[*Note 26*: The conversion ranks of floating-point types `T1` and `T2`
+\[*Note 2*: The conversion ranks of floating-point types `T1` and `T2`
 are unordered if the set of values of `T1` is neither a subset nor a
 superset of the set of values of `T2`. This can happen when one type has
 both a larger range and a lower precision than the other. — *end note*\]
@@ -4370,7 +4370,7 @@ order among types with equal ranks. The types `std::float16_t`,
 floating-point type with equal conversion rank. Otherwise, the
 conversion subrank order is *implementation-defined*.
 
-\[*Note 27*: The floating-point conversion rank and subrank are used in
+\[*Note 3*: The floating-point conversion rank and subrank are used in
 the definition of the usual arithmetic conversions
 [[expr.arith.conv]]. — *end note*\]
 
@@ -4626,7 +4626,7 @@ control within a program, including the initial invocation of a specific
 top-level function, and recursively including every function invocation
 subsequently executed by the thread.
 
-\[*Note 8*: When one thread creates another, the initial call to the
+\[*Note 1*: When one thread creates another, the initial call to the
 top-level function of the new thread is executed by the new thread, not
 by the creating thread. — *end note*\]
 
@@ -4638,7 +4638,7 @@ thread running concurrently. The execution of each thread proceeds as
 defined by the remainder of this document. The execution of the entire
 program consists of an execution of all of its threads.
 
-\[*Note 9*: Usually the execution can be viewed as an interleaving of
+\[*Note 2*: Usually the execution can be viewed as an interleaving of
 all its threads. However, some kinds of atomic operations, for example,
 allow executions inconsistent with a simple interleaving, as described
 below. — *end note*\]
@@ -4657,7 +4657,7 @@ the initial value of the object, a value assigned to the object by T, or
 a value assigned to the object by another thread, according to the rules
 below.
 
-\[*Note 10*: In some cases, there might instead be undefined behavior.
+\[*Note 1*: In some cases, there might instead be undefined behavior.
 Much of this subclause is motivated by the desire to support atomic
 operations with explicit and detailed visibility constraints. However,
 it also implicitly supports a simpler view for more restricted
@@ -4679,7 +4679,7 @@ fence, or both an acquire and release fence. In addition, there are
 relaxed atomic operations, which are not synchronization operations, and
 atomic read-modify-write operations, which have special characteristics.
 
-\[*Note 11*: For example, a call that acquires a mutex will perform an
+\[*Note 2*: For example, a call that acquires a mutex will perform an
 acquire operation on the locations comprising the mutex.
 Correspondingly, a call that releases the same mutex will perform a
 release operation on those same locations. Informally, performing a
@@ -4692,7 +4692,7 @@ operations, they cannot contribute to data races. — *end note*\]
 All modifications to a particular atomic object M occur in some
 particular total order, called the *modification order* of M.
 
-\[*Note 12*: There is a separate order for each atomic object. There is
+\[*Note 3*: There is a separate order for each atomic object. There is
 no requirement that these can be combined into a single total order for
 all objects. In general this will be impossible since different threads
 can observe modifications to different objects in inconsistent
@@ -4708,11 +4708,11 @@ by another thread. For example, an atomic store-release synchronizes
 with a load-acquire that takes its value from the store
 [[atomics.order]].
 
-\[*Note 13*: Except in the specified cases, reading a later value does
+\[*Note 4*: Except in the specified cases, reading a later value does
 not necessarily ensure visibility as described below. Such a requirement
 would sometimes interfere with efficient implementation. — *end note*\]
 
-\[*Note 14*: The specifications of the synchronization operations define
+\[*Note 5*: The specifications of the synchronization operations define
 when one reads the value written by another. For atomic objects, the
 definition is clear. All operations on a given mutex occur in a single
 total order. Each mutex acquisition “reads the value written” by the
@@ -4743,7 +4743,7 @@ An evaluation A *carries a dependency* to an evaluation B if
 - for some evaluation X, A carries a dependency to X, and X carries a
   dependency to B.
 
-\[*Note 15*: “Carries a dependency to” is a subset of “is sequenced
+\[*Note 6*: “Carries a dependency to” is a subset of “is sequenced
 before”, and is similarly strictly intra-thread. — *end note*\]
 
 An evaluation A is *dependency-ordered before* an evaluation B if
@@ -4755,7 +4755,7 @@ An evaluation A is *dependency-ordered before* an evaluation B if
 - for some evaluation X, A is dependency-ordered before X and X carries
   a dependency to B.
 
-\[*Note 16*: The relation “is dependency-ordered before” is analogous to
+\[*Note 7*: The relation “is dependency-ordered before” is analogous to
 “synchronizes with”, but uses release/consume in place of
 release/acquire. — *end note*\]
 
@@ -4773,7 +4773,7 @@ An evaluation A *inter-thread happens before* an evaluation B if
 
   - A inter-thread happens before X and X inter-thread happens before B.
 
-\[*Note 17*: The “inter-thread happens before” relation describes
+\[*Note 8*: The “inter-thread happens before” relation describes
 arbitrary concatenations of “sequenced before”, “synchronizes with” and
 “dependency-ordered before” relationships, with two exceptions. The
 first exception is that a concatenation is not permitted to end with
@@ -4800,7 +4800,7 @@ An evaluation A *happens before* an evaluation B (or, equivalently, B
 The implementation shall ensure that no program execution demonstrates a
 cycle in the “happens before” relation.
 
-\[*Note 18*: This cycle would otherwise be possible only through the use
+\[*Note 9*: This cycle would otherwise be possible only through the use
 of consume operations. — *end note*\]
 
 An evaluation A *simply happens before* an evaluation B if either
@@ -4811,7 +4811,7 @@ An evaluation A *simply happens before* an evaluation B if either
 
 - A simply happens before X and X simply happens before B.
 
-\[*Note 19*: In the absence of consume operations, the happens before
+\[*Note 10*: In the absence of consume operations, the happens before
 and simply happens before relations are identical. — *end note*\]
 
 An evaluation A *strongly happens before* an evaluation D if, either
@@ -4827,7 +4827,7 @@ An evaluation A *strongly happens before* an evaluation D if, either
 - there is an evaluation B such that A strongly happens before B, and B
   strongly happens before D.
 
-\[*Note 20*: Informally, if A strongly happens before B, then A appears
+\[*Note 11*: Informally, if A strongly happens before B, then A appears
 to be evaluated before B in all contexts. Strongly happens before
 excludes consume operations. — *end note*\]
 
@@ -4842,11 +4842,11 @@ computation B of M satisfies the conditions:
 The value of a non-atomic scalar object or bit-field M, as determined by
 evaluation B, shall be the value stored by the visible side effect A.
 
-\[*Note 21*: If there is ambiguity about which side effect to a
+\[*Note 12*: If there is ambiguity about which side effect to a
 non-atomic object or bit-field is visible, then the behavior is either
 unspecified or undefined. — *end note*\]
 
-\[*Note 22*: This states that operations on ordinary objects are not
+\[*Note 13*: This states that operations on ordinary objects are not
 visibly reordered. This is not actually detectable without data races,
 but it is necessary to ensure that data races, as defined below, and
 with suitable restrictions on the use of atomics, correspond to data
@@ -4857,7 +4857,7 @@ The value of an atomic object M, as determined by evaluation B, shall be
 the value stored by some side effect A that modifies M, where B does not
 happen before A.
 
-\[*Note 23*: The set of such side effects is also restricted by the rest
+\[*Note 14*: The set of such side effects is also restricted by the rest
 of the rules described here, and in particular, by the coherence
 requirements below. — *end note*\]
 
@@ -4865,7 +4865,7 @@ If an operation A that modifies an atomic object M happens before an
 operation B that modifies M, then A shall be earlier than B in the
 modification order of M.
 
-\[*Note 24*: This requirement is known as write-write
+\[*Note 15*: This requirement is known as write-write
 coherence. — *end note*\]
 
 If a value computation A of an atomic object M happens before a value
@@ -4874,30 +4874,30 @@ then the value computed by B shall either be the value stored by X or
 the value stored by a side effect Y on M, where Y follows X in the
 modification order of M.
 
-\[*Note 25*: This requirement is known as read-read
+\[*Note 16*: This requirement is known as read-read
 coherence. — *end note*\]
 
 If a value computation A of an atomic object M happens before an
 operation B that modifies M, then A shall take its value from a side
 effect X on M, where X precedes B in the modification order of M.
 
-\[*Note 26*: This requirement is known as read-write
+\[*Note 17*: This requirement is known as read-write
 coherence. — *end note*\]
 
 If a side effect X on an atomic object M happens before a value
 computation B of M, then the evaluation B shall take its value from X or
 from a side effect Y that follows X in the modification order of M.
 
-\[*Note 27*: This requirement is known as write-read
+\[*Note 18*: This requirement is known as write-read
 coherence. — *end note*\]
 
-\[*Note 28*: The four preceding coherence requirements effectively
+\[*Note 19*: The four preceding coherence requirements effectively
 disallow compiler reordering of atomic operations to a single object,
 even if both operations are relaxed loads. This effectively makes the
 cache coherence guarantee provided by most hardware available to C++
 atomic operations. — *end note*\]
 
-\[*Note 29*: The value observed by a load of an atomic depends on the
+\[*Note 20*: The value observed by a load of an atomic depends on the
 “happens before” relation, which depends on the values observed by loads
 of atomics. The intended reading is that there must exist an association
 of atomic loads with modifications they observe that, together with
@@ -4918,7 +4918,7 @@ atomic, and neither happens before the other, except for the special
 case for signal handlers described below. Any such data race results in
 undefined behavior.
 
-\[*Note 30*: It can be shown that programs that correctly use mutexes
+\[*Note 21*: It can be shown that programs that correctly use mutexes
 and `memory_order::seq_cst` operations to prevent all data races and use
 no other synchronization operations behave as if the operations executed
 by their constituent threads were simply interleaved, with each value
@@ -4942,7 +4942,7 @@ evaluations in A happened before the execution of the signal handler and
 the execution of the signal handler happened before all evaluations in
 B.
 
-\[*Note 31*: Compiler transformations that introduce assignments to a
+\[*Note 22*: Compiler transformations that introduce assignments to a
 potentially shared memory location that would not be modified by the
 abstract machine are generally precluded by this document, since such an
 assignment might overwrite another assignment by a different thread in
@@ -4953,7 +4953,7 @@ of atomic loads in cases in which the atomics in question might alias is
 also generally precluded, since this could violate the coherence
 rules. — *end note*\]
 
-\[*Note 32*: Transformations that introduce a speculative read of a
+\[*Note 23*: Transformations that introduce a speculative read of a
 potentially shared memory location might not preserve the semantics of
 the C++ program as defined in this document, since they potentially
 introduce a data race. However, they are typically valid in the context
@@ -4975,7 +4975,7 @@ the following:
 
 - perform a synchronization operation or an atomic operation.
 
-\[*Note 33*: This is intended to allow compiler transformations such as
+\[*Note 1*: This is intended to allow compiler transformations such as
 removal of empty loops, even when termination cannot be
 proven. — *end note*\]
 
@@ -5020,14 +5020,14 @@ An invocation of a standard library function that blocks [[defns.block]]
 is considered to continuously execute execution steps while waiting for
 the condition that it blocks on to be satisfied.
 
-\[*Example 5*: A library I/O function that blocks until the I/O
+\[*Example 1*: A library I/O function that blocks until the I/O
 operation is complete can be considered to continuously check whether
 the operation is complete. Each such check consists of one or more
 execution steps, for example using observable behavior of the abstract
 machine. — *end example*\]
 
-\[*Note 34*: Because of this and the preceding requirement regarding
-what threads of execution have to perform eventually, it follows that no
+\[*Note 2*: Because of this and the preceding requirement regarding what
+threads of execution have to perform eventually, it follows that no
 thread of execution can execute forever without an execution step
 occurring. — *end note*\]
 
@@ -5041,7 +5041,7 @@ For a thread of execution providing
 that the thread will eventually make progress for as long as it has not
 terminated.
 
-\[*Note 35*: This is required regardless of whether or not other threads
+\[*Note 3*: This is required regardless of whether or not other threads
 of execution (if any) have been or are making progress. To eventually
 fulfill this requirement means that this will happen in an unspecified
 but finite amount of time. — *end note*\]
@@ -5059,7 +5059,7 @@ required to ensure that the thread will eventually make progress if it
 has not yet executed any execution step; once this thread has executed a
 step, it provides concurrent forward progress guarantees.
 
-\[*Note 36*: This does not specify a requirement for when to start this
+\[*Note 4*: This does not specify a requirement for when to start this
 thread of execution, which will typically be specified by the entity
 that creates this thread of execution. For example, a thread of
 execution that provides concurrent forward progress guarantees and
@@ -5071,7 +5071,7 @@ For a thread of execution providing *weakly parallel forward progress
 guarantees*, the implementation does not ensure that the thread will
 eventually make progress.
 
-\[*Note 37*: Threads of execution providing weakly parallel forward
+\[*Note 5*: Threads of execution providing weakly parallel forward
 progress guarantees cannot be expected to make progress regardless of
 whether other threads make progress or not; however, blocking with
 forward progress guarantee delegation, as defined below, can be used to
@@ -5082,19 +5082,20 @@ Concurrent forward progress guarantees are stronger than parallel
 forward progress guarantees, which in turn are stronger than weakly
 parallel forward progress guarantees.
 
-\[*Note 38*: For example, some kinds of synchronization between threads
+\[*Note 6*: For example, some kinds of synchronization between threads
 of execution might only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
 make progress under weakly parallel guarantees. — *end note*\]
 
-When a thread of execution P is specified to block (execution)!with
-forward progress guarantee delegation on the completion of a set S of
-threads of execution, then throughout the whole time of P being blocked
-on S, the implementation shall ensure that the forward progress
-guarantees provided by at least one thread of execution in S is at least
-as strong as P’s forward progress guarantees.
+When a thread of execution P is specified to
+*block with forward progress guarantee delegation* block
+(execution)!with forward progress guarantee delegation on the completion
+of a set S of threads of execution, then throughout the whole time of P
+being blocked on S, the implementation shall ensure that the forward
+progress guarantees provided by at least one thread of execution in S is
+at least as strong as P’s forward progress guarantees.
 
-\[*Note 39*: It is unspecified which thread or threads of execution in S
+\[*Note 7*: It is unspecified which thread or threads of execution in S
 are chosen and for which number of execution steps. The strengthening is
 not permanent and not necessarily in place for the rest of the lifetime
 of the affected thread of execution. As long as P is blocked, the
@@ -5104,20 +5105,20 @@ thread of execution in S. — *end note*\]
 Once a thread of execution in S terminates, it is removed from S. Once S
 is empty, P is unblocked.
 
-\[*Note 40*: A thread of execution B thus can temporarily provide an
+\[*Note 8*: A thread of execution B thus can temporarily provide an
 effectively stronger forward progress guarantee for a certain amount of
 time, due to a second thread of execution A being blocked on it with
 forward progress guarantee delegation. In turn, if B then blocks with
 forward progress guarantee delegation on C, this can also temporarily
 provide a stronger forward progress guarantee to C. — *end note*\]
 
-\[*Note 41*: If all threads of execution in S finish executing (e.g.,
+\[*Note 9*: If all threads of execution in S finish executing (e.g.,
 they terminate and do not use blocking synchronization incorrectly),
 then P’s execution of the operation that blocks with forward progress
 guarantee delegation will not result in P’s progress guarantee being
 effectively weakened. — *end note*\]
 
-\[*Note 42*: This does not remove any constraints regarding blocking
+\[*Note 10*: This does not remove any constraints regarding blocking
 synchronization for threads of execution providing parallel or weakly
 parallel forward progress guarantees because the implementation is not
 required to strengthen a particular thread of execution whose too-weak
@@ -5137,7 +5138,7 @@ execution [[intro.multithread]], [[thread.threads]] in which the `main`
 function is invoked. It is *implementation-defined* whether a program in
 a freestanding environment is required to define a `main` function.
 
-\[*Note 43*: In a freestanding environment, startup and termination is
+\[*Note 1*: In a freestanding environment, startup and termination is
 *implementation-defined*; startup contains the execution of constructors
 for non-local objects with static storage duration; termination contains
 the execution of destructors for objects with static storage
@@ -5185,7 +5186,7 @@ program that declares
 
 is ill-formed. The name `main` is not otherwise reserved.
 
-\[*Example 6*: Member functions, classes, and enumerations can be called
+\[*Example 1*: Member functions, classes, and enumerations can be called
 `main`, as can entities in other namespaces. — *end example*\]
 
 Terminating the program without leaving the current block (e.g., by
@@ -5218,7 +5219,7 @@ Together, zero-initialization and constant initialization are called
 *dynamic initialization*. All static initialization strongly happens
 before [[intro.races]] any dynamic initialization.
 
-\[*Note 44*: The dynamic initialization of non-block variables is
+\[*Note 1*: The dynamic initialization of non-block variables is
 described in  [[basic.start.dynamic]]; that of static block variables is
 described in  [[stmt.dcl]]. — *end note*\]
 
@@ -5236,7 +5237,7 @@ statically, provided that
   initialization if all variables not required to be initialized
   statically were initialized dynamically.
 
-\[*Note 45*:
+\[*Note 2*:
 
 As a consequence, if the initialization of an object `obj1` refers to an
 object `obj2` potentially requiring dynamic initialization and defined
@@ -5265,8 +5266,8 @@ instantiated specialization, is partially-ordered if the variable is an
 inline variable that is not an implicitly or explicitly instantiated
 specialization, and otherwise is ordered.
 
-\[*Note 46*: A non-inline explicit specialization of a templated
-variable has ordered initialization. — *end note*\]
+\[*Note 1*: A non-inline explicit specialization of a templated variable
+has ordered initialization. — *end note*\]
 
 A declaration `D` is *appearance-ordered* before a declaration `E` if
 
@@ -5304,7 +5305,7 @@ storage duration are ordered as follows:
 - Otherwise, the initializations of `V` and `W` are indeterminately
   sequenced.
 
-\[*Note 47*: This definition permits initialization of a sequence of
+\[*Note 2*: This definition permits initialization of a sequence of
 ordered variables concurrently with another sequence. — *end note*\]
 
 A *non-initialization odr-use* is an odr-use [[term.odr.use]] not caused
@@ -5324,7 +5325,7 @@ the program such deferred dynamic initialization occurs.
 An implementation should choose such points in a way that allows the
 programmer to avoid deadlocks.
 
-\[*Example 7*:
+\[*Example 1*:
 
 ``` cpp
 // - File 1 -
@@ -5390,7 +5391,7 @@ destroyed and functions registered with `std::atexit` are called as part
 of a call to `std::exit` [[support.start.term]]. The call to `std::exit`
 is sequenced before the destructions and the registered functions.
 
-\[*Note 48*: Returning from `main` invokes `std::exit`
+\[*Note 1*: Returning from `main` invokes `std::exit`
 [[basic.start.main]]. — *end note*\]
 
 Constructed objects with thread storage duration within a given thread
@@ -5422,8 +5423,8 @@ destruction of an object with static or thread storage duration, the
 program has undefined behavior if the flow of control passes through the
 definition of the previously destroyed block variable.
 
-\[*Note 49*: Likewise, the behavior is undefined if the block variable
-is used indirectly (e.g., through a pointer) after its
+\[*Note 2*: Likewise, the behavior is undefined if the block variable is
+used indirectly (e.g., through a pointer) after its
 destruction. — *end note*\]
 
 If the completion of the initialization of an object with static storage
@@ -5445,7 +5446,7 @@ within signal handlers [[support.runtime]] that does not happen before
 storage duration and execution of `std::atexit` registered functions
 [[support.start.term]], the program has undefined behavior.
 
-\[*Note 50*: If there is a use of an object with static storage duration
+\[*Note 3*: If there is a use of an object with static storage duration
 that does not happen before the object’s destruction, the program has
 undefined behavior. Terminating every thread before a call to
 `std::exit` or the exit from `main` is sufficient, but not necessary, to

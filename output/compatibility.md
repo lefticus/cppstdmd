@@ -1283,12 +1283,12 @@ can get a different result in this revision of C++.
 
 ###  [[library]]: library introduction <a id="diff.cpp03.library">[[diff.cpp03.library]]</a>
 
-**Affected:** [[library]] – [[\lastlibchapter]] New reserved
-identifiers. Required by new features. Valid C++03 code that uses any
-identifiers added to the C++ standard library by later revisions of C++
-may fail to compile or produce different results in this revision of
-C++. A comprehensive list of identifiers used by the C++ standard
-library can be found in the Index of Library Names in this document.
+**Affected:** [[library]] – [[thread]] New reserved identifiers.
+Required by new features. Valid C++03 code that uses any identifiers
+added to the C++ standard library by later revisions of C++ may fail to
+compile or produce different results in this revision of C++. A
+comprehensive list of identifiers used by the C++ standard library can
+be found in the Index of Library Names in this document.
 
 New headers. New functionality. The following C++ headers are new:
 `<array>`, `<atomic>`, `<chrono>`, , `<condition_variable>`,
@@ -2259,7 +2259,6 @@ restricted in C++. Subclause [[c.malloc]] describes the changes.
 [diff.wchar.t]: #diff.wchar.t
 
 <!-- Link reference definitions -->
-[\lastlibchapter]: #\lastlibchapter
 [algorithms]: algorithms.md#algorithms
 [basic]: basic.md#basic
 [basic.link]: basic.md#basic.link
