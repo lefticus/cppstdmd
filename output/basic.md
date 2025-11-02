@@ -2137,8 +2137,8 @@ declarations.
 
 ``` bnf
 translation-unit:
-    [declaration-seq]
-    [global-module-fragment] module-declaration [declaration-seq] [private-module-fragment]
+    declaration-seq_opt
+    global-module-fragment_opt module-declaration declaration-seq_opt private-module-fragment_opt
 ```
 
 A name is said to have *linkage* when it can denote the same object,
@@ -3850,9 +3850,9 @@ that it is possible to create such an object, nor is it a guarantee that
 any object of that type will be usable in a constant
 expression. — *end note*\]
 
-Two types `T1` and `T2` are if `T1` and `T2` are the same type,
-layout-compatible enumerations [[dcl.enum]], or layout-compatible
-standard-layout class types [[class.mem]].
+Two types cv-qualifier{cv1} `T1` and cv-qualifier{cv2} `T2` are if `T1`
+and `T2` are the same type, layout-compatible enumerations [[dcl.enum]],
+or layout-compatible standard-layout class types [[class.mem]].
 
 ### Fundamental types <a id="basic.fundamental">[[basic.fundamental]]</a>
 
@@ -4275,16 +4275,16 @@ shows the relations that constitute this ordering.
 
 |  |  |  |
 | --- | --- | --- |
-| \cvqual{no cv-qualifier} | < | `const` |
-| \cvqual{no cv-qualifier} | < | `volatile` |
-| \cvqual{no cv-qualifier} | < | `const volatile` |
+| cv-qualifier{no cv-qualifier} | < | `const` |
+| cv-qualifier{no cv-qualifier} | < | `volatile` |
+| cv-qualifier{no cv-qualifier} | < | `const volatile` |
 | `const` | < | `const volatile` |
 | `volatile` | < | `const volatile` |
-In this document, the notation cv (or , , etc.), used in the description
-of types, represents an arbitrary set of cv-qualifiers, i.e., one of
-{`const`}, {`volatile`}, {`const`, `volatile`}, or the empty set. For a
-type cv `T`, the *top-level cv-qualifiers* of that type are those
-denoted by cv.
+In this document, the notation cv (or cv-qualifier{cv1},
+cv-qualifier{cv2}, etc.), used in the description of types, represents
+an arbitrary set of cv-qualifiers, i.e., one of {`const`}, {`volatile`},
+{`const`, `volatile`}, or the empty set. For a type cv `T`, the
+*top-level cv-qualifiers* of that type are those denoted by cv.
 
 \[*Example 7*: The type corresponding to the *type-id* `const int&` has
 no top-level cv-qualifiers. The type corresponding to the *type-id*

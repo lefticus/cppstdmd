@@ -9,17 +9,17 @@ label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 
 ``` bnf
 module-declaration:
-    [export-keyword] module-keyword module-name [module-partition] [attribute-specifier-seq] ';'
+    export-keyword_opt module-keyword module-name module-partition_opt attribute-specifier-seq_opt ';'
 ```
 
 ``` bnf
 module-name:
-    [module-name-qualifier] identifier
+    module-name-qualifier_opt identifier
 ```
 
 ``` bnf
 module-partition:
-    ':' [module-name-qualifier] identifier
+    ':' module-name-qualifier_opt identifier
 ```
 
 ``` bnf
@@ -125,7 +125,7 @@ of the module as if by a *module-import-declaration*.
 ``` bnf
 export-declaration:
     \texttt{export} name-declaration
-    \texttt{export} '{' [declaration-seq] '$'}
+    \texttt{export} '{' declaration-seq_opt '$'}
     export-keyword module-import-declaration
 ```
 
@@ -213,9 +213,9 @@ rules of exported declarations.
 
 ``` bnf
 module-import-declaration:
-    import-keyword module-name [attribute-specifier-seq] ';'
-    import-keyword module-partition [attribute-specifier-seq] ';'
-    import-keyword header-name [attribute-specifier-seq] ';'
+    import-keyword module-name attribute-specifier-seq_opt ';'
+    import-keyword module-partition attribute-specifier-seq_opt ';'
+    import-keyword header-name attribute-specifier-seq_opt ';'
 ```
 
 A *module-import-declaration* shall inhabit the global namespace scope.
@@ -335,7 +335,7 @@ have an interface dependency on itself.
 
 ``` bnf
 global-module-fragment:
-    module-keyword ';' [declaration-seq]
+    module-keyword ';' declaration-seq_opt
 ```
 
 \[*Note 1*: Prior to phase 4 of translation, only preprocessing
@@ -455,7 +455,7 @@ void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 
 ``` bnf
 private-module-fragment:
-    module-keyword ':' \texttt{private} ';' [declaration-seq]
+    module-keyword ':' \texttt{private} ';' declaration-seq_opt
 ```
 
 A *private-module-fragment* shall appear only in a primary module

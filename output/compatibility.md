@@ -177,10 +177,11 @@ auto t = tiny();
 std::format("{}", t.bit);       // ill-formed, previously returned "0"
 ```
 
-Restrict types of formatting arguments used as or in a . Disallow types
-that do not have useful or portable semantics as a formatting width or
-precision. Valid C++20 code that passes a boolean or character type as
-becomes invalid. For example:
+Restrict types of formatting arguments used as *width* or *precision* in
+a *std-format-spec*. Disallow types that do not have useful or portable
+semantics as a formatting width or precision. Valid C++20 code that
+passes a boolean or character type as *arg-id* becomes invalid. For
+example:
 
 ``` cpp
 std::format("{:*^{}}", "", true);   // ill-formed, previously returned "*"

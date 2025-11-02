@@ -283,42 +283,42 @@ components, `real()` and `imag()`, of a complex number.
 constexpr complex(const T& re = T(), const T& im = T());
 ```
 
-> *Ensures:* `real() == re && imag() == im` is `true`.
+*Ensures:* `real() == re && imag() == im` is `true`.
 
 ``` cpp
 template<class X> constexpr explicit(see below) complex(const complex<X>& other);
 ```
 
-> *Effects:* Initializes the real part with `other.real()` and the
-> imaginary part with `other.imag()`.
->
-> *Remarks:* The expression inside `explicit` evaluates to `false` if
-> and only if the floating-point conversion rank of `T` is greater than
-> or equal to the floating-point conversion rank of `X`.
+*Effects:* Initializes the real part with `other.real()` and the
+imaginary part with `other.imag()`.
+
+*Remarks:* The expression inside `explicit` evaluates to `false` if and
+only if the floating-point conversion rank of `T` is greater than or
+equal to the floating-point conversion rank of `X`.
 
 ``` cpp
 constexpr T real() const;
 ```
 
-> *Returns:* The value of the real component.
+*Returns:* The value of the real component.
 
 ``` cpp
 constexpr void real(T val);
 ```
 
-> *Effects:* Assigns `val` to the real component.
+*Effects:* Assigns `val` to the real component.
 
 ``` cpp
 constexpr T imag() const;
 ```
 
-> *Returns:* The value of the imaginary component.
+*Returns:* The value of the imaginary component.
 
 ``` cpp
 constexpr void imag(T val);
 ```
 
-> *Effects:* Assigns `val` to the imaginary component.
+*Effects:* Assigns `val` to the imaginary component.
 
 ### Member operators <a id="complex.member.ops">[[complex.member.ops]]</a>
 
@@ -326,75 +326,75 @@ constexpr void imag(T val);
 constexpr complex& operator+=(const T& rhs);
 ```
 
-> *Effects:* Adds the scalar value `rhs` to the real part of the complex
-> value `*this` and stores the result in the real part of `*this`,
-> leaving the imaginary part unchanged.
->
-> *Returns:* `*this`.
+*Effects:* Adds the scalar value `rhs` to the real part of the complex
+value `*this` and stores the result in the real part of `*this`, leaving
+the imaginary part unchanged.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr complex& operator-=(const T& rhs);
 ```
 
-> *Effects:* Subtracts the scalar value `rhs` from the real part of the
-> complex value `*this` and stores the result in the real part of
-> `*this`, leaving the imaginary part unchanged.
->
-> *Returns:* `*this`.
+*Effects:* Subtracts the scalar value `rhs` from the real part of the
+complex value `*this` and stores the result in the real part of `*this`,
+leaving the imaginary part unchanged.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr complex& operator*=(const T& rhs);
 ```
 
-> *Effects:* Multiplies the scalar value `rhs` by the complex value
-> `*this` and stores the result in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Multiplies the scalar value `rhs` by the complex value
+`*this` and stores the result in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr complex& operator/=(const T& rhs);
 ```
 
-> *Effects:* Divides the scalar value `rhs` into the complex value
-> `*this` and stores the result in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Divides the scalar value `rhs` into the complex value `*this`
+and stores the result in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class X> constexpr complex& operator+=(const complex<X>& rhs);
 ```
 
-> *Effects:* Adds the complex value `rhs` to the complex value `*this`
-> and stores the sum in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Adds the complex value `rhs` to the complex value `*this` and
+stores the sum in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class X> constexpr complex& operator-=(const complex<X>& rhs);
 ```
 
-> *Effects:* Subtracts the complex value `rhs` from the complex value
-> `*this` and stores the difference in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Subtracts the complex value `rhs` from the complex value
+`*this` and stores the difference in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class X> constexpr complex& operator*=(const complex<X>& rhs);
 ```
 
-> *Effects:* Multiplies the complex value `rhs` by the complex value
-> `*this` and stores the product in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Multiplies the complex value `rhs` by the complex value
+`*this` and stores the product in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class X> constexpr complex& operator/=(const complex<X>& rhs);
 ```
 
-> *Effects:* Divides the complex value `rhs` into the complex value
-> `*this` and stores the quotient in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Divides the complex value `rhs` into the complex value
+`*this` and stores the quotient in `*this`.
+
+*Returns:* `*this`.
 
 ### Non-member operations <a id="complex.ops">[[complex.ops]]</a>
 
@@ -402,7 +402,7 @@ template<class X> constexpr complex& operator/=(const complex<X>& rhs);
 template<class T> constexpr complex<T> operator+(const complex<T>& lhs);
 ```
 
-> *Returns:* `complex<T>(lhs)`.
+*Returns:* `complex<T>(lhs)`.
 
 ``` cpp
 template<class T> constexpr complex<T> operator+(const complex<T>& lhs, const complex<T>& rhs);
@@ -410,13 +410,13 @@ template<class T> constexpr complex<T> operator+(const complex<T>& lhs, const T&
 template<class T> constexpr complex<T> operator+(const T& lhs, const complex<T>& rhs);
 ```
 
-> *Returns:* `complex<T>(lhs) += rhs`.
+*Returns:* `complex<T>(lhs) += rhs`.
 
 ``` cpp
 template<class T> constexpr complex<T> operator-(const complex<T>& lhs);
 ```
 
-> *Returns:* `complex<T>(-lhs.real(),-lhs.imag())`.
+*Returns:* `complex<T>(-lhs.real(),-lhs.imag())`.
 
 ``` cpp
 template<class T> constexpr complex<T> operator-(const complex<T>& lhs, const complex<T>& rhs);
@@ -424,7 +424,7 @@ template<class T> constexpr complex<T> operator-(const complex<T>& lhs, const T&
 template<class T> constexpr complex<T> operator-(const T& lhs, const complex<T>& rhs);
 ```
 
-> *Returns:* `complex<T>(lhs) -= rhs`.
+*Returns:* `complex<T>(lhs) -= rhs`.
 
 ``` cpp
 template<class T> constexpr complex<T> operator*(const complex<T>& lhs, const complex<T>& rhs);
@@ -432,7 +432,7 @@ template<class T> constexpr complex<T> operator*(const complex<T>& lhs, const T&
 template<class T> constexpr complex<T> operator*(const T& lhs, const complex<T>& rhs);
 ```
 
-> *Returns:* `complex<T>(lhs) *= rhs`.
+*Returns:* `complex<T>(lhs) *= rhs`.
 
 ``` cpp
 template<class T> constexpr complex<T> operator/(const complex<T>& lhs, const complex<T>& rhs);
@@ -440,61 +440,60 @@ template<class T> constexpr complex<T> operator/(const complex<T>& lhs, const T&
 template<class T> constexpr complex<T> operator/(const T& lhs, const complex<T>& rhs);
 ```
 
-> *Returns:* `complex<T>(lhs) /= rhs`.
+*Returns:* `complex<T>(lhs) /= rhs`.
 
 ``` cpp
 template<class T> constexpr bool operator==(const complex<T>& lhs, const complex<T>& rhs);
 template<class T> constexpr bool operator==(const complex<T>& lhs, const T& rhs);
 ```
 
-> *Returns:* `lhs.real() == rhs.real() && lhs.imag() == rhs.imag()`.
->
-> *Remarks:* The imaginary part is assumed to be `T()`, or 0.0, for the
-> `T` arguments.
+*Returns:* `lhs.real() == rhs.real() && lhs.imag() == rhs.imag()`.
+
+*Remarks:* The imaginary part is assumed to be `T()`, or 0.0, for the
+`T` arguments.
 
 ``` cpp
 template<class T, class charT, class traits>
   basic_istream<charT, traits>& operator>>(basic_istream<charT, traits>& is, complex<T>& x);
 ```
 
-> *Preconditions:* The input values are convertible to `T`.
->
-> *Effects:* Extracts a complex number `x` of the form: `u`, `(u)`, or
-> `(u,v)`, where `u` is the real part and `v` is the imaginary
-> part [[istream.formatted]].
->
-> If bad input is encountered, calls `is.setstate(ios_base::failbit)`
-> (which may throw `ios_base::failure`[[iostate.flags]]).
->
-> *Returns:* `is`.
->
-> *Remarks:* This extraction is performed as a series of simpler
-> extractions. Therefore, the skipping of whitespace is specified to be
-> the same for each of the simpler extractions.
+*Preconditions:* The input values are convertible to `T`.
+
+*Effects:* Extracts a complex number `x` of the form: `u`, `(u)`, or
+`(u,v)`, where `u` is the real part and `v` is the imaginary
+part [[istream.formatted]].
+
+If bad input is encountered, calls `is.setstate(ios_base::failbit)`
+(which may throw `ios_base::failure`[[iostate.flags]]).
+
+*Returns:* `is`.
+
+*Remarks:* This extraction is performed as a series of simpler
+extractions. Therefore, the skipping of whitespace is specified to be
+the same for each of the simpler extractions.
 
 ``` cpp
 template<class T, class charT, class traits>
   basic_ostream<charT, traits>& operator<<(basic_ostream<charT, traits>& o, const complex<T>& x);
 ```
 
-> *Effects:* Inserts the complex number `x` onto the stream `o` as if it
-> were implemented as follows:
->
-> ``` cpp
-> basic_ostringstream<charT, traits> s;
-> s.flags(o.flags());
-> s.imbue(o.getloc());
-> s.precision(o.precision());
-> s << '(' << x.real() << ',' << x.imag() << ')';
-> return o << s.str();
-> ```
->
-> \[*Note 1*: In a locale in which comma is used as a decimal point
-> character, the use of comma as a field separator can be ambiguous.
-> Inserting `showpoint` into the output stream forces all outputs to
-> show an explicit decimal point character; as a result, all inserted
-> sequences of complex numbers can be extracted
-> unambiguously. — *end note*\]
+*Effects:* Inserts the complex number `x` onto the stream `o` as if it
+were implemented as follows:
+
+``` cpp
+basic_ostringstream<charT, traits> s;
+s.flags(o.flags());
+s.imbue(o.getloc());
+s.precision(o.precision());
+s << '(' << x.real() << ',' << x.imag() << ')';
+return o << s.str();
+```
+
+\[*Note 1*: In a locale in which comma is used as a decimal point
+character, the use of comma as a field separator can be ambiguous.
+Inserting `showpoint` into the output stream forces all outputs to show
+an explicit decimal point character; as a result, all inserted sequences
+of complex numbers can be extracted unambiguously. — *end note*\]
 
 ### Value operations <a id="complex.value.ops">[[complex.value.ops]]</a>
 
@@ -502,54 +501,54 @@ template<class T, class charT, class traits>
 template<class T> constexpr T real(const complex<T>& x);
 ```
 
-> *Returns:* `x.real()`.
+*Returns:* `x.real()`.
 
 ``` cpp
 template<class T> constexpr T imag(const complex<T>& x);
 ```
 
-> *Returns:* `x.imag()`.
+*Returns:* `x.imag()`.
 
 ``` cpp
 template<class T> T abs(const complex<T>& x);
 ```
 
-> *Returns:* The magnitude of `x`.
+*Returns:* The magnitude of `x`.
 
 ``` cpp
 template<class T> T arg(const complex<T>& x);
 ```
 
-> *Returns:* The phase angle of `x`, or `atan2(imag(x), real(x))`.
+*Returns:* The phase angle of `x`, or `atan2(imag(x), real(x))`.
 
 ``` cpp
 template<class T> constexpr T norm(const complex<T>& x);
 ```
 
-> *Returns:* The squared magnitude of `x`.
+*Returns:* The squared magnitude of `x`.
 
 ``` cpp
 template<class T> constexpr complex<T> conj(const complex<T>& x);
 ```
 
-> *Returns:* The complex conjugate of `x`.
+*Returns:* The complex conjugate of `x`.
 
 ``` cpp
 template<class T> complex<T> proj(const complex<T>& x);
 ```
 
-> *Returns:* The projection of `x` onto the Riemann sphere.
->
-> *Remarks:* Behaves the same as the C function `cproj`.
+*Returns:* The projection of `x` onto the Riemann sphere.
+
+*Remarks:* Behaves the same as the C function `cproj`.
 
 ``` cpp
 template<class T> complex<T> polar(const T& rho, const T& theta = T());
 ```
 
-> *Preconditions:* `rho` is non-negative and non-NaN`theta` is finite.
->
-> *Returns:* The `complex` value corresponding to a complex number whose
-> magnitude is `rho` and whose phase angle is `theta`.
+*Preconditions:* `rho` is non-negative and non-NaN`theta` is finite.
+
+*Returns:* The `complex` value corresponding to a complex number whose
+magnitude is `rho` and whose phase angle is `theta`.
 
 ### Transcendentals <a id="complex.transcendentals">[[complex.transcendentals]]</a>
 
@@ -557,88 +556,88 @@ template<class T> complex<T> polar(const T& rho, const T& theta = T());
 template<class T> complex<T> acos(const complex<T>& x);
 ```
 
-> *Returns:* The complex arc cosine of `x`.
->
-> *Remarks:* Behaves the same as the C function `cacos`.
+*Returns:* The complex arc cosine of `x`.
+
+*Remarks:* Behaves the same as the C function `cacos`.
 
 ``` cpp
 template<class T> complex<T> asin(const complex<T>& x);
 ```
 
-> *Returns:* The complex arc sine of `x`.
->
-> *Remarks:* Behaves the same as the C function `casin`.
+*Returns:* The complex arc sine of `x`.
+
+*Remarks:* Behaves the same as the C function `casin`.
 
 ``` cpp
 template<class T> complex<T> atan(const complex<T>& x);
 ```
 
-> *Returns:* The complex arc tangent of `x`.
->
-> *Remarks:* Behaves the same as the C function `catan`.
+*Returns:* The complex arc tangent of `x`.
+
+*Remarks:* Behaves the same as the C function `catan`.
 
 ``` cpp
 template<class T> complex<T> acosh(const complex<T>& x);
 ```
 
-> *Returns:* The complex arc hyperbolic cosine of `x`.
->
-> *Remarks:* Behaves the same as the C function `cacosh`.
+*Returns:* The complex arc hyperbolic cosine of `x`.
+
+*Remarks:* Behaves the same as the C function `cacosh`.
 
 ``` cpp
 template<class T> complex<T> asinh(const complex<T>& x);
 ```
 
-> *Returns:* The complex arc hyperbolic sine of `x`.
->
-> *Remarks:* Behaves the same as the C function `casinh`.
+*Returns:* The complex arc hyperbolic sine of `x`.
+
+*Remarks:* Behaves the same as the C function `casinh`.
 
 ``` cpp
 template<class T> complex<T> atanh(const complex<T>& x);
 ```
 
-> *Returns:* The complex arc hyperbolic tangent of `x`.
->
-> *Remarks:* Behaves the same as the C function `catanh`.
+*Returns:* The complex arc hyperbolic tangent of `x`.
+
+*Remarks:* Behaves the same as the C function `catanh`.
 
 ``` cpp
 template<class T> complex<T> cos(const complex<T>& x);
 ```
 
-> *Returns:* The complex cosine of `x`.
+*Returns:* The complex cosine of `x`.
 
 ``` cpp
 template<class T> complex<T> cosh(const complex<T>& x);
 ```
 
-> *Returns:* The complex hyperbolic cosine of `x`.
+*Returns:* The complex hyperbolic cosine of `x`.
 
 ``` cpp
 template<class T> complex<T> exp(const complex<T>& x);
 ```
 
-> *Returns:* The complex base-e exponential of `x`.
+*Returns:* The complex base-e exponential of `x`.
 
 ``` cpp
 template<class T> complex<T> log(const complex<T>& x);
 ```
 
-> *Returns:* The complex natural (base-e) logarithm of `x`. For all `x`,
-> `imag(log(x))` lies in the interval \[-π, π\].
->
-> \[*Note 2*: The semantics of this function are intended to be the same
-> in as they are for `clog` in C. — *end note*\]
->
-> *Remarks:* The branch cuts are along the negative real axis.
+*Returns:* The complex natural (base-e) logarithm of `x`. For all `x`,
+`imag(log(x))` lies in the interval \[-π, π\].
+
+\[*Note 2*: The semantics of this function are intended to be the same
+in as they are for `clog` in C. — *end note*\]
+
+*Remarks:* The branch cuts are along the negative real axis.
 
 ``` cpp
 template<class T> complex<T> log10(const complex<T>& x);
 ```
 
-> *Returns:* The complex common (base-10) logarithm of `x`, defined as
-> `log(x) / log(10)`.
->
-> *Remarks:* The branch cuts are along the negative real axis.
+*Returns:* The complex common (base-10) logarithm of `x`, defined as
+`log(x) / log(10)`.
+
+*Remarks:* The branch cuts are along the negative real axis.
 
 ``` cpp
 template<class T> complex<T> pow(const complex<T>& x, const complex<T>& y);
@@ -646,47 +645,47 @@ template<class T> complex<T> pow(const complex<T>& x, const T& y);
 template<class T> complex<T> pow(const T& x, const complex<T>& y);
 ```
 
-> *Returns:* The complex power of base `x` raised to the
-> $\texttt{y}^\text{th}$ power, defined as `exp(y * log(x))`. The value
-> returned for `pow(0, 0)` is *implementation-defined*.
->
-> *Remarks:* The branch cuts are along the negative real axis.
+*Returns:* The complex power of base `x` raised to the
+$\texttt{y}^\text{th}$ power, defined as `exp(y * log(x))`. The value
+returned for `pow(0, 0)` is *implementation-defined*.
+
+*Remarks:* The branch cuts are along the negative real axis.
 
 ``` cpp
 template<class T> complex<T> sin(const complex<T>& x);
 ```
 
-> *Returns:* The complex sine of `x`.
+*Returns:* The complex sine of `x`.
 
 ``` cpp
 template<class T> complex<T> sinh(const complex<T>& x);
 ```
 
-> *Returns:* The complex hyperbolic sine of `x`.
+*Returns:* The complex hyperbolic sine of `x`.
 
 ``` cpp
 template<class T> complex<T> sqrt(const complex<T>& x);
 ```
 
-> *Returns:* The complex square root of `x`, in the range of the right
-> half-plane.
->
-> \[*Note 3*: The semantics of this function are intended to be the same
-> in as they are for `csqrt` in C. — *end note*\]
->
-> *Remarks:* The branch cuts are along the negative real axis.
+*Returns:* The complex square root of `x`, in the range of the right
+half-plane.
+
+\[*Note 3*: The semantics of this function are intended to be the same
+in as they are for `csqrt` in C. — *end note*\]
+
+*Remarks:* The branch cuts are along the negative real axis.
 
 ``` cpp
 template<class T> complex<T> tan(const complex<T>& x);
 ```
 
-> *Returns:* The complex tangent of `x`.
+*Returns:* The complex tangent of `x`.
 
 ``` cpp
 template<class T> complex<T> tanh(const complex<T>& x);
 ```
 
-> *Returns:* The complex hyperbolic tangent of `x`.
+*Returns:* The complex hyperbolic tangent of `x`.
 
 ### Additional overloads <a id="cmplx.over">[[cmplx.over]]</a>
 
@@ -727,21 +726,21 @@ constexpr complex<long double> operator""il(long double d);
 constexpr complex<long double> operator""il(unsigned long long d);
 ```
 
-> *Returns:* `complex<long double>{0.0L, static_cast<long double>(d)}`.
+*Returns:* `complex<long double>{0.0L, static_cast<long double>(d)}`.
 
 ``` cpp
 constexpr complex<double> operator""i(long double d);
 constexpr complex<double> operator""i(unsigned long long d);
 ```
 
-> *Returns:* `complex<double>{0.0, static_cast<double>(d)}`.
+*Returns:* `complex<double>{0.0, static_cast<double>(d)}`.
 
 ``` cpp
 constexpr complex<float> operator""if(long double d);
 constexpr complex<float> operator""if(unsigned long long d);
 ```
 
-> *Returns:* `complex<float>{0.0f, static_cast<float>(d)}`.
+*Returns:* `complex<float>{0.0f, static_cast<float>(d)}`.
 
 ## Random number generation <a id="rand">[[rand]]</a>
 
@@ -1114,45 +1113,45 @@ follows with respect to a random number engine adaptor type.
 A::A();
 ```
 
-> *Effects:* The base engine is initialized as if by its default
-> constructor.
+*Effects:* The base engine is initialized as if by its default
+constructor.
 
 ``` cpp
 bool operator==(const A& a1, const A& a2);
 ```
 
-> *Returns:* `true` if `a1`’s base engine is equal to `a2`’s base
-> engine. Otherwise returns `false`.
+*Returns:* `true` if `a1`’s base engine is equal to `a2`’s base engine.
+Otherwise returns `false`.
 
 ``` cpp
 A::A(result_type s);
 ```
 
-> *Effects:* The base engine is initialized with `s`.
+*Effects:* The base engine is initialized with `s`.
 
 ``` cpp
 template<class Sseq> A::A(Sseq& q);
 ```
 
-> *Effects:* The base engine is initialized with `q`.
+*Effects:* The base engine is initialized with `q`.
 
 ``` cpp
 void seed();
 ```
 
-> *Effects:* With `b` as the base engine, invokes `b.seed()`.
+*Effects:* With `b` as the base engine, invokes `b.seed()`.
 
 ``` cpp
 void seed(result_type s);
 ```
 
-> *Effects:* With `b` as the base engine, invokes `b.seed(s)`.
+*Effects:* With `b` as the base engine, invokes `b.seed(s)`.
 
 ``` cpp
 template<class Sseq> void seed(Sseq& q);
 ```
 
-> *Effects:* With `b` as the base engine, invokes `b.seed(q)`.
+*Effects:* With `b` as the base engine, invokes `b.seed(q)`.
 
 `A` shall also meet the following additional requirements:
 
@@ -1378,20 +1377,20 @@ The textual representation consists of the value of .
 explicit linear_congruential_engine(result_type s);
 ```
 
-> *Effects:* If $c \bmod m$ is 0 and $\texttt{s} \bmod m$ is 0, sets the
-> engine’s state to 1, otherwise sets the engine’s state to
-> $\texttt{s} \bmod m$.
+*Effects:* If $c \bmod m$ is 0 and $\texttt{s} \bmod m$ is 0, sets the
+engine’s state to 1, otherwise sets the engine’s state to
+$\texttt{s} \bmod m$.
 
 ``` cpp
 template<class Sseq> explicit linear_congruential_engine(Sseq& q);
 ```
 
-> *Effects:* With $k = \left\lceil \frac{\log_2 m}{32} \right\rceil$ and
-> a an array (or equivalent) of length k + 3, invokes
-> `q.generate(`a + 0`, `a + k + 3`)` and then computes
-> $S = \left(\sum_{j = 0}^{k - 1} a_{j + 3} \cdot 2^{32j} \right) \bmod m$.
-> If $c \bmod m$ is 0 and S is 0, sets the engine’s state to 1, else
-> sets the engine’s state to S.
+*Effects:* With $k = \left\lceil \frac{\log_2 m}{32} \right\rceil$ and a
+an array (or equivalent) of length k + 3, invokes
+`q.generate(`a + 0`, `a + k + 3`)` and then computes
+$S = \left(\sum_{j = 0}^{k - 1} a_{j + 3} \cdot 2^{32j} \right) \bmod m$.
+If $c \bmod m$ is 0 and S is 0, sets the engine’s state to 1, else sets
+the engine’s state to S.
 
 #### Class template `mersenne_twister_engine` <a id="rand.eng.mers">[[rand.eng.mers]]</a>
 
@@ -1498,28 +1497,27 @@ $X_{i - n}, \dotsc, X_{i - 1}$, in that order.
 explicit mersenne_twister_engine(result_type value);
 ```
 
-> *Effects:* Sets $X_{-n}$ to $\texttt{value} \bmod 2^w$. Then,
-> iteratively for $i = 1 - n, \dotsc, -1$, sets Xᵢ to $$%
->  \bigl[f \cdot
->        \bigl(X_{i-1} \xor \bigl(X_{i-1} \rightshift (w-2)\bigr)
->        \bigr)
->        + i \bmod n
->  \bigr] \bmod 2^w
-> \; \mbox{.}$$
->
-> *Complexity:* 𝑂(n).
+*Effects:* Sets $X_{-n}$ to $\texttt{value} \bmod 2^w$. Then,
+iteratively for $i = 1 - n, \dotsc, -1$, sets Xᵢ to $$%
+ \bigl[f \cdot
+       \bigl(X_{i-1} \xor \bigl(X_{i-1} \rightshift (w-2)\bigr)
+       \bigr)
+       + i \bmod n
+ \bigr] \bmod 2^w
+\; \mbox{.}$$
+
+*Complexity:* 𝑂(n).
 
 ``` cpp
 template<class Sseq> explicit mersenne_twister_engine(Sseq& q);
 ```
 
-> *Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array
-> (or equivalent) of length n ⋅ k, invokes
-> `q.generate(`a+0`, `a+n ⋅ k`)` and then, iteratively for
-> $i = -n,\dotsc,-1$, sets Xᵢ to
-> $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
-> Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
-> each of the other resulting Xᵢ is 0, changes $X_{-n}$ to $2^{w-1}$.
+*Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array (or
+equivalent) of length n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and
+then, iteratively for $i = -n,\dotsc,-1$, sets Xᵢ to
+$\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
+Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
+each of the other resulting Xᵢ is 0, changes $X_{-n}$ to $2^{w-1}$.
 
 #### Class template `subtract_with_carry_engine` <a id="rand.eng.sub">[[rand.eng.sub]]</a>
 
@@ -1599,35 +1597,33 @@ $X_{i-r}, \dotsc, X_{i-1}$, in that order, followed by c.
 explicit subtract_with_carry_engine(result_type value);
 ```
 
-> *Effects:* Sets the values of $X_{-r}, \dotsc, X_{-1}$, in that order,
-> as specified below. If $X_{-1}$ is then 0, sets c to 1; otherwise sets
-> c to 0.
->
-> To set the values Xₖ, first construct `e`, a
-> `linear_congruential_engine` object, as if by the following
-> definition:
->
-> ``` cpp
-> linear_congruential_engine<result_type,
->                           40014u,0u,2147483563u> e(value == 0u ? default_seed : value);
-> ```
->
-> Then, to set each Xₖ, obtain new values $z_0, \dotsc, z_{n-1}$ from
-> $n = \lceil w/32 \rceil$ successive invocations of `e`. Set Xₖ to
-> $\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
->
-> *Complexity:* Exactly $n \cdot \texttt{r}$ invocations of `e`.
+*Effects:* Sets the values of $X_{-r}, \dotsc, X_{-1}$, in that order,
+as specified below. If $X_{-1}$ is then 0, sets c to 1; otherwise sets c
+to 0.
+
+To set the values Xₖ, first construct `e`, a
+`linear_congruential_engine` object, as if by the following definition:
+
+``` cpp
+linear_congruential_engine<result_type,
+                          40014u,0u,2147483563u> e(value == 0u ? default_seed : value);
+```
+
+Then, to set each Xₖ, obtain new values $z_0, \dotsc, z_{n-1}$ from
+$n = \lceil w/32 \rceil$ successive invocations of `e`. Set Xₖ to
+$\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
+
+*Complexity:* Exactly $n \cdot \texttt{r}$ invocations of `e`.
 
 ``` cpp
 template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
 ```
 
-> *Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array
-> (or equivalent) of length r ⋅ k, invokes
-> `q.generate(`a + 0`, `a + r ⋅ k`)` and then, iteratively for
-> $i = -r, \dotsc, -1$, sets Xᵢ to
-> $\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
-> $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
+*Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array (or
+equivalent) of length r ⋅ k, invokes `q.generate(`a + 0`, `a + r ⋅ k`)`
+and then, iteratively for $i = -r, \dotsc, -1$, sets Xᵢ to
+$\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
+$X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
 ### Random number engine adaptor class templates <a id="rand.adapt">[[rand.adapt]]</a>
 
@@ -1918,18 +1914,18 @@ using minstd_rand0 =
       linear_congruential_engine<uint_fast32_t, 16'807, 0, 2'147'483'647>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `minstd_rand0` produces the value
-> 1043618065.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `minstd_rand0` produces the value
+1043618065.
 
 ``` cpp
 using minstd_rand =
       linear_congruential_engine<uint_fast32_t, 48'271, 0, 2'147'483'647>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `minstd_rand` produces the value
-> 399268537.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `minstd_rand` produces the value
+399268537.
 
 ``` cpp
 using mt19937 =
@@ -1937,9 +1933,9 @@ using mt19937 =
        0x9908'b0df, 11, 0xffff'ffff, 7, 0x9d2c'5680, 15, 0xefc6'0000, 18, 1'812'433'253>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `mt19937` produces the value
-> 4123659995.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `mt19937` produces the value
+4123659995.
 
 ``` cpp
 using mt19937_64 =
@@ -1948,66 +1944,65 @@ using mt19937_64 =
        0x71d6'7fff'eda6'0000, 37, 0xfff7'eee0'0000'0000, 43, 6'364'136'223'846'793'005>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `mt19937_64` produces the value
-> 9981545732273789042.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `mt19937_64` produces the value
+9981545732273789042.
 
 ``` cpp
 using ranlux24_base =
       subtract_with_carry_engine<uint_fast32_t, 24, 10, 24>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `ranlux24_base` produces the value
-> 7937952.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `ranlux24_base` produces the value
+7937952.
 
 ``` cpp
 using ranlux48_base =
       subtract_with_carry_engine<uint_fast64_t, 48, 5, 12>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `ranlux48_base` produces the value
-> 61839128582725.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `ranlux48_base` produces the value
+61839128582725.
 
 ``` cpp
 using ranlux24 = discard_block_engine<ranlux24_base, 223, 23>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `ranlux24` produces the value
-> 9901578.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `ranlux24` produces the value
+9901578.
 
 ``` cpp
 using ranlux48 = discard_block_engine<ranlux48_base, 389, 11>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `ranlux48` produces the value
-> 249142670248501.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `ranlux48` produces the value
+249142670248501.
 
 ``` cpp
 using knuth_b = shuffle_order_engine<minstd_rand0,256>;
 ```
 
-> *Required behavior:* The $10000^\text{th}$ consecutive invocation of a
-> default-constructed object of type `knuth_b` produces the value
-> 1112339016.
+*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+default-constructed object of type `knuth_b` produces the value
+1112339016.
 
 ``` cpp
 using default_random_engine = \textit{\impldef{type of default_random_engine}};
 ```
 
-> *Remarks:* The choice of engine type named by this is
-> *implementation-defined*.
->
-> \[*Note 4*: The implementation can select this type on the basis of
-> performance, size, quality, or any combination of such factors, so as
-> to provide at least acceptable engine behavior for relatively casual,
-> inexpert, and/or lightweight use. Because different implementations
-> can select different underlying engine types, code that uses this need
-> not generate identical sequences across
-> implementations. — *end note*\]
+*Remarks:* The choice of engine type named by this is
+*implementation-defined*.
+
+\[*Note 7*: The implementation can select this type on the basis of
+performance, size, quality, or any combination of such factors, so as to
+provide at least acceptable engine behavior for relatively casual,
+inexpert, and/or lightweight use. Because different implementations can
+select different underlying engine types, code that uses this need not
+generate identical sequences across implementations. — *end note*\]
 
 ### Class `random_device` <a id="rand.device">[[rand.device]]</a>
 
@@ -2049,39 +2044,39 @@ namespace std {
 explicit random_device(const string& token);
 ```
 
-> *Throws:* A value of an *implementation-defined* type derived from
-> `exception` if the `random_device` cannot be initialized.
->
-> *Remarks:* The semantics of the `token` parameter and the token value
-> used by the default constructor are *implementation-defined*.
->
-> The parameter is intended to allow an implementation to differentiate
-> between different sources of randomness.
+*Throws:* A value of an *implementation-defined* type derived from
+`exception` if the `random_device` cannot be initialized.
+
+*Remarks:* The semantics of the `token` parameter and the token value
+used by the default constructor are *implementation-defined*.
+
+The parameter is intended to allow an implementation to differentiate
+between different sources of randomness.
 
 ``` cpp
 double entropy() const noexcept;
 ```
 
-> *Returns:* If the implementation employs a random number engine,
-> returns 0.0. Otherwise, returns an entropy estimate
->
-> If a device has n states whose respective probabilities are
-> $P_0, \dotsc, P_{n-1}$, the device entropy S is defined as  
-> $S = - \sum_{i=0}^{n-1} P_i \cdot \log P_i$.
->
-> for the random numbers returned by `operator()`, in the range `min()`
-> to $\log_2( \texttt{max()}+1)$.
+*Returns:* If the implementation employs a random number engine, returns
+0.0. Otherwise, returns an entropy estimate
+
+If a device has n states whose respective probabilities are
+$P_0, \dotsc, P_{n-1}$, the device entropy S is defined as  
+$S = - \sum_{i=0}^{n-1} P_i \cdot \log P_i$.
+
+for the random numbers returned by `operator()`, in the range `min()` to
+$\log_2( \texttt{max()}+1)$.
 
 ``` cpp
 result_type operator()();
 ```
 
-> *Returns:* A nondeterministic random value, uniformly distributed
-> between `min()` and `max()` (inclusive). It is
-> *implementation-defined* how these values are generated.
->
-> *Throws:* A value of an *implementation-defined* type derived from
-> `exception` if a random number cannot be obtained.
+*Returns:* A nondeterministic random value, uniformly distributed
+between `min()` and `max()` (inclusive). It is *implementation-defined*
+how these values are generated.
+
+*Throws:* A value of an *implementation-defined* type derived from
+`exception` if a random number cannot be obtained.
 
 ### Utilities <a id="rand.util">[[rand.util]]</a>
 
@@ -2124,127 +2119,127 @@ namespace std {
 seed_seq() noexcept;
 ```
 
-> *Ensures:* `v.empty()` is `true`.
+*Ensures:* `v.empty()` is `true`.
 
 ``` cpp
 template<class T>
   seed_seq(initializer_list<T> il);
 ```
 
-> *Constraints:* `T` is an integer type.
->
-> *Effects:* Same as `seed_seq(il.begin(), il.end())`.
+*Constraints:* `T` is an integer type.
+
+*Effects:* Same as `seed_seq(il.begin(), il.end())`.
 
 ``` cpp
 template<class InputIterator>
   seed_seq(InputIterator begin, InputIterator end);
 ```
 
-> *Mandates:* `iterator_traits<InputIterator>::value_type` is an integer
-> type.
->
-> *Preconditions:* `InputIterator` meets the *Cpp17InputIterator*
-> requirements [[input.iterators]].
->
-> *Effects:* Initializes `v` by the following algorithm:
->
-> ``` cpp
-> for (InputIterator s = begin; s != end; ++s)
->  v.push_back((*s)$\bmod 2^{32}$);
-> ```
+*Mandates:* `iterator_traits<InputIterator>::value_type` is an integer
+type.
+
+*Preconditions:* `InputIterator` meets the *Cpp17InputIterator*
+requirements [[input.iterators]].
+
+*Effects:* Initializes `v` by the following algorithm:
+
+``` cpp
+for (InputIterator s = begin; s != end; ++s)
+ v.push_back((*s)$\bmod 2^{32}$);
+```
 
 ``` cpp
 template<class RandomAccessIterator>
   void generate(RandomAccessIterator begin, RandomAccessIterator end);
 ```
 
-> *Mandates:* `iterator_traits<RandomAccessIterator>::value_type` is an
-> unsigned integer type capable of accommodating 32-bit quantities.
->
-> *Preconditions:* `RandomAccessIterator` meets the
-> *Cpp17RandomAccessIterator* requirements [[random.access.iterators]]
-> and the requirements of a mutable iterator.
->
-> *Effects:* Does nothing if `begin == end`. Otherwise, with
-> $s = \texttt{v.size()}$ and $n = \texttt{end} - \texttt{begin}$, fills
-> the supplied range $[\texttt{begin},\texttt{end})$ according to the
-> following algorithm in which each operation is to be carried out
-> modulo $2^{32}$, each indexing operator applied to `begin` is to be
-> taken modulo n, and T(x) is defined as $x \xor (x \rightshift 27)$:
->
-> - By way of initialization, set each element of the range to the value
->   `0x8b8b8b8b`. Additionally, for use in subsequent steps, let
->   p = (n - t) / 2 and let q = p + t, where $$%
->        t = (n \ge 623) \mbox{ ? } 11 \mbox{ : } (n \ge 68) \mbox{ ? } 7 \mbox{ : } (n \ge 39) \mbox{ ? } 5 \mbox{ : } (n \ge 7) \mbox{ ? } 3 \mbox{ : } (n - 1)/2;$$
->
-> - With m as the larger of s + 1 and n, transform the elements of the
->   range: iteratively for $k = 0, \dotsc, m - 1$, calculate values
->   $$\begin{aligned}
->        r_1 & = &
->          1664525 \cdot T(    \texttt{begin[}k\texttt{]}
->                         \xor \texttt{begin[}k+p\texttt{]}
->                         \xor \texttt{begin[}k-1 \texttt{]}
->                         )
->        \\
->        r_2 & = & r_1 + \left\{
->          \begin{array}{cl}
->            s                                  & \mbox{,  } k = 0
->            \\
->            k \bmod n + \texttt{v[}k-1\texttt{]} & \mbox{,  } 0 < k \le s
->            \\
->            k \bmod n                          & \mbox{,  } s < k
->          \end{array}
->        \right.
->      
->   \end{aligned}$$ and, in order, increment `begin[`k+p`]` by r₁,
->   increment `begin[`k+q`]` by r₂, and set `begin[`k`]` to r₂.
->
-> - Transform the elements of the range again, beginning where the
->   previous step ended: iteratively for $k = m, \dotsc, m + n - 1$,
->   calculate values $$\begin{aligned}
->        r_3 & = &
->          1566083941 \cdot T( \texttt{begin[}k  \texttt{]}
->                            + \texttt{begin[}k+p\texttt{]}
->                            + \texttt{begin[}k-1\texttt{]}
->                            )
->        \\
->        r_4 & = & r_3 - (k \bmod n)
->      
->   \end{aligned}$$ and, in order, update `begin[`k+p`]` by xoring it
->   with r₃, update `begin[`k+q`]` by xoring it with r₄, and set
->   `begin[`k`]` to r₄.
->
-> *Throws:* What and when `RandomAccessIterator` operations of `begin`
-> and `end` throw.
+*Mandates:* `iterator_traits<RandomAccessIterator>::value_type` is an
+unsigned integer type capable of accommodating 32-bit quantities.
+
+*Preconditions:* `RandomAccessIterator` meets the
+*Cpp17RandomAccessIterator* requirements [[random.access.iterators]] and
+the requirements of a mutable iterator.
+
+*Effects:* Does nothing if `begin == end`. Otherwise, with
+$s = \texttt{v.size()}$ and $n = \texttt{end} - \texttt{begin}$, fills
+the supplied range $[\texttt{begin},\texttt{end})$ according to the
+following algorithm in which each operation is to be carried out modulo
+$2^{32}$, each indexing operator applied to `begin` is to be taken
+modulo n, and T(x) is defined as $x \xor (x \rightshift 27)$:
+
+- By way of initialization, set each element of the range to the value
+  `0x8b8b8b8b`. Additionally, for use in subsequent steps, let
+  p = (n - t) / 2 and let q = p + t, where $$%
+       t = (n \ge 623) \mbox{ ? } 11 \mbox{ : } (n \ge 68) \mbox{ ? } 7 \mbox{ : } (n \ge 39) \mbox{ ? } 5 \mbox{ : } (n \ge 7) \mbox{ ? } 3 \mbox{ : } (n - 1)/2;$$
+
+- With m as the larger of s + 1 and n, transform the elements of the
+  range: iteratively for $k = 0, \dotsc, m - 1$, calculate values
+  $$\begin{aligned}
+       r_1 & = &
+         1664525 \cdot T(    \texttt{begin[}k\texttt{]}
+                        \xor \texttt{begin[}k+p\texttt{]}
+                        \xor \texttt{begin[}k-1 \texttt{]}
+                        )
+       \\
+       r_2 & = & r_1 + \left\{
+         \begin{array}{cl}
+           s                                  & \mbox{,  } k = 0
+           \\
+           k \bmod n + \texttt{v[}k-1\texttt{]} & \mbox{,  } 0 < k \le s
+           \\
+           k \bmod n                          & \mbox{,  } s < k
+         \end{array}
+       \right.
+     
+  \end{aligned}$$ and, in order, increment `begin[`k+p`]` by r₁,
+  increment `begin[`k+q`]` by r₂, and set `begin[`k`]` to r₂.
+
+- Transform the elements of the range again, beginning where the
+  previous step ended: iteratively for $k = m, \dotsc, m + n - 1$,
+  calculate values $$\begin{aligned}
+       r_3 & = &
+         1566083941 \cdot T( \texttt{begin[}k  \texttt{]}
+                           + \texttt{begin[}k+p\texttt{]}
+                           + \texttt{begin[}k-1\texttt{]}
+                           )
+       \\
+       r_4 & = & r_3 - (k \bmod n)
+     
+  \end{aligned}$$ and, in order, update `begin[`k+p`]` by xoring it with
+  r₃, update `begin[`k+q`]` by xoring it with r₄, and set `begin[`k`]`
+  to r₄.
+
+*Throws:* What and when `RandomAccessIterator` operations of `begin` and
+`end` throw.
 
 ``` cpp
 size_t size() const noexcept;
 ```
 
-> *Returns:* The number of 32-bit units that would be returned by a call
-> to `param()`.
->
-> *Complexity:* Constant time.
+*Returns:* The number of 32-bit units that would be returned by a call
+to `param()`.
+
+*Complexity:* Constant time.
 
 ``` cpp
 template<class OutputIterator>
   void param(OutputIterator dest) const;
 ```
 
-> *Mandates:* Values of type `result_type` are
-> writable [[iterator.requirements.general]] to `dest`.
->
-> *Preconditions:* `OutputIterator` meets the *Cpp17OutputIterator*
-> requirements [[output.iterators]].
->
-> *Effects:* Copies the sequence of prepared 32-bit units to the given
-> destination, as if by executing the following statement:
->
-> ``` cpp
-> copy(v.begin(), v.end(), dest);
-> ```
->
-> *Throws:* What and when `OutputIterator` operations of `dest` throw.
+*Mandates:* Values of type `result_type` are
+writable [[iterator.requirements.general]] to `dest`.
+
+*Preconditions:* `OutputIterator` meets the *Cpp17OutputIterator*
+requirements [[output.iterators]].
+
+*Effects:* Copies the sequence of prepared 32-bit units to the given
+destination, as if by executing the following statement:
+
+``` cpp
+copy(v.begin(), v.end(), dest);
+```
+
+*Throws:* What and when `OutputIterator` operations of `dest` throw.
 
 #### Function template `generate_canonical` <a id="rand.util.canonical">[[rand.util.canonical]]</a>
 
@@ -2253,34 +2248,33 @@ template<class RealType, size_t bits, class URBG>
   RealType generate_canonical(URBG& g);
 ```
 
-> *Effects:* Invokes `g()` k times to obtain values
-> $g_0, \dotsc, g_{k-1}$, respectively. Calculates a quantity
-> $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
->                         \cdot R^i$$ using arithmetic of type
-> `RealType`.
->
-> *Returns:* $S / R^k$.
->
-> \[*Note 5*: $0 \leq S / R^k < 1$. — *end note*\]
->
-> *Throws:* What and when `g` throws.
->
-> *Complexity:* Exactly
-> $k = \max(1, \left\lceil b / \log_2 R \right\rceil)$ invocations of
-> `g`, where b
->
-> b is introduced to avoid any attempt to produce more bits of
-> randomness than can be held in `RealType`.
->
-> is the lesser of `numeric_limits<RealType>::digits` and `bits`, and R
-> is the value of $\texttt{g.max()} - \texttt{g.min()} + 1$.
->
-> \[*Note 6*: If the values gᵢ produced by `g` are uniformly
-> distributed, the instantiation’s results are distributed as uniformly
-> as possible. Obtaining a value in this way can be a useful step in the
-> process of transforming a value generated by a uniform random bit
-> generator into a value that can be delivered by a random number
-> distribution. — *end note*\]
+*Effects:* Invokes `g()` k times to obtain values
+$g_0, \dotsc, g_{k-1}$, respectively. Calculates a quantity
+$$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
+                        \cdot R^i$$ using arithmetic of type `RealType`.
+
+*Returns:* $S / R^k$.
+
+\[*Note 8*: $0 \leq S / R^k < 1$. — *end note*\]
+
+*Throws:* What and when `g` throws.
+
+*Complexity:* Exactly
+$k = \max(1, \left\lceil b / \log_2 R \right\rceil)$ invocations of `g`,
+where b
+
+b is introduced to avoid any attempt to produce more bits of randomness
+than can be held in `RealType`.
+
+is the lesser of `numeric_limits<RealType>::digits` and `bits`, and R is
+the value of $\texttt{g.max()} - \texttt{g.min()} + 1$.
+
+\[*Note 9*: If the values gᵢ produced by `g` are uniformly distributed,
+the instantiation’s results are distributed as uniformly as possible.
+Obtaining a value in this way can be a useful step in the process of
+transforming a value generated by a uniform random bit generator into a
+value that can be delivered by a random number
+distribution. — *end note*\]
 
 ### Random number distribution class templates <a id="rand.dist">[[rand.dist]]</a>
 
@@ -2359,24 +2353,24 @@ namespace std {
 explicit uniform_int_distribution(IntType a, IntType b = numeric_limits<IntType>::max());
 ```
 
-> *Preconditions:* $\texttt{a} \leq \texttt{b}$.
->
-> *Remarks:* `a` and `b` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $\texttt{a} \leq \texttt{b}$.
+
+*Remarks:* `a` and `b` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 result_type a() const;
 ```
 
-> *Returns:* The value of the `a` parameter with which the object was
-> constructed.
+*Returns:* The value of the `a` parameter with which the object was
+constructed.
 
 ``` cpp
 result_type b() const;
 ```
 
-> *Returns:* The value of the `b` parameter with which the object was
-> constructed.
+*Returns:* The value of the `b` parameter with which the object was
+constructed.
 
 ##### Class template `uniform_real_distribution` <a id="rand.dist.uni.real">[[rand.dist.uni.real]]</a>
 
@@ -2384,7 +2378,7 @@ A `uniform_real_distribution` random number distribution produces random
 numbers x, a ≤ x < b, distributed according to the constant probability
 density function $$p(x\,|\,a,b) = 1 / (b - a) \text{ .}$$
 
-\[*Note 7*: This implies that p(x\,|\,a,b) is undefined when
+\[*Note 10*: This implies that p(x\,|\,a,b) is undefined when
 `a == b`. — *end note*\]
 
 ``` cpp
@@ -2435,25 +2429,25 @@ namespace std {
 explicit uniform_real_distribution(RealType a, RealType b = 1.0);
 ```
 
-> *Preconditions:* $\texttt{a} \leq \texttt{b}$ and
-> $\texttt{b} - \texttt{a} \leq \texttt{numeric_limits<RealType>::max()}$.
->
-> *Remarks:* `a` and `b` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $\texttt{a} \leq \texttt{b}$ and
+$\texttt{b} - \texttt{a} \leq \texttt{numeric_limits<RealType>::max()}$.
+
+*Remarks:* `a` and `b` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 result_type a() const;
 ```
 
-> *Returns:* The value of the `a` parameter with which the object was
-> constructed.
+*Returns:* The value of the `a` parameter with which the object was
+constructed.
 
 ``` cpp
 result_type b() const;
 ```
 
-> *Returns:* The value of the `b` parameter with which the object was
-> constructed.
+*Returns:* The value of the `b` parameter with which the object was
+constructed.
 
 #### Bernoulli distributions <a id="rand.dist.bern">[[rand.dist.bern]]</a>
 
@@ -2511,16 +2505,16 @@ namespace std {
 explicit bernoulli_distribution(double p);
 ```
 
-> *Preconditions:* $0 \leq \texttt{p} \leq 1$.
->
-> *Remarks:* `p` corresponds to the parameter of the distribution.
+*Preconditions:* $0 \leq \texttt{p} \leq 1$.
+
+*Remarks:* `p` corresponds to the parameter of the distribution.
 
 ``` cpp
 double p() const;
 ```
 
-> *Returns:* The value of the `p` parameter with which the object was
-> constructed.
+*Returns:* The value of the `p` parameter with which the object was
+constructed.
 
 ##### Class template `binomial_distribution` <a id="rand.dist.bern.bin">[[rand.dist.bern.bin]]</a>
 
@@ -2575,24 +2569,24 @@ namespace std {
 explicit binomial_distribution(IntType t, double p = 0.5);
 ```
 
-> *Preconditions:* $0 \leq \texttt{p} \leq 1$ and $0 \leq \texttt{t}$.
->
-> *Remarks:* `t` and `p` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 \leq \texttt{p} \leq 1$ and $0 \leq \texttt{t}$.
+
+*Remarks:* `t` and `p` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 IntType t() const;
 ```
 
-> *Returns:* The value of the `t` parameter with which the object was
-> constructed.
+*Returns:* The value of the `t` parameter with which the object was
+constructed.
 
 ``` cpp
 double p() const;
 ```
 
-> *Returns:* The value of the `p` parameter with which the object was
-> constructed.
+*Returns:* The value of the `p` parameter with which the object was
+constructed.
 
 ##### Class template `geometric_distribution` <a id="rand.dist.bern.geo">[[rand.dist.bern.geo]]</a>
 
@@ -2646,16 +2640,16 @@ namespace std {
 explicit geometric_distribution(double p);
 ```
 
-> *Preconditions:* $0 < \texttt{p} < 1$.
->
-> *Remarks:* `p` corresponds to the parameter of the distribution.
+*Preconditions:* $0 < \texttt{p} < 1$.
+
+*Remarks:* `p` corresponds to the parameter of the distribution.
 
 ``` cpp
 double p() const;
 ```
 
-> *Returns:* The value of the `p` parameter with which the object was
-> constructed.
+*Returns:* The value of the `p` parameter with which the object was
+constructed.
 
 ##### Class template `negative_binomial_distribution` <a id="rand.dist.bern.negbin">[[rand.dist.bern.negbin]]</a>
 
@@ -2664,7 +2658,7 @@ random integers i ≥ 0 distributed according to the discrete probability
 function
 $$P(i\,|\,k,p) = \binom{k+i-1}{i} \cdot p^k \cdot (1-p)^i \text{ .}$$
 
-\[*Note 8*: This implies that P(i\,|\,k,p) is undefined when
+\[*Note 11*: This implies that P(i\,|\,k,p) is undefined when
 `p == 1`. — *end note*\]
 
 ``` cpp
@@ -2715,24 +2709,24 @@ namespace std {
 explicit negative_binomial_distribution(IntType k, double p = 0.5);
 ```
 
-> *Preconditions:* $0 < \texttt{p} \leq 1$ and $0 < \texttt{k}$.
->
-> *Remarks:* `k` and `p` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{p} \leq 1$ and $0 < \texttt{k}$.
+
+*Remarks:* `k` and `p` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 IntType k() const;
 ```
 
-> *Returns:* The value of the `k` parameter with which the object was
-> constructed.
+*Returns:* The value of the `k` parameter with which the object was
+constructed.
 
 ``` cpp
 double p() const;
 ```
 
-> *Returns:* The value of the `p` parameter with which the object was
-> constructed.
+*Returns:* The value of the `p` parameter with which the object was
+constructed.
 
 #### Poisson distributions <a id="rand.dist.pois">[[rand.dist.pois]]</a>
 
@@ -2788,16 +2782,16 @@ template<class IntType = int>
 explicit poisson_distribution(double mean);
 ```
 
-> *Preconditions:* $0 < \texttt{mean}$.
->
-> *Remarks:* `mean` corresponds to the parameter of the distribution.
+*Preconditions:* $0 < \texttt{mean}$.
+
+*Remarks:* `mean` corresponds to the parameter of the distribution.
 
 ``` cpp
 double mean() const;
 ```
 
-> *Returns:* The value of the `mean` parameter with which the object was
-> constructed.
+*Returns:* The value of the `mean` parameter with which the object was
+constructed.
 
 ##### Class template `exponential_distribution` <a id="rand.dist.pois.exp">[[rand.dist.pois.exp]]</a>
 
@@ -2851,16 +2845,16 @@ namespace std {
 explicit exponential_distribution(RealType lambda);
 ```
 
-> *Preconditions:* $0 < \texttt{lambda}$.
->
-> *Remarks:* `lambda` corresponds to the parameter of the distribution.
+*Preconditions:* $0 < \texttt{lambda}$.
+
+*Remarks:* `lambda` corresponds to the parameter of the distribution.
 
 ``` cpp
 RealType lambda() const;
 ```
 
-> *Returns:* The value of the `lambda` parameter with which the object
-> was constructed.
+*Returns:* The value of the `lambda` parameter with which the object was
+constructed.
 
 ##### Class template `gamma_distribution` <a id="rand.dist.pois.gamma">[[rand.dist.pois.gamma]]</a>
 
@@ -2917,24 +2911,24 @@ namespace std {
 explicit gamma_distribution(RealType alpha, RealType beta = 1.0);
 ```
 
-> *Preconditions:* $0 < \texttt{alpha}$ and $0 < \texttt{beta}$.
->
-> *Remarks:* `alpha` and `beta` correspond to the parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{alpha}$ and $0 < \texttt{beta}$.
+
+*Remarks:* `alpha` and `beta` correspond to the parameters of the
+distribution.
 
 ``` cpp
 RealType alpha() const;
 ```
 
-> *Returns:* The value of the `alpha` parameter with which the object
-> was constructed.
+*Returns:* The value of the `alpha` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType beta() const;
 ```
 
-> *Returns:* The value of the `beta` parameter with which the object was
-> constructed.
+*Returns:* The value of the `beta` parameter with which the object was
+constructed.
 
 ##### Class template `weibull_distribution` <a id="rand.dist.pois.weibull">[[rand.dist.pois.weibull]]</a>
 
@@ -2992,24 +2986,24 @@ namespace std {
 explicit weibull_distribution(RealType a, RealType b = 1.0);
 ```
 
-> *Preconditions:* $0 < \texttt{a}$ and $0 < \texttt{b}$.
->
-> *Remarks:* `a` and `b` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{a}$ and $0 < \texttt{b}$.
+
+*Remarks:* `a` and `b` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 RealType a() const;
 ```
 
-> *Returns:* The value of the `a` parameter with which the object was
-> constructed.
+*Returns:* The value of the `a` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType b() const;
 ```
 
-> *Returns:* The value of the `b` parameter with which the object was
-> constructed.
+*Returns:* The value of the `b` parameter with which the object was
+constructed.
 
 ##### Class template `extreme_value_distribution` <a id="rand.dist.pois.extreme">[[rand.dist.pois.extreme]]</a>
 
@@ -3069,24 +3063,24 @@ namespace std {
 explicit extreme_value_distribution(RealType a, RealType b = 1.0);
 ```
 
-> *Preconditions:* $0 < \texttt{b}$.
->
-> *Remarks:* `a` and `b` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{b}$.
+
+*Remarks:* `a` and `b` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 RealType a() const;
 ```
 
-> *Returns:* The value of the `a` parameter with which the object was
-> constructed.
+*Returns:* The value of the `a` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType b() const;
 ```
 
-> *Returns:* The value of the `b` parameter with which the object was
-> constructed.
+*Returns:* The value of the `b` parameter with which the object was
+constructed.
 
 #### Normal distributions <a id="rand.dist.norm">[[rand.dist.norm]]</a>
 
@@ -3152,24 +3146,24 @@ namespace std {
 explicit normal_distribution(RealType mean, RealType stddev = 1.0);
 ```
 
-> *Preconditions:* $0 < \texttt{stddev}$.
->
-> *Remarks:* `mean` and `stddev` correspond to the respective parameters
-> of the distribution.
+*Preconditions:* $0 < \texttt{stddev}$.
+
+*Remarks:* `mean` and `stddev` correspond to the respective parameters
+of the distribution.
 
 ``` cpp
 RealType mean() const;
 ```
 
-> *Returns:* The value of the `mean` parameter with which the object was
-> constructed.
+*Returns:* The value of the `mean` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType stddev() const;
 ```
 
-> *Returns:* The value of the `stddev` parameter with which the object
-> was constructed.
+*Returns:* The value of the `stddev` parameter with which the object was
+constructed.
 
 ##### Class template `lognormal_distribution` <a id="rand.dist.norm.lognormal">[[rand.dist.norm.lognormal]]</a>
 
@@ -3226,24 +3220,24 @@ namespace std {
 explicit lognormal_distribution(RealType m, RealType s = 1.0);
 ```
 
-> *Preconditions:* $0 < \texttt{s}$.
->
-> *Remarks:* `m` and `s` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{s}$.
+
+*Remarks:* `m` and `s` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 RealType m() const;
 ```
 
-> *Returns:* The value of the `m` parameter with which the object was
-> constructed.
+*Returns:* The value of the `m` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType s() const;
 ```
 
-> *Returns:* The value of the `s` parameter with which the object was
-> constructed.
+*Returns:* The value of the `s` parameter with which the object was
+constructed.
 
 ##### Class template `chi_squared_distribution` <a id="rand.dist.norm.chisq">[[rand.dist.norm.chisq]]</a>
 
@@ -3297,16 +3291,16 @@ namespace std {
 explicit chi_squared_distribution(RealType n);
 ```
 
-> *Preconditions:* $0 < \texttt{n}$.
->
-> *Remarks:* `n` corresponds to the parameter of the distribution.
+*Preconditions:* $0 < \texttt{n}$.
+
+*Remarks:* `n` corresponds to the parameter of the distribution.
 
 ``` cpp
 RealType n() const;
 ```
 
-> *Returns:* The value of the `n` parameter with which the object was
-> constructed.
+*Returns:* The value of the `n` parameter with which the object was
+constructed.
 
 ##### Class template `cauchy_distribution` <a id="rand.dist.norm.cauchy">[[rand.dist.norm.cauchy]]</a>
 
@@ -3361,24 +3355,24 @@ namespace std {
 explicit cauchy_distribution(RealType a, RealType b = 1.0);
 ```
 
-> *Preconditions:* $0 < \texttt{b}$.
->
-> *Remarks:* `a` and `b` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{b}$.
+
+*Remarks:* `a` and `b` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 RealType a() const;
 ```
 
-> *Returns:* The value of the `a` parameter with which the object was
-> constructed.
+*Returns:* The value of the `a` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType b() const;
 ```
 
-> *Returns:* The value of the `b` parameter with which the object was
-> constructed.
+*Returns:* The value of the `b` parameter with which the object was
+constructed.
 
 ##### Class template `fisher_f_distribution` <a id="rand.dist.norm.f">[[rand.dist.norm.f]]</a>
 
@@ -3438,24 +3432,24 @@ namespace std {
 explicit fisher_f_distribution(RealType m, RealType n = 1);
 ```
 
-> *Preconditions:* $0 < \texttt{m}$ and $0 < \texttt{n}$.
->
-> *Remarks:* `m` and `n` correspond to the respective parameters of the
-> distribution.
+*Preconditions:* $0 < \texttt{m}$ and $0 < \texttt{n}$.
+
+*Remarks:* `m` and `n` correspond to the respective parameters of the
+distribution.
 
 ``` cpp
 RealType m() const;
 ```
 
-> *Returns:* The value of the `m` parameter with which the object was
-> constructed.
+*Returns:* The value of the `m` parameter with which the object was
+constructed.
 
 ``` cpp
 RealType n() const;
 ```
 
-> *Returns:* The value of the `n` parameter with which the object was
-> constructed.
+*Returns:* The value of the `n` parameter with which the object was
+constructed.
 
 ##### Class template `student_t_distribution` <a id="rand.dist.norm.t">[[rand.dist.norm.t]]</a>
 
@@ -3512,16 +3506,16 @@ namespace std {
 explicit student_t_distribution(RealType n);
 ```
 
-> *Preconditions:* $0 < \texttt{n}$.
->
-> *Remarks:* `n` corresponds to the parameter of the distribution.
+*Preconditions:* $0 < \texttt{n}$.
+
+*Remarks:* `n` corresponds to the parameter of the distribution.
 
 ``` cpp
 RealType n() const;
 ```
 
-> *Returns:* The value of the `n` parameter with which the object was
-> constructed.
+*Returns:* The value of the `n` parameter with which the object was
+constructed.
 
 #### Sampling distributions <a id="rand.dist.samp">[[rand.dist.samp]]</a>
 
@@ -3587,62 +3581,62 @@ namespace std {
 discrete_distribution();
 ```
 
-> *Effects:* Constructs a `discrete_distribution` object with n = 1 and
-> p₀ = 1.
->
-> \[*Note 7*: Such an object will always deliver the value
-> 0. — *end note*\]
+*Effects:* Constructs a `discrete_distribution` object with n = 1 and
+p₀ = 1.
+
+\[*Note 12*: Such an object will always deliver the value
+0. — *end note*\]
 
 ``` cpp
 template<class InputIterator>
   discrete_distribution(InputIterator firstW, InputIterator lastW);
 ```
 
-> *Mandates:*
-> `is_convertible_v<iterator_traits<InputIterator>::value_type, double>`
-> is `true`.
->
-> *Preconditions:* `InputIterator` meets the *Cpp17InputIterator*
-> requirements [[input.iterators]]. If `firstW == lastW`, let n = 1 and
-> w₀ = 1. Otherwise, $\bigl[\texttt{firstW}, \texttt{lastW}\bigr)$ forms
-> a sequence w of length n > 0.
->
-> *Effects:* Constructs a `discrete_distribution` object with
-> probabilities given by the formula above.
+*Mandates:*
+`is_convertible_v<iterator_traits<InputIterator>::value_type, double>`
+is `true`.
+
+*Preconditions:* `InputIterator` meets the *Cpp17InputIterator*
+requirements [[input.iterators]]. If `firstW == lastW`, let n = 1 and
+w₀ = 1. Otherwise, $\bigl[\texttt{firstW}, \texttt{lastW}\bigr)$ forms a
+sequence w of length n > 0.
+
+*Effects:* Constructs a `discrete_distribution` object with
+probabilities given by the formula above.
 
 ``` cpp
 discrete_distribution(initializer_list<double> wl);
 ```
 
-> *Effects:* Same as `discrete_distribution(wl.begin(), wl.end())`.
+*Effects:* Same as `discrete_distribution(wl.begin(), wl.end())`.
 
 ``` cpp
 template<class UnaryOperation>
   discrete_distribution(size_t nw, double xmin, double xmax, UnaryOperation fw);
 ```
 
-> *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
-> `true`.
->
-> *Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
-> $n = \texttt{nw}$. The relation
-> $0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
->
-> *Effects:* Constructs a `discrete_distribution` object with
-> probabilities given by the formula above, using the following values:
-> If $\texttt{nw} = 0$, let w₀ = 1. Otherwise, let
-> $w_k = \texttt{fw}(\texttt{xmin} + k \cdot \delta + \delta / 2)$ for
-> $k = 0, \dotsc, n - 1$.
->
-> *Complexity:* The number of invocations of `fw` does not exceed n.
+*Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
+`true`.
+
+*Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
+$n = \texttt{nw}$. The relation
+$0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
+
+*Effects:* Constructs a `discrete_distribution` object with
+probabilities given by the formula above, using the following values: If
+$\texttt{nw} = 0$, let w₀ = 1. Otherwise, let
+$w_k = \texttt{fw}(\texttt{xmin} + k \cdot \delta + \delta / 2)$ for
+$k = 0, \dotsc, n - 1$.
+
+*Complexity:* The number of invocations of `fw` does not exceed n.
 
 ``` cpp
 vector<double> probabilities() const;
 ```
 
-> *Returns:* A `vector<double>` whose `size` member returns n and whose
-> `operator[]` member returns pₖ when invoked with argument k for
-> $k = 0, \dotsc, n - 1$.
+*Returns:* A `vector<double>` whose `size` member returns n and whose
+`operator[]` member returns pₖ when invoked with argument k for
+$k = 0, \dotsc, n - 1$.
 
 ##### Class template `piecewise_constant_distribution` <a id="rand.dist.samp.pconst">[[rand.dist.samp.pconst]]</a>
 
@@ -3717,8 +3711,8 @@ namespace std {
 piecewise_constant_distribution();
 ```
 
-> *Effects:* Constructs a `piecewise_constant_distribution` object with
-> n = 1, $\rho_0 = 1$, b₀ = 0, and b₁ = 1.
+*Effects:* Constructs a `piecewise_constant_distribution` object with
+n = 1, $\rho_0 = 1$, b₀ = 0, and b₁ = 1.
 
 ``` cpp
 template<class InputIteratorB, class InputIteratorW>
@@ -3726,77 +3720,77 @@ template<class InputIteratorB, class InputIteratorW>
                                  InputIteratorW firstW);
 ```
 
-> *Mandates:* Both of
->
-> - `is_convertible_v<iterator_traits<InputIteratorB>::value_type, double>`
->
-> - `is_convertible_v<iterator_traits<InputIteratorW>::value_type, double>`
->
-> are `true`.
->
-> *Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
-> *Cpp17InputIterator* requirements [[input.iterators]]. If
-> `firstB == lastB` or `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0,
-> and b₁ = 1. Otherwise, $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$
-> forms a sequence b of length n+1, the length of the sequence w
-> starting from `firstW` is at least n, and any wₖ for k ≥ n are ignored
-> by the distribution.
->
-> *Effects:* Constructs a `piecewise_constant_distribution` object with
-> parameters as specified above.
+*Mandates:* Both of
+
+- `is_convertible_v<iterator_traits<InputIteratorB>::value_type, double>`
+
+- `is_convertible_v<iterator_traits<InputIteratorW>::value_type, double>`
+
+are `true`.
+
+*Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
+*Cpp17InputIterator* requirements [[input.iterators]]. If
+`firstB == lastB` or `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0, and
+b₁ = 1. Otherwise, $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a
+sequence b of length n+1, the length of the sequence w starting from
+`firstW` is at least n, and any wₖ for k ≥ n are ignored by the
+distribution.
+
+*Effects:* Constructs a `piecewise_constant_distribution` object with
+parameters as specified above.
 
 ``` cpp
 template<class UnaryOperation>
  piecewise_constant_distribution(initializer_list<RealType> bl, UnaryOperation fw);
 ```
 
-> *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
-> `true`.
->
-> *Effects:* Constructs a `piecewise_constant_distribution` object with
-> parameters taken or calculated from the following values: If
-> $\texttt{bl.size()} < 2$, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1.
-> Otherwise, let $\bigl[\texttt{bl.begin()}, \texttt{bl.end()}\bigr)$
-> form a sequence $b_0, \dotsc, b_n$, and let
-> $w_k = \texttt{fw}\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr)$ for
-> $k = 0, \dotsc, n - 1$.
->
-> *Complexity:* The number of invocations of `fw` does not exceed n.
+*Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
+`true`.
+
+*Effects:* Constructs a `piecewise_constant_distribution` object with
+parameters taken or calculated from the following values: If
+$\texttt{bl.size()} < 2$, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1.
+Otherwise, let $\bigl[\texttt{bl.begin()}, \texttt{bl.end()}\bigr)$ form
+a sequence $b_0, \dotsc, b_n$, and let
+$w_k = \texttt{fw}\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr)$ for
+$k = 0, \dotsc, n - 1$.
+
+*Complexity:* The number of invocations of `fw` does not exceed n.
 
 ``` cpp
 template<class UnaryOperation>
  piecewise_constant_distribution(size_t nw, RealType xmin, RealType xmax, UnaryOperation fw);
 ```
 
-> *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
-> `true`.
->
-> *Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
-> $n = \texttt{nw}$. The relation
-> $0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
->
-> *Effects:* Constructs a `piecewise_constant_distribution` object with
-> parameters taken or calculated from the following values: Let
-> $b_k = \texttt{xmin} + k \cdot \delta$ for $k = 0, \dotsc, n$, and
-> $w_k = \texttt{fw}(b_k + \delta / 2)$ for $k = 0, \dotsc, n - 1$.
->
-> *Complexity:* The number of invocations of `fw` does not exceed n.
+*Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
+`true`.
+
+*Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
+$n = \texttt{nw}$. The relation
+$0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
+
+*Effects:* Constructs a `piecewise_constant_distribution` object with
+parameters taken or calculated from the following values: Let
+$b_k = \texttt{xmin} + k \cdot \delta$ for $k = 0, \dotsc, n$, and
+$w_k = \texttt{fw}(b_k + \delta / 2)$ for $k = 0, \dotsc, n - 1$.
+
+*Complexity:* The number of invocations of `fw` does not exceed n.
 
 ``` cpp
 vector<result_type> intervals() const;
 ```
 
-> *Returns:* A `vector<result_type>` whose `size` member returns n + 1
-> and whose $\texttt{operator[]}$ member returns bₖ when invoked with
-> argument k for $k = 0, \dotsc, n$.
+*Returns:* A `vector<result_type>` whose `size` member returns n + 1 and
+whose $\texttt{operator[]}$ member returns bₖ when invoked with argument
+k for $k = 0, \dotsc, n$.
 
 ``` cpp
 vector<result_type> densities() const;
 ```
 
-> *Returns:* A `vector<result_type>` whose `size` member returns n and
-> whose $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
-> argument k for $k = 0, \dotsc, n - 1$.
+*Returns:* A `vector<result_type>` whose `size` member returns n and
+whose $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
+argument k for $k = 0, \dotsc, n - 1$.
 
 ##### Class template `piecewise_linear_distribution` <a id="rand.dist.samp.plinear">[[rand.dist.samp.plinear]]</a>
 
@@ -3871,8 +3865,8 @@ namespace std {
 piecewise_linear_distribution();
 ```
 
-> *Effects:* Constructs a `piecewise_linear_distribution` object with
-> n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1.
+*Effects:* Constructs a `piecewise_linear_distribution` object with
+n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1.
 
 ``` cpp
 template<class InputIteratorB, class InputIteratorW>
@@ -3880,76 +3874,76 @@ template<class InputIteratorB, class InputIteratorW>
                                InputIteratorW firstW);
 ```
 
-> *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
-> `true`.
->
-> *Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
-> *Cpp17InputIterator* requirements [[input.iterators]]. If
-> `firstB == lastB` or `++firstB == lastB`, let n = 1,
-> $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1. Otherwise,
-> $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a sequence b of
-> length n+1, the length of the sequence w starting from `firstW` is at
-> least n+1, and any wₖ for k ≥ n + 1 are ignored by the distribution.
->
-> *Effects:* Constructs a `piecewise_linear_distribution` object with
-> parameters as specified above.
+*Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
+`true`.
+
+*Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
+*Cpp17InputIterator* requirements [[input.iterators]]. If
+`firstB == lastB` or `++firstB == lastB`, let n = 1,
+$\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1. Otherwise,
+$\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a sequence b of
+length n+1, the length of the sequence w starting from `firstW` is at
+least n+1, and any wₖ for k ≥ n + 1 are ignored by the distribution.
+
+*Effects:* Constructs a `piecewise_linear_distribution` object with
+parameters as specified above.
 
 ``` cpp
 template<class UnaryOperation>
  piecewise_linear_distribution(initializer_list<RealType> bl, UnaryOperation fw);
 ```
 
-> *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
-> `true`.
->
-> *Effects:* Constructs a `piecewise_linear_distribution` object with
-> parameters taken or calculated from the following values: If
-> $\texttt{bl.size()} < 2$, let n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0,
-> and b₁ = 1. Otherwise, let
-> $\bigl[\texttt{bl.begin(),} \texttt{bl.end()}\bigr)$ form a sequence
-> $b_0, \dotsc, b_n$, and let $w_k = \texttt{fw}(b_k)$ for
-> $k = 0, \dotsc, n$.
->
-> *Complexity:* The number of invocations of `fw` does not exceed n+1.
+*Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
+`true`.
+
+*Effects:* Constructs a `piecewise_linear_distribution` object with
+parameters taken or calculated from the following values: If
+$\texttt{bl.size()} < 2$, let n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and
+b₁ = 1. Otherwise, let
+$\bigl[\texttt{bl.begin(),} \texttt{bl.end()}\bigr)$ form a sequence
+$b_0, \dotsc, b_n$, and let $w_k = \texttt{fw}(b_k)$ for
+$k = 0, \dotsc, n$.
+
+*Complexity:* The number of invocations of `fw` does not exceed n+1.
 
 ``` cpp
 template<class UnaryOperation>
  piecewise_linear_distribution(size_t nw, RealType xmin, RealType xmax, UnaryOperation fw);
 ```
 
-> *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
-> `true`.
->
-> *Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
-> $n = \texttt{nw}$. The relation
-> $0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
->
-> *Effects:* Constructs a `piecewise_linear_distribution` object with
-> parameters taken or calculated from the following values: Let
-> $b_k = \texttt{xmin} + k \cdot \delta$ for $k = 0, \dotsc, n$, and
-> $w_k = \texttt{fw}(b_k)$ for $k = 0, \dotsc, n$.
->
-> *Complexity:* The number of invocations of `fw` does not exceed n+1.
+*Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
+`true`.
+
+*Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
+$n = \texttt{nw}$. The relation
+$0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
+
+*Effects:* Constructs a `piecewise_linear_distribution` object with
+parameters taken or calculated from the following values: Let
+$b_k = \texttt{xmin} + k \cdot \delta$ for $k = 0, \dotsc, n$, and
+$w_k = \texttt{fw}(b_k)$ for $k = 0, \dotsc, n$.
+
+*Complexity:* The number of invocations of `fw` does not exceed n+1.
 
 ``` cpp
 vector<result_type> intervals() const;
 ```
 
-> *Returns:* A `vector<result_type>` whose `size` member returns n + 1
-> and whose $\texttt{operator[]}$ member returns bₖ when invoked with
-> argument k for $k = 0, \dotsc, n$.
+*Returns:* A `vector<result_type>` whose `size` member returns n + 1 and
+whose $\texttt{operator[]}$ member returns bₖ when invoked with argument
+k for $k = 0, \dotsc, n$.
 
 ``` cpp
 vector<result_type> densities() const;
 ```
 
-> *Returns:* A `vector<result_type>` whose `size` member returns n and
-> whose $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
-> argument k for $k = 0, \dotsc, n$.
+*Returns:* A `vector<result_type>` whose `size` member returns n and
+whose $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
+argument k for $k = 0, \dotsc, n$.
 
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
-\[*Note 9*: The header `<cstdlib>` declares the functions described in
+\[*Note 13*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
 
 ``` cpp
@@ -3957,18 +3951,18 @@ int rand();
 void srand(unsigned int seed);
 ```
 
-> *Effects:* The `rand` and `srand` functions have the semantics
-> specified in the C standard library.
->
-> *Remarks:* The implementation may specify that particular library
-> functions may call `rand`. It is *implementation-defined* whether the
-> `rand` function may introduce data races [[res.on.data.races]].
->
-> \[*Note 8*: The other random number generation facilities in this
-> document [[rand]] are often preferable to `rand`, because `rand`’s
-> underlying algorithm is unspecified. Use of `rand` therefore continues
-> to be non-portable, with unpredictable and oft-questionable quality
-> and performance. — *end note*\]
+*Effects:* The `rand` and `srand` functions have the semantics specified
+in the C standard library.
+
+*Remarks:* The implementation may specify that particular library
+functions may call `rand`. It is *implementation-defined* whether the
+`rand` function may introduce data races [[res.on.data.races]].
+
+\[*Note 14*: The other random number generation facilities in this
+document [[rand]] are often preferable to `rand`, because `rand`’s
+underlying algorithm is unspecified. Use of `rand` therefore continues
+to be non-portable, with unpredictable and oft-questionable quality and
+performance. — *end note*\]
 
 ## Numeric arrays <a id="numarray">[[numarray]]</a>
 
@@ -4272,67 +4266,67 @@ operators.
 valarray();
 ```
 
-> *Effects:* Constructs a `valarray` that has zero length.
->
-> This default constructor is essential, since arrays of `valarray` can
-> be useful. After initialization, the length of an empty array can be
-> increased with the `resize` member function.
+*Effects:* Constructs a `valarray` that has zero length.
+
+This default constructor is essential, since arrays of `valarray` can be
+useful. After initialization, the length of an empty array can be
+increased with the `resize` member function.
 
 ``` cpp
 explicit valarray(size_t n);
 ```
 
-> *Effects:* Constructs a `valarray` that has length `n`. Each element
-> of the array is value-initialized [[dcl.init]].
+*Effects:* Constructs a `valarray` that has length `n`. Each element of
+the array is value-initialized [[dcl.init]].
 
 ``` cpp
 valarray(const T& v, size_t n);
 ```
 
-> *Effects:* Constructs a `valarray` that has length `n`. Each element
-> of the array is initialized with `v`.
+*Effects:* Constructs a `valarray` that has length `n`. Each element of
+the array is initialized with `v`.
 
 ``` cpp
 valarray(const T* p, size_t n);
 ```
 
-> *Preconditions:* \[`p`, `p + n`) is a valid range.
->
-> *Effects:* Constructs a `valarray` that has length `n`. The values of
-> the elements of the array are initialized with the first `n` values
-> pointed to by the first argument.
->
-> This constructor is the preferred method for converting a C array to a
-> `valarray` object.
+*Preconditions:* \[`p`, `p + n`) is a valid range.
+
+*Effects:* Constructs a `valarray` that has length `n`. The values of
+the elements of the array are initialized with the first `n` values
+pointed to by the first argument.
+
+This constructor is the preferred method for converting a C array to a
+`valarray` object.
 
 ``` cpp
 valarray(const valarray& v);
 ```
 
-> *Effects:* Constructs a `valarray` that has the same length as `v`.
-> The elements are initialized with the values of the corresponding
-> elements of `v`.
->
-> This copy constructor creates a distinct array rather than an alias.
-> Implementations in which arrays share storage are permitted, but they
-> would need to implement a copy-on-reference mechanism to ensure that
-> arrays are conceptually distinct.
+*Effects:* Constructs a `valarray` that has the same length as `v`. The
+elements are initialized with the values of the corresponding elements
+of `v`.
+
+This copy constructor creates a distinct array rather than an alias.
+Implementations in which arrays share storage are permitted, but they
+would need to implement a copy-on-reference mechanism to ensure that
+arrays are conceptually distinct.
 
 ``` cpp
 valarray(valarray&& v) noexcept;
 ```
 
-> *Effects:* Constructs a `valarray` that has the same length as `v`.
-> The elements are initialized with the values of the corresponding
-> elements of `v`.
->
-> *Complexity:* Constant.
+*Effects:* Constructs a `valarray` that has the same length as `v`. The
+elements are initialized with the values of the corresponding elements
+of `v`.
+
+*Complexity:* Constant.
 
 ``` cpp
 valarray(initializer_list<T> il);
 ```
 
-> *Effects:* Equivalent to `valarray(il.begin(), il.size())`.
+*Effects:* Equivalent to `valarray(il.begin(), il.size())`.
 
 ``` cpp
 valarray(const slice_array<T>&);
@@ -4341,15 +4335,15 @@ valarray(const mask_array<T>&);
 valarray(const indirect_array<T>&);
 ```
 
-> These conversion constructors convert one of the four reference
-> templates to a `valarray`.
+These conversion constructors convert one of the four reference
+templates to a `valarray`.
 
 ``` cpp
 ~valarray();
 ```
 
-> *Effects:* The destructor is applied to every element of `*this`; an
-> implementation may return all allocated memory.
+*Effects:* The destructor is applied to every element of `*this`; an
+implementation may return all allocated memory.
 
 #### Assignment <a id="valarray.assign">[[valarray.assign]]</a>
 
@@ -4357,40 +4351,40 @@ valarray(const indirect_array<T>&);
 valarray& operator=(const valarray& v);
 ```
 
-> *Effects:* Each element of the `*this` array is assigned the value of
-> the corresponding element of `v`. If the length of `v` is not equal to
-> the length of `*this`, resizes `*this` to make the two arrays the same
-> length, as if by calling `resize(v.size())`, before performing the
-> assignment.
->
-> *Ensures:* `size() == v.size()`.
->
-> *Returns:* `*this`.
+*Effects:* Each element of the `*this` array is assigned the value of
+the corresponding element of `v`. If the length of `v` is not equal to
+the length of `*this`, resizes `*this` to make the two arrays the same
+length, as if by calling `resize(v.size())`, before performing the
+assignment.
+
+*Ensures:* `size() == v.size()`.
+
+*Returns:* `*this`.
 
 ``` cpp
 valarray& operator=(valarray&& v) noexcept;
 ```
 
-> *Effects:* `*this` obtains the value of `v`. The value of `v` after
-> the assignment is not specified.
->
-> *Returns:* `*this`.
->
-> *Complexity:* Linear.
+*Effects:* `*this` obtains the value of `v`. The value of `v` after the
+assignment is not specified.
+
+*Returns:* `*this`.
+
+*Complexity:* Linear.
 
 ``` cpp
 valarray& operator=(initializer_list<T> il);
 ```
 
-> *Effects:* Equivalent to: `return *this = valarray(il);`
+*Effects:* Equivalent to: `return *this = valarray(il);`
 
 ``` cpp
 valarray& operator=(const T& v);
 ```
 
-> *Effects:* Assigns `v` to each element of `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Assigns `v` to each element of `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 valarray& operator=(const slice_array<T>&);
@@ -4399,13 +4393,13 @@ valarray& operator=(const mask_array<T>&);
 valarray& operator=(const indirect_array<T>&);
 ```
 
-> *Preconditions:* The length of the array to which the argument refers
-> equals `size()`. The value of an element in the left-hand side of a
-> `valarray` assignment operator does not depend on the value of another
-> element in that left-hand side.
->
-> These operators allow the results of a generalized subscripting
-> operation to be assigned directly to a `valarray`.
+*Preconditions:* The length of the array to which the argument refers
+equals `size()`. The value of an element in the left-hand side of a
+`valarray` assignment operator does not depend on the value of another
+element in that left-hand side.
+
+These operators allow the results of a generalized subscripting
+operation to be assigned directly to a `valarray`.
 
 #### Element access <a id="valarray.access">[[valarray.access]]</a>
 
@@ -4414,33 +4408,33 @@ const T&  operator[](size_t n) const;
 T& operator[](size_t n);
 ```
 
-> *Preconditions:* `n < size()` is `true`.
->
-> *Returns:* A reference to the corresponding element of the array.
->
-> \[*Note 9*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
-> for any non-constant `valarray<T> a`, any `T q`, and for any
-> `size_t i` such that the value of `i` is less than the length of
-> `a`. — *end note*\]
->
-> *Remarks:* The expression `addressof(a[i+j]) == addressof(a[i]) + j`
-> evaluates to `true` for all `size_t i` and `size_t j` such that
-> `i+j < a.size()`.
->
-> The expression `addressof(a[i]) != addressof(b[j])` evaluates to
-> `true` for any two arrays `a` and `b` and for any `size_t i` and
-> `size_t j` such that `i < a.size()` and `j < b.size()`.
->
-> \[*Note 10*: This property indicates an absence of aliasing and can be
-> used to advantage by optimizing compilers. Compilers can take
-> advantage of inlining, constant propagation, loop fusion, tracking of
-> pointers obtained from `operator new`, and other techniques to
-> generate efficient `valarray`s. — *end note*\]
->
-> The reference returned by the subscript operator for an array shall be
-> valid until the member function
-> `resize(size_t, T)`[[valarray.members]] is called for that array or
-> until the lifetime of that array ends, whichever happens first.
+*Preconditions:* `n < size()` is `true`.
+
+*Returns:* A reference to the corresponding element of the array.
+
+\[*Note 1*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
+for any non-constant `valarray<T> a`, any `T q`, and for any `size_t i`
+such that the value of `i` is less than the length of
+`a`. — *end note*\]
+
+*Remarks:* The expression `addressof(a[i+j]) == addressof(a[i]) + j`
+evaluates to `true` for all `size_t i` and `size_t j` such that
+`i+j < a.size()`.
+
+The expression `addressof(a[i]) != addressof(b[j])` evaluates to `true`
+for any two arrays `a` and `b` and for any `size_t i` and `size_t j`
+such that `i < a.size()` and `j < b.size()`.
+
+\[*Note 2*: This property indicates an absence of aliasing and can be
+used to advantage by optimizing compilers. Compilers can take advantage
+of inlining, constant propagation, loop fusion, tracking of pointers
+obtained from `operator new`, and other techniques to generate efficient
+`valarray`s. — *end note*\]
+
+The reference returned by the subscript operator for an array shall be
+valid until the member function `resize(size_t, T)`[[valarray.members]]
+is called for that array or until the lifetime of that array ends,
+whichever happens first.
 
 #### Subset operations <a id="valarray.sub">[[valarray.sub]]</a>
 
@@ -4458,134 +4452,134 @@ element(s) shall exist.
 valarray operator[](slice slicearr) const;
 ```
 
-> *Returns:* A `valarray` containing those elements of the controlled
-> sequence designated by `slicearr`.
->
-> \[*Example 1*:
->
->     const valarray<char> v0("abcdefghijklmnop", 16);
->     // \texttt{v0[slice(2, 5, 3)]} returns \texttt{valarray<char>("cfilo", 5)}
->
-> — *end example*\]
+*Returns:* A `valarray` containing those elements of the controlled
+sequence designated by `slicearr`.
+
+\[*Example 1*:
+
+    const valarray<char> v0("abcdefghijklmnop", 16);
+    // \texttt{v0[slice(2, 5, 3)]} returns \texttt{valarray<char>("cfilo", 5)}
+
+— *end example*\]
 
 ``` cpp
 slice_array<T> operator[](slice slicearr);
 ```
 
-> *Returns:* An object that holds references to elements of the
-> controlled sequence selected by `slicearr`.
->
-> \[*Example 2*:
->
->     valarray<char> v0("abcdefghijklmnop", 16);
->     valarray<char> v1("ABCDE", 5);
->     v0[slice(2, 5, 3)] = v1;
->     // \texttt{v0 == valarray<char>("abAdeBghCjkDmnEp", 16);}
->
-> — *end example*\]
+*Returns:* An object that holds references to elements of the controlled
+sequence selected by `slicearr`.
+
+\[*Example 2*:
+
+    valarray<char> v0("abcdefghijklmnop", 16);
+    valarray<char> v1("ABCDE", 5);
+    v0[slice(2, 5, 3)] = v1;
+    // \texttt{v0 == valarray<char>("abAdeBghCjkDmnEp", 16);}
+
+— *end example*\]
 
 ``` cpp
 valarray operator[](const gslice& gslicearr) const;
 ```
 
-> *Returns:* A `valarray` containing those elements of the controlled
-> sequence designated by `gslicearr`.
->
-> \[*Example 3*:
->
->     const valarray<char> v0("abcdefghijklmnop", 16);
->     const size_t lv[] = { 2, 3 };
->     const size_t dv[] = { 7, 2 };
->     const valarray<size_t> len(lv, 2), str(dv, 2);
->     // \texttt{v0[gslice(3, len, str)]} returns
->     // \texttt{valarray<char>("dfhkmo", 6)}
->
-> — *end example*\]
+*Returns:* A `valarray` containing those elements of the controlled
+sequence designated by `gslicearr`.
+
+\[*Example 3*:
+
+    const valarray<char> v0("abcdefghijklmnop", 16);
+    const size_t lv[] = { 2, 3 };
+    const size_t dv[] = { 7, 2 };
+    const valarray<size_t> len(lv, 2), str(dv, 2);
+    // \texttt{v0[gslice(3, len, str)]} returns
+    // \texttt{valarray<char>("dfhkmo", 6)}
+
+— *end example*\]
 
 ``` cpp
 gslice_array<T> operator[](const gslice& gslicearr);
 ```
 
-> *Returns:* An object that holds references to elements of the
-> controlled sequence selected by `gslicearr`.
->
-> \[*Example 4*:
->
->     valarray<char> v0("abcdefghijklmnop", 16);
->     valarray<char> v1("ABCDEF", 6);
->     const size_t lv[] = { 2, 3 };
->     const size_t dv[] = { 7, 2 };
->     const valarray<size_t> len(lv, 2), str(dv, 2);
->     v0[gslice(3, len, str)] = v1;
->     // \texttt{v0 == valarray<char>("abcAeBgCijDlEnFp", 16)}
->
-> — *end example*\]
+*Returns:* An object that holds references to elements of the controlled
+sequence selected by `gslicearr`.
+
+\[*Example 4*:
+
+    valarray<char> v0("abcdefghijklmnop", 16);
+    valarray<char> v1("ABCDEF", 6);
+    const size_t lv[] = { 2, 3 };
+    const size_t dv[] = { 7, 2 };
+    const valarray<size_t> len(lv, 2), str(dv, 2);
+    v0[gslice(3, len, str)] = v1;
+    // \texttt{v0 == valarray<char>("abcAeBgCijDlEnFp", 16)}
+
+— *end example*\]
 
 ``` cpp
 valarray operator[](const valarray<bool>& boolarr) const;
 ```
 
-> *Returns:* A `valarray` containing those elements of the controlled
-> sequence designated by `boolarr`.
->
-> \[*Example 5*:
->
->     const valarray<char> v0("abcdefghijklmnop", 16);
->     const bool vb[] = { false, false, true, true, false, true };
->     // \texttt{v0[valarray<bool>(vb, 6)]} returns
->     // \texttt{valarray<char>("cdf", 3)}
->
-> — *end example*\]
+*Returns:* A `valarray` containing those elements of the controlled
+sequence designated by `boolarr`.
+
+\[*Example 5*:
+
+    const valarray<char> v0("abcdefghijklmnop", 16);
+    const bool vb[] = { false, false, true, true, false, true };
+    // \texttt{v0[valarray<bool>(vb, 6)]} returns
+    // \texttt{valarray<char>("cdf", 3)}
+
+— *end example*\]
 
 ``` cpp
 mask_array<T> operator[](const valarray<bool>& boolarr);
 ```
 
-> *Returns:* An object that holds references to elements of the
-> controlled sequence selected by `boolarr`.
->
-> \[*Example 6*:
->
->     valarray<char> v0("abcdefghijklmnop", 16);
->     valarray<char> v1("ABC", 3);
->     const bool vb[] = { false, false, true, true, false, true };
->     v0[valarray<bool>(vb, 6)] = v1;
->     // \texttt{v0 == valarray<char>("abABeCghijklmnop", 16)}
->
-> — *end example*\]
+*Returns:* An object that holds references to elements of the controlled
+sequence selected by `boolarr`.
+
+\[*Example 6*:
+
+    valarray<char> v0("abcdefghijklmnop", 16);
+    valarray<char> v1("ABC", 3);
+    const bool vb[] = { false, false, true, true, false, true };
+    v0[valarray<bool>(vb, 6)] = v1;
+    // \texttt{v0 == valarray<char>("abABeCghijklmnop", 16)}
+
+— *end example*\]
 
 ``` cpp
 valarray operator[](const valarray<size_t>& indarr) const;
 ```
 
-> *Returns:* A `valarray` containing those elements of the controlled
-> sequence designated by `indarr`.
->
-> \[*Example 7*:
->
->     const valarray<char> v0("abcdefghijklmnop", 16);
->     const size_t vi[] = { 7, 5, 2, 3, 8 };
->     // \texttt{v0[valarray<size_t>(vi, 5)]} returns
->     // \texttt{valarray<char>("hfcdi", 5)}
->
-> — *end example*\]
+*Returns:* A `valarray` containing those elements of the controlled
+sequence designated by `indarr`.
+
+\[*Example 7*:
+
+    const valarray<char> v0("abcdefghijklmnop", 16);
+    const size_t vi[] = { 7, 5, 2, 3, 8 };
+    // \texttt{v0[valarray<size_t>(vi, 5)]} returns
+    // \texttt{valarray<char>("hfcdi", 5)}
+
+— *end example*\]
 
 ``` cpp
 indirect_array<T> operator[](const valarray<size_t>& indarr);
 ```
 
-> *Returns:* An object that holds references to elements of the
-> controlled sequence selected by `indarr`.
->
-> \[*Example 8*:
->
->     valarray<char> v0("abcdefghijklmnop", 16);
->     valarray<char> v1("ABCDE", 5);
->     const size_t vi[] = { 7, 5, 2, 3, 8 };
->     v0[valarray<size_t>(vi, 5)] = v1;
->     // \texttt{v0 == valarray<char>("abCDeBgAEjklmnop", 16)}
->
-> — *end example*\]
+*Returns:* An object that holds references to elements of the controlled
+sequence selected by `indarr`.
+
+\[*Example 8*:
+
+    valarray<char> v0("abcdefghijklmnop", 16);
+    valarray<char> v1("ABCDE", 5);
+    const size_t vi[] = { 7, 5, 2, 3, 8 };
+    v0[valarray<size_t>(vi, 5)] = v1;
+    // \texttt{v0 == valarray<char>("abCDeBgAEjklmnop", 16)}
+
+— *end example*\]
 
 #### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
@@ -4596,14 +4590,14 @@ valarray operator~() const;
 valarray<bool> operator!() const;
 ```
 
-> *Mandates:* The indicated operator can be applied to operands of type
-> `T` and returns a value of type `T` (`bool` for `operator!`) or which
-> may be unambiguously implicitly converted to type `T` (`bool` for
-> `operator!`).
->
-> *Returns:* A `valarray` whose length is `size()`. Each element of the
-> returned array is initialized with the result of applying the
-> indicated operator to the corresponding element of the array.
+*Mandates:* The indicated operator can be applied to operands of type
+`T` and returns a value of type `T` (`bool` for `operator!`) or which
+may be unambiguously implicitly converted to type `T` (`bool` for
+`operator!`).
+
+*Returns:* A `valarray` whose length is `size()`. Each element of the
+returned array is initialized with the result of applying the indicated
+operator to the corresponding element of the array.
 
 #### Compound assignment <a id="valarray.cassign">[[valarray.cassign]]</a>
 
@@ -4620,22 +4614,22 @@ valarray& operator<<=(const valarray& v);
 valarray& operator>>=(const valarray& v);
 ```
 
-> *Mandates:* The indicated operator can be applied to two operands of
-> type `T`.
->
-> *Preconditions:* `size() == v.size()` is `true`.
->
-> The value of an element in the left-hand side of a valarray compound
-> assignment operator does not depend on the value of another element in
-> that left hand side.
->
-> *Effects:* Each of these operators performs the indicated operation on
-> each of the elements of `*this` and the corresponding element of `v`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* The appearance of an array on the left-hand side of a
-> compound assignment does not invalidate references or pointers.
+*Mandates:* The indicated operator can be applied to two operands of
+type `T`.
+
+*Preconditions:* `size() == v.size()` is `true`.
+
+The value of an element in the left-hand side of a valarray compound
+assignment operator does not depend on the value of another element in
+that left hand side.
+
+*Effects:* Each of these operators performs the indicated operation on
+each of the elements of `*this` and the corresponding element of `v`.
+
+*Returns:* `*this`.
+
+*Remarks:* The appearance of an array on the left-hand side of a
+compound assignment does not invalidate references or pointers.
 
 ``` cpp
 valarray& operator*= (const T& v);
@@ -4650,17 +4644,17 @@ valarray& operator<<=(const T& v);
 valarray& operator>>=(const T& v);
 ```
 
-> *Mandates:* The indicated operator can be applied to two operands of
-> type `T`.
->
-> *Effects:* Each of these operators applies the indicated operation to
-> each element of `*this` and `v`.
->
-> *Returns:* `*this`
->
-> *Remarks:* The appearance of an array on the left-hand side of a
-> compound assignment does not invalidate references or pointers to the
-> elements of the array.
+*Mandates:* The indicated operator can be applied to two operands of
+type `T`.
+
+*Effects:* Each of these operators applies the indicated operation to
+each element of `*this` and `v`.
+
+*Returns:* `*this`
+
+*Remarks:* The appearance of an array on the left-hand side of a
+compound assignment does not invalidate references or pointers to the
+elements of the array.
 
 #### Member functions <a id="valarray.members">[[valarray.members]]</a>
 
@@ -4668,96 +4662,94 @@ valarray& operator>>=(const T& v);
 void swap(valarray& v) noexcept;
 ```
 
-> *Effects:* `*this` obtains the value of `v`. `v` obtains the value of
-> `*this`.
->
-> *Complexity:* Constant.
+*Effects:* `*this` obtains the value of `v`. `v` obtains the value of
+`*this`.
+
+*Complexity:* Constant.
 
 ``` cpp
 size_t size() const;
 ```
 
-> *Returns:* The number of elements in the array.
->
-> *Complexity:* Constant time.
+*Returns:* The number of elements in the array.
+
+*Complexity:* Constant time.
 
 ``` cpp
 T sum() const;
 ```
 
-> *Mandates:* `operator+=` can be applied to operands of type `T`.
->
-> *Preconditions:* `size() > 0` is `true`.
->
-> *Returns:* The sum of all the elements of the array. If the array has
-> length 1, returns the value of element 0. Otherwise, the returned
-> value is calculated by applying `operator+=` to a copy of an element
-> of the array and all other elements of the array in an unspecified
-> order.
+*Mandates:* `operator+=` can be applied to operands of type `T`.
+
+*Preconditions:* `size() > 0` is `true`.
+
+*Returns:* The sum of all the elements of the array. If the array has
+length 1, returns the value of element 0. Otherwise, the returned value
+is calculated by applying `operator+=` to a copy of an element of the
+array and all other elements of the array in an unspecified order.
 
 ``` cpp
 T min() const;
 ```
 
-> *Preconditions:* `size() > 0` is `true`.
->
-> *Returns:* The minimum value contained in `*this`. For an array of
-> length 1, the value of element 0 is returned. For all other array
-> lengths, the determination is made using `operator<`.
+*Preconditions:* `size() > 0` is `true`.
+
+*Returns:* The minimum value contained in `*this`. For an array of
+length 1, the value of element 0 is returned. For all other array
+lengths, the determination is made using `operator<`.
 
 ``` cpp
 T max() const;
 ```
 
-> *Preconditions:* `size() > 0` is `true`.
->
-> *Returns:* The maximum value contained in `*this`. For an array of
-> length 1, the value of element 0 is returned. For all other array
-> lengths, the determination is made using `operator<`.
+*Preconditions:* `size() > 0` is `true`.
+
+*Returns:* The maximum value contained in `*this`. For an array of
+length 1, the value of element 0 is returned. For all other array
+lengths, the determination is made using `operator<`.
 
 ``` cpp
 valarray shift(int n) const;
 ```
 
-> *Returns:* A `valarray` of length `size()`, each of whose elements *I*
-> is `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
-> `size()`, otherwise `T()`.
->
-> \[*Note 11*: If element zero is taken as the leftmost element, a
-> positive value of `n` shifts the elements left `n` places, with zero
-> fill. — *end note*\]
->
-> \[*Example 9*: If the argument has the value -2, the first two
-> elements of the result will be value-initialized [[dcl.init]]; the
-> third element of the result will be assigned the value of the first
-> element of `*this`; etc. — *end example*\]
+*Returns:* A `valarray` of length `size()`, each of whose elements *I*
+is `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
+`size()`, otherwise `T()`.
+
+\[*Note 3*: If element zero is taken as the leftmost element, a positive
+value of `n` shifts the elements left `n` places, with zero
+fill. — *end note*\]
+
+\[*Example 9*: If the argument has the value -2, the first two elements
+of the result will be value-initialized [[dcl.init]]; the third element
+of the result will be assigned the value of the first element of
+`*this`; etc. — *end example*\]
 
 ``` cpp
 valarray cshift(int n) const;
 ```
 
-> *Returns:* A `valarray` of length `size()` that is a circular shift of
-> `*this`. If element zero is taken as the leftmost element, a
-> non-negative value of n shifts the elements circularly left n places
-> and a negative value of n shifts the elements circularly right -n
-> places.
+*Returns:* A `valarray` of length `size()` that is a circular shift of
+`*this`. If element zero is taken as the leftmost element, a
+non-negative value of n shifts the elements circularly left n places and
+a negative value of n shifts the elements circularly right -n places.
 
 ``` cpp
 valarray apply(T func(T)) const;
 valarray apply(T func(const T&)) const;
 ```
 
-> *Returns:* A `valarray` whose length is `size()`. Each element of the
-> returned array is assigned the value returned by applying the argument
-> function to the corresponding element of `*this`.
+*Returns:* A `valarray` whose length is `size()`. Each element of the
+returned array is assigned the value returned by applying the argument
+function to the corresponding element of `*this`.
 
 ``` cpp
 void resize(size_t sz, T c = T());
 ```
 
-> *Effects:* Changes the length of the `*this` array to `sz` and then
-> assigns to each element the value of the second argument. Resizing
-> invalidates all pointers and references to elements in the array.
+*Effects:* Changes the length of the `*this` array to `sz` and then
+assigns to each element the value of the second argument. Resizing
+invalidates all pointers and references to elements in the array.
 
 ### `valarray` non-member operations <a id="valarray.nonmembers">[[valarray.nonmembers]]</a>
 
@@ -4776,16 +4768,16 @@ template<class T> valarray<T> operator<<(const valarray<T>&, const valarray<T>&)
 template<class T> valarray<T> operator>>(const valarray<T>&, const valarray<T>&);
 ```
 
-> *Mandates:* The indicated operator can be applied to operands of type
-> `T` and returns a value of type `T` or which can be unambiguously
-> implicitly converted to `T`.
->
-> *Preconditions:* The argument arrays have the same length.
->
-> *Returns:* A `valarray` whose length is equal to the lengths of the
-> argument arrays. Each element of the returned array is initialized
-> with the result of applying the indicated operator to the
-> corresponding elements of the argument arrays.
+*Mandates:* The indicated operator can be applied to operands of type
+`T` and returns a value of type `T` or which can be unambiguously
+implicitly converted to `T`.
+
+*Preconditions:* The argument arrays have the same length.
+
+*Returns:* A `valarray` whose length is equal to the lengths of the
+argument arrays. Each element of the returned array is initialized with
+the result of applying the indicated operator to the corresponding
+elements of the argument arrays.
 
 ``` cpp
 template<class T> valarray<T> operator* (const valarray<T>&,
@@ -4830,14 +4822,14 @@ template<class T> valarray<T> operator>>(const typename valarray<T>::value_type&
                                          const valarray<T>&);
 ```
 
-> *Mandates:* The indicated operator can be applied to operands of type
-> `T` and returns a value of type `T` or which can be unambiguously
-> implicitly converted to `T`.
->
-> *Returns:* A `valarray` whose length is equal to the length of the
-> array argument. Each element of the returned array is initialized with
-> the result of applying the indicated operator to the corresponding
-> element of the array argument and the non-array argument.
+*Mandates:* The indicated operator can be applied to operands of type
+`T` and returns a value of type `T` or which can be unambiguously
+implicitly converted to `T`.
+
+*Returns:* A `valarray` whose length is equal to the length of the array
+argument. Each element of the returned array is initialized with the
+result of applying the indicated operator to the corresponding element
+of the array argument and the non-array argument.
 
 #### Logical operators <a id="valarray.comparison">[[valarray.comparison]]</a>
 
@@ -4852,16 +4844,16 @@ template<class T> valarray<bool> operator&&(const valarray<T>&, const valarray<T
 template<class T> valarray<bool> operator||(const valarray<T>&, const valarray<T>&);
 ```
 
-> *Mandates:* The indicated operator can be applied to operands of type
-> `T` and returns a value of type `bool` or which can be unambiguously
-> implicitly converted to `bool`.
->
-> *Preconditions:* The two array arguments have the same length.
->
-> *Returns:* A `valarray<bool>` whose length is equal to the length of
-> the array arguments. Each element of the returned array is initialized
-> with the result of applying the indicated operator to the
-> corresponding elements of the argument arrays.
+*Mandates:* The indicated operator can be applied to operands of type
+`T` and returns a value of type `bool` or which can be unambiguously
+implicitly converted to `bool`.
+
+*Preconditions:* The two array arguments have the same length.
+
+*Returns:* A `valarray<bool>` whose length is equal to the length of the
+array arguments. Each element of the returned array is initialized with
+the result of applying the indicated operator to the corresponding
+elements of the argument arrays.
 
 ``` cpp
 template<class T> valarray<bool> operator==(const valarray<T>&,
@@ -4898,14 +4890,14 @@ template<class T> valarray<bool> operator||(const typename valarray<T>::value_ty
                                             const valarray<T>&);
 ```
 
-> *Mandates:* The indicated operator can be applied to operands of type
-> `T` and returns a value of type `bool` or which can be unambiguously
-> implicitly converted to `bool`.
->
-> *Returns:* A `valarray<bool>` whose length is equal to the length of
-> the array argument. Each element of the returned array is initialized
-> with the result of applying the indicated operator to the
-> corresponding element of the array and the non-array argument.
+*Mandates:* The indicated operator can be applied to operands of type
+`T` and returns a value of type `bool` or which can be unambiguously
+implicitly converted to `bool`.
+
+*Returns:* A `valarray<bool>` whose length is equal to the length of the
+array argument. Each element of the returned array is initialized with
+the result of applying the indicated operator to the corresponding
+element of the array and the non-array argument.
 
 #### Transcendentals <a id="valarray.transcend">[[valarray.transcend]]</a>
 
@@ -4932,10 +4924,10 @@ template<class T> valarray<T> tan  (const valarray<T>&);
 template<class T> valarray<T> tanh (const valarray<T>&);
 ```
 
-> *Mandates:* A unique function with the indicated name can be applied
-> (unqualified) to an operand of type `T`. This function returns a value
-> of type `T` or which can be unambiguously implicitly converted to type
-> `T`.
+*Mandates:* A unique function with the indicated name can be applied
+(unqualified) to an operand of type `T`. This function returns a value
+of type `T` or which can be unambiguously implicitly converted to type
+`T`.
 
 #### Specialized algorithms <a id="valarray.special">[[valarray.special]]</a>
 
@@ -4943,7 +4935,7 @@ template<class T> valarray<T> tanh (const valarray<T>&);
 template<class T> void swap(valarray<T>& x, valarray<T>& y) noexcept;
 ```
 
-> *Effects:* Equivalent to `x.swap(y)`.
+*Effects:* Equivalent to `x.swap(y)`.
 
 ### Class `slice` <a id="class.slice">[[class.slice]]</a>
 
@@ -4976,13 +4968,13 @@ slice();
 slice(size_t start, size_t length, size_t stride);
 ```
 
-> The default constructor is equivalent to `slice(0, 0, 0)`. A default
-> constructor is provided only to permit the declaration of arrays of
-> slices. The constructor with arguments for a slice takes a start,
-> length, and stride parameter.
->
-> \[*Example 10*: `slice(3, 8, 2)` constructs a slice which selects
-> elements $3, 5, 7, \dotsc, 17$ from an array. — *end example*\]
+The default constructor is equivalent to `slice(0, 0, 0)`. A default
+constructor is provided only to permit the declaration of arrays of
+slices. The constructor with arguments for a slice takes a start,
+length, and stride parameter.
+
+\[*Example 10*: `slice(3, 8, 2)` constructs a slice which selects
+elements $3, 5, 7, \dotsc, 17$ from an array. — *end example*\]
 
 #### Access functions <a id="slice.access">[[slice.access]]</a>
 
@@ -4992,9 +4984,9 @@ size_t size() const;
 size_t stride() const;
 ```
 
-> *Returns:* The start, length, or stride specified by a `slice` object.
->
-> *Complexity:* Constant time.
+*Returns:* The start, length, or stride specified by a `slice` object.
+
+*Complexity:* Constant time.
 
 #### Operators <a id="slice.ops">[[slice.ops]]</a>
 
@@ -5002,11 +4994,11 @@ size_t stride() const;
 friend bool operator==(const slice& x, const slice& y);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return x.start() == y.start() && x.size() == y.size() && x.stride() == y.stride();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return x.start() == y.start() && x.size() == y.size() && x.stride() == y.stride();
+```
 
 ### Class template `slice_array` <a id="template.slice.array">[[template.slice.array]]</a>
 
@@ -5050,9 +5042,9 @@ slice_array<T> valarray<T>::operator[](slice);
 It has reference semantics to a subset of an array specified by a
 `slice` object.
 
-\[*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
-assigning the elements of `b` to a slice of the elements in `a`. For the
-slice shown, the elements selected from `a` are
+\[*Example 11*: The expression `a[slice(1, 5, 3)] = b;` has the effect
+of assigning the elements of `b` to a slice of the elements in `a`. For
+the slice shown, the elements selected from `a` are
 $1, 4, \dotsc, 13$. — *end example*\]
 
 #### Assignment <a id="slice.arr.assign">[[slice.arr.assign]]</a>
@@ -5062,9 +5054,9 @@ void operator=(const valarray<T>&) const;
 const slice_array& operator=(const slice_array&) const;
 ```
 
-> These assignment operators have reference semantics, assigning the
-> values of the argument array elements to selected elements of the
-> `valarray<T>` object to which the `slice_array` object refers.
+These assignment operators have reference semantics, assigning the
+values of the argument array elements to selected elements of the
+`valarray<T>` object to which the `slice_array` object refers.
 
 #### Compound assignment <a id="slice.arr.comp.assign">[[slice.arr.comp.assign]]</a>
 
@@ -5081,10 +5073,10 @@ void operator<<=(const valarray<T>&) const;
 void operator>>=(const valarray<T>&) const;
 ```
 
-> These compound assignments have reference semantics, applying the
-> indicated operation to the elements of the argument array and selected
-> elements of the `valarray<T>` object to which the `slice_array` object
-> refers.
+These compound assignments have reference semantics, applying the
+indicated operation to the elements of the argument array and selected
+elements of the `valarray<T>` object to which the `slice_array` object
+refers.
 
 #### Fill function <a id="slice.arr.fill">[[slice.arr.fill]]</a>
 
@@ -5092,9 +5084,9 @@ void operator>>=(const valarray<T>&) const;
 void operator=(const T&) const;
 ```
 
-> This function has reference semantics, assigning the value of its
-> argument to the elements of the `valarray<T>` object to which the
-> `slice_array` object refers.
+This function has reference semantics, assigning the value of its
+argument to the elements of the `valarray<T>` object to which the
+`slice_array` object refers.
 
 ### The `gslice` class <a id="class.gslice">[[class.gslice]]</a>
 
@@ -5126,7 +5118,7 @@ which is one-dimensional. The set of one-dimensional index values
 specified by a `gslice` are $$k = s + \sum_j i_j d_j$$ where the
 multidimensional indices $i_j$ range in value from 0 to $l_{ij} - 1$.
 
-\[*Example 2*:
+\[*Example 12*:
 
 The `gslice` specification
 
@@ -5147,7 +5139,7 @@ That is, the highest-ordered index turns fastest.
 It is possible to have degenerate generalized slices in which an address
 is repeated.
 
-\[*Example 3*:
+\[*Example 13*:
 
 If the stride parameters in the previous example are changed to {1, 1,
 1}, the first few elements of the resulting sequence of indices will be
@@ -5165,10 +5157,10 @@ gslice(size_t start, const valarray<size_t>& lengths,
        const valarray<size_t>& strides);
 ```
 
-> The default constructor is equivalent to
-> `gslice(0, valarray<size_t>(), valarray<size_t>())`. The constructor
-> with arguments builds a `gslice` based on a specification of start,
-> lengths, and strides, as explained in the previous subclause.
+The default constructor is equivalent to
+`gslice(0, valarray<size_t>(), valarray<size_t>())`. The constructor
+with arguments builds a `gslice` based on a specification of start,
+lengths, and strides, as explained in the previous subclause.
 
 #### Access functions <a id="gslice.access">[[gslice.access]]</a>
 
@@ -5178,11 +5170,11 @@ valarray<size_t> size() const;
 valarray<size_t> stride() const;
 ```
 
-> *Returns:* The representation of the start, lengths, or strides
-> specified for the `gslice`.
->
-> *Complexity:* `start()` is constant time. `size()` and `stride()` are
-> linear in the number of strides.
+*Returns:* The representation of the start, lengths, or strides
+specified for the `gslice`.
+
+*Complexity:* `start()` is constant time. `size()` and `stride()` are
+linear in the number of strides.
 
 ### Class template `gslice_array` <a id="template.gslice.array">[[template.gslice.array]]</a>
 
@@ -5235,9 +5227,9 @@ void operator=(const valarray<T>&) const;
 const gslice_array& operator=(const gslice_array&) const;
 ```
 
-> These assignment operators have reference semantics, assigning the
-> values of the argument array elements to selected elements of the
-> `valarray<T>` object to which the `gslice_array` refers.
+These assignment operators have reference semantics, assigning the
+values of the argument array elements to selected elements of the
+`valarray<T>` object to which the `gslice_array` refers.
 
 #### Compound assignment <a id="gslice.array.comp.assign">[[gslice.array.comp.assign]]</a>
 
@@ -5254,10 +5246,10 @@ void operator<<=(const valarray<T>&) const;
 void operator>>=(const valarray<T>&) const;
 ```
 
-> These compound assignments have reference semantics, applying the
-> indicated operation to the elements of the argument array and selected
-> elements of the `valarray<T>` object to which the `gslice_array`
-> object refers.
+These compound assignments have reference semantics, applying the
+indicated operation to the elements of the argument array and selected
+elements of the `valarray<T>` object to which the `gslice_array` object
+refers.
 
 #### Fill function <a id="gslice.array.fill">[[gslice.array.fill]]</a>
 
@@ -5265,9 +5257,9 @@ void operator>>=(const valarray<T>&) const;
 void operator=(const T&) const;
 ```
 
-> This function has reference semantics, assigning the value of its
-> argument to the elements of the `valarray<T>` object to which the
-> `gslice_array` object refers.
+This function has reference semantics, assigning the value of its
+argument to the elements of the `valarray<T>` object to which the
+`gslice_array` object refers.
 
 ### Class template `mask_array` <a id="template.mask.array">[[template.mask.array]]</a>
 
@@ -5319,9 +5311,9 @@ void operator=(const valarray<T>&) const;
 const mask_array& operator=(const mask_array&) const;
 ```
 
-> These assignment operators have reference semantics, assigning the
-> values of the argument array elements to selected elements of the
-> `valarray<T>` object to which the `mask_array` object refers.
+These assignment operators have reference semantics, assigning the
+values of the argument array elements to selected elements of the
+`valarray<T>` object to which the `mask_array` object refers.
 
 #### Compound assignment <a id="mask.array.comp.assign">[[mask.array.comp.assign]]</a>
 
@@ -5338,10 +5330,10 @@ void operator<<=(const valarray<T>&) const;
 void operator>>=(const valarray<T>&) const;
 ```
 
-> These compound assignments have reference semantics, applying the
-> indicated operation to the elements of the argument array and selected
-> elements of the `valarray<T>` object to which the `mask_array` object
-> refers.
+These compound assignments have reference semantics, applying the
+indicated operation to the elements of the argument array and selected
+elements of the `valarray<T>` object to which the `mask_array` object
+refers.
 
 #### Fill function <a id="mask.array.fill">[[mask.array.fill]]</a>
 
@@ -5349,9 +5341,9 @@ void operator>>=(const valarray<T>&) const;
 void operator=(const T&) const;
 ```
 
-> This function has reference semantics, assigning the value of its
-> argument to the elements of the `valarray<T>` object to which the
-> `mask_array` object refers.
+This function has reference semantics, assigning the value of its
+argument to the elements of the `valarray<T>` object to which the
+`mask_array` object refers.
 
 ### Class template `indirect_array` <a id="template.indirect.array">[[template.indirect.array]]</a>
 
@@ -5404,24 +5396,24 @@ void operator=(const valarray<T>&) const;
 const indirect_array& operator=(const indirect_array&) const;
 ```
 
-> These assignment operators have reference semantics, assigning the
-> values of the argument array elements to selected elements of the
-> `valarray<T>` object to which it refers.
->
-> If the `indirect_array` specifies an element in the `valarray<T>`
-> object to which it refers more than once, the behavior is undefined.
->
-> \[*Example 11*:
->
->     int addr[] = {2, 3, 1, 4, 4};
->     valarray<size_t> indirect(addr, 5);
->     valarray<double> a(0., 10), b(1., 5);
->     a[indirect] = b;
->
-> results in undefined behavior since element 4 is specified twice in
-> the indirection.
->
-> — *end example*\]
+These assignment operators have reference semantics, assigning the
+values of the argument array elements to selected elements of the
+`valarray<T>` object to which it refers.
+
+If the `indirect_array` specifies an element in the `valarray<T>` object
+to which it refers more than once, the behavior is undefined.
+
+\[*Example 14*:
+
+    int addr[] = {2, 3, 1, 4, 4};
+    valarray<size_t> indirect(addr, 5);
+    valarray<double> a(0., 10), b(1., 5);
+    a[indirect] = b;
+
+results in undefined behavior since element 4 is specified twice in the
+indirection.
+
+— *end example*\]
 
 #### Compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
 
@@ -5438,13 +5430,13 @@ void operator<<=(const valarray<T>&) const;
 void operator>>=(const valarray<T>&) const;
 ```
 
-> These compound assignments have reference semantics, applying the
-> indicated operation to the elements of the argument array and selected
-> elements of the `valarray<T>` object to which the `indirect_array`
-> object refers.
->
-> If the `indirect_array` specifies an element in the `valarray<T>`
-> object to which it refers more than once, the behavior is undefined.
+These compound assignments have reference semantics, applying the
+indicated operation to the elements of the argument array and selected
+elements of the `valarray<T>` object to which the `indirect_array`
+object refers.
+
+If the `indirect_array` specifies an element in the `valarray<T>` object
+to which it refers more than once, the behavior is undefined.
 
 #### Fill function <a id="indirect.array.fill">[[indirect.array.fill]]</a>
 
@@ -5452,9 +5444,9 @@ void operator>>=(const valarray<T>&) const;
 void operator=(const T&) const;
 ```
 
-> This function has reference semantics, assigning the value of its
-> argument to the elements of the `valarray<T>` object to which the
-> `indirect_array` object refers.
+This function has reference semantics, assigning the value of its
+argument to the elements of the `valarray<T>` object to which the
+`indirect_array` object refers.
 
 ### `valarray` range access <a id="valarray.range">[[valarray.range]]</a>
 
@@ -5478,15 +5470,14 @@ template<class T> unspecified{1} begin(valarray<T>& v);
 template<class T> unspecified{2} begin(const valarray<T>& v);
 ```
 
-> *Returns:* An iterator referencing the first value in the array.
+*Returns:* An iterator referencing the first value in the array.
 
 ``` cpp
 template<class T> unspecified{1} end(valarray<T>& v);
 template<class T> unspecified{2} end(const valarray<T>& v);
 ```
 
-> *Returns:* An iterator referencing one past the last value in the
-> array.
+*Returns:* An iterator referencing one past the last value in the array.
 
 ## Mathematical functions for floating-point types <a id="c.math">[[c.math]]</a>
 
@@ -5932,22 +5923,22 @@ constexpr long int abs(long int j);
 constexpr long long int abs(long long int j);
 ```
 
-> *Effects:* These functions have the semantics specified in the C
-> standard library for the functions `abs`, `labs`, and `llabs`,
-> respectively.
->
-> *Remarks:* If `abs` is called with an argument of type `X` for which
-> `is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int`
-> by integral promotion [[conv.prom]], the program is ill-formed.
->
-> \[*Note 12*: Arguments that can be promoted to `int` are permitted for
-> compatibility with C. — *end note*\]
+*Effects:* These functions have the semantics specified in the C
+standard library for the functions `abs`, `labs`, and `llabs`,
+respectively.
+
+*Remarks:* If `abs` is called with an argument of type `X` for which
+`is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int` by
+integral promotion [[conv.prom]], the program is ill-formed.
+
+\[*Note 3*: Arguments that can be promoted to `int` are permitted for
+compatibility with C. — *end note*\]
 
 ``` cpp
 constexpr floating-point-type abs(floating-point-type x);
 ```
 
-> *Returns:* The absolute value of `x`.
+*Returns:* The absolute value of `x`.
 
 ### Three-dimensional hypotenuse <a id="c.math.hypot3">[[c.math.hypot3]]</a>
 
@@ -5955,7 +5946,7 @@ constexpr floating-point-type abs(floating-point-type x);
 floating-point-type hypot(floating-point-type x, floating-point-type y, floating-point-type z);
 ```
 
-> *Returns:* $\sqrt{x^2+y^2+z^2}$.
+*Returns:* $\sqrt{x^2+y^2+z^2}$.
 
 ### Linear interpolation <a id="c.math.lerp">[[c.math.lerp]]</a>
 
@@ -5964,25 +5955,25 @@ constexpr floating-point-type lerp(floating-point-type a, floating-point-type b,
                                    floating-point-type t) noexcept;
 ```
 
-> *Returns:* a+t(b-a).
->
-> *Remarks:* Let `r` be the value returned. If
-> `isfinite(a) && isfinite(b)`, then:
->
-> - If `t == 0`, then `r == a`.
->
-> - If `t == 1`, then `r == b`.
->
-> - If `t >= 0 && t <= 1`, then `isfinite(r)`.
->
-> - If `isfinite(t) && a == b`, then `r == a`.
->
-> - If `isfinite(t) || !isnan(t) && b-a != 0`, then `!isnan(r)`.
->
-> Let *`CMP`*`(x,y)` be `1` if `x > y`, `-1` if `x < y`, and `0`
-> otherwise. For any `t1` and `t2`, the product of
-> *`CMP`*`(lerp(a, b, t2), lerp(a, b, t1))`, *`CMP`*`(t2, t1)`, and
-> *`CMP`*`(b, a)` is non-negative.
+*Returns:* a+t(b-a).
+
+*Remarks:* Let `r` be the value returned. If
+`isfinite(a) && isfinite(b)`, then:
+
+- If `t == 0`, then `r == a`.
+
+- If `t == 1`, then `r == b`.
+
+- If `t >= 0 && t <= 1`, then `isfinite(r)`.
+
+- If `isfinite(t) && a == b`, then `r == a`.
+
+- If `isfinite(t) || !isnan(t) && b-a != 0`, then `!isnan(r)`.
+
+Let *`CMP`*`(x,y)` be `1` if `x > y`, `-1` if `x < y`, and `0`
+otherwise. For any `t1` and `t2`, the product of
+*`CMP`*`(lerp(a, b, t2), lerp(a, b, t1))`, *`CMP`*`(t2, t1)`, and
+*`CMP`*`(b, a)` is non-negative.
 
 ### Classification / comparison functions <a id="c.math.fpclass">[[c.math.fpclass]]</a>
 
@@ -6017,16 +6008,16 @@ float        assoc_laguerref(unsigned n, unsigned m, float x);
 long double  assoc_laguerrel(unsigned n, unsigned m, long double x);
 ```
 
-> *Effects:* These functions compute the associated Laguerre polynomials
-> of their respective arguments `n`, `m`, and `x`.
->
-> *Returns:* $$\mathsf{L}_n^m(x) =
->    (-1)^m \frac{\mathsf{d} ^ m}{\mathsf{d}x ^ m} \, \mathsf{L}_{n+m}(x)
->    \text{ ,\quad for $x \ge 0$,}$$ where n is `n`, m is `m`, and x is
-> `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `n >= 128` or if `m >= 128`.
+*Effects:* These functions compute the associated Laguerre polynomials
+of their respective arguments `n`, `m`, and `x`.
+
+*Returns:* $$\mathsf{L}_n^m(x) =
+   (-1)^m \frac{\mathsf{d} ^ m}{\mathsf{d}x ^ m} \, \mathsf{L}_{n+m}(x)
+   \text{ ,\quad for $x \ge 0$,}$$ where n is `n`, m is `m`, and x is
+`x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `n >= 128` or if `m >= 128`.
 
 #### Associated Legendre functions <a id="sf.cmath.assoc.legendre">[[sf.cmath.assoc.legendre]]</a>
 
@@ -6036,16 +6027,16 @@ float        assoc_legendref(unsigned l, unsigned m, float x);
 long double  assoc_legendrel(unsigned l, unsigned m, long double x);
 ```
 
-> *Effects:* These functions compute the associated Legendre functions
-> of their respective arguments `l`, `m`, and `x`.
->
-> *Returns:* $$\mathsf{P}_\ell^m(x) = (1 - x^2) ^ {m/2} \:
->    \frac{\mathsf{d} ^ m}{\mathsf{d}x ^ m} \, \mathsf{P}_\ell(x)
->    \text{ ,\quad for $|x| \le 1$,}$$ where l is `l`, m is `m`, and x
-> is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `l >= 128`.
+*Effects:* These functions compute the associated Legendre functions of
+their respective arguments `l`, `m`, and `x`.
+
+*Returns:* $$\mathsf{P}_\ell^m(x) = (1 - x^2) ^ {m/2} \:
+   \frac{\mathsf{d} ^ m}{\mathsf{d}x ^ m} \, \mathsf{P}_\ell(x)
+   \text{ ,\quad for $|x| \le 1$,}$$ where l is `l`, m is `m`, and x is
+`x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `l >= 128`.
 
 #### Beta function <a id="sf.cmath.beta">[[sf.cmath.beta]]</a>
 
@@ -6055,13 +6046,12 @@ float        betaf(float x, float y);
 long double  betal(long double x, long double y);
 ```
 
-> *Effects:* These functions compute the beta function of their
-> respective arguments `x` and `y`.
->
-> *Returns:*
-> $$\mathsf{B}(x, y) = \frac{\Gamma(x) \, \Gamma(y)}{\Gamma(x + y)}
->    \text{ ,\quad for $x > 0$,\, $y > 0$,}$$ where x is `x` and y is
-> `y`.
+*Effects:* These functions compute the beta function of their respective
+arguments `x` and `y`.
+
+*Returns:*
+$$\mathsf{B}(x, y) = \frac{\Gamma(x) \, \Gamma(y)}{\Gamma(x + y)}
+   \text{ ,\quad for $x > 0$,\, $y > 0$,}$$ where x is `x` and y is `y`.
 
 #### Complete elliptic integral of the first kind <a id="sf.cmath.comp.ellint.1">[[sf.cmath.comp.ellint.1]]</a>
 
@@ -6071,14 +6061,14 @@ float        comp_ellint_1f(float k);
 long double  comp_ellint_1l(long double k);
 ```
 
-> *Effects:* These functions compute the complete elliptic integral of
-> the first kind of their respective arguments `k`.
->
-> *Returns:*
-> $$\mathsf{K}(k) = \mathsf{F}(k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
-> where k is `k`.
->
-> See also [[sf.cmath.ellint.1]].
+*Effects:* These functions compute the complete elliptic integral of the
+first kind of their respective arguments `k`.
+
+*Returns:*
+$$\mathsf{K}(k) = \mathsf{F}(k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
+where k is `k`.
+
+See also [[sf.cmath.ellint.1]].
 
 #### Complete elliptic integral of the second kind <a id="sf.cmath.comp.ellint.2">[[sf.cmath.comp.ellint.2]]</a>
 
@@ -6088,14 +6078,14 @@ float        comp_ellint_2f(float k);
 long double  comp_ellint_2l(long double k);
 ```
 
-> *Effects:* These functions compute the complete elliptic integral of
-> the second kind of their respective arguments `k`.
->
-> *Returns:*
-> $$\mathsf{E}(k) = \mathsf{E}(k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
-> where k is `k`.
->
-> See also [[sf.cmath.ellint.2]].
+*Effects:* These functions compute the complete elliptic integral of the
+second kind of their respective arguments `k`.
+
+*Returns:*
+$$\mathsf{E}(k) = \mathsf{E}(k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
+where k is `k`.
+
+See also [[sf.cmath.ellint.2]].
 
 #### Complete elliptic integral of the third kind <a id="sf.cmath.comp.ellint.3">[[sf.cmath.comp.ellint.3]]</a>
 
@@ -6105,14 +6095,14 @@ float        comp_ellint_3f(float k, float nu);
 long double  comp_ellint_3l(long double k, long double nu);
 ```
 
-> *Effects:* These functions compute the complete elliptic integral of
-> the third kind of their respective arguments `k` and `nu`.
->
-> *Returns:*
-> $$\mathsf{\Pi}(\nu, k) = \mathsf{\Pi}(\nu, k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
-> where k is `k` and $\nu$ is `nu`.
->
-> See also [[sf.cmath.ellint.3]].
+*Effects:* These functions compute the complete elliptic integral of the
+third kind of their respective arguments `k` and `nu`.
+
+*Returns:*
+$$\mathsf{\Pi}(\nu, k) = \mathsf{\Pi}(\nu, k, \pi / 2) \text{ ,\quad for $|k| \le 1$,}$$
+where k is `k` and $\nu$ is `nu`.
+
+See also [[sf.cmath.ellint.3]].
 
 #### Regular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.i">[[sf.cmath.cyl.bessel.i]]</a>
 
@@ -6122,18 +6112,18 @@ float        cyl_bessel_if(float nu, float x);
 long double  cyl_bessel_il(long double nu, long double x);
 ```
 
-> *Effects:* These functions compute the regular modified cylindrical
-> Bessel functions of their respective arguments `nu` and `x`.
->
-> *Returns:* $$\mathsf{I}_\nu(x) =
->      \mathrm{i}^{-\nu} \mathsf{J}_\nu(\mathrm{i}x) =
->      \sum_{k=0}^\infty \frac{(x/2)^{\nu+2k}}{k! \: \Gamma(\nu+k+1)}
->      \text{ ,\quad for $x \ge 0$,}$$ where $\nu$ is `nu` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `nu >= 128`.
->
-> See also [[sf.cmath.cyl.bessel.j]].
+*Effects:* These functions compute the regular modified cylindrical
+Bessel functions of their respective arguments `nu` and `x`.
+
+*Returns:* $$\mathsf{I}_\nu(x) =
+     \mathrm{i}^{-\nu} \mathsf{J}_\nu(\mathrm{i}x) =
+     \sum_{k=0}^\infty \frac{(x/2)^{\nu+2k}}{k! \: \Gamma(\nu+k+1)}
+     \text{ ,\quad for $x \ge 0$,}$$ where $\nu$ is `nu` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
+
+See also [[sf.cmath.cyl.bessel.j]].
 
 #### Cylindrical Bessel functions of the first kind <a id="sf.cmath.cyl.bessel.j">[[sf.cmath.cyl.bessel.j]]</a>
 
@@ -6143,15 +6133,15 @@ float        cyl_bessel_jf(float nu, float x);
 long double  cyl_bessel_jl(long double nu, long double x);
 ```
 
-> *Effects:* These functions compute the cylindrical Bessel functions of
-> the first kind of their respective arguments `nu` and `x`.
->
-> *Returns:* $$\mathsf{J}_\nu(x) =
->    \sum_{k=0}^\infty \frac{(-1)^k (x/2)^{\nu+2k}}{k! \: \Gamma(\nu+k+1)}
->    \text{ ,\quad for $x \ge 0$,}$$ where $\nu$ is `nu` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `nu >= 128`.
+*Effects:* These functions compute the cylindrical Bessel functions of
+the first kind of their respective arguments `nu` and `x`.
+
+*Returns:* $$\mathsf{J}_\nu(x) =
+   \sum_{k=0}^\infty \frac{(-1)^k (x/2)^{\nu+2k}}{k! \: \Gamma(\nu+k+1)}
+   \text{ ,\quad for $x \ge 0$,}$$ where $\nu$ is `nu` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
 
 #### Irregular modified cylindrical Bessel functions <a id="sf.cmath.cyl.bessel.k">[[sf.cmath.cyl.bessel.k]]</a>
 
@@ -6161,37 +6151,37 @@ float        cyl_bessel_kf(float nu, float x);
 long double  cyl_bessel_kl(long double nu, long double x);
 ```
 
-> *Effects:* These functions compute the irregular modified cylindrical
-> Bessel functions of their respective arguments `nu` and `x`.
->
-> *Returns:* $$%
->   \mathsf{K}_\nu(x) =
->   (\pi/2)\mathrm{i}^{\nu+1} (            \mathsf{J}_\nu(\mathrm{i}x)
->                 + \mathrm{i} \mathsf{N}_\nu(\mathrm{i}x)
->                 )
->   =
->   \left\{
->   \begin{array}{cl}
->   \displaystyle
->   \frac{\pi}{2}
->   \frac{\mathsf{I}_{-\nu}(x) - \mathsf{I}_{\nu}(x)}
->        {\sin \nu\pi },
->   & \mbox{for $x \ge 0$ and non-integral $\nu$}
->   \\
->   \\
->   \displaystyle
->   \frac{\pi}{2}
->   \lim_{\mu \rightarrow \nu} \frac{\mathsf{I}_{-\mu}(x) - \mathsf{I}_{\mu}(x)}
->                                   {\sin \mu\pi },
->   & \mbox{for $x \ge 0$ and integral $\nu$}
->   \end{array}
->   \right.$$ where $\nu$ is `nu` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `nu >= 128`.
->
-> See also [[sf.cmath.cyl.bessel.i]], [[sf.cmath.cyl.bessel.j]],
-> [[sf.cmath.cyl.neumann]].
+*Effects:* These functions compute the irregular modified cylindrical
+Bessel functions of their respective arguments `nu` and `x`.
+
+*Returns:* $$%
+  \mathsf{K}_\nu(x) =
+  (\pi/2)\mathrm{i}^{\nu+1} (            \mathsf{J}_\nu(\mathrm{i}x)
+                + \mathrm{i} \mathsf{N}_\nu(\mathrm{i}x)
+                )
+  =
+  \left\{
+  \begin{array}{cl}
+  \displaystyle
+  \frac{\pi}{2}
+  \frac{\mathsf{I}_{-\nu}(x) - \mathsf{I}_{\nu}(x)}
+       {\sin \nu\pi },
+  & \mbox{for $x \ge 0$ and non-integral $\nu$}
+  \\
+  \\
+  \displaystyle
+  \frac{\pi}{2}
+  \lim_{\mu \rightarrow \nu} \frac{\mathsf{I}_{-\mu}(x) - \mathsf{I}_{\mu}(x)}
+                                  {\sin \mu\pi },
+  & \mbox{for $x \ge 0$ and integral $\nu$}
+  \end{array}
+  \right.$$ where $\nu$ is `nu` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
+
+See also [[sf.cmath.cyl.bessel.i]], [[sf.cmath.cyl.bessel.j]],
+[[sf.cmath.cyl.neumann]].
 
 #### Cylindrical Neumann functions <a id="sf.cmath.cyl.neumann">[[sf.cmath.cyl.neumann]]</a>
 
@@ -6201,31 +6191,31 @@ float        cyl_neumannf(float nu, float x);
 long double  cyl_neumannl(long double nu, long double x);
 ```
 
-> *Effects:* These functions compute the cylindrical Neumann functions,
-> also known as the cylindrical Bessel functions of the second kind, of
-> their respective arguments `nu` and `x`.
->
-> *Returns:* $$%
->   \mathsf{N}_\nu(x) =
->   \left\{
->   \begin{array}{cl}
->   \displaystyle
->   \frac{\mathsf{J}_\nu(x) \cos \nu\pi - \mathsf{J}_{-\nu}(x)}
->        {\sin \nu\pi },
->   & \mbox{for $x \ge 0$ and non-integral $\nu$}
->   \\
->   \\
->   \displaystyle
->   \lim_{\mu \rightarrow \nu} \frac{\mathsf{J}_\mu(x) \cos \mu\pi - \mathsf{J}_{-\mu}(x)}
->                                 {\sin \mu\pi },
->   & \mbox{for $x \ge 0$ and integral $\nu$}
->   \end{array}
->   \right.$$ where $\nu$ is `nu` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `nu >= 128`.
->
-> See also [[sf.cmath.cyl.bessel.j]].
+*Effects:* These functions compute the cylindrical Neumann functions,
+also known as the cylindrical Bessel functions of the second kind, of
+their respective arguments `nu` and `x`.
+
+*Returns:* $$%
+  \mathsf{N}_\nu(x) =
+  \left\{
+  \begin{array}{cl}
+  \displaystyle
+  \frac{\mathsf{J}_\nu(x) \cos \nu\pi - \mathsf{J}_{-\nu}(x)}
+       {\sin \nu\pi },
+  & \mbox{for $x \ge 0$ and non-integral $\nu$}
+  \\
+  \\
+  \displaystyle
+  \lim_{\mu \rightarrow \nu} \frac{\mathsf{J}_\mu(x) \cos \mu\pi - \mathsf{J}_{-\mu}(x)}
+                                {\sin \mu\pi },
+  & \mbox{for $x \ge 0$ and integral $\nu$}
+  \end{array}
+  \right.$$ where $\nu$ is `nu` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `nu >= 128`.
+
+See also [[sf.cmath.cyl.bessel.j]].
 
 #### Incomplete elliptic integral of the first kind <a id="sf.cmath.ellint.1">[[sf.cmath.ellint.1]]</a>
 
@@ -6235,14 +6225,14 @@ float        ellint_1f(float k, float phi);
 long double  ellint_1l(long double k, long double phi);
 ```
 
-> *Effects:* These functions compute the incomplete elliptic integral of
-> the first kind of their respective arguments `k` and `phi` (`phi`
-> measured in radians).
->
-> *Returns:* $$\mathsf{F}(k, \phi) =
->      \int_0^\phi \! \frac{\mathsf{d}\theta}{\sqrt{1 - k^2 \sin^2 \theta}}
->      \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is
-> `phi`.
+*Effects:* These functions compute the incomplete elliptic integral of
+the first kind of their respective arguments `k` and `phi` (`phi`
+measured in radians).
+
+*Returns:* $$\mathsf{F}(k, \phi) =
+     \int_0^\phi \! \frac{\mathsf{d}\theta}{\sqrt{1 - k^2 \sin^2 \theta}}
+     \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is
+`phi`.
 
 #### Incomplete elliptic integral of the second kind <a id="sf.cmath.ellint.2">[[sf.cmath.ellint.2]]</a>
 
@@ -6252,14 +6242,13 @@ float        ellint_2f(float k, float phi);
 long double  ellint_2l(long double k, long double phi);
 ```
 
-> *Effects:* These functions compute the incomplete elliptic integral of
-> the second kind of their respective arguments `k` and `phi` (`phi`
-> measured in radians).
->
-> *Returns:*
-> $$\mathsf{E}(k, \phi) = \int_0^\phi \! \sqrt{1 - k^2 \sin^2 \theta} \, \mathsf{d}\theta
->    \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is
-> `phi`.
+*Effects:* These functions compute the incomplete elliptic integral of
+the second kind of their respective arguments `k` and `phi` (`phi`
+measured in radians).
+
+*Returns:*
+$$\mathsf{E}(k, \phi) = \int_0^\phi \! \sqrt{1 - k^2 \sin^2 \theta} \, \mathsf{d}\theta
+   \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is `phi`.
 
 #### Incomplete elliptic integral of the third kind <a id="sf.cmath.ellint.3">[[sf.cmath.ellint.3]]</a>
 
@@ -6270,13 +6259,13 @@ float        ellint_3f(float k, float nu, float phi);
 long double  ellint_3l(long double k, long double nu, long double phi);
 ```
 
-> *Effects:* These functions compute the incomplete elliptic integral of
-> the third kind of their respective arguments `k`, `nu`, and `phi`
-> (`phi` measured in radians).
->
-> *Returns:* $$\mathsf{\Pi}(\nu, k, \phi) = \int_0^\phi \!
->    \frac{ \mathsf{d}\theta }{ (1 - \nu \, \sin^2 \theta) \sqrt{1 - k^2 \sin^2 \theta} } \text{ ,\quad for $|k| \le 1$,}$$
-> where $\nu$ is `nu`, k is `k`, and $\phi$ is `phi`.
+*Effects:* These functions compute the incomplete elliptic integral of
+the third kind of their respective arguments `k`, `nu`, and `phi` (`phi`
+measured in radians).
+
+*Returns:* $$\mathsf{\Pi}(\nu, k, \phi) = \int_0^\phi \!
+   \frac{ \mathsf{d}\theta }{ (1 - \nu \, \sin^2 \theta) \sqrt{1 - k^2 \sin^2 \theta} } \text{ ,\quad for $|k| \le 1$,}$$
+where $\nu$ is `nu`, k is `k`, and $\phi$ is `phi`.
 
 #### Exponential integral <a id="sf.cmath.expint">[[sf.cmath.expint]]</a>
 
@@ -6286,14 +6275,14 @@ float        expintf(float x);
 long double  expintl(long double x);
 ```
 
-> *Effects:* These functions compute the exponential integral of their
-> respective arguments `x`.
->
-> *Returns:* $$%
->   \mathsf{Ei}(x) =
->   - \int_{-x}^\infty \frac{e^{-t}}
->                           {t     } \, \mathsf{d}t
-> \;$$ where x is `x`.
+*Effects:* These functions compute the exponential integral of their
+respective arguments `x`.
+
+*Returns:* $$%
+  \mathsf{Ei}(x) =
+  - \int_{-x}^\infty \frac{e^{-t}}
+                          {t     } \, \mathsf{d}t
+\;$$ where x is `x`.
 
 #### Hermite polynomials <a id="sf.cmath.hermite">[[sf.cmath.hermite]]</a>
 
@@ -6303,17 +6292,17 @@ float        hermitef(unsigned n, float x);
 long double  hermitel(unsigned n, long double x);
 ```
 
-> *Effects:* These functions compute the Hermite polynomials of their
-> respective arguments `n` and `x`.
->
-> *Returns:* $$%
->   \mathsf{H}_n(x) =
->   (-1)^n e^{x^2} \frac{ \mathsf{d} ^n}
->               { \mathsf{d}x^n} \, e^{-x^2}
-> \;$$ where n is `n` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `n >= 128`.
+*Effects:* These functions compute the Hermite polynomials of their
+respective arguments `n` and `x`.
+
+*Returns:* $$%
+  \mathsf{H}_n(x) =
+  (-1)^n e^{x^2} \frac{ \mathsf{d} ^n}
+              { \mathsf{d}x^n} \, e^{-x^2}
+\;$$ where n is `n` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
 
 #### Laguerre polynomials <a id="sf.cmath.laguerre">[[sf.cmath.laguerre]]</a>
 
@@ -6323,15 +6312,15 @@ float        laguerref(unsigned n, float x);
 long double  laguerrel(unsigned n, long double x);
 ```
 
-> *Effects:* These functions compute the Laguerre polynomials of their
-> respective arguments `n` and `x`.
->
-> *Returns:* $$\mathsf{L}_n(x) =
->      \frac{e^x}{n!} \frac{\mathsf{d}^n}{\mathsf{d}x^n} \, (x^n e^{-x})
->      \text{ ,\quad for $x \ge 0$,}$$ where n is `n` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `n >= 128`.
+*Effects:* These functions compute the Laguerre polynomials of their
+respective arguments `n` and `x`.
+
+*Returns:* $$\mathsf{L}_n(x) =
+     \frac{e^x}{n!} \frac{\mathsf{d}^n}{\mathsf{d}x^n} \, (x^n e^{-x})
+     \text{ ,\quad for $x \ge 0$,}$$ where n is `n` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
 
 #### Legendre polynomials <a id="sf.cmath.legendre">[[sf.cmath.legendre]]</a>
 
@@ -6341,16 +6330,16 @@ float        legendref(unsigned l, float x);
 long double  legendrel(unsigned l, long double x);
 ```
 
-> *Effects:* These functions compute the Legendre polynomials of their
-> respective arguments `l` and `x`.
->
-> *Returns:* $$\mathsf{P}_\ell(x) =
->      \frac{1}{2^\ell \, \ell!}
->      \frac{\mathsf{d}^\ell}{\mathsf{d}x^\ell} \, (x^2 - 1) ^ \ell
->      \text{ ,\quad for $|x| \le 1$,}$$ where l is `l` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `l >= 128`.
+*Effects:* These functions compute the Legendre polynomials of their
+respective arguments `l` and `x`.
+
+*Returns:* $$\mathsf{P}_\ell(x) =
+     \frac{1}{2^\ell \, \ell!}
+     \frac{\mathsf{d}^\ell}{\mathsf{d}x^\ell} \, (x^2 - 1) ^ \ell
+     \text{ ,\quad for $|x| \le 1$,}$$ where l is `l` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `l >= 128`.
 
 #### Riemann zeta function <a id="sf.cmath.riemann.zeta">[[sf.cmath.riemann.zeta]]</a>
 
@@ -6360,31 +6349,31 @@ float        riemann_zetaf(float x);
 long double  riemann_zetal(long double x);
 ```
 
-> *Effects:* These functions compute the Riemann zeta function of their
-> respective arguments `x`.
->
-> *Returns:* $$%
->   \mathsf{\zeta}(x) =
->   \left\{
->   \begin{array}{cl}
->   \displaystyle
->   \sum_{k=1}^\infty k^{-x},
->   & \mbox{for $x > 1$}
->   \\
->   \\
->   \displaystyle
->   \frac{1}
->     {1 - 2^{1-x}}
->   \sum_{k=1}^\infty (-1)^{k-1} k^{-x},
->   & \mbox{for $0 \le x \le 1$}
->   \\
->   \\
->   \displaystyle
->   2^x \pi^{x-1} \sin(\frac{\pi x}{2}) \, \Gamma(1-x) \, \zeta(1-x),
->   & \mbox{for $x < 0$}
->   \end{array}
->   \right.
-> \;$$ where x is `x`.
+*Effects:* These functions compute the Riemann zeta function of their
+respective arguments `x`.
+
+*Returns:* $$%
+  \mathsf{\zeta}(x) =
+  \left\{
+  \begin{array}{cl}
+  \displaystyle
+  \sum_{k=1}^\infty k^{-x},
+  & \mbox{for $x > 1$}
+  \\
+  \\
+  \displaystyle
+  \frac{1}
+    {1 - 2^{1-x}}
+  \sum_{k=1}^\infty (-1)^{k-1} k^{-x},
+  & \mbox{for $0 \le x \le 1$}
+  \\
+  \\
+  \displaystyle
+  2^x \pi^{x-1} \sin(\frac{\pi x}{2}) \, \Gamma(1-x) \, \zeta(1-x),
+  & \mbox{for $x < 0$}
+  \end{array}
+  \right.
+\;$$ where x is `x`.
 
 #### Spherical Bessel functions of the first kind <a id="sf.cmath.sph.bessel">[[sf.cmath.sph.bessel]]</a>
 
@@ -6394,17 +6383,17 @@ float        sph_besself(unsigned n, float x);
 long double  sph_bessell(unsigned n, long double x);
 ```
 
-> *Effects:* These functions compute the spherical Bessel functions of
-> the first kind of their respective arguments `n` and `x`.
->
-> *Returns:*
-> $$\mathsf{j}_n(x) = (\pi/2x)^{1\!/\!2} \mathsf{J}_{n + 1\!/\!2}(x) \text{ ,\quad for $x \ge 0$,}$$
-> where n is `n` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `n >= 128`.
->
-> See also [[sf.cmath.cyl.bessel.j]].
+*Effects:* These functions compute the spherical Bessel functions of the
+first kind of their respective arguments `n` and `x`.
+
+*Returns:*
+$$\mathsf{j}_n(x) = (\pi/2x)^{1\!/\!2} \mathsf{J}_{n + 1\!/\!2}(x) \text{ ,\quad for $x \ge 0$,}$$
+where n is `n` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
+
+See also [[sf.cmath.cyl.bessel.j]].
 
 #### Spherical associated Legendre functions <a id="sf.cmath.sph.legendre">[[sf.cmath.sph.legendre]]</a>
 
@@ -6414,21 +6403,21 @@ float        sph_legendref(unsigned l, unsigned m, float theta);
 long double  sph_legendrel(unsigned l, unsigned m, long double theta);
 ```
 
-> *Effects:* These functions compute the spherical associated Legendre
-> functions of their respective arguments `l`, `m`, and `theta` (`theta`
-> measured in radians).
->
-> *Returns:* $$\mathsf{Y}_\ell^m(\theta, 0)$$ where
-> $$\mathsf{Y}_\ell^m(\theta, \phi) =
->      (-1)^m \left[\frac{(2 \ell + 1)}{4 \pi} \frac{(\ell - m)!}{(\ell + m)!}\right]^{1/2}
->      \mathsf{P}_\ell^m (\cos\theta) e^{i m \phi}
->      \text{ ,\quad for $|m| \le \ell$,}$$ and l is `l`, m is `m`, and
-> θ is `theta`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `l >= 128`.
->
-> See also [[sf.cmath.assoc.legendre]].
+*Effects:* These functions compute the spherical associated Legendre
+functions of their respective arguments `l`, `m`, and `theta` (`theta`
+measured in radians).
+
+*Returns:* $$\mathsf{Y}_\ell^m(\theta, 0)$$ where
+$$\mathsf{Y}_\ell^m(\theta, \phi) =
+     (-1)^m \left[\frac{(2 \ell + 1)}{4 \pi} \frac{(\ell - m)!}{(\ell + m)!}\right]^{1/2}
+     \mathsf{P}_\ell^m (\cos\theta) e^{i m \phi}
+     \text{ ,\quad for $|m| \le \ell$,}$$ and l is `l`, m is `m`, and θ
+is `theta`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `l >= 128`.
+
+See also [[sf.cmath.assoc.legendre]].
 
 #### Spherical Neumann functions <a id="sf.cmath.sph.neumann">[[sf.cmath.sph.neumann]]</a>
 
@@ -6438,18 +6427,18 @@ float        sph_neumannf(unsigned n, float x);
 long double  sph_neumannl(unsigned n, long double x);
 ```
 
-> *Effects:* These functions compute the spherical Neumann functions,
-> also known as the spherical Bessel functions of the second kind, of
-> their respective arguments `n` and `x`.
->
-> *Returns:*
-> $$\mathsf{n}_n(x) = (\pi/2x)^{1\!/\!2} \mathsf{N}_{n + 1\!/\!2}(x)
->    \text{ ,\quad for $x \ge 0$,}$$ where n is `n` and x is `x`.
->
-> *Remarks:* The effect of calling each of these functions is
-> *implementation-defined* if `n >= 128`.
->
-> See also [[sf.cmath.cyl.neumann]].
+*Effects:* These functions compute the spherical Neumann functions, also
+known as the spherical Bessel functions of the second kind, of their
+respective arguments `n` and `x`.
+
+*Returns:*
+$$\mathsf{n}_n(x) = (\pi/2x)^{1\!/\!2} \mathsf{N}_{n + 1\!/\!2}(x)
+   \text{ ,\quad for $x \ge 0$,}$$ where n is `n` and x is `x`.
+
+*Remarks:* The effect of calling each of these functions is
+*implementation-defined* if `n >= 128`.
+
+See also [[sf.cmath.cyl.neumann]].
 
 ## Numbers <a id="numbers">[[numbers]]</a>
 

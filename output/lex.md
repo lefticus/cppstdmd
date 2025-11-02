@@ -183,45 +183,45 @@ context. — *end note*\]
 
 |  |  |
 | --- | --- |
-| \ucode{0009} | \uname{character tabulation} |
-| \ucode{000b} | \uname{line tabulation} |
-| \ucode{000c} | \uname{form feed} |
-| \ucode{0020} | \uname{space} |
-| \ucode{000a} | \uname{line feed} | new-line |
-| \ucode{0021} | \uname{exclamation mark} | `!` |
-| \ucode{0022} | \uname{quotation mark} | `"` |
-| \ucode{0023} | \uname{number sign} | `\#` |
-| \ucode{0025} | \uname{percent sign} | `\%` |
-| \ucode{0026} | \uname{ampersand} | `\&` |
-| \ucode{0027} | \uname{apostrophe} | `'` |
-| \ucode{0028} | \uname{left parenthesis} | `(` |
-| \ucode{0029} | \uname{right parenthesis} | `)` |
-| \ucode{002a} | \uname{asterisk} | `*` |
-| \ucode{002b} | \uname{plus sign} | `+` |
-| \ucode{002c} | \uname{comma} | `,` |
-| \ucode{002d} | \uname{hyphen-minus} | `-` |
-| \ucode{002e} | \uname{full stop} | `.` |
-| \ucode{002f} | \uname{solidus} | `/` |
-| \ucode{0030} .. \ucode{0039} | \uname{digit zero .. nine} | `0 1 2 3 4 5 6 7 8 9` |
-| \ucode{003a} | \uname{colon} | `:` |
-| \ucode{003b} | \uname{semicolon} | `;` |
-| \ucode{003c} | \uname{less-than sign} | `<` |
-| \ucode{003d} | \uname{equals sign} | `=` |
-| \ucode{003e} | \uname{greater-than sign} | `>` |
-| \ucode{003f} | \uname{question mark} | `?` |
-| \ucode{0041} .. \ucode{005a} | \uname{latin capital letter a .. z} | `A B C D E F G H I J K L M` |
+| `U+0009` | \uname{character tabulation} |
+| `U+000b` | \uname{line tabulation} |
+| `U+000c` | \uname{form feed} |
+| `U+0020` | \uname{space} |
+| `U+000a` | \uname{line feed} | new-line |
+| `U+0021` | \uname{exclamation mark} | `!` |
+| `U+0022` | \uname{quotation mark} | `"` |
+| `U+0023` | \uname{number sign} | `\#` |
+| `U+0025` | \uname{percent sign} | `\%` |
+| `U+0026` | \uname{ampersand} | `\&` |
+| `U+0027` | \uname{apostrophe} | `'` |
+| `U+0028` | \uname{left parenthesis} | `(` |
+| `U+0029` | \uname{right parenthesis} | `)` |
+| `U+002a` | \uname{asterisk} | `*` |
+| `U+002b` | \uname{plus sign} | `+` |
+| `U+002c` | \uname{comma} | `,` |
+| `U+002d` | \uname{hyphen-minus} | `-` |
+| `U+002e` | \uname{full stop} | `.` |
+| `U+002f` | \uname{solidus} | `/` |
+| `U+0030` .. `U+0039` | \uname{digit zero .. nine} | `0 1 2 3 4 5 6 7 8 9` |
+| `U+003a` | \uname{colon} | `:` |
+| `U+003b` | \uname{semicolon} | `;` |
+| `U+003c` | \uname{less-than sign} | `<` |
+| `U+003d` | \uname{equals sign} | `=` |
+| `U+003e` | \uname{greater-than sign} | `>` |
+| `U+003f` | \uname{question mark} | `?` |
+| `U+0041` .. `U+005a` | \uname{latin capital letter a .. z} | `A B C D E F G H I J K L M` |
 |  |  | `N O P Q R S T U V W X Y Z` |
-| \ucode{005b} | \uname{left square bracket} | `[` |
-| \ucode{005c} | \uname{reverse solidus} | `\` |
-| \ucode{005d} | \uname{right square bracket} | `]` |
-| \ucode{005e} | \uname{circumflex accent} | `\caret` |
-| \ucode{005f} | \uname{low line} | `_` |
-| \ucode{0061} .. \ucode{007a} | \uname{latin small letter a .. z} | `a b c d e f g h i j k l m` |
+| `U+005b` | \uname{left square bracket} | `[` |
+| `U+005c` | \uname{reverse solidus} | `\` |
+| `U+005d` | \uname{right square bracket} | `]` |
+| `U+005e` | \uname{circumflex accent} | `\caret` |
+| `U+005f` | \uname{low line} | `_` |
+| `U+0061` .. `U+007a` | \uname{latin small letter a .. z} | `a b c d e f g h i j k l m` |
 |  |  | `n o p q r s t u v w x y z` |
-| \ucode{007b} | \uname{left curly bracket} | \texttt{\{} |
-| \ucode{007c} | \uname{vertical line} | `|` |
-| \ucode{007d} | \uname{right curly bracket} | `\`} |
-| \ucode{007e} | \uname{tilde} | `\textasciitilde` |
+| `U+007b` | \uname{left curly bracket} | \texttt{\{} |
+| `U+007c` | \uname{vertical line} | `|` |
+| `U+007d` | \uname{right curly bracket} | `\`} |
+| `U+007e` | \uname{tilde} | `\textasciitilde` |
 The *universal-character-name* construct provides a way to name other
 characters.
 
@@ -295,10 +295,10 @@ basic character set, plus the control characters specified in
 
 |  |  |
 | --- | --- |
-| \ucode{0000} | \uname{null} |
-| \ucode{0007} | \uname{alert} |
-| \ucode{0008} | \uname{backspace} |
-| \ucode{000d} | \uname{carriage return} |
+| `U+0000` | \uname{null} |
+| `U+0007` | \uname{alert} |
+| `U+0008` | \uname{backspace} |
+| `U+000d` | \uname{carriage return} |
 A *code unit* is an integer value of character type
 [[basic.fundamental]]. Characters in a *character-literal* other than a
 multicharacter or non-encodable character literal or in a
@@ -321,13 +321,13 @@ character set. — *end note*\]
 
 The character is encoded as the value `0`. No other element of the
 translation character set is encoded with a code unit of value `0`. The
-code unit value of each decimal digit character after the digit `0` ()
-shall be one greater than the value of the previous. The ordinary and
-wide literal encodings are otherwise *implementation-defined*. For a
-UTF-8, UTF-16, or UTF-32 literal, the Unicode scalar value corresponding
-to each character of the translation character set is encoded as
-specified in the Unicode Standard for the respective Unicode encoding
-form.
+code unit value of each decimal digit character after the digit `0`
+(`U+0030`) shall be one greater than the value of the previous. The
+ordinary and wide literal encodings are otherwise
+*implementation-defined*. For a UTF-8, UTF-16, or UTF-32 literal, the
+Unicode scalar value corresponding to each character of the translation
+character set is encoded as specified in the Unicode Standard for the
+respective Unicode encoding form.
 
 ## Preprocessing tokens <a id="lex.pptoken">[[lex.pptoken]]</a>
 
@@ -386,7 +386,7 @@ given character:
   raw-string pattern
 
   ``` bnf
-  [encoding-prefix] 'R' raw-string
+  encoding-prefix_opt 'R' raw-string
   ```
 
 - Otherwise, if the next three characters are `<::` and the subsequent
@@ -702,29 +702,29 @@ a value category [[expr.prim.literal]]. — *end note*\]
 
 ``` bnf
 integer-literal:
-    binary-literal [integer-suffix]
-    octal-literal [integer-suffix]
-    decimal-literal [integer-suffix]
-    hexadecimal-literal [integer-suffix]
+    binary-literal integer-suffix_opt
+    octal-literal integer-suffix_opt
+    decimal-literal integer-suffix_opt
+    hexadecimal-literal integer-suffix_opt
 ```
 
 ``` bnf
 binary-literal:
     '0b' binary-digit
     '0B' binary-digit
-    binary-literal ['''] binary-digit
+    binary-literal ''_opt' binary-digit
 ```
 
 ``` bnf
 octal-literal:
     '0'
-    octal-literal ['''] octal-digit
+    octal-literal ''_opt' octal-digit
 ```
 
 ``` bnf
 decimal-literal:
     nonzero-digit
-    decimal-literal ['''] digit
+    decimal-literal ''_opt' digit
 ```
 
 ``` bnf
@@ -755,7 +755,7 @@ hexadecimal-prefix: one of
 ``` bnf
 hexadecimal-digit-sequence:
     hexadecimal-digit
-    hexadecimal-digit-sequence ['''] hexadecimal-digit
+    hexadecimal-digit-sequence ''_opt' hexadecimal-digit
 ```
 
 ``` bnf
@@ -767,12 +767,12 @@ hexadecimal-digit: one of
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix [long-suffix] 
-    unsigned-suffix [long-long-suffix] 
-    unsigned-suffix [size-suffix] 
-    long-suffix [unsigned-suffix] 
-    long-long-suffix [unsigned-suffix] 
-    size-suffix [unsigned-suffix]
+    unsigned-suffix long-suffix_opt 
+    unsigned-suffix long-long-suffix_opt 
+    unsigned-suffix size-suffix_opt 
+    long-suffix unsigned-suffix_opt 
+    long-long-suffix unsigned-suffix_opt 
+    size-suffix unsigned-suffix_opt
 ```
 
 ``` bnf
@@ -858,7 +858,7 @@ cannot be represented by any of the allowed types.
 
 ``` bnf
 character-literal:
-    [encoding-prefix] ''' c-char-sequence '''
+    encoding-prefix_opt ''' c-char-sequence '''
 ```
 
 ``` bnf
@@ -1022,17 +1022,17 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 
 |  |  |  |
 | --- | --- | --- |
-| \ucode{000a} | \uname{line feed} | `\ n` |
-| \ucode{0009} | \uname{character tabulation} | `\ t` |
-| \ucode{000b} | \uname{line tabulation} | `\ v` |
-| \ucode{0008} | \uname{backspace} | `\ b` |
-| \ucode{000d} | \uname{carriage return} | `\ r` |
-| \ucode{000c} | \uname{form feed} | `\ f` |
-| \ucode{0007} | \uname{alert} | `\ a` |
-| \ucode{005c} | \uname{reverse solidus} | `` |
-| \ucode{003f} | \uname{question mark} | `\ ?` |
-| \ucode{0027} | \uname{apostrophe} | `\ '` |
-| \ucode{0022} | \uname{quotation mark} | `\ "` |
+| `U+000a` | \uname{line feed} | `\ n` |
+| `U+0009` | \uname{character tabulation} | `\ t` |
+| `U+000b` | \uname{line tabulation} | `\ v` |
+| `U+0008` | \uname{backspace} | `\ b` |
+| `U+000d` | \uname{carriage return} | `\ r` |
+| `U+000c` | \uname{form feed} | `\ f` |
+| `U+0007` | \uname{alert} | `\ a` |
+| `U+005c` | \uname{reverse solidus} | `` |
+| `U+003f` | \uname{question mark} | `\ ?` |
+| `U+0027` | \uname{apostrophe} | `\ '` |
+| `U+0022` | \uname{quotation mark} | `\ "` |
 
 ### Floating-point literals <a id="lex.fcon">[[lex.fcon]]</a>
 
@@ -1044,38 +1044,38 @@ floating-point-literal:
 
 ``` bnf
 decimal-floating-point-literal:
-    fractional-constant [exponent-part] [floating-point-suffix]
-    digit-sequence exponent-part [floating-point-suffix]
+    fractional-constant exponent-part_opt floating-point-suffix_opt
+    digit-sequence exponent-part floating-point-suffix_opt
 ```
 
 ``` bnf
 hexadecimal-floating-point-literal:
-    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part [floating-point-suffix]
-    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part [floating-point-suffix]
+    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffix_opt
+    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffix_opt
 ```
 
 ``` bnf
 fractional-constant:
-    [digit-sequence] '.' digit-sequence
+    digit-sequence_opt '.' digit-sequence
     digit-sequence '.'
 ```
 
 ``` bnf
 hexadecimal-fractional-constant:
-    [hexadecimal-digit-sequence] '.' hexadecimal-digit-sequence
+    hexadecimal-digit-sequence_opt '.' hexadecimal-digit-sequence
     hexadecimal-digit-sequence '.'
 ```
 
 ``` bnf
 exponent-part:
-    'e' [sign] digit-sequence
-    'E' [sign] digit-sequence
+    'e' sign_opt digit-sequence
+    'E' sign_opt digit-sequence
 ```
 
 ``` bnf
 binary-exponent-part:
-    'p' [sign] digit-sequence
-    'P' [sign] digit-sequence
+    'p' sign_opt digit-sequence
+    'P' sign_opt digit-sequence
 ```
 
 ``` bnf
@@ -1086,7 +1086,7 @@ sign: one of
 ``` bnf
 digit-sequence:
     digit
-    digit-sequence ['''] digit
+    digit-sequence ''_opt' digit
 ```
 
 ``` bnf
@@ -1136,8 +1136,8 @@ in an *implementation-defined* manner.
 
 ``` bnf
 string-literal:
-    [encoding-prefix] '"' [s-char-sequence] '"'
-    [encoding-prefix] 'R' raw-string
+    encoding-prefix_opt '"' s-char-sequence_opt '"'
+    encoding-prefix_opt 'R' raw-string
 ```
 
 ``` bnf
@@ -1161,7 +1161,7 @@ basic-s-char:
 
 ``` bnf
 raw-string:
-    '"' [d-char-sequence] '(' [r-char-sequence] ')' [d-char-sequence] '"'
+    '"' d-char-sequence_opt '(' r-char-sequence_opt ')' d-char-sequence_opt '"'
 ```
 
 ``` bnf
@@ -1405,7 +1405,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-point-literal:
-    fractional-constant [exponent-part] ud-suffix
+    fractional-constant exponent-part_opt ud-suffix
     digit-sequence exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ud-suffix

@@ -9,23 +9,23 @@ label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
 
 ``` bnf
 preprocessing-file:
-    [group]
+    group_opt
     module-file
 ```
 
 ``` bnf
 module-file:
-    [pp-global-module-fragment] pp-module [group] [pp-private-module-fragment]
+    pp-global-module-fragment_opt pp-module group_opt pp-private-module-fragment_opt
 ```
 
 ``` bnf
 pp-global-module-fragment:
-    \texttt{module} ';' new-line [group]
+    \texttt{module} ';' new-line group_opt
 ```
 
 ``` bnf
 pp-private-module-fragment:
-    \texttt{module} ':' \texttt{private} ';' new-line [group]
+    \texttt{module} ':' \texttt{private} ';' new-line group_opt
 ```
 
 ``` bnf
@@ -47,27 +47,27 @@ control-line:
     '# include' pp-tokens new-line
     pp-import
     '# define ' identifier replacement-list new-line
-    '# define ' identifier lparen [identifier-list] ')' replacement-list new-line
+    '# define ' identifier lparen identifier-list_opt ')' replacement-list new-line
     '# define ' identifier lparen '... )' replacement-list new-line
     '# define ' identifier lparen identifier-list ', ... )' replacement-list new-line
     '# undef  ' identifier new-line
     '# line   ' pp-tokens new-line
-    '# error  ' [pp-tokens] new-line
-    '# warning' [pp-tokens] new-line
-    '# pragma ' [pp-tokens] new-line
+    '# error  ' pp-tokens_opt new-line
+    '# warning' pp-tokens_opt new-line
+    '# pragma ' pp-tokens_opt new-line
     '# 'new-line
 ```
 
 ``` bnf
 if-section:
-    if-group [elif-groups] [else-group] endif-line
+    if-group elif-groups_opt else-group_opt endif-line
 ```
 
 ``` bnf
 if-group:
-    '# if     ' constant-expression new-line [group]
-    '# ifdef  ' identifier new-line [group]
-    '# ifndef ' identifier new-line [group]
+    '# if     ' constant-expression new-line group_opt
+    '# ifdef  ' identifier new-line group_opt
+    '# ifndef ' identifier new-line group_opt
 ```
 
 ``` bnf
@@ -78,14 +78,14 @@ elif-groups:
 
 ``` bnf
 elif-group:
-    '# elif    ' constant-expression new-line [group]
-    '# elifdef ' identifier new-line [group]
-    '# elifndef' identifier new-line [group]
+    '# elif    ' constant-expression new-line group_opt
+    '# elifdef ' identifier new-line group_opt
+    '# elifndef' identifier new-line group_opt
 ```
 
 ``` bnf
 else-group:
-    '# else   ' new-line [group]
+    '# else   ' new-line group_opt
 ```
 
 ``` bnf
@@ -95,7 +95,7 @@ endif-line:
 
 ``` bnf
 text-line:
-    [pp-tokens] new-line
+    pp-tokens_opt new-line
 ```
 
 ``` bnf
@@ -116,7 +116,7 @@ identifier-list:
 
 ``` bnf
 replacement-list:
-    [pp-tokens]
+    pp-tokens_opt
 ```
 
 ``` bnf
@@ -339,8 +339,8 @@ replacements have occurred shall be in the lexical form of a token
 Preprocessing directives of the forms
 
 ``` bnf
-'# if     ' constant-expression new-line [group]
-'# elif   ' constant-expression new-line [group]
+'# if     ' constant-expression new-line group_opt
+'# elif   ' constant-expression new-line group_opt
 ```
 
 check whether the controlling constant expression evaluates to nonzero.
@@ -390,10 +390,10 @@ before processing continues.
 Preprocessing directives of the forms
 
 ``` bnf
-'# ifdef   ' identifier new-line [group]
-'# ifndef  ' identifier new-line [group]
-'# elifdef ' identifier new-line [group]
-'# elifndef' identifier new-line [group]
+'# ifdef   ' identifier new-line group_opt
+'# ifndef  ' identifier new-line group_opt
+'# elifdef ' identifier new-line group_opt
+'# elifndef' identifier new-line group_opt
 ```
 
 check whether the identifier is or is not currently defined as a macro
@@ -566,7 +566,7 @@ This illustrates macro-replaced `#include` directives:
 
 ``` bnf
 pp-module:
-    [\texttt{export]} \texttt{module} [pp-tokens] ';' new-line
+    \texttt{export_opt} \texttt{module} pp-tokens_opt ';' new-line
 ```
 
 A *pp-module* shall not appear in a context where `module` or (if it is
@@ -590,9 +590,9 @@ removed at the end of phase 4. — *end note*\]
 
 ``` bnf
 pp-import:
-    [\texttt{export]} \texttt{import} header-name [pp-tokens] ';' new-line
-    [\texttt{export]} \texttt{import} header-name-tokens [pp-tokens] ';' new-line
-    [\texttt{export]} \texttt{import} pp-tokens ';' new-line
+    \texttt{export_opt} \texttt{import} header-name pp-tokens_opt ';' new-line
+    \texttt{export_opt} \texttt{import} header-name-tokens pp-tokens_opt ';' new-line
+    \texttt{export_opt} \texttt{import} pp-tokens ';' new-line
 ```
 
 A *pp-import* shall not appear in a context where `import` or (if it is
@@ -782,7 +782,7 @@ int table[TABSIZE];
 A preprocessing directive of the form
 
 ``` bnf
-'# define' identifier lparen [identifier-list] ')' replacement-list new-line
+'# define' identifier lparen identifier-list_opt ')' replacement-list new-line
 '# define' identifier lparen '...' ')' replacement-list new-line
 '# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
 ```
@@ -838,7 +838,7 @@ one more than the number of parameters in the macro definition
 
 ``` bnf
 va-opt-replacement:
-    '__VA_OPT__ (' [pp-tokens] ')'
+    '__VA_OPT__ (' pp-tokens_opt ')'
 ```
 
 After the arguments for the invocation of a function-like macro have
@@ -1214,7 +1214,7 @@ the behavior is undefined.
 A preprocessing directive of the form
 
 ``` bnf
-'# line' digit-sequence '"' [s-char-sequence] '"' new-line
+'# line' digit-sequence '"' s-char-sequence_opt '"' new-line
 ```
 
 sets the presumed line number similarly and changes the presumed name of
@@ -1239,8 +1239,8 @@ processed as appropriate.
 A preprocessing directive of either of the following forms
 
 ``` bnf
-'# error' [pp-tokens] new-line
-'# warning' [pp-tokens] new-line
+'# error' pp-tokens_opt new-line
+'# warning' pp-tokens_opt new-line
 ```
 
 causes the implementation to produce a diagnostic message that should
@@ -1252,7 +1252,7 @@ directive renders the program ill-formed.
 A preprocessing directive of the form
 
 ``` bnf
-'# pragma' [pp-tokens] new-line
+'# pragma' pp-tokens_opt new-line
 ```
 
 causes the implementation to behave in an *implementation-defined*
@@ -1391,72 +1391,72 @@ function. If the time of translation is not available, an
 
 | Macro name | Value |
 | --- | --- |
-| __cpp_aggregate_bases__ | `201603L` |
-| __cpp_aggregate_nsdmi__ | `201304L` |
-| __cpp_aggregate_paren_init__ | `201902L` |
-| __cpp_alias_templates__ | `200704L` |
-| __cpp_aligned_new__ | `201606L` |
-| __cpp_attributes__ | `200809L` |
-| __cpp_auto_cast__ | `202110L` |
-| __cpp_binary_literals__ | `201304L` |
-| __cpp_capture_star_this__ | `201603L` |
-| __cpp_char8_t__ | `202207L` |
-| __cpp_concepts__ | `202002L` |
-| __cpp_conditional_explicit__ | `201806L` |
-| __cpp_constexpr__ | `202211L` |
-| __cpp_constexpr_dynamic_alloc__ | `201907L` |
-| __cpp_constexpr_in_decltype__ | `201711L` |
-| __cpp_consteval__ | `202211L` |
-| __cpp_constinit__ | `201907L` |
-| __cpp_decltype__ | `200707L` |
-| __cpp_decltype_auto__ | `201304L` |
-| __cpp_deduction_guides__ | `201907L` |
-| __cpp_delegating_constructors__ | `200604L` |
-| __cpp_designated_initializers__ | `201707L` |
-| __cpp_enumerator_attributes__ | `201411L` |
-| __cpp_explicit_this_parameter__ | `202110L` |
-| __cpp_fold_expressions__ | `201603L` |
-| __cpp_generic_lambdas__ | `201707L` |
-| __cpp_guaranteed_copy_elision__ | `201606L` |
-| __cpp_hex_float__ | `201603L` |
-| __cpp_if_consteval__ | `202106L` |
-| __cpp_if_constexpr__ | `201606L` |
-| __cpp_impl_coroutine__ | `201902L` |
-| __cpp_impl_destroying_delete__ | `201806L` |
-| __cpp_impl_three_way_comparison__ | `201907L` |
-| __cpp_implicit_move__ | `202207L` |
-| __cpp_inheriting_constructors__ | `201511L` |
-| __cpp_init_captures__ | `201803L` |
-| __cpp_initializer_lists__ | `200806L` |
-| __cpp_inline_variables__ | `201606L` |
-| __cpp_lambdas__ | `200907L` |
-| __cpp_modules__ | `201907L` |
-| __cpp_multidimensional_subscript__ | `202211L` |
-| __cpp_named_character_escapes__ | `202207L` |
-| __cpp_namespace_attributes__ | `201411L` |
-| __cpp_noexcept_function_type__ | `201510L` |
-| __cpp_nontype_template_args__ | `201911L` |
-| __cpp_nontype_template_parameter_auto__ | `201606L` |
-| __cpp_nsdmi__ | `200809L` |
-| __cpp_range_based_for__ | `202211L` |
-| __cpp_raw_strings__ | `200710L` |
-| __cpp_ref_qualifiers__ | `200710L` |
-| __cpp_return_type_deduction__ | `201304L` |
-| __cpp_rvalue_references__ | `200610L` |
-| __cpp_size_t_suffix__ | `202011L` |
-| __cpp_sized_deallocation__ | `201309L` |
-| __cpp_static_assert__ | `201411L` |
-| __cpp_static_call_operator__ | `202207L` |
-| __cpp_structured_bindings__ | `201606L` |
-| __cpp_template_template_args__ | `201611L` |
-| __cpp_threadsafe_static_init__ | `200806L` |
-| __cpp_unicode_characters__ | `200704L` |
-| __cpp_unicode_literals__ | `200710L` |
-| __cpp_user_defined_literals__ | `200809L` |
-| __cpp_using_enum__ | `201907L` |
-| __cpp_variable_templates__ | `201304L` |
-| __cpp_variadic_templates__ | `200704L` |
-| __cpp_variadic_using__ | `201611L` |
+| *__cpp_aggregate_bases* | `201603L` |
+| *__cpp_aggregate_nsdmi* | `201304L` |
+| *__cpp_aggregate_paren_init* | `201902L` |
+| *__cpp_alias_templates* | `200704L` |
+| *__cpp_aligned_new* | `201606L` |
+| *__cpp_attributes* | `200809L` |
+| *__cpp_auto_cast* | `202110L` |
+| *__cpp_binary_literals* | `201304L` |
+| *__cpp_capture_star_this* | `201603L` |
+| *__cpp_char8_t* | `202207L` |
+| *__cpp_concepts* | `202002L` |
+| *__cpp_conditional_explicit* | `201806L` |
+| *__cpp_constexpr* | `202211L` |
+| *__cpp_constexpr_dynamic_alloc* | `201907L` |
+| *__cpp_constexpr_in_decltype* | `201711L` |
+| *__cpp_consteval* | `202211L` |
+| *__cpp_constinit* | `201907L` |
+| *__cpp_decltype* | `200707L` |
+| *__cpp_decltype_auto* | `201304L` |
+| *__cpp_deduction_guides* | `201907L` |
+| *__cpp_delegating_constructors* | `200604L` |
+| *__cpp_designated_initializers* | `201707L` |
+| *__cpp_enumerator_attributes* | `201411L` |
+| *__cpp_explicit_this_parameter* | `202110L` |
+| *__cpp_fold_expressions* | `201603L` |
+| *__cpp_generic_lambdas* | `201707L` |
+| *__cpp_guaranteed_copy_elision* | `201606L` |
+| *__cpp_hex_float* | `201603L` |
+| *__cpp_if_consteval* | `202106L` |
+| *__cpp_if_constexpr* | `201606L` |
+| *__cpp_impl_coroutine* | `201902L` |
+| *__cpp_impl_destroying_delete* | `201806L` |
+| *__cpp_impl_three_way_comparison* | `201907L` |
+| *__cpp_implicit_move* | `202207L` |
+| *__cpp_inheriting_constructors* | `201511L` |
+| *__cpp_init_captures* | `201803L` |
+| *__cpp_initializer_lists* | `200806L` |
+| *__cpp_inline_variables* | `201606L` |
+| *__cpp_lambdas* | `200907L` |
+| *__cpp_modules* | `201907L` |
+| *__cpp_multidimensional_subscript* | `202211L` |
+| *__cpp_named_character_escapes* | `202207L` |
+| *__cpp_namespace_attributes* | `201411L` |
+| *__cpp_noexcept_function_type* | `201510L` |
+| *__cpp_nontype_template_args* | `201911L` |
+| *__cpp_nontype_template_parameter_auto* | `201606L` |
+| *__cpp_nsdmi* | `200809L` |
+| *__cpp_range_based_for* | `202211L` |
+| *__cpp_raw_strings* | `200710L` |
+| *__cpp_ref_qualifiers* | `200710L` |
+| *__cpp_return_type_deduction* | `201304L` |
+| *__cpp_rvalue_references* | `200610L` |
+| *__cpp_size_t_suffix* | `202011L` |
+| *__cpp_sized_deallocation* | `201309L` |
+| *__cpp_static_assert* | `201411L` |
+| *__cpp_static_call_operator* | `202207L` |
+| *__cpp_structured_bindings* | `201606L` |
+| *__cpp_template_template_args* | `201611L` |
+| *__cpp_threadsafe_static_init* | `200806L` |
+| *__cpp_unicode_characters* | `200704L` |
+| *__cpp_unicode_literals* | `200710L` |
+| *__cpp_user_defined_literals* | `200809L` |
+| *__cpp_using_enum* | `201907L` |
+| *__cpp_variable_templates* | `201304L` |
+| *__cpp_variadic_templates* | `200704L` |
+| *__cpp_variadic_using* | `201611L` |
 The following macro names are conditionally defined by the
 implementation:
 

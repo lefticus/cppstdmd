@@ -221,32 +221,32 @@ template<class T>
   constexpr void swap(T& a, T& b) noexcept(see below);
 ```
 
-> *Constraints:* `is_move_constructible_v<T>` is `true` and
-> `is_move_assignable_v<T>` is `true`.
->
-> *Preconditions:* Type `T` meets the *Cpp17MoveConstructible*
-> ( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-> ( [[cpp17.moveassignable]]) requirements.
->
-> *Effects:* Exchanges values stored in two locations.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>
-> ```
+*Constraints:* `is_move_constructible_v<T>` is `true` and
+`is_move_assignable_v<T>` is `true`.
+
+*Preconditions:* Type `T` meets the *Cpp17MoveConstructible*
+( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+( [[cpp17.moveassignable]]) requirements.
+
+*Effects:* Exchanges values stored in two locations.
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>
+```
 
 ``` cpp
 template<class T, size_t N>
   constexpr void swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable_v<T>);
 ```
 
-> *Constraints:* `is_swappable_v<T>` is `true`.
->
-> *Preconditions:* `a[i]` is swappable with [[swappable.requirements]]
-> `b[i]` for all `i` in the range \[`0`, `N`).
->
-> *Effects:* As if by `swap_ranges(a, a + N, b)`.
+*Constraints:* `is_swappable_v<T>` is `true`.
+
+*Preconditions:* `a[i]` is swappable with [[swappable.requirements]]
+`b[i]` for all `i` in the range \[`0`, `N`).
+
+*Effects:* As if by `swap_ranges(a, a + N, b)`.
 
 ### `exchange` <a id="utility.exchange">[[utility.exchange]]</a>
 
@@ -255,19 +255,19 @@ template<class T, class U = T>
   constexpr T exchange(T& obj, U&& new_val) noexcept(see below);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> T old_val = std::move(obj);
-> obj = std::forward<U>(new_val);
-> return old_val;
-> ```
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_constructible_v<T> && is_nothrow_assignable_v<T&, U>
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+T old_val = std::move(obj);
+obj = std::forward<U>(new_val);
+return old_val;
+```
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_constructible_v<T> && is_nothrow_assignable_v<T&, U>
+```
 
 ### Forward/move helpers <a id="forward">[[forward]]</a>
 
@@ -281,109 +281,109 @@ template<class T> constexpr T&& forward(remove_reference_t<T>& t) noexcept;
 template<class T> constexpr T&& forward(remove_reference_t<T>&& t) noexcept;
 ```
 
-> *Mandates:* For the second overload, `is_lvalue_reference_v<T>` is
-> `false`.
->
-> *Returns:* `static_cast<T&&>(t)`.
->
-> \[*Example 1*:
->
->     template<class T, class A1, class A2>
->     shared_ptr<T> factory(A1&& a1, A2&& a2) {
->       return shared_ptr<T>(new T(std::forward<A1>(a1), std::forward<A2>(a2)));
->     }
->
->     struct A {
->       A(int&, const double&);
->     };
->
->     void g() {
->       shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to \texttt{int\&}
->       int i = 2;
->       shared_ptr<A> sp2 = factory<A>(i, 1.414); // OK
->     }
->
-> In the first call to `factory`, `A1` is deduced as `int`, so 2 is
-> forwarded to `A`’s constructor as an rvalue. In the second call to
-> `factory`, `A1` is deduced as `int&`, so `i` is forwarded to `A`’s
-> constructor as an lvalue. In both cases, `A2` is deduced as `double`,
-> so 1.414 is forwarded to `A`’s constructor as an rvalue.
->
-> — *end example*\]
+*Mandates:* For the second overload, `is_lvalue_reference_v<T>` is
+`false`.
+
+*Returns:* `static_cast<T&&>(t)`.
+
+\[*Example 1*:
+
+    template<class T, class A1, class A2>
+    shared_ptr<T> factory(A1&& a1, A2&& a2) {
+      return shared_ptr<T>(new T(std::forward<A1>(a1), std::forward<A2>(a2)));
+    }
+
+    struct A {
+      A(int&, const double&);
+    };
+
+    void g() {
+      shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to \texttt{int\&}
+      int i = 2;
+      shared_ptr<A> sp2 = factory<A>(i, 1.414); // OK
+    }
+
+In the first call to `factory`, `A1` is deduced as `int`, so 2 is
+forwarded to `A`’s constructor as an rvalue. In the second call to
+`factory`, `A1` is deduced as `int&`, so `i` is forwarded to `A`’s
+constructor as an lvalue. In both cases, `A2` is deduced as `double`, so
+1.414 is forwarded to `A`’s constructor as an rvalue.
+
+— *end example*\]
 
 ``` cpp
 template<class T, class U>
   [[nodiscard]] constexpr auto forward_like(U&& x) noexcept -> see below;
 ```
 
-> *Mandates:* `T` is a referenceable type [[defns.referenceable]].
->
-> - Let *`COPY_CONST`*`(A, B)` be `const B` if `A` is a const type,
->   otherwise `B`.
->
-> - Let *`OVERRIDE_REF`*`(A, B)` be `remove_reference_t<B>&&` if `A` is
->   an rvalue reference type, otherwise `B&`.
->
-> - Let `V` be
->
->       OVERRIDE_REF(T&&, COPY_CONST(remove_reference_t<T>, remove_reference_t<U>))
->
-> *Returns:* `static_cast<V>(x)`.
->
-> *Remarks:* The return type is `V`.
->
-> \[*Example 2*:
->
->     struct accessor {
->       vector<string>* container;
->       decltype(auto) operator[](this auto&& self, size_t i) {
->         return std::forward_like<decltype(self)>((*container)[i]);
->       }
->     };
->     void g() {
->       vector v{"a"s, "b"s};
->       accessor a{&v};
->       string& x = a[0];                             // OK, binds to lvalue reference
->       string&& y = std::move(a)[0];                 // OK, is rvalue reference
->       string const&& z = std::move(as_const(a))[1]; // OK, is \texttt{const\&\&}
->       string& w = as_const(a)[1];                   // error: will not bind to non-const
->     }
->
-> — *end example*\]
+*Mandates:* `T` is a referenceable type [[defns.referenceable]].
+
+- Let *`COPY_CONST`*`(A, B)` be `const B` if `A` is a const type,
+  otherwise `B`.
+
+- Let *`OVERRIDE_REF`*`(A, B)` be `remove_reference_t<B>&&` if `A` is an
+  rvalue reference type, otherwise `B&`.
+
+- Let `V` be
+
+      OVERRIDE_REF(T&&, COPY_CONST(remove_reference_t<T>, remove_reference_t<U>))
+
+*Returns:* `static_cast<V>(x)`.
+
+*Remarks:* The return type is `V`.
+
+\[*Example 2*:
+
+    struct accessor {
+      vector<string>* container;
+      decltype(auto) operator[](this auto&& self, size_t i) {
+        return std::forward_like<decltype(self)>((*container)[i]);
+      }
+    };
+    void g() {
+      vector v{"a"s, "b"s};
+      accessor a{&v};
+      string& x = a[0];                             // OK, binds to lvalue reference
+      string&& y = std::move(a)[0];                 // OK, is rvalue reference
+      string const&& z = std::move(as_const(a))[1]; // OK, is \texttt{const\&\&}
+      string& w = as_const(a)[1];                   // error: will not bind to non-const
+    }
+
+— *end example*\]
 
 ``` cpp
 template<class T> constexpr remove_reference_t<T>&& move(T&& t) noexcept;
 ```
 
-> *Returns:* `static_cast<remove_reference_t<T>&&>(t)`.
->
-> \[*Example 3*:
->
->     template<class T, class A1>
->     shared_ptr<T> factory(A1&& a1) {
->       return shared_ptr<T>(new T(std::forward<A1>(a1)));
->     }
->
->     struct A {
->       A();
->       A(const A&);      // copies from lvalues
->       A(A&&);           // moves from rvalues
->     };
->
->     void g() {
->       A a;
->       shared_ptr<A> sp1 = factory<A>(a);                // ``\texttt{a}\!'' binds to \texttt{A(const A\&)}
->       shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``\texttt{a}\!'' binds to \texttt{A(A\&\&)}
->     }
->
-> In the first call to `factory`, `A1` is deduced as `A&`, so `a` is
-> forwarded as a non-const lvalue. This binds to the constructor
-> `A(const A&)`, which copies the value from `a`. In the second call to
-> `factory`, because of the call `std::move(a)`, `A1` is deduced as `A`,
-> so `a` is forwarded as an rvalue. This binds to the constructor
-> `A(A&&)`, which moves the value from `a`.
->
-> — *end example*\]
+*Returns:* `static_cast<remove_reference_t<T>&&>(t)`.
+
+\[*Example 3*:
+
+    template<class T, class A1>
+    shared_ptr<T> factory(A1&& a1) {
+      return shared_ptr<T>(new T(std::forward<A1>(a1)));
+    }
+
+    struct A {
+      A();
+      A(const A&);      // copies from lvalues
+      A(A&&);           // moves from rvalues
+    };
+
+    void g() {
+      A a;
+      shared_ptr<A> sp1 = factory<A>(a);                // ``\texttt{a}\!'' binds to \texttt{A(const A\&)}
+      shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``\texttt{a}\!'' binds to \texttt{A(A\&\&)}
+    }
+
+In the first call to `factory`, `A1` is deduced as `A&`, so `a` is
+forwarded as a non-const lvalue. This binds to the constructor
+`A(const A&)`, which copies the value from `a`. In the second call to
+`factory`, because of the call `std::move(a)`, `A1` is deduced as `A`,
+so `a` is forwarded as an rvalue. This binds to the constructor
+`A(A&&)`, which moves the value from `a`.
+
+— *end example*\]
 
 ``` cpp
 template<class T> constexpr conditional_t<
@@ -391,7 +391,7 @@ template<class T> constexpr conditional_t<
   move_if_noexcept(T& x) noexcept;
 ```
 
-> *Returns:* `std::move(x)`.
+*Returns:* `std::move(x)`.
 
 ### Function template `as_const` <a id="utility.as.const">[[utility.as.const]]</a>
 
@@ -399,7 +399,7 @@ template<class T> constexpr conditional_t<
 template<class T> constexpr add_const_t<T>& as_const(T& t) noexcept;
 ```
 
-> *Returns:* `t`.
+*Returns:* `t`.
 
 ### Function template `declval` <a id="declval">[[declval]]</a>
 
@@ -411,21 +411,21 @@ definition of expressions which occur as unevaluated operands
 template<class T> add_rvalue_reference_t<T> declval() noexcept;    // as unevaluated operand
 ```
 
-> *Mandates:* This function is not odr-used [[term.odr.use]].
->
-> *Remarks:* The template parameter `T` of `declval` may be an
-> incomplete type.
->
-> \[*Example 4*:
->
->     template<class To, class From> decltype(static_cast<To>(declval<From>())) convert(From&&);
->
-> declares a function template `convert` which only participates in
-> overload resolution if the type `From` can be explicitly converted to
-> type `To`. For another example see class template
-> `common_type`[[meta.trans.other]].
->
-> — *end example*\]
+*Mandates:* This function is not odr-used [[term.odr.use]].
+
+*Remarks:* The template parameter `T` of `declval` may be an incomplete
+type.
+
+\[*Example 4*:
+
+    template<class To, class From> decltype(static_cast<To>(declval<From>())) convert(From&&);
+
+declares a function template `convert` which only participates in
+overload resolution if the type `From` can be explicitly converted to
+type `To`. For another example see class template
+`common_type`[[meta.trans.other]].
+
+— *end example*\]
 
 ### Integer comparison functions <a id="utility.intcmp">[[utility.intcmp]]</a>
 
@@ -434,85 +434,85 @@ template<class T, class U>
   constexpr bool cmp_equal(T t, U u) noexcept;
 ```
 
-> *Mandates:* Both `T` and `U` are standard integer types or extended
-> integer types [[basic.fundamental]].
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> using UT = make_unsigned_t<T>;
-> using UU = make_unsigned_t<U>;
-> if constexpr (is_signed_v<T> == is_signed_v<U>)
->   return t == u;
-> else if constexpr (is_signed_v<T>)
->   return t < 0 ? false : UT(t) == u;
-> else
->   return u < 0 ? false : t == UU(u);
-> ```
+*Mandates:* Both `T` and `U` are standard integer types or extended
+integer types [[basic.fundamental]].
+
+*Effects:* Equivalent to:
+
+``` cpp
+using UT = make_unsigned_t<T>;
+using UU = make_unsigned_t<U>;
+if constexpr (is_signed_v<T> == is_signed_v<U>)
+  return t == u;
+else if constexpr (is_signed_v<T>)
+  return t < 0 ? false : UT(t) == u;
+else
+  return u < 0 ? false : t == UU(u);
+```
 
 ``` cpp
 template<class T, class U>
   constexpr bool cmp_not_equal(T t, U u) noexcept;
 ```
 
-> *Effects:* Equivalent to: `return !cmp_equal(t, u);`
+*Effects:* Equivalent to: `return !cmp_equal(t, u);`
 
 ``` cpp
 template<class T, class U>
   constexpr bool cmp_less(T t, U u) noexcept;
 ```
 
-> *Mandates:* Both `T` and `U` are standard integer types or extended
-> integer types [[basic.fundamental]].
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> using UT = make_unsigned_t<T>;
-> using UU = make_unsigned_t<U>;
-> if constexpr (is_signed_v<T> == is_signed_v<U>)
->   return t < u;
-> else if constexpr (is_signed_v<T>)
->   return t < 0 ? true : UT(t) < u;
-> else
->   return u < 0 ? false : t < UU(u);
-> ```
+*Mandates:* Both `T` and `U` are standard integer types or extended
+integer types [[basic.fundamental]].
+
+*Effects:* Equivalent to:
+
+``` cpp
+using UT = make_unsigned_t<T>;
+using UU = make_unsigned_t<U>;
+if constexpr (is_signed_v<T> == is_signed_v<U>)
+  return t < u;
+else if constexpr (is_signed_v<T>)
+  return t < 0 ? true : UT(t) < u;
+else
+  return u < 0 ? false : t < UU(u);
+```
 
 ``` cpp
 template<class T, class U>
   constexpr bool cmp_greater(T t, U u) noexcept;
 ```
 
-> *Effects:* Equivalent to: `return cmp_less(u, t);`
+*Effects:* Equivalent to: `return cmp_less(u, t);`
 
 ``` cpp
 template<class T, class U>
   constexpr bool cmp_less_equal(T t, U u) noexcept;
 ```
 
-> *Effects:* Equivalent to: `return !cmp_greater(t, u);`
+*Effects:* Equivalent to: `return !cmp_greater(t, u);`
 
 ``` cpp
 template<class T, class U>
   constexpr bool cmp_greater_equal(T t, U u) noexcept;
 ```
 
-> *Effects:* Equivalent to: `return !cmp_less(t, u);`
+*Effects:* Equivalent to: `return !cmp_less(t, u);`
 
 ``` cpp
 template<class R, class T>
   constexpr bool in_range(T t) noexcept;
 ```
 
-> *Mandates:* Both `T` and `R` are standard integer types or extended
-> integer types [[basic.fundamental]].
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return cmp_greater_equal(t, numeric_limits<R>::min()) &&
->        cmp_less_equal(t, numeric_limits<R>::max());
-> ```
+*Mandates:* Both `T` and `R` are standard integer types or extended
+integer types [[basic.fundamental]].
+
+*Effects:* Equivalent to:
+
+``` cpp
+return cmp_greater_equal(t, numeric_limits<R>::min()) &&
+       cmp_less_equal(t, numeric_limits<R>::max());
+```
 
 \[*Note 1*: These function templates cannot be used to compare `byte`,
 `char`, `char8_t`, `char16_t`, `char32_t`, `wchar_t`, and
@@ -525,7 +525,7 @@ template<class T>
   constexpr underlying_type_t<T> to_underlying(T value) noexcept;
 ```
 
-> *Returns:* `static_cast<underlying_type_t<T>>(value)`.
+*Returns:* `static_cast<underlying_type_t<T>>(value)`.
 
 ### Function `unreachable` <a id="utility.unreachable">[[utility.unreachable]]</a>
 
@@ -533,26 +533,26 @@ template<class T>
 [[noreturn]] void unreachable();
 ```
 
-> *Preconditions:* `false` is `true`.
->
-> \[*Note 1*: This precondition cannot be satisfied, thus the behavior
-> of calling `unreachable` is undefined. — *end note*\]
->
-> \[*Example 5*:
->
->     int f(int x) {
->       switch (x) {
->       case 0:
->       case 1:
->         return x;
->       default:
->         std::unreachable();
->       }
->     }
->     int a = f(1);           // OK, \texttt{a} has value \texttt{1}
->     int b = f(3);           // undefined behavior
->
-> — *end example*\]
+*Preconditions:* `false` is `true`.
+
+\[*Note 2*: This precondition cannot be satisfied, thus the behavior of
+calling `unreachable` is undefined. — *end note*\]
+
+\[*Example 5*:
+
+    int f(int x) {
+      switch (x) {
+      case 0:
+      case 1:
+        return x;
+      default:
+        std::unreachable();
+      }
+    }
+    int a = f(1);           // OK, \texttt{a} has value \texttt{1}
+    int b = f(3);           // undefined behavior
+
+— *end example*\]
 
 ## Pairs <a id="pairs">[[pairs]]</a>
 
@@ -645,61 +645,61 @@ template-argument-equivalent [[temp.type]] if and only if `p1.first` and
 constexpr explicit(see below) pair();
 ```
 
-> *Constraints:*
->
-> - `is_default_constructible_v<T1>` is `true` and
->
-> - `is_default_constructible_v<T2>` is `true`.
->
-> *Effects:* Value-initializes `first` and `second`.
->
-> *Remarks:* The expression inside evaluates to `true` if and only if
-> either `T1` or `T2` is not implicitly default-constructible.
->
-> \[*Note 2*: This behavior can be implemented with a trait that checks
-> whether a `const T1&` or a `const T2&` can be initialized with
-> `{}`. — *end note*\]
+*Constraints:*
+
+- `is_default_constructible_v<T1>` is `true` and
+
+- `is_default_constructible_v<T2>` is `true`.
+
+*Effects:* Value-initializes `first` and `second`.
+
+*Remarks:* The expression inside evaluates to `true` if and only if
+either `T1` or `T2` is not implicitly default-constructible.
+
+\[*Note 1*: This behavior can be implemented with a trait that checks
+whether a `const T1&` or a `const T2&` can be initialized with
+`{}`. — *end note*\]
 
 ``` cpp
 constexpr explicit(see below) pair(const T1& x, const T2& y);
 ```
 
-> *Constraints:*
->
-> - `is_copy_constructible_v<T1>` is `true` and
->
-> - `is_copy_constructible_v<T2>` is `true`.
->
-> *Effects:* Initializes `first` with `x` and `second` with `y`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !is_convertible_v<const T1&, T1> || !is_convertible_v<const T2&, T2>
-> ```
+*Constraints:*
+
+- `is_copy_constructible_v<T1>` is `true` and
+
+- `is_copy_constructible_v<T2>` is `true`.
+
+*Effects:* Initializes `first` with `x` and `second` with `y`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!is_convertible_v<const T1&, T1> || !is_convertible_v<const T2&, T2>
+```
 
 ``` cpp
 template<class U1 = T1, class U2 = T2> constexpr explicit(see below) pair(U1&& x, U2&& y);
 ```
 
-> *Constraints:*
->
-> - `is_constructible_v<T1, U1>` is `true` and
->
-> - `is_constructible_v<T2, U2>` is `true`.
->
-> *Effects:* Initializes `first` with `std::forward<U1>(x)` and `second`
-> with `std::forward<U2>(y)`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !is_convertible_v<U1, T1> || !is_convertible_v<U2, T2>
-> ```
->
-> This constructor is defined as deleted if
-> `reference_constructs_from_temporary_v<first_type, U1&&>` is `true` or
-> `reference_constructs_from_temporary_v<second_type, U2&&>` is `true`.
+*Constraints:*
+
+- `is_constructible_v<T1, U1>` is `true` and
+
+- `is_constructible_v<T2, U2>` is `true`.
+
+*Effects:* Initializes `first` with `std::forward<U1>(x)` and `second`
+with `std::forward<U2>(y)`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!is_convertible_v<U1, T1> || !is_convertible_v<U2, T2>
+```
+
+This constructor is defined as deleted if
+`reference_constructs_from_temporary_v<first_type, U1&&>` is `true` or
+`reference_constructs_from_temporary_v<second_type, U2&&>` is `true`.
 
 ``` cpp
 template<class U1, class U2> constexpr explicit(see below) pair(pair<U1, U2>& p);
@@ -709,36 +709,36 @@ template<class U1, class U2> constexpr explicit(see below) pair(const pair<U1, U
 template<pair-like P> constexpr explicit(see below) pair(P&& p);
 ```
 
-> Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
->
-> *Constraints:*
->
-> - For the last overload, `remove_cvref_t<P>` is not a specialization
->   of `ranges::subrange`,
->
-> - `is_constructible_v<T1, decltype(get<0>(`*`FWD`*`(p)))>` is `true`,
->   and
->
-> - `is_constructible_v<T2, decltype(get<1>(`*`FWD`*`(p)))>` is `true`.
->
-> *Effects:* Initializes `first` with `get<0>(`*`FWD`*`(p))` and
-> `second` with `get<1>(`*`FWD`*`(p))`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !is_convertible_v<decltype(get<0>(FWD(p))), T1> ||
-> !is_convertible_v<decltype(get<1>(FWD(p))), T2>
-> ```
->
-> The constructor is defined as deleted if
->
-> ``` cpp
-> reference_constructs_from_temporary_v<first_type, decltype(get<0>(FWD(p)))> ||
-> reference_constructs_from_temporary_v<second_type, decltype(get<1>(FWD(p)))>
-> ```
->
-> is `true`.
+Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
+
+*Constraints:*
+
+- For the last overload, `remove_cvref_t<P>` is not a specialization of
+  `ranges::subrange`,
+
+- `is_constructible_v<T1, decltype(get<0>(`*`FWD`*`(p)))>` is `true`,
+  and
+
+- `is_constructible_v<T2, decltype(get<1>(`*`FWD`*`(p)))>` is `true`.
+
+*Effects:* Initializes `first` with `get<0>(`*`FWD`*`(p))` and `second`
+with `get<1>(`*`FWD`*`(p))`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!is_convertible_v<decltype(get<0>(FWD(p))), T1> ||
+!is_convertible_v<decltype(get<1>(FWD(p))), T2>
+```
+
+The constructor is defined as deleted if
+
+``` cpp
+reference_constructs_from_temporary_v<first_type, decltype(get<0>(FWD(p)))> ||
+reference_constructs_from_temporary_v<second_type, decltype(get<1>(FWD(p)))>
+```
+
+is `true`.
 
 ``` cpp
 template<class... Args1, class... Args2>
@@ -746,212 +746,212 @@ template<class... Args1, class... Args2>
                  tuple<Args1...> first_args, tuple<Args2...> second_args);
 ```
 
-> *Mandates:*
->
-> - `is_constructible_v<T1, Args1...>` is `true` and
->
-> - `is_constructible_v<T2, Args2...>` is `true`.
->
-> *Effects:* Initializes `first` with arguments of types `Args1...`
-> obtained by forwarding the elements of `first_args` and initializes
-> `second` with arguments of types `Args2...` obtained by forwarding the
-> elements of `second_args`. (Here, forwarding an element `x` of type
-> `U` within a `tuple` object means calling `std::forward<U>(x)`.) This
-> form of construction, whereby constructor arguments for `first` and
-> `second` are each provided in a separate `tuple` object, is called .
->
-> \[*Note 3*: If a data member of `pair` is of reference type and its
-> initialization binds it to a temporary object, the program is
-> ill-formed [[class.base.init]]. — *end note*\]
+*Mandates:*
+
+- `is_constructible_v<T1, Args1...>` is `true` and
+
+- `is_constructible_v<T2, Args2...>` is `true`.
+
+*Effects:* Initializes `first` with arguments of types `Args1...`
+obtained by forwarding the elements of `first_args` and initializes
+`second` with arguments of types `Args2...` obtained by forwarding the
+elements of `second_args`. (Here, forwarding an element `x` of type `U`
+within a `tuple` object means calling `std::forward<U>(x)`.) This form
+of construction, whereby constructor arguments for `first` and `second`
+are each provided in a separate `tuple` object, is called .
+
+\[*Note 2*: If a data member of `pair` is of reference type and its
+initialization binds it to a temporary object, the program is
+ill-formed [[class.base.init]]. — *end note*\]
 
 ``` cpp
 constexpr pair& operator=(const pair& p);
 ```
 
-> *Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* This operator is defined as deleted unless
-> `is_copy_assignable_v<T1>` is `true` and `is_copy_assignable_v<T2>` is
-> `true`.
+*Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
+
+*Returns:* `*this`.
+
+*Remarks:* This operator is defined as deleted unless
+`is_copy_assignable_v<T1>` is `true` and `is_copy_assignable_v<T2>` is
+`true`.
 
 ``` cpp
 constexpr const pair& operator=(const pair& p) const;
 ```
 
-> *Constraints:*
->
-> - `is_copy_assignable_v<const T1>` is `true` and
->
-> - `is_copy_assignable_v<const T2>` is `true`.
->
-> *Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_copy_assignable_v<const T1>` is `true` and
+
+- `is_copy_assignable_v<const T2>` is `true`.
+
+*Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr pair& operator=(const pair<U1, U2>& p);
 ```
 
-> *Constraints:*
->
-> - `is_assignable_v<T1&, const U1&>` is `true` and
->
-> - `is_assignable_v<T2&, const U2&>` is `true`.
->
-> *Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_assignable_v<T1&, const U1&>` is `true` and
+
+- `is_assignable_v<T2&, const U2&>` is `true`.
+
+*Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr const pair& operator=(const pair<U1, U2>& p) const;
 ```
 
-> *Constraints:*
->
-> - `is_assignable_v<const T1&, const U1&>` is `true`, and
->
-> - `is_assignable_v<const T2&, const U2&>` is `true`.
->
-> *Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_assignable_v<const T1&, const U1&>` is `true`, and
+
+- `is_assignable_v<const T2&, const U2&>` is `true`.
+
+*Effects:* Assigns `p.first` to `first` and `p.second` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr pair& operator=(pair&& p) noexcept(see below);
 ```
 
-> *Constraints:*
->
-> - `is_move_assignable_v<T1>` is `true` and
->
-> - `is_move_assignable_v<T2>` is `true`.
->
-> *Effects:* Assigns to `first` with `std::forward<T1>(p.first)` and to
-> `second` with `std::forward<T2>(p.second)`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_assignable_v<T1> && is_nothrow_move_assignable_v<T2>
-> ```
+*Constraints:*
+
+- `is_move_assignable_v<T1>` is `true` and
+
+- `is_move_assignable_v<T2>` is `true`.
+
+*Effects:* Assigns to `first` with `std::forward<T1>(p.first)` and to
+`second` with `std::forward<T2>(p.second)`.
+
+*Returns:* `*this`.
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_assignable_v<T1> && is_nothrow_move_assignable_v<T2>
+```
 
 ``` cpp
 constexpr const pair& operator=(pair&& p) const;
 ```
 
-> *Constraints:*
->
-> - `is_assignable_v<const T1&, T1>` is `true` and
->
-> - `is_assignable_v<const T2&, T2>` is `true`.
->
-> *Effects:* Assigns `std::forward<T1>(p.first)` to `first` and
-> `std::forward<T2>(p.second)` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_assignable_v<const T1&, T1>` is `true` and
+
+- `is_assignable_v<const T2&, T2>` is `true`.
+
+*Effects:* Assigns `std::forward<T1>(p.first)` to `first` and
+`std::forward<T2>(p.second)` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr pair& operator=(pair<U1, U2>&& p);
 ```
 
-> *Constraints:*
->
-> - `is_assignable_v<T1&, U1>` is `true` and
->
-> - `is_assignable_v<T2&, U2>` is `true`.
->
-> *Effects:* Assigns to `first` with `std::forward<U1>(p.first)` and to
-> `second` with  
-> `std::forward<U2>(p.second)`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_assignable_v<T1&, U1>` is `true` and
+
+- `is_assignable_v<T2&, U2>` is `true`.
+
+*Effects:* Assigns to `first` with `std::forward<U1>(p.first)` and to
+`second` with  
+`std::forward<U2>(p.second)`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<pair-like P> constexpr pair& operator=(P&& p);
 ```
 
-> *Constraints:*
->
-> - `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
->
-> - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
->
-> - `is_assignable_v<T1&, decltype(get<0>(std::forward<P>(p)))>` is
->   `true`, and
->
-> - `is_assignable_v<T2&, decltype(get<1>(std::forward<P>(p)))>` is
->   `true`.
->
-> *Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
-> `get<1>(std::forward<P>(p))` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
+
+- `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
+
+- `is_assignable_v<T1&, decltype(get<0>(std::forward<P>(p)))>` is
+  `true`, and
+
+- `is_assignable_v<T2&, decltype(get<1>(std::forward<P>(p)))>` is
+  `true`.
+
+*Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
+`get<1>(std::forward<P>(p))` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<pair-like P> constexpr const pair& operator=(P&& p) const;
 ```
 
-> *Constraints:*
->
-> - `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
->
-> - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
->
-> - `is_assignable_v<const T1&, decltype(get<0>(std::forward<P>(p)))>`
->   is `true`, and
->
-> - `is_assignable_v<const T2&, decltype(get<1>(std::forward<P>(p)))>`
->   is `true`.
->
-> *Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
-> `get<1>(std::forward<P>(p))` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
+
+- `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
+
+- `is_assignable_v<const T1&, decltype(get<0>(std::forward<P>(p)))>` is
+  `true`, and
+
+- `is_assignable_v<const T2&, decltype(get<1>(std::forward<P>(p)))>` is
+  `true`.
+
+*Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
+`get<1>(std::forward<P>(p))` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr const pair& operator=(pair<U1, U2>&& p) const;
 ```
 
-> *Constraints:*
->
-> - `is_assignable_v<const T1&, U1>` is `true`, and
->
-> - `is_assignable_v<const T2&, U2>` is `true`.
->
-> *Effects:* Assigns `std::forward<U1>(p.first)` to `first` and
-> `std::forward<U2>(u.second)` to `second`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_assignable_v<const T1&, U1>` is `true`, and
+
+- `is_assignable_v<const T2&, U2>` is `true`.
+
+*Effects:* Assigns `std::forward<U1>(p.first)` to `first` and
+`std::forward<U2>(u.second)` to `second`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr void swap(pair& p) noexcept(see below);
 constexpr void swap(const pair& p) const noexcept(see below);
 ```
 
-> *Mandates:*
->
-> - For the first overload, `is_swappable_v<T1>` is `true` and
->   `is_swappable_v<T2>` is `true`.
->
-> - For the second overload, `is_swappable_v<const T1>` is `true` and
->   `is_swappable_v<const T2>` is `true`.
->
-> *Preconditions:* `first` is swappable with [[swappable.requirements]]
-> `p.first` and `second` is swappable with `p.second`.
->
-> *Effects:* Swaps `first` with `p.first` and `second` with `p.second`.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> - `is_nothrow_swappable_v<T1> && is_nothrow_swappable_v<T2>` for the
->   first overload, and
->
-> - `is_nothrow_swappable_v<const T1> && is_nothrow_swappable_v<const T2>`
->   for the second overload.
+*Mandates:*
+
+- For the first overload, `is_swappable_v<T1>` is `true` and
+  `is_swappable_v<T2>` is `true`.
+
+- For the second overload, `is_swappable_v<const T1>` is `true` and
+  `is_swappable_v<const T2>` is `true`.
+
+*Preconditions:* `first` is swappable with [[swappable.requirements]]
+`p.first` and `second` is swappable with `p.second`.
+
+*Effects:* Swaps `first` with `p.first` and `second` with `p.second`.
+
+*Remarks:* The exception specification is equivalent to:
+
+- `is_nothrow_swappable_v<T1> && is_nothrow_swappable_v<T2>` for the
+  first overload, and
+
+- `is_nothrow_swappable_v<const T1> && is_nothrow_swappable_v<const T2>`
+  for the second overload.
 
 ### Specialized algorithms <a id="pairs.spec">[[pairs.spec]]</a>
 
@@ -960,10 +960,10 @@ template<class T1, class T2, class U1, class U2>
   constexpr bool operator==(const pair<T1, T2>& x, const pair<U1, U2>& y);
 ```
 
-> *Preconditions:* Each of `decltype(x.first == y.first)` and
-> `decltype(x.second == y.second)` models `boolean-testable`.
->
-> *Returns:* `x.first == y.first && x.second == y.second`.
+*Preconditions:* Each of `decltype(x.first == y.first)` and
+`decltype(x.second == y.second)` models `boolean-testable`.
+
+*Returns:* `x.first == y.first && x.second == y.second`.
 
 ``` cpp
 template<class T1, class T2, class U1, class U2>
@@ -972,12 +972,12 @@ template<class T1, class T2, class U1, class U2>
     operator<=>(const pair<T1, T2>& x, const pair<U1, U2>& y);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (auto c = synth-three-way(x.first, y.first); c != 0) return c;
-> return synth-three-way(x.second, y.second);
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+if (auto c = synth-three-way(x.first, y.first); c != 0) return c;
+return synth-three-way(x.second, y.second);
+```
 
 ``` cpp
 template<class T1, class T2>
@@ -986,27 +986,27 @@ template<class T1, class T2>
   constexpr void swap(const pair<T1, T2>& x, const pair<T1, T2>& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:*
->
-> - For the first overload, `is_swappable_v<T1>` is `true` and
->   `is_swappable_v<T2>` is `true`.
->
-> - For the second overload, `is_swappable_v<const T1>` is `true` and
->   `is_swappable_v<const T2>` is `true`.
->
-> *Effects:* Equivalent to `x.swap(y)`.
+*Constraints:*
+
+- For the first overload, `is_swappable_v<T1>` is `true` and
+  `is_swappable_v<T2>` is `true`.
+
+- For the second overload, `is_swappable_v<const T1>` is `true` and
+  `is_swappable_v<const T2>` is `true`.
+
+*Effects:* Equivalent to `x.swap(y)`.
 
 ``` cpp
 template<class T1, class T2>
   constexpr pair<unwrap_ref_decay_t<T1>, unwrap_ref_decay_t<T2>> make_pair(T1&& x, T2&& y);
 ```
 
-> *Returns:*
->
-> ``` cpp
-> pair<unwrap_ref_decay_t<T1>,
->      unwrap_ref_decay_t<T2>>(std::forward<T1>(x), std::forward<T2>(y))
-> ```
+*Returns:*
+
+``` cpp
+pair<unwrap_ref_decay_t<T1>,
+     unwrap_ref_decay_t<T2>>(std::forward<T1>(x), std::forward<T2>(y))
+```
 
 \[*Example 1*:
 
@@ -1038,9 +1038,9 @@ template<size_t I, class T1, class T2>
   };
 ```
 
-> *Mandates:* $\texttt{I} < 2$.
->
-> *Type:* The type `T1` if `I` is 0, otherwise the type `T2`.
+*Mandates:* $\texttt{I} < 2$.
+
+*Type:* The type `T1` if `I` is 0, otherwise the type `T2`.
 
 ``` cpp
 template<size_t I, class T1, class T2>
@@ -1053,13 +1053,13 @@ template<size_t I, class T1, class T2>
   constexpr const tuple_element_t<I, pair<T1, T2>>&& get(const pair<T1, T2>&& p) noexcept;
 ```
 
-> *Mandates:* $\texttt{I} < 2$.
->
-> *Returns:*
->
-> - If `I` is 0, returns a reference to `p.first`.
->
-> - If `I` is 1, returns a reference to `p.second`.
+*Mandates:* $\texttt{I} < 2$.
+
+*Returns:*
+
+- If `I` is 0, returns a reference to `p.first`.
+
+- If `I` is 1, returns a reference to `p.second`.
 
 ``` cpp
 template<class T1, class T2>
@@ -1072,9 +1072,9 @@ template<class T1, class T2>
   constexpr const T1&& get(const pair<T1, T2>&& p) noexcept;
 ```
 
-> *Mandates:* `T1` and `T2` are distinct types.
->
-> *Returns:* A reference to `p.first`.
+*Mandates:* `T1` and `T2` are distinct types.
+
+*Returns:* A reference to `p.first`.
 
 ``` cpp
 template<class T2, class T1>
@@ -1087,9 +1087,9 @@ template<class T2, class T1>
   constexpr const T2&& get(const pair<T1, T2>&& p) noexcept;
 ```
 
-> *Mandates:* `T1` and `T2` are distinct types.
->
-> *Returns:* A reference to `p.second`.
+*Mandates:* `T1` and `T2` are distinct types.
+
+*Returns:* A reference to `p.second`.
 
 ### Piecewise construction <a id="pair.piecewise">[[pair.piecewise]]</a>
 
@@ -1233,9 +1233,9 @@ template<class T>
   concept tuple-like = see belownc;           // exposition only
 ```
 
-> A type `T` models and satisfies the exposition-only concept
-> `tuple-like` if `remove_cvref_t<T>` is a specialization of `array`,
-> `pair`, `tuple`, or `ranges::subrange`.
+A type `T` models and satisfies the exposition-only concept `tuple-like`
+if `remove_cvref_t<T>` is a specialization of `array`, `pair`, `tuple`,
+or `ranges::subrange`.
 
 ### Class template `tuple` <a id="tuple.tuple">[[tuple.tuple]]</a>
 
@@ -1389,95 +1389,95 @@ The default constructor of `tuple<>` is trivial.
 constexpr explicit(see below) tuple();
 ```
 
-> *Constraints:* `is_default_constructible_v<`$\texttt{T}_i$`>` is
-> `true` for all i.
->
-> *Effects:* Value-initializes each element.
->
-> *Remarks:* The expression inside evaluates to `true` if and only if
-> $\texttt{T}_i$ is not copy-list-initializable from an empty list for
-> at least one i.
->
-> \[*Note 4*: This behavior can be implemented with a trait that checks
-> whether a `const `$\texttt{T}_i$`&` can be initialized with
-> `{}`. — *end note*\]
+*Constraints:* `is_default_constructible_v<`$\texttt{T}_i$`>` is `true`
+for all i.
+
+*Effects:* Value-initializes each element.
+
+*Remarks:* The expression inside evaluates to `true` if and only if
+$\texttt{T}_i$ is not copy-list-initializable from an empty list for at
+least one i.
+
+\[*Note 1*: This behavior can be implemented with a trait that checks
+whether a `const `$\texttt{T}_i$`&` can be initialized with
+`{}`. — *end note*\]
 
 ``` cpp
 constexpr explicit(see below) tuple(const Types&...);
 ```
 
-> *Constraints:* $\texttt{sizeof...(Types)} \geq 1$ and
-> `is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
->
-> *Effects:* Initializes each element with the value of the
-> corresponding parameter.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !conjunction_v<is_convertible<const Types&, Types>...>
-> ```
+*Constraints:* $\texttt{sizeof...(Types)} \geq 1$ and
+`is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
+
+*Effects:* Initializes each element with the value of the corresponding
+parameter.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!conjunction_v<is_convertible<const Types&, Types>...>
+```
 
 ``` cpp
 template<class... UTypes> constexpr explicit(see below) tuple(UTypes&&... u);
 ```
 
-> Let *disambiguating-constraint* be:
->
-> - `negation<is_same<remove_cvref_t<`$\texttt{U}_0$`>, tuple>>` if
->   `sizeof...(Types)` is 1;
->
-> - otherwise,
->   `bool_constant<!is_same_v<remove_cvref_t<`$\texttt{U}_0$`>, allocator_arg_t> || is_-same_v<remove_cvref_t<`$\texttt{T}_0$`>, allocator_arg_t>>`
->   if `sizeof...(Types)` is 2 or 3;
->
-> - otherwise, `true_type`.
->
-> *Constraints:*
->
-> - `sizeof...(Types)` equals `sizeof...(UTypes)`,
->
-> - $\texttt{sizeof...(Types)} \geq 1$, and
->
-> - `conjunction_v<`*`disambiguating-constraint`*`, is_constructible<Types, UTypes>...>`
->   is`true`.
->
-> *Effects:* Initializes the elements in the tuple with the
-> corresponding value in `std::forward<UTypes>(u)`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !conjunction_v<is_convertible<UTypes, Types>...>
-> ```
->
-> This constructor is defined as deleted if
->
-> ``` cpp
-> (reference_constructs_from_temporary_v<Types, UTypes&&> || ...)
-> ```
->
-> is `true`.
+Let *disambiguating-constraint* be:
+
+- `negation<is_same<remove_cvref_t<`$\texttt{U}_0$`>, tuple>>` if
+  `sizeof...(Types)` is 1;
+
+- otherwise,
+  `bool_constant<!is_same_v<remove_cvref_t<`$\texttt{U}_0$`>, allocator_arg_t> || is_-same_v<remove_cvref_t<`$\texttt{T}_0$`>, allocator_arg_t>>`
+  if `sizeof...(Types)` is 2 or 3;
+
+- otherwise, `true_type`.
+
+*Constraints:*
+
+- `sizeof...(Types)` equals `sizeof...(UTypes)`,
+
+- $\texttt{sizeof...(Types)} \geq 1$, and
+
+- `conjunction_v<`*`disambiguating-constraint`*`, is_constructible<Types, UTypes>...>`
+  is`true`.
+
+*Effects:* Initializes the elements in the tuple with the corresponding
+value in `std::forward<UTypes>(u)`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!conjunction_v<is_convertible<UTypes, Types>...>
+```
+
+This constructor is defined as deleted if
+
+``` cpp
+(reference_constructs_from_temporary_v<Types, UTypes&&> || ...)
+```
+
+is `true`.
 
 ``` cpp
 tuple(const tuple& u) = default;
 ```
 
-> *Mandates:* `is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for
-> all i.
->
-> *Effects:* Initializes each element of `*this` with the corresponding
-> element of `u`.
+*Mandates:* `is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for
+all i.
+
+*Effects:* Initializes each element of `*this` with the corresponding
+element of `u`.
 
 ``` cpp
 tuple(tuple&& u) = default;
 ```
 
-> *Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true`
-> for all i.
->
-> *Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
-> with `std::forward<`$\texttt{T}_i$`>(get<`i`>(u))`.
+*Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
+all i.
+
+*Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
+with `std::forward<`$\texttt{T}_i$`>(get<`i`>(u))`.
 
 ``` cpp
 template<class... UTypes> constexpr explicit(see below) tuple(tuple<UTypes...>& u);
@@ -1486,38 +1486,37 @@ template<class... UTypes> constexpr explicit(see below) tuple(tuple<UTypes...>&&
 template<class... UTypes> constexpr explicit(see below) tuple(const tuple<UTypes...>&& u);
 ```
 
-> Let `I` be the pack `0, 1, ..., (sizeof...(Types) - 1)`. Let
-> *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
->
-> *Constraints:*
->
-> - `sizeof...(Types)` equals `sizeof...(UTypes)`, and
->
-> - `(is_constructible_v<Types, decltype(get<I>(`*`FWD`*`(u)))> && ...)`
->   is `true`, and
->
-> - either `sizeof...(Types)` is not 1, or (when `Types...` expands to
->   `T` and `UTypes...` expands to `U`)
->   `is_convertible_v<decltype(u), T>`,
->   `is_constructible_v<T, decltype(u)>`, and `is_same_v<T, U>` are all
->   `false`.
->
-> *Effects:* For all i, initializes the $i^\textrm{th}$ element of
-> `*this` with `get<`i`>(`*`FWD`*`(u))`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !(is_convertible_v<decltype(get<I>(FWD(u))), Types> && ...)
-> ```
->
-> The constructor is defined as deleted if
->
-> ``` cpp
-> (reference_constructs_from_temporary_v<Types, decltype(get<I>(FWD(u)))> || ...)
-> ```
->
-> is `true`.
+Let `I` be the pack `0, 1, ..., (sizeof...(Types) - 1)`. Let
+*`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
+
+*Constraints:*
+
+- `sizeof...(Types)` equals `sizeof...(UTypes)`, and
+
+- `(is_constructible_v<Types, decltype(get<I>(`*`FWD`*`(u)))> && ...)`
+  is `true`, and
+
+- either `sizeof...(Types)` is not 1, or (when `Types...` expands to `T`
+  and `UTypes...` expands to `U`) `is_convertible_v<decltype(u), T>`,
+  `is_constructible_v<T, decltype(u)>`, and `is_same_v<T, U>` are all
+  `false`.
+
+*Effects:* For all i, initializes the $i^\textrm{th}$ element of `*this`
+with `get<`i`>(`*`FWD`*`(u))`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!(is_convertible_v<decltype(get<I>(FWD(u))), Types> && ...)
+```
+
+The constructor is defined as deleted if
+
+``` cpp
+(reference_constructs_from_temporary_v<Types, decltype(get<I>(FWD(u)))> || ...)
+```
+
+is `true`.
 
 ``` cpp
 template<class U1, class U2> constexpr explicit(see below) tuple(pair<U1, U2>& u);
@@ -1526,69 +1525,68 @@ template<class U1, class U2> constexpr explicit(see below) tuple(pair<U1, U2>&& 
 template<class U1, class U2> constexpr explicit(see below) tuple(const pair<U1, U2>&& u);
 ```
 
-> Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
->
-> *Constraints:*
->
-> - `sizeof...(Types)` is 2,
->
-> - `is_constructible_v<`$\texttt{T}_0$`, decltype(get<0>(`*`FWD`*`(u)))>`
->   is `true`, and
->
-> - `is_constructible_v<`$\texttt{T}_1$`, decltype(get<1>(`*`FWD`*`(u)))>`
->   is `true`.
->
-> *Effects:* Initializes the first element with `get<0>(`*`FWD`*`(u))`
-> and the second element with `get<1>(`*`FWD`*`(u))`.
->
-> *Remarks:* The expression inside `explicit` is equivalent to:
->
-> ``` cpp
-> !is_convertible_v<decltype(get<0>(FWD(u))), $\texttt{T}_0$> ||
-> !is_convertible_v<decltype(get<1>(FWD(u))), $\texttt{T}_1$>
-> ```
->
-> The constructor is defined as deleted if
->
-> ``` cpp
-> reference_constructs_from_temporary_v<$\texttt{T}_0$, decltype(get<0>(FWD(u)))> ||
-> reference_constructs_from_temporary_v<$\texttt{T}_1$, decltype(get<1>(FWD(u)))>
-> ```
->
-> is `true`.
+Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
+
+*Constraints:*
+
+- `sizeof...(Types)` is 2,
+
+- `is_constructible_v<`$\texttt{T}_0$`, decltype(get<0>(`*`FWD`*`(u)))>`
+  is `true`, and
+
+- `is_constructible_v<`$\texttt{T}_1$`, decltype(get<1>(`*`FWD`*`(u)))>`
+  is `true`.
+
+*Effects:* Initializes the first element with `get<0>(`*`FWD`*`(u))` and
+the second element with `get<1>(`*`FWD`*`(u))`.
+
+*Remarks:* The expression inside `explicit` is equivalent to:
+
+``` cpp
+!is_convertible_v<decltype(get<0>(FWD(u))), $\texttt{T}_0$> ||
+!is_convertible_v<decltype(get<1>(FWD(u))), $\texttt{T}_1$>
+```
+
+The constructor is defined as deleted if
+
+``` cpp
+reference_constructs_from_temporary_v<$\texttt{T}_0$, decltype(get<0>(FWD(u)))> ||
+reference_constructs_from_temporary_v<$\texttt{T}_1$, decltype(get<1>(FWD(u)))>
+```
+
+is `true`.
 
 ``` cpp
 template<tuple-like UTuple>
   constexpr explicit(see below) tuple(UTuple&& u);
 ```
 
-> Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
->
-> *Constraints:*
->
-> - `different-from``<UTuple, tuple>`[[range.utility.helpers]] is
->   `true`,
->
-> - `remove_cvref_t<UTuple>` is not a specialization of
->   `ranges::subrange`,
->
-> - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
->
-> - `(is_constructible_v<Types, decltype(get<I>(std::forward<UTuple>(u)))> && ...)`
->   is `true`, and
->
-> - either `sizeof...(Types)` is not `1`, or (when `Types...` expands to
->   `T`) `is_convertible_v<UTuple, T>` and
->   `is_constructible_v<T, UTuple>` are both `false`.
->
-> *Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
-> with `get<`i`>(std::forward<UTuple>(u))`.
->
-> *Remarks:* The expression inside `explicit` is equivalent to:
->
-> ``` cpp
-> !(is_convertible_v<decltype(get<I>(std::forward<UTuple>(u))), Types> && ...)
-> ```
+Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
+
+*Constraints:*
+
+- `different-from``<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+
+- `remove_cvref_t<UTuple>` is not a specialization of
+  `ranges::subrange`,
+
+- `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
+
+- `(is_constructible_v<Types, decltype(get<I>(std::forward<UTuple>(u)))> && ...)`
+  is `true`, and
+
+- either `sizeof...(Types)` is not `1`, or (when `Types...` expands to
+  `T`) `is_convertible_v<UTuple, T>` and `is_constructible_v<T, UTuple>`
+  are both `false`.
+
+*Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
+with `get<`i`>(std::forward<UTuple>(u))`.
+
+*Remarks:* The expression inside `explicit` is equivalent to:
+
+``` cpp
+!(is_convertible_v<decltype(get<I>(std::forward<UTuple>(u))), Types> && ...)
+```
 
 ``` cpp
 template<class Alloc>
@@ -1633,12 +1631,12 @@ template<class Alloc, tuple-like UTuple>
     tuple(allocator_arg_t, const Alloc& a, UTuple&&);
 ```
 
-> *Preconditions:* `Alloc` meets the *Cpp17Allocator*
-> requirements [[allocator.requirements.general]].
->
-> *Effects:* Equivalent to the preceding constructors except that each
-> element is constructed with uses-allocator
-> construction [[allocator.uses.construction]].
+*Preconditions:* `Alloc` meets the *Cpp17Allocator*
+requirements [[allocator.requirements.general]].
+
+*Effects:* Equivalent to the preceding constructors except that each
+element is constructed with uses-allocator
+construction [[allocator.uses.construction]].
 
 #### Assignment <a id="tuple.assign">[[tuple.assign]]</a>
 
@@ -1653,237 +1651,233 @@ where indexing is zero-based.
 constexpr tuple& operator=(const tuple& u);
 ```
 
-> *Effects:* Assigns each element of `u` to the corresponding element of
-> `*this`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* This operator is defined as deleted unless
-> `is_copy_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
+*Effects:* Assigns each element of `u` to the corresponding element of
+`*this`.
+
+*Returns:* `*this`.
+
+*Remarks:* This operator is defined as deleted unless
+`is_copy_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
 
 ``` cpp
 constexpr const tuple& operator=(const tuple& u) const;
 ```
 
-> *Constraints:* `(is_copy_assignable_v<const Types> && ...)` is `true`.
->
-> *Effects:* Assigns each element of `u` to the corresponding element of
-> `*this`.
->
-> *Returns:* `*this`.
+*Constraints:* `(is_copy_assignable_v<const Types> && ...)` is `true`.
+
+*Effects:* Assigns each element of `u` to the corresponding element of
+`*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr tuple& operator=(tuple&& u) noexcept(see below);
 ```
 
-> *Constraints:* `is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for
-> all i.
->
-> *Effects:* For all i, assigns
-> `std::forward<`$\texttt{T}_i$`>(get<`i`>(u))` to `get<`i`>(*this)`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* The exception specification is equivalent to the logical of
-> the following expressions:
->
-> ``` cpp
-> is_nothrow_move_assignable_v<$\mathtt{T}_i$>
-> ```
->
-> where Tᵢ is the $i^\text{th}$ type in `Types`.
+*Constraints:* `is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for
+all i.
+
+*Effects:* For all i, assigns
+`std::forward<`$\texttt{T}_i$`>(get<`i`>(u))` to `get<`i`>(*this)`.
+
+*Returns:* `*this`.
+
+*Remarks:* The exception specification is equivalent to the logical of
+the following expressions:
+
+``` cpp
+is_nothrow_move_assignable_v<$\mathtt{T}_i$>
+```
+
+where Tᵢ is the $i^\text{th}$ type in `Types`.
 
 ``` cpp
 constexpr const tuple& operator=(tuple&& u) const;
 ```
 
-> *Constraints:* `(is_assignable_v<const Types&, Types> && ...)` is
-> `true`.
->
-> *Effects:* For all i, assigns `std::forward<T`_i`>(get<`i`>(u))` to
-> `get<`i`>(*this)`.
->
-> *Returns:* `*this`.
+*Constraints:* `(is_assignable_v<const Types&, Types> && ...)` is
+`true`.
+
+*Effects:* For all i, assigns `std::forward<T`_i`>(get<`i`>(u))` to
+`get<`i`>(*this)`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class... UTypes> constexpr tuple& operator=(const tuple<UTypes...>& u);
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` equals `sizeof...(UTypes)` and
->
-> - `is_assignable_v<`$\texttt{T}_i$`&, const `$\texttt{U}_i$`&>` is
->   `true` for all i.
->
-> *Effects:* Assigns each element of `u` to the corresponding element of
-> `*this`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` equals `sizeof...(UTypes)` and
+
+- `is_assignable_v<`$\texttt{T}_i$`&, const `$\texttt{U}_i$`&>` is
+  `true` for all i.
+
+*Effects:* Assigns each element of `u` to the corresponding element of
+`*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class... UTypes> constexpr const tuple& operator=(const tuple<UTypes...>& u) const;
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` equals `sizeof...(UTypes)` and
->
-> - `(is_assignable_v<const Types&, const UTypes&> && ...)` is `true`.
->
-> *Effects:* Assigns each element of `u` to the corresponding element of
-> `*this`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` equals `sizeof...(UTypes)` and
+
+- `(is_assignable_v<const Types&, const UTypes&> && ...)` is `true`.
+
+*Effects:* Assigns each element of `u` to the corresponding element of
+`*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class... UTypes> constexpr tuple& operator=(tuple<UTypes...>&& u);
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` equals `sizeof...(UTypes)` and
->
-> - `is_assignable_v<`$\texttt{T}_i$`&, `$\texttt{U}_i$`>` is `true` for
->   all i.
->
-> *Effects:* For all i, assigns
-> `std::forward<`$\texttt{U}_i$`>(get<`i`>(u))` to `get<`i`>(*this)`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` equals `sizeof...(UTypes)` and
+
+- `is_assignable_v<`$\texttt{T}_i$`&, `$\texttt{U}_i$`>` is `true` for
+  all i.
+
+*Effects:* For all i, assigns
+`std::forward<`$\texttt{U}_i$`>(get<`i`>(u))` to `get<`i`>(*this)`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class... UTypes> constexpr const tuple& operator=(tuple<UTypes...>&& u) const;
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` equals `sizeof...(UTypes)` and
->
-> - `(is_assignable_v<const Types&, UTypes> && ...)` is `true`.
->
-> *Effects:* For all i, assigns `std::forward<U`_i`>(get<`i`>(u))` to
-> `get<`i`>(*this)`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` equals `sizeof...(UTypes)` and
+
+- `(is_assignable_v<const Types&, UTypes> && ...)` is `true`.
+
+*Effects:* For all i, assigns `std::forward<U`_i`>(get<`i`>(u))` to
+`get<`i`>(*this)`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr tuple& operator=(const pair<U1, U2>& u);
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` is 2 and
->
-> - `is_assignable_v<`$\texttt{T}_0$`&, const U1&>` is `true`, and
->
-> - `is_assignable_v<`$\texttt{T}_1$`&, const U2&>` is `true`.
->
-> *Effects:* Assigns `u.first` to the first element of `*this` and
-> `u.second` to the second element of `*this`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` is 2 and
+
+- `is_assignable_v<`$\texttt{T}_0$`&, const U1&>` is `true`, and
+
+- `is_assignable_v<`$\texttt{T}_1$`&, const U2&>` is `true`.
+
+*Effects:* Assigns `u.first` to the first element of `*this` and
+`u.second` to the second element of `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr const tuple& operator=(const pair<U1, U2>& u) const;
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` is 2,
->
-> - `is_assignable_v<const `$\texttt{T}_0$`&, const U1&>` is `true`, and
->
-> - `is_assignable_v<const `$\texttt{T}_1$`&, const U2&>` is `true`.
->
-> *Effects:* Assigns `u.first` to the first element and `u.second` to
-> the second element.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` is 2,
+
+- `is_assignable_v<const `$\texttt{T}_0$`&, const U1&>` is `true`, and
+
+- `is_assignable_v<const `$\texttt{T}_1$`&, const U2&>` is `true`.
+
+*Effects:* Assigns `u.first` to the first element and `u.second` to the
+second element.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr tuple& operator=(pair<U1, U2>&& u);
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` is 2 and
->
-> - `is_assignable_v<`$\texttt{T}_0$`&, U1>` is `true`, and
->
-> - `is_assignable_v<`$\texttt{T}_1$`&, U2>` is `true`.
->
-> *Effects:* Assigns `std::forward<U1>(u.first)` to the first element of
-> `*this` and  
-> `std::forward<U2>(u.second)` to the second element of `*this`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` is 2 and
+
+- `is_assignable_v<`$\texttt{T}_0$`&, U1>` is `true`, and
+
+- `is_assignable_v<`$\texttt{T}_1$`&, U2>` is `true`.
+
+*Effects:* Assigns `std::forward<U1>(u.first)` to the first element of
+`*this` and  
+`std::forward<U2>(u.second)` to the second element of `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class U1, class U2> constexpr const tuple& operator=(pair<U1, U2>&& u) const;
 ```
 
-> *Constraints:*
->
-> - `sizeof...(Types)` is 2,
->
-> - `is_assignable_v<const `$\texttt{T}_0$`&, U1>` is `true`, and
->
-> - `is_assignable_v<const `$\texttt{T}_1$`&, U2>` is `true`.
->
-> *Effects:* Assigns `std::forward<U1>(u.first)` to the first element
-> and  
-> `std::forward<U2>(u.second)` to the second element.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `sizeof...(Types)` is 2,
+
+- `is_assignable_v<const `$\texttt{T}_0$`&, U1>` is `true`, and
+
+- `is_assignable_v<const `$\texttt{T}_1$`&, U2>` is `true`.
+
+*Effects:* Assigns `std::forward<U1>(u.first)` to the first element
+and  
+`std::forward<U2>(u.second)` to the second element.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<tuple-like UTuple>
   constexpr tuple& operator=(UTuple&& u);
 ```
 
-> *Constraints:*
->
-> - `different-from``<UTuple, tuple>`[[range.utility.helpers]] is
->   `true`,
->
-> - `remove_cvref_t<UTuple>` is not a specialization of
->   `ranges::subrange`,
->
-> - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
->   and,
->
-> - `is_assignable_v<`$\texttt{T}_i$`&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
->   is `true` for all i.
->
-> *Effects:* For all i, assigns `get<`i`>(std::forward<UTuple>(u))` to
-> `get<`i`>(*this)`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `different-from``<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+
+- `remove_cvref_t<UTuple>` is not a specialization of
+  `ranges::subrange`,
+
+- `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and,
+
+- `is_assignable_v<`$\texttt{T}_i$`&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
+  is `true` for all i.
+
+*Effects:* For all i, assigns `get<`i`>(std::forward<UTuple>(u))` to
+`get<`i`>(*this)`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<tuple-like UTuple>
   constexpr const tuple& operator=(UTuple&& u) const;
 ```
 
-> *Constraints:*
->
-> - `different-from``<UTuple, tuple>`[[range.utility.helpers]] is
->   `true`,
->
-> - `remove_cvref_t<UTuple>` is not a specialization of
->   `ranges::subrange`,
->
-> - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
->   and,
->
-> - `is_assignable_v<const `$\texttt{T}_i$`&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
->   is `true` for all i.
->
-> *Effects:* For all i, assigns `get<`i`>(std::forward<UTuple>(u))` to
-> `get<`i`>(*this)`.
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `different-from``<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+
+- `remove_cvref_t<UTuple>` is not a specialization of
+  `ranges::subrange`,
+
+- `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and,
+
+- `is_assignable_v<const `$\texttt{T}_i$`&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
+  is `true` for all i.
+
+*Effects:* For all i, assigns `get<`i`>(std::forward<UTuple>(u))` to
+`get<`i`>(*this)`.
+
+*Returns:* `*this`.
 
 #### `swap` <a id="tuple.swap">[[tuple.swap]]</a>
 
@@ -1892,30 +1886,30 @@ constexpr void swap(tuple& rhs) noexcept(see below);
 constexpr void swap(const tuple& rhs) const noexcept(see below);
 ```
 
-> Let i be in the range \[`0`, `sizeof...(Types)`) in order.
->
-> *Mandates:*
->
-> - For the first overload, `(is_swappable_v<Types> && ...)` is `true`.
->
-> - For the second overload, `(is_swappable_v<const Types> && ...)` is
->   `true`.
->
-> *Preconditions:* For all i, `get<`i`>(*this)` is swappable
-> with [[swappable.requirements]] `get<`i`>(rhs)`.
->
-> *Effects:* For each i, calls `swap` for `get<`i`>(*this)` with
-> `get<`i`>(rhs)`.
->
-> *Throws:* Nothing unless one of the element-wise `swap` calls throws
-> an exception.
->
-> *Remarks:* The exception specification is equivalent to
->
-> - `(is_nothrow_swappable_v<Types> && ...)` for the first overload and
->
-> - `(is_nothrow_swappable_v<const Types> && ...)` for the second
->   overload.
+Let i be in the range \[`0`, `sizeof...(Types)`) in order.
+
+*Mandates:*
+
+- For the first overload, `(is_swappable_v<Types> && ...)` is `true`.
+
+- For the second overload, `(is_swappable_v<const Types> && ...)` is
+  `true`.
+
+*Preconditions:* For all i, `get<`i`>(*this)` is swappable
+with [[swappable.requirements]] `get<`i`>(rhs)`.
+
+*Effects:* For each i, calls `swap` for `get<`i`>(*this)` with
+`get<`i`>(rhs)`.
+
+*Throws:* Nothing unless one of the element-wise `swap` calls throws an
+exception.
+
+*Remarks:* The exception specification is equivalent to
+
+- `(is_nothrow_swappable_v<Types> && ...)` for the first overload and
+
+- `(is_nothrow_swappable_v<const Types> && ...)` for the second
+  overload.
 
 ### Tuple creation functions <a id="tuple.creation">[[tuple.creation]]</a>
 
@@ -1924,87 +1918,87 @@ template<class... TTypes>
   constexpr tuple<unwrap_ref_decay_t<TTypes>...> make_tuple(TTypes&&... t);
 ```
 
-> *Returns:*
-> `tuple<unwrap_ref_decay_t<TTypes>...>(std::forward<TTypes>(t)...)`.
->
-> \[*Example 6*:
->
->     int i; float j;
->     make_tuple(1, ref(i), cref(j));
->
-> creates a tuple of type `tuple<int, int&, const float&>`.
->
-> — *end example*\]
+*Returns:*
+`tuple<unwrap_ref_decay_t<TTypes>...>(std::forward<TTypes>(t)...)`.
+
+\[*Example 1*:
+
+    int i; float j;
+    make_tuple(1, ref(i), cref(j));
+
+creates a tuple of type `tuple<int, int&, const float&>`.
+
+— *end example*\]
 
 ``` cpp
 template<class... TTypes>
   constexpr tuple<TTypes&&...> forward_as_tuple(TTypes&&... t) noexcept;
 ```
 
-> *Effects:* Constructs a tuple of references to the arguments in `t`
-> suitable for forwarding as arguments to a function. Because the result
-> may contain references to temporary objects, a program shall ensure
-> that the return value of this function does not outlive any of its
-> arguments (e.g., the program should typically not store the result in
-> a named variable).
->
-> *Returns:* `tuple<TTypes&&...>(std::forward<TTypes>(t)...)`.
+*Effects:* Constructs a tuple of references to the arguments in `t`
+suitable for forwarding as arguments to a function. Because the result
+may contain references to temporary objects, a program shall ensure that
+the return value of this function does not outlive any of its arguments
+(e.g., the program should typically not store the result in a named
+variable).
+
+*Returns:* `tuple<TTypes&&...>(std::forward<TTypes>(t)...)`.
 
 ``` cpp
 template<class... TTypes>
   constexpr tuple<TTypes&...> tie(TTypes&... t) noexcept;
 ```
 
-> *Returns:* `tuple<TTypes&...>(t...)`. When an argument in `t` is
-> `ignore`, assigning any value to the corresponding tuple element has
-> no effect.
->
-> \[*Example 7*:
->
-> `tie` functions allow one to create tuples that unpack tuples into
-> variables. `ignore` can be used for elements that are not needed:
->
->     int i; std::string s;
->     tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
->     // \texttt{i == 42}, \texttt{s == "C++"}
->
-> — *end example*\]
+*Returns:* `tuple<TTypes&...>(t...)`. When an argument in `t` is
+`ignore`, assigning any value to the corresponding tuple element has no
+effect.
+
+\[*Example 2*:
+
+`tie` functions allow one to create tuples that unpack tuples into
+variables. `ignore` can be used for elements that are not needed:
+
+    int i; std::string s;
+    tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
+    // \texttt{i == 42}, \texttt{s == "C++"}
+
+— *end example*\]
 
 ``` cpp
 template<tuple-like... Tuples>
   constexpr tuple<CTypes...> tuple_cat(Tuples&&... tpls);
 ```
 
-> Let n be `sizeof...(Tuples)`. For every integer 0 ≤ i < n:
->
-> - Let $\texttt{T}_i$ be the $i^\text{th}$ type in `Tuples`.
->
-> - Let $\texttt{U}_i$ be `remove_cvref_t<`$\texttt{T}_i$`>`.
->
-> - Let $\texttt{tp}_i$ be the $i^\text{th}$ element in the function
->   parameter pack `tpls`.
->
-> - Let Sᵢ be `tuple_size_v<`$\texttt{U}_i$`>`.
->
-> - Let $E_i^k$ be `tuple_element_t<`k`, `$\texttt{U}_i$`>`.
->
-> - Let $e_i^k$ be
->   `get<`k`>(std::forward<`$\texttt{T}_i$`>(`$\texttt{tp}_i$`))`.
->
-> - Let Elemsᵢ be a pack of the types $E_i^0, \dotsc, E_i^{S_{i-1}}$.
->
-> - Let elemsᵢ be a pack of the expressions
->   $e_i^0, \dotsc, e_i^{S_{i-1}}$.
->
-> The types in `CTypes` are equal to the ordered sequence of the
-> expanded packs of types Elems₀`...`, Elems₁`...`, …,
-> $Elems_{n-1}$`...`. Let `celems` be the ordered sequence of the
-> expanded packs of expressions elems₀`...`, …, $elems_{n-1}$`...`.
->
-> *Mandates:* `(is_constructible_v<CTypes, decltype(celems)> && ...)` is
-> `true`.
->
-> *Returns:* `tuple<CTypes...>(celems...)`.
+Let n be `sizeof...(Tuples)`. For every integer 0 ≤ i < n:
+
+- Let $\texttt{T}_i$ be the $i^\text{th}$ type in `Tuples`.
+
+- Let $\texttt{U}_i$ be `remove_cvref_t<`$\texttt{T}_i$`>`.
+
+- Let $\texttt{tp}_i$ be the $i^\text{th}$ element in the function
+  parameter pack `tpls`.
+
+- Let Sᵢ be `tuple_size_v<`$\texttt{U}_i$`>`.
+
+- Let $E_i^k$ be `tuple_element_t<`k`, `$\texttt{U}_i$`>`.
+
+- Let $e_i^k$ be
+  `get<`k`>(std::forward<`$\texttt{T}_i$`>(`$\texttt{tp}_i$`))`.
+
+- Let Elemsᵢ be a pack of the types $E_i^0, \dotsc, E_i^{S_{i-1}}$.
+
+- Let elemsᵢ be a pack of the expressions
+  $e_i^0, \dotsc, e_i^{S_{i-1}}$.
+
+The types in `CTypes` are equal to the ordered sequence of the expanded
+packs of types Elems₀`...`, Elems₁`...`, …, $Elems_{n-1}$`...`. Let
+`celems` be the ordered sequence of the expanded packs of expressions
+elems₀`...`, …, $elems_{n-1}$`...`.
+
+*Mandates:* `(is_constructible_v<CTypes, decltype(celems)> && ...)` is
+`true`.
+
+*Returns:* `tuple<CTypes...>(celems...)`.
 
 ### Calling a function with a `tuple` of arguments <a id="tuple.apply">[[tuple.apply]]</a>
 
@@ -2013,65 +2007,65 @@ template<class F, tuple-like Tuple>
   constexpr decltype(auto) apply(F&& f, Tuple&& t) noexcept(see below);
 ```
 
-> *Effects:* Given the exposition-only function:
->
-> ``` cpp
-> namespace std {
->   template<class F, tuple-like Tuple, size_t... I>
->   constexpr decltype(auto) apply-impl(F&& f, Tuple&& t, index_sequence<I...>) {
->                                                                         // exposition only
->     return INVOKE(std::forward<F>(f), get<I>(std::forward<Tuple>(t))...);     // see REF:func.require
->   }
-> }
-> ```
->
-> Equivalent to:
->
-> ``` cpp
-> return apply-impl(std::forward<F>(f), std::forward<Tuple>(t),
->                   make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>>{});
-> ```
->
-> *Remarks:* Let `I` be the pack
-> `0, 1, ..., (tuple_size_v<remove_reference_t<Tuple>> - 1)`. The
-> exception specification is equivalent to:
->
-> ``` cpp
-> noexcept(invoke(std::forward<F>(f), get<I>(std::forward<Tuple>(t))...))
-> ```
+*Effects:* Given the exposition-only function:
+
+``` cpp
+namespace std {
+  template<class F, tuple-like Tuple, size_t... I>
+  constexpr decltype(auto) apply-impl(F&& f, Tuple&& t, index_sequence<I...>) {
+                                                                        // exposition only
+    return INVOKE(std::forward<F>(f), get<I>(std::forward<Tuple>(t))...);     // see REF:func.require
+  }
+}
+```
+
+Equivalent to:
+
+``` cpp
+return apply-impl(std::forward<F>(f), std::forward<Tuple>(t),
+                  make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>>{});
+```
+
+*Remarks:* Let `I` be the pack
+`0, 1, ..., (tuple_size_v<remove_reference_t<Tuple>> - 1)`. The
+exception specification is equivalent to:
+
+``` cpp
+noexcept(invoke(std::forward<F>(f), get<I>(std::forward<Tuple>(t))...))
+```
 
 ``` cpp
 template<class T, tuple-like Tuple>
   constexpr T make_from_tuple(Tuple&& t);
 ```
 
-> *Mandates:* If `tuple_size_v<remove_reference_t<Tuple>>` is 1, then
-> `reference_constructs_from_temporary_v<T, decltype(get<0>(declval<Tuple>()))>`
-> is `false`.
->
-> *Effects:* Given the exposition-only function:
->
-> ``` cpp
-> namespace std {
->   template<class T, tuple-like Tuple, size_t... I>
->     requires is_constructible_v<T, decltype(get<I>(declval<Tuple>()))...>
->   constexpr T make-from-tuple-impl(Tuple&& t, index_sequence<I...>) {   // exposition only
->     return T(get<I>(std::forward<Tuple>(t))...);
->   }
-> }
-> ```
->
-> Equivalent to:
->
-> ``` cpp
-> return make-from-tuple-impl<T>(
->            std::forward<Tuple>(t),
->            make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>>{});
-> ```
->
-> \[*Note 5*: The type of `T` must be supplied as an explicit template
-> parameter, as it cannot be deduced from the argument
-> list. — *end note*\]
+*Mandates:* If `tuple_size_v<remove_reference_t<Tuple>>` is 1, then
+`reference_constructs_from_temporary_v<T, decltype(get<0>(declval<Tuple>()))>`
+is `false`.
+
+*Effects:* Given the exposition-only function:
+
+``` cpp
+namespace std {
+  template<class T, tuple-like Tuple, size_t... I>
+    requires is_constructible_v<T, decltype(get<I>(declval<Tuple>()))...>
+  constexpr T make-from-tuple-impl(Tuple&& t, index_sequence<I...>) {   // exposition only
+    return T(get<I>(std::forward<Tuple>(t))...);
+  }
+}
+```
+
+Equivalent to:
+
+``` cpp
+return make-from-tuple-impl<T>(
+           std::forward<Tuple>(t),
+           make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>>{});
+```
+
+\[*Note 2*: The type of `T` must be supplied as an explicit template
+parameter, as it cannot be deduced from the argument
+list. — *end note*\]
 
 ### Tuple helper classes <a id="tuple.helper">[[tuple.helper]]</a>
 
@@ -2079,9 +2073,9 @@ template<class T, tuple-like Tuple>
 template<class T> struct tuple_size;
 ```
 
-> All specializations of `tuple_size` meet the *Cpp17UnaryTypeTrait*
-> requirements [[meta.rqmts]] with a base characteristic of
-> `integral_constant<size_t, N>` for some `N`.
+All specializations of `tuple_size` meet the *Cpp17UnaryTypeTrait*
+requirements [[meta.rqmts]] with a base characteristic of
+`integral_constant<size_t, N>` for some `N`.
 
 ``` cpp
 template<class... Types>
@@ -2095,52 +2089,51 @@ template<size_t I, class... Types>
   };
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Type:* `TI` is the type of the $\texttt{I}^\text{th}$ element of
-> `Types`, where indexing is zero-based.
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Type:* `TI` is the type of the $\texttt{I}^\text{th}$ element of
+`Types`, where indexing is zero-based.
 
 ``` cpp
 template<class T> struct tuple_size<const T>;
 ```
 
-> Let `TS` denote `tuple_size<T>` of the cv-unqualified type `T`. If the
-> expression `TS::value` is well-formed when treated as an unevaluated
-> operand [[term.unevaluated.operand]], then each specialization of the
-> template meets the *Cpp17UnaryTypeTrait* requirements [[meta.rqmts]]
-> with a base characteristic of
->
-> ``` cpp
-> integral_constant<size_t, TS::value>
-> ```
->
-> Otherwise, it has no member `value`.
->
-> Access checking is performed as if in a context unrelated to `TS` and
-> `T`. Only the validity of the immediate context of the expression is
-> considered.
->
-> \[*Note 6*: The compilation of the expression can result in side
-> effects such as the instantiation of class template specializations
-> and function template specializations, the generation of
-> implicitly-defined functions, and so on. Such side effects are not in
-> the “immediate context” and can result in the program being
-> ill-formed. — *end note*\]
->
-> In addition to being available via inclusion of the header, the
-> template is available when any of the headers , , or are included.
+Let `TS` denote `tuple_size<T>` of the cv-unqualified type `T`. If the
+expression `TS::value` is well-formed when treated as an unevaluated
+operand [[term.unevaluated.operand]], then each specialization of the
+template meets the *Cpp17UnaryTypeTrait* requirements [[meta.rqmts]]
+with a base characteristic of
+
+``` cpp
+integral_constant<size_t, TS::value>
+```
+
+Otherwise, it has no member `value`.
+
+Access checking is performed as if in a context unrelated to `TS` and
+`T`. Only the validity of the immediate context of the expression is
+considered.
+
+\[*Note 3*: The compilation of the expression can result in side effects
+such as the instantiation of class template specializations and function
+template specializations, the generation of implicitly-defined
+functions, and so on. Such side effects are not in the “immediate
+context” and can result in the program being ill-formed. — *end note*\]
+
+In addition to being available via inclusion of the header, the template
+is available when any of the headers , , or are included.
 
 ``` cpp
 template<size_t I, class T> struct tuple_element<I, const T>;
 ```
 
-> Let `TE` denote `tuple_element_t<I, T>` of the cv-unqualified type
-> `T`. Then each specialization of the template meets the
-> *Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
-> typedef `type` that names the type `add_const_t<TE>`.
->
-> In addition to being available via inclusion of the header, the
-> template is available when any of the headers , , or are included.
+Let `TE` denote `tuple_element_t<I, T>` of the cv-unqualified type `T`.
+Then each specialization of the template meets the
+*Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
+typedef `type` that names the type `add_const_t<TE>`.
+
+In addition to being available via inclusion of the header, the template
+is available when any of the headers , , or are included.
 
 ### Element access <a id="tuple.elem">[[tuple.elem]]</a>
 
@@ -2158,20 +2151,20 @@ template<size_t I, class... Types>
   constexpr const tuple_element_t<I, tuple<Types...>>&& get(const tuple<Types...>&& t) noexcept;
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Returns:* A reference to the $\texttt{I}^\text{th}$ element of `t`,
-> where indexing is zero-based.
->
-> \[*Note 7*: If a type `T` in `Types` is some reference type `X&`, the
-> return type is `X&`, not `X&&`. However, if the element type is a
-> non-reference type `T`, the return type is `T&&`. — *end note*\]
->
-> \[*Note 8*: Constness is shallow. If a type `T` in `Types` is some
-> reference type `X&`, the return type is `X&`, not `const X&`. However,
-> if the element type is a non-reference type `T`, the return type is
-> `const T&`. This is consistent with how constness is defined to work
-> for non-static data members of reference type. — *end note*\]
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Returns:* A reference to the $\texttt{I}^\text{th}$ element of `t`,
+where indexing is zero-based.
+
+\[*Note 4*: If a type `T` in `Types` is some reference type `X&`, the
+return type is `X&`, not `X&&`. However, if the element type is a
+non-reference type `T`, the return type is `T&&`. — *end note*\]
+
+\[*Note 5*: Constness is shallow. If a type `T` in `Types` is some
+reference type `X&`, the return type is `X&`, not `const X&`. However,
+if the element type is a non-reference type `T`, the return type is
+`const T&`. This is consistent with how constness is defined to work for
+non-static data members of reference type. — *end note*\]
 
 ``` cpp
 template<class T, class... Types>
@@ -2184,21 +2177,21 @@ template<class T, class... Types>
   constexpr const T&& get(const tuple<Types...>&& t) noexcept;
 ```
 
-> *Mandates:* The type `T` occurs exactly once in `Types`.
->
-> *Returns:* A reference to the element of `t` corresponding to the type
-> `T` in `Types`.
->
-> \[*Example 8*:
->
->     const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
->     const int& i1 = get<int>(t);                    // OK, \texttt{i1} has value \texttt{1}
->     const int& i2 = get<const int>(t);              // OK, \texttt{i2} has value \texttt{2}
->     const double& d = get<double>(t);               // error: type \texttt{double} is not unique within \texttt{t}
->
-> — *end example*\]
+*Mandates:* The type `T` occurs exactly once in `Types`.
 
-\[*Note 1*: The reason `get` is a non-member function is that if this
+*Returns:* A reference to the element of `t` corresponding to the type
+`T` in `Types`.
+
+\[*Example 3*:
+
+    const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
+    const int& i1 = get<int>(t);                    // OK, \texttt{i1} has value \texttt{1}
+    const int& i2 = get<const int>(t);              // OK, \texttt{i2} has value \texttt{2}
+    const double& d = get<double>(t);               // error: type \texttt{double} is not unique within \texttt{t}
+
+— *end example*\]
+
+\[*Note 6*: The reason `get` is a non-member function is that if this
 functionality had been provided as a member function, code where the
 type depended on a template parameter would have required using the
 `template` keyword. — *end note*\]
@@ -2212,30 +2205,30 @@ template<class... TTypes, tuple-like UTuple>
   constexpr bool operator==(const tuple<TTypes...>& t, const UTuple& u);
 ```
 
-> For the first overload let `UTuple` be `tuple<UTypes...>`.
->
-> *Mandates:* For all `i`, where
-> $0 \leq \texttt{i} < \texttt{sizeof...(TTypes)}$,
-> `get<i>(t) == get<i>(u)` is a valid expression. `sizeof...(TTypes)`
-> equals `tuple_size_v<UTuple>`.
->
-> *Preconditions:* For all `i`, `decltype(get<i>(t) == get<i>(u))`
-> models `boolean-testable`.
->
-> *Returns:* `true` if `get<i>(t) == get<i>(u)` for all `i`, otherwise
-> `false`.
->
-> \[*Note 9*: If `sizeof...(TTypes)` equals zero, returns
-> `true`. — *end note*\]
->
-> *Remarks:*
->
-> - The elementary comparisons are performed in order from the zeroth
->   index upwards. No comparisons or element accesses are performed
->   after the first equality comparison that evaluates to `false`.
->
-> - The second overload is to be found via argument-dependent
->   lookup [[basic.lookup.argdep]] only.
+For the first overload let `UTuple` be `tuple<UTypes...>`.
+
+*Mandates:* For all `i`, where
+$0 \leq \texttt{i} < \texttt{sizeof...(TTypes)}$,
+`get<i>(t) == get<i>(u)` is a valid expression. `sizeof...(TTypes)`
+equals `tuple_size_v<UTuple>`.
+
+*Preconditions:* For all `i`, `decltype(get<i>(t) == get<i>(u))` models
+`boolean-testable`.
+
+*Returns:* `true` if `get<i>(t) == get<i>(u)` for all `i`, otherwise
+`false`.
+
+\[*Note 7*: If `sizeof...(TTypes)` equals zero, returns
+`true`. — *end note*\]
+
+*Remarks:*
+
+- The elementary comparisons are performed in order from the zeroth
+  index upwards. No comparisons or element accesses are performed after
+  the first equality comparison that evaluates to `false`.
+
+- The second overload is to be found via argument-dependent
+  lookup [[basic.lookup.argdep]] only.
 
 ``` cpp
 template<class... TTypes, class... UTypes>
@@ -2246,26 +2239,26 @@ template<class... TTypes, tuple-like UTuple>
     operator<=>(const tuple<TTypes...>& t, const UTuple& u);
 ```
 
-> For the second overload, `Elems` denotes the pack of types
-> `tuple_element_t<0, UTuple>`, `tuple_element_t<1, UTuple>`, …,
-> `tuple_element_t<tuple_size_v<UTuple> - 1, UTuple>`.
->
-> *Effects:* Performs a lexicographical comparison between `t` and `u`.
-> If `sizeof...(TTypes)` equals zero, returns `strong_ordering::equal`.
-> Otherwise, equivalent to:
->
-> ``` cpp
-> if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
-> return $\texttt{t}_\mathrm{tail}$ <=> $\texttt{u}_\mathrm{tail}$;
-> ```
->
-> where $\texttt{r}_\mathrm{tail}$ for some `r` is a tuple containing
-> all but the first element of `r`.
->
-> *Remarks:* The second overload is to be found via argument-dependent
-> lookup [[basic.lookup.argdep]] only.
+For the second overload, `Elems` denotes the pack of types
+`tuple_element_t<0, UTuple>`, `tuple_element_t<1, UTuple>`, …,
+`tuple_element_t<tuple_size_v<UTuple> - 1, UTuple>`.
 
-\[*Note 2*: The above definition does not require `t$_{tail}$` (or
+*Effects:* Performs a lexicographical comparison between `t` and `u`. If
+`sizeof...(TTypes)` equals zero, returns `strong_ordering::equal`.
+Otherwise, equivalent to:
+
+``` cpp
+if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
+return $\texttt{t}_\mathrm{tail}$ <=> $\texttt{u}_\mathrm{tail}$;
+```
+
+where $\texttt{r}_\mathrm{tail}$ for some `r` is a tuple containing all
+but the first element of `r`.
+
+*Remarks:* The second overload is to be found via argument-dependent
+lookup [[basic.lookup.argdep]] only.
+
+\[*Note 8*: The above definition does not require `t$_{tail}$` (or
 `u$_{tail}$`) to be constructed. It might not even be possible, as `t`
 and `u` are not required to be copy constructible. Also, all comparison
 operator functions are short circuited; they do not perform element
@@ -2292,22 +2285,22 @@ struct basic_common_reference<TTuple, UTuple, TQual, UQual> {
 };
 ```
 
-> *Constraints:*
->
-> - `TTuple` is a specialization of `tuple` or `UTuple` is a
->   specialization of `tuple`.
->
-> - `is_same_v<TTuple, decay_t<TTuple>>` is `true`.
->
-> - `is_same_v<UTuple, decay_t<UTuple>>` is `true`.
->
-> - `tuple_size_v<TTuple>` equals `tuple_size_v<UTuple>`.
->
-> - `tuple<common_reference_t<TQual<TTypes>, UQual<UTypes>>...>` denotes
->   a type.
->
-> The member *typedef-name* `type` denotes the type
-> `tuple<common_reference_t<TQual<TTypes>, UQual<UTypes>>...>`.
+*Constraints:*
+
+- `TTuple` is a specialization of `tuple` or `UTuple` is a
+  specialization of `tuple`.
+
+- `is_same_v<TTuple, decay_t<TTuple>>` is `true`.
+
+- `is_same_v<UTuple, decay_t<UTuple>>` is `true`.
+
+- `tuple_size_v<TTuple>` equals `tuple_size_v<UTuple>`.
+
+- `tuple<common_reference_t<TQual<TTypes>, UQual<UTypes>>...>` denotes a
+  type.
+
+The member *typedef-name* `type` denotes the type
+`tuple<common_reference_t<TQual<TTypes>, UQual<UTypes>>...>`.
 
 ``` cpp
 template<tuple-like TTuple, tuple-like UTuple>
@@ -2316,21 +2309,21 @@ struct common_type<TTuple, UTuple> {
 };
 ```
 
-> *Constraints:*
->
-> - `TTuple` is a specialization of `tuple` or `UTuple` is a
->   specialization of `tuple`.
->
-> - `is_same_v<TTuple, decay_t<TTuple>>` is `true`.
->
-> - `is_same_v<UTuple, decay_t<UTuple>>` is `true`.
->
-> - `tuple_size_v<TTuple>` equals `tuple_size_v<UTuple>`.
->
-> - `tuple<common_type_t<TTypes, UTypes>...>` denotes a type.
->
-> The member *typedef-name* `type` denotes the type
-> `tuple<common_type_t<TTypes, UTypes>...>`.
+*Constraints:*
+
+- `TTuple` is a specialization of `tuple` or `UTuple` is a
+  specialization of `tuple`.
+
+- `is_same_v<TTuple, decay_t<TTuple>>` is `true`.
+
+- `is_same_v<UTuple, decay_t<UTuple>>` is `true`.
+
+- `tuple_size_v<TTuple>` equals `tuple_size_v<UTuple>`.
+
+- `tuple<common_type_t<TTypes, UTypes>...>` denotes a type.
+
+The member *typedef-name* `type` denotes the type
+`tuple<common_type_t<TTypes, UTypes>...>`.
 
 ### Tuple traits <a id="tuple.traits">[[tuple.traits]]</a>
 
@@ -2339,12 +2332,12 @@ template<class... Types, class Alloc>
   struct uses_allocator<tuple<Types...>, Alloc> : true_type { };
 ```
 
-> *Preconditions:* `Alloc` meets the *Cpp17Allocator*
-> requirements [[allocator.requirements.general]].
->
-> \[*Note 10*: Specialization of this trait informs other library
-> components that `tuple` can be constructed with an allocator, even
-> though it does not have a nested `allocator_type`. — *end note*\]
+*Preconditions:* `Alloc` meets the *Cpp17Allocator*
+requirements [[allocator.requirements.general]].
+
+\[*Note 9*: Specialization of this trait informs other library
+components that `tuple` can be constructed with an allocator, even
+though it does not have a nested `allocator_type`. — *end note*\]
 
 ### Tuple specialized algorithms <a id="tuple.special">[[tuple.special]]</a>
 
@@ -2355,20 +2348,20 @@ template<class... Types>
   constexpr void swap(const tuple<Types...>& x, const tuple<Types...>& y) noexcept(see below);
 ```
 
-> *Constraints:*
->
-> - For the first overload, `(is_swappable_v<Types> && ...)` is `true`.
->
-> - For the second overload, `(is_swappable_v<const Types> && ...)` is
->   `true`.
->
-> *Effects:* As if by `x.swap(y)`.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> noexcept(x.swap(y))
-> ```
+*Constraints:*
+
+- For the first overload, `(is_swappable_v<Types> && ...)` is `true`.
+
+- For the second overload, `(is_swappable_v<const Types> && ...)` is
+  `true`.
+
+*Effects:* As if by `x.swap(y)`.
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+noexcept(x.swap(y))
+```
 
 ## Optional objects <a id="optional">[[optional]]</a>
 
@@ -2579,158 +2572,156 @@ constexpr optional() noexcept;
 constexpr optional(nullopt_t) noexcept;
 ```
 
-> *Ensures:* `*this` does not contain a value.
->
-> *Remarks:* No contained value is initialized. For every object type
-> `T` these constructors are constexpr constructors [[dcl.constexpr]].
+*Ensures:* `*this` does not contain a value.
+
+*Remarks:* No contained value is initialized. For every object type `T`
+these constructors are constexpr constructors [[dcl.constexpr]].
 
 ``` cpp
 constexpr optional(const optional& rhs);
 ```
 
-> *Effects:* If `rhs` contains a value, direct-non-list-initializes the
-> contained value with `*rhs`.
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* This constructor is defined as deleted unless
-> `is_copy_constructible_v<T>` is `true`. If
-> `is_trivially_copy_constructible_v<T>` is `true`, this constructor is
-> trivial.
+*Effects:* If `rhs` contains a value, direct-non-list-initializes the
+contained value with `*rhs`.
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* This constructor is defined as deleted unless
+`is_copy_constructible_v<T>` is `true`. If
+`is_trivially_copy_constructible_v<T>` is `true`, this constructor is
+trivial.
 
 ``` cpp
 constexpr optional(optional&& rhs) noexcept(see below);
 ```
 
-> *Constraints:* `is_move_constructible_v<T>` is `true`.
->
-> *Effects:* If `rhs` contains a value, direct-non-list-initializes the
-> contained value with `std::move(*rhs)`. `rhs.has_value()` is
-> unchanged.
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* The exception specification is equivalent to
-> `is_nothrow_move_constructible_v<T>`. If
-> `is_trivially_move_constructible_v<T>` is `true`, this constructor is
-> trivial.
+*Constraints:* `is_move_constructible_v<T>` is `true`.
+
+*Effects:* If `rhs` contains a value, direct-non-list-initializes the
+contained value with `std::move(*rhs)`. `rhs.has_value()` is unchanged.
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* The exception specification is equivalent to
+`is_nothrow_move_constructible_v<T>`. If
+`is_trivially_move_constructible_v<T>` is `true`, this constructor is
+trivial.
 
 ``` cpp
 template<class... Args> constexpr explicit optional(in_place_t, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes the contained value with
-> `std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* If `T`’s constructor selected for the initialization is a
-> constexpr constructor, this constructor is a constexpr constructor.
+*Constraints:* `is_constructible_v<T, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes the contained value with
+`std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* If `T`’s constructor selected for the initialization is a
+constexpr constructor, this constructor is a constexpr constructor.
 
 ``` cpp
 template<class U, class... Args>
   constexpr explicit optional(in_place_t, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Direct-non-list-initializes the contained value with
-> `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* If `T`’s constructor selected for the initialization is a
-> constexpr constructor, this constructor is a constexpr constructor.
+*Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Direct-non-list-initializes the contained value with
+`il, std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* If `T`’s constructor selected for the initialization is a
+constexpr constructor, this constructor is a constexpr constructor.
 
 ``` cpp
 template<class U = T> constexpr explicit(see below) optional(U&& v);
 ```
 
-> *Constraints:*
->
-> - `is_constructible_v<T, U>` is `true`,
->
-> - `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`,
->
-> - `is_same_v<remove_cvref_t<U>, optional>` is `false`, and
->
-> - if `T` is `bool`, `remove_cvref_t<U>` is not a specialization of
->   `optional`.
->
-> *Effects:* Direct-non-list-initializes the contained value with
-> `std::forward<U>(v)`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* If `T`’s selected constructor is a constexpr constructor,
-> this constructor is a constexpr constructor. The expression inside is
-> equivalent to:
->
-> ``` cpp
-> !is_convertible_v<U, T>
-> ```
+*Constraints:*
+
+- `is_constructible_v<T, U>` is `true`,
+
+- `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`,
+
+- `is_same_v<remove_cvref_t<U>, optional>` is `false`, and
+
+- if `T` is `bool`, `remove_cvref_t<U>` is not a specialization of
+  `optional`.
+
+*Effects:* Direct-non-list-initializes the contained value with
+`std::forward<U>(v)`.
+
+*Ensures:* `*this` contains a value.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* If `T`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor. The expression inside is
+equivalent to:
+
+``` cpp
+!is_convertible_v<U, T>
+```
 
 ``` cpp
 template<class U> constexpr explicit(see below) optional(const optional<U>& rhs);
 ```
 
-> *Constraints:*
->
-> - `is_constructible_v<T, const U&>` is `true`, and
->
-> - if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>`
->   is `false`.
->
-> *Effects:* If `rhs` contains a value, direct-non-list-initializes the
-> contained value with `*rhs`.
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !is_convertible_v<const U&, T>
-> ```
+*Constraints:*
+
+- `is_constructible_v<T, const U&>` is `true`, and
+
+- if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>` is
+  `false`.
+
+*Effects:* If `rhs` contains a value, direct-non-list-initializes the
+contained value with `*rhs`.
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!is_convertible_v<const U&, T>
+```
 
 ``` cpp
 template<class U> constexpr explicit(see below) optional(optional<U>&& rhs);
 ```
 
-> *Constraints:*
->
-> - `is_constructible_v<T, U>` is `true`, and
->
-> - if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>`
->   is `false`.
->
-> *Effects:* If `rhs` contains a value, direct-non-list-initializes the
-> contained value with `std::move(*rhs)`. `rhs.has_value()` is
-> unchanged.
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* The expression inside is equivalent to:
->
-> ``` cpp
-> !is_convertible_v<U, T>
-> ```
+*Constraints:*
+
+- `is_constructible_v<T, U>` is `true`, and
+
+- if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>` is
+  `false`.
+
+*Effects:* If `rhs` contains a value, direct-non-list-initializes the
+contained value with `std::move(*rhs)`. `rhs.has_value()` is unchanged.
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* The expression inside is equivalent to:
+
+``` cpp
+!is_convertible_v<U, T>
+```
 
 #### Destructor <a id="optional.dtor">[[optional.dtor]]</a>
 
@@ -2738,15 +2729,15 @@ template<class U> constexpr explicit(see below) optional(optional<U>&& rhs);
 constexpr ~optional();
 ```
 
-> *Effects:* If `is_trivially_destructible_v<T> != true` and `*this`
-> contains a value, calls
->
-> ``` cpp
-> val->T::~T()
-> ```
->
-> *Remarks:* If `is_trivially_destructible_v<T>` is `true`, then this
-> destructor is trivial.
+*Effects:* If `is_trivially_destructible_v<T> != true` and `*this`
+contains a value, calls
+
+``` cpp
+val->T::~T()
+```
+
+*Remarks:* If `is_trivially_destructible_v<T>` is `true`, then this
+destructor is trivial.
 
 #### Assignment <a id="optional.assign">[[optional.assign]]</a>
 
@@ -2754,250 +2745,245 @@ constexpr ~optional();
 constexpr optional<T>& operator=(nullopt_t) noexcept;
 ```
 
-> *Effects:* If `*this` contains a value, calls `val->T::T̃()` to destroy
-> the contained value; otherwise no effect.
->
-> *Ensures:* `*this` does not contain a value.
->
-> *Returns:* `*this`.
+*Effects:* If `*this` contains a value, calls `val->T::T̃()` to destroy
+the contained value; otherwise no effect.
+
+*Ensures:* `*this` does not contain a value.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr optional<T>& operator=(const optional& rhs);
 ```
 
-> *Effects:* See [[optional.assign.copy]].
->
-> <div class="lib2dtab2">
->
-> `optional::operator=(const optional&)` effectsoptional.assign.copy
-> `*this` contains a value `*this` does not contain a value
->
-> & assigns `*rhs` to the contained value & direct-non-list-initializes
-> the contained value with `*rhs`  
->
-> & destroys the contained value by calling `val->T::T̃()` & no effect  
->
-> </div>
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* If any exception is thrown, the result of the expression
-> `this->has_value()` remains unchanged. If an exception is thrown
-> during the call to `T`’s copy constructor, no effect. If an exception
-> is thrown during the call to `T`’s copy assignment, the state of its
-> contained value is as defined by the exception safety guarantee of
-> `T`’s copy assignment. This operator is defined as deleted unless
-> `is_copy_constructible_v<T>` is `true` and `is_copy_assignable_v<T>`
-> is `true`. If `is_trivially_copy_constructible_v<T> &&`
-> `is_trivially_copy_assignable_v<T> &&`
-> `is_trivially_destructible_v<T>` is `true`, this assignment operator
-> is trivial.
+*Effects:* See [[optional.assign.copy]].
+
+<div class="lib2dtab2">
+
+`optional::operator=(const optional&)` effectsoptional.assign.copy
+`*this` contains a value `*this` does not contain a value
+
+& assigns `*rhs` to the contained value & direct-non-list-initializes
+the contained value with `*rhs`  
+
+& destroys the contained value by calling `val->T::T̃()` & no effect  
+
+</div>
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Returns:* `*this`.
+
+*Remarks:* If any exception is thrown, the result of the expression
+`this->has_value()` remains unchanged. If an exception is thrown during
+the call to `T`’s copy constructor, no effect. If an exception is thrown
+during the call to `T`’s copy assignment, the state of its contained
+value is as defined by the exception safety guarantee of `T`’s copy
+assignment. This operator is defined as deleted unless
+`is_copy_constructible_v<T>` is `true` and `is_copy_assignable_v<T>` is
+`true`. If `is_trivially_copy_constructible_v<T> &&`
+`is_trivially_copy_assignable_v<T> &&` `is_trivially_destructible_v<T>`
+is `true`, this assignment operator is trivial.
 
 ``` cpp
 constexpr optional& operator=(optional&& rhs) noexcept(see below);
 ```
 
-> *Constraints:* `is_move_constructible_v<T>` is `true` and
-> `is_move_assignable_v<T>` is `true`.
->
-> *Effects:* See [[optional.assign.move]]. The result of the expression
-> `rhs.has_value()` remains unchanged.
->
-> <div class="lib2dtab2">
->
-> `optional::operator=(optional&&)` effectsoptional.assign.move `*this`
-> contains a value `*this` does not contain a value
->
-> & assigns `std::move(*rhs)` to the contained value &
-> direct-non-list-initializes the contained value with
-> `std::move(*rhs)`  
->
-> & destroys the contained value by calling `val->T::T̃()` & no effect  
->
-> </div>
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_assignable_v<T> && is_nothrow_move_constructible_v<T>
-> ```
->
-> If any exception is thrown, the result of the expression
-> `this->has_value()` remains unchanged. If an exception is thrown
-> during the call to `T`’s move constructor, the state of `*rhs.val` is
-> determined by the exception safety guarantee of `T`’s move
-> constructor. If an exception is thrown during the call to `T`’s move
-> assignment, the state of `*val` and `*rhs.val` is determined by the
-> exception safety guarantee of `T`’s move assignment. If
-> `is_trivially_move_constructible_v<T> &&`
-> `is_trivially_move_assignable_v<T> &&`
-> `is_trivially_destructible_v<T>` is `true`, this assignment operator
-> is trivial.
+*Constraints:* `is_move_constructible_v<T>` is `true` and
+`is_move_assignable_v<T>` is `true`.
+
+*Effects:* See [[optional.assign.move]]. The result of the expression
+`rhs.has_value()` remains unchanged.
+
+<div class="lib2dtab2">
+
+`optional::operator=(optional&&)` effectsoptional.assign.move `*this`
+contains a value `*this` does not contain a value
+
+& assigns `std::move(*rhs)` to the contained value &
+direct-non-list-initializes the contained value with `std::move(*rhs)`  
+
+& destroys the contained value by calling `val->T::T̃()` & no effect  
+
+</div>
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Returns:* `*this`.
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_assignable_v<T> && is_nothrow_move_constructible_v<T>
+```
+
+If any exception is thrown, the result of the expression
+`this->has_value()` remains unchanged. If an exception is thrown during
+the call to `T`’s move constructor, the state of `*rhs.val` is
+determined by the exception safety guarantee of `T`’s move constructor.
+If an exception is thrown during the call to `T`’s move assignment, the
+state of `*val` and `*rhs.val` is determined by the exception safety
+guarantee of `T`’s move assignment. If
+`is_trivially_move_constructible_v<T> &&`
+`is_trivially_move_assignable_v<T> &&` `is_trivially_destructible_v<T>`
+is `true`, this assignment operator is trivial.
 
 ``` cpp
 template<class U = T> constexpr optional<T>& operator=(U&& v);
 ```
 
-> *Constraints:* `is_same_v<remove_cvref_t<U>, optional>` is `false`,
-> `conjunction_v<is_scalar<T>, is_same<T, decay_t<U>>>` is `false`,
-> `is_constructible_v<T, U>` is `true`, and `is_assignable_v<T&, U>` is
-> `true`.
->
-> *Effects:* If `*this` contains a value, assigns `std::forward<U>(v)`
-> to the contained value; otherwise direct-non-list-initializes the
-> contained value with `std::forward<U>(v)`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Returns:* `*this`.
->
-> *Remarks:* If any exception is thrown, the result of the expression
-> `this->has_value()` remains unchanged. If an exception is thrown
-> during the call to `T`’s constructor, the state of `v` is determined
-> by the exception safety guarantee of `T`’s constructor. If an
-> exception is thrown during the call to `T`’s assignment, the state of
-> `*val` and `v` is determined by the exception safety guarantee of
-> `T`’s assignment.
+*Constraints:* `is_same_v<remove_cvref_t<U>, optional>` is `false`,
+`conjunction_v<is_scalar<T>, is_same<T, decay_t<U>>>` is `false`,
+`is_constructible_v<T, U>` is `true`, and `is_assignable_v<T&, U>` is
+`true`.
+
+*Effects:* If `*this` contains a value, assigns `std::forward<U>(v)` to
+the contained value; otherwise direct-non-list-initializes the contained
+value with `std::forward<U>(v)`.
+
+*Ensures:* `*this` contains a value.
+
+*Returns:* `*this`.
+
+*Remarks:* If any exception is thrown, the result of the expression
+`this->has_value()` remains unchanged. If an exception is thrown during
+the call to `T`’s constructor, the state of `v` is determined by the
+exception safety guarantee of `T`’s constructor. If an exception is
+thrown during the call to `T`’s assignment, the state of `*val` and `v`
+is determined by the exception safety guarantee of `T`’s assignment.
 
 ``` cpp
 template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 ```
 
-> *Constraints:*
->
-> - `is_constructible_v<T, const U&>` is `true`,
->
-> - `is_assignable_v<T&, const U&>` is `true`,
->
-> - *`converts-from-any-cvref`*`<T, optional<U>>` is `false`,
->
-> - `is_assignable_v<T&, optional<U>&>` is `false`,
->
-> - `is_assignable_v<T&, optional<U>&&>` is `false`,
->
-> - `is_assignable_v<T&, const optional<U>&>` is `false`, and
->
-> - `is_assignable_v<T&, const optional<U>&&>` is `false`.
->
-> *Effects:* See [[optional.assign.copy.templ]].
->
-> <div class="lib2dtab2">
->
-> `optional::operator=(const optional<U>&)`
-> effectsoptional.assign.copy.templ `*this` contains a value `*this`
-> does not contain a value
->
-> & assigns `*rhs` to the contained value & direct-non-list-initializes
-> the contained value with `*rhs`  
->
-> & destroys the contained value by calling `val->T::T̃()` & no effect  
->
-> </div>
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* If any exception is thrown, the result of the expression
-> `this->has_value()` remains unchanged. If an exception is thrown
-> during the call to `T`’s constructor, the state of `*rhs.val` is
-> determined by the exception safety guarantee of `T`’s constructor. If
-> an exception is thrown during the call to `T`’s assignment, the state
-> of `*val` and `*rhs.val` is determined by the exception safety
-> guarantee of `T`’s assignment.
+*Constraints:*
+
+- `is_constructible_v<T, const U&>` is `true`,
+
+- `is_assignable_v<T&, const U&>` is `true`,
+
+- *`converts-from-any-cvref`*`<T, optional<U>>` is `false`,
+
+- `is_assignable_v<T&, optional<U>&>` is `false`,
+
+- `is_assignable_v<T&, optional<U>&&>` is `false`,
+
+- `is_assignable_v<T&, const optional<U>&>` is `false`, and
+
+- `is_assignable_v<T&, const optional<U>&&>` is `false`.
+
+*Effects:* See [[optional.assign.copy.templ]].
+
+<div class="lib2dtab2">
+
+`optional::operator=(const optional<U>&)`
+effectsoptional.assign.copy.templ `*this` contains a value `*this` does
+not contain a value
+
+& assigns `*rhs` to the contained value & direct-non-list-initializes
+the contained value with `*rhs`  
+
+& destroys the contained value by calling `val->T::T̃()` & no effect  
+
+</div>
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Returns:* `*this`.
+
+*Remarks:* If any exception is thrown, the result of the expression
+`this->has_value()` remains unchanged. If an exception is thrown during
+the call to `T`’s constructor, the state of `*rhs.val` is determined by
+the exception safety guarantee of `T`’s constructor. If an exception is
+thrown during the call to `T`’s assignment, the state of `*val` and
+`*rhs.val` is determined by the exception safety guarantee of `T`’s
+assignment.
 
 ``` cpp
 template<class U> constexpr optional<T>& operator=(optional<U>&& rhs);
 ```
 
-> *Constraints:*
->
-> - `is_constructible_v<T, U>` is `true`,
->
-> - `is_assignable_v<T&, U>` is `true`,
->
-> - *`converts-from-any-cvref`*`<T, optional<U>>` is `false`,
->
-> - `is_assignable_v<T&, optional<U>&>` is `false`,
->
-> - `is_assignable_v<T&, optional<U>&&>` is `false`,
->
-> - `is_assignable_v<T&, const optional<U>&>` is `false`, and
->
-> - `is_assignable_v<T&, const optional<U>&&>` is `false`.
->
-> *Effects:* See [[optional.assign.move.templ]]. The result of the
-> expression `rhs.has_value()` remains unchanged.
->
-> <div class="lib2dtab2">
->
-> `optional::operator=(optional<U>&&)` effectsoptional.assign.move.templ
-> `*this` contains a value `*this` does not contain a value
->
-> & assigns `std::move(*rhs)` to the contained value &
-> direct-non-list-initializes the contained value with
-> `std::move(*rhs)`  
->
-> & destroys the contained value by calling `val->T::T̃()` & no effect  
->
-> </div>
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* If any exception is thrown, the result of the expression
-> `this->has_value()` remains unchanged. If an exception is thrown
-> during the call to `T`’s constructor, the state of `*rhs.val` is
-> determined by the exception safety guarantee of `T`’s constructor. If
-> an exception is thrown during the call to `T`’s assignment, the state
-> of `*val` and `*rhs.val` is determined by the exception safety
-> guarantee of `T`’s assignment.
+*Constraints:*
+
+- `is_constructible_v<T, U>` is `true`,
+
+- `is_assignable_v<T&, U>` is `true`,
+
+- *`converts-from-any-cvref`*`<T, optional<U>>` is `false`,
+
+- `is_assignable_v<T&, optional<U>&>` is `false`,
+
+- `is_assignable_v<T&, optional<U>&&>` is `false`,
+
+- `is_assignable_v<T&, const optional<U>&>` is `false`, and
+
+- `is_assignable_v<T&, const optional<U>&&>` is `false`.
+
+*Effects:* See [[optional.assign.move.templ]]. The result of the
+expression `rhs.has_value()` remains unchanged.
+
+<div class="lib2dtab2">
+
+`optional::operator=(optional<U>&&)` effectsoptional.assign.move.templ
+`*this` contains a value `*this` does not contain a value
+
+& assigns `std::move(*rhs)` to the contained value &
+direct-non-list-initializes the contained value with `std::move(*rhs)`  
+
+& destroys the contained value by calling `val->T::T̃()` & no effect  
+
+</div>
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Returns:* `*this`.
+
+*Remarks:* If any exception is thrown, the result of the expression
+`this->has_value()` remains unchanged. If an exception is thrown during
+the call to `T`’s constructor, the state of `*rhs.val` is determined by
+the exception safety guarantee of `T`’s constructor. If an exception is
+thrown during the call to `T`’s assignment, the state of `*val` and
+`*rhs.val` is determined by the exception safety guarantee of `T`’s
+assignment.
 
 ``` cpp
 template<class... Args> constexpr T& emplace(Args&&... args);
 ```
 
-> *Mandates:* `is_constructible_v<T, Args...>` is `true`.
->
-> *Effects:* Calls `*this = nullopt`. Then direct-non-list-initializes
-> the contained value with `std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Returns:* A reference to the new contained value.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* If an exception is thrown during the call to `T`’s
-> constructor, `*this` does not contain a value, and the previous `*val`
-> (if any) has been destroyed.
+*Mandates:* `is_constructible_v<T, Args...>` is `true`.
+
+*Effects:* Calls `*this = nullopt`. Then direct-non-list-initializes the
+contained value with `std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Returns:* A reference to the new contained value.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* If an exception is thrown during the call to `T`’s
+constructor, `*this` does not contain a value, and the previous `*val`
+(if any) has been destroyed.
 
 ``` cpp
 template<class U, class... Args> constexpr T& emplace(initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Calls `*this = nullopt`. Then direct-non-list-initializes
-> the contained value with `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Returns:* A reference to the new contained value.
->
-> *Throws:* Any exception thrown by the selected constructor of `T`.
->
-> *Remarks:* If an exception is thrown during the call to `T`’s
-> constructor, `*this` does not contain a value, and the previous `*val`
-> (if any) has been destroyed.
+*Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Calls `*this = nullopt`. Then direct-non-list-initializes the
+contained value with `il, std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Returns:* A reference to the new contained value.
+
+*Throws:* Any exception thrown by the selected constructor of `T`.
+
+*Remarks:* If an exception is thrown during the call to `T`’s
+constructor, `*this` does not contain a value, and the previous `*val`
+(if any) has been destroyed.
 
 #### Swap <a id="optional.swap">[[optional.swap]]</a>
 
@@ -3005,47 +2991,46 @@ template<class U, class... Args> constexpr T& emplace(initializer_list<U> il, Ar
 constexpr void swap(optional& rhs) noexcept(see below);
 ```
 
-> *Mandates:* `is_move_constructible_v<T>` is `true`.
->
-> *Preconditions:* `T` meets the *Cpp17Swappable*
-> requirements [[swappable.requirements]].
->
-> *Effects:* See [[optional.swap]].
->
-> <div class="lib2dtab2">
->
-> `optional::swap(optional&)` effectsoptional.swap `*this` contains a
-> value `*this` does not contain a value
->
-> & calls `swap(*(*this), *rhs)` & direct-non-list-initializes the
-> contained value of `*this` with `std::move(*rhs)`, followed by
-> `rhs.val->T::T̃()`; postcondition is that `*this` contains a value and
-> `rhs` does not contain a value  
->
-> & direct-non-list-initializes the contained value of `rhs` with
-> `std::move(*(*this))`, followed by `val->T::T̃()`; postcondition is
-> that `*this` does not contain a value and `rhs` contains a value & no
-> effect  
->
-> </div>
->
-> *Throws:* Any exceptions thrown by the operations in the relevant part
-> of [[optional.swap]].
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_constructible_v<T> && is_nothrow_swappable_v<T>
-> ```
->
-> If any exception is thrown, the results of the expressions
-> `this->has_value()` and `rhs.has_value()` remain unchanged. If an
-> exception is thrown during the call to function `swap`, the state of
-> `*val` and `*rhs.val` is determined by the exception safety guarantee
-> of `swap` for lvalues of `T`. If an exception is thrown during the
-> call to `T`’s move constructor, the state of `*val` and `*rhs.val` is
-> determined by the exception safety guarantee of `T`’s move
-> constructor.
+*Mandates:* `is_move_constructible_v<T>` is `true`.
+
+*Preconditions:* `T` meets the *Cpp17Swappable*
+requirements [[swappable.requirements]].
+
+*Effects:* See [[optional.swap]].
+
+<div class="lib2dtab2">
+
+`optional::swap(optional&)` effectsoptional.swap `*this` contains a
+value `*this` does not contain a value
+
+& calls `swap(*(*this), *rhs)` & direct-non-list-initializes the
+contained value of `*this` with `std::move(*rhs)`, followed by
+`rhs.val->T::T̃()`; postcondition is that `*this` contains a value and
+`rhs` does not contain a value  
+
+& direct-non-list-initializes the contained value of `rhs` with
+`std::move(*(*this))`, followed by `val->T::T̃()`; postcondition is that
+`*this` does not contain a value and `rhs` contains a value & no
+effect  
+
+</div>
+
+*Throws:* Any exceptions thrown by the operations in the relevant part
+of [[optional.swap]].
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_constructible_v<T> && is_nothrow_swappable_v<T>
+```
+
+If any exception is thrown, the results of the expressions
+`this->has_value()` and `rhs.has_value()` remain unchanged. If an
+exception is thrown during the call to function `swap`, the state of
+`*val` and `*rhs.val` is determined by the exception safety guarantee of
+`swap` for lvalues of `T`. If an exception is thrown during the call to
+`T`’s move constructor, the state of `*val` and `*rhs.val` is determined
+by the exception safety guarantee of `T`’s move constructor.
 
 #### Observers <a id="optional.observe">[[optional.observe]]</a>
 
@@ -3054,95 +3039,95 @@ constexpr const T* operator->() const noexcept;
 constexpr T* operator->() noexcept;
 ```
 
-> *Preconditions:* `*this` contains a value.
->
-> *Returns:* `val`.
->
-> *Remarks:* These functions are constexpr functions.
+*Preconditions:* `*this` contains a value.
+
+*Returns:* `val`.
+
+*Remarks:* These functions are constexpr functions.
 
 ``` cpp
 constexpr const T& operator*() const & noexcept;
 constexpr T& operator*() & noexcept;
 ```
 
-> *Preconditions:* `*this` contains a value.
->
-> *Returns:* `*val`.
->
-> *Remarks:* These functions are constexpr functions.
+*Preconditions:* `*this` contains a value.
+
+*Returns:* `*val`.
+
+*Remarks:* These functions are constexpr functions.
 
 ``` cpp
 constexpr T&& operator*() && noexcept;
 constexpr const T&& operator*() const && noexcept;
 ```
 
-> *Preconditions:* `*this` contains a value.
->
-> *Effects:* Equivalent to: `return std::move(*val);`
+*Preconditions:* `*this` contains a value.
+
+*Effects:* Equivalent to: `return std::move(*val);`
 
 ``` cpp
 constexpr explicit operator bool() const noexcept;
 ```
 
-> *Returns:* `true` if and only if `*this` contains a value.
->
-> *Remarks:* This function is a constexpr function.
+*Returns:* `true` if and only if `*this` contains a value.
+
+*Remarks:* This function is a constexpr function.
 
 ``` cpp
 constexpr bool has_value() const noexcept;
 ```
 
-> *Returns:* `true` if and only if `*this` contains a value.
->
-> *Remarks:* This function is a constexpr function.
+*Returns:* `true` if and only if `*this` contains a value.
+
+*Remarks:* This function is a constexpr function.
 
 ``` cpp
 constexpr const T& value() const &;
 constexpr T& value() &;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return has_value() ? *val : throw bad_optional_access();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return has_value() ? *val : throw bad_optional_access();
+```
 
 ``` cpp
 constexpr T&& value() &&;
 constexpr const T&& value() const &&;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return has_value() ? std::move(*val) : throw bad_optional_access();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return has_value() ? std::move(*val) : throw bad_optional_access();
+```
 
 ``` cpp
 template<class U> constexpr T value_or(U&& v) const &;
 ```
 
-> *Mandates:* `is_copy_constructible_v<T> && is_convertible_v<U&&, T>`
-> is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return has_value() ? **this : static_cast<T>(std::forward<U>(v));
-> ```
+*Mandates:* `is_copy_constructible_v<T> && is_convertible_v<U&&, T>` is
+`true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return has_value() ? **this : static_cast<T>(std::forward<U>(v));
+```
 
 ``` cpp
 template<class U> constexpr T value_or(U&& v) &&;
 ```
 
-> *Mandates:* `is_move_constructible_v<T> && is_convertible_v<U&&, T>`
-> is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return has_value() ? std::move(**this) : static_cast<T>(std::forward<U>(v));
-> ```
+*Mandates:* `is_move_constructible_v<T> && is_convertible_v<U&&, T>` is
+`true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return has_value() ? std::move(**this) : static_cast<T>(std::forward<U>(v));
+```
 
 #### Monadic operations <a id="optional.monadic">[[optional.monadic]]</a>
 
@@ -3151,126 +3136,126 @@ template<class F> constexpr auto and_then(F&& f) &;
 template<class F> constexpr auto and_then(F&& f) const &;
 ```
 
-> Let `U` be `invoke_result_t<F, decltype(value())>`.
->
-> *Mandates:* `remove_cvref_t<U>` is a specialization of `optional`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (*this) {
->   return invoke(std::forward<F>(f), value());
-> } else {
->   return remove_cvref_t<U>();
-> }
-> ```
+Let `U` be `invoke_result_t<F, decltype(value())>`.
+
+*Mandates:* `remove_cvref_t<U>` is a specialization of `optional`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (*this) {
+  return invoke(std::forward<F>(f), value());
+} else {
+  return remove_cvref_t<U>();
+}
+```
 
 ``` cpp
 template<class F> constexpr auto and_then(F&& f) &&;
 template<class F> constexpr auto and_then(F&& f) const &&;
 ```
 
-> Let `U` be `invoke_result_t<F, decltype(std::move(value()))>`.
->
-> *Mandates:* `remove_cvref_t<U>` is a specialization of `optional`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (*this) {
->   return invoke(std::forward<F>(f), std::move(value()));
-> } else {
->   return remove_cvref_t<U>();
-> }
-> ```
+Let `U` be `invoke_result_t<F, decltype(std::move(value()))>`.
+
+*Mandates:* `remove_cvref_t<U>` is a specialization of `optional`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (*this) {
+  return invoke(std::forward<F>(f), std::move(value()));
+} else {
+  return remove_cvref_t<U>();
+}
+```
 
 ``` cpp
 template<class F> constexpr auto transform(F&& f) &;
 template<class F> constexpr auto transform(F&& f) const &;
 ```
 
-> Let `U` be `remove_cv_t<invoke_result_t<F, decltype(value())>>`.
->
-> *Mandates:* `U` is a non-array object type other than `in_place_t` or
-> `nullopt_t`. The declaration
->
-> ``` cpp
-> U u(invoke(std::forward<F>(f), value()));
-> ```
->
-> is well-formed for some invented variable `u`.
->
-> \[*Note 11*: There is no requirement that `U` is
-> movable [[dcl.init.general]]. — *end note*\]
->
-> *Returns:* If `*this` contains a value, an `optional<U>` object whose
-> contained value is direct-non-list-initialized with
-> `invoke(std::forward<F>(f), value())`; otherwise, `optional<U>()`.
+Let `U` be `remove_cv_t<invoke_result_t<F, decltype(value())>>`.
+
+*Mandates:* `U` is a non-array object type other than `in_place_t` or
+`nullopt_t`. The declaration
+
+``` cpp
+U u(invoke(std::forward<F>(f), value()));
+```
+
+is well-formed for some invented variable `u`.
+
+\[*Note 1*: There is no requirement that `U` is
+movable [[dcl.init.general]]. — *end note*\]
+
+*Returns:* If `*this` contains a value, an `optional<U>` object whose
+contained value is direct-non-list-initialized with
+`invoke(std::forward<F>(f), value())`; otherwise, `optional<U>()`.
 
 ``` cpp
 template<class F> constexpr auto transform(F&& f) &&;
 template<class F> constexpr auto transform(F&& f) const &&;
 ```
 
-> Let `U` be
-> `remove_cv_t<invoke_result_t<F, decltype(std::move(value()))>>`.
->
-> *Mandates:* `U` is a non-array object type other than `in_place_t` or
-> `nullopt_t`. The declaration
->
-> ``` cpp
-> U u(invoke(std::forward<F>(f), std::move(value())));
-> ```
->
-> is well-formed for some invented variable `u`.
->
-> \[*Note 12*: There is no requirement that `U` is
-> movable [[dcl.init.general]]. — *end note*\]
->
-> *Returns:* If `*this` contains a value, an `optional<U>` object whose
-> contained value is direct-non-list-initialized with
-> `invoke(std::forward<F>(f), std::move(value()))`; otherwise,
-> `optional<U>()`.
+Let `U` be
+`remove_cv_t<invoke_result_t<F, decltype(std::move(value()))>>`.
+
+*Mandates:* `U` is a non-array object type other than `in_place_t` or
+`nullopt_t`. The declaration
+
+``` cpp
+U u(invoke(std::forward<F>(f), std::move(value())));
+```
+
+is well-formed for some invented variable `u`.
+
+\[*Note 2*: There is no requirement that `U` is
+movable [[dcl.init.general]]. — *end note*\]
+
+*Returns:* If `*this` contains a value, an `optional<U>` object whose
+contained value is direct-non-list-initialized with
+`invoke(std::forward<F>(f), std::move(value()))`; otherwise,
+`optional<U>()`.
 
 ``` cpp
 template<class F> constexpr optional or_else(F&& f) const &;
 ```
 
-> *Constraints:* `F` models `invocable``<>` and `T` models
-> `copy_constructible`.
->
-> *Mandates:* `is_same_v<remove_cvref_t<invoke_result_t<F>>, optional>`
-> is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (*this) {
->   return *this;
-> } else {
->   return std::forward<F>(f)();
-> }
-> ```
+*Constraints:* `F` models `invocable``<>` and `T` models
+`copy_constructible`.
+
+*Mandates:* `is_same_v<remove_cvref_t<invoke_result_t<F>>, optional>` is
+`true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (*this) {
+  return *this;
+} else {
+  return std::forward<F>(f)();
+}
+```
 
 ``` cpp
 template<class F> constexpr optional or_else(F&& f) &&;
 ```
 
-> *Constraints:* `F` models `invocable``<>` and `T` models
-> `move_constructible`.
->
-> *Mandates:* `is_same_v<remove_cvref_t<invoke_result_t<F>>, optional>`
-> is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (*this) {
->   return std::move(*this);
-> } else {
->   return std::forward<F>(f)();
-> }
-> ```
+*Constraints:* `F` models `invocable``<>` and `T` models
+`move_constructible`.
+
+*Mandates:* `is_same_v<remove_cvref_t<invoke_result_t<F>>, optional>` is
+`true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (*this) {
+  return std::move(*this);
+} else {
+  return std::forward<F>(f)();
+}
+```
 
 #### Modifiers <a id="optional.mod">[[optional.mod]]</a>
 
@@ -3278,10 +3263,10 @@ template<class F> constexpr optional or_else(F&& f) &&;
 constexpr void reset() noexcept;
 ```
 
-> *Effects:* If `*this` contains a value, calls `val->T::T̃()` to destroy
-> the contained value; otherwise no effect.
->
-> *Ensures:* `*this` does not contain a value.
+*Effects:* If `*this` contains a value, calls `val->T::T̃()` to destroy
+the contained value; otherwise no effect.
+
+*Ensures:* `*this` does not contain a value.
 
 ### No-value state indicator <a id="optional.nullopt">[[optional.nullopt]]</a>
 
@@ -3319,7 +3304,7 @@ the value of an optional object that does not contain a value.
 const char* what() const noexcept override;
 ```
 
-> *Returns:* An *implementation-defined* NTBS.
+*Returns:* An *implementation-defined* NTBS.
 
 ### Relational operators <a id="optional.relops">[[optional.relops]]</a>
 
@@ -3327,81 +3312,81 @@ const char* what() const noexcept override;
 template<class T, class U> constexpr bool operator==(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Mandates:* The expression `*x == *y` is well-formed and its result is
-> convertible to `bool`.
->
-> \[*Note 13*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
->
-> *Returns:* If `x.has_value() != y.has_value()`, `false`; otherwise if
-> `x.has_value() == false`, `true`; otherwise `*x == *y`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x == *y` is a core constant expression are constexpr functions.
+*Mandates:* The expression `*x == *y` is well-formed and its result is
+convertible to `bool`.
+
+\[*Note 3*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+
+*Returns:* If `x.has_value() != y.has_value()`, `false`; otherwise if
+`x.has_value() == false`, `true`; otherwise `*x == *y`.
+
+*Remarks:* Specializations of this function template for which
+`*x == *y` is a core constant expression are constexpr functions.
 
 ``` cpp
 template<class T, class U> constexpr bool operator!=(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Mandates:* The expression `*x != *y` is well-formed and its result is
-> convertible to `bool`.
->
-> *Returns:* If `x.has_value() != y.has_value()`, `true`; otherwise, if
-> `x.has_value() == false`, `false`; otherwise `*x != *y`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x != *y` is a core constant expression are constexpr functions.
+*Mandates:* The expression `*x != *y` is well-formed and its result is
+convertible to `bool`.
+
+*Returns:* If `x.has_value() != y.has_value()`, `true`; otherwise, if
+`x.has_value() == false`, `false`; otherwise `*x != *y`.
+
+*Remarks:* Specializations of this function template for which
+`*x != *y` is a core constant expression are constexpr functions.
 
 ``` cpp
 template<class T, class U> constexpr bool operator<(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Mandates:* `*x < *y` is well-formed and its result is convertible to
-> `bool`.
->
-> *Returns:* If `!y`, `false`; otherwise, if `!x`, `true`; otherwise
-> `*x < *y`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x < *y` is a core constant expression are constexpr functions.
+*Mandates:* `*x < *y` is well-formed and its result is convertible to
+`bool`.
+
+*Returns:* If `!y`, `false`; otherwise, if `!x`, `true`; otherwise
+`*x < *y`.
+
+*Remarks:* Specializations of this function template for which `*x < *y`
+is a core constant expression are constexpr functions.
 
 ``` cpp
 template<class T, class U> constexpr bool operator>(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Mandates:* The expression `*x > *y` is well-formed and its result is
-> convertible to `bool`.
->
-> *Returns:* If `!x`, `false`; otherwise, if `!y`, `true`; otherwise
-> `*x > *y`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x > *y` is a core constant expression are constexpr functions.
+*Mandates:* The expression `*x > *y` is well-formed and its result is
+convertible to `bool`.
+
+*Returns:* If `!x`, `false`; otherwise, if `!y`, `true`; otherwise
+`*x > *y`.
+
+*Remarks:* Specializations of this function template for which `*x > *y`
+is a core constant expression are constexpr functions.
 
 ``` cpp
 template<class T, class U> constexpr bool operator<=(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Mandates:* The expression `*x <= *y` is well-formed and its result is
-> convertible to `bool`.
->
-> *Returns:* If `!x`, `true`; otherwise, if `!y`, `false`; otherwise
-> `*x <= *y`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x <= *y` is a core constant expression are constexpr functions.
+*Mandates:* The expression `*x <= *y` is well-formed and its result is
+convertible to `bool`.
+
+*Returns:* If `!x`, `true`; otherwise, if `!y`, `false`; otherwise
+`*x <= *y`.
+
+*Remarks:* Specializations of this function template for which
+`*x <= *y` is a core constant expression are constexpr functions.
 
 ``` cpp
 template<class T, class U> constexpr bool operator>=(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Mandates:* The expression `*x >= *y` is well-formed and its result is
-> convertible to `bool`.
->
-> *Returns:* If `!y`, `true`; otherwise, if `!x`, `false`; otherwise
-> `*x >= *y`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x >= *y` is a core constant expression are constexpr functions.
+*Mandates:* The expression `*x >= *y` is well-formed and its result is
+convertible to `bool`.
+
+*Returns:* If `!y`, `true`; otherwise, if `!x`, `false`; otherwise
+`*x >= *y`.
+
+*Remarks:* Specializations of this function template for which
+`*x >= *y` is a core constant expression are constexpr functions.
 
 ``` cpp
 template<class T, three_way_comparable_with<T> U>
@@ -3409,11 +3394,11 @@ template<class T, three_way_comparable_with<T> U>
     operator<=>(const optional<T>& x, const optional<U>& y);
 ```
 
-> *Returns:* If `x && y`, `*x <=> *y`; otherwise
-> `x.has_value() <=> y.has_value()`.
->
-> *Remarks:* Specializations of this function template for which
-> `*x <=> *y` is a core constant expression are constexpr functions.
+*Returns:* If `x && y`, `*x <=> *y`; otherwise
+`x.has_value() <=> y.has_value()`.
+
+*Remarks:* Specializations of this function template for which
+`*x <=> *y` is a core constant expression are constexpr functions.
 
 ### Comparison with `nullopt` <a id="optional.nullops">[[optional.nullops]]</a>
 
@@ -3421,13 +3406,13 @@ template<class T, three_way_comparable_with<T> U>
 template<class T> constexpr bool operator==(const optional<T>& x, nullopt_t) noexcept;
 ```
 
-> *Returns:* `!x`.
+*Returns:* `!x`.
 
 ``` cpp
 template<class T> constexpr strong_ordering operator<=>(const optional<T>& x, nullopt_t) noexcept;
 ```
 
-> *Returns:* `x.has_value() <=> false`.
+*Returns:* `x.has_value() <=> false`.
 
 ### Comparison with `T` <a id="optional.comp.with.t">[[optional.comp.with.t]]</a>
 
@@ -3435,111 +3420,111 @@ template<class T> constexpr strong_ordering operator<=>(const optional<T>& x, nu
 template<class T, class U> constexpr bool operator==(const optional<T>& x, const U& v);
 ```
 
-> *Mandates:* The expression `*x == v` is well-formed and its result is
-> convertible to `bool`.
->
-> \[*Note 14*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
->
-> *Effects:* Equivalent to: `return x.has_value() ? *x == v : false;`
+*Mandates:* The expression `*x == v` is well-formed and its result is
+convertible to `bool`.
+
+\[*Note 4*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+
+*Effects:* Equivalent to: `return x.has_value() ? *x == v : false;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator==(const T& v, const optional<U>& x);
 ```
 
-> *Mandates:* The expression `v == *x` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? v == *x : false;`
+*Mandates:* The expression `v == *x` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? v == *x : false;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator!=(const optional<T>& x, const U& v);
 ```
 
-> *Mandates:* The expression `*x != v` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? *x != v : true;`
+*Mandates:* The expression `*x != v` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? *x != v : true;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator!=(const T& v, const optional<U>& x);
 ```
 
-> *Mandates:* The expression `v != *x` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? v != *x : true;`
+*Mandates:* The expression `v != *x` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? v != *x : true;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator<(const optional<T>& x, const U& v);
 ```
 
-> *Mandates:* The expression `*x < v` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? *x < v : true;`
+*Mandates:* The expression `*x < v` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? *x < v : true;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator<(const T& v, const optional<U>& x);
 ```
 
-> *Mandates:* The expression `v < *x` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? v < *x : false;`
+*Mandates:* The expression `v < *x` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? v < *x : false;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator>(const optional<T>& x, const U& v);
 ```
 
-> *Mandates:* The expression `*x > v` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? *x > v : false;`
+*Mandates:* The expression `*x > v` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? *x > v : false;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator>(const T& v, const optional<U>& x);
 ```
 
-> *Mandates:* The expression `v > *x` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? v > *x : true;`
+*Mandates:* The expression `v > *x` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? v > *x : true;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator<=(const optional<T>& x, const U& v);
 ```
 
-> *Mandates:* The expression `*x <= v` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? *x <= v : true;`
+*Mandates:* The expression `*x <= v` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? *x <= v : true;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator<=(const T& v, const optional<U>& x);
 ```
 
-> *Mandates:* The expression `v <= *x` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? v <= *x : false;`
+*Mandates:* The expression `v <= *x` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? v <= *x : false;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator>=(const optional<T>& x, const U& v);
 ```
 
-> *Mandates:* The expression `*x >= v` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? *x >= v : false;`
+*Mandates:* The expression `*x >= v` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? *x >= v : false;`
 
 ``` cpp
 template<class T, class U> constexpr bool operator>=(const T& v, const optional<U>& x);
 ```
 
-> *Mandates:* The expression `v >= *x` is well-formed and its result is
-> convertible to `bool`.
->
-> *Effects:* Equivalent to: `return x.has_value() ? v >= *x : true;`
+*Mandates:* The expression `v >= *x` is well-formed and its result is
+convertible to `bool`.
+
+*Effects:* Equivalent to: `return x.has_value() ? v >= *x : true;`
 
 ``` cpp
 template<class T, class U>
@@ -3548,8 +3533,8 @@ template<class T, class U>
     operator<=>(const optional<T>& x, const U& v);
 ```
 
-> *Effects:* Equivalent to:
-> `return x.has_value() ? *x <=> v : strong_ordering::less;`
+*Effects:* Equivalent to:
+`return x.has_value() ? *x <=> v : strong_ordering::less;`
 
 ### Specialized algorithms <a id="optional.specalg">[[optional.specalg]]</a>
 
@@ -3558,32 +3543,32 @@ template<class T>
   constexpr void swap(optional<T>& x, optional<T>& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:* `is_move_constructible_v<T>` is `true` and
-> `is_swappable_v<T>` is `true`.
->
-> *Effects:* Calls `x.swap(y)`.
+*Constraints:* `is_move_constructible_v<T>` is `true` and
+`is_swappable_v<T>` is `true`.
+
+*Effects:* Calls `x.swap(y)`.
 
 ``` cpp
 template<class T> constexpr optional<decay_t<T>> make_optional(T&& v);
 ```
 
-> *Returns:* `optional<decay_t<T>>(std::forward<T>(v))`.
+*Returns:* `optional<decay_t<T>>(std::forward<T>(v))`.
 
 ``` cpp
 template<class T, class...Args>
   constexpr optional<T> make_optional(Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
-> `return optional<T>(in_place, std::forward<Args>(args)...);`
+*Effects:* Equivalent to:
+`return optional<T>(in_place, std::forward<Args>(args)...);`
 
 ``` cpp
 template<class T, class U, class... Args>
   constexpr optional<T> make_optional(initializer_list<U> il, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
-> `return optional<T>(in_place, il, std::forward<Args>(args)...);`
+*Effects:* Equivalent to:
+`return optional<T>(in_place, il, std::forward<Args>(args)...);`
 
 ### Hash support <a id="optional.hash">[[optional.hash]]</a>
 
@@ -3591,12 +3576,12 @@ template<class T, class U, class... Args>
 template<class T> struct hash<optional<T>>;
 ```
 
-> The specialization `hash<optional<T>>` is enabled [[unord.hash]] if
-> and only if `hash<remove_const_t<T>>` is enabled. When enabled, for an
-> object `o` of type `optional<T>`, if `o.has_value() == true`, then
-> `hash<optional<T>>()(o)` evaluates to the same value as
-> `hash<remove_const_t<T>>()(*o)`; otherwise it evaluates to an
-> unspecified value. The member functions are not guaranteed to be .
+The specialization `hash<optional<T>>` is enabled [[unord.hash]] if and
+only if `hash<remove_const_t<T>>` is enabled. When enabled, for an
+object `o` of type `optional<T>`, if `o.has_value() == true`, then
+`hash<optional<T>>()(o)` evaluates to the same value as
+`hash<remove_const_t<T>>()(*o)`; otherwise it evaluates to an
+unspecified value. The member functions are not guaranteed to be .
 
 ## Variants <a id="variant">[[variant]]</a>
 
@@ -3796,193 +3781,192 @@ $\tcode{T}_i$ be the $i^\text{th}$ type in `Types`.
 constexpr variant() noexcept(see below);
 ```
 
-> *Constraints:* `is_default_constructible_v<`$\texttt{T}_0$`>` is
-> `true`.
->
-> *Effects:* Constructs a `variant` holding a value-initialized value of
-> type $\texttt{T}_0$.
->
-> *Ensures:* `valueless_by_exception()` is `false` and `index()` is `0`.
->
-> *Throws:* Any exception thrown by the value-initialization of
-> $\texttt{T}_0$.
->
-> *Remarks:* This function is if and only if the value-initialization of
-> the alternative type $\texttt{T}_0$ would be
-> constexpr-suitable [[dcl.constexpr]]. The exception specification is
-> equivalent to `is_nothrow_default_constructible_v<`$\texttt{T}_0$`>`.
->
-> \[*Note 15*: See also class `monostate`. — *end note*\]
+*Constraints:* `is_default_constructible_v<`$\texttt{T}_0$`>` is `true`.
+
+*Effects:* Constructs a `variant` holding a value-initialized value of
+type $\texttt{T}_0$.
+
+*Ensures:* `valueless_by_exception()` is `false` and `index()` is `0`.
+
+*Throws:* Any exception thrown by the value-initialization of
+$\texttt{T}_0$.
+
+*Remarks:* This function is if and only if the value-initialization of
+the alternative type $\texttt{T}_0$ would be
+constexpr-suitable [[dcl.constexpr]]. The exception specification is
+equivalent to `is_nothrow_default_constructible_v<`$\texttt{T}_0$`>`.
+
+\[*Note 1*: See also class `monostate`. — *end note*\]
 
 ``` cpp
 constexpr variant(const variant& w);
 ```
 
-> *Effects:* If `w` holds a value, initializes the `variant` to hold the
-> same alternative as `w` and direct-initializes the contained value
-> with `get<j>(w)`, where `j` is `w.index()`. Otherwise, initializes the
-> `variant` to not hold a value.
->
-> *Throws:* Any exception thrown by direct-initializing any
-> $\texttt{T}_i$ for all i.
->
-> *Remarks:* This constructor is defined as deleted unless
-> `is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i. If
-> `is_trivially_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for
-> all i, this constructor is trivial.
+*Effects:* If `w` holds a value, initializes the `variant` to hold the
+same alternative as `w` and direct-initializes the contained value with
+`get<j>(w)`, where `j` is `w.index()`. Otherwise, initializes the
+`variant` to not hold a value.
+
+*Throws:* Any exception thrown by direct-initializing any $\texttt{T}_i$
+for all i.
+
+*Remarks:* This constructor is defined as deleted unless
+`is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i. If
+`is_trivially_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all
+i, this constructor is trivial.
 
 ``` cpp
 constexpr variant(variant&& w) noexcept(see below);
 ```
 
-> *Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true`
-> for all i.
->
-> *Effects:* If `w` holds a value, initializes the `variant` to hold the
-> same alternative as `w` and direct-initializes the contained value
-> with `get<j>(std::move(w))`, where `j` is `w.index()`. Otherwise,
-> initializes the `variant` to not hold a value.
->
-> *Throws:* Any exception thrown by move-constructing any $\texttt{T}_i$
-> for all i.
->
-> *Remarks:* The exception specification is equivalent to the logical of
-> `is_nothrow_move_constructible_v<`$\texttt{T}_i$`>` for all i. If
-> `is_trivially_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
-> all i, this constructor is trivial.
+*Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
+all i.
+
+*Effects:* If `w` holds a value, initializes the `variant` to hold the
+same alternative as `w` and direct-initializes the contained value with
+`get<j>(std::move(w))`, where `j` is `w.index()`. Otherwise, initializes
+the `variant` to not hold a value.
+
+*Throws:* Any exception thrown by move-constructing any $\texttt{T}_i$
+for all i.
+
+*Remarks:* The exception specification is equivalent to the logical of
+`is_nothrow_move_constructible_v<`$\texttt{T}_i$`>` for all i. If
+`is_trivially_move_constructible_v<`$\texttt{T}_i$`>` is `true` for all
+i, this constructor is trivial.
 
 ``` cpp
 template<class T> constexpr variant(T&& t) noexcept(see below);
 ```
 
-> Let $\texttt{T}_j$ be a type that is determined as follows: build an
-> imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
-> for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is
-> well-formed for some invented variable `x`. The overload *FUN*($T_j$)
-> selected by overload resolution for the expression
-> *FUN*(std::forward\<T\>(t)) defines the alternative $\texttt{T}_j$
-> which is the type of the contained value after construction.
->
-> *Constraints:*
->
-> - `sizeof...(Types)` is nonzero,
->
-> - `is_same_v<remove_cvref_t<T>, variant>` is `false`,
->
-> - `remove_cvref_t<T>` is neither a specialization of `in_place_type_t`
->   nor a specialization of `in_place_index_t`,
->
-> - `is_constructible_v<`$\texttt{T}_j$`, T>` is `true`, and
->
-> - the expression *FUN*(`std::forward<T>(t))` (with *FUN* being the
->   above-mentioned set of imaginary functions) is well-formed.
->
->   \[*Note 16*:
->
->       variant<string, string> v("abc");
->
->   is ill-formed, as both alternative types have an equally viable
->   constructor for the argument.
->
->   — *end note*\]
->
-> *Effects:* Initializes `*this` to hold the alternative type
-> $\texttt{T}_j$ and direct-non-list-initializes the contained value
-> with `std::forward<T>(t)`.
->
-> *Ensures:* `holds_alternative<`$\texttt{T}_j$`>(*this)` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of the selected
-> alternative $\texttt{T}_j$.
->
-> *Remarks:* The exception specification is equivalent to
-> `is_nothrow_constructible_v<`$\texttt{T}_j$`, T>`. If $\texttt{T}_j$’s
-> selected constructor is a constexpr constructor, this constructor is a
-> constexpr constructor.
+Let $\texttt{T}_j$ be a type that is determined as follows: build an
+imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
+for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is well-formed
+for some invented variable `x`. The overload *FUN*($T_j$) selected by
+overload resolution for the expression *FUN*(std::forward\<T\>(t))
+defines the alternative $\texttt{T}_j$ which is the type of the
+contained value after construction.
+
+*Constraints:*
+
+- `sizeof...(Types)` is nonzero,
+
+- `is_same_v<remove_cvref_t<T>, variant>` is `false`,
+
+- `remove_cvref_t<T>` is neither a specialization of `in_place_type_t`
+  nor a specialization of `in_place_index_t`,
+
+- `is_constructible_v<`$\texttt{T}_j$`, T>` is `true`, and
+
+- the expression *FUN*(`std::forward<T>(t))` (with *FUN* being the
+  above-mentioned set of imaginary functions) is well-formed.
+
+  \[*Note 1*:
+
+      variant<string, string> v("abc");
+
+  is ill-formed, as both alternative types have an equally viable
+  constructor for the argument.
+
+  — *end note*\]
+
+*Effects:* Initializes `*this` to hold the alternative type
+$\texttt{T}_j$ and direct-non-list-initializes the contained value with
+`std::forward<T>(t)`.
+
+*Ensures:* `holds_alternative<`$\texttt{T}_j$`>(*this)` is `true`.
+
+*Throws:* Any exception thrown by the initialization of the selected
+alternative $\texttt{T}_j$.
+
+*Remarks:* The exception specification is equivalent to
+`is_nothrow_constructible_v<`$\texttt{T}_j$`, T>`. If $\texttt{T}_j$’s
+selected constructor is a constexpr constructor, this constructor is a
+constexpr constructor.
 
 ``` cpp
 template<class T, class... Args> constexpr explicit variant(in_place_type_t<T>, Args&&... args);
 ```
 
-> *Constraints:*
->
-> - There is exactly one occurrence of `T` in `Types...` and
->
-> - `is_constructible_v<T, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes the contained value of type `T`
-> with `std::forward<Args>(args)...`.
->
-> *Ensures:* `holds_alternative<T>(*this)` is `true`.
->
-> *Throws:* Any exception thrown by calling the selected constructor of
-> `T`.
->
-> *Remarks:* If `T`’s selected constructor is a constexpr constructor,
-> this constructor is a constexpr constructor.
+*Constraints:*
+
+- There is exactly one occurrence of `T` in `Types...` and
+
+- `is_constructible_v<T, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes the contained value of type `T`
+with `std::forward<Args>(args)...`.
+
+*Ensures:* `holds_alternative<T>(*this)` is `true`.
+
+*Throws:* Any exception thrown by calling the selected constructor of
+`T`.
+
+*Remarks:* If `T`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor.
 
 ``` cpp
 template<class T, class U, class... Args>
   constexpr explicit variant(in_place_type_t<T>, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:*
->
-> - There is exactly one occurrence of `T` in `Types...` and
->
-> - `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes the contained value of type `T`
-> with `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `holds_alternative<T>(*this)` is `true`.
->
-> *Throws:* Any exception thrown by calling the selected constructor of
-> `T`.
->
-> *Remarks:* If `T`’s selected constructor is a constexpr constructor,
-> this constructor is a constexpr constructor.
+*Constraints:*
+
+- There is exactly one occurrence of `T` in `Types...` and
+
+- `is_constructible_v<T, initializer_list<U>&, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes the contained value of type `T`
+with `il, std::forward<Args>(args)...`.
+
+*Ensures:* `holds_alternative<T>(*this)` is `true`.
+
+*Throws:* Any exception thrown by calling the selected constructor of
+`T`.
+
+*Remarks:* If `T`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor.
 
 ``` cpp
 template<size_t I, class... Args> constexpr explicit variant(in_place_index_t<I>, Args&&... args);
 ```
 
-> *Constraints:*
->
-> - `I` is less than `sizeof...(Types)` and
->
-> - `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes the contained value of type
-> $\texttt{T}_I$ with `std::forward<Args>(args)...`.
->
-> *Ensures:* `index()` is `I`.
->
-> *Throws:* Any exception thrown by calling the selected constructor of
-> $\texttt{T}_I$.
->
-> *Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
-> constructor, this constructor is a constexpr constructor.
+*Constraints:*
+
+- `I` is less than `sizeof...(Types)` and
+
+- `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes the contained value of type
+$\texttt{T}_I$ with `std::forward<Args>(args)...`.
+
+*Ensures:* `index()` is `I`.
+
+*Throws:* Any exception thrown by calling the selected constructor of
+$\texttt{T}_I$.
+
+*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
+constructor, this constructor is a constexpr constructor.
 
 ``` cpp
 template<size_t I, class U, class... Args>
   constexpr explicit variant(in_place_index_t<I>, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:*
->
-> - `I` is less than `sizeof...(Types)` and
->
-> - `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
->   is `true`.
->
-> *Effects:* Direct-non-list-initializes the contained value of type
-> $\texttt{T}_I$ with `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `index()` is `I`.
->
-> *Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
-> constructor, this constructor is a constexpr constructor.
+*Constraints:*
+
+- `I` is less than `sizeof...(Types)` and
+
+- `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
+  is `true`.
+
+*Effects:* Direct-non-list-initializes the contained value of type
+$\texttt{T}_I$ with `il, std::forward<Args>(args)...`.
+
+*Ensures:* `index()` is `I`.
+
+*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
+constructor, this constructor is a constexpr constructor.
 
 #### Destructor <a id="variant.dtor">[[variant.dtor]]</a>
 
@@ -3990,11 +3974,11 @@ template<size_t I, class U, class... Args>
 constexpr ~variant();
 ```
 
-> *Effects:* If `valueless_by_exception()` is `false`, destroys the
-> currently contained value.
->
-> *Remarks:* If `is_trivially_destructible_v<`$\texttt{T}_i$`>` is
-> `true` for all $\texttt{T}_i$, then this destructor is trivial.
+*Effects:* If `valueless_by_exception()` is `false`, destroys the
+currently contained value.
+
+*Remarks:* If `is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true`
+for all $\texttt{T}_i$, then this destructor is trivial.
 
 #### Assignment <a id="variant.assign">[[variant.assign]]</a>
 
@@ -4002,141 +3986,141 @@ constexpr ~variant();
 constexpr variant& operator=(const variant& rhs);
 ```
 
-> Let j be `rhs.index()`.
->
-> *Effects:*
->
-> - If neither `*this` nor `rhs` holds a value, there is no effect.
->
-> - Otherwise, if `*this` holds a value but `rhs` does not, destroys the
->   value contained in `*this` and sets `*this` to not hold a value.
->
-> - Otherwise, if `index() == `j, assigns the value contained in `rhs`
->   to the value contained in `*this`.
->
-> - Otherwise, if either
->   `is_nothrow_copy_constructible_v<`$\texttt{T}_j$`>` is `true` or
->   `is_nothrow_move_constructible_v<`$\texttt{T}_j$`>` is `false`,
->   equivalent to `emplace<`j`>(get<`j`>(rhs))`.
->
-> - Otherwise, equivalent to `operator=(variant(rhs))`.
->
-> *Ensures:* `index() == rhs.index()`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* This operator is defined as deleted unless
-> `is_copy_constructible_v<`$\texttt{T}_i$`> &&`
-> `is_copy_assignable_v<`$\texttt{T}_i$`>` is `true` for all i. If
-> `is_trivially_copy_constructible_v<`$\texttt{T}_i$`> &&`
-> `is_trivially_copy_assignable_v<`$\texttt{T}_i$`> &&`
-> `is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true` for all i,
-> this assignment operator is trivial.
+Let j be `rhs.index()`.
+
+*Effects:*
+
+- If neither `*this` nor `rhs` holds a value, there is no effect.
+
+- Otherwise, if `*this` holds a value but `rhs` does not, destroys the
+  value contained in `*this` and sets `*this` to not hold a value.
+
+- Otherwise, if `index() == `j, assigns the value contained in `rhs` to
+  the value contained in `*this`.
+
+- Otherwise, if either
+  `is_nothrow_copy_constructible_v<`$\texttt{T}_j$`>` is `true` or
+  `is_nothrow_move_constructible_v<`$\texttt{T}_j$`>` is `false`,
+  equivalent to `emplace<`j`>(get<`j`>(rhs))`.
+
+- Otherwise, equivalent to `operator=(variant(rhs))`.
+
+*Ensures:* `index() == rhs.index()`.
+
+*Returns:* `*this`.
+
+*Remarks:* This operator is defined as deleted unless
+`is_copy_constructible_v<`$\texttt{T}_i$`> &&`
+`is_copy_assignable_v<`$\texttt{T}_i$`>` is `true` for all i. If
+`is_trivially_copy_constructible_v<`$\texttt{T}_i$`> &&`
+`is_trivially_copy_assignable_v<`$\texttt{T}_i$`> &&`
+`is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true` for all i,
+this assignment operator is trivial.
 
 ``` cpp
 constexpr variant& operator=(variant&& rhs) noexcept(see below);
 ```
 
-> Let j be `rhs.index()`.
->
-> *Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`> &&`
-> `is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
->
-> *Effects:*
->
-> - If neither `*this` nor `rhs` holds a value, there is no effect.
->
-> - Otherwise, if `*this` holds a value but `rhs` does not, destroys the
->   value contained in `*this` and sets `*this` to not hold a value.
->
-> - Otherwise, if `index() == `j, assigns `get<`j`>(std::move(rhs))` to
->   the value contained in `*this`.
->
-> - Otherwise, equivalent to `emplace<`j`>(get<`j`>(std::move(rhs)))`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* If `is_trivially_move_constructible_v<`$\texttt{T}_i$`> &&`
-> `is_trivially_move_assignable_v<`$\texttt{T}_i$`> &&`
-> `is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true` for all i,
-> this assignment operator is trivial. The exception specification is
-> equivalent to
-> `is_nothrow_move_constructible_v<`$\texttt{T}_i$`> && is_nothrow_move_assignable_v<`$\texttt{T}_i$`>`
-> for all i.
->
-> - If an exception is thrown during the call to $\texttt{T}_j$’s move
->   construction (with j being `rhs.index()`), the `variant` will hold
->   no value.
->
-> - If an exception is thrown during the call to $\texttt{T}_j$’s move
->   assignment, the state of the contained value is as defined by the
->   exception safety guarantee of $\texttt{T}_j$’s move assignment;
->   `index()` will be j.
+Let j be `rhs.index()`.
+
+*Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`> &&`
+`is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
+
+*Effects:*
+
+- If neither `*this` nor `rhs` holds a value, there is no effect.
+
+- Otherwise, if `*this` holds a value but `rhs` does not, destroys the
+  value contained in `*this` and sets `*this` to not hold a value.
+
+- Otherwise, if `index() == `j, assigns `get<`j`>(std::move(rhs))` to
+  the value contained in `*this`.
+
+- Otherwise, equivalent to `emplace<`j`>(get<`j`>(std::move(rhs)))`.
+
+*Returns:* `*this`.
+
+*Remarks:* If `is_trivially_move_constructible_v<`$\texttt{T}_i$`> &&`
+`is_trivially_move_assignable_v<`$\texttt{T}_i$`> &&`
+`is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true` for all i,
+this assignment operator is trivial. The exception specification is
+equivalent to
+`is_nothrow_move_constructible_v<`$\texttt{T}_i$`> && is_nothrow_move_assignable_v<`$\texttt{T}_i$`>`
+for all i.
+
+- If an exception is thrown during the call to $\texttt{T}_j$’s move
+  construction (with j being `rhs.index()`), the `variant` will hold no
+  value.
+
+- If an exception is thrown during the call to $\texttt{T}_j$’s move
+  assignment, the state of the contained value is as defined by the
+  exception safety guarantee of $\texttt{T}_j$’s move assignment;
+  `index()` will be j.
 
 ``` cpp
 template<class T> constexpr variant& operator=(T&& t) noexcept(see below);
 ```
 
-> Let $\texttt{T}_j$ be a type that is determined as follows: build an
-> imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
-> for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is
-> well-formed for some invented variable `x`. The overload *FUN*($T_j$)
-> selected by overload resolution for the expression
-> *FUN*(std::forward\<T\>(t)) defines the alternative $\texttt{T}_j$
-> which is the type of the contained value after assignment.
->
-> *Constraints:*
->
-> - `is_same_v<remove_cvref_t<T>, variant>` is `false`,
->
-> - `is_assignable_v<`$\texttt{T}_j$`&, T> && is_constructible_v<`$\texttt{T}_j$`, T>`
->   is `true`, and
->
-> - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
->   above-mentioned set of imaginary functions) is well-formed.
->
->   \[*Note 17*:
->
->       variant<string, string> v;
->       v = "abc";
->
->   is ill-formed, as both alternative types have an equally viable
->   constructor for the argument.
->
->   — *end note*\]
->
-> *Effects:*
->
-> - If `*this` holds a $\texttt{T}_j$, assigns `std::forward<T>(t)` to
->   the value contained in `*this`.
->
-> - Otherwise, if `is_nothrow_constructible_v<`$\texttt{T}_j$`, T> ||`
->   `!is_nothrow_move_constructible_v<`$\texttt{T}_j$`>` is `true`,
->   equivalent to `emplace<`j`>(std::forward<T>(t))`.
->
-> - Otherwise, equivalent to
->   `emplace<`j`>(`$\texttt{T}_j$`(std::forward<T>(t)))`.
->
-> *Ensures:* `holds_alternative<`$\texttt{T}_j$`>(*this)` is `true`,
-> with $\texttt{T}_j$ selected by the imaginary function overload
-> resolution described above.
->
-> *Returns:* `*this`.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_assignable_v<T$_j$&, T> && is_nothrow_constructible_v<T$_j$, T>
-> ```
->
-> - If an exception is thrown during the assignment of
->   `std::forward<T>(t)` to the value contained in `*this`, the state of
->   the contained value and `t` are as defined by the exception safety
->   guarantee of the assignment expression; `valueless_by_exception()`
->   will be `false`.
->
-> - If an exception is thrown during the initialization of the contained
->   value, the `variant` object is permitted to not hold a value.
+Let $\texttt{T}_j$ be a type that is determined as follows: build an
+imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
+for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is well-formed
+for some invented variable `x`. The overload *FUN*($T_j$) selected by
+overload resolution for the expression *FUN*(std::forward\<T\>(t))
+defines the alternative $\texttt{T}_j$ which is the type of the
+contained value after assignment.
+
+*Constraints:*
+
+- `is_same_v<remove_cvref_t<T>, variant>` is `false`,
+
+- `is_assignable_v<`$\texttt{T}_j$`&, T> && is_constructible_v<`$\texttt{T}_j$`, T>`
+  is `true`, and
+
+- the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
+  above-mentioned set of imaginary functions) is well-formed.
+
+  \[*Note 2*:
+
+      variant<string, string> v;
+      v = "abc";
+
+  is ill-formed, as both alternative types have an equally viable
+  constructor for the argument.
+
+  — *end note*\]
+
+*Effects:*
+
+- If `*this` holds a $\texttt{T}_j$, assigns `std::forward<T>(t)` to the
+  value contained in `*this`.
+
+- Otherwise, if `is_nothrow_constructible_v<`$\texttt{T}_j$`, T> ||`
+  `!is_nothrow_move_constructible_v<`$\texttt{T}_j$`>` is `true`,
+  equivalent to `emplace<`j`>(std::forward<T>(t))`.
+
+- Otherwise, equivalent to
+  `emplace<`j`>(`$\texttt{T}_j$`(std::forward<T>(t)))`.
+
+*Ensures:* `holds_alternative<`$\texttt{T}_j$`>(*this)` is `true`, with
+$\texttt{T}_j$ selected by the imaginary function overload resolution
+described above.
+
+*Returns:* `*this`.
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_assignable_v<T$_j$&, T> && is_nothrow_constructible_v<T$_j$, T>
+```
+
+- If an exception is thrown during the assignment of
+  `std::forward<T>(t)` to the value contained in `*this`, the state of
+  the contained value and `t` are as defined by the exception safety
+  guarantee of the assignment expression; `valueless_by_exception()`
+  will be `false`.
+
+- If an exception is thrown during the initialization of the contained
+  value, the `variant` object is permitted to not hold a value.
 
 #### Modifiers <a id="variant.mod">[[variant.mod]]</a>
 
@@ -4144,57 +4128,57 @@ template<class T> constexpr variant& operator=(T&& t) noexcept(see below);
 template<class T, class... Args> constexpr T& emplace(Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, Args...>` is `true`, and `T`
-> occurs exactly once in `Types`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return emplace<$I$>(std::forward<Args>(args)...);
-> ```
->
-> where I is the zero-based index of `T` in `Types`.
+*Constraints:* `is_constructible_v<T, Args...>` is `true`, and `T`
+occurs exactly once in `Types`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return emplace<$I$>(std::forward<Args>(args)...);
+```
+
+where I is the zero-based index of `T` in `Types`.
 
 ``` cpp
 template<class T, class U, class... Args>
   constexpr T& emplace(initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>`
-> is `true`, and `T` occurs exactly once in `Types`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return emplace<$I$>(il, std::forward<Args>(args)...);
-> ```
->
-> where I is the zero-based index of `T` in `Types`.
+*Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>` is
+`true`, and `T` occurs exactly once in `Types`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return emplace<$I$>(il, std::forward<Args>(args)...);
+```
+
+where I is the zero-based index of `T` in `Types`.
 
 ``` cpp
 template<size_t I, class... Args>
   constexpr variant_alternative_t<I, variant<Types...>>& emplace(Args&&... args);
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Constraints:* `is_constructible_v<`$\texttt{T}_I$`, Args...>` is
-> `true`.
->
-> *Effects:* Destroys the currently contained value if
-> `valueless_by_exception()` is `false`. Then
-> direct-non-list-initializes the contained value of type $\texttt{T}_I$
-> with the arguments `std::forward<Args>(args)...`.
->
-> *Ensures:* `index()` is `I`.
->
-> *Returns:* A reference to the new contained value.
->
-> *Throws:* Any exception thrown during the initialization of the
-> contained value.
->
-> *Remarks:* If an exception is thrown during the initialization of the
-> contained value, the `variant` is permitted to not hold a value.
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Constraints:* `is_constructible_v<`$\texttt{T}_I$`, Args...>` is
+`true`.
+
+*Effects:* Destroys the currently contained value if
+`valueless_by_exception()` is `false`. Then direct-non-list-initializes
+the contained value of type $\texttt{T}_I$ with the arguments
+`std::forward<Args>(args)...`.
+
+*Ensures:* `index()` is `I`.
+
+*Returns:* A reference to the new contained value.
+
+*Throws:* Any exception thrown during the initialization of the
+contained value.
+
+*Remarks:* If an exception is thrown during the initialization of the
+contained value, the `variant` is permitted to not hold a value.
 
 ``` cpp
 template<size_t I, class U, class... Args>
@@ -4202,26 +4186,26 @@ template<size_t I, class U, class... Args>
     emplace(initializer_list<U> il, Args&&... args);
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Constraints:*
-> `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Destroys the currently contained value if
-> `valueless_by_exception()` is `false`. Then
-> direct-non-list-initializes the contained value of type $\texttt{T}_I$
-> with `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `index()` is `I`.
->
-> *Returns:* A reference to the new contained value.
->
-> *Throws:* Any exception thrown during the initialization of the
-> contained value.
->
-> *Remarks:* If an exception is thrown during the initialization of the
-> contained value, the `variant` is permitted to not hold a value.
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Constraints:*
+`is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Destroys the currently contained value if
+`valueless_by_exception()` is `false`. Then direct-non-list-initializes
+the contained value of type $\texttt{T}_I$ with
+`il, std::forward<Args>(args)...`.
+
+*Ensures:* `index()` is `I`.
+
+*Returns:* A reference to the new contained value.
+
+*Throws:* Any exception thrown during the initialization of the
+contained value.
+
+*Remarks:* If an exception is thrown during the initialization of the
+contained value, the `variant` is permitted to not hold a value.
 
 #### Value status <a id="variant.status">[[variant.status]]</a>
 
@@ -4229,28 +4213,28 @@ template<size_t I, class U, class... Args>
 constexpr bool valueless_by_exception() const noexcept;
 ```
 
-> *Effects:* Returns `false` if and only if the `variant` holds a value.
->
-> \[*Note 18*:
->
-> It is possible for a `variant` to hold no value if an exception is
-> thrown during a type-changing assignment or emplacement. The latter
-> means that even a `variant<float, int>` can become
-> `valueless_by_exception()`, for instance by
->
->     struct S { operator int() { throw 42; }};
->     variant<float, int> v{12.f};
->     v.emplace<1>(S());
->
-> — *end note*\]
+*Effects:* Returns `false` if and only if the `variant` holds a value.
+
+\[*Note 2*:
+
+It is possible for a `variant` to hold no value if an exception is
+thrown during a type-changing assignment or emplacement. The latter
+means that even a `variant<float, int>` can become
+`valueless_by_exception()`, for instance by
+
+    struct S { operator int() { throw 42; }};
+    variant<float, int> v{12.f};
+    v.emplace<1>(S());
+
+— *end note*\]
 
 ``` cpp
 constexpr size_t index() const noexcept;
 ```
 
-> *Effects:* If `valueless_by_exception()` is `true`, returns
-> `variant_npos`. Otherwise, returns the zero-based index of the
-> alternative of the contained value.
+*Effects:* If `valueless_by_exception()` is `true`, returns
+`variant_npos`. Otherwise, returns the zero-based index of the
+alternative of the contained value.
 
 #### Swap <a id="variant.swap">[[variant.swap]]</a>
 
@@ -4258,39 +4242,38 @@ constexpr size_t index() const noexcept;
 constexpr void swap(variant& rhs) noexcept(see below);
 ```
 
-> *Mandates:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
-> all i.
->
-> *Preconditions:* Each $\texttt{T}_i$ meets the *Cpp17Swappable*
-> requirements [[swappable.requirements]].
->
-> *Effects:*
->
-> - If `valueless_by_exception() && rhs.valueless_by_exception()` no
->   effect.
->
-> - Otherwise, if `index() == rhs.index()`, calls
->   `swap(get<`i`>(*this), get<`i`>(rhs))` where i is `index()`.
->
-> - Otherwise, exchanges values of `rhs` and `*this`.
->
-> *Throws:* If `index() == rhs.index()`, any exception thrown by
-> `swap(get<`i`>(*this), get<`i`>(rhs))` with i being `index()`.
-> Otherwise, any exception thrown by the move constructor of
-> $\texttt{T}_i$ or $\texttt{T}_j$ with i being `index()` and j being
-> `rhs.index()`.
->
-> *Remarks:* If an exception is thrown during the call to function
-> `swap(get<`i`>(*this), get<`i`>(rhs))`, the states of the contained
-> values of `*this` and of `rhs` are determined by the exception safety
-> guarantee of `swap` for lvalues of $\texttt{T}_i$ with i being
-> `index()`. If an exception is thrown during the exchange of the values
-> of `*this` and `rhs`, the states of the values of `*this` and of `rhs`
-> are determined by the exception safety guarantee of `variant`’s move
-> constructor. The exception specification is equivalent to the logical
-> of
-> `is_nothrow_move_constructible_v<`$\texttt{T}_i$`> && is_nothrow_swappable_v<`$\texttt{T}_i$`>`
-> for all i.
+*Mandates:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
+all i.
+
+*Preconditions:* Each $\texttt{T}_i$ meets the *Cpp17Swappable*
+requirements [[swappable.requirements]].
+
+*Effects:*
+
+- If `valueless_by_exception() && rhs.valueless_by_exception()` no
+  effect.
+
+- Otherwise, if `index() == rhs.index()`, calls
+  `swap(get<`i`>(*this), get<`i`>(rhs))` where i is `index()`.
+
+- Otherwise, exchanges values of `rhs` and `*this`.
+
+*Throws:* If `index() == rhs.index()`, any exception thrown by
+`swap(get<`i`>(*this), get<`i`>(rhs))` with i being `index()`.
+Otherwise, any exception thrown by the move constructor of
+$\texttt{T}_i$ or $\texttt{T}_j$ with i being `index()` and j being
+`rhs.index()`.
+
+*Remarks:* If an exception is thrown during the call to function
+`swap(get<`i`>(*this), get<`i`>(rhs))`, the states of the contained
+values of `*this` and of `rhs` are determined by the exception safety
+guarantee of `swap` for lvalues of $\texttt{T}_i$ with i being
+`index()`. If an exception is thrown during the exchange of the values
+of `*this` and `rhs`, the states of the values of `*this` and of `rhs`
+are determined by the exception safety guarantee of `variant`’s move
+constructor. The exception specification is equivalent to the logical of
+`is_nothrow_move_constructible_v<`$\texttt{T}_i$`> && is_nothrow_swappable_v<`$\texttt{T}_i$`>`
+for all i.
 
 ### `variant` helper classes <a id="variant.helper">[[variant.helper]]</a>
 
@@ -4298,18 +4281,18 @@ constexpr void swap(variant& rhs) noexcept(see below);
 template<class T> struct variant_size;
 ```
 
-> All specializations of `variant_size` meet the *Cpp17UnaryTypeTrait*
-> requirements [[meta.rqmts]] with a base characteristic of
-> `integral_constant<size_t, N>` for some `N`.
+All specializations of `variant_size` meet the *Cpp17UnaryTypeTrait*
+requirements [[meta.rqmts]] with a base characteristic of
+`integral_constant<size_t, N>` for some `N`.
 
 ``` cpp
 template<class T> struct variant_size<const T>;
 ```
 
-> Let `VS` denote `variant_size<T>` of the cv-unqualified type `T`. Then
-> each specialization of the template meets the *Cpp17UnaryTypeTrait*
-> requirements [[meta.rqmts]] with a base characteristic of
-> `integral_constant<size_t, VS::value>`.
+Let `VS` denote `variant_size<T>` of the cv-unqualified type `T`. Then
+each specialization of the template meets the *Cpp17UnaryTypeTrait*
+requirements [[meta.rqmts]] with a base characteristic of
+`integral_constant<size_t, VS::value>`.
 
 ``` cpp
 template<class... Types>
@@ -4320,18 +4303,18 @@ template<class... Types>
 template<size_t I, class T> struct variant_alternative<I, const T>;
 ```
 
-> Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
-> `T`. Then each specialization of the template meets the
-> *Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
-> typedef `type` that names the type `add_const_t<VA::type>`.
+Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
+`T`. Then each specialization of the template meets the
+*Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
+typedef `type` that names the type `add_const_t<VA::type>`.
 
 ``` cpp
 variant_alternative<I, variant<Types...>>::type
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Type:* The type $\texttt{T}_I$.
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Type:* The type $\texttt{T}_I$.
 
 ### Value access <a id="variant.get">[[variant.get]]</a>
 
@@ -4340,10 +4323,10 @@ template<class T, class... Types>
   constexpr bool holds_alternative(const variant<Types...>& v) noexcept;
 ```
 
-> *Mandates:* The type `T` occurs exactly once in `Types`.
->
-> *Returns:* `true` if `index()` is equal to the zero-based index of `T`
-> in `Types`.
+*Mandates:* The type `T` occurs exactly once in `Types`.
+
+*Returns:* `true` if `index()` is equal to the zero-based index of `T`
+in `Types`.
 
 ``` cpp
 template<size_t I, class... Types>
@@ -4356,11 +4339,11 @@ template<size_t I, class... Types>
   constexpr const variant_alternative_t<I, variant<Types...>>&& get(const variant<Types...>&& v);
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Effects:* If `v.index()` is `I`, returns a reference to the object
-> stored in the `variant`. Otherwise, throws an exception of type
-> `bad_variant_access`.
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Effects:* If `v.index()` is `I`, returns a reference to the object
+stored in the `variant`. Otherwise, throws an exception of type
+`bad_variant_access`.
 
 ``` cpp
 template<class T, class... Types> constexpr T& get(variant<Types...>& v);
@@ -4369,11 +4352,10 @@ template<class T, class... Types> constexpr const T& get(const variant<Types...>
 template<class T, class... Types> constexpr const T&& get(const variant<Types...>&& v);
 ```
 
-> *Mandates:* The type `T` occurs exactly once in `Types`.
->
-> *Effects:* If `v` holds a value of type `T`, returns a reference to
-> that value. Otherwise, throws an exception of type
-> `bad_variant_access`.
+*Mandates:* The type `T` occurs exactly once in `Types`.
+
+*Effects:* If `v` holds a value of type `T`, returns a reference to that
+value. Otherwise, throws an exception of type `bad_variant_access`.
 
 ``` cpp
 template<size_t I, class... Types>
@@ -4384,10 +4366,10 @@ template<size_t I, class... Types>
     get_if(const variant<Types...>* v) noexcept;
 ```
 
-> *Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
->
-> *Returns:* A pointer to the value stored in the `variant`, if
-> `v != nullptr` and `v->index() == I`. Otherwise, returns .
+*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+
+*Returns:* A pointer to the value stored in the `variant`, if
+`v != nullptr` and `v->index() == I`. Otherwise, returns .
 
 ``` cpp
 template<class T, class... Types>
@@ -4398,10 +4380,10 @@ template<class T, class... Types>
     get_if(const variant<Types...>* v) noexcept;
 ```
 
-> *Mandates:* The type `T` occurs exactly once in `Types`.
->
-> *Effects:* Equivalent to: `return get_if<`i`>(v);` with i being the
-> zero-based index of `T` in `Types`.
+*Mandates:* The type `T` occurs exactly once in `Types`.
+
+*Effects:* Equivalent to: `return get_if<`i`>(v);` with i being the
+zero-based index of `T` in `Types`.
 
 ### Relational operators <a id="variant.relops">[[variant.relops]]</a>
 
@@ -4410,80 +4392,78 @@ template<class... Types>
   constexpr bool operator==(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Mandates:* `get<`i`>(v) == get<`i`>(w)` is a valid expression that is
-> convertible to `bool`, for all i.
->
-> *Returns:* If `v.index() != w.index()`, `false`; otherwise if
-> `v.valueless_by_exception()`, `true`; otherwise
-> `get<`i`>(v) == get<`i`>(w)` with i being `v.index()`.
+*Mandates:* `get<`i`>(v) == get<`i`>(w)` is a valid expression that is
+convertible to `bool`, for all i.
+
+*Returns:* If `v.index() != w.index()`, `false`; otherwise if
+`v.valueless_by_exception()`, `true`; otherwise
+`get<`i`>(v) == get<`i`>(w)` with i being `v.index()`.
 
 ``` cpp
 template<class... Types>
   constexpr bool operator!=(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Mandates:* `get<`i`>(v) != get<`i`>(w)` is a valid expression that is
-> convertible to `bool`, for all i.
->
-> *Returns:* If `v.index() != w.index()`, `true`; otherwise if
-> `v.valueless_by_exception()`, `false`; otherwise
-> `get<`i`>(v) != get<`i`>(w)` with i being `v.index()`.
+*Mandates:* `get<`i`>(v) != get<`i`>(w)` is a valid expression that is
+convertible to `bool`, for all i.
+
+*Returns:* If `v.index() != w.index()`, `true`; otherwise if
+`v.valueless_by_exception()`, `false`; otherwise
+`get<`i`>(v) != get<`i`>(w)` with i being `v.index()`.
 
 ``` cpp
 template<class... Types>
   constexpr bool operator<(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Mandates:* `get<`i`>(v) < get<`i`>(w)` is a valid expression that is
-> convertible to `bool`, for all i.
->
-> *Returns:* If `w.valueless_by_exception()`, `false`; otherwise if
-> `v.valueless_by_exception()`, `true`; otherwise, if
-> `v.index() < w.index()`, `true`; otherwise if `v.index() > w.index()`,
-> `false`; otherwise `get<`i`>(v) < get<`i`>(w)` with i being
-> `v.index()`.
+*Mandates:* `get<`i`>(v) < get<`i`>(w)` is a valid expression that is
+convertible to `bool`, for all i.
+
+*Returns:* If `w.valueless_by_exception()`, `false`; otherwise if
+`v.valueless_by_exception()`, `true`; otherwise, if
+`v.index() < w.index()`, `true`; otherwise if `v.index() > w.index()`,
+`false`; otherwise `get<`i`>(v) < get<`i`>(w)` with i being `v.index()`.
 
 ``` cpp
 template<class... Types>
   constexpr bool operator>(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Mandates:* `get<`i`>(v) > get<`i`>(w)` is a valid expression that is
-> convertible to `bool`, for all i.
->
-> *Returns:* If `v.valueless_by_exception()`, `false`; otherwise if
-> `w.valueless_by_exception()`, `true`; otherwise, if
-> `v.index() > w.index()`, `true`; otherwise if `v.index() < w.index()`,
-> `false`; otherwise `get<`i`>(v) > get<`i`>(w)` with i being
-> `v.index()`.
+*Mandates:* `get<`i`>(v) > get<`i`>(w)` is a valid expression that is
+convertible to `bool`, for all i.
+
+*Returns:* If `v.valueless_by_exception()`, `false`; otherwise if
+`w.valueless_by_exception()`, `true`; otherwise, if
+`v.index() > w.index()`, `true`; otherwise if `v.index() < w.index()`,
+`false`; otherwise `get<`i`>(v) > get<`i`>(w)` with i being `v.index()`.
 
 ``` cpp
 template<class... Types>
   constexpr bool operator<=(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Mandates:* `get<`i`>(v) <= get<`i`>(w)` is a valid expression that is
-> convertible to `bool`, for all i.
->
-> *Returns:* If `v.valueless_by_exception()`, `true`; otherwise if
-> `w.valueless_by_exception()`, `false`; otherwise, if
-> `v.index() < w.index()`, `true`; otherwise if `v.index() > w.index()`,
-> `false`; otherwise `get<`i`>(v) <= get<`i`>(w)` with i being
-> `v.index()`.
+*Mandates:* `get<`i`>(v) <= get<`i`>(w)` is a valid expression that is
+convertible to `bool`, for all i.
+
+*Returns:* If `v.valueless_by_exception()`, `true`; otherwise if
+`w.valueless_by_exception()`, `false`; otherwise, if
+`v.index() < w.index()`, `true`; otherwise if `v.index() > w.index()`,
+`false`; otherwise `get<`i`>(v) <= get<`i`>(w)` with i being
+`v.index()`.
 
 ``` cpp
 template<class... Types>
   constexpr bool operator>=(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Mandates:* `get<`i`>(v) >= get<`i`>(w)` is a valid expression that is
-> convertible to `bool`, for all i.
->
-> *Returns:* If `w.valueless_by_exception()`, `true`; otherwise if
-> `v.valueless_by_exception()`, `false`; otherwise, if
-> `v.index() > w.index()`, `true`; otherwise if `v.index() < w.index()`,
-> `false`; otherwise `get<`i`>(v) >= get<`i`>(w)` with i being
-> `v.index()`.
+*Mandates:* `get<`i`>(v) >= get<`i`>(w)` is a valid expression that is
+convertible to `bool`, for all i.
+
+*Returns:* If `w.valueless_by_exception()`, `true`; otherwise if
+`v.valueless_by_exception()`, `false`; otherwise, if
+`v.index() > w.index()`, `true`; otherwise if `v.index() < w.index()`,
+`false`; otherwise `get<`i`>(v) >= get<`i`>(w)` with i being
+`v.index()`.
 
 ``` cpp
 template<class... Types> requires (three_way_comparable<Types> && ...)
@@ -4491,18 +4471,18 @@ template<class... Types> requires (three_way_comparable<Types> && ...)
     operator<=>(const variant<Types...>& v, const variant<Types...>& w);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (v.valueless_by_exception() && w.valueless_by_exception())
->   return strong_ordering::equal;
-> if (v.valueless_by_exception()) return strong_ordering::less;
-> if (w.valueless_by_exception()) return strong_ordering::greater;
-> if (auto c = v.index() <=> w.index(); c != 0) return c;
-> return get<$i$>(v) <=> get<$i$>(w);
-> ```
->
-> with i being `v.index()`.
+*Effects:* Equivalent to:
+
+``` cpp
+if (v.valueless_by_exception() && w.valueless_by_exception())
+  return strong_ordering::equal;
+if (v.valueless_by_exception()) return strong_ordering::less;
+if (w.valueless_by_exception()) return strong_ordering::greater;
+if (auto c = v.index() <=> w.index(); c != 0) return c;
+return get<$i$>(v) <=> get<$i$>(w);
+```
+
+with i being `v.index()`.
 
 ### Visitation <a id="variant.visit">[[variant.visit]]</a>
 
@@ -4513,59 +4493,59 @@ template<class R, class Visitor, class... Variants>
   constexpr R visit(Visitor&& vis, Variants&&... vars);
 ```
 
-> Let *as-variant* denote the following exposition-only function
-> templates:
->
-> ``` cpp
-> template<class... Ts>
->   auto&& as-variant(variant<Ts...>& var) { return var; }
-> template<class... Ts>
->   auto&& as-variant(const variant<Ts...>& var) { return var; }
-> template<class... Ts>
->   auto&& as-variant(variant<Ts...>&& var) { return std::move(var); }
-> template<class... Ts>
->   auto&& as-variant(const variant<Ts...>&& var) { return std::move(var); }
-> ```
->
-> Let n be `sizeof...(Variants)`. For each 0 ≤ i < n, let $\texttt{V}_i$
-> denote the type
-> `decltype(`*`as-variant`*`(``std::forward<`$\texttt{Variants}_i$`>(`$\texttt{vars}_i$`)``))`.
->
-> *Constraints:* $\texttt{V}_i$ is a valid type for all 0 ≤ i < n.
->
-> Let `V` denote the pack of types $\texttt{V}_i$.
->
-> Let m be a pack of n values of type `size_t`. Such a pack is valid if
-> $0 \leq m_i < \texttt{variant_size_v<remove_reference_t<V}_i\texttt{>>}$
-> for all 0 ≤ i < n. For each valid pack m, let e(m) denote the
-> expression:
->
-> ``` cpp
-> INVOKE(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
-> ```
->
-> for the first form and
->
-> ``` cpp
-> INVOKE<R>(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
-> ```
->
-> for the second form.
->
-> *Mandates:* For each valid pack m, e(m) is a valid expression. All
-> such expressions are of the same type and value category.
->
-> *Returns:* e(m), where m is the pack for which mᵢ is
-> *`as-variant`*`(vars`_i`).index()` for all 0 ≤ i < n. The return type
-> is $\texttt{decltype(}e(m)\texttt{)}$ for the first form.
->
-> *Throws:* `bad_variant_access` if
-> `(`*`as-variant`*`(vars).valueless_by_exception() || ...)` is `true`.
->
-> *Complexity:* For n ≤ 1, the invocation of the callable object is
-> implemented in constant time, i.e., for n = 1, it does not depend on
-> the number of alternative types of $\texttt{V}_0$. For n > 1, the
-> invocation of the callable object has no complexity requirements.
+Let *as-variant* denote the following exposition-only function
+templates:
+
+``` cpp
+template<class... Ts>
+  auto&& as-variant(variant<Ts...>& var) { return var; }
+template<class... Ts>
+  auto&& as-variant(const variant<Ts...>& var) { return var; }
+template<class... Ts>
+  auto&& as-variant(variant<Ts...>&& var) { return std::move(var); }
+template<class... Ts>
+  auto&& as-variant(const variant<Ts...>&& var) { return std::move(var); }
+```
+
+Let n be `sizeof...(Variants)`. For each 0 ≤ i < n, let $\texttt{V}_i$
+denote the type
+`decltype(`*`as-variant`*`(``std::forward<`$\texttt{Variants}_i$`>(`$\texttt{vars}_i$`)``))`.
+
+*Constraints:* $\texttt{V}_i$ is a valid type for all 0 ≤ i < n.
+
+Let `V` denote the pack of types $\texttt{V}_i$.
+
+Let m be a pack of n values of type `size_t`. Such a pack is valid if
+$0 \leq m_i < \texttt{variant_size_v<remove_reference_t<V}_i\texttt{>>}$
+for all 0 ≤ i < n. For each valid pack m, let e(m) denote the
+expression:
+
+``` cpp
+INVOKE(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
+```
+
+for the first form and
+
+``` cpp
+INVOKE<R>(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
+```
+
+for the second form.
+
+*Mandates:* For each valid pack m, e(m) is a valid expression. All such
+expressions are of the same type and value category.
+
+*Returns:* e(m), where m is the pack for which mᵢ is
+*`as-variant`*`(vars`_i`).index()` for all 0 ≤ i < n. The return type is
+$\texttt{decltype(}e(m)\texttt{)}$ for the first form.
+
+*Throws:* `bad_variant_access` if
+`(`*`as-variant`*`(vars).valueless_by_exception() || ...)` is `true`.
+
+*Complexity:* For n ≤ 1, the invocation of the callable object is
+implemented in constant time, i.e., for n = 1, it does not depend on the
+number of alternative types of $\texttt{V}_0$. For n > 1, the invocation
+of the callable object has no complexity requirements.
 
 ### Class `monostate` <a id="variant.monostate">[[variant.monostate]]</a>
 
@@ -4573,8 +4553,8 @@ template<class R, class Visitor, class... Variants>
 struct monostate{};
 ```
 
-> The class `monostate` can serve as a first alternative type for a
-> `variant` to make the `variant` type default constructible.
+The class `monostate` can serve as a first alternative type for a
+`variant` to make the `variant` type default constructible.
 
 ### `monostate` relational operators <a id="variant.monostate.relops">[[variant.monostate.relops]]</a>
 
@@ -4584,8 +4564,8 @@ constexpr strong_ordering operator<=>(monostate, monostate) noexcept
 { return strong_ordering::equal; }
 ```
 
-> \[*Note 19*: `monostate` objects have only a single state; they thus
-> always compare equal. — *end note*\]
+\[*Note 3*: `monostate` objects have only a single state; they thus
+always compare equal. — *end note*\]
 
 ### Specialized algorithms <a id="variant.specalg">[[variant.specalg]]</a>
 
@@ -4594,14 +4574,14 @@ template<class... Types>
   constexpr void swap(variant<Types...>& v, variant<Types...>& w) noexcept(see below);
 ```
 
-> *Constraints:*
-> `is_move_constructible_v<`$\texttt{T}_i$`> && is_swappable_v<`$\texttt{T}_i$`>`
-> is `true` for all i.
->
-> *Effects:* Equivalent to `v.swap(w)`.
->
-> *Remarks:* The exception specification is equivalent to
-> `noexcept(v.swap(w))`.
+*Constraints:*
+`is_move_constructible_v<`$\texttt{T}_i$`> && is_swappable_v<`$\texttt{T}_i$`>`
+is `true` for all i.
+
+*Effects:* Equivalent to `v.swap(w)`.
+
+*Remarks:* The exception specification is equivalent to
+`noexcept(v.swap(w))`.
 
 ### Class `bad_variant_access` <a id="variant.bad.access">[[variant.bad.access]]</a>
 
@@ -4622,7 +4602,7 @@ accesses to the value of a `variant` object.
 const char* what() const noexcept override;
 ```
 
-> *Returns:* An *implementation-defined* NTBS.
+*Returns:* An *implementation-defined* NTBS.
 
 ### Hash support <a id="variant.hash">[[variant.hash]]</a>
 
@@ -4630,16 +4610,15 @@ const char* what() const noexcept override;
 template<class... Types> struct hash<variant<Types...>>;
 ```
 
-> The specialization `hash<variant<Types...>>` is enabled [[unord.hash]]
-> if and only if every specialization in
-> `hash<remove_const_t<Types>>...` is enabled. The member functions are
-> not guaranteed to be .
+The specialization `hash<variant<Types...>>` is enabled [[unord.hash]]
+if and only if every specialization in `hash<remove_const_t<Types>>...`
+is enabled. The member functions are not guaranteed to be .
 
 ``` cpp
 template<> struct hash<monostate>;
 ```
 
-> The specialization is enabled [[unord.hash]].
+The specialization is enabled [[unord.hash]].
 
 ## Storage for any type <a id="any">[[any]]</a>
 
@@ -4706,7 +4685,7 @@ Objects of type `bad_any_cast` are thrown by a failed `any_cast`
 const char* what() const noexcept override;
 ```
 
-> *Returns:* An *implementation-defined* NTBS.
+*Returns:* An *implementation-defined* NTBS.
 
 ### Class `any` <a id="any.class">[[any.class]]</a>
 
@@ -4778,91 +4757,91 @@ internal buffer, not in separately-allocated memory. — *end example*\]
 constexpr any() noexcept;
 ```
 
-> *Ensures:* `has_value()` is `false`.
+*Ensures:* `has_value()` is `false`.
 
 ``` cpp
 any(const any& other);
 ```
 
-> *Effects:* If `other.has_value()` is `false`, constructs an object
-> that has no value. Otherwise, equivalent to
-> `any(in_place_type<T>, any_cast<const T&>(other))` where `T` is the
-> type of the contained value.
->
-> *Throws:* Any exceptions arising from calling the selected constructor
-> for the contained value.
+*Effects:* If `other.has_value()` is `false`, constructs an object that
+has no value. Otherwise, equivalent to
+`any(in_place_type<T>, any_cast<const T&>(other))` where `T` is the type
+of the contained value.
+
+*Throws:* Any exceptions arising from calling the selected constructor
+for the contained value.
 
 ``` cpp
 any(any&& other) noexcept;
 ```
 
-> *Effects:* If `other.has_value()` is `false`, constructs an object
-> that has no value. Otherwise, constructs an object of type `any` that
-> contains either the contained value of `other`, or contains an object
-> of the same type constructed from the contained value of `other`
-> considering that contained value as an rvalue.
+*Effects:* If `other.has_value()` is `false`, constructs an object that
+has no value. Otherwise, constructs an object of type `any` that
+contains either the contained value of `other`, or contains an object of
+the same type constructed from the contained value of `other`
+considering that contained value as an rvalue.
 
 ``` cpp
 template<class T>
   any(T&& value);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:* `VT` is not the same type as `any`, `VT` is not a
-> specialization of `in_place_type_t`, and `is_copy_constructible_v<VT>`
-> is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:* Constructs an object of type `any` that contains an object
-> of type `VT` direct-initialized with `std::forward<T>(value)`.
->
-> *Throws:* Any exception thrown by the selected constructor of `VT`.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:* `VT` is not the same type as `any`, `VT` is not a
+specialization of `in_place_type_t`, and `is_copy_constructible_v<VT>`
+is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
+
+*Effects:* Constructs an object of type `any` that contains an object of
+type `VT` direct-initialized with `std::forward<T>(value)`.
+
+*Throws:* Any exception thrown by the selected constructor of `VT`.
 
 ``` cpp
 template<class T, class... Args>
   explicit any(in_place_type_t<T>, Args&&... args);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:* `is_copy_constructible_v<VT>` is `true` and
-> `is_constructible_v<VT, Args...>` is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:* Direct-non-list-initializes the contained value of type
-> `VT` with `std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value of type `VT`.
->
-> *Throws:* Any exception thrown by the selected constructor of `VT`.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:* `is_copy_constructible_v<VT>` is `true` and
+`is_constructible_v<VT, Args...>` is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
+
+*Effects:* Direct-non-list-initializes the contained value of type `VT`
+with `std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value of type `VT`.
+
+*Throws:* Any exception thrown by the selected constructor of `VT`.
 
 ``` cpp
 template<class T, class U, class... Args>
   explicit any(in_place_type_t<T>, initializer_list<U> il, Args&&... args);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:* `is_copy_constructible_v<VT>` is `true` and
-> `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:* Direct-non-list-initializes the contained value of type
-> `VT` with `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Throws:* Any exception thrown by the selected constructor of `VT`.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:* `is_copy_constructible_v<VT>` is `true` and
+`is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
+
+*Effects:* Direct-non-list-initializes the contained value of type `VT`
+with `il, std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Throws:* Any exception thrown by the selected constructor of `VT`.
 
 ``` cpp
 ~any();
 ```
 
-> *Effects:* As if by `reset()`.
+*Effects:* As if by `reset()`.
 
 #### Assignment <a id="any.assign">[[any.assign]]</a>
 
@@ -4870,44 +4849,44 @@ template<class T, class U, class... Args>
 any& operator=(const any& rhs);
 ```
 
-> *Effects:* As if by `any(rhs).swap(*this)`. No effects if an exception
-> is thrown.
->
-> *Returns:* `*this`.
->
-> *Throws:* Any exceptions arising from the copy constructor for the
-> contained value.
+*Effects:* As if by `any(rhs).swap(*this)`. No effects if an exception
+is thrown.
+
+*Returns:* `*this`.
+
+*Throws:* Any exceptions arising from the copy constructor for the
+contained value.
 
 ``` cpp
 any& operator=(any&& rhs) noexcept;
 ```
 
-> *Effects:* As if by `any(std::move(rhs)).swap(*this)`.
->
-> *Ensures:* The state of `*this` is equivalent to the original state of
-> `rhs`.
->
-> *Returns:* `*this`.
+*Effects:* As if by `any(std::move(rhs)).swap(*this)`.
+
+*Ensures:* The state of `*this` is equivalent to the original state of
+`rhs`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class T>
   any& operator=(T&& rhs);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:* `VT` is not the same type as `any` and
-> `is_copy_constructible_v<VT>` is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:* Constructs an object `tmp` of type `any` that contains an
-> object of type `VT` direct-initialized with `std::forward<T>(rhs)`,
-> and `tmp.swap(*this)`. No effects if an exception is thrown.
->
-> *Returns:* `*this`.
->
-> *Throws:* Any exception thrown by the selected constructor of `VT`.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:* `VT` is not the same type as `any` and
+`is_copy_constructible_v<VT>` is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
+
+*Effects:* Constructs an object `tmp` of type `any` that contains an
+object of type `VT` direct-initialized with `std::forward<T>(rhs)`, and
+`tmp.swap(*this)`. No effects if an exception is thrown.
+
+*Returns:* `*this`.
+
+*Throws:* Any exception thrown by the selected constructor of `VT`.
 
 #### Modifiers <a id="any.modifiers">[[any.modifiers]]</a>
 
@@ -4916,64 +4895,64 @@ template<class T, class... Args>
   decay_t<T>& emplace(Args&&... args);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:* `is_copy_constructible_v<VT>` is `true` and
-> `is_constructible_v<VT, Args...>` is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:* Calls `reset()`. Then direct-non-list-initializes the
-> contained value of type `VT` with `std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Returns:* A reference to the new contained value.
->
-> *Throws:* Any exception thrown by the selected constructor of `VT`.
->
-> *Remarks:* If an exception is thrown during the call to `VT`’s
-> constructor, `*this` does not contain a value, and any previously
-> contained value has been destroyed.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:* `is_copy_constructible_v<VT>` is `true` and
+`is_constructible_v<VT, Args...>` is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
+
+*Effects:* Calls `reset()`. Then direct-non-list-initializes the
+contained value of type `VT` with `std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Returns:* A reference to the new contained value.
+
+*Throws:* Any exception thrown by the selected constructor of `VT`.
+
+*Remarks:* If an exception is thrown during the call to `VT`’s
+constructor, `*this` does not contain a value, and any previously
+contained value has been destroyed.
 
 ``` cpp
 template<class T, class U, class... Args>
   decay_t<T>& emplace(initializer_list<U> il, Args&&... args);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:* `is_copy_constructible_v<VT>` is `true` and
-> `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
->
-> *Effects:* Calls `reset()`. Then direct-non-list-initializes the
-> contained value of type `VT` with `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `*this` contains a value.
->
-> *Returns:* A reference to the new contained value.
->
-> *Throws:* Any exception thrown by the selected constructor of `VT`.
->
-> *Remarks:* If an exception is thrown during the call to `VT`’s
-> constructor, `*this` does not contain a value, and any previously
-> contained value has been destroyed.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:* `is_copy_constructible_v<VT>` is `true` and
+`is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
+
+*Effects:* Calls `reset()`. Then direct-non-list-initializes the
+contained value of type `VT` with `il, std::forward<Args>(args)...`.
+
+*Ensures:* `*this` contains a value.
+
+*Returns:* A reference to the new contained value.
+
+*Throws:* Any exception thrown by the selected constructor of `VT`.
+
+*Remarks:* If an exception is thrown during the call to `VT`’s
+constructor, `*this` does not contain a value, and any previously
+contained value has been destroyed.
 
 ``` cpp
 void reset() noexcept;
 ```
 
-> *Effects:* If `has_value()` is `true`, destroys the contained value.
->
-> *Ensures:* `has_value()` is `false`.
+*Effects:* If `has_value()` is `true`, destroys the contained value.
+
+*Ensures:* `has_value()` is `false`.
 
 ``` cpp
 void swap(any& rhs) noexcept;
 ```
 
-> *Effects:* Exchanges the states of `*this` and `rhs`.
+*Effects:* Exchanges the states of `*this` and `rhs`.
 
 #### Observers <a id="any.observers">[[any.observers]]</a>
 
@@ -4981,17 +4960,17 @@ void swap(any& rhs) noexcept;
 bool has_value() const noexcept;
 ```
 
-> *Returns:* `true` if `*this` contains an object, otherwise `false`.
+*Returns:* `true` if `*this` contains an object, otherwise `false`.
 
 ``` cpp
 const type_info& type() const noexcept;
 ```
 
-> *Returns:* `typeid(T)` if `*this` has a contained value of type `T`,
-> otherwise `typeid(void)`.
->
-> \[*Note 20*: Useful for querying against types known either at compile
-> time or only at runtime. — *end note*\]
+*Returns:* `typeid(T)` if `*this` has a contained value of type `T`,
+otherwise `typeid(void)`.
+
+\[*Note 2*: Useful for querying against types known either at compile
+time or only at runtime. — *end note*\]
 
 ### Non-member functions <a id="any.nonmembers">[[any.nonmembers]]</a>
 
@@ -4999,23 +4978,23 @@ const type_info& type() const noexcept;
 void swap(any& x, any& y) noexcept;
 ```
 
-> *Effects:* Equivalent to `x.swap(y)`.
+*Effects:* Equivalent to `x.swap(y)`.
 
 ``` cpp
 template<class T, class... Args>
   any make_any(Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
-> `return any(in_place_type<T>, std::forward<Args>(args)...);`
+*Effects:* Equivalent to:
+`return any(in_place_type<T>, std::forward<Args>(args)...);`
 
 ``` cpp
 template<class T, class U, class... Args>
   any make_any(initializer_list<U> il, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
-> `return any(in_place_type<T>, il, std::forward<Args>(args)...);`
+*Effects:* Equivalent to:
+`return any(in_place_type<T>, il, std::forward<Args>(args)...);`
 
 ``` cpp
 template<class T>
@@ -5026,45 +5005,45 @@ template<class T>
   T any_cast(any&& operand);
 ```
 
-> Let `U` be the type `remove_cvref_t<T>`.
->
-> *Mandates:* For the first overload, `is_constructible_v<T, const U&>`
-> is `true`. For the second overload, `is_constructible_v<T, U&>` is
-> `true`. For the third overload, `is_constructible_v<T, U>` is `true`.
->
-> *Returns:* For the first and second overload,
-> `static_cast<T>(*any_cast<U>(&operand))`. For the third overload,
-> `static_cast<T>(std::move(*any_cast<U>(&operand)))`.
->
-> *Throws:* `bad_any_cast` if
-> `operand.type() != typeid(remove_reference_t<T>)`.
->
-> \[*Example 9*:
->
->     any x(5);                                   // \texttt{x} holds \texttt{int}
->     assert(any_cast<int>(x) == 5);              // cast to value
->     any_cast<int&>(x) = 10;                     // cast to reference
->     assert(any_cast<int>(x) == 10);
->
->     x = "Meow";                                 // \texttt{x} holds \texttt{const char*}
->     assert(strcmp(any_cast<const char*>(x), "Meow") == 0);
->     any_cast<const char*&>(x) = "Harry";
->     assert(strcmp(any_cast<const char*>(x), "Harry") == 0);
->
->     x = string("Meow");                         // \texttt{x} holds \texttt{string}
->     string s, s2("Jane");
->     s = move(any_cast<string&>(x));             // move from \texttt{any}
->     assert(s == "Meow");
->     any_cast<string&>(x) = move(s2);            // move to \texttt{any}
->     assert(any_cast<const string&>(x) == "Jane");
->
->     string cat("Meow");
->     const any y(cat);                           // \texttt{const y} holds \texttt{string}
->     assert(any_cast<const string&>(y) == cat);
->
->     any_cast<string&>(y);                       // error: cannot \texttt{any_cast} away const
->
-> — *end example*\]
+Let `U` be the type `remove_cvref_t<T>`.
+
+*Mandates:* For the first overload, `is_constructible_v<T, const U&>` is
+`true`. For the second overload, `is_constructible_v<T, U&>` is `true`.
+For the third overload, `is_constructible_v<T, U>` is `true`.
+
+*Returns:* For the first and second overload,
+`static_cast<T>(*any_cast<U>(&operand))`. For the third overload,
+`static_cast<T>(std::move(*any_cast<U>(&operand)))`.
+
+*Throws:* `bad_any_cast` if
+`operand.type() != typeid(remove_reference_t<T>)`.
+
+\[*Example 2*:
+
+    any x(5);                                   // \texttt{x} holds \texttt{int}
+    assert(any_cast<int>(x) == 5);              // cast to value
+    any_cast<int&>(x) = 10;                     // cast to reference
+    assert(any_cast<int>(x) == 10);
+
+    x = "Meow";                                 // \texttt{x} holds \texttt{const char*}
+    assert(strcmp(any_cast<const char*>(x), "Meow") == 0);
+    any_cast<const char*&>(x) = "Harry";
+    assert(strcmp(any_cast<const char*>(x), "Harry") == 0);
+
+    x = string("Meow");                         // \texttt{x} holds \texttt{string}
+    string s, s2("Jane");
+    s = move(any_cast<string&>(x));             // move from \texttt{any}
+    assert(s == "Meow");
+    any_cast<string&>(x) = move(s2);            // move to \texttt{any}
+    assert(any_cast<const string&>(x) == "Jane");
+
+    string cat("Meow");
+    const any y(cat);                           // \texttt{const y} holds \texttt{string}
+    assert(any_cast<const string&>(y) == cat);
+
+    any_cast<string&>(y);                       // error: cannot \texttt{any_cast} away const
+
+— *end example*\]
 
 ``` cpp
 template<class T>
@@ -5073,16 +5052,16 @@ template<class T>
   T* any_cast(any* operand) noexcept;
 ```
 
-> *Returns:* If `operand != nullptr && operand->type() == typeid(T)`, a
-> pointer to the object contained by `operand`; otherwise, .
->
-> \[*Example 10*:
->
->     bool is_string(const any& operand) {
->       return any_cast<string>(&operand) != nullptr;
->     }
->
-> — *end example*\]
+*Returns:* If `operand != nullptr && operand->type() == typeid(T)`, a
+pointer to the object contained by `operand`; otherwise, .
+
+\[*Example 3*:
+
+    bool is_string(const any& operand) {
+      return any_cast<string>(&operand) != nullptr;
+    }
+
+— *end example*\]
 
 ## Expected objects <a id="expected">[[expected]]</a>
 
@@ -5177,43 +5156,43 @@ template<class Err = E>
   constexpr explicit unexpected(Err&& e);
 ```
 
-> *Constraints:*
->
-> - `is_same_v<remove_cvref_t<Err>, unexpected>` is `false`; and
->
-> - `is_same_v<remove_cvref_t<Err>, in_place_t>` is `false`; and
->
-> - `is_constructible_v<E, Err>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `std::forward<Err>(e)`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:*
+
+- `is_same_v<remove_cvref_t<Err>, unexpected>` is `false`; and
+
+- `is_same_v<remove_cvref_t<Err>, in_place_t>` is `false`; and
+
+- `is_constructible_v<E, Err>` is `true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`std::forward<Err>(e)`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 template<class... Args>
   constexpr explicit unexpected(in_place_t, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<E, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `std::forward<Args>(args)...`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:* `is_constructible_v<E, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`std::forward<Args>(args)...`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 template<class U, class... Args>
   constexpr explicit unexpected(in_place_t, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<E, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `il, std::forward<Args>(args)...`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:* `is_constructible_v<E, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`il, std::forward<Args>(args)...`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 #### Observers <a id="expected.un.obs">[[expected.un.obs]]</a>
 
@@ -5222,14 +5201,14 @@ constexpr const E& error() const & noexcept;
 constexpr E& error() & noexcept;
 ```
 
-> *Returns:* *unex*.
+*Returns:* *unex*.
 
 ``` cpp
 constexpr E&& error() && noexcept;
 constexpr const E&& error() const && noexcept;
 ```
 
-> *Returns:* `std::move(`*`unex`*`)`.
+*Returns:* `std::move(`*`unex`*`)`.
 
 #### Swap <a id="expected.un.swap">[[expected.un.swap]]</a>
 
@@ -5237,18 +5216,18 @@ constexpr const E&& error() const && noexcept;
 constexpr void swap(unexpected& other) noexcept(is_nothrow_swappable_v<E>);
 ```
 
-> *Mandates:* `is_swappable_v<E>` is `true`.
->
-> *Effects:* Equivalent to:
-> `using std::swap; swap(`*`unex`*`, other.`*`unex`*`);`
+*Mandates:* `is_swappable_v<E>` is `true`.
+
+*Effects:* Equivalent to:
+`using std::swap; swap(`*`unex`*`, other.`*`unex`*`);`
 
 ``` cpp
 friend constexpr void swap(unexpected& x, unexpected& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Constraints:* `is_swappable_v<E>` is `true`.
->
-> *Effects:* Equivalent to `x.swap(y)`.
+*Constraints:* `is_swappable_v<E>` is `true`.
+
+*Effects:* Equivalent to `x.swap(y)`.
 
 #### Equality operator <a id="expected.un.eq">[[expected.un.eq]]</a>
 
@@ -5257,10 +5236,10 @@ template<class E2>
   friend constexpr bool operator==(const unexpected& x, const unexpected<E2>& y);
 ```
 
-> *Mandates:* The expression `x.error() == y.error()` is well-formed and
-> its result is convertible to `bool`.
->
-> *Returns:* `x.error() == y.error()`.
+*Mandates:* The expression `x.error() == y.error()` is well-formed and
+its result is convertible to `bool`.
+
+*Returns:* `x.error() == y.error()`.
 
 ### Class template `bad_expected_access` <a id="expected.bad">[[expected.bad]]</a>
 
@@ -5291,27 +5270,27 @@ is `false`.
 explicit bad_expected_access(E e);
 ```
 
-> *Effects:* Initializes *unex* with `std::move(e)`.
+*Effects:* Initializes *unex* with `std::move(e)`.
 
 ``` cpp
 const E& error() const & noexcept;
 E& error() & noexcept;
 ```
 
-> *Returns:* *unex*.
+*Returns:* *unex*.
 
 ``` cpp
 E&& error() && noexcept;
 const E&& error() const && noexcept;
 ```
 
-> *Returns:* `std::move(`*`unex`*`)`.
+*Returns:* `std::move(`*`unex`*`)`.
 
 ``` cpp
 const char* what() const noexcept override;
 ```
 
-> *Returns:* An implementation-defined .
+*Returns:* An implementation-defined .
 
 ### Class template specialization `bad_expected_access<void>` <a id="expected.bad.void">[[expected.bad.void]]</a>
 
@@ -5337,7 +5316,7 @@ namespace std {
 const char* what() const noexcept override;
 ```
 
-> *Returns:* An implementation-defined .
+*Returns:* An implementation-defined .
 
 ### Class template `expected` <a id="expected.expected">[[expected.expected]]</a>
 
@@ -5489,67 +5468,65 @@ in [[optional.ctor]] is used by some constructors for `expected`.
 constexpr expected();
 ```
 
-> *Constraints:* `is_default_constructible_v<T>` is `true`.
->
-> *Effects:* Value-initializes *val*.
->
-> *Ensures:* `has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *val*.
+*Constraints:* `is_default_constructible_v<T>` is `true`.
+
+*Effects:* Value-initializes *val*.
+
+*Ensures:* `has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *val*.
 
 ``` cpp
 constexpr expected(const expected& rhs);
 ```
 
-> *Effects:* If `rhs.has_value()` is `true`, direct-non-list-initializes
-> *val* with `*rhs`. Otherwise, direct-non-list-initializes *unex* with
-> `rhs.error()`.
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Throws:* Any exception thrown by the initialization of *val* or
-> *unex*.
->
-> *Remarks:* This constructor is defined as deleted unless
->
-> - `is_copy_constructible_v<T>` is `true` and
->
-> - `is_copy_constructible_v<E>` is `true`.
->
-> This constructor is trivial if
->
-> - `is_trivially_copy_constructible_v<T>` is `true` and
->
-> - `is_trivially_copy_constructible_v<E>` is `true`.
+*Effects:* If `rhs.has_value()` is `true`, direct-non-list-initializes
+*val* with `*rhs`. Otherwise, direct-non-list-initializes *unex* with
+`rhs.error()`.
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Throws:* Any exception thrown by the initialization of *val* or *unex*.
+
+*Remarks:* This constructor is defined as deleted unless
+
+- `is_copy_constructible_v<T>` is `true` and
+
+- `is_copy_constructible_v<E>` is `true`.
+
+This constructor is trivial if
+
+- `is_trivially_copy_constructible_v<T>` is `true` and
+
+- `is_trivially_copy_constructible_v<E>` is `true`.
 
 ``` cpp
 constexpr expected(expected&& rhs) noexcept(see below);
 ```
 
-> *Constraints:*
->
-> - `is_move_constructible_v<T>` is `true` and
->
-> - `is_move_constructible_v<E>` is `true`.
->
-> *Effects:* If `rhs.has_value()` is `true`, direct-non-list-initializes
-> *val* with `std::move(*rhs)`. Otherwise, direct-non-list-initializes
-> *unex* with `std::move(rhs.error())`.
->
-> *Ensures:* `rhs.has_value()` is unchanged;
-> `rhs.has_value() == this->has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *val* or
-> *unex*.
->
-> *Remarks:* The exception specification is equivalent to
-> `is_nothrow_move_constructible_v<T> && is_nothrow_move_constructible_v<E>`.
->
-> This constructor is trivial if
->
-> - `is_trivially_move_constructible_v<T>` is `true` and
->
-> - `is_trivially_move_constructible_v<E>` is `true`.
+*Constraints:*
+
+- `is_move_constructible_v<T>` is `true` and
+
+- `is_move_constructible_v<E>` is `true`.
+
+*Effects:* If `rhs.has_value()` is `true`, direct-non-list-initializes
+*val* with `std::move(*rhs)`. Otherwise, direct-non-list-initializes
+*unex* with `std::move(rhs.error())`.
+
+*Ensures:* `rhs.has_value()` is unchanged;
+`rhs.has_value() == this->has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *val* or *unex*.
+
+*Remarks:* The exception specification is equivalent to
+`is_nothrow_move_constructible_v<T> && is_nothrow_move_constructible_v<E>`.
+
+This constructor is trivial if
+
+- `is_trivially_move_constructible_v<T>` is `true` and
+
+- `is_trivially_move_constructible_v<E>` is `true`.
 
 ``` cpp
 template<class U, class G>
@@ -5558,70 +5535,67 @@ template<class U, class G>
   constexpr explicit(see below) expected(expected<U, G>&& rhs);
 ```
 
-> Let:
->
-> - `UF` be `const U&` for the first overload and `U` for the second
->   overload.
->
-> - `GF` be `const G&` for the first overload and `G` for the second
->   overload.
->
-> *Constraints:*
->
-> - `is_constructible_v<T, UF>` is `true`; and
->
-> - `is_constructible_v<E, GF>` is `true`; and
->
-> - if `T` is not `bool`,
->   *`converts-from-any-cvref`*`<T, expected<U, G>>` is `false`; and
->
-> - `is_constructible_v<unexpected<E>, expected<U, G>&>` is `false`; and
->
-> - `is_constructible_v<unexpected<E>, expected<U, G>>` is `false`; and
->
-> - `is_constructible_v<unexpected<E>, const expected<U, G>&>` is
->   `false`; and
->
-> - `is_constructible_v<unexpected<E>, const expected<U, G>>` is
->   `false`.
->
-> *Effects:* If `rhs.has_value()`, direct-non-list-initializes *val*
-> with `std::forward<UF>(*rhs)`. Otherwise, direct-non-list-initializes
-> *unex* with `std::forward<GF>(rhs.error())`.
->
-> *Ensures:* `rhs.has_value()` is unchanged;
-> `rhs.has_value() == this->has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *val* or
-> *unex*.
->
-> *Remarks:* The expression inside `explicit` is equivalent to
-> `!is_convertible_v<UF, T> || !is_convertible_v<GF, E>`.
+Let:
+
+- `UF` be `const U&` for the first overload and `U` for the second
+  overload.
+
+- `GF` be `const G&` for the first overload and `G` for the second
+  overload.
+
+*Constraints:*
+
+- `is_constructible_v<T, UF>` is `true`; and
+
+- `is_constructible_v<E, GF>` is `true`; and
+
+- if `T` is not `bool`, *`converts-from-any-cvref`*`<T, expected<U, G>>`
+  is `false`; and
+
+- `is_constructible_v<unexpected<E>, expected<U, G>&>` is `false`; and
+
+- `is_constructible_v<unexpected<E>, expected<U, G>>` is `false`; and
+
+- `is_constructible_v<unexpected<E>, const expected<U, G>&>` is `false`;
+  and
+
+- `is_constructible_v<unexpected<E>, const expected<U, G>>` is `false`.
+
+*Effects:* If `rhs.has_value()`, direct-non-list-initializes *val* with
+`std::forward<UF>(*rhs)`. Otherwise, direct-non-list-initializes *unex*
+with `std::forward<GF>(rhs.error())`.
+
+*Ensures:* `rhs.has_value()` is unchanged;
+`rhs.has_value() == this->has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *val* or *unex*.
+
+*Remarks:* The expression inside `explicit` is equivalent to
+`!is_convertible_v<UF, T> || !is_convertible_v<GF, E>`.
 
 ``` cpp
 template<class U = T>
   constexpr explicit(!is_convertible_v<U, T>) expected(U&& v);
 ```
 
-> *Constraints:*
->
-> - `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`; and
->
-> - `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
->
-> - `remove_cvref_t<U>` is not a specialization of `unexpected`; and
->
-> - `is_constructible_v<T, U>` is `true`; and
->
-> - if `T` is `bool`, `remove_cvref_t<U>` is not a specialization of
->   `expected`.
->
-> *Effects:* Direct-non-list-initializes *val* with
-> `std::forward<U>(v)`.
->
-> *Ensures:* `has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *val*.
+*Constraints:*
+
+- `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`; and
+
+- `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
+
+- `remove_cvref_t<U>` is not a specialization of `unexpected`; and
+
+- `is_constructible_v<T, U>` is `true`; and
+
+- if `T` is `bool`, `remove_cvref_t<U>` is not a specialization of
+  `expected`.
+
+*Effects:* Direct-non-list-initializes *val* with `std::forward<U>(v)`.
+
+*Ensures:* `has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *val*.
 
 ``` cpp
 template<class G>
@@ -5630,75 +5604,75 @@ template<class G>
   constexpr explicit(!is_convertible_v<G, E>) expected(unexpected<G>&& e);
 ```
 
-> Let `GF` be `const G&` for the first overload and `G` for the second
-> overload.
->
-> *Constraints:* `is_constructible_v<E, GF>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `std::forward<GF>(e.error())`.
->
-> *Ensures:* `has_value()` is `false`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+Let `GF` be `const G&` for the first overload and `G` for the second
+overload.
+
+*Constraints:* `is_constructible_v<E, GF>` is `true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`std::forward<GF>(e.error())`.
+
+*Ensures:* `has_value()` is `false`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 template<class... Args>
   constexpr explicit expected(in_place_t, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *val* with
-> `std::forward<Args>(args)...`.
->
-> *Ensures:* `has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *val*.
+*Constraints:* `is_constructible_v<T, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes *val* with
+`std::forward<Args>(args)...`.
+
+*Ensures:* `has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *val*.
 
 ``` cpp
 template<class U, class... Args>
   constexpr explicit expected(in_place_t, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Direct-non-list-initializes *val* with
-> `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *val*.
+*Constraints:* `is_constructible_v<T, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Direct-non-list-initializes *val* with
+`il, std::forward<Args>(args)...`.
+
+*Ensures:* `has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *val*.
 
 ``` cpp
 template<class... Args>
   constexpr explicit expected(unexpect_t, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<E, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `std::forward<Args>(args)...`.
->
-> *Ensures:* `has_value()` is `false`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:* `is_constructible_v<E, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`std::forward<Args>(args)...`.
+
+*Ensures:* `has_value()` is `false`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 template<class U, class... Args>
   constexpr explicit expected(unexpect_t, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<E, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `has_value()` is `false`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:* `is_constructible_v<E, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`il, std::forward<Args>(args)...`.
+
+*Ensures:* `has_value()` is `false`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 #### Destructor <a id="expected.object.dtor">[[expected.object.dtor]]</a>
 
@@ -5706,12 +5680,12 @@ template<class U, class... Args>
 constexpr ~expected();
 ```
 
-> *Effects:* If `has_value()` is `true`, destroys *val*, otherwise
-> destroys *unex*.
->
-> *Remarks:* If `is_trivially_destructible_v<T>` is `true`, and
-> `is_trivially_destructible_v<E>` is `true`, then this destructor is a
-> trivial destructor.
+*Effects:* If `has_value()` is `true`, destroys *val*, otherwise
+destroys *unex*.
+
+*Remarks:* If `is_trivially_destructible_v<T>` is `true`, and
+`is_trivially_destructible_v<E>` is `true`, then this destructor is a
+trivial destructor.
 
 #### Assignment <a id="expected.object.assign">[[expected.object.assign]]</a>
 
@@ -5744,112 +5718,112 @@ constexpr void reinit-expected(T& newval, U& oldval, Args&&... args) {  // expos
 constexpr expected& operator=(const expected& rhs);
 ```
 
-> *Effects:*
->
-> - If `this->has_value() && rhs.has_value()` is `true`, equivalent to
->   *`val`*` = *rhs`.
->
-> - Otherwise, if `this->has_value()` is `true`, equivalent to:
->
->       reinit-expected(unex, val, rhs.error())
->
-> - Otherwise, if `rhs.has_value()` is `true`, equivalent to:
->
->       reinit-expected(val, unex, *rhs)
->
-> - Otherwise, equivalent to *`unex`*` = rhs.error()`.
->
-> Then, if no exception was thrown, equivalent to:
-> *`has_val`*` = rhs.has_value(); return *this;`
->
-> *Returns:* `*this`.
->
-> *Remarks:* This operator is defined as deleted unless:
->
-> - `is_copy_assignable_v<T>` is `true` and
->
-> - `is_copy_constructible_v<T>` is `true` and
->
-> - `is_copy_assignable_v<E>` is `true` and
->
-> - `is_copy_constructible_v<E>` is `true` and
->
-> - `is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
->   is `true`.
+*Effects:*
+
+- If `this->has_value() && rhs.has_value()` is `true`, equivalent to
+  *`val`*` = *rhs`.
+
+- Otherwise, if `this->has_value()` is `true`, equivalent to:
+
+      reinit-expected(unex, val, rhs.error())
+
+- Otherwise, if `rhs.has_value()` is `true`, equivalent to:
+
+      reinit-expected(val, unex, *rhs)
+
+- Otherwise, equivalent to *`unex`*` = rhs.error()`.
+
+Then, if no exception was thrown, equivalent to:
+*`has_val`*` = rhs.has_value(); return *this;`
+
+*Returns:* `*this`.
+
+*Remarks:* This operator is defined as deleted unless:
+
+- `is_copy_assignable_v<T>` is `true` and
+
+- `is_copy_constructible_v<T>` is `true` and
+
+- `is_copy_assignable_v<E>` is `true` and
+
+- `is_copy_constructible_v<E>` is `true` and
+
+- `is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+  is `true`.
 
 ``` cpp
 constexpr expected& operator=(expected&& rhs) noexcept(see below);
 ```
 
-> *Constraints:*
->
-> - `is_move_constructible_v<T>` is `true` and
->
-> - `is_move_assignable_v<T>` is `true` and
->
-> - `is_move_constructible_v<E>` is `true` and
->
-> - `is_move_assignable_v<E>` is `true` and
->
-> - `is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
->   is `true`.
->
-> *Effects:*
->
-> - If `this->has_value() && rhs.has_value()` is `true`, equivalent to
->   *`val`*` = std::move(*rhs)`.
->
-> - Otherwise, if `this->has_value()` is `true`, equivalent to:
->
->       reinit-expected(unex, val, std::move(rhs.error()))
->
-> - Otherwise, if `rhs.has_value()` is `true`, equivalent to:
->
->       reinit-expected(val, unex, std::move(*rhs))
->
-> - Otherwise, equivalent to *`unex`*` = std::move(rhs.error())`.
->
-> Then, if no exception was thrown, equivalent to:
-> `has_val = rhs.has_value(); return *this;`
->
-> *Returns:* `*this`.
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_assignable_v<T> && is_nothrow_move_constructible_v<T> &&
-> is_nothrow_move_assignable_v<E> && is_nothrow_move_constructible_v<E>
-> ```
+*Constraints:*
+
+- `is_move_constructible_v<T>` is `true` and
+
+- `is_move_assignable_v<T>` is `true` and
+
+- `is_move_constructible_v<E>` is `true` and
+
+- `is_move_assignable_v<E>` is `true` and
+
+- `is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+  is `true`.
+
+*Effects:*
+
+- If `this->has_value() && rhs.has_value()` is `true`, equivalent to
+  *`val`*` = std::move(*rhs)`.
+
+- Otherwise, if `this->has_value()` is `true`, equivalent to:
+
+      reinit-expected(unex, val, std::move(rhs.error()))
+
+- Otherwise, if `rhs.has_value()` is `true`, equivalent to:
+
+      reinit-expected(val, unex, std::move(*rhs))
+
+- Otherwise, equivalent to *`unex`*` = std::move(rhs.error())`.
+
+Then, if no exception was thrown, equivalent to:
+`has_val = rhs.has_value(); return *this;`
+
+*Returns:* `*this`.
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_assignable_v<T> && is_nothrow_move_constructible_v<T> &&
+is_nothrow_move_assignable_v<E> && is_nothrow_move_constructible_v<E>
+```
 
 ``` cpp
 template<class U = T>
   constexpr expected& operator=(U&& v);
 ```
 
-> *Constraints:*
->
-> - `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
->
-> - `remove_cvref_t<U>` is not a specialization of `unexpected`; and
->
-> - `is_constructible_v<T, U>` is `true`; and
->
-> - `is_assignable_v<T&, U>` is `true`; and
->
-> - `is_nothrow_constructible_v<T, U> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
->   is `true`.
->
-> *Effects:*
->
-> - If `has_value()` is `true`, equivalent to:
->   *`val`*` = std::forward<U>(v);`
->
-> - Otherwise, equivalent to:
->
->       reinit-expected(val, unex, std::forward<U>(v));
->       has_val = true;
->
-> *Returns:* `*this`.
+*Constraints:*
+
+- `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
+
+- `remove_cvref_t<U>` is not a specialization of `unexpected`; and
+
+- `is_constructible_v<T, U>` is `true`; and
+
+- `is_assignable_v<T&, U>` is `true`; and
+
+- `is_nothrow_constructible_v<T, U> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+  is `true`.
+
+*Effects:*
+
+- If `has_value()` is `true`, equivalent to:
+  *`val`*` = std::forward<U>(v);`
+
+- Otherwise, equivalent to:
+
+      reinit-expected(val, unex, std::forward<U>(v));
+      has_val = true;
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class G>
@@ -5858,68 +5832,68 @@ template<class G>
   constexpr expected& operator=(unexpected<G>&& e);
 ```
 
-> Let `GF` be `const G&` for the first overload and `G` for the second
-> overload.
->
-> *Constraints:*
->
-> - `is_constructible_v<E, GF>` is `true`; and
->
-> - `is_assignable_v<E&, GF>` is `true`; and
->
-> - `is_nothrow_constructible_v<E, GF> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
->   is `true`.
->
-> *Effects:*
->
-> - If `has_value()` is `true`, equivalent to:
->
->       reinit-expected(unex, val, std::forward<GF>(e.error()));
->       has_val = false;
->
-> - Otherwise, equivalent to: *`unex`*` = std::forward<GF>(e.error());`
->
-> *Returns:* `*this`.
+Let `GF` be `const G&` for the first overload and `G` for the second
+overload.
+
+*Constraints:*
+
+- `is_constructible_v<E, GF>` is `true`; and
+
+- `is_assignable_v<E&, GF>` is `true`; and
+
+- `is_nothrow_constructible_v<E, GF> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+  is `true`.
+
+*Effects:*
+
+- If `has_value()` is `true`, equivalent to:
+
+      reinit-expected(unex, val, std::forward<GF>(e.error()));
+      has_val = false;
+
+- Otherwise, equivalent to: *`unex`*` = std::forward<GF>(e.error());`
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class... Args>
   constexpr T& emplace(Args&&... args) noexcept;
 ```
 
-> *Constraints:* `is_nothrow_constructible_v<T, Args...>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value()) {
->   destroy_at(addressof(val));
-> } else {
->   destroy_at(addressof(unex));
->   has_val = true;
-> }
-> return *construct_at(addressof(val), std::forward<Args>(args)...);
-> ```
+*Constraints:* `is_nothrow_constructible_v<T, Args...>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value()) {
+  destroy_at(addressof(val));
+} else {
+  destroy_at(addressof(unex));
+  has_val = true;
+}
+return *construct_at(addressof(val), std::forward<Args>(args)...);
+```
 
 ``` cpp
 template<class U, class... Args>
   constexpr T& emplace(initializer_list<U> il, Args&&... args) noexcept;
 ```
 
-> *Constraints:*
-> `is_nothrow_constructible_v<T, initializer_list<U>&, Args...>` is
-> `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value()) {
->   destroy_at(addressof(val));
-> } else {
->   destroy_at(addressof(unex));
->   has_val = true;
-> }
-> return *construct_at(addressof(val), il, std::forward<Args>(args)...);
-> ```
+*Constraints:*
+`is_nothrow_constructible_v<T, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value()) {
+  destroy_at(addressof(val));
+} else {
+  destroy_at(addressof(unex));
+  has_val = true;
+}
+return *construct_at(addressof(val), il, std::forward<Args>(args)...);
+```
 
 #### Swap <a id="expected.object.swap">[[expected.object.swap]]</a>
 
@@ -5927,75 +5901,75 @@ template<class U, class... Args>
 constexpr void swap(expected& rhs) noexcept(see below);
 ```
 
-> *Constraints:*
->
-> - `is_swappable_v<T>` is `true` and
->
-> - `is_swappable_v<E>` is `true` and
->
-> - `is_move_constructible_v<T> && is_move_constructible_v<E>` is
->   `true`, and
->
-> - `is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
->   is `true`.
->
-> *Effects:* See [[expected.object.swap]].
->
-> <div class="floattable">
->
-> `swap(expected&)` effectsexpected.object.swap lx0.35x0.35 & &  
-> & equivalent to: `using std::swap; swap(`*`val`*`, rhs.`*`val`*`);` &
-> calls `rhs.swap(*this)`  
-> & & equivalent to:
-> `using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
->
-> </div>
->
-> For the case where `rhs.value()` is `false` and `this->has_value()` is
-> `true`, equivalent to:
->
-> ``` cpp
-> if constexpr (is_nothrow_move_constructible_v<E>) {
->   E tmp(std::move(rhs.unex));
->   destroy_at(addressof(rhs.unex));
->   try {
->     construct_at(addressof(rhs.val), std::move(val));
->     destroy_at(addressof(val));
->     construct_at(addressof(unex), std::move(tmp));
->   } catch(...) {
->     construct_at(addressof(rhs.unex), std::move(tmp));
->     throw;
->   }
-> } else {
->   T tmp(std::move(val));
->   destroy_at(addressof(val));
->   try {
->     construct_at(addressof(unex), std::move(rhs.unex));
->     destroy_at(addressof(rhs.unex));
->     construct_at(addressof(rhs.val), std::move(tmp));
->   } catch (...) {
->     construct_at(addressof(val), std::move(tmp));
->     throw;
->   }
-> }
-> has_val = false;
-> rhs.has_val = true;
-> ```
->
-> *Throws:* Any exception thrown by the expressions in the .
->
-> *Remarks:* The exception specification is equivalent to:
->
-> ``` cpp
-> is_nothrow_move_constructible_v<T> && is_nothrow_swappable_v<T> &&
-> is_nothrow_move_constructible_v<E> && is_nothrow_swappable_v<E>
-> ```
+*Constraints:*
+
+- `is_swappable_v<T>` is `true` and
+
+- `is_swappable_v<E>` is `true` and
+
+- `is_move_constructible_v<T> && is_move_constructible_v<E>` is `true`,
+  and
+
+- `is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+  is `true`.
+
+*Effects:* See [[expected.object.swap]].
+
+<div class="floattable">
+
+`swap(expected&)` effectsexpected.object.swap lx0.35x0.35 & &  
+& equivalent to: `using std::swap; swap(`*`val`*`, rhs.`*`val`*`);` &
+calls `rhs.swap(*this)`  
+& & equivalent to:
+`using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
+
+</div>
+
+For the case where `rhs.value()` is `false` and `this->has_value()` is
+`true`, equivalent to:
+
+``` cpp
+if constexpr (is_nothrow_move_constructible_v<E>) {
+  E tmp(std::move(rhs.unex));
+  destroy_at(addressof(rhs.unex));
+  try {
+    construct_at(addressof(rhs.val), std::move(val));
+    destroy_at(addressof(val));
+    construct_at(addressof(unex), std::move(tmp));
+  } catch(...) {
+    construct_at(addressof(rhs.unex), std::move(tmp));
+    throw;
+  }
+} else {
+  T tmp(std::move(val));
+  destroy_at(addressof(val));
+  try {
+    construct_at(addressof(unex), std::move(rhs.unex));
+    destroy_at(addressof(rhs.unex));
+    construct_at(addressof(rhs.val), std::move(tmp));
+  } catch (...) {
+    construct_at(addressof(val), std::move(tmp));
+    throw;
+  }
+}
+has_val = false;
+rhs.has_val = true;
+```
+
+*Throws:* Any exception thrown by the expressions in the .
+
+*Remarks:* The exception specification is equivalent to:
+
+``` cpp
+is_nothrow_move_constructible_v<T> && is_nothrow_swappable_v<T> &&
+is_nothrow_move_constructible_v<E> && is_nothrow_swappable_v<E>
+```
 
 ``` cpp
 friend constexpr void swap(expected& x, expected& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Effects:* Equivalent to `x.swap(y)`.
+*Effects:* Equivalent to `x.swap(y)`.
 
 #### Observers <a id="expected.object.obs">[[expected.object.obs]]</a>
 
@@ -6004,117 +5978,116 @@ constexpr const T* operator->() const noexcept;
 constexpr T* operator->() noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `true`.
->
-> *Returns:* `addressof(`*`val`*`)`.
+*Preconditions:* `has_value()` is `true`.
+
+*Returns:* `addressof(`*`val`*`)`.
 
 ``` cpp
 constexpr const T& operator*() const & noexcept;
 constexpr T& operator*() & noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `true`.
->
-> *Returns:* *val*.
+*Preconditions:* `has_value()` is `true`.
+
+*Returns:* *val*.
 
 ``` cpp
 constexpr T&& operator*() && noexcept;
 constexpr const T&& operator*() const && noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `true`.
->
-> *Returns:* `std::move(`*`val`*`)`.
+*Preconditions:* `has_value()` is `true`.
+
+*Returns:* `std::move(`*`val`*`)`.
 
 ``` cpp
 constexpr explicit operator bool() const noexcept;
 constexpr bool has_value() const noexcept;
 ```
 
-> *Returns:* *has_val*.
+*Returns:* *has_val*.
 
 ``` cpp
 constexpr const T& value() const &;
 constexpr T& value() &;
 ```
 
-> *Mandates:* `is_copy_constructible_v<E>` is `true`.
->
-> *Returns:* *val*, if `has_value()` is `true`.
->
-> *Throws:* `bad_expected_access(as_const(error()))` if `has_value()` is
-> `false`.
+*Mandates:* `is_copy_constructible_v<E>` is `true`.
+
+*Returns:* *val*, if `has_value()` is `true`.
+
+*Throws:* `bad_expected_access(as_const(error()))` if `has_value()` is
+`false`.
 
 ``` cpp
 constexpr T&& value() &&;
 constexpr const T&& value() const &&;
 ```
 
-> *Mandates:* `is_copy_constructible_v<E>` is `true` and
-> `is_constructible_v<E, decltype(std::move(error()))>` is `true`.
->
-> *Returns:* `std::move(`*`val`*`)`, if `has_value()` is `true`.
->
-> *Throws:* `bad_expected_access(std::move(error()))` if `has_value()`
-> is `false`.
+*Mandates:* `is_copy_constructible_v<E>` is `true` and
+`is_constructible_v<E, decltype(std::move(error()))>` is `true`.
+
+*Returns:* `std::move(`*`val`*`)`, if `has_value()` is `true`.
+
+*Throws:* `bad_expected_access(std::move(error()))` if `has_value()` is
+`false`.
 
 ``` cpp
 constexpr const E& error() const & noexcept;
 constexpr E& error() & noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `false`.
->
-> *Returns:* *unex*.
+*Preconditions:* `has_value()` is `false`.
+
+*Returns:* *unex*.
 
 ``` cpp
 constexpr E&& error() && noexcept;
 constexpr const E&& error() const && noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `false`.
->
-> *Returns:* `std::move(`*`unex`*`)`.
+*Preconditions:* `has_value()` is `false`.
+
+*Returns:* `std::move(`*`unex`*`)`.
 
 ``` cpp
 template<class U> constexpr T value_or(U&& v) const &;
 ```
 
-> *Mandates:* `is_copy_constructible_v<T>` is `true` and
-> `is_convertible_v<U, T>` is `true`.
->
-> *Returns:*
-> `has_value() ? **this : static_cast<T>(std::forward<U>(v))`.
+*Mandates:* `is_copy_constructible_v<T>` is `true` and
+`is_convertible_v<U, T>` is `true`.
+
+*Returns:* `has_value() ? **this : static_cast<T>(std::forward<U>(v))`.
 
 ``` cpp
 template<class U> constexpr T value_or(U&& v) &&;
 ```
 
-> *Mandates:* `is_move_constructible_v<T>` is `true` and
-> `is_convertible_v<U, T>` is `true`.
->
-> *Returns:*
-> `has_value() ? std::move(**this) : static_cast<T>(std::forward<U>(v))`.
+*Mandates:* `is_move_constructible_v<T>` is `true` and
+`is_convertible_v<U, T>` is `true`.
+
+*Returns:*
+`has_value() ? std::move(**this) : static_cast<T>(std::forward<U>(v))`.
 
 ``` cpp
 template<class G = E> constexpr E error_or(G&& e) const &;
 ```
 
-> *Mandates:* `is_copy_constructible_v<E>` is `true` and
-> `is_convertible_v<G, E>` is `true`.
->
-> *Returns:* `std::forward<G>(e)` if `has_value()` is `true`, `error()`
-> otherwise.
+*Mandates:* `is_copy_constructible_v<E>` is `true` and
+`is_convertible_v<G, E>` is `true`.
+
+*Returns:* `std::forward<G>(e)` if `has_value()` is `true`, `error()`
+otherwise.
 
 ``` cpp
 template<class G = E> constexpr E error_or(G&& e) &&;
 ```
 
-> *Mandates:* `is_move_constructible_v<E>` is `true` and
-> `is_convertible_v<G, E>` is `true`.
->
-> *Returns:* `std::forward<G>(e)` if `has_value()` is `true`,
-> `std::move(error())` otherwise.
+*Mandates:* `is_move_constructible_v<E>` is `true` and
+`is_convertible_v<G, E>` is `true`.
+
+*Returns:* `std::forward<G>(e)` if `has_value()` is `true`,
+`std::move(error())` otherwise.
 
 #### Monadic operations <a id="expected.object.monadic">[[expected.object.monadic]]</a>
 
@@ -6123,203 +6096,201 @@ template<class F> constexpr auto and_then(F&& f) &;
 template<class F> constexpr auto and_then(F&& f) const &;
 ```
 
-> Let `U` be `remove_cvref_t<invoke_result_t<F, decltype(value())>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(error())>` is `true`.
->
-> *Mandates:* `U` is a specialization of `expected` and
-> `is_same_v<U::error_type, E>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return invoke(std::forward<F>(f), value());
-> else
->   return U(unexpect, error());
-> ```
+Let `U` be `remove_cvref_t<invoke_result_t<F, decltype(value())>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(error())>` is `true`.
+
+*Mandates:* `U` is a specialization of `expected` and
+`is_same_v<U::error_type, E>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return invoke(std::forward<F>(f), value());
+else
+  return U(unexpect, error());
+```
 
 ``` cpp
 template<class F> constexpr auto and_then(F&& f) &&;
 template<class F> constexpr auto and_then(F&& f) const &&;
 ```
 
-> Let `U` be
-> `remove_cvref_t<invoke_result_t<F, decltype(std::move(value()))>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(std::move(error()))>`
-> is `true`.
->
-> *Mandates:* `U` is a specialization of `expected` and
-> `is_same_v<U::error_type, E>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return invoke(std::forward<F>(f), std::move(value()));
-> else
->   return U(unexpect, std::move(error()));
-> ```
+Let `U` be
+`remove_cvref_t<invoke_result_t<F, decltype(std::move(value()))>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(std::move(error()))>` is
+`true`.
+
+*Mandates:* `U` is a specialization of `expected` and
+`is_same_v<U::error_type, E>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return invoke(std::forward<F>(f), std::move(value()));
+else
+  return U(unexpect, std::move(error()));
+```
 
 ``` cpp
 template<class F> constexpr auto or_else(F&& f) &;
 template<class F> constexpr auto or_else(F&& f) const &;
 ```
 
-> Let `G` be `remove_cvref_t<invoke_result_t<F, decltype(error())>>`.
->
-> *Constraints:* `is_constructible_v<T, decltype(value())>` is `true`.
->
-> *Mandates:* `G` is a specialization of `expected` and
-> `is_same_v<G::value_type, T>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return G(in_place, value());
-> else
->   return invoke(std::forward<F>(f), error());
-> ```
+Let `G` be `remove_cvref_t<invoke_result_t<F, decltype(error())>>`.
+
+*Constraints:* `is_constructible_v<T, decltype(value())>` is `true`.
+
+*Mandates:* `G` is a specialization of `expected` and
+`is_same_v<G::value_type, T>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return G(in_place, value());
+else
+  return invoke(std::forward<F>(f), error());
+```
 
 ``` cpp
 template<class F> constexpr auto or_else(F&& f) &&;
 template<class F> constexpr auto or_else(F&& f) const &&;
 ```
 
-> Let `G` be
-> `remove_cvref_t<invoke_result_t<F, decltype(std::move(error()))>>`.
->
-> *Constraints:* `is_constructible_v<T, decltype(std::move(value()))>`
-> is `true`.
->
-> *Mandates:* `G` is a specialization of `expected` and
-> `is_same_v<G::value_type, T>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return G(in_place, std::move(value()));
-> else
->   return invoke(std::forward<F>(f), std::move(error()));
-> ```
+Let `G` be
+`remove_cvref_t<invoke_result_t<F, decltype(std::move(error()))>>`.
+
+*Constraints:* `is_constructible_v<T, decltype(std::move(value()))>` is
+`true`.
+
+*Mandates:* `G` is a specialization of `expected` and
+`is_same_v<G::value_type, T>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return G(in_place, std::move(value()));
+else
+  return invoke(std::forward<F>(f), std::move(error()));
+```
 
 ``` cpp
 template<class F> constexpr auto transform(F&& f) &;
 template<class F> constexpr auto transform(F&& f) const &;
 ```
 
-> Let `U` be `remove_cv_t<invoke_result_t<F, decltype(value())>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(error())>` is `true`.
->
-> *Mandates:* `U` is a valid value type for `expected`. If
-> `is_void_v<U>` is `false`, the declaration
->
-> ``` cpp
-> U u(invoke(std::forward<F>(f), value()));
-> ```
->
-> is well-formed.
->
-> *Effects:*
->
-> - If `has_value()` is `false`, returns
->   `expected<U, E>(unexpect, error())`.
->
-> - Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
->   object whose *has_val* member is `true` and *val* member is
->   direct-non-list-initialized with
->   `invoke(std::forward<F>(f), value())`.
->
-> - Otherwise, evaluates `invoke(std::forward<F>(f), value())` and then
->   returns `expected<U, E>()`.
+Let `U` be `remove_cv_t<invoke_result_t<F, decltype(value())>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(error())>` is `true`.
+
+*Mandates:* `U` is a valid value type for `expected`. If `is_void_v<U>`
+is `false`, the declaration
+
+``` cpp
+U u(invoke(std::forward<F>(f), value()));
+```
+
+is well-formed.
+
+*Effects:*
+
+- If `has_value()` is `false`, returns
+  `expected<U, E>(unexpect, error())`.
+
+- Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
+  object whose *has_val* member is `true` and *val* member is
+  direct-non-list-initialized with
+  `invoke(std::forward<F>(f), value())`.
+
+- Otherwise, evaluates `invoke(std::forward<F>(f), value())` and then
+  returns `expected<U, E>()`.
 
 ``` cpp
 template<class F> constexpr auto transform(F&& f) &&;
 template<class F> constexpr auto transform(F&& f) const &&;
 ```
 
-> Let `U` be
-> `remove_cv_t<invoke_result_t<F, decltype(std::move(value()))>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(std::move(error()))>`
-> is `true`.
->
-> *Mandates:* `U` is a valid value type for `expected`. If
-> `is_void_v<U>` is `false`, the declaration
->
-> ``` cpp
-> U u(invoke(std::forward<F>(f), std::move(value())));
-> ```
->
-> is well-formed for some invented variable `u`.
->
-> *Effects:*
->
-> - If `has_value()` is `false`, returns
->   `expected<U, E>(unexpect, std::move(error()))`.
->
-> - Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
->   object whose *has_val* member is `true` and *val* member is
->   direct-non-list-initialized with
->   `invoke(std::forward<F>(f), std::move(value()))`.
->
-> - Otherwise, evaluates
->   `invoke(std::forward<F>(f), std::move(value()))` and then returns
->   `expected<U, E>()`.
+Let `U` be
+`remove_cv_t<invoke_result_t<F, decltype(std::move(value()))>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(std::move(error()))>` is
+`true`.
+
+*Mandates:* `U` is a valid value type for `expected`. If `is_void_v<U>`
+is `false`, the declaration
+
+``` cpp
+U u(invoke(std::forward<F>(f), std::move(value())));
+```
+
+is well-formed for some invented variable `u`.
+
+*Effects:*
+
+- If `has_value()` is `false`, returns
+  `expected<U, E>(unexpect, std::move(error()))`.
+
+- Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
+  object whose *has_val* member is `true` and *val* member is
+  direct-non-list-initialized with
+  `invoke(std::forward<F>(f), std::move(value()))`.
+
+- Otherwise, evaluates `invoke(std::forward<F>(f), std::move(value()))`
+  and then returns `expected<U, E>()`.
 
 ``` cpp
 template<class F> constexpr auto transform_error(F&& f) &;
 template<class F> constexpr auto transform_error(F&& f) const &;
 ```
 
-> Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
->
-> *Constraints:* `is_constructible_v<T, decltype(value())>` is `true`.
->
-> *Mandates:* `G` is a valid template argument for
-> `unexpected`[[expected.un.general]] and the declaration
->
-> ``` cpp
-> G g(invoke(std::forward<F>(f), error()));
-> ```
->
-> is well-formed.
->
-> *Returns:* If `has_value()` is `true`,
-> `expected<T, G>(in_place, value())`; otherwise, an `expected<T, G>`
-> object whose *has_val* member is `false` and *unex* member is
-> direct-non-list-initialized with
-> `invoke(std::forward<F>(f), error())`.
+Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
+
+*Constraints:* `is_constructible_v<T, decltype(value())>` is `true`.
+
+*Mandates:* `G` is a valid template argument for
+`unexpected`[[expected.un.general]] and the declaration
+
+``` cpp
+G g(invoke(std::forward<F>(f), error()));
+```
+
+is well-formed.
+
+*Returns:* If `has_value()` is `true`,
+`expected<T, G>(in_place, value())`; otherwise, an `expected<T, G>`
+object whose *has_val* member is `false` and *unex* member is
+direct-non-list-initialized with `invoke(std::forward<F>(f), error())`.
 
 ``` cpp
 template<class F> constexpr auto transform_error(F&& f) &&;
 template<class F> constexpr auto transform_error(F&& f) const &&;
 ```
 
-> Let `G` be
-> `remove_cv_t<invoke_result_t<F, decltype(std::move(error()))>>`.
->
-> *Constraints:* `is_constructible_v<T, decltype(std::move(value()))>`
-> is `true`.
->
-> *Mandates:* `G` is a valid template argument for
-> `unexpected`[[expected.un.general]] and the declaration
->
-> ``` cpp
-> G g(invoke(std::forward<F>(f), std::move(error())));
-> ```
->
-> is well-formed.
->
-> *Returns:* If `has_value()` is `true`,
-> `expected<T, G>(in_place, std::move(value()))`; otherwise, an
-> `expected<T, G>` object whose *has_val* member is `false` and *unex*
-> member is direct-non-list-initialized with
-> `invoke(std::forward<F>(f), std::move(error()))`.
+Let `G` be
+`remove_cv_t<invoke_result_t<F, decltype(std::move(error()))>>`.
+
+*Constraints:* `is_constructible_v<T, decltype(std::move(value()))>` is
+`true`.
+
+*Mandates:* `G` is a valid template argument for
+`unexpected`[[expected.un.general]] and the declaration
+
+``` cpp
+G g(invoke(std::forward<F>(f), std::move(error())));
+```
+
+is well-formed.
+
+*Returns:* If `has_value()` is `true`,
+`expected<T, G>(in_place, std::move(value()))`; otherwise, an
+`expected<T, G>` object whose *has_val* member is `false` and *unex*
+member is direct-non-list-initialized with
+`invoke(std::forward<F>(f), std::move(error()))`.
 
 #### Equality operators <a id="expected.object.eq">[[expected.object.eq]]</a>
 
@@ -6328,33 +6299,33 @@ template<class T2, class E2> requires (!is_void_v<T2>)
   friend constexpr bool operator==(const expected& x, const expected<T2, E2>& y);
 ```
 
-> *Mandates:* The expressions `*x == *y` and `x.error() == y.error()`
-> are well-formed and their results are convertible to `bool`.
->
-> *Returns:* If `x.has_value()` does not equal `y.has_value()`, `false`;
-> otherwise if `x.has_value()` is `true`, `*x == *y`; otherwise
-> `x.error() == y.error()`.
+*Mandates:* The expressions `*x == *y` and `x.error() == y.error()` are
+well-formed and their results are convertible to `bool`.
+
+*Returns:* If `x.has_value()` does not equal `y.has_value()`, `false`;
+otherwise if `x.has_value()` is `true`, `*x == *y`; otherwise
+`x.error() == y.error()`.
 
 ``` cpp
 template<class T2> friend constexpr bool operator==(const expected& x, const T2& v);
 ```
 
-> *Mandates:* The expression `*x == v` is well-formed and its result is
-> convertible to `bool`.
->
-> \[*Note 21*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
->
-> *Returns:* `x.has_value() && static_cast<bool>(*x == v)`.
+*Mandates:* The expression `*x == v` is well-formed and its result is
+convertible to `bool`.
+
+\[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+
+*Returns:* `x.has_value() && static_cast<bool>(*x == v)`.
 
 ``` cpp
 template<class E2> friend constexpr bool operator==(const expected& x, const unexpected<E2>& e);
 ```
 
-> *Mandates:* The expression `x.error() == e.error()` is well-formed and
-> its result is convertible to `bool`.
->
-> *Returns:*
-> `!x.has_value() && static_cast<bool>(x.error() == e.error())`.
+*Mandates:* The expression `x.error() == e.error()` is well-formed and
+its result is convertible to `bool`.
+
+*Returns:*
+`!x.has_value() && static_cast<bool>(x.error() == e.error())`.
 
 ### Partial specialization of `expected` for `void` types <a id="expected.void">[[expected.void]]</a>
 
@@ -6473,41 +6444,41 @@ template argument for `unexpected` is ill-formed.
 constexpr expected() noexcept;
 ```
 
-> *Ensures:* `has_value()` is `true`.
+*Ensures:* `has_value()` is `true`.
 
 ``` cpp
 constexpr expected(const expected& rhs);
 ```
 
-> *Effects:* If `rhs.has_value()` is `false`,
-> direct-non-list-initializes *unex* with `rhs.error()`.
->
-> *Ensures:* `rhs.has_value() == this->has_value()`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
->
-> *Remarks:* This constructor is defined as deleted unless
-> `is_copy_constructible_v<E>` is `true`.
->
-> This constructor is trivial if `is_trivially_copy_constructible_v<E>`
-> is `true`.
+*Effects:* If `rhs.has_value()` is `false`, direct-non-list-initializes
+*unex* with `rhs.error()`.
+
+*Ensures:* `rhs.has_value() == this->has_value()`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
+
+*Remarks:* This constructor is defined as deleted unless
+`is_copy_constructible_v<E>` is `true`.
+
+This constructor is trivial if `is_trivially_copy_constructible_v<E>` is
+`true`.
 
 ``` cpp
 constexpr expected(expected&& rhs) noexcept(is_nothrow_move_constructible_v<E>);
 ```
 
-> *Constraints:* `is_move_constructible_v<E>` is `true`.
->
-> *Effects:* If `rhs.has_value()` is `false`,
-> direct-non-list-initializes *unex* with `std::move(rhs.error())`.
->
-> *Ensures:* `rhs.has_value()` is unchanged;
-> `rhs.has_value() == this->has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
->
-> *Remarks:* This constructor is trivial if
-> `is_trivially_move_constructible_v<E>` is `true`.
+*Constraints:* `is_move_constructible_v<E>` is `true`.
+
+*Effects:* If `rhs.has_value()` is `false`, direct-non-list-initializes
+*unex* with `std::move(rhs.error())`.
+
+*Ensures:* `rhs.has_value()` is unchanged;
+`rhs.has_value() == this->has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
+
+*Remarks:* This constructor is trivial if
+`is_trivially_move_constructible_v<E>` is `true`.
 
 ``` cpp
 template<class U, class G>
@@ -6516,33 +6487,31 @@ template<class U, class G>
   constexpr explicit(!is_convertible_v<G, E>) expected(expected<U, G>&& rhs);
 ```
 
-> Let `GF` be `const G&` for the first overload and `G` for the second
-> overload.
->
-> *Constraints:*
->
-> - `is_void_v<U>` is `true`; and
->
-> - `is_constructible_v<E, GF>` is `true`; and
->
-> - `is_constructible_v<unexpected<E>, expected<U, G>&>` is `false`; and
->
-> - `is_constructible_v<unexpected<E>, expected<U, G>>` is `false`; and
->
-> - `is_constructible_v<unexpected<E>, const expected<U, G>&>` is
->   `false`; and
->
-> - `is_constructible_v<unexpected<E>, const expected<U, G>>` is
->   `false`.
->
-> *Effects:* If `rhs.has_value()` is `false`,
-> direct-non-list-initializes *unex* with
-> `std::forward<GF>(rhs.error())`.
->
-> *Ensures:* `rhs.has_value()` is unchanged;
-> `rhs.has_value() == this->has_value()` is `true`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+Let `GF` be `const G&` for the first overload and `G` for the second
+overload.
+
+*Constraints:*
+
+- `is_void_v<U>` is `true`; and
+
+- `is_constructible_v<E, GF>` is `true`; and
+
+- `is_constructible_v<unexpected<E>, expected<U, G>&>` is `false`; and
+
+- `is_constructible_v<unexpected<E>, expected<U, G>>` is `false`; and
+
+- `is_constructible_v<unexpected<E>, const expected<U, G>&>` is `false`;
+  and
+
+- `is_constructible_v<unexpected<E>, const expected<U, G>>` is `false`.
+
+*Effects:* If `rhs.has_value()` is `false`, direct-non-list-initializes
+*unex* with `std::forward<GF>(rhs.error())`.
+
+*Ensures:* `rhs.has_value()` is unchanged;
+`rhs.has_value() == this->has_value()` is `true`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 template<class G>
@@ -6551,52 +6520,52 @@ template<class G>
   constexpr explicit(!is_convertible_v<G, E>) expected(unexpected<G>&& e);
 ```
 
-> Let `GF` be `const G&` for the first overload and `G` for the second
-> overload.
->
-> *Constraints:* `is_constructible_v<E, GF>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `std::forward<GF>(e.error())`.
->
-> *Ensures:* `has_value()` is `false`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+Let `GF` be `const G&` for the first overload and `G` for the second
+overload.
+
+*Constraints:* `is_constructible_v<E, GF>` is `true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`std::forward<GF>(e.error())`.
+
+*Ensures:* `has_value()` is `false`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 constexpr explicit expected(in_place_t) noexcept;
 ```
 
-> *Ensures:* `has_value()` is `true`.
+*Ensures:* `has_value()` is `true`.
 
 ``` cpp
 template<class... Args>
   constexpr explicit expected(unexpect_t, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<E, Args...>` is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `std::forward<Args>(args)...`.
->
-> *Ensures:* `has_value()` is `false`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:* `is_constructible_v<E, Args...>` is `true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`std::forward<Args>(args)...`.
+
+*Ensures:* `has_value()` is `false`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 ``` cpp
 template<class U, class... Args>
     constexpr explicit expected(unexpect_t, initializer_list<U> il, Args&&... args);
 ```
 
-> *Constraints:* `is_constructible_v<E, initializer_list<U>&, Args...>`
-> is `true`.
->
-> *Effects:* Direct-non-list-initializes *unex* with
-> `il, std::forward<Args>(args)...`.
->
-> *Ensures:* `has_value()` is `false`.
->
-> *Throws:* Any exception thrown by the initialization of *unex*.
+*Constraints:* `is_constructible_v<E, initializer_list<U>&, Args...>` is
+`true`.
+
+*Effects:* Direct-non-list-initializes *unex* with
+`il, std::forward<Args>(args)...`.
+
+*Ensures:* `has_value()` is `false`.
+
+*Throws:* Any exception thrown by the initialization of *unex*.
 
 #### Destructor <a id="expected.void.dtor">[[expected.void.dtor]]</a>
 
@@ -6604,10 +6573,10 @@ template<class U, class... Args>
 constexpr ~expected();
 ```
 
-> *Effects:* If `has_value()` is `false`, destroys *unex*.
->
-> *Remarks:* If `is_trivially_destructible_v<E>` is `true`, then this
-> destructor is a trivial destructor.
+*Effects:* If `has_value()` is `false`, destroys *unex*.
+
+*Remarks:* If `is_trivially_destructible_v<E>` is `true`, then this
+destructor is a trivial destructor.
 
 #### Assignment <a id="expected.void.assign">[[expected.void.assign]]</a>
 
@@ -6615,50 +6584,49 @@ constexpr ~expected();
 constexpr expected& operator=(const expected& rhs);
 ```
 
-> *Effects:*
->
-> - If `this->has_value() && rhs.has_value()` is `true`, no effects.
->
-> - Otherwise, if `this->has_value()` is `true`, equivalent to:
->   `construct_at(addressof(`*`unex`*`), rhs.`*`unex`*`); `*`has_val`*` = false;`
->
-> - Otherwise, if `rhs.has_value()` is `true`, destroys *unex* and sets
->   *has_val* to `true`.
->
-> - Otherwise, equivalent to *`unex`*` = rhs.error()`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* This operator is defined as deleted unless
-> `is_copy_assignable_v<E>` is `true` and `is_copy_constructible_v<E>`
-> is `true`.
+*Effects:*
+
+- If `this->has_value() && rhs.has_value()` is `true`, no effects.
+
+- Otherwise, if `this->has_value()` is `true`, equivalent to:
+  `construct_at(addressof(`*`unex`*`), rhs.`*`unex`*`); `*`has_val`*` = false;`
+
+- Otherwise, if `rhs.has_value()` is `true`, destroys *unex* and sets
+  *has_val* to `true`.
+
+- Otherwise, equivalent to *`unex`*` = rhs.error()`.
+
+*Returns:* `*this`.
+
+*Remarks:* This operator is defined as deleted unless
+`is_copy_assignable_v<E>` is `true` and `is_copy_constructible_v<E>` is
+`true`.
 
 ``` cpp
 constexpr expected& operator=(expected&& rhs) noexcept(see below);
 ```
 
-> *Effects:*
->
-> - If `this->has_value() && rhs.has_value()` is `true`, no effects.
->
-> - Otherwise, if `this->has_value()` is `true`, equivalent to:
->
->       construct_at(addressof(unex), std::move(rhs.unex));
->       has_val = false;
->
-> - Otherwise, if `rhs.has_value()` is `true`, destroys *unex* and sets
->   *has_val* to `true`.
->
-> - Otherwise, equivalent to *`unex`*` = std::move(rhs.error())`.
->
-> *Returns:* `*this`.
->
-> *Remarks:* The exception specification is equivalent to
-> `is_nothrow_move_constructible_v<E> && is_nothrow_move_assignable_v<E>`.
->
-> This operator is defined as deleted unless
-> `is_move_constructible_v<E>` is `true` and `is_move_assignable_v<E>`
-> is `true`.
+*Effects:*
+
+- If `this->has_value() && rhs.has_value()` is `true`, no effects.
+
+- Otherwise, if `this->has_value()` is `true`, equivalent to:
+
+      construct_at(addressof(unex), std::move(rhs.unex));
+      has_val = false;
+
+- Otherwise, if `rhs.has_value()` is `true`, destroys *unex* and sets
+  *has_val* to `true`.
+
+- Otherwise, equivalent to *`unex`*` = std::move(rhs.error())`.
+
+*Returns:* `*this`.
+
+*Remarks:* The exception specification is equivalent to
+`is_nothrow_move_constructible_v<E> && is_nothrow_move_assignable_v<E>`.
+
+This operator is defined as deleted unless `is_move_constructible_v<E>`
+is `true` and `is_move_assignable_v<E>` is `true`.
 
 ``` cpp
 template<class G>
@@ -6667,29 +6635,29 @@ template<class G>
   constexpr expected& operator=(unexpected<G>&& e);
 ```
 
-> Let `GF` be `const G&` for the first overload and `G` for the second
-> overload.
->
-> *Constraints:* `is_constructible_v<E, GF>` is `true` and
-> `is_assignable_v<E&, GF>` is `true`.
->
-> *Effects:*
->
-> - If `has_value()` is `true`, equivalent to:
->
->       construct_at(addressof(unex), std::forward<GF>(e.error()));
->       has_val = false;
->
-> - Otherwise, equivalent to: *`unex`*` = std::forward<GF>(e.error());`
->
-> *Returns:* `*this`.
+Let `GF` be `const G&` for the first overload and `G` for the second
+overload.
+
+*Constraints:* `is_constructible_v<E, GF>` is `true` and
+`is_assignable_v<E&, GF>` is `true`.
+
+*Effects:*
+
+- If `has_value()` is `true`, equivalent to:
+
+      construct_at(addressof(unex), std::forward<GF>(e.error()));
+      has_val = false;
+
+- Otherwise, equivalent to: *`unex`*` = std::forward<GF>(e.error());`
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr void emplace() noexcept;
 ```
 
-> *Effects:* If `has_value()` is `false`, destroys *unex* and sets
-> *has_val* to `true`.
+*Effects:* If `has_value()` is `false`, destroys *unex* and sets
+*has_val* to `true`.
 
 #### Swap <a id="expected.void.swap">[[expected.void.swap]]</a>
 
@@ -6697,40 +6665,40 @@ constexpr void emplace() noexcept;
 constexpr void swap(expected& rhs) noexcept(see below);
 ```
 
-> *Constraints:* `is_swappable_v<E>` is `true` and
-> `is_move_constructible_v<E>` is `true`.
->
-> *Effects:* See [[expected.void.swap]].
->
-> <div class="floattable">
->
-> `swap(expected&)` effectsexpected.void.swap lx0.35x0.35 & &  
-> & no effects & calls `rhs.swap(*this)`  
-> & & equivalent to:
-> `using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
->
-> </div>
->
-> For the case where `rhs.value()` is `false` and `this->has_value()` is
-> `true`, equivalent to:
->
-> ``` cpp
-> construct_at(addressof(unex), std::move(rhs.unex));
-> destroy_at(addressof(rhs.unex));
-> has_val = false;
-> rhs.has_val = true;
-> ```
->
-> *Throws:* Any exception thrown by the expressions in the .
->
-> *Remarks:* The exception specification is equivalent to
-> `is_nothrow_move_constructible_v<E> && is_nothrow_swappable_v<E>`.
+*Constraints:* `is_swappable_v<E>` is `true` and
+`is_move_constructible_v<E>` is `true`.
+
+*Effects:* See [[expected.void.swap]].
+
+<div class="floattable">
+
+`swap(expected&)` effectsexpected.void.swap lx0.35x0.35 & &  
+& no effects & calls `rhs.swap(*this)`  
+& & equivalent to:
+`using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
+
+</div>
+
+For the case where `rhs.value()` is `false` and `this->has_value()` is
+`true`, equivalent to:
+
+``` cpp
+construct_at(addressof(unex), std::move(rhs.unex));
+destroy_at(addressof(rhs.unex));
+has_val = false;
+rhs.has_val = true;
+```
+
+*Throws:* Any exception thrown by the expressions in the .
+
+*Remarks:* The exception specification is equivalent to
+`is_nothrow_move_constructible_v<E> && is_nothrow_swappable_v<E>`.
 
 ``` cpp
 friend constexpr void swap(expected& x, expected& y) noexcept(noexcept(x.swap(y)));
 ```
 
-> *Effects:* Equivalent to `x.swap(y)`.
+*Effects:* Equivalent to `x.swap(y)`.
 
 #### Observers <a id="expected.void.obs">[[expected.void.obs]]</a>
 
@@ -6739,64 +6707,64 @@ constexpr explicit operator bool() const noexcept;
 constexpr bool has_value() const noexcept;
 ```
 
-> *Returns:* *has_val*.
+*Returns:* *has_val*.
 
 ``` cpp
 constexpr void operator*() const noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `true`.
+*Preconditions:* `has_value()` is `true`.
 
 ``` cpp
 constexpr void value() const &;
 ```
 
-> *Throws:* `bad_expected_access(error())` if `has_value()` is `false`.
+*Throws:* `bad_expected_access(error())` if `has_value()` is `false`.
 
 ``` cpp
 constexpr void value() &&;
 ```
 
-> *Throws:* `bad_expected_access(std::move(error()))` if `has_value()`
-> is `false`.
+*Throws:* `bad_expected_access(std::move(error()))` if `has_value()` is
+`false`.
 
 ``` cpp
 constexpr const E& error() const & noexcept;
 constexpr E& error() & noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `false`.
->
-> *Returns:* *unex*.
+*Preconditions:* `has_value()` is `false`.
+
+*Returns:* *unex*.
 
 ``` cpp
 constexpr E&& error() && noexcept;
 constexpr const E&& error() const && noexcept;
 ```
 
-> *Preconditions:* `has_value()` is `false`.
->
-> *Returns:* `std::move(`*`unex`*`)`.
+*Preconditions:* `has_value()` is `false`.
+
+*Returns:* `std::move(`*`unex`*`)`.
 
 ``` cpp
 template<class G = E> constexpr E error_or(G&& e) const &;
 ```
 
-> *Mandates:* `is_copy_constructible_v<E>` is `true` and
-> `is_convertible_v<G, E>` is `true`.
->
-> *Returns:* `std::forward<G>(e)` if `has_value()` is `true`, `error()`
-> otherwise.
+*Mandates:* `is_copy_constructible_v<E>` is `true` and
+`is_convertible_v<G, E>` is `true`.
+
+*Returns:* `std::forward<G>(e)` if `has_value()` is `true`, `error()`
+otherwise.
 
 ``` cpp
 template<class G = E> constexpr E error_or(G&& e) &&;
 ```
 
-> *Mandates:* `is_move_constructible_v<E>` is `true` and
-> `is_convertible_v<G, E>` is `true`.
->
-> *Returns:* `std::forward<G>(e)` if `has_value()` is `true`,
-> `std::move(error())` otherwise.
+*Mandates:* `is_move_constructible_v<E>` is `true` and
+`is_convertible_v<G, E>` is `true`.
+
+*Returns:* `std::forward<G>(e)` if `has_value()` is `true`,
+`std::move(error())` otherwise.
 
 #### Monadic operations <a id="expected.void.monadic">[[expected.void.monadic]]</a>
 
@@ -6805,186 +6773,186 @@ template<class F> constexpr auto and_then(F&& f) &;
 template<class F> constexpr auto and_then(F&& f) const &;
 ```
 
-> Let `U` be `remove_cvref_t<invoke_result_t<F>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(error())>>` is `true`.
->
-> *Mandates:* `U` is a specialization of `expected` and
-> `is_same_v<U::error_type, E>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return invoke(std::forward<F>(f));
-> else
->   return U(unexpect, error());
-> ```
+Let `U` be `remove_cvref_t<invoke_result_t<F>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(error())>>` is `true`.
+
+*Mandates:* `U` is a specialization of `expected` and
+`is_same_v<U::error_type, E>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return invoke(std::forward<F>(f));
+else
+  return U(unexpect, error());
+```
 
 ``` cpp
 template<class F> constexpr auto and_then(F&& f) &&;
 template<class F> constexpr auto and_then(F&& f) const &&;
 ```
 
-> Let `U` be `remove_cvref_t<invoke_result_t<F>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(std::move(error()))>`
-> is `true`.
->
-> *Mandates:* `U` is a specialization of `expected` and
-> `is_same_v<U::error_type, E>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return invoke(std::forward<F>(f));
-> else
->   return U(unexpect, std::move(error()));
-> ```
+Let `U` be `remove_cvref_t<invoke_result_t<F>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(std::move(error()))>` is
+`true`.
+
+*Mandates:* `U` is a specialization of `expected` and
+`is_same_v<U::error_type, E>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return invoke(std::forward<F>(f));
+else
+  return U(unexpect, std::move(error()));
+```
 
 ``` cpp
 template<class F> constexpr auto or_else(F&& f) &;
 template<class F> constexpr auto or_else(F&& f) const &;
 ```
 
-> Let `G` be `remove_cvref_t<invoke_result_t<F, decltype(error())>>`.
->
-> *Mandates:* `G` is a specialization of `expected` and
-> `is_same_v<G::value_type, T>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return G();
-> else
->   return invoke(std::forward<F>(f), error());
-> ```
+Let `G` be `remove_cvref_t<invoke_result_t<F, decltype(error())>>`.
+
+*Mandates:* `G` is a specialization of `expected` and
+`is_same_v<G::value_type, T>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return G();
+else
+  return invoke(std::forward<F>(f), error());
+```
 
 ``` cpp
 template<class F> constexpr auto or_else(F&& f) &&;
 template<class F> constexpr auto or_else(F&& f) const &&;
 ```
 
-> Let `G` be
-> `remove_cvref_t<invoke_result_t<F, decltype(std::move(error()))>>`.
->
-> *Mandates:* `G` is a specialization of `expected` and
-> `is_same_v<G::value_type, T>` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (has_value())
->   return G();
-> else
->   return invoke(std::forward<F>(f), std::move(error()));
-> ```
+Let `G` be
+`remove_cvref_t<invoke_result_t<F, decltype(std::move(error()))>>`.
+
+*Mandates:* `G` is a specialization of `expected` and
+`is_same_v<G::value_type, T>` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+if (has_value())
+  return G();
+else
+  return invoke(std::forward<F>(f), std::move(error()));
+```
 
 ``` cpp
 template<class F> constexpr auto transform(F&& f) &;
 template<class F> constexpr auto transform(F&& f) const &;
 ```
 
-> Let `U` be `remove_cv_t<invoke_result_t<F>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(error())>` is `true`.
->
-> *Mandates:* `U` is a valid value type for `expected`. If
-> `is_void_v<U>` is `false`, the declaration
->
-> ``` cpp
-> U u(invoke(std::forward<F>(f)));
-> ```
->
-> is well-formed.
->
-> *Effects:*
->
-> - If `has_value()` is `false`, returns
->   `expected<U, E>(unexpect, error())`.
->
-> - Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
->   object whose *has_val* member is `true` and *val* member is
->   direct-non-list-initialized with `invoke(std::forward<F>(f))`.
->
-> - Otherwise, evaluates `invoke(std::forward<F>(f))` and then returns
->   `expected<U, E>()`.
+Let `U` be `remove_cv_t<invoke_result_t<F>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(error())>` is `true`.
+
+*Mandates:* `U` is a valid value type for `expected`. If `is_void_v<U>`
+is `false`, the declaration
+
+``` cpp
+U u(invoke(std::forward<F>(f)));
+```
+
+is well-formed.
+
+*Effects:*
+
+- If `has_value()` is `false`, returns
+  `expected<U, E>(unexpect, error())`.
+
+- Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
+  object whose *has_val* member is `true` and *val* member is
+  direct-non-list-initialized with `invoke(std::forward<F>(f))`.
+
+- Otherwise, evaluates `invoke(std::forward<F>(f))` and then returns
+  `expected<U, E>()`.
 
 ``` cpp
 template<class F> constexpr auto transform(F&& f) &&;
 template<class F> constexpr auto transform(F&& f) const &&;
 ```
 
-> Let `U` be `remove_cv_t<invoke_result_t<F>>`.
->
-> *Constraints:* `is_constructible_v<E, decltype(std::move(error()))>`
-> is `true`.
->
-> *Mandates:* `U` is a valid value type for `expected`. If
-> `is_void_v<U>` is `false`, the declaration
->
-> ``` cpp
-> U u(invoke(std::forward<F>(f)));
-> ```
->
-> is well-formed.
->
-> *Effects:*
->
-> - If `has_value()` is `false`, returns
->   `expected<U, E>(unexpect, std::move(error()))`.
->
-> - Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
->   object whose *has_val* member is `true` and *val* member is
->   direct-non-list-initialized with `invoke(std::forward<F>(f))`.
->
-> - Otherwise, evaluates `invoke(std::forward<F>(f))` and then returns
->   `expected<U, E>()`.
+Let `U` be `remove_cv_t<invoke_result_t<F>>`.
+
+*Constraints:* `is_constructible_v<E, decltype(std::move(error()))>` is
+`true`.
+
+*Mandates:* `U` is a valid value type for `expected`. If `is_void_v<U>`
+is `false`, the declaration
+
+``` cpp
+U u(invoke(std::forward<F>(f)));
+```
+
+is well-formed.
+
+*Effects:*
+
+- If `has_value()` is `false`, returns
+  `expected<U, E>(unexpect, std::move(error()))`.
+
+- Otherwise, if `is_void_v<U>` is `false`, returns an `expected<U, E>`
+  object whose *has_val* member is `true` and *val* member is
+  direct-non-list-initialized with `invoke(std::forward<F>(f))`.
+
+- Otherwise, evaluates `invoke(std::forward<F>(f))` and then returns
+  `expected<U, E>()`.
 
 ``` cpp
 template<class F> constexpr auto transform_error(F&& f) &;
 template<class F> constexpr auto transform_error(F&& f) const &;
 ```
 
-> Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
->
-> *Mandates:* `G` is a valid template argument for
-> `unexpected`[[expected.un.general]] and the declaration
->
-> ``` cpp
-> G g(invoke(std::forward<F>(f), error()));
-> ```
->
-> is well-formed.
->
-> *Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise,
-> an `expected<T, G>` object whose *has_val* member is `false` and
-> *unex* member is direct-non-list-initialized with
-> `invoke(std::forward<F>(f), error())`.
+Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
+
+*Mandates:* `G` is a valid template argument for
+`unexpected`[[expected.un.general]] and the declaration
+
+``` cpp
+G g(invoke(std::forward<F>(f), error()));
+```
+
+is well-formed.
+
+*Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise, an
+`expected<T, G>` object whose *has_val* member is `false` and *unex*
+member is direct-non-list-initialized with
+`invoke(std::forward<F>(f), error())`.
 
 ``` cpp
 template<class F> constexpr auto transform_error(F&& f) &&;
 template<class F> constexpr auto transform_error(F&& f) const &&;
 ```
 
-> Let `G` be
-> `remove_cv_t<invoke_result_t<F, decltype(std::move(error()))>>`.
->
-> *Mandates:* `G` is a valid template argument for
-> `unexpected`[[expected.un.general]] and the declaration
->
-> ``` cpp
-> G g(invoke(std::forward<F>(f), std::move(error())));
-> ```
->
-> is well-formed.
->
-> *Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise,
-> an `expected<T, G>` object whose *has_val* member is `false` and
-> *unex* member is direct-non-list-initialized with
-> `invoke(std::forward<F>(f), std::move(error()))`.
+Let `G` be
+`remove_cv_t<invoke_result_t<F, decltype(std::move(error()))>>`.
+
+*Mandates:* `G` is a valid template argument for
+`unexpected`[[expected.un.general]] and the declaration
+
+``` cpp
+G g(invoke(std::forward<F>(f), std::move(error())));
+```
+
+is well-formed.
+
+*Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise, an
+`expected<T, G>` object whose *has_val* member is `false` and *unex*
+member is direct-non-list-initialized with
+`invoke(std::forward<F>(f), std::move(error()))`.
 
 #### Equality operators <a id="expected.void.eq">[[expected.void.eq]]</a>
 
@@ -6993,23 +6961,22 @@ template<class T2, class E2> requires is_void_v<T2>
   friend constexpr bool operator==(const expected& x, const expected<T2, E2>& y);
 ```
 
-> *Mandates:* The expression `x.error() == y.error()` is well-formed and
-> its result is convertible to `bool`.
->
-> *Returns:* If `x.has_value()` does not equal `y.has_value()`, `false`;
-> otherwise
-> `x.has_value() || static_cast<bool>(x.error() == y.error())`.
+*Mandates:* The expression `x.error() == y.error()` is well-formed and
+its result is convertible to `bool`.
+
+*Returns:* If `x.has_value()` does not equal `y.has_value()`, `false`;
+otherwise `x.has_value() || static_cast<bool>(x.error() == y.error())`.
 
 ``` cpp
 template<class E2>
   friend constexpr bool operator==(const expected& x, const unexpected<E2>& e);
 ```
 
-> *Mandates:* The expression `x.error() == e.error()` is well-formed and
-> its result is convertible to `bool`.
->
-> *Returns:*
-> `!x.has_value() && static_cast<bool>(x.error() == e.error())`.
+*Mandates:* The expression `x.error() == e.error()` is well-formed and
+its result is convertible to `bool`.
+
+*Returns:*
+`!x.has_value() && static_cast<bool>(x.error() == e.error())`.
 
 ## Bitsets <a id="bitset">[[bitset]]</a>
 
@@ -7156,17 +7123,17 @@ errors, each associated with a distinct exception:
 constexpr bitset() noexcept;
 ```
 
-> *Effects:* Initializes all bits in `*this` to zero.
+*Effects:* Initializes all bits in `*this` to zero.
 
 ``` cpp
 constexpr bitset(unsigned long long val) noexcept;
 ```
 
-> *Effects:* Initializes the first `M` bit positions to the
-> corresponding bit values in `val`. `M` is the smaller of `N` and the
-> number of bits in the value
-> representation [[term.object.representation]] of `unsigned long long`.
-> If `M < N`, the remaining bit positions are initialized to zero.
+*Effects:* Initializes the first `M` bit positions to the corresponding
+bit values in `val`. `M` is the smaller of `N` and the number of bits in
+the value representation [[term.object.representation]] of
+`unsigned long long`. If `M < N`, the remaining bit positions are
+initialized to zero.
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -7179,24 +7146,24 @@ template<class charT, class traits, class Allocator>
     charT one = charT('1'));
 ```
 
-> *Effects:* Determines the effective length `rlen` of the initializing
-> string as the smaller of `n` and `str.size() - pos`. Initializes the
-> first `M` bit positions to values determined from the corresponding
-> characters in the string `str`. `M` is the smaller of `N` and `rlen`.
->
-> An element of the constructed object has value zero if the
-> corresponding character in `str`, beginning at position `pos`, is
-> `zero`. Otherwise, the element has the value one. Character position
-> `pos + M - 1` corresponds to bit position zero. Subsequent decreasing
-> character positions correspond to increasing bit positions.
->
-> If `M < N`, remaining bit positions are initialized to zero.
->
-> The function uses `traits::eq` to compare the character values.
->
-> *Throws:* `out_of_range` if `pos > str.size()` or `invalid_argument`
-> if any of the `rlen` characters in `str` beginning at position `pos`
-> is other than `zero` or `one`.
+*Effects:* Determines the effective length `rlen` of the initializing
+string as the smaller of `n` and `str.size() - pos`. Initializes the
+first `M` bit positions to values determined from the corresponding
+characters in the string `str`. `M` is the smaller of `N` and `rlen`.
+
+An element of the constructed object has value zero if the corresponding
+character in `str`, beginning at position `pos`, is `zero`. Otherwise,
+the element has the value one. Character position `pos + M - 1`
+corresponds to bit position zero. Subsequent decreasing character
+positions correspond to increasing bit positions.
+
+If `M < N`, remaining bit positions are initialized to zero.
+
+The function uses `traits::eq` to compare the character values.
+
+*Throws:* `out_of_range` if `pos > str.size()` or `invalid_argument` if
+any of the `rlen` characters in `str` beginning at position `pos` is
+other than `zero` or `one`.
 
 ``` cpp
 template<class charT>
@@ -7207,14 +7174,14 @@ template<class charT>
     charT one = charT('1'));
 ```
 
-> *Effects:* As if by:
->
-> ``` cpp
-> bitset(n == basic_string<charT>::npos
->           ? basic_string<charT>(str)
->           : basic_string<charT>(str, n),
->        0, n, zero, one)
-> ```
+*Effects:* As if by:
+
+``` cpp
+bitset(n == basic_string<charT>::npos
+          ? basic_string<charT>(str)
+          : basic_string<charT>(str, n),
+       0, n, zero, one)
+```
 
 #### Members <a id="bitset.members">[[bitset.members]]</a>
 
@@ -7222,182 +7189,181 @@ template<class charT>
 constexpr bitset& operator&=(const bitset& rhs) noexcept;
 ```
 
-> *Effects:* Clears each bit in `*this` for which the corresponding bit
-> in `rhs` is clear, and leaves all other bits unchanged.
->
-> *Returns:* `*this`.
+*Effects:* Clears each bit in `*this` for which the corresponding bit in
+`rhs` is clear, and leaves all other bits unchanged.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& operator|=(const bitset& rhs) noexcept;
 ```
 
-> *Effects:* Sets each bit in `*this` for which the corresponding bit in
-> `rhs` is set, and leaves all other bits unchanged.
->
-> *Returns:* `*this`.
+*Effects:* Sets each bit in `*this` for which the corresponding bit in
+`rhs` is set, and leaves all other bits unchanged.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& operator^=(const bitset& rhs) noexcept;
 ```
 
-> *Effects:* Toggles each bit in `*this` for which the corresponding bit
-> in `rhs` is set, and leaves all other bits unchanged.
->
-> *Returns:* `*this`.
+*Effects:* Toggles each bit in `*this` for which the corresponding bit
+in `rhs` is set, and leaves all other bits unchanged.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& operator<<=(size_t pos) noexcept;
 ```
 
-> *Effects:* Replaces each bit at position `I` in `*this` with a value
-> determined as follows:
->
-> - If `I < pos`, the new value is zero;
->
-> - If `I >= pos`, the new value is the previous value of the bit at
->   position `I - pos`.
->
-> *Returns:* `*this`.
+*Effects:* Replaces each bit at position `I` in `*this` with a value
+determined as follows:
+
+- If `I < pos`, the new value is zero;
+
+- If `I >= pos`, the new value is the previous value of the bit at
+  position `I - pos`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& operator>>=(size_t pos) noexcept;
 ```
 
-> *Effects:* Replaces each bit at position `I` in `*this` with a value
-> determined as follows:
->
-> - If `pos >= N - I`, the new value is zero;
->
-> - If `pos < N - I`, the new value is the previous value of the bit at
->   position `I + pos`.
->
-> *Returns:* `*this`.
+*Effects:* Replaces each bit at position `I` in `*this` with a value
+determined as follows:
+
+- If `pos >= N - I`, the new value is zero;
+
+- If `pos < N - I`, the new value is the previous value of the bit at
+  position `I + pos`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset operator<<(size_t pos) const noexcept;
 ```
 
-> *Returns:* `bitset(*this) <<= pos`.
+*Returns:* `bitset(*this) <<= pos`.
 
 ``` cpp
 constexpr bitset operator>>(size_t pos) const noexcept;
 ```
 
-> *Returns:* `bitset(*this) >>= pos`.
+*Returns:* `bitset(*this) >>= pos`.
 
 ``` cpp
 constexpr bitset& set() noexcept;
 ```
 
-> *Effects:* Sets all bits in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Sets all bits in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& set(size_t pos, bool val = true);
 ```
 
-> *Effects:* Stores a new value in the bit at position `pos` in `*this`.
-> If `val` is `true`, the stored value is one, otherwise it is zero.
->
-> *Returns:* `*this`.
->
-> *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
-> position.
+*Effects:* Stores a new value in the bit at position `pos` in `*this`.
+If `val` is `true`, the stored value is one, otherwise it is zero.
+
+*Returns:* `*this`.
+
+*Throws:* `out_of_range` if `pos` does not correspond to a valid bit
+position.
 
 ``` cpp
 constexpr bitset& reset() noexcept;
 ```
 
-> *Effects:* Resets all bits in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Resets all bits in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& reset(size_t pos);
 ```
 
-> *Effects:* Resets the bit at position `pos` in `*this`.
->
-> *Returns:* `*this`.
->
-> *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
-> position.
+*Effects:* Resets the bit at position `pos` in `*this`.
+
+*Returns:* `*this`.
+
+*Throws:* `out_of_range` if `pos` does not correspond to a valid bit
+position.
 
 ``` cpp
 constexpr bitset operator~() const noexcept;
 ```
 
-> *Effects:* Constructs an object `x` of class `bitset` and initializes
-> it with `*this`.
->
-> *Returns:* `x.flip()`.
+*Effects:* Constructs an object `x` of class `bitset` and initializes it
+with `*this`.
+
+*Returns:* `x.flip()`.
 
 ``` cpp
 constexpr bitset& flip() noexcept;
 ```
 
-> *Effects:* Toggles all bits in `*this`.
->
-> *Returns:* `*this`.
+*Effects:* Toggles all bits in `*this`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bitset& flip(size_t pos);
 ```
 
-> *Effects:* Toggles the bit at position `pos` in `*this`.
->
-> *Returns:* `*this`.
->
-> *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
-> position.
+*Effects:* Toggles the bit at position `pos` in `*this`.
+
+*Returns:* `*this`.
+
+*Throws:* `out_of_range` if `pos` does not correspond to a valid bit
+position.
 
 ``` cpp
 constexpr bool operator[](size_t pos) const;
 ```
 
-> *Preconditions:* `pos` is valid.
->
-> *Returns:* `true` if the bit at position `pos` in `*this` has the
-> value one, otherwise `false`.
->
-> *Throws:* Nothing.
+*Preconditions:* `pos` is valid.
+
+*Returns:* `true` if the bit at position `pos` in `*this` has the value
+one, otherwise `false`.
+
+*Throws:* Nothing.
 
 ``` cpp
 constexpr bitset::reference operator[](size_t pos);
 ```
 
-> *Preconditions:* `pos` is valid.
->
-> *Returns:* An object of type `bitset::reference` such that
-> `(*this)[pos] == this->test(pos)`, and such that `(*this)[pos] = val`
-> is equivalent to `this->set(pos, val)`.
->
-> *Throws:* Nothing.
->
-> *Remarks:* For the purpose of determining the presence of a data
-> race [[intro.multithread]], any access or update through the resulting
-> reference potentially accesses or modifies, respectively, the entire
-> underlying bitset.
+*Preconditions:* `pos` is valid.
+
+*Returns:* An object of type `bitset::reference` such that
+`(*this)[pos] == this->test(pos)`, and such that `(*this)[pos] = val` is
+equivalent to `this->set(pos, val)`.
+
+*Throws:* Nothing.
+
+*Remarks:* For the purpose of determining the presence of a data
+race [[intro.multithread]], any access or update through the resulting
+reference potentially accesses or modifies, respectively, the entire
+underlying bitset.
 
 ``` cpp
 constexpr unsigned long to_ulong() const;
 ```
 
-> *Returns:* `x`.
->
-> *Throws:* `overflow_error` if the integral value `x` corresponding to
-> the bits in `*this` cannot be represented as type `unsigned long`.
+*Returns:* `x`.
+
+*Throws:* `overflow_error` if the integral value `x` corresponding to
+the bits in `*this` cannot be represented as type `unsigned long`.
 
 ``` cpp
 constexpr unsigned long long to_ullong() const;
 ```
 
-> *Returns:* `x`.
->
-> *Throws:* `overflow_error` if the integral value `x` corresponding to
-> the bits in `*this` cannot be represented as type
-> `unsigned long long`.
+*Returns:* `x`.
+
+*Throws:* `overflow_error` if the integral value `x` corresponding to
+the bits in `*this` cannot be represented as type `unsigned long long`.
 
 ``` cpp
 template<class charT = char,
@@ -7407,62 +7373,62 @@ template<class charT = char,
     to_string(charT zero = charT('0'), charT one = charT('1')) const;
 ```
 
-> *Effects:* Constructs a string object of the appropriate type and
-> initializes it to a string of length `N` characters. Each character is
-> determined by the value of its corresponding bit position in `*this`.
-> Character position `N - 1` corresponds to bit position zero.
-> Subsequent decreasing character positions correspond to increasing bit
-> positions. Bit value zero becomes the character `zero`, bit value one
-> becomes the character `one`.
->
-> *Returns:* The created object.
+*Effects:* Constructs a string object of the appropriate type and
+initializes it to a string of length `N` characters. Each character is
+determined by the value of its corresponding bit position in `*this`.
+Character position `N - 1` corresponds to bit position zero. Subsequent
+decreasing character positions correspond to increasing bit positions.
+Bit value zero becomes the character `zero`, bit value one becomes the
+character `one`.
+
+*Returns:* The created object.
 
 ``` cpp
 constexpr size_t count() const noexcept;
 ```
 
-> *Returns:* A count of the number of bits set in `*this`.
+*Returns:* A count of the number of bits set in `*this`.
 
 ``` cpp
 constexpr size_t size() const noexcept;
 ```
 
-> *Returns:* `N`.
+*Returns:* `N`.
 
 ``` cpp
 constexpr bool operator==(const bitset& rhs) const noexcept;
 ```
 
-> *Returns:* `true` if the value of each bit in `*this` equals the value
-> of the corresponding bit in `rhs`.
+*Returns:* `true` if the value of each bit in `*this` equals the value
+of the corresponding bit in `rhs`.
 
 ``` cpp
 constexpr bool test(size_t pos) const;
 ```
 
-> *Returns:* `true` if the bit at position `pos` in `*this` has the
-> value one.
->
-> *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
-> position.
+*Returns:* `true` if the bit at position `pos` in `*this` has the value
+one.
+
+*Throws:* `out_of_range` if `pos` does not correspond to a valid bit
+position.
 
 ``` cpp
 constexpr bool all() const noexcept;
 ```
 
-> *Returns:* `count() == size()`.
+*Returns:* `count() == size()`.
 
 ``` cpp
 constexpr bool any() const noexcept;
 ```
 
-> *Returns:* `count() != 0`.
+*Returns:* `count() != 0`.
 
 ``` cpp
 constexpr bool none() const noexcept;
 ```
 
-> *Returns:* `count() == 0`.
+*Returns:* `count() == 0`.
 
 ### `bitset` hash support <a id="bitset.hash">[[bitset.hash]]</a>
 
@@ -7470,7 +7436,7 @@ constexpr bool none() const noexcept;
 template<size_t N> struct hash<bitset<N>>;
 ```
 
-> The specialization is enabled [[unord.hash]].
+The specialization is enabled [[unord.hash]].
 
 ### `bitset` operators <a id="bitset.operators">[[bitset.operators]]</a>
 
@@ -7479,21 +7445,21 @@ template<size_t N>
   constexpr bitset<N> operator&(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
-> *Returns:* `bitset<N>(lhs) &= rhs`.
+*Returns:* `bitset<N>(lhs) &= rhs`.
 
 ``` cpp
 template<size_t N>
   constexpr bitset<N> operator|(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
-> *Returns:* `bitset<N>(lhs) |= rhs`.
+*Returns:* `bitset<N>(lhs) |= rhs`.
 
 ``` cpp
 template<size_t N>
   constexpr bitset<N> operator^(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
-> *Returns:* `bitset<N>(lhs) = rhs`.
+*Returns:* `bitset<N>(lhs) = rhs`.
 
 ``` cpp
 template<class charT, class traits, size_t N>
@@ -7501,27 +7467,26 @@ template<class charT, class traits, size_t N>
     operator>>(basic_istream<charT, traits>& is, bitset<N>& x);
 ```
 
-> A formatted input function [[istream.formatted]].
->
-> *Effects:* Extracts up to `N` characters from `is`. Stores these
-> characters in a temporary object `str` of type
-> `basic_string<charT, traits>`, then evaluates the expression
-> `x = bitset<N>(str)`. Characters are extracted and stored until any of
-> the following occurs:
->
-> - `N` characters have been extracted and stored;
->
-> - end-of-file occurs on the input sequence;
->
-> - the next input character is neither `is.widen(’0’)` nor
->   `is.widen(’1’)` (in which case the input character is not
->   extracted).
->
-> If `N > 0` and no characters are stored in `str`, `ios_base::failbit`
-> is set in the input function’s local error state before `setstate` is
-> called.
->
-> *Returns:* `is`.
+A formatted input function [[istream.formatted]].
+
+*Effects:* Extracts up to `N` characters from `is`. Stores these
+characters in a temporary object `str` of type
+`basic_string<charT, traits>`, then evaluates the expression
+`x = bitset<N>(str)`. Characters are extracted and stored until any of
+the following occurs:
+
+- `N` characters have been extracted and stored;
+
+- end-of-file occurs on the input sequence;
+
+- the next input character is neither `is.widen(’0’)` nor
+  `is.widen(’1’)` (in which case the input character is not extracted).
+
+If `N > 0` and no characters are stored in `str`, `ios_base::failbit` is
+set in the input function’s local error state before `setstate` is
+called.
+
+*Returns:* `is`.
 
 ``` cpp
 template<class charT, class traits, size_t N>
@@ -7529,15 +7494,15 @@ template<class charT, class traits, size_t N>
     operator<<(basic_ostream<charT, traits>& os, const bitset<N>& x);
 ```
 
-> *Returns:*
->
-> ``` cpp
-> os << x.template to_string<charT, traits, allocator<charT>>(
->   use_facet<ctype<charT>>(os.getloc()).widen('0'),
->   use_facet<ctype<charT>>(os.getloc()).widen('1'))
-> ```
->
-> (see  [[ostream.formatted]]).
+*Returns:*
+
+``` cpp
+os << x.template to_string<charT, traits, allocator<charT>>(
+  use_facet<ctype<charT>>(os.getloc()).widen('0'),
+  use_facet<ctype<charT>>(os.getloc()).widen('1'))
+```
+
+(see  [[ostream.formatted]]).
 
 ## Function objects <a id="function.objects">[[function.objects]]</a>
 
@@ -7872,10 +7837,10 @@ template<class F, class... Args>
     noexcept(is_nothrow_invocable_v<F, Args...>);
 ```
 
-> *Constraints:* `is_invocable_v<F, Args...>` is `true`.
->
-> *Returns:* *INVOKE*(std::forward\<F\>(f),
-> std::forward\<Args\>(args)...) [[func.require]].
+*Constraints:* `is_invocable_v<F, Args...>` is `true`.
+
+*Returns:* *INVOKE*(std::forward\<F\>(f),
+std::forward\<Args\>(args)...) [[func.require]].
 
 ``` cpp
 template<class R, class F, class... Args>
@@ -7883,10 +7848,10 @@ template<class R, class F, class... Args>
     noexcept(is_nothrow_invocable_r_v<R, F, Args...>);
 ```
 
-> *Constraints:* `is_invocable_r_v<R, F, Args...>` is `true`.
->
-> *Returns:* *INVOKE*\<R\>(std::forward\<F\>(f),
-> std::forward\<Args\>(args)...) [[func.require]].
+*Constraints:* `is_invocable_r_v<R, F, Args...>` is `true`.
+
+*Returns:* *INVOKE*\<R\>(std::forward\<F\>(f),
+std::forward\<Args\>(args)...) [[func.require]].
 
 ### Class template `reference_wrapper` <a id="refwrap">[[refwrap]]</a>
 
@@ -7939,29 +7904,29 @@ template<class U>
   constexpr reference_wrapper(U&& u) noexcept(see below);
 ```
 
-> Let *FUN* denote the exposition-only functions
->
-> ``` cpp
-> void FUN(T&) noexcept;
-> void FUN(T&&) = delete;
-> ```
->
-> *Constraints:* The expression *FUN*(declval\<U\>()) is well-formed and
-> `is_same_v<remove_cvref_t<U>, reference_wrapper>` is `false`.
->
-> *Effects:* Creates a variable `r` as if by
-> `T& r = std::forward<U>(u)`, then constructs a `reference_wrapper`
-> object that stores a reference to `r`.
->
-> *Remarks:* The exception specification is equivalent to
-> `noexcept(`*`FUN`*`(declval<U>()))`.
+Let *FUN* denote the exposition-only functions
+
+``` cpp
+void FUN(T&) noexcept;
+void FUN(T&&) = delete;
+```
+
+*Constraints:* The expression *FUN*(declval\<U\>()) is well-formed and
+`is_same_v<remove_cvref_t<U>, reference_wrapper>` is `false`.
+
+*Effects:* Creates a variable `r` as if by `T& r = std::forward<U>(u)`,
+then constructs a `reference_wrapper` object that stores a reference to
+`r`.
+
+*Remarks:* The exception specification is equivalent to
+`noexcept(`*`FUN`*`(declval<U>()))`.
 
 ``` cpp
 constexpr reference_wrapper(const reference_wrapper& x) noexcept;
 ```
 
-> *Effects:* Constructs a `reference_wrapper` object that stores a
-> reference to `x.get()`.
+*Effects:* Constructs a `reference_wrapper` object that stores a
+reference to `x.get()`.
 
 #### Assignment <a id="refwrap.assign">[[refwrap.assign]]</a>
 
@@ -7969,7 +7934,7 @@ constexpr reference_wrapper(const reference_wrapper& x) noexcept;
 constexpr reference_wrapper& operator=(const reference_wrapper& x) noexcept;
 ```
 
-> *Ensures:* `*this` stores a reference to `x.get()`.
+*Ensures:* `*this` stores a reference to `x.get()`.
 
 #### Access <a id="refwrap.access">[[refwrap.access]]</a>
 
@@ -7977,13 +7942,13 @@ constexpr reference_wrapper& operator=(const reference_wrapper& x) noexcept;
 constexpr operator T& () const noexcept;
 ```
 
-> *Returns:* The stored reference.
+*Returns:* The stored reference.
 
 ``` cpp
 constexpr T& get() const noexcept;
 ```
 
-> *Returns:* The stored reference.
+*Returns:* The stored reference.
 
 #### Invocation <a id="refwrap.invoke">[[refwrap.invoke]]</a>
 
@@ -7993,10 +7958,10 @@ template<class... ArgTypes>
     operator()(ArgTypes&&... args) const noexcept(is_nothrow_invocable_v<T&, ArgTypes...>);
 ```
 
-> *Mandates:* `T` is a complete type.
->
-> *Returns:* *INVOKE*(get(),
-> std::forward\<ArgTypes\>(args)...). [[func.require]]
+*Mandates:* `T` is a complete type.
+
+*Returns:* *INVOKE*(get(),
+std::forward\<ArgTypes\>(args)...). [[func.require]]
 
 #### Helper functions <a id="refwrap.helpers">[[refwrap.helpers]]</a>
 
@@ -8007,25 +7972,25 @@ templates may be an incomplete type.
 template<class T> constexpr reference_wrapper<T> ref(T& t) noexcept;
 ```
 
-> *Returns:* `reference_wrapper<T>(t)`.
+*Returns:* `reference_wrapper<T>(t)`.
 
 ``` cpp
 template<class T> constexpr reference_wrapper<T> ref(reference_wrapper<T> t) noexcept;
 ```
 
-> *Returns:* `t`.
+*Returns:* `t`.
 
 ``` cpp
 template<class T> constexpr reference_wrapper<const T> cref(const T& t) noexcept;
 ```
 
-> *Returns:* `reference_wrapper<const T>(t)`.
+*Returns:* `reference_wrapper<const T>(t)`.
 
 ``` cpp
 template<class T> constexpr reference_wrapper<const T> cref(reference_wrapper<T> t) noexcept;
 ```
 
-> *Returns:* `t`.
+*Returns:* `t`.
 
 #### `common_reference` related specializations <a id="refwrap.common.ref">[[refwrap.common.ref]]</a>
 
@@ -8078,7 +8043,7 @@ template<class T = void> struct plus {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x + y`.
+*Returns:* `x + y`.
 
 ``` cpp
 template<> struct plus<void> {
@@ -8094,7 +8059,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) + std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) + std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) + std::forward<U>(u)`.
 
 #### Class template `minus` <a id="arithmetic.operations.minus">[[arithmetic.operations.minus]]</a>
 
@@ -8108,7 +8073,7 @@ template<class T = void> struct minus {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x - y`.
+*Returns:* `x - y`.
 
 ``` cpp
 template<> struct minus<void> {
@@ -8124,7 +8089,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) - std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) - std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) - std::forward<U>(u)`.
 
 #### Class template `multiplies` <a id="arithmetic.operations.multiplies">[[arithmetic.operations.multiplies]]</a>
 
@@ -8138,7 +8103,7 @@ template<class T = void> struct multiplies {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x * y`.
+*Returns:* `x * y`.
 
 ``` cpp
 template<> struct multiplies<void> {
@@ -8154,7 +8119,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) * std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) * std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) * std::forward<U>(u)`.
 
 #### Class template `divides` <a id="arithmetic.operations.divides">[[arithmetic.operations.divides]]</a>
 
@@ -8168,7 +8133,7 @@ template<class T = void> struct divides {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x / y`.
+*Returns:* `x / y`.
 
 ``` cpp
 template<> struct divides<void> {
@@ -8184,7 +8149,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) / std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) / std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) / std::forward<U>(u)`.
 
 #### Class template `modulus` <a id="arithmetic.operations.modulus">[[arithmetic.operations.modulus]]</a>
 
@@ -8198,7 +8163,7 @@ template<class T = void> struct modulus {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x % y`.
+*Returns:* `x % y`.
 
 ``` cpp
 template<> struct modulus<void> {
@@ -8214,7 +8179,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) % std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) % std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) % std::forward<U>(u)`.
 
 #### Class template `negate` <a id="arithmetic.operations.negate">[[arithmetic.operations.negate]]</a>
 
@@ -8228,7 +8193,7 @@ template<class T = void> struct negate {
 constexpr T operator()(const T& x) const;
 ```
 
-> *Returns:* `-x`.
+*Returns:* `-x`.
 
 ``` cpp
 template<> struct negate<void> {
@@ -8244,7 +8209,7 @@ template<class T> constexpr auto operator()(T&& t) const
     -> decltype(-std::forward<T>(t));
 ```
 
-> *Returns:* `-std::forward<T>(t)`.
+*Returns:* `-std::forward<T>(t)`.
 
 ### Comparisons <a id="comparisons">[[comparisons]]</a>
 
@@ -8280,7 +8245,7 @@ template<class T = void> struct equal_to {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x == y`.
+*Returns:* `x == y`.
 
 ``` cpp
 template<> struct equal_to<void> {
@@ -8296,7 +8261,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) == std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) == std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) == std::forward<U>(u)`.
 
 #### Class template `not_equal_to` <a id="comparisons.not.equal.to">[[comparisons.not.equal.to]]</a>
 
@@ -8310,7 +8275,7 @@ template<class T = void> struct not_equal_to {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x != y`.
+*Returns:* `x != y`.
 
 ``` cpp
 template<> struct not_equal_to<void> {
@@ -8326,7 +8291,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) != std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) != std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) != std::forward<U>(u)`.
 
 #### Class template `greater` <a id="comparisons.greater">[[comparisons.greater]]</a>
 
@@ -8340,7 +8305,7 @@ template<class T = void> struct greater {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x > y`.
+*Returns:* `x > y`.
 
 ``` cpp
 template<> struct greater<void> {
@@ -8356,7 +8321,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) > std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) > std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) > std::forward<U>(u)`.
 
 #### Class template `less` <a id="comparisons.less">[[comparisons.less]]</a>
 
@@ -8370,7 +8335,7 @@ template<class T = void> struct less {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x < y`.
+*Returns:* `x < y`.
 
 ``` cpp
 template<> struct less<void> {
@@ -8386,7 +8351,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) < std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) < std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) < std::forward<U>(u)`.
 
 #### Class template `greater_equal` <a id="comparisons.greater.equal">[[comparisons.greater.equal]]</a>
 
@@ -8400,7 +8365,7 @@ template<class T = void> struct greater_equal {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x >= y`.
+*Returns:* `x >= y`.
 
 ``` cpp
 template<> struct greater_equal<void> {
@@ -8416,7 +8381,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) >= std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) >= std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) >= std::forward<U>(u)`.
 
 #### Class template `less_equal` <a id="comparisons.less.equal">[[comparisons.less.equal]]</a>
 
@@ -8430,7 +8395,7 @@ template<class T = void> struct less_equal {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x <= y`.
+*Returns:* `x <= y`.
 
 ``` cpp
 template<> struct less_equal<void> {
@@ -8446,7 +8411,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) <= std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) <= std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) <= std::forward<U>(u)`.
 
 #### Class `compare_three_way` <a id="comparisons.three.way">[[comparisons.three.way]]</a>
 
@@ -8466,26 +8431,26 @@ template<class T, class U>
   constexpr auto operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `three_way_comparable_with`.
->
-> *Preconditions:* If the expression
-> `std::forward<T>(t) <=> std::forward<U>(u)` results in a call to a
-> built-in operator `<=>` comparing pointers of type `P`, the conversion
-> sequences from both `T` and `U` to `P` are
-> equality-preserving [[concepts.equality]]; otherwise, `T` and `U`
-> model `three_way_comparable_with`.
->
-> *Effects:*
->
-> - If the expression `std::forward<T>(t) <=> std::forward<U>(u)`
->   results in a call to a built-in operator `<=>` comparing pointers of
->   type `P`, returns `strong_ordering::less` if (the converted value
->   of) `t` precedes `u` in the implementation-defined strict total
->   order over pointers [[defns.order.ptr]], `strong_ordering::greater`
->   if `u` precedes `t`, and otherwise `strong_ordering::equal`.
->
-> - Otherwise, equivalent to:
->   `return std::forward<T>(t) <=> std::forward<U>(u);`
+*Constraints:* `T` and `U` satisfy `three_way_comparable_with`.
+
+*Preconditions:* If the expression
+`std::forward<T>(t) <=> std::forward<U>(u)` results in a call to a
+built-in operator `<=>` comparing pointers of type `P`, the conversion
+sequences from both `T` and `U` to `P` are
+equality-preserving [[concepts.equality]]; otherwise, `T` and `U` model
+`three_way_comparable_with`.
+
+*Effects:*
+
+- If the expression `std::forward<T>(t) <=> std::forward<U>(u)` results
+  in a call to a built-in operator `<=>` comparing pointers of type `P`,
+  returns `strong_ordering::less` if (the converted value of) `t`
+  precedes `u` in the implementation-defined strict total order over
+  pointers [[defns.order.ptr]], `strong_ordering::greater` if `u`
+  precedes `t`, and otherwise `strong_ordering::equal`.
+
+- Otherwise, equivalent to:
+  `return std::forward<T>(t) <=> std::forward<U>(u);`
 
 ### Concept-constrained comparisons <a id="range.cmp">[[range.cmp]]</a>
 
@@ -8503,25 +8468,25 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `equality_comparable_with`.
->
-> *Preconditions:* If the expression
-> `std::forward<T>(t) == std::forward<U>(u)` results in a call to a
-> built-in operator `==` comparing pointers of type `P`, the conversion
-> sequences from both `T` and `U` to `P` are
-> equality-preserving [[concepts.equality]]; otherwise, `T` and `U`
-> model `equality_comparable_with`.
->
-> *Effects:*
->
-> - If the expression `std::forward<T>(t) == std::forward<U>(u)` results
->   in a call to a built-in operator `==` comparing pointers: returns
->   `false` if either (the converted value of) `t` precedes `u` or `u`
->   precedes `t` in the implementation-defined strict total order over
->   pointers [[defns.order.ptr]] and otherwise `true`.
->
-> - Otherwise, equivalent to:
->   `return std::forward<T>(t) == std::forward<U>(u);`
+*Constraints:* `T` and `U` satisfy `equality_comparable_with`.
+
+*Preconditions:* If the expression
+`std::forward<T>(t) == std::forward<U>(u)` results in a call to a
+built-in operator `==` comparing pointers of type `P`, the conversion
+sequences from both `T` and `U` to `P` are
+equality-preserving [[concepts.equality]]; otherwise, `T` and `U` model
+`equality_comparable_with`.
+
+*Effects:*
+
+- If the expression `std::forward<T>(t) == std::forward<U>(u)` results
+  in a call to a built-in operator `==` comparing pointers: returns
+  `false` if either (the converted value of) `t` precedes `u` or `u`
+  precedes `t` in the implementation-defined strict total order over
+  pointers [[defns.order.ptr]] and otherwise `true`.
+
+- Otherwise, equivalent to:
+  `return std::forward<T>(t) == std::forward<U>(u);`
 
 ``` cpp
 struct ranges::not_equal_to {
@@ -8537,13 +8502,13 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `equality_comparable_with`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return !ranges::equal_to{}(std::forward<T>(t), std::forward<U>(u));
-> ```
+*Constraints:* `T` and `U` satisfy `equality_comparable_with`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return !ranges::equal_to{}(std::forward<T>(t), std::forward<U>(u));
+```
 
 ``` cpp
 struct ranges::greater {
@@ -8559,13 +8524,13 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `totally_ordered_with`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return ranges::less{}(std::forward<U>(u), std::forward<T>(t));
-> ```
+*Constraints:* `T` and `U` satisfy `totally_ordered_with`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return ranges::less{}(std::forward<U>(u), std::forward<T>(t));
+```
 
 ``` cpp
 struct ranges::less {
@@ -8581,28 +8546,28 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `totally_ordered_with`.
->
-> *Preconditions:* If the expression
-> `std::forward<T>(t) < std::forward<U>(u)` results in a call to a
-> built-in operator `<` comparing pointers of type `P`, the conversion
-> sequences from both `T` and `U` to `P` are
-> equality-preserving [[concepts.equality]]; otherwise, `T` and `U`
-> model `totally_ordered_with`. For any expressions `ET` and `EU` such
-> that `decltype((ET))` is `T` and `decltype((EU))` is `U`, exactly one
-> of `ranges::less{}(ET, EU)`, `ranges::less{}(EU, ET)`, or
-> `ranges::equal_to{}(ET, EU)` is `true`.
->
-> *Effects:*
->
-> - If the expression `std::forward<T>(t) < std::forward<U>(u)` results
->   in a call to a built-in operator `<` comparing pointers: returns
->   `true` if (the converted value of) `t` precedes `u` in the
->   implementation-defined strict total order over
->   pointers [[defns.order.ptr]] and otherwise `false`.
->
-> - Otherwise, equivalent to:
->   `return std::forward<T>(t) < std::forward<U>(u);`
+*Constraints:* `T` and `U` satisfy `totally_ordered_with`.
+
+*Preconditions:* If the expression
+`std::forward<T>(t) < std::forward<U>(u)` results in a call to a
+built-in operator `<` comparing pointers of type `P`, the conversion
+sequences from both `T` and `U` to `P` are
+equality-preserving [[concepts.equality]]; otherwise, `T` and `U` model
+`totally_ordered_with`. For any expressions `ET` and `EU` such that
+`decltype((ET))` is `T` and `decltype((EU))` is `U`, exactly one of
+`ranges::less{}(ET, EU)`, `ranges::less{}(EU, ET)`, or
+`ranges::equal_to{}(ET, EU)` is `true`.
+
+*Effects:*
+
+- If the expression `std::forward<T>(t) < std::forward<U>(u)` results in
+  a call to a built-in operator `<` comparing pointers: returns `true`
+  if (the converted value of) `t` precedes `u` in the
+  implementation-defined strict total order over
+  pointers [[defns.order.ptr]] and otherwise `false`.
+
+- Otherwise, equivalent to:
+  `return std::forward<T>(t) < std::forward<U>(u);`
 
 ``` cpp
 struct ranges::greater_equal {
@@ -8618,13 +8583,13 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `totally_ordered_with`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return !ranges::less{}(std::forward<T>(t), std::forward<U>(u));
-> ```
+*Constraints:* `T` and `U` satisfy `totally_ordered_with`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return !ranges::less{}(std::forward<T>(t), std::forward<U>(u));
+```
 
 ``` cpp
 struct ranges::less_equal {
@@ -8640,13 +8605,13 @@ template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 ```
 
-> *Constraints:* `T` and `U` satisfy `totally_ordered_with`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return !ranges::less{}(std::forward<U>(u), std::forward<T>(t));
-> ```
+*Constraints:* `T` and `U` satisfy `totally_ordered_with`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return !ranges::less{}(std::forward<U>(u), std::forward<T>(t));
+```
 
 ### Logical operations <a id="logical.operations">[[logical.operations]]</a>
 
@@ -8668,7 +8633,7 @@ template<class T = void> struct logical_and {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x && y`.
+*Returns:* `x && y`.
 
 ``` cpp
 template<> struct logical_and<void> {
@@ -8684,7 +8649,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) && std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) && std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) && std::forward<U>(u)`.
 
 #### Class template `logical_or` <a id="logical.operations.or">[[logical.operations.or]]</a>
 
@@ -8698,7 +8663,7 @@ template<class T = void> struct logical_or {
 constexpr bool operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x || y`.
+*Returns:* `x || y`.
 
 ``` cpp
 template<> struct logical_or<void> {
@@ -8714,7 +8679,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) || std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) || std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) || std::forward<U>(u)`.
 
 #### Class template `logical_not` <a id="logical.operations.not">[[logical.operations.not]]</a>
 
@@ -8728,7 +8693,7 @@ template<class T = void> struct logical_not {
 constexpr bool operator()(const T& x) const;
 ```
 
-> *Returns:* `!x`.
+*Returns:* `!x`.
 
 ``` cpp
 template<> struct logical_not<void> {
@@ -8744,7 +8709,7 @@ template<class T> constexpr auto operator()(T&& t) const
     -> decltype(!std::forward<T>(t));
 ```
 
-> *Returns:* `!std::forward<T>(t)`.
+*Returns:* `!std::forward<T>(t)`.
 
 ### Bitwise operations <a id="bitwise.operations">[[bitwise.operations]]</a>
 
@@ -8766,7 +8731,7 @@ template<class T = void> struct bit_and {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x & y`.
+*Returns:* `x & y`.
 
 ``` cpp
 template<> struct bit_and<void> {
@@ -8782,7 +8747,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) & std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) & std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) & std::forward<U>(u)`.
 
 #### Class template `bit_or` <a id="bitwise.operations.or">[[bitwise.operations.or]]</a>
 
@@ -8796,7 +8761,7 @@ template<class T = void> struct bit_or {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x | y`.
+*Returns:* `x | y`.
 
 ``` cpp
 template<> struct bit_or<void> {
@@ -8812,7 +8777,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) | std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) | std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) | std::forward<U>(u)`.
 
 #### Class template `bit_xor` <a id="bitwise.operations.xor">[[bitwise.operations.xor]]</a>
 
@@ -8826,7 +8791,7 @@ template<class T = void> struct bit_xor {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-> *Returns:* `x y`.
+*Returns:* `x y`.
 
 ``` cpp
 template<> struct bit_xor<void> {
@@ -8842,7 +8807,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) ^ std::forward<U>(u));
 ```
 
-> *Returns:* `std::forward<T>(t) std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) std::forward<U>(u)`.
 
 #### Class template `bit_not` <a id="bitwise.operations.not">[[bitwise.operations.not]]</a>
 
@@ -8856,7 +8821,7 @@ template<class T = void> struct bit_not {
 constexpr T operator()(const T& x) const;
 ```
 
-> *Returns:* `~x`.
+*Returns:* `~x`.
 
 ``` cpp
 template<> struct bit_not<void> {
@@ -8872,7 +8837,7 @@ template<class T> constexpr auto operator()(T&& t) const
     -> decltype(~std::forward<T>(t));
 ```
 
-> *Returns:* `~std::forward<T>(t)`.
+*Returns:* `~std::forward<T>(t)`.
 
 ### Class `identity` <a id="func.identity">[[func.identity]]</a>
 
@@ -8888,7 +8853,7 @@ template<class T>
   constexpr T&& operator()(T&& t) const noexcept;
 ```
 
-> *Effects:* Equivalent to: `return std::forward<T>(t);`
+*Effects:* Equivalent to: `return std::forward<T>(t);`
 
 ### Function template `not_fn` <a id="func.not.fn">[[func.not.fn]]</a>
 
@@ -8896,28 +8861,28 @@ template<class T>
 template<class F> constexpr unspecified not_fn(F&& f);
 ```
 
-> In the text that follows:
->
-> - `g` is a value of the result of a `not_fn` invocation,
->
-> - `FD` is the type `decay_t<F>`,
->
-> - `fd` is the target object of `g`[[func.def]] of type `FD`,
->   direct-non-list-initialized with `std::forward<F>(f)`,
->
-> - `call_args` is an argument pack used in a function call
->   expression [[expr.call]] of `g`.
->
-> *Mandates:* `is_constructible_v<FD, F> && is_move_constructible_v<FD>`
-> is `true`.
->
-> *Preconditions:* `FD` meets the *Cpp17MoveConstructible* requirements.
->
-> *Returns:* A perfect forwarding call
-> wrapper [[term.perfect.forwarding.call.wrapper]] `g` with call pattern
-> `!invoke(fd, call_args...)`.
->
-> *Throws:* Any exception thrown by the initialization of `fd`.
+In the text that follows:
+
+- `g` is a value of the result of a `not_fn` invocation,
+
+- `FD` is the type `decay_t<F>`,
+
+- `fd` is the target object of `g`[[func.def]] of type `FD`,
+  direct-non-list-initialized with `std::forward<F>(f)`,
+
+- `call_args` is an argument pack used in a function call
+  expression [[expr.call]] of `g`.
+
+*Mandates:* `is_constructible_v<FD, F> && is_move_constructible_v<FD>`
+is `true`.
+
+*Preconditions:* `FD` meets the *Cpp17MoveConstructible* requirements.
+
+*Returns:* A perfect forwarding call
+wrapper [[term.perfect.forwarding.call.wrapper]] `g` with call pattern
+`!invoke(fd, call_args...)`.
+
+*Throws:* Any exception thrown by the initialization of `fd`.
 
 ### Function templates `bind_front` and `bind_back` <a id="func.bind.partial">[[func.bind.partial]]</a>
 
@@ -8928,52 +8893,51 @@ template<class F, class... Args>
   constexpr unspecified bind_back(F&& f, Args&&... args);
 ```
 
-> Within this subclause:
->
-> - `g` is a value of the result of a `bind_front` or `bind_back`
->   invocation,
->
-> - `FD` is the type `decay_t<F>`,
->
-> - `fd` is the target object of `g`[[func.def]] of type `FD`,
->   direct-non-list-initialized with `std::forward<F>(f)`,
->
-> - `BoundArgs` is a pack that denotes `decay_t<Args>...`,
->
-> - `bound_args` is a pack of bound argument entities of `g`[[func.def]]
->   of types `BoundArgs...`, direct-non-list-initialized with
->   `std::forward<Args>(args)...`, respectively, and
->
-> - `call_args` is an argument pack used in a function call
->   expression [[expr.call]] of `g`.
->
-> *Mandates:*
->
-> ``` cpp
-> is_constructible_v<FD, F> &&
-> is_move_constructible_v<FD> &&
-> (is_constructible_v<BoundArgs, Args> && ...) &&
-> (is_move_constructible_v<BoundArgs> && ...)
-> ```
->
-> is `true`.
->
-> *Preconditions:* `FD` meets the *Cpp17MoveConstructible* requirements.
-> For each $\texttt{T}_i$ in `BoundArgs`, if $\texttt{T}_i$ is an object
-> type, $\texttt{T}_i$ meets the *Cpp17MoveConstructible* requirements.
->
-> *Returns:* A perfect forwarding call
-> wrapper [[term.perfect.forwarding.call.wrapper]] `g` with call
-> pattern:
->
-> - `invoke(fd, bound_args..., call_args...)` for a `bind_front`
->   invocation, or
->
-> - `invoke(fd, call_args..., bound_args...)` for a `bind_back`
->   invocation.
->
-> *Throws:* Any exception thrown by the initialization of the state
-> entities of `g`[[func.def]].
+Within this subclause:
+
+- `g` is a value of the result of a `bind_front` or `bind_back`
+  invocation,
+
+- `FD` is the type `decay_t<F>`,
+
+- `fd` is the target object of `g`[[func.def]] of type `FD`,
+  direct-non-list-initialized with `std::forward<F>(f)`,
+
+- `BoundArgs` is a pack that denotes `decay_t<Args>...`,
+
+- `bound_args` is a pack of bound argument entities of `g`[[func.def]]
+  of types `BoundArgs...`, direct-non-list-initialized with
+  `std::forward<Args>(args)...`, respectively, and
+
+- `call_args` is an argument pack used in a function call
+  expression [[expr.call]] of `g`.
+
+*Mandates:*
+
+``` cpp
+is_constructible_v<FD, F> &&
+is_move_constructible_v<FD> &&
+(is_constructible_v<BoundArgs, Args> && ...) &&
+(is_move_constructible_v<BoundArgs> && ...)
+```
+
+is `true`.
+
+*Preconditions:* `FD` meets the *Cpp17MoveConstructible* requirements.
+For each $\texttt{T}_i$ in `BoundArgs`, if $\texttt{T}_i$ is an object
+type, $\texttt{T}_i$ meets the *Cpp17MoveConstructible* requirements.
+
+*Returns:* A perfect forwarding call
+wrapper [[term.perfect.forwarding.call.wrapper]] `g` with call pattern:
+
+- `invoke(fd, bound_args..., call_args...)` for a `bind_front`
+  invocation, or
+
+- `invoke(fd, call_args..., bound_args...)` for a `bind_back`
+  invocation.
+
+*Throws:* Any exception thrown by the initialization of the state
+entities of `g`[[func.def]].
 
 ### Function object binders <a id="func.bind">[[func.bind]]</a>
 
@@ -9063,45 +9027,45 @@ template<class R, class F, class... BoundArgs>
   constexpr unspecified bind(F&& f, BoundArgs&&... bound_args);
 ```
 
-> *Mandates:* `is_constructible_v<FD, F>` is `true`. For each
-> $\texttt{T}_i$ in `BoundArgs`,
-> `is_constructible_v<`$\texttt{TD}_i$`, `$\texttt{T}_i$`>` is `true`.
->
-> *Preconditions:* `FD` and each $\texttt{TD}_i$ meet the
-> *Cpp17MoveConstructible* and *Cpp17Destructible* requirements.
-> *INVOKE*(fd, w₁, w₂, $\dotsc$, $w_N$) [[func.require]] is a valid
-> expression for some values $\texttt{w}_1$, $\texttt{w}_2$, $\dotsc{}$,
-> $\texttt{w}_N$, where N has the value `sizeof...(bound_args)`.
->
-> *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
-> program that attempts to invoke a volatile-qualified `g` is
-> ill-formed. When `g` is not volatile-qualified, invocation of
-> `g(`$\texttt{u}_1$`, `$\texttt{u}_2$`, `$\dotsc$`, `$\texttt{u}_M$`)`
-> is expression-equivalent [[defns.expression.equivalent]] to
->
-> ``` cpp
-> INVOKE(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
->        static_cast<$\texttt{V}_1$>($\texttt{v}_1$), static_cast<$\texttt{V}_2$>($\texttt{v}_2$), $\dotsc$, static_cast<$\texttt{V}_N$>($\texttt{v}_N$))
-> ```
->
-> for the first overload, and
->
-> ``` cpp
-> INVOKE<R>(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
->           static_cast<$\texttt{V}_1$>($\texttt{v}_1$), static_cast<$\texttt{V}_2$>($\texttt{v}_2$), $\dotsc$, static_cast<$\texttt{V}_N$>($\texttt{v}_N$))
-> ```
->
-> for the second overload, where the values and types of the target
-> argument $\texttt{v}_\texttt{fd}$ and of the bound arguments
-> $\texttt{v}_1$, $\texttt{v}_2$, $\dotsc$, $\texttt{v}_N$ are
-> determined as specified below.
->
-> *Throws:* Any exception thrown by the initialization of the state
-> entities of `g`.
->
-> \[*Note 22*: If all of `FD` and $\texttt{TD}_i$ meet the requirements
-> of *Cpp17CopyConstructible*, then the return type meets the
-> requirements of *Cpp17CopyConstructible*. — *end note*\]
+*Mandates:* `is_constructible_v<FD, F>` is `true`. For each
+$\texttt{T}_i$ in `BoundArgs`,
+`is_constructible_v<`$\texttt{TD}_i$`, `$\texttt{T}_i$`>` is `true`.
+
+*Preconditions:* `FD` and each $\texttt{TD}_i$ meet the
+*Cpp17MoveConstructible* and *Cpp17Destructible* requirements.
+*INVOKE*(fd, w₁, w₂, $\dotsc$, $w_N$) [[func.require]] is a valid
+expression for some values $\texttt{w}_1$, $\texttt{w}_2$, $\dotsc{}$,
+$\texttt{w}_N$, where N has the value `sizeof...(bound_args)`.
+
+*Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
+program that attempts to invoke a volatile-qualified `g` is ill-formed.
+When `g` is not volatile-qualified, invocation of
+`g(`$\texttt{u}_1$`, `$\texttt{u}_2$`, `$\dotsc$`, `$\texttt{u}_M$`)` is
+expression-equivalent [[defns.expression.equivalent]] to
+
+``` cpp
+INVOKE(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
+       static_cast<$\texttt{V}_1$>($\texttt{v}_1$), static_cast<$\texttt{V}_2$>($\texttt{v}_2$), $\dotsc$, static_cast<$\texttt{V}_N$>($\texttt{v}_N$))
+```
+
+for the first overload, and
+
+``` cpp
+INVOKE<R>(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
+          static_cast<$\texttt{V}_1$>($\texttt{v}_1$), static_cast<$\texttt{V}_2$>($\texttt{v}_2$), $\dotsc$, static_cast<$\texttt{V}_N$>($\texttt{v}_N$))
+```
+
+for the second overload, where the values and types of the target
+argument $\texttt{v}_\texttt{fd}$ and of the bound arguments
+$\texttt{v}_1$, $\texttt{v}_2$, $\dotsc$, $\texttt{v}_N$ are determined
+as specified below.
+
+*Throws:* Any exception thrown by the initialization of the state
+entities of `g`.
+
+\[*Note 4*: If all of `FD` and $\texttt{TD}_i$ meet the requirements of
+*Cpp17CopyConstructible*, then the return type meets the requirements of
+*Cpp17CopyConstructible*. — *end note*\]
 
 The values of the *bound arguments* $\tcode{v}_1$, $\tcode{v}_2$,
 $\dotsc$, $\tcode{v}_N$ and their corresponding types $\tcode{V}_1$,
@@ -9178,11 +9142,11 @@ Placeholders are freestanding items [[freestanding.item]].
 template<class R, class T> constexpr unspecified mem_fn(R T::* pm) noexcept;
 ```
 
-> *Returns:* A simple call wrapper [[term.simple.call.wrapper]] `fn`
-> with call pattern `invoke(pmd, call_args...)`, where `pmd` is the
-> target object of `fn` of type `R T::*` direct-non-list-initialized
-> with `pm`, and `call_args` is an argument pack used in a function call
-> expression [[expr.call]] of `fn`.
+*Returns:* A simple call wrapper [[term.simple.call.wrapper]] `fn` with
+call pattern `invoke(pmd, call_args...)`, where `pmd` is the target
+object of `fn` of type `R T::*` direct-non-list-initialized with `pm`,
+and `call_args` is an argument pack used in a function call
+expression [[expr.call]] of `fn`.
 
 ### Polymorphic function wrappers <a id="func.wrap">[[func.wrap]]</a>
 
@@ -9211,7 +9175,7 @@ namespace std {
 const char* what() const noexcept override;
 ```
 
-> *Returns:* An *implementation-defined* NTBS.
+*Returns:* An *implementation-defined* NTBS.
 
 #### Class template `function` <a id="func.wrap.func">[[func.wrap.func]]</a>
 
@@ -9277,7 +9241,7 @@ unevaluated operand [[term.unevaluated.operand]], is well-formed
 The `function` class template is a call wrapper [[func.def]] whose call
 signature [[func.def]] is `R(ArgTypes...)`.
 
-\[*Note 4*: The types deduced by the deduction guides for `function`
+\[*Note 5*: The types deduced by the deduction guides for `function`
 might change in future revisions of C++. — *end note*\]
 
 ##### Constructors and destructor <a id="func.wrap.func.con">[[func.wrap.func.con]]</a>
@@ -9286,162 +9250,161 @@ might change in future revisions of C++. — *end note*\]
 function() noexcept;
 ```
 
-> *Ensures:* `!*this`.
+*Ensures:* `!*this`.
 
 ``` cpp
 function(nullptr_t) noexcept;
 ```
 
-> *Ensures:* `!*this`.
+*Ensures:* `!*this`.
 
 ``` cpp
 function(const function& f);
 ```
 
-> *Ensures:* `!*this` if `!f`; otherwise, the target object of `*this`
-> is a copy of `f.target()`.
->
-> *Throws:* Nothing if `f`’s target is a specialization of
-> `reference_wrapper` or a function pointer. Otherwise, may throw
-> `bad_alloc` or any exception thrown by the copy constructor of the
-> stored callable object.
->
-> *Recommended practice:* Implementations should avoid the use of
-> dynamically allocated memory for small callable objects, for example,
-> where `f`’s target is an object holding only a pointer or reference to
-> an object and a member function pointer.
+*Ensures:* `!*this` if `!f`; otherwise, the target object of `*this` is
+a copy of `f.target()`.
+
+*Throws:* Nothing if `f`’s target is a specialization of
+`reference_wrapper` or a function pointer. Otherwise, may throw
+`bad_alloc` or any exception thrown by the copy constructor of the
+stored callable object.
+
+*Recommended practice:* Implementations should avoid the use of
+dynamically allocated memory for small callable objects, for example,
+where `f`’s target is an object holding only a pointer or reference to
+an object and a member function pointer.
 
 ``` cpp
 function(function&& f) noexcept;
 ```
 
-> *Ensures:* If `!f`, `*this` has no target; otherwise, the target of
-> `*this` is equivalent to the target of `f` before the construction,
-> and `f` is in a valid state with an unspecified value.
->
-> *Recommended practice:* Implementations should avoid the use of
-> dynamically allocated memory for small callable objects, for example,
-> where `f`’s target is an object holding only a pointer or reference to
-> an object and a member function pointer.
+*Ensures:* If `!f`, `*this` has no target; otherwise, the target of
+`*this` is equivalent to the target of `f` before the construction, and
+`f` is in a valid state with an unspecified value.
+
+*Recommended practice:* Implementations should avoid the use of
+dynamically allocated memory for small callable objects, for example,
+where `f`’s target is an object holding only a pointer or reference to
+an object and a member function pointer.
 
 ``` cpp
 template<class F> function(F&& f);
 ```
 
-> Let `FD` be `decay_t<F>`.
->
-> *Constraints:*
->
-> - `is_same_v<remove_cvref_t<F>, function>` is `false`, and
->
-> - `FD` is Lvalue-Callable [[func.wrap.func]] for argument types
->   `ArgTypes...` and return type `R`.
->
-> *Mandates:*
->
-> - `is_copy_constructible_v<FD>` is `true`, and
->
-> - `is_constructible_v<FD, F>` is `true`.
->
-> *Preconditions:* `FD` meets the *Cpp17CopyConstructible* requirements.
->
-> *Ensures:* `!*this` is `true` if any of the following hold:
->
-> - `f` is a null function pointer value.
->
-> - `f` is a null member pointer value.
->
-> - `remove_cvref_t<F>` is a specialization of the `function` class
->   template, and `!f` is `true`.
->
-> Otherwise, `*this` has a target object of type `FD`
-> direct-non-list-initialized with `std::forward<F>(f)`.
->
-> *Throws:* Nothing if `FD` is a specialization of `reference_wrapper`
-> or a function pointer type. Otherwise, may throw `bad_alloc` or any
-> exception thrown by the initialization of the target object.
->
-> *Recommended practice:* Implementations should avoid the use of
-> dynamically allocated memory for small callable objects, for example,
-> where `f` refers to an object holding only a pointer or reference to
-> an object and a member function pointer.
+Let `FD` be `decay_t<F>`.
+
+*Constraints:*
+
+- `is_same_v<remove_cvref_t<F>, function>` is `false`, and
+
+- `FD` is Lvalue-Callable [[func.wrap.func]] for argument types
+  `ArgTypes...` and return type `R`.
+
+*Mandates:*
+
+- `is_copy_constructible_v<FD>` is `true`, and
+
+- `is_constructible_v<FD, F>` is `true`.
+
+*Preconditions:* `FD` meets the *Cpp17CopyConstructible* requirements.
+
+*Ensures:* `!*this` is `true` if any of the following hold:
+
+- `f` is a null function pointer value.
+
+- `f` is a null member pointer value.
+
+- `remove_cvref_t<F>` is a specialization of the `function` class
+  template, and `!f` is `true`.
+
+Otherwise, `*this` has a target object of type `FD`
+direct-non-list-initialized with `std::forward<F>(f)`.
+
+*Throws:* Nothing if `FD` is a specialization of `reference_wrapper` or
+a function pointer type. Otherwise, may throw `bad_alloc` or any
+exception thrown by the initialization of the target object.
+
+*Recommended practice:* Implementations should avoid the use of
+dynamically allocated memory for small callable objects, for example,
+where `f` refers to an object holding only a pointer or reference to an
+object and a member function pointer.
 
 ``` cpp
 template<class F> function(F) -> function<see below>;
 ```
 
-> *Constraints:* `&F::operator()` is well-formed when treated as an
-> unevaluated operand and either
->
-> - `F::operator()` is a non-static member function and
->   `decltype(&F::operator())` is either of the form
->   `R(G::*)(A...)`  ` ` or of the form `R(*)(G, A...) ` for a type `G`,
->   or
->
-> - `F::operator()` is a static member function and
->   `decltype(&F::operator())` is of the form `R(*)(A...) `.
->
-> *Remarks:* The deduced type is `function<R(A...)>`.
->
-> \[*Example 11*:
->
->     void f() {
->       int i{5};
->       function g = [&](double) { return i; };       // deduces \texttt{function<int(double)>}
->     }
->
-> — *end example*\]
+*Constraints:* `&F::operator()` is well-formed when treated as an
+unevaluated operand and either
+
+- `F::operator()` is a non-static member function and
+  `decltype(&F::operator())` is either of the form `R(G::*)(A...)`  ` `
+  or of the form `R(*)(G, A...) ` for a type `G`, or
+
+- `F::operator()` is a static member function and
+  `decltype(&F::operator())` is of the form `R(*)(A...) `.
+
+*Remarks:* The deduced type is `function<R(A...)>`.
+
+\[*Example 3*:
+
+    void f() {
+      int i{5};
+      function g = [&](double) { return i; };       // deduces \texttt{function<int(double)>}
+    }
+
+— *end example*\]
 
 ``` cpp
 function& operator=(const function& f);
 ```
 
-> *Effects:* As if by `function(f).swap(*this);`
->
-> *Returns:* `*this`.
+*Effects:* As if by `function(f).swap(*this);`
+
+*Returns:* `*this`.
 
 ``` cpp
 function& operator=(function&& f);
 ```
 
-> *Effects:* Replaces the target of `*this` with the target of `f`.
->
-> *Returns:* `*this`.
+*Effects:* Replaces the target of `*this` with the target of `f`.
+
+*Returns:* `*this`.
 
 ``` cpp
 function& operator=(nullptr_t) noexcept;
 ```
 
-> *Effects:* If `*this != nullptr`, destroys the target of .
->
-> *Ensures:* `!(*this)`.
->
-> *Returns:* `*this`.
+*Effects:* If `*this != nullptr`, destroys the target of .
+
+*Ensures:* `!(*this)`.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class F> function& operator=(F&& f);
 ```
 
-> *Constraints:* `decay_t<F>` is Lvalue-Callable [[func.wrap.func]] for
-> argument types `ArgTypes...` and return type `R`.
->
-> *Effects:* As if by: `function(std::forward<F>(f)).swap(*this);`
->
-> *Returns:* `*this`.
+*Constraints:* `decay_t<F>` is Lvalue-Callable [[func.wrap.func]] for
+argument types `ArgTypes...` and return type `R`.
+
+*Effects:* As if by: `function(std::forward<F>(f)).swap(*this);`
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class F> function& operator=(reference_wrapper<F> f) noexcept;
 ```
 
-> *Effects:* As if by: `function(f).swap(*this);`
->
-> *Returns:* `*this`.
+*Effects:* As if by: `function(f).swap(*this);`
+
+*Returns:* `*this`.
 
 ``` cpp
 ~function();
 ```
 
-> *Effects:* If `*this != nullptr`, destroys the target of .
+*Effects:* If `*this != nullptr`, destroys the target of .
 
 ##### Modifiers <a id="func.wrap.func.mod">[[func.wrap.func.mod]]</a>
 
@@ -9449,7 +9412,7 @@ template<class F> function& operator=(reference_wrapper<F> f) noexcept;
 void swap(function& other) noexcept;
 ```
 
-> *Effects:* Interchanges the target objects of `*this` and `other`.
+*Effects:* Interchanges the target objects of `*this` and `other`.
 
 ##### Capacity <a id="func.wrap.func.cap">[[func.wrap.func.cap]]</a>
 
@@ -9457,7 +9420,7 @@ void swap(function& other) noexcept;
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:* `true` if `*this` has a target, otherwise `false`.
+*Returns:* `true` if `*this` has a target, otherwise `false`.
 
 ##### Invocation <a id="func.wrap.func.inv">[[func.wrap.func.inv]]</a>
 
@@ -9465,12 +9428,12 @@ explicit operator bool() const noexcept;
 R operator()(ArgTypes... args) const;
 ```
 
-> *Returns:* *INVOKE*\<R\>(f,
-> std::forward\<ArgTypes\>(args)...) [[func.require]], where `f` is the
-> target object [[func.def]] of `*this`.
->
-> *Throws:* `bad_function_call` if `!*this`; otherwise, any exception
-> thrown by the target object.
+*Returns:* *INVOKE*\<R\>(f,
+std::forward\<ArgTypes\>(args)...) [[func.require]], where `f` is the
+target object [[func.def]] of `*this`.
+
+*Throws:* `bad_function_call` if `!*this`; otherwise, any exception
+thrown by the target object.
 
 ##### Target access <a id="func.wrap.func.targ">[[func.wrap.func.targ]]</a>
 
@@ -9478,16 +9441,16 @@ R operator()(ArgTypes... args) const;
 const type_info& target_type() const noexcept;
 ```
 
-> *Returns:* If `*this` has a target of type `T`, `typeid(T)`;
-> otherwise, `typeid(void)`.
+*Returns:* If `*this` has a target of type `T`, `typeid(T)`; otherwise,
+`typeid(void)`.
 
 ``` cpp
 template<class T>       T* target() noexcept;
 template<class T> const T* target() const noexcept;
 ```
 
-> *Returns:* If `target_type() == typeid(T)` a pointer to the stored
-> function target; otherwise a null pointer.
+*Returns:* If `target_type() == typeid(T)` a pointer to the stored
+function target; otherwise a null pointer.
 
 ##### Null pointer comparison operator functions <a id="func.wrap.func.nullptr">[[func.wrap.func.nullptr]]</a>
 
@@ -9496,7 +9459,7 @@ template<class R, class... ArgTypes>
   bool operator==(const function<R(ArgTypes...)>& f, nullptr_t) noexcept;
 ```
 
-> *Returns:* `!f`.
+*Returns:* `!f`.
 
 ##### Specialized algorithms <a id="func.wrap.func.alg">[[func.wrap.func.alg]]</a>
 
@@ -9505,7 +9468,7 @@ template<class R, class... ArgTypes>
   void swap(function<R(ArgTypes...)>& f1, function<R(ArgTypes...)>& f2) noexcept;
 ```
 
-> *Effects:* As if by: `f1.swap(f2);`
+*Effects:* As if by: `f1.swap(f2);`
 
 #### Move only wrapper <a id="func.wrap.move">[[func.wrap.move]]</a>
 
@@ -9579,7 +9542,7 @@ call signature.
 Implementations should avoid the use of dynamically allocated memory for
 a small contained value.
 
-\[*Note 5*: Such small-object optimization can only be applied to a type
+\[*Note 6*: Such small-object optimization can only be applied to a type
 `T` for which `is_nothrow_move_constructible_v<T>` is
 `true`. — *end note*\]
 
@@ -9590,157 +9553,154 @@ template<class VT>
   static constexpr bool is-callable-from = see below;
 ```
 
-> If *noex* is `true`, *`is-callable-from`*`<VT>` is equal to:
->
-> ``` cpp
-> is_nothrow_invocable_r_v<R, VT cv ref, ArgTypes...> &&
-> is_nothrow_invocable_r_v<R, VT inv-quals, ArgTypes...>
-> ```
->
-> Otherwise, *`is-callable-from`*`<VT>` is equal to:
->
-> ``` cpp
-> is_invocable_r_v<R, VT cv ref, ArgTypes...> &&
-> is_invocable_r_v<R, VT inv-quals, ArgTypes...>
-> ```
+If *noex* is `true`, *`is-callable-from`*`<VT>` is equal to:
+
+``` cpp
+is_nothrow_invocable_r_v<R, VT cv ref, ArgTypes...> &&
+is_nothrow_invocable_r_v<R, VT inv-quals, ArgTypes...>
+```
+
+Otherwise, *`is-callable-from`*`<VT>` is equal to:
+
+``` cpp
+is_invocable_r_v<R, VT cv ref, ArgTypes...> &&
+is_invocable_r_v<R, VT inv-quals, ArgTypes...>
+```
 
 ``` cpp
 move_only_function() noexcept;
 move_only_function(nullptr_t) noexcept;
 ```
 
-> *Ensures:* `*this` has no target object.
+*Ensures:* `*this` has no target object.
 
 ``` cpp
 move_only_function(move_only_function&& f) noexcept;
 ```
 
-> *Ensures:* The target object of `*this` is the target object `f` had
-> before construction, and `f` is in a valid state with an unspecified
-> value.
+*Ensures:* The target object of `*this` is the target object `f` had
+before construction, and `f` is in a valid state with an unspecified
+value.
 
 ``` cpp
 template<class F> move_only_function(F&& f);
 ```
 
-> Let `VT` be `decay_t<F>`.
->
-> *Constraints:*
->
-> - `remove_cvref_t<F>` is not the same type as `move_only_function`,
->   and
->
-> - `remove_cvref_t<F>` is not a specialization of `in_place_type_t`,
->   and
->
-> - *`is-callable-from`*`<VT>` is `true`.
->
-> *Mandates:* `is_constructible_v<VT, F>` is `true`.
->
-> *Preconditions:* `VT` meets the *Cpp17Destructible* requirements, and
-> if `is_move_constructible_v<VT>` is `true`, `VT` meets the
-> *Cpp17MoveConstructible* requirements.
->
-> *Ensures:* `*this` has no target object if any of the following hold:
->
-> - `f` is a null function pointer value, or
->
-> - `f` is a null member pointer value, or
->
-> - `remove_cvref_t<F>` is a specialization of the `move_only_function`
->   class template, and `f` has no target object.
->
-> Otherwise, `*this` has a target object of type `VT`
-> direct-non-list-initialized with `std::forward<F>(f)`.
->
-> *Throws:* Any exception thrown by the initialization of the target
-> object. May throw `bad_alloc` unless `VT` is a function pointer or a
-> specialization of `reference_wrapper`.
+Let `VT` be `decay_t<F>`.
+
+*Constraints:*
+
+- `remove_cvref_t<F>` is not the same type as `move_only_function`, and
+
+- `remove_cvref_t<F>` is not a specialization of `in_place_type_t`, and
+
+- *`is-callable-from`*`<VT>` is `true`.
+
+*Mandates:* `is_constructible_v<VT, F>` is `true`.
+
+*Preconditions:* `VT` meets the *Cpp17Destructible* requirements, and if
+`is_move_constructible_v<VT>` is `true`, `VT` meets the
+*Cpp17MoveConstructible* requirements.
+
+*Ensures:* `*this` has no target object if any of the following hold:
+
+- `f` is a null function pointer value, or
+
+- `f` is a null member pointer value, or
+
+- `remove_cvref_t<F>` is a specialization of the `move_only_function`
+  class template, and `f` has no target object.
+
+Otherwise, `*this` has a target object of type `VT`
+direct-non-list-initialized with `std::forward<F>(f)`.
+
+*Throws:* Any exception thrown by the initialization of the target
+object. May throw `bad_alloc` unless `VT` is a function pointer or a
+specialization of `reference_wrapper`.
 
 ``` cpp
 template<class T, class... Args>
   explicit move_only_function(in_place_type_t<T>, Args&&... args);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:*
->
-> - `is_constructible_v<VT, Args...>` is `true`, and
->
-> - *`is-callable-from`*`<VT>` is `true`.
->
-> *Mandates:* `VT` is the same type as `T`.
->
-> *Preconditions:* `VT` meets the *Cpp17Destructible* requirements, and
-> if `is_move_constructible_v<VT>` is `true`, `VT` meets the
-> *Cpp17MoveConstructible* requirements.
->
-> *Ensures:* `*this` has a target object of type `VT`
-> direct-non-list-initialized with `std::forward<Args>(args)...`.
->
-> *Throws:* Any exception thrown by the initialization of the target
-> object. May throw `bad_alloc` unless `VT` is a function pointer or a
-> specialization of `reference_wrapper`.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:*
+
+- `is_constructible_v<VT, Args...>` is `true`, and
+
+- *`is-callable-from`*`<VT>` is `true`.
+
+*Mandates:* `VT` is the same type as `T`.
+
+*Preconditions:* `VT` meets the *Cpp17Destructible* requirements, and if
+`is_move_constructible_v<VT>` is `true`, `VT` meets the
+*Cpp17MoveConstructible* requirements.
+
+*Ensures:* `*this` has a target object of type `VT`
+direct-non-list-initialized with `std::forward<Args>(args)...`.
+
+*Throws:* Any exception thrown by the initialization of the target
+object. May throw `bad_alloc` unless `VT` is a function pointer or a
+specialization of `reference_wrapper`.
 
 ``` cpp
 template<class T, class U, class... Args>
   explicit move_only_function(in_place_type_t<T>, initializer_list<U> ilist, Args&&... args);
 ```
 
-> Let `VT` be `decay_t<T>`.
->
-> *Constraints:*
->
-> - `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`,
->   and
->
-> - *`is-callable-from`*`<VT>` is `true`.
->
-> *Mandates:* `VT` is the same type as `T`.
->
-> *Preconditions:* `VT` meets the *Cpp17Destructible* requirements, and
-> if `is_move_constructible_v<VT>` is `true`, `VT` meets the
-> *Cpp17MoveConstructible* requirements.
->
-> *Ensures:* `*this` has a target object of type `VT`
-> direct-non-list-initialized with `ilist, std::forward<Args>(args)...`.
->
-> *Throws:* Any exception thrown by the initialization of the target
-> object. May throw `bad_alloc` unless `VT` is a function pointer or a
-> specialization of `reference_wrapper`.
+Let `VT` be `decay_t<T>`.
+
+*Constraints:*
+
+- `is_constructible_v<VT, initializer_list<U>&, Args...>` is `true`, and
+
+- *`is-callable-from`*`<VT>` is `true`.
+
+*Mandates:* `VT` is the same type as `T`.
+
+*Preconditions:* `VT` meets the *Cpp17Destructible* requirements, and if
+`is_move_constructible_v<VT>` is `true`, `VT` meets the
+*Cpp17MoveConstructible* requirements.
+
+*Ensures:* `*this` has a target object of type `VT`
+direct-non-list-initialized with `ilist, std::forward<Args>(args)...`.
+
+*Throws:* Any exception thrown by the initialization of the target
+object. May throw `bad_alloc` unless `VT` is a function pointer or a
+specialization of `reference_wrapper`.
 
 ``` cpp
 move_only_function& operator=(move_only_function&& f);
 ```
 
-> *Effects:* Equivalent to:
-> `move_only_function(std::move(f)).swap(*this);`
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to:
+`move_only_function(std::move(f)).swap(*this);`
+
+*Returns:* `*this`.
 
 ``` cpp
 move_only_function& operator=(nullptr_t) noexcept;
 ```
 
-> *Effects:* Destroys the target object of `*this`, if any.
->
-> *Returns:* `*this`.
+*Effects:* Destroys the target object of `*this`, if any.
+
+*Returns:* `*this`.
 
 ``` cpp
 template<class F> move_only_function& operator=(F&& f);
 ```
 
-> *Effects:* Equivalent to:
-> `move_only_function(std::forward<F>(f)).swap(*this);`
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to:
+`move_only_function(std::forward<F>(f)).swap(*this);`
+
+*Returns:* `*this`.
 
 ``` cpp
 ~move_only_function();
 ```
 
-> *Effects:* Destroys the target object of `*this`, if any.
+*Effects:* Destroys the target object of `*this`, if any.
 
 ##### Invocation <a id="func.wrap.move.inv">[[func.wrap.move.inv]]</a>
 
@@ -9748,22 +9708,22 @@ template<class F> move_only_function& operator=(F&& f);
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:* `true` if `*this` has a target object, otherwise `false`.
+*Returns:* `true` if `*this` has a target object, otherwise `false`.
 
 ``` cpp
 R operator()(ArgTypes... args) cv ref noexcept(noex);
 ```
 
-> *Preconditions:* `*this` has a target object.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return INVOKE<R>(static_cast<F inv-quals>(f), std::forward<ArgTypes>(args)...);
-> ```
->
-> where `f` is an lvalue designating the target object of `*this` and
-> `F` is the type of `f`.
+*Preconditions:* `*this` has a target object.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return INVOKE<R>(static_cast<F inv-quals>(f), std::forward<ArgTypes>(args)...);
+```
+
+where `f` is an lvalue designating the target object of `*this` and `F`
+is the type of `f`.
 
 ##### Utility <a id="func.wrap.move.util">[[func.wrap.move.util]]</a>
 
@@ -9771,19 +9731,19 @@ R operator()(ArgTypes... args) cv ref noexcept(noex);
 void swap(move_only_function& other) noexcept;
 ```
 
-> *Effects:* Exchanges the target objects of `*this` and `other`.
+*Effects:* Exchanges the target objects of `*this` and `other`.
 
 ``` cpp
 friend void swap(move_only_function& f1, move_only_function& f2) noexcept;
 ```
 
-> *Effects:* Equivalent to `f1.swap(f2)`.
+*Effects:* Equivalent to `f1.swap(f2)`.
 
 ``` cpp
 friend bool operator==(const move_only_function& f, nullptr_t) noexcept;
 ```
 
-> *Returns:* `true` if `f` has no target object, otherwise `false`.
+*Returns:* `true` if `f` has no target object, otherwise `false`.
 
 ### Searchers <a id="func.search">[[func.search]]</a>
 
@@ -9851,12 +9811,12 @@ constexpr default_searcher(ForwardIterator1 pat_first, ForwardIterator1 pat_last
                            BinaryPredicate pred = BinaryPredicate());
 ```
 
-> *Effects:* Constructs a `default_searcher` object, initializing
-> `pat_first_` with `pat_first`, `pat_last_` with `pat_last`, and
-> `pred_` with `pred`.
->
-> *Throws:* Any exception thrown by the copy constructor of
-> `BinaryPredicate` or `ForwardIterator1`.
+*Effects:* Constructs a `default_searcher` object, initializing
+`pat_first_` with `pat_first`, `pat_last_` with `pat_last`, and `pred_`
+with `pred`.
+
+*Throws:* Any exception thrown by the copy constructor of
+`BinaryPredicate` or `ForwardIterator1`.
 
 ``` cpp
 template<class ForwardIterator2>
@@ -9864,12 +9824,12 @@ template<class ForwardIterator2>
     operator()(ForwardIterator2 first, ForwardIterator2 last) const;
 ```
 
-> *Effects:* Returns a pair of iterators `i` and `j` such that
->
-> - `i == search(first, last, pat_first_, pat_last_, pred_)`, and
->
-> - if `i == last`, then `j == last`, otherwise
->   `j == next(i, distance(pat_first_, pat_last_))`.
+*Effects:* Returns a pair of iterators `i` and `j` such that
+
+- `i == search(first, last, pat_first_, pat_last_, pred_)`, and
+
+- if `i == last`, then `j == last`, otherwise
+  `j == next(i, distance(pat_first_, pat_last_))`.
 
 #### Class template `boyer_moore_searcher` <a id="func.search.bm">[[func.search.bm]]</a>
 
@@ -9905,23 +9865,23 @@ boyer_moore_searcher(RandomAccessIterator1 pat_first,
                      BinaryPredicate pred = BinaryPredicate());
 ```
 
-> *Preconditions:* The value type of `RandomAccessIterator1` meets the
-> *Cpp17DefaultConstructible*, the *Cpp17CopyConstructible*, and the
-> *Cpp17CopyAssignable* requirements.
->
-> Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For
-> any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
-> `hf(A) == hf(B)` is `true`.
->
-> *Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
-> `pat_last`, `hash_` with `hf`, and `pred_` with `pred`.
->
-> *Throws:* Any exception thrown by the copy constructor of
-> `RandomAccessIterator1`, or by the default constructor, copy
-> constructor, or the copy assignment operator of the value type of
-> `RandomAccessIterator1`, or the copy constructor or `operator()` of
-> `BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional
-> memory needed for internal data structures cannot be allocated.
+*Preconditions:* The value type of `RandomAccessIterator1` meets the
+*Cpp17DefaultConstructible*, the *Cpp17CopyConstructible*, and the
+*Cpp17CopyAssignable* requirements.
+
+Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For any
+two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
+`hf(A) == hf(B)` is `true`.
+
+*Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
+`pat_last`, `hash_` with `hf`, and `pred_` with `pred`.
+
+*Throws:* Any exception thrown by the copy constructor of
+`RandomAccessIterator1`, or by the default constructor, copy
+constructor, or the copy assignment operator of the value type of
+`RandomAccessIterator1`, or the copy constructor or `operator()` of
+`BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional memory
+needed for internal data structures cannot be allocated.
 
 ``` cpp
 template<class RandomAccessIterator2>
@@ -9929,26 +9889,26 @@ template<class RandomAccessIterator2>
     operator()(RandomAccessIterator2 first, RandomAccessIterator2 last) const;
 ```
 
-> *Mandates:* `RandomAccessIterator1` and `RandomAccessIterator2` have
-> the same value type.
->
-> *Effects:* Finds a subsequence of equal values in a sequence.
->
-> *Returns:* A pair of iterators `i` and `j` such that
->
-> - `i` is the first iterator in the range \[`first`,
->   `last - (pat_last_ - pat_first_)`) such that for every non-negative
->   integer `n` less than `pat_last_ - pat_first_` the following
->   condition holds: `pred(*(i + n), *(pat_first_ + n)) != false`, and
->
-> - `j == next(i, distance(pat_first_, pat_last_))`.
->
-> Returns `make_pair(first, first)` if \[`pat_first_`, `pat_last_`) is
-> empty, otherwise returns `make_pair(last, last)` if no such iterator
-> is found.
->
-> *Complexity:* At most `(last - first) * (pat_last_ - pat_first_)`
-> applications of the predicate.
+*Mandates:* `RandomAccessIterator1` and `RandomAccessIterator2` have the
+same value type.
+
+*Effects:* Finds a subsequence of equal values in a sequence.
+
+*Returns:* A pair of iterators `i` and `j` such that
+
+- `i` is the first iterator in the range \[`first`,
+  `last - (pat_last_ - pat_first_)`) such that for every non-negative
+  integer `n` less than `pat_last_ - pat_first_` the following condition
+  holds: `pred(*(i + n), *(pat_first_ + n)) != false`, and
+
+- `j == next(i, distance(pat_first_, pat_last_))`.
+
+Returns `make_pair(first, first)` if \[`pat_first_`, `pat_last_`) is
+empty, otherwise returns `make_pair(last, last)` if no such iterator is
+found.
+
+*Complexity:* At most `(last - first) * (pat_last_ - pat_first_)`
+applications of the predicate.
 
 #### Class template `boyer_moore_horspool_searcher` <a id="func.search.bmh">[[func.search.bmh]]</a>
 
@@ -9984,23 +9944,23 @@ boyer_moore_horspool_searcher(RandomAccessIterator1 pat_first,
                               BinaryPredicate pred = BinaryPredicate());
 ```
 
-> *Preconditions:* The value type of `RandomAccessIterator1` meets the
-> *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and
-> *Cpp17CopyAssignable* requirements.
->
-> Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For
-> any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
-> `hf(A) == hf(B)` is `true`.
->
-> *Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
-> `pat_last`, `hash_` with `hf`, and `pred_` with `pred`.
->
-> *Throws:* Any exception thrown by the copy constructor of
-> `RandomAccessIterator1`, or by the default constructor, copy
-> constructor, or the copy assignment operator of the value type of
-> `RandomAccessIterator1`, or the copy constructor or `operator()` of
-> `BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional
-> memory needed for internal data structures cannot be allocated.
+*Preconditions:* The value type of `RandomAccessIterator1` meets the
+*Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and
+*Cpp17CopyAssignable* requirements.
+
+Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For any
+two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
+`hf(A) == hf(B)` is `true`.
+
+*Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
+`pat_last`, `hash_` with `hf`, and `pred_` with `pred`.
+
+*Throws:* Any exception thrown by the copy constructor of
+`RandomAccessIterator1`, or by the default constructor, copy
+constructor, or the copy assignment operator of the value type of
+`RandomAccessIterator1`, or the copy constructor or `operator()` of
+`BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional memory
+needed for internal data structures cannot be allocated.
 
 ``` cpp
 template<class RandomAccessIterator2>
@@ -10008,26 +9968,26 @@ template<class RandomAccessIterator2>
     operator()(RandomAccessIterator2 first, RandomAccessIterator2 last) const;
 ```
 
-> *Mandates:* `RandomAccessIterator1` and `RandomAccessIterator2` have
-> the same value type.
->
-> *Effects:* Finds a subsequence of equal values in a sequence.
->
-> *Returns:* A pair of iterators `i` and `j` such that
->
-> - `i` is the first iterator in the range \[`first`,
->   `last - (pat_last_ - pat_first_)`) such that for every non-negative
->   integer `n` less than `pat_last_ - pat_first_` the following
->   condition holds: `pred(*(i + n), *(pat_first_ + n)) != false`, and
->
-> - `j == next(i, distance(pat_first_, pat_last_))`.
->
-> Returns `make_pair(first, first)` if \[`pat_first_`, `pat_last_`) is
-> empty, otherwise returns `make_pair(last, last)` if no such iterator
-> is found.
->
-> *Complexity:* At most `(last - first) * (pat_last_ - pat_first_)`
-> applications of the predicate.
+*Mandates:* `RandomAccessIterator1` and `RandomAccessIterator2` have the
+same value type.
+
+*Effects:* Finds a subsequence of equal values in a sequence.
+
+*Returns:* A pair of iterators `i` and `j` such that
+
+- `i` is the first iterator in the range \[`first`,
+  `last - (pat_last_ - pat_first_)`) such that for every non-negative
+  integer `n` less than `pat_last_ - pat_first_` the following condition
+  holds: `pred(*(i + n), *(pat_first_ + n)) != false`, and
+
+- `j == next(i, distance(pat_first_, pat_last_))`.
+
+Returns `make_pair(first, first)` if \[`pat_first_`, `pat_last_`) is
+empty, otherwise returns `make_pair(last, last)` if no such iterator is
+found.
+
+*Complexity:* At most `(last - first) * (pat_last_ - pat_first_)`
+applications of the predicate.
 
 ### Class template `hash` <a id="unord.hash">[[unord.hash]]</a>
 
@@ -10038,7 +9998,7 @@ default hash function.
 Each specialization of `hash` is either enabled or disabled, as
 described below.
 
-\[*Note 6*: Enabled specializations meet the *Cpp17Hash* requirements,
+\[*Note 7*: Enabled specializations meet the *Cpp17Hash* requirements,
 and disabled specializations do not. — *end note*\]
 
 Each header that declares the template `hash` provides enabled
@@ -10057,7 +10017,7 @@ If `H` is a disabled specialization of `hash`, these values are `false`:
 `is_move_assignable_v<H>`. Disabled specializations of `hash` are not
 function object types [[function.objects]].
 
-\[*Note 7*: This means that the specialization of `hash` exists, but any
+\[*Note 8*: This means that the specialization of `hash` exists, but any
 attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*\]
 
 An enabled specialization `hash<Key>` will:
@@ -10126,62 +10086,62 @@ and in unordered associative containers [[unord]].
 type_index(const type_info& rhs) noexcept;
 ```
 
-> *Effects:* Constructs a `type_index` object, the equivalent of
-> `target = &rhs`.
+*Effects:* Constructs a `type_index` object, the equivalent of
+`target = &rhs`.
 
 ``` cpp
 bool operator==(const type_index& rhs) const noexcept;
 ```
 
-> *Returns:* `*target == *rhs.target`.
+*Returns:* `*target == *rhs.target`.
 
 ``` cpp
 bool operator<(const type_index& rhs) const noexcept;
 ```
 
-> *Returns:* `target->before(*rhs.target)`.
+*Returns:* `target->before(*rhs.target)`.
 
 ``` cpp
 bool operator>(const type_index& rhs) const noexcept;
 ```
 
-> *Returns:* `rhs.target->before(*target)`.
+*Returns:* `rhs.target->before(*target)`.
 
 ``` cpp
 bool operator<=(const type_index& rhs) const noexcept;
 ```
 
-> *Returns:* `!rhs.target->before(*target)`.
+*Returns:* `!rhs.target->before(*target)`.
 
 ``` cpp
 bool operator>=(const type_index& rhs) const noexcept;
 ```
 
-> *Returns:* `!target->before(*rhs.target)`.
+*Returns:* `!target->before(*rhs.target)`.
 
 ``` cpp
 strong_ordering operator<=>(const type_index& rhs) const noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (*target == *rhs.target) return strong_ordering::equal;
-> if (target->before(*rhs.target)) return strong_ordering::less;
-> return strong_ordering::greater;
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+if (*target == *rhs.target) return strong_ordering::equal;
+if (target->before(*rhs.target)) return strong_ordering::less;
+return strong_ordering::greater;
+```
 
 ``` cpp
 size_t hash_code() const noexcept;
 ```
 
-> *Returns:* `target->hash_code()`.
+*Returns:* `target->hash_code()`.
 
 ``` cpp
 const char* name() const noexcept;
 ```
 
-> *Returns:* `target->name()`.
+*Returns:* `target->name()`.
 
 ### Hash support <a id="type.index.hash">[[type.index.hash]]</a>
 
@@ -10189,9 +10149,8 @@ const char* name() const noexcept;
 template<> struct hash<type_index>;
 ```
 
-> For an object `index` of type `type_index`,
-> `hash<type_index>()(index)` shall evaluate to the same result as
-> `index.hash_code()`.
+For an object `index` of type `type_index`, `hash<type_index>()(index)`
+shall evaluate to the same result as `index.hash_code()`.
 
 ## Execution policies <a id="execpol">[[execpol]]</a>
 
@@ -10264,20 +10223,20 @@ namespace std::execution {
 template<class T> struct is_execution_policy { see below };
 ```
 
-> `is_execution_policy` can be used to detect execution policies for the
-> purpose of excluding function signatures from otherwise ambiguous
-> overload resolution participation.
->
-> `is_execution_policy<T>` is a *Cpp17UnaryTypeTrait* with a base
-> characteristic of `true_type` if `T` is the type of a standard or
-> *implementation-defined* execution policy, otherwise `false_type`.
->
-> \[*Note 23*: This provision reserves the privilege of creating
-> non-standard execution policies to the library
-> implementation. — *end note*\]
->
-> The behavior of a program that adds specializations for
-> `is_execution_policy` is undefined.
+`is_execution_policy` can be used to detect execution policies for the
+purpose of excluding function signatures from otherwise ambiguous
+overload resolution participation.
+
+`is_execution_policy<T>` is a *Cpp17UnaryTypeTrait* with a base
+characteristic of `true_type` if `T` is the type of a standard or
+*implementation-defined* execution policy, otherwise `false_type`.
+
+\[*Note 2*: This provision reserves the privilege of creating
+non-standard execution policies to the library
+implementation. — *end note*\]
+
+The behavior of a program that adds specializations for
+`is_execution_policy` is undefined.
 
 ### Sequenced execution policy <a id="execpol.seq">[[execpol.seq]]</a>
 
@@ -10285,15 +10244,14 @@ template<class T> struct is_execution_policy { see below };
 class execution::sequenced_policy { unspecified };
 ```
 
-> The class `execution::sequenced_policy` is an execution policy type
-> used as a unique type to disambiguate parallel algorithm overloading
-> and require that a parallel algorithm’s execution may not be
-> parallelized.
->
-> During the execution of a parallel algorithm with the
-> `execution::sequenced_policy` policy, if the invocation of an element
-> access function exits via an exception, `terminate` is
-> invoked [[except.terminate]].
+The class `execution::sequenced_policy` is an execution policy type used
+as a unique type to disambiguate parallel algorithm overloading and
+require that a parallel algorithm’s execution may not be parallelized.
+
+During the execution of a parallel algorithm with the
+`execution::sequenced_policy` policy, if the invocation of an element
+access function exits via an exception, `terminate` is
+invoked [[except.terminate]].
 
 ### Parallel execution policy <a id="execpol.par">[[execpol.par]]</a>
 
@@ -10301,15 +10259,14 @@ class execution::sequenced_policy { unspecified };
 class execution::parallel_policy { unspecified };
 ```
 
-> The class `execution::parallel_policy` is an execution policy type
-> used as a unique type to disambiguate parallel algorithm overloading
-> and indicate that a parallel algorithm’s execution may be
-> parallelized.
->
-> During the execution of a parallel algorithm with the
-> `execution::parallel_policy` policy, if the invocation of an element
-> access function exits via an exception, `terminate` is
-> invoked [[except.terminate]].
+The class `execution::parallel_policy` is an execution policy type used
+as a unique type to disambiguate parallel algorithm overloading and
+indicate that a parallel algorithm’s execution may be parallelized.
+
+During the execution of a parallel algorithm with the
+`execution::parallel_policy` policy, if the invocation of an element
+access function exits via an exception, `terminate` is
+invoked [[except.terminate]].
 
 ### Parallel and unsequenced execution policy <a id="execpol.parunseq">[[execpol.parunseq]]</a>
 
@@ -10317,15 +10274,15 @@ class execution::parallel_policy { unspecified };
 class execution::parallel_unsequenced_policy { unspecified };
 ```
 
-> The class `execution::parallel_unsequenced_policy` is an execution
-> policy type used as a unique type to disambiguate parallel algorithm
-> overloading and indicate that a parallel algorithm’s execution may be
-> parallelized and vectorized.
->
-> During the execution of a parallel algorithm with the
-> `execution::parallel_unsequenced_policy` policy, if the invocation of
-> an element access function exits via an exception, `terminate` is
-> invoked [[except.terminate]].
+The class `execution::parallel_unsequenced_policy` is an execution
+policy type used as a unique type to disambiguate parallel algorithm
+overloading and indicate that a parallel algorithm’s execution may be
+parallelized and vectorized.
+
+During the execution of a parallel algorithm with the
+`execution::parallel_unsequenced_policy` policy, if the invocation of an
+element access function exits via an exception, `terminate` is
+invoked [[except.terminate]].
 
 ### Unsequenced execution policy <a id="execpol.unseq">[[execpol.unseq]]</a>
 
@@ -10353,8 +10310,8 @@ inline constexpr execution::parallel_unsequenced_policy execution::par_unseq{ un
 inline constexpr execution::unsequenced_policy          execution::unseq{ unspecified };
 ```
 
-> The header declares global objects associated with each type of
-> execution policy.
+The header declares global objects associated with each type of
+execution policy.
 
 ## Primitive numeric conversions <a id="charconv">[[charconv]]</a>
 
@@ -10456,50 +10413,50 @@ if `fmt` is `chars_format::hex`, and `g` if `fmt` is
 constexpr to_chars_result to_chars(char* first, char* last, integer-type value, int base = 10);
 ```
 
-> *Preconditions:* `base` has a value between 2 and 36 (inclusive).
->
-> *Effects:* The value of `value` is converted to a string of digits in
-> the given base (with no redundant leading zeroes). Digits in the range
-> 10..35 (inclusive) are represented as lowercase characters `a`..`z`.
-> If `value` is less than zero, the representation starts with `’-’`.
->
-> *Throws:* Nothing.
+*Preconditions:* `base` has a value between 2 and 36 (inclusive).
+
+*Effects:* The value of `value` is converted to a string of digits in
+the given base (with no redundant leading zeroes). Digits in the range
+10..35 (inclusive) are represented as lowercase characters `a`..`z`. If
+`value` is less than zero, the representation starts with `’-’`.
+
+*Throws:* Nothing.
 
 ``` cpp
 to_chars_result to_chars(char* first, char* last, floating-point-type value);
 ```
 
-> *Effects:* `value` is converted to a string in the style of `printf`
-> in the `"C"` locale. The conversion specifier is `f` or `e`, chosen
-> according to the requirement for a shortest representation (see
-> above); a tie is resolved in favor of `f`.
->
-> *Throws:* Nothing.
+*Effects:* `value` is converted to a string in the style of `printf` in
+the `"C"` locale. The conversion specifier is `f` or `e`, chosen
+according to the requirement for a shortest representation (see above);
+a tie is resolved in favor of `f`.
+
+*Throws:* Nothing.
 
 ``` cpp
 to_chars_result to_chars(char* first, char* last, floating-point-type value, chars_format fmt);
 ```
 
-> *Preconditions:* `fmt` has the value of one of the enumerators of
-> `chars_format`.
->
-> *Effects:* `value` is converted to a string in the style of `printf`
-> in the `"C"` locale.
->
-> *Throws:* Nothing.
+*Preconditions:* `fmt` has the value of one of the enumerators of
+`chars_format`.
+
+*Effects:* `value` is converted to a string in the style of `printf` in
+the `"C"` locale.
+
+*Throws:* Nothing.
 
 ``` cpp
 to_chars_result to_chars(char* first, char* last, floating-point-type value,
                          chars_format fmt, int precision);
 ```
 
-> *Preconditions:* `fmt` has the value of one of the enumerators of
-> `chars_format`.
->
-> *Effects:* `value` is converted to a string in the style of `printf`
-> in the `"C"` locale with the given precision.
->
-> *Throws:* Nothing.
+*Preconditions:* `fmt` has the value of one of the enumerators of
+`chars_format`.
+
+*Effects:* `value` is converted to a string in the style of `printf` in
+the `"C"` locale with the given precision.
+
+*Throws:* Nothing.
 
 ### Primitive numeric input conversion <a id="charconv.from.chars">[[charconv.from.chars]]</a>
 
@@ -10527,48 +10484,47 @@ constexpr from_chars_result from_chars(const char* first, const char* last,
                                        integer-type&\itcorr[-1] value, int base = 10);
 ```
 
-> *Preconditions:* `base` has a value between 2 and 36 (inclusive).
->
-> *Effects:* The pattern is the expected form of the subject sequence in
-> the `"C"` locale for the given nonzero base, as described for
-> `strtol`, except that no `"0x"` or `"0X"` prefix shall appear if the
-> value of `base` is 16, and except that `’-’` is the only sign that may
-> appear, and only if `value` has a signed type.
->
-> *Throws:* Nothing.
+*Preconditions:* `base` has a value between 2 and 36 (inclusive).
+
+*Effects:* The pattern is the expected form of the subject sequence in
+the `"C"` locale for the given nonzero base, as described for `strtol`,
+except that no `"0x"` or `"0X"` prefix shall appear if the value of
+`base` is 16, and except that `’-’` is the only sign that may appear,
+and only if `value` has a signed type.
+
+*Throws:* Nothing.
 
 ``` cpp
 from_chars_result from_chars(const char* first, const char* last, floating-point-type& value,
                              chars_format fmt = chars_format::general);
 ```
 
-> *Preconditions:* `fmt` has the value of one of the enumerators of
-> `chars_format`.
->
-> *Effects:* The pattern is the expected form of the subject sequence in
-> the `"C"` locale, as described for `strtod`, except that
->
-> - the sign `’+’` may only appear in the exponent part;
->
-> - if `fmt` has `chars_format::scientific` set but not
->   `chars_format::fixed`, the otherwise optional exponent part shall
->   appear;
->
-> - if `fmt` has `chars_format::fixed` set but not
->   `chars_format::scientific`, the optional exponent part shall not
->   appear; and
->
-> - if `fmt` is `chars_format::hex`, the prefix `"0x"` or `"0X"` is
->   assumed.
->
->   \[*Example 12*: The string `0x123` is parsed to have the value `0`
->   with remaining characters `x123`. — *end example*\]
->
-> In any case, the resulting `value` is one of at most two
-> floating-point values closest to the value of the string matching the
-> pattern.
->
-> *Throws:* Nothing.
+*Preconditions:* `fmt` has the value of one of the enumerators of
+`chars_format`.
+
+*Effects:* The pattern is the expected form of the subject sequence in
+the `"C"` locale, as described for `strtod`, except that
+
+- the sign `’+’` may only appear in the exponent part;
+
+- if `fmt` has `chars_format::scientific` set but not
+  `chars_format::fixed`, the otherwise optional exponent part shall
+  appear;
+
+- if `fmt` has `chars_format::fixed` set but not
+  `chars_format::scientific`, the optional exponent part shall not
+  appear; and
+
+- if `fmt` is `chars_format::hex`, the prefix `"0x"` or `"0X"` is
+  assumed.
+
+  \[*Example 1*: The string `0x123` is parsed to have the value `0` with
+  remaining characters `x123`. — *end example*\]
+
+In any case, the resulting `value` is one of at most two floating-point
+values closest to the value of the string matching the pattern.
+
+*Throws:* Nothing.
 
 ## Formatting <a id="format">[[format]]</a>
 
@@ -10750,7 +10706,7 @@ output. The syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{replacement-field}
-    '{' [arg-id] [format-specifier] '$'}
+    '{' arg-id_opt format-specifier_opt '$'}
 ```
 
 ``` bnf
@@ -10791,11 +10747,12 @@ output. The syntax of replacement fields is as follows:
     as specified by the \texttt{formatter specialization for the argument type}
 ```
 
-The field specifies the index of the argument in `args` whose value is
-to be formatted and inserted into the output instead of the replacement
-field. If there is no argument with the index in `args`, the string is
-not a format string for `args`. The optional field explicitly specifies
-a format for the replacement value.
+The *arg-id* field specifies the index of the argument in `args` whose
+value is to be formatted and inserted into the output instead of the
+replacement field. If there is no argument with the index *arg-id* in
+`args`, the string is not a format string for `args`. The optional
+*format-specifier* field explicitly specifies a format for the
+replacement value.
 
 \[*Example 1*:
 
@@ -10805,10 +10762,11 @@ string s = format("{0}-{{", 8);         // value of s is "8-\{"
 
 — *end example*\]
 
-If all s in a format string are omitted (including those in the , as
-interpreted by the corresponding `formatter` specialization), argument
-indices 0, 1, 2, … will automatically be used in that order. If some s
-are omitted and some are present, the string is not a format string.
+If all *arg-id*s in a format string are omitted (including those in the
+*format-spec*, as interpreted by the corresponding `formatter`
+specialization), argument indices 0, 1, 2, … will automatically be used
+in that order. If some *arg-id*s are omitted and some are present, the
+string is not a format string.
 
 \[*Note 1*: A format string cannot contain a mixture of automatic and
 manual indexing. — *end note*\]
@@ -10826,28 +10784,32 @@ string s3 = format("{} to {1}",  "a", "b"); // not a format string (mixing autom
 
 — *end example*\]
 
-The field contains *format specifications* that define how the value
-should be presented. Each type can define its own interpretation of the
-field. If does not conform to the format specifications for the argument
-type referred to by , the string is not a format string for `args`.
+The *format-spec* field contains *format specifications* that define how
+the value should be presented. Each type can define its own
+interpretation of the *format-spec* field. If *format-spec* does not
+conform to the format specifications for the argument type referred to
+by *arg-id*, the string is not a format string for `args`.
 
 \[*Example 3*:
 
-- For arithmetic, pointer, and string types the is interpreted as a as
-  described in [[format.string.std]].
+- For arithmetic, pointer, and string types the *format-spec* is
+  interpreted as a *std-format-spec* as described in
+  [[format.string.std]].
 
-- For chrono types the is interpreted as a as described in
-  [[time.format]].
+- For chrono types the *format-spec* is interpreted as a
+  *chrono-format-spec* as described in [[time.format]].
 
 - For user-defined `formatter` specializations, the behavior of the
-  `parse` member function determines how the is interpreted.
+  `parse` member function determines how the *format-spec* is
+  interpreted.
 
 — *end example*\]
 
 #### Standard format specifiers <a id="format.string.std">[[format.string.std]]</a>
 
 Each `formatter` specialization described in [[format.formatter.spec]]
-for fundamental and string types interprets as a .
+for fundamental and string types interprets *format-spec* as a
+*std-format-spec*.
 
 \[*Note 2*: The format specification can be used to specify such details
 as minimum field width, alignment, padding, and decimal precision. Some
@@ -10858,12 +10820,12 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{std-format-spec}
-    [fill-and-align] [sign] ['#'] ['0'] [width] [precision] ['L'] [type]
+    fill-and-align_opt sign_opt '#_opt' '0_opt' width_opt precision_opt 'L_opt' type_opt
 ```
 
 ``` bnf
 \fmtnontermdef{fill-and-align}
-    [fill] align
+    fill_opt align
 ```
 
 ``` bnf
@@ -10884,13 +10846,13 @@ The syntax of format specifications is as follows:
 ``` bnf
 \fmtnontermdef{width}
     positive-integer
-    '{' [arg-id] '$'}
+    '{' arg-id_opt '$'}
 ```
 
 ``` bnf
 \fmtnontermdef{precision}
     '.' nonnegative-integer
-    '.' '{' [arg-id] '$'}
+    '.' '{' arg-id_opt '$'}
 ```
 
 ``` bnf
@@ -10905,25 +10867,27 @@ replacement field minimally requires of the formatted sequence of
 characters produced for a format argument. The *estimated field width*
 is the number of field width units that are required for the formatted
 sequence of characters produced for a format argument independent of the
-effects of the option. The *padding width* is the greater of `0` and the
-difference of the minimum field width and the estimated field width.
+effects of the *width* option. The *padding width* is the greater of `0`
+and the difference of the minimum field width and the estimated field
+width.
 
 \[*Note 3*: The POSIX `wcswidth` function is an example of a function
 that, given a string, returns the number of column positions required by
 a terminal to display the string. — *end note*\]
 
-The *fill character* is the character denoted by the option or, if the
-option is absent, the space character. For a format specification in
-UTF-8, UTF-16, or UTF-32, the fill character corresponds to a single
-Unicode scalar value.
+The *fill character* is the character denoted by the *fill* option or,
+if the *fill* option is absent, the space character. For a format
+specification in UTF-8, UTF-16, or UTF-32, the fill character
+corresponds to a single Unicode scalar value.
 
-\[*Note 4*: The presence of a option is signaled by the character
+\[*Note 4*: The presence of a *fill* option is signaled by the character
 following it, which must be one of the alignment options. If the second
-character of is not a valid alignment option, then it is assumed that
-the and options are both absent. — *end note*\]
+character of *std-format-spec* is not a valid alignment option, then it
+is assumed that the *fill* and *align* options are both
+absent. — *end note*\]
 
-The option applies to all argument types. The meaning of the various
-alignment options is as specified in [[format.align]].
+The *align* option applies to all argument types. The meaning of the
+various alignment options is as specified in [[format.align]].
 
 \[*Example 4*:
 
@@ -10944,35 +10908,35 @@ string sA = format("{:*<6}", "12345678");   // value of sA is "12345678"
 
 — *end example*\]
 
-\[*Note 5*: The , , and `0` options have no effect when the minimum
-field width is not greater than the estimated field width because
-padding width is `0` in that case. Since fill characters are assumed to
-have a field width of `1`, use of a character with a different field
-width can produce misaligned output. The character has a field width of
-`2`. The examples above that include that character illustrate the
-effect of the field width when that character is used as a fill
-character as opposed to when it is used as a formatting
+\[*Note 5*: The *fill*, *align*, and `0` options have no effect when the
+minimum field width is not greater than the estimated field width
+because padding width is `0` in that case. Since fill characters are
+assumed to have a field width of `1`, use of a character with a
+different field width can produce misaligned output. The character has a
+field width of `2`. The examples above that include that character
+illustrate the effect of the field width when that character is used as
+a fill character as opposed to when it is used as a formatting
 argument. — *end note*\]
 
-**Table: Meaning of \fmtgrammarterm{align} options**
+**Table: Meaning of *align* options**
 
 | Option | Meaning |
 | --- | --- |
 | `<` | Forces the formatted argument to be aligned to the start of the field by inserting $n$ fill characters after the formatted argument where $n$ is the padding width. This is the default for non-arithmetic non-pointer types, `charT`, and `bool`, unless an integer presentation type is specified. |
 | % `>` | Forces the formatted argument to be aligned to the end of the field by inserting $n$ fill characters before the formatted argument where $n$ is the padding width. This is the default for arithmetic types other than `charT` and `bool`, pointer types, or when an integer presentation type is specified. |
 | % `\caret` | Forces the formatted argument to be centered within the field by inserting $\bigl\lfloor \frac{n}{2} \bigr\rfloor$ fill characters before and $\bigl\lceil \frac{n}{2} \bigr\rceil$ fill characters after the formatted argument, where $n$ is the padding width. |
-The option is only valid for arithmetic types other than `charT` and
-`bool` or when an integer presentation type is specified. The meaning of
-the various options is as specified in [[format.sign]].
+The *sign* option is only valid for arithmetic types other than `charT`
+and `bool` or when an integer presentation type is specified. The
+meaning of the various options is as specified in [[format.sign]].
 
-**Table: Meaning of \fmtgrammarterm{sign} options**
+**Table: Meaning of *sign* options**
 
 | Option | Meaning |
 | --- | --- |
 | `+` | Indicates that a sign should be used for both non-negative and negative numbers. The `+` sign is inserted before the output of `to_chars` for non-negative numbers other than negative zero. \begin{tailnote} For negative numbers and negative zero the output of `to_chars` will already contain the sign so no additional transformation is performed. \end{tailnote} |
 | % `-` | Indicates that a sign should be used for negative numbers and negative zero only (this is the default behavior). |
 | % space | Indicates that a leading space should be used for non-negative numbers other than negative zero, and a minus sign for negative numbers and negative zero. |
-The option applies to floating-point infinity and NaN.
+The *sign* option applies to floating-point infinity and NaN.
 
 \[*Example 5*:
 
@@ -11005,7 +10969,7 @@ The `0` option is valid for arithmetic types other than `charT` and
 arguments that have a value other than an infinity or a NaN, this option
 pads the formatted argument by inserting the `0` character n times
 following the sign or base prefix indicators (if any) where n is `0` if
-the option is present and is the padding width otherwise.
+the *align* option is present and is the padding width otherwise.
 
 \[*Example 6*:
 
@@ -11019,17 +10983,18 @@ string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no 
 
 — *end example*\]
 
-The option specifies the minimum field width. If the option is absent,
-the minimum field width is `0`.
+The *width* option specifies the minimum field width. If the *width*
+option is absent, the minimum field width is `0`.
 
-If `\{ \opt{\fmtgrammarterm{arg-id}} \}` is used in a or option, the
-value of the corresponding formatting argument is used as the value of
-the option. If the corresponding formatting argument is not of standard
-signed or unsigned integer type, or its value is negative, an exception
-of type `format_error` is thrown.
+If `\{ \opt{\fmtgrammarterm{arg-id}} \}` is used in a *width* or
+*precision* option, the value of the corresponding formatting argument
+is used as the value of the option. If the corresponding formatting
+argument is not of standard signed or unsigned integer type, or its
+value is negative, an exception of type `format_error` is thrown.
 
-If is used in a option, the value of the is interpreted as a decimal
-integer and used as the value of the option.
+If *positive-integer* is used in a *width* option, the value of the
+*positive-integer* is interpreted as a decimal integer and used as the
+value of the option.
 
 For the purposes of width computation, a string is assumed to be in a
 locale-independent, *implementation-defined* encoding. Implementations
@@ -11054,26 +11019,26 @@ code points have a field width of 2:
   `East_Asian_Width="F"` Derived Extracted Property as described by of
   the Unicode Standard
 
--  – (Yijing Hexagram Symbols)
+- `U+4dc0` – `U+4dff` (Yijing Hexagram Symbols)
 
--  – (Miscellaneous Symbols and Pictographs)
+- `U+1f300` – `U+1f5ff` (Miscellaneous Symbols and Pictographs)
 
--  – (Supplemental Symbols and Pictographs)
+- `U+1f900` – `U+1f9ff` (Supplemental Symbols and Pictographs)
 
 The field width of all other code points is 1.
 
 For a sequence of characters in neither UTF-8, UTF-16, nor UTF-32, the
 field width is unspecified.
 
-The option is valid for floating-point and string types. For
+The *precision* option is valid for floating-point and string types. For
 floating-point types, the value of this option specifies the precision
 to be used for the floating-point presentation type. For string types,
 this option specifies the longest prefix of the formatted argument to be
 included in the replacement field such that the field width of the
 prefix is no greater than the value of this option.
 
-If is used in a option, the value of the decimal integer is used as the
-value of the option.
+If *nonnegative-integer* is used in a *precision* option, the value of
+the decimal integer is used as the value of the option.
 
 When the `L` option is used, the form used for the conversion is called
 the *locale-specific form*. The `L` option is only valid for arithmetic
@@ -11092,12 +11057,12 @@ types, and its effect depends upon the type.
   string as if obtained with `numpunct::truename` or
   `numpunct::falsename`.
 
-The determines how the data should be presented.
+The *type* determines how the data should be presented.
 
 The available string presentation types are specified in
 [[format.type.string]].
 
-**Table: Meaning of \fmtgrammarterm{type} options for strings**
+**Table: Meaning of *type* options for strings**
 
 | Type | Meaning |
 | --- | --- |
@@ -11128,7 +11093,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 
 — *end example*\]
 
-**Table: Meaning of \fmtgrammarterm{type} options for integer types**
+**Table: Meaning of *type* options for integer types**
 
 | Type | Meaning |
 | --- | --- |
@@ -11143,7 +11108,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
-**Table: Meaning of \fmtgrammarterm{type} options for `charT`**
+**Table: Meaning of *type* options for `charT`**
 
 | Type | Meaning |
 | --- | --- |
@@ -11153,7 +11118,7 @@ The available `charT` presentation types are specified in
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
-**Table: Meaning of \fmtgrammarterm{type} options for `bool`**
+**Table: Meaning of *type* options for `bool`**
 
 | Type | Meaning |
 | --- | --- |
@@ -11167,27 +11132,27 @@ presentation types, infinity and NaN are formatted as `INF` and `NAN`,
 respectively.
 
 \[*Note 8*: In either case, a sign is included if indicated by the
-option. — *end note*\]
+*sign* option. — *end note*\]
 
-**Table: Meaning of \fmtgrammarterm{type} options for floating-point types**
+**Table: Meaning of *type* options for floating-point types**
 
 | Type | Meaning |
 | --- | --- |
-| `a` | If \fmtgrammarterm{precision} is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
+| `a` | If *precision* is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
 | % `A` | The same as `a`, except that it uses uppercase letters for digits above 9 and `P` to indicate the exponent. |
-| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
+| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
 | % `E` | The same as `e`, except that it uses `E` to indicate exponent. |
-| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
-| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
+| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
+| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
 | % `G` | The same as `g`, except that it uses `E` to indicate exponent. |
-| % none | If \fmtgrammarterm{precision} is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
+| % none | If *precision* is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
 The available pointer presentation types and their mapping to `to_chars`
 are specified in [[format.type.ptr]].
 
 \[*Note 9*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*\]
 
-**Table: Meaning of \fmtgrammarterm{type} options for pointer types**
+**Table: Meaning of *type* options for pointer types**
 
 | Type | Meaning |
 | --- | --- |
@@ -11222,14 +11187,14 @@ namespace std {
 template<class T> consteval basic_format_string(const T& s);
 ```
 
-> *Constraints:* `const T&` models
-> `convertible_to``<basic_string_view<charT>>`.
->
-> *Effects:* Direct-non-list-initializes *str* with `s`.
->
-> *Remarks:* A call to this function is not a core constant
-> expression [[expr.const]] unless there exist `args` of types `Args`
-> such that *str* is a format string for `args`.
+*Constraints:* `const T&` models
+`convertible_to``<basic_string_view<charT>>`.
+
+*Effects:* Direct-non-list-initializes *str* with `s`.
+
+*Remarks:* A call to this function is not a core constant
+expression [[expr.const]] unless there exist `args` of types `Args` such
+that *str* is a format string for `args`.
 
 ### Formatting functions <a id="format.functions">[[format.functions]]</a>
 
@@ -11243,44 +11208,44 @@ template<class... Args>
   string format(format_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat(fmt.str, make_format_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat(fmt.str, make_format_args(args...));
+```
 
 ``` cpp
 template<class... Args>
   wstring format(wformat_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat(fmt.str, make_wformat_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat(fmt.str, make_wformat_args(args...));
+```
 
 ``` cpp
 template<class... Args>
   string format(const locale& loc, format_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat(loc, fmt.str, make_format_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat(loc, fmt.str, make_format_args(args...));
+```
 
 ``` cpp
 template<class... Args>
   wstring format(const locale& loc, wformat_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat(loc, fmt.str, make_wformat_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat(loc, fmt.str, make_wformat_args(args...));
+```
 
 ``` cpp
 string vformat(string_view fmt, format_args args);
@@ -11289,56 +11254,56 @@ string vformat(const locale& loc, string_view fmt, format_args args);
 wstring vformat(const locale& loc, wstring_view fmt, wformat_args args);
 ```
 
-> *Returns:* A string object holding the character representation of
-> formatting arguments provided by `args` formatted according to
-> specifications given in `fmt`. If present, `loc` is used for
-> locale-specific formatting.
->
-> *Throws:* As specified in  [[format.err.report]].
+*Returns:* A string object holding the character representation of
+formatting arguments provided by `args` formatted according to
+specifications given in `fmt`. If present, `loc` is used for
+locale-specific formatting.
+
+*Throws:* As specified in  [[format.err.report]].
 
 ``` cpp
 template<class Out, class... Args>
   Out format_to(Out out, format_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat_to(std::move(out), fmt.str, make_format_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat_to(std::move(out), fmt.str, make_format_args(args...));
+```
 
 ``` cpp
 template<class Out, class... Args>
   Out format_to(Out out, wformat_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat_to(std::move(out), fmt.str, make_wformat_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat_to(std::move(out), fmt.str, make_wformat_args(args...));
+```
 
 ``` cpp
 template<class Out, class... Args>
   Out format_to(Out out, const locale& loc, format_string<Args...>  fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat_to(std::move(out), loc, fmt.str, make_format_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat_to(std::move(out), loc, fmt.str, make_format_args(args...));
+```
 
 ``` cpp
 template<class Out, class... Args>
   Out format_to(Out out, const locale& loc, wformat_string<Args...> fmt, Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return vformat_to(std::move(out), loc, fmt.str, make_wformat_args(args...));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return vformat_to(std::move(out), loc, fmt.str, make_wformat_args(args...));
+```
 
 ``` cpp
 template<class Out>
@@ -11351,22 +11316,21 @@ template<class Out>
   Out vformat_to(Out out, const locale& loc, wstring_view fmt, wformat_args args);
 ```
 
-> Let `charT` be `decltype(fmt)::value_type`.
->
-> *Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
->
-> *Preconditions:* `Out` models `output_iterator``<const charT&>`.
->
-> *Effects:* Places the character representation of formatting the
-> arguments provided by `args`, formatted according to the
-> specifications given in `fmt`, into the range \[`out`, `out + N`),
-> where `N` is the number of characters in that character
-> representation. If present, `loc` is used for locale-specific
-> formatting.
->
-> *Returns:* `out + N`.
->
-> *Throws:* As specified in  [[format.err.report]].
+Let `charT` be `decltype(fmt)::value_type`.
+
+*Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
+
+*Preconditions:* `Out` models `output_iterator``<const charT&>`.
+
+*Effects:* Places the character representation of formatting the
+arguments provided by `args`, formatted according to the specifications
+given in `fmt`, into the range \[`out`, `out + N`), where `N` is the
+number of characters in that character representation. If present, `loc`
+is used for locale-specific formatting.
+
+*Returns:* `out + N`.
+
+*Throws:* As specified in  [[format.err.report]].
 
 ``` cpp
 template<class Out, class... Args>
@@ -11385,32 +11349,31 @@ template<class Out, class... Args>
                                       Args&&... args);
 ```
 
-> Let
->
-> - `charT` be `decltype(fmt.`*`str`*`)::value_type`,
->
-> - `N` be `formatted_size(fmt, args...)` for the functions without a
->   `loc` parameter and `formatted_size(loc, fmt, args...)` for the
->   functions with a `loc` parameter, and
->
-> - `M` be `clamp(n, 0, N)`.
->
-> *Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
->
-> *Preconditions:* `Out` models `output_iterator``<const charT&>`, and
-> `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>` meets the
-> requirements [[formatter.requirements]] for each $\texttt{T}_i$ in
-> `Args`.
->
-> *Effects:* Places the first `M` characters of the character
-> representation of formatting the arguments provided by `args`,
-> formatted according to the specifications given in `fmt`, into the
-> range \[`out`, `out + M`). If present, `loc` is used for
-> locale-specific formatting.
->
-> *Returns:* `{out + M, N}`.
->
-> *Throws:* As specified in  [[format.err.report]].
+Let
+
+- `charT` be `decltype(fmt.`*`str`*`)::value_type`,
+
+- `N` be `formatted_size(fmt, args...)` for the functions without a
+  `loc` parameter and `formatted_size(loc, fmt, args...)` for the
+  functions with a `loc` parameter, and
+
+- `M` be `clamp(n, 0, N)`.
+
+*Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
+
+*Preconditions:* `Out` models `output_iterator``<const charT&>`, and
+`formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>` meets the
+requirements [[formatter.requirements]] for each $\texttt{T}_i$ in
+`Args`.
+
+*Effects:* Places the first `M` characters of the character
+representation of formatting the arguments provided by `args`, formatted
+according to the specifications given in `fmt`, into the range \[`out`,
+`out + M`). If present, `loc` is used for locale-specific formatting.
+
+*Returns:* `{out + M, N}`.
+
+*Throws:* As specified in  [[format.err.report]].
 
 ``` cpp
 template<class... Args>
@@ -11423,18 +11386,17 @@ template<class... Args>
   size_t formatted_size(const locale& loc, wformat_string<Args...> fmt, Args&&... args);
 ```
 
-> Let `charT` be `decltype(fmt.`*`str`*`)::value_type`.
->
-> *Preconditions:* `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>`
-> meets the requirements [[formatter.requirements]] for each
-> $\texttt{T}_i$ in `Args`.
->
-> *Returns:* The number of characters in the character representation of
-> formatting arguments `args` formatted according to specifications
-> given in `fmt`. If present, `loc` is used for locale-specific
-> formatting.
->
-> *Throws:* As specified in  [[format.err.report]].
+Let `charT` be `decltype(fmt.`*`str`*`)::value_type`.
+
+*Preconditions:* `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>`
+meets the requirements [[formatter.requirements]] for each
+$\texttt{T}_i$ in `Args`.
+
+*Returns:* The number of characters in the character representation of
+formatting arguments `args` formatted according to specifications given
+in `fmt`. If present, `loc` is used for locale-specific formatting.
+
+*Throws:* As specified in  [[format.err.report]].
 
 ### Formatter <a id="format.formatter">[[format.formatter]]</a>
 
@@ -11478,9 +11440,10 @@ argument type `T`, in [[formatter.basic]] and [[formatter]]:
 
 - `fc` is an lvalue of type `FC`.
 
-`pc.begin()` points to the beginning of the [[format.string]] of the
-replacement field being formatted in the format string. If is empty then
-either `pc.begin() == pc.end()` or `*pc.begin() == '\}'`.
+`pc.begin()` points to the beginning of the *format-spec*
+[[format.string]] of the replacement field being formatted in the format
+string. If *format-spec* is empty then either `pc.begin() == pc.end()`
+or `*pc.begin() == '\}'`.
 
 \[*Note 10*: This allows formatters to emit meaningful error
 messages. — *end note*\]
@@ -11521,9 +11484,10 @@ Let `charT` be either `char` or `wchar_t`. Each specialization of
 `formatter` is either enabled or disabled, as described below. A
 *debug-enabled* specialization of `formatter` additionally provides a
 public, constexpr, non-static member function `set_debug_format()` which
-modifies the state of the `formatter` to be as if the type of the parsed
-by the last call to `parse` were `?`. Each header that declares the
-template `formatter` provides the following enabled specializations:
+modifies the state of the `formatter` to be as if the type of the
+*std-format-spec* parsed by the last call to `parse` were `?`. Each
+header that declares the template `formatter` provides the following
+enabled specializations:
 
 -  The debug-enabled specializations
 
@@ -11562,7 +11526,8 @@ template `formatter` provides the following enabled specializations:
   ```
 
 The `parse` member functions of these formatters interpret the format
-specification as a as described in [[format.string.std]].
+specification as a *std-format-spec* as described in
+[[format.string.std]].
 
 \[*Note 11*: Specializations such as `formatter<wchar_t, char>` and
 `formatter<const char*, wchar_t>` that would require implicit multibyte
@@ -11754,65 +11719,65 @@ constexpr explicit basic_format_parse_context(basic_string_view<charT> fmt,
                                               size_t num_args = 0) noexcept;
 ```
 
-> *Effects:* Initializes `begin_` with `fmt.begin()`, `end_` with
-> `fmt.end()`, `indexing_` with `unknown`, `next_arg_id_` with `0`, and
-> `num_args_` with `num_args`.
+*Effects:* Initializes `begin_` with `fmt.begin()`, `end_` with
+`fmt.end()`, `indexing_` with `unknown`, `next_arg_id_` with `0`, and
+`num_args_` with `num_args`.
 
 ``` cpp
 constexpr const_iterator begin() const noexcept;
 ```
 
-> *Returns:* `begin_`.
+*Returns:* `begin_`.
 
 ``` cpp
 constexpr const_iterator end() const noexcept;
 ```
 
-> *Returns:* `end_`.
+*Returns:* `end_`.
 
 ``` cpp
 constexpr void advance_to(const_iterator it);
 ```
 
-> *Preconditions:* `end()` is reachable from `it`.
->
-> *Effects:* Equivalent to: `begin_ = it;`
+*Preconditions:* `end()` is reachable from `it`.
+
+*Effects:* Equivalent to: `begin_ = it;`
 
 ``` cpp
 constexpr size_t next_arg_id();
 ```
 
-> *Effects:* If `indexing_ != manual` is `true`, equivalent to:
->
-> ``` cpp
-> if (indexing_ == unknown)
->   indexing_ = automatic;
-> return next_arg_id_++;
-> ```
->
-> *Throws:* `format_error` if `indexing_ == manual` is `true` which
-> indicates mixing of automatic and manual argument indexing.
->
-> *Remarks:* Let *`cur-arg-id`* be the value of `next_arg_id_` prior to
-> this call. Call expressions where *`cur-arg-id`*` >= num_args_` is
-> `true` are not core constant expressions [[expr.const]].
+*Effects:* If `indexing_ != manual` is `true`, equivalent to:
+
+``` cpp
+if (indexing_ == unknown)
+  indexing_ = automatic;
+return next_arg_id_++;
+```
+
+*Throws:* `format_error` if `indexing_ == manual` is `true` which
+indicates mixing of automatic and manual argument indexing.
+
+*Remarks:* Let *`cur-arg-id`* be the value of `next_arg_id_` prior to
+this call. Call expressions where *`cur-arg-id`*` >= num_args_` is
+`true` are not core constant expressions [[expr.const]].
 
 ``` cpp
 constexpr void check_arg_id(size_t id);
 ```
 
-> *Effects:* If `indexing_ != automatic` is `true`, equivalent to:
->
-> ``` cpp
-> if (indexing_ == unknown)
->   indexing_ = manual;
-> ```
->
-> *Throws:* `format_error` if `indexing_ == automatic` is `true` which
-> indicates mixing of automatic and manual argument indexing.
->
-> *Remarks:* Call expressions where `id >= num_args_` is `true` are not
-> core constant expressions [[expr.const]].
+*Effects:* If `indexing_ != automatic` is `true`, equivalent to:
+
+``` cpp
+if (indexing_ == unknown)
+  indexing_ = manual;
+```
+
+*Throws:* `format_error` if `indexing_ == automatic` is `true` which
+indicates mixing of automatic and manual argument indexing.
+
+*Remarks:* Call expressions where `id >= num_args_` is `true` are not
+core constant expressions [[expr.const]].
 
 #### Class template `basic_format_context` <a id="format.context">[[format.context]]</a>
 
@@ -11858,26 +11823,26 @@ interface (such as a `span<charT>`) and polymorphic reallocation.
 basic_format_arg<basic_format_context> arg(size_t id) const noexcept;
 ```
 
-> *Returns:* `args_.get(id)`.
+*Returns:* `args_.get(id)`.
 
 ``` cpp
 std::locale locale();
 ```
 
-> *Returns:* The locale passed to the formatting function if the latter
-> takes one, and `std::locale()` otherwise.
+*Returns:* The locale passed to the formatting function if the latter
+takes one, and `std::locale()` otherwise.
 
 ``` cpp
 iterator out();
 ```
 
-> *Effects:* Equivalent to: `return std::move(out_);`
+*Effects:* Equivalent to: `return std::move(out_);`
 
 ``` cpp
 void advance_to(iterator it);
 ```
 
-> *Effects:* Equivalent to: `out_ = std::move(it);`
+*Effects:* Equivalent to: `out_ = std::move(it);`
 
 \[*Example 10*:
 
@@ -11931,37 +11896,36 @@ template<ranges::input_range R>
   constexpr range_format format_kind<R> = see below;
 ```
 
-> A program that instantiates the primary template of `format_kind` is
-> ill-formed.
->
-> For a type `R`, `format_kind<R>` is defined as follows:
->
-> - If `same_as``<remove_cvref_t<ranges::range_reference_t<R>>, R>` is
->   `true`, `format_kind<R>` is `range_format::disabled`.
->
->   \[*Note 24*: This prevents constraint recursion for ranges whose
->   reference type is the same range type. For example,
->   `std::filesystem::path` is a range of
->   `std::filesystem::path`. — *end note*\]
->
-> - Otherwise, if the *qualified-id* `R::key_type` is valid and denotes
->   a type:
->
->   - If the *qualified-id* `R::mapped_type` is valid and denotes a
->     type, let `U` be `remove_cvref_t<ranges::range_reference_t<R>>`.
->     If either `U` is a specialization of `pair` or `U` is a
->     specialization of `tuple` and `tuple_size_v<U> == 2`,
->     `format_kind<R>` is `range_format::map`.
->
->   - Otherwise, `format_kind<R>` is `range_format::set`.
->
-> - Otherwise, `format_kind<R>` is `range_format::sequence`.
->
-> *Remarks:* Pursuant to [[namespace.std]], users may specialize
-> `format_kind` for cv-unqualified program-defined types that model
-> `ranges::``input_range`. Such specializations shall be usable in
-> constant expressions [[expr.const]] and have type
-> `const range_format`.
+A program that instantiates the primary template of `format_kind` is
+ill-formed.
+
+For a type `R`, `format_kind<R>` is defined as follows:
+
+- If `same_as``<remove_cvref_t<ranges::range_reference_t<R>>, R>` is
+  `true`, `format_kind<R>` is `range_format::disabled`.
+
+  \[*Note 3*: This prevents constraint recursion for ranges whose
+  reference type is the same range type. For example,
+  `std::filesystem::path` is a range of
+  `std::filesystem::path`. — *end note*\]
+
+- Otherwise, if the *qualified-id* `R::key_type` is valid and denotes a
+  type:
+
+  - If the *qualified-id* `R::mapped_type` is valid and denotes a type,
+    let `U` be `remove_cvref_t<ranges::range_reference_t<R>>`. If either
+    `U` is a specialization of `pair` or `U` is a specialization of
+    `tuple` and `tuple_size_v<U> == 2`, `format_kind<R>` is
+    `range_format::map`.
+
+  - Otherwise, `format_kind<R>` is `range_format::set`.
+
+- Otherwise, `format_kind<R>` is `range_format::sequence`.
+
+*Remarks:* Pursuant to [[namespace.std]], users may specialize
+`format_kind` for cv-unqualified program-defined types that model
+`ranges::``input_range`. Such specializations shall be usable in
+constant expressions [[expr.const]] and have type `const range_format`.
 
 #### Class template `range_formatter` <a id="format.range.formatter">[[format.range.formatter]]</a>
 
@@ -11998,17 +11962,17 @@ namespace std {
 The class template `range_formatter` is a utility for implementing
 `formatter` specializations for range types.
 
-`range_formatter` interprets as a . The syntax of format specifications
-is as follows:
+`range_formatter` interprets *format-spec* as a *range-format-spec*. The
+syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{range-format-spec}
-    [range-fill-and-align] [width] ['n'] [range-type] [range-underlying-spec]
+    range-fill-and-align_opt width_opt 'n_opt' range-type_opt range-underlying-spec_opt
 ```
 
 ``` bnf
 \fmtnontermdef{range-fill-and-align}
-    [range-fill] align
+    range-fill_opt align
 ```
 
 ``` bnf
@@ -12028,11 +11992,13 @@ is as follows:
     ':' format-spec
 ```
 
-For `range_formatter<T, charT>`, the in a , if any, is interpreted by
+For `range_formatter<T, charT>`, the *format-spec* in a
+*range-underlying-spec*, if any, is interpreted by
 `formatter<T, charT>`.
 
-The is interpreted the same way as a [[format.string.std]]. The
-productions and are described in [[format.string]].
+The *range-fill-and-align* is interpreted the same way as a
+*fill-and-align* [[format.string.std]]. The productions *align* and
+*width* are described in [[format.string]].
 
 The `n` option causes the range to be formatted without the opening and
 closing brackets.
@@ -12040,29 +12006,30 @@ closing brackets.
 \[*Note 12*: This is equivalent to invoking
 `set_brackets(\{\}, \{\})`. — *end note*\]
 
-The specifier changes the way a range is formatted, with certain options
-only valid with certain argument types. The meaning of the various type
-options is as specified in [[formatter.range.type]].
+The *range-type* specifier changes the way a range is formatted, with
+certain options only valid with certain argument types. The meaning of
+the various type options is as specified in [[formatter.range.type]].
 
-If the is `s` or `?s`, then there shall be no `n` option and no .
+If the *range-type* is `s` or `?s`, then there shall be no `n` option
+and no *range-underlying-spec*.
 
 ``` cpp
 constexpr void set_separator(basic_string_view<charT> sep) noexcept;
 ```
 
-> *Effects:* Equivalent to: *`separator_`*` = sep;`
+*Effects:* Equivalent to: *`separator_`*` = sep;`
 
 ``` cpp
 constexpr void set_brackets(basic_string_view<charT> opening,
                             basic_string_view<charT> closing) noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> opening-bracket_ = opening;
-> closing-bracket_ = closing;
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+opening-bracket_ = opening;
+closing-bracket_ = closing;
+```
 
 ``` cpp
 template<class ParseContext>
@@ -12070,20 +12037,20 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:* Parses the format specifier as a and stores the parsed
-> specifiers in `*this`. The values of *opening-bracket\_*,
-> *closing-bracket\_*, and *separator\_* are modified if and only if
-> required by the or the `n` option, if present. If:
->
-> - the is neither `s` nor `?s`,
->
-> - *`underlying_`*`.set_debug_format()` is a valid expression, and
->
-> - there is no ,
->
-> then calls *`underlying_`*`.set_debug_format()`.
->
-> *Returns:* An iterator past the end of the .
+*Effects:* Parses the format specifier as a and stores the parsed
+specifiers in `*this`. The values of *opening-bracket\_*,
+*closing-bracket\_*, and *separator\_* are modified if and only if
+required by the or the `n` option, if present. If:
+
+- the is neither `s` nor `?s`,
+
+- *`underlying_`*`.set_debug_format()` is a valid expression, and
+
+- there is no ,
+
+then calls *`underlying_`*`.set_debug_format()`.
+
+*Returns:* An iterator past the end of the .
 
 ``` cpp
 template<ranges::input_range R, class FormatContext>
@@ -12093,29 +12060,29 @@ template<ranges::input_range R, class FormatContext>
     format(R&& r, FormatContext& ctx) const;
 ```
 
-> *Effects:* Writes the following into `ctx.out()`, adjusted according
-> to the :
->
-> - If the was `s`, then as if by formatting
->   `basic_string<charT>(from_range, r)`.
->
-> - Otherwise, if the was `?s`, then as if by formatting
->   `basic_string<charT>(from_range, r)` as an escaped
->   string [[format.string.escaped]].
->
-> - Otherwise,
->
->   - *opening-bracket\_*,
->
->   - for each element `e` of the range `r`:
->
->     - the result of writing `e` via *underlying\_* and
->
->     - *separator\_*, unless `e` is the last element of `r`, and
->
->   - *closing-bracket\_*.
->
-> *Returns:* An iterator past the end of the output range.
+*Effects:* Writes the following into `ctx.out()`, adjusted according to
+the :
+
+- If the was `s`, then as if by formatting
+  `basic_string<charT>(from_range, r)`.
+
+- Otherwise, if the was `?s`, then as if by formatting
+  `basic_string<charT>(from_range, r)` as an escaped
+  string [[format.string.escaped]].
+
+- Otherwise,
+
+  - *opening-bracket\_*,
+
+  - for each element `e` of the range `r`:
+
+    - the result of writing `e` via *underlying\_* and
+
+    - *separator\_*, unless `e` is the last element of `r`, and
+
+  - *closing-bracket\_*.
+
+*Returns:* An iterator past the end of the output range.
 
 #### Class template *range-default-formatter* <a id="format.range.fmtdef">[[format.range.fmtdef]]</a>
 
@@ -12150,15 +12117,15 @@ namespace std {
 constexpr void set_separator(basic_string_view<charT> sep) noexcept;
 ```
 
-> *Effects:* Equivalent to: *`underlying_`*`.set_separator(sep);`
+*Effects:* Equivalent to: *`underlying_`*`.set_separator(sep);`
 
 ``` cpp
 constexpr void set_brackets(basic_string_view<charT> opening,
                             basic_string_view<charT> closing) noexcept;
 ```
 
-> *Effects:* Equivalent to:
-> *`underlying_`*`.set_brackets(opening, closing);`
+*Effects:* Equivalent to:
+*`underlying_`*`.set_brackets(opening, closing);`
 
 ``` cpp
 template<class ParseContext>
@@ -12166,7 +12133,7 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
+*Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
 
 ``` cpp
 template<class FormatContext>
@@ -12174,8 +12141,7 @@ template<class FormatContext>
     format(maybe-const-r& elems, FormatContext& ctx) const;
 ```
 
-> *Effects:* Equivalent to:
-> `return `*`underlying_`*`.format(elems, ctx);`
+*Effects:* Equivalent to: `return `*`underlying_`*`.format(elems, ctx);`
 
 #### Specialization of *range-default-formatter* for maps <a id="format.range.fmtmap">[[format.range.fmtmap]]</a>
 
@@ -12211,20 +12177,20 @@ namespace std {
 constexpr range-default-formatter();
 ```
 
-> *Mandates:* Either:
->
-> - *element-type* is a specialization of `pair`, or
->
-> - *element-type* is a specialization of `tuple` and
->   `tuple_size_v<`*`element-type`*`> == 2`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> underlying_.set_brackets(STATICALLY-WIDEN<charT>("{"), STATICALLY-WIDEN<charT>("}"));
-> underlying_.underlying().set_brackets({}, {});
-> underlying_.underlying().set_separator(STATICALLY-WIDEN<charT>(": "));
-> ```
+*Mandates:* Either:
+
+- *element-type* is a specialization of `pair`, or
+
+- *element-type* is a specialization of `tuple` and
+  `tuple_size_v<`*`element-type`*`> == 2`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+underlying_.set_brackets(STATICALLY-WIDEN<charT>("{"), STATICALLY-WIDEN<charT>("}"));
+underlying_.underlying().set_brackets({}, {});
+underlying_.underlying().set_separator(STATICALLY-WIDEN<charT>(": "));
+```
 
 ``` cpp
 template<class ParseContext>
@@ -12232,7 +12198,7 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
+*Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
 
 ``` cpp
 template<class FormatContext>
@@ -12240,7 +12206,7 @@ template<class FormatContext>
     format(maybe-const-map& r, FormatContext& ctx) const;
 ```
 
-> *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
+*Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
 #### Specialization of *range-default-formatter* for sets <a id="format.range.fmtset">[[format.range.fmtset]]</a>
 
@@ -12275,11 +12241,11 @@ namespace std {
 constexpr range-default-formatter();
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> underlying_.set_brackets(STATICALLY-WIDEN<charT>("{"), STATICALLY-WIDEN<charT>("}"));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+underlying_.set_brackets(STATICALLY-WIDEN<charT>("{"), STATICALLY-WIDEN<charT>("}"));
+```
 
 ``` cpp
 template<class ParseContext>
@@ -12287,7 +12253,7 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
+*Effects:* Equivalent to: `return `*`underlying_`*`.parse(ctx);`
 
 ``` cpp
 template<class FormatContext>
@@ -12295,7 +12261,7 @@ template<class FormatContext>
     format(maybe-const-set& r, FormatContext& ctx) const;
 ```
 
-> *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
+*Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
 #### Specialization of *range-default-formatter* for strings <a id="format.range.fmtstr">[[format.range.fmtstr]]</a>
 
@@ -12331,15 +12297,15 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> auto i = underlying_.parse(ctx);
-> if constexpr (K == range_format::debug_string) {
->   underlying_.set_debug_format();
-> }
-> return i;
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+auto i = underlying_.parse(ctx);
+if constexpr (K == range_format::debug_string) {
+  underlying_.set_debug_format();
+}
+return i;
+```
 
 ``` cpp
 template<class FormatContext>
@@ -12347,12 +12313,12 @@ template<class FormatContext>
     format(see below& r, FormatContext& ctx) const;
 ```
 
-> The type of `r` is `const R&` if `ranges::``input_range``<const R>` is
-> `true` and `R&` otherwise.
->
-> *Effects:* Let *`s`* be a `basic_string<charT>` such that
-> `ranges::equal(`*`s`*`, r)` is `true`. Equivalent to:
-> `return `*`underlying_`*`.format(`*`s`*`, ctx);`
+The type of `r` is `const R&` if `ranges::``input_range``<const R>` is
+`true` and `R&` otherwise.
+
+*Effects:* Let *`s`* be a `basic_string<charT>` such that
+`ranges::equal(`*`s`*`, r)` is `true`. Equivalent to:
+`return `*`underlying_`*`.format(`*`s`*`, ctx);`
 
 ### Arguments <a id="format.arguments">[[format.arguments]]</a>
 
@@ -12394,67 +12360,65 @@ The behavior of a program that adds specializations of
 basic_format_arg() noexcept;
 ```
 
-> *Ensures:* `!(*this)`.
+*Ensures:* `!(*this)`.
 
 ``` cpp
 template<class T> explicit basic_format_arg(T& v) noexcept;
 ```
 
-> *Constraints:* `T` satisfies `formattable-with``<Context>`.
->
-> *Preconditions:* If `decay_t<T>` is `char_type*` or
-> `const char_type*`, `static_cast<const char_type*>(v)` points to a
-> NTCTS [[defns.ntcts]].
->
-> *Effects:* Let `TD` be `remove_const_t<T>`.
->
-> - If `TD` is `bool` or `char_type`, initializes `value` with `v`;
->
-> - otherwise, if `TD` is `char` and `char_type` is , initializes
->   `value` with `static_cast<wchar_t>(v)`;
->
-> - otherwise, if `TD` is a signed integer type [[basic.fundamental]]
->   and `sizeof(TD) <= sizeof(int)`, initializes `value` with
->   `static_cast<int>(v)`;
->
-> - otherwise, if `TD` is an unsigned integer type and
->   `sizeof(TD) <= sizeof(unsigned int)`, initializes `value` with
->   `static_cast<unsigned int>(v)`;
->
-> - otherwise, if `TD` is a signed integer type and
->   `sizeof(TD) <= sizeof(long long int)`, initializes `value` with
->   `static_cast<long long int>(v)`;
->
-> - otherwise, if `TD` is an unsigned integer type and
->   `sizeof(TD) <= sizeof(unsigned long long int)`, initializes `value`
->   with `static_cast<unsigned long long int>(v)`;
->
-> - otherwise, if `TD` is a standard floating-point type, initializes
->   `value` with `v`;
->
-> - otherwise, if `TD` is a specialization of `basic_string_view` or
->   `basic_string` and `TD::value_type` is `char_type`, initializes
->   `value` with `basic_string_view<char_type>(v.data(), v.size())`;
->
-> - otherwise, if `decay_t<TD>` is `char_type*` or `const char_type*`,
->   initializes `value` with `static_cast<const char_type*>(v)`;
->
-> - otherwise, if `is_void_v<remove_pointer_t<TD>>` is `true` or
->   `is_null_pointer_v<TD>` is `true`, initializes `value` with
->   `static_cast<const void*>(v)`;
->
-> - otherwise, initializes `value` with `handle(v)`.
->
-> \[*Note 25*: Constructing `basic_format_arg` from a pointer to a
-> member is ill-formed unless the user provides an enabled
-> specialization of `formatter` for that pointer to member
-> type. — *end note*\]
+*Constraints:* `T` satisfies `formattable-with``<Context>`.
+
+*Preconditions:* If `decay_t<T>` is `char_type*` or `const char_type*`,
+`static_cast<const char_type*>(v)` points to a NTCTS [[defns.ntcts]].
+
+*Effects:* Let `TD` be `remove_const_t<T>`.
+
+- If `TD` is `bool` or `char_type`, initializes `value` with `v`;
+
+- otherwise, if `TD` is `char` and `char_type` is , initializes `value`
+  with `static_cast<wchar_t>(v)`;
+
+- otherwise, if `TD` is a signed integer type [[basic.fundamental]] and
+  `sizeof(TD) <= sizeof(int)`, initializes `value` with
+  `static_cast<int>(v)`;
+
+- otherwise, if `TD` is an unsigned integer type and
+  `sizeof(TD) <= sizeof(unsigned int)`, initializes `value` with
+  `static_cast<unsigned int>(v)`;
+
+- otherwise, if `TD` is a signed integer type and
+  `sizeof(TD) <= sizeof(long long int)`, initializes `value` with
+  `static_cast<long long int>(v)`;
+
+- otherwise, if `TD` is an unsigned integer type and
+  `sizeof(TD) <= sizeof(unsigned long long int)`, initializes `value`
+  with `static_cast<unsigned long long int>(v)`;
+
+- otherwise, if `TD` is a standard floating-point type, initializes
+  `value` with `v`;
+
+- otherwise, if `TD` is a specialization of `basic_string_view` or
+  `basic_string` and `TD::value_type` is `char_type`, initializes
+  `value` with `basic_string_view<char_type>(v.data(), v.size())`;
+
+- otherwise, if `decay_t<TD>` is `char_type*` or `const char_type*`,
+  initializes `value` with `static_cast<const char_type*>(v)`;
+
+- otherwise, if `is_void_v<remove_pointer_t<TD>>` is `true` or
+  `is_null_pointer_v<TD>` is `true`, initializes `value` with
+  `static_cast<const void*>(v)`;
+
+- otherwise, initializes `value` with `handle(v)`.
+
+\[*Note 13*: Constructing `basic_format_arg` from a pointer to a member
+is ill-formed unless the user provides an enabled specialization of
+`formatter` for that pointer to member type. — *end note*\]
 
 ``` cpp
 explicit operator bool() const noexcept;
 ```
 
-> *Returns:* `!holds_alternative<monostate>(value)`.
+*Returns:* `!holds_alternative<monostate>(value)`.
 
 The class `handle` allows formatting an object of a user-defined type.
 
@@ -12480,40 +12444,40 @@ namespace std {
 template<class T> explicit handle(T& val) noexcept;
 ```
 
-> Let
->
-> - `TD` be `remove_const_t<T>`,
->
-> - `TQ` be `const TD` if `const TD` satisfies
->   `formattable-with``<Context>` and `TD` otherwise.
->
-> *Mandates:* `TQ` satisfies `formattable-with``<Context>`.
->
-> *Effects:* Initializes `ptr_` with `addressof(val)` and `format_` with
->
-> ``` cpp
-> [](basic_format_parse_context<char_type>& parse_ctx,
->    Context& format_ctx, const void* ptr) {
->   typename Context::template formatter_type<TD> f;
->   parse_ctx.advance_to(f.parse(parse_ctx));
->   format_ctx.advance_to(f.format(*const_cast<TQ*>(static_cast<const TD*>(ptr)),
->                                  format_ctx));
-> }
-> ```
+Let
+
+- `TD` be `remove_const_t<T>`,
+
+- `TQ` be `const TD` if `const TD` satisfies
+  `formattable-with``<Context>` and `TD` otherwise.
+
+*Mandates:* `TQ` satisfies `formattable-with``<Context>`.
+
+*Effects:* Initializes `ptr_` with `addressof(val)` and `format_` with
+
+``` cpp
+[](basic_format_parse_context<char_type>& parse_ctx,
+   Context& format_ctx, const void* ptr) {
+  typename Context::template formatter_type<TD> f;
+  parse_ctx.advance_to(f.parse(parse_ctx));
+  format_ctx.advance_to(f.format(*const_cast<TQ*>(static_cast<const TD*>(ptr)),
+                                 format_ctx));
+}
+```
 
 ``` cpp
 void format(basic_format_parse_context<char_type>& parse_ctx, Context& format_ctx) const;
 ```
 
-> *Effects:* Equivalent to: `format_(parse_ctx, format_ctx, ptr_);`
+*Effects:* Equivalent to: `format_(parse_ctx, format_ctx, ptr_);`
 
 ``` cpp
 template<class Visitor, class Context>
   decltype(auto) visit_format_arg(Visitor&& vis, basic_format_arg<Context> arg);
 ```
 
-> *Effects:* Equivalent to:
-> `return visit(std::forward<Visitor>(vis), arg.value);`
+*Effects:* Equivalent to:
+`return visit(std::forward<Visitor>(vis), arg.value);`
 
 #### Class template *format-arg-store* <a id="format.arg.store">[[format.arg.store]]</a>
 
@@ -12533,22 +12497,22 @@ template<class Context = format_context, class... Args>
   format-arg-store<Context, Args...> make_format_args(Args&&... fmt_args);
 ```
 
-> *Preconditions:* The type
-> `typename Context::template formatter_type<remove_cvref_t<`$\texttt{T}_i$`>>`
-> meets the requirements [[formatter.requirements]] for each
-> $\texttt{T}_i$ in `Args`.
->
-> *Returns:* An object of type *`format-arg-store`*`<Context, Args...>`
-> whose *args* data member is initialized with
-> `{basic_format_arg<Context>(fmt_args)...}`.
+*Preconditions:* The type
+`typename Context::template formatter_type<remove_cvref_t<`$\texttt{T}_i$`>>`
+meets the requirements [[formatter.requirements]] for each
+$\texttt{T}_i$ in `Args`.
+
+*Returns:* An object of type *`format-arg-store`*`<Context, Args...>`
+whose *args* data member is initialized with
+`{basic_format_arg<Context>(fmt_args)...}`.
 
 ``` cpp
 template<class... Args>
   format-arg-store<wformat_context, Args...> make_wformat_args(Args&&... args);
 ```
 
-> *Effects:* Equivalent to:
-> `return make_format_args<wformat_context>(args...);`
+*Effects:* Equivalent to:
+`return make_format_args<wformat_context>(args...);`
 
 #### Class template `basic_format_args` <a id="format.args">[[format.args]]</a>
 
@@ -12577,28 +12541,28 @@ An instance of `basic_format_args` provides access to formatting
 arguments. Implementations should optimize the representation of
 `basic_format_args` for a small number of formatting arguments.
 
-\[*Note 13*: For example, by storing indices of type alternatives
+\[*Note 14*: For example, by storing indices of type alternatives
 separately from values and packing the former. — *end note*\]
 
 ``` cpp
 basic_format_args() noexcept;
 ```
 
-> *Effects:* Initializes `size_` with `0`.
+*Effects:* Initializes `size_` with `0`.
 
 ``` cpp
 template<class... Args>
   basic_format_args(const format-arg-store<Context, Args...>& store) noexcept;
 ```
 
-> *Effects:* Initializes `size_` with `sizeof...(Args)` and `data_` with
-> `store.args.data()`.
+*Effects:* Initializes `size_` with `sizeof...(Args)` and `data_` with
+`store.args.data()`.
 
 ``` cpp
 basic_format_arg<Context> get(size_t i) const noexcept;
 ```
 
-> *Returns:* `i < size_ ? data_[i] : basic_format_arg<Context>()`.
+*Returns:* `i < size_ ? data_[i] : basic_format_arg<Context>()`.
 
 ### Tuple formatter <a id="format.tuple">[[format.tuple]]</a>
 
@@ -12633,16 +12597,17 @@ namespace std {
 ```
 
 The `parse` member functions of these formatters interpret the format
-specification as a according to the following syntax:
+specification as a *tuple-format-spec* according to the following
+syntax:
 
 ``` bnf
 \fmtnontermdef{tuple-format-spec}
-    [tuple-fill-and-align] [width] [tuple-type]
+    tuple-fill-and-align_opt width_opt tuple-type_opt
 ```
 
 ``` bnf
 \fmtnontermdef{tuple-fill-and-align}
-    [tuple-fill] align
+    tuple-fill_opt align
 ```
 
 ``` bnf
@@ -12656,30 +12621,32 @@ specification as a according to the following syntax:
     'n'
 ```
 
-The is interpreted the same way as a [[format.string.std]]. The
-productions and are described in [[format.string]].
+The *tuple-fill-and-align* is interpreted the same way as a
+*fill-and-align* [[format.string.std]]. The productions *align* and
+*width* are described in [[format.string]].
 
-The specifier changes the way a `pair` or `tuple` is formatted, with
-certain options only valid with certain argument types. The meaning of
-the various type options is as specified in [[formatter.tuple.type]].
+The *tuple-type* specifier changes the way a `pair` or `tuple` is
+formatted, with certain options only valid with certain argument types.
+The meaning of the various type options is as specified in
+[[formatter.tuple.type]].
 
 ``` cpp
 constexpr void set_separator(basic_string_view<charT> sep) noexcept;
 ```
 
-> *Effects:* Equivalent to: *`separator_`*` = sep;`
+*Effects:* Equivalent to: *`separator_`*` = sep;`
 
 ``` cpp
 constexpr void set_brackets(basic_string_view<charT> opening,
                             basic_string_view<charT> closing) noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> opening-bracket_ = opening;
-> closing-bracket_ = closing;
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+opening-bracket_ = opening;
+closing-bracket_ = closing;
+```
 
 ``` cpp
 template<class ParseContext>
@@ -12687,14 +12654,14 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-> *Effects:* Parses the format specifier as a and stores the parsed
-> specifiers in `*this`. The values of *opening-bracket\_*,
-> *closing-bracket\_*, and *separator\_* are modified if and only if
-> required by the , if present. For each element *`e`* in
-> *underlying\_*, if *`e`*`.set_debug_format()` is a valid expression,
-> calls *`e`*`.set_debug_format()`.
->
-> *Returns:* An iterator past the end of the .
+*Effects:* Parses the format specifier as a and stores the parsed
+specifiers in `*this`. The values of *opening-bracket\_*,
+*closing-bracket\_*, and *separator\_* are modified if and only if
+required by the , if present. For each element *`e`* in *underlying\_*,
+if *`e`*`.set_debug_format()` is a valid expression, calls
+*`e`*`.set_debug_format()`.
+
+*Returns:* An iterator past the end of the .
 
 ``` cpp
 template<class FormatContext>
@@ -12702,28 +12669,28 @@ template<class FormatContext>
     format(see below& elems, FormatContext& ctx) const;
 ```
 
-> The type of `elems` is:
->
-> - If `(``formattable``<const Ts, charT> && ...)` is `true`,
->   `const `*`pair-or-tuple`*`<Ts...>&`.
->
-> - Otherwise *`pair-or-tuple`*`<Ts...>&`.
->
-> *Effects:* Writes the following into `ctx.out()`, adjusted according
-> to the :
->
-> - *opening-bracket\_*,
->
-> - for each index `I` in the \[`0`, `sizeof...(Ts)`):
->
->   - if `I != 0`, *separator\_*,
->
->   - the result of writing `get<I>(elems)` via
->     `get<I>(`*`underlying_`*`)`, and
->
-> - *closing-bracket\_*.
->
-> *Returns:* An iterator past the end of the output range.
+The type of `elems` is:
+
+- If `(``formattable``<const Ts, charT> && ...)` is `true`,
+  `const `*`pair-or-tuple`*`<Ts...>&`.
+
+- Otherwise *`pair-or-tuple`*`<Ts...>&`.
+
+*Effects:* Writes the following into `ctx.out()`, adjusted according to
+the :
+
+- *opening-bracket\_*,
+
+- for each index `I` in the \[`0`, `sizeof...(Ts)`):
+
+  - if `I != 0`, *separator\_*,
+
+  - the result of writing `get<I>(elems)` via
+    `get<I>(`*`underlying_`*`)`, and
+
+- *closing-bracket\_*.
+
+*Returns:* An iterator past the end of the output range.
 
 ### Class `format_error` <a id="format.error">[[format.error]]</a>
 
@@ -12744,13 +12711,13 @@ exceptions to report errors from the formatting library.
 format_error(const string& what_arg);
 ```
 
-> *Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
+*Ensures:* `strcmp(what(), what_arg.c_str()) == 0`.
 
 ``` cpp
 format_error(const char* what_arg);
 ```
 
-> *Ensures:* `strcmp(what(), what_arg) == 0`.
+*Ensures:* `strcmp(what(), what_arg) == 0`.
 
 ## Bit manipulation <a id="bit">[[bit]]</a>
 
@@ -12816,44 +12783,43 @@ template<class To, class From>
   constexpr To bit_cast(const From& from) noexcept;
 ```
 
-> *Constraints:*
->
-> - `sizeof(To) == sizeof(From)` is `true`;
->
-> - `is_trivially_copyable_v<To>` is `true`; and
->
-> - `is_trivially_copyable_v<From>` is `true`.
->
-> *Returns:* An object of type `To`. Implicitly creates objects nested
-> within the result [[intro.object]]. Each bit of the value
-> representation of the result is equal to the corresponding bit in the
-> object representation of `from`. Padding bits of the result are
-> unspecified. For the result and each object created within it, if
-> there is no value of the object’s type corresponding to the value
-> representation produced, the behavior is undefined. If there are
-> multiple such values, which value is produced is unspecified. A bit in
-> the value representation of the result is indeterminate if it does not
-> correspond to a bit in the value representation of `from` or
-> corresponds to a bit of an object that is not within its lifetime or
-> has an indeterminate value [[basic.indet]]. For each bit in the value
-> representation of the result that is indeterminate, the smallest
-> object containing that bit has an indeterminate value; the behavior is
-> undefined unless that object is of unsigned ordinary character type or
-> `std::byte` type. The result does not otherwise contain any
-> indeterminate values.
->
-> *Remarks:* This function is if and only if `To`, `From`, and the types
-> of all subobjects of `To` and `From` are types `T` such that:
->
-> - `is_union_v<T>` is `false`;
->
-> - `is_pointer_v<T>` is `false`;
->
-> - `is_member_pointer_v<T>` is `false`;
->
-> - `is_volatile_v<T>` is `false`; and
->
-> - `T` has no non-static data members of reference type.
+*Constraints:*
+
+- `sizeof(To) == sizeof(From)` is `true`;
+
+- `is_trivially_copyable_v<To>` is `true`; and
+
+- `is_trivially_copyable_v<From>` is `true`.
+
+*Returns:* An object of type `To`. Implicitly creates objects nested
+within the result [[intro.object]]. Each bit of the value representation
+of the result is equal to the corresponding bit in the object
+representation of `from`. Padding bits of the result are unspecified.
+For the result and each object created within it, if there is no value
+of the object’s type corresponding to the value representation produced,
+the behavior is undefined. If there are multiple such values, which
+value is produced is unspecified. A bit in the value representation of
+the result is indeterminate if it does not correspond to a bit in the
+value representation of `from` or corresponds to a bit of an object that
+is not within its lifetime or has an indeterminate
+value [[basic.indet]]. For each bit in the value representation of the
+result that is indeterminate, the smallest object containing that bit
+has an indeterminate value; the behavior is undefined unless that object
+is of unsigned ordinary character type or `std::byte` type. The result
+does not otherwise contain any indeterminate values.
+
+*Remarks:* This function is if and only if `To`, `From`, and the types
+of all subobjects of `To` and `From` are types `T` such that:
+
+- `is_union_v<T>` is `false`;
+
+- `is_pointer_v<T>` is `false`;
+
+- `is_member_pointer_v<T>` is `false`;
+
+- `is_volatile_v<T>` is `false`; and
+
+- `T` has no non-static data members of reference type.
 
 ### `byteswap` <a id="bit.byteswap">[[bit.byteswap]]</a>
 
@@ -12862,16 +12828,16 @@ template<class T>
   constexpr T byteswap(T value) noexcept;
 ```
 
-> *Constraints:* `T` models `integral`.
->
-> *Mandates:* `T` does not have padding bits [[basic.types.general]].
->
-> Let the sequence R comprise the bytes of the object representation of
-> `value` in reverse order.
->
-> *Returns:* An object `v` of type `T` such that each byte in the object
-> representation of `v` is equal to the byte in the corresponding
-> position in R.
+*Constraints:* `T` models `integral`.
+
+*Mandates:* `T` does not have padding bits [[basic.types.general]].
+
+Let the sequence R comprise the bytes of the object representation of
+`value` in reverse order.
+
+*Returns:* An object `v` of type `T` such that each byte in the object
+representation of `v` is equal to the byte in the corresponding position
+in R.
 
 ### Integral powers of 2 <a id="bit.pow.two">[[bit.pow.two]]</a>
 
@@ -12880,49 +12846,48 @@ template<class T>
   constexpr bool has_single_bit(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* `true` if `x` is an integral power of two; `false`
-> otherwise.
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* `true` if `x` is an integral power of two; `false` otherwise.
 
 ``` cpp
 template<class T>
   constexpr T bit_ceil(T x);
 ```
 
-> Let N be the smallest power of 2 greater than or equal to `x`.
->
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Preconditions:* N is representable as a value of type `T`.
->
-> *Returns:* N.
->
-> *Throws:* Nothing.
->
-> *Remarks:* A function call expression that violates the precondition
-> in the *Preconditions:* element is not a core constant
-> expression [[expr.const]].
+Let N be the smallest power of 2 greater than or equal to `x`.
+
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Preconditions:* N is representable as a value of type `T`.
+
+*Returns:* N.
+
+*Throws:* Nothing.
+
+*Remarks:* A function call expression that violates the precondition in
+the *Preconditions:* element is not a core constant
+expression [[expr.const]].
 
 ``` cpp
 template<class T>
   constexpr T bit_floor(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* If `x == 0`, `0`; otherwise the maximal value `y` such that
-> `has_single_bit(y)` is `true` and `y <= x`.
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* If `x == 0`, `0`; otherwise the maximal value `y` such that
+`has_single_bit(y)` is `true` and `y <= x`.
 
 ``` cpp
 template<class T>
   constexpr int bit_width(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* If `x == 0`, `0`; otherwise one plus the base-2 logarithm
-> of `x`, with any fractional part discarded.
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* If `x == 0`, `0`; otherwise one plus the base-2 logarithm of
+`x`, with any fractional part discarded.
 
 ### Rotating <a id="bit.rotate">[[bit.rotate]]</a>
 
@@ -12934,24 +12899,24 @@ template<class T>
   [[nodiscard]] constexpr T rotl(T x, int s) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> Let `r` be `s % N`.
->
-> *Returns:* If `r` is `0`, `x`; if `r` is positive,
-> `(x << r) | (x >> (N - r))`; if `r` is negative, `rotr(x, -r)`.
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+Let `r` be `s % N`.
+
+*Returns:* If `r` is `0`, `x`; if `r` is positive,
+`(x << r) | (x >> (N - r))`; if `r` is negative, `rotr(x, -r)`.
 
 ``` cpp
 template<class T>
   [[nodiscard]] constexpr T rotr(T x, int s) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> Let `r` be `s % N`.
->
-> *Returns:* If `r` is `0`, `x`; if `r` is positive,
-> `(x >> r) | (x << (N - r))`; if `r` is negative, `rotl(x, -r)`.
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+Let `r` be `s % N`.
+
+*Returns:* If `r` is `0`, `x`; if `r` is positive,
+`(x >> r) | (x << (N - r))`; if `r` is negative, `rotl(x, -r)`.
 
 ### Counting <a id="bit.count">[[bit.count]]</a>
 
@@ -12963,59 +12928,59 @@ template<class T>
   constexpr int countl_zero(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* The number of consecutive `0` bits in the value of `x`,
-> starting from the most significant bit.
->
-> \[*Note 26*: Returns `N` if `x == 0`. — *end note*\]
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* The number of consecutive `0` bits in the value of `x`,
+starting from the most significant bit.
+
+\[*Note 1*: Returns `N` if `x == 0`. — *end note*\]
 
 ``` cpp
 template<class T>
   constexpr int countl_one(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* The number of consecutive `1` bits in the value of `x`,
-> starting from the most significant bit.
->
-> \[*Note 27*: Returns `N` if
-> `x == numeric_limits<T>::max()`. — *end note*\]
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* The number of consecutive `1` bits in the value of `x`,
+starting from the most significant bit.
+
+\[*Note 2*: Returns `N` if
+`x == numeric_limits<T>::max()`. — *end note*\]
 
 ``` cpp
 template<class T>
   constexpr int countr_zero(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* The number of consecutive `0` bits in the value of `x`,
-> starting from the least significant bit.
->
-> \[*Note 28*: Returns `N` if `x == 0`. — *end note*\]
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* The number of consecutive `0` bits in the value of `x`,
+starting from the least significant bit.
+
+\[*Note 3*: Returns `N` if `x == 0`. — *end note*\]
 
 ``` cpp
 template<class T>
   constexpr int countr_one(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* The number of consecutive `1` bits in the value of `x`,
-> starting from the least significant bit.
->
-> \[*Note 29*: Returns `N` if
-> `x == numeric_limits<T>::max()`. — *end note*\]
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* The number of consecutive `1` bits in the value of `x`,
+starting from the least significant bit.
+
+\[*Note 4*: Returns `N` if
+`x == numeric_limits<T>::max()`. — *end note*\]
 
 ``` cpp
 template<class T>
   constexpr int popcount(T x) noexcept;
 ```
 
-> *Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
->
-> *Returns:* The number of `1` bits in the value of `x`.
+*Constraints:* `T` is an unsigned integer type [[basic.fundamental]].
+
+*Returns:* The number of `1` bits in the value of `x`.
 
 ### Endian <a id="bit.endian">[[bit.endian]]</a>
 
@@ -13035,13 +13000,13 @@ enum class endian {
 };
 ```
 
-> If all scalar types have size 1 byte, then all of `endian::little`,
-> `endian::big`, and `endian::native` have the same value. Otherwise,
-> `endian::little` is not equal to `endian::big`. If all scalar types
-> are big-endian, `endian::native` is equal to `endian::big`. If all
-> scalar types are little-endian, `endian::native` is equal to
-> `endian::little`. Otherwise, `endian::native` is not equal to either
-> `endian::big` or `endian::little`.
+If all scalar types have size 1 byte, then all of `endian::little`,
+`endian::big`, and `endian::native` have the same value. Otherwise,
+`endian::little` is not equal to `endian::big`. If all scalar types are
+big-endian, `endian::native` is equal to `endian::big`. If all scalar
+types are little-endian, `endian::native` is equal to `endian::little`.
+Otherwise, `endian::native` is not equal to either `endian::big` or
+`endian::little`.
 
 <!-- Section link definitions -->
 [any]: #any

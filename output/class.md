@@ -22,18 +22,18 @@ is used to make a *class-name*. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head '{' [member-specification] '$'}
+    class-head '{' member-specification_opt '$'}
 ```
 
 ``` bnf
 class-head:
-    class-key [attribute-specifier-seq] class-head-name [class-virt-specifier] [base-clause]
-    class-key [attribute-specifier-seq] [base-clause]
+    class-key attribute-specifier-seq_opt class-head-name class-virt-specifier_opt base-clause_opt
+    class-key attribute-specifier-seq_opt base-clause_opt
 ```
 
 ``` bnf
 class-head-name:
-    [nested-name-specifier] class-name
+    nested-name-specifier_opt class-name
 ```
 
 ``` bnf
@@ -355,13 +355,13 @@ names a class template.
 
 ``` bnf
 member-specification:
-    member-declaration [member-specification]
-    access-specifier ':' [member-specification]
+    member-declaration member-specification_opt
+    access-specifier ':' member-specification_opt
 ```
 
 ``` bnf
 member-declaration:
-    [attribute-specifier-seq] [decl-specifier-seq] [member-declarator-list] ';'
+    attribute-specifier-seq_opt decl-specifier-seq_opt member-declarator-list_opt ';'
     function-definition
     using-declaration
     using-enum-declaration
@@ -382,10 +382,10 @@ member-declarator-list:
 
 ``` bnf
 member-declarator:
-    declarator [virt-specifier-seq] [pure-specifier]
+    declarator virt-specifier-seq_opt pure-specifier_opt
     declarator requires-clause
-    declarator [brace-or-equal-initializer]
-    [identifier] [attribute-specifier-seq] ':' constant-expression [brace-or-equal-initializer]
+    declarator brace-or-equal-initializer_opt
+    identifier_opt attribute-specifier-seq_opt ':' constant-expression brace-or-equal-initializer_opt
 ```
 
 ``` bnf
@@ -933,7 +933,7 @@ A *declarator* declares a *constructor* if it is a function declarator
 [[dcl.fct]] of the form
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' [noexcept-specifier] [attribute-specifier-seq]
+ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifier_opt attribute-specifier-seq_opt
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -1544,7 +1544,7 @@ object assigned to.
 ### Destructors <a id="class.dtor">[[class.dtor]]</a>
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' [noexcept-specifier] [attribute-specifier-seq]
+ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifier_opt attribute-specifier-seq_opt
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -1888,12 +1888,12 @@ conversion-function-id:
 
 ``` bnf
 conversion-type-id:
-    type-specifier-seq [conversion-declarator]
+    type-specifier-seq conversion-declarator_opt
 ```
 
 ``` bnf
 conversion-declarator:
-    ptr-operator [conversion-declarator]
+    ptr-operator conversion-declarator_opt
 ```
 
 A declaration whose *declarator-id* has an *unqualified-id* that is a
@@ -1901,8 +1901,8 @@ A declaration whose *declarator-id* has an *unqualified-id* that is a
 *declarator* shall be a function declarator [[dcl.fct]] of the form
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' [cv-qualifier-seq]
-   [ref-qualifier-seq] [noexcept-specifier] [attribute-specifier-seq]
+ptr-declarator '(' parameter-declaration-clause ')' cv-qualifier-seq_opt
+   ref-qualifier-seq_opt noexcept-specifier_opt attribute-specifier-seq_opt
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -2144,7 +2144,7 @@ linkage of the name of the class [[basic.link]]. — *end note*\]
 A *member-declarator* of the form
 
 ``` bnf
-[identifier] [attribute-specifier-seq] ':' constant-expression [brace-or-equal-initializer]
+identifier_opt attribute-specifier-seq_opt ':' constant-expression brace-or-equal-initializer_opt
 ```
 
 specifies a bit-field. The optional *attribute-specifier-seq* appertains
@@ -2649,20 +2649,20 @@ base-clause:
 
 ``` bnf
 base-specifier-list:
-    base-specifier ['...']
-    base-specifier-list ',' base-specifier ['...']
+    base-specifier '..._opt'
+    base-specifier-list ',' base-specifier '..._opt'
 ```
 
 ``` bnf
 base-specifier:
-    [attribute-specifier-seq] class-or-decltype
-    [attribute-specifier-seq] \texttt{virtual} [access-specifier] class-or-decltype
-    [attribute-specifier-seq] access-specifier [\texttt{virtual]} class-or-decltype
+    attribute-specifier-seq_opt class-or-decltype
+    attribute-specifier-seq_opt \texttt{virtual} access-specifier_opt class-or-decltype
+    attribute-specifier-seq_opt access-specifier \texttt{virtual_opt} class-or-decltype
 ```
 
 ``` bnf
 class-or-decltype:
-    [nested-name-specifier] type-name
+    nested-name-specifier_opt type-name
     nested-name-specifier \texttt{template} simple-template-id
     decltype-specifier
 ```
@@ -3504,7 +3504,7 @@ Member declarations can be labeled by an *access-specifier*
 [[class.derived]]:
 
 ``` bnf
-access-specifier ':' [member-specification]
+access-specifier ':' member-specification_opt
 ```
 
 An *access-specifier* specifies the access rules for members following
@@ -4262,13 +4262,13 @@ ctor-initializer:
 
 ``` bnf
 mem-initializer-list:
-    mem-initializer ['...']
-    mem-initializer-list ',' mem-initializer ['...']
+    mem-initializer '..._opt'
+    mem-initializer-list ',' mem-initializer '..._opt'
 ```
 
 ``` bnf
 mem-initializer:
-    mem-initializer-id '(' [expression-list] ')'
+    mem-initializer-id '(' expression-list_opt ')'
     mem-initializer-id braced-init-list
 ```
 

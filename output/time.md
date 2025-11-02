@@ -996,30 +996,29 @@ that case, the author of that class type should specialize
 static constexpr Rep zero() noexcept;
 ```
 
-> *Returns:* `Rep(0)`.
->
-> \[*Note 2*: `Rep(0)` is specified instead of `Rep()` because `Rep()`
-> can have some other meaning, such as an uninitialized
-> value. — *end note*\]
->
-> *Remarks:* The value returned shall be the additive identity.
+*Returns:* `Rep(0)`.
+
+\[*Note 2*: `Rep(0)` is specified instead of `Rep()` because `Rep()` can
+have some other meaning, such as an uninitialized value. — *end note*\]
+
+*Remarks:* The value returned shall be the additive identity.
 
 ``` cpp
 static constexpr Rep min() noexcept;
 ```
 
-> *Returns:* `numeric_limits<Rep>::lowest()`.
->
-> *Remarks:* The value returned shall compare less than or equal to
-> `zero()`.
+*Returns:* `numeric_limits<Rep>::lowest()`.
+
+*Remarks:* The value returned shall compare less than or equal to
+`zero()`.
 
 ``` cpp
 static constexpr Rep max() noexcept;
 ```
 
-> *Returns:* `numeric_limits<Rep>::max()`.
->
-> *Remarks:* The value returned shall compare greater than `zero()`.
+*Returns:* `numeric_limits<Rep>::max()`.
+
+*Remarks:* The value returned shall compare greater than `zero()`.
 
 ### Specializations of `common_type` <a id="time.traits.specializations">[[time.traits.specializations]]</a>
 
@@ -1033,11 +1032,11 @@ template<class Rep1, class Period1, class Rep2, class Period2>
 The `period` of the `duration` indicated by this specialization of
 `common_type` is the greatest common divisor of `Period1` and `Period2`.
 
-\[*Note 2*: This can be computed by forming a ratio of the greatest
+\[*Note 3*: This can be computed by forming a ratio of the greatest
 common divisor of `Period1::num` and `Period2::num` and the least common
 multiple of `Period1::den` and `Period2::den`. — *end note*\]
 
-\[*Note 3*: The `typedef` name `type` is a synonym for the `duration`
+\[*Note 4*: The `typedef` name `type` is a synonym for the `duration`
 with the largest tick `period` possible where both `duration` arguments
 will convert to it without requiring a division operation. The
 representation of this type is intended to be able to hold any value
@@ -1172,46 +1171,45 @@ template<class Rep2>
   constexpr explicit duration(const Rep2& r);
 ```
 
-> *Constraints:* `is_convertible_v<const Rep2&, rep>` is `true` and
->
-> - `treat_as_floating_point_v<rep>` is `true` or
->
-> - `treat_as_floating_point_v<Rep2>` is `false`.
->
-> \[*Example 1*:
->
->     duration<int, milli> d(3);          // OK
->     duration<int, milli> d(3.5);        // error
->
-> — *end example*\]
->
-> *Effects:* Initializes `rep_` with `r`.
+*Constraints:* `is_convertible_v<const Rep2&, rep>` is `true` and
+
+- `treat_as_floating_point_v<rep>` is `true` or
+
+- `treat_as_floating_point_v<Rep2>` is `false`.
+
+\[*Example 2*:
+
+    duration<int, milli> d(3);          // OK
+    duration<int, milli> d(3.5);        // error
+
+— *end example*\]
+
+*Effects:* Initializes `rep_` with `r`.
 
 ``` cpp
 template<class Rep2, class Period2>
   constexpr duration(const duration<Rep2, Period2>& d);
 ```
 
-> *Constraints:* No overflow is induced in the conversion and
-> `treat_as_floating_point_v<rep>` is `true` or both
-> `ratio_divide<Period2, period>::den` is `1` and
-> `treat_as_floating_point_v<Rep2>` is `false`.
->
-> \[*Note 3*: This requirement prevents implicit truncation error when
-> converting between integral-based `duration` types. Such a
-> construction could easily lead to confusion about the value of the
-> `duration`. — *end note*\]
->
-> \[*Example 2*:
->
->     duration<int, milli> ms(3);
->     duration<int, micro> us = ms;       // OK
->     duration<int, milli> ms2 = us;      // error
->
-> — *end example*\]
->
-> *Effects:* Initializes `rep_` with
-> `duration_cast<duration>(d).count()`.
+*Constraints:* No overflow is induced in the conversion and
+`treat_as_floating_point_v<rep>` is `true` or both
+`ratio_divide<Period2, period>::den` is `1` and
+`treat_as_floating_point_v<Rep2>` is `false`.
+
+\[*Note 1*: This requirement prevents implicit truncation error when
+converting between integral-based `duration` types. Such a construction
+could easily lead to confusion about the value of the
+`duration`. — *end note*\]
+
+\[*Example 3*:
+
+    duration<int, milli> ms(3);
+    duration<int, micro> us = ms;       // OK
+    duration<int, milli> ms2 = us;      // error
+
+— *end example*\]
+
+*Effects:* Initializes `rep_` with `duration_cast<duration>(d).count()`.
 
 ### Observer <a id="time.duration.observer">[[time.duration.observer]]</a>
 
@@ -1219,7 +1217,7 @@ template<class Rep2, class Period2>
 constexpr rep count() const;
 ```
 
-> *Returns:* `rep_`.
+*Returns:* `rep_`.
 
 ### Arithmetic <a id="time.duration.arithmetic">[[time.duration.arithmetic]]</a>
 
@@ -1227,89 +1225,89 @@ constexpr rep count() const;
 constexpr common_type_t<duration> operator+() const;
 ```
 
-> *Returns:* `common_type_t<duration>(*this)`.
+*Returns:* `common_type_t<duration>(*this)`.
 
 ``` cpp
 constexpr common_type_t<duration> operator-() const;
 ```
 
-> *Returns:* `common_type_t<duration>(-rep_)`.
+*Returns:* `common_type_t<duration>(-rep_)`.
 
 ``` cpp
 constexpr duration& operator++();
 ```
 
-> *Effects:* Equivalent to: `++rep_`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `++rep_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration operator++(int);
 ```
 
-> *Effects:* Equivalent to: `return duration(rep_++);`
+*Effects:* Equivalent to: `return duration(rep_++);`
 
 ``` cpp
 constexpr duration& operator--();
 ```
 
-> *Effects:* Equivalent to: `–rep_`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `–rep_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration operator--(int);
 ```
 
-> *Effects:* Equivalent to: `return duration(rep_--);`
+*Effects:* Equivalent to: `return duration(rep_--);`
 
 ``` cpp
 constexpr duration& operator+=(const duration& d);
 ```
 
-> *Effects:* Equivalent to: `rep_ += d.count()`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `rep_ += d.count()`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration& operator-=(const duration& d);
 ```
 
-> *Effects:* Equivalent to: `rep_ -= d.count()`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `rep_ -= d.count()`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration& operator*=(const rep& rhs);
 ```
 
-> *Effects:* Equivalent to: `rep_ *= rhs`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `rep_ *= rhs`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration& operator/=(const rep& rhs);
 ```
 
-> *Effects:* Equivalent to: `rep_ /= rhs`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `rep_ /= rhs`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration& operator%=(const rep& rhs);
 ```
 
-> *Effects:* Equivalent to: `rep_ %= rhs`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `rep_ %= rhs`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr duration& operator%=(const duration& rhs);
 ```
 
-> *Effects:* Equivalent to: `rep_ %= rhs.count()`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `rep_ %= rhs.count()`.
+
+*Returns:* `*this`.
 
 ### Special values <a id="time.duration.special">[[time.duration.special]]</a>
 
@@ -1317,19 +1315,19 @@ constexpr duration& operator%=(const duration& rhs);
 static constexpr duration zero() noexcept;
 ```
 
-> *Returns:* `duration(duration_values<rep>::zero())`.
+*Returns:* `duration(duration_values<rep>::zero())`.
 
 ``` cpp
 static constexpr duration min() noexcept;
 ```
 
-> *Returns:* `duration(duration_values<rep>::min())`.
+*Returns:* `duration(duration_values<rep>::min())`.
 
 ``` cpp
 static constexpr duration max() noexcept;
 ```
 
-> *Returns:* `duration(duration_values<rep>::max())`.
+*Returns:* `duration(duration_values<rep>::max())`.
 
 ### Non-member arithmetic <a id="time.duration.nonmember">[[time.duration.nonmember]]</a>
 
@@ -1342,7 +1340,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
     operator+(const duration<Rep1, Period1>& lhs, const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CD(CD(lhs).count() + CD(rhs).count())`.
+*Returns:* `CD(CD(lhs).count() + CD(rhs).count())`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1350,7 +1348,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
   operator-(const duration<Rep1, Period1>& lhs, const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CD(CD(lhs).count() - CD(rhs).count())`.
+*Returns:* `CD(CD(lhs).count() - CD(rhs).count())`.
 
 ``` cpp
 template<class Rep1, class Period, class Rep2>
@@ -1358,10 +1356,10 @@ template<class Rep1, class Period, class Rep2>
     operator*(const duration<Rep1, Period>& d, const Rep2& s);
 ```
 
-> *Constraints:*
-> `is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`.
->
-> *Returns:* `CD(CD(d).count() * s)`.
+*Constraints:*
+`is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`.
+
+*Returns:* `CD(CD(d).count() * s)`.
 
 ``` cpp
 template<class Rep1, class Rep2, class Period>
@@ -1369,10 +1367,10 @@ template<class Rep1, class Rep2, class Period>
     operator*(const Rep1& s, const duration<Rep2, Period>& d);
 ```
 
-> *Constraints:*
-> `is_convertible_v<const Rep1&, common_type_t<Rep1, Rep2>>` is `true`.
->
-> *Returns:* `d * s`.
+*Constraints:*
+`is_convertible_v<const Rep1&, common_type_t<Rep1, Rep2>>` is `true`.
+
+*Returns:* `d * s`.
 
 ``` cpp
 template<class Rep1, class Period, class Rep2>
@@ -1380,11 +1378,11 @@ template<class Rep1, class Period, class Rep2>
     operator/(const duration<Rep1, Period>& d, const Rep2& s);
 ```
 
-> *Constraints:*
-> `is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`
-> and `Rep2` is not a specialization of `duration`.
->
-> *Returns:* `CD(CD(d).count() / s)`.
+*Constraints:*
+`is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true` and
+`Rep2` is not a specialization of `duration`.
+
+*Returns:* `CD(CD(d).count() / s)`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1392,10 +1390,10 @@ template<class Rep1, class Period1, class Rep2, class Period2>
     operator/(const duration<Rep1, Period1>& lhs, const duration<Rep2, Period2>& rhs);
 ```
 
-> Let `CD` be
-> `common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>`.
->
-> *Returns:* `CD(lhs).count() / CD(rhs).count()`.
+Let `CD` be
+`common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>`.
+
+*Returns:* `CD(lhs).count() / CD(rhs).count()`.
 
 ``` cpp
 template<class Rep1, class Period, class Rep2>
@@ -1403,11 +1401,11 @@ template<class Rep1, class Period, class Rep2>
     operator%(const duration<Rep1, Period>& d, const Rep2& s);
 ```
 
-> *Constraints:*
-> `is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true`
-> and `Rep2` is not a specialization of `duration`.
->
-> *Returns:* `CD(CD(d).count() % s)`.
+*Constraints:*
+`is_convertible_v<const Rep2&, common_type_t<Rep1, Rep2>>` is `true` and
+`Rep2` is not a specialization of `duration`.
+
+*Returns:* `CD(CD(d).count() % s)`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1415,7 +1413,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
     operator%(const duration<Rep1, Period1>& lhs, const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CD(CD(lhs).count() % CD(rhs).count())`.
+*Returns:* `CD(CD(lhs).count() % CD(rhs).count())`.
 
 ### Comparisons <a id="time.duration.comparisons">[[time.duration.comparisons]]</a>
 
@@ -1429,7 +1427,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
                             const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CT(lhs).count() == CT(rhs).count()`.
+*Returns:* `CT(lhs).count() == CT(rhs).count()`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1437,7 +1435,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
                            const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CT(lhs).count() < CT(rhs).count()`.
+*Returns:* `CT(lhs).count() < CT(rhs).count()`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1445,7 +1443,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
                            const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `rhs < lhs`.
+*Returns:* `rhs < lhs`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1453,7 +1451,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
                             const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `!(rhs < lhs)`.
+*Returns:* `!(rhs < lhs)`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1461,7 +1459,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
                             const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `!(lhs < rhs)`.
+*Returns:* `!(lhs < rhs)`.
 
 ``` cpp
 template<class Rep1, class Period1, class Rep2, class Period2>
@@ -1470,7 +1468,7 @@ template<class Rep1, class Period1, class Rep2, class Period2>
                              const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CT(lhs).count() <=> CT(rhs).count()`.
+*Returns:* `CT(lhs).count() <=> CT(rhs).count()`.
 
 ### Conversions <a id="time.duration.cast">[[time.duration.cast]]</a>
 
@@ -1479,69 +1477,69 @@ template<class ToDuration, class Rep, class Period>
   constexpr ToDuration duration_cast(const duration<Rep, Period>& d);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`.
->
-> *Returns:* Let `CF` be
-> `ratio_divide<Period, typename ToDuration::period>`, and `CR` be
-> `common_type<typename ToDuration::rep, Rep, intmax_t>::type`.
->
-> - If `CF::num == 1` and `CF::den == 1`, returns
->
->       ToDuration(static_cast<typename ToDuration::rep>(d.count()))
->
-> - otherwise, if `CF::num != 1` and `CF::den == 1`, returns
->
->       ToDuration(static_cast<typename ToDuration::rep>(
->         static_cast<CR>(d.count()) * static_cast<CR>(CF::num)))
->
-> - otherwise, if `CF::num == 1` and `CF::den != 1`, returns
->
->       ToDuration(static_cast<typename ToDuration::rep>(
->         static_cast<CR>(d.count()) / static_cast<CR>(CF::den)))
->
-> - otherwise, returns
->
->       ToDuration(static_cast<typename ToDuration::rep>(
->         static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
->
-> \[*Note 4*: This function does not use any implicit conversions; all
-> conversions are done with . It avoids multiplications and divisions
-> when it is known at compile time that one or more arguments is 1.
-> Intermediate computations are carried out in the widest representation
-> and only converted to the destination representation at the final
-> step. — *end note*\]
+*Constraints:* `ToDuration` is a specialization of `duration`.
+
+*Returns:* Let `CF` be
+`ratio_divide<Period, typename ToDuration::period>`, and `CR` be
+`common_type<typename ToDuration::rep, Rep, intmax_t>::type`.
+
+- If `CF::num == 1` and `CF::den == 1`, returns
+
+      ToDuration(static_cast<typename ToDuration::rep>(d.count()))
+
+- otherwise, if `CF::num != 1` and `CF::den == 1`, returns
+
+      ToDuration(static_cast<typename ToDuration::rep>(
+        static_cast<CR>(d.count()) * static_cast<CR>(CF::num)))
+
+- otherwise, if `CF::num == 1` and `CF::den != 1`, returns
+
+      ToDuration(static_cast<typename ToDuration::rep>(
+        static_cast<CR>(d.count()) / static_cast<CR>(CF::den)))
+
+- otherwise, returns
+
+      ToDuration(static_cast<typename ToDuration::rep>(
+        static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
+
+\[*Note 2*: This function does not use any implicit conversions; all
+conversions are done with . It avoids multiplications and divisions when
+it is known at compile time that one or more arguments is 1.
+Intermediate computations are carried out in the widest representation
+and only converted to the destination representation at the final
+step. — *end note*\]
 
 ``` cpp
 template<class ToDuration, class Rep, class Period>
   constexpr ToDuration floor(const duration<Rep, Period>& d);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`.
->
-> *Returns:* The greatest result `t` representable in `ToDuration` for
-> which `t <= d`.
+*Constraints:* `ToDuration` is a specialization of `duration`.
+
+*Returns:* The greatest result `t` representable in `ToDuration` for
+which `t <= d`.
 
 ``` cpp
 template<class ToDuration, class Rep, class Period>
   constexpr ToDuration ceil(const duration<Rep, Period>& d);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`.
->
-> *Returns:* The least result `t` representable in `ToDuration` for
-> which `t >= d`.
+*Constraints:* `ToDuration` is a specialization of `duration`.
+
+*Returns:* The least result `t` representable in `ToDuration` for which
+`t >= d`.
 
 ``` cpp
 template<class ToDuration, class Rep, class Period>
   constexpr ToDuration round(const duration<Rep, Period>& d);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration` and
-> `treat_as_floating_point_v<typename ToDuration::rep>` is `false`.
->
-> *Returns:* The value of `ToDuration` that is closest to `d`. If there
-> are two closest values, then return the value `t` for which
-> `t % 2 == 0`.
+*Constraints:* `ToDuration` is a specialization of `duration` and
+`treat_as_floating_point_v<typename ToDuration::rep>` is `false`.
+
+*Returns:* The value of `ToDuration` that is closest to `d`. If there
+are two closest values, then return the value `t` for which
+`t % 2 == 0`.
 
 ### Suffixes for duration literals <a id="time.duration.literals">[[time.duration.literals]]</a>
 
@@ -1559,7 +1557,7 @@ If any of these suffixes are applied to an *integer-literal* and the
 resulting `chrono::duration` value cannot be represented in the result
 type because of overflow, the program is ill-formed.
 
-\[*Example 2*:
+\[*Example 4*:
 
 The following code shows some duration literals.
 
@@ -1577,46 +1575,46 @@ constexpr chrono::hours                                 operator""h(unsigned lon
 constexpr chrono::duration<unspecified, ratio<3600, 1>> operator""h(long double hours);
 ```
 
-> *Returns:* A `duration` literal representing `hours` hours.
+*Returns:* A `duration` literal representing `hours` hours.
 
 ``` cpp
 constexpr chrono::minutes                             operator""min(unsigned long long minutes);
 constexpr chrono::duration<unspecified, ratio<60, 1>> operator""min(long double minutes);
 ```
 
-> *Returns:* A `duration` literal representing `minutes` minutes.
+*Returns:* A `duration` literal representing `minutes` minutes.
 
 ``` cpp
 constexpr chrono::seconds  \itcorr             operator""s(unsigned long long sec);
 constexpr chrono::duration<unspecified> operator""s(long double sec);
 ```
 
-> *Returns:* A `duration` literal representing `sec` seconds.
->
-> \[*Note 5*: The same suffix `s` is used for `basic_string` but there
-> is no conflict, since duration suffixes apply to numbers and string
-> literal suffixes apply to character array literals. — *end note*\]
+*Returns:* A `duration` literal representing `sec` seconds.
+
+\[*Note 3*: The same suffix `s` is used for `basic_string` but there is
+no conflict, since duration suffixes apply to numbers and string literal
+suffixes apply to character array literals. — *end note*\]
 
 ``` cpp
 constexpr chrono::milliseconds                 operator""ms(unsigned long long msec);
 constexpr chrono::duration<unspecified, milli> operator""ms(long double msec);
 ```
 
-> *Returns:* A `duration` literal representing `msec` milliseconds.
+*Returns:* A `duration` literal representing `msec` milliseconds.
 
 ``` cpp
 constexpr chrono::microseconds                 operator""us(unsigned long long usec);
 constexpr chrono::duration<unspecified, micro> operator""us(long double usec);
 ```
 
-> *Returns:* A `duration` literal representing `usec` microseconds.
+*Returns:* A `duration` literal representing `usec` microseconds.
 
 ``` cpp
 constexpr chrono::nanoseconds                 operator""ns(unsigned long long nsec);
 constexpr chrono::duration<unspecified, nano> operator""ns(long double nsec);
 ```
 
-> *Returns:* A `duration` literal representing `nsec` nanoseconds.
+*Returns:* A `duration` literal representing `nsec` nanoseconds.
 
 ### Algorithms <a id="time.duration.alg">[[time.duration.alg]]</a>
 
@@ -1625,9 +1623,9 @@ template<class Rep, class Period>
   constexpr duration<Rep, Period> abs(duration<Rep, Period> d);
 ```
 
-> *Constraints:* `numeric_limits<Rep>::is_signed` is `true`.
->
-> *Returns:* If `d >= d.zero()`, return `d`, otherwise return `-d`.
+*Constraints:* `numeric_limits<Rep>::is_signed` is `true`.
+
+*Returns:* If `d >= d.zero()`, return `d`, otherwise return `-d`.
 
 ### I/O <a id="time.duration.io">[[time.duration.io]]</a>
 
@@ -1637,76 +1635,75 @@ template<class charT, class traits, class Rep, class Period>
     operator<<(basic_ostream<charT, traits>& os, const duration<Rep, Period>& d);
 ```
 
-> *Effects:* Inserts the duration `d` onto the stream `os` as if it were
-> implemented as follows:
->
-> ``` cpp
-> basic_ostringstream<charT, traits> s;
-> s.flags(os.flags());
-> s.imbue(os.getloc());
-> s.precision(os.precision());
-> s << d.count() << units-suffix;
-> return os << s.str();
-> ```
->
-> where *`units-suffix`* depends on the type `Period::type` as follows:
->
-> - If `Period::type` is `atto`, *`units-suffix`* is `"as"`.
->
-> - Otherwise, if `Period::type` is `femto`, *`units-suffix`* is `"fs"`.
->
-> - Otherwise, if `Period::type` is `pico`, *`units-suffix`* is `"ps"`.
->
-> - Otherwise, if `Period::type` is `nano`, *`units-suffix`* is `"ns"`.
->
-> - Otherwise, if `Period::type` is `micro`, it is
->   *implementation-defined* whether *`units-suffix`* is `"s"`
->   (`"\u00b5\u0073"`) or `"us"`.
->
-> - Otherwise, if `Period::type` is `milli`, *`units-suffix`* is `"ms"`.
->
-> - Otherwise, if `Period::type` is `centi`, *`units-suffix`* is `"cs"`.
->
-> - Otherwise, if `Period::type` is `deci`, *`units-suffix`* is `"ds"`.
->
-> - Otherwise, if `Period::type` is `ratio<1>`, *`units-suffix`* is
->   `"s"`.
->
-> - Otherwise, if `Period::type` is `deca`, *`units-suffix`* is `"das"`.
->
-> - Otherwise, if `Period::type` is `hecto`, *`units-suffix`* is `"hs"`.
->
-> - Otherwise, if `Period::type` is `kilo`, *`units-suffix`* is `"ks"`.
->
-> - Otherwise, if `Period::type` is `mega`, *`units-suffix`* is `"Ms"`.
->
-> - Otherwise, if `Period::type` is `giga`, *`units-suffix`* is `"Gs"`.
->
-> - Otherwise, if `Period::type` is `tera`, *`units-suffix`* is `"Ts"`.
->
-> - Otherwise, if `Period::type` is `peta`, *`units-suffix`* is `"Ps"`.
->
-> - Otherwise, if `Period::type` is `exa`, *`units-suffix`* is `"Es"`.
->
-> - Otherwise, if `Period::type` is `ratio<60>`, *`units-suffix`* is
->   `"min"`.
->
-> - Otherwise, if `Period::type` is `ratio<3600>`, *`units-suffix`* is
->   `"h"`.
->
-> - Otherwise, if `Period::type` is `ratio<86400>`, *`units-suffix`* is
->   `"d"`.
->
-> - Otherwise, if `Period::type::den == 1`, *`units-suffix`* is
->   `"[`*`num`*`]s"`.
->
-> - Otherwise, *`units-suffix`* is `"[`*`num`*`/`*`den`*`]s"`.
->
-> In the list above, the use of *`num`* and *`den`* refers to the static
-> data members of `Period::type`, which are converted to arrays of
-> `charT` using a decimal conversion with no leading zeroes.
->
-> *Returns:* `os`.
+*Effects:* Inserts the duration `d` onto the stream `os` as if it were
+implemented as follows:
+
+``` cpp
+basic_ostringstream<charT, traits> s;
+s.flags(os.flags());
+s.imbue(os.getloc());
+s.precision(os.precision());
+s << d.count() << units-suffix;
+return os << s.str();
+```
+
+where *`units-suffix`* depends on the type `Period::type` as follows:
+
+- If `Period::type` is `atto`, *`units-suffix`* is `"as"`.
+
+- Otherwise, if `Period::type` is `femto`, *`units-suffix`* is `"fs"`.
+
+- Otherwise, if `Period::type` is `pico`, *`units-suffix`* is `"ps"`.
+
+- Otherwise, if `Period::type` is `nano`, *`units-suffix`* is `"ns"`.
+
+- Otherwise, if `Period::type` is `micro`, it is
+  *implementation-defined* whether *`units-suffix`* is `"s"`
+  (`"\u00b5\u0073"`) or `"us"`.
+
+- Otherwise, if `Period::type` is `milli`, *`units-suffix`* is `"ms"`.
+
+- Otherwise, if `Period::type` is `centi`, *`units-suffix`* is `"cs"`.
+
+- Otherwise, if `Period::type` is `deci`, *`units-suffix`* is `"ds"`.
+
+- Otherwise, if `Period::type` is `ratio<1>`, *`units-suffix`* is `"s"`.
+
+- Otherwise, if `Period::type` is `deca`, *`units-suffix`* is `"das"`.
+
+- Otherwise, if `Period::type` is `hecto`, *`units-suffix`* is `"hs"`.
+
+- Otherwise, if `Period::type` is `kilo`, *`units-suffix`* is `"ks"`.
+
+- Otherwise, if `Period::type` is `mega`, *`units-suffix`* is `"Ms"`.
+
+- Otherwise, if `Period::type` is `giga`, *`units-suffix`* is `"Gs"`.
+
+- Otherwise, if `Period::type` is `tera`, *`units-suffix`* is `"Ts"`.
+
+- Otherwise, if `Period::type` is `peta`, *`units-suffix`* is `"Ps"`.
+
+- Otherwise, if `Period::type` is `exa`, *`units-suffix`* is `"Es"`.
+
+- Otherwise, if `Period::type` is `ratio<60>`, *`units-suffix`* is
+  `"min"`.
+
+- Otherwise, if `Period::type` is `ratio<3600>`, *`units-suffix`* is
+  `"h"`.
+
+- Otherwise, if `Period::type` is `ratio<86400>`, *`units-suffix`* is
+  `"d"`.
+
+- Otherwise, if `Period::type::den == 1`, *`units-suffix`* is
+  `"[`*`num`*`]s"`.
+
+- Otherwise, *`units-suffix`* is `"[`*`num`*`/`*`den`*`]s"`.
+
+In the list above, the use of *`num`* and *`den`* refers to the static
+data members of `Period::type`, which are converted to arrays of `charT`
+using a decimal conversion with no leading zeroes.
+
+*Returns:* `os`.
 
 ``` cpp
 template<class charT, class traits, class Rep, class Period, class Alloc = allocator<charT>>
@@ -1717,16 +1714,16 @@ template<class charT, class traits, class Rep, class Period, class Alloc = alloc
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the duration
-> `d` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid duration,
-> `is.setstate(ios_base::failbit)` is called and `d` is not modified. If
-> `%Z` is used and successfully parsed, that value will be assigned to
-> `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
-> used and successfully parsed, that value will be assigned to `*offset`
-> if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the duration `d`
+using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid duration,
+`is.setstate(ios_base::failbit)` is called and `d` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ## Class template `time_point` <a id="time.point">[[time.point]]</a>
 
@@ -1779,24 +1776,24 @@ ill-formed.
 constexpr time_point();
 ```
 
-> *Effects:* Initializes `d_` with `duration::zero()`. Such a
-> `time_point` object represents the epoch.
+*Effects:* Initializes `d_` with `duration::zero()`. Such a `time_point`
+object represents the epoch.
 
 ``` cpp
 constexpr explicit time_point(const duration& d);
 ```
 
-> *Effects:* Initializes `d_` with `d`. Such a `time_point` object
-> represents the epoch `+ d`.
+*Effects:* Initializes `d_` with `d`. Such a `time_point` object
+represents the epoch `+ d`.
 
 ``` cpp
 template<class Duration2>
   constexpr time_point(const time_point<clock, Duration2>& t);
 ```
 
-> *Constraints:* `is_convertible_v<Duration2, duration>` is `true`.
->
-> *Effects:* Initializes `d_` with `t.time_since_epoch()`.
+*Constraints:* `is_convertible_v<Duration2, duration>` is `true`.
+
+*Effects:* Initializes `d_` with `t.time_since_epoch()`.
 
 ### Observer <a id="time.point.observer">[[time.point.observer]]</a>
 
@@ -1804,7 +1801,7 @@ template<class Duration2>
 constexpr duration time_since_epoch() const;
 ```
 
-> *Returns:* `d_`.
+*Returns:* `d_`.
 
 ### Arithmetic <a id="time.point.arithmetic">[[time.point.arithmetic]]</a>
 
@@ -1812,45 +1809,45 @@ constexpr duration time_since_epoch() const;
 constexpr time_point& operator++();
 ```
 
-> *Effects:* Equivalent to: `++d_`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `++d_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr time_point operator++(int);
 ```
 
-> *Effects:* Equivalent to: `return time_point{d_++};`
+*Effects:* Equivalent to: `return time_point{d_++};`
 
 ``` cpp
 constexpr time_point& operator--();
 ```
 
-> *Effects:* Equivalent to: `–d_`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `–d_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr time_point operator--(int);
 ```
 
-> *Effects:* Equivalent to: `return time_point{d_--};`
+*Effects:* Equivalent to: `return time_point{d_--};`
 
 ``` cpp
 constexpr time_point& operator+=(const duration& d);
 ```
 
-> *Effects:* Equivalent to: `d_ += d`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `d_ += d`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr time_point& operator-=(const duration& d);
 ```
 
-> *Effects:* Equivalent to: `d_ -= d`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `d_ -= d`.
+
+*Returns:* `*this`.
 
 ### Special values <a id="time.point.special">[[time.point.special]]</a>
 
@@ -1858,13 +1855,13 @@ constexpr time_point& operator-=(const duration& d);
 static constexpr time_point min() noexcept;
 ```
 
-> *Returns:* `time_point(duration::min())`.
+*Returns:* `time_point(duration::min())`.
 
 ``` cpp
 static constexpr time_point max() noexcept;
 ```
 
-> *Returns:* `time_point(duration::max())`.
+*Returns:* `time_point(duration::max())`.
 
 ### Non-member arithmetic <a id="time.point.nonmember">[[time.point.nonmember]]</a>
 
@@ -1874,8 +1871,8 @@ template<class Clock, class Duration1, class Rep2, class Period2>
     operator+(const time_point<Clock, Duration1>& lhs, const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CT(lhs.time_since_epoch() + rhs)`, where `CT` is the type
-> of the return value.
+*Returns:* `CT(lhs.time_since_epoch() + rhs)`, where `CT` is the type of
+the return value.
 
 ``` cpp
 template<class Rep1, class Period1, class Clock, class Duration2>
@@ -1883,7 +1880,7 @@ template<class Rep1, class Period1, class Clock, class Duration2>
     operator+(const duration<Rep1, Period1>& lhs, const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `rhs + lhs`.
+*Returns:* `rhs + lhs`.
 
 ``` cpp
 template<class Clock, class Duration1, class Rep2, class Period2>
@@ -1891,8 +1888,8 @@ template<class Clock, class Duration1, class Rep2, class Period2>
     operator-(const time_point<Clock, Duration1>& lhs, const duration<Rep2, Period2>& rhs);
 ```
 
-> *Returns:* `CT(lhs.time_since_epoch() - rhs)`, where `CT` is the type
-> of the return value.
+*Returns:* `CT(lhs.time_since_epoch() - rhs)`, where `CT` is the type of
+the return value.
 
 ``` cpp
 template<class Clock, class Duration1, class Duration2>
@@ -1900,7 +1897,7 @@ template<class Clock, class Duration1, class Duration2>
     operator-(const time_point<Clock, Duration1>& lhs, const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `lhs.time_since_epoch() - rhs.time_since_epoch()`.
+*Returns:* `lhs.time_since_epoch() - rhs.time_since_epoch()`.
 
 ### Comparisons <a id="time.point.comparisons">[[time.point.comparisons]]</a>
 
@@ -1910,7 +1907,7 @@ template<class Clock, class Duration1, class Duration2>
                             const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `lhs.time_since_epoch() == rhs.time_since_epoch()`.
+*Returns:* `lhs.time_since_epoch() == rhs.time_since_epoch()`.
 
 ``` cpp
 template<class Clock, class Duration1, class Duration2>
@@ -1918,7 +1915,7 @@ template<class Clock, class Duration1, class Duration2>
                            const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `lhs.time_since_epoch() < rhs.time_since_epoch()`.
+*Returns:* `lhs.time_since_epoch() < rhs.time_since_epoch()`.
 
 ``` cpp
 template<class Clock, class Duration1, class Duration2>
@@ -1926,7 +1923,7 @@ template<class Clock, class Duration1, class Duration2>
                            const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `rhs < lhs`.
+*Returns:* `rhs < lhs`.
 
 ``` cpp
 template<class Clock, class Duration1, class Duration2>
@@ -1934,7 +1931,7 @@ template<class Clock, class Duration1, class Duration2>
                             const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `!(rhs < lhs)`.
+*Returns:* `!(rhs < lhs)`.
 
 ``` cpp
 template<class Clock, class Duration1, class Duration2>
@@ -1942,7 +1939,7 @@ template<class Clock, class Duration1, class Duration2>
                             const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `!(lhs < rhs)`.
+*Returns:* `!(lhs < rhs)`.
 
 ``` cpp
 template<class Clock, class Duration1,
@@ -1951,7 +1948,7 @@ template<class Clock, class Duration1,
                              const time_point<Clock, Duration2>& rhs);
 ```
 
-> *Returns:* `lhs.time_since_epoch() <=> rhs.time_since_epoch()`.
+*Returns:* `lhs.time_since_epoch() <=> rhs.time_since_epoch()`.
 
 ### Conversions <a id="time.point.cast">[[time.point.cast]]</a>
 
@@ -1960,44 +1957,44 @@ template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> time_point_cast(const time_point<Clock, Duration>& t);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`.
->
-> *Returns:*
->
-> ``` cpp
-> time_point<Clock, ToDuration>(duration_cast<ToDuration>(t.time_since_epoch()))
-> ```
+*Constraints:* `ToDuration` is a specialization of `duration`.
+
+*Returns:*
+
+``` cpp
+time_point<Clock, ToDuration>(duration_cast<ToDuration>(t.time_since_epoch()))
+```
 
 ``` cpp
 template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> floor(const time_point<Clock, Duration>& tp);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`.
->
-> *Returns:*
-> `time_point<Clock, ToDuration>(floor<ToDuration>(tp.time_since_epoch()))`.
+*Constraints:* `ToDuration` is a specialization of `duration`.
+
+*Returns:*
+`time_point<Clock, ToDuration>(floor<ToDuration>(tp.time_since_epoch()))`.
 
 ``` cpp
 template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> ceil(const time_point<Clock, Duration>& tp);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`.
->
-> *Returns:*
-> `time_point<Clock, ToDuration>(ceil<ToDuration>(tp.time_since_epoch()))`.
+*Constraints:* `ToDuration` is a specialization of `duration`.
+
+*Returns:*
+`time_point<Clock, ToDuration>(ceil<ToDuration>(tp.time_since_epoch()))`.
 
 ``` cpp
 template<class ToDuration, class Clock, class Duration>
   constexpr time_point<Clock, ToDuration> round(const time_point<Clock, Duration>& tp);
 ```
 
-> *Constraints:* `ToDuration` is a specialization of `duration`, and
-> `treat_as_floating_point_v<typename ToDuration::rep>` is `false`.
->
-> *Returns:*
-> `time_point<Clock, ToDuration>(round<ToDuration>(tp.time_since_epoch()))`.
+*Constraints:* `ToDuration` is a specialization of `duration`, and
+`treat_as_floating_point_v<typename ToDuration::rep>` is `false`.
+
+*Returns:*
+`time_point<Clock, ToDuration>(round<ToDuration>(tp.time_since_epoch()))`.
 
 ## Clocks <a id="time.clock">[[time.clock]]</a>
 
@@ -2048,30 +2045,29 @@ efficient mapping between `sys_time` and calendar types [[time.cal]].
 using system_clock::rep = unspecified;
 ```
 
-> *Constraints:*
-> `system_clock::duration::min() < system_clock::duration::zero()` is
-> `true`.
->
-> \[*Note 6*: This implies that `rep` is a signed type. — *end note*\]
+*Constraints:*
+`system_clock::duration::min() < system_clock::duration::zero()` is
+`true`.
+
+\[*Note 1*: This implies that `rep` is a signed type. — *end note*\]
 
 ``` cpp
 static time_t to_time_t(const time_point& t) noexcept;
 ```
 
-> *Returns:* A `time_t` object that represents the same point in time as
-> `t` when both values are restricted to the coarser of the precisions
-> of `time_t` and `time_point`. It is *implementation-defined* whether
-> values are rounded or truncated to the required precision.
+*Returns:* A `time_t` object that represents the same point in time as
+`t` when both values are restricted to the coarser of the precisions of
+`time_t` and `time_point`. It is *implementation-defined* whether values
+are rounded or truncated to the required precision.
 
 ``` cpp
 static time_point from_time_t(time_t t) noexcept;
 ```
 
-> *Returns:* A `time_point` object that represents the same point in
-> time as `t` when both values are restricted to the coarser of the
-> precisions of `time_t` and `time_point`. It is
-> *implementation-defined* whether values are rounded or truncated to
-> the required precision.
+*Returns:* A `time_point` object that represents the same point in time
+as `t` when both values are restricted to the coarser of the precisions
+of `time_t` and `time_point`. It is *implementation-defined* whether
+values are rounded or truncated to the required precision.
 
 #### Non-member functions <a id="time.clock.system.nonmembers">[[time.clock.system.nonmembers]]</a>
 
@@ -2081,22 +2077,22 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const sys_time<Duration>& tp);
 ```
 
-> *Constraints:* `treat_as_floating_point_v<typename Duration::rep>` is
-> `false`, and `Duration{1} < days{1}` is `true`.
->
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), tp);
-> ```
->
-> \[*Example 3*:
->
->     cout << sys_seconds{0s} << '\n';                // 1970-01-01 00:00:00
->     cout << sys_seconds{946'684'800s} << '\n';      // 2000-01-01 00:00:00
->     cout << sys_seconds{946'688'523s} << '\n';      // 2000-01-01 01:02:03
->
-> — *end example*\]
+*Constraints:* `treat_as_floating_point_v<typename Duration::rep>` is
+`false`, and `Duration{1} < days{1}` is `true`.
+
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), tp);
+```
+
+\[*Example 2*:
+
+    cout << sys_seconds{0s} << '\n';                // 1970-01-01 00:00:00
+    cout << sys_seconds{946'684'800s} << '\n';      // 2000-01-01 00:00:00
+    cout << sys_seconds{946'688'523s} << '\n';      // 2000-01-01 01:02:03
+
+— *end example*\]
 
 ``` cpp
 template<class charT, class traits>
@@ -2104,9 +2100,9 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const sys_days& dp);
 ```
 
-> *Effects:* `os << year_month_day{dp}`.
->
-> *Returns:* `os`.
+*Effects:* `os << year_month_day{dp}`.
+
+*Returns:* `os`.
 
 ``` cpp
 template<class charT, class traits, class Duration, class Alloc = allocator<charT>>
@@ -2116,18 +2112,18 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `sys_time`
-> `tp` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid date,
-> `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
-> If `%Z` is used and successfully parsed, that value will be assigned
-> to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
-> is used and successfully parsed, that value will be assigned to
-> `*offset` if `offset` is non-null. Additionally, the parsed offset
-> will be subtracted from the successfully parsed timestamp prior to
-> assigning that difference to `tp`.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `sys_time`
+`tp` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid date,
+`is.setstate(ios_base::failbit)` is called and `tp` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null. Additionally, the parsed offset will be
+subtracted from the successfully parsed timestamp prior to assigning
+that difference to `tp`.
+
+*Returns:* `is`.
 
 ### Class `utc_clock` <a id="time.clock.utc">[[time.clock.utc]]</a>
 
@@ -2159,12 +2155,12 @@ In contrast to `sys_time`, which does not take leap seconds into
 account, `utc_clock` and its associated `time_point`, `utc_time`, count
 time, including leap seconds, since 1970-01-01 00:00:00 UTC.
 
-\[*Note 1*: The UTC time standard began on 1972-01-01 00:00:10 TAI. To
+\[*Note 2*: The UTC time standard began on 1972-01-01 00:00:10 TAI. To
 measure time since this epoch instead, one can add/subtract the constant
 `sys_days\{1972y/1/1\} - sys_days\{1970y/1/1\}` (`63'072'000s`) from the
 `utc_time`. — *end note*\]
 
-\[*Example 2*:   
+\[*Example 3*:   
 `clock_cast<utc_clock>(sys_seconds\{sys_days\{1970y/January/1\}\}).time_since_epoch()`
 is `0s`.  
 `clock_cast<utc_clock>(sys_seconds\{sys_days\{2000y/January/1\}\}).time_since_epoch()`
@@ -2175,7 +2171,7 @@ which is `10'957 * 86'400s + 22s`.
 `utc_clock` is not a *Cpp17TrivialClock* unless the implementation can
 guarantee that `utc_clock::now()` does not propagate an exception.
 
-\[*Note 2*: `noexcept(from_sys(system_clock::now()))` is
+\[*Note 3*: `noexcept(from_sys(system_clock::now()))` is
 `false`. — *end note*\]
 
 #### Member functions <a id="time.clock.utc.members">[[time.clock.utc.members]]</a>
@@ -2184,8 +2180,8 @@ guarantee that `utc_clock::now()` does not propagate an exception.
 static time_point now();
 ```
 
-> *Returns:* `from_sys(system_clock::now())`, or a more accurate value
-> of `utc_time`.
+*Returns:* `from_sys(system_clock::now())`, or a more accurate value of
+`utc_time`.
 
 ``` cpp
 template<class Duration>
@@ -2193,11 +2189,11 @@ template<class Duration>
     to_sys(const utc_time<Duration>& u);
 ```
 
-> *Returns:* A `sys_time` `t`, such that `from_sys(t) == u` if such a
-> mapping exists. Otherwise `u` represents a `time_point` during a
-> positive leap second insertion, the conversion counts that leap second
-> as not inserted, and the last representable value of `sys_time` prior
-> to the insertion of the leap second is returned.
+*Returns:* A `sys_time` `t`, such that `from_sys(t) == u` if such a
+mapping exists. Otherwise `u` represents a `time_point` during a
+positive leap second insertion, the conversion counts that leap second
+as not inserted, and the last representable value of `sys_time` prior to
+the insertion of the leap second is returned.
 
 ``` cpp
 template<class Duration>
@@ -2205,28 +2201,28 @@ template<class Duration>
     from_sys(const sys_time<Duration>& t);
 ```
 
-> *Returns:* A `utc_time` `u`, such that
-> `u.time_since_epoch() - t.time_since_epoch()` is equal to the sum of
-> leap seconds that were inserted between `t` and 1970-01-01. If `t` is
-> exactly the date of leap second insertion, then the conversion counts
-> that leap second as inserted.
->
-> \[*Example 4*:
->
->     auto t = sys_days{July/1/2015} - 2ns;
->     auto u = utc_clock::from_sys(t);
->     assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
->     t += 1ns;
->     u = utc_clock::from_sys(t);
->     assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
->     t += 1ns;
->     u = utc_clock::from_sys(t);
->     assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
->     t += 1ns;
->     u = utc_clock::from_sys(t);
->     assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
->
-> — *end example*\]
+*Returns:* A `utc_time` `u`, such that
+`u.time_since_epoch() - t.time_since_epoch()` is equal to the sum of
+leap seconds that were inserted between `t` and 1970-01-01. If `t` is
+exactly the date of leap second insertion, then the conversion counts
+that leap second as inserted.
+
+\[*Example 4*:
+
+    auto t = sys_days{July/1/2015} - 2ns;
+    auto u = utc_clock::from_sys(t);
+    assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
+    t += 1ns;
+    u = utc_clock::from_sys(t);
+    assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
+    t += 1ns;
+    u = utc_clock::from_sys(t);
+    assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
+    t += 1ns;
+    u = utc_clock::from_sys(t);
+    assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
+
+— *end example*\]
 
 #### Non-member functions <a id="time.clock.utc.nonmembers">[[time.clock.utc.nonmembers]]</a>
 
@@ -2236,31 +2232,31 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const utc_time<Duration>& t);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
-> ```
->
-> \[*Example 5*:
->
->     auto t = sys_days{July/1/2015} - 500ms;
->     auto u = clock_cast<utc_clock>(t);
->     for (auto i = 0; i < 8; ++i, u += 250ms)
->       cout << u << " UTC\n";
->
-> Produces this output:
->
-> <div class="outputblock">
->
-> 2015-06-30 23:59:59.500 UTC 2015-06-30 23:59:59.750 UTC 2015-06-30
-> 23:59:60.000 UTC 2015-06-30 23:59:60.250 UTC 2015-06-30 23:59:60.500
-> UTC 2015-06-30 23:59:60.750 UTC 2015-07-01 00:00:00.000 UTC 2015-07-01
-> 00:00:00.250 UTC
->
-> </div>
->
-> — *end example*\]
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
+```
+
+\[*Example 5*:
+
+    auto t = sys_days{July/1/2015} - 500ms;
+    auto u = clock_cast<utc_clock>(t);
+    for (auto i = 0; i < 8; ++i, u += 250ms)
+      cout << u << " UTC\n";
+
+Produces this output:
+
+<div class="outputblock">
+
+2015-06-30 23:59:59.500 UTC 2015-06-30 23:59:59.750 UTC 2015-06-30
+23:59:60.000 UTC 2015-06-30 23:59:60.250 UTC 2015-06-30 23:59:60.500 UTC
+2015-06-30 23:59:60.750 UTC 2015-07-01 00:00:00.000 UTC 2015-07-01
+00:00:00.250 UTC
+
+</div>
+
+— *end example*\]
 
 ``` cpp
 template<class charT, class traits, class Duration, class Alloc = allocator<charT>>
@@ -2270,18 +2266,18 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `utc_time`
-> `tp` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid date,
-> `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
-> If `%Z` is used and successfully parsed, that value will be assigned
-> to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
-> is used and successfully parsed, that value will be assigned to
-> `*offset` if `offset` is non-null. Additionally, the parsed offset
-> will be subtracted from the successfully parsed timestamp prior to
-> assigning that difference to `tp`.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `utc_time`
+`tp` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid date,
+`is.setstate(ios_base::failbit)` is called and `tp` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null. Additionally, the parsed offset will be
+subtracted from the successfully parsed timestamp prior to assigning
+that difference to `tp`.
+
+*Returns:* `is`.
 
 ``` cpp
 struct leap_second_info {
@@ -2290,20 +2286,20 @@ struct leap_second_info {
 };
 ```
 
-> The type `leap_second_info` has data members and special members
-> specified above. It has no base classes or members other than those
-> specified.
+The type `leap_second_info` has data members and special members
+specified above. It has no base classes or members other than those
+specified.
 
 ``` cpp
 template<class Duration>
   leap_second_info get_leap_second_info(const utc_time<Duration>& ut);
 ```
 
-> *Returns:* A `leap_second_info` `lsi`, where `lsi.is_leap_second` is
-> `true` if `ut` is during a positive leap second insertion, and
-> otherwise `false`. `lsi.elapsed` is the sum of leap seconds between
-> 1970-01-01 and `ut`. If `lsi.is_leap_second` is `true`, the leap
-> second referred to by `ut` is included in the sum.
+*Returns:* A `leap_second_info` `lsi`, where `lsi.is_leap_second` is
+`true` if `ut` is during a positive leap second insertion, and otherwise
+`false`. `lsi.elapsed` is the sum of leap seconds between 1970-01-01 and
+`ut`. If `lsi.is_leap_second` is `true`, the leap second referred to by
+`ut` is included in the sum.
 
 ### Class `tai_clock` <a id="time.clock.tai">[[time.clock.tai]]</a>
 
@@ -2343,7 +2339,7 @@ plus the initial 10s offset).
 `tai_clock` is not a *Cpp17TrivialClock* unless the implementation can
 guarantee that `tai_clock::now()` does not propagate an exception.
 
-\[*Note 3*: `noexcept(from_utc(utc_clock::now()))` is
+\[*Note 4*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
 
 #### Member functions <a id="time.clock.tai.members">[[time.clock.tai.members]]</a>
@@ -2352,8 +2348,8 @@ guarantee that `tai_clock::now()` does not propagate an exception.
 static time_point now();
 ```
 
-> *Returns:* `from_utc(utc_clock::now())`, or a more accurate value of
-> `tai_time`.
+*Returns:* `from_utc(utc_clock::now())`, or a more accurate value of
+`tai_time`.
 
 ``` cpp
 template<class Duration>
@@ -2361,17 +2357,17 @@ template<class Duration>
     to_utc(const tai_time<Duration>& t) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 378691210s
-> ```
->
-> \[*Note 7*:
->
->     378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
->
-> — *end note*\]
+*Returns:*
+
+``` cpp
+utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 378691210s
+```
+
+\[*Note 5*:
+
+    378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
+
+— *end note*\]
 
 ``` cpp
 template<class Duration>
@@ -2379,17 +2375,17 @@ template<class Duration>
     from_utc(const utc_time<Duration>& t) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> tai_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 378691210s
-> ```
->
-> \[*Note 8*:
->
->     378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
->
-> — *end note*\]
+*Returns:*
+
+``` cpp
+tai_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 378691210s
+```
+
+\[*Note 6*:
+
+    378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
+
+— *end note*\]
 
 #### Non-member functions <a id="time.clock.tai.nonmembers">[[time.clock.tai.nonmembers]]</a>
 
@@ -2399,27 +2395,27 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const tai_time<Duration>& t);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
-> ```
->
-> \[*Example 6*:
->
->     auto st = sys_days{2000y/January/1};
->     auto tt = clock_cast<tai_clock>(st);
->     cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, tt);
->
-> Produces this output:
->
-> <div class="outputblock">
->
-> 2000-01-01 00:00:00 UTC == 2000-01-01 00:00:32 TAI
->
-> </div>
->
-> — *end example*\]
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
+```
+
+\[*Example 6*:
+
+    auto st = sys_days{2000y/January/1};
+    auto tt = clock_cast<tai_clock>(st);
+    cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, tt);
+
+Produces this output:
+
+<div class="outputblock">
+
+2000-01-01 00:00:00 UTC == 2000-01-01 00:00:32 TAI
+
+</div>
+
+— *end example*\]
 
 ``` cpp
 template<class charT, class traits, class Duration, class Alloc = allocator<charT>>
@@ -2429,18 +2425,18 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `tai_time`
-> `tp` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid date,
-> `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
-> If `%Z` is used and successfully parsed, that value will be assigned
-> to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
-> is used and successfully parsed, that value will be assigned to
-> `*offset` if `offset` is non-null. Additionally, the parsed offset
-> will be subtracted from the successfully parsed timestamp prior to
-> assigning that difference to `tp`.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `tai_time`
+`tp` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid date,
+`is.setstate(ios_base::failbit)` is called and `tp` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null. Additionally, the parsed offset will be
+subtracted from the successfully parsed timestamp prior to assigning
+that difference to `tp`.
+
+*Returns:* `is`.
 
 ### Class `gps_clock` <a id="time.clock.gps">[[time.clock.gps]]</a>
 
@@ -2479,7 +2475,7 @@ seconds inserted between 1970 and 1980.
 `gps_clock` is not a *Cpp17TrivialClock* unless the implementation can
 guarantee that `gps_clock::now()` does not propagate an exception.
 
-\[*Note 4*: `noexcept(from_utc(utc_clock::now()))` is
+\[*Note 7*: `noexcept(from_utc(utc_clock::now()))` is
 `false`. — *end note*\]
 
 #### Member functions <a id="time.clock.gps.members">[[time.clock.gps.members]]</a>
@@ -2488,8 +2484,8 @@ guarantee that `gps_clock::now()` does not propagate an exception.
 static time_point now();
 ```
 
-> *Returns:* `from_utc(utc_clock::now())`, or a more accurate value of
-> `gps_time`.
+*Returns:* `from_utc(utc_clock::now())`, or a more accurate value of
+`gps_time`.
 
 ``` cpp
 template<class Duration>
@@ -2497,17 +2493,17 @@ template<class Duration>
     to_utc(const gps_time<Duration>& t) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 315964809s
-> ```
->
-> \[*Note 9*:
->
->     315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
->
-> — *end note*\]
+*Returns:*
+
+``` cpp
+utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 315964809s
+```
+
+\[*Note 8*:
+
+    315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
+
+— *end note*\]
 
 ``` cpp
 template<class Duration>
@@ -2515,17 +2511,17 @@ template<class Duration>
     from_utc(const utc_time<Duration>& t) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> gps_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 315964809s
-> ```
->
-> \[*Note 10*:
->
->     315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
->
-> — *end note*\]
+*Returns:*
+
+``` cpp
+gps_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 315964809s
+```
+
+\[*Note 9*:
+
+    315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
+
+— *end note*\]
 
 #### Non-member functions <a id="time.clock.gps.nonmembers">[[time.clock.gps.nonmembers]]</a>
 
@@ -2535,27 +2531,27 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const gps_time<Duration>& t);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
-> ```
->
-> \[*Example 7*:
->
->     auto st = sys_days{2000y/January/1};
->     auto gt = clock_cast<gps_clock>(st);
->     cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, gt);
->
-> Produces this output:
->
-> <div class="outputblock">
->
-> 2000-01-01 00:00:00 UTC == 2000-01-01 00:00:13 GPS
->
-> </div>
->
-> — *end example*\]
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
+```
+
+\[*Example 7*:
+
+    auto st = sys_days{2000y/January/1};
+    auto gt = clock_cast<gps_clock>(st);
+    cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, gt);
+
+Produces this output:
+
+<div class="outputblock">
+
+2000-01-01 00:00:00 UTC == 2000-01-01 00:00:13 GPS
+
+</div>
+
+— *end example*\]
 
 ``` cpp
 template<class charT, class traits, class Duration, class Alloc = allocator<charT>>
@@ -2565,18 +2561,18 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `gps_time`
-> `tp` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid date,
-> `is.setstate(ios_base::failbit)` is called and `tp` is not modified.
-> If `%Z` is used and successfully parsed, that value will be assigned
-> to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
-> is used and successfully parsed, that value will be assigned to
-> `*offset` if `offset` is non-null. Additionally, the parsed offset
-> will be subtracted from the successfully parsed timestamp prior to
-> assigning that difference to `tp`.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `gps_time`
+`tp` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid date,
+`is.setstate(ios_base::failbit)` is called and `tp` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null. Additionally, the parsed offset will be
+subtracted from the successfully parsed timestamp prior to assigning
+that difference to `tp`.
+
+*Returns:* `is`.
 
 ### Type `file_clock` <a id="time.clock.file">[[time.clock.file]]</a>
 
@@ -2594,7 +2590,7 @@ requirements [[time.clock.req]], and using a signed arithmetic type for
 system used for `file_time_type` [[filesystems]]. Its epoch is
 unspecified, and `noexcept(file_clock::now())` is `true`.
 
-\[*Note 5*: The type that `file_clock` denotes can be in a different
+\[*Note 10*: The type that `file_clock` denotes can be in a different
 namespace than `std::chrono`, such as `std::filesystem`. — *end note*\]
 
 #### Member functions <a id="time.clock.file.members">[[time.clock.file.members]]</a>
@@ -2635,11 +2631,11 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const file_time<Duration>& t);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
+```
 
 ``` cpp
 template<class charT, class traits, class Duration, class Alloc = allocator<charT>>
@@ -2649,18 +2645,18 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the
-> `file_time` `tp` using the format flags given in the NTCTS `fmt` as
-> specified in [[time.parse]]. If the parse fails to decode a valid
-> date, `is.setstate(ios_base::failbit)` is called and `tp` is not
-> modified. If `%Z` is used and successfully parsed, that value will be
-> assigned to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified
-> variant) is used and successfully parsed, that value will be assigned
-> to `*offset` if `offset` is non-null. Additionally, the parsed offset
-> will be subtracted from the successfully parsed timestamp prior to
-> assigning that difference to `tp`.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `file_time`
+`tp` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid date,
+`is.setstate(ios_base::failbit)` is called and `tp` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null. Additionally, the parsed offset will be
+subtracted from the successfully parsed timestamp prior to assigning
+that difference to `tp`.
+
+*Returns:* `is`.
 
 ### Class `steady_clock` <a id="time.clock.steady">[[time.clock.steady]]</a>
 
@@ -2721,13 +2717,13 @@ template<class charT, class traits, class Duration>
     operator<<(basic_ostream<charT, traits>& os, const local_time<Duration>& lt);
 ```
 
-> *Effects:*
->
-> ``` cpp
-> os << sys_time<Duration>{lt.time_since_epoch()};
-> ```
->
-> *Returns:* `os`.
+*Effects:*
+
+``` cpp
+os << sys_time<Duration>{lt.time_since_epoch()};
+```
+
+*Returns:* `os`.
 
 ``` cpp
 template<class charT, class traits, class Duration, class Alloc = allocator<charT>>
@@ -2737,16 +2733,16 @@ template<class charT, class traits, class Duration, class Alloc = allocator<char
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the
-> `local_time` `tp` using the format flags given in the NTCTS `fmt` as
-> specified in [[time.parse]]. If the parse fails to decode a valid
-> date, `is.setstate(ios_base::failbit)` is called and `tp` is not
-> modified. If `%Z` is used and successfully parsed, that value will be
-> assigned to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified
-> variant) is used and successfully parsed, that value will be assigned
-> to `*offset` if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `local_time`
+`tp` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid date,
+`is.setstate(ios_base::failbit)` is called and `tp` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ### `time_point` conversions <a id="time.clock.cast">[[time.clock.cast]]</a>
 
@@ -2795,7 +2791,7 @@ template<class Duration>
     operator()(const time_point<Clock, Duration>& t) const;
 ```
 
-> *Returns:* `t`.
+*Returns:* `t`.
 
 ``` cpp
 template<>
@@ -2812,7 +2808,7 @@ template<class Duration>
     operator()(const sys_time<Duration>& t) const;
 ```
 
-> *Returns:* `t`.
+*Returns:* `t`.
 
 ``` cpp
 template<>
@@ -2829,7 +2825,7 @@ template<class Duration>
     operator()(const utc_time<Duration>& t) const;
 ```
 
-> *Returns:* `t`.
+*Returns:* `t`.
 
 #### Conversions between `system_clock` and `utc_clock` <a id="time.clock.cast.sys.utc">[[time.clock.cast.sys.utc]]</a>
 
@@ -2848,7 +2844,7 @@ template<class Duration>
     operator()(const sys_time<Duration>& t) const;
 ```
 
-> *Returns:* `utc_clock::from_sys(t)`.
+*Returns:* `utc_clock::from_sys(t)`.
 
 ``` cpp
 template<>
@@ -2865,7 +2861,7 @@ template<class Duration>
     operator()(const utc_time<Duration>& t) const;
 ```
 
-> *Returns:* `utc_clock::to_sys(t)`.
+*Returns:* `utc_clock::to_sys(t)`.
 
 #### Conversions between `system_clock` and other clocks <a id="time.clock.cast.sys">[[time.clock.cast.sys]]</a>
 
@@ -2884,12 +2880,12 @@ template<class Duration>
     -> decltype(SourceClock::to_sys(t));
 ```
 
-> *Constraints:* `SourceClock::to_sys(t)` is well-formed.
->
-> *Mandates:* `SourceClock::to_sys(t)` returns a `sys_time<Duration2>`
-> for some type `Duration2`[[time.point.general]].
->
-> *Returns:* `SourceClock::to_sys(t)`.
+*Constraints:* `SourceClock::to_sys(t)` is well-formed.
+
+*Mandates:* `SourceClock::to_sys(t)` returns a `sys_time<Duration2>` for
+some type `Duration2`[[time.point.general]].
+
+*Returns:* `SourceClock::to_sys(t)`.
 
 ``` cpp
 template<class DestClock>
@@ -2906,13 +2902,13 @@ template<class Duration>
     -> decltype(DestClock::from_sys(t));
 ```
 
-> *Constraints:* `DestClock::from_sys(t)` is well-formed.
->
-> *Mandates:* `DestClock::from_sys(t)` returns a
-> `time_point<DestClock, Duration2>` for some type
-> `Duration2`[[time.point.general]].
->
-> *Returns:* `DestClock::from_sys(t)`.
+*Constraints:* `DestClock::from_sys(t)` is well-formed.
+
+*Mandates:* `DestClock::from_sys(t)` returns a
+`time_point<DestClock, Duration2>` for some type
+`Duration2`[[time.point.general]].
+
+*Returns:* `DestClock::from_sys(t)`.
 
 #### Conversions between `utc_clock` and other clocks <a id="time.clock.cast.utc">[[time.clock.cast.utc]]</a>
 
@@ -2931,12 +2927,12 @@ template<class Duration>
     -> decltype(SourceClock::to_utc(t));
 ```
 
-> *Constraints:* `SourceClock::to_utc(t)` is well-formed.
->
-> *Mandates:* `SourceClock::to_utc(t)` returns a `utc_time<Duration2>`
-> for some type `Duration2`[[time.point.general]].
->
-> *Returns:* `SourceClock::to_utc(t)`.
+*Constraints:* `SourceClock::to_utc(t)` is well-formed.
+
+*Mandates:* `SourceClock::to_utc(t)` returns a `utc_time<Duration2>` for
+some type `Duration2`[[time.point.general]].
+
+*Returns:* `SourceClock::to_utc(t)`.
 
 ``` cpp
 template<class DestClock>
@@ -2953,13 +2949,13 @@ template<class Duration>
     -> decltype(DestClock::from_utc(t));
 ```
 
-> *Constraints:* `DestClock::from_utc(t)` is well-formed.
->
-> *Mandates:* `DestClock::from_utc(t)` returns a
-> `time_point<DestClock, Duration2>` for some type
-> `Duration2`[[time.point.general]].
->
-> *Returns:* `DestClock::from_utc(t)`.
+*Constraints:* `DestClock::from_utc(t)` is well-formed.
+
+*Mandates:* `DestClock::from_utc(t)` returns a
+`time_point<DestClock, Duration2>` for some type
+`Duration2`[[time.point.general]].
+
+*Returns:* `DestClock::from_utc(t)`.
 
 #### Function template `clock_cast` <a id="time.clock.cast.fn">[[time.clock.cast.fn]]</a>
 
@@ -2968,34 +2964,34 @@ template<class DestClock, class SourceClock, class Duration>
   auto clock_cast(const time_point<SourceClock, Duration>& t);
 ```
 
-> *Constraints:* At least one of the following clock time conversion
-> expressions is well-formed:
->
-> - clock_time_conversion<DestClock, SourceClock>{}(t)
->
-> - clock_time_conversion<DestClock, system_clock>{}(
->         clock_time_conversion<system_clock, SourceClock>{}(t))
->
-> - clock_time_conversion<DestClock, utc_clock>{}(
->         clock_time_conversion<utc_clock, SourceClock>{}(t))
->
-> - clock_time_conversion<DestClock, utc_clock>{}(
->         clock_time_conversion<utc_clock, system_clock>{}(
->           clock_time_conversion<system_clock, SourceClock>{}(t)))
->
-> - clock_time_conversion<DestClock, system_clock>{}(
->         clock_time_conversion<system_clock, utc_clock>{}(
->           clock_time_conversion<utc_clock, SourceClock>{}(t)))
->
-> A clock time conversion expression is considered better than another
-> clock time conversion expression if it involves fewer `operator()`
-> calls on `clock_time_conversion` specializations.
->
-> *Mandates:* Among the well-formed clock time conversion expressions
-> from the above list, there is a unique best expression.
->
-> *Returns:* The best well-formed clock time conversion expression in
-> the above list.
+*Constraints:* At least one of the following clock time conversion
+expressions is well-formed:
+
+- clock_time_conversion<DestClock, SourceClock>{}(t)
+
+- clock_time_conversion<DestClock, system_clock>{}(
+        clock_time_conversion<system_clock, SourceClock>{}(t))
+
+- clock_time_conversion<DestClock, utc_clock>{}(
+        clock_time_conversion<utc_clock, SourceClock>{}(t))
+
+- clock_time_conversion<DestClock, utc_clock>{}(
+        clock_time_conversion<utc_clock, system_clock>{}(
+          clock_time_conversion<system_clock, SourceClock>{}(t)))
+
+- clock_time_conversion<DestClock, system_clock>{}(
+        clock_time_conversion<system_clock, utc_clock>{}(
+          clock_time_conversion<utc_clock, SourceClock>{}(t)))
+
+A clock time conversion expression is considered better than another
+clock time conversion expression if it involves fewer `operator()` calls
+on `clock_time_conversion` specializations.
+
+*Mandates:* Among the well-formed clock time conversion expressions from
+the above list, there is a unique best expression.
+
+*Returns:* The best well-formed clock time conversion expression in the
+above list.
 
 ## The civil calendar <a id="time.cal">[[time.cal]]</a>
 
@@ -3062,70 +3058,70 @@ represent a difference between two `day` objects.
 constexpr explicit day(unsigned d) noexcept;
 ```
 
-> *Effects:* Initializes `d_` with `d`. The value held is unspecified if
-> `d` is not in the range \[`0`, `255`\].
+*Effects:* Initializes `d_` with `d`. The value held is unspecified if
+`d` is not in the range \[`0`, `255`\].
 
 ``` cpp
 constexpr day& operator++() noexcept;
 ```
 
-> *Effects:* `++d_`.
->
-> *Returns:* `*this`.
+*Effects:* `++d_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr day operator++(int) noexcept;
 ```
 
-> *Effects:* `++(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `++(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr day& operator--() noexcept;
 ```
 
-> *Effects:* Equivalent to: `–d_`.
->
-> *Returns:* `*this`.
+*Effects:* Equivalent to: `–d_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr day operator--(int) noexcept;
 ```
 
-> *Effects:* `–(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `–(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr day& operator+=(const days& d) noexcept;
 ```
 
-> *Effects:* `*this = *this + d`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + d`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr day& operator-=(const days& d) noexcept;
 ```
 
-> *Effects:* `*this = *this - d`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - d`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr explicit operator unsigned() const noexcept;
 ```
 
-> *Returns:* `d_`.
+*Returns:* `d_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `1 <= d_ && d_ <= 31`.
+*Returns:* `1 <= d_ && d_ <= 31`.
 
 #### Non-member functions <a id="time.cal.day.nonmembers">[[time.cal.day.nonmembers]]</a>
 
@@ -3133,37 +3129,37 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const day& x, const day& y) noexcept;
 ```
 
-> *Returns:* `unsigned{x} == unsigned{y}`.
+*Returns:* `unsigned{x} == unsigned{y}`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const day& x, const day& y) noexcept;
 ```
 
-> *Returns:* `unsigned{x} <=> unsigned{y}`.
+*Returns:* `unsigned{x} <=> unsigned{y}`.
 
 ``` cpp
 constexpr day operator+(const day& x, const days& y) noexcept;
 ```
 
-> *Returns:* `day(unsigned{x} + y.count())`.
+*Returns:* `day(unsigned{x} + y.count())`.
 
 ``` cpp
 constexpr day operator+(const days& x, const day& y) noexcept;
 ```
 
-> *Returns:* `y + x`.
+*Returns:* `y + x`.
 
 ``` cpp
 constexpr day operator-(const day& x, const days& y) noexcept;
 ```
 
-> *Returns:* `x + -y`.
+*Returns:* `x + -y`.
 
 ``` cpp
 constexpr days operator-(const day& x, const day& y) noexcept;
 ```
 
-> *Returns:* `days{int(unsigned{x}) - int(unsigned{y})}`.
+*Returns:* `days{int(unsigned{x}) - int(unsigned{y})}`.
 
 ``` cpp
 template<class charT, class traits>
@@ -3171,13 +3167,13 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const day& d);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << (d.ok() ?
->   format(STATICALLY-WIDEN<charT>("{:%d}"), d) :
->   format(STATICALLY-WIDEN<charT>("{:%d} is not a valid day"), d));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << (d.ok() ?
+  format(STATICALLY-WIDEN<charT>("{:%d}"), d) :
+  format(STATICALLY-WIDEN<charT>("{:%d} is not a valid day"), d));
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -3187,22 +3183,22 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `day` `d`
-> using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid day,
-> `is.setstate(ios_base::failbit)` is called and `d` is not modified. If
-> `%Z` is used and successfully parsed, that value will be assigned to
-> `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
-> used and successfully parsed, that value will be assigned to `*offset`
-> if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `day` `d`
+using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid day,
+`is.setstate(ios_base::failbit)` is called and `d` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ``` cpp
 constexpr chrono::day operator""d(unsigned long long d) noexcept;
 ```
 
-> *Returns:* `day{static_cast<unsigned>(d)}`.
+*Returns:* `day{static_cast<unsigned>(d)}`.
 
 ### Class `month` <a id="time.cal.month">[[time.cal.month]]</a>
 
@@ -3247,70 +3243,70 @@ represent a difference between two `month` objects.
 constexpr explicit month(unsigned m) noexcept;
 ```
 
-> *Effects:* Initializes `m_` with `m`. The value held is unspecified if
-> `m` is not in the range \[`0`, `255`\].
+*Effects:* Initializes `m_` with `m`. The value held is unspecified if
+`m` is not in the range \[`0`, `255`\].
 
 ``` cpp
 constexpr month& operator++() noexcept;
 ```
 
-> *Effects:* `*this += months{1}`.
->
-> *Returns:* `*this`.
+*Effects:* `*this += months{1}`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr month operator++(int) noexcept;
 ```
 
-> *Effects:* `++(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `++(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr month& operator--() noexcept;
 ```
 
-> *Effects:* `*this -= months{1}`.
->
-> *Returns:* `*this`.
+*Effects:* `*this -= months{1}`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr month operator--(int) noexcept;
 ```
 
-> *Effects:* `–(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `–(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr month& operator+=(const months& m) noexcept;
 ```
 
-> *Effects:* `*this = *this + m`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr month& operator-=(const months& m) noexcept;
 ```
 
-> *Effects:* `*this = *this - m`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr explicit operator unsigned() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `1 <= m_ && m_ <= 12`.
+*Returns:* `1 <= m_ && m_ <= 12`.
 
 #### Non-member functions <a id="time.cal.month.nonmembers">[[time.cal.month.nonmembers]]</a>
 
@@ -3318,56 +3314,56 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const month& x, const month& y) noexcept;
 ```
 
-> *Returns:* `unsigned{x} == unsigned{y}`.
+*Returns:* `unsigned{x} == unsigned{y}`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const month& x, const month& y) noexcept;
 ```
 
-> *Returns:* `unsigned{x} <=> unsigned{y}`.
+*Returns:* `unsigned{x} <=> unsigned{y}`.
 
 ``` cpp
 constexpr month operator+(const month& x, const months& y) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> month{modulo(static_cast<long long>(unsigned{x}) + (y.count() - 1), 12) + 1}
-> ```
->
-> where `modulo(n, 12)` computes the remainder of `n` divided by 12
-> using Euclidean division.
->
-> \[*Note 11*: Given a divisor of 12, Euclidean division truncates
-> towards negative infinity and always produces a remainder in the range
-> of \[`0`, `11`\]. Assuming no overflow in the signed summation, this
-> operation results in a `month` holding a value in the range \[`1`,
-> `12`\] even if `!x.ok()`. — *end note*\]
->
-> \[*Example 8*: `February + months{11} == January`. — *end example*\]
+*Returns:*
+
+``` cpp
+month{modulo(static_cast<long long>(unsigned{x}) + (y.count() - 1), 12) + 1}
+```
+
+where `modulo(n, 12)` computes the remainder of `n` divided by 12 using
+Euclidean division.
+
+\[*Note 1*: Given a divisor of 12, Euclidean division truncates towards
+negative infinity and always produces a remainder in the range of \[`0`,
+`11`\]. Assuming no overflow in the signed summation, this operation
+results in a `month` holding a value in the range \[`1`, `12`\] even if
+`!x.ok()`. — *end note*\]
+
+\[*Example 1*: `February + months{11} == January`. — *end example*\]
 
 ``` cpp
 constexpr month operator+(const months& x, const month& y) noexcept;
 ```
 
-> *Returns:* `y + x`.
+*Returns:* `y + x`.
 
 ``` cpp
 constexpr month operator-(const month& x, const months& y) noexcept;
 ```
 
-> *Returns:* `x + -y`.
+*Returns:* `x + -y`.
 
 ``` cpp
 constexpr months operator-(const month& x, const month& y) noexcept;
 ```
 
-> *Returns:* If `x.ok() == true` and `y.ok() == true`, returns a value
-> `m` in the range satisfying `y + m == x`. Otherwise the value returned
-> is unspecified.
->
-> \[*Example 9*: `January - February == months{11}`. — *end example*\]
+*Returns:* If `x.ok() == true` and `y.ok() == true`, returns a value `m`
+in the range satisfying `y + m == x`. Otherwise the value returned is
+unspecified.
+
+\[*Example 2*: `January - February == months{11}`. — *end example*\]
 
 ``` cpp
 template<class charT, class traits>
@@ -3375,14 +3371,14 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const month& m);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << (m.ok() ?
->   format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%b}"), m) :
->   format(os.getloc(), STATICALLY-WIDEN<charT>("{} is not a valid month"),
->          static_cast<unsigned>(m)));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << (m.ok() ?
+  format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%b}"), m) :
+  format(os.getloc(), STATICALLY-WIDEN<charT>("{} is not a valid month"),
+         static_cast<unsigned>(m)));
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -3392,16 +3388,16 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `month`
-> `m` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid month,
-> `is.setstate(ios_base::failbit)` is called and `m` is not modified. If
-> `%Z` is used and successfully parsed, that value will be assigned to
-> `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
-> used and successfully parsed, that value will be assigned to `*offset`
-> if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `month` `m`
+using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid month,
+`is.setstate(ios_base::failbit)` is called and `m` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ### Class `year` <a id="time.cal.year">[[time.cal.year]]</a>
 
@@ -3454,100 +3450,100 @@ two `year` objects.
 constexpr explicit year(int y) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `y`. The value held is unspecified if
-> `y` is not in the range \[`-32767`, `32767`\].
+*Effects:* Initializes `y_` with `y`. The value held is unspecified if
+`y` is not in the range \[`-32767`, `32767`\].
 
 ``` cpp
 constexpr year& operator++() noexcept;
 ```
 
-> *Effects:* `++y_`.
->
-> *Returns:* `*this`.
+*Effects:* `++y_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year operator++(int) noexcept;
 ```
 
-> *Effects:* `++(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `++(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr year& operator--() noexcept;
 ```
 
-> *Effects:* `–y_`.
->
-> *Returns:* `*this`.
+*Effects:* `–y_`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year operator--(int) noexcept;
 ```
 
-> *Effects:* `–(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `–(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr year& operator+=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this + y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year& operator-=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this - y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year operator+() const noexcept;
 ```
 
-> *Returns:* `*this`.
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year operator-() const noexcept;
 ```
 
-> *Returns:* `year{-y_}`.
+*Returns:* `year{-y_}`.
 
 ``` cpp
 constexpr bool is_leap() const noexcept;
 ```
 
-> *Returns:* `y_ % 4 == 0 && (y_ % 100 != 0 || y_ % 400 == 0)`.
+*Returns:* `y_ % 4 == 0 && (y_ % 100 != 0 || y_ % 400 == 0)`.
 
 ``` cpp
 constexpr explicit operator int() const noexcept;
 ```
 
-> *Returns:* `y_`.
+*Returns:* `y_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `min().y_ <= y_ && y_ <= max().y_`.
+*Returns:* `min().y_ <= y_ && y_ <= max().y_`.
 
 ``` cpp
 static constexpr year min() noexcept;
 ```
 
-> *Returns:* `year{-32767}`.
+*Returns:* `year{-32767}`.
 
 ``` cpp
 static constexpr year max() noexcept;
 ```
 
-> *Returns:* `year{32767}`.
+*Returns:* `year{32767}`.
 
 #### Non-member functions <a id="time.cal.year.nonmembers">[[time.cal.year.nonmembers]]</a>
 
@@ -3555,37 +3551,37 @@ static constexpr year max() noexcept;
 constexpr bool operator==(const year& x, const year& y) noexcept;
 ```
 
-> *Returns:* `int{x} == int{y}`.
+*Returns:* `int{x} == int{y}`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const year& x, const year& y) noexcept;
 ```
 
-> *Returns:* `int{x} <=> int{y}`.
+*Returns:* `int{x} <=> int{y}`.
 
 ``` cpp
 constexpr year operator+(const year& x, const years& y) noexcept;
 ```
 
-> *Returns:* `year{int{x} + static_cast<int>(y.count())}`.
+*Returns:* `year{int{x} + static_cast<int>(y.count())}`.
 
 ``` cpp
 constexpr year operator+(const years& x, const year& y) noexcept;
 ```
 
-> *Returns:* `y + x`.
+*Returns:* `y + x`.
 
 ``` cpp
 constexpr year operator-(const year& x, const years& y) noexcept;
 ```
 
-> *Returns:* `x + -y`.
+*Returns:* `x + -y`.
 
 ``` cpp
 constexpr years operator-(const year& x, const year& y) noexcept;
 ```
 
-> *Returns:* `years{int{x} - int{y}}`.
+*Returns:* `years{int{x} - int{y}}`.
 
 ``` cpp
 template<class charT, class traits>
@@ -3593,13 +3589,13 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const year& y);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << (y.ok() ?
->   format(STATICALLY-WIDEN<charT>("{:%Y}"), y) :
->   format(STATICALLY-WIDEN<charT>("{:%Y} is not a valid year"), y));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << (y.ok() ?
+  format(STATICALLY-WIDEN<charT>("{:%Y}"), y) :
+  format(STATICALLY-WIDEN<charT>("{:%Y} is not a valid year"), y));
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -3609,22 +3605,22 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `year` `y`
-> using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid year,
-> `is.setstate(ios_base::failbit)` is called and `y` is not modified. If
-> `%Z` is used and successfully parsed, that value will be assigned to
-> `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
-> used and successfully parsed, that value will be assigned to `*offset`
-> if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `year` `y`
+using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid year,
+`is.setstate(ios_base::failbit)` is called and `y` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ``` cpp
 constexpr chrono::year operator""y(unsigned long long y) noexcept;
 ```
 
-> *Returns:* `year{static_cast<int>(y)}`.
+*Returns:* `year{static_cast<int>(y)}`.
 
 ### Class `weekday` <a id="time.cal.wd">[[time.cal.wd]]</a>
 
@@ -3666,7 +3662,7 @@ subsequently truncated to fit into `weekday`’s unspecified internal
 storage. `weekday` meets the *Cpp17EqualityComparable* (
 [[cpp17.equalitycomparable]]) requirements.
 
-\[*Note 1*: `weekday` is not *Cpp17LessThanComparable* because there is
+\[*Note 2*: `weekday` is not *Cpp17LessThanComparable* because there is
 no universal consensus on which day is the first day of the week.
 `weekday`’s arithmetic operations treat the days of the week as a
 circular range, with no beginning and no end. — *end note*\]
@@ -3679,109 +3675,108 @@ circular range, with no beginning and no end. — *end note*\]
 constexpr explicit weekday(unsigned wd) noexcept;
 ```
 
-> *Effects:* Initializes `wd_` with `wd == 7 ? 0 : wd`. The value held
-> is unspecified if `wd` is not in the range \[`0`, `255`\].
+*Effects:* Initializes `wd_` with `wd == 7 ? 0 : wd`. The value held is
+unspecified if `wd` is not in the range \[`0`, `255`\].
 
 ``` cpp
 constexpr weekday(const sys_days& dp) noexcept;
 ```
 
-> *Effects:* Computes what day of the week corresponds to the `sys_days`
-> `dp`, and initializes that day of the week in `wd_`.
->
-> \[*Example 10*: If `dp` represents 1970-01-01, the constructed
-> `weekday` represents Thursday by storing `4` in
-> `wd_`. — *end example*\]
+*Effects:* Computes what day of the week corresponds to the `sys_days`
+`dp`, and initializes that day of the week in `wd_`.
+
+\[*Example 3*: If `dp` represents 1970-01-01, the constructed `weekday`
+represents Thursday by storing `4` in `wd_`. — *end example*\]
 
 ``` cpp
 constexpr explicit weekday(const local_days& dp) noexcept;
 ```
 
-> *Effects:* Computes what day of the week corresponds to the
-> `local_days` `dp`, and initializes that day of the week in `wd_`.
->
-> *Ensures:* The value is identical to that constructed from
-> `sys_days{dp.time_since_epoch()}`.
+*Effects:* Computes what day of the week corresponds to the `local_days`
+`dp`, and initializes that day of the week in `wd_`.
+
+*Ensures:* The value is identical to that constructed from
+`sys_days{dp.time_since_epoch()}`.
 
 ``` cpp
 constexpr weekday& operator++() noexcept;
 ```
 
-> *Effects:* `*this += days{1}`.
->
-> *Returns:* `*this`.
+*Effects:* `*this += days{1}`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr weekday operator++(int) noexcept;
 ```
 
-> *Effects:* `++(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `++(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr weekday& operator--() noexcept;
 ```
 
-> *Effects:* `*this -= days{1}`.
->
-> *Returns:* `*this`.
+*Effects:* `*this -= days{1}`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr weekday operator--(int) noexcept;
 ```
 
-> *Effects:* `–(*this)`.
->
-> *Returns:* A copy of `*this` as it existed on entry to this member
-> function.
+*Effects:* `–(*this)`.
+
+*Returns:* A copy of `*this` as it existed on entry to this member
+function.
 
 ``` cpp
 constexpr weekday& operator+=(const days& d) noexcept;
 ```
 
-> *Effects:* `*this = *this + d`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + d`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr weekday& operator-=(const days& d) noexcept;
 ```
 
-> *Effects:* `*this = *this - d`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - d`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr unsigned c_encoding() const noexcept;
 ```
 
-> *Returns:* `wd_`.
+*Returns:* `wd_`.
 
 ``` cpp
 constexpr unsigned iso_encoding() const noexcept;
 ```
 
-> *Returns:* `wd_ == 0u ? 7u : wd_`.
+*Returns:* `wd_ == 0u ? 7u : wd_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `wd_ <= 6`.
+*Returns:* `wd_ <= 6`.
 
 ``` cpp
 constexpr weekday_indexed operator[](unsigned index) const noexcept;
 ```
 
-> *Returns:* `{*this, index}`.
+*Returns:* `{*this, index}`.
 
 ``` cpp
 constexpr weekday_last operator[](last_spec) const noexcept;
 ```
 
-> *Returns:* `weekday_last{*this}`.
+*Returns:* `weekday_last{*this}`.
 
 #### Non-member functions <a id="time.cal.wd.nonmembers">[[time.cal.wd.nonmembers]]</a>
 
@@ -3789,50 +3784,50 @@ constexpr weekday_last operator[](last_spec) const noexcept;
 constexpr bool operator==(const weekday& x, const weekday& y) noexcept;
 ```
 
-> *Returns:* `x.wd_ == y.wd_`.
+*Returns:* `x.wd_ == y.wd_`.
 
 ``` cpp
 constexpr weekday operator+(const weekday& x, const days& y) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> weekday{modulo(static_cast<long long>(x.wd_) + y.count(), 7)}
-> ```
->
-> where `modulo(n, 7)` computes the remainder of `n` divided by 7 using
-> Euclidean division.
->
-> \[*Note 12*: Given a divisor of 7, Euclidean division truncates
-> towards negative infinity and always produces a remainder in the range
-> of \[`0`, `6`\]. Assuming no overflow in the signed summation, this
-> operation results in a `weekday` holding a value in the range \[`0`,
-> `6`\] even if `!x.ok()`. — *end note*\]
->
-> \[*Example 11*: `Monday + days{6} == Sunday`. — *end example*\]
+*Returns:*
+
+``` cpp
+weekday{modulo(static_cast<long long>(x.wd_) + y.count(), 7)}
+```
+
+where `modulo(n, 7)` computes the remainder of `n` divided by 7 using
+Euclidean division.
+
+\[*Note 3*: Given a divisor of 7, Euclidean division truncates towards
+negative infinity and always produces a remainder in the range of \[`0`,
+`6`\]. Assuming no overflow in the signed summation, this operation
+results in a `weekday` holding a value in the range \[`0`, `6`\] even if
+`!x.ok()`. — *end note*\]
+
+\[*Example 4*: `Monday + days{6} == Sunday`. — *end example*\]
 
 ``` cpp
 constexpr weekday operator+(const days& x, const weekday& y) noexcept;
 ```
 
-> *Returns:* `y + x`.
+*Returns:* `y + x`.
 
 ``` cpp
 constexpr weekday operator-(const weekday& x, const days& y) noexcept;
 ```
 
-> *Returns:* `x + -y`.
+*Returns:* `x + -y`.
 
 ``` cpp
 constexpr days operator-(const weekday& x, const weekday& y) noexcept;
 ```
 
-> *Returns:* If `x.ok() == true` and `y.ok() == true`, returns a value
-> `d` in the range satisfying `y + d == x`. Otherwise the value returned
-> is unspecified.
->
-> \[*Example 12*: `Sunday - Monday == days{6}`. — *end example*\]
+*Returns:* If `x.ok() == true` and `y.ok() == true`, returns a value `d`
+in the range satisfying `y + d == x`. Otherwise the value returned is
+unspecified.
+
+\[*Example 5*: `Sunday - Monday == days{6}`. — *end example*\]
 
 ``` cpp
 template<class charT, class traits>
@@ -3840,14 +3835,14 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const weekday& wd);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << (wd.ok() ?
->   format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%a}"), wd) :
->   format(os.getloc(), STATICALLY-WIDEN<charT>("{} is not a valid weekday"),
->          static_cast<unsigned>(wd.wd_)));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << (wd.ok() ?
+  format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%a}"), wd) :
+  format(os.getloc(), STATICALLY-WIDEN<charT>("{} is not a valid weekday"),
+         static_cast<unsigned>(wd.wd_)));
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -3857,16 +3852,16 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the `weekday`
-> `wd` using the format flags given in the NTCTS `fmt` as specified in
-> [[time.parse]]. If the parse fails to decode a valid weekday,
-> `is.setstate(ios_base::failbit)` is called and `wd` is not modified.
-> If `%Z` is used and successfully parsed, that value will be assigned
-> to `*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant)
-> is used and successfully parsed, that value will be assigned to
-> `*offset` if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `weekday`
+`wd` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid weekday,
+`is.setstate(ios_base::failbit)` is called and `wd` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ### Class `weekday_indexed` <a id="time.cal.wdidx">[[time.cal.wdidx]]</a>
 
@@ -3893,10 +3888,10 @@ namespace std::chrono {
 1 to 5. This class is used to represent the first, second, third,
 fourth, or fifth weekday of a month.
 
-\[*Note 2*: A `weekday_indexed` object can be constructed by indexing a
+\[*Note 4*: A `weekday_indexed` object can be constructed by indexing a
 `weekday` with an `unsigned`. — *end note*\]
 
-\[*Example 1*:
+\[*Example 6*:
 
 ``` cpp
 constexpr auto wdi = Sunday[2]; // wdi is the second Sunday of an as yet unspecified month
@@ -3915,27 +3910,27 @@ type.
 constexpr weekday_indexed(const chrono::weekday& wd, unsigned index) noexcept;
 ```
 
-> *Effects:* Initializes `wd_` with `wd` and `index_` with `index`. The
-> values held are unspecified if `!wd.ok()` or `index` is not in the
-> range \[`0`, `7`\].
+*Effects:* Initializes `wd_` with `wd` and `index_` with `index`. The
+values held are unspecified if `!wd.ok()` or `index` is not in the range
+\[`0`, `7`\].
 
 ``` cpp
 constexpr chrono::weekday weekday() const noexcept;
 ```
 
-> *Returns:* `wd_`.
+*Returns:* `wd_`.
 
 ``` cpp
 constexpr unsigned index() const noexcept;
 ```
 
-> *Returns:* `index_`.
+*Returns:* `index_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `wd_.ok() && 1 <= index_ && index_ <= 5`.
+*Returns:* `wd_.ok() && 1 <= index_ && index_ <= 5`.
 
 #### Non-member functions <a id="time.cal.wdidx.nonmembers">[[time.cal.wdidx.nonmembers]]</a>
 
@@ -3943,7 +3938,7 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const weekday_indexed& x, const weekday_indexed& y) noexcept;
 ```
 
-> *Returns:* `x.weekday() == y.weekday() && x.index() == y.index()`.
+*Returns:* `x.weekday() == y.weekday() && x.index() == y.index()`.
 
 ``` cpp
 template<class charT, class traits>
@@ -3951,15 +3946,15 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const weekday_indexed& wdi);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> auto i = wdi.index();
-> return os << (i >= 1 && i <= 5 ?
->   format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[{}]"), wdi.weekday(), i) :
->   format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[{} is not a valid index]"),
->          wdi.weekday(), i));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+auto i = wdi.index();
+return os << (i >= 1 && i <= 5 ?
+  format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[{}]"), wdi.weekday(), i) :
+  format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[{} is not a valid index]"),
+         wdi.weekday(), i));
+```
 
 ### Class `weekday_last` <a id="time.cal.wdlast">[[time.cal.wdlast]]</a>
 
@@ -3981,10 +3976,10 @@ namespace std::chrono {
 
 `weekday_last` represents the last weekday of a month.
 
-\[*Note 3*: A `weekday_last` object can be constructed by indexing a
+\[*Note 5*: A `weekday_last` object can be constructed by indexing a
 `weekday` with `last`. — *end note*\]
 
-\[*Example 2*:
+\[*Example 7*:
 
 ``` cpp
 constexpr auto wdl = Sunday[last];      // wdl is the last Sunday of an as yet unspecified month
@@ -4001,19 +3996,19 @@ static_assert(wdl.weekday() == Sunday);
 constexpr explicit weekday_last(const chrono::weekday& wd) noexcept;
 ```
 
-> *Effects:* Initializes `wd_` with `wd`.
+*Effects:* Initializes `wd_` with `wd`.
 
 ``` cpp
 constexpr chrono::weekday weekday() const noexcept;
 ```
 
-> *Returns:* `wd_`.
+*Returns:* `wd_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `wd_.ok()`.
+*Returns:* `wd_.ok()`.
 
 #### Non-member functions <a id="time.cal.wdlast.nonmembers">[[time.cal.wdlast.nonmembers]]</a>
 
@@ -4021,7 +4016,7 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const weekday_last& x, const weekday_last& y) noexcept;
 ```
 
-> *Returns:* `x.weekday() == y.weekday()`.
+*Returns:* `x.weekday() == y.weekday()`.
 
 ``` cpp
 template<class charT, class traits>
@@ -4029,11 +4024,11 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const weekday_last& wdl);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[last]"), wdl.weekday());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}[last]"), wdl.weekday());
+```
 
 ### Class `month_day` <a id="time.cal.md">[[time.cal.md]]</a>
 
@@ -4069,28 +4064,28 @@ unspecified year. `month_day` meets the *Cpp17EqualityComparable* (
 constexpr month_day(const chrono::month& m, const chrono::day& d) noexcept;
 ```
 
-> *Effects:* Initializes `m_` with `m`, and `d_` with `d`.
+*Effects:* Initializes `m_` with `m`, and `d_` with `d`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr chrono::day day() const noexcept;
 ```
 
-> *Returns:* `d_`.
+*Returns:* `d_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `true` if `m_.ok()` is `true`, `1d <= d_`, and `d_` is less
-> than or equal to the number of days in month `m_`; otherwise returns
-> `false`. When `m_ == February`, the number of days is considered to be
-> 29.
+*Returns:* `true` if `m_.ok()` is `true`, `1d <= d_`, and `d_` is less
+than or equal to the number of days in month `m_`; otherwise returns
+`false`. When `m_ == February`, the number of days is considered to be
+29.
 
 #### Non-member functions <a id="time.cal.md.nonmembers">[[time.cal.md.nonmembers]]</a>
 
@@ -4098,18 +4093,18 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const month_day& x, const month_day& y) noexcept;
 ```
 
-> *Returns:* `x.month() == y.month() && x.day() == y.day()`.
+*Returns:* `x.month() == y.month() && x.day() == y.day()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const month_day& x, const month_day& y) noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (auto c = x.month() <=> y.month(); c != 0) return c;
-> return x.day() <=> y.day();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+if (auto c = x.month() <=> y.month(); c != 0) return c;
+return x.day() <=> y.day();
+```
 
 ``` cpp
 template<class charT, class traits>
@@ -4117,12 +4112,12 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const month_day& md);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/{}"),
->                     md.month(), md.day());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/{}"),
+                    md.month(), md.day());
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -4132,16 +4127,16 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the
-> `month_day` `md` using the format flags given in the NTCTS `fmt` as
-> specified in [[time.parse]]. If the parse fails to decode a valid
-> `month_day`, `is.setstate(ios_base::failbit)` is called and `md` is
-> not modified. If `%Z` is used and successfully parsed, that value will
-> be assigned to `*abbrev` if `abbrev` is non-null. If `%z` (or a
-> modified variant) is used and successfully parsed, that value will be
-> assigned to `*offset` if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `month_day`
+`md` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid `month_day`,
+`is.setstate(ios_base::failbit)` is called and `md` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ### Class `month_day_last` <a id="time.cal.mdlast">[[time.cal.mdlast]]</a>
 
@@ -4161,11 +4156,11 @@ namespace std::chrono {
 
 `month_day_last` represents the last day of a month.
 
-\[*Note 4*: A `month_day_last` object can be constructed using the
+\[*Note 6*: A `month_day_last` object can be constructed using the
 expression `m/last` or `last/m`, where `m` is an expression of type
 `month`. — *end note*\]
 
-\[*Example 3*:
+\[*Example 8*:
 
 ``` cpp
 constexpr auto mdl = February/last;     // mdl is the last day of February of an as yet unspecified year
@@ -4180,31 +4175,31 @@ static_assert(mdl.month() == February);
 constexpr explicit month_day_last(const chrono::month& m) noexcept;
 ```
 
-> *Effects:* Initializes `m_` with `m`.
+*Effects:* Initializes `m_` with `m`.
 
 ``` cpp
 constexpr month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `m_.ok()`.
+*Returns:* `m_.ok()`.
 
 ``` cpp
 constexpr bool operator==(const month_day_last& x, const month_day_last& y) noexcept;
 ```
 
-> *Returns:* `x.month() == y.month()`.
+*Returns:* `x.month() == y.month()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const month_day_last& x, const month_day_last& y) noexcept;
 ```
 
-> *Returns:* `x.month() <=> y.month()`.
+*Returns:* `x.month() <=> y.month()`.
 
 ``` cpp
 template<class charT, class traits>
@@ -4212,11 +4207,11 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const month_day_last& mdl);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/last"), mdl.month());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/last"), mdl.month());
+```
 
 ### Class `month_weekday` <a id="time.cal.mwd">[[time.cal.mwd]]</a>
 
@@ -4241,7 +4236,7 @@ namespace std::chrono {
 as yet unspecified year. To do this the `month_weekday` stores a `month`
 and a `weekday_indexed`.
 
-\[*Example 4*:
+\[*Example 9*:
 
 ``` cpp
 constexpr auto mwd
@@ -4260,25 +4255,25 @@ static_assert(mwd.weekday_indexed() == Tuesday[3]);
 constexpr month_weekday(const chrono::month& m, const chrono::weekday_indexed& wdi) noexcept;
 ```
 
-> *Effects:* Initializes `m_` with `m`, and `wdi_` with `wdi`.
+*Effects:* Initializes `m_` with `m`, and `wdi_` with `wdi`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr chrono::weekday_indexed weekday_indexed() const noexcept;
 ```
 
-> *Returns:* `wdi_`.
+*Returns:* `wdi_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `m_.ok() && wdi_.ok()`.
+*Returns:* `m_.ok() && wdi_.ok()`.
 
 #### Non-member functions <a id="time.cal.mwd.nonmembers">[[time.cal.mwd.nonmembers]]</a>
 
@@ -4286,8 +4281,8 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const month_weekday& x, const month_weekday& y) noexcept;
 ```
 
-> *Returns:*
-> `x.month() == y.month() && x.weekday_indexed() == y.weekday_indexed()`.
+*Returns:*
+`x.month() == y.month() && x.weekday_indexed() == y.weekday_indexed()`.
 
 ``` cpp
 template<class charT, class traits>
@@ -4295,12 +4290,12 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const month_weekday& mwd);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/{:L}"),
->                     mwd.month(), mwd.weekday_indexed());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/{:L}"),
+                    mwd.month(), mwd.weekday_indexed());
+```
 
 ### Class `month_weekday_last` <a id="time.cal.mwdlast">[[time.cal.mwdlast]]</a>
 
@@ -4326,7 +4321,7 @@ namespace std::chrono {
 yet unspecified year. To do this the `month_weekday_last` stores a
 `month` and a `weekday_last`.
 
-\[*Example 5*:
+\[*Example 10*:
 
 ``` cpp
 constexpr auto mwd
@@ -4347,25 +4342,25 @@ constexpr month_weekday_last(const chrono::month& m,
                              const chrono::weekday_last& wdl) noexcept;
 ```
 
-> *Effects:* Initializes `m_` with `m`, and `wdl_` with `wdl`.
+*Effects:* Initializes `m_` with `m`, and `wdl_` with `wdl`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr chrono::weekday_last weekday_last() const noexcept;
 ```
 
-> *Returns:* `wdl_`.
+*Returns:* `wdl_`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `m_.ok() && wdl_.ok()`.
+*Returns:* `m_.ok() && wdl_.ok()`.
 
 #### Non-member functions <a id="time.cal.mwdlast.nonmembers">[[time.cal.mwdlast.nonmembers]]</a>
 
@@ -4373,8 +4368,8 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const month_weekday_last& x, const month_weekday_last& y) noexcept;
 ```
 
-> *Returns:*
-> `x.month() == y.month() && x.weekday_last() == y.weekday_last()`.
+*Returns:*
+`x.month() == y.month() && x.weekday_last() == y.weekday_last()`.
 
 ``` cpp
 template<class charT, class traits>
@@ -4382,12 +4377,12 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const month_weekday_last& mwdl);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/{:L}"),
->                     mwdl.month(), mwdl.weekday_last());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L}/{:L}"),
+                    mwdl.month(), mwdl.weekday_last());
+```
 
 ### Class `year_month` <a id="time.cal.ym">[[time.cal.ym]]</a>
 
@@ -4430,67 +4425,67 @@ resolution of `months`. `year_month` meets the *Cpp17EqualityComparable*
 constexpr year_month(const chrono::year& y, const chrono::month& m) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `y`, and `m_` with `m`.
+*Effects:* Initializes `y_` with `y`, and `m_` with `m`.
 
 ``` cpp
 constexpr chrono::year year() const noexcept;
 ```
 
-> *Returns:* `y_`.
+*Returns:* `y_`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr year_month& operator+=(const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this + dm`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this + dm`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month& operator-=(const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this - dm`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this - dm`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month& operator+=(const years& dy) noexcept;
 ```
 
-> *Effects:* `*this = *this + dy`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + dy`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month& operator-=(const years& dy) noexcept;
 ```
 
-> *Effects:* `*this = *this - dy`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - dy`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `y_.ok() && m_.ok()`.
+*Returns:* `y_.ok() && m_.ok()`.
 
 #### Non-member functions <a id="time.cal.ym.nonmembers">[[time.cal.ym.nonmembers]]</a>
 
@@ -4498,83 +4493,83 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const year_month& x, const year_month& y) noexcept;
 ```
 
-> *Returns:* `x.year() == y.year() && x.month() == y.month()`.
+*Returns:* `x.year() == y.year() && x.month() == y.month()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const year_month& x, const year_month& y) noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (auto c = x.year() <=> y.year(); c != 0) return c;
-> return x.month() <=> y.month();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+if (auto c = x.year() <=> y.year(); c != 0) return c;
+return x.month() <=> y.month();
+```
 
 ``` cpp
 constexpr year_month operator+(const year_month& ym, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* A `year_month` value `z` such that `z.ok() && z - ym == dm`
-> is `true`.
->
-> *Complexity:* 𝑂(1) with respect to the value of `dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* A `year_month` value `z` such that `z.ok() && z - ym == dm`
+is `true`.
+
+*Complexity:* 𝑂(1) with respect to the value of `dm`.
 
 ``` cpp
 constexpr year_month operator+(const months& dm, const year_month& ym) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ym + dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ym + dm`.
 
 ``` cpp
 constexpr year_month operator-(const year_month& ym, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ym + -dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ym + -dm`.
 
 ``` cpp
 constexpr months operator-(const year_month& x, const year_month& y) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> x.year() - y.year() + months{static_cast<int>(unsigned{x.month()}) -
->                              static_cast<int>(unsigned{y.month()})}
-> ```
+*Returns:*
+
+``` cpp
+x.year() - y.year() + months{static_cast<int>(unsigned{x.month()}) -
+                             static_cast<int>(unsigned{y.month()})}
+```
 
 ``` cpp
 constexpr year_month operator+(const year_month& ym, const years& dy) noexcept;
 ```
 
-> *Returns:* `(ym.year() + dy) / ym.month()`.
+*Returns:* `(ym.year() + dy) / ym.month()`.
 
 ``` cpp
 constexpr year_month operator+(const years& dy, const year_month& ym) noexcept;
 ```
 
-> *Returns:* `ym + dy`.
+*Returns:* `ym + dy`.
 
 ``` cpp
 constexpr year_month operator-(const year_month& ym, const years& dy) noexcept;
 ```
 
-> *Returns:* `ym + -dy`.
+*Returns:* `ym + -dy`.
 
 ``` cpp
 template<class charT, class traits>
@@ -4582,12 +4577,12 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const year_month& ym);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}"),
->                     ym.year(), ym.month());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}"),
+                    ym.year(), ym.month());
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -4597,16 +4592,16 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the
-> `year_month` `ym` using the format flags given in the NTCTS `fmt` as
-> specified in [[time.parse]]. If the parse fails to decode a valid
-> `year_month`, `is.setstate(ios_base::failbit)` is called and `ym` is
-> not modified. If `%Z` is used and successfully parsed, that value will
-> be assigned to `*abbrev` if `abbrev` is non-null. If `%z` (or a
-> modified variant) is used and successfully parsed, that value will be
-> assigned to `*offset` if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the `year_month`
+`ym` using the format flags given in the NTCTS `fmt` as specified in
+[[time.parse]]. If the parse fails to decode a valid `year_month`,
+`is.setstate(ios_base::failbit)` is called and `ym` is not modified. If
+`%Z` is used and successfully parsed, that value will be assigned to
+`*abbrev` if `abbrev` is non-null. If `%z` (or a modified variant) is
+used and successfully parsed, that value will be assigned to `*offset`
+if `offset` is non-null.
+
+*Returns:* `is`.
 
 ### Class `year_month_day` <a id="time.cal.ymd">[[time.cal.ymd]]</a>
 
@@ -4647,7 +4642,7 @@ namespace std::chrono {
 `year_month_day` is a field-based time point with a resolution of
 `days`.
 
-\[*Note 5*: `year_month_day` supports `years`- and `months`-oriented
+\[*Note 7*: `year_month_day` supports `years`- and `months`-oriented
 arithmetic, but not `days`-oriented arithmetic. For the latter, there is
 a conversion to `sys_days`, which efficiently supports `days`-oriented
 arithmetic. — *end note*\]
@@ -4665,135 +4660,132 @@ constexpr year_month_day(const chrono::year& y, const chrono::month& m,
                          const chrono::day& d) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `y`, `m_` with `m`, and `d_` with
-> `d`.
+*Effects:* Initializes `y_` with `y`, `m_` with `m`, and `d_` with `d`.
 
 ``` cpp
 constexpr year_month_day(const year_month_day_last& ymdl) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `ymdl.year()`, `m_` with
-> `ymdl.month()`, and `d_` with `ymdl.day()`.
->
-> \[*Note 13*: This conversion from `year_month_day_last` to
-> `year_month_day` can be more efficient than converting a
-> `year_month_day_last` to a `sys_days`, and then converting that
-> `sys_days` to a `year_month_day`. — *end note*\]
+*Effects:* Initializes `y_` with `ymdl.year()`, `m_` with
+`ymdl.month()`, and `d_` with `ymdl.day()`.
+
+\[*Note 8*: This conversion from `year_month_day_last` to
+`year_month_day` can be more efficient than converting a
+`year_month_day_last` to a `sys_days`, and then converting that
+`sys_days` to a `year_month_day`. — *end note*\]
 
 ``` cpp
 constexpr year_month_day(const sys_days& dp) noexcept;
 ```
 
-> *Effects:* Constructs an object of type `year_month_day` that
-> corresponds to the date represented by `dp`.
->
-> *Remarks:* For any value `ymd` of type `year_month_day` for which
-> `ymd.ok()` is `true`, `ymd == year_month_day{sys_days{ymd}}` is
-> `true`.
+*Effects:* Constructs an object of type `year_month_day` that
+corresponds to the date represented by `dp`.
+
+*Remarks:* For any value `ymd` of type `year_month_day` for which
+`ymd.ok()` is `true`, `ymd == year_month_day{sys_days{ymd}}` is `true`.
 
 ``` cpp
 constexpr explicit year_month_day(const local_days& dp) noexcept;
 ```
 
-> *Effects:* Equivalent to constructing with
-> `sys_days{dp.time_since_epoch()}`.
+*Effects:* Equivalent to constructing with
+`sys_days{dp.time_since_epoch()}`.
 
 ``` cpp
 constexpr year_month_day& operator+=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this + m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this + m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_day& operator-=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this - m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this - m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_day& year_month_day::operator+=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this + y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_day& year_month_day::operator-=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this - y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr chrono::year year() const noexcept;
 ```
 
-> *Returns:* `y_`.
+*Returns:* `y_`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr chrono::day day() const noexcept;
 ```
 
-> *Returns:* `d_`.
+*Returns:* `d_`.
 
 ``` cpp
 constexpr operator sys_days() const noexcept;
 ```
 
-> *Returns:* If `ok()`, returns a `sys_days` holding a count of days
-> from the `sys_days` epoch to `*this` (a negative value if `*this`
-> represents a date prior to the `sys_days` epoch). Otherwise, if
-> `y_.ok() && m_.ok()` is `true`, returns
-> `sys_days{y_/m_/1d} + (d_ - 1d)`. Otherwise the value returned is
-> unspecified.
->
-> *Remarks:* A `sys_days` in the range which is converted to a
-> `year_month_day` has the same value when converted back to a
-> `sys_days`.
->
-> \[*Example 13*:
->
->     static_assert(year_month_day{sys_days{2017y/January/0}}  == 2016y/December/31);
->     static_assert(year_month_day{sys_days{2017y/January/31}} == 2017y/January/31);
->     static_assert(year_month_day{sys_days{2017y/January/32}} == 2017y/February/1);
->
-> — *end example*\]
+*Returns:* If `ok()`, returns a `sys_days` holding a count of days from
+the `sys_days` epoch to `*this` (a negative value if `*this` represents
+a date prior to the `sys_days` epoch). Otherwise, if
+`y_.ok() && m_.ok()` is `true`, returns
+`sys_days{y_/m_/1d} + (d_ - 1d)`. Otherwise the value returned is
+unspecified.
+
+*Remarks:* A `sys_days` in the range which is converted to a
+`year_month_day` has the same value when converted back to a `sys_days`.
+
+\[*Example 11*:
+
+    static_assert(year_month_day{sys_days{2017y/January/0}}  == 2016y/December/31);
+    static_assert(year_month_day{sys_days{2017y/January/31}} == 2017y/January/31);
+    static_assert(year_month_day{sys_days{2017y/January/32}} == 2017y/February/1);
+
+— *end example*\]
 
 ``` cpp
 constexpr explicit operator local_days() const noexcept;
 ```
 
-> *Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
+*Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* If `y_.ok()` is `true`, and `m_.ok()` is `true`, and `d_`
-> is in the range \[`1d`, `(y_/m_/last).day()`\], then returns `true`;
-> otherwise returns `false`.
+*Returns:* If `y_.ok()` is `true`, and `m_.ok()` is `true`, and `d_` is
+in the range \[`1d`, `(y_/m_/last).day()`\], then returns `true`;
+otherwise returns `false`.
 
 #### Non-member functions <a id="time.cal.ymd.nonmembers">[[time.cal.ymd.nonmembers]]</a>
 
@@ -4801,78 +4793,78 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const year_month_day& x, const year_month_day& y) noexcept;
 ```
 
-> *Returns:*
-> `x.year() == y.year() && x.month() == y.month() && x.day() == y.day()`.
+*Returns:*
+`x.year() == y.year() && x.month() == y.month() && x.day() == y.day()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const year_month_day& x, const year_month_day& y) noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (auto c = x.year() <=> y.year(); c != 0) return c;
-> if (auto c = x.month() <=> y.month(); c != 0) return c;
-> return x.day() <=> y.day();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+if (auto c = x.year() <=> y.year(); c != 0) return c;
+if (auto c = x.month() <=> y.month(); c != 0) return c;
+return x.day() <=> y.day();
+```
 
 ``` cpp
 constexpr year_month_day operator+(const year_month_day& ymd, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `(ymd.year() / ymd.month() + dm) / ymd.day()`.
->
-> \[*Note 14*: If `ymd.day()` is in the range \[`1d`, `28d`\], `ok()`
-> will return `true` for the resultant `year_month_day`. — *end note*\]
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `(ymd.year() / ymd.month() + dm) / ymd.day()`.
+
+\[*Note 9*: If `ymd.day()` is in the range \[`1d`, `28d`\], `ok()` will
+return `true` for the resultant `year_month_day`. — *end note*\]
 
 ``` cpp
 constexpr year_month_day operator+(const months& dm, const year_month_day& ymd) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymd + dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymd + dm`.
 
 ``` cpp
 constexpr year_month_day operator-(const year_month_day& ymd, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymd + (-dm)`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymd + (-dm)`.
 
 ``` cpp
 constexpr year_month_day operator+(const year_month_day& ymd, const years& dy) noexcept;
 ```
 
-> *Returns:* `(ymd.year() + dy) / ymd.month() / ymd.day()`.
->
-> \[*Note 15*: If `ymd.month()` is February and `ymd.day()` is not in
-> the range \[`1d`, `28d`\], `ok()` can return `false` for the resultant
-> `year_month_day`. — *end note*\]
+*Returns:* `(ymd.year() + dy) / ymd.month() / ymd.day()`.
+
+\[*Note 10*: If `ymd.month()` is February and `ymd.day()` is not in the
+range \[`1d`, `28d`\], `ok()` can return `false` for the resultant
+`year_month_day`. — *end note*\]
 
 ``` cpp
 constexpr year_month_day operator+(const years& dy, const year_month_day& ymd) noexcept;
 ```
 
-> *Returns:* `ymd + dy`.
+*Returns:* `ymd + dy`.
 
 ``` cpp
 constexpr year_month_day operator-(const year_month_day& ymd, const years& dy) noexcept;
 ```
 
-> *Returns:* `ymd + (-dy)`.
+*Returns:* `ymd + (-dy)`.
 
 ``` cpp
 template<class charT, class traits>
@@ -4880,13 +4872,13 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const year_month_day& ymd);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << (ymd.ok() ?
->   format(STATICALLY-WIDEN<charT>("{:%F}"), ymd) :
->   format(STATICALLY-WIDEN<charT>("{:%F} is not a valid date"), ymd));
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << (ymd.ok() ?
+  format(STATICALLY-WIDEN<charT>("{:%F}"), ymd) :
+  format(STATICALLY-WIDEN<charT>("{:%F} is not a valid date"), ymd));
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc = allocator<charT>>
@@ -4896,16 +4888,16 @@ template<class charT, class traits, class Alloc = allocator<charT>>
                 minutes* offset = nullptr);
 ```
 
-> *Effects:* Attempts to parse the input stream `is` into the
-> `year_month_day` `ymd` using the format flags given in the NTCTS `fmt`
-> as specified in [[time.parse]]. If the parse fails to decode a valid
-> `year_month_day`, `is.setstate(ios_base::failbit)` is called and `ymd`
-> is not modified. If `%Z` is used and successfully parsed, that value
-> will be assigned to `*abbrev` if `abbrev` is non-null. If `%z` (or a
-> modified variant) is used and successfully parsed, that value will be
-> assigned to `*offset` if `offset` is non-null.
->
-> *Returns:* `is`.
+*Effects:* Attempts to parse the input stream `is` into the
+`year_month_day` `ymd` using the format flags given in the NTCTS `fmt`
+as specified in [[time.parse]]. If the parse fails to decode a valid
+`year_month_day`, `is.setstate(ios_base::failbit)` is called and `ymd`
+is not modified. If `%Z` is used and successfully parsed, that value
+will be assigned to `*abbrev` if `abbrev` is non-null. If `%z` (or a
+modified variant) is used and successfully parsed, that value will be
+assigned to `*offset` if `offset` is non-null.
+
+*Returns:* `is`.
 
 ### Class `year_month_day_last` <a id="time.cal.ymdlast">[[time.cal.ymdlast]]</a>
 
@@ -4943,7 +4935,7 @@ month. `year_month_day_last` is a field-based time point with a
 resolution of `days`, except that it is restricted to pointing to the
 last day of a year and month.
 
-\[*Note 6*: `year_month_day_last` supports `years`- and
+\[*Note 11*: `year_month_day_last` supports `years`- and
 `months`-oriented arithmetic, but not `days`-oriented arithmetic. For
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
@@ -4962,95 +4954,95 @@ constexpr year_month_day_last(const chrono::year& y,
                               const chrono::month_day_last& mdl) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `y` and `mdl_` with `mdl`.
+*Effects:* Initializes `y_` with `y` and `mdl_` with `mdl`.
 
 ``` cpp
 constexpr year_month_day_last& operator+=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this + m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this + m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_day_last& operator-=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this - m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this - m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_day_last& operator+=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this + y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_day_last& operator-=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this - y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr chrono::year year() const noexcept;
 ```
 
-> *Returns:* `y_`.
+*Returns:* `y_`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `mdl_.month()`.
+*Returns:* `mdl_.month()`.
 
 ``` cpp
 constexpr chrono::month_day_last month_day_last() const noexcept;
 ```
 
-> *Returns:* `mdl_`.
+*Returns:* `mdl_`.
 
 ``` cpp
 constexpr chrono::day day() const noexcept;
 ```
 
-> *Returns:* If `ok()` is `true`, returns a `day` representing the last
-> day of the (`year`, `month`) pair represented by `*this`. Otherwise,
-> the returned value is unspecified.
->
-> \[*Note 16*: This value might be computed on demand. — *end note*\]
+*Returns:* If `ok()` is `true`, returns a `day` representing the last
+day of the (`year`, `month`) pair represented by `*this`. Otherwise, the
+returned value is unspecified.
+
+\[*Note 12*: This value might be computed on demand. — *end note*\]
 
 ``` cpp
 constexpr operator sys_days() const noexcept;
 ```
 
-> *Returns:* `sys_days{year()/month()/day()}`.
+*Returns:* `sys_days{year()/month()/day()}`.
 
 ``` cpp
 constexpr explicit operator local_days() const noexcept;
 ```
 
-> *Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
+*Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `y_.ok() && mdl_.ok()`.
+*Returns:* `y_.ok() && mdl_.ok()`.
 
 #### Non-member functions <a id="time.cal.ymdlast.nonmembers">[[time.cal.ymdlast.nonmembers]]</a>
 
@@ -5058,77 +5050,77 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const year_month_day_last& x, const year_month_day_last& y) noexcept;
 ```
 
-> *Returns:*
-> `x.year() == y.year() && x.month_day_last() == y.month_day_last()`.
+*Returns:*
+`x.year() == y.year() && x.month_day_last() == y.month_day_last()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const year_month_day_last& x,
                                       const year_month_day_last& y) noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if (auto c = x.year() <=> y.year(); c != 0) return c;
-> return x.month_day_last() <=> y.month_day_last();
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+if (auto c = x.year() <=> y.year(); c != 0) return c;
+return x.month_day_last() <=> y.month_day_last();
+```
 
 ``` cpp
 constexpr year_month_day_last
   operator+(const year_month_day_last& ymdl, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `(ymdl.year() / ymdl.month() + dm) / last`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `(ymdl.year() / ymdl.month() + dm) / last`.
 
 ``` cpp
 constexpr year_month_day_last
   operator+(const months& dm, const year_month_day_last& ymdl) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymdl + dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymdl + dm`.
 
 ``` cpp
 constexpr year_month_day_last
   operator-(const year_month_day_last& ymdl, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymdl + (-dm)`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymdl + (-dm)`.
 
 ``` cpp
 constexpr year_month_day_last
   operator+(const year_month_day_last& ymdl, const years& dy) noexcept;
 ```
 
-> *Returns:* `{ymdl.year()+dy, ymdl.month_day_last()}`.
+*Returns:* `{ymdl.year()+dy, ymdl.month_day_last()}`.
 
 ``` cpp
 constexpr year_month_day_last
   operator+(const years& dy, const year_month_day_last& ymdl) noexcept;
 ```
 
-> *Returns:* `ymdl + dy`.
+*Returns:* `ymdl + dy`.
 
 ``` cpp
 constexpr year_month_day_last
   operator-(const year_month_day_last& ymdl, const years& dy) noexcept;
 ```
 
-> *Returns:* `ymdl + (-dy)`.
+*Returns:* `ymdl + (-dy)`.
 
 ``` cpp
 template<class charT, class traits>
@@ -5136,12 +5128,12 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const year_month_day_last& ymdl);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}"),
->                     ymdl.year(), ymdl.month_day_last());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}"),
+                    ymdl.year(), ymdl.month_day_last());
+```
 
 ### Class `year_month_weekday` <a id="time.cal.ymwd">[[time.cal.ymwd]]</a>
 
@@ -5183,10 +5175,10 @@ namespace std::chrono {
 $n^\text{th}$ weekday of the month. `year_month_weekday` is a
 field-based time point with a resolution of `days`.
 
-\[*Note 7*: `year_month_weekday` supports `years`- and `months`-oriented
-arithmetic, but not `days`-oriented arithmetic. For the latter, there is
-a conversion to `sys_days`, which efficiently supports `days`-oriented
-arithmetic. — *end note*\]
+\[*Note 13*: `year_month_weekday` supports `years`- and
+`months`-oriented arithmetic, but not `days`-oriented arithmetic. For
+the latter, there is a conversion to `sys_days`, which efficiently
+supports `days`-oriented arithmetic. — *end note*\]
 
 `year_month_weekday` meets the *Cpp17EqualityComparable* (
 [[cpp17.equalitycomparable]]) requirements.
@@ -5201,122 +5193,122 @@ constexpr year_month_weekday(const chrono::year& y, const chrono::month& m,
                              const chrono::weekday_indexed& wdi) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `y`, `m_` with `m`, and `wdi_` with
-> `wdi`.
+*Effects:* Initializes `y_` with `y`, `m_` with `m`, and `wdi_` with
+`wdi`.
 
 ``` cpp
 constexpr year_month_weekday(const sys_days& dp) noexcept;
 ```
 
-> *Effects:* Constructs an object of type `year_month_weekday` which
-> corresponds to the date represented by `dp`.
->
-> *Remarks:* For any value `ymwd` of type `year_month_weekday` for which
-> `ymwd.ok()` is `true`, `ymwd == year_month_weekday{sys_days{ymwd}}` is
-> `true`.
+*Effects:* Constructs an object of type `year_month_weekday` which
+corresponds to the date represented by `dp`.
+
+*Remarks:* For any value `ymwd` of type `year_month_weekday` for which
+`ymwd.ok()` is `true`, `ymwd == year_month_weekday{sys_days{ymwd}}` is
+`true`.
 
 ``` cpp
 constexpr explicit year_month_weekday(const local_days& dp) noexcept;
 ```
 
-> *Effects:* Equivalent to constructing with
-> `sys_days{dp.time_since_epoch()}`.
+*Effects:* Equivalent to constructing with
+`sys_days{dp.time_since_epoch()}`.
 
 ``` cpp
 constexpr year_month_weekday& operator+=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this + m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this + m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_weekday& operator-=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this - m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this - m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_weekday& operator+=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this + y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_weekday& operator-=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this - y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr chrono::year year() const noexcept;
 ```
 
-> *Returns:* `y_`.
+*Returns:* `y_`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr chrono::weekday weekday() const noexcept;
 ```
 
-> *Returns:* `wdi_.weekday()`.
+*Returns:* `wdi_.weekday()`.
 
 ``` cpp
 constexpr unsigned index() const noexcept;
 ```
 
-> *Returns:* `wdi_.index()`.
+*Returns:* `wdi_.index()`.
 
 ``` cpp
 constexpr chrono::weekday_indexed weekday_indexed() const noexcept;
 ```
 
-> *Returns:* `wdi_`.
+*Returns:* `wdi_`.
 
 ``` cpp
 constexpr operator sys_days() const noexcept;
 ```
 
-> *Returns:* If `y_.ok() && m_.ok() && wdi_.weekday().ok()`, returns a
-> `sys_days` that represents the date `(index() - 1) * 7` days after the
-> first `weekday()` of `year()/month()`. If `index()` is 0 the returned
-> `sys_days` represents the date 7 days prior to the first `weekday()`
-> of `year()/month()`. Otherwise the returned value is unspecified.
+*Returns:* If `y_.ok() && m_.ok() && wdi_.weekday().ok()`, returns a
+`sys_days` that represents the date `(index() - 1) * 7` days after the
+first `weekday()` of `year()/month()`. If `index()` is 0 the returned
+`sys_days` represents the date 7 days prior to the first `weekday()` of
+`year()/month()`. Otherwise the returned value is unspecified.
 
 ``` cpp
 constexpr explicit operator local_days() const noexcept;
 ```
 
-> *Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
+*Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* If any of `y_.ok()`, `m_.ok()`, or `wdi_.ok()` is `false`,
-> returns `false`. Otherwise, if `*this` represents a valid date,
-> returns `true`. Otherwise, returns `false`.
+*Returns:* If any of `y_.ok()`, `m_.ok()`, or `wdi_.ok()` is `false`,
+returns `false`. Otherwise, if `*this` represents a valid date, returns
+`true`. Otherwise, returns `false`.
 
 #### Non-member functions <a id="time.cal.ymwd.nonmembers">[[time.cal.ymwd.nonmembers]]</a>
 
@@ -5324,63 +5316,62 @@ constexpr bool ok() const noexcept;
 constexpr bool operator==(const year_month_weekday& x, const year_month_weekday& y) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> x.year() == y.year() && x.month() == y.month() && x.weekday_indexed() == y.weekday_indexed()
-> ```
+*Returns:*
+
+``` cpp
+x.year() == y.year() && x.month() == y.month() && x.weekday_indexed() == y.weekday_indexed()
+```
 
 ``` cpp
 constexpr year_month_weekday operator+(const year_month_weekday& ymwd, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:*
-> `(ymwd.year() / ymwd.month() + dm) / ymwd.weekday_indexed()`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `(ymwd.year() / ymwd.month() + dm) / ymwd.weekday_indexed()`.
 
 ``` cpp
 constexpr year_month_weekday operator+(const months& dm, const year_month_weekday& ymwd) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymwd + dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymwd + dm`.
 
 ``` cpp
 constexpr year_month_weekday operator-(const year_month_weekday& ymwd, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymwd + (-dm)`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymwd + (-dm)`.
 
 ``` cpp
 constexpr year_month_weekday operator+(const year_month_weekday& ymwd, const years& dy) noexcept;
 ```
 
-> *Returns:* `{ymwd.year()+dy, ymwd.month(), ymwd.weekday_indexed()}`.
+*Returns:* `{ymwd.year()+dy, ymwd.month(), ymwd.weekday_indexed()}`.
 
 ``` cpp
 constexpr year_month_weekday operator+(const years& dy, const year_month_weekday& ymwd) noexcept;
 ```
 
-> *Returns:* `ymwd + dy`.
+*Returns:* `ymwd + dy`.
 
 ``` cpp
 constexpr year_month_weekday operator-(const year_month_weekday& ymwd, const years& dy) noexcept;
 ```
 
-> *Returns:* `ymwd + (-dy)`.
+*Returns:* `ymwd + (-dy)`.
 
 ``` cpp
 template<class charT, class traits>
@@ -5388,12 +5379,12 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const year_month_weekday& ymwd);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}/{:L}"),
->                     ymwd.year(), ymwd.month(), ymwd.weekday_indexed());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}/{:L}"),
+                    ymwd.year(), ymwd.month(), ymwd.weekday_indexed());
+```
 
 ### Class `year_month_weekday_last` <a id="time.cal.ymwdlast">[[time.cal.ymwdlast]]</a>
 
@@ -5432,7 +5423,7 @@ weekday of the month. `year_month_weekday_last` is a field-based time
 point with a resolution of `days`, except that it is restricted to
 pointing to the last weekday of a year and month.
 
-\[*Note 8*: `year_month_weekday_last` supports `years`- and
+\[*Note 14*: `year_month_weekday_last` supports `years`- and
 `months`-oriented arithmetic, but not `days`-oriented arithmetic. For
 the latter, there is a conversion to `sys_days`, which efficiently
 supports `days`-oriented arithmetic. — *end note*\]
@@ -5450,94 +5441,94 @@ constexpr year_month_weekday_last(const chrono::year& y, const chrono::month& m,
                                   const chrono::weekday_last& wdl) noexcept;
 ```
 
-> *Effects:* Initializes `y_` with `y`, `m_` with `m`, and `wdl_` with
-> `wdl`.
+*Effects:* Initializes `y_` with `y`, `m_` with `m`, and `wdl_` with
+`wdl`.
 
 ``` cpp
 constexpr year_month_weekday_last& operator+=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this + m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this + m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_weekday_last& operator-=(const months& m) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Effects:* `*this = *this - m`.
->
-> *Returns:* `*this`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Effects:* `*this = *this - m`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_weekday_last& operator+=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this + y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this + y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr year_month_weekday_last& operator-=(const years& y) noexcept;
 ```
 
-> *Effects:* `*this = *this - y`.
->
-> *Returns:* `*this`.
+*Effects:* `*this = *this - y`.
+
+*Returns:* `*this`.
 
 ``` cpp
 constexpr chrono::year year() const noexcept;
 ```
 
-> *Returns:* `y_`.
+*Returns:* `y_`.
 
 ``` cpp
 constexpr chrono::month month() const noexcept;
 ```
 
-> *Returns:* `m_`.
+*Returns:* `m_`.
 
 ``` cpp
 constexpr chrono::weekday weekday() const noexcept;
 ```
 
-> *Returns:* `wdl_.weekday()`.
+*Returns:* `wdl_.weekday()`.
 
 ``` cpp
 constexpr chrono::weekday_last weekday_last() const noexcept;
 ```
 
-> *Returns:* `wdl_`.
+*Returns:* `wdl_`.
 
 ``` cpp
 constexpr operator sys_days() const noexcept;
 ```
 
-> *Returns:* If `ok() == true`, returns a `sys_days` that represents the
-> last `weekday()` of `year()/month()`. Otherwise the returned value is
-> unspecified.
+*Returns:* If `ok() == true`, returns a `sys_days` that represents the
+last `weekday()` of `year()/month()`. Otherwise the returned value is
+unspecified.
 
 ``` cpp
 constexpr explicit operator local_days() const noexcept;
 ```
 
-> *Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
+*Returns:* `local_days{sys_days{*this}.time_since_epoch()}`.
 
 ``` cpp
 constexpr bool ok() const noexcept;
 ```
 
-> *Returns:* `y_.ok() && m_.ok() && wdl_.ok()`.
+*Returns:* `y_.ok() && m_.ok() && wdl_.ok()`.
 
 #### Non-member functions <a id="time.cal.ymwdlast.nonmembers">[[time.cal.ymwdlast.nonmembers]]</a>
 
@@ -5546,69 +5537,68 @@ constexpr bool operator==(const year_month_weekday_last& x,
                           const year_month_weekday_last& y) noexcept;
 ```
 
-> *Returns:*
->
-> ``` cpp
-> x.year() == y.year() && x.month() == y.month() && x.weekday_last() == y.weekday_last()
-> ```
+*Returns:*
+
+``` cpp
+x.year() == y.year() && x.month() == y.month() && x.weekday_last() == y.weekday_last()
+```
 
 ``` cpp
 constexpr year_month_weekday_last
   operator+(const year_month_weekday_last& ymwdl, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:*
-> `(ymwdl.year() / ymwdl.month() + dm) / ymwdl.weekday_last()`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `(ymwdl.year() / ymwdl.month() + dm) / ymwdl.weekday_last()`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator+(const months& dm, const year_month_weekday_last& ymwdl) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymwdl + dm`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymwdl + dm`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator-(const year_month_weekday_last& ymwdl, const months& dm) noexcept;
 ```
 
-> *Constraints:* If the argument supplied by the caller for the `months`
-> parameter is convertible to `years`, its implicit conversion sequence
-> to `years` is worse than its implicit conversion sequence to
-> `months`[[over.ics.rank]].
->
-> *Returns:* `ymwdl + (-dm)`.
+*Constraints:* If the argument supplied by the caller for the `months`
+parameter is convertible to `years`, its implicit conversion sequence to
+`years` is worse than its implicit conversion sequence to
+`months`[[over.ics.rank]].
+
+*Returns:* `ymwdl + (-dm)`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator+(const year_month_weekday_last& ymwdl, const years& dy) noexcept;
 ```
 
-> *Returns:* `{ymwdl.year()+dy, ymwdl.month(), ymwdl.weekday_last()}`.
+*Returns:* `{ymwdl.year()+dy, ymwdl.month(), ymwdl.weekday_last()}`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator+(const years& dy, const year_month_weekday_last& ymwdl) noexcept;
 ```
 
-> *Returns:* `ymwdl + dy`.
+*Returns:* `ymwdl + dy`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator-(const year_month_weekday_last& ymwdl, const years& dy) noexcept;
 ```
 
-> *Returns:* `ymwdl + (-dy)`.
+*Returns:* `ymwdl + (-dy)`.
 
 ``` cpp
 template<class charT, class traits>
@@ -5616,19 +5606,19 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const year_month_weekday_last& ymwdl);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}/{:L}"),
->                     ymwdl.year(), ymwdl.month(), ymwdl.weekday_last());
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{}/{:L}/{:L}"),
+                    ymwdl.year(), ymwdl.month(), ymwdl.weekday_last());
+```
 
 ### Conventional syntax operators <a id="time.cal.operators">[[time.cal.operators]]</a>
 
 A set of overloaded `operator/` functions provides a conventional syntax
 for the creation of civil calendar dates.
 
-\[*Note 9*:
+\[*Note 15*:
 
 The year, month, and day are accepted in any of the following 3 orders:
 
@@ -5649,7 +5639,7 @@ weekday[last]
 
 — *end note*\]
 
-\[*Note 10*:
+\[*Note 16*:
 
 Partial-date types such as `year_month` and `month_day` can be created
 by not applying the second division operator for any of the three
@@ -5663,7 +5653,7 @@ month_day md2 = 4d/April;
 
 — *end note*\]
 
-\[*Example 6*:
+\[*Example 12*:
 
 ``` cpp
 auto a = 2015/4/4;          // a == int(125)
@@ -5679,280 +5669,280 @@ constexpr year_month
   operator/(const year& y, const month& m) noexcept;
 ```
 
-> *Returns:* `{y, m}`.
+*Returns:* `{y, m}`.
 
 ``` cpp
 constexpr year_month
   operator/(const year& y, int   m) noexcept;
 ```
 
-> *Returns:* `y / month(m)`.
+*Returns:* `y / month(m)`.
 
 ``` cpp
 constexpr month_day
   operator/(const month& m, const day& d) noexcept;
 ```
 
-> *Returns:* `{m, d}`.
+*Returns:* `{m, d}`.
 
 ``` cpp
 constexpr month_day
   operator/(const month& m, int d) noexcept;
 ```
 
-> *Returns:* `m / day(d)`.
+*Returns:* `m / day(d)`.
 
 ``` cpp
 constexpr month_day
   operator/(int m, const day& d) noexcept;
 ```
 
-> *Returns:* `month(m) / d`.
+*Returns:* `month(m) / d`.
 
 ``` cpp
 constexpr month_day
   operator/(const day& d, const month& m) noexcept;
 ```
 
-> *Returns:* `m / d`.
+*Returns:* `m / d`.
 
 ``` cpp
 constexpr month_day
   operator/(const day& d, int m) noexcept;
 ```
 
-> *Returns:* `month(m) / d`.
+*Returns:* `month(m) / d`.
 
 ``` cpp
 constexpr month_day_last
   operator/(const month& m, last_spec) noexcept;
 ```
 
-> *Returns:* `month_day_last{m}`.
+*Returns:* `month_day_last{m}`.
 
 ``` cpp
 constexpr month_day_last
   operator/(int m, last_spec) noexcept;
 ```
 
-> *Returns:* `month(m) / last`.
+*Returns:* `month(m) / last`.
 
 ``` cpp
 constexpr month_day_last
   operator/(last_spec, const month& m) noexcept;
 ```
 
-> *Returns:* `m / last`.
+*Returns:* `m / last`.
 
 ``` cpp
 constexpr month_day_last
   operator/(last_spec, int m) noexcept;
 ```
 
-> *Returns:* `month(m) / last`.
+*Returns:* `month(m) / last`.
 
 ``` cpp
 constexpr month_weekday
   operator/(const month& m, const weekday_indexed& wdi) noexcept;
 ```
 
-> *Returns:* `{m, wdi}`.
+*Returns:* `{m, wdi}`.
 
 ``` cpp
 constexpr month_weekday
   operator/(int m, const weekday_indexed& wdi) noexcept;
 ```
 
-> *Returns:* `month(m) / wdi`.
+*Returns:* `month(m) / wdi`.
 
 ``` cpp
 constexpr month_weekday
   operator/(const weekday_indexed& wdi, const month& m) noexcept;
 ```
 
-> *Returns:* `m / wdi`.
+*Returns:* `m / wdi`.
 
 ``` cpp
 constexpr month_weekday
   operator/(const weekday_indexed& wdi, int m) noexcept;
 ```
 
-> *Returns:* `month(m) / wdi`.
+*Returns:* `month(m) / wdi`.
 
 ``` cpp
 constexpr month_weekday_last
   operator/(const month& m, const weekday_last& wdl) noexcept;
 ```
 
-> *Returns:* `{m, wdl}`.
+*Returns:* `{m, wdl}`.
 
 ``` cpp
 constexpr month_weekday_last
   operator/(int m, const weekday_last& wdl) noexcept;
 ```
 
-> *Returns:* `month(m) / wdl`.
+*Returns:* `month(m) / wdl`.
 
 ``` cpp
 constexpr month_weekday_last
   operator/(const weekday_last& wdl, const month& m) noexcept;
 ```
 
-> *Returns:* `m / wdl`.
+*Returns:* `m / wdl`.
 
 ``` cpp
 constexpr month_weekday_last
   operator/(const weekday_last& wdl, int m) noexcept;
 ```
 
-> *Returns:* `month(m) / wdl`.
+*Returns:* `month(m) / wdl`.
 
 ``` cpp
 constexpr year_month_day
   operator/(const year_month& ym, const day& d) noexcept;
 ```
 
-> *Returns:* `{ym.year(), ym.month(), d}`.
+*Returns:* `{ym.year(), ym.month(), d}`.
 
 ``` cpp
 constexpr year_month_day
   operator/(const year_month& ym, int d) noexcept;
 ```
 
-> *Returns:* `ym / day(d)`.
+*Returns:* `ym / day(d)`.
 
 ``` cpp
 constexpr year_month_day
   operator/(const year& y, const month_day& md) noexcept;
 ```
 
-> *Returns:* `y / md.month() / md.day()`.
+*Returns:* `y / md.month() / md.day()`.
 
 ``` cpp
 constexpr year_month_day
   operator/(int y, const month_day& md) noexcept;
 ```
 
-> *Returns:* `year(y) / md`.
+*Returns:* `year(y) / md`.
 
 ``` cpp
 constexpr year_month_day
   operator/(const month_day& md, const year& y) noexcept;
 ```
 
-> *Returns:* `y / md`.
+*Returns:* `y / md`.
 
 ``` cpp
 constexpr year_month_day
   operator/(const month_day& md, int y) noexcept;
 ```
 
-> *Returns:* `year(y) / md`.
+*Returns:* `year(y) / md`.
 
 ``` cpp
 constexpr year_month_day_last
   operator/(const year_month& ym, last_spec) noexcept;
 ```
 
-> *Returns:* `{ym.year(), month_day_last{ym.month()}}`.
+*Returns:* `{ym.year(), month_day_last{ym.month()}}`.
 
 ``` cpp
 constexpr year_month_day_last
   operator/(const year& y, const month_day_last& mdl) noexcept;
 ```
 
-> *Returns:* `{y, mdl}`.
+*Returns:* `{y, mdl}`.
 
 ``` cpp
 constexpr year_month_day_last
   operator/(int y, const month_day_last& mdl) noexcept;
 ```
 
-> *Returns:* `year(y) / mdl`.
+*Returns:* `year(y) / mdl`.
 
 ``` cpp
 constexpr year_month_day_last
   operator/(const month_day_last& mdl, const year& y) noexcept;
 ```
 
-> *Returns:* `y / mdl`.
+*Returns:* `y / mdl`.
 
 ``` cpp
 constexpr year_month_day_last
   operator/(const month_day_last& mdl, int y) noexcept;
 ```
 
-> *Returns:* `year(y) / mdl`.
+*Returns:* `year(y) / mdl`.
 
 ``` cpp
 constexpr year_month_weekday
   operator/(const year_month& ym, const weekday_indexed& wdi) noexcept;
 ```
 
-> *Returns:* `{ym.year(), ym.month(), wdi}`.
+*Returns:* `{ym.year(), ym.month(), wdi}`.
 
 ``` cpp
 constexpr year_month_weekday
   operator/(const year& y, const month_weekday& mwd) noexcept;
 ```
 
-> *Returns:* `{y, mwd.month(), mwd.weekday_indexed()}`.
+*Returns:* `{y, mwd.month(), mwd.weekday_indexed()}`.
 
 ``` cpp
 constexpr year_month_weekday
   operator/(int y, const month_weekday& mwd) noexcept;
 ```
 
-> *Returns:* `year(y) / mwd`.
+*Returns:* `year(y) / mwd`.
 
 ``` cpp
 constexpr year_month_weekday
   operator/(const month_weekday& mwd, const year& y) noexcept;
 ```
 
-> *Returns:* `y / mwd`.
+*Returns:* `y / mwd`.
 
 ``` cpp
 constexpr year_month_weekday
   operator/(const month_weekday& mwd, int y) noexcept;
 ```
 
-> *Returns:* `year(y) / mwd`.
+*Returns:* `year(y) / mwd`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator/(const year_month& ym, const weekday_last& wdl) noexcept;
 ```
 
-> *Returns:* `{ym.year(), ym.month(), wdl}`.
+*Returns:* `{ym.year(), ym.month(), wdl}`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator/(const year& y, const month_weekday_last& mwdl) noexcept;
 ```
 
-> *Returns:* `{y, mwdl.month(), mwdl.weekday_last()}`.
+*Returns:* `{y, mwdl.month(), mwdl.weekday_last()}`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator/(int y, const month_weekday_last& mwdl) noexcept;
 ```
 
-> *Returns:* `year(y) / mwdl`.
+*Returns:* `year(y) / mwdl`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator/(const month_weekday_last& mwdl, const year& y) noexcept;
 ```
 
-> *Returns:* `y / mwdl`.
+*Returns:* `y / mwdl`.
 
 ``` cpp
 constexpr year_month_weekday_last
   operator/(const month_weekday_last& mwdl, int y) noexcept;
 ```
 
-> *Returns:* `year(y) / mwdl`.
+*Returns:* `year(y) / mwdl`.
 
 ## Class template `hh_mm_ss` <a id="time.hms">[[time.hms]]</a>
 
@@ -6006,125 +5996,125 @@ ill-formed.
 static constexpr unsigned fractional_width = see below;
 ```
 
-> `fractional_width` is the number of fractional decimal digits
-> represented by `precision`. `fractional_width` has the value of the
-> smallest possible integer in the range \[`0`, `18`\] such that
-> `precision` will exactly represent all values of `Duration`. If no
-> such value of `fractional_width` exists, then `fractional_width` is 6.
->
-> \[*Example 14*:
->
-> See  [[time.hms.width]] for some durations, the resulting
-> `fractional_width`, and the formatted fractional second output of
-> `Duration{1}`.
->
-> <div class="LongTable">
->
-> Examples for `fractional_width` time.hms.width llx.3  
-> & &  
->   
-> & &  
-> `hours`, `minutes`, and `seconds` & `0` &  
-> `milliseconds` & `3` & `0.001`  
-> `microseconds` & `6` & `0.000001`  
-> `nanoseconds` & `9` & `0.000000001`  
-> `duration<int, ratio<1, 2>>` & `1` & `0.5`  
-> `duration<int, ratio<1, 3>>` & `6` & `0.333333`  
-> `duration<int, ratio<1, 4>>` & `2` & `0.25`  
-> `duration<int, ratio<1, 5>>` & `1` & `0.2`  
-> `duration<int, ratio<1, 6>>` & `6` & `0.166666`  
-> `duration<int, ratio<1, 7>>` & `6` & `0.142857`  
-> `duration<int, ratio<1, 8>>` & `3` & `0.125`  
-> `duration<int, ratio<1, 9>>` & `6` & `0.111111`  
-> `duration<int, ratio<1, 10>>` & `1` & `0.1`  
-> `duration<int, ratio<756, 625>>` & `4` & `0.2096`  
->
-> </div>
->
-> — *end example*\]
+`fractional_width` is the number of fractional decimal digits
+represented by `precision`. `fractional_width` has the value of the
+smallest possible integer in the range \[`0`, `18`\] such that
+`precision` will exactly represent all values of `Duration`. If no such
+value of `fractional_width` exists, then `fractional_width` is 6.
+
+\[*Example 1*:
+
+See  [[time.hms.width]] for some durations, the resulting
+`fractional_width`, and the formatted fractional second output of
+`Duration{1}`.
+
+<div class="LongTable">
+
+Examples for `fractional_width` time.hms.width llx.3  
+& &  
+  
+& &  
+`hours`, `minutes`, and `seconds` & `0` &  
+`milliseconds` & `3` & `0.001`  
+`microseconds` & `6` & `0.000001`  
+`nanoseconds` & `9` & `0.000000001`  
+`duration<int, ratio<1, 2>>` & `1` & `0.5`  
+`duration<int, ratio<1, 3>>` & `6` & `0.333333`  
+`duration<int, ratio<1, 4>>` & `2` & `0.25`  
+`duration<int, ratio<1, 5>>` & `1` & `0.2`  
+`duration<int, ratio<1, 6>>` & `6` & `0.166666`  
+`duration<int, ratio<1, 7>>` & `6` & `0.142857`  
+`duration<int, ratio<1, 8>>` & `3` & `0.125`  
+`duration<int, ratio<1, 9>>` & `6` & `0.111111`  
+`duration<int, ratio<1, 10>>` & `1` & `0.1`  
+`duration<int, ratio<756, 625>>` & `4` & `0.2096`  
+
+</div>
+
+— *end example*\]
 
 ``` cpp
 using precision = see below;
 ```
 
-> `precision` is
->
-> ``` cpp
-> duration<common_type_t<Duration::rep, seconds::rep>, ratio<1, $10^\texttt{fractional_width}$>>
-> ```
+`precision` is
+
+``` cpp
+duration<common_type_t<Duration::rep, seconds::rep>, ratio<1, $10^\texttt{fractional_width}$>>
+```
 
 ``` cpp
 constexpr explicit hh_mm_ss(Duration d);
 ```
 
-> *Effects:* Constructs an object of type `hh_mm_ss` which represents
-> the `Duration d` with precision `precision`.
->
-> - Initializes `is_neg` with `d < Duration::zero()`.
->
-> - Initializes `h` with `duration_cast<chrono::hours>(abs(d))`.
->
-> - Initializes `m` with
->   `duration_cast<chrono::minutes>(abs(d) - hours())`.
->
-> - Initializes `s` with
->   `duration_cast<chrono::seconds>(abs(d) - hours() - minutes())`.
->
-> - If `treat_as_floating_point_v<precision::rep>` is `true`,
->   initializes `ss` with `abs(d) - hours() - minutes() - seconds()`.
->   Otherwise, initializes `ss` with
->   `duration_cast<precision>(abs(d) - hours() - minutes() - seconds())`.
->
-> \[*Note 17*: When `precision::rep` is integral and `precision::period`
-> is `ratio<1>`, `subseconds()` always returns a value equal to
-> `0s`. — *end note*\]
->
-> *Ensures:* If `treat_as_floating_point_v<precision::rep>` is `true`,
-> `to_duration()` returns `d`, otherwise `to_duration()` returns
-> `duration_cast<precision>(d)`.
+*Effects:* Constructs an object of type `hh_mm_ss` which represents the
+`Duration d` with precision `precision`.
+
+- Initializes `is_neg` with `d < Duration::zero()`.
+
+- Initializes `h` with `duration_cast<chrono::hours>(abs(d))`.
+
+- Initializes `m` with
+  `duration_cast<chrono::minutes>(abs(d) - hours())`.
+
+- Initializes `s` with
+  `duration_cast<chrono::seconds>(abs(d) - hours() - minutes())`.
+
+- If `treat_as_floating_point_v<precision::rep>` is `true`, initializes
+  `ss` with `abs(d) - hours() - minutes() - seconds()`. Otherwise,
+  initializes `ss` with
+  `duration_cast<precision>(abs(d) - hours() - minutes() - seconds())`.
+
+\[*Note 1*: When `precision::rep` is integral and `precision::period` is
+`ratio<1>`, `subseconds()` always returns a value equal to
+`0s`. — *end note*\]
+
+*Ensures:* If `treat_as_floating_point_v<precision::rep>` is `true`,
+`to_duration()` returns `d`, otherwise `to_duration()` returns
+`duration_cast<precision>(d)`.
 
 ``` cpp
 constexpr bool is_negative() const noexcept;
 ```
 
-> *Returns:* `is_neg`.
+*Returns:* `is_neg`.
 
 ``` cpp
 constexpr chrono::hours hours() const noexcept;
 ```
 
-> *Returns:* `h`.
+*Returns:* `h`.
 
 ``` cpp
 constexpr chrono::minutes minutes() const noexcept;
 ```
 
-> *Returns:* `m`.
+*Returns:* `m`.
 
 ``` cpp
 constexpr chrono::seconds seconds() const noexcept;
 ```
 
-> *Returns:* `s`.
+*Returns:* `s`.
 
 ``` cpp
 constexpr precision subseconds() const noexcept;
 ```
 
-> *Returns:* `ss`.
+*Returns:* `ss`.
 
 ``` cpp
 constexpr precision to_duration() const noexcept;
 ```
 
-> *Returns:* If `is_neg`, returns `-(h + m + s + ss)`, otherwise returns
-> `h + m + s + ss`.
+*Returns:* If `is_neg`, returns `-(h + m + s + ss)`, otherwise returns
+`h + m + s + ss`.
 
 ``` cpp
 constexpr explicit operator precision() const noexcept;
 ```
 
-> *Returns:* `to_duration()`.
+*Returns:* `to_duration()`.
 
 ### Non-members <a id="time.hms.nonmembers">[[time.hms.nonmembers]]</a>
 
@@ -6134,28 +6124,28 @@ basic_ostream<charT, traits>&
 operator<<(basic_ostream<charT, traits>& os, const hh_mm_ss<Duration>& hms);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%T}"), hms);
-> ```
->
-> \[*Example 15*:
->
->     for (auto ms : {-4083007ms, 4083007ms, 65745123ms}) {
->       hh_mm_ss hms{ms};
->       cout << hms << '\n';
->     }
->     cout << hh_mm_ss{65745s} << '\n';
->
-> Produces the output (assuming the "C" locale):
->
->     -01:08:03.007
->     01:08:03.007
->     18:15:45.123
->     18:15:45
->
-> — *end example*\]
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%T}"), hms);
+```
+
+\[*Example 2*:
+
+    for (auto ms : {-4083007ms, 4083007ms, 65745123ms}) {
+      hh_mm_ss hms{ms};
+      cout << hms << '\n';
+    }
+    cout << hh_mm_ss{65745s} << '\n';
+
+Produces the output (assuming the "C" locale):
+
+    -01:08:03.007
+    01:08:03.007
+    18:15:45.123
+    18:15:45
+
+— *end example*\]
 
 ## 12/24 hours functions <a id="time.12">[[time.12]]</a>
 
@@ -6166,32 +6156,31 @@ a 24h format time of day.
 constexpr bool is_am(const hours& h) noexcept;
 ```
 
-> *Returns:* `0h <= h && h <= 11h`.
+*Returns:* `0h <= h && h <= 11h`.
 
 ``` cpp
 constexpr bool is_pm(const hours& h) noexcept;
 ```
 
-> *Returns:* `12h <= h && h <= 23h`.
+*Returns:* `12h <= h && h <= 23h`.
 
 ``` cpp
 constexpr hours make12(const hours& h) noexcept;
 ```
 
-> *Returns:* The 12-hour equivalent of `h` in the range \[`1h`, `12h`\].
-> If `h` is not in the range \[`0h`, `23h`\], the value returned is
-> unspecified.
+*Returns:* The 12-hour equivalent of `h` in the range \[`1h`, `12h`\].
+If `h` is not in the range \[`0h`, `23h`\], the value returned is
+unspecified.
 
 ``` cpp
 constexpr hours make24(const hours& h, bool is_pm) noexcept;
 ```
 
-> *Returns:* If `is_pm` is `false`, returns the 24-hour equivalent of
-> `h` in the range \[`0h`, `11h`\], assuming `h` represents an ante
-> meridiem hour. Otherwise, returns the 24-hour equivalent of `h` in the
-> range \[`12h`, `23h`\], assuming `h` represents a post meridiem hour.
-> If `h` is not in the range \[`1h`, `12h`\], the value returned is
-> unspecified.
+*Returns:* If `is_pm` is `false`, returns the 24-hour equivalent of `h`
+in the range \[`0h`, `11h`\], assuming `h` represents an ante meridiem
+hour. Otherwise, returns the 24-hour equivalent of `h` in the range
+\[`12h`, `23h`\], assuming `h` represents a post meridiem hour. If `h`
+is not in the range \[`1h`, `12h`\], the value returned is unspecified.
 
 ## Time zones <a id="time.zone">[[time.zone]]</a>
 
@@ -6226,30 +6215,30 @@ Each `vector` in a `tzdb` object is sorted to enable fast lookup.
 const time_zone* locate_zone(string_view tz_name) const;
 ```
 
-> *Returns:*
->
-> - If `zones` contains an element `tz` for which
->   `tz.name() == tz_name`, a pointer to `tz`;
->
-> - otherwise, if `links` contains an element `tz_l` for which
->   `tz_l.name() == tz_name`, then a pointer to the element `tz` of
->   `zones` for which `tz.name() == tz_l.target()`.
->
-> \[*Note 18*: A `time_zone_link` specifies an alternative name for a
-> `time_zone`. — *end note*\]
->
-> *Throws:* If a `const time_zone*` cannot be found as described in the
-> *Returns:* element, throws a `runtime_error`.
->
-> \[*Note 19*: On non-exceptional return, the return value is always a
-> pointer to a valid `time_zone`. — *end note*\]
+*Returns:*
+
+- If `zones` contains an element `tz` for which `tz.name() == tz_name`,
+  a pointer to `tz`;
+
+- otherwise, if `links` contains an element `tz_l` for which
+  `tz_l.name() == tz_name`, then a pointer to the element `tz` of
+  `zones` for which `tz.name() == tz_l.target()`.
+
+\[*Note 1*: A `time_zone_link` specifies an alternative name for a
+`time_zone`. — *end note*\]
+
+*Throws:* If a `const time_zone*` cannot be found as described in the
+*Returns:* element, throws a `runtime_error`.
+
+\[*Note 2*: On non-exceptional return, the return value is always a
+pointer to a valid `time_zone`. — *end note*\]
 
 ``` cpp
 const time_zone* current_zone() const;
 ```
 
-> *Returns:* A pointer to the time zone which the computer has set as
-> its local time zone.
+*Returns:* A pointer to the time zone which the computer has set as its
+local time zone.
 
 #### Class `tzdb_list` <a id="time.zone.db.list">[[time.zone.db.list]]</a>
 
@@ -6280,7 +6269,7 @@ namespace std::chrono {
 The `tzdb_list` database is a singleton; the unique object of type
 `tzdb_list` can be accessed via the `get_tzdb_list()` function.
 
-\[*Note 1*: This access is only needed for those applications that need
+\[*Note 3*: This access is only needed for those applications that need
 to have long uptimes and have a need to update the time zone database
 while running. Other applications can implicitly access the `front()` of
 this list via the read-only namespace scope functions `get_tzdb()`,
@@ -6295,58 +6284,57 @@ The `tzdb_list` object contains a list of `tzdb` objects.
 const tzdb& front() const noexcept;
 ```
 
-> *Synchronization:* This operation is thread-safe with respect to
-> `reload_tzdb()`.
->
-> \[*Note 20*: `reload_tzdb()` pushes a new `tzdb` onto the front of
-> this container. — *end note*\]
->
-> *Returns:* A reference to the first `tzdb` in the container.
+*Synchronization:* This operation is thread-safe with respect to
+`reload_tzdb()`.
+
+\[*Note 4*: `reload_tzdb()` pushes a new `tzdb` onto the front of this
+container. — *end note*\]
+
+*Returns:* A reference to the first `tzdb` in the container.
 
 ``` cpp
 const_iterator erase_after(const_iterator p);
 ```
 
-> *Preconditions:* The iterator following `p` is dereferenceable.
->
-> *Effects:* Erases the `tzdb` referred to by the iterator following
-> `p`.
->
-> *Ensures:* No pointers, references, or iterators are invalidated
-> except those referring to the erased `tzdb`.
->
-> \[*Note 21*: It is not possible to erase the `tzdb` referred to by
-> `begin()`. — *end note*\]
->
-> *Returns:* An iterator pointing to the element following the one that
-> was erased, or `end()` if no such element exists.
->
-> *Throws:* Nothing.
+*Preconditions:* The iterator following `p` is dereferenceable.
+
+*Effects:* Erases the `tzdb` referred to by the iterator following `p`.
+
+*Ensures:* No pointers, references, or iterators are invalidated except
+those referring to the erased `tzdb`.
+
+\[*Note 5*: It is not possible to erase the `tzdb` referred to by
+`begin()`. — *end note*\]
+
+*Returns:* An iterator pointing to the element following the one that
+was erased, or `end()` if no such element exists.
+
+*Throws:* Nothing.
 
 ``` cpp
 const_iterator begin() const noexcept;
 ```
 
-> *Returns:* An iterator referring to the first `tzdb` in the container.
+*Returns:* An iterator referring to the first `tzdb` in the container.
 
 ``` cpp
 const_iterator end() const noexcept;
 ```
 
-> *Returns:* An iterator referring to the position one past the last
-> `tzdb` in the container.
+*Returns:* An iterator referring to the position one past the last
+`tzdb` in the container.
 
 ``` cpp
 const_iterator cbegin() const noexcept;
 ```
 
-> *Returns:* `begin()`.
+*Returns:* `begin()`.
 
 ``` cpp
 const_iterator cend() const noexcept;
 ```
 
-> *Returns:* `end()`.
+*Returns:* `end()`.
 
 #### Time zone database access <a id="time.zone.db.access">[[time.zone.db.access]]</a>
 
@@ -6354,39 +6342,39 @@ const_iterator cend() const noexcept;
 tzdb_list& get_tzdb_list();
 ```
 
-> *Effects:* If this is the first access to the time zone database,
-> initializes the database. If this call initializes the database, the
-> resulting database will be a `tzdb_list` holding a single initialized
-> `tzdb`.
->
-> *Synchronization:* It is safe to call this function from multiple
-> threads at one time.
->
-> *Returns:* A reference to the database.
->
-> *Throws:* `runtime_error` if for any reason a reference cannot be
-> returned to a valid `tzdb_list` containing one or more valid `tzdb`s.
+*Effects:* If this is the first access to the time zone database,
+initializes the database. If this call initializes the database, the
+resulting database will be a `tzdb_list` holding a single initialized
+`tzdb`.
+
+*Synchronization:* It is safe to call this function from multiple
+threads at one time.
+
+*Returns:* A reference to the database.
+
+*Throws:* `runtime_error` if for any reason a reference cannot be
+returned to a valid `tzdb_list` containing one or more valid `tzdb`s.
 
 ``` cpp
 const tzdb& get_tzdb();
 ```
 
-> *Returns:* `get_tzdb_list().front()`.
+*Returns:* `get_tzdb_list().front()`.
 
 ``` cpp
 const time_zone* locate_zone(string_view tz_name);
 ```
 
-> *Returns:* `get_tzdb().locate_zone(tz_name)`.
->
-> \[*Note 22*: The time zone database will be initialized if this is the
-> first reference to the database. — *end note*\]
+*Returns:* `get_tzdb().locate_zone(tz_name)`.
+
+\[*Note 6*: The time zone database will be initialized if this is the
+first reference to the database. — *end note*\]
 
 ``` cpp
 const time_zone* current_zone();
 ```
 
-> *Returns:* `get_tzdb().current_zone()`.
+*Returns:* `get_tzdb().current_zone()`.
 
 #### Remote time zone database support <a id="time.zone.db.remote">[[time.zone.db.remote]]</a>
 
@@ -6402,30 +6390,29 @@ the *remote time zone database*.
 const tzdb& reload_tzdb();
 ```
 
-> *Effects:* This function first checks the version of the remote time
-> zone database. If the versions of the local and remote databases are
-> the same, there are no effects. Otherwise the remote database is
-> pushed to the front of the `tzdb_list` accessed by `get_tzdb_list()`.
->
-> *Synchronization:* This function is thread-safe with respect to
-> `get_tzdb_list().front()` and `get_tzdb_list().erase_after()`.
->
-> *Ensures:* No pointers, references, or iterators are invalidated.
->
-> *Returns:* `get_tzdb_list().front()`.
->
-> *Throws:* `runtime_error` if for any reason a reference cannot be
-> returned to a valid `tzdb`.
+*Effects:* This function first checks the version of the remote time
+zone database. If the versions of the local and remote databases are the
+same, there are no effects. Otherwise the remote database is pushed to
+the front of the `tzdb_list` accessed by `get_tzdb_list()`.
+
+*Synchronization:* This function is thread-safe with respect to
+`get_tzdb_list().front()` and `get_tzdb_list().erase_after()`.
+
+*Ensures:* No pointers, references, or iterators are invalidated.
+
+*Returns:* `get_tzdb_list().front()`.
+
+*Throws:* `runtime_error` if for any reason a reference cannot be
+returned to a valid `tzdb`.
 
 ``` cpp
 string remote_version();
 ```
 
-> *Returns:* The latest remote database version.
->
-> \[*Note 23*: This can be compared with `get_tzdb().version` to
-> discover if the local and remote databases are
-> equivalent. — *end note*\]
+*Returns:* The latest remote database version.
+
+\[*Note 7*: This can be compared with `get_tzdb().version` to discover
+if the local and remote databases are equivalent. — *end note*\]
 
 ### Exception classes <a id="time.zone.exception">[[time.zone.exception]]</a>
 
@@ -6450,48 +6437,48 @@ template<class Duration>
   nonexistent_local_time(const local_time<Duration>& tp, const local_info& i);
 ```
 
-> *Preconditions:* `i.result == local_info::nonexistent` is `true`.
->
-> *Effects:* Initializes the base class with a sequence of `char`
-> equivalent to that produced by `os.str()` initialized as shown below:
->
-> ``` cpp
-> ostringstream os;
-> os << tp << " is in a gap between\n"
->    << local_seconds{i.first.end.time_since_epoch()} + i.first.offset << ' '
->    << i.first.abbrev << " and\n"
->    << local_seconds{i.second.begin.time_since_epoch()} + i.second.offset << ' '
->    << i.second.abbrev
->    << " which are both equivalent to\n"
->    << i.first.end << " UTC";
-> ```
->
-> \[*Example 16*:
->
->     #include <chrono>
->     #include <iostream>
->
->     int main() {
->       using namespace std::chrono;
->       try {
->         auto zt = zoned_time{"America/New_York",
->                              local_days{Sunday[2]/March/2016} + 2h + 30min};
->       } catch (const nonexistent_local_time& e) {
->         std::cout << e.what() << '\n';
->       }
->     }
->
-> Produces the output:
->
-> <div class="outputblock">
->
-> 2016-03-13 02:30:00 is in a gap between 2016-03-13 02:00:00 EST and
-> 2016-03-13 03:00:00 EDT which are both equivalent to 2016-03-13
-> 07:00:00 UTC
->
-> </div>
->
-> — *end example*\]
+*Preconditions:* `i.result == local_info::nonexistent` is `true`.
+
+*Effects:* Initializes the base class with a sequence of `char`
+equivalent to that produced by `os.str()` initialized as shown below:
+
+``` cpp
+ostringstream os;
+os << tp << " is in a gap between\n"
+   << local_seconds{i.first.end.time_since_epoch()} + i.first.offset << ' '
+   << i.first.abbrev << " and\n"
+   << local_seconds{i.second.begin.time_since_epoch()} + i.second.offset << ' '
+   << i.second.abbrev
+   << " which are both equivalent to\n"
+   << i.first.end << " UTC";
+```
+
+\[*Example 1*:
+
+    #include <chrono>
+    #include <iostream>
+
+    int main() {
+      using namespace std::chrono;
+      try {
+        auto zt = zoned_time{"America/New_York",
+                             local_days{Sunday[2]/March/2016} + 2h + 30min};
+      } catch (const nonexistent_local_time& e) {
+        std::cout << e.what() << '\n';
+      }
+    }
+
+Produces the output:
+
+<div class="outputblock">
+
+2016-03-13 02:30:00 is in a gap between 2016-03-13 02:00:00 EST and
+2016-03-13 03:00:00 EDT which are both equivalent to 2016-03-13 07:00:00
+UTC
+
+</div>
+
+— *end example*\]
 
 #### Class `ambiguous_local_time` <a id="time.zone.exception.ambig">[[time.zone.exception.ambig]]</a>
 
@@ -6514,46 +6501,46 @@ template<class Duration>
   ambiguous_local_time(const local_time<Duration>& tp, const local_info& i);
 ```
 
-> *Preconditions:* `i.result == local_info::ambiguous` is `true`.
->
-> *Effects:* Initializes the base class with a sequence of `char`
-> equivalent to that produced by `os.str()` initialized as shown below:
->
-> ``` cpp
-> ostringstream os;
-> os << tp << " is ambiguous.  It could be\n"
->    << tp << ' ' << i.first.abbrev << " == "
->    << tp - i.first.offset << " UTC or\n"
->    << tp << ' ' << i.second.abbrev  << " == "
->    << tp - i.second.offset  << " UTC";
-> ```
->
-> \[*Example 17*:
->
->     #include <chrono>
->     #include <iostream>
->
->     int main() {
->       using namespace std::chrono;
->       try {
->         auto zt = zoned_time{"America/New_York",
->                              local_days{Sunday[1]/November/2016} + 1h + 30min};
->       } catch (const ambiguous_local_time& e) {
->         std::cout << e.what() << '\n';
->       }
->     }
->
-> Produces the output:
->
-> <div class="outputblock">
->
-> 2016-11-06 01:30:00 is ambiguous. It could be 2016-11-06 01:30:00 EDT
-> == 2016-11-06 05:30:00 UTC or 2016-11-06 01:30:00 EST == 2016-11-06
-> 06:30:00 UTC
->
-> </div>
->
-> — *end example*\]
+*Preconditions:* `i.result == local_info::ambiguous` is `true`.
+
+*Effects:* Initializes the base class with a sequence of `char`
+equivalent to that produced by `os.str()` initialized as shown below:
+
+``` cpp
+ostringstream os;
+os << tp << " is ambiguous.  It could be\n"
+   << tp << ' ' << i.first.abbrev << " == "
+   << tp - i.first.offset << " UTC or\n"
+   << tp << ' ' << i.second.abbrev  << " == "
+   << tp - i.second.offset  << " UTC";
+```
+
+\[*Example 2*:
+
+    #include <chrono>
+    #include <iostream>
+
+    int main() {
+      using namespace std::chrono;
+      try {
+        auto zt = zoned_time{"America/New_York",
+                             local_days{Sunday[1]/November/2016} + 1h + 30min};
+      } catch (const ambiguous_local_time& e) {
+        std::cout << e.what() << '\n';
+      }
+    }
+
+Produces the output:
+
+<div class="outputblock">
+
+2016-11-06 01:30:00 is ambiguous. It could be 2016-11-06 01:30:00 EDT ==
+2016-11-06 05:30:00 UTC or 2016-11-06 01:30:00 EST == 2016-11-06
+06:30:00 UTC
+
+</div>
+
+— *end example*\]
 
 ### Information classes <a id="time.zone.info">[[time.zone.info]]</a>
 
@@ -6576,7 +6563,7 @@ A `sys_info` object can be obtained from the combination of a
 obtained from a `zoned_time`, which is effectively a pair of a
 `time_zone` and `sys_time`.
 
-\[*Note 2*: This type provides a low-level interface to time zone
+\[*Note 8*: This type provides a low-level interface to time zone
 information. Typical conversions from `sys_time` to `local_time` will
 use this class implicitly, not explicitly. — *end note*\]
 
@@ -6615,10 +6602,10 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const sys_info& r);
 ```
 
-> *Effects:* Streams out the `sys_info` object `r` in an unspecified
-> format.
->
-> *Returns:* `os`.
+*Effects:* Streams out the `sys_info` object `r` in an unspecified
+format.
+
+*Returns:* `os`.
 
 #### Class `local_info` <a id="time.zone.info.local">[[time.zone.info.local]]</a>
 
@@ -6636,7 +6623,7 @@ namespace std::chrono {
 }
 ```
 
-\[*Note 3*: This type provides a low-level interface to time zone
+\[*Note 9*: This type provides a low-level interface to time zone
 information. Typical conversions from `local_time` to `sys_time` will
 use this class implicitly, not explicitly. — *end note*\]
 
@@ -6664,10 +6651,10 @@ template<class charT, class traits>
     operator<<(basic_ostream<charT, traits>& os, const local_info& r);
 ```
 
-> *Effects:* Streams out the `local_info` object `r` in an unspecified
-> format.
->
-> *Returns:* `os`.
+*Effects:* Streams out the `local_info` object `r` in an unspecified
+format.
+
+*Returns:* `os`.
 
 ### Class `time_zone` <a id="time.zone.timezone">[[time.zone.timezone]]</a>
 
@@ -6706,8 +6693,8 @@ A `time_zone` represents all time zone transitions for a specific
 geographic area. `time_zone` construction is unspecified, and performed
 as part of database initialization.
 
-\[*Note 4*: `const time_zone` objects can be accessed via functions such
-as `locate_zone`. — *end note*\]
+\[*Note 10*: `const time_zone` objects can be accessed via functions
+such as `locate_zone`. — *end note*\]
 
 #### Member functions <a id="time.zone.members">[[time.zone.members]]</a>
 
@@ -6715,24 +6702,24 @@ as `locate_zone`. — *end note*\]
 string_view name() const noexcept;
 ```
 
-> *Returns:* The name of the `time_zone`.
->
-> \[*Example 18*: `"America/New_York"`. — *end example*\]
+*Returns:* The name of the `time_zone`.
+
+\[*Example 3*: `"America/New_York"`. — *end example*\]
 
 ``` cpp
 template<class Duration>
   sys_info get_info(const sys_time<Duration>& st) const;
 ```
 
-> *Returns:* A `sys_info` `i` for which `st` is in the range
-> \[`i.begin`, `i.end`).
+*Returns:* A `sys_info` `i` for which `st` is in the range \[`i.begin`,
+`i.end`).
 
 ``` cpp
 template<class Duration>
   local_info get_info(const local_time<Duration>& tp) const;
 ```
 
-> *Returns:* A `local_info` for `tp`.
+*Returns:* A `local_info` for `tp`.
 
 ``` cpp
 template<class Duration>
@@ -6740,14 +6727,13 @@ template<class Duration>
     to_sys(const local_time<Duration>& tp) const;
 ```
 
-> *Returns:* A `sys_time` that is at least as fine as `seconds`, and
-> will be finer if the argument `tp` has finer precision. This
-> `sys_time` is the UTC equivalent of `tp` according to the rules of
-> this `time_zone`.
->
-> *Throws:* If the conversion from `tp` to a `sys_time` is ambiguous,
-> throws `ambiguous_local_time`. If the `tp` represents a non-existent
-> time between two UTC `time_points`, throws `nonexistent_local_time`.
+*Returns:* A `sys_time` that is at least as fine as `seconds`, and will
+be finer if the argument `tp` has finer precision. This `sys_time` is
+the UTC equivalent of `tp` according to the rules of this `time_zone`.
+
+*Throws:* If the conversion from `tp` to a `sys_time` is ambiguous,
+throws `ambiguous_local_time`. If the `tp` represents a non-existent
+time between two UTC `time_points`, throws `nonexistent_local_time`.
 
 ``` cpp
 template<class Duration>
@@ -6755,15 +6741,15 @@ template<class Duration>
     to_sys(const local_time<Duration>& tp, choose z) const;
 ```
 
-> *Returns:* A `sys_time` that is at least as fine as `seconds`, and
-> will be finer if the argument `tp` has finer precision. This
-> `sys_time` is the UTC equivalent of `tp` according to the rules of
-> this `time_zone`. If the conversion from `tp` to a `sys_time` is
-> ambiguous, returns the earlier `sys_time` if `z == choose::earliest`,
-> and returns the later `sys_time` if `z == choose::latest`. If the `tp`
-> represents a non-existent time between two UTC `time_points`, then the
-> two UTC `time_points` will be the same, and that UTC `time_point` will
-> be returned.
+*Returns:* A `sys_time` that is at least as fine as `seconds`, and will
+be finer if the argument `tp` has finer precision. This `sys_time` is
+the UTC equivalent of `tp` according to the rules of this `time_zone`.
+If the conversion from `tp` to a `sys_time` is ambiguous, returns the
+earlier `sys_time` if `z == choose::earliest`, and returns the later
+`sys_time` if `z == choose::latest`. If the `tp` represents a
+non-existent time between two UTC `time_points`, then the two UTC
+`time_points` will be the same, and that UTC `time_point` will be
+returned.
 
 ``` cpp
 template<class Duration>
@@ -6771,7 +6757,7 @@ template<class Duration>
     to_local(const sys_time<Duration>& tp) const;
 ```
 
-> *Returns:* The `local_time` associated with `tp` and this `time_zone`.
+*Returns:* The `local_time` associated with `tp` and this `time_zone`.
 
 #### Non-member functions <a id="time.zone.nonmembers">[[time.zone.nonmembers]]</a>
 
@@ -6779,13 +6765,13 @@ template<class Duration>
 bool operator==(const time_zone& x, const time_zone& y) noexcept;
 ```
 
-> *Returns:* `x.name() == y.name()`.
+*Returns:* `x.name() == y.name()`.
 
 ``` cpp
 strong_ordering operator<=>(const time_zone& x, const time_zone& y) noexcept;
 ```
 
-> *Returns:* `x.name() <=> y.name()`.
+*Returns:* `x.name() <=> y.name()`.
 
 ### Class template `zoned_traits` <a id="time.zone.zonedtraits">[[time.zone.zonedtraits]]</a>
 
@@ -6813,13 +6799,13 @@ namespace std::chrono {
 static const time_zone* default_zone();
 ```
 
-> *Returns:* `std::chrono::locate_zone("UTC")`.
+*Returns:* `std::chrono::locate_zone("UTC")`.
 
 ``` cpp
 static const time_zone* locate_zone(string_view name);
 ```
 
-> *Returns:* `std::chrono::locate_zone(name)`.
+*Returns:* `std::chrono::locate_zone(name)`.
 
 ### Class template `zoned_time` <a id="time.zone.zonedtime">[[time.zone.zonedtime]]</a>
 
@@ -6933,179 +6919,178 @@ deduction [[over.match.class.deduct]].
 zoned_time();
 ```
 
-> *Constraints:* `traits::default_zone()` is a well-formed expression.
->
-> *Effects:* Initializes `zone_` with `traits::default_zone()` and
-> default constructs `tp_`.
+*Constraints:* `traits::default_zone()` is a well-formed expression.
+
+*Effects:* Initializes `zone_` with `traits::default_zone()` and default
+constructs `tp_`.
 
 ``` cpp
 zoned_time(const sys_time<Duration>& st);
 ```
 
-> *Constraints:* `traits::default_zone()` is a well-formed expression.
->
-> *Effects:* Initializes `zone_` with `traits::default_zone()` and `tp_`
-> with `st`.
+*Constraints:* `traits::default_zone()` is a well-formed expression.
+
+*Effects:* Initializes `zone_` with `traits::default_zone()` and `tp_`
+with `st`.
 
 ``` cpp
 explicit zoned_time(TimeZonePtr z);
 ```
 
-> *Preconditions:* `z` refers to a time zone.
->
-> *Effects:* Initializes `zone_` with `std::move(z)` and default
-> constructs `tp_`.
+*Preconditions:* `z` refers to a time zone.
+
+*Effects:* Initializes `zone_` with `std::move(z)` and default
+constructs `tp_`.
 
 ``` cpp
 explicit zoned_time(string_view name);
 ```
 
-> *Constraints:* `traits::locate_zone(string_view{})` is a well-formed
-> expression and `zoned_time` is constructible from the return type of
-> `traits::locate_zone(string_view{})`.
->
-> *Effects:* Initializes `zone_` with `traits::locate_zone(name)` and
-> default constructs `tp_`.
+*Constraints:* `traits::locate_zone(string_view{})` is a well-formed
+expression and `zoned_time` is constructible from the return type of
+`traits::locate_zone(string_view{})`.
+
+*Effects:* Initializes `zone_` with `traits::locate_zone(name)` and
+default constructs `tp_`.
 
 ``` cpp
 template<class Duration2>
   zoned_time(const zoned_time<Duration2, TimeZonePtr>& y);
 ```
 
-> *Constraints:*
-> `is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
->
-> *Effects:* Initializes `zone_` with `y.zone_` and `tp_` with `y.tp_`.
+*Constraints:*
+`is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
+
+*Effects:* Initializes `zone_` with `y.zone_` and `tp_` with `y.tp_`.
 
 ``` cpp
 zoned_time(TimeZonePtr z, const sys_time<Duration>& st);
 ```
 
-> *Preconditions:* `z` refers to a time zone.
->
-> *Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
-> `st`.
+*Preconditions:* `z` refers to a time zone.
+
+*Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with `st`.
 
 ``` cpp
 zoned_time(string_view name, const sys_time<Duration>& st);
 ```
 
-> *Constraints:* `zoned_time` is constructible from the return type of
-> `traits::locate_zone(name)` and `st`.
->
-> *Effects:* Equivalent to construction with
-> `{traits::locate_zone(name), st}`.
+*Constraints:* `zoned_time` is constructible from the return type of
+`traits::locate_zone(name)` and `st`.
+
+*Effects:* Equivalent to construction with
+`{traits::locate_zone(name), st}`.
 
 ``` cpp
 zoned_time(TimeZonePtr z, const local_time<Duration>& tp);
 ```
 
-> *Constraints:*
->
-> ``` cpp
-> is_convertible_v<
->   decltype(declval<TimeZonePtr&>()->to_sys(local_time<Duration>{})),
->   sys_time<duration>>
-> ```
->
-> is `true`.
->
-> *Preconditions:* `z` refers to a time zone.
->
-> *Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
-> `zone_->to_sys(tp)`.
+*Constraints:*
+
+``` cpp
+is_convertible_v<
+  decltype(declval<TimeZonePtr&>()->to_sys(local_time<Duration>{})),
+  sys_time<duration>>
+```
+
+is `true`.
+
+*Preconditions:* `z` refers to a time zone.
+
+*Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
+`zone_->to_sys(tp)`.
 
 ``` cpp
 zoned_time(string_view name, const local_time<Duration>& tp);
 ```
 
-> *Constraints:* `zoned_time` is constructible from the return type of
-> `traits::locate_zone(name)` and `tp`.
->
-> *Effects:* Equivalent to construction with
-> `{traits::locate_zone(name), tp}`.
+*Constraints:* `zoned_time` is constructible from the return type of
+`traits::locate_zone(name)` and `tp`.
+
+*Effects:* Equivalent to construction with
+`{traits::locate_zone(name), tp}`.
 
 ``` cpp
 zoned_time(TimeZonePtr z, const local_time<Duration>& tp, choose c);
 ```
 
-> *Constraints:*
->
-> ``` cpp
-> is_convertible_v<
->   decltype(declval<TimeZonePtr&>()->to_sys(local_time<Duration>{}, choose::earliest)),
->   sys_time<duration>>
-> ```
->
-> is `true`.
->
-> *Preconditions:* `z` refers to a time zone.
->
-> *Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
-> `zone_->to_sys(tp, c)`.
+*Constraints:*
+
+``` cpp
+is_convertible_v<
+  decltype(declval<TimeZonePtr&>()->to_sys(local_time<Duration>{}, choose::earliest)),
+  sys_time<duration>>
+```
+
+is `true`.
+
+*Preconditions:* `z` refers to a time zone.
+
+*Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
+`zone_->to_sys(tp, c)`.
 
 ``` cpp
 zoned_time(string_view name, const local_time<Duration>& tp, choose c);
 ```
 
-> *Constraints:* `zoned_time` is constructible from the return type of
-> `traits::locate_zone(name)`, `local_time<Duration>`, and `choose`.
->
-> *Effects:* Equivalent to construction with
-> `{traits::locate_zone(name), tp, c}`.
+*Constraints:* `zoned_time` is constructible from the return type of
+`traits::locate_zone(name)`, `local_time<Duration>`, and `choose`.
+
+*Effects:* Equivalent to construction with
+`{traits::locate_zone(name), tp, c}`.
 
 ``` cpp
 template<class Duration2, class TimeZonePtr2>
   zoned_time(TimeZonePtr z, const zoned_time<Duration2, TimeZonePtr2>& y);
 ```
 
-> *Constraints:*
-> `is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
->
-> *Preconditions:* `z` refers to a valid time zone.
->
-> *Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
-> `y.tp_`.
+*Constraints:*
+`is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
+
+*Preconditions:* `z` refers to a valid time zone.
+
+*Effects:* Initializes `zone_` with `std::move(z)` and `tp_` with
+`y.tp_`.
 
 ``` cpp
 template<class Duration2, class TimeZonePtr2>
   zoned_time(TimeZonePtr z, const zoned_time<Duration2, TimeZonePtr2>& y, choose);
 ```
 
-> *Constraints:*
-> `is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
->
-> *Preconditions:* `z` refers to a valid time zone.
->
-> *Effects:* Equivalent to construction with `{z, y}`.
->
-> \[*Note 24*: The `choose` parameter has no effect. — *end note*\]
+*Constraints:*
+`is_convertible_v<sys_time<Duration2>, sys_time<Duration>>` is `true`.
+
+*Preconditions:* `z` refers to a valid time zone.
+
+*Effects:* Equivalent to construction with `{z, y}`.
+
+\[*Note 11*: The `choose` parameter has no effect. — *end note*\]
 
 ``` cpp
 template<class Duration2, class TimeZonePtr2>
   zoned_time(string_view name, const zoned_time<Duration2, TimeZonePtr2>& y);
 ```
 
-> *Constraints:* `zoned_time` is constructible from the return type of
-> `traits::locate_zone(name)` and the type
-> `zoned_time<Duration2, TimeZonePtr2>`.
->
-> *Effects:* Equivalent to construction with
-> `{traits::locate_zone(name), y}`.
+*Constraints:* `zoned_time` is constructible from the return type of
+`traits::locate_zone(name)` and the type
+`zoned_time<Duration2, TimeZonePtr2>`.
+
+*Effects:* Equivalent to construction with
+`{traits::locate_zone(name), y}`.
 
 ``` cpp
 template<class Duration2, class TimeZonePtr2>
   zoned_time(string_view name, const zoned_time<Duration2, TimeZonePtr2>& y, choose c);
 ```
 
-> *Constraints:* `zoned_time` is constructible from the return type of
-> `traits::locate_zone(name)`, the type
-> `zoned_time<Duration2, TimeZonePtr2>`, and the type `choose`.
->
-> *Effects:* Equivalent to construction with
-> `{traits::locate_zone(name), y, c}`.
->
-> \[*Note 25*: The `choose` parameter has no effect. — *end note*\]
+*Constraints:* `zoned_time` is constructible from the return type of
+`traits::locate_zone(name)`, the type
+`zoned_time<Duration2, TimeZonePtr2>`, and the type `choose`.
+
+*Effects:* Equivalent to construction with
+`{traits::locate_zone(name), y, c}`.
+
+\[*Note 12*: The `choose` parameter has no effect. — *end note*\]
 
 #### Member functions <a id="time.zone.zonedtime.members">[[time.zone.zonedtime.members]]</a>
 
@@ -7113,55 +7098,55 @@ template<class Duration2, class TimeZonePtr2>
 zoned_time& operator=(const sys_time<Duration>& st);
 ```
 
-> *Effects:* After assignment, `get_sys_time() == st`. This assignment
-> has no effect on the return value of `get_time_zone()`.
->
-> *Returns:* `*this`.
+*Effects:* After assignment, `get_sys_time() == st`. This assignment has
+no effect on the return value of `get_time_zone()`.
+
+*Returns:* `*this`.
 
 ``` cpp
 zoned_time& operator=(const local_time<Duration>& lt);
 ```
 
-> *Effects:* After assignment, `get_local_time() == lt`. This assignment
-> has no effect on the return value of `get_time_zone()`.
->
-> *Returns:* `*this`.
+*Effects:* After assignment, `get_local_time() == lt`. This assignment
+has no effect on the return value of `get_time_zone()`.
+
+*Returns:* `*this`.
 
 ``` cpp
 operator sys_time<duration>() const;
 ```
 
-> *Returns:* `get_sys_time()`.
+*Returns:* `get_sys_time()`.
 
 ``` cpp
 explicit operator local_time<duration>() const;
 ```
 
-> *Returns:* `get_local_time()`.
+*Returns:* `get_local_time()`.
 
 ``` cpp
 TimeZonePtr get_time_zone() const;
 ```
 
-> *Returns:* `zone_`.
+*Returns:* `zone_`.
 
 ``` cpp
 local_time<duration> get_local_time() const;
 ```
 
-> *Returns:* `zone_->to_local(tp_)`.
+*Returns:* `zone_->to_local(tp_)`.
 
 ``` cpp
 sys_time<duration> get_sys_time() const;
 ```
 
-> *Returns:* `tp_`.
+*Returns:* `tp_`.
 
 ``` cpp
 sys_info get_info() const;
 ```
 
-> *Returns:* `zone_->get_info(tp_)`.
+*Returns:* `zone_->get_info(tp_)`.
 
 #### Non-member functions <a id="time.zone.zonedtime.nonmembers">[[time.zone.zonedtime.nonmembers]]</a>
 
@@ -7171,7 +7156,7 @@ template<class Duration1, class Duration2, class TimeZonePtr>
                   const zoned_time<Duration2, TimeZonePtr>& y);
 ```
 
-> *Returns:* `x.zone_ == y.zone_ && x.tp_ == y.tp_`.
+*Returns:* `x.zone_ == y.zone_ && x.tp_ == y.tp_`.
 
 ``` cpp
 template<class charT, class traits, class Duration, class TimeZonePtr>
@@ -7180,11 +7165,11 @@ template<class charT, class traits, class Duration, class TimeZonePtr>
                const zoned_time<Duration, TimeZonePtr>& t);
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T %Z}"), t);
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T %Z}"), t);
+```
 
 ### Class `leap_second` <a id="time.zone.leap">[[time.zone.leap]]</a>
 
@@ -7209,7 +7194,7 @@ Objects of type `leap_second` representing the date and value of the
 leap second insertions are constructed and stored in the time zone
 database when initialized.
 
-\[*Example 1*:
+\[*Example 4*:
 
 ``` cpp
 for (auto& l : get_tzdb().leap_seconds)
@@ -7227,17 +7212,17 @@ Produces the output:
 constexpr sys_seconds date() const noexcept;
 ```
 
-> *Returns:* The date and time at which the leap second was inserted.
+*Returns:* The date and time at which the leap second was inserted.
 
 ``` cpp
 constexpr seconds value() const noexcept;
 ```
 
-> *Returns:* `+1s` to indicate a positive leap second or `-1s` to
-> indicate a negative leap second.
->
-> \[*Note 26*: All leap seconds inserted up through 2022 were positive
-> leap seconds. — *end note*\]
+*Returns:* `+1s` to indicate a positive leap second or `-1s` to indicate
+a negative leap second.
+
+\[*Note 13*: All leap seconds inserted up through 2022 were positive
+leap seconds. — *end note*\]
 
 #### Non-member functions <a id="time.zone.leap.nonmembers">[[time.zone.leap.nonmembers]]</a>
 
@@ -7245,76 +7230,76 @@ constexpr seconds value() const noexcept;
 constexpr bool operator==(const leap_second& x, const leap_second& y) noexcept;
 ```
 
-> *Returns:* `x.date() == y.date()`.
+*Returns:* `x.date() == y.date()`.
 
 ``` cpp
 constexpr strong_ordering operator<=>(const leap_second& x, const leap_second& y) noexcept;
 ```
 
-> *Returns:* `x.date() <=> y.date()`.
+*Returns:* `x.date() <=> y.date()`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator==(const leap_second& x, const sys_time<Duration>& y) noexcept;
 ```
 
-> *Returns:* `x.date() == y`.
+*Returns:* `x.date() == y`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator<(const leap_second& x, const sys_time<Duration>& y) noexcept;
 ```
 
-> *Returns:* `x.date() < y`.
+*Returns:* `x.date() < y`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator<(const sys_time<Duration>& x, const leap_second& y) noexcept;
 ```
 
-> *Returns:* `x < y.date()`.
+*Returns:* `x < y.date()`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator>(const leap_second& x, const sys_time<Duration>& y) noexcept;
 ```
 
-> *Returns:* `y < x`.
+*Returns:* `y < x`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator>(const sys_time<Duration>& x, const leap_second& y) noexcept;
 ```
 
-> *Returns:* `y < x`.
+*Returns:* `y < x`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator<=(const leap_second& x, const sys_time<Duration>& y) noexcept;
 ```
 
-> *Returns:* `!(y < x)`.
+*Returns:* `!(y < x)`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator<=(const sys_time<Duration>& x, const leap_second& y) noexcept;
 ```
 
-> *Returns:* `!(y < x)`.
+*Returns:* `!(y < x)`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator>=(const leap_second& x, const sys_time<Duration>& y) noexcept;
 ```
 
-> *Returns:* `!(x < y)`.
+*Returns:* `!(x < y)`.
 
 ``` cpp
 template<class Duration>
   constexpr bool operator>=(const sys_time<Duration>& x, const leap_second& y) noexcept;
 ```
 
-> *Returns:* `!(x < y)`.
+*Returns:* `!(x < y)`.
 
 ``` cpp
 template<class Duration>
@@ -7322,7 +7307,7 @@ template<class Duration>
   constexpr auto operator<=>(const leap_second& x, const sys_time<Duration>& y) noexcept;
 ```
 
-> *Returns:* `x.date() <=> y`.
+*Returns:* `x.date() <=> y`.
 
 ### Class `time_zone_link` <a id="time.zone.link">[[time.zone.link]]</a>
 
@@ -7353,14 +7338,14 @@ initialized.
 string_view name() const noexcept;
 ```
 
-> *Returns:* The alternative name for the time zone.
+*Returns:* The alternative name for the time zone.
 
 ``` cpp
 string_view target() const noexcept;
 ```
 
-> *Returns:* The name of the `time_zone` for which this `time_zone_link`
-> provides an alternative name.
+*Returns:* The name of the `time_zone` for which this `time_zone_link`
+provides an alternative name.
 
 #### Non-member functions <a id="time.zone.link.nonmembers">[[time.zone.link.nonmembers]]</a>
 
@@ -7368,24 +7353,25 @@ string_view target() const noexcept;
 bool operator==(const time_zone_link& x, const time_zone_link& y) noexcept;
 ```
 
-> *Returns:* `x.name() == y.name()`.
+*Returns:* `x.name() == y.name()`.
 
 ``` cpp
 strong_ordering operator<=>(const time_zone_link& x, const time_zone_link& y) noexcept;
 ```
 
-> *Returns:* `x.name() <=> y.name()`.
+*Returns:* `x.name() <=> y.name()`.
 
 ## Formatting <a id="time.format">[[time.format]]</a>
 
 Each `formatter` [[format.formatter]] specialization in the chrono
 library [[time.syn]] meets the requirements [[formatter.requirements]].
 The `parse` member functions of these formatters interpret the format
-specification as a according to the following syntax:
+specification as a *chrono-format-spec* according to the following
+syntax:
 
 ``` bnf
 \fmtnontermdef{chrono-format-spec}
-    [fill-and-align] [width] [precision] ['L'] [chrono-specs]
+    fill-and-align_opt width_opt precision_opt 'L_opt' chrono-specs_opt
 ```
 
 ``` bnf
@@ -7402,7 +7388,7 @@ specification as a according to the following syntax:
 
 ``` bnf
 \fmtnontermdef{conversion-spec}
-    '%' [modifier] type
+    '%' modifier_opt type
 ```
 
 ``` bnf
@@ -7416,27 +7402,30 @@ specification as a according to the following syntax:
     'p q Q r R S t T u U V w W x X y Y z Z %'
 ```
 
-The productions , , and are described in [[format.string]]. Giving a
-specification in the is valid only for types that are specializations of
+The productions *fill-and-align*, *width*, and *precision* are described
+in [[format.string]]. Giving a *precision* specification in the
+*chrono-format-spec* is valid only for types that are specializations of
 `std::chrono::duration` for which the nested *typedef-name* `rep`
 denotes a floating-point type. For all other types, an exception of type
-`format_error` is thrown if the contains a specification. All ordinary
-multibyte characters represented by are copied unchanged to the output.
+`format_error` is thrown if the *chrono-format-spec* contains a
+*precision* specification. All ordinary multibyte characters represented
+by *literal-char* are copied unchanged to the output.
 
 A *formatting locale* is an instance of `locale` used by a formatting
 function, defined as
 
-- the `"C"` locale if the `L` option is not present in , otherwise
+- the `"C"` locale if the `L` option is not present in
+  *chrono-format-spec*, otherwise
 
 - the locale passed to the formatting function if any, otherwise
 
 - the global locale.
 
-Each conversion specifier is replaced by appropriate characters as
-described in [[time.format.spec]]; the formats specified in ISO
-8601:2004 shall be used where so described. Some of the conversion
-specifiers depend on the formatting locale. If the string literal
-encoding is a Unicode encoding form and the locale is among an
+Each conversion specifier *conversion-spec* is replaced by appropriate
+characters as described in [[time.format.spec]]; the formats specified
+in ISO 8601:2004 shall be used where so described. Some of the
+conversion specifiers depend on the formatting locale. If the string
+literal encoding is a Unicode encoding form and the locale is among an
 *implementation-defined* set of locales, each replacement that depends
 on the locale is performed as if the replacement character sequence is
 converted to the string literal encoding. If the formatted object does
@@ -7459,8 +7448,8 @@ the information is available, the conversion specifiers `%Z` and `%z`
 will format this information (respectively).
 
 \[*Note 1*: If the information is not available and a `%Z` or `%z`
-conversion specifier appears in the , an exception of type
-`format_error` is thrown, as described above. — *end note*\]
+conversion specifier appears in the *chrono-format-spec*, an exception
+of type `format_error` is thrown, as described above. — *end note*\]
 
 If the type being formatted does not contain the information that the
 format flag needs, an exception of type `format_error` is thrown.
@@ -7515,11 +7504,11 @@ day elapsed since midnight.
 | . If the offset is zero, `+0000` is used. The modified commands `\%Ez` and `\%Oz` insert a `:` between the hours and minutes: `-04:30`. If the offset information is not available, an exception of type `format_error` is thrown. |
 | `\%Z` | The time zone abbreviation. If the time zone abbreviation is not available, an exception of type `format_error` is thrown. |
 | `\%\%` | A `\%` character. |
-If the is omitted, the chrono object is formatted as if by streaming it
-to `basic_ostringstream<charT> os` with the formatting locale imbued and
-copying `os.str()` through the output iterator of the context with
-additional padding and adjustments as specified by the format
-specifiers.
+If the *chrono-specs* is omitted, the chrono object is formatted as if
+by streaming it to `basic_ostringstream<charT> os` with the formatting
+locale imbued and copying `os.str()` through the output iterator of the
+context with additional padding and adjustments as specified by the
+format specifiers.
 
 \[*Example 3*:
 
@@ -7534,74 +7523,73 @@ template<class Duration, class charT>
   struct formatter<chrono::sys_time<Duration>, charT>;
 ```
 
-> *Remarks:* If `%Z` is used, it is replaced with
-> *`STATICALLY-WIDEN`*`<charT>("UTC")`. If `%z` (or a modified variant
-> of `%z`) is used, an offset of `0min` is formatted.
+*Remarks:* If `%Z` is used, it is replaced with
+*`STATICALLY-WIDEN`*`<charT>("UTC")`. If `%z` (or a modified variant of
+`%z`) is used, an offset of `0min` is formatted.
 
 ``` cpp
 template<class Duration, class charT>
   struct formatter<chrono::utc_time<Duration>, charT>;
 ```
 
-> *Remarks:* If `%Z` is used, it is replaced with
-> *`STATICALLY-WIDEN`*`<charT>("UTC")`. If `%z` (or a modified variant
-> of `%z`) is used, an offset of `0min` is formatted. If the argument
-> represents a time during a positive leap second insertion, and if a
-> seconds field is formatted, the integral portion of that format is
-> *`STATICALLY-WIDEN`*`<charT>("60")`.
+*Remarks:* If `%Z` is used, it is replaced with
+*`STATICALLY-WIDEN`*`<charT>("UTC")`. If `%z` (or a modified variant of
+`%z`) is used, an offset of `0min` is formatted. If the argument
+represents a time during a positive leap second insertion, and if a
+seconds field is formatted, the integral portion of that format is
+*`STATICALLY-WIDEN`*`<charT>("60")`.
 
 ``` cpp
 template<class Duration, class charT>
   struct formatter<chrono::tai_time<Duration>, charT>;
 ```
 
-> *Remarks:* If `%Z` is used, it is replaced with
-> *`STATICALLY-WIDEN`*`<charT>("TAI")`. If `%z` (or a modified variant
-> of `%z`) is used, an offset of `0min` is formatted. The date and time
-> formatted are equivalent to those formatted by a `sys_time`
-> initialized with
->
-> ``` cpp
-> sys_time<Duration>{tp.time_since_epoch()} -
->   (sys_days{1970y/January/1} - sys_days{1958y/January/1})
-> ```
+*Remarks:* If `%Z` is used, it is replaced with
+*`STATICALLY-WIDEN`*`<charT>("TAI")`. If `%z` (or a modified variant of
+`%z`) is used, an offset of `0min` is formatted. The date and time
+formatted are equivalent to those formatted by a `sys_time` initialized
+with
+
+``` cpp
+sys_time<Duration>{tp.time_since_epoch()} -
+  (sys_days{1970y/January/1} - sys_days{1958y/January/1})
+```
 
 ``` cpp
 template<class Duration, class charT>
   struct formatter<chrono::gps_time<Duration>, charT>;
 ```
 
-> *Remarks:* If `%Z` is used, it is replaced with
-> *`STATICALLY-WIDEN`*`<charT>("GPS")`. If `%z` (or a modified variant
-> of `%z`) is used, an offset of `0min` is formatted. The date and time
-> formatted are equivalent to those formatted by a `sys_time`
-> initialized with
->
-> ``` cpp
-> sys_time<Duration>{tp.time_since_epoch()} +
->   (sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1})
-> ```
+*Remarks:* If `%Z` is used, it is replaced with
+*`STATICALLY-WIDEN`*`<charT>("GPS")`. If `%z` (or a modified variant of
+`%z`) is used, an offset of `0min` is formatted. The date and time
+formatted are equivalent to those formatted by a `sys_time` initialized
+with
+
+``` cpp
+sys_time<Duration>{tp.time_since_epoch()} +
+  (sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1})
+```
 
 ``` cpp
 template<class Duration, class charT>
   struct formatter<chrono::file_time<Duration>, charT>;
 ```
 
-> *Remarks:* If `%Z` is used, it is replaced with
-> *`STATICALLY-WIDEN`*`<charT>("UTC")`. If `%z` (or a modified variant
-> of `%z`) is used, an offset of `0min` is formatted. The date and time
-> formatted are equivalent to those formatted by a `sys_time`
-> initialized with `clock_cast<system_clock>(t)`, or by a `utc_time`
-> initialized with `clock_cast<utc_clock>(t)`, where `t` is the first
-> argument to `format`.
+*Remarks:* If `%Z` is used, it is replaced with
+*`STATICALLY-WIDEN`*`<charT>("UTC")`. If `%z` (or a modified variant of
+`%z`) is used, an offset of `0min` is formatted. The date and time
+formatted are equivalent to those formatted by a `sys_time` initialized
+with `clock_cast<system_clock>(t)`, or by a `utc_time` initialized with
+`clock_cast<utc_clock>(t)`, where `t` is the first argument to `format`.
 
 ``` cpp
 template<class Duration, class charT>
   struct formatter<chrono::local_time<Duration>, charT>;
 ```
 
-> *Remarks:* If `%Z`, `%z`, or a modified version of `%z` is used, an
-> exception of type `format_error` is thrown.
+*Remarks:* If `%Z`, `%z`, or a modified version of `%z` is used, an
+exception of type `format_error` is thrown.
 
 *local-time-format-t*
 
@@ -7620,7 +7608,7 @@ template<class Duration>
                       const seconds* offset_sec = nullptr);
 ```
 
-> *Returns:* `{time, abbrev, offset_sec}`.
+*Returns:* `{time, abbrev, offset_sec}`.
 
 `chrono::local-time-format-t}`
 
@@ -7629,17 +7617,17 @@ template<class Duration, class charT>
   struct formatter<chrono::local-time-format-t<Duration>, charT>;
 ```
 
-> Let `f` be a *`local-time-format-t`*`<Duration>` object passed to
-> `formatter::format`.
->
-> *Remarks:* If `%Z` is used, it is replaced with `*f.abbrev` if
-> `f.abbrev` is not a null pointer value. If `%Z` is used and `f.abbrev`
-> is a null pointer value, an exception of type `format_error` is
-> thrown. If `%z` (or a modified variant of `%z`) is used, it is
-> formatted with the value of `*f.offset_sec` if `f.offset_sec` is not a
-> null pointer value. If `%z` (or a modified variant of `%z`) is used
-> and `f.offset_sec` is a null pointer value, then an exception of type
-> `format_error` is thrown.
+Let `f` be a *`local-time-format-t`*`<Duration>` object passed to
+`formatter::format`.
+
+*Remarks:* If `%Z` is used, it is replaced with `*f.abbrev` if
+`f.abbrev` is not a null pointer value. If `%Z` is used and `f.abbrev`
+is a null pointer value, an exception of type `format_error` is thrown.
+If `%z` (or a modified variant of `%z`) is used, it is formatted with
+the value of `*f.offset_sec` if `f.offset_sec` is not a null pointer
+value. If `%z` (or a modified variant of `%z`) is used and
+`f.offset_sec` is a null pointer value, then an exception of type
+`format_error` is thrown.
 
 ``` cpp
 template<class Duration, class TimeZonePtr, class charT>
@@ -7657,13 +7645,13 @@ template<class FormatContext>
     format(const chrono::zoned_time<Duration, TimeZonePtr>& tp, FormatContext& ctx) const;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> sys_info info = tp.get_info();
-> return formatter<chrono::local-time-format-t<Duration>, charT>::
->          format({tp.get_local_time(), &info.abbrev, &info.offset}, ctx);
-> ```
+*Effects:* Equivalent to:
+
+``` cpp
+sys_info info = tp.get_info();
+return formatter<chrono::local-time-format-t<Duration>, charT>::
+         format({tp.get_local_time(), &info.abbrev, &info.offset}, ctx);
+```
 
 ## Parsing <a id="time.parse">[[time.parse]]</a>
 
@@ -7688,21 +7676,20 @@ template<class charT, class traits, class Alloc, class Parsable>
     parse(const basic_string<charT, traits, Alloc>& fmt, Parsable& tp);
 ```
 
-> Let F be `fmt` for the first overload and `fmt.c_str()` for the second
-> overload. Let `traits` be `char_traits<charT>` for the first overload.
->
-> *Constraints:* The expression
->
-> ``` cpp
-> from_stream(declval<basic_istream<charT, traits>&>(), $F$, tp)
-> ```
->
-> is well-formed when treated as an unevaluated
-> operand [[term.unevaluated.operand]].
->
-> *Returns:* A manipulator such that the expression
-> `is >> parse(fmt, tp)` has type `I`, has value `is`, and calls
-> `from_stream(is, `F`, tp)`.
+Let F be `fmt` for the first overload and `fmt.c_str()` for the second
+overload. Let `traits` be `char_traits<charT>` for the first overload.
+
+*Constraints:* The expression
+
+``` cpp
+from_stream(declval<basic_istream<charT, traits>&>(), $F$, tp)
+```
+
+is well-formed when treated as an unevaluated
+operand [[term.unevaluated.operand]].
+
+*Returns:* A manipulator such that the expression `is >> parse(fmt, tp)`
+has type `I`, has value `is`, and calls `from_stream(is, `F`, tp)`.
 
 ``` cpp
 template<class charT, class traits, class Alloc, class Parsable>
@@ -7715,21 +7702,21 @@ template<class charT, class traits, class Alloc, class Parsable>
           basic_string<charT, traits, Alloc>& abbrev);
 ```
 
-> Let F be `fmt` for the first overload and `fmt.c_str()` for the second
-> overload.
->
-> *Constraints:* The expression
->
-> ``` cpp
-> from_stream(declval<basic_istream<charT, traits>&>(), $F$, tp, addressof(abbrev))
-> ```
->
-> is well-formed when treated as an unevaluated
-> operand [[term.unevaluated.operand]].
->
-> *Returns:* A manipulator such that the expression
-> `is >> parse(fmt, tp, abbrev)` has type `I`, has value `is`, and calls
-> `from_stream(is, `F`, tp, addressof(abbrev))`.
+Let F be `fmt` for the first overload and `fmt.c_str()` for the second
+overload.
+
+*Constraints:* The expression
+
+``` cpp
+from_stream(declval<basic_istream<charT, traits>&>(), $F$, tp, addressof(abbrev))
+```
+
+is well-formed when treated as an unevaluated
+operand [[term.unevaluated.operand]].
+
+*Returns:* A manipulator such that the expression
+`is >> parse(fmt, tp, abbrev)` has type `I`, has value `is`, and calls
+`from_stream(is, `F`, tp, addressof(abbrev))`.
 
 ``` cpp
 template<class charT, class Parsable>
@@ -7741,32 +7728,31 @@ template<class charT, class traits, class Alloc, class Parsable>
           minutes& offset);
 ```
 
-> Let F be `fmt` for the first overload and `fmt.c_str()` for the second
-> overload. Let `traits` be `char_traits<charT>` and `Alloc` be
-> `allocator<charT>` for the first overload.
->
-> *Constraints:* The expression
->
-> ``` cpp
-> from_stream(declval<basic_istream<charT, traits>&>(),
->             $F$, tp,
->             declval<basic_string<charT, traits, Alloc>*>(),
->             &offset)
-> ```
->
-> is well-formed when treated as an unevaluated
-> operand [[term.unevaluated.operand]].
->
-> *Returns:* A manipulator such that the expression
-> `is >> parse(fmt, tp, offset)` has type `I`, has value `is`, and
-> calls:
->
-> ``` cpp
-> from_stream(is,
->             $F$, tp,
->             static_cast<basic_string<charT, traits, Alloc>*>(nullptr),
->             &offset)
-> ```
+Let F be `fmt` for the first overload and `fmt.c_str()` for the second
+overload. Let `traits` be `char_traits<charT>` and `Alloc` be
+`allocator<charT>` for the first overload.
+
+*Constraints:* The expression
+
+``` cpp
+from_stream(declval<basic_istream<charT, traits>&>(),
+            $F$, tp,
+            declval<basic_string<charT, traits, Alloc>*>(),
+            &offset)
+```
+
+is well-formed when treated as an unevaluated
+operand [[term.unevaluated.operand]].
+
+*Returns:* A manipulator such that the expression
+`is >> parse(fmt, tp, offset)` has type `I`, has value `is`, and calls:
+
+``` cpp
+from_stream(is,
+            $F$, tp,
+            static_cast<basic_string<charT, traits, Alloc>*>(nullptr),
+            &offset)
+```
 
 ``` cpp
 template<class charT, class traits, class Alloc, class Parsable>
@@ -7779,22 +7765,22 @@ template<class charT, class traits, class Alloc, class Parsable>
           basic_string<charT, traits, Alloc>& abbrev, minutes& offset);
 ```
 
-> Let F be `fmt` for the first overload and `fmt.c_str()` for the second
-> overload.
->
-> *Constraints:* The expression
->
-> ``` cpp
-> from_stream(declval<basic_istream<charT, traits>&>(),
->             $F$, tp, addressof(abbrev), &offset)
-> ```
->
-> is well-formed when treated as an unevaluated
-> operand [[term.unevaluated.operand]].
->
-> *Returns:* A manipulator such that the expression
-> `is >> parse(fmt, tp, abbrev, offset)` has type `I`, has value `is`,
-> and calls `from_stream(is, `F`, tp, addressof(abbrev), &offset)`.
+Let F be `fmt` for the first overload and `fmt.c_str()` for the second
+overload.
+
+*Constraints:* The expression
+
+``` cpp
+from_stream(declval<basic_istream<charT, traits>&>(),
+            $F$, tp, addressof(abbrev), &offset)
+```
+
+is well-formed when treated as an unevaluated
+operand [[term.unevaluated.operand]].
+
+*Returns:* A manipulator such that the expression
+`is >> parse(fmt, tp, abbrev, offset)` has type `I`, has value `is`, and
+calls `from_stream(is, `F`, tp, addressof(abbrev), &offset)`.
 
 All `from_stream` overloads behave as unformatted input functions,
 except that they have an unspecified effect on the value returned by

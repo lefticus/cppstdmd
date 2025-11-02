@@ -214,9 +214,10 @@ function that
 - for the former set, is non-explicit
 
 is also a candidate function. If initializing an object, for any
-permissible type cv `U`, any `U`, `U&`, or `U&&` is also a permissible
-type. If the set of permissible types for explicit conversion functions
-is empty, any candidates that are explicit are discarded.
+permissible type cv `U`, any cv-qualifier{cv2} `U`, cv-qualifier{cv2}
+`U&`, or cv-qualifier{cv2} `U&&` is also a permissible type. If the set
+of permissible types for explicit conversion functions is empty, any
+candidates that are explicit are discarded.
 
 In each case where a candidate is a function template, candidate
 function template specializations are generated using template argument
@@ -238,11 +239,11 @@ A defaulted move special member function
 [[class.copy.ctor]], [[class.copy.assign]] that is defined as deleted is
 excluded from the set of candidate functions in all contexts. A
 constructor inherited from class type `C` [[class.inhctor.init]] that
-has a first parameter of type “reference to `P`” (including such a
-constructor instantiated from a template) is excluded from the set of
-candidate functions when constructing an object of type `D` if the
-argument list has exactly one argument and `C` is reference-related to
-`P` and `P` is reference-related to `D`.
+has a first parameter of type “reference to cv-qualifier{cv1} `P`”
+(including such a constructor instantiated from a template) is excluded
+from the set of candidate functions when constructing an object of type
+cv-qualifier{cv2} `D` if the argument list has exactly one argument and
+`C` is reference-related to `P` and `P` is reference-related to `D`.
 
 \[*Example 3*:
 
@@ -274,7 +275,7 @@ B b3 = C();                             // calls \#4
 In a function call [[expr.call]]
 
 ``` bnf
-postfix-expression '(' [expression-list] ')'
+postfix-expression '(' expression-list_opt ')'
 ```
 
 if the *postfix-expression* names at least one function or function
@@ -401,7 +402,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-\texttt{operator} conversion-type-id '(\,)' [cv-qualifier-seq] [ref-qualifier] [noexcept-specifier] [attribute-specifier-seq] ';'
+\texttt{operator} conversion-type-id '(\,)' cv-qualifier-seq_opt ref-qualifier_opt noexcept-specifier_opt attribute-specifier-seq_opt ';'
 ```
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
@@ -506,10 +507,11 @@ built-in operator [[expr.compound]].
 | [[over.sub]] | `a[b]` | `(a).operator[](b)` |
 | [[over.ref]] | `a->` | `(a).operator->(\,)` |
 | (a, 0)} |
-For a unary operator `@` with an operand of type `T1`, and for a binary
-operator `@` with a left operand of type `T1` and a right operand of
-type `T2`, four sets of candidate functions, designated
-*member candidates*, *non-member candidates*, *built-in candidates*, and
+For a unary operator `@` with an operand of type cv-qualifier{cv1} `T1`,
+and for a binary operator `@` with a left operand of type
+cv-qualifier{cv1} `T1` and a right operand of type cv-qualifier{cv2}
+`T2`, four sets of candidate functions, designated *member candidates*,
+*non-member candidates*, *built-in candidates*, and
 *rewritten candidates*, are constructed as follows:
 
 - If `T1` is a complete class type or a class currently being defined,
@@ -754,8 +756,9 @@ select the user-defined conversion to be invoked.
 reference to a possibly cv-qualified class type is determined in terms
 of a corresponding non-reference copy-initialization. — *end note*\]
 
-Assuming that “ `T`” is the type of the object being initialized, with
-`T` a class type, the candidate functions are selected as follows:
+Assuming that “cv-qualifier{cv1} `T`” is the type of the object being
+initialized, with `T` a class type, the candidate functions are selected
+as follows:
 
 - The converting constructors [[class.conv.ctor]] of `T` are candidate
   functions.
@@ -765,10 +768,10 @@ Assuming that “ `T`” is the type of the object being initialized, with
   non-explicit conversion functions are `T` and any class derived from
   `T`. When initializing a temporary object [[class.mem]] to be bound to
   the first parameter of a constructor where the parameter is of type
-  “reference to `T`” and the constructor is called with a single
-  argument in the context of direct-initialization of an object of type
-  “ `T`”, the permissible types for explicit conversion functions are
-  the same; otherwise there are none.
+  “reference to cv-qualifier{cv2} `T`” and the constructor is called
+  with a single argument in the context of direct-initialization of an
+  object of type “cv-qualifier{cv3} `T`”, the permissible types for
+  explicit conversion functions are the same; otherwise there are none.
 
 In both cases, the argument list has one argument, which is the
 initializer expression.
@@ -804,24 +807,26 @@ of the conversion functions. — *end note*\]
 Under the conditions specified in  [[dcl.init.ref]], a reference can be
 bound directly to the result of applying a conversion function to an
 initializer expression. Overload resolution is used to select the
-conversion function to be invoked. Assuming that “reference to `T`” is
-the type of the reference being initialized, the candidate functions are
-selected as follows:
+conversion function to be invoked. Assuming that “reference to
+cv-qualifier{cv1} `T`” is the type of the reference being initialized,
+the candidate functions are selected as follows:
 
 - Let R be a set of types including
 
-  - “lvalue reference to `T2`” (when initializing an lvalue reference or
-    an rvalue reference to function) and
+  - “lvalue reference to cv-qualifier{cv2} `T2`” (when initializing an
+    lvalue reference or an rvalue reference to function) and
 
-  - “ `T2`” and “rvalue reference to `T2`” (when initializing an rvalue
-    reference or an lvalue reference to function)
+  - “cv-qualifier{cv2} `T2`” and “rvalue reference to cv-qualifier{cv2}
+    `T2`” (when initializing an rvalue reference or an lvalue reference
+    to function)
 
   for any `T2`. The permissible types for non-explicit conversion
-  functions are the members of R where “ `T`” is reference-compatible
-  [[dcl.init.ref]] with “ `T2`”. For direct-initialization, the
-  permissible types for explicit conversion functions are the members of
-  R where `T2` can be converted to type `T` with a (possibly trivial)
-  qualification conversion [[conv.qual]]; otherwise there are none.
+  functions are the members of R where “cv-qualifier{cv1} `T`” is
+  reference-compatible [[dcl.init.ref]] with “cv-qualifier{cv2} `T2`”.
+  For direct-initialization, the permissible types for explicit
+  conversion functions are the members of R where `T2` can be converted
+  to type `T` with a (possibly trivial) qualification conversion
+  [[conv.qual]]; otherwise there are none.
 
 The argument list has one argument, which is the initializer expression.
 
@@ -1021,7 +1026,7 @@ When resolving a placeholder for a deduced class type
 `A`, the *defining-type-id* of `A` must be of the form
 
 ``` bnf
-[\texttt{typename]} [nested-name-specifier] [\texttt{template]} simple-template-id
+\texttt{typename_opt} nested-name-specifier_opt \texttt{template_opt} simple-template-id
 ```
 
 as specified in [[dcl.type.simple]]. The guides of `A` are the set of
@@ -2633,7 +2638,7 @@ that is a member function with an arbitrary number of parameters. It may
 have default arguments. For an expression of the form
 
 ``` bnf
-postfix-expression '(' [expression-list] ')'
+postfix-expression '(' expression-list_opt ')'
 ```
 
 where the *postfix-expression* is of class type, the operator function
@@ -2644,13 +2649,13 @@ corresponding conversion operator function on the *postfix-expression*;
 the expression is interpreted as
 
 ``` bnf
-$e$ '(' [expression-list] ')'
+$e$ '(' expression-list_opt ')'
 ```
 
 Otherwise, the expression is interpreted as
 
 ``` bnf
-postfix-expression '.' \texttt{operator} '('')' '(' [expression-list] ')'
+postfix-expression '.' \texttt{operator} '('')' '(' expression-list_opt ')'
 ```
 
 ### Subscripting <a id="over.sub">[[over.sub]]</a>
@@ -2660,7 +2665,7 @@ A *subscripting operator function* is a member function named
 arguments. For an expression of the form
 
 ``` bnf
-postfix-expression '[' [expression-list] ']'
+postfix-expression '[' expression-list_opt ']'
 ```
 
 the operator function is selected by overload resolution
@@ -2668,7 +2673,7 @@ the operator function is selected by overload resolution
 interpreted as
 
 ``` bnf
-postfix-expression . \texttt{operator} '['']' '(' [expression-list] ')'
+postfix-expression . \texttt{operator} '['']' '(' expression-list_opt ')'
 ```
 
 \[*Example 2*:
@@ -2695,14 +2700,14 @@ A *class member access operator function* is a function named
 parameters. For an expression of the form
 
 ``` bnf
-postfix-expression '->' [\texttt{template]} id-expression
+postfix-expression '->' \texttt{template_opt} id-expression
 ```
 
 the operator function is selected by overload resolution
 [[over.match.oper]], and the expression is interpreted as
 
 ``` bnf
-'(' postfix-expression . \texttt{operator} '->' '('')' ')' '->' [\texttt{template]} id-expression
+'(' postfix-expression . \texttt{operator} '->' '('')' ')' '->' \texttt{template_opt} id-expression
 ```
 
 ### Increment and decrement <a id="over.inc">[[over.inc]]</a>
@@ -2782,12 +2787,13 @@ e.g. `char`).
 operand of unscoped enumeration type will be acceptable by way of the
 integral promotions. — *end note*\]
 
-In the remainder of this subclause, represents either `volatile` or no
-cv-qualifier.
+In the remainder of this subclause, cv-qualifier{vq} represents either
+`volatile` or no cv-qualifier.
 
-For every pair (`T`, ), where `T` is a cv-unqualified arithmetic type
-other than `bool` or a cv-unqualified pointer to (possibly cv-qualified)
-object type, there exist candidate operator functions of the form
+For every pair (`T`, cv-qualifier{vq}), where `T` is a cv-unqualified
+arithmetic type other than `bool` or a cv-unqualified pointer to
+(possibly cv-qualified) object type, there exist candidate operator
+functions of the form
 
 ``` cpp
 \cvqual{vq} T& operator++(\cvqual{vq} T&);
@@ -2825,18 +2831,18 @@ functions of the form
 T operator~(T);
 ```
 
-For every quintuple (`C1`, `C2`, `T`, , ), where `C2` is a class type,
-`C1` is the same type as `C2` or is a derived class of `C2`, and `T` is
-an object type or a function type, there exist candidate operator
-functions of the form
+For every quintuple (`C1`, `C2`, `T`, cv-qualifier{cv1},
+cv-qualifier{cv2}), where `C2` is a class type, `C1` is the same type as
+`C2` or is a derived class of `C2`, and `T` is an object type or a
+function type, there exist candidate operator functions of the form
 
 ``` cpp
 \cvqual{cv12} T& operator->*(\cvqual{cv1} C1*, \cvqual{cv2} T C2::*);
 ```
 
-where is the union of and . The return type is shown for exposition
-only; see  [[expr.mptr.oper]] for the determination of the operator’s
-result type.
+where cv-qualifier{cv12} is the union of cv-qualifier{cv1} and
+cv-qualifier{cv2}. The return type is shown for exposition only; see 
+[[expr.mptr.oper]] for the determination of the operator’s result type.
 
 For every pair of types `L` and `R`, where each of `L` and `R` is a
 floating-point or promoted integral type, there exist candidate operator
@@ -2928,9 +2934,9 @@ L       operator>>(L, R);
 where `LR` is the result of the usual arithmetic conversions
 [[expr.arith.conv]] between types `L` and `R`.
 
-For every triple (`L`, , `R`), where `L` is an arithmetic type, and `R`
-is a floating-point or promoted integral type, there exist candidate
-operator functions of the form
+For every triple (`L`, cv-qualifier{vq}, `R`), where `L` is an
+arithmetic type, and `R` is a floating-point or promoted integral type,
+there exist candidate operator functions of the form
 
 ``` cpp
 \cvqual{vq} L&   operator=(\cvqual{vq} L&, R);
@@ -2940,31 +2946,33 @@ operator functions of the form
 \cvqual{vq} L&   operator-=(\cvqual{vq} L&, R);
 ```
 
-For every pair (`T`, ), where `T` is any type, there exist candidate
-operator functions of the form
+For every pair (`T`, cv-qualifier{vq}), where `T` is any type, there
+exist candidate operator functions of the form
 
 ``` cpp
 T*\cvqual{vq}&   operator=(T*\cvqual{vq}&, T*);
 ```
 
-For every pair (`T`, ), where `T` is an enumeration or pointer-to-member
-type, there exist candidate operator functions of the form
+For every pair (`T`, cv-qualifier{vq}), where `T` is an enumeration or
+pointer-to-member type, there exist candidate operator functions of the
+form
 
 ``` cpp
 \cvqual{vq} T&   operator=(\cvqual{vq} T&, T);
 ```
 
-For every pair (`T`, ), where `T` is a cv-qualified or cv-unqualified
-object type, there exist candidate operator functions of the form
+For every pair (`T`, cv-qualifier{vq}), where `T` is a cv-qualified or
+cv-unqualified object type, there exist candidate operator functions of
+the form
 
 ``` cpp
 T*\cvqual{vq}&   operator+=(T*\cvqual{vq}&, std::ptrdiff_t);
 T*\cvqual{vq}&   operator-=(T*\cvqual{vq}&, std::ptrdiff_t);
 ```
 
-For every triple (`L`, , `R`), where `L` is an integral type, and `R` is
-a promoted integral type, there exist candidate operator functions of
-the form
+For every triple (`L`, cv-qualifier{vq}, `R`), where `L` is an integral
+type, and `R` is a promoted integral type, there exist candidate
+operator functions of the form
 
 ``` cpp
 \cvqual{vq} L&   operator%=(\cvqual{vq} L&, R);

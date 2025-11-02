@@ -51,15 +51,15 @@ template<class T, T N>
   using make_integer_sequence = integer_sequence<T, see below{}>;
 ```
 
-> *Mandates:* $\texttt{N} \geq 0$.
->
-> The alias template `make_integer_sequence` denotes a specialization of
-> `integer_sequence` with `N` non-type template arguments. The type
-> `make_integer_sequence<T, N>` is an alias for the type
-> `integer_sequence<T, 0, 1, ..., N-1>`.
->
-> \[*Note 1*: `make_integer_sequence<int, 0>` is an alias for the type
-> `integer_sequence<int>`. — *end note*\]
+*Mandates:* $\texttt{N} \geq 0$.
+
+The alias template `make_integer_sequence` denotes a specialization of
+`integer_sequence` with `N` non-type template arguments. The type
+`make_integer_sequence<T, N>` is an alias for the type
+`integer_sequence<T, 0, 1, ..., N-1>`.
+
+\[*Note 2*: `make_integer_sequence<int, 0>` is an alias for the type
+`integer_sequence<int>`. — *end note*\]
 
 ## Metaprogramming and type traits <a id="type.traits">[[type.traits]]</a>
 
@@ -641,7 +641,7 @@ For the purpose of defining the templates in this subclause, let
 
 - Otherwise, `VAL<T>` is a prvalue that initially has type `T`.
 
-  \[*Note 2*: If `T` is cv-qualified, the cv-qualification is subject to
+  \[*Note 1*: If `T` is cv-qualified, the cv-qualification is subject to
   adjustment [[expr.type]]. — *end note*\]
 
 \[*Example 1*:
@@ -935,7 +935,7 @@ as follows:
   - If `is_same_v<T1, D1>` is `false` or `is_same_v<T2, D2>` is `false`,
     let `C` denote the same type, if any, as `common_type_t<D1, D2>`.
 
-  - \[*Note 3*: None of the following will apply if there is a
+  - \[*Note 2*: None of the following will apply if there is a
     specialization `common_type<D1, D2>`. — *end note*\]
 
   - Otherwise, if
@@ -1078,92 +1078,91 @@ other type traits.
 template<class... B> struct conjunction : see below { };
 ```
 
-> The class template `conjunction` forms the logical conjunction of its
-> template type arguments.
->
-> For a specialization
-> `conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>`, if
-> there is a template type argument $\texttt{B}_{i}$ for which
-> `bool(`$\texttt{B}_{i}$`::value)` is `false`, then instantiating
-> `conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>::value`
-> does not require the instantiation of $\texttt{B}_{j}$`::value` for
-> j > i.
->
-> \[*Note 4*: This is analogous to the short-circuiting behavior of the
-> built-in operator `&&`. — *end note*\]
->
-> Every template type argument for which $\texttt{B}_{i}$`::value` is
-> instantiated shall be usable as a base class and shall have a member
-> `value` which is convertible to `bool`, is not hidden, and is
-> unambiguously available in the type.
->
-> The specialization
-> `conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>` has
-> a public and unambiguous base that is either
->
-> - the first type $\texttt{B}_{i}$ in the list
->   `true_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
->   which `bool(`$\texttt{B}_{i}$`::value)` is `false`, or
->
-> - if there is no such $\texttt{B}_{i}$, the last type in the list.
->
-> \[*Note 5*: This means a specialization of `conjunction` does not
-> necessarily inherit from either `true_type` or
-> `false_type`. — *end note*\]
->
-> The member names of the base class, other than `conjunction` and
-> `operator=`, shall not be hidden and shall be unambiguously available
-> in `conjunction`.
+The class template `conjunction` forms the logical conjunction of its
+template type arguments.
+
+For a specialization
+`conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>`, if
+there is a template type argument $\texttt{B}_{i}$ for which
+`bool(`$\texttt{B}_{i}$`::value)` is `false`, then instantiating
+`conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>::value`
+does not require the instantiation of $\texttt{B}_{j}$`::value` for
+j > i.
+
+\[*Note 10*: This is analogous to the short-circuiting behavior of the
+built-in operator `&&`. — *end note*\]
+
+Every template type argument for which $\texttt{B}_{i}$`::value` is
+instantiated shall be usable as a base class and shall have a member
+`value` which is convertible to `bool`, is not hidden, and is
+unambiguously available in the type.
+
+The specialization
+`conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>` has a
+public and unambiguous base that is either
+
+- the first type $\texttt{B}_{i}$ in the list
+  `true_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
+  which `bool(`$\texttt{B}_{i}$`::value)` is `false`, or
+
+- if there is no such $\texttt{B}_{i}$, the last type in the list.
+
+\[*Note 11*: This means a specialization of `conjunction` does not
+necessarily inherit from either `true_type` or
+`false_type`. — *end note*\]
+
+The member names of the base class, other than `conjunction` and
+`operator=`, shall not be hidden and shall be unambiguously available in
+`conjunction`.
 
 ``` cpp
 template<class... B> struct disjunction : see below { };
 ```
 
-> The class template `disjunction` forms the logical disjunction of its
-> template type arguments.
->
-> For a specialization
-> `disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>`, if
-> there is a template type argument $\texttt{B}_{i}$ for which
-> `bool(`$\texttt{B}_{i}$`::value)` is `true`, then instantiating
-> `disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>::value`
-> does not require the instantiation of $\texttt{B}_{j}$`::value` for
-> j > i.
->
-> \[*Note 6*: This is analogous to the short-circuiting behavior of the
-> built-in operator `||`. — *end note*\]
->
-> Every template type argument for which $\texttt{B}_{i}$`::value` is
-> instantiated shall be usable as a base class and shall have a member
-> `value` which is convertible to `bool`, is not hidden, and is
-> unambiguously available in the type.
->
-> The specialization
-> `disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>` has
-> a public and unambiguous base that is either
->
-> - the first type $\texttt{B}_{i}$ in the list
->   `false_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
->   which `bool(`$\texttt{B}_{i}$`::value)` is `true`, or
->
-> - if there is no such $\texttt{B}_{i}$, the last type in the list.
->
-> \[*Note 7*: This means a specialization of `disjunction` does not
-> necessarily inherit from either `true_type` or
-> `false_type`. — *end note*\]
->
-> The member names of the base class, other than `disjunction` and
-> `operator=`, shall not be hidden and shall be unambiguously available
-> in `disjunction`.
+The class template `disjunction` forms the logical disjunction of its
+template type arguments.
+
+For a specialization
+`disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>`, if
+there is a template type argument $\texttt{B}_{i}$ for which
+`bool(`$\texttt{B}_{i}$`::value)` is `true`, then instantiating
+`disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>::value`
+does not require the instantiation of $\texttt{B}_{j}$`::value` for
+j > i.
+
+\[*Note 12*: This is analogous to the short-circuiting behavior of the
+built-in operator `||`. — *end note*\]
+
+Every template type argument for which $\texttt{B}_{i}$`::value` is
+instantiated shall be usable as a base class and shall have a member
+`value` which is convertible to `bool`, is not hidden, and is
+unambiguously available in the type.
+
+The specialization
+`disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>` has a
+public and unambiguous base that is either
+
+- the first type $\texttt{B}_{i}$ in the list
+  `false_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
+  which `bool(`$\texttt{B}_{i}$`::value)` is `true`, or
+
+- if there is no such $\texttt{B}_{i}$, the last type in the list.
+
+\[*Note 13*: This means a specialization of `disjunction` does not
+necessarily inherit from either `true_type` or
+`false_type`. — *end note*\]
+
+The member names of the base class, other than `disjunction` and
+`operator=`, shall not be hidden and shall be unambiguously available in
+`disjunction`.
 
 ``` cpp
 template<class B> struct negation : see below { };
 ```
 
-> The class template `negation` forms the logical negation of its
-> template type argument. The type `negation<B>` is a
-> *Cpp17UnaryTypeTrait* with a base characteristic of
-> `bool_constant<!bool(B::value)>`.
+The class template `negation` forms the logical negation of its template
+type argument. The type `negation<B>` is a *Cpp17UnaryTypeTrait* with a
+base characteristic of `bool_constant<!bool(B::value)>`.
 
 ### Member relationships <a id="meta.member">[[meta.member]]</a>
 
@@ -1172,25 +1171,25 @@ template<class S, class M>
   constexpr bool is_pointer_interconvertible_with_class(M S::*m) noexcept;
 ```
 
-> *Mandates:* `S` is a complete type.
->
-> *Returns:* `true` if and only if `S` is a standard-layout type, `M` is
-> an object type, `m` is not null, and each object `s` of type `S` is
-> pointer-interconvertible [[basic.compound]] with its subobject `s.*m`.
+*Mandates:* `S` is a complete type.
+
+*Returns:* `true` if and only if `S` is a standard-layout type, `M` is
+an object type, `m` is not null, and each object `s` of type `S` is
+pointer-interconvertible [[basic.compound]] with its subobject `s.*m`.
 
 ``` cpp
 template<class S1, class S2, class M1, class M2>
   constexpr bool is_corresponding_member(M1 S1::*m1, M2 S2::*m2) noexcept;
 ```
 
-> *Mandates:* `S1` and `S2` are complete types.
->
-> *Returns:* `true` if and only if `S1` and `S2` are standard-layout
-> struct [[class.prop]] types, `M1` and `M2` are object types, `m1` and
-> `m2` are not null, and `m1` and `m2` point to corresponding members of
-> the common initial sequence [[class.mem]] of `S1` and `S2`.
+*Mandates:* `S1` and `S2` are complete types.
 
-\[*Note 10*:
+*Returns:* `true` if and only if `S1` and `S2` are standard-layout
+struct [[class.prop]] types, `M1` and `M2` are object types, `m1` and
+`m2` are not null, and `m1` and `m2` point to corresponding members of
+the common initial sequence [[class.mem]] of `S1` and `S2`.
+
+\[*Note 14*:
 
 The type of a pointer-to-member expression `&C::b` is not always a
 pointer to member of `C`, leading to potentially surprising results when
@@ -1204,27 +1203,27 @@ using these functions in conjunction with inheritance.
 constexpr bool is_constant_evaluated() noexcept;
 ```
 
-> *Effects:* Equivalent to:
->
-> ``` cpp
-> if consteval {
->   return true;
-> } else {
->   return false;
-> }
-> ```
->
-> \[*Example 2*:
->
->     constexpr void f(unsigned char *p, int n) {
->       if (std::is_constant_evaluated()) {           // should not be a constexpr if statement
->         for (int k = 0; k<n; ++k) p[k] = 0;
->       } else {
->         memset(p, 0, n);                            // not a core constant expression
->       }
->     }
->
-> — *end example*\]
+*Effects:* Equivalent to:
+
+``` cpp
+if consteval {
+  return true;
+} else {
+  return false;
+}
+```
+
+\[*Example 10*:
+
+    constexpr void f(unsigned char *p, int n) {
+      if (std::is_constant_evaluated()) {           // should not be a constexpr if statement
+        for (int k = 0; k<n; ++k) p[k] = 0;
+      } else {
+        memset(p, 0, n);                            // not a core constant expression
+      }
+    }
+
+— *end example*\]
 
 ## Compile-time rational arithmetic <a id="ratio">[[ratio]]</a>
 
@@ -1394,11 +1393,11 @@ template<class R1, class R2>
   struct ratio_less : bool_constant<see below> { };
 ```
 
-> If `R1::num` × `R2::den` is less than `R2::num` × `R1::den`,
-> `ratio_less<R1, R2>` shall be derived from `bool_constant<true>`;
-> otherwise it shall be derived from `bool_constant<false>`.
-> Implementations may use other algorithms to compute this relationship
-> to avoid overflow. If overflow occurs, the program is ill-formed.
+If `R1::num` × `R2::den` is less than `R2::num` × `R1::den`,
+`ratio_less<R1, R2>` shall be derived from `bool_constant<true>`;
+otherwise it shall be derived from `bool_constant<false>`.
+Implementations may use other algorithms to compute this relationship to
+avoid overflow. If overflow occurs, the program is ill-formed.
 
 ``` cpp
 template<class R1, class R2>

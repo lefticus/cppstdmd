@@ -285,8 +285,8 @@ template<class T, class U>
   concept same_as = same-as-impl<T, U> && same-as-impl<U, T>;
 ```
 
-> \[*Note 1*: `same_as``<T, U>` subsumes `same_as``<U, T>` and vice
-> versa. — *end note*\]
+\[*Note 1*: `same_as``<T, U>` subsumes `same_as``<U, T>` and vice
+versa. — *end note*\]
 
 ### Concept  <a id="concept.derived">[[concept.derived]]</a>
 
@@ -297,10 +297,10 @@ template<class Derived, class Base>
     is_convertible_v<const volatile Derived*, const volatile Base*>;
 ```
 
-> \[*Note 2*: `derived_from``<Derived, Base>` is satisfied if and only
-> if `Derived` is publicly and unambiguously derived from `Base`, or
-> `Derived` and `Base` are the same class type ignoring
-> cv-qualifiers. — *end note*\]
+\[*Note 2*: `derived_from``<Derived, Base>` is satisfied if and only if
+`Derived` is publicly and unambiguously derived from `Base`, or
+`Derived` and `Base` are the same class type ignoring
+cv-qualifiers. — *end note*\]
 
 ### Concept  <a id="concept.convertible">[[concept.convertible]]</a>
 
@@ -319,30 +319,30 @@ template<class From, class To>
     };
 ```
 
-> Let `FromR` be `add_rvalue_reference_t<From>` and `test` be the
-> invented function:
->
-> ``` cpp
-> To test(FromR (&f)()) {
->   return f();
-> }
-> ```
->
-> and let `f` be a function with no arguments and return type `FromR`
-> such that `f()` is equality-preserving. Types `From` and `To` model
-> `convertible_to``<From, To>` only if:
->
-> - `To` is not an object or reference-to-object type, or
->   `static_cast<To>(f())` is equal to `test(f)`.
->
-> - `FromR` is not a reference-to-object type, or
->
->   - If `FromR` is an rvalue reference to a non const-qualified type,
->     the resulting state of the object referenced by `f()` after either
->     above expression is valid but unspecified [[lib.types.movedfrom]].
->
->   - Otherwise, the object referred to by `f()` is not modified by
->     either above expression.
+Let `FromR` be `add_rvalue_reference_t<From>` and `test` be the invented
+function:
+
+``` cpp
+To test(FromR (&f)()) {
+  return f();
+}
+```
+
+and let `f` be a function with no arguments and return type `FromR` such
+that `f()` is equality-preserving. Types `From` and `To` model
+`convertible_to``<From, To>` only if:
+
+- `To` is not an object or reference-to-object type, or
+  `static_cast<To>(f())` is equal to `test(f)`.
+
+- `FromR` is not a reference-to-object type, or
+
+  - If `FromR` is an rvalue reference to a non const-qualified type, the
+    resulting state of the object referenced by `f()` after either above
+    expression is valid but unspecified [[lib.types.movedfrom]].
+
+  - Otherwise, the object referred to by `f()` is not modified by either
+    above expression.
 
 ### Concept  <a id="concept.commonref">[[concept.commonref]]</a>
 
@@ -351,7 +351,7 @@ and denotes a type `C` such that both `convertible_to<T, C>` and
 `convertible_to<U, C>` are modeled, then `T` and `U` share a
 *common reference type*, `C`.
 
-\[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
+\[*Note 3*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` can be a reference type. — *end note*\]
 
 ``` cpp
@@ -362,27 +362,27 @@ template<class T, class U>
     convertible_to<U, common_reference_t<T, U>>;
 ```
 
-> Let `C` be `common_reference_t<T, U>`. Let `t1` and `t2` be
-> equality-preserving expressions [[concepts.equality]] such that
-> `decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
-> `u2` be equality-preserving expressions such that `decltype((u1))` and
-> `decltype((u2))` are each `U`. `T` and `U` model
-> `common_reference_with``<T, U>` only if:
->
-> - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
->
-> - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
->
-> \[*Note 3*: Users can customize the behavior of
-> `common_reference_with` by specializing the `basic_common_reference`
-> class template [[meta.trans.other]]. — *end note*\]
+Let `C` be `common_reference_t<T, U>`. Let `t1` and `t2` be
+equality-preserving expressions [[concepts.equality]] such that
+`decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
+`u2` be equality-preserving expressions such that `decltype((u1))` and
+`decltype((u2))` are each `U`. `T` and `U` model
+`common_reference_with``<T, U>` only if:
+
+- `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
+
+- `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
+
+\[*Note 4*: Users can customize the behavior of `common_reference_with`
+by specializing the `basic_common_reference` class
+template [[meta.trans.other]]. — *end note*\]
 
 ### Concept  <a id="concept.common">[[concept.common]]</a>
 
 If `T` and `U` can both be explicitly converted to some third type, `C`,
 then `T` and `U` share a *common type*, `C`.
 
-\[*Note 2*: `C` can be the same as `T` or `U`, or can be a different
+\[*Note 5*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` is not necessarily unique. — *end note*\]
 
 ``` cpp
@@ -403,20 +403,20 @@ template<class T, class U>
         add_lvalue_reference_t<const U>>>;
 ```
 
-> Let `C` be `common_type_t<T, U>`. Let `t1` and `t2` be
-> equality-preserving expressions [[concepts.equality]] such that
-> `decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
-> `u2` be equality-preserving expressions such that `decltype((u1))` and
-> `decltype((u2))` are each `U`. `T` and `U` model `common_with``<T, U>`
-> only if:
->
-> - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
->
-> - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
->
-> \[*Note 4*: Users can customize the behavior of `common_with` by
-> specializing the `common_type` class
-> template [[meta.trans.other]]. — *end note*\]
+Let `C` be `common_type_t<T, U>`. Let `t1` and `t2` be
+equality-preserving expressions [[concepts.equality]] such that
+`decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
+`u2` be equality-preserving expressions such that `decltype((u1))` and
+`decltype((u2))` are each `U`. `T` and `U` model `common_with``<T, U>`
+only if:
+
+- `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
+
+- `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
+
+\[*Note 6*: Users can customize the behavior of `common_with` by
+specializing the `common_type` class
+template [[meta.trans.other]]. — *end note*\]
 
 ### Arithmetic concepts <a id="concepts.arithmetic">[[concepts.arithmetic]]</a>
 
@@ -431,13 +431,13 @@ template<class T>
   concept floating_point = is_floating_point_v<T>;
 ```
 
-> \[*Note 5*: `signed_integral` can be modeled even by types that are
-> not signed integer types [[basic.fundamental]]; for example,
-> `char`. — *end note*\]
->
-> \[*Note 6*: `unsigned_integral` can be modeled even by types that are
-> not unsigned integer types [[basic.fundamental]]; for example,
-> `bool`. — *end note*\]
+\[*Note 7*: `signed_integral` can be modeled even by types that are not
+signed integer types [[basic.fundamental]]; for example,
+`char`. — *end note*\]
+
+\[*Note 8*: `unsigned_integral` can be modeled even by types that are
+not unsigned integer types [[basic.fundamental]]; for example,
+`bool`. — *end note*\]
 
 ### Concept  <a id="concept.assignable">[[concept.assignable]]</a>
 
@@ -451,34 +451,34 @@ template<class LHS, class RHS>
     };
 ```
 
-> Let:
->
-> - `lhs` be an lvalue that refers to an object `lcopy` such that
->   `decltype((lhs))` is `LHS`,
->
-> - `rhs` be an expression such that `decltype((rhs))` is `RHS`, and
->
-> - `rcopy` be a distinct object that is equal to `rhs`.
->
-> `LHS` and `RHS` model `assignable_from``<LHS, RHS>` only if
->
-> - `addressof(lhs = rhs) == addressof(lcopy)`.
->
-> - After evaluating `lhs = rhs`:
->
->   - `lhs` is equal to `rcopy`, unless `rhs` is a non-const xvalue that
->     refers to `lcopy`.
->
->   - If `rhs` is a non- xvalue, the resulting state of the object to
->     which it refers is valid but unspecified [[lib.types.movedfrom]].
->
->   - Otherwise, if `rhs` is a glvalue, the object to which it refers is
->     not modified.
->
-> \[*Note 7*: Assignment need not be a total
-> function [[structure.requirements]]; in particular, if assignment to
-> an object `x` can result in a modification of some other object `y`,
-> then `x = y` is likely not in the domain of `=`. — *end note*\]
+Let:
+
+- `lhs` be an lvalue that refers to an object `lcopy` such that
+  `decltype((lhs))` is `LHS`,
+
+- `rhs` be an expression such that `decltype((rhs))` is `RHS`, and
+
+- `rcopy` be a distinct object that is equal to `rhs`.
+
+`LHS` and `RHS` model `assignable_from``<LHS, RHS>` only if
+
+- `addressof(lhs = rhs) == addressof(lcopy)`.
+
+- After evaluating `lhs = rhs`:
+
+  - `lhs` is equal to `rcopy`, unless `rhs` is a non-const xvalue that
+    refers to `lcopy`.
+
+  - If `rhs` is a non- xvalue, the resulting state of the object to
+    which it refers is valid but unspecified [[lib.types.movedfrom]].
+
+  - Otherwise, if `rhs` is a glvalue, the object to which it refers is
+    not modified.
+
+\[*Note 9*: Assignment need not be a total
+function [[structure.requirements]]; in particular, if assignment to an
+object `x` can result in a modification of some other object `y`, then
+`x = y` is likely not in the domain of `=`. — *end note*\]
 
 ### Concept  <a id="concept.swappable">[[concept.swappable]]</a>
 
@@ -486,7 +486,7 @@ Let `t1` and `t2` be equality-preserving expressions that denote
 distinct equal objects of type `T`, and let `u1` and `u2` similarly
 denote distinct equal objects of type `U`.
 
-\[*Note 3*: `t1` and `u1` can denote distinct objects, or the same
+\[*Note 10*: `t1` and `u1` can denote distinct objects, or the same
 object. — *end note*\]
 
 An operation *exchanges the values* denoted by `t1` and `u1` if and only
@@ -521,7 +521,7 @@ expression `S` determined as follows:
   selected by overload resolution does not exchange the values denoted
   by `E1` and `E2`, the program is ill-formed, no diagnostic required.
 
-  \[*Note 8*: This precludes calling unconstrained program-defined
+  \[*Note 1*: This precludes calling unconstrained program-defined
   overloads of `swap`. When the deleted overload is viable,
   program-defined overloads need to be more specialized
   [[temp.func.order]] to be selected. — *end note*\]
@@ -555,11 +555,11 @@ expression `S` determined as follows:
 
 - Otherwise, `ranges::swap(E1, E2)` is ill-formed.
 
-  \[*Note 9*: This case can result in substitution failure when
+  \[*Note 2*: This case can result in substitution failure when
   `ranges::swap(E1, E2)` appears in the immediate context of a template
   instantiation. — *end note*\]
 
-\[*Note 4*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
+\[*Note 11*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type
 `void`. — *end note*\]
 
@@ -580,7 +580,7 @@ template<class T, class U>
     };
 ```
 
-\[*Note 5*: The semantics of the `swappable` and `swappable_with`
+\[*Note 12*: The semantics of the `swappable` and `swappable_with`
 concepts are fully defined by the `ranges::swap` customization point
 object. — *end note*\]
 
@@ -642,10 +642,10 @@ template<class T>
   concept destructible = is_nothrow_destructible_v<T>;
 ```
 
-> \[*Note 10*: Unlike the *Cpp17Destructible*
-> requirements ( [[cpp17.destructible]]), this concept forbids
-> destructors that are potentially throwing, even if a particular
-> invocation of the destructor does not actually throw. — *end note*\]
+\[*Note 13*: Unlike the *Cpp17Destructible*
+requirements ( [[cpp17.destructible]]), this concept forbids destructors
+that are potentially throwing, even if a particular invocation of the
+destructor does not actually throw. — *end note*\]
 
 ### Concept  <a id="concept.constructible">[[concept.constructible]]</a>
 
@@ -669,17 +669,17 @@ template<class T>
                                   is-default-initializable<T>;
 ```
 
-> For a type `T`, *`is-default-initializable`*`<T>` is `true` if and
-> only if the variable definition
->
-> ``` cpp
-> T t;
-> ```
->
-> is well-formed for some invented variable `t`; otherwise it is
-> `false`. Access checking is performed as if in a context unrelated to
-> `T`. Only the validity of the immediate context of the variable
-> initialization is considered.
+For a type `T`, *`is-default-initializable`*`<T>` is `true` if and only
+if the variable definition
+
+``` cpp
+T t;
+```
+
+is well-formed for some invented variable `t`; otherwise it is `false`.
+Access checking is performed as if in a context unrelated to `T`. Only
+the validity of the immediate context of the variable initialization is
+considered.
 
 ### Concept  <a id="concept.moveconstructible">[[concept.moveconstructible]]</a>
 
@@ -688,16 +688,16 @@ template<class T>
   concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 ```
 
-> If `T` is an object type, then let `rv` be an rvalue of type `T` and
-> `u2` a distinct object of type `T` equal to `rv`. `T` models
-> `move_constructible` only if
->
-> - After the definition `T u = rv;`, `u` is equal to `u2`.
->
-> - `T(rv)` is equal to `u2`.
->
-> - If `T` is not , `rv`’s resulting state is valid but
->   unspecified [[lib.types.movedfrom]]; otherwise, it is unchanged.
+If `T` is an object type, then let `rv` be an rvalue of type `T` and
+`u2` a distinct object of type `T` equal to `rv`. `T` models
+`move_constructible` only if
+
+- After the definition `T u = rv;`, `u` is equal to `u2`.
+
+- `T(rv)` is equal to `u2`.
+
+- If `T` is not , `rv`’s resulting state is valid but
+  unspecified [[lib.types.movedfrom]]; otherwise, it is unchanged.
 
 ### Concept  <a id="concept.copyconstructible">[[concept.copyconstructible]]</a>
 
@@ -710,14 +710,13 @@ template<class T>
     constructible_from<T, const T> && convertible_to<const T, T>;
 ```
 
-> If `T` is an object type, then let `v` be an lvalue of type `T` or
-> ` T` or an rvalue of type ` T`. `T` models `copy_constructible` only
-> if
->
-> - After the definition `T u = v;`, `u` is equal to
->   `v`[[concepts.equality]] and `v` is not modified.
->
-> - `T(v)` is equal to `v` and does not modify `v`.
+If `T` is an object type, then let `v` be an lvalue of type `T` or ` T`
+or an rvalue of type ` T`. `T` models `copy_constructible` only if
+
+- After the definition `T u = v;`, `u` is equal to
+  `v`[[concepts.equality]] and `v` is not modified.
+
+- `T(v)` is equal to `v` and does not modify `v`.
 
 ## Comparison concepts <a id="concepts.compare">[[concepts.compare]]</a>
 
@@ -878,31 +877,31 @@ template<class T, class U>
     };
 ```
 
-> Given types `T` and `U`, let `t` and `u` be lvalues of types
-> `const remove_reference_t<T>` and `const remove_reference_t<U>`
-> respectively. `T` and `U` model
-> `weakly-equality-comparable-with``<T, U>` only if
->
-> - `t == u`, `u == t`, `t != u`, and `u != t` have the same domain.
->
-> - `bool(u == t) == bool(t == u)`.
->
-> - `bool(t != u) == !bool(t == u)`.
->
-> - `bool(u != t) == bool(t != u)`.
+Given types `T` and `U`, let `t` and `u` be lvalues of types
+`const remove_reference_t<T>` and `const remove_reference_t<U>`
+respectively. `T` and `U` model
+`weakly-equality-comparable-with``<T, U>` only if
+
+- `t == u`, `u == t`, `t != u`, and `u != t` have the same domain.
+
+- `bool(u == t) == bool(t == u)`.
+
+- `bool(t != u) == !bool(t == u)`.
+
+- `bool(u != t) == bool(t != u)`.
 
 ``` cpp
 template<class T>
   concept equality_comparable = weakly-equality-comparable-with<T, T>;
 ```
 
-> Let `a` and `b` be objects of type `T`. `T` models
-> `equality_comparable` only if `bool(a == b)` is `true` when `a` is
-> equal to `b`[[concepts.equality]], and `false` otherwise.
->
-> \[*Note 11*: The requirement that the expression `a == b` is
-> equality-preserving implies that `==` is transitive and
-> symmetric. — *end note*\]
+Let `a` and `b` be objects of type `T`. `T` models `equality_comparable`
+only if `bool(a == b)` is `true` when `a` is equal to
+`b`[[concepts.equality]], and `false` otherwise.
+
+\[*Note 2*: The requirement that the expression `a == b` is
+equality-preserving implies that `==` is transitive and
+symmetric. — *end note*\]
 
 ``` cpp
 template<class T, class U>
@@ -916,21 +915,21 @@ template<class T, class U>
     weakly-equality-comparable-with<T, U>;
 ```
 
-> Given types `T` and `U`, let `t` and `t2` be lvalues denoting distinct
-> equal objects of types `const remove_reference_t<T>` and
-> `remove_cvref_t<T>`, respectively, let `u` and `u2` be lvalues
-> denoting distinct equal objects of types `const remove_reference_t<U>`
-> and `remove_cvref_t<U>`, respectively, and let `C` be:
->
-> ``` cpp
-> common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
-> ```
->
-> `T` and `U` model `equality_comparable_with``<T, U>` only if
->
-> ``` cpp
-> bool(t == u) == bool(CONVERT_TO_LVALUE<C>(t2) == CONVERT_TO_LVALUE<C>(u2))
-> ```
+Given types `T` and `U`, let `t` and `t2` be lvalues denoting distinct
+equal objects of types `const remove_reference_t<T>` and
+`remove_cvref_t<T>`, respectively, let `u` and `u2` be lvalues denoting
+distinct equal objects of types `const remove_reference_t<U>` and
+`remove_cvref_t<U>`, respectively, and let `C` be:
+
+``` cpp
+common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
+```
+
+`T` and `U` model `equality_comparable_with``<T, U>` only if
+
+``` cpp
+bool(t == u) == bool(CONVERT_TO_LVALUE<C>(t2) == CONVERT_TO_LVALUE<C>(u2))
+```
 
 ### Concept  <a id="concept.totallyordered">[[concept.totallyordered]]</a>
 
@@ -940,17 +939,17 @@ template<class T>
     equality_comparable<T> && partially-ordered-with<T, T>;
 ```
 
-> Given a type `T`, let `a`, `b`, and `c` be lvalues of type
-> `const remove_reference_t<T>`. `T` models `totally_ordered` only if
->
-> - Exactly one of `bool(a < b)`, `bool(a > b)`, or `bool(a == b)` is
->   `true`.
->
-> - If `bool(a < b)` and `bool(b < c)`, then `bool(a < c)`.
->
-> - `bool(a <= b) == !bool(b < a)`.
->
-> - `bool(a >= b) == !bool(a < b)`.
+Given a type `T`, let `a`, `b`, and `c` be lvalues of type
+`const remove_reference_t<T>`. `T` models `totally_ordered` only if
+
+- Exactly one of `bool(a < b)`, `bool(a > b)`, or `bool(a == b)` is
+  `true`.
+
+- If `bool(a < b)` and `bool(b < c)`, then `bool(a < c)`.
+
+- `bool(a <= b) == !bool(b < a)`.
+
+- `bool(a >= b) == !bool(a < b)`.
 
 ``` cpp
 template<class T, class U>
@@ -964,33 +963,33 @@ template<class T, class U>
     partially-ordered-with<T, U>;
 ```
 
-> Given types `T` and `U`, let `t` and `t2` be lvalues denoting distinct
-> equal objects of types `const remove_reference_t<T>` and
-> `remove_cvref_t<T>`, respectively, let `u` and `u2` be lvalues
-> denoting distinct equal objects of types `const remove_reference_t<U>`
-> and `remove_cvref_t<U>`, respectively, and let `C` be:
->
-> ``` cpp
-> common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
-> ```
->
-> `T` and `U` model `totally_ordered_with``<T, U>` only if
->
-> - `bool(t < u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) < `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
->
-> - `bool(t > u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) > `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
->
-> - `bool(t <= u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) <= `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
->
-> - `bool(t >= u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) >= `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
->
-> - `bool(u < t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) < `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
->
-> - `bool(u > t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) > `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
->
-> - `bool(u <= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) <= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
->
-> - `bool(u >= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) >= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
+Given types `T` and `U`, let `t` and `t2` be lvalues denoting distinct
+equal objects of types `const remove_reference_t<T>` and
+`remove_cvref_t<T>`, respectively, let `u` and `u2` be lvalues denoting
+distinct equal objects of types `const remove_reference_t<U>` and
+`remove_cvref_t<U>`, respectively, and let `C` be:
+
+``` cpp
+common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
+```
+
+`T` and `U` model `totally_ordered_with``<T, U>` only if
+
+- `bool(t < u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) < `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
+
+- `bool(t > u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) > `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
+
+- `bool(t <= u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) <= `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
+
+- `bool(t >= u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) >= `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
+
+- `bool(u < t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) < `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
+
+- `bool(u > t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) > `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
+
+- `bool(u <= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) <= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
+
+- `bool(u >= t) == bool(`*`CONVERT_TO_LVALUE`*`<C>(u2) >= `*`CONVERT_TO_LVALUE`*`<C>(t2))`.
 
 ## Object concepts <a id="concepts.object">[[concepts.object]]</a>
 
@@ -1010,13 +1009,13 @@ template<class T>
   concept regular = semiregular<T> && equality_comparable<T>;
 ```
 
-> \[*Note 12*: The `semiregular` concept is modeled by types that behave
-> similarly to fundamental types like `int`, except that they need not
-> be comparable with `==`. — *end note*\]
->
-> \[*Note 13*: The `regular` concept is modeled by types that behave
-> similarly to fundamental types like `int` and that are comparable with
-> `==`. — *end note*\]
+\[*Note 1*: The `semiregular` concept is modeled by types that behave
+similarly to fundamental types like `int`, except that they need not be
+comparable with `==`. — *end note*\]
+
+\[*Note 2*: The `regular` concept is modeled by types that behave
+similarly to fundamental types like `int` and that are comparable with
+`==`. — *end note*\]
 
 ## Callable concepts <a id="concepts.callable">[[concepts.callable]]</a>
 
@@ -1039,10 +1038,9 @@ template<class F, class... Args>
   };
 ```
 
-> \[*Example 1*: A function that generates random numbers can model
-> `invocable`, since the `invoke` function call expression is not
-> required to be
-> equality-preserving [[concepts.equality]]. — *end example*\]
+\[*Example 1*: A function that generates random numbers can model
+`invocable`, since the `invoke` function call expression is not required
+to be equality-preserving [[concepts.equality]]. — *end example*\]
 
 ### Concept  <a id="concept.regularinvocable">[[concept.regularinvocable]]</a>
 
@@ -1051,18 +1049,18 @@ template<class F, class... Args>
   concept regular_invocable = invocable<F, Args...>;
 ```
 
-> The `invoke` function call expression shall be
-> equality-preserving [[concepts.equality]] and shall not modify the
-> function object or the arguments.
->
-> \[*Note 14*: This requirement supersedes the annotation in the
-> definition of `invocable`. — *end note*\]
->
-> \[*Example 2*: A random number generator does not model
-> `regular_invocable`. — *end example*\]
->
-> \[*Note 15*: The distinction between `invocable` and
-> `regular_invocable` is purely semantic. — *end note*\]
+The `invoke` function call expression shall be
+equality-preserving [[concepts.equality]] and shall not modify the
+function object or the arguments.
+
+\[*Note 1*: This requirement supersedes the annotation in the definition
+of `invocable`. — *end note*\]
+
+\[*Example 2*: A random number generator does not model
+`regular_invocable`. — *end example*\]
+
+\[*Note 2*: The distinction between `invocable` and `regular_invocable`
+is purely semantic. — *end note*\]
 
 ### Concept  <a id="concept.predicate">[[concept.predicate]]</a>
 
@@ -1088,8 +1086,8 @@ template<class R, class T, class U>
   concept equivalence_relation = relation<R, T, U>;
 ```
 
-> A `relation` models `equivalence_relation` only if it imposes an
-> equivalence relation on its arguments.
+A `relation` models `equivalence_relation` only if it imposes an
+equivalence relation on its arguments.
 
 ### Concept  <a id="concept.strictweakorder">[[concept.strictweakorder]]</a>
 
@@ -1098,32 +1096,32 @@ template<class R, class T, class U>
   concept strict_weak_order = relation<R, T, U>;
 ```
 
-> A `relation` models `strict_weak_order` only if it imposes a on its
-> arguments.
->
-> The term refers to the requirement of an irreflexive relation
-> (`!comp(x, x)` for all `x`), and the term to requirements that are not
-> as strong as those for a total ordering, but stronger than those for a
-> partial ordering. If we define `equiv(a, b)` as
-> `!comp(a, b) && !comp(b, a)`, then the requirements are that `comp`
-> and `equiv` both be transitive relations:
->
-> - `comp(a, b) && comp(b, c)` implies `comp(a, c)`
->
-> - `equiv(a, b) && equiv(b, c)` implies `equiv(a, c)`
->
-> \[*Note 16*:
->
-> Under these conditions, it can be shown that
->
-> - `equiv` is an equivalence relation,
->
-> - `comp` induces a well-defined relation on the equivalence classes
->   determined by `equiv`, and
->
-> - the induced relation is a strict total ordering.
->
-> — *end note*\]
+A `relation` models `strict_weak_order` only if it imposes a on its
+arguments.
+
+The term refers to the requirement of an irreflexive relation
+(`!comp(x, x)` for all `x`), and the term to requirements that are not
+as strong as those for a total ordering, but stronger than those for a
+partial ordering. If we define `equiv(a, b)` as
+`!comp(a, b) && !comp(b, a)`, then the requirements are that `comp` and
+`equiv` both be transitive relations:
+
+- `comp(a, b) && comp(b, c)` implies `comp(a, c)`
+
+- `equiv(a, b) && equiv(b, c)` implies `equiv(a, c)`
+
+\[*Note 3*:
+
+Under these conditions, it can be shown that
+
+- `equiv` is an equivalence relation,
+
+- `comp` induces a well-defined relation on the equivalence classes
+  determined by `equiv`, and
+
+- the induced relation is a strict total ordering.
+
+— *end note*\]
 
 <!-- Section link definitions -->
 [concept.assignable]: #concept.assignable

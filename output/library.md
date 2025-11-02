@@ -1238,378 +1238,374 @@ expression.
 typename X::pointer
 ```
 
-> *Remarks:* Default: `T*`
+*Remarks:* Default: `T*`
 
 ``` cpp
 typename X::const_pointer
 ```
 
-> *Mandates:* `XX::pointer` is convertible to `XX::const_pointer`.
->
-> *Remarks:* Default: `pointer_traits<XX::pointer>::rebind<const T>`
+*Mandates:* `XX::pointer` is convertible to `XX::const_pointer`.
+
+*Remarks:* Default: `pointer_traits<XX::pointer>::rebind<const T>`
 
 ``` cpp
 typename X::void_pointer
 typename Y::void_pointer
 ```
 
-> *Mandates:* `XX::pointer` is convertible to `XX::void_pointer`.
-> `XX::void_pointer` and `YY::void_pointer` are the same type.
->
-> *Remarks:* Default: `pointer_traits<XX::pointer>::rebind<void>`
+*Mandates:* `XX::pointer` is convertible to `XX::void_pointer`.
+`XX::void_pointer` and `YY::void_pointer` are the same type.
+
+*Remarks:* Default: `pointer_traits<XX::pointer>::rebind<void>`
 
 ``` cpp
 typename X::const_void_pointer
 typename Y::const_void_pointer
 ```
 
-> *Mandates:* `XX::pointer`, `XX::const_pointer`, and `XX::void_pointer`
-> are convertible to `XX::const_void_pointer`. `XX::const_void_pointer`
-> and `YY::const_void_pointer` are the same type.
->
-> *Remarks:* Default: `pointer_traits<XX::pointer>::rebind<const void>`
+*Mandates:* `XX::pointer`, `XX::const_pointer`, and `XX::void_pointer`
+are convertible to `XX::const_void_pointer`. `XX::const_void_pointer`
+and `YY::const_void_pointer` are the same type.
+
+*Remarks:* Default: `pointer_traits<XX::pointer>::rebind<const void>`
 
 ``` cpp
 typename X::value_type
 ```
 
-> *Result:* Identical to `T`.
+*Result:* Identical to `T`.
 
 ``` cpp
 typename X::size_type
 ```
 
-> *Result:* An unsigned integer type that can represent the size of the
-> largest object in the allocation model.
->
-> *Remarks:* Default: `make_unsigned_t<XX::difference_type>`
+*Result:* An unsigned integer type that can represent the size of the
+largest object in the allocation model.
+
+*Remarks:* Default: `make_unsigned_t<XX::difference_type>`
 
 ``` cpp
 typename X::difference_type
 ```
 
-> *Result:* A signed integer type that can represent the difference
-> between any two pointers in the allocation model.
->
-> *Remarks:* Default: `pointer_traits<XX::pointer>::difference_type`
+*Result:* A signed integer type that can represent the difference
+between any two pointers in the allocation model.
+
+*Remarks:* Default: `pointer_traits<XX::pointer>::difference_type`
 
 ``` cpp
 typename X::template rebind<U>::other
 ```
 
-> *Result:* `Y`
->
-> *Ensures:* For all `U` (including `T`), `YY::rebind_alloc<T>` is `X`.
->
-> *Remarks:* If `Allocator` is a class template instantiation of the
-> form `SomeAllocator<T, Args>`, where `Args` is zero or more type
-> arguments, and `Allocator` does not supply a `rebind` member template,
-> the standard `allocator_traits` template uses `SomeAllocator<U, Args>`
-> in place of `Allocator::rebind<U>::other` by default. For allocator
-> types that are not template instantiations of the above form, no
-> default is provided.
->
-> \[*Note 3*: The member class template `rebind` of `X` is effectively a
-> typedef template. In general, if the name `Allocator` is bound to
-> `SomeAllocator<T>`, then `Allocator::rebind<U>::other` is the same
-> type as `SomeAllocator<U>`, where `SomeAllocator<T>::value_type` is
-> `T` and `SomeAllocator<U>::value_type` is `U`. — *end note*\]
+*Result:* `Y`
+
+*Ensures:* For all `U` (including `T`), `YY::rebind_alloc<T>` is `X`.
+
+*Remarks:* If `Allocator` is a class template instantiation of the form
+`SomeAllocator<T, Args>`, where `Args` is zero or more type arguments,
+and `Allocator` does not supply a `rebind` member template, the standard
+`allocator_traits` template uses `SomeAllocator<U, Args>` in place of
+`Allocator::rebind<U>::other` by default. For allocator types that are
+not template instantiations of the above form, no default is provided.
+
+\[*Note 12*: The member class template `rebind` of `X` is effectively a
+typedef template. In general, if the name `Allocator` is bound to
+`SomeAllocator<T>`, then `Allocator::rebind<U>::other` is the same type
+as `SomeAllocator<U>`, where `SomeAllocator<T>::value_type` is `T` and
+`SomeAllocator<U>::value_type` is `U`. — *end note*\]
 
 ``` cpp
 *p
 ```
 
-> *Result:* `T&`
+*Result:* `T&`
 
 ``` cpp
 *q
 ```
 
-> *Result:* `const T&`
->
-> *Ensures:* `*q` refers to the same object as `*p`.
+*Result:* `const T&`
+
+*Ensures:* `*q` refers to the same object as `*p`.
 
 ``` cpp
 p->m
 ```
 
-> *Result:* Type of `T::m`.
->
-> *Preconditions:* `(*p).m` is well-defined.
->
-> *Effects:* Equivalent to `(*p).m`.
+*Result:* Type of `T::m`.
+
+*Preconditions:* `(*p).m` is well-defined.
+
+*Effects:* Equivalent to `(*p).m`.
 
 ``` cpp
 q->m
 ```
 
-> *Result:* Type of `T::m`.
->
-> *Preconditions:* `(*q).m` is well-defined.
->
-> *Effects:* Equivalent to `(*q).m`.
+*Result:* Type of `T::m`.
+
+*Preconditions:* `(*q).m` is well-defined.
+
+*Effects:* Equivalent to `(*q).m`.
 
 ``` cpp
 static_cast<XX::pointer>(w)
 ```
 
-> *Result:* `XX::pointer`
->
-> *Ensures:* `static_cast<XX::pointer>(w) == p`.
+*Result:* `XX::pointer`
+
+*Ensures:* `static_cast<XX::pointer>(w) == p`.
 
 ``` cpp
 static_cast<XX::const_pointer>(x)
 ```
 
-> *Result:* `XX::const_pointer`
->
-> *Ensures:* `static_cast<XX::const_pointer>(x) == q`.
+*Result:* `XX::const_pointer`
+
+*Ensures:* `static_cast<XX::const_pointer>(x) == q`.
 
 ``` cpp
 pointer_traits<XX::pointer>::pointer_to(r)
 ```
 
-> *Result:* `XX::pointer`
->
-> *Ensures:* Same as `p`.
+*Result:* `XX::pointer`
+
+*Ensures:* Same as `p`.
 
 ``` cpp
 a.allocate(n)
 ```
 
-> *Result:* `XX::pointer`
->
-> *Effects:* Memory is allocated for an array of `n` `T` and such an
-> object is created but array elements are not constructed.
->
-> \[*Example 3*: When reusing storage denoted by some pointer value `p`,
-> `launder(reinterpret_cast<T*>(new (p) byte[n * sizeof(T)]))` can be
-> used to implicitly create a suitable array object and obtain a pointer
-> to it. — *end example*\]
->
-> *Throws:* `allocate` may throw an appropriate exception.
->
-> \[*Note 4*: It is intended that `a.allocate` be an efficient means of
-> allocating a single object of type `T`, even when `sizeof(T)` is
-> small. That is, there is no need for a container to maintain its own
-> free list. — *end note*\]
->
-> *Remarks:* If `n == 0`, the return value is unspecified.
+*Result:* `XX::pointer`
+
+*Effects:* Memory is allocated for an array of `n` `T` and such an
+object is created but array elements are not constructed.
+
+\[*Example 4*: When reusing storage denoted by some pointer value `p`,
+`launder(reinterpret_cast<T*>(new (p) byte[n * sizeof(T)]))` can be used
+to implicitly create a suitable array object and obtain a pointer to
+it. — *end example*\]
+
+*Throws:* `allocate` may throw an appropriate exception.
+
+\[*Note 13*: It is intended that `a.allocate` be an efficient means of
+allocating a single object of type `T`, even when `sizeof(T)` is small.
+That is, there is no need for a container to maintain its own free
+list. — *end note*\]
+
+*Remarks:* If `n == 0`, the return value is unspecified.
 
 ``` cpp
 a.allocate(n, y)
 ```
 
-> *Result:* `XX::pointer`
->
-> *Effects:* Same as `a.allocate(n)`. The use of `y` is unspecified, but
-> it is intended as an aid to locality.
->
-> *Remarks:* Default: `a.allocate(n)`
+*Result:* `XX::pointer`
+
+*Effects:* Same as `a.allocate(n)`. The use of `y` is unspecified, but
+it is intended as an aid to locality.
+
+*Remarks:* Default: `a.allocate(n)`
 
 ``` cpp
 a.allocate_at_least(n)
 ```
 
-> *Result:* `allocation_result<XX::pointer, XX::size_type>`
->
-> *Returns:* `allocation_result<XX::pointer, XX::size_type>{ptr, count}`
-> where `ptr` is memory allocated for an array of `count` `T` and such
-> an object is created but array elements are not constructed, such that
-> $\texttt{count} \geq \texttt{n}$. If `n == 0`, the return value is
-> unspecified.
->
-> *Throws:* `allocate_at_least` may throw an appropriate exception.
->
-> *Remarks:* Default: `{a.allocate(n), n}`.
+*Result:* `allocation_result<XX::pointer, XX::size_type>`
+
+*Returns:* `allocation_result<XX::pointer, XX::size_type>{ptr, count}`
+where `ptr` is memory allocated for an array of `count` `T` and such an
+object is created but array elements are not constructed, such that
+$\texttt{count} \geq \texttt{n}$. If `n == 0`, the return value is
+unspecified.
+
+*Throws:* `allocate_at_least` may throw an appropriate exception.
+
+*Remarks:* Default: `{a.allocate(n), n}`.
 
 ``` cpp
 a.deallocate(p, n)
 ```
 
-> *Result:* (not used)
->
-> *Preconditions:*
->
-> - If `p` is memory that was obtained by a call to
->   `a.allocate_at_least`, let `ret` be the value returned and `req` be
->   the value passed as the first argument of that call. `p` is equal to
->   `ret.ptr` and `n` is a value such that
->   $\texttt{req} \leq \texttt{n} \leq \texttt{ret.count}$.
->
-> - Otherwise, `p` is a pointer value obtained from `allocate`. `n`
->   equals the value passed as the first argument to the invocation of
->   `allocate` which returned `p`.
->
-> `p` has not been invalidated by an intervening call to `deallocate`.
->
-> *Throws:* Nothing.
+*Result:* (not used)
+
+*Preconditions:*
+
+- If `p` is memory that was obtained by a call to `a.allocate_at_least`,
+  let `ret` be the value returned and `req` be the value passed as the
+  first argument of that call. `p` is equal to `ret.ptr` and `n` is a
+  value such that
+  $\texttt{req} \leq \texttt{n} \leq \texttt{ret.count}$.
+
+- Otherwise, `p` is a pointer value obtained from `allocate`. `n` equals
+  the value passed as the first argument to the invocation of `allocate`
+  which returned `p`.
+
+`p` has not been invalidated by an intervening call to `deallocate`.
+
+*Throws:* Nothing.
 
 ``` cpp
 a.max_size()
 ```
 
-> *Result:* `XX::size_type`
->
-> *Returns:* The largest value `n` that can meaningfully be passed to
-> `a.allocate(n)`.
->
-> *Remarks:* Default:
-> `numeric_limits<size_type>::max() / sizeof(value_type)`
+*Result:* `XX::size_type`
+
+*Returns:* The largest value `n` that can meaningfully be passed to
+`a.allocate(n)`.
+
+*Remarks:* Default:
+`numeric_limits<size_type>::max() / sizeof(value_type)`
 
 ``` cpp
 a1 == a2
 ```
 
-> *Result:* `bool`
->
-> *Returns:* `true` only if storage allocated from each can be
-> deallocated via the other.
->
-> *Throws:* Nothing.
->
-> *Remarks:* `operator==` shall be reflexive, symmetric, and transitive.
+*Result:* `bool`
+
+*Returns:* `true` only if storage allocated from each can be deallocated
+via the other.
+
+*Throws:* Nothing.
+
+*Remarks:* `operator==` shall be reflexive, symmetric, and transitive.
 
 ``` cpp
 a1 != a2
 ```
 
-> *Result:* `bool`
->
-> *Returns:* `!(a1 == a2)`.
+*Result:* `bool`
+
+*Returns:* `!(a1 == a2)`.
 
 ``` cpp
 a == b
 ```
 
-> *Result:* `bool`
->
-> *Returns:* `a == YY::rebind_alloc<T>(b)`.
+*Result:* `bool`
+
+*Returns:* `a == YY::rebind_alloc<T>(b)`.
 
 ``` cpp
 a != b
 ```
 
-> *Result:* `bool`
->
-> *Returns:* `!(a == b)`.
+*Result:* `bool`
+
+*Returns:* `!(a == b)`.
 
 ``` cpp
 X u(a);
 X u = a;
 ```
 
-> *Ensures:* `u == a`
->
-> *Throws:* Nothing.
+*Ensures:* `u == a`
+
+*Throws:* Nothing.
 
 ``` cpp
 X u(b);
 ```
 
-> *Ensures:* `Y(u) == b` and `u == X(b)`.
->
-> *Throws:* Nothing.
+*Ensures:* `Y(u) == b` and `u == X(b)`.
+
+*Throws:* Nothing.
 
 ``` cpp
 X u(std::move(a));
 X u = std::move(a);
 ```
 
-> *Ensures:* The value of `a` is unchanged and is equal to `u`.
->
-> *Throws:* Nothing.
+*Ensures:* The value of `a` is unchanged and is equal to `u`.
+
+*Throws:* Nothing.
 
 ``` cpp
 X u(std::move(b));
 ```
 
-> *Ensures:* `u` is equal to the prior value of `X(b)`.
->
-> *Throws:* Nothing.
+*Ensures:* `u` is equal to the prior value of `X(b)`.
+
+*Throws:* Nothing.
 
 ``` cpp
 a.construct(c, args)
 ```
 
-> *Result:* (not used)
->
-> *Effects:* Constructs an object of type `C` at `c`.
->
-> *Remarks:* Default: `construct_at(c, std::forward<Args>(args)...)`
+*Result:* (not used)
+
+*Effects:* Constructs an object of type `C` at `c`.
+
+*Remarks:* Default: `construct_at(c, std::forward<Args>(args)...)`
 
 ``` cpp
 a.destroy(c)
 ```
 
-> *Result:* (not used)
->
-> *Effects:* Destroys the object at `c`.
->
-> *Remarks:* Default: `destroy_at(c)`
+*Result:* (not used)
+
+*Effects:* Destroys the object at `c`.
+
+*Remarks:* Default: `destroy_at(c)`
 
 ``` cpp
 a.select_on_container_copy_construction()
 ```
 
-> *Result:* `X`
->
-> *Returns:* Typically returns either `a` or `X()`.
->
-> *Remarks:* Default: `return a;`
+*Result:* `X`
+
+*Returns:* Typically returns either `a` or `X()`.
+
+*Remarks:* Default: `return a;`
 
 ``` cpp
 typename X::propagate_on_container_copy_assignment
 ```
 
-> *Result:* Identical to or derived from `true_type` or `false_type`.
->
-> *Returns:* `true_type` only if an allocator of type `X` should be
-> copied when the client container is copy-assigned; if so, `X` shall
-> meet the *Cpp17CopyAssignable* requirements
-> ( [[cpp17.copyassignable]]) and the copy operation shall not throw
-> exceptions.
->
-> *Remarks:* Default: `false_type`
+*Result:* Identical to or derived from `true_type` or `false_type`.
+
+*Returns:* `true_type` only if an allocator of type `X` should be copied
+when the client container is copy-assigned; if so, `X` shall meet the
+*Cpp17CopyAssignable* requirements ( [[cpp17.copyassignable]]) and the
+copy operation shall not throw exceptions.
+
+*Remarks:* Default: `false_type`
 
 ``` cpp
 typename X::propagate_on_container_move_assignment
 ```
 
-> *Result:* Identical to or derived from `true_type` or `false_type`.
->
-> *Returns:* `true_type` only if an allocator of type `X` should be
-> moved when the client container is move-assigned; if so, `X` shall
-> meet the *Cpp17MoveAssignable* requirements
-> ( [[cpp17.moveassignable]]) and the move operation shall not throw
-> exceptions.
->
-> *Remarks:* Default: `false_type`
+*Result:* Identical to or derived from `true_type` or `false_type`.
+
+*Returns:* `true_type` only if an allocator of type `X` should be moved
+when the client container is move-assigned; if so, `X` shall meet the
+*Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]) and the
+move operation shall not throw exceptions.
+
+*Remarks:* Default: `false_type`
 
 ``` cpp
 typename X::propagate_on_container_swap
 ```
 
-> *Result:* Identical to or derived from `true_type` or `false_type`.
->
-> *Returns:* `true_type` only if an allocator of type `X` should be
-> swapped when the client container is swapped; if so, `X` shall meet
-> the *Cpp17Swappable* requirements [[swappable.requirements]] and the
-> `swap` operation shall not throw exceptions.
->
-> *Remarks:* Default: `false_type`
+*Result:* Identical to or derived from `true_type` or `false_type`.
+
+*Returns:* `true_type` only if an allocator of type `X` should be
+swapped when the client container is swapped; if so, `X` shall meet the
+*Cpp17Swappable* requirements [[swappable.requirements]] and the `swap`
+operation shall not throw exceptions.
+
+*Remarks:* Default: `false_type`
 
 ``` cpp
 typename X::is_always_equal
 ```
 
-> *Result:* Identical to or derived from `true_type` or `false_type`.
->
-> *Returns:* `true_type` only if the expression `a1 == a2` is guaranteed
-> to be `true` for any two (possibly const) values `a1`, `a2` of type
-> `X`.
->
-> *Remarks:* Default: `is_empty<X>::type`
+*Result:* Identical to or derived from `true_type` or `false_type`.
+
+*Returns:* `true_type` only if the expression `a1 == a2` is guaranteed
+to be `true` for any two (possibly const) values `a1`, `a2` of type `X`.
+
+*Remarks:* Default: `is_empty<X>::type`
 
 An allocator type `X` shall meet the *Cpp17CopyConstructible*
 requirements ( [[cpp17.copyconstructible]]). The `XX::pointer`,
@@ -1675,10 +1671,10 @@ supported by an allocator, instantiation of the allocator for that type
 may fail. The allocator also may silently ignore the requested
 alignment.
 
-\[*Note 12*: Additionally, the member function `allocate` for that type
+\[*Note 14*: Additionally, the member function `allocate` for that type
 can fail by throwing an object of type `bad_alloc`. — *end note*\]
 
-\[*Example 4*:
+\[*Example 5*:
 
 The following is an allocator class template supporting the minimal
 interface that meets the requirements of
@@ -1744,7 +1740,7 @@ partial specialization of any standard library variable template, except
 where explicitly permitted by the specification of that variable
 template.
 
-\[*Note 13*: The requirements on an explicit or partial specialization
+\[*Note 15*: The requirements on an explicit or partial specialization
 are stated by each variable template that grants such
 permission. — *end note*\]
 
@@ -1773,7 +1769,7 @@ standard library function template. Unless `F` is designated an
 (possibly ill-formed) if it explicitly or implicitly attempts to form a
 pointer to `F`.
 
-\[*Note 14*: Possible means of forming such pointers include application
+\[*Note 16*: Possible means of forming such pointers include application
 of the unary `&` operator [[expr.unary.op]], `addressof`
 [[specialized.addressof]], or a function-to-pointer standard conversion
 [[conv.func]]. — *end note*\]
@@ -1801,7 +1797,7 @@ by one or more *digit* [[lex.name]] are reserved for future
 standardization. The behavior of a C++ program is undefined if it adds
 declarations or definitions to such a namespace.
 
-\[*Example 5*: The top-level namespace `std2` is reserved for use by
+\[*Example 6*: The top-level namespace `std2` is reserved for use by
 future revisions of this International Standard. — *end example*\]
 
 #### Reserved names <a id="reserved.names">[[reserved.names]]</a>
@@ -2130,11 +2126,11 @@ the C++ standard library, unless explicitly stated otherwise.
   this argument, except that the argument passed to a move-assignment
   operator may be a reference to `*this` [[lib.types.movedfrom]].
 
-  \[*Note 5*: If the type of a parameter is a forwarding reference
+  \[*Note 3*: If the type of a parameter is a forwarding reference
   [[temp.deduct.call]] that is deduced to an lvalue reference type, then
   the argument is not bound to an rvalue reference. — *end note*\]
 
-  \[*Note 6*: If a program casts an lvalue to an xvalue while passing
+  \[*Note 4*: If a program casts an lvalue to an xvalue while passing
   that lvalue to a library function (e.g., by calling the function with
   the argument `std::move(x)`), the program is effectively asking that
   function to treat that lvalue as a temporary object. The
@@ -2148,7 +2144,7 @@ functions from different threads may introduce a data race. The
 conditions under which this may occur are specified in 
 [[res.on.data.races]].
 
-\[*Note 15*: Modifying an object of a standard library type that is
+\[*Note 17*: Modifying an object of a standard library type that is
 shared between threads risks undefined behavior unless objects of that
 type are explicitly specified as being shareable without data races or
 the user supplies a locking mechanism. — *end note*\]
@@ -2158,7 +2154,7 @@ of the object’s lifetime [[basic.life]] does not happen before the
 access, or the access does not happen before the end of the object’s
 lifetime, the behavior is undefined unless otherwise specified.
 
-\[*Note 16*: This applies even to objects such as mutexes intended for
+\[*Note 18*: This applies even to objects such as mutexes intended for
 thread synchronization. — *end note*\]
 
 #### Semantic requirements <a id="res.on.requirements">[[res.on.requirements]]</a>
@@ -2233,7 +2229,7 @@ library to non-operator, non-member functions do not use functions from
 another namespace which are found through argument-dependent name lookup
 [[basic.lookup.argdep]].
 
-\[*Note 17*:
+\[*Note 19*:
 
 The phrase “unless otherwise specified” applies to cases such as the
 swappable with requirements [[swappable.requirements]]. The exception
@@ -2260,7 +2256,7 @@ signatures, provided that any call to the member function that would
 select an overload from the set of declarations described in this
 document behaves as if that overload were selected.
 
-\[*Note 18*: For instance, an implementation can add parameters with
+\[*Note 20*: For instance, an implementation can add parameters with
 default values, or replace a member function with default arguments with
 two or more member functions with equivalent behavior, or add additional
 signatures for a member function name. — *end note*\]
@@ -2272,11 +2268,11 @@ function template within a class or class template definition, that
 declaration shall be the only declaration of that function or function
 template provided by an implementation.
 
-\[*Note 19*: In particular, an implementation is not allowed to provide
+\[*Note 21*: In particular, an implementation is not allowed to provide
 an additional declaration of that function or function template at
 namespace scope. — *end note*\]
 
-\[*Note 20*: Such a friend function or function template declaration is
+\[*Note 22*: Such a friend function or function template declaration is
 known as a hidden friend, as it is visible neither to ordinary
 unqualified lookup [[basic.lookup.unqual]] nor to qualified lookup
 [[basic.lookup.qual]]. — *end note*\]
@@ -2330,7 +2326,7 @@ objects [[intro.multithread]] accessible by threads other than the
 current thread unless the objects are accessed directly or indirectly
 via the function’s non-const arguments, including `this`.
 
-\[*Note 21*: This means, for example, that implementations can’t use an
+\[*Note 23*: This means, for example, that implementations can’t use an
 object with static storage duration for internal purposes without
 synchronization because doing so can cause a data race even in programs
 that do not explicitly share objects between threads. — *end note*\]
@@ -2344,7 +2340,7 @@ Operations on iterators obtained by calling a standard library container
 or string member function may access the underlying container, but shall
 not modify it.
 
-\[*Note 22*: In particular, container operations that invalidate
+\[*Note 24*: In particular, container operations that invalidate
 iterators conflict with operations on iterators associated with that
 container. — *end note*\]
 
@@ -2356,7 +2352,7 @@ Unless otherwise specified, C++ standard library functions shall perform
 all operations solely within the current thread if those operations have
 effects that are visible [[intro.multithread]] to users.
 
-\[*Note 23*: This allows implementations to parallelize operations if
+\[*Note 25*: This allows implementations to parallelize operations if
 there are no visible side effects. — *end note*\]
 
 #### Protection within classes <a id="protection.within.classes">[[protection.within.classes]]</a>
@@ -2385,7 +2381,7 @@ In any case:
 - Unless explicitly stated otherwise, types with distinct names shall be
   distinct types.
 
-  \[*Note 7*: There is an implicit exception to this rule for types that
+  \[*Note 5*: There is an implicit exception to this rule for types that
   are described as synonyms [[dcl.typedef]], [[namespace.udecl]], such
   as `size_t` [[support.types]] and `streamoff`
   [[stream.types]]. — *end note*\]
@@ -2430,7 +2426,7 @@ originating from the operating system, or a reference to an
 elsewhere. The implementation shall define the possible values of
 `value()` for each of these error categories.
 
-\[*Example 6*: For operating systems that are based on POSIX,
+\[*Example 7*: For operating systems that are based on POSIX,
 implementations should define the `std::system_category()` values as
 identical to the POSIX `errno` values, with additional values as defined
 by the operating system’s documentation. Implementations for operating
