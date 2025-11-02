@@ -1287,7 +1287,7 @@ typename Y::const_void_pointer
 typename X::value_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Identical to `T`.
 
@@ -1295,7 +1295,7 @@ typename X::value_type
 typename X::size_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > An unsigned integer type that can represent the size of the largest
 > object in the allocation model.
@@ -1308,7 +1308,7 @@ typename X::size_type
 typename X::difference_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A signed integer type that can represent the difference between any
 > two pointers in the allocation model.
@@ -1321,7 +1321,7 @@ typename X::difference_type
 typename X::template rebind<U>::other
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Y`
 >
@@ -1349,7 +1349,7 @@ typename X::template rebind<U>::other
 *p
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `T&`
 
@@ -1357,7 +1357,7 @@ typename X::template rebind<U>::other
 *q
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const T&`
 >
@@ -1369,7 +1369,7 @@ typename X::template rebind<U>::other
 p->m
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Type of `T::m`.
 >
@@ -1385,7 +1385,7 @@ p->m
 q->m
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Type of `T::m`.
 >
@@ -1401,7 +1401,7 @@ q->m
 static_cast<XX::pointer>(w)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `XX::pointer`
 >
@@ -1413,7 +1413,7 @@ static_cast<XX::pointer>(w)
 static_cast<XX::const_pointer>(x)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `XX::const_pointer`
 >
@@ -1425,7 +1425,7 @@ static_cast<XX::const_pointer>(x)
 pointer_traits<XX::pointer>::pointer_to(r)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `XX::pointer`
 >
@@ -1437,7 +1437,7 @@ pointer_traits<XX::pointer>::pointer_to(r)
 a.allocate(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `XX::pointer`
 >
@@ -1468,7 +1468,7 @@ a.allocate(n)
 a.allocate(n, y)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `XX::pointer`
 >
@@ -1485,7 +1485,7 @@ a.allocate(n, y)
 a.allocate_at_least(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `allocation_result<XX::pointer, XX::size_type>`
 >
@@ -1509,7 +1509,7 @@ a.allocate_at_least(n)
 a.deallocate(p, n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > (not used)
 >
@@ -1535,7 +1535,7 @@ a.deallocate(p, n)
 a.max_size()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `XX::size_type`
 >
@@ -1552,7 +1552,7 @@ a.max_size()
 a1 == a2
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -1573,7 +1573,7 @@ a1 == a2
 a1 != a2
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -1585,7 +1585,7 @@ a1 != a2
 a == b
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -1597,7 +1597,7 @@ a == b
 a != b
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -1659,7 +1659,7 @@ X u(std::move(b));
 a.construct(c, args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > (not used)
 >
@@ -1675,7 +1675,7 @@ a.construct(c, args)
 a.destroy(c)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > (not used)
 >
@@ -1691,7 +1691,7 @@ a.destroy(c)
 a.select_on_container_copy_construction()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X`
 >
@@ -1707,7 +1707,7 @@ a.select_on_container_copy_construction()
 typename X::propagate_on_container_copy_assignment
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Identical to or derived from `true_type` or `false_type`.
 >
@@ -1726,7 +1726,7 @@ typename X::propagate_on_container_copy_assignment
 typename X::propagate_on_container_move_assignment
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Identical to or derived from `true_type` or `false_type`.
 >
@@ -1745,7 +1745,7 @@ typename X::propagate_on_container_move_assignment
 typename X::propagate_on_container_swap
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Identical to or derived from `true_type` or `false_type`.
 >
@@ -1764,7 +1764,7 @@ typename X::propagate_on_container_swap
 typename X::is_always_equal
 ```
 
-> *Returns:*
+> *Result:*
 >
 > Identical to or derived from `true_type` or `false_type`.
 >

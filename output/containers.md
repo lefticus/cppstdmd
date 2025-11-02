@@ -96,7 +96,7 @@ semantics.
 typename X::value_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `T`
 >
@@ -109,7 +109,7 @@ typename X::value_type
 typename X::reference
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `T&`
 
@@ -117,7 +117,7 @@ typename X::reference
 typename X::const_reference
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const T&`
 
@@ -125,7 +125,7 @@ typename X::const_reference
 typename X::iterator
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type that meets the forward iterator
 > requirements [[forward.iterators]] with value type `T`. The type
@@ -135,7 +135,7 @@ typename X::iterator
 typename X::const_iterator
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type that meets the requirements of a constant iterator and those of
 > a forward iterator with value type `T`.
@@ -144,7 +144,7 @@ typename X::const_iterator
 typename X::difference_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A signed integer type, identical to the difference type of
 > `X::iterator` and `X::const_iterator`.
@@ -153,7 +153,7 @@ typename X::difference_type
 typename X::size_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > An unsigned integer type that can represent any non-negative value of
 > `X::difference_type`.
@@ -205,7 +205,7 @@ X u = rv;
 t = v;
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`.
 >
@@ -221,7 +221,7 @@ t = v;
 t = rv
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`.
 >
@@ -242,7 +242,7 @@ t = rv
 a.~X()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > .
 >
@@ -258,7 +258,7 @@ a.~X()
 b.begin()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `b`.
 >
@@ -274,7 +274,7 @@ b.begin()
 b.end()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `b`.
 >
@@ -290,7 +290,7 @@ b.end()
 b.cbegin()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const_iterator`.
 >
@@ -306,7 +306,7 @@ b.cbegin()
 b.cend()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const_iterator`.
 >
@@ -322,7 +322,7 @@ b.cend()
 i <=> j
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `strong_ordering`.
 >
@@ -342,7 +342,7 @@ c == b
 >
 > `T` meets the *Cpp17EqualityComparable* requirements.
 >
-> *Returns:*
+> *Result:*
 >
 > `bool`.
 >
@@ -373,7 +373,7 @@ c != b
 t.swap(s)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > .
 >
@@ -397,7 +397,7 @@ swap(t, s)
 c.size()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`.
 >
@@ -419,7 +419,7 @@ c.size()
 c.max_size()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`.
 >
@@ -435,7 +435,7 @@ c.max_size()
 c.empty()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`.
 >
@@ -593,7 +593,7 @@ well-formed and have the specified semantics.
 typename X::reverse_iterator
 ```
 
-> *Returns:*
+> *Result:*
 >
 > The type `reverse_iterator<X::iterator>`, an iterator type whose value
 > type is `T`.
@@ -602,7 +602,7 @@ typename X::reverse_iterator
 typename X::const_reverse_iterator
 ```
 
-> *Returns:*
+> *Result:*
 >
 > The type `reverse_iterator<X::const_iterator>`, a constant iterator
 > type whose value type is `T`.
@@ -611,7 +611,7 @@ typename X::const_reverse_iterator
 a.rbegin()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reverse_iterator`; `const_reverse_iterator` for constant `a`.
 >
@@ -627,7 +627,7 @@ a.rbegin()
 a.rend()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reverse_iterator`; `const_reverse_iterator` for constant `a`.
 >
@@ -643,7 +643,7 @@ a.rend()
 a.crbegin()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const_reverse_iterator`.
 >
@@ -659,7 +659,7 @@ a.crbegin()
 a.crend()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const_reverse_iterator`.
 >
@@ -685,7 +685,7 @@ are implemented by constexpr functions.
 a <=> b
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *`synth-three-way-result`*`<X::value_type>`.
 >
@@ -811,7 +811,7 @@ expressions are well-formed and have the specified semantics.
 typename X::allocator_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `A`
 >
@@ -823,7 +823,7 @@ typename X::allocator_type
 c.get_allocator()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `A`
 >
@@ -911,7 +911,7 @@ X u(rv, m);
 a = t
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`.
 >
@@ -931,7 +931,7 @@ a = t
 a = rv
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`.
 >
@@ -959,7 +959,7 @@ a = rv
 a.swap(b)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Effects:*
 >
@@ -1123,7 +1123,7 @@ X(il)
 a = il
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`.
 >
@@ -1144,7 +1144,7 @@ a = il
 a.emplace(p, args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1171,7 +1171,7 @@ a.emplace(p, args)
 a.insert(p, t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1192,7 +1192,7 @@ a.insert(p, t)
 a.insert(p, rv)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1213,7 +1213,7 @@ a.insert(p, rv)
 a.insert(p, n, t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1234,7 +1234,7 @@ a.insert(p, n, t)
 a.insert(p, i, j)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1260,7 +1260,7 @@ a.insert(p, i, j)
 a.insert_range(p, rg)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1294,7 +1294,7 @@ a.insert(p, il)
 a.erase(q)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1316,7 +1316,7 @@ a.erase(q)
 a.erase(q1, q2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`.
 >
@@ -1338,7 +1338,7 @@ a.erase(q1, q2)
 a.clear()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Effects:*
 >
@@ -1358,7 +1358,7 @@ a.clear()
 a.assign(i, j)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1379,7 +1379,7 @@ a.assign(i, j)
 a.assign_range(rg)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Mandates:*
 >
@@ -1412,7 +1412,7 @@ a.assign(il)
 a.assign(n, t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1473,7 +1473,7 @@ containers but not others. Operations other than `prepend_range` and
 a.front()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reference; const_reference` for constant `a`.
 >
@@ -1490,7 +1490,7 @@ a.front()
 a.back()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reference; const_reference` for constant `a`.
 >
@@ -1512,7 +1512,7 @@ a.back()
 a.emplace_front(args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reference`
 >
@@ -1537,7 +1537,7 @@ a.emplace_front(args)
 a.emplace_back(args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reference`
 >
@@ -1563,7 +1563,7 @@ a.emplace_back(args)
 a.push_front(t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1581,7 +1581,7 @@ a.push_front(t)
 a.push_front(rv)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1599,7 +1599,7 @@ a.push_front(rv)
 a.prepend_range(rg)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1624,7 +1624,7 @@ a.prepend_range(rg)
 a.push_back(t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1642,7 +1642,7 @@ a.push_back(t)
 a.push_back(rv)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1660,7 +1660,7 @@ a.push_back(rv)
 a.append_range(rg)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1680,7 +1680,7 @@ a.append_range(rg)
 a.pop_front()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1698,7 +1698,7 @@ a.pop_front()
 a.pop_back()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -1716,7 +1716,7 @@ a.pop_back()
 a[n]
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reference; const_reference` for constant `a`
 >
@@ -1732,7 +1732,7 @@ a[n]
 a.at(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `reference; const_reference` for constant `a`
 >
@@ -2158,7 +2158,7 @@ required to be *Cpp17CopyAssignable* even though the associated
 typename X::key_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Key`.
 
@@ -2166,7 +2166,7 @@ typename X::key_type
 typename X::mapped_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `T`.
 >
@@ -2178,7 +2178,7 @@ typename X::mapped_type
 typename X::value_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Key` for `set` and `multiset` only; `pair<const Key, T>` for `map`
 > and `multimap` only.
@@ -2191,7 +2191,7 @@ typename X::value_type
 typename X::key_compare
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Compare`.
 >
@@ -2203,7 +2203,7 @@ typename X::key_compare
 typename X::value_compare
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A binary predicate type. It is the same as `key_compare` for `set` and
 > `multiset`; is an ordering relation on pairs induced by the first
@@ -2213,7 +2213,7 @@ typename X::value_compare
 typename X::node_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A specialization of the *node-handle* class
 > template [[container.node]], such that the public nested types are the
@@ -2345,7 +2345,7 @@ X(il)
 a = il
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`
 >
@@ -2369,7 +2369,7 @@ a = il
 b.key_comp()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::key_compare`
 >
@@ -2385,7 +2385,7 @@ b.key_comp()
 b.value_comp()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::value_compare`
 >
@@ -2401,7 +2401,7 @@ b.value_comp()
 a_uniq.emplace(args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, bool>`
 >
@@ -2429,7 +2429,7 @@ a_uniq.emplace(args)
 a_eq.emplace(args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2456,7 +2456,7 @@ a_eq.emplace(args)
 a.emplace_hint(p, args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2480,7 +2480,7 @@ a.emplace_hint(p, args)
 a_uniq.insert(t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, bool>`
 >
@@ -2508,7 +2508,7 @@ a_uniq.insert(t)
 a_eq.insert(t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2531,7 +2531,7 @@ a_eq.insert(t)
 a.insert(p, t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2561,7 +2561,7 @@ a.insert(p, t)
 a.insert(i, j)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -2584,7 +2584,7 @@ a.insert(i, j)
 a.insert_range(rg)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -2614,7 +2614,7 @@ a.insert(il)
 a_uniq.insert(nh)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `insert_return_type`
 >
@@ -2646,7 +2646,7 @@ a_uniq.insert(nh)
 a_eq.insert(nh)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2675,7 +2675,7 @@ a_eq.insert(nh)
 a.insert(p, nh)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2709,7 +2709,7 @@ a.insert(p, nh)
 a.extract(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `node_type`
 >
@@ -2730,7 +2730,7 @@ a.extract(k)
 a_tran.extract(kx)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `node_type`
 >
@@ -2752,7 +2752,7 @@ a_tran.extract(kx)
 a.extract(q)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `node_type`
 >
@@ -2772,7 +2772,7 @@ a.extract(q)
 a.merge(a2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -2804,7 +2804,7 @@ a.merge(a2)
 a.erase(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -2824,7 +2824,7 @@ a.erase(k)
 a_tran.erase(kx)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -2845,7 +2845,7 @@ a_tran.erase(kx)
 a.erase(q)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2867,7 +2867,7 @@ a.erase(q)
 a.erase(r)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2889,7 +2889,7 @@ a.erase(r)
 a.erase(q1, q2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -2928,7 +2928,7 @@ a.clear()
 b.find(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `b`.
 >
@@ -2945,7 +2945,7 @@ b.find(k)
 a_tran.find(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `a_tran`.
 >
@@ -2963,7 +2963,7 @@ a_tran.find(ke)
 b.count(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -2979,7 +2979,7 @@ b.count(k)
 a_tran.count(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -2996,7 +2996,7 @@ a_tran.count(ke)
 b.contains(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -3008,7 +3008,7 @@ b.contains(k)
 a_tran.contains(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -3020,7 +3020,7 @@ a_tran.contains(ke)
 b.lower_bound(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `b`.
 >
@@ -3037,7 +3037,7 @@ b.lower_bound(k)
 a_tran.lower_bound(kl)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `a_tran`.
 >
@@ -3054,7 +3054,7 @@ a_tran.lower_bound(kl)
 b.upper_bound(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `b`.
 >
@@ -3071,7 +3071,7 @@ b.upper_bound(k)
 a_tran.upper_bound(ku)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `a_tran`.
 >
@@ -3088,7 +3088,7 @@ a_tran.upper_bound(ku)
 b.equal_range(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
 > constant `b`.
@@ -3105,7 +3105,7 @@ b.equal_range(k)
 a_tran.equal_range(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
 > constant `a_tran`.
@@ -3364,7 +3364,7 @@ required to be *Cpp17CopyAssignable* even though the associated
 typename X::key_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Key`.
 
@@ -3372,7 +3372,7 @@ typename X::key_type
 typename X::mapped_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `T`.
 >
@@ -3384,7 +3384,7 @@ typename X::mapped_type
 typename X::value_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Key` for `unordered_set` and `unordered_multiset` only;
 > `pair<const Key, T>` for `unordered_map` and `unordered_multimap`
@@ -3398,7 +3398,7 @@ typename X::value_type
 typename X::hasher
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Hash`.
 >
@@ -3411,7 +3411,7 @@ typename X::hasher
 typename X::key_equal
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `Pred`.
 >
@@ -3425,7 +3425,7 @@ typename X::key_equal
 typename X::local_iterator
 ```
 
-> *Returns:*
+> *Result:*
 >
 > An iterator type whose category, value type, difference type, and
 > pointer and reference types are the same as `X::iterator`’s.
@@ -3438,7 +3438,7 @@ typename X::local_iterator
 typename X::const_local_iterator
 ```
 
-> *Returns:*
+> *Result:*
 >
 > An iterator type whose category, value type, difference type, and
 > pointer and reference types are the same as `X::const_iterator`’s.
@@ -3451,7 +3451,7 @@ typename X::const_local_iterator
 typename X::node_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A specialization of a *node-handle* class template [[container.node]],
 > such that the public nested types are the same types as the
@@ -3732,7 +3732,7 @@ X(b)
 a = b
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`
 >
@@ -3749,7 +3749,7 @@ a = b
 a = il
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X&`
 >
@@ -3771,7 +3771,7 @@ a = il
 b.hash_function()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `hasher`
 >
@@ -3787,7 +3787,7 @@ b.hash_function()
 b.key_eq()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `key_equal`
 >
@@ -3803,7 +3803,7 @@ b.key_eq()
 a_uniq.emplace(args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator,` `bool>`
 >
@@ -3831,7 +3831,7 @@ a_uniq.emplace(args)
 a_eq.emplace(args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -3856,7 +3856,7 @@ a_eq.emplace(args)
 a.emplace_hint(p, args)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -3883,7 +3883,7 @@ a.emplace_hint(p, args)
 a_uniq.insert(t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, bool>`
 >
@@ -3911,7 +3911,7 @@ a_uniq.insert(t)
 a_eq.insert(t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -3936,7 +3936,7 @@ a_eq.insert(t)
 a.insert(p, t)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -3964,7 +3964,7 @@ a.insert(p, t)
 a.insert(i, j)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -3984,7 +3984,7 @@ a.insert(i, j)
 a.insert_range(rg)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -4012,7 +4012,7 @@ a.insert(il)
 a_uniq.insert(nh)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `insert_return_type`
 >
@@ -4044,7 +4044,7 @@ a_uniq.insert(nh)
 a_eq.insert(nh)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -4071,7 +4071,7 @@ a_eq.insert(nh)
 a.insert(q, nh)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -4104,7 +4104,7 @@ a.insert(q, nh)
 a.extract(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `node_type`
 >
@@ -4125,7 +4125,7 @@ a.extract(k)
 a_tran.extract(kx)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `node_type`
 >
@@ -4146,7 +4146,7 @@ a_tran.extract(kx)
 a.extract(q)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `node_type`
 >
@@ -4166,7 +4166,7 @@ a.extract(q)
 a.merge(a2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -4197,7 +4197,7 @@ a.merge(a2)
 a.erase(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4217,7 +4217,7 @@ a.erase(k)
 a_tran.erase(kx)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4237,7 +4237,7 @@ a_tran.erase(kx)
 a.erase(q)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -4257,7 +4257,7 @@ a.erase(q)
 a.erase(r)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -4277,7 +4277,7 @@ a.erase(r)
 a.erase(q1, q2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`
 >
@@ -4298,7 +4298,7 @@ a.erase(q1, q2)
 a.clear()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Effects:*
 >
@@ -4316,7 +4316,7 @@ a.clear()
 b.find(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `b`.
 >
@@ -4333,7 +4333,7 @@ b.find(k)
 a_tran.find(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `iterator`; `const_iterator` for constant `a_tran`.
 >
@@ -4350,7 +4350,7 @@ a_tran.find(ke)
 b.count(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4366,7 +4366,7 @@ b.count(k)
 a_tran.count(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4398,7 +4398,7 @@ a_tran.contains(ke)
 b.equal_range(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
 > constant `b`.
@@ -4416,7 +4416,7 @@ b.equal_range(k)
 a_tran.equal_range(ke)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `pair<iterator, iterator>`; `pair<const_iterator, const_iterator>` for
 > constant `a_tran`.
@@ -4434,7 +4434,7 @@ a_tran.equal_range(ke)
 b.bucket_count()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4450,7 +4450,7 @@ b.bucket_count()
 b.max_bucket_count()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4466,7 +4466,7 @@ b.max_bucket_count()
 b.bucket(k)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4488,7 +4488,7 @@ b.bucket(k)
 b.bucket_size(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_type`
 >
@@ -4508,7 +4508,7 @@ b.bucket_size(n)
 b.begin(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `local_iterator`; `const_local_iterator` for constant `b`.
 >
@@ -4529,7 +4529,7 @@ b.begin(n)
 b.end(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `local_iterator`; `const_local_iterator` for constant `b`.
 >
@@ -4549,7 +4549,7 @@ b.end(n)
 b.cbegin(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const_local_iterator`
 >
@@ -4570,7 +4570,7 @@ b.cbegin(n)
 b.cend(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const_local_iterator`
 >
@@ -4590,7 +4590,7 @@ b.cend(n)
 b.load_factor()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `float`
 >
@@ -4606,7 +4606,7 @@ b.load_factor()
 b.max_load_factor()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `float`
 >
@@ -4625,7 +4625,7 @@ b.max_load_factor()
 a.max_load_factor(z)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Preconditions:*
 >
@@ -4640,7 +4640,7 @@ a.max_load_factor(z)
 a.rehash(n)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > *Ensures:*
 >
@@ -16123,7 +16123,7 @@ template<class IndexType, size_t Rank>
   using dextents = see below;
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type `E` that is a specialization of `extents` such that
 > `E::rank() == Rank && E::rank() == E::rank_dynamic()` is `true`, and
@@ -16182,7 +16182,7 @@ A type `M` meets the *layout mapping* requirements if
 typename M::extents_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type that is a specialization of `extents`.
 
@@ -16190,7 +16190,7 @@ typename M::extents_type
 typename M::index_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `typename M::extents_type::index_type`.
 
@@ -16198,7 +16198,7 @@ typename M::index_type
 typename M::rank_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `typename M::extents_type::rank_type`.
 
@@ -16206,7 +16206,7 @@ typename M::rank_type
 typename M::layout_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type `MP` that meets the layout mapping policy
 > requirements [[mdspan.layout.policy.reqmts]] and for which
@@ -16216,7 +16216,7 @@ typename M::layout_type
 m.extents()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `const typename M::extents_type&`
 
@@ -16224,7 +16224,7 @@ m.extents()
 m(i...)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `typename M::index_type`
 >
@@ -16238,7 +16238,7 @@ m(i...)
 m(i...) == m(static_cast<typename M::index_type>(i)...)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -16250,7 +16250,7 @@ m(i...) == m(static_cast<typename M::index_type>(i)...)
 m.required_span_size()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `typename M::index_type`
 >
@@ -16263,7 +16263,7 @@ m.required_span_size()
 m.is_unique()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -16280,7 +16280,7 @@ m.is_unique()
 m.is_exhaustive()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -16298,7 +16298,7 @@ m.is_exhaustive()
 m.is_strided()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -16324,7 +16324,7 @@ m.stride(r)
 >
 > `m.is_strided()` is `true`.
 >
-> *Returns:*
+> *Result:*
 >
 > `typename M::index_type`
 >
@@ -16336,7 +16336,7 @@ m.stride(r)
 M::is_always_unique()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A constant expression [[expr.const]] of type `bool`.
 >
@@ -16353,7 +16353,7 @@ M::is_always_unique()
 M::is_always_exhaustive()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A constant expression [[expr.const]] of type `bool`.
 >
@@ -16370,7 +16370,7 @@ M::is_always_exhaustive()
 M::is_always_strided()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A constant expression [[expr.const]] of type `bool`.
 >
@@ -17214,7 +17214,7 @@ A type `A` meets the accessor policy requirements if
 typename A::element_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A complete object type that is not an abstract class type.
 
@@ -17222,7 +17222,7 @@ typename A::element_type
 typename A::data_handle_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type that models `copyable`, and for which
 > `is_nothrow_move_constructible_v<A::data_handle_type>` is `true`,
@@ -17236,7 +17236,7 @@ typename A::data_handle_type
 typename A::reference
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type that models
 > `common_reference_with``<A::reference&&, A::element_type&>`.
@@ -17248,7 +17248,7 @@ typename A::reference
 typename A::offset_policy
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A type `OP` such that:
 >
@@ -17263,7 +17263,7 @@ typename A::offset_policy
 a.access(p, i)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `A::reference`
 >
@@ -17281,7 +17281,7 @@ a.access(p, i)
 a.offset(p, i)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `A::offset_policy::data_handle_type`
 >

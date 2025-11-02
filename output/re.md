@@ -90,7 +90,7 @@ specified semantics.
 typename X::char_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `charT`, the character container type used in the implementation of
 > class template `basic_regex`.
@@ -99,7 +99,7 @@ typename X::char_type
 typename X::string_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `basic_string<charT>`
 
@@ -107,7 +107,7 @@ typename X::string_type
 typename X::locale_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A copy constructible type that represents the locale used by the
 > traits class.
@@ -116,7 +116,7 @@ typename X::locale_type
 typename X::char_class_type
 ```
 
-> *Returns:*
+> *Result:*
 >
 > A bitmask type [[bitmask.types]] representing a particular character
 > classification.
@@ -125,7 +125,7 @@ typename X::char_class_type
 X::length(p)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `size_t`
 >
@@ -141,7 +141,7 @@ X::length(p)
 v.translate(c)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::char_type`
 >
@@ -154,7 +154,7 @@ v.translate(c)
 v.translate_nocase(c)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::char_type`
 >
@@ -168,7 +168,7 @@ v.translate_nocase(c)
 v.transform(F1, F2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::string_type`
 >
@@ -183,7 +183,7 @@ v.transform(F1, F2)
 v.transform_primary(F1, F2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::string_type`
 >
@@ -199,7 +199,7 @@ v.transform_primary(F1, F2)
 v.lookup_collatename(F1, F2)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::string_type`
 >
@@ -214,7 +214,7 @@ v.lookup_collatename(F1, F2)
 v.lookup_classname(F1, F2, b)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::char_class_type`
 >
@@ -234,7 +234,7 @@ v.lookup_classname(F1, F2, b)
 v.isctype(c, cl)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `bool`
 >
@@ -247,7 +247,7 @@ v.isctype(c, cl)
 v.value(c, I)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `int`
 >
@@ -262,7 +262,7 @@ v.value(c, I)
 u.imbue(loc)
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::locale_type`
 >
@@ -275,7 +275,7 @@ u.imbue(loc)
 v.getloc()
 ```
 
-> *Returns:*
+> *Result:*
 >
 > `X::locale_type`
 >

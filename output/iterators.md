@@ -3353,7 +3353,7 @@ template<input_iterator I>
   using \libglobal{const_iterator} = see below;
 ```
 
-> *Returns:*
+> *Result:*
 >
 > If `I` models `constant-iterator`, `I`. Otherwise,
 > `basic_const_iterator<I>`.
@@ -3363,7 +3363,7 @@ template<semiregular S>
   using \libglobal{const_sentinel} = see below;
 ```
 
-> *Returns:*
+> *Result:*
 >
 > If `S` models `input_iterator`, `const_iterator<S>`. Otherwise, `S`.
 
