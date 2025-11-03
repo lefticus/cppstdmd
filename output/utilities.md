@@ -290,20 +290,22 @@ template<class T> constexpr T&& forward(remove_reference_t<T>&& t) noexcept;
 
 \[*Example 1*:
 
-    template<class T, class A1, class A2>
-    shared_ptr<T> factory(A1&& a1, A2&& a2) {
-      return shared_ptr<T>(new T(std::forward<A1>(a1), std::forward<A2>(a2)));
-    }
+``` cpp
+template<class T, class A1, class A2>
+shared_ptr<T> factory(A1&& a1, A2&& a2) {
+  return shared_ptr<T>(new T(std::forward<A1>(a1), std::forward<A2>(a2)));
+}
 
-    struct A {
-      A(int&, const double&);
-    };
+struct A {
+  A(int&, const double&);
+};
 
-    void g() {
-      shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to \texttt{int\&}
-      int i = 2;
-      shared_ptr<A> sp2 = factory<A>(i, 1.414); // OK
-    }
+void g() {
+  shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to \texttt{int\&}
+  int i = 2;
+  shared_ptr<A> sp2 = factory<A>(i, 1.414); // OK
+}
+```
 
 In the first call to `factory`, `A1` is deduced as `int`, so 2 is
 forwarded to `A`’s constructor as an rvalue. In the second call to
@@ -325,7 +327,9 @@ template<class T, class U>
 - Let *`OVERRIDE_REF`*`(A, B)` be `remove_reference_t<B>&&` if `A` is an
   rvalue reference type, otherwise `B&`.
 - Let `V` be
-      OVERRIDE_REF(T&&, COPY_CONST(remove_reference_t<T>, remove_reference_t<U>))
+  ``` cpp
+  OVERRIDE_REF(T&&, COPY_CONST(remove_reference_t<T>, remove_reference_t<U>))
+  ```
 
 *Returns:* `static_cast<V>(x)`.
 
@@ -333,20 +337,22 @@ template<class T, class U>
 
 \[*Example 2*:
 
-    struct accessor {
-      vector<string>* container;
-      decltype(auto) operator[](this auto&& self, size_t i) {
-        return std::forward_like<decltype(self)>((*container)[i]);
-      }
-    };
-    void g() {
-      vector v{"a"s, "b"s};
-      accessor a{&v};
-      string& x = a[0];                             // OK, binds to lvalue reference
-      string&& y = std::move(a)[0];                 // OK, is rvalue reference
-      string const&& z = std::move(as_const(a))[1]; // OK, is \texttt{const\&\&}
-      string& w = as_const(a)[1];                   // error: will not bind to non-const
-    }
+``` cpp
+struct accessor {
+  vector<string>* container;
+  decltype(auto) operator[](this auto&& self, size_t i) {
+    return std::forward_like<decltype(self)>((*container)[i]);
+  }
+};
+void g() {
+  vector v{"a"s, "b"s};
+  accessor a{&v};
+  string& x = a[0];                             // OK, binds to lvalue reference
+  string&& y = std::move(a)[0];                 // OK, is rvalue reference
+  string const&& z = std::move(as_const(a))[1]; // OK, is \texttt{const\&\&}
+  string& w = as_const(a)[1];                   // error: will not bind to non-const
+}
+```
 
 — *end example*\]
 
@@ -358,22 +364,24 @@ template<class T> constexpr remove_reference_t<T>&& move(T&& t) noexcept;
 
 \[*Example 3*:
 
-    template<class T, class A1>
-    shared_ptr<T> factory(A1&& a1) {
-      return shared_ptr<T>(new T(std::forward<A1>(a1)));
-    }
+``` cpp
+template<class T, class A1>
+shared_ptr<T> factory(A1&& a1) {
+  return shared_ptr<T>(new T(std::forward<A1>(a1)));
+}
 
-    struct A {
-      A();
-      A(const A&);      // copies from lvalues
-      A(A&&);           // moves from rvalues
-    };
+struct A {
+  A();
+  A(const A&);      // copies from lvalues
+  A(A&&);           // moves from rvalues
+};
 
-    void g() {
-      A a;
-      shared_ptr<A> sp1 = factory<A>(a);                // ``\texttt{a}\!'' binds to \texttt{A(const A\&)}
-      shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``\texttt{a}\!'' binds to \texttt{A(A\&\&)}
-    }
+void g() {
+  A a;
+  shared_ptr<A> sp1 = factory<A>(a);                // ``\texttt{a}\!'' binds to \texttt{A(const A\&)}
+  shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``\texttt{a}\!'' binds to \texttt{A(A\&\&)}
+}
+```
 
 In the first call to `factory`, `A1` is deduced as `A&`, so `a` is
 forwarded as a non-const lvalue. This binds to the constructor
@@ -417,7 +425,9 @@ type.
 
 \[*Example 1*:
 
-    template<class To, class From> decltype(static_cast<To>(declval<From>())) convert(From&&);
+``` cpp
+template<class To, class From> decltype(static_cast<To>(declval<From>())) convert(From&&);
+```
 
 declares a function template `convert` which only participates in
 overload resolution if the type `From` can be explicitly converted to
@@ -539,17 +549,19 @@ calling `unreachable` is undefined. — *end note*\]
 
 \[*Example 1*:
 
-    int f(int x) {
-      switch (x) {
-      case 0:
-      case 1:
-        return x;
-      default:
-        std::unreachable();
-      }
-    }
-    int a = f(1);           // OK, \texttt{a} has value \texttt{1}
-    int b = f(3);           // undefined behavior
+``` cpp
+int f(int x) {
+  switch (x) {
+  case 0:
+  case 1:
+    return x;
+  default:
+    std::unreachable();
+  }
+}
+int a = f(1);           // OK, \texttt{a} has value \texttt{1}
+int b = f(3);           // undefined behavior
+```
 
 — *end example*\]
 
@@ -1857,8 +1869,10 @@ template<class... TTypes>
 
 \[*Example 1*:
 
-    int i; float j;
-    make_tuple(1, ref(i), cref(j));
+``` cpp
+int i; float j;
+make_tuple(1, ref(i), cref(j));
+```
 
 creates a tuple of type `tuple<int, int&, const float&>`.
 
@@ -1892,9 +1906,11 @@ effect.
 `tie` functions allow one to create tuples that unpack tuples into
 variables. `ignore` can be used for elements that are not needed:
 
-    int i; std::string s;
-    tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
-    // \texttt{i == 42}, \texttt{s == "C++"}
+``` cpp
+int i; std::string s;
+tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
+// \texttt{i == 42}, \texttt{s == "C++"}
+```
 
 — *end example*\]
 
@@ -2110,10 +2126,12 @@ template<class T, class... Types>
 
 \[*Example 1*:
 
-    const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
-    const int& i1 = get<int>(t);                    // OK, \texttt{i1} has value \texttt{1}
-    const int& i2 = get<const int>(t);              // OK, \texttt{i2} has value \texttt{2}
-    const double& d = get<double>(t);               // error: type \texttt{double} is not unique within \texttt{t}
+``` cpp
+const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
+const int& i1 = get<int>(t);                    // OK, \texttt{i1} has value \texttt{1}
+const int& i2 = get<const int>(t);              // OK, \texttt{i2} has value \texttt{2}
+const double& d = get<double>(t);               // error: type \texttt{double} is not unique within \texttt{t}
+```
 
 — *end example*\]
 
@@ -3749,7 +3767,9 @@ which is the type of the contained value after construction.
 - the expression *FUN*(`std::forward<T>(t))` (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
   \[*Note 1*:
-      variant<string, string> v("abc");
+  ``` cpp
+  variant<string, string> v("abc");
+  ```
 
   is ill-formed, as both alternative types have an equally viable
   constructor for the argument.
@@ -3944,8 +3964,10 @@ which is the type of the contained value after assignment.
 - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
   \[*Note 2*:
-      variant<string, string> v;
-      v = "abc";
+  ``` cpp
+  variant<string, string> v;
+  v = "abc";
+  ```
 
   is ill-formed, as both alternative types have an equally viable
   constructor for the argument.
@@ -4077,9 +4099,11 @@ thrown during a type-changing assignment or emplacement. The latter
 means that even a `variant<float, int>` can become
 `valueless_by_exception()`, for instance by
 
-    struct S { operator int() { throw 42; }};
-    variant<float, int> v{12.f};
-    v.emplace<1>(S());
+``` cpp
+struct S { operator int() { throw 42; }};
+variant<float, int> v{12.f};
+v.emplace<1>(S());
+```
 
 — *end note*\]
 
@@ -4870,28 +4894,30 @@ For the third overload, `is_constructible_v<T, U>` is `true`.
 
 \[*Example 1*:
 
-    any x(5);                                   // \texttt{x} holds \texttt{int}
-    assert(any_cast<int>(x) == 5);              // cast to value
-    any_cast<int&>(x) = 10;                     // cast to reference
-    assert(any_cast<int>(x) == 10);
+``` cpp
+any x(5);                                   // \texttt{x} holds \texttt{int}
+assert(any_cast<int>(x) == 5);              // cast to value
+any_cast<int&>(x) = 10;                     // cast to reference
+assert(any_cast<int>(x) == 10);
 
-    x = "Meow";                                 // \texttt{x} holds \texttt{const char*}
-    assert(strcmp(any_cast<const char*>(x), "Meow") == 0);
-    any_cast<const char*&>(x) = "Harry";
-    assert(strcmp(any_cast<const char*>(x), "Harry") == 0);
+x = "Meow";                                 // \texttt{x} holds \texttt{const char*}
+assert(strcmp(any_cast<const char*>(x), "Meow") == 0);
+any_cast<const char*&>(x) = "Harry";
+assert(strcmp(any_cast<const char*>(x), "Harry") == 0);
 
-    x = string("Meow");                         // \texttt{x} holds \texttt{string}
-    string s, s2("Jane");
-    s = move(any_cast<string&>(x));             // move from \texttt{any}
-    assert(s == "Meow");
-    any_cast<string&>(x) = move(s2);            // move to \texttt{any}
-    assert(any_cast<const string&>(x) == "Jane");
+x = string("Meow");                         // \texttt{x} holds \texttt{string}
+string s, s2("Jane");
+s = move(any_cast<string&>(x));             // move from \texttt{any}
+assert(s == "Meow");
+any_cast<string&>(x) = move(s2);            // move to \texttt{any}
+assert(any_cast<const string&>(x) == "Jane");
 
-    string cat("Meow");
-    const any y(cat);                           // \texttt{const y} holds \texttt{string}
-    assert(any_cast<const string&>(y) == cat);
+string cat("Meow");
+const any y(cat);                           // \texttt{const y} holds \texttt{string}
+assert(any_cast<const string&>(y) == cat);
 
-    any_cast<string&>(y);                       // error: cannot \texttt{any_cast} away const
+any_cast<string&>(y);                       // error: cannot \texttt{any_cast} away const
+```
 
 — *end example*\]
 
@@ -4907,9 +4933,11 @@ pointer to the object contained by `operand`; otherwise, .
 
 \[*Example 2*:
 
-    bool is_string(const any& operand) {
-      return any_cast<string>(&operand) != nullptr;
-    }
+``` cpp
+bool is_string(const any& operand) {
+  return any_cast<string>(&operand) != nullptr;
+}
+```
 
 — *end example*\]
 
@@ -5556,9 +5584,13 @@ constexpr expected& operator=(const expected& rhs);
 - If `this->has_value() && rhs.has_value()` is `true`, equivalent to
   *`val`*` = *rhs`.
 - Otherwise, if `this->has_value()` is `true`, equivalent to:
-      reinit-expected(unex, val, rhs.error())
+  ``` cpp
+  reinit-expected(unex, val, rhs.error())
+  ```
 - Otherwise, if `rhs.has_value()` is `true`, equivalent to:
-      reinit-expected(val, unex, *rhs)
+  ``` cpp
+  reinit-expected(val, unex, *rhs)
+  ```
 - Otherwise, equivalent to *`unex`*` = rhs.error()`.
 
 Then, if no exception was thrown, equivalent to:
@@ -5593,9 +5625,13 @@ constexpr expected& operator=(expected&& rhs) noexcept(see below);
 - If `this->has_value() && rhs.has_value()` is `true`, equivalent to
   *`val`*` = std::move(*rhs)`.
 - Otherwise, if `this->has_value()` is `true`, equivalent to:
-      reinit-expected(unex, val, std::move(rhs.error()))
+  ``` cpp
+  reinit-expected(unex, val, std::move(rhs.error()))
+  ```
 - Otherwise, if `rhs.has_value()` is `true`, equivalent to:
-      reinit-expected(val, unex, std::move(*rhs))
+  ``` cpp
+  reinit-expected(val, unex, std::move(*rhs))
+  ```
 - Otherwise, equivalent to *`unex`*` = std::move(rhs.error())`.
 
 Then, if no exception was thrown, equivalent to:
@@ -5629,8 +5665,10 @@ template<class U = T>
 - If `has_value()` is `true`, equivalent to:
   *`val`*` = std::forward<U>(v);`
 - Otherwise, equivalent to:
-      reinit-expected(val, unex, std::forward<U>(v));
-      has_val = true;
+  ``` cpp
+  reinit-expected(val, unex, std::forward<U>(v));
+  has_val = true;
+  ```
 
 *Returns:* `*this`.
 
@@ -5654,8 +5692,10 @@ overload.
 *Effects:*
 
 - If `has_value()` is `true`, equivalent to:
-      reinit-expected(unex, val, std::forward<GF>(e.error()));
-      has_val = false;
+  ``` cpp
+  reinit-expected(unex, val, std::forward<GF>(e.error()));
+  has_val = false;
+  ```
 - Otherwise, equivalent to: *`unex`*` = std::forward<GF>(e.error());`
 
 *Returns:* `*this`.
@@ -6400,8 +6440,10 @@ constexpr expected& operator=(expected&& rhs) noexcept(see below);
 
 - If `this->has_value() && rhs.has_value()` is `true`, no effects.
 - Otherwise, if `this->has_value()` is `true`, equivalent to:
-      construct_at(addressof(unex), std::move(rhs.unex));
-      has_val = false;
+  ``` cpp
+  construct_at(addressof(unex), std::move(rhs.unex));
+  has_val = false;
+  ```
 - Otherwise, if `rhs.has_value()` is `true`, destroys *unex* and sets
   *has_val* to `true`.
 - Otherwise, equivalent to *`unex`*` = std::move(rhs.error())`.
@@ -6430,8 +6472,10 @@ overload.
 *Effects:*
 
 - If `has_value()` is `true`, equivalent to:
-      construct_at(addressof(unex), std::forward<GF>(e.error()));
-      has_val = false;
+  ``` cpp
+  construct_at(addressof(unex), std::forward<GF>(e.error()));
+  has_val = false;
+  ```
 - Otherwise, equivalent to: *`unex`*` = std::forward<GF>(e.error());`
 
 *Returns:* `*this`.
@@ -9082,10 +9126,12 @@ unevaluated operand and either
 
 \[*Example 1*:
 
-    void f() {
-      int i{5};
-      function g = [&](double) { return i; };       // deduces \texttt{function<int(double)>}
-    }
+``` cpp
+void f() {
+  int i{5};
+  function g = [&](double) { return i; };       // deduces \texttt{function<int(double)>}
+}
+```
 
 — *end example*\]
 

@@ -4029,7 +4029,9 @@ template<forward_range R1, forward_range R2, class Pred = ranges::equal_to,
 - `{i, i + (last2 - first2)}`, where `i` is the first iterator in the
   range \[`first1`, `last1 - (last2 - first2)`) such that for every
   non-negative integer `n` less than `last2 - first2` the condition
-      bool(invoke(pred, invoke(proj1, *(i + n)), invoke(proj2, *(first2 + n))))
+  ``` cpp
+  bool(invoke(pred, invoke(proj1, *(i + n)), invoke(proj2, *(first2 + n))))
+  ```
 
   is `true`.
 - Returns `{last1, last1}` if no such iterator exists.
@@ -6177,11 +6179,15 @@ with respect to the expressions
 *Returns:*
 
 - For the overloads in namespace `std`:
-      {lower_bound(first, last, value, comp),
-       upper_bound(first, last, value, comp)}
+  ``` cpp
+  {lower_bound(first, last, value, comp),
+   upper_bound(first, last, value, comp)}
+  ```
 - For the overloads in namespace `ranges`:
-      {ranges::lower_bound(first, last, value, comp, proj),
-       ranges::upper_bound(first, last, value, comp, proj)}
+  ``` cpp
+  {ranges::lower_bound(first, last, value, comp, proj),
+   ranges::upper_bound(first, last, value, comp, proj)}
+  ```
 
 *Complexity:* At most 2 * \log_2(`last - first`) + 𝑂(1) comparisons and
 projections.
@@ -7574,11 +7580,13 @@ corresponding pair of elements that are not equivalent.
 `ranges::lexicographical_compare(I1, S1, I2, S2, Comp, Proj1, Proj2)`
 can be implemented as:
 
-    for ( ; first1 != last1 && first2 != last2 ; ++first1, (void) ++first2) {
-      if (invoke(comp, invoke(proj1, *first1), invoke(proj2, *first2))) return true;
-      if (invoke(comp, invoke(proj2, *first2), invoke(proj1, *first1))) return false;
-    }
-    return first1 == last1 && first2 != last2;
+``` cpp
+for ( ; first1 != last1 && first2 != last2 ; ++first1, (void) ++first2) {
+  if (invoke(comp, invoke(proj1, *first1), invoke(proj2, *first2))) return true;
+  if (invoke(comp, invoke(proj2, *first2), invoke(proj1, *first1))) return false;
+}
+return first1 == last1 && first2 != last2;
+```
 
 — *end example*\]
 

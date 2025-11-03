@@ -744,25 +744,29 @@ if (ct.is(m, c)) {
 
 \[*Example 1*:
 
-    regex_traits<char> t;
-    string d("d");
-    string u("upper");
-    regex_traits<char>::char_class_type f;
-    f = t.lookup_classname(d.begin(), d.end());
-    f |= t.lookup_classname(u.begin(), u.end());
-    ctype_base::mask m = convert<char>(f);  // \texttt{m == ctype_base::digit|ctype_base::upper}
+``` cpp
+regex_traits<char> t;
+string d("d");
+string u("upper");
+regex_traits<char>::char_class_type f;
+f = t.lookup_classname(d.begin(), d.end());
+f |= t.lookup_classname(u.begin(), u.end());
+ctype_base::mask m = convert<char>(f);  // \texttt{m == ctype_base::digit|ctype_base::upper}
+```
 
 — *end example*\]
 
 \[*Example 2*:
 
-    regex_traits<char> t;
-    string w("w");
-    regex_traits<char>::char_class_type f;
-    f = t.lookup_classname(w.begin(), w.end());
-    t.isctype('A', f);  // returns \texttt{true}
-    t.isctype('_', f);  // returns \texttt{true}
-    t.isctype(' ', f);  // returns \texttt{false}
+``` cpp
+regex_traits<char> t;
+string w("w");
+regex_traits<char>::char_class_type f;
+f = t.lookup_classname(w.begin(), w.end());
+t.isctype('A', f);  // returns \texttt{true}
+t.isctype('_', f);  // returns \texttt{true}
+t.isctype(' ', f);  // returns \texttt{false}
+```
 
 — *end example*\]
 
@@ -1791,12 +1795,14 @@ considered. Returns `true` if such a match exists, `false` otherwise.
 
 \[*Example 1*:
 
-    std::regex re("Get|GetValue");
-    std::cmatch m;
-    regex_search("GetValue", m, re);        // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"Get"}
-    regex_match ("GetValue", m, re);        // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"GetValue"}
-    regex_search("GetValues", m, re);       // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"Get"}
-    regex_match ("GetValues", m, re);       // returns \texttt{false}
+``` cpp
+std::regex re("Get|GetValue");
+std::cmatch m;
+regex_search("GetValue", m, re);        // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"Get"}
+regex_match ("GetValue", m, re);        // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"GetValue"}
+regex_search("GetValues", m, re);       // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"Get"}
+regex_match ("GetValues", m, re);       // returns \texttt{false}
+```
 
 — *end example*\]
 
@@ -1970,12 +1976,18 @@ out = copy(first, last, out)
 If any matches are found then, for each such match:
 
 - If `!(flags & regex_constants::format_no_copy)`, calls
-      out = copy(m.prefix().first, m.prefix().second, out)
+  ``` cpp
+  out = copy(m.prefix().first, m.prefix().second, out)
+  ```
 - Then calls
-      out = m.format(out, fmt, flags)
+  ``` cpp
+  out = m.format(out, fmt, flags)
+  ```
 
   for the first form of the function and
-      out = m.format(out, fmt, fmt + char_traits<charT>::length(fmt), flags)
+  ``` cpp
+  out = m.format(out, fmt, fmt + char_traits<charT>::length(fmt), flags)
+  ```
 
   for the second.
 

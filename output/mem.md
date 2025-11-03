@@ -913,8 +913,10 @@ template<class T, class Alloc, class... Args>
 - Otherwise, if `uses_allocator_v<remove_cv_t<T>, Alloc>` is `true` and
   `is_constructible_v<T, allocator_arg_t, const Alloc&, Args...>` is
   `true`, return
-      tuple<allocator_arg_t, const Alloc&, Args&&...>(
-        allocator_arg, alloc, std::forward<Args>(args)...)
+  ``` cpp
+  tuple<allocator_arg_t, const Alloc&, Args&&...>(
+    allocator_arg, alloc, std::forward<Args>(args)...)
+  ```
 - Otherwise, if `uses_allocator_v<remove_cv_t<T>, Alloc>` is `true` and
   `is_constructible_v<T, Args..., const Alloc&>` is `true`, return
   `forward_as_tuple(std::forward<Args>(args)..., alloc)`.
@@ -1716,12 +1718,14 @@ as deleted.
 
 \[*Example 2*:
 
-    D d;
-    unique_ptr<int, D> p1(new int, D());        // \texttt{D} must be \textit{Cpp17MoveConstructible}
-    unique_ptr<int, D> p2(new int, d);          // \texttt{D} must be \textit{Cpp17CopyConstructible}
-    unique_ptr<int, D&> p3(new int, d);         // \texttt{p3} holds a reference to \texttt{d}
-    unique_ptr<int, const D&> p4(new int, D()); // error: rvalue deleter object combined
-                                                // with reference deleter type
+``` cpp
+D d;
+unique_ptr<int, D> p1(new int, D());        // \texttt{D} must be \textit{Cpp17MoveConstructible}
+unique_ptr<int, D> p2(new int, d);          // \texttt{D} must be \textit{Cpp17CopyConstructible}
+unique_ptr<int, D&> p3(new int, d);         // \texttt{p3} holds a reference to \texttt{d}
+unique_ptr<int, const D&> p4(new int, D()); // error: rvalue deleter object combined
+                                            // with reference deleter type
+```
 
 — *end example*\]
 
@@ -2633,10 +2637,12 @@ destruction are not observable side effects, so the implementation can
 meet the effects (and the implied guarantees) via different means,
 without creating a temporary. In particular, in the example:
 
-    shared_ptr<int> p(new int);
-    shared_ptr<void> q(p);
-    p = p;
-    q = p;
+``` cpp
+shared_ptr<int> p(new int);
+shared_ptr<void> q(p);
+p = p;
+q = p;
+```
 
 both assignments can be no-ops.
 
@@ -2900,9 +2906,11 @@ object of type `T`.
 
 \[*Example 2*:
 
-    shared_ptr<int> p = make_shared<int>(); // \texttt{shared_ptr} to \texttt{int()}
-    shared_ptr<vector<int>> q = make_shared<vector<int>>(16, 1);
-      // \texttt{shared_ptr} to vector of \texttt{16} elements with value \texttt{1}
+``` cpp
+shared_ptr<int> p = make_shared<int>(); // \texttt{shared_ptr} to \texttt{int()}
+shared_ptr<vector<int>> q = make_shared<vector<int>>(16, 1);
+  // \texttt{shared_ptr} to vector of \texttt{16} elements with value \texttt{1}
+```
 
 — *end example*\]
 
@@ -2920,10 +2928,12 @@ initial value, where `U` is `remove_extent_t<T>`.
 
 \[*Example 3*:
 
-    shared_ptr<double[]> p = make_shared<double[]>(1024);
-      // \texttt{shared_ptr} to a value-initialized \texttt{double[1024]}
-    shared_ptr<double[][2][2]> q = make_shared<double[][2][2]>(6);
-      // \texttt{shared_ptr} to a value-initialized \texttt{double[6][2][2]}
+``` cpp
+shared_ptr<double[]> p = make_shared<double[]>(1024);
+  // \texttt{shared_ptr} to a value-initialized \texttt{double[1024]}
+shared_ptr<double[][2][2]> q = make_shared<double[][2][2]>(6);
+  // \texttt{shared_ptr} to a value-initialized \texttt{double[6][2][2]}
+```
 
 — *end example*\]
 
@@ -2941,10 +2951,12 @@ initial value.
 
 \[*Example 4*:
 
-    shared_ptr<double[1024]> p = make_shared<double[1024]>();
-      // \texttt{shared_ptr} to a value-initialized \texttt{double[1024]}
-    shared_ptr<double[6][2][2]> q = make_shared<double[6][2][2]>();
-      // \texttt{shared_ptr} to a value-initialized \texttt{double[6][2][2]}
+``` cpp
+shared_ptr<double[1024]> p = make_shared<double[1024]>();
+  // \texttt{shared_ptr} to a value-initialized \texttt{double[1024]}
+shared_ptr<double[6][2][2]> q = make_shared<double[6][2][2]>();
+  // \texttt{shared_ptr} to a value-initialized \texttt{double[6][2][2]}
+```
 
 — *end example*\]
 
@@ -2964,12 +2976,14 @@ template<class T, class A>
 
 \[*Example 5*:
 
-    shared_ptr<double[]> p = make_shared<double[]>(1024, 1.0);
-      // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
-    shared_ptr<double[][2]> q = make_shared<double[][2]>(6, {1.0, 0.0});
-      // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each \texttt{double[2]} element is \texttt{{1.0, 0.0}}
-    shared_ptr<vector<int>[]> r = make_shared<vector<int>[]>(4, {1, 2});
-      // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
+``` cpp
+shared_ptr<double[]> p = make_shared<double[]>(1024, 1.0);
+  // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
+shared_ptr<double[][2]> q = make_shared<double[][2]>(6, {1.0, 0.0});
+  // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each \texttt{double[2]} element is \texttt{{1.0, 0.0}}
+shared_ptr<vector<int>[]> r = make_shared<vector<int>[]>(4, {1, 2});
+  // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
+```
 
 — *end example*\]
 
@@ -2988,12 +3002,14 @@ element of type `remove_extent_t<T>` has an initial value of `u`.
 
 \[*Example 6*:
 
-    shared_ptr<double[1024]> p = make_shared<double[1024]>(1.0);
-      // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
-    shared_ptr<double[6][2]> q = make_shared<double[6][2]>({1.0, 0.0});
-      // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each double[2] element is \texttt{{1.0, 0.0}}
-    shared_ptr<vector<int>[4]> r = make_shared<vector<int>[4]>({1, 2});
-      // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
+``` cpp
+shared_ptr<double[1024]> p = make_shared<double[1024]>(1.0);
+  // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
+shared_ptr<double[6][2]> q = make_shared<double[6][2]>({1.0, 0.0});
+  // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each double[2] element is \texttt{{1.0, 0.0}}
+shared_ptr<vector<int>[4]> r = make_shared<vector<int>[4]>({1, 2});
+  // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
+```
 
 — *end example*\]
 
@@ -3010,12 +3026,14 @@ template<class T, class A>
 
 \[*Example 7*:
 
-    struct X { double data[1024]; };
-    shared_ptr<X> p = make_shared_for_overwrite<X>();
-      // \texttt{shared_ptr} to a default-initialized \texttt{X}, where each element in \texttt{X::data} has an indeterminate value
+``` cpp
+struct X { double data[1024]; };
+shared_ptr<X> p = make_shared_for_overwrite<X>();
+  // \texttt{shared_ptr} to a default-initialized \texttt{X}, where each element in \texttt{X::data} has an indeterminate value
 
-    shared_ptr<double[1024]> q = make_shared_for_overwrite<double[1024]>();
-      // \texttt{shared_ptr} to a default-initialized \texttt{double[1024]}, where each element has an indeterminate value
+shared_ptr<double[1024]> q = make_shared_for_overwrite<double[1024]>();
+  // \texttt{shared_ptr} to a default-initialized \texttt{double[1024]}, where each element has an indeterminate value
+```
 
 — *end example*\]
 
@@ -3033,8 +3051,10 @@ template<class T, class A>
 
 \[*Example 8*:
 
-    shared_ptr<double[]> p = make_shared_for_overwrite<double[]>(1024);
-      // \texttt{shared_ptr} to a default-initialized \texttt{double[1024]}, where each element has an indeterminate value
+``` cpp
+shared_ptr<double[]> p = make_shared_for_overwrite<double[]>(1024);
+  // \texttt{shared_ptr} to a default-initialized \texttt{double[1024]}, where each element has an indeterminate value
+```
 
 — *end example*\]
 
@@ -3632,12 +3652,16 @@ explicit out_ptr_t(Smart& smart, Args... args);
 `std::forward<Args>(args)...`, and value-initializes `p`. Then,
 equivalent to:
 
-- s.reset();
+- ``` cpp
+  s.reset();
+  ```
 
   if the expression `s.reset()` is well-formed;
 
 - otherwise,
-      s = Smart();
+  ``` cpp
+  s = Smart();
+  ```
 
   if `is_constructible_v<Smart>` is `true`;
 
@@ -3658,20 +3682,24 @@ Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)`[[memory.general]].
 
 *Effects:* Equivalent to:
 
-- if (p) {
-        apply([&](auto&&... args) {
-          s.reset(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
-      }
+- ``` cpp
+  if (p) {
+    apply([&](auto&&... args) {
+      s.reset(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
+  }
+  ```
 
   if the expression
   `s.reset(static_cast<SP>(p), std::forward<Args>(args)...)` is
   well-formed;
 
 - otherwise,
-      if (p) {
-        apply([&](auto&&... args) {
-          s = Smart(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
-      }
+  ``` cpp
+  if (p) {
+    apply([&](auto&&... args) {
+      s = Smart(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
+  }
+  ```
 
   if `is_constructible_v<Smart, SP, Args...>` is `true`;
 
@@ -3822,30 +3850,36 @@ call `s.release()` in the constructor. Otherwise, it is empty.
 
 *Effects:* Equivalent to:
 
-- if (p) {
-        apply([&](auto&&... args) {
-          s = Smart( static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
-      }
+- ``` cpp
+  if (p) {
+    apply([&](auto&&... args) {
+      s = Smart( static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
+  }
+  ```
 
   if `is_pointer_v<Smart>` is `true`;
 
 - otherwise,
-      release-statement;
-      if (p) {
-        apply([&](auto&&... args) {
-          s.reset(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
-      }
+  ``` cpp
+  release-statement;
+  if (p) {
+    apply([&](auto&&... args) {
+      s.reset(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
+  }
+  ```
 
   if the expression
   `s.reset(static_cast<SP>(p), std::forward<Args>(args)...)` is
   well-formed;
 
 - otherwise,
-      release-statement;
-      if (p) {
-        apply([&](auto&&... args) {
-          s = Smart(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
-      }
+  ``` cpp
+  release-statement;
+  if (p) {
+    apply([&](auto&&... args) {
+      s = Smart(static_cast<SP>(p), std::forward<Args>(args)...); }, std::move(a));
+  }
+  ```
 
   if `is_constructible_v<Smart, SP, Args...>` is `true`;
 
@@ -4190,7 +4224,9 @@ of type `T`, as follows:
 - if `numeric_limits<size_t>::max() / sizeof(T) < n`, throws
   `bad_array_new_length`,
 - otherwise equivalent to:
-      return static_cast<T*>(allocate_bytes(n*sizeof(T), alignof(T)));
+  ``` cpp
+  return static_cast<T*>(allocate_bytes(n*sizeof(T), alignof(T)));
+  ```
 
 \[*Note 2*: `T` is not deduced and must therefore be provided as a
 template argument. — *end note*\]

@@ -1074,12 +1074,14 @@ by an array `std::byte[Len]` declared with
 
 A typical implementation would define `aligned_storage` as:
 
-    template<size_t Len, size_t Alignment>
-    struct aligned_storage {
-      typedef struct {
-        alignas(Alignment) unsigned char __data[Len];
-      } type;
-    };
+``` cpp
+template<size_t Len, size_t Alignment>
+struct aligned_storage {
+  typedef struct {
+    alignas(Alignment) unsigned char __data[Len];
+  } type;
+};
+```
 
 — *end note*\]
 
@@ -1888,9 +1890,11 @@ performed is unspecified.
 A string is to be read from a database that is encoded in UTF-8, and
 used to create a directory using the native encoding for filenames:
 
-    namespace fs = std::filesystem;
-    std::string utf8_string = read_utf8_data();
-    fs::create_directory(fs::u8path(utf8_string));
+``` cpp
+namespace fs = std::filesystem;
+std::string utf8_string = read_utf8_data();
+fs::create_directory(fs::u8path(utf8_string));
+```
 
 For POSIX-based operating systems with the native narrow encoding set to
 UTF-8, no encoding or type conversion occurs.
@@ -1982,7 +1986,9 @@ operation, constitutes a data race.
 
 \[*Example 1*:
 
-    atomic<int> v = ATOMIC_VAR_INIT(5);
+``` cpp
+atomic<int> v = ATOMIC_VAR_INIT(5);
+```
 
 — *end example*\]
 

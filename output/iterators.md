@@ -4126,19 +4126,23 @@ indirectly_readable<const I> &&
   `return get<I>(v_);`
 - Otherwise, if `iter_reference_t<I>` is a reference type, equivalent
   to:
-      auto&& tmp = *get<I>(v_);
-      return addressof(tmp);
+  ``` cpp
+  auto&& tmp = *get<I>(v_);
+  return addressof(tmp);
+  ```
 - Otherwise, equivalent to: `return `*`proxy`*`(*get<I>(v_));` where
   *proxy* is the exposition-only class:
-      class proxy {
-        iter_value_t<I> keep_;
-        constexpr proxy(iter_reference_t<I>&& x)
-          : keep_(std::move(x)) {}
-      public:
-        constexpr const iter_value_t<I>* operator->() const noexcept {
-          return addressof(keep_);
-        }
-      };
+  ``` cpp
+  class proxy {
+    iter_value_t<I> keep_;
+    constexpr proxy(iter_reference_t<I>&& x)
+      : keep_(std::move(x)) {}
+  public:
+    constexpr const iter_value_t<I>* operator->() const noexcept {
+      return addressof(keep_);
+    }
+  };
+  ```
 
 #### Navigation <a id="common.iter.nav">[[common.iter.nav]]</a>
 

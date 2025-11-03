@@ -4398,8 +4398,10 @@ sequence designated by `slicearr`.
 
 \[*Example 1*:
 
-    const valarray<char> v0("abcdefghijklmnop", 16);
-    // \texttt{v0[slice(2, 5, 3)]} returns \texttt{valarray<char>("cfilo", 5)}
+``` cpp
+const valarray<char> v0("abcdefghijklmnop", 16);
+// \texttt{v0[slice(2, 5, 3)]} returns \texttt{valarray<char>("cfilo", 5)}
+```
 
 — *end example*\]
 
@@ -4412,10 +4414,12 @@ sequence selected by `slicearr`.
 
 \[*Example 2*:
 
-    valarray<char> v0("abcdefghijklmnop", 16);
-    valarray<char> v1("ABCDE", 5);
-    v0[slice(2, 5, 3)] = v1;
-    // \texttt{v0 == valarray<char>("abAdeBghCjkDmnEp", 16);}
+``` cpp
+valarray<char> v0("abcdefghijklmnop", 16);
+valarray<char> v1("ABCDE", 5);
+v0[slice(2, 5, 3)] = v1;
+// \texttt{v0 == valarray<char>("abAdeBghCjkDmnEp", 16);}
+```
 
 — *end example*\]
 
@@ -4428,12 +4432,14 @@ sequence designated by `gslicearr`.
 
 \[*Example 3*:
 
-    const valarray<char> v0("abcdefghijklmnop", 16);
-    const size_t lv[] = { 2, 3 };
-    const size_t dv[] = { 7, 2 };
-    const valarray<size_t> len(lv, 2), str(dv, 2);
-    // \texttt{v0[gslice(3, len, str)]} returns
-    // \texttt{valarray<char>("dfhkmo", 6)}
+``` cpp
+const valarray<char> v0("abcdefghijklmnop", 16);
+const size_t lv[] = { 2, 3 };
+const size_t dv[] = { 7, 2 };
+const valarray<size_t> len(lv, 2), str(dv, 2);
+// \texttt{v0[gslice(3, len, str)]} returns
+// \texttt{valarray<char>("dfhkmo", 6)}
+```
 
 — *end example*\]
 
@@ -4446,13 +4452,15 @@ sequence selected by `gslicearr`.
 
 \[*Example 4*:
 
-    valarray<char> v0("abcdefghijklmnop", 16);
-    valarray<char> v1("ABCDEF", 6);
-    const size_t lv[] = { 2, 3 };
-    const size_t dv[] = { 7, 2 };
-    const valarray<size_t> len(lv, 2), str(dv, 2);
-    v0[gslice(3, len, str)] = v1;
-    // \texttt{v0 == valarray<char>("abcAeBgCijDlEnFp", 16)}
+``` cpp
+valarray<char> v0("abcdefghijklmnop", 16);
+valarray<char> v1("ABCDEF", 6);
+const size_t lv[] = { 2, 3 };
+const size_t dv[] = { 7, 2 };
+const valarray<size_t> len(lv, 2), str(dv, 2);
+v0[gslice(3, len, str)] = v1;
+// \texttt{v0 == valarray<char>("abcAeBgCijDlEnFp", 16)}
+```
 
 — *end example*\]
 
@@ -4465,10 +4473,12 @@ sequence designated by `boolarr`.
 
 \[*Example 5*:
 
-    const valarray<char> v0("abcdefghijklmnop", 16);
-    const bool vb[] = { false, false, true, true, false, true };
-    // \texttt{v0[valarray<bool>(vb, 6)]} returns
-    // \texttt{valarray<char>("cdf", 3)}
+``` cpp
+const valarray<char> v0("abcdefghijklmnop", 16);
+const bool vb[] = { false, false, true, true, false, true };
+// \texttt{v0[valarray<bool>(vb, 6)]} returns
+// \texttt{valarray<char>("cdf", 3)}
+```
 
 — *end example*\]
 
@@ -4481,11 +4491,13 @@ sequence selected by `boolarr`.
 
 \[*Example 6*:
 
-    valarray<char> v0("abcdefghijklmnop", 16);
-    valarray<char> v1("ABC", 3);
-    const bool vb[] = { false, false, true, true, false, true };
-    v0[valarray<bool>(vb, 6)] = v1;
-    // \texttt{v0 == valarray<char>("abABeCghijklmnop", 16)}
+``` cpp
+valarray<char> v0("abcdefghijklmnop", 16);
+valarray<char> v1("ABC", 3);
+const bool vb[] = { false, false, true, true, false, true };
+v0[valarray<bool>(vb, 6)] = v1;
+// \texttt{v0 == valarray<char>("abABeCghijklmnop", 16)}
+```
 
 — *end example*\]
 
@@ -4498,10 +4510,12 @@ sequence designated by `indarr`.
 
 \[*Example 7*:
 
-    const valarray<char> v0("abcdefghijklmnop", 16);
-    const size_t vi[] = { 7, 5, 2, 3, 8 };
-    // \texttt{v0[valarray<size_t>(vi, 5)]} returns
-    // \texttt{valarray<char>("hfcdi", 5)}
+``` cpp
+const valarray<char> v0("abcdefghijklmnop", 16);
+const size_t vi[] = { 7, 5, 2, 3, 8 };
+// \texttt{v0[valarray<size_t>(vi, 5)]} returns
+// \texttt{valarray<char>("hfcdi", 5)}
+```
 
 — *end example*\]
 
@@ -4514,11 +4528,13 @@ sequence selected by `indarr`.
 
 \[*Example 8*:
 
-    valarray<char> v0("abcdefghijklmnop", 16);
-    valarray<char> v1("ABCDE", 5);
-    const size_t vi[] = { 7, 5, 2, 3, 8 };
-    v0[valarray<size_t>(vi, 5)] = v1;
-    // \texttt{v0 == valarray<char>("abCDeBgAEjklmnop", 16)}
+``` cpp
+valarray<char> v0("abcdefghijklmnop", 16);
+valarray<char> v1("ABCDE", 5);
+const size_t vi[] = { 7, 5, 2, 3, 8 };
+v0[valarray<size_t>(vi, 5)] = v1;
+// \texttt{v0 == valarray<char>("abCDeBgAEjklmnop", 16)}
+```
 
 — *end example*\]
 
@@ -5359,10 +5375,12 @@ to which it refers more than once, the behavior is undefined.
 
 \[*Example 1*:
 
-    int addr[] = {2, 3, 1, 4, 4};
-    valarray<size_t> indirect(addr, 5);
-    valarray<double> a(0., 10), b(1., 5);
-    a[indirect] = b;
+``` cpp
+int addr[] = {2, 3, 1, 4, 4};
+valarray<size_t> indirect(addr, 5);
+valarray<double> a(0., 10), b(1., 5);
+a[indirect] = b;
+```
 
 results in undefined behavior since element 4 is specified twice in the
 indirection.

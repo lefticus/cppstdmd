@@ -1178,13 +1178,15 @@ if consteval {
 
 \[*Example 1*:
 
-    constexpr void f(unsigned char *p, int n) {
-      if (std::is_constant_evaluated()) {           // should not be a constexpr if statement
-        for (int k = 0; k<n; ++k) p[k] = 0;
-      } else {
-        memset(p, 0, n);                            // not a core constant expression
-      }
-    }
+``` cpp
+constexpr void f(unsigned char *p, int n) {
+  if (std::is_constant_evaluated()) {           // should not be a constexpr if statement
+    for (int k = 0; k<n; ++k) p[k] = 0;
+  } else {
+    memset(p, 0, n);                            // not a core constant expression
+  }
+}
+```
 
 — *end example*\]
 

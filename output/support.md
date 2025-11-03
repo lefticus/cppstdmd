@@ -1638,8 +1638,10 @@ pointer.
 
 \[*Example 1*:
 
-    T* p1 = new T;                  // throws \texttt{bad_alloc} if it fails
-    T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
+``` cpp
+T* p1 = new T;                  // throws \texttt{bad_alloc} if it fails
+T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
+```
 
 — *end example*\]
 
@@ -1887,8 +1889,10 @@ placement forms of `operator new` and `operator delete`.
 
 This can be useful for constructing an object at a known address:
 
-    void* place = operator new(sizeof(Something));
-    Something* p = new (place) Something();
+``` cpp
+void* place = operator new(sizeof(Something));
+Something* p = new (place) Something();
+```
 
 — *end example*\]
 
@@ -2048,12 +2052,14 @@ See  [[basic.life]]. — *end note*\]
 
 \[*Example 1*:
 
-    struct X { int n; };
-    const X *p = new const X{3};
-    const int a = p->n;
-    new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new objectREF:basic.life because its type is \keyword{const}
-    const int b = p->n;                 // undefined behavior
-    const int c = std::launder(p)->n;   // OK
+``` cpp
+struct X { int n; };
+const X *p = new const X{3};
+const int a = p->n;
+new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new objectREF:basic.life because its type is \keyword{const}
+const int b = p->n;                 // undefined behavior
+const int c = std::launder(p)->n;   // OK
+```
 
 — *end example*\]
 

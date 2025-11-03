@@ -2905,10 +2905,12 @@ Otherwise, these operations are atomic load operations on that memory.
 For example, the effect of `compare_exchange_strong` on objects without
 padding bits [[term.padding.bits]] is
 
-    if (memcmp(this, &expected, sizeof(*this)) == 0)
-      memcpy(this, &desired, sizeof(*this));
-    else
-      memcpy(&expected, this, sizeof(*this));
+``` cpp
+if (memcmp(this, &expected, sizeof(*this)) == 0)
+  memcpy(this, &desired, sizeof(*this));
+else
+  memcpy(&expected, this, sizeof(*this));
+```
 
 — *end note*\]
 
@@ -2918,10 +2920,12 @@ The expected use of the compare-and-exchange operations is as follows.
 The compare-and-exchange operations will update `expected` when another
 iteration of the loop is needed.
 
-    expected = current.load();
-    do {
-      desired = function(expected);
-    } while (!current.compare_exchange_weak(expected, desired));
+``` cpp
+expected = current.load();
+do {
+  desired = function(expected);
+} while (!current.compare_exchange_weak(expected, desired));
+```
 
 — *end example*\]
 
@@ -2932,9 +2936,11 @@ the memory containing the `expected` value on success will work. For
 example, list head insertion will act atomically and would not introduce
 a data race in the following code:
 
-    do {
-      p->next = head;                                   // make new list node point to the current head
-    } while (!head.compare_exchange_weak(p->next, p));  // try to insert
+``` cpp
+do {
+  p->next = head;                                   // make new list node point to the current head
+} while (!head.compare_exchange_weak(p->next, p));  // try to insert
+```
 
 — *end example*\]
 
@@ -2974,17 +2980,19 @@ padding bits that never participate in the object’s value representation
 are ignored. As a consequence, the following code is guaranteed to avoid
 spurious failure:
 
-    struct padded {
-      char clank = 0x42;
-      // Padding here.
-      unsigned biff = 0xC0DEFEFE;
-    };
-    atomic<padded> pad = {};
+``` cpp
+struct padded {
+  char clank = 0x42;
+  // Padding here.
+  unsigned biff = 0xC0DEFEFE;
+};
+atomic<padded> pad = {};
 
-    bool zap() {
-      padded expected, desired{0, 0};
-      return pad.compare_exchange_strong(expected, desired);
-    }
+bool zap() {
+  padded expected, desired{0, 0};
+  return pad.compare_exchange_strong(expected, desired);
+}
+```
 
 — *end note*\]
 
@@ -2996,16 +3004,18 @@ This is because such padding bits have an indeterminate value when they
 do not participate in the value representation of the active member. As
 a consequence, the following code is not guaranteed to ever succeed:
 
-    union pony {
-      double celestia = 0.;
-      short luna;       // padded
-    };
-    atomic<pony> princesses = {};
+``` cpp
+union pony {
+  double celestia = 0.;
+  short luna;       // padded
+};
+atomic<pony> princesses = {};
 
-    bool party(pony desired) {
-      pony expected;
-      return princesses.compare_exchange_strong(expected, desired);
-    }
+bool party(pony desired) {
+  pony expected;
+  return princesses.compare_exchange_strong(expected, desired);
+}
+```
 
 — *end note*\]
 
@@ -5983,31 +5993,33 @@ required [[thread.req.exception]], or any exception thrown by `func`.
 
 \[*Example 1*:
 
-    // global flag, regular function
-    void init();
-    std::once_flag flag;
+``` cpp
+// global flag, regular function
+void init();
+std::once_flag flag;
 
-    void f() {
-      std::call_once(flag, init);
-    }
+void f() {
+  std::call_once(flag, init);
+}
 
-    // function static flag, function object
-    struct initializer {
-      void operator()();
-    };
+// function static flag, function object
+struct initializer {
+  void operator()();
+};
 
-    void g() {
-      static std::once_flag flag2;
-      std::call_once(flag2, initializer());
-    }
+void g() {
+  static std::once_flag flag2;
+  std::call_once(flag2, initializer());
+}
 
-    // object flag, member function
-    class information {
-      std::once_flag verified;
-      void verifier();
-    public:
-      void verify() { std::call_once(verified, &information::verifier, *this); }
-    };
+// object flag, member function
+class information {
+  std::once_flag verified;
+  void verifier();
+public:
+  void verify() { std::call_once(verified, &information::verifier, *this); }
+};
+```
 
 — *end example*\]
 

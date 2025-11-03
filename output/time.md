@@ -1175,8 +1175,10 @@ template<class Rep2>
 
 \[*Example 1*:
 
-    duration<int, milli> d(3);          // OK
-    duration<int, milli> d(3.5);        // error
+``` cpp
+duration<int, milli> d(3);          // OK
+duration<int, milli> d(3.5);        // error
+```
 
 — *end example*\]
 
@@ -1199,9 +1201,11 @@ could easily lead to confusion about the value of the
 
 \[*Example 2*:
 
-    duration<int, milli> ms(3);
-    duration<int, micro> us = ms;       // OK
-    duration<int, milli> ms2 = us;      // error
+``` cpp
+duration<int, milli> ms(3);
+duration<int, micro> us = ms;       // OK
+duration<int, milli> ms2 = us;      // error
+```
 
 — *end example*\]
 
@@ -1480,16 +1484,24 @@ template<class ToDuration, class Rep, class Period>
 `common_type<typename ToDuration::rep, Rep, intmax_t>::type`.
 
 - If `CF::num == 1` and `CF::den == 1`, returns
-      ToDuration(static_cast<typename ToDuration::rep>(d.count()))
+  ``` cpp
+  ToDuration(static_cast<typename ToDuration::rep>(d.count()))
+  ```
 - otherwise, if `CF::num != 1` and `CF::den == 1`, returns
-      ToDuration(static_cast<typename ToDuration::rep>(
-        static_cast<CR>(d.count()) * static_cast<CR>(CF::num)))
+  ``` cpp
+  ToDuration(static_cast<typename ToDuration::rep>(
+    static_cast<CR>(d.count()) * static_cast<CR>(CF::num)))
+  ```
 - otherwise, if `CF::num == 1` and `CF::den != 1`, returns
-      ToDuration(static_cast<typename ToDuration::rep>(
-        static_cast<CR>(d.count()) / static_cast<CR>(CF::den)))
+  ``` cpp
+  ToDuration(static_cast<typename ToDuration::rep>(
+    static_cast<CR>(d.count()) / static_cast<CR>(CF::den)))
+  ```
 - otherwise, returns
-      ToDuration(static_cast<typename ToDuration::rep>(
-        static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
+  ``` cpp
+  ToDuration(static_cast<typename ToDuration::rep>(
+    static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
+  ```
 
 \[*Note 1*: This function does not use any implicit conversions; all
 conversions are done with . It avoids multiplications and divisions when
@@ -2056,9 +2068,11 @@ return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), tp);
 
 \[*Example 1*:
 
-    cout << sys_seconds{0s} << '\n';                // 1970-01-01 00:00:00
-    cout << sys_seconds{946'684'800s} << '\n';      // 2000-01-01 00:00:00
-    cout << sys_seconds{946'688'523s} << '\n';      // 2000-01-01 01:02:03
+``` cpp
+cout << sys_seconds{0s} << '\n';                // 1970-01-01 00:00:00
+cout << sys_seconds{946'684'800s} << '\n';      // 2000-01-01 00:00:00
+cout << sys_seconds{946'688'523s} << '\n';      // 2000-01-01 01:02:03
+```
 
 — *end example*\]
 
@@ -2177,18 +2191,20 @@ that leap second as inserted.
 
 \[*Example 1*:
 
-    auto t = sys_days{July/1/2015} - 2ns;
-    auto u = utc_clock::from_sys(t);
-    assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
-    t += 1ns;
-    u = utc_clock::from_sys(t);
-    assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
-    t += 1ns;
-    u = utc_clock::from_sys(t);
-    assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
-    t += 1ns;
-    u = utc_clock::from_sys(t);
-    assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
+``` cpp
+auto t = sys_days{July/1/2015} - 2ns;
+auto u = utc_clock::from_sys(t);
+assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
+t += 1ns;
+u = utc_clock::from_sys(t);
+assert(u.time_since_epoch() - t.time_since_epoch() == 25s);
+t += 1ns;
+u = utc_clock::from_sys(t);
+assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
+t += 1ns;
+u = utc_clock::from_sys(t);
+assert(u.time_since_epoch() - t.time_since_epoch() == 26s);
+```
 
 — *end example*\]
 
@@ -2208,10 +2224,12 @@ return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
 
 \[*Example 1*:
 
-    auto t = sys_days{July/1/2015} - 500ms;
-    auto u = clock_cast<utc_clock>(t);
-    for (auto i = 0; i < 8; ++i, u += 250ms)
-      cout << u << " UTC\n";
+``` cpp
+auto t = sys_days{July/1/2015} - 500ms;
+auto u = clock_cast<utc_clock>(t);
+for (auto i = 0; i < 8; ++i, u += 250ms)
+  cout << u << " UTC\n";
+```
 
 Produces this output:
 
@@ -2333,7 +2351,9 @@ utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 378691210s
 
 \[*Note 1*:
 
-    378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
+``` cpp
+378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
+```
 
 — *end note*\]
 
@@ -2351,7 +2371,9 @@ tai_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 378691210s
 
 \[*Note 2*:
 
-    378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
+``` cpp
+378691210s == sys_days{1970y/January/1} - sys_days{1958y/January/1} + 10s
+```
 
 — *end note*\]
 
@@ -2371,9 +2393,11 @@ return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
 
 \[*Example 1*:
 
-    auto st = sys_days{2000y/January/1};
-    auto tt = clock_cast<tai_clock>(st);
-    cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, tt);
+``` cpp
+auto st = sys_days{2000y/January/1};
+auto tt = clock_cast<tai_clock>(st);
+cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, tt);
+```
 
 Produces this output:
 
@@ -2469,7 +2493,9 @@ utc_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} + 315964809s
 
 \[*Note 1*:
 
-    315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
+``` cpp
+315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
+```
 
 — *end note*\]
 
@@ -2487,7 +2513,9 @@ gps_time<common_type_t<Duration, seconds>>{t.time_since_epoch()} - 315964809s
 
 \[*Note 2*:
 
-    315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
+``` cpp
+315964809s == sys_days{1980y/January/Sunday[1]} - sys_days{1970y/January/1} + 9s
+```
 
 — *end note*\]
 
@@ -2507,9 +2535,11 @@ return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%F %T}"), t);
 
 \[*Example 1*:
 
-    auto st = sys_days{2000y/January/1};
-    auto gt = clock_cast<gps_clock>(st);
-    cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, gt);
+``` cpp
+auto st = sys_days{2000y/January/1};
+auto gt = clock_cast<gps_clock>(st);
+cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, gt);
+```
 
 Produces this output:
 
@@ -2935,21 +2965,31 @@ template<class DestClock, class SourceClock, class Duration>
 *Constraints:* At least one of the following clock time conversion
 expressions is well-formed:
 
-- clock_time_conversion<DestClock, SourceClock>{}(t)
+- ``` cpp
+  clock_time_conversion<DestClock, SourceClock>{}(t)
+  ```
 
-- clock_time_conversion<DestClock, system_clock>{}(
-        clock_time_conversion<system_clock, SourceClock>{}(t))
+- ``` cpp
+  clock_time_conversion<DestClock, system_clock>{}(
+    clock_time_conversion<system_clock, SourceClock>{}(t))
+  ```
 
-- clock_time_conversion<DestClock, utc_clock>{}(
-        clock_time_conversion<utc_clock, SourceClock>{}(t))
+- ``` cpp
+  clock_time_conversion<DestClock, utc_clock>{}(
+    clock_time_conversion<utc_clock, SourceClock>{}(t))
+  ```
 
-- clock_time_conversion<DestClock, utc_clock>{}(
-        clock_time_conversion<utc_clock, system_clock>{}(
-          clock_time_conversion<system_clock, SourceClock>{}(t)))
+- ``` cpp
+  clock_time_conversion<DestClock, utc_clock>{}(
+    clock_time_conversion<utc_clock, system_clock>{}(
+      clock_time_conversion<system_clock, SourceClock>{}(t)))
+  ```
 
-- clock_time_conversion<DestClock, system_clock>{}(
-        clock_time_conversion<system_clock, utc_clock>{}(
-          clock_time_conversion<utc_clock, SourceClock>{}(t)))
+- ``` cpp
+  clock_time_conversion<DestClock, system_clock>{}(
+    clock_time_conversion<system_clock, utc_clock>{}(
+      clock_time_conversion<utc_clock, SourceClock>{}(t)))
+  ```
 
 A clock time conversion expression is considered better than another
 clock time conversion expression if it involves fewer `operator()` calls
@@ -4735,9 +4775,11 @@ unspecified.
 
 \[*Example 1*:
 
-    static_assert(year_month_day{sys_days{2017y/January/0}}  == 2016y/December/31);
-    static_assert(year_month_day{sys_days{2017y/January/31}} == 2017y/January/31);
-    static_assert(year_month_day{sys_days{2017y/January/32}} == 2017y/February/1);
+``` cpp
+static_assert(year_month_day{sys_days{2017y/January/0}}  == 2016y/December/31);
+static_assert(year_month_day{sys_days{2017y/January/31}} == 2017y/January/31);
+static_assert(year_month_day{sys_days{2017y/January/32}} == 2017y/February/1);
+```
 
 — *end example*\]
 
@@ -6096,18 +6138,22 @@ return os << format(os.getloc(), STATICALLY-WIDEN<charT>("{:L%T}"), hms);
 
 \[*Example 1*:
 
-    for (auto ms : {-4083007ms, 4083007ms, 65745123ms}) {
-      hh_mm_ss hms{ms};
-      cout << hms << '\n';
-    }
-    cout << hh_mm_ss{65745s} << '\n';
+``` cpp
+for (auto ms : {-4083007ms, 4083007ms, 65745123ms}) {
+  hh_mm_ss hms{ms};
+  cout << hms << '\n';
+}
+cout << hh_mm_ss{65745s} << '\n';
+```
 
 Produces the output (assuming the "C" locale):
 
-    -01:08:03.007
-    01:08:03.007
-    18:15:45.123
-    18:15:45
+``` cpp
+-01:08:03.007
+01:08:03.007
+18:15:45.123
+18:15:45
+```
 
 — *end example*\]
 
@@ -6418,18 +6464,20 @@ os << tp << " is in a gap between\n"
 
 \[*Example 1*:
 
-    #include <chrono>
-    #include <iostream>
+``` cpp
+#include <chrono>
+#include <iostream>
 
-    int main() {
-      using namespace std::chrono;
-      try {
-        auto zt = zoned_time{"America/New_York",
-                             local_days{Sunday[2]/March/2016} + 2h + 30min};
-      } catch (const nonexistent_local_time& e) {
-        std::cout << e.what() << '\n';
-      }
-    }
+int main() {
+  using namespace std::chrono;
+  try {
+    auto zt = zoned_time{"America/New_York",
+                         local_days{Sunday[2]/March/2016} + 2h + 30min};
+  } catch (const nonexistent_local_time& e) {
+    std::cout << e.what() << '\n';
+  }
+}
+```
 
 Produces the output:
 
@@ -6480,18 +6528,20 @@ os << tp << " is ambiguous.  It could be\n"
 
 \[*Example 1*:
 
-    #include <chrono>
-    #include <iostream>
+``` cpp
+#include <chrono>
+#include <iostream>
 
-    int main() {
-      using namespace std::chrono;
-      try {
-        auto zt = zoned_time{"America/New_York",
-                             local_days{Sunday[1]/November/2016} + 1h + 30min};
-      } catch (const ambiguous_local_time& e) {
-        std::cout << e.what() << '\n';
-      }
-    }
+int main() {
+  using namespace std::chrono;
+  try {
+    auto zt = zoned_time{"America/New_York",
+                         local_days{Sunday[1]/November/2016} + 1h + 30min};
+  } catch (const ambiguous_local_time& e) {
+    std::cout << e.what() << '\n';
+  }
+}
+```
 
 Produces the output:
 

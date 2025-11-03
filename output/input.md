@@ -3242,28 +3242,30 @@ array.
 
 \[*Example 1*:
 
-    #include <iostream>
+``` cpp
+#include <iostream>
 
-    int main() {
-      using namespace std;
-      const int line_buffer_size = 100;
+int main() {
+  using namespace std;
+  const int line_buffer_size = 100;
 
-      char buffer[line_buffer_size];
-      int line_number = 0;
-      while (cin.getline(buffer, line_buffer_size, '\n') || cin.gcount()) {
-        int count = cin.gcount();
-        if (cin.eof())
-          cout << "Partial final line";     // \texttt{cin.fail()} is \texttt{false}
-        else if (cin.fail()) {
-          cout << "Partial long line";
-          cin.clear(cin.rdstate() & ~ios_base::failbit);
-        } else {
-          count--;                          // Don't include newline in \texttt{count}
-          cout << "Line " << ++line_number;
-        }
-        cout << " (" << count << " chars): " << buffer << endl;
-      }
+  char buffer[line_buffer_size];
+  int line_number = 0;
+  while (cin.getline(buffer, line_buffer_size, '\n') || cin.gcount()) {
+    int count = cin.gcount();
+    if (cin.eof())
+      cout << "Partial final line";     // \texttt{cin.fail()} is \texttt{false}
+    else if (cin.fail()) {
+      cout << "Partial long line";
+      cin.clear(cin.rdstate() & ~ios_base::failbit);
+    } else {
+      count--;                          // Don't include newline in \texttt{count}
+      cout << "Line " << ++line_number;
     }
+    cout << " (" << count << " chars): " << buffer << endl;
+  }
+}
+```
 
 — *end example*\]
 
@@ -7896,7 +7898,9 @@ been move constructed from `rhs`[[syncstream.syncbuf.cons]].
 
 - `rhs.get_wrapped() == nullptr` is `true`.
 - `this->get_allocator() == rhs.get_allocator()` is `true` when
-      allocator_traits<Allocator>::propagate_on_container_move_assignment::value
+  ``` cpp
+  allocator_traits<Allocator>::propagate_on_container_move_assignment::value
+  ```
 
   is `true`; otherwise, the allocator is unchanged.
 
@@ -8106,14 +8110,16 @@ calls `sb.emit()`. If that call returns `false`, calls
 
 A flush on a `basic_osyncstream` does not flush immediately:
 
-    {
-      osyncstream bout(cout);
-      bout << "Hello," << '\n';     // no flush
-      bout.emit();                  // characters transferred; \texttt{cout} not flushed
-      bout << "World!" << endl;     // flush noted; \texttt{cout} not flushed
-      bout.emit();                  // characters transferred; \texttt{cout} flushed
-      bout << "Greetings." << '\n'; // no flush
-    }   // characters transferred; \texttt{cout} not flushed
+``` cpp
+{
+  osyncstream bout(cout);
+  bout << "Hello," << '\n';     // no flush
+  bout.emit();                  // characters transferred; \texttt{cout} not flushed
+  bout << "World!" << endl;     // flush noted; \texttt{cout} not flushed
+  bout.emit();                  // characters transferred; \texttt{cout} flushed
+  bout << "Greetings." << '\n'; // no flush
+}   // characters transferred; \texttt{cout} not flushed
+```
 
 — *end example*\]
 
@@ -8122,15 +8128,17 @@ A flush on a `basic_osyncstream` does not flush immediately:
 The function `emit()` can be used to handle exceptions from operations
 on the underlying stream.
 
-    {
-      osyncstream bout(cout);
-      bout << "Hello, " << "World!" << '\n';
-      try {
-        bout.emit();
-      } catch (...) {
-        // handle exception
-      }
-    }
+``` cpp
+{
+  osyncstream bout(cout);
+  bout << "Hello, " << "World!" << '\n';
+  try {
+    bout.emit();
+  } catch (...) {
+    // handle exception
+  }
+}
+```
 
 — *end example*\]
 
@@ -8145,14 +8153,16 @@ streambuf_type* get_wrapped() const noexcept;
 Obtaining the wrapped stream buffer with `get_wrapped()` allows wrapping
 it again with an `osyncstream`. For example,
 
-    {
-      osyncstream bout1(cout);
-      bout1 << "Hello, ";
-      {
-        osyncstream(bout1.get_wrapped()) << "Goodbye, " << "Planet!" << '\n';
-      }
-      bout1 << "World!" << '\n';
-    }
+``` cpp
+{
+  osyncstream bout1(cout);
+  bout1 << "Hello, ";
+  {
+    osyncstream(bout1.get_wrapped()) << "Goodbye, " << "Planet!" << '\n';
+  }
+  bout1 << "World!" << '\n';
+}
+```
 
 produces the *uninterleaved* output
 
@@ -9101,11 +9111,13 @@ object of class `path` for which the pathname in that format is `s`.
 A string is to be read from a database that is encoded in ISO/IEC
 8859-1, and used to create a directory:
 
-    namespace fs = std::filesystem;
-    std::string latin1_string = read_latin1_data();
-    codecvt_8859_1<wchar_t> latin1_facet;
-    std::locale latin1_locale(std::locale(), latin1_facet);
-    fs::create_directory(fs::path(latin1_string, latin1_locale));
+``` cpp
+namespace fs = std::filesystem;
+std::string latin1_string = read_latin1_data();
+codecvt_8859_1<wchar_t> latin1_facet;
+std::locale latin1_locale(std::locale(), latin1_facet);
+fs::create_directory(fs::path(latin1_string, latin1_locale));
+```
 
 For POSIX-based operating systems, the path is constructed by first
 using `latin1_facet` to convert ISO/IEC 8859-1 encoded `latin1_string`
@@ -9209,18 +9221,20 @@ Even if `//host` is interpreted as a *root-name*, both of the paths
 
 Expression examples:
 
-    // On POSIX,
-    path("foo") /= path("");        // yields \texttt{path("foo/")}
-    path("foo") /= path("/bar");    // yields \texttt{path("/bar")}
+``` cpp
+// On POSIX,
+path("foo") /= path("");        // yields \texttt{path("foo/")}
+path("foo") /= path("/bar");    // yields \texttt{path("/bar")}
 
-    // On Windows,
-    path("foo") /= path("");        // yields \texttt{path("foo\\")}
-    path("foo") /= path("/bar");    // yields \texttt{path("/bar")}
-    path("foo") /= path("c:/bar");  // yields \texttt{path("c:/bar")}
-    path("foo") /= path("c:");      // yields \texttt{path("c:")}
-    path("c:") /= path("");         // yields \texttt{path("c:")}
-    path("c:foo") /= path("/bar");  // yields \texttt{path("c:/bar")}
-    path("c:foo") /= path("c:bar"); // yields \texttt{path("c:foo\\bar")}
+// On Windows,
+path("foo") /= path("");        // yields \texttt{path("foo\\")}
+path("foo") /= path("/bar");    // yields \texttt{path("/bar")}
+path("foo") /= path("c:/bar");  // yields \texttt{path("c:/bar")}
+path("foo") /= path("c:");      // yields \texttt{path("c:")}
+path("c:") /= path("");         // yields \texttt{path("c:")}
+path("c:foo") /= path("/bar");  // yields \texttt{path("c:/bar")}
+path("c:foo") /= path("c:bar"); // yields \texttt{path("c:foo\\bar")}
+```
 
 — *end example*\]
 
@@ -9297,22 +9311,28 @@ format is converted to *preferred-separator*.
 
 \[*Example 3*:
 
-    path p("foo/bar");
-    std::cout << p << '\n';
-    p.make_preferred();
-    std::cout << p << '\n';
+``` cpp
+path p("foo/bar");
+std::cout << p << '\n';
+p.make_preferred();
+std::cout << p << '\n';
+```
 
 On an operating system where *preferred-separator* is a slash, the
 output is:
 
-    "foo/bar"
-    "foo/bar"
+``` cpp
+"foo/bar"
+"foo/bar"
+```
 
 On an operating system where *preferred-separator* is a backslash, the
 output is:
 
-    "foo/bar"
-    "foo\bar"
+``` cpp
+"foo/bar"
+"foo\bar"
+```
 
 — *end example*\]
 
@@ -9329,10 +9349,12 @@ generic format pathname.
 
 \[*Example 4*:
 
-    path("foo/bar").remove_filename();      // yields \texttt{"foo/"}
-    path("foo/").remove_filename();         // yields \texttt{"foo/"}
-    path("/foo").remove_filename();         // yields \texttt{"/"}
-    path("/").remove_filename();            // yields \texttt{"/"}
+``` cpp
+path("foo/bar").remove_filename();      // yields \texttt{"foo/"}
+path("foo/").remove_filename();         // yields \texttt{"foo/"}
+path("/foo").remove_filename();         // yields \texttt{"/"}
+path("/").remove_filename();            // yields \texttt{"/"}
+```
 
 — *end example*\]
 
@@ -9351,8 +9373,10 @@ operator/=(replacement);
 
 \[*Example 5*:
 
-    path("/foo").replace_filename("bar");   // yields \texttt{"/bar"} on POSIX
-    path("/").replace_filename("bar");      // yields \texttt{"/bar"} on POSIX
+``` cpp
+path("/foo").replace_filename("bar");   // yields \texttt{"/bar"} on POSIX
+path("/").replace_filename("bar");      // yields \texttt{"/bar"} on POSIX
+```
 
 — *end example*\]
 
@@ -9549,13 +9573,15 @@ path filename() const;
 
 \[*Example 7*:
 
-    path("/foo/bar.txt").filename();        // yields \texttt{"bar.txt"}
-    path("/foo/bar").filename();            // yields \texttt{"bar"}
-    path("/foo/bar/").filename();           // yields \texttt{""}
-    path("/").filename();                   // yields \texttt{""}
-    path("//host").filename();              // yields \texttt{""}
-    path(".").filename();                   // yields \texttt{"."}
-    path("..").filename();                  // yields \texttt{".."}
+``` cpp
+path("/foo/bar.txt").filename();        // yields \texttt{"bar.txt"}
+path("/foo/bar").filename();            // yields \texttt{"bar"}
+path("/foo/bar/").filename();           // yields \texttt{""}
+path("/").filename();                   // yields \texttt{""}
+path("//host").filename();              // yields \texttt{""}
+path(".").filename();                   // yields \texttt{"."}
+path("..").filename();                  // yields \texttt{".."}
+```
 
 — *end example*\]
 
@@ -9572,13 +9598,15 @@ Returns a path whose pathname in the generic format is
 
 \[*Example 8*:
 
-    std::cout << path("/foo/bar.txt").stem();       // outputs \texttt{"bar"}
-    path p = "foo.bar.baz.tar";
-    for (; !p.extension().empty(); p = p.stem())
-      std::cout << p.extension() << '\n';
-      // outputs: \texttt{.tar}
-      //          \texttt{.baz}
-      //          \texttt{.bar}
+``` cpp
+std::cout << path("/foo/bar.txt").stem();       // outputs \texttt{"bar"}
+path p = "foo.bar.baz.tar";
+for (; !p.extension().empty(); p = p.stem())
+  std::cout << p.extension() << '\n';
+  // outputs: \texttt{.tar}
+  //          \texttt{.baz}
+  //          \texttt{.bar}
+```
 
 — *end example*\]
 
@@ -9591,11 +9619,13 @@ path extension() const;
 
 \[*Example 9*:
 
-    path("/foo/bar.txt").extension();       // yields \texttt{".txt"} and \texttt{stem()} is \texttt{"bar"}
-    path("/foo/bar").extension();           // yields \texttt{""} and \texttt{stem()} is \texttt{"bar"}
-    path("/foo/.profile").extension();      // yields \texttt{""} and \texttt{stem()} is \texttt{".profile"}
-    path(".bar").extension();               // yields \texttt{""} and \texttt{stem()} is \texttt{".bar"}
-    path("..bar").extension();              // yields \texttt{".bar"} and \texttt{stem()} is \texttt{"."}
+``` cpp
+path("/foo/bar.txt").extension();       // yields \texttt{".txt"} and \texttt{stem()} is \texttt{"bar"}
+path("/foo/bar").extension();           // yields \texttt{""} and \texttt{stem()} is \texttt{"bar"}
+path("/foo/.profile").extension();      // yields \texttt{""} and \texttt{stem()} is \texttt{".profile"}
+path(".bar").extension();               // yields \texttt{""} and \texttt{stem()} is \texttt{".bar"}
+path("..bar").extension();              // yields \texttt{".bar"} and \texttt{stem()} is \texttt{"."}
+```
 
 — *end example*\]
 
@@ -9693,8 +9723,10 @@ form [[fs.path.generic]] of the pathname in the generic format of
 
 \[*Example 11*:
 
-    assert(path("foo/./bar/..").lexically_normal() == "foo/");
-    assert(path("foo/.///bar/../").lexically_normal() == "foo/");
+``` cpp
+assert(path("foo/./bar/..").lexically_normal() == "foo/");
+assert(path("foo/.///bar/../").lexically_normal() == "foo/");
+```
 
 The above assertions will succeed. On Windows, the returned path’s
 *directory-separator* characters will be backslashes rather than
@@ -9744,12 +9776,14 @@ normalize [[fs.path.generic]] `*this` or `base`.
 
 \[*Example 12*:
 
-    assert(path("/a/d").lexically_relative("/a/b/c") == "../../d");
-    assert(path("/a/b/c").lexically_relative("/a/d") == "../b/c");
-    assert(path("a/b/c").lexically_relative("a") == "b/c");
-    assert(path("a/b/c").lexically_relative("a/b/c/x/y") == "../..");
-    assert(path("a/b/c").lexically_relative("a/b/c") == ".");
-    assert(path("a/b").lexically_relative("c/d") == "../../a/b");
+``` cpp
+assert(path("/a/d").lexically_relative("/a/b/c") == "../../d");
+assert(path("/a/b/c").lexically_relative("/a/d") == "../b/c");
+assert(path("a/b/c").lexically_relative("a") == "b/c");
+assert(path("a/b/c").lexically_relative("a/b/c/x/y") == "../..");
+assert(path("a/b/c").lexically_relative("a/b/c") == ".");
+assert(path("a/b").lexically_relative("c/d") == "../../a/b");
+```
 
 The above assertions will succeed. On Windows, the returned path’s
 *directory-separator* characters will be backslashes rather than
@@ -10933,13 +10967,17 @@ iterators [[input.iterators]], except that:
   `depth() != 0` iteration over the parent directory resumes; otherwise
   `*this = recursive_directory_iterator()`.
 - Otherwise if
-      recursion_pending() && is_directory((*this)->status()) &&
-      (!is_symlink((*this)->symlink_status()) ||
-       (options() & directory_options::follow_directory_symlink) != directory_options::none)
+  ``` cpp
+  recursion_pending() && is_directory((*this)->status()) &&
+  (!is_symlink((*this)->symlink_status()) ||
+   (options() & directory_options::follow_directory_symlink) != directory_options::none)
+  ```
 
   then either directory `(*this)->path()` is recursively iterated into
   or, if
-      (options() & directory_options::skip_permission_denied) != directory_options::none
+  ``` cpp
+  (options() & directory_options::skip_permission_denied) != directory_options::none
+  ```
 
   and an error occurs indicating that permission to access directory
   `(*this)->path()` is denied, then directory `(*this)->path()` is
@@ -11078,13 +11116,17 @@ group [[fs.enum.copy.opts]] is set in `options`.
 *Effects:* Before the first use of `f` and `t`:
 
 - If
-      (options & copy_options::create_symlinks) != copy_options::none ||
-      (options & copy_options::skip_symlinks) != copy_options::none
+  ``` cpp
+  (options & copy_options::create_symlinks) != copy_options::none ||
+  (options & copy_options::skip_symlinks) != copy_options::none
+  ```
 
   then `auto f = symlink_status(from)` and if needed
   `auto t = symlink_status(to)`.
 - Otherwise, if
-      (options & copy_options::copy_symlinks) != copy_options::none
+  ``` cpp
+  (options & copy_options::copy_symlinks) != copy_options::none
+  ```
 
   then `auto f = symlink_status(from)` and if needed
   `auto t = status(to)`.
@@ -11105,7 +11147,9 @@ Effects are then as follows:
   - If `(options & copy_options::skip_symlinks) != copy_options::none`
     then return.
   - Otherwise if
-        !exists(t) && (options & copy_options::copy_symlinks) != copy_options::none
+    ``` cpp
+    !exists(t) && (options & copy_options::copy_symlinks) != copy_options::none
+    ```
 
     then `copy_symlink(from, to)`.
   - Otherwise report an error as specified in  [[fs.err.report]].
@@ -11123,22 +11167,28 @@ Effects are then as follows:
     `copy_file(from, to/from.filename(), options)`.
   - Otherwise, `copy_file(from, to, options)`.
 - Otherwise, if
-      is_directory(f) &&
-      (options & copy_options::create_symlinks) != copy_options::none
+  ``` cpp
+  is_directory(f) &&
+  (options & copy_options::create_symlinks) != copy_options::none
+  ```
 
   then report an error with an `error_code` argument equal to
   `make_error_code(errc::is_a_directory)`.
 - Otherwise, if
-      is_directory(f) &&
-      ((options & copy_options::recursive) != copy_options::none ||
-       options == copy_options::none)
+  ``` cpp
+  is_directory(f) &&
+  ((options & copy_options::recursive) != copy_options::none ||
+   options == copy_options::none)
+  ```
 
   then:
   - If `exists(t)` is `false`, then `create_directory(to, from)`.
   - Then, iterate over the files in `from`, as if by
-        for (const directory_entry& x : directory_iterator(from))
-          copy(x.path(), to/x.path().filename(),
-               options | copy_options::in-recursive-copy);
+    ``` cpp
+    for (const directory_entry& x : directory_iterator(from))
+      copy(x.path(), to/x.path().filename(),
+           options | copy_options::in-recursive-copy);
+    ```
 
     where *`in-recursive-copy`* is a bitmask element of `copy_options`
     that is not one of the elements in  [[fs.enum.copy.opts]].
@@ -11155,36 +11205,42 @@ applicable.
 
 Given this directory structure:
 
-    /dir1
-      file1
-      file2
-      dir2
-        file3
+``` cpp
+/dir1
+  file1
+  file2
+  dir2
+    file3
+```
 
 Calling `copy("/dir1", "/dir3")` would result in:
 
-    /dir1
-      file1
-      file2
-      dir2
-        file3
-    /dir3
-      file1
-      file2
+``` cpp
+/dir1
+  file1
+  file2
+  dir2
+    file3
+/dir3
+  file1
+  file2
+```
 
 Alternatively, calling `copy("/dir1", "/dir3", copy_options::recursive)`
 would result in:
 
-    /dir1
-      file1
-      file2
-      dir2
-        file3
-    /dir3
-      file1
-      file2
-      dir2
-        file3
+``` cpp
+/dir1
+  file1
+  file2
+  dir2
+    file3
+/dir3
+  file1
+  file2
+  dir2
+    file3
+```
 
 — *end example*\]
 
@@ -11216,9 +11272,11 @@ group [[fs.enum.copy.opts]] is set in `options`.
   - `exists(to)` is `true` and `is_regular_file(to)` is `false`, or
   - `exists(to)` is `true` and `equivalent(from, to)` is `true`, or
   - `exists(to)` is `true` and
-        (options & (copy_options::skip_existing |
-                    copy_options::overwrite_existing |
-                    copy_options::update_existing)) == copy_options::none
+    ``` cpp
+    (options & (copy_options::skip_existing |
+                copy_options::overwrite_existing |
+                copy_options::update_existing)) == copy_options::none
+    ```
 - Otherwise, copy the contents and attributes of the file `from`
   resolves to, to the file `to` resolves to, if:
   - `exists(to)` is `false`, or

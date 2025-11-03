@@ -561,7 +561,9 @@ argument [[algorithms]] applied to strings.
 A vector of strings `v` can be collated according to collation rules in
 locale `loc` simply by [[alg.sort,vector]]:
 
-    std::sort(v.begin(), v.end(), loc);
+``` cpp
+std::sort(v.begin(), v.end(), loc);
+```
 
 — *end example*\]
 
@@ -1642,10 +1644,12 @@ The details of the stages are presented below.
 
 The function initializes local variables via
 
-    fmtflags flags = str.flags();
-    fmtflags basefield = (flags & ios_base::basefield);
-    fmtflags uppercase = (flags & ios_base::uppercase);
-    fmtflags boolalpha = (flags & ios_base::boolalpha);
+``` cpp
+fmtflags flags = str.flags();
+fmtflags basefield = (flags & ios_base::basefield);
+fmtflags uppercase = (flags & ios_base::uppercase);
+fmtflags boolalpha = (flags & ios_base::boolalpha);
+```
 
 For conversion to an integral type, the function determines the integral
 conversion specifier as indicated in [[facet.num.get.int]]. The table is
@@ -1686,19 +1690,23 @@ Length modifierfacet.num.get.length lc & Length modifier
 If `in == end` then stage 2 terminates. Otherwise a `charT` is taken
 from `in` and local variables are initialized as if by
 
-    char_type ct = *in;
-    char c = src[find(atoms, atoms + sizeof(src) - 1, ct) - atoms];
-    if (ct == use_facet<numpunct<charT>>(loc).decimal_point())
-      c = '.';
-    bool discard =
-      ct == use_facet<numpunct<charT>>(loc).thousands_sep()
-      && use_facet<numpunct<charT>>(loc).grouping().length() != 0;
+``` cpp
+char_type ct = *in;
+char c = src[find(atoms, atoms + sizeof(src) - 1, ct) - atoms];
+if (ct == use_facet<numpunct<charT>>(loc).decimal_point())
+  c = '.';
+bool discard =
+  ct == use_facet<numpunct<charT>>(loc).thousands_sep()
+  && use_facet<numpunct<charT>>(loc).grouping().length() != 0;
+```
 
 where the values `src` and `atoms` are defined as if by:
 
-    static const char src[] = "0123456789abcdefpxABCDEFPX+-";
-    char_type atoms[sizeof(src)];
-    use_facet<ctype<charT>>(loc).widen(src, src + sizeof(src), atoms);
+``` cpp
+static const char src[] = "0123456789abcdefpxABCDEFPX+-";
+char_type atoms[sizeof(src)];
+use_facet<ctype<charT>>(loc).widen(src, src + sizeof(src), atoms);
+```
 
 for this value of `loc`.
 
@@ -1886,7 +1894,9 @@ The details of this operation occur in several stages:
 - Stage 1: Determine a printf conversion specifier `spec` and determine
   the characters that would be printed by `printf`[[c.files]] given this
   conversion specifier for
-      printf(spec, val)
+  ``` cpp
+  printf(spec, val)
+  ```
 
   assuming that the current locale is the `"C"` locale.
 - Stage 2: Adjust the representation by converting each `char`
@@ -1905,13 +1915,15 @@ The first action of stage 1 is to determine a conversion specifier. The
 tables that describe this determination use the following local
 variables
 
-    fmtflags flags = str.flags();
-    fmtflags basefield =  (flags & (ios_base::basefield));
-    fmtflags uppercase =  (flags & (ios_base::uppercase));
-    fmtflags floatfield = (flags & (ios_base::floatfield));
-    fmtflags showpos =    (flags & (ios_base::showpos));
-    fmtflags showbase =   (flags & (ios_base::showbase));
-    fmtflags showpoint =  (flags & (ios_base::showpoint));
+``` cpp
+fmtflags flags = str.flags();
+fmtflags basefield =  (flags & (ios_base::basefield));
+fmtflags uppercase =  (flags & (ios_base::uppercase));
+fmtflags floatfield = (flags & (ios_base::floatfield));
+fmtflags showpos =    (flags & (ios_base::showpos));
+fmtflags showbase =   (flags & (ios_base::showbase));
+fmtflags showpoint =  (flags & (ios_base::showpoint));
+```
 
 All tables used in describing stage 1 are ordered. That is, the first
 line whose condition is true applies. A line without a condition is the
@@ -1993,11 +2005,15 @@ conversion specifier determined above.
 Any character `c` other than a decimal point(.) is converted to a
 `charT` via
 
-    use_facet<ctype<charT>>(loc).widen(c)
+``` cpp
+use_facet<ctype<charT>>(loc).widen(c)
+```
 
 A local variable `punct` is initialized via
 
-    const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
+``` cpp
+const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
+```
 
 For arithmetic types, `punct.thousands_sep()` characters are inserted
 into the sequence as determined by the value returned by
@@ -2008,7 +2024,9 @@ Decimal point characters(.) are replaced by `punct.decimal_point()`.
 
 A local variable is initialized as
 
-    fmtflags adjustfield = (flags & (ios_base::adjustfield));
+``` cpp
+fmtflags adjustfield = (flags & (ios_base::adjustfield));
+```
 
 The location of any padding
 
@@ -2039,7 +2057,9 @@ the length of the sequence to `str.width()`.
 
 The sequence of `charT`’s at the end of stage 3 are output via
 
-    *out++ = c
+``` cpp
+*out++ = c
+```
 
 </div>
 

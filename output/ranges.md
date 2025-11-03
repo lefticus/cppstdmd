@@ -1796,10 +1796,14 @@ the following manner:
 - If `C` does not satisfy `input_range` or
   `convertible_to``<range_reference_t<R>, range_value_t<C>>` is `true`:
   - If `constructible_from``<C, R, Args...>` is `true`:
-        C(std::forward<R>(r), std::forward<Args>(args)...)
+    ``` cpp
+    C(std::forward<R>(r), std::forward<Args>(args)...)
+    ```
   - Otherwise, if `constructible_from``<C, from_range_t, R, Args...>` is
     `true`:
-        C(from_range, std::forward<R>(r), std::forward<Args>(args)...)
+    ``` cpp
+    C(from_range, std::forward<R>(r), std::forward<Args>(args)...)
+    ```
   - Otherwise, if
     - `common_range``<R>` is `true`,
     - the *qualified-id*
@@ -1809,23 +1813,25 @@ the following manner:
     - `constructible_from``<C, iterator_t<R>, sentinel_t<R>, Args...>`
       is `true`:
 
-    <!-- -->
-
-        C(ranges::begin(r), ranges::end(r), std::forward<Args>(args)...)
+    ``` cpp
+    C(ranges::begin(r), ranges::end(r), std::forward<Args>(args)...)
+    ```
   - Otherwise, if
     - `constructible_from``<C, Args...>` is `true`, and
     - *`container-insertable`*`<C, range_reference_t<R>>` is `true`:
 
-    <!-- -->
-
-        C c(std::forward<Args>(args)...);
-        if constexpr (sized_range<R> && reservable-container<C>)
-          c.reserve(static_cast<range_size_t<C>>(ranges::size(r)));
-        ranges::copy(r, container-inserter<range_reference_t<R>>(c));
+    ``` cpp
+    C c(std::forward<Args>(args)...);
+    if constexpr (sized_range<R> && reservable-container<C>)
+      c.reserve(static_cast<range_size_t<C>>(ranges::size(r)));
+    ranges::copy(r, container-inserter<range_reference_t<R>>(c));
+    ```
 - Otherwise, if `input_range``<range_reference_t<R>>` is `true`:
-      to<C>(r | views::transform([](auto&& elem) {
-        return to<range_value_t<C>>(std::forward<decltype(elem)>(elem));
-      }), std::forward<Args>(args)...);
+  ``` cpp
+  to<C>(r | views::transform([](auto&& elem) {
+    return to<range_value_t<C>>(std::forward<decltype(elem)>(elem));
+  }), std::forward<Args>(args)...);
+  ```
 - Otherwise, the program is ill-formed.
 
 ``` cpp
@@ -1859,7 +1865,9 @@ Let *`DEDUCE_EXPR`* be defined as follows:
 - otherwise, `C(from_range, declval<R>(), declval<Args>()...)` if that
   is a valid expression,
 - otherwise,
-      C(declval<input-iterator>(), declval<input-iterator>(), declval<Args>()...)
+  ``` cpp
+  C(declval<input-iterator>(), declval<input-iterator>(), declval<Args>()...)
+  ```
 
   if that is a valid expression,
 - otherwise, the program is ill-formed.
@@ -10813,8 +10821,10 @@ constexpr auto begin()
 *Returns:*
 
 - If `V` models `slide-caches-first`,
-      iterator<false>(ranges::begin(base_),
-                      ranges::next(ranges::begin(base_), n_ - 1, ranges::end(base_)), n_)
+  ``` cpp
+  iterator<false>(ranges::begin(base_),
+                  ranges::next(ranges::begin(base_), n_ - 1, ranges::end(base_)), n_)
+  ```
 - Otherwise,
   *`iterator`*`<false>(ranges::begin(`*`base_`*`), `*`n_`*`)`.
 
@@ -10837,11 +10847,17 @@ constexpr auto end()
 *Returns:*
 
 - If `V` models `slide-caches-nothing`,
-      iterator<false>(ranges::begin(base_) + range_difference_t<V>(size()), n_)
+  ``` cpp
+  iterator<false>(ranges::begin(base_) + range_difference_t<V>(size()), n_)
+  ```
 - Otherwise, if `V` models `slide-caches-last`,
-      iterator<false>(ranges::prev(ranges::end(base_), n_ - 1, ranges::begin(base_)), n_)
+  ``` cpp
+  iterator<false>(ranges::prev(ranges::end(base_), n_ - 1, ranges::begin(base_)), n_)
+  ```
 - Otherwise, if `V` models `common_range`,
-      iterator<false>(ranges::end(base_), ranges::end(base_), n_)
+  ``` cpp
+  iterator<false>(ranges::end(base_), ranges::end(base_), n_)
+  ```
 - Otherwise, *`sentinel`*`(ranges::end(`*`base_`*`))`.
 
 *Remarks:* In order to provide the amortized constant-time complexity
