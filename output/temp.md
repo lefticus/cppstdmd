@@ -2229,7 +2229,7 @@ If N is zero for a unary fold, the value of the expression is shown in
 
 | Operator | Value when pack is empty |
 | --- | --- |
-| `\&\&` | `true` |
+| `&&` | `true` |
 | `||` | `false` |
 | `,` | `void()` |
 

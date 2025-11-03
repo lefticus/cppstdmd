@@ -3178,6 +3178,15 @@ The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
 [[atomic.types.int.comp]].
 
+**Table: Atomic arithmetic computations**
+
+| Op | Computation |
+| --- | --- |
+| `add` | `+` | addition | `sub` | `-` | subtraction |
+| `or` | `|` | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
+| `and` | `&` | bitwise and |  |  |
+
+
 *integral-type* *integral-type* *integral-type* *integral-type*
 *integral-type*
 
@@ -3440,6 +3449,12 @@ primary template.
 The following operations perform pointer arithmetic. The correspondence
 among key, operator, and computation is specified in
 [[atomic.types.pointer.comp]].
+
+**Table: Atomic pointer computations**
+
+| Op | Computation |
+| --- | --- |
+| `add` | `+` | addition | `sub` | `-` | subtraction |
 
 ``` cpp
 T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) volatile noexcept;

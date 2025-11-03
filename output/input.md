@@ -10009,11 +10009,37 @@ and `path2` in the native format in the returned string.
 This enum specifies constants used to identify the format of the
 character sequence, with the meanings listed in [[fs.enum.path.format]].
 
+**Table: Enum `path::format`**
+
+| Name | Meaning |
+| --- | --- |
+| `native_format` | The native pathname format. |
+| `generic_format` | The generic pathname format. |
+| `auto_format` | The interpretation of the format of the character sequence is *implementation-defined*. The implementation may inspect the content of the character sequence to determine the format. \recommended For POSIX-based systems, native and generic formats are equivalent and the character sequence should always be interpreted in the same way. |
+
+
 #### Enum class `file_type` <a id="fs.enum.file.type">[[fs.enum.file.type]]</a>
 
 This enum class specifies constants used to identify file types, with
 the meanings listed in [[fs.enum.file.type]]. The values of the
 constants are distinct.
+
+**Table: Enum class `file_type`**
+
+| Constant | Meaning |
+| --- | --- |
+| `none` | The type of the file has not been determined or an error occurred while trying to determine the type. |
+| `not_found` | Pseudo-type indicating the file was not found. \begin{tailnote} The file not being found is not considered an error while determining the type of a file. \end{tailnote} |
+| `regular` | Regular file |
+| `directory` | Directory file |
+| `symlink` | Symbolic link file |
+| `block` | Block special file |
+| `character` | Character special file |
+| `fifo` | FIFO or pipe file |
+| `socket` | Socket file |
+| `\textit{*implementation-defined*}` | Implementations that support file systems having file types in addition to the above `file_type` types shall supply *implementation-defined* `file_type` constants to separately identify each of those additional file types |
+| `unknown` | The file exists but the type cannot be determined |
+
 
 #### Enum class `copy_options` <a id="fs.enum.copy.opts">[[fs.enum.copy.opts]]</a>
 
@@ -10025,11 +10051,49 @@ the empty bitmask, and is shown in each option group for purposes of
 exposition; implementations shall provide only a single definition.
 Every other constant in the table represents a distinct bitmask element.
 
+**Table: Enum class `copy_options`**
+
+| Constant | Meaning |
+| --- | --- |
+| `none` | (Default) Error; file already exists. |
+| `skip_existing` | Do not overwrite existing file, do not report an error. |
+| `overwrite_existing` | Overwrite the existing file. |
+| `copy_symlinks` | Copy symbolic links as symbolic links rather than copying the files that they point to. |
+| `directories_only` | Copy directory structure only, do not copy non-directory files. |
+| `create_symlinks` | Make symbolic links instead of copies of files. The source path shall be an absolute path unless the destination path is in the current directory. |
+| `create_hard_links` | Make hard links instead of copies of files. |
+
+
 #### Enum class `perms` <a id="fs.enum.perms">[[fs.enum.perms]]</a>
 
 The `enum class` type `perms` is a bitmask type [[bitmask.types]] that
 specifies bitmask constants used to identify file permissions, with the
 meanings listed in [[fs.enum.perms]].
+
+**Table: Enum class `perms`**
+
+|  |  |  |  |
+| --- | --- | --- | --- |
+| `none` | `0` |  | There are no permissions set for the file. |
+| `owner_read` | `0400` | `S_IRUSR` | Read permission, owner |
+| `owner_write` | `0200` | `S_IWUSR` | Write permission, owner |
+| `owner_exec` | `0100` | `S_IXUSR` | Execute/search permission, owner |
+| `owner_all` | `0700` | `S_IRWXU` | Read, write, execute/search by owner;\br `owner_read | owner_write | owner_exec` |
+| `group_read` | `040` | `S_IRGRP` | Read permission, group |
+| `group_write` | `020` | `S_IWGRP` | Write permission, group |
+| `group_exec` | `010` | `S_IXGRP` | Execute/search permission, group |
+| `group_all` | `070` | `S_IRWXG` | Read, write, execute/search by group;\br `group_read | group_write | group_exec` |
+| `others_read` | `04` | `S_IROTH` | Read permission, others |
+| `others_write` | `02` | `S_IWOTH` | Write permission, others |
+| `others_exec` | `01` | `S_IXOTH` | Execute/search permission, others |
+| `others_all` | `07` | `S_IRWXO` | Read, write, execute/search by others;\br `others_read | others_write | others_exec` |
+| `all` | `0777` |  | `owner_all | group_all | others_all` |
+| `set_uid` | `04000` | `S_ISUID` | Set-user-ID on execution |
+| `set_gid` | `02000` | `S_ISGID` | Set-group-ID on execution |
+| `sticky_bit` | `01000` | `S_ISVTX` | Operating system dependent. |
+| `mask` | `07777` |  | `all | set_uid | set_gid | sticky_bit` |
+| `unknown` | `0xFFFF` |  | The permissions are not known, such as when a `file_status` object is created without specifying the permissions |
+
 
 #### Enum class `perm_options` <a id="fs.enum.perm.opts">[[fs.enum.perm.opts]]</a>
 
@@ -10040,6 +10104,16 @@ permissions operations, with the meanings listed in
 [[fs.enum.perm.opts]] `perm` denotes a value of type `perms` passed to
 `permissions`.
 
+**Table: Enum class `perm_options`**
+
+| Name | Meaning |
+| --- | --- |
+| `replace` | `permissions` shall replace the file's permission bits with `perm` |
+| `add` | `permissions` shall replace the file's permission bits with the bitwise \logop{or} of `perm` and the file's current permission bits. |
+| `remove` | `permissions` shall replace the file's permission bits with the bitwise \logop{and} of the complement of `perm` and the file's current permission bits. |
+| `nofollow` | `permissions` shall change the permissions of a symbolic link itself rather than the permissions of the file the link resolves to. |
+
+
 #### Enum class `directory_options` <a id="fs.enum.dir.opts">[[fs.enum.dir.opts]]</a>
 
 The `enum class` type `directory_options` is a bitmask type
@@ -10047,6 +10121,15 @@ The `enum class` type `directory_options` is a bitmask type
 directory traversal options, with the meanings listed in
 [[fs.enum.dir.opts]]. The constant `none` represents the empty bitmask;
 every other constant in the table represents a distinct bitmask element.
+
+**Table: Enum class `directory_options`**
+
+| Name | Meaning |
+| --- | --- |
+| `none` | (Default) Skip directory symlinks, permission denied is an error. |
+| `follow_directory_symlink` | Follow rather than skip directory symlinks. |
+| `skip_permission_denied` | Skip directories that would otherwise result in permission denied. |
+
 
 ### Class `file_status` <a id="fs.class.file.status">[[fs.class.file.status]]</a>
 

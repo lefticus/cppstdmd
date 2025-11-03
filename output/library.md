@@ -973,6 +973,69 @@ class member function signatures specify `T()` as a default argument.
 `T()` shall be a well-defined expression [[dcl.init]] if one of those
 signatures is called using the default argument [[dcl.fct.default]].
 
+**Table: Cpp17EqualityComparable requirements**
+
+| Expression | Return type |
+| --- | --- |
+| `a == b` | `decltype(a == b)` models *exposition only*conceptx{boolean-testable}{boolean-testable} | `==` is an equivalence relation, that is, it has the following properties: \begin{itemize} \item For all `a`, `a == a`. \item If `a == b`, then `b == a`. \item If `a == b` and `b == c`, then `a == c`. \end{itemize} |
+
+
+**Table: Cpp17LessThanComparable requirements**
+
+| Expression | Return type | Requirement |
+| --- | --- | --- |
+| `a < b` | `decltype(a < b)` models *exposition only*conceptx{boolean-testable}{boolean-testable} | `<` is a strict weak ordering relation [[alg.sorting]] |
+
+
+**Table: Cpp17DefaultConstructible requirements**
+
+| Expression | Post-condition |
+| --- | --- |
+| `T t;` | object `t` is default-initialized |
+| `T u{};` | object `u` is value-initialized or aggregate-initialized |
+| `T()`\br`T{}` | an object of type `T` is value-initialized or aggregate-initialized |
+
+
+**Table: Cpp17MoveConstructible requirements**
+
+| Expression | Post-condition |
+| --- | --- |
+| `T u = rv;` | `u` is equivalent to the value of `rv` before the construction |
+| `T(rv)` | `T(rv)` is equivalent to the value of `rv` before the construction |
+| \multicolumn{2}{|p{5.3in}|}{ `rv`'s state is unspecified \begin{tailnote} `rv` must still meet the requirements of the library component that is using it. The operations listed in those requirements must work as specified whether `rv` has been moved from or not. \end{tailnote} } |
+
+
+**Table: Cpp17CopyConstructible requirements (in addition to \oldconcept{MoveConstructible})**
+
+| Expression | Post-condition |
+| --- | --- |
+| `T u = v;` | the value of `v` is unchanged and is equivalent to ` u` |
+| `T(v)` | the value of `v` is unchanged and is equivalent to `T(v)` |
+
+
+**Table: Cpp17MoveAssignable requirements**
+
+| Expression | Return type | Return value | Post-condition |
+| --- | --- | --- | --- |
+| `t = rv` | `T&` | `t` | If `t` and `rv` do not refer to the same object, `t` is equivalent to the value of `rv` before the assignment |
+| \multicolumn{4}{|p{5.3in}|}{ `rv`'s state is unspecified. \begin{tailnote} `rv` must still meet the requirements of the library component that is using it, whether or not `t` and `rv` refer to the same object. The operations listed in those requirements must work as specified whether `rv` has been moved from or not. \end{tailnote} } |
+
+
+**Table: Cpp17CopyAssignable requirements (in addition to \oldconcept{MoveAssignable})**
+
+| Expression | Return type | Return value | Post-condition |
+| --- | --- | --- | --- |
+| `t = v` | `T&` | `t` | `t` is equivalent to `v`, the value of `v` is unchanged |
+
+
+**Table: Cpp17Destructible requirements**
+
+| Expression | Post-condition |
+| --- | --- |
+| `u.\~T()` | All resources owned by `u` are reclaimed, no exception is propagated. |
+| \multicolumn{2}{|l|}{ \begin{tailnote} Array types and non-object types are not \oldconcept{Destructible}. \end{tailnote} } |
+
+
 #### Swappable requirements <a id="swappable.requirements">[[swappable.requirements]]</a>
 
 This subclause provides definitions for swappable types and expressions.
@@ -1095,6 +1158,21 @@ In [[cpp17.nullablepointer]], `u` denotes an identifier, `t` denotes a
 non-`const` lvalue of type `P`, `a` and `b` denote values of type
 (possibly const) `P`, and `np` denotes a value of type (possibly const)
 `std::nullptr_t`.
+
+**Table: Cpp17NullablePointer requirements**
+
+| Expression | Return type | Operational semantics |
+| --- | --- | --- |
+| `P u(np);`\br |  | \ensures `u == nullptr` |
+| `P u = np;` |  |
+| `P(np)` |  | \ensures `P(np) == nullptr` |
+| `t = np` | `P&` | \ensures `t == nullptr` |
+| `a != b` | `decltype(a != b)` models `boolean-testable` | `!(a == b)` |
+| `a == np` | `decltype(a == np)` and `decltype(np == a)` each model `boolean-testable` | `a == P()` |
+| `np == a` |  |
+| `a != np` | `decltype(a != np)` and `decltype(np != a)` each model `boolean-testable` | `!(a == np)` |
+| `np != a` |  |
+
 
 #### *Cpp17Hash* requirements <a id="hash.requirements">[[hash.requirements]]</a>
 

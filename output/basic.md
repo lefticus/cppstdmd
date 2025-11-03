@@ -3825,6 +3825,17 @@ the beginning of the mantissa, so the storage used for the mantissa is
 p-1 bits. ISO/IEC/IEEE 60559 does not assign a name for a type having
 the parameters specified for `std::bfloat16_t`. — *end note*\]
 
+**Table: Properties of named extended floating-point types**
+
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| ISO/IEC/IEEE 60559 name | binary16 | binary32 | binary64 | binary128 |
+| $k$, storage width in bits | 16 | 32 | 64 | 128 | 16 |
+| $p$, precision in bits | 11 | 24 | 53 | 113 | 8 |
+| $emax$, maximum exponent | 15 | 127 | 1023 | 16383 | 127 |
+| $w$, exponent field width in bits | 5 | 8 | 11 | 15 | 8 |
+
+
 Any names that the implementation provides for the extended
 floating-point types described in this subsection that are in addition
 to the names defined in the `<stdfloat>` header should be chosen to

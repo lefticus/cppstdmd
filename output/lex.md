@@ -188,7 +188,7 @@ context. — *end note*\]
 | `U+0041` .. `U+005a` | latin capital letter a .. z | `A B C D E F G H I J K L M` |
 |  |  | `N O P Q R S T U V W X Y Z` |
 | `U+005b` | left square bracket | `[` |
-| `U+005c` | reverse solidus | `\` |
+| `U+005c` | reverse solidus | \texttt{\} |
 | `U+005d` | right square bracket | `]` |
 | `U+005e` | circumflex accent | `^` |
 | `U+005f` | low line | `_` |
@@ -777,6 +777,16 @@ digit of the sequence of digits is the most significant.
 \[*Note 1*: The prefix and any optional separating single quotes are
 ignored when determining the value. — *end note*\]
 
+**Table: Base of *integer-literal*{s}**
+
+| Kind of *integer-literal* | base $N$ |
+| --- | --- |
+| *binary-literal* | 2 |
+| *octal-literal* | 8 |
+| *decimal-literal* | 10 |
+| *hexadecimal-literal* | 16 |
+
+
 The *hexadecimal-digit*s `a` through `f` and `A` through `F` have
 decimal values ten through fifteen.
 
@@ -1073,6 +1083,20 @@ The type of a *floating-point-literal*
 \[*Note 1*: The floating-point suffixes `f16`, `f32`, `f64`, `f128`,
 `bf16`, `F16`, `F32`, `F64`, `F128`, and `BF16` are
 conditionally-supported. See [[basic.extended.fp]]. — *end note*\]
+
+**Table: Types of *floating-point-literal*{s}**
+
+| *floating-point-suffix* | type |
+| --- | --- |
+| none | `double` |
+| `f` or `F` | \keyword {float} |
+| `l` or `L` | `long` `double` |
+| `f16` or `F16` | `std::float16_t` |
+| `f32` or `F32` | `std::float32_t` |
+| `f64` or `F64` | `std::float64_t` |
+| `f128` or `F128` | `std::float128_t` |
+| `bf16` or `BF16` | `std::bfloat16_t` |
+
 
 The *significand* of a *floating-point-literal* is the
 *fractional-constant* or *digit-sequence* of a

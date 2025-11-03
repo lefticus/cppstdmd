@@ -1105,6 +1105,52 @@ type, a type determined from an expression, or one of the fundamental
 types [[basic.fundamental]]. [[dcl.type.simple]] summarizes the valid
 combinations of *simple-type-specifier* and the types they specify.
 
+**Table: *simple-type-specifier*{s} and the types they specify**
+
+| Specifier(s) | Type |
+| --- | --- |
+| *type-name* | the type named |
+| *simple-template-id* | the type as defined in~ [[temp.names]] |
+| *decltype-specifier* | the type as defined in~ [[dcl.type.decltype]] |
+| *placeholder-type-specifier* | the type as defined in~ [[dcl.spec.auto]] |
+| *template-name* | the type as defined in~ [[dcl.type.class.deduct]] |
+| `char` | ```char`'' |
+| `unsigned char` | ```unsigned char`'' |
+| `signed char` | ```signed char`'' |
+| `char8_t` | ```char8_t`'' |
+| `char16_t` | ```char16_t`'' |
+| `char32_t` | ```char32_t`'' |
+| `bool` | ```bool`'' |
+| `unsigned` | ```unsigned int`'' |
+| `unsigned int` | ```unsigned int`'' |
+| `signed` | ```int`'' |
+| `signed int` | ```int`'' |
+| `int` | ```int`'' |
+| `unsigned short int` | ```unsigned short int`'' |
+| `unsigned short` | ```unsigned short int`'' |
+| `unsigned long int` | ```unsigned long int`'' |
+| `unsigned long` | ```unsigned long int`'' |
+| `unsigned long long int` | ```unsigned long long int`'' |
+| `unsigned long long` | ```unsigned long long int`'' |
+| `signed long int` | ```long int`'' |
+| `signed long` | ```long int`'' |
+| `signed long long int` | ```long long int`'' |
+| `signed long long` | ```long long int`'' |
+| `long long int` | ```long long int`'' |
+| `long long` | ```long long int`'' |
+| `long int` | ```long int`'' |
+| `long` | ```long int`'' |
+| `signed short int` | ```short int`'' |
+| `signed short` | ```short int`'' |
+| `short int` | ```short int`'' |
+| `short` | ```short int`'' |
+| `wchar_t` | ```wchar_t`'' |
+| `float` | ```float`'' |
+| `double` | ```double`'' |
+| `long double` | ```long double`'' |
+| `void` | ```void`'' |
+
+
 When multiple *simple-type-specifier* are allowed, they can be freely
 intermixed with other *decl-specifier* in any order.
 

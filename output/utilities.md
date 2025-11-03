@@ -11154,6 +11154,14 @@ or `*pc.begin() == '\}'`.
 \[*Note 1*: This allows formatters to emit meaningful error
 messages. — *end note*\]
 
+**Table: \newoldconcept{Formatter} requirements**
+
+| Expression | Return type | Requirement |
+| --- | --- | --- |
+| `f.format(t, fc)` | `FC::iterator` | Formats `t` according to the specifiers stored in `*this`, writes the output to `fc.out()`, and returns an iterator past the end of the output range. The output shall only depend on `t`, `fc.locale()`, `fc.arg(n)` for any value `n` of type `size_t`, and the range \range{pc.begin()}{pc.end()} from the last call to `f.parse(pc)`. |
+| `f.format(u, fc)` | `FC::iterator` | As above, but does not modify `u`. |
+
+
 #### Concept  <a id="format.formattable">[[format.formattable]]</a>
 
 Let `fmt-iter-for<charT>` be an unspecified type that models
@@ -11687,6 +11695,15 @@ closing brackets.
 The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of
 the various type options is as specified in [[formatter.range.type]].
+
+**Table: Meaning of *range-type* options**
+
+| Option | Requirements | Meaning |
+| --- | --- | --- |
+| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its *tuple-type*. \begin{tailnote} If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty. \end{tailnote} |
+| % `s` | `T` shall be `charT`. | Indicates that the range should be formatted as a `string`. |
+| % `?s` | `T` shall be `charT`. | Indicates that the range should be formatted as an escaped string [[format.string.escaped]]. |
+
 
 If the *range-type* is `s` or `?s`, then there shall be no `n` option
 and no *range-underlying-spec*.
@@ -12286,6 +12303,14 @@ The *tuple-type* specifier changes the way a `pair` or `tuple` is
 formatted, with certain options only valid with certain argument types.
 The meaning of the various type options is as specified in
 [[formatter.tuple.type]].
+
+**Table: Meaning of *tuple-type* options**
+
+| Option | Requirements | Meaning |
+| --- | --- | --- |
+| <charT>(": ")); set_brackets({}, {}); \end{codeblock}% |
+| % `n` | none | Equivalent to: `set_brackets({}, {});` |
+| % none | none | No effects |
 
 ``` cpp
 constexpr void set_separator(basic_string_view<charT> sep) noexcept;

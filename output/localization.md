@@ -3426,6 +3426,22 @@ Calls to the function `setlocale` may introduce a data race
 [[res.on.data.races]] with other calls to `setlocale` or with calls to
 the functions listed in [[setlocale.data.races]].
 
+**Table: Potential `setlocale` data races**
+
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| `fprintf` | `isprint` | `iswdigit` | `localeconv` | `tolower` |
+| `fscanf` | `ispunct` | `iswgraph` | `mblen` | `toupper` |
+| `isalnum` | `isspace` | `iswlower` | `mbstowcs` | `towlower` |
+| `isalpha` | `isupper` | `iswprint` | `mbtowc` | `towupper` |
+| `isblank` | `iswalnum` | `iswpunct` | `setlocale` | `wcscoll` |
+| `iscntrl` | `iswalpha` | `iswspace` | `strcoll` | `wcstod` |
+| `isdigit` | `iswblank` | `iswupper` | `strerror` | `wcstombs` |
+| `isgraph` | `iswcntrl` | `iswxdigit` | `strtod` | `wcsxfrm` |
+| `islower` | `iswctype` | `isxdigit` | `strxfrm` | `wctomb` |
+
+
+
 <!-- Section link definitions -->
 [c.locales]: #c.locales
 [category.collate]: #category.collate
