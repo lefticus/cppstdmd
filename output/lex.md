@@ -1481,13 +1481,13 @@ parameter for which *str* is a well-formed *template-argument*, the
 literal *L* is treated as a call of the form
 
 ``` cpp
-operator ""X<str{}>()
+operator ""X<str>()
 ```
 
 Otherwise, the literal *L* is treated as a call of the form
 
 ``` cpp
-operator ""X(str{}, len{})
+operator ""X(str, len)
 ```
 
 If *L* is a *user-defined-character-literal*, let *ch* be the literal
@@ -1496,7 +1496,7 @@ without its *ud-suffix*. *S* shall contain a literal operator
 literal *L* is treated as a call of the form
 
 ``` cpp
-operator ""X(ch{})
+operator ""X(ch)
 ```
 
 \[*Example 2*:

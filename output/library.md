@@ -444,28 +444,28 @@ inline constexpr bitmask C₂(V₂{});
 inline constexpr bitmask C₃(V₃{});
   ⋮
 
-constexpr bitmask{} operator&(bitmask{} X, bitmask{} Y) {
-  return static_cast<bitmask{}>(
+constexpr bitmask operator&(bitmask X, bitmask Y) {
+  return static_cast<bitmask>(
     static_cast<int_type>(X) & static_cast<int_type>(Y));
 }
-constexpr bitmask{} operator|(bitmask{} X, bitmask{} Y) {
-  return static_cast<bitmask{}>(
+constexpr bitmask operator|(bitmask X, bitmask Y) {
+  return static_cast<bitmask>(
     static_cast<int_type>(X) | static_cast<int_type>(Y));
 }
-constexpr bitmask{} operator^(bitmask{} X, bitmask{} Y) {
-  return static_cast<bitmask{}>(
+constexpr bitmask operator^(bitmask X, bitmask Y) {
+  return static_cast<bitmask>(
     static_cast<int_type>(X) ^ static_cast<int_type>(Y));
 }
-constexpr bitmask{} operator~(bitmask{} X) {
-  return static_cast<bitmask{}>(~static_cast<int_type>(X));
+constexpr bitmask operator~(bitmask X) {
+  return static_cast<bitmask>(~static_cast<int_type>(X));
 }
-bitmask{}& operator&=(bitmask{}& X, bitmask{} Y) {
+bitmask& operator&=(bitmask& X, bitmask Y) {
   X = X & Y; return X;
 }
-bitmask{}& operator|=(bitmask{}& X, bitmask{} Y) {
+bitmask& operator|=(bitmask& X, bitmask Y) {
   X = X | Y; return X;
 }
-bitmask{}& operator^=(bitmask{}& X, bitmask{} Y) {
+bitmask& operator^=(bitmask& X, bitmask Y) {
   X = X ^ Y; return X;
 }
 ```
