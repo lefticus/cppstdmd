@@ -199,7 +199,7 @@ namespace std::ranges {
     requires is_object_v<T>
   class single_view;                                                                // freestanding
 
-  namespace views { inline constexpr unspecifiednc single = unspecifiednc; }            // freestanding
+  namespace views { inline constexpr unspecified single = unspecified; }            // freestanding
 
   template<bool Const, class T>
     using exposition onlyidnc{maybe-const} = conditional_t<Const, const T, T>;   // exposition only
@@ -212,14 +212,14 @@ namespace std::ranges {
   template<class W, class Bound>
     constexpr bool enable_borrowed_range<iota_view<W, Bound>> = true;               // freestanding
 
-  namespace views { inline constexpr unspecifiednc iota = unspecifiednc; }              // freestanding
+  namespace views { inline constexpr unspecified iota = unspecified; }              // freestanding
 
   // [range.repeat], repeat view
   template<move_constructible T, semiregular Bound = unreachable_sentinel_t>
     requires see below
   class repeat_view;                                                                // freestanding
 
-  namespace views { inline constexpr unspecifiednc repeat = unspecifiednc; }            // freestanding
+  namespace views { inline constexpr unspecified repeat = unspecified; }            // freestanding
 
   // [range.istream], istream view
   template<movable Val, class CharT, class Traits = char_traits<CharT>>
@@ -230,7 +230,7 @@ namespace std::ranges {
   template<class Val>
     using wistream_view = basic_istream_view<Val, wchar_t>;
 
-  namespace views { template<class T> constexpr unspecifiednc istream = unspecifiednc; }
+  namespace views { template<class T> constexpr unspecified istream = unspecified; }
 
   // [range.adaptor.object], range adaptor objects
   template<class D>
@@ -239,7 +239,7 @@ namespace std::ranges {
 
   // [range.all], all view
   namespace views {
-    inline constexpr unspecifiednc all = unspecifiednc;                                 // freestanding
+    inline constexpr unspecified all = unspecified;                                 // freestanding
 
     template<viewable_range R>
       using all_t = decltype(all(declval<R>()));                                    // freestanding
@@ -271,14 +271,14 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<as_rvalue_view<T>> =                       // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc as_rvalue = unspecifiednc; }         // freestanding
+  namespace views { inline constexpr unspecified as_rvalue = unspecified; }         // freestanding
 
   // [range.filter], filter view
   template<input_range V, indirect_unary_predicate<iterator_t<V>> Pred>
     requires view<V> && is_object_v<Pred>
   class filter_view;                                                                // freestanding
 
-  namespace views { inline constexpr unspecifiednc filter = unspecifiednc; }            // freestanding
+  namespace views { inline constexpr unspecified filter = unspecified; }            // freestanding
 
   // [range.transform], transform view
   template<input_range V, move_constructible F>
@@ -287,7 +287,7 @@ namespace std::ranges {
              can-reference<invoke_result_t<F&, range_reference_t<V>>>
   class transform_view;                                                             // freestanding
 
-  namespace views { inline constexpr unspecifiednc transform = unspecifiednc; }         // freestanding
+  namespace views { inline constexpr unspecified transform = unspecified; }         // freestanding
 
   // [range.take], take view
   template<view> class take_view;                                                   // freestanding
@@ -296,7 +296,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<take_view<T>> =                            // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc take = unspecifiednc; }              // freestanding
+  namespace views { inline constexpr unspecified take = unspecified; }              // freestanding
 
   // [range.take.while], take while view
   template<view V, class Pred>
@@ -304,7 +304,7 @@ namespace std::ranges {
              indirect_unary_predicate<const Pred, iterator_t<V>>
     class take_while_view;                                                          // freestanding
 
-  namespace views { inline constexpr unspecifiednc take_while = unspecifiednc; }        // freestanding
+  namespace views { inline constexpr unspecified take_while = unspecified; }        // freestanding
 
   // [range.drop], drop view
   template<view V>
@@ -314,7 +314,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<drop_view<T>> =                            // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc drop = unspecifiednc; }              // freestanding
+  namespace views { inline constexpr unspecified drop = unspecified; }              // freestanding
 
   // [range.drop.while], drop while view
   template<view V, class Pred>
@@ -326,14 +326,14 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<drop_while_view<T, Pred>> =                // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc drop_while = unspecifiednc; }        // freestanding
+  namespace views { inline constexpr unspecified drop_while = unspecified; }        // freestanding
 
   // [range.join], join view
   template<input_range V>
     requires view<V> && input_range<range_reference_t<V>>
   class join_view;                                                                  // freestanding
 
-  namespace views { inline constexpr unspecifiednc join = unspecifiednc; }              // freestanding
+  namespace views { inline constexpr unspecified join = unspecified; }              // freestanding
 
   // [range.join.with], join with view
   template<class R, class P>
@@ -345,7 +345,7 @@ namespace std::ranges {
           && compatible-joinable-ranges<range_reference_t<V>, Pattern>
   class join_with_view;                                                             // freestanding
 
-  namespace views { inline constexpr unspecifiednc join_with = unspecifiednc; }         // freestanding
+  namespace views { inline constexpr unspecified join_with = unspecified; }         // freestanding
 
   // [range.lazy.split], lazy split view
   template<class R>
@@ -364,12 +364,12 @@ namespace std::ranges {
   class split_view;                                                                 // freestanding
 
   namespace views {
-    inline constexpr unspecifiednc lazy_split = unspecifiednc;                          // freestanding
-    inline constexpr unspecifiednc split = unspecifiednc;                               // freestanding
+    inline constexpr unspecified lazy_split = unspecified;                          // freestanding
+    inline constexpr unspecified split = unspecified;                               // freestanding
   }
 
   // [range.counted], counted view
-  namespace views { inline constexpr unspecifiednc counted = unspecifiednc; }           // freestanding
+  namespace views { inline constexpr unspecified counted = unspecified; }           // freestanding
 
   // [range.common], common view
   template<view V>
@@ -380,7 +380,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<common_view<T>> =                          // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc common = unspecifiednc; }            // freestanding
+  namespace views { inline constexpr unspecified common = unspecified; }            // freestanding
 
   // [range.reverse], reverse view
   template<view V>
@@ -391,7 +391,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<reverse_view<T>> =                         // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc reverse = unspecifiednc; }           // freestanding
+  namespace views { inline constexpr unspecified reverse = unspecified; }           // freestanding
 
   // [range.as.const], as const view
   template<input_range R>
@@ -411,7 +411,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<as_const_view<T>> =                        // freestanding
       enable_borrowed_range<T>;
 
-  namespace views { inline constexpr unspecifiednc as_const = unspecifiednc; }          // freestanding
+  namespace views { inline constexpr unspecified as_const = unspecified; }          // freestanding
 
   // [range.elements], elements view
   template<input_range V, size_t N>
@@ -429,7 +429,7 @@ namespace std::ranges {
 
   namespace views {
     template<size_t N>
-      constexpr unspecifiednc elements = unspecifiednc;                                 // freestanding
+      constexpr unspecified elements = unspecified;                                 // freestanding
     inline constexpr auto \libmember{keys}{views} = elements<0>;                                       // freestanding
     inline constexpr auto \libmember{values}{views} = elements<1>;                                     // freestanding
   }
@@ -443,7 +443,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<enumerate_view<View>> =                    // freestanding
       enable_borrowed_range<View>;
 
-  namespace views { inline constexpr unspecifiednc enumerate = unspecifiednc; }         // freestanding
+  namespace views { inline constexpr unspecified enumerate = unspecified; }         // freestanding
 
   // [range.zip], zip view
   template<input_range... Views>
@@ -454,7 +454,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<zip_view<Views...>> =                      // freestanding
       (enable_borrowed_range<Views> && ...);
 
-  namespace views { inline constexpr unspecifiednc zip = unspecifiednc; }               // freestanding
+  namespace views { inline constexpr unspecified zip = unspecified; }               // freestanding
 
   // [range.zip.transform], zip transform view
   template<move_constructible F, input_range... Views>
@@ -463,7 +463,7 @@ namespace std::ranges {
              can-reference<invoke_result_t<F&, range_reference_t<Views>...>>
   class zip_transform_view;                                                         // freestanding
 
-  namespace views { inline constexpr unspecifiednc zip_transform = unspecifiednc; }     // freestanding
+  namespace views { inline constexpr unspecified zip_transform = unspecified; }     // freestanding
 
   // [range.adjacent], adjacent view
   template<forward_range V, size_t N>
@@ -476,7 +476,7 @@ namespace std::ranges {
 
   namespace views {
     template<size_t N>
-      constexpr unspecifiednc adjacent = unspecifiednc;                                 // freestanding
+      constexpr unspecified adjacent = unspecified;                                 // freestanding
     inline constexpr auto \libmember{pairwise}{views} = adjacent<2>;                                   // freestanding
   }
 
@@ -487,7 +487,7 @@ namespace std::ranges {
 
   namespace views {
     template<size_t N>
-      constexpr unspecifiednc adjacent_transform = unspecifiednc;                       // freestanding
+      constexpr unspecified adjacent_transform = unspecified;                       // freestanding
     inline constexpr auto \libmember{pairwise_transform}{views} = adjacent_transform<2>;               // freestanding
   }
 
@@ -504,7 +504,7 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<chunk_view<V>> =                           // freestanding
       forward_range<V> && enable_borrowed_range<V>;
 
-  namespace views { inline constexpr unspecifiednc chunk = unspecifiednc; }             // freestanding
+  namespace views { inline constexpr unspecified chunk = unspecified; }             // freestanding
 
   // [range.slide], slide view
   template<forward_range V>
@@ -515,14 +515,14 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<slide_view<V>> =
       enable_borrowed_range<V>;                                                     // freestanding
 
-  namespace views { inline constexpr unspecifiednc slide = unspecifiednc; }             // freestanding
+  namespace views { inline constexpr unspecified slide = unspecified; }             // freestanding
 
   // [range.chunk.by], chunk by view
   template<forward_range V, indirect_binary_predicate<iterator_t<V>, iterator_t<V>> Pred>
     requires view<V> && is_object_v<Pred>
   class chunk_by_view;                                                              // freestanding
 
-  namespace views { inline constexpr unspecifiednc chunk_by = unspecifiednc; }          // freestanding
+  namespace views { inline constexpr unspecified chunk_by = unspecified; }          // freestanding
 
   // [range.stride], stride view
   template<input_range V>
@@ -533,14 +533,14 @@ namespace std::ranges {
     constexpr bool enable_borrowed_range<stride_view<V>> =                          // freestanding
       enable_borrowed_range<V>;
 
-  namespace views { inline constexpr unspecifiednc stride = unspecifiednc; }            // freestanding
+  namespace views { inline constexpr unspecified stride = unspecified; }            // freestanding
 
   // [range.cartesian], cartesian product view
   template<input_range First, forward_range... Vs>
     requires (view<First> && ... && view<Vs>)
   class cartesian_product_view;                                                     // freestanding
 
-  namespace views { inline constexpr unspecifiednc cartesian_product = unspecifiednc; } // freestanding
+  namespace views { inline constexpr unspecified cartesian_product = unspecified; } // freestanding
 }
 
 namespace std {

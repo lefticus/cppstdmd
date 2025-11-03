@@ -1408,7 +1408,7 @@ namespace std {
       using value_type      = sub_match<BidirectionalIterator>;
       using const_reference = const value_type&;
       using reference       = value_type&;
-      using const_iterator  = \impdefx{type of match_results::const_iterator};
+      using const_iterator  = implementation-defined  // type of match_results::const_iterator;
       using iterator        = const_iterator;
       using difference_type =
               typename iterator_traits<BidirectionalIterator>::difference_type;

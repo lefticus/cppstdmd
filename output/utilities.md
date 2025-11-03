@@ -1155,11 +1155,13 @@ namespace std {
     constexpr T make_from_tuple(Tuple&& t);
 
   // [tuple.helper], tuple helper classes
-  template<class T> struct tuple_size;                  // *not defined*   template<class T> struct tuple_size<const T>;
+  template<class T> struct tuple_size;                  // not defined
+  template<class T> struct tuple_size<const T>;
 
   template<class... Types> struct tuple_size<tuple<Types...>>;
 
-  template<size_t I, class T> struct tuple_element;     // *not defined*   template<size_t I, class T> struct tuple_element<I, const T>;
+  template<size_t I, class T> struct tuple_element;     // not defined
+  template<size_t I, class T> struct tuple_element<I, const T>;
 
   template<size_t I, class... Types>
     struct tuple_element<I, tuple<Types...>>;
@@ -3518,14 +3520,16 @@ namespace std {
     class variant;
 
   // [variant.helper], variant helper classes
-  template<class T> struct variant_size;                        // *not defined*   template<class T> struct variant_size<const T>;
+  template<class T> struct variant_size;                        // not defined
+  template<class T> struct variant_size<const T>;
   template<class T>
     constexpr size_t \libglobal{variant_size_v} = variant_size<T>::value;
 
   template<class... Types>
     struct variant_size<variant<Types...>>;
 
-  template<size_t I, class T> struct variant_alternative;       // *not defined*   template<size_t I, class T> struct variant_alternative<I, const T>;
+  template<size_t I, class T> struct variant_alternative;       // not defined
+  template<size_t I, class T> struct variant_alternative<I, const T>;
   template<size_t I, class T>
     using \libglobal{variant_alternative_t} = typename variant_alternative<I, T>::type;
 
@@ -7469,7 +7473,8 @@ namespace std {
   // [func.wrap], polymorphic function wrappers
   class bad_function_call;
 
-  template<class> class function;       // *not defined*   template<class R, class... ArgTypes> class function<R(ArgTypes...)>;
+  template<class> class function;       // not defined
+  template<class R, class... ArgTypes> class function<R(ArgTypes...)>;
 
   // [func.wrap.func.alg], specialized algorithms
   template<class R, class... ArgTypes>
@@ -7480,7 +7485,8 @@ namespace std {
     bool operator==(const function<R(ArgTypes...)>&, nullptr_t) noexcept;
 
   // [func.wrap.move], move only wrapper
-  template<class... S> class move_only_function;        // *not defined*   template<class R, class... ArgTypes>
+  template<class... S> class move_only_function;        // not defined
+  template<class R, class... ArgTypes>
     class move_only_function<R(ArgTypes...) cv ref noexcept(noex)>; // see below
 
   // [func.search], searchers
@@ -8272,7 +8278,7 @@ struct ranges::equal_to {
   template<class T, class U>
     constexpr bool operator()(T&& t, U&& u) const;
 
-  using is_transparent = unspecifiednc;
+  using is_transparent = unspecified;
 };
 ```
 
@@ -8305,7 +8311,7 @@ struct ranges::not_equal_to {
   template<class T, class U>
     constexpr bool operator()(T&& t, U&& u) const;
 
-  using is_transparent = unspecifiednc;
+  using is_transparent = unspecified;
 };
 ```
 
@@ -8327,7 +8333,7 @@ struct ranges::greater {
   template<class T, class U>
   constexpr bool operator()(T&& t, U&& u) const;
 
-  using is_transparent = unspecifiednc;
+  using is_transparent = unspecified;
 };
 ```
 
@@ -8349,7 +8355,7 @@ struct ranges::less {
   template<class T, class U>
     constexpr bool operator()(T&& t, U&& u) const;
 
-  using is_transparent = unspecifiednc;
+  using is_transparent = unspecified;
 };
 ```
 
@@ -8385,7 +8391,7 @@ struct ranges::greater_equal {
   template<class T, class U>
     constexpr bool operator()(T&& t, U&& u) const;
 
-  using is_transparent = unspecifiednc;
+  using is_transparent = unspecified;
 };
 ```
 
@@ -8407,7 +8413,7 @@ struct ranges::less_equal {
   template<class T, class U>
     constexpr bool operator()(T&& t, U&& u) const;
 
-  using is_transparent = unspecifiednc;
+  using is_transparent = unspecified;
 };
 ```
 
@@ -8967,7 +8973,8 @@ const char* what() const noexcept override;
 
 ``` cpp
 namespace std {
-  template<class> class function;       // *not defined* 
+  template<class> class function;       // not defined
+
   template<class R, class... ArgTypes>
   class function<R(ArgTypes...)> {
   public:
@@ -9272,7 +9279,8 @@ above, there is a placeholder *inv-quals* defined as follows:
 
 ``` cpp
 namespace std {
-  template<class... S> class move_only_function;                // *not defined* 
+  template<class... S> class move_only_function;                // not defined
+
   template<class R, class... ArgTypes>
   class move_only_function<R(ArgTypes...) cv ref noexcept(noex)> {
   public:

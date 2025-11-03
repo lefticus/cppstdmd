@@ -1332,7 +1332,7 @@ If a user-defined specialization of `pair` exists for
 operations involving node handles is undefined.
 
 ``` cpp
-template<unspecifiednc>
+template<unspecified>
 class node-handle {
 public:
   // These type declarations are described in [associative.reqmts] and [unord.req].
@@ -1342,7 +1342,7 @@ public:
   using allocator_type = see belownc{};
 
 private:
-  using container_node_type = unspecifiednc;                  // exposition only
+  using container_node_type = unspecified;                  // exposition only
   using ator_traits = allocator_traits<allocator_type>;     // exposition only
 
   typename ator_traits::template
@@ -3737,8 +3737,8 @@ namespace std {
     using const_reference        = const T&;
     using size_type              = size_t;
     using difference_type        = ptrdiff_t;
-    using iterator               = \impdefx{type of array::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of array::const_iterator}; // see [container.requirements]
+    using iterator               = implementation-defined  // type of array::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of array::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -3954,10 +3954,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of deque::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of deque::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of deque::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of deque::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of deque::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of deque::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of deque::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of deque::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -4308,10 +4308,10 @@ namespace std {
     using const_pointer   = typename allocator_traits<Allocator>::const_pointer;
     using reference       = value_type&;
     using const_reference = const value_type&;
-    using size_type       = \impdefx{type of forward_list::size_type}; // see [container.requirements]
-    using difference_type = \impdefx{type of forward_list::difference_type}; // see [container.requirements]
-    using iterator        = \impdefx{type of forward_list::iterator}; // see [container.requirements]
-    using const_iterator  = \impdefx{type of forward_list::const_iterator}; // see [container.requirements]
+    using size_type       = implementation-defined  // type of forward_list::size_type; // see [container.requirements]
+    using difference_type = implementation-defined  // type of forward_list::difference_type; // see [container.requirements]
+    using iterator        = implementation-defined  // type of forward_list::iterator; // see [container.requirements]
+    using const_iterator  = implementation-defined  // type of forward_list::const_iterator; // see [container.requirements]
 
     // [forward.list.cons], construct/copy/destroy
     forward_list() : forward_list(Allocator()) { }
@@ -4921,10 +4921,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of list::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of list::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of list::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of list::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of list::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of list::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of list::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of list::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -5417,10 +5417,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of vector::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of vector::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of vector::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of vector::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of vector::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of vector::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of vector::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of vector::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -5818,13 +5818,13 @@ namespace std {
     // types
     using value_type             = bool;
     using allocator_type         = Allocator;
-    using pointer                = \impdefx{type of vector<bool>::pointer};
-    using const_pointer          = \impdefx{type of vector<bool>::const_pointer};
+    using pointer                = implementation-defined  // type of vector<bool>::pointer;
+    using const_pointer          = implementation-defined  // type of vector<bool>::const_pointer;
     using const_reference        = bool;
-    using size_type              = \impdefx{type of vector<bool>::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of vector<bool>::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of vector<bool>::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of vector<bool>::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of vector<bool>::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of vector<bool>::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of vector<bool>::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of vector<bool>::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -6220,10 +6220,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of map::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of map::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of map::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of map::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of map::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of map::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of map::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of map::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using node_type              = unspecified;
@@ -6651,10 +6651,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of multimap::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of multimap::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of multimap::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of multimap::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of multimap::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of multimap::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of multimap::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of multimap::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using node_type              = unspecified;
@@ -6940,10 +6940,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of set::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of set::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of set::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of set::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of set::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of set::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of set::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of set::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using node_type              = unspecified;
@@ -7200,10 +7200,10 @@ namespace std {
     using const_pointer          = typename allocator_traits<Allocator>::const_pointer;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using size_type              = \impdefx{type of multiset::size_type}; // see [container.requirements]
-    using difference_type        = \impdefx{type of multiset::difference_type}; // see [container.requirements]
-    using iterator               = \impdefx{type of multiset::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of multiset::const_iterator}; // see [container.requirements]
+    using size_type              = implementation-defined  // type of multiset::size_type; // see [container.requirements]
+    using difference_type        = implementation-defined  // type of multiset::difference_type; // see [container.requirements]
+    using iterator               = implementation-defined  // type of multiset::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of multiset::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using node_type              = unspecified;
@@ -7614,13 +7614,13 @@ namespace std {
     using const_pointer        = typename allocator_traits<Allocator>::const_pointer;
     using reference            = value_type&;
     using const_reference      = const value_type&;
-    using size_type            = \impdefx{type of unordered_map::size_type}; // see [container.requirements]
-    using difference_type      = \impdefx{type of unordered_map::difference_type}; // see [container.requirements]
+    using size_type            = implementation-defined  // type of unordered_map::size_type; // see [container.requirements]
+    using difference_type      = implementation-defined  // type of unordered_map::difference_type; // see [container.requirements]
 
-    using iterator             = \impdefx{type of unordered_map::iterator}; // see [container.requirements]
-    using const_iterator       = \impdefx{type of unordered_map::const_iterator}; // see [container.requirements]
-    using local_iterator       = \impdefx{type of unordered_map::local_iterator}; // see [container.requirements]
-    using const_local_iterator = \impdefx{type of unordered_map::const_local_iterator}; // see [container.requirements]
+    using iterator             = implementation-defined  // type of unordered_map::iterator; // see [container.requirements]
+    using const_iterator       = implementation-defined  // type of unordered_map::const_iterator; // see [container.requirements]
+    using local_iterator       = implementation-defined  // type of unordered_map::local_iterator; // see [container.requirements]
+    using const_local_iterator = implementation-defined  // type of unordered_map::const_local_iterator; // see [container.requirements]
     using node_type            = unspecified;
     using insert_return_type   = insert-return-type<iterator, node_type>;
 
@@ -8126,13 +8126,13 @@ namespace std {
     using const_pointer        = typename allocator_traits<Allocator>::const_pointer;
     using reference            = value_type&;
     using const_reference      = const value_type&;
-    using size_type            = \impdefx{type of unordered_multimap::size_type}; // see [container.requirements]
-    using difference_type      = \impdefx{type of unordered_multimap::difference_type}; // see [container.requirements]
+    using size_type            = implementation-defined  // type of unordered_multimap::size_type; // see [container.requirements]
+    using difference_type      = implementation-defined  // type of unordered_multimap::difference_type; // see [container.requirements]
 
-    using iterator             = \impdefx{type of unordered_multimap::iterator}; // see [container.requirements]
-    using const_iterator       = \impdefx{type of unordered_multimap::const_iterator}; // see [container.requirements]
-    using local_iterator       = \impdefx{type of unordered_multimap::local_iterator}; // see [container.requirements]
-    using const_local_iterator = \impdefx{type of unordered_multimap::const_local_iterator}; // see [container.requirements]
+    using iterator             = implementation-defined  // type of unordered_multimap::iterator; // see [container.requirements]
+    using const_iterator       = implementation-defined  // type of unordered_multimap::const_iterator; // see [container.requirements]
+    using local_iterator       = implementation-defined  // type of unordered_multimap::local_iterator; // see [container.requirements]
+    using const_local_iterator = implementation-defined  // type of unordered_multimap::const_local_iterator; // see [container.requirements]
     using node_type            = unspecified;
 
     // [unord.multimap.cnstr], construct/copy/destroy
@@ -8500,13 +8500,13 @@ namespace std {
     using const_pointer        = typename allocator_traits<Allocator>::const_pointer;
     using reference            = value_type&;
     using const_reference      = const value_type&;
-    using size_type            = \impdefx{type of unordered_set::size_type}; // see [container.requirements]
-    using difference_type      = \impdefx{type of unordered_set::difference_type}; // see [container.requirements]
+    using size_type            = implementation-defined  // type of unordered_set::size_type; // see [container.requirements]
+    using difference_type      = implementation-defined  // type of unordered_set::difference_type; // see [container.requirements]
 
-    using iterator             = \impdefx{type of unordered_set::iterator}; // see [container.requirements]
-    using const_iterator       = \impdefx{type of unordered_set::const_iterator}; // see [container.requirements]
-    using local_iterator       = \impdefx{type of unordered_set::local_iterator}; // see [container.requirements]
-    using const_local_iterator = \impdefx{type of unordered_set::const_local_iterator}; // see [container.requirements]
+    using iterator             = implementation-defined  // type of unordered_set::iterator; // see [container.requirements]
+    using const_iterator       = implementation-defined  // type of unordered_set::const_iterator; // see [container.requirements]
+    using local_iterator       = implementation-defined  // type of unordered_set::local_iterator; // see [container.requirements]
+    using const_local_iterator = implementation-defined  // type of unordered_set::const_local_iterator; // see [container.requirements]
     using node_type            = unspecified;
     using insert_return_type   = insert-return-type<iterator, node_type>;
 
@@ -8841,13 +8841,13 @@ namespace std {
     using const_pointer        = typename allocator_traits<Allocator>::const_pointer;
     using reference            = value_type&;
     using const_reference      = const value_type&;
-    using size_type            = \impdefx{type of unordered_multiset::size_type}; // see [container.requirements]
-    using difference_type      = \impdefx{type of unordered_multiset::difference_type}; // see [container.requirements]
+    using size_type            = implementation-defined  // type of unordered_multiset::size_type; // see [container.requirements]
+    using difference_type      = implementation-defined  // type of unordered_multiset::difference_type; // see [container.requirements]
 
-    using iterator             = \impdefx{type of unordered_multiset::iterator}; // see [container.requirements]
-    using const_iterator       = \impdefx{type of unordered_multiset::const_iterator}; // see [container.requirements]
-    using local_iterator       = \impdefx{type of unordered_multiset::local_iterator}; // see [container.requirements]
-    using const_local_iterator = \impdefx{type of unordered_multiset::const_local_iterator}; // see [container.requirements]
+    using iterator             = implementation-defined  // type of unordered_multiset::iterator; // see [container.requirements]
+    using const_iterator       = implementation-defined  // type of unordered_multiset::const_iterator; // see [container.requirements]
+    using local_iterator       = implementation-defined  // type of unordered_multiset::local_iterator; // see [container.requirements]
+    using const_local_iterator = implementation-defined  // type of unordered_multiset::const_local_iterator; // see [container.requirements]
     using node_type            = unspecified;
 
     // [unord.multiset.cnstr], construct/copy/destroy
@@ -10313,8 +10313,8 @@ namespace std {
     using const_reference        = pair<const key_type&, const mapped_type&>;
     using size_type              = size_t;
     using difference_type        = ptrdiff_t;
-    using iterator               = \impdefx{type of flat_map::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of flat_map::const_iterator}; // see [container.requirements]
+    using iterator               = implementation-defined  // type of flat_map::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of flat_map::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using key_container_type     = KeyContainer;
@@ -11257,8 +11257,8 @@ namespace std {
     using const_reference        = pair<const key_type&, const mapped_type&>;
     using size_type              = size_t;
     using difference_type        = ptrdiff_t;
-    using iterator               = \impdefx{type of flat_multimap::iterator};     // see [container.requirements]
-    using const_iterator         = \impdefx{type of flat_multimap::const_iterator};     // see [container.requirements]
+    using iterator               = implementation-defined  // type of flat_multimap::iterator;     // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of flat_multimap::const_iterator;     // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     using key_container_type     = KeyContainer;
@@ -11757,8 +11757,8 @@ namespace std {
     using const_reference           = const value_type&;
     using size_type                 = typename KeyContainer::size_type;
     using difference_type           = typename KeyContainer::difference_type;
-    using iterator                  = \impdefx{type of flat_set::iterator};  // see [container.requirements]
-    using const_iterator            = \impdefx{type of flat_set::const_iterator};  // see [container.requirements]
+    using iterator                  = implementation-defined  // type of flat_set::iterator;  // see [container.requirements]
+    using const_iterator            = implementation-defined  // type of flat_set::const_iterator;  // see [container.requirements]
     using reverse_iterator          = std::reverse_iterator<iterator>;
     using const_reverse_iterator    = std::reverse_iterator<const_iterator>;
     using container_type            = KeyContainer;
@@ -12290,8 +12290,8 @@ namespace std {
     using const_reference           = const value_type&;
     using size_type                 = typename KeyContainer::size_type;
     using difference_type           = typename KeyContainer::difference_type;
-    using iterator                  = \impdefx{type of flat_multiset::iterator};  // see [container.requirements]
-    using const_iterator            = \impdefx{type of flat_multiset::const_iterator};  // see [container.requirements]
+    using iterator                  = implementation-defined  // type of flat_multiset::iterator;  // see [container.requirements]
+    using const_iterator            = implementation-defined  // type of flat_multiset::const_iterator;  // see [container.requirements]
     using reverse_iterator          = std::reverse_iterator<iterator>;
     using const_reverse_iterator    = std::reverse_iterator<const_iterator>;
     using container_type            = KeyContainer;
@@ -12827,7 +12827,7 @@ namespace std {
     using const_pointer = const element_type*;
     using reference = element_type&;
     using const_reference = const element_type&;
-    using iterator = \impdefx{type of span::iterator};        // see [span.iterators]
+    using iterator = implementation-defined  // type of span::iterator;        // see [span.iterators]
     using const_iterator = std::const_iterator<iterator>;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::const_iterator<reverse_iterator>;
@@ -13231,7 +13231,7 @@ constexpr pointer data() const noexcept;
 ##### Iterator support <a id="span.iterators">[[span.iterators]]</a>
 
 ``` cpp
-using iterator = \impdefx{type of span::iterator};
+using iterator = implementation-defined  // type of span::iterator;
 ```
 
 The type models `contiguous_iterator`[[iterator.concept.contiguous]],

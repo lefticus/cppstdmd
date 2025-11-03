@@ -998,7 +998,7 @@ namespace std {
       const char* narrow(const char* low, const char* high, char dfault, char* to) const;
 
       static locale::id id;
-      static const size_t table_size = \impdef;
+      static const size_t table_size = implementation-defined;
 
       const mask* table() const noexcept;
       static const mask* classic_table() noexcept;
@@ -3427,7 +3427,7 @@ namespace std {
   lconv* localeconv();
 }
 
-#define NULL \textit{see [support.types.nullptr]}
+#define NULL see [support.types.nullptr]
 #define LC_ALL see below
 #define LC_COLLATE see below
 #define LC_CTYPE see below

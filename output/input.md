@@ -49,7 +49,7 @@ behavior is undefined.
 ### Types <a id="stream.types">[[stream.types]]</a>
 
 ``` cpp
-using streamoff = \impdefx{type of streamoff};
+using streamoff = implementation-defined  // type of streamoff;
 ```
 
 The type `streamoff` is a synonym for one of the signed basic integral
@@ -59,7 +59,7 @@ the operating system.
 Typically `long long`.
 
 ``` cpp
-using streamsize = \impdef;
+using streamsize = implementation-defined;
 ```
 
 The type `streamsize` is a synonym for one of the signed basic integral
@@ -427,8 +427,8 @@ the object `stderr`, declared in .
 #include <iosfwd>   // see [iosfwd.syn]
 
 namespace std {
-  using streamoff  = \impdef;
-  using streamsize = \impdef;
+  using streamoff  = implementation-defined;
+  using streamsize = implementation-defined;
   template<class stateT> class fpos;
 
   class ios_base;
@@ -12150,12 +12150,12 @@ normalized [[fs.path.generic]].
 
 ``` cpp
 namespace std {
-  using size_t = \textit{see [support.types.layout]};
+  using size_t = see [support.types.layout];
   using FILE = see below;
   using fpos_t = see below;
 }
 
-#define NULL \textit{see [support.types.nullptr]}
+#define NULL see [support.types.nullptr]
 #define _IOFBF see below
 #define _IOLBF see below
 #define _IONBF see below

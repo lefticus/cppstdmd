@@ -1992,7 +1992,7 @@ namespace std::chrono {
   class system_clock {
   public:
     using rep        = see below;
-    using period     = ratio<unspecifiednc, unspecified{}>;
+    using period     = ratio<unspecified, unspecified{}>;
     using duration   = chrono::duration<rep, period>;
     using time_point = chrono::time_point<system_clock>;
     static constexpr bool is_steady = unspecified;
@@ -2116,7 +2116,7 @@ namespace std::chrono {
   class utc_clock {
   public:
     using rep                       = a signed arithmetic type;
-    using period                    = ratio<unspecifiednc, unspecified>;
+    using period                    = ratio<unspecified, unspecified>;
     using duration                  = chrono::duration<rep, period>;
     using time_point                = chrono::time_point<utc_clock>;
     static constexpr bool is_steady = unspecified;
@@ -2296,7 +2296,7 @@ namespace std::chrono {
   class tai_clock {
   public:
     using rep                       = a signed arithmetic type;
-    using period                    = ratio<unspecifiednc, unspecified>;
+    using period                    = ratio<unspecified, unspecified>;
     using duration                  = chrono::duration<rep, period>;
     using time_point                = chrono::time_point<tai_clock>;
     static constexpr bool is_steady = unspecified;
@@ -2439,7 +2439,7 @@ namespace std::chrono {
   class gps_clock {
   public:
     using rep                       = a signed arithmetic type;
-    using period                    = ratio<unspecifiednc, unspecified>;
+    using period                    = ratio<unspecified, unspecified>;
     using duration                  = chrono::duration<rep, period>;
     using time_point                = chrono::time_point<gps_clock>;
     static constexpr bool is_steady = unspecified;
@@ -2663,9 +2663,9 @@ namespace std::chrono {
   class steady_clock {
   public:
     using rep        = unspecified;
-    using period     = ratio<unspecifiednc, unspecified{}>;
+    using period     = ratio<unspecified, unspecified{}>;
     using duration   = chrono::duration<rep, period>;
-    using time_point = chrono::time_point<unspecifiednc, duration>;
+    using time_point = chrono::time_point<unspecified, duration>;
     static constexpr bool is_steady = true;
 
     static time_point now() noexcept;
@@ -2685,9 +2685,9 @@ namespace std::chrono {
   class high_resolution_clock {
   public:
     using rep        = unspecified;
-    using period     = ratio<unspecifiednc, unspecified{}>;
+    using period     = ratio<unspecified, unspecified{}>;
     using duration   = chrono::duration<rep, period>;
-    using time_point = chrono::time_point<unspecifiednc, duration>;
+    using time_point = chrono::time_point<unspecified, duration>;
     static constexpr bool is_steady = unspecified;
 
     static time_point now() noexcept;
@@ -7868,12 +7868,12 @@ complete duration, time point, or calendrical data structure,
 ## Header `<ctime>` synopsis <a id="ctime.syn">[[ctime.syn]]</a>
 
 ``` cpp
-#define NULL \textit{see [support.types.nullptr]}
+#define NULL see [support.types.nullptr]
 #define CLOCKS_PER_SEC see below
 #define TIME_UTC see below
 
 namespace std {
-  using size_t = \textit{see [support.types.layout]};
+  using size_t = see [support.types.layout];
   using clock_t = see below;
   using time_t = see below;
 

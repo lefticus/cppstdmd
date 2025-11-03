@@ -1527,8 +1527,8 @@ namespace std {
   template<class T> [[nodiscard]] constexpr T* launder(T* p) noexcept;
 
   // [hardware.interference], hardware interference size
-  inline constexpr size_t hardware_destructive_interference_size = \impdef{};
-  inline constexpr size_t hardware_constructive_interference_size = \impdef{};
+  inline constexpr size_t hardware_destructive_interference_size = implementation-defined{};
+  inline constexpr size_t hardware_constructive_interference_size = implementation-defined{};
 }
 
 // [new.delete], storage allocation and deallocation
@@ -2066,7 +2066,7 @@ const int c = std::launder(p)->n;   // OK
 ### Hardware interference size <a id="hardware.interference">[[hardware.interference]]</a>
 
 ``` cpp
-inline constexpr size_t hardware_destructive_interference_size = \impdef{};
+inline constexpr size_t hardware_destructive_interference_size = implementation-defined{};
 ```
 
 This number is the minimum recommended offset between two
@@ -2086,7 +2086,7 @@ struct keep_apart {
 — *end example*\]
 
 ``` cpp
-inline constexpr size_t hardware_constructive_interference_size = \impdef{};
+inline constexpr size_t hardware_constructive_interference_size = implementation-defined{};
 ```
 
 This number is the maximum recommended size of contiguous memory

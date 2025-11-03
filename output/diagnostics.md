@@ -1254,7 +1254,7 @@ namespace std {
 namespace std {
   class \libglobal{stacktrace_entry} {
   public:
-    using native_handle_type = \impdefx{stacktrace_entry::native_handle_type};
+    using native_handle_type = implementation-defined  // stacktrace_entry::native_handle_type;
 
     // [stacktrace.entry.cons], constructors
     constexpr stacktrace_entry() noexcept;
@@ -1373,12 +1373,12 @@ namespace std {
     using value_type = stacktrace_entry;
     using const_reference = const value_type&;
     using reference = value_type&;
-    using const_iterator = \impdefx{type of basic_stacktrace::const_iterator};  // see [stacktrace.basic.obs]
+    using const_iterator = implementation-defined  // type of basic_stacktrace::const_iterator;  // see [stacktrace.basic.obs]
     using iterator = const_iterator;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-    using difference_type = \impdefx{type of basic_stacktrace::difference_type};
-    using size_type = \impdefx{type of basic_stacktrace::size_type};
+    using difference_type = implementation-defined  // type of basic_stacktrace::difference_type;
+    using size_type = implementation-defined  // type of basic_stacktrace::size_type;
     using allocator_type = Allocator;
 
     // [stacktrace.basic.cons], creation and assignment
@@ -1527,7 +1527,7 @@ for these functions [[res.on.exception.handling]] by ensuring that
 #### Observers <a id="stacktrace.basic.obs">[[stacktrace.basic.obs]]</a>
 
 ``` cpp
-using const_iterator = \impdef;
+using const_iterator = implementation-defined;
 ```
 
 The type models

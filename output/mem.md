@@ -392,14 +392,14 @@ namespace std {
   template<class T>
     constexpr unique_ptr<T> make_unique(size_t n);                              // T is U[]
   template<class T, class... Args>
-    unspecifiednc make_unique(Args&&...) = delete;                                // T is U[N]
+    unspecified make_unique(Args&&...) = delete;                                // T is U[N]
 
   template<class T>
     constexpr unique_ptr<T> make_unique_for_overwrite();                        // T is not array
   template<class T>
     constexpr unique_ptr<T> make_unique_for_overwrite(size_t n);                // T is U[]
   template<class T, class... Args>
-    unspecifiednc make_unique_for_overwrite(Args&&...) = delete;                  // T is U[N]
+    unspecified make_unique_for_overwrite(Args&&...) = delete;                  // T is U[N]
 
   template<class T, class D>
     constexpr void swap(unique_ptr<T, D>& x, unique_ptr<T, D>& y) noexcept;         // freestanding

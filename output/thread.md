@@ -855,7 +855,7 @@ namespace std {
   public:
     // [thread.thread.id], class thread::id
     class id;
-    using native_handle_type = \impdefnc;         // see~[thread.req.native]
+    using native_handle_type = implementation-defined;         // see~[thread.req.native]
 
     // construct/copy/destroy
     thread() noexcept;
@@ -1489,7 +1489,7 @@ access. This access is provided via operations on atomic objects.
 ``` cpp
 namespace std {
   // [atomics.order], order and consistency
-  enum class memory_order : unspecifiednc;                                            // freestanding
+  enum class memory_order : unspecified;                                            // freestanding
   inline constexpr memory_order memory_order_relaxed = memory_order::relaxed;       // freestanding
   inline constexpr memory_order memory_order_consume = memory_order::consume;       // freestanding
   inline constexpr memory_order memory_order_acquire = memory_order::acquire;       // freestanding
@@ -1502,17 +1502,17 @@ namespace std {
 }
 
 // [atomics.lockfree], lock-free property
-#define ATOMIC_BOOL_LOCK_FREE unspecifiednc                                           // freestanding
-#define ATOMIC_CHAR_LOCK_FREE unspecifiednc                                           // freestanding
-#define ATOMIC_CHAR8_T_LOCK_FREE unspecifiednc                                        // freestanding
-#define ATOMIC_CHAR16_T_LOCK_FREE unspecifiednc                                       // freestanding
-#define ATOMIC_CHAR32_T_LOCK_FREE unspecifiednc                                       // freestanding
-#define ATOMIC_WCHAR_T_LOCK_FREE unspecifiednc                                        // freestanding
-#define ATOMIC_SHORT_LOCK_FREE unspecifiednc                                          // freestanding
-#define ATOMIC_INT_LOCK_FREE unspecifiednc                                            // freestanding
-#define ATOMIC_LONG_LOCK_FREE unspecifiednc                                           // freestanding
-#define ATOMIC_LLONG_LOCK_FREE unspecifiednc                                          // freestanding
-#define ATOMIC_POINTER_LOCK_FREE unspecifiednc                                        // freestanding
+#define ATOMIC_BOOL_LOCK_FREE unspecified                                           // freestanding
+#define ATOMIC_CHAR_LOCK_FREE unspecified                                           // freestanding
+#define ATOMIC_CHAR8_T_LOCK_FREE unspecified                                        // freestanding
+#define ATOMIC_CHAR16_T_LOCK_FREE unspecified                                       // freestanding
+#define ATOMIC_CHAR32_T_LOCK_FREE unspecified                                       // freestanding
+#define ATOMIC_WCHAR_T_LOCK_FREE unspecified                                        // freestanding
+#define ATOMIC_SHORT_LOCK_FREE unspecified                                          // freestanding
+#define ATOMIC_INT_LOCK_FREE unspecified                                            // freestanding
+#define ATOMIC_LONG_LOCK_FREE unspecified                                           // freestanding
+#define ATOMIC_LLONG_LOCK_FREE unspecified                                          // freestanding
+#define ATOMIC_POINTER_LOCK_FREE unspecified                                        // freestanding
 
 namespace std {
   // [atomics.ref.generic], class template atomic_ref
@@ -2044,9 +2044,9 @@ namespace std {
 
   public:
     using value_type = T;
-    static constexpr size_t required_alignment = \impdefx{required alignment for atomic_ref type's operations};
+    static constexpr size_t required_alignment = implementation-defined  // required alignment for atomic_ref type's operations;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic_ref type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic_ref type's operations are always lock free;
     bool is_lock_free() const noexcept;
 
     explicit atomic_ref(T&);
@@ -2336,9 +2336,9 @@ namespace std {
   public:
     using value_type = integral-type;
     using difference_type = value_type;
-    static constexpr size_t required_alignment = \impdefx{required alignment for atomic_ref type's operations};
+    static constexpr size_t required_alignment = implementation-defined  // required alignment for atomic_ref type's operations;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic_ref type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic_ref type's operations are always lock free;
     bool is_lock_free() const noexcept;
 
     explicit atomic_ref(integral-type&);
@@ -2448,9 +2448,9 @@ namespace std {
   public:
     using value_type = floating-point-type;
     using difference_type = value_type;
-    static constexpr size_t required_alignment = \impdefx{required alignment for atomic_ref type's operations};
+    static constexpr size_t required_alignment = implementation-defined  // required alignment for atomic_ref type's operations;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic_ref type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic_ref type's operations are always lock free;
     bool is_lock_free() const noexcept;
 
     explicit atomic_ref(floating-point-type&);
@@ -2541,9 +2541,9 @@ namespace std {
   public:
     using value_type = T*;
     using difference_type = ptrdiff_t;
-    static constexpr size_t required_alignment = \impdefx{required alignment for atomic_ref type's operations};
+    static constexpr size_t required_alignment = implementation-defined  // required alignment for atomic_ref type's operations;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic_ref type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic_ref type's operations are always lock free;
     bool is_lock_free() const noexcept;
 
     explicit atomic_ref(T*&);
@@ -2657,7 +2657,7 @@ namespace std {
   template<class T> struct atomic {
     using value_type = T;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
     bool is_lock_free() const volatile noexcept;
     bool is_lock_free() const noexcept;
 
@@ -2751,7 +2751,7 @@ This results in undefined behavior. — *end note*\]
 *integral-type* *floating-point-type*
 
 ``` cpp
-static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
 ```
 
 The data member `is_always_lock_free` is `true` if the atomic type’s
@@ -3087,7 +3087,7 @@ namespace std {
     using value_type = integral-type;
     using difference_type = value_type;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
     bool is_lock_free() const volatile noexcept;
     bool is_lock_free() const noexcept;
 
@@ -3252,7 +3252,7 @@ namespace std {
     using value_type = floating-point-type;
     using difference_type = value_type;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
     bool is_lock_free() const volatile noexcept;
     bool is_lock_free() const noexcept;
 
@@ -3386,7 +3386,7 @@ namespace std {
     using value_type = T*;
     using difference_type = ptrdiff_t;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
     bool is_lock_free() const volatile noexcept;
     bool is_lock_free() const noexcept;
 
@@ -3615,7 +3615,7 @@ namespace std {
   template<class T> struct atomic<shared_ptr<T>> {
     using value_type = shared_ptr<T>;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
     bool is_lock_free() const noexcept;
 
     constexpr atomic() noexcept;
@@ -3824,7 +3824,7 @@ namespace std {
   template<class T> struct atomic<weak_ptr<T>> {
     using value_type = weak_ptr<T>;
 
-    static constexpr bool is_always_lock_free = \impdefx{whether a given atomic type's operations are always lock free};
+    static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
     bool is_lock_free() const noexcept;
 
     constexpr atomic() noexcept;
@@ -4603,7 +4603,7 @@ namespace std {
     bool try_lock();
     void unlock();
 
-    using native_handle_type = \impdefnc;          // see~[thread.req.native]
+    using native_handle_type = implementation-defined;          // see~[thread.req.native]
     native_handle_type native_handle();                         // see~[thread.req.native]
   };
 }
@@ -4653,7 +4653,7 @@ namespace std {
     bool try_lock() noexcept;
     void unlock();
 
-    using native_handle_type = \impdefnc;          // see~[thread.req.native]
+    using native_handle_type = implementation-defined;          // see~[thread.req.native]
     native_handle_type native_handle();                         // see~[thread.req.native]
   };
 }
@@ -4772,7 +4772,7 @@ namespace std {
       bool try_lock_until(const chrono::time_point<Clock, Duration>& abs_time);
     void unlock();
 
-    using native_handle_type = \impdefnc;          // see~[thread.req.native]
+    using native_handle_type = implementation-defined;          // see~[thread.req.native]
     native_handle_type native_handle();                         // see~[thread.req.native]
   };
 }
@@ -4818,7 +4818,7 @@ namespace std {
       bool try_lock_until(const chrono::time_point<Clock, Duration>& abs_time);
     void unlock();
 
-    using native_handle_type = \impdefnc;          // see~[thread.req.native]
+    using native_handle_type = implementation-defined;          // see~[thread.req.native]
     native_handle_type native_handle();                         // see~[thread.req.native]
   };
 }
@@ -4965,7 +4965,7 @@ namespace std {
     bool try_lock_shared();
     void unlock_shared();
 
-    using native_handle_type = \impdefnc;          // see~[thread.req.native]
+    using native_handle_type = implementation-defined;          // see~[thread.req.native]
     native_handle_type native_handle();                         // see~[thread.req.native]
   };
 }
@@ -6141,7 +6141,7 @@ namespace std {
                     const chrono::duration<Rep, Period>& rel_time,
                     Predicate pred);
 
-    using native_handle_type = \impdefnc;          // see~[thread.req.native]
+    using native_handle_type = implementation-defined;          // see~[thread.req.native]
     native_handle_type native_handle();                         // see~[thread.req.native]
   };
 }
@@ -6740,7 +6740,7 @@ implementation of a counting semaphore with a unit resource count.
 ``` cpp
 namespace std {
   // [thread.sema.cnt], class template counting_semaphore
-  template<ptrdiff_t least_max_value = \impdef>
+  template<ptrdiff_t least_max_value = implementation-defined>
     class counting_semaphore;
 
   using binary_semaphore = counting_semaphore<1>;
@@ -6751,7 +6751,7 @@ namespace std {
 
 ``` cpp
 namespace std {
-  template<ptrdiff_t least_max_value = \impdefx{default value for least_max_value template parameter of counting_semaphore}>
+  template<ptrdiff_t least_max_value = implementation-defined  // default value for least_max_value template parameter of counting_semaphore>
   class counting_semaphore {
   public:
     static constexpr ptrdiff_t max() noexcept;
@@ -7229,16 +7229,16 @@ well. — *end note*\]
 ``` cpp
 namespace std {
   enum class future_errc {
-    broken_promise = \impdefx{value of future_errc::broken_promise},
-    future_already_retrieved = \impdefx{value of future_errc::future_already_retrieved},
-    promise_already_satisfied = \impdefx{value of future_errc::promise_already_satisfied},
-    no_state = \impdefx{value of future_errc::no_state}
+    broken_promise = implementation-defined  // value of future_errc::broken_promise,
+    future_already_retrieved = implementation-defined  // value of future_errc::future_already_retrieved,
+    promise_already_satisfied = implementation-defined  // value of future_errc::promise_already_satisfied,
+    no_state = implementation-defined  // value of future_errc::no_state
   };
 
   enum class launch : unspecified{} {
     async = unspecified{},
     deferred = unspecified{},
-    \impdefx{last enumerator of launch}
+    implementation-defined  // last enumerator of launch
   };
 
   enum class future_status {
@@ -7279,7 +7279,8 @@ namespace std {
   template<> class shared_future<void>;
 
   // [futures.task], class template packaged_task
-  template<class> class packaged_task;  // *not defined*   template<class R, class... ArgTypes>
+  template<class> class packaged_task;  // not defined
+  template<class R, class... ArgTypes>
     class packaged_task<R(ArgTypes...)>;
 
   template<class R, class... ArgTypes>
@@ -8210,7 +8211,8 @@ access the stored result.
 
 ``` cpp
 namespace std {
-  template<class> class packaged_task;  // *not defined* 
+  template<class> class packaged_task;  // not defined
+
   template<class R, class... ArgTypes>
   class packaged_task<R(ArgTypes...)> {
   public:

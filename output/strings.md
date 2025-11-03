@@ -398,7 +398,7 @@ namespace std {
     using const_pointer          = const value_type*;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using const_iterator         = \impdefx{type of basic_string_view::const_iterator}; // see [string.view.iterators]
+    using const_iterator         = implementation-defined  // type of basic_string_view::const_iterator; // see [string.view.iterators]
     using iterator               = const_iterator;
 \begin{footnote}
 Because basic_string_view refers to a constant sequence, iterator and const_iterator are the same type.
@@ -633,7 +633,7 @@ template<class R>
 #### Iterator support <a id="string.view.iterators">[[string.view.iterators]]</a>
 
 ``` cpp
-using const_iterator = \impdefx{type of basic_string_view::const_iterator};
+using const_iterator = implementation-defined  // type of basic_string_view::const_iterator;
 ```
 
 A type that meets the requirements of a constant
@@ -1412,8 +1412,8 @@ namespace std {
     using reference              = value_type&;
     using const_reference        = const value_type&;
 
-    using iterator               = \impdefx{type of basic_string::iterator}; // see [container.requirements]
-    using const_iterator         = \impdefx{type of basic_string::const_iterator}; // see [container.requirements]
+    using iterator               = implementation-defined  // type of basic_string::iterator; // see [container.requirements]
+    using const_iterator         = implementation-defined  // type of basic_string::const_iterator; // see [container.requirements]
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     static constexpr size_type npos = size_type(-1);
@@ -3720,7 +3720,7 @@ standard library header `<wctype.h>`.
 
 ``` cpp
 namespace std {
-  using size_t = \textit{see [support.types.layout]};
+  using size_t = see [support.types.layout];
 
   void* memcpy(void* s1, const void* s2, size_t n);
   void* memmove(void* s1, const void* s2, size_t n);
@@ -3751,7 +3751,7 @@ namespace std {
   size_t strlen(const char* s);
 }
 
-#define NULL \textit{see [support.types.nullptr]}
+#define NULL see [support.types.nullptr]
 ```
 
 The contents and meaning of the header `<cstring>` are the same as the C
@@ -3773,7 +3773,7 @@ same behavior as in the C standard library [[library.c]]. — *end note*\]
 
 ``` cpp
 namespace std {
-  using size_t = \textit{see [support.types.layout]};
+  using size_t = see [support.types.layout];
   using mbstate_t = see below;
   using wint_t = see below;
 
@@ -3847,7 +3847,7 @@ namespace std {
   size_t wcsrtombs(char* dst, const wchar_t** src, size_t len, mbstate_t* ps);
 }
 
-#define NULL \textit{see [support.types.nullptr]}
+#define NULL see [support.types.nullptr]
 #define WCHAR_MAX see below
 #define WCHAR_MIN see below
 #define WEOF see below
@@ -3866,7 +3866,7 @@ same behavior as in the C standard library [[library.c]]. — *end note*\]
 ``` cpp
 namespace std {
   using mbstate_t = see below;
-  using size_t = \textit{see [support.types.layout]};
+  using size_t = see [support.types.layout];
 
   size_t mbrtoc8(char8_t* pc8, const char* s, size_t n, mbstate_t* ps);
   size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);

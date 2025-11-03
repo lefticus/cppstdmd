@@ -1901,7 +1901,8 @@ namespace std {
   template<indirectly_readable I, indirectly_regular_unary_invocable<I> Proj>
   struct projected {
     using value_type = remove_cvref_t<indirect_result_t<Proj&, I>>;
-    indirect_result_t<Proj&, I> operator*() const;              // *not defined*   };
+    indirect_result_t<Proj&, I> operator*() const;              // not defined
+  };
 
   template<weakly_incrementable I, class Proj>
   struct incrementable_traits<projected<I, Proj>> {
