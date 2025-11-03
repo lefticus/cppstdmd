@@ -277,10 +277,10 @@ template<typename... Ts> concept C2 = true;
 template<typename T, typename U> concept C3 = true;
 
 template<C1 T> struct s1;               // associates C1<T>
-template<C1... T> struct s2;            // associates (C1<T> \&\& ...)
-template<C2... T> struct s3;            // associates (C2<T> \&\& ...)
+template<C1... T> struct s2;            // associates (C1<T> && ...)
+template<C2... T> struct s3;            // associates (C2<T> && ...)
 template<C3<int> T> struct s4;          // associates C3<T, int>
-template<C3<int>... T> struct s5;       // associates (C3<T, int> \&\& ...)
+template<C3<int>... T> struct s5;       // associates (C3<T, int> && ...)
 ```
 
 — *end example*\]
@@ -1305,13 +1305,13 @@ template<typename T> struct S {
 };
 
 template<typename T> requires (S<T>{})
-void f(T);                      // \#1
-void f(int);                    // \#2
+void f(T);                      // #1
+void f(int);                    // #2
 
 void g() {
   f(0);                         // error: expression S<int>{} does not have type bool
-}                               // while checking satisfaction of deduced arguments of \#1;
-                                // call is ill-formed even though \#2 is a better match
+}                               // while checking satisfaction of deduced arguments of #1;
+                                // call is ill-formed even though #2 is a better match
 ```
 
 — *end example*\]
@@ -1405,12 +1405,12 @@ specialized by an explicit specialization declaration. — *end note*\]
 ``` cpp
 template <class T> concept C = true;
 template <class T> struct A {
-  template <class U> U f(U) requires C<typename T::type>;   // \#1
-  template <class U> U f(U) requires C<T>;                  // \#2
+  template <class U> U f(U) requires C<typename T::type>;   // #1
+  template <class U> U f(U) requires C<T>;                  // #2
 };
 
 template <> template <class U>
-U A<int>::f(U u) requires C<int> { return u; }              // OK, specializes \#2
+U A<int>::f(U u) requires C<int> { return u; }              // OK, specializes #2
 ```
 
 Substituting `int` for `T` in `C<typename T::type>` produces an invalid
@@ -1444,11 +1444,11 @@ The *normal form* of an *expression* `E` is a constraint
   ```
 
   Normalization of `B}{'s` *constraint-expression* is valid and results
-  in `T::value` (with the mapping $\tcode{T} \mapsto \tcode{U*}$) ∨
-  `true` (with an empty mapping), despite the expression `T::value`
-  being ill-formed for a pointer type `T`. Normalization of `C}{'s`
-  *constraint-expression* results in the program being ill-formed,
-  because it would form the invalid type `V&*` in the parameter mapping.
+  in `T::value` (with the mapping `T` \mapsto `U*`) ∨ `true` (with an
+  empty mapping), despite the expression `T::value` being ill-formed for
+  a pointer type `T`. Normalization of `C}{'s` *constraint-expression*
+  results in the program being ill-formed, because it would form the
+  invalid type `V&*` in the parameter mapping.
   — *end example*\]
 - The normal form of any other expression `E` is the atomic constraint
   whose expression is `E` and whose parameter mapping is the identity
@@ -1470,17 +1470,17 @@ template<typename T> concept C2 = C1<T> && 1 == 2;
 template<typename T> concept C3 = requires { typename T::type; };
 template<typename T> concept C4 = requires (T x) { ++x; };
 
-template<C2 U> void f1(U);      // \#1
-template<C3 U> void f2(U);      // \#2
-template<C4 U> void f3(U);      // \#3
+template<C2 U> void f1(U);      // #1
+template<C3 U> void f2(U);      // #2
+template<C4 U> void f3(U);      // #3
 ```
 
 The associated constraints of \#1 are `sizeof(T) == 1` (with mapping
-$\tcode{T} \mapsto \tcode{U}$) ∧ `1 == 2`.  
+`T` \mapsto `U`) ∧ `1 == 2`.  
 The associated constraints of \#2 are `requires \{ typename T::type; \}`
-(with mapping $\tcode{T} \mapsto \tcode{U}$).  
+(with mapping `T` \mapsto `U`).  
 The associated constraints of \#3 are `requires (T x) \{ ++x; \}` (with
-mapping $\tcode{T} \mapsto \tcode{U}$).
+mapping `T` \mapsto `U`).
 
 — *end example*\]
 
@@ -1538,15 +1538,15 @@ as constrained as `D1`.
 template<typename T> concept C1 = requires(T t) { --t; };
 template<typename T> concept C2 = C1<T> && requires(T t) { *t; };
 
-template<C1 T> void f(T);       // \#1
-template<C2 T> void f(T);       // \#2
-template<typename T> void g(T); // \#3
-template<C1 T> void g(T);       // \#4
+template<C1 T> void f(T);       // #1
+template<C2 T> void f(T);       // #2
+template<typename T> void g(T); // #3
+template<C1 T> void g(T);       // #4
 
-f(0);                           // selects \#1
-f((int*)0);                     // selects \#2
-g(true);                        // selects \#3 because C1<bool> is not satisfied
-g(0);                           // selects \#4
+f(0);                           // selects #1
+f((int*)0);                     // selects #2
+g(true);                        // selects #3 because C1<bool> is not satisfied
+g(0);                           // selects #4
 ```
 
 — *end example*\]
@@ -2110,7 +2110,7 @@ the following contexts:
 ``` cpp
 template<class ... Types> void f(Types ... rest);
 template<class ... Types> void g(Types ... rest) {
-  f(&rest ...);     // ``\&rest ...'' is a pack expansion; ``\&rest'' is its pattern
+  f(&rest ...);     // ``&rest ...'' is a pack expansion; ``&rest'' is its pattern
 }
 ```
 
@@ -2159,11 +2159,11 @@ template<class ... Args>
 — *end example*\]
 
 The instantiation of a pack expansion considers items
-$\tcode{E}_1, \tcode{E}_2, \dotsc, \tcode{E}_N$, where N is the number
-of elements in the pack expansion parameters. Each $\tcode{E}_i$ is
-generated by instantiating the pattern and replacing each pack expansion
-parameter with its $i^\text{th}$ element. Such an element, in the
-context of the instantiation, is interpreted as follows:
+`E₁`, `E₂`, \dotsc, `E_N`, where N is the number of elements in the pack
+expansion parameters. Each `Eᵢ` is generated by instantiating the
+pattern and replacing each pack expansion parameter with its
+$i^\text{th}$ element. Such an element, in the context of the
+instantiation, is interpreted as follows:
 
 - if the pack is a template parameter pack, the element is an
   *id-expression* (for a non-type template parameter pack), a
@@ -2235,7 +2235,7 @@ If N is zero for a unary fold, the value of the expression is shown in
 
 
 The instantiation of any other pack expansion produces a list of
-elements $\tcode{E}_1, \tcode{E}_2, \dotsc, \tcode{E}_N$.
+elements `E₁`, `E₂`, \dotsc, `E_N`.
 
 \[*Note 1*: The variety of list varies with the context:
 *expression-list*, *base-specifier-list*, *template-argument-list*,
@@ -2464,8 +2464,8 @@ A partial specialization may be constrained [[temp.constr]].
 template<typename T> concept C = true;
 
 template<typename T> struct X { };
-template<typename T> struct X<T*> { };          // \#1
-template<C T> struct X<T> { };                  // \#2
+template<typename T> struct X<T*> { };          // #1
+template<C T> struct X<T> { };                  // #2
 ```
 
 Both partial specializations are more specialized than the primary
@@ -2490,15 +2490,15 @@ corresponding primary template may be defined
 template<class T> struct A {
   struct C {
     template<class T2> struct B { };
-    template<class T2> struct B<T2**> { };      // partial specialization \#1
+    template<class T2> struct B<T2**> { };      // partial specialization #1
   };
 };
 
 // partial specialization of A<T>::C::B<T2>
 template<class T> template<class T2>
-  struct A<T>::C::B<T2*> { };                   // \#2
+  struct A<T>::C::B<T2*> { };                   // #2
 
-A<short>::C::B<int*> absip;                     // uses partial specialization \#2
+A<short>::C::B<int*> absip;                     // uses partial specialization #2
 ```
 
 — *end example*\]
@@ -2596,17 +2596,17 @@ specialization, if any [[temp.constr.decl]].
 \[*Example 1*:
 
 ``` cpp
-template<class T1, class T2, int I> class A             { };    // \#1
-template<class T, int I>            class A<T, T*, I>   { };    // \#2
-template<class T1, class T2, int I> class A<T1*, T2, I> { };    // \#3
-template<class T>                   class A<int, T*, 5> { };    // \#4
-template<class T1, class T2, int I> class A<T1, T2*, I> { };    // \#5
+template<class T1, class T2, int I> class A             { };    // #1
+template<class T, int I>            class A<T, T*, I>   { };    // #2
+template<class T1, class T2, int I> class A<T1*, T2, I> { };    // #3
+template<class T>                   class A<int, T*, 5> { };    // #4
+template<class T1, class T2, int I> class A<T1, T2*, I> { };    // #5
 
-A<int, int, 1>   a1;                    // uses \#1
-A<int, int*, 1>  a2;                    // uses \#2, T is int, I is 1
-A<int, char*, 5> a3;                    // uses \#4, T is char
-A<int, char*, 1> a4;                    // uses \#5, T1 is int, T2 is char, I is 1
-A<int*, int*, 2> a5;                    // ambiguous: matches \#3 and \#5
+A<int, int, 1>   a1;                    // uses #1
+A<int, int*, 1>  a2;                    // uses #2, T is int, I is 1
+A<int, char*, 5> a3;                    // uses #4, T is char
+A<int, char*, 1> a4;                    // uses #5, T1 is int, T2 is char, I is 1
+A<int*, int*, 2> a5;                    // ambiguous: matches #3 and #5
 ```
 
 — *end example*\]
@@ -2616,13 +2616,13 @@ A<int*, int*, 2> a5;                    // ambiguous: matches \#3 and \#5
 ``` cpp
 template<typename T> concept C = requires (T t) { t.f(); };
 
-template<typename T> struct S { };      // \#1
-template<C T> struct S<T> { };          // \#2
+template<typename T> struct S { };      // #1
+template<C T> struct S<T> { };          // #2
 
 struct Arg { void f(); };
 
-S<int> s1;                              // uses \#1; the constraints of \#2 are not satisfied
-S<Arg> s2;                              // uses \#2; both constraints are satisfied but \#2 is more specialized
+S<int> s1;                              // uses #1; the constraints of #2 are not satisfied
+S<Arg> s2;                              // uses #2; both constraints are satisfied but #2 is more specialized
 ```
 
 — *end example*\]
@@ -2672,15 +2672,15 @@ according to the ordering rules for function templates
 
 ``` cpp
 template<int I, int J, class T> class X { };
-template<int I, int J>          class X<I, J, int> { };         // \#1
-template<int I>                 class X<I, I, int> { };         // \#2
+template<int I, int J>          class X<I, J, int> { };         // #1
+template<int I>                 class X<I, I, int> { };         // #2
 
 template<int I0, int J0> void f(X<I0, J0, int>);                // A
 template<int I0>         void f(X<I0, I0, int>);                // B
 
 template <auto v>    class Y { };
-template <auto* p>   class Y<p> { };                            // \#3
-template <auto** pp> class Y<pp> { };                           // \#4
+template <auto* p>   class Y<p> { };                            // #3
+template <auto** pp> class Y<pp> { };                           // #4
 
 template <auto* p0>   void g(Y<p0>);                            // C
 template <auto** pp0> void g(Y<pp0>);                           // D
@@ -2702,8 +2702,8 @@ template<typename T> concept C = requires (T t) { t.f(); };
 template<typename T> concept D = C<T> && requires (T t) { t.f(); };
 
 template<typename T> class S { };
-template<C T> class S<T> { };   // \#1
-template<D T> class S<T> { };   // \#2
+template<C T> class S<T> { };   // #1
+template<D T> class S<T> { };   // #2
 
 template<C T> void f(S<T>);     // A
 template<D T> void f(S<T>);     // B
@@ -2780,15 +2780,15 @@ considered for this specialization of the enclosing class template.
 
 ``` cpp
 template<class T> struct A {
-  template<class T2> struct B {};                               // \#1
-  template<class T2> struct B<T2*> {};                          // \#2
+  template<class T2> struct B {};                               // #1
+  template<class T2> struct B<T2*> {};                          // #2
 };
 
-template<> template<class T2> struct A<short>::B {};            // \#3
+template<> template<class T2> struct A<short>::B {};            // #3
 
-A<char>::B<int*>  abcip;                                        // uses \#2
-A<short>::B<int*> absip;                                        // uses \#3
-A<char>::B<int>  abci;                                          // uses \#1
+A<char>::B<int*>  abcip;                                        // uses #2
+A<short>::B<int*> absip;                                        // uses #3
+A<char>::B<int>  abci;                                          // uses #1
 ```
 
 — *end example*\]
@@ -2880,9 +2880,9 @@ are intended to be distinct are not linked with one another.
 \[*Example 2*:
 
 ``` cpp
-template <int I, int J> A<I+J> f(A<I>, A<J>);   // \#1
-template <int K, int L> A<K+L> f(A<K>, A<L>);   // same as \#1
-template <int I, int J> A<I-J> f(A<I>, A<J>);   // different from \#1
+template <int I, int J> A<I+J> f(A<I>, A<J>);   // #1
+template <int K, int L> A<K+L> f(A<K>, A<L>);   // same as #1
+template <int I, int J> A<I-J> f(A<I>, A<J>);   // different from #1
 ```
 
 — *end example*\]
@@ -2924,8 +2924,8 @@ from the first declaration of the function template
 \[*Example 3*:
 
 ``` cpp
-template <int I, int J> void f(A<I+J>);         // \#1
-template <int K, int L> void f(A<K+L>);         // same as \#1
+template <int I, int J> void f(A<I+J>);         // #1
+template <int K, int L> void f(A<K+L>);         // same as #1
 
 template <class T> decltype(g(T())) h();
 int g(int);
@@ -2961,7 +2961,7 @@ parentheses. — *end note*\]
 ``` cpp
 template<int I> concept C = true;
 template<typename T> struct A {
-  void f() requires C<42>;      // \#1
+  void f() requires C<42>;      // #1
   void f() requires true;       // OK, different functions
 };
 ```
@@ -3091,18 +3091,18 @@ ordering of two equivalent non-members. — *end note*\]
 ``` cpp
 struct A { };
 template<class T> struct B {
-  template<class R> int operator*(R&);              // \#1
+  template<class R> int operator*(R&);              // #1
 };
 
-template<class T, class R> int operator*(T&, R&);   // \#2
+template<class T, class R> int operator*(T&, R&);   // #2
 
 // The declaration of B::operator* is transformed into the equivalent of
-// template<class R> int operator*(B<A>\&, R\&);\quad\quad\quad// \#1a
+// template<class R> int operator*(B<A>&, R&);\quad\quad\quad// #1a
 
 int main() {
   A a;
   B<A> b;
-  b * a;                                            // calls \#1
+  b * a;                                            // calls #1
 }
 ```
 
@@ -3131,11 +3131,11 @@ void m() {
   const int* p;
   f(p);             // f(const T*) is more specialized than f(T) or f(T*)
   float x;
-  g(x);             // ambiguous: g(T) or g(T\&)
+  g(x);             // ambiguous: g(T) or g(T&)
   A<int> z;
-  h(z);             // overload resolution selects h(A<T>\&)
+  h(z);             // overload resolution selects h(A<T>&)
   const A<int> z2;
-  h(z2);            // h(const T\&) is called because h(A<T>\&) is not callable
+  h(z2);            // h(const T&) is called because h(A<T>&) is not callable
 }
 ```
 
@@ -4564,12 +4564,12 @@ definition in the template is considered to be a definition.
 template<class T, class U>
 struct Outer {
   template<class X, class Y> struct Inner;
-  template<class Y> struct Inner<T, Y>;         // \#1a
-  template<class Y> struct Inner<T, Y> { };     // \#1b; OK, valid redeclaration of \#1a
-  template<class Y> struct Inner<U, Y> { };     // \#2
+  template<class Y> struct Inner<T, Y>;         // #1a
+  template<class Y> struct Inner<T, Y> { };     // #1b; OK, valid redeclaration of #1a
+  template<class Y> struct Inner<U, Y> { };     // #2
 };
 
-Outer<int, int> outer;                          // error at \#2
+Outer<int, int> outer;                          // error at #2
 ```
 
 `Outer<int, int>::Inner<int, Y>` is redeclared at \#1b. (It is not
@@ -4807,12 +4807,12 @@ template<typename T> concept C = sizeof(T) > 2;
 template<typename T> concept D = C<T> && sizeof(T) > 4;
 
 template<typename T> struct S {
-  S() requires C<T> { }         // \#1
-  S() requires D<T> { }         // \#2
+  S() requires C<T> { }         // #1
+  S() requires D<T> { }         // #2
 };
 
 S<char> s1;                     // error: no matching constructor
-S<char[8]> s2;                  // OK, calls \#2
+S<char[8]> s2;                  // OK, calls #2
 ```
 
 When `S<char>` is instantiated, both constructors are part of the
@@ -4946,7 +4946,7 @@ empty template argument list `<>` may be omitted.
 template<class T> class Array { ... };
 template<class T> void sort(Array<T>& v) { ... }
 
-// instantiate sort(Array<int>\&) -- template-argument deduced
+// instantiate sort(Array<int>&) -- template-argument deduced
 template void sort<>(Array<int>&);
 ```
 
@@ -5008,7 +5008,7 @@ argument, so default argument instantiation is not done.
 ``` cpp
 char* p = 0;
 template<class T> T g(T x = &p) { return x; }
-template int g<int>(int);       // OK even though \&p isn't an int.
+template int g<int>(int);       // OK even though &p isn't an int.
 ```
 
 — *end example*\]
@@ -5181,7 +5181,7 @@ template<class T> class Array { ... };
 template<class T> void sort(Array<T>& v) { ... }
 
 void f(Array<String>& v) {
-  sort(v);          // use primary template sort(Array<T>\&), T is String
+  sort(v);          // use primary template sort(Array<T>&), T is String
 }
 
 template<> void sort<String>(Array<String>& v);     // error: specialization after use of primary template
@@ -5247,7 +5247,7 @@ provided it can be deduced [[temp.deduct.decl]].
 template<class T> class Array { ... };
 template<class T> void sort(Array<T>& v);
 
-// explicit specialization for sort(Array<int>\&)
+// explicit specialization for sort(Array<int>&)
 // with deduced template-argument of type int
 template<> void sort(Array<int>&);
 ```
@@ -5465,8 +5465,8 @@ in uses of a class template specialization.
 ``` cpp
 template<class T> void sort(Array<T>& v);
 void f(Array<dcomplex>& cv, Array<int>& ci) {
-  sort<dcomplex>(cv);                   // sort(Array<dcomplex>\&)
-  sort<int>(ci);                        // sort(Array<int>\&)
+  sort<dcomplex>(cv);                   // sort(Array<dcomplex>&)
+  sort<int>(ci);                        // sort(Array<int>&)
 }
 ```
 
@@ -5534,10 +5534,10 @@ non-template function [[dcl.fct]] is visible that would otherwise be
 used. For example:
 
 ``` cpp
-template <class T> int f(T);    // \#1
-int f(int);                     // \#2
-int k = f(1);                   // uses \#2
-int l = f<>(1);                 // uses \#1
+template <class T> int f(T);    // #1
+int f(int);                     // #2
+int k = f(1);                   // uses #2
+int l = f<>(1);                 // uses #1
 ```
 
 — *end note*\]
@@ -5623,8 +5623,8 @@ default *template-argument*.
 
 ``` cpp
 void f(Array<dcomplex>& cv, Array<int>& ci) {
-  sort(cv);                     // calls sort(Array<dcomplex>\&)
-  sort(ci);                     // calls sort(Array<int>\&)
+  sort(cv);                     // calls sort(Array<dcomplex>&)
+  sort(ci);                     // calls sort(Array<int>&)
 }
 ```
 
@@ -5662,19 +5662,19 @@ template <class X> void g(const X x);
 template <class Z> void h(Z, Z*);
 
 int main() {
-  // \#1: function type is f(int), t is non const
+  // #1: function type is f(int), t is non const
   f<int>(1);
 
-  // \#2: function type is f(int), t is const
+  // #2: function type is f(int), t is const
   f<const int>(1);
 
-  // \#3: function type is g(int), x is const
+  // #3: function type is g(int), x is const
   g<int>(1);
 
-  // \#4: function type is g(int), x is const
+  // #4: function type is g(int), x is const
   g<const int>(1);
 
-  // \#5: function type is h(int, const int*)
+  // #5: function type is h(int, const int*)
   h<const int>(1,0);
 }
 ```
@@ -5743,8 +5743,8 @@ template <class T> struct Z {
   typedef typename T::x xx;
 };
 template <class T> concept C = requires { typename T::A; };
-template <C T> typename Z<T>::xx f(void *, T);          // \#1
-template <class T> void f(int, T);                      // \#2
+template <C T> typename Z<T>::xx f(void *, T);          // #1
+template <class T> void f(int, T);                      // #2
 struct A {} a;
 struct ZZ {
   template <class T, class = typename Z<T>::xx> operator T *();
@@ -5752,8 +5752,8 @@ struct ZZ {
 };
 int main() {
   ZZ zz;
-  f(1, a);              // OK, deduction fails for \#1 because there is no conversion from int to void*
-  f(zz, 42);            // OK, deduction fails for \#1 because C<int> is not satisfied
+  f(1, a);              // OK, deduction fails for #1 because there is no conversion from int to void*
+  f(zz, 42);            // OK, deduction fails for #1 because C<int> is not satisfied
 }
 ```
 
@@ -5850,11 +5850,11 @@ struct Y {
   Y(X) {}
 };
 
-template <class T> auto f(T t1, T t2) -> decltype(t1 + t2);     // \#1
-X f(Y, Y);                                                      // \#2
+template <class T> auto f(T t1, T t2) -> decltype(t1 + t2);     // #1
+X f(Y, Y);                                                      // #2
 
 X x1, x2;
-X x3 = f(x1, x2);   // deduction fails on \#1 (cannot add X+X), calls \#2
+X x3 = f(x1, x2);   // deduction fails on #1 (cannot add X+X), calls #2
 ```
 
 — *end example*\]
@@ -5915,16 +5915,15 @@ parameter type (call it `P`) that contains *template-parameter* that
 participate in template argument deduction with the type of the
 corresponding argument of the call (call it `A`) as described below. If
 removing references and cv-qualifiers from `P` gives
-`std::initializer_list<P$^{\prime}$>` or $\tcode{P}'\tcode{[N]}$ for
-some $\tcode{P}'$ and `N` and the argument is a non-empty initializer
-list [[dcl.init.list]], then deduction is performed instead for each
-element of the initializer list independently, taking $\tcode{P}'$ as
-separate function template parameter types $\tcode{P}'_i$ and the
-$i^\text{th}$ initializer element as the corresponding argument. In the
-$\tcode{P}'\tcode{[N]}$ case, if `N` is a non-type template parameter,
-`N` is deduced from the length of the initializer list. Otherwise, an
-initializer list argument causes the parameter to be considered a
-non-deduced context [[temp.deduct.type]].
+`std::initializer_list<P$^{\prime}$>` or `P`'`[N]` for some `P`' and `N`
+and the argument is a non-empty initializer list [[dcl.init.list]], then
+deduction is performed instead for each element of the initializer list
+independently, taking `P`' as separate function template parameter types
+`P`'_i and the $i^\text{th}$ initializer element as the corresponding
+argument. In the `P`'`[N]` case, if `N` is a non-type template
+parameter, `N` is deduced from the length of the initializer list.
+Otherwise, an initializer list argument causes the parameter to be
+considered a non-deduced context [[temp.deduct.type]].
 
 \[*Example 1*:
 
@@ -6010,11 +6009,11 @@ referred to by `P` is used for type deduction.
 
 ``` cpp
 template<class T> int f(const T&);
-int n1 = f(5);                  // calls f<int>(const int\&)
+int n1 = f(5);                  // calls f<int>(const int&)
 const int i = 0;
-int n2 = f(i);                  // calls f<int>(const int\&)
+int n2 = f(i);                  // calls f<int>(const int&)
 template <class T> int g(volatile T&);
-int n3 = g(i);                  // calls g<const int>(const volatile int\&)
+int n3 = g(i);                  // calls g<const int>(const volatile int&)
 ```
 
 — *end example*\]
@@ -6032,24 +6031,24 @@ place of `A` for type deduction.
 template <class T> int f(T&& heisenreference);
 template <class T> int g(const T&&);
 int i;
-int n1 = f(i);                  // calls f<int\&>(int\&)
-int n2 = f(0);                  // calls f<int>(int\&\&)
-int n3 = g(i);                  // error: would call g<int>(const int\&\&), which
+int n1 = f(i);                  // calls f<int&>(int&)
+int n2 = f(0);                  // calls f<int>(int&&)
+int n3 = g(i);                  // error: would call g<int>(const int&&), which
                                 // would bind an rvalue reference to an lvalue
 
 template <class T> struct A {
   template <class U>
-    A(T&&, U&&, int*);          // \#1: T\&\& is not a forwarding reference.
-                                // U\&\& is a forwarding reference.
-  A(T&&, int*);                 // \#2
+    A(T&&, U&&, int*);          // #1: T&& is not a forwarding reference.
+                                // U&& is a forwarding reference.
+  A(T&&, int*);                 // #2
 };
 
-template <class T> A(T&&, int*) -> A<T>;    // \#3: T\&\& is a forwarding reference.
+template <class T> A(T&&, int*) -> A<T>;    // #3: T&& is a forwarding reference.
 
 int *ip;
-A a{i, 0, ip};                  // error: cannot deduce from \#1
-A a0{0, 0, ip};                 // uses \#1 to deduce A<int> and \#1 to initialize
-A a2{i, ip};                    // uses \#3 to deduce A<int\&> and \#2 to initialize
+A a{i, 0, ip};                  // error: cannot deduce from #1
+A a0{0, 0, ip};                 // uses #1 to deduce A<int> and #1 to initialize
+A a2{i, ip};                    // uses #3 to deduce A<int&> and #2 to initialize
 ```
 
 — *end example*\]
@@ -6278,14 +6277,14 @@ specialized as the type from the parameter template.
 \[*Example 1*:
 
 ``` cpp
-template<class... Args>           void f(Args... args);         // \#1
-template<class T1, class... Args> void f(T1 a1, Args... args);  // \#2
-template<class T1, class T2>      void f(T1 a1, T2 a2);         // \#3
+template<class... Args>           void f(Args... args);         // #1
+template<class T1, class... Args> void f(T1 a1, Args... args);  // #2
+template<class T1, class T2>      void f(T1 a1, T2 a2);         // #3
 
-f();                // calls \#1
-f(1, 2, 3);         // calls \#2
-f(1, 2);            // calls \#3; non-variadic template \#3 is more specialized
-                    // than the variadic templates \#1 and \#2
+f();                // calls #1
+f(1, 2, 3);         // calls #2
+f(1, 2);            // calls #3; non-variadic template #3 is more specialized
+                    // than the variadic templates #1 and #2
 ```
 
 — *end example*\]
@@ -6326,10 +6325,10 @@ considered used. — *end note*\]
 \[*Example 2*:
 
 ``` cpp
-template <class T> T f(int);            // \#1
-template <class T, class U> T f(U);     // \#2
+template <class T> T f(int);            // #1
+template <class T, class U> T f(U);     // #2
 void g() {
-  f<int>(1);                            // calls \#1
+  f<int>(1);                            // calls #1
 }
 ```
 
@@ -6343,14 +6342,14 @@ those template parameter packs. — *end note*\]
 
 ``` cpp
 template<class ...> struct Tuple { };
-template<class ... Types> void g(Tuple<Types ...>);                 // \#1
-template<class T1, class ... Types> void g(Tuple<T1, Types ...>);   // \#2
-template<class T1, class ... Types> void g(Tuple<T1, Types& ...>);  // \#3
+template<class ... Types> void g(Tuple<Types ...>);                 // #1
+template<class T1, class ... Types> void g(Tuple<T1, Types ...>);   // #2
+template<class T1, class ... Types> void g(Tuple<T1, Types& ...>);  // #3
 
-g(Tuple<>());                   // calls \#1
-g(Tuple<int, float>());         // calls \#2
-g(Tuple<int, float&>());        // calls \#3
-g(Tuple<int>());                // calls \#3
+g(Tuple<>());                   // calls #1
+g(Tuple<int, float>());         // calls #2
+g(Tuple<int, float&>());        // calls #3
+g(Tuple<int>());                // calls #3
 ```
 
 — *end example*\]
@@ -6524,8 +6523,8 @@ template <class T> void f(B<T>&) {}
 void t() {
   D<int> d;
   D2     d2;
-  f(d);             // calls f(B<int>\&)
-  f(d2);            // calls f(B<int>\&)
+  f(d);             // calls f(B<int>&)
+  f(d2);            // calls f(B<int>&)
 }
 ```
 
@@ -6577,86 +6576,84 @@ the respective template argument list of `P` is compared with the
 corresponding argument Aᵢ of the corresponding template argument list of
 `A`. If the template argument list of `P` contains a pack expansion that
 is not the last template argument, the entire template argument list is
-a non-deduced context. If $\texttt{P}_i$ is a pack expansion, then the
-pattern of $\texttt{P}_i$ is compared with each remaining argument in
-the template argument list of `A`. Each comparison deduces template
-arguments for subsequent positions in the template parameter packs
-expanded by $\texttt{P}_i$. During partial ordering
-[[temp.deduct.partial]], if $\texttt{A}_i$ was originally a pack
+a non-deduced context. If `Pᵢ` is a pack expansion, then the pattern of
+`Pᵢ` is compared with each remaining argument in the template argument
+list of `A`. Each comparison deduces template arguments for subsequent
+positions in the template parameter packs expanded by `Pᵢ`. During
+partial ordering [[temp.deduct.partial]], if `Aᵢ` was originally a pack
 expansion:
 
-- if `P` does not contain a template argument corresponding to
-  $\texttt{A}_i$ then $\texttt{A}_i$ is ignored;
-- otherwise, if $\texttt{P}_i$ is not a pack expansion, template
-  argument deduction fails.
+- if `P` does not contain a template argument corresponding to `Aᵢ` then
+  `Aᵢ` is ignored;
+- otherwise, if `Pᵢ` is not a pack expansion, template argument
+  deduction fails.
 
 \[*Example 3*:
 
 ``` cpp
-template<class T1, class... Z> class S;                                 // \#1
-template<class T1, class... Z> class S<T1, const Z&...> { };            // \#2
-template<class T1, class T2>   class S<T1, const T2&> { };              // \#3
-S<int, const int&> s;           // both \#2 and \#3 match; \#3 is more specialized
+template<class T1, class... Z> class S;                                 // #1
+template<class T1, class... Z> class S<T1, const Z&...> { };            // #2
+template<class T1, class T2>   class S<T1, const T2&> { };              // #3
+S<int, const int&> s;           // both #2 and #3 match; #3 is more specialized
 
-template<class T, class... U>            struct A { };                  // \#1
-template<class T1, class T2, class... U> struct A<T1, T2*, U...> { };   // \#2
-template<class T1, class T2>             struct A<T1, T2> { };          // \#3
-template struct A<int, int*>;   // selects \#2
+template<class T, class... U>            struct A { };                  // #1
+template<class T1, class T2, class... U> struct A<T1, T2*, U...> { };   // #2
+template<class T1, class T2>             struct A<T1, T2> { };          // #3
+template struct A<int, int*>;   // selects #2
 ```
 
 — *end example*\]
 
 Similarly, if `P` has a form that contains `(T)`, then each parameter
-type $\texttt{P}_i$ of the respective parameter-type-list [[dcl.fct]] of
-`P` is compared with the corresponding parameter type $\texttt{A}_i$ of
-the corresponding parameter-type-list of `A`. If `P` and `A` are
-function types that originated from deduction when taking the address of
-a function template [[temp.deduct.funcaddr]] or when deducing template
-arguments from a function declaration [[temp.deduct.decl]] and
-$\texttt{P}_i$ and $\texttt{A}_i$ are parameters of the top-level
-parameter-type-list of `P` and `A`, respectively, $\texttt{P}_i$ is
-adjusted if it is a forwarding reference [[temp.deduct.call]] and
-$\texttt{A}_i$ is an lvalue reference, in which case the type of
-$\texttt{P}_i$ is changed to be the template parameter type (i.e., `T&&`
+type `Pᵢ` of the respective parameter-type-list [[dcl.fct]] of `P` is
+compared with the corresponding parameter type `Aᵢ` of the corresponding
+parameter-type-list of `A`. If `P` and `A` are function types that
+originated from deduction when taking the address of a function template
+[[temp.deduct.funcaddr]] or when deducing template arguments from a
+function declaration [[temp.deduct.decl]] and `Pᵢ` and `Aᵢ` are
+parameters of the top-level parameter-type-list of `P` and `A`,
+respectively, `Pᵢ` is adjusted if it is a forwarding reference
+[[temp.deduct.call]] and `Aᵢ` is an lvalue reference, in which case the
+type of `Pᵢ` is changed to be the template parameter type (i.e., `T&&`
 is changed to simply `T`).
 
-\[*Note 3*: As a result, when $\texttt{P}_i$ is `T&&` and $\texttt{A}_i$
-is `X&`, the adjusted $\texttt{P}_i$ will be `T`, causing `T` to be
-deduced as `X&`. — *end note*\]
+\[*Note 3*: As a result, when `Pᵢ` is `T&&` and `Aᵢ` is `X&`, the
+adjusted `Pᵢ` will be `T`, causing `T` to be deduced as
+`X&`. — *end note*\]
 
 \[*Example 4*:
 
 ``` cpp
 template <class T> void f(T&&);
-template <> void f(int&) { }    // \#1
-template <> void f(int&&) { }   // \#2
+template <> void f(int&) { }    // #1
+template <> void f(int&&) { }   // #2
 void g(int i) {
-  f(i);                         // calls f<int\&>(int\&), i.e., \#1
-  f(0);                         // calls f<int>(int\&\&), i.e., \#2
+  f(i);                         // calls f<int&>(int&), i.e., #1
+  f(0);                         // calls f<int>(int&&), i.e., #2
 }
 ```
 
 — *end example*\]
 
-If the *parameter-declaration* corresponding to $\texttt{P}_i$ is a
-function parameter pack, then the type of its *declarator-id* is
-compared with each remaining parameter type in the parameter-type-list
-of `A`. Each comparison deduces template arguments for subsequent
-positions in the template parameter packs expanded by the function
-parameter pack. During partial ordering [[temp.deduct.partial]], if
-$\texttt{A}_i$ was originally a function parameter pack:
+If the *parameter-declaration* corresponding to `Pᵢ` is a function
+parameter pack, then the type of its *declarator-id* is compared with
+each remaining parameter type in the parameter-type-list of `A`. Each
+comparison deduces template arguments for subsequent positions in the
+template parameter packs expanded by the function parameter pack. During
+partial ordering [[temp.deduct.partial]], if `Aᵢ` was originally a
+function parameter pack:
 
 - if `P` does not contain a function parameter type corresponding to
-  $\texttt{A}_i$ then $\texttt{A}_i$ is ignored;
-- otherwise, if $\texttt{P}_i$ is not a function parameter pack,
-  template argument deduction fails.
+  `Aᵢ` then `Aᵢ` is ignored;
+- otherwise, if `Pᵢ` is not a function parameter pack, template argument
+  deduction fails.
 
 \[*Example 5*:
 
 ``` cpp
-template<class T, class... U> void f(T*, U...) { }  // \#1
-template<class T>             void f(T) { }         // \#2
-template void f(int*);                              // selects \#1
+template<class T, class... U> void f(T*, U...) { }  // #1
+template<class T>             void f(T) { }         // #2
+template void f(int*);                              // selects #1
 ```
 
 — *end example*\]
@@ -6910,7 +6907,7 @@ X<int> x1;                      // uses primary template
 X<int(int, float, double)> x2;  // uses partial specialization; ArgTypes contains float, double
 X<int(float, int)> x3;          // uses primary template
 Y<> y1;                         // uses primary template; Types is empty
-Y<int&, float&, double&> y2;    // uses partial specialization; T is int\&, Types contains float, double
+Y<int&, float&, double&> y2;    // uses partial specialization; T is int&, Types contains float, double
 Y<int, float, double> y3;       // uses primary template; Types contains int, float, double
 int fv = f(g);                  // OK; Types contains int, float
 ```
@@ -6996,7 +6993,7 @@ template<class T> void f(B<T>&);
 
 void g(B<int>& bi, D<int>& di) {
   f(bi);            // f(bi)
-  f(di);            // f((B<int>\&)di)
+  f(di);            // f((B<int>&)di)
 }
 ```
 
@@ -7008,15 +7005,15 @@ Here is an example involving conversions on a function argument not
 involved in *template-parameter* deduction:
 
 ``` cpp
-template<class T> void f(T*,int);       // \#1
-template<class T> void f(T,char);       // \#2
+template<class T> void f(T*,int);       // #1
+template<class T> void f(T,char);       // #2
 
 void h(int* pi, int i, char c) {
-  f(pi,i);          // \#1: f<int>(pi,i)
-  f(pi,c);          // \#2: f<int*>(pi,c)
+  f(pi,i);          // #1: f<int>(pi,i)
+  f(pi,c);          // #2: f<int*>(pi,c)
 
-  f(i,c);           // \#2: f<int>(i,c);
-  f(i,i);           // \#2: f<int>(i,char(i))
+  f(i,c);           // #2: f<int>(i,c);
+  f(i,i);           // #2: f<int>(i,char(i))
 }
 ```
 

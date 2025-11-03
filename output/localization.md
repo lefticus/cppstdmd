@@ -2293,7 +2293,8 @@ containers operating on strings. The specializations required in
 and `collate<wchar_t>`, apply lexicographical ordering
 [[alg.lex.comparison]].
 
-Each function compares a string of characters `*p` in the range .
+Each function compares a string of characters `*p` in the range
+[`low`, `high`).
 
 ##### Members <a id="locale.collate.members">[[locale.collate.members]]</a>
 
@@ -3087,8 +3088,8 @@ namespace std {
 The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
-value `static_cast<part>(p.field[i])` determines the
-$\tcode{i}^\text{th}$ component of the format
+value `static_cast<part>(p.field[i])` determines the `i`^\text{th}
+component of the format
 
 In the `field` member of a `pattern` object, each value `symbol`,
 `sign`, `value`, and either `space` or `none` appears exactly once. The

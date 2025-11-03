@@ -1665,12 +1665,12 @@ namespace std::ranges {
 
 ``` cpp
 vector<int> f();
-auto result1 = ranges::find(f(), 42);                                   // \#1
+auto result1 = ranges::find(f(), 42);                                   // #1
 static_assert(same_as<decltype(result1), ranges::dangling>);
 auto vec = f();
-auto result2 = ranges::find(vec, 42);                                   // \#2
+auto result2 = ranges::find(vec, 42);                                   // #2
 static_assert(same_as<decltype(result2), vector<int>::iterator>);
-auto result3 = ranges::find(ranges::subrange{vec}, 42);                 // \#3
+auto result3 = ranges::find(ranges::subrange{vec}, 42);                 // #3
 static_assert(same_as<decltype(result3), vector<int>::iterator>);
 ```
 
@@ -2664,7 +2664,7 @@ constexpr explicit repeat_view(const T& value, Bound bound = Bound())
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\texttt{bound} \ge 0$.
+`bound` \ge 0.
 
 *Effects:* Initializes *value\_* with `value` and *bound\_* with
 `bound`.
@@ -2674,7 +2674,7 @@ constexpr explicit repeat_view(T&& value, Bound bound = Bound());
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\texttt{bound} \ge 0$.
+`bound` \ge 0.
 
 *Effects:* Initializes *value\_* with `std::move(value)` and *bound\_*
 with `bound`.
@@ -2778,8 +2778,7 @@ denotes `IOTA-DIFF-T(index-type)` [[range.iota.view]].
 constexpr explicit iterator(const T* value, index-type b = index-type());
 ```
 
-*Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\texttt{b} \ge 0$.
+*Preconditions:* If `Bound` is not `unreachable_sentinel_t`, `b` \ge 0.
 
 *Effects:* Initializes *value\_* with `value` and *current\_* with `b`.
 
@@ -2855,7 +2854,7 @@ constexpr iterator& operator+=(difference_type n);
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} + \texttt{n} \ge 0$.
+\textit{current_} + `n` \ge 0.
 
 *Effects:* Equivalent to:
 
@@ -2871,7 +2870,7 @@ constexpr iterator& operator-=(difference_type n);
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} - \texttt{n} \ge 0$.
+\textit{current_} - `n` \ge 0.
 
 *Effects:* Equivalent to:
 
@@ -4674,7 +4673,7 @@ friend constexpr bool operator==(const CI<OtherConst>& y, const sentinel& x);
 
 Given a unary predicate `pred` and a view `r`, `take_while_view`
 produces a view of the range
-\range{ranges::begin(r)}{ranges::find_if_not(r, pred)}.
+[`ranges::be\-gin(r)`, `ranges::find_if_not(r, pred)`).
 
 The name `views::take_while` denotes a range adaptor object
 [[range.adaptor.object]]. Given subexpressions `E` and `F`, the
@@ -4959,7 +4958,8 @@ would have quadratic iteration complexity. — *end note*\]
 #### Overview <a id="range.drop.while.overview">[[range.drop.while.overview]]</a>
 
 Given a unary predicate `pred` and a view `r`, `drop_while_view`
-produces a view of the range .
+produces a view of the range
+[`ranges::find_if_not(r, pred)`, `ranges::end(r)`).
 
 The name `views::drop_while` denotes a range adaptor object
 [[range.adaptor.object]]. Given subexpressions `E` and `F`, the
@@ -8126,7 +8126,7 @@ vector v = {1, 2};
 list l = {'a', 'b', 'c'};
 
 auto z = views::zip(v, l);
-range_reference_t<decltype(z)> f = z.front();   // f is a tuple<int\&, char\&>
+range_reference_t<decltype(z)> f = z.front();   // f is a tuple<int&, char&>
                                                 // that refers to the first element of v and l
 
 for (auto&& [x, y] : z) {
@@ -8435,7 +8435,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 - `x.`*`current_`*` == y.`*`current_`* if
   `all-bidirectional``<Const, Views...>` is `true`.
 - Otherwise, `true` if there exists an integer
-  $0 \leq i < \texttt{sizeof...(Views)}$ such that
+  0 ≤ i < `sizeof...(Views)` such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
   is `true`.
   \[*Note 4*: This allows `zip_view` to model `common_range` when all
@@ -8487,7 +8487,7 @@ Let *`DIST`*`(`i`)` be
 `difference_type(std::get<`i`>(x.`*`current_`*`) - std::get<`i`>(y.`*`current_`*`))`.
 
 *Returns:* The value with the smallest absolute value among
-*`DIST`*`(`n`)` for all integers $0 \leq n < \texttt{sizeof...(Views)}$.
+*`DIST`*`(`n`)` for all integers 0 ≤ n < `sizeof...(Views)`.
 
 ``` cpp
 friend constexpr auto iter_move(const iterator& i) noexcept(see below);
@@ -8513,8 +8513,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
   requires (indirectly_swappable<iterator_t<maybe-const<Const, Views>>> && ...);
 ```
 
-*Effects:* For every integer $0 \leq i < \texttt{sizeof...(Views)}$,
-performs:
+*Effects:* For every integer 0 ≤ i < `sizeof...(Views)`, performs:
 
 ``` cpp
 ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
@@ -8527,7 +8526,7 @@ the following expressions:
 noexcept(ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_)))
 ```
 
-for every integer $0 \leq i < \texttt{sizeof...(Views)}$.
+for every integer 0 ≤ i < `sizeof...(Views)`.
 
 #### Class template `zip_view::sentinel` <a id="range.zip.sentinel">[[range.zip.sentinel]]</a>
 
@@ -8585,8 +8584,8 @@ template<bool OtherConst>
 friend constexpr bool operator==(const iterator<OtherConst>& x, const sentinel& y);
 ```
 
-*Returns:* `true` if there exists an integer
-$0 \leq i < \texttt{sizeof...(Views)}$ such that
+*Returns:* `true` if there exists an integer 0 ≤ i < `sizeof...(Views)`
+such that
 `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`end_`*`))`
 is `true`. Otherwise, `false`.
 
@@ -8602,7 +8601,7 @@ Let `D` be the return type. Let *`DIST`*`(`i`)` be
 `D(std::get<`i`>(x.`*`current_`*`) - std::get<`i`>(y.`*`end_`*`))`.
 
 *Returns:* The value with the smallest absolute value among
-*`DIST`*`(`n`)` for all integers $0 \leq n < \texttt{sizeof...(Views)}$.
+*`DIST`*`(`n`)` for all integers 0 ≤ n < `sizeof...(Views)`.
 
 ``` cpp
 template<bool OtherConst>
@@ -9043,8 +9042,8 @@ friend constexpr range_difference_t<maybe-const<OtherConst, InnerView>>
 
 `adjacent_view` takes a view and produces a view whose $M^\text{th}$
 element is a tuple of references to the $M^\text{th}$ through
-$(M + N - 1)^\text{th}$ elements of the original view. If the original
-view has fewer than N elements, the resulting view is empty.
+(M + N - 1)^th elements of the original view. If the original view has
+fewer than N elements, the resulting view is empty.
 
 The name `views::adjacent<N>` denotes a range adaptor object
 [[range.adaptor.object]]. Given a subexpression `E` and a constant
@@ -9228,7 +9227,7 @@ constexpr iterator(iterator_t<Base> first, sentinel_t<Base> last);
 ```
 
 *Ensures:* *`current_`*`[0] == first` is `true`, and for every integer
-$1 \leq i < \texttt{N}$,
+1 ≤ i < `N`,
 *`current_`*`[`i`] == ranges::next(`*`current_`*`[`i`-1], 1, last)` is
 `true`.
 
@@ -9239,7 +9238,7 @@ constexpr iterator(as-sentinel, iterator_t<Base> first, iterator_t<Base> last);
 *Ensures:* If *Base* does not model `bidirectional_range`, each element
 of *current\_* is equal to *last*. Otherwise,
 *`current_`*`[N-1] == last` is `true`, and for every integer
-$0 \leq i < (\texttt{N} - 1)$,
+0 ≤ i < (`N` - 1),
 *`current_`*`[`i`] == ranges::prev(`*`current_`*`[`i`+1], 1, first)` is
 `true`.
 
@@ -9442,7 +9441,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 *Preconditions:* None of the iterators in `l.`*`current_`* is equal to
 an iterator in `r.`*`current_`*.
 
-*Effects:* For every integer $0 \leq i < \texttt{N}$, performs
+*Effects:* For every integer 0 ≤ i < `N`, performs
 `ranges::iter_swap(l.`*`current_`*`[`i`], r.`*`current_`*`[`i`])`.
 
 *Remarks:* The exception specification is equivalent to:
@@ -9533,9 +9532,9 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
 
 `adjacent_transform_view` takes an invocable object and a view and
 produces a view whose $M^\text{th}$ element is the result of applying
-the invocable object to the $M^\text{th}$ through
-$(M + N - 1)^\text{th}$ elements of the original view. If the original
-view has fewer than N elements, the resulting view is empty.
+the invocable object to the $M^\text{th}$ through (M + N - 1)^th
+elements of the original view. If the original view has fewer than N
+elements, the resulting view is empty.
 
 The name `views::adjacent_transform<N>` denotes a range adaptor object
 [[range.adaptor.object]]. Given subexpressions `E` and `F` and a
@@ -10730,8 +10729,8 @@ friend constexpr difference_type operator-(const iterator& x, default_sentinel_t
 
 `slide_view` takes a view and a number N and produces a view whose
 $M^\text{th}$ element is a view over the $M^\text{th}$ through
-$(M + N - 1)^\text{th}$ elements of the original view. If the original
-view has fewer than N elements, the resulting view is empty.
+(M + N - 1)^th elements of the original view. If the original view has
+fewer than N elements, the resulting view is empty.
 
 The name `views::slide` denotes a range adaptor object
 [[range.adaptor.object]]. Given subexpressions `E` and `N`, the
@@ -12322,13 +12321,13 @@ Let:
 
 - $\textit{scaled-size}(N)$ be the product of
   `static_cast<difference_type>(ranges::size(std::get<`N`>(`*`parent_`*`->`*`bases_`*`)))`
-  and $\textit{scaled-size}(N+1)$ if $N \le \texttt{sizeof...(Vs)}$,
-  otherwise `static_cast<difference_type>(1)`;
+  and $\textit{scaled-size}(N+1)$ if N \le `sizeof...(Vs)`, otherwise
+  `static_cast<difference_type>(1)`;
 - $\textit{scaled-distance}(N)$ be the product of
   `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
   and $\textit{scaled-size}(N+1)$; and
 - *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
-  integer $0 \le N \le \texttt{sizeof...(Vs)}$.
+  integer 0 \le N \le `sizeof...(Vs)`.
 
 *Preconditions:* *scaled-sum* can be represented by `difference_type`.
 
@@ -12430,8 +12429,8 @@ Let `ret` be:
 - Otherwise, `orig`.
 
 *Preconditions:* `x` is in the range
-$[\texttt{ranges::distance(*this, ranges::begin(*\textit{parent_}))},$
-$\texttt{ranges::distance(*this, ranges::end(*\textit{parent_}))}]$.
+[`ranges::distance(*this, ranges::begin(*\textit{parent_}))`,
+`ranges::distance(*this, ranges::end(*\textit{parent_}))`].
 
 *Effects:* Sets the value of `*this` to `ret`.
 
@@ -12471,8 +12470,8 @@ friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 
 *Returns:* `true` if
 `std::get<`i`>(x.`*`current_`*`) == ranges::end(std::get<`i`>(x.`*`parent_`*`->`*`bases_`*`))`
-is `true` for any integer $0 \le i \le \texttt{sizeof...(Vs)}$;
-otherwise, `false`.
+is `true` for any integer 0 \le i \le `sizeof...(Vs)`; otherwise,
+`false`.
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
@@ -12523,7 +12522,7 @@ Let *end-tuple* be an object of a type that is a specialization of
   `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
 - `std::get<`N`>(`*`end-tuple`*`)` has the same value as
   `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
-  every integer $1 \le N \le \texttt{sizeof...(Vs)}$.
+  every integer 1 \le N \le `sizeof...(Vs)`.
 
 *Effects:* Equivalent to:
 `return i.`*`distance-from`*`(`*`end-tuple`*`);`
@@ -12546,7 +12545,7 @@ friend constexpr auto iter_move(const iterator& i) noexcept(see below);
 the following expressions:
 
 - `noexcept(ranges::iter_move(std::get<`N`>(i.`*`current_`*`)))` for
-  every integer$0 \le N \le \texttt{sizeof...(Vs)}$,
+  every integer0 \le N \le `sizeof...(Vs)`,
 - `is_nothrow_move_constructible_v<range_rvalue_reference_t<`*`maybe-const`*`<Const, T>>>`
   for every type `T` in `First, Vs...`.
 
@@ -12556,8 +12555,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
         indirectly_swappable<iterator_t<maybe-const<Const, Vs>>>);
 ```
 
-*Effects:* For every integer $0 \le i \le \texttt{sizeof...(Vs)}$,
-performs:
+*Effects:* For every integer 0 \le i \le `sizeof...(Vs)`, performs:
 
 ``` cpp
 ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
@@ -12567,7 +12565,7 @@ ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
 the following expressions:
 
 - `noexcept(ranges::iter_swap(std::get<`i`>(l.`*`current_`*`), std::get<`i`>(r.`*`current_`*`)))`
-  forevery integer $0 \le i \le \texttt{sizeof...(Vs)}$.
+  forevery integer 0 \le i \le `sizeof...(Vs)`.
 
 ## Range generators <a id="coro.generator">[[coro.generator]]</a>
 

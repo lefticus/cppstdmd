@@ -1388,12 +1388,11 @@ object, but not that of any of the array elements.
 *Mandates:* `T` is not an incomplete type [[term.incomplete.type]].
 
 *Returns:* `allocation_result<T*>{ptr, count}`, where `ptr` is a pointer
-to the initial element of an array of `count` `T` and
-$\texttt{count} \geq \texttt{n}$.
+to the initial element of an array of `count` `T` and `count` ≥ `n`.
 
 *Throws:* `bad_array_new_length` if
-$\texttt{numeric_limits<size_t>::max() / sizeof(T)} < \texttt{n}$, or
-`bad_alloc` if the storage cannot be obtained.
+`numeric_limits<size_t>::max() / sizeof(T)` < `n`, or `bad_alloc` if the
+storage cannot be obtained.
 
 *Remarks:* The storage for the array is obtained by calling
 `::operator new`, but it is unspecified when or how often this function
@@ -1409,8 +1408,7 @@ constexpr void deallocate(T* p, size_t n);
 - If `p` is memory that was obtained by a call to `allocate_at_least`,
   let `ret` be the value returned and `req` be the value passed as the
   first argument to that call. `p` is equal to `ret.ptr` and `n` is a
-  value such that
-  $\texttt{req} \leq \texttt{n} \leq \texttt{ret.count}$.
+  value such that `req` ≤ `n` ≤ `ret.count`.
 - Otherwise, `p` is a pointer value obtained from `allocate`. `n` equals
   the value passed as the first argument to the invocation of `allocate`
   which returned `p`.
@@ -2073,8 +2071,8 @@ primary template. — *end note*\]
 constexpr T& operator[](size_t i) const;
 ```
 
-*Preconditions:* $\texttt{i} <$ the number of elements in the array to
-which the stored pointer points.
+*Preconditions:* `i` < the number of elements in the array to which the
+stored pointer points.
 
 *Returns:* `get()[i]`.
 

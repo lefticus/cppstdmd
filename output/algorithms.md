@@ -45,7 +45,7 @@ argument-dependent name lookup.
 void foo() {
   using namespace std::ranges;
   std::vector<int> vec{1,2,3};
-  find(begin(vec), end(vec), 2);        // \#1
+  find(begin(vec), end(vec), 2);        // #1
 }
 ```
 
@@ -170,8 +170,9 @@ return tmp;
 ```
 
 Similarly, operator `-` is used for some combinations of iterators and
-sentinel types for which it does not have to be defined. If denotes a
-range, the semantics of `b - a` in these cases are the same as those of
+sentinel types for which it does not have to be defined. If [`a`, `b`)
+denotes a range, the semantics of `b - a` in these cases are the same as
+those of
 
 ``` cpp
 iter_difference_t<decltype(a)> n = 0;
@@ -179,7 +180,7 @@ for (auto tmp = a; tmp != b; ++tmp) ++n;
 return n;
 ```
 
-and if denotes a range, the same as those of
+and if [`b`, `a`) denotes a range, the same as those of
 
 ``` cpp
 iter_difference_t<decltype(b)> n = 0;
@@ -193,9 +194,9 @@ than cv `D`, the semantics of `a + n` and `a - n` are, respectively,
 those of `a + D(n)` and `a - D(n)`.
 
 In the description of algorithm return values, a sentinel value `s`
-denoting the end of a range is sometimes returned where an iterator is
-expected. In these cases, the semantics are as if the sentinel is
-converted into an iterator using `ranges::next(i, s)`.
+denoting the end of a range [`i`, `s`) is sometimes returned where an
+iterator is expected. In these cases, the semantics are as if the
+sentinel is converted into an iterator using `ranges::next(i, s)`.
 
 Overloads of algorithms that take `range` arguments [[range.range]]
 behave as if they are implemented by calling `ranges::begin` and
@@ -3787,7 +3788,7 @@ Let E be:
 - `!invoke(pred, invoke(proj1, *(first1 + n)), invoke(proj2, *(first2 + n)))`
   for the overloads with both parameters `pred` and `proj1`.
 
-Let N be $\min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$.
+Let N be \min(`last1 - first1`, \ `last2 - first2`).
 
 *Returns:* `{ first1 + n, first2 + n }`, where `n` is the smallest
 integer in \[`0`, N) such that E holds, or N if no such integer exists.
@@ -3882,8 +3883,8 @@ then no applications of the corresponding predicate and each projection;
 otherwise,
 
 - For the overloads with no `ExecutionPolicy`, at most
-  $\min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$
-  applications of the corresponding predicate and any projections.
+  \min(`last1 - first1`, \ `last2 - first2`) applications of the
+  corresponding predicate and any projections.
 - For the overloads with an `ExecutionPolicy`,
   𝑂(min(`last1 - first1),  ``last2 - first2``)` applications of the
   corresponding predicate.
@@ -4145,7 +4146,7 @@ template<input_iterator I1, sentinel_for<I1> S1, input_iterator I2, sentinel_for
 
 Let `N1` be `last1 - first1` and `N2` be `last2 - first2`.
 
-*Returns:* `false` if $\texttt{N1} < \texttt{N2}$, otherwise
+*Returns:* `false` if `N1` < `N2`, otherwise
 
 ``` cpp
 ranges::equal(std::move(first1) + (N1 - N2), last1, std::move(first2), last2,
@@ -4164,7 +4165,7 @@ template<input_range R1, input_range R2, class Pred = ranges::equal_to, class Pr
 
 Let `N1` be `ranges::distance(r1)` and `N2` be `ranges::distance(r2)`.
 
-*Returns:* `false` if $\texttt{N1} < \texttt{N2}$, otherwise
+*Returns:* `false` if `N1` < `N2`, otherwise
 
 ``` cpp
 ranges::equal(ranges::drop_view(ranges::ref_view(r1), N1 - N2), r2, pred, proj1, proj2)
@@ -4372,7 +4373,7 @@ template<input_iterator I, weakly_incrementable O>
     ranges::copy_n(I first, iter_difference_t<I> n, O result);
 ```
 
-Let N be $\max(0, \texttt{n})$.
+Let N be \max(0, `n`).
 
 *Mandates:* The type `Size` is convertible to an integral
 type [[conv.integral,class.conv]].
@@ -4605,7 +4606,7 @@ Let:
 
 - `last2` be `first2 + (last1 - first1)` for the overloads with no
   parameter named `last2`;
-- M be $\min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$.
+- M be \min(`last1 - first1`, \ `last2 - first2`).
 
 *Preconditions:* The two ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) do not overlap. For the overloads in namespace `std`,
@@ -4698,8 +4699,7 @@ Let:
 - `last2` be `first2 + (last1 - first1)` for the overloads with
   parameter `first2` but no parameter `last2`;
 - N be `last1 - first1` for unary transforms, or
-  $\min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$ for binary
-  transforms;
+  \min(`last1 - first1`, \ `last2 - first2`) for binary transforms;
 - E be
   - `op(*(first1 + (i - result)))` for unary transforms defined in
     namespace `std`;
@@ -4901,8 +4901,8 @@ template<class T, output_iterator<const T&> O>
   constexpr O ranges::fill_n(O first, iter_difference_t<O> n, const T& value);
 ```
 
-Let N be $\max(0, \texttt{n})$ for the `fill_n` algorithms, and
-`last - first` for the `fill` algorithms.
+Let N be \max(0, `n`) for the `fill_n` algorithms, and `last - first`
+for the `fill` algorithms.
 
 *Mandates:* The expression `value` is
 writable [[iterator.requirements.general]] to the output iterator. The
@@ -4944,7 +4944,7 @@ template<input_or_output_iterator O, copy_constructible F>
   constexpr O ranges::generate_n(O first, iter_difference_t<O> n, F gen);
 ```
 
-Let N be $\max(0, \texttt{n})$ for the `generate_n` algorithms, and
+Let N be \max(0, `n`) for the `generate_n` algorithms, and
 `last - first` for the `generate` algorithms.
 
 *Mandates:* `Size` is convertible to an integral
@@ -5437,9 +5437,9 @@ overload in namespace `std`:
 - `remove_reference_t<UniformRandomBitGenerator>` meets the requirements
   of a uniform random bit generator type [[rand.req.urng]].
 
-*Effects:* Copies $\min(\texttt{last - first}, \ \texttt{n})$ elements
-(the ) from \[`first`, `last`) (the ) to `out` such that each possible
-sample has equal probability of appearance.
+*Effects:* Copies \min(`last - first`, \ `n`) elements (the ) from
+\[`first`, `last`) (the ) to `out` such that each possible sample has
+equal probability of appearance.
 
 \[*Note 1*: Algorithms that obtain such effects include and
 . — *end note*\]
@@ -5634,10 +5634,10 @@ A sequence is *sorted with respect to a comparator `comp`* for a
 comparator `comp` if it is sorted with respect to `comp` and
 `identity\{\}` (the identity projection).
 
-A sequence is *partitioned with respect to an expression* `f(e)` if
-there exists an integer `n` such that for all
-`0 <= i < (finish - start)`, `f(*(start + i))` is `true` if and only if
-`i < n`.
+A sequence [`start`, `finish`) is
+*partitioned with respect to an expression* `f(e)` if there exists an
+integer `n` such that for all `0 <= i < (finish - start)`,
+`f(*(start + i))` is `true` if and only if `i < n`.
 
 In the descriptions of the functions that deal with ordering
 relationships we frequently use a notion of equivalence to describe
@@ -5735,7 +5735,7 @@ respect to `comp` and `proj`.
 *Returns:* `last` for the overloads in namespace `ranges`.
 
 *Complexity:* Let N be `last - first`. If enough extra memory is
-available, $N \log(N)$ comparisons. Otherwise, at most $N \log^2(N)$
+available, N log(N) comparisons. Otherwise, at most N log²(N)
 comparisons. In either case, twice as many projections as the number of
 comparisons.
 
@@ -5855,9 +5855,8 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
                               Proj1 proj1 = {}, Proj2 proj2 = {});
 ```
 
-Let N be
-$\min(\texttt{last - first}, \ \texttt{result_last - result_first})$.
-Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for the
+Let N be \min(`last - first`, \ `result_last - result_first`). Let
+`comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for the
 overloads with no parameters by those names.
 
 *Mandates:* For the overloads in namespace `std`, the expression
@@ -6037,8 +6036,7 @@ iterator `j` in the range \[`nth`, `last`) it holds that:
 
 *Complexity:* For the overloads with no `ExecutionPolicy`, linear on
 average. For the overloads with an `ExecutionPolicy`, 𝑂(N) applications
-of the predicate, and 𝑂(N log N) swaps, where
-$N = \texttt{last - first}$.
+of the predicate, and 𝑂(N log N) swaps, where N = `last - first`.
 
 ``` cpp
 template<random_access_range R, class Comp = ranges::less, class Proj = identity>
@@ -6102,8 +6100,8 @@ with respect to the expression
 such that for every iterator `j` in the range \[`first`, `i`),
 `bool(invoke(comp, invoke(proj, *j), value))` is `true`.
 
-*Complexity:* At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons
-and projections.
+*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons and
+projections.
 
 #### `upper_bound` <a id="upper.bound">[[upper.bound]]</a>
 
@@ -6139,8 +6137,8 @@ with respect to the expression
 such that for every iterator `j` in the range \[`first`, `i`),
 `!bool(invoke(comp, value, invoke(proj, *j)))` is `true`.
 
-*Complexity:* At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons
-and projections.
+*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons and
+projections.
 
 #### `equal_range` <a id="equal.range">[[equal.range]]</a>
 
@@ -6186,8 +6184,8 @@ with respect to the expressions
       {ranges::lower_bound(first, last, value, comp, proj),
        ranges::upper_bound(first, last, value, comp, proj)}
 
-*Complexity:* At most $2 * \log_2(\texttt{last - first}) + 𝑂(1)$
-comparisons and projections.
+*Complexity:* At most 2 * \log_2(`last - first`) + 𝑂(1) comparisons and
+projections.
 
 #### `binary_search` <a id="binary.search">[[binary.search]]</a>
 
@@ -6228,8 +6226,8 @@ with respect to the expressions
 `!bool(invoke(comp, invoke(proj, *i), value)) && !bool(invoke(comp, value, invoke(proj, *i)))`
 is `true`.
 
-*Complexity:* At most $\log_2(\texttt{last - first}) + 𝑂(1)$ comparisons
-and projections.
+*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons and
+projections.
 
 ### Partitions <a id="alg.partitions">[[alg.partitions]]</a>
 
@@ -6285,16 +6283,16 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 meets the *Cpp17ValueSwappable* requirements [[swappable.requirements]].
 
 *Effects:* Places all the elements `e` in \[`first`, `last`) that
-satisfy $E(\texttt{e})$ before all the elements that do not.
+satisfy E(`e`) before all the elements that do not.
 
-*Returns:* Let `i` be an iterator such that $E(\texttt{*j})$ is `true`
-for every iterator `j` in \[`first`, `i`) and `false` for every iterator
-`j` in \[`i`, `last`). Returns:
+*Returns:* Let `i` be an iterator such that E(`*j`) is `true` for every
+iterator `j` in \[`first`, `i`) and `false` for every iterator `j` in
+\[`i`, `last`). Returns:
 
 - `i` for the overloads in namespace `std`.
 - `{i, last}` for the overloads in namespace `ranges`.
 
-*Complexity:* Let $N = \texttt{last - first}$:
+*Complexity:* Let N = `last - first`:
 
 - For the overload with no `ExecutionPolicy`, exactly N applications of
   the predicate and projection. At most N / 2 swaps if the type of
@@ -6333,20 +6331,20 @@ the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
 *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 
 *Effects:* Places all the elements `e` in \[`first`, `last`) that
-satisfy $E(\texttt{e})$ before all the elements that do not. The
-relative order of the elements in both groups is preserved.
+satisfy E(`e`) before all the elements that do not. The relative order
+of the elements in both groups is preserved.
 
 *Returns:* Let `i` be an iterator such that for every iterator `j` in
-\[`first`, `i`), $E(\texttt{*j})$ is `true`, and for every iterator `j`
-in the range \[`i`, `last`), $E(\texttt{*j})$ is `false`. Returns:
+\[`first`, `i`), E(`*j`) is `true`, and for every iterator `j` in the
+range \[`i`, `last`), E(`*j`) is `false`. Returns:
 
 - `i` for the overloads in namespace `std`.
 - `{i, last}` for the overloads in namespace `ranges`.
 
 *Complexity:* Let N = `last - first`:
 
-- For the overloads with no `ExecutionPolicy`, at most $N \log_2 N$
-  swaps, but only 𝑂(N) swaps if there is enough extra memory. Exactly N
+- For the overloads with no `ExecutionPolicy`, at most N log₂ N swaps,
+  but only 𝑂(N) swaps if there is enough extra memory. Exactly N
   applications of the predicate and projection.
 - For the overload with an `ExecutionPolicy`, 𝑂(N log N) swaps and 𝑂(N)
   applications of the predicate.
@@ -6392,8 +6390,8 @@ performance cost if `first`’s value type does not meet the
 *Cpp17CopyConstructible* requirements. — *end note*\]
 
 *Effects:* For each iterator `i` in \[`first`, `last`), copies `*i` to
-the output range beginning with `out_true` if $E(\texttt{*i})$ is
-`true`, or to the output range beginning with `out_false` otherwise.
+the output range beginning with `out_true` if E(`*i`) is `true`, or to
+the output range beginning with `out_false` otherwise.
 
 *Returns:* Let `o1` be the end of the output range beginning at
 `out_true`, and `o2` the end of the output range beginning at
@@ -6422,11 +6420,11 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 `proj` and let E(x) be `bool(invoke(pred, invoke(proj, `x`)))`.
 
 *Preconditions:* The elements `e` of \[`first`, `last`) are partitioned
-with respect to $E(\texttt{e})$.
+with respect to E(`e`).
 
-*Returns:* An iterator `mid` such that $E(\texttt{*i})$ is `true` for
-all iterators `i` in \[`first`, `mid`), and `false` for all iterators
-`i` in \[`mid`, `last`).
+*Returns:* An iterator `mid` such that E(`*i`) is `true` for all
+iterators `i` in \[`first`, `mid`), and `false` for all iterators `i` in
+\[`mid`, `last`).
 
 *Complexity:* 𝑂(log(`last - first))` applications of `pred` and `proj`.
 
@@ -6551,7 +6549,7 @@ and `proj`.
 
 *Returns:* `last` for the overload in namespace `ranges`.
 
-*Complexity:* Let $N = \texttt{last - first}$:
+*Complexity:* Let N = `last - first`:
 
 - For the overloads with no `ExecutionPolicy`, and if enough additional
   memory is available, exactly N - 1 comparisons.
@@ -6706,8 +6704,8 @@ comparisons and applications of each projection.
 m elements that are equivalent to each other and \[`first2`, `last2`)
 contains n elements that are equivalent to them, then all m elements
 from the first range are copied to the output range, in order, and then
-the final $\max(n - m, 0)$ elements from the second range are copied to
-the output range, in order.
+the final max(n - m, 0) elements from the second range are copied to the
+output range, in order.
 
 #### `set_intersection` <a id="set.intersection">[[set.intersection]]</a>
 
@@ -6778,7 +6776,7 @@ comparisons and applications of each projection.
 
 *Remarks:* Stable [[algorithm.stable]]. If \[`first1`, `last1`) contains
 m elements that are equivalent to each other and \[`first2`, `last2`)
-contains n elements that are equivalent to them, the first $\min(m, n)$
+contains n elements that are equivalent to them, the first min(m, n)
 elements are copied from the first range to the output range, in order.
 
 #### `set_difference` <a id="set.difference">[[set.difference]]</a>
@@ -6850,7 +6848,7 @@ comparisons and applications of each projection.
 
 *Remarks:* If \[`first1`, `last1`) contains m elements that are
 equivalent to each other and \[`first2`, `last2`) contains n elements
-that are equivalent to them, the last $\max(m - n, 0)$ elements from
+that are equivalent to them, the last max(m - n, 0) elements from
 \[`first1`, `last1`) are copied to the output range, in order.
 
 #### `set_symmetric_difference` <a id="set.symmetric.difference">[[set.symmetric.difference]]</a>
@@ -6936,10 +6934,10 @@ elements are copied in order.
 
 #### General <a id="alg.heap.operations.general">[[alg.heap.operations.general]]</a>
 
-A random access range is a `comp} and \tcode{proj}` heap with respect to
-comp and proj@heap with respect to `comp` and `proj` for a comparator
-and projection `comp` and `proj` if its elements are organized such
-that:
+A random access range [`a`, `b`) is a `comp} and \tcode{proj}` heap with
+respect to comp and proj@heap with respect to `comp` and `proj` for a
+comparator and projection `comp` and `proj` if its elements are
+organized such that:
 
 - With `$N$ = b - a`, for all i, 0 < i < N,
   `bool(invoke(comp, invoke(proj, a[$\left \lfloor{\frac{i - 1}{2}}\right \rfloor$]), invoke(proj, a[$i$])))`
@@ -6988,8 +6986,8 @@ resulting heap \[`first`, `last`).
 
 *Returns:* `last` for the overloads in namespace `ranges`.
 
-*Complexity:* At most $\log(\texttt{last - first})$ comparisons and
-twice as many projections.
+*Complexity:* At most \log(`last - first`) comparisons and twice as many
+projections.
 
 #### `pop_heap` <a id="pop.heap">[[pop.heap]]</a>
 
@@ -7028,8 +7026,8 @@ respect to `comp` and `proj`.
 
 *Returns:* `last` for the overloads in namespace `ranges`.
 
-*Complexity:* At most $2 \log(\texttt{last - first})$ comparisons and
-twice as many projections.
+*Complexity:* At most 2 \log(`last - first`) comparisons and twice as
+many projections.
 
 #### `make_heap` <a id="make.heap">[[make.heap]]</a>
 
@@ -7066,8 +7064,8 @@ the range \[`first`, `last`).
 
 *Returns:* `last` for the overloads in namespace `ranges`.
 
-*Complexity:* At most $3(\texttt{last - first})$ comparisons and twice
-as many projections.
+*Complexity:* At most 3(`last - first`) comparisons and twice as many
+projections.
 
 #### `sort_heap` <a id="sort.heap">[[sort.heap]]</a>
 
@@ -7105,8 +7103,8 @@ the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
 
 *Returns:* `last` for the overloads in namespace `ranges`.
 
-*Complexity:* At most $2N \log N$ comparisons, where
-$N = \texttt{last - first}$, and twice as many projections.
+*Complexity:* At most 2N log N comparisons, where N = `last - first`,
+and twice as many projections.
 
 #### `is_heap` <a id="is.heap">[[is.heap]]</a>
 
@@ -7356,8 +7354,8 @@ requirements ( [[cpp17.lessthancomparable]]).
 copy of the leftmost element with the smallest value and `y` a copy of
 the rightmost element with the largest value in the input range.
 
-*Complexity:* At most $(3/2)\texttt{ranges::distance(r)}$ applications
-of the corresponding predicate and twice as many applications of the
+*Complexity:* At most (3/2)`ranges::distance(r)` applications of the
+corresponding predicate and twice as many applications of the
 projection, if any.
 
 *Remarks:* An invocation may explicitly specify an argument for the
@@ -7399,8 +7397,8 @@ bool(invoke(comp, invoke(proj, *j), invoke(proj, *i)))
 
 is `false`. Returns `last` if `first == last`.
 
-*Complexity:* Exactly $\max(\texttt{last - first - 1}, 0)$ comparisons
-and twice as many projections.
+*Complexity:* Exactly \max(`last - first - 1`, 0) comparisons and twice
+as many projections.
 
 ``` cpp
 template<class ForwardIterator>
@@ -7438,8 +7436,8 @@ bool(invoke(comp, invoke(proj, *i), invoke(proj, *j)))
 
 is `false`. Returns `last` if `first == last`.
 
-*Complexity:* Exactly $\max(\texttt{last - first - 1}, 0)$ comparisons
-and twice as many projections.
+*Complexity:* Exactly \max(`last - first - 1`, 0) comparisons and twice
+as many projections.
 
 ``` cpp
 template<class ForwardIterator>
@@ -7560,8 +7558,7 @@ template<input_range R1, input_range R2, class Proj1 = identity,
 range \[`first1`, `last1`) is lexicographically less than the sequence
 of elements defined by the range \[`first2`, `last2`).
 
-*Complexity:* At most
-$2 \min(\texttt{last1 - first1}, \ \texttt{last2 - first2})$
+*Complexity:* At most 2 \min(`last1 - first1`, \ `last2 - first2`)
 applications of the corresponding comparison and each projection, if
 any.
 
@@ -7600,7 +7597,7 @@ template<class InputIterator1, class InputIterator2, class Cmp>
       -> decltype(comp(*b1, *b2));
 ```
 
-Let N be $\min(\texttt{e1 - b1}, \texttt{e2 - b2})$. Let E(n) be
+Let N be \min(`e1 - b1`, `e2 - b2`). Let E(n) be
 `comp(*(b1 + `n`), *(b2 + `n`))`.
 
 *Mandates:* `decltype(comp(*b1, *b2))` is a comparison category type.
@@ -8700,15 +8697,15 @@ template<class M, class N>
 
 *Mandates:* `M` and `N` both are integer types other than  `bool`.
 
-*Preconditions:* $|\texttt{m}|$ and $|\texttt{n}|$ are representable as
-a value of `common_type_t<M, N>`.
+*Preconditions:* |`m`| and |`n`| are representable as a value of
+`common_type_t<M, N>`.
 
 \[*Note 1*: These requirements ensure, for example, that
-$\texttt{gcd(m, m)} = |\texttt{m}|$ is representable as a value of type
+`gcd(m, m)` = |`m`| is representable as a value of type
 `M`. — *end note*\]
 
 *Returns:* Zero when `m` and `n` are both zero. Otherwise, returns the
-greatest common divisor of $|\texttt{m}|$ and $|\texttt{n}|$.
+greatest common divisor of |`m`| and |`n`|.
 
 *Throws:* Nothing.
 
@@ -8721,13 +8718,12 @@ template<class M, class N>
 
 *Mandates:* `M` and `N` both are integer types other than  `bool`.
 
-*Preconditions:* $|\texttt{m}|$ and $|\texttt{n}|$ are representable as
-a value of `common_type_t<M, N>`. The least common multiple of
-$|\texttt{m}|$ and $|\texttt{n}|$ is representable as a value of type
-`common_type_t<M, N>`.
+*Preconditions:* |`m`| and |`n`| are representable as a value of
+`common_type_t<M, N>`. The least common multiple of |`m`| and |`n`| is
+representable as a value of type `common_type_t<M, N>`.
 
 *Returns:* Zero when either `m` or `n` is zero. Otherwise, returns the
-least common multiple of $|\texttt{m}|$ and $|\texttt{n}|$.
+least common multiple of |`m`| and |`n`|.
 
 *Throws:* Nothing.
 

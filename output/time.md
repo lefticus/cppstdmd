@@ -6532,8 +6532,8 @@ use this class implicitly, not explicitly. — *end note*\]
 
 The `begin` and `end` data members indicate that, for the associated
 `time_zone` and `time_point`, the `offset` and `abbrev` are in effect in
-the range . This information can be used to efficiently iterate the
-transitions of a `time_zone`.
+the range [`begin`, `end`). This information can be used to efficiently
+iterate the transitions of a `time_zone`.
 
 The `offset` data member indicates the UTC offset in effect for the
 associated `time_zone` and `time_point`. The relationship between
@@ -6552,7 +6552,7 @@ authoritative. The only sure way to get such information is to query the
 `time_zone` with a `time_point` that returns a `sys_info` where
 `save == 0min`. There is no guarantee what `time_point` might return
 such a `sys_info` except that it is guaranteed not to be in the range
-(if `save != 0min` for this `sys_info`).
+[`begin`, `end`) (if `save != 0min` for this `sys_info`).
 
 The `abbrev` data member indicates the current abbreviation used for the
 associated `time_zone` and `time_point`. Abbreviations are not unique

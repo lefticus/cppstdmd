@@ -607,15 +607,16 @@ a *sentinel* that designate the beginning and end of the computation, or
 an iterator and a count that designate the beginning and the number of
 elements to which the computation is to be applied.
 
-An iterator and a sentinel denoting a range are comparable. A range is
-empty if `i == s`; otherwise, refers to the elements in the data
-structure starting with the element pointed to by `i` and up to but not
-including the element, if any, pointed to by the first iterator `j` such
-that `j == s`.
+An iterator and a sentinel denoting a range are comparable. A range
+[`i`, `s`) is empty if `i == s`; otherwise, [`i`, `s`) refers to the
+elements in the data structure starting with the element pointed to by
+`i` and up to but not including the element, if any, pointed to by the
+first iterator `j` such that `j == s`.
 
 A sentinel `s` is called *reachable from* an iterator `i` if and only if
 there is a finite sequence of applications of the expression `++i` that
-makes `i == s`. If `s` is reachable from `i`, denotes a *valid range*.
+makes `i == s`. If `s` is reachable from `i`, [`i`, `s`) denotes a
+*valid range*.
 
 A *counted range* is empty if `n == 0`; otherwise, refers to the `n`
 elements in the data structure starting with the element pointed to by
@@ -691,8 +692,8 @@ namespace std {
 }
 ```
 
-Let $R_\tcode{I}$ be `remove_cvref_t<I>`. The type
-`iter_difference_t<I>` denotes
+Let R_`I` be `remove_cvref_t<I>`. The type `iter_difference_t<I>`
+denotes
 
 - `incrementable_traits<$R_\tcode{I}$>::difference_type`
   if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
@@ -766,8 +767,7 @@ struct indirectly_readable_traits<T>
 template<class T> using iter_value_t = see below;
 ```
 
-Let $R_\tcode{I}$ be `remove_cvref_t<I>`. The type `iter_value_t<I>`
-denotes
+Let R_`I` be `remove_cvref_t<I>`. The type `iter_value_t<I>` denotes
 
 - `indirectly_readable_traits<$R_\tcode{I}$>::value_type`
   if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
@@ -1409,9 +1409,10 @@ denotes a range. Types `S` and `I` model `sentinel_for``<S, I>` only if
 - `assignable_from``<I&, S>` is either modeled or not satisfied.
 
 The domain of `==` is not static. Given an iterator `i` and sentinel `s`
-such that denotes a range and `i != s`, `i` and `s` are not required to
-continue to denote a range after incrementing any other iterator equal
-to `i`. Consequently, `i == s` is no longer required to be well-defined.
+such that [`i`, `s`) denotes a range and `i != s`, `i` and `s` are not
+required to continue to denote a range after incrementing any other
+iterator equal to `i`. Consequently, `i == s` is no longer required to
+be well-defined.
 
 #### Concept  <a id="iterator.concept.sizedsentinel">[[iterator.concept.sizedsentinel]]</a>
 
@@ -1538,7 +1539,8 @@ value-initialized iterators of the same type.
 end of the same empty sequence. — *end note*\]
 
 Pointers and references obtained from a forward iterator into a range
-shall remain valid while continues to denote a range.
+[`i`, `s`) shall remain valid while [`i`, `s`) continues to denote a
+range.
 
 Two dereferenceable iterators `a` and `b` of type `X` offer the
 *multi-pass guarantee* if:
@@ -2240,7 +2242,7 @@ argument-dependent name lookup.
 void foo() {
     using namespace std::ranges;
     std::vector<int> vec{1,2,3};
-    distance(begin(vec), end(vec));     // \#1
+    distance(begin(vec), end(vec));     // #1
 }
 ```
 
@@ -2303,7 +2305,7 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 *Effects:*
 
 - If `S` and `I` model `sized_sentinel_for``<S, I>`:
-  - If $|\texttt{n}| \ge |\texttt{bound - i}|$, equivalent to
+  - If |`n`| \ge |`bound - i`|, equivalent to
     `ranges::advance(i, bound)`.
   - Otherwise, equivalent to `ranges::advance(i, n)`.
 - Otherwise,
@@ -2816,11 +2818,11 @@ classes,
 while (first != last) *result++ = *first++;
 ```
 
-causes a range to be copied into a range starting with result. The same
-code with `result` being an insert iterator will insert corresponding
-elements into the container. This device allows all of the copying
-algorithms in the library to work in the *insert mode* instead of the
-*regular overwrite* mode.
+causes a range [`first`, `last`) to be copied into a range starting with
+result. The same code with `result` being an insert iterator will insert
+corresponding elements into the container. This device allows all of the
+copying algorithms in the library to work in the *insert mode* instead
+of the *regular overwrite* mode.
 
 An insert iterator is constructed from a container and possibly one of
 its iterators pointing to where insertion takes place if it is neither

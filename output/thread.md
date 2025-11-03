@@ -943,12 +943,11 @@ execution or neither `x` nor `y` represents a thread of execution.
 strong_ordering operator<=>(thread::id x, thread::id y) noexcept;
 ```
 
-Let $P(\texttt{x}, \texttt{y})$ be an unspecified total ordering over
-`thread::id` as described in [[alg.sorting]].
+Let P(`x`, `y`) be an unspecified total ordering over `thread::id` as
+described in [[alg.sorting]].
 
-*Returns:* `strong_ordering::less` if $P(\texttt{x}, \texttt{y})$ is
-`true`. Otherwise, `strong_ordering::greater` if
-$P(\texttt{y}, \texttt{x})$ is `true`. Otherwise,
+*Returns:* `strong_ordering::less` if P(`x`, `y`) is `true`. Otherwise,
+`strong_ordering::greater` if P(`y`, `x`) is `true`. Otherwise,
 `strong_ordering::equal`.
 
 ``` cpp

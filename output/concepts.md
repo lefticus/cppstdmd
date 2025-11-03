@@ -98,9 +98,9 @@ implementation validates the syntax of the variations is unspecified.
 
 ``` cpp
 template<class T> concept C = requires(T a, T b, const T c, const T d) {
-  c == d;           // \#1
-  a = std::move(b); // \#2
-  a = c;            // \#3
+  c == d;           // #1
+  a = std::move(b); // #2
+  a = c;            // #3
 };
 ```
 

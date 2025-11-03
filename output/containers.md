@@ -1588,7 +1588,7 @@ In this subclause,
   type [[temp.deduct]],
 - `i` and `j` meet the *Cpp17InputIterator* requirements and refer to
   elements implicitly convertible to `value_type`,
--  denotes a valid range,
+- [`i`, `j`) denotes a valid range,
 - `rg` denotes a value of a type `R` that models
   `container-compatible-range<value_type>`,
 - `p` denotes a valid constant iterator to `a`,
@@ -1710,7 +1710,7 @@ from `*i`.
 *Effects:* Constructs an empty container and inserts elements from the
 range \[`i`, `j`) into it; uses `c` as a comparison object.
 
-*Complexity:* $N \log N$ in general, where N has the value
+*Complexity:* N log N in general, where N has the value
 `distance(i, j)`; linear if \[`i`, `j`) is sorted with respect to
 `value_comp()`.
 
@@ -1725,7 +1725,7 @@ requirements. `value_type` is *Cpp17EmplaceConstructible* into `X` from
 *Effects:* Constructs an empty container and inserts elements from the
 range \[`i`, `j`) into it; uses `Compare()` as a comparison object.
 
-*Complexity:* $N \log N$ in general, where N has the value
+*Complexity:* N log N in general, where N has the value
 `distance(i, j)`; linear if \[`i`, `j`) is sorted with respect to
 `value_comp()`.
 
@@ -1739,7 +1739,7 @@ from `*ranges::begin(rg)`.
 *Effects:* Constructs an empty container and inserts each element from
 `rg` into it. Uses `c` as the comparison object.
 
-*Complexity:* $N \log N$ in general, where N has the value
+*Complexity:* N log N in general, where N has the value
 `ranges::distance(rg)`; linear if `rg` is sorted with respect to
 `value_comp()`.
 
@@ -1780,7 +1780,7 @@ a = il
 *Effects:* Assigns the range \[`il.begin()`, `il.end()`) into `a`. All
 existing elements of `a` are either assigned to or destroyed.
 
-*Complexity:* $N \log N$ in general, where N has the value
+*Complexity:* N log N in general, where N has the value
 `il.size() + a.size()`; linear if \[`il.begin()`, `il.end()`) is sorted
 with respect to `value_comp()`.
 
@@ -1927,7 +1927,7 @@ if there is no element with key equivalent to the key of that element in
 containers with unique keys; always inserts that element in containers
 with equivalent keys.
 
-*Complexity:* $N \log (\texttt{a.size()} + N)$, where N has the value
+*Complexity:* N \log (`a.size()` + N), where N has the value
 `distance(i, j)`.
 
 ``` cpp
@@ -1944,7 +1944,7 @@ element with key equivalent to the key of that element in containers
 with unique keys; always inserts that element in containers with
 equivalent keys.
 
-*Complexity:* $N \log (\texttt{a.size()} + N)$, where N has the value
+*Complexity:* N \log (`a.size()` + N), where N has the value
 `ranges::distance(rg)`.
 
 ``` cpp
@@ -2031,7 +2031,7 @@ equivalent to `k`.
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* $\log (\texttt{a.size()})$
+*Complexity:* \log (`a.size()`)
 
 ``` cpp
 a_tran.extract(kx)
@@ -2045,7 +2045,7 @@ that `!c(r, kx) && !c(kx, r)` is `true`.
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* $\log(\texttt{a_tran.size()})$
+*Complexity:* \log(`a_tran.size()`)
 
 ``` cpp
 a.extract(q)
@@ -2079,8 +2079,7 @@ but they now behave as iterators into `a`, not into `a2`.
 
 *Throws:* Nothing unless the comparison object throws.
 
-*Complexity:* $N \log(\texttt{a.size()+} N)$, where N has the value
-`a2.size()`.
+*Complexity:* N \log(`a.size()+` N), where N has the value `a2.size()`.
 
 ``` cpp
 a.erase(k)
@@ -2093,7 +2092,7 @@ a.erase(k)
 
 *Returns:* The number of erased elements.
 
-*Complexity:* $\log (\texttt{a.size()}) + \texttt{a.count(k)}$
+*Complexity:* \log (`a.size()`) + `a.count(k)`
 
 ``` cpp
 a_tran.erase(kx)
@@ -2106,7 +2105,7 @@ a_tran.erase(kx)
 
 *Returns:* The number of erased elements.
 
-*Complexity:* $\log(\texttt{a_tran.size())} + \texttt{a_tran.count(kx)}$
+*Complexity:* \log(`a_tran.size())` + `a_tran.count(kx)`
 
 ``` cpp
 a.erase(q)
@@ -2148,7 +2147,7 @@ a.erase(q1, q2)
 to any elements being erased. If no such element exists, `a.end()` is
 returned.
 
-*Complexity:* $\log(\texttt{a.size()}) + N$, where N has the value
+*Complexity:* \log(`a.size()`) + N, where N has the value
 `distance(q1, q2)`.
 
 ``` cpp
@@ -2192,7 +2191,7 @@ b.count(k)
 
 *Returns:* The number of elements with key equivalent to `k`.
 
-*Complexity:* $\log (\texttt{b.size()}) + \texttt{b.count(k)}$
+*Complexity:* \log (`b.size()`) + `b.count(k)`
 
 ``` cpp
 a_tran.count(ke)
@@ -2203,8 +2202,7 @@ a_tran.count(ke)
 *Returns:* The number of elements with key `r` such that
 `!c(r, ke) && !c(ke, r)`.
 
-*Complexity:*
-$\log (\texttt{a_tran.size()}) + \texttt{a_tran.count(ke)}$
+*Complexity:* \log (`a_tran.size()`) + `a_tran.count(ke)`
 
 ``` cpp
 b.contains(k)
@@ -3283,7 +3281,7 @@ b.bucket_size(n)
 
 *Preconditions:* `n` shall be in the range `[0, b.bucket_count())`.
 
-*Returns:* The number of elements in the $\texttt{n}^\text{th}$ bucket.
+*Returns:* The number of elements in the `n`^\text{th} bucket.
 
 *Complexity:* 𝑂(`b.bucket_size(n))`
 
@@ -3389,28 +3387,28 @@ a.reserve(n)
 *Effects:* Equivalent to `a.rehash(ceil(n / a.max_load_factor()))`.
 
 Two unordered containers `a` and `b` compare equal if
-`a.size() == b.size()` and, for every equivalent-key group obtained from
-`a.equal_range(Ea1)`, there exists an equivalent-key group obtained from
-`b.equal_range(Ea1)`, such that `is_permutation(Ea1, Ea2, Eb1, Eb2)`
-returns `true`. For `unordered_set` and `unordered_map`, the complexity
-of `operator==` (i.e., the number of calls to the `==` operator of the
-`value_type`, to the predicate returned by `key_eq()`, and to the hasher
-returned by `hash_function()`) is proportional to N in the average case
-and to N² in the worst case, where N is `a.size()`. For
-`unordered_multiset` and `unordered_multimap`, the complexity of
-`operator==` is proportional to $\sum E_i^2$ in the average case and to
-N² in the worst case, where N is `a.size()`, and Eᵢ is the size of the
-$i^\text{th}$ equivalent-key group in `a`. However, if the respective
-elements of each corresponding pair of equivalent-key groups Eaᵢ and Ebᵢ
-are arranged in the same order (as is commonly the case, e.g., if `a`
-and `b` are unmodified copies of the same container), then the
-average-case complexity for `unordered_multiset` and
-`unordered_multimap` becomes proportional to N (but worst-case
-complexity remains , e.g., for a pathologically bad hash function). The
-behavior of a program that uses `operator==` or `operator!=` on
-unordered containers is undefined unless the `Pred` function object has
-the same behavior for both containers and the equality comparison
-function for `Key` is a refinement
+`a.size() == b.size()` and, for every equivalent-key group
+[`Ea1`, `Ea2`) obtained from `a.equal_range(Ea1)`, there exists an
+equivalent-key group [`Eb1`, `Eb2`) obtained from `b.equal_range(Ea1)`,
+such that `is_permutation(Ea1, Ea2, Eb1, Eb2)` returns `true`. For
+`unordered_set` and `unordered_map`, the complexity of `operator==`
+(i.e., the number of calls to the `==` operator of the `value_type`, to
+the predicate returned by `key_eq()`, and to the hasher returned by
+`hash_function()`) is proportional to N in the average case and to N² in
+the worst case, where N is `a.size()`. For `unordered_multiset` and
+`unordered_multimap`, the complexity of `operator==` is proportional to
+$\sum E_i^2$ in the average case and to N² in the worst case, where N is
+`a.size()`, and Eᵢ is the size of the $i^\text{th}$ equivalent-key group
+in `a`. However, if the respective elements of each corresponding pair
+of equivalent-key groups Eaᵢ and Ebᵢ are arranged in the same order (as
+is commonly the case, e.g., if `a` and `b` are unmodified copies of the
+same container), then the average-case complexity for
+`unordered_multiset` and `unordered_multimap` becomes proportional to N
+(but worst-case complexity remains , e.g., for a pathologically bad hash
+function). The behavior of a program that uses `operator==` or
+`operator!=` on unordered containers is undefined unless the `Pred`
+function object has the same behavior for both containers and the
+equality comparison function for `Key` is a refinement
 
 of the partition into equivalent-key groups produced by `Pred`.
 
@@ -3712,7 +3710,7 @@ list-initialized with up to `N` elements whose types are convertible to
 An `array` meets all of the requirements of a container
 [[container.reqmts]] and of a reversible container
 [[container.rev.reqmts]], except that a default constructed `array`
-object is not empty if $\tcode{N} > 0$. An `array` meets some of the
+object is not empty if `N` > 0. An `array` meets some of the
 requirements of a sequence container [[sequence.reqmts]]. Descriptions
 are provided here only for operations on `array` that are not described
 in one of these tables and for operations where there is additional
@@ -3921,8 +3919,8 @@ template<size_t I, class T, size_t N>
 
 *Mandates:* `I < N` is `true`.
 
-*Returns:* A reference to the $\texttt{I}^\text{th}$ element of `a`,
-where indexing is zero-based.
+*Returns:* A reference to the `I`^\text{th} element of `a`, where
+indexing is zero-based.
 
 ### Class template `deque` <a id="deque">[[deque]]</a>
 
@@ -4856,7 +4854,7 @@ function object. If an exception is thrown, the order of the elements in
 `*this` is unspecified. Does not affect the validity of iterators and
 references.
 
-*Complexity:* Approximately $N \log N$ comparisons, where N is
+*Complexity:* Approximately N log N comparisons, where N is
 `distance(begin(), end())`.
 
 *Remarks:* Stable [[algorithm.stable]].
@@ -5360,7 +5358,7 @@ function object. If an exception is thrown, the order of the elements in
 `*this` is unspecified. Does not affect the validity of iterators and
 references.
 
-*Complexity:* Approximately $N \log N$ comparisons, where `N == size()`.
+*Complexity:* Approximately N log N comparisons, where `N == size()`.
 
 *Remarks:* Stable [[algorithm.stable]].
 
@@ -5580,7 +5578,7 @@ using the specified allocator.
 is the distance between `first` and `last`) and no reallocations if
 iterators `first` and `last` are of forward, bidirectional, or random
 access categories. It makes order N calls to the copy constructor of `T`
-and order $\log N$ reallocations if they are just input iterators.
+and order log N reallocations if they are just input iterators.
 
 ``` cpp
 template<container-compatible-range<T> R>
@@ -5594,8 +5592,8 @@ template<container-compatible-range<T> R>
 dereferencing successive iterators of `rg`, where N is
 `ranges::distance(rg)`. Performs no reallocations if `R` models
 `ranges::``forward_range` or `ranges::``sized_range`; otherwise,
-performs order $\log N$ reallocations and order N calls to the copy or
-move constructor of `T`.
+performs order log N reallocations and order N calls to the copy or move
+constructor of `T`.
 
 #### Capacity <a id="vector.capacity">[[vector.capacity]]</a>
 
@@ -6445,7 +6443,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted with respect to `comp` and otherwise $N \log N$, where N is
+sorted with respect to `comp` and otherwise N log N, where N is
 `last - first`.
 
 ``` cpp
@@ -6457,7 +6455,7 @@ template<container-compatible-range<value_type> R>
 object and allocator, and inserts elements from the range `rg`.
 
 *Complexity:* Linear in N if `rg` is already sorted with respect to
-`comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
+`comp` and otherwise N log N, where N is `ranges::distance(rg)`.
 
 #### Element access <a id="map.access">[[map.access]]</a>
 
@@ -6856,7 +6854,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted with respect to `comp` and otherwise $N \log N$, where N is
+sorted with respect to `comp` and otherwise N log N, where N is
 `last - first`.
 
 ``` cpp
@@ -6868,7 +6866,7 @@ template<container-compatible-range<value_type> R>
 object and allocator, and inserts elements from the range `rg`.
 
 *Complexity:* Linear in N if `rg` is already sorted with respect to
-`comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
+`comp` and otherwise N log N, where N is `ranges::distance(rg)`.
 
 #### Modifiers <a id="multimap.modifiers">[[multimap.modifiers]]</a>
 
@@ -7128,7 +7126,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted with respect to `comp` and otherwise $N \log N$, where N is
+sorted with respect to `comp` and otherwise N log N, where N is
 `last - first`.
 
 ``` cpp
@@ -7140,7 +7138,7 @@ template<container-compatible-range<value_type> R>
 object and allocator, and inserts elements from the range `rg`.
 
 *Complexity:* Linear in N if `rg` is already sorted with respect to
-`comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
+`comp` and otherwise N log N, where N is `ranges::distance(rg)`.
 
 #### Erasure <a id="set.erasure">[[set.erasure]]</a>
 
@@ -7388,7 +7386,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted with respect to `comp` and otherwise $N \log N$, where N is
+sorted with respect to `comp` and otherwise N log N, where N is
 `last - first`.
 
 ``` cpp
@@ -7400,7 +7398,7 @@ template<container-compatible-range<value_type> R>
 object and allocator, and inserts elements from the range `rg`.
 
 *Complexity:* Linear in N if `rg` is already sorted with respect to
-`comp` and otherwise $N \log N$, where N is `ranges::distance(rg)`.
+`comp` and otherwise N log N, where N is `ranges::distance(rg)`.
 
 #### Erasure <a id="multiset.erasure">[[multiset.erasure]]</a>
 
@@ -10658,7 +10656,7 @@ c.values.erase(c.values.begin() + dist, c.values.end());
 ```
 
 *Complexity:* Linear in N if the container arguments are already sorted
-with respect to `value_comp()` and otherwise $N \log N$, where N is the
+with respect to `value_comp()` and otherwise N log N, where N is the
 value of `key_cont.size()` before this call.
 
 ``` cpp
@@ -10886,8 +10884,8 @@ c.keys.erase(c.keys.begin() + dist, c.keys.end());
 c.values.erase(c.values.begin() + dist, c.values.end());
 ```
 
-*Complexity:* N + $M \log M$, where N is `size()` before the operation
-and M is `distance(first, last)`.
+*Complexity:* N + M log M, where N is `size()` before the operation and
+M is `distance(first, last)`.
 
 *Remarks:* Since this operation performs an in-place merge, it may
 allocate memory.
@@ -10951,8 +10949,8 @@ c.keys.erase(c.keys.begin() + dist, c.keys.end());
 c.values.erase(c.values.begin() + dist, c.values.end());
 ```
 
-*Complexity:* N + $M \log M$, where N is `size()` before the operation
-and M is `ranges::distance(rg)`.
+*Complexity:* N + M log M, where N is `size()` before the operation and
+M is `ranges::distance(rg)`.
 
 *Remarks:* Since this operation performs an in-place merge, it may
 allocate memory.
@@ -11563,7 +11561,7 @@ with `std::move(mapped_cont)`, and `compare` with `comp`; sorts the
 range \[`begin()`, `end()`) with respect to `value_comp()`.
 
 *Complexity:* Linear in N if the container arguments are already sorted
-with respect to `value_comp()` and otherwise $N \log N$, where N is the
+with respect to `value_comp()` and otherwise N log N, where N is the
 value of `key_cont.size()` before this call.
 
 ``` cpp
@@ -12014,8 +12012,8 @@ and finally erases all but the first element from each group of
 consecutive equivalent elements.
 
 *Complexity:* Linear in N if `cont` is sorted with respect to *compare*
-and otherwise $N \log N$, where N is the value of `cont.size()` before
-this call.
+and otherwise N log N, where N is the value of `cont.size()` before this
+call.
 
 ``` cpp
 template<class Allocator>
@@ -12122,8 +12120,8 @@ pre-existing elements into a single sorted range; and finally erases all
 but the first element from each group of consecutive equivalent
 elements.
 
-*Complexity:* N + $M \log M$, where N is `size()` before the operation
-and M is `distance(first, last)`.
+*Complexity:* N + M log M, where N is `size()` before the operation and
+M is `distance(first, last)`.
 
 *Remarks:* Since this operation performs an in-place merge, it may
 allocate memory.
@@ -12156,8 +12154,8 @@ pre-existing elements into a single sorted range; and finally erases all
 but the first element from each group of consecutive equivalent
 elements.
 
-*Complexity:* N + $M \log M$, where N is `size()` before the operation
-and M is `ranges::distance(rg)`.
+*Complexity:* N + M log M, where N is `size()` before the operation and
+M is `ranges::distance(rg)`.
 
 *Remarks:* Since this operation performs an in-place merge, it may
 allocate memory.
@@ -12549,8 +12547,8 @@ explicit flat_multiset(container_type cont, const key_compare& comp = key_compar
 *compare*.
 
 *Complexity:* Linear in N if `cont` is sorted with respect to *compare*
-and otherwise $N \log N$, where N is the value of `cont.size()` before
-this call.
+and otherwise N log N, where N is the value of `cont.size()` before this
+call.
 
 ``` cpp
 template<class Allocator>
@@ -12655,8 +12653,8 @@ Then, sorts the range of newly inserted elements with respect to
 *compare*, and merges the resulting sorted range and the sorted range of
 pre-existing elements into a single sorted range.
 
-*Complexity:* N + $M \log M$, where N is `size()` before the operation
-and M is `distance(first, last)`.
+*Complexity:* N + M log M, where N is `size()` before the operation and
+M is `distance(first, last)`.
 
 *Remarks:* Since this operation performs an in-place merge, it may
 allocate memory.
@@ -13307,7 +13305,7 @@ the number of intervals it represents. The
 each dimension i if its rank is greater than 0, and 1 otherwise.
 
 An integer r is a *rank index* of an index space S if r is in the range
-$[0, \text{rank of $S$})$.
+[0, rank of $S$).
 
 A pack of integers `idx` is a *multidimensional index* in a
 multidimensional index space S (or representation thereof) if both of
@@ -13430,8 +13428,8 @@ static constexpr rank_type dynamic-index(rank_type i) noexcept;
 
 *Preconditions:* `i <= rank()` is `true`.
 
-*Returns:* The number of $E_r$ with $r < \texttt{i}$ for which $E_r$ is
-a dynamic extent.
+*Returns:* The number of $E_r$ with r < `i` for which $E_r$ is a dynamic
+extent.
 
 ``` cpp
 static constexpr rank_type dynamic-index-inv(rank_type i) noexcept;
@@ -13449,7 +13447,7 @@ constexpr size_t fwd-prod-of-extents(rank_type i) const noexcept;
 *Preconditions:* `i <= rank()` is `true`.
 
 *Returns:* If `i > 0` is `true`, the product of `extent(`k`)` for all k
-in the range $[0, \texttt{i})$, otherwise `1`.
+in the range [0, `i`), otherwise `1`.
 
 ``` cpp
 constexpr size_t rev-prod-of-extents(rank_type i) const noexcept;
@@ -13458,8 +13456,7 @@ constexpr size_t rev-prod-of-extents(rank_type i) const noexcept;
 *Preconditions:* `i < rank()` is `true`.
 
 *Returns:* If `i + 1 < rank()` is `true`, the product of `extent(`k`)`
-for all k in the range $[\texttt{i + 1}, \texttt{rank()})$, otherwise
-`1`.
+for all k in the range [`i + 1`, `rank()`), otherwise `1`.
 
 ``` cpp
 template<class OtherIndexType>
@@ -13568,9 +13565,9 @@ template<class OtherIndexType, size_t N>
 *Effects:*
 
 - If `N` equals `dynamic_rank()`, for all d in the range
-  $[0, \texttt{rank_dynamic()})$, direct-non-list-initializes `[`d`]`
-  with `as_const(exts[`d`])`.
-- Otherwise, for all d in the range $[0, \texttt{rank_dynamic()})$,
+  [0, `rank_dynamic()`), direct-non-list-initializes `[`d`]` with
+  `as_const(exts[`d`])`.
+- Otherwise, for all d in the range [0, `rank_dynamic()`),
   direct-non-list-initializes `[`d`]` with `as_const(exts[(`d`)])`.
 
 ``` cpp
@@ -13590,7 +13587,7 @@ static constexpr size_t static_extent(rank_type i) noexcept;
 
 *Preconditions:* `i < rank()` is `true`.
 
-*Returns:* $E_\texttt{i}$.
+*Returns:* E_`i`.
 
 ``` cpp
 constexpr index_type extent(rank_type i) const noexcept;
@@ -13598,7 +13595,7 @@ constexpr index_type extent(rank_type i) const noexcept;
 
 *Preconditions:* `i < rank()` is `true`.
 
-*Returns:* $D_\texttt{i}$.
+*Returns:* D_`i`.
 
 ##### Comparison operators <a id="mdspan.extents.cmp">[[mdspan.extents.cmp]]</a>
 
@@ -13637,7 +13634,7 @@ In subclauses [[mdspan.layout.reqmts]] and
   \[*Note 9*: The type of each element of the packs can be a different
   integer type. — *end note*\]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
-- $\tcode{d}_r$ is a pack of (possibly const) integers for which
+- `d_r` is a pack of (possibly const) integers for which
   `sizeof...($\tcode{d}_r$) == M::extents_type::rank()` is `true`, the
   $r^\text{th}$ element is equal to 1, and all other elements are equal
   to 0.
@@ -13743,8 +13740,8 @@ m.is_exhaustive()
 *Result:* `bool`
 
 *Returns:* `true` only if for all k in the range
-$[0, \texttt{m.required_span_size()})$ there exists an `i` such that
-`m(i...)` equals k.
+[0, `m.required_span_size()`) there exists an `i` such that `m(i...)`
+equals k.
 
 \[*Note 2*: A mapping can return `false` even if the condition is met.
 For certain layouts, it is possibly not feasible to determine
@@ -13757,8 +13754,8 @@ m.is_strided()
 *Result:* `bool`
 
 *Returns:* `true` only if for every rank index r of `m.extents()` there
-exists an integer $s_r$ such that, for all `i` where $(\texttt{i}+d_r)$
-is a multidimensional index in `m.extents()`[[mdspan.overview]],
+exists an integer $s_r$ such that, for all `i` where (`i`+d_r) is a
+multidimensional index in `m.extents()`[[mdspan.overview]],
 `m((i + `$d_r$`)...) - m(i...)` equals $s_r$.
 
 \[*Note 3*: This implies that for a strided layout
@@ -13974,7 +13971,7 @@ template<class OtherExtents>
 *Preconditions:*
 
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
-  $[0, \texttt{extents_type::rank()})$, `other.stride(`r`)` equals
+  [0, `extents_type::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`fwd-prod-of-extents`*`(`r`)`, and
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
@@ -14161,7 +14158,7 @@ template<class OtherExtents>
 *Preconditions:*
 
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
-  $[0, \texttt{extents_type::rank()})$, `other.stride(`r`)` equals
+  [0, `extents_type::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`rev-prod-of-extents`*`(`r`)`.
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
@@ -14304,7 +14301,7 @@ Let `REQUIRED-SPAN-SIZE(e, strides)` be:
 - otherwise `0`, if the size of the multidimensional index space `e` is
   0,
 - otherwise `1` plus the sum of products of `(e.extent($r$) - 1)` and
-  `strides[$r$]` for all r in the range $[0, \tcode{e.rank()})$.
+  `strides[$r$]` for all r in the range [0, `e.rank()`).
 
 Let `OFFSET(m)` be:
 
@@ -14496,7 +14493,7 @@ requirements [[mdspan.layout.policy.reqmts]].
 *Returns:* `true` if `x.extents() == y.extents()` is `true`,
 *`OFFSET`*`(y) == 0` is `true`, and each of
 `x.stride(`r`) == y.stride(`r`)` is `true` for r in the range
-$[0, \texttt{x.extents().rank()})$. Otherwise, `false`.
+[0, `x.extents().rank()`). Otherwise, `false`.
 
 #### Accessor policy <a id="mdspan.accessor">[[mdspan.accessor]]</a>
 
@@ -14591,14 +14588,11 @@ a.offset(p, i)
 *Result:* `A::offset_policy::data_handle_type`
 
 *Returns:* `q` such that for `b` being `A::offset_policy(a)`, and any
-integer `n` for which $[0, \texttt{n})$ is an accessible range of `p`
-and `a`:
+integer `n` for which [0, `n`) is an accessible range of `p` and `a`:
 
-- $[0, \texttt{n} - \texttt{i})$ is an accessible range of `q` and `b`;
-  and
+- [0, `n` - `i`) is an accessible range of `q` and `b`; and
 - `b.access(q, j)` provides access to the same element as
-  `a.access(p, i + j)`, for every `j` in the range
-  $[0, \texttt{n} - \texttt{i})$.
+  `a.access(p, i + j)`, for every `j` in the range [0, `n` - `i`).
 
 *Remarks:* The expression is equality-preserving.
 
@@ -14634,7 +14628,7 @@ that models `semiregular`.
 
 [0, n) is an accessible range for an object `p` of type
 `data_handle_type` and an object of type `default_accessor` if and only
-if is a valid range.
+if [`p`, `p + $n$`) is a valid range.
 
 ###### Members <a id="mdspan.accessor.default.members">[[mdspan.accessor.default.members]]</a>
 
@@ -14827,8 +14821,8 @@ constexpr mdspan();
 - `is_default_constructible_v<mapping_type>` is `true`.
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
-an accessible range of *ptr\_* and *acc\_* for the values of *map\_* and
+*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
+accessible range of *ptr\_* and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:* Value-initializes *ptr\_*, *map\_*, and *acc\_*.
@@ -14849,8 +14843,8 @@ Let `N` be `sizeof...(OtherIndexTypes)`.
 - `is_constructible_v<mapping_type, extents_type>` is `true`, and
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
-an accessible range of `p` and *acc\_* for the values of *map\_* and
+*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
+accessible range of `p` and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:*
@@ -14878,8 +14872,8 @@ template<class OtherIndexType, size_t N>
 - `is_constructible_v<mapping_type, extents_type>` is `true`, and
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
-an accessible range of `p` and *acc\_* for the values of *map\_* and
+*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
+accessible range of `p` and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:*
@@ -14897,8 +14891,8 @@ constexpr mdspan(data_handle_type p, const extents_type& ext);
 - `is_constructible_v<mapping_type, const extents_type&>` is `true`, and
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
-an accessible range of `p` and *acc\_* for the values of *map\_* and
+*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
+accessible range of `p` and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:*
@@ -14913,9 +14907,9 @@ constexpr mdspan(data_handle_type p, const mapping_type& m);
 
 *Constraints:* `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* $[0, \texttt{m.required_span_size()})$ is an accessible
-range of `p` and *acc\_* for the value of *acc\_* after the invocation
-of this constructor.
+*Preconditions:* [0, `m.required_span_size()`) is an accessible range of
+`p` and *acc\_* for the value of *acc\_* after the invocation of this
+constructor.
 
 *Effects:*
 
@@ -14927,8 +14921,8 @@ of this constructor.
 constexpr mdspan(data_handle_type p, const mapping_type& m, const accessor_type& a);
 ```
 
-*Preconditions:* $[0, \texttt{m.required_span_size()})$ is an accessible
-range of `p` and `a`.
+*Preconditions:* [0, `m.required_span_size()`) is an accessible range of
+`p` and `a`.
 
 *Effects:*
 
@@ -14961,9 +14955,9 @@ template<class OtherElementType, class OtherExtents,
 - For each rank index `r` of `extents_type`,
   `static_extent(r) == dynamic_extent || static_extent(r) == other.extent(r)`
   is `true`.
-- $[0, \texttt{\textit{map_}.required_span_size()})$ is an accessible
-  range of *ptr\_* and *acc\_* for values of *ptr\_*, *map\_*, and
-  *acc\_* after the invocation of this constructor.
+- [0, `\textit{map_}.required_span_size()`) is an accessible range of
+  *ptr\_* and *acc\_* for values of *ptr\_*, *map\_*, and *acc\_* after
+  the invocation of this constructor.
 
 *Effects:*
 

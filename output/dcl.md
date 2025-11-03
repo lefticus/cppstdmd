@@ -1254,10 +1254,10 @@ const int&& foo();
 int i;
 struct A { double x; };
 const A* a = new A();
-decltype(foo()) x1 = 17;        // type is const int\&\&
+decltype(foo()) x1 = 17;        // type is const int&&
 decltype(i) x2;                 // type is int
 decltype(a->x) x3;              // type is double
-decltype((a->x)) x4 = x3;       // type is const double\&
+decltype((a->x)) x4 = x3;       // type is const double&
 ```
 
 — *end example*\]
@@ -1292,14 +1292,14 @@ template<class T> auto h()
   -> A<T>;
 template<class T> auto i(T)     // identity
   -> T;
-template<class T> auto f(T)     // \#1
+template<class T> auto f(T)     // #1
   -> decltype(i(h<T>()));       // forces completion of A<T> and implicitly uses A<T>::\~{A()}
                                 // for the temporary introduced by the use of h().
                                 // (A temporary is not introduced as a result of the use of i().)
-template<class T> auto f(T)     // \#2
+template<class T> auto f(T)     // #2
   -> void;
 auto g() -> void {
-  f(42);                        // OK, calls \#2. (\#1 is not a viable candidate: type deduction
+  f(42);                        // OK, calls #2. (#1 is not a viable candidate: type deduction
                                 // fails[temp.deduct] because A<int>::\~{A()} is implicitly used in its
                                 // decltype-specifier)
 }
@@ -1486,14 +1486,14 @@ auto f();                                       // OK
 int f();                                        // error: auto and int don't match
 decltype(auto) f();                             // error: auto and decltype(auto) don't match
 
-template <typename T> auto g(T t) { return t; } // \#1
+template <typename T> auto g(T t) { return t; } // #1
 template auto g(int);                           // OK, return type is int
 template char g(char);                          // error: no matching template
 template<> auto g(double);                      // OK, forward declaration with unknown return type
 
-template <class T> T g(T t) { return t; }       // OK, not functionally equivalent to \#1
+template <class T> T g(T t) { return t; }       // OK, not functionally equivalent to #1
 template char g(char);                          // OK, now there is a matching template
-template auto g(float);                         // still matches \#1
+template auto g(float);                         // still matches #1
 
 void h() { return g(42); }                      // error: ambiguous
 
@@ -1637,15 +1637,15 @@ decltype(auto) x2d(i);          // decltype(x2d) is int
 auto           x3a = i;         // decltype(x3a) is int
 decltype(auto) x3d = i;         // decltype(x3d) is int
 auto           x4a = (i);       // decltype(x4a) is int
-decltype(auto) x4d = (i);       // decltype(x4d) is int\&
+decltype(auto) x4d = (i);       // decltype(x4d) is int&
 auto           x5a = f();       // decltype(x5a) is int
-decltype(auto) x5d = f();       // decltype(x5d) is int\&\&
+decltype(auto) x5d = f();       // decltype(x5d) is int&&
 auto           x6a = { 1, 2 };  // decltype(x6a) is std::initializer_list<int>
 decltype(auto) x6d = { 1, 2 };  // error: { 1, 2 } is not an expression
 auto          *x7a = &i;        // decltype(x7a) is int*
 decltype(auto)*x7d = &i;        // error: declared type is not plain decltype(auto)
-auto f1(int x) -> decltype((x)) { return (x); }         // return type is int\&
-auto f2(int x) -> decltype(auto) { return (x); }        // return type is int\&\&
+auto f1(int x) -> decltype((x)) { return (x); }         // return type is int&
+auto f2(int x) -> decltype(auto) { return (x); }        // return type is int&&
 ```
 
 — *end example*\]
@@ -2110,16 +2110,16 @@ Otherwise:
   ``` cpp
   namespace N {
     inline namespace O {
-      template<class T> void f(T);        // \#1
+      template<class T> void f(T);        // #1
       template<class T> void g(T) {}
     }
     namespace P {
-      template<class T> void f(T*);       // \#2, more specialized than \#1
+      template<class T> void f(T*);       // #2, more specialized than #1
       template<class> int g;
     }
     using P::f,P::g;
   }
-  template<> void N::f(int*) {}           // OK, \#2 is not nominable
+  template<> void N::f(int*) {}           // OK, #2 is not nominable
   template void N::g(int);                // error: lookup is ambiguous
   ```
 
@@ -2428,15 +2428,15 @@ int i;
 typedef int& LRI;
 typedef int&& RRI;
 
-LRI& r1 = i;                    // r1 has the type int\&
-const LRI& r2 = i;              // r2 has the type int\&
-const LRI&& r3 = i;             // r3 has the type int\&
+LRI& r1 = i;                    // r1 has the type int&
+const LRI& r2 = i;              // r2 has the type int&
+const LRI&& r3 = i;             // r3 has the type int&
 
-RRI& r4 = i;                    // r4 has the type int\&
-RRI&& r5 = 5;                   // r5 has the type int\&\&
+RRI& r4 = i;                    // r4 has the type int&
+RRI&& r5 = 5;                   // r5 has the type int&&
 
-decltype(r2)& r6 = i;           // r6 has the type int\&
-decltype(r2)&& r7 = i;          // r7 has the type int\&
+decltype(r2)& r6 = i;           // r6 has the type int&
+decltype(r2)&& r7 = i;          // r7 has the type int&
 ```
 
 — *end example*\]
@@ -2761,17 +2761,17 @@ parameters. For example, `int(*)(const int p, decltype(p)*)` and
 \[*Example 2*:
 
 ``` cpp
-void f(char*);                  // \#1
-void f(char[]) {}               // defines \#1
+void f(char*);                  // #1
+void f(char[]) {}               // defines #1
 void f(const char*) {}          // OK, another overload
-void f(char *const) {}          // error: redefines \#1
+void f(char *const) {}          // error: redefines #1
 
-void g(char(*)[2]);             // \#2
-void g(char[3][2]) {}           // defines \#2
+void g(char(*)[2]);             // #2
+void g(char[3][2]) {}           // defines #2
 void g(char[3][3]) {}           // OK, another overload
 
-void h(int x(const int));       // \#3
-void h(int (*)(int)) {}         // defines \#3
+void h(int x(const int));       // #3
+void h(int (*)(int)) {}         // defines #3
 ```
 
 — *end example*\]
@@ -2801,7 +2801,7 @@ struct C {
 
 void test(C c) {
   c.f();                        // OK, calls C::f
-  c.g(42);                      // OK, calls C::g<C\&>
+  c.g(42);                      // OK, calls C::g<C&>
   std::move(c).g(42);           // OK, calls C::g<C>
 }
 ```
@@ -4259,7 +4259,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   struct B : A { operator int&(); } b;
   A& ra = b;                      // ra refers to A subobject in b
   const A& rca = b;               // rca refers to A subobject in b
-  int& ir = B();                  // ir refers to the result of B::operator int\&
+  int& ir = B();                  // ir refers to the result of B::operator int&
   ```
 
   — *end example*\]
@@ -4476,14 +4476,14 @@ follows:
   \[*Example 13*:
   ``` cpp
   struct S {
-    S(std::initializer_list<double>); // \#1
-    S(std::initializer_list<int>);    // \#2
-    S();                              // \#3
+    S(std::initializer_list<double>); // #1
+    S(std::initializer_list<int>);    // #2
+    S();                              // #3
     // ...
   };
-  S s1 = { 1.0, 2.0, 3.0 };           // invoke \#1
-  S s2 = { 1, 2, 3 };                 // invoke \#2
-  S s3 = { };                         // invoke \#3
+  S s1 = { 1.0, 2.0, 3.0 };           // invoke #1
+  S s2 = { 1, 2, 3 };                 // invoke #2
+  S s3 = { };                         // invoke #3
   ```
 
   — *end example*\]
@@ -4500,13 +4500,13 @@ follows:
   ``` cpp
   struct S {
     // no initializer-list constructors
-    S(int, double, double);           // \#1
-    S();                              // \#2
+    S(int, double, double);           // #1
+    S();                              // #2
     // ...
   };
-  S s1 = { 1, 2, 3.0 };               // OK, invoke \#1
+  S s1 = { 1, 2, 3.0 };               // OK, invoke #1
   S s2 { 1.0, 2, 3 };                 // error: narrowing
-  S s3 { };                           // OK, invoke \#2
+  S s3 { };                           // OK, invoke #2
   ```
 
   — *end example*\]
@@ -4563,12 +4563,12 @@ follows:
   \[*Example 18*:
   ``` cpp
   struct S {
-    S(std::initializer_list<double>); // \#1
-    S(const std::string&);            // \#2
+    S(std::initializer_list<double>); // #1
+    S(const std::string&);            // #2
     // ...
   };
-  const S& r1 = { 1, 2, 3.0 };        // OK, invoke \#1
-  const S& r2 { "Spinach" };          // OK, invoke \#2
+  const S& r1 = { 1, 2, 3.0 };        // OK, invoke #1
+  const S& r2 { "Spinach" };          // OK, invoke #2
   S& r3 = { 1, 2, 3 };                // error: initializer is not an lvalue
   const int& i1 = { 1 };              // OK
   const int& i2 = { 1.1 };            // error: narrowing
@@ -4855,31 +4855,28 @@ explicitly defaulted shall
   [[over.binary]], and
 - not have default arguments.
 
-An explicitly defaulted special member function $\tcode{F}_1$ is allowed
-to differ from the corresponding special member function $\tcode{F}_2$
-that would have been implicitly declared, as follows:
+An explicitly defaulted special member function `F₁` is allowed to
+differ from the corresponding special member function `F₂` that would
+have been implicitly declared, as follows:
 
-- $\tcode{F}_1$ and $\tcode{F}_2$ may have differing *ref-qualifier*;
-- if $\tcode{F}_2$ has an implicit object parameter of type “reference
-  to `C`”, $\tcode{F}_1$ may be an explicit object member function whose
-  explicit object parameter is of type “reference to `C`”, in which case
-  the type of $\tcode{F}_1$ would differ from the type of $\tcode{F}_2$
-  in that the type of $\tcode{F}_1$ has an additional parameter;
-- $\tcode{F}_1$ and $\tcode{F}_2$ may have differing exception
-  specifications; and
-- if $\tcode{F}_2$ has a non-object parameter of type `const C&`, the
-  corresponding non-object parameter of $\tcode{F}_1$ may be of type
-  `C&`.
+- `F₁` and `F₂` may have differing *ref-qualifier*;
+- if `F₂` has an implicit object parameter of type “reference to `C`”,
+  `F₁` may be an explicit object member function whose explicit object
+  parameter is of type “reference to `C`”, in which case the type of
+  `F₁` would differ from the type of `F₂` in that the type of `F₁` has
+  an additional parameter;
+- `F₁` and `F₂` may have differing exception specifications; and
+- if `F₂` has a non-object parameter of type `const C&`, the
+  corresponding non-object parameter of `F₁` may be of type `C&`.
 
-If the type of $\tcode{F}_1$ differs from the type of $\tcode{F}_2$ in a
-way other than as allowed by the preceding rules, then:
+If the type of `F₁` differs from the type of `F₂` in a way other than as
+allowed by the preceding rules, then:
 
-- if $\tcode{F}_1$ is an assignment operator, and the return type of
-  $\tcode{F}_1$ differs from the return type of $\tcode{F}_2$ or
-  $\tcode{F}_1$’s non-object parameter type is not a reference, the
-  program is ill-formed;
-- otherwise, if $\tcode{F}_1$ is explicitly defaulted on its first
-  declaration, it is defined as deleted;
+- if `F₁` is an assignment operator, and the return type of `F₁` differs
+  from the return type of `F₂` or `F₁`’s non-object parameter type is
+  not a reference, the program is ill-formed;
+- otherwise, if `F₁` is explicitly defaulted on its first declaration,
+  it is defined as deleted;
 - otherwise, the program is ill-formed.
 
 A function explicitly defaulted on its first declaration is implicitly
@@ -4909,7 +4906,7 @@ struct U {
   U(U &&) noexcept = default;
 };
 U u1;
-U u2 = static_cast<U&&>(u1);            // OK, calls std::terminate if T::T(T\&\&) throws
+U u2 = static_cast<U&&>(u1);            // OK, calls std::terminate if T::T(T&&) throws
 ```
 
 — *end example*\]
@@ -5087,19 +5084,17 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 
 The *promise type* of a coroutine is
 `std::coroutine_traits<R, P$_1$, $\dotsc$, P$_n$>::promise_type`, where
-`R` is the return type of the function, and
-$\tcode{P}_1 \dotsc \tcode{P}_n$ is the sequence of types of the
-non-object function parameters, preceded by the type of the object
-parameter [[dcl.fct]] if the coroutine is a non-static member function.
-The promise type shall be a class type.
+`R` is the return type of the function, and `P₁` \dotsc `Pₙ` is the
+sequence of types of the non-object function parameters, preceded by the
+type of the object parameter [[dcl.fct]] if the coroutine is a
+non-static member function. The promise type shall be a class type.
 
-In the following, $\tcode{p}_i$ is an lvalue of type $\tcode{P}_i$,
-where $\tcode{p}_1$ denotes the object parameter and $\tcode{p}_{i+1}$
-denotes the $i^\text{th}$ non-object function parameter for a non-static
-member function, and $\tcode{p}_i$ denotes the $i^\text{th}$ function
-parameter otherwise. For a non-static member function, $\tcode{q}_1$ is
-an lvalue that denotes `*this`; any other $\tcode{q}_i$ is an lvalue
-that denotes the parameter copy corresponding to $\tcode{p}_i$, as
+In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
+object parameter and `p_i+1` denotes the $i^\text{th}$ non-object
+function parameter for a non-static member function, and `pᵢ` denotes
+the $i^\text{th}$ function parameter otherwise. For a non-static member
+function, `q₁` is an lvalue that denotes `*this`; any other `qᵢ` is an
+lvalue that denotes the parameter copy corresponding to `pᵢ`, as
 described below.
 
 A coroutine behaves as if its *function-body* were replaced by:
@@ -5144,10 +5139,9 @@ where
 
 - *promise-constructor-arguments* is determined as follows: overload
   resolution is performed on a promise constructor call created by
-  assembling an argument list $\tcode{q}_1 \dotsc \tcode{q}_n$. If a
-  viable constructor is found [[over.match.viable]], then
-  *promise-constructor-arguments* is
-  `($\tcode{q}_1$, $\dotsc$, $\tcode{q}_n$)`, otherwise
+  assembling an argument list `q₁` \dotsc `qₙ`. If a viable constructor
+  is found [[over.match.viable]], then *promise-constructor-arguments*
+  is `($\tcode{q}_1$, $\dotsc$, $\tcode{q}_n$)`, otherwise
   *promise-constructor-arguments* is empty, and
 
 - a coroutine is suspended at the *initial suspend point* if it is
@@ -5187,11 +5181,11 @@ looked up by searching for it in the scope of the promise type.
 - If the search finds any declarations, overload resolution is performed
   on a function call created by assembling an argument list. The first
   argument is the amount of space requested, and is a prvalue of type
-  `std::size_t`. The lvalues $\tcode{p}_1 \dotsc \tcode{p}_n$ are the
-  successive arguments. If no viable function is found
-  [[over.match.viable]], overload resolution is performed again on a
-  function call created by passing just the amount of space required as
-  a prvalue of type `std::size_t`.
+  `std::size_t`. The lvalues `p₁` \dotsc `pₙ` are the successive
+  arguments. If no viable function is found [[over.match.viable]],
+  overload resolution is performed again on a function call created by
+  passing just the amount of space required as a prvalue of type
+  `std::size_t`.
 - If the search finds no declarations, a search is performed in the
   global scope. Overload resolution is performed on a function call
   created by passing the amount of space required as a prvalue of type
@@ -5305,16 +5299,15 @@ potentially-throwing [[except.spec]].
 
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
-A structured binding declaration introduces the *identifier*
-$\tcode{v}_0$, $\tcode{v}_1$, $\tcode{v}_2, \dotsc$ of the
-*identifier-list* as names of *structured binding*. Let cv denote the
-*cv-qualifier* in the *decl-specifier-seq* and *S* consist of the
-*storage-class-specifier* of the *decl-specifier-seq* (if any). A cv
-that includes `volatile` is deprecated; see  [[depr.volatile.type]].
-First, a variable with a unique name *e* is introduced. If the
-*assignment-expression* in the *initializer* has array type
-cv-qualifier{cv1} `A` and no *ref-qualifier* is present, *e* is defined
-by
+A structured binding declaration introduces the *identifier* `v₀`, `v₁`,
+`v₂`, \dotsc of the *identifier-list* as names of *structured binding*.
+Let cv denote the *cv-qualifier* in the *decl-specifier-seq* and *S*
+consist of the *storage-class-specifier* of the *decl-specifier-seq* (if
+any). A cv that includes `volatile` is deprecated; see 
+[[depr.volatile.type]]. First, a variable with a unique name *e* is
+introduced. If the *assignment-expression* in the *initializer* has
+array type cv-qualifier{cv1} `A` and no *ref-qualifier* is present, *e*
+is defined by
 
 ``` bnf
 attribute-specifier-seq_opt *S* cv 'A' *e* ';'
@@ -5340,8 +5333,8 @@ structured binding declaration, the program is ill-formed.
 
 If `E` is an array type with element type `T`, the number of elements in
 the *identifier-list* shall be equal to the number of elements of `E`.
-Each $\tcode{v}_i$ is the name of an lvalue that refers to the element i
-of the array and whose type is `T`; the referenced type is `T`.
+Each `vᵢ` is the name of an lvalue that refers to the element i of the
+array and whose type is `T`; the referenced type is `T`.
 
 \[*Note 2*: The top-level cv-qualifiers of `T` are cv. — *end note*\]
 
@@ -5360,46 +5353,43 @@ class type with a member named `value`, the expression
 `std::tuple_size<E>::value` shall be a well-formed integral constant
 expression and the number of elements in the *identifier-list* shall be
 equal to the value of that expression. Let `i` be an index prvalue of
-type `std::size_t` corresponding to $\tcode{v}_i$. If a search for the
-name `get` in the scope of `E` [[class.member.lookup]] finds at least
-one declaration that is a function template whose first template
-parameter is a non-type parameter, the initializer is
-`\exposidnc{e}.get<i>()`. Otherwise, the initializer is `get<i>(e)`,
-where `get` undergoes argument-dependent lookup [[basic.lookup.argdep]].
-In either case, `get<i>` is interpreted as a *template-id*.
+type `std::size_t` corresponding to `vᵢ`. If a search for the name `get`
+in the scope of `E` [[class.member.lookup]] finds at least one
+declaration that is a function template whose first template parameter
+is a non-type parameter, the initializer is `\exposidnc{e}.get<i>()`.
+Otherwise, the initializer is `get<i>(e)`, where `get` undergoes
+argument-dependent lookup [[basic.lookup.argdep]]. In either case,
+`get<i>` is interpreted as a *template-id*.
 
 \[*Note 3*: Ordinary unqualified lookup [[basic.lookup.unqual]] is not
 performed. — *end note*\]
 
 In either case, *e* is an lvalue if the type of the entity *e* is an
-lvalue reference and an xvalue otherwise. Given the type $\tcode{T}_i$
-designated by `std::tuple_element<i, E>::type` and the type
-$\tcode{U}_i$ designated by either `$\tcode{T}_i$&` or
-`$\tcode{T}_i$&&`, where $\tcode{U}_i$ is an lvalue reference if the
-initializer is an lvalue and an rvalue reference otherwise, variables
-are introduced with unique names $\tcode{r}_i$ as follows:
+lvalue reference and an xvalue otherwise. Given the type `Tᵢ` designated
+by `std::tuple_element<i, E>::type` and the type `Uᵢ` designated by
+either `$\tcode{T}_i$&` or `$\tcode{T}_i$&&`, where `Uᵢ` is an lvalue
+reference if the initializer is an lvalue and an rvalue reference
+otherwise, variables are introduced with unique names `rᵢ` as follows:
 
 ``` bnf
 *S* 'U$_i$ r$_i$ =' initializer ';'
 ```
 
-Each $\tcode{v}_i$ is the name of an lvalue of type $\tcode{T}_i$ that
-refers to the object bound to $\tcode{r}_i$; the referenced type is
-$\tcode{T}_i$.
+Each `vᵢ` is the name of an lvalue of type `Tᵢ` that refers to the
+object bound to `rᵢ`; the referenced type is `Tᵢ`.
 
 Otherwise, all of `E`’s non-static data members shall be direct members
 of `E` or of the same base class of `E`, well-formed when named as
 `\exposidnc{e}.name` in the context of the structured binding, `E` shall
 not have an anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
-members of `E`. Designating the non-static data members of `E` as
-$\tcode{m}_0$, $\tcode{m}_1$, $\tcode{m}_2, \dotsc$ (in declaration
-order), each $\tcode{v}_i$ is the name of an lvalue that refers to the
-member `m`_i of *e* and whose type is that of
+members of `E`. Designating the non-static data members of `E` as `m₀`,
+`m₁`, `m₂`, \dotsc (in declaration order), each `vᵢ` is the name of an
+lvalue that refers to the member `m`_i of *e* and whose type is that of
 `\exposidnc{e}.$\tcode{m}_i$` [[expr.ref]]; the referenced type is the
-declared type of $\tcode{m}_i$ if that type is a reference type, or the
-type of `\exposidnc{e}.$\tcode{m}_i$` otherwise. The lvalue is a
-bit-field if that member is a bit-field.
+declared type of `mᵢ` if that type is a reference type, or the type of
+`\exposidnc{e}.$\tcode{m}_i$` otherwise. The lvalue is a bit-field if
+that member is a bit-field.
 
 \[*Example 2*:
 
@@ -6563,7 +6553,7 @@ language, `"C"`, and C++, `"C++"`.
 \[*Example 1*:
 
 ``` cpp
-complex sqrt(complex);          // \Cpp{} language linkage by default
+complex sqrt(complex);          // C++ language linkage by default
 extern "C" {
   double sqrt(double);          // C language linkage
 }
@@ -6593,13 +6583,13 @@ extern "C"                      // f1 and its function type have C language link
   void f1(void(*pf)(int));      // pf is a pointer to a C function
 
 extern "C" typedef void FUNC();
-FUNC f2;                        // f2 has \Cpp{} language linkage and
+FUNC f2;                        // f2 has C++ language linkage and
                                 // its  type has C language linkage
 
 extern "C" FUNC f3;             // f3 and its type have C language linkage
 
-void (*pf2)(FUNC*);             // the variable pf2 has \Cpp{} language linkage; its type
-                                // is ``pointer to \Cpp{} function that takes one parameter of type
+void (*pf2)(FUNC*);             // the variable pf2 has C++ language linkage; its type
+                                // is ``pointer to C++ function that takes one parameter of type
                                 // pointer to C function''
 extern "C" {
   static void f4();             // the name of the function f4 has internal linkage,
@@ -6632,19 +6622,19 @@ the function type of non-static class member functions.
 extern "C" typedef void FUNC_c();
 
 class C {
-  void mf1(FUNC_c*);            // the function mf1 and its type have \Cpp{} language linkage;
+  void mf1(FUNC_c*);            // the function mf1 and its type have C++ language linkage;
                                 // the parameter has type ``pointer to C function''
 
-  FUNC_c mf2;                   // the function mf2 and its type have \Cpp{} language linkage
+  FUNC_c mf2;                   // the function mf2 and its type have C++ language linkage
 
-  static FUNC_c* q;             // the data member q has \Cpp{} language linkage;
+  static FUNC_c* q;             // the data member q has C++ language linkage;
                                 // its type is ``pointer to C function''
 };
 
 extern "C" {
   class X {
-    void mf();                  // the function mf and its type have \Cpp{} language linkage
-    void mf2(void(*)());        // the function mf2 has \Cpp{} language linkage;
+    void mf();                  // the function mf and its type have C++ language linkage
+    void mf2(void(*)());        // the function mf2 has C++ language linkage;
                                 // the parameter has type ``pointer to C function''
   };
 }
@@ -6946,10 +6936,10 @@ different *alignment-specifier* in different translation units.
 \[*Example 2*:
 
 ``` cpp
-// Translation unit \#1:
+// Translation unit #1:
 struct S { int x; } s, *p = &s;
 
-// Translation unit \#2:
+// Translation unit #2:
 struct alignas(16) S;           // ill-formed, no diagnostic required: definition of S lacks alignment
 extern S* p;
 ```

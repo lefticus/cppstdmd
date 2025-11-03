@@ -525,10 +525,10 @@ The type `match_flag_type` is an *implementation-defined* bitmask type
 [[bitmask.types]]. The constants of that type, except for
 `match_default` and `format_default`, are bitmask elements. The
 `match_default` and `format_default` constants are empty bitmasks.
-Matching a regular expression against a sequence of characters proceeds
-according to the rules of the grammar specified for the regular
-expression object, modified according to the effects listed in
-[[re.matchflag]] for any bitmask elements set.
+Matching a regular expression against a sequence of characters
+[`first`, `last`) proceeds according to the rules of the grammar
+specified for the regular expression object, modified according to the
+effects listed in [[re.matchflag]] for any bitmask elements set.
 
 ### Implementation-defined `error_type` <a id="re.err">[[re.err]]</a>
 
@@ -1387,9 +1387,9 @@ always `true`. The `sub_match` object stored at index `n` denotes what
 matched the marked sub-expression `n` within the matched expression. If
 the sub-expression `n` participated in a regular expression match then
 the `sub_match` member `matched` evaluates to `true`, and members
-`first` and `second` denote the range of characters which formed that
-match. Otherwise `matched` is `false`, and members `first` and `second`
-point to the end of the sequence that was searched.
+`first` and `second` denote the range of characters [`first`, `second`)
+which formed that match. Otherwise `matched` is `false`, and members
+`first` and `second` point to the end of the sequence that was searched.
 
 \[*Note 1*: The `sub_match` objects representing different
 sub-expressions that did not participate in a regular expression match
@@ -2622,7 +2622,7 @@ as follows:
   equality.
 - During matching of a regular expression finite state machine against a
   sequence of characters, a character `c` is a member of a character
-  class designated by an iterator range if
+  class designated by an iterator range [`first`, `last`) if
   `traits_inst.isctype(c, traits_inst.lookup_classname(first, last, flags() & icase))`
   is `true`.
 

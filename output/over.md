@@ -239,21 +239,21 @@ cv-qualifier{cv2} `D` if the argument list has exactly one argument and
 
 ``` cpp
 struct A {
-  A();                                  // \#1
-  A(A &&);                              // \#2
-  template<typename T> A(T &&);         // \#3
+  A();                                  // #1
+  A(A &&);                              // #2
+  template<typename T> A(T &&);         // #3
 };
 struct B : A {
   using A::A;
-  B(const B &);                         // \#4
-  B(B &&) = default;                    // \#5, implicitly deleted
+  B(const B &);                         // #4
+  B(B &&) = default;                    // #5, implicitly deleted
 
   struct X { X(X &&) = delete; } x;
 };
 extern B b1;
-B b2 = static_cast<B&&>(b1);            // calls \#4: \#1 is not viable, \#2, \#3, and \#5 are not candidates
+B b2 = static_cast<B&&>(b1);            // calls #4: #1 is not viable, #2, #3, and #5 are not candidates
 struct C { operator B&&(); };
-B b3 = C();                             // calls \#4
+B b3 = C();                             // calls #4
 ```
 
 — *end example*\]
@@ -343,17 +343,17 @@ struct C {
     a();                // OK, (*this).a()
   }
 
-void c(this const C&);      // \#1
-void c()&;                  // \#2
-static void c(int = 0);     // \#3
+void c(this const C&);      // #1
+void c()&;                  // #2
+static void c(int = 0);     // #3
 
 void d() {
-  c();                  // error: ambiguous between \#2 and \#3
+  c();                  // error: ambiguous between #2 and #3
   (C::c)();             // error: as above
   (&(C::c))();          // error: cannot resolve address of overloaded this->C::c[over.over]
-  (&C::c)(C{});         // selects \#1
-  (&C::c)(*this);       // error: selects \#2, and is ill-formed[over.match.call.general]
-  (&C::c)();            // selects \#3
+  (&C::c)(C{});         // selects #1
+  (&C::c)(*this);       // error: selects #2, and is ill-formed[over.match.call.general]
+  (&C::c)();            // selects #3
 }
 
   void f(this const C&);
@@ -397,13 +397,11 @@ of the form
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
 or a greater cv-qualification than, cv, and where *conversion-type-id*
-denotes the type “pointer to function of
-($\tcode{P}_1, \dotsc, \tcode{P}_n$) returning `R`”, or the type
-“reference to pointer to function of
-($\tcode{P}_1, \dotsc, \tcode{P}_n$) returning `R`”, or the type
-“reference to function of ($\tcode{P}_1, \dotsc, \tcode{P}_n$) returning
-`R`”, a *surrogate call function* with the unique name *call-function*
-and having the form
+denotes the type “pointer to function of (`P₁`, \dotsc, `Pₙ`) returning
+`R`”, or the type “reference to pointer to function of
+(`P₁`, \dotsc, `Pₙ`) returning `R`”, or the type “reference to function
+of (`P₁`, \dotsc, `Pₙ`) returning `R`”, a *surrogate call function* with
+the unique name *call-function* and having the form
 
 ``` bnf
 'R' *call-function* '(' conversion-type-id \ %
@@ -567,30 +565,30 @@ function template is a rewrite target.
 
 ``` cpp
 struct A {};
-template<typename T> bool operator==(A, T);     // \#1
-bool a1 = 0 == A();                             // OK, calls reversed \#1
+template<typename T> bool operator==(A, T);     // #1
+bool a1 = 0 == A();                             // OK, calls reversed #1
 template<typename T> bool operator!=(A, T);
-bool a2 = 0 == A();                             // error, \#1 is not a rewrite target
+bool a2 = 0 == A();                             // error, #1 is not a rewrite target
 
 struct B {
-  bool operator==(const B&);    // \#2
+  bool operator==(const B&);    // #2
 };
 struct C : B {
   C();
   C(B);
-  bool operator!=(const B&);    // \#3
+  bool operator!=(const B&);    // #3
 };
-bool c1 = B() == C();           // OK, calls \#2; reversed \#2 is not a candidate
-                                // because search for operator!= in C finds \#3
-bool c2 = C() == B();           // error: ambiguous between \#2 found when searching C and
-                                // reversed \#2 found when searching B
+bool c1 = B() == C();           // OK, calls #2; reversed #2 is not a candidate
+                                // because search for operator!= in C finds #3
+bool c2 = C() == B();           // error: ambiguous between #2 found when searching C and
+                                // reversed #2 found when searching B
 
 struct D {};
-template<typename T> bool operator==(D, T);     // \#4
+template<typename T> bool operator==(D, T);     // #4
 inline namespace N {
-  template<typename T> bool operator!=(D, T);   // \#5
+  template<typename T> bool operator!=(D, T);   // #5
 }
-bool d1 = 0 == D();             // OK, calls reversed \#4; \#5 does not forbid \#4 as a rewrite target
+bool d1 = 0 == D();             // OK, calls reversed #4; #5 does not forbid #4 as a rewrite target
 ```
 
 — *end example*\]
@@ -888,23 +886,22 @@ would be initialized by xᵢ [[dcl.init.aggr]] if
 If there is no such aggregate element eᵢ for any xᵢ, the aggregate
 deduction candidate is not added to the set. The aggregate deduction
 candidate is derived as above from a hypothetical constructor
-$\tcode{C}(\tcode{T}_1, \dotsc, \tcode{T}_n)$, where
+`C`(`T₁`, \dotsc, `Tₙ`), where
 
-- if eᵢ is of array type and xᵢ is a *braced-init-list*, $\tcode{T}_i$
-  is an rvalue reference to the declared type of eᵢ, and
-- if eᵢ is of array type and xᵢ is a *string-literal*, $\tcode{T}_i$ is
-  an lvalue reference to the const-qualified declared type of eᵢ, and
-- otherwise, $\tcode{T}_i$ is the declared type of eᵢ,
+- if eᵢ is of array type and xᵢ is a *braced-init-list*, `Tᵢ` is an
+  rvalue reference to the declared type of eᵢ, and
+- if eᵢ is of array type and xᵢ is a *string-literal*, `Tᵢ` is an lvalue
+  reference to the const-qualified declared type of eᵢ, and
+- otherwise, `Tᵢ` is the declared type of eᵢ,
 
-except that additional parameter packs of the form
-$\tcode{P}_j \tcode{...}$ are inserted into the parameter list in their
-original aggregate element position corresponding to each non-trailing
-aggregate element of type $\tcode{P}_j$ that was skipped because it was
-a parameter pack, and the trailing sequence of parameters corresponding
-to a trailing aggregate element that is a pack expansion (if any) is
-replaced by a single parameter of the form $\tcode{T}_n \tcode{...}$. In
-addition, if `C` is defined and inherits constructors
-[[namespace.udecl]] from a direct base class denoted in the
+except that additional parameter packs of the form `Pⱼ` `...` are
+inserted into the parameter list in their original aggregate element
+position corresponding to each non-trailing aggregate element of type
+`Pⱼ` that was skipped because it was a parameter pack, and the trailing
+sequence of parameters corresponding to a trailing aggregate element
+that is a pack expansion (if any) is replaced by a single parameter of
+the form `Tₙ` `...`. In addition, if `C` is defined and inherits
+constructors [[namespace.udecl]] from a direct base class denoted in the
 *base-specifier-list* by a *class-or-decltype* `B`, let `A` be an alias
 template whose template parameter list is that of `C` and whose
 *defining-type-id* is `B`. If `A` is a deducible template
@@ -1061,25 +1058,25 @@ hypothetical class type.
 
 ``` cpp
 template <class T> struct A {
-  explicit A(const T&, ...) noexcept;               // \#1
-  A(T&&, ...);                                      // \#2
+  explicit A(const T&, ...) noexcept;               // #1
+  A(T&&, ...);                                      // #2
 };
 
 int i;
-A a1 = { i, i };    // error: explicit constructor \#1 selected in copy-list-initialization during deduction,
-                    // cannot deduce from non-forwarding rvalue reference in \#2
+A a1 = { i, i };    // error: explicit constructor #1 selected in copy-list-initialization during deduction,
+                    // cannot deduce from non-forwarding rvalue reference in #2
 
-A a2{i, i};         // OK, \#1 deduces to A<int> and also initializes
-A a3{0, i};         // OK, \#2 deduces to A<int> and also initializes
-A a4 = {0, i};      // OK, \#2 deduces to A<int> and also initializes
+A a2{i, i};         // OK, #1 deduces to A<int> and also initializes
+A a3{0, i};         // OK, #2 deduces to A<int> and also initializes
+A a4 = {0, i};      // OK, #2 deduces to A<int> and also initializes
 
-template <class T> A(const T&, const T&) -> A<T&>;  // \#3
-template <class T> explicit A(T&&, T&&) -> A<T>;    // \#4
+template <class T> A(const T&, const T&) -> A<T&>;  // #3
+template <class T> explicit A(T&&, T&&) -> A<T>;    // #4
 
-A a5 = {0, 1};      // error: explicit deduction guide \#4 selected in copy-list-initialization during deduction
-A a6{0,1};          // OK, \#4 deduces to A<int> and \#2 initializes
-A a7 = {0, i};      // error: \#3 deduces to A<int\&>, \#1 and \#2 declare same constructor
-A a8{0,i};          // error: \#3 deduces to A<int\&>, \#1 and \#2 declare same constructor
+A a5 = {0, 1};      // error: explicit deduction guide #4 selected in copy-list-initialization during deduction
+A a6{0,1};          // OK, #4 deduces to A<int> and #2 initializes
+A a7 = {0, i};      // error: #3 deduces to A<int&>, #1 and #2 declare same constructor
+A a8{0,i};          // error: #3 deduces to A<int&>, #1 and #2 declare same constructor
 
 template <class T> struct B {
   template <class U> using TA = T;
@@ -1143,10 +1140,10 @@ F f3 = {Types<X, Y, Z>{}, X{}, W{}};    // error: conflicting types deduced; ope
 
 ``` cpp
 template <class T, class U> struct C {
-  C(T, U);                                      // \#1
+  C(T, U);                                      // #1
 };
 template<class T, class U>
-  C(T, U) -> C<T, std::type_identity_t<U>>;     // \#2
+  C(T, U) -> C<T, std::type_identity_t<U>>;     // #2
 
 template<class V> using A = C<V *, V *>;
 template<std::integral W> using B = A<W>;
@@ -1155,8 +1152,8 @@ int i{};
 double d{};
 A a1(&i, &i);   // deduces A<int>
 A a2(i, i);     // error: cannot deduce V * from i
-A a3(&i, &d);   // error: \#1: cannot deduce (V*, V*) from (int *, double *)
-                // \#2: cannot deduce A<V> from C<int *, double *>
+A a3(&i, &d);   // error: #1: cannot deduce (V*, V*) from (int *, double *)
+                // #2: cannot deduce A<V> from C<int *, double *>
 B b1(&i, &i);   // deduces B<int>
 B b2(&d, &d);   // error: cannot deduce B<W> from C<double *, double *>
 ```
@@ -1169,7 +1166,7 @@ template <class> class AA;
 template <class V> class AA<A<V>> { };
 template <class T> concept deduces_A = requires { sizeof(AA<T>); };
 
-// f1 is formed from the constructor \#1 of C, generating the following function template
+// f1 is formed from the constructor #1 of C, generating the following function template
 template<class T, class U>
   auto f1(T, U) -> C<T, U>;
 
@@ -1178,7 +1175,7 @@ template<class T, class U>
 template<class V> requires deduces_A<C<V *, V *>>
   auto f1_prime(V *, V*) -> C<V *, V *>;
 
-// f2 is formed from the deduction-guide \#2 of C
+// f2 is formed from the deduction-guide #2 of C
 template<class T, class U> auto f2(T, U) -> C<T, std::type_identity_t<U>>;
 
 // Deducing arguments for C<T, std::type_identity_t<U>> from C<V *, V*> deduces T as V *;
@@ -1248,26 +1245,26 @@ function (see  [[over.ics.ref]]).
 
 #### General <a id="over.match.best.general">[[over.match.best.general]]</a>
 
-Define $\text{ICS}^i(\tcode{F})$ as the implicit conversion sequence
-that converts the $i^\text{th}$ argument in the list to the type of the
+Define \text{ICS}^i(`F`) as the implicit conversion sequence that
+converts the $i^\text{th}$ argument in the list to the type of the
 $i^\text{th}$ parameter of viable function `F`. [[over.best.ics]]
 defines the implicit conversion sequences and [[over.ics.rank]] defines
 what it means for one implicit conversion sequence to be a better
 conversion sequence or worse conversion sequence than another.
 
-Given these definitions, a viable function $\tcode{F}_1$ is defined to
-be a *better* function than another viable function $\tcode{F}_2$ if for
-all arguments i, $\text{ICS}^i(\tcode{F}_1)$ is not a worse conversion
-sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
+Given these definitions, a viable function `F₁` is defined to be a
+*better* function than another viable function `F₂` if for all arguments
+i, \text{ICS}^i(`F₁`) is not a worse conversion sequence than
+\text{ICS}^i(`F₂`), and then
 
-- for some argument j, $\text{ICS}^j(\tcode{F}_1)$ is a better
-  conversion sequence than $\text{ICS}^j(\tcode{F}_2)$, or, if not that,
+- for some argument j, \text{ICS}^j(`F₁`) is a better conversion
+  sequence than \text{ICS}^j(`F₂`), or, if not that,
 - the context is an initialization by user-defined conversion (see 
   [[dcl.init]], [[over.match.conv]], and  [[over.match.ref]]) and the
-  standard conversion sequence from the return type of $\tcode{F}_1$ to
-  the destination type (i.e., the type of the entity being initialized)
-  is a better conversion sequence than the standard conversion sequence
-  from the return type of $\tcode{F}_2$ to the destination type
+  standard conversion sequence from the return type of `F₁` to the
+  destination type (i.e., the type of the entity being initialized) is a
+  better conversion sequence than the standard conversion sequence from
+  the return type of `F₂` to the destination type
   \[*Example 1*:
   ``` cpp
   struct A {
@@ -1291,13 +1288,13 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   \[*Example 2*:
   ``` cpp
   template <class T> struct A {
-    operator T&();    // \#1
-    operator T&&();   // \#2
+    operator T&();    // #1
+    operator T&&();   // #2
   };
   typedef int Fn();
   A<Fn> a;
-  Fn& lf = a;         // calls \#1
-  Fn&& rf = a;        // calls \#2
+  Fn& lf = a;         // calls #1
+  Fn&& rf = a;        // calls #2
   ```
 
   — *end example*\]
@@ -1339,10 +1336,10 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   \[*Example 4*:
   ``` cpp
   struct S {
-    friend auto operator<=>(const S&, const S&) = default;        // \#1
-    friend bool operator<(const S&, const S&);                    // \#2
+    friend auto operator<=>(const S&, const S&) = default;        // #1
+    friend bool operator<(const S&, const S&);                    // #2
   };
-  bool b = S() < S();                                             // calls \#2
+  bool b = S() < S();                                             // calls #2
   ```
 
   — *end example*\]
@@ -1352,10 +1349,10 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   \[*Example 5*:
   ``` cpp
   struct S {
-    friend std::weak_ordering operator<=>(const S&, int);         // \#1
-    friend std::weak_ordering operator<=>(int, const S&);         // \#2
+    friend std::weak_ordering operator<=>(const S&, int);         // #1
+    friend std::weak_ordering operator<=>(int, const S&);         // #2
   };
-  bool b = 1 < S();                                               // calls \#2
+  bool b = 1 < S();                                               // calls #2
   ```
 
   — *end example*\]
@@ -1376,26 +1373,26 @@ sequence than $\text{ICS}^i(\tcode{F}_2)$, and then
   ``` cpp
   template <class T> struct A {
     using value_type = T;
-    A(value_type);    // \#1
-    A(const A&);      // \#2
-    A(T, T, int);     // \#3
+    A(value_type);    // #1
+    A(const A&);      // #2
+    A(T, T, int);     // #3
     template<class U>
-      A(int, T, U);   // \#4
-    // \#5 is the copy deduction candidate, A(A)
+      A(int, T, U);   // #4
+    // #5 is the copy deduction candidate, A(A)
   };
 
-  A x(1, 2, 3);       // uses \#3, generated from a non-template constructor
+  A x(1, 2, 3);       // uses #3, generated from a non-template constructor
 
   template <class T>
-  A(T) -> A<T>;       // \#6, less specialized than \#5
+  A(T) -> A<T>;       // #6, less specialized than #5
 
-  A a(42);            // uses \#6 to deduce A<int> and \#1 to initialize
-  A b = a;            // uses \#5 to deduce A<int> and \#2 to initialize
+  A a(42);            // uses #6 to deduce A<int> and #1 to initialize
+  A b = a;            // uses #5 to deduce A<int> and #2 to initialize
 
   template <class T>
-  A(A<T>) -> A<A<T>>; // \#7, as specialized as \#5
+  A(A<T>) -> A<A<T>>; // #7, as specialized as #5
 
-  A b2 = a;           // uses \#7 to deduce A<A<int>> and \#1 to initialize
+  A b2 = a;           // uses #7 to deduce A<A<int>> and #1 to initialize
   ```
 
   — *end example*\]
@@ -1414,13 +1411,13 @@ int i;
 short s = 0;
 
 void f() {
-  Fcn(&i, s);       // is ambiguous because \&i $\to$ int* is better than \&i $\to$ const int*
+  Fcn(&i, s);       // is ambiguous because &i $\to$ int* is better than &i $\to$ const int*
                     // but s $\to$ short is also better than s $\to$ int
 
-  Fcn(&i, 1L);      // calls Fcn(int*, int), because \&i $\to$ int* is better than \&i $\to$ const int*
+  Fcn(&i, 1L);      // calls Fcn(int*, int), because &i $\to$ int* is better than &i $\to$ const int*
                     // and 1L $\to$ short and 1L $\to$ int are indistinguishable
 
-  Fcn(&i, 'c');     // calls Fcn(int*, int), because \&i $\to$ int* is better than \&i $\to$ const int*
+  Fcn(&i, 'c');     // calls Fcn(int*, int), because &i $\to$ int* is better than &i $\to$ const int*
                     // and 'c' $\to$ int is better than 'c' $\to$ short
 }
 ```
@@ -1686,7 +1683,7 @@ struct A {};
 struct B : public A {} b;
 int f(A&);
 int f(B&);
-int i = f(b);       // calls f(B\&), an exact match, rather than f(A\&), a conversion
+int i = f(b);       // calls f(B&), an exact match, rather than f(A&), a conversion
 ```
 
 — *end example*\]
@@ -1782,14 +1779,14 @@ f( {'a','b'} );                 // OK, f(initializer_list<int>) integral promoti
 f( {1.0} );                     // error: narrowing
 
 struct A {
-  A(std::initializer_list<double>);             // \#1
-  A(std::initializer_list<complex<double>>);    // \#2
-  A(std::initializer_list<std::string>);        // \#3
+  A(std::initializer_list<double>);             // #1
+  A(std::initializer_list<complex<double>>);    // #2
+  A(std::initializer_list<std::string>);        // #3
 };
-A a{ 1.0,2.0 };                 // OK, uses \#1
+A a{ 1.0,2.0 };                 // OK, uses #1
 
 void g(A);
-g({ "foo", "bar" });            // OK, uses \#3
+g({ "foo", "bar" });            // OK, uses #3
 
 typedef int IA[3];
 void h(const IA&);
@@ -1964,26 +1961,26 @@ conversion sequences unless one of the following rules applies:
   apply.
   \[*Example 9*:
   ``` cpp
-  void f1(int);                                   // \#1
-  void f1(std::initializer_list<long>);           // \#2
-  void g1() { f1({42}); }                         // chooses \#2
+  void f1(int);                                   // #1
+  void f1(std::initializer_list<long>);           // #2
+  void g1() { f1({42}); }                         // chooses #2
 
-  void f2(std::pair<const char*, const char*>);   // \#3
-  void f2(std::initializer_list<std::string>);    // \#4
-  void g2() { f2({"foo","bar"}); }                // chooses \#4
+  void f2(std::pair<const char*, const char*>);   // #3
+  void f2(std::initializer_list<std::string>);    // #4
+  void g2() { f2({"foo","bar"}); }                // chooses #4
   ```
 
   — *end example*\]
   \[*Example 10*:
   ``` cpp
-  void f(int    (&&)[] );         // \#1
-  void f(double (&&)[] );         // \#2
-  void f(int    (&&)[2]);         // \#3
+  void f(int    (&&)[] );         // #1
+  void f(double (&&)[] );         // #2
+  void f(int    (&&)[2]);         // #3
 
-  f( {1} );           // Calls \#1: Better than \#2 due to conversion, better than \#3 due to bounds
-  f( {1.0} );         // Calls \#2: Identity conversion is better than floating-integral conversion
-  f( {1.0, 2.0} );    // Calls \#2: Identity conversion is better than floating-integral conversion
-  f( {1, 2} );        // Calls \#3: Converting to array of known bound is better than to unknown bound,
+  f( {1} );           // Calls #1: Better than #2 due to conversion, better than #3 due to bounds
+  f( {1.0} );         // Calls #2: Identity conversion is better than floating-integral conversion
+  f( {1.0, 2.0} );    // Calls #2: Identity conversion is better than floating-integral conversion
+  f( {1, 2} );        // Calls #3: Converting to array of known bound is better than to unknown bound,
                       // and an identity conversion is better than floating-integral conversion
   ```
 
@@ -2009,9 +2006,9 @@ conversion sequences unless one of the following rules applies:
     int&& f2();
     int g(const int&);
     int g(const int&&);
-    int j = g(i);                   // calls g(const int\&)
-    int k = g(f1());                // calls g(const int\&\&)
-    int l = g(f2());                // calls g(const int\&\&)
+    int j = g(i);                   // calls g(const int&)
+    int k = g(f1());                // calls g(const int&&)
+    int l = g(f2());                // calls g(const int&&)
 
     struct A {
       A& operator<<(int);
@@ -2020,12 +2017,12 @@ conversion sequences unless one of the following rules applies:
     };
     A& operator<<(A&&, char);
     A() << 1;                       // calls A::operator<<(int)
-    A() << 'c';                     // calls operator<<(A\&\&, char)
+    A() << 'c';                     // calls operator<<(A&&, char)
     A a;
     a << 1;                         // calls A::operator<<(int)
     a << 'c';                       // calls A::operator<<(int)
-    A().p();                        // calls A::p()\&\&
-    a.p();                          // calls A::p()\&
+    A().p();                        // calls A::p()&&
+    a.p();                          // calls A::p()&
     ```
 
     — *end example*\]
@@ -2035,10 +2032,10 @@ conversion sequences unless one of the following rules applies:
     rvalue reference to a function lvalue
     \[*Example 12*:
     ``` cpp
-    int f(void(&)());               // \#1
-    int f(void(&&)());              // \#2
+    int f(void(&)());               // #1
+    int f(void(&&)());              // #2
     void g();
-    int i1 = f(g);                  // calls \#1
+    int i1 = f(g);                  // calls #1
     ```
 
     — *end example*\]
@@ -2070,7 +2067,7 @@ conversion sequences unless one of the following rules applies:
     int g(int);
 
     int i;
-    int j = f(i);                   // calls f(int \&)
+    int j = f(i);                   // calls f(int &)
     int k = g(i);                   // ambiguous
 
     struct X {

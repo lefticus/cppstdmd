@@ -1071,8 +1071,8 @@ struct X {
   X(const X&, int = 1);
 };
 X a(1);             // calls X(int);
-X b(a, 0);          // calls X(const X\&, int);
-X c = b;            // calls X(const X\&, int);
+X b(a, 0);          // calls X(const X&, int);
+X c = b;            // calls X(const X&, int);
 ```
 
 — *end example*\]
@@ -1092,8 +1092,8 @@ struct Y {
   Y(Y&&);
 };
 extern Y f(int);
-Y d(f(1));          // calls Y(Y\&\&)
-Y e = d;            // calls Y(const Y\&)
+Y d(f(1));          // calls Y(Y&&)
+Y e = d;            // calls Y(const Y&)
 ```
 
 — *end example*\]
@@ -3049,7 +3049,7 @@ struct D : B1, B2 {             // D has two separate A subobjects
 
 void foo() {
   D   d;
-//   A*  ap = \&d;                  // would be ill-formed: ambiguous
+//   A*  ap = &d;                  // would be ill-formed: ambiguous
   B1*  b1p = &d;
   A*   ap = b1p;
   D*   dp = &d;
@@ -3951,7 +3951,7 @@ void fr(B* pb, D1* p1, D2* p2) {
   p2->i = 3;                    // OK (access through a D2)
   p2->B::i = 4;                 // OK (access through a D2, even though naming class is B)
   int B::* pmi_B = &B::i;       // error
-  int B::* pmi_B2 = &D2::i;     // OK (type of \&D2::i is int B::*)
+  int B::* pmi_B2 = &D2::i;     // OK (type of &D2::i is int B::*)
   B::j = 5;                     // error: not a friend of naming class B
   D2::j = 6;                    // OK (because refers to static member)
 }
@@ -4252,10 +4252,10 @@ is ill-formed, no diagnostic required.
 
 ``` cpp
 struct C {
-  C( int ) { }                  // \#1: non-delegating constructor
-  C(): C(42) { }                // \#2: delegates to \#1
-  C( char c ) : C(42.0) { }     // \#3: ill-formed due to recursion with \#4
-  C( double d ) : C('a') { }    // \#4: ill-formed due to recursion with \#3
+  C( int ) { }                  // #1: non-delegating constructor
+  C(): C(42) { }                // #2: delegates to #1
+  C( char c ) : C(42.0) { }     // #3: ill-formed due to recursion with #4
+  C( double d ) : C('a') { }    // #4: ill-formed due to recursion with #3
 };
 ```
 
@@ -4989,8 +4989,8 @@ private:
 Thing f(bool b) {
   Thing t;
   if (b)
-    throw t;            // OK, Thing(Thing\&\&) used (or elided) to throw t
-  return t;             // OK, Thing(Thing\&\&) used (or elided) to return t
+    throw t;            // OK, Thing(Thing&&) used (or elided) to throw t
+  return t;             // OK, Thing(Thing&&) used (or elided) to return t
 }
 
 Thing t2 = f(false);    // OK, no extra copy/move performed, t2 constructed by call to f
@@ -5004,7 +5004,7 @@ Weird g(bool b) {
   static Weird w1;
   Weird w2;
   if (b)
-    return w1;  // OK, uses Weird(Weird\&)
+    return w1;  // OK, uses Weird(Weird&)
   else
     return w2;  // error: w2 in this context is an xvalue
 }
@@ -5022,7 +5022,7 @@ decltype(auto) h2(Thing t) {
 }
 
 decltype(auto) h3(Thing t) {
-  return (t);   // OK, (t) is an xvalue and h3's return type is Thing\&\&
+  return (t);   // OK, (t) is an xvalue and h3's return type is Thing&&
 }
 ```
 
@@ -5110,7 +5110,7 @@ template<typename T> struct X {
   // implicitly declares: friend constexpr bool operator==(X, X) requires (sizeof(T) != 1) = default;
 
   [[nodiscard]] virtual std::strong_ordering operator<=>(const X&) const = default;
-  // implicitly declares: [[nodiscard]] virtual bool operator==(const X\&) const = default;
+  // implicitly declares: [[nodiscard]] virtual bool operator==(const X&) const = default;
 };
 ```
 
@@ -5125,12 +5125,12 @@ declaration in the *base-specifier-list* of `C`, followed by the
 non-static data members of `C`, in the order of their declaration in the
 *member-specification* of `C`, form a list of subobjects. In that list,
 any subobject of array type is recursively expanded to the sequence of
-its elements, in the order of increasing subscript. Let $\tcode{x}_i$ be
-an lvalue denoting the $i^\text{th}$ element in the expanded list of
-subobjects for an object `x` (of length n), where $\tcode{x}_i$ is
-formed by a sequence of derived-to-base conversions [[over.best.ics]],
-class member access expressions [[expr.ref]], and array subscript
-expressions [[expr.sub]] applied to `x`.
+its elements, in the order of increasing subscript. Let `xᵢ` be an
+lvalue denoting the $i^\text{th}$ element in the expanded list of
+subobjects for an object `x` (of length n), where `xᵢ` is formed by a
+sequence of derived-to-base conversions [[over.best.ics]], class member
+access expressions [[expr.ref]], and array subscript expressions
+[[expr.sub]] applied to `x`.
 
 ### Equality operator <a id="class.eq">[[class.eq]]</a>
 
@@ -5138,17 +5138,16 @@ A defaulted equality operator function [[over.binary]] shall have a
 declared return type `bool`.
 
 A defaulted `==` operator function for a class `C` is defined as deleted
-unless, for each $\tcode{x}_i$ in the expanded list of subobjects for an
-object `x` of type `C`, $\tcode{x}_i\tcode{ == }\tcode{x}_i$ is usable
-[[class.compare.default]].
+unless, for each `xᵢ` in the expanded list of subobjects for an object
+`x` of type `C`, `xᵢ`` == ``xᵢ` is usable [[class.compare.default]].
 
 The return value `V` of a defaulted `==` operator function with
 parameters `x` and `y` is determined by comparing corresponding elements
-$\tcode{x}_i$ and $\tcode{y}_i$ in the expanded lists of subobjects for
-`x` and `y` (in increasing index order) until the first index i where
-$\tcode{x}_i\tcode{ == }\tcode{y}_i$ yields a result value which, when
-contextually converted to `bool`, yields `false`. If no such index
-exists, `V` is `true`. Otherwise, `V` is `false`.
+`xᵢ` and `yᵢ` in the expanded lists of subobjects for `x` and `y` (in
+increasing index order) until the first index i where `xᵢ`` == ``yᵢ`
+yields a result value which, when contextually converted to `bool`,
+yields `false`. If no such index exists, `V` is `true`. Otherwise, `V`
+is `false`.
 
 \[*Example 1*:
 
@@ -5200,40 +5199,36 @@ resolution finds usable candidates that do not otherwise meet the
 requirements implied by the defined expression. — *end note*\]
 
 Let `R` be the declared return type of a defaulted three-way comparison
-operator function, and let $\tcode{x}_i$ be the elements of the expanded
-list of subobjects for an object `x` of type `C`.
+operator function, and let `xᵢ` be the elements of the expanded list of
+subobjects for an object `x` of type `C`.
 
-- If `R` is `auto`, then let $\cv{}_i~\tcode{R}_i$ be the type of the
-  expression $\tcode{x}_i\tcode{ <=> }\tcode{x}_i$. The operator
-  function is defined as deleted if that expression is not usable or if
-  $\tcode{R}_i$ is not a comparison category type [[cmp.categories.pre]]
-  for any i. The return type is deduced as the common comparison type
-  (see below) of $\tcode{R}_0$, $\tcode{R}_1$, $\dotsc$,
-  $\tcode{R}_{n-1}$.
+- If `R` is `auto`, then let \cv{}_i~`Rᵢ` be the type of the expression
+  `xᵢ`` <=> ``xᵢ`. The operator function is defined as deleted if that
+  expression is not usable or if `Rᵢ` is not a comparison category type
+  [[cmp.categories.pre]] for any i. The return type is deduced as the
+  common comparison type (see below) of `R₀`, `R₁`, $\dotsc$, `R_n-1`.
 - Otherwise, `R` shall not contain a placeholder type. If the
-  synthesized three-way comparison of type `R` between any objects
-  $\tcode{x}_i$ and $\tcode{x}_i$ is not defined, the operator function
-  is defined as deleted.
+  synthesized three-way comparison of type `R` between any objects `xᵢ`
+  and `xᵢ` is not defined, the operator function is defined as deleted.
 
 The return value `V` of type `R` of the defaulted three-way comparison
 operator function with parameters `x` and `y` of the same type is
-determined by comparing corresponding elements $\tcode{x}_i$ and
-$\tcode{y}_i$ in the expanded lists of subobjects for `x` and `y` (in
-increasing index order) until the first index i where the synthesized
-three-way comparison of type `R` between $\tcode{x}_i$ and $\tcode{y}_i$
-yields a result value $\tcode{v}_i$ where
-$\tcode{v}_i \mathrel{\tcode{!=}} 0$, contextually converted to `bool`,
-yields `true`; `V` is a copy of $\tcode{v}_i$. If no such index exists,
-`V` is `static_cast<R>(std::strong_ordering::equal)`.
+determined by comparing corresponding elements `xᵢ` and `yᵢ` in the
+expanded lists of subobjects for `x` and `y` (in increasing index order)
+until the first index i where the synthesized three-way comparison of
+type `R` between `xᵢ` and `yᵢ` yields a result value `vᵢ` where
+`vᵢ` \mathrel{`!=`} 0, contextually converted to `bool`, yields `true`;
+`V` is a copy of `vᵢ`. If no such index exists, `V` is
+`static_cast<R>(std::strong_ordering::equal)`.
 
 The *common comparison type* `U` of a possibly-empty list of n
-comparison category types $\tcode{T}_0$, $\tcode{T}_1$, $\dotsc$,
-$\tcode{T}_{n-1}$ is defined as follows:
+comparison category types `T₀`, `T₁`, $\dotsc$, `T_n-1` is defined as
+follows:
 
-- If at least one $\tcode{T}_i$ is `std::partial_ordering`, `U` is
+- If at least one `Tᵢ` is `std::partial_ordering`, `U` is
   `std::partial_ordering` [[cmp.partialord]].
-- Otherwise, if at least one $\tcode{T}_i$ is `std::weak_ordering`, `U`
-  is `std::weak_ordering` [[cmp.weakord]].
+- Otherwise, if at least one `Tᵢ` is `std::weak_ordering`, `U` is
+  `std::weak_ordering` [[cmp.weakord]].
 - Otherwise, `U` is `std::strong_ordering` [[cmp.strongord]].
   \[*Note 4*: In particular, this is the result when n is
   0. — *end note*\]

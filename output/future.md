@@ -70,7 +70,7 @@ operands are ill-formed. — *end note*\]
 ``` cpp
 int arr1[5];
 int arr2[5];
-bool same = arr1 == arr2;       // deprecated, same as \&arr1[0] == \&arr2[0],
+bool same = arr1 == arr2;       // deprecated, same as &arr1[0] == &arr2[0],
                                 // does not compare array contents
 auto cmp = arr1 <=> arr2;       // error
 ```

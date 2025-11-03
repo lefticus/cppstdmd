@@ -6347,9 +6347,8 @@ follows:
     `ios_base::in` is not set in *mode*,
   - `buf.size()` otherwise.
 
-If $\texttt{baseoff} + \texttt{off}$ would overflow, or if
-$\texttt{baseoff} + \texttt{off}$ is less than zero, or if
-$\texttt{baseoff} + \texttt{off}$ is greater than *`buf`*`.size()`, the
+If `baseoff` + `off` would overflow, or if `baseoff` + `off` is less
+than zero, or if `baseoff` + `off` is greater than *`buf`*`.size()`, the
 positioning operation fails. Otherwise, the function computes
 
 ``` cpp
@@ -9007,19 +9006,21 @@ In addition to the requirements [[fs.req]], function template parameters
 named `Source` shall be one of:
 
 - `basic_string<EcharT, traits, Allocator>`. A function argument
-  `const Source&` `source` shall have an effective range .
+  `const Source&` `source` shall have an effective range
+  [`source.begin()`, `source.end()`).
 - `basic_string_view<EcharT, traits>`. A function argument
-  `const Source&` `source` shall have an effective range .
+  `const Source&` `source` shall have an effective range
+  [`source.begin()`, `source.end()`).
 - A type meeting the *Cpp17InputIterator* requirements that iterates
   over a NTCTS. The value type shall be an encoded character type. A
   function argument `const Source&` `source` shall have an effective
-  range where `end` is the first iterator value with an element value
-  equal to `iterator_traits<Source>::value_type()`.
+  range [`source`, `end`) where `end` is the first iterator value with
+  an element value equal to `iterator_traits<Source>::value_type()`.
 - A character array that after array-to-pointer decay results in a
   pointer to the start of a NTCTS. The value type shall be an encoded
   character type. A function argument `const Source&` `source` shall
-  have an effective range where `end` is the first iterator value with
-  an element value equal to
+  have an effective range [`source`, `end`) where `end` is the first
+  iterator value with an element value equal to
   `iterator_traits<decay_t<Source>>::value_type()`.
 
 Functions taking template parameters named `Source` shall not

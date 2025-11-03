@@ -933,7 +933,7 @@ G(a)                // replaced by f(0, a)
 SDEF(foo);          // replaced by S foo;
 SDEF(bar, 1, 2);    // replaced by S bar = { 1, 2 \;}
 
-#define H1(X, ...) X __VA_OPT__(##) __VA_ARGS__ // error: \#\# may not appear at
+#define H1(X, ...) X __VA_OPT__(##) __VA_ARGS__ // error: ## may not appear at
                                                 // the beginning of a replacement list[cpp.concat]
 
 #define H2(X, Y, ...) __VA_OPT__(X ## Y,) __VA_ARGS__
@@ -1070,7 +1070,7 @@ In the following fragment:
 #define mkstr(a) # a
 #define in_between(a) mkstr(a)
 #define join(c, d) in_between(c hash_hash d)
-char p[] = join(x, y);          // equivalent to char p[] = "x \#\# y";
+char p[] = join(x, y);          // equivalent to char p[] = "x ## y";
 ```
 
 The expansion produces, at various stages:

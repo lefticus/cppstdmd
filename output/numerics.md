@@ -644,9 +644,9 @@ template<class T> complex<T> pow(const complex<T>& x, const T& y);
 template<class T> complex<T> pow(const T& x, const complex<T>& y);
 ```
 
-*Returns:* The complex power of base `x` raised to the
-$\texttt{y}^\text{th}$ power, defined as `exp(y * log(x))`. The value
-returned for `pow(0, 0)` is *implementation-defined*.
+*Returns:* The complex power of base `x` raised to the `y`^\text{th}
+power, defined as `exp(y * log(x))`. The value returned for `pow(0, 0)`
+is *implementation-defined*.
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -1039,10 +1039,10 @@ suitable `operator>>`.
 
 - the size of `E`’s state in multiples of the size of `result_type`,
   given as an integral constant expression;
-- the *transition algorithm* $\mathsf{TA}$ by which `e`’s state is
-  advanced to its *successor state* ; and
-- the *generation algorithm* $\mathsf{GA}$ by which an engine’s state is
-  mapped to a value of type `result_type`.
+- the *transition algorithm* TA by which `e`’s state is advanced to its
+  *successor state* ; and
+- the *generation algorithm* GA by which an engine’s state is mapped to
+  a value of type `result_type`.
 
 A class `E` that meets the requirements of a uniform random bit
 generator [[rand.req.urng]] also meets the requirements of a
@@ -1151,11 +1151,10 @@ identifies its associated probability function p(z) or P(zᵢ).
 An associated probability function is typically expressed using certain
 externally-supplied quantities known as the
 *parameters of the distribution*. Such distribution parameters are
-identified in this context by writing, for example, p(z\,|\,a,b) or
-P(zᵢ\,|\,a,b), to name specific parameters, or by writing, for example,
-$p(z\,|\left\{\tcode{p}\right\})$ or
-$P(z_i\,|\left\{\tcode{p}\right\})$, to denote a distribution’s
-parameters `p` taken as a whole.
+identified in this context by writing, for example, p(z | a,b) or
+P(zᵢ | a,b), to name specific parameters, or by writing, for example,
+p(z\,|\left\{`p`\right\}) or P(z_i\,|\left\{`p`\right\}), to denote a
+distribution’s parameters `p` taken as a whole.
 
 A class `D` meets the requirements of a *random number distribution* if
 the expressions shown in [[rand.req.dist]] are valid and have the
@@ -1339,9 +1338,8 @@ The textual representation consists of the value of .
 explicit linear_congruential_engine(result_type s);
 ```
 
-*Effects:* If $c \bmod m$ is 0 and $\texttt{s} \bmod m$ is 0, sets the
-engine’s state to 1, otherwise sets the engine’s state to
-$\texttt{s} \bmod m$.
+*Effects:* If c  mod  m is 0 and `s` \bmod m is 0, sets the engine’s
+state to 1, otherwise sets the engine’s state to `s` \bmod m.
 
 ``` cpp
 template<class Sseq> explicit linear_congruential_engine(Sseq& q);
@@ -1351,7 +1349,7 @@ template<class Sseq> explicit linear_congruential_engine(Sseq& q);
 an array (or equivalent) of length k + 3, invokes
 `q.generate(`a + 0`, `a + k + 3`)` and then computes
 $S = \left(\sum_{j = 0}^{k - 1} a_{j + 3} \cdot 2^{32j} \right) \bmod m$.
-If $c \bmod m$ is 0 and S is 0, sets the engine’s state to 1, else sets
+If c  mod  m is 0 and S is 0, sets the engine’s state to 1, else sets
 the engine’s state to S.
 
 #### Class template `mersenne_twister_engine` <a id="rand.eng.mers">[[rand.eng.mers]]</a>
@@ -1414,7 +1412,7 @@ namespace std {
     static constexpr size_t tempering_l = l;
     static constexpr UIntType initialization_multiplier = f;
     static constexpr result_type min() { return 0; }
-    static constexpr result_type max() { return  $2^w - 1$; }
+    static constexpr result_type max() { return  2^w - 1; }
     static constexpr result_type default_seed = 5489u;
 
     // constructors and seeding functions
@@ -1455,8 +1453,8 @@ $X_{i - n}, \dotsc, X_{i - 1}$, in that order.
 explicit mersenne_twister_engine(result_type value);
 ```
 
-*Effects:* Sets $X_{-n}$ to $\texttt{value} \bmod 2^w$. Then,
-iteratively for $i = 1 - n, \dotsc, -1$, sets Xᵢ to $$%
+*Effects:* Sets $X_{-n}$ to `value` \bmod 2^w. Then, iteratively for
+$i = 1 - n, \dotsc, -1$, sets Xᵢ to $$%
  \bigl[f \cdot
        \bigl(X_{i-1} \xor \bigl(X_{i-1} \rightshift (w-2)\bigr)
        \bigr)
@@ -1491,7 +1489,7 @@ is either 0 or 1.
 The state transition is performed as follows:
 
 - Let $Y = X_{i-s} - X_{i-r} - c$.
-- Set Xᵢ to $y = Y \bmod m$. Set c to 1 if Y < 0, otherwise set c to 0.
+- Set Xᵢ to y = Y  mod  m. Set c to 1 if Y < 0, otherwise set c to 0.
 
 \[*Note 1*: This algorithm corresponds to a modular linear function of
 the form $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$,
@@ -1515,7 +1513,7 @@ namespace std {
     static constexpr size_t short_lag = s;
     static constexpr size_t long_lag = r;
     static constexpr result_type min() { return 0; }
-    static constexpr result_type max() { return $m - 1$; }
+    static constexpr result_type max() { return m - 1; }
     static constexpr result_type default_seed = 19780503u;
 
     // constructors and seeding functions
@@ -1567,10 +1565,10 @@ linear_congruential_engine<result_type,
 ```
 
 Then, to set each Xₖ, obtain new values $z_0, \dotsc, z_{n-1}$ from
-$n = \lceil w/32 \rceil$ successive invocations of `e`. Set Xₖ to
+n = ⌈ w/32 ⌉ successive invocations of `e`. Set Xₖ to
 $\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
 
-*Complexity:* Exactly $n \cdot \texttt{r}$ invocations of `e`.
+*Complexity:* Exactly n \cdot `r` invocations of `e`.
 
 ``` cpp
 template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
@@ -1698,10 +1696,10 @@ state.
 The transition and generation algorithms are described in terms of the
 following integral constants:
 
-- Let $R = \tcode{e.max() - e.min() + 1}$ and
+- Let R = `e.max() - e.min() + 1` and
   $m = \left\lfloor \log_2 R \right\rfloor$.
 - With n as determined below, let
-  $w_0 = \left\lfloor w / n \right\rfloor$, $n_0 = n - w \bmod n$,
+  $w_0 = \left\lfloor w / n \right\rfloor$, n₀ = n - w  mod  n,
   $y_0 = 2^{w_0} \left\lfloor R / 2^{w_0} \right\rfloor$, and
   $y_1 = 2^{w_0 + 1} \left\lfloor R / 2^{w_0 + 1} \right\rfloor$.
 - Let $n = \left\lceil w / m \right\rceil$ if and only if the relation
@@ -1712,22 +1710,22 @@ following integral constants:
 holds. — *end note*\]
 
 The transition algorithm is carried out by invoking `e()` as often as
-needed to obtain n₀ values less than $y_0 + \tcode{e.min()}$ and n - n₀
-values less than $y_1 + \tcode{e.min()}$.
+needed to obtain n₀ values less than y_0 + `e.min()` and n - n₀ values
+less than y_1 + `e.min()`.
 
 The generation algorithm uses the values produced while advancing the
 state as described above to yield a quantity S obtained as if by the
 following algorithm:
 
 ``` cpp
-$S$ = 0;
-for ($k$ = $0$; $k \neq n_0$; $k$ += $1$)  {
- do $u$ = e() - e.min(); while ($u \ge y_0$);
- $S$ = $2^{w_0} \cdot S + u \bmod 2^{w_0}$;
+S = 0;
+for (k = 0; k \neq n_0; k += 1)  {
+ do u = e() - e.min(); while (u \ge y_0);
+ S = 2^{w_0} \cdot S + u \bmod 2^{w_0};
 }
-for ($k$ = $n_0$; $k \neq n$; $k$ += $1$)  {
- do $u$ = e() - e.min(); while ($u \ge y_1$);
- $S$ = $2^{w_0 + 1} \cdot S + u \bmod 2^{w_0 + 1}$;
+for (k = n_0; k \neq n; k += 1)  {
+ do u = e() - e.min(); while (u \ge y_1);
+ S = 2^{w_0 + 1} \cdot S + u \bmod 2^{w_0 + 1};
 }
 ```
 
@@ -1740,7 +1738,7 @@ template<class Engine, size_t w, class UIntType>
 
     // engine characteristics
     static constexpr result_type min() { return 0; }
-    static constexpr result_type max() { return $2^w - 1$; }
+    static constexpr result_type max() { return 2^w - 1; }
 
     // constructors and seeding functions
     independent_bits_engine();
@@ -1797,7 +1795,7 @@ transition is performed as follows:
 - Calculate an integer $j = \left\lfloor \frac{k \cdot (Y - e_{\min})}
                             {e_{\max} - e_{\min} +1}
           \right\rfloor$ .
-- Set Y to Vⱼ and then set Vⱼ to $\tcode{e()}$.
+- Set Y to Vⱼ and then set Vⱼ to `e()`.
 
 The generation algorithm yields the last value of `Y` produced while
 advancing `e`’s state as described above.
@@ -1858,8 +1856,8 @@ The textual representation consists of the textual representation of
 
 In addition to its behavior pursuant to subclause  [[rand.req.adapt]],
 each constructor that is not a copy constructor initializes
-$\tcode{V[0]}, \dotsc, \tcode{V[k-1]}$ and Y, in that order, with values
-returned by successive invocations of `e()`.
+`V[0]`, \dotsc, `V[k-1]` and Y, in that order, with values returned by
+successive invocations of `e()`.
 
 ### Engines and engine adaptors with predefined parameters <a id="rand.predef">[[rand.predef]]</a>
 
@@ -2019,7 +2017,7 @@ $P_0, \dotsc, P_{n-1}$, the device entropy S is defined as
 $S = - \sum_{i=0}^{n-1} P_i \cdot \log P_i$.
 
 for the random numbers returned by `operator()`, in the range `min()` to
-$\log_2( \texttt{max()}+1)$.
+\log_2( `max()`+1).
 
 ``` cpp
 result_type operator()();
@@ -2115,11 +2113,11 @@ unsigned integer type capable of accommodating 32-bit quantities.
 the requirements of a mutable iterator.
 
 *Effects:* Does nothing if `begin == end`. Otherwise, with
-$s = \texttt{v.size()}$ and $n = \texttt{end} - \texttt{begin}$, fills
-the supplied range $[\texttt{begin},\texttt{end})$ according to the
-following algorithm in which each operation is to be carried out modulo
-$2^{32}$, each indexing operator applied to `begin` is to be taken
-modulo n, and T(x) is defined as $x \xor (x \rightshift 27)$:
+s = `v.size()` and n = `end` - `begin`, fills the supplied range
+[`begin`,`end`) according to the following algorithm in which each
+operation is to be carried out modulo $2^{32}$, each indexing operator
+applied to `begin` is to be taken modulo n, and T(x) is defined as
+$x \xor (x \rightshift 27)$:
 
 - By way of initialization, set each element of the range to the value
   `0x8b8b8b8b`. Additionally, for use in subsequent steps, let
@@ -2219,7 +2217,7 @@ b is introduced to avoid any attempt to produce more bits of randomness
 than can be held in `RealType`.
 
 is the lesser of `numeric_limits<RealType>::digits` and `bits`, and R is
-the value of $\texttt{g.max()} - \texttt{g.min()} + 1$.
+the value of `g.max()` - `g.min()` + 1.
 
 \[*Note 2*: If the values gᵢ produced by `g` are uniformly distributed,
 the instantiation’s results are distributed as uniformly as possible.
@@ -2305,7 +2303,7 @@ namespace std {
 explicit uniform_int_distribution(IntType a, IntType b = numeric_limits<IntType>::max());
 ```
 
-*Preconditions:* $\texttt{a} \leq \texttt{b}$.
+*Preconditions:* `a` ≤ `b`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -2330,7 +2328,7 @@ A `uniform_real_distribution` random number distribution produces random
 numbers x, a ≤ x < b, distributed according to the constant probability
 density function $$p(x\,|\,a,b) = 1 / (b - a) \text{ .}$$
 
-\[*Note 1*: This implies that p(x\,|\,a,b) is undefined when
+\[*Note 1*: This implies that p(x | a,b) is undefined when
 `a == b`. — *end note*\]
 
 ``` cpp
@@ -2381,8 +2379,8 @@ namespace std {
 explicit uniform_real_distribution(RealType a, RealType b = 1.0);
 ```
 
-*Preconditions:* $\texttt{a} \leq \texttt{b}$ and
-$\texttt{b} - \texttt{a} \leq \texttt{numeric_limits<RealType>::max()}$.
+*Preconditions:* `a` ≤ `b` and
+`b` - `a` ≤ `numeric_limits<RealType>::max()`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -2457,7 +2455,7 @@ namespace std {
 explicit bernoulli_distribution(double p);
 ```
 
-*Preconditions:* $0 \leq \texttt{p} \leq 1$.
+*Preconditions:* 0 ≤ `p` ≤ 1.
 
 *Remarks:* `p` corresponds to the parameter of the distribution.
 
@@ -2521,7 +2519,7 @@ namespace std {
 explicit binomial_distribution(IntType t, double p = 0.5);
 ```
 
-*Preconditions:* $0 \leq \texttt{p} \leq 1$ and $0 \leq \texttt{t}$.
+*Preconditions:* 0 ≤ `p` ≤ 1 and 0 ≤ `t`.
 
 *Remarks:* `t` and `p` correspond to the respective parameters of the
 distribution.
@@ -2592,7 +2590,7 @@ namespace std {
 explicit geometric_distribution(double p);
 ```
 
-*Preconditions:* $0 < \texttt{p} < 1$.
+*Preconditions:* 0 < `p` < 1.
 
 *Remarks:* `p` corresponds to the parameter of the distribution.
 
@@ -2610,7 +2608,7 @@ random integers i ≥ 0 distributed according to the discrete probability
 function
 $$P(i\,|\,k,p) = \binom{k+i-1}{i} \cdot p^k \cdot (1-p)^i \text{ .}$$
 
-\[*Note 1*: This implies that P(i\,|\,k,p) is undefined when
+\[*Note 1*: This implies that P(i | k,p) is undefined when
 `p == 1`. — *end note*\]
 
 ``` cpp
@@ -2661,7 +2659,7 @@ namespace std {
 explicit negative_binomial_distribution(IntType k, double p = 0.5);
 ```
 
-*Preconditions:* $0 < \texttt{p} \leq 1$ and $0 < \texttt{k}$.
+*Preconditions:* 0 < `p` ≤ 1 and 0 < `k`.
 
 *Remarks:* `k` and `p` correspond to the respective parameters of the
 distribution.
@@ -2734,7 +2732,7 @@ template<class IntType = int>
 explicit poisson_distribution(double mean);
 ```
 
-*Preconditions:* $0 < \texttt{mean}$.
+*Preconditions:* 0 < `mean`.
 
 *Remarks:* `mean` corresponds to the parameter of the distribution.
 
@@ -2797,7 +2795,7 @@ namespace std {
 explicit exponential_distribution(RealType lambda);
 ```
 
-*Preconditions:* $0 < \texttt{lambda}$.
+*Preconditions:* 0 < `lambda`.
 
 *Remarks:* `lambda` corresponds to the parameter of the distribution.
 
@@ -2863,7 +2861,7 @@ namespace std {
 explicit gamma_distribution(RealType alpha, RealType beta = 1.0);
 ```
 
-*Preconditions:* $0 < \texttt{alpha}$ and $0 < \texttt{beta}$.
+*Preconditions:* 0 < `alpha` and 0 < `beta`.
 
 *Remarks:* `alpha` and `beta` correspond to the parameters of the
 distribution.
@@ -2938,7 +2936,7 @@ namespace std {
 explicit weibull_distribution(RealType a, RealType b = 1.0);
 ```
 
-*Preconditions:* $0 < \texttt{a}$ and $0 < \texttt{b}$.
+*Preconditions:* 0 < `a` and 0 < `b`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -3015,7 +3013,7 @@ namespace std {
 explicit extreme_value_distribution(RealType a, RealType b = 1.0);
 ```
 
-*Preconditions:* $0 < \texttt{b}$.
+*Preconditions:* 0 < `b`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -3098,7 +3096,7 @@ namespace std {
 explicit normal_distribution(RealType mean, RealType stddev = 1.0);
 ```
 
-*Preconditions:* $0 < \texttt{stddev}$.
+*Preconditions:* 0 < `stddev`.
 
 *Remarks:* `mean` and `stddev` correspond to the respective parameters
 of the distribution.
@@ -3172,7 +3170,7 @@ namespace std {
 explicit lognormal_distribution(RealType m, RealType s = 1.0);
 ```
 
-*Preconditions:* $0 < \texttt{s}$.
+*Preconditions:* 0 < `s`.
 
 *Remarks:* `m` and `s` correspond to the respective parameters of the
 distribution.
@@ -3243,7 +3241,7 @@ namespace std {
 explicit chi_squared_distribution(RealType n);
 ```
 
-*Preconditions:* $0 < \texttt{n}$.
+*Preconditions:* 0 < `n`.
 
 *Remarks:* `n` corresponds to the parameter of the distribution.
 
@@ -3307,7 +3305,7 @@ namespace std {
 explicit cauchy_distribution(RealType a, RealType b = 1.0);
 ```
 
-*Preconditions:* $0 < \texttt{b}$.
+*Preconditions:* 0 < `b`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -3384,7 +3382,7 @@ namespace std {
 explicit fisher_f_distribution(RealType m, RealType n = 1);
 ```
 
-*Preconditions:* $0 < \texttt{m}$ and $0 < \texttt{n}$.
+*Preconditions:* 0 < `m` and 0 < `n`.
 
 *Remarks:* `m` and `n` correspond to the respective parameters of the
 distribution.
@@ -3458,7 +3456,7 @@ namespace std {
 explicit student_t_distribution(RealType n);
 ```
 
-*Preconditions:* $0 < \texttt{n}$.
+*Preconditions:* 0 < `n`.
 
 *Remarks:* `n` corresponds to the parameter of the distribution.
 
@@ -3550,8 +3548,8 @@ is `true`.
 
 *Preconditions:* `InputIterator` meets the *Cpp17InputIterator*
 requirements [[input.iterators]]. If `firstW == lastW`, let n = 1 and
-w₀ = 1. Otherwise, $\bigl[\texttt{firstW}, \texttt{lastW}\bigr)$ forms a
-sequence w of length n > 0.
+w₀ = 1. Otherwise, \bigl[`firstW`, `lastW`\bigr) forms a sequence w of
+length n > 0.
 
 *Effects:* Constructs a `discrete_distribution` object with
 probabilities given by the formula above.
@@ -3570,14 +3568,13 @@ template<class UnaryOperation>
 *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
 `true`.
 
-*Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
-$n = \texttt{nw}$. The relation
-$0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
+*Preconditions:* If `nw` = 0, let n = 1, otherwise let n = `nw`. The
+relation 0 < \delta = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `discrete_distribution` object with
 probabilities given by the formula above, using the following values: If
-$\texttt{nw} = 0$, let w₀ = 1. Otherwise, let
-$w_k = \texttt{fw}(\texttt{xmin} + k \cdot \delta + \delta / 2)$ for
+`nw` = 0, let w₀ = 1. Otherwise, let
+w_k = `fw`(`xmin` + k \cdot \delta + \delta / 2) for
 $k = 0, \dotsc, n - 1$.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
@@ -3682,10 +3679,9 @@ are `true`.
 *Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
 *Cpp17InputIterator* requirements [[input.iterators]]. If
 `firstB == lastB` or `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0, and
-b₁ = 1. Otherwise, $\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a
-sequence b of length n+1, the length of the sequence w starting from
-`firstW` is at least n, and any wₖ for k ≥ n are ignored by the
-distribution.
+b₁ = 1. Otherwise, \bigl[`firstB`, `lastB`\bigr) forms a sequence b of
+length n+1, the length of the sequence w starting from `firstW` is at
+least n, and any wₖ for k ≥ n are ignored by the distribution.
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters as specified above.
@@ -3700,10 +3696,9 @@ template<class UnaryOperation>
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters taken or calculated from the following values: If
-$\texttt{bl.size()} < 2$, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1.
-Otherwise, let $\bigl[\texttt{bl.begin()}, \texttt{bl.end()}\bigr)$ form
-a sequence $b_0, \dotsc, b_n$, and let
-$w_k = \texttt{fw}\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr)$ for
+`bl.size()` < 2, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1. Otherwise, let
+\bigl[`bl.begin()`, `bl.end()`\bigr) form a sequence $b_0, \dotsc, b_n$,
+and let w_k = `fw`\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr) for
 $k = 0, \dotsc, n - 1$.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
@@ -3716,14 +3711,13 @@ template<class UnaryOperation>
 *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
 `true`.
 
-*Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
-$n = \texttt{nw}$. The relation
-$0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
+*Preconditions:* If `nw` = 0, let n = 1, otherwise let n = `nw`. The
+relation 0 < \delta = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters taken or calculated from the following values: Let
-$b_k = \texttt{xmin} + k \cdot \delta$ for $k = 0, \dotsc, n$, and
-$w_k = \texttt{fw}(b_k + \delta / 2)$ for $k = 0, \dotsc, n - 1$.
+b_k = `xmin` + k \cdot \delta for $k = 0, \dotsc, n$, and
+w_k = `fw`(b_k + \delta / 2) for $k = 0, \dotsc, n - 1$.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3732,16 +3726,16 @@ vector<result_type> intervals() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n + 1 and
-whose $\texttt{operator[]}$ member returns bₖ when invoked with argument
-k for $k = 0, \dotsc, n$.
+whose `operator[]` member returns bₖ when invoked with argument k for
+$k = 0, \dotsc, n$.
 
 ``` cpp
 vector<result_type> densities() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n and
-whose $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
-argument k for $k = 0, \dotsc, n - 1$.
+whose `operator[]` member returns $\rho_k$ when invoked with argument k
+for $k = 0, \dotsc, n - 1$.
 
 ##### Class template `piecewise_linear_distribution` <a id="rand.dist.samp.plinear">[[rand.dist.samp.plinear]]</a>
 
@@ -3832,9 +3826,9 @@ template<class InputIteratorB, class InputIteratorW>
 *Cpp17InputIterator* requirements [[input.iterators]]. If
 `firstB == lastB` or `++firstB == lastB`, let n = 1,
 $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1. Otherwise,
-$\bigl[\texttt{firstB}, \texttt{lastB}\bigr)$ forms a sequence b of
-length n+1, the length of the sequence w starting from `firstW` is at
-least n+1, and any wₖ for k ≥ n + 1 are ignored by the distribution.
+\bigl[`firstB`, `lastB`\bigr) forms a sequence b of length n+1, the
+length of the sequence w starting from `firstW` is at least n+1, and any
+wₖ for k ≥ n + 1 are ignored by the distribution.
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters as specified above.
@@ -3849,11 +3843,9 @@ template<class UnaryOperation>
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: If
-$\texttt{bl.size()} < 2$, let n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and
-b₁ = 1. Otherwise, let
-$\bigl[\texttt{bl.begin(),} \texttt{bl.end()}\bigr)$ form a sequence
-$b_0, \dotsc, b_n$, and let $w_k = \texttt{fw}(b_k)$ for
-$k = 0, \dotsc, n$.
+`bl.size()` < 2, let n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1.
+Otherwise, let \bigl[`bl.begin(),` `bl.end()`\bigr) form a sequence
+$b_0, \dotsc, b_n$, and let w_k = `fw`(b_k) for $k = 0, \dotsc, n$.
 
 *Complexity:* The number of invocations of `fw` does not exceed n+1.
 
@@ -3865,14 +3857,13 @@ template<class UnaryOperation>
 *Mandates:* `is_invocable_r_v<double, UnaryOperation&, double>` is
 `true`.
 
-*Preconditions:* If $\texttt{nw} = 0$, let n = 1, otherwise let
-$n = \texttt{nw}$. The relation
-$0 < \delta = (\texttt{xmax} - \texttt{xmin}) / n$ holds.
+*Preconditions:* If `nw` = 0, let n = 1, otherwise let n = `nw`. The
+relation 0 < \delta = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: Let
-$b_k = \texttt{xmin} + k \cdot \delta$ for $k = 0, \dotsc, n$, and
-$w_k = \texttt{fw}(b_k)$ for $k = 0, \dotsc, n$.
+b_k = `xmin` + k \cdot \delta for $k = 0, \dotsc, n$, and
+w_k = `fw`(b_k) for $k = 0, \dotsc, n$.
 
 *Complexity:* The number of invocations of `fw` does not exceed n+1.
 
@@ -3881,16 +3872,16 @@ vector<result_type> intervals() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n + 1 and
-whose $\texttt{operator[]}$ member returns bₖ when invoked with argument
-k for $k = 0, \dotsc, n$.
+whose `operator[]` member returns bₖ when invoked with argument k for
+$k = 0, \dotsc, n$.
 
 ``` cpp
 vector<result_type> densities() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n and
-whose $\texttt{operator[]}$ member returns $\rho_k$ when invoked with
-argument k for $k = 0, \dotsc, n$.
+whose `operator[]` member returns $\rho_k$ when invoked with argument k
+for $k = 0, \dotsc, n$.
 
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
@@ -6453,7 +6444,7 @@ namespace std::numbers {
 
 The library-defined partial specializations of mathematical constant
 variable templates are initialized with the nearest representable values
-of e, $\log_{2} \mathrm{e}$, $\log_{10} \mathrm{e}$, π, $\frac{1}{\pi}$,
+of e, log₂ e, $\log_{10} \mathrm{e}$, π, $\frac{1}{\pi}$,
 $\frac{1}{\sqrt{\pi}}$, $\ln 2$, $\ln 10$, $\sqrt{2}$, $\sqrt{3}$,
 $\frac{1}{\sqrt{3}}$, the Euler-Mascheroni γ constant, and the golden
 ratio $\phi$ constant $\frac{1+\sqrt{5}}{2}$, respectively.

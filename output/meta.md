@@ -53,7 +53,7 @@ template<class T, T N>
   using make_integer_sequence = integer_sequence<T, see below{}>;
 ```
 
-*Mandates:* $\texttt{N} \geq 0$.
+*Mandates:* `N` ≥ 0.
 
 The alias template `make_integer_sequence` denotes a specialization of
 `integer_sequence` with `N` non-type template arguments. The type
@@ -660,7 +660,7 @@ is_const_v<const int[3]>            // true
 ``` cpp
 remove_const_t<const volatile int>  // volatile int
 remove_const_t<const int* const>    // const int*
-remove_const_t<const int&>          // const int\&
+remove_const_t<const int&>          // const int&
 remove_const_t<const int[3]>        // int[3]
 ```
 
@@ -1053,30 +1053,26 @@ template<class... B> struct conjunction : see below { };
 The class template `conjunction` forms the logical conjunction of its
 template type arguments.
 
-For a specialization
-`conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>`, if
-there is a template type argument $\texttt{B}_{i}$ for which
-`bool(`$\texttt{B}_{i}$`::value)` is `false`, then instantiating
-`conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>::value`
-does not require the instantiation of $\texttt{B}_{j}$`::value` for
-j > i.
+For a specialization `conjunction<``B₁``, `$\dotsc$`, ``B_N``>`, if
+there is a template type argument `Bᵢ` for which `bool(``Bᵢ``::value)`
+is `false`, then instantiating
+`conjunction<``B₁``, `$\dotsc$`, ``B_N``>::value` does not require the
+instantiation of `Bⱼ``::value` for j > i.
 
 \[*Note 1*: This is analogous to the short-circuiting behavior of the
 built-in operator `&&`. — *end note*\]
 
-Every template type argument for which $\texttt{B}_{i}$`::value` is
-instantiated shall be usable as a base class and shall have a member
-`value` which is convertible to `bool`, is not hidden, and is
-unambiguously available in the type.
+Every template type argument for which `Bᵢ``::value` is instantiated
+shall be usable as a base class and shall have a member `value` which is
+convertible to `bool`, is not hidden, and is unambiguously available in
+the type.
 
-The specialization
-`conjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>` has a
+The specialization `conjunction<``B₁``, `$\dotsc$`, ``B_N``>` has a
 public and unambiguous base that is either
 
-- the first type $\texttt{B}_{i}$ in the list
-  `true_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
-  which `bool(`$\texttt{B}_{i}$`::value)` is `false`, or
-- if there is no such $\texttt{B}_{i}$, the last type in the list.
+- the first type `Bᵢ` in the list `true_type, ``B₁``, `$\dotsc$`, ``B_N`
+  for which `bool(``Bᵢ``::value)` is `false`, or
+- if there is no such `Bᵢ`, the last type in the list.
 
 \[*Note 2*: This means a specialization of `conjunction` does not
 necessarily inherit from either `true_type` or
@@ -1093,30 +1089,27 @@ template<class... B> struct disjunction : see below { };
 The class template `disjunction` forms the logical disjunction of its
 template type arguments.
 
-For a specialization
-`disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>`, if
-there is a template type argument $\texttt{B}_{i}$ for which
-`bool(`$\texttt{B}_{i}$`::value)` is `true`, then instantiating
-`disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>::value`
-does not require the instantiation of $\texttt{B}_{j}$`::value` for
-j > i.
+For a specialization `disjunction<``B₁``, `$\dotsc$`, ``B_N``>`, if
+there is a template type argument `Bᵢ` for which `bool(``Bᵢ``::value)`
+is `true`, then instantiating
+`disjunction<``B₁``, `$\dotsc$`, ``B_N``>::value` does not require the
+instantiation of `Bⱼ``::value` for j > i.
 
 \[*Note 3*: This is analogous to the short-circuiting behavior of the
 built-in operator `||`. — *end note*\]
 
-Every template type argument for which $\texttt{B}_{i}$`::value` is
-instantiated shall be usable as a base class and shall have a member
-`value` which is convertible to `bool`, is not hidden, and is
-unambiguously available in the type.
+Every template type argument for which `Bᵢ``::value` is instantiated
+shall be usable as a base class and shall have a member `value` which is
+convertible to `bool`, is not hidden, and is unambiguously available in
+the type.
 
-The specialization
-`disjunction<`$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$`>` has a
+The specialization `disjunction<``B₁``, `$\dotsc$`, ``B_N``>` has a
 public and unambiguous base that is either
 
-- the first type $\texttt{B}_{i}$ in the list
-  `false_type, `$\texttt{B}_{1}$`, `$\dotsc$`, `$\texttt{B}_{N}$ for
-  which `bool(`$\texttt{B}_{i}$`::value)` is `true`, or
-- if there is no such $\texttt{B}_{i}$, the last type in the list.
+- the first type `Bᵢ` in the list
+  `false_type, ``B₁``, `$\dotsc$`, ``B_N` for which
+  `bool(``Bᵢ``::value)` is `true`, or
+- if there is no such `Bᵢ`, the last type in the list.
 
 \[*Note 4*: This means a specialization of `disjunction` does not
 necessarily inherit from either `true_type` or

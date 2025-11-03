@@ -292,10 +292,10 @@ A f() {
     A a;
     Y y;
     A b;
-    return {};      // \#1
+    return {};      // #1
   } catch (...) {
   }
-  return {};        // \#2
+  return {};        // #2
 }
 ```
 
@@ -674,8 +674,8 @@ int n = 7;
 struct D : public A, public B {
     int * p = new int[n];
     // D::D() potentially-throwing, as the new operator may throw bad_alloc or bad_array_new_length
-    // D::D(const D\&) non-throwing
-    // D::D(D\&\&) potentially-throwing, as the default argument for B's constructor may throw
+    // D::D(const D&) non-throwing
+    // D::D(D&&) potentially-throwing, as the default argument for B's constructor may throw
     // D::\~D() potentially-throwing
 };
 ```

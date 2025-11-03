@@ -4111,7 +4111,7 @@ C++, it declares a function with C language linkage; viewed as C it
 simply declares a function (and provides a prototype).
 
 ``` cpp
-#include <stdbool.h>    // for bool in C, no effect in \Cpp{}
+#include <stdbool.h>    // for bool in C, no effect in C++
 #include <stddef.h>     // for size_t
 
 #ifdef __cplusplus      // see [cpp.predefined]

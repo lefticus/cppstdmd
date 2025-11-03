@@ -410,17 +410,16 @@ be implemented as an enumeration or as a synonym for an enumeration.
 The enumerated type `enumerated` can be written:
 
 ``` cpp
-enum enumerated { $V_{0}$, $V_{1}$, $V_{2}$, $V_{3}$, $\ldots$ };
+enum enumerated { V₀, V₁, V₂, V₃, … };
 
-inline const $enumerated C_{0}$($V_{0}$);
-inline const $enumerated C_{1}$($V_{1}$);
-inline const $enumerated C_{2}$($V_{2}$);
-inline const $enumerated C_{3}$($V_{3}$);
-  \vdots
+inline const enumerated C₀(V₀);
+inline const enumerated C₁(V₁);
+inline const enumerated C₂(V₂);
+inline const enumerated C₃(V₃);
+  ⋮
 ```
 
-Here, the names $\tcode{\placeholder{C}}_0$,
-$\tcode{\placeholder{C}}_1$, etc. represent *enumerated elements* for
+Here, the names `C₀`, `C₁`, etc. represent *enumerated elements* for
 this particular enumerated type. All such elements have distinct values.
 
 ##### Bitmask types <a id="bitmask.types">[[bitmask.types]]</a>
@@ -436,14 +435,14 @@ The bitmask type `bitmask` can be written:
 // For exposition only.
 // int_type is an integral type capable of representing all values of the bitmask type.
 enum bitmask : int_type {
-  $V_{0}$ = 1 << 0, $V_{1}$ = 1 << 1, $V_{2}$ = 1 << 2, $V_{3}$ = 1 << 3, $\ldots$
+  V₀ = 1 << 0, V₁ = 1 << 1, V₂ = 1 << 2, V₃ = 1 << 3, …
 };
 
-inline constexpr $bitmask C_{0}$($V_{0}{}$);
-inline constexpr $bitmask C_{1}$($V_{1}{}$);
-inline constexpr $bitmask C_{2}$($V_{2}{}$);
-inline constexpr $bitmask C_{3}$($V_{3}{}$);
-  \vdots
+inline constexpr bitmask C₀(V₀{});
+inline constexpr bitmask C₁(V₁{});
+inline constexpr bitmask C₂(V₂{});
+inline constexpr bitmask C₃(V₃{});
+  ⋮
 
 constexpr bitmask{} operator&(bitmask{} X, bitmask{} Y) {
   return static_cast<bitmask{}>(
@@ -471,13 +470,11 @@ bitmask{}& operator^=(bitmask{}& X, bitmask{} Y) {
 }
 ```
 
-Here, the names $\tcode{\placeholder{C}}_0$,
-$\tcode{\placeholder{C}}_1$, etc. represent *bitmask elements* for this
+Here, the names `C₀`, `C₁`, etc. represent *bitmask elements* for this
 particular bitmask type. All such elements have distinct, nonzero values
-such that, for any pair $\tcode{\placeholder{C}}_i$ and
-$\tcode{\placeholder{C}}_j$ where i ≠ j, `$C_i$ & $C_i$` is nonzero and
-`$C_i$ & $C_j$` is zero. Additionally, the value `0` is used to
-represent an *empty bitmask*, in which no bitmask elements are set.
+such that, for any pair `Cᵢ` and `Cⱼ` where i ≠ j, `$C_i$ & $C_i$` is
+nonzero and `$C_i$ & $C_j$` is zero. Additionally, the value `0` is used
+to represent an *empty bitmask*, in which no bitmask elements are set.
 
 The following terms apply to objects and values of bitmask types:
 
@@ -1036,7 +1033,7 @@ void value_swap(T&& t, U&& u) {
                                                 // for rvalues and lvalues
 }
 
-// Preconditions: T meets the \oldconcept{Swappable} requirements.
+// Preconditions: T meets the Cpp17Swappable requirements.
 template<class T>
 void lv_swap(T& t1, T& t2) {
   using std::swap;
@@ -1353,8 +1350,7 @@ a.allocate_at_least(n)
 *Returns:* `allocation_result<XX::pointer, XX::size_type>{ptr, count}`
 where `ptr` is memory allocated for an array of `count` `T` and such an
 object is created but array elements are not constructed, such that
-$\texttt{count} \geq \texttt{n}$. If `n == 0`, the return value is
-unspecified.
+`count` ≥ `n`. If `n == 0`, the return value is unspecified.
 
 *Throws:* `allocate_at_least` may throw an appropriate exception.
 
@@ -1371,8 +1367,7 @@ a.deallocate(p, n)
 - If `p` is memory that was obtained by a call to `a.allocate_at_least`,
   let `ret` be the value returned and `req` be the value passed as the
   first argument of that call. `p` is equal to `ret.ptr` and `n` is a
-  value such that
-  $\texttt{req} \leq \texttt{n} \leq \texttt{ret.count}$.
+  value such that `req` ≤ `n` ≤ `ret.count`.
 - Otherwise, `p` is a pointer value obtained from `allocate`. `n` equals
   the value passed as the first argument to the invocation of `allocate`
   which returned `p`.

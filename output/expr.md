@@ -465,10 +465,9 @@ When an lvalue-to-rvalue conversion is applied to an expression E, and
 either
 
 - E is not potentially evaluated, or
-- the evaluation of E results in the evaluation of a member
-  $E_\tcode{x}$ of the set of potential results of E, and $E_\tcode{x}$
-  names a variable `x` that is not odr-used by $E_\tcode{x}$
-  [[basic.def.odr]],
+- the evaluation of E results in the evaluation of a member E_`x` of the
+  set of potential results of E, and E_`x` names a variable `x` that is
+  not odr-used by E_`x` [[basic.def.odr]],
 
 the value contained in the referenced object is not accessed.
 
@@ -580,8 +579,8 @@ The *qualification-combined type* of two types `T1` and `T2` is the type
   then `const` is added to every $\cv{}^3_k$ for 0 < k < i,
 
 where $\cv{}^j_i$ and $P^j_i$ are the components of the
-qualification-decomposition of $\tcode{T}j$. A prvalue of type `T1` can
-be converted to type `T2` if the qualification-combined type of `T1` and
+qualification-decomposition of `T`j. A prvalue of type `T1` can be
+converted to type `T2` if the qualification-combined type of `T1` and
 `T2` is `T2`.
 
 \[*Note 1*:
@@ -595,9 +594,9 @@ example,
 int main() {
   const char c = 'c';
   char* pc;
-  const char** pcc = &pc;       // \#1: not allowed
+  const char** pcc = &pc;       // #1: not allowed
   *pcc = &c;
-  *pc = 'C';                    // \#2: modifies a const object
+  *pc = 'C';                    // #2: modifies a const object
 }
 ```
 
@@ -1096,24 +1095,24 @@ designates a bit-field.
 void f() {
   float x, &r = x;
 
-  [=]() -> decltype((x)) {      // lambda returns float const\& because this lambda is not mutable and
+  [=]() -> decltype((x)) {      // lambda returns float const& because this lambda is not mutable and
                                 // x is an lvalue
     decltype(x) y1;             // y1 has type float
-    decltype((x)) y2 = y1;      // y2 has type float const\&
-    decltype(r) r1 = y1;        // r1 has type float\&
-    decltype((r)) r2 = y2;      // r2 has type float const\&
+    decltype((x)) y2 = y1;      // y2 has type float const&
+    decltype(r) r1 = y1;        // r1 has type float&
+    decltype((r)) r2 = y2;      // r2 has type float const&
     return y2;
   };
 
   [=](decltype((x)) y) {
-    decltype((x)) z = x;        // OK, y has type float\&, z has type float const\&
+    decltype((x)) z = x;        // OK, y has type float&, z has type float const&
   };
 
   [=] {
-    [](decltype((x)) y) {};     // OK, lambda takes a parameter of type float const\&
+    [](decltype((x)) y) {};     // OK, lambda takes a parameter of type float const&
 
     [x=1](decltype((x)) y) {
-      decltype((x)) z = x;      // OK, y has type int\&, z has type int const\&
+      decltype((x)) z = x;      // OK, y has type int&, z has type int const&
     };
   };
 }
@@ -1338,7 +1337,7 @@ statements as described in [[dcl.spec.auto]]. — *end note*\]
 auto x1 = [](int i) { return i; };      // OK, return type is int
 auto x2 = []{ return { 1, 2 }; };       // error: deducing return type from braced-init-list
 int j;
-auto x3 = [&]()->auto&& { return j; };  // OK, return type is int\&
+auto x3 = [&]()->auto&& { return j; };  // OK, return type is int&
 ```
 
 — *end example*\]
@@ -1592,17 +1591,17 @@ struct Closure {
 void f1(int (*)(int))   { }
 void f2(char (*)(int))  { }
 
-void g(int (*)(int))    { }     // \#1
-void g(char (*)(char))  { }     // \#2
+void g(int (*)(int))    { }     // #1
+void g(char (*)(char))  { }     // #2
 
-void h(int (*)(int))    { }     // \#3
-void h(char (*)(int))   { }     // \#4
+void h(int (*)(int))    { }     // #3
+void h(char (*)(int))   { }     // #4
 
 auto glambda = [](auto a) { return a; };
 f1(glambda);                    // OK
 f2(glambda);                    // error: ID is not convertible
 g(glambda);                     // error: ambiguous
-h(glambda);                     // OK, calls \#3 since it is convertible from ID
+h(glambda);                     // OK, calls #3 since it is convertible from ID
 int& (*fpi)(int*) = [](auto* a) -> auto& { return *a; };        // OK
 ```
 
@@ -1760,8 +1759,8 @@ or `this` shall not appear more than once in a *lambda-capture*.
 struct S2 { void f(int i); };
 void S2::f(int i) {
   [&, i]{ };        // OK
-  [&, this, i]{ };  // OK, equivalent to [\&, i]
-  [&, &i]{ };       // error: i preceded by \& when \& is the default
+  [&, this, i]{ };  // OK, equivalent to [&, i]
+  [&, &i]{ };       // error: i preceded by & when & is the default
   [=, *this]{ };    // OK
   [=, this]{ };     // OK, equivalent to [=]
   [i, i]{ };        // error: i repeated
@@ -1859,21 +1858,21 @@ implicit capture of `*this` is deprecated when the *capture-default* is
 \[*Example 4*:
 
 ``` cpp
-void f(int, const int (&)[2] = {});         // \#1
-void f(const int&, const int (&)[1]);       // \#2
+void f(int, const int (&)[2] = {});         // #1
+void f(const int&, const int (&)[1]);       // #2
 void test() {
   const int x = 17;
   auto g = [](auto a) {
-    f(x);                       // OK, calls \#1, does not capture x
+    f(x);                       // OK, calls #1, does not capture x
   };
 
   auto g1 = [=](auto a) {
-    f(x);                       // OK, calls \#1, captures x
+    f(x);                       // OK, calls #1, captures x
   };
 
   auto g2 = [=](auto a) {
     int selector[sizeof(a) == 1 ? 1 : 2]{};
-    f(x, selector);             // OK, captures x, can call \#1 or \#2
+    f(x, selector);             // OK, captures x, can call #1 or #2
   };
 
   auto g3 = [=](auto a) {
@@ -2014,7 +2013,7 @@ void g() {
   const int N = 10;
   [=] {
     int arr[N];     // OK, not an odr-use, refers to automatic variable
-    f(&N);          // OK, causes N to be captured; \&N points to
+    f(&N);          // OK, causes N to be captured; &N points to
                     // the corresponding member of the closure type
   };
 }
@@ -2766,13 +2765,13 @@ the type determined by placeholder type deduction
 
 ``` cpp
 struct A {};
-void f(A&);             // \#1
-void f(A&&);            // \#2
+void f(A&);             // #1
+void f(A&&);            // #2
 A& g();
 void h() {
-  f(g());               // calls \#1
-  f(A(g()));            // calls \#2 with a temporary object
-  f(auto(g()));         // calls \#2 with a temporary object
+  f(g());               // calls #1
+  f(A(g()));            // calls #2 with a temporary object
+  f(auto(g()));         // calls #2 with a temporary object
 }
 ```
 
@@ -3165,7 +3164,7 @@ type, the effect is the same as performing the declaration and
 initialization
 
 ``` cpp
-T t($E$);
+T t(E);
 ```
 
 for some invented temporary variable `t` [[dcl.init]] and then using the
@@ -3634,11 +3633,10 @@ operand is `false` and `false` otherwise. The type of the result is
 
 The operand of the `~{}` operator shall have integral or unscoped
 enumeration type. Integral promotions are performed. The type of the
-result is the type of the promoted operand. Given the coefficients
-$\tcode{x}_i$ of the base-2 representation [[basic.fundamental]] of the
-promoted operand `x`, the coefficient $\tcode{r}_i$ of the base-2
-representation of the result `r` is 1 if $\tcode{x}_i$ is 0, and 0
-otherwise.
+result is the type of the promoted operand. Given the coefficients `xᵢ`
+of the base-2 representation [[basic.fundamental]] of the promoted
+operand `x`, the coefficient `rᵢ` of the base-2 representation of the
+result `r` is 1 if `xᵢ` is 0, and 0 otherwise.
 
 \[*Note 6*: The result is the ones’ complement of the operand (where
 operand and result are considered as unsigned). — *end note*\]
@@ -4785,13 +4783,13 @@ negative, or greater than or equal to the width of the promoted left
 operand.
 
 The value of `E1 << E2` is the unique value congruent to
-$\tcode{E1} \times 2^\tcode{E2}$ modulo $2^N$, where N is the width of
-the type of the result.
+`E1` \times 2^`E2` modulo $2^N$, where N is the width of the type of the
+result.
 
 \[*Note 1*: `E1` is left-shifted `E2` bit positions; vacated bits are
 zero-filled. — *end note*\]
 
-The value of `E1 >> E2` is $\tcode{E1} / 2^\tcode{E2}$, rounded down.
+The value of `E1 >> E2` is `E1` / 2^`E2`, rounded down.
 
 \[*Note 2*: `E1` is right-shifted `E2` bit positions. Right-shift on
 signed integral types is an arithmetic right shift, which performs
@@ -5051,11 +5049,10 @@ and-expression:
 
 The `&` operator groups left-to-right. The operands shall be of integral
 or unscoped enumeration type. The usual arithmetic conversions
-[[expr.arith.conv]] are performed. Given the coefficients $\tcode{x}_i$
-and $\tcode{y}_i$ of the base-2 representation [[basic.fundamental]] of
-the converted operands `x` and `y`, the coefficient $\tcode{r}_i$ of the
-base-2 representation of the result `r` is 1 if both $\tcode{x}_i$ and
-$\tcode{y}_i$ are 1, and 0 otherwise.
+[[expr.arith.conv]] are performed. Given the coefficients `xᵢ` and `yᵢ`
+of the base-2 representation [[basic.fundamental]] of the converted
+operands `x` and `y`, the coefficient `rᵢ` of the base-2 representation
+of the result `r` is 1 if both `xᵢ` and `yᵢ` are 1, and 0 otherwise.
 
 \[*Note 1*: The result is the bitwise function of the
 operands. — *end note*\]
@@ -5070,11 +5067,11 @@ exclusive-or-expression:
 
 The `\caret` operator groups left-to-right. The operands shall be of
 integral or unscoped enumeration type. The usual arithmetic conversions
-[[expr.arith.conv]] are performed. Given the coefficients $\tcode{x}_i$
-and $\tcode{y}_i$ of the base-2 representation [[basic.fundamental]] of
-the converted operands `x` and `y`, the coefficient $\tcode{r}_i$ of the
-base-2 representation of the result `r` is 1 if either (but not both) of
-$\tcode{x}_i$ and $\tcode{y}_i$ is 1, and 0 otherwise.
+[[expr.arith.conv]] are performed. Given the coefficients `xᵢ` and `yᵢ`
+of the base-2 representation [[basic.fundamental]] of the converted
+operands `x` and `y`, the coefficient `rᵢ` of the base-2 representation
+of the result `r` is 1 if either (but not both) of `xᵢ` and `yᵢ` is 1,
+and 0 otherwise.
 
 \[*Note 1*: The result is the bitwise exclusive function of the
 operands. — *end note*\]
@@ -5089,11 +5086,11 @@ inclusive-or-expression:
 
 The `|` operator groups left-to-right. The operands shall be of integral
 or unscoped enumeration type. The usual arithmetic conversions
-[[expr.arith.conv]] are performed. Given the coefficients $\tcode{x}_i$
-and $\tcode{y}_i$ of the base-2 representation [[basic.fundamental]] of
-the converted operands `x` and `y`, the coefficient $\tcode{r}_i$ of the
-base-2 representation of the result `r` is 1 if at least one of
-$\tcode{x}_i$ and $\tcode{y}_i$ is 1, and 0 otherwise.
+[[expr.arith.conv]] are performed. Given the coefficients `xᵢ` and `yᵢ`
+of the base-2 representation [[basic.fundamental]] of the converted
+operands `x` and `y`, the coefficient `rᵢ` of the base-2 representation
+of the result `r` is 1 if at least one of `xᵢ` and `yᵢ` is 1, and 0
+otherwise.
 
 \[*Note 1*: The result is the bitwise inclusive function of the
 operands. — *end note*\]
@@ -5571,7 +5568,7 @@ would evaluate one of the following:
     const int n = 0;
     [=] {
       constexpr int i = n;        // OK, n is not odr-used here
-      constexpr int j = *&n;      // error: \&n would be an odr-use of n
+      constexpr int j = *&n;      // error: &n would be an odr-use of n
     };
   }
   ```

@@ -2098,8 +2098,8 @@ Let
 *Preconditions:*
 
 - *`OP`* does not throw an exception or modify `p` or `m`.
-- $\texttt{r} \geq 0$.
-- $\texttt{r} \leq \texttt{m}$.
+- `r` ≥ 0.
+- `r` ≤ `m`.
 - After evaluating *`OP`* there are no indeterminate values in the range
   \[`p`, `p + r`).
 

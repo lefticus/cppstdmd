@@ -711,8 +711,8 @@ Declarations can correspond even if neither binds a name.
 ``` cpp
 typedef int Int;
 enum E : int { a };
-void f(int);                    // \#1
-void f(Int) {}                  // defines \#1
+void f(int);                    // #1
+void f(Int) {}                  // defines #1
 void f(E) {}                    // OK, another overload
 
 struct X {
@@ -1193,9 +1193,9 @@ int main() {
 }
 ```
 
-$S(\tcode{x},\tcode{F})$ is unambiguous because the `A` and `B` base
-class subobjects of `D` are also base class subobjects of `E`, so
-$S(\tcode{x},\tcode{D})$ is discarded in the first merge step.
+S(`x`,`F`) is unambiguous because the `A` and `B` base class subobjects
+of `D` are also base class subobjects of `E`, so S(`x`,`D`) is discarded
+in the first merge step.
 
 — *end example*\]
 
@@ -1397,12 +1397,12 @@ struct B {
 template<class X, class T>
 int g() {
   using U = U2;
-  X().operator U T::*();                // \#1, searches for T in the scope of X first
-  X().operator U decltype(T())::*();    // \#2
+  X().operator U T::*();                // #1, searches for T in the scope of X first
+  X().operator U decltype(T())::*();    // #2
   return 0;
 }
-int x = g<B, T2>();                     // \#1 calls B::operator U1 T1::*
-                                        // \#2 calls B::operator U1 T2::*
+int x = g<B, T2>();                     // #1 calls B::operator U1 T1::*
+                                        // #2 calls B::operator U1 T2::*
 ```
 
 — *end example*\]
@@ -1744,7 +1744,7 @@ If a qualified name Q follows a `~`:
   has another *nested-name-specifier* S, Q is looked up as if its lookup
   context were that nominated by S.
 - Otherwise, if the terminal name of N is a member-qualified name M, Q
-  is looked up as if $\tcode{\~}Q$ appeared in place of M (as above).
+  is looked up as if `\~`Q appeared in place of M (as above).
 - Otherwise, Q undergoes unqualified lookup.
 - Each lookup for Q considers only types (if Q is not followed by a `<`)
   and templates whose specializations are types. If it finds nothing or
@@ -2078,15 +2078,15 @@ the class of which it is a member.
 ``` cpp
 static void f();
 extern "C" void h();
-static int i = 0;               // \#1
+static int i = 0;               // #1
 void q() {
   extern void f();              // internal linkage
   extern void g();              // ::g, external linkage
   extern void h();              // C language linkage
-  int i;                        // \#2: i has no linkage
+  int i;                        // #2: i has no linkage
   {
     extern void f();            // internal linkage
-    extern int i;               // \#3: internal linkage
+    extern int i;               // #3: internal linkage
   }
 }
 ```
@@ -2163,11 +2163,11 @@ if neither declaration is reachable from the other.
 
 ``` cpp
 int f(int x, int x);    // error: different entities for x
-void g();               // \#1
-void g(int);            // OK, different entity from \#1
-int g();                // error: same entity as \#1 with different type
-void h();               // \#2
-namespace h {}          // error: same entity as \#2, but not a function
+void g();               // #1
+void g(int);            // OK, different entity from #1
+int g();                // error: same entity as #1 with different type
+void h();               // #2
+namespace h {}          // error: same entity as #2, but not a function
 ```
 
 — *end example*\]

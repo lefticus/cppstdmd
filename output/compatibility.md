@@ -37,7 +37,7 @@ the rules for implicit move. Valid C++20 code that relies on a returned
 compile. For example:
 
 ``` cpp
-decltype(auto) f(int&& x) { return (x); }       // returns int\&\&; previously returned int\&
+decltype(auto) f(int&& x) { return (x); }       // returns int&&; previously returned int&
 int& g(int&& x) { return x; }                   // ill-formed; previously well-formed
 ```
 
@@ -517,9 +517,9 @@ private:
 struct derived : base {};
 
 base f(base b) {
-  throw b;                      // error: base(base \&\&) is private
+  throw b;                      // error: base(base &&) is private
   derived d;
-  return d;                     // error: base(base \&\&) is private
+  return d;                     // error: base(base &&) is private
 }
 
 struct S {
@@ -554,14 +554,14 @@ struct A {
   operator int() const;
 };
 
-bool operator==(A, int);        // \#1
-// \#2 is built-in candidate: bool operator==(int, int);
-// \#3 is built-in candidate: bool operator!=(int, int);
+bool operator==(A, int);        // #1
+// #2 is built-in candidate: bool operator==(int, int);
+// #3 is built-in candidate: bool operator!=(int, int);
 
 int check(A x, A y) {
   return (x == y) +             // ill-formed; previously well-formed
-    (10 == x) +                 // calls \#1, previously selected \#2
-    (10 != x);                  // calls \#1, previously selected \#3
+    (10 == x) +                 // calls #1, previously selected #2
+    (10 != x);                  // calls #1, previously selected #3
 }
 ```
 
@@ -576,9 +576,9 @@ struct A {
   operator int() const { return 10; }
 };
 
-bool operator==(A, int);        // \#1
-// \#2 is built-in candidate: bool operator==(int, int);
-bool b = 10 == A();             // calls \#1 with reversed order of arguments; previously selected \#2
+bool operator==(A, int);        // #1
+// #2 is built-in candidate: bool operator==(int, int);
+bool b = 10 == A();             // calls #1 with reversed order of arguments; previously selected #2
 
 struct B {
   bool operator==(const B&);    // member function with no cv-qualifier
@@ -1166,7 +1166,7 @@ revision of C++. For example:
 
 ``` cpp
 #define _x "there"
-"hello"_x           // \#1
+"hello"_x           // #1
 ```
 
 Previously, \#1 would have consisted of two separate preprocessing
@@ -1192,10 +1192,10 @@ may fail to compile or produce different results in this revision of
 C++. For example:
 
 ``` cpp
-void f(void *);     // \#1
-void f(...);        // \#2
+void f(void *);     // #1
+void f(...);        // #2
 template<int N> void g() {
-  f(0*N);           // calls \#2; used to call \#1
+  f(0*N);           // calls #2; used to call #1
 }
 ```
 

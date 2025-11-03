@@ -1015,7 +1015,7 @@ template<size_t I, class T1, class T2>
   };
 ```
 
-*Mandates:* $\texttt{I} < 2$.
+*Mandates:* `I` < 2.
 
 *Type:* The type `T1` if `I` is 0, otherwise the type `T2`.
 
@@ -1030,7 +1030,7 @@ template<size_t I, class T1, class T2>
   constexpr const tuple_element_t<I, pair<T1, T2>>&& get(const pair<T1, T2>&& p) noexcept;
 ```
 
-*Mandates:* $\texttt{I} < 2$.
+*Mandates:* `I` < 2.
 
 *Returns:*
 
@@ -1340,10 +1340,10 @@ namespace std {
 
 #### Construction <a id="tuple.cnstr">[[tuple.cnstr]]</a>
 
-In the descriptions that follow, let i be in the range in order,
-$\tcode{T}_i$ be the $i^\text{th}$ type in `Types`, and $\tcode{U}_i$ be
-the $i^\text{th}$ type in a template parameter pack named `UTypes`,
-where indexing is zero-based.
+In the descriptions that follow, let i be in the range
+[`0`, `sizeof...(Types)`) in order, `Tᵢ` be the $i^\text{th}$ type in
+`Types`, and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack
+named `UTypes`, where indexing is zero-based.
 
 For each `tuple` constructor, an exception is thrown only if the
 construction of one of the types in `Types` throws an exception.
@@ -1354,8 +1354,8 @@ initializations for move and copy, respectively, would be
 constexpr-suitable [[dcl.constexpr]]. The defaulted move and copy
 constructor of `tuple<>` are constexpr functions.
 
-If `is_trivially_destructible_v<$\tcode{T}_i$>` is `true` for all
-$\tcode{T}_i$, then the destructor of `tuple` is trivial.
+If `is_trivially_destructible_v<$\tcode{T}_i$>` is `true` for all `Tᵢ`,
+then the destructor of `tuple` is trivial.
 
 The default constructor of `tuple<>` is trivial.
 
@@ -1363,25 +1363,22 @@ The default constructor of `tuple<>` is trivial.
 constexpr explicit(see below) tuple();
 ```
 
-*Constraints:* `is_default_constructible_v<`$\texttt{T}_i$`>` is `true`
-for all i.
+*Constraints:* `is_default_constructible_v<``Tᵢ``>` is `true` for all i.
 
 *Effects:* Value-initializes each element.
 
-*Remarks:* The expression inside evaluates to `true` if and only if
-$\texttt{T}_i$ is not copy-list-initializable from an empty list for at
-least one i.
+*Remarks:* The expression inside evaluates to `true` if and only if `Tᵢ`
+is not copy-list-initializable from an empty list for at least one i.
 
 \[*Note 1*: This behavior can be implemented with a trait that checks
-whether a `const `$\texttt{T}_i$`&` can be initialized with
-`{}`. — *end note*\]
+whether a `const ``Tᵢ``&` can be initialized with `{}`. — *end note*\]
 
 ``` cpp
 constexpr explicit(see below) tuple(const Types&...);
 ```
 
-*Constraints:* $\texttt{sizeof...(Types)} \geq 1$ and
-`is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i.
+*Constraints:* `sizeof...(Types)` ≥ 1 and
+`is_copy_constructible_v<``Tᵢ``>` is `true` for all i.
 
 *Effects:* Initializes each element with the value of the corresponding
 parameter.
@@ -1398,17 +1395,17 @@ template<class... UTypes> constexpr explicit(see below) tuple(UTypes&&... u);
 
 Let *disambiguating-constraint* be:
 
-- `negation<is_same<remove_cvref_t<`$\texttt{U}_0$`>, tuple>>` if
+- `negation<is_same<remove_cvref_t<``U₀``>, tuple>>` if
   `sizeof...(Types)` is 1;
 - otherwise,
-  `bool_constant<!is_same_v<remove_cvref_t<`$\texttt{U}_0$`>, allocator_arg_t> || is_-same_v<remove_cvref_t<`$\texttt{T}_0$`>, allocator_arg_t>>`
+  `bool_constant<!is_same_v<remove_cvref_t<``U₀``>, allocator_arg_t> || is_-same_v<remove_cvref_t<``T₀``>, allocator_arg_t>>`
   if `sizeof...(Types)` is 2 or 3;
 - otherwise, `true_type`.
 
 *Constraints:*
 
 - `sizeof...(Types)` equals `sizeof...(UTypes)`,
-- $\texttt{sizeof...(Types)} \geq 1$, and
+- `sizeof...(Types)` ≥ 1, and
 - `conjunction_v<`*`disambiguating-constraint`*`, is_constructible<Types, UTypes>...>`
   is`true`.
 
@@ -1433,8 +1430,7 @@ is `true`.
 tuple(const tuple& u) = default;
 ```
 
-*Mandates:* `is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for
-all i.
+*Mandates:* `is_copy_constructible_v<``Tᵢ``>` is `true` for all i.
 
 *Effects:* Initializes each element of `*this` with the corresponding
 element of `u`.
@@ -1443,11 +1439,10 @@ element of `u`.
 tuple(tuple&& u) = default;
 ```
 
-*Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
-all i.
+*Constraints:* `is_move_constructible_v<``Tᵢ``>` is `true` for all i.
 
 *Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
-with `std::forward<`$\texttt{T}_i$`>(get<`i`>(u))`.
+with `std::forward<``Tᵢ``>(get<`i`>(u))`.
 
 ``` cpp
 template<class... UTypes> constexpr explicit(see below) tuple(tuple<UTypes...>& u);
@@ -1498,10 +1493,10 @@ Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
 *Constraints:*
 
 - `sizeof...(Types)` is 2,
-- `is_constructible_v<`$\texttt{T}_0$`, decltype(get<0>(`*`FWD`*`(u)))>`
-  is `true`, and
-- `is_constructible_v<`$\texttt{T}_1$`, decltype(get<1>(`*`FWD`*`(u)))>`
-  is `true`.
+- `is_constructible_v<``T₀``, decltype(get<0>(`*`FWD`*`(u)))>` is
+  `true`, and
+- `is_constructible_v<``T₁``, decltype(get<1>(`*`FWD`*`(u)))>` is
+  `true`.
 
 *Effects:* Initializes the first element with `get<0>(`*`FWD`*`(u))` and
 the second element with `get<1>(`*`FWD`*`(u))`.
@@ -1604,10 +1599,10 @@ construction [[allocator.uses.construction]].
 
 For each `tuple` assignment operator, an exception is thrown only if the
 assignment of one of the types in `Types` throws an exception. In the
-function descriptions that follow, let i be in the range in order,
-$\tcode{T}_i$ be the $i^\text{th}$ type in `Types`, and $\tcode{U}_i$ be
-the $i^\text{th}$ type in a template parameter pack named `UTypes`,
-where indexing is zero-based.
+function descriptions that follow, let i be in the range
+[`0`, `sizeof...\brk{`) in order, `Tᵢ` be the $i^\text{th}$ type in
+`Types`, and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack
+named `UTypes`, where indexing is zero-based.
 
 ``` cpp
 constexpr tuple& operator=(const tuple& u);
@@ -1619,7 +1614,7 @@ constexpr tuple& operator=(const tuple& u);
 *Returns:* `*this`.
 
 *Remarks:* This operator is defined as deleted unless
-`is_copy_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
+`is_copy_assignable_v<``Tᵢ``>` is `true` for all i.
 
 ``` cpp
 constexpr const tuple& operator=(const tuple& u) const;
@@ -1636,11 +1631,10 @@ constexpr const tuple& operator=(const tuple& u) const;
 constexpr tuple& operator=(tuple&& u) noexcept(see below);
 ```
 
-*Constraints:* `is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for
-all i.
+*Constraints:* `is_move_assignable_v<``Tᵢ``>` is `true` for all i.
 
-*Effects:* For all i, assigns
-`std::forward<`$\texttt{T}_i$`>(get<`i`>(u))` to `get<`i`>(*this)`.
+*Effects:* For all i, assigns `std::forward<``Tᵢ``>(get<`i`>(u))` to
+`get<`i`>(*this)`.
 
 *Returns:* `*this`.
 
@@ -1672,8 +1666,7 @@ template<class... UTypes> constexpr tuple& operator=(const tuple<UTypes...>& u);
 *Constraints:*
 
 - `sizeof...(Types)` equals `sizeof...(UTypes)` and
-- `is_assignable_v<`$\texttt{T}_i$`&, const `$\texttt{U}_i$`&>` is
-  `true` for all i.
+- `is_assignable_v<``Tᵢ``&, const ``Uᵢ``&>` is `true` for all i.
 
 *Effects:* Assigns each element of `u` to the corresponding element of
 `*this`.
@@ -1701,11 +1694,10 @@ template<class... UTypes> constexpr tuple& operator=(tuple<UTypes...>&& u);
 *Constraints:*
 
 - `sizeof...(Types)` equals `sizeof...(UTypes)` and
-- `is_assignable_v<`$\texttt{T}_i$`&, `$\texttt{U}_i$`>` is `true` for
-  all i.
+- `is_assignable_v<``Tᵢ``&, ``Uᵢ``>` is `true` for all i.
 
-*Effects:* For all i, assigns
-`std::forward<`$\texttt{U}_i$`>(get<`i`>(u))` to `get<`i`>(*this)`.
+*Effects:* For all i, assigns `std::forward<``Uᵢ``>(get<`i`>(u))` to
+`get<`i`>(*this)`.
 
 *Returns:* `*this`.
 
@@ -1730,8 +1722,8 @@ template<class U1, class U2> constexpr tuple& operator=(const pair<U1, U2>& u);
 *Constraints:*
 
 - `sizeof...(Types)` is 2 and
-- `is_assignable_v<`$\texttt{T}_0$`&, const U1&>` is `true`, and
-- `is_assignable_v<`$\texttt{T}_1$`&, const U2&>` is `true`.
+- `is_assignable_v<``T₀``&, const U1&>` is `true`, and
+- `is_assignable_v<``T₁``&, const U2&>` is `true`.
 
 *Effects:* Assigns `u.first` to the first element of `*this` and
 `u.second` to the second element of `*this`.
@@ -1745,8 +1737,8 @@ template<class U1, class U2> constexpr const tuple& operator=(const pair<U1, U2>
 *Constraints:*
 
 - `sizeof...(Types)` is 2,
-- `is_assignable_v<const `$\texttt{T}_0$`&, const U1&>` is `true`, and
-- `is_assignable_v<const `$\texttt{T}_1$`&, const U2&>` is `true`.
+- `is_assignable_v<const ``T₀``&, const U1&>` is `true`, and
+- `is_assignable_v<const ``T₁``&, const U2&>` is `true`.
 
 *Effects:* Assigns `u.first` to the first element and `u.second` to the
 second element.
@@ -1760,8 +1752,8 @@ template<class U1, class U2> constexpr tuple& operator=(pair<U1, U2>&& u);
 *Constraints:*
 
 - `sizeof...(Types)` is 2 and
-- `is_assignable_v<`$\texttt{T}_0$`&, U1>` is `true`, and
-- `is_assignable_v<`$\texttt{T}_1$`&, U2>` is `true`.
+- `is_assignable_v<``T₀``&, U1>` is `true`, and
+- `is_assignable_v<``T₁``&, U2>` is `true`.
 
 *Effects:* Assigns `std::forward<U1>(u.first)` to the first element of
 `*this` and  
@@ -1776,8 +1768,8 @@ template<class U1, class U2> constexpr const tuple& operator=(pair<U1, U2>&& u) 
 *Constraints:*
 
 - `sizeof...(Types)` is 2,
-- `is_assignable_v<const `$\texttt{T}_0$`&, U1>` is `true`, and
-- `is_assignable_v<const `$\texttt{T}_1$`&, U2>` is `true`.
+- `is_assignable_v<const ``T₀``&, U1>` is `true`, and
+- `is_assignable_v<const ``T₁``&, U2>` is `true`.
 
 *Effects:* Assigns `std::forward<U1>(u.first)` to the first element
 and  
@@ -1796,7 +1788,7 @@ template<tuple-like UTuple>
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and,
-- `is_assignable_v<`$\texttt{T}_i$`&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
+- `is_assignable_v<``Tᵢ``&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
   is `true` for all i.
 
 *Effects:* For all i, assigns `get<`i`>(std::forward<UTuple>(u))` to
@@ -1815,7 +1807,7 @@ template<tuple-like UTuple>
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and,
-- `is_assignable_v<const `$\texttt{T}_i$`&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
+- `is_assignable_v<const ``Tᵢ``&, decltype(get<`i`>(std::forward<UTuple>(u)))>`
   is `true` for all i.
 
 *Effects:* For all i, assigns `get<`i`>(std::forward<UTuple>(u))` to
@@ -1913,14 +1905,13 @@ template<tuple-like... Tuples>
 
 Let n be `sizeof...(Tuples)`. For every integer 0 ≤ i < n:
 
-- Let $\texttt{T}_i$ be the $i^\text{th}$ type in `Tuples`.
-- Let $\texttt{U}_i$ be `remove_cvref_t<`$\texttt{T}_i$`>`.
-- Let $\texttt{tp}_i$ be the $i^\text{th}$ element in the function
-  parameter pack `tpls`.
-- Let Sᵢ be `tuple_size_v<`$\texttt{U}_i$`>`.
-- Let $E_i^k$ be `tuple_element_t<`k`, `$\texttt{U}_i$`>`.
-- Let $e_i^k$ be
-  `get<`k`>(std::forward<`$\texttt{T}_i$`>(`$\texttt{tp}_i$`))`.
+- Let `Tᵢ` be the $i^\text{th}$ type in `Tuples`.
+- Let `Uᵢ` be `remove_cvref_t<``Tᵢ``>`.
+- Let `tpᵢ` be the $i^\text{th}$ element in the function parameter pack
+  `tpls`.
+- Let Sᵢ be `tuple_size_v<``Uᵢ``>`.
+- Let $E_i^k$ be `tuple_element_t<`k`, ``Uᵢ``>`.
+- Let $e_i^k$ be `get<`k`>(std::forward<``Tᵢ``>(``tpᵢ``))`.
 - Let Elemsᵢ be a pack of the types $E_i^0, \dotsc, E_i^{S_{i-1}}$.
 - Let elemsᵢ be a pack of the expressions
   $e_i^0, \dotsc, e_i^{S_{i-1}}$.
@@ -2024,10 +2015,10 @@ template<size_t I, class... Types>
   };
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
-*Type:* `TI` is the type of the $\texttt{I}^\text{th}$ element of
-`Types`, where indexing is zero-based.
+*Type:* `TI` is the type of the `I`^\text{th} element of `Types`, where
+indexing is zero-based.
 
 ``` cpp
 template<class T> struct tuple_size<const T>;
@@ -2086,10 +2077,10 @@ template<size_t I, class... Types>
   constexpr const tuple_element_t<I, tuple<Types...>>&& get(const tuple<Types...>&& t) noexcept;
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
-*Returns:* A reference to the $\texttt{I}^\text{th}$ element of `t`,
-where indexing is zero-based.
+*Returns:* A reference to the `I`^\text{th} element of `t`, where
+indexing is zero-based.
 
 \[*Note 1*: If a type `T` in `Types` is some reference type `X&`, the
 return type is `X&`, not `X&&`. However, if the element type is a
@@ -2142,8 +2133,7 @@ template<class... TTypes, tuple-like UTuple>
 
 For the first overload let `UTuple` be `tuple<UTypes...>`.
 
-*Mandates:* For all `i`, where
-$0 \leq \texttt{i} < \texttt{sizeof...(TTypes)}$,
+*Mandates:* For all `i`, where 0 ≤ `i` < `sizeof...(TTypes)`,
 `get<i>(t) == get<i>(u)` is a valid expression. `sizeof...(TTypes)`
 equals `tuple_size_v<UTuple>`.
 
@@ -2186,8 +2176,8 @@ if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
 return $\texttt{t}_\mathrm{tail}$ <=> $\texttt{u}_\mathrm{tail}$;
 ```
 
-where $\texttt{r}_\mathrm{tail}$ for some `r` is a tuple containing all
-but the first element of `r`.
+where `r`_\mathrm{tail} for some `r` is a tuple containing all but the
+first element of `r`.
 
 *Remarks:* The second overload is to be found via argument-dependent
 lookup [[basic.lookup.argdep]] only.
@@ -2205,10 +2195,10 @@ In the descriptions that follow:
 
 - Let `TTypes` be a pack formed by the sequence of
   `tuple_element_t<$i$, TTuple>` for every integer
-  $0 \leq i < \tcode{tuple_size_v<TTuple>}$.
+  0 ≤ i < `tuple_size_v<TTuple>`.
 - Let `UTypes` be a pack formed by the sequence of
   `tuple_element_t<$i$, UTuple>` for every integer
-  $0 \leq i < \tcode{tuple_size_v<UTuple>}$.
+  0 ≤ i < `tuple_size_v<UTuple>`.
 
 ``` cpp
 template<tuple-like TTuple, tuple-like UTuple,
@@ -3679,27 +3669,27 @@ arguments is ill-formed.
 
 #### Constructors <a id="variant.ctor">[[variant.ctor]]</a>
 
-In the descriptions that follow, let i be in the range , and
-$\tcode{T}_i$ be the $i^\text{th}$ type in `Types`.
+In the descriptions that follow, let i be in the range
+[`0`, `sizeof...(Types)`), and `Tᵢ` be the $i^\text{th}$ type in
+`Types`.
 
 ``` cpp
 constexpr variant() noexcept(see below);
 ```
 
-*Constraints:* `is_default_constructible_v<`$\texttt{T}_0$`>` is `true`.
+*Constraints:* `is_default_constructible_v<``T₀``>` is `true`.
 
 *Effects:* Constructs a `variant` holding a value-initialized value of
-type $\texttt{T}_0$.
+type `T₀`.
 
 *Ensures:* `valueless_by_exception()` is `false` and `index()` is `0`.
 
-*Throws:* Any exception thrown by the value-initialization of
-$\texttt{T}_0$.
+*Throws:* Any exception thrown by the value-initialization of `T₀`.
 
 *Remarks:* This function is if and only if the value-initialization of
-the alternative type $\texttt{T}_0$ would be
-constexpr-suitable [[dcl.constexpr]]. The exception specification is
-equivalent to `is_nothrow_default_constructible_v<`$\texttt{T}_0$`>`.
+the alternative type `T₀` would be constexpr-suitable [[dcl.constexpr]].
+The exception specification is equivalent to
+`is_nothrow_default_constructible_v<``T₀``>`.
 
 \[*Note 1*: See also class `monostate`. — *end note*\]
 
@@ -3712,45 +3702,42 @@ same alternative as `w` and direct-initializes the contained value with
 `get<j>(w)`, where `j` is `w.index()`. Otherwise, initializes the
 `variant` to not hold a value.
 
-*Throws:* Any exception thrown by direct-initializing any $\texttt{T}_i$
-for all i.
+*Throws:* Any exception thrown by direct-initializing any `Tᵢ` for all
+i.
 
 *Remarks:* This constructor is defined as deleted unless
-`is_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all i. If
-`is_trivially_copy_constructible_v<`$\texttt{T}_i$`>` is `true` for all
-i, this constructor is trivial.
+`is_copy_constructible_v<``Tᵢ``>` is `true` for all i. If
+`is_trivially_copy_constructible_v<``Tᵢ``>` is `true` for all i, this
+constructor is trivial.
 
 ``` cpp
 constexpr variant(variant&& w) noexcept(see below);
 ```
 
-*Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
-all i.
+*Constraints:* `is_move_constructible_v<``Tᵢ``>` is `true` for all i.
 
 *Effects:* If `w` holds a value, initializes the `variant` to hold the
 same alternative as `w` and direct-initializes the contained value with
 `get<j>(std::move(w))`, where `j` is `w.index()`. Otherwise, initializes
 the `variant` to not hold a value.
 
-*Throws:* Any exception thrown by move-constructing any $\texttt{T}_i$
-for all i.
+*Throws:* Any exception thrown by move-constructing any `Tᵢ` for all i.
 
 *Remarks:* The exception specification is equivalent to the logical of
-`is_nothrow_move_constructible_v<`$\texttt{T}_i$`>` for all i. If
-`is_trivially_move_constructible_v<`$\texttt{T}_i$`>` is `true` for all
-i, this constructor is trivial.
+`is_nothrow_move_constructible_v<``Tᵢ``>` for all i. If
+`is_trivially_move_constructible_v<``Tᵢ``>` is `true` for all i, this
+constructor is trivial.
 
 ``` cpp
 template<class T> constexpr variant(T&& t) noexcept(see below);
 ```
 
-Let $\texttt{T}_j$ be a type that is determined as follows: build an
-imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
-for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is well-formed
-for some invented variable `x`. The overload *FUN*(Tⱼ) selected by
-overload resolution for the expression *FUN*(std::forward\<T\>(t))
-defines the alternative $\texttt{T}_j$ which is the type of the
-contained value after construction.
+Let `Tⱼ` be a type that is determined as follows: build an imaginary
+function *FUN*(Tᵢ) for each alternative type `Tᵢ` for which `Tᵢ`` x[] =`
+`{std::forward<T>(t)};` is well-formed for some invented variable `x`.
+The overload *FUN*(Tⱼ) selected by overload resolution for the
+expression *FUN*(std::forward\<T\>(t)) defines the alternative `Tⱼ`
+which is the type of the contained value after construction.
 
 *Constraints:*
 
@@ -3758,7 +3745,7 @@ contained value after construction.
 - `is_same_v<remove_cvref_t<T>, variant>` is `false`,
 - `remove_cvref_t<T>` is neither a specialization of `in_place_type_t`
   nor a specialization of `in_place_index_t`,
-- `is_constructible_v<`$\texttt{T}_j$`, T>` is `true`, and
+- `is_constructible_v<``Tⱼ``, T>` is `true`, and
 - the expression *FUN*(`std::forward<T>(t))` (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
   \[*Note 1*:
@@ -3768,19 +3755,18 @@ contained value after construction.
   constructor for the argument.
   — *end note*\]
 
-*Effects:* Initializes `*this` to hold the alternative type
-$\texttt{T}_j$ and direct-non-list-initializes the contained value with
+*Effects:* Initializes `*this` to hold the alternative type `Tⱼ` and
+direct-non-list-initializes the contained value with
 `std::forward<T>(t)`.
 
-*Ensures:* `holds_alternative<`$\texttt{T}_j$`>(*this)` is `true`.
+*Ensures:* `holds_alternative<``Tⱼ``>(*this)` is `true`.
 
 *Throws:* Any exception thrown by the initialization of the selected
-alternative $\texttt{T}_j$.
+alternative `Tⱼ`.
 
 *Remarks:* The exception specification is equivalent to
-`is_nothrow_constructible_v<`$\texttt{T}_j$`, T>`. If $\texttt{T}_j$’s
-selected constructor is a constexpr constructor, this constructor is a
-constexpr constructor.
+`is_nothrow_constructible_v<``Tⱼ``, T>`. If `Tⱼ`’s selected constructor
+is a constexpr constructor, this constructor is a constexpr constructor.
 
 ``` cpp
 template<class T, class... Args> constexpr explicit variant(in_place_type_t<T>, Args&&... args);
@@ -3830,18 +3816,18 @@ template<size_t I, class... Args> constexpr explicit variant(in_place_index_t<I>
 *Constraints:*
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
+- `is_constructible_v<``T_I``, Args...>` is `true`.
 
-*Effects:* Direct-non-list-initializes the contained value of type
-$\texttt{T}_I$ with `std::forward<Args>(args)...`.
+*Effects:* Direct-non-list-initializes the contained value of type `T_I`
+with `std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
 *Throws:* Any exception thrown by calling the selected constructor of
-$\texttt{T}_I$.
+`T_I`.
 
-*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
-constructor, this constructor is a constexpr constructor.
+*Remarks:* If `T_I`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor.
 
 ``` cpp
 template<size_t I, class U, class... Args>
@@ -3851,16 +3837,16 @@ template<size_t I, class U, class... Args>
 *Constraints:*
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
-  is `true`.
+- `is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is
+  `true`.
 
-*Effects:* Direct-non-list-initializes the contained value of type
-$\texttt{T}_I$ with `il, std::forward<Args>(args)...`.
+*Effects:* Direct-non-list-initializes the contained value of type `T_I`
+with `il, std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
-*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
-constructor, this constructor is a constexpr constructor.
+*Remarks:* If `T_I`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor.
 
 #### Destructor <a id="variant.dtor">[[variant.dtor]]</a>
 
@@ -3871,8 +3857,8 @@ constexpr ~variant();
 *Effects:* If `valueless_by_exception()` is `false`, destroys the
 currently contained value.
 
-*Remarks:* If `is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true`
-for all $\texttt{T}_i$, then this destructor is trivial.
+*Remarks:* If `is_trivially_destructible_v<``Tᵢ``>` is `true` for all
+`Tᵢ`, then this destructor is trivial.
 
 #### Assignment <a id="variant.assign">[[variant.assign]]</a>
 
@@ -3889,9 +3875,8 @@ Let j be `rhs.index()`.
   value contained in `*this` and sets `*this` to not hold a value.
 - Otherwise, if `index() == `j, assigns the value contained in `rhs` to
   the value contained in `*this`.
-- Otherwise, if either
-  `is_nothrow_copy_constructible_v<`$\texttt{T}_j$`>` is `true` or
-  `is_nothrow_move_constructible_v<`$\texttt{T}_j$`>` is `false`,
+- Otherwise, if either `is_nothrow_copy_constructible_v<``Tⱼ``>` is
+  `true` or `is_nothrow_move_constructible_v<``Tⱼ``>` is `false`,
   equivalent to `emplace<`j`>(get<`j`>(rhs))`.
 - Otherwise, equivalent to `operator=(variant(rhs))`.
 
@@ -3900,12 +3885,11 @@ Let j be `rhs.index()`.
 *Returns:* `*this`.
 
 *Remarks:* This operator is defined as deleted unless
-`is_copy_constructible_v<`$\texttt{T}_i$`> &&`
-`is_copy_assignable_v<`$\texttt{T}_i$`>` is `true` for all i. If
-`is_trivially_copy_constructible_v<`$\texttt{T}_i$`> &&`
-`is_trivially_copy_assignable_v<`$\texttt{T}_i$`> &&`
-`is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true` for all i,
-this assignment operator is trivial.
+`is_copy_constructible_v<``Tᵢ``> &&` `is_copy_assignable_v<``Tᵢ``>` is
+`true` for all i. If `is_trivially_copy_constructible_v<``Tᵢ``> &&`
+`is_trivially_copy_assignable_v<``Tᵢ``> &&`
+`is_trivially_destructible_v<``Tᵢ``>` is `true` for all i, this
+assignment operator is trivial.
 
 ``` cpp
 constexpr variant& operator=(variant&& rhs) noexcept(see below);
@@ -3913,8 +3897,8 @@ constexpr variant& operator=(variant&& rhs) noexcept(see below);
 
 Let j be `rhs.index()`.
 
-*Constraints:* `is_move_constructible_v<`$\texttt{T}_i$`> &&`
-`is_move_assignable_v<`$\texttt{T}_i$`>` is `true` for all i.
+*Constraints:* `is_move_constructible_v<``Tᵢ``> &&`
+`is_move_assignable_v<``Tᵢ``>` is `true` for all i.
 
 *Effects:*
 
@@ -3927,39 +3911,36 @@ Let j be `rhs.index()`.
 
 *Returns:* `*this`.
 
-*Remarks:* If `is_trivially_move_constructible_v<`$\texttt{T}_i$`> &&`
-`is_trivially_move_assignable_v<`$\texttt{T}_i$`> &&`
-`is_trivially_destructible_v<`$\texttt{T}_i$`>` is `true` for all i,
-this assignment operator is trivial. The exception specification is
+*Remarks:* If `is_trivially_move_constructible_v<``Tᵢ``> &&`
+`is_trivially_move_assignable_v<``Tᵢ``> &&`
+`is_trivially_destructible_v<``Tᵢ``>` is `true` for all i, this
+assignment operator is trivial. The exception specification is
 equivalent to
-`is_nothrow_move_constructible_v<`$\texttt{T}_i$`> && is_nothrow_move_assignable_v<`$\texttt{T}_i$`>`
+`is_nothrow_move_constructible_v<``Tᵢ``> && is_nothrow_move_assignable_v<``Tᵢ``>`
 for all i.
 
-- If an exception is thrown during the call to $\texttt{T}_j$’s move
-  construction (with j being `rhs.index()`), the `variant` will hold no
-  value.
-- If an exception is thrown during the call to $\texttt{T}_j$’s move
-  assignment, the state of the contained value is as defined by the
-  exception safety guarantee of $\texttt{T}_j$’s move assignment;
-  `index()` will be j.
+- If an exception is thrown during the call to `Tⱼ`’s move construction
+  (with j being `rhs.index()`), the `variant` will hold no value.
+- If an exception is thrown during the call to `Tⱼ`’s move assignment,
+  the state of the contained value is as defined by the exception safety
+  guarantee of `Tⱼ`’s move assignment; `index()` will be j.
 
 ``` cpp
 template<class T> constexpr variant& operator=(T&& t) noexcept(see below);
 ```
 
-Let $\texttt{T}_j$ be a type that is determined as follows: build an
-imaginary function *FUN*(Tᵢ) for each alternative type $\texttt{T}_i$
-for which $\texttt{T}_i$` x[] =` `{std::forward<T>(t)};` is well-formed
-for some invented variable `x`. The overload *FUN*(Tⱼ) selected by
-overload resolution for the expression *FUN*(std::forward\<T\>(t))
-defines the alternative $\texttt{T}_j$ which is the type of the
-contained value after assignment.
+Let `Tⱼ` be a type that is determined as follows: build an imaginary
+function *FUN*(Tᵢ) for each alternative type `Tᵢ` for which `Tᵢ`` x[] =`
+`{std::forward<T>(t)};` is well-formed for some invented variable `x`.
+The overload *FUN*(Tⱼ) selected by overload resolution for the
+expression *FUN*(std::forward\<T\>(t)) defines the alternative `Tⱼ`
+which is the type of the contained value after assignment.
 
 *Constraints:*
 
 - `is_same_v<remove_cvref_t<T>, variant>` is `false`,
-- `is_assignable_v<`$\texttt{T}_j$`&, T> && is_constructible_v<`$\texttt{T}_j$`, T>`
-  is `true`, and
+- `is_assignable_v<``Tⱼ``&, T> && is_constructible_v<``Tⱼ``, T>` is
+  `true`, and
 - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
   \[*Note 2*:
@@ -3972,17 +3953,15 @@ contained value after assignment.
 
 *Effects:*
 
-- If `*this` holds a $\texttt{T}_j$, assigns `std::forward<T>(t)` to the
-  value contained in `*this`.
-- Otherwise, if `is_nothrow_constructible_v<`$\texttt{T}_j$`, T> ||`
-  `!is_nothrow_move_constructible_v<`$\texttt{T}_j$`>` is `true`,
-  equivalent to `emplace<`j`>(std::forward<T>(t))`.
-- Otherwise, equivalent to
-  `emplace<`j`>(`$\texttt{T}_j$`(std::forward<T>(t)))`.
+- If `*this` holds a `Tⱼ`, assigns `std::forward<T>(t)` to the value
+  contained in `*this`.
+- Otherwise, if `is_nothrow_constructible_v<``Tⱼ``, T> ||`
+  `!is_nothrow_move_constructible_v<``Tⱼ``>` is `true`, equivalent to
+  `emplace<`j`>(std::forward<T>(t))`.
+- Otherwise, equivalent to `emplace<`j`>(``Tⱼ``(std::forward<T>(t)))`.
 
-*Ensures:* `holds_alternative<`$\texttt{T}_j$`>(*this)` is `true`, with
-$\texttt{T}_j$ selected by the imaginary function overload resolution
-described above.
+*Ensures:* `holds_alternative<``Tⱼ``>(*this)` is `true`, with `Tⱼ`
+selected by the imaginary function overload resolution described above.
 
 *Returns:* `*this`.
 
@@ -4038,14 +4017,13 @@ template<size_t I, class... Args>
   constexpr variant_alternative_t<I, variant<Types...>>& emplace(Args&&... args);
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
-*Constraints:* `is_constructible_v<`$\texttt{T}_I$`, Args...>` is
-`true`.
+*Constraints:* `is_constructible_v<``T_I``, Args...>` is `true`.
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then direct-non-list-initializes
-the contained value of type $\texttt{T}_I$ with the arguments
+the contained value of type `T_I` with the arguments
 `std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
@@ -4064,15 +4042,14 @@ template<size_t I, class U, class... Args>
     emplace(initializer_list<U> il, Args&&... args);
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
 *Constraints:*
-`is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>` is
-`true`.
+`is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is `true`.
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then direct-non-list-initializes
-the contained value of type $\texttt{T}_I$ with
+the contained value of type `T_I` with
 `il, std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
@@ -4120,10 +4097,9 @@ alternative of the contained value.
 constexpr void swap(variant& rhs) noexcept(see below);
 ```
 
-*Mandates:* `is_move_constructible_v<`$\texttt{T}_i$`>` is `true` for
-all i.
+*Mandates:* `is_move_constructible_v<``Tᵢ``>` is `true` for all i.
 
-*Preconditions:* Each $\texttt{T}_i$ meets the *Cpp17Swappable*
+*Preconditions:* Each `Tᵢ` meets the *Cpp17Swappable*
 requirements [[swappable.requirements]].
 
 *Effects:*
@@ -4136,19 +4112,18 @@ requirements [[swappable.requirements]].
 
 *Throws:* If `index() == rhs.index()`, any exception thrown by
 `swap(get<`i`>(*this), get<`i`>(rhs))` with i being `index()`.
-Otherwise, any exception thrown by the move constructor of
-$\texttt{T}_i$ or $\texttt{T}_j$ with i being `index()` and j being
-`rhs.index()`.
+Otherwise, any exception thrown by the move constructor of `Tᵢ` or `Tⱼ`
+with i being `index()` and j being `rhs.index()`.
 
 *Remarks:* If an exception is thrown during the call to function
 `swap(get<`i`>(*this), get<`i`>(rhs))`, the states of the contained
 values of `*this` and of `rhs` are determined by the exception safety
-guarantee of `swap` for lvalues of $\texttt{T}_i$ with i being
-`index()`. If an exception is thrown during the exchange of the values
-of `*this` and `rhs`, the states of the values of `*this` and of `rhs`
-are determined by the exception safety guarantee of `variant`’s move
-constructor. The exception specification is equivalent to the logical of
-`is_nothrow_move_constructible_v<`$\texttt{T}_i$`> && is_nothrow_swappable_v<`$\texttt{T}_i$`>`
+guarantee of `swap` for lvalues of `Tᵢ` with i being `index()`. If an
+exception is thrown during the exchange of the values of `*this` and
+`rhs`, the states of the values of `*this` and of `rhs` are determined
+by the exception safety guarantee of `variant`’s move constructor. The
+exception specification is equivalent to the logical of
+`is_nothrow_move_constructible_v<``Tᵢ``> && is_nothrow_swappable_v<``Tᵢ``>`
 for all i.
 
 ### `variant` helper classes <a id="variant.helper">[[variant.helper]]</a>
@@ -4188,9 +4163,9 @@ typedef `type` that names the type `add_const_t<VA::type>`.
 variant_alternative<I, variant<Types...>>::type
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
-*Type:* The type $\texttt{T}_I$.
+*Type:* The type `T_I`.
 
 ### Value access <a id="variant.get">[[variant.get]]</a>
 
@@ -4215,7 +4190,7 @@ template<size_t I, class... Types>
   constexpr const variant_alternative_t<I, variant<Types...>>&& get(const variant<Types...>&& v);
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
 *Effects:* If `v.index()` is `I`, returns a reference to the object
 stored in the `variant`. Otherwise, throws an exception of type
@@ -4242,7 +4217,7 @@ template<size_t I, class... Types>
     get_if(const variant<Types...>* v) noexcept;
 ```
 
-*Mandates:* $\texttt{I} < \texttt{sizeof...(Types)}$.
+*Mandates:* `I` < `sizeof...(Types)`.
 
 *Returns:* A pointer to the value stored in the `variant`, if
 `v != nullptr` and `v->index() == I`. Otherwise, returns .
@@ -4383,18 +4358,17 @@ template<class... Ts>
   auto&& as-variant(const variant<Ts...>&& var) { return std::move(var); }
 ```
 
-Let n be `sizeof...(Variants)`. For each 0 ≤ i < n, let $\texttt{V}_i$
-denote the type
-`decltype(`*`as-variant`*`(``std::forward<`$\texttt{Variants}_i$`>(`$\texttt{vars}_i$`)``))`.
+Let n be `sizeof...(Variants)`. For each 0 ≤ i < n, let `Vᵢ` denote the
+type
+`decltype(`*`as-variant`*`(``std::forward<``Variantsᵢ``>(``varsᵢ``)``))`.
 
-*Constraints:* $\texttt{V}_i$ is a valid type for all 0 ≤ i < n.
+*Constraints:* `Vᵢ` is a valid type for all 0 ≤ i < n.
 
-Let `V` denote the pack of types $\texttt{V}_i$.
+Let `V` denote the pack of types `Vᵢ`.
 
 Let m be a pack of n values of type `size_t`. Such a pack is valid if
-$0 \leq m_i < \texttt{variant_size_v<remove_reference_t<V}_i\texttt{>>}$
-for all 0 ≤ i < n. For each valid pack m, let e(m) denote the
-expression:
+0 ≤ m_i < `variant_size_v<remove_reference_t<Vᵢ``>>` for all 0 ≤ i < n.
+For each valid pack m, let e(m) denote the expression:
 
 ``` cpp
 INVOKE(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
@@ -4413,15 +4387,15 @@ expressions are of the same type and value category.
 
 *Returns:* e(m), where m is the pack for which mᵢ is
 *`as-variant`*`(vars`_i`).index()` for all 0 ≤ i < n. The return type is
-$\texttt{decltype(}e(m)\texttt{)}$ for the first form.
+`decltype(`e(m)`)` for the first form.
 
 *Throws:* `bad_variant_access` if
 `(`*`as-variant`*`(vars).valueless_by_exception() || ...)` is `true`.
 
 *Complexity:* For n ≤ 1, the invocation of the callable object is
 implemented in constant time, i.e., for n = 1, it does not depend on the
-number of alternative types of $\texttt{V}_0$. For n > 1, the invocation
-of the callable object has no complexity requirements.
+number of alternative types of `V₀`. For n > 1, the invocation of the
+callable object has no complexity requirements.
 
 ### Class `monostate` <a id="variant.monostate">[[variant.monostate]]</a>
 
@@ -4451,8 +4425,8 @@ template<class... Types>
 ```
 
 *Constraints:*
-`is_move_constructible_v<`$\texttt{T}_i$`> && is_swappable_v<`$\texttt{T}_i$`>`
-is `true` for all i.
+`is_move_constructible_v<``Tᵢ``> && is_swappable_v<``Tᵢ``>` is `true`
+for all i.
 
 *Effects:* Equivalent to `v.swap(w)`.
 
@@ -8709,8 +8683,8 @@ is_move_constructible_v<FD> &&
 is `true`.
 
 *Preconditions:* `FD` meets the *Cpp17MoveConstructible* requirements.
-For each $\texttt{T}_i$ in `BoundArgs`, if $\texttt{T}_i$ is an object
-type, $\texttt{T}_i$ meets the *Cpp17MoveConstructible* requirements.
+For each `Tᵢ` in `BoundArgs`, if `Tᵢ` is an object type, `Tᵢ` meets the
+*Cpp17MoveConstructible* requirements.
 
 *Returns:* A perfect forwarding call
 wrapper [[term.perfect.forwarding.call.wrapper]] `g` with call pattern:
@@ -8782,19 +8756,17 @@ In the text that follows:
 - `FD` is the type `decay_t<F>`,
 - `fd` is an lvalue that is a target object of `g` [[func.def]] of type
   `FD` direct-non-list-initialized with `std::forward<F>(f)`,
-- $\tcode{T}_i$ is the $i^\text{th}$ type in the template parameter pack
+- `Tᵢ` is the $i^\text{th}$ type in the template parameter pack
   `BoundArgs`,
-- $\tcode{TD}_i$ is the type `decay_t<$\tcode{T}_i$>`,
-- $\tcode{t}_i$ is the $i^\text{th}$ argument in the function parameter
-  pack `bound_args`,
-- $\tcode{td}_i$ is a bound argument entity of `g` [[func.def]] of type
-  $\tcode{TD}_i$ direct-non-list-initialized with
+- `TDᵢ` is the type `decay_t<$\tcode{T}_i$>`,
+- `tᵢ` is the $i^\text{th}$ argument in the function parameter pack
+  `bound_args`,
+- `tdᵢ` is a bound argument entity of `g` [[func.def]] of type `TDᵢ`
+  direct-non-list-initialized with
   `std::forward<$\tcode{T}_i$>($\tcode{t}_i$)`,
-- $\tcode{U}_j$ is the $j^\text{th}$ deduced type of the
-  `UnBoundArgs&&...` parameter of the argument forwarding call wrapper,
-  and
-- $\tcode{u}_j$ is the $j^\text{th}$ argument associated with
-  $\tcode{U}_j$.
+- `Uⱼ` is the $j^\text{th}$ deduced type of the `UnBoundArgs&&...`
+  parameter of the argument forwarding call wrapper, and
+- `uⱼ` is the $j^\text{th}$ argument associated with `Uⱼ`.
 
 ``` cpp
 template<class F, class... BoundArgs>
@@ -8803,20 +8775,18 @@ template<class R, class F, class... BoundArgs>
   constexpr unspecified bind(F&& f, BoundArgs&&... bound_args);
 ```
 
-*Mandates:* `is_constructible_v<FD, F>` is `true`. For each
-$\texttt{T}_i$ in `BoundArgs`,
-`is_constructible_v<`$\texttt{TD}_i$`, `$\texttt{T}_i$`>` is `true`.
+*Mandates:* `is_constructible_v<FD, F>` is `true`. For each `Tᵢ` in
+`BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` is `true`.
 
-*Preconditions:* `FD` and each $\texttt{TD}_i$ meet the
-*Cpp17MoveConstructible* and *Cpp17Destructible* requirements.
-*INVOKE*(fd, w₁, w₂, $\dotsc$, $w_N$) [[func.require]] is a valid
-expression for some values $\texttt{w}_1$, $\texttt{w}_2$, $\dotsc{}$,
-$\texttt{w}_N$, where N has the value `sizeof...(bound_args)`.
+*Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
+and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, $\dotsc$,
+$w_N$) [[func.require]] is a valid expression for some values `w₁`,
+`w₂`, $\dotsc{}$, `w_N`, where N has the value `sizeof...(bound_args)`.
 
 *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.
 When `g` is not volatile-qualified, invocation of
-`g(`$\texttt{u}_1$`, `$\texttt{u}_2$`, `$\dotsc$`, `$\texttt{u}_M$`)` is
+`g(``u₁``, ``u₂``, `$\dotsc$`, ``u_M``)` is
 expression-equivalent [[defns.expression.equivalent]] to
 
 ``` cpp
@@ -8832,41 +8802,39 @@ INVOKE<R>(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
 ```
 
 for the second overload, where the values and types of the target
-argument $\texttt{v}_\texttt{fd}$ and of the bound arguments
-$\texttt{v}_1$, $\texttt{v}_2$, $\dotsc$, $\texttt{v}_N$ are determined
-as specified below.
+argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, $\dotsc$, `v_N`
+are determined as specified below.
 
 *Throws:* Any exception thrown by the initialization of the state
 entities of `g`.
 
-\[*Note 1*: If all of `FD` and $\texttt{TD}_i$ meet the requirements of
+\[*Note 1*: If all of `FD` and `TDᵢ` meet the requirements of
 *Cpp17CopyConstructible*, then the return type meets the requirements of
 *Cpp17CopyConstructible*. — *end note*\]
 
-The values of the *bound arguments* $\tcode{v}_1$, $\tcode{v}_2$,
-$\dotsc$, $\tcode{v}_N$ and their corresponding types $\tcode{V}_1$,
-$\tcode{V}_2$, $\dotsc$, $\tcode{V}_N$ depend on the types
-$\tcode{TD}_i$ derived from the call to `bind` and the cv-qualifiers cv
-of the call wrapper `g` as follows:
+The values of the *bound arguments* `v₁`, `v₂`, $\dotsc$, `v_N` and
+their corresponding types `V₁`, `V₂`, $\dotsc$, `V_N` depend on the
+types `TDᵢ` derived from the call to `bind` and the cv-qualifiers cv of
+the call wrapper `g` as follows:
 
-- if $\tcode{TD}_i$ is `reference_wrapper<T>`, the argument is
-  `$\tcode{td}_i$.get()` and its type $\tcode{V}_i$ is `T&`;
+- if `TDᵢ` is `reference_wrapper<T>`, the argument is
+  `$\tcode{td}_i$.get()` and its type `Vᵢ` is `T&`;
 - if the value of `is_bind_expression_v<$\tcode{TD}_i$>` is `true`, the
   argument is
   ``` cpp
-  static_cast<cv $TD_i$&>($td_i$)(std::forward<$U_j$>($u_j$)...)
+  static_cast<cv $TD_i$&>(td_i)(std::forward<U_j>(u_j)...)
   ```
 
-  and its type $\tcode{V}_i$ is
+  and its type `Vᵢ` is
   `invoke_result_t<\cv{} $\tcode{TD}_i$&, $\tcode{U}_j$...>&&`;
 - if the value `j` of `is_placeholder_v<$\tcode{TD}_i$>` is not zero,
   the argument is `std::forward<$\tcode{U}_j$>($\tcode{u}_j$)` and its
-  type $\tcode{V}_i$ is `$\tcode{U}_j$&&`;
-- otherwise, the value is $\tcode{td}_i$ and its type $\tcode{V}_i$ is
+  type `Vᵢ` is `$\tcode{U}_j$&&`;
+- otherwise, the value is `tdᵢ` and its type `Vᵢ` is
   `\cv{} $\tcode{TD}_i$&`.
 
-The value of the target argument $\tcode{v}_\tcode{fd}$ is `fd` and its
-corresponding type $\tcode{V}_\tcode{fd}$ is `\cv{} FD&`.
+The value of the target argument `v`_`fd` is `fd` and its corresponding
+type `V`_`fd` is `\cv{} FD&`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 
@@ -9506,8 +9474,9 @@ friend bool operator==(const move_only_function& f, nullptr_t) noexcept;
 #### General <a id="func.search.general">[[func.search.general]]</a>
 
 Subclause [[func.search]] provides function object types
-[[function.objects]] for operations that search for a sequence in
-another sequence that is provided to the object’s function call
+[[function.objects]] for operations that search for a sequence
+[`pat\textunderscore\nobreak first`, `pat_last`) in another sequence
+[`first`, `last`) that is provided to the object’s function call
 operator. The first sequence (the pattern to be searched for) is
 provided to the object’s constructor, and the second (the sequence to be
 searched) is provided to the function call operator.
@@ -10125,13 +10094,14 @@ or members other than those specified.
 ### Primitive numeric output conversion <a id="charconv.to.chars">[[charconv.to.chars]]</a>
 
 All functions named `to_chars` convert `value` into a character string
-by successively filling the range , where is required to be a valid
-range. If the member `ec` of the return value is such that the value is
-equal to the value of a value-initialized `errc`, the conversion was
-successful and the member `ptr` is the one-past-the-end pointer of the
-characters written. Otherwise, the member `ec` has the value
-`errc::value_too_large`, the member `ptr` has the value `last`, and the
-contents of the range are unspecified.
+by successively filling the range [`first`, `last`), where
+[`first`, `last`) is required to be a valid range. If the member `ec` of
+the return value is such that the value is equal to the value of a
+value-initialized `errc`, the conversion was successful and the member
+`ptr` is the one-past-the-end pointer of the characters written.
+Otherwise, the member `ec` has the value `errc::value_too_large`, the
+member `ptr` has the value `last`, and the contents of the range
+[`first`, `last`) are unspecified.
 
 The functions that take a floating-point `value` but not a `precision`
 parameter ensure that the string representation consists of the smallest
@@ -10205,10 +10175,11 @@ the `"C"` locale with the given precision.
 
 ### Primitive numeric input conversion <a id="charconv.from.chars">[[charconv.from.chars]]</a>
 
-All functions named `from_chars` analyze the string for a pattern, where
-is required to be a valid range. If no characters match the pattern,
-`value` is unmodified, the member `ptr` of the return value is `first`
-and the member `ec` is equal to `errc::invalid_argument`.
+All functions named `from_chars` analyze the string [`first`, `last`)
+for a pattern, where [`first`, `last`) is required to be a valid range.
+If no characters match the pattern, `value` is unmodified, the member
+`ptr` of the return value is `first` and the member `ec` is equal to
+`errc::invalid_argument`.
 
 \[*Note 1*: If the pattern allows for an optional sign, but the string
 has no digit characters following the sign, no characters match the
@@ -10809,10 +10780,11 @@ The available string presentation types are specified in
 
 
 The meaning of some non-string presentation types is defined in terms of
-a call to `to_chars`. In such cases, let be a range large enough to hold
-the `to_chars` output and `value` be the formatting argument value.
-Formatting is done as if by calling `to_chars` as specified and copying
-the output through the output iterator of the format context.
+a call to `to_chars`. In such cases, let [`first`, `last`) be a range
+large enough to hold the `to_chars` output and `value` be the formatting
+argument value. Formatting is done as if by calling `to_chars` as
+specified and copying the output through the output iterator of the
+format context.
 
 \[*Note 6*: Additional padding and adjustments are performed prior to
 copying the output through the output iterator as specified by the
@@ -11109,9 +11081,8 @@ Let
 *Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
 
 *Preconditions:* `Out` models `output_iterator``<const charT&>`, and
-`formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>` meets the
-requirements [[formatter.requirements]] for each $\texttt{T}_i$ in
-`Args`.
+`formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
+requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Effects:* Places the first `M` characters of the character
 representation of formatting the arguments provided by `args`, formatted
@@ -11135,9 +11106,8 @@ template<class... Args>
 
 Let `charT` be `decltype(fmt.`*`str`*`)::value_type`.
 
-*Preconditions:* `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>`
-meets the requirements [[formatter.requirements]] for each
-$\texttt{T}_i$ in `Args`.
+*Preconditions:* `formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
+requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Returns:* The number of characters in the character representation of
 formatting arguments `args` formatted according to specifications given
@@ -12185,9 +12155,9 @@ template<class Context = format_context, class... Args>
 ```
 
 *Preconditions:* The type
-`typename Context::template formatter_type<remove_cvref_t<`$\texttt{T}_i$`>>`
-meets the requirements [[formatter.requirements]] for each
-$\texttt{T}_i$ in `Args`.
+`typename Context::template formatter_type<remove_cvref_t<``Tᵢ``>>`
+meets the requirements [[formatter.requirements]] for each `Tᵢ` in
+`Args`.
 
 *Returns:* An object of type *`format-arg-store`*`<Context, Args...>`
 whose *args* data member is initialized with

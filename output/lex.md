@@ -1436,7 +1436,7 @@ Otherwise (*S* contains a numeric literal operator template), *L* is
 treated as a call of the form
 
 ``` cpp
-operator ""X<'$c_1$', '$c_2$', ... '$c_k$'>()
+operator ""X<'c_1', 'c_2', ... 'c_k'>()
 ```
 
 where *n* is the source character sequence c₁c₂...cₖ.
@@ -1465,7 +1465,7 @@ Otherwise (*S* contains a numeric literal operator template), *L* is
 treated as a call of the form
 
 ``` cpp
-operator ""X<'$c_1$', '$c_2$', ... '$c_k$'>()
+operator ""X<'c_1', 'c_2', ... 'c_k'>()
 ```
 
 where *f* is the source character sequence c₁c₂...cₖ.
