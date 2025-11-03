@@ -17,7 +17,7 @@ conditions and values between threads, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[thread.req]] | Requirements |
+| [[thread.req]] | Requirements |  |
 | [[thread.stoptoken]] | Stop tokens | `<stop_token>` |
 | [[thread.threads]] | Threads | `<thread>` |
 | [[atomics]] | Atomic operations | `<atomic>`, `<stdatomic.h>` |
@@ -3184,7 +3184,7 @@ correspondence among key, operator, and computation is specified in
 | --- | --- |
 | `add` | `+` | addition | `sub` | `-` | subtraction |
 | `or` | `|` | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
-| `and` | `&` | bitwise and |  |  |
+| `and` | `&` | bitwise and |  |  |  |
 
 
 *integral-type* *integral-type* *integral-type* *integral-type*

@@ -21,10 +21,10 @@ summarized in [[iterators.summary]].
 | Subclause |  | Header |
 | --- | --- | --- |
 | [[iterator.requirements]] | Iterator requirements | `<iterator>` |
-| [[iterator.primitives]] | Iterator primitives |
-| [[predef.iterators]] | Iterator adaptors |
-| [[stream.iterators]] | Stream iterators |
-| [[iterator.range]] | Range access |
+| [[iterator.primitives]] | Iterator primitives |  |
+| [[predef.iterators]] | Iterator adaptors |  |
+| [[stream.iterators]] | Stream iterators |  |
+| [[iterator.range]] | Range access |  |
 
 
 ## Header `<iterator>` synopsis <a id="iterator.synopsis">[[iterator.synopsis]]</a>

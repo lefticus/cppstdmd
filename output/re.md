@@ -24,16 +24,16 @@ summarized in [[re.summary]].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[re.req]] | Requirements |
+| [[re.req]] | Requirements |  |
 | [[re.const]] | Constants | `<regex>` |
-| [[re.badexp]] | Exception type |
-| [[re.traits]] | Traits |
-| [[re.regex]] | Regular expression template |
-| [[re.submatch]] | Submatches |
-| [[re.results]] | Match results |
-| [[re.alg]] | Algorithms |
-| [[re.iter]] | Iterators |
-| [[re.grammar]] | Grammar |
+| [[re.badexp]] | Exception type |  |
+| [[re.traits]] | Traits |  |
+| [[re.regex]] | Regular expression template |  |
+| [[re.submatch]] | Submatches |  |
+| [[re.results]] | Match results |  |
+| [[re.alg]] | Algorithms |  |
+| [[re.iter]] | Iterators |  |
+| [[re.grammar]] | Grammar |  |
 
 
 ## Requirements <a id="re.req">[[re.req]]</a>
@@ -802,7 +802,7 @@ the last argument passed to `imbue`.
 
 **Table: Character class names and corresponding `ctype` masks**
 
-|  |  |  |
+| Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
 | --- | --- | --- |
 | `"alnum"` | `L"alnum"` | `ctype_base::alnum` |
 | `"alpha"` | `L"alpha"` | `ctype_base::alpha` |

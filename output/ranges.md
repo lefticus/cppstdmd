@@ -19,10 +19,10 @@ components for range primitives and range generators as summarized in
 | Subclause |  | Header |
 | --- | --- | --- |
 | [[range.access]] | Range access | `<ranges>` |
-| [[range.req]] | Requirements |
-| [[range.utility]] | Range utilities |
-| [[range.factories]] | Range factories |
-| [[range.adaptors]] | Range adaptors |
+| [[range.req]] | Requirements |  |
+| [[range.utility]] | Range utilities |  |
+| [[range.factories]] | Range factories |  |
+| [[range.adaptors]] | Range adaptors |  |
 | [[coro.generator]] | Range generators | `<generator>` |
 
 

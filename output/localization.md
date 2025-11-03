@@ -23,7 +23,7 @@ standard facets, and facilities from the ISO C library, as summarized in
 | Subclause |  | Header |
 | --- | --- | --- |
 | [[locales]] | Locales | `<locale>` |
-| [[locale.categories]] | Standard `locale` categories |
+| [[locale.categories]] | Standard `locale` categories |  |
 | [[c.locales]] | C library locales | `<clocale>` |
 
 

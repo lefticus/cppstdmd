@@ -20,12 +20,12 @@ operations, and algorithms from the ISO C library, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[algorithms.requirements]] | Algorithms requirements |
-| [[algorithms.parallel]] | Parallel algorithms |
+| [[algorithms.requirements]] | Algorithms requirements |  |
+| [[algorithms.parallel]] | Parallel algorithms |  |
 | [[algorithms.results]] | Algorithm result types | `<algorithm>` |
-| [[alg.nonmodifying]] | Non-modifying sequence operations |
-| [[alg.modifying.operations]] | Mutating sequence operations |
-| [[alg.sorting]] | Sorting and related operations |
+| [[alg.nonmodifying]] | Non-modifying sequence operations |  |
+| [[alg.modifying.operations]] | Mutating sequence operations |  |
+| [[alg.sorting]] | Sorting and related operations |  |
 | [[numeric.ops]] | Generalized numeric operations | `<numeric>` |
 | [[specialized.algorithms]] | Specialized `<memory>` algorithms | `<memory>` |
 | [[alg.c.library]] | C library algorithms | `<cstdlib>` |

@@ -19,7 +19,7 @@ for sequence containers and associative containers, as summarized in
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[container.requirements]] | Requirements |
+| [[container.requirements]] | Requirements |  |
 | [[sequences]] | Sequence containers | `<array>`, `<deque>`, `<forward_list>`, `<list>`, `<vector>` |
 | [[associative]] | Associative containers | `<map>`, `<set>` |
 | [[unord]] | Unordered associative containers | `<unordered_map>`, `<unordered_set>` |

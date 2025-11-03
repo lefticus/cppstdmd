@@ -20,7 +20,7 @@ floating-point types, as summarized in [[numerics.summary]].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[numeric.requirements]] | Requirements |
+| [[numeric.requirements]] | Requirements |  |
 | [[cfenv]] | Floating-point environment | `<cfenv>` |
 | [[complex.numbers]] | Complex numbers | `<complex>` |
 | [[rand]] | Random number generation | `<random>` |

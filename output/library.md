@@ -1164,14 +1164,14 @@ non-`const` lvalue of type `P`, `a` and `b` denote values of type
 | Expression | Return type | Operational semantics |
 | --- | --- | --- |
 | `P u(np);`<br> |  | \ensures `u == nullptr` |
-| `P u = np;` |  |
+| `P u = np;` |  |  |
 | `P(np)` |  | \ensures `P(np) == nullptr` |
 | `t = np` | `P&` | \ensures `t == nullptr` |
 | `a != b` | `decltype(a != b)` models `boolean-testable` | `!(a == b)` |
 | `a == np` | `decltype(a == np)` and `decltype(np == a)` each model `boolean-testable` | `a == P()` |
-| `np == a` |  |
+| `np == a` |  |  |
 | `a != np` | `decltype(a != np)` and `decltype(np != a)` each model `boolean-testable` | `!(a == np)` |
-| `np != a` |  |
+| `np != a` |  |  |
 
 
 #### *Cpp17Hash* requirements <a id="hash.requirements">[[hash.requirements]]</a>

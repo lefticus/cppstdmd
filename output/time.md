@@ -16,17 +16,17 @@ summarized in [[time.summary]].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[time.clock.req]] | Cpp17Clock requirements |
+| [[time.clock.req]] | Cpp17Clock requirements |  |
 | [[time.traits]] | Time-related traits | `<chrono>` |
-| [[time.duration]] | Class template `duration` |
-| [[time.point]] | Class template `time_point` |
-| [[time.clock]] | Clocks |
-| [[time.cal]] | Civil calendar |
-| [[time.hms]] | Class template `hh_mm_ss` |
-| [[time.12]] | 12/24 hour functions |
-| [[time.zone]] | Time zones |
-| [[time.format]] | Formatting |
-| [[time.parse]] | Parsing |
+| [[time.duration]] | Class template `duration` |  |
+| [[time.point]] | Class template `time_point` |  |
+| [[time.clock]] | Clocks |  |
+| [[time.cal]] | Civil calendar |  |
+| [[time.hms]] | Class template `hh_mm_ss` |  |
+| [[time.12]] | 12/24 hour functions |  |
+| [[time.zone]] | Time zones |  |
+| [[time.format]] | Formatting |  |
+| [[time.parse]] | Parsing |  |
 | [[ctime.syn]] | C library time utilities | `<ctime>` |
 
 

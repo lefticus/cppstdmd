@@ -157,12 +157,12 @@ context. — *end note*\]
 
 **Table: Basic character set**
 
-|  |  |
-| --- | --- |
-| `U+0009` | character tabulation |
-| `U+000b` | line tabulation |
-| `U+000c` | form feed |
-| `U+0020` | space |
+| character |  | glyph |
+| --- | --- | --- |
+| `U+0009` | character tabulation |  |
+| `U+000b` | line tabulation |  |
+| `U+000c` | form feed |  |
+| `U+0020` | space |  |
 | `U+000a` | line feed | new-line |
 | `U+0021` | exclamation mark | `!` |
 | `U+0022` | quotation mark | `"` |
@@ -616,7 +616,7 @@ Furthermore, the alternative representations shown in
 |  |  |  |  |  |  |
 | --- | --- | --- | --- | --- | --- |
 | `and` | `and_eq` | `bitand` | `bitor` | `compl` | `not` |
-| `not_eq` | `or` | `or_eq` | `xor` | `xor_eq` |
+| `not_eq` | `or` | `or_eq` | `xor` | `xor_eq` |  |
 
 ## Operators and punctuators <a id="lex.operators">[[lex.operators]]</a>
 
@@ -801,7 +801,7 @@ which its value can be represented.
 
 **Table: Types of *integer-literal*s**
 
-|  |  |  |
+| *integer-suffix* | *decimal-literal* | *integer-literal* other than *decimal-literal* |
 | --- | --- | --- |
 | none | `int` | `int` |
 |  | `long int` | `unsigned int` |
@@ -821,12 +821,12 @@ which its value can be represented.
 | `ll` or `LL` | `long long int` | `long long int` |
 |  |  | `unsigned long long int` |
 | Both `u` or `U` | `unsigned long long int` | `unsigned long long int` |
-| and `ll` or `LL` |  |
+| and `ll` or `LL` |  |  |
 | `z` or `Z` | the signed integer type corresponding | the signed integer type |
 |  | to `std::size_t` [[support.types.layout]] | corresponding to `std::size_t` |
 |  |  | `std::size_t` |
 | Both `u` or `U` | `std::size_t` | `std::size_t` |
-| and `z` or `Z` |  |
+| and `z` or `Z` |  |  |
 
 
 If an *integer-literal* cannot be represented by any type in its list
@@ -954,7 +954,7 @@ character would require more than one code unit. — *end note*\]
 | --- | --- | --- | --- | --- |
 | none | \defnx{ordinary character literal}{literal!character!ordinary} | `char` | ordinary | `'v'` |
 | `L` | \defnx{wide character literal}{literal!character!wide} | `wchar_t` | wide literal | `L'w'` |
-|  |  |  | encoding |
+|  |  |  | encoding |  |
 | `u8` | \defnx{UTF-8 character literal}{literal!character!UTF-8} | `char8_t` | UTF-8 | `u8'x'` |
 | `u` | \defnx{UTF-16 character literal}{literal!character!UTF-16} | `char16_t` | UTF-16 | `u'y'` |
 | `U` | \defnx{UTF-32 character literal}{literal!character!UTF-32} | `char32_t` | UTF-32 | `U'z'` |
@@ -1001,7 +1001,7 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 
 **Table: Simple escape sequences**
 
-|  |  |  |
+| character |  | *simple-escape-sequence* |
 | --- | --- | --- |
 | `U+000a` | line feed | `\n` |
 | `U+0009` | character tabulation | `\t` |

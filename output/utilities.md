@@ -18,7 +18,7 @@ standard library. These utilities are summarized in
 | Subclause |  | Header |
 | --- | --- | --- |
 | [[utility]] | Utility components | `<utility>` |
-| [[pairs]] | Pairs |
+| [[pairs]] | Pairs |  |
 | [[tuple]] | Tuples | `<tuple>` |
 | [[optional]] | Optional objects | `<optional>` |
 | [[variant]] | Variants | `<variant>` |

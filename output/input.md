@@ -21,7 +21,7 @@ summarized in [[iostreams.summary]].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[iostreams.requirements]] | Requirements |
+| [[iostreams.requirements]] | Requirements |  |
 | [[iostream.forward]] | Forward declarations | `<iosfwd>` |
 | [[iostream.objects]] | Standard iostream objects | `<iostream>` |
 | [[iostreams.base]] | Iostreams base classes | `<ios>` |
@@ -10075,8 +10075,8 @@ meanings listed in [[fs.enum.perms]].
 
 **Table: Enum class `perms`**
 
-|  |  |  |  |
-| --- | --- | --- | --- |
+| Name | Value | POSIX | Definition or notes | (octal) | macro |
+| --- | --- | --- | --- | --- | --- |
 | `none` | `0` |  | There are no permissions set for the file. |
 | `owner_read` | `0400` | `S_IRUSR` | Read permission, owner |
 | `owner_write` | `0200` | `S_IWUSR` | Write permission, owner |

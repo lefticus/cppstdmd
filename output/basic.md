@@ -3827,9 +3827,9 @@ the parameters specified for `std::bfloat16_t`. — *end note*\]
 
 **Table: Properties of named extended floating-point types**
 
-|  |  |  |  |  |
-| --- | --- | --- | --- | --- |
-| ISO/IEC/IEEE 60559 name | binary16 | binary32 | binary64 | binary128 |
+| Parameter | `float16_t` | `float32_t` | `float64_t` | `float128_t` | `bfloat16_t` |
+| --- | --- | --- | --- | --- | --- |
+| ISO/IEC/IEEE 60559 name | binary16 | binary32 | binary64 | binary128 |  |
 | $k$, storage width in bits | 16 | 32 | 64 | 128 | 16 |
 | $p$, precision in bits | 11 | 24 | 53 | 113 | 8 |
 | $emax$, maximum exponent | 15 | 127 | 1023 | 16383 | 127 |

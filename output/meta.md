@@ -1312,9 +1312,9 @@ yields correct values of `U` and `V`.
 |  |  |  |
 | --- | --- | --- |
 | `ratio_add<R1, R2>` | `R1::num * R2::den +` | `R1::den * R2::den` |
-|  | `R2::num * R1::den` |
+|  | `R2::num * R1::den` |  |
 | `ratio_subtract<R1, R2>` | `R1::num * R2::den -` | `R1::den * R2::den` |
-|  | `R2::num * R1::den` |
+|  | `R2::num * R1::den` |  |
 | `ratio_multiply<R1, R2>` | `R1::num * R2::num` | `R1::den * R2::den` |
 | `ratio_divide<R1, R2>` | `R1::num * R2::den` | `R1::den * R2::num` |
 
