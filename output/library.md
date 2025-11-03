@@ -1921,8 +1921,8 @@ shall be identical to `std::T`.
 
 Literal suffix identifiers [[over.literal]] that do not start with an
 underscore are reserved for future standardization. Literal suffix
-identifiers that contain a double underscore `\unun` are reserved for
-use by C++ implementations.
+identifiers that contain a double underscore `__` are reserved for use
+by C++ implementations.
 
 #### Headers <a id="alt.headers">[[alt.headers]]</a>
 

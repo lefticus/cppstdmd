@@ -5058,8 +5058,8 @@ exclusive-or-expression:
     exclusive-or-expression '^' and-expression
 ```
 
-The `\caret` operator groups left-to-right. The operands shall be of
-integral or unscoped enumeration type. The usual arithmetic conversions
+The `^` operator groups left-to-right. The operands shall be of integral
+or unscoped enumeration type. The usual arithmetic conversions
 [[expr.arith.conv]] are performed. Given the coefficients `xᵢ` and `yᵢ`
 of the base-2 representation [[basic.fundamental]] of the converted
 operands `x` and `y`, the coefficient `rᵢ` of the base-2 representation
