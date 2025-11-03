@@ -474,9 +474,9 @@ number of elements `N` is determined as follows:
 
 - If `n > 0`, `N` is `n`.
 - If `n == 0`, `N` is `std::strlen(gnext_arg)`.
-- If `n < 0`, `N` is `INT_MAX`.
-  The function signature `strlen(const char*)` is declared in . The
-  macro `INT_MAX` is defined in .
+- If `n < 0`, `N` is `INT_MAX`. The function signature
+  `strlen(const char*)` is declared in . The macro `INT_MAX` is defined
+  in .
 
 If `pbeg_arg` is a null pointer, the function executes:
 
@@ -551,10 +551,10 @@ sequence, if possible, in one of two ways:
 
 - If `c != EOF` and if either the output sequence has a write position
   available or the function makes a write position available (as
-  described below), assigns `c` to `*pnext++`.
-  Returns `(unsigned char)c`.
-- If `c == EOF`, there is no character to append.
-  Returns a value other than `EOF`.
+  described below), assigns `c` to `*pnext++`. Returns
+  `(unsigned char)c`.
+- If `c == EOF`, there is no character to append. Returns a value other
+  than `EOF`.
 
 Returns `EOF` to indicate failure.
 
@@ -591,14 +591,14 @@ Puts back the character designated by `c` to the input sequence, if
 possible, in one of three ways:
 
 - If `c != EOF`, if the input sequence has a putback position available,
-  and if `(char)c == gnext[-1]`, assigns `gnext - 1` to `gnext`.
-  Returns `c`.
+  and if `(char)c == gnext[-1]`, assigns `gnext - 1` to `gnext`. Returns
+  `c`.
 - If `c != EOF`, if the input sequence has a putback position available,
-  and if `strmode & constant` is zero, assigns `c` to `*–gnext`.
-  Returns `c`.
+  and if `strmode & constant` is zero, assigns `c` to `*–gnext`. Returns
+  `c`.
 - If `c == EOF` and if the input sequence has a putback position
-  available, assigns `gnext - 1` to `gnext`.
-  Returns a value other than `EOF`.
+  available, assigns `gnext - 1` to `gnext`. Returns a value other than
+  `EOF`.
 
 Returns `EOF` to indicate failure.
 
@@ -618,8 +618,7 @@ stream position past it, as follows:
 - Otherwise, if the current write next pointer `pnext` is not a null
   pointer and is greater than the current read end pointer `gend`, makes
   a available by assigning to `gend` a value greater than `gnext` and no
-  greater than `pnext`.
-  Returns `(unsigned char)*gnext`.
+  greater than `pnext`. Returns `(unsigned char)*gnext`.
 
 Returns `EOF` to indicate failure.
 
@@ -817,13 +816,12 @@ ostrstream(char* s, int n, ios_base::openmode mode = ios_base::out);
 one of two constructors:
 
 - If `(mode & app) == 0`, then `s` shall designate the first element of
-  an array of `n` elements.
-  The constructor is `strstreambuf(s, n, s)`.
+  an array of `n` elements. The constructor is `strstreambuf(s, n, s)`.
 - If `(mode & app) != 0`, then `s` shall designate the first element of
   an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
-  `strstreambuf(s, n, s + std::strlen(s))`.
-  The function signature `strlen(const char*)` is declared in .
+  `strstreambuf(s, n, s + std::strlen(s))`. The function signature
+  `strlen(const char*)` is declared in .
 
 #### Member functions <a id="depr.ostrstream.members">[[depr.ostrstream.members]]</a>
 

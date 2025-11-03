@@ -1806,12 +1806,11 @@ enumerated values and their meanings are as follows:
   `memory_order::seq_cst`: a store operation performs a release
   operation on the affected memory location.
 - `memory_order::consume`: a load operation performs a consume operation
-  on the affected memory location.
-  \[*Note 2*: Prefer `memory_order::acquire`, which provides stronger
-  guarantees than `memory_order::consume`. Implementations have found it
-  infeasible to provide performance better than that of
-  `memory_order::acquire`. Specification revisions are under
-  consideration. — *end note*\]
+  on the affected memory location. \[*Note 2*: Prefer
+  `memory_order::acquire`, which provides stronger guarantees than
+  `memory_order::consume`. Implementations have found it infeasible to
+  provide performance better than that of `memory_order::acquire`.
+  Specification revisions are under consideration. — *end note*\]
 - `memory_order::acquire`, `memory_order::acq_rel`, and
   `memory_order::seq_cst`: a load operation performs an acquire
   operation on the affected memory location.
@@ -7984,9 +7983,9 @@ shared_future& operator=(const shared_future& rhs) noexcept;
 Otherwise:
 
 - Releases any shared state [[futures.state]];
-- assigns the contents of `rhs` to `*this`.
-  \[*Note 3*: As a result, `*this` refers to the same shared state as
-  `rhs` (if any). — *end note*\]
+- assigns the contents of `rhs` to `*this`. \[*Note 3*: As a result,
+  `*this` refers to the same shared state as `rhs` (if
+  any). — *end note*\]
 
 *Ensures:* `valid() == rhs.valid()`.
 
@@ -8010,11 +8009,11 @@ value stored in the shared state.
 *Returns:*
 
 - `shared_future::get()` returns a const reference to the value stored
-  in the object’s shared state.
-  \[*Note 4*: Access through that reference after the shared state has
-  been destroyed produces undefined behavior; this can be avoided by not
-  storing the reference in any storage with a greater lifetime than the
-  `shared_future` object that returned the reference. — *end note*\]
+  in the object’s shared state. \[*Note 4*: Access through that
+  reference after the shared state has been destroyed produces undefined
+  behavior; this can be avoided by not storing the reference in any
+  storage with a greater lifetime than the `shared_future` object that
+  returned the reference. — *end note*\]
 - `shared_future<R&>::get()` returns the reference stored as value in
   the object’s shared state.
 - `shared_future<void>::get()` returns nothing.
@@ -8131,12 +8130,11 @@ implementation may choose any of the corresponding policies):
   to this shared state invokes the deferred function in the thread that
   called the waiting function. Once evaluation of
   `invoke(std::move(g), std::move(xyz))` begins, the function is no
-  longer considered deferred.
-  *Recommended practice:* If this policy is specified together with
-  other policies, such as when using a `policy` value of
-  `launch::async | launch::deferred`, implementations should defer
-  invocation or the selection of the policy when no more concurrency can
-  be effectively exploited.
+  longer considered deferred. *Recommended practice:* If this policy is
+  specified together with other policies, such as when using a `policy`
+  value of `launch::async | launch::deferred`, implementations should
+  defer invocation or the selection of the policy when no more
+  concurrency can be effectively exploited.
 - If no value is set in the launch policy, or a value is set that is
   neither specified in this document nor by the implementation, the
   behavior is undefined.

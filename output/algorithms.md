@@ -4715,8 +4715,7 @@ subranges, nor modify elements in the ranges
 
 - ,
 - , and
-- .
-  The use of fully closed ranges is intentional.
+- . The use of fully closed ranges is intentional.
 
 *Effects:* Assigns through every iterator `i` in the range \[`result`,
 `result + `N) a new corresponding value equal to E.
@@ -5219,10 +5218,10 @@ parameter `pred`, and let E be
     the same as `T`, then `T` meets the *Cpp17CopyAssignable*
     ( [[cpp17.copyassignable]]) requirements. Otherwise, `T` meets both
     the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]) and
-    *Cpp17CopyAssignable* requirements.
-    \[*Note 2*: For the overloads with an `ExecutionPolicy`, there might
-    be a performance cost if the value type of `ForwardIterator1` does
-    not meet both the *Cpp17CopyConstructible* and *Cpp17CopyAssignable*
+    *Cpp17CopyAssignable* requirements. \[*Note 2*: For the overloads
+    with an `ExecutionPolicy`, there might be a performance cost if the
+    value type of `ForwardIterator1` does not meet both the
+    *Cpp17CopyConstructible* and *Cpp17CopyAssignable*
     requirements. — *end note*\]
 
 *Effects:* Copies only the first element from every consecutive group of
@@ -8627,8 +8626,8 @@ denotes an object of type `minus<>`.
   *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 - For all overloads, in the ranges \[`first`, `last`\] and \[`result`,
   `result + (last - first)`\], `binary_op` neither modifies elements nor
-  invalidates iterators or subranges.
-  The use of fully closed ranges is intentional.
+  invalidates iterators or subranges. The use of fully closed ranges is
+  intentional.
 
 *Effects:* For the overloads with no `ExecutionPolicy` and a non-empty
 range, the function creates an accumulator `acc` of type `T`,

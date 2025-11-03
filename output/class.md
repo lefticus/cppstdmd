@@ -605,9 +605,9 @@ If `T` is the name of a class, then each of the following shall have a
 name different from `T`:
 
 - every static data member of class `T`;
-- every member function of class `T`;
-  \[*Note 2*: This restriction does not apply to constructors, which do
-  not have names [[class.ctor]] — *end note*\]
+- every member function of class `T`; \[*Note 2*: This restriction does
+  not apply to constructors, which do not have names
+  [[class.ctor]] — *end note*\]
 - every member of class `T` that is itself a type;
 - every member template of class `T`;
 - every enumerator of every member of class `T` that is an unscoped
@@ -3254,12 +3254,12 @@ undefined.
 
 A member of a class can be
 
--  private, that is, it can be named only by members and friends of the
+- private, that is, it can be named only by members and friends of the
   class in which it is declared;
--  protected, that is, it can be named only by members and friends of
-  the class in which it is declared, by classes derived from that class,
-  and by their friends (see  [[class.protected]]); or
--  public, that is, it can be named anywhere without access restriction.
+- protected, that is, it can be named only by members and friends of the
+  class in which it is declared, by classes derived from that class, and
+  by their friends (see  [[class.protected]]); or
+- public, that is, it can be named anywhere without access restriction.
 
 \[*Note 1*: A constructor or destructor can be named by an expression
 [[basic.def.odr]] even though it has no name. — *end note*\]
@@ -3573,14 +3573,11 @@ void DD::f() {
 A base class `B` of `N` is *accessible* at *R*, if
 
 - an invented public member of `B` would be a public member of `N`, or
-
-- occurs in a direct member or friend of class `N`, and an invented
+- *R* occurs in a direct member or friend of class `N`, and an invented
   public member of `B` would be a private or protected member of `N`, or
-
-- occurs in a direct member or friend of a class `P` derived from `N`,
-  and an invented public member of `B` would be a private or protected
-  member of `P`, or
-
+- *R* occurs in a direct member or friend of a class `P` derived from
+  `N`, and an invented public member of `B` would be a private or
+  protected member of `P`, or
 - there exists a class `S` such that `B` is a base class of `S`
   accessible at *R* and `S` is a base class of `N` accessible at *R*.
 
@@ -3629,15 +3626,12 @@ is the class denoted by the *nested-name-specifier* of the
 
 A member `m` is accessible at the point *R* when named in class `N` if
 
-- `m`
-  as a member of `N` is public, or
-- `m`
-  as a member of `N` is private, and *R* occurs in a direct member or
-  friend of class `N`, or
-- `m`
-  as a member of `N` is protected, and *R* occurs in a direct member or
-  friend of class `N`, or in a member of a class `P` derived from `N`,
-  where `m` as a member of `P` is public, private, or protected, or
+- `m` as a member of `N` is public, or
+- `m` as a member of `N` is private, and *R* occurs in a direct member
+  or friend of class `N`, or
+- `m` as a member of `N` is protected, and *R* occurs in a direct member
+  or friend of class `N`, or in a member of a class `P` derived from
+  `N`, where `m` as a member of `P` is public, private, or protected, or
 - there exists a base class `B` of `N` that is accessible at *R*, and
   `m` is accessible at *R* when named in class `B`.
   \[*Example 1*:
@@ -4415,16 +4409,16 @@ fully-constructed subobjects in case an exception is thrown
 In a non-delegating constructor, initialization proceeds in the
 following order:
 
--  First, and only for the constructor of the most derived class
+- First, and only for the constructor of the most derived class
   [[intro.object]], virtual base classes are initialized in the order
   they appear on a depth-first left-to-right traversal of the directed
   acyclic graph of base classes, where “left-to-right” is the order of
   appearance of the base classes in the derived class
   *base-specifier-list*.
--  Then, direct base classes are initialized in declaration order as
-  they appear in the *base-specifier-list* (regardless of the order of
-  the *mem-initializer*).
--  Then, non-static data members are initialized in the order they were
+- Then, direct base classes are initialized in declaration order as they
+  appear in the *base-specifier-list* (regardless of the order of the
+  *mem-initializer*).
+- Then, non-static data members are initialized in the order they were
   declared in the class definition (again regardless of the order of the
   *mem-initializer*).
 - Finally, the *compound-statement* of the constructor body is executed.
@@ -4917,9 +4911,9 @@ eliminate multiple copies):
   operation can be omitted by treating the *exception-declaration* as an
   alias for the exception object if the meaning of the program will be
   unchanged except for the execution of constructors and destructors for
-  the object declared by the *exception-declaration*.
-  \[*Note 3*: There cannot be a move from the exception object because
-  it is always an lvalue. — *end note*\]
+  the object declared by the *exception-declaration*. \[*Note 3*: There
+  cannot be a move from the exception object because it is always an
+  lvalue. — *end note*\]
 
 Copy elision is not permitted where an expression is evaluated in a
 context requiring a constant expression [[expr.const]] and in constant

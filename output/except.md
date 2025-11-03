@@ -698,12 +698,11 @@ An exception specification is considered to be *needed* when:
   (e.g., an explicit specialization or an overriding virtual function);
 - the function is defined; or
 - the exception specification is needed for a defaulted function that
-  calls the function.
-  \[*Note 1*: A defaulted declaration does not require the exception
-  specification of a base member function to be evaluated until the
-  implicit exception specification of the derived function is needed,
-  but an explicit *noexcept-specifier* needs the implicit exception
-  specification to compare against. — *end note*\]
+  calls the function. \[*Note 1*: A defaulted declaration does not
+  require the exception specification of a base member function to be
+  evaluated until the implicit exception specification of the derived
+  function is needed, but an explicit *noexcept-specifier* needs the
+  implicit exception specification to compare against. — *end note*\]
 
 The exception specification of a defaulted function is evaluated as
 described above only when needed; similarly, the *noexcept-specifier* of

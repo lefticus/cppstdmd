@@ -10229,9 +10229,8 @@ the `"C"` locale, as described for `strtod`, except that
   `chars_format::scientific`, the optional exponent part shall not
   appear; and
 - if `fmt` is `chars_format::hex`, the prefix `"0x"` or `"0X"` is
-  assumed.
-  \[*Example 1*: The string `0x123` is parsed to have the value `0` with
-  remaining characters `x123`. — *end example*\]
+  assumed. \[*Example 1*: The string `0x123` is parsed to have the value
+  `0` with remaining characters `x123`. — *end example*\]
 
 In any case, the resulting `value` is one of at most two floating-point
 values closest to the value of the string matching the pattern.
@@ -11203,13 +11202,13 @@ modifies the state of the `formatter` to be as if the type of the
 header that declares the template `formatter` provides the following
 enabled specializations:
 
--  The debug-enabled specializations
+- The debug-enabled specializations
   ``` cpp
   template<> struct formatter<char, char>;
   template<> struct formatter<char, wchar_t>;
   template<> struct formatter<wchar_t, wchar_t>;
   ```
--  For each `charT`, the debug-enabled string type specializations
+- For each `charT`, the debug-enabled string type specializations
   ``` cpp
   template<> struct formatter<charT*, charT>;
   template<> struct formatter<const charT*, charT>;
@@ -11219,13 +11218,13 @@ enabled specializations:
   template<class traits>
     struct formatter<basic_string_view<charT, traits>, charT>;
   ```
--  For each `charT`, for each cv-unqualified arithmetic type
+- For each `charT`, for each cv-unqualified arithmetic type
   `ArithmeticT` other than `char`, `wchar_t`, `char8_t`, `char16_t`, or
   `char32_t`, a specialization
   ``` cpp
   template<> struct formatter<ArithmeticT, charT>;
   ```
--  For each `charT`, the pointer type specializations
+- For each `charT`, the pointer type specializations
   ``` cpp
   template<> struct formatter<nullptr_t, charT>;
   template<> struct formatter<void*, charT>;
@@ -11321,9 +11320,9 @@ interpret *S* and construct *E*.
       representation of *C* using lower-case hexadecimal digits.
     - Otherwise, *C* is appended to *E*.
   - Otherwise, if *X* is a shift sequence, the effect on *E* and further
-    decoding of *S* is unspecified.
-    A shift sequence should be represented in *E* such that the original
-    code unit sequence of *S* can be reconstructed.
+    decoding of *S* is unspecified. A shift sequence should be
+    represented in *E* such that the original code unit sequence of *S*
+    can be reconstructed.
   - Otherwise (*X* is a sequence of ill-formed code units), each code
     unit *U* is appended to *E* in order as the sequence
     `\x\{hex-digit-sequence\}`, where `hex-digit-sequence` is the
@@ -11593,10 +11592,9 @@ ill-formed.
 For a type `R`, `format_kind<R>` is defined as follows:
 
 - If `same_as``<remove_cvref_t<ranges::range_reference_t<R>>, R>` is
-  `true`, `format_kind<R>` is `range_format::disabled`.
-  \[*Note 3*: This prevents constraint recursion for ranges whose
-  reference type is the same range type. For example,
-  `std::filesystem::path` is a range of
+  `true`, `format_kind<R>` is `range_format::disabled`. \[*Note 3*: This
+  prevents constraint recursion for ranges whose reference type is the
+  same range type. For example, `std::filesystem::path` is a range of
   `std::filesystem::path`. — *end note*\]
 - Otherwise, if the *qualified-id* `R::key_type` is valid and denotes a
   type:

@@ -626,12 +626,12 @@ namespace std {
 The rounding mode for floating-point arithmetic is characterized by the
 values:
 
--  `round_indeterminate` if the rounding style is indeterminable
--  `round_toward_zero` if the rounding style is toward zero
--  `round_to_nearest` if the rounding style is to the nearest
+- `round_indeterminate` if the rounding style is indeterminable
+- `round_toward_zero` if the rounding style is toward zero
+- `round_to_nearest` if the rounding style is to the nearest
   representable value
--  `round_toward_infinity` if the rounding style is toward infinity
--  `round_toward_neg_infinity` if the rounding style is toward negative
+- `round_toward_infinity` if the rounding style is toward infinity
+- `round_toward_neg_infinity` if the rounding style is toward negative
   infinity
 
 ### Class template `numeric_limits` <a id="numeric.limits">[[numeric.limits]]</a>
@@ -1421,17 +1421,15 @@ succeeds, nonzero if it fails.
 - First, objects with thread storage duration and associated with the
   current thread are destroyed. Next, objects with static storage
   duration are destroyed and functions registered by calling `atexit`
-  are called.
-  A function is called for every time it is registered.
+  are called. A function is called for every time it is registered.
   See  [[basic.start.term]] for the order of destructions and calls.
   (Objects with automatic storage duration are not destroyed as a result
-  of calling `exit()`.)
-  Objects with automatic storage duration are all destroyed in a program
-  whose `main` function [[basic.start.main]] contains no objects with
-  automatic storage duration and executes the call to `exit()`. Control
-  can be transferred directly to such a `main` function by throwing an
-  exception that is caught in `main`.
-  If a registered function invoked by `exit` exits via an exception, the
+  of calling `exit()`.) Objects with automatic storage duration are all
+  destroyed in a program whose `main` function [[basic.start.main]]
+  contains no objects with automatic storage duration and executes the
+  call to `exit()`. Control can be transferred directly to such a `main`
+  function by throwing an exception that is caught in `main`. If a
+  registered function invoked by `exit` exits via an exception, the
   function `std::terminate` is invoked [[except.terminate]].
 - Next, all open C streams (as mediated by the function signatures
   declared in ) with unwritten buffered data are flushed, all open C
@@ -1441,8 +1439,8 @@ succeeds, nonzero if it fails.
   zero or `EXIT_SUCCESS`, an *implementation-defined* form of the status
   is returned. If `status` is `EXIT_FAILURE`, an
   *implementation-defined* form of the status is returned. Otherwise the
-  status returned is *implementation-defined*.
-  The macros `EXIT_FAILURE` and `EXIT_SUCCESS` are defined in .
+  status returned is *implementation-defined*. The macros `EXIT_FAILURE`
+  and `EXIT_SUCCESS` are defined in .
 
 ``` cpp
 int at_quick_exit(c-atexit-handler* f) noexcept;

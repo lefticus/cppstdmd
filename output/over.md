@@ -1299,11 +1299,9 @@ i, \text{ICS}^i(`F₁`) is not a worse conversion sequence than
 
   — *end example*\]
   or, if not that,
-- `F1`
-  is not a function template specialization and `F2` is a function
+- `F1` is not a function template specialization and `F2` is a function
   template specialization, or, if not that,
-- `F1`
-  and `F2` are function template specializations, and the function
+- `F1` and `F2` are function template specializations, and the function
   template for `F1` is more specialized than the template for `F2`
   according to the partial ordering rules described in 
   [[temp.func.order]], or, if not that,
@@ -1987,7 +1985,7 @@ conversion sequences unless one of the following rules applies:
   — *end example*\]
 - Standard conversion sequence `S1` is a better conversion sequence than
   standard conversion sequence `S2` if
-  -  `S1` is a proper subsequence of `S2` (comparing the conversion
+  - `S1` is a proper subsequence of `S2` (comparing the conversion
     sequences in the canonical form defined by  [[over.ics.scs]],
     excluding any Lvalue Transformation; the identity conversion
     sequence is considered to be a subsequence of any non-identity

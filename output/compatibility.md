@@ -300,7 +300,7 @@ import<int> f();                // ill-formed; previously well-formed
 
 New keywords. Required for new features.
 
--  The `char8_t` keyword is added to differentiate the types of ordinary
+- The `char8_t` keyword is added to differentiate the types of ordinary
   and UTF-8 literals [[lex.string]].
 - The `concept` keyword is added to enable the definition of concepts
   [[temp.concept]].

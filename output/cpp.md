@@ -645,7 +645,7 @@ introduced by a `#define` directive. — *end note*\]
 Each macro definition has at most one point of definition in each
 translation unit and at most one point of undefinition, as follows:
 
--  The *point of definition* of a macro definition within a translation
+- The *point of definition* of a macro definition within a translation
   unit T is
   - if the `#define` directive of the macro definition occurs within T,
     the point at which that directive occurs, or otherwise,
@@ -656,12 +656,11 @@ translation unit and at most one point of undefinition, as follows:
 
   In the latter case, the macro is said to be *imported* from the header
   unit.
--  The *point of undefinition* of a macro definition within a
-  translation unit is the first point at which a `#undef` directive
-  naming the macro occurs after its point of definition, or the first
-  point of macro import of a header unit containing a point of
-  undefinition for the macro definition, whichever (if any) occurs
-  first.
+- The *point of undefinition* of a macro definition within a translation
+  unit is the first point at which a `#undef` directive naming the macro
+  occurs after its point of definition, or the first point of macro
+  import of a header unit containing a point of undefinition for the
+  macro definition, whichever (if any) occurs first.
 
 A macro directive is *active* at a source location if it has a point of
 definition in that translation unit preceding the location, and does not

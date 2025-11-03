@@ -52,8 +52,7 @@ Let `POINTER_OF(T)` denote a type that is
 
 Let `POINTER_OF_OR(T, U)` denote a type that is:
 
-- `\exposid{POINTER_OF}(T)`
-  if `POINTER_OF(T)` is valid and denotes a type,
+- `POINTER_OF(T)` if `POINTER_OF(T)` is valid and denotes a type,
 - otherwise, `U`.
 
 ``` cpp
@@ -4344,10 +4343,9 @@ general-purpose memory resources having the following qualities:
   results in the allocation of an additional chunk of memory from the
   *upstream allocator* (supplied at construction), thus replenishing the
   pool. With each successive replenishment, the chunk size obtained
-  increases geometrically.
-  \[*Note 2*: By allocating memory in chunks, the pooling strategy
-  increases the chance that consecutive allocations will be close
-  together in memory. — *end note*\]
+  increases geometrically. \[*Note 2*: By allocating memory in chunks,
+  the pooling strategy increases the chance that consecutive allocations
+  will be close together in memory. — *end note*\]
 - Allocation requests that exceed the largest block size of any pool are
   fulfilled directly from the upstream allocator.
 - A `pool_options` struct may be passed to the pool resource

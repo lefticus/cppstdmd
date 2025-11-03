@@ -32,34 +32,34 @@ program [[basic.link]]. — *end note*\]
 The precedence among the syntax rules of translation is specified by the
 following phases.
 
-1.   An implementation shall support input files that are a sequence of
+1.  An implementation shall support input files that are a sequence of
     UTF-8 code units (UTF-8 files). It may also support an
     *implementation-defined* set of other kinds of input files, and, if
     so, the kind of an input file is determined in an
     *implementation-defined* manner that includes a means of designating
     input files as UTF-8 files, independent of their content.
     \[*Note 1*: In other words, recognizing the is not
-    sufficient. — *end note*\]
-    If an input file is determined to be a UTF-8 file, then it shall be
-    a well-formed UTF-8 code unit sequence and it is decoded to produce
-    a sequence of Unicode scalar values. A sequence of translation
-    character set elements is then formed by mapping each Unicode scalar
-    value to the corresponding translation character set element. In the
-    resulting sequence, each pair of characters in the input sequence
-    consisting of followed by , as well as each not immediately followed
-    by a , is replaced by a single new-line character.
-    For any other kind of input file supported by the implementation,
-    characters are mapped, in an *implementation-defined* manner, to a
-    sequence of translation character set elements [[lex.charset]],
-    representing end-of-line indicators as new-line characters.
-2.   If the first translation character is , it is deleted. Each
-    sequence of a backslash character (\\ immediately followed by zero
-    or more whitespace characters other than new-line followed by a
-    new-line character is deleted, splicing physical source lines to
-    form logical source lines. Only the last backslash on any physical
-    source line shall be eligible for being part of such a splice.
-    Except for splices reverted in a raw string literal, if a splice
-    results in a character sequence that matches the syntax of a
+    sufficient. — *end note*\] If an input file is determined to be a
+    UTF-8 file, then it shall be a well-formed UTF-8 code unit sequence
+    and it is decoded to produce a sequence of Unicode scalar values. A
+    sequence of translation character set elements is then formed by
+    mapping each Unicode scalar value to the corresponding translation
+    character set element. In the resulting sequence, each pair of
+    characters in the input sequence consisting of followed by , as well
+    as each not immediately followed by a , is replaced by a single
+    new-line character. For any other kind of input file supported by
+    the implementation, characters are mapped, in an
+    *implementation-defined* manner, to a sequence of translation
+    character set elements [[lex.charset]], representing end-of-line
+    indicators as new-line characters.
+2.  If the first translation character is , it is deleted. Each sequence
+    of a backslash character (\\ immediately followed by zero or more
+    whitespace characters other than new-line followed by a new-line
+    character is deleted, splicing physical source lines to form logical
+    source lines. Only the last backslash on any physical source line
+    shall be eligible for being part of such a splice. Except for
+    splices reverted in a raw string literal, if a splice results in a
+    character sequence that matches the syntax of a
     *universal-character-name*, the behavior is undefined. A source file
     that is not empty and that does not end in a new-line character, or
     that ends in a splice, shall be processed as if an additional
@@ -98,36 +98,32 @@ following phases.
     syntactically and semantically analyzed and translated.
     \[*Note 2*: The process of analyzing and translating the tokens can
     occasionally result in one token being replaced by a sequence of
-    other tokens [[temp.names]]. — *end note*\]
-    It is *implementation-defined* whether the sources for module units
-    and header units on which the current translation unit has an
-    interface dependency [[module.unit]], [[module.import]] are required
-    to be available.
-    \[*Note 3*: Source files, translation units and translated
-    translation units need not necessarily be stored as files, nor need
-    there be any one-to-one correspondence between these entities and
-    any external representation. The description is conceptual only, and
-    does not specify any particular implementation. — *end note*\]
+    other tokens [[temp.names]]. — *end note*\] It is
+    *implementation-defined* whether the sources for module units and
+    header units on which the current translation unit has an interface
+    dependency [[module.unit]], [[module.import]] are required to be
+    available. \[*Note 3*: Source files, translation units and
+    translated translation units need not necessarily be stored as
+    files, nor need there be any one-to-one correspondence between these
+    entities and any external representation. The description is
+    conceptual only, and does not specify any particular
+    implementation. — *end note*\]
 8.  Translated translation units and instantiation units are combined as
-    follows:
-    \[*Note 4*: Some or all of these can be supplied from a
-    library. — *end note*\]
-    Each translated translation unit is examined to produce a list of
-    required instantiations.
-    \[*Note 5*: This can include instantiations which have been
-    explicitly requested [[temp.explicit]]. — *end note*\]
-    The definitions of the required templates are located. It is
-    *implementation-defined* whether the source of the translation units
-    containing these definitions is required to be available.
-    \[*Note 6*: An implementation can choose to encode sufficient
-    information into the translated translation unit so as to ensure the
-    source is not required here. — *end note*\]
+    follows: \[*Note 4*: Some or all of these can be supplied from a
+    library. — *end note*\] Each translated translation unit is examined
+    to produce a list of required instantiations. \[*Note 5*: This can
+    include instantiations which have been explicitly requested
+    [[temp.explicit]]. — *end note*\] The definitions of the required
+    templates are located. It is *implementation-defined* whether the
+    source of the translation units containing these definitions is
+    required to be available. \[*Note 6*: An implementation can choose
+    to encode sufficient information into the translated translation
+    unit so as to ensure the source is not required here. — *end note*\]
     All the required instantiations are performed to produce
-    *instantiation units*.
-    \[*Note 7*: These are similar to translated translation units, but
-    contain no references to uninstantiated templates and no template
-    definitions. — *end note*\]
-    The program is ill-formed if any instantiation fails.
+    *instantiation units*. \[*Note 7*: These are similar to translated
+    translation units, but contain no references to uninstantiated
+    templates and no template definitions. — *end note*\] The program is
+    ill-formed if any instantiation fails.
 9.  All external entity references are resolved. Library components are
     linked to satisfy external references to entities not defined in the
     current translation. All such translator output is collected into a
@@ -355,7 +351,7 @@ quotation characters in a character literal or string literal.
 If the input stream has been parsed into preprocessing tokens up to a
 given character:
 
--  If the next character begins a sequence of characters that could be
+- If the next character begins a sequence of characters that could be
   the prefix and initial double quote of a raw string literal, such as
   `R"`, the next preprocessing token shall be a raw string literal.
   Between the initial and final double quote characters of the raw
@@ -363,10 +359,9 @@ given character:
   reverted; this reversion shall apply before any *d-char*, *r-char*, or
   delimiting parenthesis is identified. The raw string literal is
   defined as the shortest sequence of characters that matches the
-  raw-string pattern
-  ``` bnf
-  encoding-prefix_opt 'R' raw-string
-  ```
+  raw-string pattern\begin{ncbnf}
+  encoding-prefix_opt \terminal{R} raw-string
+  \end{ncbnf}
 - Otherwise, if the next three characters are `<::` and the subsequent
   character is neither `:` nor `>`, the `<` is treated as a
   preprocessing token by itself and not as the first character of the
@@ -1316,16 +1311,14 @@ raw string literals), plus a terminating character, in order as follows:
   encoding. If a character lacks representation in the associated
   character encoding, then the *string-literal* is
   conditionally-supported and an *implementation-defined* code unit
-  sequence is encoded.
-  \[*Note 9*: No character lacks representation in any Unicode encoding
-  form. — *end note*\]
-  When encoding a stateful character encoding, implementations should
-  encode the first such sequence beginning with the initial encoding
-  state and encode subsequent sequences beginning with the final
-  encoding state of the prior sequence.
-  \[*Note 10*: The encoded code unit sequence can differ from the
-  sequence of code units that would be obtained by encoding each
-  character independently. — *end note*\]
+  sequence is encoded. \[*Note 9*: No character lacks representation in
+  any Unicode encoding form. — *end note*\] When encoding a stateful
+  character encoding, implementations should encode the first such
+  sequence beginning with the initial encoding state and encode
+  subsequent sequences beginning with the final encoding state of the
+  prior sequence. \[*Note 10*: The encoded code unit sequence can differ
+  from the sequence of code units that would be obtained by encoding
+  each character independently. — *end note*\]
 - Each *numeric-escape-sequence* [[lex.ccon]] contributes a single code
   unit with a value as follows:
   - Let v be the integer value represented by the octal number

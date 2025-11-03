@@ -8115,8 +8115,7 @@ The name `views::zip` denotes a customization point object
 [[customization.point.object]]. Given a pack of subexpressions `Es...`,
 the expression `views::zip(Es...)` is expression-equivalent to
 
-- `auto(views::empty<tuple<>>)`
-  if `Es` is an empty pack,
+- `auto(views::empty<tuple<>>)` if `Es` is an empty pack,
 - otherwise, `zip_view<views::all_t<decltype((Es))>...>(Es...)`.
 
 \[*Example 1*:
@@ -8437,9 +8436,8 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 - Otherwise, `true` if there exists an integer
   0 ≤ i < `sizeof...(Views)` such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
-  is `true`.
-  \[*Note 4*: This allows `zip_view` to model `common_range` when all
-  constituent views model `common_range`. — *end note*\]
+  is `true`. \[*Note 4*: This allows `zip_view` to model `common_range`
+  when all constituent views model `common_range`. — *end note*\]
 - Otherwise, `false`.
 
 ``` cpp
@@ -9050,8 +9048,7 @@ The name `views::adjacent<N>` denotes a range adaptor object
 expression `N`, the expression `views::adjacent<N>(E)` is
 expression-equivalent to
 
-- `((void)E, auto(views::empty<tuple<>>))`
-  if `N` is equal to `0`,
+- `((void)E, auto(views::empty<tuple<>>))` if `N` is equal to `0`,
 - otherwise, `adjacent_view<views::all_t<decltype((E))>, N>(E)`.
 
 \[*Example 1*:
@@ -11981,8 +11978,7 @@ The name `views::cartesian_product` denotes a customization point object
 [[customization.point.object]]. Given a pack of subexpressions `Es`, the
 expression `views::cartesian_product(Es...)` is expression-equivalent to
 
-- `views::single(tuple())`
-  if `Es` is an empty pack,
+- `views::single(tuple())` if `Es` is an empty pack,
 - otherwise,
   `cartesian_product_view<views::all_t<decltype((Es))>...>(Es...)`.
 

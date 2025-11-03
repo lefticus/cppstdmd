@@ -33,31 +33,18 @@ Every name is introduced by a *declaration*, which is a
 
 - *name-declaration*, *block-declaration*, or *member-declaration*
   [[dcl.pre]], [[class.mem]],
-
 - *init-declarator* [[dcl.decl]],
-
-- in a structured binding declaration [[dcl.struct.bind]],
-
+- *identifier* in a structured binding declaration [[dcl.struct.bind]],
 - *init-capture* [[expr.prim.lambda.capture]],
-
 - *condition* with a *declarator* [[stmt.pre]],
-
 - *member-declarator* [[class.mem]],
-
 - *using-declarator* [[namespace.udecl]],
-
 - *parameter-declaration* [[dcl.fct]],
-
 - *type-parameter* [[temp.param]],
-
-- that introduces a name [[dcl.type.elab]],
-
+- *elaborated-type-specifier* that introduces a name [[dcl.type.elab]],
 - *class-specifier* [[class.pre]],
-
 - *enum-specifier* or *enumerator-definition* [[dcl.enum]],
-
 - *exception-declaration* [[except.pre]], or
-
 - implicit declaration of an injected-class-name [[class.pre]].
 
 \[*Note 3*: The interpretation of a *for-range-declaration* produces one
@@ -119,12 +106,12 @@ declaration unless:
 - it contains the `extern` specifier [[dcl.stc]] or a
   *linkage-specification*
   and neither an *initializer* nor a *function-body*,
--  it declares a non-inline static data member in a class definition
+- it declares a non-inline static data member in a class definition
   [[class.mem]], [[class.static]],
 - it declares a static data member outside a class definition and the
   variable was defined within the class with the `constexpr` specifier
   (this usage is deprecated; see [[depr.static.constexpr]]),
--  it is an *elaborated-type-specifier* [[class.name]],
+- it is an *elaborated-type-specifier* [[class.name]],
 - it is an *opaque-enum-declaration* [[dcl.enum]],
 - it is a *template-parameter* [[temp.param]],
 - it is a *parameter-declaration* [[dcl.fct]] in a function declarator
@@ -907,7 +894,7 @@ Each
 
 - selection or iteration statement [[stmt.select]], [[stmt.iter]],
 - substatement of such a statement,
--  *handler* [[except.pre]], or
+- *handler* [[except.pre]], or
 - compound statement [[stmt.block]] that is not the *compound-statement*
   of a *handler*
 
@@ -970,11 +957,10 @@ A *parameter-declaration-clause* P introduces a
   end of the nearest enclosing *init-declarator*, *member-declarator*,
   *declarator* of a *parameter-declaration* or a
   *nodeclspec-function-declaration*, or *function-definition*, but does
-  not include the locus of the associated *declarator*.
-  \[*Note 2*: In this case, P declares the parameters of a function (or
-  a function or template parameter declared with function type). A
-  member function’s parameter scope is nested within its class’s
-  scope. — *end note*\]
+  not include the locus of the associated *declarator*. \[*Note 2*: In
+  this case, P declares the parameters of a function (or a function or
+  template parameter declared with function type). A member function’s
+  parameter scope is nested within its class’s scope. — *end note*\]
 - If P is associated with a *lambda-declarator*, its scope extends to
   the end of the *compound-statement* in the *lambda-expression*.
 - If P is associated with a *requirement-parameter-list*, its scope
@@ -1090,9 +1076,8 @@ appears in a translation unit D and
   *private-module-fragment* in D (if any), and
 - either X is exported or else D and L are part of the same module and X
   does not inhabit a namespace with internal linkage or declare a name
-  with internal linkage.
-  \[*Note 3*: Names declared by a *using-declaration* have no
-  linkage. — *end note*\]
+  with internal linkage. \[*Note 3*: Names declared by a
+  *using-declaration* have no linkage. — *end note*\]
 
 \[*Note 2*:
 
@@ -1542,9 +1527,9 @@ set. The set of entities is determined in the following way:
   entities associated with the types of the template arguments provided
   for template type parameters; the templates used as template template
   arguments; and the classes of which any member templates used as
-  template template arguments are members.
-  \[*Note 4*: Non-type template arguments do not contribute to the set
-  of associated entities. — *end note*\]
+  template template arguments are members. \[*Note 4*: Non-type template
+  arguments do not contribute to the set of associated
+  entities. — *end note*\]
 - If `T` is an enumeration type, its associated entities are `T` and, if
   it is a class member, the member’s class.
 - If `T` is a pointer to `U` or an array of `U`, its associated entities
@@ -2047,11 +2032,11 @@ name of
 
 - a variable; or
 - a function; or
--  a named class [[class.pre]], or an unnamed class defined in a typedef
+- a named class [[class.pre]], or an unnamed class defined in a typedef
   declaration in which the class has the typedef name for linkage
   purposes [[dcl.typedef]]; or
--  a named enumeration [[dcl.enum]], or an unnamed enumeration defined
-  in a typedef declaration in which the enumeration has the typedef name
+- a named enumeration [[dcl.enum]], or an unnamed enumeration defined in
+  a typedef declaration in which the enumeration has the typedef name
   for linkage purposes [[dcl.typedef]]; or
 - an unnamed enumeration that has an enumerator as a name for linkage
   purposes [[dcl.enum]]; or
@@ -2183,9 +2168,9 @@ A declaration D *names* an entity E if
   *template-name*, or *concept-name* denoting E, or
 - E is a function or function template and D contains an expression that
   names E [[basic.def.odr]] or an *id-expression* that refers to a set
-  of overloads that contains E.
-  \[*Note 6*: Non-dependent names in an instantiated declaration do not
-  refer to a set of overloads [[temp.res]]. — *end note*\]
+  of overloads that contains E. \[*Note 6*: Non-dependent names in an
+  instantiated declaration do not refer to a set of overloads
+  [[temp.res]]. — *end note*\]
 
 A declaration is an *exposure* if it either names a TU-local entity
 (defined below), ignoring
@@ -2221,9 +2206,8 @@ An entity is *TU-local* if it is
 - a specialization of a TU-local template,
 - a specialization of a template with any TU-local template argument, or
 - a specialization of a template whose (possibly instantiated)
-  declaration is an exposure.
-  \[*Note 7*: A specialization can be produced by implicit or explicit
-  instantiation. — *end note*\]
+  declaration is an exposure. \[*Note 7*: A specialization can be
+  produced by implicit or explicit instantiation. — *end note*\]
 
 A value or object is *TU-local* if either
 
@@ -3172,9 +3156,8 @@ Temporary objects are created
 - when a prvalue is converted to an xvalue [[conv.rval]],
 - when needed by the implementation to pass or return an object of
   trivially copyable type (see below), and
-- when throwing an exception [[except.throw]].
-  \[*Note 8*: The lifetime of exception objects is described in 
-  [[except.throw]]. — *end note*\]
+- when throwing an exception [[except.throw]]. \[*Note 8*: The lifetime
+  of exception objects is described in  [[except.throw]]. — *end note*\]
 
 Even when the creation of the temporary object is unevaluated
 [[expr.context]], all the semantic restrictions shall be respected as if
@@ -3305,12 +3288,9 @@ which the reference is bound was obtained through one of the following:
   right operand is a pointer to data member of non-reference type,
 - a
   - `const_cast` [[expr.const.cast]],
-
   - `static_cast` [[expr.static.cast]],
-
   - `dynamic_cast` [[expr.dynamic.cast]], or
-
-  - 
+  - `reinterpret_cast` [[expr.reinterpret.cast]]
 
   converting, without a user-defined conversion, a glvalue operand that
   is one of these expressions to a glvalue that refers to the object
@@ -3852,7 +3832,7 @@ Compound types can be constructed in the following ways:
   references or objects of a given type, [[dcl.fct]];
 - *pointers* to cv `void` or objects or functions (including static
   members of classes) of a given type, [[dcl.ptr]];
--  *references* to objects or functions of a given type, [[dcl.ref]].
+- *references* to objects or functions of a given type, [[dcl.ref]].
   There are two types of references:
   - lvalue reference
   - rvalue reference
@@ -3864,7 +3844,7 @@ Compound types can be constructed in the following ways:
   types at different times, [[class.union]];
 - *enumerations*, which comprise a set of named constant values,
   [[dcl.enum]];
--  *pointers to non-static class members*,
+- *pointers to non-static class members*,
   which identify members of a given type within objects of a given
   class, [[dcl.mptr]]. Pointers to data members and pointers to member
   functions are collectively called *pointer-to-member* types.
@@ -3896,11 +3876,8 @@ allowed although there are restrictions on what can be done with them
 
 - a *pointer to* an object or function (the pointer is said to *point*
   to the object or function), or
-
 - a *pointer past the end of* an object [[expr.add]], or
-
 - the *null pointer value* for that type, or
-
 - an *invalid pointer value*.
 
 A value of a pointer type that is a pointer to or past the end of an
@@ -4061,7 +4038,7 @@ Every integer type has an *integer conversion rank* defined as follows:
   `unsigned char`.
 - The rank of `bool` is less than the rank of all standard integer
   types.
--  The ranks of `char8_t`, `char16_t`, `char32_t`, and `wchar_t` equal
+- The ranks of `char8_t`, `char16_t`, `char32_t`, and `wchar_t` equal
   the ranks of their underlying types [[basic.fundamental]].
 - The rank of any extended signed integer type relative to another
   extended signed integer type with the same width is
@@ -4684,23 +4661,21 @@ Executions of atomic functions that are either defined to be lock-free
 
 - If there is only one thread that is not blocked [[defns.block]] in a
   standard library function, a lock-free execution in that thread shall
-  complete.
-  \[*Note 10*: Concurrently executing threads might prevent progress of
-  a lock-free execution. For example, this situation can occur with
-  load-locked store-conditional implementations. This property is
-  sometimes termed obstruction-free. — *end note*\]
+  complete. \[*Note 10*: Concurrently executing threads might prevent
+  progress of a lock-free execution. For example, this situation can
+  occur with load-locked store-conditional implementations. This
+  property is sometimes termed obstruction-free. — *end note*\]
 - When one or more lock-free executions run concurrently, at least one
-  should complete.
-  \[*Note 11*: It is difficult for some implementations to provide
-  absolute guarantees to this effect, since repeated and particularly
-  inopportune interference from other threads could prevent forward
-  progress, e.g., by repeatedly stealing a cache line for unrelated
-  purposes between load-locked and store-conditional instructions. For
-  implementations that follow this recommendation and ensure that such
-  effects cannot indefinitely delay progress under expected operating
-  conditions, such anomalies can therefore safely be ignored by
-  programmers. Outside this document, this property is sometimes termed
-  lock-free. — *end note*\]
+  should complete. \[*Note 11*: It is difficult for some implementations
+  to provide absolute guarantees to this effect, since repeated and
+  particularly inopportune interference from other threads could prevent
+  forward progress, e.g., by repeatedly stealing a cache line for
+  unrelated purposes between load-locked and store-conditional
+  instructions. For implementations that follow this recommendation and
+  ensure that such effects cannot indefinitely delay progress under
+  expected operating conditions, such anomalies can therefore safely be
+  ignored by programmers. Outside this document, this property is
+  sometimes termed lock-free. — *end note*\]
 
 During the execution of a thread of execution, each of the following is
 termed an *execution step*:

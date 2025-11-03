@@ -695,9 +695,9 @@ namespace std {
 Let R_`I` be `remove_cvref_t<I>`. The type `iter_difference_t<I>`
 denotes
 
-- `incrementable_traits<$R_\tcode{I}$>::difference_type`
-  if `iterator_traits<R_\tcode{I}>` names a specialization generated
-  from the primary template, and
+- `incrementable_traits<R_\tcode{I}>::difference_type` if
+  `iterator_traits<R_\tcode{I}>` names a specialization generated from
+  the primary template, and
 - `iterator_traits<R_\tcode{I}>::difference_type` otherwise.
 
 Users may specialize `incrementable_traits` on program-defined types.
@@ -769,9 +769,9 @@ template<class T> using iter_value_t = see below;
 
 Let R_`I` be `remove_cvref_t<I>`. The type `iter_value_t<I>` denotes
 
-- `indirectly_readable_traits<$R_\tcode{I}$>::value_type`
-  if `iterator_traits<R_\tcode{I}>` names a specialization generated
-  from the primary template, and
+- `indirectly_readable_traits<R_\tcode{I}>::value_type` if
+  `iterator_traits<R_\tcode{I}>` names a specialization generated from
+  the primary template, and
 - `iterator_traits<R_\tcode{I}>::value_type` otherwise.
 
 Class template `indirectly_readable_traits` may be specialized on
@@ -914,8 +914,8 @@ The members of a specialization `iterator_traits<I>` generated from the
   - If the *qualified-id* `I::iterator_category` is valid and denotes a
     type, `iterator_category` names that type. Otherwise,
     `iterator_category` names:
-    - `random_access_iterator_tag`
-      if `I` satisfies `cpp17-random-access-iterator`, or otherwise
+    - `random_access_iterator_tag` if `I` satisfies
+      `cpp17-random-access-iterator`, or otherwise
     - `bidirectional_iterator_tag` if `I` satisfies
       `cpp17-bidirectional-iterator`, or otherwise
     - `forward_iterator_tag` if `I` satisfies `cpp17-forward-iterator`,
@@ -1004,10 +1004,9 @@ for a subexpression `E` is expression-equivalent to:
 - Otherwise, if the expression `*E` is well-formed:
   - if `*E` is an lvalue, `std::move(*E)`;
   - otherwise, `*E`.
-- Otherwise, `ranges::iter_move(E)` is ill-formed.
-  \[*Note 1*: This case can result in substitution failure when
-  `ranges::iter_move(E)` appears in the immediate context of a template
-  instantiation. — *end note*\]
+- Otherwise, `ranges::iter_move(E)` is ill-formed. \[*Note 1*: This case
+  can result in substitution failure when `ranges::iter_move(E)` appears
+  in the immediate context of a template instantiation. — *end note*\]
 
 If `ranges::iter_move(E)` is not equal to `*E`, the program is
 ill-formed, no diagnostic required.
@@ -1063,8 +1062,8 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   `indirectly_movable_storable<T2, T1>`, then
   `(void)(*E1 = iter-exchange-move(E2, E1))`, except that `E1` is
   evaluated only once.
-- Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed.
-  \[*Note 3*: This case can result in substitution failure when
+- Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed. \[*Note 3*: This
+  case can result in substitution failure when
   `ranges::iter_swap(E1, E2)` appears in the immediate context of a
   template instantiation. — *end note*\]
 
@@ -1816,8 +1815,8 @@ To implement algorithms taking projections, it is necessary to determine
 the projected type of an iterator’s value type. For the exposition-only
 alias template *indirect-value-t*, `indirect-value-t<T>` denotes
 
-- `invoke_result_t<Proj&, \exposid{indirect-value-t}<I>>`
-  if `T` names `projected<I, Proj>`, and
+- `invoke_result_t<Proj&, indirect-value-t<I>>` if `T` names
+  `projected<I, Proj>`, and
 - `iter_value_t<T>&` otherwise.
 
 #### Indirect callables <a id="indirectcallable.indirectinvocable">[[indirectcallable.indirectinvocable]]</a>

@@ -255,48 +255,37 @@ appropriate):
 Descriptions of function semantics contain the following elements (as
 appropriate):
 
-- the conditions for the function’s participation in overload resolution
-  [[over.match]].
-  \[*Note 1*: Failure to meet such a condition results in the function’s
-  silent non-viability. — *end note*\]
-  \[*Example 1*: An implementation can express such a condition via a
-  *constraint-expression* [[temp.constr.decl]]. — *end example*\]
-
-- the conditions that, if not met, render the program ill-formed.
+-  the conditions for the function’s participation in overload
+  resolution [[over.match]]. \[*Note 1*: Failure to meet such a
+  condition results in the function’s silent
+  non-viability. — *end note*\] \[*Example 1*: An implementation can
+  express such a condition via a *constraint-expression*
+  [[temp.constr.decl]]. — *end example*\]
+-  the conditions that, if not met, render the program ill-formed.
   \[*Example 2*: An implementation can express such a condition via the
   *constant-expression* in a *static_assert-declaration* [[dcl.pre]]. If
   the diagnostic is to be emitted only after the function has been
   selected by overload resolution, an implementation can express such a
   condition via a *constraint-expression* [[temp.constr.decl]] and also
   define the function as deleted. — *end example*\]
-
-- the conditions that the function assumes to hold whenever it is
+-  the conditions that the function assumes to hold whenever it is
   called; violation of any preconditions results in undefined behavior.
-
-- the actions performed by the function.
-
-- the synchronization operations [[intro.multithread]] applicable to the
-  function.
-
-- the conditions (sometimes termed observable results) established by
+-  the actions performed by the function.
+-  the synchronization operations [[intro.multithread]] applicable to
   the function.
-
-- for a *typename-specifier*, a description of the named type; for an
+-  the conditions (sometimes termed observable results) established by
+  the function.
+-  for a *typename-specifier*, a description of the named type; for an
   *expression*, a description of the type of the expression; the
   expression is an lvalue if the type is an lvalue reference type, an
   xvalue if the type is an rvalue reference type, and a prvalue
   otherwise.
-
-- a description of the value(s) returned by the function.
-
-- any exceptions thrown by the function, and the conditions that would
+-  a description of the value(s) returned by the function.
+-  any exceptions thrown by the function, and the conditions that would
   cause the exception.
-
-- the time and/or space complexity of the function.
-
-- additional semantic constraints on the function.
-
-- the error conditions for error codes reported by the function.
+-  the time and/or space complexity of the function.
+-  additional semantic constraints on the function.
+-  the error conditions for error codes reported by the function.
 
 Whenever the *Effects* element specifies that the semantics of some
 function `F` are *Equivalent to* some code sequence, then the various
@@ -501,9 +490,9 @@ sequences that follow a few uniform conventions:
   encodings of the execution character sets and the sets of additional
   elements (if any) are locale-specific. Each element of the execution
   wide-character set is encoded as a single code unit representable by a
-  value of type `wchar_t`.
-  \[*Note 2*: The encodings of the execution character sets can be
-  unrelated to any literal encoding. — *end note*\]
+  value of type `wchar_t`. \[*Note 2*: The encodings of the execution
+  character sets can be unrelated to any literal
+  encoding. — *end note*\]
 - A *letter* is any of the 26 lowercase or 26 uppercase letters in the
   basic character set.
 - The *decimal-point character* is the locale-specific (single-byte)
@@ -1825,63 +1814,63 @@ is undefined.
 In namespace `std`, the following names are reserved for previous
 standardization:
 
--  `auto_ptr`,
--  `auto_ptr_ref`,
--  `binary_function`,
--  `binary_negate`,
--  `bind1st`,
--  `bind2nd`,
--  `binder1st`,
--  `binder2nd`,
--  `const_mem_fun1_ref_t`,
--  `const_mem_fun1_t`,
--  `const_mem_fun_ref_t`,
--  `const_mem_fun_t`,
--  `declare_no_pointers`,
--  `declare_reachable`,
--  `get_pointer_safety`,
--  `get_temporary_buffer`,
--  `get_unexpected`,
--  `gets`,
--  `is_literal_type`,
--  `is_literal_type_v`,
--  `mem_fun1_ref_t`,
--  `mem_fun1_t`,
--  `mem_fun_ref_t`,
--  `mem_fun_ref`,
--  `mem_fun_t`,
--  `mem_fun`,
--  `not1`,
--  `not2`,
--  `pointer_safety`,
--  `pointer_to_binary_function`,
--  `pointer_to_unary_function`,
--  `ptr_fun`,
--  `random_shuffle`,
--  `raw_storage_iterator`,
--  `result_of`,
--  `result_of_t`,
--  `return_temporary_buffer`,
--  `set_unexpected`,
--  `unary_function`,
--  `unary_negate`,
--  `uncaught_exception`,
--  `undeclare_no_pointers`,
--  `undeclare_reachable`, and
--  `unexpected_handler`.
+- `auto_ptr`,
+- `auto_ptr_ref`,
+- `binary_function`,
+- `binary_negate`,
+- `bind1st`,
+- `bind2nd`,
+- `binder1st`,
+- `binder2nd`,
+- `const_mem_fun1_ref_t`,
+- `const_mem_fun1_t`,
+- `const_mem_fun_ref_t`,
+- `const_mem_fun_t`,
+- `declare_no_pointers`,
+- `declare_reachable`,
+- `get_pointer_safety`,
+- `get_temporary_buffer`,
+- `get_unexpected`,
+- `gets`,
+- `is_literal_type`,
+- `is_literal_type_v`,
+- `mem_fun1_ref_t`,
+- `mem_fun1_t`,
+- `mem_fun_ref_t`,
+- `mem_fun_ref`,
+- `mem_fun_t`,
+- `mem_fun`,
+- `not1`,
+- `not2`,
+- `pointer_safety`,
+- `pointer_to_binary_function`,
+- `pointer_to_unary_function`,
+- `ptr_fun`,
+- `random_shuffle`,
+- `raw_storage_iterator`,
+- `result_of`,
+- `result_of_t`,
+- `return_temporary_buffer`,
+- `set_unexpected`,
+- `unary_function`,
+- `unary_negate`,
+- `uncaught_exception`,
+- `undeclare_no_pointers`,
+- `undeclare_reachable`, and
+- `unexpected_handler`.
 
 The following names are reserved as members for previous
 standardization, and may not be used as a name for object-like macros in
 portable code:
 
--  `argument_type`,
--  `first_argument_type`,
--  `io_state`,
--  `open_mode`,
--  `preferred`,
--  `second_argument_type`,
--  `seek_dir`, and.
--  `strict`.
+- `argument_type`,
+- `first_argument_type`,
+- `io_state`,
+- `open_mode`,
+- `preferred`,
+- `second_argument_type`,
+- `seek_dir`, and.
+- `strict`.
 
 The name `stossc` is reserved as a member function for previous
 standardization, and may not be used as a name for function-like macros
@@ -2010,7 +1999,6 @@ by supplying a pointer to a function defined in the program or the
 library as an argument to (respectively):
 
 - `set_new_handler`
-
 - `set_terminate`
 
 See also subclauses  [[alloc.errors]], Storage allocation errors, and 
@@ -2019,8 +2007,7 @@ See also subclauses  [[alloc.errors]], Storage allocation errors, and 
 A C++ program can get a pointer to the current handler function by
 calling the following functions:
 
--  `get_new_handler`
-
+- `get_new_handler`
 - `get_terminate`
 
 Calling the `set_*` and `get_*` functions shall not incur a data race. A
@@ -2320,11 +2307,10 @@ In any case:
 - Every base class described as `virtual` shall be virtual;
 - Every base class not specified as `virtual` shall not be virtual;
 - Unless explicitly stated otherwise, types with distinct names shall be
-  distinct types.
-  \[*Note 5*: There is an implicit exception to this rule for types that
-  are described as synonyms [[dcl.typedef]], [[namespace.udecl]], such
-  as `size_t` [[support.types]] and `streamoff`
-  [[stream.types]]. — *end note*\]
+  distinct types. \[*Note 5*: There is an implicit exception to this
+  rule for types that are described as synonyms
+  [[dcl.typedef]], [[namespace.udecl]], such as `size_t`
+  [[support.types]] and `streamoff` [[stream.types]]. — *end note*\]
 
 All types specified in the C++ standard library shall be non-`final`
 types unless otherwise specified.

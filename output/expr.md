@@ -491,11 +491,10 @@ The result of the conversion is determined according to the following
 rules:
 
 - If `T` is cv `std::nullptr_t`, the result is a null pointer constant
-  [[conv.ptr]].
-  \[*Note 1*: Since the conversion does not access the object to which
-  the glvalue refers, there is no side effect even if `T` is
-  volatile-qualified [[intro.execution]], and the glvalue can refer to
-  an inactive member of a union [[class.union]]. — *end note*\]
+  [[conv.ptr]]. \[*Note 1*: Since the conversion does not access the
+  object to which the glvalue refers, there is no side effect even if
+  `T` is volatile-qualified [[intro.execution]], and the glvalue can
+  refer to an inactive member of a union [[class.union]]. — *end note*\]
 - Otherwise, if `T` has a class type, the conversion copy-initializes
   the result object from the glvalue.
 - Otherwise, if the object to which the glvalue refers contains an
@@ -977,11 +976,10 @@ If an *id-expression* E denotes a member M of an anonymous union
   anonymous union member. — *end example*\]
 - Otherwise, E is interpreted as a class member access [[expr.ref]] that
   designates the member subobject M of the anonymous union variable for
-  U.
-  \[*Note 2*: Under this interpretation, E no longer denotes a
-  non-static data member. — *end note*\]
-  \[*Example 2*: `N::x` is interpreted as `N::u.x`, where u names the
-  anonymous union variable. — *end example*\]
+  U. \[*Note 2*: Under this interpretation, E no longer denotes a
+  non-static data member. — *end note*\] \[*Example 2*: `N::x` is
+  interpreted as `N::u.x`, where u names the anonymous union
+  variable. — *end example*\]
 
 An *id-expression* that denotes a non-static data member or implicit
 object member function of a class can only be used:
@@ -1068,9 +1066,9 @@ the innermost such *lambda-expression*.
   type of the expression is the type of a class member access expression
   [[expr.ref]] naming the non-static data member that would be declared
   for such a capture in the object parameter [[dcl.fct]] of the function
-  call operator of E.
-  \[*Note 3*: If E is not declared `mutable`, the type of such an
-  identifier will typically be `const` qualified. — *end note*\]
+  call operator of E. \[*Note 3*: If E is not declared `mutable`, the
+  type of such an identifier will typically be `const`
+  qualified. — *end note*\]
 - Otherwise (if there is no such *lambda-expression* or if P either
   precedes E’s function parameter scope or is in E’s
   *parameter-declaration-clause*), the type of the expression is the
@@ -1839,9 +1837,9 @@ local entities as follows:
 - An *id-expression* that names a local entity potentially references
   that entity; an *id-expression* that names one or more non-static
   class members and does not form a pointer to member [[expr.unary.op]]
-  potentially references `*this`.
-  \[*Note 4*: This occurs even if overload resolution selects a static
-  member function for the *id-expression*. — *end note*\]
+  potentially references `*this`. \[*Note 4*: This occurs even if
+  overload resolution selects a static member function for the
+  *id-expression*. — *end note*\]
 - A `this` expression potentially references `*this`.
 - A *lambda-expression* potentially references the local entities named
   by its *simple-capture*.
@@ -3565,9 +3563,9 @@ The operand of the unary `&` operator shall be an lvalue of some type
 - Otherwise, the result has type “pointer to `T`” and points to the
   designated object [[intro.memory]] or function [[basic.compound]]. If
   the operand names an explicit object member function [[dcl.fct]], the
-  operand shall be a *qualified-id*.
-  \[*Note 6*: In particular, taking the address of a variable of type
-  “cv `T`” yields a pointer of type “pointer to cv `T`”. — *end note*\]
+  operand shall be a *qualified-id*. \[*Note 6*: In particular, taking
+  the address of a variable of type “cv `T`” yields a pointer of type
+  “pointer to cv `T`”. — *end note*\]
 
 \[*Example 1*:
 
@@ -3734,12 +3732,11 @@ and the *await-ready* expression, then:
 - If the result of *await-ready* is `false`, the coroutine is considered
   suspended. Then:
   - If the type of *await-suspend* is `std::coroutine_handle<Z>`,
-    *await-suspend*`.resume()` is evaluated.
-    \[*Note 7*: This resumes the coroutine referred to by the result of
-    *await-suspend*. Any number of coroutines can be successively
-    resumed in this fashion, eventually returning control flow to the
-    current coroutine caller or resumer
-    [[dcl.fct.def.coroutine]]. — *end note*\]
+    *await-suspend*`.resume()` is evaluated. \[*Note 7*: This resumes
+    the coroutine referred to by the result of *await-suspend*. Any
+    number of coroutines can be successively resumed in this fashion,
+    eventually returning control flow to the current coroutine caller or
+    resumer [[dcl.fct.def.coroutine]]. — *end note*\]
   - Otherwise, if the type of *await-suspend* is `bool`, *await-suspend*
     is evaluated, and the coroutine is resumed if the result is `false`.
   - Otherwise, *await-suspend* is evaluated.
@@ -4188,12 +4185,10 @@ and then overload resolution is performed again.
 
 \[*Example 5*:
 
-- `new T` results in one of the following calls:
-  \_\_CODEBLOCK_1\_\_
+- `new T` results in one of the following calls: \_\_CODEBLOCK_1\_\_
 - `new(2,f) T` results in one of the following calls:
   \_\_CODEBLOCK_2\_\_
-- `new T[5]` results in one of the following calls:
-  \_\_CODEBLOCK_3\_\_
+- `new T[5]` results in one of the following calls: \_\_CODEBLOCK_3\_\_
 - `new(2,f) T[5]` results in one of the following calls:
   \_\_CODEBLOCK_4\_\_
 
@@ -4234,9 +4229,8 @@ A *new-expression* that creates an object of type `T` initializes that
 object as follows:
 
 - If the *new-initializer* is omitted, the object is default-initialized
-  [[dcl.init]].
-  \[*Note 8*: If no initialization is performed, the object has an
-  indeterminate value. — *end note*\]
+  [[dcl.init]]. \[*Note 8*: If no initialization is performed, the
+  object has an indeterminate value. — *end note*\]
 - Otherwise, the *new-initializer* is interpreted according to the
   initialization rules of  [[dcl.init]] for direct-initialization.
 
@@ -4709,7 +4703,7 @@ unscoped enumeration type.
 For subtraction, one of the following shall hold:
 
 - both operands have arithmetic or unscoped enumeration type; or
--  both operands are pointers to cv-qualified or cv-unqualified versions
+- both operands are pointers to cv-qualified or cv-unqualified versions
   of the same completely-defined object type; or
 - the left operand is a pointer to a completely-defined object type and
   the right operand has integral or unscoped enumeration type.
@@ -4745,10 +4739,9 @@ shall be the same type that is defined as `std::ptrdiff_t` in the
 - Otherwise, if `P` and `Q` point to, respectively, array elements i and
   j of the same array object `x`, the expression `P - Q` has the value
   i - j.
-- Otherwise, the behavior is undefined.
-  \[*Note 9*: If the value i - j is not in the range of representable
-  values of type `std::ptrdiff_t`, the behavior is
-  undefined. — *end note*\]
+- Otherwise, the behavior is undefined. \[*Note 9*: If the value i - j
+  is not in the range of representable values of type `std::ptrdiff_t`,
+  the behavior is undefined. — *end note*\]
 
 For addition or subtraction, if the expressions `P` or `Q` have type
 “pointer to cv `T`”, where `T` and the array element type are not
@@ -5149,14 +5142,13 @@ sequenced before the second or third expression [[intro.execution]].
 If either the second or the third operand has type `void`, one of the
 following shall hold:
 
--  The second or the third operand (but not both) is a (possibly
+- The second or the third operand (but not both) is a (possibly
   parenthesized) *throw-expression* [[expr.throw]]; the result is of the
   type and value category of the other. The *conditional-expression* is
   a bit-field if that operand is a bit-field.
 - Both the second and the third operands have type `void`; the result is
-  of type `void` and is a prvalue.
-  \[*Note 10*: This includes the case where both operands are
-  *throw-expression*. — *end note*\]
+  of type `void` and is a prvalue. \[*Note 10*: This includes the case
+  where both operands are *throw-expression*. — *end note*\]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
 same value category and of types cv-qualifier{cv1} `T` and
@@ -5486,10 +5478,9 @@ A variable or temporary object `o` is *constant-initialized* if
   when interpreted as a *constant-expression*, except that if `o` is an
   object, that full-expression may also invoke constexpr constructors
   for `o` and its subobjects even if those objects are of non-literal
-  class types.
-  \[*Note 11*: Such a class can have a non-trivial destructor. Within
-  this evaluation, `std::is_constant_evaluated()` [[meta.const.eval]]
-  returns `true`. — *end note*\]
+  class types. \[*Note 11*: Such a class can have a non-trivial
+  destructor. Within this evaluation, `std::is_constant_evaluated()`
+  [[meta.const.eval]] returns `true`. — *end note*\]
 
 A variable is *potentially-constant* if it is constexpr or it has
 reference or non-volatile const-qualified integral or enumeration type.
@@ -5626,11 +5617,10 @@ evaluate
 - a statement with an assumption [[dcl.attr.assume]] whose converted
   *conditional-expression*, if evaluated where the assumption appears,
   would not disqualify E from being a core constant expression and would
-  not evaluate to `true`.
-  \[*Note 13*: E is not disqualified from being a core constant
-  expression if the hypothetical evaluation of the converted
-  *conditional-expression* would disqualify E from being a core constant
-  expression. — *end note*\]
+  not evaluate to `true`. \[*Note 13*: E is not disqualified from being
+  a core constant expression if the hypothetical evaluation of the
+  converted *conditional-expression* would disqualify E from being a
+  core constant expression. — *end note*\]
 
 \[*Example 1*:
 

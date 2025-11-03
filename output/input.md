@@ -1354,10 +1354,9 @@ member objects of `rhs` as follows:
   member objects of `rhs`, except that
   - `rdstate()`, `rdbuf()`, and `exceptions()` are left unchanged;
   - the contents of arrays pointed at by `pword` and `iword` are copied,
-    not the pointers themselves;
-    This suggests an infinite amount of copying, but the implementation
-    can keep track of the maximum element of the arrays that is nonzero.
-    and
+    not the pointers themselves; This suggests an infinite amount of
+    copying, but the implementation can keep track of the maximum
+    element of the arrays that is nonzero. and
   - if any newly stored pointer values in `*this` point at objects
     stored outside the object `rhs` and those objects are destroyed when
     `rhs` is destroyed, the newly stored pointer values are altered to
@@ -2419,8 +2418,7 @@ The pending sequence is defined as the concatenation of
 obeys the following constraints:
 
 - The effect of consuming a character on the associated output sequence
-  is specified.
-  That is, for each class derived from a specialization of
+  is specified. That is, for each class derived from a specialization of
   `basic_streambuf` in this Clause [[stringbuf,filebuf]], a
   specification of how consuming a character effects the associated
   output sequence is given. There is no requirement on a program-defined
@@ -5020,8 +5018,8 @@ initialization is presented here as:
 
 - `ios_base::openmode mode`, has `in` set if the input sequence can be
   read, and `out` set if the output sequence can be written.
-- `basic_string<charT, traits, Allocator> buf`
-  contains the underlying character sequence.
+- `basic_string<charT, traits, Allocator> buf` contains the underlying
+  character sequence.
 - `init_buf_ptrs()` sets the base class’ get area [[streambuf.get.area]]
   and put area [[streambuf.put.area]] pointers after initializing,
   moving from, or assigning to `buf` accordingly.
@@ -5313,16 +5311,13 @@ sequence, if possible, in one of three ways:
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if the
   input sequence has a putback position available, and if
   `traits::eq(to_char_type(c), gptr()[-1])` returns `true`, assigns
-  `gptr() - 1` to `gptr()`.
-  Returns: `c`.
+  `gptr() - 1` to `gptr()`. Returns: `c`.
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if the
   input sequence has a putback position available, and if `mode` `&`
-  `ios_base::out` is nonzero, assigns `c` to `*–gptr()`.
-  Returns: `c`.
+  `ios_base::out` is nonzero, assigns `c` to `*–gptr()`. Returns: `c`.
 - If `traits::eq_int_type(c, traits::eof())` returns `true` and if the
   input sequence has a putback position available, assigns `gptr() - 1`
-  to `gptr()`.
-  Returns: `traits::not_eof(c)`.
+  to `gptr()`. Returns: `traits::not_eof(c)`.
 
 *Returns:* As specified above, or `traits::eof()` to indicate failure.
 
@@ -5339,11 +5334,10 @@ sequence, if possible, in one of two ways:
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if
   either the output sequence has a write position available or the
   function makes a write position available (as described below), the
-  function calls `sputc(c)`.
-  Signals success by returning `c`.
+  function calls `sputc(c)`. Signals success by returning `c`.
 - If `traits::eq_int_type(c, traits::eof())` returns `true`, there is no
-  character to append.
-  Signals success by returning a value other than `traits::eof()`.
+  character to append. Signals success by returning a value other than
+  `traits::eof()`.
 
 *Returns:* As specified above, or `traits::eof()` to indicate failure.
 
@@ -7105,18 +7099,16 @@ sequence, if possible, in one of three ways:
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if the
   function makes a putback position available and if
   `traits::eq(to_char_type(c), gptr()[-1])` returns `true`, decrements
-  the next pointer for the input sequence, `gptr()`.
-  Returns: `c`.
+  the next pointer for the input sequence, `gptr()`. Returns: `c`.
 - If `traits::eq_int_type(c, traits::eof())` returns `false` and if the
   function makes a putback position available and if the function is
   permitted to assign to the putback position, decrements the next
-  pointer for the input sequence, and stores `c` there.
-  Returns: `c`.
+  pointer for the input sequence, and stores `c` there. Returns: `c`.
 - If `traits::eq_int_type(c, traits::eof())` returns `true`, and if
   either the input sequence has a putback position available or the
   function makes a putback position available, decrements the next
-  pointer for the input sequence, `gptr()`.
-  Returns: `traits::not_eof(c)`.
+  pointer for the input sequence, `gptr()`. Returns:
+  `traits::not_eof(c)`.
 
 *Returns:* As specified above, or `traits::eof()` to indicate failure.
 
@@ -8825,11 +8817,11 @@ consisting solely of one and two period characters respectively, have
 special meaning. The following characteristics of filenames are
 operating system dependent:
 
-- The permitted characters.
-  \[*Example 1*: Some operating systems prohibit the ASCII control
-  characters (0x00 – 0x1F) in filenames. — *end example*\]
-  \[*Note 1*: Wider portability can be achieved by limiting *filename*
-  characters to the POSIX Portable Filename Character Set:  
+- The permitted characters. \[*Example 1*: Some operating systems
+  prohibit the ASCII control characters (0x00 – 0x1F) in
+  filenames. — *end example*\] \[*Note 1*: Wider portability can be
+  achieved by limiting *filename* characters to the POSIX Portable
+  Filename Character Set:  
   `A B C D E F G H I J K L M N O P Q R S T U V W X Y Z`  
   `a b c d e f g h i j k l m n o p q r s t u v w x y z`  
   `0 1 2 3 4 5 6 7 8 9 . _ -` — *end note*\]
@@ -8883,9 +8875,9 @@ longest sequence of characters is chosen.
     followed by a *directory-separator* and a dot-dot filename, along
     with any immediately following *directory-separator*.
 6.  If there is a *root-directory*, remove all dot-dot filenames and any
-    *directory-separator* immediately following them.
-    \[*Note 3*: These dot-dot filenames attempt to refer to nonexistent
-    parent directories. — *end note*\]
+    *directory-separator* immediately following them. \[*Note 3*: These
+    dot-dot filenames attempt to refer to nonexistent parent
+    directories. — *end note*\]
 7.  If the last filename is dot-dot, remove any trailing
     *directory-separator*.
 8.  If the path is empty, add a dot.
@@ -8973,26 +8965,26 @@ value, the method of conversion and the encoding to be converted to is
 determined by its value type:
 
 - `char`: The encoding is the native ordinary encoding. The method of
-  conversion, if any, is operating system dependent.
-  \[*Note 4*: For POSIX-based operating systems `path::value_type` is
-  `char` so no conversion from `char` value type arguments or to `char`
-  value type return values is performed. For Windows-based operating
-  systems, the native ordinary encoding is determined by calling a
-  Windows API function. — *end note*\]
-  \[*Note 5*: This results in behavior identical to other C and C++
-  standard library functions that perform file operations using ordinary
-  character strings to identify paths. Changing this behavior would be
-  surprising and error-prone. — *end note*\]
+  conversion, if any, is operating system dependent. \[*Note 4*: For
+  POSIX-based operating systems `path::value_type` is `char` so no
+  conversion from `char` value type arguments or to `char` value type
+  return values is performed. For Windows-based operating systems, the
+  native ordinary encoding is determined by calling a Windows API
+  function. — *end note*\] \[*Note 5*: This results in behavior
+  identical to other C and C++ standard library functions that perform
+  file operations using ordinary character strings to identify paths.
+  Changing this behavior would be surprising and
+  error-prone. — *end note*\]
 - `wchar_t`: The encoding is the native wide encoding. The method of
-  conversion is unspecified.
-  \[*Note 6*: For Windows-based operating systems `path::value_type` is
-  `wchar_t` so no conversion from `wchar_t` value type arguments or to
-  `wchar_t` value type return values is performed. — *end note*\]
--  `char8_t`: The encoding is UTF-8. The method of conversion is
+  conversion is unspecified. \[*Note 6*: For Windows-based operating
+  systems `path::value_type` is `wchar_t` so no conversion from
+  `wchar_t` value type arguments or to `wchar_t` value type return
+  values is performed. — *end note*\]
+- `char8_t`: The encoding is UTF-8. The method of conversion is
   unspecified.
--  `char16_t`: The encoding is UTF-16. The method of conversion is
+- `char16_t`: The encoding is UTF-16. The method of conversion is
   unspecified.
--  `char32_t`: The encoding is UTF-32. The method of conversion is
+- `char32_t`: The encoding is UTF-32. The method of conversion is
   unspecified.
 
 If the encoding being converted to has no representation for source
@@ -9804,9 +9796,9 @@ For the elements of the pathname in the generic format, the forward
 traversal order is as follows:
 
 - The *root-name* element, if present.
-- The *root-directory* element, if present.
-  \[*Note 7*: The generic format is required to ensure lexicographical
-  comparison works correctly. — *end note*\]
+- The *root-directory* element, if present. \[*Note 7*: The generic
+  format is required to ensure lexicographical comparison works
+  correctly. — *end note*\]
 - Each successive *filename* element, if present.
 - An empty element, if a trailing non-root *directory-separator* is
   present.
@@ -9888,9 +9880,8 @@ Path equality and path equivalence have different semantics.
   `true`. — *end example*\]
 - Equivalence is determined by the `equivalent()` non-member function,
   which determines if two paths resolve [[fs.class.path]] to the same
-  file system entity.
-  \[*Example 3*: `equivalent("foo", "bar")` will be `true` when both
-  paths resolve to the same file. — *end example*\]
+  file system entity. \[*Example 3*: `equivalent("foo", "bar")` will be
+  `true` when both paths resolve to the same file. — *end example*\]
 
 — *end note*\]
 

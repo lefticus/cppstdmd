@@ -575,10 +575,10 @@ Such requirements have the following meaning:
   resource limits as described in [[implimits]], accept and correctly
   execute
   that program.
--  If a program contains a violation of a rule for which no diagnostic
-  is required, this document places no requirement on implementations
-  with respect to that program.
--  Otherwise, if a program contains a violation of any diagnosable rule
+- If a program contains a violation of a rule for which no diagnostic is
+  required, this document places no requirement on implementations with
+  respect to that program.
+- Otherwise, if a program contains a violation of any diagnosable rule
   or an occurrence of a construct described in this document as
   “conditionally-supported” when the implementation does not support
   that construct, a conforming implementation shall issue at least one

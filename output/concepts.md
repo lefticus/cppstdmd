@@ -110,9 +110,7 @@ For the above example:
   both of its operands, and \#3 modifies only its first operand `a`.
 - Expression \#1 implicitly requires additional expression variations
   that meet the requirements for `c == d` (including non-modification),
-  as if the expressions
-  \_\_CODEBLOCK_2\_\_
-  had been declared as well.
+  as if the expressions \_\_CODEBLOCK_2\_\_ had been declared as well.
 - Expression \#3 implicitly requires additional expression variations
   that meet the requirements for `a = c` (including non-modification of
   the second operand), as if the expressions `a = b` and
@@ -528,10 +526,9 @@ expression `S` determined as follows:
 
   `noexcept(S)` is equal to
   `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>`.
-- Otherwise, `ranges::swap(E1, E2)` is ill-formed.
-  \[*Note 2*: This case can result in substitution failure when
-  `ranges::swap(E1, E2)` appears in the immediate context of a template
-  instantiation. — *end note*\]
+- Otherwise, `ranges::swap(E1, E2)` is ill-formed. \[*Note 2*: This case
+  can result in substitution failure when `ranges::swap(E1, E2)` appears
+  in the immediate context of a template instantiation. — *end note*\]
 
 \[*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type

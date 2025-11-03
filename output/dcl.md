@@ -1596,9 +1596,8 @@ A type `T` containing a placeholder type, and a corresponding
   - If the operand is a *braced-init-list* [[dcl.init.list]], the
     program is ill-formed.
   - If the operand is an *expression* X that is not an
-    *assignment-expression*, E is `(X)`.
-    \[*Note 1*: A comma expression [[expr.comma]] is not an
-    *assignment-expression*. — *end note*\]
+    *assignment-expression*, E is `(X)`. \[*Note 1*: A comma expression
+    [[expr.comma]] is not an *assignment-expression*. — *end note*\]
   - Otherwise, E is the operand of the `return` statement.
 
   If E has type `void`, `T` shall be either *type-constraint*
@@ -3653,9 +3652,8 @@ source type is not defined.
   - If the initializer expression is a prvalue and the cv-unqualified
     version of the source type is the same class as the class of the
     destination, the initializer expression is used to initialize the
-    destination object.
-    \[*Example 4*: `T x = T(T(T()));` value-initializes
-    `x`. — *end example*\]
+    destination object. \[*Example 4*: `T x = T(T(T()));`
+    value-initializes `x`. — *end example*\]
   - Otherwise, if the initialization is direct-initialization, or if it
     is copy-initialization where the cv-unqualified version of the
     source type is the same class as, or a derived class of, the class
@@ -3676,9 +3674,8 @@ source type is not defined.
       otherwise are value-initialized. For each 1 ≤ i < j ≤ n, every
       value computation and side effect associated with the
       initialization of eᵢ is sequenced before those associated with the
-      initialization of eⱼ.
-      \[*Note 3*:
-      By contrast with direct-list-initialization, narrowing conversions
+      initialization of eⱼ. \[*Note 3*: By contrast with
+      direct-list-initialization, narrowing conversions
       [[dcl.init.list]] are permitted, designators are not permitted, a
       temporary object bound to a reference does not have its lifetime
       extended [[class.temporary]], and there is no brace elision.
@@ -4372,13 +4369,12 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
     “cv-qualifier{cv1} `T1`”, and the reference is bound to the result.
 
   If `T1` is reference-related to `T2`:
-  - shall be the same cv-qualification as, or greater cv-qualification
-    than, cv-qualifier{cv2}; and
-
+  - cv-qualifier{cv1} shall be the same cv-qualification as, or greater
+    cv-qualification than, cv-qualifier{cv2}; and
   - if the reference is an rvalue reference, the initializer expression
-    shall not be an lvalue.
-    \[*Note 8*: This can be affected by whether the initializer
-    expression is move-eligible [[expr.prim.id.unqual]]. — *end note*\]
+    shall not be an lvalue. \[*Note 8*: This can be affected by whether
+    the initializer expression is move-eligible
+    [[expr.prim.id.unqual]]. — *end note*\]
 
   \[*Example 10*:
   ``` cpp
@@ -5165,34 +5161,26 @@ A coroutine behaves as if its *function-body* were replaced by:
 
 where
 
--  the *await-expression* containing the call to `initial_suspend` is
-  the *initial await expression*, and
-
+- the *await-expression* containing the call to `initial_suspend` is the
+  *initial await expression*, and
 - the *await-expression* containing the call to `final_suspend` is the
   *final await expression*, and
-
-- is initially `false` and is set to `true` immediately before the
-  evaluation of the *await-resume* expression [[expr.await]] of the
-  initial await expression, and
-
+- *initial-await-resume-called* is initially `false` and is set to
+  `true` immediately before the evaluation of the *await-resume*
+  expression [[expr.await]] of the initial await expression, and
 - *promise-type* denotes the promise type, and
-
 - the object denoted by the exposition-only name *promise* is the
   *promise object* of the coroutine, and
-
 - the label denoted by the name *final-suspend* is defined for
   exposition only [[stmt.return.coroutine]], and
-
 - *promise-constructor-arguments* is determined as follows: overload
   resolution is performed on a promise constructor call created by
   assembling an argument list `q₁` \dotsc `qₙ`. If a viable constructor
   is found [[over.match.viable]], then *promise-constructor-arguments*
   is `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
   *promise-constructor-arguments* is empty, and
-
 - a coroutine is suspended at the *initial suspend point* if it is
   suspended at the initial await expression, and
-
 - a coroutine is suspended at a *final suspend point* if it is suspended
   - at a final await expression or
   - due to an exception exiting from `unhandled_exception()`.

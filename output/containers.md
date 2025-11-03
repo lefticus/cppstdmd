@@ -13041,9 +13041,9 @@ template<class OtherElementType, size_t OtherExtent>
 - `extent == dynamic_extent` `||` `OtherExtent == dynamic_extent` `||`
   `extent == OtherExtent` is `true`, and
 - `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
-  `true`.
-  \[*Note 7*: The intent is to allow only qualification conversions of
-  the `OtherElementType` to `element_type`. — *end note*\]
+  `true`. \[*Note 7*: The intent is to allow only qualification
+  conversions of the `OtherElementType` to
+  `element_type`. — *end note*\]
 
 *Preconditions:* If `extent` is not equal to `dynamic_extent`, then
 `s.size()` is equal to `extent`.
@@ -13521,10 +13521,10 @@ Let `N` be `sizeof...(OtherIndexTypes)`, and let `exts_arr` be
 - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
 - `(is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)` is
   `true`, and
-- `N == rank_dynamic() || N == rank()` is `true`.
-  \[*Note 8*: One can construct `extents` from just dynamic extents,
-  which are all the values getting stored, or from all the extents with
-  a precondition. — *end note*\]
+- `N == rank_dynamic() || N == rank()` is `true`. \[*Note 8*: One can
+  construct `extents` from just dynamic extents, which are all the
+  values getting stored, or from all the extents with a
+  precondition. — *end note*\]
 
 *Preconditions:*
 
@@ -14380,9 +14380,9 @@ template<class OtherIndexType>
   the integers in the range $[0, \textit{rank_})$, such that
   `s[`pᵢ`] >= s[`$p_{i-1}$`] * e.extent(p`$_{i-1}$`)` is `true` for all
   i in the range $[1, \textit{rank_})$, where pᵢ is the $i^\text{th}$
-  element of P.
-  \[*Note 10*: For `layout_stride`, this condition is necessary and
-  sufficient for `is_unique()` to be `true`. — *end note*\]
+  element of P. \[*Note 10*: For `layout_stride`, this condition is
+  necessary and sufficient for `is_unique()` to be
+  `true`. — *end note*\]
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`, and for all
 d in the range $[0, \textit{rank_})$, direct-non-list-initializes
@@ -14512,9 +14512,8 @@ In subclause [[mdspan.accessor.reqmts]],
 - `A` denotes an accessor policy.
 - `a` denotes a value of type `A` or `const A`.
 - `p` denotes a value of type `A::data_handle_type` or
-  `const A::data_handle_type`.
-  \[*Note 11*: The type `A::data_handle_type` need not be
-  dereferenceable. — *end note*\]
+  `const A::data_handle_type`. \[*Note 11*: The type
+  `A::data_handle_type` need not be dereferenceable. — *end note*\]
 - `n`, `i`, and `j` each denote values of type `size_t`.
 
 ##### Requirements <a id="mdspan.accessor.reqmts">[[mdspan.accessor.reqmts]]</a>
@@ -14791,8 +14790,8 @@ namespace std {
 - `ElementType` is a complete object type that is neither an abstract
   class type nor an array type,
 - `Extents` is a specialization of `extents`, and
-- `is_same_v<ElementType, typename AccessorPolicy::element_type>`
-  is `true`.
+- `is_same_v<ElementType, typename AccessorPolicy::element_type>` is
+  `true`.
 
 `LayoutPolicy` shall meet the layout mapping policy requirements
 [[mdspan.layout.policy.reqmts]], and `AccessorPolicy` shall meet the
