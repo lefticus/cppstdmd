@@ -392,7 +392,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-\texttt{operator} conversion-type-id '(\,)' cv-qualifier-seq_opt ref-qualifier_opt noexcept-specifier_opt attribute-specifier-seq_opt ';'
+\texttt{operator} conversion-type-id '( )' cv-qualifier-seq_opt ref-qualifier_opt noexcept-specifier_opt attribute-specifier-seq_opt ';'
 ```
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
@@ -493,7 +493,7 @@ built-in operator [[expr.compound]].
 | (a, b)} |
 | [[over.ass]] | `a=b` | `(a).operator= (b)` |
 | [[over.sub]] | `a[b]` | `(a).operator[](b)` |
-| [[over.ref]] | `a->` | `(a).operator->(\,)` |
+| [[over.ref]] | `a->` | `(a).operator->( )` |
 | (a, 0)} |
 
 
@@ -2308,7 +2308,7 @@ operator-function-id:
 ``` bnf
 %% Ed. note: character protrusion would misalign various operators.
 operator: one of
-    'new      delete   new[]    delete[] co_await (\rlap{\,)'        [\rlap{\,]}        ->       ->*}
+    'new      delete   new[]    delete[] co_await (\rlap{ )'        [\rlap{ ]}        ->       ->*}
     '\~        !        +        -        *        /        %        ^        &'
     '|        =        +=       -=       *=       /=       %=       ^=       &='
     '|=       ==       !=       <        >        <=       >=       <=>      &&'
@@ -2435,8 +2435,8 @@ from an enclosing scope, and vice versa. — *end note*\]
 A *binary operator function* is a function named `operator@` for a
 binary operator `@` that is either a non-static member function
 [[class.mfct]] with one non-object parameter or a non-member function
-with two parameters. For an expression `$x$ @ $y$` with subexpressions x
-and y, the operator function is selected by overload resolution
+with two parameters. For an expression `x @ y` with subexpressions x and
+y, the operator function is selected by overload resolution
 [[over.match.oper]]. If a member function is selected, the expression is
 interpreted as
 
@@ -2468,8 +2468,8 @@ non-static member function.
 
 \[*Note 1*: Because only standard conversion sequences are considered
 when converting to the left operand of an assignment operation
-[[over.best.ics]], an expression `$x$ = $y$` with a subexpression x of
-class type is always interpreted as `$x$.operator=($y$)`. — *end note*\]
+[[over.best.ics]], an expression `x = y` with a subexpression x of class
+type is always interpreted as `x.operator=(y)`. — *end note*\]
 
 \[*Note 2*: Since a copy assignment operator is implicitly declared for
 a class if not declared by the user [[class.copy.assign]], a base class

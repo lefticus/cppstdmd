@@ -813,7 +813,7 @@ which its value can be represented.
 | Both `u` or `U` | `unsigned long long int` | `unsigned long long int` |
 | and `ll` or `LL` |  |
 | `z` or `Z` | the signed integer type corresponding | the signed integer type |
-|  | \qquad to `std::size_t` [[support.types.layout]] | \qquad corresponding to `std::size_t` |
+|  | to `std::size_t` [[support.types.layout]] | corresponding to `std::size_t` |
 |  |  | `std::size_t` |
 | Both `u` or `U` | `std::size_t` | `std::size_t` |
 | and `z` or `Z` |  |
@@ -839,7 +839,7 @@ character-literal:
 
 ``` bnf
 encoding-prefix: one of
-    'u8'\quad'u'\quad'U'\quad'L'
+    'u8' 'u' 'U' 'L'
 ```
 
 ``` bnf

@@ -696,9 +696,9 @@ Let R_`I` be `remove_cvref_t<I>`. The type `iter_difference_t<I>`
 denotes
 
 - `incrementable_traits<$R_\tcode{I}$>::difference_type`
-  if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
+  if `iterator_traits<R_\tcode{I}>` names a specialization generated
   from the primary template, and
-- `iterator_traits<$R_\tcode{I}$>::difference_type` otherwise.
+- `iterator_traits<R_\tcode{I}>::difference_type` otherwise.
 
 Users may specialize `incrementable_traits` on program-defined types.
 
@@ -770,9 +770,9 @@ template<class T> using iter_value_t = see below;
 Let R_`I` be `remove_cvref_t<I>`. The type `iter_value_t<I>` denotes
 
 - `indirectly_readable_traits<$R_\tcode{I}$>::value_type`
-  if `iterator_traits<$R_\tcode{I}$>` names a specialization generated
+  if `iterator_traits<R_\tcode{I}>` names a specialization generated
   from the primary template, and
-- `iterator_traits<$R_\tcode{I}$>::value_type` otherwise.
+- `iterator_traits<R_\tcode{I}>::value_type` otherwise.
 
 Class template `indirectly_readable_traits` may be specialized on
 program-defined types.
@@ -4308,9 +4308,8 @@ ranges::copy(counted_iterator(s.begin(), 10), default_sentinel, back_inserter(v)
 Two values `i1` and `i2` of types `counted_iterator<I1>` and
 `counted_iterator<I2>` refer to elements of the same sequence if and
 only if there exists some integer n such that
-`next(i1.base(), i1.count() + $n$)` and
-`next(i2.base(), i2.count() + $n$)` refer to the same (possibly
-past-the-end) element.
+`next(i1.base(), i1.count() + n)` and `next(i2.base(), i2.count() + n)`
+refer to the same (possibly past-the-end) element.
 
 ``` cpp
 namespace std {

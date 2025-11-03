@@ -1224,25 +1224,25 @@ decltype-specifier:
   \texttt{decltype} '(' expression ')'
 ```
 
-For an expression E, the type denoted by `decltype($E$)` is defined as
+For an expression E, the type denoted by `decltype(E)` is defined as
 follows:
 
 - if E is an unparenthesized *id-expression* naming a structured binding
-  [[dcl.struct.bind]], `decltype($E$)` is the referenced type as given
-  in the specification of the structured binding declaration;
+  [[dcl.struct.bind]], `decltype(E)` is the referenced type as given in
+  the specification of the structured binding declaration;
 - otherwise, if E is an unparenthesized *id-expression* naming a
-  non-type *template-parameter* [[temp.param]], `decltype($E$)` is the
+  non-type *template-parameter* [[temp.param]], `decltype(E)` is the
   type of the *template-parameter* after performing any necessary type
   deduction [[dcl.spec.auto]], [[dcl.type.class.deduct]];
 - otherwise, if E is an unparenthesized *id-expression* or an
-  unparenthesized class member access [[expr.ref]], `decltype($E$)` is
-  the type of the entity named by E. If there is no such entity, the
-  program is ill-formed;
-- otherwise, if E is an xvalue, `decltype($E$)` is `T&&`, where `T` is
-  the type of E;
-- otherwise, if E is an lvalue, `decltype($E$)` is `T&`, where `T` is
-  the type of E;
-- otherwise, `decltype($E$)` is the type of E.
+  unparenthesized class member access [[expr.ref]], `decltype(E)` is the
+  type of the entity named by E. If there is no such entity, the program
+  is ill-formed;
+- otherwise, if E is an xvalue, `decltype(E)` is `T&&`, where `T` is the
+  type of E;
+- otherwise, if E is an lvalue, `decltype(E)` is `T&`, where `T` is the
+  type of E;
+- otherwise, `decltype(E)` is the type of E.
 
 The operand of the `decltype` specifier is an unevaluated operand
 [[term.unevaluated.operand]].
@@ -1550,7 +1550,7 @@ A type `T` containing a placeholder type, and a corresponding
   - If the operand is a *braced-init-list* [[dcl.init.list]], the
     program is ill-formed.
   - If the operand is an *expression* X that is not an
-    *assignment-expression*, E is `($X$)`.
+    *assignment-expression*, E is `(X)`.
     \[*Note 1*: A comma expression [[expr.comma]] is not an
     *assignment-expression*. — *end note*\]
   - Otherwise, E is the operand of the `return` statement.
@@ -4556,7 +4556,7 @@ follows:
   the reference. The type of the prvalue is the type referenced by `T`,
   unless `T` is “reference to array of unknown bound of `U`”, in which
   case the type of the prvalue is the type of `x` in the declaration
-  `U x[] $H$`, where H is the initializer list.
+  `U x[] H`, where H is the initializer list.
   \[*Note 9*: As usual, the binding will fail and the program is
   ill-formed if the reference type is an lvalue reference to a non-const
   type. — *end note*\]
@@ -5083,11 +5083,11 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 — *end example*\]
 
 The *promise type* of a coroutine is
-`std::coroutine_traits<R, P$_1$, $\dotsc$, P$_n$>::promise_type`, where
-`R` is the return type of the function, and `P₁` \dotsc `Pₙ` is the
-sequence of types of the non-object function parameters, preceded by the
-type of the object parameter [[dcl.fct]] if the coroutine is a
-non-static member function. The promise type shall be a class type.
+`std::coroutine_traits<R, P_1, \dotsc, P_n>::promise_type`, where `R` is
+the return type of the function, and `P₁` \dotsc `Pₙ` is the sequence of
+types of the non-object function parameters, preceded by the type of the
+object parameter [[dcl.fct]] if the coroutine is a non-static member
+function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
 object parameter and `p_i+1` denotes the $i^\text{th}$ non-object
@@ -5141,7 +5141,7 @@ where
   resolution is performed on a promise constructor call created by
   assembling an argument list `q₁` \dotsc `qₙ`. If a viable constructor
   is found [[over.match.viable]], then *promise-constructor-arguments*
-  is `($\tcode{q}_1$, $\dotsc$, $\tcode{q}_n$)`, otherwise
+  is `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
   *promise-constructor-arguments* is empty, and
 
 - a coroutine is suspended at the *initial suspend point* if it is
@@ -5367,7 +5367,7 @@ performed. — *end note*\]
 In either case, *e* is an lvalue if the type of the entity *e* is an
 lvalue reference and an xvalue otherwise. Given the type `Tᵢ` designated
 by `std::tuple_element<i, E>::type` and the type `Uᵢ` designated by
-either `$\tcode{T}_i$&` or `$\tcode{T}_i$&&`, where `Uᵢ` is an lvalue
+either `\tcode{T}_i&` or `\tcode{T}_i&&`, where `Uᵢ` is an lvalue
 reference if the initializer is an lvalue and an rvalue reference
 otherwise, variables are introduced with unique names `rᵢ` as follows:
 
@@ -5386,10 +5386,10 @@ not have an anonymous union member, and the number of elements in the
 members of `E`. Designating the non-static data members of `E` as `m₀`,
 `m₁`, `m₂`, \dotsc (in declaration order), each `vᵢ` is the name of an
 lvalue that refers to the member `m`_i of *e* and whose type is that of
-`\exposidnc{e}.$\tcode{m}_i$` [[expr.ref]]; the referenced type is the
+`\exposidnc{e}.\tcode{m}_i` [[expr.ref]]; the referenced type is the
 declared type of `mᵢ` if that type is a reference type, or the type of
-`\exposidnc{e}.$\tcode{m}_i$` otherwise. The lvalue is a bit-field if
-that member is a bit-field.
+`\exposidnc{e}.\tcode{m}_i` otherwise. The lvalue is a bit-field if that
+member is a bit-field.
 
 \[*Example 2*:
 

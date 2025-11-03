@@ -472,9 +472,9 @@ bitmask& operator^=(bitmask& X, bitmask Y) {
 
 Here, the names `C₀`, `C₁`, etc. represent *bitmask elements* for this
 particular bitmask type. All such elements have distinct, nonzero values
-such that, for any pair `Cᵢ` and `Cⱼ` where i ≠ j, `$C_i$ & $C_i$` is
-nonzero and `$C_i$ & $C_j$` is zero. Additionally, the value `0` is used
-to represent an *empty bitmask*, in which no bitmask elements are set.
+such that, for any pair `Cᵢ` and `Cⱼ` where i ≠ j, `C_i & C_i` is
+nonzero and `C_i & C_j` is zero. Additionally, the value `0` is used to
+represent an *empty bitmask*, in which no bitmask elements are set.
 
 The following terms apply to objects and values of bitmask types:
 
@@ -514,7 +514,7 @@ sequences that follow a few uniform conventions:
   and [[depr]] by a period, `'.'`, which is also its value in the `"C"`
   locale.
 - A *character sequence* is an array object [[dcl.array]] `A` that can
-  be declared as `T\;A[N]`, where `T` is any of the types `char`,
+  be declared as `T A[N]`, where `T` is any of the types `char`,
   `unsigned char`, or `signed char` [[basic.fundamental]], optionally
   qualified by any combination of `const` or `volatile`. The initial
   elements of the array have defined contents up to and including an
@@ -810,7 +810,7 @@ header. These names are also subject to the restrictions of 
 
 #### Modules <a id="std.modules">[[std.modules]]</a>
 
-The C++ standard library provides the following *\Cpp{*.
+The C++ standard library provides the following *C++ library modules*.
 
 The named module `std` exports declarations in namespace `std` that are
 provided by the importable C++ library headers ( [[headers.cpp]] or the

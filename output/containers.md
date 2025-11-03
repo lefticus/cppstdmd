@@ -13414,7 +13414,7 @@ copyable.
 Let $E_r$ be the $r^\text{th}$ element of `Extents`. $E_r$ is a
 *dynamic extent* if it is equal to `dynamic_extent`, otherwise $E_r$ is
 a *static extent*. Let $D_r$ be the value of
-`dynamic-extents[dynamic-index($r$)]` if $E_r$ is a dynamic extent,
+`dynamic-extents[dynamic-index(r)]` if $E_r$ is a dynamic extent,
 otherwise $E_r$.
 
 The $r^\text{th}$ interval of the multidimensional index space
@@ -13635,7 +13635,7 @@ In subclauses [[mdspan.layout.reqmts]] and
   integer type. — *end note*\]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
 - `d_r` is a pack of (possibly const) integers for which
-  `sizeof...($\tcode{d}_r$) == M::extents_type::rank()` is `true`, the
+  `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the
   $r^\text{th}$ element is equal to 1, and all other elements are equal
   to 0.
 
@@ -14300,8 +14300,8 @@ Let `REQUIRED-SPAN-SIZE(e, strides)` be:
 - `1`, if `e.rank() == 0` is `true`,
 - otherwise `0`, if the size of the multidimensional index space `e` is
   0,
-- otherwise `1` plus the sum of products of `(e.extent($r$) - 1)` and
-  `strides[$r$]` for all r in the range [0, `e.rank()`).
+- otherwise `1` plus the sum of products of `(e.extent(r) - 1)` and
+  `strides[r]` for all r in the range [0, `e.rank()`).
 
 Let `OFFSET(m)` be:
 

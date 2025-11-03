@@ -2093,7 +2093,7 @@ iterator holds a *zero-length match* if `match[0].matched == true` and
 
 \[*Note 1*: For example, this can occur when the part of the regular
 expression that matched consists only of an assertion (such as `'^'`,
-`'$'`, `'$\backslash$b'`, `'$\backslash$B'`). — *end note*\]
+`'$'`, `'\backslashb'`, `'\backslashB'`). — *end note*\]
 
 #### Constructors <a id="re.regiter.cnstr">[[re.regiter.cnstr]]</a>
 

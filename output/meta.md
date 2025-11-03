@@ -1288,7 +1288,7 @@ where `gcd` represents the greatest common divisor of the absolute
 values of `N` and `D`:
 
 - `num` shall have the value
-  `$\operatorname{sgn}(\tcode{N})$ * $\operatorname{sgn}(\tcode{D})$ * abs(N) / gcd`.
+  `\operatorname{sgn}(\tcode{N}) * \operatorname{sgn}(\tcode{D}) * abs(N) / gcd`.
 - `den` shall have the value `abs(D) / gcd`.
 
 ### Arithmetic on `ratio}{s` <a id="ratio.arithmetic">[[ratio.arithmetic]]</a>

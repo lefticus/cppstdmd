@@ -413,13 +413,13 @@ types in several contexts:
 — *end note*\]
 
 An expression E can be *implicitly converted* to a type `T` if and only
-if the declaration `T t=$E$;` is well-formed, for some invented
-temporary variable `t` [[dcl.init]].
+if the declaration `T t=E;` is well-formed, for some invented temporary
+variable `t` [[dcl.init]].
 
 Certain language constructs require that an expression be converted to a
 Boolean value. An expression E appearing in such a context is said to be
 `bool}}{conversion!contextual to \tcode{bool}` and is well-formed if and
-only if the declaration `bool t($E$);` is well-formed, for some invented
+only if the declaration `bool t(E);` is well-formed, for some invented
 temporary variable `t` [[dcl.init]].
 
 Certain language constructs require conversion to a value having one of
@@ -946,7 +946,7 @@ class Outer {
 
 ### Parentheses <a id="expr.prim.paren">[[expr.prim.paren]]</a>
 
-A parenthesized expression `($E$)` is a primary expression whose type,
+A parenthesized expression `(E)` is a primary expression whose type,
 result, and value category are identical to those of E. The
 parenthesized expression can be used in exactly the same contexts as
 those where E can be used, and with the same meaning, except as
@@ -973,14 +973,14 @@ If an *id-expression* E denotes a member M of an anonymous union
 - If U is a non-static data member, E refers to M as a member of the
   lookup context of the terminal name of E (after any transformation to
   a class member access expression [[class.mfct.non.static]]).
-  \[*Example 1*: `o.x` is interpreted as `o.$u$.x`, where u names the
+  \[*Example 1*: `o.x` is interpreted as `o.u.x`, where u names the
   anonymous union member. — *end example*\]
 - Otherwise, E is interpreted as a class member access [[expr.ref]] that
   designates the member subobject M of the anonymous union variable for
   U.
   \[*Note 2*: Under this interpretation, E no longer denotes a
   non-static data member. — *end note*\]
-  \[*Example 2*: `N::x` is interpreted as `N::$u$.x`, where u names the
+  \[*Example 2*: `N::x` is interpreted as `N::u.x`, where u names the
   anonymous union variable. — *end example*\]
 
 An *id-expression* that denotes a non-static data member or implicit
@@ -2147,9 +2147,9 @@ fold-expression:
 %% Ed. note: character protrusion would misalign operators with leading `-`.
 
 fold-operator: one of
-    '+ '\quad'- '\quad'* '\quad'/ '\quad'% '\quad'^ '\quad'& '\quad'| '\quad'<< '\quad'>> '
-    '+='\quad'-='\quad'*='\quad'/='\quad'%='\quad'^='\quad'&='\quad'|='\quad'<<='\quad'>>='\quad'='
-    '=='\quad'!='\quad'< '\quad'> '\quad'<='\quad'>='\quad'&&'\quad'||'\quad',  '\quad'.* '\quad'->*'
+    '+ ' '- ' '* ' '/ ' '% ' '^ ' '& ' '| ' '<< ' '>> '
+    '+=' '-=' '*=' '/=' '%=' '^=' '&=' '|=' '<<=' '>>=' '='
+    '==' '!=' '< ' '> ' '<=' '>=' '&&' '||' ',  ' '.* ' '->*'
 ```
 
 An expression of the form `(...` *op* `e)` where *op* is a

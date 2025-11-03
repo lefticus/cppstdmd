@@ -4352,13 +4352,13 @@ using std::\libglobal{atomic_signal_fence};                          // see belo
 ```
 
 Each *using-declaration* for some name A in the synopsis above makes
-available the same entity as `std::$A$` declared in `<atomic>`. Each
-macro listed above other than `_Atomic(T)` is defined as in `<atomic>`.
-It is unspecified whether `<stdatomic.h>` makes available any
-declarations in namespace `std`.
+available the same entity as `std::A` declared in `<atomic>`. Each macro
+listed above other than `_Atomic(T)` is defined as in `<atomic>`. It is
+unspecified whether `<stdatomic.h>` makes available any declarations in
+namespace `std`.
 
-Each of the *using-declaration*s for `int$N$_t`, `uint$N$_t`,
-`intptr_t`, and `uintptr_t` listed above is defined if and only if the
+Each of the *using-declaration*s for `intN_t`, `uintN_t`, `intptr_t`,
+and `uintptr_t` listed above is defined if and only if the
 implementation defines the corresponding *typedef-name* in
 [[atomics.syn]].
 

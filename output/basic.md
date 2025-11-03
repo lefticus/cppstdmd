@@ -265,7 +265,7 @@ follows:
   the set contains the *id-expression* designating the data member.
 - If E is a pointer-to-member expression [[expr.mptr.oper]] of the form
   E₁ `.*` E₂, the set contains the potential results of E₁.
-- If E has the form `($E_1$)`, the set contains the potential results of
+- If E has the form `(E₁)`, the set contains the potential results of
   E₁.
 - If E is a glvalue conditional expression [[expr.cond]], the set is the
   union of the sets of potential results of the second and third

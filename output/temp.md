@@ -258,10 +258,10 @@ class Map {
 A *type-constraint* `Q` that designates a concept `C` can be used to
 constrain a contextually-determined type or template type parameter pack
 `T` with a *constraint-expression* `E` defined as follows. If `Q` is of
-the form `C<A$_1$, $\cdots$, A$_n$>`, then let `E$'$` be
-`C<T, A$_1$, $\cdots$, A$_n$>`. Otherwise, let `E$'$` be `C<T>`. If `T`
-is not a pack, then `E` is `E$'$`, otherwise `E` is `(E$'$ && ...)`.
-This *constraint-expression* `E` is called the
+the form `C<A_1, \cdots, A_n>`, then let `E'` be
+`C<T, A_1, \cdots, A_n>`. Otherwise, let `E'` be `C<T>`. If `T` is not a
+pack, then `E` is `E'`, otherwise `E` is `(E' && ...)`. This
+*constraint-expression* `E` is called the
 *immediately-declared constraint* of `Q` for `T`. The concept designated
 by a *type-constraint* shall be a type concept [[temp.concept]].
 
@@ -1378,15 +1378,15 @@ template<C1 T> void f4(T) requires C2<T>;
 template<typename T> requires C1<T> && C2<T> void f5(T);
 ```
 
-The associated constraints of `f4` and `f5` are `C1<T> $\land$ C2<T>`.
+The associated constraints of `f4` and `f5` are `C1<T> \land C2<T>`.
 
 ``` cpp
 template<C1 T> requires C2<T> void f6();
 template<C2 T> requires C1<T> void f7();
 ```
 
-The associated constraints of `f6` are `C1<T> $\land$ C2<T>`, and those
-of `f7` are `C2<T> $\land$ C1<T>`.
+The associated constraints of `f6` are `C1<T> \land C2<T>`, and those of
+`f7` are `C2<T> \land C1<T>`.
 
 — *end example*\]
 
@@ -1430,12 +1430,12 @@ The *normal form* of an *expression* `E` is a constraint
   [[temp.constr.op]] of the normal forms of `E1` and `E2`.
 - The normal form of an expression `E1 && E2` is the conjunction of the
   normal forms of `E1` and `E2`.
-- The normal form of a concept-id `C<A$_1$, A$_2$, ..., A$_n$>` is the
-  normal form of the *constraint-expression* of `C`, after substituting
-  `A$_1$, A$_2$, ..., A$_n$` for `C}{'s` respective template parameters
-  in the parameter mappings in each atomic constraint. If any such
-  substitution results in an invalid type or expression, the program is
-  ill-formed; no diagnostic is required.
+- The normal form of a concept-id `C<A_1, A_2, ..., A_n>` is the normal
+  form of the *constraint-expression* of `C`, after substituting
+  `A_1, A_2, ..., A_n` for `C}{'s` respective template parameters in the
+  parameter mappings in each atomic constraint. If any such substitution
+  results in an invalid type or expression, the program is ill-formed;
+  no diagnostic is required.
   \[*Example 1*:
   ``` cpp
   template<typename T> concept A = T::value || true;
@@ -1622,7 +1622,7 @@ declares `y` and `z` to be of the same type.
 
 — *end example*\]
 
-If an expression e is type-dependent [[temp.dep.expr]], `decltype($e$)`
+If an expression e is type-dependent [[temp.dep.expr]], `decltype(e)`
 denotes a unique dependent type. Two such *decltype-specifier* refer to
 the same type only if their *expression* are equivalent
 [[temp.over.link]].
@@ -5915,7 +5915,7 @@ parameter type (call it `P`) that contains *template-parameter* that
 participate in template argument deduction with the type of the
 corresponding argument of the call (call it `A`) as described below. If
 removing references and cv-qualifiers from `P` gives
-`std::initializer_list<P$^{\prime}$>` or `P`'`[N]` for some `P`' and `N`
+`std::initializer_list<P^{\prime}>` or `P`'`[N]` for some `P`' and `N`
 and the argument is a non-empty initializer list [[dcl.init.list]], then
 deduction is performed instead for each element of the initializer list
 independently, taking `P`' as separate function template parameter types

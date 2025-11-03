@@ -6939,8 +6939,8 @@ respect to comp and proj@heap with respect to `comp` and `proj` for a
 comparator and projection `comp` and `proj` if its elements are
 organized such that:
 
-- With `$N$ = b - a`, for all i, 0 < i < N,
-  `bool(invoke(comp, invoke(proj, a[$\left \lfloor{\frac{i - 1}{2}}\right \rfloor$]), invoke(proj, a[$i$])))`
+- With `N = b - a`, for all i, 0 < i < N,
+  `bool(invoke(comp, invoke(proj, a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor]), invoke(proj, a[i])))`
   is `false`.
 - `*a` may be removed by `pop_heap`, or a new element added by
   `push_heap`, in time.
