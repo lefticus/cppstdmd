@@ -16,7 +16,7 @@ summarized in [[time.summary]].
 
 | Subclause |  | Header |
 | --- | --- | --- |
-| [[time.clock.req]] | \oldconcept{Clock} requirements |
+| [[time.clock.req]] | Cpp17Clock requirements |
 | [[time.traits]] | Time-related traits | `<chrono>` |
 | [[time.duration]] | Class template `duration` |
 | [[time.point]] | Class template `time_point` |
@@ -7794,7 +7794,7 @@ complete duration, time point, or calendrical data structure,
 | `\%j` | If the type being parsed is a specialization of `duration`, a decimal number of `days`. Otherwise, the day of the year as a decimal number. Jan 1 is `1`. In either case, the modified command `\%*N*j` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 3. Leading zeroes are permitted but not required. |
 | `\%m` | The month as a decimal number. Jan is `1`. The modified command `\%*N*m` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%Om` interprets the locale's alternative representation. |
 | `\%M` | The minutes as a decimal number. The modified command `\%*N*M` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `\%OM` interprets the locale's alternative representation. |
-| `\%n` | Matches one whitespace character. \begin{tailnote} `\%n`, `\%t`, and a space can be combined to match a wide range of whitespace patterns. For example, `"\%n "` matches one or more whitespace characters, and `"\%n\%t\%t"` matches one to three whitespace characters. \end{tailnote} |
+| `\%n` | Matches one whitespace character. *`\%n`, `\%t`, and a space can be combined to match a wide range of whitespace patterns. For example, `"\%n "` matches one or more whitespace characters, and `"\%n\%t\%t"` matches one to three whitespace characters.* |
 | `\%p` | The locale's equivalent of the AM/PM designations associated with a 12-hour clock. |
 | `\%r` | The locale's 12-hour clock time. |
 | `\%R` | Equivalent to `\%H:\%M`. |

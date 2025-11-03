@@ -10645,7 +10645,7 @@ meaning of the various options is as specified in [[format.sign]].
 
 | Option | Meaning |
 | --- | --- |
-| `+` | Indicates that a sign should be used for both non-negative and negative numbers. The `+` sign is inserted before the output of `to_chars` for non-negative numbers other than negative zero. \begin{tailnote} For negative numbers and negative zero the output of `to_chars` will already contain the sign so no additional transformation is performed. \end{tailnote} |
+| `+` | Indicates that a sign should be used for both non-negative and negative numbers. The `+` sign is inserted before the output of `to_chars` for non-negative numbers other than negative zero. *For negative numbers and negative zero the output of `to_chars` will already contain the sign so no additional transformation is performed.* |
 | % `-` | Indicates that a sign should be used for negative numbers and negative zero only (this is the default behavior). |
 | % space | Indicates that a leading space should be used for non-negative numbers other than negative zero, and a minus sign for negative numbers and negative zero. |
 
@@ -10816,7 +10816,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 | % `o` | `to_chars(first, last, value, 8)`; \indextext{base prefix}% the base prefix is `0` if `value` is nonzero and is empty otherwise. |
 | % `x` | `to_chars(first, last, value, 16)`; \indextext{base prefix}% the base prefix is `0x`. |
 | % `X` | The same as `x`, except that it uses uppercase letters for digits above 9 and \indextext{base prefix}% the base prefix is `0X`. |
-| % none | The same as `d`. \begin{tailnote} If the formatting argument type is `charT` or `bool`, the default is instead `c` or `s`, respectively. \end{tailnote} |
+| % none | The same as `d`. *If the formatting argument type is `charT` or `bool`, the default is instead `c` or `s`, respectively.* |
 
 
 The available `charT` presentation types are specified in
@@ -11700,7 +11700,7 @@ the various type options is as specified in [[formatter.range.type]].
 
 | Option | Requirements | Meaning |
 | --- | --- | --- |
-| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its *tuple-type*. \begin{tailnote} If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty. \end{tailnote} |
+| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its *tuple-type*. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
 | % `s` | `T` shall be `charT`. | Indicates that the range should be formatted as a `string`. |
 | % `?s` | `T` shall be `charT`. | Indicates that the range should be formatted as an escaped string [[format.string.escaped]]. |
 

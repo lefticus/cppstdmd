@@ -10029,7 +10029,7 @@ constants are distinct.
 | Constant | Meaning |
 | --- | --- |
 | `none` | The type of the file has not been determined or an error occurred while trying to determine the type. |
-| `not_found` | Pseudo-type indicating the file was not found. \begin{tailnote} The file not being found is not considered an error while determining the type of a file. \end{tailnote} |
+| `not_found` | Pseudo-type indicating the file was not found. *The file not being found is not considered an error while determining the type of a file.* |
 | `regular` | Regular file |
 | `directory` | Directory file |
 | `symlink` | Symbolic link file |
@@ -10058,7 +10058,10 @@ Every other constant in the table represents a distinct bitmask element.
 | `none` | (Default) Error; file already exists. |
 | `skip_existing` | Do not overwrite existing file, do not report an error. |
 | `overwrite_existing` | Overwrite the existing file. |
+| `update_existing` | Overwrite the existing file if it is older than the replacement file. \ohdrx{2}{Option group controlling `copy` function effects for subdirectories} |
+| `recursive` | Recursively copy subdirectories and their contents. \ohdrx{2}{Option group controlling `copy` function effects for symbolic links} |
 | `copy_symlinks` | Copy symbolic links as symbolic links rather than copying the files that they point to. |
+| `skip_symlinks` | Ignore symbolic links. \ohdrx{2}{Option group controlling `copy` function effects for choosing the form of copying} |
 | `directories_only` | Copy directory structure only, do not copy non-directory files. |
 | `create_symlinks` | Make symbolic links instead of copies of files. The source path shall be an absolute path unless the destination path is in the current directory. |
 | `create_hard_links` | Make hard links instead of copies of files. |
@@ -10078,15 +10081,15 @@ meanings listed in [[fs.enum.perms]].
 | `owner_read` | `0400` | `S_IRUSR` | Read permission, owner |
 | `owner_write` | `0200` | `S_IWUSR` | Write permission, owner |
 | `owner_exec` | `0100` | `S_IXUSR` | Execute/search permission, owner |
-| `owner_all` | `0700` | `S_IRWXU` | Read, write, execute/search by owner;\br `owner_read | owner_write | owner_exec` |
+| `owner_all` | `0700` | `S_IRWXU` | Read, write, execute/search by owner;<br> `owner_read | owner_write | owner_exec` |
 | `group_read` | `040` | `S_IRGRP` | Read permission, group |
 | `group_write` | `020` | `S_IWGRP` | Write permission, group |
 | `group_exec` | `010` | `S_IXGRP` | Execute/search permission, group |
-| `group_all` | `070` | `S_IRWXG` | Read, write, execute/search by group;\br `group_read | group_write | group_exec` |
+| `group_all` | `070` | `S_IRWXG` | Read, write, execute/search by group;<br> `group_read | group_write | group_exec` |
 | `others_read` | `04` | `S_IROTH` | Read permission, others |
 | `others_write` | `02` | `S_IWOTH` | Write permission, others |
 | `others_exec` | `01` | `S_IXOTH` | Execute/search permission, others |
-| `others_all` | `07` | `S_IRWXO` | Read, write, execute/search by others;\br `others_read | others_write | others_exec` |
+| `others_all` | `07` | `S_IRWXO` | Read, write, execute/search by others;<br> `others_read | others_write | others_exec` |
 | `all` | `0777` |  | `owner_all | group_all | others_all` |
 | `set_uid` | `04000` | `S_ISUID` | Set-user-ID on execution |
 | `set_gid` | `02000` | `S_ISGID` | Set-group-ID on execution |

@@ -1289,7 +1289,7 @@ digit `1` (and not the single character `'A'` specified by a
 
 |  |  |  |  |  |  |
 | --- | --- | --- | --- | --- | --- |
-| \multicolumn{2}{|c}{Source} | Means | \multicolumn{2}{c}{Source} | Means | \multicolumn{2}{c}{Source} | Means |
+| *[spans 2 columns]* Source | Means | *[spans 2 columns]* Source | Means | *[spans 2 columns]* Source | Means |
 | `u"a"` | `u"b"` | `u"ab"` | `U"a"` | `U"b"` | `U"ab"` | `L"a"` | `L"b"` | `L"ab"` |
 | `u"a"` | `"b"` | `u"ab"` | `U"a"` | `"b"` | `U"ab"` | `L"a"` | `"b"` | `L"ab"` |
 | `"a"` | `u"b"` | `u"ab"` | `"a"` | `U"b"` | `U"ab"` | `"a"` | `L"b"` | `L"ab"` |
