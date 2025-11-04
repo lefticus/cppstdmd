@@ -14,9 +14,16 @@ def filter_dir():
 @pytest.fixture
 def cpp_draft_source():
     """Path to C++ draft source if available"""
-    draft_path = Path("/tmp/cplusplus-draft/source")
-    if draft_path.exists():
-        return draft_path
+    # Look in project directory first, then fall back to /tmp
+    project_draft = PROJECT_ROOT / "cplusplus-draft" / "source"
+    if project_draft.exists():
+        return project_draft
+
+    # Fall back to legacy location for backwards compatibility
+    tmp_draft = Path("/tmp/cplusplus-draft/source")
+    if tmp_draft.exists():
+        return tmp_draft
+
     return None
 
 def pytest_configure(config):
@@ -25,5 +32,5 @@ def pytest_configure(config):
         "markers", "slow: marks tests as slow (deselect with '-m \"not slow\"')"
     )
     config.addinivalue_line(
-        "markers", "integration: marks tests as integration tests requiring /tmp/cplusplus-draft"
+        "markers", "integration: marks tests as integration tests requiring cplusplus-draft"
     )

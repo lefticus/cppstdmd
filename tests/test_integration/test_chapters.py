@@ -11,32 +11,8 @@ from cpp_std_converter.repo_manager import DraftRepoManager
 # Mark all tests in this module as integration tests
 pytestmark = pytest.mark.integration
 
-
-@pytest.fixture(scope="module")
-def draft_repo():
-    """Fixture to ensure draft repository exists and is on n4950 (C++23)"""
-    repo_manager = DraftRepoManager()
-
-    # Ensure repo exists
-    if not repo_manager.exists():
-        try:
-            repo_manager.clone(shallow=False)
-        except Exception as e:
-            pytest.skip(f"Could not clone draft repository: {e}")
-
-    # Checkout n4950 (C++23) for consistent, stable test state
-    try:
-        repo_manager.checkout("n4950")
-    except Exception as e:
-        pytest.skip(f"Could not checkout n4950: {e}")
-
-    return repo_manager
-
-
-@pytest.fixture(scope="module")
-def converter():
-    """Fixture to create converter instance"""
-    return Converter()
+# Fixtures draft_repo and converter are provided by conftest.py (session scope)
+# to prevent race conditions when running tests in parallel
 
 
 class TestChapterConversion:
