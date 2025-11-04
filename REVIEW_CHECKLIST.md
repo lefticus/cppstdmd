@@ -1,0 +1,92 @@
+# n4950 Quality Review Checklist
+
+## Purpose
+
+Systematically review all converted markdown files for quality issues by comparing them against the source .tex files. Work through files from smallest to largest, one at a time.
+
+## Workflow (for each file)
+
+### 1. Compare Source and Output
+- Read the .tex source file from `cplusplus-draft/source/`
+- Read the .md output file from `n4950/`
+- Look at structure, content, and formatting
+
+### 2. Identify Issues
+Look for:
+- **Missing content** - sections, paragraphs, examples not converted
+- **Unconverted LaTeX** - `\command{}` syntax still present
+- **Broken code blocks** - malformed ``` blocks, incorrect language tags
+- **Incorrect heading levels** - `#` count doesn't match structure
+- **Missing cross-references** - `[label]` links broken or missing
+- **Formatting problems** - lists, tables, notes, examples not rendering correctly
+- **Math/symbols** - Unicode conversion issues
+
+### 3. Categorize Issues
+- **Filter bugs** - Problems in Lua filters that need code fixes
+- **Systematic issues** - Patterns affecting multiple files (address once globally)
+- **One-off quirks** - Edge cases specific to this file (document for later)
+
+### 4. Discuss Findings
+- Report findings to user
+- User reviews all proposed changes
+- **No commits without user approval**
+
+### 5. Fix (if approved)
+- For filter bugs: Update Lua filters, test, regenerate
+- For one-offs: Document or make targeted fixes
+- Re-run tests after any filter changes
+
+### 6. Mark Complete
+- Check off the file in the list below
+- Document any patterns in "Issues Found" section
+
+## Files to Review (37 total, smallest first)
+
+- [ ] `back.md` (1.0K)
+- [ ] `grammar.md` (1.5K)
+- [ ] `uax31.md` (4.5K)
+- [ ] `limits.md` (5.8K)
+- [ ] `module.md` (24K)
+- [ ] `stmt.md` (32K)
+- [ ] `except.md` (33K)
+- [ ] `intro.md` (33K)
+- [ ] `concepts.md` (41K)
+- [ ] `cpp.md` (52K)
+- [ ] `diagnostics.md` (54K)
+- [ ] `lex.md` (57K)
+- [ ] `meta.md` (58K)
+- [ ] `future.md` (67K)
+- [ ] `compatibility.md` (89K)
+- [ ] `re.md` (95K)
+- [ ] `library.md` (101K)
+- [ ] `front.md` (114K)
+- [ ] `over.md` (119K)
+- [ ] `localization.md` (127K)
+- [ ] `strings.md` (141K)
+- [ ] `support.md` (160K)
+- [ ] `class.md` (177K)
+- [ ] `mem.md` (180K)
+- [ ] `iterators.md` (191K)
+- [ ] `basic.md` (219K)
+- [ ] `numerics.md` (230K)
+- [ ] `expr.md` (251K)
+- [ ] `temp.md` (254K)
+- [ ] `time.md` (257K)
+- [ ] `dcl.md` (264K)
+- [ ] `thread.md` (308K)
+- [ ] `algorithms.md` (405K)
+- [ ] `input.md` (413K)
+- [ ] `utilities.md` (414K)
+- [ ] `ranges.md` (415K)
+- [ ] `containers.md` (543K)
+
+## Issues Found
+
+### Patterns Discovered
+(Document recurring issues here as we find them)
+
+### Filter Improvements Needed
+(Track Lua filter bugs that need fixes)
+
+### Known Edge Cases
+(Document one-off quirks that don't need fixing)
