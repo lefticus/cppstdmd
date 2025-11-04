@@ -1,0 +1,858 @@
+--[[
+cpp-tables.lua
+
+Pandoc Lua filter to convert C++ standard table environments to GFM tables.
+
+Handles:
+- \begin{floattable}{caption}{label}{colspec}...\end{floattable}
+- \begin{libsumtab}{caption}{label}...\end{libsumtab}
+- \begin{LongTable}{caption}{label}{colspec}...\end{LongTable}
+- \begin{concepttable}{caption}{label}{colspec}...\end{concepttable}
+- \begin{simpletypetable}{caption}{label}{colspec}...\end{simpletypetable}
+- \begin{oldconcepttable}{name}{extra}{label}{colspec}...\end{oldconcepttable}
+
+All convert to pipe-delimited GFM tables.
+]]
+
+-- Add current directory to Lua search path for local modules
+local script_dir = debug.getinfo(1, "S").source:match("@?(.*/)") or "./"
+package.path = package.path .. ";" .. script_dir .. "?.lua"
+
+-- Import shared utilities
+local common = require("cpp-common")
+local convert_special_chars = common.convert_special_chars
+local trim = common.trim
+local extract_braced = common.extract_braced
+local expand_balanced_command = common.expand_balanced_command
+local replace_code_macro_special_chars = common.replace_code_macro_special_chars
+local process_code_macro = common.process_code_macro
+
+-- Initialize references table if not already created by cpp-macros.lua
+-- This allows cpp-tables.lua to work standalone or as part of filter chain
+if not references then
+  references = {}
+end
+
+-- Helper function to expand common macros in table cells
+local function expand_table_macros(text)
+  if not text then return text end
+
+  -- \keyword{X} → X (strip keyword markup, keep content)
+  -- Process this first and repeatedly until all nested keywords are removed
+  text = expand_balanced_command(text, "keyword", function(content) return content end)
+
+  -- \hdstyle{X} → X (strip header style markup, keep content)
+  -- Used in table headers to make text bold
+  text = expand_balanced_command(text, "hdstyle", function(content) return content end)
+
+  -- \uname{X} → X (Unicode character names - strip small caps formatting)
+  text = expand_balanced_command(text, "uname", function(content) return content end)
+
+  -- \textbf{X} → **X** (bold text in markdown)
+  text = expand_balanced_command(text, "textbf", function(content) return "**" .. content .. "**" end)
+
+  -- \libglobal{X} → `X` (library global identifiers)
+  text = expand_balanced_command(text, "libglobal", function(content) return "`" .. content .. "`" end)
+
+  -- Special characters
+  text = convert_special_chars(text)
+
+  -- \notdef → *not defined* (exposition-only marker)
+  text = text:gsub("\\notdef{}", "*not defined*")
+  text = text:gsub("\\notdef%s", "*not defined* ")
+  text = text:gsub("\\notdef", "*not defined*")
+
+  -- Strip italic corrections (PDF-only spacing)
+  text = text:gsub("\\itcorr%[%-?%d*%]", "")
+  text = text:gsub("\\itcorr{}", "")
+  text = text:gsub("\\itcorr%s", "")
+
+  -- Handle bare \texttt{} and \tcode{} with escaped special chars FIRST
+  -- (before process_code_macro which uses extract_braced that doesn't handle escaped braces)
+  text = replace_code_macro_special_chars(text, "tcode")
+  text = replace_code_macro_special_chars(text, "texttt")
+
+  -- \tcode{X} → `X` and \texttt{X} → `X`
+  -- Use balanced brace extraction to handle nested braces like \tcode{T u\{\};}
+  text = process_code_macro(text, "tcode")
+  text = process_code_macro(text, "texttt")
+
+  -- \xname{X} → __X
+  text = text:gsub("\\xname{([^}]*)}", "__%1")
+
+  -- \defnxname{X} → `__X` (for feature-test macros, uses \xname which only adds prefix)
+  -- Wrapped in backticks to render as code, not markdown bold
+  text = text:gsub("\\defnxname{([^}]*)}", "`__%1`")
+
+  -- \defnlibxname{X} → `__X` (for library feature-test macros, uses \xname which only adds prefix)
+  -- Wrapped in backticks to render as code, not markdown bold
+  text = text:gsub("\\defnlibxname{([^}]*)}", "`__%1`")
+
+  -- \mname{X} → __X__
+  text = text:gsub("\\mname{([^}]*)}", "__%1__")
+
+
+  -- \unicode{XXXX}{description} → U+XXXX (description)
+  -- This macro takes two brace-balanced arguments
+  while true do
+    local start_pos = text:find("\\unicode{", 1, true)
+    if not start_pos then break end
+
+    -- Extract first argument (code point)
+    local pos = start_pos + 9  -- length of "\unicode{"
+    local depth = 1
+    local code_start = pos
+    while pos <= #text and depth > 0 do
+      local c = text:sub(pos, pos)
+      if c == "{" then
+        depth = depth + 1
+      elseif c == "}" then
+        depth = depth - 1
+      end
+      pos = pos + 1
+    end
+
+    if depth ~= 0 then break end  -- Unbalanced braces
+
+    local code = text:sub(code_start, pos - 2)
+
+    -- Extract second argument (description)
+    if pos > #text or text:sub(pos, pos) ~= "{" then break end
+
+    local desc_start = pos + 1
+    pos = pos + 1
+    depth = 1
+    while pos <= #text and depth > 0 do
+      local c = text:sub(pos, pos)
+      if c == "{" then
+        depth = depth + 1
+      elseif c == "}" then
+        depth = depth - 1
+      end
+      pos = pos + 1
+    end
+
+    if depth ~= 0 then break end  -- Unbalanced braces
+
+    local desc = text:sub(desc_start, pos - 2)
+
+    -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
+    text = text:sub(1, start_pos - 1) .. "U+" .. code .. " (" .. desc .. ")" .. text:sub(pos)
+  end
+
+  -- \multicolumn{N}{alignment}{content} → content
+  -- Markdown doesn't support column spans, so just extract the content
+  -- This macro takes three brace-balanced arguments
+  while true do
+    local start_pos = text:find("\\multicolumn{", 1, true)
+    if not start_pos then break end
+
+    -- Extract first argument (number of columns to span)
+    -- "\\multicolumn{" is 12 chars total, so first { after it is at start_pos + 12
+    local num_cols, pos1 = extract_braced(text, start_pos + 12)
+    if not num_cols then
+      -- Debug: extraction failed, add marker and break
+      text = text:gsub("\\multicolumn{", "[MULTICOLUMN-EXTRACT-FAILED]{", 1)
+      break
+    end
+
+    -- Extract second argument (alignment spec like |p{5.3in}|)
+    local alignment, pos2 = extract_braced(text, pos1)
+    if not alignment then break end
+
+    -- Extract third argument (cell content)
+    local content, pos3 = extract_braced(text, pos2)
+    if not content then break end
+
+    -- Recursively process content (may contain nested macros)
+    content = expand_table_macros(content)
+
+    -- Replace \multicolumn{...}{...}{content} with just content
+    -- Prefix with note about column span for clarity
+    local replacement = "*[spans " .. num_cols .. " columns]* " .. content
+    text = text:sub(1, start_pos - 1) .. replacement .. text:sub(pos3)
+  end
+
+  -- \begin{itemize} ... \end{itemize} → semicolon-separated list
+  -- Convert itemized lists to readable inline format
+  while true do
+    local itemize_start = text:find("\\begin{itemize}", 1, true)
+    if not itemize_start then break end
+
+    local itemize_end = text:find("\\end{itemize}", itemize_start, true)
+    if not itemize_end then break end
+
+    local list_content = text:sub(itemize_start + 15, itemize_end - 1)  -- +15 for "\begin{itemize}"
+
+    -- Split on \item and collect items
+    local items = {}
+    for item in list_content:gmatch("\\item%s*([^\\]*)") do
+      item = trim(item)  -- trim whitespace
+      if item ~= "" then
+        -- Recursively expand any macros in the item
+        item = expand_table_macros(item)
+        table.insert(items, item)
+      end
+    end
+
+    -- Join with semicolons for readability
+    local replacement = table.concat(items, "; ")
+    text = text:sub(1, itemize_start - 1) .. replacement .. text:sub(itemize_end + 14)  -- +14 for "\end{itemize}"
+  end
+
+  -- \begin{tailnote} ... \end{tailnote} → italic text
+  -- Tailnotes are footnotes/clarifications, render as emphasized text
+  while true do
+    local note_start = text:find("\\begin{tailnote}", 1, true)
+    if not note_start then break end
+
+    local note_end = text:find("\\end{tailnote}", note_start, true)
+    if not note_end then break end
+
+    local note_content = text:sub(note_start + 16, note_end - 1)  -- +16 for "\begin{tailnote}"
+
+    -- Recursively expand any macros in the note
+    note_content = expand_table_macros(note_content)
+    note_content = trim(note_content)  -- trim whitespace
+
+    -- Wrap in italic markers
+    local replacement = "*" .. note_content .. "*"
+    text = text:sub(1, note_start - 1) .. replacement .. text:sub(note_end + 15)  -- +15 for "\end{tailnote}"
+  end
+
+  -- \br → <br> (line break within table cell)
+  text = text:gsub("\\br{}", "<br>")
+  text = text:gsub("\\br%s", "<br> ")
+  text = text:gsub("\\br", "<br>")
+
+  -- \oldconcept{X} → Cpp17X
+  text = expand_balanced_command(text, "oldconcept", function(content)
+    return "Cpp17" .. content
+  end)
+
+  -- Strip LaTeX table formatting commands that may leak into cells
+  -- These can appear after \\ at end of rows: \\ \hline, \\ \cline{...}
+  text = text:gsub("\\\\%s*\\hline[^a-zA-Z]*", "")  -- Remove \\ \hline
+  text = text:gsub("\\\\%s*\\cline{[^}]*}", "")  -- Remove \\ \cline{...}
+  text = text:gsub("\\\\%s*\\rowsep[^a-zA-Z]*", "")  -- Remove \\ \rowsep
+  text = text:gsub("\\\\%s*", "")  -- Remove remaining bare \\
+
+  -- Cross-reference macros - unified helper handles \ref, \iref, \tref identically
+  -- Track references and handle comma-separated refs: {a,b,c} → [[a]], [[b]], [[c]]
+  local function process_refs(refs)
+    local parts = {}
+    for ref in refs:gmatch("([^,]+)") do
+      ref = trim(ref)  -- trim whitespace
+      references[ref] = true
+      table.insert(parts, "[[" .. ref .. "]]")
+    end
+    return table.concat(parts, ", ")
+  end
+
+  text = text:gsub("\\ref{([^}]*)}", process_refs)
+  text = text:gsub("\\iref{([^}]*)}", process_refs)
+  text = text:gsub("\\tref{([^}]*)}", process_refs)
+
+  return text
+end
+
+-- Helper function to parse a table row (split by &)
+local function parse_row(row_text)
+  local cells = {}
+  local current_cell = ""
+  local depth = 0
+
+  for i = 1, #row_text do
+    local c = row_text:sub(i, i)
+
+    if c == "{" then
+      depth = depth + 1
+      current_cell = current_cell .. c
+    elseif c == "}" then
+      depth = depth - 1
+      current_cell = current_cell .. c
+    elseif c == "&" and depth == 0 then
+      -- End of cell
+      table.insert(cells, trim(current_cell))
+      current_cell = ""
+    else
+      current_cell = current_cell .. c
+    end
+  end
+
+  -- Add last cell (even if empty - important for trailing empty columns)
+  table.insert(cells, trim(current_cell))
+
+  -- Expand macros in each cell
+  for i, cell in ipairs(cells) do
+    cells[i] = expand_table_macros(cell)
+  end
+
+  return cells
+end
+
+-- Helper function to normalize table row endings
+-- Converts LaTeX row endings (\\ with various suffixes) to a standard @@ROWEND@@ marker
+-- CRITICAL: Must be called BEFORE removing formatting commands like \rowsep
+local function normalize_table_rows(text)
+  -- Process patterns in order - more specific patterns first
+  local normalized = text:gsub("\\\\%s*\\rowsep%s*\n", "@@ROWEND@@\n")  -- \\ \rowsep with newline
+  normalized = normalized:gsub("\\\\%s*\\rowsep", "@@ROWEND@@")  -- \\ \rowsep without immediate newline
+  normalized = normalized:gsub("\\\\%s*\\hline", "@@ROWEND@@")
+  normalized = normalized:gsub("\\\\%s*\\cline{[^}]*}", "@@ROWEND@@")
+  normalized = normalized:gsub("\\\\%s*\n", "@@ROWEND@@\n")  -- \\ with newline
+  normalized = normalized:gsub("\\\\%s*$", "@@ROWEND@@")  -- bare \\ at end of text
+
+  -- NOW remove any remaining formatting commands
+  -- Note: Must also remove \topline and \capsep that may appear in the data section
+  local cleaned = normalized:gsub("\\topline[^\n]*\n?", "")
+  cleaned = cleaned:gsub("\\capsep[^\n]*\n?", "")
+  cleaned = cleaned:gsub("\\rowsep[^\n]*\n?", "")
+  return cleaned
+end
+
+-- Helper function to parse table rows from normalized text
+-- Takes text with @@ROWEND@@ markers and returns array of row arrays
+-- Filters out LaTeX formatting commands that may have leaked through
+local function parse_table_rows(normalized_text)
+  local rows = {}
+  local row_num = 0
+  for row_content in normalized_text:gmatch("([^@]+)@@ROWEND@@") do
+    row_num = row_num + 1
+    -- DEBUG: Add marker to see what rows were found
+    -- io.stderr:write("[DEBUG] Row " .. row_num .. ": " .. row_content:sub(1, 50) .. "\n")
+
+    -- Normalize whitespace (replace newlines with spaces)
+    row_content = trim(row_content:gsub("%s+", " "))
+    -- Safety net: skip rows with LaTeX formatting commands that slipped through
+    if row_content ~= "" and
+       not row_content:match("\\hline") and
+       not row_content:match("\\cline") and
+       not row_content:match("\\topline") and
+       not row_content:match("\\capsep") and
+       not row_content:match("\\lhdr") and
+       not row_content:match("\\rhdr") and
+       not row_content:match("\\hdstyle") and
+       not row_content:match("\\continuedcaption") then
+      local cells = parse_row(row_content)
+      if #cells > 0 then
+        table.insert(rows, cells)
+      end
+    end
+  end
+  return rows
+end
+
+-- Helper function to extract data section from table content
+-- Tries multiple patterns to find where data rows start (after headers)
+local function extract_data_section(table_content)
+  -- Try after \endhead FIRST (used in LongTable - must come before \capsep check)
+  local data_section = table_content:match("\\endhead[^\n]*\n(.*)")
+
+  if not data_section then
+    -- Try after \endfirsthead (used in LongTable)
+    data_section = table_content:match("\\endfirsthead[^\n]*\n(.*)")
+  end
+
+  if not data_section then
+    -- Try to find data after \capsep (common in most table types)
+    data_section = table_content:match("\\capsep[^\n]*\n(.*)")
+  end
+
+  if not data_section then
+    -- Try after \rhdr (floattable with no \capsep)
+    data_section = table_content:match("\\rhdr{[^}]*}[^\n]*\\\\ *\\rowsep[^\n]*\n(.*)")
+    if not data_section then
+      data_section = table_content:match("\\rhdr{[^}]*}[^\n]*\\\\[^\n]*\n(.*)")
+    end
+  end
+
+  if not data_section then
+    -- Try after \topline (tables with no headers)
+    data_section = table_content:match("\\topline[^\n]*\n(.*)")
+  end
+
+  if not data_section then
+    -- Final fallback: take everything
+    data_section = table_content
+  end
+
+  return data_section
+end
+
+-- Helper function to build markdown table from structured data
+-- This is the single source of truth for table formatting (DRY principle)
+local function build_markdown_table(caption, headers, rows)
+  local md_lines = {}
+
+  -- Add caption as heading
+  table.insert(md_lines, "**Table: " .. caption .. "**\n")
+
+  -- If no headers provided but we have rows, generate empty headers based on column count
+  -- This ensures valid markdown table structure
+  if #headers == 0 and #rows > 0 and #rows[1] > 0 then
+    for i = 1, #rows[1] do
+      table.insert(headers, "")
+    end
+  end
+
+  -- Add header row and separator (required for valid markdown tables)
+  if #headers > 0 then
+    table.insert(md_lines, "| " .. table.concat(headers, " | ") .. " |")
+    -- Add separator row
+    local sep = {}
+    for i = 1, #headers do
+      table.insert(sep, "---")
+    end
+    table.insert(md_lines, "| " .. table.concat(sep, " | ") .. " |")
+  end
+
+  -- Add data rows
+  for _, row in ipairs(rows) do
+    table.insert(md_lines, "| " .. table.concat(row, " | ") .. " |")
+  end
+
+  -- Add trailing blank line to separate table from following content
+  return table.concat(md_lines, "\n") .. "\n\n"
+end
+
+-- Main filter function for raw blocks
+function RawBlock(elem)
+  if elem.format ~= 'latex' then
+    return elem
+  end
+
+  local text = elem.text
+
+  -- Handle floattable environment
+  local float_start = text:find("\\begin{floattable}", 1, true)
+  if float_start then
+    -- Extract caption (first braced argument)
+    local caption_start = float_start + 18 -- length of "\begin{floattable}"
+    local caption, pos = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, end_pos = extract_braced(text, pos)
+
+    if caption and label then
+      -- Find the end of floattable
+      local float_end = text:find("\\end{floattable}", end_pos, true)
+      if float_end then
+        local table_content = text:sub(end_pos + 1, float_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Extract header row (supports multiple columns and column-spanning headers)
+        local headers = {}
+
+        -- Try to find header line (ends with \\ and followed by \capsep)
+        -- Must handle multiline headers where \lhdr{Name} & \rhdr{Meaning} spans lines
+        local header_line = table_content:match("(.-\\\\)%s*\\capsep")
+
+        if header_line then
+          -- Parse headers by scanning for \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle macros
+          -- \lhdrx{N}{text} creates N columns with text in first
+          -- Other macros create single columns
+
+          local pos = 1
+          while pos <= #header_line do
+            -- Check for \lhdrx{N}{text} - column-spanning header
+            local lhdrx_start = header_line:find("\\lhdrx{", pos, true)
+            if lhdrx_start and lhdrx_start == pos then
+              -- Extract span count - point to the '{' character
+              -- "\lhdrx" is 6 chars, so '{' is at lhdrx_start + 6
+              local span_count, pos1 = extract_braced(header_line, lhdrx_start + 6)
+              if span_count and pos1 then
+                -- Extract header text - pos1 points after first '}', look for next '{'
+                local header_text, pos2 = extract_braced(header_line, pos1)
+                if header_text then
+                  header_text = expand_table_macros(header_text)
+                  -- Add first column with text, remaining columns empty
+                  table.insert(headers, header_text)
+                  for i = 2, tonumber(span_count) or 1 do
+                    table.insert(headers, "")
+                  end
+                  pos = pos2
+                  goto continue
+                end
+              end
+            end
+
+            -- Check for \lhdr{text}
+            local lhdr_start = header_line:find("\\lhdr{", pos, true)
+            if lhdr_start and lhdr_start == pos then
+              -- "\lhdr" is 5 chars, so '{' is at lhdr_start + 5
+              local lhdr_match, end_pos = extract_braced(header_line, lhdr_start + 5)
+              if lhdr_match then
+                table.insert(headers, expand_table_macros(lhdr_match))
+                pos = end_pos
+                goto continue
+              end
+            end
+
+            -- Check for \chdr{text}
+            local chdr_start = header_line:find("\\chdr{", pos, true)
+            if chdr_start and chdr_start == pos then
+              -- "\chdr" is 5 chars, so '{' is at chdr_start + 5
+              local chdr_match, end_pos = extract_braced(header_line, chdr_start + 5)
+              if chdr_match then
+                table.insert(headers, expand_table_macros(chdr_match))
+                pos = end_pos
+                goto continue
+              end
+            end
+
+            -- Check for \rhdr{text}
+            local rhdr_start = header_line:find("\\rhdr{", pos, true)
+            if rhdr_start and rhdr_start == pos then
+              -- "\rhdr" is 5 chars, so '{' is at rhdr_start + 5
+              local rhdr_match, end_pos = extract_braced(header_line, rhdr_start + 5)
+              if rhdr_match then
+                table.insert(headers, expand_table_macros(rhdr_match))
+                pos = end_pos
+                goto continue
+              end
+            end
+
+            -- Check for \hdstyle{text}
+            local hdstyle_start = header_line:find("\\hdstyle{", pos, true)
+            if hdstyle_start and hdstyle_start == pos then
+              -- "\hdstyle" is 8 chars, so '{' is at hdstyle_start + 8
+              local hdstyle_match, end_pos = extract_braced(header_line, hdstyle_start + 8)
+              if hdstyle_match then
+                table.insert(headers, expand_table_macros(hdstyle_match))
+                pos = end_pos
+                goto continue
+              end
+            end
+
+            -- Skip other characters (whitespace, &, etc.)
+            pos = pos + 1
+            ::continue::
+          end
+        end
+
+        -- Fallback: if no headers found, try old 2-column pattern
+        if #headers == 0 then
+          local h1, h2 = table_content:match("\\hdstyle{([^}]*)}%s*&%s*\\hdstyle{([^}]*)}")
+          if h1 and h2 then
+            headers = {expand_table_macros(h1), expand_table_macros(h2)}
+          else
+            h1, h2 = table_content:match("\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
+            if h1 and h2 then
+              headers = {expand_table_macros(h1), expand_table_macros(h2)}
+            end
+          end
+        end
+
+        -- Extract data rows (handle multi-line rows)
+        local data_section = extract_data_section(table_content)
+        local normalized = normalize_table_rows(data_section)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper (DRY)
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle libsumtab environment (library summary tables)
+  local libsum_start = text:find("\\begin{libsumtab}", 1, true)
+  if libsum_start then
+    -- Extract caption (first braced argument)
+    local caption_start = libsum_start + 17 -- length of "\begin{libsumtab}"
+    local caption, pos = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, end_pos = extract_braced(text, pos)
+
+    if caption and label then
+      -- Find the end of libsumtab
+      local libsum_end = text:find("\\end{libsumtab}", end_pos, true)
+      if libsum_end then
+        local table_content = text:sub(end_pos + 1, libsum_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- libsumtab has implicit headers: Subclause | (Description) | Header
+        local headers = {"Subclause", "", "Header"}
+
+        -- Extract data rows (handle multi-line rows)
+        -- Note: libsumtab doesn't use extract_data_section() - it processes the whole content
+        local normalized = normalize_table_rows(table_content)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle LongTable environment
+  local long_start = text:find("\\begin{LongTable}", 1, true)
+  if long_start then
+    -- Extract caption (first braced argument)
+    local caption_start = long_start + 17 -- length of "\begin{LongTable}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, pos2 = extract_braced(text, pos1)
+
+    -- Extract colspec (third braced argument)
+    local colspec, end_pos = extract_braced(text, pos2)
+
+    if caption and label and colspec then
+      -- Find the end of LongTable
+      local long_end = text:find("\\end{LongTable}", end_pos, true)
+      if long_end then
+        local table_content = text:sub(end_pos + 1, long_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Extract header from first head section (between \topline and \endfirsthead)
+        local first_head = table_content:match("\\topline(.-)\\endfirsthead")
+        local headers = {}
+        if first_head then
+          local h1, h2 = first_head:match("\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
+          if h1 and h2 then
+            headers = {expand_table_macros(h1), expand_table_macros(h2)}
+          end
+        end
+
+        -- Extract data rows (after \endhead) - handle multi-line rows
+        local data_section = extract_data_section(table_content)
+        local normalized = normalize_table_rows(data_section)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper (DRY)
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle concepttable environment (C++20 concept requirements tables)
+  local concept_start = text:find("\\begin{concepttable}", 1, true)
+  if concept_start then
+    -- Extract caption (first braced argument)
+    local caption_start = concept_start + 20 -- length of "\begin{concepttable}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, pos2 = extract_braced(text, pos1)
+
+    -- Extract colspec (third braced argument)
+    local colspec, end_pos = extract_braced(text, pos2)
+
+    if caption and label and colspec then
+      -- Find the end of concepttable
+      local concept_end = text:find("\\end{concepttable}", end_pos, true)
+      if concept_end then
+        local table_content = text:sub(end_pos + 1, concept_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Extract header row (try multiple header styles)
+        local headers = {}
+
+        -- Try to find all headers in row (could be 2, 3, or 4 columns)
+        local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
+        if header_line then
+          for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
+            table.insert(headers, expand_table_macros(hdr))
+          end
+        end
+
+        -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
+        if #headers == 0 then
+          local header_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+          if header_line then
+            for hdr in header_line:gmatch("\\lhdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+            for hdr in header_line:gmatch("\\chdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+            for hdr in header_line:gmatch("\\rhdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+          end
+        end
+
+        -- Extract data rows (after \capsep)
+        local data_section = extract_data_section(table_content)
+        local normalized = normalize_table_rows(data_section)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle simpletypetable environment
+  local simple_start = text:find("\\begin{simpletypetable}", 1, true)
+  if simple_start then
+    -- Extract caption (first braced argument)
+    local caption_start = simple_start + 23 -- length of "\begin{simpletypetable}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, pos2 = extract_braced(text, pos1)
+
+    -- Extract colspec (third braced argument)
+    local colspec, end_pos = extract_braced(text, pos2)
+
+    if caption and label and colspec then
+      -- Find the end of simpletypetable
+      local simple_end = text:find("\\end{simpletypetable}", end_pos, true)
+      if simple_end then
+        local table_content = text:sub(end_pos + 1, simple_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Extract header row (try multiple header styles)
+        local headers = {}
+
+        -- Try to find all headers in row (could be 2, 3, or 4 columns)
+        local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
+        if header_line then
+          for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
+            table.insert(headers, expand_table_macros(hdr))
+          end
+        end
+
+        -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
+        if #headers == 0 then
+          local header_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+          if header_line then
+            for hdr in header_line:gmatch("\\lhdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+            for hdr in header_line:gmatch("\\chdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+            for hdr in header_line:gmatch("\\rhdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+          end
+        end
+
+        -- Extract data rows (after \capsep)
+        local data_section = extract_data_section(table_content)
+        local normalized = normalize_table_rows(data_section)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle oldconcepttable environment (Cpp17* requirements tables)
+  local oldconcept_start = text:find("\\begin{oldconcepttable}", 1, true)
+  if oldconcept_start then
+    -- Extract name (first braced argument) - e.g., "EqualityComparable"
+    local name_start = oldconcept_start + 23 -- length of "\begin{oldconcepttable}"
+    local name, pos1 = extract_braced(text, name_start)
+
+    -- Extract extra (second braced argument) - e.g., "" or " (in addition to ...)"
+    local extra, pos2 = extract_braced(text, pos1)
+
+    -- Extract label (third braced argument) - e.g., "cpp17.equalitycomparable"
+    local label, pos3 = extract_braced(text, pos2)
+
+    -- Extract colspec (fourth braced argument) - e.g., "x{1in}x{1in}p{3in}"
+    local colspec, end_pos = extract_braced(text, pos3)
+
+    if name and extra and label and colspec then
+      -- Find the end of oldconcepttable
+      local oldconcept_end = text:find("\\end{oldconcepttable}", end_pos, true)
+      if oldconcept_end then
+        local table_content = text:sub(end_pos + 1, oldconcept_end - 1)
+
+        -- Generate caption: "Cpp17{NAME} requirements{EXTRA}"
+        local caption = "Cpp17" .. name .. " requirements" .. extra
+
+        -- Parse caption to expand any macros in EXTRA (like \oldconcept{...})
+        caption = expand_table_macros(caption)
+
+        -- Extract header row (try multiple header styles)
+        local headers = {}
+
+        -- Try to find all headers in row (could be 2, 3, or 4 columns)
+        -- Match pattern: \hdstyle{...} & \hdstyle{...} & ...
+        local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
+        if header_line then
+          -- Parse headers by splitting on &
+          for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
+            table.insert(headers, expand_table_macros(hdr))
+          end
+        end
+
+        -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
+        if #headers == 0 then
+          local header_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+          if header_line then
+            -- Extract individual headers
+            for hdr in header_line:gmatch("\\lhdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+            for hdr in header_line:gmatch("\\chdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+            for hdr in header_line:gmatch("\\rhdr{([^}]*)}") do
+              table.insert(headers, expand_table_macros(hdr))
+            end
+          end
+        end
+
+        -- Extract data rows (after \capsep)
+        local data_section = extract_data_section(table_content)
+        local normalized = normalize_table_rows(data_section)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper (DRY)
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  return elem
+end
+
+-- Add link reference definitions at end of document
+-- This function runs after all RawBlock processing is complete
+function Pandoc(doc)
+  -- Collect all references and sort them
+  local refs = {}
+  for ref, _ in pairs(references) do
+    table.insert(refs, ref)
+  end
+  table.sort(refs)
+
+  -- Create link reference definitions
+  if #refs > 0 then
+    -- Add a separator comment
+    local separator = pandoc.RawBlock('markdown', '\n<!-- Link reference definitions -->')
+    table.insert(doc.blocks, separator)
+
+    -- Add each link definition
+    for _, ref in ipairs(refs) do
+      local link_def = pandoc.RawBlock('markdown', '[' .. ref .. ']: #' .. ref)
+      table.insert(doc.blocks, link_def)
+    end
+  end
+
+  return doc
+end
