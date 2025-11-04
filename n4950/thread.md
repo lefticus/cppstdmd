@@ -1,9 +1,3 @@
----
-current_file: thread
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Concurrency support library <a id="thread">[[thread]]</a>
 
 ## General <a id="thread.general">[[thread.general]]</a>

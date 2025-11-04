@@ -1,9 +1,3 @@
----
-current_file: expr
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Expressions <a id="expr">[[expr]]</a>
 
 ## Preamble <a id="expr.pre">[[expr.pre]]</a>

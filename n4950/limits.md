@@ -1,9 +1,3 @@
----
-current_file: limits
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 Because computers are finite, C++ implementations are inevitably limited
 in the size of the programs they can successfully process. Every
 implementation shall document those limitations where known. This

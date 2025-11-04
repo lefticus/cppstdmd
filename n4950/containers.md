@@ -1,9 +1,3 @@
----
-current_file: containers
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Containers library <a id="containers">[[containers]]</a>
 
 ## General <a id="containers.general">[[containers.general]]</a>

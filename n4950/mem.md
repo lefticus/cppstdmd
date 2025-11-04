@@ -1,9 +1,3 @@
----
-current_file: mem
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Memory management library <a id="mem">[[mem]]</a>
 
 ## General <a id="mem.general">[[mem.general]]</a>

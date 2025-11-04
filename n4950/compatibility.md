@@ -1,9 +1,3 @@
----
-current_file: compatibility
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 ## C++ and ISO C++20 <a id="diff.cpp20">[[diff.cpp20]]</a>
 
 ### General <a id="diff.cpp20.general">[[diff.cpp20.general]]</a>

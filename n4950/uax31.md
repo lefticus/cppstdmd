@@ -1,9 +1,3 @@
----
-current_file: uax31
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 ## General <a id="uaxid.general">[[uaxid.general]]</a>
 
 This Annex describes the choices made in application of (“Unicode

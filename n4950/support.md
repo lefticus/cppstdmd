@@ -1,9 +1,3 @@
----
-current_file: support
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Language support library <a id="support">[[support]]</a>
 
 ## General <a id="support.general">[[support.general]]</a>

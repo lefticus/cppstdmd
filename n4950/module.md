@@ -1,9 +1,3 @@
----
-current_file: module
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Modules <a id="module">[[module]]</a>
 
 ## Module units and purviews <a id="module.unit">[[module.unit]]</a>

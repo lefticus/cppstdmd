@@ -1,9 +1,3 @@
----
-current_file: strings
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Strings library <a id="strings">[[strings]]</a>
 
 ## General <a id="strings.general">[[strings.general]]</a>

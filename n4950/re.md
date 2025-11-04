@@ -1,9 +1,3 @@
----
-current_file: re
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Regular expressions library <a id="re">[[re]]</a>
 
 ## General <a id="re.general">[[re.general]]</a>

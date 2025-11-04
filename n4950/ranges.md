@@ -1,9 +1,3 @@
----
-current_file: ranges
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Ranges library <a id="ranges">[[ranges]]</a>
 
 ## General <a id="ranges.general">[[ranges.general]]</a>

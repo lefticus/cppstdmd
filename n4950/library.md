@@ -1,9 +1,3 @@
----
-current_file: library
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Library introduction <a id="library">[[library]]</a>
 
 ## General <a id="library.general">[[library.general]]</a>

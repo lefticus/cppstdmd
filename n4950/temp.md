@@ -1,9 +1,3 @@
----
-current_file: temp
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Templates <a id="temp">[[temp]]</a>
 
 ## Preamble <a id="temp.pre">[[temp.pre]]</a>

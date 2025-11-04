@@ -1,9 +1,3 @@
----
-current_file: time
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Time library <a id="time">[[time]]</a>
 
 ## General <a id="time.general">[[time.general]]</a>

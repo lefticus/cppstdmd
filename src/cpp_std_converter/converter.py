@@ -41,8 +41,9 @@ class Converter:
         self.filters_dir = Path(filters_dir)
 
         # Verify filters exist
-        # Order matters: sections → itemdecl/itemdescr → code blocks → definitions → notes/examples → lists (early) → macros → math → grammar → tables
+        # Order matters: sections → itemdecl/itemdescr → code blocks → definitions → notes/examples → lists (early) → macros → math → grammar → tables → strip-metadata (LAST)
         # cpp-lists runs early to merge multi-block list items before macro/grammar processing
+        # strip-metadata runs LAST to remove YAML front matter from output (after all filters that need metadata)
         self.filters = [
             self.filters_dir / "cpp-sections.lua",
             self.filters_dir / "cpp-itemdecl.lua",
@@ -54,6 +55,7 @@ class Converter:
             self.filters_dir / "cpp-math.lua",
             self.filters_dir / "cpp-grammar.lua",
             self.filters_dir / "cpp-tables.lua",
+            self.filters_dir / "strip-metadata.lua",  # Must be LAST
         ]
 
         for filter_path in self.filters:

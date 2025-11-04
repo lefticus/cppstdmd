@@ -1,9 +1,3 @@
----
-current_file: concepts
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Concepts library <a id="concepts">[[concepts]]</a>
 
 ## General <a id="concepts.general">[[concepts.general]]</a>

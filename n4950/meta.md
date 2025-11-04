@@ -1,9 +1,3 @@
----
-current_file: meta
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Metaprogramming library <a id="meta">[[meta]]</a>
 
 ## General <a id="meta.general">[[meta.general]]</a>

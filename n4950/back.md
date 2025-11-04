@@ -1,9 +1,3 @@
----
-current_file: back
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: /tmp
----
-
 # Bibliography
 
 - ISO 4217:2015, *Codes for the representation of currencies*

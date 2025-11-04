@@ -1,9 +1,3 @@
----
-current_file: basic
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Basics <a id="basic">[[basic]]</a>
 
 ## Preamble <a id="basic.pre">[[basic.pre]]</a>

@@ -1,9 +1,3 @@
----
-current_file: over
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Overloading <a id="over">[[over]]</a>
 
 ## Preamble <a id="over.pre">[[over.pre]]</a>

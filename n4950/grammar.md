@@ -1,9 +1,3 @@
----
-current_file: grammar
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 ## General <a id="gram.general">[[gram.general]]</a>
 
 This summary of C++ grammar is intended to be an aid to comprehension.

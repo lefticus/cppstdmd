@@ -1,9 +1,3 @@
----
-current_file: intro
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Scope <a id="intro.scope">[[intro.scope]]</a>
 
 This document specifies requirements for implementations of the C++

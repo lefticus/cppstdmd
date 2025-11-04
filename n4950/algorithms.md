@@ -1,9 +1,3 @@
----
-current_file: algorithms
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Algorithms library <a id="algorithms">[[algorithms]]</a>
 
 ## General <a id="algorithms.general">[[algorithms.general]]</a>

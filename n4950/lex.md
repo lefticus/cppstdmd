@@ -1,9 +1,3 @@
----
-current_file: lex
-label_index_file: converted/cppstdmd/output/cpp_std_labels.lua
-source_dir: ../../cplusplus-draft/source
----
-
 # Lexical conventions <a id="lex">[[lex]]</a>
 
 ## Separate translation <a id="lex.separate">[[lex.separate]]</a>
