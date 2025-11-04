@@ -164,6 +164,7 @@ info "Building separate markdown files with cross-file linking..."
 cpp-std-convert --build-separate \
     --draft-repo "$DRAFT_DIR" \
     --git-ref n4950 \
+    --toc-depth 3 \
     -o n4950/ || abort "Failed to convert n4950 standard"
 
 success "n4950 conversion complete"

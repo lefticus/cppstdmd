@@ -506,6 +506,24 @@ def test_ucode_macro():
     assert "\\ucode" not in output
 
 
+def test_unicode_macro_with_description():
+    r"""Test \unicode{code}{description} expansion (uax31.md bug)"""
+    latex = r"For C++ we add the character \unicode{005f}{low line}, or \tcode{_}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "U+005f (low line)" in output or "U+005F (low line)" in output
+    assert "\\unicode" not in output
+
+
+def test_uax_macro():
+    r"""Test \UAX{number} expansion (uax31.md bug)"""
+    latex = r"This Annex describes \UAX{31} (Unicode Identifier and Pattern Syntax)."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "UAX #31" in output
+    assert "\\UAX" not in output
+
+
 def test_cvqual_macro():
     r"""Test \cvqual{} expansion (cv-qualifier term)"""
     latex = r"A \cvqual{} can be const or volatile."

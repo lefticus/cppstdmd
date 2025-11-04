@@ -32,28 +32,29 @@ following phases.
     so, the kind of an input file is determined in an
     *implementation-defined* manner that includes a means of designating
     input files as UTF-8 files, independent of their content.
-    \[*Note 1*: In other words, recognizing the is not
-    sufficient. — *end note*\] If an input file is determined to be a
-    UTF-8 file, then it shall be a well-formed UTF-8 code unit sequence
-    and it is decoded to produce a sequence of Unicode scalar values. A
-    sequence of translation character set elements is then formed by
-    mapping each Unicode scalar value to the corresponding translation
-    character set element. In the resulting sequence, each pair of
-    characters in the input sequence consisting of followed by , as well
-    as each not immediately followed by a , is replaced by a single
-    new-line character. For any other kind of input file supported by
-    the implementation, characters are mapped, in an
-    *implementation-defined* manner, to a sequence of translation
-    character set elements [[lex.charset]], representing end-of-line
-    indicators as new-line characters.
-2.  If the first translation character is , it is deleted. Each sequence
-    of a backslash character (\\ immediately followed by zero or more
-    whitespace characters other than new-line followed by a new-line
-    character is deleted, splicing physical source lines to form logical
-    source lines. Only the last backslash on any physical source line
-    shall be eligible for being part of such a splice. Except for
-    splices reverted in a raw string literal, if a splice results in a
-    character sequence that matches the syntax of a
+    \[*Note 1*: In other words, recognizing the U+feff (byte order mark)
+    is not sufficient. — *end note*\] If an input file is determined to
+    be a UTF-8 file, then it shall be a well-formed UTF-8 code unit
+    sequence and it is decoded to produce a sequence of Unicode scalar
+    values. A sequence of translation character set elements is then
+    formed by mapping each Unicode scalar value to the corresponding
+    translation character set element. In the resulting sequence, each
+    pair of characters in the input sequence consisting of
+    U+000d (carriage return) followed by U+000a (line feed), as well as
+    each U+000d (carriage return) not immediately followed by a
+    U+000a (line feed), is replaced by a single new-line character. For
+    any other kind of input file supported by the implementation,
+    characters are mapped, in an *implementation-defined* manner, to a
+    sequence of translation character set elements [[lex.charset]],
+    representing end-of-line indicators as new-line characters.
+2.  If the first translation character is U+feff (byte order mark), it
+    is deleted. Each sequence of a backslash character (\\ immediately
+    followed by zero or more whitespace characters other than new-line
+    followed by a new-line character is deleted, splicing physical
+    source lines to form logical source lines. Only the last backslash
+    on any physical source line shall be eligible for being part of such
+    a splice. Except for splices reverted in a raw string literal, if a
+    splice results in a character sequence that matches the syntax of a
     *universal-character-name*, the behavior is undefined. A source file
     that is not empty and that does not end in a new-line character, or
     that ends in a splice, shall be processed as if an additional
@@ -289,11 +290,11 @@ encoded with more than one code unit; the value of such a code unit can
 be the same as that of a code unit for an element of the basic literal
 character set. — *end note*\]
 
-The character is encoded as the value `0`. No other element of the
-translation character set is encoded with a code unit of value `0`. The
-code unit value of each decimal digit character after the digit `0`
-(`U+0030`) shall be one greater than the value of the previous. The
-ordinary and wide literal encodings are otherwise
+The U+0000 (null) character is encoded as the value `0`. No other
+element of the translation character set is encoded with a code unit of
+value `0`. The code unit value of each decimal digit character after the
+digit `0` (`U+0030`) shall be one greater than the value of the
+previous. The ordinary and wide literal encodings are otherwise
 *implementation-defined*. For a UTF-8, UTF-16, or UTF-32 literal, the
 Unicode scalar value corresponding to each character of the translation
 character set is encoded as specified in the Unicode Standard for the
@@ -331,16 +332,19 @@ preprocessing numbers, character literals (including user-defined
 character literals), string literals (including user-defined string
 literals), preprocessing operators and punctuators, and single
 non-whitespace characters that do not lexically match the other
-preprocessing token categories. If a or a character matches the last
-category, the behavior is undefined. If any character not in the basic
-character set matches the last category, the program is ill-formed.
-Preprocessing tokens can be separated by whitespace; this consists of
-comments [[lex.comment]], or whitespace characters (, , new-line, , and
-), or both. As described in [[cpp]], in certain circumstances during
-translation phase 4, whitespace (or the absence thereof) serves as more
-than preprocessing token separation. Whitespace can appear within a
-preprocessing token only as part of a header name or between the
-quotation characters in a character literal or string literal.
+preprocessing token categories. If a U+0027 (apostrophe) or a
+U+0022 (quotation mark) character matches the last category, the
+behavior is undefined. If any character not in the basic character set
+matches the last category, the program is ill-formed. Preprocessing
+tokens can be separated by whitespace; this consists of comments
+[[lex.comment]], or whitespace characters (U+0020 (space),
+U+0009 (character tabulation), new-line, U+000b (line tabulation), and
+U+000c (form feed)), or both. As described in [[cpp]], in certain
+circumstances during translation phase 4, whitespace (or the absence
+thereof) serves as more than preprocessing token separation. Whitespace
+can appear within a preprocessing token only as part of a header name or
+between the quotation characters in a character literal or string
+literal.
 
 If the input stream has been parsed into preprocessing tokens up to a
 given character:
@@ -548,7 +552,7 @@ digit: one of
 \[*Note 1*:
 
 The character properties XID_Start and XID_Continue are Derived Core
-Properties as described by of the Unicode Standard.
+Properties as described by UAX #44 of the Unicode Standard.
 
 — *end note*\]
 
@@ -1296,7 +1300,8 @@ is undefined. — *end note*\]
 String literal objects are initialized with the sequence of code unit
 values corresponding to the *string-literal*’s sequence of *s-char*s
 (originally from non-raw string literals) and *r-char*s (originally from
-raw string literals), plus a terminating character, in order as follows:
+raw string literals), plus a terminating U+0000 (null) character, in
+order as follows:
 
 - The sequence of characters denoted by each contiguous sequence of
   *basic-s-char*s, *r-char*s, *simple-escape-sequence*s [[lex.ccon]],

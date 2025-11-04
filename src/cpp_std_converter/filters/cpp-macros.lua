@@ -820,6 +820,42 @@ function RawInline(elem)
     return pandoc.Emph({pandoc.Str("exposition only")})
   end
 
+  -- \UAX{number} - Unicode Annex reference (e.g., \UAX{31} -> UAX #31)
+  local uax_num = text:match("^\\UAX{([^}]*)}")
+  if uax_num then
+    return pandoc.Str("UAX #" .. uax_num)
+  end
+
+  -- \unicode{code}{description} - Unicode character with description
+  -- This needs special handling because Pandoc recognizes \unicode as a known LaTeX command
+  local unicode_match = text:match("^\\unicode{")
+  if unicode_match then
+    -- Extract both brace-balanced arguments
+    local code, _ = extract_braced_content(text, 1, 8)  -- \unicode is 8 chars
+    if code then
+      -- Find the start of the second argument
+      local second_brace_start = 1 + 8 + #code + 2  -- position after \unicode{code}
+      if text:sub(second_brace_start, second_brace_start) == "{" then
+        local desc_start = second_brace_start + 1
+        local depth = 1
+        local pos = desc_start
+        while pos <= #text and depth > 0 do
+          local c = text:sub(pos, pos)
+          if c == "{" then
+            depth = depth + 1
+          elseif c == "}" then
+            depth = depth - 1
+          end
+          pos = pos + 1
+        end
+        if depth == 0 then
+          local desc = text:sub(desc_start, pos - 2)
+          return pandoc.Str("U+" .. code .. " (" .. desc .. ")")
+        end
+      end
+    end
+  end
+
   -- Plain text macros - expand and return as Str
   local expanded = expand_macros(text)
   if expanded ~= text then

@@ -9,10 +9,10 @@ of this document.
 ###  [[lex]]: lexical conventions <a id="diff.cpp20.lex">[[diff.cpp20.lex]]</a>
 
 Previously valid identifiers containing characters not present in
-properties XID_Start or XID_Continue, or not in Normalization Form C,
-are now rejected. Prevent confusing characters in identifiers. Requiring
-normalization of names ensures consistent linker behavior. Some
-identifiers are no longer well-formed.
+UAX #44 properties XID_Start or XID_Continue, or not in Normalization
+Form C, are now rejected. Prevent confusing characters in identifiers.
+Requiring normalization of names ensures consistent linker behavior.
+Some identifiers are no longer well-formed.
 
 Concatenated *string-literal*s can no longer have conflicting
 *encoding-prefix*es. Removal of unimplemented conditionally-supported

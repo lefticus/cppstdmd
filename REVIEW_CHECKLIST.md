@@ -43,8 +43,8 @@ Look for:
 ## Files to Review (37 total, smallest first)
 
 - [x] `back.md` (1.0K) - ✅ FIXED: \doccite{} with nested \Cpp{} macro
-- [ ] `grammar.md` (1.5K)
-- [ ] `uax31.md` (4.5K)
+- [x] `grammar.md` (1.5K) - ✅ Perfect, no issues
+- [x] `uax31.md` (4.5K) - ✅ FIXED: \UAX{} and \unicode{}{} macros not being processed
 - [ ] `limits.md` (5.8K)
 - [ ] `module.md` (24K)
 - [ ] `stmt.md` (32K)
@@ -90,7 +90,9 @@ Look for:
 
 - [x] **FIXED**: `\doccite{}` and `\Fundescx{}` now use brace-balanced parsing (cpp-macros.lua lines 610-630)
 - [x] **TEST ADDED**: `test_doccite_with_nested_cpp_macro` verifies the fix
+- [x] **FIXED**: `\UAX{}` and `\unicode{}{}`macros now processed in RawInline handler (cpp-macros.lua lines 823-857)
+- [x] **TEST ADDED**: `test_uax_macro` and `test_unicode_macro_with_description` verify the fix
 
 ### Known Edge Cases
 
-None so far.
+**Pandoc-Recognized LaTeX Commands** - Some LaTeX macros (like `\unicode`) are recognized by Pandoc's LaTeX reader and preserved as `RawInline` elements instead of `Str` elements. These need explicit handling in the `RawInline` function, not just in `expand_macros`.

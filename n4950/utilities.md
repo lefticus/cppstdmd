@@ -10669,11 +10669,11 @@ string sA = format("{:*<6}", "12345678");   // value of sA is "12345678"
 minimum field width is not greater than the estimated field width
 because padding width is `0` in that case. Since fill characters are
 assumed to have a field width of `1`, use of a character with a
-different field width can produce misaligned output. The character has a
-field width of `2`. The examples above that include that character
-illustrate the effect of the field width when that character is used as
-a fill character as opposed to when it is used as a formatting
-argument. — *end note*\]
+different field width can produce misaligned output. The
+U+1f921 (clown face) character has a field width of `2`. The examples
+above that include that character illustrate the effect of the field
+width when that character is used as a fill character as opposed to when
+it is used as a formatting argument. — *end note*\]
 
 **Table: Meaning of *align* options**
 
@@ -10773,12 +10773,12 @@ This is the case for Windows
 For a sequence of characters in UTF-8, UTF-16, or UTF-32, an
 implementation should use as its field width the sum of the field widths
 of the first code point of each extended grapheme cluster. Extended
-grapheme clusters are defined by of the Unicode Standard. The following
-code points have a field width of 2:
+grapheme clusters are defined by UAX #29 of the Unicode Standard. The
+following code points have a field width of 2:
 
 - any code point with the `East_Asian_Width="W"` or
-  `East_Asian_Width="F"` Derived Extracted Property as described by of
-  the Unicode Standard
+  `East_Asian_Width="F"` Derived Extracted Property as described by
+  UAX #44 of the Unicode Standard
 - `U+4dc0` – `U+4dff` (Yijing Hexagram Symbols)
 - `U+1f300` – `U+1f5ff` (Miscellaneous Symbols and Pictographs)
 - `U+1f900` – `U+1f9ff` (Supplemental Symbols and Pictographs)
@@ -11341,7 +11341,7 @@ encoding a sequence of characters as follows. The associated character
 encoding *CE* for `charT` ( [[lex.string.literal]]) is used to both
 interpret *S* and construct *E*.
 
--  (`"`) is appended to *E*.
+- U+0022 (quotation mark) (`"`) is appended to *E*.
 - For each code unit sequence *X* in *S* that either encodes a single
   character, is a shift sequence, or is a sequence of ill-formed code
   units, processing is in order as follows:
@@ -11349,16 +11349,17 @@ interpret *S* and construct *E*.
     - If *C* is one of the characters in [[format.escape.sequences]],
       then the two characters shown as the corresponding escape sequence
       are appended to *E*.
-    - Otherwise, if *C* is not and
+    - Otherwise, if *C* is not U+0020 (space) and
       - *CE* is UTF-8, UTF-16, or UTF-32 and *C* corresponds to a
         Unicode scalar value whose Unicode property `General_Category`
         has a value in the groups `Separator` (`Z`) or `Other` (`C`), as
-        described by of the Unicode Standard, or
+        described by UAX #44 of the Unicode Standard, or
       - *CE* is UTF-8, UTF-16, or UTF-32 and *C* corresponds to a
         Unicode scalar value with the Unicode property
-        `Grapheme_Extend=Yes` as described by of the Unicode Standard
-        and *C* is not immediately preceded in *S* by a character *P*
-        appended to *E* without translation to an escape sequence, or
+        `Grapheme_Extend=Yes` as described by UAX #44 of the Unicode
+        Standard and *C* is not immediately preceded in *S* by a
+        character *P* appended to *E* without translation to an escape
+        sequence, or
       - *CE* is neither UTF-8, UTF-16, nor UTF-32 and *C* is one of an
         implementation-defined set of separator or non-printable
         characters
@@ -11376,7 +11377,7 @@ interpret *S* and construct *E*.
     `\x\{hex-digit-sequence\}`, where `hex-digit-sequence` is the
     shortest hexadecimal representation of *U* using lower-case
     hexadecimal digits.
-- Finally, (`"`) is appended to *E*.
+- Finally, U+0022 (quotation mark) (`"`) is appended to *E*.
 
 **Table: Mapping of characters to escape sequences**
 
@@ -11392,9 +11393,11 @@ interpret *S* and construct *E*.
 The escaped string representation of a character *C* is equivalent to
 the escaped string representation of a string of *C*, except that:
 
-- the result starts and ends with (`'`) instead of (`"`), and
-- if *C* is , the two characters `\'` are appended to *E*, and
-- if *C* is , then *C* is appended unchanged.
+- the result starts and ends with U+0027 (apostrophe) (`'`) instead of
+  U+0022 (quotation mark) (`"`), and
+- if *C* is U+0027 (apostrophe), the two characters `\'` are appended to
+  *E*, and
+- if *C* is U+0022 (quotation mark), then *C* is appended unchanged.
 
 \[*Example 1*:
 
