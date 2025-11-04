@@ -738,3 +738,22 @@ The type \tcode{$T_0$} is defined as \tcode{$T_1$}.
     assert "$T_0$" not in output
     assert "$T_1$" not in output
     assert "`$C_i$ \\& $C_j$`" not in output
+
+def test_doccite_with_nested_cpp_macro():
+    r"""Test \doccite{} with nested \Cpp{} macro (back.md bug)"""
+    latex = r"""
+\begin{itemize}
+\item Bjarne Stroustrup, \doccite{The \Cpp{} Programming Language, second edition}, Chapter R.
+\item P.J. Plauger, \doccite{The Draft Standard \Cpp{} Library}.
+\end{itemize}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+
+    # Should have properly expanded citations with C++
+    assert "*The C++ Programming Language, second edition*" in output
+    assert "*The Draft Standard C++ Library*" in output
+   
+    # Should NOT have truncated content or unexpanded macros
+    assert "\\Cpp{" not in output
+    assert "*The \\Cpp{*" not in output

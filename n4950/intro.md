@@ -28,7 +28,13 @@ amendments) applies.
 - ISO/IEC 9899:2018, *Programming languages --- C*
 - ISO/IEC/IEEE 9945:2009, *Information Technology --- Portable
   Operating System Interface (POSIX
-  \begin{footnote*
+  \begin{footnote}
+  POSIX\textregistered\\is a registered trademark of
+  the Institute of Electrical and Electronic Engineers, Inc.
+  This information is given for the convenience of users of this document and
+  does not constitute an endorsement by ISO or IEC of this product.
+  \end{footnote}%
+  )*
 - ISO/IEC/IEEE 9945:2009/Cor 1:2013,
   *Information Technology --- Portable
   Operating System Interface (POSIX), Technical Corrigendum 1*
@@ -41,7 +47,13 @@ amendments) applies.
   Part 2: Mathematical signs and symbols
   to be used in the natural sciences and technology*
 - Ecma International, *ECMAScript
-  \begin{footnote*, Standard Ecma-262, third edition, 1999.
+  \begin{footnote}
+  ECMAScript\textregistered\\is a registered trademark of Ecma
+  International.
+  This information is given for the convenience of users of this document and
+  does not constitute an endorsement by ISO or IEC of this product.
+  \end{footnote}
+  Language Specification*, Standard Ecma-262, third edition, 1999.
 - The Unicode Consortium. *The Unicode Standard*. Available from:
   <https://www.unicode.org/versions/latest/>
 

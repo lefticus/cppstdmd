@@ -607,15 +607,30 @@ function RawInline(elem)
   code = text:match("\\ucode{([^}]*)}")
   if code then return pandoc.Code("U+" .. code) end
 
-  -- Document citations - return Emph elements
+  -- Document citations - use brace-balanced parsing to handle nested macros like \Cpp{}
+  local doccite_start = text:find("\\doccite{", 1, true)
+  if doccite_start then
+    local content, _ = extract_braced_content(text, doccite_start, 8)  -- "\doccite" is 8 chars
+    if content then
+      -- Expand macros in content before wrapping in emphasis
+      content = expand_macros(content)
+      return pandoc.Emph({pandoc.Str(content)})
+    end
+  end
+
+  -- Function description cross-reference - use brace-balanced parsing
+  local fundescx_start = text:find("\\Fundescx{", 1, true)
+  if fundescx_start then
+    local content, _ = extract_braced_content(text, fundescx_start, 9)  -- "\Fundescx" is 9 chars
+    if content then
+      -- Expand macros in content before wrapping in emphasis
+      content = expand_macros(content)
+      return pandoc.Emph({pandoc.Str(content)})
+    end
+  end
+
+  -- Other emphasis macros - return Emph elements
   local emph
-
-  emph = text:match("\\doccite{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
-
-  -- Function description cross-reference - return Emph element
-  emph = text:match("\\Fundescx{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
 
   -- \oldconcept{x} - C++17-era named requirements (prepend Cpp17 prefix)
   emph = text:match("\\oldconcept{([^}]*)}")

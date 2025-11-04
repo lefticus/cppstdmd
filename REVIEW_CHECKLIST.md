@@ -42,7 +42,7 @@ Look for:
 
 ## Files to Review (37 total, smallest first)
 
-- [ ] `back.md` (1.0K)
+- [x] `back.md` (1.0K) - ✅ FIXED: \doccite{} with nested \Cpp{} macro
 - [ ] `grammar.md` (1.5K)
 - [ ] `uax31.md` (4.5K)
 - [ ] `limits.md` (5.8K)
@@ -83,10 +83,14 @@ Look for:
 ## Issues Found
 
 ### Patterns Discovered
-(Document recurring issues here as we find them)
+
+**Nested Macro Issue** - Macros that can contain other macros (like `\doccite{\Cpp{}}`) need brace-balanced parsing instead of simple `[^}]*` regex patterns.
 
 ### Filter Improvements Needed
-(Track Lua filter bugs that need fixes)
+
+- [x] **FIXED**: `\doccite{}` and `\Fundescx{}` now use brace-balanced parsing (cpp-macros.lua lines 610-630)
+- [x] **TEST ADDED**: `test_doccite_with_nested_cpp_macro` verifies the fix
 
 ### Known Edge Cases
-(Document one-off quirks that don't need fixing)
+
+None so far.

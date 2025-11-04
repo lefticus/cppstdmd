@@ -3,7 +3,7 @@
 ### General <a id="diff.cpp20.general">[[diff.cpp20.general]]</a>
 
 Subclause [[diff.cpp20]] lists the differences between C++ and ISO C++20
-(ISO/IEC 14882:2020, *Programming Languages --- \Cpp{*), by the chapters
+(ISO/IEC 14882:2020, *Programming Languages --- C++*), by the chapters
 of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp20.lex">[[diff.cpp20.lex]]</a>
@@ -263,7 +263,7 @@ b1.arrive();            // implementation-defined; previously well-defined
 ### General <a id="diff.cpp17.general">[[diff.cpp17.general]]</a>
 
 Subclause [[diff.cpp17]] lists the differences between C++ and ISO C++17
-(ISO/IEC 14882:2017, *Programming Languages --- \Cpp{*), by the chapters
+(ISO/IEC 14882:2017, *Programming Languages --- C++*), by the chapters
 of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp17.lex">[[diff.cpp17.lex]]</a>
@@ -779,7 +779,7 @@ compile.
 ### General <a id="diff.cpp14.general">[[diff.cpp14.general]]</a>
 
 Subclause [[diff.cpp14]] lists the differences between C++ and ISO C++14
-(ISO/IEC 14882:2014, *Programming Languages --- \Cpp{*), in addition to
+(ISO/IEC 14882:2014, *Programming Languages --- C++*), in addition to
 those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp14.lex">[[diff.cpp14.lex]]</a>
@@ -1016,7 +1016,7 @@ C++.
 ### General <a id="diff.cpp11.general">[[diff.cpp11.general]]</a>
 
 Subclause [[diff.cpp11]] lists the differences between C++ and ISO C++11
-(ISO/IEC 14882:2011, *Programming Languages --- \Cpp{*), in addition to
+(ISO/IEC 14882:2011, *Programming Languages --- C++*), in addition to
 those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp11.lex">[[diff.cpp11.lex]]</a>
@@ -1138,7 +1138,7 @@ revision of C++.
 ### General <a id="diff.cpp03.general">[[diff.cpp03.general]]</a>
 
 Subclause [[diff.cpp03]] lists the differences between C++ and ISO C++03
-(ISO/IEC 14882:2003, *Programming Languages --- \Cpp{*), in addition to
+(ISO/IEC 14882:2003, *Programming Languages --- C++*), in addition to
 those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp03.lex">[[diff.cpp03.lex]]</a>
