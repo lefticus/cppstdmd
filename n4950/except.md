@@ -16,12 +16,12 @@ try-block:
 
 ``` bnf
 function-try-block:
-    try ctor-initializer_opt compound-statement handler-seq
+    try [ctor-initializer] compound-statement handler-seq
 ```
 
 ``` bnf
 handler-seq:
-    handler handler-seq_opt
+    handler [handler-seq]
 ```
 
 ``` bnf
@@ -31,8 +31,8 @@ handler:
 
 ``` bnf
 exception-declaration:
-    attribute-specifier-seq_opt type-specifier-seq declarator
-    attribute-specifier-seq_opt type-specifier-seq abstract-declarator_opt
+    [attribute-specifier-seq] type-specifier-seq declarator
+    [attribute-specifier-seq] type-specifier-seq [abstract-declarator]
     '...'
 ```
 

@@ -10465,7 +10465,7 @@ output. The syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{replacement-field}
-    '{' arg-id_opt format-specifier_opt '}'
+    '{' [arg-id] [format-specifier] '}'
 ```
 
 ``` bnf
@@ -10577,12 +10577,12 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{std-format-spec}
-    fill-and-align_opt sign_opt '#_opt' '0_opt' width_opt precision_opt 'L_opt' type_opt
+    [fill-and-align] [sign] ['#'] ['0'] [width] [precision] ['L'] [type]
 ```
 
 ``` bnf
 \fmtnontermdef{fill-and-align}
-    fill_opt align
+    [fill] align
 ```
 
 ``` bnf
@@ -10603,13 +10603,13 @@ The syntax of format specifications is as follows:
 ``` bnf
 \fmtnontermdef{width}
     positive-integer
-    '{' arg-id_opt '}'
+    '{' [arg-id] '}'
 ```
 
 ``` bnf
 \fmtnontermdef{precision}
     '.' nonnegative-integer
-    '.' '{' arg-id_opt '}'
+    '.' '{' [arg-id] '}'
 ```
 
 ``` bnf
@@ -11702,12 +11702,12 @@ syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{range-format-spec}
-    range-fill-and-align_opt width_opt 'n_opt' range-type_opt range-underlying-spec_opt
+    [range-fill-and-align] [width] ['n'] [range-type] [range-underlying-spec]
 ```
 
 ``` bnf
 \fmtnontermdef{range-fill-and-align}
-    range-fill_opt align
+    [range-fill] align
 ```
 
 ``` bnf
@@ -12325,12 +12325,12 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{tuple-format-spec}
-    tuple-fill-and-align_opt width_opt tuple-type_opt
+    [tuple-fill-and-align] [width] [tuple-type]
 ```
 
 ``` bnf
 \fmtnontermdef{tuple-fill-and-align}
-    tuple-fill_opt align
+    [tuple-fill] align
 ```
 
 ``` bnf

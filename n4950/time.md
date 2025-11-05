@@ -7406,7 +7406,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{chrono-format-spec}
-    fill-and-align_opt width_opt precision_opt 'L_opt' chrono-specs_opt
+    [fill-and-align] [width] [precision] ['L'] [chrono-specs]
 ```
 
 ``` bnf
@@ -7423,7 +7423,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{conversion-spec}
-    '%' modifier_opt type
+    '%' [modifier] type
 ```
 
 ``` bnf

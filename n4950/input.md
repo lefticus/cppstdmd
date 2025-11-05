@@ -8774,7 +8774,7 @@ Windows-based operating systems, `value_type` is `wchar_t` and
 
 ``` bnf
 pathname:
-    root-name_opt root-directory_opt relative-path
+    [root-name] [root-directory] relative-path
 ```
 
 ``` bnf
@@ -8802,8 +8802,8 @@ filename:
 
 ``` bnf
 directory-separator:
-    preferred-separator directory-separator_opt
-    fallback-separator directory-separator_opt
+    preferred-separator [directory-separator]
+    fallback-separator [directory-separator]
 ```
 
 ``` bnf

@@ -7,13 +7,13 @@ Except as indicated, statements are executed in sequence.
 ``` bnf
 statement:
     labeled-statement
-    attribute-specifier-seq_opt expression-statement
-    attribute-specifier-seq_opt compound-statement
-    attribute-specifier-seq_opt selection-statement
-    attribute-specifier-seq_opt iteration-statement
-    attribute-specifier-seq_opt jump-statement
+    [attribute-specifier-seq] expression-statement
+    [attribute-specifier-seq] compound-statement
+    [attribute-specifier-seq] selection-statement
+    [attribute-specifier-seq] iteration-statement
+    [attribute-specifier-seq] jump-statement
     declaration-statement
-    attribute-specifier-seq_opt try-block
+    [attribute-specifier-seq] try-block
 ```
 
 ``` bnf
@@ -26,7 +26,7 @@ init-statement:
 ``` bnf
 condition:
     expression
-    attribute-specifier-seq_opt decl-specifier-seq declarator brace-or-equal-initializer
+    [attribute-specifier-seq] decl-specifier-seq declarator brace-or-equal-initializer
 ```
 
 The optional *attribute-specifier-seq* appertains to the respective
@@ -89,9 +89,9 @@ A label can be added to a statement or used anywhere in a
 
 ``` bnf
 label:
-    attribute-specifier-seq_opt identifier ':'
-    attribute-specifier-seq_opt case constant-expression ':'
-    attribute-specifier-seq_opt default ':'
+    [attribute-specifier-seq] identifier ':'
+    [attribute-specifier-seq] case constant-expression ':'
+    [attribute-specifier-seq] default ':'
 ```
 
 ``` bnf
@@ -120,7 +120,7 @@ Expression statements have the form
 
 ``` bnf
 expression-statement:
-    expression_opt ';'
+    [expression] ';'
 ```
 
 The expression is a discarded-value expression [[expr.context]]. All
@@ -140,7 +140,7 @@ statements into a single statement.
 
 ``` bnf
 compound-statement:
-    '{' statement-seq_opt label-seq_opt '}'
+    '{' [statement-seq] [label-seq] '}'
 ```
 
 ``` bnf
@@ -169,11 +169,11 @@ Selection statements choose one of several flows of control.
 
 ``` bnf
 selection-statement:
-    if constexpr_opt '(' init-statement_opt condition ')' statement
-    if constexpr_opt '(' init-statement_opt condition ')' statement else statement
-    if '!_opt' consteval compound-statement
-    if '!_opt' consteval compound-statement else statement
-    switch '(' init-statement_opt condition ')' statement
+    if [constexpr] '(' [init-statement] condition ')' statement
+    if [constexpr] '(' [init-statement] condition ')' statement else statement
+    if ['!'] consteval compound-statement
+    if ['!'] consteval compound-statement else statement
+    switch '(' [init-statement] condition ')' statement
 ```
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
@@ -246,7 +246,7 @@ int f() {
 An `if` statement of the form
 
 ``` bnf
-if constexpr_opt '(' init-statement condition ')' statement
+if [constexpr] '(' init-statement condition ')' statement
 ```
 
 is equivalent to
@@ -254,14 +254,14 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   if constexpr_opt '(' condition ')' statement
+   if [constexpr] '(' condition ')' statement
 '}'
 ```
 
 and an `if` statement of the form
 
 ``` bnf
-if constexpr_opt '(' init-statement condition ')' statement else statement
+if [constexpr] '(' init-statement condition ')' statement else statement
 ```
 
 is equivalent to
@@ -269,7 +269,7 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   if constexpr_opt '(' condition ')' statement else statement
+   if [constexpr] '(' condition ')' statement else statement
 '}'
 ```
 
@@ -410,14 +410,14 @@ Iteration statements specify looping.
 iteration-statement:
     while '(' condition ')' statement
     do statement while '(' expression ')' ';'
-    for '(' init-statement condition_opt ';' expression_opt ')' statement
-    for '(' init-statement_opt for-range-declaration ':' for-range-initializer ')' statement
+    for '(' init-statement [condition] ';' [expression] ')' statement
+    for '(' [init-statement] for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 ``` bnf
 for-range-declaration:
-    attribute-specifier-seq_opt decl-specifier-seq declarator
-    attribute-specifier-seq_opt decl-specifier-seq ref-qualifier_opt '[' identifier-list ']'
+    [attribute-specifier-seq] decl-specifier-seq declarator
+    [attribute-specifier-seq] decl-specifier-seq [ref-qualifier] '[' identifier-list ']'
 ```
 
 ``` bnf
@@ -494,7 +494,7 @@ execution of the statement.
 The `for` statement
 
 ``` bnf
-for '(' init-statement condition_opt ';' expression_opt ')' statement
+for '(' init-statement [condition] ';' [expression] ')' statement
 ```
 
 is equivalent to
@@ -529,14 +529,14 @@ missing *condition* makes the implied `while` clause equivalent to
 The range-based `for` statement
 
 ``` bnf
-for '(' init-statement_opt for-range-declaration ':' for-range-initializer ')' statement
+for '(' [init-statement] for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 is equivalent to
 
 ``` bnf
 '{'
-   init-statement_opt
+   [init-statement]
    auto '&&'*range* '=' for-range-initializer ';'
    auto *begin* '=' *begin-expr* ';'
    auto *end* '=' *end-expr* ';'
@@ -615,7 +615,7 @@ Jump statements unconditionally transfer control.
 jump-statement:
     break ';'
     continue ';'
-    return expr-or-braced-init-list_opt ';'
+    return [expr-or-braced-init-list] ';'
     coroutine-return-statement
     goto identifier ';'
 ```
@@ -732,7 +732,7 @@ block enclosing the `return` statement.
 
 ``` bnf
 coroutine-return-statement:
-    'co_return' expr-or-braced-init-list_opt ';'
+    'co_return' [expr-or-braced-init-list] ';'
 ```
 
 A coroutine returns to its caller or resumer [[dcl.fct.def.coroutine]]

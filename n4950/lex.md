@@ -669,29 +669,29 @@ a value category [[expr.prim.literal]]. — *end note*\]
 
 ``` bnf
 integer-literal:
-    binary-literal integer-suffix_opt
-    octal-literal integer-suffix_opt
-    decimal-literal integer-suffix_opt
-    hexadecimal-literal integer-suffix_opt
+    binary-literal [integer-suffix]
+    octal-literal [integer-suffix]
+    decimal-literal [integer-suffix]
+    hexadecimal-literal [integer-suffix]
 ```
 
 ``` bnf
 binary-literal:
     '0b' binary-digit
     '0B' binary-digit
-    binary-literal ''_opt' binary-digit
+    binary-literal ['''] binary-digit
 ```
 
 ``` bnf
 octal-literal:
     '0'
-    octal-literal ''_opt' octal-digit
+    octal-literal ['''] octal-digit
 ```
 
 ``` bnf
 decimal-literal:
     nonzero-digit
-    decimal-literal ''_opt' digit
+    decimal-literal ['''] digit
 ```
 
 ``` bnf
@@ -722,7 +722,7 @@ hexadecimal-prefix: one of
 ``` bnf
 hexadecimal-digit-sequence:
     hexadecimal-digit
-    hexadecimal-digit-sequence ''_opt' hexadecimal-digit
+    hexadecimal-digit-sequence ['''] hexadecimal-digit
 ```
 
 ``` bnf
@@ -734,12 +734,12 @@ hexadecimal-digit: one of
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix long-suffix_opt 
-    unsigned-suffix long-long-suffix_opt 
-    unsigned-suffix size-suffix_opt 
-    long-suffix unsigned-suffix_opt 
-    long-long-suffix unsigned-suffix_opt 
-    size-suffix unsigned-suffix_opt
+    unsigned-suffix [long-suffix] 
+    unsigned-suffix [long-long-suffix] 
+    unsigned-suffix [size-suffix] 
+    long-suffix [unsigned-suffix] 
+    long-long-suffix [unsigned-suffix] 
+    size-suffix [unsigned-suffix]
 ```
 
 ``` bnf
@@ -837,7 +837,7 @@ cannot be represented by any of the allowed types.
 
 ``` bnf
 character-literal:
-    encoding-prefix_opt ''' c-char-sequence '''
+    [encoding-prefix] ''' c-char-sequence '''
 ```
 
 ``` bnf
@@ -1019,38 +1019,38 @@ floating-point-literal:
 
 ``` bnf
 decimal-floating-point-literal:
-    fractional-constant exponent-part_opt floating-point-suffix_opt
-    digit-sequence exponent-part floating-point-suffix_opt
+    fractional-constant [exponent-part] [floating-point-suffix]
+    digit-sequence exponent-part [floating-point-suffix]
 ```
 
 ``` bnf
 hexadecimal-floating-point-literal:
-    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffix_opt
-    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffix_opt
+    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part [floating-point-suffix]
+    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part [floating-point-suffix]
 ```
 
 ``` bnf
 fractional-constant:
-    digit-sequence_opt '.' digit-sequence
+    [digit-sequence] '.' digit-sequence
     digit-sequence '.'
 ```
 
 ``` bnf
 hexadecimal-fractional-constant:
-    hexadecimal-digit-sequence_opt '.' hexadecimal-digit-sequence
+    [hexadecimal-digit-sequence] '.' hexadecimal-digit-sequence
     hexadecimal-digit-sequence '.'
 ```
 
 ``` bnf
 exponent-part:
-    'e' sign_opt digit-sequence
-    'E' sign_opt digit-sequence
+    'e' [sign] digit-sequence
+    'E' [sign] digit-sequence
 ```
 
 ``` bnf
 binary-exponent-part:
-    'p' sign_opt digit-sequence
-    'P' sign_opt digit-sequence
+    'p' [sign] digit-sequence
+    'P' [sign] digit-sequence
 ```
 
 ``` bnf
@@ -1061,7 +1061,7 @@ sign: one of
 ``` bnf
 digit-sequence:
     digit
-    digit-sequence ''_opt' digit
+    digit-sequence ['''] digit
 ```
 
 ``` bnf
@@ -1125,8 +1125,8 @@ in an *implementation-defined* manner.
 
 ``` bnf
 string-literal:
-    encoding-prefix_opt '"' s-char-sequence_opt '"'
-    encoding-prefix_opt 'R' raw-string
+    [encoding-prefix] '"' [s-char-sequence] '"'
+    [encoding-prefix] 'R' raw-string
 ```
 
 ``` bnf
@@ -1150,7 +1150,7 @@ basic-s-char:
 
 ``` bnf
 raw-string:
-    '"' d-char-sequence_opt '(' r-char-sequence_opt ')' d-char-sequence_opt '"'
+    '"' [d-char-sequence] '(' [r-char-sequence] ')' [d-char-sequence] '"'
 ```
 
 ``` bnf
@@ -1388,7 +1388,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-point-literal:
-    fractional-constant exponent-part_opt ud-suffix
+    fractional-constant [exponent-part] ud-suffix
     digit-sequence exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ud-suffix

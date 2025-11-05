@@ -2025,8 +2025,8 @@ declarations.
 
 ``` bnf
 translation-unit:
-    declaration-seq_opt
-    global-module-fragment_opt module-declaration declaration-seq_opt private-module-fragment_opt
+    [declaration-seq]
+    [global-module-fragment] module-declaration [declaration-seq] [private-module-fragment]
 ```
 
 A name is said to have *linkage* when it can denote the same object,

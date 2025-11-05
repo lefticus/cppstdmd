@@ -4,23 +4,23 @@
 
 ``` bnf
 preprocessing-file:
-    group_opt
+    [group]
     module-file
 ```
 
 ``` bnf
 module-file:
-    pp-global-module-fragment_opt pp-module group_opt pp-private-module-fragment_opt
+    [pp-global-module-fragment] pp-module [group] [pp-private-module-fragment]
 ```
 
 ``` bnf
 pp-global-module-fragment:
-    module ';' new-line group_opt
+    module ';' new-line [group]
 ```
 
 ``` bnf
 pp-private-module-fragment:
-    module ':' private ';' new-line group_opt
+    module ':' private ';' new-line [group]
 ```
 
 ``` bnf
@@ -42,27 +42,27 @@ control-line:
     '# include' pp-tokens new-line
     pp-import
     '# define ' identifier replacement-list new-line
-    '# define ' identifier lparen identifier-list_opt ')' replacement-list new-line
+    '# define ' identifier lparen [identifier-list] ')' replacement-list new-line
     '# define ' identifier lparen '... )' replacement-list new-line
     '# define ' identifier lparen identifier-list ', ... )' replacement-list new-line
     '# undef  ' identifier new-line
     '# line   ' pp-tokens new-line
-    '# error  ' pp-tokens_opt new-line
-    '# warning' pp-tokens_opt new-line
-    '# pragma ' pp-tokens_opt new-line
+    '# error  ' [pp-tokens] new-line
+    '# warning' [pp-tokens] new-line
+    '# pragma ' [pp-tokens] new-line
     '# 'new-line
 ```
 
 ``` bnf
 if-section:
-    if-group elif-groups_opt else-group_opt endif-line
+    if-group [elif-groups] [else-group] endif-line
 ```
 
 ``` bnf
 if-group:
-    '# if     ' constant-expression new-line group_opt
-    '# ifdef  ' identifier new-line group_opt
-    '# ifndef ' identifier new-line group_opt
+    '# if     ' constant-expression new-line [group]
+    '# ifdef  ' identifier new-line [group]
+    '# ifndef ' identifier new-line [group]
 ```
 
 ``` bnf
@@ -73,14 +73,14 @@ elif-groups:
 
 ``` bnf
 elif-group:
-    '# elif    ' constant-expression new-line group_opt
-    '# elifdef ' identifier new-line group_opt
-    '# elifndef' identifier new-line group_opt
+    '# elif    ' constant-expression new-line [group]
+    '# elifdef ' identifier new-line [group]
+    '# elifndef' identifier new-line [group]
 ```
 
 ``` bnf
 else-group:
-    '# else   ' new-line group_opt
+    '# else   ' new-line [group]
 ```
 
 ``` bnf
@@ -90,7 +90,7 @@ endif-line:
 
 ``` bnf
 text-line:
-    pp-tokens_opt new-line
+    [pp-tokens] new-line
 ```
 
 ``` bnf
@@ -111,7 +111,7 @@ identifier-list:
 
 ``` bnf
 replacement-list:
-    pp-tokens_opt
+    [pp-tokens]
 ```
 
 ``` bnf
@@ -333,8 +333,8 @@ replacements have occurred shall be in the lexical form of a token
 Preprocessing directives of the forms
 
 ``` bnf
-'# if     ' constant-expression new-line group_opt
-'# elif   ' constant-expression new-line group_opt
+'# if     ' constant-expression new-line [group]
+'# elif   ' constant-expression new-line [group]
 ```
 
 check whether the controlling constant expression evaluates to nonzero.
@@ -384,10 +384,10 @@ before processing continues.
 Preprocessing directives of the forms
 
 ``` bnf
-'# ifdef   ' identifier new-line group_opt
-'# ifndef  ' identifier new-line group_opt
-'# elifdef ' identifier new-line group_opt
-'# elifndef' identifier new-line group_opt
+'# ifdef   ' identifier new-line [group]
+'# ifndef  ' identifier new-line [group]
+'# elifdef ' identifier new-line [group]
+'# elifndef' identifier new-line [group]
 ```
 
 check whether the identifier is or is not currently defined as a macro
@@ -560,7 +560,7 @@ This illustrates macro-replaced `#include` directives:
 
 ``` bnf
 pp-module:
-    export_opt module pp-tokens_opt ';' new-line
+    [export] module [pp-tokens] ';' new-line
 ```
 
 A *pp-module* shall not appear in a context where `module` or (if it is
@@ -584,9 +584,9 @@ removed at the end of phase 4. — *end note*\]
 
 ``` bnf
 pp-import:
-    export_opt import header-name pp-tokens_opt ';' new-line
-    export_opt import header-name-tokens pp-tokens_opt ';' new-line
-    export_opt import pp-tokens ';' new-line
+    [export] import header-name [pp-tokens] ';' new-line
+    [export] import header-name-tokens [pp-tokens] ';' new-line
+    [export] import pp-tokens ';' new-line
 ```
 
 A *pp-import* shall not appear in a context where `import` or (if it is
@@ -827,7 +827,7 @@ int table[TABSIZE];
 A preprocessing directive of the form
 
 ``` bnf
-'# define' identifier lparen identifier-list_opt ')' replacement-list new-line
+'# define' identifier lparen [identifier-list] ')' replacement-list new-line
 '# define' identifier lparen '...' ')' replacement-list new-line
 '# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
 ```
@@ -883,7 +883,7 @@ one more than the number of parameters in the macro definition
 
 ``` bnf
 va-opt-replacement:
-    '__VA_OPT__ (' pp-tokens_opt ')'
+    '__VA_OPT__ (' [pp-tokens] ')'
 ```
 
 After the arguments for the invocation of a function-like macro have
@@ -1258,7 +1258,7 @@ the behavior is undefined.
 A preprocessing directive of the form
 
 ``` bnf
-'# line' digit-sequence '"' s-char-sequence_opt '"' new-line
+'# line' digit-sequence '"' [s-char-sequence] '"' new-line
 ```
 
 sets the presumed line number similarly and changes the presumed name of
@@ -1283,8 +1283,8 @@ processed as appropriate.
 A preprocessing directive of either of the following forms
 
 ``` bnf
-'# error' pp-tokens_opt new-line
-'# warning' pp-tokens_opt new-line
+'# error' [pp-tokens] new-line
+'# warning' [pp-tokens] new-line
 ```
 
 causes the implementation to produce a diagnostic message that should
@@ -1296,7 +1296,7 @@ directive renders the program ill-formed.
 A preprocessing directive of the form
 
 ``` bnf
-'# pragma' pp-tokens_opt new-line
+'# pragma' [pp-tokens] new-line
 ```
 
 causes the implementation to behave in an *implementation-defined*

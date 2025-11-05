@@ -329,9 +329,10 @@ local function expand_macros(text, skip_special_chars)
   text = text:gsub("\\doccite{([^}]*)}", "*%1*")
 
   -- \opt{x} renders as x_opt (optional grammar element with subscript marker)
-  -- Use simple pattern - don't recursively expand since expand_macros processes left-to-right
-  -- Special case \opt{\grammarterm{...}} is handled in RawInline for emphasis preservation
-  text = text:gsub("\\opt{([^}]*)}", "%1_opt")
+  -- EXCEPT in BNF blocks where cpp-grammar.lua converts it to [x] bracket notation
+  if not skip_special_chars then  -- skip_special_chars is true for BNF blocks
+    text = text:gsub("\\opt{([^}]*)}", "%1_opt")
+  end
 
   -- \ucode{XXXX} renders Unicode code point as U+XXXX
   -- The LaTeX macro does complex text scaling, but for Markdown we simplify to standard format

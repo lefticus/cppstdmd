@@ -2123,7 +2123,7 @@ format:
 
 ``` bnf
 {\BnfNontermshape intval\itcorr}:
-    sign_opt units
+    [sign] units
 ```
 
 ``` bnf
@@ -2140,25 +2140,25 @@ format:
 
 ``` bnf
 {\BnfNontermshape digits\itcorr}:
-    digit digits_opt
+    digit [digits]
 ```
 
 and floating-point values have:
 
 ``` bnf
 {\BnfNontermshape floatval\itcorr}:
-    sign_opt units fractional_opt exponent_opt
-    sign_opt decimal-point digits exponent_opt
+    [sign] units [fractional] [exponent]
+    [sign] decimal-point digits [exponent]
 ```
 
 ``` bnf
 {\BnfNontermshape fractional\itcorr}:
-    decimal-point digits_opt
+    decimal-point [digits]
 ```
 
 ``` bnf
 {\BnfNontermshape exponent\itcorr}:
-    e sign_opt digits
+    e [sign] digits
 ```
 
 ``` bnf
@@ -3125,13 +3125,13 @@ The format of the numeric monetary value is a decimal number:
 
 ``` bnf
 {\BnfNontermshape value\itcorr}:
-    units fractional_opt
+    units [fractional]
     decimal-point digits
 ```
 
 ``` bnf
 {\BnfNontermshape fractional\itcorr}:
-    decimal-point digits_opt
+    decimal-point [digits]
 ```
 
 if `frac_digits()` returns a positive value, or
@@ -3152,7 +3152,7 @@ otherwise. The symbol indicates the character returned by
 
 ``` bnf
 {\BnfNontermshape digits\itcorr}:
-    adigit digits_opt
+    adigit [digits]
 ```
 
 In the syntax specification, the symbol is any of the values
