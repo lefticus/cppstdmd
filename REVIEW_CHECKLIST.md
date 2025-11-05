@@ -46,7 +46,7 @@ Look for:
 - [x] `grammar.md` (1.5K) - ✅ Perfect, no issues
 - [x] `uax31.md` (4.6K) - ✅ FIXED: \UAX{}, \unicode{}{}, and \ucode{} in code blocks
 - [x] `limits.md` (5.8K) - ✅ FIXED: \grammarterm{}{} with plural suffix dropping the suffix
-- [~] `module.md` (30K) - ⚠️ PARTIALLY FIXED: 4 issues resolved, 1 critical issue remains (see top priority below)
+- [x] `module.md` (30K) - ✅ FIXED: All 5 issues resolved (including BNF terminal backslash)
 - [ ] `stmt.md` (31K)
 - [ ] `except.md` (33K)
 - [ ] `intro.md` (33K)
@@ -89,18 +89,6 @@ Look for:
 **Multi-Argument Macros** - Some macros take optional second arguments for suffixes (like `\grammarterm{term}{s}` for plurals). These need special handling to extract both arguments and append the suffix after the emphasized term.
 
 ### Filter Improvements Needed
-
-#### 🚨 TOP PRIORITY - CRITICAL ISSUE
-
-- [ ] **BLOCKED**: `\terminal{\textbackslash}` in BNF grammar shows as `\terminal{\}` instead of `'\' `
-  - **Location**: lex.md lines 876, 898-900, 901, 912 (and likely other files)
-  - **Root Cause**: Filter ordering issue - cpp-macros.lua converts `\textbackslash` to literal `\` before cpp-grammar.lua runs, creating ambiguity in escape detection
-  - **Evidence**: Test with single filter works correctly, full filter chain fails
-  - **Impact**: All BNF grammar definitions with backslash terminals are malformed
-  - **Attempted Fix**: Added `\textbackslash` handling in cpp-grammar.lua line 63, but doesn't solve root issue
-  - **Real Solution Needed**: Either (1) prevent cpp-macros.lua from modifying RawBlocks, or (2) redesign escape detection to handle this case
-  - **Test Added**: `tests/test_filters/test_terminal_backslash.py` demonstrates the issue
-  - **Files**: src/cpp_std_converter/filters/cpp-common.lua (extract_braced_content), cpp-grammar.lua (terminal processing)
 
 #### Completed Fixes
 
@@ -155,9 +143,15 @@ Key Technical Details:
 
 ` → `M3 → ...`
   - **Impact**: module.md line 522 now has proper Unicode arrows
-- [x] **FIXED**: BNF `\terminal{\}}` with escaped closing brace now extracts correctly (cpp-common.lua lines 135-147)
+- [x] **FIXED**: BNF `\terminal{\}}` with escaped closing brace now extracts correctly (cpp-common.lua lines 135-152)
   - **Method**: Improved escape detection in `extract_braced_content()` to skip escapable chars after `\`
   - **Impact**: module.md line 185 BNF now shows `'}'` instead of malformed output
+- [x] **FIXED**: BNF `\terminal{\textbackslash}` now correctly converts to `'\'` (cpp-macros.lua lines 1129-1135, cpp-common.lua lines 139-140)
+  - **Root Cause**: cpp-macros.lua RawBlock fallback was calling `expand_macros()` on BNF blocks, converting `\textbackslash` to `\` before cpp-grammar.lua could process it
+  - **Solution**: Added check in cpp-macros.lua to skip all BNF grammar blocks, letting cpp-grammar.lua handle them exclusively
+  - **Additional Enhancement**: `extract_braced_content()` now recognizes `\textbackslash` as a special macro to skip as a complete unit
+  - **Impact**: Fixed 100+ instances across 16 files (lex.md, dcl.md, expr.md, stmt.md, class.md, cpp.md, temp.md, over.md, etc.)
+  - **Test**: test_terminal_backslash.py verifies the fix
 - [x] **FIXED**: `\doccite{}` and `\Fundescx{}` now use brace-balanced parsing (cpp-macros.lua lines 610-630)
 - [x] **TEST ADDED**: `test_doccite_with_nested_cpp_macro` verifies the fix
 - [x] **FIXED**: `\UAX{}` and `\unicode{}{}`macros now processed in RawInline handler (cpp-macros.lua lines 823-857)

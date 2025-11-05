@@ -60,6 +60,8 @@ local function clean_grammar(grammar)
     content = content:gsub("\\{", "{")
     content = content:gsub("\\}", "}")
     -- Handle \textbackslash macro (may appear in terminal symbols)
+    -- Note: Pandoc adds a space after macro names, so handle both variants
+    content = content:gsub("\\textbackslash%s", "\\")  -- with trailing space
     content = content:gsub("\\textbackslash", "\\")
     return "'" .. content .. "'"
   end)

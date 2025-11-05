@@ -873,12 +873,12 @@ escape-sequence:
 
 ``` bnf
 simple-escape-sequence:
-    \terminal{\} simple-escape-sequence-char
+    '\' simple-escape-sequence-char
 ```
 
 ``` bnf
 simple-escape-sequence-char: one of
-    ''  "  ?  \ a  b  f  n  r  t  v'
+    ''  "  ?  \{} a  b  f  n  r  t  v'
 ```
 
 ``` bnf
@@ -895,10 +895,10 @@ simple-octal-digit-sequence:
 
 ``` bnf
 octal-escape-sequence:
-    \terminal{\} octal-digit
-    \terminal{\} octal-digit octal-digit
-    \terminal{\} octal-digit octal-digit octal-digit
-    \terminal{\o\{} simple-octal-digit-sequence \terminal{\}}
+    '\' octal-digit
+    '\' octal-digit octal-digit
+    '\' octal-digit octal-digit octal-digit
+    '\o{' simple-octal-digit-sequence '}'
 ```
 
 ``` bnf
@@ -909,7 +909,7 @@ hexadecimal-escape-sequence:
 
 ``` bnf
 conditional-escape-sequence:
-    \terminal{\} conditional-escape-sequence-char
+    '\' conditional-escape-sequence-char
 ```
 
 ``` bnf

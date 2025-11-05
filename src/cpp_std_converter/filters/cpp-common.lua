@@ -132,18 +132,23 @@ local function extract_braced_content(text, start_pos, macro_len)
   while pos <= #text and depth > 0 do
     local c = text:sub(pos, pos)
 
-    -- If we encounter a backslash followed by an escapable character, skip both
-    -- Escapable characters in LaTeX: { } \ # $ % & _
-    -- This handles LaTeX escapes like \{ \} \\ etc, but NOT macros like \textbackslash
+    -- If we encounter a backslash, we need to skip escape sequences and special macros
     if c == "\\" and pos < #text then
-      local next_char = text:sub(pos + 1, pos + 1)
-      if next_char == "{" or next_char == "}" or next_char == "\\" or
-         next_char == "#" or next_char == "$" or next_char == "%" or
-         next_char == "&" or next_char == "_" then
-        pos = pos + 2  -- Skip backslash and escaped char
+      -- Check for \textbackslash macro (needs special handling in BNF contexts)
+      -- This must be checked BEFORE single-character escapes
+      if text:sub(pos, pos + 13) == "\\textbackslash" then
+        pos = pos + 14  -- Skip entire \textbackslash macro
       else
-        -- It's a macro like \textbackslash, just move forward
-        pos = pos + 1
+        -- Check for single-character LaTeX escapes: { } \ # $ % & _
+        local next_char = text:sub(pos + 1, pos + 1)
+        if next_char == "{" or next_char == "}" or next_char == "\\" or
+           next_char == "#" or next_char == "$" or next_char == "%" or
+           next_char == "&" or next_char == "_" then
+          pos = pos + 2  -- Skip backslash and escaped char
+        else
+          -- It's some other macro, just move forward
+          pos = pos + 1
+        end
       end
     else
       -- Normal brace counting

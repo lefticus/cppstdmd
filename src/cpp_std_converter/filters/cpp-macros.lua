@@ -135,7 +135,7 @@ local function convert_mname(text)
 end
 
 -- Helper function to expand macros in text
-local function expand_macros(text)
+local function expand_macros(text, skip_special_chars)
   if not text then return text end
 
   -- Tier 1: Most Critical Macros
@@ -281,7 +281,10 @@ local function expand_macros(text)
   text = text:gsub("\\stage{([^}]*)}", "Stage %1:")
 
   -- Tier 7: Special characters and preprocessor macros
-  text = convert_special_chars(text)
+  -- Skip for BNF blocks (cpp-grammar.lua handles \textbackslash specially)
+  if not skip_special_chars then
+    text = convert_special_chars(text)
+  end
 
   -- \mname{X} renders as __X__ (preprocessor macro names with underscore wrapper)
   -- \xname{X} renders as __X (special identifiers with underscore prefix)
@@ -1126,8 +1129,14 @@ function RawBlock(elem)
     end
   end
 
-  -- Fallback: just expand macros in text
-  elem.text = expand_macros(text)
+  -- For BNF blocks: expand macros but skip special char conversion
+  -- (cpp-grammar.lua handles \textbackslash specially in terminals)
+  local is_bnf = text:match("\\begin{bnf}") or text:match("\\begin{ncbnf}") or
+                 text:match("\\begin{ncsimplebnf}") or text:match("\\begin{ncrebnf}") or
+                 text:match("\\begin{bnfbase}")
+
+  -- Fallback: expand macros in text (skip special chars for BNF)
+  elem.text = expand_macros(text, is_bnf)
   return elem
 end
 
