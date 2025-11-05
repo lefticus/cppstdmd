@@ -513,6 +513,156 @@ local function expand_library_spec_macros(text, has_at_delimiters)
   return text
 end
 
+-- Helper function to extract multiple brace-balanced arguments from LaTeX macros
+-- Used to simplify extraction of multi-argument macros like \unicode{codepoint}{description}
+-- Generalizes the pattern of calling extract_braced_content multiple times
+--
+-- Parameters:
+--   text: The full text string
+--   start_pos: Position of the start of the macro (e.g., position of \)
+--   macro_len: Length of the macro name (e.g., 9 for "\unicode")
+--   num_args: Number of brace-balanced arguments to extract
+--
+-- Returns:
+--   args: Table of extracted arguments {arg1, arg2, ..., argN}, or nil on failure
+--   end_pos: Position immediately after the last closing brace, or nil on failure
+local function extract_multi_arg_macro(text, start_pos, macro_len, num_args)
+  local args = {}
+  local pos = start_pos + macro_len
+
+  for i = 1, num_args do
+    -- Skip whitespace before argument
+    while pos <= #text and text:sub(pos, pos):match("%s") do
+      pos = pos + 1
+    end
+
+    -- Extract this argument
+    if pos > #text or text:sub(pos, pos) ~= "{" then
+      return nil, nil
+    end
+
+    local content, next_pos = extract_braced_content(text, pos - 1, 1)  -- pos-1 to include the brace, macro_len=1 for just "{"
+    if not content then
+      return nil, nil
+    end
+
+    args[i] = content
+    pos = next_pos
+  end
+
+  return args, pos
+end
+
+-- Helper function to process all instances of a macro with a replacement function
+-- Generalizes the pattern of finding a macro, extracting content, and replacing it
+-- Used to eliminate repetitive macro processing loops across filters
+--
+-- Parameters:
+--   text: The text to process
+--   macro_name: The macro name (without backslash, e.g., "defn", "term", "impldef")
+--   replacement_func: Function(content) that returns replacement text
+--
+-- Returns:
+--   The processed text with all \macro_name{content} replaced
+local function process_macro_with_replacement(text, macro_name, replacement_func)
+  local macro_pattern = "\\" .. macro_name .. "{"
+  local macro_len = #macro_name + 1  -- +1 for backslash
+
+  while true do
+    local macro_start = text:find(macro_pattern, 1, true)
+    if not macro_start then break end
+
+    local content, end_pos = extract_braced_content(text, macro_start, macro_len)
+    if not content then break end
+
+    local replacement = replacement_func(content)
+    text = text:sub(1, macro_start - 1) .. replacement .. text:sub(end_pos)
+  end
+
+  return text
+end
+
+-- Helper function to expand nested macros recursively with multiple passes
+-- Generalizes the multi-pass expansion pattern used in clean_code() functions
+-- Handles cases like \tcode{\keyword{noexcept}(\keyword{true})}
+--
+-- Parameters:
+--   text: The text to process
+--   macro_patterns: Table of {pattern=string, replacement=string or function} entries
+--                   If replacement is a function, it receives the matched content
+--   max_passes: Maximum number of expansion passes (default 5)
+--
+-- Returns:
+--   The text with nested macros expanded
+local function expand_nested_macros_recursive(text, macro_patterns, max_passes)
+  max_passes = max_passes or 5
+
+  for pass = 1, max_passes do
+    local changed = false
+    local new_text = text
+
+    for _, pattern_info in ipairs(macro_patterns) do
+      local pattern = pattern_info.pattern
+      local replacement = pattern_info.replacement
+
+      if type(replacement) == "function" then
+        -- Pattern with capture group, call function with captured content
+        new_text = new_text:gsub(pattern, function(captured)
+          changed = true
+          return replacement(captured)
+        end)
+      else
+        -- Simple string replacement
+        local old_text = new_text
+        new_text = new_text:gsub(pattern, replacement)
+        if new_text ~= old_text then
+          changed = true
+        end
+      end
+    end
+
+    text = new_text
+
+    -- If nothing changed in this pass, we're done
+    if not changed then
+      break
+    end
+  end
+
+  return text
+end
+
+-- Helper function to remove all instances of a macro
+-- Generalizes the pattern of removing LaTeX commands while preserving content
+-- Used by cpp-macros.lua and other filters to clean up markup
+--
+-- Parameters:
+--   text: The text to process
+--   macro_name: The macro name (without backslash, e.g., "textrm", "emph")
+--   keep_content: If true, keeps the content; if false, removes macro and content (default: true)
+--
+-- Returns:
+--   The text with \macro_name{content} removed (keeping content if keep_content=true)
+local function remove_macro(text, macro_name, keep_content)
+  if keep_content == nil then keep_content = true end
+
+  local macro_pattern = "\\" .. macro_name .. "{"
+  local macro_len = #macro_name + 1  -- +1 for backslash
+
+  while true do
+    local macro_start = text:find(macro_pattern, 1, true)
+    if not macro_start then break end
+
+    local content, end_pos = extract_braced_content(text, macro_start, macro_len)
+    if not content then break end
+
+    local replacement = keep_content and content or ""
+    text = text:sub(1, macro_start - 1) .. replacement .. text:sub(end_pos)
+  end
+
+  return text
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -532,4 +682,8 @@ return {
   expand_concept_macros = expand_concept_macros,
   convert_cross_references_in_code = convert_cross_references_in_code,
   expand_library_spec_macros = expand_library_spec_macros,
+  extract_multi_arg_macro = extract_multi_arg_macro,
+  process_macro_with_replacement = process_macro_with_replacement,
+  expand_nested_macros_recursive = expand_nested_macros_recursive,
+  remove_macro = remove_macro,
 }
