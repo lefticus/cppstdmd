@@ -25,6 +25,7 @@ local expand_concept_macros = common.expand_concept_macros
 local convert_cross_references_in_code = common.convert_cross_references_in_code
 local expand_library_spec_macros = common.expand_library_spec_macros
 local expand_nested_macros_recursive = common.expand_nested_macros_recursive
+local code_block_macro_patterns = common.code_block_macro_patterns
 
 -- Helper function to handle layout overlap commands
 local function handle_overlap_commands(text)
@@ -105,45 +106,8 @@ local function clean_code(code)
   code = code:gsub("@\\commentellip@", "...")
 
   -- Expand macros in multiple passes to handle nesting (e.g., \tcode{\keyword{x}})
-  -- Use helper function for cleaner recursive expansion
-  local macro_patterns = {
-    -- \tcode{x} represents inline code (just extract the content)
-    -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
-    {pattern = "@\\tcode{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\tcode{([^}]*)}", replacement = "%1"},
-
-    -- \placeholder{x}{} or \placeholder{x} represents a placeholder
-    -- Handle with empty braces first (order matters!)
-    {pattern = "@\\placeholder{([^}]*)}{}@", replacement = "%1"},
-    {pattern = "@\\placeholder{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\placeholder{([^}]*)}{}",  replacement = "%1"},
-    {pattern = "\\placeholder{([^}]*)}", replacement = "%1"},
-
-    -- \placeholdernc{x}{} or \placeholdernc{x} represents a placeholder (non-code variant)
-    -- Handle with empty braces first (order matters!)
-    {pattern = "@\\placeholdernc{([^}]*)}{}@", replacement = "%1"},
-    {pattern = "@\\placeholdernc{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\placeholdernc{([^}]*)}{}",  replacement = "%1"},
-    {pattern = "\\placeholdernc{([^}]*)}", replacement = "%1"},
-
-    -- \exposid{x} represents exposition-only identifier
-    {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
-
-    -- \keyword{x} in code comments
-    {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
-
-    -- \texttt{x} in code comments (font switch, just extract content)
-    {pattern = "\\texttt{([^}]*)}", replacement = "%1"},
-
-    -- \grammarterm{x} in code comments
-    {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
-
-    -- \term{x} in code comments
-    {pattern = "\\term{([^}]*)}", replacement = "%1"}
-  }
-
-  code = expand_nested_macros_recursive(code, macro_patterns, 5)
+  -- Use shared macro patterns from cpp-common.lua
+  code = expand_nested_macros_recursive(code, code_block_macro_patterns, 5)
 
   -- Concept macros (library, exposition-only, and old-style concepts)
   code = expand_concept_macros(code, true)

@@ -24,6 +24,7 @@ local convert_cross_references_in_code = common.convert_cross_references_in_code
 local expand_library_spec_macros = common.expand_library_spec_macros
 local extract_braced_content = common.extract_braced_content
 local expand_nested_macros_recursive = common.expand_nested_macros_recursive
+local code_block_macro_patterns = common.code_block_macro_patterns
 
 -- Track note and example counters
 local note_counter = 0
@@ -44,38 +45,14 @@ local function clean_code(code)
   end)
 
   -- Expand macros in multiple passes to handle nesting (e.g., \tcode{\keyword{x}})
-  -- Use helper function for cleaner recursive expansion
-  local macro_patterns = {
-    -- \tcode{x} represents inline code (just extract the content)
-    -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
-    -- Use pattern that matches up to }@ specifically
-    {pattern = "@\\tcode{([^@]-)}@", replacement = "%1"},
-    {pattern = "\\tcode{([^}]*)}", replacement = "%1"},
-
-    -- \placeholder{x} represents a placeholder (keep as-is or use angle brackets)
-    {pattern = "@\\placeholder{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\placeholder{([^}]*)}", replacement = "%1"},
-
-    -- \placeholdernc{x} represents a placeholder (non-code variant)
-    {pattern = "@\\placeholdernc{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\placeholdernc{([^}]*)}", replacement = "%1"},
-
-    -- \exposid{x} represents exposition-only identifier
-    {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
-
-    -- \keyword{x} in code comments
-    {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
-
-    -- \texttt{x} in code comments (font switch, just extract content)
-    {pattern = "\\texttt{([^}]*)}", replacement = "%1"},
-
-    -- \grammarterm{x} in code comments
-    {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
-
-    -- \term{x} in code comments
-    {pattern = "\\term{([^}]*)}", replacement = "%1"}
-  }
+  -- Use shared macro patterns from cpp-common.lua, but with special @\tcode pattern
+  -- We need a local copy to override the @\tcode pattern for this filter's special handling
+  local macro_patterns = {}
+  for i, v in ipairs(code_block_macro_patterns) do
+    macro_patterns[i] = v
+  end
+  -- Override the first @\tcode pattern to use ([^@]-) for special textbackslash handling
+  macro_patterns[1] = {pattern = "@\\tcode{([^@]-)}@", replacement = "%1"}
 
   code = expand_nested_macros_recursive(code, macro_patterns, 5)
 

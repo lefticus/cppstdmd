@@ -686,4 +686,43 @@ return {
   process_macro_with_replacement = process_macro_with_replacement,
   expand_nested_macros_recursive = expand_nested_macros_recursive,
   remove_macro = remove_macro,
+
+  -- Shared code block macro patterns for nested expansion
+  -- Returns a table of patterns used by cpp-code-blocks.lua and cpp-notes-examples.lua
+  code_block_macro_patterns = {
+    -- \tcode{x} represents inline code (just extract the content)
+    -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
+    {pattern = "@\\tcode{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\tcode{([^}]*)}", replacement = "%1"},
+
+    -- \placeholder{x}{} or \placeholder{x} represents a placeholder
+    -- Handle with empty braces first (order matters!)
+    {pattern = "@\\placeholder{([^}]*)}{}@", replacement = "%1"},
+    {pattern = "@\\placeholder{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\placeholder{([^}]*)}{}",  replacement = "%1"},
+    {pattern = "\\placeholder{([^}]*)}", replacement = "%1"},
+
+    -- \placeholdernc{x}{} or \placeholdernc{x} represents a placeholder (non-code variant)
+    -- Handle with empty braces first (order matters!)
+    {pattern = "@\\placeholdernc{([^}]*)}{}@", replacement = "%1"},
+    {pattern = "@\\placeholdernc{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\placeholdernc{([^}]*)}{}",  replacement = "%1"},
+    {pattern = "\\placeholdernc{([^}]*)}", replacement = "%1"},
+
+    -- \exposid{x} represents exposition-only identifier
+    {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
+
+    -- \keyword{x} in code comments
+    {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
+
+    -- \texttt{x} in code comments (font switch, just extract content)
+    {pattern = "\\texttt{([^}]*)}", replacement = "%1"},
+
+    -- \grammarterm{x} in code comments
+    {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
+
+    -- \term{x} in code comments
+    {pattern = "\\term{([^}]*)}", replacement = "%1"}
+  },
 }
