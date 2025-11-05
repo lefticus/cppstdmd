@@ -22,6 +22,7 @@ local expand_cpp_version_macros = common.expand_cpp_version_macros
 local expand_concept_macros = common.expand_concept_macros
 local convert_cross_references_in_code = common.convert_cross_references_in_code
 local expand_library_spec_macros = common.expand_library_spec_macros
+local extract_braced_content = common.extract_braced_content
 
 -- Track note and example counters
 local note_counter = 0
@@ -191,31 +192,71 @@ local function process_codeblock_div(block, codeblocks)
 end
 
 -- Optimized codeblock extraction using position tracking instead of repeated scanning
+-- Handles all code block types: codeblock, codeblocktu, codeblockdigitsep, outputblock
+-- Uses pattern matching with balanced brace extraction for codeblocktu titles
 local function extract_codeblocks(content)
   local codeblocks = {}
   local modified_content = content
   local counter = 0
-  local offset = 0  -- Track position offset from replacements
 
+  -- Process each type with its own pattern, finding earliest match each iteration
   local pos = 1
-  while true do
-    local cb_start, cb_end = modified_content:find("\\begin{codeblock}.-\\end{codeblock}", pos)
-    if not cb_start then break end
+  while pos <= #modified_content do
+    local earliest_start, earliest_end, earliest_code, earliest_type = nil, nil, nil, nil
 
-    local codeblock_text = modified_content:sub(cb_start, cb_end)
-    local code = codeblock_text:match("\\begin{codeblock}(.-)\\end{codeblock}")
-    if code then
-      code = code:gsub("^%s*\n", ""):gsub("\n%s*$", "") -- Trim leading/trailing newlines
-      code = clean_code(code) -- Clean @ escapes and LaTeX macros
+    -- Try each pattern and find which one matches earliest
+    local patterns = {
+      {name = "codeblock", start_pat = "\\begin{codeblock}",  end_pat = "\\end{codeblock}"},
+      {name = "codeblockdigitsep", start_pat = "\\begin{codeblockdigitsep}", end_pat = "\\end{codeblockdigitsep}"},
+      {name = "outputblock", start_pat = "\\begin{outputblock}", end_pat = "\\end{outputblock}"},
+    }
+
+    for _, p in ipairs(patterns) do
+      local start_pos = modified_content:find(p.start_pat, pos, true)
+      if start_pos and (not earliest_start or start_pos < earliest_start) then
+        local end_pos = modified_content:find(p.end_pat, start_pos, true)
+        if end_pos then
+          local code_start = start_pos + #p.start_pat
+          local code = modified_content:sub(code_start, end_pos - 1)
+          earliest_start = start_pos
+          earliest_end = end_pos + #p.end_pat - 1
+          earliest_code = code
+          earliest_type = p.name
+        end
+      end
+    end
+
+    -- Handle codeblocktu separately due to title parameter with nested braces
+    local cbtu_start = modified_content:find("\\begin{codeblocktu}{", pos, true)
+    if cbtu_start and (not earliest_start or cbtu_start < earliest_start) then
+      -- Use brace-balanced extraction for the title
+      local title_brace_start = cbtu_start + 20  -- After \begin{codeblocktu}{
+      local title, title_end = extract_braced_content(modified_content, title_brace_start - 1, 0)
+      if title and title_end then
+        local cbtu_end = modified_content:find("\\end{codeblocktu}", title_end, true)
+        if cbtu_end then
+          local code = modified_content:sub(title_end + 1, cbtu_end - 1)
+          earliest_start = cbtu_start
+          earliest_end = cbtu_end + 17 - 1  -- \end{codeblocktu} is 17 chars
+          earliest_code = code
+          earliest_type = "codeblocktu"
+        end
+      end
+    end
+
+    if earliest_start and earliest_code then
+      -- Clean and store the code
+      local code = earliest_code:gsub("^%s*\n", ""):gsub("\n%s*$", "")
+      code = clean_code(code)
       counter = counter + 1
       codeblocks[counter] = code
 
       -- Replace with placeholder
       local placeholder = "\n\n__CODEBLOCK_" .. counter .. "__\n\n"
-      modified_content = modified_content:sub(1, cb_start - 1) .. placeholder .. modified_content:sub(cb_end + 1)
+      modified_content = modified_content:sub(1, earliest_start - 1) .. placeholder .. modified_content:sub(earliest_end + 1)
 
-      -- Update position to continue after the placeholder
-      pos = cb_start + #placeholder
+      -- Continue from after the placeholder
+      pos = earliest_start + #placeholder
     else
       break
     end

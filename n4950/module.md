@@ -57,6 +57,30 @@ visible outside the module. — *end note*\]
 
 \[*Example 1*:
 
+``` cpp
+export module A;
+export import :Foo;
+export int baz();
+```
+
+``` cpp
+export module A:Foo;
+import :Internals;
+export int foo() { return 2 * (bar() + 1); }
+```
+
+``` cpp
+module A:Internals;
+int bar();
+```
+
+``` cpp
+module A;
+import :Internals;
+int bar() { return baz() - 10; }
+int baz() { return 30; }
+```
+
 Module `A` contains four translation units:
 
 - a primary module interface unit,
@@ -106,6 +130,33 @@ of the module as if by a *module-import-declaration*.
 
 \[*Example 2*:
 
+``` cpp
+module B:Y;                     // does not implicitly import B
+int y();
+```
+
+``` cpp
+export module B;
+import :Y;                      // OK, does not create interface dependency cycle
+int n = y();
+```
+
+``` cpp
+module B:X1;                    // does not implicitly import B
+int &a = n;                     // error: n not visible here
+```
+
+``` cpp
+module B:X2;                    // does not implicitly import B
+import B;
+int &b = n;                     // OK
+```
+
+``` cpp
+module B;                       // implicitly imports B
+int &c = n;                     // OK
+```
+
 — *end example*\]
 
 ## Export declaration <a id="module.interface">[[module.interface]]</a>
@@ -143,6 +194,25 @@ declare a name with internal linkage.
 
 \[*Example 1*:
 
+``` cpp
+export int x;
+```
+
+``` cpp
+module;
+#include "a.h"                  // error: declaration of x is not in the
+                                // purview of a module interface unit
+export module M;
+export namespace {}             // error: namespace has internal linkage
+namespace {
+  export int a2;                // error: export of name with internal linkage
+}
+export static int b;            // error: b explicitly declared static
+export int f();                 // OK
+export namespace N { }          // OK
+export using namespace N;       // OK
+```
+
 — *end example*\]
 
 If an exported declaration is a *using-declaration* [[namespace.udecl]]
@@ -151,6 +221,35 @@ and is not within a header unit, all entities to which all of the
 with a name having external linkage.
 
 \[*Example 2*:
+
+``` cpp
+int f();
+```
+
+``` cpp
+int g();
+```
+
+``` cpp
+export module X;
+export int h();
+```
+
+``` cpp
+module;
+#include "b.h"
+export module M;
+import "c.h";
+import X;
+export using ::f, ::g, ::h;     // OK
+struct S;
+export using ::S;               // error: S has module linkage
+namespace N {
+  export int h();
+  static int h(int);            // #1
+}
+export using N::h;              // error: #1 has internal linkage
+```
 
 — *end example*\]
 
@@ -185,6 +284,46 @@ enumeration member names can be found by name lookup in any context in
 which a definition of the type is reachable. — *end note*\]
 
 \[*Example 4*:
+
+``` cpp
+export module M;
+export struct X {
+  static void f();
+  struct Y { };
+};
+
+namespace {
+  struct S { };
+}
+export void f(S);               // OK
+struct T { };
+export T id(T);                 // OK
+
+export struct A;                // A exported as incomplete
+
+export auto rootFinder(double a) {
+  return [=](double x) { return (x + a/x)/2; };
+}
+
+export const int n = 5;         // OK, n has external linkage
+```
+
+``` cpp
+module M;
+struct A {
+  int value;
+};
+```
+
+``` cpp
+import M;
+int main() {
+  X::f();                       // OK, X is exported and definition of X is reachable
+  X::Y y;                       // OK, X::Y is exported as a complete type
+  auto f = rootFinder(2);       // OK
+  return A{45}.value;           // error: A is incomplete
+}
+```
 
 — *end example*\]
 
@@ -290,6 +429,15 @@ A module implementation unit shall not be exported.
 
 \[*Example 1*:
 
+``` cpp
+module M:Part;
+```
+
+``` cpp
+export module M;
+export import :Part;    // error: exported partition :Part is an implementation unit
+```
+
 — *end example*\]
 
 A module implementation unit of a module `M` that is not a module
@@ -312,6 +460,21 @@ that has an interface dependency on `U`. A translation unit shall not
 have an interface dependency on itself.
 
 \[*Example 3*:
+
+``` cpp
+export module M1;
+import M2;
+```
+
+``` cpp
+export module M2;
+import M3;
+```
+
+``` cpp
+export module M3;
+import M1;              // error: cyclic interface dependency $\mathtt{M3} \rightarrow \mathtt{M1} \rightarrow \mathtt{M2} \rightarrow \mathtt{M3}$
+```
 
 — *end example*\]
 
@@ -416,6 +579,53 @@ void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 
 \[*Example 2*:
 
+``` cpp
+namespace N {
+  struct X {};
+  int d();
+  int e();
+  inline int f(X, int = d()) { return e(); }
+  int g(X);
+  int h(X);
+}
+```
+
+``` cpp
+module;
+#include "foo.h"
+export module M;
+template<typename T> int use_f() {
+  N::X x;                       // N::X, N, and :: are decl-reachable from use_f
+  return f(x, 123);             // N::f is decl-reachable from use_f,
+                                // N::e is indirectly decl-reachable from use_f
+                                //   because it is decl-reachable from N::f, and
+                                // N::d is decl-reachable from use_f
+                                //   because it is decl-reachable from N::f
+                                //   even though it is not used in this call
+}
+template<typename T> int use_g() {
+  N::X x;                       // N::X, N, and :: are decl-reachable from use_g
+  return g((T(), x));           // N::g is not decl-reachable from use_g
+}
+template<typename T> int use_h() {
+  N::X x;                       // N::X, N, and :: are decl-reachable from use_h
+  return h((T(), x));           // N::h is not decl-reachable from use_h, but
+                                // N::h is decl-reachable from use_h<int>
+}
+int k = use_h<int>();
+  // use_h<int> is decl-reachable from k, so
+  // N::h is decl-reachable from k
+```
+
+``` cpp
+module M;
+int a = use_f<int>();           // OK
+int b = use_g<int>();           // error: no viable function for call to g;
+                                // g is not decl-reachable from purview of
+                                // module M{'s} interface, so is discarded
+int c = use_h<int>();           // OK
+```
+
 — *end example*\]
 
 ## Private module fragment <a id="module.private.frag">[[module.private.frag]]</a>
@@ -515,6 +725,41 @@ program comprises that point.
 
 \[*Example 1*:
 
+``` cpp
+export module stuff;
+export template<typename T, typename U> void foo(T, U u) { auto v = u; }
+export template<typename T, typename U> void bar(T, U u) { auto v = *u; }
+```
+
+``` cpp
+export module M1;
+import "defn.h";        // provides struct X {\;}
+import stuff;
+export template<typename T> void f(T t) {
+  X x;
+  foo(t, x);
+}
+```
+
+``` cpp
+export module M2;
+import "decl.h";        // provides struct X; (not a definition)
+import stuff;
+export template<typename T> void g(T t) {
+  X *x;
+  bar(t, x);
+}
+```
+
+``` cpp
+import M1;
+import M2;
+void test() {
+  f(0);
+  g(0);
+}
+```
+
 The call to `f(0)` is valid; the instantiation context of `foo<int, X>`
 comprises
 
@@ -588,6 +833,18 @@ properties of the corresponding parameter types apply in that context.
 cannot be found by name lookup. — *end note*\]
 
 \[*Example 1*:
+
+``` cpp
+export module A;
+struct X {};
+export using Y = X;
+```
+
+``` cpp
+import A;
+Y y;                // OK, definition of X is reachable
+X x;                // error: X not visible to unqualified lookup
+```
 
 — *end example*\]
 

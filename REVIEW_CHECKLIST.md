@@ -102,6 +102,10 @@ Look for:
 - [x] **FIXED**: `\texttt{}` in BNF blocks now processes correctly (cpp-grammar.lua line 70-71)
 - [x] **TEST ADDED**: `test_texttt_in_bnf` verifies the fix
 - [x] **IMPACT**: Affects 188+ instances across 20 files (dcl.md has 67, expr.md has 28, input.md has 40)
+- [x] **FIXED**: Code blocks nested in examples/notes now extract correctly (cpp-notes-examples.lua lines 193-249)
+- [x] **TEST ADDED**: `test_example_with_codeblocktu` verifies the fix
+- [x] **IMPACT**: Affects 580+ code blocks across 30 files (55+ codeblocktu, 7 outputblock, 521+ in notes, 1 codeblockdigitsep)
+- [x] **SEVERITY**: CRITICAL - Major content loss bug
 
 ### Known Edge Cases
 

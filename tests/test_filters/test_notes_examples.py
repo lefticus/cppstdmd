@@ -385,3 +385,38 @@ The sample (the \defn{selected items}) comes from the population.
     assert "(the )" not in output
     # Should NOT have unexpanded macro
     assert "\\defn" not in output
+
+def test_example_with_codeblocktu():
+    r"""Test example with \begin{codeblocktu} nested inside (module.md bug)"""
+    latex = r"""
+\begin{example}
+\begin{codeblocktu}{Translation unit \#1}
+export module A;
+export import :Foo;
+export int baz();
+\end{codeblocktu}
+
+\begin{codeblocktu}{Translation unit \#2}
+export module A:Foo;
+import :Internals;
+\end{codeblocktu}
+
+Module \tcode{A} contains two translation units.
+\end{example}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*Example 1*" in output
+    # Check that both code blocks are present
+    assert "export module A;" in output
+    assert "export import :Foo" in output
+    assert "export int baz()" in output
+    assert "export module A:Foo" in output
+    assert "import :Internals" in output
+    # Check description text
+    assert "Module" in output
+    assert "contains two translation units" in output
+    # Ensure \tcode{A} was expanded
+    assert "\\tcode" not in output
+    # Should have markdown code blocks
+    assert "``` cpp" in output or "```cpp" in output

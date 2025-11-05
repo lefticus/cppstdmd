@@ -4307,17 +4307,165 @@ diagnostic required.
 
 \[*Example 1*:
 
+``` cpp
+namespace Q {
+  struct X { };
+}
+```
+
+``` cpp
+namespace Q {
+  void g_impl(X, X);
+}
+```
+
+``` cpp
+module;
+#include "X.h"
+#include "G.h"
+export module M1;
+export template<typename T>
+void g(T t) {
+  g_impl(t, Q::X{ });   // ADL in definition context finds Q::g_impl, g_impl not discarded
+}
+```
+
+``` cpp
+module;
+#include "X.h"
+export module M2;
+import M1;
+void h(Q::X x) {
+   g(x);                // OK
+}
+```
+
 — *end example*\]
 
 \[*Example 2*:
+
+``` cpp
+export module Std;
+export template<typename Iter>
+void indirect_swap(Iter lhs, Iter rhs)
+{
+  swap(*lhs, *rhs);     // swap not found by unqualified lookup, can be found only via ADL
+}
+```
+
+``` cpp
+export module M;
+import Std;
+
+struct S { /* ...*/ };
+void swap(S&, S&);      // #1
+
+void f(S* p, S* q)
+{
+  indirect_swap(p, q);  // finds #1 via ADL in instantiation context
+}
+```
 
 — *end example*\]
 
 \[*Example 3*:
 
+``` cpp
+struct X { /* ... */ };
+X operator+(X, X);
+```
+
+``` cpp
+export module F;
+export template<typename T>
+void f(T t) {
+  t + t;
+}
+```
+
+``` cpp
+module;
+#include "X.h"
+export module M;
+import F;
+void g(X x) {
+  f(x);             // OK, instantiates f from F,
+                    // operator+ is visible in instantiation context
+}
+```
+
 — *end example*\]
 
 \[*Example 4*:
+
+``` cpp
+export module A;
+export template<typename T>
+void f(T t) {
+  cat(t, t);            // #1
+  dog(t, t);            // #2
+}
+```
+
+``` cpp
+export module B;
+import A;
+export template<typename T, typename U>
+void g(T t, U u) {
+  f(t);
+}
+```
+
+``` cpp
+struct foo {
+  friend int cat(foo, foo);
+};
+int dog(foo, foo);
+```
+
+``` cpp
+module;
+#include "foo.h"        // dog not referenced, discarded
+export module C1;
+import B;
+export template<typename T>
+void h(T t) {
+  g(foo{ }, t);
+}
+```
+
+``` cpp
+import C1;
+void i() {
+   h(0);                // error: dog not found at #2
+}
+```
+
+``` cpp
+struct bar {
+  friend int cat(bar, bar);
+};
+int dog(bar, bar);
+```
+
+``` cpp
+module;
+#include "bar.h"        // imports header unit "bar.h"
+export module C2;
+import B;
+export template<typename T>
+void j(T t) {
+  g(bar{ }, t);
+}
+```
+
+``` cpp
+import C2;
+void k() {
+   j(0);                // OK, dog found in instantiation context:
+                        // visible at end of module interface unit of C2
+}
+```
 
 — *end example*\]
 

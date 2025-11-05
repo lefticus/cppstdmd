@@ -1570,6 +1570,45 @@ discarded [[module.global.frag]] or has internal linkage.
 
 \[*Example 2*:
 
+``` cpp
+export module M;
+namespace R {
+  export struct X {};
+  export void f(X);
+}
+namespace S {
+  export void f(R::X, R::X);
+}
+```
+
+``` cpp
+export module N;
+import M;
+export R::X make();
+namespace R { static int g(X); }
+export template<typename T, typename U> void apply(T t, U u) {
+  f(t, u);
+  g(t);
+}
+```
+
+``` cpp
+module Q;
+import N;
+namespace S {
+  struct Z { template<typename T> operator T(); };
+}
+void test() {
+  auto x = make();              // OK, decltype(x) is R::X in module M
+  R::f(x);                      // error: R and R::f are not visible here
+  f(x);                         // OK, calls R::f from interface of M
+  f(x, S::Z());                 // error: S::f in module M not considered
+                                // even though S is an associated namespace
+  apply(x, S::Z());             // error: S::f is visible in instantiation context, but
+                                // R::g has internal linkage and cannot be used outside TU #2
+}
+```
+
 — *end example*\]
 
 \[*Note 2*: The associated namespace can include namespaces already
@@ -2107,6 +2146,27 @@ from the other.
 
 \[*Example 2*:
 
+``` cpp
+int f();            // #1, attached to the global module
+int g();            // #2, attached to the global module
+```
+
+``` cpp
+module;
+#include "decls.h"
+export module M;
+export using ::f;   // OK, does not declare an entity, exports #1
+int g();            // error: matches #2, but attached to M
+export int h();     // #3
+export int k();     // #4
+```
+
+``` cpp
+import M;
+static int h();     // error: matches #3
+int k();            // error: matches #4
+```
+
 — *end example*\]
 
 As a consequence of these rules, all declarations of an entity are
@@ -2225,6 +2285,50 @@ specialization [[temp.spec]] appears at the point of instantiation of
 the specialization [[temp.point]].
 
 \[*Example 4*:
+
+``` cpp
+export module A;
+static void f() {}
+inline void it() { f(); }           // error: is an exposure of f
+static inline void its() { f(); }   // OK
+template<int> void g() { its(); }   // OK
+template void g<0>();
+
+decltype(f) *fp;                    // error: f (though not its type) is TU-local
+auto &fr = f;                       // OK
+constexpr auto &fr2 = fr;           // error: is an exposure of f
+constexpr static auto fp2 = fr;     // OK
+
+struct S { void (&ref)(); } s{f};               // OK, value is TU-local
+constexpr extern struct W { S &s; } wrap{s};    // OK, value is not TU-local
+
+static auto x = []{f();};           // OK
+auto x2 = x;                        // error: the closure type is TU-local
+int y = ([]{f();}(),0);             // error: the closure type is not TU-local
+int y2 = (x,0);                     // OK
+
+namespace N {
+  struct A {};
+  void adl(A);
+  static void adl(int);
+}
+void adl(double);
+
+inline void h(auto x) { adl(x); }   // OK, but certain specializations are exposures
+```
+
+``` cpp
+module A;
+void other() {
+  g<0>();                           // OK, specialization is explicitly instantiated
+  g<1>();                           // error: instantiation uses TU-local its
+  h(N::A{});                        // error: overload set contains TU-local N::adl(int)
+  h(0);                             // OK, calls adl(double)
+  adl(N::A{});                      // OK; N::adl(int) not found, calls N::adl(N::A)
+  fr();                             // OK, calls f
+  constexpr auto ptr = fr;          // error: fr is not usable in constant expressions here
+}
+```
 
 — *end example*\]
 

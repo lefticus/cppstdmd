@@ -7209,6 +7209,36 @@ for (auto& l : get_tzdb().leap_seconds)
 
 Produces the output:
 
+``` cpp
+1972-07-01 00:00:00: 1s
+1973-01-01 00:00:00: 1s
+1974-01-01 00:00:00: 1s
+1975-01-01 00:00:00: 1s
+1976-01-01 00:00:00: 1s
+1977-01-01 00:00:00: 1s
+1978-01-01 00:00:00: 1s
+1979-01-01 00:00:00: 1s
+1980-01-01 00:00:00: 1s
+1981-07-01 00:00:00: 1s
+1982-07-01 00:00:00: 1s
+1983-07-01 00:00:00: 1s
+1985-07-01 00:00:00: 1s
+1988-01-01 00:00:00: 1s
+1990-01-01 00:00:00: 1s
+1991-01-01 00:00:00: 1s
+1992-07-01 00:00:00: 1s
+1993-07-01 00:00:00: 1s
+1994-07-01 00:00:00: 1s
+1996-01-01 00:00:00: 1s
+1997-07-01 00:00:00: 1s
+1999-01-01 00:00:00: 1s
+2006-01-01 00:00:00: 1s
+2009-01-01 00:00:00: 1s
+2012-07-01 00:00:00: 1s
+2015-07-01 00:00:00: 1s
+2017-01-01 00:00:00: 1s
+```
+
 — *end example*\]
 
 #### Member functions <a id="time.zone.leap.members">[[time.zone.leap.members]]</a>
@@ -7442,6 +7472,13 @@ value, with a `STATICALLY-WIDEN<charT>("-")` character sequence placed
 before the replacement of the initial conversion specifier.
 
 \[*Example 1*:
+
+``` cpp
+cout << format("{:%T}", -10'000s);          // prints: -02:46:40
+cout << format("{:%H:%M:%S}", -10'000s);    // prints: -02:46:40
+cout << format("minutes {:%M, hours %H, seconds %S}", -10'000s);
+                                            // prints: minutes -46, hours 02, seconds 40
+```
 
 — *end example*\]
 
