@@ -553,6 +553,8 @@ function RawInline(elem)
     code = convert_latex_spacing(code)
     -- Handle escaped special characters
     code = code:gsub("\\([~!@#$%%^&*])", "%1")
+    -- Clean up ~{} from LaTeX \~{} (tilde with spacing braces)
+    code = code:gsub("~{}", "~")
     -- Expand nested macros in code content
     code = code:gsub("\\keyword{([^}]*)}", "%1")
     code = code:gsub("\\ctype{([^}]*)}", "%1")

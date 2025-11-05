@@ -3623,7 +3623,7 @@ converted to `bool` [[conv]]; its value is `true` if the converted
 operand is `false` and `false` otherwise. The type of the result is
 `bool`.
 
-The operand of the `~{}` operator shall have integral or unscoped
+The operand of the `~` operator shall have integral or unscoped
 enumeration type. Integral promotions are performed. The type of the
 result is the type of the promoted operand. Given the coefficients `xᵢ`
 of the base-2 representation [[basic.fundamental]] of the promoted
@@ -3633,13 +3633,13 @@ result `r` is 1 if `xᵢ` is 0, and 0 otherwise.
 \[*Note 6*: The result is the ones’ complement of the operand (where
 operand and result are considered as unsigned). — *end note*\]
 
-There is an ambiguity in the grammar when `~{}` is followed by a
+There is an ambiguity in the grammar when `~` is followed by a
 *type-name* or *decltype-specifier*. The ambiguity is resolved by
-treating `~{}` as the operator rather than as the start of an
+treating `~` as the operator rather than as the start of an
 *unqualified-id* naming a destructor.
 
 \[*Note 7*: Because the grammar does not permit an operator to follow
-the `.`, `->`, or `::` tokens, a `~{}` followed by a *type-name* or
+the `.`, `->`, or `::` tokens, a `~` followed by a *type-name* or
 *decltype-specifier* in a member access expression or *qualified-id* is
 unambiguously parsed as a destructor name. — *end note*\]
 

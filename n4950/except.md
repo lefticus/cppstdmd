@@ -674,10 +674,10 @@ struct D : public A, public B {
 };
 ```
 
-Furthermore, if `A::~{}A()` were virtual, the program would be
-ill-formed since a function that overrides a virtual function from a
-base class shall not have a potentially-throwing exception specification
-if the base class function has a non-throwing exception specification.
+Furthermore, if `A::~A()` were virtual, the program would be ill-formed
+since a function that overrides a virtual function from a base class
+shall not have a potentially-throwing exception specification if the
+base class function has a non-throwing exception specification.
 
 — *end example*\]
 

@@ -1618,7 +1618,7 @@ lookup fails or if the deallocation function has a deleted definition
 the dynamic type of an object is available for the *delete-expression*
 [[class.free]]. — *end note*\]
 
-In an explicit destructor call, the destructor is specified by a `~{}`
+In an explicit destructor call, the destructor is specified by a `~`
 followed by a *type-name* or *decltype-specifier* that denotes the
 destructor’s class type. The invocation of a destructor is subject to
 the usual rules for member functions [[class.mfct]]; that is, if the
@@ -1656,8 +1656,8 @@ void f() {
 
 \[*Note 8*: An explicit destructor call must always be written using a
 member access operator [[expr.ref]] or a *qualified-id*
-[[expr.prim.id.qual]]; in particular, the *unary-expression* `~{}X()` in
-a member function is not an explicit destructor call
+[[expr.prim.id.qual]]; in particular, the *unary-expression* `~X()` in a
+member function is not an explicit destructor call
 [[expr.unary.op]]. — *end note*\]
 
 \[*Note 9*:
