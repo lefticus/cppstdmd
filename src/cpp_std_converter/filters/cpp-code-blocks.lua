@@ -24,6 +24,7 @@ local expand_cpp_version_macros = common.expand_cpp_version_macros
 local expand_concept_macros = common.expand_concept_macros
 local convert_cross_references_in_code = common.convert_cross_references_in_code
 local expand_library_spec_macros = common.expand_library_spec_macros
+local expand_nested_macros_recursive = common.expand_nested_macros_recursive
 
 -- Helper function to handle layout overlap commands
 local function handle_overlap_commands(text)
@@ -104,51 +105,45 @@ local function clean_code(code)
   code = code:gsub("@\\commentellip@", "...")
 
   -- Expand macros in multiple passes to handle nesting (e.g., \tcode{\keyword{x}})
-  -- Run until no more changes occur (max 5 passes to prevent infinite loops)
-  local max_passes = 5
-  for pass = 1, max_passes do
-    local old_code = code
-
+  -- Use helper function for cleaner recursive expansion
+  local macro_patterns = {
     -- \tcode{x} represents inline code (just extract the content)
     -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
-    code = code:gsub("@\\tcode{([^}]*)}@", "%1")
-    code = code:gsub("\\tcode{([^}]*)}", "%1")
+    {pattern = "@\\tcode{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\tcode{([^}]*)}", replacement = "%1"},
 
     -- \placeholder{x}{} or \placeholder{x} represents a placeholder
     -- Handle with empty braces first (order matters!)
-    code = code:gsub("@\\placeholder{([^}]*)}{}@", "%1")
-    code = code:gsub("@\\placeholder{([^}]*)}@", "%1")
-    code = code:gsub("\\placeholder{([^}]*)}{}",  "%1")
-    code = code:gsub("\\placeholder{([^}]*)}", "%1")
+    {pattern = "@\\placeholder{([^}]*)}{}@", replacement = "%1"},
+    {pattern = "@\\placeholder{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\placeholder{([^}]*)}{}",  replacement = "%1"},
+    {pattern = "\\placeholder{([^}]*)}", replacement = "%1"},
 
     -- \placeholdernc{x}{} or \placeholdernc{x} represents a placeholder (non-code variant)
     -- Handle with empty braces first (order matters!)
-    code = code:gsub("@\\placeholdernc{([^}]*)}{}@", "%1")
-    code = code:gsub("@\\placeholdernc{([^}]*)}@", "%1")
-    code = code:gsub("\\placeholdernc{([^}]*)}{}",  "%1")
-    code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
+    {pattern = "@\\placeholdernc{([^}]*)}{}@", replacement = "%1"},
+    {pattern = "@\\placeholdernc{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\placeholdernc{([^}]*)}{}",  replacement = "%1"},
+    {pattern = "\\placeholdernc{([^}]*)}", replacement = "%1"},
 
     -- \exposid{x} represents exposition-only identifier
-    code = code:gsub("@\\exposid{([^}]*)}@", "%1")
-    code = code:gsub("\\exposid{([^}]*)}", "%1")
+    {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
+    {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
 
     -- \keyword{x} in code comments
-    code = code:gsub("\\keyword{([^}]*)}", "%1")
+    {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
 
     -- \texttt{x} in code comments (font switch, just extract content)
-    code = code:gsub("\\texttt{([^}]*)}", "%1")
+    {pattern = "\\texttt{([^}]*)}", replacement = "%1"},
 
     -- \grammarterm{x} in code comments
-    code = code:gsub("\\grammarterm{([^}]*)}", "%1")
+    {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
 
     -- \term{x} in code comments
-    code = code:gsub("\\term{([^}]*)}", "%1")
+    {pattern = "\\term{([^}]*)}", replacement = "%1"}
+  }
 
-    -- If nothing changed, we're done
-    if code == old_code then
-      break
-    end
-  end
+  code = expand_nested_macros_recursive(code, macro_patterns, 5)
 
   -- Concept macros (library, exposition-only, and old-style concepts)
   code = expand_concept_macros(code, true)
