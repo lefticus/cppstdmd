@@ -173,6 +173,23 @@ This enables stable cross-file linking when using `--build-separate` mode.
 
 **Start every workflow by running `./setup-and-build.sh` first.**
 
+### Making Changes and Committing
+
+**CRITICAL:** Always follow this workflow before committing any changes to filters or code that affects output:
+
+1. Make your code changes
+2. Add unit tests for your changes in `tests/test_filters/`
+3. Run `./venv/bin/pytest tests/test_filters/your_test.py -v` to test iteratively
+4. **Run `./setup-and-build.sh` to test and regenerate with correct settings**
+5. Review git diffs carefully to ensure:
+   - Only expected files changed
+   - No regressions in other files
+   - Generated output looks correct
+6. Stage changes: `git add <files>`
+7. Commit only if everything looks good
+
+**Why this matters:** The script runs the full test suite AND regenerates the n4950 output with your preferred settings. Skipping this step risks committing broken output or missing regressions.
+
 ### Adding a New Filter
 
 1. Run `./setup-and-build.sh` to ensure environment is ready
@@ -180,7 +197,7 @@ This enables stable cross-file linking when using `--build-separate` mode.
 3. Add it to the filter list in `converter.py` in the correct order
 4. Add unit tests in `tests/test_filters/`
 5. Run `./venv/bin/pytest tests/test_filters/your_test.py -v` to test iteratively
-6. Run `./setup-and-build.sh` to verify full test suite passes
+6. **Run `./setup-and-build.sh` before committing** (see "Making Changes and Committing" above)
 
 ### Debugging Conversion Issues
 
@@ -189,7 +206,7 @@ This enables stable cross-file linking when using `--build-separate` mode.
 3. Test with small LaTeX snippets in unit tests first
 4. Check filter order - later filters don't see earlier transformations
 5. Integration tests use n4950 as the stable baseline
-6. After fixes, run `./setup-and-build.sh` to verify all tests pass
+6. After fixes, **run `./setup-and-build.sh` before committing** (see "Making Changes and Committing" above)
 
 ### Working with Git Refs
 
