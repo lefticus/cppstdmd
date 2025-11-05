@@ -42,16 +42,16 @@ Look for:
 
 ## Files to Review (37 total, smallest first)
 
-- [x] `back.md` (1.0K) - ✅ FIXED: \doccite{} with nested \Cpp{} macro
+- [x] `back.md` (1.1K) - ✅ FIXED: \doccite{} with nested \Cpp{} macro
 - [x] `grammar.md` (1.5K) - ✅ Perfect, no issues
-- [x] `uax31.md` (4.5K) - ✅ FIXED: \UAX{}, \unicode{}{}, and \ucode{} in code blocks
+- [x] `uax31.md` (4.6K) - ✅ FIXED: \UAX{}, \unicode{}{}, and \ucode{} in code blocks
 - [x] `limits.md` (5.8K) - ✅ FIXED: \grammarterm{}{} with plural suffix dropping the suffix
-- [ ] `module.md` (24K)
-- [ ] `stmt.md` (32K)
+- [ ] `module.md` (30K)
+- [ ] `stmt.md` (31K)
 - [ ] `except.md` (33K)
 - [ ] `intro.md` (33K)
 - [ ] `concepts.md` (41K)
-- [ ] `cpp.md` (52K)
+- [ ] `cpp.md` (53K)
 - [ ] `diagnostics.md` (54K)
 - [ ] `lex.md` (57K)
 - [ ] `meta.md` (58K)
@@ -67,17 +67,17 @@ Look for:
 - [ ] `class.md` (177K)
 - [ ] `mem.md` (180K)
 - [ ] `iterators.md` (191K)
-- [ ] `basic.md` (219K)
+- [ ] `basic.md` (222K)
 - [ ] `numerics.md` (230K)
 - [ ] `expr.md` (251K)
-- [ ] `temp.md` (254K)
-- [ ] `time.md` (257K)
+- [ ] `temp.md` (256K)
+- [ ] `time.md` (258K)
 - [ ] `dcl.md` (264K)
 - [ ] `thread.md` (308K)
 - [ ] `algorithms.md` (405K)
 - [ ] `input.md` (413K)
-- [ ] `utilities.md` (414K)
 - [ ] `ranges.md` (415K)
+- [ ] `utilities.md` (415K)
 - [ ] `containers.md` (543K)
 
 ## Issues Found
@@ -106,6 +106,12 @@ Look for:
 - [x] **TEST ADDED**: `test_example_with_codeblocktu` verifies the fix
 - [x] **IMPACT**: Affects 580+ code blocks across 30 files (55+ codeblocktu, 7 outputblock, 521+ in notes, 1 codeblockdigitsep)
 - [x] **SEVERITY**: CRITICAL - Major content loss bug
+- [x] **FIXED**: Nested macros in code block comments now expand properly (cpp-code-blocks.lua and cpp-notes-examples.lua)
+- [x] **TEST ADDED**: `test_nested_macros_in_code_comments` and `test_texttt_in_code_comments` verify the fix
+- [x] **IMPACT**: Multi-pass expansion (max 5 passes) handles `\tcode{\keyword{x}}` patterns
+- [x] **FIXED**: Tilde with spacing braces `~{}` now cleaned up to `~` in inline code (cpp-macros.lua line 557)
+- [x] **TEST ADDED**: `test_tilde_in_destructor`, `test_tilde_operator`, `test_tilde_in_class_description` verify the fix
+- [x] **IMPACT**: Fixed 7 instances across 3 files (class.md, except.md, expr.md) - destructor syntax and bitwise complement operator
 
 ### Known Edge Cases
 
