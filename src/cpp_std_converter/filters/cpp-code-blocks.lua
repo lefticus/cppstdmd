@@ -183,6 +183,10 @@ local function clean_code(code)
   code = code:gsub("@\\libheader{([^}]*)}@", "<%1>")
   code = code:gsub("\\libheader{([^}]*)}", "<%1>")
 
+  -- \ucode{XXXX} represents Unicode code point U+XXXX (process before \textrm to handle nesting)
+  code = code:gsub("@\\ucode{([^}]*)}@", "U+%1")
+  code = code:gsub("\\ucode{([^}]*)}", "U+%1")
+
   -- \colcol{} represents ::
   code = code:gsub("\\colcol{}", "::")
 

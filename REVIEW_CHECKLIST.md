@@ -44,7 +44,7 @@ Look for:
 
 - [x] `back.md` (1.0K) - ✅ FIXED: \doccite{} with nested \Cpp{} macro
 - [x] `grammar.md` (1.5K) - ✅ Perfect, no issues
-- [x] `uax31.md` (4.5K) - ✅ FIXED: \UAX{} and \unicode{}{} macros not being processed
+- [x] `uax31.md` (4.5K) - ✅ FIXED: \UAX{}, \unicode{}{}, and \ucode{} in code blocks
 - [x] `limits.md` (5.8K) - ✅ FIXED: \grammarterm{}{} with plural suffix dropping the suffix
 - [ ] `module.md` (24K)
 - [ ] `stmt.md` (32K)
@@ -94,6 +94,8 @@ Look for:
 - [x] **TEST ADDED**: `test_doccite_with_nested_cpp_macro` verifies the fix
 - [x] **FIXED**: `\UAX{}` and `\unicode{}{}`macros now processed in RawInline handler (cpp-macros.lua lines 823-857)
 - [x] **TEST ADDED**: `test_uax_macro` and `test_unicode_macro_with_description` verify the fix
+- [x] **FIXED**: `\ucode{}` in code blocks now processes correctly (cpp-code-blocks.lua lines 186-188)
+- [x] **TEST ADDED**: `test_ucode_in_textrm_in_codeblock` verifies nested `\textrm{\ucode{}}` handling
 - [x] **FIXED**: `\grammarterm{term}{suffix}` now handles optional suffix argument (cpp-macros.lua lines 641-660)
 - [x] **TEST ADDED**: `test_grammarterm_with_suffix` verifies the fix
 - [x] **IMPACT**: Affects 314 instances across the entire codebase

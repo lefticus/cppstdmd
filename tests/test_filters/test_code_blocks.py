@@ -305,3 +305,19 @@ constexpr @\placeholder{bitmask}{}@ operator&(@\placeholder{bitmask}{}@ X, @\pla
     assert "bitmask{}" not in output
     assert "\\placeholder" not in output
     assert "@" not in output
+
+
+def test_ucode_in_textrm_in_codeblock():
+    r"""Test \textrm{\ucode{}} nested in code blocks (uax31.md bug)"""
+    latex = r"""
+\begin{codeblock}
+<Start> := XID_Start + @\textrm{\ucode{005f}}@
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "U+005f" in output or "U+005F" in output
+    # Should NOT have unprocessed LaTeX
+    assert "\\textrm" not in output
+    assert "\\ucode" not in output
+    assert "@" not in output

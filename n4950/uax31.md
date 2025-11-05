@@ -28,7 +28,7 @@ unmodified. In the grammar used in UAX #31, this is
 
 ``` cpp
 <Identifier> := <Start> <Continue>*
-<Start> := XID_Start + \textrm{\ucode{005f}}
+<Start> := XID_Start + U+005f
 <Continue> := <Start> + XID_Continue
 ```
 
