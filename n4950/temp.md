@@ -2921,8 +2921,8 @@ template <int K, int L> void f(A<K+L>);         // same as #1
 
 template <class T> decltype(g(T())) h();
 int g(int);
-template <class T> decltype(g(T())) h()         // redeclaration of h() uses the earlier lookup\ldots
-  { return g(T()); }                            // \ldots{} although the lookup here does find g(int)
+template <class T> decltype(g(T())) h()         // redeclaration of h() uses the earlier lookup…
+  { return g(T()); }                            // …{} although the lookup here does find g(int)
 int i = h<int>();                               // template argument substitution fails; g(int)
                                                 // not considered at the first declaration of h()
 
@@ -3993,7 +3993,7 @@ template<class T>
 void g(T t) {
   decltype(t.A::f())::B i;      // error: typename needed to interpret B as a type
 }
-template void g(C);             // \ldots even though A is ::A here
+template void g(C);             // … even though A is ::A here
 ```
 
 — *end example*\]
@@ -4956,7 +4956,7 @@ template<class T> class X {
   X<T>* p;          // OK
   X<T*> a;          // implicit generation of X<T> requires
                     // the implicit instantiation of X<T*> which requires
-                    // the implicit instantiation of X<T**> which \ldots
+                    // the implicit instantiation of X<T**> which …
 };
 ```
 

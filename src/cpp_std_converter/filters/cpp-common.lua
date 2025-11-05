@@ -663,6 +663,288 @@ local function remove_macro(text, macro_name, keep_content)
   return text
 end
 
+-- Shared code block macro patterns for nested expansion
+-- Used by cpp-code-blocks.lua and cpp-notes-examples.lua
+local code_block_macro_patterns = {
+  -- \tcode{x} represents inline code (just extract the content)
+  -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
+  {pattern = "@\\tcode{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\tcode{([^}]*)}", replacement = "%1"},
+
+  -- \placeholder{x}{} or \placeholder{x} represents a placeholder
+  -- Handle with empty braces first (order matters!)
+  {pattern = "@\\placeholder{([^}]*)}{}@", replacement = "%1"},
+  {pattern = "@\\placeholder{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\placeholder{([^}]*)}{}",  replacement = "%1"},
+  {pattern = "\\placeholder{([^}]*)}", replacement = "%1"},
+
+  -- \placeholdernc{x}{} or \placeholdernc{x} represents a placeholder (non-code variant)
+  -- Handle with empty braces first (order matters!)
+  {pattern = "@\\placeholdernc{([^}]*)}{}@", replacement = "%1"},
+  {pattern = "@\\placeholdernc{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\placeholdernc{([^}]*)}{}",  replacement = "%1"},
+  {pattern = "\\placeholdernc{([^}]*)}", replacement = "%1"},
+
+  -- \exposid{x} represents exposition-only identifier
+  {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
+
+  -- \keyword{x} in code comments
+  {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
+
+  -- \texttt{x} in code comments (font switch, just extract content)
+  {pattern = "\\texttt{([^}]*)}", replacement = "%1"},
+
+  -- \grammarterm{x} in code comments
+  {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
+
+  -- \term{x} in code comments
+  {pattern = "\\term{([^}]*)}", replacement = "%1"}
+}
+
+-- Helper function to handle layout overlap commands
+-- Used by clean_code_common() for code block cleaning
+local function handle_overlap_commands(text)
+  text = text:gsub("\\rlap{([^}]+)}", "%1")
+  text = text:gsub("\\llap{([^}]+)}", "%1")
+  text = text:gsub("\\clap{([^}]+)}", "%1")
+  return text
+end
+
+-- Helper function to convert math patterns in code
+-- Used by clean_code_common() for code block cleaning
+local function convert_math_in_code(text)
+  -- Process @$...$@ patterns (math mode in code blocks)
+  -- These contain subscripts, placeholders, and math symbols
+  text = text:gsub("@%$(.-)%$@", function(math_content)
+    -- Convert \ldots to Unicode ellipsis
+    math_content = math_content:gsub("\\ldots", "…")
+
+    -- Convert subscripts: \tcode{\placeholder{X}}_{n} → Xₙ
+    -- Or: \tcode{\placeholder{X}_{n}} → Xₙ
+    math_content = math_content:gsub("\\tcode{\\placeholder{([^}]*)}}_{{?([%w]+)}?}", function(name, sub)
+      if subscripts[sub] then
+        return name .. subscripts[sub]
+      else
+        return name .. "_" .. sub
+      end
+    end)
+
+    -- Convert subscripts in simpler form: \tcode{\placeholder{X}}_{n} without nested braces
+    math_content = math_content:gsub("\\tcode{([^}]*)}_{{?([%w]+)}?}", function(name, sub)
+      -- Remove \placeholder{} wrapper if present
+      name = name:gsub("\\placeholder{([^}]*)}", "%1")
+      if subscripts[sub] then
+        return name .. subscripts[sub]
+      else
+        return name .. "_" .. sub
+      end
+    end)
+
+    -- Convert standalone subscripts: X_{n} → Xₙ
+    math_content = math_content:gsub("([%w]+)_{{?([%w]+)}?}", function(name, sub)
+      if subscripts[sub] then
+        return name .. subscripts[sub]
+      else
+        return name .. "_" .. sub
+      end
+    end)
+
+    -- Remove remaining \tcode{} and \placeholder{} wrappers
+    math_content = math_content:gsub("\\tcode{([^}]*)}", "%1")
+    math_content = math_content:gsub("\\placeholder{([^}]*)}", "%1")
+
+    return math_content
+  end)
+
+  -- Convert standalone @\vdots@ to Unicode vertical ellipsis
+  text = text:gsub("@\\vdots@", "⋮")
+  text = text:gsub("\\vdots", "⋮")
+
+  -- Convert standalone @\ldots@ to Unicode ellipsis
+  text = text:gsub("@\\ldots@", "…")
+  text = text:gsub("\\ldots", "…")
+
+  return text
+end
+
+-- Unified function to clean up LaTeX escapes in code blocks
+-- Used by cpp-code-blocks.lua and cpp-notes-examples.lua
+-- Merges ALL logic from both filters for consistent code handling
+--
+-- Parameters:
+--   code: The code text to clean
+--   handle_textbackslash: If true, special handling for \textbackslash in @\tcode{}@ blocks
+--
+-- Returns:
+--   Cleaned code text
+local function clean_code_common(code, handle_textbackslash)
+  -- Remove @ escape delimiters and expand common macros
+
+  -- First, convert math patterns (@$...$@) before processing other escapes
+  code = convert_math_in_code(code)
+
+  -- \commentellip represents "..."
+  code = code:gsub("@\\commentellip@", "...")
+
+  -- Special case for cpp-notes-examples.lua: preserve newlines after \textbackslash in @\tcode{}@ blocks
+  -- This must be handled BEFORE the general macro expansion
+  if handle_textbackslash then
+    code = code:gsub("@\\tcode{([^@]-)\\textbackslash}@\n", function(content)
+      return content .. "\\\n"
+    end)
+  end
+
+  -- Expand macros in multiple passes to handle nesting (e.g., \tcode{\keyword{x}})
+  -- Use shared macro patterns from code_block_macro_patterns
+  -- For cpp-notes-examples.lua with textbackslash handling, override @\tcode pattern
+  local macro_patterns
+  if handle_textbackslash then
+    macro_patterns = {}
+    for i, v in ipairs(code_block_macro_patterns) do
+      macro_patterns[i] = v
+    end
+    -- Override the first @\tcode pattern to use ([^@]-) for special textbackslash handling
+    macro_patterns[1] = {pattern = "@\\tcode{([^@]-)}@", replacement = "%1"}
+    code = expand_nested_macros_recursive(code, macro_patterns, 5)
+  else
+    code = expand_nested_macros_recursive(code, code_block_macro_patterns, 5)
+  end
+
+  -- Concept macros (library, exposition-only, and old-style concepts)
+  code = expand_concept_macros(code, true)
+
+  -- Handle escaped special characters
+  code = code:gsub("\\#", "#")
+  code = code:gsub("\\%%", "%")
+  code = code:gsub("\\&", "&")
+  code = code:gsub("\\$", "$")
+
+  -- Cross-references - convert to [label]
+  code = convert_cross_references_in_code(code, true)
+
+  -- \defn{x} definition terms
+  code = code:gsub("@\\defn{([^}]*)}@", "%1")
+  code = code:gsub("\\defn{([^}]*)}", "%1")
+
+  -- \defexposconcept{x} exposition-only concept definition
+  code = code:gsub("@\\defexposconcept{([^}]*)}@", "%1")
+  code = code:gsub("\\defexposconcept{([^}]*)}", "%1")
+
+  -- \cv represents "cv"
+  code = code:gsub("@\\cv{}@", "cv")
+  code = code:gsub("\\cv{}", "cv")
+  code = code:gsub("\\cv%s", "cv ")
+
+  -- C++ version macros
+  code = expand_cpp_version_macros(code)
+
+  -- Library specification macros
+  code = expand_library_spec_macros(code, true)
+
+  -- \defnlibxname{X} represents __X (used for feature test macro names like __cpp_lib_*)
+  -- This expands to \xname{X} in the LaTeX, which should become __X
+  code = code:gsub("@\\defnlibxname{([^}]*)}@", "__%1")
+  code = code:gsub("\\defnlibxname{([^}]*)}", "__%1")
+
+  -- \xname{X} represents __X (special identifiers with underscore prefix)
+  code = code:gsub("@\\xname{([^}]*)}@", "__%1")
+  code = code:gsub("\\xname{([^}]*)}", "__%1")
+
+  -- \mname{X} represents __X__ (preprocessor macro names with underscore wrapper)
+  code = code:gsub("@\\mname{([^}]*)}@", "__%1__")
+  code = code:gsub("\\mname{([^}]*)}", "__%1__")
+
+  -- \libheader{X} represents <X> in code blocks (without backticks, plain angle brackets)
+  code = code:gsub("@\\libheader{([^}]*)}@", "<%1>")
+  code = code:gsub("\\libheader{([^}]*)}", "<%1>")
+
+  -- \ucode{XXXX} represents Unicode code point U+XXXX (process before \textrm to handle nesting)
+  code = code:gsub("@\\ucode{([^}]*)}@", "U+%1")
+  code = code:gsub("\\ucode{([^}]*)}", "U+%1")
+
+  -- \colcol{} represents ::
+  code = code:gsub("\\colcol{}", "::")
+
+  -- Strip \brk{} line break hints
+  code = code:gsub("\\brk{}", "")
+
+  -- Math formatting in code comments
+  code = code:gsub("\\mathit{([^}]*)}", "%1")
+  code = code:gsub("\\mathrm{([^}]*)}", "%1")
+
+  -- Text formatting in code comments - strip the commands but keep content
+  -- Handle @\textrm{}@, @\textit{}@, and @\texttt{}@ with nested braces
+  while true do
+    local changed = false
+    local new_code = code:gsub("@\\textrm{([^{}@]*)}@", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    new_code = code:gsub("@\\textit{([^{}@]*)}@", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    new_code = code:gsub("@\\texttt{([^{}@]*)}@", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    -- Also handle bare versions (not in @ delimiters)
+    new_code = code:gsub("\\textrm{([^{}]*)}", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    new_code = code:gsub("\\textit{([^{}]*)}", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    new_code = code:gsub("\\texttt{([^{}]*)}", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    if not changed then break end
+  end
+
+  -- \ref{x} cross-references
+  code = code:gsub("\\ref{([^}]*)}", "[%1]")
+
+  -- \impldef{description} -> "implementation-defined" (used in @\UNSP{\impldef{}}@)
+  -- Handle this before \UNSP{} so nested macros get expanded
+  code = code:gsub("\\impldef{([^}]*)}", "implementation-defined")
+
+  -- \UNSP{x} represents unspecified value (italic monospace in LaTeX)
+  -- In code blocks, just extract the content (may contain nested macros)
+  -- Must handle nested braces iteratively
+  while true do
+    local new_code = code:gsub("@\\UNSP{([^{}@]*)}@", "%1")
+    if new_code == code then break end
+    code = new_code
+  end
+  -- Also handle bare \UNSP{} (without @ delimiters)
+  while true do
+    local new_code = code:gsub("\\UNSP{([^{}]*)}", "%1")
+    if new_code == code then break end
+    code = new_code
+  end
+
+  -- Handle \textbackslash for cpp-notes-examples.lua
+  if handle_textbackslash then
+    code = code:gsub("\\textbackslash", "\\")
+  end
+
+  -- Remove any @ delimiters first (escape markers from listings package)
+  code = code:gsub("@([^@]*)@", "%1")
+
+  -- Remove font switch commands (bare commands without arguments)
+  -- Process these BEFORE overlap commands since they may appear inside
+  code = remove_font_switches(code)
+
+  -- Handle layout overlap commands: \rlap{}, \llap{}, \clap{}
+  -- These create overlapping text in LaTeX - just extract the content
+  -- After removing font switches above, the content should be simpler
+  code = handle_overlap_commands(code)
+
+  -- Clean up extra whitespace but preserve indentation
+  -- Remove trailing whitespace from each line
+  code = code:gsub("[ \t]+\n", "\n")
+
+  return code
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -686,43 +968,8 @@ return {
   process_macro_with_replacement = process_macro_with_replacement,
   expand_nested_macros_recursive = expand_nested_macros_recursive,
   remove_macro = remove_macro,
-
-  -- Shared code block macro patterns for nested expansion
-  -- Returns a table of patterns used by cpp-code-blocks.lua and cpp-notes-examples.lua
-  code_block_macro_patterns = {
-    -- \tcode{x} represents inline code (just extract the content)
-    -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
-    {pattern = "@\\tcode{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\tcode{([^}]*)}", replacement = "%1"},
-
-    -- \placeholder{x}{} or \placeholder{x} represents a placeholder
-    -- Handle with empty braces first (order matters!)
-    {pattern = "@\\placeholder{([^}]*)}{}@", replacement = "%1"},
-    {pattern = "@\\placeholder{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\placeholder{([^}]*)}{}",  replacement = "%1"},
-    {pattern = "\\placeholder{([^}]*)}", replacement = "%1"},
-
-    -- \placeholdernc{x}{} or \placeholdernc{x} represents a placeholder (non-code variant)
-    -- Handle with empty braces first (order matters!)
-    {pattern = "@\\placeholdernc{([^}]*)}{}@", replacement = "%1"},
-    {pattern = "@\\placeholdernc{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\placeholdernc{([^}]*)}{}",  replacement = "%1"},
-    {pattern = "\\placeholdernc{([^}]*)}", replacement = "%1"},
-
-    -- \exposid{x} represents exposition-only identifier
-    {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
-    {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
-
-    -- \keyword{x} in code comments
-    {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
-
-    -- \texttt{x} in code comments (font switch, just extract content)
-    {pattern = "\\texttt{([^}]*)}", replacement = "%1"},
-
-    -- \grammarterm{x} in code comments
-    {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
-
-    -- \term{x} in code comments
-    {pattern = "\\term{([^}]*)}", replacement = "%1"}
-  },
+  handle_overlap_commands = handle_overlap_commands,
+  convert_math_in_code = convert_math_in_code,
+  clean_code_common = clean_code_common,
+  code_block_macro_patterns = code_block_macro_patterns,
 }

@@ -18,119 +18,17 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 -- Import shared utilities
 local common = require("cpp-common")
 local trim = common.trim
-local expand_cpp_version_macros = common.expand_cpp_version_macros
-local expand_concept_macros = common.expand_concept_macros
-local convert_cross_references_in_code = common.convert_cross_references_in_code
-local expand_library_spec_macros = common.expand_library_spec_macros
+local clean_code_common = common.clean_code_common
 local extract_braced_content = common.extract_braced_content
-local expand_nested_macros_recursive = common.expand_nested_macros_recursive
-local code_block_macro_patterns = common.code_block_macro_patterns
 
 -- Track note and example counters
 local note_counter = 0
 local example_counter = 0
 
 -- Helper function to clean up LaTeX escapes in code
--- (copied from cpp-code-blocks.lua to handle nested codeblocks)
+-- Now uses unified clean_code_common() from cpp-common.lua with special textbackslash handling
 local function clean_code(code)
-  -- Remove @ escape delimiters and expand common macros
-
-  -- \commentellip represents "..."
-  code = code:gsub("@\\commentellip@", "...")
-
-  -- Special case: preserve newlines after \textbackslash in @\tcode{}@ blocks
-  -- This must be handled BEFORE the general macro expansion
-  code = code:gsub("@\\tcode{([^@]-)\\textbackslash}@\n", function(content)
-    return content .. "\\\n"
-  end)
-
-  -- Expand macros in multiple passes to handle nesting (e.g., \tcode{\keyword{x}})
-  -- Use shared macro patterns from cpp-common.lua, but with special @\tcode pattern
-  -- We need a local copy to override the @\tcode pattern for this filter's special handling
-  local macro_patterns = {}
-  for i, v in ipairs(code_block_macro_patterns) do
-    macro_patterns[i] = v
-  end
-  -- Override the first @\tcode pattern to use ([^@]-) for special textbackslash handling
-  macro_patterns[1] = {pattern = "@\\tcode{([^@]-)}@", replacement = "%1"}
-
-  code = expand_nested_macros_recursive(code, macro_patterns, 5)
-
-  -- Concept macros (library, exposition-only, and old-style concepts)
-  code = expand_concept_macros(code, true)
-
-  -- Handle escaped special characters
-  code = code:gsub("\\#", "#")
-  code = code:gsub("\\%%", "%")
-  code = code:gsub("\\&", "&")
-  code = code:gsub("\\$", "$")
-
-  -- Cross-references - convert to [label]
-  code = convert_cross_references_in_code(code, true)
-
-  -- \defn{x} definition terms
-  code = code:gsub("@\\defn{([^}]*)}@", "%1")
-  code = code:gsub("\\defn{([^}]*)}", "%1")
-
-  -- \defexposconcept{x} exposition-only concept definition
-  code = code:gsub("@\\defexposconcept{([^}]*)}@", "%1")
-  code = code:gsub("\\defexposconcept{([^}]*)}", "%1")
-
-  -- \cv represents "cv"
-  code = code:gsub("@\\cv{}@", "cv")
-  code = code:gsub("\\cv{}", "cv")
-  code = code:gsub("\\cv%s", "cv ")
-
-  -- C++ version macros
-  code = expand_cpp_version_macros(code)
-
-  -- Library specification macros
-  code = expand_library_spec_macros(code, true)
-
-  -- \colcol{} represents ::
-  code = code:gsub("\\colcol{}", "::")
-
-  -- Strip \brk{} line break hints
-  code = code:gsub("\\brk{}", "")
-
-  -- Math formatting in code comments
-  code = code:gsub("\\mathit{([^}]*)}", "%1")
-  code = code:gsub("\\mathrm{([^}]*)}", "%1")
-
-  -- Text formatting in code comments - strip the commands but keep content
-  -- Handle @\textrm{}@ and @\textit{}@ with nested braces
-  while true do
-    local changed = false
-    local new_code = code:gsub("@\\textrm{([^{}@]*)}@", "%1")
-    if new_code ~= code then changed = true end
-    code = new_code
-    new_code = code:gsub("@\\textit{([^{}@]*)}@", "%1")
-    if new_code ~= code then changed = true end
-    code = new_code
-    -- Also handle bare versions (not in @ delimiters)
-    new_code = code:gsub("\\textrm{([^{}]*)}", "%1")
-    if new_code ~= code then changed = true end
-    code = new_code
-    new_code = code:gsub("\\textit{([^{}]*)}", "%1")
-    if new_code ~= code then changed = true end
-    code = new_code
-    if not changed then break end
-  end
-
-  -- \ref{x} cross-references
-  code = code:gsub("\\ref{([^}]*)}", "[%1]")
-
-  -- \textbackslash represents a backslash (for line continuations, etc.)
-  code = code:gsub("\\textbackslash", "\\")
-
-  -- Remove any remaining @ delimiters
-  code = code:gsub("@([^@]*)@", "%1")
-
-  -- Clean up extra whitespace but preserve indentation
-  -- Remove trailing whitespace from each line
-  code = code:gsub("[ \t]+\n", "\n")
-
-  return code
+  return clean_code_common(code, true)  -- true = special textbackslash handling for notes/examples
 end
 
 -- Helper function to convert codeblock Div to CodeBlock or replace placeholders
