@@ -36,37 +36,52 @@ local function clean_code(code)
   -- \commentellip represents "..."
   code = code:gsub("@\\commentellip@", "...")
 
-  -- \tcode{x} represents inline code (just extract the content)
-  -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
-  -- Special case: preserve newlines after \textbackslash in @\tcode{}@ blocks
-  -- Use [^@]- to match content without crossing @ delimiters
-  code = code:gsub("@\\tcode{([^@]-)\\textbackslash}@\n", function(content)
-    return content .. "\\\n"
-  end)
-  -- Use pattern that matches up to }@ specifically
-  code = code:gsub("@\\tcode{([^@]-)}@", "%1")
-  code = code:gsub("\\tcode{(.-)}", "%1")
+  -- Expand macros in multiple passes to handle nesting (e.g., \tcode{\keyword{x}})
+  -- Run until no more changes occur (max 5 passes to prevent infinite loops)
+  local max_passes = 5
+  for pass = 1, max_passes do
+    local old_code = code
 
-  -- \placeholder{x} represents a placeholder (keep as-is or use angle brackets)
-  code = code:gsub("@\\placeholder{([^}]*)}@", "%1")
-  code = code:gsub("\\placeholder{([^}]*)}", "%1")
+    -- \tcode{x} represents inline code (just extract the content)
+    -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
+    -- Special case: preserve newlines after \textbackslash in @\tcode{}@ blocks
+    -- Use [^@]- to match content without crossing @ delimiters
+    code = code:gsub("@\\tcode{([^@]-)\\textbackslash}@\n", function(content)
+      return content .. "\\\n"
+    end)
+    -- Use pattern that matches up to }@ specifically
+    code = code:gsub("@\\tcode{([^@]-)}@", "%1")
+    code = code:gsub("\\tcode{([^}]*)}", "%1")
 
-  -- \placeholdernc{x} represents a placeholder (non-code variant)
-  code = code:gsub("@\\placeholdernc{([^}]*)}@", "%1")
-  code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
+    -- \placeholder{x} represents a placeholder (keep as-is or use angle brackets)
+    code = code:gsub("@\\placeholder{([^}]*)}@", "%1")
+    code = code:gsub("\\placeholder{([^}]*)}", "%1")
 
-  -- \exposid{x} represents exposition-only identifier
-  code = code:gsub("@\\exposid{([^}]*)}@", "%1")
-  code = code:gsub("\\exposid{([^}]*)}", "%1")
+    -- \placeholdernc{x} represents a placeholder (non-code variant)
+    code = code:gsub("@\\placeholdernc{([^}]*)}@", "%1")
+    code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
 
-  -- \keyword{x} in code comments
-  code = code:gsub("\\keyword{([^}]*)}", "%1")
+    -- \exposid{x} represents exposition-only identifier
+    code = code:gsub("@\\exposid{([^}]*)}@", "%1")
+    code = code:gsub("\\exposid{([^}]*)}", "%1")
 
-  -- \grammarterm{x} in code comments
-  code = code:gsub("\\grammarterm{([^}]*)}", "%1")
+    -- \keyword{x} in code comments
+    code = code:gsub("\\keyword{([^}]*)}", "%1")
 
-  -- \term{x} in code comments
-  code = code:gsub("\\term{([^}]*)}", "%1")
+    -- \texttt{x} in code comments (font switch, just extract content)
+    code = code:gsub("\\texttt{([^}]*)}", "%1")
+
+    -- \grammarterm{x} in code comments
+    code = code:gsub("\\grammarterm{([^}]*)}", "%1")
+
+    -- \term{x} in code comments
+    code = code:gsub("\\term{([^}]*)}", "%1")
+
+    -- If nothing changed, we're done
+    if code == old_code then
+      break
+    end
+  end
 
   -- Concept macros (library, exposition-only, and old-style concepts)
   code = expand_concept_macros(code, true)

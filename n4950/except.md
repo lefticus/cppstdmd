@@ -660,7 +660,7 @@ struct A {
 };
 struct B {
   B() noexcept;
-  B(const B&) = default;        // implicit exception specification is noexcept(\keyword{true)}
+  B(const B&) = default;        // implicit exception specification is noexcept(true)
   B(B&&, int = (throw 42, 0)) noexcept;
   ~B() noexcept(false);
 };

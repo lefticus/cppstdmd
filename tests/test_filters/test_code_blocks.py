@@ -321,3 +321,43 @@ def test_ucode_in_textrm_in_codeblock():
     assert "\\textrm" not in output
     assert "\\ucode" not in output
     assert "@" not in output
+
+
+def test_nested_macros_in_code_comments():
+    r"""Test nested macros like \tcode{\keyword{x}} in code comments (except.md bug)"""
+    latex = r"""
+\begin{codeblock}
+struct B {
+  B() noexcept;
+  B(const B&) = default;        // implicit exception specification is \tcode{\keyword{noexcept}(\keyword{true})}
+  B(B&&, int = (throw 42, 0)) noexcept;
+};
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have expanded all nested macros
+    assert "noexcept(true)" in output
+    # Should NOT have unprocessed LaTeX
+    assert "\\tcode" not in output
+    assert "\\keyword" not in output
+
+
+def test_texttt_in_code_comments():
+    r"""Test \texttt{} in code comments (support.md bug)"""
+    latex = r"""
+\begin{codeblock}
+T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
+X* p = new X;
+new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new object because its type is \keyword{const}
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have expanded all macros
+    assert "returns nullptr if it fails" in output
+    assert "p does not point to new object" in output
+    assert "const" in output
+    # Should NOT have unprocessed LaTeX
+    assert "\\keyword" not in output
+    assert "\\texttt" not in output
