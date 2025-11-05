@@ -10465,7 +10465,7 @@ output. The syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{replacement-field}
-    '{' arg-id_opt format-specifier_opt '$'}
+    '{' arg-id_opt format-specifier_opt '}'
 ```
 
 ``` bnf
@@ -10603,13 +10603,13 @@ The syntax of format specifications is as follows:
 ``` bnf
 \fmtnontermdef{width}
     positive-integer
-    '{' arg-id_opt '$'}
+    '{' arg-id_opt '}'
 ```
 
 ``` bnf
 \fmtnontermdef{precision}
     '.' nonnegative-integer
-    '.' '{' arg-id_opt '$'}
+    '.' '{' arg-id_opt '}'
 ```
 
 ``` bnf
@@ -11712,7 +11712,7 @@ syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{range-fill}
-    any character other than '{' or '$'} or ':'
+    any character other than '{' or '}' or ':'
 ```
 
 ``` bnf
@@ -12335,7 +12335,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{tuple-fill}
-    any character other than '{' or '$'} or ':'
+    any character other than '{' or '}' or ':'
 ```
 
 ``` bnf

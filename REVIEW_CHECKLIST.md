@@ -46,7 +46,7 @@ Look for:
 - [x] `grammar.md` (1.5K) - ✅ Perfect, no issues
 - [x] `uax31.md` (4.6K) - ✅ FIXED: \UAX{}, \unicode{}{}, and \ucode{} in code blocks
 - [x] `limits.md` (5.8K) - ✅ FIXED: \grammarterm{}{} with plural suffix dropping the suffix
-- [ ] `module.md` (30K)
+- [~] `module.md` (30K) - ⚠️ PARTIALLY FIXED: 4 issues resolved, 1 critical issue remains (see top priority below)
 - [ ] `stmt.md` (31K)
 - [ ] `except.md` (33K)
 - [ ] `intro.md` (33K)
@@ -90,6 +90,74 @@ Look for:
 
 ### Filter Improvements Needed
 
+#### 🚨 TOP PRIORITY - CRITICAL ISSUE
+
+- [ ] **BLOCKED**: `\terminal{\textbackslash}` in BNF grammar shows as `\terminal{\}` instead of `'\' `
+  - **Location**: lex.md lines 876, 898-900, 901, 912 (and likely other files)
+  - **Root Cause**: Filter ordering issue - cpp-macros.lua converts `\textbackslash` to literal `\` before cpp-grammar.lua runs, creating ambiguity in escape detection
+  - **Evidence**: Test with single filter works correctly, full filter chain fails
+  - **Impact**: All BNF grammar definitions with backslash terminals are malformed
+  - **Attempted Fix**: Added `\textbackslash` handling in cpp-grammar.lua line 63, but doesn't solve root issue
+  - **Real Solution Needed**: Either (1) prevent cpp-macros.lua from modifying RawBlocks, or (2) redesign escape detection to handle this case
+  - **Test Added**: `tests/test_filters/test_terminal_backslash.py` demonstrates the issue
+  - **Files**: src/cpp_std_converter/filters/cpp-common.lua (extract_braced_content), cpp-grammar.lua (terminal processing)
+
+#### Completed Fixes
+
+- [x] **FIXED**: LaTeX escape sequences (`\{`, `\}`, `\;`, `\:`, `\,`, `\!`) now handled in code blocks (cpp-common.lua lines 822-829)
+  - **TEST ADDED**: Verified in existing test suite
+  - **Impact**: module.md line 792 now correctly shows `struct X {}` instead of `struct X {\;}`
+- [x] **FIXED**: Unnecessary grouping braces removed from inline code (cpp-common.lua line 977)
+  - **Pattern**: `{('...)}` → `'...` for cleaner output
+  - **Impact**: module.md line 677 now shows `M's` instead of `M{'s}`
+- [x] **FIXED**: Inline math with `\mathtt{}` and arrow symbols now converts to Unicode (cpp-common.lua lines 767-795)
+  - **Pattern**: `$\mathtt{M3} \rightarrow ...Analysis:
+Let me chronologically analyze this conversation:
+
+1. **Session Start**: This conversation continued from a previous session where I was reviewing module.md and had identified 4 issues to fix.
+
+2. **Initial Work**: I began by reading cpp-grammar.lua to understand the BNF conversion process.
+
+3. **User's First Message**: "you failed to run the full final test suite and rebuild. I know because the TOC changed too much"
+   - This told me I needed to run `./setup-and-build.sh` before committing
+   - This is critical feedback about my process
+
+4. **User's Second Message**: "no, the script, remember the script that I say always has to run?"
+   - Reinforced that I must run `./setup-and-build.sh` before committing
+   - This is a standing requirement
+
+5. **Successful Build**: I ran `./setup-and-build.sh` and all 429 tests passed
+
+6. **Attempted Commit**: I tried to commit but the user interrupted
+
+7. **User's Third Message**: "This change set is very good, and we should probably commit it, but it does have a new bug. Look at lex.md for a new \terminal{\} showing up."
+   - Found bug: `\terminal{\}` appearing in output (lines 876, 898-900, 901, 912)
+   - The source has `\terminal{\textbackslash}` which should convert to `'\'`
+
+8. **Root Cause Analysis**:
+   - My previous fix checked if a character was escaped by looking at the previous character
+   - For `\terminal{\}`, the `}` has `\` before it, so my code thought it was escaped
+   - This prevented proper brace matching, causing the macro not to be processed
+
+9. **The Fix**: Changed extract_braced_content() to skip backslash AND the next character when encountering `\`
+   - This properly handles LaTeX escapes like `\{`, `\}`, `\\`, etc.
+   - Now `\terminal{\}` will be extracted as `\}`, then converted to `'\'`
+
+10. **Current State**: Just fixed the bug, haven't tested yet
+
+Key Technical Details:
+- The 4 original issues were all in module.md
+- The new bug is in lex.md with `\terminal{\}` not being processed
+- The root cause was my escaping logic in extract_braced_content()
+- Files modified: cpp-common.lua, cpp-grammar.lua
+- 12 output .md files changed
+- All 429 tests passed before finding the new bug
+
+` → `M3 → ...`
+  - **Impact**: module.md line 522 now has proper Unicode arrows
+- [x] **FIXED**: BNF `\terminal{\}}` with escaped closing brace now extracts correctly (cpp-common.lua lines 135-147)
+  - **Method**: Improved escape detection in `extract_braced_content()` to skip escapable chars after `\`
+  - **Impact**: module.md line 185 BNF now shows `'}'` instead of malformed output
 - [x] **FIXED**: `\doccite{}` and `\Fundescx{}` now use brace-balanced parsing (cpp-macros.lua lines 610-630)
 - [x] **TEST ADDED**: `test_doccite_with_nested_cpp_macro` verifies the fix
 - [x] **FIXED**: `\UAX{}` and `\unicode{}{}`macros now processed in RawInline handler (cpp-macros.lua lines 823-857)

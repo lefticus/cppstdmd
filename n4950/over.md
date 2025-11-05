@@ -399,7 +399,7 @@ the unique name *call-function* and having the form
 
 ``` bnf
 'R' *call-function* '(' conversion-type-id \ %
-'F, P$_1$ a$_1$, $\dotsc$, P$_n$ a$_n$)' '{ return F (a$_1$, $\dotsc$, a$_n$); $'}
+'F, P$_1$ a$_1$, $\dotsc$, P$_n$ a$_n$)' '{ return F (a$_1$, $\dotsc$, a$_n$); }'
 ```
 
 is also considered as a candidate function. Similarly, surrogate call
@@ -2300,7 +2300,7 @@ operator-function-id:
 ``` bnf
 %% Ed. note: character protrusion would misalign various operators.
 operator: one of
-    'new      delete   new[]    delete[] co_await (\rlap{ )'        [\rlap{ ]}        ->       ->*}
+    'new      delete   new[]    delete[] co_await (\rlap{ )}        [\rlap{ ]}        ->       ->*'
     '\~        !        +        -        *        /        %        ^        &'
     '|        =        +=       -=       *=       /=       %=       ^=       &='
     '|=       ==       !=       <        >        <=       >=       <=>      &&'

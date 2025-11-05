@@ -131,9 +131,26 @@ local function extract_braced_content(text, start_pos, macro_len)
   local content_start = pos
   while pos <= #text and depth > 0 do
     local c = text:sub(pos, pos)
-    if c == "{" then depth = depth + 1
-    elseif c == "}" then depth = depth - 1 end
-    if depth > 0 then pos = pos + 1 else break end
+
+    -- If we encounter a backslash followed by an escapable character, skip both
+    -- Escapable characters in LaTeX: { } \ # $ % & _
+    -- This handles LaTeX escapes like \{ \} \\ etc, but NOT macros like \textbackslash
+    if c == "\\" and pos < #text then
+      local next_char = text:sub(pos + 1, pos + 1)
+      if next_char == "{" or next_char == "}" or next_char == "\\" or
+         next_char == "#" or next_char == "$" or next_char == "%" or
+         next_char == "&" or next_char == "_" then
+        pos = pos + 2  -- Skip backslash and escaped char
+      else
+        -- It's a macro like \textbackslash, just move forward
+        pos = pos + 1
+      end
+    else
+      -- Normal brace counting
+      if c == "{" then depth = depth + 1
+      elseif c == "}" then depth = depth - 1 end
+      if depth > 0 then pos = pos + 1 else break end
+    end
   end
   if depth == 0 then
     return text:sub(content_start, pos - 1), pos + 1
@@ -757,6 +774,34 @@ local function convert_math_in_code(text)
     return math_content
   end)
 
+  -- Also process plain $...$ patterns (inline math in code comments without @ delimiters)
+  -- Only convert if they contain LaTeX commands like \mathtt, \mathrm, \rightarrow
+  text = text:gsub("%$([^$]+)%$", function(math_content)
+    -- Only process if it contains LaTeX commands
+    if math_content:match("\\math") or math_content:match("\\rightarrow") or
+       math_content:match("\\leftarrow") or math_content:match("\\ldots") then
+
+      -- Convert \mathtt{...} to plain text
+      math_content = math_content:gsub("\\mathtt{([^}]*)}", "%1")
+      math_content = math_content:gsub("\\mathrm{([^}]*)}", "%1")
+      math_content = math_content:gsub("\\mathit{([^}]*)}", "%1")
+
+      -- Convert arrows to Unicode
+      math_content = math_content:gsub("\\rightarrow", "→")
+      math_content = math_content:gsub("\\leftarrow", "←")
+      math_content = math_content:gsub("\\Rightarrow", "⇒")
+      math_content = math_content:gsub("\\Leftarrow", "⇐")
+
+      -- Convert \ldots to Unicode ellipsis
+      math_content = math_content:gsub("\\ldots", "…")
+
+      return math_content
+    else
+      -- Not LaTeX math, return unchanged with $ delimiters
+      return "$" .. math_content .. "$"
+    end
+  end)
+
   -- Convert standalone @\vdots@ to Unicode vertical ellipsis
   text = text:gsub("@\\vdots@", "⋮")
   text = text:gsub("\\vdots", "⋮")
@@ -819,6 +864,14 @@ local function clean_code_common(code, handle_textbackslash)
   code = code:gsub("\\%%", "%")
   code = code:gsub("\\&", "&")
   code = code:gsub("\\$", "$")
+  code = code:gsub("\\{", "{")
+  code = code:gsub("\\}", "}")
+
+  -- Remove LaTeX spacing commands that should not appear in code
+  code = code:gsub("\\;", "")  -- \; is a medium space in LaTeX
+  code = code:gsub("\\:", "")  -- \: is a medium space in LaTeX
+  code = code:gsub("\\,", "")  -- \, is a thin space in LaTeX
+  code = code:gsub("\\!", "")  -- \! is a negative thin space in LaTeX
 
   -- Cross-references - convert to [label]
   code = convert_cross_references_in_code(code, true)
@@ -928,6 +981,11 @@ local function clean_code_common(code, handle_textbackslash)
 
   -- Remove any @ delimiters first (escape markers from listings package)
   code = code:gsub("@([^@]*)@", "%1")
+
+  -- Remove unnecessary LaTeX grouping braces
+  -- Pattern: {'<content>} where content is punctuation/short text
+  -- Example: M{'s} → M's (possessive after \tcode{M})
+  code = code:gsub("{('[ %w]+)}", "%1")  -- {' followed by letters/spaces
 
   -- Remove font switch commands (bare commands without arguments)
   -- Process these BEFORE overlap commands since they may appear inside

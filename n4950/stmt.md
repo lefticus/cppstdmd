@@ -140,7 +140,7 @@ statements into a single statement.
 
 ``` bnf
 compound-statement:
-    '{' statement-seq_opt label-seq_opt '$'}
+    '{' statement-seq_opt label-seq_opt '}'
 ```
 
 ``` bnf
@@ -255,7 +255,7 @@ is equivalent to
 '{'
    init-statement
    if constexpr_opt '(' condition ')' statement
-'$'}
+'}'
 ```
 
 and an `if` statement of the form
@@ -270,7 +270,7 @@ is equivalent to
 '{'
    init-statement
    if constexpr_opt '(' condition ')' statement else statement
-'$'}
+'}'
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -313,7 +313,7 @@ is not itself a consteval if statement, but is equivalent to the
 consteval if statement
 
 ``` bnf
-if consteval '{' '$'} else compound-statement
+if consteval '{' '}' else compound-statement
 ```
 
 An `if` statement of the form
@@ -394,7 +394,7 @@ is equivalent to
 '{'
    init-statement
    switch '(' condition ')' statement
-'$'}
+'}'
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -469,8 +469,8 @@ A `while` statement is equivalent to
    if '(' condition ')' '{'
       statement
       goto *label* ';'
-   '$'}
-'$'}
+   '}'
+'}'
 ```
 
 \[*Note 1*:
@@ -505,8 +505,8 @@ is equivalent to
    while '(' condition ')' '{'
      statement
      expression ';'
-   '$'}
-'$'}
+   '}'
+'}'
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -543,8 +543,8 @@ is equivalent to
    for '(' ';' *begin* '!=' *end*';' '++'*begin* ')' '{'
      for-range-declaration '=' '*' *begin* ';'
      statement
-   '$'}
-'$'}
+   '}'
+'}'
 ```
 
 where
@@ -748,7 +748,7 @@ operand. Let *p* be an lvalue naming the coroutine promise object
 [[dcl.fct.def.coroutine]]. A `co_return` statement is equivalent to:
 
 ``` bnf
-'{' S';' 'goto' *final-suspend*';' '$'}
+'{' S';' 'goto' *final-suspend*';' '}'
 ```
 
 where *final-suspend* is the exposition-only label defined in

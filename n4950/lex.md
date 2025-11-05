@@ -207,7 +207,7 @@ n-char-sequence:
 
 ``` bnf
 named-universal-character:
-    '\N{' n-char-sequence '$'}
+    '\N{' n-char-sequence '}'
 ```
 
 ``` bnf
@@ -225,7 +225,7 @@ simple-hexadecimal-digit-sequence:
 universal-character-name:
     '\u' hex-quad
     '\U' hex-quad hex-quad
-    '\u{' simple-hexadecimal-digit-sequence '$'}
+    '\u{' simple-hexadecimal-digit-sequence '}'
     named-universal-character
 ```
 
@@ -631,15 +631,15 @@ preprocessing-operator: one of
 
 ``` bnf
 operator-or-punctuator: one of
-    '{        $'        [        ]        (        )}
+    '{        }        [        ]        (        )'
     '<:       :>       <%       %>       ;        :        ...'
     '?        ::       .        .*       ->       ->*      \~'
     '!        +        -        *        /        %        ^        &        |'
     '=        +=       -=       *=       /=       %=       ^=       &=       |='
     '==       !=       <        >        <=       >=       <=>      &&       ||'
     '<<       >>       <<=      >>=      ++       --       ,'
-    'and'      \texttt{or       xor      not      bitand   bitor    compl}
-    'and_eq'   \texttt{or_eq    xor_eq   not_eq}
+    'and      or       xor      not      bitand   bitor    compl'
+    'and_eq   or_eq    xor_eq   not_eq'
 ```
 
 Each *operator-or-punctuator* is converted to a single token in
@@ -873,7 +873,7 @@ escape-sequence:
 
 ``` bnf
 simple-escape-sequence:
-    '$' simple-escape-sequence-char
+    \terminal{\} simple-escape-sequence-char
 ```
 
 ``` bnf
@@ -895,26 +895,26 @@ simple-octal-digit-sequence:
 
 ``` bnf
 octal-escape-sequence:
-    '$' octal-digit
-    '$' octal-digit octal-digit
-    '$' octal-digit octal-digit octal-digit
-    '\o{' simple-octal-digit-sequence '$'}
+    \terminal{\} octal-digit
+    \terminal{\} octal-digit octal-digit
+    \terminal{\} octal-digit octal-digit octal-digit
+    \terminal{\o\{} simple-octal-digit-sequence \terminal{\}}
 ```
 
 ``` bnf
 hexadecimal-escape-sequence:
     '\x' simple-hexadecimal-digit-sequence
-    '\x{' simple-hexadecimal-digit-sequence '$'}
+    '\x{' simple-hexadecimal-digit-sequence '}'
 ```
 
 ``` bnf
 conditional-escape-sequence:
-    '$' conditional-escape-sequence-char
+    \terminal{\} conditional-escape-sequence-char
 ```
 
 ``` bnf
 conditional-escape-sequence-char:
-    any member of the basic character set that is not an octal-digit, a simple-escape-sequence-char, or the characters 'N, \terminal{o', 'u', 'U', or 'x'}
+    any member of the basic character set that is not an octal-digit, a simple-escape-sequence-char, or the characters 'N, 'o', 'u', 'U', or 'x''
 ```
 
 A *non-encodable character literal* is a *character-literal* whose

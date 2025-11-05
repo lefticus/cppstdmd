@@ -17,7 +17,7 @@ is used to make a *class-name*. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head '{' member-specification_opt '$'}
+    class-head '{' member-specification_opt '}'
 ```
 
 ``` bnf
@@ -2430,7 +2430,7 @@ new (&u.n) N;
 A union of the form
 
 ``` bnf
-union '{' member-specification '$'} ';'
+union '{' member-specification '}' ';'
 ```
 
 is called an *anonymous union*; it defines an unnamed type and an
@@ -4640,8 +4640,8 @@ struct M { M(); M(int); };
 struct N : M { using M::M; };
 struct O : M {};
 struct P : N, O { using N::N; using O::O; };
-P p(0);             // OK, use M(0) to initialize N{'s} base class,
-                    // use M() to initialize O{'s} base class
+P p(0);             // OK, use M(0) to initialize N's base class,
+                    // use M() to initialize O's base class
 ```
 
 — *end example*\]
@@ -4752,11 +4752,11 @@ struct D : virtual A { D(A*); };
 struct X { X(A*); };
 
 struct E : C, D, X {
-  E() : D(this),    // undefined behavior: upcast from E* to A* might use path E* $\rightarrow$ D* $\rightarrow$ A*
+  E() : D(this),    // undefined behavior: upcast from E* to A* might use path E* → D* → A*
                     // but D is not constructed
 
-                    // ``D((C*)this)\!'' would be defined: E* $\rightarrow$ C* is defined because E() has started,
-                    // and C* $\rightarrow$ A* is defined because C is fully constructed
+                    // ``D((C*)this)'' would be defined: E* → C* is defined because E() has started,
+                    // and C* → A* is defined because C is fully constructed
 
   X(this) {}        // defined: upon construction of X, C/B/D/A sublattice is fully constructed
 };

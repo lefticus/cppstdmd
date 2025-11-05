@@ -21,6 +21,7 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 local common = require("cpp-common")
 local convert_special_chars = common.convert_special_chars
 local trim = common.trim
+local process_macro_with_replacement = common.process_macro_with_replacement
 
 -- Helper function to clean up grammar content
 local function clean_grammar(grammar)
@@ -48,16 +49,18 @@ local function clean_grammar(grammar)
   grammar = grammar:gsub("\\textnormal{([^}]*)}", "%1")
 
   -- Replace \terminal{x} with 'x' (terminal symbols)
-  -- Also unescape LaTeX special characters within terminals
-  grammar = grammar:gsub("\\terminal{([^}]*)}", function(content)
+  -- Use brace-balanced extraction to handle escaped braces properly
+  grammar = process_macro_with_replacement(grammar, "terminal", function(content)
     -- Unescape common LaTeX special characters
     content = content:gsub("\\#", "#")
-    content = content:gsub("\\$", "$")
+    content = content:gsub("\\%$", "$")
     content = content:gsub("\\%%", "%%")
     content = content:gsub("\\&", "&")
     content = content:gsub("\\_", "_")
     content = content:gsub("\\{", "{")
     content = content:gsub("\\}", "}")
+    -- Handle \textbackslash macro (may appear in terminal symbols)
+    content = content:gsub("\\textbackslash", "\\")
     return "'" .. content .. "'"
   end)
 

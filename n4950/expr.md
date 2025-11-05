@@ -2195,7 +2195,7 @@ requirement-parameter-list:
 
 ``` bnf
 requirement-body:
-    '{' requirement-seq '$'}
+    '{' requirement-seq '}'
 ```
 
 ``` bnf
@@ -2360,7 +2360,7 @@ require that type to be complete [[term.incomplete.type]].
 
 ``` bnf
 compound-requirement:
-    '{' expression '$'} noexcept_opt return-type-requirement_opt ';'
+    '{' expression '}' noexcept_opt return-type-requirement_opt ';'
 ```
 
 ``` bnf

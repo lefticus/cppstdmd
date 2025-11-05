@@ -3450,9 +3450,9 @@ initializer-clause:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ',_opt' '$'}
-    '{' designated-initializer-list ',_opt' '$'}
-    '{' '$'}
+    '{' initializer-list ',_opt' '}'
+    '{' designated-initializer-list ',_opt' '}'
+    '{' '}'
 ```
 
 ``` bnf
@@ -5147,14 +5147,14 @@ A coroutine behaves as if its *function-body* were replaced by:
    'try' '{'
      'co_await' '*promise*.initial_suspend()' ';'
      function-body
-   '$' catch ( ... ) \{}
+   '} catch ( ... ) {'
      'if (!*initial-await-resume-called*)'
        'throw' ';'
      '*promise*.unhandled_exception()' ';'
-   '$'}
+   '}'
 *final-suspend* ':'
    'co_await' '*promise*.final_suspend()' ';'
-'$'}
+'}'
 ```
 
 where
@@ -5450,8 +5450,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head '{' enumerator-list_opt '$'}
-    enum-head '{' enumerator-list ',' '$'}
+    enum-head '{' enumerator-list_opt '}'
+    enum-head '{' enumerator-list ',' '}'
 ```
 
 ``` bnf
@@ -5793,17 +5793,17 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        inline_opt namespace attribute-specifier-seq_opt identifier '{' namespace-body '$'}
+        inline_opt namespace attribute-specifier-seq_opt identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        inline_opt namespace attribute-specifier-seq_opt '{' namespace-body '$'}
+        inline_opt namespace attribute-specifier-seq_opt '{' namespace-body '}'
 ```
 
 ``` bnf
 nested-namespace-definition:
-        namespace enclosing-namespace-specifier '::' inline_opt identifier '{' namespace-body '$'}
+        namespace enclosing-namespace-specifier '::' inline_opt identifier '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -5916,9 +5916,9 @@ namespace A {
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-inline_opt namespace *unique* '{' '/* empty body */' '$'}
+inline_opt namespace *unique* '{' '/* empty body */' '}'
 using namespace *unique* ';'
-namespace *unique* '{' namespace-body '$'}
+namespace *unique* '{' namespace-body '}'
 ```
 
 where `inline` appears if and only if it appears in the
@@ -6563,7 +6563,7 @@ achieved using a *linkage-specification*:
 
 ``` bnf
 linkage-specification:
-    extern string-literal '{' declaration-seq_opt '$'}
+    extern string-literal '{' declaration-seq_opt '}'
     extern string-literal name-declaration
 ```
 
@@ -6811,7 +6811,7 @@ balanced-token-seq:
 balanced-token:
     '(' balanced-token-seq_opt ')'
     '[' balanced-token-seq_opt ']'
-    '{' balanced-token-seq_opt '$'}
+    '{' balanced-token-seq_opt '}'
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 

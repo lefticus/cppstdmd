@@ -801,7 +801,7 @@ C++. For example:
 
 ``` cpp
 #define F(a) b ## a
-int b0p = F(0p+0);  // ill-formed; equivalent to ``int b0p = b0p + 0;\!'' in C++14
+int b0p = F(0p+0);  // ill-formed; equivalent to ``int b0p = b0p + 0;'' in C++14
 ```
 
 ###  [[expr]]: expressions <a id="diff.cpp14.expr">[[diff.cpp14.expr]]</a>
@@ -1032,8 +1032,8 @@ separators in this revision of C++. For example:
 ``` cpp
 #define M(x, ...) __VA_ARGS__
 int x[2] = { M(1'2,3'4, 5) };
-// int x[2] = { 5 \;\ \ \ \ \ } --- C++11
-// int x[2] = { 3'4, 5 \;} --- this revision of \Cpp{}
+// int x[2] = { 5 \ \ \ \ \ } --- C++11
+// int x[2] = { 3'4, 5 } --- this revision of \Cpp{}
 ```
 
 ###  [[basic]]: basics <a id="diff.cpp11.basic">[[diff.cpp11.basic]]</a>

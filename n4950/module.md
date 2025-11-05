@@ -182,7 +182,7 @@ int &c = n;                     // OK
 ``` bnf
 export-declaration:
     export name-declaration
-    export '{' declaration-seq_opt '$'}
+    export '{' declaration-seq_opt '}'
     export-keyword module-import-declaration
 ```
 
@@ -519,7 +519,7 @@ import M3;
 **Interface unit of `M3`**
 
 export module M3;
-import M1;              // error: cyclic interface dependency $\mathtt{M3} \rightarrow \mathtt{M1} \rightarrow \mathtt{M2} \rightarrow \mathtt{M3}$
+import M1;              // error: cyclic interface dependency M3 → M1 → M2 → M3
 ```
 
 — *end example*\]
@@ -674,7 +674,7 @@ module M;
 int a = use_f<int>();           // OK
 int b = use_g<int>();           // error: no viable function for call to g;
                                 // g is not decl-reachable from purview of
-                                // module M{'s} interface, so is discarded
+                                // module M's interface, so is discarded
 int c = use_h<int>();           // OK
 ```
 
@@ -789,7 +789,7 @@ export template<typename T, typename U> void bar(T, U u) { auto v = *u; }
 **Translation unit #2**
 
 export module M1;
-import "defn.h";        // provides struct X {\;}
+import "defn.h";        // provides struct X {}
 import stuff;
 export template<typename T> void f(T t) {
   X x;

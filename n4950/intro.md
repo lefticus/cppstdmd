@@ -732,7 +732,7 @@ terminal or non-terminal symbol is indicated by the subscript
 “\relax_opt”, so
 
 ``` bnf
-'{' expression_opt '$'}
+'{' expression_opt '}'
 ```
 
 indicates an optional expression enclosed in braces.
