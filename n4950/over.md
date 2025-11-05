@@ -386,7 +386,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-\texttt{operator} conversion-type-id '( )' cv-qualifier-seq_opt ref-qualifier_opt noexcept-specifier_opt attribute-specifier-seq_opt ';'
+operator conversion-type-id '( )' cv-qualifier-seq_opt ref-qualifier_opt noexcept-specifier_opt attribute-specifier-seq_opt ';'
 ```
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
@@ -975,7 +975,7 @@ When resolving a placeholder for a deduced class type
 `A`, the *defining-type-id* of `A` must be of the form
 
 ``` bnf
-\texttt{typename_opt} nested-name-specifier_opt \texttt{template_opt} simple-template-id
+typename_opt nested-name-specifier_opt template_opt simple-template-id
 ```
 
 as specified in [[dcl.type.simple]]. The guides of `A` are the set of
@@ -2294,7 +2294,7 @@ template is also an operator function. An operator function is said to
 
 ``` bnf
 operator-function-id:
-    \texttt{operator} operator
+    operator operator
 ```
 
 ``` bnf
@@ -2403,14 +2403,14 @@ overload resolution [[over.match.oper]]. If a member function is
 selected, the expression is interpreted as
 
 ``` bnf
-cast-expression '.' \texttt{operator} '@' '('')'
+cast-expression '.' operator '@' '('')'
 ```
 
 Otherwise, if a non-member function is selected, the expression is
 interpreted as
 
 ``` bnf
-\texttt{operator} '@' '(' cast-expression ')'
+operator '@' '(' cast-expression ')'
 ```
 
 \[*Note 1*: The operators `++` and `--` [[expr.pre.incr]] are described
@@ -2433,14 +2433,14 @@ y, the operator function is selected by overload resolution
 interpreted as
 
 ``` bnf
-$x$ '.' \texttt{operator} '@' '(' $y$ ')'
+$x$ '.' operator '@' '(' $y$ ')'
 ```
 
 Otherwise, if a non-member function is selected, the expression is
 interpreted as
 
 ``` bnf
-\texttt{operator} '@' '(' $x$ ',' $y$ ')'
+operator '@' '(' $x$ ',' $y$ ')'
 ```
 
 An *equality operator function* is an operator function for an equality
@@ -2502,7 +2502,7 @@ $e$ '(' expression-list_opt ')'
 Otherwise, the expression is interpreted as
 
 ``` bnf
-postfix-expression '.' \texttt{operator} '('')' '(' expression-list_opt ')'
+postfix-expression '.' operator '('')' '(' expression-list_opt ')'
 ```
 
 ### Subscripting <a id="over.sub">[[over.sub]]</a>
@@ -2520,7 +2520,7 @@ the operator function is selected by overload resolution
 interpreted as
 
 ``` bnf
-postfix-expression . \texttt{operator} '['']' '(' expression-list_opt ')'
+postfix-expression . operator '['']' '(' expression-list_opt ')'
 ```
 
 \[*Example 1*:
@@ -2547,14 +2547,14 @@ A *class member access operator function* is a function named
 parameters. For an expression of the form
 
 ``` bnf
-postfix-expression '->' \texttt{template_opt} id-expression
+postfix-expression '->' template_opt id-expression
 ```
 
 the operator function is selected by overload resolution
 [[over.match.oper]], and the expression is interpreted as
 
 ``` bnf
-'(' postfix-expression . \texttt{operator} '->' '('')' ')' '->' \texttt{template_opt} id-expression
+'(' postfix-expression . operator '->' '('')' ')' '->' template_opt id-expression
 ```
 
 ### Increment and decrement <a id="over.inc">[[over.inc]]</a>
@@ -2865,8 +2865,8 @@ T       operator?:(bool, T, T);
 
 ``` bnf
 literal-operator-id:
-    \texttt{operator} string-literal identifier
-    \texttt{operator} user-defined-string-literal
+    operator string-literal identifier
+    operator user-defined-string-literal
 ```
 
 The *string-literal* or *user-defined-string-literal* in a

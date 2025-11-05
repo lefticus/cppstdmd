@@ -8813,7 +8813,7 @@ preferred-separator:
 
 ``` bnf
 fallback-separator:
-    \texttt{/, if *preferred-separator* is not \texttt{/}}
+    /, if *preferred-separator* is not \texttt{/}
 ```
 
 A *filename* is the name of a file. The *dot* and *dot-dot* filenames,

@@ -112,8 +112,8 @@ of the module as if by a *module-import-declaration*.
 
 ``` bnf
 export-declaration:
-    \texttt{export} name-declaration
-    \texttt{export} '{' declaration-seq_opt '$'}
+    export name-declaration
+    export '{' declaration-seq_opt '$'}
     export-keyword module-import-declaration
 ```
 
@@ -422,7 +422,7 @@ void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 
 ``` bnf
 private-module-fragment:
-    module-keyword ':' \texttt{private} ';' declaration-seq_opt
+    module-keyword ':' private ';' declaration-seq_opt
 ```
 
 A *private-module-fragment* shall appear only in a primary module

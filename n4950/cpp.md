@@ -15,12 +15,12 @@ module-file:
 
 ``` bnf
 pp-global-module-fragment:
-    \texttt{module} ';' new-line group_opt
+    module ';' new-line group_opt
 ```
 
 ``` bnf
 pp-private-module-fragment:
-    \texttt{module} ':' \texttt{private} ';' new-line group_opt
+    module ':' private ';' new-line group_opt
 ```
 
 ``` bnf
@@ -560,7 +560,7 @@ This illustrates macro-replaced `#include` directives:
 
 ``` bnf
 pp-module:
-    \texttt{export_opt} \texttt{module} pp-tokens_opt ';' new-line
+    export_opt module pp-tokens_opt ';' new-line
 ```
 
 A *pp-module* shall not appear in a context where `module` or (if it is
@@ -584,9 +584,9 @@ removed at the end of phase 4. — *end note*\]
 
 ``` bnf
 pp-import:
-    \texttt{export_opt} \texttt{import} header-name pp-tokens_opt ';' new-line
-    \texttt{export_opt} \texttt{import} header-name-tokens pp-tokens_opt ';' new-line
-    \texttt{export_opt} \texttt{import} pp-tokens ';' new-line
+    export_opt import header-name pp-tokens_opt ';' new-line
+    export_opt import header-name-tokens pp-tokens_opt ';' new-line
+    export_opt import pp-tokens ';' new-line
 ```
 
 A *pp-import* shall not appear in a context where `import` or (if it is

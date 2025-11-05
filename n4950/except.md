@@ -11,12 +11,12 @@ block.
 
 ``` bnf
 try-block:
-    \texttt{try} compound-statement handler-seq
+    try compound-statement handler-seq
 ```
 
 ``` bnf
 function-try-block:
-    \texttt{try} ctor-initializer_opt compound-statement handler-seq
+    try ctor-initializer_opt compound-statement handler-seq
 ```
 
 ``` bnf
@@ -26,7 +26,7 @@ handler-seq:
 
 ``` bnf
 handler:
-    \texttt{catch} '(' exception-declaration ')' compound-statement
+    catch '(' exception-declaration ')' compound-statement
 ```
 
 ``` bnf
@@ -499,8 +499,8 @@ either defined implicitly, or defined explicitly by using a
 
 ``` bnf
 noexcept-specifier:
-    \texttt{noexcept} '(' constant-expression ')'
-    \texttt{noexcept}
+    noexcept '(' constant-expression ')'
+    noexcept
 ```
 
 In a *noexcept-specifier*, the *constant-expression*, if supplied, shall

@@ -90,8 +90,8 @@ A label can be added to a statement or used anywhere in a
 ``` bnf
 label:
     attribute-specifier-seq_opt identifier ':'
-    attribute-specifier-seq_opt \texttt{case} constant-expression ':'
-    attribute-specifier-seq_opt \texttt{default} ':'
+    attribute-specifier-seq_opt case constant-expression ':'
+    attribute-specifier-seq_opt default ':'
 ```
 
 ``` bnf
@@ -169,11 +169,11 @@ Selection statements choose one of several flows of control.
 
 ``` bnf
 selection-statement:
-    \texttt{if} \texttt{constexpr_opt} '(' init-statement_opt condition ')' statement
-    \texttt{if} \texttt{constexpr_opt} '(' init-statement_opt condition ')' statement \texttt{else} statement
-    \texttt{if} '!_opt' \texttt{consteval} compound-statement
-    \texttt{if} '!_opt' \texttt{consteval} compound-statement \texttt{else} statement
-    \texttt{switch} '(' init-statement_opt condition ')' statement
+    if constexpr_opt '(' init-statement_opt condition ')' statement
+    if constexpr_opt '(' init-statement_opt condition ')' statement else statement
+    if '!_opt' consteval compound-statement
+    if '!_opt' consteval compound-statement else statement
+    switch '(' init-statement_opt condition ')' statement
 ```
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
@@ -246,7 +246,7 @@ int f() {
 An `if` statement of the form
 
 ``` bnf
-\texttt{if} \texttt{constexpr_opt} '(' init-statement condition ')' statement
+if constexpr_opt '(' init-statement condition ')' statement
 ```
 
 is equivalent to
@@ -254,14 +254,14 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   \texttt{if} \texttt{constexpr_opt} '(' condition ')' statement
+   if constexpr_opt '(' condition ')' statement
 '$'}
 ```
 
 and an `if` statement of the form
 
 ``` bnf
-\texttt{if} \texttt{constexpr_opt} '(' init-statement condition ')' statement \texttt{else} statement
+if constexpr_opt '(' init-statement condition ')' statement else statement
 ```
 
 is equivalent to
@@ -269,7 +269,7 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   \texttt{if} \texttt{constexpr_opt} '(' condition ')' statement \texttt{else} statement
+   if constexpr_opt '(' condition ')' statement else statement
 '$'}
 ```
 
@@ -306,27 +306,27 @@ consteval if statement is a control-flow-limited statement
 An `if` statement of the form
 
 ``` bnf
-\texttt{if} '!' \texttt{consteval} compound-statement
+if '!' consteval compound-statement
 ```
 
 is not itself a consteval if statement, but is equivalent to the
 consteval if statement
 
 ``` bnf
-\texttt{if} \texttt{consteval} '{' '$'} \texttt{else} compound-statement
+if consteval '{' '$'} else compound-statement
 ```
 
 An `if` statement of the form
 
 ``` bnf
-\texttt{if} '!' \texttt{consteval} compound-statement$_1$ \texttt{else} statement$_2$
+if '!' consteval compound-statement$_1$ else statement$_2$
 ```
 
 is not itself a consteval if statement, but is equivalent to the
 consteval if statement
 
 ``` bnf
-\texttt{if} \texttt{consteval} statement$_2$ \texttt{else} compound-statement$_1$
+if consteval statement$_2$ else compound-statement$_1$
 ```
 
 ### The `switch` statement <a id="stmt.switch">[[stmt.switch]]</a>
@@ -345,7 +345,7 @@ statement within the `switch` statement can be labeled with one or more
 case labels as follows:
 
 ``` bnf
-\texttt{case} constant-expression ':'
+case constant-expression ':'
 ```
 
 where the *constant-expression* shall be a converted constant expression
@@ -385,7 +385,7 @@ statement. — *end note*\]
 A `switch` statement of the form
 
 ``` bnf
-\texttt{switch} '(' init-statement condition ')' statement
+switch '(' init-statement condition ')' statement
 ```
 
 is equivalent to
@@ -393,7 +393,7 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   \texttt{switch} '(' condition ')' statement
+   switch '(' condition ')' statement
 '$'}
 ```
 
@@ -408,10 +408,10 @@ Iteration statements specify looping.
 
 ``` bnf
 iteration-statement:
-    \texttt{while} '(' condition ')' statement
-    \texttt{do} statement \texttt{while} '(' expression ')' ';'
-    \texttt{for} '(' init-statement condition_opt ';' expression_opt ')' statement
-    \texttt{for} '(' init-statement_opt for-range-declaration ':' for-range-initializer ')' statement
+    while '(' condition ')' statement
+    do statement while '(' expression ')' ';'
+    for '(' init-statement condition_opt ';' expression_opt ')' statement
+    for '(' init-statement_opt for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 ``` bnf
@@ -466,9 +466,9 @@ A `while` statement is equivalent to
 ``` bnf
 *label* ':'
 '{'
-   \texttt{if} '(' condition ')' '{'
+   if '(' condition ')' '{'
       statement
-      \texttt{goto} *label* ';'
+      goto *label* ';'
    '$'}
 '$'}
 ```
@@ -494,7 +494,7 @@ execution of the statement.
 The `for` statement
 
 ``` bnf
-\texttt{for} '(' init-statement condition_opt ';' expression_opt ')' statement
+for '(' init-statement condition_opt ';' expression_opt ')' statement
 ```
 
 is equivalent to
@@ -502,7 +502,7 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   \texttt{while} '(' condition ')' '{'
+   while '(' condition ')' '{'
      statement
      expression ';'
    '$'}
@@ -529,7 +529,7 @@ missing *condition* makes the implied `while` clause equivalent to
 The range-based `for` statement
 
 ``` bnf
-\texttt{for} '(' init-statement_opt for-range-declaration ':' for-range-initializer ')' statement
+for '(' init-statement_opt for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 is equivalent to
@@ -537,10 +537,10 @@ is equivalent to
 ``` bnf
 '{'
    init-statement_opt
-   \texttt{auto} '&&'*range* '=' for-range-initializer ';'
-   \texttt{auto} *begin* '=' *begin-expr* ';'
-   \texttt{auto} *end* '=' *end-expr* ';'
-   \texttt{for} '(' ';' *begin* '!=' *end*';' '++'*begin* ')' '{'
+   auto '&&'*range* '=' for-range-initializer ';'
+   auto *begin* '=' *begin-expr* ';'
+   auto *end* '=' *end-expr* ';'
+   for '(' ';' *begin* '!=' *end*';' '++'*begin* ')' '{'
      for-range-declaration '=' '*' *begin* ';'
      statement
    '$'}
@@ -613,11 +613,11 @@ Jump statements unconditionally transfer control.
 
 ``` bnf
 jump-statement:
-    \texttt{break} ';'
-    \texttt{continue} ';'
-    \texttt{return} expr-or-braced-init-list_opt ';'
+    break ';'
+    continue ';'
+    return expr-or-braced-init-list_opt ';'
     coroutine-return-statement
-    \texttt{goto} identifier ';'
+    goto identifier ';'
 ```
 
 \[*Note 1*: On exit from a scope (however accomplished), objects with

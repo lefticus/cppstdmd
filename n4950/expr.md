@@ -861,7 +861,7 @@ deprecated [[depr.arith.conv.enum]].
 ``` bnf
 primary-expression:
     literal
-    \texttt{this}
+    this
     '(' expression ')'
     id-expression
     lambda-expression
@@ -1134,7 +1134,7 @@ a non-volatile object type. In the following contexts, an
 
 ``` bnf
 qualified-id:
-    nested-name-specifier \texttt{template_opt} unqualified-id
+    nested-name-specifier template_opt unqualified-id
 ```
 
 ``` bnf
@@ -1144,7 +1144,7 @@ nested-name-specifier:
     namespace-name '::'
     decltype-specifier '::'
     nested-name-specifier identifier '::'
-    nested-name-specifier \texttt{template_opt} simple-template-id '::'
+    nested-name-specifier template_opt simple-template-id '::'
 ```
 
 The component names of a *qualified-id* are those of its
@@ -1261,10 +1261,10 @@ lambda-declarator:
 
 ``` bnf
 lambda-specifier:
-    \texttt{consteval}
-    \texttt{constexpr}
-    \texttt{mutable}
-    \texttt{static}
+    consteval
+    constexpr
+    mutable
+    static
 ```
 
 ``` bnf
@@ -1720,7 +1720,7 @@ capture:
 simple-capture:
     identifier '..._opt'
     '&' identifier '..._opt'
-    \texttt{this}
+    this
     '*' 'this'
 ```
 
@@ -2185,7 +2185,7 @@ on template arguments that can be checked by name lookup
 
 ``` bnf
 requires-expression:
-    \texttt{requires} requirement-parameter-list_opt requirement-body
+    requires requirement-parameter-list_opt requirement-body
 ```
 
 ``` bnf
@@ -2329,7 +2329,7 @@ as a *simple-requirement*.
 
 ``` bnf
 type-requirement:
-    \texttt{typename} nested-name-specifier_opt type-name ';'
+    typename nested-name-specifier_opt type-name ';'
 ```
 
 A *type-requirement* asserts the validity of a type.
@@ -2360,7 +2360,7 @@ require that type to be complete [[term.incomplete.type]].
 
 ``` bnf
 compound-requirement:
-    '{' expression '$'} \texttt{noexcept_opt} return-type-requirement_opt ';'
+    '{' expression '$'} noexcept_opt return-type-requirement_opt ';'
 ```
 
 ``` bnf
@@ -2439,7 +2439,7 @@ expression and that `g(x)` is non-throwing.
 
 ``` bnf
 nested-requirement:
-    \texttt{requires} constraint-expression ';'
+    requires constraint-expression ';'
 ```
 
 A *nested-requirement* can be used to specify additional constraints in
@@ -2485,12 +2485,12 @@ postfix-expression:
     postfix-expression '->' 'template_opt' id-expression
     postfix-expression '++'
     postfix-expression '--'
-    \texttt{dynamic_cast} '<' type-id '>' '(' expression ')'
-    \texttt{static_cast} '<' type-id '>' '(' expression ')'
-    \texttt{reinterpret_cast} '<' type-id '>' '(' expression ')'
-    \texttt{const_cast} '<' type-id '>' '(' expression ')'
-    \texttt{typeid} '(' expression ')'
-    \texttt{typeid} '(' type-id ')'
+    dynamic_cast '<' type-id '>' '(' expression ')'
+    static_cast '<' type-id '>' '(' expression ')'
+    reinterpret_cast '<' type-id '>' '(' expression ')'
+    const_cast '<' type-id '>' '(' expression ')'
+    typeid '(' expression ')'
+    typeid '(' type-id ')'
 ```
 
 ``` bnf
@@ -3517,10 +3517,10 @@ unary-expression:
     '++' cast-expression
     '--' cast-expression
     await-expression
-    \texttt{sizeof} unary-expression
-    \texttt{sizeof} '(' type-id ')'
-    \texttt{sizeof} '...' '(' identifier ')'
-    \texttt{alignof} '(' type-id ')'
+    sizeof unary-expression
+    sizeof '(' type-id ')'
+    sizeof '...' '(' identifier ')'
+    alignof '(' type-id ')'
     noexcept-expression
     new-expression
     delete-expression
@@ -3878,7 +3878,7 @@ can throw an exception [[except.throw]].
 
 ``` bnf
 noexcept-expression:
-  \texttt{noexcept} '(' expression ')'
+  noexcept '(' expression ')'
 ```
 
 The result of the `noexcept` operator is a prvalue of type `bool`.
@@ -3906,8 +3906,8 @@ type. — *end note*\]
 
 ``` bnf
 new-expression:
-    '::_opt' \texttt{new} new-placement_opt new-type-id new-initializer_opt 
-    '::_opt' \texttt{new} new-placement_opt '(' type-id ')' new-initializer_opt
+    '::_opt' new new-placement_opt new-type-id new-initializer_opt 
+    '::_opt' new new-placement_opt '(' type-id ')' new-initializer_opt
 ```
 
 ``` bnf
@@ -4306,8 +4306,8 @@ The *delete-expression* operator destroys a most derived object
 
 ``` bnf
 delete-expression:
-    '::_opt' \texttt{delete} cast-expression
-    '::_opt' \texttt{delete} '[' ']' cast-expression
+    '::_opt' delete cast-expression
+    '::_opt' delete '[' ']' cast-expression
 ```
 
 The first alternative is a *single-object delete expression*, and the
@@ -5295,7 +5295,7 @@ int main() {
 
 ``` bnf
 throw-expression:
-    \texttt{throw}  assignment-expression_opt
+    throw  assignment-expression_opt
 ```
 
 A *throw-expression* is of type `void`.

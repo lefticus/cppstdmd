@@ -58,7 +58,7 @@ nodeclspec-function-declaration:
 
 ``` bnf
 alias-declaration:
-    \texttt{using} identifier attribute-specifier-seq_opt '=' defining-type-id ';'
+    using identifier attribute-specifier-seq_opt '=' defining-type-id ';'
 ```
 
 ``` bnf
@@ -70,8 +70,8 @@ simple-declaration:
 
 ``` bnf
 static_assert-declaration:
-  \texttt{static_assert} '(' constant-expression ')' ';'
-  \texttt{static_assert} '(' constant-expression ',' string-literal ')' ';'
+  static_assert '(' constant-expression ')' ';'
+  static_assert '(' constant-expression ',' string-literal ')' ';'
 ```
 
 ``` bnf
@@ -265,12 +265,12 @@ decl-specifier:
     storage-class-specifier
     defining-type-specifier
     function-specifier
-    \texttt{friend}
-    \texttt{typedef}
-    \texttt{constexpr}
-    \texttt{consteval}
-    \texttt{constinit}
-    \texttt{inline}
+    friend
+    typedef
+    constexpr
+    consteval
+    constinit
+    inline
 ```
 
 ``` bnf
@@ -331,10 +331,10 @@ The storage class specifiers are
 
 ``` bnf
 storage-class-specifier:
-    \texttt{static}
-    \texttt{thread_local}
-    \texttt{extern}
-    \texttt{mutable}
+    static
+    thread_local
+    extern
+    mutable
 ```
 
 At most one *storage-class-specifier* shall appear in a given
@@ -478,14 +478,14 @@ A *function-specifier* can be used only in a function declaration.
 
 ``` bnf
 function-specifier:
-    \texttt{virtual}
+    virtual
     explicit-specifier
 ```
 
 ``` bnf
 explicit-specifier:
-    \texttt{explicit} '(' constant-expression ')'
-    \texttt{explicit}
+    explicit '(' constant-expression ')'
+    explicit
 ```
 
 The `virtual` specifier shall be used only in the initial declaration of
@@ -1043,24 +1043,24 @@ The simple type specifiers are
 ``` bnf
 simple-type-specifier:
     nested-name-specifier_opt type-name
-    nested-name-specifier \texttt{template} simple-template-id
+    nested-name-specifier template simple-template-id
     decltype-specifier
     placeholder-type-specifier
     nested-name-specifier_opt template-name
-    \texttt{char}
-    \texttt{char8_t}
-    \texttt{char16_t}
-    \texttt{char32_t}
-    \texttt{wchar_t}
-    \texttt{bool}
-    \texttt{short}
-    \texttt{int}
-    \texttt{long}
-    \texttt{signed}
-    \texttt{unsigned}
-    \texttt{float}
-    \texttt{double}
-    \texttt{void}
+    char
+    char8_t
+    char16_t
+    char32_t
+    wchar_t
+    bool
+    short
+    int
+    long
+    signed
+    unsigned
+    float
+    double
+    void
 ```
 
 ``` bnf
@@ -1086,7 +1086,7 @@ is either a class template or is an alias template whose
 *defining-type-id* is of the form
 
 ``` bnf
-\texttt{typename_opt} nested-name-specifier_opt \texttt{template_opt} simple-template-id
+typename_opt nested-name-specifier_opt template_opt simple-template-id
 ```
 
 where the *nested-name-specifier* (if any) is non-dependent and the
@@ -1161,8 +1161,8 @@ contexts. — *end note*\]
 elaborated-type-specifier:
     class-key attribute-specifier-seq_opt nested-name-specifier_opt identifier
     class-key simple-template-id
-    class-key nested-name-specifier \texttt{template_opt} simple-template-id
-    \texttt{enum} nested-name-specifier_opt identifier
+    class-key nested-name-specifier template_opt simple-template-id
+    enum nested-name-specifier_opt identifier
 ```
 
 The component names of an *elaborated-type-specifier* are its
@@ -1198,9 +1198,9 @@ an entire *member-declaration*, the *member-declaration* shall have one
 of the following forms:
 
 ``` bnf
-\texttt{friend} class-key nested-name-specifier_opt identifier ';'
-\texttt{friend} class-key simple-template-id ';'
-\texttt{friend} class-key nested-name-specifier \texttt{template_opt} simple-template-id ';'
+friend class-key nested-name-specifier_opt identifier ';'
+friend class-key simple-template-id ';'
+friend class-key nested-name-specifier template_opt simple-template-id ';'
 ```
 
 Any unqualified lookup for the *identifier* (in the first case) does not
@@ -1263,7 +1263,7 @@ class S* p = &s;                // OK
 
 ``` bnf
 decltype-specifier:
-  \texttt{decltype} '(' expression ')'
+  decltype '(' expression ')'
 ```
 
 For an expression E, the type denoted by `decltype(E)` is defined as
@@ -1364,8 +1364,8 @@ void r() {
 
 ``` bnf
 placeholder-type-specifier:
-  type-constraint_opt \texttt{auto}
-  type-constraint_opt \texttt{decltype} '(' \texttt{auto} ')'
+  type-constraint_opt auto
+  type-constraint_opt decltype '(' auto ')'
 ```
 
 A *placeholder-type-specifier* designates a placeholder type that will
@@ -1908,8 +1908,8 @@ cv-qualifier-seq:
 
 ``` bnf
 cv-qualifier:
-    \texttt{const}
-    \texttt{volatile}
+    const
+    volatile
 ```
 
 ``` bnf
@@ -2733,9 +2733,9 @@ parameter-declaration-list:
 
 ``` bnf
 parameter-declaration:
-    attribute-specifier-seq_opt \texttt{this_opt} decl-specifier-seq declarator
+    attribute-specifier-seq_opt this_opt decl-specifier-seq declarator
     attribute-specifier-seq_opt decl-specifier-seq declarator '=' initializer-clause
-    attribute-specifier-seq_opt \texttt{this_opt} decl-specifier-seq abstract-declarator_opt
+    attribute-specifier-seq_opt this_opt decl-specifier-seq abstract-declarator_opt
     attribute-specifier-seq_opt decl-specifier-seq abstract-declarator_opt '=' initializer-clause
 ```
 
@@ -4806,8 +4806,8 @@ function-definition:
 function-body:
     ctor-initializer_opt compound-statement
     function-try-block
-    '=' \texttt{default} ';'
-    '=' \texttt{delete} ';'
+    '=' default ';'
+    '=' delete ';'
 ```
 
 Any informal reference to the body of a function should be interpreted
@@ -5471,9 +5471,9 @@ opaque-enum-declaration:
 
 ``` bnf
 enum-key:
-    \texttt{enum}
-    \texttt{enum} \texttt{class}
-    \texttt{enum} \texttt{struct}
+    enum
+    enum class
+    enum struct
 ```
 
 ``` bnf
@@ -5709,7 +5709,7 @@ void h()  {
 
 ``` bnf
 using-enum-declaration:
-    \texttt{using} \texttt{enum} using-enum-declarator ';'
+    using enum using-enum-declarator ';'
 ```
 
 ``` bnf
@@ -5793,23 +5793,23 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        \texttt{inline_opt} \texttt{namespace} attribute-specifier-seq_opt identifier '{' namespace-body '$'}
+        inline_opt namespace attribute-specifier-seq_opt identifier '{' namespace-body '$'}
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        \texttt{inline_opt} \texttt{namespace} attribute-specifier-seq_opt '{' namespace-body '$'}
+        inline_opt namespace attribute-specifier-seq_opt '{' namespace-body '$'}
 ```
 
 ``` bnf
 nested-namespace-definition:
-        \texttt{namespace} enclosing-namespace-specifier '::' \texttt{inline_opt} identifier '{' namespace-body '$'}
+        namespace enclosing-namespace-specifier '::' inline_opt identifier '{' namespace-body '$'}
 ```
 
 ``` bnf
 enclosing-namespace-specifier:
         identifier
-        enclosing-namespace-specifier '::' \texttt{inline_opt} identifier
+        enclosing-namespace-specifier '::' inline_opt identifier
 ```
 
 ``` bnf
@@ -5916,9 +5916,9 @@ namespace A {
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-\texttt{inline_opt} \texttt{namespace} *unique* '{' '/* empty body */' '$'}
-\texttt{using} \texttt{namespace} *unique* ';'
-\texttt{namespace} *unique* '{' namespace-body '$'}
+inline_opt namespace *unique* '{' '/* empty body */' '$'}
+using namespace *unique* ';'
+namespace *unique* '{' namespace-body '$'}
 ```
 
 where `inline` appears if and only if it appears in the
@@ -5964,7 +5964,7 @@ namespace-alias:
 
 ``` bnf
 namespace-alias-definition:
-        \texttt{namespace} identifier '=' qualified-namespace-specifier ';'
+        namespace identifier '=' qualified-namespace-specifier ';'
 ```
 
 ``` bnf
@@ -5984,7 +5984,7 @@ The *identifier* in a *namespace-alias-definition* becomes a
 
 ``` bnf
 using-directive:
-    attribute-specifier-seq_opt \texttt{using} \texttt{namespace} nested-name-specifier_opt namespace-name ';'
+    attribute-specifier-seq_opt using namespace nested-name-specifier_opt namespace-name ';'
 ```
 
 A *using-directive* shall not appear in class scope, but may appear in
@@ -6174,7 +6174,7 @@ void f() {
 
 ``` bnf
 using-declaration:
-    \texttt{using} using-declarator-list ';'
+    using using-declarator-list ';'
 ```
 
 ``` bnf
@@ -6185,7 +6185,7 @@ using-declarator-list:
 
 ``` bnf
 using-declarator:
-    \texttt{typename_opt} nested-name-specifier unqualified-id
+    typename_opt nested-name-specifier unqualified-id
 ```
 
 The component names of a *using-declarator* are those of its
@@ -6531,7 +6531,7 @@ An `asm` declaration has the form
 
 ``` bnf
 asm-declaration:
-    attribute-specifier-seq_opt \texttt{asm} '(' string-literal ')' ';'
+    attribute-specifier-seq_opt asm '(' string-literal ')' ';'
 ```
 
 The `asm` declaration is conditionally-supported; its meaning is
@@ -6563,8 +6563,8 @@ achieved using a *linkage-specification*:
 
 ``` bnf
 linkage-specification:
-    \texttt{extern} string-literal '{' declaration-seq_opt '$'}
-    \texttt{extern} string-literal name-declaration
+    extern string-literal '{' declaration-seq_opt '$'}
+    extern string-literal name-declaration
 ```
 
 The *string-literal* indicates the required language linkage. This
@@ -6758,13 +6758,13 @@ attribute-specifier:
 
 ``` bnf
 alignment-specifier:
-  \texttt{alignas} '(' type-id '..._opt' ')'
-  \texttt{alignas} '(' constant-expression '..._opt' ')'
+  alignas '(' type-id '..._opt' ')'
+  alignas '(' constant-expression '..._opt' ')'
 ```
 
 ``` bnf
 attribute-using-prefix:
-  \texttt{using} attribute-namespace ':'
+  using attribute-namespace ':'
 ```
 
 ``` bnf

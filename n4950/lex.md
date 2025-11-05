@@ -638,8 +638,8 @@ operator-or-punctuator: one of
     '=        +=       -=       *=       /=       %=       ^=       &=       |='
     '==       !=       <        >        <=       >=       <=>      &&       ||'
     '<<       >>       <<=      >>=      ++       --       ,'
-    '\texttt{and'      \texttt{or}       \texttt{xor}      \texttt{not}      \texttt{bitand}   \texttt{bitor}    \texttt{compl}}
-    '\texttt{and_eq'   \texttt{or_eq}    \texttt{xor_eq}   \texttt{not_eq}}
+    'and'      \texttt{or       xor      not      bitand   bitor    compl}
+    'and_eq'   \texttt{or_eq    xor_eq   not_eq}
 ```
 
 Each *operator-or-punctuator* is converted to a single token in

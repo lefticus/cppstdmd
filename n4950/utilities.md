@@ -10503,7 +10503,7 @@ output. The syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{format-spec}
-    as specified by the \texttt{formatter specialization for the argument type}
+    as specified by the formatter specialization for the argument type
 ```
 
 The *arg-id* field specifies the index of the argument in `args` whose
@@ -10587,7 +10587,7 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{fill}
-    any character other than \texttt{\{ or \texttt{\}}}
+    any character other than \{ or \texttt{\}}
 ```
 
 ``` bnf

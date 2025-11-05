@@ -192,6 +192,22 @@ def test_tcode_in_bnf():
     assert "int" in output
     assert "char" in output
 
+def test_texttt_in_bnf():
+    r"""Test \texttt{} in BNF blocks (module.md bug - Pandoc converts \keyword{} to \texttt{})"""
+    latex = r"""
+\begin{bnf}
+\nontermdef{export-declaration}\br
+    \texttt{export} name-declaration\br
+    \texttt{export} \terminal{\{} \opt{declaration-seq} \terminal{\}}
+\end{bnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "export-declaration:" in output
+    assert "export" in output
+    assert "\\texttt" not in output
+    assert "'{'" in output
+
 def test_caret():
     r"""Test \caret{} command"""
     latex = r"""

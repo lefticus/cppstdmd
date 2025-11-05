@@ -33,14 +33,14 @@ class-head-name:
 
 ``` bnf
 class-virt-specifier:
-    \texttt{final}
+    final
 ```
 
 ``` bnf
 class-key:
-    \texttt{class}
-    \texttt{struct}
-    \texttt{union}
+    class
+    struct
+    union
 ```
 
 A class declaration where the *class-name* in the *class-head-name* is a
@@ -376,8 +376,8 @@ virt-specifier-seq:
 
 ``` bnf
 virt-specifier:
-    \texttt{override}
-    \texttt{final}
+    override
+    final
 ```
 
 ``` bnf
@@ -1799,7 +1799,7 @@ conversions. — *end note*\]
 
 ``` bnf
 conversion-function-id:
-    \texttt{operator} conversion-type-id
+    operator conversion-type-id
 ```
 
 ``` bnf
@@ -2430,7 +2430,7 @@ new (&u.n) N;
 A union of the form
 
 ``` bnf
-\texttt{union} '{' member-specification '$'} ';'
+union '{' member-specification '$'} ';'
 ```
 
 is called an *anonymous union*; it defines an unnamed type and an
@@ -2569,22 +2569,22 @@ base-specifier-list:
 ``` bnf
 base-specifier:
     attribute-specifier-seq_opt class-or-decltype
-    attribute-specifier-seq_opt \texttt{virtual} access-specifier_opt class-or-decltype
-    attribute-specifier-seq_opt access-specifier \texttt{virtual_opt} class-or-decltype
+    attribute-specifier-seq_opt virtual access-specifier_opt class-or-decltype
+    attribute-specifier-seq_opt access-specifier virtual_opt class-or-decltype
 ```
 
 ``` bnf
 class-or-decltype:
     nested-name-specifier_opt type-name
-    nested-name-specifier \texttt{template} simple-template-id
+    nested-name-specifier template simple-template-id
     decltype-specifier
 ```
 
 ``` bnf
 access-specifier:
-    \texttt{private}
-    \texttt{protected}
-    \texttt{public}
+    private
+    protected
+    public
 ```
 
 The optional *attribute-specifier-seq* appertains to the
@@ -3731,9 +3731,9 @@ A friend declaration that does not declare a function shall have one of
 the following forms:
 
 ``` bnf
-\texttt{friend} elaborated-type-specifier ';'
-\texttt{friend} simple-type-specifier ';'
-\texttt{friend} typename-specifier ';'
+friend elaborated-type-specifier ';'
+friend simple-type-specifier ';'
+friend typename-specifier ';'
 ```
 
 \[*Note 1*: A friend declaration can be the *declaration* in a

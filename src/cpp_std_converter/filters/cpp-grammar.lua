@@ -67,6 +67,9 @@ local function clean_grammar(grammar)
   -- Replace \tcode{x} with x (code - macros filter may have already handled this)
   grammar = grammar:gsub("\\tcode{([^}]*)}", "%1")
 
+  -- Replace \texttt{x} with x (Pandoc may convert \keyword{} to \texttt{} in BNF blocks)
+  grammar = grammar:gsub("\\texttt{([^}]*)}", "%1")
+
   -- Replace \unicode{XXXX} with actual Unicode character
   grammar = grammar:gsub("\\unicode{([0-9A-Fa-f]+)}", function(hex)
     local codepoint = tonumber(hex, 16)

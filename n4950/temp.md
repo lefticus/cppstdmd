@@ -13,7 +13,7 @@ template-declaration:
 
 ``` bnf
 template-head:
-  \texttt{template} '<' template-parameter-list '>' requires-clause_opt
+  template '<' template-parameter-list '>' requires-clause_opt
 ```
 
 ``` bnf
@@ -24,7 +24,7 @@ template-parameter-list:
 
 ``` bnf
 requires-clause:
-  \texttt{requires} constraint-logical-or-expression
+  requires constraint-logical-or-expression
 ```
 
 ``` bnf
@@ -180,8 +180,8 @@ type-parameter:
 
 ``` bnf
 type-parameter-key:
-  \texttt{class}
-  \texttt{typename}
+  class
+  typename
 ```
 
 ``` bnf
@@ -3296,7 +3296,7 @@ arguments.
 
 ``` bnf
 concept-definition:
-  \texttt{concept} concept-name attribute-specifier-seq_opt '=' constraint-expression ';'
+  concept concept-name attribute-specifier-seq_opt '=' constraint-expression ';'
 ```
 
 ``` bnf
@@ -3435,8 +3435,8 @@ specialization, the program is ill-formed, no diagnostic required.
 
 ``` bnf
 typename-specifier:
-  \texttt{typename} nested-name-specifier identifier
-  \texttt{typename} nested-name-specifier 'template_opt' simple-template-id
+  typename nested-name-specifier identifier
+  typename nested-name-specifier 'template_opt' simple-template-id
 ```
 
 The component names of a *typename-specifier* are its *identifier* (if
@@ -4101,12 +4101,12 @@ simple-type-specifier '(' expression-list_opt ')'
 simple-type-specifier braced-init-list
 typename-specifier '(' expression-list_opt ')'
 typename-specifier braced-init-list
-'::_opt' \texttt{new} new-placement_opt new-type-id new-initializer_opt
-'::_opt' \texttt{new} new-placement_opt '(' type-id ')' new-initializer_opt
-\texttt{dynamic_cast} '<' type-id '>' '(' expression ')'
-\texttt{static_cast} '<' type-id '>' '(' expression ')'
-\texttt{const_cast} '<' type-id '>' '(' expression ')'
-\texttt{reinterpret_cast} '<' type-id '>' '(' expression ')'
+'::_opt' new new-placement_opt new-type-id new-initializer_opt
+'::_opt' new new-placement_opt '(' type-id ')' new-initializer_opt
+dynamic_cast '<' type-id '>' '(' expression ')'
+static_cast '<' type-id '>' '(' expression ')'
+const_cast '<' type-id '>' '(' expression ')'
+reinterpret_cast '<' type-id '>' '(' expression ')'
 '(' type-id ')' cast-expression
 ```
 
@@ -4115,16 +4115,16 @@ type of the expression cannot be dependent):
 
 ``` bnf
 literal
-\texttt{sizeof} unary-expression
-\texttt{sizeof} '(' type-id ')'
-\texttt{sizeof} '...' '(' identifier ')'
-\texttt{alignof} '(' type-id ')'
-\texttt{typeid} '(' expression ')'
-\texttt{typeid} '(' type-id ')'
-'::_opt' \texttt{delete} cast-expression
-'::_opt' \texttt{delete} '[' ']' cast-expression
-\texttt{throw} assignment-expression_opt
-\texttt{noexcept} '(' expression ')'
+sizeof unary-expression
+sizeof '(' type-id ')'
+sizeof '...' '(' identifier ')'
+alignof '(' type-id ')'
+typeid '(' expression ')'
+typeid '(' type-id ')'
+'::_opt' delete cast-expression
+'::_opt' delete '[' ']' cast-expression
+throw assignment-expression_opt
+noexcept '(' expression ')'
 ```
 
 \[*Note 1*: For the standard library macro `offsetof`, see 
@@ -4169,12 +4169,12 @@ Expressions of the following form are value-dependent if the
 dependent:
 
 ``` bnf
-\texttt{sizeof} unary-expression
-\texttt{sizeof} '(' type-id ')'
-\texttt{typeid} '(' expression ')'
-\texttt{typeid} '(' type-id ')'
-\texttt{alignof} '(' type-id ')'
-\texttt{noexcept} '(' expression ')'
+sizeof unary-expression
+sizeof '(' type-id ')'
+typeid '(' expression ')'
+typeid '(' type-id ')'
+alignof '(' type-id ')'
+noexcept '(' expression ')'
 ```
 
 \[*Note 1*: For the standard library macro `offsetof`, see 
@@ -4186,16 +4186,16 @@ Expressions of the following form are value-dependent if either the
 
 ``` bnf
 simple-type-specifier '(' expression-list_opt ')'
-\texttt{static_cast} '<' type-id '>' '(' expression ')'
-\texttt{const_cast} '<' type-id '>' '(' expression ')'
-\texttt{reinterpret_cast} '<' type-id '>' '(' expression ')'
+static_cast '<' type-id '>' '(' expression ')'
+const_cast '<' type-id '>' '(' expression ')'
+reinterpret_cast '<' type-id '>' '(' expression ')'
 '(' type-id ')' cast-expression
 ```
 
 Expressions of the following form are value-dependent:
 
 ``` bnf
-\texttt{sizeof} '...' '(' identifier ')'
+sizeof '...' '(' identifier ')'
 fold-expression
 ```
 
@@ -4850,7 +4850,7 @@ The syntax for explicit instantiation is:
 
 ``` bnf
 explicit-instantiation:
-  \texttt{extern_opt} \texttt{template} declaration
+  extern_opt template declaration
 ```
 
 There are two forms of explicit instantiation: an explicit instantiation
@@ -5024,7 +5024,7 @@ can be declared by a declaration introduced by `template<>`; that is:
 
 ``` bnf
 explicit-specialization:
-  \texttt{template} '<' '>' declaration
+  template '<' '>' declaration
 ```
 
 \[*Example 1*:

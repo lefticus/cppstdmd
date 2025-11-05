@@ -99,6 +99,9 @@ Look for:
 - [x] **FIXED**: `\grammarterm{term}{suffix}` now handles optional suffix argument (cpp-macros.lua lines 641-660)
 - [x] **TEST ADDED**: `test_grammarterm_with_suffix` verifies the fix
 - [x] **IMPACT**: Affects 314 instances across the entire codebase
+- [x] **FIXED**: `\texttt{}` in BNF blocks now processes correctly (cpp-grammar.lua line 70-71)
+- [x] **TEST ADDED**: `test_texttt_in_bnf` verifies the fix
+- [x] **IMPACT**: Affects 188+ instances across 20 files (dcl.md has 67, expr.md has 28, input.md has 40)
 
 ### Known Edge Cases
 
