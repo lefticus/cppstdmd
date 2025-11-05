@@ -58,23 +58,31 @@ visible outside the module. — *end note*\]
 \[*Example 1*:
 
 ``` cpp
+**Translation unit #1**
+
 export module A;
 export import :Foo;
 export int baz();
 ```
 
 ``` cpp
+**Translation unit #2**
+
 export module A:Foo;
 import :Internals;
 export int foo() { return 2 * (bar() + 1); }
 ```
 
 ``` cpp
+**Translation unit #3**
+
 module A:Internals;
 int bar();
 ```
 
 ``` cpp
+**Translation unit #4**
+
 module A;
 import :Internals;
 int bar() { return baz() - 10; }
@@ -131,28 +139,38 @@ of the module as if by a *module-import-declaration*.
 \[*Example 2*:
 
 ``` cpp
+**Translation unit #1**
+
 module B:Y;                     // does not implicitly import B
 int y();
 ```
 
 ``` cpp
+**Translation unit #2**
+
 export module B;
 import :Y;                      // OK, does not create interface dependency cycle
 int n = y();
 ```
 
 ``` cpp
+**Translation unit #3**
+
 module B:X1;                    // does not implicitly import B
 int &a = n;                     // error: n not visible here
 ```
 
 ``` cpp
+**Translation unit #4**
+
 module B:X2;                    // does not implicitly import B
 import B;
 int &b = n;                     // OK
 ```
 
 ``` cpp
+**Translation unit #5**
+
 module B;                       // implicitly imports B
 int &c = n;                     // OK
 ```
@@ -195,10 +213,14 @@ declare a name with internal linkage.
 \[*Example 1*:
 
 ``` cpp
+**Source file `"a.h"`**
+
 export int x;
 ```
 
 ``` cpp
+**Translation unit #1**
+
 module;
 #include "a.h"                  // error: declaration of x is not in the
                                 // purview of a module interface unit
@@ -223,19 +245,27 @@ with a name having external linkage.
 \[*Example 2*:
 
 ``` cpp
+**Source file `"b.h"`**
+
 int f();
 ```
 
 ``` cpp
+**Importable header `"c.h"`**
+
 int g();
 ```
 
 ``` cpp
+**Translation unit #1**
+
 export module X;
 export int h();
 ```
 
 ``` cpp
+**Translation unit #2**
+
 module;
 #include "b.h"
 export module M;
@@ -286,6 +316,8 @@ which a definition of the type is reachable. — *end note*\]
 \[*Example 4*:
 
 ``` cpp
+**Interface unit of `M`**
+
 export module M;
 export struct X {
   static void f();
@@ -309,6 +341,8 @@ export const int n = 5;         // OK, n has external linkage
 ```
 
 ``` cpp
+**Implementation unit of `M`**
+
 module M;
 struct A {
   int value;
@@ -316,6 +350,8 @@ struct A {
 ```
 
 ``` cpp
+**Main program**
+
 import M;
 int main() {
   X::f();                       // OK, X is exported and definition of X is reachable
@@ -430,10 +466,14 @@ A module implementation unit shall not be exported.
 \[*Example 1*:
 
 ``` cpp
+**Translation unit #1**
+
 module M:Part;
 ```
 
 ``` cpp
+**Translation unit #2**
+
 export module M;
 export import :Part;    // error: exported partition :Part is an implementation unit
 ```
@@ -462,16 +502,22 @@ have an interface dependency on itself.
 \[*Example 3*:
 
 ``` cpp
+**Interface unit of `M1`**
+
 export module M1;
 import M2;
 ```
 
 ``` cpp
+**Interface unit of `M2`**
+
 export module M2;
 import M3;
 ```
 
 ``` cpp
+**Interface unit of `M3`**
+
 export module M3;
 import M1;              // error: cyclic interface dependency $\mathtt{M3} \rightarrow \mathtt{M1} \rightarrow \mathtt{M2} \rightarrow \mathtt{M3}$
 ```
@@ -580,6 +626,8 @@ void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 \[*Example 2*:
 
 ``` cpp
+**Source file `"foo.h"`**
+
 namespace N {
   struct X {};
   int d();
@@ -591,6 +639,8 @@ namespace N {
 ```
 
 ``` cpp
+**Module `M` interface**
+
 module;
 #include "foo.h"
 export module M;
@@ -618,6 +668,8 @@ int k = use_h<int>();
 ```
 
 ``` cpp
+**Module `M` implementation**
+
 module M;
 int a = use_f<int>();           // OK
 int b = use_g<int>();           // error: no viable function for call to g;
@@ -726,12 +778,16 @@ program comprises that point.
 \[*Example 1*:
 
 ``` cpp
+**Translation unit #1**
+
 export module stuff;
 export template<typename T, typename U> void foo(T, U u) { auto v = u; }
 export template<typename T, typename U> void bar(T, U u) { auto v = *u; }
 ```
 
 ``` cpp
+**Translation unit #2**
+
 export module M1;
 import "defn.h";        // provides struct X {\;}
 import stuff;
@@ -742,6 +798,8 @@ export template<typename T> void f(T t) {
 ```
 
 ``` cpp
+**Translation unit #3**
+
 export module M2;
 import "decl.h";        // provides struct X; (not a definition)
 import stuff;
@@ -752,6 +810,8 @@ export template<typename T> void g(T t) {
 ```
 
 ``` cpp
+**Translation unit #4**
+
 import M1;
 import M2;
 void test() {
@@ -835,12 +895,16 @@ cannot be found by name lookup. — *end note*\]
 \[*Example 1*:
 
 ``` cpp
+**Translation unit #1**
+
 export module A;
 struct X {};
 export using Y = X;
 ```
 
 ``` cpp
+**Translation unit #2**
+
 import A;
 Y y;                // OK, definition of X is reachable
 X x;                // error: X not visible to unqualified lookup

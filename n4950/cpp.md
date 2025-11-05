@@ -671,6 +671,8 @@ a particular macro definition is active. — *end note*\]
 \[*Example 1*:
 
 ``` cpp
+**Importable header `"a.h"`**
+
 #define X 123   // #1
 #define Y 45    // #2
 #define Z a     // #3
@@ -678,21 +680,29 @@ a particular macro definition is active. — *end note*\]
 ```
 
 ``` cpp
+**Importable header `"b.h"`**
+
 import "a.h";   // point of definition of #1, #2, and #3, point of undefinition of #1 in "b.h"
 #define X 456   // OK, #1 is not active
 #define Y 6     // error: #2 is active
 ```
 
 ``` cpp
+**Importable header `"c.h"`**
+
 #define Y 45    // #4
 #define Z c     // #5
 ```
 
 ``` cpp
+**Importable header `"d.h"`**
+
 import "c.h";   // point of definition of #4 and #5 in "d.h"
 ```
 
 ``` cpp
+**Importable header `"e.h"`**
+
 import "a.h";   // point of definition of #1, #2, and #3, point of undefinition of #1 in "e.h"
 import "d.h";   // point of definition of #4 and #5 in "e.h"
 int a = Y;      // OK, active macro definitions #2 and #4 are valid redefinitions
@@ -700,6 +710,8 @@ int c = Z;      // error: active macro definitions #3 and #5 are not valid redef
 ```
 
 ``` cpp
+**Module unit `f`**
+
 export module f;
 export import "a.h";
 
@@ -707,6 +719,8 @@ int a = Y;      // OK
 ```
 
 ``` cpp
+**Translation unit `#1`**
+
 import f;
 int x = Y;      // error: Y is neither a defined macro nor a declared name
 ```

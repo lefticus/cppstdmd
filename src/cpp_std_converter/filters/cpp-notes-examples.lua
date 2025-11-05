@@ -228,6 +228,7 @@ local function extract_codeblocks(content)
 
     -- Handle codeblocktu separately due to title parameter with nested braces
     local cbtu_start = modified_content:find("\\begin{codeblocktu}{", pos, true)
+    local cbtu_title = nil
     if cbtu_start and (not earliest_start or cbtu_start < earliest_start) then
       -- Use brace-balanced extraction for the title
       local title_brace_start = cbtu_start + 20  -- After \begin{codeblocktu}{
@@ -240,6 +241,7 @@ local function extract_codeblocks(content)
           earliest_end = cbtu_end + 17 - 1  -- \end{codeblocktu} is 17 chars
           earliest_code = code
           earliest_type = "codeblocktu"
+          cbtu_title = title  -- Store the raw title for processing
         end
       end
     end
@@ -248,6 +250,16 @@ local function extract_codeblocks(content)
       -- Clean and store the code
       local code = earliest_code:gsub("^%s*\n", ""):gsub("\n%s*$", "")
       code = clean_code(code)
+
+      -- For codeblocktu, prepend the formatted title
+      if earliest_type == "codeblocktu" and cbtu_title then
+        -- Process title: expand \tcode{} and clean up
+        local formatted_title = cbtu_title
+        formatted_title = formatted_title:gsub("\\tcode{([^}]*)}", "`%1`")
+        formatted_title = formatted_title:gsub("\\#", "#")
+        code = "**" .. formatted_title .. "**\n\n" .. code
+      end
+
       counter = counter + 1
       codeblocks[counter] = code
 
