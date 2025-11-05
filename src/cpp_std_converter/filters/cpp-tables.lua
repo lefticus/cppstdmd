@@ -26,6 +26,7 @@ local extract_braced = common.extract_braced
 local expand_balanced_command = common.expand_balanced_command
 local replace_code_macro_special_chars = common.replace_code_macro_special_chars
 local process_code_macro = common.process_code_macro
+local extract_multi_arg_macro = common.extract_multi_arg_macro
 
 -- Initialize references table if not already created by cpp-macros.lua
 -- This allows cpp-tables.lua to work standalone or as part of filter chain
@@ -98,46 +99,11 @@ local function expand_table_macros(text)
     local start_pos = text:find("\\unicode{", 1, true)
     if not start_pos then break end
 
-    -- Extract first argument (code point)
-    local pos = start_pos + 9  -- length of "\unicode{"
-    local depth = 1
-    local code_start = pos
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then
-        depth = depth + 1
-      elseif c == "}" then
-        depth = depth - 1
-      end
-      pos = pos + 1
-    end
-
-    if depth ~= 0 then break end  -- Unbalanced braces
-
-    local code = text:sub(code_start, pos - 2)
-
-    -- Extract second argument (description)
-    if pos > #text or text:sub(pos, pos) ~= "{" then break end
-
-    local desc_start = pos + 1
-    pos = pos + 1
-    depth = 1
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then
-        depth = depth + 1
-      elseif c == "}" then
-        depth = depth - 1
-      end
-      pos = pos + 1
-    end
-
-    if depth ~= 0 then break end  -- Unbalanced braces
-
-    local desc = text:sub(desc_start, pos - 2)
+    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)  -- \unicode is 8 chars, 2 args
+    if not args then break end
 
     -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
-    text = text:sub(1, start_pos - 1) .. "U+" .. code .. " (" .. desc .. ")" .. text:sub(pos)
+    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] .. ")" .. text:sub(end_pos)
   end
 
   -- \multicolumn{N}{alignment}{content} → content
