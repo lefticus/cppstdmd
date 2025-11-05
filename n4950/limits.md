@@ -65,7 +65,7 @@ guidelines and do not determine compliance.
   \[4 096\].
 - Member initializers in a constructor definition [[class.base.init]]
   \[6 144\].
-- *initializer-clause* in one *braced-init-list* [[dcl.init]]
+- *initializer-clause*s in one *braced-init-list* [[dcl.init]]
   \[16 384\].
 - Scope qualifications of one identifier [[expr.prim.id.qual]] \[256\].
 - Nested *linkage-specification*s [[dcl.link]] \[1 024\].

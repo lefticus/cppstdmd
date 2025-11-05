@@ -65,11 +65,11 @@ it. The process that determines this is called *name lookup*
 
 Two names are *the same* if
 
-- they are *identifier* composed of the same character sequence, or
-- they are *operator-function-id* formed with the same operator, or
-- they are *conversion-function-id* formed with equivalent
+- they are *identifier*s composed of the same character sequence, or
+- they are *operator-function-id*s formed with the same operator, or
+- they are *conversion-function-id*s formed with equivalent
   [[temp.over.link]] types, or
-- they are *literal-operator-id* [[over.literal]] formed with the same
+- they are *literal-operator-id*s [[over.literal]] formed with the same
   literal suffix identifier.
 
 A name used in more than one translation unit can potentially refer to
@@ -257,7 +257,7 @@ follows:
 
 \[*Note 1*:
 
-This set is a (possibly-empty) set of *id-expression*, each of which is
+This set is a (possibly-empty) set of *id-expression*s, each of which is
 either E or a subexpression of E.
 
 — *end note*\]
@@ -274,7 +274,7 @@ A function is *named by* an expression or conversion as follows:
   \[*Note 1*: This covers taking the address of functions
   [[conv.func]], [[expr.unary.op]], calls to named functions
   [[expr.call]], operator overloading [[over]], user-defined conversions
-  [[class.conv.fct]], allocation functions for *new-expression*
+  [[class.conv.fct]], allocation functions for *new-expression*s
   [[expr.new]], as well as non-default initialization [[dcl.init]]. A
   constructor selected to copy or move an object of class type is
   considered to be named by an expression or conversion even if the call
@@ -481,7 +481,7 @@ point, the following requirements shall be satisfied.
     expression such that the reference refers to the same entity in all
     definitions of `D`.
 - In each such definition, except within the default arguments and
-  default template arguments of `D`, corresponding *lambda-expression*
+  default template arguments of `D`, corresponding *lambda-expression*s
   shall have the same closure type (see below).
 - In each such definition, corresponding entities shall have the same
   language linkage.
@@ -544,7 +544,7 @@ then the preceding requirements shall apply both to names from the
 template’s enclosing scope used in the template definition, and also to
 dependent names at the point of instantiation [[temp.dep]]. These
 requirements also apply to corresponding entities defined within each
-definition of `D` (including the closure types of *lambda-expression*,
+definition of `D` (including the closure types of *lambda-expression*s,
 but excluding entities defined within default arguments or default
 template arguments of either `D` or an entity not defined within `D`).
 For each such entity and for `D` itself, the behavior is as if there is
@@ -553,9 +553,9 @@ of these requirements to other entities.
 
 \[*Note 3*: The entity is still declared in multiple translation units,
 and [[basic.link]] still applies to these declarations. In particular,
-*lambda-expression* [[expr.prim.lambda]] appearing in the type of `D`
+*lambda-expression*s [[expr.prim.lambda]] appearing in the type of `D`
 can result in the different declarations having distinct types, and
-*lambda-expression* appearing in a default argument of `D` might still
+*lambda-expression*s appearing in a default argument of `D` might still
 denote different types in different translation units. — *end note*\]
 
 \[*Example 4*:
@@ -580,7 +580,7 @@ the definition of `g` appears in multiple translation units, the program
 is ill-formed (no diagnostic required) because each such definition uses
 a default argument that refers to a distinct *lambda-expression* closure
 type. The definition of `X` can appear in multiple translation units of
-a valid program; the *lambda-expression* defined within the default
+a valid program; the *lambda-expression*s defined within the default
 argument of `X::h` within the definition of `X` denote the same closure
 type in each translation unit.
 
@@ -659,8 +659,8 @@ Two non-static member function templates have if:
   removing any references, are equivalent, or
 - the types of their object parameters are equivalent.
 
-Two function templates have if their *template-parameter-list* have the
-same length, their corresponding *template-parameter* are equivalent,
+Two function templates have if their *template-parameter-list*s have the
+same length, their corresponding *template-parameter*s are equivalent,
 they have equivalent non-object-parameter-type-lists and return types
 (if any), and, if both are non-static members, they have corresponding
 object parameters.
@@ -947,9 +947,9 @@ A *parameter-declaration-clause* P introduces a
 
 - If P is associated with a *declarator* and is preceded by a
   (possibly-parenthesized) *noptr-declarator* of the form
-  *declarator-id* *attribute-specifier-seq*, its scope extends to the
-  end of the nearest enclosing *init-declarator*, *member-declarator*,
-  *declarator* of a *parameter-declaration* or a
+  *declarator-id* *attribute-specifier-seq*\_opt, its scope extends to
+  the end of the nearest enclosing *init-declarator*,
+  *member-declarator*, *declarator* of a *parameter-declaration* or a
   *nodeclspec-function-declaration*, or *function-definition*, but does
   not include the locus of the associated *declarator*. \[*Note 2*: In
   this case, P declares the parameters of a function (or a function or
@@ -1037,8 +1037,8 @@ parameter scope as a parent scope. — *end note*\]
 ### General <a id="basic.lookup.general">[[basic.lookup.general]]</a>
 
 The name lookup rules apply uniformly to all names (including
-*typedef-name* [[dcl.typedef]], *namespace-name* [[basic.namespace]],
-and *class-name* [[class.name]]) wherever the grammar allows such names
+*typedef-name*s [[dcl.typedef]], *namespace-name*s [[basic.namespace]],
+and *class-name*s [[class.name]]) wherever the grammar allows such names
 in the context discussed by a particular rule. Name lookup associates
 the use of a name with a set of declarations [[basic.def]] of that name.
 Unless otherwise specified, the program is ill-formed if no declarations
@@ -1076,7 +1076,7 @@ appears in a translation unit D and
 \[*Note 2*:
 
 A *module-import-declaration* imports both the named translation unit(s)
-and any modules named by exported *module-import-declaration* within
+and any modules named by exported *module-import-declaration*s within
 them, recursively.
 
 — *end note*\]
@@ -1115,7 +1115,7 @@ The *lookup set* for a name N in a class or class template C, called
 S(N,C), consists of two component sets: the *declaration set*, a set of
 members named N; and the *subobject set*, a set of subobjects where
 declarations of these members were found (possibly via
-*using-declaration*). In the declaration set, type declarations
+*using-declaration*s). In the declaration set, type declarations
 (including injected-class-names) are replaced by the types they
 designate. S(N,C) is calculated as follows:
 
@@ -1510,7 +1510,7 @@ For each argument type `T` in the function call, there is a set of zero
 or more *associated entities* to be considered. The set of entities is
 determined entirely by the types of the function arguments (and any
 template template arguments). Any *typedef-name*s and
-*using-declaration* used to specify the types do not contribute to this
+*using-declaration*s used to specify the types do not contribute to this
 set. The set of entities is determined in the following way:
 
 - If `T` is a fundamental type, its associated set of entities is empty.
@@ -1543,7 +1543,7 @@ set, its associated entities are the union of those associated with each
 of the members of the set, i.e., the entities associated with its
 parameter types and return type. Additionally, if the aforementioned
 overload set is named with a *template-id*, its associated entities also
-include its template *template-argument* and those associated with its
+include its template *template-argument*s and those associated with its
 type *template-argument*s.
 
 The *associated namespaces* for a call are the innermost enclosing
@@ -2880,9 +2880,9 @@ be eliminated as specified in  [[class.copy.elision]].
 ##### General <a id="basic.stc.dynamic.general">[[basic.stc.dynamic.general]]</a>
 
 Objects can be created dynamically during program execution
-[[intro.execution]], using *new-expression* [[expr.new]], and destroyed
-using *delete-expression* [[expr.delete]]. A C++ implementation provides
-access to, and management of, dynamic storage via the global
+[[intro.execution]], using *new-expression*s [[expr.new]], and destroyed
+using *delete-expression*s [[expr.delete]]. A C++ implementation
+provides access to, and management of, dynamic storage via the global
 *allocation functions* `operator new` and `operator new[]` and the
 global *deallocation functions* `operator delete` and
 `operator delete[]`.
@@ -3982,7 +3982,7 @@ array type is considered to be const-qualified.
 — *end example*\]
 
 \[*Note 3*: See  [[dcl.fct]] and  [[over.match.funcs]] regarding
-function types that have *cv-qualifier*. — *end note*\]
+function types that have *cv-qualifier*s. — *end note*\]
 
 There is a partial ordering on cv-qualifiers, so that a type can be said
 to be *more cv-qualified* than another. [[basic.type.qualifier.rel]]
@@ -4121,7 +4121,7 @@ The *immediate subexpressions* of an expression E are
 - any function call that E implicitly invokes,
 - if E is a *lambda-expression* [[expr.prim.lambda]], the initialization
   of the entities captured by copy and the constituent expressions of
-  the *initializer* of the *init-capture*,
+  the *initializer* of the *init-capture*s,
 - if E is a function call [[expr.call]] or implicitly invokes a
   function, the constituent expressions of each default argument
   [[dcl.fct.default]] used in the call, or

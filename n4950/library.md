@@ -333,7 +333,7 @@ and member functions [[functions.within.classes]].
 
 #### Exposition-only entities, etc. <a id="expos.only.entity">[[expos.only.entity]]</a>
 
-Several entities and *typedef-name* defined in [[support]] through
+Several entities and *typedef-name*s defined in [[support]] through
 [[thread]] and [[depr]] are only defined for the purpose of exposition.
 The declaration of such an entity or *typedef-name* is followed by a
 comment ending in *exposition only*.
@@ -758,7 +758,7 @@ which are defined as macros in C) are within namespace scope
 whether these names (including any overloads added in [[support]]
 through [[thread]] and [[depr]]) are first declared within the global
 namespace scope and are then injected into namespace `std` by explicit
-*using-declaration* [[namespace.udecl]].
+*using-declaration*s [[namespace.udecl]].
 
 Names which are defined as macros in C shall be defined as macros in the
 C++ standard library, even if C grants license for implementation as
@@ -1782,7 +1782,7 @@ for use by ISO/IEC/IEEE 9945 and other POSIX standards.
 ##### Namespaces for future standardization <a id="namespace.future">[[namespace.future]]</a>
 
 Top-level namespaces whose *namespace-name* consists of `std` followed
-by one or more *digit* [[lex.name]] are reserved for future
+by one or more *digit*s [[lex.name]] are reserved for future
 standardization. The behavior of a C++ program is undefined if it adds
 declarations or definitions to such a namespace.
 
@@ -1879,7 +1879,7 @@ A translation unit that includes a standard library header shall not
 
 A translation unit shall not `#define` or `#undef` names lexically
 identical to keywords, to the identifiers listed in
-[[lex.name.special]], or to the *attribute-token* described in 
+[[lex.name.special]], or to the *attribute-token*s described in 
 [[dcl.attr]], except that the names `likely` and `unlikely` may be
 defined as function-like macros  [[cpp.replace]].
 

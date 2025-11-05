@@ -573,7 +573,7 @@ namespace std {
 ```
 
 The class template `integral_constant`, alias template `bool_constant`,
-and its associated *typedef-name* `true_type` and `false_type` are used
+and its associated *typedef-name*s `true_type` and `false_type` are used
 as base classes to define the interface for various type traits.
 
 ### Unary type traits <a id="meta.unary">[[meta.unary]]</a>
@@ -1376,7 +1376,7 @@ template<class R1, class R2>
 
 ### SI types for `ratio` <a id="ratio.si">[[ratio.si]]</a>
 
-For each of the *typedef-name* `yocto`, `zepto`, `zetta`, and `yotta`,
+For each of the *typedef-name*s `yocto`, `zepto`, `zetta`, and `yotta`,
 if both of the constants used in its specification are representable by
 `intmax_t`, the typedef is defined; if either of the constants is not
 representable by `intmax_t`, the typedef is not defined.

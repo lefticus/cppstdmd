@@ -373,6 +373,8 @@ local function expand_macros(text)
   text = text:gsub("\\doccite{([^}]*)}", "*%1*")
 
   -- \opt{x} renders as x_opt (optional grammar element with subscript marker)
+  -- Use simple pattern - don't recursively expand since expand_macros processes left-to-right
+  -- Special case \opt{\grammarterm{...}} is handled in RawInline for emphasis preservation
   text = text:gsub("\\opt{([^}]*)}", "%1_opt")
 
   -- \ucode{XXXX} renders Unicode code point as U+XXXX
@@ -638,8 +640,43 @@ function RawInline(elem)
 
   -- Emphasis macros - return Emph elements
 
-  emph = text:match("\\grammarterm{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
+  -- \opt{\grammarterm{...}} - optional grammar term (special case before general grammarterm handling)
+  local opt_start = text:find("\\opt{", 1, true)
+  if opt_start and opt_start == 1 then
+    local opt_content, opt_end = extract_braced_content(text, opt_start, 4)  -- \opt is 4 chars
+    if opt_content and opt_end and opt_end - 1 == #text then
+      -- Check if content is \grammarterm{...}
+      if opt_content:match("^\\grammarterm{") then
+        local term, _ = extract_braced_content(opt_content, 1, 12)  -- \grammarterm is 12 chars
+        if term then
+          -- Return Emph followed by _opt suffix
+          return {pandoc.Emph({pandoc.Str(term)}), pandoc.Str("_opt")}
+        end
+      end
+    end
+  end
+
+  -- \grammarterm{term}{suffix} - with optional suffix (e.g., {s} for plurals)
+  -- Returns Emph + Str if suffix present, otherwise just Emph
+  local grammarterm_start = text:find("\\grammarterm{", 1, true)
+  if grammarterm_start and grammarterm_start == 1 then  -- Must be at start
+    local term, pos_after_term = extract_braced_content(text, grammarterm_start, 12)  -- \grammarterm is 12 chars
+    if term then
+      -- Check if there's a second argument (suffix)
+      if pos_after_term and pos_after_term <= #text and text:sub(pos_after_term, pos_after_term) == "{" then
+        local suffix, pos_after_suffix = extract_braced_content(text, pos_after_term, 0)
+        if suffix and pos_after_suffix and pos_after_suffix - 1 == #text then  -- Suffix must end the string
+          -- Return list of Inlines: Emph + Str for the suffix
+          -- Pandoc will splice these into the document
+          return {pandoc.Emph({pandoc.Str(term)}), pandoc.Str(suffix)}
+        end
+      end
+      -- No suffix or not at end - check if it ends here
+      if pos_after_term and pos_after_term - 1 == #text then
+        return pandoc.Emph({pandoc.Str(term)})
+      end
+    end
+  end
 
   emph = text:match("\\exposid{([^}]*)}")
   if emph then return pandoc.Emph({pandoc.Str(emph)}) end

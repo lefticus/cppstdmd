@@ -48,6 +48,28 @@ def test_grammarterm_macro():
     assert code == 0
     assert "*constant-expression*" in output
 
+
+def test_grammarterm_with_suffix():
+    r"""Test \grammarterm{}{} with plural suffix (limits.md bug)"""
+    latex = r"Multiple \grammarterm{initializer-clause}{s} are allowed."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*initializer-clause*s" in output
+    assert "\\grammarterm" not in output
+
+
+def test_opt_with_grammarterm():
+    r"""Test \opt{\grammarterm{}} pattern (dcl.md escaping bug)"""
+    latex = r"\opt{\grammarterm{nested-name-specifier}} \grammarterm{template-name}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*nested-name-specifier*_opt" in output or "*nested-name-specifier*\\_opt" in output
+    assert "*template-name*" in output
+    # Should NOT have escaped asterisks
+    assert "\\*nested-name-specifier\\*" not in output
+    assert "\\grammarterm" not in output
+
+
 def test_cpp_version_macros():
     """Test C++ version macro expansion"""
     latex = r"\CppXI{} \CppXIV{} \CppXVII{} \CppXX{} \CppXXIII{}"

@@ -26,10 +26,10 @@ module-name-qualifier:
 A *module unit* is a translation unit that contains a
 *module-declaration*. A *named module* is the collection of module units
 with the same *module-name*. The identifiers `module` and `import` shall
-not appear as *identifier* in a *module-name* or *module-partition*. All
-*module-name* either beginning with an *identifier* consisting of `std`
-followed by zero or more *digit* or containing a reserved identifier
-[[lex.name]] are reserved and shall not be specified in a
+not appear as *identifier*s in a *module-name* or *module-partition*.
+All *module-name*s either beginning with an *identifier* consisting of
+`std` followed by zero or more *digit*s or containing a reserved
+identifier [[lex.name]] are reserved and shall not be specified in a
 *module-declaration*; no diagnostic is required. If any *identifier* in
 a reserved *module-name* is a reserved identifier, the module name is
 reserved for use by C++ implementations; otherwise it is reserved for
@@ -70,12 +70,12 @@ Module `A` contains four translation units:
 
 — *end example*\]
 
-A *module unit purview* is the sequence of *token* starting at the
+A *module unit purview* is the sequence of *token*s starting at the
 *module-declaration* and extending to the end of the translation unit.
 The *purview* of a named module `M` is the set of module unit purviews
 of `M`’s module units.
 
-The *global module* is the collection of all *global-module-fragment*
+The *global module* is the collection of all *global-module-fragment*s
 and all translation units that are not module units. Declarations
 appearing in such a context are said to be in the *purview* of the
 global module.
@@ -147,7 +147,7 @@ declare a name with internal linkage.
 
 If an exported declaration is a *using-declaration* [[namespace.udecl]]
 and is not within a header unit, all entities to which all of the
-*using-declarator* ultimately refer (if any) shall have been introduced
+*using-declarator*s ultimately refer (if any) shall have been introduced
 with a name having external linkage.
 
 \[*Example 2*:
@@ -157,7 +157,7 @@ with a name having external linkage.
 \[*Note 2*:
 
 These constraints do not apply to type names introduced by `typedef`
-declarations and *alias-declaration*.
+declarations and *alias-declaration*s.
 
 — *end note*\]
 
@@ -206,9 +206,9 @@ module-import-declaration:
 ```
 
 A *module-import-declaration* shall inhabit the global namespace scope.
-In a module unit, all *module-import-declaration* and
-*export-declaration* exporting *module-import-declaration* shall appear
-before all other *declaration* in the *declaration-seq* of the
+In a module unit, all *module-import-declaration*s and
+*export-declaration*s exporting *module-import-declaration*s shall
+appear before all other *declaration*s in the *declaration-seq* of the
 *translation-unit* and of the *private-module-fragment* (if any). The
 optional *attribute-specifier-seq* appertains to the
 *module-import-declaration*.
@@ -243,9 +243,9 @@ exported [[module.interface]], and are attached to the global module
 An *importable header* is a member of an *implementation-defined* set of
 headers that includes all importable C++ library headers [[headers]].
 `H` shall identify an importable header. Given two such
-*module-import-declaration*:
+*module-import-declaration*s:
 
-- if their *header-name* identify different headers or source files
+- if their *header-name*s identify different headers or source files
   [[cpp.include]], they import distinct header units;
 - otherwise, if they appear in the same translation unit, they import
   the same header unit;
@@ -272,11 +272,11 @@ variable whose name has external linkage.
 
 When a *module-import-declaration* imports a translation unit T, it also
 imports all translation units imported by exported
-*module-import-declaration* in T; such translation units are said to be
+*module-import-declaration*s in T; such translation units are said to be
 *exported* by T. Additionally, when a *module-import-declaration* in a
 module unit of some module M imports another module unit U of M, it also
 imports all translation units imported by non-exported
-*module-import-declaration* in the module unit purview of U.
+*module-import-declaration*s in the module unit purview of U.
 
 These rules can in turn lead to the importation of yet more translation
 units.

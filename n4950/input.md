@@ -257,8 +257,8 @@ as a base class for class templates `basic_stringstream` and
 ill-formed if `traits::char_type` is not the same type as `charT`
 [[char.traits]]. — *end note*\]
 
-Other *typedef-name* define instances of class templates specialized for
-`char` or `wchar_t` types.
+Other *typedef-name*s define instances of class templates specialized
+for `char` or `wchar_t` types.
 
 Specializations of the class template `fpos` are used for specifying
 file position information.
@@ -8575,10 +8575,10 @@ and to perform conversions between encodings when
 necessary. — *end note*\]
 
 A *path* is a sequence of elements that identify the location of a file
-within a filesystem. The elements are the *root-name*, *root-directory*,
-and an optional sequence of *filename* [[fs.path.generic]]. The maximum
-number of elements in the sequence is operating system dependent
-[[fs.conform.os]].
+within a filesystem. The elements are the *root-name*\_opt,
+*root-directory*\_opt, and an optional sequence of *filename*s
+[[fs.path.generic]]. The maximum number of elements in the sequence is
+operating system dependent [[fs.conform.os]].
 
 An *absolute path* is a path that unambiguously identifies the location
 of a file without reference to an additional starting location. The
@@ -8848,7 +8848,7 @@ for a particular operating system.
 
 A *root-name* identifies the starting location for pathname resolution
 [[fs.class.path]]. If there are no operating system dependent
-*root-name*, at least one *implementation-defined* *root-name* is
+*root-name*s, at least one *implementation-defined* *root-name* is
 required.
 
 \[*Note 1*: Many operating systems define a name beginning with two
@@ -8872,14 +8872,14 @@ longest sequence of characters is chosen.
 3.  Replace each *directory-separator* with a *preferred-separator*.
     \[*Note 2*: The generic pathname grammar defines
     *directory-separator* as one or more slashes and
-    *preferred-separator*. — *end note*\]
+    *preferred-separator*s. — *end note*\]
 4.  Remove each dot filename and any immediately following
     *directory-separator*.
 5.  As long as any appear, remove a non-dot-dot filename immediately
     followed by a *directory-separator* and a dot-dot filename, along
     with any immediately following *directory-separator*.
 6.  If there is a *root-directory*, remove all dot-dot filenames and any
-    *directory-separator* immediately following them. \[*Note 3*: These
+    *directory-separator*s immediately following them. \[*Note 3*: These
     dot-dot filenames attempt to refer to nonexistent parent
     directories. — *end note*\]
 7.  If the last filename is dot-dot, remove any trailing

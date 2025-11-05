@@ -481,7 +481,7 @@ q-char:
 expression, or after certain occurrences of an `import` token (see 
 [[lex.pptoken]]). — *end note*\]
 
-The sequences in both forms of *header-name* are mapped in an
+The sequences in both forms of *header-name*s are mapped in an
 *implementation-defined* manner to headers or to external source file
 names as specified in  [[cpp.include]].
 
@@ -970,9 +970,9 @@ of any other kind of *character-literal* is determined as follows:
 - A *character-literal* with a *c-char-sequence* consisting of a single
   *numeric-escape-sequence* has a value as follows:
   - Let v be the integer value represented by the octal number
-    comprising the sequence of *octal-digit* in an
+    comprising the sequence of *octal-digit*s in an
     *octal-escape-sequence* or by the hexadecimal number comprising the
-    sequence of *hexadecimal-digit* in a *hexadecimal-escape-sequence*.
+    sequence of *hexadecimal-digit*s in a *hexadecimal-escape-sequence*.
   - If v does not exceed the range of representable values of the
     *character-literal*’s type, then the value is v.
   - Otherwise, if the *character-literal*’s *encoding-prefix* is absent
@@ -1111,8 +1111,8 @@ Otherwise, the exponent e is 0. The scaled value of the literal is
 $s \times 10^e$ for a *decimal-floating-point-literal* and
 $s \times 2^e$ for a *hexadecimal-floating-point-literal*.
 
-\[*Example 1*: The *floating-point-literal* `49.625` and `0xC.68p+2`
-have the same value. The *floating-point-literal* `1.602'176'565e-19`
+\[*Example 1*: The *floating-point-literal*s `49.625` and `0xC.68p+2`
+have the same value. The *floating-point-literal*s `1.602'176'565e-19`
 and `1.602176565e-19` have the same value. — *end example*\]
 
 If the scaled value is not in the range of representable values for its
@@ -1245,7 +1245,7 @@ as narrow string literals.
 
 The common *encoding-prefix* for a sequence of adjacent
 *string-literal*s is determined pairwise as follows: If two
-*string-literal* have the same *encoding-prefix*, the common
+*string-literal*s have the same *encoding-prefix*, the common
 *encoding-prefix* is that *encoding-prefix*. If one *string-literal* has
 no *encoding-prefix*, the common *encoding-prefix* is that of the other
 *string-literal*. Any other combinations are ill-formed.
@@ -1321,9 +1321,9 @@ order as follows:
 - Each *numeric-escape-sequence* [[lex.ccon]] contributes a single code
   unit with a value as follows:
   - Let v be the integer value represented by the octal number
-    comprising the sequence of *octal-digit* in an
+    comprising the sequence of *octal-digit*s in an
     *octal-escape-sequence* or by the hexadecimal number comprising the
-    sequence of *hexadecimal-digit* in a *hexadecimal-escape-sequence*.
+    sequence of *hexadecimal-digit*s in a *hexadecimal-escape-sequence*.
   - If v does not exceed the range of representable values of the
     *string-literal*’s array element type, then the value is v.
   - Otherwise, if the *string-literal*’s *encoding-prefix* is absent or
@@ -1532,13 +1532,13 @@ int main() {
 — *end example*\]
 
 In translation phase 6 [[lex.phases]], adjacent *string-literal*s are
-concatenated and *user-defined-string-literal* are considered
-*string-literal*s for that purpose. During concatenation, *ud-suffix*
+concatenated and *user-defined-string-literal*s are considered
+*string-literal*s for that purpose. During concatenation, *ud-suffix*es
 are removed and ignored and the concatenation process occurs as
 described in  [[lex.string]]. At the end of phase 6, if a
 *string-literal* is the result of a concatenation involving at least one
 *user-defined-string-literal*, all the participating
-*user-defined-string-literal* shall have the same *ud-suffix* and that
+*user-defined-string-literal*s shall have the same *ud-suffix* and that
 suffix is applied to the result of the concatenation.
 
 \[*Example 3*:

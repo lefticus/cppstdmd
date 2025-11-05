@@ -160,7 +160,7 @@ unless the corresponding specialization is explicitly instantiated
 
 ## Template parameters <a id="temp.param">[[temp.param]]</a>
 
-The syntax for *template-parameter* is:
+The syntax for *template-parameter*s is:
 
 ``` bnf
 template-parameter:
@@ -286,7 +286,7 @@ A non-type *template-parameter* shall have one of the following
 - a type that contains a placeholder type [[dcl.spec.auto]], or
 - a placeholder for a deduced class type [[dcl.type.class.deduct]].
 
-The top-level *cv-qualifier* on the *template-parameter* are ignored
+The top-level *cv-qualifier*s on the *template-parameter* are ignored
 when determining its type.
 
 A *structural type* is one of the following:
@@ -368,15 +368,15 @@ specified after `=` in a *template-parameter*. A default
 *template-parameter* (type, non-type, template) that is not a template
 parameter pack [[temp.variadic]]. A default *template-argument* may be
 specified in a template declaration. A default *template-argument* shall
-not be specified in the *template-parameter-list* of the definition of a
-member of a class template that appears outside of the member’s class. A
-default *template-argument* shall not be specified in a friend class
+not be specified in the *template-parameter-list*s of the definition of
+a member of a class template that appears outside of the member’s class.
+A default *template-argument* shall not be specified in a friend class
 template declaration. If a friend function template declaration D
 specifies a default *template-argument*, that declaration shall be a
 definition and there shall be no other declaration of the function
 template which is reachable from D or from which D is reachable.
 
-The set of default *template-argument* available for use is obtained by
+The set of default *template-argument*s available for use is obtained by
 merging the default arguments from all prior declarations of the
 template in the same way default function arguments are
 [[dcl.fct.default]].
@@ -668,7 +668,7 @@ using T5 = X<S>;                // OK
 
 When the *template-name* of a *simple-template-id* names a constrained
 non-function template or a constrained template *template-parameter*,
-and all *template-argument* in the *simple-template-id* are
+and all *template-argument*s in the *simple-template-id* are
 non-dependent [[temp.dep.temp]], the associated constraints
 [[temp.constr.decl]] of the constrained template shall be satisfied
 [[temp.constr.constr]].
@@ -739,7 +739,7 @@ match the type and form specified for the corresponding parameter
 declared by the template in its *template-parameter-list*. When the
 parameter declared by the template is a template parameter pack
 [[temp.variadic]], it will correspond to zero or more
-*template-argument*.
+*template-argument*s.
 
 \[*Example 1*:
 
@@ -835,7 +835,7 @@ A<B> b;             // error: A has no access to B::S
 
 — *end example*\]
 
-When template argument packs or default *template-argument* are used, a
+When template argument packs or default *template-argument*s are used, a
 *template-argument* list can be empty. In that case the empty `<>`
 brackets shall still be used as the *template-argument-list*.
 
@@ -854,7 +854,7 @@ Tuple* u;                       // syntax error
 
 An explicit destructor call [[class.dtor]] for an object that has a type
 that is a class template specialization may explicitly specify the
-*template-argument*.
+*template-argument*s.
 
 \[*Example 6*:
 
@@ -876,11 +876,11 @@ is ill-formed.
 
 When name lookup for the component name of a *template-id* finds an
 overload set, both non-template functions in the overload set and
-function templates in the overload set for which the *template-argument*
-do not match the *template-parameter* are ignored.
+function templates in the overload set for which the
+*template-argument*s do not match the *template-parameter*s are ignored.
 
 \[*Note 2*: If none of the function templates have matching
-*template-parameter*, the program is ill-formed. — *end note*\]
+*template-parameter*s, the program is ill-formed. — *end note*\]
 
 When a *simple-template-id* does not name a function, a default
 *template-argument* is implicitly instantiated [[temp.inst]] when the
@@ -1053,14 +1053,15 @@ considered. If `P` contains a template parameter pack, then `A` also
 matches `P` if each of `A`’s template parameters matches the
 corresponding template parameter in the *template-head* of `P`. Two
 template parameters match if they are of the same kind (type, non-type,
-template), for non-type *template-parameter*, their types are equivalent
-[[temp.over.link]], and for template *template-parameter*, each of their
-corresponding *template-parameter* matches, recursively. When `P`’s
-*template-head* contains a template parameter pack [[temp.variadic]],
-the template parameter pack will match zero or more template parameters
-or template parameter packs in the *template-head* of `A` with the same
-type and form as the template parameter pack in `P` (ignoring whether
-those template parameters are template parameter packs).
+template), for non-type *template-parameter*s, their types are
+equivalent [[temp.over.link]], and for template *template-parameter*s,
+each of their corresponding *template-parameter*s matches, recursively.
+When `P`’s *template-head* contains a template parameter pack
+[[temp.variadic]], the template parameter pack will match zero or more
+template parameters or template parameter packs in the *template-head*
+of `A` with the same type and form as the template parameter pack in `P`
+(ignoring whether those template parameters are template parameter
+packs).
 
 \[*Example 2*:
 
@@ -1230,8 +1231,8 @@ operand is not checked for satisfaction.
 
 A logical negation expression [[expr.unary.op]] is an atomic constraint;
 the negation operator is not treated as a logical operation on
-constraints. As a result, distinct negation *constraint-expression* that
-are equivalent under  [[temp.over.link]] do not subsume one another
+constraints. As a result, distinct negation *constraint-expression*s
+that are equivalent under  [[temp.over.link]] do not subsume one another
 under  [[temp.constr.order]]. Furthermore, if substitution to determine
 whether an atomic constraint is satisfied [[temp.constr.atomic]]
 encounters a substitution failure, the constraint is not satisfied,
@@ -1323,13 +1324,13 @@ constraint-expression:
 ```
 
 Constraints can also be associated with a declaration through the use of
-*type-constraint* in a *template-parameter-list* or parameter-type-list.
-Each of these forms introduces additional *constraint-expression* that
-are used to constrain the declaration.
+*type-constraint*s in a *template-parameter-list* or
+parameter-type-list. Each of these forms introduces additional
+*constraint-expression*s that are used to constrain the declaration.
 
 A declaration’s *associated constraints* are defined as follows:
 
-- If there are no introduced *constraint-expression*, the declaration
+- If there are no introduced *constraint-expression*s, the declaration
   has no associated constraints.
 - Otherwise, if there is a single introduced *constraint-expression*,
   the associated constraints are the normal form [[temp.constr.normal]]
@@ -1451,7 +1452,7 @@ The *normal form* of an *expression* `E` is a constraint
 The process of obtaining the normal form of a *constraint-expression* is
 called *normalization*.
 
-\[*Note 1*: Normalization of *constraint-expression* is performed when
+\[*Note 1*: Normalization of *constraint-expression*s is performed when
 determining the associated constraints [[temp.constr.constr]] of a
 declaration and when evaluating the value of an *id-expression* that
 names a concept specialization [[expr.prim.id]]. — *end note*\]
@@ -1547,18 +1548,18 @@ g(0);                           // selects #4
 
 ## Type equivalence <a id="temp.type">[[temp.type]]</a>
 
-Two *template-id* are the same if
+Two *template-id*s are the same if
 
-- their *template-name*, *operator-function-id*, or
-  *literal-operator-id* refer to the same template, and
-- their corresponding type *template-argument* are the same type, and
-- their corresponding non-type *template-argument* are
+- their *template-name*s, *operator-function-id*s, or
+  *literal-operator-id*s refer to the same template, and
+- their corresponding type *template-argument*s are the same type, and
+- their corresponding non-type *template-argument*s are
   template-argument-equivalent (see below) after conversion to the type
   of the *template-parameter*, and
-- their corresponding template *template-argument* refer to the same
+- their corresponding template *template-argument*s refer to the same
   template.
 
-Two *template-id* that are the same refer to the same class, function,
+Two *template-id*s that are the same refer to the same class, function,
 or variable.
 
 Two values are *template-argument-equivalent* if they are of the same
@@ -1617,8 +1618,8 @@ declares `y` and `z` to be of the same type.
 — *end example*\]
 
 If an expression e is type-dependent [[temp.dep.expr]], `decltype(e)`
-denotes a unique dependent type. Two such *decltype-specifier* refer to
-the same type only if their *expression* are equivalent
+denotes a unique dependent type. Two such *decltype-specifier*s refer to
+the same type only if their *expression*s are equivalent
 [[temp.over.link]].
 
 \[*Note 1*: However, such a type might be aliased, e.g., by a
@@ -1640,13 +1641,13 @@ specialization [[temp.spec.partial]] of the template named in the
 declaration, which shall be a class or variable template.
 
 For purposes of name lookup and instantiation, default arguments,
-*type-constraint*, *requires-clause* [[temp.pre]], and
-*noexcept-specifier* of function templates and of member functions of
+*type-constraint*s, *requires-clause*s [[temp.pre]], and
+*noexcept-specifier*s of function templates and of member functions of
 class templates are considered definitions; each default argument,
 *type-constraint*, *requires-clause*, or *noexcept-specifier* is a
 separate definition which is unrelated to the templated function
-definition or to any other default arguments, *type-constraint*,
-*requires-clause*, or *noexcept-specifier*. For the purpose of
+definition or to any other default arguments, *type-constraint*s,
+*requires-clause*s, or *noexcept-specifier*s. For the purpose of
 instantiation, the substatements of a constexpr if statement [[stmt.if]]
 are considered definitions.
 
@@ -1750,8 +1751,8 @@ template<typename T>
 
 — *end example*\]
 
-The *template-argument* for a member function of a class template are
-determined by the *template-argument* of the type of the object for
+The *template-argument*s for a member function of a class template are
+determined by the *template-argument*s of the type of the object for
 which the member function is called.
 
 \[*Example 2*:
@@ -1809,7 +1810,7 @@ the *simple-template-id*. A *deduction-guide* shall inhabit the scope to
 which the corresponding class template belongs and, for a member class
 template, have the same access. Two deduction guide declarations for the
 same class template shall not have equivalent
-*parameter-declaration-clause* if either is reachable from the other.
+*parameter-declaration-clause*s if either is reachable from the other.
 
 #### Member classes of class templates <a id="temp.mem.class">[[temp.mem.class]]</a>
 
@@ -2039,8 +2040,9 @@ f(2, 1.0);                      // args contains two arguments: int and double
 
 — *end example*\]
 
-An *init-capture* is a lambda capture that introduces an *init-capture*
-for each of the elements in the pack expansion of its *initializer*.
+An *\*init-capture\* pack* is a lambda capture that introduces an
+*init-capture* for each of the elements in the pack expansion of its
+*initializer*.
 
 \[*Example 3*:
 
@@ -2273,7 +2275,7 @@ template<class T> class task {
 
 Here, each specialization of the `task` class template has the function
 `next_time` as a friend; because `process` does not have explicit
-*template-argument*, each specialization of the `task` class template
+*template-argument*s, each specialization of the `task` class template
 has an appropriately typed function `process` as a friend, and this
 friend is not a function template specialization; because the friend
 `preempt` has an explicit *template-argument* `T`, each specialization
@@ -2893,15 +2895,15 @@ parameters are considered equivalent if two function definitions
 containing the expressions would satisfy the one-definition rule, except
 that the tokens used to name types and declarations may differ as long
 as they name the same entities, and the tokens used to form concept-ids
-[[temp.names]] may differ as long as the two *template-id* are the same
+[[temp.names]] may differ as long as the two *template-id*s are the same
 [[temp.type]].
 
 \[*Note 3*: For instance, `A<42>` and `A<40+2>` name the same
 type. — *end note*\]
 
-Two *lambda-expression* are never considered equivalent.
+Two *lambda-expression*s are never considered equivalent.
 
-\[*Note 4*: The intent is to avoid *lambda-expression* appearing in the
+\[*Note 4*: The intent is to avoid *lambda-expression*s appearing in the
 signature of a function template with external linkage. — *end note*\]
 
 For determining whether two dependent names [[temp.dep]] are equivalent,
@@ -2958,25 +2960,26 @@ template<typename T> struct A {
 
 — *end example*\]
 
-Two *template-head* are *equivalent* if their *template-parameter-list*
-have the same length, corresponding *template-parameter* are equivalent
-and are both declared with *type-constraint*s that are equivalent if
-either *template-parameter* is declared with a *type-constraint*, and if
-either *template-head* has a *requires-clause*, they both have
-*requires-clause* and the corresponding *constraint-expression* are
-equivalent. Two *template-parameter* are *equivalent* under the
-following conditions:
+Two *template-head*s are *equivalent* if their
+*template-parameter-list*s have the same length, corresponding
+*template-parameter*s are equivalent and are both declared with
+*type-constraint*s that are equivalent if either *template-parameter* is
+declared with a *type-constraint*, and if either *template-head* has a
+*requires-clause*, they both have *requires-clause*s and the
+corresponding *constraint-expression*s are equivalent. Two
+*template-parameter*s are *equivalent* under the following conditions:
 
 - they declare template parameters of the same kind,
 - if either declares a template parameter pack, they both do,
 - if they declare non-type template parameters, they have equivalent
-  types ignoring the use of *type-constraint* for placeholder types, and
+  types ignoring the use of *type-constraint*s for placeholder types,
+  and
 - if they declare template template parameters, their template
   parameters are equivalent.
 
-When determining whether types or *type-constraint* are equivalent, the
+When determining whether types or *type-constraint*s are equivalent, the
 rules above are used to compare expressions involving template
-parameters. Two *template-head* are *functionally equivalent* if they
+parameters. Two *template-head*s are *functionally equivalent* if they
 accept and are satisfied by [[temp.constr.constr]] the same set of
 template argument lists.
 
@@ -3143,8 +3146,8 @@ and ellipsis parameters).
 If deduction against the other template succeeds for both transformed
 templates, constraints can be considered as follows:
 
-- If their *template-parameter-list* (possibly including
-  *template-parameter* invented for an abbreviated function template
+- If their *template-parameter-list*s (possibly including
+  *template-parameter*s invented for an abbreviated function template
   [[dcl.fct]]) or function parameter lists differ in length, neither
   template is more specialized than the other.
 - Otherwise:
@@ -3156,14 +3159,14 @@ templates, constraints can be considered as follows:
       specialized than the other.
     - If there is either no reordering or more than one reordering of
       the associated *template-parameter-list* such that
-      - the corresponding *template-parameter* of the
-        *template-parameter-list* are equivalent and
+      - the corresponding *template-parameter*s of the
+        *template-parameter-list*s are equivalent and
       - the function parameters that positionally correspond between the
         two templates are of the same type,
 
       neither template is more specialized than the other.
-  - Otherwise, if the corresponding *template-parameter* of the
-    *template-parameter-list* are not equivalent [[temp.over.link]] or
+  - Otherwise, if the corresponding *template-parameter*s of the
+    *template-parameter-list*s are not equivalent [[temp.over.link]] or
     if the function parameters that positionally correspond between the
     two templates are not of the same type, neither template is more
     specialized than the other.
@@ -3210,7 +3213,7 @@ name of the alias template is a *template-name*.
 
 When a *template-id* refers to the specialization of an alias template,
 it is equivalent to the associated type obtained by substitution of its
-*template-argument* for the *template-parameter* in the
+*template-argument*s for the *template-parameter*s in the
 *defining-type-id* of the alias template.
 
 \[*Note 1*: An alias template name is never deduced. — *end note*\]
@@ -3551,7 +3554,7 @@ every template to be checked in this way. — *end note*\]
 
 The program is ill-formed, no diagnostic required, if:
 
-- no valid specialization, ignoring *static_assert-declaration* that
+- no valid specialization, ignoring *static_assert-declaration*s that
   fail, can be generated for a template or a substatement of a constexpr
   if statement [[stmt.if]] within a template and the template is not
   instantiated, or
@@ -3635,8 +3638,8 @@ template<class... T> struct A : T...,  T... { };    // error: duplicate base cla
 — *end example*\]
 
 \[*Note 6*: For purposes of name lookup, default arguments and
-*noexcept-specifier* of function templates and default arguments and
-*noexcept-specifier* of member functions of class templates are
+*noexcept-specifier*s of function templates and default arguments and
+*noexcept-specifier*s of member functions of class templates are
 considered definitions [[temp.decls]]. — *end note*\]
 
 ### Locally declared names <a id="temp.local">[[temp.local]]</a>
@@ -3655,7 +3658,7 @@ enclosed in `<>`.
 
 When the injected-class-name of a class template specialization or
 partial specialization is used as a *type-name*, it is equivalent to the
-*template-name* followed by the *template-argument* of the class
+*template-name* followed by the *template-argument*s of the class
 template specialization or partial specialization enclosed in `<>`.
 
 \[*Example 1*:
@@ -3812,7 +3815,7 @@ where the *postfix-expression* is an *unqualified-id* and
 
 - any of the expressions in the *expression-list* is a pack expansion
   [[temp.variadic]], or
-- any of the expressions or *braced-init-list* in the *expression-list*
+- any of the expressions or *braced-init-list*s in the *expression-list*
   is type-dependent [[temp.dep.expr]], or
 - the *unqualified-id* is a *template-id* in which any of the template
   arguments depends on a template parameter.
@@ -4381,7 +4384,7 @@ function, or class member that is either instantiated [[temp.inst]] from
 a templated entity or is an explicit specialization [[temp.expl.spec]]
 of a templated entity.
 
-For a given template and a given set of *template-argument*,
+For a given template and a given set of *template-argument*s,
 
 - an explicit instantiation definition shall appear at most once in a
   program,
@@ -4509,9 +4512,9 @@ X<char> ch;         // error: incomplete type X<char>
 \[*Note 3*: Within a template declaration, a local class [[class.local]]
 or enumeration and the members of a local class are never considered to
 be entities that can be separately instantiated (this includes their
-default arguments, *noexcept-specifier*, and non-static data member
-initializers, if any, but not their *type-constraint* or
-*requires-clause*). As a result, the dependent names are looked up, the
+default arguments, *noexcept-specifier*s, and non-static data member
+initializers, if any, but not their *type-constraint*s or
+*requires-clause*s). As a result, the dependent names are looked up, the
 semantic constraints are checked, and any templates used are
 instantiated as part of the instantiation of the entity within which the
 local class or enumeration is declared. — *end note*\]
@@ -4527,7 +4530,7 @@ The implicit instantiation of a class template specialization causes
 
 The implicit instantiation of a class template specialization does not
 cause the implicit instantiation of default arguments or
-*noexcept-specifier* of the class member functions.
+*noexcept-specifier*s of the class member functions.
 
 \[*Example 3*:
 
@@ -4777,11 +4780,11 @@ template<class T> class X {
 
 — *end example*\]
 
-The *type-constraint* and *requires-clause* of a template specialization
-or member function are not instantiated along with the specialization or
-function itself, even for a member function of a local class;
-substitution into the atomic constraints formed from them is instead
-performed as specified in [[temp.constr.decl]] and
+The *type-constraint*s and *requires-clause* of a template
+specialization or member function are not instantiated along with the
+specialization or function itself, even for a member function of a local
+class; substitution into the atomic constraints formed from them is
+instead performed as specified in [[temp.constr.decl]] and
 [[temp.constr.atomic]] when determining whether the constraints are
 satisfied or as specified in [[temp.constr.decl]] when comparing
 declarations.
@@ -5365,8 +5368,8 @@ not explicitly specialized as well. In such an explicit specialization
 declaration, the keyword `template` followed by a
 *template-parameter-list* shall be provided instead of the `template<>`
 preceding the explicit specialization declaration of the member. The
-types of the *template-parameter* in the *template-parameter-list* shall
-be the same as those specified in the primary template definition.
+types of the *template-parameter*s in the *template-parameter-list*
+shall be the same as those specified in the primary template definition.
 
 \[*Example 10*:
 
@@ -5447,8 +5450,8 @@ Here `f<int>(int*)` has a static variable `s` of type `int` and
 Template arguments can be specified when referring to a function
 template specialization that is not a specialization of a constructor
 template by qualifying the function template name with the list of
-*template-argument* in the same way as *template-argument* are specified
-in uses of a class template specialization.
+*template-argument*s in the same way as *template-argument*s are
+specified in uses of a class template specialization.
 
 \[*Example 1*:
 
@@ -5487,15 +5490,15 @@ specialization of a function template
 - in a friend declaration.
 
 Trailing template arguments that can be deduced [[temp.deduct]] or
-obtained from default *template-argument* may be omitted from the list
-of explicit *template-argument*.
+obtained from default *template-argument*s may be omitted from the list
+of explicit *template-argument*s.
 
 \[*Note 1*: A trailing template parameter pack [[temp.variadic]] not
 otherwise deduced will be deduced as an empty sequence of template
 arguments. — *end note*\]
 
 If all of the template arguments can be deduced or obtained from default
-*template-argument*, they may all be omitted; in this case, the empty
+*template-argument*s, they may all be omitted; in this case, the empty
 template argument list `<>` itself may also be omitted.
 
 \[*Example 2*:
@@ -5533,10 +5536,10 @@ int l = f<>(1);                 // uses #1
 — *end note*\]
 
 Template arguments that are present shall be specified in the
-declaration order of their corresponding *template-parameter*. The
-template argument list shall not specify more *template-argument* than
-there are corresponding *template-parameter* unless one of the
-*template-parameter* is a template parameter pack.
+declaration order of their corresponding *template-parameter*s. The
+template argument list shall not specify more *template-argument*s than
+there are corresponding *template-parameter*s unless one of the
+*template-parameter*s is a template parameter pack.
 
 \[*Example 3*:
 
@@ -5556,7 +5559,7 @@ void g() {
 
 Implicit conversions [[conv]] will be performed on a function argument
 to convert it to the type of the corresponding function parameter if the
-parameter type contains no *template-parameter* that participate in
+parameter type contains no *template-parameter*s that participate in
 template argument deduction.
 
 \[*Note 3*:
@@ -5607,7 +5610,7 @@ void g() {
 When a function template specialization is referenced, all of the
 template arguments shall have values. The values can be explicitly
 specified or, in some cases, be deduced from the use or obtained from
-default *template-argument*.
+default *template-argument*s.
 
 \[*Example 1*:
 
@@ -5901,7 +5904,7 @@ int i2 = f<1>(0);               // ambiguous; not narrowing
 #### Deducing template arguments from a function call <a id="temp.deduct.call">[[temp.deduct.call]]</a>
 
 Template argument deduction is done by comparing each function template
-parameter type (call it `P`) that contains *template-parameter* that
+parameter type (call it `P`) that contains *template-parameter*s that
 participate in template argument deduction with the type of the
 corresponding argument of the call (call it `A`) as described below. If
 removing references and cv-qualifiers from `P` gives
@@ -6390,7 +6393,7 @@ non-deduced contexts and is not explicitly specified, template argument
 deduction fails.
 
 \[*Note 1*: Under [[temp.deduct.call]], if `P` contains no
-*template-parameter* that appear in deduced contexts, no deduction is
+*template-parameter*s that appear in deduced contexts, no deduction is
 done, so `P` and `A` need not have the same form. — *end note*\]
 
 The non-deduced contexts are:
@@ -6935,7 +6938,7 @@ template argument values (if any) that can be used with that function
 template to instantiate a function template specialization that can be
 invoked with the call arguments or, for conversion function templates,
 that can convert to the required type. For each function template, if
-the argument deduction and checking succeeds, the *template-argument*
+the argument deduction and checking succeeds, the *template-argument*s
 (deduced and/or explicit) are used to synthesize the declaration of a
 single function template specialization which is added to the candidate
 functions set to be used in overload resolution. If, for a given

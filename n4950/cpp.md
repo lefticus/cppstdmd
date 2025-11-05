@@ -264,8 +264,8 @@ The expression that controls conditional inclusion shall be an integral
 constant expression except that identifiers (including those lexically
 identical to keywords) are interpreted as described below
 
-and it may contain zero or more *defined-macro-expression* and/or
-*has-include-expression* and/or *has-attribute-expression* as unary
+and it may contain zero or more *defined-macro-expression*s and/or
+*has-include-expression*s and/or *has-attribute-expression*s as unary
 operator expressions.
 
 A *defined-macro-expression* evaluates to `1` if the identifier is
@@ -504,9 +504,9 @@ into a single header name preprocessing token is
 *implementation-defined*.
 
 The implementation shall provide unique mappings for sequences
-consisting of one or more *nondigit* or *digit* [[lex.name]] followed by
-a period (`.`) and a single *nondigit*. The first character shall not be
-a *digit*. The implementation may ignore distinctions of alphabetical
+consisting of one or more *nondigit*s or *digit*s [[lex.name]] followed
+by a period (`.`) and a single *nondigit*. The first character shall not
+be a *digit*. The implementation may ignore distinctions of alphabetical
 case.
 
 A `#include` preprocessing directive may appear in a source file that
@@ -644,7 +644,7 @@ translation unit and at most one point of undefinition, as follows:
   - if the `#define` directive of the macro definition occurs within T,
     the point at which that directive occurs, or otherwise,
   - if the macro name is not lexically identical to a keyword
-    [[lex.key]] or to the *identifier* `module` or `import`, the first
+    [[lex.key]] or to the *identifier*s `module` or `import`, the first
     point of macro import in T of a header unit containing a point of
     definition for the macro definition, if any.
 
@@ -665,7 +665,7 @@ If a macro would be replaced or redefined, and multiple macro
 definitions are active for that macro name, the active macro definitions
 shall all be valid redefinitions of the same macro [[cpp.replace]].
 
-\[*Note 5*: The relative order of *pp-import* has no bearing on whether
+\[*Note 5*: The relative order of *pp-import*s has no bearing on whether
 a particular macro definition is active. — *end note*\]
 
 \[*Example 1*:

@@ -535,7 +535,7 @@ the declaration of a virtual function [[class.virtual]] that is not a
 friend declaration.
 
 The optional *attribute-specifier-seq* in a *member-declaration*
-appertains to each of the entities declared by the *member-declarator*;
+appertains to each of the entities declared by the *member-declarator*s;
 it shall not appear if the optional *member-declarator-list* is omitted.
 
 A *virt-specifier-seq* shall contain at most one of each
@@ -805,7 +805,7 @@ not members of the class `tnode` and should be declared elsewhere.
 — *end example*\]
 
 \[*Note 2*: An implicit object member function can be declared with
-*cv-qualifier*, which affect the type of the `this` pointer
+*cv-qualifier*s, which affect the type of the `this` pointer
 [[expr.prim.this]], and/or a *ref-qualifier* [[dcl.fct]]; both affect
 overload resolution [[over.match.funcs]] — *end note*\]
 
@@ -1839,7 +1839,7 @@ specifies a conversion from `X` to the type specified by the
 (if any) shall not be a *defining-type-specifier*.
 
 The type of the conversion function is “`noexcept}` function taking no
-parameter *cv-qualifier-seq* *ref-qualifier* returning
+parameter *cv-qualifier-seq*\_opt *ref-qualifier*\_opt returning
 *conversion-type-id*”.
 
 A conversion function is never used to convert a (possibly cv-qualified)
@@ -3283,7 +3283,7 @@ struct S {
 Access control is applied uniformly to declarations and expressions.
 
 \[*Note 2*: Access control applies to members nominated by friend
-declarations [[class.friend]] and *using-declaration*
+declarations [[class.friend]] and *using-declaration*s
 [[namespace.udecl]]. — *end note*\]
 
 When a *using-declarator* is named, access control is applied to it, not
@@ -3341,7 +3341,7 @@ All access controls in [[class.access]] affect the ability to name a
 class member from the declaration of a particular entity, including
 parts of the declaration preceding the name of the entity being declared
 and, if the entity is a class, the definitions of members of the class
-appearing outside the class’s *member-specification*
+appearing outside the class’s *member-specification*.
 
 \[*Note 5*: This access also applies to implicit references to
 constructors, conversion functions, and destructors. — *end note*\]
@@ -3376,7 +3376,7 @@ Here, all the uses of `A::I` are well-formed because `A::f`, `A::x`, and
 `A::I` must be deferred until it is determined that this use of `A::I`
 is as the return type of a member of class `A`. Similarly, the use of
 `A::B` as a *base-specifier* is well-formed because `D` is derived from
-`A`, so checking of *base-specifier* must be deferred until the entire
+`A`, so checking of *base-specifier*s must be deferred until the entire
 *base-specifier-list* has been seen.
 
 — *end example*\]
@@ -3688,7 +3688,7 @@ void f() {
 
 Declaring a class to be a friend implies that private and protected
 members of the class granting friendship can be named in the
-*base-specifier* and member declarations of the befriended class.
+*base-specifier*s and member declarations of the befriended class.
 
 \[*Example 2*:
 
@@ -4317,7 +4317,7 @@ constructor has no *ctor-initializer*), then
 
 \[*Note 3*: An abstract class [[class.abstract]] is never a most derived
 class, thus its constructors never initialize virtual base classes,
-therefore the corresponding *mem-initializer* can be
+therefore the corresponding *mem-initializer*s can be
 omitted. — *end note*\]
 
 An attempt to initialize more than one non-static data member of a union
@@ -4411,10 +4411,10 @@ following order:
   *base-specifier-list*.
 - Then, direct base classes are initialized in declaration order as they
   appear in the *base-specifier-list* (regardless of the order of the
-  *mem-initializer*).
+  *mem-initializer*s).
 - Then, non-static data members are initialized in the order they were
   declared in the class definition (again regardless of the order of the
-  *mem-initializer*).
+  *mem-initializer*s).
 - Finally, the *compound-statement* of the constructor body is executed.
 
 \[*Note 6*: The declaration order is mandated to ensure that base and
@@ -4488,7 +4488,7 @@ under construction can be the operand of the `typeid` operator
 [[expr.typeid]] or of a `dynamic_cast` [[expr.dynamic.cast]]. However,
 if these operations are performed in a *ctor-initializer* (or in a
 function called directly or indirectly from a *ctor-initializer*) before
-all the *mem-initializer* for base classes have completed, the program
+all the *mem-initializer*s for base classes have completed, the program
 has undefined behavior.
 
 \[*Example 11*:

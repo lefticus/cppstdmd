@@ -4184,7 +4184,7 @@ functions and function templates described in [[support.types.byteops]].
 It is unspecified whether these names are first declared or defined
 within namespace scope [[basic.scope.namespace]] of the namespace `std`
 and are then injected into the global namespace scope by explicit
-*using-declaration* [[namespace.udecl]].
+*using-declaration*s [[namespace.udecl]].
 
 \[*Example 1*: The header `<cstdlib>` assuredly provides its
 declarations and definitions within the namespace `std`. It may also

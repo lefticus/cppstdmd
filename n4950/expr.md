@@ -1024,9 +1024,9 @@ declared [[dcl.dcl]] or if it appears as part of a *declarator-id*
 [[dcl.decl]]. An *identifier* that names a coroutine parameter refers to
 the copy of the parameter [[dcl.fct.def.coroutine]].
 
-\[*Note 1*: For *operator-function-id*, see  [[over.oper]]; for
-*conversion-function-id*, see  [[class.conv.fct]]; for
-*literal-operator-id*, see  [[over.literal]]; for *template-id*, see 
+\[*Note 1*: For *operator-function-id*s, see  [[over.oper]]; for
+*conversion-function-id*s, see  [[class.conv.fct]]; for
+*literal-operator-id*s, see  [[over.literal]]; for *template-id*s, see 
 [[temp.names]]. A *type-name* or *decltype-specifier* prefixed by `~`
 denotes the destructor of the type so named; see  [[expr.prim.id.dtor]].
 Within the definition of a non-static member function, an *identifier*
@@ -1457,11 +1457,11 @@ call operator or operator template. An *attribute-specifier-seq* in a
 *lambda-expression* preceding a *lambda-declarator* appertains to the
 corresponding function call operator or operator template. The function
 call operator or any given operator template specialization is a
-constexpr function if either the corresponding *lambda-expression*
+constexpr function if either the corresponding *lambda-expression*'s
 *parameter-declaration-clause* is followed by `constexpr` or
 `consteval`, or it is constexpr-suitable [[dcl.constexpr]]. It is an
 immediate function [[dcl.constexpr]] if the corresponding
-*lambda-expression* *parameter-declaration-clause* is followed by
+*lambda-expression*'s *parameter-declaration-clause* is followed by
 `consteval`.
 
 \[*Example 3*:
@@ -1742,7 +1742,7 @@ form “`&` *identifier* `...}`”, “`this`”, or “`* this`”.
 \[*Note 1*: The form `[&,this]` is redundant but accepted for
 compatibility with ISO C++14. — *end note*\]
 
-Ignoring appearances in *initializer* of *init-capture*, an identifier
+Ignoring appearances in *initializer*s of *init-capture*s, an identifier
 or `this` shall not appear more than once in a *lambda-capture*.
 
 \[*Example 1*:
@@ -1769,7 +1769,7 @@ within a default member initializer and its innermost enclosing scope is
 the corresponding class scope [[basic.scope.class]].
 
 The *identifier* in a *simple-capture* shall denote a local entity
-[[basic.lookup.unqual]], [[basic.pre]]. The *simple-capture* `this` and
+[[basic.lookup.unqual]], [[basic.pre]]. The *simple-capture*s `this` and
 `* this` denote the local entity `*this`. An entity that is designated
 by a *simple-capture* is said to be *explicitly captured*.
 
@@ -1836,7 +1836,7 @@ local entities as follows:
   *id-expression*. — *end note*\]
 - A `this` expression potentially references `*this`.
 - A *lambda-expression* potentially references the local entities named
-  by its *simple-capture*.
+  by its *simple-capture*s.
 
 If an expression potentially references a local entity within a scope in
 which it is odr-usable [[basic.def.odr]], and the expression would be
@@ -2089,7 +2089,7 @@ std::cout << a << b << c;
 When the *lambda-expression* is evaluated, the entities that are
 captured by copy are used to direct-initialize each corresponding
 non-static data member of the resulting closure object, and the
-non-static data members corresponding to the *init-capture* are
+non-static data members corresponding to the *init-capture*s are
 initialized as indicated by the corresponding *initializer* (which may
 be copy- or direct-initialization). (For array members, the array
 elements are direct-initialized in increasing subscript order.) These
@@ -2152,7 +2152,7 @@ collectively called *unary folds*. In a unary fold, the
 *cast-expression* shall contain an unexpanded pack [[temp.variadic]].
 
 An expression of the form `(e1` *op1* `...` *op2* `e2)` where *op1* and
-*op2* are *fold-operator* is called a *binary fold*. In a binary fold,
+*op2* are *fold-operator*s is called a *binary fold*. In a binary fold,
 *op1* and *op2* shall be the same *fold-operator*, and either `e1` shall
 contain an unexpanded pack or `e2` shall contain an unexpanded pack, but
 not both. If `e2` contains an unexpanded pack, the expression is called
@@ -2536,7 +2536,7 @@ of array types. — *end note*\]
 
 A function call is a postfix expression followed by parentheses
 containing a possibly empty, comma-separated list of
-*initializer-clause* which constitute the arguments to the function.
+*initializer-clause*s which constitute the arguments to the function.
 
 \[*Note 1*: If the postfix expression is a function or member function
 name, the appropriate function and the validity of the call are
@@ -3898,7 +3898,7 @@ type [[term.incomplete.type]], but not an abstract class type
 [[class.abstract]] or array thereof [[intro.object]].
 
 \[*Note 1*: Because references are not objects, references cannot be
-created by *new-expression*. — *end note*\]
+created by *new-expression*s. — *end note*\]
 
 \[*Note 2*: The *type-id* can be a cv-qualified type, in which case the
 object created by the *new-expression* has a cv-qualified
@@ -3963,7 +3963,7 @@ auto y = new A{1, 2};           // allocated type is A<int>
 — *end example*\]
 
 The *new-type-id* in a *new-expression* is the longest possible sequence
-of *new-declarator*.
+of *new-declarator*s.
 
 \[*Note 3*: This prevents ambiguities between the declarator operators
 `&`, `&&`, `*`, and `[]` and their expression
@@ -4085,7 +4085,7 @@ provided by extending the allocation of another *new-expression*.
 During an evaluation of a constant expression, a call to an allocation
 function is always omitted.
 
-\[*Note 8*: Only *new-expression* that would otherwise result in a call
+\[*Note 8*: Only *new-expression*s that would otherwise result in a call
 to a replaceable global allocation function can be evaluated in constant
 expressions [[expr.const]]. — *end note*\]
 
@@ -4101,7 +4101,7 @@ true were the allocation not extended:
   exceptions thrown in the evaluation of either `e1` or `e2` would be
   first caught in the same handler, and
 - the pointer values produced by `e1` and `e2` are operands to evaluated
-  *delete-expression*, and
+  *delete-expression*s, and
 - the evaluation of `e2` is sequenced before the evaluation of the
   *delete-expression* whose operand is the pointer value produced by
   `e1`.
@@ -4159,14 +4159,15 @@ plus any padding necessary to align the allocated objects within the
 allocated memory.
 
 The *new-placement* syntax is used to supply additional arguments to an
-allocation function; such an expression is called a *new-expression*.
+allocation function; such an expression is called a
+*placement \*new-expression\**.
 
 Overload resolution is performed on a function call created by
 assembling an argument list. The first argument is the amount of space
 requested, and has type `std::size_t`. If the type of the allocated
 object has new-extended alignment, the next argument is the type’s
 alignment, and has type `std::align_val_t`. If the *new-placement*
-syntax is used, the *initializer-clause* in its *expression-list* are
+syntax is used, the *initializer-clause*s in its *expression-list* are
 the succeeding arguments. If no matching function is found then
 
 - if the allocated object type has new-extended alignment, the alignment
@@ -4190,7 +4191,7 @@ Here, each instance of `x` is a non-negative unspecified value
 representing array allocation overhead; the result of the
 *new-expression* will be offset by this amount from the value returned
 by `operator new[]`. This overhead may be applied in all array
-*new-expression*, including those referencing a placement allocation
+*new-expression*s, including those referencing a placement allocation
 function, except when referencing the library function
 `operator new[](std::size_t, void*)`. The amount of overhead may vary
 from one invocation of `new` to another.
@@ -4493,7 +4494,7 @@ reference to function type and an xvalue if `T` is an rvalue reference
 to object type; otherwise the result is a prvalue.
 
 \[*Note 1*: If `T` is a non-class type that is cv-qualified, the
-*cv-qualifier* are discarded when determining the type of the resulting
+*cv-qualifier*s are discarded when determining the type of the resulting
 prvalue; see [[expr.prop]]. — *end note*\]
 
 An explicit type conversion can be expressed using functional notation
@@ -5142,7 +5143,7 @@ following shall hold:
   a bit-field if that operand is a bit-field.
 - Both the second and the third operands have type `void`; the result is
   of type `void` and is a prvalue. \[*Note 10*: This includes the case
-  where both operands are *throw-expression*. — *end note*\]
+  where both operands are *throw-expression*s. — *end note*\]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
 same value category and of types cv-qualifier{cv1} `T` and
@@ -5301,7 +5302,7 @@ A *throw-expression* is of type `void`.
 
 Evaluating a *throw-expression* with an operand throws an exception
 [[except.throw]]; the type of the exception object is determined by
-removing any top-level *cv-qualifier* from the static type of the
+removing any top-level *cv-qualifier*s from the static type of the
 operand and adjusting the type from “array of `T`” or function type `T`
 to “pointer to `T`”.
 
@@ -5441,7 +5442,7 @@ bit-field.
 
 In contexts where the comma token is given special meaning (e.g.,
 function calls [[expr.call]], subscript expressions [[expr.sub]], lists
-of initializers [[dcl.init]], or *template-argument-list*
+of initializers [[dcl.init]], or *template-argument-list*s
 [[temp.names]]), the comma operator as described in this subclause can
 appear only in parentheses.
 

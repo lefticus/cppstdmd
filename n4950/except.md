@@ -130,9 +130,9 @@ relation [[intro.execution]].
 Throwing an exception transfers control to a handler.
 
 \[*Note 1*: An exception can be thrown from one of the following
-contexts: *throw-expression* [[expr.throw]], allocation functions
+contexts: *throw-expression*s [[expr.throw]], allocation functions
 [[basic.stc.dynamic.allocation]], `dynamic_cast` [[expr.dynamic.cast]],
-`typeid` [[expr.typeid]], *new-expression* [[expr.new]], and standard
+`typeid` [[expr.typeid]], *new-expression*s [[expr.new]], and standard
 library functions [[structure.specifications]]. — *end note*\]
 
 An object is passed and the type of that object determines which
@@ -369,7 +369,7 @@ of type “pointer to `T`”.
 A *handler* is a match for an exception object of type `E` if
 
 - The *handler* is of type cv `T` or cv `T&` and `E` and `T` are the
-  same type (ignoring the top-level *cv-qualifier*), or
+  same type (ignoring the top-level *cv-qualifier*s), or
 - the *handler* is of type cv `T` or cv `T&` and `T` is an unambiguous
   public base class of `E`, or
 - the *handler* is of type cv `T` or `const T&` where `T` is a pointer

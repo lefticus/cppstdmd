@@ -933,7 +933,7 @@ headers with these names may be invalid in this revision of C++.
 New reserved namespaces. Reserve namespaces for future revisions of the
 standard library that might otherwise be incompatible with existing
 programs. The global namespaces `std` followed by an arbitrary sequence
-of *digit* [[lex.name]] are reserved for future standardization. Valid
+of *digit*s [[lex.name]] are reserved for future standardization. Valid
 C++14 code that uses such a top-level namespace, e.g., `std2`, may be
 invalid in this revision of C++.
 

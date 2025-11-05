@@ -566,10 +566,10 @@ called *mutable iterators*. Nonmutable iterators are referred to as
 *constant iterators*.
 
 In addition to the requirements in this subclause, the nested
-*typedef-name* specified in [[iterator.traits]] shall be provided for
+*typedef-name*s specified in [[iterator.traits]] shall be provided for
 the iterator type.
 
-\[*Note 1*: Either the iterator type must provide the *typedef-name*
+\[*Note 1*: Either the iterator type must provide the *typedef-name*s
 directly (in which case `iterator_traits` pick them up automatically),
 or an `iterator_traits` specialization must provide them. — *end note*\]
 

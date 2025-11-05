@@ -25,9 +25,9 @@ requirements.
 Most classes specified in [[string.classes]], [[string.view]], and
 [[input.output]] need a set of related types and functions to complete
 the definition of their semantics. These types and functions are
-provided as a set of member *typedef-name* and functions in the template
-parameter `traits` used by each such template. Subclause [[char.traits]]
-defines the semantics of these members.
+provided as a set of member *typedef-name*s and functions in the
+template parameter `traits` used by each such template. Subclause
+[[char.traits]] defines the semantics of these members.
 
 To specialize those templates to generate a string, string view, or
 iostream class to handle a particular character container type
@@ -1163,7 +1163,7 @@ constexpr wstring_view operator""sv(const wchar_t* str, size_t len) noexcept;
 
 The header `<string>` defines the `basic_string` class template for
 manipulating varying-length sequences of char-like objects and five
-*typedef-name*, `string`, `u8string`, `u16string`, `u32string`, and
+*typedef-name*s, `string`, `u8string`, `u16string`, `u32string`, and
 `wstring`, that name the specializations `basic_string<char>`,
 `basic_string<char8_t>`, `basic_string<char16_t>`,
 `basic_string<char32_t>`, and `basic_string<wchar_t>`, respectively.

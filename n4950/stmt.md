@@ -36,8 +36,8 @@ A *substatement* of a *statement* is one of the following:
 
 - for a *labeled-statement*, its *statement*,
 - for a *compound-statement*, any *statement* of its *statement-seq*,
-- for a *selection-statement*, any of its *statement* or
-  *compound-statement* (but not its *init-statement*), or
+- for a *selection-statement*, any of its *statement*s or
+  *compound-statement*s (but not its *init-statement*), or
 - for an *iteration-statement*, its *statement* (but not an
   *init-statement*).
 
@@ -51,13 +51,13 @@ A *statement* `S1` *encloses* a *statement* `S2` if
 - `S1` is a *selection-statement* or *iteration-statement* and `S2` is
   the *init-statement* of `S1`,
 - `S1` is a *try-block* and `S2` is its *compound-statement* or any of
-  the *compound-statement* of its *handler*, or
+  the *compound-statement*s of its *handler*s, or
 - `S1` encloses a statement `S3` and `S3` encloses `S2`.
 
 A statement `S1` is *enclosed by* a statement `S2` if `S2` encloses
 `S1`.
 
-The rules for *condition* apply both to *selection-statement*
+The rules for *condition*s apply both to *selection-statement*s
 [[stmt.select]] and to the `for` and `while` statements [[stmt.iter]]. A
 *condition* that is not an *expression* is a declaration [[dcl.dcl]].
 The *declarator* shall not specify a function or an array. The
@@ -551,7 +551,7 @@ where
 
 - if the *for-range-initializer* is an *expression*, it is regarded as
   if it were surrounded by parentheses (so that a comma operator cannot
-  be reinterpreted as delimiting two *init-declarator*);
+  be reinterpreted as delimiting two *init-declarator*s);
 - *range*, *begin*, and *end* are variables defined for exposition only;
   and
 - *begin-expr* and *end-expr* are determined as follows:
@@ -757,9 +757,9 @@ where *final-suspend* is the exposition-only label defined in
 - If the operand is a *braced-init-list* or an expression of non-`void`
   type, *S* is *p*`.return_value(`*expr-or-braced-init-list*`)`. The
   expression *S* shall be a prvalue of type `void`.
-- Otherwise, *S* is the *compound-statement* `\{}{ `*expression* `;`
-  *p*`.return_void()``;{ }\}`. The expression *p*`.return_void()` shall
-  be a prvalue of type `void`.
+- Otherwise, *S* is the *compound-statement* `\{}{ `*expression*\_opt
+  `;` *p*`.return_void()``;{ }\}`. The expression *p*`.return_void()`
+  shall be a prvalue of type `void`.
 
 If *p*`.return_void()` is a valid expression, flowing off the end of a
 coroutine’s *function-body* is equivalent to a `co_return` with no
@@ -857,8 +857,8 @@ objects are destroyed. — *end note*\]
 
 ## Ambiguity resolution <a id="stmt.ambig">[[stmt.ambig]]</a>
 
-There is an ambiguity in the grammar involving *expression-statement*
-and *declaration*: An *expression-statement* with a function-style
+There is an ambiguity in the grammar involving *expression-statement*s
+and *declaration*s: An *expression-statement* with a function-style
 explicit type conversion [[expr.type.conv]] as its leftmost
 subexpression can be indistinguishable from a *declaration* where the
 first *declarator* starts with a `(`. In those cases the *statement* is
@@ -871,19 +871,19 @@ ambiguity, so this rule does not apply. In some cases, the whole
 *statement* needs to be examined to determine whether this is the case.
 This resolves the meaning of many examples.
 
-The remaining cases are *declaration*.
+The remaining cases are *declaration*s.
 
 — *end note*\]
 
 The disambiguation is purely syntactic; that is, the meaning of the
-names occurring in such a statement, beyond whether they are *type-name*
-or not, is not generally used in or changed by the disambiguation. Class
-templates are instantiated as necessary to determine if a qualified name
-is a *type-name*. Disambiguation precedes parsing, and a statement
-disambiguated as a declaration may be an ill-formed declaration. If,
-during parsing, lookup finds that a name in a template argument is bound
-to (part of) the declaration being parsed, the program is ill-formed. No
-diagnostic is required.
+names occurring in such a statement, beyond whether they are
+*type-name*s or not, is not generally used in or changed by the
+disambiguation. Class templates are instantiated as necessary to
+determine if a qualified name is a *type-name*. Disambiguation precedes
+parsing, and a statement disambiguated as a declaration may be an
+ill-formed declaration. If, during parsing, lookup finds that a name in
+a template argument is bound to (part of) the declaration being parsed,
+the program is ill-formed. No diagnostic is required.
 
 \[*Example 1*:
 

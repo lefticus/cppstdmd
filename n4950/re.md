@@ -41,7 +41,7 @@ meets these requirements. — *end note*\]
 The class template `basic_regex`, defined in [[re.regex]], needs a set
 of related types and functions to complete the definition of its
 semantics. These types and functions are provided as a set of member
-*typedef-name* and functions in the template parameter `traits` used by
+*typedef-name*s and functions in the template parameter `traits` used by
 the `basic_regex` class template. This subclause defines the semantics
 of these members.
 

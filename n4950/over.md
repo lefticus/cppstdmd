@@ -858,7 +858,7 @@ In addition, if `C` is defined and its definition satisfies the
 conditions for an aggregate class [[dcl.init.aggr]] with the assumption
 that any dependent base class has no virtual functions and no virtual
 base classes, and the initializer is a non-empty *braced-init-list* or
-parenthesized *expression-list*, and there are no *deduction-guide* for
+parenthesized *expression-list*, and there are no *deduction-guide*s for
 `C`, the set contains an additional function template, called the
 *aggregate deduction candidate*, defined as follows. Let
 $x_1, \dotsc, x_n$ be the elements of the *initializer-list* or

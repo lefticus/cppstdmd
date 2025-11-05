@@ -1542,7 +1542,7 @@ This subclause describes literal suffixes for constructing duration
 literals. The suffixes `h`, `min`, `s`, `ms`, `us`, `ns` denote duration
 values of the corresponding types `hours`, `minutes`, `seconds`,
 `milliseconds`, `microseconds`, and `nanoseconds` respectively if they
-are applied to *integer-literal*.
+are applied to *integer-literal*s.
 
 If any of these suffixes are applied to a *floating-point-literal* the
 result is a `chrono::duration` literal with an unspecified
