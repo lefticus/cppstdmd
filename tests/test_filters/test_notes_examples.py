@@ -413,9 +413,9 @@ Module \tcode{A} contains two translation units.
     assert "export int baz()" in output
     assert "export module A:Foo" in output
     assert "import :Internals" in output
-    # Check that titles are preserved
-    assert "**Translation unit #1**" in output
-    assert "**Translation unit #2**" in output
+    # Check that titles are preserved as plain text before code blocks (not bold inside)
+    assert "Translation unit #1" in output
+    assert "Translation unit #2" in output
     # Check description text
     assert "Module" in output
     assert "contains two translation units" in output

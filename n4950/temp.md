@@ -4307,25 +4307,25 @@ diagnostic required.
 
 \[*Example 1*:
 
-``` cpp
-**Source file `"X.h"`**
+Source file \`"X.h"\`
 
+``` cpp
 namespace Q {
   struct X { };
 }
 ```
 
-``` cpp
-**Source file `"G.h"`**
+Source file \`"G.h"\`
 
+``` cpp
 namespace Q {
   void g_impl(X, X);
 }
 ```
 
-``` cpp
-**Module interface unit of `M1`**
+Module interface unit of \`M1\`
 
+``` cpp
 module;
 #include "X.h"
 #include "G.h"
@@ -4336,9 +4336,9 @@ void g(T t) {
 }
 ```
 
-``` cpp
-**Module interface unit of `M2`**
+Module interface unit of \`M2\`
 
+``` cpp
 module;
 #include "X.h"
 export module M2;
@@ -4352,9 +4352,9 @@ void h(Q::X x) {
 
 \[*Example 2*:
 
-``` cpp
-**Module interface unit of `Std`**
+Module interface unit of \`Std\`
 
+``` cpp
 export module Std;
 export template<typename Iter>
 void indirect_swap(Iter lhs, Iter rhs)
@@ -4363,9 +4363,9 @@ void indirect_swap(Iter lhs, Iter rhs)
 }
 ```
 
-``` cpp
-**Module interface unit of `M`**
+Module interface unit of \`M\`
 
+``` cpp
 export module M;
 import Std;
 
@@ -4382,16 +4382,16 @@ void f(S* p, S* q)
 
 \[*Example 3*:
 
-``` cpp
-**Source file `"X.h"`**
+Source file \`"X.h"\`
 
+``` cpp
 struct X { /* ... */ };
 X operator+(X, X);
 ```
 
-``` cpp
-**Module interface unit of `F`**
+Module interface unit of \`F\`
 
+``` cpp
 export module F;
 export template<typename T>
 void f(T t) {
@@ -4399,9 +4399,9 @@ void f(T t) {
 }
 ```
 
-``` cpp
-**Module interface unit of `M`**
+Module interface unit of \`M\`
 
+``` cpp
 module;
 #include "X.h"
 export module M;
@@ -4416,9 +4416,9 @@ void g(X x) {
 
 \[*Example 4*:
 
-``` cpp
-**Module interface unit of `A`**
+Module interface unit of \`A\`
 
+``` cpp
 export module A;
 export template<typename T>
 void f(T t) {
@@ -4427,9 +4427,9 @@ void f(T t) {
 }
 ```
 
-``` cpp
-**Module interface unit of `B`**
+Module interface unit of \`B\`
 
+``` cpp
 export module B;
 import A;
 export template<typename T, typename U>
@@ -4438,18 +4438,18 @@ void g(T t, U u) {
 }
 ```
 
-``` cpp
-**Source file `"foo.h"`, not an importable header**
+Source file \`"foo.h"\`, not an importable header
 
+``` cpp
 struct foo {
   friend int cat(foo, foo);
 };
 int dog(foo, foo);
 ```
 
-``` cpp
-**Module interface unit of `C1`**
+Module interface unit of \`C1\`
 
+``` cpp
 module;
 #include "foo.h"        // dog not referenced, discarded
 export module C1;
@@ -4460,27 +4460,27 @@ void h(T t) {
 }
 ```
 
-``` cpp
-**Translation unit**
+Translation unit
 
+``` cpp
 import C1;
 void i() {
    h(0);                // error: dog not found at #2
 }
 ```
 
-``` cpp
-**Importable header `"bar.h"`**
+Importable header \`"bar.h"\`
 
+``` cpp
 struct bar {
   friend int cat(bar, bar);
 };
 int dog(bar, bar);
 ```
 
-``` cpp
-**Module interface unit of `C2`**
+Module interface unit of \`C2\`
 
+``` cpp
 module;
 #include "bar.h"        // imports header unit "bar.h"
 export module C2;
@@ -4491,9 +4491,9 @@ void j(T t) {
 }
 ```
 
-``` cpp
-**Translation unit**
+Translation unit
 
+``` cpp
 import C2;
 void k() {
    j(0);                // OK, dog found in instantiation context:

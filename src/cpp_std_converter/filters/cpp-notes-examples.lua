@@ -32,7 +32,8 @@ local function clean_code(code)
 end
 
 -- Helper function to convert codeblock Div to CodeBlock or replace placeholders
-local function process_codeblock_div(block, codeblocks)
+-- Returns a list of blocks (to support title + code for codeblocktu)
+local function process_codeblock_div(block, codeblocks, titles)
   -- Check for placeholder in Para blocks
   if block.t == "Para" and codeblocks then
     local text = pandoc.utils.stringify(block)
@@ -42,7 +43,14 @@ local function process_codeblock_div(block, codeblocks)
     if placeholder then
       local idx = tonumber(placeholder)
       if codeblocks[idx] then
-        return pandoc.CodeBlock(codeblocks[idx], {class = "cpp"})
+        local result = {}
+        -- If this codeblock has a title, add it as a paragraph first
+        if titles and titles[idx] then
+          table.insert(result, pandoc.Para({pandoc.Str(titles[idx])}))
+        end
+        -- Add the code block
+        table.insert(result, pandoc.CodeBlock(codeblocks[idx], {class = "cpp"}))
+        return result
       end
     end
   end
@@ -70,18 +78,21 @@ local function process_codeblock_div(block, codeblocks)
 
     -- Create a proper CodeBlock with class "cpp"
     if #code_text > 0 then
-      return pandoc.CodeBlock(code_text, {class = "cpp"})
+      return {pandoc.CodeBlock(code_text, {class = "cpp"})}
     end
   end
 
-  return block
+  -- Return block as single-item list for consistency
+  return {block}
 end
 
 -- Optimized codeblock extraction using position tracking instead of repeated scanning
 -- Handles all code block types: codeblock, codeblocktu, codeblockdigitsep, outputblock
 -- Uses pattern matching with balanced brace extraction for codeblocktu titles
+-- Returns: modified_content, codeblocks, titles, counter
 local function extract_codeblocks(content)
   local codeblocks = {}
+  local titles = {}  -- Store titles for codeblocktu (indexed by codeblock number)
   local modified_content = content
   local counter = 0
 
@@ -137,17 +148,17 @@ local function extract_codeblocks(content)
       local code = earliest_code:gsub("^%s*\n", ""):gsub("\n%s*$", "")
       code = clean_code(code)
 
-      -- For codeblocktu, prepend the formatted title
+      counter = counter + 1
+      codeblocks[counter] = code
+
+      -- For codeblocktu, store the title separately
       if earliest_type == "codeblocktu" and cbtu_title then
         -- Process title: expand \tcode{} and clean up
         local formatted_title = cbtu_title
         formatted_title = formatted_title:gsub("\\tcode{([^}]*)}", "`%1`")
         formatted_title = formatted_title:gsub("\\#", "#")
-        code = "**" .. formatted_title .. "**\n\n" .. code
+        titles[counter] = formatted_title
       end
-
-      counter = counter + 1
-      codeblocks[counter] = code
 
       -- Replace with placeholder
       local placeholder = "\n\n__CODEBLOCK_" .. counter .. "__\n\n"
@@ -160,7 +171,7 @@ local function extract_codeblocks(content)
     end
   end
 
-  return modified_content, codeblocks, counter
+  return modified_content, codeblocks, titles, counter
 end
 
 -- Macro expansion lookup table for better performance
@@ -201,7 +212,7 @@ local function process_environment(content, env_type, counter_val)
   content = expand_macros(content)
 
   -- Extract codeblocks before parsing (optimized)
-  local modified_content, codeblocks, codeblock_count = extract_codeblocks(content)
+  local modified_content, codeblocks, titles, codeblock_count = extract_codeblocks(content)
 
   -- Parse the LaTeX content to get Pandoc AST elements
   local parsed = pandoc.read(modified_content, "latex+raw_tex")
@@ -259,7 +270,11 @@ local function process_environment(content, env_type, counter_val)
 
     -- Output all blocks from parsed content
     for _, parsed_block in ipairs(parsed.blocks) do
-      table.insert(result, process_codeblock_div(parsed_block, codeblocks))
+      local blocks = process_codeblock_div(parsed_block, codeblocks, titles)
+      -- Insert all blocks from the list (handles both single block and title+code)
+      for _, block in ipairs(blocks) do
+        table.insert(result, block)
+      end
     end
 
     local closing = {
@@ -415,7 +430,10 @@ function Blocks(blocks)
 
           -- Output all blocks from div content
           for _, div_block in ipairs(block.content) do
-            table.insert(result, process_codeblock_div(div_block))
+            local blocks = process_codeblock_div(div_block, nil, nil)
+            for _, b in ipairs(blocks) do
+              table.insert(result, b)
+            end
           end
 
           local closing = {
@@ -481,7 +499,10 @@ function Blocks(blocks)
 
           -- Output all blocks from div content
           for _, div_block in ipairs(block.content) do
-            table.insert(result, process_codeblock_div(div_block))
+            local blocks = process_codeblock_div(div_block, nil, nil)
+            for _, b in ipairs(blocks) do
+              table.insert(result, b)
+            end
           end
 
           local closing = {

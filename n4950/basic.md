@@ -1570,9 +1570,9 @@ discarded [[module.global.frag]] or has internal linkage.
 
 \[*Example 2*:
 
-``` cpp
-**Translation unit #1**
+Translation unit #1
 
+``` cpp
 export module M;
 namespace R {
   export struct X {};
@@ -1583,9 +1583,9 @@ namespace S {
 }
 ```
 
-``` cpp
-**Translation unit #2**
+Translation unit #2
 
+``` cpp
 export module N;
 import M;
 export R::X make();
@@ -1596,9 +1596,9 @@ export template<typename T, typename U> void apply(T t, U u) {
 }
 ```
 
-``` cpp
-**Translation unit #3**
+Translation unit #3
 
+``` cpp
 module Q;
 import N;
 namespace S {
@@ -2152,16 +2152,16 @@ from the other.
 
 \[*Example 2*:
 
-``` cpp
-**`"decls.h"`**
+\`"decls.h"\`
 
+``` cpp
 int f();            // #1, attached to the global module
 int g();            // #2, attached to the global module
 ```
 
-``` cpp
-**Module interface of `M`**
+Module interface of \`M\`
 
+``` cpp
 module;
 #include "decls.h"
 export module M;
@@ -2171,9 +2171,9 @@ export int h();     // #3
 export int k();     // #4
 ```
 
-``` cpp
-**Other translation unit**
+Other translation unit
 
+``` cpp
 import M;
 static int h();     // error: matches #3
 int k();            // error: matches #4
@@ -2298,9 +2298,9 @@ the specialization [[temp.point]].
 
 \[*Example 4*:
 
-``` cpp
-**Translation unit #1**
+Translation unit #1
 
+``` cpp
 export module A;
 static void f() {}
 inline void it() { f(); }           // error: is an exposure of f
@@ -2331,9 +2331,9 @@ void adl(double);
 inline void h(auto x) { adl(x); }   // OK, but certain specializations are exposures
 ```
 
-``` cpp
-**Translation unit #2**
+Translation unit #2
 
+``` cpp
 module A;
 void other() {
   g<0>();                           // OK, specialization is explicitly instantiated
