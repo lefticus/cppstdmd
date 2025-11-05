@@ -21,6 +21,9 @@ local trim = common.trim
 local extract_impdefx_description = common.extract_impdefx_description
 local expand_impdefx_in_text = common.expand_impdefx_in_text
 local parse_impdefx_description_to_inlines = common.parse_impdefx_description_to_inlines
+local extract_multi_arg_macro = common.extract_multi_arg_macro
+local process_macro_with_replacement = common.process_macro_with_replacement
+local remove_macro = common.remove_macro
 
 -- Table to collect all references for link definitions
 -- Made global so cpp-tables.lua can also track references
@@ -262,31 +265,9 @@ local function expand_macros(text)
 
   -- \impldef{description} renders as "*implementation-defined*"
   -- The description text is informational only and doesn't appear in output
-  -- Use a loop to handle nested braces properly
-  while true do
-    local start_pos = text:find("\\impldef{", 1, true)
-    if not start_pos then break end
-
-    -- Find matching closing brace
-    local pos = start_pos + 9  -- length of "\impldef{"
-    local depth = 1
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then
-        depth = depth + 1
-      elseif c == "}" then
-        depth = depth - 1
-      end
-      pos = pos + 1
-    end
-
-    if depth == 0 then
-      -- Replace the entire \impldef{...} with the expansion
-      text = text:sub(1, start_pos - 1) .. "*implementation-defined*" .. text:sub(pos)
-    else
-      break
-    end
-  end
+  text = process_macro_with_replacement(text, "impldef", function(content)
+    return "*implementation-defined*"
+  end)
 
   -- \cvqual renders as "cv-qualifier"
   text = text:gsub("\\cvqual{}", "cv-qualifier")
@@ -313,23 +294,9 @@ local function expand_macros(text)
   text = text:gsub("\\descr{([^}]*)}", "%1")
 
   -- \defn{x} renders as definition term
-  -- Use brace-balanced parsing to handle nested \tcode{} etc.
-  while true do
-    local start_pos = text:find("\\defn{", 1, true)
-    if not start_pos then break end
-    local pos = start_pos + 6  -- length of "\defn{"
-    local depth = 1
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then depth = depth + 1
-      elseif c == "}" then depth = depth - 1 end
-      pos = pos + 1
-    end
-    if depth == 0 then
-      local content = text:sub(start_pos + 6, pos - 2)
-      text = text:sub(1, start_pos - 1) .. "*" .. content .. "*" .. text:sub(pos)
-    else break end
-  end
+  text = process_macro_with_replacement(text, "defn", function(content)
+    return "*" .. content .. "*"
+  end)
 
   -- Note: \defnx, \defnadj, \defexposconcept are now handled in RawInline
   -- with proper emphasis using pandoc.Emph() instead of literal asterisks
@@ -351,23 +318,9 @@ local function expand_macros(text)
   text = text:gsub("\\effect([^%w])", "**Effect on original feature:**%1")
 
   -- \term{x} renders as term
-  -- Use brace-balanced parsing to handle nested \tcode{} etc.
-  while true do
-    local start_pos = text:find("\\term{", 1, true)
-    if not start_pos then break end
-    local pos = start_pos + 6  -- length of "\term{"
-    local depth = 1
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then depth = depth + 1
-      elseif c == "}" then depth = depth - 1 end
-      pos = pos + 1
-    end
-    if depth == 0 then
-      local content = text:sub(start_pos + 6, pos - 2)
-      text = text:sub(1, start_pos - 1) .. "*" .. content .. "*" .. text:sub(pos)
-    else break end
-  end
+  text = process_macro_with_replacement(text, "term", function(content)
+    return "*" .. content .. "*"
+  end)
 
   -- \doccite{x} renders as italic (document citation)
   text = text:gsub("\\doccite{([^}]*)}", "*%1*")
@@ -870,28 +823,9 @@ function RawInline(elem)
   local unicode_match = text:match("^\\unicode{")
   if unicode_match then
     -- Extract both brace-balanced arguments
-    local code, _ = extract_braced_content(text, 1, 8)  -- \unicode is 8 chars
-    if code then
-      -- Find the start of the second argument
-      local second_brace_start = 1 + 8 + #code + 2  -- position after \unicode{code}
-      if text:sub(second_brace_start, second_brace_start) == "{" then
-        local desc_start = second_brace_start + 1
-        local depth = 1
-        local pos = desc_start
-        while pos <= #text and depth > 0 do
-          local c = text:sub(pos, pos)
-          if c == "{" then
-            depth = depth + 1
-          elseif c == "}" then
-            depth = depth - 1
-          end
-          pos = pos + 1
-        end
-        if depth == 0 then
-          local desc = text:sub(desc_start, pos - 2)
-          return pandoc.Str("U+" .. code .. " (" .. desc .. ")")
-        end
-      end
+    local args, _ = extract_multi_arg_macro(text, 1, 8, 2)  -- \unicode is 8 chars, 2 args
+    if args then
+      return pandoc.Str("U+" .. args[1] .. " (" .. args[2] .. ")")
     end
   end
 
@@ -954,46 +888,11 @@ function CodeBlock(elem)
     local start_pos = text:find("\\unicode{", 1, true)
     if not start_pos then break end
 
-    -- Extract first argument (code point)
-    local pos = start_pos + 9  -- length of "\unicode{"
-    local depth = 1
-    local code_start = pos
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then
-        depth = depth + 1
-      elseif c == "}" then
-        depth = depth - 1
-      end
-      pos = pos + 1
-    end
-
-    if depth ~= 0 then break end  -- Unbalanced braces
-
-    local code = text:sub(code_start, pos - 2)
-
-    -- Extract second argument (description)
-    if pos > #text or text:sub(pos, pos) ~= "{" then break end
-
-    local desc_start = pos + 1
-    pos = pos + 1
-    depth = 1
-    while pos <= #text and depth > 0 do
-      local c = text:sub(pos, pos)
-      if c == "{" then
-        depth = depth + 1
-      elseif c == "}" then
-        depth = depth - 1
-      end
-      pos = pos + 1
-    end
-
-    if depth ~= 0 then break end  -- Unbalanced braces
-
-    local desc = text:sub(desc_start, pos - 2)
+    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)  -- \unicode is 8 chars, 2 args
+    if not args then break end
 
     -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
-    text = text:sub(1, start_pos - 1) .. "U+" .. code .. " (" .. desc .. ")" .. text:sub(pos)
+    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] .. ")" .. text:sub(end_pos)
   end
 
   -- Handle \mname{} macros
@@ -1016,38 +915,9 @@ function CodeBlock(elem)
   return elem
 end
 
--- Helper function to remove a LaTeX command with balanced braces
+-- Helper function to remove a LaTeX command with balanced braces (discard content)
 local function remove_latex_command(text, command)
-  local result = text
-  while true do
-    local start_pos = result:find("\\" .. command .. "{", 1, true)
-    if not start_pos then break end
-
-    -- Find matching closing brace
-    local pos = start_pos + #command + 2
-    local depth = 1
-    while pos <= #result and depth > 0 do
-      local c = result:sub(pos, pos)
-      if c == "{" then
-        depth = depth + 1
-      elseif c == "}" then
-        depth = depth - 1
-      end
-      pos = pos + 1
-    end
-
-    if depth == 0 then
-      -- Remove the command including trailing % if present
-      local end_pos = pos - 1
-      if result:sub(end_pos + 1, end_pos + 1) == "%" then
-        end_pos = end_pos + 1
-      end
-      result = result:sub(1, start_pos - 1) .. result:sub(end_pos + 1)
-    else
-      break
-    end
-  end
-  return result
+  return remove_macro(text, command, false)  -- false = discard content
 end
 
 -- Apply to raw blocks as well
