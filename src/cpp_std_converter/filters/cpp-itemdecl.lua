@@ -25,6 +25,8 @@ local expand_cpp_version_macros = common.expand_cpp_version_macros
 local expand_concept_macros = common.expand_concept_macros
 local convert_cross_references_in_code = common.convert_cross_references_in_code
 local expand_library_spec_macros = common.expand_library_spec_macros
+local remove_macro = common.remove_macro
+local process_macro_with_replacement = common.process_macro_with_replacement
 
 -- Track note and example counters across itemdescr processing
 local itemdescr_note_counter = 0
@@ -356,16 +358,7 @@ local function expand_itemdescr_macros(text)
 
   -- Strip \indexlibrary{} macro (used for index generation, not content)
   -- Must handle nested braces like \indexlibrary{\idxcode{terminate}}
-  while true do
-    local start_pos = text:find("\\indexlibrary{", 1, true)
-    if not start_pos then break end
-    local _, end_pos = extract_braced_content(text, start_pos, 14)  -- "\indexlibrary" is 14 chars
-    if end_pos then
-      text = text:sub(1, start_pos - 1) .. text:sub(end_pos)
-    else
-      break
-    end
-  end
+  text = remove_macro(text, "indexlibrary", false)
 
   -- Specification section labels - convert to italic with colon using LaTeX commands
   -- Use \textit{...}: for italic that Pandoc will convert properly
@@ -515,17 +508,9 @@ local function expand_itemdescr_macros(text)
     if tcode_content then
       -- Remove nested \tcode{} wrappers while preserving content
       -- Example: \placeholdernc{FUN}($\tcode{T}_j$) -> \placeholdernc{FUN}($T_j$)
-      local cleaned = tcode_content
-      -- Recursively remove all \tcode{...} by extracting and replacing
-      local modified = true
-      while modified do
-        local new_cleaned = cleaned:gsub("\\tcode{([^{}]*)}", "%1")  -- Handle simple cases first
-        if new_cleaned == cleaned then
-          modified = false
-        else
-          cleaned = new_cleaned
-        end
-      end
+      -- Use helper function to recursively remove all \tcode{} macros
+      local cleaned = remove_macro(tcode_content, "tcode", true)
+
       -- Now apply placeholder conversion
       cleaned = cleaned:gsub("\\placeholdernc{", "\\textit{")
       text = text:sub(1, start_pos - 1) .. cleaned .. text:sub(end_pos)
@@ -574,16 +559,9 @@ local function expand_itemdescr_macros(text)
   -- \impldef{description} -> \textit{implementation-defined}
   -- The description is for implementers, we just show "implementation-defined"
   -- Use brace-balanced extraction because description may contain nested \tcode{}
-  while true do
-    local start_pos = text:find("\\impldef{", 1, true)
-    if not start_pos then break end
-    local _, end_pos = extract_braced_content(text, start_pos, 8)  -- "\impldef" is 8 chars
-    if end_pos then
-      text = text:sub(1, start_pos - 1) .. "\\textit{implementation-defined}" .. text:sub(end_pos)
-    else
-      break
-    end
-  end
+  text = process_macro_with_replacement(text, "impldef", function(content)
+    return "\\textit{implementation-defined}"
+  end)
 
   -- \mname{X} -> __X__ (preprocessor macro names with underscore wrapper)
   -- Handle specific cases first
