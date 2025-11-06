@@ -1933,7 +1933,7 @@ value [[intro.multithread]].
 
 ### Lock-free property <a id="atomics.lockfree">[[atomics.lockfree]]</a>
 
-`ATOMIC_..._LOCK_FREE} macros`
+\indeximpldef{values of various \texttt{ATOMIC\_...\_LOCK_FREE} macros}
 
 ``` cpp
 #define ATOMIC_BOOL_LOCK_FREE unspecified

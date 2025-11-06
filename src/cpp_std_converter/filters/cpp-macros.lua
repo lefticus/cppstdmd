@@ -15,6 +15,7 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 -- Import shared utilities
 local common = require("cpp-common")
 local subscripts = common.subscripts
+local unescape_latex_chars = common.unescape_latex_chars
 local convert_special_chars = common.convert_special_chars
 local extract_braced_content = common.extract_braced_content
 local trim = common.trim
@@ -495,15 +496,108 @@ function RawInline(elem)
     end
   end
 
+  -- \mbox{...} - process nested macros within the box
+  local mbox_start = text:find("\\mbox{", 1, true)
+  if mbox_start and mbox_start == 1 then
+    local content, _ = extract_braced_content(text, mbox_start, 5)  -- "\mbox" is 5 chars
+    if content then
+      -- Parse content into inline elements, processing nested macros
+      local inlines = {}
+      local pos = 1
+
+      while pos <= #content do
+        -- Look for known macros in order
+        local next_macro_pos = nil
+        local next_macro_name = nil
+
+        -- Check for each macro type
+        for _, macro_info in ipairs({
+          {"\\placeholder{", 12, "placeholder"},     -- \placeholder = 12 chars
+          {"\\placeholdernc{", 14, "placeholdernc"}, -- \placeholdernc = 14 chars
+          {"\\tcode{", 6, "tcode"},                   -- \tcode = 6 chars
+          {"\\grammarterm{", 12, "grammarterm"},     -- \grammarterm = 12 chars
+          {"\\keyword{", 8, "keyword"},               -- \keyword = 8 chars
+          {"\\term{", 5, "term"},                     -- \term = 5 chars
+        }) do
+          local macro_pattern = macro_info[1]
+          local macro_len = macro_info[2]
+          local macro_type = macro_info[3]
+
+          local found_pos = content:find(macro_pattern, pos, true)
+          if found_pos and (not next_macro_pos or found_pos < next_macro_pos) then
+            next_macro_pos = found_pos
+            next_macro_name = {macro_pattern, macro_len, macro_type}
+          end
+        end
+
+        if next_macro_pos then
+          -- Add text before macro
+          if next_macro_pos > pos then
+            local text_before = content:sub(pos, next_macro_pos - 1)
+            text_before = expand_macros(text_before)
+            text_before = unescape_latex_chars(text_before)
+            if #text_before > 0 then
+              table.insert(inlines, pandoc.Str(text_before))
+            end
+          end
+
+          -- Extract macro content
+          local macro_content, macro_next_pos = extract_braced_content(content, next_macro_pos, next_macro_name[2])
+          if macro_content then
+            macro_content = unescape_latex_chars(macro_content)
+
+            -- Process based on macro type
+            if next_macro_name[3] == "tcode" or next_macro_name[3] == "keyword" then
+              table.insert(inlines, pandoc.Code(macro_content))
+            elseif next_macro_name[3] == "grammarterm" then
+              table.insert(inlines, pandoc.Emph({pandoc.Str(macro_content)}))
+            elseif next_macro_name[3] == "placeholder" or next_macro_name[3] == "placeholdernc" then
+              table.insert(inlines, pandoc.Emph({pandoc.Str(macro_content)}))
+            elseif next_macro_name[3] == "term" then
+              table.insert(inlines, pandoc.Emph({pandoc.Str(macro_content)}))
+            end
+            pos = macro_next_pos
+          else
+            -- Malformed macro, skip it
+            pos = next_macro_pos + next_macro_name[2]
+          end
+        else
+          -- No more macros, add remaining text
+          local remaining = content:sub(pos)
+          remaining = expand_macros(remaining)
+          remaining = unescape_latex_chars(remaining)
+          if #remaining > 0 then
+            table.insert(inlines, pandoc.Str(remaining))
+          end
+          break
+        end
+      end
+
+      return inlines
+    end
+  end
+
   -- Inline code macros - return Code elements
   -- Need to expand nested macros first
   local code
 
-  code = text:match("\\tcode{(.*)}")
+  -- Use brace-balanced extraction instead of greedy matching for \tcode{}
+  local tcode_start = text:find("\\tcode{", 1, true)
+  local end_pos
+  if tcode_start and tcode_start == 1 then  -- Must be at start
+    code, end_pos = extract_braced_content(text, tcode_start, 6)  -- "\tcode" is 6 chars
+  end
   if code then
     -- Strip \brk{} line break hints and \- discretionary hyphens first
     code = code:gsub("\\brk{}", "")
     code = code:gsub("\\%-", "")
+    -- Handle LaTeX spacing braces: { } (with space) should become regular space
+    -- Do this BEFORE unescaping so we don't affect C++ code
+    code = code:gsub("{ }", " ")
+    -- Unescape LaTeX escaped characters (\{ → {, \} → }, etc.)
+    code = unescape_latex_chars(code)
+    -- Handle \opt{} in code (should use subscript suffix)
+    code = code:gsub("\\opt{([^}]*)}", "%1_opt")
     -- Convert inline math with subscripts to Unicode (BEFORE other processing)
     code = convert_math_subscripts(code)
     -- Convert LaTeX spacing commands to regular spaces
@@ -529,6 +623,17 @@ function RawInline(elem)
     code = convert_special_chars(code)
     -- Handle \mname macros
     code = convert_mname(code)
+
+    -- Check if there's a suffix like {s} after the \tcode{} for plurals
+    -- Pattern: \tcode{...}{s} should become `code`s
+    if end_pos and end_pos <= #text and text:sub(end_pos, end_pos) == "{" then
+      local suffix, pos_after_suffix = extract_braced_content(text, end_pos, 0)
+      if suffix and pos_after_suffix and pos_after_suffix - 1 == #text then
+        -- Suffix must end the string - return Code + Str
+        return {pandoc.Code(code), pandoc.Str(suffix)}
+      end
+    end
+
     return pandoc.Code(code)
   end
 
@@ -676,9 +781,40 @@ function RawInline(elem)
   if defnx_start then
     local plural, next_pos = extract_braced_content(text, defnx_start, 6)
     if plural then
-      -- Expand macros in plural form before wrapping in emphasis
-      plural = expand_macros(plural)
-      return pandoc.Emph({pandoc.Str(plural)})
+      -- Parse plural content into a list of inline elements
+      local inlines = {}
+      local pos = 1
+      while pos <= #plural do
+        -- Look for \tcode{...}
+        local tcode_start, tcode_end = plural:find("\\tcode{", pos, true)
+        if tcode_start then
+          -- Add text before \tcode
+          if tcode_start > pos then
+            local text_before = plural:sub(pos, tcode_start - 1)
+            text_before = expand_macros(text_before)  -- Expand macros like \Cpp{}
+            text_before = unescape_latex_chars(text_before)
+            table.insert(inlines, pandoc.Str(text_before))
+          end
+          -- Extract \tcode content using brace-balanced extraction
+          local tcode_content, tcode_next_pos = extract_braced_content(plural, tcode_start, 6)
+          if tcode_content then
+            tcode_content = unescape_latex_chars(tcode_content)
+            table.insert(inlines, pandoc.Code(tcode_content))
+            pos = tcode_next_pos
+          else
+            -- Malformed \tcode, skip it
+            pos = tcode_end + 1
+          end
+        else
+          -- No more \tcode, add remaining text
+          local remaining = plural:sub(pos)
+          remaining = expand_macros(remaining)  -- Expand macros like \Cpp{}
+          remaining = unescape_latex_chars(remaining)
+          table.insert(inlines, pandoc.Str(remaining))
+          break
+        end
+      end
+      return pandoc.Emph(inlines)
     end
   end
 

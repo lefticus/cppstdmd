@@ -412,9 +412,9 @@ variable `t` [[dcl.init]].
 
 Certain language constructs require that an expression be converted to a
 Boolean value. An expression E appearing in such a context is said to be
-`bool}}{conversion!contextual to \tcode{bool}` and is well-formed if and
-only if the declaration `bool t(E);` is well-formed, for some invented
-temporary variable `t` [[dcl.init]].
+*contextually converted to `bool`* and is well-formed if and only if the
+declaration `bool t(E);` is well-formed, for some invented temporary
+variable `t` [[dcl.init]].
 
 Certain language constructs require conversion to a value having one of
 a specified set of types appropriate to the construct. An expression E
@@ -1737,7 +1737,7 @@ If a *lambda-capture* includes a *capture-default* that is `&`, no
 identifier in a *simple-capture* of that *lambda-capture* shall be
 preceded by `&`. If a *lambda-capture* includes a *capture-default* that
 is `=`, each *simple-capture* of that *lambda-capture* shall be of the
-form “`&` *identifier* `...}`”, “`this`”, or “`* this`”.
+form “`&` *identifier* \texttt{...\_opt}”, “`this`”, or “`* this`”.
 
 \[*Note 1*: The form `[&,this]` is redundant but accepted for
 compatibility with ISO C++14. — *end note*\]
@@ -2772,7 +2772,7 @@ void h() {
 If the initializer is a parenthesized single expression, the type
 conversion expression is equivalent to the corresponding cast expression
 [[expr.cast]]. Otherwise, if the type is cv `void` and the initializer
-is `()` or `\{\}` (after pack expansion, if any), the expression is a
+is `()` or `{}` (after pack expansion, if any), the expression is a
 prvalue of type `void` that performs no initialization. Otherwise, the
 expression is a prvalue of the specified type whose result object is
 direct-initialized [[dcl.init]] with the initializer. If the initializer
@@ -3697,7 +3697,7 @@ types, expressions, and objects:
   performed for the name `await_transform` in the scope of `P`
   [[class.member.lookup]]. If this search is performed and finds at
   least one declaration, then *a* is
-  `.await_transform(}cast-expression\tcode{)}`; otherwise, *a* is the
+  *p*`.await_transform(`*cast-expression*`)`; otherwise, *a* is the
   *cast-expression*.
 - *o* is determined by enumerating the applicable `operator co_await`
   functions for an argument *a* [[over.match.oper]], and choosing the
@@ -5400,9 +5400,9 @@ about how the target of the assignment can be aliased in general. See 
 A *braced-init-list* may appear on the right-hand side of
 
 - an assignment to a scalar, in which case the initializer list shall
-  have at most a single element. The meaning of `x = \{v\}`, where `T`
-  is the scalar type of the expression `x`, is that of `x = T\{v\}`. The
-  meaning of `x = \{\}` is `x = T\{\}`.
+  have at most a single element. The meaning of `x = {v}`, where `T` is
+  the scalar type of the expression `x`, is that of `x = T{v}`. The
+  meaning of `x = {}` is `x = T{}`.
 - an assignment to an object of class type, in which case the
   initializer list is passed as the argument to the assignment operator
   function selected by overload resolution [[over.ass]], [[over.match]].

@@ -2164,7 +2164,7 @@ value `n` of type `D`. `I` models `advanceable` only if
   `I(I(a + x) + y)`.
 - `I(a + D(0))` is equal to `a`.
 - If `I(a + D(n - 1))` is well-defined, then `I(a + n)` is equal to
-  `[](I c) \{ return ++c; \}(I(a + D(n - 1)))`.
+  `[](I c) { return ++c; }(I(a + D(n - 1)))`.
 - `(b += -n)` is equal to `a`.
 - `(b -= n)` is equal to `a`.
 - `addressof(b -= n)` is equal to `addressof(b)`.
@@ -3349,8 +3349,8 @@ The name `views::all` denotes a range adaptor object
 `views::all(E)` is expression-equivalent to:
 
 - `decay-copy(E)` if the decayed type of `E` models `view`.
-- Otherwise, `ref_view\{E\}` if that expression is well-formed.
-- Otherwise, `owning_view\{E\}`.
+- Otherwise, `ref_view{E}` if that expression is well-formed.
+- Otherwise, `owning_view{E}`.
 
 #### Class template `ref_view` <a id="range.ref.view">[[range.ref.view]]</a>
 
@@ -5051,7 +5051,7 @@ complexity. — *end note*\]
 The name `views::join` denotes a range adaptor object
 [[range.adaptor.object]]. Given a subexpression `E`, the expression
 `views::join(E)` is expression-equivalent to
-`join_view<views::all_t<decltype((E))>>\{E\}`.
+`join_view<views::all_t<decltype((E))>>{E}`.
 
 \[*Example 1*:
 
@@ -6820,7 +6820,7 @@ The name `views::common` denotes a range adaptor object
 
 - `views::all(E)`, if `decltype((E))` models `common_range` and
   `views::all(E)` is a well-formed expression.
-- Otherwise, `common_view\{E\}`.
+- Otherwise, `common_view{E}`.
 
 \[*Example 1*:
 
@@ -6930,7 +6930,7 @@ The name `views::reverse` denotes a range adaptor object
     ```
 
   However, in either case `E` is evaluated only once.
-- Otherwise, equivalent to `reverse_view\{E\}`.
+- Otherwise, equivalent to `reverse_view{E}`.
 
 \[*Example 1*:
 
@@ -7103,7 +7103,7 @@ The name `views::elements<N>` denotes a range adaptor object
 [[range.adaptor.object]]. Given a subexpression `E` and constant
 expression `N`, the expression `views::elements<N>(E)` is
 expression-equivalent to
-`elements_view<views::all_t<decltype((E))>, N>\{E\}`.
+`elements_view<views::all_t<decltype((E))>, N>{E}`.
 
 \[*Example 1*:
 

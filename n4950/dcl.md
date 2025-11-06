@@ -171,7 +171,7 @@ C auto [x, y] = std::pair{1, 2};    // error: constrained placeholder-type-speci
 — *end example*\]
 
 The *initializer* shall be of the form “`=` *assignment-expression*”, of
-the form “`\{` *assignment-expression* `\}`”, or of the form “`(`
+the form “`{` *assignment-expression* `}`”, or of the form “`(`
 *assignment-expression* `)`”, where the *assignment-expression* is of
 array or non-union class type.
 
@@ -3801,14 +3801,14 @@ follows:
   explicitly initialized elements of the aggregate are the first n
   elements of the aggregate, where n is the number of elements in the
   initializer list.
-- Otherwise, the initializer list must be `\{\}`, and there are no
+- Otherwise, the initializer list must be `{}`, and there are no
   explicitly initialized elements.
 
 For each explicitly initialized element:
 
 - If the element is an anonymous union member and the initializer list
   is a brace-enclosed *designated-initializer-list*, the element is
-  initialized by the *braced-init-list* `\{ `*D*` \}`, where *D* is the
+  initialized by the *braced-init-list* `{ `*D*` }`, where *D* is the
   *designated-initializer-clause* naming a member of the anonymous union
   member. There shall be only one such *designated-initializer-clause*.
   \[*Example 5*:
@@ -3896,8 +3896,8 @@ S ss = { 1, "asdf" };
 ```
 
 initializes `ss.a` with 1, `ss.b` with `"asdf"`, `ss.c` with the value
-of an expression of the form `int\{\}` (that is, `0`), and `ss.d` with
-the value of `ss.b[ss.a]` (that is, `'s'`), and in
+of an expression of the form `int{}` (that is, `0`), and `ss.d` with the
+value of `ss.b[ss.a]` (that is, `'s'`), and in
 
 ``` cpp
 struct X { int i, j, k = 42; };
@@ -3915,9 +3915,9 @@ struct A {
 };
 ```
 
-`A\{.c=21\}` has the following steps:
+`A{.c=21}` has the following steps:
 
-- Initialize `a` with `\{\}`
+- Initialize `a` with `{}`
 - Initialize `b` with `= 42`
 - Initialize `c` with `= 21`
 
@@ -3955,7 +3955,7 @@ elements since no size was specified and there are three initializers.
 — *end example*\]
 
 An array of unknown bound shall not be initialized with an empty
-*braced-init-list* `\{\}`.
+*braced-init-list* `{}`.
 
 \[*Note 3*:
 
@@ -4725,7 +4725,7 @@ struct A {
 ```
 
 For `v1` and `v2`, the `initializer_list` object is a parameter in a
-function call, so the array created for `\{ 1, 2, 3 \}` has
+function call, so the array created for `{ 1, 2, 3 }` has
 full-expression lifetime. For `i3`, the `initializer_list` object is a
 variable, so the array persists for the lifetime of the variable. For
 `i4`, the `initializer_list` object is initialized in the constructor’s
@@ -4836,8 +4836,7 @@ int max(int a, int b, int c) {
 ```
 
 Here `int` is the *decl-specifier-seq*; `max(int` `a,` `int` `b,` `int`
-`c)` is the *declarator*; `\{ \commentellip{} \}` is the
-*function-body*.
+`c)` is the *declarator*; `{ \commentellip{} }` is the *function-body*.
 
 — *end example*\]
 
@@ -5605,7 +5604,7 @@ the closing brace is determined as follows:
 An enumeration whose underlying type is fixed is an incomplete type
 until immediately after its *enum-base* (if any), at which point it
 becomes a complete type. An enumeration whose underlying type is not
-fixed is an incomplete type until the closing `\}` of its
+fixed is an incomplete type until the closing `}` of its
 *enum-specifier*, at which point it becomes a complete type.
 
 For an enumeration whose underlying type is not fixed, the underlying

@@ -825,7 +825,7 @@ declare them. The implementation will implicitly define them as needed
 [[dcl.fct.def.default]]. — *end note*\]
 
 An implicitly-declared special member function is declared at the
-closing `\}` of the *class-specifier*. Programs shall not define
+closing `}` of the *class-specifier*. Programs shall not define
 implicitly-declared special member functions.
 
 Programs may explicitly refer to implicitly-declared special member
@@ -1838,9 +1838,9 @@ specifies a conversion from `X` to the type specified by the
 *decl-specifier* in the *decl-specifier-seq* of a conversion function
 (if any) shall not be a *defining-type-specifier*.
 
-The type of the conversion function is “`noexcept}` function taking no
-parameter *cv-qualifier-seq*\_opt *ref-qualifier*\_opt returning
-*conversion-type-id*”.
+The type of the conversion function is “\texttt{noexcept_opt} function
+taking no parameter *cv-qualifier-seq*\_opt *ref-qualifier*\_opt
+returning *conversion-type-id*”.
 
 A conversion function is never used to convert a (possibly cv-qualified)
 object to the (possibly cv-qualified) same object type (or a reference

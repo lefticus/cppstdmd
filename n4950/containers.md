@@ -444,8 +444,8 @@ allocator unless it meets both of the following conditions:
 
 - The *qualified-id* `A::value_type` is valid and denotes a type
   [[temp.deduct]].
-- The expression `declval<A&>().allocate(size_t\{\})` is well-formed
-  when treated as an unevaluated operand.
+- The expression `declval<A&>().allocate(size_t{})` is well-formed when
+  treated as an unevaluated operand.
 
 #### Reversible container requirements <a id="container.rev.reqmts">[[container.rev.reqmts]]</a>
 
@@ -553,8 +553,8 @@ defined. If `X` is not allocator-aware or is a specialization of
 `allocator<T>` — no allocator object needs to be created and user
 specializations of `allocator<T>` are not instantiated:
 
-- `T` is `X}` into X@*Cpp17DefaultInsertable* into `X` means that the
-  following expression is well-formed:
+- `T` is *Cpp17DefaultInsertable* into X@*Cpp17DefaultInsertable* into
+  `X` means that the following expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p)
   ```
@@ -566,8 +566,8 @@ specializations of `allocator<T>` are not instantiated:
 
   where `p` is the address of the uninitialized storage for the element
   allocated within `X`.
-- `T` is `X}` into X@*Cpp17MoveInsertable* into `X` means that the
-  following expression is well-formed:
+- `T` is *Cpp17MoveInsertable* into X@*Cpp17MoveInsertable* into `X`
+  means that the following expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, rv)
   ```
@@ -577,24 +577,24 @@ specializations of `allocator<T>` are not instantiated:
   evaluation.
   \[*Note 2*: `rv` remains a valid object. Its state is
   unspecified — *end note*\]
-- `T` is `X}` into X@*Cpp17CopyInsertable* into `X` means that, in
-  addition to `T` being *Cpp17MoveInsertable* into `X`, the following
-  expression is well-formed:
+- `T` is *Cpp17CopyInsertable* into X@*Cpp17CopyInsertable* into `X`
+  means that, in addition to `T` being *Cpp17MoveInsertable* into `X`,
+  the following expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, v)
   ```
 
   and its evaluation causes the following postcondition to hold: The
   value of `v` is unchanged and is equivalent to `*p`.
-- `T` is `X} from \tcode{args}` into X from
+- `T` is *Cpp17EmplaceConstructible* into X from
   args@*Cpp17EmplaceConstructible* into `X` from `args`, for zero or
   more arguments `args`, means that the following expression is
   well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, args)
   ```
-- `T` is `X}` from X@*Cpp17Erasable* from `X` means that the following
-  expression is well-formed:
+- `T` is *Cpp17Erasable* from X@*Cpp17Erasable* from `X` means that the
+  following expression is well-formed:
   ``` cpp
   allocator_traits<A>::destroy(m, p)
   ```

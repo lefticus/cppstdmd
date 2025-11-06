@@ -1789,7 +1789,7 @@ h({ 1, 2, 3 });                 // OK, identity conversion
 
 Otherwise, if the parameter type is “array of `N` `X`” or “array of
 unknown bound of `X`”, if there exists an implicit conversion sequence
-from each element of the initializer list (and from `\{\}` in the former
+from each element of the initializer list (and from `{}` in the former
 case if `N` exceeds the number of elements in the initializer list) to
 `X`, the implicit conversion sequence is the worst such implicit
 conversion sequence.

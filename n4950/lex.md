@@ -230,7 +230,7 @@ universal-character-name:
 ```
 
 A *universal-character-name* of the form `\u` *hex-quad*, `\U`
-*hex-quad* *hex-quad*, or `\u\{simple-hexadecimal-digit-sequence\}`
+*hex-quad* *hex-quad*, or `\u{simple-hexadecimal-digit-sequence}`
 designates the character in the translation character set whose Unicode
 scalar value is the hexadecimal number represented by the sequence of
 *hexadecimal-digit*s in the *universal-character-name*. The program is

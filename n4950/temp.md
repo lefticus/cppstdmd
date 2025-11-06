@@ -1427,7 +1427,7 @@ The *normal form* of an *expression* `E` is a constraint
   normal forms of `E1` and `E2`.
 - The normal form of a concept-id `C<A_1, A_2, ..., A_n>` is the normal
   form of the *constraint-expression* of `C`, after substituting
-  `A_1, A_2, ..., A_n` for `C}{'s` respective template parameters in the
+  `A_1, A_2, ..., A_n` for `C`'s respective template parameters in the
   parameter mappings in each atomic constraint. If any such substitution
   results in an invalid type or expression, the program is ill-formed;
   no diagnostic is required.
@@ -1438,10 +1438,10 @@ The *normal form* of an *expression* `E` is a constraint
   template<typename V> concept C = B<V&>;
   ```
 
-  Normalization of `B}{'s` *constraint-expression* is valid and results
-  in `T::value` (with the mapping `T` \mapsto `U*`) ∨ `true` (with an
-  empty mapping), despite the expression `T::value` being ill-formed for
-  a pointer type `T`. Normalization of `C}{'s` *constraint-expression*
+  Normalization of `B`'s *constraint-expression* is valid and results in
+  `T::value` (with the mapping `T` \mapsto `U*`) ∨ `true` (with an empty
+  mapping), despite the expression `T::value` being ill-formed for a
+  pointer type `T`. Normalization of `C`'s *constraint-expression*
   results in the program being ill-formed, because it would form the
   invalid type `V&*` in the parameter mapping.
   — *end example*\]
@@ -1472,9 +1472,9 @@ template<C4 U> void f3(U);      // #3
 
 The associated constraints of \#1 are `sizeof(T) == 1` (with mapping
 `T` \mapsto `U`) ∧ `1 == 2`.  
-The associated constraints of \#2 are `requires \{ typename T::type; \}`
+The associated constraints of \#2 are `requires { typename T::type; }`
 (with mapping `T` \mapsto `U`).  
-The associated constraints of \#3 are `requires (T x) \{ ++x; \}` (with
+The associated constraints of \#3 are `requires (T x) { ++x; }` (with
 mapping `T` \mapsto `U`).
 
 — *end example*\]
@@ -6725,17 +6725,17 @@ T&&
 
 where
 
-- `\opt{T}` represents a type or parameter-type-list that either
-  satisfies these rules recursively, is a non-deduced context in `P` or
-  `A`, or is the same non-dependent type in `P` and `A`,
-- `\opt{TT}` represents either a class template or a template template
+- `T_opt` represents a type or parameter-type-list that either satisfies
+  these rules recursively, is a non-deduced context in `P` or `A`, or is
+  the same non-dependent type in `P` and `A`,
+- `TT_opt` represents either a class template or a template template
   parameter,
-- `\opt{i}` represents an expression that either is an `i`, is
+- `i_opt` represents an expression that either is an `i`, is
   value-dependent in `P` or `A`, or has the same constant value in `P`
   and `A`, and
-- `noexcept(\opt{i})` represents an exception specification
+- `noexcept(i_opt)` represents an exception specification
   [[except.spec]] in which the (possibly-implicit, see  [[dcl.fct]])
-  *noexcept-specifier*’s operand satisfies the rules for an `\opt{i}`
+  *noexcept-specifier*’s operand satisfies the rules for an `i_opt`
   above.
 
 \[*Note 2*: If a type matches such a form but contains no `T`s, `i`s, or

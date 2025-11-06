@@ -7562,7 +7562,7 @@ collectively referred to as *state entities*.
 
 ### Requirements <a id="func.require">[[func.require]]</a>
 
-`INVOKE}` Define `INVOKE(f, t_1, t_2, \dotsc, t_N)` as follows:
+*INVOKE* Define `INVOKE(f, t_1, t_2, \dotsc, t_N)` as follows:
 
 - `(t_1.*f)(t_2, \dotsc, t_N)` when `f` is a pointer to a member
   function of a class `T` and
@@ -7584,7 +7584,7 @@ collectively referred to as *state entities*.
   `T` and `t_1` does not satisfy the previous two items;
 - `f(t_1, t_2, \dotsc, t_N)` in all other cases.
 
-`INVOKE}` Define `INVOKE<R>(f, t_1, t_2, \dotsc, t_N)` as
+*INVOKE* Define `INVOKE<R>(f, t_1, t_2, \dotsc, t_N)` as
 `static_cast<void>(INVOKE(f, t_1, t_2, \dotsc, t_N))` if `R` is
 cv `void`, otherwise `INVOKE(f, t_1, t_2, \dotsc, t_N)` implicitly
 converted to `R`. If
@@ -8777,7 +8777,11 @@ namespace std {
 }
 ```
 
-`_1}` `_2}` `_3}` `_4}` `_5}` `_6}` `_7}` `_8}` `_9}` `_10}` The class
+\indexlibrary{1@\texttt{\_1}} \indexlibrary{2@\texttt{\_2}}
+\indexlibrary{3@\texttt{\_3}} \indexlibrary{4@\texttt{\_4}}
+\indexlibrary{5@\texttt{\_5}} \indexlibrary{6@\texttt{\_6}}
+\indexlibrary{7@\texttt{\_7}} \indexlibrary{8@\texttt{\_8}}
+\indexlibrary{9@\texttt{\_9}} \indexlibrary{10@\texttt{\_10}} The class
 template `is_placeholder` can be used to detect the standard
 placeholders `_1`, `_2`, and so on [[func.bind.place]]. The function
 template `bind` uses `is_placeholder` to detect placeholders.
@@ -8882,7 +8886,11 @@ type `V`_`fd` is `\cv{} FD&`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 
-`_1}` `_2}` `_3}` `_4}` `_5}` `_6}` `_7}` `_8}` `_9}` `_10}`
+\indexlibrary{1@\texttt{\_1}} \indexlibrary{2@\texttt{\_2}}
+\indexlibrary{3@\texttt{\_3}} \indexlibrary{4@\texttt{\_4}}
+\indexlibrary{5@\texttt{\_5}} \indexlibrary{6@\texttt{\_6}}
+\indexlibrary{7@\texttt{\_7}} \indexlibrary{8@\texttt{\_8}}
+\indexlibrary{9@\texttt{\_9}} \indexlibrary{10@\texttt{\_10}}
 
 ``` cpp
 namespace std::placeholders {
@@ -10456,12 +10464,12 @@ classes or members other than those specified.
 #### In general <a id="format.string.general">[[format.string.general]]</a>
 
 A *format string* for arguments `args` is a (possibly empty) sequence of
-*replacement fields*, *escape sequences*, and characters other than `\{`
-and `\}`. Let `charT` be the character type of the format string. Each
+*replacement fields*, *escape sequences*, and characters other than `{`
+and `}`. Let `charT` be the character type of the format string. Each
 character that is not part of a replacement field or an escape sequence
-is copied unchanged to the output. An escape sequence is one of `\{\{`
-or `\}\}`. It is replaced with `\{` or `\}`, respectively, in the
-output. The syntax of replacement fields is as follows:
+is copied unchanged to the output. An escape sequence is one of `{{` or
+`}}`. It is replaced with `{` or `}`, respectively, in the output. The
+syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{replacement-field}
@@ -10747,11 +10755,11 @@ string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no 
 The *width* option specifies the minimum field width. If the *width*
 option is absent, the minimum field width is `0`.
 
-If `\{ \opt{\fmtgrammarterm{arg-id}} \}` is used in a *width* or
-*precision* option, the value of the corresponding formatting argument
-is used as the value of the option. If the corresponding formatting
-argument is not of standard signed or unsigned integer type, or its
-value is negative, an exception of type `format_error` is thrown.
+If `{ \fmtgrammarterm{arg-id_opt} }` is used in a *width* or *precision*
+option, the value of the corresponding formatting argument is used as
+the value of the option. If the corresponding formatting argument is not
+of standard signed or unsigned integer type, or its value is negative,
+an exception of type `format_error` is thrown.
 
 If *positive-integer* is used in a *width* option, the value of the
 *positive-integer* is interpreted as a decimal integer and used as the
@@ -11196,7 +11204,7 @@ argument type `T`, in [[formatter.basic]] and [[formatter]]:
 `pc.begin()` points to the beginning of the *format-spec*
 [[format.string]] of the replacement field being formatted in the format
 string. If *format-spec* is empty then either `pc.begin() == pc.end()`
-or `*pc.begin() == '\}'`.
+or `*pc.begin() == '}'`.
 
 \[*Note 1*: This allows formatters to emit meaningful error
 messages. — *end note*\]
@@ -11364,7 +11372,7 @@ interpret *S* and construct *E*.
         implementation-defined set of separator or non-printable
         characters
 
-      then the sequence `\u\{hex-digit-sequence\}` is appended to *E*,
+      then the sequence `\u{hex-digit-sequence}` is appended to *E*,
       where `hex-digit-sequence` is the shortest hexadecimal
       representation of *C* using lower-case hexadecimal digits.
     - Otherwise, *C* is appended to *E*.
@@ -11374,9 +11382,9 @@ interpret *S* and construct *E*.
     can be reconstructed.
   - Otherwise (*X* is a sequence of ill-formed code units), each code
     unit *U* is appended to *E* in order as the sequence
-    `\x\{hex-digit-sequence\}`, where `hex-digit-sequence` is the
-    shortest hexadecimal representation of *U* using lower-case
-    hexadecimal digits.
+    `\x{hex-digit-sequence}`, where `hex-digit-sequence` is the shortest
+    hexadecimal representation of *U* using lower-case hexadecimal
+    digits.
 - Finally, U+0022 (quotation mark) (`"`) is appended to *E*.
 
 **Table: Mapping of characters to escape sequences**
@@ -11739,7 +11747,7 @@ The `n` option causes the range to be formatted without the opening and
 closing brackets.
 
 \[*Note 1*: This is equivalent to invoking
-`set_brackets(\{\}, \{\})`. — *end note*\]
+`set_brackets({}, {})`. — *end note*\]
 
 The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of

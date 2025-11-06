@@ -1539,7 +1539,7 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 *multi-pass guarantee* if:
 
 - `a == b` implies `++a == ++b` and
-- the expression `((void)[](X x)\{++x;\}(a), *a)` is equivalent to the
+- the expression `((void)[](X x){++x;}(a), *a)` is equivalent to the
   expression `*a`.
 
 \[*Note 2*: The requirement that `a == b` implies `++a == ++b` and the
@@ -1617,7 +1617,7 @@ models `random_access_iterator` only if
   `((a + x) + y)`.
 - `(a + D(0))` is equal to `a`.
 - If `(a + D(n - 1))` is valid, then `(a + n)` is equal to
-  `[](I c)\{ return ++c; \}(a + D(n - 1))`.
+  `[](I c){ return ++c; }(a + D(n - 1))`.
 - `(b += D(-n))` is equal to `a`.
 - `(b -= n)` is equal to `a`.
 - `addressof(b -= n)` is equal to `addressof(b)`.

@@ -1287,12 +1287,12 @@ values of `N` and `D`:
   `\operatorname{sgn}(\tcode{N}) * \operatorname{sgn}(\tcode{D}) * abs(N) / gcd`.
 - `den` shall have the value `abs(D) / gcd`.
 
-### Arithmetic on `ratio}{s` <a id="ratio.arithmetic">[[ratio.arithmetic]]</a>
+### Arithmetic on `ratio`s <a id="ratio.arithmetic">[[ratio.arithmetic]]</a>
 
 Each of the alias templates `ratio_add`, `ratio_subtract`,
 `ratio_multiply`, and `ratio_divide` denotes the result of an arithmetic
-computation on two `ratio}{s` `R1` and `R2`. With `X` and `Y` computed
-(in the absence of arithmetic overflow) as specified by
+computation on two `ratio`s `R1` and `R2`. With `X` and `Y` computed (in
+the absence of arithmetic overflow) as specified by
 [[ratio.arithmetic]], each alias denotes a `ratio<U, V>` such that `U`
 is the same as `ratio<X, Y>::num` and `V` is the same as
 `ratio<X, Y>::den`.
@@ -1336,7 +1336,7 @@ static_assert(ratio_multiply<ratio<1, INT_MAX>, ratio<INT_MAX, 2>>::den == 2,
 
 — *end example*\]
 
-### Comparison of `ratio}{s` <a id="ratio.comparison">[[ratio.comparison]]</a>
+### Comparison of `ratio`s <a id="ratio.comparison">[[ratio.comparison]]</a>
 
 ``` cpp
 template<class R1, class R2>

@@ -109,7 +109,7 @@ void h() {
 New headers. New functionality. The following C++ headers are new:
 `<expected>`, `<flat_map>`, `<flat_set>`, `<generator>`, `<print>`,
 `<spanstream>`, `<stacktrace>`, and `<stdatomic.h>`. Valid C++20 code
-that `#include}{s` headers with these names may be invalid in this
+that `#include`s headers with these names may be invalid in this
 revision of C++.
 
 ###  [[concepts]]: concepts library <a id="diff.cpp20.concepts">[[diff.cpp20.concepts]]</a>
@@ -624,13 +624,13 @@ New headers. New functionality. The following C++ headers are new:
 `<barrier>`, `<bit>`, `<charconv>`, `<compare>`, `<concepts>`,
 `<coroutine>`, `<format>`, `<latch>`, `<numbers>`, `<ranges>`,
 `<semaphore>`, `<source_location>`, `<span>`, `<stop_token>`,
-`<syncstream>`, and `<version>`. Valid C++17 code that `#include}{s`
+`<syncstream>`, and `<version>`. Valid C++17 code that `#include`s
 headers with these names may be invalid in this revision of C++.
 
 Remove vacuous C++ header files. The empty headers implied a false
 requirement to achieve C compatibility with the C++ headers. A valid
-C++17 program that `#include}{s` any of the following headers may fail
-to compile: , , , , and . To retain the same behavior:
+C++17 program that `#include`s any of the following headers may fail to
+compile: , , , , and . To retain the same behavior:
 
 - a `#include` of can be replaced by a `#include` of `<complex>`,
 - a `#include` of can be replaced by a `#include` of `<cmath>` and a
@@ -927,7 +927,7 @@ unspecified whether stack unwinding is performed prior to such a call.
 New headers. New functionality. The following C++ headers are new:
 `<any>`, `<charconv>`, `<execution>`, `<filesystem>`,
 `<memory_resource>`, `<optional>`,  
-`<string_view>`, and `<variant>`. Valid C++14 code that `#include}{s`
+`<string_view>`, and `<variant>`. Valid C++14 code that `#include`s
 headers with these names may be invalid in this revision of C++.
 
 New reserved namespaces. Reserve namespaces for future revisions of the
@@ -1124,8 +1124,8 @@ S b{a};             // uses copy constructor in C++11,
 ###  [[library]]: library introduction <a id="diff.cpp11.library">[[diff.cpp11.library]]</a>
 
 New header. New functionality. The C++ header `<shared_mutex>` is new.
-Valid C++11 code that `#include}{s` a header with that name may be
-invalid in this revision of C++.
+Valid C++11 code that `#include`s a header with that name may be invalid
+in this revision of C++.
 
 ###  [[input.output]]: input/output library <a id="diff.cpp11.input.output">[[diff.cpp11.input.output]]</a>
 
@@ -1285,7 +1285,7 @@ New headers. New functionality. The following C++ headers are new:
 `<system_error>`, `<thread>`, `<tuple>`, `<type\-index>`,
 `<type_traits>`, `<unordered_map>`, and `<unordered_set>`. In addition
 the following C compatibility headers are new: `<cfenv>`, `<cinttypes>`,
-`<cstdint>`, and `<cuchar>`. Valid C++03 code that `#include}{s` headers
+`<cstdint>`, and `<cuchar>`. Valid C++03 code that `#include`s headers
 with these names may be invalid in this revision of C++.
 
 Function `swap` moved to a different header Remove dependency on

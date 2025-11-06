@@ -339,7 +339,7 @@ The declaration of such an entity or *typedef-name* is followed by a
 comment ending in *exposition only*.
 
 The following are defined for exposition only to aid in the
-specification of the library: `decay-copy}`
+specification of the library: *decay-copy*
 
 ``` cpp
 namespace std {

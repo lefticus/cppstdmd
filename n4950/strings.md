@@ -914,8 +914,8 @@ constexpr bool contains(const charT* x) const;
 #### Searching <a id="string.view.find">[[string.view.find]]</a>
 
 Member functions in this subclause have complexity
-`size() * str.size()}` at worst, although implementations should do
-better.
+\bigoh{\texttt{size() \* str.size()}} at worst, although implementations
+should do better.
 
 Let *F* be one of `find`, `rfind`, `find_first_of`, `find_last_of`,
 `find_first_not_of`, and `find_last_not_of`.

@@ -797,3 +797,66 @@ def test_doccite_with_nested_cpp_macro():
     # Should NOT have truncated content or unexpanded macros
     assert "\\Cpp{" not in output
     assert "*The \\Cpp{*" not in output
+
+def test_tcode_with_escaped_braces():
+    r"""Test \tcode{} with escaped braces like \{\}"""
+    latex = r"Use \tcode{identity\{\}} for the identity projection."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should preserve {} after unescaping, not remove them
+    assert "`identity{}`" in output
+    assert "identity`" not in output  # Should not lose the {}
+
+def test_tcode_with_single_escaped_brace():
+    r"""Test \tcode{} with single escaped braces like \{"""
+    latex = r"The syntax is \tcode{\{} for opening."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should unescape to just {
+    assert "`{`" in output
+    assert "`\\{`" not in output  # Should not have backslash
+
+def test_tcode_with_plural_suffix():
+    r"""Test \tcode{} with plural suffix like {s}"""
+    latex = r"Valid code that \tcode{\#include}{s} headers."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should produce `#include`s not `#include}{s` or just `#include`
+    assert "`#include`s" in output
+    assert "`#include}{s`" not in output
+    assert "`#include` headers" not in output  # Should not drop the 's'
+
+def test_defnx_with_nested_tcode_heap():
+    r"""Test \defnx{}{} with multiple nested \tcode{} macros - heap example"""
+    latex = r"A range is a \defnx{heap with respect to \tcode{comp} and \tcode{proj}}{heap with respect to comp and proj@heap with respect to \tcode{comp} and \tcode{proj}} for a comparator."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should render first argument with nested code, discard second argument
+    assert "*heap with respect to `comp` and `proj`*" in output
+    # Should NOT have the @ index marker or second argument text
+    assert "@heap" not in output
+    assert "comp and proj@" not in output
+
+def test_mbox_with_mixed_macros():
+    r"""Test \mbox{} with mixed \placeholder, \tcode, and \grammarterm"""
+    latex = r"then \placeholder{a} is \mbox{\placeholder{p}\tcode{.await_transform(}\grammarterm{cast-expression}\tcode{)}}; otherwise"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should produce complete expression with all parts
+    assert "*p*" in output
+    assert ".await_transform(" in output
+    assert "*cast-expression*" in output
+    assert ")" in output
+    # The complete pattern should be: *p*.await_transform(*cast-expression*)
+    # But we'll test for the key components since formatting may vary
+
+def test_defnx_contextual_bool():
+    r"""Test \defnx{}{} with nested \tcode{bool}"""
+    latex = r"An expression is said to be \defnx{contextually converted to \tcode{bool}}{conversion!contextual to \tcode{bool}} and is well-formed."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should render first argument in emphasis with nested code
+    assert "*contextually converted to `bool`*" in output
+    # Should NOT have the second argument or index marker
+    assert "conversion!contextual" not in output
+

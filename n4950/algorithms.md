@@ -5627,7 +5627,7 @@ is `false`.
 
 A sequence is *sorted with respect to a comparator `comp`* for a
 comparator `comp` if it is sorted with respect to `comp` and
-`identity\{\}` (the identity projection).
+`identity{}` (the identity projection).
 
 A sequence [`start`, `finish`) is
 *partitioned with respect to an expression* `f(e)` if there exists an
@@ -6933,10 +6933,10 @@ elements are copied in order.
 
 #### General <a id="alg.heap.operations.general">[[alg.heap.operations.general]]</a>
 
-A random access range [`a`, `b`) is a `comp} and \tcode{proj}` heap with
-respect to comp and proj@heap with respect to `comp` and `proj` for a
-comparator and projection `comp` and `proj` if its elements are
-organized such that:
+A random access range [`a`, `b`) is a
+*heap with respect to `comp` and `proj`* heap with respect to comp and
+proj@heap with respect to `comp` and `proj` for a comparator and
+projection `comp` and `proj` if its elements are organized such that:
 
 - With `N = b - a`, for all i, 0 < i < N,
   `bool(invoke(comp, invoke(proj, a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor]), invoke(proj, a[i])))`
@@ -7950,7 +7950,7 @@ intentional. — *end note*\]
 
 ### Definitions <a id="numerics.defns">[[numerics.defns]]</a>
 
-`GENERALIZED_NONCOMMUTATIVE_SUM}` Define
+*GENERALIZED_NONCOMMUTATIVE_SUM* Define
 `GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, ..., aN)` as follows:
 
 - `a1` when `N` is `1`, otherwise
@@ -7958,7 +7958,7 @@ intentional. — *end note*\]
   `\phantom{op(}GENERALIZED_NONCOMMUTATIVE_SUM(op, aM, ..., aN))` for
   any `K` where 1 < K+1 = M ≤ N.
 
-`GENERALIZED_SUM}` Define `GENERALIZED_SUM(op, a1, ..., aN)` as
+*GENERALIZED_SUM* Define `GENERALIZED_SUM(op, a1, ..., aN)` as
 `GENERALIZED_NONCOMMUTATIVE_SUM(op, b1, ..., bN)`, where `b1, ..., bN`
 may be any permutation of `a1, ..., aN`.
 

@@ -2007,9 +2007,8 @@ is commonly referred to as *Unix time*. This measure facilitates an
 efficient mapping between `sys_time` and calendar types [[time.cal]].
 
 \[*Example 1*:   
-`sys_seconds\{sys_days\{1970y/January/1\}\}.time_since_epoch()` is
-`0s`.  
-`sys_seconds\{sys_days\{2000y/January/1\}\}.time_since_epoch()` is
+`sys_seconds{sys_days{1970y/January/1}}.time_since_epoch()` is `0s`.  
+`sys_seconds{sys_days{2000y/January/1}}.time_since_epoch()` is
 `946'684'800s`, which is `10'957 * 86'400s`.  
  — *end example*\]
 
@@ -2133,13 +2132,13 @@ time, including leap seconds, since 1970-01-01 00:00:00 UTC.
 
 \[*Note 1*: The UTC time standard began on 1972-01-01 00:00:10 TAI. To
 measure time since this epoch instead, one can add/subtract the constant
-`sys_days\{1972y/1/1\} - sys_days\{1970y/1/1\}` (`63'072'000s`) from the
+`sys_days{1972y/1/1} - sys_days{1970y/1/1}` (`63'072'000s`) from the
 `utc_time`. — *end note*\]
 
 \[*Example 1*:   
-`clock_cast<utc_clock>(sys_seconds\{sys_days\{1970y/January/1\}\}).time_since_epoch()`
+`clock_cast<utc_clock>(sys_seconds{sys_days{1970y/January/1}}).time_since_epoch()`
 is `0s`.  
-`clock_cast<utc_clock>(sys_seconds\{sys_days\{2000y/January/1\}\}).time_since_epoch()`
+`clock_cast<utc_clock>(sys_seconds{sys_days{2000y/January/1}}).time_since_epoch()`
 is `946'684'822s`,  
 which is `10'957 * 86'400s + 22s`.  
  — *end example*\]
@@ -7652,7 +7651,7 @@ template<class Duration>
 
 *Returns:* `{time, abbrev, offset_sec}`.
 
-`chrono::local-time-format-t}`
+*local-time-format-t*
 
 ``` cpp
 template<class Duration, class charT>
