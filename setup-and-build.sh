@@ -118,18 +118,28 @@ else
     info "Repository already exists, attempting to update..."
     cd "$DRAFT_DIR"
 
-    # Try to fetch and update, but don't fail if offline
-    if git fetch --tags 2>/dev/null; then
-        # Only pull if we're on a branch (not detached HEAD)
-        if git symbolic-ref --short HEAD &>/dev/null; then
-            git pull 2>/dev/null || warn "Could not pull latest changes (offline?)"
-        fi
-        success "Repository updated"
+    # Check if repository is in a valid state
+    if ! git rev-parse --git-dir &>/dev/null; then
+        warn "Repository appears corrupted, but continuing with existing files"
+        cd "$SCRIPT_DIR"
     else
-        warn "Could not fetch from remote (offline?), using local repository"
-    fi
+        # Try to fetch and update with timeout, but don't fail if offline
+        if timeout 10 git fetch --tags 2>/dev/null; then
+            # Only pull if we're on a branch (not detached HEAD)
+            if git symbolic-ref --short HEAD &>/dev/null; then
+                timeout 10 git pull 2>/dev/null || warn "Could not pull latest changes (offline or timeout)"
+                success "Repository updated"
+            else
+                info "Repository in detached HEAD state (likely using specific git ref)"
+                success "Repository ready (using existing checkout)"
+            fi
+        else
+            warn "Could not fetch from remote (offline, timeout, or network error), using local repository"
+            success "Repository ready (using existing checkout)"
+        fi
 
-    cd "$SCRIPT_DIR"
+        cd "$SCRIPT_DIR"
+    fi
 fi
 
 # Verify the source directory exists
