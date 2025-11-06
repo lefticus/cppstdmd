@@ -88,24 +88,45 @@ class DraftRepoManager:
         logger.info(f"Checking out {ref}...")
 
         try:
-            # Fetch if it's not a local ref
-            subprocess.run(
-                ["git", "fetch", "--tags"],
+            # Try to checkout the ref directly (works if ref exists locally)
+            result = subprocess.run(
+                ["git", "checkout", ref],
                 cwd=self.repo_dir,
-                check=True,
                 capture_output=True,
                 text=True,
             )
 
-            # Checkout the ref
-            subprocess.run(
-                ["git", "checkout", ref],
-                cwd=self.repo_dir,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-            logger.info(f"Checked out {ref}")
+            if result.returncode == 0:
+                logger.info(f"Checked out {ref}")
+                return
+
+            # If local checkout failed, try fetching and then checkout
+            logger.debug(f"Local ref {ref} not found, attempting fetch...")
+            try:
+                subprocess.run(
+                    ["git", "fetch", "--tags"],
+                    cwd=self.repo_dir,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                )
+
+                # Try checkout again after fetch
+                subprocess.run(
+                    ["git", "checkout", ref],
+                    cwd=self.repo_dir,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+                logger.info(f"Checked out {ref}")
+            except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as fetch_error:
+                # Fetch failed (offline?), but original checkout also failed
+                raise RepoManagerError(
+                    f"Failed to checkout {ref}. Not found locally and fetch failed "
+                    f"(offline?):\n{result.stderr}"
+                ) from fetch_error
 
         except subprocess.CalledProcessError as e:
             raise RepoManagerError(
@@ -195,16 +216,21 @@ class DraftRepoManager:
             )
 
         try:
-            # Fetch latest tags
-            subprocess.run(
-                ["git", "fetch", "--tags"],
-                cwd=self.repo_dir,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
+            # Try to fetch latest tags (optional, works offline if tags already exist)
+            try:
+                subprocess.run(
+                    ["git", "fetch", "--tags"],
+                    cwd=self.repo_dir,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                )
+                logger.debug("Fetched latest tags")
+            except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+                logger.debug("Fetch failed (offline?), using local tags")
 
-            # List tags
+            # List tags (works with whatever tags are available locally)
             cmd = ["git", "tag", "--list"]
             if pattern:
                 cmd.append(pattern)
