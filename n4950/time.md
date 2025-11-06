@@ -7632,8 +7632,6 @@ template<class Duration, class charT>
 *Remarks:* If `%Z`, `%z`, or a modified version of `%z` is used, an
 exception of type `format_error` is thrown.
 
-*local-time-format-t*
-
 ``` cpp
 template<class Duration> struct local-time-format-t {           // exposition only
   local_time<Duration> time;                                    // exposition only
@@ -7650,8 +7648,6 @@ template<class Duration>
 ```
 
 *Returns:* `{time, abbrev, offset_sec}`.
-
-*local-time-format-t*
 
 ``` cpp
 template<class Duration, class charT>

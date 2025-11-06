@@ -5969,8 +5969,6 @@ template<class Allocator> struct hash<vector<bool, Allocator>>;
 
 The specialization is enabled [[unord.hash]].
 
-*is-vector-bool-reference*
-
 ``` cpp
 template<class T>
   constexpr bool is-vector-bool-reference = see below;

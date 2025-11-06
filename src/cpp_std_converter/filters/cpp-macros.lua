@@ -435,7 +435,7 @@ function RawInline(elem)
   local text = elem.text
 
   -- Strip index generation commands - these are PDF-only and should never appear in output
-  if text:match("^\\indextext{") or text:match("^\\index{") then
+  if text:match("^\\indextext{") or text:match("^\\index{") or text:match("^\\indexlibrary{") then
     return {}  -- Return empty list to remove element
   end
 

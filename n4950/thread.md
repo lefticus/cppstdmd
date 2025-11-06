@@ -2130,8 +2130,6 @@ bool is_lock_free() const noexcept;
 *Returns:* `true` if operations on all objects of the type
 `atomic_ref<T>` are lock-free, `false` otherwise.
 
-*integral-type* *floating-point-type*
-
 ``` cpp
 atomic_ref(T& obj);
 ```
@@ -2142,8 +2140,6 @@ atomic_ref(T& obj);
 *Ensures:* `*this` references `obj`.
 
 *Throws:* Nothing.
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 atomic_ref(const atomic_ref& ref) noexcept;
@@ -2309,14 +2305,14 @@ operation [[atomics.wait]] on atomic object `*ptr`.
 
 #### Specializations for integral types <a id="atomics.ref.int">[[atomics.ref.int]]</a>
 
-*integral-type* There are specializations of the `atomic_ref` class
-template for the integral types `char`, `signed char`, `unsigned char`,
-`short`, `unsigned short`, `int`, `unsigned int`, `long`,
-`unsigned long`, `long long`, `unsigned long long`, `char8_t`,
-`char16_t`, `char32_t`, `wchar_t`, and any other types needed by the
-typedefs in the header `<cstdint>`. For each such type `integral-type`,
-the specialization `atomic_ref<integral-type>` provides additional
-atomic operations appropriate to integral types.
+There are specializations of the `atomic_ref` class template for the
+integral types `char`, `signed char`, `unsigned char`, `short`,
+`unsigned short`, `int`, `unsigned int`, `long`, `unsigned long`,
+`long long`, `unsigned long long`, `char8_t`, `char16_t`, `char32_t`,
+`wchar_t`, and any other types needed by the typedefs in the header
+`<cstdint>`. For each such type `integral-type`, the specialization
+`atomic_ref<integral-type>` provides additional atomic operations
+appropriate to integral types.
 
 \[*Note 1*: The specialization `atomic_ref<bool>` uses the primary
 template [[atomics.ref.generic]]. — *end note*\]
@@ -2427,11 +2423,11 @@ integral-type operator op=(integral-type operand) const noexcept;
 
 #### Specializations for floating-point types <a id="atomics.ref.float">[[atomics.ref.float]]</a>
 
-*floating-point-type* There are specializations of the `atomic_ref`
-class template for all cv-unqualified floating-point types. For each
-such type `floating-point-type`, the specialization
-`atomic_ref<floating-point>` provides additional atomic operations
-appropriate to floating-point types.
+There are specializations of the `atomic_ref` class template for all
+cv-unqualified floating-point types. For each such type
+`floating-point-type`, the specialization `atomic_ref<floating-point>`
+provides additional atomic operations appropriate to floating-point
+types.
 
 ``` cpp
 namespace std {
@@ -2715,8 +2711,6 @@ type. — *end note*\]
 
 #### Operations on atomic types <a id="atomics.types.operations">[[atomics.types.operations]]</a>
 
-*integral-type* *floating-point-type*
-
 ``` cpp
 constexpr atomic() noexcept(is_nothrow_default_constructible_v<T>);
 ```
@@ -2725,8 +2719,6 @@ constexpr atomic() noexcept(is_nothrow_default_constructible_v<T>);
 
 *Effects:* Initializes the atomic object with the value of `T()`.
 Initialization is not an atomic operation [[intro.multithread]].
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 constexpr atomic(T desired) noexcept;
@@ -3063,8 +3055,8 @@ operation [[atomics.wait]].
 
 #### Specializations for integers <a id="atomics.types.int">[[atomics.types.int]]</a>
 
-*integral-type* There are specializations of the `atomic` class template
-for the integral types `char`, `signed char`, `unsigned char`, `short`,
+There are specializations of the `atomic` class template for the
+integral types `char`, `signed char`, `unsigned char`, `short`,
 `unsigned short`, `int`, `unsigned int`, `long`, `unsigned long`,
 `long long`, `unsigned long long`, `char8_t`, `char16_t`, `char32_t`,
 `wchar_t`, and any other types needed by the typedefs in the header
@@ -3234,8 +3226,8 @@ T operator op=(T operand) noexcept;
 
 #### Specializations for floating-point types <a id="atomics.types.float">[[atomics.types.float]]</a>
 
-*floating-point-type* There are specializations of the `atomic` class
-template for all cv-unqualified floating-point types. For each such type
+There are specializations of the `atomic` class template for all
+cv-unqualified floating-point types. For each such type
 `floating-point-type`, the specialization `atomic<floating-point-type>`
 provides additional atomic operations appropriate to floating-point
 types.

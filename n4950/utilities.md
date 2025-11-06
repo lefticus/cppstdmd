@@ -7562,7 +7562,7 @@ collectively referred to as *state entities*.
 
 ### Requirements <a id="func.require">[[func.require]]</a>
 
-*INVOKE* Define `INVOKE(f, t_1, t_2, \dotsc, t_N)` as follows:
+Define `INVOKE(f, t_1, t_2, \dotsc, t_N)` as follows:
 
 - `(t_1.*f)(t_2, \dotsc, t_N)` when `f` is a pointer to a member
   function of a class `T` and
@@ -7584,7 +7584,7 @@ collectively referred to as *state entities*.
   `T` and `t_1` does not satisfy the previous two items;
 - `f(t_1, t_2, \dotsc, t_N)` in all other cases.
 
-*INVOKE* Define `INVOKE<R>(f, t_1, t_2, \dotsc, t_N)` as
+Define `INVOKE<R>(f, t_1, t_2, \dotsc, t_N)` as
 `static_cast<void>(INVOKE(f, t_1, t_2, \dotsc, t_N))` if `R` is
 cv `void`, otherwise `INVOKE(f, t_1, t_2, \dotsc, t_N)` implicitly
 converted to `R`. If
@@ -8777,12 +8777,7 @@ namespace std {
 }
 ```
 
-\indexlibrary{1@\texttt{\_1}} \indexlibrary{2@\texttt{\_2}}
-\indexlibrary{3@\texttt{\_3}} \indexlibrary{4@\texttt{\_4}}
-\indexlibrary{5@\texttt{\_5}} \indexlibrary{6@\texttt{\_6}}
-\indexlibrary{7@\texttt{\_7}} \indexlibrary{8@\texttt{\_8}}
-\indexlibrary{9@\texttt{\_9}} \indexlibrary{10@\texttt{\_10}} The class
-template `is_placeholder` can be used to detect the standard
+The class template `is_placeholder` can be used to detect the standard
 placeholders `_1`, `_2`, and so on [[func.bind.place]]. The function
 template `bind` uses `is_placeholder` to detect placeholders.
 
@@ -8885,12 +8880,6 @@ The value of the target argument `v`_`fd` is `fd` and its corresponding
 type `V`_`fd` is `\cv{} FD&`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
-
-\indexlibrary{1@\texttt{\_1}} \indexlibrary{2@\texttt{\_2}}
-\indexlibrary{3@\texttt{\_3}} \indexlibrary{4@\texttt{\_4}}
-\indexlibrary{5@\texttt{\_5}} \indexlibrary{6@\texttt{\_6}}
-\indexlibrary{7@\texttt{\_7}} \indexlibrary{8@\texttt{\_8}}
-\indexlibrary{9@\texttt{\_9}} \indexlibrary{10@\texttt{\_10}}
 
 ``` cpp
 namespace std::placeholders {
@@ -11829,8 +11818,6 @@ the :
 
 #### Class template *range-default-formatter* <a id="format.range.fmtdef">[[format.range.fmtdef]]</a>
 
-*range-default-formatter*
-
 ``` cpp
 namespace std {
   template<ranges::input_range R, class charT>
@@ -11887,8 +11874,6 @@ template<class FormatContext>
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(elems, ctx);`
 
 #### Specialization of *range-default-formatter* for maps <a id="format.range.fmtmap">[[format.range.fmtmap]]</a>
-
-*range-default-formatter*
 
 ``` cpp
 namespace std {
@@ -11952,8 +11937,6 @@ template<class FormatContext>
 
 #### Specialization of *range-default-formatter* for sets <a id="format.range.fmtset">[[format.range.fmtset]]</a>
 
-*range-default-formatter*
-
 ``` cpp
 namespace std {
   template<ranges::input_range R, class charT>
@@ -12006,8 +11989,6 @@ template<class FormatContext>
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
 #### Specialization of *range-default-formatter* for strings <a id="format.range.fmtstr">[[format.range.fmtstr]]</a>
-
-*range-default-formatter*
 
 ``` cpp
 namespace std {

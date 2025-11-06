@@ -7950,15 +7950,14 @@ intentional. — *end note*\]
 
 ### Definitions <a id="numerics.defns">[[numerics.defns]]</a>
 
-*GENERALIZED_NONCOMMUTATIVE_SUM* Define
-`GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, ..., aN)` as follows:
+Define `GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, ..., aN)` as follows:
 
 - `a1` when `N` is `1`, otherwise
 - `op(GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, ..., aK),`  
   `\phantom{op(}GENERALIZED_NONCOMMUTATIVE_SUM(op, aM, ..., aN))` for
   any `K` where 1 < K+1 = M ≤ N.
 
-*GENERALIZED_SUM* Define `GENERALIZED_SUM(op, a1, ..., aN)` as
+Define `GENERALIZED_SUM(op, a1, ..., aN)` as
 `GENERALIZED_NONCOMMUTATIVE_SUM(op, b1, ..., bN)`, where `b1, ..., bN`
 may be any permutation of `a1, ..., aN`.
 
