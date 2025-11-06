@@ -227,7 +227,7 @@ namespace std {
 
 Default template arguments are described as appearing both in `<iosfwd>`
 and in the synopsis of other headers but it is well-formed to include
-both `<iosfwd>` and one or more of the other headers.
+both `<iosfwd>` and one or more of the other headers.[^1]
 
 ### Overview <a id="iostream.forward.overview">[[iostream.forward.overview]]</a>
 
@@ -307,7 +307,7 @@ The objects are constructed and the associations are established at some
 time prior to or during the first time an object of class
 `ios_base::Init` is constructed, and in any case before the body of
 `main` [[basic.start.main]] begins execution. The objects are not
-destroyed during program execution.
+destroyed during program execution.[^2]
 
 If it is possible for them to do so, implementations should initialize
 the objects earlier than required.
@@ -3864,7 +3864,7 @@ to a value of type `bool`, the function endeavors to generate the
 requested output. If the generation fails, then the formatted output
 function does `setstate(ios_base::failbit)`, which can throw an
 exception. If an exception is thrown during output, then
-`ios_base::badbit` is set
+`ios_base::badbit` is set[^3]
 
 in `*this`’s error state. If `(exceptions()&badbit) != 0` then the
 exception is rethrown. Whether or not an exception is thrown, the
@@ -4231,7 +4231,7 @@ Each unformatted output function begins execution by constructing an
 object of class `sentry`. If that object returns `true`, while
 converting to a value of type `bool`, the function endeavors to generate
 the requested output. If an exception is thrown during output, then
-`ios_base::badbit` is set
+`ios_base::badbit` is set[^4]
 
 in `*this`’s error state. If `(exceptions() & badbit) != 0` then the
 exception is rethrown. In any case, the unformatted output function ends
@@ -12761,3 +12761,15 @@ modifier for the type.
 [stream.buffers]: #stream.buffers
 [string.streams]: #string.streams
 [syncstream]: #syncstream
+
+[^1]: It is the implementation’s responsibility to implement headers so
+    that including `<iosfwd>` and other headers does not violate the
+    rules about multiple occurrences of default arguments.
+
+[^2]: Constructors and destructors for objects with static storage
+    duration can access these objects to read input from `stdin` or
+    write output to `stdout` or `stderr`.
+
+[^3]: This is done without causing an `ios_base::failure` to be thrown.
+
+[^4]: This is done without causing an `ios_base::failure` to be thrown.

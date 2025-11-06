@@ -194,7 +194,7 @@ the first substatement is reached via a label, the condition is not
 evaluated and the second substatement is not executed. In the second
 form of `if` statement (the one including `else`), if the first
 substatement is also an `if` statement then that inner `if` statement
-shall contain an `else` part.
+shall contain an `else` part.[^1]
 
 If the `if` statement is of the form `if constexpr`, the value of the
 condition is contextually converted to `bool` and the converted
@@ -477,6 +477,28 @@ A `while` statement is equivalent to
 
 The variable created in the condition is destroyed and created with each
 iteration of the loop.
+
+\[*Example 1*:
+
+``` cpp
+struct A {
+  int val;
+  A(int i) : val(i) { }
+  ~A() { }
+  operator bool() { return val != 0; }
+};
+int i = 1;
+while (A a = i) {
+  // ...
+  i = 0;
+}
+```
+
+In the while-loop, the constructor and destructor are each called twice,
+once for the condition that succeeds and once for the condition that
+fails.
+
+— *end example*\]
 
 — *end note*\]
 
@@ -796,7 +818,7 @@ at Q are destroyed in the reverse order of their construction. Then, all
 variables with automatic storage duration that are active at Q but not
 at P are initialized in declaration order; unless all such variables
 have vacuous initialization [[basic.life]], the transfer of control
-shall not be a jump.
+shall not be a jump.[^2]
 
 When a *declaration-statement* is executed, P and Q are the points
 immediately before and after it; when a function returns, Q is after its
@@ -871,7 +893,48 @@ ambiguity, so this rule does not apply. In some cases, the whole
 *statement* needs to be examined to determine whether this is the case.
 This resolves the meaning of many examples.
 
+\[*Example 1*:
+
+Assuming `T` is a *simple-type-specifier* [[dcl.type]],
+
+``` cpp
+T(a)->m = 7;        // expression-statement
+T(a)++;             // expression-statement
+T(a,5)<<c;          // expression-statement
+
+T(*d)(int);         //  declaration
+T(e)[5];            //  declaration
+T(f) = { 1, 2 };    //  declaration
+T(*g)(double(3));   //  declaration
+```
+
+In the last example above, `g`, which is a pointer to `T`, is
+initialized to `double(3)`. This is of course ill-formed for semantic
+reasons, but that does not affect the syntactic analysis.
+
+— *end example*\]
+
 The remaining cases are *declaration*s.
+
+\[*Example 2*:
+
+``` cpp
+class T {
+  // ...
+public:
+  T();
+  T(int);
+  T(int, int);
+};
+T(a);               //  declaration
+T(*b)();            //  declaration
+T(c)=7;             //  declaration
+T(d),e,f=3;         //  declaration
+extern int h;
+T(g)(h,2);          //  declaration
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -885,7 +948,7 @@ ill-formed declaration. If, during parsing, lookup finds that a name in
 a template argument is bound to (part of) the declaration being parsed,
 the program is ill-formed. No diagnostic is required.
 
-\[*Example 1*:
+\[*Example 3*:
 
 ``` cpp
 struct T1 {
@@ -977,3 +1040,9 @@ void f() {
 [support.start.term]: support.md#support.start.term
 [temp.pre]: temp.md#temp.pre
 [term.odr.use]: #term.odr.use
+
+[^1]: In other words, the `else` is associated with the nearest un-elsed
+    `if`.
+
+[^2]: The transfer from the condition of a `switch` statement to a
+    `case` label is considered a jump in this respect.

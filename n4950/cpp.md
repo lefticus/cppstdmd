@@ -144,7 +144,7 @@ character, and is
 
 The last token in the sequence is the first token within the sequence
 that is immediately followed by whitespace containing a new-line
-character.
+character.[^1]
 
 \[*Note 1*: A new-line character ends the preprocessing directive even
 if it occurs within what would otherwise be an invocation of a
@@ -262,7 +262,7 @@ has-attribute-expression:
 
 The expression that controls conditional inclusion shall be an integral
 constant expression except that identifiers (including those lexically
-identical to keywords) are interpreted as described below
+identical to keywords) are interpreted as described below[^2]
 
 and it may contain zero or more *defined-macro-expression*s and/or
 *has-include-expression*s and/or *has-attribute-expression*s as unary
@@ -406,7 +406,7 @@ controlling directives are processed as if they were in a group that is
 skipped. If none of the conditions evaluates to true, and there is a
 `#else` directive, the group controlled by the `#else` is processed;
 lacking a `#else` directive, all the groups until the `#endif` are
-skipped.
+skipped.[^3]
 
 \[*Example 1*:
 
@@ -496,7 +496,7 @@ preprocessing tokens after `include` in the directive are processed just
 as in normal text (i.e., each identifier currently defined as a macro
 name is replaced by its replacement list of preprocessing tokens). If
 the directive resulting after all replacements does not match one of the
-two previous forms, the behavior is undefined.
+two previous forms, the behavior is undefined.[^4]
 
 The method by which a sequence of preprocessing tokens between a `<` and
 a `>` preprocessing token pair or a pair of `"` characters is combined
@@ -804,10 +804,10 @@ A preprocessing directive of the form
 ```
 
 defines an *object-like macro* that causes each subsequent instance of
-the macro name
+the macro name[^5]
 
 to be replaced by the replacement list of preprocessing tokens that
-constitute the remainder of the directive.
+constitute the remainder of the directive.[^6]
 
 The replacement list is then rescanned for more macro names as specified
 below.
@@ -850,7 +850,7 @@ macro. The individual arguments within the list are separated by comma
 preprocessing tokens, but comma preprocessing tokens between matching
 inner parentheses do not separate arguments. If there are sequences of
 preprocessing tokens within the list of arguments that would otherwise
-act as preprocessing directives,
+act as preprocessing directives,[^7]
 
 the behavior is undefined.
 
@@ -1039,7 +1039,7 @@ immediately preceded or followed by a `##` preprocessing token, the
 parameter is replaced by the corresponding argument’s preprocessing
 token sequence; however, if an argument consists of no preprocessing
 tokens, the parameter is replaced by a placemarker preprocessing token
-instead.
+instead.[^8]
 
 For both object-like and function-like macro invocations, before the
 replacement list is reexamined for more macro names to replace, each
@@ -1629,3 +1629,41 @@ LISTING( ..\listing.dir )
 [lex.token]: lex.md#lex.token
 [module.import]: module.md#module.import
 [support.limits]: support.md#support.limits
+
+[^1]: Thus, preprocessing directives are commonly called “lines”. These
+    “lines” have no other syntactic significance, as all whitespace is
+    equivalent except in certain situations during preprocessing (see
+    the `#` character string literal creation operator in 
+    [[cpp.stringize]], for example).
+
+[^2]: Because the controlling constant expression is evaluated during
+    translation phase 4, all identifiers either are or are not macro
+    names — there simply are no keywords, enumeration constants, etc.
+
+[^3]: As indicated by the syntax, a preprocessing token cannot follow a
+    `#else` or `#endif` directive before the terminating new-line
+    character. However, comments can appear anywhere in a source file,
+    including within a preprocessing directive.
+
+[^4]: Note that adjacent *string-literal*s are not concatenated into a
+    single *string-literal* (see the translation phases in 
+    [[lex.phases]]); thus, an expansion that results in two
+    *string-literal*s is an invalid directive.
+
+[^5]: Since, by macro-replacement time, all *character-literal*s and
+    *string-literal*s are preprocessing tokens, not sequences possibly
+    containing identifier-like subsequences (see [[lex.phases]],
+    translation phases), they are never scanned for macro names or
+    parameters.
+
+[^6]: An alternative token [[lex.digraph]] is not an identifier, even
+    when its spelling consists entirely of letters and underscores.
+    Therefore it is not possible to define a macro whose name is the
+    same as that of an alternative token.
+
+[^7]: A *conditionally-supported-directive* is a preprocessing directive
+    regardless of whether the implementation supports it.
+
+[^8]: Placemarker preprocessing tokens do not appear in the syntax
+    because they are temporary entities that exist only within
+    translation phase 4.

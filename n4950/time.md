@@ -7920,7 +7920,7 @@ namespace std {
 ```
 
 The contents of the header `<ctime>` are the same as the C standard
-library header `<time.h>`.
+library header `<time.h>`.[^1]
 
 The functions `asctime`, `ctime`, `gmtime`, and `localtime` are not
 required to avoid data races [[res.on.data.races]].
@@ -8139,3 +8139,7 @@ required to avoid data races [[res.on.data.races]].
 [time.point]: #time.point
 [time.traits]: #time.traits
 [time.zone]: #time.zone
+
+[^1]: `strftime` supports the C conversion specifiers `C`, `D`, `e`,
+    `F`, `g`, `G`, `h`, `r`, `R`, `t`, `T`, `u`, `V`, and `z`, and the
+    modifiers `E` and `O`.

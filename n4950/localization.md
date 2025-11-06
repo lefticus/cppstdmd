@@ -99,7 +99,7 @@ namespace std {
 ```
 
 The header `<locale>` defines classes and declares functions that
-encapsulate and manipulate the information peculiar to a locale.
+encapsulate and manipulate the information peculiar to a locale.[^1]
 
 ## Locales <a id="locales">[[locales]]</a>
 
@@ -162,6 +162,8 @@ Access to the facets of a `locale` is via two function templates,
 \[*Example 1*:
 
 An iostream `operator<<` can be implemented as:
+
+[^2]
 
 ``` cpp
 template<class charT, class traits>
@@ -347,7 +349,7 @@ namespace std {
 Class `facet` is the base class for locale feature sets. A class is a
 *facet* if it is publicly derived from another facet, or if it is a
 class derived from `locale::facet` and contains a publicly accessible
-declaration as follows:
+declaration as follows:[^3]
 
 ``` cpp
 static ::std::locale::id id;
@@ -647,7 +649,7 @@ use_facet<ctype<charT>>(loc).is(ctype_base::F, c)
 ```
 
 where `F` is the `ctype_base::mask` value corresponding to that function
-[[category.ctype]].
+[[category.ctype]].[^4]
 
 #### Character conversions <a id="conversions.character">[[conversions.character]]</a>
 
@@ -1014,7 +1016,7 @@ namespace std {
 ```
 
 A specialization `ctype<char>` is provided so that the member functions
-on type `char` can be implemented inline.
+on type `char` can be implemented inline.[^5]
 
 The *implementation-defined* value of member `table_size` is at least
 256.
@@ -1479,7 +1481,7 @@ namespace std {
 The classes `num_get<>` and `num_put<>` handle numeric formatting and
 parsing. Virtual functions are provided for several numeric types.
 Implementations may (but are not required to) delegate extraction of
-smaller types to extractors for larger types.
+smaller types to extractors for larger types.[^6]
 
 All specifications of member functions for `num_put` and `num_get` in
 the subclauses of  [[category.numeric]] only apply to the
@@ -2462,7 +2464,7 @@ as produced by a corresponding format specifier to `time_put<>::put`. If
 the sequence being parsed matches the correct format, the corresponding
 members of the `tm` argument are set to the values used to produce the
 sequence; otherwise either an error is reported or unspecified values
-are assigned.
+are assigned.[^7]
 
 If the end iterator is reached during parsing by any of the `get()`
 member functions, the member sets `ios_base::eofbit` in `err`.
@@ -3102,7 +3104,7 @@ The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
 value `static_cast<part>(p.field[i])` determines the `i`^\text{th}
-component of the format
+component of the format[^8]
 
 In the `field` member of a `pattern` object, each value `symbol`,
 `sign`, `value`, and either `space` or `none` appears exactly once. The
@@ -3598,3 +3600,33 @@ the functions listed in [[setlocale.data.races]].
 [c.locales]: #c.locales
 [locale.categories]: #locale.categories
 [locales]: #locales
+
+[^1]: In this subclause, the type name `tm` is an incomplete type that
+    is defined in `<ctime>`.
+
+[^2]: Note that in the call to `put`, the stream is implicitly converted
+    to an `ostreambuf_iterator<charT, traits>`.
+
+[^3]: This is a complete list of requirements; there are no other
+    requirements. Thus, a facet class need not have a public copy
+    constructor, assignment, default constructor, destructor, etc.
+
+[^4]: When used in a loop, it is faster to cache the `ctype<>` facet and
+    use it directly, or use the vector form of `ctype<>::is`.
+
+[^5]: Only the `char` (not `unsigned char` and `signed char`) form is
+    provided. The specialization is specified in the standard, and not
+    left as an implementation detail, because it affects the derivation
+    interface for `ctype<char>`.
+
+[^6]: Parsing `"-1"` correctly into, e.g., an `unsigned short` requires
+    that the corresponding member `get()` at least extract the sign
+    before delegating.
+
+[^7]: In other words, user confirmation is required for reliable parsing
+    of user-entered dates and times, but machine-generated formats can
+    be parsed reliably. This allows parsers to be aggressive about
+    interpreting user variations on standard formats.
+
+[^8]: An array of `char`, rather than an array of `part`, is specified
+    for `pattern::field` purely for efficiency.

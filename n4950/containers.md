@@ -3402,7 +3402,7 @@ same container), then the average-case complexity for
 function). The behavior of a program that uses `operator==` or
 `operator!=` on unordered containers is undefined unless the `Pred`
 function object has the same behavior for both containers and the
-equality comparison function for `Key` is a refinement
+equality comparison function for `Key` is a refinement[^1]
 
 of the partition into equivalent-key groups produced by `Pred`.
 
@@ -4897,7 +4897,7 @@ A `list` meets all of the requirements of a container
 [[container.alloc.reqmts]], and of a sequence container, including most
 of the optional sequence container requirements [[sequence.reqmts]]. The
 exceptions are the `operator[]` and `at` member functions, which are not
-provided.
+provided.[^2]
 
 Descriptions are provided here only for operations on `list` that are
 not described in one of these tables or for operations where there is
@@ -5192,7 +5192,7 @@ destructor of type `T` is exactly equal to the size of the range.
 #### Operations <a id="list.ops">[[list.ops]]</a>
 
 Since lists allow fast insertion and erasing from the middle of a list,
-certain operations are provided specifically for them.
+certain operations are provided specifically for them.[^3]
 
 In this subclause, arguments for a template parameter named `Predicate`
 or `BinaryPredicate` shall meet the corresponding requirements in
@@ -15347,3 +15347,12 @@ swap(x.acc_, y.acc_);
 [sequences]: #sequences
 [unord]: #unord
 [views]: #views
+
+[^1]: Equality comparison is a refinement of partitioning if no two
+    objects that compare equal fall into different partitions.
+
+[^2]: These member functions are only provided by containers whose
+    iterators are random access iterators.
+
+[^3]: As specified in  [[allocator.requirements]], the requirements in
+    this Clause apply only to lists whose allocators compare equal.

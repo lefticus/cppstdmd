@@ -31,7 +31,7 @@ these components only with a numeric type. A *numeric type* is a
 cv-unqualified object type `T` that meets the
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
 *Cpp17CopyAssignable*, and *Cpp17Destructible* requirements
-[[utility.arg.requirements]].
+[[utility.arg.requirements]].[^1]
 
 If any operation on `T` throws an exception the effects are undefined.
 
@@ -1058,7 +1058,7 @@ throughout this subclause:
   `basic_istream<charT,` `traits>`;
 
 where `charT` and `traits` are constrained according to [[strings]] and
-[[input.output]].
+[[input.output]].[^2]
 
 `E` shall meet the *Cpp17CopyConstructible* (
 [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable* (
@@ -1348,7 +1348,7 @@ the engine’s state to S.
 
 #### Class template `mersenne_twister_engine` <a id="rand.eng.mers">[[rand.eng.mers]]</a>
 
-A `mersenne_twister_engine` random number engine
+A `mersenne_twister_engine` random number engine[^3]
 
 produces unsigned integer random numbers in the closed interval
 $[0,2^w-1]$. The state of a `mersenne_twister_engine` object `x` is of
@@ -2953,7 +2953,7 @@ constructed.
 
 An `extreme_value_distribution` random number distribution produces
 random numbers x distributed according to the probability density
-function
+function[^4]
 
 $$p(x\,|\,a,b) = \frac{1}{b}
      \cdot \exp\left(\frac{a-x}{b} - \exp\left(\frac{a-x}{b}\right)\right)
@@ -4068,7 +4068,7 @@ Any function returning a `valarray<T>` is permitted to return an object
 of another type, provided all the const member functions of
 `valarray<T>` are also applicable to this type. This return type shall
 not add more than two levels of template nesting over the most deeply
-nested argument type.
+nested argument type.[^5]
 
 Implementations introducing such replacement types shall provide
 additional functions and operators as follows:
@@ -4193,7 +4193,7 @@ object of type `valarray<T>` is referred to as an “array” throughout the
 remainder of  [[numarray]]. The illusion of higher dimensionality may be
 produced by the familiar idiom of computed indices, together with the
 powerful subsetting capabilities provided by the generalized subscript
-operators.
+operators.[^6]
 
 #### Constructors <a id="valarray.cons">[[valarray.cons]]</a>
 
@@ -4918,7 +4918,7 @@ namespace std {
 ```
 
 The `slice` class represents a BLAS-like slice from an array. Such a
-slice is specified by a starting index, a length, and a stride.
+slice is specified by a starting index, a length, and a stride.[^7]
 
 #### Constructors <a id="cons.slice">[[cons.slice]]</a>
 
@@ -5957,7 +5957,8 @@ error for just those argument values for which:
   those argument values fall outside the specified domain, or
 - the corresponding mathematical function value has a nonzero imaginary
   component, or
-- the corresponding mathematical function is not mathematically defined.
+- the corresponding mathematical function is not mathematically
+  defined.[^8]
 
 Unless otherwise specified, each function is defined for all finite
 values, for negative infinity, and for positive infinity.
@@ -6630,6 +6631,7 @@ constant variable template is ill-formed.
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [dcl.init]: dcl.md#dcl.init
+[implimits]: #implimits
 [input.iterators]: iterators.md#input.iterators
 [input.output]: input.md#input.output
 [iostate.flags]: input.md#iostate.flags
@@ -6678,3 +6680,42 @@ constant variable template is ill-formed.
 [numbers]: #numbers
 [numeric.requirements]: #numeric.requirements
 [rand]: #rand
+
+[^1]: In other words, value types. These include arithmetic types,
+    pointers, the library class `complex`, and instantiations of
+    `valarray` for value types.
+
+[^2]: This constructor (as well as the subsequent corresponding `seed()`
+    function) can be particularly useful to applications requiring a
+    large number of independent random sequences.
+
+[^3]: The name of this engine refers, in part, to a property of its
+    period: For properly-selected values of the parameters, the period
+    is closely related to a large Mersenne prime number.
+
+[^4]: The distribution corresponding to this probability density
+    function is also known (with a possible change of variable) as the
+    Gumbel Type I, the log-Weibull, or the Fisher-Tippett Type I
+    distribution.
+
+[^5]:  [[implimits]] recommends a minimum number of recursively nested
+    template instantiations. This requirement thus indirectly suggests a
+    minimum allowable complexity for valarray expressions.
+
+[^6]: The intent is to specify an array template that has the minimum
+    functionality necessary to address aliasing ambiguities and the
+    proliferation of temporary objects. Thus, the `valarray` template is
+    neither a matrix class nor a field class. However, it is a very
+    useful building block for designing such classes.
+
+[^7]: BLAS stands for *Basic Linear Algebra Subprograms*. C++ programs
+    can instantiate this class. See, for example, Dongarra, Du Croz,
+    Duff, and Hammerling: *A set of Level 3 Basic Linear Algebra
+    Subprograms*; Technical Report MCS-P1-0888, Argonne National
+    Laboratory (USA), Mathematics and Computer Science Division, August,
+    1988.
+
+[^8]: A mathematical function is mathematically defined for a given set
+    of argument values (a) if it is explicitly defined for that set of
+    argument values, or (b) if its limiting value exists and does not
+    depend on the direction of approach.

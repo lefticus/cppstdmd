@@ -483,7 +483,7 @@ The name `ranges::swap` denotes a customization point object
 for subexpressions `E1` and `E2` is expression-equivalent to an
 expression `S` determined as follows:
 
-- `S` is `(void)swap(E1, E2)`
+- `S` is `(void)swap(E1, E2)`[^1]
   if `E1` or `E2` has class or enumeration type [[basic.compound]] and
   that expression is valid, with overload resolution performed in a
   context that includes the declaration
@@ -1134,3 +1134,5 @@ Under these conditions, it can be shown that
 [concepts.equality]: #concepts.equality
 [concepts.lang]: #concepts.lang
 [concepts.object]: #concepts.object
+
+[^1]: The name `swap` is used here unqualified.

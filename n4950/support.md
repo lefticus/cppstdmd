@@ -187,7 +187,8 @@ expression, and it has the characteristics described in 
 another `nullptr_t` object that is an lvalue can be
 taken. — *end note*\]
 
-The macro `NULL` is an *implementation-defined* null pointer constant.
+The macro `NULL` is an *implementation-defined* null pointer
+constant.[^1]
 
 ### Sizes, alignments, and offsets <a id="support.types.layout">[[support.types.layout]]</a>
 
@@ -195,7 +196,7 @@ The macro `offsetof(type, member-designator)` has the same semantics as
 the corresponding macro in the C standard library header `<stddef.h>`,
 but accepts a restricted set of `type` arguments in this document. Use
 of the `offsetof` macro with a `type` other than a standard-layout class
-[[class.prop]] is conditionally-supported.
+[[class.prop]] is conditionally-supported.[^2]
 
 The expression `offsetof(type, member-designator)` is never
 type-dependent [[temp.dep.expr]] and it is value-dependent
@@ -2964,7 +2965,7 @@ The `partial_ordering` type is typically used as the result type of a
 three-way comparison operator [[expr.spaceship]] for a type that admits
 all of the six two-way comparison operators [[expr.rel]], [[expr.eq]],
 for which equality need not imply substitutability, and that permits two
-values to be incomparable.
+values to be incomparable.[^3]
 
 ``` cpp
 namespace std {
@@ -3987,13 +3988,12 @@ library header `<stdarg.h>`, with the following changes:
   `va_start` macro in header `<stdarg.h>` are different in this
   document. The parameter `parmN` is the rightmost parameter in the
   variable parameter list of the function definition (the one just
-  before the `...`).
-  If the parameter `parmN` is a pack expansion [[temp.variadic]] or an
-  entity resulting from a lambda capture [[expr.prim.lambda]], the
-  program is ill-formed, no diagnostic required. If the parameter
-  `parmN` is of a reference type, or of a type that is not compatible
-  with the type that results when passing an argument for which there is
-  no parameter, the behavior is undefined.
+  before the `...`).[^4] If the parameter `parmN` is a pack expansion
+  [[temp.variadic]] or an entity resulting from a lambda capture
+  [[expr.prim.lambda]], the program is ill-formed, no diagnostic
+  required. If the parameter `parmN` is of a reference type, or of a
+  type that is not compatible with the type that results when passing an
+  argument for which there is no parameter, the behavior is undefined.
 
 ### Header `<csetjmp>` synopsis <a id="csetjmp.syn">[[csetjmp.syn]]</a>
 
@@ -4074,8 +4074,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - throwing of an exception;
 - control entering a *try-block* or *function-try-block*;
 - initialization of a variable with static storage duration requiring
-  dynamic initialization [[basic.start.dynamic]], [[stmt.dcl]]
-  ; or
+  dynamic initialization [[basic.start.dynamic]], [[stmt.dcl]][^5] ; or
 - waiting for the completion of the initialization of a variable with
   static storage duration [[stmt.dcl]].
 
@@ -4425,3 +4424,16 @@ names within the namespace `std`. — *end example*\]
 [support.srcloc]: #support.srcloc
 [support.start.term]: #support.start.term
 [support.types]: #support.types
+
+[^1]: Possible definitions include `0` and `0L`, but not `(void*)0`.
+
+[^2]: Note that `offsetof` is required to work as specified even if
+    unary `operator&` is overloaded for any of the types involved.
+
+[^3]: That is, `a < b`, `a == b`, and `a > b` might all be `false`.
+
+[^4]: Note that `va_start` is required to work as specified even if
+    unary `operator&` is overloaded for the type of `parmN`.
+
+[^5]: Such initialization can occur because it is the first odr-use
+    [[term.odr.use]] of that variable.

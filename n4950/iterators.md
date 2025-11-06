@@ -599,7 +599,7 @@ Most of the library’s algorithmic templates that operate on data
 structures have interfaces that use ranges. A *range* is an iterator and
 a *sentinel* that designate the beginning and end of the computation, or
 an iterator and a count that designate the beginning and the number of
-elements to which the computation is to be applied.
+elements to which the computation is to be applied.[^1]
 
 An iterator and a sentinel denoting a range are comparable. A range
 [`i`, `s`) is empty if `i == s`; otherwise, [`i`, `s`) refers to the
@@ -630,7 +630,7 @@ specify complexity.
 Destruction of a non-forward iterator may invalidate pointers and
 references previously obtained from that iterator.
 
-An *invalid iterator* is an iterator that may be singular.
+An *invalid iterator* is an iterator that may be singular.[^2]
 
 Iterators are called *constexpr iterators* if all operations provided to
 meet iterator category requirements are constexpr functions.
@@ -5600,3 +5600,11 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [iterator.requirements]: #iterator.requirements
 [predef.iterators]: #predef.iterators
 [stream.iterators]: #stream.iterators
+
+[^1]: The sentinel denoting the end of a range can have the same type as
+    the iterator denoting the beginning of the range, or a different
+    type.
+
+[^2]: This definition applies to pointers, since pointers are iterators.
+    The effect of dereferencing an iterator that has been invalidated is
+    undefined.

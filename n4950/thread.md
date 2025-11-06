@@ -90,7 +90,7 @@ but in all cases shorter is better.
 
 The functions whose names end in `_for` take an argument that specifies
 a duration. These functions produce relative timeouts. Implementations
-should use a steady clock to measure time for these functions.
+should use a steady clock to measure time for these functions.[^1]
 
 Given a duration argument Dₜ, the real-time duration of the timeout is
 Dₜ + Dᵢ + Dₘ.
@@ -1970,7 +1970,7 @@ same for all atomic objects of the same type.
 Atomic operations that are not lock-free are considered to potentially
 block [[intro.progress]].
 
-Operations that are lock-free should also be address-free.
+Operations that are lock-free should also be address-free.[^2]
 
 The implementation of these operations should not depend on any
 per-process state.
@@ -8668,3 +8668,9 @@ template<class R, class... ArgTypes>
 [thread.sema]: #thread.sema
 [thread.stoptoken]: #thread.stoptoken
 [thread.threads]: #thread.threads
+
+[^1]: Implementations for which standard time units are meaningful will
+    typically have a steady clock within their hardware implementation.
+
+[^2]: That is, atomic operations on the same memory location via two
+    different addresses will communicate atomically.

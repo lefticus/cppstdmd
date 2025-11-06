@@ -1744,7 +1744,7 @@ References, pointers, and iterators referring to the elements of a
 `basic_string` object:
 
 - Passing as an argument to any standard library function taking a
-  reference to non-const `basic_string` as an argument.
+  reference to non-const `basic_string` as an argument.[^1]
 - Calling non-const member functions, except `operator[]`, `at`, `data`,
   `front`, `back`, `begin`, `rbegin`, `end`, and `rend`.
 
@@ -4100,3 +4100,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [term.trivially.copyable.type]: #term.trivially.copyable.type
 [unord.hash]: utilities.md#unord.hash
 [utility.swap]: utilities.md#utility.swap
+
+[^1]: For example, as an argument to non-member functions `swap()`
+    [[string.special]], `operator>{}>()` [[string.io]], and `getline()`
+    [[string.io]], or as an argument to `basic_string::swap()`.

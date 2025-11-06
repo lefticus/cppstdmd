@@ -98,8 +98,8 @@ declaration unless:
 - it declares a function without specifying the function’s body
   [[dcl.fct.def]],
 - it contains the `extern` specifier [[dcl.stc]] or a
-  *linkage-specification*
-  and neither an *initializer* nor a *function-body*,
+  *linkage-specification*[^1] [[dcl.link]] and neither an *initializer*
+  nor a *function-body*,
 - it declares a non-inline static data member in a class definition
   [[class.mem]], [[class.static]],
 - it declares a static data member outside a class definition and the
@@ -260,6 +260,21 @@ follows:
 This set is a (possibly-empty) set of *id-expression*s, each of which is
 either E or a subexpression of E.
 
+\[*Example 1*:
+
+In the following example, the set of potential results of the
+initializer of `n` contains the first `S::x` subexpression, but not the
+second `S::x` subexpression.
+
+``` cpp
+struct S { static const int x = 0; };
+const int &f(const int &r);
+int n = b ? (1, S::x)           // S::x is not odr-used here
+          : f(S::x);            // S::x is odr-used here, so a definition is required
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A function is *named by* an expression or conversion as follows:
@@ -318,7 +333,7 @@ class is odr-used by the definition of a constructor of that class. A
 non-placement deallocation function for a class is odr-used by the
 definition of the destructor of that class, or by being selected by the
 lookup at the point of definition of a virtual destructor
-[[class.dtor]].
+[[class.dtor]].[^2]
 
 An assignment operator function in a class is odr-used by an
 implicitly-defined copy-assignment or move-assignment function for
@@ -346,7 +361,7 @@ A local entity [[basic.pre]] is *odr-usable* in a scope
 If a local entity is odr-used in a scope in which it is not odr-usable,
 the program is ill-formed.
 
-\[*Example 1*:
+\[*Example 2*:
 
 ``` cpp
 void f(int n) {
@@ -371,7 +386,7 @@ user-defined library, or (when appropriate) it is implicitly defined
 (see  [[class.default.ctor]], [[class.copy.ctor]], [[class.dtor]], and
 [[class.copy.assign]]).
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 auto f() {
@@ -398,7 +413,7 @@ discarded statement.
 A definition of a class shall be reachable in every context in which the
 class is used in a way that requires the class type to be complete.
 
-\[*Example 3*:
+\[*Example 4*:
 
 The following complete translation unit is well-formed, even though it
 never defines `X`:
@@ -558,7 +573,7 @@ can result in the different declarations having distinct types, and
 *lambda-expression*s appearing in a default argument of `D` might still
 denote different types in different translation units. — *end note*\]
 
-\[*Example 4*:
+\[*Example 5*:
 
 ``` cpp
 inline void f(bool cond, void (*p)()) {
@@ -673,10 +688,11 @@ declare constructors, or both declare destructors, unless
   variable, non-static data member other than of an anonymous union
   [[class.union.anon]], enumerator, function, or function template, or
 - each declares a function or function template, except when
-  - both declare functions with the same non-object-parameter-type-list,
-    equivalent [[temp.over.link]] trailing *requires-clause*s (if any,
-    except as specified in [[temp.friend]]), and, if both are non-static
-    members, they have corresponding object parameters, or
+  - both declare functions with the same
+    non-object-parameter-type-list,[^3] equivalent [[temp.over.link]]
+    trailing *requires-clause*s (if any, except as specified in
+    [[temp.friend]]), and, if both are non-static members, they have
+    corresponding object parameters, or
   - both declare function templates with corresponding signatures and
     equivalent *template-head*s and trailing *requires-clause*s (if
     any).
@@ -685,9 +701,22 @@ declare constructors, or both declare destructors, unless
 
 Declarations can correspond even if neither binds a name.
 
+\[*Example 1*:
+
+``` cpp
+struct A {
+  friend void f();      // #1
+};
+struct B {
+  friend void f() {}    // corresponds to, and defines, #1
+};
+```
+
+— *end example*\]
+
 — *end note*\]
 
-\[*Example 1*:
+\[*Example 2*:
 
 ``` cpp
 typedef int Int;
@@ -725,7 +754,7 @@ declarations found in multiple scopes (e.g., via *using-directive*s or
 for operator functions), in which case it is often
 ambiguous. — *end note*\]
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 void f() {
@@ -749,7 +778,7 @@ at a point P if it precedes P, it does not inhabit a block scope, and
 its target scope is the scope associated with E or, if E is a namespace,
 any element of the inline namespace set of E [[namespace.def]].
 
-\[*Example 3*:
+\[*Example 4*:
 
 ``` cpp
 namespace A {
@@ -796,6 +825,17 @@ because the initializer accesses the second `x` outside its lifetime
 A name from an outer scope remains visible up to the locus of the
 declaration that hides it.
 
+\[*Example 2*:
+
+``` cpp
+const int  i = 2;
+{ int  i[i]; }
+```
+
+declares a block-scope array of two integers.
+
+— *end example*\]
+
 — *end note*\]
 
 The locus of a *class-specifier* is immediately after the *identifier*
@@ -810,7 +850,7 @@ immediately after the *using-declarator* [[namespace.udecl]].
 
 The locus of an *enumerator-definition* is immediately after it.
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 const int x = 12;
@@ -826,6 +866,17 @@ Here, the enumerator `x` is initialized with the value of the constant
 
 After the declaration of a class member, the member name can be found in
 the scope of its class even if the class is an incomplete class.
+
+\[*Example 4*:
+
+``` cpp
+struct X {
+  enum E { z = 16 };
+  int b[X::z];          // OK
+};
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -848,7 +899,7 @@ The locus of a *for-range-declaration* of a range-based `for` statement
 
 The locus of a *template-parameter* is immediately after it.
 
-\[*Example 3*:
+\[*Example 5*:
 
 ``` cpp
 typedef unsigned char T;
@@ -1006,6 +1057,20 @@ portion after the *declarator-id*, *class-head-name*, or
 Lookup from a program point before the *class-specifier* of a class will
 find no bindings in the class scope.
 
+\[*Example 1*:
+
+``` cpp
+template<class D>
+struct B {
+  D::type x;            // #1
+};
+
+struct A { using type = int; };
+struct C : A, B<C> {};  // error at #1: C::type not found
+```
+
+— *end example*\]
+
 — *end note*\]
 
 ### Enumeration scope <a id="basic.scope.enum">[[basic.scope.enum]]</a>
@@ -1078,6 +1143,31 @@ appears in a translation unit D and
 A *module-import-declaration* imports both the named translation unit(s)
 and any modules named by exported *module-import-declaration*s within
 them, recursively.
+
+\[*Example 1*:
+
+Translation unit #1
+
+``` cpp
+export module Q;
+export int sq(int i) { return i*i; }
+```
+
+Translation unit #2
+
+``` cpp
+export module R;
+export import Q;
+```
+
+Translation unit #3
+
+``` cpp
+import R;
+int main() { return sq(9); }    // OK, sq from module Q
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -1805,7 +1895,7 @@ int main() {
 #### Class members <a id="class.qual">[[class.qual]]</a>
 
 In a lookup for a qualified name N whose lookup context is a class C in
-which function names are not ignored,
+which function names are not ignored,[^4]
 
 - if the search finds the injected-class-name of `C` [[class.pre]], or
 - if N is dependent and is the terminal name of a *using-declarator*
@@ -1904,9 +1994,51 @@ void h()
 The same declaration found more than once is not an ambiguity (because
 it is still a unique declaration).
 
+\[*Example 2*:
+
+``` cpp
+namespace A {
+  int a;
+}
+
+namespace B {
+  using namespace A;
+}
+
+namespace C {
+  using namespace A;
+}
+
+namespace BC {
+  using namespace B;
+  using namespace C;
+}
+
+void f()
+{
+  BC::a++;          // OK, S is ${ A::a, A::a }$
+}
+
+namespace D {
+  using A::a;
+}
+
+namespace BD {
+  using namespace B;
+  using namespace D;
+}
+
+void g()
+{
+  BD::a++;          // OK, S is ${ A::a, A::a }$
+}
+```
+
+— *end example*\]
+
 — *end note*\]
 
-\[*Example 2*:
+\[*Example 3*:
 
 Because each referenced namespace is searched at most once, the
 following is well-defined:
@@ -1939,7 +2071,7 @@ void f()
 \[*Note 3*: Class and enumeration declarations are not discarded because
 of other declarations found in other searches. — *end note*\]
 
-\[*Example 3*:
+\[*Example 4*:
 
 ``` cpp
 namespace A {
@@ -2355,9 +2487,10 @@ void other() {
 The fundamental storage unit in the C++ memory model is the *byte*. A
 byte is at least large enough to contain the ordinary literal encoding
 of any element of the basic literal character set [[lex.charset]] and
-the eight-bit code units of the Unicode
+the eight-bit code units of the Unicode[^5]
 
-UTF-8 encoding form and is composed of a contiguous sequence of bits,
+UTF-8 encoding form and is composed of a contiguous sequence of
+bits,[^6]
 
 the number of which is *implementation-defined*. The least significant
 bit is called the *low-order bit*; the most significant bit is called
@@ -2543,7 +2676,7 @@ of that object is the address of the first byte it occupies. Two objects
 with overlapping lifetimes that are not bit-fields may have the same
 address if one is nested within the other, or if at least one is a
 subobject of zero size and they are of different types; otherwise, they
-have distinct addresses and occupy disjoint bytes of storage.
+have distinct addresses and occupy disjoint bytes of storage.[^7]
 
 \[*Example 2*:
 
@@ -2677,7 +2810,7 @@ In this case, the destructor is not implicitly invoked.
 destructor being invoked for each object of class type. — *end note*\]
 
 Before the lifetime of an object has started but after the storage which
-the object will occupy has been allocated
+the object will occupy has been allocated[^8]
 
 or, after the lifetime of an object has ended and before the storage
 which the object occupied is reused or released, any pointer that
@@ -2806,7 +2939,7 @@ storage by calling `std::launder` [[ptr.launder]]. — *end note*\]
 If a program ends the lifetime of an object of type `T` with static
 [[basic.stc.static]], thread [[basic.stc.thread]], or automatic
 [[basic.stc.auto]] storage duration and if `T` has a non-trivial
-destructor,
+destructor,[^9]
 
 and another object of the original type does not occupy that same
 storage location when the implicit destructor call takes place, the
@@ -2940,7 +3073,7 @@ region of storage become invalid pointer values [[basic.compound]].
 Indirection through an invalid pointer value and passing an invalid
 pointer value to a deallocation function have undefined behavior. Any
 other use of an invalid pointer value has *implementation-defined*
-behavior.
+behavior.[^10]
 
 #### Static storage duration <a id="basic.stc.static">[[basic.stc.static]]</a>
 
@@ -3090,7 +3223,7 @@ for the library allocation functions in  [[new.delete.single]] and 
 [[new.delete.array]], `p0` represents the address of a block of storage
 disjoint from the storage for any other object accessible to the caller.
 The effect of indirecting through a pointer returned from a request for
-zero size is undefined.
+zero size is undefined.[^11]
 
 For an allocation function other than a reserved placement allocation
 function [[new.delete.placement]], the pointer returned on a successful
@@ -3153,8 +3286,7 @@ one parameter. A *usual deallocation function* is a deallocation
 function whose parameters after the first are
 
 - optionally, a parameter of type `std::destroying_delete_t`, then
-- optionally, a parameter of type `std::size_t`,
-  then
+- optionally, a parameter of type `std::size_t`,[^12] then
 - optionally, a parameter of type `std::align_val_t`.
 
 A destroying operator delete shall be a usual deallocation function. A
@@ -3383,7 +3515,7 @@ the constructor has one or more default arguments, the destruction of
 every temporary created in a default argument is sequenced before the
 construction of the next array element, if any.
 
-The third context is when a reference binds to a temporary object.
+The third context is when a reference binds to a temporary object.[^13]
 
 The temporary object to which the reference is bound or the temporary
 object that is the complete object of a subobject to which the reference
@@ -3434,6 +3566,14 @@ int&& c = cond ? id<int[3]>{1, 2, 3}[i] : static_cast<int&&>(0);
 An explicit type conversion [[expr.type.conv]], [[expr.cast]] is
 interpreted as a sequence of elementary casts, covered above.
 
+\[*Example 3*:
+
+``` cpp
+const int& x = (const int&)1;   // temporary for value 1 has same lifetime as x
+```
+
+— *end example*\]
+
 — *end note*\]
 
 \[*Note 5*:
@@ -3441,6 +3581,17 @@ interpreted as a sequence of elementary casts, covered above.
 If a temporary object has a reference member initialized by another
 temporary object, lifetime extension applies recursively to such a
 member’s initializer.
+
+\[*Example 4*:
+
+``` cpp
+struct S {
+  const int& m;
+};
+const S& s = S{1};              // both S and int temporaries have lifetime of s
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -3493,7 +3644,7 @@ destroyed before `obj1` is destroyed; if `obj2` is an object with the
 same storage duration as the temporary and created after the temporary
 is created the temporary shall be destroyed after `obj2` is destroyed.
 
-\[*Example 3*:
+\[*Example 5*:
 
 ``` cpp
 struct S {
@@ -3541,7 +3692,7 @@ For any object (other than a potentially-overlapping subobject) of
 trivially copyable type `T`, whether or not the object holds a valid
 value of type `T`, the underlying bytes [[intro.memory]] making up the
 object can be copied into an array of `char`, `unsigned char`, or
-`std::byte` [[cstddef.syn]].
+`std::byte` [[cstddef.syn]].[^14]
 
 If the content of that array is copied back into the object, the object
 shall subsequently hold its original value.
@@ -3561,7 +3712,7 @@ std::memcpy(&obj, buf, N);      // at this point, each subobject of obj of scala
 For two distinct objects `obj1` and `obj2` of trivially copyable type
 `T`, where neither `obj1` nor `obj2` is a potentially-overlapping
 subobject, if the underlying bytes [[intro.memory]] making up `obj1` are
-copied into `obj2`,
+copied into `obj2`,[^15]
 
 `obj2` shall subsequently hold the same value as `obj1`.
 
@@ -3586,11 +3737,11 @@ The *object representation* of an object of type `T` is the sequence of
 representation are *padding bits*. For trivially copyable types, the
 value representation is a set of bits in the object representation that
 determines a *value*, which is one discrete element of an
-*implementation-defined* set of values.
+*implementation-defined* set of values.[^16]
 
 A class that has been declared but not defined, an enumeration type in
 certain contexts [[dcl.enum]], or an array of unknown bound or of
-incomplete element type, is an *incompletely-defined object type*.
+incomplete element type, is an *incompletely-defined object type*.[^17]
 
 Incompletely-defined object types and cv `void` are
 [[basic.fundamental]].
@@ -3729,7 +3880,7 @@ representation, and alignment requirements [[basic.align]] as the
 corresponding signed integer type. For each value x of a signed integer
 type, the value of the corresponding unsigned integer type congruent to
 x modulo $2^N$ has the same value of corresponding bits in its value
-representation.
+representation.[^18]
 
 \[*Example 1*: The value -1 of a signed integer type has the same
 representation as the largest value of the corresponding unsigned
@@ -3958,10 +4109,10 @@ Compound types can be constructed in the following ways:
   types at different times, [[class.union]];
 - *enumerations*, which comprise a set of named constant values,
   [[dcl.enum]];
-- *pointers to non-static class members*,
-  which identify members of a given type within objects of a given
-  class, [[dcl.mptr]]. Pointers to data members and pointers to member
-  functions are collectively called *pointer-to-member* types.
+- *pointers to non-static class members*,[^19] which identify members of
+  a given type within objects of a given class, [[dcl.mptr]]. Pointers
+  to data members and pointers to member functions are collectively
+  called *pointer-to-member* types.
 
 These methods of constructing types can be applied recursively;
 restrictions are mentioned in  [[dcl.meaning]]. Constructing a type such
@@ -3996,7 +4147,7 @@ allowed although there are restrictions on what can be done with them
 
 A value of a pointer type that is a pointer to or past the end of an
 object *represents the address* of the first byte in memory
-[[intro.memory]] occupied by the object
+[[intro.memory]] occupied by the object[^20]
 
 or the first byte in memory after the end of the storage occupied by the
 object, respectively.
@@ -4057,7 +4208,8 @@ Each type other than a function or reference type is part of a group of
 four distinct, but related, types: a *cv-unqualified* version, a
 *const-qualified* version, a *volatile-qualified* version, and a
 *const-volatile-qualified* version. The types in each such group shall
-have the same representation and alignment requirements [[basic.align]].
+have the same representation and alignment requirements
+[[basic.align]].[^21]
 
 A function or reference type is always cv-unqualified.
 
@@ -4361,7 +4513,7 @@ side effect associated with the expression *Y*.
 
 Every value computation and side effect associated with a
 full-expression is sequenced before every value computation and side
-effect associated with the next full-expression to be evaluated.
+effect associated with the next full-expression to be evaluated.[^22]
 
 Except where noted, evaluations of operands of individual operators and
 of subexpressions of individual expressions are unsequenced.
@@ -4403,7 +4555,8 @@ of the called function. For each function invocation or evaluation of an
 *await-expression* *F*, each evaluation that does not occur within *F*
 but is evaluated on the same thread and as part of the same signal
 handler (if any) is either sequenced before all evaluations that occur
-within *F* or sequenced after all evaluations that occur within *F*;
+within *F* or sequenced after all evaluations that occur within
+*F*;[^23]
 
 if *F* invokes or resumes a coroutine [[expr.await]], only evaluations
 subsequent to the previous suspension (if any) and prior to the next
@@ -4444,7 +4597,7 @@ top-level function of the new thread is executed by the new thread, not
 by the creating thread. — *end note*\]
 
 Every thread in a program can potentially access every object and
-function in a program.
+function in a program.[^24]
 
 Under a hosted implementation, a C++ program can have more than one
 thread running concurrently. The execution of each thread proceeds as
@@ -5090,7 +5243,7 @@ non-block non-inline variable with static storage duration is sequenced
 before the first statement of `main` or is deferred. If it is deferred,
 it strongly happens before any non-initialization odr-use of any
 non-inline function or non-inline variable defined in the same
-translation unit as the variable to be initialized.
+translation unit as the variable to be initialized.[^25]
 
 It is *implementation-defined* in which threads and at which points in
 the program such deferred dynamic initialization occurs.
@@ -5539,3 +5692,95 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class
 [thread.threads]: thread.md#thread.threads
+
+[^1]: Appearing inside the brace-enclosed *declaration-seq* in a
+    *linkage-specification* does not affect whether a declaration is a
+    definition.
+
+[^2]: An implementation is not required to call allocation and
+    deallocation functions from constructors or destructors; however,
+    this is a permissible implementation technique.
+
+[^3]: An implicit object parameter [[over.match.funcs]] is not part of
+    the parameter-type-list.
+
+[^4]: Lookups in which function names are ignored include names
+    appearing in a *nested-name-specifier*, an
+    *elaborated-type-specifier*, or a *base-specifier*.
+
+[^5]: Unicode is a registered trademark of Unicode, Inc. This
+    information is given for the convenience of users of this document
+    and does not constitute an endorsement by ISO or IEC of this
+    product.
+
+[^6]: The number of bits in a byte is reported by the macro `CHAR_BIT`
+    in the header `<climits>`.
+
+[^7]: Under the “as-if” rule an implementation is allowed to store two
+    objects at the same machine address or not store an object at all if
+    the program cannot observe the difference [[intro.execution]].
+
+[^8]: For example, before the dynamic initialization of an object with
+    static storage duration [[basic.start.dynamic]].
+
+[^9]: That is, an object for which a destructor will be called
+    implicitly—upon exit from the block for an object with automatic
+    storage duration, upon exit from the thread for an object with
+    thread storage duration, or upon exit from the program for an object
+    with static storage duration.
+
+[^10]: Some implementations might define that copying an invalid pointer
+    value causes a system-generated runtime fault.
+
+[^11]: The intent is to have `operator new()` implementable by calling
+    `std::malloc()` or `std::calloc()`, so the rules are substantially
+    the same. C++ differs from C in requiring a zero request to return a
+    non-null pointer.
+
+[^12]: The global `operator delete(void*, std::size_t)` precludes use of
+    an allocation function `void operator new(std::size_t, std::size_t)`
+    as a placement allocation function [[diff.cpp11.basic]].
+
+[^13]: The same rules apply to initialization of an `initializer_list`
+    object [[dcl.init.list]] with its underlying temporary array.
+
+[^14]: By using, for example, the library functions [[headers]]
+    `std::memcpy` or `std::memmove`.
+
+[^15]: By using, for example, the library functions [[headers]]
+    `std::memcpy` or `std::memmove`.
+
+[^16]: The intent is that the memory model of C++ is compatible with
+    that of ISO/IEC 9899 Programming Language C.
+
+[^17]: The size and layout of an instance of an incompletely-defined
+    object type is unknown.
+
+[^18]: This is also known as two’s complement representation.
+
+[^19]: Static class members are objects or functions, and pointers to
+    them are ordinary pointers to objects or functions.
+
+[^20]: For an object that is not within its lifetime, this is the first
+    byte in memory that it will occupy or used to occupy.
+
+[^21]: The same representation and alignment requirements are meant to
+    imply interchangeability as arguments to functions, return values
+    from functions, and non-static data members of unions.
+
+[^22]: As specified in  [[class.temporary]], after a full-expression is
+    evaluated, a sequence of zero or more invocations of destructor
+    functions for temporary objects takes place, usually in reverse
+    order of the construction of each temporary object.
+
+[^23]: In other words, function executions do not interleave with each
+    other.
+
+[^24]: An object with automatic or thread storage duration [[basic.stc]]
+    is associated with one specific thread, and can be accessed by a
+    different thread only indirectly through a pointer or reference
+    [[basic.compound]].
+
+[^25]: A non-block variable with static storage duration having
+    initialization with side effects is initialized in this case, even
+    if it is not itself odr-used [[term.odr.use]], [[basic.stc.static]].

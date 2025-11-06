@@ -58,7 +58,7 @@ amendments) applies.
   <https://www.unicode.org/versions/latest/>
 
 The library described in ISO/IEC 9899:2018, Clause 7, is hereinafter
-called the *C standard library*.
+called the *C standard library*.[^1]
 
 The operating system interface described in ISO/IEC 9945:2009 is
 hereinafter called *POSIX*.
@@ -579,8 +579,7 @@ Such requirements have the following meaning:
 - If a program contains no violations of the rules in [[lex]] through
   [[thread]] and [[depr]], a conforming implementation shall, within its
   resource limits as described in [[implimits]], accept and correctly
-  execute
-  that program.
+  execute[^2] that program.
 - If a program contains a violation of a rule for which no diagnostic is
   required, this document places no requirement on implementations with
   respect to that program.
@@ -639,7 +638,7 @@ Having done so, however, they can compile and execute such programs.
 
 Each implementation shall include documentation that identifies all
 conditionally-supported constructs that it does not support and defines
-all locale-specific characteristics.
+all locale-specific characteristics.[^3]
 
 ### Abstract machine <a id="intro.abstract">[[intro.abstract]]</a>
 
@@ -648,13 +647,13 @@ nondeterministic abstract machine. This document places no requirement
 on the structure of conforming implementations. In particular, they need
 not copy or emulate the structure of the abstract machine. Rather,
 conforming implementations are required to emulate (only) the observable
-behavior of the abstract machine as explained below.
+behavior of the abstract machine as explained below.[^4]
 
 Certain aspects and operations of the abstract machine are described in
 this document as implementation-defined (for example, `sizeof(int)`).
 These constitute the parameters of the abstract machine. Each
 implementation shall include documentation describing its
-characteristics and behavior in these respects.
+characteristics and behavior in these respects.[^5]
 
 Such documentation shall define the instance of the abstract machine
 that corresponds to that implementation (referred to as the
@@ -773,11 +772,13 @@ the following rules:
 [defns.well.formed]: #defns.well.formed
 [depr]: #depr
 [diff]: #diff
+[diff.library]: compatibility.md#diff.library
 [expr.call]: expr.md#expr.call
 [gram]: #gram
 [implimits]: #implimits
 [intro.abstract]: #intro.abstract
 [intro.compliance.general]: #intro.compliance.general
+[intro.defs]: #intro.defs
 [intro.execution]: basic.md#intro.execution
 [lex]: lex.md#lex
 [lex.phases]: lex.md#lex.phases
@@ -787,3 +788,27 @@ the following rules:
 [temp.deduct]: temp.md#temp.deduct
 [thread]: thread.md#thread
 [using.headers]: library.md#using.headers
+
+[^1]: With the qualifications noted in [[support]] through [[thread]]
+    and in [[diff.library]], the C standard library is a subset of the
+    C++ standard library.
+
+[^2]: “Correct execution” can include undefined behavior, depending on
+    the data being processed; see [[intro.defs]] and 
+    [[intro.execution]].
+
+[^3]: This documentation also defines implementation-defined behavior;
+    see  [[intro.abstract]].
+
+[^4]: This provision is sometimes called the “as-if” rule, because an
+    implementation is free to disregard any requirement of this document
+    as long as the result is *as if* the requirement had been obeyed, as
+    far as can be determined from the observable behavior of the
+    program. For instance, an actual implementation need not evaluate
+    part of an expression if it can deduce that its value is not used
+    and that no side effects affecting the observable behavior of the
+    program are produced.
+
+[^5]: This documentation also includes conditionally-supported
+    constructs and locale-specific behavior. See 
+    [[intro.compliance.general]].

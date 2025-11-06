@@ -114,7 +114,7 @@ A call to a C standard library function is a non-constant library call
 [[defns.nonconst.libcall]] if it raises a floating-point exception other
 than `FE_INEXACT`. The semantics of a call to a C standard library
 function evaluated as a core constant expression are those specified in
-Annex F of the C standard
+Annex F of the C standard[^1]
 
 to the extent applicable to the floating-point types
 [[basic.fundamental]] that are parameter types of the called function.
@@ -140,7 +140,7 @@ other editorial conventions.
 
 #### Elements <a id="structure.elements">[[structure.elements]]</a>
 
-Each library clause contains the following elements, as applicable:
+Each library clause contains the following elements, as applicable:[^2]
 
 - Summary
 - Requirements
@@ -209,7 +209,7 @@ Template argument requirements are sometimes referenced by name. See 
 In some cases the semantic requirements are presented as C++ code. Such
 code is intended as a specification of equivalence of a construct to
 another construct, not necessarily as the way the construct must be
-implemented.
+implemented.[^3]
 
 Required operations of any concept defined in this document need not be
 total functions; that is, some arguments to a required operation may
@@ -237,7 +237,7 @@ The detailed specifications each contain the following elements:
 - description of function semantics
 
 Descriptions of class member functions follow the order (as
-appropriate):
+appropriate):[^4]
 
 - constructor(s) and destructor
 - copying, moving & assignment functions
@@ -247,7 +247,7 @@ appropriate):
 - operators and other non-member functions
 
 Descriptions of function semantics contain the following elements (as
-appropriate):
+appropriate):[^5]
 
 -  the conditions for the function’s participation in overload
   resolution [[over.match]]. \[*Note 1*: Failure to meet such a
@@ -306,7 +306,7 @@ implementation or a C++ program. Where no distinction is explicitly made
 in the description, the behavior described is the required behavior.
 
 If the formulation of a complexity requirement calls for a negative
-number of operations, the actual requirement is zero operations.
+number of operations, the actual requirement is zero operations.[^6]
 
 Complexity requirements specified in the library clauses are upper
 bounds, and implementations that provide better complexity guarantees
@@ -375,7 +375,7 @@ namespace std {
 ##### General <a id="type.descriptions.general">[[type.descriptions.general]]</a>
 
 The Requirements subclauses may describe names that are used to specify
-constraints on template arguments.
+constraints on template arguments.[^7]
 
 These names are used in library Clauses to describe the types that may
 be supplied as arguments by a C++ program when instantiating template
@@ -388,7 +388,7 @@ added constraints.
 ##### Enumerated types <a id="enumerated.types">[[enumerated.types]]</a>
 
 Several types defined in [[input.output]] are . Each enumerated type may
-be implemented as an enumeration or as a synonym for an enumeration.
+be implemented as an enumeration or as a synonym for an enumeration.[^8]
 
 The enumerated type `enumerated` can be written:
 
@@ -509,7 +509,7 @@ sequences that follow a few uniform conventions:
 A *null-terminated byte string*, or NTBS, is a character sequence whose
 highest-addressed element with defined content has the value zero (the
 *terminating null character*); no other element in the sequence has the
-value zero.
+value zero.[^9]
 
 The *length of an NTBS* is the number of elements that precede the
 terminating null character. An *empty NTBS* has a length of zero.
@@ -517,7 +517,7 @@ terminating null character. An *empty NTBS* has a length of zero.
 The *value of an NTBS* is the sequence of values of the elements up to
 and including the terminating null character.
 
-A *static NTBS* is an NTBS with static storage duration.
+A *static NTBS* is an NTBS with static storage duration.[^10]
 
 ###### Multibyte strings <a id="multibyte.strings">[[multibyte.strings]]</a>
 
@@ -527,7 +527,7 @@ character set.
 
 A *null-terminated multibyte string*, or NTMBS, is an NTBS that
 constitutes a sequence of valid multibyte characters, beginning and
-ending in the initial shift state.
+ending in the initial shift state.[^11]
 
 A *static NTMBS* is an NTMBS with static storage duration.
 
@@ -690,11 +690,11 @@ macros described in the synopses of the C++ standard library headers
 
 All library entities except `operator new` and `operator delete` are
 defined within the namespace `std` or namespaces nested within namespace
-`std`.
+`std`.[^12]
 
 It is unspecified whether names declared in a specific namespace are
 declared directly in that namespace or in an inline namespace inside
-that namespace.
+that namespace.[^13]
 
 Whenever an unqualified name other than `swap`, `make_error_code`, or
 `make_error_condition` is used in the specification of a declaration `D`
@@ -724,13 +724,13 @@ argument-dependent lookup [[basic.lookup.argdep]].
 #### Headers <a id="headers">[[headers]]</a>
 
 Each element of the C++ standard library is declared or defined (as
-appropriate) in a *header*.
+appropriate) in a *header*.[^14]
 
 The C++ standard library provides the *C++ library headers*, shown in
 [[headers.cpp]].
 
 The facilities of the C standard library are provided in the additional
-headers shown in [[headers.cpp.c]].
+headers shown in [[headers.cpp.c]].[^15]
 
 The headers listed in [[headers.cpp]], or, for a freestanding
 implementation, the subset of such headers that are provided by the
@@ -769,13 +769,13 @@ functions.
 `va_start`. — *end note*\]
 
 Names that are defined as functions in C shall be defined as functions
-in the C++ standard library.
+in the C++ standard library.[^16]
 
 Identifiers that are keywords or operators in C++ shall not be defined
-as macros in C++ standard library headers.
+as macros in C++ standard library headers.[^17]
 
 [[support.c.headers]], C standard library headers, describes the effects
-of using the `name.h` (C header) form in a C++ program.
+of using the `name.h` (C header) form in a C++ program.[^18]
 
 Annex K of the C standard describes a large number of functions, with
 associated types and macros, which “promote safer, more secure
@@ -895,7 +895,7 @@ A translation unit may include library headers in any order
 [[lex.separate]]. Each may be included more than once, with no effect
 different from being included exactly once, except that the effect of
 including either `<cassert>` or `<assert.h>` depends each time on the
-lexically current definition of `NDEBUG`.
+lexically current definition of `NDEBUG`.[^19]
 
 A translation unit shall include a header only outside of any
 declaration or definition and, in the case of a module unit, only in its
@@ -913,7 +913,7 @@ the default `extern "C++"` linkage [[dcl.link]].
 Whether a name from the C standard library declared with external
 linkage has `extern "C"` or `extern "C++"` linkage is
 *implementation-defined*. It is recommended that an implementation use
-`extern "C++"` linkage for this purpose.
+`extern "C++"` linkage for this purpose.[^20]
 
 Objects and functions defined in the library and required by a C++
 program are included in the program prior to program startup.
@@ -1725,7 +1725,7 @@ Unless explicitly prohibited, a program may add a template
 specialization for any standard library class template to namespace
 `std` provided that (a) the added declaration depends on at least one
 program-defined type and (b) the specialization meets the standard
-library requirements for the original template.
+library requirements for the original template.[^21]
 
 The behavior of a C++ program is undefined if it declares an explicit or
 partial specialization of any standard library variable template, except
@@ -1887,13 +1887,13 @@ defined as function-like macros  [[cpp.replace]].
 
 Each name declared as an object with external linkage in a header is
 reserved to the implementation to designate that library object with
-external linkage,
+external linkage, [^22]
 
 both in namespace `std` and in the global namespace.
 
 Each global function signature declared with external linkage in a
 header is reserved to the implementation to designate that function
-signature with external linkage.
+signature with external linkage.[^23]
 
 Each name from the C standard library declared with external linkage is
 reserved to the implementation for use as a name with `extern "C"`
@@ -1901,7 +1901,7 @@ linkage, both in namespace `std` and in the global namespace.
 
 Each function signature from the C standard library declared with
 external linkage is reserved to the implementation for use as a function
-signature with both `extern "C"` and `extern "C++"` linkage,
+signature with both `extern "C"` and `extern "C++"` linkage,[^24]
 
 or as a name of namespace scope in the global namespace.
 
@@ -2145,7 +2145,7 @@ library are defined as inline [[dcl.inline]].
 
 A call to a non-member function signature described in [[support]]
 through [[thread]] and [[depr]] shall behave as if the implementation
-declared no additional non-member function signatures.
+declared no additional non-member function signatures.[^25]
 
 An implementation shall not declare a non-member function signature with
 additional default arguments.
@@ -2316,10 +2316,10 @@ failure by throwing an exception of a type described in its paragraph,
 or of a type derived from a type named in the paragraph that would be
 caught by an exception handler for the base type.
 
-Functions from the C standard library shall not throw exceptions
+Functions from the C standard library shall not throw exceptions [^26]
 
 except when such a function calls a program-supplied function that
-throws an exception.
+throws an exception.[^27]
 
 Destructor operations defined in the C++ standard library shall not
 throw exceptions. Every destructor in the C++ standard library shall
@@ -2327,7 +2327,7 @@ behave as if it had a non-throwing exception specification.
 
 Functions defined in the C++ standard library that do not have a
 paragraph but do have a potentially-throwing exception specification may
-throw *implementation-defined* exceptions.
+throw *implementation-defined* exceptions.[^28]
 
 Implementations should report errors by throwing exceptions of or
 derived from the standard exception classes
@@ -2657,3 +2657,111 @@ unspecified state.
 [type.traits]: #type.traits
 [utilities]: #utilities
 [utility]: #utility
+
+[^1]: See also ISO/IEC 9899:2018 section 7.6.
+
+[^2]: To save space, items that do not apply to a Clause are omitted.
+    For example, if a Clause does not specify any requirements, there
+    will be no “Requirements” subclause.
+
+[^3]: Although in some cases the code given is unambiguously the optimum
+    implementation.
+
+[^4]: To save space, items that do not apply to a class are omitted. For
+    example, if a class does not specify any comparison operator
+    functions, there will be no “Comparison operator functions”
+    subclause.
+
+[^5]: To save space, elements that do not apply to a function are
+    omitted. For example, if a function specifies no preconditions,
+    there will be no element.
+
+[^6]: This simplifies the presentation of complexity requirements in
+    some cases.
+
+[^7]: Examples from  [[utility.requirements]] include:
+    *Cpp17EqualityComparable*, *Cpp17LessThanComparable*,
+    *Cpp17CopyConstructible*. Examples from  [[iterator.requirements]]
+    include: *Cpp17InputIterator*, *Cpp17ForwardIterator*.
+
+[^8]: Such as an integer type, with constant integer values
+    [[basic.fundamental]].
+
+[^9]: Many of the objects manipulated by function signatures declared in
+    `<cstring>` are character sequences or NTBSs. The size of some of
+    these character sequences is limited by a length value, maintained
+    separately from the character sequence.
+
+[^10]: A *string-literal*, such as `"abc"`, is a static NTBS.
+
+[^11]: An NTBS that contains characters only from the basic literal
+    character set is also an NTMBS. Each multibyte character then
+    consists of a single byte.
+
+[^12]: The C standard library headers [[support.c.headers]] also define
+    names within the global namespace, while the C++ headers for C
+    library facilities [[headers]] can also define names within the
+    global namespace.
+
+[^13]: This gives implementers freedom to use inline namespaces to
+    support multiple configurations of the library.
+
+[^14]: A header is not necessarily a source file, nor are the sequences
+    delimited by `<` and `>` in header names necessarily valid source
+    file names [[cpp.include]].
+
+[^15]: It is intentional that there is no C++ header for any of these C
+    headers: , .
+
+[^16]: This disallows the practice, allowed in C, of providing a masking
+    macro in addition to the function prototype. The only way to achieve
+    equivalent inline behavior in C++ is to provide a definition as an
+    extern inline function.
+
+[^17]: In particular, including the standard header `<iso646.h>` has no
+    effect.
+
+[^18]: The `".h"` headers dump all their names into the global
+    namespace, whereas the newer forms keep their names in namespace
+    `std`. Therefore, the newer forms are the preferred forms for all
+    uses except for C++ programs which are intended to be strictly
+    compatible with C.
+
+[^19]: This is the same as the C standard library.
+
+[^20]: The only reliable way to declare an object or function signature
+    from the C standard library is by including the header that declares
+    it, notwithstanding the latitude granted in 7.1.4 of the C Standard.
+
+[^21]: Any library code that instantiates other library templates must
+    be prepared to work adequately with any user-supplied specialization
+    that meets the minimum requirements of this document.
+
+[^22]: The list of such reserved names includes `errno`, declared or
+    defined in `<cerrno>`.
+
+[^23]: The list of such reserved function signatures with external
+    linkage includes `setjmp(jmp_buf)`, declared or defined in
+    `<csetjmp>`, and `va_end(va_list)`, declared or defined in
+    `<cstdarg>`.
+
+[^24]: The function signatures declared in `<cuchar>`, `<cwchar>`, and
+    `<cwctype>` are always reserved, notwithstanding the restrictions
+    imposed in subclause 4.5.1 of Amendment 1 to the C Standard for
+    these headers.
+
+[^25]: A valid C++ program always calls the expected library non-member
+    function. An implementation can also define additional non-member
+    functions that would otherwise not be called by a valid C++ program.
+
+[^26]: That is, the C library functions can all be treated as if they
+    are marked `noexcept`. This allows implementations to make
+    performance optimizations based on the absence of exceptions at
+    runtime.
+
+[^27]: The functions `qsort()` and `bsearch()` [[alg.c.library]] meet
+    this condition.
+
+[^28]: In particular, they can report a failure to allocate storage by
+    throwing an exception of type `bad_alloc`, or a class derived from
+    `bad_alloc` [[bad.alloc]].

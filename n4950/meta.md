@@ -1152,6 +1152,29 @@ The type of a pointer-to-member expression `&C::b` is not always a
 pointer to member of `C`, leading to potentially surprising results when
 using these functions in conjunction with inheritance.
 
+\[*Example 1*:
+
+``` cpp
+struct A { int a; };                    // a standard-layout class
+struct B { int b; };                    // a standard-layout class
+struct C: public A, public B { };       // not a standard-layout class
+
+static_assert( is_pointer_interconvertible_with_class( &C::b ) );
+  // Succeeds because, despite its appearance, &C::b has type
+  // ``pointer to member of B of type int''.
+static_assert( is_pointer_interconvertible_with_class<C>( &C::b ) );
+  // Forces the use of class C, and fails.
+
+static_assert( is_corresponding_member( &C::a, &C::b ) );
+  // Succeeds because, despite its appearance, &C::a and &C::b have types
+  // ``pointer to member of A of type int'' and
+  // ``pointer to member of B of type int'', respectively.
+static_assert( is_corresponding_member<C, C>( &C::a, &C::b ) );
+  // Forces the use of class C, and fails.
+```
+
+— *end example*\]
+
 — *end note*\]
 
 ### Constant evaluation context <a id="meta.const.eval">[[meta.const.eval]]</a>

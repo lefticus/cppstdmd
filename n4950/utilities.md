@@ -7330,7 +7330,7 @@ os << x.template to_string<charT, traits, allocator<charT>>(
 
 A *function object type* is an object type [[term.object.type]] that can
 be the type of the *postfix-expression* in a function call
-[[expr.call]], [[over.match.call]].
+[[expr.call]], [[over.match.call]].[^1]
 
 A *function object* is an object of a function object type. In the
 places where one would expect to pass a pointer to a function to an
@@ -10763,6 +10763,8 @@ displaying Unicode text in a terminal.
 
 This is the case for Windows
 
+[^2]
+
 -based and many POSIX-based operating systems.
 
 — *end note*\]
@@ -13112,3 +13114,12 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
 [type.index]: #type.index
 [utility]: #utility
 [variant]: #variant
+
+[^1]: Such a type is a function pointer or a class type which has a
+    member `operator()` or a class type which has a conversion to a
+    pointer to function.
+
+[^2]: Windows is a registered trademark of Microsoft Corporation. This
+    information is given for the convenience of users of this document
+    and does not constitute an endorsement by ISO or IEC of this
+    product.

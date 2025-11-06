@@ -97,7 +97,8 @@ requirements.
 constrained, for which iterator category and mutability requirements are
 expressed explicitly. — *end note*\]
 
-Both in-place and copying versions are provided for certain algorithms.
+Both in-place and copying versions are provided for certain
+algorithms.[^1]
 
 When such a version is provided for *algorithm* it is called
 *algorithm`_copy`*. Algorithms that take predicates end with the suffix
@@ -9508,3 +9509,10 @@ standard library.
 [algorithms.results]: #algorithms.results
 [numeric.ops]: #numeric.ops
 [specialized.algorithms]: #specialized.algorithms
+
+[^1]: The decision whether to include a copying version was usually
+    based on complexity considerations. When the cost of doing the
+    operation dominates the cost of copy, the copying version is not
+    included. For example, `sort_copy` is not included because the cost
+    of sorting is much more significant, and users can invoke `copy`
+    followed by `sort`.

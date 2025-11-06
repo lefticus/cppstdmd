@@ -198,11 +198,319 @@ local function expand_macros(content)
   return content
 end
 
+-- Forward declarations for recursive processing
+local process_div_block
+local process_environment
+
+-- Helper function to process Div blocks (examples, notes, footnotes)
+-- Takes codeblocks and titles for placeholder replacement
+-- Returns a list of blocks
+function process_div_block(block, codeblocks, titles)
+  if not block.classes then
+    return {block}
+  end
+
+  -- Handle <div class="note">
+  if block.classes[1] == "note" then
+    note_counter = note_counter + 1
+
+    local note_inlines = {}
+    local has_blocks = false
+
+    -- Check if content has non-Para blocks
+    for _, div_block in ipairs(block.content) do
+      if div_block.t ~= "Para" then
+        has_blocks = true
+        break
+      end
+    end
+
+    if not has_blocks then
+      -- Simple case: only paragraphs, combine into single inline sequence
+      for _, div_block in ipairs(block.content) do
+        if div_block.t == "Para" and div_block.content then
+          if #note_inlines > 0 then
+            table.insert(note_inlines, pandoc.Space())
+          end
+          for _, inline in ipairs(div_block.content) do
+            table.insert(note_inlines, inline)
+          end
+        end
+      end
+
+      local note_para = {
+        pandoc.Str("["),
+        pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
+        pandoc.Str(": ")
+      }
+      for _, inline in ipairs(note_inlines) do
+        table.insert(note_para, inline)
+      end
+      table.insert(note_para, pandoc.Str(" — "))
+      table.insert(note_para, pandoc.Emph({pandoc.Str("end note")}))
+      table.insert(note_para, pandoc.Str("]"))
+
+      return {pandoc.Para(note_para)}
+    else
+      -- Complex case: has code blocks or other non-Para blocks
+      local result = {}
+      local opening = {
+        pandoc.Str("["),
+        pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
+        pandoc.Str(":")
+      }
+      table.insert(result, pandoc.Para(opening))
+
+      -- Recursively process nested div content, passing codeblocks/titles
+      for _, div_block in ipairs(block.content) do
+        local blocks = process_single_block(div_block, codeblocks, titles)
+        for _, b in ipairs(blocks) do
+          table.insert(result, b)
+        end
+      end
+
+      local closing = {
+        pandoc.Str("— "),
+        pandoc.Emph({pandoc.Str("end note")}),
+        pandoc.Str("]")
+      }
+      table.insert(result, pandoc.Para(closing))
+      return result
+    end
+  end
+
+  -- Handle <div class="example">
+  if block.classes[1] == "example" then
+    example_counter = example_counter + 1
+
+    local example_inlines = {}
+    local has_blocks = false
+
+    -- Check if content has non-Para blocks
+    for _, div_block in ipairs(block.content) do
+      if div_block.t ~= "Para" then
+        has_blocks = true
+        break
+      end
+    end
+
+    if not has_blocks then
+      -- Simple case: only paragraphs, combine into single inline sequence
+      for _, div_block in ipairs(block.content) do
+        if div_block.t == "Para" and div_block.content then
+          if #example_inlines > 0 then
+            table.insert(example_inlines, pandoc.Space())
+          end
+          for _, inline in ipairs(div_block.content) do
+            table.insert(example_inlines, inline)
+          end
+        end
+      end
+
+      local example_para = {
+        pandoc.Str("["),
+        pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
+        pandoc.Str(": ")
+      }
+      for _, inline in ipairs(example_inlines) do
+        table.insert(example_para, inline)
+      end
+      table.insert(example_para, pandoc.Str(" — "))
+      table.insert(example_para, pandoc.Emph({pandoc.Str("end example")}))
+      table.insert(example_para, pandoc.Str("]"))
+
+      return {pandoc.Para(example_para)}
+    else
+      -- Complex case: has code blocks or other non-Para blocks
+      local result = {}
+      local opening = {
+        pandoc.Str("["),
+        pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
+        pandoc.Str(":")
+      }
+      table.insert(result, pandoc.Para(opening))
+
+      -- Recursively process nested div content, passing codeblocks/titles
+      for _, div_block in ipairs(block.content) do
+        local blocks = process_single_block(div_block, codeblocks, titles)
+        for _, b in ipairs(blocks) do
+          table.insert(result, b)
+        end
+      end
+
+      local closing = {
+        pandoc.Str("— "),
+        pandoc.Emph({pandoc.Str("end example")}),
+        pandoc.Str("]")
+      }
+      table.insert(result, pandoc.Para(closing))
+      return result
+    end
+  end
+
+  -- Handle <div class="footnote"> - just unwrap the div, keep content
+  if block.classes[1] == "footnote" then
+    local result = {}
+    for _, div_block in ipairs(block.content) do
+      table.insert(result, div_block)
+    end
+    return result
+  end
+
+  -- Handle <div class="codeblock"> - convert to proper code block
+  if block.classes[1] == "codeblock" then
+    local code_text = ""
+    for _, div_block in ipairs(block.content) do
+      if div_block.t == "Para" then
+        local text = pandoc.utils.stringify(div_block)
+        if #code_text > 0 then
+          code_text = code_text .. "\n"
+        end
+        code_text = code_text .. text
+      elseif div_block.t == "CodeBlock" then
+        if #code_text > 0 then
+          code_text = code_text .. "\n"
+        end
+        code_text = code_text .. div_block.text
+      end
+    end
+
+    if #code_text > 0 then
+      return {pandoc.CodeBlock(code_text, {class = "cpp"})}
+    end
+  end
+
+  -- Return block as-is if not recognized
+  return {block}
+end
+
+-- Helper function to recursively process a single block, handling nested Divs and RawBlocks
+local function process_single_block(block, codeblocks, titles)
+  -- Handle Div blocks that might contain nested examples/notes/footnotes
+  if block.t == "Div" and block.classes then
+    return process_div_block(block, codeblocks, titles)
+  end
+
+  -- Handle RawBlock that might contain nested examples/notes
+  -- Note: At this point, codeblocks have already been extracted and replaced with placeholders
+  -- by the parent's extract_codeblocks() call. We need to parse the content and process it
+  -- using the existing codeblocks dict rather than calling process_environment() which would
+  -- try to extract codeblocks again.
+  if block.t == "RawBlock" and block.format == "latex" then
+    local text = block.text
+
+    -- Check for nested note
+    local note_start, note_end = text:find("\\begin{note}")
+    if note_start then
+      local note_content_end = text:find("\\end{note}", note_start)
+      if note_content_end then
+        note_counter = note_counter + 1
+        local note_content = text:sub(note_start + 12, note_content_end - 1)  -- 12 = length of "\begin{note}"
+        note_content = trim(note_content)
+        note_content = expand_macros(note_content)
+
+        -- Parse the content (which already has codeblock placeholders)
+        local parsed = pandoc.read(note_content, "latex+raw_tex")
+
+        local result = {}
+        local label = "Note"
+        -- Opening
+        table.insert(result, pandoc.Para({
+          pandoc.Str("["),
+          pandoc.Emph({pandoc.Str(label .. " " .. note_counter)}),
+          pandoc.Str(":")
+        }))
+
+        -- Process all blocks recursively with the existing codeblocks dict
+        for _, parsed_block in ipairs(parsed.blocks) do
+          local blocks = process_single_block(parsed_block, codeblocks, titles)
+          for _, b in ipairs(blocks) do
+            table.insert(result, b)
+          end
+        end
+
+        -- Closing
+        table.insert(result, pandoc.Para({
+          pandoc.Str("— "),
+          pandoc.Emph({pandoc.Str("end note")}),
+          pandoc.Str("]")
+        }))
+
+        return result
+      end
+    end
+
+    -- Check for nested example
+    local example_start, example_end = text:find("\\begin{example}")
+    if example_start then
+      local example_content_end = text:find("\\end{example}", example_start)
+      if example_content_end then
+        example_counter = example_counter + 1
+        local example_content = text:sub(example_start + 15, example_content_end - 1)  -- 15 = length of "\begin{example}"
+        example_content = trim(example_content)
+        example_content = expand_macros(example_content)
+
+        -- Parse the content (which already has codeblock placeholders)
+        local parsed = pandoc.read(example_content, "latex+raw_tex")
+
+        local result = {}
+        local label = "Example"
+        -- Opening
+        table.insert(result, pandoc.Para({
+          pandoc.Str("["),
+          pandoc.Emph({pandoc.Str(label .. " " .. example_counter)}),
+          pandoc.Str(":")
+        }))
+
+        -- Process all blocks recursively with the existing codeblocks dict
+        for _, parsed_block in ipairs(parsed.blocks) do
+          local blocks = process_single_block(parsed_block, codeblocks, titles)
+          for _, b in ipairs(blocks) do
+            table.insert(result, b)
+          end
+        end
+
+        -- Closing
+        table.insert(result, pandoc.Para({
+          pandoc.Str("— "),
+          pandoc.Emph({pandoc.Str("end example")}),
+          pandoc.Str("]")
+        }))
+
+        return result
+      end
+    end
+
+    -- Check for nested footnote
+    local footnote_start, footnote_end = text:find("\\begin{footnote}")
+    if footnote_start then
+      local footnote_content_end = text:find("\\end{footnote}", footnote_start)
+      if footnote_content_end then
+        local footnote_content = text:sub(footnote_start + 16, footnote_content_end - 1)  -- 16 = length of "\begin{footnote}"
+        footnote_content = trim(footnote_content)
+        footnote_content = expand_macros(footnote_content)
+
+        -- Create a native Pandoc footnote (Note inline element)
+        local parsed = pandoc.read(footnote_content, "latex+raw_tex")
+
+        -- Create Note with parsed blocks as content
+        local note = pandoc.Note(parsed.blocks)
+
+        -- Return as Para containing the Note inline element
+        return {pandoc.Para({note})}
+      end
+    end
+  end
+
+  -- Handle codeblock replacement
+  return process_codeblock_div(block, codeblocks, titles)
+end
+
 -- Unified function to process note or example environments
 -- env_type: "note" or "example"
 -- counter_val: current counter value
 -- Returns: result blocks, updated counter value
-local function process_environment(content, env_type, counter_val)
+function process_environment(content, env_type, counter_val)
   counter_val = counter_val + 1
 
   -- Trim leading/trailing whitespace
@@ -268,9 +576,9 @@ local function process_environment(content, env_type, counter_val)
     }
     table.insert(result, pandoc.Para(opening))
 
-    -- Output all blocks from parsed content
+    -- Output all blocks from parsed content, recursively processing Divs
     for _, parsed_block in ipairs(parsed.blocks) do
-      local blocks = process_codeblock_div(parsed_block, codeblocks, titles)
+      local blocks = process_single_block(parsed_block, codeblocks, titles)
       -- Insert all blocks from the list (handles both single block and title+code)
       for _, block in ipairs(blocks) do
         table.insert(result, block)
@@ -330,6 +638,36 @@ function Blocks(blocks)
         blocks_to_insert, example_counter = process_environment(example_content, "example", example_counter)
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
+        end
+        goto continue
+      end
+
+      -- Check for footnote environment
+      local footnote_content = text:match("\\begin{footnote}([%s%S]-)\\end{footnote}")
+      if footnote_content then
+        -- Create a native Pandoc footnote (Note inline element)
+        footnote_content = trim(footnote_content)
+        footnote_content = expand_macros(footnote_content)
+        local parsed = pandoc.read(footnote_content, "latex+raw_tex")
+
+        -- Create Note with parsed blocks as content
+        local note = pandoc.Note(parsed.blocks)
+
+        -- Find the last Para block in result to attach the footnote to
+        local last_para_idx = nil
+        for idx = #result, 1, -1 do
+          if result[idx].t == "Para" then
+            last_para_idx = idx
+            break
+          end
+        end
+
+        if last_para_idx then
+          -- Append footnote to the end of the paragraph's inline content
+          table.insert(result[last_para_idx].content, note)
+        else
+          -- No preceding paragraph found; create new Para with just the footnote
+          table.insert(result, pandoc.Para({note}))
         end
         goto continue
       end

@@ -323,6 +323,15 @@ Since `signed`, `unsigned`, `long`, and `short` by default imply `int`,
 a *type-name* appearing after one of those specifiers is treated as the
 name being (re)declared.
 
+\[*Example 2*:
+
+``` cpp
+void h(unsigned Pc);            // void h(unsigned int)
+void k(unsigned int Pc);        // void k(unsigned int)
+```
+
+— *end example*\]
+
 — *end note*\]
 
 ### Storage class specifiers <a id="dcl.stc">[[dcl.stc]]</a>
@@ -937,7 +946,7 @@ the following:
 Except in a declaration of a constructor, destructor, or conversion
 function, at least one *defining-type-specifier* that is not a
 *cv-qualifier* shall appear in a complete *type-specifier-seq* or a
-complete *decl-specifier-seq*.
+complete *decl-specifier-seq*.[^1]
 
 \[*Note 1*: *enum-specifier*s, *class-specifier*s, and
 *typename-specifier*s are discussed in [[dcl.enum]], [[class]], and
@@ -2660,6 +2669,34 @@ When several “array of” specifications are adjacent, a multidimensional
 array type is created; only the first of the constant expressions that
 specify the bounds of the arrays can be omitted.
 
+\[*Example 4*:
+
+``` cpp
+int x3d[3][5][7];
+```
+
+declares an array of three elements, each of which is an array of five
+elements, each of which is an array of seven integers. The overall array
+can be viewed as a three-dimensional array of integers, with rank
+3 × 5 × 7. Any of the expressions `x3d`, `x3d[i]`, `x3d[i][j]`,
+`x3d[i][j][k]` can reasonably appear in an expression. The expression
+`x3d[i]` is equivalent to `*(x3d + i)`; in that expression, `x3d` is
+subject to the array-to-pointer conversion [[conv.array]] and is first
+converted to a pointer to a 2-dimensional array with rank 5 × 7 that
+points to the first element of `x3d`. Then `i` is added, which on
+typical implementations involves multiplying `i` by the length of the
+object to which the pointer points, which is `sizeof(int)`× 5 × 7. The
+result of the addition and indirection is an lvalue denoting the
+`i`^\text{th} array element of `x3d` (an array of five arrays of seven
+integers). If there is another subscript, the same argument applies
+again, so `x3d[i][j]` is an lvalue denoting the `j`^\text{th} array
+element of the `i`^\text{th} array element of `x3d` (an array of seven
+integers), and `x3d[i][j][k]` is an lvalue denoting the `k`^\text{th}
+array element of the `j`^\text{th} array element of the `i`^\text{th}
+array element of `x3d` (an integer).
+
+— *end example*\]
+
 The first subscript in the declaration helps determine the amount of
 storage consumed by an array but plays no other part in subscript
 calculations.
@@ -2717,7 +2754,7 @@ returning `U`”, where
 
 The optional *attribute-specifier-seq* appertains to the function type.
 
-A type of either form is a *function type*.
+A type of either form is a *function type*.[^2]
 
 ``` bnf
 parameter-declaration-clause:
@@ -3149,7 +3186,7 @@ There is a syntactic ambiguity when an ellipsis occurs at the end of a
 the ellipsis is parsed as part of the *abstract-declarator* if the type
 of the parameter either names a template parameter pack that has not
 been expanded or contains `auto`; otherwise, it is parsed as part of the
-*parameter-declaration-clause*.
+*parameter-declaration-clause*.[^3]
 
 #### Default arguments <a id="dcl.fct.default">[[dcl.fct.default]]</a>
 
@@ -3186,7 +3223,7 @@ latter case, the *initializer-clause* shall be an
 *assignment-expression*. A default argument shall not be specified for a
 template parameter pack or a function parameter pack. If it is specified
 in a *parameter-declaration-clause*, it shall not occur within a
-*declarator* or *abstract-declarator* of a *parameter-declaration*.
+*declarator* or *abstract-declarator* of a *parameter-declaration*.[^4]
 
 For non-template functions, default arguments can be added in later
 declarations of a function that inhabit the same scope. Declarations
@@ -3320,6 +3357,16 @@ void f() {
 The keyword `this` cannot appear in a default argument of a member
 function; see  [[expr.prim.this]].
 
+\[*Example 6*:
+
+``` cpp
+class A {
+  void f(A* p = this) { }           // error
+};
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A default argument is evaluated each time the function is called with no
@@ -3330,7 +3377,7 @@ as a potentially-evaluated expression in a default argument.
 are in scope and can hide namespace and class member
 names. — *end note*\]
 
-\[*Example 6*:
+\[*Example 7*:
 
 ``` cpp
 int a;
@@ -3347,7 +3394,7 @@ appears as the *id-expression* of a class member access expression
 [[expr.ref]] or unless it is used to form a pointer to member
 [[expr.unary.op]].
 
-\[*Example 7*:
+\[*Example 8*:
 
 The declaration of `X::mem1()` in the following example is ill-formed
 because no object is supplied for the non-static member `X::a` used as
@@ -3371,7 +3418,7 @@ members are described in [[class]].
 
 A default argument is not part of the type of a function.
 
-\[*Example 8*:
+\[*Example 9*:
 
 ``` cpp
 int f(int = 0);
@@ -3401,7 +3448,7 @@ the pointer or reference denoting the object. An overriding function in
 a derived class does not acquire default arguments from the function it
 overrides.
 
-\[*Example 9*:
+\[*Example 10*:
 
 ``` cpp
 struct A {
@@ -3518,7 +3565,7 @@ To *zero-initialize* an object or reference of type `T` means:
 
 - if `T` is a scalar type [[term.scalar.type]], the object is
   initialized to the value obtained by converting the integer literal
-  `0` (zero) to `T`;
+  `0` (zero) to `T`;[^5]
 - if `T` is a (possibly cv-qualified) non-union class type, its padding
   bits [[term.padding.bits]] are initialized to zero bits and each
   non-static data member, each non-virtual base class subobject, and, if
@@ -3672,11 +3719,30 @@ source type is not defined.
       otherwise are value-initialized. For each 1 ≤ i < j ≤ n, every
       value computation and side effect associated with the
       initialization of eᵢ is sequenced before those associated with the
-      initialization of eⱼ. \[*Note 3*: By contrast with
-      direct-list-initialization, narrowing conversions
+      initialization of eⱼ.
+      \[*Note 3*:
+      By contrast with direct-list-initialization, narrowing conversions
       [[dcl.init.list]] are permitted, designators are not permitted, a
       temporary object bound to a reference does not have its lifetime
       extended [[class.temporary]], and there is no brace elision.
+      \[*Example 5*:
+      ``` cpp
+      struct A {
+        int a;
+        int&& r;
+      };
+
+      int f();
+      int n = 10;
+
+      A a1{1, f()};                   // OK, lifetime is extended
+      A a2(1, f());                   // well-formed, but dangling reference
+      A a3{1.0, 1};                   // error: narrowing conversion
+      A a4(1.0, 1);                   // well-formed, but dangling reference
+      A a5(1.0, std::move(n));        // OK
+      ```
+
+      — *end example*\]
       — *end note*\]
     - Otherwise, the initialization is ill-formed.
   - Otherwise (i.e., for the remaining copy-initialization cases),
@@ -3811,7 +3877,7 @@ For each explicitly initialized element:
   initialized by the *braced-init-list* `{ `*D*` }`, where *D* is the
   *designated-initializer-clause* naming a member of the anonymous union
   member. There shall be only one such *designated-initializer-clause*.
-  \[*Example 5*:
+  \[*Example 6*:
   ``` cpp
   struct C {
     union {
@@ -3839,7 +3905,7 @@ For each explicitly initialized element:
   element is list-initialized, which will result in a recursive
   application of the rules in this subclause if the element is an
   aggregate. — *end note*\]
-  \[*Example 6*:
+  \[*Example 7*:
   ``` cpp
   struct A {
     int x;
@@ -3955,7 +4021,7 @@ elements since no size was specified and there are three initializers.
 — *end example*\]
 
 An array of unknown bound shall not be initialized with an empty
-*braced-init-list* `{}`.
+*braced-init-list* `{}`.[^6]
 
 \[*Note 3*:
 
@@ -3965,6 +4031,16 @@ if a suitable *mem-initializer* is present [[class.base.init]], the
 default member initializer is not considered to initialize the array of
 unknown bound.
 
+\[*Example 3*:
+
+``` cpp
+struct S {
+  int y[] = { 0 };          // error: non-static data member of incomplete type
+};
+```
+
+— *end example*\]
+
 — *end note*\]
 
 \[*Note 4*:
@@ -3972,12 +4048,30 @@ unknown bound.
 Static data members, non-static data members of anonymous union members,
 and unnamed bit-fields are not considered elements of the aggregate.
 
+\[*Example 4*:
+
+``` cpp
+struct A {
+  int i;
+  static int s;
+  int j;
+  int :17;
+  int k;
+} a = { 1, 2, 3 };
+```
+
+Here, the second initializer 2 initializes `a.j` and not the static data
+member `A::s`, and the third initializer 3 initializes `a.k` and not the
+unnamed bit-field before it.
+
+— *end example*\]
+
 — *end note*\]
 
 An *initializer-list* is ill-formed if the number of
 *initializer-clause*s exceeds the number of elements of the aggregate.
 
-\[*Example 3*:
+\[*Example 5*:
 
 ``` cpp
 char cv[4] = { 'a', 's', 'd', 'f', 0 };     // error
@@ -3991,7 +4085,7 @@ If a member has a default member initializer and a potentially-evaluated
 subexpression thereof is an aggregate initialization that would use that
 default member initializer, the program is ill-formed.
 
-\[*Example 4*:
+\[*Example 6*:
 
 ``` cpp
 struct A;
@@ -4015,7 +4109,7 @@ elements, the *initializer-clause* for `e` shall not be omitted from an
 *initializer-clause*s for all elements of `C` following `e` are also
 omitted.
 
-\[*Example 5*:
+\[*Example 7*:
 
 ``` cpp
 struct S { } s;
@@ -4040,7 +4134,7 @@ When initializing a multidimensional array, the *initializer-clause*s
 initialize the elements with the last (rightmost) index of the array
 varying the fastest [[dcl.array]].
 
-\[*Example 6*:
+\[*Example 8*:
 
 ``` cpp
 int x[2][2] = { 3, 1, 4, 2 };
@@ -4071,7 +4165,7 @@ of the subaggregate; any remaining *initializer-clause*s are left to
 initialize the next element of the aggregate of which the current
 subaggregate is an element.
 
-\[*Example 7*:
+\[*Example 9*:
 
 ``` cpp
 float y[4][3] = {
@@ -4114,7 +4208,7 @@ initialization of the first element of the subaggregate.
 subaggregates with no elements; an *initializer-clause* for the entire
 subobject is required. — *end note*\]
 
-\[*Example 8*:
+\[*Example 10*:
 
 ``` cpp
 struct A {
@@ -4147,7 +4241,7 @@ duration is static or dynamic is specified in  [[basic.start.static]],
 When a union is initialized with an initializer list, there shall not be
 more than one explicitly initialized element.
 
-\[*Example 9*:
+\[*Example 11*:
 
 ``` cpp
 union u { int a; const char* b; };
@@ -4277,10 +4371,10 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   - has a class type (i.e., `T2` is a class type), where `T1` is not
     reference-related to `T2`, and can be converted to an lvalue of type
     “cv-qualifier{cv3} `T3`”, where “cv-qualifier{cv1} `T1`” is
-    reference-compatible with “cv-qualifier{cv3} `T3`”
-    (this conversion is selected by enumerating the applicable
-    conversion functions [[over.match.ref]] and choosing the best one
-    through overload resolution [[over.match]]),
+    reference-compatible with “cv-qualifier{cv3} `T3`”[^7] (this
+    conversion is selected by enumerating the applicable conversion
+    functions [[over.match.ref]] and choosing the best one through
+    overload resolution [[over.match]]),
 
   then the reference binds to the initializer expression lvalue in the
   first case and to the lvalue result of the conversion in the second
@@ -4290,7 +4384,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   [[conv.array]], and function-to-pointer [[conv.func]] standard
   conversions are not needed, and therefore are suppressed, when such
   direct bindings to lvalues are done. — *end note*\]
-  \[*Example 7*:
+  \[*Example 8*:
   ``` cpp
   double d = 2.0;
   double& rd = d;                 // rd refers to d
@@ -4307,7 +4401,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
 - Otherwise, if the reference is an lvalue reference to a type that is
   not const-qualified or is volatile-qualified, the program is
   ill-formed.
-  \[*Example 8*:
+  \[*Example 9*:
   ``` cpp
   double& rd2 = 2.0;              // error: not an lvalue and reference not const
   int  i = 2;
@@ -4332,7 +4426,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   materialization conversion [[conv.rval]] is applied. In any case, the
   reference binds to the resulting glvalue (or to an appropriate base
   class subobject).
-  \[*Example 9*:
+  \[*Example 10*:
   ``` cpp
   struct A { };
   struct B : A { } b;
@@ -4374,7 +4468,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
     the initializer expression is move-eligible
     [[expr.prim.id.unqual]]. — *end note*\]
 
-  \[*Example 10*:
+  \[*Example 11*:
   ``` cpp
   struct Banana { };
   struct Enigma { operator const Banana(); };
@@ -4439,6 +4533,21 @@ List-initialization can be used
 - in a *mem-initializer* [[class.base.init]]
 - on the right-hand side of an assignment [[expr.ass]]
 
+\[*Example 1*:
+
+``` cpp
+int a = {1};
+std::complex<double> z{1,2};
+new std::vector<std::string>{"once", "upon", "a", "time"};  // 4 string elements
+f( {"Nicholas","Annemarie"} );  // pass list of two elements
+return { "Norah" };             // return list of one element
+int* e {};                      // initialization to zero / null pointer
+x = double{1};                  // explicitly construct a double
+std::map<std::string,int> anim = { {"bear",4}, {"cassowary",2}, {"tiger",7} };
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A constructor is an *initializer-list constructor* if its first
@@ -4470,7 +4579,7 @@ follows:
   subsequence of the ordered *identifier*s in the direct non-static data
   members of `T`. Aggregate initialization is performed
   [[dcl.init.aggr]].
-  \[*Example 11*:
+  \[*Example 12*:
   ``` cpp
   struct A { int x; int y; int z; };
   A a{.y = 2, .x = 1};                // error: designator order does not match declaration order
@@ -4489,7 +4598,7 @@ follows:
   subclause.
 - Otherwise, if `T` is an aggregate, aggregate initialization is
   performed [[dcl.init.aggr]].
-  \[*Example 12*:
+  \[*Example 13*:
   ``` cpp
   double ad[] = { 1, 2.0 };           // OK
   int ai[] = { 1, 2.0 };              // error: narrowing
@@ -4513,7 +4622,7 @@ follows:
   through overload resolution [[over.match]], [[over.match.list]]. If a
   narrowing conversion (see below) is required to convert any of the
   arguments, the program is ill-formed.
-  \[*Example 13*:
+  \[*Example 14*:
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // #1
@@ -4527,7 +4636,7 @@ follows:
   ```
 
   — *end example*\]
-  \[*Example 14*:
+  \[*Example 15*:
   ``` cpp
   struct Map {
     Map(std::initializer_list<std::pair<std::string,int>>);
@@ -4536,7 +4645,7 @@ follows:
   ```
 
   — *end example*\]
-  \[*Example 15*:
+  \[*Example 16*:
   ``` cpp
   struct S {
     // no initializer-list constructors
@@ -4556,7 +4665,7 @@ follows:
   direct-list-initialization, the object is initialized with the value
   `T(v)` [[expr.type.conv]]; if a narrowing conversion is required to
   convert `v` to `U`, the program is ill-formed.
-  \[*Example 16*:
+  \[*Example 17*:
   ``` cpp
   enum byte : unsigned char { };
   byte b { 42 };                      // OK
@@ -4583,7 +4692,7 @@ follows:
   by direct-initialization for direct-list-initialization); if a
   narrowing conversion (see below) is required to convert the element to
   `T`, the program is ill-formed.
-  \[*Example 17*:
+  \[*Example 18*:
   ``` cpp
   int x1 {2};                         // OK
   int x2 {2.0};                       // error: narrowing
@@ -4600,7 +4709,7 @@ follows:
   \[*Note 9*: As usual, the binding will fail and the program is
   ill-formed if the reference type is an lvalue reference to a non-const
   type. — *end note*\]
-  \[*Example 18*:
+  \[*Example 19*:
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // #1
@@ -4622,14 +4731,14 @@ follows:
   — *end example*\]
 - Otherwise, if the initializer list has no elements, the object is
   value-initialized.
-  \[*Example 19*:
+  \[*Example 20*:
   ``` cpp
   int** pp {};                        // initialized to null pointer
   ```
 
   — *end example*\]
 - Otherwise, the program is ill-formed.
-  \[*Example 20*:
+  \[*Example 21*:
   ``` cpp
   struct A { int i; int j; };
   A a1 { 1, 2 };                      // aggregate initialization
@@ -4680,7 +4789,7 @@ initializer list. — *end note*\]
 If a narrowing conversion is required to initialize any of the elements,
 the program is ill-formed.
 
-\[*Example 1*:
+\[*Example 2*:
 
 ``` cpp
 struct X {
@@ -4707,7 +4816,7 @@ The array has the same lifetime as any other temporary object
 object from the array extends the lifetime of the array exactly like
 binding a reference to a temporary.
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 typedef std::complex<double> cmplx;
@@ -4765,7 +4874,7 @@ A *narrowing conversion* is an implicit conversion
 \[*Note 6*: As indicated above, such conversions are not allowed at the
 top level in list-initializations. — *end note*\]
 
-\[*Example 3*:
+\[*Example 4*:
 
 ``` cpp
 int x = 999;                    // x is not a constant expression
@@ -4870,7 +4979,7 @@ static const char __func__[] = "function-name";
 
 had been provided, where `function-name` is an *implementation-defined*
 string. It is unspecified whether such a variable has an address
-distinct from that of any other object in the program.
+distinct from that of any other object in the program.[^8]
 
 \[*Example 2*:
 
@@ -5511,6 +5620,17 @@ This resolves a potential ambiguity between the declaration of an
 enumeration with an *enum-base* and the declaration of an unnamed
 bit-field of enumeration type.
 
+\[*Example 1*:
+
+``` cpp
+struct S {
+  enum E : int {};
+  enum E : int {};              // error: redeclaration of enumeration
+};
+```
+
+— *end example*\]
+
 — *end note*\]
 
 The *identifier* in an *enum-head-name* is not looked up and is
@@ -5539,7 +5659,7 @@ the value of the corresponding constant is zero. An
 the value obtained by increasing the value of the previous *enumerator*
 by one.
 
-\[*Example 1*:
+\[*Example 2*:
 
 ``` cpp
 enum { a, b, c=0 };
@@ -5625,7 +5745,7 @@ represented. The width of the smallest bit-field large enough to hold
 all the values of the enumeration type is M. It is possible to define an
 enumeration that has values not defined by any of its enumerators. If
 the *enumerator-list* is empty, the values of the enumeration are as if
-the enumeration had a single enumerator with value 0.
+the enumeration had a single enumerator with value 0.[^9]
 
 An enumeration has the same size, value representation, and alignment
 requirements [[basic.align]] as its underlying type. Furthermore, each
@@ -5638,7 +5758,7 @@ the same underlying type.
 The value of an enumerator or an object of an unscoped enumeration type
 is converted to an integer by integral promotion [[conv.prom]].
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 enum color { red, yellow, green=20, blue };
@@ -5682,7 +5802,7 @@ purposes.
 \[*Note 3*: Each unnamed enumeration with no enumerators is a distinct
 type. — *end note*\]
 
-\[*Example 3*:
+\[*Example 4*:
 
 ``` cpp
 enum direction { left='l', right='r' };
@@ -5730,12 +5850,41 @@ each enumerator.
 A *using-enum-declaration* in class scope makes the enumerators of the
 named enumeration available via member lookup.
 
+\[*Example 1*:
+
+``` cpp
+enum class fruit { orange, apple };
+struct S {
+  using enum fruit;             // OK, introduces orange and apple into S
+};
+void f() {
+  S s;
+  s.orange;                     // OK, names fruit::orange
+  S::orange;                    // OK, names fruit::orange
+}
+```
+
+— *end example*\]
+
 — *end note*\]
 
 \[*Note 2*:
 
 Two *using-enum-declaration*s that introduce two enumerators of the same
 name conflict.
+
+\[*Example 2*:
+
+``` cpp
+enum class fruit { orange, apple };
+enum class color { red, orange };
+void f() {
+  using enum fruit;             // OK
+  using enum color;             // error: color::orange and fruit::orange conflict
+}
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -6132,6 +6281,8 @@ resolution. Neither is any function excluded because another has the
 same signature, even if one is in a namespace reachable through
 *using-directive*s in the namespace of the other.
 
+[^10]
+
 — *end note*\]
 
 \[*Example 3*:
@@ -6189,7 +6340,7 @@ using-declarator:
 
 The component names of a *using-declarator* are those of its
 *nested-name-specifier* and *unqualified-id*. Each *using-declarator* in
-a *using-declaration*
+a *using-declaration*[^11]
 
 names the set of declarations found by lookup [[basic.lookup.qual]] for
 the *using-declarator*, except that class and enumeration declarations
@@ -6495,6 +6646,27 @@ member subobject or a member function of a base class subobject), a
 *using-declarator* cannot be used to resolve inherited member
 ambiguities.
 
+\[*Example 8*:
+
+``` cpp
+struct A { int x(); };
+struct B : A { };
+struct C : A {
+  using A::x;
+  int x(int);
+};
+
+struct D : B, C {
+  using C::x;
+  int x(double);
+};
+int f(D* d) {
+  return d->x();    // error: overload resolution selects A::x, but A is an ambiguous base class
+}
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A *using-declaration* has the usual accessibility for a
@@ -6503,7 +6675,7 @@ A *using-declaration* has the usual accessibility for a
 to construct an object of the base class; the accessibility of the
 *using-declaration* is ignored.
 
-\[*Example 8*:
+\[*Example 9*:
 
 ``` cpp
 class A {
@@ -7715,3 +7887,51 @@ Here, `hasher`, `pred`, and `alloc` could have the same address as
 [term.padding.bits]: #term.padding.bits
 [term.scalar.type]: #term.scalar.type
 [term.unevaluated.operand]: #term.unevaluated.operand
+
+[^1]: There is no special provision for a *decl-specifier-seq* that
+    lacks a *type-specifier* or that has a *type-specifier* that only
+    specifies *cv-qualifier*s. The “implicit int” rule of C is no longer
+    supported.
+
+[^2]: As indicated by syntax, cv-qualifiers are a significant component
+    in function return types.
+
+[^3]: One can explicitly disambiguate the parse either by introducing a
+    comma (so the ellipsis will be parsed as part of the
+    *parameter-declaration-clause*) or by introducing a name for the
+    parameter (so the ellipsis will be parsed as part of the
+    *declarator-id*).
+
+[^4]: This means that default arguments cannot appear, for example, in
+    declarations of pointers to functions, references to functions, or
+    `typedef` declarations.
+
+[^5]: As specified in  [[conv.ptr]], converting an integer literal whose
+    value is `0` to a pointer type results in a null pointer value.
+
+[^6]: The syntax provides for empty *braced-init-list*s, but nonetheless
+    C++ does not have zero length arrays.
+
+[^7]: This requires a conversion function [[class.conv.fct]] returning a
+    reference type.
+
+[^8]: Implementations are permitted to provide additional predefined
+    variables with names that are reserved to the implementation
+    [[lex.name]]. If a predefined variable is not odr-used
+    [[term.odr.use]], its string value need not be present in the
+    program image.
+
+[^9]: This set of values is used to define promotion and conversion
+    semantics for the enumeration type. It does not preclude an
+    expression of enumeration type from having a value that falls
+    outside this range.
+
+[^10]: During name lookup in a class hierarchy, some ambiguities can be
+    resolved by considering whether one member hides the other along
+    some paths [[class.member.lookup]]. There is no such disambiguation
+    when considering the set of names found as a result of following
+    *using-directive*s.
+
+[^11]: A *using-declaration* with more than one *using-declarator* is
+    equivalent to a corresponding sequence of *using-declaration*s with
+    one *using-declarator* each.

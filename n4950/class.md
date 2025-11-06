@@ -159,7 +159,7 @@ A class `S` is a *standard-layout class* if it:
 - has all non-static data members and bit-fields in the class and its
   base classes first declared in the same class, and
 - has no element of the set M(S) of types as a base class, where for any
-  type `X`, M(X) is defined as follows.
+  type `X`, M(X) is defined as follows.[^1]
   \[*Note 1*: M(X) is the set of the types of all non-base-class
   subobjects that can be at a zero offset in `X`. — *end note*\]
   - If `X` is a non-union class type with no non-static data members,
@@ -284,10 +284,65 @@ It can be necessary to use an *elaborated-type-specifier* to refer to a
 class that belongs to a scope in which its name is also bound to a
 variable, function, or enumerator [[basic.lookup.elab]].
 
+\[*Example 2*:
+
+``` cpp
+struct stat {
+  // ...
+};
+
+stat gstat;                     // use plain stat to define variable
+
+int stat(struct stat*);         // stat now also names a function
+
+void f() {
+  struct stat* ps;              // struct prefix needed to name struct stat
+  stat(ps);                     // call stat function
+}
+```
+
+— *end example*\]
+
 An *elaborated-type-specifier* can also be used to declare an
 *identifier* as a *class-name*.
 
+\[*Example 3*:
+
+``` cpp
+struct s { int a; };
+
+void g() {
+  struct s;                     // hide global struct s with a block-scope declaration
+  s* p;                         // refer to local struct s
+  struct s { char* p; };        // define local struct s
+  struct s;                     // redeclaration, has no effect
+}
+```
+
+— *end example*\]
+
 Such declarations allow definition of classes that refer to each other.
+
+\[*Example 4*:
+
+``` cpp
+class Vector;
+
+class Matrix {
+  // ...
+  friend Vector operator*(const Matrix&, const Vector&);
+};
+
+class Vector {
+  // ...
+  friend Vector operator*(const Matrix&, const Vector&);
+};
+```
+
+Declaration of friends is described in  [[class.friend]], operator
+functions in  [[over.oper]].
+
+— *end example*\]
 
 — *end note*\]
 
@@ -296,7 +351,7 @@ used as a *type-specifier* as part of a declaration. It differs from a
 class declaration in that it can refer to an existing class of the given
 name. — *end note*\]
 
-\[*Example 2*:
+\[*Example 5*:
 
 ``` cpp
 struct s { int a; };
@@ -802,6 +857,8 @@ which the function is called. Thus, in the call `n1.set("abc",&n2,0)`,
 refers to `n2.tword`. The functions `strlen`, `perror`, and `strcpy` are
 not members of the class `tnode` and should be declared elsewhere.
 
+[^2]
+
 — *end example*\]
 
 \[*Note 2*: An implicit object member function can be declared with
@@ -1096,6 +1153,19 @@ Y e = d;            // calls Y(const Y&)
 
 All forms of copy/move constructor can be declared for a class.
 
+\[*Example 3*:
+
+``` cpp
+struct X {
+  X(const X&);
+  X(X&);            // OK
+  X(X&&);
+  X(const X&&);     // OK, but possibly not sensible
+};
+```
+
+— *end example*\]
+
 — *end note*\]
 
 \[*Note 2*:
@@ -1103,6 +1173,19 @@ All forms of copy/move constructor can be declared for a class.
 If a class `X` only has a copy constructor with a parameter of type
 `X&`, an initializer of type `const` `X` or `volatile` `X` cannot
 initialize an object of type cv `X`.
+
+\[*Example 4*:
+
+``` cpp
+struct X {
+  X();              // default constructor
+  X(X&);            // copy constructor with a non-const parameter
+};
+const X cx;
+X x = cx;           // error: X::X(X&) cannot copy cx into x
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -1112,7 +1195,7 @@ parameters or else all other parameters have default arguments. A member
 function template is never instantiated to produce such a constructor
 signature.
 
-\[*Example 3*:
+\[*Example 5*:
 
 ``` cpp
 struct S {
@@ -1147,7 +1230,7 @@ X::X(const X&)
 
 if each potentially constructed subobject of a class type `M` (or array
 thereof) has a copy constructor whose first parameter is of type `const`
-`M&` or `const` `volatile` `M&`.
+`M&` or `const` `volatile` `M&`.[^3]
 
 Otherwise, the implicitly-declared copy constructor will have the form
 
@@ -1259,7 +1342,7 @@ the lifetime of o begins before the copy is performed.
 A user-declared *copy* assignment operator `X::operator=` is a
 non-static non-template member function of class `X` with exactly one
 non-object parameter of type `X`, `X&`, `const X&`, `volatile X&`, or
-`const volatile X&`.
+`const volatile X&`.[^4]
 
 \[*Note 1*: An overloaded assignment operator must be declared to have
 only one parameter; see  [[over.ass]]. — *end note*\]
@@ -1272,6 +1355,22 @@ declared for a class. — *end note*\]
 If a class `X` only has a copy assignment operator with a parameter of
 type `X&`, an expression of type const `X` cannot be assigned to an
 object of type `X`.
+
+\[*Example 1*:
+
+``` cpp
+struct X {
+  X();
+  X& operator=(X&);
+};
+const X cx;
+X x;
+void f() {
+  x = cx;           // error: X::operator=(X&) cannot assign cx into x
+}
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -1295,7 +1394,7 @@ if
 - for all the non-static data members of `X` that are of a class type
   `M` (or array thereof), each such class type has a copy assignment
   operator whose parameter is of type `const M&`, `const volatile M&`,
-  or `M`.
+  or `M`.[^5]
 
 Otherwise, the implicitly-declared copy assignment operator will have
 the form
@@ -1324,7 +1423,7 @@ only if
 - `X` does not have a user-declared copy assignment operator, and
 - `X` does not have a user-declared destructor.
 
-\[*Example 1*:
+\[*Example 2*:
 
 The class definition
 
@@ -1438,7 +1537,7 @@ It is unspecified whether subobjects representing virtual base classes
 are assigned more than once by the implicitly-defined copy/move
 assignment operator.
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 struct V { };
@@ -1786,6 +1885,29 @@ explicitly used; see also  [[over.match.copy]]. A default constructor
 can be an explicit constructor; such a constructor will be used to
 perform default-initialization or value-initialization [[dcl.init]].
 
+\[*Example 2*:
+
+``` cpp
+struct Z {
+  explicit Z();
+  explicit Z(int);
+  explicit Z(int, int);
+};
+
+Z a;                            // OK, default-initialization performed
+Z b{};                          // OK, direct initialization syntax used
+Z c = {};                       // error: copy-list-initialization
+Z a1 = 1;                       // error: no implicit conversion
+Z a3 = Z(1);                    // OK, direct initialization syntax used
+Z a2(1);                        // OK, direct initialization syntax used
+Z* p = new Z(1);                // OK, direct initialization syntax used
+Z a4 = (Z)1;                    // OK, explicit cast used
+Z a5 = static_cast<Z>(1);       // OK, explicit cast used
+Z a6 = { 3, 4 };                // error: no implicit conversion
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A non-explicit copy/move constructor [[class.copy.ctor]] is a converting
@@ -1845,7 +1967,7 @@ returning *conversion-type-id*”.
 A conversion function is never used to convert a (possibly cv-qualified)
 object to the (possibly cv-qualified) same object type (or a reference
 to it), to a (possibly cv-qualified) base class of that type (or a
-reference to it), or to cv `void`.
+reference to it), or to cv `void`.[^6]
 
 \[*Example 1*:
 
@@ -1906,7 +2028,27 @@ the longest sequence of tokens that could possibly form a
 This prevents ambiguities between the declarator operator `*` and its
 expression counterparts.
 
+\[*Example 3*:
+
+``` cpp
+&ac.operator int*i; // syntax error:
+                    // parsed as: &(ac.operator int *)i
+                    // not as: &(ac.operator int)*i
+```
+
+The `*` is the pointer declarator and not the multiplication operator.
+
+— *end example*\]
+
 This rule also prevents ambiguities for attributes.
+
+\[*Example 4*:
+
+``` cpp
+operator int [[noreturn]] ();   // error: noreturn attribute applied to a type
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -1920,6 +2062,25 @@ hides and is hidden as a non-template function. Function overload
 resolution [[over.match.best]] selects the best conversion function to
 perform the conversion.
 
+\[*Example 5*:
+
+``` cpp
+struct X {
+  operator int();
+};
+
+struct Y : X {
+    operator char();
+};
+
+void f(Y& a) {
+  if (a) {          // error: ambiguous between X::operator int() and Y::operator char()
+  }
+}
+```
+
+— *end example*\]
+
 — *end note*\]
 
 Conversion functions can be virtual.
@@ -1927,7 +2088,7 @@ Conversion functions can be virtual.
 A conversion function template shall not have a deduced return type
 [[dcl.spec.auto]].
 
-\[*Example 3*:
+\[*Example 6*:
 
 ``` cpp
 struct S {
@@ -2027,6 +2188,13 @@ class `process`.
 
 Once the static data member has been defined, it exists even if no
 objects of its class have been created.
+
+\[*Example 2*:
+
+In the example above, `run_chain` and `running` exist even if no objects
+of class `process` are created by the program.
+
+— *end example*\]
 
 The initialization and destruction of static data members is described
 in [[basic.start.static]], [[basic.start.dynamic]], and
@@ -2300,6 +2468,30 @@ enclosing namespace; member functions and static data members of a
 nested class can be defined either in the nested class or in an
 enclosing namespace scope.
 
+\[*Example 2*:
+
+``` cpp
+struct enclose {
+  struct inner {
+    static int x;
+    void f(int i);
+  };
+};
+
+int enclose::inner::x = 1;
+
+void enclose::inner::f(int i) { ... }
+
+class E {
+  class I1;                     // forward declaration of nested class
+  class I2;
+  class I1 { };                 // definition of nested class
+};
+class E::I2 { };                // definition of nested class
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A friend function [[class.friend]] defined within a nested class has no
@@ -2350,6 +2542,26 @@ member of a union has a non-trivial default constructor
 member function of the union must be user-provided or it will be
 implicitly deleted [[dcl.fct.def.delete]] for the union.
 
+\[*Example 1*:
+
+Consider the following union:
+
+``` cpp
+union U {
+  int i;
+  float f;
+  std::string s;
+};
+```
+
+Since `std::string` [[string.classes]] declares non-trivial versions of
+all of the special member functions, `U` will have an implicitly deleted
+default constructor, copy/move constructor, copy/move assignment
+operator, and destructor. To use `U`, some or all of these member
+functions must be user-provided.
+
+— *end example*\]
+
 — *end note*\]
 
 When the left operand of an assignment operator involves a member access
@@ -2378,7 +2590,7 @@ operands and before the assignment.
 \[*Note 4*: This ends the lifetime of the previously-active member of
 the union, if any [[basic.life]]. — *end note*\]
 
-\[*Example 1*:
+\[*Example 2*:
 
 ``` cpp
 union A { int x; int y[4]; };
@@ -2409,7 +2621,7 @@ void g() {
 member of a union can only be changed by the use of a placement
 *new-expression*. — *end note*\]
 
-\[*Example 2*:
+\[*Example 3*:
 
 Consider an object `u` of a `union` type `U` having non-static data
 members `m` of type `M` and `n` of type `N`. If `M` has a non-trivial
@@ -2469,6 +2681,22 @@ declaration of an anonymous union in a class scope.
 A union for which objects, pointers, or references are declared is not
 an anonymous union.
 
+\[*Example 2*:
+
+``` cpp
+void f() {
+  union { int aa; char* p; } obj, *ptr = &obj;
+  aa = 1;           // error
+  ptr->aa = 1;      // OK
+}
+```
+
+The assignment to plain `aa` is ill-formed since the member name is not
+visible outside the union, and even if it were visible, it is not
+associated with any particular object.
+
+— *end example*\]
+
 — *end note*\]
 
 \[*Note 2*: Initialization of unions with no user-declared constructors
@@ -2482,7 +2710,7 @@ a non-static data member of an anonymous union that is a member of `X`
 is also a variant member of `X`. At most one variant member of a union
 may have a default member initializer.
 
-\[*Example 2*:
+\[*Example 3*:
 
 ``` cpp
 union U {
@@ -2800,17 +3028,18 @@ a distinct `B` subobject within the object of type `AA`. Given the class
 
 A non-static member function is a *virtual function* if it is first
 declared with the keyword `virtual` or if it overrides a virtual member
-function declared in a base class (see below).
+function declared in a base class (see below).[^7]
 
 \[*Note 1*: Virtual functions support dynamic binding and
 object-oriented programming. — *end note*\]
 
-A class with a virtual member function is called a *polymorphic class*.
+A class with a virtual member function is called a
+*polymorphic class*.[^8]
 
 If a virtual member function F is declared in a class B, and, in a class
 D derived (directly or indirectly) from B, a declaration of a member
 function G corresponds [[basic.scope.scope]] to a declaration of F,
-ignoring trailing *requires-clause*s, then G *overrides*
+ignoring trailing *requires-clause*s, then G *overrides*[^9]
 
 F. For convenience we say that any virtual function overrides itself. A
 virtual member function V of a class object S is a *final
@@ -2940,7 +3169,7 @@ classes of the functions. If a function `D::f` overrides a function
 the following criteria:
 
 - both are pointers to classes, both are lvalue references to classes,
-  or both are rvalue references to classes
+  or both are rvalue references to classes[^10]
 - the class in the return type of `B::f` is the same class as the class
   in the return type of `D::f`, or is an unambiguous and accessible
   direct or indirect base class of the class in the return type of
@@ -3260,7 +3489,7 @@ A member of a class can be
 
 A member of a class can also access all the members to which the class
 has access. A local class of a member function may access the same
-members that the member function itself may access.
+members that the member function itself may access.[^11]
 
 Members of a class defined with the keyword `class` are `private` by
 default. Members of a class defined with the keywords `struct` or
@@ -3501,7 +3730,7 @@ protected members of the base class are accessible as protected members
 of the derived class. If a class is declared to be a base class for
 another class using the `private` access specifier, the public and
 protected members of the base class are accessible as private members of
-the derived class.
+the derived class.[^12]
 
 In the absence of an *access-specifier* for a base class, `public` is
 assumed when the derived class is defined with the *class-key* `struct`
@@ -3778,13 +4007,25 @@ function retains its previous linkage [[dcl.stc]].
 A friend declaration refers to an entity, not (all overloads of) a name.
 A member function of a class `X` can be a friend of a class `Y`.
 
+\[*Example 5*:
+
+``` cpp
+class Y {
+  friend char* X::foo(int);
+  friend X::X(char);            // constructors can be friends
+  friend X::~X();               // destructors can be friends
+};
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A function may be defined in a friend declaration of a class if and only
 if the class is a non-local class [[class.local]] and the function name
 is unqualified.
 
-\[*Example 5*:
+\[*Example 6*:
 
 ``` cpp
 class M {
@@ -3812,7 +4053,7 @@ private, protected, or public [[class.mem]] portion of the class
 
 Friendship is neither inherited nor transitive.
 
-\[*Example 6*:
+\[*Example 7*:
 
 ``` cpp
 class A {
@@ -3842,7 +4083,7 @@ class D : public B  {
 \[*Note 4*: A friend declaration never binds any names
 [[dcl.meaning]], [[dcl.type.elab]]. — *end note*\]
 
-\[*Example 7*:
+\[*Example 8*:
 
 ``` cpp
 // Assume f and g have not yet been declared.
@@ -3878,7 +4119,7 @@ void h() {
 
 — *end example*\]
 
-\[*Example 8*:
+\[*Example 9*:
 
 ``` cpp
 class X;
@@ -3906,7 +4147,7 @@ void f() {
 An additional access check beyond those described earlier in
 [[class.access]] is applied when a non-static data member or non-static
 member function is a protected member of its naming class
-[[class.access.base]].
+[[class.access.base]].[^13]
 
 As described earlier, access to a protected member is granted because
 the reference occurs in a friend or direct member of some class `C`. If
@@ -4874,7 +5115,8 @@ different ways of referring to the same object. If the first parameter
 of the selected constructor is an rvalue reference to the object’s type,
 the destruction of that object occurs when the target would have been
 destroyed; otherwise, the destruction occurs at the later of the times
-when the two objects would have been destroyed without the optimization.
+when the two objects would have been destroyed without the
+optimization.[^14]
 
 This elision of copy/move operations, called *copy elision*, is
 permitted in the following circumstances (which may be combined to
@@ -5473,3 +5715,64 @@ struct C {
 [term.object.representation]: #term.object.representation
 [term.odr.use]: #term.odr.use
 [term.padding.bits]: #term.padding.bits
+
+[^1]: This ensures that two subobjects that have the same class type and
+    that belong to the same most derived object are not allocated at the
+    same address [[expr.eq]].
+
+[^2]: See, for example, `<cstring>`.
+
+[^3]: This implies that the reference parameter of the
+    implicitly-declared copy constructor cannot bind to a `volatile`
+    lvalue; see  [[diff.class]].
+
+[^4]: Because a template assignment operator or an assignment operator
+    taking an rvalue reference parameter is never a copy assignment
+    operator, the presence of such an assignment operator does not
+    suppress the implicit declaration of a copy assignment operator.
+    Such assignment operators participate in overload resolution with
+    other assignment operators, including copy assignment operators,
+    and, if selected, will be used to assign an object.
+
+[^5]: This implies that the reference parameter of the
+    implicitly-declared copy assignment operator cannot bind to a
+    `volatile` lvalue; see  [[diff.class]].
+
+[^6]: These conversions are considered as standard conversions for the
+    purposes of overload resolution [[over.best.ics]], [[over.ics.ref]]
+    and therefore initialization [[dcl.init]] and explicit casts
+    [[expr.static.cast]]. A conversion to `void` does not invoke any
+    conversion function [[expr.static.cast]]. Even though never directly
+    called to perform a conversion, such conversion functions can be
+    declared and can potentially be reached through a call to a virtual
+    conversion function in a base class.
+
+[^7]: The use of the `virtual` specifier in the declaration of an
+    overriding function is valid but redundant (has empty semantics).
+
+[^8]: If all virtual functions are immediate functions, the class is
+    still polymorphic even if its internal representation does not
+    otherwise require any additions for that polymorphic behavior.
+
+[^9]: A function with the same name but a different parameter list
+    [[over]] as a virtual function is not necessarily virtual and does
+    not override. Access control [[class.access]] is not considered in
+    determining overriding.
+
+[^10]: Multi-level pointers to classes or references to multi-level
+    pointers to classes are not allowed.
+
+[^11]: Access permissions are thus transitive and cumulative to nested
+    and local classes.
+
+[^12]: As specified previously in [[class.access]], private members of a
+    base class remain inaccessible even to derived classes unless friend
+    declarations within the base class definition are used to grant
+    access explicitly.
+
+[^13]: This additional check does not apply to other members, e.g.,
+    static data members or enumerator member constants.
+
+[^14]: Because only one object is destroyed instead of two, and one
+    copy/move constructor is not executed, there is still one object
+    destroyed for each one constructed.

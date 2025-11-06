@@ -212,7 +212,7 @@ deduction is performed first and then, if the context admits only
 candidates that are not explicit and the generated specialization is
 explicit [[dcl.fct.spec]], it will be removed from the candidate set.
 Those candidates are then handled as candidate functions in the usual
-way.
+way.[^1]
 
 A given name can refer to, or a conversion can consider, one or more
 function templates as well as a set of non-template functions. In such a
@@ -303,7 +303,7 @@ generally equivalent to `(*A).B`, the rest of [[over]] assumes, without
 loss of generality, that all member function calls have been normalized
 to the form that uses an object and the `.` operator. Furthermore,
 [[over]] assumes that the *postfix-expression* that is the left operand
-of the `.` operator has type “cv `T`” where `T` denotes a class.
+of the `.` operator has type “cv `T`” where `T` denotes a class.[^2]
 
 The function declarations found by name lookup [[class.member.lookup]]
 constitute the set of candidate functions. The argument list is the
@@ -323,7 +323,7 @@ the address of an overload set, the argument list is the same as the
 object argument as in a qualified function call. If the current class
 is, or is derived from, `T`, and the keyword `this` [[expr.prim.this]]
 refers to it, then the implied object argument is `(*this)`. Otherwise,
-a contrived object of type `T` becomes the implied object argument;
+a contrived object of type `T` becomes the implied object argument;[^3]
 
 if overload resolution selects a non-static member function, the call is
 ill-formed.
@@ -406,7 +406,7 @@ is also considered as a candidate function. Similarly, surrogate call
 functions are added to the set of candidate functions for each
 non-explicit conversion function declared in a base class of `T`
 provided the function is not hidden within `T` by another intervening
-declaration.
+declaration.[^4]
 
 The argument list submitted to overload resolution consists of the
 argument expressions present in the function call syntax preceded by the
@@ -603,7 +603,7 @@ the built-in candidates, and the rewritten candidates for that operator
 
 The argument list contains all of the operands of the operator. The best
 function from the set of candidate functions is selected according to 
-[[over.match.viable]] and  [[over.match.best]].
+[[over.match.viable]] and  [[over.match.best]].[^5]
 
 \[*Example 3*:
 
@@ -667,7 +667,7 @@ int *b = Y() + X();             // error: pointer arithmetic requires integral o
 The second operand of operator `->` is ignored in selecting an
 `operator->` function, and is not an argument when the `operator->`
 function is called. When `operator->` returns, the operator `->` is
-applied to the value returned, with the original second operand.
+applied to the value returned, with the original second operand.[^6]
 
 If the operator is the operator `,`, the unary operator `&`, or the
 operator `->`, and there are no viable functions, then the operator is
@@ -1391,7 +1391,7 @@ i, \text{ICS}^i(`F₁`) is not a worse conversion sequence than
 
 If there is exactly one viable function that is a better function than
 all other viable functions, then it is the one selected by overload
-resolution; otherwise the call is ill-formed.
+resolution; otherwise the call is ill-formed.[^7]
 
 \[*Example 1*:
 
@@ -1576,6 +1576,24 @@ other user-defined conversion sequence.
 This rule prevents a function from becoming non-viable because of an
 ambiguous conversion sequence for one of its parameters.
 
+\[*Example 3*:
+
+``` cpp
+class B;
+class A { A (B&);};
+class B { operator A (); };
+class C { C (B&); };
+void f(A) { }
+void f(C) { }
+B b;
+f(b);               // error: ambiguous because there is a conversion b $\to$ C (via constructor)
+                    // and an (ambiguous) conversion b $\to$ A (via constructor or conversion function)
+void f(B) { }
+f(b);               // OK, unambiguous
+```
+
+— *end example*\]
+
 — *end note*\]
 
 If a function that uses the ambiguous conversion sequence is selected as
@@ -1668,7 +1686,7 @@ conversion, unless the argument expression has a type that is a derived
 class of the parameter type, in which case the implicit conversion
 sequence is a derived-to-base conversion [[over.best.ics]].
 
-\[*Example 3*:
+\[*Example 4*:
 
 ``` cpp
 struct A {};
@@ -1711,7 +1729,7 @@ Other restrictions on binding a reference to a particular argument that
 are not based on the types of the reference and the argument do not
 affect the formation of an implicit conversion sequence, however.
 
-\[*Example 4*: A function with an “lvalue reference to `int`” parameter
+\[*Example 5*: A function with an “lvalue reference to `int`” parameter
 can be a viable candidate even if the corresponding argument is an `int`
 bit-field. The formation of implicit conversion sequences treats the
 `int` bit-field as an `int` lvalue and finds an exact match with the
@@ -1740,6 +1758,25 @@ in designation order. If, after overload resolution, the order does not
 match for the selected overload, the initialization of the parameter
 will be ill-formed [[dcl.init.list]].
 
+\[*Example 6*:
+
+``` cpp
+struct A { int x, y; };
+struct B { int y, x; };
+void f(A a, int);               // #1
+void f(B b, ...);               // #2
+void g(A a);                    // #3
+void g(B b);                    // #4
+void h() {
+  f({.x = 1, .y = 2}, 0);       // OK; calls #1
+  f({.y = 2, .x = 1}, 0);       // error: selects #1, initialization of a fails
+                                // due to non-matching member order[dcl.init.list]
+  g({.x = 1, .y = 2});          // error: ambiguous between #3 and #4
+}
+```
+
+— *end example*\]
+
 — *end note*\]
 
 Otherwise, if the parameter type is an aggregate class `X` and the
@@ -1747,7 +1784,7 @@ initializer list has a single element of type cv `U`, where `U` is `X`
 or a class derived from `X`, the implicit conversion sequence is the one
 required to convert the element to the parameter type.
 
-Otherwise, if the parameter type is a character array
+Otherwise, if the parameter type is a character array[^8]
 
 and the initializer list has a single element that is an
 appropriately-typed *string-literal* [[dcl.init.string]], the implicit
@@ -1761,7 +1798,7 @@ elements, the identity conversion. This conversion can be a user-defined
 conversion even in the context of a call to an initializer-list
 constructor.
 
-\[*Example 5*:
+\[*Example 7*:
 
 ``` cpp
 void f(std::initializer_list<int>);
@@ -1813,7 +1850,7 @@ User-defined conversions are allowed for conversion of the initializer
 list elements to the constructor parameter types except as noted in 
 [[over.best.ics]].
 
-\[*Example 6*:
+\[*Example 8*:
 
 ``` cpp
 struct A {
@@ -1853,7 +1890,7 @@ aggregate initialization [[dcl.init.aggr]], the implicit conversion
 sequence is a user-defined conversion sequence whose second standard
 conversion sequence is an identity conversion.
 
-\[*Example 7*:
+\[*Example 9*:
 
 ``` cpp
 struct A {
@@ -1873,7 +1910,7 @@ Otherwise, if the parameter is a reference, see  [[over.ics.ref]].
 \[*Note 11*: The rules in this subclause will apply for initializing the
 underlying temporary for the reference. — *end note*\]
 
-\[*Example 8*:
+\[*Example 10*:
 
 ``` cpp
 struct A {
@@ -2476,6 +2513,32 @@ for which a virtual copy/move assignment has been declared, the
 copy/move assignment operator in `D` does not override `B`’s virtual
 copy/move assignment operator.
 
+\[*Example 1*:
+
+``` cpp
+struct B {
+  virtual int operator= (int);
+  virtual B& operator= (const B&);
+};
+struct D : B {
+  virtual int operator= (int);
+  virtual D& operator= (const B&);
+};
+
+D dobj1;
+D dobj2;
+B* bptr = &dobj1;
+void f() {
+  bptr->operator=(99);          // calls D::operator=(int)
+  *bptr = 99;                   // ditto
+  bptr->operator=(dobj2);       // calls D::operator=(const B&)
+  *bptr = dobj2;                // ditto
+  dobj1 = dobj2;                // calls implicitly-declared D::operator=(const D&)
+}
+```
+
+— *end example*\]
+
 — *end note*\]
 
 ### Function call <a id="over.call">[[over.call]]</a>
@@ -2568,7 +2631,7 @@ shall be of type `int`) or a non-member function with two parameters
 (the second of which shall be of type `int`), it defines the postfix
 increment operator `++` for objects of that type. When the postfix
 increment is called as a result of using the `++` operator, the `int`
-argument will have value zero.
+argument will have value zero.[^9]
 
 \[*Example 1*:
 
@@ -3106,3 +3169,53 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [over.ass]: #over.ass
 [over.ref]: #over.ref
 [over.sub]: #over.sub
+
+[^1]: The process of argument deduction fully determines the parameter
+    types of the function template specializations, i.e., the parameters
+    of function template specializations contain no template parameter
+    types. Therefore, except where specified otherwise, function
+    template specializations and non-template functions [[dcl.fct]] are
+    treated equivalently for the remainder of overload resolution.
+
+[^2]: Note that cv-qualifiers on the type of objects are significant in
+    overload resolution for both glvalue and class prvalue objects.
+
+[^3]: An implied object argument is contrived to correspond to the
+    implicit object parameter attributed to member functions during
+    overload resolution. It is not used in the call to the selected
+    function. Since the member functions all have the same implicit
+    object parameter, the contrived object will not be the cause to
+    select or reject a function.
+
+[^4]: Note that this construction can yield candidate call functions
+    that cannot be differentiated one from the other by overload
+    resolution because they have identical declarations or differ only
+    in their return type. The call will be ambiguous if overload
+    resolution cannot select a match to the call that is uniquely better
+    than such undifferentiable functions.
+
+[^5]: If the set of candidate functions is empty, overload resolution is
+    unsuccessful.
+
+[^6]: If the value returned by the `operator->` function has class type,
+    this can result in selecting and calling another `operator->`
+    function. The process repeats until an `operator->` function returns
+    a value of non-class type.
+
+[^7]: The algorithm for selecting the best viable function is linear in
+    the number of viable functions. Run a simple tournament to find a
+    function `W` that is not worse than any opponent it faced. Although
+    it is possible that another function `F` that `W` did not face is at
+    least as good as `W`, `F` cannot be the best function because at
+    some point in the tournament `F` encountered another function `G`
+    such that `F` was not better than `G`. Hence, either `W` is the best
+    function or there is no best function. So, make a second pass over
+    the viable functions to verify that `W` is better than all other
+    functions.
+
+[^8]: Since there are no parameters of array type, this will only occur
+    as the referenced type of a reference parameter.
+
+[^9]: Calling `operator++` explicitly, as in expressions like
+    `a.operator++(2)`, has no special properties: The argument to
+    `operator++` is `2`.

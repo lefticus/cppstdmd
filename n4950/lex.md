@@ -24,7 +24,7 @@ program [[basic.link]]. — *end note*\]
 ## Phases of translation <a id="lex.phases">[[lex.phases]]</a>
 
 The precedence among the syntax rules of translation is specified by the
-following phases.
+following phases.[^1]
 
 1.  An implementation shall support input files that are a sequence of
     UTF-8 code units (UTF-8 files). It may also support an
@@ -62,19 +62,18 @@ following phases.
 3.  The source file is decomposed into preprocessing tokens
     [[lex.pptoken]] and sequences of whitespace characters (including
     comments). A source file shall not end in a partial preprocessing
-    token or in a partial comment.
-    Each comment is replaced by one space character. New-line characters
-    are retained. Whether each nonempty sequence of whitespace
-    characters other than new-line is retained or replaced by one space
-    character is unspecified. As characters from the source file are
-    consumed to form the next preprocessing token (i.e., not being
-    consumed as part of a comment or other forms of whitespace), except
-    when matching a *c-char-sequence*, *s-char-sequence*,
-    *r-char-sequence*, *h-char-sequence*, or *q-char-sequence*,
-    *universal-character-name*s are recognized and replaced by the
-    designated element of the translation character set. The process of
-    dividing a source file’s characters into preprocessing tokens is
-    context-dependent.
+    token or in a partial comment.[^2] Each comment is replaced by one
+    space character. New-line characters are retained. Whether each
+    nonempty sequence of whitespace characters other than new-line is
+    retained or replaced by one space character is unspecified. As
+    characters from the source file are consumed to form the next
+    preprocessing token (i.e., not being consumed as part of a comment
+    or other forms of whitespace), except when matching a
+    *c-char-sequence*, *s-char-sequence*, *r-char-sequence*,
+    *h-char-sequence*, or *q-char-sequence*, *universal-character-name*s
+    are recognized and replaced by the designated element of the
+    translation character set. The process of dividing a source file’s
+    characters into preprocessing tokens is context-dependent.
     \[*Example 1*: See the handling of `<` within a `#include`
     preprocessing directive. — *end example*\]
 4.  Preprocessing directives are executed, macro invocations are
@@ -405,10 +404,10 @@ can yield a correct expression. — *end example*\]
 ## Alternative tokens <a id="lex.digraph">[[lex.digraph]]</a>
 
 Alternative token representations are provided for some operators and
-punctuators.
+punctuators.[^3]
 
 In all respects of the language, each alternative token behaves the
-same, respectively, as its primary token, except for its spelling.
+same, respectively, as its primary token, except for its spelling.[^4]
 
 The set of alternative tokens is defined in [[lex.digraph]].
 
@@ -422,7 +421,7 @@ token:
     operator-or-punctuator
 ```
 
-There are five kinds of tokens: identifiers, keywords, literals,
+There are five kinds of tokens: identifiers, keywords, literals,[^5]
 
 operators, and other separators. Blanks, horizontal and vertical tabs,
 newlines, formfeeds, and comments (collectively, “whitespace”), as
@@ -489,7 +488,7 @@ The appearance of either of the characters `'` or `\` or of either of
 the character sequences `/*` or `//` in a *q-char-sequence* or an
 *h-char-sequence* is conditionally-supported with
 *implementation-defined* semantics, as is the appearance of the
-character `"` in an *h-char-sequence*.
+character `"` in an *h-char-sequence*.[^6]
 
 ## Preprocessing numbers <a id="lex.ppnumber">[[lex.ppnumber]]</a>
 
@@ -553,6 +552,8 @@ digit: one of
 
 The character properties XID_Start and XID_Continue are Derived Core
 Properties as described by UAX #44 of the Unicode Standard.
+
+[^7]
 
 — *end note*\]
 
@@ -649,7 +650,7 @@ translation phase 7 [[lex.phases]].
 
 ### Kinds of literals <a id="lex.literal.kinds">[[lex.literal.kinds]]</a>
 
-There are several kinds of literals.
+There are several kinds of literals.[^8]
 
 ``` bnf
 literal:
@@ -1623,3 +1624,41 @@ int main() {
 [support.types.layout]: support.md#support.types.layout
 [temp.explicit]: temp.md#temp.explicit
 [temp.names]: temp.md#temp.names
+
+[^1]: Implementations behave as if these separate phases occur, although
+    in practice different phases can be folded together.
+
+[^2]: A partial preprocessing token would arise from a source file
+    ending in the first portion of a multi-character token that requires
+    a terminating sequence of characters, such as a *header-name* that
+    is missing the closing `"` or `>`. A partial comment would arise
+    from a source file ending with an unclosed `/*` comment.
+
+[^3]:  These include “digraphs” and additional reserved words. The term
+    “digraph” (token consisting of two characters) is not perfectly
+    descriptive, since one of the alternative *preprocessing-token*s is
+    `%:%:` and of course several primary tokens contain two characters.
+    Nonetheless, those alternative tokens that aren’t lexical keywords
+    are colloquially known as “digraphs”.
+
+[^4]: Thus the “stringized” values [[cpp.stringize]] of `[` and `<:`
+    will be different, maintaining the source spelling, but the tokens
+    can otherwise be freely interchanged.
+
+[^5]: Literals include strings and character and numeric literals.
+
+[^6]: Thus, a sequence of characters that resembles an escape sequence
+    can result in an error, be interpreted as the character
+    corresponding to the escape sequence, or have a completely different
+    meaning, depending on the implementation.
+
+[^7]: On systems in which linkers cannot accept extended characters, an
+    encoding of the *universal-character-name* can be used in forming
+    valid external identifiers. For example, some otherwise unused
+    character or sequence of characters can be used to encode the `\u`
+    in a *universal-character-name*. Extended characters can produce a
+    long external identifier, but C++ does not place a translation limit
+    on significant characters for external identifiers.
+
+[^8]: The term “literal” generally designates, in this document, those
+    tokens that are called “constants” in ISO C.

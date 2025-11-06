@@ -288,13 +288,23 @@ export using N::h;              // error: #1 has internal linkage
 These constraints do not apply to type names introduced by `typedef`
 declarations and *alias-declaration*s.
 
+\[*Example 3*:
+
+``` cpp
+export module M;
+struct S;
+export using T = S;             // OK, exports name T denoting type S
+```
+
+— *end example*\]
+
 — *end note*\]
 
 A redeclaration of an entity X is implicitly exported if X was
 introduced by an exported declaration; otherwise it shall not be
 exported.
 
-\[*Example 3*:
+\[*Example 4*:
 
 ``` cpp
 export module M;
@@ -313,7 +323,7 @@ translation unit importing that module [[basic.lookup]]. Class and
 enumeration member names can be found by name lookup in any context in
 which a definition of the type is reachable. — *end note*\]
 
-\[*Example 4*:
+\[*Example 5*:
 
 Interface unit of \`M\`
 
@@ -368,6 +378,19 @@ int main() {
 Declarations in an exported *namespace-definition* or in an exported
 *linkage-specification* [[dcl.link]] are exported and subject to the
 rules of exported declarations.
+
+\[*Example 6*:
+
+``` cpp
+export module M;
+int g;
+export namespace N {
+  int x;                        // OK
+  using ::g;                    // error: ::g has module linkage
+}
+```
+
+— *end example*\]
 
 — *end note*\]
 
@@ -451,7 +474,7 @@ imports all translation units imported by exported
 *exported* by T. Additionally, when a *module-import-declaration* in a
 module unit of some module M imports another module unit U of M, it also
 imports all translation units imported by non-exported
-*module-import-declaration*s in the module unit purview of U.
+*module-import-declaration*s in the module unit purview of U.[^1]
 
 These rules can in turn lead to the importation of yet more translation
 units.
@@ -571,8 +594,7 @@ translation unit if:
     declares a member or friend of C, or
   - one of D and M declares an enumeration E and the other declares an
     enumerator of E, or
-  - D declares a function or variable and M is declared in D,
-    or
+  - D declares a function or variable and M is declared in D,[^2] or
   - one of M and D declares a template and the other declares a partial
     or explicit specialization or an implicit or explicit instantiation
     of that template, or
@@ -856,7 +878,7 @@ name lookup [[basic.lookup]]. — *end note*\]
 All translation units that are necessarily reachable are *reachable*.
 Additional translation units on which the point within the program has
 an interface dependency may be considered reachable, but it is
-unspecified which are and under what circumstances.
+unspecified which are and under what circumstances.[^3]
 
 \[*Note 2*: It is advisable to avoid depending on the reachability of
 any additional translation units in programs intending to be
@@ -887,12 +909,58 @@ declarations, attributes, names bound, etc. Since default arguments are
 evaluated in the context of the call expression, the reachable semantic
 properties of the corresponding parameter types apply in that context.
 
+\[*Example 1*:
+
+Translation unit #1
+
+``` cpp
+export module M:A;
+export struct B;
+```
+
+Translation unit #2
+
+``` cpp
+module M:B;
+struct B {
+  operator int();
+};
+```
+
+Translation unit #3
+
+``` cpp
+module M:C;
+import :A;
+B b1;                           // error: no reachable definition of struct B
+```
+
+Translation unit #4
+
+``` cpp
+export module M;
+export import :A;
+import :B;
+B b2;
+export void f(B b = B());
+```
+
+Translation unit #5
+
+``` cpp
+import M;
+B b3;                           // error: no reachable definition of struct B
+void g() { f(); }               // error: no reachable definition of struct B
+```
+
+— *end example*\]
+
 — *end note*\]
 
 \[*Note 5*: Declarations of an entity can be reachable even where they
 cannot be found by name lookup. — *end note*\]
 
-\[*Example 1*:
+\[*Example 2*:
 
 Translation unit #1
 
@@ -950,3 +1018,13 @@ X x;                // error: X not visible to unqualified lookup
 [temp.dep]: temp.md#temp.dep
 [temp.point]: temp.md#temp.point
 [temp.pre]: temp.md#temp.pre
+
+[^1]: This is consistent with the lookup rules for imported names
+    [[basic.lookup]].
+
+[^2]: A declaration can appear within a *lambda-expression* in the
+    initializer of a variable.
+
+[^3]: Implementations are therefore not required to prevent the semantic
+    effects of additional translation units involved in the compilation
+    from being observed.
