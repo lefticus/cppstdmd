@@ -860,3 +860,48 @@ def test_defnx_contextual_bool():
     # Should NOT have the second argument or index marker
     assert "conversion!contextual" not in output
 
+
+def test_tref_in_list_item_with_linebreak():
+    r"""Test \tref{} in list item with \\ linebreak (Issue #22 - cpp.md bug)"""
+    latex = r"""
+\begin{itemize}
+\item The names listed in \tref{cpp.predefined.ft}.\\
+The macros defined in \tref{cpp.predefined.ft} shall be defined to
+the corresponding integer literal.
+\end{itemize}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Both \tref{} macros should be converted to [[cpp.predefined.ft]]
+    assert "[[cpp.predefined.ft]]" in output
+    # Should have TWO instances (one before \\, one after)
+    assert output.count("[[cpp.predefined.ft]]") == 2
+    # Verify the text is complete (no content loss)
+    assert "The names listed in" in output
+    assert "The macros defined in" in output
+    assert "shall be defined to" in output
+    # Should NOT have unconverted \tref
+    assert r"\tref" not in output
+
+
+def test_tref_in_description_list_with_linebreak():
+    r"""Test \tref{} in description list item with \\ linebreak (Issue #22 - cpp.md bug)"""
+    latex = r"""
+\begin{description}
+\item The names listed in \tref{cpp.predefined.ft}.\\
+The macros defined in \tref{cpp.predefined.ft} shall be defined to
+the corresponding integer literal.
+\end{description}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Both \tref{} macros should be converted to [[cpp.predefined.ft]]
+    assert "[[cpp.predefined.ft]]" in output
+    # Should have TWO instances (one before \\, one after)
+    assert output.count("[[cpp.predefined.ft]]") == 2
+    # Verify the text is complete (no content loss)
+    assert "The names listed in" in output
+    assert "The macros defined in" in output
+    assert "shall be defined to" in output
+    # Should NOT have unconverted \tref
+    assert r"\tref" not in output

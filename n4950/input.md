@@ -8780,7 +8780,7 @@ pathname:
 ``` bnf
 root-name:
     operating system dependent sequences of characters
-    *implementation-defined*{ sequences of characters}
+    *implementation-defined*{} sequences of characters
 ```
 
 ``` bnf
@@ -8813,7 +8813,7 @@ preferred-separator:
 
 ``` bnf
 fallback-separator:
-    /, if *preferred-separator* is not \texttt{/}
+    /, if *preferred-separator* is not /
 ```
 
 A *filename* is the name of a file. The *dot* and *dot-dot* filenames,

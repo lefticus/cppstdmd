@@ -7417,7 +7417,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{literal-char}
-    any character other than \{, \texttt{\}, or \%}
+    any character other than \{, \}, or \%
 ```
 
 ``` bnf

@@ -260,3 +260,24 @@ def test_terminal_with_escaped_chars():
     assert r"'\#'" not in output
     assert r"'\%'" not in output
     assert r"'\_'" not in output
+
+
+def test_textnormal_with_nested_tref():
+    r"""Test \textnormal{} with nested \tref{} (Issue #22 - lex.md bug)"""
+    latex = r"""
+\begin{bnf}
+\nontermdef{keyword}\br
+    \textnormal{any identifier listed in \tref{lex.key}}\br
+\end{bnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "keyword:" in output
+    # The \textnormal{} wrapper should be stripped, preserving nested content
+    assert "any identifier listed in" in output
+    # CRITICAL: \tref{lex.key} should be converted to [[lex.key]]
+    assert "[[lex.key]]" in output
+    # Verify the entire phrase is correct (no truncation/mangling)
+    assert "any identifier listed in [[lex.key]]" in output
+    # Should NOT have unconverted \tref
+    assert r"\tref" not in output

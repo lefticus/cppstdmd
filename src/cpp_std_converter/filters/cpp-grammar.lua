@@ -45,8 +45,11 @@ local function clean_grammar(grammar)
   -- Replace \keyword{x} with x (keywords - macros filter may have already handled this)
   grammar = grammar:gsub("\\keyword{([^}]*)}", "%1")
 
-  -- Replace \textnormal{x} with x (normal text)
-  grammar = grammar:gsub("\\textnormal{([^}]*)}", "%1")
+  -- Replace \textnormal{x} with x (normal text) - use brace-balanced extraction (Issue #22)
+  -- This handles nested macros like \tref{} inside \textnormal{}
+  grammar = process_macro_with_replacement(grammar, "textnormal", function(content)
+    return content  -- Just strip the wrapper, preserve nested content
+  end)
 
   -- Replace \terminal{x} with 'x' (terminal symbols)
   -- Use brace-balanced extraction to handle escaped braces properly
@@ -107,6 +110,13 @@ local function clean_grammar(grammar)
 
   -- \descr{X} renders as X (description text, just remove wrapper)
   grammar = grammar:gsub("\\descr{([^}]*)}", "%1")
+
+  -- Process cross-reference macros that may appear in BNF blocks (Issue #22)
+  -- \tref{label} -> [[label]] (table reference)
+  -- \iref{label} -> [[label]] (indexed reference)
+  -- These must be converted here since cpp-macros doesn't process BNF RawBlocks
+  grammar = grammar:gsub("\\tref{([^}]*)}", "[[%1]]")
+  grammar = grammar:gsub("\\iref{([^}]*)}", "[[%1]]")
 
   -- Clean up extra whitespace
   grammar = trim(grammar)

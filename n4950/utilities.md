@@ -10584,7 +10584,7 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{fill}
-    any character other than \{ or \texttt{\}}
+    any character other than \{ or \}
 ```
 
 ``` bnf

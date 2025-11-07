@@ -195,7 +195,7 @@ characters.
 
 ``` bnf
 n-char: one of
-     any member of the translation character set except the \unicode{007d{right curly bracket} or new-line character}
+     any member of the translation character set except the }{right curly bracket} or new-line character
 ```
 
 ``` bnf
@@ -461,7 +461,7 @@ h-char-sequence:
 
 ``` bnf
 h-char:
-    any member of the translation character set except new-line and \unicode{003e{greater-than sign}}
+    any member of the translation character set except new-line and >{greater-than sign}
 ```
 
 ``` bnf
@@ -472,7 +472,7 @@ q-char-sequence:
 
 ``` bnf
 q-char:
-    any member of the translation character set except new-line and \unicode{0022{quotation mark}}
+    any member of the translation character set except new-line and "{quotation mark}
 ```
 
 \[*Note 1*: Header name preprocessing tokens only appear within a
@@ -588,7 +588,7 @@ shall not be used otherwise; no diagnostic is required.
 
 ``` bnf
 keyword:
-    any identifier listed in \tref{lex.key}
+    any identifier listed in [[lex.key]]
     *import-keyword*
     *module-keyword*
     *export-keyword*
@@ -861,8 +861,8 @@ c-char:
 
 ``` bnf
 basic-c-char:
-    any member of the translation character set except the \unicode{0027{apostrophe},}
-      \unicode{005c{reverse solidus}, or new-line character}
+    any member of the translation character set except the '{apostrophe},
+      \{reverse solidus}, or new-line character
 ```
 
 ``` bnf
@@ -915,7 +915,7 @@ conditional-escape-sequence:
 
 ``` bnf
 conditional-escape-sequence-char:
-    any member of the basic character set that is not an octal-digit, a simple-escape-sequence-char, or the characters 'N, 'o', 'u', 'U', or 'x''
+    any member of the basic character set that is not an octal-digit, a simple-escape-sequence-char, or the characters 'N', 'o', 'u', 'U', or 'x'
 ```
 
 A *non-encodable character literal* is a *character-literal* whose
@@ -1145,8 +1145,8 @@ s-char:
 
 ``` bnf
 basic-s-char:
-    any member of the translation character set except the \unicode{0022{quotation mark},}
-      \unicode{005c{reverse solidus}, or new-line character}
+    any member of the translation character set except the "{quotation mark},
+      \{reverse solidus}, or new-line character
 ```
 
 ``` bnf
@@ -1162,8 +1162,8 @@ r-char-sequence:
 
 ``` bnf
 r-char:
-    any member of the translation character set, except a \unicode{0029{right parenthesis} followed by}
-      the initial *d-char-sequence* (which may be empty) followed by a \unicode{0022{quotation mark}}
+    any member of the translation character set, except a ){right parenthesis} followed by
+      the initial *d-char-sequence* (which may be empty) followed by a "{quotation mark}
 ```
 
 ``` bnf
@@ -1175,8 +1175,8 @@ d-char-sequence:
 ``` bnf
 d-char:
     any member of the basic character set except:
-      \unicode{0020{space}, ({left parenthesis}, ){right parenthesis}, \{reverse solidus},}
-      \unicode{0009{character tabulation}, {line tabulation}, {form feed}, and new-line}
+       {space}, ({left parenthesis}, ){right parenthesis}, \{reverse solidus},
+      	{character tabulation}, {line tabulation}, {form feed}, and new-line
 ```
 
 The kind of a *string-literal*, its type, and its associated character
