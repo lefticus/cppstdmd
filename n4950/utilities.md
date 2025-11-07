@@ -1204,7 +1204,7 @@ namespace std {
 
   // [tuple.helper], tuple helper classes
   template<class T>
-    constexpr size_t \libglobal{tuple_size_v} = tuple_size<T>::value;
+    constexpr size_t \libglobal{tuple_size_v}@ = tuple_size<T>::value;
 }
 ```
 
@@ -1325,7 +1325,7 @@ namespace std {
 
     template<exposition onlyconceptnc{tuple-like} UTuple>
       constexpr tuple& operator=(UTuple&&);
-    template<exposition onlyconceptnc{tuple-like} UTuple>
+    template<exposition onlyconceptnc{tuple-like}@ UTuple>
       constexpr const tuple& operator=(UTuple&&) const;
 
     // [tuple.swap], tuple swap
@@ -5014,7 +5014,7 @@ namespace std {
     friend constexpr void swap(unexpected& x, unexpected& y) noexcept(noexcept(x.swap(y)));
 
   private:
-    E exposition onlyidnc{unex};             // exposition only
+    E unex;             // exposition only
   };
 
   template<class E> unexpected(E) -> unexpected<E>;
@@ -5130,7 +5130,7 @@ namespace std {
     const E&& error() const && noexcept;
 
   private:
-    E exposition onlyidnc{unex};             // exposition only
+    E unex;             // exposition only
   };
 }
 ```
@@ -10430,7 +10430,7 @@ namespace std {
     decltype(auto) visit_format_arg(Visitor&& vis, basic_format_arg<Context> arg);
 
   // [format.arg.store], class template format-arg-store
-  template<class Context, class... Args> class exposition onlyidnc{format-arg-store};        // exposition only
+  template<class Context, class... Args> class format-arg-store;        // exposition only
 
   template<class Context = format_context, class... Args>
     format-arg-store<Context, Args...>
@@ -10940,7 +10940,7 @@ namespace std {
   template<class charT, class... Args>
   struct \libglobal{basic_format_string} {
   private:
-    basic_string_view<charT> exposition onlyidnc{str};         // exposition only
+    basic_string_view<charT> str;         // exposition only
 
   public:
     template<class T> consteval basic_format_string(const T& s);
@@ -11823,9 +11823,9 @@ the :
 ``` cpp
 namespace std {
   template<ranges::input_range R, class charT>
-  struct exposition onlyidnc{range-default-formatter}<range_format::sequence, R, charT> {    // exposition only
+  struct range-default-formatter<range_format::sequence, R, charT> {    // exposition only
   private:
-    using exposition onlyidnc{maybe-const-r} = exposition onlyidnc{fmt-maybe-const}<R, charT>;                    // exposition only
+    using maybe-const-r = fmt-maybe-const<R, charT>;                    // exposition only
     range_formatter<remove_cvref_t<ranges::range_reference_t<maybe-const-r>>,
                     charT> underlying_;                                 // exposition only
 
@@ -11882,10 +11882,10 @@ namespace std {
   template<ranges::input_range R, class charT>
   struct range-default-formatter<range_format::map, R, charT> {
   private:
-    using exposition onlyidnc{maybe-const-map} = exposition onlyidnc{fmt-maybe-const}<R, charT>;                  // exposition only
-    using exposition onlyidnc{element-type} =                                                // exposition only
+    using maybe-const-map = fmt-maybe-const<R, charT>;                  // exposition only
+    using element-type =                                                // exposition only
       remove_cvref_t<ranges::range_reference_t<maybe-const-map>>;
-    range_formatter<exposition onlyidnc{element-type}, charT> underlying_;                   // exposition only
+    range_formatter<element-type, charT> underlying_;                   // exposition only
 
   public:
     constexpr range-default-formatter();
@@ -11944,7 +11944,7 @@ namespace std {
   template<ranges::input_range R, class charT>
   struct range-default-formatter<range_format::set, R, charT> {
   private:
-    using exposition onlyidnc{maybe-const-set} = exposition onlyidnc{fmt-maybe-const}<R, charT>;                  // exposition only
+    using maybe-const-set = fmt-maybe-const<R, charT>;                  // exposition only
     range_formatter<remove_cvref_t<ranges::range_reference_t<maybe-const-set>>,
                     charT> underlying_;                                 // exposition only
 
@@ -12198,8 +12198,8 @@ template<class Visitor, class Context>
 ``` cpp
 namespace std {
   template<class Context, class... Args>
-  class exposition onlyidnc{format-arg-store} {                                      // exposition only
-    array<basic_format_arg<Context>, sizeof...(Args)> exposition onlyidnc{args};     // exposition only
+  class format-arg-store {                                      // exposition only
+    array<basic_format_arg<Context>, sizeof...(Args)> args;     // exposition only
   };
 }
 ```

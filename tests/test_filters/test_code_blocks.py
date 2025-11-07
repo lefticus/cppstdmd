@@ -169,6 +169,27 @@ struct S {
     assert "\\expos" not in output
     assert "@" not in output
 
+def test_exposidnc_in_codeblock():
+    r"""Test @\exposidnc{}@ macro inside code block (ranges.md/iterators.md bug)"""
+    latex = r"""
+\begin{codeblock}
+template<bool Const, class T>
+  using @\exposidnc{maybe-const}@ = conditional_t<Const, const T, T>;   // exposition only
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have just the identifier name
+    assert "maybe-const" in output
+    # Should NOT have the macro name or corrupted output
+    assert "exposidnc" not in output.lower()
+    assert "exposition onlyidnc" not in output
+    assert "exposition only idnc" not in output
+    # @ delimiters should be removed
+    assert "@" not in output
+    # Backslashes should be gone
+    assert "\\" not in output
+
 def test_unsp_with_impldef_in_codeblock():
     r"""Test @\UNSP{\impldef{}}@ nested macros in code block"""
     latex = r"""

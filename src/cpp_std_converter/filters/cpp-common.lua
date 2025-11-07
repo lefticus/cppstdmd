@@ -503,7 +503,10 @@ local function expand_library_spec_macros(text, has_at_delimiters)
     text = text:gsub("@\\seebelow@", "see below")
     text = text:gsub("@\\unspec@", "unspecified")
     text = text:gsub("@\\unspecnc@", "unspecified")
+    -- Match @\expos@ first (complete pattern), then partial matches
+    -- This avoids matching @\exposid@ or @\exposidnc@
     text = text:gsub("@\\expos@", "exposition only")
+    text = text:gsub("@\\expos([^i@])", "exposition only%1")
 
     -- Handle @\impdefx{description}@ with nested braces (extract description)
     -- Process this BEFORE @\impdef@ to avoid prefix matching
@@ -519,7 +522,9 @@ local function expand_library_spec_macros(text, has_at_delimiters)
   text = text:gsub("\\seebelow", "see below")
   text = text:gsub("\\unspec", "unspecified")
   text = text:gsub("\\unspecnc", "unspecified")
-  text = text:gsub("\\expos", "exposition only")
+  -- Use pattern that requires \expos to NOT be followed by 'i' to avoid matching \exposid or \exposidnc
+  text = text:gsub("\\expos([^i])", "exposition only%1")
+  text = text:gsub("\\expos$", "exposition only")
 
   -- Process \impdefx{...} with nested braces (fallback for any missed by cpp-macros.lua)
   text = expand_impdefx_in_text(text, "\\impdefx{", 9, nil)
@@ -710,6 +715,10 @@ local code_block_macro_patterns = {
   -- \exposid{x} represents exposition-only identifier
   {pattern = "@\\exposid{([^}]*)}@", replacement = "%1"},
   {pattern = "\\exposid{([^}]*)}", replacement = "%1"},
+
+  -- \exposidnc{x} represents exposition-only identifier (no italic correction)
+  {pattern = "@\\exposidnc{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\exposidnc{([^}]*)}", replacement = "%1"},
 
   -- \keyword{x} in code comments
   {pattern = "\\keyword{([^}]*)}", replacement = "%1"},

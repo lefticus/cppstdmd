@@ -78,7 +78,7 @@ namespace std {
     concept indirectly_readable = see below;                                        // freestanding
 
   template<indirectly_readable T>
-    using exposition onlyidnc{indirect-value-t} = see below;         // exposition only
+    using indirect-value-t = see below;         // exposition only
 
   template<indirectly_readable T>
     using \libglobal{iter_common_reference_t} =                                                 // freestanding
@@ -1824,29 +1824,29 @@ namespace std {
     concept indirectly_unary_invocable =
       indirectly_readable<I> &&
       copy_constructible<F> &&
-      invocable<F&, exposition onlyidnc{indirect-value-t}<I>> &&
+      invocable<F&, indirect-value-t<I>> &&
       invocable<F&, iter_reference_t<I>> &&
       invocable<F&, iter_common_reference_t<I>> &&
       common_reference_with<
-        invoke_result_t<F&, exposition onlyidnc{indirect-value-t}<I>>,
+        invoke_result_t<F&, indirect-value-t<I>>,
         invoke_result_t<F&, iter_reference_t<I>>>;
 
   template<class F, class I>
     concept indirectly_regular_unary_invocable =
       indirectly_readable<I> &&
       copy_constructible<F> &&
-      regular_invocable<F&, exposition onlyidnc{indirect-value-t}<I>> &&
+      regular_invocable<F&, indirect-value-t<I>> &&
       regular_invocable<F&, iter_reference_t<I>> &&
       regular_invocable<F&, iter_common_reference_t<I>> &&
       common_reference_with<
-        invoke_result_t<F&, exposition onlyidnc{indirect-value-t}<I>>,
+        invoke_result_t<F&, indirect-value-t<I>>,
         invoke_result_t<F&, iter_reference_t<I>>>;
 
   template<class F, class I>
     concept indirect_unary_predicate =
       indirectly_readable<I> &&
       copy_constructible<F> &&
-      predicate<F&, exposition onlyidnc{indirect-value-t}<I>> &&
+      predicate<F&, indirect-value-t<I>> &&
       predicate<F&, iter_reference_t<I>> &&
       predicate<F&, iter_common_reference_t<I>>;
 
@@ -1854,9 +1854,9 @@ namespace std {
     concept indirect_binary_predicate =
       indirectly_readable<I1> && indirectly_readable<I2> &&
       copy_constructible<F> &&
-      predicate<F&, exposition onlyidnc{indirect-value-t}<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
-      predicate<F&, exposition onlyidnc{indirect-value-t}<I1>, iter_reference_t<I2>> &&
-      predicate<F&, iter_reference_t<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
+      predicate<F&, indirect-value-t<I1>, indirect-value-t<I2>> &&
+      predicate<F&, indirect-value-t<I1>, iter_reference_t<I2>> &&
+      predicate<F&, iter_reference_t<I1>, indirect-value-t<I2>> &&
       predicate<F&, iter_reference_t<I1>, iter_reference_t<I2>> &&
       predicate<F&, iter_common_reference_t<I1>, iter_common_reference_t<I2>>;
 
@@ -1864,9 +1864,9 @@ namespace std {
     concept indirect_equivalence_relation =
       indirectly_readable<I1> && indirectly_readable<I2> &&
       copy_constructible<F> &&
-      equivalence_relation<F&, exposition onlyidnc{indirect-value-t}<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
-      equivalence_relation<F&, exposition onlyidnc{indirect-value-t}<I1>, iter_reference_t<I2>> &&
-      equivalence_relation<F&, iter_reference_t<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
+      equivalence_relation<F&, indirect-value-t<I1>, indirect-value-t<I2>> &&
+      equivalence_relation<F&, indirect-value-t<I1>, iter_reference_t<I2>> &&
+      equivalence_relation<F&, iter_reference_t<I1>, indirect-value-t<I2>> &&
       equivalence_relation<F&, iter_reference_t<I1>, iter_reference_t<I2>> &&
       equivalence_relation<F&, iter_common_reference_t<I1>, iter_common_reference_t<I2>>;
 
@@ -1874,9 +1874,9 @@ namespace std {
     concept indirect_strict_weak_order =
       indirectly_readable<I1> && indirectly_readable<I2> &&
       copy_constructible<F> &&
-      strict_weak_order<F&, exposition onlyidnc{indirect-value-t}<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
-      strict_weak_order<F&, exposition onlyidnc{indirect-value-t}<I1>, iter_reference_t<I2>> &&
-      strict_weak_order<F&, iter_reference_t<I1>, exposition onlyidnc{indirect-value-t}<I2>> &&
+      strict_weak_order<F&, indirect-value-t<I1>, indirect-value-t<I2>> &&
+      strict_weak_order<F&, indirect-value-t<I1>, iter_reference_t<I2>> &&
+      strict_weak_order<F&, iter_reference_t<I1>, indirect-value-t<I2>> &&
       strict_weak_order<F&, iter_reference_t<I1>, iter_reference_t<I2>> &&
       strict_weak_order<F&, iter_common_reference_t<I1>, iter_common_reference_t<I2>>;
 }
@@ -3115,14 +3115,14 @@ namespace std {
     concept not-a-const-iterator = see below;                   // exposition only
 
   template<indirectly_readable I>
-    using exposition onlyidnc{iter-const-rvalue-reference-t} =                       // exposition only
+    using iter-const-rvalue-reference-t =                       // exposition only
       common_reference_t<const iter_value_t<I>&&, iter_rvalue_reference_t<I>>;
 
   template<input_iterator Iterator>
   class \libglobal{basic_const_iterator} {
-    Iterator exposition onlyidnc{current_} = Iterator();                             // exposition only
-    using exposition onlyidnc{reference} = iter_const_reference_t<Iterator>;         // exposition only
-    using exposition onlyidnc{rvalue-reference} =                                    // exposition only
+    Iterator current_ = Iterator();                             // exposition only
+    using reference = iter_const_reference_t<Iterator>;         // exposition only
+    using rvalue-reference =                                    // exposition only
       iter-const-rvalue-reference-t<Iterator>;
 
   public:

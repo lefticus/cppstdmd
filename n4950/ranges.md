@@ -196,7 +196,7 @@ namespace std::ranges {
   namespace views { inline constexpr unspecified single = unspecified; }            // freestanding
 
   template<bool Const, class T>
-    using exposition onlyidnc{maybe-const} = conditional_t<Const, const T, T>;   // exposition only
+    using maybe-const = conditional_t<Const, const T, T>;   // exposition only
 
   // [range.iota], iota view
   template<weakly_incrementable W, semiregular Bound = unreachable_sentinel_t>
@@ -1113,7 +1113,7 @@ two are differentiated with the help of `enable_view`.
 
 ``` cpp
 template<class T>
-  constexpr bool exposition onlyidnc{is-derived-from-view-interface} = see belownc;            // exposition only
+  constexpr bool \exposidnc{is-derived-from-view-interface} = see belownc;            // exposition only
 template<class T>
   constexpr bool enable_view =
     derived_from<T, view_base> || is-derived-from-view-interface<T>;
@@ -1189,7 +1189,7 @@ template<class T>
 
 ``` cpp
 template<class R>
-  constexpr bool exposition onlyidnc{is-initializer-list} = see below;               // exposition only
+  constexpr bool \exposidnc{is-initializer-list} = see below;               // exposition only
 ```
 
 For a type `R`, *`is-initializer-list`*`<R>` is `true` if and only if
@@ -1263,10 +1263,10 @@ namespace std::ranges {
     requires is_class_v<D> && same_as<D, remove_cv_t<D>>
   class view_interface {
   private:
-    constexpr D& exposition onlyidnc{derived}() noexcept {               // exposition only
+    constexpr D& derived() noexcept {               // exposition only
       return static_cast<D&>(*this);
     }
-    constexpr const D& exposition onlyidnc{derived}() const noexcept {   // exposition only
+    constexpr const D& derived() const noexcept {   // exposition only
       return static_cast<const D&>(*this);
     }
 
@@ -1403,11 +1403,11 @@ namespace std::ranges {
     requires (K == subrange_kind::sized || !sized_sentinel_for<S, I>)
   class subrange : public view_interface<subrange<I, S, K>> {
   private:
-    static constexpr bool exposition onlyidnc{StoreSize} =                       // exposition only
+    static constexpr bool StoreSize =                       // exposition only
       K == subrange_kind::sized && !sized_sentinel_for<S, I>;
     I begin_ = I();                                         // exposition only
     S end_ = S();                                           // exposition only
-    exposition onlyidnc{make-unsigned-like-t}<iter_difference_t<I>> size_ = 0;   // exposition only; present only
+    make-unsigned-like-t<iter_difference_t<I>> size_ = 0;   // exposition only; present only
                                                             // if StoreSize is true
   public:
     subrange() requires default_initializable<I> = default;
@@ -1963,7 +1963,7 @@ namespace std::ranges {
     requires is_object_v<T>
   class single_view : public view_interface<single_view<T>> {
   private:
-    exposition onlyidnc{movable-box}<T> exposition onlyidnc{value_};              // exposition only{} (see [range.move.wrap])
+    movable-box<T> value_;              // exposition only{} (see [range.move.wrap])
 
   public:
     single_view() requires default_initializable<T> = default;
@@ -2072,10 +2072,10 @@ namespace std::ranges {
   class iota_view : public view_interface<iota_view<W, Bound>> {
   private:
     // [range.iota.iterator], class iota_view::iterator
-    struct exposition onlyidnc{iterator};                    // exposition only
+    struct iterator;                    // exposition only
 
     // [range.iota.sentinel], class iota_view::sentinel
-    struct exposition onlyidnc{sentinel};                    // exposition only
+    struct sentinel;                    // exposition only
 
     W value_ = W();                     // exposition only
     Bound bound_ = Bound();             // exposition only
@@ -2631,9 +2631,9 @@ namespace std::ranges {
   class \libglobal{repeat_view} : public view_interface<repeat_view<T, Bound>> {
   private:
     // [range.repeat.iterator], class repeat_view::iterator
-    struct exposition onlyidnc{iterator};                            // exposition only
+    struct iterator;                            // exposition only
 
-    exposition onlyidnc{movable-box}<T> value_;                      // exposition only, see [range.move.wrap]
+    movable-box<T> value_;                      // exposition only, see [range.move.wrap]
     Bound bound_ = Bound();                     // exposition only
 
   public:
@@ -2731,12 +2731,12 @@ namespace std::ranges {
                same_as<Bound, unreachable_sentinel_t>))
   class repeat_view<T, Bound>::iterator {
   private:
-    using exposition onlyidnc{index-type} =                          // exposition only
+    using index-type =                          // exposition only
       conditional_t<same_as<Bound, unreachable_sentinel_t>, ptrdiff_t, Bound>;
-    const T* exposition onlyidnc{value_} = nullptr;                  // exposition only
-    exposition onlyidnc{index-type} exposition onlyidnc{current_} = exposition onlyidnc{index-type}();         // exposition only
+    const T* value_ = nullptr;                  // exposition only
+    index-type current_ = index-type();         // exposition only
 
-    constexpr explicit iterator(const T* value, index-type b = exposition onlyidnc{index-type}());   // exposition only
+    constexpr explicit iterator(const T* value, index-type b = index-type());   // exposition only
 
   public:
     using iterator_concept = random_access_iterator_tag;
@@ -2998,7 +2998,7 @@ namespace std::ranges {
 
   private:
     // [range.istream.iterator], class basic_istream_view::iterator
-    struct exposition onlyidnc{iterator};                            // exposition only
+    struct iterator;                            // exposition only
     basic_istream<CharT, Traits>* stream_;      // exposition only
     Val value_ = Val();                         // exposition only
   };
@@ -3581,7 +3581,7 @@ namespace std::ranges {
   class filter_view : public view_interface<filter_view<V, Pred>> {
   private:
     V base_ = V();                              // exposition only
-    exposition onlyidnc{movable-box}<Pred> pred_;                    // exposition only
+    movable-box<Pred> pred_;                    // exposition only
 
     // [range.filter.iterator], class filter_view::iterator
     class iterator;                             // exposition only
@@ -4046,16 +4046,16 @@ namespace std::ranges {
   template<bool Const>
   class transform_view<V, F>::iterator {
   private:
-    using exposition onlyidnc{Parent} = exposition onlyidnc{maybe-const}<Const, transform_view>;          // exposition only
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                         // exposition only
-    iterator_t<exposition onlyidnc{Base}> current_ = iterator_t<exposition onlyidnc{Base}>();             // exposition only
-    exposition onlyidnc{Parent}* parent_ = nullptr;                                  // exposition only
+    using Parent = maybe-const<Const, transform_view>;          // exposition only
+    using Base = maybe-const<Const, V>;                         // exposition only
+    iterator_t<Base> current_ = iterator_t<Base>();             // exposition only
+    Parent* parent_ = nullptr;                                  // exposition only
 
   public:
     using iterator_concept  = see belownc;
     using iterator_category = see belownc;                        // not always present
     using value_type        =
-      remove_cvref_t<invoke_result_t<exposition onlyidnc{maybe-const}<Const, F>&, range_reference_t<Base>>>;
+      remove_cvref_t<invoke_result_t<maybe-const<Const, F>&, range_reference_t<Base>>>;
     using difference_type   = range_difference_t<Base>;
 
     iterator() requires default_initializable<iterator_t<Base>> = default;
@@ -4707,10 +4707,10 @@ namespace std::ranges {
              indirect_unary_predicate<const Pred, iterator_t<V>>
   class take_while_view : public view_interface<take_while_view<V, Pred>> {
     // [range.take.while.sentinel], class template take_while_view::sentinel
-    template<bool> class exposition onlyidnc{sentinel};                      // exposition only
+    template<bool> class sentinel;                      // exposition only
 
     V base_ = V();                                      // exposition only
-    exposition onlyidnc{movable-box}<Pred> pred_;                            // exposition only
+    movable-box<Pred> pred_;                            // exposition only
 
   public:
     take_while_view() requires default_initializable<V> && default_initializable<Pred> = default;
@@ -4764,10 +4764,10 @@ namespace std::ranges {
     requires input_range<V> && is_object_v<Pred> &&
              indirect_unary_predicate<const Pred, iterator_t<V>>
   template<bool Const>
-  class take_while_view<V, Pred>::exposition onlyidnc{sentinel} {
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                 // exposition only
+  class take_while_view<V, Pred>::sentinel {
+    using Base = maybe-const<Const, V>;                 // exposition only
 
-    sentinel_t<exposition onlyidnc{Base}> end_ = sentinel_t<exposition onlyidnc{Base}>();         // exposition only
+    sentinel_t<Base> end_ = sentinel_t<Base>();         // exposition only
     const Pred* pred_ = nullptr;                        // exposition only
 
   public:
@@ -5071,21 +5071,21 @@ namespace std::ranges {
     requires view<V> && input_range<range_reference_t<V>>
   class join_view : public view_interface<join_view<V>> {
   private:
-    using exposition onlyidnc{InnerRng} = range_reference_t<V>;                  // exposition only
+    using InnerRng = range_reference_t<V>;                  // exposition only
 
     // [range.join.iterator], class template join_view::iterator
     template<bool Const>
-      struct exposition onlyidnc{iterator};                                      // exposition only
+      struct iterator;                                      // exposition only
 
     // [range.join.sentinel], class template join_view::sentinel
     template<bool Const>
-      struct exposition onlyidnc{sentinel};                                      // exposition only
+      struct sentinel;                                      // exposition only
 
     V base_ = V();                                          // exposition only
 
-    exposition onlyidnc{non-propagating-cache}<iterator_t<V>> exposition onlyidnc{outer_};            // exposition only, present only
+    non-propagating-cache<iterator_t<V>> outer_;            // exposition only, present only
                                                             // when !forward_range<V>
-    exposition onlyidnc{non-propagating-cache}<remove_cv_t<exposition onlyidnc{InnerRng}>> inner_;    // exposition only, present only
+    non-propagating-cache<remove_cv_t<InnerRng>> inner_;    // exposition only, present only
                                                             // if is_reference_v<InnerRng> is false
 
   public:
@@ -5154,28 +5154,28 @@ namespace std::ranges {
   template<bool Const>
   struct join_view<V>::iterator {
   private:
-    using exposition onlyidnc{Parent}    = exposition onlyidnc{maybe-const}<Const, join_view>;            // exposition only
-    using exposition onlyidnc{Base}      = exposition onlyidnc{maybe-const}<Const, V>;                    // exposition only
-    using exposition onlyidnc{OuterIter} = iterator_t<exposition onlyidnc{Base}>;                         // exposition only
-    using exposition onlyidnc{InnerIter} = iterator_t<range_reference_t<exposition onlyidnc{Base}>>;      // exposition only
+    using Parent    = maybe-const<Const, join_view>;            // exposition only
+    using Base      = maybe-const<Const, V>;                    // exposition only
+    using OuterIter = iterator_t<Base>;                         // exposition only
+    using InnerIter = iterator_t<range_reference_t<Base>>;      // exposition only
 
-    static constexpr bool exposition onlyidnc{ref-is-glvalue} =                      // exposition only
-      is_reference_v<range_reference_t<exposition onlyidnc{Base}>>;
+    static constexpr bool ref-is-glvalue =                      // exposition only
+      is_reference_v<range_reference_t<Base>>;
 
-    exposition onlyidnc{OuterIter} outer_ = exposition onlyidnc{OuterIter}();                     // exposition only, present only
+    OuterIter outer_ = OuterIter();                     // exposition only, present only
                                                         // if Base models forward_range
-    optional<exposition onlyidnc{InnerIter}> inner_;                                 // exposition only
-    exposition onlyidnc{Parent}* parent_  = nullptr;                                 // exposition only
+    optional<InnerIter> inner_;                                 // exposition only
+    Parent* parent_  = nullptr;                                 // exposition only
 
-    constexpr void exposition onlyidnc{satisfy}();                                   // exposition only
+    constexpr void satisfy();                                   // exposition only
 
-    constexpr exposition onlyidnc{OuterIter}& exposition onlyidnc{outer}();                               // exposition only
-    constexpr const exposition onlyidnc{OuterIter}& exposition onlyidnc{outer}() const;                   // exposition only
+    constexpr OuterIter& outer();                               // exposition only
+    constexpr const OuterIter& outer() const;                   // exposition only
 
-    constexpr exposition onlyidnc{iterator}(exposition onlyidnc{Parent}& parent, exposition onlyidnc{OuterIter} outer)
-      requires forward_range<exposition onlyidnc{Base}>;                             // exposition only
-    constexpr explicit exposition onlyidnc{iterator}(exposition onlyidnc{Parent}& parent)
-      requires (!forward_range<exposition onlyidnc{Base}>);                          // exposition only
+    constexpr iterator(Parent& parent, OuterIter outer)
+      requires forward_range<Base>;                             // exposition only
+    constexpr explicit iterator(Parent& parent)
+      requires (!forward_range<Base>);                          // exposition only
 
   public:
     using iterator_concept  = see below;
@@ -5847,7 +5847,7 @@ Then, equivalent to:
 ``` cpp
 if (outer() != ranges::end(parent_->base_)) {
   inner_it_.emplace<1>(ranges::begin(update-inner()));
-  exposition onlyidnc{satisfy}();
+  satisfy();
 }
 ```
 
@@ -5891,7 +5891,7 @@ constexpr iterator& operator++();
 
 ``` cpp
 visit([](auto& it){ ++it; }, inner_it_);
-exposition onlyidnc{satisfy}();
+satisfy();
 return *this;
 ```
 
@@ -6056,7 +6056,7 @@ for (auto word : str | views::lazy_split(' ')) {
 
 ``` cpp
 namespace std::ranges {
-  template<auto> struct exposition onlyidnc{require-constant};                       // exposition only
+  template<auto> struct require-constant;                       // exposition only
 
   template<class R>
   concept \defexposconceptnc{tiny-range} =                                          // exposition only
@@ -6073,14 +6073,14 @@ namespace std::ranges {
     V base_ = V();                                              // exposition only
     Pattern pattern_ = Pattern();                               // exposition only
 
-    exposition onlyidnc{non-propagating-cache}<iterator_t<V>> current_;              // exposition only, present only
+    non-propagating-cache<iterator_t<V>> current_;              // exposition only, present only
                                                                 // if forward_range<V> is false
 
     // [range.lazy.split.outer], class template lazy_split_view::outer-iterator
-    template<bool> struct exposition onlyidnc{outer-iterator};                       // exposition only
+    template<bool> struct outer-iterator;                       // exposition only
 
     // [range.lazy.split.inner], class template lazy_split_view::inner-iterator
-    template<bool> struct exposition onlyidnc{inner-iterator};                       // exposition only
+    template<bool> struct inner-iterator;                       // exposition only
 
   public:
     lazy_split_view()
@@ -6161,11 +6161,11 @@ namespace std::ranges {
   template<bool Const>
   struct lazy_split_view<V, Pattern>::outer-iterator {
   private:
-    using exposition onlyidnc{Parent} = exposition onlyidnc{maybe-const}<Const, lazy_split_view>;     // exposition only
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                     // exposition only
-    exposition onlyidnc{Parent}* parent_ = nullptr;                              // exposition only
+    using Parent = maybe-const<Const, lazy_split_view>;     // exposition only
+    using Base = maybe-const<Const, V>;                     // exposition only
+    Parent* parent_ = nullptr;                              // exposition only
 
-    iterator_t<exposition onlyidnc{Base}> current_ = iterator_t<exposition onlyidnc{Base}>();         // exposition only, present only
+    iterator_t<Base> current_ = iterator_t<Base>();         // exposition only, present only
                                                             // if V models forward_range
 
     bool trailing_empty_ = false;                           // exposition only
@@ -6378,8 +6378,8 @@ namespace std::ranges {
   template<bool Const>
   struct lazy_split_view<V, Pattern>::inner-iterator {
   private:
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                     // exposition only
-    exposition onlyidnc{outer-iterator}<Const> i_ = exposition onlyidnc{outer-iterator}<Const>();     // exposition only
+    using Base = maybe-const<Const, V>;                     // exposition only
+    outer-iterator<Const> i_ = outer-iterator<Const>();     // exposition only
     bool incremented_ = false;                              // exposition only
 
   public:
@@ -7670,15 +7670,15 @@ namespace std::ranges {
   template<view V>
     requires range-with-movable-references<V>
   class enumerate_view : public view_interface<enumerate_view<V>> {
-    V exposition onlyidnc{base_} = V();                                    // exposition only
+    V base_ = V();                                    // exposition only
 
     // [range.enumerate.iterator], class template enumerate_view::iterator
     template<bool Const>
-      class exposition onlyidnc{iterator};                                 // exposition only
+      class iterator;                                 // exposition only
 
     // [range.enumerate.sentinel], class template enumerate_view::sentinel
     template<bool Const>
-      class exposition onlyidnc{sentinel};                                 // exposition only
+      class sentinel;                                 // exposition only
 
   public:
     constexpr enumerate_view() requires default_initializable<V> = default;
@@ -7732,7 +7732,7 @@ namespace std::ranges {
     requires range-with-movable-references<V>
   template<bool Const>
   class enumerate_view<V>::iterator {
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                         // exposition only
+    using Base = maybe-const<Const, V>;                         // exposition only
 
   public:
     using iterator_category = input_iterator_tag;
@@ -7741,13 +7741,13 @@ namespace std::ranges {
     using value_type = tuple<difference_type, range_value_t<Base>>;
 
   private:
-    using exposition onlyidnc{reference-type} =                                      // exposition only
+    using reference-type =                                      // exposition only
       tuple<difference_type, range_reference_t<Base>>;
-    iterator_t<exposition onlyidnc{Base}> exposition onlyidnc{current_} = iterator_t<exposition onlyidnc{Base}>();             // exposition only
-    difference_type exposition onlyidnc{pos_} = 0;                                   // exposition only
+    iterator_t<Base> current_ = iterator_t<Base>();             // exposition only
+    difference_type pos_ = 0;                                   // exposition only
 
     constexpr explicit
-      exposition onlyidnc{iterator}(iterator_t<exposition onlyidnc{Base}> current, difference_type pos);  // exposition only
+      iterator(iterator_t<Base> current, difference_type pos);  // exposition only
 
   public:
     iterator() requires default_initializable<iterator_t<Base>> = default;
@@ -8021,9 +8021,9 @@ namespace std::ranges {
     requires range-with-movable-references<V>
   template<bool Const>
   class enumerate_view<V>::sentinel {
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                         // exposition only
-    sentinel_t<exposition onlyidnc{Base}> exposition onlyidnc{end_} = sentinel_t<exposition onlyidnc{Base}>();                 // exposition only
-    constexpr explicit exposition onlyidnc{sentinel}(sentinel_t<exposition onlyidnc{Base}> end);          // exposition only
+    using Base = maybe-const<Const, V>;                         // exposition only
+    sentinel_t<Base> end_ = sentinel_t<Base>();                 // exposition only
+    constexpr explicit sentinel(sentinel_t<Base> end);          // exposition only
 
   public:
     sentinel() = default;
@@ -8153,10 +8153,10 @@ namespace std::ranges {
     tuple<Views...> views_;             // exposition only
 
     // [range.zip.iterator], class template zip_view::iterator
-    template<bool> class exposition onlyidnc{iterator};      // exposition only
+    template<bool> class iterator;      // exposition only
 
     // [range.zip.sentinel], class template zip_view::sentinel
-    template<bool> class exposition onlyidnc{sentinel};      // exposition only
+    template<bool> class sentinel;      // exposition only
 
   public:
     zip_view() = default;
@@ -8245,8 +8245,8 @@ namespace std::ranges {
     requires (view<Views> && ...) && (sizeof...(Views) > 0)
   template<bool Const>
   class zip_view<Views...>::iterator {
-    tuple<iterator_t<exposition onlyidnc{maybe-const}<Const, Views>>...> current_;\itcorr[-1]       // exposition only
-    constexpr explicit exposition onlyidnc{iterator}(tuple<iterator_t<exposition onlyidnc{maybe-const}<Const, Views>>...>);
+    tuple<iterator_t<maybe-const<Const, Views>>...> current_;\itcorr[-1]       // exposition only
+    constexpr explicit iterator(tuple<iterator_t<maybe-const<Const, Views>>...>);
                                                                             // exposition only
   public:
     using iterator_category = input_iterator_tag;                           // not always present
@@ -8536,8 +8536,8 @@ namespace std::ranges {
     requires (view<Views> && ...) && (sizeof...(Views) > 0)
   template<bool Const>
   class zip_view<Views...>::sentinel {
-    tuple<sentinel_t<exposition onlyidnc{maybe-const}<Const, Views>>...> end_;\itcorr[-1]               // exposition only
-    constexpr explicit exposition onlyidnc{sentinel}(tuple<sentinel_t<exposition onlyidnc{maybe-const}<Const, Views>>...> end);
+    tuple<sentinel_t<maybe-const<Const, Views>>...> end_;\itcorr[-1]               // exposition only
+    constexpr explicit sentinel(tuple<sentinel_t<maybe-const<Const, Views>>...> end);
                                                                                 // exposition only
   public:
     sentinel() = default;
@@ -8661,20 +8661,20 @@ namespace std::ranges {
               regular_invocable<F&, range_reference_t<Views>...> &&
               can-reference<invoke_result_t<F&, range_reference_t<Views>...>>
   class zip_transform_view : public view_interface<zip_transform_view<F, Views...>> {
-    exposition onlyidnc{movable-box}<F> fun_;                    // exposition only
+    movable-box<F> fun_;                    // exposition only
     zip_view<Views...> zip_;                // exposition only
 
-    using exposition onlyidnc{InnerView} = zip_view<Views...>;   // exposition only
+    using InnerView = zip_view<Views...>;   // exposition only
     template<bool Const>
-      using exposition onlyidnc{ziperator} = iterator_t<exposition onlyidnc{maybe-const}<Const, exposition onlyidnc{InnerView}>>;      // exposition only
+      using ziperator = iterator_t<maybe-const<Const, InnerView>>;      // exposition only
     template<bool Const>
-      using exposition onlyidnc{zentinel} = sentinel_t<exposition onlyidnc{maybe-const}<Const, exposition onlyidnc{InnerView}>>;       // exposition only
+      using zentinel = sentinel_t<maybe-const<Const, InnerView>>;       // exposition only
 
     // [range.zip.transform.iterator], class template zip_transform_view::iterator
-    template<bool> class exposition onlyidnc{iterator};          // exposition only
+    template<bool> class iterator;          // exposition only
 
     // [range.zip.transform.sentinel], class template zip_transform_view::sentinel
-    template<bool> class exposition onlyidnc{sentinel};          // exposition only
+    template<bool> class sentinel;          // exposition only
 
   public:
     zip_transform_view() = default;
@@ -8738,9 +8738,9 @@ namespace std::ranges {
               can-reference<invoke_result_t<F&, range_reference_t<Views>...>>
   template<bool Const>
   class zip_transform_view<F, Views...>::iterator {
-    using exposition onlyidnc{Parent} = exposition onlyidnc{maybe-const}<Const, zip_transform_view>;      // exposition only
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, exposition onlyidnc{InnerView}>;                 // exposition only
-    exposition onlyidnc{Parent}* parent_ = nullptr;                                  // exposition only
+    using Parent = maybe-const<Const, zip_transform_view>;      // exposition only
+    using Base = maybe-const<Const, InnerView>;                 // exposition only
+    Parent* parent_ = nullptr;                                  // exposition only
     ziperator<Const> inner_;\itcorr[-1]                                    // exposition only
 
     constexpr iterator(Parent& parent, ziperator<Const> inner);   // exposition only
@@ -8977,8 +8977,8 @@ namespace std::ranges {
               can-reference<invoke_result_t<F&, range_reference_t<Views>...>>
   template<bool Const>
   class zip_transform_view<F, Views...>::sentinel {
-    exposition onlyidnc{zentinel}<Const> inner_;                                     // exposition only
-    constexpr explicit exposition onlyidnc{sentinel}(exposition onlyidnc{zentinel}<Const> inner);         // exposition only
+    zentinel<Const> inner_;                                     // exposition only
+    constexpr explicit sentinel(zentinel<Const> inner);         // exposition only
 
   public:
     sentinel() = default;
@@ -9078,12 +9078,12 @@ namespace std::ranges {
     V base_ = V();                      // exposition only
 
     // [range.adjacent.iterator], class template adjacent_view::iterator
-    template<bool> class exposition onlyidnc{iterator};      // exposition only
+    template<bool> class iterator;      // exposition only
 
     // [range.adjacent.sentinel], class template adjacent_view::sentinel
-    template<bool> class exposition onlyidnc{sentinel};      // exposition only
+    template<bool> class sentinel;      // exposition only
 
-    struct exposition onlyidnc{as-sentinel}{};               // exposition only
+    struct as-sentinel{};               // exposition only
 
   public:
     adjacent_view() requires default_initializable<V> = default;
@@ -9151,10 +9151,10 @@ namespace std::ranges {
     requires view<V> && (N > 0)
   template<bool Const>
   class adjacent_view<V, N>::iterator {
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                                         // exposition only
-    array<iterator_t<exposition onlyidnc{Base}>, N> current_ = array<iterator_t<exposition onlyidnc{Base}>, N>();         // exposition only
-    constexpr exposition onlyidnc{iterator}(iterator_t<exposition onlyidnc{Base}> first, sentinel_t<exposition onlyidnc{Base}> last);          // exposition only
-    constexpr exposition onlyidnc{iterator}(exposition onlyidnc{as-sentinel}, iterator_t<exposition onlyidnc{Base}> first, iterator_t<exposition onlyidnc{Base}> last);
+    using Base = maybe-const<Const, V>;                                         // exposition only
+    array<iterator_t<Base>, N> current_ = array<iterator_t<Base>, N>();         // exposition only
+    constexpr iterator(iterator_t<Base> first, sentinel_t<Base> last);          // exposition only
+    constexpr iterator(as-sentinel, iterator_t<Base> first, iterator_t<Base> last);
                                                                                 // exposition only
   public:
     using iterator_category = input_iterator_tag;
@@ -9567,20 +9567,20 @@ namespace std::ranges {
              regular_invocable<F&, REPEAT(range_reference_t<V>, N)...> &&
              can-reference<invoke_result_t<F&, REPEAT(range_reference_t<V>, N)...>>
   class adjacent_transform_view : public view_interface<adjacent_transform_view<V, F, N>> {
-    exposition onlyidnc{movable-box}<F> fun_;                        // exposition only
+    movable-box<F> fun_;                        // exposition only
     adjacent_view<V, N> inner_;                 // exposition only
 
-    using exposition onlyidnc{InnerView} = adjacent_view<V, N>;      // exposition only
+    using InnerView = adjacent_view<V, N>;      // exposition only
     template<bool Const>
       using inner-iterator = iterator_t<maybe-const<Const, InnerView>>;         // exposition only
     template<bool Const>
       using inner-sentinel = sentinel_t<maybe-const<Const, InnerView>>;         // exposition only
 
     // [range.adjacent.transform.iterator], class template adjacent_transform_view::iterator
-    template<bool> class exposition onlyidnc{iterator};              // exposition only
+    template<bool> class iterator;              // exposition only
 
     // [range.adjacent.transform.sentinel], class template adjacent_transform_view::sentinel
-    template<bool> class exposition onlyidnc{sentinel};              // exposition only
+    template<bool> class sentinel;              // exposition only
 
   public:
     adjacent_transform_view() = default;
@@ -9645,12 +9645,12 @@ namespace std::ranges {
              can-reference<invoke_result_t<F&, REPEAT(range_reference_t<V>, N)...>>
   template<bool Const>
   class adjacent_transform_view<V, F, N>::iterator {
-    using exposition onlyidnc{Parent} = exposition onlyidnc{maybe-const}<Const, adjacent_transform_view>;         // exposition only
-    using exposition onlyidnc{Base} = exposition onlyidnc{maybe-const}<Const, V>;                                 // exposition only
-    exposition onlyidnc{Parent}* parent_ = nullptr;                                          // exposition only
-    exposition onlyidnc{inner-iterator}<Const> inner_;                                       // exposition only
+    using Parent = maybe-const<Const, adjacent_transform_view>;         // exposition only
+    using Base = maybe-const<Const, V>;                                 // exposition only
+    Parent* parent_ = nullptr;                                          // exposition only
+    inner-iterator<Const> inner_;                                       // exposition only
 
-    constexpr exposition onlyidnc{iterator}(exposition onlyidnc{Parent}& parent, exposition onlyidnc{inner-iterator}<Const> inner);    // exposition only
+    constexpr iterator(Parent& parent, inner-iterator<Const> inner);    // exposition only
 
   public:
     using iterator_category = see below;
@@ -9884,8 +9884,8 @@ namespace std::ranges {
              can-reference<invoke_result_t<F&, REPEAT(range_reference_t<V>, N)...>>
   template<bool Const>
   class adjacent_transform_view<V, F, N>::sentinel {
-    exposition onlyidnc{inner-sentinel}<Const> inner_;                               // exposition only
-    constexpr explicit exposition onlyidnc{sentinel}(exposition onlyidnc{inner-sentinel}<Const> inner);   // exposition only
+    inner-sentinel<Const> inner_;                               // exposition only
+    constexpr explicit sentinel(inner-sentinel<Const> inner);   // exposition only
 
   public:
     sentinel() = default;
@@ -9982,7 +9982,7 @@ for (auto r : v | views::chunk(2)) {
 ``` cpp
 namespace std::ranges {
   template<class I>
-  constexpr I exposition onlyidnc{div-ceil}(I num, I denom) {                  // exposition only
+  constexpr I div-ceil(I num, I denom) {                  // exposition only
     I r = num / denom;
     if (num % denom)
       ++r;
@@ -10057,7 +10057,7 @@ constexpr auto size() const requires sized_range<const V>;
 *Effects:* Equivalent to:
 
 ``` cpp
-return to-unsigned-like(exposition onlyidnc{div-ceil}(ranges::distance(base_), n_));
+return to-unsigned-like(div-ceil(ranges::distance(base_), n_));
 ```
 
 #### Class `chunk_view::outer-iterator` <a id="range.chunk.outer.iter">[[range.chunk.outer.iter]]</a>
@@ -10151,7 +10151,7 @@ const auto dist = ranges::end(x.parent_->base_) - *x.parent_->current_;
 if (dist < x.parent_->remainder_) {
   return dist == 0 ? 0 : 1;
 }
-return exposition onlyidnc{div-ceil}(dist - x.parent_->remainder_, x.parent_->n_) + 1;
+return div-ceil(dist - x.parent_->remainder_, x.parent_->n_) + 1;
 ```
 
 ``` cpp
@@ -11257,10 +11257,10 @@ namespace std::ranges {
     requires view<V> && is_object_v<Pred>
   class chunk_by_view : public view_interface<chunk_by_view<V, Pred>> {
     V base_ = V();                                          // exposition only
-    exposition onlyidnc{movable-box}<Pred> pred_;                                // exposition only
+    movable-box<Pred> pred_;                                // exposition only
 
     // [range.chunk.by.iter], class chunk_by_view::iterator
-    class exposition onlyidnc{iterator};                                         // exposition only
+    class iterator;                                         // exposition only
 
   public:
     chunk_by_view() requires default_initializable<V> && default_initializable<Pred> = default;
@@ -11274,8 +11274,8 @@ namespace std::ranges {
     constexpr iterator begin();
     constexpr auto end();
 
-    constexpr iterator_t<V> exposition onlyidnc{find-next}(iterator_t<V>);       // exposition only
-    constexpr iterator_t<V> exposition onlyidnc{find-prev}(iterator_t<V>)        // exposition only
+    constexpr iterator_t<V> find-next(iterator_t<V>);       // exposition only
+    constexpr iterator_t<V> find-prev(iterator_t<V>)        // exposition only
       requires bidirectional_range<V>;
   };
 
@@ -12244,22 +12244,22 @@ namespace std::ranges {
         indirectly_swappable<iterator_t<maybe-const<Const, Vs>>>);
 
   private:
-    using exposition onlyidnc{Parent} = exposition onlyidnc{maybe-const}<Const, cartesian_product_view>;          // exposition only
-    exposition onlyidnc{Parent}* exposition onlyidnc{parent_} = nullptr;                                          // exposition only
+    using Parent = maybe-const<Const, cartesian_product_view>;          // exposition only
+    Parent* parent_ = nullptr;                                          // exposition only
     tuple<iterator_t<maybe-const<Const, First>>,
-      iterator_t<exposition onlyidnc{maybe-const}<Const, Vs>>...> exposition onlyidnc{current_};                  // exposition only
+      iterator_t<maybe-const<Const, Vs>>...> current_;                  // exposition only
 
     template<size_t N = sizeof...(Vs)>
-      constexpr void exposition onlyidnc{next}();                                            // exposition only
+      constexpr void next();                                            // exposition only
 
     template<size_t N = sizeof...(Vs)>
-      constexpr void exposition onlyidnc{prev}();                                            // exposition only
+      constexpr void prev();                                            // exposition only
 
     template<class Tuple>
-      constexpr difference_type exposition onlyidnc{distance-from}(const Tuple& t) const;    // exposition only
+      constexpr difference_type distance-from(const Tuple& t) const;    // exposition only
 
     constexpr iterator(Parent& parent, tuple<iterator_t<maybe-const<Const, First>>,
-      iterator_t<exposition onlyidnc{maybe-const}<Const, Vs>>...> current);                  // exposition only
+      iterator_t<maybe-const<Const, Vs>>...> current);                  // exposition only
   };
 }
 ```
@@ -12629,7 +12629,7 @@ namespace std {
     using reference = conditional_t<is_void_v<V>, Ref&&, Ref>;          // exposition only
 
     // [coro.generator.iterator], class generator::iterator
-    class exposition onlyidnc{iterator};                                                     // exposition only
+    class iterator;                                                     // exposition only
 
   public:
     using yielded =
