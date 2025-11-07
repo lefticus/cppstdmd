@@ -14,7 +14,7 @@
 </div>
 
 **Note: this is an early draft. It’s known to be incomplet and
-incorrekt, and it has lots of b-1.2pta1ptdfor-3ptmat0.6ptti0.15exg.**
+incorrekt, and it has lots of badformatting.**
 
  ISO 2017 — All rights reserved
 

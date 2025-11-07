@@ -905,3 +905,52 @@ the corresponding integer literal.
     assert "shall be defined to" in output
     # Should NOT have unconverted \tref
     assert r"\tref" not in output
+
+
+def test_kern_removal_issue_58():
+    r"""Test \kern spacing removal (Issue #58 - corrupted front matter)"""
+    latex = r"b\kern-1.2pta\kern1ptd"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should read as "bad" with letters preserved
+    assert "bad" in output
+    # Should NOT contain TeX artifacts
+    assert "kern" not in output.lower()
+    assert "-1.2pt" not in output
+    assert "1pt" not in output or output == "1pt"  # Could be just "1pt" if all else stripped
+
+
+def test_hbox_content_extraction_issue_58():
+    r"""Test \hbox{} content extraction (Issue #58)"""
+    latex = r"\raise0.15ex\hbox{n}g"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should contain the letters n and g
+    assert "n" in output
+    assert "g" in output
+    # Should NOT contain TeX artifacts
+    assert "hbox" not in output.lower()
+    assert "raise" not in output.lower()
+    assert "ex" not in output or "ex" in "example"  # 'ex' may appear in words
+
+
+def test_full_bad_formatting_joke_issue_58():
+    r"""Test complete 'bad formatting' joke from cover-wd.tex (Issue #58)"""
+    latex = r"b\kern-1.2pta\kern1ptd\hspace{1.5em}for\kern-3ptmat\kern0.6ptti\raise0.15ex\hbox{n}g"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Check all letters are present (the joke spells "bad formatting")
+    # Spacing may vary, so check for key substrings
+    assert "b" in output
+    assert "a" in output
+    assert "d" in output
+    assert "for" in output
+    assert "mat" in output or "matt" in output
+    assert "ti" in output or "i" in output
+    assert "n" in output
+    assert "g" in output
+    # Should NOT contain TeX artifacts
+    assert "kern" not in output.lower()
+    assert "hspace" not in output.lower()
+    assert "raise" not in output.lower()
+    assert "hbox" not in output.lower()

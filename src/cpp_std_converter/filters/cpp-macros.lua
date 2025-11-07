@@ -413,6 +413,14 @@ end
 -- Apply to all string elements
 function Str(elem)
   elem.text = expand_macros(elem.text)
+
+  -- Strip TeX dimension remnants that appear after \kern removal (Issue #58)
+  -- Pattern: -1.2pta → a, 1ptd → d, 0.6ptti → ti
+  -- These appear when \kern precedes text and Pandoc parses dimensions as part of next word
+  elem.text = elem.text:gsub("^%-?%d+%.?%d*pt", "")   -- pt units (points)
+  elem.text = elem.text:gsub("^%-?%d+%.?%d*em", "")   -- em units
+  elem.text = elem.text:gsub("^%-?%d+%.?%d*ex", "")   -- ex units (x-height)
+
   return elem
 end
 
@@ -437,6 +445,35 @@ function RawInline(elem)
   -- Strip index generation commands - these are PDF-only and should never appear in output
   if text:match("^\\indextext{") or text:match("^\\index{") or text:match("^\\indexlibrary{") then
     return {}  -- Return empty list to remove element
+  end
+
+  -- Strip TeX box/spacing primitives - PDF typesetting artifacts (Issue #58)
+  -- These commands have no semantic meaning in Markdown output
+
+  -- \kern<dimension> - horizontal spacing (dimensions will be stripped from next Str element)
+  if text:match("^\\kern$") then
+    return {}  -- Remove element entirely
+  end
+
+  -- \hspace{<dimension>} - explicit horizontal space
+  if text:match("^\\hspace{.*}$") then
+    return {}  -- Remove element entirely
+  end
+
+  -- \vspace{<dimension>} - vertical spacing
+  if text:match("^\\vspace{.*}$") then
+    return {}  -- Remove element entirely
+  end
+
+  -- \raise<dimension> - vertical positioning (will be followed by \hbox{})
+  if text:match("^\\raise$") then
+    return {}  -- Remove element entirely
+  end
+
+  -- \hbox{<content>} - extract content, discard box wrapper
+  local hbox_content = text:match("^\\hbox{(.*)}$")
+  if hbox_content then
+    return pandoc.Str(hbox_content)
   end
 
   -- \impldef{description} - handle BEFORE \tcode to avoid greedy matching issues
