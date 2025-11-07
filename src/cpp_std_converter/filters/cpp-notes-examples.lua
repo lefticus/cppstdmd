@@ -82,6 +82,37 @@ local function process_codeblock_div(block, codeblocks, titles)
     end
   end
 
+  -- Handle BulletList and OrderedList blocks - recursively process items for placeholders (Issue #18)
+  if (block.t == "BulletList" or block.t == "OrderedList") and codeblocks then
+    local modified = false
+    local new_items = {}
+
+    for _, item in ipairs(block.content) do
+      local new_item_blocks = {}
+      for _, item_block in ipairs(item) do
+        -- Recursively process each block in the list item
+        local processed = process_codeblock_div(item_block, codeblocks, titles)
+        for _, b in ipairs(processed) do
+          table.insert(new_item_blocks, b)
+        end
+        -- Check if we made a modification
+        if #processed ~= 1 or processed[1] ~= item_block then
+          modified = true
+        end
+      end
+      table.insert(new_items, new_item_blocks)
+    end
+
+    if modified then
+      -- Return modified list
+      if block.t == "BulletList" then
+        return {pandoc.BulletList(new_items)}
+      else
+        return {pandoc.OrderedList(new_items, block.listAttributes)}
+      end
+    end
+  end
+
   -- Return block as single-item list for consistency
   return {block}
 end

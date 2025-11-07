@@ -4279,12 +4279,26 @@ and then overload resolution is performed again.
 
 \[*Example 6*:
 
-- `new T` results in one of the following calls: \_\_CODEBLOCK_1\_\_
+- `new T` results in one of the following calls:
+  ``` cpp
+  operator new(sizeof(T))
+  operator new(sizeof(T), std::align_val_t(alignof(T)))
+  ```
 - `new(2,f) T` results in one of the following calls:
-  \_\_CODEBLOCK_2\_\_
-- `new T[5]` results in one of the following calls: \_\_CODEBLOCK_3\_\_
+  ``` cpp
+  operator new(sizeof(T), 2, f)
+  operator new(sizeof(T), std::align_val_t(alignof(T)), 2, f)
+  ```
+- `new T[5]` results in one of the following calls:
+  ``` cpp
+  operator new[](sizeof(T) * 5 + x)
+  operator new[](sizeof(T) * 5 + x, std::align_val_t(alignof(T)))
+  ```
 - `new(2,f) T[5]` results in one of the following calls:
-  \_\_CODEBLOCK_4\_\_
+  ``` cpp
+  operator new[](sizeof(T) * 5 + x, 2, f)
+  operator new[](sizeof(T) * 5 + x, std::align_val_t(alignof(T)), 2, f)
+  ```
 
 Here, each instance of `x` is a non-negative unspecified value
 representing array allocation overhead; the result of the

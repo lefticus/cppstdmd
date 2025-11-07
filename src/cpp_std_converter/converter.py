@@ -397,8 +397,8 @@ class Converter:
 @click.option(
     '--toc-depth',
     type=int,
-    default=1,
-    help='Maximum heading depth for table of contents (1=H1 only, 2=H1+H2, etc. Default: 1)'
+    default=3,
+    help='Maximum heading depth for table of contents (1=H1 only, 2=H1+H2, etc. Default: 3)'
 )
 def main(
     input_path: Optional[Path],

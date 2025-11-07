@@ -104,7 +104,20 @@ For the above example:
   both of its operands, and \#3 modifies only its first operand `a`.
 - Expression \#1 implicitly requires additional expression variations
   that meet the requirements for `c == d` (including non-modification),
-  as if the expressions \_\_CODEBLOCK_2\_\_ had been declared as well.
+  as if the expressions
+  ``` cpp
+                                              c  ==           b;
+            c  == std::move(d);               c  == std::move(b);
+  std::move(c) ==           d;      std::move(c) ==           b;
+  std::move(c) == std::move(d);     std::move(c) == std::move(b);
+
+            a  ==           d;                a  ==           b;
+            a  == std::move(d);               a  == std::move(b);
+  std::move(a) ==           d;      std::move(a) ==           b;
+  std::move(a) == std::move(d);     std::move(a) == std::move(b);
+  ```
+
+  had been declared as well.
 - Expression \#3 implicitly requires additional expression variations
   that meet the requirements for `a = c` (including non-modification of
   the second operand), as if the expressions `a = b` and

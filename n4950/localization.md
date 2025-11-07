@@ -196,9 +196,13 @@ installed in a locale, and used identically as may standard facets.
 All locale semantics are accessed via `use_facet<>` and `has_facet<>`,
 except that:
 
-- A member operator template \_\_CODEBLOCK_1\_\_ is provided so that a
-  locale can be used as a predicate argument to the standard
-  collections, to collate strings.
+- A member operator template
+  ``` cpp
+  operator()(const basic_string<C, T, A>&, const basic_string<C, T, A>&)
+  ```
+
+  is provided so that a locale can be used as a predicate argument to
+  the standard collections, to collate strings.
 - Convenient global interfaces are provided for traditional `ctype`
   functions such as `isdigit()` and `isspace()`, so that given a locale
   object `loc` a C++ program can call `isspace(c, loc)`. (This eases

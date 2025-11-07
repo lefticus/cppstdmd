@@ -423,3 +423,45 @@ Module \tcode{A} contains two translation units.
     assert "\\tcode" not in output
     # Should have markdown code blocks
     assert "``` cpp" in output or "```cpp" in output
+
+
+def test_example_with_code_block_in_list_item():
+    r"""Test example with code block inside list item (Issue #18)"""
+    latex = r"""
+\begin{example}
+\begin{itemize}
+\item
+Expression \#1 implicitly requires additional expression variations that meet
+the requirements for \tcode{c == d} (including non-modification), as if the
+expressions
+\begin{codeblock}
+                                            c  ==           b;
+          c  == std::move(d);               c  == std::move(b);
+std::move(c) ==           d;      std::move(c) ==           b;
+std::move(c) == std::move(d);     std::move(c) == std::move(b);
+
+          a  ==           d;                a  ==           b;
+          a  == std::move(d);               a  == std::move(b);
+std::move(a) ==           d;      std::move(a) ==           b;
+std::move(a) == std::move(d);     std::move(a) == std::move(b);
+\end{codeblock}
+had been declared as well.
+\end{itemize}
+\end{example}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*Example 1*" in output
+    # Check that the list item text is present (LaTeX \# becomes \# in output)
+    assert "Expression" in output and "#1" in output
+    assert "implicitly requires" in output
+    assert "had been declared as well" in output
+    # Check that the actual code block is present (NOT the placeholder)
+    assert "c  ==           b;" in output
+    assert "std::move(c)" in output
+    assert "std::move(a)" in output
+    # CRITICAL: Ensure placeholder was NOT left in output
+    assert "__CODEBLOCK_" not in output
+    # Should have markdown code blocks
+    assert "``` cpp" in output or "```cpp" in output
+    assert "*end example*" in output
