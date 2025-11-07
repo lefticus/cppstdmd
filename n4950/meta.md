@@ -252,17 +252,17 @@ namespace std {
   template<class T> struct add_cv;
 
   template<class T>
-    using \libglobal{remove_const_t}    = typename remove_const<T>::type;
+    using remove_const_t    = typename remove_const<T>::type;
   template<class T>
-    using \libglobal{remove_volatile_t} = typename remove_volatile<T>::type;
+    using remove_volatile_t = typename remove_volatile<T>::type;
   template<class T>
-    using \libglobal{remove_cv_t}       = typename remove_cv<T>::type;
+    using remove_cv_t       = typename remove_cv<T>::type;
   template<class T>
-    using \libglobal{add_const_t}       = typename add_const<T>::type;
+    using add_const_t       = typename add_const<T>::type;
   template<class T>
-    using \libglobal{add_volatile_t}    = typename add_volatile<T>::type;
+    using add_volatile_t    = typename add_volatile<T>::type;
   template<class T>
-    using \libglobal{add_cv_t}          = typename add_cv<T>::type;
+    using add_cv_t          = typename add_cv<T>::type;
 
   // [meta.trans.ref], reference modifications
   template<class T> struct remove_reference;
@@ -270,38 +270,38 @@ namespace std {
   template<class T> struct add_rvalue_reference;
 
   template<class T>
-    using \libglobal{remove_reference_t}     = typename remove_reference<T>::type;
+    using remove_reference_t     = typename remove_reference<T>::type;
   template<class T>
-    using \libglobal{add_lvalue_reference_t} = typename add_lvalue_reference<T>::type;
+    using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
   template<class T>
-    using \libglobal{add_rvalue_reference_t} = typename add_rvalue_reference<T>::type;
+    using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
 
   // [meta.trans.sign], sign modifications
   template<class T> struct make_signed;
   template<class T> struct make_unsigned;
 
   template<class T>
-    using \libglobal{make_signed_t}   = typename make_signed<T>::type;
+    using make_signed_t   = typename make_signed<T>::type;
   template<class T>
-    using \libglobal{make_unsigned_t} = typename make_unsigned<T>::type;
+    using make_unsigned_t = typename make_unsigned<T>::type;
 
   // [meta.trans.arr], array modifications
   template<class T> struct remove_extent;
   template<class T> struct remove_all_extents;
 
   template<class T>
-    using \libglobal{remove_extent_t}      = typename remove_extent<T>::type;
+    using remove_extent_t      = typename remove_extent<T>::type;
   template<class T>
-    using \libglobal{remove_all_extents_t} = typename remove_all_extents<T>::type;
+    using remove_all_extents_t = typename remove_all_extents<T>::type;
 
   // [meta.trans.ptr], pointer modifications
   template<class T> struct remove_pointer;
   template<class T> struct add_pointer;
 
   template<class T>
-    using \libglobal{remove_pointer_t} = typename remove_pointer<T>::type;
+    using remove_pointer_t = typename remove_pointer<T>::type;
   template<class T>
-    using \libglobal{add_pointer_t}    = typename add_pointer<T>::type;
+    using add_pointer_t    = typename add_pointer<T>::type;
 
   // [meta.trans.other], other transformations
   template<class T> struct type_identity;
@@ -319,29 +319,29 @@ namespace std {
   template<class T> struct unwrap_ref_decay;
 
   template<class T>
-    using \libglobal{type_identity_t}    = typename type_identity<T>::type;
+    using type_identity_t    = typename type_identity<T>::type;
   template<class T>
-    using \libglobal{remove_cvref_t}     = typename remove_cvref<T>::type;
+    using remove_cvref_t     = typename remove_cvref<T>::type;
   template<class T>
-    using \libglobal{decay_t}            = typename decay<T>::type;
+    using decay_t            = typename decay<T>::type;
   template<bool B, class T = void>
-    using \libglobal{enable_if_t}        = typename enable_if<B, T>::type;
+    using enable_if_t        = typename enable_if<B, T>::type;
   template<bool B, class T, class F>
-    using \libglobal{conditional_t}      = typename conditional<B, T, F>::type;
+    using conditional_t      = typename conditional<B, T, F>::type;
   template<class... T>
-    using \libglobal{common_type_t}      = typename common_type<T...>::type;
+    using common_type_t      = typename common_type<T...>::type;
   template<class... T>
-    using \libglobal{common_reference_t} = typename common_reference<T...>::type;
+    using common_reference_t = typename common_reference<T...>::type;
   template<class T>
-    using \libglobal{underlying_type_t}  = typename underlying_type<T>::type;
+    using underlying_type_t  = typename underlying_type<T>::type;
   template<class Fn, class... ArgTypes>
-    using \libglobal{invoke_result_t}    = typename invoke_result<Fn, ArgTypes...>::type;
+    using invoke_result_t    = typename invoke_result<Fn, ArgTypes...>::type;
   template<class T>
     using unwrap_reference_t = typename unwrap_reference<T>::type;
   template<class T>
     using unwrap_ref_decay_t = typename unwrap_ref_decay<T>::type;
   template<class...>
-    using \libglobal{void_t}             = void;
+    using void_t             = void;
 
   // [meta.logical], logical operator traits
   template<class... B> struct conjunction;
@@ -350,101 +350,101 @@ namespace std {
 
   // [meta.unary.cat], primary type categories
   template<class T>
-    constexpr bool \libglobal{is_void_v} = is_void<T>::value;
+    constexpr bool is_void_v = is_void<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_null_pointer_v} = is_null_pointer<T>::value;
+    constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_integral_v} = is_integral<T>::value;
+    constexpr bool is_integral_v = is_integral<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_floating_point_v} = is_floating_point<T>::value;
+    constexpr bool is_floating_point_v = is_floating_point<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_array_v} = is_array<T>::value;
+    constexpr bool is_array_v = is_array<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_pointer_v} = is_pointer<T>::value;
+    constexpr bool is_pointer_v = is_pointer<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_lvalue_reference_v} = is_lvalue_reference<T>::value;
+    constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_rvalue_reference_v} = is_rvalue_reference<T>::value;
+    constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_member_object_pointer_v} = is_member_object_pointer<T>::value;
+    constexpr bool is_member_object_pointer_v = is_member_object_pointer<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_member_function_pointer_v} = is_member_function_pointer<T>::value;
+    constexpr bool is_member_function_pointer_v = is_member_function_pointer<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_enum_v} = is_enum<T>::value;
+    constexpr bool is_enum_v = is_enum<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_union_v} = is_union<T>::value;
+    constexpr bool is_union_v = is_union<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_class_v} = is_class<T>::value;
+    constexpr bool is_class_v = is_class<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_function_v} = is_function<T>::value;
+    constexpr bool is_function_v = is_function<T>::value;
 
   // [meta.unary.comp], composite type categories
   template<class T>
-    constexpr bool \libglobal{is_reference_v} = is_reference<T>::value;
+    constexpr bool is_reference_v = is_reference<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_arithmetic_v} = is_arithmetic<T>::value;
+    constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_fundamental_v} = is_fundamental<T>::value;
+    constexpr bool is_fundamental_v = is_fundamental<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_object_v} = is_object<T>::value;
+    constexpr bool is_object_v = is_object<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_scalar_v} = is_scalar<T>::value;
+    constexpr bool is_scalar_v = is_scalar<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_compound_v} = is_compound<T>::value;
+    constexpr bool is_compound_v = is_compound<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_member_pointer_v} = is_member_pointer<T>::value;
+    constexpr bool is_member_pointer_v = is_member_pointer<T>::value;
 
   // [meta.unary.prop], type properties
   template<class T>
-    constexpr bool \libglobal{is_const_v} = is_const<T>::value;
+    constexpr bool is_const_v = is_const<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_volatile_v} = is_volatile<T>::value;
+    constexpr bool is_volatile_v = is_volatile<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_trivial_v} = is_trivial<T>::value;
+    constexpr bool is_trivial_v = is_trivial<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_trivially_copyable_v} = is_trivially_copyable<T>::value;
+    constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_standard_layout_v} = is_standard_layout<T>::value;
+    constexpr bool is_standard_layout_v = is_standard_layout<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_empty_v} = is_empty<T>::value;
+    constexpr bool is_empty_v = is_empty<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_polymorphic_v} = is_polymorphic<T>::value;
+    constexpr bool is_polymorphic_v = is_polymorphic<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_abstract_v} = is_abstract<T>::value;
+    constexpr bool is_abstract_v = is_abstract<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_final_v} = is_final<T>::value;
+    constexpr bool is_final_v = is_final<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_aggregate_v} = is_aggregate<T>::value;
+    constexpr bool is_aggregate_v = is_aggregate<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_signed_v} = is_signed<T>::value;
+    constexpr bool is_signed_v = is_signed<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_unsigned_v} = is_unsigned<T>::value;
+    constexpr bool is_unsigned_v = is_unsigned<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_bounded_array_v} = is_bounded_array<T>::value;
+    constexpr bool is_bounded_array_v = is_bounded_array<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_unbounded_array_v} = is_unbounded_array<T>::value;
+    constexpr bool is_unbounded_array_v = is_unbounded_array<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_scoped_enum_v} = is_scoped_enum<T>::value;
+    constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
   template<class T, class... Args>
-    constexpr bool \libglobal{is_constructible_v} = is_constructible<T, Args...>::value;
+    constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
   template<class T>
-    constexpr bool \libglobal{is_default_constructible_v} = is_default_constructible<T>::value;
+    constexpr bool is_default_constructible_v = is_default_constructible<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_copy_constructible_v} = is_copy_constructible<T>::value;
+    constexpr bool is_copy_constructible_v = is_copy_constructible<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_move_constructible_v} = is_move_constructible<T>::value;
+    constexpr bool is_move_constructible_v = is_move_constructible<T>::value;
   template<class T, class U>
-    constexpr bool \libglobal{is_assignable_v} = is_assignable<T, U>::value;
+    constexpr bool is_assignable_v = is_assignable<T, U>::value;
   template<class T>
-    constexpr bool \libglobal{is_copy_assignable_v} = is_copy_assignable<T>::value;
+    constexpr bool is_copy_assignable_v = is_copy_assignable<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_move_assignable_v} = is_move_assignable<T>::value;
+    constexpr bool is_move_assignable_v = is_move_assignable<T>::value;
   template<class T, class U>
-    constexpr bool \libglobal{is_swappable_with_v} = is_swappable_with<T, U>::value;
+    constexpr bool is_swappable_with_v = is_swappable_with<T, U>::value;
   template<class T>
-    constexpr bool \libglobal{is_swappable_v} = is_swappable<T>::value;
+    constexpr bool is_swappable_v = is_swappable<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_destructible_v} = is_destructible<T>::value;
+    constexpr bool is_destructible_v = is_destructible<T>::value;
   template<class T, class... Args>
     constexpr bool is_trivially_constructible_v
       = is_trivially_constructible<T, Args...>::value;
@@ -458,7 +458,7 @@ namespace std {
     constexpr bool is_trivially_move_constructible_v
       = is_trivially_move_constructible<T>::value;
   template<class T, class U>
-    constexpr bool \libglobal{is_trivially_assignable_v} = is_trivially_assignable<T, U>::value;
+    constexpr bool is_trivially_assignable_v = is_trivially_assignable<T, U>::value;
   template<class T>
     constexpr bool is_trivially_copy_assignable_v
       = is_trivially_copy_assignable<T>::value;
@@ -466,7 +466,7 @@ namespace std {
     constexpr bool is_trivially_move_assignable_v
       = is_trivially_move_assignable<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_trivially_destructible_v} = is_trivially_destructible<T>::value;
+    constexpr bool is_trivially_destructible_v = is_trivially_destructible<T>::value;
   template<class T, class... Args>
     constexpr bool is_nothrow_constructible_v
       = is_nothrow_constructible<T, Args...>::value;
@@ -480,70 +480,70 @@ namespace std {
     constexpr bool is_nothrow_move_constructible_v
       = is_nothrow_move_constructible<T>::value;
   template<class T, class U>
-    constexpr bool \libglobal{is_nothrow_assignable_v} = is_nothrow_assignable<T, U>::value;
+    constexpr bool is_nothrow_assignable_v = is_nothrow_assignable<T, U>::value;
   template<class T>
-    constexpr bool \libglobal{is_nothrow_copy_assignable_v} = is_nothrow_copy_assignable<T>::value;
+    constexpr bool is_nothrow_copy_assignable_v = is_nothrow_copy_assignable<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_nothrow_move_assignable_v} = is_nothrow_move_assignable<T>::value;
+    constexpr bool is_nothrow_move_assignable_v = is_nothrow_move_assignable<T>::value;
   template<class T, class U>
-    constexpr bool \libglobal{is_nothrow_swappable_with_v} = is_nothrow_swappable_with<T, U>::value;
+    constexpr bool is_nothrow_swappable_with_v = is_nothrow_swappable_with<T, U>::value;
   template<class T>
-    constexpr bool \libglobal{is_nothrow_swappable_v} = is_nothrow_swappable<T>::value;
+    constexpr bool is_nothrow_swappable_v = is_nothrow_swappable<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_nothrow_destructible_v} = is_nothrow_destructible<T>::value;
+    constexpr bool is_nothrow_destructible_v = is_nothrow_destructible<T>::value;
   template<class T>
-    constexpr bool \libglobal{is_implicit_lifetime_v} = is_implicit_lifetime<T>::value;
+    constexpr bool is_implicit_lifetime_v = is_implicit_lifetime<T>::value;
   template<class T>
-    constexpr bool \libglobal{has_virtual_destructor_v} = has_virtual_destructor<T>::value;
+    constexpr bool has_virtual_destructor_v = has_virtual_destructor<T>::value;
   template<class T>
     constexpr bool has_unique_object_representations_v
       = has_unique_object_representations<T>::value;
   template<class T, class U>
-    constexpr bool \libglobal{reference_constructs_from_temporary_v}
+    constexpr bool reference_constructs_from_temporary_v
       = reference_constructs_from_temporary<T, U>::value;
   template<class T, class U>
-    constexpr bool \libglobal{reference_converts_from_temporary_v}
+    constexpr bool reference_converts_from_temporary_v
       = reference_converts_from_temporary<T, U>::value;
 
   // [meta.unary.prop.query], type property queries
   template<class T>
-    constexpr size_t \libglobal{alignment_of_v} = alignment_of<T>::value;
+    constexpr size_t alignment_of_v = alignment_of<T>::value;
   template<class T>
-    constexpr size_t \libglobal{rank_v} = rank<T>::value;
+    constexpr size_t rank_v = rank<T>::value;
   template<class T, unsigned I = 0>
-    constexpr size_t \libglobal{extent_v} = extent<T, I>::value;
+    constexpr size_t extent_v = extent<T, I>::value;
 
   // [meta.rel], type relations
   template<class T, class U>
-    constexpr bool \libglobal{is_same_v} = is_same<T, U>::value;
+    constexpr bool is_same_v = is_same<T, U>::value;
   template<class Base, class Derived>
-    constexpr bool \libglobal{is_base_of_v} = is_base_of<Base, Derived>::value;
+    constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;
   template<class From, class To>
-    constexpr bool \libglobal{is_convertible_v} = is_convertible<From, To>::value;
+    constexpr bool is_convertible_v = is_convertible<From, To>::value;
   template<class From, class To>
-    constexpr bool \libglobal{is_nothrow_convertible_v} = is_nothrow_convertible<From, To>::value;
+    constexpr bool is_nothrow_convertible_v = is_nothrow_convertible<From, To>::value;
   template<class T, class U>
-    constexpr bool \libglobal{is_layout_compatible_v} = is_layout_compatible<T, U>::value;
+    constexpr bool is_layout_compatible_v = is_layout_compatible<T, U>::value;
   template<class Base, class Derived>
     constexpr bool is_pointer_interconvertible_base_of_v
       = is_pointer_interconvertible_base_of<Base, Derived>::value;
   template<class Fn, class... ArgTypes>
-    constexpr bool \libglobal{is_invocable_v} = is_invocable<Fn, ArgTypes...>::value;
+    constexpr bool is_invocable_v = is_invocable<Fn, ArgTypes...>::value;
   template<class R, class Fn, class... ArgTypes>
-    constexpr bool \libglobal{is_invocable_r_v} = is_invocable_r<R, Fn, ArgTypes...>::value;
+    constexpr bool is_invocable_r_v = is_invocable_r<R, Fn, ArgTypes...>::value;
   template<class Fn, class... ArgTypes>
-    constexpr bool \libglobal{is_nothrow_invocable_v} = is_nothrow_invocable<Fn, ArgTypes...>::value;
+    constexpr bool is_nothrow_invocable_v = is_nothrow_invocable<Fn, ArgTypes...>::value;
   template<class R, class Fn, class... ArgTypes>
     constexpr bool is_nothrow_invocable_r_v
       = is_nothrow_invocable_r<R, Fn, ArgTypes...>::value;
 
   // [meta.logical], logical operator traits
   template<class... B>
-    constexpr bool \libglobal{conjunction_v} = conjunction<B...>::value;
+    constexpr bool conjunction_v = conjunction<B...>::value;
   template<class... B>
-    constexpr bool \libglobal{disjunction_v} = disjunction<B...>::value;
+    constexpr bool disjunction_v = disjunction<B...>::value;
   template<class B>
-    constexpr bool \libglobal{negation_v} = negation<B>::value;
+    constexpr bool negation_v = negation<B>::value;
 
   // [meta.member], member relationships
   template<class S, class M>
@@ -1244,39 +1244,39 @@ namespace std {
   template<class R1, class R2> struct ratio_greater_equal;
 
   template<class R1, class R2>
-    constexpr bool \libglobal{ratio_equal_v} = ratio_equal<R1, R2>::value;
+    constexpr bool ratio_equal_v = ratio_equal<R1, R2>::value;
   template<class R1, class R2>
-    constexpr bool \libglobal{ratio_not_equal_v} = ratio_not_equal<R1, R2>::value;
+    constexpr bool ratio_not_equal_v = ratio_not_equal<R1, R2>::value;
   template<class R1, class R2>
-    constexpr bool \libglobal{ratio_less_v} = ratio_less<R1, R2>::value;
+    constexpr bool ratio_less_v = ratio_less<R1, R2>::value;
   template<class R1, class R2>
-    constexpr bool \libglobal{ratio_less_equal_v} = ratio_less_equal<R1, R2>::value;
+    constexpr bool ratio_less_equal_v = ratio_less_equal<R1, R2>::value;
   template<class R1, class R2>
-    constexpr bool \libglobal{ratio_greater_v} = ratio_greater<R1, R2>::value;
+    constexpr bool ratio_greater_v = ratio_greater<R1, R2>::value;
   template<class R1, class R2>
-    constexpr bool \libglobal{ratio_greater_equal_v} = ratio_greater_equal<R1, R2>::value;
+    constexpr bool ratio_greater_equal_v = ratio_greater_equal<R1, R2>::value;
 
   // [ratio.si], convenience SI typedefs
-  using \libglobal{yocto} = ratio<1, 1'000'000'000'000'000'000'000'000>;  // see below
-  using \libglobal{zepto} = ratio<1,     1'000'000'000'000'000'000'000>;  // see below
-  using \libglobal{atto}  = ratio<1,         1'000'000'000'000'000'000>;
-  using \libglobal{femto} = ratio<1,             1'000'000'000'000'000>;
-  using \libglobal{pico}  = ratio<1,                 1'000'000'000'000>;
-  using \libglobal{nano}  = ratio<1,                     1'000'000'000>;
-  using \libglobal{micro} = ratio<1,                         1'000'000>;
-  using \libglobal{milli} = ratio<1,                             1'000>;
-  using \libglobal{centi} = ratio<1,                               100>;
-  using \libglobal{deci}  = ratio<1,                                10>;
-  using \libglobal{deca}  = ratio<                               10, 1>;
-  using \libglobal{hecto} = ratio<                              100, 1>;
-  using \libglobal{kilo}  = ratio<                            1'000, 1>;
-  using \libglobal{mega}  = ratio<                        1'000'000, 1>;
-  using \libglobal{giga}  = ratio<                    1'000'000'000, 1>;
-  using \libglobal{tera}  = ratio<                1'000'000'000'000, 1>;
-  using \libglobal{peta}  = ratio<            1'000'000'000'000'000, 1>;
-  using \libglobal{exa}   = ratio<        1'000'000'000'000'000'000, 1>;
-  using \libglobal{zetta} = ratio<    1'000'000'000'000'000'000'000, 1>;  // see below
-  using \libglobal{yotta} = ratio<1'000'000'000'000'000'000'000'000, 1>;  // see below
+  using yocto = ratio<1, 1'000'000'000'000'000'000'000'000>;  // see below
+  using zepto = ratio<1,     1'000'000'000'000'000'000'000>;  // see below
+  using atto  = ratio<1,         1'000'000'000'000'000'000>;
+  using femto = ratio<1,             1'000'000'000'000'000>;
+  using pico  = ratio<1,                 1'000'000'000'000>;
+  using nano  = ratio<1,                     1'000'000'000>;
+  using micro = ratio<1,                         1'000'000>;
+  using milli = ratio<1,                             1'000>;
+  using centi = ratio<1,                               100>;
+  using deci  = ratio<1,                                10>;
+  using deca  = ratio<                               10, 1>;
+  using hecto = ratio<                              100, 1>;
+  using kilo  = ratio<                            1'000, 1>;
+  using mega  = ratio<                        1'000'000, 1>;
+  using giga  = ratio<                    1'000'000'000, 1>;
+  using tera  = ratio<                1'000'000'000'000, 1>;
+  using peta  = ratio<            1'000'000'000'000'000, 1>;
+  using exa   = ratio<        1'000'000'000'000'000'000, 1>;
+  using zetta = ratio<    1'000'000'000'000'000'000'000, 1>;  // see below
+  using yotta = ratio<1'000'000'000'000'000'000'000'000, 1>;  // see below
 }
 ```
 

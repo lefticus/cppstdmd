@@ -52,7 +52,7 @@ namespace std {
   template<class T> requires is_object_v<T> struct iterator_traits<T*>;             // freestanding
 
   template<dereferenceable T>
-    using \libglobal{iter_reference_t} = decltype(*declval<T&>());                              // freestanding
+    using iter_reference_t = decltype(*declval<T&>());                              // freestanding
 
   namespace ranges {
     // [iterator.cust], customization point objects
@@ -69,7 +69,7 @@ namespace std {
     requires requires(T& t) {
       { ranges::iter_move(t) } -> can-reference;
     }
-  using \libglobal{iter_rvalue_reference_t}                                                     // freestanding
+  using iter_rvalue_reference_t                                                     // freestanding
     = decltype(ranges::iter_move(declval<T&>()));
 
   // [iterator.concepts], iterator concepts
@@ -81,7 +81,7 @@ namespace std {
     using indirect-value-t = see below;         // exposition only
 
   template<indirectly_readable T>
-    using \libglobal{iter_common_reference_t} =                                                 // freestanding
+    using iter_common_reference_t =                                                 // freestanding
       common_reference_t<iter_reference_t<T>, indirect-value-t<T>>;
 
   // [iterator.concept.writable], concept indirectly_writable
@@ -157,7 +157,7 @@ namespace std {
 
   template<class F, class... Is>
     requires (indirectly_readable<Is> && ...) && invocable<F, iter_reference_t<Is>...>
-      using \libglobal{indirect_result_t} = invoke_result_t<F, iter_reference_t<Is>...>;        // freestanding
+      using indirect_result_t = invoke_result_t<F, iter_reference_t<Is>...>;        // freestanding
 
   // [projected], projected
   template<indirectly_readable I, indirectly_regular_unary_invocable<I> Proj>
@@ -362,10 +362,10 @@ namespace std {
   };
 
   template<input_iterator I>
-    constexpr const_iterator<I> \libglobal{make_const_iterator}(I it) { return it; }            // freestanding
+    constexpr const_iterator<I> make_const_iterator(I it) { return it; }            // freestanding
 
   template<semiregular S>
-    constexpr const_sentinel<S> \libglobal{make_const_sentinel}(S s) { return s; }              // freestanding
+    constexpr const_sentinel<S> make_const_sentinel(S s) { return s; }              // freestanding
 
   // [move.iterators], move iterators and sentinels
   template<class Iterator> class move_iterator;                                     // freestanding
@@ -421,7 +421,7 @@ namespace std {
 
   // [default.sentinel], default sentinel
   struct default_sentinel_t;                                                        // freestanding
-  inline constexpr default_sentinel_t \libglobal{default_sentinel}{};                           // freestanding
+  inline constexpr default_sentinel_t default_sentinel{};                           // freestanding
 
   // [iterators.counted], counted iterators
   template<input_or_output_iterator I> class counted_iterator;                      // freestanding
@@ -432,7 +432,7 @@ namespace std {
 
   // [unreachable.sentinel], unreachable sentinel
   struct unreachable_sentinel_t;                                                    // freestanding
-  inline constexpr unreachable_sentinel_t \libglobal{unreachable_sentinel}{};                   // freestanding
+  inline constexpr unreachable_sentinel_t unreachable_sentinel{};                   // freestanding
 
   // [stream.iterators], stream iterators
   template<class T, class charT = char, class traits = char_traits<charT>,
@@ -3085,7 +3085,7 @@ Specializations of `basic_const_iterator` are constant iterators.
 
 ``` cpp
 template<indirectly_readable It>
-  using \libglobal{iter_const_reference_t} =
+  using iter_const_reference_t =
     common_reference_t<const iter_value_t<It>&&, iter_reference_t<It>>;
 
 template<class It>
@@ -3093,7 +3093,7 @@ template<class It>
     input_iterator<It> && same_as<iter_const_reference_t<It>, iter_reference_t<It>>;
 
 template<input_iterator I>
-  using \libglobal{const_iterator} = see below;
+  using const_iterator = see below;
 ```
 
 *Result:* If `I` models `constant-iterator`, `I`. Otherwise,
@@ -3101,7 +3101,7 @@ template<input_iterator I>
 
 ``` cpp
 template<semiregular S>
-  using \libglobal{const_sentinel} = see below;
+  using const_sentinel = see below;
 ```
 
 *Result:* If `S` models `input_iterator`, `const_iterator<S>`.
@@ -3119,7 +3119,7 @@ namespace std {
       common_reference_t<const iter_value_t<I>&&, iter_rvalue_reference_t<I>>;
 
   template<input_iterator Iterator>
-  class \libglobal{basic_const_iterator} {
+  class basic_const_iterator {
     Iterator current_ = Iterator();                             // exposition only
     using reference = iter_const_reference_t<Iterator>;         // exposition only
     using rvalue-reference =                                    // exposition only

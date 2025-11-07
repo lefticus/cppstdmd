@@ -1161,7 +1161,7 @@ namespace std {
     struct tuple_element<I, tuple<Types...>>;
 
   template<size_t I, class T>
-    using \libglobal{tuple_element_t} = typename tuple_element<I, T>::type;
+    using tuple_element_t = typename tuple_element<I, T>::type;
 
   // [tuple.elem], element access
   template<size_t I, class... Types>
@@ -1190,7 +1190,7 @@ namespace std {
     constexpr common_comparison_category_t<synth-three-way-result<TTypes, UTypes>...>
       operator<=>(const tuple<TTypes...>&, const tuple<UTypes...>&);
   template<class... TTypes, exposition onlyconceptnc{tuple-like} UTuple>
-    constexpr see belownc operator<=>(const tuple<TTypes...>&, const UTuple&);
+    constexpr see belownc@ operator<=>(const tuple<TTypes...>&, const UTuple&);
 
   // [tuple.traits], allocator-related traits
   template<class... Types, class Alloc>
@@ -1204,7 +1204,7 @@ namespace std {
 
   // [tuple.helper], tuple helper classes
   template<class T>
-    constexpr size_t \libglobal{tuple_size_v}@ = tuple_size<T>::value;
+    constexpr size_t tuple_size_v = tuple_size<T>::value;
 }
 ```
 
@@ -3517,7 +3517,7 @@ namespace std {
   template<class T> struct variant_size;                        // not defined
   template<class T> struct variant_size<const T>;
   template<class T>
-    constexpr size_t \libglobal{variant_size_v} = variant_size<T>::value;
+    constexpr size_t variant_size_v = variant_size<T>::value;
 
   template<class... Types>
     struct variant_size<variant<Types...>>;
@@ -3525,7 +3525,7 @@ namespace std {
   template<size_t I, class T> struct variant_alternative;       // not defined
   template<size_t I, class T> struct variant_alternative<I, const T>;
   template<size_t I, class T>
-    using \libglobal{variant_alternative_t} = typename variant_alternative<I, T>::type;
+    using variant_alternative_t = typename variant_alternative<I, T>::type;
 
   template<size_t I, class... Types>
     struct variant_alternative<I, variant<Types...>>;
@@ -5201,12 +5201,12 @@ namespace std {
   template<class T, class E>
   class expected {
   public:
-    using \libmember{value_type}{expected} = T;
-    using \libmember{error_type}{expected} = E;
-    using \libmember{unexpected_type}{expected} = unexpected<E>;
+    using value_type = T;
+    using error_type = E;
+    using unexpected_type = unexpected<E>;
 
     template<class U>
-    using \libmember{rebind}{expected} = expected<U, error_type>;
+    using rebind = expected<U, error_type>;
 
     // [expected.object.cons], constructors
     constexpr expected();
@@ -6171,12 +6171,12 @@ its result is convertible to `bool`.
 template<class T, class E> requires is_void_v<T>
 class expected<T, E> {
 public:
-  using \libmember{value_type}{expected<void>} = T;
-  using \libmember{error_type}{expected<void>} = E;
-  using \libmember{unexpected_type}{expected<void>} = unexpected<E>;
+  using value_type = T;
+  using error_type = E;
+  using unexpected_type = unexpected<E>;
 
   template<class U>
-  using \libmember{rebind}{expected<void>} = expected<U, error_type>;
+  using rebind = expected<U, error_type>;
 
   // [expected.void.cons], constructors
   constexpr expected() noexcept;
@@ -7438,11 +7438,11 @@ namespace std {
   // [func.bind], bind
   template<class T> struct is_bind_expression;                                      // freestanding
   template<class T>
-    constexpr bool \libglobal{is_bind_expression_v} =                                           // freestanding
+    constexpr bool is_bind_expression_v =                                           // freestanding
       is_bind_expression<T>::value;
   template<class T> struct is_placeholder;                                          // freestanding
   template<class T>
-    constexpr int \libglobal{is_placeholder_v} =                                                // freestanding
+    constexpr int is_placeholder_v =                                                // freestanding
       is_placeholder<T>::value;
 
   template<class F, class... BoundArgs>
@@ -9952,7 +9952,7 @@ execution. — *end note*\]
 namespace std {
   // [execpol.type], execution policy type trait
   template<class T> struct is_execution_policy;
-  template<class T> constexpr bool \libglobal{is_execution_policy_v} = is_execution_policy<T>::value;
+  template<class T> constexpr bool is_execution_policy_v = is_execution_policy<T>::value;
 }
 
 namespace std::execution {
@@ -10303,9 +10303,9 @@ namespace std {
     struct basic_format_string;
 
   template<class... Args>
-    using \libglobal{format_string} = basic_format_string<char, type_identity_t<Args>...>;
+    using format_string = basic_format_string<char, type_identity_t<Args>...>;
   template<class... Args>
-    using \libglobal{wformat_string} = basic_format_string<wchar_t, type_identity_t<Args>...>;
+    using wformat_string = basic_format_string<wchar_t, type_identity_t<Args>...>;
 
   // [format.functions], formatting functions
   template<class... Args>
@@ -10391,13 +10391,13 @@ namespace std {
 
   // [format.range], formatting of ranges
   // [format.range.fmtkind], variable template format_kind
-  enum class \libglobal{range_format} {
-    \libmember{disabled}{range_format},
-    \libmember{map}{range_format},
-    \libmember{set}{range_format},
-    \libmember{sequence}{range_format},
-    \libmember{string}{range_format},
-    \libmember{debug_string}{range_format}
+  enum class range_format {
+    disabled,
+    map,
+    set,
+    sequence,
+    string,
+    debug_string
   };
 
   template<class R>
@@ -10938,7 +10938,7 @@ allocate storage is reported by throwing an exception as described in 
 ``` cpp
 namespace std {
   template<class charT, class... Args>
-  struct \libglobal{basic_format_string} {
+  struct basic_format_string {
   private:
     basic_string_view<charT> str;         // exposition only
 

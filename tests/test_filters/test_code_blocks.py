@@ -382,3 +382,70 @@ new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new object b
     # Should NOT have unprocessed LaTeX
     assert "\\keyword" not in output
     assert "\\texttt" not in output
+
+
+def test_math_subscripts_in_codeblock():
+    r"""Test math subscripts @$c_1$@ conversion to Unicode in code blocks (Issue #24)"""
+    latex = r"""
+\begin{codeblock}
+operator ""X<'@$c_1$@', '@$c_2$@', ... '@$c_k$@'>()
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have Unicode subscripts
+    assert "c₁" in output
+    assert "c₂" in output
+    assert "cₖ" in output
+    # Should NOT have literal underscores
+    assert "c_1" not in output
+    assert "c_2" not in output
+    assert "c_k" not in output
+    # Should NOT have raw math delimiters
+    assert "$" not in output
+    assert "@" not in output
+
+
+def test_libglobal_in_codeblock():
+    r"""Test \libglobal{} macro stripping in code blocks (Issue #24)"""
+    latex = r"""
+\begin{codeblock}
+  using @\libglobal{string}@    = basic_string<char>;
+  using @\libglobal{u8string}@  = basic_string<char8_t>;
+  using @\libglobal{u16string}@ = basic_string<char16_t>;
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have plain identifiers
+    assert "using string    = basic_string<char>" in output
+    assert "using u8string  = basic_string<char8_t>" in output
+    assert "using u16string = basic_string<char16_t>" in output
+    # Should NOT have \libglobal macro
+    assert "\\libglobal" not in output
+    # Should NOT have @ delimiters
+    assert "@" not in output
+
+
+def test_libmember_in_codeblock():
+    r"""Test \libmember{member}{class} macro stripping in code blocks (Issue #24)"""
+    latex = r"""
+\begin{codeblock}
+  class @\libmember{reference}{vector<bool>}@ {
+    // member functions
+  };
+  constexpr empty_view<T> @\libmember{empty}{views}@{};
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have plain member names (without class names)
+    assert "class reference {" in output
+    assert "constexpr empty_view<T> empty{};" in output
+    # Should NOT have class names like {vector<bool>} or {views}
+    assert "{vector<bool>}" not in output
+    assert "{views}" not in output
+    # Should NOT have \libmember macro
+    assert "\\libmember" not in output
+    # Should NOT have @ delimiters
+    assert "@" not in output

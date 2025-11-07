@@ -1246,7 +1246,7 @@ namespace std {
 
 ``` cpp
 namespace std {
-  class \libglobal{stacktrace_entry} {
+  class stacktrace_entry {
   public:
     using native_handle_type = implementation-defined  // stacktrace_entry::native_handle_type;
 
@@ -1362,7 +1362,7 @@ stacktrace entry or both `x` and `y` are empty.
 ``` cpp
 namespace std {
   template<class Allocator>
-  class \libglobal{basic_stacktrace} {
+  class basic_stacktrace {
   public:
     using value_type = stacktrace_entry;
     using const_reference = const value_type&;

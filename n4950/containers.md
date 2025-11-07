@@ -5823,7 +5823,7 @@ namespace std {
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
     // bit reference
-    class \libmember{reference}{vector<bool>} {
+    class reference {
       friend class vector;
       constexpr reference() noexcept;
 
@@ -11738,7 +11738,7 @@ to `key_comp()`, or that contains equal elements, is undefined.
 ``` cpp
 namespace std {
   template<class Key, class Compare = less<Key>, class KeyContainer = vector<Key>>
-  class \libglobal{flat_set} {
+  class flat_set {
   public:
     // types
     using key_type                  = Key;
@@ -12774,7 +12774,7 @@ with these multidimensional views.
 ``` cpp
 namespace std {
   // constants
-  inline constexpr size_t \libglobal{dynamic_extent} = numeric_limits<size_t>::max();
+  inline constexpr size_t dynamic_extent = numeric_limits<size_t>::max();
 
   // [views.span], class template span
   template<class ElementType, size_t Extent = dynamic_extent>
@@ -13346,7 +13346,7 @@ is used synonymously with multidimensional index space.
 ``` cpp
 namespace std {
   template<class IndexType, size_t... Extents>
-  class \libglobal{extents} {
+  class extents {
   public:
     using index_type = IndexType;
     using size_type = make_unsigned_t<index_type>;

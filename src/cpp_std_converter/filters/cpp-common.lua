@@ -720,6 +720,15 @@ local code_block_macro_patterns = {
   {pattern = "@\\exposidnc{([^}]*)}@", replacement = "%1"},
   {pattern = "\\exposidnc{([^}]*)}", replacement = "%1"},
 
+  -- \libglobal{x} represents a library-level global name (Issue #24)
+  {pattern = "@\\libglobal{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\libglobal{([^}]*)}", replacement = "%1"},
+
+  -- \libmember{member}{class} represents a library class member name (Issue #24)
+  -- Takes 2 parameters but only outputs the first (member name)
+  {pattern = "@\\libmember{([^}]*)}{([^}]*)}@", replacement = "%1"},
+  {pattern = "\\libmember{([^}]*)}{([^}]*)}", replacement = "%1"},
+
   -- \keyword{x} in code comments
   {pattern = "\\keyword{([^}]*)}", replacement = "%1"},
 
@@ -772,8 +781,9 @@ local function convert_math_in_code(text)
       end
     end)
 
-    -- Convert standalone subscripts: X_{n} → Xₙ
-    math_content = math_content:gsub("([%w]+)_{{?([%w]+)}?}", function(name, sub)
+    -- Convert standalone subscripts: X_{n} → Xₙ or X_n → Xₙ
+    -- Fixed pattern: _{?...}? to properly handle both X_n and X_{n}
+    math_content = math_content:gsub("([%w]+)_{?([%w]+)}?", function(name, sub)
       if subscripts[sub] then
         return name .. subscripts[sub]
       else

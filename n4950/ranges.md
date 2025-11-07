@@ -129,7 +129,7 @@ namespace std::ranges {
   class view_interface;                                                             // freestanding
 
   // [range.subrange], sub-ranges
-  enum class \libglobal{subrange_kind} : bool { \libmember{unsized}{subrange_kind}, \libmember{sized}{subrange_kind} };                               // freestanding
+  enum class subrange_kind : bool { unsized, sized };                               // freestanding
 
   template<input_or_output_iterator I, sentinel_for<I> S = I, subrange_kind K = see below>
     requires (K == subrange_kind::sized || !sized_sentinel_for<S, I>)
@@ -185,7 +185,7 @@ namespace std::ranges {
 
   namespace views {
     template<class T>
-      constexpr empty_view<T> \libmember{empty}{views}{};                                              // freestanding
+      constexpr empty_view<T> empty{};                                              // freestanding
   }
 
   // [range.single], single view
@@ -417,15 +417,15 @@ namespace std::ranges {
       enable_borrowed_range<T>;
 
   template<class R>
-    using \libglobal{keys_view} = elements_view<R, 0>;                                          // freestanding
+    using keys_view = elements_view<R, 0>;                                          // freestanding
   template<class R>
-    using \libglobal{values_view} = elements_view<R, 1>;                                        // freestanding
+    using values_view = elements_view<R, 1>;                                        // freestanding
 
   namespace views {
     template<size_t N>
       constexpr unspecified elements = unspecified;                                 // freestanding
-    inline constexpr auto \libmember{keys}{views} = elements<0>;                                       // freestanding
-    inline constexpr auto \libmember{values}{views} = elements<1>;                                     // freestanding
+    inline constexpr auto keys = elements<0>;                                       // freestanding
+    inline constexpr auto values = elements<1>;                                     // freestanding
   }
 
   // [range.enumerate], enumerate view
@@ -471,7 +471,7 @@ namespace std::ranges {
   namespace views {
     template<size_t N>
       constexpr unspecified adjacent = unspecified;                                 // freestanding
-    inline constexpr auto \libmember{pairwise}{views} = adjacent<2>;                                   // freestanding
+    inline constexpr auto pairwise = adjacent<2>;                                   // freestanding
   }
 
   // [range.adjacent.transform], adjacent transform view
@@ -482,7 +482,7 @@ namespace std::ranges {
   namespace views {
     template<size_t N>
       constexpr unspecified adjacent_transform = unspecified;                       // freestanding
-    inline constexpr auto \libmember{pairwise_transform}{views} = adjacent_transform<2>;               // freestanding
+    inline constexpr auto pairwise_transform = adjacent_transform<2>;               // freestanding
   }
 
   // [range.chunk], chunk view
@@ -2628,7 +2628,7 @@ namespace std::ranges {
     requires (is_object_v<T> && same_as<T, remove_cv_t<T>> &&
               (integer-like-with-usable-difference-type<Bound> ||
                same_as<Bound, unreachable_sentinel_t>))
-  class \libglobal{repeat_view} : public view_interface<repeat_view<T, Bound>> {
+  class repeat_view : public view_interface<repeat_view<T, Bound>> {
   private:
     // [range.repeat.iterator], class repeat_view::iterator
     struct iterator;                            // exposition only
@@ -3504,7 +3504,7 @@ ranges::copy(words | views::as_rvalue, back_inserter(new_words));
 namespace std::ranges {
   template<view V>
     requires input_range<V>
-  class \libglobal{as_rvalue_view} : public view_interface<as_rvalue_view<V>> {
+  class as_rvalue_view : public view_interface<as_rvalue_view<V>> {
     V base_ = V();      // exposition only
 
   public:
@@ -12623,7 +12623,7 @@ namespace std {
 ``` cpp
 namespace std {
   template<class Ref, class V = void, class Allocator = void>
-  class \libglobal{generator} : public ranges::view_interface<generator<Ref, V, Allocator>> {
+  class generator : public ranges::view_interface<generator<Ref, V, Allocator>> {
   private:
     using value = conditional_t<is_void_v<V>, remove_cvref_t<Ref>, V>;  // exposition only
     using reference = conditional_t<is_void_v<V>, Ref&&, Ref>;          // exposition only

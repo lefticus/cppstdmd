@@ -1015,11 +1015,11 @@ namespace std {
   template<size_t Len, size_t Align = default-alignment> // see below
     struct aligned_storage;
   template<size_t Len, size_t Align = default-alignment> // see below
-    using \libglobal{aligned_storage_t} = typename aligned_storage<Len, Align>::type;
+    using aligned_storage_t = typename aligned_storage<Len, Align>::type;
   template<size_t Len, class... Types>
     struct aligned_union;
   template<size_t Len, class... Types>
-    using \libglobal{aligned_union_t} = typename aligned_union<Len, Types...>::type;
+    using aligned_union_t = typename aligned_union<Len, Types...>::type;
 }
 ```
 

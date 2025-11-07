@@ -1713,13 +1713,13 @@ following algorithm:
 
 ``` cpp
 S = 0;
-for (k = 0; k \neq n_0; k += 1)  {
- do u = e() - e.min(); while (u \ge y_0);
- S = 2^{w_0} \cdot S + u \bmod 2^{w_0};
+for (k = 0; k \neq n₀; k += 1)  {
+ do u = e() - e.min(); while (u \ge y₀);
+ S = 2^{w₀ \cdot S + u \bmod 2^{w₀;
 }
-for (k = n_0; k \neq n; k += 1)  {
- do u = e() - e.min(); while (u \ge y_1);
- S = 2^{w_0 + 1} \cdot S + u \bmod 2^{w_0 + 1};
+for (k = n₀; k \neq n; k += 1)  {
+ do u = e() - e.min(); while (u \ge y₁);
+ S = 2^{w₀ + 1} \cdot S + u \bmod 2^{w₀ + 1};
 }
 ```
 

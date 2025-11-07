@@ -98,7 +98,7 @@ namespace std {
 
   // [allocator.uses.trait], uses_allocator
   template<class T, class Alloc>
-    constexpr bool \libglobal{uses_allocator_v} = uses_allocator<T, Alloc>::value;              // freestanding
+    constexpr bool uses_allocator_v = uses_allocator<T, Alloc>::value;              // freestanding
 
   // [allocator.uses.construction], uses-allocator construction
   template<class T, class Alloc, class... Args>
