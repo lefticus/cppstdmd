@@ -551,7 +551,7 @@ digit: one of
 \[*Note 1*:
 
 The character properties XID_Start and XID_Continue are Derived Core
-Properties as described by UAX #44 of the Unicode Standard.
+Properties as described by UAX \#44 of the Unicode Standard.
 
 [^7]
 

@@ -10777,12 +10777,12 @@ This is the case for Windows
 For a sequence of characters in UTF-8, UTF-16, or UTF-32, an
 implementation should use as its field width the sum of the field widths
 of the first code point of each extended grapheme cluster. Extended
-grapheme clusters are defined by UAX #29 of the Unicode Standard. The
+grapheme clusters are defined by UAX \#29 of the Unicode Standard. The
 following code points have a field width of 2:
 
 - any code point with the `East_Asian_Width="W"` or
-  `East_Asian_Width="F"` Derived Extracted Property as described by
-  UAX #44 of the Unicode Standard
+  `East_Asian_Width="F"` Derived Extracted Property as described by UAX
+  \#44 of the Unicode Standard
 - `U+4dc0` – `U+4dff` (Yijing Hexagram Symbols)
 - `U+1f300` – `U+1f5ff` (Miscellaneous Symbols and Pictographs)
 - `U+1f900` – `U+1f9ff` (Supplemental Symbols and Pictographs)
@@ -11357,10 +11357,10 @@ interpret *S* and construct *E*.
       - *CE* is UTF-8, UTF-16, or UTF-32 and *C* corresponds to a
         Unicode scalar value whose Unicode property `General_Category`
         has a value in the groups `Separator` (`Z`) or `Other` (`C`), as
-        described by UAX #44 of the Unicode Standard, or
+        described by UAX \#44 of the Unicode Standard, or
       - *CE* is UTF-8, UTF-16, or UTF-32 and *C* corresponds to a
         Unicode scalar value with the Unicode property
-        `Grapheme_Extend=Yes` as described by UAX #44 of the Unicode
+        `Grapheme_Extend=Yes` as described by UAX \#44 of the Unicode
         Standard and *C* is not immediately preceded in *S* by a
         character *P* appended to *E* without translation to an escape
         sequence, or

@@ -1,9 +1,9 @@
 ## General <a id="uaxid.general">[[uaxid.general]]</a>
 
-This Annex describes the choices made in application of UAX #31
+This Annex describes the choices made in application of UAX \#31
 (“Unicode Identifier and Pattern Syntax”) to C++ in terms of the
-requirements from UAX #31 and how they do or do not apply to C++. In
-terms of UAX #31, C++ conforms by meeting the requirements R1 “Default
+requirements from UAX \#31 and how they do or do not apply to C++. In
+terms of UAX \#31, C++ conforms by meeting the requirements R1 “Default
 Identifiers” and R4 “Equivalent Normalized Identifiers”. The other
 requirements, also listed below, are either alternatives not taken or do
 not apply to C++.
@@ -12,8 +12,8 @@ not apply to C++.
 
 ### General <a id="uaxid.def.general">[[uaxid.def.general]]</a>
 
-UAX #31 specifies a default syntax for identifiers based on properties
-from the Unicode Character Database, UAX #44. The general syntax is
+UAX \#31 specifies a default syntax for identifiers based on properties
+from the Unicode Character Database, UAX \#44. The general syntax is
 
 ``` cpp
 <Identifier> := <Start> <Continue>* (<Medial> <Continue>+)*
@@ -24,7 +24,7 @@ XID_Continue property, and `<Medial>` is a list of characters permitted
 between continue characters. For C++ we add the character
 U+005f (low line), or `_`, to the set of permitted `<Start>` characters,
 the `<Medial>` set is empty, and the `<Continue>` characters are
-unmodified. In the grammar used in UAX #31, this is
+unmodified. In the grammar used in UAX \#31, this is
 
 ``` cpp
 <Identifier> := <Start> <Continue>*
@@ -38,7 +38,7 @@ is formed from *identifier-start* or *identifier* followed by
 
 ### R1a Restricted format characters <a id="uaxid.def.rfmt">[[uaxid.def.rfmt]]</a>
 
-If an implementation of UAX #31 wishes to allow format characters such
+If an implementation of UAX \#31 wishes to allow format characters such
 as U+200d (zero width joiner) or U+200c (zero width non-joiner) it must
 define a profile allowing them, or describe precisely which combinations
 are permitted.
@@ -48,11 +48,11 @@ apply.
 
 ### R1b Stable identifiers <a id="uaxid.def.stable">[[uaxid.def.stable]]</a>
 
-An implementation of UAX #31 may choose to guarantee that identifiers
+An implementation of UAX \#31 may choose to guarantee that identifiers
 are stable across versions of the Unicode Standard. Once a string
 qualifies as an identifier it does so in all future versions.
 
-C++ does not make this guarantee, except to the extent that UAX #31
+C++ does not make this guarantee, except to the extent that UAX \#31
 guarantees the stability of the XID_Start and XID_Continue properties.
 
 ## R2 Immutable identifiers <a id="uaxid.immutable">[[uaxid.immutable]]</a>
@@ -67,15 +67,15 @@ use in identifiers.
 
 ## R3 Pattern_White_Space and Pattern_Syntax characters <a id="uaxid.pattern">[[uaxid.pattern]]</a>
 
-UAX #31 describes how formal languages such as computer languages should
-describe and implement their use of whitespace and syntactically
+UAX \#31 describes how formal languages such as computer languages
+should describe and implement their use of whitespace and syntactically
 significant characters during the processes of lexing and parsing.
 
 C++ does not claim conformance with this requirement.
 
 ## R4 Equivalent normalized identifiers <a id="uaxid.eqn">[[uaxid.eqn]]</a>
 
-UAX #31 requires that implementations describe how identifiers are
+UAX \#31 requires that implementations describe how identifiers are
 compared and considered equivalent.
 
 C++ requires that identifiers be in Normalization Form C and therefore
@@ -89,7 +89,7 @@ not do any case folding. This requirement does not apply to C++.
 
 ## R6 Filtered normalized identifiers <a id="uaxid.filter">[[uaxid.filter]]</a>
 
-If any characters are excluded from normalization, UAX #31 requires a
+If any characters are excluded from normalization, UAX \#31 requires a
 precise specification of those exclusions.
 
 C++ does not make any such exclusions.

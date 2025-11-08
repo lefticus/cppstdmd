@@ -209,9 +209,6 @@ local function expand_macros(text, skip_special_chars)
   text = convert_mname(text)
   text = text:gsub("\\xname{([^}]*)}", "__%1")
 
-  -- \descr{X} renders as X (description text, just remove wrapper)
-  text = text:gsub("\\descr{([^}]*)}", "%1")
-
   -- Note: \defnx, \defnadj, \defexposconcept are now handled in RawInline
   -- with proper emphasis using pandoc.Emph() instead of literal asterisks
 
@@ -738,10 +735,6 @@ function RawInline(elem)
     end
   end
 
-  -- \fmtgrammarterm{x} - format grammar term (italic)
-  emph = text:match("\\fmtgrammarterm{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
-
   -- \defnxname{x} - define identifier with __ prefix (italic)
   local defnxname = text:match("\\defnxname{([^}]*)}")
   if defnxname then
@@ -817,23 +810,10 @@ function RawInline(elem)
     return pandoc.Code("__" .. mname .. "__")
   end
 
-  -- \descr{X} - description text, just unwrap
-  local descr = text:match("\\descr{([^}]*)}")
-  if descr then
-    return pandoc.Str(descr)
-  end
-
   -- \range{first}{last} - half-open range [first, last)
   local first, last = text:match("\\range{([^}]*)}{([^}]*)}")
   if first and last then
     return pandoc.RawInline('markdown', '[`' .. first .. '`, `' .. last .. '`)')
-  end
-
-
-  -- \UAX{number} - Unicode Annex reference (e.g., \UAX{31} -> UAX #31)
-  local uax_num = text:match("^\\UAX{([^}]*)}")
-  if uax_num then
-    return pandoc.Str("UAX #" .. uax_num)
   end
 
   -- \unicode{code}{description} - Unicode character with description

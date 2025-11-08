@@ -9,7 +9,7 @@ this document.
 ###  [[lex]]: lexical conventions <a id="diff.cpp20.lex">[[diff.cpp20.lex]]</a>
 
 **Change:** Previously valid identifiers containing characters not
-present in UAX #44 properties XID_Start or XID_Continue, or not in
+present in UAX \#44 properties XID_Start or XID_Continue, or not in
 Normalization Form C, are now rejected. **Rationale:** Prevent confusing
 characters in identifiers. Requiring normalization of names ensures
 consistent linker behavior. **Effect on original feature:** Some
