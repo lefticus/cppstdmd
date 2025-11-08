@@ -121,8 +121,8 @@ specified above to the time it would return from a steady-clock relative
 timeout on the difference between Cₜ and the time point of the call to
 the `_until` function.
 
-Implementations should decrease the duration of the wait when the clock
-is adjusted forwards.
+*Recommended practice:* Implementations should decrease the duration of
+the wait when the clock is adjusted forwards.
 
 \[*Note 1*: If the clock is not synchronized with a steady clock, e.g.,
 a CPU time clock, these timeouts can fail to provide useful
@@ -137,8 +137,8 @@ the *Cpp17TrivialClock* requirements [[time.clock.req]].
 
 A function that takes an argument which specifies a timeout will throw
 if, during its execution, a clock, time point, or time duration throws
-an exception. Such exceptions are referred to as
-*timeout-related exceptions*.
+an exception. Such exceptions are referred to as *timeout-related
+exceptions*.
 
 \[*Note 2*: Instantiations of clock, time point and duration types
 supplied by the implementation as specified in  [[time.clock]] do not
@@ -168,7 +168,7 @@ The standard library templates `unique_lock` [[thread.lock.unique]],
 [[thread.condition.condvarany]] all operate on user-supplied lockable
 objects. The *Cpp17BasicLockable* requirements, the *Cpp17Lockable*
 requirements, the *Cpp17TimedLockable* requirements, the
-*Cpp17SharedLockable* requirements, and the *Cpp17SharedTimedLock\\able*
+*Cpp17SharedLockable* requirements, and the *Cpp17SharedTimedLockable*
 requirements list the requirements imposed by these library types in
 order to acquire or release ownership of a `lock` by a given execution
 agent.
@@ -736,11 +736,13 @@ namespace std {
 }
 ```
 
-`stop_callback` is instantiated with an argument for the template
-parameter `Callback` that satisfies both `invocable` and `destructible`.
+*Mandates:* `stop_callback` is instantiated with an argument for the
+template parameter `Callback` that satisfies both `invocable` and
+`destructible`.
 
-`stop_callback` is instantiated with an argument for the template
-parameter `Callback` that models both `invocable` and `destructible`.
+*Preconditions:* `stop_callback` is instantiated with an argument for
+the template parameter `Callback` that models both `invocable` and
+`destructible`.
 
 #### Constructors and destructor <a id="stopcallback.cons">[[stopcallback.cons]]</a>
 
@@ -1006,7 +1008,7 @@ template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 *Effects:* The new thread of execution executes
 
 ``` cpp
-invoke(auto(std::forward<F>(f)),                // for \texttt{invoke}, see REF:func.invoke
+invoke(auto(std::forward<F>(f)),                // for invoke, see REF:func.invoke
        auto(std::forward<Args>(args))...)
 ```
 
@@ -1242,7 +1244,7 @@ template<class F, class... Args> explicit jthread(F&& f, Args&&... args);
 *Effects:* Initializes `ssource`. The new thread of execution executes
 
 ``` cpp
-invoke(auto(std::forward<F>(f)), get_stop_token(),  // for \texttt{invoke}, see REF:func.invoke
+invoke(auto(std::forward<F>(f)), get_stop_token(),  // for invoke, see REF:func.invoke
        auto(std::forward<Args>(args))...)
 ```
 
@@ -1820,8 +1822,8 @@ object M synchronizes with an atomic operation B that performs an
 acquire operation on M and takes its value from any side effect in the
 release sequence headed by A.
 
-An atomic operation A on some atomic object M is
-*coherence-ordered before* another atomic operation B on M if
+An atomic operation A on some atomic object M is *coherence-ordered
+before* another atomic operation B on M if
 
 - A is a modification, and B reads the value stored by A, or
 - A precedes B in the modification order of M, or
@@ -1970,7 +1972,8 @@ same for all atomic objects of the same type.
 Atomic operations that are not lock-free are considered to potentially
 block [[intro.progress]].
 
-Operations that are lock-free should also be address-free.[^2]
+*Recommended practice:* Operations that are lock-free should also be
+address-free.[^2]
 
 The implementation of these operations should not depend on any
 per-process state.
@@ -4199,8 +4202,7 @@ shall be static.
 This subclause introduces synchronization primitives called *fences*.
 Fences can have acquire semantics, release semantics, or both. A fence
 with acquire semantics is called an *acquire fence*. A fence with
-release semantics is called a *release
-fence*.
+release semantics is called a *release fence*.
 
 A release fence A synchronizes with an acquire fence B if there exist
 atomic operations X and Y, both operating on some atomic object M, such
@@ -4376,11 +4378,12 @@ Neither the `_Atomic` macro, nor any of the non-macro global namespace
 declarations, are provided by any C++ standard library header other than
 `<stdatomic.h>`.
 
-Implementations should ensure that C and C++ representations of atomic
-objects are compatible, so that the same object can be accessed as both
-an `_Atomic(T)` from C code and an `atomic<T>` from C++ code. The
-representations should be the same, and the mechanisms used to ensure
-atomicity and memory ordering should be compatible.
+*Recommended practice:* Implementations should ensure that C and C++
+representations of atomic objects are compatible, so that the same
+object can be accessed as both an `_Atomic(T)` from C code and an
+`atomic<T>` from C++ code. The representations should be the same, and
+the mechanisms used to ensure atomicity and memory ordering should be
+compatible.
 
 ## Mutual exclusion <a id="thread.mutex">[[thread.mutex]]</a>
 
@@ -4509,7 +4512,7 @@ the mutex.
 obtained for the calling thread.
 
 *Synchronization:* Prior `unlock()` operations on the same object
-[[intro.multithread]] this operation.
+*synchronize with*[[intro.multithread]] this operation.
 
 *Ensures:* The calling thread owns the mutex.
 
@@ -4545,7 +4548,8 @@ An implementation should ensure that `try_lock()` does not consistently
 return `false` in the absence of contending mutex acquisitions.
 
 *Synchronization:* If `try_lock()` returns `true`, prior `unlock()`
-operations on the same object [[intro.multithread]] this operation.
+operations on the same object *synchronize with*[[intro.multithread]]
+this operation.
 
 \[*Note 5*: Since `lock()` does not synchronize with a failed subsequent
 `try_lock()`, the visibility rules are weak enough that little would be
@@ -4704,7 +4708,8 @@ will be obtained if the lock is available, but implementations are
 expected to make a strong effort to do so. — *end note*\]
 
 *Synchronization:* If `try_lock_for()` returns `true`, prior `unlock()`
-operations on the same object [[intro.multithread]] this operation.
+operations on the same object *synchronize with*[[intro.multithread]]
+this operation.
 
 *Return type:* `bool`.
 
@@ -4729,8 +4734,8 @@ will be obtained if the lock is available, but implementations are
 expected to make a strong effort to do so. — *end note*\]
 
 *Synchronization:* If `try_lock_until()` returns `true`, prior
-`unlock()` operations on the same object [[intro.multithread]] this
-operation.
+`unlock()` operations on the same object *synchronize
+with*[[intro.multithread]] this operation.
 
 *Return type:* `bool`.
 
@@ -4978,12 +4983,12 @@ The behavior of a program is undefined if:
 
 ##### General <a id="thread.sharedtimedmutex.requirements.general">[[thread.sharedtimedmutex.requirements.general]]</a>
 
-The standard library type `shared_timed_mutex` is a
-*shared timed mutex type*. Shared timed mutex types meet the
-requirements of timed mutex types [[thread.timedmutex.requirements]],
-shared mutex types [[thread.sharedmutex.requirements]], and additionally
-meet the requirements set out below. In this description, `m` denotes an
-object of a shared timed mutex type, `rel_time` denotes an object of an
+The standard library type `shared_timed_mutex` is a *shared timed mutex
+type*. Shared timed mutex types meet the requirements of timed mutex
+types [[thread.timedmutex.requirements]], shared mutex types
+[[thread.sharedmutex.requirements]], and additionally meet the
+requirements set out below. In this description, `m` denotes an object
+of a shared timed mutex type, `rel_time` denotes an object of an
 instantiation of `duration` [[time.duration]], and `abs_time` denotes an
 object of an instantiation of `time_point` [[time.point]].
 
@@ -5632,7 +5637,7 @@ supplied `Mutex` type shall meet the *Cpp17SharedLockable* requirements
 
 \[*Note 1*: `shared_lock<Mutex>` meets the *Cpp17Lockable* requirements
 [[thread.req.lockable.req]]. If `Mutex` meets the
-*Cpp17Shared\\TimedLockable* requirements
+*Cpp17SharedTimedLockable* requirements
 [[thread.req.lockable.shared.timed]], `shared_lock<Mutex>` also meets
 the *Cpp17TimedLockable* requirements
 [[thread.req.lockable.timed]]. — *end note*\]
@@ -5954,13 +5959,13 @@ template<class Callable, class... Args>
 *Mandates:* `is_invocable_v<Callable, Args...>` is `true`.
 
 *Effects:* An execution of `call_once` that does not call its `func` is
-a execution. An execution of `call_once` that calls its `func` is an
-execution. An active execution calls *INVOKE*(
+a *passive* execution. An execution of `call_once` that calls its `func`
+is an *active* execution. An active execution calls *INVOKE*(
 std::forward\<Callable\>(func),
 std::forward\<Args\>(args)...) [[func.require]]. If such a call to
-`func` throws an exception the execution is , otherwise it is . An
-exceptional execution propagates the exception to the caller of
-`call_once`. Among all executions of `call_once` for any given
+`func` throws an exception the execution is *exceptional*, otherwise it
+is *returning*. An exceptional execution propagates the exception to the
+caller of `call_once`. Among all executions of `call_once` for any given
 `once_flag`: at most one is a returning execution; if there is a
 returning execution, it is the last active execution; and there are
 passive executions only if there is a returning execution.
@@ -6399,8 +6404,8 @@ exception. — *end note*\]
 #### General <a id="thread.condition.condvarany.general">[[thread.condition.condvarany.general]]</a>
 
 In this subclause [[thread.condition.condvarany]], template arguments
-for template parameters named `Lock` shall meet the
-*Cpp17Basic\\Lockable* requirements [[thread.req.lockable.basic]].
+for template parameters named `Lock` shall meet the *Cpp17BasicLockable*
+requirements [[thread.req.lockable.basic]].
 
 \[*Note 1*: All of the standard mutex types meet this requirement. If a
 type other than one of the standard mutex types or a `unique_lock`
@@ -7372,9 +7377,8 @@ An *asynchronous return object* is an object that reads results from a
 shared state. A *waiting function* of an asynchronous return object is
 one that potentially blocks to wait for the shared state to be made
 ready. If a waiting function can return before the state is made ready
-because of a timeout [[thread.req.lockable]], then it is a
-*timed waiting function*, otherwise it is a
-*non-timed waiting function*.
+because of a timeout [[thread.req.lockable]], then it is a *timed
+waiting function*, otherwise it is a *non-timed waiting function*.
 
 An *asynchronous provider* is an object that provides a result to a
 shared state. The result of a shared state is set by respective
@@ -7481,8 +7485,8 @@ For the primary template, `R` shall be an object type that meets the
 *Cpp17Destructible* requirements.
 
 The implementation provides the template `promise` and two
-specializations, `promise<R&>` and `promise<void>`. These differ only in
-the argument type of the member functions `set_value` and
+specializations, `promise<R&>` and `promise<{}void>`. These differ only
+in the argument type of the member functions `set_value` and
 `set_value_at_thread_exit`, as set out in their descriptions, below.
 
 The `set_value`, `set_exception`, `set_value_at_thread_exit`, and
@@ -7682,8 +7686,9 @@ which `valid() == false` is undefined.
 \[*Note 2*: It is valid to move from a future object for which
 `valid() == false`. — *end note*\]
 
-Implementations should detect this case and throw an object of type
-`future_error` with an error condition of `future_errc::no_state`.
+*Recommended practice:* Implementations should detect this case and
+throw an object of type `future_error` with an error condition of
+`future_errc::no_state`.
 
 ``` cpp
 namespace std {
@@ -7717,7 +7722,7 @@ For the primary template, `R` shall be an object type that meets the
 *Cpp17Destructible* requirements.
 
 The implementation provides the template `future` and two
-specializations, `future<R&>` and `future<void>`. These differ only in
+specializations, `future<R&>` and `future<{}void>`. These differ only in
 the return type and return value of the member function `get`, as set
 out in its description, below.
 
@@ -7880,8 +7885,9 @@ a `shared_future` object for which `valid() == false` is undefined.
 \[*Note 2*: It is valid to copy or move from a `shared_future` object
 for which `valid()` is `false`. — *end note*\]
 
-Implementations should detect this case and throw an object of type
-`future_error` with an error condition of `future_errc::no_state`.
+*Recommended practice:* Implementations should detect this case and
+throw an object of type `future_error` with an error condition of
+`future_errc::no_state`.
 
 ``` cpp
 namespace std {
@@ -8272,8 +8278,9 @@ template<class F> packaged_task(F) -> packaged_task<see below>;
 unevaluated operand [[term.unevaluated.operand]] and either
 
 - `F::operator()` is a non-static member function and
-  `decltype(&F::operator())` is either of the form `R(G::*)(A...)`  ` `
-  or of the form `R(*)(G, A...) ` for a type `G`, or
+  `decltype(&F::operator())` is either of the form
+  `R(G::*)(A...)` cv ` ` or of the form `R(*)(G, A...) ` for a type `G`,
+  or
 - `F::operator()` is a static member function and
   `decltype(&F::operator())` is of the form `R(*)(A...) `.
 

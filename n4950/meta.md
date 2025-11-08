@@ -38,7 +38,7 @@ namespace std {
 }
 ```
 
-`T` is an integer type.
+*Mandates:* `T` is an integer type.
 
 ### Alias template `make_integer_sequence` <a id="intseq.make">[[intseq.make]]</a>
 
@@ -82,8 +82,8 @@ A describes a property of a type. It shall be a class template that
 takes one template type argument and, optionally, additional arguments
 that help define the property being described. It shall be
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and publicly and
-unambiguously derived, directly or indirectly, from its
-*base characteristic*, which is a specialization of the template
+unambiguously derived, directly or indirectly, from its *base
+characteristic*, which is a specialization of the template
 `integral_constant` [[meta.help]], with the arguments to the template
 `integral_constant` determined by the requirements for the particular
 property being described. The member names of the base characteristic
@@ -881,11 +881,11 @@ Let:
   `decltype(false ?\ declval<X(&)()>()() :\ declval<Y(&)()>()())`.
 
 Given types `A` and `B`, let `X` be `remove_reference_t<A>`, let `Y` be
-`remove_reference_t<B>`, and let `COMMON-REF(A, B)` be:
+`remove_reference_t<B>`, and let `COMMON-{REF}(A, B)` be:
 
 - If `A` and `B` are both lvalue reference types, `COMMON-REF(A, B)` is
   `COND-RES(COPYCV(X, Y) &,
-      COPYCV(Y, X) &)` if that type exists and is a reference type.
+      COPYCV({}Y, X) &)` if that type exists and is a reference type.
 - Otherwise, let `C` be `remove_reference_t<COMMON-REF(X&, Y&)>&&`. If
   `A` and `B` are both rvalue reference types, `C` is well-formed, and
   `is_convertible_v<A, C> && is_convertible_v<B, C>` is `true`, then
@@ -969,7 +969,7 @@ follows:
     is `true`, then the member typedef `type` denotes `R`.
   - Otherwise, if
     `basic_common_reference<remove_cvref_t<T1>, remove_cvref_t<T2>,
-          XREF(T1), XREF(T2)>::type` is well-formed, then the member
+          {}XREF({}T1), XREF(T2)>::type` is well-formed, then the member
     typedef `type` denotes that type.
   - Otherwise, if `COND-RES(T1, T2)` is well-formed, then the member
     typedef `type` denotes that type.

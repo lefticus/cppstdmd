@@ -308,8 +308,8 @@ cv-qualifiers. — *end note*\]
 
 Given types `From` and `To` and an expression `E` whose type and value
 category are the same as those of `declval<From>()`,
-`convertible_to<From, To>` requires `E` to be both implicitly and
-explicitly convertible to type `To`. The implicit and explicit
+`\texttt{convertible_to}<From, To>` requires `E` to be both implicitly
+and explicitly convertible to type `To`. The implicit and explicit
 conversions are required to produce equal results.
 
 ``` cpp
@@ -346,9 +346,9 @@ that `f()` is equality-preserving. Types `From` and `To` model
 ### Concept  <a id="concept.commonref">[[concept.commonref]]</a>
 
 For two types `T` and `U`, if `common_reference_t<T, U>` is well-formed
-and denotes a type `C` such that both `convertible_to<T, C>` and
-`convertible_to<U, C>` are modeled, then `T` and `U` share a
-*common reference type*, `C`.
+and denotes a type `C` such that both `\texttt{convertible_to}<T, C>`
+and `\texttt{convertible_to}<U, C>` are modeled, then `T` and `U` share
+a *common reference type*, `C`.
 
 \[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` can be a reference type. — *end note*\]
@@ -486,9 +486,9 @@ if the operation modifies neither `t2` nor `u2` and:
 - If `T` and `U` are the same type, the result of the operation is that
   `t1` equals `u2` and `u1` equals `t2`.
 - If `T` and `U` are different types and
-  `common_reference_with<decltype((t1)), decltype((u1))>` is modeled,
-  the result of the operation is that `C(t1)` equals `C(u2)` and `C(u1)`
-  equals `C(t2)` where `C` is
+  `\texttt{common_reference_with}<decltype((t1)), decltype((u1))>` is
+  modeled, the result of the operation is that `C(t1)` equals `C(u2)`
+  and `C(u1)` equals `C(t2)` where `C` is
   `common_reference_t<decltype((t1)), decltype((u1))>`.
 
 The name `ranges::swap` denotes a customization point object
@@ -515,11 +515,11 @@ expression `S` determined as follows:
 - Otherwise, if `E1` and `E2` are lvalues of array types
   [[basic.compound]] with equal extent and `ranges::swap(*E1, *E2)` is a
   valid expression, `S` is `(void)ranges::swap_ranges(E1, E2)`, except
-  that `noexcept(S)` is equal to `noexcept(ranges::swap(*E1, *E2))`.
+  that `noexcept(S)` is equal to `noexcept({}ranges::swap(*E1, *E2))`.
 - Otherwise, if `E1` and `E2` are lvalues of the same type `T` that
-  models `move_constructible<T>` and `assignable_from<T&, T>`, `S` is an
-  expression that exchanges the denoted values. `S` is a constant
-  expression if
+  models `\texttt{move_constructible}<T>` and
+  `\texttt{assignable_from}<T&, T>`, `S` is an expression that exchanges
+  the denoted values. `S` is a constant expression if
   - `T` is a literal type [[term.literal.type]],
   - both `E1 = std::move(E2)` and `E2 = std::move(E1)` are constant
     subexpressions [[defns.const.subexpr]], and
@@ -821,7 +821,7 @@ Let `C` be `common_reference_t<const T&, const U&>`. Let `t1` and `t2`
 be equality-preserving expressions that are lvalues of type
 `remove_cvref_t<T>`, and let `u1` and `u2` be equality-preserving
 expressions that are lvalues of type `remove_cvref_t<U>`. `T` and `U`
-model `comparison-common-type-with<T, U>` only if:
+model `\texttt{comparison-common-type-with}<T, U>` only if:
 
 - `CONVERT_TO_LVALUE<C>(t1)` equals `CONVERT_TO_LVALUE<C>(t2)` if and
   only if `t1` equals `t2`, and
@@ -1048,13 +1048,13 @@ template<class R, class T, class U>
   concept strict_weak_order = relation<R, T, U>;
 ```
 
-A `relation` models `strict_weak_order` only if it imposes a on its
-arguments.
+A `relation` models `strict_weak_order` only if it imposes a *strict
+weak ordering* on its arguments.
 
-The term refers to the requirement of an irreflexive relation
-(`!comp(x, x)` for all `x`), and the term to requirements that are not
-as strong as those for a total ordering, but stronger than those for a
-partial ordering. If we define `equiv(a, b)` as
+The term *strict* refers to the requirement of an irreflexive relation
+(`!comp(x, x)` for all `x`), and the term *weak* to requirements that
+are not as strong as those for a total ordering, but stronger than those
+for a partial ordering. If we define `equiv(a, b)` as
 `!comp(a, b) && !comp(b, a)`, then the requirements are that `comp` and
 `equiv` both be transitive relations:
 

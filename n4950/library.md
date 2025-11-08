@@ -249,37 +249,40 @@ appropriate):[^4]
 Descriptions of function semantics contain the following elements (as
 appropriate):[^5]
 
--  the conditions for the function’s participation in overload
-  resolution [[over.match]]. \[*Note 1*: Failure to meet such a
+- *Constraints:* the conditions for the function’s participation in
+  overload resolution [[over.match]]. \[*Note 1*: Failure to meet such a
   condition results in the function’s silent
   non-viability. — *end note*\] \[*Example 1*: An implementation can
   express such a condition via a *constraint-expression*
   [[temp.constr.decl]]. — *end example*\]
--  the conditions that, if not met, render the program ill-formed.
-  \[*Example 2*: An implementation can express such a condition via the
-  *constant-expression* in a *static_assert-declaration* [[dcl.pre]]. If
-  the diagnostic is to be emitted only after the function has been
-  selected by overload resolution, an implementation can express such a
-  condition via a *constraint-expression* [[temp.constr.decl]] and also
-  define the function as deleted. — *end example*\]
--  the conditions that the function assumes to hold whenever it is
-  called; violation of any preconditions results in undefined behavior.
--  the actions performed by the function.
--  the synchronization operations [[intro.multithread]] applicable to
-  the function.
--  the conditions (sometimes termed observable results) established by
-  the function.
--  for a *typename-specifier*, a description of the named type; for an
-  *expression*, a description of the type of the expression; the
+- *Mandates:* the conditions that, if not met, render the program
+  ill-formed. \[*Example 2*: An implementation can express such a
+  condition via the *constant-expression* in a
+  *static_assert-declaration* [[dcl.pre]]. If the diagnostic is to be
+  emitted only after the function has been selected by overload
+  resolution, an implementation can express such a condition via a
+  *constraint-expression* [[temp.constr.decl]] and also define the
+  function as deleted. — *end example*\]
+- *Preconditions:* the conditions that the function assumes to hold
+  whenever it is called; violation of any preconditions results in
+  undefined behavior.
+- *Effects:* the actions performed by the function.
+- *Synchronization:* the synchronization operations
+  [[intro.multithread]] applicable to the function.
+- *Ensures:* the conditions (sometimes termed observable results)
+  established by the function.
+- *Result:* for a *typename-specifier*, a description of the named type;
+  for an *expression*, a description of the type of the expression; the
   expression is an lvalue if the type is an lvalue reference type, an
   xvalue if the type is an rvalue reference type, and a prvalue
   otherwise.
--  a description of the value(s) returned by the function.
--  any exceptions thrown by the function, and the conditions that would
-  cause the exception.
--  the time and/or space complexity of the function.
--  additional semantic constraints on the function.
--  the error conditions for error codes reported by the function.
+- *Returns:* a description of the value(s) returned by the function.
+- *Throws:* any exceptions thrown by the function, and the conditions
+  that would cause the exception.
+- *Complexity:* the time and/or space complexity of the function.
+- *Remarks:* additional semantic constraints on the function.
+- *Error conditions:* the error conditions for error codes reported by
+  the function.
 
 Whenever the *Effects* element specifies that the semantics of some
 function `F` are *Equivalent to* some code sequence, then the various
@@ -546,13 +549,14 @@ of a specific customization point object type on the same arguments are
 equivalent.
 
 The type `T` of a customization point object, ignoring *cv-qualifier*s,
-shall model `invocable<T&, Args...>`, `invocable<const T&, Args...>`,
-`invocable<T, Args...>`, and `invocable<const T, Args...>`
-[[concept.invocable]] when the types in `Args...` meet the requirements
-specified in that customization point object’s definition. When the
-types of `Args...` do not meet the customization point object’s
-requirements, `T` shall not have a function call operator that
-participates in overload resolution.
+shall model `\texttt{invocable}<T&, Args...>`,
+`\texttt{invocable}<const T&, Args...>`,
+`\texttt{invocable}<T, Args...>`, and
+`\texttt{invocable}<const T, Args...>` [[concept.invocable]] when the
+types in `Args...` meet the requirements specified in that customization
+point object’s definition. When the types of `Args...` do not meet the
+customization point object’s requirements, `T` shall not have a function
+call operator that participates in overload resolution.
 
 For a given customization point object `o`, let `p` be a variable
 initialized as if by `auto p = o;`. Then for any sequence of arguments
@@ -590,8 +594,8 @@ member functions specified in [[support]] through [[thread]] and
 For the sake of exposition, some subclauses provide representative
 declarations, and semantic requirements, for private members of classes
 that meet the external specifications of the classes. The declarations
-for such members are followed by a comment that ends with
-*exposition only*, as in:
+for such members are followed by a comment that ends with *exposition
+only*, as in:
 
 ``` cpp
 streambuf* sb;      // exposition only
@@ -816,15 +820,16 @@ is attached.
 `#include` and `import` does not result in conflicting attachments
 [[basic.link]]. — *end note*\]
 
-Implementations should ensure such attachments do not preclude further
-evolution or decomposition of the standard library modules.
+*Recommended practice:* Implementations should ensure such attachments
+do not preclude further evolution or decomposition of the standard
+library modules.
 
 A declaration in the standard library denotes the same entity regardless
 of whether it was made reachable through including a header, importing a
 header unit, or importing a C++ library module.
 
-Implementations should avoid exporting any other declarations from the
-C++ library modules.
+*Recommended practice:* Implementations should avoid exporting any other
+declarations from the C++ library modules.
 
 \[*Note 2*: Like all named modules, the C++ library modules do not make
 macros visible [[module.import]], such as `assert` [[cassert.syn]],
@@ -956,38 +961,6 @@ class member function signatures specify `T()` as a default argument.
 `T()` shall be a well-defined expression [[dcl.init]] if one of those
 signatures is called using the default argument [[dcl.fct.default]].
 
-**Table: Cpp17EqualityComparable requirements**
-
-| Expression | Return type |
-| --- | --- |
-| `a == b` | `decltype(a == b)` models *exposition only*conceptx{boolean-testable}{boolean-testable} | `==` is an equivalence relation, that is, it has the following properties: For all `a`, `a == a`.; If `a == b`, then `b == a`.; If `a == b` and `b == c`, then `a == c`. |
-
-
-**Table: Cpp17LessThanComparable requirements**
-
-| Expression | Return type | Requirement |
-| --- | --- | --- |
-| `a < b` | `decltype(a < b)` models *exposition only*conceptx{boolean-testable}{boolean-testable} | `<` is a strict weak ordering relation [[alg.sorting]] |
-
-
-**Table: Cpp17DefaultConstructible requirements**
-
-| Expression | Post-condition |
-| --- | --- |
-| `T t;` | object `t` is default-initialized |
-| `T u{};` | object `u` is value-initialized or aggregate-initialized |
-| `T()`<br>`T{}` | an object of type `T` is value-initialized or aggregate-initialized |
-
-
-**Table: Cpp17MoveConstructible requirements**
-
-| Expression | Post-condition |
-| --- | --- |
-| `T u = rv;` | `u` is equivalent to the value of `rv` before the construction |
-| `T(rv)` | `T(rv)` is equivalent to the value of `rv` before the construction |
-| *[spans 2 columns]*  `rv`'s state is unspecified *`rv` must still meet the requirements of the library component that is using it. The operations listed in those requirements must work as specified whether `rv` has been moved from or not.* |
-
-
 **Table: Cpp17CopyConstructible requirements (in addition to Cpp17MoveConstructible)**
 
 | Expression | Post-condition |
@@ -996,27 +969,11 @@ signatures is called using the default argument [[dcl.fct.default]].
 | `T(v)` | the value of `v` is unchanged and is equivalent to `T(v)` |
 
 
-**Table: Cpp17MoveAssignable requirements**
-
-| Expression | Return type | Return value | Post-condition |
-| --- | --- | --- | --- |
-| `t = rv` | `T&` | `t` | If `t` and `rv` do not refer to the same object, `t` is equivalent to the value of `rv` before the assignment |
-| *[spans 4 columns]*  `rv`'s state is unspecified. *`rv` must still meet the requirements of the library component that is using it, whether or not `t` and `rv` refer to the same object. The operations listed in those requirements must work as specified whether `rv` has been moved from or not.* |
-
-
 **Table: Cpp17CopyAssignable requirements (in addition to Cpp17MoveAssignable)**
 
 | Expression | Return type | Return value | Post-condition |
 | --- | --- | --- | --- |
 | `t = v` | `T&` | `t` | `t` is equivalent to `v`, the value of `v` is unchanged |
-
-
-**Table: Cpp17Destructible requirements**
-
-| Expression | Post-condition |
-| --- | --- |
-| `u.\~T()` | All resources owned by `u` are reclaimed, no exception is propagated. |
-| *[spans 2 columns]*  *Array types and non-object types are not Cpp17Destructible.* |
 
 
 #### Swappable requirements <a id="swappable.requirements">[[swappable.requirements]]</a>
@@ -1114,11 +1071,11 @@ int main() {
 #### *Cpp17NullablePointer* requirements <a id="nullablepointer.requirements">[[nullablepointer.requirements]]</a>
 
 A *Cpp17NullablePointer* type is a pointer-like type that supports null
-values. A type `P` meets the *Cpp17\\Nullable\\Pointer* requirements if:
+values. A type `P` meets the *Cpp17NullablePointer* requirements if:
 
 - `P` meets the *Cpp17EqualityComparable*, *Cpp17DefaultConstructible*,
-  *Cpp17CopyConstructible*, *Cpp17\\Copy\\Assign\\able*,
-  *Cpp17Swappable*, and *Cpp17Destructible* requirements,
+  *Cpp17CopyConstructible*, *Cpp17CopyAssignable*, *Cpp17Swappable*, and
+  *Cpp17Destructible* requirements,
 - the expressions shown in [[cpp17.nullablepointer]] are valid and have
   the indicated semantics, and
 - `P` meets all the other requirements of this subclause.
@@ -1141,21 +1098,6 @@ In [[cpp17.nullablepointer]], `u` denotes an identifier, `t` denotes a
 non-`const` lvalue of type `P`, `a` and `b` denote values of type
 (possibly const) `P`, and `np` denotes a value of type (possibly const)
 `std::nullptr_t`.
-
-**Table: Cpp17NullablePointer requirements**
-
-| Expression | Return type | Operational semantics |
-| --- | --- | --- |
-| `P u(np);`<br> |  | \ensures `u == nullptr` |
-| `P u = np;` |  |  |
-| `P(np)` |  | \ensures `P(np) == nullptr` |
-| `t = np` | `P&` | \ensures `t == nullptr` |
-| `a != b` | `decltype(a != b)` models `boolean-testable` | `!(a == b)` |
-| `a == np` | `decltype(a == np)` and `decltype(np == a)` each model `boolean-testable` | `a == P()` |
-| `np == a` |  |  |
-| `a != np` | `decltype(a != np)` and `decltype(np != a)` each model `boolean-testable` | `!(a == np)` |
-| `np != a` |  |  |
-
 
 #### *Cpp17Hash* requirements <a id="hash.requirements">[[hash.requirements]]</a>
 
@@ -1603,7 +1545,7 @@ to be `true` for any two (possibly const) values `a1`, `a2` of type `X`.
 An allocator type `X` shall meet the *Cpp17CopyConstructible*
 requirements ( [[cpp17.copyconstructible]]). The `XX::pointer`,
 `XX::const_pointer`, `XX::void_pointer`, and `XX::const_void_pointer`
-types shall meet the *Cpp17Nullable\\Pointer* requirements (
+types shall meet the *Cpp17NullablePointer* requirements (
 [[cpp17.nullablepointer]]). No constructor, comparison operator
 function, copy operation, move operation, or swap operation on these
 pointer types shall exit via an exception. `XX::pointer` and
@@ -2020,10 +1962,11 @@ requirements on the implementation.
 In particular, the behavior is undefined in the following cases:
 
 - For replacement functions [[new.delete]], if the installed replacement
-  function does not implement the semantics of the applicable paragraph.
+  function does not implement the semantics of the applicable *Required
+  behavior:* paragraph.
 - For handler functions [[new.handler]], [[terminate.handler]], if the
   installed handler function does not implement the semantics of the
-  applicable paragraph.
+  applicable *Required behavior:* paragraph.
 - For types used as template arguments when instantiating a template
   component, if the operations on the type do not implement the
   semantics of the applicable *Requirements* subclause
@@ -2032,7 +1975,7 @@ In particular, the behavior is undefined in the following cases:
   unless otherwise specified.
 - If any replacement function or handler function or destructor
   operation exits via an exception, unless specifically allowed in the
-  applicable paragraph.
+  applicable *Required behavior:* paragraph.
 - If an incomplete type [[term.incomplete.type]] is used as a template
   argument when instantiating a template component or evaluating a
   concept, unless specifically allowed for that component.
@@ -2161,6 +2104,8 @@ The phrase “unless otherwise specified” applies to cases such as the
 swappable with requirements [[swappable.requirements]]. The exception
 for overloaded operators allows argument-dependent lookup in cases like
 that of `ostream_iterator::operator=` [[ostream.iterator.ops]]:
+
+*Effects:*
 
 ``` cpp
 *out_stream << value;
@@ -2312,9 +2257,10 @@ types unless otherwise specified.
 #### Restrictions on exception handling <a id="res.on.exception.handling">[[res.on.exception.handling]]</a>
 
 Any of the functions defined in the C++ standard library can report a
-failure by throwing an exception of a type described in its paragraph,
-or of a type derived from a type named in the paragraph that would be
-caught by an exception handler for the base type.
+failure by throwing an exception of a type described in its *Throws:*
+paragraph, or of a type derived from a type named in the *Throws:*
+paragraph that would be caught by an exception handler for the base
+type.
 
 Functions from the C standard library shall not throw exceptions [^26]
 
@@ -2326,8 +2272,8 @@ throw exceptions. Every destructor in the C++ standard library shall
 behave as if it had a non-throwing exception specification.
 
 Functions defined in the C++ standard library that do not have a
-paragraph but do have a potentially-throwing exception specification may
-throw *implementation-defined* exceptions.[^28]
+*Throws:* paragraph but do have a potentially-throwing exception
+specification may throw *implementation-defined* exceptions.[^28]
 
 Implementations should report errors by throwing exceptions of or
 derived from the standard exception classes
@@ -2674,7 +2620,7 @@ unspecified state.
 
 [^5]: To save space, elements that do not apply to a function are
     omitted. For example, if a function specifies no preconditions,
-    there will be no element.
+    there will be no *Preconditions:* element.
 
 [^6]: This simplifies the presentation of complexity requirements in
     some cases.

@@ -2,17 +2,25 @@
 import subprocess
 import pytest
 from pathlib import Path
+import sys
+
+# Import inject_macros helper from conftest
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from conftest import inject_macros
 
 
 def run_pandoc_with_filter(latex_content, filter_name="cpp-macros.lua"):
     """Helper to run Pandoc with a filter on LaTeX content"""
+    # Inject simplified_macros.tex preprocessing
+    latex_with_macros = inject_macros(latex_content)
+
     cmd = [
         "pandoc",
         "-f", "latex+raw_tex",
         "-t", "gfm",
         "--lua-filter", f"src/cpp_std_converter/filters/{filter_name}"
     ]
-    result = subprocess.run(cmd, input=latex_content, capture_output=True, text=True)
+    result = subprocess.run(cmd, input=latex_with_macros, capture_output=True, text=True)
     return result.stdout, result.returncode
 
 

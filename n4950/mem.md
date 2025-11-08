@@ -667,7 +667,7 @@ returns a pointer to `r` through which indirection is valid.
 *Returns:* The first member function returns `Ptr::pointer_to(r)`. The
 second member function returns `addressof(r)`.
 
-*Remarks:* If `element_type` is  , the type of `r` is unspecified;
+*Remarks:* If `element_type` is cv , the type of `r` is unspecified;
 otherwise, it is `element_type&`.
 
 #### Optional members <a id="pointer.traits.optmem">[[pointer.traits.optmem]]</a>
@@ -1714,9 +1714,9 @@ as deleted.
 
 ``` cpp
 D d;
-unique_ptr<int, D> p1(new int, D());        // \texttt{D} must be \textit{Cpp17MoveConstructible}
-unique_ptr<int, D> p2(new int, d);          // \texttt{D} must be \textit{Cpp17CopyConstructible}
-unique_ptr<int, D&> p3(new int, d);         // \texttt{p3} holds a reference to \texttt{d}
+unique_ptr<int, D> p1(new int, D());        // D must be Cpp17MoveConstructible
+unique_ptr<int, D> p2(new int, d);          // D must be Cpp17CopyConstructible
+unique_ptr<int, D&> p3(new int, d);         // p3 holds a reference to d
 unique_ptr<int, const D&> p4(new int, D()); // error: rvalue deleter object combined
                                             // with reference deleter type
 ```
@@ -2410,9 +2410,9 @@ namespace std {
 ```
 
 Specializations of `shared_ptr` shall be *Cpp17CopyConstructible*,
-*Cpp17CopyAssignable*, and *Cpp17\\Less\\Than\\Comparable*, allowing
-their use in standard containers. Specializations of `shared_ptr` shall
-be contextually convertible to `bool`, allowing their use in boolean
+*Cpp17CopyAssignable*, and *Cpp17LessThanComparable*, allowing their use
+in standard containers. Specializations of `shared_ptr` shall be
+contextually convertible to `bool`, allowing their use in boolean
 expressions and declarations in conditions.
 
 The template parameter `T` of `shared_ptr` may be an incomplete type.
@@ -2707,7 +2707,7 @@ T& operator*() const noexcept;
 
 *Returns:* `*get()`.
 
-*Remarks:* When `T` is an array type or  , it is unspecified whether
+*Remarks:* When `T` is an array type or cv , it is unspecified whether
 this member function is declared. If it is declared, it is unspecified
 what its return type is, except that the declaration (although not
 necessarily the definition) of the function shall be well-formed.
@@ -2901,9 +2901,9 @@ object of type `T`.
 \[*Example 2*:
 
 ``` cpp
-shared_ptr<int> p = make_shared<int>(); // \texttt{shared_ptr} to \texttt{int()}
+shared_ptr<int> p = make_shared<int>(); // shared_ptr to int()
 shared_ptr<vector<int>> q = make_shared<vector<int>>(16, 1);
-  // \texttt{shared_ptr} to vector of \texttt{16} elements with value \texttt{1}
+  // shared_ptr to vector of 16 elements with value 1
 ```
 
 — *end example*\]
@@ -2924,9 +2924,9 @@ initial value, where `U` is `remove_extent_t<T>`.
 
 ``` cpp
 shared_ptr<double[]> p = make_shared<double[]>(1024);
-  // \texttt{shared_ptr} to a value-initialized \texttt{double[1024]}
+  // shared_ptr to a value-initialized double[1024]
 shared_ptr<double[][2][2]> q = make_shared<double[][2][2]>(6);
-  // \texttt{shared_ptr} to a value-initialized \texttt{double[6][2][2]}
+  // shared_ptr to a value-initialized double[6][2][2]
 ```
 
 — *end example*\]
@@ -2947,9 +2947,9 @@ initial value.
 
 ``` cpp
 shared_ptr<double[1024]> p = make_shared<double[1024]>();
-  // \texttt{shared_ptr} to a value-initialized \texttt{double[1024]}
+  // shared_ptr to a value-initialized double[1024]
 shared_ptr<double[6][2][2]> q = make_shared<double[6][2][2]>();
-  // \texttt{shared_ptr} to a value-initialized \texttt{double[6][2][2]}
+  // shared_ptr to a value-initialized double[6][2][2]
 ```
 
 — *end example*\]
@@ -2972,11 +2972,11 @@ template<class T, class A>
 
 ``` cpp
 shared_ptr<double[]> p = make_shared<double[]>(1024, 1.0);
-  // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
+  // shared_ptr to a double[1024], where each element is 1.0
 shared_ptr<double[][2]> q = make_shared<double[][2]>(6, {1.0, 0.0});
-  // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each \texttt{double[2]} element is \texttt{{1.0, 0.0}}
+  // shared_ptr to a double[6][2], where each double[2] element is {1.0, 0.0}
 shared_ptr<vector<int>[]> r = make_shared<vector<int>[]>(4, {1, 2});
-  // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
+  // shared_ptr to a vector<int>[4], where each vector has contents {1, 2}
 ```
 
 — *end example*\]
@@ -2998,11 +2998,11 @@ element of type `remove_extent_t<T>` has an initial value of `u`.
 
 ``` cpp
 shared_ptr<double[1024]> p = make_shared<double[1024]>(1.0);
-  // \texttt{shared_ptr} to a \texttt{double[1024]}, where each element is \texttt{1.0}
+  // shared_ptr to a double[1024], where each element is 1.0
 shared_ptr<double[6][2]> q = make_shared<double[6][2]>({1.0, 0.0});
-  // \texttt{shared_ptr} to a \texttt{double[6][2]}, where each double[2] element is \texttt{{1.0, 0.0}}
+  // shared_ptr to a double[6][2], where each double[2] element is {1.0, 0.0}
 shared_ptr<vector<int>[4]> r = make_shared<vector<int>[4]>({1, 2});
-  // \texttt{shared_ptr} to a \texttt{vector<int>[4]}, where each vector has contents \texttt{{1, 2}}
+  // shared_ptr to a vector<int>[4], where each vector has contents {1, 2}
 ```
 
 — *end example*\]
@@ -3023,10 +3023,10 @@ template<class T, class A>
 ``` cpp
 struct X { double data[1024]; };
 shared_ptr<X> p = make_shared_for_overwrite<X>();
-  // \texttt{shared_ptr} to a default-initialized \texttt{X}, where each element in \texttt{X::data} has an indeterminate value
+  // shared_ptr to a default-initialized X, where each element in X::data has an indeterminate value
 
 shared_ptr<double[1024]> q = make_shared_for_overwrite<double[1024]>();
-  // \texttt{shared_ptr} to a default-initialized \texttt{double[1024]}, where each element has an indeterminate value
+  // shared_ptr to a default-initialized double[1024], where each element has an indeterminate value
 ```
 
 — *end example*\]
@@ -3047,7 +3047,7 @@ template<class T, class A>
 
 ``` cpp
 shared_ptr<double[]> p = make_shared_for_overwrite<double[]>(1024);
-  // \texttt{shared_ptr} to a default-initialized \texttt{double[1024]}, where each element has an indeterminate value
+  // shared_ptr to a default-initialized double[1024], where each element has an indeterminate value
 ```
 
 — *end example*\]

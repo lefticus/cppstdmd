@@ -140,15 +140,11 @@ local function expand_macros(text, skip_special_chars)
   if not text then return text end
 
   -- Tier 1: Most Critical Macros
-  -- \Cpp renders as C++
-  text = text:gsub("\\Cpp{}", "C++")
-  text = text:gsub("\\Cpp%s", "C++ ")
-  text = text:gsub("\\Cpp([^%w])", "C++%1")
+  -- \Cpp is now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A macro)
 
-  -- \cppver renders as the C++ version literal (from config.tex)
-  text = text:gsub("\\cppver{}", "202302L")
-  text = text:gsub("\\cppver%s", "202302L ")
-  text = text:gsub("\\cppver", "202302L")
+  -- \cppver now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A macro - Phase 3a)
 
   -- Strip discretionary hyphen \- used for line breaking (BEFORE processing \tcode)
   text = text:gsub("\\%-", "")
@@ -166,56 +162,32 @@ local function expand_macros(text, skip_special_chars)
   -- MUST be processed BEFORE \tcode{} conversion to handle nested \tcode{}
   text = expand_impdefx_in_text(text, "\\impdefx{", 9, nil)
 
-  -- \tcode{x} and \keyword{x} - convert to \texttt{x} for Pandoc to handle
+  -- Code formatting macros - convert to \texttt{x} for Pandoc to handle
   -- Pandoc's LaTeX reader will convert \texttt{} to Code elements properly
-  text = text:gsub("\\tcode{", "\\texttt{")
+  -- NOTE: Order matters - process inner macros first so nested \tcode{\keyword{...}} works
   text = text:gsub("\\keyword{", "\\texttt{")
+  text = text:gsub("\\ctype{", "\\texttt{")
+  text = text:gsub("\\tcode{", "\\texttt{")
 
-  -- \deflibconcept{x} - marks concept definition, just keep the name
-  text = text:gsub("\\deflibconcept{([^}]*)}", "%1")
+  -- \deflibconcept now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category I macro - Phase 3a)
 
   -- Tier 2: Grammar and Special Identifiers
-  -- \grammarterm{x} renders as *x* (italics)
+
+  -- \grammarterm{x} renders as *x* (italics) - RESTORED: context-dependent
   text = text:gsub("\\grammarterm{([^}]*)}", "*%1*")
 
-  -- \exposid{x} renders as exposition-only identifier
-  text = text:gsub("\\exposid{([^}]*)}", "*%1*")
-
-  -- \exposidnc{x} renders as exposition-only identifier without italic correction
-  text = text:gsub("\\exposidnc{([^}]*)}", "*%1*")
-
-  -- \exposconcept{x} renders as exposition-only concept reference
-  text = text:gsub("\\exposconcept{([^}]*)}", "`%1`")
-
-  -- \placeholder{x} renders as placeholder
+  -- \placeholder{x} and \placeholdernc{x} render as *x* - RESTORED: context-dependent
   text = text:gsub("\\placeholder{([^}]*)}", "*%1*")
-
-  -- \placeholdernc{x} renders as placeholder (non-code variant)
   text = text:gsub("\\placeholdernc{([^}]*)}", "*%1*")
 
-  -- \libheader{x} renders as <x>
-  text = text:gsub("\\libheader{([^}]*)}", "`<%1>`")
+  -- Remaining Category B and C macros handled by simplified_macros.tex → Pandoc
+  -- (Kept in simplified: \exposid, \exposidnc, \exposconcept,
+  --  \libheader, \libheaderdef, \libheaderref, \libheaderrefx)
 
-  -- \libheaderdef{x} renders as <x>
-  text = text:gsub("\\libheaderdef{([^}]*)}", "`<%1>`")
-
-  -- \libheaderref{x} renders as <x> (reference to header, same as libheader)
-  text = text:gsub("\\libheaderref{([^}]*)}", "`<%1>`")
-
-  -- \libheaderrefx{header}{section} renders as <header> (ignores section label)
-  text = text:gsub("\\libheaderrefx{([^}]*)}{[^}]*}", "`<%1>`")
-
-  -- Tier 3: C++ Version Macros and General C++ Macro
-  text = text:gsub("\\Cpp{}", "C++")
-  text = text:gsub("\\Cpp{%*%.", "C++")  -- Handle broken case like \Cpp{*.
-  text = text:gsub("\\Cpp%s+", "C++ ")
-
-  text = text:gsub("\\CppIII{}", "C++03")
-  text = text:gsub("\\CppXI{}", "C++11")
-  text = text:gsub("\\CppXIV{}", "C++14")
-  text = text:gsub("\\CppXVII{}", "C++17")
-  text = text:gsub("\\CppXX{}", "C++20")
-  text = text:gsub("\\CppXXIII{}", "C++23")
+  -- Tier 3: C++ Version Macros
+  -- All \Cpp* macros now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A macros)
 
   -- Library chapter reference macros (dynamic, loaded from config.tex in Meta())
   -- Handle with braces first (more specific pattern)
@@ -224,61 +196,30 @@ local function expand_macros(text, skip_special_chars)
   -- Then without braces
   text = text:gsub("\\firstlibchapter", FIRSTLIB)
   text = text:gsub("\\lastlibchapter", LASTLIB)
-  text = text:gsub("\\CppXXVI{}", "C++26")
 
   -- Tier 4: Reference Standards
-  text = text:gsub("\\IsoC{}", "ISO/IEC 9899:2018 (C)")
-  text = text:gsub("\\IsoPosix{}", "IEEE 1003.1-2017 (POSIX)")
-  text = text:gsub("\\IsoFloatUndated{}", "ISO/IEC 60559")
+  -- \IsoC, \IsoPosix, \IsoFloatUndated now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A macros)
 
   -- Tier 5: Common Formatting
-  -- \cv renders as "cv"
-  text = text:gsub("\\cv{}", "cv")
-  text = text:gsub("\\cv%s", "cv ")
-  text = text:gsub("\\cv([^%w])", "cv%1")
+  -- \cv now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A macro)
 
   -- Tier 6: Library specification macros
-  -- \seebelow renders as "*see below*"
-  text = text:gsub("\\seebelow{}", "*see below*")
-  text = text:gsub("\\seebelow%s", "*see below* ")
-  text = text:gsub("\\seebelow", "*see below*")
+  -- \seebelow, \unspec, \unspecnc, \expos now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category D macros)
 
-  -- \unspec renders as "*unspecified*"
-  text = text:gsub("\\unspec{}", "*unspecified*")
-  text = text:gsub("\\unspec%s", "*unspecified* ")
-  text = text:gsub("\\unspec", "*unspecified*")
+  -- \fmtgrammarterm, \libglobal now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category B/C macros)
 
-  -- \unspecnc renders as "*unspecified*" (non-code variant)
-  text = text:gsub("\\unspecnc{}", "*unspecified*")
-  text = text:gsub("\\unspecnc%s", "*unspecified* ")
-  text = text:gsub("\\unspecnc", "*unspecified*")
+  -- \impldef now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category D macro)
 
-  -- \expos renders as "*exposition only*"
-  text = text:gsub("\\expos{}", "*exposition only*")
-  text = text:gsub("\\expos%s", "*exposition only* ")
-  text = text:gsub("\\expos", "*exposition only*")
+  -- \cvqual, \ctype now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A, B macros)
 
-  -- \fmtgrammarterm{x} renders as *x* (format grammar term - gray sans-serif italic -> italic)
-  text = text:gsub("\\fmtgrammarterm{([^}]*)}", "*%1*")
-
-  -- \libglobal{x} renders as `x` (library global function/type)
-  text = text:gsub("\\libglobal{([^}]*)}", "`%1`")
-
-  -- \impldef{description} renders as "*implementation-defined*"
-  -- The description text is informational only and doesn't appear in output
-  text = process_macro_with_replacement(text, "impldef", function(content)
-    return "*implementation-defined*"
-  end)
-
-  -- \cvqual renders as "cv-qualifier"
-  text = text:gsub("\\cvqual{}", "cv-qualifier")
-  text = text:gsub("\\cvqual%s", "cv-qualifier ")
-  text = text:gsub("\\cvqual([^%w])", "cv-qualifier%1")
-
-  -- \ctype{x} renders as C type
-  text = text:gsub("\\ctype{([^}]*)}", "`%1`")
-
-  -- \stage{N} renders as "Stage N:" (used in description lists)
+  -- \stage{N} - keep for RawBlock description list processing
+  -- (simplified_macros.tex handles it in regular context, but RawBlocks need Lua)
   text = text:gsub("\\stage{([^}]*)}", "Stage %1:")
 
   -- Tier 7: Special characters and preprocessor macros
@@ -286,6 +227,14 @@ local function expand_macros(text, skip_special_chars)
   if not skip_special_chars then
     text = convert_special_chars(text)
   end
+
+  -- \caret and \unun - special characters that Pandoc macro preprocessing can't handle
+  text = text:gsub("\\caret{}", "^")
+  text = text:gsub("\\caret%s", "^ ")  -- Handle \caret followed by space
+  text = text:gsub("\\caret([^a-zA-Z])", "^%1")  -- Handle \caret not followed by letter
+  text = text:gsub("\\unun{}", "__")
+  text = text:gsub("\\unun%s", "__ ")
+  text = text:gsub("\\unun([^a-zA-Z])", "__%1")
 
   -- \mname{X} renders as __X__ (preprocessor macro names with underscore wrapper)
   -- \xname{X} renders as __X (special identifiers with underscore prefix)
@@ -297,37 +246,14 @@ local function expand_macros(text, skip_special_chars)
   -- \descr{X} renders as X (description text, just remove wrapper)
   text = text:gsub("\\descr{([^}]*)}", "%1")
 
-  -- \defn{x} renders as definition term
-  text = process_macro_with_replacement(text, "defn", function(content)
-    return "*" .. content .. "*"
-  end)
+  -- \defn{}, \term{}, \doccite{} now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category C macros)
 
   -- Note: \defnx, \defnadj, \defexposconcept are now handled in RawInline
   -- with proper emphasis using pandoc.Emph() instead of literal asterisks
 
-  -- Change description macros - these are section headers in change history
-  -- \change -> **Change:**
-  text = text:gsub("\\change%s*\n", "**Change:** ")
-  text = text:gsub("\\change%s+", "**Change:** ")
-  text = text:gsub("\\change([^%w])", "**Change:**%1")
-
-  -- \rationale -> **Rationale:**
-  text = text:gsub("\\rationale%s*\n", "**Rationale:** ")
-  text = text:gsub("\\rationale%s+", "**Rationale:** ")
-  text = text:gsub("\\rationale([^%w])", "**Rationale:**%1")
-
-  -- \effect -> **Effect on original feature:**
-  text = text:gsub("\\effect%s*\n", "**Effect on original feature:** ")
-  text = text:gsub("\\effect%s+", "**Effect on original feature:** ")
-  text = text:gsub("\\effect([^%w])", "**Effect on original feature:**%1")
-
-  -- \term{x} renders as term
-  text = process_macro_with_replacement(text, "term", function(content)
-    return "*" .. content .. "*"
-  end)
-
-  -- \doccite{x} renders as italic (document citation)
-  text = text:gsub("\\doccite{([^}]*)}", "*%1*")
+  -- Change description macros now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category G macros - \change, \rationale, \effect)
 
   -- \opt{x} renders as x_opt (optional grammar element with subscript marker)
   -- EXCEPT in BNF blocks where cpp-grammar.lua converts it to [x] bracket notation
@@ -339,30 +265,26 @@ local function expand_macros(text, skip_special_chars)
   -- The LaTeX macro does complex text scaling, but for Markdown we simplify to standard format
   text = text:gsub("\\ucode{([^}]*)}", "`U+%1`")
 
-  -- \ntbs{} and \ntmbs{} - null-terminated byte/multibyte string abbreviations
-  -- These expand to \NTS{ntbs} -> \textsc{ntbs} which should render as uppercase
-  text = text:gsub("\\ntbs{}", "NTBS")
-  text = text:gsub("\\ntmbs{}", "NTMBS")
-  -- Also handle \NTS{text} directly (converts \textsc{text} to uppercase)
+  -- \ntbs{} and \ntmbs{} now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A macros)
+  -- Note: \NTS{text} still needs Lua handling for uppercase conversion
   text = text:gsub("\\NTS{([^}]*)}", function(s) return s:upper() end)
 
   -- Special characters that may appear in inline text (already handled above by convert_special_chars)
   -- Left here for documentation but no longer needed as duplicates
 
   -- \uname{X} → X (Unicode character names - strip small caps formatting)
-  text = text:gsub("\\uname{([^}]*)}", "%1")
+  -- \uname now handled by simplified_macros.tex → Pandoc (Phase 3a)
 
-  -- \notdef → *not defined* (exposition-only marker)
-  text = text:gsub("\\notdef{}", "*not defined*")
-  text = text:gsub("\\notdef%s", "*not defined* ")
-  text = text:gsub("\\notdef", "*not defined*")
+  -- \notdef now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category D macro)
 
-  -- \colcol{} renders as ::
+  -- \colcol{} renders as :: (restored - context-dependent)
   text = text:gsub("\\colcol{}", "::")
 
   -- Math formatting
   text = text:gsub("\\mathit{([^}]*)}", "*%1*")
-  text = text:gsub("\\mathrm{([^}]*)}", "%1")
+  text = text:gsub("\\mathrm{([^}]*)}", "%1")  -- Restored: different meaning in math mode
 
   -- Helper function to split comma-separated references and create individual links
   -- E.g., "a,b,c" -> "[[a]], [[b]], [[c]]"
@@ -406,6 +328,11 @@ local function expand_macros(text, skip_special_chars)
   text = text:gsub("^\\tref{([^}]*)}", function(refs)
     return split_refs(refs)
   end)
+
+  -- Strip empty braces {} left behind after macro expansion from simplified_macros.tex
+  -- Example: \Cpp{} → C++{}, \CppXX{} → C++20{}
+  -- The {} is a LaTeX idiom to prevent space-eating but becomes literal text after preprocessing
+  text = text:gsub("{}", "")
 
   return text
 end
@@ -476,10 +403,8 @@ function RawInline(elem)
     return pandoc.Str(hbox_content)
   end
 
-  -- \impldef{description} - handle BEFORE \tcode to avoid greedy matching issues
-  if text:match("^\\impldef{") then
-    return pandoc.Emph({pandoc.Str("implementation-defined")})
-  end
+  -- \impldef now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category D macro)
 
   -- \impdefx{description} - handle BEFORE \tcode to extract description with nested macros
   if text:match("^\\impdefx{") then
@@ -654,8 +579,9 @@ function RawInline(elem)
     code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
     code = code:gsub("\\exposid{([^}]*)}", "%1")
     code = code:gsub("\\mathit{([^}]*)}", "%1")
-    code = code:gsub("\\mathrm{([^}]*)}", "%1")
-    code = code:gsub("\\colcol{}", "::")
+    code = code:gsub("\\mathrm{([^}]*)}", "%1")  -- Restored: different meaning in math mode
+    code = code:gsub("\\textit{([^}]*)}", "%1")  -- Strip \textit{} from simplified_macros.tex preprocessing
+    code = code:gsub("\\colcol{}", "::")  -- Restored: context-dependent
     -- Handle special characters
     code = convert_special_chars(code)
     -- Handle \mname macros
@@ -732,12 +658,8 @@ function RawInline(elem)
     end
   end
 
-  -- Other emphasis macros - return Emph elements
-  local emph
-
-  -- \oldconcept{x} - C++17-era named requirements (prepend Cpp17 prefix)
-  emph = text:match("\\oldconcept{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str("Cpp17" .. emph)}) end
+  -- \oldconcept now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category C macro)
 
   -- Emphasis macros - return Emph elements
 
@@ -962,32 +884,8 @@ function RawInline(elem)
     return pandoc.RawInline('markdown', '[`' .. first .. '`, `' .. last .. '`)')
   end
 
-  -- Handle bare \Cpp (without braces)
-  if text == "\\Cpp" then
-    return pandoc.Str("C++")
-  end
-
-  -- Handle bare \cv (without braces)
-  if text == "\\cv" then
-    return pandoc.Str("cv")
-  end
-
-  -- Library specification macros - return as Emph
-  if text:match("^\\seebelow") then
-    return pandoc.Emph({pandoc.Str("see below")})
-  end
-
-  if text:match("^\\unspec") then
-    return pandoc.Emph({pandoc.Str("unspecified")})
-  end
-
-  if text:match("^\\unspecnc") then
-    return pandoc.Emph({pandoc.Str("unspecified")})
-  end
-
-  if text:match("^\\expos") then
-    return pandoc.Emph({pandoc.Str("exposition only")})
-  end
+  -- Bare \Cpp, \cv, \seebelow, \unspec, \unspecnc, \expos now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category A and D macros)
 
   -- \UAX{number} - Unicode Annex reference (e.g., \UAX{31} -> UAX #31)
   local uax_num = text:match("^\\UAX{([^}]*)}")
@@ -1021,6 +919,9 @@ function Code(elem)
   -- like discretionary hyphens that shouldn't appear in code
   elem.text = elem.text:gsub("\\%-", "")
 
+  -- Strip \textit{} from simplified_macros.tex preprocessing
+  elem.text = elem.text:gsub("\\textit{([^}]*)}", "%1")
+
   -- LaTeX spacing commands should be converted to regular spaces
   elem.text = convert_latex_spacing(elem.text)
 
@@ -1052,12 +953,10 @@ function CodeBlock(elem)
   text = text:gsub("\\clap{([^}]+)}", "%1")
 
   -- \uname{X} → X (Unicode character names - strip formatting)
-  text = text:gsub("\\uname{([^}]*)}", "%1")
+  -- \uname now handled by simplified_macros.tex → Pandoc (Phase 3a)
 
-  -- \notdef → *not defined* (exposition-only marker)
-  text = text:gsub("\\notdef{}", "*not defined*")
-  text = text:gsub("\\notdef%s", "*not defined* ")
-  text = text:gsub("\\notdef", "*not defined*")
+  -- \notdef now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category D macro)
 
   -- \unicode{XXXX}{description} → U+XXXX (description)
   -- This macro takes two brace-balanced arguments
@@ -1075,8 +974,8 @@ function CodeBlock(elem)
   -- Handle \mname{} macros
   text = convert_mname(text)
 
-  -- \deflibconcept{x} - marks concept definition, just keep the name
-  text = text:gsub("\\deflibconcept{([^}]*)}", "%1")
+  -- \deflibconcept now handled by simplified_macros.tex → Pandoc
+  -- (Removed: Category I macro - Phase 3a)
 
   -- Strip discretionary hyphen \- used for line breaking
   text = text:gsub("\\%-", "")

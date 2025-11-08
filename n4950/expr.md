@@ -71,8 +71,8 @@ due to the associativity and precedence of these operators. Thus, the
 result of the sum `(a + 32760)` is next added to `b`, and that result is
 then added to 5 which results in the value assigned to `a`. On a machine
 in which overflows produce an exception and in which the range of values
-representable by an `int` is , the implementation cannot rewrite this
-expression as
+representable by an `int` is \[`-32768`, `+32767`\], the implementation
+cannot rewrite this expression as
 
 ``` cpp
 a = ((a + b) + 32765);
@@ -279,17 +279,16 @@ pointer-to-member type or `std::nullptr_t`, is:
 - if both `p1` and `p2` are null pointer constants, `std::nullptr_t`;
 - if either `p1` or `p2` is a null pointer constant, `T2` or `T1`,
   respectively;
-- if `T1` or `T2` is “pointer to cv-qualifier{cv1} `void`” and the other
-  type is “pointer to cv-qualifier{cv2} `T`”, where `T` is an object
-  type or `void`, “pointer to cv-qualifier{cv12} `void`”, where
-  cv-qualifier{cv12} is the union of cv-qualifier{cv1} and
-  cv-qualifier{cv2};
+- if `T1` or `T2` is “pointer to cv-qualifiercv1 `void`” and the other
+  type is “pointer to cv-qualifiercv2 `T`”, where `T` is an object type
+  or `void`, “pointer to cv-qualifiercv12 `void`”, where
+  cv-qualifiercv12 is the union of cv-qualifiercv1 and cv-qualifiercv2;
 - if `T1` or `T2` is “pointer to `noexcept` function” and the other type
   is “pointer to function”, where the function types are otherwise the
   same, “pointer to function”;
-- if `T1` is “pointer to cv-qualifier{cv1} `C1`” and `T2` is “pointer to
-  cv-qualifier{cv2} `C2`”, where `C1` is reference-related to `C2` or
-  `C2` is reference-related to `C1` [[dcl.init.ref]], the
+- if `T1` is “pointer to cv-qualifiercv1 `C1`” and `T2` is “pointer to
+  cv-qualifiercv2 `C2`”, where `C1` is reference-related to `C2` or `C2`
+  is reference-related to `C1` [[dcl.init.ref]], the
   qualification-combined type [[conv.qual]] of `T1` and `T2` or the
   qualification-combined type of `T2` and `T1`, respectively;
 - if `T1` or `T2` is “pointer to member of `C1` of type function”, the
@@ -298,10 +297,10 @@ pointer-to-member type or `std::nullptr_t`, is:
   `C1` [[dcl.init.ref]], where the function types are otherwise the
   same, “pointer to member of `C2` of type function” or “pointer to
   member of `C1` of type function”, respectively;
-- if `T1` is “pointer to member of `C1` of type cv-qualifier{cv1} `U`”
-  and `T2` is “pointer to member of `C2` of type cv-qualifier{cv2} `U`”,
-  for some non-function type `U`, where `C1` is reference-related to
-  `C2` or `C2` is reference-related to `C1` [[dcl.init.ref]], the
+- if `T1` is “pointer to member of `C1` of type cv-qualifiercv1 `U`” and
+  `T2` is “pointer to member of `C2` of type cv-qualifiercv2 `U`”, for
+  some non-function type `U`, where `C1` is reference-related to `C2` or
+  `C2` is reference-related to `C1` [[dcl.init.ref]], the
   qualification-combined type of `T2` and `T1` or the
   qualification-combined type of `T1` and `T2`, respectively;
 - if `T1` and `T2` are similar types [[conv.qual]], the
@@ -540,15 +539,15 @@ int k = X().n;      // OK, X() prvalue is converted to xvalue
 
 ### Qualification conversions <a id="conv.qual">[[conv.qual]]</a>
 
-A *qualification-decomposition* of a type `T` is a sequence of $\cv{}_i$
+A *qualification-decomposition* of a type `T` is a sequence of cv{}_i
 and Pᵢ such that `T` is
 
-where each $\cv{}_i$ is a set of cv-qualifiers [[basic.type.qualifier]],
+where each cv{}_i is a set of cv-qualifiers [[basic.type.qualifier]],
 and each Pᵢ is “pointer to” [[dcl.ptr]], “pointer to member of class Cᵢ
 of type” [[dcl.mptr]], “array of Nᵢ”, or “array of unknown bound of”
-[[dcl.array]]. If Pᵢ designates an array, the cv-qualifiers
-$\cv{}_{i+1}$ on the element type are also taken as the cv-qualifiers
-$\cv{}_i$ of the array.
+[[dcl.array]]. If Pᵢ designates an array, the cv-qualifiers $cv{}_{i+1}$
+on the element type are also taken as the cv-qualifiers cv{}_i of the
+array.
 
 \[*Example 1*: The type denoted by the *type-id* `const int **` has
 three qualification-decompositions, taking `U` as “`int`”, as “pointer
@@ -557,8 +556,8 @@ to `const int`”, and as “pointer to pointer to
 
 The n-tuple of cv-qualifiers after the first one in the longest
 qualification-decomposition of `T`, that is,
-$\cv{}_1, \cv{}_2, \dotsc, \cv{}_n$, is called the
-*cv-qualification signature* of `T`.
+$cv{}_1, cv{}_2, \dotsc, cv{}_n$, is called the *cv-qualification
+signature* of `T`.
 
 Two types `T1` and `T2` are *similar* if they have
 qualification-decompositions with the same n such that corresponding Pᵢ
@@ -568,15 +567,14 @@ components are either the same or one is “array of Nᵢ” and the other is
 The *qualification-combined type* of two types `T1` and `T2` is the type
 `T3` similar to `T1` whose qualification-decomposition is such that:
 
-- for every i > 0, $\cv{}^3_i$ is the union of $\cv{}^1_i$ and
-  $\cv{}^2_i$,
+- for every i > 0, cv{}^3ᵢ is the union of cv{}^1ᵢ and cv{}^2ᵢ,
 - if either P¹_i or P²_i is “array of unknown bound of”, P³_i is “array
   of unknown bound of”, otherwise it is P¹_i, and
-- if the resulting $\cv{}^3_i$ is different from $\cv{}^1_i$ or
-  $\cv{}^2_i$, or the resulting P³_i is different from P¹_i or P²_i,
-  then `const` is added to every $\cv{}^3_k$ for 0 < k < i,
+- if the resulting cv{}^3ᵢ is different from cv{}^1ᵢ or cv{}^2ᵢ, or the
+  resulting P³_i is different from P¹_i or P²_i, then `const` is added
+  to every cv{}^3ₖ for 0 < k < i,
 
-where $\cv{}^j_i$ and $P^j_i$ are the components of the
+where cv{}^jᵢ and $P^j_i$ are the components of the
 qualification-decomposition of `T`j. A prvalue of type `T1` can be
 converted to type `T2` if the qualification-combined type of `T1` and
 `T2` is `T2`.
@@ -604,13 +602,13 @@ int main() {
 that both can be converted to the qualification-combined type of `T1`
 and `T2`. — *end note*\]
 
-\[*Note 3*: A prvalue of type “pointer to cv-qualifier{cv1} `T`” can be
-converted to a prvalue of type “pointer to cv-qualifier{cv2} `T`” if
-“cv-qualifier{cv2} `T`” is more cv-qualified than “cv-qualifier{cv1}
-`T`”. A prvalue of type “pointer to member of `X` of type
-cv-qualifier{cv1} `T`” can be converted to a prvalue of type “pointer to
-member of `X` of type cv-qualifier{cv2} `T`” if “cv-qualifier{cv2} `T`”
-is more cv-qualified than “cv-qualifier{cv1} `T`”. — *end note*\]
+\[*Note 3*: A prvalue of type “pointer to cv-qualifiercv1 `T`” can be
+converted to a prvalue of type “pointer to cv-qualifiercv2 `T`” if
+“cv-qualifiercv2 `T`” is more cv-qualified than “cv-qualifiercv1 `T`”. A
+prvalue of type “pointer to member of `X` of type cv-qualifiercv1 `T`”
+can be converted to a prvalue of type “pointer to member of `X` of type
+cv-qualifiercv2 `T`” if “cv-qualifiercv2 `T`” is more cv-qualified than
+“cv-qualifiercv1 `T`”. — *end note*\]
 
 \[*Note 4*: Function types (including those used in
 pointer-to-member-function types) are never cv-qualified
@@ -1388,8 +1386,8 @@ int j = []<class T>(T t, int i) { return i; }(3, 4);            // OK, a generic
 #### Closure types <a id="expr.prim.lambda.closure">[[expr.prim.lambda.closure]]</a>
 
 The type of a *lambda-expression* (which is also the type of the closure
-object) is a unique, unnamed non-union class type, called the
-*closure type*, whose properties are described below.
+object) is a unique, unnamed non-union class type, called the *closure
+type*, whose properties are described below.
 
 The closure type is declared in the smallest block scope, class scope,
 or namespace scope that contains the corresponding *lambda-expression*.
@@ -2216,10 +2214,10 @@ fold-operator: one of
 
 An expression of the form `(...` *op* `e)` where *op* is a
 *fold-operator* is called a *unary left fold*. An expression of the form
-`(e` *op* `...)` where *op* is a *fold-operator* is called a
-*unary right fold*. Unary left folds and unary right folds are
-collectively called *unary folds*. In a unary fold, the
-*cast-expression* shall contain an unexpanded pack [[temp.variadic]].
+`(e` *op* `...)` where *op* is a *fold-operator* is called a *unary
+right fold*. Unary left folds and unary right folds are collectively
+called *unary folds*. In a unary fold, the *cast-expression* shall
+contain an unexpanded pack [[temp.variadic]].
 
 An expression of the form `(e1` *op1* `...` *op2* `e2)` where *op1* and
 *op2* are *fold-operator*s is called a *binary fold*. In a binary fold,
@@ -2265,7 +2263,7 @@ requirement-parameter-list:
 
 ``` bnf
 requirement-body:
-    '{' requirement-seq '}'
+    \terminal{\ requirement-seq \terminal{\}}
 ```
 
 ``` bnf
@@ -2430,7 +2428,7 @@ require that type to be complete [[term.incomplete.type]].
 
 ``` bnf
 compound-requirement:
-    '{' expression '}' [noexcept] [return-type-requirement] ';'
+    \terminal{\ expression \terminal{\}} [noexcept] [return-type-requirement] \terminal{;}
 ```
 
 ``` bnf
@@ -2491,7 +2489,7 @@ template<typename T> concept C2 = requires(T x) {
 
 The *compound-requirement* in `C2` requires that `*x` is a valid
 expression, that `typename T::inner` is a valid type, and that
-`std::same_as<decltype((*x)), typename T::inner>` is satisfied.
+`std::\texttt{same_as}<decltype((*x)), typename T::inner>` is satisfied.
 
 ``` cpp
 template<typename T> concept C3 =
@@ -2891,9 +2889,9 @@ after the `.` and `->` operators. — *end note*\]
 
 If `E2` is a bit-field, `E1.E2` is a bit-field. The type and value
 category of `E1.E2` are determined as follows. In the remainder of 
-[[expr.ref]], cv-qualifier{cq} represents either `const` or the absence
-of `const` and cv-qualifier{vq} represents either `volatile` or the
-absence of `volatile`. cv-qualifier{cv} represents an arbitrary set of
+[[expr.ref]], cv-qualifiercq represents either `const` or the absence of
+`const` and cv-qualifiervq represents either `volatile` or the absence
+of `volatile`. cv-qualifiercv represents an arbitrary set of
 cv-qualifiers, as defined in  [[basic.type.qualifier]].
 
 If `E2` is declared to have type “reference to `T`”, then `E1.E2` is an
@@ -2907,20 +2905,19 @@ applies.
   `E1.E2` is an lvalue; the expression designates the named member of
   the class. The type of `E1.E2` is `T`.
 - If `E2` is a non-static data member and the type of `E1` is
-  “cv-qualifier{cq1 vq1} `X`”, and the type of `E2` is
-  “cv-qualifier{cq2 vq2} `T`”, the expression designates the
-  corresponding member subobject of the object designated by the first
-  expression. If `E1` is an lvalue, then `E1.E2` is an lvalue; otherwise
-  `E1.E2` is an xvalue. Let the notation cv-qualifier{vq12} stand for
-  the “union” of cv-qualifier{vq1} and cv-qualifier{vq2}; that is, if
-  cv-qualifier{vq1} or cv-qualifier{vq2} is `volatile`, then
-  cv-qualifier{vq12} is `volatile`. Similarly, let the notation
-  cv-qualifier{cq12} stand for the “union” of cv-qualifier{cq1} and
-  cv-qualifier{cq2}; that is, if cv-qualifier{cq1} or cv-qualifier{cq2}
-  is `const`, then cv-qualifier{cq12} is `const`. If `E2` is declared to
-  be a `mutable` member, then the type of `E1.E2` is “cv-qualifier{vq12}
-  `T`”. If `E2` is not declared to be a `mutable` member, then the type
-  of `E1.E2` is “cv-qualifier{cq12} cv-qualifier{vq12} `T`”.
+  “cv-qualifiercq1 vq1 `X`”, and the type of `E2` is “cv-qualifiercq2
+  vq2 `T`”, the expression designates the corresponding member subobject
+  of the object designated by the first expression. If `E1` is an
+  lvalue, then `E1.E2` is an lvalue; otherwise `E1.E2` is an xvalue. Let
+  the notation cv-qualifiervq12 stand for the “union” of cv-qualifiervq1
+  and cv-qualifiervq2; that is, if cv-qualifiervq1 or cv-qualifiervq2 is
+  `volatile`, then cv-qualifiervq12 is `volatile`. Similarly, let the
+  notation cv-qualifiercq12 stand for the “union” of cv-qualifiercq1 and
+  cv-qualifiercq2; that is, if cv-qualifiercq1 or cv-qualifiercq2 is
+  `const`, then cv-qualifiercq12 is `const`. If `E2` is declared to be a
+  `mutable` member, then the type of `E1.E2` is “cv-qualifiervq12 `T`”.
+  If `E2` is not declared to be a `mutable` member, then the type of
+  `E1.E2` is “cv-qualifiercq12 cv-qualifiervq12 `T`”.
 - If `E2` is an overload set, function overload resolution
   [[over.match]] is used to select the function to which `E2` refers.
   The type of `E1.E2` is the type of `E2` and `E1.E2` refers to the
@@ -3013,14 +3010,13 @@ class type, and the result is an xvalue of the type referred to by `T`.
 If the type of `v` is the same as `T` (ignoring cv-qualifications), the
 result is `v` (converted if necessary).
 
-If `T` is “pointer to cv-qualifier{cv1} `B`” and `v` has type “pointer
-to cv-qualifier{cv2} `D`” such that `B` is a base class of `D`, the
-result is a pointer to the unique `B` subobject of the `D` object
-pointed to by `v`, or a null pointer value if `v` is a null pointer
-value. Similarly, if `T` is “reference to cv-qualifier{cv1} `B`” and `v`
-has type cv-qualifier{cv2} `D` such that `B` is a base class of `D`, the
-result is the unique `B` subobject of the `D` object referred to by
-`v`.[^14]
+If `T` is “pointer to cv-qualifiercv1 `B`” and `v` has type “pointer to
+cv-qualifiercv2 `D`” such that `B` is a base class of `D`, the result is
+a pointer to the unique `B` subobject of the `D` object pointed to by
+`v`, or a null pointer value if `v` is a null pointer value. Similarly,
+if `T` is “reference to cv-qualifiercv1 `B`” and `v` has type
+cv-qualifiercv2 `D` such that `B` is a base class of `D`, the result is
+the unique `B` subobject of the `D` object referred to by `v`.[^14]
 
 In both the pointer and reference cases, the program is ill-formed if
 `B` is an inaccessible or ambiguous base class of `D`.
@@ -3179,19 +3175,19 @@ if `T` is an rvalue reference to object type, the result is an xvalue;
 otherwise, the result is a prvalue. The `static_cast` operator shall not
 cast away constness [[expr.const.cast]].
 
-An lvalue of type “cv-qualifier{cv1} `B`”, where `B` is a class type,
-can be cast to type “reference to cv-qualifier{cv2} `D`”, where `D` is a
-class derived [[class.derived]] from `B`, if cv-qualifier{cv2} is the
-same cv-qualification as, or greater cv-qualification than,
-cv-qualifier{cv1}. If `B` is a virtual base class of `D` or a base class
-of a virtual base class of `D`, or if no valid standard conversion from
-“pointer to `D`” to “pointer to `B`” exists [[conv.ptr]], the program is
-ill-formed. An xvalue of type “cv-qualifier{cv1} `B`” can be cast to
-type “rvalue reference to cv-qualifier{cv2} `D`” with the same
-constraints as for an lvalue of type “cv-qualifier{cv1} `B`”. If the
-object of type “cv-qualifier{cv1} `B`” is actually a base class
-subobject of an object of type `D`, the result refers to the enclosing
-object of type `D`. Otherwise, the behavior is undefined.
+An lvalue of type “cv-qualifiercv1 `B`”, where `B` is a class type, can
+be cast to type “reference to cv-qualifiercv2 `D`”, where `D` is a class
+derived [[class.derived]] from `B`, if cv-qualifiercv2 is the same
+cv-qualification as, or greater cv-qualification than, cv-qualifiercv1.
+If `B` is a virtual base class of `D` or a base class of a virtual base
+class of `D`, or if no valid standard conversion from “pointer to `D`”
+to “pointer to `B`” exists [[conv.ptr]], the program is ill-formed. An
+xvalue of type “cv-qualifiercv1 `B`” can be cast to type “rvalue
+reference to cv-qualifiercv2 `D`” with the same constraints as for an
+lvalue of type “cv-qualifiercv1 `B`”. If the object of type
+“cv-qualifiercv1 `B`” is actually a base class subobject of an object of
+type `D`, the result refers to the enclosing object of type `D`.
+Otherwise, the behavior is undefined.
 
 \[*Example 1*:
 
@@ -3312,27 +3308,25 @@ destination values, the result of the conversion is an
 *implementation-defined* choice of either of those values. Otherwise,
 the behavior is undefined.
 
-A prvalue of type “pointer to cv-qualifier{cv1} `B`”, where `B` is a
-class type, can be converted to a prvalue of type “pointer to
-cv-qualifier{cv2} `D`”, where `D` is a complete class derived
-[[class.derived]] from `B`, if cv-qualifier{cv2} is the same
-cv-qualification as, or greater cv-qualification than,
-cv-qualifier{cv1}. If `B` is a virtual base class of `D` or a base class
-of a virtual base class of `D`, or if no valid standard conversion from
-“pointer to `D`” to “pointer to `B`” exists [[conv.ptr]], the program is
-ill-formed. The null pointer value [[basic.compound]] is converted to
-the null pointer value of the destination type. If the prvalue of type
-“pointer to cv-qualifier{cv1} `B`” points to a `B` that is actually a
-base class subobject of an object of type `D`, the resulting pointer
-points to the enclosing object of type `D`. Otherwise, the behavior is
-undefined.
+A prvalue of type “pointer to cv-qualifiercv1 `B`”, where `B` is a class
+type, can be converted to a prvalue of type “pointer to cv-qualifiercv2
+`D`”, where `D` is a complete class derived [[class.derived]] from `B`,
+if cv-qualifiercv2 is the same cv-qualification as, or greater
+cv-qualification than, cv-qualifiercv1. If `B` is a virtual base class
+of `D` or a base class of a virtual base class of `D`, or if no valid
+standard conversion from “pointer to `D`” to “pointer to `B`” exists
+[[conv.ptr]], the program is ill-formed. The null pointer value
+[[basic.compound]] is converted to the null pointer value of the
+destination type. If the prvalue of type “pointer to cv-qualifiercv1
+`B`” points to a `B` that is actually a base class subobject of an
+object of type `D`, the resulting pointer points to the enclosing object
+of type `D`. Otherwise, the behavior is undefined.
 
-A prvalue of type “pointer to member of `D` of type cv-qualifier{cv1}
-`T`” can be converted to a prvalue of type “pointer to member of `B` of
-type cv-qualifier{cv2} `T`”, where `D` is a complete class type and `B`
-is a base class [[class.derived]] of `D`, if cv-qualifier{cv2} is the
-same cv-qualification as, or greater cv-qualification than,
-cv-qualifier{cv1}.
+A prvalue of type “pointer to member of `D` of type cv-qualifiercv1 `T`”
+can be converted to a prvalue of type “pointer to member of `B` of type
+cv-qualifiercv2 `T`”, where `D` is a complete class type and `B` is a
+base class [[class.derived]] of `D`, if cv-qualifiercv2 is the same
+cv-qualification as, or greater cv-qualification than, cv-qualifiercv1.
 
 \[*Note 5*: Function types (including those used in
 pointer-to-member-function types) are never cv-qualified
@@ -3352,17 +3346,17 @@ dynamic type of the object with which indirection through the pointer to
 member is performed must contain the original member; see 
 [[expr.mptr.oper]]. — *end note*\]
 
-A prvalue of type “pointer to cv-qualifier{cv1} `void`” can be converted
-to a prvalue of type “pointer to cv-qualifier{cv2} `T`”, where `T` is an
-object type and cv-qualifier{cv2} is the same cv-qualification as, or
-greater cv-qualification than, cv-qualifier{cv1}. If the original
-pointer value represents the address `A` of a byte in memory and `A`
-does not satisfy the alignment requirement of `T`, then the resulting
-pointer value is unspecified. Otherwise, if the original pointer value
-points to an object *a*, and there is an object *b* of type similar to
-`T` that is pointer-interconvertible [[basic.compound]] with *a*, the
-result is a pointer to *b*. Otherwise, the pointer value is unchanged by
-the conversion.
+A prvalue of type “pointer to cv-qualifiercv1 `void`” can be converted
+to a prvalue of type “pointer to cv-qualifiercv2 `T`”, where `T` is an
+object type and cv-qualifiercv2 is the same cv-qualification as, or
+greater cv-qualification than, cv-qualifiercv1. If the original pointer
+value represents the address `A` of a byte in memory and `A` does not
+satisfy the alignment requirement of `T`, then the resulting pointer
+value is unspecified. Otherwise, if the original pointer value points to
+an object *a*, and there is an object *b* of type similar to `T` that is
+pointer-interconvertible [[basic.compound]] with *a*, the result is a
+pointer to *b*. Otherwise, the pointer value is unchanged by the
+conversion.
 
 \[*Example 3*:
 
@@ -3436,7 +3430,7 @@ different type.[^17]
 
 When a prvalue `v` of object pointer type is converted to the object
 pointer type “pointer to cv `T`”, the result is
-`static_cast<\cv{} T*>(static_cast<\cv{}~void*>(v))`.
+`static_cast<cv{} T*>(static_cast<cv{}~void*>(v))`.
 
 \[*Note 6*: Converting a pointer of type “pointer to `T1`” that points
 to an object of type `T1` to the type “pointer to `T2`” (where `T2` is
@@ -3756,8 +3750,8 @@ of a *handler* [[except.pre]]. In a *declaration-statement* or in the
 shall not appear in a default argument [[dcl.fct.default]]. An
 *await-expression* shall not appear in the initializer of a block
 variable with static or thread storage duration. A context within a
-function where an *await-expression* can appear is called a
-*suspension context* of the function.
+function where an *await-expression* can appear is called a *suspension
+context* of the function.
 
 Evaluation of an *await-expression* involves the following auxiliary
 types, expressions, and objects:
@@ -5259,10 +5253,10 @@ following shall hold:
   where both operands are *throw-expression*s. — *end note*\]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
-same value category and of types cv-qualifier{cv1} `T` and
-cv-qualifier{cv2} `T`, respectively, the operands are considered to be
-of type cv `T` for the remainder of this subclause, where cv is the
-union of cv-qualifier{cv1} and cv-qualifier{cv2}.
+same value category and of types cv-qualifiercv1 `T` and cv-qualifiercv2
+`T`, respectively, the operands are considered to be of type cv `T` for
+the remainder of this subclause, where cv is the union of
+cv-qualifiercv1 and cv-qualifiercv2.
 
 Otherwise, if the second and third operand have different types and
 either has (possibly cv-qualified) class type, or if both are glvalues
@@ -5292,7 +5286,7 @@ type `T2` of the operand expression `E2` as follows:
     and `T2` is at least as cv-qualified as `T1`, the target type is
     `T2`,
   - otherwise, if `T2` is a base class of `T1`, the target type is
-    cv-qualifier{cv1} `T2`, where cv-qualifier{cv1} denotes the
+    cv-qualifiercv1 `T2`, where cv-qualifiercv1 denotes the
     cv-qualifiers of `T1`,
   - otherwise, the target type is the type that `E2` would have after
     applying the lvalue-to-rvalue [[conv.lval]], array-to-pointer
@@ -5441,7 +5435,7 @@ try {
 — *end example*\]
 
 If no exception is presently being handled, evaluating a
-*throw-expression* with no operand calls `std::terminate()`
+*throw-expression* with no operand calls `std::{}terminate()`
 [[except.terminate]].
 
 ### Assignment and compound assignment operators <a id="expr.ass">[[expr.ass]]</a>
@@ -5603,9 +5597,9 @@ A variable or temporary object `o` is *constant-initialized* if
 A variable is *potentially-constant* if it is constexpr or it has
 reference or non-volatile const-qualified integral or enumeration type.
 
-A constant-initialized potentially-constant variable V is
-*usable in constant expressions* at a point P if V’s initializing
-declaration D is reachable from P and
+A constant-initialized potentially-constant variable V is *usable in
+constant expressions* at a point P if V’s initializing declaration D is
+reachable from P and
 
 - V is constexpr,
 - V is not initialized to a TU-local value, or
@@ -5993,9 +5987,9 @@ constexpr auto e = g();                         // error: a pointer to an immedi
 
 — *end example*\]
 
-Implementations should provide consistent results of floating-point
-evaluations, irrespective of whether the evaluation is performed during
-translation or during program execution.
+*Recommended practice:* Implementations should provide consistent
+results of floating-point evaluations, irrespective of whether the
+evaluation is performed during translation or during program execution.
 
 \[*Note 6*:
 

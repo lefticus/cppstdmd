@@ -155,10 +155,10 @@ typedef class { };  // error
 
 — *end example*\]
 
-A *simple-declaration* with an *identifier-list* is called a
-*structured binding declaration* [[dcl.struct.bind]]. Each
-*decl-specifier* in the *decl-specifier-seq* shall be `static`,
-`thread_local`, `auto` [[dcl.spec.auto]], or a *cv-qualifier*.
+A *simple-declaration* with an *identifier-list* is called a *structured
+binding declaration* [[dcl.struct.bind]]. Each *decl-specifier* in the
+*decl-specifier-seq* shall be `static`, `thread_local`, `auto`
+[[dcl.spec.auto]], or a *cv-qualifier*.
 
 \[*Example 3*:
 
@@ -1384,9 +1384,8 @@ A *placeholder-type-specifier* of the form *type-constraint*\_opt `auto`
 can be used as a *decl-specifier* of the *decl-specifier-seq* of a
 *parameter-declaration* of a function declaration or *lambda-expression*
 and, if it is not the `auto` *type-specifier* introducing a
-*trailing-return-type* (see below), is a
-*generic parameter type placeholder* of the function declaration or
-*lambda-expression*.
+*trailing-return-type* (see below), is a *generic parameter type
+placeholder* of the function declaration or *lambda-expression*.
 
 \[*Note 1*: Having a generic parameter type placeholder signifies that
 the function is an abbreviated function template [[dcl.fct]] or the
@@ -2392,10 +2391,10 @@ object. — *end note*\]
 A declarator that specifies the type “reference to cv `void`” is
 ill-formed.
 
-A reference type that is declared using `&` is called an
-*lvalue reference*, and a reference type that is declared using `&&` is
-called an *rvalue reference*. Lvalue references and rvalue references
-are distinct types. Except where explicitly noted, they are semantically
+A reference type that is declared using `&` is called an *lvalue
+reference*, and a reference type that is declared using `&&` is called
+an *rvalue reference*. Lvalue references and rvalue references are
+distinct types. Except where explicitly noted, they are semantically
 equivalent and commonly referred to as references.
 
 \[*Example 2*:
@@ -3497,9 +3496,9 @@ initializer-clause:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list [','] '}'
-    '{' designated-initializer-list [','] '}'
-    '{' '}'
+    \terminal{\ initializer-list [\terminal{,]} \terminal{\}}
+    \terminal{\ designated-initializer-list [\terminal{,]} \terminal{\}}
+    \terminal{\ \terminal{\}}
 ```
 
 ``` bnf
@@ -3656,10 +3655,10 @@ The initialization that occurs
 is called *direct-initialization*.
 
 The semantics of initializers are as follows. The *destination type* is
-the type of the object or reference being initialized and the
-*source type* is the type of the initializer expression. If the
-initializer is not a single (possibly parenthesized) expression, the
-source type is not defined.
+the type of the object or reference being initialized and the *source
+type* is the type of the initializer expression. If the initializer is
+not a single (possibly parenthesized) expression, the source type is not
+defined.
 
 - If the initializer is a (non-parenthesized) *braced-init-list* or is
   `=` *braced-init-list*, the object or reference is list-initialized
@@ -3777,9 +3776,9 @@ source type is not defined.
   initializing a bit-field with a value that it cannot represent, the
   resulting value of the bit-field is .
   \[*Note 4*:
-  An expression of type “cv-qualifier{cv1} `T`” can initialize an object
-  of type “cv-qualifier{cv2} `T`” independently of the cv-qualifiers
-  cv-qualifier{cv1} and cv-qualifier{cv2}.
+  An expression of type “cv-qualifiercv1 `T`” can initialize an object
+  of type “cv-qualifiercv2 `T`” independently of the cv-qualifiers
+  cv-qualifiercv1 and cv-qualifiercv2.
   ``` cpp
   int a;
   const int b = a;
@@ -4350,28 +4349,28 @@ extern int& r2;                 // OK
 
 — *end example*\]
 
-Given types “cv-qualifier{cv1} `T1`” and “cv-qualifier{cv2} `T2`”,
-“cv-qualifier{cv1} `T1`” is *reference-related* to “cv-qualifier{cv2}
-`T2`” if `T1` is similar [[conv.qual]] to `T2`, or `T1` is a base class
-of `T2`. “cv-qualifier{cv1} `T1`” is *reference-compatible* with
-“cv-qualifier{cv2} `T2`” if a prvalue of type “pointer to
-cv-qualifier{cv2} `T2`” can be converted to the type “pointer to
-cv-qualifier{cv1} `T1`” via a standard conversion sequence [[conv]]. In
-all cases where the reference-compatible relationship of two types is
-used to establish the validity of a reference binding and the standard
-conversion sequence would be ill-formed, a program that necessitates
-such a binding is ill-formed.
+Given types “cv-qualifiercv1 `T1`” and “cv-qualifiercv2 `T2`”,
+“cv-qualifiercv1 `T1`” is *reference-related* to “cv-qualifiercv2 `T2`”
+if `T1` is similar [[conv.qual]] to `T2`, or `T1` is a base class of
+`T2`. “cv-qualifiercv1 `T1`” is *reference-compatible* with
+“cv-qualifiercv2 `T2`” if a prvalue of type “pointer to cv-qualifiercv2
+`T2`” can be converted to the type “pointer to cv-qualifiercv1 `T1`” via
+a standard conversion sequence [[conv]]. In all cases where the
+reference-compatible relationship of two types is used to establish the
+validity of a reference binding and the standard conversion sequence
+would be ill-formed, a program that necessitates such a binding is
+ill-formed.
 
-A reference to type “cv-qualifier{cv1} `T1`” is initialized by an
-expression of type “cv-qualifier{cv2} `T2`” as follows:
+A reference to type “cv-qualifiercv1 `T1`” is initialized by an
+expression of type “cv-qualifiercv2 `T2`” as follows:
 
 - If the reference is an lvalue reference and the initializer expression
-  - is an lvalue (but is not a bit-field), and “cv-qualifier{cv1} `T1`”
-    is reference-compatible with “cv-qualifier{cv2} `T2`”, or
+  - is an lvalue (but is not a bit-field), and “cv-qualifiercv1 `T1`” is
+    reference-compatible with “cv-qualifiercv2 `T2`”, or
   - has a class type (i.e., `T2` is a class type), where `T1` is not
     reference-related to `T2`, and can be converted to an lvalue of type
-    “cv-qualifier{cv3} `T3`”, where “cv-qualifier{cv1} `T1`” is
-    reference-compatible with “cv-qualifier{cv3} `T3`”[^7] (this
+    “cv-qualifiercv3 `T3`”, where “cv-qualifiercv1 `T1`” is
+    reference-compatible with “cv-qualifiercv3 `T3`”[^7] (this
     conversion is selected by enumerating the applicable conversion
     functions [[over.match.ref]] and choosing the best one through
     overload resolution [[over.match]]),
@@ -4411,18 +4410,18 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
   — *end example*\]
 - Otherwise, if the initializer expression
   - is an rvalue (but not a bit-field) or function lvalue and
-    “cv-qualifier{cv1} `T1`” is reference-compatible with
-    “cv-qualifier{cv2} `T2`”, or
+    “cv-qualifiercv1 `T1`” is reference-compatible with “cv-qualifiercv2
+    `T2`”, or
   - has a class type (i.e., `T2` is a class type), where `T1` is not
     reference-related to `T2`, and can be converted to an rvalue or
-    function lvalue of type “cv-qualifier{cv3} `T3`”, where
-    “cv-qualifier{cv1} `T1`” is reference-compatible with
-    “cv-qualifier{cv3} `T3`” (see  [[over.match.ref]]),
+    function lvalue of type “cv-qualifiercv3 `T3`”, where
+    “cv-qualifiercv1 `T1`” is reference-compatible with “cv-qualifiercv3
+    `T3`” (see  [[over.match.ref]]),
 
   then the initializer expression in the first case and the converted
   expression in the second case is called the converted initializer. If
   the converted initializer is a prvalue, its type `T4` is adjusted to
-  type “cv-qualifier{cv1} `T4`” [[conv.qual]] and the temporary
+  type “cv-qualifiercv1 `T4`” [[conv.qual]] and the temporary
   materialization conversion [[conv.rval]] is applied. In any case, the
   reference binds to the resulting glvalue (or to an appropriate base
   class subobject).
@@ -4447,7 +4446,7 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
 - Otherwise:
   - If `T1` or `T2` is a class type and `T1` is not reference-related to
     `T2`, user-defined conversions are considered using the rules for
-    copy-initialization of an object of type “cv-qualifier{cv1} `T1`” by
+    copy-initialization of an object of type “cv-qualifiercv1 `T1`” by
     user-defined conversion
     [[dcl.init]], [[over.match.copy]], [[over.match.conv]]; the program
     is ill-formed if the corresponding non-reference copy-initialization
@@ -4457,12 +4456,12 @@ expression of type “cv-qualifier{cv2} `T2`” as follows:
     direct-initialization, user-defined conversions are not considered.
   - Otherwise, the initializer expression is implicitly converted to a
     prvalue of type “`T1`”. The temporary materialization conversion is
-    applied, considering the type of the prvalue to be
-    “cv-qualifier{cv1} `T1`”, and the reference is bound to the result.
+    applied, considering the type of the prvalue to be “cv-qualifiercv1
+    `T1`”, and the reference is bound to the result.
 
   If `T1` is reference-related to `T2`:
-  - cv-qualifier{cv1} shall be the same cv-qualification as, or greater
-    cv-qualification than, cv-qualifier{cv2}; and
+  - cv-qualifiercv1 shall be the same cv-qualification as, or greater
+    cv-qualification than, cv-qualifiercv2; and
   - if the reference is an rvalue reference, the initializer expression
     shall not be an lvalue. \[*Note 8*: This can be affected by whether
     the initializer expression is move-eligible
@@ -4588,7 +4587,7 @@ follows:
 
   — *end example*\]
 - If `T` is an aggregate class and the initializer list has a single
-  element of type cv-qualifier{cv} `U`, where `U` is `T` or a class
+  element of type cv-qualifiercv `U`, where `U` is `T` or a class
   derived from `T`, the object is initialized from that element (by
   copy-initialization for copy-list-initialization, or by
   direct-initialization for direct-list-initialization).
@@ -5248,21 +5247,21 @@ described below.
 A coroutine behaves as if its *function-body* were replaced by:
 
 ``` bnf
-'{'
-   *promise-type* *promise* *promise-constructor-arguments* ';'
-% FIXME:    *promise*'.get_return_object()' ';'
+\terminal{\
+   *promise-type* \textit{promise} *promise-constructor-arguments* \terminal{;}
+% FIXME:    \exposid{promise}\terminal{.get_return_object()} \terminal{;}
 % ... except that it's not a discarded-value expression
-   'try' '{'
-     'co_await' '*promise*.initial_suspend()' ';'
+   \terminal{try} \terminal{\
+     \terminal{co_await} \terminal{\textit{promise}.initial_suspend()} \terminal{;}
      function-body
-   '} catch ( ... ) {'
-     'if (!*initial-await-resume-called*)'
-       'throw' ';'
-     '*promise*.unhandled_exception()' ';'
-   '}'
-*final-suspend* ':'
-   'co_await' '*promise*.final_suspend()' ';'
-'}'
+   \terminal{\} catch ( ... ) \
+     \terminal{if (!\textit{initial-await-resume-called})}
+       \terminal{throw} \terminal{;}
+     \terminal{\textit{promise}.unhandled_exception()} \terminal{;}
+   \terminal{\}}
+\textit{final-suspend} \terminal{:}
+   \terminal{co_await} \terminal{\textit{promise}.final_suspend()} \terminal{;}
+\terminal{\}}
 ```
 
 where
@@ -5440,17 +5439,17 @@ potentially-throwing [[except.spec]].
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
 A structured binding declaration introduces the *identifier*s `v₀`,
-`v₁`, `v₂`, \dotsc of the *identifier-list* as names of
-*structured binding*. Let cv denote the *cv-qualifier*s in the
-*decl-specifier-seq* and *S* consist of the *storage-class-specifier*s
-of the *decl-specifier-seq* (if any). A cv that includes `volatile` is
+`v₁`, `v₂`, \dotsc of the *identifier-list* as names of *structured
+binding*s. Let cv denote the *cv-qualifier*s in the *decl-specifier-seq*
+and *S* consist of the *storage-class-specifier*s of the
+*decl-specifier-seq* (if any). A cv that includes `volatile` is
 deprecated; see  [[depr.volatile.type]]. First, a variable with a unique
 name *e* is introduced. If the *assignment-expression* in the
-*initializer* has array type cv-qualifier{cv1} `A` and no
-*ref-qualifier* is present, *e* is defined by
+*initializer* has array type cv-qualifiercv1 `A` and no *ref-qualifier*
+is present, *e* is defined by
 
 ``` bnf
-[attribute-specifier-seq] *S* cv 'A' *e* ';'
+[attribute-specifier-seq] *S* cv 'A' \textit{e} ';'
 ```
 
 and each element is copy-initialized or direct-initialized from the
@@ -5458,7 +5457,7 @@ corresponding element of the *assignment-expression* as specified by the
 form of the *initializer*. Otherwise, *e* is defined as-if by
 
 ``` bnf
-[attribute-specifier-seq] decl-specifier-seq [ref-qualifier] *e* initializer ';'
+[attribute-specifier-seq] decl-specifier-seq [ref-qualifier] \textit{e} initializer ';'
 ```
 
 where the declaration is never interpreted as a function declaration and
@@ -5496,10 +5495,10 @@ equal to the value of that expression. Let `i` be an index prvalue of
 type `std::size_t` corresponding to `vᵢ`. If a search for the name `get`
 in the scope of `E` [[class.member.lookup]] finds at least one
 declaration that is a function template whose first template parameter
-is a non-type parameter, the initializer is `\exposidnc{e}.get<i>()`.
-Otherwise, the initializer is `get<i>(e)`, where `get` undergoes
-argument-dependent lookup [[basic.lookup.argdep]]. In either case,
-`get<i>` is interpreted as a *template-id*.
+is a non-type parameter, the initializer is `e.get<i>()`. Otherwise, the
+initializer is `get<i>(e)`, where `get` undergoes argument-dependent
+lookup [[basic.lookup.argdep]]. In either case, `get<i>` is interpreted
+as a *template-id*.
 
 \[*Note 3*: Ordinary unqualified lookup [[basic.lookup.unqual]] is not
 performed. — *end note*\]
@@ -5520,16 +5519,15 @@ object bound to `rᵢ`; the referenced type is `Tᵢ`.
 
 Otherwise, all of `E`’s non-static data members shall be direct members
 of `E` or of the same base class of `E`, well-formed when named as
-`\exposidnc{e}.name` in the context of the structured binding, `E` shall
-not have an anonymous union member, and the number of elements in the
+`e.name` in the context of the structured binding, `E` shall not have an
+anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
 members of `E`. Designating the non-static data members of `E` as `m₀`,
 `m₁`, `m₂`, \dotsc (in declaration order), each `vᵢ` is the name of an
 lvalue that refers to the member `m`_i of *e* and whose type is that of
-`\exposidnc{e}.\tcode{m}_i` [[expr.ref]]; the referenced type is the
-declared type of `mᵢ` if that type is a reference type, or the type of
-`\exposidnc{e}.\tcode{m}_i` otherwise. The lvalue is a bit-field if that
-member is a bit-field.
+`e.\tcode{m}_i` [[expr.ref]]; the referenced type is the declared type
+of `mᵢ` if that type is a reference type, or the type of `e.\tcode{m}_i`
+otherwise. The lvalue is a bit-field if that member is a bit-field.
 
 \[*Example 2*:
 
@@ -5558,8 +5556,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head '{' [enumerator-list] '}'
-    enum-head '{' enumerator-list ',' '}'
+    enum-head \terminal{\ [enumerator-list] \terminal{\}}
+    enum-head \terminal{\ enumerator-list \terminal{,} \terminal{\}}
 ```
 
 ``` bnf
@@ -5941,17 +5939,17 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        [inline] namespace [attribute-specifier-seq] identifier '{' namespace-body '}'
+        [inline] namespace [attribute-specifier-seq] identifier \terminal{\ namespace-body \terminal{\}}
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        [inline] namespace [attribute-specifier-seq] '{' namespace-body '}'
+        [inline] namespace [attribute-specifier-seq] \terminal{\ namespace-body \terminal{\}}
 ```
 
 ``` bnf
 nested-namespace-definition:
-        namespace enclosing-namespace-specifier '::' [inline] identifier '{' namespace-body '}'
+        namespace enclosing-namespace-specifier '::' [inline] identifier \terminal{\ namespace-body \terminal{\}}
 ```
 
 ``` bnf
@@ -6064,9 +6062,9 @@ namespace A {
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-[inline] namespace *unique* '{' '/* empty body */' '}'
-using namespace *unique* ';'
-namespace *unique* '{' namespace-body '}'
+[inline] namespace \textit{unique} \terminal{\ \terminal{/* empty body */} \terminal{\}}
+using namespace \textit{unique} \terminal{;}
+namespace \textit{unique} \terminal{\ namespace-body \terminal{\}}
 ```
 
 where `inline` appears if and only if it appears in the
@@ -6734,7 +6732,7 @@ achieved using a *linkage-specification*:
 
 ``` bnf
 linkage-specification:
-    extern string-literal '{' [declaration-seq] '}'
+    extern string-literal \terminal{\ [declaration-seq] \terminal{\}}
     extern string-literal name-declaration
 ```
 
@@ -6747,9 +6745,9 @@ conditionally-supported, with *implementation-defined* semantics.
 that is unknown to the implementation requires a
 diagnostic. — *end note*\]
 
-The spelling of the *string-literal* should be taken from the document
-defining that language. For example, `Ada` (not `ADA`) and `Fortran` or
-`FORTRAN`, depending on the vintage.
+*Recommended practice:* The spelling of the *string-literal* should be
+taken from the document defining that language. For example, `Ada` (not
+`ADA`) and `Fortran` or `FORTRAN`, depending on the vintage.
 
 Every implementation shall provide for linkage to the C programming
 language, `"C"`, and C++, `"C++"`.
@@ -6757,7 +6755,7 @@ language, `"C"`, and C++, `"C++"`.
 \[*Example 1*:
 
 ``` cpp
-complex sqrt(complex);          // C++ language linkage by default
+complex sqrt(complex);          // C++{} language linkage by default
 extern "C" {
   double sqrt(double);          // C language linkage
 }
@@ -6787,13 +6785,13 @@ extern "C"                      // f1 and its function type have C language link
   void f1(void(*pf)(int));      // pf is a pointer to a C function
 
 extern "C" typedef void FUNC();
-FUNC f2;                        // f2 has C++ language linkage and
+FUNC f2;                        // f2 has C++{} language linkage and
                                 // its  type has C language linkage
 
 extern "C" FUNC f3;             // f3 and its type have C language linkage
 
-void (*pf2)(FUNC*);             // the variable pf2 has C++ language linkage; its type
-                                // is ``pointer to C++ function that takes one parameter of type
+void (*pf2)(FUNC*);             // the variable pf2 has C++{} language linkage; its type
+                                // is ``pointer to C++{} function that takes one parameter of type
                                 // pointer to C function''
 extern "C" {
   static void f4();             // the name of the function f4 has internal linkage,
@@ -6826,19 +6824,19 @@ the function type of non-static class member functions.
 extern "C" typedef void FUNC_c();
 
 class C {
-  void mf1(FUNC_c*);            // the function mf1 and its type have C++ language linkage;
+  void mf1(FUNC_c*);            // the function mf1 and its type have C++{} language linkage;
                                 // the parameter has type ``pointer to C function''
 
-  FUNC_c mf2;                   // the function mf2 and its type have C++ language linkage
+  FUNC_c mf2;                   // the function mf2 and its type have C++{} language linkage
 
-  static FUNC_c* q;             // the data member q has C++ language linkage;
+  static FUNC_c* q;             // the data member q has C++{} language linkage;
                                 // its type is ``pointer to C function''
 };
 
 extern "C" {
   class X {
-    void mf();                  // the function mf and its type have C++ language linkage
-    void mf2(void(*)());        // the function mf2 has C++ language linkage;
+    void mf();                  // the function mf and its type have C++{} language linkage
+    void mf2(void(*)());        // the function mf2 has C++{} language linkage;
                                 // the parameter has type ``pointer to C function''
   };
 }
@@ -6982,7 +6980,7 @@ balanced-token-seq:
 balanced-token:
     '(' [balanced-token-seq] ')'
     '[' [balanced-token-seq] ']'
-    '{' [balanced-token-seq] '}'
+    \terminal{\ [balanced-token-seq] \terminal{\}}
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 
@@ -7107,7 +7105,7 @@ When the *alignment-specifier* is of the form `alignas(`
   declaration, the program is ill-formed.
 
 An *alignment-specifier* of the form `alignas(` *type-id* `)` has the
-same effect as `alignas(alignof(` *type-id* `))` [[expr.alignof]].
+same effect as `alignas({}alignof(` *type-id* `))` [[expr.alignof]].
 
 The alignment requirement of an entity is the strictest nonzero
 alignment specified by its *alignment-specifier*s, if any; otherwise,
@@ -7324,12 +7322,12 @@ Redeclarations using different forms of the attribute (with or without
 the *attribute-argument-clause* or with different
 *attribute-argument-clause*s) are allowed.
 
-Implementations should use the `deprecated` attribute to produce a
-diagnostic message in case the program refers to a name or entity other
-than to declare it, after a declaration that specifies the attribute.
-The diagnostic message should include the text provided within the
-*attribute-argument-clause* of any `deprecated` attribute applied to the
-name or entity.
+*Recommended practice:* Implementations should use the `deprecated`
+attribute to produce a diagnostic message in case the program refers to
+a name or entity other than to declare it, after a declaration that
+specifies the attribute. The diagnostic message should include the text
+provided within the *attribute-argument-clause* of any `deprecated`
+attribute applied to the name or entity.
 
 ### Fallthrough attribute <a id="dcl.attr.fallthrough">[[dcl.attr.fallthrough]]</a>
 
@@ -7345,11 +7343,11 @@ of the same execution of the substatement of the innermost enclosing
 iteration statement. The program is ill-formed if there is no such
 statement.
 
-The use of a fallthrough statement should suppress a warning that an
-implementation might otherwise issue for a case or default label that is
-reachable from another case or default label along some path of
-execution. Implementations should issue a warning if a fallthrough
-statement is not dynamically reachable.
+*Recommended practice:* The use of a fallthrough statement should
+suppress a warning that an implementation might otherwise issue for a
+case or default label that is reachable from another case or default
+label along some path of execution. Implementations should issue a
+warning if a fallthrough statement is not dynamically reachable.
 
 \[*Example 1*:
 
@@ -7392,15 +7390,16 @@ or statements. No *attribute-argument-clause* shall be present. The
 *attribute-specifier-seq* that contains the *attribute-token*
 `unlikely`.
 
-The use of the `likely` attribute is intended to allow implementations
-to optimize for the case where paths of execution including it are
-arbitrarily more likely than any alternative path of execution that does
-not include such an attribute on a statement or label. The use of the
-`unlikely` attribute is intended to allow implementations to optimize
-for the case where paths of execution including it are arbitrarily more
-unlikely than any alternative path of execution that does not include
-such an attribute on a statement or label. A path of execution includes
-a label if and only if it contains a jump to that label.
+*Recommended practice:* The use of the `likely` attribute is intended to
+allow implementations to optimize for the case where paths of execution
+including it are arbitrarily more likely than any alternative path of
+execution that does not include such an attribute on a statement or
+label. The use of the `unlikely` attribute is intended to allow
+implementations to optimize for the case where paths of execution
+including it are arbitrarily more unlikely than any alternative path of
+execution that does not include such an attribute on a statement or
+label. A path of execution includes a label if and only if it contains a
+jump to that label.
 
 \[*Note 1*: Excessive usage of either of these attributes is liable to
 result in performance degradation. — *end note*\]
@@ -7444,11 +7443,12 @@ A name or entity declared without the `maybe_unused` attribute can later
 be redeclared with the attribute and vice versa. An entity is considered
 marked after the first declaration that marks it.
 
-For an entity marked `maybe_unused`, implementations should not emit a
-warning that the entity or its structured bindings (if any) are used or
-unused. For a structured binding declaration not marked `maybe_unused`,
-implementations should not emit such a warning unless all of its
-structured bindings are unused.
+*Recommended practice:* For an entity marked `maybe_unused`,
+implementations should not emit a warning that the entity or its
+structured bindings (if any) are used or unused. For a structured
+binding declaration not marked `maybe_unused`, implementations should
+not emit such a warning unless all of its structured bindings are
+unused.
 
 \[*Example 1*:
 
@@ -7501,10 +7501,10 @@ is either
   reachable declaration, or that initializes an object of a nodiscard
   type.
 
-Appearance of a nodiscard call as a potentially-evaluated
-discarded-value expression [[expr.prop]] is discouraged unless
-explicitly cast to `void`. Implementations should issue a warning in
-such cases.
+*Recommended practice:* Appearance of a nodiscard call as a
+potentially-evaluated discarded-value expression [[expr.prop]] is
+discouraged unless explicitly cast to `void`. Implementations should
+issue a warning in such cases.
 
 \[*Note 2*: This is typically because discarding the return value of a
 nodiscard call has surprising consequences. — *end note*\]
@@ -7561,8 +7561,8 @@ undefined.
 \[*Note 1*: The function may terminate by throwing an
 exception. — *end note*\]
 
-Implementations should issue a warning if a function marked
-`[[noreturn]]` might return.
+*Recommended practice:* Implementations should issue a warning if a
+function marked `[[noreturn]]` might return.
 
 \[*Example 1*:
 

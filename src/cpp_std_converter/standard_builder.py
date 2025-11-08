@@ -10,6 +10,7 @@ Builds a complete C++ standard document from std.tex by:
 from pathlib import Path
 from typing import List, Tuple
 import re
+import sys
 import tempfile
 from pylatexenc.latexwalker import LatexWalker, LatexMacroNode
 
@@ -299,8 +300,11 @@ class StandardBuilder:
                 converted_chapters.append(chapter)
 
             except Exception as e:
+                # Always print conversion errors to prevent silent failures
+                print(f"ERROR: Failed to convert {chapter}.tex: {e}", file=sys.stderr)
                 if verbose:
-                    print(f"Error converting {chapter}.tex: {e}")
+                    import traceback
+                    traceback.print_exc()
                 continue
 
         # Build final document
@@ -597,8 +601,11 @@ class StandardBuilder:
                 output_files.append(output_file)
 
             except Exception as e:
+                # Always print conversion errors to prevent silent failures
+                print(f"ERROR: Failed to convert {chapter}.tex: {e}", file=sys.stderr)
                 if verbose:
-                    print(f"Error converting {chapter}.tex: {e}")
+                    import traceback
+                    traceback.print_exc()
                 continue
 
         # Note: Cross-file links are now handled during conversion via label indexing

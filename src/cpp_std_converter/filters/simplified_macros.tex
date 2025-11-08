@@ -1,0 +1,159 @@
+%%--------------------------------------------------
+%% simplified_macros.tex
+%% Simplified macro definitions for Pandoc conversion
+%%
+%% This file replaces complex macro definitions from cplusplus-draft/source/macros.tex
+%% with simpler forms that Pandoc can understand natively.
+%% Used by cpp-std-converter to reduce Lua filter complexity.
+%%
+%% Strategy: Convert custom C++ standard macros to standard LaTeX commands
+%% that Pandoc already knows how to handle (\texttt, \textit, etc.)
+%%--------------------------------------------------
+
+%%--------------------------------------------------
+%% Category A: Simple Text Substitutions (20 macros)
+%% These are constant strings with no arguments
+%%--------------------------------------------------
+\renewcommand{\Cpp}{C++}
+\renewcommand{\CppIII}{C++03}
+\renewcommand{\CppXI}{C++11}
+\renewcommand{\CppXIV}{C++14}
+\renewcommand{\CppXVII}{C++17}
+\renewcommand{\CppXX}{C++20}
+\renewcommand{\CppXXIII}{C++23}
+\renewcommand{\CppXXVI}{C++26}
+\renewcommand{\IsoC}{ISO/IEC 9899:2018 (C)}
+\renewcommand{\IsoPosix}{IEEE 1003.1-2017 (POSIX)}
+\renewcommand{\IsoFloatUndated}{ISO/IEC 60559}
+\renewcommand{\cv}{cv}
+\renewcommand{\cvqual}{cv-qualifier}
+\renewcommand{\ntbs}{NTBS}
+\renewcommand{\ntmbs}{NTMBS}
+%% \caret - REMOVED: Pandoc can't handle \string^ properly, needs Lua filter
+\renewcommand{\atsign}{@}
+%% \unun - REMOVED: Pandoc can't handle \string_ properly, needs Lua filter
+\renewcommand{\brk}{}  % Strip discretionary hyphen hints
+\renewcommand{\tilde}{\textasciitilde}
+
+%%--------------------------------------------------
+%% Category B: Code Formatting (7 macros)
+%% Convert to \texttt (monospace) - Pandoc renders as inline code
+%%--------------------------------------------------
+%% \tcode{} - REMOVED: contains nested macros (\keyword{}, \ctype{}, etc)
+%% \keyword{} - REMOVED: nested in \tcode{}, context-dependent (tables)
+%% \ctype{} - REMOVED: nested in \tcode{}
+\renewcommand{\libheader}[1]{\texttt{<#1>}}
+\renewcommand{\libheaderdef}[1]{\texttt{<#1>}}
+\renewcommand{\libheaderref}[1]{\texttt{<#1>}}
+\renewcommand{\libconcept}[1]{\texttt{#1}}
+\renewcommand{\exposconcept}[1]{\texttt{#1}}
+\renewcommand{\libglobal}[1]{\texttt{#1}}
+\renewcommand{\deflibconcept}[1]{\texttt{#1}}
+
+%%--------------------------------------------------
+%% Category C: Emphasis Formatting (6 macros)
+%% Convert to \textit (italic) - Pandoc renders as emphasis
+%%--------------------------------------------------
+%% \grammarterm{} - REMOVED: context-dependent (BNF vs text), nested in \opt{}
+\renewcommand{\exposid}[1]{\textit{#1}}
+\renewcommand{\exposidnc}[1]{\textit{#1}}
+%% \placeholder{} - REMOVED: context-dependent (code blocks vs text)
+%% \placeholdernc{} - REMOVED: context-dependent (code blocks vs text)
+\renewcommand{\defn}[1]{\textit{#1}}
+\renewcommand{\term}[1]{\textit{#1}}
+\renewcommand{\oldconcept}[1]{\textit{Cpp17#1}}
+\renewcommand{\doccite}[1]{\textit{#1}}
+
+%%--------------------------------------------------
+%% Category D: Library Specifications (7 macros)
+%% Convert to italic text for semantic markers
+%%--------------------------------------------------
+\renewcommand{\seebelow}{\textit{see below}}
+\renewcommand{\unspec}{\textit{unspecified}}
+\renewcommand{\unspecnc}{\textit{unspecified}}
+\renewcommand{\expos}{\textit{exposition only}}
+\renewcommand{\impldef}[1]{\textit{implementation-defined}}
+\renewcommand{\notdef}{\textit{not defined}}
+\renewcommand{\impdef}{\textit{implementation-defined}}
+
+%%--------------------------------------------------
+%% Category E: Fundesc Labels (24 macros)
+%% Specification section headers - italic labels
+%%--------------------------------------------------
+\renewcommand{\expects}{\textit{Preconditions:} }
+\renewcommand{\requires}{\textit{Requires:} }
+\renewcommand{\constraints}{\textit{Constraints:} }
+\renewcommand{\effects}{\textit{Effects:} }
+\renewcommand{\ensures}{\textit{Ensures:} }
+\renewcommand{\returns}{\textit{Returns:} }
+\renewcommand{\result}{\textit{Result:} }
+\renewcommand{\complexity}{\textit{Complexity:} }
+\renewcommand{\remarks}{\textit{Remarks:} }
+\renewcommand{\throws}{\textit{Throws:} }
+\renewcommand{\errors}{\textit{Error conditions:} }
+\renewcommand{\mandates}{\textit{Mandates:} }
+\renewcommand{\recommended}{\textit{Recommended practice:} }
+\renewcommand{\required}{\textit{Required behavior:} }
+\renewcommand{\default}{\textit{Default behavior:} }
+\renewcommand{\sync}{\textit{Synchronization:} }
+\renewcommand{\replaceable}{\textit{Replaceable:} }
+\renewcommand{\returntype}{\textit{Return type:} }
+\renewcommand{\cvalue}{\textit{Value:} }
+\renewcommand{\templalias}{\textit{Alias template:} }
+\renewcommand{\implimits}{\textit{Implementation limits:} }
+\renewcommand{\postconditions}{\textit{Postconditions:} }
+\renewcommand{\preconditions}{\textit{Preconditions:} }
+\renewcommand{\realnote}{\textit{Note:} }
+
+%%--------------------------------------------------
+%% Category F: Ranges (5 macros)
+%% Mathematical range notations with code formatting
+%% Note: Square brackets wrapped in braces {[} {]} to escape them for Pandoc
+%%--------------------------------------------------
+\renewcommand{\range}[2]{{[}\texttt{#1}, \texttt{#2}{)}}
+\renewcommand{\crange}[2]{{[}\texttt{#1}, \texttt{#2}{]}}
+\renewcommand{\brange}[2]{{(}\texttt{#1}, \texttt{#2}{)}}
+\renewcommand{\orange}[2]{{(}\texttt{#1}, \texttt{#2}{)}}
+\renewcommand{\countedrange}[2]{\texttt{#1}+{[}0, \texttt{#2}{)}}
+
+%%--------------------------------------------------
+%% Category G: Change Descriptions (3 macros)
+%% Appendix C compatibility markers
+%%--------------------------------------------------
+\renewcommand{\change}{\textbf{Change:} }
+\renewcommand{\rationale}{\textbf{Rationale:} }
+\renewcommand{\effect}{\textbf{Effect on original feature:} }
+
+%%--------------------------------------------------
+%% Category H: Special Formatting (3 macros)
+%% Misc formatting helpers
+%%--------------------------------------------------
+%% \textbackslash - Removed: Already a standard LaTeX command, no need to redefine
+\renewcommand{\cppver}{202302L}
+\renewcommand{\tablerefheader}[1]{\textbf{#1}}
+%% \stage{} - Removed: cpp-macros.lua needs to handle this for description list processing
+\renewcommand{\columnline}{}  % Strip table column separators
+
+%%--------------------------------------------------
+%% Category I: Phase 3 Additions - Simple Unwrapping (2 macros)
+%%--------------------------------------------------
+\renewcommand{\deflibconcept}[1]{#1}
+\renewcommand{\uname}[1]{#1}
+%% \colcol - Removed: context-dependent, keep in Lua
+%% \mathrm{} - Removed: standard LaTeX math command, different meaning in math mode
+%% \bigoh{} - Removed: needs special handling in cpp-itemdecl.lua
+
+%%--------------------------------------------------
+%% TOTAL: 77 simplified macros (75 original + 2 Phase 3 additions)
+%% These cover ~73% of macro usage in the C++ standard source
+%%
+%% Macros removed after investigation (moved back to Lua filters):
+%%  - \tcode{} - contains nested macros (\keyword{}, \ctype{}, \placeholder{}, etc)
+%%  - \keyword{} - nested in \tcode{}, context-dependent (tables)
+%%  - \ctype{} - nested in \tcode{}
+%%  - \grammarterm{} - context-dependent (BNF vs text), nested in \opt{}
+%%  - \placeholder{}, \placeholdernc{} - context-dependent (code blocks vs text)
+%%  - \stage{} - requires special handling in cpp-macros.lua for description lists
+%%  - \textbackslash - already a standard LaTeX command
+%%  - \colcol{}, \mathrm{}, \bigoh{} - context-dependent, keep in Lua filters
+%%--------------------------------------------------

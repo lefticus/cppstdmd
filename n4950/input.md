@@ -309,8 +309,8 @@ time prior to or during the first time an object of class
 `main` [[basic.start.main]] begins execution. The objects are not
 destroyed during program execution.[^2]
 
-If it is possible for them to do so, implementations should initialize
-the objects earlier than required.
+*Recommended practice:* If it is possible for them to do so,
+implementations should initialize the objects earlier than required.
 
 The results of including `<iostream>` in a translation unit shall be as
 if `<iostream>` defined an instance of `ios_base::Init` with static
@@ -344,7 +344,7 @@ istream cin;
 ```
 
 The object `cin` controls input from a stream buffer associated with the
-object `stdin`, declared in .
+object `stdin`, declared in `<cstdio>`.
 
 After the object `cin` is initialized, `cin.tie()` returns `&cout`. Its
 state is otherwise the same as required for
@@ -355,14 +355,14 @@ ostream cout;
 ```
 
 The object `cout` controls output to a stream buffer associated with the
-object `stdout`, declared in .
+object `stdout`, declared in `<cstdio>`.
 
 ``` cpp
 ostream cerr;
 ```
 
 The object `cerr` controls output to a stream buffer associated with the
-object `stderr`, declared in .
+object `stderr`, declared in `<cstdio>`.
 
 After the object `cerr` is initialized, `cerr.flags() & unitbuf` is
 nonzero and `cerr.tie()` returns `&cout`. Its state is otherwise the
@@ -373,7 +373,7 @@ ostream clog;
 ```
 
 The object `clog` controls output to a stream buffer associated with the
-object `stderr`, declared in .
+object `stderr`, declared in `<cstdio>`.
 
 ### Wide stream objects <a id="wide.stream.objects">[[wide.stream.objects]]</a>
 
@@ -382,7 +382,7 @@ wistream wcin;
 ```
 
 The object `wcin` controls input from a stream buffer associated with
-the object `stdin`, declared in .
+the object `stdin`, declared in `<cstdio>`.
 
 After the object `wcin` is initialized, `wcin.tie()` returns `&wcout`.
 Its state is otherwise the same as required for
@@ -393,14 +393,14 @@ wostream wcout;
 ```
 
 The object `wcout` controls output to a stream buffer associated with
-the object `stdout`, declared in .
+the object `stdout`, declared in `<cstdio>`.
 
 ``` cpp
 wostream wcerr;
 ```
 
 The object `wcerr` controls output to a stream buffer associated with
-the object `stderr`, declared in .
+the object `stderr`, declared in `<cstdio>`.
 
 After the object `wcerr` is initialized, `wcerr.flags() & unitbuf` is
 nonzero and `wcerr.tie()` returns `&wcout`. Its state is otherwise the
@@ -411,7 +411,7 @@ wostream wclog;
 ```
 
 The object `wclog` controls output to a stream buffer associated with
-the object `stderr`, declared in .
+the object `stderr`, declared in `<cstdio>`.
 
 ## Iostreams base classes <a id="iostreams.base">[[iostreams.base]]</a>
 
@@ -664,7 +664,7 @@ explicit failure(const char* msg, const error_code& ec = io_errc::stream);
 ##### Type `ios_base::fmtflags` <a id="ios.fmtflags">[[ios.fmtflags]]</a>
 
 ``` cpp
-using fmtflags = \textit{T1};
+using fmtflags = T1;
 ```
 
 The type `fmtflags` is a bitmask type [[bitmask.types]]. Setting its
@@ -717,7 +717,7 @@ Type `fmtflags` also defines the constants indicated in
 ##### Type `ios_base::iostate` <a id="ios.iostate">[[ios.iostate]]</a>
 
 ``` cpp
-using iostate = \textit{T2};
+using iostate = T2;
 ```
 
 The type `iostate` is a bitmask type [[bitmask.types]] that contains the
@@ -743,7 +743,7 @@ Type `iostate` also defines the constant:
 ##### Type `ios_base::openmode` <a id="ios.openmode">[[ios.openmode]]</a>
 
 ``` cpp
-using openmode = \textit{T3};
+using openmode = T3;
 ```
 
 The type `openmode` is a bitmask type [[bitmask.types]]. It contains the
@@ -765,7 +765,7 @@ mode)
 ##### Type `ios_base::seekdir` <a id="ios.seekdir">[[ios.seekdir]]</a>
 
 ``` cpp
-using seekdir = \textit{T4};
+using seekdir = T4;
 ```
 
 The type `seekdir` is an enumerated type [[enumerated.types]] that
@@ -910,10 +910,10 @@ the new locale value `loc`.
 locale getloc() const;
 ```
 
-*Returns:* If no locale has been imbued, a copy of the global locale,
-`locale()`, in effect at the time of construction. Otherwise, returns
-the imbued locale, to be used to perform locale-dependent input and
-output operations.
+*Returns:* If no locale has been imbued, a copy of the global C++
+locale, `locale()`, in effect at the time of construction. Otherwise,
+returns the imbued locale, to be used to perform locale-dependent input
+and output operations.
 
 #### Static members <a id="ios.members.static">[[ios.members.static]]</a>
 
@@ -2294,18 +2294,19 @@ from the base class.
 int_type underflow();
 ```
 
-The of characters is defined as the concatenation of
+The *pending sequence* of characters is defined as the concatenation of
 
 - the empty sequence if `gptr()` is null, otherwise the characters in
   \[`gptr()`, `egptr()`), followed by
 - some (possibly empty) sequence of characters read from the input
   sequence.
 
-The is the first character of the pending sequence if it is non-empty,
-otherwise the next character that would be read from the input sequence.
+The *result character* is the first character of the pending sequence if
+it is non-empty, otherwise the next character that would be read from
+the input sequence.
 
-The is the empty sequence if `eback()` is null, otherwise the characters
-in \[`eback()`, `gptr()`).
+The *backup sequence* is the empty sequence if `eback()` is null,
+otherwise the characters in \[`eback()`, `gptr()`).
 
 *Effects:* The function sets up the `gptr()` and `egptr()` such that if
 the pending sequence is non-empty, then `egptr()` is non-null and the
@@ -2323,9 +2324,9 @@ that either
   sequence (where `n` is the length of the backup sequence).
 
 *Returns:* `traits::to_int_type(c)`, where `c` is the first *character*
-of the , without moving the input sequence position past it. If the
-pending sequence is null then the function returns `traits::eof()` to
-indicate failure.
+of the *pending sequence*, without moving the input sequence position
+past it. If the pending sequence is null then the function returns
+`traits::eof()` to indicate failure.
 
 *Default behavior:* Returns `traits::eof()`.
 
@@ -2354,7 +2355,8 @@ pointer for the input sequence.
 int_type pbackfail(int_type c = traits::eof());
 ```
 
-The is defined as for `underflow()`, with the modifications that
+The *pending sequence* is defined as for `underflow()`, with the
+modifications that
 
 - If `traits::eq_int_type(c, traits::eof())` returns `true`, then the
   input sequence is backed up one character before the pending sequence
@@ -2400,8 +2402,9 @@ whether the function calls `overflow()` when `pptr() == epptr()` becomes
 int_type overflow(int_type c = traits::eof());
 ```
 
-*Effects:* Consumes some initial subsequence of the characters of the .
-The pending sequence is defined as the concatenation of
+*Effects:* Consumes some initial subsequence of the characters of the
+*pending sequence*. The pending sequence is defined as the concatenation
+of
 
 - the empty sequence if `pbase()` is null, otherwise the
   `pptr() - pbase()` characters beginning at `pbase()`, followed by
@@ -2577,7 +2580,7 @@ template that extracts from stream rvalues.
 When a function is specified with a type placeholder of
 `extended-floating-point-type`, the implementation provides overloads
 for all cv-unqualified extended floating-point types
-[[basic.fundamental]] in lieu of `extended-floating-point-type`.
+[[basic.fundamental]] in lieu of `extended-floating-{point-type}`.
 
 ``` cpp
 namespace std {
@@ -2678,11 +2681,10 @@ signatures that assist in reading and interpreting input from sequences
 controlled by a stream buffer.
 
 Two groups of member function signatures share common properties: the
-*formatted input functions* (or *extractors*) and the
-*unformatted input functions.* Both groups of input functions are
-described as if they obtain (or *extract*) input *characters* by calling
-`rdbuf()->sbumpc()` or `rdbuf()->sgetc()`. They may use other public
-members of `istream`.
+*formatted input functions* (or *extractors*) and the *unformatted input
+functions.* Both groups of input functions are described as if they
+obtain (or *extract*) input *characters* by calling `rdbuf()->sbumpc()`
+or `rdbuf()->sgetc()`. They may use other public members of `istream`.
 
 ##### Constructors <a id="istream.cons">[[istream.cons]]</a>
 
@@ -2786,7 +2788,7 @@ constructor performs as if it executes the following code fragment:
 ``` cpp
 const ctype<charT>& ctype = use_facet<ctype<charT>>(is.getloc());
 if (ctype.is(ctype.space, c) != 0)
-  // \texttt{c} is a whitespace character.
+  // c is a whitespace character.
 ```
 
 If, after any preparation is completed, `is.good()` is `true`,
@@ -3248,12 +3250,12 @@ int main() {
   while (cin.getline(buffer, line_buffer_size, '\n') || cin.gcount()) {
     int count = cin.gcount();
     if (cin.eof())
-      cout << "Partial final line";     // \texttt{cin.fail()} is \texttt{false}
+      cout << "Partial final line";     // cin.fail() is false
     else if (cin.fail()) {
       cout << "Partial long line";
       cin.clear(cin.rdstate() & ~ios_base::failbit);
     } else {
-      count--;                          // Don't include newline in \texttt{count}
+      count--;                          // Don't include newline in count
       cout << "Line " << ++line_number;
     }
     cout << " (" << count << " chars): " << buffer << endl;
@@ -3707,9 +3709,9 @@ signatures that assist in formatting and writing output to output
 sequences controlled by a stream buffer.
 
 Two groups of member function signatures share common properties: the
-*formatted output functions* (or *inserters*) and the
-*unformatted output functions.* Both groups of output functions generate
-(or *insert*) output *characters* by actions equivalent to calling
+*formatted output functions* (or *inserters*) and the *unformatted
+output functions.* Both groups of output functions generate (or
+*insert*) output *characters* by actions equivalent to calling
 `rdbuf()->sputc(int_type)`. They may use other public members of
 `basic_ostream` except that they shall not invoke any virtual members of
 `rdbuf()` except `overflow()`, `xsputn()`, and `sync()`.
@@ -3830,7 +3832,7 @@ pos_type tellp();
 ```
 
 *Returns:* If `fail() != false`, returns `pos_type(-1)` to indicate
-failure. Otherwise, returns `rdbuf()->pubseekoff(, cur, out)`.
+failure. Otherwise, returns `rdbuf()->pubseekoff(0, cur, out)`.
 
 ``` cpp
 basic_ostream& seekp(pos_type pos);
@@ -4453,7 +4455,7 @@ where the function `f` is defined as:
 
 ``` cpp
 void f(ios_base& str, int base) {
-  // set \texttt{basefield}
+  // set basefield
   str.setf(base ==  8 ? ios_base::oct :
       base == 10 ? ios_base::dec :
       base == 16 ? ios_base::hex :
@@ -5184,7 +5186,8 @@ according to `mode`.
 
 \[*Note 1*: For efficiency reasons, stream buffer operations can violate
 invariants of `buf` while it is held encapsulated in the
-`basic_stringbuf`, e.g., by writing to characters in the range . All
+`basic_stringbuf`, e.g., by writing to characters in the range
+\[`buf.data() + buf.size()`, `buf.data() + buf.capacity()`). All
 operations retrieving a `basic_string` from `buf` ensure that the
 `basic_string` invariants hold on the returned value. — *end note*\]
 
@@ -5484,7 +5487,7 @@ namespace std {
 ```
 
 The class `basic_istringstream<charT, traits, Allocator>` supports
-reading objects of class `basic_string<charT, traits, Allocator>`. It
+reading objects of class `basic_string<{}charT, traits, Allocator>`. It
 uses a `basic_stringbuf<charT, traits, Allocator>` object to control the
 associated storage. For the sake of exposition, the maintained data is
 presented here as:
@@ -5704,7 +5707,7 @@ namespace std {
 ```
 
 The class `basic_ostringstream<charT, traits, Allocator>` supports
-writing objects of class `basic_string<charT, traits, Allocator>`. It
+writing objects of class `basic_string<{}charT, traits, Allocator>`. It
 uses a `basic_stringbuf` object to control the associated storage. For
 the sake of exposition, the maintained data is presented here as:
 
@@ -6854,8 +6857,8 @@ In particular:
   the output sequence.
 
 An instance of `basic_filebuf` behaves as described in  [[filebuf]]
-provided `traits::pos_type` is `fpos<traits::state_type>`. Otherwise the
-behavior is undefined.
+provided `traits::pos_type` is `fpos<traits::{}state_type>`. Otherwise
+the behavior is undefined.
 
 In order to support file I/O and multibyte/wide character conversion,
 conversions are performed using members of a facet, referred to as
@@ -7003,7 +7006,7 @@ calling `fopen`).
 
 The macro `SEEK_END` is defined, and the function signatures
 `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
-declared, in .
+declared, in `<cstdio>`.
 
 If the repositioning operation fails, calls `close()` and returns a null
 pointer to indicate failure.
@@ -7299,7 +7302,7 @@ namespace std {
 ```
 
 The class `basic_ifstream<charT, traits>` supports reading from named
-files. It uses a `basic_filebuf<charT, traits>` object to control the
+files. It uses a `basic_filebuf<{}charT, traits>` object to control the
 associated sequence. For the sake of exposition, the maintained data is
 presented here as:
 
@@ -7461,7 +7464,7 @@ namespace std {
 ```
 
 The class `basic_ofstream<charT, traits>` supports writing to named
-files. It uses a `basic_filebuf<charT, traits>` object to control the
+files. It uses a `basic_filebuf<{}charT, traits>` object to control the
 associated sequence. For the sake of exposition, the maintained data is
 presented here as:
 
@@ -8108,11 +8111,11 @@ A flush on a `basic_osyncstream` does not flush immediately:
 {
   osyncstream bout(cout);
   bout << "Hello," << '\n';     // no flush
-  bout.emit();                  // characters transferred; \texttt{cout} not flushed
-  bout << "World!" << endl;     // flush noted; \texttt{cout} not flushed
-  bout.emit();                  // characters transferred; \texttt{cout} flushed
+  bout.emit();                  // characters transferred; cout not flushed
+  bout << "World!" << endl;     // flush noted; cout not flushed
+  bout.emit();                  // characters transferred; cout flushed
   bout << "Greetings." << '\n'; // no flush
-}   // characters transferred; \texttt{cout} not flushed
+}   // characters transferred; cout not flushed
 ```
 
 — *end example*\]
@@ -8260,7 +8263,7 @@ provided by subclause  [[filesystems]] introduce a file system race.
 
 If the possibility of a file system race would make it unreliable for a
 program to test for a precondition before calling a function described
-herein, is not specified for the function.
+herein, *Preconditions:* is not specified for the function.
 
 \[*Note 1*: As a design practice, preconditions are not specified when
 it is unreasonable for a program to detect them prior to calling the
@@ -8780,7 +8783,7 @@ pathname:
 ``` bnf
 root-name:
     operating system dependent sequences of characters
-    *implementation-defined*{} sequences of characters
+    \textit{implementation-defined} sequences of characters
 ```
 
 ``` bnf
@@ -9003,19 +9006,19 @@ named `Source` shall be one of:
 
 - `basic_string<EcharT, traits, Allocator>`. A function argument
   `const Source&` `source` shall have an effective range
-  [`source.begin()`, `source.end()`).
+  \[`source.begin()`, `source.end()`).
 - `basic_string_view<EcharT, traits>`. A function argument
   `const Source&` `source` shall have an effective range
-  [`source.begin()`, `source.end()`).
+  \[`source.begin()`, `source.end()`).
 - A type meeting the *Cpp17InputIterator* requirements that iterates
   over a NTCTS. The value type shall be an encoded character type. A
   function argument `const Source&` `source` shall have an effective
-  range [`source`, `end`) where `end` is the first iterator value with
+  range \[`source`, `end`) where `end` is the first iterator value with
   an element value equal to `iterator_traits<Source>::value_type()`.
 - A character array that after array-to-pointer decay results in a
   pointer to the start of a NTCTS. The value type shall be an encoded
   character type. A function argument `const Source&` `source` shall
-  have an effective range [`source`, `end`) where `end` is the first
+  have an effective range \[`source`, `end`) where `end` is the first
   iterator value with an element value equal to
   `iterator_traits<decay_t<Source>>::value_type()`.
 
@@ -9217,17 +9220,17 @@ Expression examples:
 
 ``` cpp
 // On POSIX,
-path("foo") /= path("");        // yields \texttt{path("foo/")}
-path("foo") /= path("/bar");    // yields \texttt{path("/bar")}
+path("foo") /= path("");        // yields path("foo/")
+path("foo") /= path("/bar");    // yields path("/bar")
 
 // On Windows,
-path("foo") /= path("");        // yields \texttt{path("foo\\")}
-path("foo") /= path("/bar");    // yields \texttt{path("/bar")}
-path("foo") /= path("c:/bar");  // yields \texttt{path("c:/bar")}
-path("foo") /= path("c:");      // yields \texttt{path("c:")}
-path("c:") /= path("");         // yields \texttt{path("c:")}
-path("c:foo") /= path("/bar");  // yields \texttt{path("c:/bar")}
-path("c:foo") /= path("c:bar"); // yields \texttt{path("c:foo\\bar")}
+path("foo") /= path("");        // yields path("foo\{")}
+path("foo") /= path("/bar");    // yields path("/bar")
+path("foo") /= path("c:/bar");  // yields path("c:/bar")
+path("foo") /= path("c:");      // yields path("c:")
+path("c:") /= path("");         // yields path("c:")
+path("c:foo") /= path("/bar");  // yields path("c:/bar")
+path("c:foo") /= path("c:bar"); // yields path("c:foo\{bar")}
 ```
 
 — *end example*\]
@@ -9344,10 +9347,10 @@ generic format pathname.
 \[*Example 4*:
 
 ``` cpp
-path("foo/bar").remove_filename();      // yields \texttt{"foo/"}
-path("foo/").remove_filename();         // yields \texttt{"foo/"}
-path("/foo").remove_filename();         // yields \texttt{"/"}
-path("/").remove_filename();            // yields \texttt{"/"}
+path("foo/bar").remove_filename();      // yields "foo/"
+path("foo/").remove_filename();         // yields "foo/"
+path("/foo").remove_filename();         // yields "/"
+path("/").remove_filename();            // yields "/"
 ```
 
 — *end example*\]
@@ -9368,8 +9371,8 @@ operator/=(replacement);
 \[*Example 5*:
 
 ``` cpp
-path("/foo").replace_filename("bar");   // yields \texttt{"/bar"} on POSIX
-path("/").replace_filename("bar");      // yields \texttt{"/bar"} on POSIX
+path("/foo").replace_filename("bar");   // yields "/bar" on POSIX
+path("/").replace_filename("bar");      // yields "/bar" on POSIX
 ```
 
 — *end example*\]
@@ -9568,13 +9571,13 @@ path filename() const;
 \[*Example 7*:
 
 ``` cpp
-path("/foo/bar.txt").filename();        // yields \texttt{"bar.txt"}
-path("/foo/bar").filename();            // yields \texttt{"bar"}
-path("/foo/bar/").filename();           // yields \texttt{""}
-path("/").filename();                   // yields \texttt{""}
-path("//host").filename();              // yields \texttt{""}
-path(".").filename();                   // yields \texttt{"."}
-path("..").filename();                  // yields \texttt{".."}
+path("/foo/bar.txt").filename();        // yields "bar.txt"
+path("/foo/bar").filename();            // yields "bar"
+path("/foo/bar/").filename();           // yields ""
+path("/").filename();                   // yields ""
+path("//host").filename();              // yields ""
+path(".").filename();                   // yields "."
+path("..").filename();                  // yields ".."
 ```
 
 — *end example*\]
@@ -9593,13 +9596,13 @@ Returns a path whose pathname in the generic format is
 \[*Example 8*:
 
 ``` cpp
-std::cout << path("/foo/bar.txt").stem();       // outputs \texttt{"bar"}
+std::cout << path("/foo/bar.txt").stem();       // outputs "bar"
 path p = "foo.bar.baz.tar";
 for (; !p.extension().empty(); p = p.stem())
   std::cout << p.extension() << '\n';
-  // outputs: \texttt{.tar}
-  //          \texttt{.baz}
-  //          \texttt{.bar}
+  // outputs: .tar
+  //          .baz
+  //          .bar
 ```
 
 — *end example*\]
@@ -9614,11 +9617,11 @@ path extension() const;
 \[*Example 9*:
 
 ``` cpp
-path("/foo/bar.txt").extension();       // yields \texttt{".txt"} and \texttt{stem()} is \texttt{"bar"}
-path("/foo/bar").extension();           // yields \texttt{""} and \texttt{stem()} is \texttt{"bar"}
-path("/foo/.profile").extension();      // yields \texttt{""} and \texttt{stem()} is \texttt{".profile"}
-path(".bar").extension();               // yields \texttt{""} and \texttt{stem()} is \texttt{".bar"}
-path("..bar").extension();              // yields \texttt{".bar"} and \texttt{stem()} is \texttt{"."}
+path("/foo/bar.txt").extension();       // yields ".txt" and stem() is "bar"
+path("/foo/bar").extension();           // yields "" and stem() is "bar"
+path("/foo/.profile").extension();      // yields "" and stem() is ".profile"
+path(".bar").extension();               // yields "" and stem() is ".bar"
+path("..bar").extension();              // yields ".bar" and stem() is "."
 ```
 
 — *end example*\]
@@ -10034,7 +10037,7 @@ character sequence, with the meanings listed in [[fs.enum.path.format]].
 | --- | --- |
 | `native_format` | The native pathname format. |
 | `generic_format` | The generic pathname format. |
-| `auto_format` | The interpretation of the format of the character sequence is *implementation-defined*. The implementation may inspect the content of the character sequence to determine the format. \recommended For POSIX-based systems, native and generic formats are equivalent and the character sequence should always be interpreted in the same way. |
+| `auto_format` | The interpretation of the format of the character sequence is implementation-defined. The implementation may inspect the content of the character sequence to determine the format. Recommended practice: For POSIX-based systems, native and generic formats are equivalent and the character sequence should always be interpreted in the same way. |
 
 
 #### Enum class `file_type` <a id="fs.enum.file.type">[[fs.enum.file.type]]</a>
@@ -10056,7 +10059,7 @@ constants are distinct.
 | `character` | Character special file |
 | `fifo` | FIFO or pipe file |
 | `socket` | Socket file |
-| `\textit{*implementation-defined*}` | Implementations that support file systems having file types in addition to the above `file_type` types shall supply *implementation-defined* `file_type` constants to separately identify each of those additional file types |
+| `implementation-defined` | Implementations that support file systems having file types in addition to the above `file_type` types shall supply implementation-defined `file_type` constants to separately identify each of those additional file types |
 | `unknown` | The file exists but the type cannot be determined |
 
 
@@ -10406,9 +10409,9 @@ directly or indirectly calling the `refresh` function as described in
 
 #### Observers <a id="fs.dir.entry.obs">[[fs.dir.entry.obs]]</a>
 
-Unqualified function names in the elements of the `directory_entry`
-observers described below refer to members of the `std::filesystem`
-namespace.
+Unqualified function names in the *Returns:* elements of the
+`directory_entry` observers described below refer to members of the
+`std::filesystem` namespace.
 
 ``` cpp
 const filesystem::path& path() const noexcept;
@@ -10993,8 +10996,8 @@ parent directory.
 
 *Throws:* As specified in  [[fs.err.report]].
 
-Any copies of the previous value of `*this` are no longer required to be
-dereferenceable nor to be in the domain of `==`.
+*Remarks:* Any copies of the previous value of `*this` are no longer
+required to be dereferenceable nor to be in the domain of `==`.
 
 ``` cpp
 void disable_recursion_pending();
@@ -11984,7 +11987,7 @@ file_status filesystem::status(const path& p);
 error_code ec;
 file_status result = status(p, ec);
 if (result.type() == file_type::none)
-  throw filesystem_error(\textit{implementation-supplied-message}, p, ec);
+  throw filesystem_error(implementation-supplied-message, p, ec);
 return result;
 ```
 
@@ -12032,10 +12035,10 @@ determined as if by converting the `st_mode` member of the obtained
 - Otherwise,
   - If the attributes indicate a regular file, as if by POSIX `S_ISREG`,
     returns `file_status(file_type::regular, prms)`.
-    \[*Note 9*: `file_type::regular` implies appropriate operations
-    would succeed, assuming no hardware, permission, access, or file
-    system race errors. Lack of `file_type::regular` does not
-    necessarily imply operations would fail on a
+    \[*Note 9*: `file_type::regular` implies appropriate `<fstream>`
+    operations would succeed, assuming no hardware, permission, access,
+    or file system race errors. Lack of `file_type::regular` does not
+    necessarily imply `<fstream>` operations would fail on a
     directory. — *end note*\]
   - Otherwise, if the attributes indicate a directory, as if by POSIX
     `S_ISDIR`, returns `file_status(file_type::directory, prms)`.

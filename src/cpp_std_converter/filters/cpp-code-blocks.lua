@@ -104,13 +104,18 @@ function CodeBlock(elem)
 
   -- Check if this code block has LaTeX commands that need cleaning
   if code:match("\\rlap") or code:match("\\llap") or code:match("\\clap") or
-     code:match("\\normalfont") or code:match("\\itshape") or code:match("\\rmfamily") or code:match("\\bfseries") then
+     code:match("\\normalfont") or code:match("\\itshape") or code:match("\\rmfamily") or code:match("\\bfseries") or
+     code:match("\\texttt{") or code:match("\\textit{") then
 
     -- Remove font switch commands
     code = remove_font_switches(code)
 
     -- Handle layout overlap commands
     code = handle_overlap_commands(code)
+
+    -- Strip \texttt{} and \textit{} from simplified_macros.tex preprocessing
+    code = code:gsub("\\texttt{([^}]*)}", "%1")
+    code = code:gsub("\\textit{([^}]*)}", "%1")
 
     -- Return updated code block
     return pandoc.CodeBlock(code, elem.attr)

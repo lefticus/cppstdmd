@@ -17,7 +17,7 @@ is used to make a *class-name*. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head '{' [member-specification] '}'
+    class-head \terminal{\ [member-specification] \terminal{\}}
 ```
 
 ``` bnf
@@ -936,8 +936,8 @@ which:
 
 For a class, its non-static data members, its non-virtual direct base
 classes, and, if the class is not abstract [[class.abstract]], its
-virtual base classes are called its
-*potentially constructed subobjects*.
+virtual base classes are called its *potentially constructed
+subobjects*.
 
 ### Constructors <a id="class.ctor">[[class.ctor]]</a>
 
@@ -2642,7 +2642,7 @@ new (&u.n) N;
 A union of the form
 
 ``` bnf
-union '{' member-specification '}' ';'
+union \terminal{\ member-specification \terminal{\}} \terminal{;}
 ```
 
 is called an *anonymous union*; it defines an unnamed type and an
@@ -2850,9 +2850,8 @@ accessible unambiguous base class [[conv.ptr]]. An lvalue of a derived
 class type can be bound to a reference to an accessible unambiguous base
 class [[dcl.init.ref]]. — *end note*\]
 
-The *base-specifier-list* specifies the type of the
-*base class subobjects* contained in an object of the derived class
-type.
+The *base-specifier-list* specifies the type of the *base class
+subobjects* contained in an object of the derived class type.
 
 \[*Example 1*:
 
@@ -3042,12 +3041,11 @@ function G corresponds [[basic.scope.scope]] to a declaration of F,
 ignoring trailing *requires-clause*s, then G *overrides*[^9]
 
 F. For convenience we say that any virtual function overrides itself. A
-virtual member function V of a class object S is a *final
-overrider* unless the most derived class [[intro.object]] of which S is
-a base class subobject (if any) has another member function that
-overrides V. In a derived class, if a virtual member function of a base
-class subobject has more than one final overrider the program is
-ill-formed.
+virtual member function V of a class object S is a *final overrider*
+unless the most derived class [[intro.object]] of which S is a base
+class subobject (if any) has another member function that overrides V.
+In a derived class, if a virtual member function of a base class
+subobject has more than one final overrider the program is ill-formed.
 
 \[*Example 1*:
 
@@ -4358,8 +4356,8 @@ complex v[6] = { 1, complex(1,2), complex(), 2 };
 ```
 
 Here, `complex::complex(double)` is called for the initialization of
-`v[0]` and `v[3]`, `complex::complex(double, double)` is called for the
-initialization of `v[1]`, `complex::complex()` is called for the
+`v[0]` and `v[3]`, `complex::complex({}double, double)` is called for
+the initialization of `v[1]`, `complex::complex()` is called for the
 initialization of `v[2]`, `v[4]`, and `v[5]`. For another example,
 
 ``` cpp
@@ -5432,7 +5430,7 @@ Let `R` be the declared return type of a defaulted three-way comparison
 operator function, and let `xᵢ` be the elements of the expanded list of
 subobjects for an object `x` of type `C`.
 
-- If `R` is `auto`, then let \cv{}_i~`Rᵢ` be the type of the expression
+- If `R` is `auto`, then let cv{}_i~`Rᵢ` be the type of the expression
   `xᵢ`` <=> ``xᵢ`. The operator function is defined as deleted if that
   expression is not usable or if `Rᵢ` is not a comparison category type
   [[cmp.categories.pre]] for any i. The return type is deduced as the

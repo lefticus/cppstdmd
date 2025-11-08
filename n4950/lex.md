@@ -184,7 +184,7 @@ context. — *end note*\]
 | `U+005f` | low line | `_` |
 | `U+0061` .. `U+007a` | latin small letter a .. z | `a b c d e f g h i j k l m` |
 |  |  | `n o p q r s t u v w x y z` |
-| `U+007b` | left curly bracket | `{` |
+| `U+007b` | left curly bracket | \texttt{\ |
 | `U+007c` | vertical line | `|` |
 | `U+007d` | right curly bracket | `}` |
 | `U+007e` | tilde | `~` |
@@ -206,7 +206,7 @@ n-char-sequence:
 
 ``` bnf
 named-universal-character:
-    '\N{' n-char-sequence '}'
+    \terminal{\N\ n-char-sequence \terminal{\}}
 ```
 
 ``` bnf
@@ -224,7 +224,7 @@ simple-hexadecimal-digit-sequence:
 universal-character-name:
     '\u' hex-quad
     '\U' hex-quad hex-quad
-    '\u{' simple-hexadecimal-digit-sequence '}'
+    \terminal{\u\ simple-hexadecimal-digit-sequence \terminal{\}}
     named-universal-character
 ```
 
@@ -879,7 +879,7 @@ simple-escape-sequence:
 
 ``` bnf
 simple-escape-sequence-char: one of
-    ''  "  ?  \{} a  b  f  n  r  t  v'
+    ''  "  ?  \a  b  f  n  r  t  v'
 ```
 
 ``` bnf
@@ -899,13 +899,13 @@ octal-escape-sequence:
     '\' octal-digit
     '\' octal-digit octal-digit
     '\' octal-digit octal-digit octal-digit
-    '\o{' simple-octal-digit-sequence '}'
+    \terminal{\o\ simple-octal-digit-sequence \terminal{\}}
 ```
 
 ``` bnf
 hexadecimal-escape-sequence:
     '\x' simple-hexadecimal-digit-sequence
-    '\x{' simple-hexadecimal-digit-sequence '}'
+    \terminal{\x\ simple-hexadecimal-digit-sequence \terminal{\}}
 ```
 
 ``` bnf
@@ -1195,11 +1195,11 @@ where n is the number of encoded code units as described below.
 | `U` | \defnx{UTF-32 string literal}{literal!string!UTF-32} | array of $n$\newline `const char32_t` | UTF-32 | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
 
 
-A *string-literal* that has an `R` in the prefix is a
-*raw string literal*. The *d-char-sequence* serves as a delimiter. The
-terminating *d-char-sequence* of a *raw-string* is the same sequence of
-characters as the initial *d-char-sequence*. A *d-char-sequence* shall
-consist of at most 16 characters.
+A *string-literal* that has an `R` in the prefix is a *raw string
+literal*. The *d-char-sequence* serves as a delimiter. The terminating
+*d-char-sequence* of a *raw-string* is the same sequence of characters
+as the initial *d-char-sequence*. A *d-char-sequence* shall consist of
+at most 16 characters.
 
 \[*Note 1*: The characters `'('` and `')'` are permitted in a
 *raw-string*. Thus, `R"delimiter((a|b))delimiter"` is equivalent to

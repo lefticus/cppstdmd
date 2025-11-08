@@ -37,11 +37,10 @@ future standardization. The optional *attribute-specifier-seq*
 appertains to the *module-declaration*.
 
 A *module interface unit* is a module unit whose *module-declaration*
-starts with *export-keyword*; any other module unit is a
-*module implementation unit*. A named module shall contain exactly one
-module interface unit with no *module-partition*, known as the
-*primary module interface unit* of the module; no diagnostic is
-required.
+starts with *export-keyword*; any other module unit is a *module
+implementation unit*. A named module shall contain exactly one module
+interface unit with no *module-partition*, known as the *primary module
+interface unit* of the module; no diagnostic is required.
 
 A *module partition* is a module unit whose *module-declaration*
 contains a *module-partition*. A named module shall not contain multiple
@@ -182,7 +181,7 @@ int &c = n;                     // OK
 ``` bnf
 export-declaration:
     export name-declaration
-    export '{' [declaration-seq] '}'
+    export \terminal{\ [declaration-seq] \terminal{\}}
     export-keyword module-import-declaration
 ```
 
@@ -558,10 +557,10 @@ global-module-fragment:
 directives can appear in the *declaration-seq*
 [[cpp.pre]]. — *end note*\]
 
-A *global-module-fragment* specifies the contents of the
-*global module fragment* for a module unit. The global module fragment
-can be used to provide declarations that are attached to the global
-module and usable within the module unit.
+A *global-module-fragment* specifies the contents of the *global module
+fragment* for a module unit. The global module fragment can be used to
+provide declarations that are attached to the global module and usable
+within the module unit.
 
 A declaration D is *decl-reachable* from a declaration S in the same
 translation unit if:

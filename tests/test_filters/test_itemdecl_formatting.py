@@ -7,18 +7,26 @@ including blockquote indentation and italic (not bold-italic) labels.
 
 import subprocess
 from pathlib import Path
+import sys
 
 import pytest
+
+# Import inject_macros helper from conftest
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from conftest import inject_macros
 
 
 def run_pandoc_with_filter(latex_content: str, filter_name: str = "cpp-itemdecl.lua") -> str:
     """Helper to run Pandoc with a specific Lua filter."""
+    # Inject simplified_macros.tex preprocessing
+    latex_with_macros = inject_macros(latex_content)
+
     filters_dir = Path(__file__).parent.parent.parent / "src" / "cpp_std_converter" / "filters"
     filter_path = filters_dir / filter_name
 
     result = subprocess.run(
         ["pandoc", "--from=latex+raw_tex", "--to=gfm", f"--lua-filter={filter_path}"],
-        input=latex_content,
+        input=latex_with_macros,
         capture_output=True,
         text=True,
         check=True,

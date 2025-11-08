@@ -1,12 +1,20 @@
 """Test for \terminal{\textbackslash} conversion in BNF grammar"""
 import subprocess
 from pathlib import Path
+import sys
+
+# Import inject_macros helper from conftest
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-grammar.lua")
 
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with grammar filter"""
+    # Inject simplified_macros.tex preprocessing
+    latex_with_macros = inject_macros(latex_content)
+
     cmd = [
         "pandoc",
         "--from=latex+raw_tex",
@@ -15,7 +23,7 @@ def run_pandoc_with_filter(latex_content):
     ]
     result = subprocess.run(
         cmd,
-        input=latex_content,
+        input=latex_with_macros,
         capture_output=True,
         text=True,
         check=True,

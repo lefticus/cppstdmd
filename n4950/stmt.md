@@ -140,7 +140,7 @@ statements into a single statement.
 
 ``` bnf
 compound-statement:
-    '{' [statement-seq] [label-seq] '}'
+    \terminal{\ [statement-seq] [label-seq] \terminal{\}}
 ```
 
 ``` bnf
@@ -252,10 +252,10 @@ if [constexpr] '(' init-statement condition ')' statement
 is equivalent to
 
 ``` bnf
-'{'
+\terminal{\
    init-statement
-   if [constexpr] '(' condition ')' statement
-'}'
+   if [constexpr] \terminal{(} condition \terminal{)} statement
+\terminal{\}}
 ```
 
 and an `if` statement of the form
@@ -267,10 +267,10 @@ if [constexpr] '(' init-statement condition ')' statement else statement
 is equivalent to
 
 ``` bnf
-'{'
+\terminal{\
    init-statement
-   if [constexpr] '(' condition ')' statement else statement
-'}'
+   if [constexpr] \terminal{(} condition \terminal{)} statement else statement
+\terminal{\}}
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -313,7 +313,7 @@ is not itself a consteval if statement, but is equivalent to the
 consteval if statement
 
 ``` bnf
-if consteval '{' '}' else compound-statement
+if consteval \terminal{\ \terminal{\}} else compound-statement
 ```
 
 An `if` statement of the form
@@ -391,10 +391,10 @@ switch '(' init-statement condition ')' statement
 is equivalent to
 
 ``` bnf
-'{'
+\terminal{\
    init-statement
-   switch '(' condition ')' statement
-'}'
+   switch \terminal{(} condition \terminal{)} statement
+\terminal{\}}
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -464,13 +464,13 @@ place before each execution of the substatement.
 A `while` statement is equivalent to
 
 ``` bnf
-*label* ':'
-'{'
-   if '(' condition ')' '{'
+\textit{label} ':'
+\terminal{\
+   if \terminal{(} condition \terminal{)} \terminal{\
       statement
-      goto *label* ';'
-   '}'
-'}'
+      goto \textit{label} \terminal{;}
+   \terminal{\}}
+\terminal{\}}
 ```
 
 \[*Note 1*:
@@ -522,13 +522,13 @@ for '(' init-statement [condition] ';' [expression] ')' statement
 is equivalent to
 
 ``` bnf
-'{'
+\terminal{\
    init-statement
-   while '(' condition ')' '{'
+   while \terminal{(} condition \terminal{)} \terminal{\
      statement
-     expression ';'
-   '}'
-'}'
+     expression \terminal{;}
+   \terminal{\}}
+\terminal{\}}
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -557,16 +557,16 @@ for '(' [init-statement] for-range-declaration ':' for-range-initializer ')' sta
 is equivalent to
 
 ``` bnf
-'{'
+\terminal{\
    [init-statement]
-   auto '&&'*range* '=' for-range-initializer ';'
-   auto *begin* '=' *begin-expr* ';'
-   auto *end* '=' *end-expr* ';'
-   for '(' ';' *begin* '!=' *end*';' '++'*begin* ')' '{'
-     for-range-declaration '=' '*' *begin* ';'
+   auto \terminal{\&\&}\textit{range} \terminal{=} for-range-initializer \terminal{;}
+   auto \textit{begin} \terminal{=} \textit{begin-expr} \terminal{;}
+   auto \textit{end} \terminal{=} \textit{end-expr} \terminal{;}
+   for \terminal{(} \terminal{;} \textit{begin} \terminal{!=} \textit{end}\terminal{;} \terminal{++}\textit{begin} \terminal{)} \terminal{\
+     for-range-declaration \terminal{=} \terminal{*} \textit{begin} \terminal{;}
      statement
-   '}'
-'}'
+   \terminal{\}}
+\terminal{\}}
 ```
 
 where
@@ -770,7 +770,7 @@ operand. Let *p* be an lvalue naming the coroutine promise object
 [[dcl.fct.def.coroutine]]. A `co_return` statement is equivalent to:
 
 ``` bnf
-'{' S';' 'goto' *final-suspend*';' '}'
+\terminal{\ S\terminal{;} \terminal{goto} \textit{final-suspend}\terminal{;} \terminal{\}}
 ```
 
 where *final-suspend* is the exposition-only label defined in

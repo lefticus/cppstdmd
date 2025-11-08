@@ -520,7 +520,7 @@ The type `match_flag_type` is an *implementation-defined* bitmask type
 `match_default` and `format_default`, are bitmask elements. The
 `match_default` and `format_default` constants are empty bitmasks.
 Matching a regular expression against a sequence of characters
-[`first`, `last`) proceeds according to the rules of the grammar
+\[`first`, `last`) proceeds according to the rules of the grammar
 specified for the regular expression object, modified according to the
 effects listed in [[re.matchflag]] for any bitmask elements set.
 
@@ -614,7 +614,7 @@ The specializations `regex_traits<char>` and `regex_traits<wchar_t>`
 meet the requirements for a regular expression traits class [[re.req]].
 
 ``` cpp
-using char_class_type = \textit{bitmask_type};
+using char_class_type = bitmask_type;
 ```
 
 The type `char_class_type` is used to represent a character
@@ -745,7 +745,7 @@ string u("upper");
 regex_traits<char>::char_class_type f;
 f = t.lookup_classname(d.begin(), d.end());
 f |= t.lookup_classname(u.begin(), u.end());
-ctype_base::mask m = convert<char>(f);  // \texttt{m == ctype_base::digit|ctype_base::upper}
+ctype_base::mask m = convert<char>(f);  // m == ctype_base::digit|ctype_base::upper
 ```
 
 — *end example*\]
@@ -757,9 +757,9 @@ regex_traits<char> t;
 string w("w");
 regex_traits<char>::char_class_type f;
 f = t.lookup_classname(w.begin(), w.end());
-t.isctype('A', f);  // returns \texttt{true}
-t.isctype('_', f);  // returns \texttt{true}
-t.isctype(' ', f);  // returns \texttt{false}
+t.isctype('A', f);  // returns true
+t.isctype('_', f);  // returns true
+t.isctype(' ', f);  // returns false
 ```
 
 — *end example*\]
@@ -940,7 +940,7 @@ range.
 
 *Effects:* The object’s internal finite state machine is constructed
 from the regular expression contained in the sequence of characters
-\[`p`, `p + char_traits<charT>::)length(p)`, and interpreted according
+\[`p`, `p + char_traits<charT>::length(p)`), and interpreted according
 to the flags `f`.
 
 *Ensures:* `flags()` returns `f`. `mark_count()` returns the number of
@@ -1385,7 +1385,7 @@ always `true`. The `sub_match` object stored at index `n` denotes what
 matched the marked sub-expression `n` within the matched expression. If
 the sub-expression `n` participated in a regular expression match then
 the `sub_match` member `matched` evaluates to `true`, and members
-`first` and `second` denote the range of characters [`first`, `second`)
+`first` and `second` denote the range of characters \[`first`, `second`)
 which formed that match. Otherwise `matched` is `false`, and members
 `first` and `second` point to the end of the sequence that was searched.
 
@@ -1738,7 +1738,7 @@ template<class BidirectionalIterator, class Allocator>
             match_results<BidirectionalIterator, Allocator>& m2);
 ```
 
-As if by `m1.swap(m2)`.
+*Effects:* As if by `m1.swap(m2)`.
 
 ### Non-member functions <a id="re.results.nonmember">[[re.results.nonmember]]</a>
 
@@ -1792,10 +1792,10 @@ considered. Returns `true` if such a match exists, `false` otherwise.
 ``` cpp
 std::regex re("Get|GetValue");
 std::cmatch m;
-regex_search("GetValue", m, re);        // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"Get"}
-regex_match ("GetValue", m, re);        // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"GetValue"}
-regex_search("GetValues", m, re);       // returns \texttt{true}, and \texttt{m[0]} contains \texttt{"Get"}
-regex_match ("GetValues", m, re);       // returns \texttt{false}
+regex_search("GetValue", m, re);        // returns true, and m[0] contains "Get"
+regex_match ("GetValue", m, re);        // returns true, and m[0] contains "GetValue"
+regex_search("GetValues", m, re);       // returns true, and m[0] contains "Get"
+regex_match ("GetValues", m, re);       // returns false
 ```
 
 — *end example*\]
@@ -2346,8 +2346,8 @@ suffix iterator the member `result` holds a pointer to the data member
 `suffix.second` points to the end of the final sequence.
 
 \[*Note 1*: For a suffix iterator, data member `suffix.first` is the
-same as the end of the last match found, and `suffix\brk.second` is the
-same as the end of the target sequence. — *end note*\]
+same as the end of the last match found, and `suffix.second` is the same
+as the end of the target sequence. — *end note*\]
 
 The *current match* is `(*position).prefix()` if `subs[N] == -1`, or
 `(*position)[subs[N]]` for any other value of `subs[N]`.
@@ -2561,9 +2561,9 @@ bitwise ’ed together and subsequently passed to `traits_inst.isctype`.
 
 A production when used in a production is not valid if the value
 returned by `traits_inst.lookup_collatename` for that name is an empty
-string or if the value returned by `traits_inst\brk.transform_primary`
-for the result of the call to `traits_inst.lookup_collatename` is an
-empty string.
+string or if the value returned by `traits_inst.transform_primary` for
+the result of the call to `traits_inst.lookup_collatename` is an empty
+string.
 
 When the sequence of characters being transformed to a finite state
 machine contains an invalid class name the translator shall throw an
@@ -2596,7 +2596,7 @@ as follows:
     `traits_inst.translate_nocase(c) == traits_inst.translate_nocase(d)`;
   - otherwise, if `flags() & regex_constants::collate` the two
     characters are equal if
-    `traits_inst\brk.translate(c) == traits_inst\brk.translate(d)`;
+    `traits_inst.translate(c) == traits_inst.translate(d)`;
   - otherwise, the two characters are equal if `c == d`.
 - During matching of a regular expression finite state machine against a
   sequence of characters, comparison of a collating element range
@@ -2628,7 +2628,7 @@ as follows:
   equality.
 - During matching of a regular expression finite state machine against a
   sequence of characters, a character `c` is a member of a character
-  class designated by an iterator range [`first`, `last`) if
+  class designated by an iterator range \[`first`, `last`) if
   `traits_inst.isctype(c, traits_inst.lookup_classname(first, last, flags() & icase))`
   is `true`.
 

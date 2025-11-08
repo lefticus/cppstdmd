@@ -52,6 +52,9 @@ local function expand_table_macros(text)
   -- \textbf{X} → **X** (bold text in markdown)
   text = expand_balanced_command(text, "textbf", function(content) return "**" .. content .. "**" end)
 
+  -- \textit{X} → X (strip italic wrapper - tailnotes are already italicized)
+  text = expand_balanced_command(text, "textit", function(content) return content end)
+
   -- \libglobal{X} → `X` (library global identifiers)
   text = expand_balanced_command(text, "libglobal", function(content) return "`" .. content .. "`" end)
 

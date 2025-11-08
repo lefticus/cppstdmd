@@ -527,9 +527,9 @@ Since iterators are an abstraction of pointers, their semantics are a
 generalization of most of the semantics of pointers in C++. This ensures
 that every function template that takes iterators works as well with
 regular pointers. This document defines six categories of iterators,
-according to the operations defined on them: *input iterators*,
-*output iterators*, *forward iterators*, *bidirectional iterators*,
-*random access iterators*, and *contiguous iterators*, as shown in
+according to the operations defined on them: *input iterators*, *output
+iterators*, *forward iterators*, *bidirectional iterators*, *random
+access iterators*, and *contiguous iterators*, as shown in
 [[iterators.relations]].
 
 **Table: Relations among iterator categories**
@@ -602,22 +602,22 @@ an iterator and a count that designate the beginning and the number of
 elements to which the computation is to be applied.[^1]
 
 An iterator and a sentinel denoting a range are comparable. A range
-[`i`, `s`) is empty if `i == s`; otherwise, [`i`, `s`) refers to the
+\[`i`, `s`) is empty if `i == s`; otherwise, \[`i`, `s`) refers to the
 elements in the data structure starting with the element pointed to by
 `i` and up to but not including the element, if any, pointed to by the
 first iterator `j` such that `j == s`.
 
 A sentinel `s` is called *reachable from* an iterator `i` if and only if
 there is a finite sequence of applications of the expression `++i` that
-makes `i == s`. If `s` is reachable from `i`, [`i`, `s`) denotes a
+makes `i == s`. If `s` is reachable from `i`, \[`i`, `s`) denotes a
 *valid range*.
 
-A *counted range* is empty if `n == 0`; otherwise, refers to the `n`
-elements in the data structure starting with the element pointed to by
-`i` and up to but not including the element, if any, pointed to by the
-result of `n` applications of `++i`. A counted range is *valid* if and
-only if `n == 0`; or `n` is positive, `i` is dereferenceable, and is
-valid.
+A *counted range* `i`+\[0, `n`) is empty if `n == 0`; otherwise,
+`i`+\[0, `n`) refers to the `n` elements in the data structure starting
+with the element pointed to by `i` and up to but not including the
+element, if any, pointed to by the result of `n` applications of `++i`.
+A counted range `i`+\[0, `n`) is *valid* if and only if `n == 0`; or `n`
+is positive, `i` is dereferenceable, and `++i`+\[0, `–n`) is valid.
 
 The result of the application of library functions to invalid ranges is
 undefined.
@@ -900,7 +900,7 @@ The members of a specialization `iterator_traits<I>` generated from the
 
   - If the *qualified-id* `I::pointer` is valid and denotes a type,
     `pointer` names that type. Otherwise, if
-    `decltype(declval<I&>().operator->())` is well-formed, then
+    `decltype({}declval<I&>().operator->())` is well-formed, then
     `pointer` names that type. Otherwise, `pointer` names `void`.
   - If the *qualified-id* `I::reference` is valid and denotes a type,
     `reference` names that type. Otherwise, `reference` names
@@ -937,7 +937,7 @@ member type `iterator_concept` that is used to indicate conformance to
 the iterator concepts [[iterator.concepts]].
 
 \[*Example 1*: To indicate conformance to the `input_iterator` concept
-but a lack of conformance to the *Cpp17InputIter\\ator* requirements
+but a lack of conformance to the *Cpp17InputIterator* requirements
 [[input.iterators]], an `iterator_traits` specialization might have
 `iterator_concept` denote `input_iterator_tag` but not define
 `iterator_category`. — *end example*\]
@@ -1052,8 +1052,8 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   model `swappable_with` [[concept.swappable]], then
   `ranges::swap(*E1, *E2)`.
 - Otherwise, if the types `T1` and `T2` of `E1` and `E2` model
-  `indirectly_movable_storable<T1, T2>` and
-  `indirectly_movable_storable<T2, T1>`, then
+  `\texttt{indirectly_movable_storable}<T1, T2>` and
+  `\texttt{indirectly_movable_storable}<T2, T1>`, then
   `(void)(*E1 = iter-exchange-move(E2, E1))`, except that `E1` is
   evaluated only once.
 - Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed. \[*Note 3*: This
@@ -1071,7 +1071,7 @@ template. Otherwise, `ITER_TRAITS(I)` denotes `iterator_traits<I>`.
 
 - If the *qualified-id* `ITER_TRAITS(I)::iterator_concept` is valid and
   names a type, then `ITER_CONCEPT(I)` denotes that type.
-- Otherwise, if the *qualified-id* `ITER_TRAITS(I)::iterator_category`
+- Otherwise, if the *qualified-id* `ITER_TRAITS(I){}::iterator_category`
   is valid and names a type, then `ITER_CONCEPT(I)` denotes that type.
 - Otherwise, if `iterator_traits<I>` names a specialization generated
   from the primary template, then `ITER_CONCEPT(I)` denotes
@@ -1153,10 +1153,10 @@ template<class Out, class T>
 
 Let `E` be an expression such that `decltype((E))` is `T`, and let `o`
 be a dereferenceable object of type `Out`. `Out` and `T` model
-`indirectly_writable<Out, T>` only if
+`\texttt{indirectly_writable}<Out, T>` only if
 
 - If `Out` and `T` model
-  `indirectly_readable<Out> && same_as<iter_value_t<Out>, decay_t<T>>`,
+  `\texttt{indirectly_readable}<Out> && \texttt{same_as}<iter_value_t<Out>, decay_t<T>>`,
   then `*o` after any above assignment is equal to the value of `E`
   before the assignment.
 
@@ -1175,7 +1175,7 @@ expressions to reject iterators with prvalue non-proxy reference types
 that permit rvalue assignment but do not also permit `const` rvalue
 assignment. Consequently, an iterator type `I` that returns
 `std::string` by value does not model
-`indirectly_writable<I, std::string>`. — *end note*\]
+`\texttt{indirectly_writable}<I, std::string>`. — *end note*\]
 
 #### Concept  <a id="iterator.concept.winc">[[iterator.concept.winc]]</a>
 
@@ -1220,11 +1220,12 @@ an integer-class type is greater than that of every integral type of the
 same signedness.
 
 A type `I` other than cv `bool` is *integer-like* if it models
-`integral<I>` or if it is an integer-class type. An integer-like type
-`I` is *signed-integer-like* if it models `signed_integral<I>` or if it
-is a signed-integer-class type. An integer-like type `I` is
-*unsigned-integer-like* if it models `unsigned_integral<I>` or if it is
-an unsigned-integer-class type.
+`\texttt{integral}<I>` or if it is an integer-class type. An
+integer-like type `I` is *signed-integer-like* if it models
+`\texttt{signed_integral}<I>` or if it is a signed-integer-class type.
+An integer-like type `I` is *unsigned-integer-like* if it models
+`\texttt{unsigned_integral}<I>` or if it is an unsigned-integer-class
+type.
 
 For every integer-class type `I`, let `B(I)` be a unique hypothetical
 extended integer type of the same signedness with the same width
@@ -1285,7 +1286,7 @@ An expression `E` of integer-class type `I` is contextually convertible
 to `bool` as if by `bool(E != I(0))`.
 
 All integer-class types model `regular` [[concepts.object]] and
-`three_way_comparable<strong_ordering>` [[cmp.concept]].
+`\texttt{three_way_comparable}<strong_ordering>` [[cmp.concept]].
 
 A value-initialized object of integer-class type has value 0.
 
@@ -1306,7 +1307,7 @@ signed-integer-like type.
 
 Let `i` be an object of type `I`. When `i` is in the domain of both pre-
 and post-increment, `i` is said to be *incrementable*. `I` models
-`weakly_incrementable<I>` only if
+`\texttt{weakly_incrementable}<I>` only if
 
 - The expressions `++i` and `i++` have the same domain.
 - If `i` is incrementable, then both `++i` and `i++` advance `i` to the
@@ -1314,9 +1315,10 @@ and post-increment, `i` is said to be *incrementable*. `I` models
 - If `i` is incrementable, then `addressof(++i)` is equal to
   `addressof(i)`.
 
-The implementaton of an algorithm on a weakly incrementable type should
-never attempt to pass through the same incrementable value twice; such
-an algorithm should be a single-pass algorithm.
+*Recommended practice:* The implementaton of an algorithm on a weakly
+incrementable type should never attempt to pass through the same
+incrementable value twice; such an algorithm should be a single-pass
+algorithm.
 
 \[*Note 3*: For `weakly_incrementable` types, `a` equals `b` does not
 imply that `++a` equals `++b`. (Equality does not guarantee the
@@ -1402,7 +1404,7 @@ denotes a range. Types `S` and `I` model `sentinel_for``<S, I>` only if
 - `assignable_from``<I&, S>` is either modeled or not satisfied.
 
 The domain of `==` is not static. Given an iterator `i` and sentinel `s`
-such that [`i`, `s`) denotes a range and `i != s`, `i` and `s` are not
+such that \[`i`, `s`) denotes a range and `i != s`, `i` and `s` are not
 required to continue to denote a range after incrementing any other
 iterator equal to `i`. Consequently, `i == s` is no longer required to
 be well-defined.
@@ -1411,8 +1413,8 @@ be well-defined.
 
 The `sized_sentinel_for` concept specifies requirements on an
 `input_or_output_iterator` type `I` and a corresponding
-`sentinel_for<I>` that allow the use of the `-` operator to compute the
-distance between them in constant time.
+`\texttt{sentinel_for}<I>` that allow the use of the `-` operator to
+compute the distance between them in constant time.
 
 ``` cpp
 template<class S, class I>
@@ -1498,16 +1500,17 @@ template<class I, class T>
 
 Let `E` be an expression such that `decltype((E))` is `T`, and let `i`
 be a dereferenceable object of type `I`. `I` and `T` model
-`output_iterator<I, T>` only if `*i++ = E;` has effects equivalent to:
+`\texttt{output_iterator}<I, T>` only if `*i++ = E;` has effects
+equivalent to:
 
 ``` cpp
 *i = E;
 ++i;
 ```
 
-The implementation of an algorithm on output iterators should never
-attempt to pass through the same iterator twice; such an algorithm
-should be a single-pass algorithm.
+*Recommended practice:* The implementation of an algorithm on output
+iterators should never attempt to pass through the same iterator twice;
+such an algorithm should be a single-pass algorithm.
 
 #### Concept  <a id="iterator.concept.forward">[[iterator.concept.forward]]</a>
 
@@ -1532,7 +1535,7 @@ value-initialized iterators of the same type.
 end of the same empty sequence. — *end note*\]
 
 Pointers and references obtained from a forward iterator into a range
-[`i`, `s`) shall remain valid while [`i`, `s`) continues to denote a
+\[`i`, `s`) shall remain valid while \[`i`, `s`) continues to denote a
 range.
 
 Two dereferenceable iterators `a` and `b` of type `X` offer the
@@ -1674,7 +1677,7 @@ value of some type that is writable to the output iterator.
 #### *Cpp17Iterator* <a id="iterator.iterators">[[iterator.iterators]]</a>
 
 The *Cpp17Iterator* requirements form the basis of the iterator
-taxonomy; every iterator meets the *Cpp17\\Iterator* requirements. This
+taxonomy; every iterator meets the *Cpp17Iterator* requirements. This
 set of requirements specifies operations for dereferencing and
 incrementing an iterator. Most algorithms will require additional
 operations to read [[input.iterators]] or write [[output.iterators]]
@@ -1711,9 +1714,9 @@ uses that algorithm makes of `==` and `!=`.
 value `i` has property *p* if (`*i==x`) or if (`*i!=x` and `++i` has
 property *p*). — *end example*\]
 
-The implementation of an algorithm on input iterators should never
-attempt to pass through the same iterator twice; such an algorithm
-should be a single pass algorithm.
+*Recommended practice:* The implementation of an algorithm on input
+iterators should never attempt to pass through the same iterator twice;
+such an algorithm should be a single pass algorithm.
 
 \[*Note 1*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
@@ -1729,9 +1732,9 @@ if `X` meets the *Cpp17Iterator* requirements [[iterator.iterators]] and
 the expressions in [[outputiterator]] are valid and have the indicated
 semantics.
 
-The implementation of an algorithm on output iterators should never
-attempt to pass through the same iterator twice; such an algorithm
-should be a single-pass algorithm.
+*Recommended practice:* The implementation of an algorithm on output
+iterators should never attempt to pass through the same iterator twice;
+such an algorithm should be a single-pass algorithm.
 
 \[*Note 1*: The only valid use of an `operator*` is on the left side of
 the assignment statement. Assignment through the same value of the
@@ -1952,8 +1955,8 @@ template<class In, class Out>
 ```
 
 Let `i` be a dereferenceable value of type `In`. `In` and `Out` model
-`indirectly_movable_storable<In, Out>` only if after the initialization
-of the object `obj` in
+`\texttt{indirectly_movable_storable}<In, Out>` only if after the
+initialization of the object `obj` in
 
 ``` cpp
 iter_value_t<In> obj(ranges::iter_move(i));
@@ -1997,8 +2000,8 @@ template<class In, class Out>
 ```
 
 Let `i` be a dereferenceable value of type `In`. `In` and `Out` model
-`indirectly_copyable_storable<In, Out>` only if after the initialization
-of the object `obj` in
+`\texttt{indirectly_copyable_storable}<In, Out>` only if after the
+initialization of the object `obj` in
 
 ``` cpp
 iter_value_t<In> obj(*i);
@@ -2469,9 +2472,9 @@ The member *typedef-name* `iterator_concept` denotes
 The member *typedef-name* `iterator_category` denotes
 
 - `random_access_iterator_tag` if the type
-  `iterator_traits<Iterator>::iterator_category` models
-  `derived_from<random_access_iterator_tag>`, and
-- `iterator_traits<Iterator>::iterator_category` otherwise.
+  `iterator_traits<{}Iterator>::iterator_category` models
+  `\texttt{derived_from}<random_access_iterator_tag>`, and
+- `iterator_traits<{}Iterator>::iterator_category` otherwise.
 
 #### Requirements <a id="reverse.iter.requirements">[[reverse.iter.requirements]]</a>
 
@@ -2804,19 +2807,18 @@ template<class Iterator>
 #### General <a id="insert.iterators.general">[[insert.iterators.general]]</a>
 
 To make it possible to deal with insertion in the same way as writing
-into an array, a special kind of iterator adaptors, called
-*insert iterators*, are provided in the library. With regular iterator
-classes,
+into an array, a special kind of iterator adaptors, called *insert
+iterators*, are provided in the library. With regular iterator classes,
 
 ``` cpp
 while (first != last) *result++ = *first++;
 ```
 
-causes a range [`first`, `last`) to be copied into a range starting with
-result. The same code with `result` being an insert iterator will insert
-corresponding elements into the container. This device allows all of the
-copying algorithms in the library to work in the *insert mode* instead
-of the *regular overwrite* mode.
+causes a range \[`first`, `last`) to be copied into a range starting
+with result. The same code with `result` being an insert iterator will
+insert corresponding elements into the container. This device allows all
+of the copying algorithms in the library to work in the *insert mode*
+instead of the *regular overwrite* mode.
 
 An insert iterator is constructed from a container and possibly one of
 its iterators pointing to where insertion takes place if it is neither
@@ -3250,7 +3252,7 @@ follows:
 The member *typedef-name* `iterator_category` is defined if and only if
 `Iterator` models `forward_iterator`. In that case,
 `basic_const_iterator<Iterator>::iterator_category` denotes the type
-`iterator_traits<Iterator>::iterator_category`.
+`iterator_traits<{}Iterator>::iterator_category`.
 
 #### Operations <a id="const.iterators.ops">[[const.iterators.ops]]</a>
 
@@ -3574,9 +3576,9 @@ the *qualified-id* `iterator_traits<Iterator>::iterator_category` is
 valid and denotes a type. In that case, `iterator_category` denotes
 
 - `random_access_iterator_tag` if the type
-  `iterator_traits<Iterator>::iterator_category` models
-  `derived_from<random_access_iterator_tag>`, and
-- `iterator_traits<Iterator>::iterator_category` otherwise.
+  `iterator_traits<{}Iterator>::iterator_category` models
+  `\texttt{derived_from}<random_access_iterator_tag>`, and
+- `iterator_traits<{}Iterator>::iterator_category` otherwise.
 
 #### Requirements <a id="move.iter.requirements">[[move.iter.requirements]]</a>
 
@@ -3847,9 +3849,9 @@ constexpr move_iterator<Iterator> make_move_iterator(Iterator i);
 
 Class template `move_sentinel` is a sentinel adaptor useful for denoting
 ranges together with `move_iterator`. When an input iterator type `I`
-and sentinel type `S` model `sentinel_for<S, I>`, `move_sentinel<S>` and
-`move_iterator<I>` model
-`sentinel_for<move_sentinel<S>, move_iterator<I>>` as well.
+and sentinel type `S` model `\texttt{sentinel_for}<S, I>`,
+`move_sentinel<S>` and `move_iterator<I>` model
+`\texttt{sentinel_for}<move_sentinel<S>, move_iterator<I>>` as well.
 
 \[*Example 1*:
 
@@ -4035,8 +4037,9 @@ for `common_iterator<I, S>` are defined as follows.
   `forward_iterator`; otherwise it denotes `input_iterator_tag`.
 - `iterator_category` denotes `forward_iterator_tag` if the
   *qualified-id* `iterator_traits<I>::iterator_category` is valid and
-  denotes a type that models `derived_from<forward_iterator_tag>`;
-  otherwise it denotes `input_iterator_tag`.
+  denotes a type that models
+  `\texttt{derived_from}<forward_iterator_tag>`; otherwise it denotes
+  `input_iterator_tag`.
 - Let `a` denote an lvalue of type `const common_iterator<I, S>`. If the
   expression `a.operator->()` is well-formed, then `pointer` denotes
   `decltype(a.operator->())`. Otherwise, `pointer` denotes `void`.

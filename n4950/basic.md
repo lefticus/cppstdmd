@@ -1108,9 +1108,9 @@ in the context discussed by a particular rule. Name lookup associates
 the use of a name with a set of declarations [[basic.def]] of that name.
 Unless otherwise specified, the program is ill-formed if no declarations
 are found. If the declarations found by name lookup all denote functions
-or function templates, the declarations are said to form an
-*overload set*. Otherwise, if the declarations found by name lookup do
-not all denote the same entity, they are *ambiguous* and the program is
+or function templates, the declarations are said to form an *overload
+set*. Otherwise, if the declarations found by name lookup do not all
+denote the same entity, they are *ambiguous* and the program is
 ill-formed. Overload resolution [[over.match]], [[over.over]] takes
 place after name lookup has succeeded. The access rules [[class.access]]
 are considered only once name lookup and function overload resolution
@@ -2575,11 +2575,10 @@ execution. — *end note*\]
 Objects can contain other objects, called *subobjects*. A subobject can
 be a *member subobject* [[class.mem]], a *base class subobject*
 [[class.derived]], or an array element. An object that is not a
-subobject of any other object is called a *complete
-object*. If an object is created in storage associated with a member
-subobject or array element *e* (which may or may not be within its
-lifetime), the created object is a subobject of *e*’s containing object
-if:
+subobject of any other object is called a *complete object*. If an
+object is created in storage associated with a member subobject or array
+element *e* (which may or may not be within its lifetime), the created
+object is a subobject of *e*’s containing object if:
 
 - the lifetime of *e*’s containing object has begun and not ended, and
 - the storage for the new object exactly overlays the storage location
@@ -2633,8 +2632,8 @@ An object *a* is *nested within* another object *b* if:
 - there exists an object *c* where *a* is nested within *c*, and *c* is
   nested within *b*.
 
-For every object `x`, there is some object called the
-*complete object of* `x`, determined as follows:
+For every object `x`, there is some object called the *complete object
+of* `x`, determined as follows:
 
 - If `x` is a complete object, then the complete object of `x` is
   itself.
@@ -2642,10 +2641,10 @@ For every object `x`, there is some object called the
   (unique) object that contains `x`.
 
 If a complete object, a member subobject, or an array element is of
-class type, its type is considered the *most derived
-class*, to distinguish it from the class type of any base class
-subobject; an object of a most derived class type or of a non-class type
-is called a *most derived object*.
+class type, its type is considered the *most derived class*, to
+distinguish it from the class type of any base class subobject; an
+object of a most derived class type or of a non-class type is called a
+*most derived object*.
 
 A *potentially-overlapping subobject* is either:
 
@@ -3843,9 +3842,9 @@ that it is possible to create such an object, nor is it a guarantee that
 any object of that type will be usable in a constant
 expression. — *end note*\]
 
-Two types cv-qualifier{cv1} `T1` and cv-qualifier{cv2} `T2` are if `T1`
-and `T2` are the same type, layout-compatible enumerations [[dcl.enum]],
-or layout-compatible standard-layout class types [[class.mem]].
+Two types cv-qualifiercv1 `T1` and cv-qualifiercv2 `T2` are if `T1` and
+`T2` are the same type, layout-compatible enumerations [[dcl.enum]], or
+layout-compatible standard-layout class types [[class.mem]].
 
 ### Fundamental types <a id="basic.fundamental">[[basic.fundamental]]</a>
 
@@ -3915,13 +3914,13 @@ type is *implementation-defined*.
 
 Each value x of an unsigned integer type with width N has a unique
 representation $x = x_0 2^0 + x_1 2^1 + \ldots + x_{N-1} 2^{N-1}$, where
-each coefficient xᵢ is either 0 or 1; this is called the
-*base-2 representation* of x. The base-2 representation of a value of
-signed integer type is the base-2 representation of the congruent value
-of the corresponding unsigned integer type. The standard signed integer
-types and standard unsigned integer types are collectively called the ,
-and the extended signed integer types and extended unsigned integer
-types are collectively called the .
+each coefficient xᵢ is either 0 or 1; this is called the *base-2
+representation* of x. The base-2 representation of a value of signed
+integer type is the base-2 representation of the congruent value of the
+corresponding unsigned integer type. The standard signed integer types
+and standard unsigned integer types are collectively called the , and
+the extended signed integer types and extended unsigned integer types
+are collectively called the .
 
 A fundamental type specified to have a signed or unsigned integer type
 as its *underlying type* has the same object representation, value
@@ -4081,12 +4080,13 @@ the parameters specified for `std::bfloat16_t`. — *end note*\]
 | $w$, exponent field width in bits | 5 | 8 | 11 | 15 | 8 |
 
 
-Any names that the implementation provides for the extended
-floating-point types described in this subsection that are in addition
-to the names defined in the `<stdfloat>` header should be chosen to
-increase compatibility and interoperability with the interchange types
-`_Float16`, `_Float32`, `_Float64`, and `_Float128` defined in ISO/IEC
-TS 18661-3 and with future versions of the C standard.
+*Recommended practice:* Any names that the implementation provides for
+the extended floating-point types described in this subsection that are
+in addition to the names defined in the `<stdfloat>` header should be
+chosen to increase compatibility and interoperability with the
+interchange types `_Float16`, `_Float32`, `_Float64`, and `_Float128`
+defined in ISO/IEC TS 18661-3 and with future versions of the C
+standard.
 
 ### Compound types <a id="basic.compound">[[basic.compound]]</a>
 
@@ -4271,10 +4271,10 @@ shows the relations that constitute this ordering.
 | `volatile` | < | `const volatile` |
 
 
-In this document, the notation cv (or cv-qualifier{cv1},
-cv-qualifier{cv2}, etc.), used in the description of types, represents
-an arbitrary set of cv-qualifiers, i.e., one of {`const`}, {`volatile`},
-{`const`, `volatile`}, or the empty set. For a type cv `T`, the
+In this document, the notation cv (or cv-qualifiercv1, cv-qualifiercv2,
+etc.), used in the description of types, represents an arbitrary set of
+cv-qualifiers, i.e., one of {`const`}, {`volatile`}, {`const`,
+`volatile`}, or the empty set. For a type cv `T`, the
 *top-level cv-qualifiers* of that type are those denoted by cv.
 
 \[*Example 2*: The type corresponding to the *type-id* `const int&` has
@@ -4972,10 +4972,9 @@ a lock-free execution does not complete because there are other
 concurrent threads that are not blocked in a standard library function
 (see above).
 
-For a thread of execution providing
-*concurrent forward progress guarantees*, the implementation ensures
-that the thread will eventually make progress for as long as it has not
-terminated.
+For a thread of execution providing *concurrent forward progress
+guarantees*, the implementation ensures that the thread will eventually
+make progress for as long as it has not terminated.
 
 \[*Note 3*: This is required regardless of whether or not other threads
 of execution (if any) have been or are making progress. To eventually
@@ -4989,11 +4988,11 @@ of execution created by `std::thread` [[thread.thread.class]] or
 progress guarantees. General-purpose implementations should provide
 these guarantees.
 
-For a thread of execution providing
-*parallel forward progress guarantees*, the implementation is not
-required to ensure that the thread will eventually make progress if it
-has not yet executed any execution step; once this thread has executed a
-step, it provides concurrent forward progress guarantees.
+For a thread of execution providing *parallel forward progress
+guarantees*, the implementation is not required to ensure that the
+thread will eventually make progress if it has not yet executed any
+execution step; once this thread has executed a step, it provides
+concurrent forward progress guarantees.
 
 \[*Note 4*: This does not specify a requirement for when to start this
 thread of execution, which will typically be specified by the entity
@@ -5100,7 +5099,8 @@ character of a NTMBS that represents the name used to invoke the program
 or `""`. The value of `argc` shall be non-negative. The value of
 `argv[argc]` shall be 0.
 
-Any further (optional) parameters should be added after `argv`.
+*Recommended practice:* Any further (optional) parameters should be
+added after `argv`.
 
 The function `main` shall not be used within a program. The linkage
 [[basic.link]] of `main` is *implementation-defined*. A program that
@@ -5248,8 +5248,8 @@ translation unit as the variable to be initialized.[^25]
 It is *implementation-defined* in which threads and at which points in
 the program such deferred dynamic initialization occurs.
 
-An implementation should choose such points in a way that allows the
-programmer to avoid deadlocks.
+*Recommended practice:* An implementation should choose such points in a
+way that allows the programmer to avoid deadlocks.
 
 \[*Example 1*:
 

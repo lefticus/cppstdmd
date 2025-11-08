@@ -12,6 +12,31 @@ def filter_dir():
     return PROJECT_ROOT / "src" / "cpp_std_converter" / "filters"
 
 @pytest.fixture
+def simplified_macros():
+    """Load simplified macro definitions for Pandoc preprocessing"""
+    macros_file = PROJECT_ROOT / "src" / "cpp_std_converter" / "filters" / "simplified_macros.tex"
+    if macros_file.exists():
+        return macros_file.read_text(encoding='utf-8')
+    return ""
+
+def inject_macros(latex_content, macros=None):
+    """Inject simplified macro definitions into LaTeX content
+
+    This mimics the preprocessing done by converter.py to ensure tests
+    run with the same macro expansion behavior as production.
+    """
+    if macros is None:
+        macros_file = PROJECT_ROOT / "src" / "cpp_std_converter" / "filters" / "simplified_macros.tex"
+        if macros_file.exists():
+            macros = macros_file.read_text(encoding='utf-8')
+        else:
+            macros = ""
+
+    if macros:
+        return macros + "\n\n" + latex_content
+    return latex_content
+
+@pytest.fixture
 def cpp_draft_source():
     """Path to C++ draft source if available"""
     # Look in project directory first, then fall back to /tmp

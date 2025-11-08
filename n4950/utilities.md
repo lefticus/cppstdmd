@@ -187,7 +187,7 @@ namespace std {
     explicit piecewise_construct_t() = default;
   };
   inline constexpr piecewise_construct_t piecewise_construct{};
-  template<class... Types> class tuple;         // defined in \libheaderref{tuple}
+  template<class... Types> class tuple;         // defined in <tuple>
 
   // in-place construction%
 \indexlibraryglobal{in_place_t\indexlibraryglobal{in_place\indexlibraryglobal{in_place_type_t\indexlibraryglobal{in_place_type\indexlibraryglobal{in_place_index_t\indexlibraryglobal{in_place_index}
@@ -295,7 +295,7 @@ struct A {
 };
 
 void g() {
-  shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to \texttt{int\&}
+  shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to int\&
   int i = 2;
   shared_ptr<A> sp2 = factory<A>(i, 1.414); // OK
 }
@@ -343,7 +343,7 @@ void g() {
   accessor a{&v};
   string& x = a[0];                             // OK, binds to lvalue reference
   string&& y = std::move(a)[0];                 // OK, is rvalue reference
-  string const&& z = std::move(as_const(a))[1]; // OK, is \texttt{const\&\&}
+  string const&& z = std::move(as_const(a))[1]; // OK, is const\&\&
   string& w = as_const(a)[1];                   // error: will not bind to non-const
 }
 ```
@@ -372,8 +372,8 @@ struct A {
 
 void g() {
   A a;
-  shared_ptr<A> sp1 = factory<A>(a);                // ``\texttt{a}\!'' binds to \texttt{A(const A\&)}
-  shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``\texttt{a}\!'' binds to \texttt{A(A\&\&)}
+  shared_ptr<A> sp1 = factory<A>(a);                // ``a\!'' binds to A(const A\&)
+  shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``a\!'' binds to A(A\&\&)
 }
 ```
 
@@ -553,7 +553,7 @@ int f(int x) {
     std::unreachable();
   }
 }
-int a = f(1);           // OK, \texttt{a} has value \texttt{1}
+int a = f(1);           // OK, a has value 1
 int b = f(3);           // undefined behavior
 ```
 
@@ -757,7 +757,8 @@ obtained by forwarding the elements of `first_args` and initializes
 elements of `second_args`. (Here, forwarding an element `x` of type `U`
 within a `tuple` object means calling `std::forward<U>(x)`.) This form
 of construction, whereby constructor arguments for `first` and `second`
-are each provided in a separate `tuple` object, is called .
+are each provided in a separate `tuple` object, is called *piecewise
+construction*.
 
 \[*Note 2*: If a data member of `pair` is of reference type and its
 initialization binds it to a temporary object, the program is
@@ -1190,7 +1191,7 @@ namespace std {
     constexpr common_comparison_category_t<synth-three-way-result<TTypes, UTypes>...>
       operator<=>(const tuple<TTypes...>&, const tuple<UTypes...>&);
   template<class... TTypes, exposition onlyconceptnc{tuple-like} UTuple>
-    constexpr see belownc@ operator<=>(const tuple<TTypes...>&, const UTuple&);
+    constexpr see belownc operator<=>(const tuple<TTypes...>&, const UTuple&);
 
   // [tuple.traits], allocator-related traits
   template<class... Types, class Alloc>
@@ -1204,7 +1205,7 @@ namespace std {
 
   // [tuple.helper], tuple helper classes
   template<class T>
-    constexpr size_t tuple_size_v = tuple_size<T>::value;
+    constexpr size_t tuple_size_v@ = tuple_size<T>::value;
 }
 ```
 
@@ -1348,10 +1349,10 @@ namespace std {
 
 #### Construction <a id="tuple.cnstr">[[tuple.cnstr]]</a>
 
-In the descriptions that follow, let i be in the range
-[`0`, `sizeof...(Types)`) in order, `Tᵢ` be the $i^\text{th}$ type in
-`Types`, and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack
-named `UTypes`, where indexing is zero-based.
+In the descriptions that follow, let i be in the range \[`0`,
+`sizeof...(Types)`) in order, `Tᵢ` be the $i^\text{th}$ type in `Types`,
+and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack named
+`UTypes`, where indexing is zero-based.
 
 For each `tuple` constructor, an exception is thrown only if the
 construction of one of the types in `Types` throws an exception.
@@ -1512,15 +1513,15 @@ the second element with `get<1>(`*`FWD`*`(u))`.
 *Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
-!is_convertible_v<decltype(get<0>(FWD(u))), $\texttt{T}_0$> ||
-!is_convertible_v<decltype(get<1>(FWD(u))), $\texttt{T}_1$>
+!is_convertible_v<decltype(get<0>(FWD(u))), $T_0$> ||
+!is_convertible_v<decltype(get<1>(FWD(u))), $T_1$>
 ```
 
 The constructor is defined as deleted if
 
 ``` cpp
-reference_constructs_from_temporary_v<$\texttt{T}_0$, decltype(get<0>(FWD(u)))> ||
-reference_constructs_from_temporary_v<$\texttt{T}_1$, decltype(get<1>(FWD(u)))>
+reference_constructs_from_temporary_v<$T_0$, decltype(get<0>(FWD(u)))> ||
+reference_constructs_from_temporary_v<$T_1$, decltype(get<1>(FWD(u)))>
 ```
 
 is `true`.
@@ -1607,10 +1608,10 @@ construction [[allocator.uses.construction]].
 
 For each `tuple` assignment operator, an exception is thrown only if the
 assignment of one of the types in `Types` throws an exception. In the
-function descriptions that follow, let i be in the range
-[`0`, `sizeof...\brk{`) in order, `Tᵢ` be the $i^\text{th}$ type in
-`Types`, and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack
-named `UTypes`, where indexing is zero-based.
+function descriptions that follow, let i be in the range \[`0`,
+`sizeof...(Types)`) in order, `Tᵢ` be the $i^\text{th}$ type in `Types`,
+and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack named
+`UTypes`, where indexing is zero-based.
 
 ``` cpp
 constexpr tuple& operator=(const tuple& u);
@@ -1905,7 +1906,7 @@ variables. `ignore` can be used for elements that are not needed:
 ``` cpp
 int i; std::string s;
 tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
-// \texttt{i == 42}, \texttt{s == "C++"}
+// i == 42, s == "C++"
 ```
 
 — *end example*\]
@@ -2058,8 +2059,9 @@ template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
 context” and can result in the program being ill-formed. — *end note*\]
 
-In addition to being available via inclusion of the header, the template
-is available when any of the headers , , or are included.
+In addition to being available via inclusion of the `<tuple>` header,
+the template is available when any of the headers `<array>`, `<ranges>`,
+or `<utility>` are included.
 
 ``` cpp
 template<size_t I, class T> struct tuple_element<I, const T>;
@@ -2070,8 +2072,9 @@ Then each specialization of the template meets the
 *Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
 typedef `type` that names the type `add_const_t<TE>`.
 
-In addition to being available via inclusion of the header, the template
-is available when any of the headers , , or are included.
+In addition to being available via inclusion of the `<tuple>` header,
+the template is available when any of the headers `<array>`, `<ranges>`,
+or `<utility>` are included.
 
 ### Element access <a id="tuple.elem">[[tuple.elem]]</a>
 
@@ -2124,9 +2127,9 @@ template<class T, class... Types>
 
 ``` cpp
 const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
-const int& i1 = get<int>(t);                    // OK, \texttt{i1} has value \texttt{1}
-const int& i2 = get<const int>(t);              // OK, \texttt{i2} has value \texttt{2}
-const double& d = get<double>(t);               // error: type \texttt{double} is not unique within \texttt{t}
+const int& i1 = get<int>(t);                    // OK, i1 has value 1
+const int& i2 = get<const int>(t);              // OK, i2 has value 2
+const double& d = get<double>(t);               // error: type double is not unique within t
 ```
 
 — *end example*\]
@@ -2187,7 +2190,7 @@ Otherwise, equivalent to:
 
 ``` cpp
 if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
-return $\texttt{t}_\mathrm{tail}$ <=> $\texttt{u}_\mathrm{tail}$;
+return $t_\mathrm{tail}$ <=> $u_\mathrm{tail}$;
 ```
 
 where `r`_\mathrm{tail} for some `r` is a tuple containing all but the
@@ -2582,7 +2585,7 @@ template<class U = T> constexpr explicit(see below) optional(U&& v);
 - `is_constructible_v<T, U>` is `true`,
 - `is_same_v<remove_cvref_t<U>, in_place_t>` is `false`,
 - `is_same_v<remove_cvref_t<U>, optional>` is `false`, and
-- if `T` is `bool`, `remove_cvref_t<U>` is not a specialization of
+- if `T` is cv `bool`, `remove_cvref_t<U>` is not a specialization of
   `optional`.
 
 *Effects:* Direct-non-list-initializes the contained value with
@@ -2607,8 +2610,8 @@ template<class U> constexpr explicit(see below) optional(const optional<U>& rhs)
 *Constraints:*
 
 - `is_constructible_v<T, const U&>` is `true`, and
-- if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>` is
-  `false`.
+- if `T` is not cv `bool`, *`converts-from-any-cvref`*`<T, optional<U>>`
+  is `false`.
 
 *Effects:* If `rhs` contains a value, direct-non-list-initializes the
 contained value with `*rhs`.
@@ -2630,8 +2633,8 @@ template<class U> constexpr explicit(see below) optional(optional<U>&& rhs);
 *Constraints:*
 
 - `is_constructible_v<T, U>` is `true`, and
-- if `T` is not `bool`, *`converts-from-any-cvref`*`<T, optional<U>>` is
-  `false`.
+- if `T` is not cv `bool`, *`converts-from-any-cvref`*`<T, optional<U>>`
+  is `false`.
 
 *Effects:* If `rhs` contains a value, direct-non-list-initializes the
 contained value with `std::move(*rhs)`. `rhs.has_value()` is unchanged.
@@ -3685,9 +3688,8 @@ arguments is ill-formed.
 
 #### Constructors <a id="variant.ctor">[[variant.ctor]]</a>
 
-In the descriptions that follow, let i be in the range
-[`0`, `sizeof...(Types)`), and `Tᵢ` be the $i^\text{th}$ type in
-`Types`.
+In the descriptions that follow, let i be in the range \[`0`,
+`sizeof...(Types)`), and `Tᵢ` be the $i^\text{th}$ type in `Types`.
 
 ``` cpp
 constexpr variant() noexcept(see below);
@@ -4893,28 +4895,28 @@ For the third overload, `is_constructible_v<T, U>` is `true`.
 \[*Example 1*:
 
 ``` cpp
-any x(5);                                   // \texttt{x} holds \texttt{int}
+any x(5);                                   // x holds int
 assert(any_cast<int>(x) == 5);              // cast to value
 any_cast<int&>(x) = 10;                     // cast to reference
 assert(any_cast<int>(x) == 10);
 
-x = "Meow";                                 // \texttt{x} holds \texttt{const char*}
+x = "Meow";                                 // x holds const char*
 assert(strcmp(any_cast<const char*>(x), "Meow") == 0);
 any_cast<const char*&>(x) = "Harry";
 assert(strcmp(any_cast<const char*>(x), "Harry") == 0);
 
-x = string("Meow");                         // \texttt{x} holds \texttt{string}
+x = string("Meow");                         // x holds string
 string s, s2("Jane");
-s = move(any_cast<string&>(x));             // move from \texttt{any}
+s = move(any_cast<string&>(x));             // move from any
 assert(s == "Meow");
-any_cast<string&>(x) = move(s2);            // move to \texttt{any}
+any_cast<string&>(x) = move(s2);            // move to any
 assert(any_cast<const string&>(x) == "Jane");
 
 string cat("Meow");
-const any y(cat);                           // \texttt{const y} holds \texttt{string}
+const any y(cat);                           // const y holds string
 assert(any_cast<const string&>(y) == cat);
 
-any_cast<string&>(y);                       // error: cannot \texttt{any_cast} away const
+any_cast<string&>(y);                       // error: cannot any_cast away const
 ```
 
 — *end example*\]
@@ -5164,7 +5166,7 @@ const E&& error() const && noexcept;
 const char* what() const noexcept override;
 ```
 
-*Returns:* An implementation-defined .
+*Returns:* An implementation-defined NTBS.
 
 ### Class template specialization `bad_expected_access<void>` <a id="expected.bad.void">[[expected.bad.void]]</a>
 
@@ -5190,7 +5192,7 @@ namespace std {
 const char* what() const noexcept override;
 ```
 
-*Returns:* An implementation-defined .
+*Returns:* An implementation-defined NTBS.
 
 ### Class template `expected` <a id="expected.expected">[[expected.expected]]</a>
 
@@ -5416,8 +5418,8 @@ Let:
 
 - `is_constructible_v<T, UF>` is `true`; and
 - `is_constructible_v<E, GF>` is `true`; and
-- if `T` is not `bool`, *`converts-from-any-cvref`*`<T, expected<U, G>>`
-  is `false`; and
+- if `T` is not cv `bool`,
+  *`converts-from-any-cvref`*`<T, expected<U, G>>` is `false`; and
 - `is_constructible_v<unexpected<E>, expected<U, G>&>` is `false`; and
 - `is_constructible_v<unexpected<E>, expected<U, G>>` is `false`; and
 - `is_constructible_v<unexpected<E>, const expected<U, G>&>` is `false`;
@@ -5447,7 +5449,7 @@ template<class U = T>
 - `is_same_v<expected, remove_cvref_t<U>>` is `false`; and
 - `remove_cvref_t<U>` is not a specialization of `unexpected`; and
 - `is_constructible_v<T, U>` is `true`; and
-- if `T` is `bool`, `remove_cvref_t<U>` is not a specialization of
+- if `T` is cv `bool`, `remove_cvref_t<U>` is not a specialization of
   `expected`.
 
 *Effects:* Direct-non-list-initializes *val* with `std::forward<U>(v)`.
@@ -5760,7 +5762,7 @@ constexpr void swap(expected& rhs) noexcept(see below);
 `swap(expected&)` effectsexpected.object.swap lx0.35x0.35 & &  
 & equivalent to: `using std::swap; swap(`*`val`*`, rhs.`*`val`*`);` &
 calls `rhs.swap(*this)`  
-& & equivalent to:
+& *see below*& equivalent to:
 `using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
 
 </div>
@@ -6500,7 +6502,7 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 `swap(expected&)` effectsexpected.void.swap lx0.35x0.35 & &  
 & no effects & calls `rhs.swap(*this)`  
-& & equivalent to:
+& *see below*& equivalent to:
 `using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
 
 </div>
@@ -7111,6 +7113,8 @@ constexpr bitset& reset(size_t pos);
 *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
 position.
 
+\indexlibrarymember{operator\\}{bitset}
+
 ``` cpp
 constexpr bitset operator~() const noexcept;
 ```
@@ -7481,7 +7485,7 @@ namespace std {
   // [func.wrap.move], move only wrapper
   template<class... S> class move_only_function;        // not defined
   template<class R, class... ArgTypes>
-    class move_only_function<R(ArgTypes...) cv ref noexcept(noex)>; // see below
+    class move_only_function<R(ArgTypes...) cv{} ref noexcept(noex)>; // see below
 
   // [func.search], searchers
   template<class ForwardIterator1, class BinaryPredicate = equal_to<>>
@@ -8806,7 +8810,7 @@ In the text that follows:
   `bound_args`,
 - `tdᵢ` is a bound argument entity of `g` [[func.def]] of type `TDᵢ`
   direct-non-list-initialized with
-  `std::forward<\tcode{T}_i>(\tcode{t}_i)`,
+  `std::forward<{}\tcode{T}_i>(\tcode{t}_i)`,
 - `Uⱼ` is the $j^\text{th}$ deduced type of the `UnBoundArgs&&...`
   parameter of the argument forwarding call wrapper, and
 - `uⱼ` is the $j^\text{th}$ argument associated with `Uⱼ`.
@@ -8833,15 +8837,15 @@ When `g` is not volatile-qualified, invocation of
 expression-equivalent [[defns.expression.equivalent]] to
 
 ``` cpp
-INVOKE(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
-       static_cast<$\texttt{V}_1$>($\texttt{v}_1$), static_cast<$\texttt{V}_2$>($\texttt{v}_2$), $\dotsc$, static_cast<$\texttt{V}_N$>($\texttt{v}_N$))
+INVOKE(static_cast<$V_fd$>($v_fd$),
+       static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), $\dotsc$, static_cast<$V_N$>($v_N$))
 ```
 
 for the first overload, and
 
 ``` cpp
-INVOKE<R>(static_cast<$\texttt{V}_\texttt{fd}$>($\texttt{v}_\texttt{fd}$),
-          static_cast<$\texttt{V}_1$>($\texttt{v}_1$), static_cast<$\texttt{V}_2$>($\texttt{v}_2$), $\dotsc$, static_cast<$\texttt{V}_N$>($\texttt{v}_N$))
+INVOKE<R>(static_cast<$V_fd$>($v_fd$),
+          static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), $\dotsc$, static_cast<$V_N$>($v_N$))
 ```
 
 for the second overload, where the values and types of the target
@@ -8865,19 +8869,19 @@ the call wrapper `g` as follows:
 - if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
   argument is
   ``` cpp
-  static_cast<cv $TD_i$&>(td_i)(std::forward<U_j>(u_j)...)
+  static_cast<cv{} $TD_i$&>(td_i)(std::forward<U_j>(u_j)...)
   ```
 
   and its type `Vᵢ` is
-  `invoke_result_t<\cv{} \tcode{TD}_i&, \tcode{U}_j...>&&`;
+  `invoke_result_t<cv{} \tcode{TD}_i&, \tcode{U}_j...>&&`;
 - if the value `j` of `is_placeholder_v<\tcode{TD}_i>` is not zero, the
   argument is `std::forward<\tcode{U}_j>(\tcode{u}_j)` and its type `Vᵢ`
   is `\tcode{U}_j&&`;
 - otherwise, the value is `tdᵢ` and its type `Vᵢ` is
-  `\cv{} \tcode{TD}_i&`.
+  `cv{} \tcode{TD}_i&`.
 
 The value of the target argument `v`_`fd` is `fd` and its corresponding
-type `V`_`fd` is `\cv{} FD&`.
+type `V`_`fd` is `cv{} FD&`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 
@@ -9115,8 +9119,9 @@ template<class F> function(F) -> function<see below>;
 unevaluated operand and either
 
 - `F::operator()` is a non-static member function and
-  `decltype(&F::operator())` is either of the form `R(G::*)(A...)`  ` `
-  or of the form `R(*)(G, A...) ` for a type `G`, or
+  `decltype(&F::operator())` is either of the form
+  `R(G::*)(A...)` cv ` ` or of the form `R(*)(G, A...) ` for a type `G`,
+  or
 - `F::operator()` is a static member function and
   `decltype(&F::operator())` is of the form `R(*)(A...) `.
 
@@ -9127,7 +9132,7 @@ unevaluated operand and either
 ``` cpp
 void f() {
   int i{5};
-  function g = [&](double) { return i; };       // deduces \texttt{function<int(double)>}
+  function g = [&](double) { return i; };       // deduces function<int(double)>
 }
 ```
 
@@ -9273,7 +9278,7 @@ namespace std {
   template<class... S> class move_only_function;                // not defined
 
   template<class R, class... ArgTypes>
-  class move_only_function<R(ArgTypes...) cv ref noexcept(noex)> {
+  class move_only_function<R(ArgTypes...) cv{} ref noexcept(noex)> {
   public:
     using result_type = R;
 
@@ -9295,7 +9300,7 @@ namespace std {
 
     // [func.wrap.move.inv], invocation
     explicit operator bool() const noexcept;
-    R operator()(ArgTypes...) cv ref noexcept(noex);
+    R operator()(ArgTypes...) cv{} ref noexcept(noex);
 
     // [func.wrap.move.util], utility
     void swap(move_only_function&) noexcept;
@@ -9314,8 +9319,8 @@ that generalize the notion of a callable object [[func.def]]. These
 wrappers can store, move, and call arbitrary callable objects, given a
 call signature.
 
-Implementations should avoid the use of dynamically allocated memory for
-a small contained value.
+*Recommended practice:* Implementations should avoid the use of
+dynamically allocated memory for a small contained value.
 
 \[*Note 1*: Such small-object optimization can only be applied to a type
 `T` for which `is_nothrow_move_constructible_v<T>` is
@@ -9331,14 +9336,14 @@ template<class VT>
 If *noex* is `true`, *`is-callable-from`*`<VT>` is equal to:
 
 ``` cpp
-is_nothrow_invocable_r_v<R, VT cv ref, ArgTypes...> &&
+is_nothrow_invocable_r_v<R, VT cv{} ref, ArgTypes...> &&
 is_nothrow_invocable_r_v<R, VT inv-quals, ArgTypes...>
 ```
 
 Otherwise, *`is-callable-from`*`<VT>` is equal to:
 
 ``` cpp
-is_invocable_r_v<R, VT cv ref, ArgTypes...> &&
+is_invocable_r_v<R, VT cv{} ref, ArgTypes...> &&
 is_invocable_r_v<R, VT inv-quals, ArgTypes...>
 ```
 
@@ -9480,7 +9485,7 @@ explicit operator bool() const noexcept;
 *Returns:* `true` if `*this` has a target object, otherwise `false`.
 
 ``` cpp
-R operator()(ArgTypes... args) cv ref noexcept(noex);
+R operator()(ArgTypes... args) cv{} ref noexcept(noex);
 ```
 
 *Preconditions:* `*this` has a target object.
@@ -9520,14 +9525,14 @@ friend bool operator==(const move_only_function& f, nullptr_t) noexcept;
 
 Subclause [[func.search]] provides function object types
 [[function.objects]] for operations that search for a sequence
-[`pat\textunderscore\nobreak first`, `pat_last`) in another sequence
-[`first`, `last`) that is provided to the object’s function call
-operator. The first sequence (the pattern to be searched for) is
-provided to the object’s constructor, and the second (the sequence to be
-searched) is provided to the function call operator.
+\[`pat``first`, `pat_last`) in another sequence \[`first`, `last`) that
+is provided to the object’s function call operator. The first sequence
+(the pattern to be searched for) is provided to the object’s
+constructor, and the second (the sequence to be searched) is provided to
+the function call operator.
 
 Each specialization of a class template specified in [[func.search]]
-shall meet the *Cpp17CopyConst\\ruct\\ible* and *Cpp17CopyAssignable*
+shall meet the *Cpp17CopyConstructible* and *Cpp17CopyAssignable*
 requirements. Template parameters named
 
 - `ForwardIterator`,
@@ -9784,7 +9789,7 @@ attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*\]
 An enabled specialization `hash<Key>` will:
 
 - meet the *Cpp17Hash* requirements ( [[cpp17.hash]]), with `Key` as the
-  function call argument type, the *Cpp17Default\\Constructible*
+  function call argument type, the *Cpp17DefaultConstructible*
   requirements ( [[cpp17.defaultconstructible]]), the
   *Cpp17CopyAssignable* requirements ( [[cpp17.copyassignable]]), the
   *Cpp17Swappable* requirements [[swappable.requirements]],
@@ -10069,8 +10074,8 @@ inline constexpr execution::parallel_unsequenced_policy execution::par_unseq{ un
 inline constexpr execution::unsequenced_policy          execution::unseq{ unspecified };
 ```
 
-The header declares global objects associated with each type of
-execution policy.
+The header `<execution>` declares global objects associated with each
+type of execution policy.
 
 ## Primitive numeric conversions <a id="charconv">[[charconv]]</a>
 
@@ -10139,14 +10144,14 @@ or members other than those specified.
 ### Primitive numeric output conversion <a id="charconv.to.chars">[[charconv.to.chars]]</a>
 
 All functions named `to_chars` convert `value` into a character string
-by successively filling the range [`first`, `last`), where
-[`first`, `last`) is required to be a valid range. If the member `ec` of
-the return value is such that the value is equal to the value of a
+by successively filling the range \[`first`, `last`), where \[`first`,
+`last`) is required to be a valid range. If the member `ec` of the
+return value is such that the value is equal to the value of a
 value-initialized `errc`, the conversion was successful and the member
 `ptr` is the one-past-the-end pointer of the characters written.
 Otherwise, the member `ec` has the value `errc::value_too_large`, the
 member `ptr` has the value `last`, and the contents of the range
-[`first`, `last`) are unspecified.
+\[`first`, `last`) are unspecified.
 
 The functions that take a floating-point `value` but not a `precision`
 parameter ensure that the string representation consists of the smallest
@@ -10220,8 +10225,8 @@ the `"C"` locale with the given precision.
 
 ### Primitive numeric input conversion <a id="charconv.from.chars">[[charconv.from.chars]]</a>
 
-All functions named `from_chars` analyze the string [`first`, `last`)
-for a pattern, where [`first`, `last`) is required to be a valid range.
+All functions named `from_chars` analyze the string \[`first`, `last`)
+for a pattern, where \[`first`, `last`) is required to be a valid range.
 If no characters match the pattern, `value` is unmodified, the member
 `ptr` of the return value is `first` and the member `ec` is equal to
 `errc::invalid_argument`.
@@ -10462,7 +10467,7 @@ syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{replacement-field}
-    '{' [arg-id] [format-specifier] '}'
+    \terminal{\ [arg-id] [format-specifier] \terminal{\}}
 ```
 
 ``` bnf
@@ -10584,7 +10589,7 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{fill}
-    any character other than \{ or \}
+    \textnormal{any character other than \ or \texttt{\}}
 ```
 
 ``` bnf
@@ -10600,13 +10605,13 @@ The syntax of format specifications is as follows:
 ``` bnf
 \fmtnontermdef{width}
     positive-integer
-    '{' [arg-id] '}'
+    \terminal{\ [arg-id] \terminal{\}}
 ```
 
 ``` bnf
 \fmtnontermdef{precision}
     '.' nonnegative-integer
-    '.' '{' [arg-id] '}'
+    '.' \terminal{\ [arg-id] \terminal{\}}
 ```
 
 ``` bnf
@@ -10672,7 +10677,7 @@ above that include that character illustrate the effect of the field
 width when that character is used as a fill character as opposed to when
 it is used as a formatting argument. — *end note*\]
 
-**Table: Meaning of *align* options**
+**Table: Meaning of \fmtgrammarterm{align} options**
 
 | Option | Meaning |
 | --- | --- |
@@ -10685,7 +10690,7 @@ The *sign* option is only valid for arithmetic types other than `charT`
 and `bool` or when an integer presentation type is specified. The
 meaning of the various options is as specified in [[format.sign]].
 
-**Table: Meaning of *sign* options**
+**Table: Meaning of \fmtgrammarterm{sign} options**
 
 | Option | Meaning |
 | --- | --- |
@@ -10817,7 +10822,7 @@ The *type* determines how the data should be presented.
 The available string presentation types are specified in
 [[format.type.string]].
 
-**Table: Meaning of *type* options for strings**
+**Table: Meaning of \fmtgrammarterm{type} options for strings**
 
 | Type | Meaning |
 | --- | --- |
@@ -10826,7 +10831,7 @@ The available string presentation types are specified in
 
 
 The meaning of some non-string presentation types is defined in terms of
-a call to `to_chars`. In such cases, let [`first`, `last`) be a range
+a call to `to_chars`. In such cases, let \[`first`, `last`) be a range
 large enough to hold the `to_chars` output and `value` be the formatting
 argument value. Formatting is done as if by calling `to_chars` as
 specified and copying the output through the output iterator of the
@@ -10851,7 +10856,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 
 — *end example*\]
 
-**Table: Meaning of *type* options for integer types**
+**Table: Meaning of \fmtgrammarterm{type} options for integer types**
 
 | Type | Meaning |
 | --- | --- |
@@ -10868,7 +10873,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
-**Table: Meaning of *type* options for `charT`**
+**Table: Meaning of \fmtgrammarterm{type} options for `charT`**
 
 | Type | Meaning |
 | --- | --- |
@@ -10880,7 +10885,7 @@ The available `charT` presentation types are specified in
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
-**Table: Meaning of *type* options for `bool`**
+**Table: Meaning of \fmtgrammarterm{type} options for `bool`**
 
 | Type | Meaning |
 | --- | --- |
@@ -10898,18 +10903,18 @@ respectively.
 \[*Note 7*: In either case, a sign is included if indicated by the
 *sign* option. — *end note*\]
 
-**Table: Meaning of *type* options for floating-point types**
+**Table: Meaning of \fmtgrammarterm{type} options for floating-point types**
 
 | Type | Meaning |
 | --- | --- |
-| `a` | If *precision* is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
+| `a` | If \fmtgrammarterm{precision} is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
 | % `A` | The same as `a`, except that it uses uppercase letters for digits above 9 and `P` to indicate the exponent. |
-| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
+| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
 | % `E` | The same as `e`, except that it uses `E` to indicate exponent. |
-| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
-| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if *precision* is not specified. |
+| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
+| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
 | % `G` | The same as `g`, except that it uses `E` to indicate exponent. |
-| % none | If *precision* is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
+| % none | If \fmtgrammarterm{precision} is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
 
 
 The available pointer presentation types and their mapping to `to_chars`
@@ -10918,7 +10923,7 @@ are specified in [[format.type.ptr]].
 \[*Note 8*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*\]
 
-**Table: Meaning of *type* options for pointer types**
+**Table: Meaning of \fmtgrammarterm{type} options for pointer types**
 
 | Type | Meaning |
 | --- | --- |
@@ -11204,14 +11209,14 @@ messages. — *end note*\]
 
 | Expression | Return type | Requirement |
 | --- | --- | --- |
-| `f.format(t, fc)` | `FC::iterator` | Formats `t` according to the specifiers stored in `*this`, writes the output to `fc.out()`, and returns an iterator past the end of the output range. The output shall only depend on `t`, `fc.locale()`, `fc.arg(n)` for any value `n` of type `size_t`, and the range \range{pc.begin()}{pc.end()} from the last call to `f.parse(pc)`. |
+| `f.format(t, fc)` | `FC::iterator` | Formats `t` according to the specifiers stored in `*this`, writes the output to `fc.out()`, and returns an iterator past the end of the output range. The output shall only depend on `t`, `fc.locale()`, `fc.arg(n)` for any value `n` of type `size_t`, and the range {[}`pc.begin()`, `pc.end()`{)} from the last call to `f.parse(pc)`. |
 | `f.format(u, fc)` | `FC::iterator` | As above, but does not modify `u`. |
 
 
 #### Concept  <a id="format.formattable">[[format.formattable]]</a>
 
 Let `fmt-iter-for<charT>` be an unspecified type that models
-`output_iterator<const charT&>` [[iterator.concept.output]].
+`\texttt{output_iterator}<const charT&>` [[iterator.concept.output]].
 
 ``` cpp
 template<class T, class Context,
@@ -11368,9 +11373,9 @@ interpret *S* and construct *E*.
       representation of *C* using lower-case hexadecimal digits.
     - Otherwise, *C* is appended to *E*.
   - Otherwise, if *X* is a shift sequence, the effect on *E* and further
-    decoding of *S* is unspecified. A shift sequence should be
-    represented in *E* such that the original code unit sequence of *S*
-    can be reconstructed.
+    decoding of *S* is unspecified. *Recommended practice:* A shift
+    sequence should be represented in *E* such that the original code
+    unit sequence of *S* can be reconstructed.
   - Otherwise (*X* is a sequence of ill-formed code units), each code
     unit *U* is appended to *E* in order as the sequence
     `\x{hex-digit-sequence}`, where `hex-digit-sequence` is the shortest
@@ -11545,7 +11550,7 @@ namespace std {
 An instance of `basic_format_context` holds formatting state consisting
 of the formatting arguments and the output iterator.
 
-`Out` shall model `output_iterator<const charT&>`.
+`Out` shall model `\texttt{output_iterator}<const charT&>`.
 
 `format_context` is an alias for a specialization of
 `basic_format_context` with an output iterator that appends to `string`,
@@ -11553,9 +11558,9 @@ such as `back_insert_iterator<string>`. Similarly, `wformat_context` is
 an alias for a specialization of `basic_format_context` with an output
 iterator that appends to `wstring`.
 
-For a given type `charT`, implementations should provide a single
-instantiation of `basic_format_context` for appending to
-`basic_string<charT>`, `vector<charT>`, or any other container with
+*Recommended practice:* For a given type `charT`, implementations should
+provide a single instantiation of `basic_format_context` for appending
+to `basic_string<charT>`, `vector<charT>`, or any other container with
 contiguous storage by wrapping those in temporary objects with a uniform
 interface (such as a `span<charT>`) and polymorphic reallocation.
 
@@ -11711,7 +11716,7 @@ syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{range-fill}
-    any character other than '{' or '}' or ':'
+    any character other than \terminal{\ or \terminal{\}} or \terminal{:}
 ```
 
 ``` bnf
@@ -11744,11 +11749,11 @@ The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of
 the various type options is as specified in [[formatter.range.type]].
 
-**Table: Meaning of *range-type* options**
+**Table: Meaning of \fmtgrammarterm{range-type} options**
 
 | Option | Requirements | Meaning |
 | --- | --- | --- |
-| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its *tuple-type*. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
+| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its \fmtgrammarterm{tuple-type}. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
 | % `s` | `T` shall be `charT`. | Indicates that the range should be formatted as a `string`. |
 | % `?s` | `T` shall be `charT`. | Indicates that the range should be formatted as an escaped string [[format.string.escaped]]. |
 
@@ -11901,8 +11906,6 @@ namespace std {
 }
 ```
 
-*range-default-formatter*
-
 ``` cpp
 constexpr range-default-formatter();
 ```
@@ -11962,8 +11965,6 @@ namespace std {
 }
 ```
 
-*range-default-formatter*
-
 ``` cpp
 constexpr range-default-formatter();
 ```
@@ -12012,9 +12013,9 @@ namespace std {
 }
 ```
 
-`\libconcept{same_as}<remove_cvref_t<range_reference_t<R>>, charT>`
-
-is `true`.
+*Mandates:*
+`\texttt{same_as}<remove_cvref_t<range_reference_t<R>>, charT>` is
+`true`.
 
 ``` cpp
 template<class ParseContext>
@@ -12326,7 +12327,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{tuple-fill}
-    any character other than '{' or '}' or ':'
+    any character other than \terminal{\ or \terminal{\}} or \terminal{:}
 ```
 
 ``` bnf
@@ -12344,11 +12345,11 @@ formatted, with certain options only valid with certain argument types.
 The meaning of the various type options is as specified in
 [[formatter.tuple.type]].
 
-**Table: Meaning of *tuple-type* options**
+**Table: Meaning of \fmtgrammarterm{tuple-type} options**
 
 | Option | Requirements | Meaning |
 | --- | --- | --- |
-| <charT>(": ")); set_brackets({}, {}); \end{codeblock}% |
+| <charT>(": ")); set_brackets(, ); \end{codeblock}% |
 | % `n` | none | Equivalent to: `set_brackets({}, {});` |
 | % none | none | No effects |
 

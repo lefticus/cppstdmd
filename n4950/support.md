@@ -214,10 +214,10 @@ The type `size_t` is an *implementation-defined* unsigned integer type
 that is large enough to contain the size in bytes of any object
 [[expr.sizeof]].
 
-An implementation should choose types for `ptrdiff_t` and `size_t` whose
-integer conversion ranks [[conv.rank]] are no greater than that of
-`signed long int` unless a larger size is necessary to contain all the
-possible values.
+*Recommended practice:* An implementation should choose types for
+`ptrdiff_t` and `size_t` whose integer conversion ranks [[conv.rank]]
+are no greater than that of `signed long int` unless a larger size is
+necessary to contain all the possible values.
 
 The type `max_align_t` is a trivial standard-layout type whose alignment
 requirement is at least as great as that of every scalar type, and whose
@@ -320,6 +320,8 @@ constexpr byte operator^(byte l, byte r) noexcept;
 ``` cpp
 return static_cast<byte>(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
 ```
+
+\indexlibrarymember{operator\\}{byte}
 
 ``` cpp
 constexpr byte operator~(byte b) noexcept;
@@ -1427,15 +1429,16 @@ succeeds, nonzero if it fails.
   registered function invoked by `exit` exits via an exception, the
   function `std::terminate` is invoked [[except.terminate]].
 - Next, all open C streams (as mediated by the function signatures
-  declared in ) with unwritten buffered data are flushed, all open C
-  streams are closed, and all files created by calling `tmpfile()` are
-  removed.
+  declared in `<cstdio>`) with unwritten buffered data are flushed, all
+  open C streams are closed, and all files created by calling
+  `tmpfile()` are removed.
 - Finally, control is returned to the host environment. If `status` is
   zero or `EXIT_SUCCESS`, an *implementation-defined* form of the status
-  is returned. If `status` is `EXIT_FAILURE`, an
-  *implementation-defined* form of the status is returned. Otherwise the
-  status returned is *implementation-defined*. The macros `EXIT_FAILURE`
-  and `EXIT_SUCCESS` are defined in .
+  *successful termination* is returned. If `status` is `EXIT_FAILURE`,
+  an *implementation-defined* form of the status *unsuccessful
+  termination* is returned. Otherwise the status returned is
+  *implementation-defined*. The macros `EXIT_FAILURE` and `EXIT_SUCCESS`
+  are defined in `<cstdlib>`.
 
 ``` cpp
 int at_quick_exit(c-atexit-handler* f) noexcept;
@@ -1581,9 +1584,9 @@ called by a *new-expression*[[expr.new]] to allocate `size` bytes of
 storage. The second form is called for a type with new-extended
 alignment, and the first form is called otherwise.
 
-*Replaceable:* A program may define functions with either of these
+*Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
-by the standard library.
+by the C++ standard library.
 
 *Required behavior:* Return a non-null pointer to suitably aligned
 storage [[basic.stc.dynamic]], or else throw a `bad_alloc` exception.
@@ -1612,12 +1615,12 @@ functions.
 ```
 
 *Effects:* Same as above, except that these are called by a placement
-version of a *new-expression* when a program prefers a null pointer
+version of a *new-expression* when a C++ program prefers a null pointer
 result as an error indication, instead of a `bad_alloc` exception.
 
-*Replaceable:* A program may define functions with either of these
+*Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
-by the standard library.
+by the C++ standard library.
 
 *Required behavior:* Return a non-null pointer to suitably aligned
 storage [[basic.stc.dynamic]], or else return a null pointer. Each of
@@ -1634,7 +1637,7 @@ pointer.
 \[*Example 1*:
 
 ``` cpp
-T* p1 = new T;                  // throws \texttt{bad_alloc} if it fails
+T* p1 = new T;                  // throws bad_alloc if it fails
 T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
 ```
 
@@ -1664,9 +1667,9 @@ returned `ptr`.
 called by a *delete-expression*[[expr.delete]] to render the value of
 `ptr` invalid.
 
-*Replaceable:* A program may define functions with any of these function
-signatures, and thereby displace the default versions defined by the
-standard library.
+*Replaceable:* A C++ program may define functions with any of these
+function signatures, and thereby displace the default versions defined
+by the C++ standard library.
 
 If a function without a `size` parameter is defined, the program should
 also define the corresponding function with a `size` parameter. If a
@@ -1699,7 +1702,7 @@ the storage allocated by the earlier call to `operator new`.
 *Remarks:* It is unspecified under what conditions part or all of such
 reclaimed storage will be allocated by subsequent calls to
 `operator new` or any of `aligned_alloc`, `calloc`, `malloc`, or
-`realloc`, declared in .
+`realloc`, declared in `<cstdlib>`.
 
 ``` cpp
 void operator delete(void* ptr, const std::nothrow_t&) noexcept;
@@ -1722,9 +1725,9 @@ called by the implementation to render the value of `ptr` invalid when
 the constructor invoked from a nothrow placement version of the
 *new-expression* throws an exception.
 
-*Replaceable:* A program may define functions with either of these
+*Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
-by the standard library.
+by the C++ standard library.
 
 *Default behavior:* Calls `operator delete(ptr)`, or
 `operator delete(ptr, alignment)`, respectively.
@@ -1748,9 +1751,9 @@ expressions. The array expression, can, however, increase the `size`
 argument to `operator new[]` to obtain space to store supplemental
 information.
 
-*Replaceable:* A program may define functions with either of these
+*Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
-by the standard library.
+by the C++ standard library.
 
 *Required behavior:* Same as for the corresponding single-object forms.
 This requirement is binding on any replacement versions of these
@@ -1766,12 +1769,12 @@ functions.
 ```
 
 *Effects:* Same as above, except that these are called by a placement
-version of a *new-expression* when a program prefers a null pointer
+version of a *new-expression* when a C++ program prefers a null pointer
 result as an error indication, instead of a `bad_alloc` exception.
 
-*Replaceable:* A program may define functions with either of these
+*Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
-by the standard library.
+by the C++ standard library.
 
 *Required behavior:* Return a non-null pointer to suitably aligned
 storage [[basic.stc.dynamic]], or else return a null pointer. Each of
@@ -1809,9 +1812,9 @@ returned `ptr`.
 called by the array form of a *delete-expression* to render the value of
 `ptr` invalid.
 
-*Replaceable:* A program may define functions with any of these function
-signatures, and thereby displace the default versions defined by the
-standard library.
+*Replaceable:* A C++ program may define functions with any of these
+function signatures, and thereby displace the default versions defined
+by the C++ standard library.
 
 If a function without a `size` parameter is defined, the program should
 also define the corresponding function with a `size` parameter. If a
@@ -1858,9 +1861,9 @@ called by the implementation to render the value of `ptr` invalid when
 the constructor invoked from a nothrow placement version of the array
 *new-expression* throws an exception.
 
-*Replaceable:* A program may define functions with either of these
+*Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
-by the standard library.
+by the C++ standard library.
 
 *Default behavior:* Calls `operator delete[](ptr)`, or
 `operator delete[](ptr, alignment)`, respectively.
@@ -1984,7 +1987,7 @@ const char* what() const noexcept override;
 using new_handler = void (*)();
 ```
 
-The type of a to be called by `operator new()` or
+The type of a *handler function* to be called by `operator new()` or
 `operator new[]()`[[new.delete]] when they cannot satisfy a request for
 additional storage.
 
@@ -2051,7 +2054,7 @@ See  [[basic.life]]. — *end note*\]
 struct X { int n; };
 const X *p = new const X{3};
 const int a = p->n;
-new (const_cast<X*>(p)) const X{5}; // \texttt{p} does not point to new objectREF:basic.life because its type is \keyword{const}
+new (const_cast<X*>(p)) const X{5}; // p does not point to new objectREF:basic.life because its type is \keyword{const}
 const int b = p->n;                 // undefined behavior
 const int c = std::launder(p)->n;   // OK
 ```
@@ -2272,7 +2275,7 @@ namespace std {
 ```
 
 The type `source_location` meets the *Cpp17DefaultConstructible*,
-*Cpp17CopyConstructible*, *Cpp17Copy\\Assignable*, *Cpp17Swappable*, and
+*Cpp17CopyConstructible*, *Cpp17CopyAssignable*, *Cpp17Swappable*, and
 *Cpp17Destructible* requirements
 [[utility.arg.requirements]], [[swappable.requirements]]. All of the
 following conditions are `true`:
@@ -2531,8 +2534,8 @@ const char* what() const noexcept override;
 using terminate_handler = void (*)();
 ```
 
-The type of a to be invoked by `terminate` when terminating exception
-processing.
+The type of a *handler function* to be invoked by `terminate` when
+terminating exception processing.
 
 *Required behavior:* A `terminate_handler` shall terminate execution of
 the program without returning to the caller.
@@ -3283,7 +3286,7 @@ template<class T, class U>
 
 Let `t` and `u` be lvalues of types `const remove_reference_t<T>` and
 `const remove_reference_t<U>`, respectively. `T` and `U` model
-`partially-ordered-with<T, U>` only if:
+`\texttt{partially-ordered-with}<T, U>` only if:
 
 - `t < u`, `t <= u`, `t > u`, `t >= u`, `u < t`, `u <= t`, `u > t`, and
   `u >= t` have the same domain.
@@ -3303,7 +3306,7 @@ template<class T, class Cat = partial_ordering>
 ```
 
 Let `a` and `b` be lvalues of type `const remove_reference_t<T>`. `T`
-and `Cat` model `three_way_comparable<T, Cat>` only if:
+and `Cat` model `\texttt{three_way_comparable}<T, Cat>` only if:
 
 - `(a <=> b == 0) == bool(a == b)` is `true`,
 - `(a <=> b != 0) == bool(a != b)` is `true`,
@@ -3339,7 +3342,7 @@ let `u` and `u2` be lvalues denoting distinct equal objects of types
 `common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>`.
 Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
 [[concepts.compare.general]]. `T`, `U`, and `Cat` model
-`three_way_comparable_with<T, U, Cat>` only if:
+`\texttt{three_way_comparable_with}<T, U, Cat>` only if:
 
 - `t <=> u` and `u <=> t` have the same domain,
 - `((t <=> u) <=> 0)` and `(0 <=> (u <=> t))` are equal,
@@ -3352,7 +3355,7 @@ Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
 - `(t <=> u <= 0) == bool(t <= u)` is `true`,
 - `(t <=> u >= 0) == bool(t >= u)` is `true`, and
 - if `Cat` is convertible to `strong_ordering`, `T` and `U` model
-  `totally_ordered_with<T, U>` [[concept.totallyordered]].
+  `\texttt{totally_ordered_with}<T, U>` [[concept.totallyordered]].
 
 ### Result of three-way comparison <a id="cmp.result">[[cmp.result]]</a>
 
@@ -3725,7 +3728,7 @@ static constexpr coroutine_handle<Promise> coroutine_handle<Promise>::from_addre
 ```
 
 *Preconditions:* `addr` was obtained via a prior call to `address` on an
-object of type  `coroutine_handle<Promise>`.
+object of type cv `coroutine_handle<Promise>`.
 
 *Ensures:* `from_address(address()) == *this`.
 
@@ -4108,7 +4111,7 @@ C++, it declares a function with C language linkage; viewed as C it
 simply declares a function (and provides a prototype).
 
 ``` cpp
-#include <stdbool.h>    // for bool in C, no effect in C++
+#include <stdbool.h>    // for bool in C, no effect in C++{}
 #include <stddef.h>     // for size_t
 
 #ifdef __cplusplus      // see [cpp.predefined]

@@ -165,7 +165,7 @@ return tmp;
 ```
 
 Similarly, operator `-` is used for some combinations of iterators and
-sentinel types for which it does not have to be defined. If [`a`, `b`)
+sentinel types for which it does not have to be defined. If \[`a`, `b`)
 denotes a range, the semantics of `b - a` in these cases are the same as
 those of
 
@@ -175,7 +175,7 @@ for (auto tmp = a; tmp != b; ++tmp) ++n;
 return n;
 ```
 
-and if [`b`, `a`) denotes a range, the same as those of
+and if \[`b`, `a`) denotes a range, the same as those of
 
 ``` cpp
 iter_difference_t<decltype(b)> n = 0;
@@ -189,7 +189,7 @@ than cv `D`, the semantics of `a + n` and `a - n` are, respectively,
 those of `a + D(n)` and `a - D(n)`.
 
 In the description of algorithm return values, a sentinel value `s`
-denoting the end of a range [`i`, `s`) is sometimes returned where an
+denoting the end of a range \[`i`, `s`) is sometimes returned where an
 iterator is expected. In these cases, the semantics are as if the
 sentinel is converted into an iterator using `ranges::next(i, s)`.
 
@@ -483,7 +483,7 @@ Unless otherwise specified, the complexity requirements of
 requirements of the overloads without as follows: when the guarantee
 says “at most *expr*” or “exactly *expr*” and does not specify the
 number of assignments or swaps, and *expr* is not already expressed with
-notation, the complexity of the algorithm shall be *expr*.
+\bigoh notation, the complexity of the algorithm shall be *expr*.
 
 Parallel algorithms shall not participate in overload resolution unless
 `is_execution_policy_v<remove_cvref_t<ExecutionPolicy>>` is `true`.
@@ -4710,9 +4710,10 @@ Let:
 *Preconditions:* `op` and `binary_op` do not invalidate iterators or
 subranges, nor modify elements in the ranges
 
-- ,
-- , and
-- . The use of fully closed ranges is intentional.
+- \[`first1`, `first1 + `N\],
+- \[`first2`, `first2 + `N\], and
+- \[`result`, `result + `N\]. The use of fully closed ranges is
+  intentional.
 
 *Effects:* Assigns through every iterator `i` in the range \[`result`,
 `result + `N) a new corresponding value equal to E.
@@ -5433,12 +5434,12 @@ overload in namespace `std`:
 - `remove_reference_t<UniformRandomBitGenerator>` meets the requirements
   of a uniform random bit generator type [[rand.req.urng]].
 
-*Effects:* Copies \min(`last - first`, \ `n`) elements (the ) from
-\[`first`, `last`) (the ) to `out` such that each possible sample has
-equal probability of appearance.
+*Effects:* Copies \min(`last - first`, \ `n`) elements (the *sample*)
+from \[`first`, `last`) (the *population*) to `out` such that each
+possible sample has equal probability of appearance.
 
-\[*Note 1*: Algorithms that obtain such effects include and
-. — *end note*\]
+\[*Note 1*: Algorithms that obtain such effects include *selection
+sampling* and *reservoir sampling*. — *end note*\]
 
 *Returns:* The end of the resulting sample range.
 
@@ -5630,10 +5631,10 @@ A sequence is *sorted with respect to a comparator `comp`* for a
 comparator `comp` if it is sorted with respect to `comp` and
 `identity{}` (the identity projection).
 
-A sequence [`start`, `finish`) is
-*partitioned with respect to an expression* `f(e)` if there exists an
-integer `n` such that for all `0 <= i < (finish - start)`,
-`f(*(start + i))` is `true` if and only if `i < n`.
+A sequence \[`start`, `finish`) is *partitioned with respect to an
+expression* `f(e)` if there exists an integer `n` such that for all
+`0 <= i < (finish - start)`, `f(*(start + i))` is `true` if and only if
+`i < n`.
 
 In the descriptions of the functions that deal with ordering
 relationships we frequently use a notion of equivalence to describe
@@ -6934,13 +6935,13 @@ elements are copied in order.
 
 #### General <a id="alg.heap.operations.general">[[alg.heap.operations.general]]</a>
 
-A random access range [`a`, `b`) is a
+A random access range \[`a`, `b`) is a
 *heap with respect to `comp` and `proj`* heap with respect to comp and
 proj@heap with respect to `comp` and `proj` for a comparator and
 projection `comp` and `proj` if its elements are organized such that:
 
 - With `N = b - a`, for all i, 0 < i < N,
-  `bool(invoke(comp, invoke(proj, a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor]), invoke(proj, a[i])))`
+  `bool(invoke(comp, invoke(proj, a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor]), invoke({}proj, a[i])))`
   is `false`.
 - `*a` may be removed by `pop_heap`, or a new element added by
   `push_heap`, in time.
@@ -8696,7 +8697,7 @@ template<class M, class N>
   constexpr common_type_t<M, N> gcd(M m, N n);
 ```
 
-*Mandates:* `M` and `N` both are integer types other than  `bool`.
+*Mandates:* `M` and `N` both are integer types other than cv `bool`.
 
 *Preconditions:* |`m`| and |`n`| are representable as a value of
 `common_type_t<M, N>`.
@@ -8717,7 +8718,7 @@ template<class M, class N>
   constexpr common_type_t<M, N> lcm(M m, N n);
 ```
 
-*Mandates:* `M` and `N` both are integer types other than  `bool`.
+*Mandates:* `M` and `N` both are integer types other than cv `bool`.
 
 *Preconditions:* |`m`| and |`n`| are representable as a value of
 `common_type_t<M, N>`. The least common multiple of |`m`| and |`n`| is

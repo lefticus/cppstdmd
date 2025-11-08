@@ -3,21 +3,23 @@
 ### General <a id="diff.cpp20.general">[[diff.cpp20.general]]</a>
 
 Subclause [[diff.cpp20]] lists the differences between C++ and ISO C++20
-(ISO/IEC 14882:2020, *Programming Languages --- C++*), by the chapters
-of this document.
+(ISO/IEC 14882:2020, *Programming Languages — C++*), by the chapters of
+this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp20.lex">[[diff.cpp20.lex]]</a>
 
-Previously valid identifiers containing characters not present in
-UAX #44 properties XID_Start or XID_Continue, or not in Normalization
-Form C, are now rejected. Prevent confusing characters in identifiers.
-Requiring normalization of names ensures consistent linker behavior.
-Some identifiers are no longer well-formed.
+**Change:** Previously valid identifiers containing characters not
+present in UAX #44 properties XID_Start or XID_Continue, or not in
+Normalization Form C, are now rejected. **Rationale:** Prevent confusing
+characters in identifiers. Requiring normalization of names ensures
+consistent linker behavior. **Effect on original feature:** Some
+identifiers are no longer well-formed.
 
-Concatenated *string-literal*s can no longer have conflicting
-*encoding-prefix*es. Removal of unimplemented conditionally-supported
-feature. Concatenation of *string-literal*s with different
-*encoding-prefix*es is now ill-formed. For example:
+**Change:** Concatenated *string-literal*s can no longer have
+conflicting *encoding-prefix*es. **Rationale:** Removal of unimplemented
+conditionally-supported feature. **Effect on original feature:**
+Concatenation of *string-literal*s with different *encoding-prefix*es is
+now ill-formed. For example:
 
 ``` cpp
 auto c = L"a" U"b";             // was conditionally-supported; now ill-formed
@@ -25,8 +27,9 @@ auto c = L"a" U"b";             // was conditionally-supported; now ill-formed
 
 ###  [[expr]]: expressions <a id="diff.cpp20.expr">[[diff.cpp20.expr]]</a>
 
-Change move-eligible *id-expression*s from lvalues to xvalues. Simplify
-the rules for implicit move. Valid C++20 code that relies on a returned
+**Change:** Change move-eligible *id-expression*s from lvalues to
+xvalues. **Rationale:** Simplify the rules for implicit move. **Effect
+on original feature:** Valid C++20 code that relies on a returned
 *id-expression*’s being an lvalue may change behavior or fail to
 compile. For example:
 
@@ -35,8 +38,9 @@ decltype(auto) f(int&& x) { return (x); }       // returns int&&; previously ret
 int& g(int&& x) { return x; }                   // ill-formed; previously well-formed
 ```
 
-Change the meaning of comma in subscript expressions. Enable repurposing
-a deprecated syntax to support multidimensional indexing. Valid C++20
+**Change:** Change the meaning of comma in subscript expressions.
+**Rationale:** Enable repurposing a deprecated syntax to support
+multidimensional indexing. **Effect on original feature:** Valid C++20
 code that uses a comma expression within a subscript expression may fail
 to compile. For example:
 
@@ -47,9 +51,10 @@ arr[1, 2]               // was equivalent to arr[(1, 2)],
 
 ###  [[stmt.stmt]]: statements <a id="diff.cpp20.stmt">[[diff.cpp20.stmt]]</a>
 
-The lifetime of temporary objects in the *for-range-initializer* is
-extended until the end of the loop [[class.temporary]]. Improve
-usability of the range-based `for` statement. Destructors of some
+**Change:** The lifetime of temporary objects in the
+*for-range-initializer* is extended until the end of the loop
+[[class.temporary]]. **Rationale:** Improve usability of the range-based
+`for` statement. **Effect on original feature:** Destructors of some
 temporary objects are invoked later. For example:
 
 ``` cpp
@@ -58,20 +63,21 @@ void f() {
   std::mutex m;
 
   for (int x :
-       static_cast<void>(std::lock_guard<std::mutex>(m)), v) {  // lock released in \CppXX
-    std::lock_guard<std::mutex> guard(m);                       // OK in \CppXX, now deadlocks
+       static_cast<void>(std::lock_guard<std::mutex>(m)), v) {  // lock released in C++20
+    std::lock_guard<std::mutex> guard(m);                       // OK in C++20, now deadlocks
   }
 }
 ```
 
 ###  [[dcl.dcl]]: declarations <a id="diff.cpp20.dcl">[[diff.cpp20.dcl]]</a>
 
-UTF-8 string literals may initialize arrays of `char` or
-`unsigned char`. Compatibility with previously written code that
-conformed to previous versions of this document. Arrays of `char` or
-`unsigned char` may now be initialized with a UTF-8 string literal. This
-can affect initialization that includes arrays that are directly
-initialized within class types, typically aggregates. For example:
+**Change:** UTF-8 string literals may initialize arrays of `char` or
+`unsigned char`. **Rationale:** Compatibility with previously written
+code that conformed to previous versions of this document. **Effect on
+original feature:** Arrays of `char` or `unsigned char` may now be
+initialized with a UTF-8 string literal. This can affect initialization
+that includes arrays that are directly initialized within class types,
+typically aggregates. For example:
 
 ``` cpp
 struct A {
@@ -91,9 +97,10 @@ int main() {
 
 ###  [[temp]]: templates <a id="diff.cpp20.temp">[[diff.cpp20.temp]]</a>
 
-Deducing template arguments from exception specifications. Facilitate
-generic handling of throwing and non-throwing functions. Valid ISO C++20
-code may be ill-formed in this revision of C++. For example:
+**Change:** Deducing template arguments from exception specifications.
+**Rationale:** Facilitate generic handling of throwing and non-throwing
+functions. **Effect on original feature:** Valid ISO C++20 code may be
+ill-formed in this revision of C++. For example:
 
 ``` cpp
 template<bool> struct A { };
@@ -106,18 +113,19 @@ void h() {
 
 ###  [[library]]: library introduction <a id="diff.cpp20.library">[[diff.cpp20.library]]</a>
 
-New headers. New functionality. The following C++ headers are new:
-`<expected>`, `<flat_map>`, `<flat_set>`, `<generator>`, `<print>`,
-`<spanstream>`, `<stacktrace>`, and `<stdatomic.h>`. Valid C++20 code
-that `#include`s headers with these names may be invalid in this
-revision of C++.
+**Change:** New headers. **Rationale:** New functionality. **Effect on
+original feature:** The following C++ headers are new: `<expected>`,
+`<flat_map>`, `<flat_set>`, `<generator>`, `<print>`, `<spanstream>`,
+`<stacktrace>`, and `<stdatomic.h>`. Valid C++20 code that `#include`s
+headers with these names may be invalid in this revision of C++.
 
 ###  [[concepts]]: concepts library <a id="diff.cpp20.concepts">[[diff.cpp20.concepts]]</a>
 
-Replace `common_reference_with` in `three_way_comparable_with`,
-`equality_comparable_with`, and `totally_ordered_with` with an
-exposition-only concept. Allow uncopyable, but movable, types to model
-these concepts. Valid C++20 code relying on subsumption with
+**Change:** Replace `common_reference_with` in
+`three_way_comparable_with`, `equality_comparable_with`, and
+`totally_ordered_with` with an exposition-only concept. **Rationale:**
+Allow uncopyable, but movable, types to model these concepts. **Effect
+on original feature:** Valid C++20 code relying on subsumption with
 `common_reference_with` may fail to compile in this revision of C++. For
 example:
 
@@ -137,19 +145,21 @@ bool test(shared_ptr<int> p) {
 
 ###  [[mem]]: memory management library <a id="diff.cpp20.memory">[[diff.cpp20.memory]]</a>
 
-Forbid partial and explicit program-defined specializations of
-`allocator_traits`. Allow addition of `allocate_at_least` to
-`allocator_traits`, and potentially other members in the future. Valid
-C++20 code that partially or explicitly specializes `allocator_traits`
-is ill-formed with no diagnostic required in this revision of C++.
+**Change:** Forbid partial and explicit program-defined specializations
+of `allocator_traits`. **Rationale:** Allow addition of
+`allocate_at_least` to `allocator_traits`, and potentially other members
+in the future. **Effect on original feature:** Valid C++20 code that
+partially or explicitly specializes `allocator_traits` is ill-formed
+with no diagnostic required in this revision of C++.
 
 ###  [[utilities]]: general utilities library <a id="diff.cpp20.utilities">[[diff.cpp20.utilities]]</a>
 
-Signature changes: `format`, `format_to`, `vformat_to`, `format_to_n`,
-`formatted_size`. Removal of `format_args_t`. Improve safety via
-compile-time format string checks, avoid unnecessary template
-instantiations. Valid C++20 code that contained errors in format strings
-or relied on previous format string signatures or `format_args_t` may
+**Change:** Signature changes: `format`, `format_to`, `vformat_to`,
+`format_to_n`, `formatted_size`. Removal of `format_args_t`.
+**Rationale:** Improve safety via compile-time format string checks,
+avoid unnecessary template instantiations. **Effect on original
+feature:** Valid C++20 code that contained errors in format strings or
+relied on previous format string signatures or `format_args_t` may
 become ill-formed. For example:
 
 ``` cpp
@@ -157,11 +167,11 @@ auto s = std::format("{:d}", "I am not a number");      // ill-formed,
                                                         // previously threw format_error
 ```
 
-Signature changes: `format`, `format_to`, `format_to_n`,
-`formatted_size`. Enable formatting of views that do not support
-iteration when const-qualified and that are not copyable. Valid C++20
-code that passes bit fields to formatting functions may become
-ill-formed. For example:
+**Change:** Signature changes: `format`, `format_to`, `format_to_n`,
+`formatted_size`. **Rationale:** Enable formatting of views that do not
+support iteration when const-qualified and that are not copyable.
+**Effect on original feature:** Valid C++20 code that passes bit fields
+to formatting functions may become ill-formed. For example:
 
 ``` cpp
 struct tiny {
@@ -172,11 +182,11 @@ auto t = tiny();
 std::format("{}", t.bit);       // ill-formed, previously returned "0"
 ```
 
-Restrict types of formatting arguments used as *width* or *precision* in
-a *std-format-spec*. Disallow types that do not have useful or portable
-semantics as a formatting width or precision. Valid C++20 code that
-passes a boolean or character type as *arg-id* becomes invalid. For
-example:
+**Change:** Restrict types of formatting arguments used as *width* or
+*precision* in a *std-format-spec*. **Rationale:** Disallow types that
+do not have useful or portable semantics as a formatting width or
+precision. **Effect on original feature:** Valid C++20 code that passes
+a boolean or character type as *arg-id* becomes invalid. For example:
 
 ``` cpp
 std::format("{:*^{}}", "", true);   // ill-formed, previously returned "*"
@@ -184,25 +194,26 @@ std::format("{:*^{}}", "", '1');    // ill-formed, previously returned an
                                     // implementation-defined number of '*' characters
 ```
 
-Removed the `formatter` specialization:
+**Change:** Removed the `formatter` specialization:
 
 ``` cpp
 template<size_t N> struct formatter<const charT[N], charT>;
 ```
 
-The specialization is inconsistent with the design of `formatter`, which
-is intended to be instantiated only with cv-unqualified object types.
-Valid C++20 code that instantiated the removed specialization can become
-ill-formed.
+**Rationale:** The specialization is inconsistent with the design of
+`formatter`, which is intended to be instantiated only with
+cv-unqualified object types. **Effect on original feature:** Valid C++20
+code that instantiated the removed specialization can become ill-formed.
 
 ###  [[strings]]: strings library <a id="diff.cpp20.strings">[[diff.cpp20.strings]]</a>
 
-Additional rvalue overload for the `substr` member function and the
-corresponding constructor. Improve efficiency of operations on rvalues.
-Valid C++20 code that created a substring by calling `substr` (or the
-corresponding constructor) on an xvalue expression with type `S` that is
-a specialization of `basic_string` may change meaning in this revision
-of C++. For example:
+**Change:** Additional rvalue overload for the `substr` member function
+and the corresponding constructor. **Rationale:** Improve efficiency of
+operations on rvalues. **Effect on original feature:** Valid C++20 code
+that created a substring by calling `substr` (or the corresponding
+constructor) on an xvalue expression with type `S` that is a
+specialization of `basic_string` may change meaning in this revision of
+C++. For example:
 
 ``` cpp
 std::string s1 = "some long string that forces allocation", s2 = s1;
@@ -214,10 +225,11 @@ assert(s1 == s2);       // unspecified, previously guaranteed to be true
 
 ###  [[containers]]: containers library <a id="diff.cpp20.containers">[[diff.cpp20.containers]]</a>
 
-Heterogeneous `extract` and `erase` overloads for associative
-containers. Improve efficiency of erasing elements from associative
-containers. Valid C++20 code may fail to compile in this revision of
-C++. For example:
+**Change:** Heterogeneous `extract` and `erase` overloads for
+associative containers. **Rationale:** Improve efficiency of erasing
+elements from associative containers. **Effect on original feature:**
+Valid C++20 code may fail to compile in this revision of C++. For
+example:
 
 ``` cpp
 struct B {
@@ -233,16 +245,17 @@ struct D : private B {
 
 ###  [[thread]]: concurrency support library <a id="diff.cpp20.thread">[[diff.cpp20.thread]]</a>
 
-In this revision of C++, it is implementation-defined whether a
-barrier’s phase completion step runs if no thread calls `wait`.
-Previously the phase completion step was guaranteed to run on the last
-thread that calls `arrive` or `arrive_and_drop` during the phase. In
-this revision of C++, it can run on any of the threads that arrived or
-waited at the barrier during the phase. Correct contradictory wording
-and improve implementation flexibility for performance. Valid C++20 code
-using a barrier might have different semantics in this revision of C++
-if it depends on a completion function’s side effects occurring exactly
-once, on a specific thread running the phase completion step, or on a
+**Change:** In this revision of C++, it is implementation-defined
+whether a barrier’s phase completion step runs if no thread calls
+`wait`. Previously the phase completion step was guaranteed to run on
+the last thread that calls `arrive` or `arrive_and_drop` during the
+phase. In this revision of C++, it can run on any of the threads that
+arrived or waited at the barrier during the phase. **Rationale:**
+Correct contradictory wording and improve implementation flexibility for
+performance. **Effect on original feature:** Valid C++20 code using a
+barrier might have different semantics in this revision of C++ if it
+depends on a completion function’s side effects occurring exactly once,
+on a specific thread running the phase completion step, or on a
 completion function’s side effects occurring without `wait` having been
 called. For example:
 
@@ -263,14 +276,15 @@ b1.arrive();            // implementation-defined; previously well-defined
 ### General <a id="diff.cpp17.general">[[diff.cpp17.general]]</a>
 
 Subclause [[diff.cpp17]] lists the differences between C++ and ISO C++17
-(ISO/IEC 14882:2017, *Programming Languages --- C++*), by the chapters
-of this document.
+(ISO/IEC 14882:2017, *Programming Languages — C++*), by the chapters of
+this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp17.lex">[[diff.cpp17.lex]]</a>
 
-New identifiers with special meaning. Required for new features. Logical
-lines beginning with `module` or `import` may be interpreted differently
-in this revision of C++. For example:
+**Change:** New identifiers with special meaning. **Rationale:**
+Required for new features. **Effect on original feature:** Logical lines
+beginning with `module` or `import` may be interpreted differently in
+this revision of C++. For example:
 
 ``` cpp
 class module {};
@@ -282,9 +296,10 @@ import j1;          // was variable declaration; now module-import-declaration
 ::import j2;        // variable declaration
 ```
 
-*header-name* tokens are formed in more contexts. Required for new
-features. When the identifier `import` is followed by a `<` character, a
-*header-name* token may be formed. For example:
+**Change:** *header-name* tokens are formed in more contexts.
+**Rationale:** Required for new features. **Effect on original
+feature:** When the identifier `import` is followed by a `<` character,
+a *header-name* token may be formed. For example:
 
 ``` cpp
 template<typename> class import {};
@@ -292,7 +307,7 @@ import<int> f();                // ill-formed; previously well-formed
 ::import<int> g();              // OK
 ```
 
-New keywords. Required for new features.
+**Change:** New keywords. **Rationale:** Required for new features.
 
 - The `char8_t` keyword is added to differentiate the types of ordinary
   and UTF-8 literals [[lex.string]].
@@ -312,8 +327,9 @@ Valid C++17 code using `char8_t`, `concept`, `consteval`, `constinit`,
 `co_await`, `co_yield`, `co_return`, or `requires` as an identifier is
 not valid in this revision of C++.
 
-New operator `<=>`. Necessary for new functionality. Valid C++17 code
-that contains a `<=` token immediately followed by a `>` token may be
+**Change:** New operator `<=>`. **Rationale:** Necessary for new
+functionality. **Effect on original feature:** Valid C++17 code that
+contains a `<=` token immediately followed by a `>` token may be
 ill-formed or have different semantics in this revision of C++. For
 example:
 
@@ -326,13 +342,13 @@ namespace N {
 }
 ```
 
-Type of UTF-8 string and character literals. Required for new features.
-The changed types enable function overloading, template specialization,
-and type deduction to distinguish ordinary and UTF-8 string and
-character literals. Valid C++17 code that depends on UTF-8 string
-literals having type “array of `const char`” and UTF-8 character
-literals having type “`char`” is not valid in this revision of C++. For
-example:
+**Change:** Type of UTF-8 string and character literals. **Rationale:**
+Required for new features. The changed types enable function
+overloading, template specialization, and type deduction to distinguish
+ordinary and UTF-8 string and character literals. **Effect on original
+feature:** Valid C++17 code that depends on UTF-8 string literals having
+type “array of `const char`” and UTF-8 character literals having type
+“`char`” is not valid in this revision of C++. For example:
 
 ``` cpp
 const auto *u8s = u8"text";     // u8s previously deduced as const char*; now deduced as const char8_t*
@@ -355,10 +371,11 @@ ct<decltype(u8'c')>::type x;    // ill-formed; previously well-formed.
 
 ###  [[basic]]: basics <a id="diff.cpp17.basic">[[diff.cpp17.basic]]</a>
 
-A pseudo-destructor call ends the lifetime of the object to which it is
-applied. Increase consistency of the language model. Valid ISO C++17
-code may be ill-formed or have undefined behavior in this revision of
-C++. For example:
+**Change:** A pseudo-destructor call ends the lifetime of the object to
+which it is applied. **Rationale:** Increase consistency of the language
+model. **Effect on original feature:** Valid ISO C++17 code may be
+ill-formed or have undefined behavior in this revision of C++. For
+example:
 
 ``` cpp
 int f() {
@@ -369,27 +386,30 @@ int f() {
 }
 ```
 
-Except for the initial release operation, a release sequence consists
-solely of atomic read-modify-write operations. Removal of rarely used
-and confusing feature. If a `memory_order_release` atomic store is
-followed by a `memory_order_relaxed` store to the same variable by the
-same thread, then reading the latter value with a `memory_order_acquire`
-load no longer provides any “happens before” guarantees, even in the
-absence of intervening stores by another thread.
+**Change:** Except for the initial release operation, a release sequence
+consists solely of atomic read-modify-write operations. **Rationale:**
+Removal of rarely used and confusing feature. **Effect on original
+feature:** If a `memory_order_release` atomic store is followed by a
+`memory_order_relaxed` store to the same variable by the same thread,
+then reading the latter value with a `memory_order_acquire` load no
+longer provides any “happens before” guarantees, even in the absence of
+intervening stores by another thread.
 
 ###  [[expr]]: expressions <a id="diff.cpp17.expr">[[diff.cpp17.expr]]</a>
 
-Implicit lambda capture may capture additional entities. Rule
-simplification, necessary to resolve interactions with constexpr if.
-Lambdas with a *capture-default* may capture local entities that were
-not captured in C++17 if those entities are only referenced in contexts
-that do not result in an odr-use.
+**Change:** Implicit lambda capture may capture additional entities.
+**Rationale:** Rule simplification, necessary to resolve interactions
+with constexpr if. **Effect on original feature:** Lambdas with a
+*capture-default* may capture local entities that were not captured in
+C++17 if those entities are only referenced in contexts that do not
+result in an odr-use.
 
 ###  [[dcl.dcl]]: declarations <a id="diff.cpp17.dcl.dcl">[[diff.cpp17.dcl.dcl]]</a>
 
-Unnamed classes with a typedef name for linkage purposes can contain
-only C-compatible constructs. Necessary for implementability. Valid
-C++17 code may be ill-formed in this revision of C++. For example:
+**Change:** Unnamed classes with a typedef name for linkage purposes can
+contain only C-compatible constructs. **Rationale:** Necessary for
+implementability. **Effect on original feature:** Valid C++17 code may
+be ill-formed in this revision of C++. For example:
 
 ``` cpp
 typedef struct {
@@ -397,8 +417,9 @@ typedef struct {
 } S;
 ```
 
-A function cannot have different default arguments in different
-translation units. Required for modules support. Valid C++17 code may be
+**Change:** A function cannot have different default arguments in
+different translation units. **Rationale:** Required for modules
+support. **Effect on original feature:** Valid C++17 code may be
 ill-formed in this revision of C++, with no diagnostic required. For
 example:
 
@@ -413,11 +434,12 @@ int g();
 int main() { return g(); }              // used to return 42
 ```
 
-A class that has user-declared constructors is never an aggregate.
-Remove potentially error-prone aggregate initialization which may apply
-notwithstanding the declared constructors of a class. Valid C++17 code
-that aggregate-initializes a type with a user-declared constructor may
-be ill-formed or have different semantics in this revision of C++. For
+**Change:** A class that has user-declared constructors is never an
+aggregate. **Rationale:** Remove potentially error-prone aggregate
+initialization which may apply notwithstanding the declared constructors
+of a class. **Effect on original feature:** Valid C++17 code that
+aggregate-initializes a type with a user-declared constructor may be
+ill-formed or have different semantics in this revision of C++. For
 example:
 
 ``` cpp
@@ -453,9 +475,10 @@ struct Y {              // not an aggregate; previously an aggregate
 Y y{X{}};               // copy constructor call; previously aggregate-initialization
 ```
 
-Boolean conversion from a pointer or pointer-to-member type is now a
-narrowing conversion. Catches bugs. Valid C++17 code may fail to compile
-in this revision of C++. For example:
+**Change:** Boolean conversion from a pointer or pointer-to-member type
+is now a narrowing conversion. **Rationale:** Catches bugs. **Effect on
+original feature:** Valid C++17 code may fail to compile in this
+revision of C++. For example:
 
 ``` cpp
 bool y[] = { "bc" };    // ill-formed; previously well-formed
@@ -463,11 +486,12 @@ bool y[] = { "bc" };    // ill-formed; previously well-formed
 
 ###  [[class]]: classes <a id="diff.cpp17.class">[[diff.cpp17.class]]</a>
 
-The class name can no longer be used parenthesized immediately after an
-`explicit` *decl-specifier* in a constructor declaration. The
-*conversion-function-id* can no longer be used parenthesized immediately
-after an `explicit` *decl-specifier* in a conversion function
-declaration. Necessary for new functionality. Valid C++17 code may fail
+**Change:** The class name can no longer be used parenthesized
+immediately after an `explicit` *decl-specifier* in a constructor
+declaration. The *conversion-function-id* can no longer be used
+parenthesized immediately after an `explicit` *decl-specifier* in a
+conversion function declaration. **Rationale:** Necessary for new
+functionality. **Effect on original feature:** Valid C++17 code may fail
 to compile in this revision of C++. For example:
 
 ``` cpp
@@ -478,10 +502,11 @@ struct S {
 };
 ```
 
-A *simple-template-id* is no longer valid as the *declarator-id* of a
-constructor or destructor. Remove potentially error-prone option for
-redundancy. Valid C++17 code may fail to compile in this revision of
-C++. For example:
+**Change:** A *simple-template-id* is no longer valid as the
+*declarator-id* of a constructor or destructor. **Rationale:** Remove
+potentially error-prone option for redundancy. **Effect on original
+feature:** Valid C++17 code may fail to compile in this revision of C++.
+For example:
 
 ``` cpp
 template<class T>
@@ -492,13 +517,13 @@ struct A {
 };
 ```
 
-A function returning an implicitly movable entity may invoke a
-constructor taking an rvalue reference to a type different from that of
-the returned expression. Function and catch-clause parameters can be
-thrown using move constructors. Side effect of making it easier to write
-more efficient code that takes advantage of moves. Valid C++17 code may
-fail to compile or have different semantics in this revision of C++. For
-example:
+**Change:** A function returning an implicitly movable entity may invoke
+a constructor taking an rvalue reference to a type different from that
+of the returned expression. Function and catch-clause parameters can be
+thrown using move constructors. **Rationale:** Side effect of making it
+easier to write more efficient code that takes advantage of moves.
+**Effect on original feature:** Valid C++17 code may fail to compile or
+have different semantics in this revision of C++. For example:
 
 ``` cpp
 struct base {
@@ -534,14 +559,15 @@ void g() {
 
 ###  [[over]]: overloading <a id="diff.cpp17.over">[[diff.cpp17.over]]</a>
 
-Equality and inequality expressions can now find reversed and rewritten
-candidates. Improve consistency of equality with three-way comparison
-and make it easier to write the full complement of equality operations.
-For certain pairs of types where one is convertible to the other,
-equality or inequality expressions between an object of one type and an
-object of the other type invoke a different operator. Also, for certain
-types, equality or inequality expressions between two objects of that
-type become ambiguous. For example:
+**Change:** Equality and inequality expressions can now find reversed
+and rewritten candidates. **Rationale:** Improve consistency of equality
+with three-way comparison and make it easier to write the full
+complement of equality operations. **Effect on original feature:** For
+certain pairs of types where one is convertible to the other, equality
+or inequality expressions between an object of one type and an object of
+the other type invoke a different operator. Also, for certain types,
+equality or inequality expressions between two objects of that type
+become ambiguous. For example:
 
 ``` cpp
 struct A {
@@ -559,11 +585,11 @@ int check(A x, A y) {
 }
 ```
 
-Overload resolution may change for equality operators [[expr.eq]].
-Support calling `operator==` with reversed order of arguments. Valid
-C++17 code that uses equality operators with conversion functions may be
-ill-formed or have different semantics in this revision of C++. For
-example:
+**Change:** Overload resolution may change for equality operators
+[[expr.eq]]. **Rationale:** Support calling `operator==` with reversed
+order of arguments. **Effect on original feature:** Valid C++17 code
+that uses equality operators with conversion functions may be ill-formed
+or have different semantics in this revision of C++. For example:
 
 ``` cpp
 struct A {
@@ -583,14 +609,15 @@ bool eq = (b1 == b1);           // ambiguous; previously well-formed
 
 ###  [[temp]]: templates <a id="diff.cpp17.temp">[[diff.cpp17.temp]]</a>
 
-An *unqualified-id* that is followed by a `<` and for which name lookup
-finds nothing or finds a function will be treated as a *template-name*
-in order to potentially cause argument dependent lookup to be performed.
-It was problematic to call a function template with an explicit template
-argument list via argument dependent lookup because of the need to have
-a template with the same name visible via normal lookup. Previously
-valid code that uses a function name as the left operand of a `<`
-operator would become ill-formed. For example:
+**Change:** An *unqualified-id* that is followed by a `<` and for which
+name lookup finds nothing or finds a function will be treated as a
+*template-name* in order to potentially cause argument dependent lookup
+to be performed. **Rationale:** It was problematic to call a function
+template with an explicit template argument list via argument dependent
+lookup because of the need to have a template with the same name visible
+via normal lookup. **Effect on original feature:** Previously valid code
+that uses a function name as the left operand of a `<` operator would
+become ill-formed. For example:
 
 ``` cpp
 struct A {};
@@ -605,10 +632,11 @@ int main() {
 
 ###  [[except]]: exception handling <a id="diff.cpp17.except">[[diff.cpp17.except]]</a>
 
-Remove `throw()` exception specification. Removal of obsolete feature
-that has been replaced by `noexcept`. A valid C++17 function
-declaration, member function declaration, function pointer declaration,
-or function reference declaration that uses `throw()` for its exception
+**Change:** Remove `throw()` exception specification. **Rationale:**
+Removal of obsolete feature that has been replaced by `noexcept`.
+**Effect on original feature:** A valid C++17 function declaration,
+member function declaration, function pointer declaration, or function
+reference declaration that uses `throw()` for its exception
 specification will be rejected as ill-formed in this revision of C++. It
 should simply be replaced with `noexcept` for no change of meaning since
 C++17.
@@ -620,17 +648,19 @@ in each case. — *end note*\]
 
 ###  [[library]]: library introduction <a id="diff.cpp17.library">[[diff.cpp17.library]]</a>
 
-New headers. New functionality. The following C++ headers are new:
-`<barrier>`, `<bit>`, `<charconv>`, `<compare>`, `<concepts>`,
-`<coroutine>`, `<format>`, `<latch>`, `<numbers>`, `<ranges>`,
-`<semaphore>`, `<source_location>`, `<span>`, `<stop_token>`,
-`<syncstream>`, and `<version>`. Valid C++17 code that `#include`s
-headers with these names may be invalid in this revision of C++.
+**Change:** New headers. **Rationale:** New functionality. **Effect on
+original feature:** The following C++ headers are new: `<barrier>`,
+`<bit>`, `<charconv>`, `<compare>`, `<concepts>`, `<coroutine>`,
+`<format>`, `<latch>`, `<numbers>`, `<ranges>`, `<semaphore>`,
+`<source_location>`, `<span>`, `<stop_token>`, `<syncstream>`, and
+`<version>`. Valid C++17 code that `#include`s headers with these names
+may be invalid in this revision of C++.
 
-Remove vacuous C++ header files. The empty headers implied a false
-requirement to achieve C compatibility with the C++ headers. A valid
-C++17 program that `#include`s any of the following headers may fail to
-compile: , , , , and . To retain the same behavior:
+**Change:** Remove vacuous C++ header files. **Rationale:** The empty
+headers implied a false requirement to achieve C compatibility with the
+C++ headers. **Effect on original feature:** A valid C++17 program that
+`#include`s any of the following headers may fail to compile: , , , ,
+and . To retain the same behavior:
 
 - a `#include` of can be replaced by a `#include` of `<complex>`,
 - a `#include` of can be replaced by a `#include` of `<cmath>` and a
@@ -639,36 +669,40 @@ compile: , , , , and . To retain the same behavior:
 
 ###  [[containers]]: containers library <a id="diff.cpp17.containers">[[diff.cpp17.containers]]</a>
 
-Return types of `remove`, `remove_if`, and `unique` changed from `void`
-to `container::size_type`. Improve efficiency and convenience of finding
-number of removed elements. Code that depends on the return types might
-have different semantics in this revision of C++. Translation units
-compiled against this version of C++ may be incompatible with
-translation units compiled against C++17, either failing to link or
-having undefined behavior.
+**Change:** Return types of `remove`, `remove_if`, and `unique` changed
+from `void` to `container::size_type`. **Rationale:** Improve efficiency
+and convenience of finding number of removed elements. **Effect on
+original feature:** Code that depends on the return types might have
+different semantics in this revision of C++. Translation units compiled
+against this version of C++ may be incompatible with translation units
+compiled against C++17, either failing to link or having undefined
+behavior.
 
 ###  [[iterators]]: iterators library <a id="diff.cpp17.iterators">[[diff.cpp17.iterators]]</a>
 
-The specialization of `iterator_traits` for `void*` and for function
-pointer types no longer contains any nested typedefs. Corrects an issue
-misidentifying pointer types that are not incrementable as iterator
-types. A valid C++17 program that relies on the presence of the typedefs
-may fail to compile, or have different behavior.
+**Change:** The specialization of `iterator_traits` for `void*` and for
+function pointer types no longer contains any nested typedefs.
+**Rationale:** Corrects an issue misidentifying pointer types that are
+not incrementable as iterator types. **Effect on original feature:** A
+valid C++17 program that relies on the presence of the typedefs may fail
+to compile, or have different behavior.
 
 ###  [[algorithms]]: algorithms library <a id="diff.cpp17.alg.reqs">[[diff.cpp17.alg.reqs]]</a>
 
-The number and order of deducible template parameters for algorithm
-declarations is now unspecified, instead of being as-declared. Increase
-implementor freedom and allow some function templates to be implemented
-as function objects with templated call operators. A valid C++17 program
-that passes explicit template arguments to algorithms not explicitly
+**Change:** The number and order of deducible template parameters for
+algorithm declarations is now unspecified, instead of being as-declared.
+**Rationale:** Increase implementor freedom and allow some function
+templates to be implemented as function objects with templated call
+operators. **Effect on original feature:** A valid C++17 program that
+passes explicit template arguments to algorithms not explicitly
 specified to allow such in this version of C++ may fail to compile or
 have undefined behavior.
 
 ###  [[input.output]]: input/output library <a id="diff.cpp17.input.output">[[diff.cpp17.input.output]]</a>
 
-Character array extraction only takes array types. Increase safety via
-preventing buffer overflow at compile time. Valid C++17 code may fail to
+**Change:** Character array extraction only takes array types.
+**Rationale:** Increase safety via preventing buffer overflow at compile
+time. **Effect on original feature:** Valid C++17 code may fail to
 compile in this revision of C++. For example:
 
 ``` cpp
@@ -678,9 +712,10 @@ std::cin >> std::setw(20) >> p;         // ill-formed; previously well-formed
 std::cin >> std::setw(20) >> q;         // OK
 ```
 
-Overload resolution for ostream inserters used with UTF-8 literals.
-Required for new features. Valid C++17 code that passes UTF-8 literals
-to `basic_ostream<char, ...>::operator<<` or
+**Change:** Overload resolution for ostream inserters used with UTF-8
+literals. **Rationale:** Required for new features. **Effect on original
+feature:** Valid C++17 code that passes UTF-8 literals to
+`basic_ostream<char, ...>::operator<<` or
 `basic_ostream<wchar_t, ...>::operator<<` is now ill-formed. For
 example:
 
@@ -691,11 +726,12 @@ std::cout << u8'X';             // previously called operator<<(char) and printe
                                 // now ill-formed
 ```
 
-Overload resolution for ostream inserters used with `wchar_t`,
-`char16_t`, or `char32_t` types. Removal of surprising behavior. Valid
-C++17 code that passes `wchar_t`, `char16_t`, or `char32_t` characters
-or strings to `basic_ostream<char, ...>::operator<<` or that passes
-`char16_t` or `char32_t` characters or strings to
+**Change:** Overload resolution for ostream inserters used with
+`wchar_t`, `char16_t`, or `char32_t` types. **Rationale:** Removal of
+surprising behavior. **Effect on original feature:** Valid C++17 code
+that passes `wchar_t`, `char16_t`, or `char32_t` characters or strings
+to `basic_ostream<char, ...>::operator<<` or that passes `char16_t` or
+`char32_t` characters or strings to
 `basic_ostream<wchar_t, ...>::operator<<` is now ill-formed. For
 example:
 
@@ -706,11 +742,12 @@ std::cout << u'X';              // previously formatted the character as an inte
                                 // now ill-formed
 ```
 
-Return type of filesystem path format observer member functions.
-Required for new features. Valid C++17 code that depends on the
-`u8string()` and `generic_u8string()` member functions of
-`std::filesystem::path` returning `std::string` is not valid in this
-revision of C++. For example:
+**Change:** Return type of filesystem path format observer member
+functions. **Rationale:** Required for new features. **Effect on
+original feature:** Valid C++17 code that depends on the `u8string()`
+and `generic_u8string()` member functions of `std::filesystem::path`
+returning `std::string` is not valid in this revision of C++. For
+example:
 
 ``` cpp
 std::filesystem::path p;
@@ -720,124 +757,136 @@ std::string s2 = p.generic_u8string();  // ill-formed; previously well-formed
 
 ###  [[depr]]: compatibility features <a id="diff.cpp17.depr">[[diff.cpp17.depr]]</a>
 
-Remove `uncaught_exception`. The function did not have a clear
-specification when multiple exceptions were active, and has been
-superseded by `uncaught_exceptions`. A valid C++17 program that calls
-`std::uncaught_exception` may fail to compile. It can be revised to use
-`std::uncaught_exceptions` instead, for clear and portable semantics.
+**Change:** Remove `uncaught_exception`. **Rationale:** The function did
+not have a clear specification when multiple exceptions were active, and
+has been superseded by `uncaught_exceptions`. **Effect on original
+feature:** A valid C++17 program that calls `std::uncaught_exception`
+may fail to compile. It can be revised to use `std::uncaught_exceptions`
+instead, for clear and portable semantics.
 
-Remove support for adaptable function API. The deprecated support relied
-on a limited convention that could not be extended to support the
-general case or new language features. It has been superseded by direct
-language support with `decltype`, and by the `std::bind` and
-`std::not_fn` function templates. A valid C++17 program that relies on
-the presence of `result_type`, `argument_type`, `first_argument_type`,
-or `second_argument_type` in a standard library class may fail to
-compile. A valid C++17 program that calls `not1` or `not2`, or uses the
-class templates `unary_negate` or `binary_negate`, may fail to compile.
+**Change:** Remove support for adaptable function API. **Rationale:**
+The deprecated support relied on a limited convention that could not be
+extended to support the general case or new language features. It has
+been superseded by direct language support with `decltype`, and by the
+`std::bind` and `std::not_fn` function templates. **Effect on original
+feature:** A valid C++17 program that relies on the presence of
+`result_type`, `argument_type`, `first_argument_type`, or
+`second_argument_type` in a standard library class may fail to compile.
+A valid C++17 program that calls `not1` or `not2`, or uses the class
+templates `unary_negate` or `binary_negate`, may fail to compile.
 
-Remove redundant members from `std::allocator`. `std::allocator` was
-overspecified, encouraging direct usage in user containers rather than
-relying on `std::allocator_traits`, leading to poor containers. A valid
+**Change:** Remove redundant members from `std::allocator`.
+**Rationale:** `std::allocator` was overspecified, encouraging direct
+usage in user containers rather than relying on `std::allocator_traits`,
+leading to poor containers. **Effect on original feature:** A valid
 C++17 program that directly makes use of the `pointer`, `const_pointer`,
 `reference`, `const_reference`, `rebind`, `address`, `construct`,
 `destroy`, or `max_size` members of `std::allocator`, or that directly
 calls `allocate` with an additional hint argument, may fail to compile.
 
-Remove `raw_storage_iterator`. The iterator encouraged use of
-potentially-throwing algorithms, but did not return the number of
-elements successfully constructed, as would be necessary to destroy
-them. A valid C++17 program that uses this iterator class may fail to
-compile.
+**Change:** Remove `raw_storage_iterator`. **Rationale:** The iterator
+encouraged use of potentially-throwing algorithms, but did not return
+the number of elements successfully constructed, as would be necessary
+to destroy them. **Effect on original feature:** A valid C++17 program
+that uses this iterator class may fail to compile.
 
-Remove temporary buffers API. The temporary buffer facility was intended
-to provide an efficient optimization for small memory requests, but
-there is little evidence this was achieved in practice, while requiring
-the user to provide their own exception-safe wrappers to guard use of
-the facility in many cases. A valid C++17 program that calls
+**Change:** Remove temporary buffers API. **Rationale:** The temporary
+buffer facility was intended to provide an efficient optimization for
+small memory requests, but there is little evidence this was achieved in
+practice, while requiring the user to provide their own exception-safe
+wrappers to guard use of the facility in many cases. **Effect on
+original feature:** A valid C++17 program that calls
 `get_temporary_buffer` or `return_temporary_buffer` may fail to compile.
 
-Remove `shared_ptr::unique`. The result of a call to this member
-function is not reliable in the presence of multiple threads and weak
-pointers. The member function `use_count` is similarly unreliable, but
-has a clearer contract in such cases, and remains available for
-well-defined use in single-threaded cases. A valid C++17 program that
-calls `unique` on a `shared_ptr` object may fail to compile.
+**Change:** Remove `shared_ptr::unique`. **Rationale:** The result of a
+call to this member function is not reliable in the presence of multiple
+threads and weak pointers. The member function `use_count` is similarly
+unreliable, but has a clearer contract in such cases, and remains
+available for well-defined use in single-threaded cases. **Effect on
+original feature:** A valid C++17 program that calls `unique` on a
+`shared_ptr` object may fail to compile.
 
-Remove deprecated type traits. The traits had unreliable or awkward
-interfaces. The `is_literal_type` trait provided no way to detect which
-subset of constructors and member functions of a type were declared
-`constexpr`. The `result_of` trait had a surprising syntax that did not
-directly support function types. It has been superseded by the
-`invoke_result` trait. A valid C++17 program that relies on the
-`is_literal_type` or `result_of` type traits, on the `is_literal_type_v`
-variable template, or on the `result_of_t` alias template may fail to
-compile.
+**Change:** Remove deprecated type traits. **Rationale:** The traits had
+unreliable or awkward interfaces. The `is_literal_type` trait provided
+no way to detect which subset of constructors and member functions of a
+type were declared `constexpr`. The `result_of` trait had a surprising
+syntax that did not directly support function types. It has been
+superseded by the `invoke_result` trait. **Effect on original feature:**
+A valid C++17 program that relies on the `is_literal_type` or
+`result_of` type traits, on the `is_literal_type_v` variable template,
+or on the `result_of_t` alias template may fail to compile.
 
 ## C++ and ISO C++14 <a id="diff.cpp14">[[diff.cpp14]]</a>
 
 ### General <a id="diff.cpp14.general">[[diff.cpp14.general]]</a>
 
 Subclause [[diff.cpp14]] lists the differences between C++ and ISO C++14
-(ISO/IEC 14882:2014, *Programming Languages --- C++*), in addition to
+(ISO/IEC 14882:2014, *Programming Languages — C++*), in addition to
 those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp14.lex">[[diff.cpp14.lex]]</a>
 
-Removal of trigraph support as a required feature. Prevents accidental
-uses of trigraphs in non-raw string literals and comments. Valid C++14
-code that uses trigraphs may not be valid or may have different
-semantics in this revision of C++. Implementations may choose to
-translate trigraphs as specified in C++14 if they appear outside of a
-raw string literal, as part of the *implementation-defined* mapping from
-input source file characters to the translation character set.
+**Change:** Removal of trigraph support as a required feature.
+**Rationale:** Prevents accidental uses of trigraphs in non-raw string
+literals and comments. **Effect on original feature:** Valid C++14 code
+that uses trigraphs may not be valid or may have different semantics in
+this revision of C++. Implementations may choose to translate trigraphs
+as specified in C++14 if they appear outside of a raw string literal, as
+part of the *implementation-defined* mapping from input source file
+characters to the translation character set.
 
-*pp-number* can contain `p` *sign* and `P` *sign*. Necessary to enable
-*hexadecimal-floating-point-literal*s. Valid C++14 code may fail to
-compile or produce different results in this revision of C++.
-Specifically, character sequences like `0p+0` and `0e1_p+0` are three
-separate tokens each in C++14, but one single token in this revision of
-C++. For example:
+**Change:** *pp-number* can contain `p` *sign* and `P` *sign*.
+**Rationale:** Necessary to enable
+*hexadecimal-floating-point-literal*s. **Effect on original feature:**
+Valid C++14 code may fail to compile or produce different results in
+this revision of C++. Specifically, character sequences like `0p+0` and
+`0e1_p+0` are three separate tokens each in C++14, but one single token
+in this revision of C++. For example:
 
 ``` cpp
 #define F(a) b ## a
-int b0p = F(0p+0);  // ill-formed; equivalent to ``int b0p = b0p + 0;'' in C++14
+int b0p = F(0p+0);  // ill-formed; equivalent to ``int b0p = b0p + 0;'' in C++14{}
 ```
 
 ###  [[expr]]: expressions <a id="diff.cpp14.expr">[[diff.cpp14.expr]]</a>
 
-Remove increment operator with `bool` operand. Obsolete feature with
-occasionally surprising semantics. A valid C++14 expression utilizing
-the increment operator on a `bool` lvalue is ill-formed in this revision
-of C++.
+**Change:** Remove increment operator with `bool` operand.
+**Rationale:** Obsolete feature with occasionally surprising semantics.
+**Effect on original feature:** A valid C++14 expression utilizing the
+increment operator on a `bool` lvalue is ill-formed in this revision of
+C++.
 
-Dynamic allocation mechanism for over-aligned types. Simplify use of
-over-aligned types. In C++14 code that uses a *new-expression* to
-allocate an object with an over-aligned class type, where that class has
-no allocation functions of its own, `::operator new(std::size_t)` is
-used to allocate the memory. In this revision of C++,
+**Change:** Dynamic allocation mechanism for over-aligned types.
+**Rationale:** Simplify use of over-aligned types. **Effect on original
+feature:** In C++14 code that uses a *new-expression* to allocate an
+object with an over-aligned class type, where that class has no
+allocation functions of its own, `::operator new(std::size_t)` is used
+to allocate the memory. In this revision of C++,
 `::operator new(std::size_t, std::align_val_t)` is used instead.
 
 ###  [[dcl.dcl]]: declarations <a id="diff.cpp14.dcl.dcl">[[diff.cpp14.dcl.dcl]]</a>
 
-Removal of `register` *storage-class-specifier*. Enable repurposing of
-deprecated keyword in future revisions of C++. A valid C++14 declaration
-utilizing the `register` *storage-class-specifier* is ill-formed in this
-revision of C++. The specifier can simply be removed to retain the
-original meaning.
+**Change:** Removal of `register` *storage-class-specifier*.
+**Rationale:** Enable repurposing of deprecated keyword in future
+revisions of C++. **Effect on original feature:** A valid C++14
+declaration utilizing the `register` *storage-class-specifier* is
+ill-formed in this revision of C++. The specifier can simply be removed
+to retain the original meaning.
 
-`auto` deduction from *braced-init-list*. More intuitive deduction
-behavior. Valid C++14 code may fail to compile or may change meaning in
-this revision of C++. For example:
+**Change:** `auto` deduction from *braced-init-list*. **Rationale:**
+More intuitive deduction behavior. **Effect on original feature:** Valid
+C++14 code may fail to compile or may change meaning in this revision of
+C++. For example:
 
 ``` cpp
 auto x1{1};         // was std::initializer_list<int>, now int
 auto x2{1, 2};      // was std::initializer_list<int>, now ill-formed
 ```
 
-Make exception specifications be part of the type system. Improve
-type-safety. Valid C++14 code may fail to compile or change meaning in
-this revision of C++. For example:
+**Change:** Make exception specifications be part of the type system.
+**Rationale:** Improve type-safety. **Effect on original feature:**
+Valid C++14 code may fail to compile or change meaning in this revision
+of C++. For example:
 
 ``` cpp
 void g1() noexcept;
@@ -846,8 +895,9 @@ template<class T> int f(T *, T *);
 int x = f(g1, g2);              // ill-formed; previously well-formed
 ```
 
-Definition of an aggregate is extended to apply to user-defined types
-with base classes. To increase convenience of aggregate initialization.
+**Change:** Definition of an aggregate is extended to apply to
+user-defined types with base classes. **Rationale:** To increase
+convenience of aggregate initialization. **Effect on original feature:**
 Valid C++14 code may fail to compile or produce different results in
 this revision of C++; initialization from an empty initializer list will
 perform aggregate initialization instead of invoking a default
@@ -862,19 +912,20 @@ private:
 };
 struct derived : base {};
 
-derived d1{};       // error; the code was well-formed in C++14
+derived d1{};       // error; the code was well-formed in C++14{}
 derived d2;         // still OK
 ```
 
 ###  [[class]]: classes <a id="diff.cpp14.class">[[diff.cpp14.class]]</a>
 
-Inheriting a constructor no longer injects a constructor into the
-derived class. Better interaction with other language features. Valid
-C++14 code that uses inheriting constructors may not be valid or may
-have different semantics. A *using-declaration* that names a constructor
-now makes the corresponding base class constructors visible to
-initializations of the derived class rather than declaring additional
-derived class constructors. For example:
+**Change:** Inheriting a constructor no longer injects a constructor
+into the derived class. **Rationale:** Better interaction with other
+language features. **Effect on original feature:** Valid C++14 code that
+uses inheriting constructors may not be valid or may have different
+semantics. A *using-declaration* that names a constructor now makes the
+corresponding base class constructors visible to initializations of the
+derived class rather than declaring additional derived class
+constructors. For example:
 
 ``` cpp
 struct A {
@@ -892,10 +943,11 @@ B b(42L);           // now calls B(int), used to call B<long>(long),
 
 ###  [[temp]]: templates <a id="diff.cpp14.temp">[[diff.cpp14.temp]]</a>
 
-Allowance to deduce from the type of a non-type template argument. In
-combination with the ability to declare non-type template arguments with
-placeholder types, allows partial specializations to decompose from the
-type deduced for the non-type template argument. Valid C++14 code may
+**Change:** Allowance to deduce from the type of a non-type template
+argument. **Rationale:** In combination with the ability to declare
+non-type template arguments with placeholder types, allows partial
+specializations to decompose from the type deduced for the non-type
+template argument. **Effect on original feature:** Valid C++14 code may
 fail to compile or produce different results in this revision of C++.
 For example:
 
@@ -910,45 +962,50 @@ void bar(A<0> *p) {
 
 ###  [[except]]: exception handling <a id="diff.cpp14.except">[[diff.cpp14.except]]</a>
 
-Remove dynamic exception specifications. Dynamic exception
-specifications were a deprecated feature that was complex and brittle in
-use. They interacted badly with the type system, which became a more
-significant issue in this revision of C++ where (non-dynamic) exception
-specifications are part of the function type. A valid C++14 function
-declaration, member function declaration, function pointer declaration,
-or function reference declaration, if it has a potentially throwing
-dynamic exception specification, is rejected as ill-formed in this
-revision of C++. Violating a non-throwing dynamic exception
-specification calls `terminate` rather than `unexpected`, and it is
-unspecified whether stack unwinding is performed prior to such a call.
+**Change:** Remove dynamic exception specifications. **Rationale:**
+Dynamic exception specifications were a deprecated feature that was
+complex and brittle in use. They interacted badly with the type system,
+which became a more significant issue in this revision of C++ where
+(non-dynamic) exception specifications are part of the function type.
+**Effect on original feature:** A valid C++14 function declaration,
+member function declaration, function pointer declaration, or function
+reference declaration, if it has a potentially throwing dynamic
+exception specification, is rejected as ill-formed in this revision of
+C++. Violating a non-throwing dynamic exception specification calls
+`terminate` rather than `unexpected`, and it is unspecified whether
+stack unwinding is performed prior to such a call.
 
 ###  [[library]]: library introduction <a id="diff.cpp14.library">[[diff.cpp14.library]]</a>
 
-New headers. New functionality. The following C++ headers are new:
-`<any>`, `<charconv>`, `<execution>`, `<filesystem>`,
-`<memory_resource>`, `<optional>`,  
+**Change:** New headers. **Rationale:** New functionality. **Effect on
+original feature:** The following C++ headers are new: `<any>`,
+`<charconv>`, `<execution>`, `<filesystem>`, `<memory_resource>`,
+`<optional>`,  
 `<string_view>`, and `<variant>`. Valid C++14 code that `#include`s
 headers with these names may be invalid in this revision of C++.
 
-New reserved namespaces. Reserve namespaces for future revisions of the
-standard library that might otherwise be incompatible with existing
-programs. The global namespaces `std` followed by an arbitrary sequence
-of *digit*s [[lex.name]] are reserved for future standardization. Valid
-C++14 code that uses such a top-level namespace, e.g., `std2`, may be
-invalid in this revision of C++.
+**Change:** New reserved namespaces. **Rationale:** Reserve namespaces
+for future revisions of the standard library that might otherwise be
+incompatible with existing programs. **Effect on original feature:** The
+global namespaces `std` followed by an arbitrary sequence of *digit*s
+[[lex.name]] are reserved for future standardization. Valid C++14 code
+that uses such a top-level namespace, e.g., `std2`, may be invalid in
+this revision of C++.
 
 ###  [[utilities]]: general utilities library <a id="diff.cpp14.utilities">[[diff.cpp14.utilities]]</a>
 
-Constructors taking allocators removed. No implementation consensus.
-Valid C++14 code may fail to compile or may change meaning in this
-revision of C++. Specifically, constructing a `std::function` with an
-allocator is ill-formed and uses-allocator construction will not pass an
-allocator to `std::function` constructors in this revision of C++.
+**Change:** Constructors taking allocators removed. **Rationale:** No
+implementation consensus. **Effect on original feature:** Valid C++14
+code may fail to compile or may change meaning in this revision of C++.
+Specifically, constructing a `std::function` with an allocator is
+ill-formed and uses-allocator construction will not pass an allocator to
+`std::function` constructors in this revision of C++.
 
-Different constraint on conversions from `unique_ptr`. Adding array
-support to `shared_ptr`, via the syntax `shared_ptr<T[]>` and
-`shared_ptr<T[N]>`. Valid C++14 code may fail to compile or may change
-meaning in this revision of C++. For example:
+**Change:** Different constraint on conversions from `unique_ptr`.
+**Rationale:** Adding array support to `shared_ptr`, via the syntax
+`shared_ptr<T[]>` and `shared_ptr<T[N]>`. **Effect on original
+feature:** Valid C++14 code may fail to compile or may change meaning in
+this revision of C++. For example:
 
 ``` cpp
 #include <memory>
@@ -958,12 +1015,13 @@ std::shared_ptr<int> ptr(std::move(arr));   // error: int(*)[] is not compatible
 
 ###  [[strings]]: strings library <a id="diff.cpp14.string">[[diff.cpp14.string]]</a>
 
-Non-const `.data()` member added. The lack of a non-const `.data()`
-differed from the similar member of `std::vector`. This change
-regularizes behavior. Overloaded functions which have differing code
-paths for `char*` and `const char*` arguments will execute differently
-when called with a non-const string’s `.data()` member in this revision
-of C++. For example:
+**Change:** Non-const `.data()` member added. **Rationale:** The lack of
+a non-const `.data()` differed from the similar member of `std::vector`.
+This change regularizes behavior. **Effect on original feature:**
+Overloaded functions which have differing code paths for `char*` and
+`const char*` arguments will execute differently when called with a
+non-const string’s `.data()` member in this revision of C++. For
+example:
 
 ``` cpp
 int f(char *) = delete;
@@ -974,11 +1032,11 @@ int x = f(s.data());            // ill-formed; previously well-formed
 
 ###  [[containers]]: containers library <a id="diff.cpp14.containers">[[diff.cpp14.containers]]</a>
 
-Requirements change: Increase portability, clarification of associative
-container requirements. Valid C++14 code that attempts to use
-associative containers having a comparison object with non-const
-function call operator may fail to compile in this revision of C++. For
-example:
+**Change:** Requirements change: **Rationale:** Increase portability,
+clarification of associative container requirements. **Effect on
+original feature:** Valid C++14 code that attempts to use associative
+containers having a comparison object with non-const function call
+operator may fail to compile in this revision of C++. For example:
 
 ``` cpp
 #include <set>
@@ -999,15 +1057,17 @@ int main() {
 
 ###  [[depr]]: compatibility features <a id="diff.cpp14.depr">[[diff.cpp14.depr]]</a>
 
-The class templates `auto_ptr`, `unary_function`, and `binary_function`,
-the function templates `random_shuffle`, and the function templates (and
-their return types) `ptr_fun`, `mem_fun`, `mem_fun_ref`, `bind1st`, and
-`bind2nd` are not defined. Superseded by new features. Valid C++14 code
-that uses these class templates and function templates may fail to
+**Change:** The class templates `auto_ptr`, `unary_function`, and
+`binary_function`, the function templates `random_shuffle`, and the
+function templates (and their return types) `ptr_fun`, `mem_fun`,
+`mem_fun_ref`, `bind1st`, and `bind2nd` are not defined. **Rationale:**
+Superseded by new features. **Effect on original feature:** Valid C++14
+code that uses these class templates and function templates may fail to
 compile in this revision of C++.
 
-Remove old iostreams members \[depr.ios.members\]. Redundant feature for
-compatibility with pre-standard code has served its time. A valid C++14
+**Change:** Remove old iostreams members \[depr.ios.members\].
+**Rationale:** Redundant feature for compatibility with pre-standard
+code has served its time. **Effect on original feature:** A valid C++14
 program using these identifiers may be ill-formed in this revision of
 C++.
 
@@ -1016,30 +1076,32 @@ C++.
 ### General <a id="diff.cpp11.general">[[diff.cpp11.general]]</a>
 
 Subclause [[diff.cpp11]] lists the differences between C++ and ISO C++11
-(ISO/IEC 14882:2011, *Programming Languages --- C++*), in addition to
+(ISO/IEC 14882:2011, *Programming Languages — C++*), in addition to
 those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp11.lex">[[diff.cpp11.lex]]</a>
 
-*pp-number* can contain one or more single quotes. Necessary to enable
-single quotes as digit separators. Valid C++11 code may fail to compile
-or may change meaning in this revision of C++. For example, the
-following code is valid both in C++11 and in this revision of C++, but
-the macro invocation produces different outcomes because the single
-quotes delimit a *character-literal* in C++11, whereas they are digit
-separators in this revision of C++. For example:
+**Change:** *pp-number* can contain one or more single quotes.
+**Rationale:** Necessary to enable single quotes as digit separators.
+**Effect on original feature:** Valid C++11 code may fail to compile or
+may change meaning in this revision of C++. For example, the following
+code is valid both in C++11 and in this revision of C++, but the macro
+invocation produces different outcomes because the single quotes delimit
+a *character-literal* in C++11, whereas they are digit separators in
+this revision of C++. For example:
 
 ``` cpp
 #define M(x, ...) __VA_ARGS__
 int x[2] = { M(1'2,3'4, 5) };
-// int x[2] = { 5 \ \ \ \ \ } --- C++11
-// int x[2] = { 3'4, 5 } --- this revision of \Cpp{}
+// int x[2] = { 5 \ \ \ \ \ } --- C++11{}
+// int x[2] = { 3'4, 5 } --- this revision of C++{}
 ```
 
 ###  [[basic]]: basics <a id="diff.cpp11.basic">[[diff.cpp11.basic]]</a>
 
-New usual (non-placement) deallocator. Required for sized deallocation.
-Valid C++11 code can declare a global placement allocation function and
+**Change:** New usual (non-placement) deallocator. **Rationale:**
+Required for sized deallocation. **Effect on original feature:** Valid
+C++11 code can declare a global placement allocation function and
 deallocation function as follows:
 
 ``` cpp
@@ -1055,14 +1117,15 @@ class member allocation functions and deallocation functions
 
 ###  [[expr]]: expressions <a id="diff.cpp11.expr">[[diff.cpp11.expr]]</a>
 
-A conditional expression with a throw expression as its second or third
-operand keeps the type and value category of the other operand. Formerly
-mandated conversions (lvalue-to-rvalue [[conv.lval]], array-to-pointer
-[[conv.array]], and function-to-pointer [[conv.func]] standard
-conversions), especially the creation of the temporary due to
-lvalue-to-rvalue conversion, were considered gratuitous and surprising.
-Valid C++11 code that relies on the conversions may behave differently
-in this revision of C++. For example:
+**Change:** A conditional expression with a throw expression as its
+second or third operand keeps the type and value category of the other
+operand. **Rationale:** Formerly mandated conversions (lvalue-to-rvalue
+[[conv.lval]], array-to-pointer [[conv.array]], and function-to-pointer
+[[conv.func]] standard conversions), especially the creation of the
+temporary due to lvalue-to-rvalue conversion, were considered gratuitous
+and surprising. **Effect on original feature:** Valid C++11 code that
+relies on the conversions may behave differently in this revision of
+C++. For example:
 
 ``` cpp
 struct S {
@@ -1088,10 +1151,11 @@ of C++, it yields `sizeof(const char[1])`.
 
 ###  [[dcl.dcl]]: declarations <a id="diff.cpp11.dcl.dcl">[[diff.cpp11.dcl.dcl]]</a>
 
-`constexpr` non-static member functions are not implicitly `const`
-member functions. Necessary to allow `constexpr` member functions to
-mutate the object. Valid C++11 code may fail to compile in this revision
-of C++. For example:
+**Change:** `constexpr` non-static member functions are not implicitly
+`const` member functions. **Rationale:** Necessary to allow `constexpr`
+member functions to mutate the object. **Effect on original feature:**
+Valid C++11 code may fail to compile in this revision of C++. For
+example:
 
 ``` cpp
 struct S {
@@ -1103,13 +1167,14 @@ struct S {
 This code is valid in C++11 but invalid in this revision of C++ because
 it declares the same member function twice with different return types.
 
-Classes with default member initializers can be aggregates. Necessary to
-allow default member initializers to be used by aggregate
-initialization. Valid C++11 code may fail to compile or may change
-meaning in this revision of C++. For example:
+**Change:** Classes with default member initializers can be aggregates.
+**Rationale:** Necessary to allow default member initializers to be used
+by aggregate initialization. **Effect on original feature:** Valid C++11
+code may fail to compile or may change meaning in this revision of C++.
+For example:
 
 ``` cpp
-struct S {          // Aggregate in C++14 onwards.
+struct S {          // Aggregate in C++14{} onwards.
   int m = 1;
 };
 struct X {
@@ -1117,46 +1182,50 @@ struct X {
   operator S();
 };
 X a{};
-S b{a};             // uses copy constructor in C++11,
-                    // performs aggregate initialization in this revision of \Cpp{}
+S b{a};             // uses copy constructor in C++11{},
+                    // performs aggregate initialization in this revision of C++{}
 ```
 
 ###  [[library]]: library introduction <a id="diff.cpp11.library">[[diff.cpp11.library]]</a>
 
-New header. New functionality. The C++ header `<shared_mutex>` is new.
-Valid C++11 code that `#include`s a header with that name may be invalid
-in this revision of C++.
+**Change:** New header. **Rationale:** New functionality. **Effect on
+original feature:** The C++ header `<shared_mutex>` is new. Valid C++11
+code that `#include`s a header with that name may be invalid in this
+revision of C++.
 
 ###  [[input.output]]: input/output library <a id="diff.cpp11.input.output">[[diff.cpp11.input.output]]</a>
 
-`gets` is not defined. Use of `gets` is considered dangerous. Valid
-C++11 code that uses the `gets` function may fail to compile in this
-revision of C++.
+**Change:** `gets` is not defined. **Rationale:** Use of `gets` is
+considered dangerous. **Effect on original feature:** Valid C++11 code
+that uses the `gets` function may fail to compile in this revision of
+C++.
 
 ## C++ and ISO C++03 <a id="diff.cpp03">[[diff.cpp03]]</a>
 
 ### General <a id="diff.cpp03.general">[[diff.cpp03.general]]</a>
 
 Subclause [[diff.cpp03]] lists the differences between C++ and ISO C++03
-(ISO/IEC 14882:2003, *Programming Languages --- C++*), in addition to
+(ISO/IEC 14882:2003, *Programming Languages — C++*), in addition to
 those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.cpp03.lex">[[diff.cpp03.lex]]</a>
 
-New kinds of *string-literal*s. Required for new features. Valid C++03
-code may fail to compile or produce different results in this revision
-of C++. Specifically, macros named `R`, `u8`, `u8R`, `u`, `uR`, `U`,
-`UR`, or `LR` will not be expanded when adjacent to a *string-literal*
-but will be interpreted as part of the *string-literal*. For example:
+**Change:** New kinds of *string-literal*s. **Rationale:** Required for
+new features. **Effect on original feature:** Valid C++03 code may fail
+to compile or produce different results in this revision of C++.
+Specifically, macros named `R`, `u8`, `u8R`, `u`, `uR`, `U`, `UR`, or
+`LR` will not be expanded when adjacent to a *string-literal* but will
+be interpreted as part of the *string-literal*. For example:
 
 ``` cpp
 #define u8 "abc"
 const char* s = u8"def";        // Previously "abcdef", now "def"
 ```
 
-User-defined literal string support. Required for new features. Valid
-C++03 code may fail to compile or produce different results in this
-revision of C++. For example:
+**Change:** User-defined literal string support. **Rationale:** Required
+for new features. **Effect on original feature:** Valid C++03 code may
+fail to compile or produce different results in this revision of C++.
+For example:
 
 ``` cpp
 #define _x "there"
@@ -1168,20 +1237,23 @@ tokens and the macro `_x` would have been expanded. In this revision of
 C++, \#1 consists of a single preprocessing token, so the macro is not
 expanded.
 
-New keywords. Required for new features. Added to [[lex.key]], the
-following identifiers are new keywords: `alignas`, `alignof`,
-`char16_t`, `char32_t`, `constexpr`, `decltype`, `noexcept`, `nullptr`,
+**Change:** New keywords. **Rationale:** Required for new features.
+**Effect on original feature:** Added to [[lex.key]], the following
+identifiers are new keywords: `alignas`, `alignof`, `char16_t`,
+`char32_t`, `constexpr`, `decltype`, `noexcept`, `nullptr`,
 `static_assert`, and `thread_local`. Valid C++03 code using these
 identifiers is invalid in this revision of C++.
 
-Type of integer literals. C99 compatibility. Certain integer literals
-larger than can be represented by `long` could change from an unsigned
-integer type to `signed long long`.
+**Change:** Type of integer literals. **Rationale:** C99 compatibility.
+**Effect on original feature:** Certain integer literals larger than can
+be represented by `long` could change from an unsigned integer type to
+`signed long long`.
 
 ###  [[expr]]: expressions <a id="diff.cpp03.expr">[[diff.cpp03.expr]]</a>
 
-Only literals are integer null pointer constants. Removing surprising
-interactions with templates and constant expressions. Valid C++03 code
+**Change:** Only literals are integer null pointer constants.
+**Rationale:** Removing surprising interactions with templates and
+constant expressions. **Effect on original feature:** Valid C++03 code
 may fail to compile or produce different results in this revision of
 C++. For example:
 
@@ -1193,14 +1265,16 @@ template<int N> void g() {
 }
 ```
 
-Specify rounding for results of integer `/` and `%`. Increase
-portability, C99 compatibility. Valid C++03 code that uses integer
-division rounds the result toward 0 or toward negative infinity, whereas
-this revision of C++ always rounds the result toward 0.
+**Change:** Specify rounding for results of integer `/` and `%`.
+**Rationale:** Increase portability, C99 compatibility. **Effect on
+original feature:** Valid C++03 code that uses integer division rounds
+the result toward 0 or toward negative infinity, whereas this revision
+of C++ always rounds the result toward 0.
 
-`&&` is valid in a *type-name*. Required for new features. Valid C++03
-code may fail to compile or produce different results in this revision
-of C++. For example:
+**Change:** `&&` is valid in a *type-name*. **Rationale:** Required for
+new features. **Effect on original feature:** Valid C++03 code may fail
+to compile or produce different results in this revision of C++. For
+example:
 
 ``` cpp
 bool b1 = new int && false;             // previously false, now ill-formed
@@ -1210,14 +1284,15 @@ bool b2 = &S::operator int && false;    // previously false, now ill-formed
 
 ###  [[dcl.dcl]]: declarations <a id="diff.cpp03.dcl.dcl">[[diff.cpp03.dcl.dcl]]</a>
 
-Remove `auto` as a storage class specifier. New feature. Valid C++03
-code that uses the keyword `auto` as a storage class specifier may be
-invalid in this revision of C++. In this revision of C++, `auto`
-indicates that the type of a variable is to be deduced from its
-initializer expression.
+**Change:** Remove `auto` as a storage class specifier. **Rationale:**
+New feature. **Effect on original feature:** Valid C++03 code that uses
+the keyword `auto` as a storage class specifier may be invalid in this
+revision of C++. In this revision of C++, `auto` indicates that the type
+of a variable is to be deduced from its initializer expression.
 
-Narrowing restrictions in aggregate initializers. Catches bugs. Valid
-C++03 code may fail to compile in this revision of C++. For example:
+**Change:** Narrowing restrictions in aggregate initializers.
+**Rationale:** Catches bugs. **Effect on original feature:** Valid C++03
+code may fail to compile in this revision of C++. For example:
 
 ``` cpp
 int x[] = { 2.0 };
@@ -1228,30 +1303,34 @@ This code is valid in C++03 but invalid in this revision of C++ because
 
 ###  [[class]]: classes <a id="diff.cpp03.class">[[diff.cpp03.class]]</a>
 
-Implicitly-declared special member functions are defined as deleted when
-the implicit definition would have been ill-formed. Improves template
-argument deduction failure. A valid C++03 program that uses one of these
-special member functions in a context where the definition is not
-required (e.g., in an expression that is not potentially evaluated)
-becomes ill-formed.
+**Change:** Implicitly-declared special member functions are defined as
+deleted when the implicit definition would have been ill-formed.
+**Rationale:** Improves template argument deduction failure. **Effect on
+original feature:** A valid C++03 program that uses one of these special
+member functions in a context where the definition is not required
+(e.g., in an expression that is not potentially evaluated) becomes
+ill-formed.
 
-User-declared destructors have an implicit exception specification.
-Clarification of destructor requirements. Valid C++03 code may execute
-differently in this revision of C++. In particular, destructors that
-throw exceptions will call `std::terminate` (without calling
+**Change:** User-declared destructors have an implicit exception
+specification. **Rationale:** Clarification of destructor requirements.
+**Effect on original feature:** Valid C++03 code may execute differently
+in this revision of C++. In particular, destructors that throw
+exceptions will call `std::terminate` (without calling
 `std::unexpected`) if their exception specification is non-throwing.
 
 ###  [[temp]]: templates <a id="diff.cpp03.temp">[[diff.cpp03.temp]]</a>
 
-Repurpose `export` for modules
-[[module]], [[cpp.module]], [[cpp.import]]. No implementation consensus
-for the C++03 meaning of `export`. A valid C++03 program containing
-`export` is ill-formed in this revision of C++.
+**Change:** Repurpose `export` for modules
+[[module]], [[cpp.module]], [[cpp.import]]. **Rationale:** No
+implementation consensus for the C++03 meaning of `export`. **Effect on
+original feature:** A valid C++03 program containing `export` is
+ill-formed in this revision of C++.
 
-Remove whitespace requirement for nested closing template right angle
-brackets. Considered a persistent but minor annoyance. Template aliases
-representing non-class types would exacerbate whitespace issues. Change
-to semantics of well-defined expression. A valid C++03 expression
+**Change:** Remove whitespace requirement for nested closing template
+right angle brackets. **Rationale:** Considered a persistent but minor
+annoyance. Template aliases representing non-class types would
+exacerbate whitespace issues. **Effect on original feature:** Change to
+semantics of well-defined expression. A valid C++03 expression
 containing a right angle bracket (“`>`”) followed immediately by another
 right angle bracket may now be treated as closing two templates. For
 example:
@@ -1265,48 +1344,55 @@ X< Y< 1 >> 2 > > x;
 This code is valid in C++03 because “`>>`” is a right-shift operator,
 but invalid in this revision of C++ because “`>>`” closes two templates.
 
-Allow dependent calls of functions with internal linkage. Overly
-constrained, simplify overload resolution rules. A valid C++03 program
-can get a different result in this revision of C++.
+**Change:** Allow dependent calls of functions with internal linkage.
+**Rationale:** Overly constrained, simplify overload resolution rules.
+**Effect on original feature:** A valid C++03 program can get a
+different result in this revision of C++.
 
 ###  [[library]]: library introduction <a id="diff.cpp03.library">[[diff.cpp03.library]]</a>
 
-**Affected:** [[library]] – [[thread]] New reserved identifiers.
-Required by new features. Valid C++03 code that uses any identifiers
-added to the C++ standard library by later revisions of C++ may fail to
-compile or produce different results in this revision of C++. A
-comprehensive list of identifiers used by the C++ standard library can
-be found in the Index of Library Names in this document.
+**Affected:** [[library]] – [[thread]] **Change:** New reserved
+identifiers. **Rationale:** Required by new features. **Effect on
+original feature:** Valid C++03 code that uses any identifiers added to
+the C++ standard library by later revisions of C++ may fail to compile
+or produce different results in this revision of C++. A comprehensive
+list of identifiers used by the C++ standard library can be found in the
+Index of Library Names in this document.
 
-New headers. New functionality. The following C++ headers are new:
-`<array>`, `<atomic>`, `<chrono>`, , `<condition_variable>`,
-`<forward_list>`, `<future>`, `<initializer_list>`, `<mutex>`,
-`<random>`, `<ratio>`, `<regex>`, `<scoped_allocator>`,
-`<system_error>`, `<thread>`, `<tuple>`, `<type\-index>`,
-`<type_traits>`, `<unordered_map>`, and `<unordered_set>`. In addition
-the following C compatibility headers are new: `<cfenv>`, `<cinttypes>`,
-`<cstdint>`, and `<cuchar>`. Valid C++03 code that `#include`s headers
-with these names may be invalid in this revision of C++.
+**Change:** New headers. **Rationale:** New functionality. **Effect on
+original feature:** The following C++ headers are new: `<array>`,
+`<atomic>`, `<chrono>`, , `<condition_variable>`, `<forward_list>`,
+`<future>`, `<initializer_list>`, `<mutex>`, `<random>`, `<ratio>`,
+`<regex>`, `<scoped_allocator>`, `<system_error>`, `<thread>`,
+`<tuple>`, `<type\-index>`, `<type_traits>`, `<unordered_map>`, and
+`<unordered_set>`. In addition the following C compatibility headers are
+new: `<cfenv>`, `<cinttypes>`, `<cstdint>`, and `<cuchar>`. Valid C++03
+code that `#include`s headers with these names may be invalid in this
+revision of C++.
 
-Function `swap` moved to a different header Remove dependency on
-`<algorithm>` for `swap`. Valid C++03 code that has been compiled
+**Effect on original feature:** Function `swap` moved to a different
+header **Rationale:** Remove dependency on `<algorithm>` for `swap`.
+**Effect on original feature:** Valid C++03 code that has been compiled
 expecting swap to be in `<algorithm>` may have to instead include
 `<utility>`.
 
-New reserved namespace. New functionality. The global namespace `posix`
-is now reserved for standardization. Valid C++03 code that uses a
-top-level namespace `posix` may be invalid in this revision of C++.
+**Change:** New reserved namespace. **Rationale:** New functionality.
+**Effect on original feature:** The global namespace `posix` is now
+reserved for standardization. Valid C++03 code that uses a top-level
+namespace `posix` may be invalid in this revision of C++.
 
-Additional restrictions on macro names. Avoid hard to diagnose or
-non-portable constructs. Names of attribute identifiers may not be used
-as macro names. Valid C++03 code that defines `override`, `final`,
+**Change:** Additional restrictions on macro names. **Rationale:** Avoid
+hard to diagnose or non-portable constructs. **Effect on original
+feature:** Names of attribute identifiers may not be used as macro
+names. Valid C++03 code that defines `override`, `final`,
 `carries_dependency`, or `noreturn` as macros is invalid in this
 revision of C++.
 
 ###  [[support]]: language support library <a id="diff.cpp03.language.support">[[diff.cpp03.language.support]]</a>
 
-`operator new` may throw exceptions other than `std::bad_alloc`.
-Consistent application of `noexcept`. Valid C++03 code that assumes that
+**Change:** `operator new` may throw exceptions other than
+`std::bad_alloc`. **Rationale:** Consistent application of `noexcept`.
+**Effect on original feature:** Valid C++03 code that assumes that
 global `operator new` only throws `std::bad_alloc` may execute
 differently in this revision of C++. Valid C++03 code that replaces the
 global replaceable `operator new` is ill-formed in this revision of C++,
@@ -1315,42 +1401,47 @@ removed.
 
 ###  [[diagnostics]]: diagnostics library <a id="diff.cpp03.diagnostics">[[diff.cpp03.diagnostics]]</a>
 
-Thread-local error numbers. Support for new thread facilities. Valid but
+**Change:** Thread-local error numbers. **Rationale:** Support for new
+thread facilities. **Effect on original feature:** Valid but
 implementation-specific C++03 code that relies on `errno` being the same
 across threads may change behavior in this revision of C++.
 
 ###  [[utilities]]: general utilities library <a id="diff.cpp03.utilities">[[diff.cpp03.utilities]]</a>
 
-Standard function object types no longer derived from
-`std::unary_function` or `std::binary_function`. Superseded by new
-feature; `unary_function` and `binary_function` are no longer defined.
-Valid C++03 code that depends on function object types being derived
-from `unary_function` or `binary_function` may fail to compile in this
-revision of C++.
+**Change:** Standard function object types no longer derived from
+`std::unary_function` or `std::binary_function`. **Rationale:**
+Superseded by new feature; `unary_function` and `binary_function` are no
+longer defined. **Effect on original feature:** Valid C++03 code that
+depends on function object types being derived from `unary_function` or
+`binary_function` may fail to compile in this revision of C++.
 
 ###  [[strings]]: strings library <a id="diff.cpp03.strings">[[diff.cpp03.strings]]</a>
 
-`basic_string` requirements no longer allow reference-counted strings.
-Invalidation is subtly different with reference-counted strings. This
-change regularizes behavior. Valid C++03 code may execute differently in
-this revision of C++.
+**Change:** `basic_string` requirements no longer allow
+reference-counted strings. **Rationale:** Invalidation is subtly
+different with reference-counted strings. This change regularizes
+behavior. **Effect on original feature:** Valid C++03 code may execute
+differently in this revision of C++.
 
-Loosen `basic_string` invalidation rules. Allow small-string
-optimization. Valid C++03 code may execute differently in this revision
-of C++. Some `const` member functions, such as `data` and `c_str`, no
-longer invalidate iterators.
+**Change:** Loosen `basic_string` invalidation rules. **Rationale:**
+Allow small-string optimization. **Effect on original feature:** Valid
+C++03 code may execute differently in this revision of C++. Some `const`
+member functions, such as `data` and `c_str`, no longer invalidate
+iterators.
 
 ###  [[containers]]: containers library <a id="diff.cpp03.containers">[[diff.cpp03.containers]]</a>
 
-Complexity of `size()` member functions now constant. Lack of
-specification of complexity of `size()` resulted in divergent
-implementations with inconsistent performance characteristics. Some
-container implementations that conform to C++03 may not conform to the
-specified `size()` requirements in this revision of C++. Adjusting
-containers such as `std::list` to the stricter requirements may require
-incompatible changes.
+**Change:** Complexity of `size()` member functions now constant.
+**Rationale:** Lack of specification of complexity of `size()` resulted
+in divergent implementations with inconsistent performance
+characteristics. **Effect on original feature:** Some container
+implementations that conform to C++03 may not conform to the specified
+`size()` requirements in this revision of C++. Adjusting containers such
+as `std::list` to the stricter requirements may require incompatible
+changes.
 
-Requirements change: relaxation. Clarification. Valid C++03 code that
+**Change:** Requirements change: relaxation. **Rationale:**
+Clarification. **Effect on original feature:** Valid C++03 code that
 attempts to meet the specified container requirements may now be
 over-specified. Code that attempted to be portable across containers may
 need to be adjusted as follows:
@@ -1360,14 +1451,16 @@ need to be adjusted as follows:
 - not all containers are empty after construction (`array`);
 - not all containers have constant complexity for `swap()` (`array`).
 
-Requirements change: default constructible. Clarification of container
-requirements. Valid C++03 code that attempts to explicitly instantiate a
-container using a user-defined type with no default constructor may fail
-to compile.
+**Change:** Requirements change: default constructible. **Rationale:**
+Clarification of container requirements. **Effect on original feature:**
+Valid C++03 code that attempts to explicitly instantiate a container
+using a user-defined type with no default constructor may fail to
+compile.
 
-Signature changes: from `void` return types. Old signature threw away
-useful information that may be expensive to recalculate. The following
-member functions have changed:
+**Change:** Signature changes: from `void` return types. **Rationale:**
+Old signature threw away useful information that may be expensive to
+recalculate. **Effect on original feature:** The following member
+functions have changed:
 
 - `erase(iter)` for `set`, `multiset`, `map`, `multimap`
 - `erase(begin, end)` for `set`, `multiset`, `map`, `multimap`
@@ -1378,9 +1471,10 @@ Valid C++03 code that relies on these functions returning `void` (e.g.,
 code that creates a pointer to member function that points to one of
 these functions) will fail to compile with this revision of C++.
 
-Signature changes: from `iterator` to `const_iterator` parameters.
-Overspecification. The signatures of the following member functions
-changed from taking an `iterator` to taking a `const_iterator`:
+**Change:** Signature changes: from `iterator` to `const_iterator`
+parameters. **Rationale:** Overspecification. **Effect on original
+feature:** The signatures of the following member functions changed from
+taking an `iterator` to taking a `const_iterator`:
 
 - `insert(iter, val)` for `vector`, `deque`, `list`, `set`, `multiset`,
   `map`, `multimap`
@@ -1392,40 +1486,45 @@ changed from taking an `iterator` to taking a `const_iterator`:
 Valid C++03 code that uses these functions may fail to compile with this
 revision of C++.
 
-Signature changes: `resize`. Performance, compatibility with move
-semantics. For `vector`, `deque`, and `list` the fill value passed to
-`resize` is now passed by reference instead of by value, and an
-additional overload of `resize` has been added. Valid C++03 code that
-uses this function may fail to compile with this revision of C++.
+**Change:** Signature changes: `resize`. **Rationale:** Performance,
+compatibility with move semantics. **Effect on original feature:** For
+`vector`, `deque`, and `list` the fill value passed to `resize` is now
+passed by reference instead of by value, and an additional overload of
+`resize` has been added. Valid C++03 code that uses this function may
+fail to compile with this revision of C++.
 
 ###  [[algorithms]]: algorithms library <a id="diff.cpp03.algorithms">[[diff.cpp03.algorithms]]</a>
 
-Result state of inputs after application of some algorithms. Required by
-new feature. A valid C++03 program may detect that an object with a
-valid but unspecified state has a different valid but unspecified state
-with this revision of C++. For example, `std::remove` and
-`std::remove_if` may leave the tail of the input sequence with a
-different set of values than previously.
+**Change:** Result state of inputs after application of some algorithms.
+**Rationale:** Required by new feature. **Effect on original feature:**
+A valid C++03 program may detect that an object with a valid but
+unspecified state has a different valid but unspecified state with this
+revision of C++. For example, `std::remove` and `std::remove_if` may
+leave the tail of the input sequence with a different set of values than
+previously.
 
 ###  [[numerics]]: numerics library <a id="diff.cpp03.numerics">[[diff.cpp03.numerics]]</a>
 
-Specified representation of complex numbers. Compatibility with C99.
-Valid C++03 code that uses implementation-specific knowledge about the
-binary representation of the required template specializations of
+**Change:** Specified representation of complex numbers. **Rationale:**
+Compatibility with C99. **Effect on original feature:** Valid C++03 code
+that uses implementation-specific knowledge about the binary
+representation of the required template specializations of
 `std::complex` may not be compatible with this revision of C++.
 
 ###  [[localization]]: localization library <a id="diff.cpp03.locale">[[diff.cpp03.locale]]</a>
 
-The `num_get` facet recognizes hexadecimal floating point values.
-Required by new feature. Valid C++03 code may have different behavior in
-this revision of C++.
+**Change:** The `num_get` facet recognizes hexadecimal floating point
+values. **Rationale:** Required by new feature. **Effect on original
+feature:** Valid C++03 code may have different behavior in this revision
+of C++.
 
 ###  [[input.output]]: input/output library <a id="diff.cpp03.input.output">[[diff.cpp03.input.output]]</a>
 
-Specify use of `explicit` in existing boolean conversion functions.
-Clarify intentions, avoid workarounds. Valid C++03 code that relies on
-implicit boolean conversions will fail to compile with this revision of
-C++. Such conversions occur in the following conditions:
+**Change:** Specify use of `explicit` in existing boolean conversion
+functions. **Rationale:** Clarify intentions, avoid workarounds.
+**Effect on original feature:** Valid C++03 code that relies on implicit
+boolean conversions will fail to compile with this revision of C++. Such
+conversions occur in the following conditions:
 
 - passing a value to a function that takes an argument of type `bool`;
 - using `operator==` to compare to `false` or `true`;
@@ -1433,18 +1532,20 @@ C++. Such conversions occur in the following conditions:
 - initializing members of type `bool` via aggregate initialization;
 - initializing a `const bool&` which would bind to a temporary object.
 
-Change base class of `std::ios_base::failure`. More detailed error
-messages. `std::ios_base::failure` is no longer derived directly from
+**Change:** Change base class of `std::ios_base::failure`.
+**Rationale:** More detailed error messages. **Effect on original
+feature:** `std::ios_base::failure` is no longer derived directly from
 `std::exception`, but is now derived from `std::system_error`, which in
 turn is derived from `std::runtime_error`. Valid C++03 code that assumes
 that `std::ios_base::failure` is derived directly from `std::exception`
 may execute differently in this revision of C++.
 
-Flag types in `std::ios_base` are now bitmasks with values defined as
-constexpr static members. Required for new features. Valid C++03 code
-that relies on `std::ios_base` flag types being represented as
-`std::bitset` or as an integer type may fail to compile with this
-revision of C++. For example:
+**Change:** Flag types in `std::ios_base` are now bitmasks with values
+defined as constexpr static members. **Rationale:** Required for new
+features. **Effect on original feature:** Valid C++03 code that relies
+on `std::ios_base` flag types being represented as `std::bitset` or as
+an integer type may fail to compile with this revision of C++. For
+example:
 
 ``` cpp
 #include <iostream>
@@ -1464,17 +1565,18 @@ addition to those listed above, by the chapters of this document.
 
 ###  [[lex]]: lexical conventions <a id="diff.lex">[[diff.lex]]</a>
 
-New Keywords  
-New keywords are added to C++; see [[lex.key]]. These keywords were
-added in order to implement the new semantics of C++. Change to
-semantics of well-defined feature. Any ISO C programs that used any of
-these keywords as identifiers are not valid C++ programs. Syntactic
-transformation. Converting one specific program is easy. Converting a
-large collection of related programs takes more work. Common.
+**Change:** New Keywords  
+New keywords are added to C++; see [[lex.key]]. **Rationale:** These
+keywords were added in order to implement the new semantics of C++.
+**Effect on original feature:** Change to semantics of well-defined
+feature. Any ISO C programs that used any of these keywords as
+identifiers are not valid C++ programs. Syntactic transformation.
+Converting one specific program is easy. Converting a large collection
+of related programs takes more work. Common.
 
-Type of *character-literal* is changed from `int` to `char`. This is
-needed for improved overloaded function argument type matching. For
-example:
+**Change:** Type of *character-literal* is changed from `int` to `char`.
+**Rationale:** This is needed for improved overloaded function argument
+type matching. For example:
 
 ``` cpp
 int function( int i );
@@ -1484,8 +1586,8 @@ function( 'x' );
 ```
 
 It is preferable that this call match the second version of function
-rather than the first. Change to semantics of well-defined feature. ISO
-C programs which depend on
+rather than the first. **Effect on original feature:** Change to
+semantics of well-defined feature. ISO C programs which depend on
 
 ``` cpp
 sizeof('x') == sizeof(int)
@@ -1494,12 +1596,13 @@ sizeof('x') == sizeof(int)
 will not work the same as C++ programs. Simple. Programs which depend
 upon `sizeof('x')` are probably rare.
 
-Concatenated *string-literal*s can no longer have conflicting
-*encoding-prefix*es. Removal of non-portable feature. Concatenation of
+**Change:** Concatenated *string-literal*s can no longer have
+conflicting *encoding-prefix*es. **Rationale:** Removal of non-portable
+feature. **Effect on original feature:** Concatenation of
 *string-literal*s with different *encoding-prefix*es is now ill-formed.
 Syntactic transformation. Seldom.
 
-String literals made const.  
+**Change:** String literals made const.  
 The type of a *string-literal* is changed from “array of `char`” to
 “array of `const char`”. The type of a UTF-8 string literal is changed
 from “array of `char`” to “array of `const char8_t`”. The type of a
@@ -1507,13 +1610,14 @@ UTF-16 string literal is changed from “array of *some-integer-type*” to
 “array of `const char16_t`”. The type of a UTF-32 string literal is
 changed from “array of *some-integer-type*” to “array of
 `const char32_t`”. The type of a wide string literal is changed from
-“array of `wchar_t`” to “array of `const wchar_t`”. This avoids calling
-an inappropriate overloaded function, which might expect to be able to
-modify its argument. Change to semantics of well-defined feature.
-Syntactic transformation. The fix is to add a cast:
+“array of `wchar_t`” to “array of `const wchar_t`”. **Rationale:** This
+avoids calling an inappropriate overloaded function, which might expect
+to be able to modify its argument. **Effect on original feature:**
+Change to semantics of well-defined feature. Syntactic transformation.
+The fix is to add a cast:
 
 ``` cpp
-char* p = "abc";                // valid in C, invalid in \Cpp{}
+char* p = "abc";                // valid in C, invalid in C++{}
 void f(char*) {
   char* p = (char*)"abc";       // OK, cast added
   f(p);
@@ -1526,7 +1630,7 @@ as potentially modifiable memory are probably rare.
 
 ###  [[basic]]: basics <a id="diff.basic">[[diff.basic]]</a>
 
-C++ does not have “tentative definitions” as in C.  
+**Change:** C++ does not have “tentative definitions” as in C.  
 E.g., at file scope,
 
 ``` cpp
@@ -1546,13 +1650,14 @@ static struct X b = { 0, &a };
 static struct X a = { 1, &b };
 ```
 
-This avoids having different initialization rules for fundamental types
-and user-defined types. Deletion of semantically well-defined feature.
-Semantic transformation. In C++, the initializer for one of a set of
+**Rationale:** This avoids having different initialization rules for
+fundamental types and user-defined types. **Effect on original
+feature:** Deletion of semantically well-defined feature. Semantic
+transformation. In C++, the initializer for one of a set of
 mutually-referential file-local objects with static storage duration
 must invoke a function call to achieve the initialization. Seldom.
 
-A `struct` is a scope in C++, not in C. For example,
+**Change:** A `struct` is a scope in C++, not in C. For example,
 
 ``` cpp
 struct X {
@@ -1561,39 +1666,45 @@ struct X {
 struct Y c;
 ```
 
-is valid in C but not in C++, which would require `X::Y c;`. Class scope
-is crucial to C++, and a struct is a class. Change to semantics of
-well-defined feature. Semantic transformation. C programs use `struct`
-extremely frequently, but the change is only noticeable when `struct`,
+is valid in C but not in C++, which would require `X::Y c;`.
+**Rationale:** Class scope is crucial to C++, and a struct is a class.
+**Effect on original feature:** Change to semantics of well-defined
+feature. Semantic transformation. C programs use `struct` extremely
+frequently, but the change is only noticeable when `struct`,
 enumeration, or enumerator names are referred to outside the `struct`.
 The latter is probably rare.
 
-\[also [[dcl.type]]\] A name of file scope that is explicitly declared
-`const`, and not explicitly declared `extern`, has internal linkage,
-while in C it would have external linkage. Because const objects may be
-used as values during translation in C++, this feature urges programmers
-to provide an explicit initializer for each const object. This feature
-allows the user to put const objects in source files that are included
-in more than one translation unit. Change to semantics of well-defined
-feature. Semantic transformation. Seldom.
+\[also [[dcl.type]]\] **Change:** A name of file scope that is
+explicitly declared `const`, and not explicitly declared `extern`, has
+internal linkage, while in C it would have external linkage.
+**Rationale:** Because const objects may be used as values during
+translation in C++, this feature urges programmers to provide an
+explicit initializer for each const object. This feature allows the user
+to put const objects in source files that are included in more than one
+translation unit. **Effect on original feature:** Change to semantics of
+well-defined feature. Semantic transformation. Seldom.
 
-The `main` function cannot be called recursively and cannot have its
-address taken. The `main` function may require special actions. Deletion
-of semantically well-defined feature. Trivial: create an intermediary
+**Change:** The `main` function cannot be called recursively and cannot
+have its address taken. **Rationale:** The `main` function may require
+special actions. **Effect on original feature:** Deletion of
+semantically well-defined feature. Trivial: create an intermediary
 function such as `mymain(argc, argv)`. Seldom.
 
-C allows “compatible types” in several places, C++ does not.  
+**Change:** C allows “compatible types” in several places, C++ does
+not.  
 For example, otherwise-identical `struct` types with different tag names
 are “compatible” in C but are distinctly different types in C++.
-Stricter type checking is essential for C++. Deletion of semantically
-well-defined feature. Semantic transformation. The “typesafe linkage”
-mechanism will find many, but not all, of such problems. Those problems
-not found by typesafe linkage will continue to function properly,
-according to the “layout compatibility rules” of this document. Common.
+**Rationale:** Stricter type checking is essential for C++. **Effect on
+original feature:** Deletion of semantically well-defined feature.
+Semantic transformation. The “typesafe linkage” mechanism will find
+many, but not all, of such problems. Those problems not found by
+typesafe linkage will continue to function properly, according to the
+“layout compatibility rules” of this document. Common.
 
 ###  [[expr]]: expressions <a id="diff.expr">[[diff.expr]]</a>
 
-Converting `void*` to a pointer-to-object type requires casting.
+**Change:** Converting `void*` to a pointer-to-object type requires
+casting.
 
 ``` cpp
 char a[10];
@@ -1604,10 +1715,11 @@ void foo() {
 ```
 
 ISO C accepts this usage of pointer to `void` being assigned to a
-pointer to object type. C++ does not. C++ tries harder than C to enforce
-compile-time type safety. Deletion of semantically well-defined feature.
-Can be automated. Violations will be diagnosed by the C++ translator.
-The fix is to add a cast. For example:
+pointer to object type. C++ does not. **Rationale:** C++ tries harder
+than C to enforce compile-time type safety. **Effect on original
+feature:** Deletion of semantically well-defined feature. Can be
+automated. Violations will be diagnosed by the C++ translator. The fix
+is to add a cast. For example:
 
 ``` cpp
 char* c = (char*) b;
@@ -1617,12 +1729,14 @@ This is fairly widely used but it is good programming practice to add
 the cast when assigning pointer-to-void to pointer-to-object. Some ISO C
 translators will give a warning if the cast is not used.
 
-Decrement operator is not allowed with `bool` operand. Feature with
-surprising semantics. A valid ISO C expression utilizing the decrement
-operator on a `bool` lvalue (for instance, via the C typedef in
-`<stdbool.h>`) is ill-formed in C++.
+**Change:** Decrement operator is not allowed with `bool` operand.
+**Rationale:** Feature with surprising semantics. **Effect on original
+feature:** A valid ISO C expression utilizing the decrement operator on
+a `bool` lvalue (for instance, via the C typedef in `<stdbool.h>`) is
+ill-formed in C++.
 
-In C++, types can only be defined in declarations, not in expressions.  
+**Change:** In C++, types can only be defined in declarations, not in
+expressions.  
 In C, a `sizeof` expression or cast expression may define a new type.
 For example,
 
@@ -1630,14 +1744,16 @@ For example,
 p = (void*)(struct x {int i;} *)0;
 ```
 
-defines a new type, struct `x`. This prohibition helps to clarify the
-location of definitions in the source code. Deletion of semantically
-well-defined feature. Syntactic transformation. Seldom.
+defines a new type, struct `x`. **Rationale:** This prohibition helps to
+clarify the location of definitions in the source code. **Effect on
+original feature:** Deletion of semantically well-defined feature.
+Syntactic transformation. Seldom.
 
-The result of a conditional expression, an assignment expression, or a
-comma expression may be an lvalue. C++ is an object-oriented language,
-placing relatively more emphasis on lvalues. For example, function calls
-may yield lvalues. Change to semantics of well-defined feature. Some C
+**Change:** The result of a conditional expression, an assignment
+expression, or a comma expression may be an lvalue. **Rationale:** C++
+is an object-oriented language, placing relatively more emphasis on
+lvalues. For example, function calls may yield lvalues. **Effect on
+original feature:** Change to semantics of well-defined feature. Some C
 expressions that implicitly rely on lvalue-to-rvalue conversions will
 yield different results. For example,
 
@@ -1651,25 +1767,27 @@ casts to the appropriate rvalue. Rare.
 
 ###  [[stmt.stmt]]: statements <a id="diff.stat">[[diff.stat]]</a>
 
-It is now invalid to jump past a declaration with explicit or implicit
-initializer (except across entire block not entered). Constructors used
-in initializers may allocate resources which need to be de-allocated
-upon leaving the block. Allowing jump past initializers would require
-complicated runtime determination of allocation. Furthermore, many
-operations on such an uninitialized object have undefined behavior. With
-this simple compile-time rule, C++ assures that if an initialized
-variable is in scope, then it has assuredly been initialized. Deletion
-of semantically well-defined feature. Semantic transformation. Seldom.
+**Change:** It is now invalid to jump past a declaration with explicit
+or implicit initializer (except across entire block not entered).
+**Rationale:** Constructors used in initializers may allocate resources
+which need to be de-allocated upon leaving the block. Allowing jump past
+initializers would require complicated runtime determination of
+allocation. Furthermore, many operations on such an uninitialized object
+have undefined behavior. With this simple compile-time rule, C++ assures
+that if an initialized variable is in scope, then it has assuredly been
+initialized. **Effect on original feature:** Deletion of semantically
+well-defined feature. Semantic transformation. Seldom.
 
-It is now invalid to return (explicitly or implicitly) from a function
-which is declared to return a value without actually returning a value.
-The caller and callee may assume fairly elaborate return-value
-mechanisms for the return of class objects. If some flow paths execute a
-return without specifying any value, the implementation must embody many
-more complications. Besides, promising to return a value of a given
-type, and then not returning such a value, has always been recognized to
-be a questionable practice, tolerated only because very-old C had no
-distinction between functions with `void` and `int` return types.
+**Change:** It is now invalid to return (explicitly or implicitly) from
+a function which is declared to return a value without actually
+returning a value. **Rationale:** The caller and callee may assume
+fairly elaborate return-value mechanisms for the return of class
+objects. If some flow paths execute a return without specifying any
+value, the implementation must embody many more complications. Besides,
+promising to return a value of a given type, and then not returning such
+a value, has always been recognized to be a questionable practice,
+tolerated only because very-old C had no distinction between functions
+with `void` and `int` return types. **Effect on original feature:**
 Deletion of semantically well-defined feature. Semantic transformation.
 Add an appropriate return value to the source code, such as zero.
 Seldom. For several years, many existing C implementations have produced
@@ -1677,46 +1795,48 @@ warnings in this case.
 
 ###  [[dcl.dcl]]: declarations <a id="diff.dcl">[[diff.dcl]]</a>
 
-In C++, the `static` or `extern` specifiers can only be applied to names
-of objects or functions.  
+**Change:** In C++, the `static` or `extern` specifiers can only be
+applied to names of objects or functions.  
 Using these specifiers with type declarations is illegal in C++. In C,
 these specifiers are ignored when used on type declarations.
 
 Example:
 
 ``` cpp
-static struct S {               // valid C, invalid in \Cpp{}
+static struct S {               // valid C, invalid in C++{}
   int i;
 };
 ```
 
-Storage class specifiers don’t have any meaning when associated with a
-type. In C++, class members can be declared with the `static` storage
-class specifier. Storage class specifiers on type declarations can be
-confusing for users. Deletion of semantically well-defined feature.
-Syntactic transformation. Seldom.
+**Rationale:** Storage class specifiers don’t have any meaning when
+associated with a type. In C++, class members can be declared with the
+`static` storage class specifier. Storage class specifiers on type
+declarations can be confusing for users. **Effect on original feature:**
+Deletion of semantically well-defined feature. Syntactic transformation.
+Seldom.
 
-In C++, `register` is not a storage class specifier. The storage class
-specifier had no effect in C++. Deletion of semantically well-defined
+**Change:** In C++, `register` is not a storage class specifier.
+**Rationale:** The storage class specifier had no effect in C++.
+**Effect on original feature:** Deletion of semantically well-defined
 feature. Syntactic transformation. Common.
 
-A C++ *typedef-name* must be different from any class type name declared
-in the same scope (except if the typedef is a synonym of the class name
-with the same name). In C, a *typedef-name* and a struct tag name
-declared in the same scope can have the same name (because they have
-different name spaces).
+**Change:** A C++ *typedef-name* must be different from any class type
+name declared in the same scope (except if the typedef is a synonym of
+the class name with the same name). In C, a *typedef-name* and a struct
+tag name declared in the same scope can have the same name (because they
+have different name spaces).
 
 Example:
 
 ``` cpp
-typedef struct name1 { ... } name1;         // valid C and \Cpp{}
+typedef struct name1 { ... } name1;         // valid C and C++{}
 struct name { ... };
-typedef int name;               // valid C, invalid \Cpp{}
+typedef int name;               // valid C, invalid C++{}
 ```
 
-For ease of use, C++ doesn’t require that a type name be prefixed with
-the keywords `class`, `struct` or `union` when used in object
-declarations or type casts.
+**Rationale:** For ease of use, C++ doesn’t require that a type name be
+prefixed with the keywords `class`, `struct` or `union` when used in
+object declarations or type casts.
 
 Example:
 
@@ -1725,174 +1845,181 @@ class name { ... };
 name i;                         // i has type class name
 ```
 
-Deletion of semantically well-defined feature. Semantic transformation.
-One of the 2 types has to be renamed. Seldom.
+**Effect on original feature:** Deletion of semantically well-defined
+feature. Semantic transformation. One of the 2 types has to be renamed.
+Seldom.
 
-\[see also [[basic.link]]\] Const objects must be initialized in C++ but
-can be left uninitialized in C. A const object cannot be assigned to so
-it must be initialized to hold a useful value. Deletion of semantically
+\[see also [[basic.link]]\] **Change:** Const objects must be
+initialized in C++ but can be left uninitialized in C. **Rationale:** A
+const object cannot be assigned to so it must be initialized to hold a
+useful value. **Effect on original feature:** Deletion of semantically
 well-defined feature. Semantic transformation. Seldom.
 
-The keyword `auto` cannot be used as a storage class specifier.
+**Change:** The keyword `auto` cannot be used as a storage class
+specifier.
 
 Example:
 
 ``` cpp
 void f() {
-  auto int x;       // valid C, invalid \Cpp{}
+  auto int x;       // valid C, invalid C++{}
 }
 ```
 
-Allowing the use of `auto` to deduce the type of a variable from its
-initializer results in undesired interpretations of `auto` as a storage
-class specifier in certain contexts. Deletion of semantically
-well-defined feature. Syntactic transformation. Rare.
+**Rationale:** Allowing the use of `auto` to deduce the type of a
+variable from its initializer results in undesired interpretations of
+`auto` as a storage class specifier in certain contexts. **Effect on
+original feature:** Deletion of semantically well-defined feature.
+Syntactic transformation. Rare.
 
-In C++, a function declared with an empty parameter list takes no
-arguments. In C, an empty parameter list means that the number and type
-of the function arguments are unknown.
+**Change:** In C++, a function declared with an empty parameter list
+takes no arguments. In C, an empty parameter list means that the number
+and type of the function arguments are unknown.
 
 Example:
 
 ``` cpp
-int f();            // means   int f(void) in \Cpp{}
+int f();            // means   int f(void) in C++{}
                     // int f( unknown ) in C
 ```
 
-This is to avoid erroneous function calls (i.e., function calls with the
-wrong number or type of arguments). Change to semantics of well-defined
-feature. This feature was marked as “obsolescent” in C. Syntactic
-transformation. The function declarations using C incomplete declaration
-style must be completed to become full prototype declarations. A program
-may need to be updated further if different calls to the same
-(non-prototype) function have different numbers of arguments or if the
-type of corresponding arguments differed. Common.
+**Rationale:** This is to avoid erroneous function calls (i.e., function
+calls with the wrong number or type of arguments). **Effect on original
+feature:** Change to semantics of well-defined feature. This feature was
+marked as “obsolescent” in C. Syntactic transformation. The function
+declarations using C incomplete declaration style must be completed to
+become full prototype declarations. A program may need to be updated
+further if different calls to the same (non-prototype) function have
+different numbers of arguments or if the type of corresponding arguments
+differed. Common.
 
-\[see [[expr.sizeof]]\] In C++, types may not be defined in return or
-parameter types. In C, these type definitions are allowed.
+\[see [[expr.sizeof]]\] **Change:** In C++, types may not be defined in
+return or parameter types. In C, these type definitions are allowed.
 
 Example:
 
 ``` cpp
-void f( struct S { int a; } arg ) {}    // valid C, invalid \Cpp{}
-enum E { A, B, C } f() {}               // valid C, invalid \Cpp{}
+void f( struct S { int a; } arg ) {}    // valid C, invalid C++{}
+enum E { A, B, C } f() {}               // valid C, invalid C++{}
 ```
 
-When comparing types in different translation units, C++ relies on name
-equivalence when C relies on structural equivalence. Regarding parameter
-types: since the type defined in a parameter list would be in the scope
-of the function, the only legal calls in C++ would be from within the
-function itself. Deletion of semantically well-defined feature. Semantic
-transformation. The type definitions must be moved to file scope, or in
-header files. Seldom. This style of type definition is seen as poor
-coding style.
+**Rationale:** When comparing types in different translation units, C++
+relies on name equivalence when C relies on structural equivalence.
+Regarding parameter types: since the type defined in a parameter list
+would be in the scope of the function, the only legal calls in C++ would
+be from within the function itself. **Effect on original feature:**
+Deletion of semantically well-defined feature. Semantic transformation.
+The type definitions must be moved to file scope, or in header files.
+Seldom. This style of type definition is seen as poor coding style.
 
-In C++, the syntax for function definition excludes the “old-style” C
-function. In C, “old-style” syntax is allowed, but deprecated as
-“obsolescent”. Prototypes are essential to type safety. Deletion of
-semantically well-defined feature. Syntactic transformation. Common in
-old programs, but already known to be obsolescent.
+**Change:** In C++, the syntax for function definition excludes the
+“old-style” C function. In C, “old-style” syntax is allowed, but
+deprecated as “obsolescent”. **Rationale:** Prototypes are essential to
+type safety. **Effect on original feature:** Deletion of semantically
+well-defined feature. Syntactic transformation. Common in old programs,
+but already known to be obsolescent.
 
-In C++, designated initialization support is restricted compared to the
-corresponding functionality in C. In C++, designators for non-static
-data members must be specified in declaration order, designators for
-array elements and nested designators are not supported, and designated
-and non-designated initializers cannot be mixed in the same initializer
-list.
+**Change:** In C++, designated initialization support is restricted
+compared to the corresponding functionality in C. In C++, designators
+for non-static data members must be specified in declaration order,
+designators for array elements and nested designators are not supported,
+and designated and non-designated initializers cannot be mixed in the
+same initializer list.
 
 Example:
 
 ``` cpp
 struct A { int x, y; };
 struct B { struct A a; };
-struct A a = {.y = 1, .x = 2};  // valid C, invalid \Cpp{}
-int arr[3] = {[1] = 5};         // valid C, invalid \Cpp{}
-struct B b = {.a.x = 0};        // valid C, invalid \Cpp{}
-struct A c = {.x = 1, 2};       // valid C, invalid \Cpp{}
+struct A a = {.y = 1, .x = 2};  // valid C, invalid C++{}
+int arr[3] = {[1] = 5};         // valid C, invalid C++{}
+struct B b = {.a.x = 0};        // valid C, invalid C++{}
+struct A c = {.x = 1, 2};       // valid C, invalid C++{}
 ```
 
-In C++, members are destroyed in reverse construction order and the
-elements of an initializer list are evaluated in lexical order, so field
-initializers must be specified in order. Array designators conflict with
-*lambda-expression* syntax. Nested designators are seldom used. Deletion
-of feature that is incompatible with C++. Syntactic transformation.
-Out-of-order initializers are common. The other features are seldom
-used.
+**Rationale:** In C++, members are destroyed in reverse construction
+order and the elements of an initializer list are evaluated in lexical
+order, so field initializers must be specified in order. Array
+designators conflict with *lambda-expression* syntax. Nested designators
+are seldom used. **Effect on original feature:** Deletion of feature
+that is incompatible with C++. Syntactic transformation. Out-of-order
+initializers are common. The other features are seldom used.
 
-In C++, when initializing an array of character with a string, the
-number of characters in the string (including the terminating `'\0'`)
-must not exceed the number of elements in the array. In C, an array can
-be initialized with a string even if the array is not large enough to
-contain the string-terminating `'\0'`.
+**Change:** In C++, when initializing an array of character with a
+string, the number of characters in the string (including the
+terminating `'\0'`) must not exceed the number of elements in the array.
+In C, an array can be initialized with a string even if the array is not
+large enough to contain the string-terminating `'\0'`.
 
 Example:
 
 ``` cpp
-char array[4] = "abcd";         // valid C, invalid \Cpp{}
+char array[4] = "abcd";         // valid C, invalid C++{}
 ```
 
-When these non-terminated arrays are manipulated by standard string
-functions, there is potential for major catastrophe. Deletion of
-semantically well-defined feature. Semantic transformation. The arrays
-must be declared one element bigger to contain the string terminating
-`'\0'`. Seldom. This style of array initialization is seen as poor
-coding style.
+**Rationale:** When these non-terminated arrays are manipulated by
+standard string functions, there is potential for major catastrophe.
+**Effect on original feature:** Deletion of semantically well-defined
+feature. Semantic transformation. The arrays must be declared one
+element bigger to contain the string terminating `'\0'`. Seldom. This
+style of array initialization is seen as poor coding style.
 
-C++ objects of enumeration type can only be assigned values of the same
-enumeration type. In C, objects of enumeration type can be assigned
-values of any integral type.
+**Change:** C++ objects of enumeration type can only be assigned values
+of the same enumeration type. In C, objects of enumeration type can be
+assigned values of any integral type.
 
 Example:
 
 ``` cpp
 enum color { red, blue, green };
-enum color c = 1;               // valid C, invalid \Cpp{}
+enum color c = 1;               // valid C, invalid C++{}
 ```
 
-The type-safe nature of C++. Deletion of semantically well-defined
-feature. Syntactic transformation. (The type error produced by the
-assignment can be automatically corrected by applying an explicit cast.)
-Common.
+**Rationale:** The type-safe nature of C++. **Effect on original
+feature:** Deletion of semantically well-defined feature. Syntactic
+transformation. (The type error produced by the assignment can be
+automatically corrected by applying an explicit cast.) Common.
 
-In C++, the type of an enumerator is its enumeration. In C, the type of
-an enumerator is `int`.
+**Change:** In C++, the type of an enumerator is its enumeration. In C,
+the type of an enumerator is `int`.
 
 Example:
 
 ``` cpp
 enum e { A };
 sizeof(A) == sizeof(int)        // in C
-sizeof(A) == sizeof(e)          // in \Cpp{}
+sizeof(A) == sizeof(e)          // in C++{}
 /* and sizeof(int) is not necessarily equal to sizeof(e) */
 ```
 
-In C++, an enumeration is a distinct type. Change to semantics of
-well-defined feature. Semantic transformation. Seldom. The only time
-this affects existing C code is when the size of an enumerator is taken.
-Taking the size of an enumerator is not a common C coding practice.
+**Rationale:** In C++, an enumeration is a distinct type. **Effect on
+original feature:** Change to semantics of well-defined feature.
+Semantic transformation. Seldom. The only time this affects existing C
+code is when the size of an enumerator is taken. Taking the size of an
+enumerator is not a common C coding practice.
 
-In C++, an *alignment-specifier* is an *attribute-specifier*. In C, an
-*alignment-specifier* is a .
+**Change:** In C++, an *alignment-specifier* is an
+*attribute-specifier*. In C, an *alignment-specifier* is a .
 
 Example:
 
 ``` cpp
 #include <stdalign.h>
-unsigned alignas(8) int x;      // valid C, invalid \Cpp{}
-unsigned int y alignas(8);      // valid \Cpp{}, invalid C
+unsigned alignas(8) int x;      // valid C, invalid C++{}
+unsigned int y alignas(8);      // valid C++{}, invalid C
 ```
 
-C++ requires unambiguous placement of the *alignment-specifier*.
-Deletion of semantically well-defined feature. Syntactic transformation.
-Seldom.
+**Rationale:** C++ requires unambiguous placement of the
+*alignment-specifier*. **Effect on original feature:** Deletion of
+semantically well-defined feature. Syntactic transformation. Seldom.
 
 ###  [[class]]: classes <a id="diff.class">[[diff.class]]</a>
 
-\[see also [[dcl.typedef]]\] In C++, a class declaration introduces the
-class name into the scope where it is declared and hides any object,
-function or other declaration of that name in an enclosing scope. In C,
-an inner scope declaration of a struct tag name never hides the name of
-an object or function in an outer scope.
+\[see also [[dcl.typedef]]\] **Change:** In C++, a class declaration
+introduces the class name into the scope where it is declared and hides
+any object, function or other declaration of that name in an enclosing
+scope. In C, an inner scope declaration of a struct tag name never hides
+the name of an object or function in an outer scope.
 
 Example:
 
@@ -1901,26 +2028,27 @@ int x[99];
 void f() {
   struct x { int a; };
   sizeof(x);  /* size of the array in C */
-  /* size of the struct in \textit{\textrm{\Cpp{}}} */
+  /* size of the struct in \textit{\textrm{C++{}}} */
 }
 ```
 
-This is one of the few incompatibilities between C and C++ that can be
-attributed to the new C++ name space definition where a name can be
-declared as a type and as a non-type in a single scope causing the
-non-type name to hide the type name and requiring that the keywords
-`class`, `struct`, `union` or `enum` be used to refer to the type name.
-This new name space definition provides important notational
+**Rationale:** This is one of the few incompatibilities between C and
+C++ that can be attributed to the new C++ name space definition where a
+name can be declared as a type and as a non-type in a single scope
+causing the non-type name to hide the type name and requiring that the
+keywords `class`, `struct`, `union` or `enum` be used to refer to the
+type name. This new name space definition provides important notational
 conveniences to C++ programmers and helps making the use of the
 user-defined types as similar as possible to the use of fundamental
 types. The advantages of the new name space definition were judged to
-outweigh by far the incompatibility with C described above. Change to
-semantics of well-defined feature. Semantic transformation. If the
-hidden name that needs to be accessed is at global scope, the `::` C++
-operator can be used. If the hidden name is at block scope, either the
-type or the struct tag has to be renamed. Seldom.
+outweigh by far the incompatibility with C described above. **Effect on
+original feature:** Change to semantics of well-defined feature.
+Semantic transformation. If the hidden name that needs to be accessed is
+at global scope, the `::` C++ operator can be used. If the hidden name
+is at block scope, either the type or the struct tag has to be renamed.
+Seldom.
 
-Copying volatile objects.
+**Change:** Copying volatile objects.
 
 The implicitly-declared copy constructor and implicitly-declared copy
 assignment operator cannot make a copy of a volatile lvalue. For
@@ -1929,32 +2057,33 @@ example, the following is valid in ISO C:
 ``` cpp
 struct X { int i; };
 volatile struct X x1 = {0};
-struct X x2 = x1;               // invalid \Cpp{}
+struct X x2 = x1;               // invalid C++{}
 struct X x3;
-x3 = x1;                        // also invalid \Cpp{}
+x3 = x1;                        // also invalid C++{}
 ```
 
-Several alternatives were debated at length. Changing the parameter to
-`volatile` `const` `X&` would greatly complicate the generation of
-efficient code for class objects. Discussion of providing two
-alternative signatures for these implicitly-defined operations raised
-unanswered concerns about creating ambiguities and complicating the
-rules that specify the formation of these operators according to the
-bases and members. Deletion of semantically well-defined feature.
-Semantic transformation. If volatile semantics are required for the
-copy, a user-declared constructor or assignment must be provided. If
-non-volatile semantics are required, an explicit `const_cast` can be
-used. Seldom.
+**Rationale:** Several alternatives were debated at length. Changing the
+parameter to `volatile` `const` `X&` would greatly complicate the
+generation of efficient code for class objects. Discussion of providing
+two alternative signatures for these implicitly-defined operations
+raised unanswered concerns about creating ambiguities and complicating
+the rules that specify the formation of these operators according to the
+bases and members. **Effect on original feature:** Deletion of
+semantically well-defined feature. Semantic transformation. If volatile
+semantics are required for the copy, a user-declared constructor or
+assignment must be provided. If non-volatile semantics are required, an
+explicit `const_cast` can be used. Seldom.
 
-Bit-fields of type plain `int` are signed. The signedness needs to be
-consistent among template specializations. For consistency, the
-implementation freedom was eliminated for non-dependent types, too. The
-choice is implementation-defined in C, but not so in C++. Syntactic
+**Change:** Bit-fields of type plain `int` are signed. **Rationale:**
+The signedness needs to be consistent among template specializations.
+For consistency, the implementation freedom was eliminated for
+non-dependent types, too. **Effect on original feature:** The choice is
+implementation-defined in C, but not so in C++. Syntactic
 transformation. Seldom.
 
-In C++, the name of a nested class is local to its enclosing class. In C
-the name of the nested class belongs to the same scope as the name of
-the outermost enclosing class.
+**Change:** In C++, the name of a nested class is local to its enclosing
+class. In C the name of the nested class belongs to the same scope as
+the name of the outermost enclosing class.
 
 Example:
 
@@ -1962,19 +2091,20 @@ Example:
 struct X {
   struct Y { ... } y;
 };
-struct Y yy;                    // valid C, invalid \Cpp{}
+struct Y yy;                    // valid C, invalid C++{}
 ```
 
-C++ classes have member functions which require that classes establish
-scopes. The C rule would leave classes as an incomplete scope mechanism
-which would prevent C++ programmers from maintaining locality within a
-class. A coherent set of scope rules for C++ based on the C rule would
-be very complicated and C++ programmers would be unable to predict
-reliably the meanings of nontrivial examples involving nested or local
-functions. Change to semantics of well-defined feature. Semantic
-transformation. To make the struct type name visible in the scope of the
-enclosing struct, the struct tag can be declared in the scope of the
-enclosing struct, before the enclosing struct is defined. Example:
+**Rationale:** C++ classes have member functions which require that
+classes establish scopes. The C rule would leave classes as an
+incomplete scope mechanism which would prevent C++ programmers from
+maintaining locality within a class. A coherent set of scope rules for
+C++ based on the C rule would be very complicated and C++ programmers
+would be unable to predict reliably the meanings of nontrivial examples
+involving nested or local functions. **Effect on original feature:**
+Change to semantics of well-defined feature. Semantic transformation. To
+make the struct type name visible in the scope of the enclosing struct,
+the struct tag can be declared in the scope of the enclosing struct,
+before the enclosing struct is defined. Example:
 
 ``` cpp
 struct Y;                       // struct Y and struct X are at the same scope
@@ -1989,8 +2119,8 @@ be exported to the scope of the enclosing struct. Note: this is a
 consequence of the difference in scope rules, which is documented in
 [[basic.scope]]. Seldom.
 
-In C++, a *typedef-name* may not be redeclared in a class definition
-after being used in that definition.
+**Change:** In C++, a *typedef-name* may not be redeclared in a class
+definition after being used in that definition.
 
 Example:
 
@@ -1998,24 +2128,25 @@ Example:
 typedef int I;
 struct S {
   I i;
-  int I;            // valid C, invalid \Cpp{}
+  int I;            // valid C, invalid C++{}
 };
 ```
 
-When classes become complicated, allowing such a redefinition after the
-type has been used can create confusion for C++ programmers as to what
-the meaning of `I` really is. Deletion of semantically well-defined
-feature. Semantic transformation. Either the type or the struct member
-has to be renamed. Seldom.
+**Rationale:** When classes become complicated, allowing such a
+redefinition after the type has been used can create confusion for C++
+programmers as to what the meaning of `I` really is. **Effect on
+original feature:** Deletion of semantically well-defined feature.
+Semantic transformation. Either the type or the struct member has to be
+renamed. Seldom.
 
 ###  [[cpp]]: preprocessing directives <a id="diff.cpp">[[diff.cpp]]</a>
 
-Whether `__STDC__` is defined and if so, what its value is, are
-*implementation-defined*. C++ is not identical to ISO C. Mandating that
-`__STDC__` be defined would require that translators make an incorrect
-claim. Change to semantics of well-defined feature. Semantic
-transformation. Programs and headers that reference `__STDC__` are quite
-common.
+**Change:** Whether `__STDC__` is defined and if so, what its value is,
+are *implementation-defined*. **Rationale:** C++ is not identical to ISO
+C. Mandating that `__STDC__` be defined would require that translators
+make an incorrect claim. **Effect on original feature:** Change to
+semantics of well-defined feature. Semantic transformation. Programs and
+headers that reference `__STDC__` are quite common.
 
 ## C standard library <a id="diff.library">[[diff.library]]</a>
 

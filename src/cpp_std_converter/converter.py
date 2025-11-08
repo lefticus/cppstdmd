@@ -8,6 +8,7 @@ using Pandoc with custom Lua filters.
 
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Optional, List, Dict
 import click
@@ -93,39 +94,70 @@ class Converter:
         if not input_file.exists():
             raise ConverterError(f"Input file not found: {input_file}")
 
-        # Build pandoc command
-        cmd = [
-            "pandoc",
-            str(input_file),
-            "--from=latex+raw_tex",
-            "--to=gfm",
-        ]
+        # Preprocessing: inject simplified macro definitions for Pandoc
+        # This allows Pandoc to expand common macros natively, reducing Lua filter complexity
+        macros_file = self.filters_dir / "simplified_macros.tex"
+        temp_input_file = None
 
-        # Pass metadata to Lua filters for cross-file linking
-        if current_file_stem:
-            cmd.append(f"--metadata=current_file:{current_file_stem}")
-        if label_index_file:
-            cmd.append(f"--metadata=label_index_file:{label_index_file}")
+        if macros_file.exists():
+            # Read input content
+            input_content = input_file.read_text(encoding='utf-8')
 
-        # Pass source directory for dynamic config loading
-        source_dir = input_file.parent
-        cmd.append(f"--metadata=source_dir:{source_dir}")
+            # Read macro definitions
+            macros_content = macros_file.read_text(encoding='utf-8')
 
-        # Add filters in order
-        for filter_path in self.filters:
-            cmd.append(f"--lua-filter={filter_path}")
+            # Combine: macros first, then original content
+            combined_content = macros_content + "\n\n" + input_content
 
-        if standalone:
-            cmd.append("--standalone")
+            # Write to temporary file
+            with tempfile.NamedTemporaryFile(
+                mode='w',
+                suffix='.tex',
+                delete=False,
+                encoding='utf-8'
+            ) as tmp:
+                tmp.write(combined_content)
+                temp_input_file = Path(tmp.name)
 
-        if output_file:
-            cmd.extend(["-o", str(output_file)])
+            # Use temp file for conversion
+            file_to_convert = temp_input_file
+        else:
+            # No macro preprocessing
+            file_to_convert = input_file
 
-        if verbose:
-            click.echo(f"Running: {' '.join(cmd)}", err=True)
-
-        # Run pandoc
         try:
+            # Build pandoc command
+            cmd = [
+                "pandoc",
+                str(file_to_convert),
+                "--from=latex+raw_tex",
+                "--to=gfm",
+            ]
+
+            # Pass metadata to Lua filters for cross-file linking
+            if current_file_stem:
+                cmd.append(f"--metadata=current_file:{current_file_stem}")
+            if label_index_file:
+                cmd.append(f"--metadata=label_index_file:{label_index_file}")
+
+            # Pass source directory for dynamic config loading
+            source_dir = input_file.parent
+            cmd.append(f"--metadata=source_dir:{source_dir}")
+
+            # Add filters in order
+            for filter_path in self.filters:
+                cmd.append(f"--lua-filter={filter_path}")
+
+            if standalone:
+                cmd.append("--standalone")
+
+            if output_file:
+                cmd.extend(["-o", str(output_file)])
+
+            if verbose:
+                click.echo(f"Running: {' '.join(cmd)}", err=True)
+
+            # Run pandoc
             result = subprocess.run(
                 cmd,
                 capture_output=True,
@@ -143,6 +175,10 @@ class Converter:
             raise ConverterError(
                 f"Pandoc conversion failed:\n{e.stderr}"
             ) from e
+        finally:
+            # Cleanup: remove temporary file if created
+            if temp_input_file and temp_input_file.exists():
+                temp_input_file.unlink()
 
     def convert_directory(
         self,

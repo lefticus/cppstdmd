@@ -140,10 +140,10 @@ initializer. This usage is deprecated.
 
 ``` cpp
 struct A {
-  static constexpr int n = 5;   // definition (declaration in C++14)
+  static constexpr int n = 5;   // definition (declaration in C++14{})
 };
 
-constexpr int A::n;             // redundant declaration (definition in C++14)
+constexpr int A::n;             // redundant declaration (definition in C++14{})
 ```
 
 — *end example*\]
@@ -200,12 +200,13 @@ or alias template without a template argument list is deprecated
 ## Requires paragraph <a id="depr.res.on.required">[[depr.res.on.required]]</a>
 
 In addition to the elements specified in [[structure.specifications]],
-descriptions of function semantics may also contain a element to denote
-the preconditions for calling a function.
+descriptions of function semantics may also contain a *Requires:*
+element to denote the preconditions for calling a function.
 
-Violation of any preconditions specified in a function’s element results
-in undefined behavior unless the function’s element specifies throwing
-an exception when the precondition is violated.
+Violation of any preconditions specified in a function’s *Requires:*
+element results in undefined behavior unless the function’s *Throws:*
+element specifies throwing an exception when the precondition is
+violated.
 
 ## `has_denorm` members in `numeric_limits` <a id="depr.numeric.limits.has.denorm">[[depr.numeric.limits.has.denorm]]</a>
 
@@ -276,7 +277,8 @@ the following:
 template<class T> bool operator!=(const T& x, const T& y);
 ```
 
-Type `T` is *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]).
+*Requires:* Type `T` is *Cpp17EqualityComparable*
+( [[cpp17.equalitycomparable]]).
 
 *Returns:* `!(x == y)`.
 
@@ -284,7 +286,8 @@ Type `T` is *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]).
 template<class T> bool operator>(const T& x, const T& y);
 ```
 
-Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
+*Requires:* Type `T` is *Cpp17LessThanComparable*
+( [[cpp17.lessthancomparable]]).
 
 *Returns:* `y < x`.
 
@@ -292,7 +295,8 @@ Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 template<class T> bool operator<=(const T& x, const T& y);
 ```
 
-Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
+*Requires:* Type `T` is *Cpp17LessThanComparable*
+( [[cpp17.lessthancomparable]]).
 
 *Returns:* `!(y < x)`.
 
@@ -300,7 +304,8 @@ Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
 template<class T> bool operator>=(const T& x, const T& y);
 ```
 
-Type `T` is *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]).
+*Requires:* Type `T` is *Cpp17LessThanComparable*
+( [[cpp17.lessthancomparable]]).
 
 *Returns:* `!(x < y)`.
 
@@ -469,8 +474,8 @@ number of elements `N` is determined as follows:
 - If `n > 0`, `N` is `n`.
 - If `n == 0`, `N` is `std::strlen(gnext_arg)`.
 - If `n < 0`, `N` is `INT_MAX`. The function signature
-  `strlen(const char*)` is declared in . The macro `INT_MAX` is defined
-  in .
+  `strlen(const char*)` is declared in `<cstring>`. The macro `INT_MAX`
+  is defined in `<climits>`.
 
 If `pbeg_arg` is a null pointer, the function executes:
 
@@ -604,15 +609,16 @@ of putback positions available as a result of any call.
 int_type underflow() override;
 ```
 
-*Effects:* Reads a character from the , if possible, without moving the
-stream position past it, as follows:
+*Effects:* Reads a character from the *input sequence*, if possible,
+without moving the stream position past it, as follows:
 
 - If the input sequence has a read position available, the function
-  signals success by returning `(unsigned char)gnext`.
+  signals success by returning `(unsigned char)*gnext`.
 - Otherwise, if the current write next pointer `pnext` is not a null
   pointer and is greater than the current read end pointer `gend`, makes
-  a available by assigning to `gend` a value greater than `gnext` and no
-  greater than `pnext`. Returns `(unsigned char)*gnext`.
+  a *read position* available by assigning to `gend` a value greater
+  than `gnext` and no greater than `pnext`. Returns
+  `(unsigned char)*gnext`.
 
 Returns `EOF` to indicate failure.
 
@@ -815,7 +821,7 @@ one of two constructors:
   an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
   `strstreambuf(s, n, s + std::strlen(s))`. The function signature
-  `strlen(const char*)` is declared in .
+  `strlen(const char*)` is declared in `<cstring>`.
 
 #### Member functions <a id="depr.ostrstream.members">[[depr.ostrstream.members]]</a>
 
@@ -1031,7 +1037,7 @@ permitted by the specification of the corresponding template.
 template<class T> struct is_pod;
 ```
 
-`remove_all_extents_t<T>` shall be a complete type or .
+*Requires:* `remove_all_extents_t<T>` shall be a complete type or cv .
 
 `is_pod<T>` is a *Cpp17UnaryTypeTrait*[[meta.rqmts]] with a base
 characteristic of `true_type` if `T` is a POD type, and `false_type`
@@ -1123,8 +1129,9 @@ Access checking is performed as if in a context unrelated to `TS` and
 `T`. Only the validity of the immediate context of the expression is
 considered.
 
-In addition to being available via inclusion of the header, the two
-templates are available when any of the headers , , or are included.
+In addition to being available via inclusion of the `<tuple>` header,
+the two templates are available when any of the headers `<array>`,
+`<ranges>`, or `<utility>` are included.
 
 ``` cpp
 template<size_t I, class T> struct tuple_element<I, volatile T>;
@@ -1139,8 +1146,9 @@ that names the following type:
 - for the first specialization, `add_volatile_t<TE>`, and
 - for the second specialization, `add_cv_t<TE>`.
 
-In addition to being available via inclusion of the header, the two
-templates are available when any of the headers , , or are included.
+In addition to being available via inclusion of the `<tuple>` header,
+the two templates are available when any of the headers `<array>`,
+`<ranges>`, or `<utility>` are included.
 
 ## Variant <a id="depr.variant">[[depr.variant]]</a>
 
@@ -1291,7 +1299,7 @@ The meaning of the arguments of type `memory_order` is explained in 
 template<class T> bool atomic_is_lock_free(const shared_ptr<T>* p);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
 *Returns:* `true` if atomic access to `*p` is lock-free, `false`
 otherwise.
@@ -1302,7 +1310,7 @@ otherwise.
 template<class T> shared_ptr<T> atomic_load(const shared_ptr<T>* p);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
 *Returns:* `atomic_load_explicit(p, memory_order::seq_cst)`.
 
@@ -1312,9 +1320,10 @@ template<class T> shared_ptr<T> atomic_load(const shared_ptr<T>* p);
 template<class T> shared_ptr<T> atomic_load_explicit(const shared_ptr<T>* p, memory_order mo);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
-`mo` shall not be `memory_order::release` or `memory_order::acq_rel`.
+*Requires:* `mo` shall not be `memory_order::release` or
+`memory_order::acq_rel`.
 
 *Returns:* `*p`.
 
@@ -1324,7 +1333,7 @@ template<class T> shared_ptr<T> atomic_load_explicit(const shared_ptr<T>* p, mem
 template<class T> void atomic_store(shared_ptr<T>* p, shared_ptr<T> r);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
 *Effects:* As if by
 `atomic_store_explicit(p, r, memory_order::seq_cst)`.
@@ -1335,9 +1344,10 @@ template<class T> void atomic_store(shared_ptr<T>* p, shared_ptr<T> r);
 template<class T> void atomic_store_explicit(shared_ptr<T>* p, shared_ptr<T> r, memory_order mo);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
-`mo` shall not be `memory_order::acquire` or `memory_order::acq_rel`.
+*Requires:* `mo` shall not be `memory_order::acquire` or
+`memory_order::acq_rel`.
 
 *Effects:* As if by `p->swap(r)`.
 
@@ -1347,7 +1357,7 @@ template<class T> void atomic_store_explicit(shared_ptr<T>* p, shared_ptr<T> r, 
 template<class T> shared_ptr<T> atomic_exchange(shared_ptr<T>* p, shared_ptr<T> r);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
 *Returns:* `atomic_exchange_explicit(p, r, memory_order::seq_cst)`.
 
@@ -1358,7 +1368,7 @@ template<class T>
   shared_ptr<T> atomic_exchange_explicit(shared_ptr<T>* p, shared_ptr<T> r, memory_order mo);
 ```
 
-`p` shall not be null.
+*Requires:* `p` shall not be null.
 
 *Effects:* As if by `p->swap(r)`.
 
@@ -1371,7 +1381,7 @@ template<class T>
   bool atomic_compare_exchange_weak(shared_ptr<T>* p, shared_ptr<T>* v, shared_ptr<T> w);
 ```
 
-`p` shall not be null and `v` shall not be null.
+*Requires:* `p` shall not be null and `v` shall not be null.
 
 *Returns:*
 
@@ -1404,8 +1414,9 @@ template<class T>
     memory_order success, memory_order failure);
 ```
 
-`p` shall not be null and `v` shall not be null. The `failure` argument
-shall not be `memory_order::release` nor `memory_order::acq_rel`.
+*Requires:* `p` shall not be null and `v` shall not be null. The
+`failure` argument shall not be `memory_order::release` nor
+`memory_order::acq_rel`.
 
 *Effects:* If `*p` is equivalent to `*v`, assigns `w` to `*p` and has
 synchronization semantics corresponding to the value of `success`,
@@ -1715,7 +1726,7 @@ explicit wstring_convert(const byte_string& byte_err,
     const wide_string& wide_err = wide_string());
 ```
 
-For the first and second constructors, `pcvt != nullptr`.
+*Requires:* For the first and second constructors, `pcvt != nullptr`.
 
 *Effects:* The first constructor shall store `pcvt` in `cvtptr` and
 default values in `cvtstate`, `byte_err_string`, and `wide_err_string`.
@@ -1812,7 +1823,7 @@ explicit wbuffer_convert(
     state_type state = state_type());
 ```
 
-`pcvt != nullptr`.
+*Requires:* `pcvt != nullptr`.
 
 *Effects:* The constructor constructs a stream buffer object,
 initializes `bufptr` to `bytebuf`, initializes `cvtptr` to `pcvt`, and
@@ -1859,9 +1870,9 @@ template<class InputIterator>
   path u8path(InputIterator first, InputIterator last);
 ```
 
-The `source` and \[`first`, `last`) sequences are UTF-8 encoded. The
-value type of `Source` and `InputIterator` is `char` or . `Source` meets
-the requirements specified in [[fs.path.req]].
+*Requires:* The `source` and \[`first`, `last`) sequences are UTF-8
+encoded. The value type of `Source` and `InputIterator` is `char` or .
+`Source` meets the requirements specified in [[fs.path.req]].
 
 *Returns:*
 

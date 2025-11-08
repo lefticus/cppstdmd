@@ -1,12 +1,20 @@
 """Tests for cpp-itemdecl.lua filter"""
 import subprocess
 from pathlib import Path
+import sys
+
+# Import inject_macros helper from conftest
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-itemdecl.lua")
 NOTES_FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-notes-examples.lua")
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with itemdecl filter"""
+    # Inject simplified_macros.tex preprocessing
+    latex_with_macros = inject_macros(latex_content)
+
     cmd = [
         "pandoc",
         "--from=latex+raw_tex",
@@ -16,7 +24,7 @@ def run_pandoc_with_filter(latex_content):
     ]
     result = subprocess.run(
         cmd,
-        input=latex_content,
+        input=latex_with_macros,
         capture_output=True,
         text=True,
     )
@@ -24,7 +32,6 @@ def run_pandoc_with_filter(latex_content):
 
 def run_pandoc_with_both_filters(latex_content):
     """Helper to run Pandoc with both itemdecl and notes-examples filters
-
     This matches production behavior where both filters run in sequence.
     Used for tests that check note/example formatting inside itemdescr blocks.
     """

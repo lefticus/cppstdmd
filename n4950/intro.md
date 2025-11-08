@@ -7,7 +7,7 @@ relaxations of the first requirement appear at various places within
 this document.
 
 C++ is a general purpose programming language based on the C programming
-language as described in ISO/IEC 9899:2018 *Programming languages --- C*
+language as described in ISO/IEC 9899:2018 *Programming languages — C*
 (hereinafter referred to as the *C standard*). C++ provides many
 facilities beyond those provided by C, including additional data types,
 classes, templates, exceptions, namespaces, operator overloading,
@@ -20,45 +20,10 @@ The following documents are referred to in the text in such a way that
 some or all of their content constitutes requirements of this document.
 For dated references, only the edition cited applies. For undated
 references, the latest edition of the referenced document (including any
-amendments) applies.
-
-- ISO/IEC 2382, *Information technology --- Vocabulary*
-- ISO 8601:2004, *Data elements and interchange formats ---
-  Information interchange --- Representation of dates and times*
-- ISO/IEC 9899:2018, *Programming languages --- C*
-- ISO/IEC/IEEE 9945:2009, *Information Technology --- Portable
-  Operating System Interface (POSIX
-  \begin{footnote}
-  POSIX\textregistered\\is a registered trademark of
-  the Institute of Electrical and Electronic Engineers, Inc.
-  This information is given for the convenience of users of this document and
-  does not constitute an endorsement by ISO or IEC of this product.
-  \end{footnote}%
-  )*
-- ISO/IEC/IEEE 9945:2009/Cor 1:2013,
-  *Information Technology --- Portable
-  Operating System Interface (POSIX), Technical Corrigendum 1*
-- ISO/IEC/IEEE 9945:2009/Cor 2:2017,
-  *Information Technology --- Portable
-  Operating System Interface (POSIX), Technical Corrigendum 2*
-- ISO/IEC/IEEE 60559:2020, *Information technology ---
-  Microprocessor Systems --- Floating-Point arithmetic*
-- ISO 80000-2:2009, *Quantities and units ---
-  Part 2: Mathematical signs and symbols
-  to be used in the natural sciences and technology*
-- Ecma International, *ECMAScript
-  \begin{footnote}
-  ECMAScript\textregistered\\is a registered trademark of Ecma
-  International.
-  This information is given for the convenience of users of this document and
-  does not constitute an endorsement by ISO or IEC of this product.
-  \end{footnote}
-  Language Specification*, Standard Ecma-262, third edition, 1999.
-- The Unicode Consortium. *The Unicode Standard*. Available from:
-  <https://www.unicode.org/versions/latest/>
+amendments) applies.[^1]
 
 The library described in ISO/IEC 9899:2018, Clause 7, is hereinafter
-called the *C standard library*.[^1]
+called the *C standard library*.[^2]
 
 The operating system interface described in ISO/IEC 9945:2009 is
 hereinafter called *POSIX*.
@@ -172,7 +137,7 @@ parameters, or return types
 
 \[*Note 1 to entry*: For example, the class template and the non-member
 function templates that operate on strings are referred to as the
-. — *end note*\]
+*string component*. — *end note*\]
 
 #### 13 conditionally-supported <a id="defns.cond.supp">[defns.cond.supp]</a>
 
@@ -247,7 +212,7 @@ replaced with some part of a regular expression match
 ⟨library⟩ non-reserved function whose definition may be provided by a
 C++ program
 
-\[*Note 1 to entry*: A program may designate a handler function at
+\[*Note 1 to entry*: A C++ program may designate a handler function at
 various points in its execution by supplying a pointer to the function
 when calling any of the library functions that install handler
 functions. — *end note*\]
@@ -416,8 +381,8 @@ encountered
 semantics applicable to both the behavior provided by the implementation
 and the behavior of any such function definition in the program
 
-\[*Note 1 to entry*: If such a function defined in a program fails to
-meet the required behavior when it executes, the behavior is
+\[*Note 1 to entry*: If such a function defined in a C++ program fails
+to meet the required behavior when it executes, the behavior is
 undefined. — *end note*\]
 
 #### 50 reserved function <a id="defns.reserved.function">[defns.reserved.function]</a>
@@ -425,8 +390,8 @@ undefined. — *end note*\]
 ⟨library⟩ function, specified as part of the C++ standard library, that
 is defined by the implementation
 
-\[*Note 1 to entry*: If a program provides a definition for any reserved
-function, the results are undefined. — *end note*\]
+\[*Note 1 to entry*: If a C++ program provides a definition for any
+reserved function, the results are undefined. — *end note*\]
 
 #### 51 signature <a id="defns.signature">[defns.signature]</a>
 
@@ -579,7 +544,7 @@ Such requirements have the following meaning:
 - If a program contains no violations of the rules in [[lex]] through
   [[thread]] and [[depr]], a conforming implementation shall, within its
   resource limits as described in [[implimits]], accept and correctly
-  execute[^2] that program.
+  execute[^3] that program.
 - If a program contains a violation of a rule for which no diagnostic is
   required, this document places no requirement on implementations with
   respect to that program.
@@ -638,7 +603,7 @@ Having done so, however, they can compile and execute such programs.
 
 Each implementation shall include documentation that identifies all
 conditionally-supported constructs that it does not support and defines
-all locale-specific characteristics.[^3]
+all locale-specific characteristics.[^4]
 
 ### Abstract machine <a id="intro.abstract">[[intro.abstract]]</a>
 
@@ -647,13 +612,13 @@ nondeterministic abstract machine. This document places no requirement
 on the structure of conforming implementations. In particular, they need
 not copy or emulate the structure of the abstract machine. Rather,
 conforming implementations are required to emulate (only) the observable
-behavior of the abstract machine as explained below.[^4]
+behavior of the abstract machine as explained below.[^5]
 
 Certain aspects and operations of the abstract machine are described in
 this document as implementation-defined (for example, `sizeof(int)`).
 These constitute the parameters of the abstract machine. Each
 implementation shall include documentation describing its
-characteristics and behavior in these respects.[^5]
+characteristics and behavior in these respects.[^6]
 
 Such documentation shall define the instance of the abstract machine
 that corresponds to that implementation (referred to as the
@@ -731,7 +696,7 @@ terminal or non-terminal symbol is indicated by the subscript
 “\relax_opt”, so
 
 ``` bnf
-'{' [expression] '}'
+\terminal{\ [expression] \terminal{\}}
 ```
 
 indicates an optional expression enclosed in braces.
@@ -789,18 +754,23 @@ the following rules:
 [thread]: thread.md#thread
 [using.headers]: library.md#using.headers
 
-[^1]: With the qualifications noted in [[support]] through [[thread]]
+[^1]: POSIX is a registered trademark of the Institute of Electrical and
+    Electronic Engineers, Inc. This information is given for the
+    convenience of users of this document and does not constitute an
+    endorsement by ISO or IEC of this product.
+
+[^2]: With the qualifications noted in [[support]] through [[thread]]
     and in [[diff.library]], the C standard library is a subset of the
     C++ standard library.
 
-[^2]: “Correct execution” can include undefined behavior, depending on
+[^3]: “Correct execution” can include undefined behavior, depending on
     the data being processed; see [[intro.defs]] and 
     [[intro.execution]].
 
-[^3]: This documentation also defines implementation-defined behavior;
+[^4]: This documentation also defines implementation-defined behavior;
     see  [[intro.abstract]].
 
-[^4]: This provision is sometimes called the “as-if” rule, because an
+[^5]: This provision is sometimes called the “as-if” rule, because an
     implementation is free to disregard any requirement of this document
     as long as the result is *as if* the requirement had been obeyed, as
     far as can be determined from the observable behavior of the
@@ -809,6 +779,6 @@ the following rules:
     and that no side effects affecting the observable behavior of the
     program are produced.
 
-[^5]: This documentation also includes conditionally-supported
+[^6]: This documentation also includes conditionally-supported
     constructs and locale-specific behavior. See 
     [[intro.compliance.general]].

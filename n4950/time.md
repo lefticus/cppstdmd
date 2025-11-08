@@ -3361,8 +3361,8 @@ constexpr months operator-(const month& x, const month& y) noexcept;
 ```
 
 *Returns:* If `x.ok() == true` and `y.ok() == true`, returns a value `m`
-in the range satisfying `y + m == x`. Otherwise the value returned is
-unspecified.
+in the range \[`months{0}`, `months{11}`\] satisfying `y + m == x`.
+Otherwise the value returned is unspecified.
 
 \[*Example 2*: `January - February == months{11}`. — *end example*\]
 
@@ -3435,10 +3435,10 @@ namespace std::chrono {
 ```
 
 `year` represents a year in the civil calendar. It can represent values
-in the range . It can be constructed with any `int` value, which will be
-subsequently truncated to fit into `year`’s unspecified internal
-storage. `year` meets the *Cpp17EqualityComparable* (
-[[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+in the range \[`min()`, `max()`\]. It can be constructed with any `int`
+value, which will be subsequently truncated to fit into `year`’s
+unspecified internal storage. `year` meets the *Cpp17EqualityComparable*
+( [[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
 [[cpp17.lessthancomparable]]) requirements, and participates in basic
 arithmetic with `years` objects, which represent a difference between
 two `year` objects.
@@ -3825,8 +3825,8 @@ constexpr days operator-(const weekday& x, const weekday& y) noexcept;
 ```
 
 *Returns:* If `x.ok() == true` and `y.ok() == true`, returns a value `d`
-in the range satisfying `y + d == x`. Otherwise the value returned is
-unspecified.
+in the range \[`days{0}`, `days{6}`\] satisfying `y + d == x`. Otherwise
+the value returned is unspecified.
 
 \[*Example 2*: `Sunday - Monday == days{6}`. — *end example*\]
 
@@ -4763,8 +4763,9 @@ a date prior to the `sys_days` epoch). Otherwise, if
 `sys_days{y_/m_/1d} + (d_ - 1d)`. Otherwise the value returned is
 unspecified.
 
-*Remarks:* A `sys_days` in the range which is converted to a
-`year_month_day` has the same value when converted back to a `sys_days`.
+*Remarks:* A `sys_days` in the range \[`days{-12687428}`,
+`days{11248737}`\] which is converted to a `year_month_day` has the same
+value when converted back to a `sys_days`.
 
 \[*Example 1*:
 
@@ -6043,7 +6044,7 @@ using precision = see below;
 `precision` is
 
 ``` cpp
-duration<common_type_t<Duration::rep, seconds::rep>, ratio<1, $10^\texttt{fractional_width}$>>
+duration<common_type_t<Duration::rep, seconds::rep>, ratio<1, $10^fractional_width$>>
 ```
 
 ``` cpp
@@ -6575,7 +6576,7 @@ use this class implicitly, not explicitly. — *end note*\]
 
 The `begin` and `end` data members indicate that, for the associated
 `time_zone` and `time_point`, the `offset` and `abbrev` are in effect in
-the range [`begin`, `end`). This information can be used to efficiently
+the range \[`begin`, `end`). This information can be used to efficiently
 iterate the transitions of a `time_zone`.
 
 The `offset` data member indicates the UTC offset in effect for the
@@ -6595,7 +6596,7 @@ authoritative. The only sure way to get such information is to query the
 `time_zone` with a `time_point` that returns a `sys_info` where
 `save == 0min`. There is no guarantee what `time_point` might return
 such a `sys_info` except that it is guaranteed not to be in the range
-[`begin`, `end`) (if `save != 0min` for this `sys_info`).
+\[`begin`, `end`) (if `save != 0min` for this `sys_info`).
 
 The `abbrev` data member indicates the current abbreviation used for the
 associated `time_zone` and `time_point`. Abbreviations are not unique
@@ -7417,7 +7418,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{literal-char}
-    any character other than \{, \}, or \%
+    \textnormal{any character other than \, \texttt{\}, or \%}
 ```
 
 ``` bnf
@@ -7699,10 +7700,11 @@ object of type `basic_istream<charT, traits>` and let `I` be
 `basic_istream<charT, traits>&`, where `charT` and `traits` are template
 parameters in that context.
 
-Implementations should make it difficult to accidentally store or use a
-manipulator that may contain a dangling reference to a format string,
-for example by making the manipulators produced by `parse` immovable and
-preventing stream extraction into an lvalue of such a manipulator type.
+*Recommended practice:* Implementations should make it difficult to
+accidentally store or use a manipulator that may contain a dangling
+reference to a format string, for example by making the manipulators
+produced by `parse` immovable and preventing stream extraction into an
+lvalue of such a manipulator type.
 
 ``` cpp
 template<class charT, class Parsable>
@@ -7884,7 +7886,7 @@ complete duration, time point, or calendrical data structure,
 | `%W` | The week number of the year as a decimal number. The first Monday of the year is the first day of week `01`. Days of the same year prior to that are in week `00`. The modified command `%*N*W` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified command `%OW` interprets the locale's alternative representation. |
 | `%x` | The locale's date representation. The modified command `%Ex` interprets the locale's alternate date representation. |
 | `%X` | The locale's time representation. The modified command `%EX` interprets the locale's alternate time representation. |
-| `%y` | The last two decimal digits of the year. If the century is not otherwise specified (e.g., with `%C`), values in the range \crange{69}{99} are presumed to refer to the years 1969 to 1999, and values in the range \crange{00}{68} are presumed to refer to the years 2000 to 2068. The modified command `%*N*y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified commands `%Ey` and `%Oy` interpret the locale's alternative representation. |
+| `%y` | The last two decimal digits of the year. If the century is not otherwise specified (e.g., with `%C`), values in the range {[}`69`, `99`{]} are presumed to refer to the years 1969 to 1999, and values in the range {[}`00`, `68`{]} are presumed to refer to the years 2000 to 2068. The modified command `%*N*y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 2. Leading zeroes are permitted but not required. The modified commands `%Ey` and `%Oy` interpret the locale's alternative representation. |
 | `%Y` | The year as a decimal number. The modified command `%*N*Y` specifies the maximum number of characters to read. If `*N*` is not specified, the default is 4. Leading zeroes are permitted but not required. The modified command `%EY` interprets the locale's alternative representation. |
 | . The modified commands `%Ez` and `%Oz` parse a `:` between the hours and minutes and render leading zeroes on the hour field optional: `[+|-]h[h][:mm]`. For example `-04:30` refers to 4 hours 30 minutes behind UTC, and `4` refers to 4 hours ahead of UTC. |
 | `%Z` | The time zone abbreviation or name. A single word is parsed. This word can only contain characters from the basic character set [[lex.charset]] that are alphanumeric, or one of `'_'`, `'/'`, `'-'`, or `'+'`. |

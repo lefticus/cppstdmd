@@ -133,18 +133,18 @@ range of representable values for its type, the behavior is undefined.
 
 If `z` is an lvalue of type cv `complex<T>` then:
 
-- the expression `reinterpret_cast<\cv{} T(&)[2]>(z)` is well-formed,
-- `reinterpret_cast<\cv{} T(&)[2]>(z)[0]` designates the real part of
+- the expression `reinterpret_cast<cv{} T(&)[2]>(z)` is well-formed,
+- `reinterpret_cast<cv{} T(&)[2]>(z)[0]` designates the real part of
   `z`, and
-- `reinterpret_cast<\cv{} T(&)[2]>(z)[1]` designates the imaginary part
+- `reinterpret_cast<cv{} T(&)[2]>(z)[1]` designates the imaginary part
   of `z`.
 
 Moreover, if `a` is an expression of type cv `complex<T>*` and the
 expression `a[i]` is well-defined for an integer expression `i`, then:
 
-- `reinterpret_cast<\cv{} T*>(a)[2*i]` designates the real part of
+- `reinterpret_cast<cv{} T*>(a)[2*i]` designates the real part of
   `a[i]`, and
-- `reinterpret_cast<\cv{} T*>(a)[2*i + 1]` designates the imaginary part
+- `reinterpret_cast<cv{} T*>(a)[2*i + 1]` designates the imaginary part
   of `a[i]`.
 
 ### Header `<complex>` synopsis <a id="complex.syn">[[complex.syn]]</a>
@@ -619,7 +619,7 @@ template<class T> complex<T> log(const complex<T>& x);
 `imag(log(x))` lies in the interval \[-π, π\].
 
 \[*Note 1*: The semantics of this function are intended to be the same
-in as they are for `clog` in C. — *end note*\]
+in C++ as they are for `clog` in C. — *end note*\]
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -664,7 +664,7 @@ template<class T> complex<T> sqrt(const complex<T>& x);
 half-plane.
 
 \[*Note 2*: The semantics of this function are intended to be the same
-in as they are for `csqrt` in C. — *end note*\]
+in C++ as they are for `csqrt` in C. — *end note*\]
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -770,11 +770,11 @@ If integer-valued, an entity may optionally be further characterized as
 Unless otherwise specified, all descriptions of calculations in [[rand]]
 use mathematical real numbers.
 
-Throughout [[rand]], the operators , , and denote the respective
+Throughout [[rand]], the operators , , and \xor denote the respective
 conventional bitwise operations. Further:
 
-- the operator denotes a bitwise right shift with zero-valued bits
-  appearing in the high bits of the result, and
+- the operator \rightshift denotes a bitwise right shift with
+  zero-valued bits appearing in the high bits of the result, and
 - the operator denotes a bitwise left shift with zero-valued bits
   appearing in the low bits of the result, and whose result is always
   taken modulo $2^w$.
@@ -1039,9 +1039,9 @@ suitable `operator>>`.
   a value of type `result_type`.
 
 A class `E` that meets the requirements of a uniform random bit
-generator [[rand.req.urng]] also meets the requirements of a
-*random number engine* if the expressions shown in [[rand.req.eng]] are
-valid and have the indicated semantics, and if `E` also meets all other
+generator [[rand.req.urng]] also meets the requirements of a *random
+number engine* if the expressions shown in [[rand.req.eng]] are valid
+and have the indicated semantics, and if `E` also meets all other
 requirements of this subclause [[rand.req.eng]]. In that Table and
 throughout this subclause:
 
@@ -1137,16 +1137,16 @@ template<class Sseq> void seed(Sseq& q);
 
 A *random number distribution* (commonly shortened to *distribution*)
 `d` of type `D` is a function object returning values that are
-distributed according to an associated mathematical
-*probability density function* p(z) or according to an associated
-*discrete probability function* P(zᵢ). A distribution’s specification
-identifies its associated probability function p(z) or P(zᵢ).
+distributed according to an associated mathematical *probability density
+function* p(z) or according to an associated *discrete probability
+function* P(zᵢ). A distribution’s specification identifies its
+associated probability function p(z) or P(zᵢ).
 
 An associated probability function is typically expressed using certain
-externally-supplied quantities known as the
-*parameters of the distribution*. Such distribution parameters are
-identified in this context by writing, for example, p(z | a,b) or
-P(zᵢ | a,b), to name specific parameters, or by writing, for example,
+externally-supplied quantities known as the *parameters of the
+distribution*. Such distribution parameters are identified in this
+context by writing, for example, p(z | a,b) or P(zᵢ | a,b), to name
+specific parameters, or by writing, for example,
 p(z\,|\left\{`p`\right\}) or P(z_i\,|\left\{`p`\right\}), to denote a
 distribution’s parameters `p` taken as a whole.
 
@@ -1196,7 +1196,7 @@ exposition only.
 
 `P` shall meet the *Cpp17CopyConstructible* (
 [[cpp17.copyconstructible]]), *Cpp17CopyAssignable* (
-[[cpp17.copyassignable]]), and *Cpp17Equality\\Comp\\arable* (
+[[cpp17.copyassignable]]), and *Cpp17EqualityComparable* (
 [[cpp17.equalitycomparable]]) requirements.
 
 For each of the constructors of `D` taking arguments corresponding to
@@ -1937,7 +1937,7 @@ default-constructed object of type `knuth_b` produces the value
 1112339016.
 
 ``` cpp
-using default_random_engine = \textit{\impldef{type of default_random_engine}};
+using default_random_engine = \textit{implementation-defined};
 ```
 
 *Remarks:* The choice of engine type named by this is
@@ -4394,7 +4394,7 @@ sequence designated by `slicearr`.
 
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
-// \texttt{v0[slice(2, 5, 3)]} returns \texttt{valarray<char>("cfilo", 5)}
+// v0[slice(2, 5, 3)] returns valarray<char>("cfilo", 5)
 ```
 
 — *end example*\]
@@ -4412,7 +4412,7 @@ sequence selected by `slicearr`.
 valarray<char> v0("abcdefghijklmnop", 16);
 valarray<char> v1("ABCDE", 5);
 v0[slice(2, 5, 3)] = v1;
-// \texttt{v0 == valarray<char>("abAdeBghCjkDmnEp", 16);}
+// v0 == valarray<char>("abAdeBghCjkDmnEp", 16);
 ```
 
 — *end example*\]
@@ -4431,8 +4431,8 @@ const valarray<char> v0("abcdefghijklmnop", 16);
 const size_t lv[] = { 2, 3 };
 const size_t dv[] = { 7, 2 };
 const valarray<size_t> len(lv, 2), str(dv, 2);
-// \texttt{v0[gslice(3, len, str)]} returns
-// \texttt{valarray<char>("dfhkmo", 6)}
+// v0[gslice(3, len, str)] returns
+// valarray<char>("dfhkmo", 6)
 ```
 
 — *end example*\]
@@ -4453,7 +4453,7 @@ const size_t lv[] = { 2, 3 };
 const size_t dv[] = { 7, 2 };
 const valarray<size_t> len(lv, 2), str(dv, 2);
 v0[gslice(3, len, str)] = v1;
-// \texttt{v0 == valarray<char>("abcAeBgCijDlEnFp", 16)}
+// v0 == valarray<char>("abcAeBgCijDlEnFp", 16)
 ```
 
 — *end example*\]
@@ -4470,8 +4470,8 @@ sequence designated by `boolarr`.
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
 const bool vb[] = { false, false, true, true, false, true };
-// \texttt{v0[valarray<bool>(vb, 6)]} returns
-// \texttt{valarray<char>("cdf", 3)}
+// v0[valarray<bool>(vb, 6)] returns
+// valarray<char>("cdf", 3)
 ```
 
 — *end example*\]
@@ -4490,7 +4490,7 @@ valarray<char> v0("abcdefghijklmnop", 16);
 valarray<char> v1("ABC", 3);
 const bool vb[] = { false, false, true, true, false, true };
 v0[valarray<bool>(vb, 6)] = v1;
-// \texttt{v0 == valarray<char>("abABeCghijklmnop", 16)}
+// v0 == valarray<char>("abABeCghijklmnop", 16)
 ```
 
 — *end example*\]
@@ -4507,8 +4507,8 @@ sequence designated by `indarr`.
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
 const size_t vi[] = { 7, 5, 2, 3, 8 };
-// \texttt{v0[valarray<size_t>(vi, 5)]} returns
-// \texttt{valarray<char>("hfcdi", 5)}
+// v0[valarray<size_t>(vi, 5)] returns
+// valarray<char>("hfcdi", 5)
 ```
 
 — *end example*\]
@@ -4527,12 +4527,14 @@ valarray<char> v0("abcdefghijklmnop", 16);
 valarray<char> v1("ABCDE", 5);
 const size_t vi[] = { 7, 5, 2, 3, 8 };
 v0[valarray<size_t>(vi, 5)] = v1;
-// \texttt{v0 == valarray<char>("abCDeBgAEjklmnop", 16)}
+// v0 == valarray<char>("abCDeBgAEjklmnop", 16)
 ```
 
 — *end example*\]
 
 #### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
+
+\indexlibrarymember{operator\\}{valarray}
 
 ``` cpp
 valarray operator+() const;
@@ -5349,9 +5351,9 @@ indirect_array<T> valarray<T>::operator[](const valarray<size_t>&);
 ```
 
 It has reference semantics to a subset of an array specified by an
-`indirect_array`. Thus, the expression `a[indirect] = b;` has the effect
-of assigning the elements of `b` to the elements in `a` whose indices
-appear in `indirect`.
+`indirect_array`. Thus, the expression `a[{}indirect] = b;` has the
+effect of assigning the elements of `b` to the elements in `a` whose
+indices appear in `indirect`.
 
 #### Assignment <a id="indirect.array.assign">[[indirect.array.assign]]</a>
 
@@ -5418,12 +5420,12 @@ argument to the elements of the `valarray<T>` object to which the
 
 ### `valarray` range access <a id="valarray.range">[[valarray.range]]</a>
 
-In the `begin` and `end` function templates that follow, *unspecified*
+In the `begin` and `end` function templates that follow, *unspecified*1
 is a type that meets the requirements of a mutable
 *Cpp17RandomAccessIterator* [[random.access.iterators]] and models
 `contiguous_iterator` [[iterator.concept.contiguous]], whose
 `value_type` is the template parameter `T` and whose `reference` type is
-`T&`. *unspecified* is a type that meets the requirements of a constant
+`T&`. *unspecified*2 is a type that meets the requirements of a constant
 *Cpp17RandomAccessIterator* and models `contiguous_iterator`, whose
 `value_type` is the template parameter `T` and whose `reference` type is
 `const T&`.
@@ -5953,8 +5955,8 @@ is a NaN (Not a Number), the function shall return a NaN but it shall
 not report a domain error. Otherwise, the function shall report a domain
 error for just those argument values for which:
 
-- the function description’s element explicitly specifies a domain and
-  those argument values fall outside the specified domain, or
+- the function description’s *Returns:* element explicitly specifies a
+  domain and those argument values fall outside the specified domain, or
 - the corresponding mathematical function value has a nonzero imaginary
   component, or
 - the corresponding mathematical function is not mathematically

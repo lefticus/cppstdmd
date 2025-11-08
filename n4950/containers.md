@@ -38,9 +38,9 @@ linear complexity, even though the complexity of copying each contained
 
 Allocator-aware containers [[container.alloc.reqmts]] other than
 `basic_string` construct elements using the function
-`allocator_traits<allocator_type>::rebind_traits<U>::construct` and
+`allocator_traits<allocator_type>::rebind_traits<U>::{}construct` and
 destroy elements using the function
-`allocator_traits<allocator_type>::rebind_traits<U>::destroy`
+`allocator_traits<allocator_type>::rebind_traits<U>::{}destroy`
 [[allocator.traits.members]], where `U` is either
 `allocator_type::value_type` or an internal type used by the container.
 These functions are called only for the container’s element type, not
@@ -350,7 +350,7 @@ memory using an allocator (see  [[allocator.requirements]]).
 \[*Note 2*: In particular, containers and iterators do not store
 references to allocated elements other than through the allocator’s
 pointer type, i.e., as objects of type `P` or
-`pointer_traits<P>::template rebind<\unspec>`, where `P` is
+`pointer_traits<P>::template rebind<unspecified>`, where `P` is
 `allocator_traits<allocator_type>::pointer`. — *end note*\]
 
 Copy constructors for these container types obtain an allocator by
@@ -392,7 +392,7 @@ belonging to `a` and `b` shall meet the *Cpp17Swappable* requirements
 and shall be exchanged by calling `swap` as described in 
 [[swappable.requirements]]. If
 `allocator_traits<allocator_type>::propagate_on_container_swap::value`
-is `true`, then `allocator_type` shall meet the *Cpp17Swap\\pable*
+is `true`, then `allocator_type` shall meet the *Cpp17Swappable*
 requirements and the allocators of `a` and `b` shall also be exchanged
 by calling `swap` as described in  [[swappable.requirements]].
 Otherwise, the allocators shall not be swapped, and the behavior is
@@ -530,7 +530,7 @@ const) `T`, or `<` is defined for values of type (possibly const) `T`
 and `<` is a total ordering relationship.
 
 *Returns:*
-`lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(),)`
+`lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(),`*`synth-three-way`*`)`
 
 \[*Note 1*: The algorithm `lexicographical_compare_three_way` is defined
 in [[algorithms]]. — *end note*\]
@@ -553,8 +553,9 @@ defined. If `X` is not allocator-aware or is a specialization of
 `allocator<T>` — no allocator object needs to be created and user
 specializations of `allocator<T>` are not instantiated:
 
-- `T` is *Cpp17DefaultInsertable* into X@*Cpp17DefaultInsertable* into
-  `X` means that the following expression is well-formed:
+- `T` is *\textit{Cpp17DefaultInsertable} into `X`* into
+  X@*Cpp17DefaultInsertable* into `X` means that the following
+  expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p)
   ```
@@ -566,8 +567,9 @@ specializations of `allocator<T>` are not instantiated:
 
   where `p` is the address of the uninitialized storage for the element
   allocated within `X`.
-- `T` is *Cpp17MoveInsertable* into X@*Cpp17MoveInsertable* into `X`
-  means that the following expression is well-formed:
+- `T` is *\textit{Cpp17MoveInsertable} into `X`* into
+  X@*Cpp17MoveInsertable* into `X` means that the following expression
+  is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, rv)
   ```
@@ -577,24 +579,25 @@ specializations of `allocator<T>` are not instantiated:
   evaluation.
   \[*Note 2*: `rv` remains a valid object. Its state is
   unspecified — *end note*\]
-- `T` is *Cpp17CopyInsertable* into X@*Cpp17CopyInsertable* into `X`
-  means that, in addition to `T` being *Cpp17MoveInsertable* into `X`,
-  the following expression is well-formed:
+- `T` is *\textit{Cpp17CopyInsertable} into `X`* into
+  X@*Cpp17CopyInsertable* into `X` means that, in addition to `T` being
+  *Cpp17MoveInsertable* into `X`, the following expression is
+  well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, v)
   ```
 
   and its evaluation causes the following postcondition to hold: The
   value of `v` is unchanged and is equivalent to `*p`.
-- `T` is *Cpp17EmplaceConstructible* into X from
-  args@*Cpp17EmplaceConstructible* into `X` from `args`, for zero or
-  more arguments `args`, means that the following expression is
+- `T` is *\textit{Cpp17EmplaceConstructible} into `X` from `args`* into
+  X from args@*Cpp17EmplaceConstructible* into `X` from `args`, for zero
+  or more arguments `args`, means that the following expression is
   well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, args)
   ```
-- `T` is *Cpp17Erasable* from X@*Cpp17Erasable* from `X` means that the
-  following expression is well-formed:
+- `T` is *\textit{Cpp17Erasable} from `X`* from X@*Cpp17Erasable* from
+  `X` means that the following expression is well-formed:
   ``` cpp
   allocator_traits<A>::destroy(m, p)
   ```
@@ -783,7 +786,7 @@ In this subclause,
   `value_type`,
 - `[i, j)` denotes a valid range,
 - `rg` denotes a value of a type `R` that models
-  `container-compatible-range<T>`,
+  `\texttt{container-compatible-range}<T>`,
 - `il` designates an object of type `initializer_list<value_type>`,
 - `n` denotes a value of type `X::size_type`,
 - `p` denotes a valid constant iterator to `a`,
@@ -1582,9 +1585,9 @@ In this subclause,
   type [[temp.deduct]],
 - `i` and `j` meet the *Cpp17InputIterator* requirements and refer to
   elements implicitly convertible to `value_type`,
-- [`i`, `j`) denotes a valid range,
+- \[`i`, `j`) denotes a valid range,
 - `rg` denotes a value of a type `R` that models
-  `container-compatible-range<value_type>`,
+  `\texttt{container-compatible-range}<value_type>`,
 - `p` denotes a valid constant iterator to `a`,
 - `q` denotes a valid dereferenceable constant iterator to `a`,
 - `r` denotes a valid dereferenceable iterator to `a`,
@@ -2449,7 +2452,7 @@ In this subclause,
 - `i` and `j` denote input iterators that refer to `value_type`,
 - `[i, j)` denotes a valid range,
 - `rg` denotes a value of a type `R` that models
-  `container-compatible-range<value_type>`,
+  `\texttt{container-compatible-range}<value_type>`,
 - `p` and `q2` denote valid constant iterators to `a`,
 - `q` and `q1` denote valid dereferenceable constant iterators to `a`,
 - `r` denotes a valid dereferenceable iterator to `a`,
@@ -3381,9 +3384,9 @@ a.reserve(n)
 *Effects:* Equivalent to `a.rehash(ceil(n / a.max_load_factor()))`.
 
 Two unordered containers `a` and `b` compare equal if
-`a.size() == b.size()` and, for every equivalent-key group
-[`Ea1`, `Ea2`) obtained from `a.equal_range(Ea1)`, there exists an
-equivalent-key group [`Eb1`, `Eb2`) obtained from `b.equal_range(Ea1)`,
+`a.size() == b.size()` and, for every equivalent-key group \[`Ea1`,
+`Ea2`) obtained from `a.equal_range(Ea1)`, there exists an
+equivalent-key group \[`Eb1`, `Eb2`) obtained from `b.equal_range(Ea1)`,
 such that `is_permutation(Ea1, Ea2, Eb1, Eb2)` returns `true`. For
 `unordered_set` and `unordered_map`, the complexity of `operator==`
 (i.e., the number of calls to the `==` operator of the `value_type`, to
@@ -7423,7 +7426,7 @@ and `unordered_multimap`; the header `<unordered_set>` defines the class
 templates `unordered_set` and `unordered_multiset`.
 
 The exposition-only alias templates *iter-value-type*, *iter-key-type*,
-*iter-mapped-type*, *iter-to\\-alloc-type*, *range-key-type*,
+*iter-mapped-type*, *iter-to-alloc-type*, *range-key-type*,
 *range-mapped-type*, and *range-to-alloc-type* defined in
 [[associative.general]] may appear in deduction guides for unordered
 containers.
@@ -13292,9 +13295,9 @@ A *multidimensional index space* is a Cartesian product of integer
 intervals. Each interval can be represented by a half-open range
 [Lᵢ, Uᵢ), where Lᵢ and Uᵢ are the lower and upper bounds of the
 $i^\text{th}$ dimension. The *rank* of a multidimensional index space is
-the number of intervals it represents. The
-*size of a multidimensional index space* is the product of Uᵢ - Lᵢ for
-each dimension i if its rank is greater than 0, and 1 otherwise.
+the number of intervals it represents. The *size of a multidimensional
+index space* is the product of Uᵢ - Lᵢ for each dimension i if its rank
+is greater than 0, and 1 otherwise.
 
 An integer r is a *rank index* of an index space S if r is in the range
 [0, rank of $S$).
@@ -13395,6 +13398,8 @@ namespace std {
       -> see below;
 }
 ```
+
+*Mandates:*
 
 - `IndexType` is a signed or unsigned integer type, and
 - each element of `Extents` is either equal to `dynamic_extent`, or is
@@ -13557,10 +13562,11 @@ template<class OtherIndexType, size_t N>
 *Effects:*
 
 - If `N` equals `dynamic_rank()`, for all d in the range
-  [0, `rank_dynamic()`), direct-non-list-initializes `[`d`]` with
-  `as_const(exts[`d`])`.
+  [0, `rank_dynamic()`), direct-non-list-initializes
+  *`dynamic-extents`*`[`d`]` with `as_const(exts[`d`])`.
 - Otherwise, for all d in the range [0, `rank_dynamic()`),
-  direct-non-list-initializes `[`d`]` with `as_const(exts[(`d`)])`.
+  direct-non-list-initializes *dynamic-extents*`[`d`]` with
+  `as_const(exts[`*`dynamic-index-inv`*`(`d`)])`.
 
 ``` cpp
 template<class... Integrals>
@@ -13904,9 +13910,9 @@ ill-formed.
 `layout_left::mapping<E>` is a trivially copyable type that models
 `regular` for each `E`.
 
-If `Extents::rank_dynamic() == 0` is `true`, then the size of the
-multidimensional index space `Extents()` is representable as a value of
-type `typename Extents::index_type`.
+*Mandates:* If `Extents::rank_dynamic() == 0` is `true`, then the size
+of the multidimensional index space `Extents()` is representable as a
+value of type `typename Extents::index_type`.
 
 ###### Constructors <a id="mdspan.layout.left.cons">[[mdspan.layout.left.cons]]</a>
 
@@ -14091,9 +14097,9 @@ ill-formed.
 `layout_right::mapping<E>` is a trivially copyable type that models
 `regular` for each `E`.
 
-If `Extents::rank_dynamic() == 0` is `true`, then the size of the
-multidimensional index space `Extents()` is representable as a value of
-type `typename Extents::index_type`.
+*Mandates:* If `Extents::rank_dynamic() == 0` is `true`, then the size
+of the multidimensional index space `Extents()` is representable as a
+value of type `typename Extents::index_type`.
 
 ###### Constructors <a id="mdspan.layout.right.cons">[[mdspan.layout.right.cons]]</a>
 
@@ -14281,9 +14287,9 @@ ill-formed.
 `layout_stride::mapping<E>` is a trivially copyable type that models
 `regular` for each `E`.
 
-If `Extents::rank_dynamic() == 0` is `true`, then the size of the
-multidimensional index space `Extents()` is representable as a value of
-type `typename Extents::index_type`.
+*Mandates:* If `Extents::rank_dynamic() == 0` is `true`, then the size
+of the multidimensional index space `Extents()` is representable as a
+value of type `typename Extents::index_type`.
 
 ###### Exposition-only helpers <a id="mdspan.layout.stride.expo">[[mdspan.layout.stride.expo]]</a>
 
@@ -14346,7 +14352,7 @@ constexpr mapping() noexcept;
 representable as a value of type `index_type`[[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
-`extents_type()`, and for all d in the range \[`0`, *`rank_`*`)`,
+`extents_type()`, and for all d in the range \[`0`, *`rank_`*),
 direct-non-list-initializes *`strides_`*`[`d`]` with
 `layout_right::mapping<extents_type>().stride(`d`)`.
 
@@ -14619,7 +14625,7 @@ that models `semiregular`.
 
 [0, n) is an accessible range for an object `p` of type
 `data_handle_type` and an object of type `default_accessor` if and only
-if [`p`, `p + $n$`) is a valid range.
+if \[`p`, `p + `n) is a valid range.
 
 ###### Members <a id="mdspan.accessor.default.members">[[mdspan.accessor.default.members]]</a>
 
@@ -14778,6 +14784,8 @@ namespace std {
                 typename MappingType::layout_type, AccessorType>;
 }
 ```
+
+*Mandates:*
 
 - `ElementType` is a complete object type that is neither an abstract
   class type nor an array type,

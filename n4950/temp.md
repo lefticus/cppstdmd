@@ -4774,8 +4774,8 @@ void k() {
 ### General <a id="temp.spec.general">[[temp.spec.general]]</a>
 
 The act of instantiating a function, a variable, a class, a member of a
-class template, or a member template is referred to as
-*template instantiation*.
+class template, or a member template is referred to as *template
+instantiation*.
 
 A function instantiated from a function template is called an
 instantiated function. A class instantiated from a class template is
@@ -5174,9 +5174,9 @@ scope, the same template parameters and the same access as that of the
 function template `f` used at that point, except that the scope in which
 a closure type is declared [[expr.prim.lambda.closure]] — and therefore
 its associated namespaces — remain as determined from the context of the
-definition for the default argument. This analysis is called
-*default argument instantiation*. The instantiated default argument is
-then used as the argument of `f`.
+definition for the default argument. This analysis is called *default
+argument instantiation*. The instantiated default argument is then used
+as the argument of `f`.
 
 Each default argument is instantiated independently.
 
@@ -7025,7 +7025,7 @@ template non-type argument `i` can be deduced if `P` and `A` have one of
 the following forms:
 
 ``` cpp
-\opt{cv} T
+\opt{cv{}} T
 T*
 T&
 T&&

@@ -1738,7 +1738,7 @@ In all cases, the remainder is left in the input.
 
 The sequence of `char`s accumulated in stage 2 (the field) is converted
 to a numeric value by the rules of one of the functions declared in the
-header :
+header `<cstdlib>`:
 
 - For a signed integer value, the function `strtoll`.
 - For an unsigned integer value, the function `strtoull`.
@@ -2117,10 +2117,10 @@ namespace std {
 
 `numpunct<>` specifies numeric punctuation. The specializations required
 in [[locale.category.facets]] [[locale.category]], namely
-`numpunct<wchar_t>` and `numpunct<char>`, provide classic `"C"` numeric
-formats, i.e., they contain information equivalent to that contained in
-the `"C"` locale or their wide character counterparts as if obtained by
-a call to `widen`.
+`numpunct<{}wchar_t>` and `numpunct<char>`, provide classic `"C"`
+numeric formats, i.e., they contain information equivalent to that
+contained in the `"C"` locale or their wide character counterparts as if
+obtained by a call to `widen`.
 
 The syntax for number formats is as follows, where represents the radix
 set specified by the `fmtflags` argument value, and and are the results
@@ -2312,8 +2312,8 @@ containers operating on strings. The specializations required in
 and `collate<wchar_t>`, apply lexicographical ordering
 [[alg.lex.comparison]].
 
-Each function compares a string of characters `*p` in the range
-[`low`, `high`).
+Each function compares a string of characters `*p` in the range \[`low`,
+`high`).
 
 ##### Members <a id="locale.collate.members">[[locale.collate.members]]</a>
 

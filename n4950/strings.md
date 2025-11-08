@@ -94,7 +94,7 @@ namespace std {
 ```
 
 The header `<string>` defines five specializations of the class template
-`char_traits`: `char_traits<char>`, `char_traits<char8_t>`,
+`char_traits`: `char_traits<{}char>`, `char_traits<char8_t>`,
 `char_traits<char16_t>`, `char_traits<char32_t>`, and
 `char_traits<wchar_t>`.
 
@@ -520,7 +520,7 @@ For a `basic_string_view str`, any operation that invalidates a pointer
 in the range
 
 ``` cpp
-\range{str.data()}{str.data() + str.size()}
+{[}str.data(), {str.data() + str.size()}{)}
 ```
 
 invalidates pointers, iterators, and references returned from `str`’s
@@ -1166,7 +1166,7 @@ manipulating varying-length sequences of char-like objects and five
 *typedef-name*s, `string`, `u8string`, `u16string`, `u32string`, and
 `wstring`, that name the specializations `basic_string<char>`,
 `basic_string<char8_t>`, `basic_string<char16_t>`,
-`basic_string<char32_t>`, and `basic_string<wchar_t>`, respectively.
+`basic_string<char32_t>`, and `basic_string<{}wchar_t>`, respectively.
 
 ### Header `<string>` synopsis <a id="string.syn">[[string.syn]]</a>
 
@@ -1385,9 +1385,9 @@ by `charT`.
 A specialization of `basic_string` is a contiguous container
 [[container.reqmts]].
 
-In all cases, is a valid range, `data() + size()` points at an object
-with value `charT()` (a “null terminator”), and `size() <= capacity()`
-is `true`.
+In all cases, \[`data()`, `data() + size()`\] is a valid range,
+`data() + size()` points at an object with value `charT()` (a “null
+terminator”), and `size() <= capacity()` is `true`.
 
 ``` cpp
 namespace std {
