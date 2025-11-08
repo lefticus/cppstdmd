@@ -100,7 +100,7 @@ conditionally-supported-directive:
 
 ``` bnf
 lparen:
-    a '( character not immediately preceded by whitespace'
+    a '(' character not immediately preceded by whitespace
 ```
 
 ``` bnf

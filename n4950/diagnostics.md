@@ -1677,15 +1677,16 @@ template<class Allocator>
 template<> struct formatter<stacktrace_entry>;
 ```
 
-`formatter<stacktrace_entry>` interprets as a . The syntax of format
-specifications is as follows:
+`formatter<stacktrace_entry>` interprets *format-spec* as a
+*stacktrace-entry-format-spec*. The syntax of format specifications is
+as follows:
 
 <div class="ncbnf">
 
 </div>
 
-\[*Note 1*: The productions and are described in
-[[format.string.std]]. — *end note*\]
+\[*Note 1*: The productions *fill-and-align* and *width* are described
+in [[format.string.std]]. — *end note*\]
 
 A `stacktrace_entry` object `se` is formatted as if by copying
 `to_string(se)` through the output iterator of the context with
@@ -1696,7 +1697,7 @@ specifiers.
 template<class Allocator> struct formatter<basic_stacktrace<Allocator>>;
 ```
 
-For `formatter<basic_stacktrace<Allocator>>`, is empty.
+For `formatter<basic_stacktrace<Allocator>>`, *format-spec* is empty.
 
 A `basic_stacktrace<Allocator>` object `s` is formatted as if by copying
 `to_string(s)` through the output iterator of the context.

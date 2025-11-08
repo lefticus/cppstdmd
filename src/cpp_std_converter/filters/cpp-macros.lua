@@ -140,11 +140,6 @@ local function expand_macros(text, skip_special_chars)
   if not text then return text end
 
   -- Tier 1: Most Critical Macros
-  -- \Cpp is now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A macro)
-
-  -- \cppver now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A macro - Phase 3a)
 
   -- Strip discretionary hyphen \- used for line breaking (BEFORE processing \tcode)
   text = text:gsub("\\%-", "")
@@ -169,8 +164,6 @@ local function expand_macros(text, skip_special_chars)
   text = text:gsub("\\ctype{", "\\texttt{")
   text = text:gsub("\\tcode{", "\\texttt{")
 
-  -- \deflibconcept now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category I macro - Phase 3a)
 
   -- Tier 2: Grammar and Special Identifiers
 
@@ -181,13 +174,7 @@ local function expand_macros(text, skip_special_chars)
   text = text:gsub("\\placeholder{([^}]*)}", "*%1*")
   text = text:gsub("\\placeholdernc{([^}]*)}", "*%1*")
 
-  -- Remaining Category B and C macros handled by simplified_macros.tex → Pandoc
-  -- (Kept in simplified: \exposid, \exposidnc, \exposconcept,
-  --  \libheader, \libheaderdef, \libheaderref, \libheaderrefx)
-
   -- Tier 3: C++ Version Macros
-  -- All \Cpp* macros now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A macros)
 
   -- Library chapter reference macros (dynamic, loaded from config.tex in Meta())
   -- Handle with braces first (more specific pattern)
@@ -196,27 +183,6 @@ local function expand_macros(text, skip_special_chars)
   -- Then without braces
   text = text:gsub("\\firstlibchapter", FIRSTLIB)
   text = text:gsub("\\lastlibchapter", LASTLIB)
-
-  -- Tier 4: Reference Standards
-  -- \IsoC, \IsoPosix, \IsoFloatUndated now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A macros)
-
-  -- Tier 5: Common Formatting
-  -- \cv now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A macro)
-
-  -- Tier 6: Library specification macros
-  -- \seebelow, \unspec, \unspecnc, \expos now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category D macros)
-
-  -- \fmtgrammarterm, \libglobal now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category B/C macros)
-
-  -- \impldef now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category D macro)
-
-  -- \cvqual, \ctype now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A, B macros)
 
   -- \stage{N} - keep for RawBlock description list processing
   -- (simplified_macros.tex handles it in regular context, but RawBlocks need Lua)
@@ -246,14 +212,8 @@ local function expand_macros(text, skip_special_chars)
   -- \descr{X} renders as X (description text, just remove wrapper)
   text = text:gsub("\\descr{([^}]*)}", "%1")
 
-  -- \defn{}, \term{}, \doccite{} now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category C macros)
-
   -- Note: \defnx, \defnadj, \defexposconcept are now handled in RawInline
   -- with proper emphasis using pandoc.Emph() instead of literal asterisks
-
-  -- Change description macros now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category G macros - \change, \rationale, \effect)
 
   -- \opt{x} renders as x_opt (optional grammar element with subscript marker)
   -- EXCEPT in BNF blocks where cpp-grammar.lua converts it to [x] bracket notation
@@ -265,19 +225,8 @@ local function expand_macros(text, skip_special_chars)
   -- The LaTeX macro does complex text scaling, but for Markdown we simplify to standard format
   text = text:gsub("\\ucode{([^}]*)}", "`U+%1`")
 
-  -- \ntbs{} and \ntmbs{} now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A macros)
   -- Note: \NTS{text} still needs Lua handling for uppercase conversion
   text = text:gsub("\\NTS{([^}]*)}", function(s) return s:upper() end)
-
-  -- Special characters that may appear in inline text (already handled above by convert_special_chars)
-  -- Left here for documentation but no longer needed as duplicates
-
-  -- \uname{X} → X (Unicode character names - strip small caps formatting)
-  -- \uname now handled by simplified_macros.tex → Pandoc (Phase 3a)
-
-  -- \notdef now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category D macro)
 
   -- \colcol{} renders as :: (restored - context-dependent)
   text = text:gsub("\\colcol{}", "::")
@@ -403,8 +352,6 @@ function RawInline(elem)
     return pandoc.Str(hbox_content)
   end
 
-  -- \impldef now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category D macro)
 
   -- \impdefx{description} - handle BEFORE \tcode to extract description with nested macros
   if text:match("^\\impdefx{") then
@@ -658,8 +605,6 @@ function RawInline(elem)
     end
   end
 
-  -- \oldconcept now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category C macro)
 
   -- Emphasis macros - return Emph elements
 
@@ -884,8 +829,6 @@ function RawInline(elem)
     return pandoc.RawInline('markdown', '[`' .. first .. '`, `' .. last .. '`)')
   end
 
-  -- Bare \Cpp, \cv, \seebelow, \unspec, \unspecnc, \expos now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category A and D macros)
 
   -- \UAX{number} - Unicode Annex reference (e.g., \UAX{31} -> UAX #31)
   local uax_num = text:match("^\\UAX{([^}]*)}")
@@ -953,10 +896,7 @@ function CodeBlock(elem)
   text = text:gsub("\\clap{([^}]+)}", "%1")
 
   -- \uname{X} → X (Unicode character names - strip formatting)
-  -- \uname now handled by simplified_macros.tex → Pandoc (Phase 3a)
 
-  -- \notdef now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category D macro)
 
   -- \unicode{XXXX}{description} → U+XXXX (description)
   -- This macro takes two brace-balanced arguments
@@ -974,8 +914,6 @@ function CodeBlock(elem)
   -- Handle \mname{} macros
   text = convert_mname(text)
 
-  -- \deflibconcept now handled by simplified_macros.tex → Pandoc
-  -- (Removed: Category I macro - Phase 3a)
 
   -- Strip discretionary hyphen \- used for line breaking
   text = text:gsub("\\%-", "")

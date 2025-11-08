@@ -961,17 +961,18 @@ template<class charT, class traits>
 template<class charT> struct formatter<thread::id, charT>;
 ```
 
-`formatter<thread::id, charT>` interprets as a . The syntax of format
-specifications is as follows:
+`formatter<thread::id, charT>` interprets *format-spec* as a
+*thread-id-format-spec*. The syntax of format specifications is as
+follows:
 
 <div class="ncbnf">
 
 </div>
 
-\[*Note 2*: The productions and are described in
-[[format.string.std]]. — *end note*\]
+\[*Note 2*: The productions *fill-and-align* and *width* are described
+in [[format.string.std]]. — *end note*\]
 
-If the option is omitted it defaults to `>`.
+If the *align* option is omitted it defaults to `>`.
 
 A `thread::id` object is formatted by writing its text representation
 for `charT` to the output with additional padding and adjustments as

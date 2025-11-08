@@ -10677,7 +10677,7 @@ above that include that character illustrate the effect of the field
 width when that character is used as a fill character as opposed to when
 it is used as a formatting argument. — *end note*\]
 
-**Table: Meaning of \fmtgrammarterm{align} options**
+**Table: Meaning of align options**
 
 | Option | Meaning |
 | --- | --- |
@@ -10690,7 +10690,7 @@ The *sign* option is only valid for arithmetic types other than `charT`
 and `bool` or when an integer presentation type is specified. The
 meaning of the various options is as specified in [[format.sign]].
 
-**Table: Meaning of \fmtgrammarterm{sign} options**
+**Table: Meaning of sign options**
 
 | Option | Meaning |
 | --- | --- |
@@ -10749,11 +10749,11 @@ string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no 
 The *width* option specifies the minimum field width. If the *width*
 option is absent, the minimum field width is `0`.
 
-If `{ \fmtgrammarterm{arg-id_opt} }` is used in a *width* or *precision*
-option, the value of the corresponding formatting argument is used as
-the value of the option. If the corresponding formatting argument is not
-of standard signed or unsigned integer type, or its value is negative,
-an exception of type `format_error` is thrown.
+If `{ arg-id_opt }` is used in a *width* or *precision* option, the
+value of the corresponding formatting argument is used as the value of
+the option. If the corresponding formatting argument is not of standard
+signed or unsigned integer type, or its value is negative, an exception
+of type `format_error` is thrown.
 
 If *positive-integer* is used in a *width* option, the value of the
 *positive-integer* is interpreted as a decimal integer and used as the
@@ -10822,7 +10822,7 @@ The *type* determines how the data should be presented.
 The available string presentation types are specified in
 [[format.type.string]].
 
-**Table: Meaning of \fmtgrammarterm{type} options for strings**
+**Table: Meaning of type options for strings**
 
 | Type | Meaning |
 | --- | --- |
@@ -10856,7 +10856,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 
 — *end example*\]
 
-**Table: Meaning of \fmtgrammarterm{type} options for integer types**
+**Table: Meaning of type options for integer types**
 
 | Type | Meaning |
 | --- | --- |
@@ -10873,7 +10873,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
-**Table: Meaning of \fmtgrammarterm{type} options for `charT`**
+**Table: Meaning of type options for `charT`**
 
 | Type | Meaning |
 | --- | --- |
@@ -10885,7 +10885,7 @@ The available `charT` presentation types are specified in
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
-**Table: Meaning of \fmtgrammarterm{type} options for `bool`**
+**Table: Meaning of type options for `bool`**
 
 | Type | Meaning |
 | --- | --- |
@@ -10903,18 +10903,18 @@ respectively.
 \[*Note 7*: In either case, a sign is included if indicated by the
 *sign* option. — *end note*\]
 
-**Table: Meaning of \fmtgrammarterm{type} options for floating-point types**
+**Table: Meaning of type options for floating-point types**
 
 | Type | Meaning |
 | --- | --- |
-| `a` | If \fmtgrammarterm{precision} is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
+| `a` | If precision is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
 | % `A` | The same as `a`, except that it uses uppercase letters for digits above 9 and `P` to indicate the exponent. |
-| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
+| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified. |
 | % `E` | The same as `e`, except that it uses `E` to indicate exponent. |
-| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
-| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if \fmtgrammarterm{precision} is not specified. |
+| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified. |
+| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified. |
 | % `G` | The same as `g`, except that it uses `E` to indicate exponent. |
-| % none | If \fmtgrammarterm{precision} is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
+| % none | If precision is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
 
 
 The available pointer presentation types and their mapping to `to_chars`
@@ -10923,7 +10923,7 @@ are specified in [[format.type.ptr]].
 \[*Note 8*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*\]
 
-**Table: Meaning of \fmtgrammarterm{type} options for pointer types**
+**Table: Meaning of type options for pointer types**
 
 | Type | Meaning |
 | --- | --- |
@@ -11597,7 +11597,7 @@ struct S { int value; };
 template<> struct std::formatter<S> {
   size_t width_arg_id = 0;
 
-  // Parses a width argument id in the format { \fmtgrammarterm{digit} }.
+  // Parses a width argument id in the format { digit }.
   constexpr auto parse(format_parse_context& ctx) {
     auto iter = ctx.begin();
     auto get_char = [&]() { return iter != ctx.end() ? *iter : 0; };
@@ -11749,11 +11749,11 @@ The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of
 the various type options is as specified in [[formatter.range.type]].
 
-**Table: Meaning of \fmtgrammarterm{range-type} options**
+**Table: Meaning of range-type options**
 
 | Option | Requirements | Meaning |
 | --- | --- | --- |
-| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its \fmtgrammarterm{tuple-type}. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
+| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its tuple-type. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
 | % `s` | `T` shall be `charT`. | Indicates that the range should be formatted as a `string`. |
 | % `?s` | `T` shall be `charT`. | Indicates that the range should be formatted as an escaped string [[format.string.escaped]]. |
 
@@ -11785,18 +11785,19 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-*Effects:* Parses the format specifier as a and stores the parsed
-specifiers in `*this`. The values of *opening-bracket\_*,
-*closing-bracket\_*, and *separator\_* are modified if and only if
-required by the or the `n` option, if present. If:
+*Effects:* Parses the format specifier as a *range-format-spec* and
+stores the parsed specifiers in `*this`. The values of
+*opening-bracket\_*, *closing-bracket\_*, and *separator\_* are modified
+if and only if required by the *range-type* or the `n` option, if
+present. If:
 
-- the is neither `s` nor `?s`,
+- the *range-type* is neither `s` nor `?s`,
 - *`underlying_`*`.set_debug_format()` is a valid expression, and
-- there is no ,
+- there is no *range-underlying-spec*,
 
 then calls *`underlying_`*`.set_debug_format()`.
 
-*Returns:* An iterator past the end of the .
+*Returns:* An iterator past the end of the *range-format-spec*.
 
 ``` cpp
 template<ranges::input_range R, class FormatContext>
@@ -11807,11 +11808,11 @@ template<ranges::input_range R, class FormatContext>
 ```
 
 *Effects:* Writes the following into `ctx.out()`, adjusted according to
-the :
+the *range-format-spec*:
 
-- If the was `s`, then as if by formatting
+- If the *range-type* was `s`, then as if by formatting
   `basic_string<charT>(from_range, r)`.
-- Otherwise, if the was `?s`, then as if by formatting
+- Otherwise, if the *range-type* was `?s`, then as if by formatting
   `basic_string<charT>(from_range, r)` as an escaped
   string [[format.string.escaped]].
 - Otherwise,
@@ -12345,7 +12346,7 @@ formatted, with certain options only valid with certain argument types.
 The meaning of the various type options is as specified in
 [[formatter.tuple.type]].
 
-**Table: Meaning of \fmtgrammarterm{tuple-type} options**
+**Table: Meaning of tuple-type options**
 
 | Option | Requirements | Meaning |
 | --- | --- | --- |
@@ -12377,14 +12378,14 @@ template<class ParseContext>
     parse(ParseContext& ctx);
 ```
 
-*Effects:* Parses the format specifier as a and stores the parsed
-specifiers in `*this`. The values of *opening-bracket\_*,
-*closing-bracket\_*, and *separator\_* are modified if and only if
-required by the , if present. For each element *`e`* in *underlying\_*,
-if *`e`*`.set_debug_format()` is a valid expression, calls
-*`e`*`.set_debug_format()`.
+*Effects:* Parses the format specifier as a *tuple-format-spec* and
+stores the parsed specifiers in `*this`. The values of
+*opening-bracket\_*, *closing-bracket\_*, and *separator\_* are modified
+if and only if required by the *tuple-type*, if present. For each
+element *`e`* in *underlying\_*, if *`e`*`.set_debug_format()` is a
+valid expression, calls *`e`*`.set_debug_format()`.
 
-*Returns:* An iterator past the end of the .
+*Returns:* An iterator past the end of the *tuple-format-spec*.
 
 ``` cpp
 template<class FormatContext>
@@ -12399,7 +12400,7 @@ The type of `elems` is:
 - Otherwise *`pair-or-tuple`*`<Ts...>&`.
 
 *Effects:* Writes the following into `ctx.out()`, adjusted according to
-the :
+the *tuple-format-spec*:
 
 - *opening-bracket\_*,
 - for each index `I` in the \[`0`, `sizeof...(Ts)`):
