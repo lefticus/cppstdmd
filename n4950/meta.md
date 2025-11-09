@@ -7,11 +7,11 @@ summarized in [[meta.summary]].
 
 **Table: Metaprogramming library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[intseq]] | Integer sequences | `<utility>` |
-| [[type.traits]] | Type traits | `<type_traits>` |
-| [[ratio]] | Rational arithmetic | `<ratio>` |
+| Subclause       |                     | Header          |
+| --------------- | ------------------- | --------------- |
+| [[intseq]]      | Integer sequences   | `<utility>`     |
+| [[type.traits]] | Type traits         | `<type_traits>` |
+| [[ratio]]       | Rational arithmetic | `<ratio>`       |
 
 
 ## Compile-time integer sequences <a id="intseq">[[intseq]]</a>
@@ -1328,14 +1328,14 @@ yields correct values of `U` and `V`.
 
 **Table: Expressions used to perform ratio arithmetic**
 
-|  |  |  |
-| --- | --- | --- |
-| `ratio_add<R1, R2>` | `R1::num * R2::den +` | `R1::den * R2::den` |
-|  | `R2::num * R1::den` |  |
+|                          |                       |                     |
+| ------------------------ | --------------------- | ------------------- |
+| `ratio_add<R1, R2>`      | `R1::num * R2::den +` | `R1::den * R2::den` |
+|                          | `R2::num * R1::den`   |                     |
 | `ratio_subtract<R1, R2>` | `R1::num * R2::den -` | `R1::den * R2::den` |
-|  | `R2::num * R1::den` |  |
-| `ratio_multiply<R1, R2>` | `R1::num * R2::num` | `R1::den * R2::den` |
-| `ratio_divide<R1, R2>` | `R1::num * R2::den` | `R1::den * R2::num` |
+|                          | `R2::num * R1::den`   |                     |
+| `ratio_multiply<R1, R2>` | `R1::num * R2::num`   | `R1::den * R2::den` |
+| `ratio_divide<R1, R2>`   | `R1::num * R2::den`   | `R1::den * R2::num` |
 
 
 \[*Example 1*:

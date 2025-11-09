@@ -349,6 +349,66 @@ local function extract_data_section(table_content)
   return data_section
 end
 
+-- Calculate raw string width for markdown source alignment
+-- Counts all characters including markdown syntax (backticks, brackets, etc.)
+-- For pretty-printing markdown source, we want alignment based on what you see in a text editor
+local function string_width(str)
+  if not str or str == "" then
+    return 0
+  end
+
+  -- Count UTF-8 characters (not bytes), including all markdown syntax
+  -- This pattern matches UTF-8 character boundaries
+  local count = 0
+  for _ in str:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+    count = count + 1
+  end
+
+  return count
+end
+
+-- Calculate maximum width for each column
+local function calculate_column_widths(headers, rows)
+  local widths = {}
+  local num_cols = #headers
+
+  -- Initialize with header widths
+  for i, header in ipairs(headers) do
+    widths[i] = string_width(header)
+  end
+
+  -- Update with row data widths
+  -- Skip malformed rows that don't have the expected number of columns
+  for _, row in ipairs(rows) do
+    if #row == num_cols then  -- Only process rows with correct column count
+      for i, cell in ipairs(row) do
+        local width = string_width(cell)
+        if not widths[i] or width > widths[i] then
+          widths[i] = width
+        end
+      end
+    end
+  end
+
+  return widths
+end
+
+-- Pad a cell to the specified width with trailing spaces
+local function pad_cell(cell, width)
+  if not cell then
+    cell = ""
+  end
+
+  local current_width = string_width(cell)
+  local padding_needed = width - current_width
+
+  if padding_needed > 0 then
+    return cell .. string.rep(" ", padding_needed)
+  end
+
+  return cell
+end
+
 -- Helper function to build markdown table from structured data
 -- This is the single source of truth for table formatting (DRY principle)
 local function build_markdown_table(caption, headers, rows)
@@ -365,20 +425,38 @@ local function build_markdown_table(caption, headers, rows)
     end
   end
 
+  -- Calculate column widths for alignment
+  local col_widths = calculate_column_widths(headers, rows)
+
+  -- Enforce minimum width of 3 for all columns (markdown requires at least --- in separator)
+  for i = 1, #col_widths do
+    col_widths[i] = math.max(col_widths[i], 3)
+  end
+
   -- Add header row and separator (required for valid markdown tables)
   if #headers > 0 then
-    table.insert(md_lines, "| " .. table.concat(headers, " | ") .. " |")
-    -- Add separator row
+    -- Build padded header row
+    local padded_headers = {}
+    for i, header in ipairs(headers) do
+      table.insert(padded_headers, pad_cell(header, col_widths[i]))
+    end
+    table.insert(md_lines, "| " .. table.concat(padded_headers, " | ") .. " |")
+
+    -- Add separator row with dashes matching column widths
     local sep = {}
     for i = 1, #headers do
-      table.insert(sep, "---")
+      table.insert(sep, string.rep("-", col_widths[i]))
     end
     table.insert(md_lines, "| " .. table.concat(sep, " | ") .. " |")
   end
 
-  -- Add data rows
+  -- Add data rows with padding
   for _, row in ipairs(rows) do
-    table.insert(md_lines, "| " .. table.concat(row, " | ") .. " |")
+    local padded_row = {}
+    for i, cell in ipairs(row) do
+      table.insert(padded_row, pad_cell(cell, col_widths[i] or 3))
+    end
+    table.insert(md_lines, "| " .. table.concat(padded_row, " | ") .. " |")
   end
 
   -- Add trailing blank line to separate table from following content

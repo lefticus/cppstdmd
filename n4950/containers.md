@@ -11,14 +11,14 @@ for sequence containers and associative containers, as summarized in
 
 **Table: Containers library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[container.requirements]] | Requirements |  |
-| [[sequences]] | Sequence containers | `<array>`, `<deque>`, `<forward_list>`, `<list>`, `<vector>` |
-| [[associative]] | Associative containers | `<map>`, `<set>` |
-| [[unord]] | Unordered associative containers | `<unordered_map>`, `<unordered_set>` |
-| [[container.adaptors]] | Container adaptors | `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>` |
-| [[views]] | Views | `<span>`, `<mdspan>` |
+| Subclause                  |                                  | Header                                                       |
+| -------------------------- | -------------------------------- | ------------------------------------------------------------ |
+| [[container.requirements]] | Requirements                     |                                                              |
+| [[sequences]]              | Sequence containers              | `<array>`, `<deque>`, `<forward_list>`, `<list>`, `<vector>` |
+| [[associative]]            | Associative containers           | `<map>`, `<set>`                                             |
+| [[unord]]                  | Unordered associative containers | `<unordered_map>`, `<unordered_set>`                         |
+| [[container.adaptors]]     | Container adaptors               | `<queue>`, `<stack>`, `<flat_map>`, `<flat_set>`             |
+| [[views]]                  | Views                            | `<span>`, `<mdspan>`                                         |
 
 
 ## Requirements <a id="container.requirements">[[container.requirements]]</a>
@@ -1305,16 +1305,16 @@ of [[container.node.compat]].
 
 **Table: Container types with compatible nodes**
 
-|  |  |
-| --- | --- |
-| `map<K, T, C1, A>` | `map<K, T, C2, A>` |
-| `map<K, T, C1, A>` | `multimap<K, T, C2, A>` |
-| `set<K, C1, A>` | `set<K, C2, A>` |
-| `set<K, C1, A>` | `multiset<K, C2, A>` |
-| `unordered_map<K, T, H1, E1, A>` | `unordered_map<K, T, H2, E2, A>` |
+|                                  |                                       |
+| -------------------------------- | ------------------------------------- |
+| `map<K, T, C1, A>`               | `map<K, T, C2, A>`                    |
+| `map<K, T, C1, A>`               | `multimap<K, T, C2, A>`               |
+| `set<K, C1, A>`                  | `set<K, C2, A>`                       |
+| `set<K, C1, A>`                  | `multiset<K, C2, A>`                  |
+| `unordered_map<K, T, H1, E1, A>` | `unordered_map<K, T, H2, E2, A>`      |
 | `unordered_map<K, T, H1, E1, A>` | `unordered_multimap<K, T, H2, E2, A>` |
-| `unordered_set<K, H1, E1, A>` | `unordered_set<K, H2, E2, A>` |
-| `unordered_set<K, H1, E1, A>` | `unordered_multiset<K, H2, E2, A>` |
+| `unordered_set<K, H1, E1, A>`    | `unordered_set<K, H2, E2, A>`         |
+| `unordered_set<K, H1, E1, A>`    | `unordered_multiset<K, H2, E2, A>`    |
 
 
 If a node handle is not empty, then it contains an allocator that is

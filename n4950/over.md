@@ -481,14 +481,14 @@ built-in operator [[expr.compound]].
 
 **Table: Relationship between operator and function call notation**
 
-| Subclause | Expression | As member function | As non-member function |
-| --- | --- | --- | --- |
-| (a)} |
-| (a, b)} |
-| [[over.ass]] | `a=b` | `(a).operator= (b)` |  |
-| [[over.sub]] | `a[b]` | `(a).operator[](b)` |  |
-| [[over.ref]] | `a->` | `(a).operator->( )` |  |
-| (a, 0)} |
+| Subclause    | Expression | As member function  | As non-member function |
+| ------------ | ---------- | ------------------- | ---------------------- |
+| (a)}         |
+| (a, b)}      |
+| [[over.ass]] | `a=b`      | `(a).operator= (b)` |                        |
+| [[over.sub]] | `a[b]`     | `(a).operator[](b)` |                        |
+| [[over.ref]] | `a->`      | `(a).operator->( )` |                        |
+| (a, 0)}      |
 
 
 For a unary operator `@` with an operand of type cv-qualifiercv1 `T1`,
@@ -1635,11 +1635,11 @@ Promotion rank; otherwise, the sequence has Exact Match rank.
 
 **Table: Conversions**
 
-| Conversion | Category | Rank | Subclause |
-| --- | --- | --- | --- |
-| No conversions required | Identity |  |  |
-| Integral promotions |  |  | [[conv.prom]] |
-| Integral conversions |  |  | [[conv.integral]] |
+| Conversion              | Category | Rank | Subclause         |
+| ----------------------- | -------- | ---- | ----------------- |
+| No conversions required | Identity |      |                   |
+| Integral promotions     |          |      | [[conv.prom]]     |
+| Integral conversions    |          |      | [[conv.integral]] |
 
 
 ##### User-defined conversion sequences <a id="over.ics.user">[[over.ics.user]]</a>

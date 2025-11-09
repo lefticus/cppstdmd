@@ -16,20 +16,20 @@ other runtime support, as summarized in [[support.summary]].
 
 **Table: Language support library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[support.types]] | Common definitions | `<cstddef>`, `<cstdlib>` |
-| [[support.limits]] | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
-| [[support.arith.types]] | Arithmetic types | `<cstdint>`, `<stdfloat>` |
-| [[support.start.term]] | Start and termination | `<cstdlib>` |
-| [[support.dynamic]] | Dynamic memory management | `<new>` |
-| [[support.rtti]] | Type identification | `<typeinfo>` |
-| [[support.srcloc]] | Source location | `<source_location>` |
-| [[support.exception]] | Exception handling | `<exception>` |
-| [[support.initlist]] | Initializer lists | `<initializer_list>` |
-| [[cmp]] | Comparisons | `<compare>` |
-| [[support.coroutine]] | Coroutines | `<coroutine>` |
-| [[support.runtime]] | Other runtime support | `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
+| Subclause               |                           | Header                                             |
+| ----------------------- | ------------------------- | -------------------------------------------------- |
+| [[support.types]]       | Common definitions        | `<cstddef>`, `<cstdlib>`                           |
+| [[support.limits]]      | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>`   |
+| [[support.arith.types]] | Arithmetic types          | `<cstdint>`, `<stdfloat>`                          |
+| [[support.start.term]]  | Start and termination     | `<cstdlib>`                                        |
+| [[support.dynamic]]     | Dynamic memory management | `<new>`                                            |
+| [[support.rtti]]        | Type identification       | `<typeinfo>`                                       |
+| [[support.srcloc]]      | Source location           | `<source_location>`                                |
+| [[support.exception]]   | Exception handling        | `<exception>`                                      |
+| [[support.initlist]]    | Initializer lists         | `<initializer_list>`                               |
+| [[cmp]]                 | Comparisons               | `<compare>`                                        |
+| [[support.coroutine]]   | Coroutines                | `<coroutine>`                                      |
+| [[support.runtime]]     | Other runtime support     | `<csetjmp>`, `<csignal>`, `<cstdarg>`, `<cstdlib>` |
 
 
 ## Common definitions <a id="support.types">[[support.types]]</a>

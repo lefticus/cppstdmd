@@ -9,22 +9,22 @@ standard library. These utilities are summarized in
 
 **Table: General utilities library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[utility]] | Utility components | `<utility>` |
-| [[pairs]] | Pairs |  |
-| [[tuple]] | Tuples | `<tuple>` |
-| [[optional]] | Optional objects | `<optional>` |
-| [[variant]] | Variants | `<variant>` |
-| [[any]] | Storage for any type | `<any>` |
-| [[expected]] | Expected objects | `<expected>` |
-| [[bitset]] | Fixed-size sequences of bits | `<bitset>` |
-| [[function.objects]] | Function objects | `<functional>` |
-| [[type.index]] | Type indexes | `<typeindex>` |
-| [[execpol]] | Execution policies | `<execution>` |
-| [[charconv]] | Primitive numeric conversions | `<charconv>` |
-| [[format]] | Formatting | `<format>` |
-| [[bit]] | Bit manipulation | `<bit>` |
+| Subclause            |                               | Header         |
+| -------------------- | ----------------------------- | -------------- |
+| [[utility]]          | Utility components            | `<utility>`    |
+| [[pairs]]            | Pairs                         |                |
+| [[tuple]]            | Tuples                        | `<tuple>`      |
+| [[optional]]         | Optional objects              | `<optional>`   |
+| [[variant]]          | Variants                      | `<variant>`    |
+| [[any]]              | Storage for any type          | `<any>`        |
+| [[expected]]         | Expected objects              | `<expected>`   |
+| [[bitset]]           | Fixed-size sequences of bits  | `<bitset>`     |
+| [[function.objects]] | Function objects              | `<functional>` |
+| [[type.index]]       | Type indexes                  | `<typeindex>`  |
+| [[execpol]]          | Execution policies            | `<execution>`  |
+| [[charconv]]         | Primitive numeric conversions | `<charconv>`   |
+| [[format]]           | Formatting                    | `<format>`     |
+| [[bit]]              | Bit manipulation              | `<bit>`        |
 
 
 ## Utility components <a id="utility">[[utility]]</a>
@@ -10679,11 +10679,11 @@ it is used as a formatting argument. — *end note*\]
 
 **Table: Meaning of align options**
 
-| Option | Meaning |
-| --- | --- |
-| `<` | Forces the formatted argument to be aligned to the start of the field by inserting $n$ fill characters after the formatted argument where $n$ is the padding width. This is the default for non-arithmetic non-pointer types, `charT`, and `bool`, unless an integer presentation type is specified. |
-| % `>` | Forces the formatted argument to be aligned to the end of the field by inserting $n$ fill characters before the formatted argument where $n$ is the padding width. This is the default for arithmetic types other than `charT` and `bool`, pointer types, or when an integer presentation type is specified. |
-| % `^` | Forces the formatted argument to be centered within the field by inserting $\bigl\lfloor \frac{n}{2} \bigr\rfloor$ fill characters before and $\bigl\lceil \frac{n}{2} \bigr\rceil$ fill characters after the formatted argument, where $n$ is the padding width. |
+| Option | Meaning                                                                                                                                                                                                                                                                                                      |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `<`    | Forces the formatted argument to be aligned to the start of the field by inserting $n$ fill characters after the formatted argument where $n$ is the padding width. This is the default for non-arithmetic non-pointer types, `charT`, and `bool`, unless an integer presentation type is specified.         |
+| % `>`  | Forces the formatted argument to be aligned to the end of the field by inserting $n$ fill characters before the formatted argument where $n$ is the padding width. This is the default for arithmetic types other than `charT` and `bool`, pointer types, or when an integer presentation type is specified. |
+| % `^`  | Forces the formatted argument to be centered within the field by inserting $\bigl\lfloor \frac{n}{2} \bigr\rfloor$ fill characters before and $\bigl\lceil \frac{n}{2} \bigr\rceil$ fill characters after the formatted argument, where $n$ is the padding width.                                            |
 
 
 The *sign* option is only valid for arithmetic types other than `charT`
@@ -10692,11 +10692,11 @@ meaning of the various options is as specified in [[format.sign]].
 
 **Table: Meaning of sign options**
 
-| Option | Meaning |
-| --- | --- |
-| `+` | Indicates that a sign should be used for both non-negative and negative numbers. The `+` sign is inserted before the output of `to_chars` for non-negative numbers other than negative zero. *For negative numbers and negative zero the output of `to_chars` will already contain the sign so no additional transformation is performed.* |
-| % `-` | Indicates that a sign should be used for negative numbers and negative zero only (this is the default behavior). |
-| % space | Indicates that a leading space should be used for non-negative numbers other than negative zero, and a minus sign for negative numbers and negative zero. |
+| Option  | Meaning                                                                                                                                                                                                                                                                                                                                    |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `+`     | Indicates that a sign should be used for both non-negative and negative numbers. The `+` sign is inserted before the output of `to_chars` for non-negative numbers other than negative zero. *For negative numbers and negative zero the output of `to_chars` will already contain the sign so no additional transformation is performed.* |
+| % `-`   | Indicates that a sign should be used for negative numbers and negative zero only (this is the default behavior).                                                                                                                                                                                                                           |
+| % space | Indicates that a leading space should be used for non-negative numbers other than negative zero, and a minus sign for negative numbers and negative zero.                                                                                                                                                                                  |
 
 
 The *sign* option applies to floating-point infinity and NaN.
@@ -10824,10 +10824,10 @@ The available string presentation types are specified in
 
 **Table: Meaning of type options for strings**
 
-| Type | Meaning |
-| --- | --- |
-| none, `s` | Copies the string to the output. |
-| % `?` | Copies the escaped string [[format.string.escaped]] to the output. |
+| Type      | Meaning                                                            |
+| --------- | ------------------------------------------------------------------ |
+| none, `s` | Copies the string to the output.                                   |
+| % `?`     | Copies the escaped string [[format.string.escaped]] to the output. |
 
 
 The meaning of some non-string presentation types is defined in terms of
@@ -10858,16 +10858,16 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 
 **Table: Meaning of type options for integer types**
 
-| Type | Meaning |
-| --- | --- |
-| `b` | `to_chars(first, last, value, 2)`; \indextext{base prefix}% the base prefix is `0b`. |
-| % `B` | The same as `b`, except that \indextext{base prefix}% the base prefix is `0B`. |
-| % `c` | Copies the character `static_cast<charT>(value)` to the output. Throws `format_error` if `value` is not in the range of representable values for `charT`. |
-| % `d` | `to_chars(first, last, value)`. |
-| % `o` | `to_chars(first, last, value, 8)`; \indextext{base prefix}% the base prefix is `0` if `value` is nonzero and is empty otherwise. |
-| % `x` | `to_chars(first, last, value, 16)`; \indextext{base prefix}% the base prefix is `0x`. |
-| % `X` | The same as `x`, except that it uses uppercase letters for digits above 9 and \indextext{base prefix}% the base prefix is `0X`. |
-| % none | The same as `d`. *If the formatting argument type is `charT` or `bool`, the default is instead `c` or `s`, respectively.* |
+| Type   | Meaning                                                                                                                                                   |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `b`    | `to_chars(first, last, value, 2)`; \indextext{base prefix}% the base prefix is `0b`.                                                                      |
+| % `B`  | The same as `b`, except that \indextext{base prefix}% the base prefix is `0B`.                                                                            |
+| % `c`  | Copies the character `static_cast<charT>(value)` to the output. Throws `format_error` if `value` is not in the range of representable values for `charT`. |
+| % `d`  | `to_chars(first, last, value)`.                                                                                                                           |
+| % `o`  | `to_chars(first, last, value, 8)`; \indextext{base prefix}% the base prefix is `0` if `value` is nonzero and is empty otherwise.                          |
+| % `x`  | `to_chars(first, last, value, 16)`; \indextext{base prefix}% the base prefix is `0x`.                                                                     |
+| % `X`  | The same as `x`, except that it uses uppercase letters for digits above 9 and \indextext{base prefix}% the base prefix is `0X`.                           |
+| % none | The same as `d`. *If the formatting argument type is `charT` or `bool`, the default is instead `c` or `s`, respectively.*                                 |
 
 
 The available `charT` presentation types are specified in
@@ -10875,11 +10875,11 @@ The available `charT` presentation types are specified in
 
 **Table: Meaning of type options for `charT`**
 
-| Type | Meaning |
-| --- | --- |
-| none, `c` | Copies the character to the output. |
-| % `b`, `B`, `d`, `o`, `x`, `X` | As specified in [[format.type.int]]. |
-| % `?` | Copies the escaped character [[format.string.escaped]] to the output. |
+| Type                           | Meaning                                                               |
+| ------------------------------ | --------------------------------------------------------------------- |
+| none, `c`                      | Copies the character to the output.                                   |
+| % `b`, `B`, `d`, `o`, `x`, `X` | As specified in [[format.type.int]].                                  |
+| % `?`                          | Copies the escaped character [[format.string.escaped]] to the output. |
 
 
 The available `bool` presentation types are specified in
@@ -10887,9 +10887,9 @@ The available `bool` presentation types are specified in
 
 **Table: Meaning of type options for `bool`**
 
-| Type | Meaning |
-| --- | --- |
-| none, `s` | Copies textual representation, either `true` or `false`, to the output. |
+| Type                           | Meaning                                                                                |
+| ------------------------------ | -------------------------------------------------------------------------------------- |
+| none, `s`                      | Copies textual representation, either `true` or `false`, to the output.                |
 | % `b`, `B`, `d`, `o`, `x`, `X` | As specified in [[format.type.int]] for the value `static_cast<unsigned char>(value)`. |
 
 
@@ -10905,16 +10905,16 @@ respectively.
 
 **Table: Meaning of type options for floating-point types**
 
-| Type | Meaning |
-| --- | --- |
-| `a` | If precision is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
-| % `A` | The same as `a`, except that it uses uppercase letters for digits above 9 and `P` to indicate the exponent. |
-| % `e` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified. |
-| % `E` | The same as `e`, except that it uses `E` to indicate exponent. |
-| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified. |
-| % `g` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified. |
-| % `G` | The same as `g`, except that it uses `E` to indicate exponent. |
-| % none | If precision is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise. |
+| Type       | Meaning                                                                                                                                                                                                                                                                                                   |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `a`        | If precision is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::hex) \end{codeblock} otherwise. |
+| % `A`      | The same as `a`, except that it uses uppercase letters for digits above 9 and `P` to indicate the exponent.                                                                                                                                                                                               |
+| % `e`      | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::scientific, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified.                                                                                          |
+| % `E`      | The same as `e`, except that it uses `E` to indicate exponent.                                                                                                                                                                                                                                            |
+| % `f`, `F` | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::fixed, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified.                                                                                               |
+| % `g`      | Equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision, or `6` if precision is not specified.                                                                                             |
+| % `G`      | The same as `g`, except that it uses `E` to indicate exponent.                                                                                                                                                                                                                                            |
+| % none     | If precision is specified, equivalent to \begin{codeblock} to_chars(first, last, value, chars_format::general, precision) \end{codeblock} where `precision` is the specified formatting precision; equivalent to \begin{codeblock} to_chars(first, last, value) \end{codeblock} otherwise.                |
 
 
 The available pointer presentation types and their mapping to `to_chars`
@@ -10925,8 +10925,8 @@ are specified in [[format.type.ptr]].
 
 **Table: Meaning of type options for pointer types**
 
-| Type | Meaning |
-| --- | --- |
+| Type      | Meaning                                                                                                                                                                                                                                  |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | none, `p` | If `uintptr_t` is defined, \begin{codeblock} to_chars(first, last, reinterpret_cast<uintptr_t>(value), 16) \end{codeblock} with the prefix `0x` inserted immediately before the output of `to_chars`; otherwise, implementation-defined. |
 
 
@@ -11207,10 +11207,10 @@ messages. — *end note*\]
 
 **Table: \newoldconcept{Formatter} requirements**
 
-| Expression | Return type | Requirement |
-| --- | --- | --- |
+| Expression        | Return type    | Requirement                                                                                                                                                                                                                                                                                                                                 |
+| ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `f.format(t, fc)` | `FC::iterator` | Formats `t` according to the specifiers stored in `*this`, writes the output to `fc.out()`, and returns an iterator past the end of the output range. The output shall only depend on `t`, `fc.locale()`, `fc.arg(n)` for any value `n` of type `size_t`, and the range {[}`pc.begin()`, `pc.end()`{)} from the last call to `f.parse(pc)`. |
-| `f.format(u, fc)` | `FC::iterator` | As above, but does not modify `u`. |
+| `f.format(u, fc)` | `FC::iterator` | As above, but does not modify `u`.                                                                                                                                                                                                                                                                                                          |
 
 
 #### Concept  <a id="format.formattable">[[format.formattable]]</a>
@@ -11385,13 +11385,13 @@ interpret *S* and construct *E*.
 
 **Table: Mapping of characters to escape sequences**
 
-| Character | Escape sequence |
-| --- | --- |
-| U+0009 (character tabulation) | `\t` |
-| % U+000a (line feed) | `\n` |
-| % U+000d (carriage return) | `\r` |
-| % U+0022 (quotation mark) | `\"` |
-| % U+005c (reverse solidus) | `` |
+| Character                     | Escape sequence |
+| ----------------------------- | --------------- |
+| U+0009 (character tabulation) | `\t`            |
+| % U+000a (line feed)          | `\n`            |
+| % U+000d (carriage return)    | `\r`            |
+| % U+0022 (quotation mark)     | `\"`            |
+| % U+005c (reverse solidus)    | ``              |
 
 
 The escaped string representation of a character *C* is equivalent to
@@ -11751,11 +11751,11 @@ the various type options is as specified in [[formatter.range.type]].
 
 **Table: Meaning of range-type options**
 
-| Option | Requirements | Meaning |
-| --- | --- | --- |
-| % `m` | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its tuple-type. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
-| % `s` | `T` shall be `charT`. | Indicates that the range should be formatted as a `string`. |
-| % `?s` | `T` shall be `charT`. | Indicates that the range should be formatted as an escaped string [[format.string.escaped]]. |
+| Option | Requirements                                                                                                      | Meaning                                                                                                                                                                                                                                                                                                                                |
+| ------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| % `m`  | `T` shall be either a specialization of `pair` or a specialization of `tuple` such that `tuple_size_v<T>` is `2`. | Indicates that the opening bracket should be `"{"`, the closing bracket should be `"}"`, the separator should be `", "`, and each range element should be formatted as if `m` were specified for its tuple-type. *If the `n` option is provided in addition to the `m` option, both the opening and closing brackets are still empty.* |
+| % `s`  | `T` shall be `charT`.                                                                                             | Indicates that the range should be formatted as a `string`.                                                                                                                                                                                                                                                                            |
+| % `?s` | `T` shall be `charT`.                                                                                             | Indicates that the range should be formatted as an escaped string [[format.string.escaped]].                                                                                                                                                                                                                                           |
 
 
 If the *range-type* is `s` or `?s`, then there shall be no `n` option
@@ -12348,11 +12348,11 @@ The meaning of the various type options is as specified in
 
 **Table: Meaning of tuple-type options**
 
-| Option | Requirements | Meaning |
-| --- | --- | --- |
+| Option | Requirements | Meaning                                |
+| ------ | ------------ | -------------------------------------- |
 | <charT>(": ")); set_brackets(, ); \end{codeblock}% |
-| % `n` | none | Equivalent to: `set_brackets({}, {});` |
-| % none | none | No effects |
+| % `n`  | none         | Equivalent to: `set_brackets({}, {});` |
+| % none | none         | No effects                             |
 
 ``` cpp
 constexpr void set_separator(basic_string_view<charT> sep) noexcept;

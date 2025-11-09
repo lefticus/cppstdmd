@@ -18,25 +18,25 @@ Detailed specifications for each of the components in the library are in
 
 **Table: Library categories**
 
-| Clause | Category |
-| --- | --- |
-| [[support]] | Language support library |
-| [[concepts]] | Concepts library |
-| [[diagnostics]] | Diagnostics library |
-| [[mem]] | Memory management library |
-| [[meta]] | Metaprogramming library |
-| [[utilities]] | General utilities library |
-| [[strings]] | Strings library |
-| [[containers]] | Containers library |
-| [[iterators]] | Iterators library |
-| [[ranges]] | Ranges library |
-| [[algorithms]] | Algorithms library |
-| [[numerics]] | Numerics library |
-| [[time]] | Time library |
-| [[localization]] | Localization library |
-| [[input.output]] | Input/output library |
-| [[re]] | Regular expressions library |
-| [[thread]] | Concurrency support library |
+| Clause           | Category                    |
+| ---------------- | --------------------------- |
+| [[support]]      | Language support library    |
+| [[concepts]]     | Concepts library            |
+| [[diagnostics]]  | Diagnostics library         |
+| [[mem]]          | Memory management library   |
+| [[meta]]         | Metaprogramming library     |
+| [[utilities]]    | General utilities library   |
+| [[strings]]      | Strings library             |
+| [[containers]]   | Containers library          |
+| [[iterators]]    | Iterators library           |
+| [[ranges]]       | Ranges library              |
+| [[algorithms]]   | Algorithms library          |
+| [[numerics]]     | Numerics library            |
+| [[time]]         | Time library                |
+| [[localization]] | Localization library        |
+| [[input.output]] | Input/output library        |
+| [[re]]           | Regular expressions library |
+| [[thread]]       | Concurrency support library |
 
 
 The language support library [[support]] provides components that are
@@ -849,31 +849,31 @@ headers. This set shall include at least the headers shown in
 
 **Table: C++ headers for freestanding implementations**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[support.types]] | Common definitions | `<cstddef>` |
-| [[support.limits]] | Implementation properties | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
-| [[cstdint.syn]] | Integer types | `<cstdint>` |
-| [[support.start.term]] | Start and termination | `<cstdlib>` |
-| [[support.dynamic]] | Dynamic memory management | `<new>` |
-| [[support.rtti]] | Type identification | `<typeinfo>` |
-| [[support.srcloc]] | Source location | `<source_location>` |
-| [[support.exception]] | Exception handling | `<exception>` |
-| [[support.initlist]] | Initializer lists | `<initializer_list>` |
-| [[cmp]] | Comparisons | `<compare>` |
-| [[support.coroutine]] | Coroutines support | `<coroutine>` |
-| [[support.runtime]] | Other runtime support | `<cstdarg>` |
-| [[concepts]] | Concepts library | `<concepts>` |
-| [[type.traits]] | Type traits | `<type_traits>` |
-| [[bit]] | Bit manipulation | `<bit>` |
-| [[atomics]] | Atomics | `<atomic>` |
-| [[utility]] | Utility components | `<utility>` |
-| [[tuple]] | Tuples | `<tuple>` |
-| [[memory]] | Memory | `<memory>` |
-| [[function.objects]] | Function objects | `<functional>` |
-| [[ratio]] | Compile-time rational arithmetic | `<ratio>` |
-| [[iterators]] | Iterators library | `<iterator>` |
-| [[ranges]] | Ranges library | `<ranges>` |
+| Subclause              |                                  | Header                                           |
+| ---------------------- | -------------------------------- | ------------------------------------------------ |
+| [[support.types]]      | Common definitions               | `<cstddef>`                                      |
+| [[support.limits]]     | Implementation properties        | `<cfloat>`, `<climits>`, `<limits>`, `<version>` |
+| [[cstdint.syn]]        | Integer types                    | `<cstdint>`                                      |
+| [[support.start.term]] | Start and termination            | `<cstdlib>`                                      |
+| [[support.dynamic]]    | Dynamic memory management        | `<new>`                                          |
+| [[support.rtti]]       | Type identification              | `<typeinfo>`                                     |
+| [[support.srcloc]]     | Source location                  | `<source_location>`                              |
+| [[support.exception]]  | Exception handling               | `<exception>`                                    |
+| [[support.initlist]]   | Initializer lists                | `<initializer_list>`                             |
+| [[cmp]]                | Comparisons                      | `<compare>`                                      |
+| [[support.coroutine]]  | Coroutines support               | `<coroutine>`                                    |
+| [[support.runtime]]    | Other runtime support            | `<cstdarg>`                                      |
+| [[concepts]]           | Concepts library                 | `<concepts>`                                     |
+| [[type.traits]]        | Type traits                      | `<type_traits>`                                  |
+| [[bit]]                | Bit manipulation                 | `<bit>`                                          |
+| [[atomics]]            | Atomics                          | `<atomic>`                                       |
+| [[utility]]            | Utility components               | `<utility>`                                      |
+| [[tuple]]              | Tuples                           | `<tuple>`                                        |
+| [[memory]]             | Memory                           | `<memory>`                                       |
+| [[function.objects]]   | Function objects                 | `<functional>`                                   |
+| [[ratio]]              | Compile-time rational arithmetic | `<ratio>`                                        |
+| [[iterators]]          | Iterators library                | `<iterator>`                                     |
+| [[ranges]]             | Ranges library                   | `<ranges>`                                       |
 
 
 For each of the headers listed in [[headers.cpp.fs]], a freestanding
@@ -963,17 +963,17 @@ signatures is called using the default argument [[dcl.fct.default]].
 
 **Table: Cpp17CopyConstructible requirements (in addition to Cpp17MoveConstructible)**
 
-| Expression | Post-condition |
-| --- | --- |
-| `T u = v;` | the value of `v` is unchanged and is equivalent to ` u` |
-| `T(v)` | the value of `v` is unchanged and is equivalent to `T(v)` |
+| Expression | Post-condition                                            |
+| ---------- | --------------------------------------------------------- |
+| `T u = v;` | the value of `v` is unchanged and is equivalent to ` u`   |
+| `T(v)`     | the value of `v` is unchanged and is equivalent to `T(v)` |
 
 
 **Table: Cpp17CopyAssignable requirements (in addition to Cpp17MoveAssignable)**
 
-| Expression | Return type | Return value | Post-condition |
-| --- | --- | --- | --- |
-| `t = v` | `T&` | `t` | `t` is equivalent to `v`, the value of `v` is unchanged |
+| Expression | Return type | Return value | Post-condition                                          |
+| ---------- | ----------- | ------------ | ------------------------------------------------------- |
+| `t = v`    | `T&`        | `t`          | `t` is equivalent to `v`, the value of `v` is unchanged |
 
 
 #### Swappable requirements <a id="swappable.requirements">[[swappable.requirements]]</a>

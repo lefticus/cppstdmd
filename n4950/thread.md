@@ -9,17 +9,17 @@ conditions and values between threads, as summarized in
 
 **Table: Concurrency support library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[thread.req]] | Requirements |  |
-| [[thread.stoptoken]] | Stop tokens | `<stop_token>` |
-| [[thread.threads]] | Threads | `<thread>` |
-| [[atomics]] | Atomic operations | `<atomic>`, `<stdatomic.h>` |
-| [[thread.mutex]] | Mutual exclusion | `<mutex>`, `<shared_mutex>` |
-| [[thread.condition]] | Condition variables | `<condition_variable>` |
-| [[thread.sema]] | Semaphores | `<semaphore>` |
-| [[thread.coord]] | Coordination types | `<latch>` `<barrier>` |
-| [[futures]] | Futures | `<future>` |
+| Subclause            |                     | Header                      |
+| -------------------- | ------------------- | --------------------------- |
+| [[thread.req]]       | Requirements        |                             |
+| [[thread.stoptoken]] | Stop tokens         | `<stop_token>`              |
+| [[thread.threads]]   | Threads             | `<thread>`                  |
+| [[atomics]]          | Atomic operations   | `<atomic>`, `<stdatomic.h>` |
+| [[thread.mutex]]     | Mutual exclusion    | `<mutex>`, `<shared_mutex>` |
+| [[thread.condition]] | Condition variables | `<condition_variable>`      |
+| [[thread.sema]]      | Semaphores          | `<semaphore>`               |
+| [[thread.coord]]     | Coordination types  | `<latch>` `<barrier>`       |
+| [[futures]]          | Futures             | `<future>`                  |
 
 
 ## Requirements <a id="thread.req">[[thread.req]]</a>
@@ -3179,11 +3179,11 @@ correspondence among key, operator, and computation is specified in
 
 **Table: Atomic arithmetic computations**
 
-| Op | Computation |
-| --- | --- |
-| `add` | `+` | addition | `sub` | `-` | subtraction |
-| `or` | `|` | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
-| `and` | `&` | bitwise and |  |  |  |
+| Op  | Computation |
+| --- | ----------- |
+| `add` | `+`         | addition | `sub` | `-` | subtraction |
+| `or` | `|`         | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
+| `and` | `&`         | bitwise and |     |     |     |
 
 
 *integral-type* *integral-type* *integral-type* *integral-type*
@@ -3451,9 +3451,9 @@ among key, operator, and computation is specified in
 
 **Table: Atomic pointer computations**
 
-| Op | Computation |
-| --- | --- |
-| `add` | `+` | addition | `sub` | `-` | subtraction |
+| Op  | Computation |
+| --- | ----------- |
+| `add` | `+`         | addition | `sub` | `-` | subtraction |
 
 ``` cpp
 T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) volatile noexcept;

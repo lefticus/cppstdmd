@@ -14,11 +14,11 @@ standard facets, and facilities from the ISO C library, as summarized in
 
 **Table: Localization library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[locales]] | Locales | `<locale>` |
-| [[locale.categories]] | Standard `locale` categories |  |
-| [[c.locales]] | C library locales | `<clocale>` |
+| Subclause             |                              | Header      |
+| --------------------- | ---------------------------- | ----------- |
+| [[locales]]           | Locales                      | `<locale>`  |
+| [[locale.categories]] | Standard `locale` categories |             |
+| [[c.locales]]         | C library locales            | `<clocale>` |
 
 
 ## Header `<locale>` synopsis <a id="locale.syn">[[locale.syn]]</a>
@@ -262,24 +262,24 @@ including at least those shown in [[locale.category.facets]].
 
 **Table: Locale category facets**
 
-| Category | Includes facets |
-| --- | --- |
-| collate | `collate<char>`, `collate<wchar_t>` |
-| ctype | `ctype<char>`, `ctype<wchar_t>` |
-|  | `codecvt<char, char, mbstate_t>` |
-|  | `codecvt<char16_t, char8_t, mbstate_t>` |
-|  | `codecvt<char32_t, char8_t, mbstate_t>` |
-|  | `codecvt<wchar_t, char, mbstate_t>` |
-| monetary | `moneypunct<char>`, `moneypunct<wchar_t>` |
-|  | `moneypunct<char, true>`, `moneypunct<wchar_t, true>` |
-|  | `money_get<char>`, `money_get<wchar_t>` |
-|  | `money_put<char>`, `money_put<wchar_t>` |
-| numeric | `numpunct<char>`, `numpunct<wchar_t>` |
-|  | `num_get<char>`, `num_get<wchar_t>` |
-|  | `num_put<char>`, `num_put<wchar_t>` |
-| time | `time_get<char>`, `time_get<wchar_t>` |
-|  | `time_put<char>`, `time_put<wchar_t>` |
-| messages | `messages<char>`, `messages<wchar_t>` |
+| Category | Includes facets                                       |
+| -------- | ----------------------------------------------------- |
+| collate  | `collate<char>`, `collate<wchar_t>`                   |
+| ctype    | `ctype<char>`, `ctype<wchar_t>`                       |
+|          | `codecvt<char, char, mbstate_t>`                      |
+|          | `codecvt<char16_t, char8_t, mbstate_t>`               |
+|          | `codecvt<char32_t, char8_t, mbstate_t>`               |
+|          | `codecvt<wchar_t, char, mbstate_t>`                   |
+| monetary | `moneypunct<char>`, `moneypunct<wchar_t>`             |
+|          | `moneypunct<char, true>`, `moneypunct<wchar_t, true>` |
+|          | `money_get<char>`, `money_get<wchar_t>`               |
+|          | `money_put<char>`, `money_put<wchar_t>`               |
+| numeric  | `numpunct<char>`, `numpunct<wchar_t>`                 |
+|          | `num_get<char>`, `num_get<wchar_t>`                   |
+|          | `num_put<char>`, `num_put<wchar_t>`                   |
+| time     | `time_get<char>`, `time_get<wchar_t>`                 |
+|          | `time_put<char>`, `time_put<wchar_t>`                 |
+| messages | `messages<char>`, `messages<wchar_t>`                 |
 
 
 For any locale `loc` either constructed, or returned by
@@ -294,29 +294,29 @@ templates identified as members of a category, and for those shown in
 
 **Table: Required specializations**
 
-| Category | Includes facets |
-| --- | --- |
-| collate | `collate_byname<char>`, `collate_byname<wchar_t>` |
-| ctype | `ctype_byname<char>`, `ctype_byname<wchar_t>` |
-|  | `codecvt_byname<char, char, mbstate_t>` |
-|  | `codecvt_byname<char16_t, char8_t, mbstate_t>` |
-|  | `codecvt_byname<char32_t, char8_t, mbstate_t>` |
-|  | `codecvt_byname<wchar_t, char, mbstate_t>` |
-| monetary | `moneypunct_byname<char, International>` |
-|  | `moneypunct_byname<wchar_t, International>` |
-|  | `money_get<C, InputIterator>` |
-|  | `money_put<C, OutputIterator>` |
-| numeric | `numpunct_byname<char>`, `numpunct_byname<wchar_t>` |
-|  | `num_get<C, InputIterator>`, `num_put<C, OutputIterator>` |
-| time | `time_get<char, InputIterator>` |
-|  | `time_get_byname<char, InputIterator>` |
-|  | `time_get<wchar_t, InputIterator>` |
-|  | `time_get_byname<wchar_t, InputIterator>` |
-|  | `time_put<char, OutputIterator>` |
-|  | `time_put_byname<char, OutputIterator>` |
-|  | `time_put<wchar_t, OutputIterator>` |
-|  | `time_put_byname<wchar_t, OutputIterator>` |
-| messages | `messages_byname<char>`, `messages_byname<wchar_t>` |
+| Category | Includes facets                                           |
+| -------- | --------------------------------------------------------- |
+| collate  | `collate_byname<char>`, `collate_byname<wchar_t>`         |
+| ctype    | `ctype_byname<char>`, `ctype_byname<wchar_t>`             |
+|          | `codecvt_byname<char, char, mbstate_t>`                   |
+|          | `codecvt_byname<char16_t, char8_t, mbstate_t>`            |
+|          | `codecvt_byname<char32_t, char8_t, mbstate_t>`            |
+|          | `codecvt_byname<wchar_t, char, mbstate_t>`                |
+| monetary | `moneypunct_byname<char, International>`                  |
+|          | `moneypunct_byname<wchar_t, International>`               |
+|          | `money_get<C, InputIterator>`                             |
+|          | `money_put<C, OutputIterator>`                            |
+| numeric  | `numpunct_byname<char>`, `numpunct_byname<wchar_t>`       |
+|          | `num_get<C, InputIterator>`, `num_put<C, OutputIterator>` |
+| time     | `time_get<char, InputIterator>`                           |
+|          | `time_get_byname<char, InputIterator>`                    |
+|          | `time_get<wchar_t, InputIterator>`                        |
+|          | `time_get_byname<wchar_t, InputIterator>`                 |
+|          | `time_put<char, OutputIterator>`                          |
+|          | `time_put_byname<char, OutputIterator>`                   |
+|          | `time_put<wchar_t, OutputIterator>`                       |
+|          | `time_put_byname<wchar_t, OutputIterator>`                |
+| messages | `messages_byname<char>`, `messages_byname<wchar_t>`       |
 
 
 The provided implementation of members of facets `num_get<charT>` and
@@ -3447,17 +3447,17 @@ the functions listed in [[setlocale.data.races]].
 
 **Table: Potential `setlocale` data races**
 
-|  |  |  |  |  |
-| --- | --- | --- | --- | --- |
-| `fprintf` | `isprint` | `iswdigit` | `localeconv` | `tolower` |
-| `fscanf` | `ispunct` | `iswgraph` | `mblen` | `toupper` |
-| `isalnum` | `isspace` | `iswlower` | `mbstowcs` | `towlower` |
-| `isalpha` | `isupper` | `iswprint` | `mbtowc` | `towupper` |
-| `isblank` | `iswalnum` | `iswpunct` | `setlocale` | `wcscoll` |
-| `iscntrl` | `iswalpha` | `iswspace` | `strcoll` | `wcstod` |
-| `isdigit` | `iswblank` | `iswupper` | `strerror` | `wcstombs` |
-| `isgraph` | `iswcntrl` | `iswxdigit` | `strtod` | `wcsxfrm` |
-| `islower` | `iswctype` | `isxdigit` | `strxfrm` | `wctomb` |
+|           |            |             |              |            |
+| --------- | ---------- | ----------- | ------------ | ---------- |
+| `fprintf` | `isprint`  | `iswdigit`  | `localeconv` | `tolower`  |
+| `fscanf`  | `ispunct`  | `iswgraph`  | `mblen`      | `toupper`  |
+| `isalnum` | `isspace`  | `iswlower`  | `mbstowcs`   | `towlower` |
+| `isalpha` | `isupper`  | `iswprint`  | `mbtowc`     | `towupper` |
+| `isblank` | `iswalnum` | `iswpunct`  | `setlocale`  | `wcscoll`  |
+| `iscntrl` | `iswalpha` | `iswspace`  | `strcoll`    | `wcstod`   |
+| `isdigit` | `iswblank` | `iswupper`  | `strerror`   | `wcstombs` |
+| `isgraph` | `iswcntrl` | `iswxdigit` | `strtod`     | `wcsxfrm`  |
+| `islower` | `iswctype` | `isxdigit`  | `strxfrm`    | `wctomb`   |
 
 
 

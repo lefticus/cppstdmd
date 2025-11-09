@@ -147,47 +147,47 @@ context. — *end note*\]
 
 **Table: Basic character set**
 
-| character |  | glyph |
-| --- | --- | --- |
-| `U+0009` | character tabulation |  |
-| `U+000b` | line tabulation |  |
-| `U+000c` | form feed |  |
-| `U+0020` | space |  |
-| `U+000a` | line feed | new-line |
-| `U+0021` | exclamation mark | `!` |
-| `U+0022` | quotation mark | `"` |
-| `U+0023` | number sign | `#` |
-| `U+0025` | percent sign | `%` |
-| `U+0026` | ampersand | `&` |
-| `U+0027` | apostrophe | `'` |
-| `U+0028` | left parenthesis | `(` |
-| `U+0029` | right parenthesis | `)` |
-| `U+002a` | asterisk | `*` |
-| `U+002b` | plus sign | `+` |
-| `U+002c` | comma | `,` |
-| `U+002d` | hyphen-minus | `-` |
-| `U+002e` | full stop | `.` |
-| `U+002f` | solidus | `/` |
-| `U+0030` .. `U+0039` | digit zero .. nine | `0 1 2 3 4 5 6 7 8 9` |
-| `U+003a` | colon | `:` |
-| `U+003b` | semicolon | `;` |
-| `U+003c` | less-than sign | `<` |
-| `U+003d` | equals sign | `=` |
-| `U+003e` | greater-than sign | `>` |
-| `U+003f` | question mark | `?` |
+| character            |                             | glyph                       |
+| -------------------- | --------------------------- | --------------------------- |
+| `U+0009`             | character tabulation        |                             |
+| `U+000b`             | line tabulation             |                             |
+| `U+000c`             | form feed                   |                             |
+| `U+0020`             | space                       |                             |
+| `U+000a`             | line feed                   | new-line                    |
+| `U+0021`             | exclamation mark            | `!`                         |
+| `U+0022`             | quotation mark              | `"`                         |
+| `U+0023`             | number sign                 | `#`                         |
+| `U+0025`             | percent sign                | `%`                         |
+| `U+0026`             | ampersand                   | `&`                         |
+| `U+0027`             | apostrophe                  | `'`                         |
+| `U+0028`             | left parenthesis            | `(`                         |
+| `U+0029`             | right parenthesis           | `)`                         |
+| `U+002a`             | asterisk                    | `*`                         |
+| `U+002b`             | plus sign                   | `+`                         |
+| `U+002c`             | comma                       | `,`                         |
+| `U+002d`             | hyphen-minus                | `-`                         |
+| `U+002e`             | full stop                   | `.`                         |
+| `U+002f`             | solidus                     | `/`                         |
+| `U+0030` .. `U+0039` | digit zero .. nine          | `0 1 2 3 4 5 6 7 8 9`       |
+| `U+003a`             | colon                       | `:`                         |
+| `U+003b`             | semicolon                   | `;`                         |
+| `U+003c`             | less-than sign              | `<`                         |
+| `U+003d`             | equals sign                 | `=`                         |
+| `U+003e`             | greater-than sign           | `>`                         |
+| `U+003f`             | question mark               | `?`                         |
 | `U+0041` .. `U+005a` | latin capital letter a .. z | `A B C D E F G H I J K L M` |
-|  |  | `N O P Q R S T U V W X Y Z` |
-| `U+005b` | left square bracket | `[` |
-| `U+005c` | reverse solidus | \texttt{\} |
-| `U+005d` | right square bracket | `]` |
-| `U+005e` | circumflex accent | `^` |
-| `U+005f` | low line | `_` |
-| `U+0061` .. `U+007a` | latin small letter a .. z | `a b c d e f g h i j k l m` |
-|  |  | `n o p q r s t u v w x y z` |
-| `U+007b` | left curly bracket | \texttt{\ |
-| `U+007c` | vertical line | `|` |
-| `U+007d` | right curly bracket | `}` |
-| `U+007e` | tilde | `~` |
+|                      |                             | `N O P Q R S T U V W X Y Z` |
+| `U+005b`             | left square bracket         | `[`                         |
+| `U+005c`             | reverse solidus             | \texttt{\}                  |
+| `U+005d`             | right square bracket        | `]`                         |
+| `U+005e`             | circumflex accent           | `^`                         |
+| `U+005f`             | low line                    | `_`                         |
+| `U+0061` .. `U+007a` | latin small letter a .. z   | `a b c d e f g h i j k l m` |
+|                      |                             | `n o p q r s t u v w x y z` |
+| `U+007b`             | left curly bracket          | \texttt{\                   |
+| `U+007c`             | vertical line               | `|`                         |
+| `U+007d`             | right curly bracket         | `}`                         |
+| `U+007e`             | tilde                       | `~`                         |
 
 
 The *universal-character-name* construct provides a way to name other
@@ -261,11 +261,11 @@ basic character set, plus the control characters specified in
 
 **Table: Additional control characters in the basic literal character set**
 
-|  |  |
-| --- | --- |
-| `U+0000` | null |
-| `U+0007` | alert |
-| `U+0008` | backspace |
+|          |                 |
+| -------- | --------------- |
+| `U+0000` | null            |
+| `U+0007` | alert           |
+| `U+0008` | backspace       |
 | `U+000d` | carriage return |
 
 
@@ -607,10 +607,10 @@ Furthermore, the alternative representations shown in
 
 **Table: Alternative representations**
 
-|  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
-| `and` | `and_eq` | `bitand` | `bitor` | `compl` | `not` |
-| `not_eq` | `or` | `or_eq` | `xor` | `xor_eq` |  |
+|          |          |          |         |          |       |
+| -------- | -------- | -------- | ------- | -------- | ----- |
+| `and`    | `and_eq` | `bitand` | `bitor` | `compl`  | `not` |
+| `not_eq` | `or`     | `or_eq`  | `xor`   | `xor_eq` |       |
 
 ## Operators and punctuators <a id="lex.operators">[[lex.operators]]</a>
 
@@ -774,11 +774,11 @@ ignored when determining the value. — *end note*\]
 **Table: Base of *integer-literal*{s}**
 
 | Kind of *integer-literal* | base $N$ |
-| --- | --- |
-| *binary-literal* | 2 |
-| *octal-literal* | 8 |
-| *decimal-literal* | 10 |
-| *hexadecimal-literal* | 16 |
+| ------------------------- | -------- |
+| *binary-literal*          | 2        |
+| *octal-literal*           | 8        |
+| *decimal-literal*         | 10       |
+| *hexadecimal-literal*     | 16       |
 
 
 The *hexadecimal-digit*s `a` through `f` and `A` through `F` have
@@ -795,32 +795,32 @@ which its value can be represented.
 
 **Table: Types of *integer-literal*s**
 
-| *integer-suffix* | *decimal-literal* | *integer-literal* other than *decimal-literal* |
-| --- | --- | --- |
-| none | `int` | `int` |
-|  | `long int` | `unsigned int` |
-|  | `long long int` | `long int` |
-|  |  | `unsigned long int` |
-|  |  | `long long int` |
-|  |  | `unsigned long long int` |
-| `u` or `U` | `unsigned int` | `unsigned int` |
-|  | `unsigned long int` | `unsigned long int` |
-|  | `unsigned long long int` | `unsigned long long int` |
-| `l` or `L` | `long int` | `long int` |
-|  | `long long int` | `unsigned long int` |
-|  |  | `long long int` |
-|  |  | `unsigned long long int` |
-| Both `u` or `U` | `unsigned long int` | `unsigned long int` |
-| and `l` or `L` | `unsigned long long int` | `unsigned long long int` |
-| `ll` or `LL` | `long long int` | `long long int` |
-|  |  | `unsigned long long int` |
-| Both `u` or `U` | `unsigned long long int` | `unsigned long long int` |
-| and `ll` or `LL` |  |  |
-| `z` or `Z` | the signed integer type corresponding | the signed integer type |
-|  | to `std::size_t` [[support.types.layout]] | corresponding to `std::size_t` |
-|  |  | `std::size_t` |
-| Both `u` or `U` | `std::size_t` | `std::size_t` |
-| and `z` or `Z` |  |  |
+| *integer-suffix* | *decimal-literal*                         | *integer-literal* other than *decimal-literal* |
+| ---------------- | ----------------------------------------- | ---------------------------------------------- |
+| none             | `int`                                     | `int`                                          |
+|                  | `long int`                                | `unsigned int`                                 |
+|                  | `long long int`                           | `long int`                                     |
+|                  |                                           | `unsigned long int`                            |
+|                  |                                           | `long long int`                                |
+|                  |                                           | `unsigned long long int`                       |
+| `u` or `U`       | `unsigned int`                            | `unsigned int`                                 |
+|                  | `unsigned long int`                       | `unsigned long int`                            |
+|                  | `unsigned long long int`                  | `unsigned long long int`                       |
+| `l` or `L`       | `long int`                                | `long int`                                     |
+|                  | `long long int`                           | `unsigned long int`                            |
+|                  |                                           | `long long int`                                |
+|                  |                                           | `unsigned long long int`                       |
+| Both `u` or `U`  | `unsigned long int`                       | `unsigned long int`                            |
+| and `l` or `L`   | `unsigned long long int`                  | `unsigned long long int`                       |
+| `ll` or `LL`     | `long long int`                           | `long long int`                                |
+|                  |                                           | `unsigned long long int`                       |
+| Both `u` or `U`  | `unsigned long long int`                  | `unsigned long long int`                       |
+| and `ll` or `LL` |                                           |                                                |
+| `z` or `Z`       | the signed integer type corresponding     | the signed integer type                        |
+|                  | to `std::size_t` [[support.types.layout]] | corresponding to `std::size_t`                 |
+|                  |                                           | `std::size_t`                                  |
+| Both `u` or `U`  | `std::size_t`                             | `std::size_t`                                  |
+| and `z` or `Z`   |                                           |                                                |
 
 
 If an *integer-literal* cannot be represented by any type in its list
@@ -944,14 +944,14 @@ character would require more than one code unit. — *end note*\]
 
 **Table: Character literals**
 
-|  |  |  |  |  |
-| --- | --- | --- | --- | --- |
-| none | \defnx{ordinary character literal}{literal!character!ordinary} | `char` | ordinary | `'v'` |
-| `L` | \defnx{wide character literal}{literal!character!wide} | `wchar_t` | wide literal | `L'w'` |
-|  |  |  | encoding |  |
-| `u8` | \defnx{UTF-8 character literal}{literal!character!UTF-8} | `char8_t` | UTF-8 | `u8'x'` |
-| `u` | \defnx{UTF-16 character literal}{literal!character!UTF-16} | `char16_t` | UTF-16 | `u'y'` |
-| `U` | \defnx{UTF-32 character literal}{literal!character!UTF-32} | `char32_t` | UTF-32 | `U'z'` |
+|      |                                                                |            |              |         |
+| ---- | -------------------------------------------------------------- | ---------- | ------------ | ------- |
+| none | \defnx{ordinary character literal}{literal!character!ordinary} | `char`     | ordinary     | `'v'`   |
+| `L`  | \defnx{wide character literal}{literal!character!wide}         | `wchar_t`  | wide literal | `L'w'`  |
+|      |                                                                |            | encoding     |         |
+| `u8` | \defnx{UTF-8 character literal}{literal!character!UTF-8}       | `char8_t`  | UTF-8        | `u8'x'` |
+| `u`  | \defnx{UTF-16 character literal}{literal!character!UTF-16}     | `char16_t` | UTF-16       | `u'y'`  |
+| `U`  | \defnx{UTF-32 character literal}{literal!character!UTF-32}     | `char32_t` | UTF-32       | `U'z'`  |
 
 
 In translation phase 4, the value of a *character-literal* is determined
@@ -995,19 +995,19 @@ for compatibility with ISO C++14 and ISO C. — *end note*\]
 
 **Table: Simple escape sequences**
 
-| character |  | *simple-escape-sequence* |
-| --- | --- | --- |
-| `U+000a` | line feed | `\n` |
-| `U+0009` | character tabulation | `\t` |
-| `U+000b` | line tabulation | `\v` |
-| `U+0008` | backspace | `\b` |
-| `U+000d` | carriage return | `\r` |
-| `U+000c` | form feed | `\f` |
-| `U+0007` | alert | `\a` |
-| `U+005c` | reverse solidus | `` |
-| `U+003f` | question mark | `\?` |
-| `U+0027` | apostrophe | `\'` |
-| `U+0022` | quotation mark | `\"` |
+| character |                      | *simple-escape-sequence* |
+| --------- | -------------------- | ------------------------ |
+| `U+000a`  | line feed            | `\n`                     |
+| `U+0009`  | character tabulation | `\t`                     |
+| `U+000b`  | line tabulation      | `\v`                     |
+| `U+0008`  | backspace            | `\b`                     |
+| `U+000d`  | carriage return      | `\r`                     |
+| `U+000c`  | form feed            | `\f`                     |
+| `U+0007`  | alert                | `\a`                     |
+| `U+005c`  | reverse solidus      | ``                       |
+| `U+003f`  | question mark        | `\?`                     |
+| `U+0027`  | apostrophe           | `\'`                     |
+| `U+0022`  | quotation mark       | `\"`                     |
 
 
 ### Floating-point literals <a id="lex.fcon">[[lex.fcon]]</a>
@@ -1080,16 +1080,16 @@ conditionally-supported. See [[basic.extended.fp]]. — *end note*\]
 
 **Table: Types of *floating-point-literal*{s}**
 
-| *floating-point-suffix* | type |
-| --- | --- |
-| none | `double` |
-| `f` or `F` | \keyword {float} |
-| `l` or `L` | `long` `double` |
-| `f16` or `F16` | `std::float16_t` |
-| `f32` or `F32` | `std::float32_t` |
-| `f64` or `F64` | `std::float64_t` |
-| `f128` or `F128` | `std::float128_t` |
-| `bf16` or `BF16` | `std::bfloat16_t` |
+| *floating-point-suffix* | type              |
+| ----------------------- | ----------------- |
+| none                    | `double`          |
+| `f` or `F`              | \keyword {float}  |
+| `l` or `L`              | `long` `double`   |
+| `f16` or `F16`          | `std::float16_t`  |
+| `f32` or `F32`          | `std::float32_t`  |
+| `f64` or `F64`          | `std::float64_t`  |
+| `f128` or `F128`        | `std::float128_t` |
+| `bf16` or `BF16`        | `std::bfloat16_t` |
 
 
 The *significand* of a *floating-point-literal* is the
@@ -1186,13 +1186,13 @@ where n is the number of encoded code units as described below.
 
 **Table: String literals**
 
-|  |  |  |  |  |
-| --- | --- | --- | --- | --- |
-| none | \defnx{ordinary string literal}{literal!string!ordinary} | array of $n$\newline `const char` | ordinary literal encoding | `"ordinary string"`\newline `R"(ordinary raw string)"` |
-| `L` | \defnx{wide string literal}{literal!string!wide} | array of $n$\newline `const wchar_t` | wide literal\newline encoding | `L"wide string"`\newline `LR"w(wide raw string)w"` |
-| `u8` | \defnx{UTF-8 string literal}{literal!string!UTF-8} | array of $n$\newline `const char8_t` | UTF-8 | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
-| `u` | \defnx{UTF-16 string literal}{literal!string!UTF-16} | array of $n$\newline `const char16_t` | UTF-16 | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
-| `U` | \defnx{UTF-32 string literal}{literal!string!UTF-32} | array of $n$\newline `const char32_t` | UTF-32 | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
+|      |                                                          |                                       |                               |                                                        |
+| ---- | -------------------------------------------------------- | ------------------------------------- | ----------------------------- | ------------------------------------------------------ |
+| none | \defnx{ordinary string literal}{literal!string!ordinary} | array of $n$\newline `const char`     | ordinary literal encoding     | `"ordinary string"`\newline `R"(ordinary raw string)"` |
+| `L`  | \defnx{wide string literal}{literal!string!wide}         | array of $n$\newline `const wchar_t`  | wide literal\newline encoding | `L"wide string"`\newline `LR"w(wide raw string)w"`     |
+| `u8` | \defnx{UTF-8 string literal}{literal!string!UTF-8}       | array of $n$\newline `const char8_t`  | UTF-8                         | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
+| `u`  | \defnx{UTF-16 string literal}{literal!string!UTF-16}     | array of $n$\newline `const char16_t` | UTF-16                        | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
+| `U`  | \defnx{UTF-32 string literal}{literal!string!UTF-32}     | array of $n$\newline `const char32_t` | UTF-32                        | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
 
 
 A *string-literal* that has an `R` in the prefix is a *raw string
@@ -1281,12 +1281,12 @@ digit `1` (and not the single character `'A'` specified by a
 
 **Table: String literal concatenations**
 
-|  |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
+|                            |       |                            |       |                            |       |
+| -------------------------- | ----- | -------------------------- | ----- | -------------------------- | ----- |
 | *[spans 2 columns]* Source | Means | *[spans 2 columns]* Source | Means | *[spans 2 columns]* Source | Means |
-| `u"a"` | `u"b"` | `u"ab"` | `U"a"` | `U"b"` | `U"ab"` | `L"a"` | `L"b"` | `L"ab"` |
-| `u"a"` | `"b"` | `u"ab"` | `U"a"` | `"b"` | `U"ab"` | `L"a"` | `"b"` | `L"ab"` |
-| `"a"` | `u"b"` | `u"ab"` | `"a"` | `U"b"` | `U"ab"` | `"a"` | `L"b"` | `L"ab"` |
+| `u"a"`                     | `u"b"` | `u"ab"`                    | `U"a"` | `U"b"`                     | `U"ab"` | `L"a"` | `L"b"` | `L"ab"` |
+| `u"a"`                     | `"b"` | `u"ab"`                    | `U"a"` | `"b"`                      | `U"ab"` | `L"a"` | `"b"` | `L"ab"` |
+| `"a"`                      | `u"b"` | `u"ab"`                    | `"a"` | `U"b"`                     | `U"ab"` | `"a"` | `L"b"` | `L"ab"` |
 
 
 Evaluating a *string-literal* results in a string literal object with

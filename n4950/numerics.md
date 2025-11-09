@@ -12,15 +12,15 @@ floating-point types, as summarized in [[numerics.summary]].
 
 **Table: Numerics library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[numeric.requirements]] | Requirements |  |
-| [[cfenv]] | Floating-point environment | `<cfenv>` |
-| [[complex.numbers]] | Complex numbers | `<complex>` |
-| [[rand]] | Random number generation | `<random>` |
-| [[numarray]] | Numeric arrays | `<valarray>` |
-| [[c.math]] | Mathematical functions for floating-point types | `<cmath>`, `<cstdlib>` |
-| [[numbers]] | Numbers | `<numbers>` |
+| Subclause                |                                                 | Header                 |
+| ------------------------ | ----------------------------------------------- | ---------------------- |
+| [[numeric.requirements]] | Requirements                                    |                        |
+| [[cfenv]]                | Floating-point environment                      | `<cfenv>`              |
+| [[complex.numbers]]      | Complex numbers                                 | `<complex>`            |
+| [[rand]]                 | Random number generation                        | `<random>`             |
+| [[numarray]]             | Numeric arrays                                  | `<valarray>`           |
+| [[c.math]]               | Mathematical functions for floating-point types | `<cmath>`, `<cstdlib>` |
+| [[numbers]]              | Numbers                                         | `<numbers>`            |
 
 
 ## Numeric type requirements <a id="numeric.requirements">[[numeric.requirements]]</a>

@@ -2415,10 +2415,10 @@ If N is zero for a unary fold, the value of the expression is shown in
 **Table: Value of folding empty sequences**
 
 | Operator | Value when pack is empty |
-| --- | --- |
-| `&&` | `true` |
-| `||` | `false` |
-| `,` | `void()` |
+| -------- | ------------------------ |
+| `&&`     | `true`                   |
+| `||`     | `false`                  |
+| `,`      | `void()`                 |
 
 
 The instantiation of any other pack expansion produces a list of

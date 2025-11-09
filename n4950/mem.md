@@ -10,12 +10,12 @@ in [[mem.summary]].
 
 **Table: Memory management library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[memory]] | Memory | `<cstdlib>`, `<memory>` |
-| [[smartptr]] | Smart pointers | `<memory>` |
-| [[mem.res]] | Memory resources | `<memory_resource>` |
-| [[allocator.adaptor]] | Scoped allocators | `<scoped_allocator>` |
+| Subclause             |                   | Header                  |
+| --------------------- | ----------------- | ----------------------- |
+| [[memory]]            | Memory            | `<cstdlib>`, `<memory>` |
+| [[smartptr]]          | Smart pointers    | `<memory>`              |
+| [[mem.res]]           | Memory resources  | `<memory_resource>`     |
+| [[allocator.adaptor]] | Scoped allocators | `<scoped_allocator>`    |
 
 
 ## Memory <a id="memory">[[memory]]</a>

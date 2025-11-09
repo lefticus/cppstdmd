@@ -13,20 +13,20 @@ summarized in [[iostreams.summary]].
 
 **Table: Input/output library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[iostreams.requirements]] | Requirements |  |
-| [[iostream.forward]] | Forward declarations | `<iosfwd>` |
-| [[iostream.objects]] | Standard iostream objects | `<iostream>` |
-| [[iostreams.base]] | Iostreams base classes | `<ios>` |
-| [[stream.buffers]] | Stream buffers | `<streambuf>` |
-| [[iostream.format]] | Formatting and manipulators | `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
-| [[string.streams]] | String streams | `<sstream>` |
-| [[span.streams]] | Span-based streams | `<spanstream>` |
-| [[file.streams]] | File streams | `<fstream>` |
-| [[syncstream]] | Synchronized output streams | `<syncstream>` |
-| [[filesystems]] | File systems | `<filesystem>` |
-| [[c.files]] | C library files | `<cstdio>`, `<cinttypes>` |
+| Subclause                  |                             | Header                                           |
+| -------------------------- | --------------------------- | ------------------------------------------------ |
+| [[iostreams.requirements]] | Requirements                |                                                  |
+| [[iostream.forward]]       | Forward declarations        | `<iosfwd>`                                       |
+| [[iostream.objects]]       | Standard iostream objects   | `<iostream>`                                     |
+| [[iostreams.base]]         | Iostreams base classes      | `<ios>`                                          |
+| [[stream.buffers]]         | Stream buffers              | `<streambuf>`                                    |
+| [[iostream.format]]        | Formatting and manipulators | `<istream>`, `<ostream>`, `<iomanip>`, `<print>` |
+| [[string.streams]]         | String streams              | `<sstream>`                                      |
+| [[span.streams]]           | Span-based streams          | `<spanstream>`                                   |
+| [[file.streams]]           | File streams                | `<fstream>`                                      |
+| [[syncstream]]             | Synchronized output streams | `<syncstream>`                                   |
+| [[filesystems]]            | File systems                | `<filesystem>`                                   |
+| [[c.files]]                | C library files             | `<cstdio>`, `<cinttypes>`                        |
 
 
 ## Iostreams requirements <a id="iostreams.requirements">[[iostreams.requirements]]</a>
@@ -10033,11 +10033,11 @@ character sequence, with the meanings listed in [[fs.enum.path.format]].
 
 **Table: Enum `path::format`**
 
-| Name | Meaning |
-| --- | --- |
-| `native_format` | The native pathname format. |
-| `generic_format` | The generic pathname format. |
-| `auto_format` | The interpretation of the format of the character sequence is implementation-defined. The implementation may inspect the content of the character sequence to determine the format. Recommended practice: For POSIX-based systems, native and generic formats are equivalent and the character sequence should always be interpreted in the same way. |
+| Name             | Meaning                                                                                                                                                                                                                                                                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `native_format`  | The native pathname format.                                                                                                                                                                                                                                                                                                                           |
+| `generic_format` | The generic pathname format.                                                                                                                                                                                                                                                                                                                          |
+| `auto_format`    | The interpretation of the format of the character sequence is implementation-defined. The implementation may inspect the content of the character sequence to determine the format. Recommended practice: For POSIX-based systems, native and generic formats are equivalent and the character sequence should always be interpreted in the same way. |
 
 
 #### Enum class `file_type` <a id="fs.enum.file.type">[[fs.enum.file.type]]</a>
@@ -10048,19 +10048,19 @@ constants are distinct.
 
 **Table: Enum class `file_type`**
 
-| Constant | Meaning |
-| --- | --- |
-| `none` | The type of the file has not been determined or an error occurred while trying to determine the type. |
-| `not_found` | Pseudo-type indicating the file was not found. *The file not being found is not considered an error while determining the type of a file.* |
-| `regular` | Regular file |
-| `directory` | Directory file |
-| `symlink` | Symbolic link file |
-| `block` | Block special file |
-| `character` | Character special file |
-| `fifo` | FIFO or pipe file |
-| `socket` | Socket file |
+| Constant                 | Meaning                                                                                                                                                                                                                     |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `none`                   | The type of the file has not been determined or an error occurred while trying to determine the type.                                                                                                                       |
+| `not_found`              | Pseudo-type indicating the file was not found. *The file not being found is not considered an error while determining the type of a file.*                                                                                  |
+| `regular`                | Regular file                                                                                                                                                                                                                |
+| `directory`              | Directory file                                                                                                                                                                                                              |
+| `symlink`                | Symbolic link file                                                                                                                                                                                                          |
+| `block`                  | Block special file                                                                                                                                                                                                          |
+| `character`              | Character special file                                                                                                                                                                                                      |
+| `fifo`                   | FIFO or pipe file                                                                                                                                                                                                           |
+| `socket`                 | Socket file                                                                                                                                                                                                                 |
 | `implementation-defined` | Implementations that support file systems having file types in addition to the above `file_type` types shall supply implementation-defined `file_type` constants to separately identify each of those additional file types |
-| `unknown` | The file exists but the type cannot be determined |
+| `unknown`                | The file exists but the type cannot be determined                                                                                                                                                                           |
 
 
 #### Enum class `copy_options` <a id="fs.enum.copy.opts">[[fs.enum.copy.opts]]</a>
@@ -10075,18 +10075,18 @@ Every other constant in the table represents a distinct bitmask element.
 
 **Table: Enum class `copy_options`**
 
-| Constant | Meaning |
-| --- | --- |
-| `none` | (Default) Error; file already exists. |
-| `skip_existing` | Do not overwrite existing file, do not report an error. |
-| `overwrite_existing` | Overwrite the existing file. |
-| `update_existing` | Overwrite the existing file if it is older than the replacement file. \ohdrx{2}{Option group controlling `copy` function effects for subdirectories} |
-| `recursive` | Recursively copy subdirectories and their contents. \ohdrx{2}{Option group controlling `copy` function effects for symbolic links} |
-| `copy_symlinks` | Copy symbolic links as symbolic links rather than copying the files that they point to. |
-| `skip_symlinks` | Ignore symbolic links. \ohdrx{2}{Option group controlling `copy` function effects for choosing the form of copying} |
-| `directories_only` | Copy directory structure only, do not copy non-directory files. |
-| `create_symlinks` | Make symbolic links instead of copies of files. The source path shall be an absolute path unless the destination path is in the current directory. |
-| `create_hard_links` | Make hard links instead of copies of files. |
+| Constant             | Meaning                                                                                                                                              |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `none`               | (Default) Error; file already exists.                                                                                                                |
+| `skip_existing`      | Do not overwrite existing file, do not report an error.                                                                                              |
+| `overwrite_existing` | Overwrite the existing file.                                                                                                                         |
+| `update_existing`    | Overwrite the existing file if it is older than the replacement file. \ohdrx{2}{Option group controlling `copy` function effects for subdirectories} |
+| `recursive`          | Recursively copy subdirectories and their contents. \ohdrx{2}{Option group controlling `copy` function effects for symbolic links}                   |
+| `copy_symlinks`      | Copy symbolic links as symbolic links rather than copying the files that they point to.                                                              |
+| `skip_symlinks`      | Ignore symbolic links. \ohdrx{2}{Option group controlling `copy` function effects for choosing the form of copying}                                  |
+| `directories_only`   | Copy directory structure only, do not copy non-directory files.                                                                                      |
+| `create_symlinks`    | Make symbolic links instead of copies of files. The source path shall be an absolute path unless the destination path is in the current directory.   |
+| `create_hard_links`  | Make hard links instead of copies of files.                                                                                                          |
 
 
 #### Enum class `perms` <a id="fs.enum.perms">[[fs.enum.perms]]</a>
@@ -10098,8 +10098,8 @@ meanings listed in [[fs.enum.perms]].
 **Table: Enum class `perms`**
 
 | Name | Value | POSIX | Definition or notes | (octal) | macro |
-| --- | --- | --- | --- | --- | --- |
-| `none` | `0` |  | There are no permissions set for the file. |
+| ---- | ----- | ----- | ------------------- | ------- | ----- |
+| `none` | `0`   |       | There are no permissions set for the file. |
 | `owner_read` | `0400` | `S_IRUSR` | Read permission, owner |
 | `owner_write` | `0200` | `S_IWUSR` | Write permission, owner |
 | `owner_exec` | `0100` | `S_IXUSR` | Execute/search permission, owner |
@@ -10108,16 +10108,16 @@ meanings listed in [[fs.enum.perms]].
 | `group_write` | `020` | `S_IWGRP` | Write permission, group |
 | `group_exec` | `010` | `S_IXGRP` | Execute/search permission, group |
 | `group_all` | `070` | `S_IRWXG` | Read, write, execute/search by group;<br> `group_read | group_write | group_exec` |
-| `others_read` | `04` | `S_IROTH` | Read permission, others |
-| `others_write` | `02` | `S_IWOTH` | Write permission, others |
-| `others_exec` | `01` | `S_IXOTH` | Execute/search permission, others |
-| `others_all` | `07` | `S_IRWXO` | Read, write, execute/search by others;<br> `others_read | others_write | others_exec` |
-| `all` | `0777` |  | `owner_all | group_all | others_all` |
+| `others_read` | `04`  | `S_IROTH` | Read permission, others |
+| `others_write` | `02`  | `S_IWOTH` | Write permission, others |
+| `others_exec` | `01`  | `S_IXOTH` | Execute/search permission, others |
+| `others_all` | `07`  | `S_IRWXO` | Read, write, execute/search by others;<br> `others_read | others_write | others_exec` |
+| `all` | `0777` |       | `owner_all | group_all | others_all` |
 | `set_uid` | `04000` | `S_ISUID` | Set-user-ID on execution |
 | `set_gid` | `02000` | `S_ISGID` | Set-group-ID on execution |
 | `sticky_bit` | `01000` | `S_ISVTX` | Operating system dependent. |
-| `mask` | `07777` |  | `all | set_uid | set_gid | sticky_bit` |
-| `unknown` | `0xFFFF` |  | The permissions are not known, such as when a `file_status` object is created without specifying the permissions |
+| `mask` | `07777` |       | `all | set_uid | set_gid | sticky_bit` |
+| `unknown` | `0xFFFF` |       | The permissions are not known, such as when a `file_status` object is created without specifying the permissions |
 
 
 #### Enum class `perm_options` <a id="fs.enum.perm.opts">[[fs.enum.perm.opts]]</a>
@@ -10131,12 +10131,12 @@ permissions operations, with the meanings listed in
 
 **Table: Enum class `perm_options`**
 
-| Name | Meaning |
-| --- | --- |
-| `replace` | `permissions` shall replace the file's permission bits with `perm` |
-| `add` | `permissions` shall replace the file's permission bits with the bitwise \logop{or} of `perm` and the file's current permission bits. |
-| `remove` | `permissions` shall replace the file's permission bits with the bitwise \logop{and} of the complement of `perm` and the file's current permission bits. |
-| `nofollow` | `permissions` shall change the permissions of a symbolic link itself rather than the permissions of the file the link resolves to. |
+| Name       | Meaning                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `replace`  | `permissions` shall replace the file's permission bits with `perm`                                                                                      |
+| `add`      | `permissions` shall replace the file's permission bits with the bitwise \logop{or} of `perm` and the file's current permission bits.                    |
+| `remove`   | `permissions` shall replace the file's permission bits with the bitwise \logop{and} of the complement of `perm` and the file's current permission bits. |
+| `nofollow` | `permissions` shall change the permissions of a symbolic link itself rather than the permissions of the file the link resolves to.                      |
 
 
 #### Enum class `directory_options` <a id="fs.enum.dir.opts">[[fs.enum.dir.opts]]</a>
@@ -10149,11 +10149,11 @@ every other constant in the table represents a distinct bitmask element.
 
 **Table: Enum class `directory_options`**
 
-| Name | Meaning |
-| --- | --- |
-| `none` | (Default) Skip directory symlinks, permission denied is an error. |
-| `follow_directory_symlink` | Follow rather than skip directory symlinks. |
-| `skip_permission_denied` | Skip directories that would otherwise result in permission denied. |
+| Name                       | Meaning                                                            |
+| -------------------------- | ------------------------------------------------------------------ |
+| `none`                     | (Default) Skip directory symlinks, permission denied is an error.  |
+| `follow_directory_symlink` | Follow rather than skip directory symlinks.                        |
+| `skip_permission_denied`   | Skip directories that would otherwise result in permission denied. |
 
 
 ### Class `file_status` <a id="fs.class.file.status">[[fs.class.file.status]]</a>

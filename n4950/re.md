@@ -16,18 +16,18 @@ summarized in [[re.summary]].
 
 **Table: Regular expressions library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[re.req]] | Requirements |  |
-| [[re.const]] | Constants | `<regex>` |
-| [[re.badexp]] | Exception type |  |
-| [[re.traits]] | Traits |  |
-| [[re.regex]] | Regular expression template |  |
-| [[re.submatch]] | Submatches |  |
-| [[re.results]] | Match results |  |
-| [[re.alg]] | Algorithms |  |
-| [[re.iter]] | Iterators |  |
-| [[re.grammar]] | Grammar |  |
+| Subclause       |                             | Header    |
+| --------------- | --------------------------- | --------- |
+| [[re.req]]      | Requirements                |           |
+| [[re.const]]    | Constants                   | `<regex>` |
+| [[re.badexp]]   | Exception type              |           |
+| [[re.traits]]   | Traits                      |           |
+| [[re.regex]]    | Regular expression template |           |
+| [[re.submatch]] | Submatches                  |           |
+| [[re.results]]  | Match results               |           |
+| [[re.alg]]      | Algorithms                  |           |
+| [[re.iter]]     | Iterators                   |           |
+| [[re.grammar]]  | Grammar                     |           |
 
 
 ## Requirements <a id="re.req">[[re.req]]</a>
@@ -496,19 +496,19 @@ grammar is `ECMAScript`.
 
 **Table: `syntax_option_type` effects**
 
-| Element | Effect(s) if set |
-| --- | --- |
-| % `icase` | Specifies that matching of regular expressions against a character container sequence shall be performed without regard to case. \indexlibrarymember{syntax_option_type}{icase}% |
-| % `nosubs` | Specifies that no sub-expressions shall be considered to be marked, so that when a regular expression is matched against a character container sequence, no sub-expression matches shall be stored in the supplied `match_results` object. \indexlibrarymember{syntax_option_type}{nosubs}% |
-| % `optimize` | Specifies that the regular expression engine should pay more attention to the speed with which regular expressions are matched, and less to the speed with which regular expression objects are constructed. Otherwise it has no detectable effect on the program output. \indexlibrarymember{syntax_option_type}{optimize}% |
-| % `collate` | Specifies that character ranges of the form `"[a-b]"` shall be locale sensitive.% \indexlibrarymember{syntax_option_type}{collate}% \indextext{locale}% |
-| % `ECMAScript` | Specifies that the grammar recognized by the regular expression engine shall be that used by ECMAScript in ECMA-262, as modified in~ [[re.grammar]]. \newline \xref ECMA-262 15.10 \indextext{ECMAScript}% \indexlibrarymember{syntax_option_type}{ECMAScript}% |
-| % `basic` | Specifies that the grammar recognized by the regular expression engine shall be that used by basic regular expressions in POSIX. \newline \xref POSIX, Base Definitions and Headers, Section 9.3 \indextext{POSIX!regular expressions}% \indexlibrarymember{syntax_option_type}{basic}% |
-| % `extended` | Specifies that the grammar recognized by the regular expression engine shall be that used by extended regular expressions in POSIX. \newline \xref POSIX, Base Definitions and Headers, Section 9.4 \indextext{POSIX!extended regular expressions}% \indexlibrarymember{syntax_option_type}{extended}% |
-| % `awk` | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility awk in POSIX. \indexlibrarymember{syntax_option_type}{awk}% |
-| % `grep` | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep in POSIX. \indexlibrarymember{syntax_option_type}{grep}% |
-| % `egrep` | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep when given the -E option in POSIX. \indexlibrarymember{syntax_option_type}{egrep}% |
-| % `multiline` | Specifies that `^` shall match the beginning of a line and `$` shall match the end of a line, if the `ECMAScript` engine is selected. \indexlibrarymember{syntax_option_type}{multiline}% |
+| Element        | Effect(s) if set                                                                                                                                                                                                                                                                                                             |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| % `icase`      | Specifies that matching of regular expressions against a character container sequence shall be performed without regard to case. \indexlibrarymember{syntax_option_type}{icase}%                                                                                                                                             |
+| % `nosubs`     | Specifies that no sub-expressions shall be considered to be marked, so that when a regular expression is matched against a character container sequence, no sub-expression matches shall be stored in the supplied `match_results` object. \indexlibrarymember{syntax_option_type}{nosubs}%                                  |
+| % `optimize`   | Specifies that the regular expression engine should pay more attention to the speed with which regular expressions are matched, and less to the speed with which regular expression objects are constructed. Otherwise it has no detectable effect on the program output. \indexlibrarymember{syntax_option_type}{optimize}% |
+| % `collate`    | Specifies that character ranges of the form `"[a-b]"` shall be locale sensitive.% \indexlibrarymember{syntax_option_type}{collate}% \indextext{locale}%                                                                                                                                                                      |
+| % `ECMAScript` | Specifies that the grammar recognized by the regular expression engine shall be that used by ECMAScript in ECMA-262, as modified in~ [[re.grammar]]. \newline \xref ECMA-262 15.10 \indextext{ECMAScript}% \indexlibrarymember{syntax_option_type}{ECMAScript}%                                                              |
+| % `basic`      | Specifies that the grammar recognized by the regular expression engine shall be that used by basic regular expressions in POSIX. \newline \xref POSIX, Base Definitions and Headers, Section 9.3 \indextext{POSIX!regular expressions}% \indexlibrarymember{syntax_option_type}{basic}%                                      |
+| % `extended`   | Specifies that the grammar recognized by the regular expression engine shall be that used by extended regular expressions in POSIX. \newline \xref POSIX, Base Definitions and Headers, Section 9.4 \indextext{POSIX!extended regular expressions}% \indexlibrarymember{syntax_option_type}{extended}%                       |
+| % `awk`        | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility awk in POSIX. \indexlibrarymember{syntax_option_type}{awk}%                                                                                                                                                         |
+| % `grep`       | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep in POSIX. \indexlibrarymember{syntax_option_type}{grep}%                                                                                                                                                       |
+| % `egrep`      | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep when given the -E option in POSIX. \indexlibrarymember{syntax_option_type}{egrep}%                                                                                                                             |
+| % `multiline`  | Specifies that `^` shall match the beginning of a line and `$` shall match the end of a line, if the `ECMAScript` engine is selected. \indexlibrarymember{syntax_option_type}{multiline}%                                                                                                                                    |
 
 
 ### Bitmask type `match_flag_type` <a id="re.matchflag">[[re.matchflag]]</a>
@@ -544,20 +544,20 @@ effects listed in [[re.matchflag]] for any bitmask elements set.
 **Table: `regex_constants::match_flag_type` effects when obtaining a match against a
      character container sequence {[}`first`, `last`{)}.**
 
-| Element | Effect(s) if set |
-| --- | --- |
-| % \indexlibraryglobal{match_not_bol}% `match_not_bol` | The first character in the sequence {[}`first`, `last`{)} shall be treated as though it is not at the beginning of a line, so the character \verb|^| in the regular expression shall not match {[}`first`, `first`{)}. |
-| % \indexlibraryglobal{match_not_eol}% `match_not_eol` | The last character in the sequence {[}`first`, `last`{)} shall be treated as though it is not at the end of a line, so the character \verb|"$"| in the regular expression shall not match {[}`last`, `last`{)}. |
-| % \indexlibraryglobal{match_not_bow}% `match_not_bow` | The expression \verb|"b"| shall not match the sub-sequence {[}`first`, `first`{)}. |
-| % \indexlibraryglobal{match_not_eow}% `match_not_eow` | The expression \verb|"b"| shall not match the sub-sequence {[}`last`, `last`{)}. |
-| % \indexlibraryglobal{match_any}% `match_any` | If more than one match is possible then any match is an acceptable result. |
-| % \indexlibraryglobal{match_not_null}% `match_not_null` | The expression shall not match an empty sequence. |
-| % \indexlibraryglobal{match_continuous}% `match_continuous` | The expression shall only match a sub-sequence that begins at `first`. |
-| % \indexlibraryglobal{match_prev_avail}% `match_prev_avail` | \verb!--first! is a valid iterator position. When this flag is set the flags `match_not_bol` and `match_not_bow` shall be ignored by the regular expression algorithms [[re.alg]] and iterators [[re.iter]]. |
-| % \indexlibraryglobal{format_default}% `format_default` | When a regular expression match is to be replaced by a new string, the new string shall be constructed using the rules used by the ECMAScript replace function in ECMA-262, part 15.5.4.11 String.prototype.replace. In addition, during search and replace operations all non-overlapping occurrences of the regular expression shall be located and replaced, and sections of the input that did not match the expression shall be copied unchanged to the output string. |
-| % \indexlibraryglobal{format_sed}% `format_sed` | When a regular expression match is to be replaced by a new string, the new string shall be constructed using the rules used by the sed utility in POSIX. |
-| % \indexlibraryglobal{format_no_copy}% `format_no_copy` | During a search and replace operation, sections of the character container sequence being searched that do not match the regular expression shall not be copied to the output string. |
-| % \indexlibraryglobal{format_first_only}% `format_first_only` | When specified during a search and replace operation, only the first occurrence of the regular expression shall be replaced. |
+| Element                                                       | Effect(s) if set                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| % \indexlibraryglobal{match_not_bol}% `match_not_bol`         | The first character in the sequence {[}`first`, `last`{)} shall be treated as though it is not at the beginning of a line, so the character \verb|^| in the regular expression shall not match {[}`first`, `first`{)}.                                                                                                                                                                                                                                                      |
+| % \indexlibraryglobal{match_not_eol}% `match_not_eol`         | The last character in the sequence {[}`first`, `last`{)} shall be treated as though it is not at the end of a line, so the character \verb|"$"| in the regular expression shall not match {[}`last`, `last`{)}.                                                                                                                                                                                                                                                             |
+| % \indexlibraryglobal{match_not_bow}% `match_not_bow`         | The expression \verb|"b"| shall not match the sub-sequence {[}`first`, `first`{)}.                                                                                                                                                                                                                                                                                                                                                                                          |
+| % \indexlibraryglobal{match_not_eow}% `match_not_eow`         | The expression \verb|"b"| shall not match the sub-sequence {[}`last`, `last`{)}.                                                                                                                                                                                                                                                                                                                                                                                            |
+| % \indexlibraryglobal{match_any}% `match_any`                 | If more than one match is possible then any match is an acceptable result.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| % \indexlibraryglobal{match_not_null}% `match_not_null`       | The expression shall not match an empty sequence.                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| % \indexlibraryglobal{match_continuous}% `match_continuous`   | The expression shall only match a sub-sequence that begins at `first`.                                                                                                                                                                                                                                                                                                                                                                                                      |
+| % \indexlibraryglobal{match_prev_avail}% `match_prev_avail`   | \verb!--first! is a valid iterator position. When this flag is set the flags `match_not_bol` and `match_not_bow` shall be ignored by the regular expression algorithms [[re.alg]] and iterators [[re.iter]].                                                                                                                                                                                                                                                                |
+| % \indexlibraryglobal{format_default}% `format_default`       | When a regular expression match is to be replaced by a new string, the new string shall be constructed using the rules used by the ECMAScript replace function in ECMA-262, part 15.5.4.11 String.prototype.replace. In addition, during search and replace operations all non-overlapping occurrences of the regular expression shall be located and replaced, and sections of the input that did not match the expression shall be copied unchanged to the output string. |
+| % \indexlibraryglobal{format_sed}% `format_sed`               | When a regular expression match is to be replaced by a new string, the new string shall be constructed using the rules used by the sed utility in POSIX.                                                                                                                                                                                                                                                                                                                    |
+| % \indexlibraryglobal{format_no_copy}% `format_no_copy`       | During a search and replace operation, sections of the character container sequence being searched that do not match the regular expression shall not be copied to the output string.                                                                                                                                                                                                                                                                                       |
+| % \indexlibraryglobal{format_first_only}% `format_first_only` | When specified during a search and replace operation, only the first occurrence of the regular expression shall be replaced.                                                                                                                                                                                                                                                                                                                                                |
 
 
 ### Implementation-defined `error_type` <a id="re.err">[[re.err]]</a>
@@ -587,21 +587,21 @@ conditions described in [[re.err]]:
 
 **Table: `error_type` values in the C locale**
 
-| Value | Error condition |
-| --- | --- |
-| `error_collate` | The expression contains an invalid collating element name. |
-| % `error_ctype` | The expression contains an invalid character class name. |
-| % `error_escape` | The expression contains an invalid escaped character, or a trailing escape. |
-| % `error_backref` | The expression contains an invalid back reference. |
-| % `error_brack` | The expression contains mismatched \verb|[| and \verb|]|. |
-| % `error_paren` | The expression contains mismatched \verb|(| and \verb|)|. |
-| % `error_brace` | The expression contains mismatched \verb|{| and \verb|}| |
-| % `error_badbrace` | The expression contains an invalid range in a \verb|| expression. |
-| % `error_range` | The expression contains an invalid character range, such as \verb|[b-a]| in most encodings. |
-| % `error_space` | There is insufficient memory to convert the expression into a finite state machine. |
-| % `error_badrepeat` | One of \verb|*?+{| is not preceded by a valid regular expression. |
-| % `error_complexity` | The complexity of an attempted match against a regular expression exceeds a pre-set level. |
-| % `error_stack` | There is insufficient memory to determine whether the regular expression matches the specified character sequence. |
+| Value                | Error condition                                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `error_collate`      | The expression contains an invalid collating element name.                                                         |
+| % `error_ctype`      | The expression contains an invalid character class name.                                                           |
+| % `error_escape`     | The expression contains an invalid escaped character, or a trailing escape.                                        |
+| % `error_backref`    | The expression contains an invalid back reference.                                                                 |
+| % `error_brack`      | The expression contains mismatched \verb|[| and \verb|]|.                                                          |
+| % `error_paren`      | The expression contains mismatched \verb|(| and \verb|)|.                                                          |
+| % `error_brace`      | The expression contains mismatched \verb|{| and \verb|}|                                                           |
+| % `error_badbrace`   | The expression contains an invalid range in a \verb|| expression.                                                  |
+| % `error_range`      | The expression contains an invalid character range, such as \verb|[b-a]| in most encodings.                        |
+| % `error_space`      | There is insufficient memory to convert the expression into a finite state machine.                                |
+| % `error_badrepeat`  | One of \verb|*?+{| is not preceded by a valid regular expression.                                                  |
+| % `error_complexity` | The complexity of an attempted match against a regular expression exceeds a pre-set level.                         |
+| % `error_stack`      | There is insufficient memory to determine whether the regular expression matches the specified character sequence. |
 
 
 ## Class `regex_error` <a id="re.badexp">[[re.badexp]]</a>
@@ -856,22 +856,22 @@ the last argument passed to `imbue`.
 **Table: Character class names and corresponding `ctype` masks**
 
 | Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
-| --- | --- | --- |
-| `"alnum"` | `L"alnum"` | `ctype_base::alnum` |
-| `"alpha"` | `L"alpha"` | `ctype_base::alpha` |
-| `"blank"` | `L"blank"` | `ctype_base::blank` |
-| `"cntrl"` | `L"cntrl"` | `ctype_base::cntrl` |
-| `"digit"` | `L"digit"` | `ctype_base::digit` |
-| `"d"` | `L"d"` | `ctype_base::digit` |
-| `"graph"` | `L"graph"` | `ctype_base::graph` |
-| `"lower"` | `L"lower"` | `ctype_base::lower` |
-| `"print"` | `L"print"` | `ctype_base::print` |
-| `"punct"` | `L"punct"` | `ctype_base::punct` |
-| `"space"` | `L"space"` | `ctype_base::space` |
-| `"s"` | `L"s"` | `ctype_base::space` |
-| `"upper"` | `L"upper"` | `ctype_base::upper` |
-| `"w"` | `L"w"` | `ctype_base::alnum` |
-| `"xdigit"` | `L"xdigit"` | `ctype_base::xdigit` |
+| --------------------- | ------------------- | -------------------------------------- |
+| `"alnum"`             | `L"alnum"`          | `ctype_base::alnum`                    |
+| `"alpha"`             | `L"alpha"`          | `ctype_base::alpha`                    |
+| `"blank"`             | `L"blank"`          | `ctype_base::blank`                    |
+| `"cntrl"`             | `L"cntrl"`          | `ctype_base::cntrl`                    |
+| `"digit"`             | `L"digit"`          | `ctype_base::digit`                    |
+| `"d"`                 | `L"d"`              | `ctype_base::digit`                    |
+| `"graph"`             | `L"graph"`          | `ctype_base::graph`                    |
+| `"lower"`             | `L"lower"`          | `ctype_base::lower`                    |
+| `"print"`             | `L"print"`          | `ctype_base::print`                    |
+| `"punct"`             | `L"punct"`          | `ctype_base::punct`                    |
+| `"space"`             | `L"space"`          | `ctype_base::space`                    |
+| `"s"`                 | `L"s"`              | `ctype_base::space`                    |
+| `"upper"`             | `L"upper"`          | `ctype_base::upper`                    |
+| `"w"`                 | `L"w"`              | `ctype_base::alnum`                    |
+| `"xdigit"`            | `L"xdigit"`         | `ctype_base::xdigit`                   |
 
 
 ## Class template `basic_regex` <a id="re.regex">[[re.regex]]</a>

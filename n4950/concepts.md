@@ -14,13 +14,13 @@ concepts, object concepts, and callable concepts as summarized in
 
 **Table: Fundamental concepts library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[concepts.equality]] | Equality preservation |  |
-| [[concepts.lang]] | Language-related concepts | `<concepts>` |
-| [[concepts.compare]] | Comparison concepts |  |
-| [[concepts.object]] | Object concepts |  |
-| [[concepts.callable]] | Callable concepts |  |
+| Subclause             |                           | Header       |
+| --------------------- | ------------------------- | ------------ |
+| [[concepts.equality]] | Equality preservation     |              |
+| [[concepts.lang]]     | Language-related concepts | `<concepts>` |
+| [[concepts.compare]]  | Comparison concepts       |              |
+| [[concepts.object]]   | Object concepts           |              |
+| [[concepts.callable]] | Callable concepts         |              |
 
 
 ## Equality preservation <a id="concepts.equality">[[concepts.equality]]</a>

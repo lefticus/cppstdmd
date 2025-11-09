@@ -10,14 +10,14 @@ components for range primitives and range generators as summarized in
 
 **Table: Ranges library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[range.access]] | Range access | `<ranges>` |
-| [[range.req]] | Requirements |  |
-| [[range.utility]] | Range utilities |  |
-| [[range.factories]] | Range factories |  |
-| [[range.adaptors]] | Range adaptors |  |
-| [[coro.generator]] | Range generators | `<generator>` |
+| Subclause           |                  | Header        |
+| ------------------- | ---------------- | ------------- |
+| [[range.access]]    | Range access     | `<ranges>`    |
+| [[range.req]]       | Requirements     |               |
+| [[range.utility]]   | Range utilities  |               |
+| [[range.factories]] | Range factories  |               |
+| [[range.adaptors]]  | Range adaptors   |               |
+| [[coro.generator]]  | Range generators | `<generator>` |
 
 
 ## Header `<ranges>` synopsis <a id="ranges.syn">[[ranges.syn]]</a>

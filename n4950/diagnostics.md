@@ -12,13 +12,13 @@ in [[diagnostics.summary]].
 
 **Table: Diagnostics library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
-| [[std.exceptions]] | Exception classes | `<stdexcept>` |
-| [[assertions]] | Assertions | `<cassert>` |
-| [[errno]] | Error numbers | `<cerrno>` |
-| [[syserr]] | System error support | `<system_error>` |
-| [[stacktrace]] | Stacktrace | `<stacktrace>` |
+| Subclause          |                      | Header           |
+| ------------------ | -------------------- | ---------------- |
+| [[std.exceptions]] | Exception classes    | `<stdexcept>`    |
+| [[assertions]]     | Assertions           | `<cassert>`      |
+| [[errno]]          | Error numbers        | `<cerrno>`       |
+| [[syserr]]         | System error support | `<system_error>` |
+| [[stacktrace]]     | Stacktrace           | `<stacktrace>`   |
 
 
 ## Exception classes <a id="std.exceptions">[[std.exceptions]]</a>

@@ -12,13 +12,13 @@ summarized in [[iterators.summary]].
 
 **Table: Iterators library summary**
 
-| Subclause |  | Header |
-| --- | --- | --- |
+| Subclause                 |                       | Header       |
+| ------------------------- | --------------------- | ------------ |
 | [[iterator.requirements]] | Iterator requirements | `<iterator>` |
-| [[iterator.primitives]] | Iterator primitives |  |
-| [[predef.iterators]] | Iterator adaptors |  |
-| [[stream.iterators]] | Stream iterators |  |
-| [[iterator.range]] | Range access |  |
+| [[iterator.primitives]]   | Iterator primitives   |              |
+| [[predef.iterators]]      | Iterator adaptors     |              |
+| [[stream.iterators]]      | Stream iterators      |              |
+| [[iterator.range]]        | Range access          |              |
 
 
 ## Header `<iterator>` synopsis <a id="iterator.synopsis">[[iterator.synopsis]]</a>
@@ -534,10 +534,10 @@ access iterators*, and *contiguous iterators*, as shown in
 
 **Table: Relations among iterator categories**
 
-|  |  |  |  |  |
-| --- | --- | --- | --- | --- |
-| **Contiguous** | $\rightarrow$ **Random Access** | $\rightarrow$ **Bidirectional** | $\rightarrow$ **Forward** | $\rightarrow$ **Input** |
-|  |  |  |  | $\rightarrow$ **Output** |
+|                |                                 |                                 |                           |                          |
+| -------------- | ------------------------------- | ------------------------------- | ------------------------- | ------------------------ |
+| **Contiguous** | $\rightarrow$ **Random Access** | $\rightarrow$ **Bidirectional** | $\rightarrow$ **Forward** | $\rightarrow$ **Input**  |
+|                |                                 |                                 |                           | $\rightarrow$ **Output** |
 
 
 The six categories of iterators correspond to the iterator concepts

@@ -3887,13 +3887,13 @@ type. — *end example*\]
 
 **Table: Minimum width**
 
-| Type | Minimum width $N$ |
-| --- | --- |
-| `signed char` | 8 |
-| `short int` | 16 |
-| `int` | 16 |
-| `long int` | 32 |
-| `long long int` | 64 |
+| Type            | Minimum width $N$ |
+| --------------- | ----------------- |
+| `signed char`   | 8                 |
+| `short int`     | 16                |
+| `int`           | 16                |
+| `long int`      | 32                |
+| `long long int` | 64                |
 
 
 The width of each signed integer type shall not be less than the values
@@ -4071,13 +4071,13 @@ the parameters specified for `std::bfloat16_t`. — *end note*\]
 
 **Table: Properties of named extended floating-point types**
 
-| Parameter | `float16_t` | `float32_t` | `float64_t` | `float128_t` | `bfloat16_t` |
-| --- | --- | --- | --- | --- | --- |
-| ISO/IEC/IEEE 60559 name | binary16 | binary32 | binary64 | binary128 |  |
-| $k$, storage width in bits | 16 | 32 | 64 | 128 | 16 |
-| $p$, precision in bits | 11 | 24 | 53 | 113 | 8 |
-| $emax$, maximum exponent | 15 | 127 | 1023 | 16383 | 127 |
-| $w$, exponent field width in bits | 5 | 8 | 11 | 15 | 8 |
+| Parameter                         | `float16_t` | `float32_t` | `float64_t` | `float128_t` | `bfloat16_t` |
+| --------------------------------- | ----------- | ----------- | ----------- | ------------ | ------------ |
+| ISO/IEC/IEEE 60559 name           | binary16    | binary32    | binary64    | binary128    |              |
+| $k$, storage width in bits        | 16          | 32          | 64          | 128          | 16           |
+| $p$, precision in bits            | 11          | 24          | 53          | 113          | 8            |
+| $emax$, maximum exponent          | 15          | 127         | 1023        | 16383        | 127          |
+| $w$, exponent field width in bits | 5           | 8           | 11          | 15           | 8            |
 
 
 *Recommended practice:* Any names that the implementation provides for
@@ -4262,13 +4262,13 @@ shows the relations that constitute this ordering.
 
 **Table: Relations on `const` and `volatile`**
 
-|  |  |  |
-| --- | --- | --- |
-| cv-qualifier{no cv-qualifier} | < | `const` |
-| cv-qualifier{no cv-qualifier} | < | `volatile` |
-| cv-qualifier{no cv-qualifier} | < | `const volatile` |
-| `const` | < | `const volatile` |
-| `volatile` | < | `const volatile` |
+|                               |     |                  |
+| ----------------------------- | --- | ---------------- |
+| cv-qualifier{no cv-qualifier} | <   | `const`          |
+| cv-qualifier{no cv-qualifier} | <   | `volatile`       |
+| cv-qualifier{no cv-qualifier} | <   | `const volatile` |
+| `const`                       | <   | `const volatile` |
+| `volatile`                    | <   | `const volatile` |
 
 
 In this document, the notation cv (or cv-qualifiercv1, cv-qualifiercv2,
