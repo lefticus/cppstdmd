@@ -3971,7 +3971,7 @@ shift sequence needed to restore the initial shift state; the resulting
 state described is the initial conversion state.
 
 *Returns:* The number of bytes stored in the array object (including any
-shift sequences). If `c8` does not contribute to a sequence of
+shift sequences). If `c8` does not contribute to a sequence of `char8_t`
 corresponding to a valid multibyte character, the value of the macro
 `EILSEQ` is stored in `errno`, `(size_t) (-1)` is returned, and the
 conversion state is unspecified.

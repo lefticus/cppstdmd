@@ -1026,9 +1026,9 @@ void*& pword(int idx);
 *Preconditions:* `idx` is a value obtained by a call to `xalloc`.
 
 *Effects:* If `parray` is a null pointer, allocates an array of pointers
-to of unspecified size and stores a pointer to its first element in
-`parray`. The function then extends the array pointed at by `parray` as
-necessary to include the element `parray[idx]`. Each newly allocated
+to `void` of unspecified size and stores a pointer to its first element
+in `parray`. The function then extends the array pointed at by `parray`
+as necessary to include the element `parray[idx]`. Each newly allocated
 element of the array is initialized to a null pointer. The reference
 returned is invalid after any other operation on the object. However,
 the value of the storage referred to is retained, so that until the next
@@ -1389,9 +1389,9 @@ void move(basic_ios&& rhs);
 ```
 
 *Ensures:* `*this` has the state that `rhs` had before the function
-call, except that `rdbuf()` returns . `rhs` is in a valid but
+call, except that `rdbuf()` returns `nullptr`. `rhs` is in a valid but
 unspecified state, except that `rhs.rdbuf()` returns the same value as
-it returned before the function call, and `rhs.tie()` returns .
+it returned before the function call, and `rhs.tie()` returns `nullptr`.
 
 ``` cpp
 void swap(basic_ios& rhs) noexcept;
@@ -2207,7 +2207,7 @@ basic_streambuf* setbuf(char_type* s, streamsize n);
 separately for each class derived from `basic_streambuf` in this
 Clause [[stringbuf.virtuals,filebuf.virtuals]].
 
-*Default behavior:* Does nothing. Returns .
+*Default behavior:* Does nothing. Returns `this`.
 
 ``` cpp
 pos_type seekoff(off_type off, ios_base::seekdir way,
@@ -2425,8 +2425,8 @@ obeys the following constraints:
   that: `pptr() - pbase() == r` and the `r` characters starting at
   `pbase()` are the associated output stream. In case `r` is zero (all
   characters of the pending sequence have been consumed) then either
-  `pbase()` is set to , or `pbase()` and `pptr()` are both set to the
-  same non-null value.
+  `pbase()` is set to `nullptr`, or `pbase()` and `pptr()` are both set
+  to the same non-null value.
 - The function may fail if either appending some character to the
   associated output stream fails or if it is unable to establish
   `pbase()` and `pptr()` according to the above rules.
@@ -5417,7 +5417,7 @@ basic_streambuf<charT, traits>* setbuf(charT* s, streamsize n) override;
 *Effects:* *implementation-defined*, except that `setbuf(0, 0)` has no
 effect.
 
-*Returns:* .
+*Returns:* `this`.
 
 ### Class template `basic_istringstream` <a id="istringstream">[[istringstream]]</a>
 
@@ -7011,7 +7011,7 @@ declared, in `<cstdio>`.
 If the repositioning operation fails, calls `close()` and returns a null
 pointer to indicate failure.
 
-*Returns:* if successful, a null pointer otherwise.
+*Returns:* `this` if successful, a null pointer otherwise.
 
 ``` cpp
 basic_filebuf* open(const string& s, ios_base::openmode mode);
@@ -7039,7 +7039,7 @@ after closing the file.
 
 *Ensures:* `is_open() == false`.
 
-*Returns:* on success, a null pointer otherwise.
+*Returns:* `this` on success, a null pointer otherwise.
 
 #### Overridden virtual functions <a id="filebuf.virtuals">[[filebuf.virtuals]]</a>
 
@@ -9093,7 +9093,7 @@ template<class InputIterator>
 *Effects:* Let `s` be the effective range of `source` or the range
 \[`first`, `last`), after converting the encoding as follows:
 
-- If `value_type` is , converts to the native wide
+- If `value_type` is `wchar_t`, converts to the native wide
   encoding [[fs.path.type.cvt]] using the
   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`.
 - Otherwise a conversion is performed using the

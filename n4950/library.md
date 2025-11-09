@@ -549,14 +549,13 @@ of a specific customization point object type on the same arguments are
 equivalent.
 
 The type `T` of a customization point object, ignoring *cv-qualifier*s,
-shall model `\texttt{invocable}<T&, Args...>`,
-`\texttt{invocable}<const T&, Args...>`,
-`\texttt{invocable}<T, Args...>`, and
-`\texttt{invocable}<const T, Args...>` [[concept.invocable]] when the
-types in `Args...` meet the requirements specified in that customization
-point object’s definition. When the types of `Args...` do not meet the
-customization point object’s requirements, `T` shall not have a function
-call operator that participates in overload resolution.
+shall model `invocable<T&, Args...>`, `invocable<const T&, Args...>`,
+`invocable<T, Args...>`, and `invocable<const T, Args...>`
+[[concept.invocable]] when the types in `Args...` meet the requirements
+specified in that customization point object’s definition. When the
+types of `Args...` do not meet the customization point object’s
+requirements, `T` shall not have a function call operator that
+participates in overload resolution.
 
 For a given customization point object `o`, let `p` be a variable
 initialized as if by `auto p = o;`. Then for any sequence of arguments

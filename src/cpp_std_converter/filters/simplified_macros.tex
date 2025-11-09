@@ -36,12 +36,12 @@
 \renewcommand{\tilde}{\textasciitilde}
 
 %%--------------------------------------------------
-%% Category B: Code Formatting (7 macros)
+%% Category B: Code Formatting (8 macros)
 %% Convert to \texttt (monospace) - Pandoc renders as inline code
 %%--------------------------------------------------
 %% \tcode{} - REMOVED: contains nested macros (\keyword{}, \ctype{}, etc)
-%% \keyword{} - REMOVED: nested in \tcode{}, context-dependent (tables)
 %% \ctype{} - REMOVED: nested in \tcode{}
+\renewcommand{\keyword}[1]{\texttt{#1}}
 \renewcommand{\libheader}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderdef}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderref}[1]{\texttt{<#1>}}
@@ -153,12 +153,11 @@
 \renewcommand{\opt}[1]{#1ₒₚₜ}  % Optional grammar element (e.g., \opt{T} -> Tₒₚₜ) - consistent everywhere, uses Unicode subscripts
 
 %%--------------------------------------------------
-%% TOTAL: 81 simplified macros (75 original + 2 Phase 3 + 4 Phase 4 additions)
+%% TOTAL: 82 simplified macros (75 original + 2 Phase 3 + 4 Phase 4 + 1 Issue #63)
 %% These cover ~73% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):
 %%  - \tcode{} - contains nested macros (\keyword{}, \ctype{}, \placeholder{}, etc)
-%%  - \keyword{} - nested in \tcode{}, context-dependent (tables)
 %%  - \ctype{} - nested in \tcode{}
 %%  - \grammarterm{} - context-dependent (BNF vs text)
 %%  - \placeholder{}, \placeholdernc{} - context-dependent (code blocks vs text)

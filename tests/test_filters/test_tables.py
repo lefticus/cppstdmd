@@ -258,12 +258,12 @@ def test_floattable_with_keyword():
     # All rows should be present (including first row with signed char)
     assert "`signed char`" in output
     assert "`short int`" in output
-    assert "| int |" in normalized  # Plain keyword without \tcode
+    assert "`int`" in output  # \keyword{} renders as inline code
     assert "`long int`" in output
     # Should NOT have LaTeX commands leaking
     assert "\\keyword" not in output
     assert "\\texttt" not in output
-    # Should have 4 data rows - only 3 have backticks (int row has none)
+    # Should have 4 data rows - all with backticks
     assert output.count("| `") >= 3  # At least 3 cells with backticks
 
 def test_floattable_with_hline():
@@ -704,10 +704,12 @@ none & \keyword{double} \\
     normalized = normalize_table_whitespace(output)
     # Should have caption
     assert "**Table: Types of floating-point-literals**" in output
-    # Should strip \keyword markup
-    assert "| none | double |" in normalized
-    assert "| `f` or `F` | float |" in normalized
-    assert "| `l` or `L` | long double |" in normalized
+    # \keyword{} should render as inline code
+    assert "`double`" in output
+    assert "`float`" in output
+    assert "`long` `double`" in output  # Two keywords: \keyword{long} \keyword{double}
+    assert "`f` or `F`" in output
+    assert "`l` or `L`" in output
     # Should NOT have LaTeX commands
     assert "\\keyword" not in output
     assert "\\tcode" not in output

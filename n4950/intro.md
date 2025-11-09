@@ -107,9 +107,10 @@ satisfied before continuing execution past the blocking operation
 
 ⟨library⟩ object which, when treated sequentially, can represent text
 
-\[*Note 1 to entry*: The term does not mean only , , , , and objects,
-but any value that can be represented by a type that provides the
-definitions specified in <a href="#strings" data-reference-type="ref"
+\[*Note 1 to entry*: The term does not mean only , `char8_t`,
+`char16_t`, `char32_t`, and `wchar_t` objects, but any value that can be
+represented by a type that provides the definitions specified in
+<a href="#strings" data-reference-type="ref"
 data-reference="strings">[strings]</a>,
 <a href="#localization" data-reference-type="ref"
 data-reference="localization">[localization]</a>,
@@ -287,7 +288,7 @@ terminating null character type value `charT()`
 ⟨library⟩ class member function that accesses the state of an object of
 the class but does not alter that state
 
-\[*Note 1 to entry*: Observer functions are specified as member
+\[*Note 1 to entry*: Observer functions are specified as `const` member
 functions. — *end note*\]
 
 #### 38 parameter <a id="defns.parameter">[defns.parameter]</a>

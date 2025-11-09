@@ -2746,8 +2746,8 @@ This results in undefined behavior. — *end note*\]
 static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
 ```
 
-The data member `is_always_lock_free` is `true` if the atomic type’s
-operations are always lock-free, and `false` otherwise.
+The `static` data member `is_always_lock_free` is `true` if the atomic
+type’s operations are always lock-free, and `false` otherwise.
 
 \[*Note 2*: The value of `is_always_lock_free` is consistent with the
 value of the corresponding `ATOMIC_..._LOCK_FREE` macro, if
@@ -2781,8 +2781,9 @@ void store(T desired, memory_order order = memory_order::seq_cst) noexcept;
 `memory_order::consume`, `memory_order::acquire`, nor
 `memory_order::acq_rel`.
 
-*Effects:* Atomically replaces the value pointed to by with the value of
-`desired`. Memory is affected according to the value of `order`.
+*Effects:* Atomically replaces the value pointed to by `this` with the
+value of `desired`. Memory is affected according to the value of
+`order`.
 
 *integral-type* *floating-point-type*
 
@@ -2813,7 +2814,7 @@ nor `memory_order::acq_rel`.
 
 *Effects:* Memory is affected according to the value of `order`.
 
-*Returns:* Atomically returns the value pointed to by .
+*Returns:* Atomically returns the value pointed to by `this`.
 
 *type* *integral-type* *floating-point-type*
 
@@ -2837,12 +2838,13 @@ T exchange(T desired, memory_order order = memory_order::seq_cst) noexcept;
 *Constraints:* For the `volatile` overload of this function,
 `is_always_lock_free` is `true`.
 
-*Effects:* Atomically replaces the value pointed to by with `desired`.
-Memory is affected according to the value of `order`. These operations
-are atomic read-modify-write operations [[intro.multithread]].
+*Effects:* Atomically replaces the value pointed to by `this` with
+`desired`. Memory is affected according to the value of `order`. These
+operations are atomic read-modify-write
+operations [[intro.multithread]].
 
-*Returns:* Atomically returns the value pointed to by immediately before
-the effects.
+*Returns:* Atomically returns the value pointed to by `this` immediately
+before the effects.
 
 *integral-type* *floating-point-type* *integral-type*
 *floating-point-type*
@@ -2873,21 +2875,21 @@ bool compare_exchange_strong(T& expected, T desired,
 `memory_order::release` nor `memory_order::acq_rel`.
 
 *Effects:* Retrieves the value in `expected`. It then atomically
-compares the value representation of the value pointed to by for
+compares the value representation of the value pointed to by `this` for
 equality with that previously retrieved from `expected`, and if true,
-replaces the value pointed to by with that in `desired`. If and only if
-the comparison is `true`, memory is affected according to the value of
-`success`, and if the comparison is false, memory is affected according
-to the value of `failure`. When only one `memory_order` argument is
-supplied, the value of `success` is `order`, and the value of `failure`
-is `order` except that a value of `memory_order::acq_rel` shall be
-replaced by the value `memory_order::acquire` and a value of
+replaces the value pointed to by `this` with that in `desired`. If and
+only if the comparison is `true`, memory is affected according to the
+value of `success`, and if the comparison is false, memory is affected
+according to the value of `failure`. When only one `memory_order`
+argument is supplied, the value of `success` is `order`, and the value
+of `failure` is `order` except that a value of `memory_order::acq_rel`
+shall be replaced by the value `memory_order::acquire` and a value of
 `memory_order::release` shall be replaced by the value
 `memory_order::relaxed`. If and only if the comparison is false then,
 after the atomic operation, the value in `expected` is replaced by the
-value pointed to by during the atomic comparison. If the operation
-returns `true`, these operations are atomic read-modify-write
-operations [[intro.multithread]] on the memory pointed to by .
+value pointed to by `this` during the atomic comparison. If the
+operation returns `true`, these operations are atomic read-modify-write
+operations [[intro.multithread]] on the memory pointed to by `this`.
 Otherwise, these operations are atomic load operations on that memory.
 
 *Returns:* The result of the comparison.
@@ -2943,8 +2945,8 @@ the atomic object.
 
 *Remarks:* A weak compare-and-exchange operation may fail spuriously.
 That is, even when the contents of memory referred to by `expected` and
-are equal, it may return `false` and store back to `expected` the same
-memory contents that were originally there.
+`this` are equal, it may return `false` and store back to `expected` the
+same memory contents that were originally there.
 
 \[*Note 5*: This spurious failure enables implementation of
 compare-and-exchange on a broader class of machines, e.g., load-locked
@@ -3199,14 +3201,14 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 *Constraints:* For the `volatile` overload of this function,
 `is_always_lock_free` is `true`.
 
-*Effects:* Atomically replaces the value pointed to by with the result
-of the computation applied to the value pointed to by and the given
-`operand`. Memory is affected according to the value of `order`. These
-operations are atomic read-modify-write
+*Effects:* Atomically replaces the value pointed to by `this` with the
+result of the computation applied to the value pointed to by `this` and
+the given `operand`. Memory is affected according to the value of
+`order`. These operations are atomic read-modify-write
 operations [[intro.multithread]].
 
-*Returns:* Atomically, the value pointed to by immediately before the
-effects.
+*Returns:* Atomically, the value pointed to by `this` immediately before
+the effects.
 
 *Remarks:* For signed integer types, the result is as if the object
 value and parameters were converted to their corresponding unsigned
@@ -3328,14 +3330,14 @@ T fetch_key(T operand, memory_order order = memory_order::seq_cst) noexcept;
 *Constraints:* For the `volatile` overload of this function,
 `is_always_lock_free` is `true`.
 
-*Effects:* Atomically replaces the value pointed to by with the result
-of the computation applied to the value pointed to by and the given
-`operand`. Memory is affected according to the value of `order`. These
-operations are atomic read-modify-write
+*Effects:* Atomically replaces the value pointed to by `this` with the
+result of the computation applied to the value pointed to by `this` and
+the given `operand`. Memory is affected according to the value of
+`order`. These operations are atomic read-modify-write
 operations [[intro.multithread]].
 
-*Returns:* Atomically, the value pointed to by immediately before the
-effects.
+*Returns:* Atomically, the value pointed to by `this` immediately before
+the effects.
 
 *Remarks:* If the result is not a representable value for its
 type [[expr.pre]] the result is unspecified, but the operations
@@ -3470,14 +3472,14 @@ T* fetch_key(ptrdiff_t operand, memory_order order = memory_order::seq_cst) noex
 \[*Note 1*: Pointer arithmetic on `void*` or function pointers is
 ill-formed. — *end note*\]
 
-*Effects:* Atomically replaces the value pointed to by with the result
-of the computation applied to the value pointed to by and the given
-`operand`. Memory is affected according to the value of `order`. These
-operations are atomic read-modify-write
+*Effects:* Atomically replaces the value pointed to by `this` with the
+result of the computation applied to the value pointed to by `this` and
+the given `operand`. Memory is affected according to the value of
+`order`. These operations are atomic read-modify-write
 operations [[intro.multithread]].
 
-*Returns:* Atomically, the value pointed to by immediately before the
-effects.
+*Returns:* Atomically, the value pointed to by `this` immediately before
+the effects.
 
 *Remarks:* The result may be an undefined address, but the operations
 otherwise have no undefined behavior.
@@ -3669,9 +3671,9 @@ void store(shared_ptr<T> desired, memory_order order = memory_order::seq_cst) no
 *Preconditions:* `order` is neither `memory_order::consume`,
 `memory_order::acquire`, nor `memory_order::acq_rel`.
 
-*Effects:* Atomically replaces the value pointed to by with the value of
-`desired` as if by `p.swap(desired)`. Memory is affected according to
-the value of `order`.
+*Effects:* Atomically replaces the value pointed to by `this` with the
+value of `desired` as if by `p.swap(desired)`. Memory is affected
+according to the value of `order`.
 
 ``` cpp
 void operator=(shared_ptr<T> desired) noexcept;
@@ -3731,12 +3733,13 @@ weak form may fail spuriously. See [[atomics.types.operations]].
 
 If the operation returns `true`, `expected` is not accessed after the
 atomic update and the operation is an atomic read-modify-write
-operation [[intro.multithread]] on the memory pointed to by . Otherwise,
-the operation is an atomic load operation on that memory, and `expected`
-is updated with the existing value read from the atomic object in the
-attempted atomic update. The `use_count` update corresponding to the
-write to `expected` is part of the atomic operation. The write to
-`expected` itself is not required to be part of the atomic operation.
+operation [[intro.multithread]] on the memory pointed to by `this`.
+Otherwise, the operation is an atomic load operation on that memory, and
+`expected` is updated with the existing value read from the atomic
+object in the attempted atomic update. The `use_count` update
+corresponding to the write to `expected` is part of the atomic
+operation. The write to `expected` itself is not required to be part of
+the atomic operation.
 
 ``` cpp
 bool compare_exchange_weak(shared_ptr<T>& expected, shared_ptr<T> desired,
@@ -3877,9 +3880,9 @@ void store(weak_ptr<T> desired, memory_order order = memory_order::seq_cst) noex
 *Preconditions:* `order` is neither `memory_order::consume`,
 `memory_order::acquire`, nor `memory_order::acq_rel`.
 
-*Effects:* Atomically replaces the value pointed to by with the value of
-`desired` as if by `p.swap(desired)`. Memory is affected according to
-the value of `order`.
+*Effects:* Atomically replaces the value pointed to by `this` with the
+value of `desired` as if by `p.swap(desired)`. Memory is affected
+according to the value of `order`.
 
 ``` cpp
 void operator=(weak_ptr<T> desired) noexcept;
@@ -3939,12 +3942,13 @@ form may fail spuriously. See [[atomics.types.operations]].
 
 If the operation returns `true`, `expected` is not accessed after the
 atomic update and the operation is an atomic read-modify-write
-operation [[intro.multithread]] on the memory pointed to by . Otherwise,
-the operation is an atomic load operation on that memory, and `expected`
-is updated with the existing value read from the atomic object in the
-attempted atomic update. The `use_count` update corresponding to the
-write to `expected` is part of the atomic operation. The write to
-`expected` itself is not required to be part of the atomic operation.
+operation [[intro.multithread]] on the memory pointed to by `this`.
+Otherwise, the operation is an atomic load operation on that memory, and
+`expected` is updated with the existing value read from the atomic
+object in the attempted atomic update. The `use_count` update
+corresponding to the write to `expected` is part of the atomic
+operation. The write to `expected` itself is not required to be part of
+the atomic operation.
 
 ``` cpp
 bool compare_exchange_weak(weak_ptr<T>& expected, weak_ptr<T> desired,
@@ -4092,7 +4096,8 @@ For `atomic_flag_test`, let `order` be `memory_order::seq_cst`.
 
 *Effects:* Memory is affected according to the value of `order`.
 
-*Returns:* Atomically returns the value pointed to by `object` or .
+*Returns:* Atomically returns the value pointed to by `object` or
+`this`.
 
 ``` cpp
 bool atomic_flag_test_and_set(volatile atomic_flag* object) noexcept;
@@ -4103,8 +4108,8 @@ bool atomic_flag::test_and_set(memory_order order = memory_order::seq_cst) volat
 bool atomic_flag::test_and_set(memory_order order = memory_order::seq_cst) noexcept;
 ```
 
-*Effects:* Atomically sets the value pointed to by `object` or by to
-`true`. Memory is affected according to the value of `order`. These
+*Effects:* Atomically sets the value pointed to by `object` or by `this`
+to `true`. Memory is affected according to the value of `order`. These
 operations are atomic read-modify-write
 operations [[intro.multithread]].
 
@@ -4124,8 +4129,8 @@ void atomic_flag::clear(memory_order order = memory_order::seq_cst) noexcept;
 `memory_order::consume`, `memory_order::acquire`, nor
 `memory_order::acq_rel`.
 
-*Effects:* Atomically sets the value pointed to by `object` or by to
-`false`. Memory is affected according to the value of `order`.
+*Effects:* Atomically sets the value pointed to by `object` or by `this`
+to `false`. Memory is affected according to the value of `order`.
 
 ``` cpp
 void atomic_flag_wait(const volatile atomic_flag* object, bool old) noexcept;
@@ -4141,8 +4146,8 @@ void atomic_flag::wait(bool old, memory_order order =
 ```
 
 For `atomic_flag_wait`, let `order` be `memory_order::seq_cst`. Let
-`flag` be `object` for the non-member functions and for the member
-functions.
+`flag` be `object` for the non-member functions and `this` for the
+member functions.
 
 *Preconditions:* `order` is neither `memory_order::release` nor
 `memory_order::acq_rel`.
@@ -4519,7 +4524,7 @@ obtained for the calling thread.
 
 *Ensures:* The calling thread owns the mutex.
 
-*Return type:* .
+*Return type:* `void`.
 
 *Throws:* `system_error` when an exception is
 required [[thread.req.exception]].
@@ -4572,7 +4577,7 @@ semantics:
 
 *Effects:* Releases the calling thread’s ownership of the mutex.
 
-*Return type:* .
+*Return type:* `void`.
 
 *Synchronization:* This operation synchronizes
 with [[intro.multithread]] subsequent lock operations that obtain
@@ -4888,7 +4893,7 @@ synchronize with [[intro.multithread]] this operation.
 
 *Ensures:* The calling thread has a shared lock on the mutex.
 
-*Return type:* .
+*Return type:* `void`.
 
 *Throws:* `system_error` when an exception is
 required [[thread.req.exception]].
@@ -4908,7 +4913,7 @@ semantics:
 *Effects:* Releases a shared lock on the mutex held by the calling
 thread.
 
-*Return type:* .
+*Return type:* `void`.
 
 *Synchronization:* This operation synchronizes
 with [[intro.multithread]] subsequent `lock()` operations that obtain
@@ -5444,7 +5449,7 @@ exception is required [[thread.req.exception]].
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5466,7 +5471,7 @@ an exception is required [[thread.req.exception]].
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5489,7 +5494,7 @@ template<class Clock, class Duration>
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5512,7 +5517,7 @@ template<class Rep, class Period>
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5751,7 +5756,7 @@ when an exception is required [[thread.req.exception]].
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5770,7 +5775,7 @@ to `pm->try_lock_shared()`.
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5794,7 +5799,7 @@ to `pm->try_lock_shared_until(abs_time)`.
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp
@@ -5818,7 +5823,7 @@ to `pm->try_lock_shared_for(rel_time)`.
 
 *Error conditions:*
 
-- `operation_not_permitted` — if `pm` is .
+- `operation_not_permitted` — if `pm` is `nullptr`.
 - `resource_deadlock_would_occur` — if on entry `owns` is `true`.
 
 ``` cpp

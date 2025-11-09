@@ -1081,7 +1081,7 @@ conditionally-supported. See [[basic.extended.fp]]. — *end note*\]
 | *floating-point-suffix* | type              |
 | ----------------------- | ----------------- |
 | none                    | `double`          |
-| `f` or `F`              | \keyword {float}  |
+| `f` or `F`              | `float`           |
 | `l` or `L`              | `long` `double`   |
 | `f16` or `F16`          | `std::float16_t`  |
 | `f32` or `F32`          | `std::float32_t`  |

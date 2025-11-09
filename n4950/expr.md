@@ -2489,7 +2489,7 @@ template<typename T> concept C2 = requires(T x) {
 
 The *compound-requirement* in `C2` requires that `*x` is a valid
 expression, that `typename T::inner` is a valid type, and that
-`std::\texttt{same_as}<decltype((*x)), typename T::inner>` is satisfied.
+`std::same_as<decltype((*x)), typename T::inner>` is satisfied.
 
 ``` cpp
 template<typename T> concept C3 =
@@ -6569,8 +6569,8 @@ A function or variable is *needed for constant evaluation* if it is:
 [^19]: This is sometimes referred to as a type pun when the result
     refers to the same object as the source glvalue.
 
-[^20]:
-    is not limited to conversions that cast away a const-qualifier.
+[^20]: `const_cast` is not limited to conversions that cast away a
+    const-qualifier.
 
 [^21]: `sizeof(bool)` is not required to be `1`.
 

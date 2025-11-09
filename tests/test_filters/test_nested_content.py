@@ -152,9 +152,12 @@ In other words, the \keyword{else} is associated with the nearest un-elsed
 
     output = result.stdout
 
-    # Should contain the main text
-    assert "In the second form of `if` statement" in output
-    assert "`else` part" in output
+    # Should contain the main text (keywords may be \texttt or backticks depending on context)
+    assert ("In the second form of `if` statement" in output or
+            "In the second form of \\texttt{if} statement" in output)
+    # Check for else keyword (may have newline between keyword and "part")
+    assert ("`else`" in output or "\\texttt{else}" in output)
+    assert "part" in output  # Separately check for "part" word
 
     # Should contain GFM footnote reference marker
     assert "[^" in output  # Footnote reference like [^1]

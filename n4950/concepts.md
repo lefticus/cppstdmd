@@ -308,8 +308,8 @@ cv-qualifiers. — *end note*\]
 
 Given types `From` and `To` and an expression `E` whose type and value
 category are the same as those of `declval<From>()`,
-`\texttt{convertible_to}<From, To>` requires `E` to be both implicitly
-and explicitly convertible to type `To`. The implicit and explicit
+`convertible_to<From, To>` requires `E` to be both implicitly and
+explicitly convertible to type `To`. The implicit and explicit
 conversions are required to produce equal results.
 
 ``` cpp
@@ -346,9 +346,9 @@ that `f()` is equality-preserving. Types `From` and `To` model
 ### Concept  <a id="concept.commonref">[[concept.commonref]]</a>
 
 For two types `T` and `U`, if `common_reference_t<T, U>` is well-formed
-and denotes a type `C` such that both `\texttt{convertible_to}<T, C>`
-and `\texttt{convertible_to}<U, C>` are modeled, then `T` and `U` share
-a *common reference type*, `C`.
+and denotes a type `C` such that both `convertible_to<T, C>` and
+`convertible_to<U, C>` are modeled, then `T` and `U` share a *common
+reference type*, `C`.
 
 \[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` can be a reference type. — *end note*\]
@@ -461,8 +461,8 @@ Let:
 - After evaluating `lhs = rhs`:
   - `lhs` is equal to `rcopy`, unless `rhs` is a non-const xvalue that
     refers to `lcopy`.
-  - If `rhs` is a non- xvalue, the resulting state of the object to
-    which it refers is valid but unspecified [[lib.types.movedfrom]].
+  - If `rhs` is a non-`const` xvalue, the resulting state of the object
+    to which it refers is valid but unspecified [[lib.types.movedfrom]].
   - Otherwise, if `rhs` is a glvalue, the object to which it refers is
     not modified.
 
@@ -486,9 +486,9 @@ if the operation modifies neither `t2` nor `u2` and:
 - If `T` and `U` are the same type, the result of the operation is that
   `t1` equals `u2` and `u1` equals `t2`.
 - If `T` and `U` are different types and
-  `\texttt{common_reference_with}<decltype((t1)), decltype((u1))>` is
-  modeled, the result of the operation is that `C(t1)` equals `C(u2)`
-  and `C(u1)` equals `C(t2)` where `C` is
+  `common_reference_with<decltype((t1)), decltype((u1))>` is modeled,
+  the result of the operation is that `C(t1)` equals `C(u2)` and `C(u1)`
+  equals `C(t2)` where `C` is
   `common_reference_t<decltype((t1)), decltype((u1))>`.
 
 The name `ranges::swap` denotes a customization point object
@@ -517,9 +517,9 @@ expression `S` determined as follows:
   valid expression, `S` is `(void)ranges::swap_ranges(E1, E2)`, except
   that `noexcept(S)` is equal to `noexcept({}ranges::swap(*E1, *E2))`.
 - Otherwise, if `E1` and `E2` are lvalues of the same type `T` that
-  models `\texttt{move_constructible}<T>` and
-  `\texttt{assignable_from}<T&, T>`, `S` is an expression that exchanges
-  the denoted values. `S` is a constant expression if
+  models `move_constructible<T>` and `assignable_from<T&, T>`, `S` is an
+  expression that exchanges the denoted values. `S` is a constant
+  expression if
   - `T` is a literal type [[term.literal.type]],
   - both `E1 = std::move(E2)` and `E2 = std::move(E1)` are constant
     subexpressions [[defns.const.subexpr]], and
@@ -672,7 +672,7 @@ If `T` is an object type, then let `rv` be an rvalue of type `T` and
 
 - After the definition `T u = rv;`, `u` is equal to `u2`.
 - `T(rv)` is equal to `u2`.
-- If `T` is not , `rv`’s resulting state is valid but
+- If `T` is not `const`, `rv`’s resulting state is valid but
   unspecified [[lib.types.movedfrom]]; otherwise, it is unchanged.
 
 ### Concept  <a id="concept.copyconstructible">[[concept.copyconstructible]]</a>
@@ -686,8 +686,9 @@ template<class T>
     constructible_from<T, const T> && convertible_to<const T, T>;
 ```
 
-If `T` is an object type, then let `v` be an lvalue of type `T` or ` T`
-or an rvalue of type ` T`. `T` models `copy_constructible` only if
+If `T` is an object type, then let `v` be an lvalue of type `T` or
+`const`` T` or an rvalue of type `const`` T`. `T` models
+`copy_constructible` only if
 
 - After the definition `T u = v;`, `u` is equal to
   `v`[[concepts.equality]] and `v` is not modified.
@@ -821,7 +822,7 @@ Let `C` be `common_reference_t<const T&, const U&>`. Let `t1` and `t2`
 be equality-preserving expressions that are lvalues of type
 `remove_cvref_t<T>`, and let `u1` and `u2` be equality-preserving
 expressions that are lvalues of type `remove_cvref_t<U>`. `T` and `U`
-model `\texttt{comparison-common-type-with}<T, U>` only if:
+model `comparison-common-type-with<T, U>` only if:
 
 - `CONVERT_TO_LVALUE<C>(t1)` equals `CONVERT_TO_LVALUE<C>(t2)` if and
   only if `t1` equals `t2`, and

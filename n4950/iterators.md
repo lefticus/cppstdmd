@@ -1052,8 +1052,8 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   model `swappable_with` [[concept.swappable]], then
   `ranges::swap(*E1, *E2)`.
 - Otherwise, if the types `T1` and `T2` of `E1` and `E2` model
-  `\texttt{indirectly_movable_storable}<T1, T2>` and
-  `\texttt{indirectly_movable_storable}<T2, T1>`, then
+  `indirectly_movable_storable<T1, T2>` and
+  `indirectly_movable_storable<T2, T1>`, then
   `(void)(*E1 = iter-exchange-move(E2, E1))`, except that `E1` is
   evaluated only once.
 - Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed. \[*Note 3*: This
@@ -1153,10 +1153,10 @@ template<class Out, class T>
 
 Let `E` be an expression such that `decltype((E))` is `T`, and let `o`
 be a dereferenceable object of type `Out`. `Out` and `T` model
-`\texttt{indirectly_writable}<Out, T>` only if
+`indirectly_writable<Out, T>` only if
 
 - If `Out` and `T` model
-  `\texttt{indirectly_readable}<Out> && \texttt{same_as}<iter_value_t<Out>, decay_t<T>>`,
+  `indirectly_readable<Out> && same_as<iter_value_t<Out>, decay_t<T>>`,
   then `*o` after any above assignment is equal to the value of `E`
   before the assignment.
 
@@ -1175,7 +1175,7 @@ expressions to reject iterators with prvalue non-proxy reference types
 that permit rvalue assignment but do not also permit `const` rvalue
 assignment. Consequently, an iterator type `I` that returns
 `std::string` by value does not model
-`\texttt{indirectly_writable}<I, std::string>`. — *end note*\]
+`indirectly_writable<I, std::string>`. — *end note*\]
 
 #### Concept  <a id="iterator.concept.winc">[[iterator.concept.winc]]</a>
 
@@ -1220,12 +1220,11 @@ an integer-class type is greater than that of every integral type of the
 same signedness.
 
 A type `I` other than cv `bool` is *integer-like* if it models
-`\texttt{integral}<I>` or if it is an integer-class type. An
-integer-like type `I` is *signed-integer-like* if it models
-`\texttt{signed_integral}<I>` or if it is a signed-integer-class type.
-An integer-like type `I` is *unsigned-integer-like* if it models
-`\texttt{unsigned_integral}<I>` or if it is an unsigned-integer-class
-type.
+`integral<I>` or if it is an integer-class type. An integer-like type
+`I` is *signed-integer-like* if it models `signed_integral<I>` or if it
+is a signed-integer-class type. An integer-like type `I` is
+*unsigned-integer-like* if it models `unsigned_integral<I>` or if it is
+an unsigned-integer-class type.
 
 For every integer-class type `I`, let `B(I)` be a unique hypothetical
 extended integer type of the same signedness with the same width
@@ -1286,7 +1285,7 @@ An expression `E` of integer-class type `I` is contextually convertible
 to `bool` as if by `bool(E != I(0))`.
 
 All integer-class types model `regular` [[concepts.object]] and
-`\texttt{three_way_comparable}<strong_ordering>` [[cmp.concept]].
+`three_way_comparable<strong_ordering>` [[cmp.concept]].
 
 A value-initialized object of integer-class type has value 0.
 
@@ -1307,7 +1306,7 @@ signed-integer-like type.
 
 Let `i` be an object of type `I`. When `i` is in the domain of both pre-
 and post-increment, `i` is said to be *incrementable*. `I` models
-`\texttt{weakly_incrementable}<I>` only if
+`weakly_incrementable<I>` only if
 
 - The expressions `++i` and `i++` have the same domain.
 - If `i` is incrementable, then both `++i` and `i++` advance `i` to the
@@ -1413,8 +1412,8 @@ be well-defined.
 
 The `sized_sentinel_for` concept specifies requirements on an
 `input_or_output_iterator` type `I` and a corresponding
-`\texttt{sentinel_for}<I>` that allow the use of the `-` operator to
-compute the distance between them in constant time.
+`sentinel_for<I>` that allow the use of the `-` operator to compute the
+distance between them in constant time.
 
 ``` cpp
 template<class S, class I>
@@ -1500,8 +1499,7 @@ template<class I, class T>
 
 Let `E` be an expression such that `decltype((E))` is `T`, and let `i`
 be a dereferenceable object of type `I`. `I` and `T` model
-`\texttt{output_iterator}<I, T>` only if `*i++ = E;` has effects
-equivalent to:
+`output_iterator<I, T>` only if `*i++ = E;` has effects equivalent to:
 
 ``` cpp
 *i = E;
@@ -1955,8 +1953,8 @@ template<class In, class Out>
 ```
 
 Let `i` be a dereferenceable value of type `In`. `In` and `Out` model
-`\texttt{indirectly_movable_storable}<In, Out>` only if after the
-initialization of the object `obj` in
+`indirectly_movable_storable<In, Out>` only if after the initialization
+of the object `obj` in
 
 ``` cpp
 iter_value_t<In> obj(ranges::iter_move(i));
@@ -2000,8 +1998,8 @@ template<class In, class Out>
 ```
 
 Let `i` be a dereferenceable value of type `In`. `In` and `Out` model
-`\texttt{indirectly_copyable_storable}<In, Out>` only if after the
-initialization of the object `obj` in
+`indirectly_copyable_storable<In, Out>` only if after the initialization
+of the object `obj` in
 
 ``` cpp
 iter_value_t<In> obj(*i);
@@ -2473,7 +2471,7 @@ The member *typedef-name* `iterator_category` denotes
 
 - `random_access_iterator_tag` if the type
   `iterator_traits<{}Iterator>::iterator_category` models
-  `\texttt{derived_from}<random_access_iterator_tag>`, and
+  `derived_from<random_access_iterator_tag>`, and
 - `iterator_traits<{}Iterator>::iterator_category` otherwise.
 
 #### Requirements <a id="reverse.iter.requirements">[[reverse.iter.requirements]]</a>
@@ -3577,7 +3575,7 @@ valid and denotes a type. In that case, `iterator_category` denotes
 
 - `random_access_iterator_tag` if the type
   `iterator_traits<{}Iterator>::iterator_category` models
-  `\texttt{derived_from}<random_access_iterator_tag>`, and
+  `derived_from<random_access_iterator_tag>`, and
 - `iterator_traits<{}Iterator>::iterator_category` otherwise.
 
 #### Requirements <a id="move.iter.requirements">[[move.iter.requirements]]</a>
@@ -3849,9 +3847,9 @@ constexpr move_iterator<Iterator> make_move_iterator(Iterator i);
 
 Class template `move_sentinel` is a sentinel adaptor useful for denoting
 ranges together with `move_iterator`. When an input iterator type `I`
-and sentinel type `S` model `\texttt{sentinel_for}<S, I>`,
-`move_sentinel<S>` and `move_iterator<I>` model
-`\texttt{sentinel_for}<move_sentinel<S>, move_iterator<I>>` as well.
+and sentinel type `S` model `sentinel_for<S, I>`, `move_sentinel<S>` and
+`move_iterator<I>` model
+`sentinel_for<move_sentinel<S>, move_iterator<I>>` as well.
 
 \[*Example 1*:
 
@@ -3900,7 +3898,7 @@ constexpr move_sentinel();
 
 *Effects:* Value-initializes `last`. If
 `is_trivially_default_constructible_v<S>` is `true`, then this
-constructor is a constructor.
+constructor is a `constexpr` constructor.
 
 ``` cpp
 constexpr explicit move_sentinel(S s);
@@ -4037,9 +4035,8 @@ for `common_iterator<I, S>` are defined as follows.
   `forward_iterator`; otherwise it denotes `input_iterator_tag`.
 - `iterator_category` denotes `forward_iterator_tag` if the
   *qualified-id* `iterator_traits<I>::iterator_category` is valid and
-  denotes a type that models
-  `\texttt{derived_from}<forward_iterator_tag>`; otherwise it denotes
-  `input_iterator_tag`.
+  denotes a type that models `derived_from<forward_iterator_tag>`;
+  otherwise it denotes `input_iterator_tag`.
 - Let `a` denote an lvalue of type `const common_iterator<I, S>`. If the
   expression `a.operator->()` is well-formed, then `pointer` denotes
   `decltype(a.operator->())`. Otherwise, `pointer` denotes `void`.
@@ -4805,7 +4802,7 @@ constexpr istream_iterator(default_sentinel_t);
 
 *Remarks:* If the initializer `T()` in the declaration `auto x = T();`
 is a constant initializer [[expr.const]], then these constructors are
-constructors.
+`constexpr` constructors.
 
 ``` cpp
 istream_iterator(istream_type& s);
@@ -4943,7 +4940,7 @@ ostream_iterator(ostream_type& s);
 ```
 
 *Effects:* Initializes `out_stream` with `addressof(s)` and `delim` with
-.
+`nullptr`.
 
 ``` cpp
 ostream_iterator(ostream_type& s, const charT* delimiter);
@@ -5077,7 +5074,7 @@ constexpr istreambuf_iterator() noexcept;
 constexpr istreambuf_iterator(default_sentinel_t) noexcept;
 ```
 
-*Effects:* Initializes `sbuf_` with .
+*Effects:* Initializes `sbuf_` with `nullptr`.
 
 ``` cpp
 istreambuf_iterator(istream_type& s) noexcept;

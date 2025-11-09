@@ -657,8 +657,8 @@ constexpr explicit(see below) pair();
 
 *Effects:* Value-initializes `first` and `second`.
 
-*Remarks:* The expression inside evaluates to `true` if and only if
-either `T1` or `T2` is not implicitly default-constructible.
+*Remarks:* The expression inside `explicit` evaluates to `true` if and
+only if either `T1` or `T2` is not implicitly default-constructible.
 
 \[*Note 1*: This behavior can be implemented with a trait that checks
 whether a `const T1&` or a `const T2&` can be initialized with
@@ -675,7 +675,7 @@ constexpr explicit(see below) pair(const T1& x, const T2& y);
 
 *Effects:* Initializes `first` with `x` and `second` with `y`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !is_convertible_v<const T1&, T1> || !is_convertible_v<const T2&, T2>
@@ -693,7 +693,7 @@ template<class U1 = T1, class U2 = T2> constexpr explicit(see below) pair(U1&& x
 *Effects:* Initializes `first` with `std::forward<U1>(x)` and `second`
 with `std::forward<U2>(y)`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !is_convertible_v<U1, T1> || !is_convertible_v<U2, T2>
@@ -724,7 +724,7 @@ Let *`FWD`*`(u)` be `static_cast<decltype(u)>(u)`.
 *Effects:* Initializes `first` with `get<0>(`*`FWD`*`(p))` and `second`
 with `get<1>(`*`FWD`*`(p))`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !is_convertible_v<decltype(get<0>(FWD(p))), T1> ||
@@ -1376,8 +1376,9 @@ constexpr explicit(see below) tuple();
 
 *Effects:* Value-initializes each element.
 
-*Remarks:* The expression inside evaluates to `true` if and only if `Tᵢ`
-is not copy-list-initializable from an empty list for at least one i.
+*Remarks:* The expression inside `explicit` evaluates to `true` if and
+only if `Tᵢ` is not copy-list-initializable from an empty list for at
+least one i.
 
 \[*Note 1*: This behavior can be implemented with a trait that checks
 whether a `const ``Tᵢ``&` can be initialized with `{}`. — *end note*\]
@@ -1392,7 +1393,7 @@ constexpr explicit(see below) tuple(const Types&...);
 *Effects:* Initializes each element with the value of the corresponding
 parameter.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !conjunction_v<is_convertible<const Types&, Types>...>
@@ -1421,7 +1422,7 @@ Let *disambiguating-constraint* be:
 *Effects:* Initializes the elements in the tuple with the corresponding
 value in `std::forward<UTypes>(u)`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !conjunction_v<is_convertible<UTypes, Types>...>
@@ -1476,7 +1477,7 @@ Let `I` be the pack `0, 1, ..., (sizeof...(Types) - 1)`. Let
 *Effects:* For all i, initializes the $i^\textrm{th}$ element of `*this`
 with `get<`i`>(`*`FWD`*`(u))`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !(is_convertible_v<decltype(get<I>(FWD(u))), Types> && ...)
@@ -2596,8 +2597,8 @@ template<class U = T> constexpr explicit(see below) optional(U&& v);
 *Throws:* Any exception thrown by the selected constructor of `T`.
 
 *Remarks:* If `T`’s selected constructor is a constexpr constructor,
-this constructor is a constexpr constructor. The expression inside is
-equivalent to:
+this constructor is a constexpr constructor. The expression inside
+`explicit` is equivalent to:
 
 ``` cpp
 !is_convertible_v<U, T>
@@ -2620,7 +2621,7 @@ contained value with `*rhs`.
 
 *Throws:* Any exception thrown by the selected constructor of `T`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !is_convertible_v<const U&, T>
@@ -2643,7 +2644,7 @@ contained value with `std::move(*rhs)`. `rhs.has_value()` is unchanged.
 
 *Throws:* Any exception thrown by the selected constructor of `T`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 !is_convertible_v<U, T>
@@ -3495,7 +3496,8 @@ only if `hash<remove_const_t<T>>` is enabled. When enabled, for an
 object `o` of type `optional<T>`, if `o.has_value() == true`, then
 `hash<optional<T>>()(o)` evaluates to the same value as
 `hash<remove_const_t<T>>()(*o)`; otherwise it evaluates to an
-unspecified value. The member functions are not guaranteed to be .
+unspecified value. The member functions are not guaranteed to be
+`noexcept`.
 
 ## Variants <a id="variant">[[variant]]</a>
 
@@ -3704,10 +3706,10 @@ type `T₀`.
 
 *Throws:* Any exception thrown by the value-initialization of `T₀`.
 
-*Remarks:* This function is if and only if the value-initialization of
-the alternative type `T₀` would be constexpr-suitable [[dcl.constexpr]].
-The exception specification is equivalent to
-`is_nothrow_default_constructible_v<``T₀``>`.
+*Remarks:* This function is `constexpr` if and only if the
+value-initialization of the alternative type `T₀` would be
+constexpr-suitable [[dcl.constexpr]]. The exception specification is
+equivalent to `is_nothrow_default_constructible_v<``T₀``>`.
 
 \[*Note 1*: See also class `monostate`. — *end note*\]
 
@@ -4244,7 +4246,7 @@ template<size_t I, class... Types>
 *Mandates:* `I` < `sizeof...(Types)`.
 
 *Returns:* A pointer to the value stored in the `variant`, if
-`v != nullptr` and `v->index() == I`. Otherwise, returns .
+`v != nullptr` and `v->index() == I`. Otherwise, returns `nullptr`.
 
 ``` cpp
 template<class T, class... Types>
@@ -4486,7 +4488,7 @@ template<class... Types> struct hash<variant<Types...>>;
 
 The specialization `hash<variant<Types...>>` is enabled [[unord.hash]]
 if and only if every specialization in `hash<remove_const_t<Types>>...`
-is enabled. The member functions are not guaranteed to be .
+is enabled. The member functions are not guaranteed to be `noexcept`.
 
 ``` cpp
 template<> struct hash<monostate>;
@@ -4929,7 +4931,7 @@ template<class T>
 ```
 
 *Returns:* If `operand != nullptr && operand->type() == typeid(T)`, a
-pointer to the object contained by `operand`; otherwise, .
+pointer to the object contained by `operand`; otherwise, `nullptr`.
 
 \[*Example 2*:
 
@@ -9156,7 +9158,7 @@ function& operator=(function&& f);
 function& operator=(nullptr_t) noexcept;
 ```
 
-*Effects:* If `*this != nullptr`, destroys the target of .
+*Effects:* If `*this != nullptr`, destroys the target of `this`.
 
 *Ensures:* `!(*this)`.
 
@@ -9185,7 +9187,7 @@ template<class F> function& operator=(reference_wrapper<F> f) noexcept;
 ~function();
 ```
 
-*Effects:* If `*this != nullptr`, destroys the target of .
+*Effects:* If `*this != nullptr`, destroys the target of `this`.
 
 ##### Modifiers <a id="func.wrap.func.mod">[[func.wrap.func.mod]]</a>
 
@@ -11214,7 +11216,7 @@ messages. — *end note*\]
 #### Concept  <a id="format.formattable">[[format.formattable]]</a>
 
 Let `fmt-iter-for<charT>` be an unspecified type that models
-`\texttt{output_iterator}<const charT&>` [[iterator.concept.output]].
+`output_iterator<const charT&>` [[iterator.concept.output]].
 
 ``` cpp
 template<class T, class Context,
@@ -11548,7 +11550,7 @@ namespace std {
 An instance of `basic_format_context` holds formatting state consisting
 of the formatting arguments and the output iterator.
 
-`Out` shall model `\texttt{output_iterator}<const charT&>`.
+`Out` shall model `output_iterator<const charT&>`.
 
 `format_context` is an alias for a specialization of
 `basic_format_context` with an output iterator that appends to `string`,
@@ -12012,8 +12014,7 @@ namespace std {
 }
 ```
 
-*Mandates:*
-`\texttt{same_as}<remove_cvref_t<range_reference_t<R>>, charT>` is
+*Mandates:* `same_as<remove_cvref_t<range_reference_t<R>>, charT>` is
 `true`.
 
 ``` cpp
@@ -12099,8 +12100,8 @@ template<class T> explicit basic_format_arg(T& v) noexcept;
 *Effects:* Let `TD` be `remove_const_t<T>`.
 
 - If `TD` is `bool` or `char_type`, initializes `value` with `v`;
-- otherwise, if `TD` is `char` and `char_type` is , initializes `value`
-  with `static_cast<wchar_t>(v)`;
+- otherwise, if `TD` is `char` and `char_type` is `wchar_t`, initializes
+  `value` with `static_cast<wchar_t>(v)`;
 - otherwise, if `TD` is a signed integer type [[basic.fundamental]] and
   `sizeof(TD) <= sizeof(int)`, initializes `value` with
   `static_cast<int>(v)`;
@@ -12523,8 +12524,8 @@ has an indeterminate value; the behavior is undefined unless that object
 is of unsigned ordinary character type or `std::byte` type. The result
 does not otherwise contain any indeterminate values.
 
-*Remarks:* This function is if and only if `To`, `From`, and the types
-of all subobjects of `To` and `From` are types `T` such that:
+*Remarks:* This function is `constexpr` if and only if `To`, `From`, and
+the types of all subobjects of `To` and `From` are types `T` such that:
 
 - `is_union_v<T>` is `false`;
 - `is_pointer_v<T>` is `false`;

@@ -4326,8 +4326,8 @@ referred to is dependent. — *end note*\]
 Except as described below, an expression is type-dependent if any
 subexpression is type-dependent.
 
-is type-dependent if the current class [[expr.prim.this]] is dependent
-[[temp.dep.type]].
+`this` is type-dependent if the current class [[expr.prim.this]] is
+dependent [[temp.dep.type]].
 
 An *id-expression* is type-dependent if it is a *template-id* that is
 not a concept-id and is dependent; or if its terminal name is

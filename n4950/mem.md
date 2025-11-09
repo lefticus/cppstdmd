@@ -667,8 +667,8 @@ returns a pointer to `r` through which indirection is valid.
 *Returns:* The first member function returns `Ptr::pointer_to(r)`. The
 second member function returns `addressof(r)`.
 
-*Remarks:* If `element_type` is cv , the type of `r` is unspecified;
-otherwise, it is `element_type&`.
+*Remarks:* If `element_type` is cv `void`, the type of `r` is
+unspecified; otherwise, it is `element_type&`.
 
 #### Optional members <a id="pointer.traits.optmem">[[pointer.traits.optmem]]</a>
 
@@ -1540,7 +1540,7 @@ constexpr void operator()(T* ptr) const;
 
 *Mandates:* `T` is a complete type.
 
-*Effects:* Calls on `ptr`.
+*Effects:* Calls `delete` on `ptr`.
 
 ##### `default_delete<T[]>` <a id="unique.ptr.dltr.dflt1">[[unique.ptr.dltr.dflt1]]</a>
 
@@ -2707,10 +2707,11 @@ T& operator*() const noexcept;
 
 *Returns:* `*get()`.
 
-*Remarks:* When `T` is an array type or cv , it is unspecified whether
-this member function is declared. If it is declared, it is unspecified
-what its return type is, except that the declaration (although not
-necessarily the definition) of the function shall be well-formed.
+*Remarks:* When `T` is an array type or cv `void`, it is unspecified
+whether this member function is declared. If it is declared, it is
+unspecified what its return type is, except that the declaration
+(although not necessarily the definition) of the function shall be
+well-formed.
 
 ``` cpp
 T* operator->() const noexcept;
@@ -3207,8 +3208,9 @@ template<class D, class T>
 ```
 
 *Returns:* If `p` owns a deleter `d` of type cv-unqualified `D`, returns
-`addressof(d)`; otherwise returns . The returned pointer remains valid
-as long as there exists a `shared_ptr` instance that owns `d`.
+`addressof(d)`; otherwise returns `nullptr`. The returned pointer
+remains valid as long as there exists a `shared_ptr` instance that owns
+`d`.
 
 \[*Note 15*: It is unspecified whether the pointer remains valid longer
 than that. This can happen if the implementation doesn’t destroy the
@@ -3553,7 +3555,7 @@ Letting `UP` be `unique_ptr<T, D>`, the specialization `hash<UP>` is
 enabled [[unord.hash]] if and only if `hash<typename UP::pointer>` is
 enabled. When enabled, for an object `p` of type `UP`, `hash<UP>()(p)`
 evaluates to the same value as `hash<typename UP::pointer>()(p.get())`.
-The member functions are not guaranteed to be .
+The member functions are not guaranteed to be `noexcept`.
 
 ``` cpp
 template<class T> struct hash<shared_ptr<T>>;
@@ -4055,12 +4057,12 @@ virtual bool do_is_equal(const memory_resource& other) const noexcept = 0;
 ```
 
 *Returns:* A derived class shall implement this function to return
-`true` if memory allocated from can be deallocated from `other` and
-vice-versa, otherwise `false`.
+`true` if memory allocated from `this` can be deallocated from `other`
+and vice-versa, otherwise `false`.
 
 \[*Note 1*: It is possible that the most-derived type of `other` does
-not match the type of . For a derived class `D`, an implementation of
-this function can immediately return `false` if
+not match the type of `this`. For a derived class `D`, an implementation
+of this function can immediately return `false` if
 `dynamic_cast<const D*>(&other) == nullptr`. — *end note*\]
 
 #### Equality <a id="mem.res.eq">[[mem.res.eq]]</a>
@@ -4633,9 +4635,9 @@ monotonic_buffer_resource(size_t initial_size, memory_resource* upstream);
 *Preconditions:* `upstream` is the address of a valid memory resource.
 `initial_size`, if specified, is greater than zero.
 
-*Effects:* Sets `upstream_rsrc` to `upstream` and `current_buffer` to .
-If `initial_size` is specified, sets `next_buffer_size` to at least
-`initial_size`; otherwise sets `next_buffer_size` to an
+*Effects:* Sets `upstream_rsrc` to `upstream` and `current_buffer` to
+`nullptr`. If `initial_size` is specified, sets `next_buffer_size` to at
+least `initial_size`; otherwise sets `next_buffer_size` to an
 *implementation-defined* size.
 
 ``` cpp
@@ -4667,8 +4669,8 @@ all allocated memory. Resets `current_buffer` and `next_buffer_size` to
 their initial values at construction.
 
 \[*Note 1*: The memory is released back to `upstream_rsrc` even if some
-blocks that were allocated from have not been deallocated from
-. — *end note*\]
+blocks that were allocated from `this` have not been deallocated from
+`this`. — *end note*\]
 
 ``` cpp
 memory_resource* upstream_resource() const;

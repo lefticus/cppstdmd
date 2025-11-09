@@ -1636,7 +1636,7 @@ pointer.
 
 ``` cpp
 T* p1 = new T;                  // throws bad_alloc if it fails
-T* p2 = new(nothrow) T;         // returns \keyword{nullptr} if it fails
+T* p2 = new(nothrow) T;         // returns nullptr if it fails
 ```
 
 — *end example*\]
@@ -1744,10 +1744,10 @@ new-extended alignment, and the first form is called otherwise.
 
 It is not the direct responsibility of `operator new[]` or
 `operator delete[]` to note the repetition count or element size of the
-array. Those operations are performed elsewhere in the array and
-expressions. The array expression, can, however, increase the `size`
-argument to `operator new[]` to obtain space to store supplemental
-information.
+array. Those operations are performed elsewhere in the array `new` and
+`delete` expressions. The array `new` expression, can, however, increase
+the `size` argument to `operator new[]` to obtain space to store
+supplemental information.
 
 *Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
@@ -2052,7 +2052,7 @@ See  [[basic.life]]. — *end note*\]
 struct X { int n; };
 const X *p = new const X{3};
 const int a = p->n;
-new (const_cast<X*>(p)) const X{5}; // p does not point to new objectREF:basic.life because its type is \keyword{const}
+new (const_cast<X*>(p)) const X{5}; // p does not point to new objectREF:basic.life because its type is const
 const int b = p->n;                 // undefined behavior
 const int c = std::launder(p)->n;   // OK
 ```
@@ -2499,7 +2499,7 @@ virtual const char* what() const noexcept;
 string [[multibyte.strings]], suitable for conversion and display as a
 `wstring`[[string.classes,locale.codecvt]]. The return value remains
 valid until the exception object from which it is obtained is destroyed
-or a non- member function of the exception object is called.
+or a non-`const` member function of the exception object is called.
 
 ### Class `bad_exception` <a id="bad.exception">[[bad.exception]]</a>
 
@@ -3256,7 +3256,8 @@ struct common_comparison_category {
 
 *Remarks:* The member *typedef-name* `type` denotes the common
 comparison type [[class.spaceship]] of `Ts...`, the expanded parameter
-pack, or if any element of `Ts` is not a comparison category type.
+pack, or `void` if any element of `Ts` is not a comparison category
+type.
 
 \[*Note 2*: This is `std::strong_ordering` if the expansion is
 empty. — *end note*\]
@@ -3284,7 +3285,7 @@ template<class T, class U>
 
 Let `t` and `u` be lvalues of types `const remove_reference_t<T>` and
 `const remove_reference_t<U>`, respectively. `T` and `U` model
-`\texttt{partially-ordered-with}<T, U>` only if:
+`partially-ordered-with<T, U>` only if:
 
 - `t < u`, `t <= u`, `t > u`, `t >= u`, `u < t`, `u <= t`, `u > t`, and
   `u >= t` have the same domain.
@@ -3304,7 +3305,7 @@ template<class T, class Cat = partial_ordering>
 ```
 
 Let `a` and `b` be lvalues of type `const remove_reference_t<T>`. `T`
-and `Cat` model `\texttt{three_way_comparable}<T, Cat>` only if:
+and `Cat` model `three_way_comparable<T, Cat>` only if:
 
 - `(a <=> b == 0) == bool(a == b)` is `true`,
 - `(a <=> b != 0) == bool(a != b)` is `true`,
@@ -3340,7 +3341,7 @@ let `u` and `u2` be lvalues denoting distinct equal objects of types
 `common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>`.
 Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
 [[concepts.compare.general]]. `T`, `U`, and `Cat` model
-`\texttt{three_way_comparable_with}<T, U, Cat>` only if:
+`three_way_comparable_with<T, U, Cat>` only if:
 
 - `t <=> u` and `u <=> t` have the same domain,
 - `((t <=> u) <=> 0)` and `(0 <=> (u <=> t))` are equal,
@@ -3353,7 +3354,7 @@ Let `CONVERT_TO_LVALUE<C>(E)` be defined as in
 - `(t <=> u <= 0) == bool(t <= u)` is `true`,
 - `(t <=> u >= 0) == bool(t >= u)` is `true`, and
 - if `Cat` is convertible to `strong_ordering`, `T` and `U` model
-  `\texttt{totally_ordered_with}<T, U>` [[concept.totallyordered]].
+  `totally_ordered_with<T, U>` [[concept.totallyordered]].
 
 ### Result of three-way comparison <a id="cmp.result">[[cmp.result]]</a>
 

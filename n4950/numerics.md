@@ -1940,15 +1940,16 @@ default-constructed object of type `knuth_b` produces the value
 using default_random_engine = \textit{implementation-defined};
 ```
 
-*Remarks:* The choice of engine type named by this is
+*Remarks:* The choice of engine type named by this `typedef` is
 *implementation-defined*.
 
 \[*Note 1*: The implementation can select this type on the basis of
 performance, size, quality, or any combination of such factors, so as to
 provide at least acceptable engine behavior for relatively casual,
 inexpert, and/or lightweight use. Because different implementations can
-select different underlying engine types, code that uses this need not
-generate identical sequences across implementations. — *end note*\]
+select different underlying engine types, code that uses this `typedef`
+need not generate identical sequences across
+implementations. — *end note*\]
 
 ### Class `random_device` <a id="rand.device">[[rand.device]]</a>
 

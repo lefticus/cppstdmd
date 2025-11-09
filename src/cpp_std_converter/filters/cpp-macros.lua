@@ -159,7 +159,8 @@ local function expand_macros(text, skip_special_chars)
 
   -- Code formatting macros - convert to \texttt{x} for Pandoc to handle
   -- Pandoc's LaTeX reader will convert \texttt{} to Code elements properly
-  -- NOTE: Order matters - process inner macros first so nested \tcode{\keyword{...}} works
+  -- NOTE: \keyword{} primarily handled in simplified_macros.tex (Issue #63)
+  -- but keep fallback for tests that don't use preprocessing
   text = text:gsub("\\keyword{", "\\texttt{")
   text = text:gsub("\\ctype{", "\\texttt{")
   text = text:gsub("\\tcode{", "\\texttt{")
@@ -417,7 +418,7 @@ function RawInline(elem)
           {"\\placeholdernc{", 14, "placeholdernc"}, -- \placeholdernc = 14 chars
           {"\\tcode{", 6, "tcode"},                   -- \tcode = 6 chars
           {"\\grammarterm{", 12, "grammarterm"},     -- \grammarterm = 12 chars
-          {"\\keyword{", 8, "keyword"},               -- \keyword = 8 chars
+          -- \keyword{} now handled in simplified_macros.tex (Issue #63)
           {"\\term{", 5, "term"},                     -- \term = 5 chars
         }) do
           local macro_pattern = macro_info[1]
@@ -506,7 +507,8 @@ function RawInline(elem)
     -- Clean up ~{} from LaTeX \~{} (tilde with spacing braces)
     code = code:gsub("~{}", "~")
     -- Expand nested macros in code content
-    code = code:gsub("\\keyword{([^}]*)}", "%1")
+    -- NOTE: \keyword{} handled in simplified_macros.tex but must be stripped when nested in \tcode{}
+    code = code:gsub("\\texttt{([^}]*)}", "%1")  -- Strip \texttt{} from \keyword{} preprocessing
     code = code:gsub("\\ctype{([^}]*)}", "%1")
     code = code:gsub("\\term{([^}]*)}", "%1")
     code = code:gsub("\\grammarterm{([^}]*)}", "%1")
@@ -537,8 +539,7 @@ function RawInline(elem)
     return pandoc.Code(code)
   end
 
-  code = text:match("\\keyword{([^}]*)}")
-  if code then return pandoc.Code(code) end
+  -- NOTE: \keyword{} now handled in simplified_macros.tex (Issue #63)
 
   code = text:match("\\ctype{([^}]*)}")
   if code then return pandoc.Code(code) end

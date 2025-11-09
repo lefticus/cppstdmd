@@ -190,7 +190,7 @@ to the value that `rv` had before this assignment.
 a.~X()
 ```
 
-*Result:* .
+*Result:* `void`.
 
 *Effects:* Destroys every element of `a`; any memory obtained is
 deallocated.
@@ -276,7 +276,7 @@ c != b
 t.swap(s)
 ```
 
-*Result:* .
+*Result:* `void`.
 
 *Effects:* Exchanges the contents of `t` and `s`.
 
@@ -495,7 +495,7 @@ a.crbegin()
 
 *Result:* `const_reverse_iterator`.
 
-*Returns:* `<X &>(a).rbegin()`
+*Returns:* `const_cast``<X ``const``&>(a).rbegin()`
 
 *Complexity:* Constant.
 
@@ -505,7 +505,7 @@ a.crend()
 
 *Result:* `const_reverse_iterator`.
 
-*Returns:* `<X &>(a).rend()`
+*Returns:* `const_cast``<X ``const``&>(a).rend()`
 
 *Complexity:* Constant.
 
@@ -725,7 +725,7 @@ to the value that `rv` had before this assignment.
 a.swap(b)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Effects:* Exchanges the contents of `a` and `b`.
 
@@ -786,7 +786,7 @@ In this subclause,
   `value_type`,
 - `[i, j)` denotes a valid range,
 - `rg` denotes a value of a type `R` that models
-  `\texttt{container-compatible-range}<T>`,
+  `container-compatible-range<T>`,
 - `il` designates an object of type `initializer_list<value_type>`,
 - `n` denotes a value of type `X::size_type`,
 - `p` denotes a valid constant iterator to `a`,
@@ -996,7 +996,7 @@ is returned.
 a.clear()
 ```
 
-*Result:*
+*Result:* `void`
 
 *Effects:* Destroys all elements in `a`. Invalidates all references,
 pointers, and iterators referring to the elements of `a` and may
@@ -1010,7 +1010,7 @@ invalidate the past-the-end iterator.
 a.assign(i, j)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from `*i`
 and assignable from `*i`. For `vector`, if the iterator does not meet
@@ -1027,7 +1027,7 @@ Each iterator in the range \[`i`, `j`) is dereferenced exactly once.
 a.assign_range(rg)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Mandates:* `assignable_from``<T&, ranges::range_reference_t<R>>` is
 modeled.
@@ -1053,7 +1053,7 @@ a.assign(il)
 a.assign(n, t)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17CopyInsertable* into `X` and
 *Cpp17CopyAssignable*. `t` is not a reference into `a`.
@@ -1166,7 +1166,7 @@ a.emplace_back(args)
 a.push_front(t)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`.
 
@@ -1178,7 +1178,7 @@ a.push_front(t)
 a.push_front(rv)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17MoveInsertable* into `X`.
 
@@ -1190,7 +1190,7 @@ a.push_front(rv)
 a.prepend_range(rg)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`. For `deque`, `T` is also *Cpp17MoveInsertable*
@@ -1210,7 +1210,7 @@ reversed. — *end note*\]
 a.push_back(t)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17CopyInsertable* into `X`.
 
@@ -1222,7 +1222,7 @@ a.push_back(t)
 a.push_back(rv)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17MoveInsertable* into `X`.
 
@@ -1234,7 +1234,7 @@ a.push_back(rv)
 a.append_range(rg)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`. For `vector`, `T` is also *Cpp17MoveInsertable*
@@ -1249,7 +1249,7 @@ iterator in the range `rg` is dereferenced exactly once.
 a.pop_front()
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `a.empty()` is `false`.
 
@@ -1261,7 +1261,7 @@ a.pop_front()
 a.pop_back()
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `a.empty()` is `false`.
 
@@ -1382,8 +1382,8 @@ node-handle(node-handle&& nh) noexcept;
 ```
 
 *Effects:* Constructs a *node-handle* object initializing `ptr_` with
-`nh.ptr_`. Move constructs `alloc_` with `nh.alloc_`. Assigns to
-`nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
+`nh.ptr_`. Move constructs `alloc_` with `nh.alloc_`. Assigns `nullptr`
+to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
 
 ``` cpp
 node-handle& operator=(node-handle&& nh);
@@ -1403,7 +1403,7 @@ or `alloc_ == nh.alloc_`.
 - If `!alloc` or
   `ator_traits::propagate_on_container_move_assignment::value` is
   `true`, move assigns `nh.alloc_` to `alloc_`.
-- Assigns to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
+- Assigns `nullptr` to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
 
 *Returns:* `*this`.
 
@@ -1587,7 +1587,7 @@ In this subclause,
   elements implicitly convertible to `value_type`,
 - \[`i`, `j`) denotes a valid range,
 - `rg` denotes a value of a type `R` that models
-  `\texttt{container-compatible-range}<value_type>`,
+  `container-compatible-range<value_type>`,
 - `p` denotes a valid constant iterator to `a`,
 - `q` denotes a valid dereferenceable constant iterator to `a`,
 - `r` denotes a valid dereferenceable iterator to `a`,
@@ -1914,7 +1914,7 @@ inserted right before `p`.
 a.insert(i, j)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
 from `*i`. Neither `i` nor `j` are iterators into `a`.
@@ -1931,7 +1931,7 @@ with equivalent keys.
 a.insert_range(rg)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
 from `*ranges::begin(rg)`. `rg` and `a` do not overlap.
@@ -2060,7 +2060,7 @@ a.extract(q)
 a.merge(a2)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `a.get_allocator() == a2.get_allocator()`.
 
@@ -2452,7 +2452,7 @@ In this subclause,
 - `i` and `j` denote input iterators that refer to `value_type`,
 - `[i, j)` denotes a valid range,
 - `rg` denotes a value of a type `R` that models
-  `\texttt{container-compatible-range}<value_type>`,
+  `container-compatible-range<value_type>`,
 - `p` and `q2` denote valid constant iterators to `a`,
 - `q` and `q1` denote valid dereferenceable constant iterators to `a`,
 - `r` denotes a valid dereferenceable iterator to `a`,
@@ -2923,7 +2923,7 @@ to that of `t`.
 a.insert(i, j)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
 from `*i`. Neither `i` nor `j` are iterators into `a`.
@@ -2937,7 +2937,7 @@ from `*i`. Neither `i` nor `j` are iterators into `a`.
 a.insert_range(rg)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `X`
 from `*ranges::begin(rg)`. `rg` and `a` do not overlap.
@@ -3060,7 +3060,7 @@ a.extract(q)
 a.merge(a2)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `a.get_allocator() == a2.get_allocator()`.
 
@@ -3146,7 +3146,7 @@ to the erasure.
 a.clear()
 ```
 
-*Result:*
+*Result:* `void`
 
 *Effects:* Erases all elements in the container.
 
@@ -3359,7 +3359,7 @@ number.
 a.max_load_factor(z)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Preconditions:* `z` is positive. May change the container’s maximum
 load factor, using `z` as a hint.
@@ -3370,7 +3370,7 @@ load factor, using `z` as a hint.
 a.rehash(n)
 ```
 
-*Result:*
+*Result:* `void`
 
 *Ensures:* `a.bucket_count() >= a.size() / a.max_load_factor()` and
 `a.bucket_count() >= n`.
@@ -13048,7 +13048,7 @@ template<class OtherElementType, size_t OtherExtent>
 
 *Ensures:* `size() == s.size() && data() == s.data()`.
 
-*Remarks:* The expression inside is equivalent to:
+*Remarks:* The expression inside `explicit` is equivalent to:
 
 ``` cpp
 extent != dynamic_extent && OtherExtent == dynamic_extent

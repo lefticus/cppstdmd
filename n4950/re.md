@@ -833,7 +833,7 @@ the character `ch` is a valid digit in base `radix`; otherwise returns
 locale_type imbue(locale_type loc);
 ```
 
-*Effects:* Imbues with a copy of the locale `loc`.
+*Effects:* Imbues `this` with a copy of the locale `loc`.
 
 \[*Note 1*: Calling `imbue` with a different locale than the one
 currently in use invalidates all cached data held by

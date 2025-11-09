@@ -1037,7 +1037,8 @@ permitted by the specification of the corresponding template.
 template<class T> struct is_pod;
 ```
 
-*Requires:* `remove_all_extents_t<T>` shall be a complete type or cv .
+*Requires:* `remove_all_extents_t<T>` shall be a complete type or cv
+`void`.
 
 `is_pod<T>` is a *Cpp17UnaryTypeTrait*[[meta.rqmts]] with a base
 characteristic of `true_type` if `T` is a POD type, and `false_type`
@@ -1871,18 +1872,18 @@ template<class InputIterator>
 ```
 
 *Requires:* The `source` and \[`first`, `last`) sequences are UTF-8
-encoded. The value type of `Source` and `InputIterator` is `char` or .
-`Source` meets the requirements specified in [[fs.path.req]].
+encoded. The value type of `Source` and `InputIterator` is `char` or
+`char8_t`. `Source` meets the requirements specified in [[fs.path.req]].
 
 *Returns:*
 
 - If `value_type` is `char` and the current native narrow
   encoding [[fs.path.type.cvt]] is UTF-8, return `path(source)` or
   `path(first, last)`; otherwise,
-- if `value_type` is and the native wide encoding is UTF-16, or if
-  `value_type` is or , convert `source` or \[`first`, `last`) to a
-  temporary, `tmp`, of type `string_type` and return `path(tmp)`;
-  otherwise,
+- if `value_type` is `wchar_t` and the native wide encoding is UTF-16,
+  or if `value_type` is `char16_t` or `char32_t`, convert `source` or
+  \[`first`, `last`) to a temporary, `tmp`, of type `string_type` and
+  return `path(tmp)`; otherwise,
 - convert `source` or \[`first`, `last`) to a temporary, `tmp`, of type
   `u32string` and return `path(tmp)`.
 

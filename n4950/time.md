@@ -1498,11 +1498,11 @@ template<class ToDuration, class Rep, class Period>
   ```
 
 \[*Note 1*: This function does not use any implicit conversions; all
-conversions are done with . It avoids multiplications and divisions when
-it is known at compile time that one or more arguments is 1.
-Intermediate computations are carried out in the widest representation
-and only converted to the destination representation at the final
-step. — *end note*\]
+conversions are done with `static_cast`. It avoids multiplications and
+divisions when it is known at compile time that one or more arguments
+is 1. Intermediate computations are carried out in the widest
+representation and only converted to the destination representation at
+the final step. — *end note*\]
 
 ``` cpp
 template<class ToDuration, class Rep, class Period>

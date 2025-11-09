@@ -1278,7 +1278,7 @@ namespace std {
 An object of type `stacktrace_entry` is either empty, or represents a
 stacktrace entry and provides operations for querying information about
 it. The class `stacktrace_entry` models `regular` [[concepts.object]]
-and `\texttt{three_way_comparable}<strong_ordering>` [[cmp.concept]].
+and `three_way_comparable<strong_ordering>` [[cmp.concept]].
 
 #### Constructors <a id="stacktrace.entry.cons">[[stacktrace.entry.cons]]</a>
 
