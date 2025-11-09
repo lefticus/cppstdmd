@@ -870,7 +870,7 @@ template<pair-like P> constexpr pair& operator=(P&& p);
 
 *Constraints:*
 
-- `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
+- `different-from<P, pair>`[[range.utility.helpers]] is `true`,
 - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
 - `is_assignable_v<T1&, decltype(get<0>(std::forward<P>(p)))>` is
   `true`, and
@@ -888,7 +888,7 @@ template<pair-like P> constexpr const pair& operator=(P&& p) const;
 
 *Constraints:*
 
-- `different-from``<P, pair>`[[range.utility.helpers]] is `true`,
+- `different-from<P, pair>`[[range.utility.helpers]] is `true`,
 - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
 - `is_assignable_v<const T1&, decltype(get<0>(std::forward<P>(p)))>` is
   `true`, and
@@ -1536,7 +1536,7 @@ Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
 
 *Constraints:*
 
-- `different-from``<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+- `different-from<UTuple, tuple>`[[range.utility.helpers]] is `true`,
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
@@ -1794,7 +1794,7 @@ template<tuple-like UTuple>
 
 *Constraints:*
 
-- `different-from``<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+- `different-from<UTuple, tuple>`[[range.utility.helpers]] is `true`,
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and,
@@ -1813,7 +1813,7 @@ template<tuple-like UTuple>
 
 *Constraints:*
 
-- `different-from``<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+- `different-from<UTuple, tuple>`[[range.utility.helpers]] is `true`,
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and,
@@ -3136,7 +3136,7 @@ contained value is direct-non-list-initialized with
 template<class F> constexpr optional or_else(F&& f) const &;
 ```
 
-*Constraints:* `F` models `invocable``<>` and `T` models
+*Constraints:* `F` models `invocable<>` and `T` models
 `copy_constructible`.
 
 *Mandates:* `is_same_v<remove_cvref_t<invoke_result_t<F>>, optional>` is
@@ -3156,7 +3156,7 @@ if (*this) {
 template<class F> constexpr optional or_else(F&& f) &&;
 ```
 
-*Constraints:* `F` models `invocable``<>` and `T` models
+*Constraints:* `F` models `invocable<>` and `T` models
 `move_constructible`.
 
 *Mandates:* `is_same_v<remove_cvref_t<invoke_result_t<F>>, optional>` is
@@ -10960,7 +10960,7 @@ template<class T> consteval basic_format_string(const T& s);
 ```
 
 *Constraints:* `const T&` models
-`convertible_to``<basic_string_view<charT>>`.
+`convertible_to<basic_string_view<charT>>`.
 
 *Effects:* Direct-non-list-initializes *str* with `s`.
 
@@ -11090,9 +11090,9 @@ template<class Out>
 
 Let `charT` be `decltype(fmt)::value_type`.
 
-*Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
+*Constraints:* `Out` satisfies `output_iterator<const charT&>`.
 
-*Preconditions:* `Out` models `output_iterator``<const charT&>`.
+*Preconditions:* `Out` models `output_iterator<const charT&>`.
 
 *Effects:* Places the character representation of formatting the
 arguments provided by `args`, formatted according to the specifications
@@ -11129,9 +11129,9 @@ Let
   functions with a `loc` parameter, and
 - `M` be `clamp(n, 0, N)`.
 
-*Constraints:* `Out` satisfies `output_iterator``<const charT&>`.
+*Constraints:* `Out` satisfies `output_iterator<const charT&>`.
 
-*Preconditions:* `Out` models `output_iterator``<const charT&>`, and
+*Preconditions:* `Out` models `output_iterator<const charT&>`, and
 `formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
 requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
@@ -11646,7 +11646,7 @@ ill-formed.
 
 For a type `R`, `format_kind<R>` is defined as follows:
 
-- If `same_as``<remove_cvref_t<ranges::range_reference_t<R>>, R>` is
+- If `same_as<remove_cvref_t<ranges::range_reference_t<R>>, R>` is
   `true`, `format_kind<R>` is `range_format::disabled`. \[*Note 3*: This
   prevents constraint recursion for ranges whose reference type is the
   same range type. For example, `std::filesystem::path` is a range of
@@ -11663,8 +11663,8 @@ For a type `R`, `format_kind<R>` is defined as follows:
 
 *Remarks:* Pursuant to [[namespace.std]], users may specialize
 `format_kind` for cv-unqualified program-defined types that model
-`ranges::``input_range`. Such specializations shall be usable in
-constant expressions [[expr.const]] and have type `const range_format`.
+`ranges::input_range`. Such specializations shall be usable in constant
+expressions [[expr.const]] and have type `const range_format`.
 
 #### Class template `range_formatter` <a id="format.range.formatter">[[format.range.formatter]]</a>
 
@@ -12039,7 +12039,7 @@ template<class FormatContext>
     format(see below& r, FormatContext& ctx) const;
 ```
 
-The type of `r` is `const R&` if `ranges::``input_range``<const R>` is
+The type of `r` is `const R&` if `ranges::input_range<const R>` is
 `true` and `R&` otherwise.
 
 *Effects:* Let *`s`* be a `basic_string<charT>` such that
@@ -12092,7 +12092,7 @@ basic_format_arg() noexcept;
 template<class T> explicit basic_format_arg(T& v) noexcept;
 ```
 
-*Constraints:* `T` satisfies `formattable-with``<Context>`.
+*Constraints:* `T` satisfies `formattable-with<Context>`.
 
 *Preconditions:* If `decay_t<T>` is `char_type*` or `const char_type*`,
 `static_cast<const char_type*>(v)` points to a NTCTS [[defns.ntcts]].
@@ -12163,10 +12163,10 @@ template<class T> explicit handle(T& val) noexcept;
 Let
 
 - `TD` be `remove_const_t<T>`,
-- `TQ` be `const TD` if `const TD` satisfies
-  `formattable-with``<Context>` and `TD` otherwise.
+- `TQ` be `const TD` if `const TD` satisfies `formattable-with<Context>`
+  and `TD` otherwise.
 
-*Mandates:* `TQ` satisfies `formattable-with``<Context>`.
+*Mandates:* `TQ` satisfies `formattable-with<Context>`.
 
 *Effects:* Initializes `ptr_` with `addressof(val)` and `format_` with
 
@@ -12394,7 +12394,7 @@ template<class FormatContext>
 
 The type of `elems` is:
 
-- If `(``formattable``<const Ts, charT> && ...)` is `true`,
+- If `(formattable<const Ts, charT> && ...)` is `true`,
   `const `*`pair-or-tuple`*`<Ts...>&`.
 - Otherwise *`pair-or-tuple`*`<Ts...>&`.
 

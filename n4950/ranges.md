@@ -1087,10 +1087,10 @@ template<class T>
 - if N copies and/or moves are made from an object of type `T` that
   contained M elements, then those N objects have 𝑂(N+M) destruction;
   and
-- `copy_constructible``<T>` is `false`, or `T` has 𝑂(1) copy
-  construction; and
-- `copyable``<T>` is `false`, or copy assignment of an object of type
-  `T` is no more complex than destruction followed by copy construction.
+- `copy_constructible<T>` is `false`, or `T` has 𝑂(1) copy construction;
+  and
+- `copyable<T>` is `false`, or copy assignment of an object of type `T`
+  is no more complex than destruction followed by copy construction.
 
 \[*Note 1*: The constraints on copying and moving imply that a
 moved-from object of type `T` has 𝑂(1) destruction. — *end note*\]
@@ -1790,30 +1790,29 @@ template<class C, input_range R, class... Args> requires (!view<C>)
 the following manner:
 
 - If `C` does not satisfy `input_range` or
-  `convertible_to``<range_reference_t<R>, range_value_t<C>>` is `true`:
-  - If `constructible_from``<C, R, Args...>` is `true`:
+  `convertible_to<range_reference_t<R>, range_value_t<C>>` is `true`:
+  - If `constructible_from<C, R, Args...>` is `true`:
     ``` cpp
     C(std::forward<R>(r), std::forward<Args>(args)...)
     ```
-  - Otherwise, if `constructible_from``<C, from_range_t, R, Args...>` is
+  - Otherwise, if `constructible_from<C, from_range_t, R, Args...>` is
     `true`:
     ``` cpp
     C(from_range, std::forward<R>(r), std::forward<Args>(args)...)
     ```
   - Otherwise, if
-    - `common_range``<R>` is `true`,
+    - `common_range<R>` is `true`,
     - the *qualified-id*
       `iterator_traits<iterator_t<R>>::iterator_category` is valid and
-      denotes a type that models `derived_from``<input_iterator_tag>`,
-      and
-    - `constructible_from``<C, iterator_t<R>, sentinel_t<R>, Args...>`
-      is `true`:
+      denotes a type that models `derived_from<input_iterator_tag>`, and
+    - `constructible_from<C, iterator_t<R>, sentinel_t<R>, Args...>` is
+      `true`:
 
     ``` cpp
     C(ranges::begin(r), ranges::end(r), std::forward<Args>(args)...)
     ```
   - Otherwise, if
-    - `constructible_from``<C, Args...>` is `true`, and
+    - `constructible_from<C, Args...>` is `true`, and
     - *`container-insertable`*`<C, range_reference_t<R>>` is `true`:
 
     ``` cpp
@@ -1822,7 +1821,7 @@ the following manner:
       c.reserve(static_cast<range_size_t<C>>(ranges::size(r)));
     ranges::copy(r, container-inserter<range_reference_t<R>>(c));
     ```
-- Otherwise, if `input_range``<range_reference_t<R>>` is `true`:
+- Otherwise, if `input_range<range_reference_t<R>>` is `true`:
   ``` cpp
   to<C>(r | views::transform([](auto&& elem) {
     return to<range_value_t<C>>(std::forward<decltype(elem)>(elem));
@@ -2202,7 +2201,7 @@ constexpr explicit iota_view(iterator first, see below last);
 
 *Effects:* Equivalent to:
 
-- If `same_as``<W, Bound>` is `true`,
+- If `same_as<W, Bound>` is `true`,
   `iota_view(first.`*`value_`*`, last.`*`value_`*`)`.
 - Otherwise, if `Bound` denotes `unreachable_sentinel_t`,
   `iota_view(first.`*`value_`*`, last)`.
@@ -2210,7 +2209,7 @@ constexpr explicit iota_view(iterator first, see below last);
 
 *Remarks:* The type of `last` is:
 
-- If `same_as``<W, Bound>` is `true`, *iterator*.
+- If `same_as<W, Bound>` is `true`, *iterator*.
 - Otherwise, if `Bound` denotes `unreachable_sentinel_t`, `Bound`.
 - Otherwise, *sentinel*.
 
@@ -8134,7 +8133,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 *Returns:*
 
 - `x.`*`current_`*` == y.`*`current_`* if
-  `all-bidirectional``<Const, Views...>` is `true`.
+  `all-bidirectional<Const, Views...>` is `true`.
 - Otherwise, `true` if there exists an integer
   0 ≤ i < `sizeof...(Views)` such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`

@@ -525,8 +525,29 @@ local function expand_itemdescr_macros(text)
   -- in code blocks (e.g., \tcode{\placeholdernc{X}} should become italic, not code)
   text = text:gsub("\\placeholdernc{", "\\textit{")
 
-  -- \tcode{x} -> \texttt{x}
-  text = text:gsub("\\tcode{", "\\texttt{")
+  -- Process \tcode{} blocks to strip nested \texttt{} from simplified_macros.tex preprocessing
+  -- This prevents nested backticks like `const_cast``<X ``const``&>` in the final markdown
+  -- Example: \tcode{\texttt{const_cast}<X \texttt{const}\&>} -> \texttt{const_cast<X const\&>}
+  -- When simplified_macros.tex converts \keyword{} to \texttt{}, we need to strip those
+  -- inner \texttt{} wrappers before pandoc.read() sees them (to avoid double conversion)
+  while true do
+    local start_pos = text:find("\\tcode{", 1, true)
+    if not start_pos then break end
+
+    -- Extract the full \tcode{...} content using brace-balancing
+    local tcode_content, end_pos = extract_braced_content(text, start_pos, 6)  -- "\tcode" is 6 chars
+    if tcode_content then
+      -- Strip all \texttt{} wrappers that came from simplified_macros.tex (\keyword{}, \libconcept{}, etc.)
+      -- Use remove_macro to recursively remove all \texttt{} macros
+      local cleaned = remove_macro(tcode_content, "texttt", true)
+
+      -- Replace \tcode{...} with \texttt{cleaned}
+      text = text:sub(1, start_pos - 1) .. "\\texttt{" .. cleaned .. "}" .. text:sub(end_pos)
+    else
+      -- Couldn't extract, skip this occurrence
+      break
+    end
+  end
 
   -- Range macros
   -- \range{first}{last} -> [first, last) (half-open range)

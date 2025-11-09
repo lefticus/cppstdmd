@@ -568,7 +568,7 @@ template<class It, class End>
 *Constraints:*
 
 - `It` satisfies `contiguous_iterator`.
-- `End` satisfies `sized_sentinel_for``<It>`.
+- `End` satisfies `sized_sentinel_for<It>`.
 - `is_same_v<iter_value_t<It>, charT>` is `true`.
 - `is_convertible_v<End, size_type>` is `false`.
 
@@ -576,7 +576,7 @@ template<class It, class End>
 
 - \[`begin`, `end`) is a valid range.
 - `It` models `contiguous_iterator`.
-- `End` models `sized_sentinel_for``<It>`.
+- `End` models `sized_sentinel_for<It>`.
 
 *Effects:* Initializes `data_` with `to_address(begin)` and initializes
 `size_` with `end - begin`.
@@ -593,7 +593,7 @@ Let `d` be an lvalue of type `remove_cvref_t<R>`.
 *Constraints:*
 
 - `remove_cvref_t<R>` is not the same type as `basic_string_view`,
-- `R` models `ranges::``contiguous_range` and `ranges::``sized_range`,
+- `R` models `ranges::contiguous_range` and `ranges::sized_range`,
 - `is_same_v<ranges::range_value_t<R>, charT>` is `true`,
 - `is_convertible_v<R, const charT*>` is `false`, and
 - `d.operator ::std::basic_string_view<charT, traits>()` is not a valid
@@ -615,14 +615,14 @@ template<class It, class End>
 *Constraints:*
 
 - `It` satisfies `contiguous_iterator`.
-- `End` satisfies `sized_sentinel_for``<It>`.
+- `End` satisfies `sized_sentinel_for<It>`.
 
 ``` cpp
 template<class R>
   basic_string_view(R&&) -> basic_string_view<ranges::range_value_t<R>>;
 ```
 
-*Constraints:* `R` satisfies `ranges::``contiguous_range`.
+*Constraints:* `R` satisfies `ranges::contiguous_range`.
 
 #### Iterator support <a id="string.view.iterators">[[string.view.iterators]]</a>
 

@@ -756,10 +756,10 @@ explicit stop_callback(stop_token&& st, C&& cb)
 ```
 
 *Constraints:* `Callback` and `C` satisfy
-`constructible_from``<Callback, C>`.
+`constructible_from<Callback, C>`.
 
 *Preconditions:* `Callback` and `C` model
-`constructible_from``<Callback, C>`.
+`constructible_from<Callback, C>`.
 
 *Effects:* Initializes `callback` with `std::forward<C>(cb)`. If
 `st.stop_requested()` is `true`, then

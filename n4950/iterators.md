@@ -1395,12 +1395,12 @@ template<class S, class I>
 ```
 
 Let `s` and `i` be values of type `S` and `I` such that \[`i`, `s`)
-denotes a range. Types `S` and `I` model `sentinel_for``<S, I>` only if
+denotes a range. Types `S` and `I` model `sentinel_for<S, I>` only if
 
 - `i == s` is well-defined.
 - If `bool(i != s)` then `i` is dereferenceable and \[`++i`, `s`)
   denotes a range.
-- `assignable_from``<I&, S>` is either modeled or not satisfied.
+- `assignable_from<I&, S>` is either modeled or not satisfied.
 
 The domain of `==` is not static. Given an iterator `i` and sentinel `s`
 such that \[`i`, `s`) denotes a range and `i != s`, `i` and `s` are not
@@ -1429,7 +1429,7 @@ template<class S, class I>
 Let `i` be an iterator of type `I`, and `s` a sentinel of type `S` such
 that \[`i`, `s`) denotes a range. Let N be the smallest number of
 applications of `++i` necessary to make `bool(i == s)` be `true`. `S`
-and `I` model `sized_sentinel_for``<S, I>` only if
+and `I` model `sized_sentinel_for<S, I>` only if
 
 - If N is representable by `iter_difference_t<I>`, then `s - i` is
   well-defined and equals N.
@@ -2276,15 +2276,15 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 ```
 
 *Preconditions:* Either
-`assignable_from``<I&, S> || ``sized_sentinel_for``<S, I>` is modeled,
-or \[`i`, `bound`) denotes a range.
+`assignable_from<I&, S> || sized_sentinel_for<S, I>` is modeled, or
+\[`i`, `bound`) denotes a range.
 
 *Effects:*
 
-- If `I` and `S` model `assignable_from``<I&, S>`, equivalent to
+- If `I` and `S` model `assignable_from<I&, S>`, equivalent to
   `i = std::move(bound)`.
-- Otherwise, if `S` and `I` model `sized_sentinel_for``<S, I>`,
-  equivalent to `ranges::advance(i, bound - i)`.
+- Otherwise, if `S` and `I` model `sized_sentinel_for<S, I>`, equivalent
+  to `ranges::advance(i, bound - i)`.
 - Otherwise, while `bool(i != bound)` is `true`, increments `i`.
 
 ``` cpp
@@ -2295,11 +2295,11 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 *Preconditions:* If `n > 0`, \[`i`, `bound`) denotes a range. If
 `n == 0`, \[`i`, `bound`) or \[`bound`, `i`) denotes a range. If
 `n < 0`, \[`bound`, `i`) denotes a range, `I` models
-`bidirectional_iterator`, and `I` and `S` model `same_as``<I, S>`.
+`bidirectional_iterator`, and `I` and `S` model `same_as<I, S>`.
 
 *Effects:*
 
-- If `S` and `I` model `sized_sentinel_for``<S, I>`:
+- If `S` and `I` model `sized_sentinel_for<S, I>`:
   - If |`n`| \ge |`bound - i`|, equivalent to
     `ranges::advance(i, bound)`.
   - Otherwise, equivalent to `ranges::advance(i, n)`.
@@ -2518,7 +2518,7 @@ template<class U> constexpr reverse_iterator(const reverse_iterator<U>& u);
 ```
 
 *Constraints:* `is_same_v<U, Iterator>` is `false` and `const U&` models
-`convertible_to``<Iterator>`.
+`convertible_to<Iterator>`.
 
 *Effects:* Initializes `current` with `u.current`.
 
@@ -2529,8 +2529,8 @@ template<class U>
 ```
 
 *Constraints:* `is_same_v<U, Iterator>` is `false`, `const U&` models
-`convertible_to``<Iterator>`, and
-`assignable_from``<Iterator&, const U&>` is modeled.
+`convertible_to<Iterator>`, and `assignable_from<Iterator&, const U&>`
+is modeled.
 
 *Effects:* Assigns `u.current` to `current`.
 
@@ -3611,7 +3611,7 @@ template<class U> constexpr move_iterator(const move_iterator<U>& u);
 ```
 
 *Constraints:* `is_same_v<U, Iterator>` is `false` and `const U&` models
-`convertible_to``<Iterator>`.
+`convertible_to<Iterator>`.
 
 *Effects:* Initializes `current` with `u.current`.
 
@@ -3620,8 +3620,8 @@ template<class U> constexpr move_iterator& operator=(const move_iterator<U>& u);
 ```
 
 *Constraints:* `is_same_v<U, Iterator>` is `false`, `const U&` models
-`convertible_to``<Iterator>`, and
-`assignable_from``<Iterator&, const U&>` is modeled.
+`convertible_to<Iterator>`, and `assignable_from<Iterator&, const U&>`
+is modeled.
 
 *Effects:* Assigns `u.current` to `current`.
 

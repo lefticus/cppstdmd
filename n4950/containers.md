@@ -495,7 +495,7 @@ a.crbegin()
 
 *Result:* `const_reverse_iterator`.
 
-*Returns:* `const_cast``<X ``const``&>(a).rbegin()`
+*Returns:* `const_cast<X const&>(a).rbegin()`
 
 *Complexity:* Constant.
 
@@ -505,7 +505,7 @@ a.crend()
 
 *Result:* `const_reverse_iterator`.
 
-*Returns:* `const_cast``<X ``const``&>(a).rend()`
+*Returns:* `const_cast<X const&>(a).rend()`
 
 *Complexity:* Constant.
 
@@ -833,7 +833,7 @@ X(from_range, rg)
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`. For `vector`, if `R` models neither
-`ranges::``sized_range` nor `ranges::``forward_range`, `T` is also
+`ranges::sized_range` nor `ranges::forward_range`, `T` is also
 *Cpp17MoveInsertable* into `X`.
 
 *Effects:* Constructs a sequence container equal to the range `rg`. Each
@@ -1029,12 +1029,12 @@ a.assign_range(rg)
 
 *Result:* `void`
 
-*Mandates:* `assignable_from``<T&, ranges::range_reference_t<R>>` is
+*Mandates:* `assignable_from<T&, ranges::range_reference_t<R>>` is
 modeled.
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `X` from
 `*ranges::begin(rg)`. For `vector`, if `R` models neither
-`ranges::``sized_range` nor `ranges::``forward_range`, `T` is also
+`ranges::sized_range` nor `ranges::forward_range`, `T` is also
 *Cpp17MoveInsertable* into `X`. `rg` and `a` do not overlap.
 
 *Effects:* Replaces elements in `a` with a copy of each element in `rg`.
@@ -5588,8 +5588,8 @@ template<container-compatible-range<T> R>
 *Complexity:* Initializes exactly N elements from the results of
 dereferencing successive iterators of `rg`, where N is
 `ranges::distance(rg)`. Performs no reallocations if `R` models
-`ranges::``forward_range` or `ranges::``sized_range`; otherwise,
-performs order log N reallocations and order N calls to the copy or move
+`ranges::forward_range` or `ranges::sized_range`; otherwise, performs
+order log N reallocations and order N calls to the copy or move
 constructor of `T`.
 
 #### Capacity <a id="vector.capacity">[[vector.capacity]]</a>
@@ -12953,7 +12953,7 @@ template<class It, class End>
   \[*Note 4*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*\]
 - `It` satisfies `contiguous_iterator`.
-- `End` satisfies `sized_sentinel_for``<It>`.
+- `End` satisfies `sized_sentinel_for<It>`.
 - `is_convertible_v<End, size_t>` is `false`.
 
 *Preconditions:*
@@ -12962,7 +12962,7 @@ template<class It, class End>
   equal to `extent`.
 - \[`first`, `last`) is a valid range.
 - `It` models `contiguous_iterator`.
-- `End` models `sized_sentinel_for``<It>`.
+- `End` models `sized_sentinel_for<It>`.
 
 *Effects:* Initializes *`data_`* with `to_address(first)` and *`size_`*
 with `last - first`.
@@ -12996,9 +12996,8 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 *Constraints:* Let `U` be
 `remove_reference_t<ranges::range_reference_t<R>>`.
 
-- `R` satisfies `ranges::``contiguous_range` and
-  `ranges::``sized_range`.
-- Either `R` satisfies `ranges::``borrowed_range` or
+- `R` satisfies `ranges::contiguous_range` and `ranges::sized_range`.
+- Either `R` satisfies `ranges::borrowed_range` or
   `is_const_v<element_type>` is `true`.
 - `remove_cvref_t<R>` is not a specialization of `span`.
 - `remove_cvref_t<R>` is not a specialization of `array`.
@@ -13011,9 +13010,9 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 
 - If `extent` is not equal to `dynamic_extent`, then `ranges::size(r)`
   is equal to `extent`.
-- `R` models `ranges::``contiguous_range` and `ranges::``sized_range`.
+- `R` models `ranges::contiguous_range` and `ranges::sized_range`.
 - If `is_const_v<element_type>` is `false`, `R` models
-  `ranges::``borrowed_range`.
+  `ranges::borrowed_range`.
 
 *Effects:* Initializes *`data_`* with `ranges::data(r)` and *`size_`*
 with `ranges::size(r)`.
@@ -13074,7 +13073,7 @@ template<class R>
   span(R&&) -> span<remove_reference_t<ranges::range_reference_t<R>>>;
 ```
 
-*Constraints:* `R` satisfies `ranges::``contiguous_range`.
+*Constraints:* `R` satisfies `ranges::contiguous_range`.
 
 ##### Subviews <a id="span.sub">[[span.sub]]</a>
 
@@ -14394,7 +14393,7 @@ template<class StridedLayoutMapping>
 
 *Constraints:*
 
-- `layout-mapping-alike``<StridedLayoutMapping>` is satisfied.
+- `layout-mapping-alike<StridedLayoutMapping>` is satisfied.
 - `is_constructible_v<extents_type, typename StridedLayoutMapping::extents_type>`
   is  
   `true`.
@@ -14481,7 +14480,7 @@ template<class OtherMapping>
 
 *Constraints:*
 
-- `layout-mapping-alike``<OtherMapping>` is satisfied.
+- `layout-mapping-alike<OtherMapping>` is satisfied.
 - *`rank_`*` == OtherMapping::extents_type::rank()` is `true`.
 - `OtherMapping::is_always_strided()` is `true`.
 
@@ -14548,7 +14547,7 @@ typename A::reference
 ```
 
 *Result:* A type that models
-`common_reference_with``<A::reference&&, A::element_type&>`.
+`common_reference_with<A::reference&&, A::element_type&>`.
 
 \[*Note 2*: The type of `reference` need not be
 `element_type&`. — *end note*\]
@@ -14560,7 +14559,7 @@ typename A::offset_policy
 *Result:* A type `OP` such that:
 
 - `OP` meets the accessor policy requirements,
-- `constructible_from``<OP, const A&>` is modeled, and
+- `constructible_from<OP, const A&>` is modeled, and
 - `is_same_v<typename OP::element_type, typename A::element_type>` is
   `true`.
 

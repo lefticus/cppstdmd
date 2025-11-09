@@ -982,3 +982,32 @@ Equivalent to:
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Should not crash, exact output may vary but should be valid
+
+
+def test_nested_keyword_in_tcode_itemdescr():
+    r"""Test that \keyword{} inside \tcode{} doesn't create nested backticks
+
+    Issue: When simplified_macros.tex converts \keyword{const} to \texttt{const},
+    and then \tcode{\texttt{const_cast}<X \texttt{const}\&>} is processed by
+    cpp-itemdecl.lua, we were getting nested \texttt{\texttt{...}} which pandoc.read()
+    converted to nested backticks like `const_cast``<X ``const``&>`.
+
+    Fix: Strip \texttt{} from inside \tcode{} before converting to \texttt{}.
+    """
+    latex = r"""
+\begin{itemdescr}
+\returns
+\tcode{\keyword{const_cast}<X \keyword{const}\&>(a).rbegin()}
+\end{itemdescr}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+
+    # Should have proper inline code without nested backticks
+    assert "`const_cast<X const&>(a).rbegin()`" in output
+
+    # Should NOT have nested backticks
+    assert "``" not in output
+
+    # Should have the Returns label
+    assert "*Returns:*" in output

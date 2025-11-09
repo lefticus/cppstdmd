@@ -6443,8 +6443,8 @@ install the contained `basic_spanbuf`.
 template<class ROS> explicit basic_ispanstream(ROS&& s)
 ```
 
-*Constraints:* `ROS` models `ranges::``borrowed_range`.
-`!``convertible_to``<ROS, std::span<charT>> && ``convertible_to``<ROS, std::span<charT const>>`
+*Constraints:* `ROS` models `ranges::borrowed_range`.
+`!convertible_to<ROS, std::span<charT>> && convertible_to<ROS, std::span<charT const>>`
 is `true`.
 
 *Effects:* Let `sp` be `std::span<const charT>(std::forward<ROS>(s))`.
@@ -6502,8 +6502,8 @@ void span(std::span<charT> s) noexcept;
 template<class ROS> void span(ROS&& s) noexcept;
 ```
 
-*Constraints:* `ROS` models `ranges::``borrowed_range`.
-`(!``convertible_to``<ROS, std::span<charT>>) && ``convertible_to``<ROS, std::span<const charT>>`
+*Constraints:* `ROS` models `ranges::borrowed_range`.
+`(!convertible_to<ROS, std::span<charT>>) && convertible_to<ROS, std::span<const charT>>`
 is `true`.
 
 *Effects:* Let `sp` be `std::span<const charT>(std::forward<ROS>(s))`.

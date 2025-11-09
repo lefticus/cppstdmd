@@ -3953,8 +3953,8 @@ returns `true`; otherwise, returns `false`.
 projections if:
 
 - for the first overload,
-  - `S1` and `I1` model `sized_sentinel_for``<S1, I1>`,
-  - `S2` and `I2` model `sized_sentinel_for``<S2, I2>`, and
+  - `S1` and `I1` model `sized_sentinel_for<S1, I1>`,
+  - `S2` and `I2` model `sized_sentinel_for<S2, I2>`, and
   - `last1 - first1 != last2 - first2`;
 - for the second overload, `R1` and `R2` each model `sized_range`, and
   `ranges::distance(r1) != ranges::distance(r2)`.

@@ -287,7 +287,7 @@ template<class T, class U>
   concept same_as = same-as-impl<T, U> && same-as-impl<U, T>;
 ```
 
-\[*Note 1*: `same_as``<T, U>` subsumes `same_as``<U, T>` and vice
+\[*Note 1*: `same_as<T, U>` subsumes `same_as<U, T>` and vice
 versa. — *end note*\]
 
 ### Concept  <a id="concept.derived">[[concept.derived]]</a>
@@ -299,7 +299,7 @@ template<class Derived, class Base>
     is_convertible_v<const volatile Derived*, const volatile Base*>;
 ```
 
-\[*Note 1*: `derived_from``<Derived, Base>` is satisfied if and only if
+\[*Note 1*: `derived_from<Derived, Base>` is satisfied if and only if
 `Derived` is publicly and unambiguously derived from `Base`, or
 `Derived` and `Base` are the same class type ignoring
 cv-qualifiers. — *end note*\]
@@ -332,7 +332,7 @@ To test(FromR (&f)()) {
 
 and let `f` be a function with no arguments and return type `FromR` such
 that `f()` is equality-preserving. Types `From` and `To` model
-`convertible_to``<From, To>` only if:
+`convertible_to<From, To>` only if:
 
 - `To` is not an object or reference-to-object type, or
   `static_cast<To>(f())` is equal to `test(f)`.
@@ -366,7 +366,7 @@ equality-preserving expressions [[concepts.equality]] such that
 `decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
 `u2` be equality-preserving expressions such that `decltype((u1))` and
 `decltype((u2))` are each `U`. `T` and `U` model
-`common_reference_with``<T, U>` only if:
+`common_reference_with<T, U>` only if:
 
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
@@ -405,7 +405,7 @@ Let `C` be `common_type_t<T, U>`. Let `t1` and `t2` be
 equality-preserving expressions [[concepts.equality]] such that
 `decltype((t1))` and `decltype((t2))` are each `T`, and let `u1` and
 `u2` be equality-preserving expressions such that `decltype((u1))` and
-`decltype((u2))` are each `U`. `T` and `U` model `common_with``<T, U>`
+`decltype((u2))` are each `U`. `T` and `U` model `common_with<T, U>`
 only if:
 
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
@@ -455,7 +455,7 @@ Let:
 - `rhs` be an expression such that `decltype((rhs))` is `RHS`, and
 - `rcopy` be a distinct object that is equal to `rhs`.
 
-`LHS` and `RHS` model `assignable_from``<LHS, RHS>` only if
+`LHS` and `RHS` model `assignable_from<LHS, RHS>` only if
 
 - `addressof(lhs = rhs) == addressof(lcopy)`.
 - After evaluating `lhs = rhs`:
@@ -687,7 +687,7 @@ template<class T>
 ```
 
 If `T` is an object type, then let `v` be an lvalue of type `T` or
-`const`` T` or an rvalue of type `const`` T`. `T` models
+`const T` or an rvalue of type `const T`. `T` models
 `copy_constructible` only if
 
 - After the definition `T u = v;`, `u` is equal to
@@ -845,8 +845,8 @@ template<class T, class U>
 
 Given types `T` and `U`, let `t` and `u` be lvalues of types
 `const remove_reference_t<T>` and `const remove_reference_t<U>`
-respectively. `T` and `U` model
-`weakly-equality-comparable-with``<T, U>` only if
+respectively. `T` and `U` model `weakly-equality-comparable-with<T, U>`
+only if
 
 - `t == u`, `u == t`, `t != u`, and `u != t` have the same domain.
 - `bool(u == t) == bool(t == u)`.
@@ -888,7 +888,7 @@ distinct equal objects of types `const remove_reference_t<U>` and
 common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
 ```
 
-`T` and `U` model `equality_comparable_with``<T, U>` only if
+`T` and `U` model `equality_comparable_with<T, U>` only if
 
 ``` cpp
 bool(t == u) == bool(CONVERT_TO_LVALUE<C>(t2) == CONVERT_TO_LVALUE<C>(u2))
@@ -933,7 +933,7 @@ distinct equal objects of types `const remove_reference_t<U>` and
 common_reference_t<const remove_reference_t<T>&, const remove_reference_t<U>&>
 ```
 
-`T` and `U` model `totally_ordered_with``<T, U>` only if
+`T` and `U` model `totally_ordered_with<T, U>` only if
 
 - `bool(t < u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) < `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
 - `bool(t > u) == bool(`*`CONVERT_TO_LVALUE`*`<C>(t2) > `*`CONVERT_TO_LVALUE`*`<C>(u2))`.
