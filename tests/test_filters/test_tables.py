@@ -882,3 +882,91 @@ def test_floattable_with_multiline_headers():
     assert "| `add` | `permissions` shall add bits |" in output
     # Name column should NOT be missing
     assert "Name" in output
+
+def test_libefftab_basic():
+    r"""Test libefftab (effects table for enum/bitmask types)"""
+    latex = r"""
+\begin{libefftab}
+  {\tcode{syntax_option_type} effects}
+  {re.synopt}
+\tcode{icase} &
+Specifies that matching shall be performed without regard to case.
+\\ \rowsep
+\tcode{nosubs} &
+Specifies that no sub-expressions shall be considered to be marked.
+\\ \rowsep
+\end{libefftab}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have caption
+    assert "**Table: `syntax_option_type` effects**" in output
+    # Should have implicit headers
+    assert "| Element | Effect(s) if set |" in output
+    # Should have data rows
+    assert "| `icase` | Specifies that matching shall be performed without regard to case. |" in output
+    assert "| `nosubs` | Specifies that no sub-expressions shall be considered to be marked. |" in output
+    # Should NOT have LaTeX commands
+    assert "\\tcode" not in output
+    assert "\\rowsep" not in output
+
+def test_longlibefftab_basic():
+    r"""Test longlibefftab (long effects table for enum/bitmask types)"""
+    latex = r"""
+\begin{longlibefftab}
+  {\tcode{match_flag_type} effects}
+  {re.matchflag}
+\tcode{match_not_bol} &
+The first character shall be treated as though it is not at the beginning of a line.
+\\ \rowsep
+\tcode{match_not_eol} &
+The last character shall be treated as though it is not at the end of a line.
+\\ \rowsep
+\tcode{match_continuous} &
+The expression shall only match a sub-sequence that begins at first.
+\\ \rowsep
+\end{longlibefftab}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have caption
+    assert "**Table: `match_flag_type` effects**" in output
+    # Should have implicit headers
+    assert "| Element | Effect(s) if set |" in output
+    # Should have data rows
+    assert "| `match_not_bol` |" in output
+    assert "| `match_not_eol` |" in output
+    assert "| `match_continuous` |" in output
+    # Should NOT have LaTeX commands
+    assert "\\tcode" not in output
+
+def test_longliberrtab_basic():
+    r"""Test longliberrtab (error value table)"""
+    latex = r"""
+\begin{longliberrtab}
+  {\tcode{error_type} values in the C locale}
+  {re.err}
+\tcode{error_collate} &
+The expression contains an invalid collating element name.
+\\ \rowsep
+\tcode{error_ctype} &
+The expression contains an invalid character class name.
+\\ \rowsep
+\tcode{error_escape} &
+The expression contains an invalid escaped character, or a trailing escape.
+\\ \rowsep
+\end{longliberrtab}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have caption
+    assert "**Table: `error_type` values in the C locale**" in output
+    # Should have implicit headers (different from libefftab!)
+    assert "| Value | Error condition |" in output
+    # Should have data rows
+    assert "| `error_collate` | The expression contains an invalid collating element name. |" in output
+    assert "| `error_ctype` | The expression contains an invalid character class name. |" in output
+    assert "| `error_escape` |" in output
+    # Should NOT have LaTeX commands
+    assert "\\tcode" not in output
+    assert "\\rowsep" not in output

@@ -561,6 +561,105 @@ function RawBlock(elem)
     end
   end
 
+  -- Handle libefftab environment (enum/bitmask effects tables)
+  local libefftab_start = text:find("\\begin{libefftab}", 1, true)
+  if libefftab_start then
+    -- Extract caption (first braced argument)
+    local caption_start = libefftab_start + 17 -- length of "\begin{libefftab}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, end_pos = extract_braced(text, pos1)
+
+    if caption and label then
+      -- Find the end of libefftab
+      local libefftab_end = text:find("\\end{libefftab}", end_pos, true)
+      if libefftab_end then
+        local table_content = text:sub(end_pos + 1, libefftab_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Implicit headers for effects tables
+        local headers = {"Element", "Effect(s) if set"}
+
+        -- Extract data rows (handle multi-line rows)
+        local normalized = normalize_table_rows(table_content)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle longlibefftab environment (long enum/bitmask effects tables)
+  local longlibefftab_start = text:find("\\begin{longlibefftab}", 1, true)
+  if longlibefftab_start then
+    -- Extract caption (first braced argument)
+    local caption_start = longlibefftab_start + 21 -- length of "\begin{longlibefftab}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, end_pos = extract_braced(text, pos1)
+
+    if caption and label then
+      -- Find the end of longlibefftab
+      local longlibefftab_end = text:find("\\end{longlibefftab}", end_pos, true)
+      if longlibefftab_end then
+        local table_content = text:sub(end_pos + 1, longlibefftab_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Implicit headers for effects tables
+        local headers = {"Element", "Effect(s) if set"}
+
+        -- Extract data rows (handle multi-line rows)
+        local normalized = normalize_table_rows(table_content)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle longliberrtab environment (error value tables)
+  local longliberrtab_start = text:find("\\begin{longliberrtab}", 1, true)
+  if longliberrtab_start then
+    -- Extract caption (first braced argument)
+    local caption_start = longliberrtab_start + 21 -- length of "\begin{longliberrtab}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, end_pos = extract_braced(text, pos1)
+
+    if caption and label then
+      -- Find the end of longliberrtab
+      local longliberrtab_end = text:find("\\end{longliberrtab}", end_pos, true)
+      if longliberrtab_end then
+        local table_content = text:sub(end_pos + 1, longliberrtab_end - 1)
+
+        -- Parse caption (may contain macros)
+        caption = expand_table_macros(caption)
+
+        -- Implicit headers for error tables
+        local headers = {"Value", "Error condition"}
+
+        -- Extract data rows (handle multi-line rows)
+        local normalized = normalize_table_rows(table_content)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
   -- Handle LongTable environment
   local long_start = text:find("\\begin{LongTable}", 1, true)
   if long_start then
