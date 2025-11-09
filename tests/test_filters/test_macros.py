@@ -398,11 +398,12 @@ def test_discretionary_hyphen():
 # ============================================================================
 
 def test_opt_macro():
-    r"""Test \opt{} expansion (optional grammar element with subscript)"""
+    r"""Test \opt{} expansion (optional grammar element with Unicode subscript)"""
     latex = r"The parameter is \opt{noexcept} in this context."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "noexcept_opt" in output
+    # Should render with Unicode subscript: noexceptₒₚₜ
+    assert "noexceptₒₚₜ" in output
     assert "\\opt" not in output
 
 

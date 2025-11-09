@@ -961,6 +961,38 @@ class member function signatures specify `T()` as a default argument.
 `T()` shall be a well-defined expression [[dcl.init]] if one of those
 signatures is called using the default argument [[dcl.fct.default]].
 
+**Table: Cpp17EqualityComparable requirements**
+
+| Expression | Return type |
+| ---------- | ----------- |
+| `a == b`   | `decltype(a == b)` models \exposconceptx{boolean-testable}{boolean-testable} | `==` is an equivalence relation, that is, it has the following properties: For all `a`, `a == a`.; If `a == b`, then `b == a`.; If `a == b` and `b == c`, then `a == c`. |
+
+
+**Table: Cpp17LessThanComparable requirements**
+
+| Expression | Return type                                                                 | Requirement                                            |
+| ---------- | --------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `a < b`    | `decltype(a < b)` models \exposconceptx{boolean-testable}{boolean-testable} | `<` is a strict weak ordering relation [[alg.sorting]] |
+
+
+**Table: Cpp17DefaultConstructible requirements**
+
+| Expression     | Post-condition                                                      |
+| -------------- | ------------------------------------------------------------------- |
+| `T t;`         | object `t` is default-initialized                                   |
+| `T u{};`       | object `u` is value-initialized or aggregate-initialized            |
+| `T()`<br>`T{}` | an object of type `T` is value-initialized or aggregate-initialized |
+
+
+**Table: Cpp17MoveConstructible requirements**
+
+| Expression  | Post-condition                                                     |
+| ----------- | ------------------------------------------------------------------ |
+| `T u = rv;` | `u` is equivalent to the value of `rv` before the construction     |
+| `T(rv)`     | `T(rv)` is equivalent to the value of `rv` before the construction |
+| *[spans 2 columns]*  `rv`'s state is unspecified *`rv` must still meet the requirements of the library component that is using it. The operations listed in those requirements must work as specified whether `rv` has been moved from or not.* |
+
+
 **Table: Cpp17CopyConstructible requirements (in addition to Cpp17MoveConstructible)**
 
 | Expression | Post-condition                                            |
@@ -969,11 +1001,27 @@ signatures is called using the default argument [[dcl.fct.default]].
 | `T(v)`     | the value of `v` is unchanged and is equivalent to `T(v)` |
 
 
+**Table: Cpp17MoveAssignable requirements**
+
+| Expression | Return type | Return value | Post-condition                                                                                                |
+| ---------- | ----------- | ------------ | ------------------------------------------------------------------------------------------------------------- |
+| `t = rv`   | `T&`        | `t`          | If `t` and `rv` do not refer to the same object, `t` is equivalent to the value of `rv` before the assignment |
+| *[spans 4 columns]*  `rv`'s state is unspecified. *`rv` must still meet the requirements of the library component that is using it, whether or not `t` and `rv` refer to the same object. The operations listed in those requirements must work as specified whether `rv` has been moved from or not.* |
+
+
 **Table: Cpp17CopyAssignable requirements (in addition to Cpp17MoveAssignable)**
 
 | Expression | Return type | Return value | Post-condition                                          |
 | ---------- | ----------- | ------------ | ------------------------------------------------------- |
 | `t = v`    | `T&`        | `t`          | `t` is equivalent to `v`, the value of `v` is unchanged |
+
+
+**Table: Cpp17Destructible requirements**
+
+| Expression | Post-condition                                                        |
+| ---------- | --------------------------------------------------------------------- |
+| `u.\~T()`  | All resources owned by `u` are reclaimed, no exception is propagated. |
+| *[spans 2 columns]*  *Array types and non-object types are not Cpp17Destructible.* |
 
 
 #### Swappable requirements <a id="swappable.requirements">[[swappable.requirements]]</a>
@@ -1098,6 +1146,21 @@ In [[cpp17.nullablepointer]], `u` denotes an identifier, `t` denotes a
 non-`const` lvalue of type `P`, `a` and `b` denote values of type
 (possibly const) `P`, and `np` denotes a value of type (possibly const)
 `std::nullptr_t`.
+
+**Table: Cpp17NullablePointer requirements**
+
+| Expression     | Return type                                                               | Operational semantics       |
+| -------------- | ------------------------------------------------------------------------- | --------------------------- |
+| `P u(np);`<br> |                                                                           | Ensures: `u == nullptr`     |
+| `P u = np;`    |                                                                           |                             |
+| `P(np)`        |                                                                           | Ensures: `P(np) == nullptr` |
+| `t = np`       | `P&`                                                                      | Ensures: `t == nullptr`     |
+| `a != b`       | `decltype(a != b)` models `boolean-testable`                              | `!(a == b)`                 |
+| `a == np`      | `decltype(a == np)` and `decltype(np == a)` each model `boolean-testable` | `a == P()`                  |
+| `np == a`      |                                                                           |                             |
+| `a != np`      | `decltype(a != np)` and `decltype(np != a)` each model `boolean-testable` | `!(a == np)`                |
+| `np != a`      |                                                                           |                             |
+
 
 #### *Cpp17Hash* requirements <a id="hash.requirements">[[hash.requirements]]</a>
 

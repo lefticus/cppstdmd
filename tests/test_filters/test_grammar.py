@@ -64,7 +64,7 @@ string:\br
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "[encoding]" in output  # \opt{} should become [...]
+    assert "encodingₒₚₜ" in output  # \opt{} should become contentₒₚₜ
 
 def test_ncsimplebnf():
     """Test ncsimplebnf environment"""
@@ -138,8 +138,8 @@ def test_bnfindent():
     assert code == 0
     assert "function-ptr:" in output
     assert "'void'" in output
-    # \bnfindent should be converted to spaces
-    assert "  [parameter-list]" in output or "[parameter-list]" in output
+    # \bnfindent should be converted to spaces, \opt{} to Unicode subscript
+    assert "  parameter-listₒₚₜ" in output or "parameter-listₒₚₜ" in output
 
 def test_grammarterm():
     r"""Test \grammarterm{} command"""
@@ -244,7 +244,7 @@ def test_complex_bnf():
     assert code == 0
     assert "member-declarator:" in output
     assert "declarator" in output
-    assert "[brace-or-equal-initializer]" in output
+    assert "brace-or-equal-initializerₒₚₜ" in output  # \opt{} uses Unicode subscript
     assert "':'" in output
 
 def test_terminal_with_escaped_chars():

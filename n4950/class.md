@@ -17,18 +17,18 @@ is used to make a *class-name*. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head \terminal{\ [member-specification] \terminal{\}}
+    class-head \terminal{\ member-specificationₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
 class-head:
-    class-key [attribute-specifier-seq] class-head-name [class-virt-specifier] [base-clause]
-    class-key [attribute-specifier-seq] [base-clause]
+    class-key attribute-specifier-seqₒₚₜ class-head-name class-virt-specifierₒₚₜ base-clauseₒₚₜ
+    class-key attribute-specifier-seqₒₚₜ base-clauseₒₚₜ
 ```
 
 ``` bnf
 class-head-name:
-    [nested-name-specifier] class-name
+    nested-name-specifierₒₚₜ class-name
 ```
 
 ``` bnf
@@ -390,13 +390,13 @@ names a class template.
 
 ``` bnf
 member-specification:
-    member-declaration [member-specification]
-    access-specifier ':' [member-specification]
+    member-declaration member-specificationₒₚₜ
+    access-specifier ':' member-specificationₒₚₜ
 ```
 
 ``` bnf
 member-declaration:
-    [attribute-specifier-seq] [decl-specifier-seq] [member-declarator-list] ';'
+    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ member-declarator-listₒₚₜ ';'
     function-definition
     using-declaration
     using-enum-declaration
@@ -417,10 +417,10 @@ member-declarator-list:
 
 ``` bnf
 member-declarator:
-    declarator [virt-specifier-seq] [pure-specifier]
+    declarator virt-specifier-seqₒₚₜ pure-specifierₒₚₜ
     declarator requires-clause
-    declarator [brace-or-equal-initializer]
-    [identifier] [attribute-specifier-seq] ':' constant-expression [brace-or-equal-initializer]
+    declarator brace-or-equal-initializerₒₚₜ
+    identifierₒₚₜ attribute-specifier-seqₒₚₜ ':' constant-expression brace-or-equal-initializerₒₚₜ
 ```
 
 ``` bnf
@@ -947,7 +947,7 @@ A *declarator* declares a *constructor* if it is a function declarator
 [[dcl.fct]] of the form
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' [noexcept-specifier] [attribute-specifier-seq]
+ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -1567,7 +1567,7 @@ object assigned to.
 ### Destructors <a id="class.dtor">[[class.dtor]]</a>
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' [noexcept-specifier] [attribute-specifier-seq]
+ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -1926,12 +1926,12 @@ conversion-function-id:
 
 ``` bnf
 conversion-type-id:
-    type-specifier-seq [conversion-declarator]
+    type-specifier-seq conversion-declaratorₒₚₜ
 ```
 
 ``` bnf
 conversion-declarator:
-    ptr-operator [conversion-declarator]
+    ptr-operator conversion-declaratorₒₚₜ
 ```
 
 A declaration whose *declarator-id* has an *unqualified-id* that is a
@@ -1939,8 +1939,8 @@ A declaration whose *declarator-id* has an *unqualified-id* that is a
 *declarator* shall be a function declarator [[dcl.fct]] of the form
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' [cv-qualifier-seq]
-   [ref-qualifier-seq] [noexcept-specifier] [attribute-specifier-seq]
+ptr-declarator '(' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ
+   ref-qualifier-seqₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -1960,9 +1960,9 @@ specifies a conversion from `X` to the type specified by the
 *decl-specifier* in the *decl-specifier-seq* of a conversion function
 (if any) shall not be a *defining-type-specifier*.
 
-The type of the conversion function is “\texttt{noexcept_opt} function
-taking no parameter *cv-qualifier-seq*\_opt *ref-qualifier*\_opt
-returning *conversion-type-id*”.
+The type of the conversion function is “`noexcept`ₒₚₜ function taking no
+parameter *cv-qualifier-seq*ₒₚₜ *ref-qualifier*ₒₚₜ returning
+*conversion-type-id*”.
 
 A conversion function is never used to convert a (possibly cv-qualified)
 object to the (possibly cv-qualified) same object type (or a reference
@@ -2227,7 +2227,7 @@ linkage of the name of the class [[basic.link]]. — *end note*\]
 A *member-declarator* of the form
 
 ``` bnf
-[identifier] [attribute-specifier-seq] ':' constant-expression [brace-or-equal-initializer]
+identifierₒₚₜ attribute-specifier-seqₒₚₜ ':' constant-expression brace-or-equal-initializerₒₚₜ
 ```
 
 specifies a bit-field. The optional *attribute-specifier-seq* appertains
@@ -2790,20 +2790,20 @@ base-clause:
 
 ``` bnf
 base-specifier-list:
-    base-specifier ['...']
-    base-specifier-list ',' base-specifier ['...']
+    base-specifier '...'ₒₚₜ
+    base-specifier-list ',' base-specifier '...'ₒₚₜ
 ```
 
 ``` bnf
 base-specifier:
-    [attribute-specifier-seq] class-or-decltype
-    [attribute-specifier-seq] virtual [access-specifier] class-or-decltype
-    [attribute-specifier-seq] access-specifier [virtual] class-or-decltype
+    attribute-specifier-seqₒₚₜ class-or-decltype
+    attribute-specifier-seqₒₚₜ virtual access-specifierₒₚₜ class-or-decltype
+    attribute-specifier-seqₒₚₜ access-specifier virtualₒₚₜ class-or-decltype
 ```
 
 ``` bnf
 class-or-decltype:
-    [nested-name-specifier] type-name
+    nested-name-specifierₒₚₜ type-name
     nested-name-specifier template simple-template-id
     decltype-specifier
 ```
@@ -3640,7 +3640,7 @@ Member declarations can be labeled by an *access-specifier*
 [[class.derived]]:
 
 ``` bnf
-access-specifier ':' [member-specification]
+access-specifier ':' member-specificationₒₚₜ
 ```
 
 An *access-specifier* specifies the access rules for members following
@@ -4399,13 +4399,13 @@ ctor-initializer:
 
 ``` bnf
 mem-initializer-list:
-    mem-initializer ['...']
-    mem-initializer-list ',' mem-initializer ['...']
+    mem-initializer '...'ₒₚₜ
+    mem-initializer-list ',' mem-initializer '...'ₒₚₜ
 ```
 
 ``` bnf
 mem-initializer:
-    mem-initializer-id '(' [expression-list] ')'
+    mem-initializer-id '(' expression-listₒₚₜ ')'
     mem-initializer-id braced-init-list
 ```
 

@@ -967,6 +967,8 @@ follows:
 
 <div class="ncbnf">
 
+fill-and-alignₒₚₜ widthₒₚₜ
+
 </div>
 
 \[*Note 2*: The productions *fill-and-align* and *width* are described
@@ -8280,10 +8282,10 @@ unevaluated operand [[term.unevaluated.operand]] and either
 
 - `F::operator()` is a non-static member function and
   `decltype(&F::operator())` is either of the form
-  `R(G::*)(A...)` cv ` ` or of the form `R(*)(G, A...) ` for a type `G`,
-  or
+  `R(G::*)(A...)` cv `&ₒₚₜ noexceptₒₚₜ` or of the form
+  `R(*)(G, A...) noexceptₒₚₜ` for a type `G`, or
 - `F::operator()` is a static member function and
-  `decltype(&F::operator())` is of the form `R(*)(A...) `.
+  `decltype(&F::operator())` is of the form `R(*)(A...) noexceptₒₚₜ`.
 
 *Remarks:* The deduced type is `packaged_task<R(A...)>`.
 

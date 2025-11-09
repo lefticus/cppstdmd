@@ -1170,7 +1170,7 @@ a non-volatile object type. In the following contexts, an
 
 ``` bnf
 qualified-id:
-    nested-name-specifier [template] unqualified-id
+    nested-name-specifier templateₒₚₜ unqualified-id
 ```
 
 ``` bnf
@@ -1180,7 +1180,7 @@ nested-name-specifier:
     namespace-name '::'
     decltype-specifier '::'
     nested-name-specifier identifier '::'
-    nested-name-specifier [template] simple-template-id '::'
+    nested-name-specifier templateₒₚₜ simple-template-id '::'
 ```
 
 The component names of a *qualified-id* are those of its
@@ -1223,8 +1223,8 @@ the *nested-name-specifier* is not declarative, the entity shall not be
 a template.
 
 A *qualified-id* shall not be of the form *nested-name-specifier*
-`template` `~` *decltype-specifier* nor of the form *decltype-specifier*
-`::` `~` *type-name*.
+`template`ₒₚₜ `~` *decltype-specifier* nor of the form
+*decltype-specifier* `::` `~` *type-name*.
 
 The result of a *qualified-id* Q is the entity it denotes
 [[basic.lookup.qual]]. The type of the expression is the type of the
@@ -1276,23 +1276,23 @@ void f() {
 
 ``` bnf
 lambda-expression:
-    lambda-introducer [attribute-specifier-seq] lambda-declarator compound-statement
-    lambda-introducer '<' template-parameter-list '>' [requires-clause] [attribute-specifier-seq]
+    lambda-introducer attribute-specifier-seqₒₚₜ lambda-declarator compound-statement
+    lambda-introducer '<' template-parameter-list '>' requires-clauseₒₚₜ attribute-specifier-seqₒₚₜ
        lambda-declarator compound-statement
 ```
 
 ``` bnf
 lambda-introducer:
-    '[' [lambda-capture] ']'
+    '[' lambda-captureₒₚₜ ']'
 ```
 
 ``` bnf
 lambda-declarator:
-    lambda-specifier-seq [noexcept-specifier] [attribute-specifier-seq] [trailing-return-type]
-    noexcept-specifier [attribute-specifier-seq] [trailing-return-type]
-    [trailing-return-type]
-    '(' parameter-declaration-clause ')' [lambda-specifier-seq] [noexcept-specifier] [attribute-specifier-seq]
-       [trailing-return-type] [requires-clause]
+    lambda-specifier-seq noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+    noexcept-specifier attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+    trailing-return-typeₒₚₜ
+    '(' parameter-declaration-clause ')' lambda-specifier-seqₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
+       trailing-return-typeₒₚₜ requires-clauseₒₚₜ
 ```
 
 ``` bnf
@@ -1771,16 +1771,16 @@ capture:
 
 ``` bnf
 simple-capture:
-    identifier ['...']
-    '&' identifier ['...']
+    identifier '...'ₒₚₜ
+    '&' identifier '...'ₒₚₜ
     this
     '*' 'this'
 ```
 
 ``` bnf
 init-capture:
-    ['...'] identifier initializer
-    '&' ['...'] identifier initializer
+    '...'ₒₚₜ identifier initializer
+    '&' '...'ₒₚₜ identifier initializer
 ```
 
 The body of a *lambda-expression* may refer to local entities of
@@ -1790,7 +1790,7 @@ If a *lambda-capture* includes a *capture-default* that is `&`, no
 identifier in a *simple-capture* of that *lambda-capture* shall be
 preceded by `&`. If a *lambda-capture* includes a *capture-default* that
 is `=`, each *simple-capture* of that *lambda-capture* shall be of the
-form “`&` *identifier* \texttt{...\_opt}”, “`this`”, or “`* this`”.
+form “`&` *identifier* `...`ₒₚₜ”, “`this`”, or “`* this`”.
 
 \[*Note 1*: The form `[&,this]` is redundant but accepted for
 compatibility with ISO C++14. — *end note*\]
@@ -2253,7 +2253,7 @@ on template arguments that can be checked by name lookup
 
 ``` bnf
 requires-expression:
-    requires [requirement-parameter-list] requirement-body
+    requires requirement-parameter-listₒₚₜ requirement-body
 ```
 
 ``` bnf
@@ -2397,7 +2397,7 @@ as a *simple-requirement*.
 
 ``` bnf
 type-requirement:
-    typename [nested-name-specifier] type-name ';'
+    typename nested-name-specifierₒₚₜ type-name ';'
 ```
 
 A *type-requirement* asserts the validity of a type.
@@ -2428,7 +2428,7 @@ require that type to be complete [[term.incomplete.type]].
 
 ``` bnf
 compound-requirement:
-    \terminal{\ expression \terminal{\}} [noexcept] [return-type-requirement] \terminal{;}
+    \terminal{\ expression \terminal{\}} noexceptₒₚₜ return-type-requirementₒₚₜ \terminal{;}
 ```
 
 ``` bnf
@@ -2543,14 +2543,14 @@ Postfix expressions group left-to-right.
 ``` bnf
 postfix-expression:
     primary-expression
-    postfix-expression '[' [expression-list] ']'
-    postfix-expression '(' [expression-list] ')'
-    simple-type-specifier '(' [expression-list] ')'
-    typename-specifier '(' [expression-list] ')'
+    postfix-expression '[' expression-listₒₚₜ ']'
+    postfix-expression '(' expression-listₒₚₜ ')'
+    simple-type-specifier '(' expression-listₒₚₜ ')'
+    typename-specifier '(' expression-listₒₚₜ ')'
     simple-type-specifier braced-init-list
     typename-specifier braced-init-list
-    postfix-expression '.' ['template'] id-expression
-    postfix-expression '->' ['template'] id-expression
+    postfix-expression '.' 'template'ₒₚₜ id-expression
+    postfix-expression '->' 'template'ₒₚₜ id-expression
     postfix-expression '++'
     postfix-expression '--'
     dynamic_cast '<' type-id '>' '(' expression ')'
@@ -3975,8 +3975,8 @@ type. — *end note*\]
 
 ``` bnf
 new-expression:
-    ['::'] new [new-placement] new-type-id [new-initializer] 
-    ['::'] new [new-placement] '(' type-id ')' [new-initializer]
+    '::'ₒₚₜ new new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
+    '::'ₒₚₜ new new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ
 ```
 
 ``` bnf
@@ -3986,24 +3986,24 @@ new-placement:
 
 ``` bnf
 new-type-id:
-    type-specifier-seq [new-declarator]
+    type-specifier-seq new-declaratorₒₚₜ
 ```
 
 ``` bnf
 new-declarator:
-    ptr-operator [new-declarator] 
+    ptr-operator new-declaratorₒₚₜ 
     noptr-new-declarator
 ```
 
 ``` bnf
 noptr-new-declarator:
-    '[' [expression] ']' [attribute-specifier-seq]
-    noptr-new-declarator '[' constant-expression ']' [attribute-specifier-seq]
+    '[' expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
+    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
 new-initializer:
-    '(' [expression-list] ')'
+    '(' expression-listₒₚₜ ')'
     braced-init-list
 ```
 
@@ -4413,8 +4413,8 @@ The *delete-expression* operator destroys a most derived object
 
 ``` bnf
 delete-expression:
-    ['::'] delete cast-expression
-    ['::'] delete '[' ']' cast-expression
+    '::'ₒₚₜ delete cast-expression
+    '::'ₒₚₜ delete '[' ']' cast-expression
 ```
 
 The first alternative is a *single-object delete expression*, and the
@@ -5402,7 +5402,7 @@ int main() {
 
 ``` bnf
 throw-expression:
-    throw  [assignment-expression]
+    throw  assignment-expressionₒₚₜ
 ```
 
 A *throw-expression* is of type `void`.

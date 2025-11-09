@@ -144,22 +144,23 @@
 %% \bigoh{} - Removed: needs special handling in cpp-itemdecl.lua
 
 %%--------------------------------------------------
-%% Category J: Phase 4 Additions (3 macros)
+%% Category J: Phase 4 Additions (4 macros)
 %% Additional safe migrations from Lua filters
 %%--------------------------------------------------
 \renewcommand{\descr}[1]{#1}  % Description text - simple unwrapping
 \renewcommand{\fmtgrammarterm}[1]{\textit{#1}}  % Format grammar term (always italic, unlike \grammarterm{})
 \renewcommand{\UAX}[1]{UAX \##1}  % Unicode Annex reference (e.g., UAX #44) - \# escapes the hash
+\renewcommand{\opt}[1]{#1ₒₚₜ}  % Optional grammar element (e.g., \opt{T} -> Tₒₚₜ) - consistent everywhere, uses Unicode subscripts
 
 %%--------------------------------------------------
-%% TOTAL: 80 simplified macros (75 original + 2 Phase 3 + 3 Phase 4 additions)
+%% TOTAL: 81 simplified macros (75 original + 2 Phase 3 + 4 Phase 4 additions)
 %% These cover ~73% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):
 %%  - \tcode{} - contains nested macros (\keyword{}, \ctype{}, \placeholder{}, etc)
 %%  - \keyword{} - nested in \tcode{}, context-dependent (tables)
 %%  - \ctype{} - nested in \tcode{}
-%%  - \grammarterm{} - context-dependent (BNF vs text), nested in \opt{}
+%%  - \grammarterm{} - context-dependent (BNF vs text)
 %%  - \placeholder{}, \placeholdernc{} - context-dependent (code blocks vs text)
 %%  - \stage{} - requires special handling in cpp-macros.lua for description lists
 %%  - \textbackslash - already a standard LaTeX command

@@ -7406,7 +7406,7 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{chrono-format-spec}
-    [fill-and-align] [width] [precision] ['L'] [chrono-specs]
+    fill-and-alignₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ chrono-specsₒₚₜ
 ```
 
 ``` bnf
@@ -7418,12 +7418,12 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{literal-char}
-    \textnormal{any character other than \, \texttt{\}, or \%}
+    any character other than \{, \}, or \%
 ```
 
 ``` bnf
 \fmtnontermdef{conversion-spec}
-    '%' [modifier] type
+    '%' modifierₒₚₜ type
 ```
 
 ``` bnf

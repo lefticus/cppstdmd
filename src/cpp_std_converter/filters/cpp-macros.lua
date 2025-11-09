@@ -212,12 +212,6 @@ local function expand_macros(text, skip_special_chars)
   -- Note: \defnx, \defnadj, \defexposconcept are now handled in RawInline
   -- with proper emphasis using pandoc.Emph() instead of literal asterisks
 
-  -- \opt{x} renders as x_opt (optional grammar element with subscript marker)
-  -- EXCEPT in BNF blocks where cpp-grammar.lua converts it to [x] bracket notation
-  if not skip_special_chars then  -- skip_special_chars is true for BNF blocks
-    text = text:gsub("\\opt{([^}]*)}", "%1_opt")
-  end
-
   -- \ucode{XXXX} renders Unicode code point as U+XXXX
   -- The LaTeX macro does complex text scaling, but for Markdown we simplify to standard format
   text = text:gsub("\\ucode{([^}]*)}", "`U+%1`")
@@ -275,10 +269,11 @@ local function expand_macros(text, skip_special_chars)
     return split_refs(refs)
   end)
 
-  -- Strip empty braces {} left behind after macro expansion from simplified_macros.tex
-  -- Example: \Cpp{} → C++{}, \CppXX{} → C++20{}
-  -- The {} is a LaTeX idiom to prevent space-eating but becomes literal text after preprocessing
-  text = text:gsub("{}", "")
+  -- Strip empty braces {} that appear after C++ version identifiers
+  -- (LaTeX idiom to prevent space-eating: \Cpp{} → C++{}, \CppXX{} → C++20{})
+  -- BUT preserve = {} (default initializers in function signatures)
+  text = text:gsub("(%S){}%s", "%1 ")  -- foo{} followed by space → foo
+  text = text:gsub("(%S){}$", "%1")     -- foo{} at end of line → foo
 
   return text
 end
@@ -502,8 +497,6 @@ function RawInline(elem)
     code = code:gsub("{ }", " ")
     -- Unescape LaTeX escaped characters (\{ → {, \} → }, etc.)
     code = unescape_latex_chars(code)
-    -- Handle \opt{} in code (should use subscript suffix)
-    code = code:gsub("\\opt{([^}]*)}", "%1_opt")
     -- Convert inline math with subscripts to Unicode (BEFORE other processing)
     code = convert_math_subscripts(code)
     -- Convert LaTeX spacing commands to regular spaces
@@ -604,22 +597,6 @@ function RawInline(elem)
 
 
   -- Emphasis macros - return Emph elements
-
-  -- \opt{\grammarterm{...}} - optional grammar term (special case before general grammarterm handling)
-  local opt_start = text:find("\\opt{", 1, true)
-  if opt_start and opt_start == 1 then
-    local opt_content, opt_end = extract_braced_content(text, opt_start, 4)  -- \opt is 4 chars
-    if opt_content and opt_end and opt_end - 1 == #text then
-      -- Check if content is \grammarterm{...}
-      if opt_content:match("^\\grammarterm{") then
-        local term, _ = extract_braced_content(opt_content, 1, 12)  -- \grammarterm is 12 chars
-        if term then
-          -- Return Emph followed by _opt suffix
-          return {pandoc.Emph({pandoc.Str(term)}), pandoc.Str("_opt")}
-        end
-      end
-    end
-  end
 
   -- \grammarterm{term}{suffix} - with optional suffix (e.g., {s} for plurals)
   -- Returns Emph + Str if suffix present, otherwise just Emph
@@ -811,9 +788,15 @@ function RawInline(elem)
   end
 
   -- \range{first}{last} - half-open range [first, last)
-  local first, last = text:match("\\range{([^}]*)}{([^}]*)}")
-  if first and last then
-    return pandoc.RawInline('markdown', '[`' .. first .. '`, `' .. last .. '`)')
+  -- Use brace-balanced extraction to handle nested braces
+  local range_start = text:find("\\range{", 1, true)
+  if range_start and range_start == 1 then
+    local args, end_pos = extract_multi_arg_macro(text, range_start, 6, 2)  -- \range is 6 chars, 2 args
+    if args and end_pos and end_pos - 1 == #text then
+      local first = expand_macros(args[1])
+      local last = expand_macros(args[2])
+      return pandoc.RawInline('markdown', '[`' .. first .. '`, `' .. last .. '`)')
+    end
   end
 
   -- \unicode{code}{description} - Unicode character with description
@@ -893,7 +876,6 @@ function CodeBlock(elem)
 
   -- Handle \mname{} macros
   text = convert_mname(text)
-
 
   -- Strip discretionary hyphen \- used for line breaking
   text = text:gsub("\\%-", "")

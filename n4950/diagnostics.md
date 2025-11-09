@@ -1683,6 +1683,8 @@ as follows:
 
 <div class="ncbnf">
 
+fill-and-alignₒₚₜ widthₒₚₜ
+
 </div>
 
 \[*Note 1*: The productions *fill-and-align* and *width* are described

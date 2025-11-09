@@ -7113,8 +7113,6 @@ constexpr bitset& reset(size_t pos);
 *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
 position.
 
-\indexlibrarymember{operator\\}{bitset}
-
 ``` cpp
 constexpr bitset operator~() const noexcept;
 ```
@@ -9120,10 +9118,10 @@ unevaluated operand and either
 
 - `F::operator()` is a non-static member function and
   `decltype(&F::operator())` is either of the form
-  `R(G::*)(A...)` cv ` ` or of the form `R(*)(G, A...) ` for a type `G`,
-  or
+  `R(G::*)(A...)` cv `&ₒₚₜ noexceptₒₚₜ` or of the form
+  `R(*)(G, A...) noexceptₒₚₜ` for a type `G`, or
 - `F::operator()` is a static member function and
-  `decltype(&F::operator())` is of the form `R(*)(A...) `.
+  `decltype(&F::operator())` is of the form `R(*)(A...) noexceptₒₚₜ`.
 
 *Remarks:* The deduced type is `function<R(A...)>`.
 
@@ -10467,7 +10465,7 @@ syntax of replacement fields is as follows:
 
 ``` bnf
 \fmtnontermdef{replacement-field}
-    \terminal{\ [arg-id] [format-specifier] \terminal{\}}
+    \terminal{\ arg-idₒₚₜ format-specifierₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
@@ -10579,12 +10577,12 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{std-format-spec}
-    [fill-and-align] [sign] ['#'] ['0'] [width] [precision] ['L'] [type]
+    fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
 ```
 
 ``` bnf
 \fmtnontermdef{fill-and-align}
-    [fill] align
+    fillₒₚₜ align
 ```
 
 ``` bnf
@@ -10605,13 +10603,13 @@ The syntax of format specifications is as follows:
 ``` bnf
 \fmtnontermdef{width}
     positive-integer
-    \terminal{\ [arg-id] \terminal{\}}
+    \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
 \fmtnontermdef{precision}
     '.' nonnegative-integer
-    '.' \terminal{\ [arg-id] \terminal{\}}
+    '.' \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
@@ -10749,9 +10747,9 @@ string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no 
 The *width* option specifies the minimum field width. If the *width*
 option is absent, the minimum field width is `0`.
 
-If `{ arg-id_opt }` is used in a *width* or *precision* option, the
-value of the corresponding formatting argument is used as the value of
-the option. If the corresponding formatting argument is not of standard
+If `{ arg-idₒₚₜ }` is used in a *width* or *precision* option, the value
+of the corresponding formatting argument is used as the value of the
+option. If the corresponding formatting argument is not of standard
 signed or unsigned integer type, or its value is negative, an exception
 of type `format_error` is thrown.
 
@@ -11706,12 +11704,12 @@ syntax of format specifications is as follows:
 
 ``` bnf
 \fmtnontermdef{range-format-spec}
-    [range-fill-and-align] [width] ['n'] [range-type] [range-underlying-spec]
+    range-fill-and-alignₒₚₜ widthₒₚₜ 'n'ₒₚₜ range-typeₒₚₜ range-underlying-specₒₚₜ
 ```
 
 ``` bnf
 \fmtnontermdef{range-fill-and-align}
-    [range-fill] align
+    range-fillₒₚₜ align
 ```
 
 ``` bnf
@@ -12318,12 +12316,12 @@ syntax:
 
 ``` bnf
 \fmtnontermdef{tuple-format-spec}
-    [tuple-fill-and-align] [width] [tuple-type]
+    tuple-fill-and-alignₒₚₜ widthₒₚₜ tuple-typeₒₚₜ
 ```
 
 ``` bnf
 \fmtnontermdef{tuple-fill-and-align}
-    [tuple-fill] align
+    tuple-fillₒₚₜ align
 ```
 
 ``` bnf
@@ -12350,7 +12348,7 @@ The meaning of the various type options is as specified in
 
 | Option | Requirements | Meaning                                |
 | ------ | ------------ | -------------------------------------- |
-| <charT>(": ")); set_brackets(, ); \end{codeblock}% |
+| <charT>(": ")); set_brackets({}, {}); \end{codeblock}% |
 | % `n`  | none         | Equivalent to: `set_brackets({}, {});` |
 | % none | none         | No effects                             |
 

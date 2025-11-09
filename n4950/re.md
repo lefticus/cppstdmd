@@ -596,7 +596,7 @@ conditions described in [[re.err]]:
 | % `error_brack`      | The expression contains mismatched \verb|[| and \verb|]|.                                                          |
 | % `error_paren`      | The expression contains mismatched \verb|(| and \verb|)|.                                                          |
 | % `error_brace`      | The expression contains mismatched \verb|{| and \verb|}|                                                           |
-| % `error_badbrace`   | The expression contains an invalid range in a \verb|| expression.                                                  |
+| % `error_badbrace`   | The expression contains an invalid range in a \verb|{}| expression.                                                |
 | % `error_range`      | The expression contains an invalid character range, such as \verb|[b-a]| in most encodings.                        |
 | % `error_space`      | There is insufficient memory to convert the expression into a finite state machine.                                |
 | % `error_badrepeat`  | One of \verb|*?+{| is not preceded by a valid regular expression.                                                  |

@@ -69,9 +69,6 @@ local function clean_grammar(grammar)
     return "'" .. content .. "'"
   end)
 
-  -- Replace \opt{x} with [x] (optional elements)
-  grammar = grammar:gsub("\\opt{([^}]*)}", "[%1]")
-
   -- Replace \tcode{x} with x (code - macros filter may have already handled this)
   grammar = grammar:gsub("\\tcode{([^}]*)}", "%1")
 

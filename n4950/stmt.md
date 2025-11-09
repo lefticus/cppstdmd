@@ -7,13 +7,13 @@ Except as indicated, statements are executed in sequence.
 ``` bnf
 statement:
     labeled-statement
-    [attribute-specifier-seq] expression-statement
-    [attribute-specifier-seq] compound-statement
-    [attribute-specifier-seq] selection-statement
-    [attribute-specifier-seq] iteration-statement
-    [attribute-specifier-seq] jump-statement
+    attribute-specifier-seqₒₚₜ expression-statement
+    attribute-specifier-seqₒₚₜ compound-statement
+    attribute-specifier-seqₒₚₜ selection-statement
+    attribute-specifier-seqₒₚₜ iteration-statement
+    attribute-specifier-seqₒₚₜ jump-statement
     declaration-statement
-    [attribute-specifier-seq] try-block
+    attribute-specifier-seqₒₚₜ try-block
 ```
 
 ``` bnf
@@ -26,7 +26,7 @@ init-statement:
 ``` bnf
 condition:
     expression
-    [attribute-specifier-seq] decl-specifier-seq declarator brace-or-equal-initializer
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator brace-or-equal-initializer
 ```
 
 The optional *attribute-specifier-seq* appertains to the respective
@@ -89,9 +89,9 @@ A label can be added to a statement or used anywhere in a
 
 ``` bnf
 label:
-    [attribute-specifier-seq] identifier ':'
-    [attribute-specifier-seq] case constant-expression ':'
-    [attribute-specifier-seq] default ':'
+    attribute-specifier-seqₒₚₜ identifier ':'
+    attribute-specifier-seqₒₚₜ case constant-expression ':'
+    attribute-specifier-seqₒₚₜ default ':'
 ```
 
 ``` bnf
@@ -120,7 +120,7 @@ Expression statements have the form
 
 ``` bnf
 expression-statement:
-    [expression] ';'
+    expressionₒₚₜ ';'
 ```
 
 The expression is a discarded-value expression [[expr.context]]. All
@@ -140,7 +140,7 @@ statements into a single statement.
 
 ``` bnf
 compound-statement:
-    \terminal{\ [statement-seq] [label-seq] \terminal{\}}
+    \terminal{\ statement-seqₒₚₜ label-seqₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
@@ -169,11 +169,11 @@ Selection statements choose one of several flows of control.
 
 ``` bnf
 selection-statement:
-    if [constexpr] '(' [init-statement] condition ')' statement
-    if [constexpr] '(' [init-statement] condition ')' statement else statement
-    if ['!'] consteval compound-statement
-    if ['!'] consteval compound-statement else statement
-    switch '(' [init-statement] condition ')' statement
+    if constexprₒₚₜ '(' init-statementₒₚₜ condition ')' statement
+    if constexprₒₚₜ '(' init-statementₒₚₜ condition ')' statement else statement
+    if '!'ₒₚₜ consteval compound-statement
+    if '!'ₒₚₜ consteval compound-statement else statement
+    switch '(' init-statementₒₚₜ condition ')' statement
 ```
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
@@ -246,31 +246,31 @@ int f() {
 An `if` statement of the form
 
 ``` bnf
-if [constexpr] '(' init-statement condition ')' statement
+if constexprₒₚₜ '(' init-statement condition ')' statement
 ```
 
 is equivalent to
 
 ``` bnf
-\terminal{\
+'{'
    init-statement
-   if [constexpr] \terminal{(} condition \terminal{)} statement
-\terminal{\}}
+   if constexprₒₚₜ '(' condition ')' statement
+'}'
 ```
 
 and an `if` statement of the form
 
 ``` bnf
-if [constexpr] '(' init-statement condition ')' statement else statement
+if constexprₒₚₜ '(' init-statement condition ')' statement else statement
 ```
 
 is equivalent to
 
 ``` bnf
-\terminal{\
+'{'
    init-statement
-   if [constexpr] \terminal{(} condition \terminal{)} statement else statement
-\terminal{\}}
+   if constexprₒₚₜ '(' condition ')' statement else statement
+'}'
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -391,10 +391,10 @@ switch '(' init-statement condition ')' statement
 is equivalent to
 
 ``` bnf
-\terminal{\
+'{'
    init-statement
-   switch \terminal{(} condition \terminal{)} statement
-\terminal{\}}
+   switch '(' condition ')' statement
+'}'
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -410,14 +410,14 @@ Iteration statements specify looping.
 iteration-statement:
     while '(' condition ')' statement
     do statement while '(' expression ')' ';'
-    for '(' init-statement [condition] ';' [expression] ')' statement
-    for '(' [init-statement] for-range-declaration ':' for-range-initializer ')' statement
+    for '(' init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
+    for '(' init-statementₒₚₜ for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 ``` bnf
 for-range-declaration:
-    [attribute-specifier-seq] decl-specifier-seq declarator
-    [attribute-specifier-seq] decl-specifier-seq [ref-qualifier] '[' identifier-list ']'
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ '[' identifier-list ']'
 ```
 
 ``` bnf
@@ -465,12 +465,12 @@ A `while` statement is equivalent to
 
 ``` bnf
 \textit{label} ':'
-\terminal{\
-   if \terminal{(} condition \terminal{)} \terminal{\
+'{'
+   if '(' condition ')' '{'
       statement
-      goto \textit{label} \terminal{;}
-   \terminal{\}}
-\terminal{\}}
+      goto \textit{label} ';'
+   '}'
+'}'
 ```
 
 \[*Note 1*:
@@ -516,19 +516,19 @@ execution of the statement.
 The `for` statement
 
 ``` bnf
-for '(' init-statement [condition] ';' [expression] ')' statement
+for '(' init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
 ```
 
 is equivalent to
 
 ``` bnf
-\terminal{\
+'{'
    init-statement
-   while \terminal{(} condition \terminal{)} \terminal{\
+   while '(' condition ')' '{'
      statement
-     expression \terminal{;}
-   \terminal{\}}
-\terminal{\}}
+     expression ';'
+   '}'
+'}'
 ```
 
 except that the *init-statement* is in the same scope as the
@@ -551,22 +551,22 @@ missing *condition* makes the implied `while` clause equivalent to
 The range-based `for` statement
 
 ``` bnf
-for '(' [init-statement] for-range-declaration ':' for-range-initializer ')' statement
+for '(' init-statementₒₚₜ for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 is equivalent to
 
 ``` bnf
-\terminal{\
-   [init-statement]
-   auto \terminal{\&\&}\textit{range} \terminal{=} for-range-initializer \terminal{;}
-   auto \textit{begin} \terminal{=} \textit{begin-expr} \terminal{;}
-   auto \textit{end} \terminal{=} \textit{end-expr} \terminal{;}
-   for \terminal{(} \terminal{;} \textit{begin} \terminal{!=} \textit{end}\terminal{;} \terminal{++}\textit{begin} \terminal{)} \terminal{\
-     for-range-declaration \terminal{=} \terminal{*} \textit{begin} \terminal{;}
+'{'
+   init-statementₒₚₜ
+   auto '&&'\textit{range} '=' for-range-initializer ';'
+   auto \textit{begin} '=' \textit{begin-expr} ';'
+   auto \textit{end} '=' \textit{end-expr} ';'
+   for '(' ';' \textit{begin} '!=' \textit{end}';' '++'\textit{begin} ')' '{'
+     for-range-declaration '=' '*' \textit{begin} ';'
      statement
-   \terminal{\}}
-\terminal{\}}
+   '}'
+'}'
 ```
 
 where
@@ -637,7 +637,7 @@ Jump statements unconditionally transfer control.
 jump-statement:
     break ';'
     continue ';'
-    return [expr-or-braced-init-list] ';'
+    return expr-or-braced-init-listₒₚₜ ';'
     coroutine-return-statement
     goto identifier ';'
 ```
@@ -754,7 +754,7 @@ block enclosing the `return` statement.
 
 ``` bnf
 coroutine-return-statement:
-    'co_return' [expr-or-braced-init-list] ';'
+    'co_return' expr-or-braced-init-listₒₚₜ ';'
 ```
 
 A coroutine returns to its caller or resumer [[dcl.fct.def.coroutine]]
@@ -779,7 +779,7 @@ where *final-suspend* is the exposition-only label defined in
 - If the operand is a *braced-init-list* or an expression of non-`void`
   type, *S* is *p*`.return_value(`*expr-or-braced-init-list*`)`. The
   expression *S* shall be a prvalue of type `void`.
-- Otherwise, *S* is the *compound-statement* `{` *expression*\_opt `;`
+- Otherwise, *S* is the *compound-statement* `{` *expression*ₒₚₜ `;`
   *p*`.return_void()``; }`. The expression *p*`.return_void()` shall be
   a prvalue of type `void`.
 
