@@ -593,6 +593,30 @@ function RawBlock(elem)
           end
         end
 
+        -- Final fallback: handle multi-row headers with \multicolumn and plain \tcode{} content
+        -- Example: "File open modes" table
+        -- Row 1: \multicolumn{6}{|c}{\tcode{ios_base} flag combination} & \tcode{stdio} equivalent \\
+        -- Row 2: \tcode{binary} & \tcode{in} & \tcode{out} & \tcode{trunc} & \tcode{app} & \tcode{noreplace} \\ \capsep
+        if #headers == 0 and header_line and header_line:find("\\multicolumn{", 1, true) then
+          -- Extract the header from the row after \multicolumn
+          -- Get the part after \multicolumn{...}{...}{...} from first row (may have extra column header)
+          local remaining_first_row = header_line:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
+
+          -- Get the second row before \\ \capsep (actual column headers)
+          local second_row = header_line:match("\n([^\n]*)\\\\%s*$")
+
+          if second_row and second_row ~= "" then
+            -- Parse second row to get main column headers
+            headers = parse_row(second_row)
+
+            -- If there's a remaining header from first row, append it
+            if remaining_first_row and remaining_first_row ~= "" then
+              local extra_header = expand_table_macros(remaining_first_row)
+              table.insert(headers, extra_header)
+            end
+          end
+        end
+
         -- Extract data rows (handle multi-line rows)
         local data_section = extract_data_section(table_content)
         local normalized = normalize_table_rows(data_section)
