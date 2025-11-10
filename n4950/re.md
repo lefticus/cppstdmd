@@ -1576,6 +1576,20 @@ match_results& operator=(match_results&& m);
 
 *Ensures:* As specified in [[re.results.const]].
 
+**Table: `match_results` copy/move operation postconditions**
+
+| Element       | Value                                                        |
+| ------------- | ------------------------------------------------------------ |
+| `ready()`     | `m.ready()`                                                  |
+| `size()`      | `m.size()`                                                   |
+| `str(n)`      | `m.str(n)` for all non-negative integers `n < m.size()`      |
+| `prefix()`    | `m.prefix()`                                                 |
+| `suffix()`    | `m.suffix()`                                                 |
+| `(*this)[n]`  | `m[n]` for all non-negative integers `n < m.size()`          |
+| `length(n)`   | `m.length(n)` for all non-negative integers `n < m.size()`   |
+| `position(n)` | `m.position(n)` for all non-negative integers `n < m.size()` |
+
+
 ### State <a id="re.results.state">[[re.results.state]]</a>
 
 ``` cpp
@@ -1857,6 +1871,25 @@ regex_match ("GetValues", m, re);       // returns false
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.match]].
 
+**Table: Effects of `regex_match` algorithm**
+
+| Element              | Value                                                                                                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `m.size()`           | `1 + e.mark_count()`                                                                                                                                                                |
+| `m.empty()`          | `false`                                                                                                                                                                             |
+| `m.prefix().first`   | `first`                                                                                                                                                                             |
+| `m.prefix().second`  | `first`                                                                                                                                                                             |
+| `m.prefix().matched` | `false`                                                                                                                                                                             |
+| `m.suffix().first`   | `last`                                                                                                                                                                              |
+| `m.suffix().second`  | `last`                                                                                                                                                                              |
+| `m.suffix().matched` | `false`                                                                                                                                                                             |
+| `m[0].first`         | `first`                                                                                                                                                                             |
+| `m[0].second`        | `last`                                                                                                                                                                              |
+| `m[0].matched`       | `true`                                                                                                                                                                              |
+| `m[n].first`         | For all integers `0 < n < m.size()`, the start of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last`. |
+| `m[n].second`        | For all integers `0 < n < m.size()`, the end of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last`.   |
+| `m[n].matched`       | For all integers `0 < n < m.size()`, `true` if sub-expression `n` participated in the match, `false` otherwise.                                                                     |
+
 ``` cpp
 template<class BidirectionalIterator, class charT, class traits>
   bool regex_match(BidirectionalIterator first, BidirectionalIterator last,
@@ -1932,6 +1965,25 @@ exists, `false` otherwise.
 `false`, then the effect on parameter `m` is unspecified except that
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.search]].
+
+**Table: Effects of `regex_search` algorithm**
+
+| Element              | Value                                                                                                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `m.size()`           | `1 + e.mark_count()`                                                                                                                                                                |
+| `m.empty()`          | `false`                                                                                                                                                                             |
+| `m.prefix().first`   | `first`                                                                                                                                                                             |
+| `m.prefix().second`  | `m[0].first`                                                                                                                                                                        |
+| `m.prefix().matched` | `m.prefix().first != m.prefix().second`                                                                                                                                             |
+| `m.suffix().first`   | `m[0].second`                                                                                                                                                                       |
+| `m.suffix().second`  | `last`                                                                                                                                                                              |
+| `m.suffix().matched` | `m.suffix().first != m.suffix().second`                                                                                                                                             |
+| `m[0].first`         | The start of the sequence of characters that matched the regular expression                                                                                                         |
+| `m[0].second`        | The end of the sequence of characters that matched the regular expression                                                                                                           |
+| `m[0].matched`       | `true`                                                                                                                                                                              |
+| `m[n].first`         | For all integers `0 < n < m.size()`, the start of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last`. |
+| `m[n].second`        | For all integers `0 < n < m.size()`, the end of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last`.   |
+| `m[n].matched`       | For all integers `0 < n < m.size()`, `true` if sub-expression `n` participated in the match, `false` otherwise.                                                                     |
 
 ``` cpp
 template<class charT, class Allocator, class traits>

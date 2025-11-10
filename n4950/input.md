@@ -751,6 +751,15 @@ using seekdir = T4;
 The type `seekdir` is an enumerated type [[enumerated.types]] that
 contains the elements indicated in [[ios.seekdir]].
 
+**Table: `seekdir` effects**
+
+| Element | Meaning                                                                                 |
+| ------- | --------------------------------------------------------------------------------------- |
+| `beg`   | request a seek (for subsequent input or output) relative to the beginning of the stream |
+| `cur`   | request a seek relative to the current position within the sequence                     |
+| `end`   | request a seek relative to the current end of the sequence                              |
+
+
 ##### Class `ios_base::Init` <a id="ios.init">[[ios.init]]</a>
 
 ``` cpp
@@ -1201,6 +1210,23 @@ void init(basic_streambuf<charT, traits>* sb);
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.cons]].
 
+**Table: `basic_ios::init()` effects**
+
+| Element        | Value                                                        |
+| -------------- | ------------------------------------------------------------ |
+| `rdbuf()`      | `sb`                                                         |
+| `tie()`        | `0`                                                          |
+| `rdstate()`    | `goodbit` if `sb` is not a null pointer, otherwise `badbit`. |
+| `exceptions()` | `goodbit`                                                    |
+| `flags()`      | `skipws | dec`                                               |
+| `width()`      | `0`                                                          |
+| `precision()`  | `6`                                                          |
+| `fill()`       | `widen(' ')`                                                 |
+| `getloc()`     | a copy of the value returned by `locale()`                   |
+| `iarray`       | a null pointer                                               |
+| `parray`       | a null pointer                                               |
+
+
 #### Member functions <a id="basic.ios.members">[[basic.ios.members]]</a>
 
 ``` cpp
@@ -1303,6 +1329,21 @@ reference counted, or to have other special action taken. — *end note*\]
 
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.copyfmt]].
+
+**Table: `basic_ios::copyfmt()` effects**
+
+| Element                      |
+| ---------------------------- |
+| 1.2in} `rdbuf()` & unchanged |
+| `tie()`                      | `rhs.tie()` |
+| `rdstate()`                  | unchanged |
+| `exceptions()`               | `rhs.exceptions()` |
+| `flags()`                    | `rhs.flags()` |
+| `width()`                    | `rhs.width()` |
+| `precision()`                | `rhs.precision()` |
+| `fill()`                     | `rhs.fill()` |
+| `getloc()`                   | `rhs.getloc()` |
+
 
 *Returns:* `*this`.
 

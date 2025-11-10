@@ -463,6 +463,89 @@ local function build_markdown_table(caption, headers, rows)
   return table.concat(md_lines, "\n") .. "\n\n"
 end
 
+-- Generic handler for "libeff family" table types
+-- These table types share a common structure: {caption}{label}[optional args]
+-- with implicit or partially implicit headers (first column is always "Element")
+--
+-- Parameters:
+--   text: Raw LaTeX text containing the table environment
+--   env_name: Name of the environment (e.g., "libefftabmean", "LibEffTab")
+--   header_config: Array of header strings. Use nil to extract from arguments.
+--                  Examples: {"Element", "Meaning"} - both fixed
+--                           {"Element", nil} - second extracted from arg 3
+--   skip_args: Number of additional arguments to skip after headers (e.g., width specs)
+--
+-- Returns: pandoc.RawBlock with markdown table, or nil if parsing fails
+local function handle_libeff_family_table(text, env_name, header_config, skip_args)
+  skip_args = skip_args or 0  -- default to 0 if not provided
+
+  local begin_tag = "\\begin{" .. env_name .. "}"
+  local end_tag = "\\end{" .. env_name .. "}"
+
+  local env_start = text:find(begin_tag, 1, true)
+  if not env_start then
+    return nil
+  end
+
+  -- Extract caption (first braced argument)
+  local caption_start = env_start + #begin_tag
+  local caption, pos1 = extract_braced(text, caption_start)
+
+  -- Extract label (second braced argument)
+  local label, pos2 = extract_braced(text, pos1)
+
+  if not caption or not label then
+    return nil
+  end
+
+  -- Extract additional arguments if needed (for headers with nil placeholders)
+  local extracted_headers = {}
+  local current_pos = pos2
+  for _, hdr in ipairs(header_config) do
+    if hdr == nil then
+      -- Extract this header from next argument
+      local extracted, next_pos = extract_braced(text, current_pos)
+      if not extracted then
+        return nil
+      end
+      table.insert(extracted_headers, expand_table_macros(extracted))
+      current_pos = next_pos
+    else
+      -- Use fixed header
+      table.insert(extracted_headers, hdr)
+    end
+  end
+
+  -- Skip additional arguments (e.g., width specifications)
+  for i = 1, skip_args do
+    local _, next_pos = extract_braced(text, current_pos)
+    if not next_pos then
+      return nil
+    end
+    current_pos = next_pos
+  end
+
+  -- Find the end of environment
+  local env_end = text:find(end_tag, current_pos, true)
+  if not env_end then
+    return nil
+  end
+
+  -- Extract table content
+  local table_content = text:sub(current_pos + 1, env_end - 1)
+
+  -- Parse caption (may contain macros)
+  caption = expand_table_macros(caption)
+
+  -- Extract data rows (handle multi-line rows)
+  local normalized = normalize_table_rows(table_content)
+  local rows = parse_table_rows(normalized)
+
+  -- Generate markdown table using shared helper
+  local markdown = build_markdown_table(caption, extracted_headers, rows)
+  return pandoc.RawBlock('markdown', markdown)
+end
+
 -- Main filter function for raw blocks
 function RawBlock(elem)
   if elem.format ~= 'latex' then
@@ -883,6 +966,38 @@ function RawBlock(elem)
       end
     end
   end
+
+  -- Handle libefftabmean environment (enum/bitmask "meaning" tables)
+  -- Arguments: {caption}{label}
+  -- Uses generic handler with fixed headers
+  local result = handle_libeff_family_table(text, "libefftabmean", {"Element", "Meaning"})
+  if result then return result end
+
+  -- Handle libefftabvalue environment (enum/bitmask "value" tables)
+  -- Arguments: {caption}{label}
+  -- Uses generic handler with fixed headers
+  result = handle_libeff_family_table(text, "libefftabvalue", {"Element", "Value"})
+  if result then return result end
+
+  -- Handle LibEffTab environment (generic effects table with custom second header)
+  -- Arguments: {caption}{label}{header2}{width2}
+  -- Headers: Element (fixed) + header2 (extracted from arg 3)
+  -- Skip: width2 (arg 4)
+  result = handle_libeff_family_table(text, "LibEffTab", {"Element", nil}, 1)
+  if result then return result end
+
+  -- Handle longlibefftabvalue environment (long enum/bitmask "value" tables)
+  -- Arguments: {caption}{label}
+  -- Uses generic handler with fixed headers
+  result = handle_libeff_family_table(text, "longlibefftabvalue", {"Element", "Value"})
+  if result then return result end
+
+  -- Handle longLibEffTab environment (long generic effects table with custom second header)
+  -- Arguments: {caption}{label}{header2}{width2}
+  -- Headers: Element (fixed) + header2 (extracted from arg 3)
+  -- Skip: width2 (arg 4)
+  result = handle_libeff_family_table(text, "longLibEffTab", {"Element", nil}, 1)
+  if result then return result end
 
   -- Handle LongTable environment
   local long_start = text:find("\\begin{LongTable}", 1, true)
