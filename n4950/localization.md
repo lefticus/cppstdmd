@@ -2453,6 +2453,17 @@ to produce one of the following formats, or until it encounters an
 error. The format depends on the value returned by `date_order()` as
 shown in [[locale.time.get.dogetdate]].
 
+**Table: `do_get_date` effects**
+
+| `date_order()` | Format     |
+| -------------- | ---------- |
+| `no_order`     | `"%m%d%y"` |
+| `dmy`          | `"%d%m%y"` |
+| `mdy`          | `"%m%d%y"` |
+| `ymd`          | `"%y%m%d"` |
+| `ydm`          | `"%y%d%m"` |
+
+
 An implementation may also accept additional *implementation-defined*
 formats.
 

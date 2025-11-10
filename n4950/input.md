@@ -5200,10 +5200,29 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 *Effects:* Alters the stream position within one of the controlled
 sequences, if possible, as indicated in [[stringbuf.seekoff.pos]].
 
+**Table: `seekoff` positioning**
+
+| Conditions                                                                                                                     | Result                                            |
+| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| `ios_base::in` is set in `which`                                                                                               | positions the input sequence                      |
+| `ios_base::out` is set in `which`                                                                                              | positions the output sequence                     |
+| both `ios_base::in` and `ios_base::out` are set in `which` and either<br> `way == ios_base::beg` or<br> `way == ios_base::end` | positions both the input and the output sequences |
+| Otherwise                                                                                                                      | the positioning operation fails.                  |
+
+
 For a sequence to be positioned, the function determines `newoff` as
 indicated in [[stringbuf.seekoff.newoff]]. If the sequence’s next
 pointer (either `gptr()` or `pptr()`) is a null pointer and `newoff` is
 nonzero, the positioning operation fails.
+
+**Table: `newoff` values**
+
+| Condition              | `newoff` Value                                                          |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `way == ios_base::beg` | 0                                                                       |
+| `way == ios_base::cur` | the next pointer minus the beginning pointer (`xnext - xbeg`).          |
+| `way == ios_base::end` | the high mark pointer minus the beginning pointer (`high_mark - xbeg`). |
+
 
 If `(newoff + off) < 0`, or if `newoff + off` refers to an uninitialized
 character [[stringbuf.members]], the positioning operation fails.
@@ -7001,6 +7020,14 @@ unshift sequence” means, if `width` if less than zero then call
 resulting unshift sequence. The function determines one of three values
 for the argument `whence`, of type `int`, as indicated in
 [[filebuf.seekoff]].
+
+**Table: `seekoff` effects**
+
+| `way` Value      | `stdio` Equivalent |
+| ---------------- | ------------------ |
+| `basic_ios::beg` | `SEEK_SET`         |
+| `basic_ios::cur` | `SEEK_CUR`         |
+| `basic_ios::end` | `SEEK_END`         |
 
 ``` cpp
 pos_type seekpos(pos_type sp,

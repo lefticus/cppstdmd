@@ -2684,6 +2684,14 @@ constexpr optional<T>& operator=(const optional& rhs);
 
 *Effects:* See [[optional.assign.copy]].
 
+**Table: `optional::operator=(const optional&)` effects**
+
+|                                | `*this` contains a value                                | `*this` does not contain a value                            |
+| ------------------------------ | ------------------------------------------------------- | ----------------------------------------------------------- |
+| `rhs` contains a value         | assigns `*rhs` to the contained value                   | direct-non-list-initializes the contained value with `*rhs` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                   |
+
+
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
 *Returns:* `*this`.
@@ -2708,6 +2716,14 @@ constexpr optional& operator=(optional&& rhs) noexcept(see below);
 
 *Effects:* See [[optional.assign.move]]. The result of the expression
 `rhs.has_value()` remains unchanged.
+
+**Table: `optional::operator=(optional&&)` effects**
+
+|                                | `*this` contains a value                                | `*this` does not contain a value                                       |
+| ------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `rhs` contains a value         | assigns `std::move(*rhs)` to the contained value        | direct-non-list-initializes the contained value with `std::move(*rhs)` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                              |
+
 
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
@@ -2770,6 +2786,14 @@ template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 
 *Effects:* See [[optional.assign.copy.templ]].
 
+**Table: `optional::operator=(const optional<U>&)` effects**
+
+|                                | `*this` contains a value                                | `*this` does not contain a value                            |
+| ------------------------------ | ------------------------------------------------------- | ----------------------------------------------------------- |
+| `rhs` contains a value         | assigns `*rhs` to the contained value                   | direct-non-list-initializes the contained value with `*rhs` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                   |
+
+
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
 *Returns:* `*this`.
@@ -2798,6 +2822,14 @@ template<class U> constexpr optional<T>& operator=(optional<U>&& rhs);
 
 *Effects:* See [[optional.assign.move.templ]]. The result of the
 expression `rhs.has_value()` remains unchanged.
+
+**Table: `optional::operator=(optional<U>&&)` effects**
+
+|                                | `*this` contains a value                                | `*this` does not contain a value                                       |
+| ------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `rhs` contains a value         | assigns `std::move(*rhs)` to the contained value        | direct-non-list-initializes the contained value with `std::move(*rhs)` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                              |
+
 
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
@@ -2862,6 +2894,14 @@ constexpr void swap(optional& rhs) noexcept(see below);
 requirements [[swappable.requirements]].
 
 *Effects:* See [[optional.swap]].
+
+**Table: `optional::swap(optional&)` effects**
+
+|                                | `*this` contains a value                                                                                                                                                                            | `*this` does not contain a value                                                                                                                                                                      |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rhs` contains a value         | calls `swap(*(*this), *rhs)`                                                                                                                                                                        | direct-non-list-initializes the contained value of `*this` with `std::move(*rhs)`, followed by `rhs.val->T::\~T()`; postcondition is that `*this` contains a value and `rhs` does not contain a value |
+| `rhs` does not contain a value | direct-non-list-initializes the contained value of `rhs` with `std::move(*(*this))`, followed by `val->T::\~T()`; postcondition is that `*this` does not contain a value and `rhs` contains a value | no effect                                                                                                                                                                                             |
+
 
 *Throws:* Any exceptions thrown by the operations in the relevant part
 of [[optional.swap]].

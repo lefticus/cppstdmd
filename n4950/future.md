@@ -428,6 +428,15 @@ explicit strstreambuf(streamsize alsize_arg);
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.sz]].
 
+**Table: `strstreambuf(streamsize)` effects**
+
+| Element   | Value          |
+| --------- | -------------- |
+| `strmode` | `dynamic`      |
+| `alsize`  | `alsize_arg`   |
+| `palloc`  | a null pointer |
+| `pfree`   | a null pointer |
+
 ``` cpp
 strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 ```
@@ -435,6 +444,15 @@ strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 *Effects:* Initializes the base class with `streambuf()`. The
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.alloc]].
+
+**Table: `strstreambuf(void* (*)(size_t), void (*)(void*))` effects**
+
+| Element   | Value                |
+| --------- | -------------------- |
+| `strmode` | `dynamic`            |
+| `alsize`  | an unspecified value |
+| `palloc`  | `palloc_arg`         |
+| `pfree`   | `pfree_arg`          |
 
 ``` cpp
 strstreambuf(char* gnext_arg, streamsize n, char* pbeg_arg = nullptr);
@@ -447,6 +465,16 @@ strstreambuf(unsigned char* gnext_arg, streamsize n,
 *Effects:* Initializes the base class with `streambuf()`. The
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.ptr]].
+
+**Table: `strstreambuf(charT*, streamsize, charT*)` effects**
+
+| Element   | Value                |
+| --------- | -------------------- |
+| `strmode` | 0                    |
+| `alsize`  | an unspecified value |
+| `palloc`  | a null pointer       |
+| `pfree`   | a null pointer       |
+
 
 `gnext_arg` shall point to the first element of an array object whose
 number of elements `N` is determined as follows:
@@ -611,9 +639,28 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 sequences, if possible, as indicated in
 [[depr.strstreambuf.seekoff.pos]].
 
+**Table: `seekoff` positioning**
+
+| Conditions                                                                                                           | Result                                            |
+| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `(which & ios::in) != 0`                                                                                             | positions the input sequence                      |
+| `(which & ios::out) != 0`                                                                                            | positions the output sequence                     |
+| `(which & (ios::in | ios::out)) ==`<br> `(ios::in | ios::out)` and either<br> `way == ios::beg` or `way == ios::end` | positions both the input and the output sequences |
+| Otherwise                                                                                                            | the positioning operation fails.                  |
+
+
 For a sequence to be positioned, if its next pointer is a null pointer,
 the positioning operation fails. Otherwise, the function determines
 `newoff` as indicated in [[depr.strstreambuf.seekoff.newoff]].
+
+**Table: `newoff` values**
+
+| Condition         | `newoff` Value                                                 |
+| ----------------- | -------------------------------------------------------------- |
+| `way == ios::beg` | 0                                                              |
+| `way == ios::cur` | the next pointer minus the beginning pointer (`xnext - xbeg`). |
+| `way == ios::end` | `seekhigh` minus the beginning pointer (`seekhigh - xbeg`).    |
+
 
 If `(newoff + off) < (seeklow - xbeg)` or
 `(seekhigh - xbeg) < (newoff + off)`, the positioning operation fails.

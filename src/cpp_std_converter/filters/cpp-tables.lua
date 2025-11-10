@@ -639,6 +639,128 @@ function RawBlock(elem)
     end
   end
 
+  -- Handle lib2dtab2 environment (2D comparison tables with row headers)
+  local lib2dtab2_start = text:find("\\begin{lib2dtab2}", 1, true)
+  if lib2dtab2_start then
+    -- Extract caption (first braced argument)
+    local caption_start = lib2dtab2_start + 17 -- length of "\begin{lib2dtab2}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, pos2 = extract_braced(text, pos1)
+
+    -- Extract column 1 header (third braced argument)
+    local col1_header, pos3 = extract_braced(text, pos2)
+
+    -- Extract column 2 header (fourth braced argument)
+    local col2_header, end_pos = extract_braced(text, pos3)
+
+    if caption and label and col1_header and col2_header then
+      -- Find the end of lib2dtab2
+      local lib2dtab2_end = text:find("\\end{lib2dtab2}", end_pos, true)
+      if lib2dtab2_end then
+        local table_content = text:sub(end_pos + 1, lib2dtab2_end - 1)
+
+        -- Parse caption and headers (may contain macros)
+        caption = expand_table_macros(caption)
+        col1_header = expand_table_macros(col1_header)
+        col2_header = expand_table_macros(col2_header)
+
+        -- Headers: row header column + 2 data columns
+        local headers = {"", col1_header, col2_header}
+
+        -- Parse rows - lib2dtab2 uses \rowhdr{} for row headers and \rowsep for separators
+        local rows = {}
+
+        -- Normalize line breaks (converts \\ to @@ROWEND@@ and removes \rowsep)
+        local normalized = normalize_table_rows(table_content)
+
+        -- Parse each row (split on @@ROWEND@@ markers)
+        for row_content in normalized:gmatch("([^@]+)@@ROWEND@@") do
+          -- Normalize whitespace (replace newlines with spaces)
+          row_content = row_content:gsub("%s+", " ")
+          local trimmed = row_content:match("^%s*(.-)%s*$")
+
+          if trimmed and #trimmed > 0 then
+            -- Check if this row starts with \rowhdr{}
+            local rowhdr_start = trimmed:find("\\rowhdr{", 1, true)
+            if rowhdr_start == 1 then
+              -- Use extract_braced to handle nested braces correctly
+              local row_header, end_pos = extract_braced(trimmed, rowhdr_start + 7) -- +7 for "\rowhdr"
+              if row_header then
+                row_header = expand_table_macros(row_header)
+
+                -- Extract the remaining cells (after \rowhdr{...})
+                -- Skip leading whitespace and the first & separator
+                local rest = trimmed:sub(end_pos + 1)
+                rest = rest:match("^%s*&?%s*(.*)$") or rest
+
+                -- Parse the remaining cells using parse_row helper (handles & separators)
+                local cells = parse_row(rest)
+
+                -- Build row: row header + cells
+                local row = {row_header}
+                for _, cell in ipairs(cells) do
+                  table.insert(row, cell)
+                end
+
+                table.insert(rows, row)
+              end
+            end
+          end
+        end
+
+        -- Generate markdown table using shared helper
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
+  -- Handle libtab2 environment (simple 2-column tables)
+  local libtab2_start = text:find("\\begin{libtab2}", 1, true)
+  if libtab2_start then
+    -- Extract caption (first braced argument)
+    local caption_start = libtab2_start + 15 -- length of "\begin{libtab2}"
+    local caption, pos1 = extract_braced(text, caption_start)
+
+    -- Extract label (second braced argument)
+    local label, pos2 = extract_braced(text, pos1)
+
+    -- Extract column spec (third braced argument) - we don't use this, just skip it
+    local colspec, pos3 = extract_braced(text, pos2)
+
+    -- Extract header 1 (fourth braced argument)
+    local header1, pos4 = extract_braced(text, pos3)
+
+    -- Extract header 2 (fifth braced argument)
+    local header2, end_pos = extract_braced(text, pos4)
+
+    if caption and label and header1 and header2 then
+      -- Find the end of libtab2
+      local libtab2_end = text:find("\\end{libtab2}", end_pos, true)
+      if libtab2_end then
+        local table_content = text:sub(end_pos + 1, libtab2_end - 1)
+
+        -- Parse caption and headers (may contain macros)
+        caption = expand_table_macros(caption)
+        header1 = expand_table_macros(header1)
+        header2 = expand_table_macros(header2)
+
+        -- Headers
+        local headers = {header1, header2}
+
+        -- Extract data rows (simple 2-column format)
+        local normalized = normalize_table_rows(table_content)
+        local rows = parse_table_rows(normalized)
+
+        -- Generate markdown table using shared helper
+        local markdown = build_markdown_table(caption, headers, rows)
+        return pandoc.RawBlock('markdown', markdown)
+      end
+    end
+  end
+
   -- Handle libefftab environment (enum/bitmask effects tables)
   local libefftab_start = text:find("\\begin{libefftab}", 1, true)
   if libefftab_start then

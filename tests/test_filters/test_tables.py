@@ -1033,3 +1033,63 @@ The expression contains an invalid escaped character, or a trailing escape.
     # Should NOT have LaTeX commands
     assert "\\tcode" not in output
     assert "\\rowsep" not in output
+
+def test_lib2dtab2_simple():
+    r"""Test lib2dtab2 (2D comparison table with row headers)"""
+    latex = r"""
+\begin{lib2dtab2}{\tcode{optional::operator=(const optional\&)} effects}{optional.assign.copy}
+{\tcode{*this} contains a value}
+{\tcode{*this} does not contain a value}
+
+\rowhdr{\tcode{rhs} contains a value} &
+assigns \tcode{*rhs} to the contained value &
+direct-non-list-initializes the contained value with \tcode{*rhs} \\
+\rowsep
+
+\rowhdr{\tcode{rhs} does not contain a value} &
+destroys the contained value by calling \tcode{val->T::\~T()} &
+no effect \\
+\end{lib2dtab2}
+"""
+    output, returncode = run_pandoc_with_filter(latex)
+    assert returncode == 0, f"Pandoc failed with output: {output}"
+
+    normalized = normalize_table_whitespace(output)
+
+    # Should have caption
+    assert "**Table: `optional::operator=(const optional&)` effects**" in output
+    # Should have 3 columns: row header + 2 data columns
+    assert "|  | `*this` contains a value | `*this` does not contain a value |" in normalized
+    # Should have row headers and data
+    assert "| `rhs` contains a value |" in normalized
+    assert "| `rhs` does not contain a value |" in normalized
+    # Should NOT have LaTeX commands
+    assert "\\rowhdr" not in output
+    assert "\\rowsep" not in output
+
+
+def test_libtab2_simple():
+    r"""Test libtab2 (simple 2-column table)"""
+    latex = r"""
+\begin{libtab2}{\tcode{compare()} results}{string.view.compare}{cc}{Condition}{Return Value}
+\tcode{size() < str.size()}  & \tcode{< 0}\\
+\tcode{size() == str.size()} & \tcode{ \ 0}\\
+\tcode{size() >  str.size()} & \tcode{> 0}\\
+\end{libtab2}
+"""
+    output, returncode = run_pandoc_with_filter(latex)
+    assert returncode == 0, f"Pandoc failed with output: {output}"
+
+    normalized = normalize_table_whitespace(output)
+
+    # Should have caption
+    assert "**Table: `compare()` results**" in output
+    # Should have 2 columns with specified headers
+    assert "| Condition | Return Value |" in normalized
+    # Should have data rows
+    assert "| `size() < str.size()` | `< 0` |" in normalized
+    assert "| `size() == str.size()` |" in normalized
+    assert "| `size() > str.size()` | `> 0` |" in normalized
+    # Should NOT have LaTeX commands
+    assert "\\tcode" not in output
+    assert "\\begin" not in output

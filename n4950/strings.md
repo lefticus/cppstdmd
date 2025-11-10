@@ -815,6 +815,15 @@ compare. The function then compares the two strings by calling
 nonzero. Otherwise, returns a value as indicated in
 [[string.view.compare]].
 
+**Table: `compare()` results**
+
+| Condition              | Return Value |
+| ---------------------- | ------------ |
+| `size() < str.size()`  | `< 0`        |
+| `size() == str.size()` | ` \ 0`       |
+| `size() > str.size()`  | `> 0`        |
+
+
 *Complexity:* 𝑂(`rlen)`.
 
 ``` cpp
@@ -1037,6 +1046,26 @@ of `S`. Implementations shall provide sufficient additional overloads
 marked `constexpr` and `noexcept` so that an object `t` with an implicit
 conversion to `S` can be compared according to
 [[string.view.comparison.overloads]].
+
+**Table: Additional `basic_string_view` comparison overloads**
+
+| Expression | Equivalent to |
+| ---------- | ------------- |
+| `t == sv`  | `S(t) == sv`  |
+| `sv == t`  | `sv == S(t)`  |
+| `t != sv`  | `S(t) != sv`  |
+| `sv != t`  | `sv != S(t)`  |
+| `t < sv`   | `S(t) < sv`   |
+| `sv < t`   | `sv < S(t)`   |
+| `t > sv`   | `S(t) > sv`   |
+| `sv > t`   | `sv > S(t)`   |
+| `t <= sv`  | `S(t) <= sv`  |
+| `sv <= t`  | `sv <= S(t)`  |
+| `t >= sv`  | `S(t) >= sv`  |
+| `sv >= t`  | `sv >= S(t)`  |
+| `t <=> sv` | `S(t) <=> sv` |
+| `sv <=> t` | `sv <=> S(t)` |
+
 
 \[*Example 1*:
 
