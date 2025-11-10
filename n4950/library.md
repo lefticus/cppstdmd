@@ -1305,10 +1305,10 @@ typename X::template rebind<U>::other
 `SomeAllocator<T, Args>`, where `Args` is zero or more type arguments,
 and `Allocator` does not supply a `rebind` member template, the standard
 `allocator_traits` template uses `SomeAllocator<U, Args>` in place of
-`Allocator::rebind<U>::other` by default. For allocator types that are
+`Allocator::re``bind<U>::other` by default. For allocator types that are
 not template instantiations of the above form, no default is provided.
 
-\[*Note 2*: The member class template `rebind` of `X` is effectively a
+\[*Note 1*: The member class template `rebind` of `X` is effectively a
 typedef template. In general, if the name `Allocator` is bound to
 `SomeAllocator<T>`, then `Allocator::rebind<U>::other` is the same type
 as `SomeAllocator<U>`, where `SomeAllocator<T>::value_type` is `T` and
@@ -1388,7 +1388,7 @@ it. — *end example*\]
 
 *Throws:* `allocate` may throw an appropriate exception.
 
-\[*Note 3*: It is intended that `a.allocate` be an efficient means of
+\[*Note 2*: It is intended that `a.allocate` be an efficient means of
 allocating a single object of type `T`, even when `sizeof(T)` is small.
 That is, there is no need for a container to maintain its own free
 list. — *end note*\]
@@ -1668,10 +1668,10 @@ supported by an allocator, instantiation of the allocator for that type
 may fail. The allocator also may silently ignore the requested
 alignment.
 
-\[*Note 4*: Additionally, the member function `allocate` for that type
+\[*Note 2*: Additionally, the member function `allocate` for that type
 can fail by throwing an object of type `bad_alloc`. — *end note*\]
 
-\[*Example 2*:
+\[*Example 1*:
 
 The following is an allocator class template supporting the minimal
 interface that meets the requirements of

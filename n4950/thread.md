@@ -965,13 +965,12 @@ template<class charT> struct formatter<thread::id, charT>;
 *thread-id-format-spec*. The syntax of format specifications is as
 follows:
 
-<div class="ncbnf">
+``` bnf
+\fmtnontermdef{thread-id-format-spec}
+    fill-and-alignₒₚₜ widthₒₚₜ
+```
 
-fill-and-alignₒₚₜ widthₒₚₜ
-
-</div>
-
-\[*Note 2*: The productions *fill-and-align* and *width* are described
+\[*Note 1*: The productions *fill-and-align* and *width* are described
 in [[format.string.std]]. — *end note*\]
 
 If the *align* option is omitted it defaults to `>`.
@@ -2414,7 +2413,7 @@ value and parameters were converted to their corresponding unsigned
 types, the computation performed on those types, and the result
 converted back to the signed type.
 
-\[*Note 2*: There are no undefined results arising from the
+\[*Note 1*: There are no undefined results arising from the
 computation. — *end note*\]
 
 *integral-type* *integral-type* *integral-type* *integral-type*
@@ -3215,7 +3214,7 @@ value and parameters were converted to their corresponding unsigned
 types, the computation performed on those types, and the result
 converted back to the signed type.
 
-\[*Note 2*: There are no undefined results arising from the
+\[*Note 1*: There are no undefined results arising from the
 computation. — *end note*\]
 
 *integral-type* *integral-type* *integral-type* *integral-type*
@@ -3657,7 +3656,7 @@ atomic(shared_ptr<T> desired) noexcept;
 *Effects:* Initializes the object with the value `desired`.
 Initialization is not an atomic operation [[intro.multithread]].
 
-\[*Note 3*: It is possible to have an access to an atomic object `A`
+\[*Note 1*: It is possible to have an access to an atomic object `A`
 race with its construction, for example, by communicating the address of
 the just-constructed object `A` to another thread via
 `memory_order::relaxed` operations on a suitable atomic pointer
@@ -3866,7 +3865,7 @@ atomic(weak_ptr<T> desired) noexcept;
 *Effects:* Initializes the object with the value `desired`.
 Initialization is not an atomic operation [[intro.multithread]].
 
-\[*Note 4*: It is possible to have an access to an atomic object `A`
+\[*Note 2*: It is possible to have an access to an atomic object `A`
 race with its construction, for example, by communicating the address of
 the just-constructed object `A` to another thread via
 `memory_order::relaxed` operations on a suitable atomic pointer
@@ -4548,7 +4547,7 @@ thread without blocking. If ownership is not obtained, there is no
 effect and `try_lock()` immediately returns. An implementation may fail
 to obtain the lock even if it is not held by any other thread.
 
-\[*Note 4*: This spurious failure is normally uncommon, but allows
+\[*Note 1*: This spurious failure is normally uncommon, but allows
 interesting implementations based on a simple compare and
 exchange [[atomics]]. — *end note*\]
 
@@ -4559,7 +4558,7 @@ return `false` in the absence of contending mutex acquisitions.
 operations on the same object *synchronize with*[[intro.multithread]]
 this operation.
 
-\[*Note 5*: Since `lock()` does not synchronize with a failed subsequent
+\[*Note 2*: Since `lock()` does not synchronize with a failed subsequent
 `try_lock()`, the visibility rules are weak enough that little would be
 known about the state after a failure, even in the absence of spurious
 failures. — *end note*\]
@@ -4613,7 +4612,7 @@ another thread to acquire ownership of that object will fail (for
 `try_lock()`) or block (for `lock()`) until the owning thread has
 released ownership with a call to `unlock()`.
 
-\[*Note 6*: After a thread `A` has called `unlock()`, releasing a mutex,
+\[*Note 4*: After a thread `A` has called `unlock()`, releasing a mutex,
 it is possible for another thread `B` to lock the same mutex, observe
 that it is no longer in use, unlock it, and destroy it, before thread
 `A` appears to have returned from its unlock call. Implementations are
@@ -4626,7 +4625,7 @@ The class `mutex` meets all of the mutex requirements
 [[thread.mutex.requirements]]. It is a standard-layout class
 [[class.prop]].
 
-\[*Note 7*: A program can deadlock if the thread that owns a `mutex`
+\[*Note 5*: A program can deadlock if the thread that owns a `mutex`
 object calls `lock()` on that object. If the implementation can detect
 the deadlock, a `resource_deadlock_would_occur` error condition might be
 observed. — *end note*\]
@@ -4711,7 +4710,7 @@ blocking (as if by calling `try_lock()`). The function returns within
 the timeout specified by `rel_time` only if it has obtained ownership of
 the mutex object.
 
-\[*Note 2*: As with `try_lock()`, there is no guarantee that ownership
+\[*Note 1*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
 expected to make a strong effort to do so. — *end note*\]
 
@@ -4737,7 +4736,7 @@ without blocking (as if by calling `try_lock()`). The function returns
 before the absolute timeout [[thread.req.timing]] specified by
 `abs_time` only if it has obtained ownership of the mutex object.
 
-\[*Note 3*: As with `try_lock()`, there is no guarantee that ownership
+\[*Note 2*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
 expected to make a strong effort to do so. — *end note*\]
 
@@ -5017,7 +5016,7 @@ blocking (as if by calling `try_lock_shared()`). The function returns
 within the timeout specified by `rel_time` only if it has obtained
 shared ownership of the mutex object.
 
-\[*Note 2*: As with `try_lock()`, there is no guarantee that ownership
+\[*Note 1*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
 expected to make a strong effort to do so. — *end note*\]
 
@@ -5046,7 +5045,7 @@ shared ownership without blocking (as if by calling
 timeout [[thread.req.timing]] specified by `abs_time` only if it has
 obtained shared ownership of the mutex object.
 
-\[*Note 3*: As with `try_lock()`, there is no guarantee that ownership
+\[*Note 2*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
 expected to make a strong effort to do so. — *end note*\]
 
@@ -5422,7 +5421,7 @@ unique_lock& operator=(unique_lock&& u);
 state of `u` just prior to this construction), `u.pm == 0` and
 `u.owns == false`.
 
-\[*Note 2*: With a recursive mutex it is possible for both `*this` and
+\[*Note 1*: With a recursive mutex it is possible for both `*this` and
 `u` to own the same mutex before the assignment. In this case, `*this`
 will own the mutex after the assignment and `u` will not. — *end note*\]
 
@@ -6484,7 +6483,7 @@ required [[thread.req.exception]].
 
 *Preconditions:* There is no thread blocked on `*this`.
 
-\[*Note 2*: That is, all threads have been notified; they can
+\[*Note 1*: That is, all threads have been notified; they can
 subsequently block on the lock specified in the wait. This relaxes the
 usual rules, which would have required all wait calls to happen before
 destruction. Only the notification to unblock the wait needs to happen
@@ -7794,7 +7793,7 @@ R& future<R&>::get();
 void future<void>::get();
 ```
 
-\[*Note 3*: As described above, the template and its two required
+\[*Note 1*: As described above, the template and its two required
 specializations differ only in the return type and return value of the
 member function `get`. — *end note*\]
 
@@ -8008,11 +8007,11 @@ R& shared_future<R&>::get() const;
 void shared_future<void>::get() const;
 ```
 
-\[*Note 3*: As described above, the template and its two required
+\[*Note 1*: As described above, the template and its two required
 specializations differ only in the return type and return value of the
 member function `get`. — *end note*\]
 
-\[*Note 4*: Access to a value object stored in the shared state is
+\[*Note 2*: Access to a value object stored in the shared state is
 unsynchronized, so operations on `R` might introduce a data
 race [[intro.multithread]]. — *end note*\]
 
@@ -8118,7 +8117,7 @@ as follows (if more than one of these conditions applies, the
 implementation may choose any of the corresponding policies):
 
 - If `launch::async` is set in `policy`, calls
-  `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`[[func.invoke,thread.thread.constr]]
+  `invoke(auto(std::forward<F>(f)), auto(std::for``ward<Args>(args))...)`[[func.invoke,thread.thread.constr]]
   as if in a new thread of execution represented by a `thread` object
   with the values produced by `auto` being materialized [[conv.rval]] in
   the thread that called `async`. Any return value is stored as the
@@ -8129,9 +8128,9 @@ implementation may choose any of the corresponding policies):
   object is stored in the shared state and affects the behavior of any
   asynchronous return objects that reference that state.
 - If `launch::deferred` is set in `policy`, stores
-  `auto(std::forward<F>(f))` and `auto(std::forward<Args>(args))...` in
-  the shared state. These copies of `f` and `args` constitute a .
-  Invocation of the deferred function evaluates
+  `auto(std::forward<F>(f))` and `auto(std::for``ward<Args>(args))...`
+  in the shared state. These copies of `f` and `args` constitute a
+  *deferred function*. Invocation of the deferred function evaluates
   `invoke(std::move(g), std::move(xyz))` where `g` is the stored value
   of `auto(std::forward<F>(f))` and `xyz` is the stored copy of
   `auto(std::forward<Args>(args))...`. Any return value is stored as the
@@ -8190,7 +8189,7 @@ memory for the internal data structures cannot be allocated.
 - `resource_unavailable_try_again` — if `policy == launch::async` and
   the system is unable to start a new thread.
 
-\[*Note 3*: Line \#1 might not result in concurrency because the `async`
+\[*Note 1*: Line \#1 might not result in concurrency because the `async`
 call uses the default policy, which might use `launch::deferred`, in
 which case the lambda might not be invoked until the `get()` call; in
 that case, `work1` and `work2` are called on the same thread and there

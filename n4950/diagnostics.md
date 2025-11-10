@@ -1681,7 +1681,10 @@ template<> struct formatter<stacktrace_entry>;
 *stacktrace-entry-format-spec*. The syntax of format specifications is
 as follows:
 
-> fill-and-alignₒₚₜ widthₒₚₜ
+``` bnf
+\fmtnontermdef{stacktrace-entry-format-spec}
+    fill-and-alignₒₚₜ widthₒₚₜ
+```
 
 \[*Note 1*: The productions *fill-and-align* and *width* are described
 in [[format.string.std]]. — *end note*\]

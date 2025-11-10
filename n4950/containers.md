@@ -347,7 +347,7 @@ semantics.
 Unless otherwise specified, all containers defined in this Clause obtain
 memory using an allocator (see  [[allocator.requirements]]).
 
-\[*Note 2*: In particular, containers and iterators do not store
+\[*Note 1*: In particular, containers and iterators do not store
 references to allocated elements other than through the allocator’s
 pointer type, i.e., as objects of type `P` or
 `pointer_traits<P>::template rebind<unspecified>`, where `P` is
@@ -362,7 +362,7 @@ belonging to the container being moved. Such move construction of the
 allocator shall not exit via an exception. All other constructors for
 these container types take a `const allocator_type&` argument.
 
-\[*Note 3*: If an invocation of a constructor uses the default value of
+\[*Note 2*: If an invocation of a constructor uses the default value of
 an optional allocator argument, then the allocator type must support
 value-initialization. — *end note*\]
 
@@ -709,7 +709,7 @@ a = rv
 *Result:* `X&`.
 
 *Preconditions:* If
-`allocator_traits<allocator_type>::propagate_on_container_move_assignment::value`
+`allocator_traits<allocator_type>::propagate_on_container_move_assign``ment::value`
 is `false`, `T` is *Cpp17MoveInsertable* into `X` and
 *Cpp17MoveAssignable*.
 
@@ -874,7 +874,7 @@ a.emplace(p, args)
 *Effects:* Inserts an object of type `T` constructed with
 `std::forward<Args>(args)...` before `p`.
 
-\[*Note 2*: `args` can directly or indirectly refer to a value in
+\[*Note 1*: `args` can directly or indirectly refer to a value in
 `a`. — *end note*\]
 
 *Returns:* An iterator that points to the new element constructed from
@@ -1201,7 +1201,7 @@ requirements.
 *Effects:* Inserts copies of elements in `rg` before `begin()`. Each
 iterator in the range `rg` is dereferenced exactly once.
 
-\[*Note 3*: The order of elements in `rg` is not
+\[*Note 2*: The order of elements in `rg` is not
 reversed. — *end note*\]
 
 *Remarks:* Required for `deque`, `forward_list`, and `list`.
@@ -1390,8 +1390,8 @@ node-handle& operator=(node-handle&& nh);
 ```
 
 *Preconditions:* Either `!alloc_`, or
-`ator_traits::propagate_on_container_move_assignment::value` is `true`,
-or `alloc_ == nh.alloc_`.
+`ator_traits::propagate_on_container_move_assignment::``value` is
+`true`, or `alloc_ == nh.alloc_`.
 
 *Effects:*
 
@@ -1440,8 +1440,8 @@ key_type& key() const;
 *Preconditions:* `empty() == false`.
 
 *Returns:* A non-const reference to the `key_type` member of the
-`value_type` subobject in the `container_node_type` object pointed to by
-`ptr_`.
+`value_type` subobject in the `contain``er_node_type` object pointed to
+by `ptr_`.
 
 *Throws:* Nothing.
 
@@ -2543,7 +2543,7 @@ typename X::local_iterator
 *Result:* An iterator type whose category, value type, difference type,
 and pointer and reference types are the same as `X::iterator`’s.
 
-\[*Note 4*: A `local_iterator` object can be used to iterate through a
+\[*Note 1*: A `local_iterator` object can be used to iterate through a
 single bucket, but cannot be used to iterate across
 buckets. — *end note*\]
 
@@ -2554,7 +2554,7 @@ typename X::const_local_iterator
 *Result:* An iterator type whose category, value type, difference type,
 and pointer and reference types are the same as `X::const_iterator`’s.
 
-\[*Note 5*: A `const_local_iterator` object can be used to iterate
+\[*Note 2*: A `const_local_iterator` object can be used to iterate
 through a single bucket, but cannot be used to iterate across
 buckets. — *end note*\]
 
@@ -4606,7 +4606,7 @@ template<container-compatible-range<T> R>
 ```
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `forward_list`
-from `*ranges::begin(rg)`. `position` is `before_begin()` or is a
+from `*ranges::begin(rg)`. `posi``tion` is `before_begin()` or is a
 dereferenceable iterator in the range \[`begin()`, `end()`). `rg` and
 `*this` do not overlap.
 
@@ -4629,11 +4629,11 @@ template<class... Args>
 ```
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `forward_list`
-from `std::forward<Args>(args)...`. `position` is `before_begin()` or is
-a dereferenceable iterator in the range \[`begin()`, `end()`).
+from `std::forward<Args>(``args)...`. `position` is `before_begin()` or
+is a dereferenceable iterator in the range \[`begin()`, `end()`).
 
 *Effects:* Inserts an object of type `value_type`
-direct-non-list-initialized with `std::forward<Args>(args)...` after
+direct-non-list-initialized with `std::forward<Args>(``args)...` after
 `position`.
 
 *Returns:* An iterator pointing to the new object.
@@ -5618,10 +5618,7 @@ if the current capacity is less than the argument of `reserve()`. If an
 exception is thrown other than by the move constructor of a
 non-*Cpp17CopyInsertable* type, there are no effects.
 
-*Throws:* `length_error` if `n > max_size()`.
-
-`reserve()` uses `Allocator::allocate()` which can throw an appropriate
-exception.
+*Throws:* `length_error` if `n > max_size()`.[^4]
 
 *Complexity:* It does not change the size of the sequence and takes at
 most linear time in the size of the sequence.
@@ -5978,8 +5975,9 @@ template<class T>
 ```
 
 The expression *`is-vector-bool-reference`*`<T>` is `true` if `T`
-denotes the type `vector<bool, Alloc>::reference` for some type `Alloc`
-and `vector<bool, Alloc>` is not a program-defined specialization.
+denotes the type `vector<bool, Alloc>::`\linebreak`reference` for some
+type `Alloc` and `vector<bool, Alloc>` is not a program-defined
+specialization.
 
 #### Formatter specialization for `vector<bool>` <a id="vector.bool.fmt">[[vector.bool.fmt]]</a>
 
@@ -6503,7 +6501,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `piecewise_construct`, `forward_as_tuple(k)`,
+from `piecewise_construct`, `for``ward_as_tuple(k)`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
 *Effects:* If the map already contains an element whose key is
@@ -6525,7 +6523,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `piecewise_construct`, `forward_as_tuple(std::move(k))`,
+from `piecewise_construct`, `for``ward_as_tuple(std::move(k))`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
 *Effects:* If the map already contains an element whose key is
@@ -6553,7 +6551,7 @@ template<class M>
 from `k`, `std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with `k`,
 `std::forward<M>(obj)`.
 
@@ -6573,10 +6571,10 @@ template<class M>
 *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `std::move(k)`, `std::forward<M>(obj)`.
+from `std::move(k)`, `std::for``ward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with
 `std::move(k)`, `std::forward<M>(obj)`.
 
@@ -7972,7 +7970,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `piecewise_construct`, `forward_as_tuple(k)`,
+`unordered_map` from `piecewise_con``struct`, `forward_as_tuple(k)`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
 *Effects:* If the map already contains an element whose key is
@@ -7994,7 +7992,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `piecewise_construct`,
+`unordered_map` from `piecewise_con``struct`,
 `forward_as_tuple(std::move(k))`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
@@ -8020,10 +8018,10 @@ template<class M>
 *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `k`, `std::forward<M>(obj)`.
+`unordered_map` from `k`, `std::for``ward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with `k`,
 `std::forward<M>(obj)`.
 
@@ -8046,7 +8044,7 @@ template<class M>
 `unordered_map` from `std::move(k)`, `std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with
 `std::move(k)`, `std::forward<M>(obj)`.
 
@@ -9904,7 +9902,7 @@ template<container-compatible-range<T> R, class Alloc>
 
 *Effects:* Initializes `c` with
 `ranges::to<Container>(std::forward<R>(rg), a)`; calls
-`make_heap(c.begin(), c.end(), comp)`.
+`make_heap(c.``begin(), c.end(), comp)`.
 
 #### Members <a id="priqueue.members">[[priqueue.members]]</a>
 
@@ -10700,8 +10698,8 @@ template<class Allocator>
 `true`.
 
 *Effects:* Equivalent to `flat_map(s, key_cont, mapped_cont)` and
-`flat_map(s, key_cont, mapped_cont, comp)`, respectively, except that
-`c.keys` and `c.values` are constructed with uses-allocator
+`flat_map(s, key_cont, `\linebreak`mapped_cont, comp)`, respectively,
+except that `c.keys` and `c.values` are constructed with uses-allocator
 construction [[allocator.uses.construction]].
 
 *Complexity:* Linear.
@@ -10824,9 +10822,9 @@ template<class... Args> pair<iterator, bool> emplace(Args&&... args);
 `is_constructible_v<pair<key_type, mapped_type>, Args...>` is `true`.
 
 *Effects:* Initializes an object `t` of type
-`pair<key_type, mapped_type>` with `std::forward<Args>(args)...`; if the
-map already contains an element whose key is equivalent to `t.first`,
-`*this` is unchanged. Otherwise, equivalent to:
+`pair<key_type, mapped_type>` with `std::forward<Args>(``args)...`; if
+the map already contains an element whose key is equivalent to
+`t.first`, `*this` is unchanged. Otherwise, equivalent to:
 
 ``` cpp
 auto key_it = ranges::upper_bound(c.keys, t.first, compare);
@@ -11033,7 +11031,7 @@ template<class M>
 `is_constructible_v<mapped_type, M>` is `true`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<``M>(obj)` to `e.second`.
 Otherwise, equivalent to
 
 ``` cpp
@@ -11075,7 +11073,7 @@ template<class K, class M>
 object `u`, for which `find(k) == find(u)` is `true`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<``M>(obj)` to `e.second`.
 Otherwise, equivalent to
 
 ``` cpp
@@ -11573,12 +11571,12 @@ template<class Allocator>
 `true`.
 
 *Effects:* Equivalent to `flat_multimap(key_cont, mapped_cont)` and
-`flat_multimap(key_cont, mapped_cont, comp)`, respectively, except that
-`c.keys` and `c.values` are constructed with uses-allocator
+`flat_multimap(key_cont, `\linebreak`mapped_cont, comp)`, respectively,
+except that `c.keys` and `c.values` are constructed with uses-allocator
 construction [[allocator.uses.construction]].
 
 *Complexity:* Same as `flat_multimap(key_cont, mapped_cont)` and
-`flat_multimap(key_cont, mapped_cont, comp)`, respectively.
+`flat_multimap(key_cont, `\linebreak`mapped_cont, comp)`, respectively.
 
 ``` cpp
 flat_multimap(sorted_equivalent_t, key_container_type key_cont, mapped_container_type mapped_cont,
@@ -11606,7 +11604,7 @@ template<class Allocator>
 
 *Effects:* Equivalent to `flat_multimap(s, key_cont, mapped_cont)` and
 `flat_multimap(s, key_cont, mapped_cont, comp)`, respectively, except
-that `c.keys` and `c.values` are constructed with uses-allocator
+that `c.keys` and `c.val``ues` are constructed with uses-allocator
 construction [[allocator.uses.construction]].
 
 *Complexity:* Linear.
@@ -12085,7 +12083,7 @@ template<class K> iterator insert(const_iterator hint, K&& x);
 ```
 
 *Constraints:* The *qualified-id* `Compare::is_transparent` is valid and
-denotes a type. `is_constructible_v<value_type, K>` is `true`.
+denotes a type. `is_constructi``ble_v<value_type, K>` is `true`.
 
 *Preconditions:* The conversion from `x` into `value_type` constructs an
 object `u`, for which `find(x) == find(u)` is true.
@@ -13482,7 +13480,7 @@ template<class OtherIndexType, size_t... OtherExtents>
 *Constraints:*
 
 - `sizeof...(OtherExtents) == rank()` is `true`.
-- `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents ==Extents) && ...)`
+- `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents ==``Extents) && ...)`
   is `true`.
 
 *Preconditions:*
@@ -14334,7 +14332,7 @@ concept layout-mapping-alike = requires {                         // exposition 
 };
 ```
 
-\[*Note 8*: This concept checks that the functions
+\[*Note 1*: This concept checks that the functions
 `M::is_always_strided()`, `M::is_always_exhaustive()`, and
 `M::is_always_unique()` exist, are constant expressions, and have a
 return type of `bool`. — *end note*\]
@@ -14935,7 +14933,7 @@ template<class OtherElementType, class OtherExtents,
 
 *Constraints:*
 
-- `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth-erExtents>&>`
+- `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth-``erExtents>&>`
   is `true`, and
 - `is_constructible_v<accessor_type, const OtherAccessor&>` is `true`.
 
@@ -15360,3 +15358,6 @@ swap(x.acc_, y.acc_);
 
 [^3]: As specified in  [[allocator.requirements]], the requirements in
     this Clause apply only to lists whose allocators compare equal.
+
+[^4]: `reserve()` uses `Allocator::allocate()` which can throw an
+    appropriate exception.

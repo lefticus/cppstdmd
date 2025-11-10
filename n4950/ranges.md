@@ -2350,7 +2350,7 @@ constexpr W operator*() const noexcept(is_nothrow_copy_constructible_v<W>);
 
 *Effects:* Equivalent to: `return `*`value_`*`;`
 
-\[*Note 2*: The `noexcept` clause is needed by the default `iter_move`
+\[*Note 1*: The `noexcept` clause is needed by the default `iter_move`
 implementation. — *end note*\]
 
 ``` cpp
@@ -2691,10 +2691,10 @@ constexpr explicit repeat_view(piecewise_construct_t,
 ```
 
 *Effects:* Initializes *value\_* with
-`make_from_tuple<T>(std::move(value_args))` and initializes *bound\_*
-with `make_from_tuple<Bound>(std::move(bound_args))`. The behavior is
-undefined if `Bound` is not `unreachable_sentinel_t` and *bound\_* is
-negative.
+`make_from_tuple<T>(std::move(value_args))` and initializes\linebreak
+*bound\_* with `make_from_tuple<Bound>(std::move(bound_args))`. The
+behavior is undefined if `Bound` is not `unreachable_sentinel_t` and
+*bound\_* is negative.
 
 ``` cpp
 constexpr iterator begin() const;
@@ -3262,7 +3262,7 @@ following differences:
 
   *Mandates:* The declaration `T t(*i);` is well-formed for some
   invented variable `t`.
-  \[*Note 3*: If `*i` is a prvalue of type cv `T`, there is no
+  \[*Note 1*: If `*i` is a prvalue of type cv `T`, there is no
   requirement that it is movable [[dcl.init.general]]. — *end note*\]
   *Effects:* Calls `reset()`. Then direct-non-list-initializes the
   contained value with `*i`.
@@ -5483,7 +5483,7 @@ constexpr explicit join_with_view(R&& r, range_value_t<InnerRng> e);
 ```
 
 *Effects:* Initializes *base\_* with `views::all(std::forward<R>(r))`
-and *pattern\_* with `views::single(std::move(e))`.
+and *pattern\_* with `views::sin``gle(std::move(e))`.
 
 #### Class template `join_with_view::iterator` <a id="range.join.with.iterator">[[range.join.with.iterator]]</a>
 
@@ -5991,7 +5991,7 @@ constexpr explicit lazy_split_view(R&& r, range_value_t<R> e);
 ```
 
 *Effects:* Initializes *base\_* with `views::all(std::forward<R>(r))`,
-and *pattern\_* with `views::single(std::move(e))`.
+and *pattern\_* with `views::``single(std::move(e))`.
 
 #### Class template `lazy_split_view::outer-iterator` <a id="range.lazy.split.outer">[[range.lazy.split.outer]]</a>
 
@@ -6424,7 +6424,7 @@ constexpr explicit split_view(R&& r, range_value_t<R> e);
 ```
 
 *Effects:* Initializes *base\_* with `views::all(std::forward<R>(r))`,
-and *pattern\_* with `views::single(std::move(e))`.
+and *pattern\_* with `views::``single(std::move(e))`.
 
 ``` cpp
 constexpr iterator begin();
@@ -8137,7 +8137,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 - Otherwise, `true` if there exists an integer
   0 ≤ i < `sizeof...(Views)` such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
-  is `true`. \[*Note 4*: This allows `zip_view` to model `common_range`
+  is `true`. \[*Note 3*: This allows `zip_view` to model `common_range`
   when all constituent views model `common_range`. — *end note*\]
 - Otherwise, `false`.
 
@@ -10206,7 +10206,7 @@ constexpr iterator(Parent* parent, iterator_t<Base> current,
 ```
 
 *Effects:* Initializes *current\_* with `current`, *end\_* with
-`ranges::end(parent->`*`base_`*`)`, *n\_* with `parent->`*`n_`*, and
+`ranges::end(parent->`*`base_`*`)`, *n\_* with `parent``->`*`n_`*, and
 *missing\_* with `missing`.
 
 ``` cpp
@@ -10292,7 +10292,7 @@ constexpr iterator& operator+=(difference_type x)
 `ranges::distance(`*`current_`*`, `*`end_`*`) > `*`n_`*` * (x - 1)` is
 `true`.
 
-\[*Note 1*: If `x` is negative, the paragraph implies a
+\[*Note 1*: If `x` is negative, the *Effects* paragraph implies a
 precondition. — *end note*\]
 
 *Effects:* Equivalent to:
@@ -10783,7 +10783,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y);
 
 *Returns:* If *last_ele\_* is present,
 `x.`*`last_ele_`*` == y.`*`last_ele_`*; otherwise,
-`x.`*`current_`*` == y.`*`current_`*.
+`x.`*`current_`*` == y.`*`cur``rent_`*.
 
 ``` cpp
 friend constexpr bool operator<(const iterator& x, const iterator& y)
@@ -10856,7 +10856,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 
 *Returns:* If *last_ele\_* is present,
 `x.`*`last_ele_`*` - y.`*`last_ele_`*; otherwise,
-`x.`*`current_`*` - y.`*`current_`*.
+`x.`*`current_`*` - y.`*`cur``rent_`*.
 
 #### Class `slide_view::sentinel` <a id="range.slide.sentinel">[[range.slide.sentinel]]</a>
 
@@ -11483,7 +11483,7 @@ constexpr iterator& operator+=(difference_type n) requires random_access_range<B
 `ranges::distance(`*`current_`*`, `*`end_`*`) > `*`stride_`*` * (n - 1)`
 is `true`.
 
-\[*Note 1*: If `n` is negative, the paragraph implies a
+\[*Note 1*: If `n` is negative, the *Effects* paragraph implies a
 precondition. — *end note*\]
 
 *Effects:* Equivalent to:
@@ -11980,7 +11980,7 @@ Let:
   and $\textit{scaled-size}(N+1)$ if N \le `sizeof...(Vs)`, otherwise
   `static_cast<difference_type>(1)`;
 - $\textit{scaled-distance}(N)$ be the product of
-  `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
+  `static_cast<difference_type>(std::get<`N`>(`*`cur``rent_`*`) - std::get<`N`>(t))`
   and $\textit{scaled-size}(N+1)$; and
 - *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
   integer 0 \le N \le `sizeof...(Vs)`.
@@ -12175,7 +12175,7 @@ Let *end-tuple* be an object of a type that is a specialization of
 `tuple`, such that:
 
 - `std::get<0>(`*`end-tuple`*`)` has the same value as
-  `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
+  `ranges::end(std::get<0>(i.`*`parent_`*`->`*`ba``ses_`*`))`;
 - `std::get<`N`>(`*`end-tuple`*`)` has the same value as
   `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
   every integer 1 \le N \le `sizeof...(Vs)`.
@@ -12319,7 +12319,7 @@ namespace std {
   - `\texttt{common_reference_with}<RRef&&, const \textit{value}&>`
 
   is modeled.
-  \[*Note 5*: These requirements ensure the exposition-only *iterator*
+  \[*Note 4*: These requirements ensure the exposition-only *iterator*
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*\]
 
@@ -12518,12 +12518,12 @@ suspended at its initial suspend point.
 
 *Returns:* An awaitable object of an unspecified type [[expr.await]]
 into which `g.range` is moved, whose member `await_ready` returns
-`false`, whose member `await_suspend` pushes `g.range.`*coroutine\_*
-into `*x.`*`active_`* and resumes execution of the coroutine referred to
-by `g.range.`*`coroutine_`*, and whose member `await_resume` evaluates
-`rethrow_exception(`*`except_`*`)` if `bool(`*`except_`*`)` is `true`.
-If `bool(`*`except_`*`)` is `false`, the `await_resume` member has no
-effects.
+`false`, whose member `await_suspend` pushes
+`g.range.`\textit{coroutine\_} into `*x.`*`active_`* and resumes
+execution of the coroutine referred to by `g.range.`*`coroutine_`*, and
+whose member `await_resume` evaluates `rethrow_exception(`*`except_`*`)`
+if `bool(`*`ex``cept_`*`)` is `true`. If `bool(`*`except_`*`)` is
+`false`, the `await_resume` member has no effects.
 
 *Remarks:* A *yield-expression* that calls this function has type
 `void`[[expr.yield]].

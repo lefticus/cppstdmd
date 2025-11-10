@@ -307,7 +307,7 @@ return static_cast<byte>(static_cast<unsigned int>(l) & static_cast<unsigned int
 constexpr byte& operator^=(byte& l, byte r) noexcept;
 ```
 
-*Effects:* Equivalent to: `return l = l r;`
+*Effects:* Equivalent to: `return l = l `^` r;`
 
 \indexlibrarymember{operator^}{byte}
 
@@ -712,9 +712,7 @@ Each member function defined in this subclause is signal-safe
 static constexpr T min() noexcept;
 ```
 
-Minimum finite value.
-
-Equivalent to `CHAR_MIN`, `SHRT_MIN`, `FLT_MIN`, `DBL_MIN`, etc.
+Minimum finite value.[^3]
 
 For floating-point types with subnormal numbers, returns the minimum
 positive normalized value.
@@ -726,9 +724,7 @@ Meaningful for all specializations in which `is_bounded != false`, or
 static constexpr T max() noexcept;
 ```
 
-Maximum finite value.
-
-Equivalent to `CHAR_MAX`, `SHRT_MAX`, `FLT_MAX`, `DBL_MAX`, etc.
+Maximum finite value.[^4]
 
 Meaningful for all specializations in which `is_bounded != false`.
 
@@ -737,11 +733,7 @@ static constexpr T lowest() noexcept;
 ```
 
 A finite value `x` such that there is no other finite value `y` where
-`y < x`.
-
-`lowest()` is necessary because not all floating-point representations
-have a smallest (most negative) value that is the negative of the
-largest (most positive) finite value.
+`y < x`.[^5]
 
 Meaningful for all specializations in which `is_bounded != false`.
 
@@ -753,17 +745,14 @@ Number of `radix` digits that can be represented without change.
 
 For integer types, the number of non-sign bits in the representation.
 
-For floating-point types, the number of `radix` digits in the mantissa.
-
-Equivalent to `FLT_MANT_DIG`, `DBL_MANT_DIG`, `LDBL_MANT_DIG`.
+For floating-point types, the number of `radix` digits in the
+mantissa.[^6]
 
 ``` cpp
 static constexpr int digits10;
 ```
 
-Number of base 10 digits that can be represented without change.
-
-Equivalent to `FLT_DIG`, `DBL_DIG`, `LDBL_DIG`.
+Number of base 10 digits that can be represented without change.[^7]
 
 Meaningful for all specializations in which `is_bounded != false`.
 
@@ -807,13 +796,9 @@ static constexpr int radix;
 ```
 
 For floating-point types, specifies the base or radix of the exponent
-representation (often 2).
+representation (often 2).[^8]
 
-Equivalent to `FLT_RADIX`.
-
-For integer types, specifies the base of the representation.
-
-Distinguishes types with bases other than 2 (e.g., BCD).
+For integer types, specifies the base of the representation.[^9]
 
 Meaningful for all specializations.
 
@@ -822,9 +807,7 @@ static constexpr T epsilon() noexcept;
 ```
 
 Machine epsilon: the difference between 1 and the least value greater
-than 1 that is representable.
-
-Equivalent to `FLT_EPSILON`, `DBL_EPSILON`, `LDBL_EPSILON`.
+than 1 that is representable.[^10]
 
 Meaningful for all floating-point types.
 
@@ -832,19 +815,14 @@ Meaningful for all floating-point types.
 static constexpr T round_error() noexcept;
 ```
 
-Measure of the maximum rounding error.
-
-Rounding error is described in LIA-1 Section 5.2.4 and Annex C Rationale
-Section C.5.2.4 — Rounding and rounding constants.
+Measure of the maximum rounding error.[^11]
 
 ``` cpp
 static constexpr int  min_exponent;
 ```
 
 Minimum negative integer such that `radix` raised to the power of one
-less than that integer is a normalized floating-point number.
-
-Equivalent to `FLT_MIN_EXP`, `DBL_MIN_EXP`, `LDBL_MIN_EXP`.
+less than that integer is a normalized floating-point number.[^12]
 
 Meaningful for all floating-point types.
 
@@ -853,9 +831,7 @@ static constexpr int  min_exponent10;
 ```
 
 Minimum negative integer such that 10 raised to that power is in the
-range of normalized floating-point numbers.
-
-Equivalent to `FLT_MIN_10_EXP`, `DBL_MIN_10_EXP`, `LDBL_MIN_10_EXP`.
+range of normalized floating-point numbers.[^13]
 
 Meaningful for all floating-point types.
 
@@ -864,9 +840,7 @@ static constexpr int  max_exponent;
 ```
 
 Maximum positive integer such that `radix` raised to the power one less
-than that integer is a representable finite floating-point number.
-
-Equivalent to `FLT_MAX_EXP`, `DBL_MAX_EXP`, `LDBL_MAX_EXP`.
+than that integer is a representable finite floating-point number.[^14]
 
 Meaningful for all floating-point types.
 
@@ -875,9 +849,7 @@ static constexpr int  max_exponent10;
 ```
 
 Maximum positive integer such that 10 raised to that power is in the
-range of representable finite floating-point numbers.
-
-Equivalent to `FLT_MAX_10_EXP`, `DBL_MAX_10_EXP`, `LDBL_MAX_10_EXP`.
+range of representable finite floating-point numbers.[^15]
 
 Meaningful for all floating-point types.
 
@@ -896,9 +868,7 @@ static constexpr bool has_quiet_NaN;
 ```
 
 `true` if the type has a representation for a quiet (non-signaling) “Not
-a Number”.
-
-Required by LIA-1.
+a Number”.[^16]
 
 Meaningful for all floating-point types.
 
@@ -908,9 +878,8 @@ Shall be `true` for all specializations in which `is_iec559 != false`.
 static constexpr bool has_signaling_NaN;
 ```
 
-`true` if the type has a representation for a signaling “Not a Number”.
-
-Required by LIA-1.
+`true` if the type has a representation for a signaling “Not a
+Number”.[^17]
 
 Meaningful for all floating-point types.
 
@@ -920,9 +889,7 @@ Shall be `true` for all specializations in which `is_iec559 != false`.
 static constexpr T infinity() noexcept;
 ```
 
-Representation of positive infinity, if available.
-
-Required by LIA-1.
+Representation of positive infinity, if available.[^18]
 
 Meaningful for all specializations for which `has_infinity != false`.
 Required in specializations for which `is_iec559 != false`.
@@ -931,9 +898,7 @@ Required in specializations for which `is_iec559 != false`.
 static constexpr T quiet_NaN() noexcept;
 ```
 
-Representation of a quiet “Not a Number”, if available.
-
-Required by LIA-1.
+Representation of a quiet “Not a Number”, if available.[^19]
 
 Meaningful for all specializations for which `has_quiet_NaN != false`.
 Required in specializations for which `is_iec559 != false`.
@@ -942,9 +907,7 @@ Required in specializations for which `is_iec559 != false`.
 static constexpr T signaling_NaN() noexcept;
 ```
 
-Representation of a signaling “Not a Number”, if available.
-
-Required by LIA-1.
+Representation of a signaling “Not a Number”, if available.[^20]
 
 Meaningful for all specializations for which
 `has_signaling_NaN != false`. Required in specializations for which
@@ -954,9 +917,7 @@ Meaningful for all specializations for which
 static constexpr T denorm_min() noexcept;
 ```
 
-Minimum positive subnormal value, if available.
-
-Required by LIA-1.
+Minimum positive subnormal value, if available.[^21]
 
 Otherwise, minimum positive normalized value.
 
@@ -966,9 +927,7 @@ Meaningful for all floating-point types.
 static constexpr bool is_iec559;
 ```
 
-`true` if and only if the type adheres to ISO/IEC/IEEE 60559.
-
-ISO/IEC/IEEE 60559:2020 is the same as IEEE 754-2019.
+`true` if and only if the type adheres to ISO/IEC/IEEE 60559.[^22]
 
 \[*Note 1*: The value is `true` for any of the types `float16_t`,
 `float32_t`, `float64_t`, or `float128_t`, if
@@ -980,9 +939,7 @@ Meaningful for all floating-point types.
 static constexpr bool is_bounded;
 ```
 
-`true` if the set of values representable by the type is finite.
-
-Required by LIA-1.
+`true` if the set of values representable by the type is finite.[^23]
 
 \[*Note 2*: All fundamental types [[basic.fundamental]] are bounded.
 This member would be `false` for arbitrary precision
@@ -994,9 +951,7 @@ Meaningful for all specializations.
 static constexpr bool is_modulo;
 ```
 
-`true` if the type is modulo.
-
-Required by LIA-1.
+`true` if the type is modulo.[^24]
 
 A type is modulo if, for any operation involving `+`, `-`, or `*` on
 values of that type whose result would fall outside the range \[`min()`,
@@ -1015,9 +970,7 @@ static constexpr bool traps;
 ```
 
 `true` if, at the start of the program, there exists a value of the type
-that would cause an arithmetic operation using that value to trap.
-
-Required by LIA-1.
+that would cause an arithmetic operation using that value to trap.[^25]
 
 Meaningful for all specializations.
 
@@ -1025,9 +978,7 @@ Meaningful for all specializations.
 static constexpr bool tinyness_before;
 ```
 
-`true` if tinyness is detected before rounding.
-
-Refer to ISO/IEC/IEEE 60559. Required by LIA-1.
+`true` if tinyness is detected before rounding.[^26]
 
 Meaningful for all floating-point types.
 
@@ -1035,9 +986,7 @@ Meaningful for all floating-point types.
 static constexpr float_round_style round_style;
 ```
 
-The rounding style for the type.
-
-Equivalent to `FLT_ROUNDS`. Required by LIA-1.
+The rounding style for the type.[^27]
 
 Meaningful for all floating-point types. Specializations for integer
 types shall return `round_toward_zero`.
@@ -1398,7 +1347,7 @@ int atexit(atexit-handler* f) noexcept;
 unspecified whether a call to `atexit()` that does not happen
 before [[intro.multithread]] a call to `exit()` will succeed.
 
-\[*Note 2*: The `atexit()` functions do not introduce a data
+\[*Note 1*: The `atexit()` functions do not introduce a data
 race [[res.on.data.races]]. — *end note*\]
 
 *Implementation limits:* The implementation shall support the
@@ -1416,16 +1365,11 @@ succeeds, nonzero if it fails.
 - First, objects with thread storage duration and associated with the
   current thread are destroyed. Next, objects with static storage
   duration are destroyed and functions registered by calling `atexit`
-  are called. A function is called for every time it is registered.
-  See  [[basic.start.term]] for the order of destructions and calls.
-  (Objects with automatic storage duration are not destroyed as a result
-  of calling `exit()`.) Objects with automatic storage duration are all
-  destroyed in a program whose `main` function [[basic.start.main]]
-  contains no objects with automatic storage duration and executes the
-  call to `exit()`. Control can be transferred directly to such a `main`
-  function by throwing an exception that is caught in `main`. If a
-  registered function invoked by `exit` exits via an exception, the
-  function `std::terminate` is invoked [[except.terminate]].
+  are called.[^28] See  [[basic.start.term]] for the order of
+  destructions and calls. (Objects with automatic storage duration are
+  not destroyed as a result of calling `exit()`.)[^29] If a registered
+  function invoked by `exit` exits via an exception, the function
+  `std::terminate` is invoked [[except.terminate]].
 - Next, all open C streams (as mediated by the function signatures
   declared in `<cstdio>`) with unwritten buffered data are flushed, all
   open C streams are closed, and all files created by calling
@@ -1435,8 +1379,7 @@ succeeds, nonzero if it fails.
   *successful termination* is returned. If `status` is `EXIT_FAILURE`,
   an *implementation-defined* form of the status *unsuccessful
   termination* is returned. Otherwise the status returned is
-  *implementation-defined*. The macros `EXIT_FAILURE` and `EXIT_SUCCESS`
-  are defined in `<cstdlib>`.
+  *implementation-defined*.[^30]
 
 ``` cpp
 int at_quick_exit(c-atexit-handler* f) noexcept;
@@ -1448,13 +1391,13 @@ to by `f` to be called without arguments when `quick_exit` is called. It
 is unspecified whether a call to `at_quick_exit()` that does not happen
 before [[intro.multithread]] all calls to `quick_exit` will succeed.
 
-\[*Note 3*: The `at_quick_exit()` functions do not introduce a data
+\[*Note 2*: The `at_quick_exit()` functions do not introduce a data
 race [[res.on.data.races]]. — *end note*\]
 
-\[*Note 4*: The order of registration could be indeterminate if
+\[*Note 3*: The order of registration could be indeterminate if
 `at_quick_exit` was called from more than one thread. — *end note*\]
 
-\[*Note 5*: The `at_quick_exit` registrations are distinct from the
+\[*Note 4*: The `at_quick_exit` registrations are distinct from the
 `atexit` registrations, and applications might need to call both
 registration functions with the same argument. — *end note*\]
 
@@ -1475,7 +1418,7 @@ destroyed as a result of calling `quick_exit`. If a registered function
 invoked by `quick_exit` exits via an exception, the function
 `std::terminate` is invoked [[except.terminate]].
 
-\[*Note 6*: A function registered via `at_quick_exit` is invoked by the
+\[*Note 5*: A function registered via `at_quick_exit` is invoked by the
 thread that calls `quick_exit`, which can be a different thread than the
 one that registered it, so registered functions cannot rely on the
 identity of objects with thread storage duration. — *end note*\]
@@ -1740,14 +1683,7 @@ by the C++ standard library.
 *Effects:* The allocation functions [[basic.stc.dynamic.allocation]]
 called by the array form of a *new-expression*[[expr.new]] to allocate
 `size` bytes of storage. The second form is called for a type with
-new-extended alignment, and the first form is called otherwise.
-
-It is not the direct responsibility of `operator new[]` or
-`operator delete[]` to note the repetition count or element size of the
-array. Those operations are performed elsewhere in the array `new` and
-`delete` expressions. The array `new` expression, can, however, increase
-the `size` argument to `operator new[]` to obtain space to store
-supplemental information.
+new-extended alignment, and the first form is called otherwise.[^31]
 
 *Replaceable:* A C++ program may define functions with either of these
 function signatures, and thereby displace the default versions defined
@@ -2317,19 +2253,6 @@ static consteval source_location current() noexcept;
   \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only data
   members of the returned `source_location` object are indicated in
   [[support.srcloc.current]].
-  > Value of object returned by `current` support.srcloc.current `line_`
-  > & A presumed line number [[cpp.predefined]]. Line numbers are
-  > presumed to be 1-indexed; however, an implementation is encouraged
-  > to use 0 when the line number is unknown.  
-  > `column_` & An *implementation-defined* value denoting some offset
-  > from the start of the line denoted by `line_`. Column numbers are
-  > presumed to be 1-indexed; however, an implementation is encouraged
-  > to use 0 when the column number is unknown.  
-  > `file_name_` & A presumed name of the current source
-  > file [[cpp.predefined]] as an NTBS.  
-  > `function_name_` & A name of the current function such as in
-  > \_\_func\_\_ [[dcl.fct.def.general]] if any, an empty string
-  > otherwise.  
 - Otherwise, when invoked in some other way, returns a `source_location`
   whose data members are initialized with valid but unspecified values.
 
@@ -2962,7 +2885,7 @@ The `partial_ordering` type is typically used as the result type of a
 three-way comparison operator [[expr.spaceship]] for a type that admits
 all of the six two-way comparison operators [[expr.rel]], [[expr.eq]],
 for which equality need not imply substitutability, and that permits two
-values to be incomparable.[^3]
+values to be incomparable.[^32]
 
 ``` cpp
 namespace std {
@@ -3255,7 +3178,7 @@ comparison type [[class.spaceship]] of `Ts...`, the expanded parameter
 pack, or `void` if any element of `Ts` is not a comparison category
 type.
 
-\[*Note 2*: This is `std::strong_ordering` if the expansion is
+\[*Note 1*: This is `std::strong_ordering` if the expansion is
 empty. — *end note*\]
 
 ### Concept  <a id="cmp.concept">[[cmp.concept]]</a>
@@ -3986,7 +3909,7 @@ library header `<stdarg.h>`, with the following changes:
   `va_start` macro in header `<stdarg.h>` are different in this
   document. The parameter `parmN` is the rightmost parameter in the
   variable parameter list of the function definition (the one just
-  before the `...`).[^4] If the parameter `parmN` is a pack expansion
+  before the `...`).[^33] If the parameter `parmN` is a pack expansion
   [[temp.variadic]] or an entity resulting from a lambda capture
   [[expr.prim.lambda]], the program is ill-formed, no diagnostic
   required. If the parameter `parmN` is of a reference type, or of a
@@ -4072,7 +3995,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - throwing of an exception;
 - control entering a *try-block* or *function-try-block*;
 - initialization of a variable with static storage duration requiring
-  dynamic initialization [[basic.start.dynamic]], [[stmt.dcl]][^5] ; or
+  dynamic initialization [[basic.start.dynamic]], [[stmt.dcl]][^34] ; or
 - waiting for the completion of the initialization of a variable with
   static storage duration [[stmt.dcl]].
 
@@ -4325,7 +4248,6 @@ names within the namespace `std`. — *end example*\]
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
 [basic.scope.namespace]: basic.md#basic.scope.namespace
 [basic.start.dynamic]: basic.md#basic.start.dynamic
-[basic.start.main]: basic.md#basic.start.main
 [basic.start.term]: basic.md#basic.start.term
 [basic.stc.dynamic]: basic.md#basic.stc.dynamic
 [basic.stc.dynamic.allocation]: basic.md#basic.stc.dynamic.allocation
@@ -4352,13 +4274,11 @@ names within the namespace `std`. — *end example*\]
 [coroutine.syn]: #coroutine.syn
 [coroutine.traits]: #coroutine.traits
 [cpp.line]: cpp.md#cpp.line
-[cpp.predefined]: cpp.md#cpp.predefined
 [cpp17.nullablepointer]: #cpp17.nullablepointer
 [cstddef.syn]: #cstddef.syn
 [cstdlib.syn]: #cstdlib.syn
 [customization.point.object]: library.md#customization.point.object
 [dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
-[dcl.fct.def.general]: dcl.md#dcl.fct.def.general
 [dcl.fct.default]: dcl.md#dcl.fct.default
 [dcl.init.list]: dcl.md#dcl.init.list
 [defns.expression.equivalent]: #defns.expression.equivalent
@@ -4428,10 +4348,83 @@ names within the namespace `std`. — *end example*\]
 [^2]: Note that `offsetof` is required to work as specified even if
     unary `operator&` is overloaded for any of the types involved.
 
-[^3]: That is, `a < b`, `a == b`, and `a > b` might all be `false`.
+[^3]: Equivalent to `CHAR_MIN`, `SHRT_MIN`, `FLT_MIN`, `DBL_MIN`, etc.
 
-[^4]: Note that `va_start` is required to work as specified even if
+[^4]: Equivalent to `CHAR_MAX`, `SHRT_MAX`, `FLT_MAX`, `DBL_MAX`, etc.
+
+[^5]: `lowest()` is necessary because not all floating-point
+    representations have a smallest (most negative) value that is the
+    negative of the largest (most positive) finite value.
+
+[^6]: Equivalent to `FLT_MANT_DIG`, `DBL_MANT_DIG`, `LDBL_MANT_DIG`.
+
+[^7]: Equivalent to `FLT_DIG`, `DBL_DIG`, `LDBL_DIG`.
+
+[^8]: Equivalent to `FLT_RADIX`.
+
+[^9]: Distinguishes types with bases other than 2 (e.g., BCD).
+
+[^10]: Equivalent to `FLT_EPSILON`, `DBL_EPSILON`, `LDBL_EPSILON`.
+
+[^11]: Rounding error is described in LIA-1 Section 5.2.4 and Annex C
+    Rationale Section C.5.2.4 — Rounding and rounding constants.
+
+[^12]: Equivalent to `FLT_MIN_EXP`, `DBL_MIN_EXP`, `LDBL_MIN_EXP`.
+
+[^13]: Equivalent to `FLT_MIN_10_EXP`, `DBL_MIN_10_EXP`,
+    `LDBL_MIN_10_EXP`.
+
+[^14]: Equivalent to `FLT_MAX_EXP`, `DBL_MAX_EXP`, `LDBL_MAX_EXP`.
+
+[^15]: Equivalent to `FLT_MAX_10_EXP`, `DBL_MAX_10_EXP`,
+    `LDBL_MAX_10_EXP`.
+
+[^16]: Required by LIA-1.
+
+[^17]: Required by LIA-1.
+
+[^18]: Required by LIA-1.
+
+[^19]: Required by LIA-1.
+
+[^20]: Required by LIA-1.
+
+[^21]: Required by LIA-1.
+
+[^22]: ISO/IEC/IEEE 60559:2020 is the same as IEEE 754-2019.
+
+[^23]: Required by LIA-1.
+
+[^24]: Required by LIA-1.
+
+[^25]: Required by LIA-1.
+
+[^26]: Refer to ISO/IEC/IEEE 60559. Required by LIA-1.
+
+[^27]: Equivalent to `FLT_ROUNDS`. Required by LIA-1.
+
+[^28]: A function is called for every time it is registered.
+
+[^29]: Objects with automatic storage duration are all destroyed in a
+    program whose `main` function@@REF:basic.start.main@@ contains no
+    objects with automatic storage duration and executes the call to
+    `exit()`. Control can be transferred directly to such a `main`
+    function by throwing an exception that is caught in `main`.
+
+[^30]: The macros `EXIT_FAILURE` and `EXIT_SUCCESS` are defined in
+    `<cstdlib>`.
+
+[^31]: It is not the direct responsibility of `operator new[]` or
+    `operator delete[]` to note the repetition count or element size of
+    the array. Those operations are performed elsewhere in the array
+    `new` and `delete` expressions. The array `new` expression, can,
+    however, increase the `size` argument to `operator new[]` to obtain
+    space to store supplemental information.
+
+[^32]: That is, `a < b`, `a == b`, and `a > b` might all be `false`.
+
+[^33]: Note that `va_start` is required to work as specified even if
     unary `operator&` is overloaded for the type of `parmN`.
 
-[^5]: Such initialization can occur because it is the first odr-use
+[^34]: Such initialization can occur because it is the first odr-use
     [[term.odr.use]] of that variable.

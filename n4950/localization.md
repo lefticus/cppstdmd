@@ -898,20 +898,14 @@ const char*  do_widen(const char* low, const char* high, charT* dest) const;
 
 *Effects:* Applies the simplest reasonable transformation from a `char`
 value or sequence of `char` values to the corresponding `charT` value or
-values.
-
-The parameter `c` of `do_widen` is intended to accept values derived
-from *character-literal*s for conversion to the locale’s encoding.
+values.[^5]
 
 The only characters for which unique transformations are required are
 those in the basic character set [[lex.charset]].
 
 For any named `ctype` category with a `ctype<charT>` facet `ctc` and
 valid `ctype_base::mask` value `M`,
-`(ctc.is(M, c) || !is(M, do_widen(c)) )` is `true`.
-
-In other words, the transformed character is not a member of any
-character classification that `c` is not also a member of.
+`(ctc.is(M, c) || !is(M, do_widen(c)) )` is `true`.[^6]
 
 The second form transforms each character `*p` in the range \[`low`,
 `high`), placing the result in `dest[p - low]`.
@@ -1020,7 +1014,7 @@ namespace std {
 ```
 
 A specialization `ctype<char>` is provided so that the member functions
-on type `char` can be implemented inline.[^5]
+on type `char` can be implemented inline.[^7]
 
 The *implementation-defined* value of member `table_size` is at least
 256.
@@ -1315,7 +1309,7 @@ Stops if it encounters a character it cannot convert. It always leaves
 the `from_next` and `to_next` pointers pointing one beyond the last
 element successfully converted. If returns `noconv`, `internT` and
 `externT` are the same type and the converted sequence is identical to
-the input sequence \[`from`, `fromnext`). `to_next` is set equal to
+the input sequence \[`from`, `from``next`). `to_next` is set equal to
 `to`, the value of `state` is unchanged, and there are no changes to the
 values in \[`to`, `to_end`).
 
@@ -1344,12 +1338,7 @@ would return `ok`, where `to != to_end`, then
 do_in(state, from, from_end, from_next, to, to + 1, to_next)
 ```
 
-shall also return `ok`.
-
-Informally, this means that `basic_filebuf` assumes that the mappings
-from internal to external characters is 1 to N: that a `codecvt` facet
-that is used by `basic_filebuf` can translate characters one internal
-character at a time.
+shall also return `ok`.[^8]
 
 \[*Note 1*: As a result of operations on `state`, it can return `ok` or
 `partial` and set `from_next == from` and
@@ -1358,17 +1347,15 @@ character at a time.
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.inout]].
 
-<div class="floattable">
+**Table: `do_in/do_out` result values**
 
-`do_in/do_out` result valueslocale.codecvt.inout lp3in &  
-`ok` & completed the conversion  
-`partial` & not all source characters converted  
-`error` & encountered a character in \[`from`, `from_end`) that cannot
-be converted  
-`noconv` & `internT` and `externT` are the same type, and input sequence
-is identical to converted sequence  
+| Value     | Meaning                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| `ok`      | completed the conversion                                                                         |
+| `partial` | not all source characters converted                                                              |
+| `error`   | encountered a character in {[}`from`, `from_end`{)} that cannot be converted                     |
+| `noconv`  | `internT` and `externT` are the same type, and input sequence is identical to converted sequence |
 
-</div>
 
 A return value of `partial`, if `(from_next == from_end)`, indicates
 that either the destination sequence has not absorbed all the available
@@ -1390,9 +1377,7 @@ initialized, if at the beginning of a sequence, or else is equal to the
 result of converting the preceding characters in the sequence.
 
 *Effects:* Places characters starting at `to` that should be appended to
-terminate a sequence when the current `stateT` is given by `state`.
-
-Typically these will be characters to return the state to `stateT()`.
+terminate a sequence when the current `stateT` is given by `state`.[^9]
 
 Stores no more than `(to_end - to)` destination elements, and leaves the
 `to_next` pointer pointing one beyond the last element successfully
@@ -1401,16 +1386,14 @@ stored.
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.unshift]].
 
-<div class="floattable">
+**Table: `do_unshift` result values**
 
-`do_unshift` result valueslocale.codecvt.unshift lp.50 &  
-`ok` & completed the sequence  
-`partial` & space for more than `to_end - to` destination elements was
-needed to terminate a sequence given the value of `state`  
-`error` & an unspecified error has occurred  
-`noconv` & no termination is needed for this `state_type`  
-
-</div>
+| Value     | Meaning                                                                                                              |
+| --------- | -------------------------------------------------------------------------------------------------------------------- |
+| `ok`      | completed the sequence                                                                                               |
+| `partial` | space for more than `to_end - to` destination elements was needed to terminate a sequence given the value of `state` |
+| `error`   | an unspecified error has occurred                                                                                    |
+| `noconv`  | no termination is needed for this `state_type`                                                                       |
 
 ``` cpp
 int do_encoding() const noexcept;
@@ -1419,12 +1402,7 @@ int do_encoding() const noexcept;
 *Returns:* `-1` if the encoding of the `externT` sequence is
 state-dependent; else the constant number of `externT` characters needed
 to produce an internal character; or `0` if this number is not a
-constant.
-
-If `encoding()` yields `-1`, then more than `max_length()` `externT`
-elements can be consumed when producing a single `internT` character,
-and additional `externT` elements can appear at the end of a sequence
-after those that yield the final `internT` character.
+constant.[^10]
 
 ``` cpp
 bool do_always_noconv() const noexcept;
@@ -1485,7 +1463,7 @@ namespace std {
 The classes `num_get<>` and `num_put<>` handle numeric formatting and
 parsing. Virtual functions are provided for several numeric types.
 Implementations may (but are not required to) delegate extraction of
-smaller types to extractors for larger types.[^6]
+smaller types to extractors for larger types.[^11]
 
 All specifications of member functions for `num_put` and `num_get` in
 the subclauses of  [[category.numeric]] only apply to the
@@ -1640,87 +1618,6 @@ The details of this operation occur in three stages
 
 The details of the stages are presented below.
 
-<div class="description">
-
-The function initializes local variables via
-
-``` cpp
-fmtflags flags = str.flags();
-fmtflags basefield = (flags & ios_base::basefield);
-fmtflags uppercase = (flags & ios_base::uppercase);
-fmtflags boolalpha = (flags & ios_base::boolalpha);
-```
-
-For conversion to an integral type, the function determines the integral
-conversion specifier as indicated in [[facet.num.get.int]]. The table is
-ordered. That is, the first line whose condition is true applies.
-
-<div class="floattable">
-
-Integer conversionsfacet.num.get.int lc & `stdio` equivalent  
-`basefield == oct` & `%o`  
-`basefield == hex` & `%X`  
-`basefield == 0` & `%i`  
-`signed` integral type & `%d`  
-`unsigned` integral type & `%u`  
-
-</div>
-
-For conversions to a floating-point type the specifier is `%g`.
-
-For conversions to `void*` the specifier is `%p`.
-
-A length modifier is added to the conversion specification, if needed,
-as indicated in [[facet.num.get.length]].
-
-<div class="floattable">
-
-Length modifierfacet.num.get.length lc & Length modifier  
-`short` & `h`  
-`unsigned short` & `h`  
-`long` & `l`  
-`unsigned long` & `l`  
-`long long` & `ll`  
-`unsigned long long` & `ll`  
-`double` & `l`  
-`long double` & `L`  
-
-</div>
-
-If `in == end` then stage 2 terminates. Otherwise a `charT` is taken
-from `in` and local variables are initialized as if by
-
-``` cpp
-char_type ct = *in;
-char c = src[find(atoms, atoms + sizeof(src) - 1, ct) - atoms];
-if (ct == use_facet<numpunct<charT>>(loc).decimal_point())
-  c = '.';
-bool discard =
-  ct == use_facet<numpunct<charT>>(loc).thousands_sep()
-  && use_facet<numpunct<charT>>(loc).grouping().length() != 0;
-```
-
-where the values `src` and `atoms` are defined as if by:
-
-``` cpp
-static const char src[] = "0123456789abcdefpxABCDEFPX+-";
-char_type atoms[sizeof(src)];
-use_facet<ctype<charT>>(loc).widen(src, src + sizeof(src), atoms);
-```
-
-for this value of `loc`.
-
-If `discard` is `true`, then if `’.’` has not yet been accumulated, then
-the position of the character is remembered, but the character is
-otherwise ignored. Otherwise, if `’.’` has already been accumulated, the
-character is discarded and Stage 2 terminates. If it is not discarded,
-then a check is made to determine if `c` is allowed as the next
-character of an input field of the conversion specifier returned by
-Stage 1. If so, it is accumulated.
-
-If the character is either discarded or accumulated then `in` is
-advanced by `++in` and processing returns to the beginning of stage 2.
-
 \[*Example 1*:
 
 Given an input sequence of `"0x1a.bp+07p"`,
@@ -1735,34 +1632,6 @@ Given an input sequence of `"0x1a.bp+07p"`,
 In all cases, the remainder is left in the input.
 
 — *end example*\]
-
-The sequence of `char`s accumulated in stage 2 (the field) is converted
-to a numeric value by the rules of one of the functions declared in the
-header `<cstdlib>`:
-
-- For a signed integer value, the function `strtoll`.
-- For an unsigned integer value, the function `strtoull`.
-- For a `float` value, the function `strtof`.
-- For a `double` value, the function `strtod`.
-- For a `long double` value, the function `strtold`.
-
-The numeric value to be stored can be one of:
-
-- zero, if the conversion function does not convert the entire field.
-- the most positive (or negative) representable value, if the field to
-  be converted to a signed integer type represents a value too large
-  positive (or negative) to be represented in `val`.
-- the most positive representable value, if the field to be converted to
-  an unsigned integer type represents a value that cannot be represented
-  in `val`.
-- the converted value, otherwise.
-
-The resultant numeric value is stored in `val`. If the conversion
-function does not convert the entire field, or if the field represents a
-value outside the range of representable values, `ios_base::failbit` is
-assigned to `err`.
-
-</div>
 
 Digit grouping is checked. That is, the positions of discarded
 separators are examined for consistency with
@@ -1802,7 +1671,7 @@ match, it is found that `(in == end)`. If `val` is not set, then `err`
 is set to `str.failbit`; or to `(str.failbit|str.eofbit)` if the reason
 for the failure was that `(in == end)`.
 
-\[*Example 1*: For targets `true`: `"a"` and `false`: `"abb"`, the input
+\[*Example 2*: For targets `true`: `"a"` and `false`: `"abb"`, the input
 sequence `"a"` yields `val == true` and `err == str.eofbit`; the input
 sequence `"abc"` yields `err = str.failbit`, with `in` ending at the
 `’c’` element. For targets `true`: `"1"` and `false`: `"0"`, the input
@@ -1909,21 +1778,19 @@ Detailed descriptions of each stage follow.
 
 *Returns:* `out`.
 
-<div class="description">
+- **Stage 1:**
 
 The first action of stage 1 is to determine a conversion specifier. The
 tables that describe this determination use the following local
 variables
 
-``` cpp
-fmtflags flags = str.flags();
-fmtflags basefield =  (flags & (ios_base::basefield));
-fmtflags uppercase =  (flags & (ios_base::uppercase));
-fmtflags floatfield = (flags & (ios_base::floatfield));
-fmtflags showpos =    (flags & (ios_base::showpos));
-fmtflags showbase =   (flags & (ios_base::showbase));
-fmtflags showpoint =  (flags & (ios_base::showpoint));
-```
+    fmtflags flags = str.flags();
+    fmtflags basefield =  (flags & (ios_base::basefield));
+    fmtflags uppercase =  (flags & (ios_base::uppercase));
+    fmtflags floatfield = (flags & (ios_base::floatfield));
+    fmtflags showpos =    (flags & (ios_base::showpos));
+    fmtflags showbase =   (flags & (ios_base::showbase));
+    fmtflags showpoint =  (flags & (ios_base::showpoint));
 
 All tables used in describing stage 1 are ordered. That is, the first
 line whose condition is true applies. A line without a condition is the
@@ -1931,65 +1798,64 @@ default behavior when none of the earlier lines apply.
 
 For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
-[[facet.num.put.int]].
+@@REF:facet.num.put.int@@.
 
-<div class="floattable">
+**Table: Integer conversions**
 
-Integer conversionsfacet.num.put.int lc & `stdio` equivalent  
-`basefield == ios_base::oct` & `%o`  
-`(basefield == ios_base::hex) && !uppercase` & `%x`  
-`(basefield == ios_base::hex)` & `%X`  
-for a `signed` integral type & `%d`  
-for an `unsigned` integral type & `%u`  
+| State |
+| ----- |
+| `basefield == ios_base::oct` | `%o` |
+| `(basefield == ios_base::hex) && !uppercase` | `%x` |
+| `(basefield == ios_base::hex)` | `%X` |
+| for a `signed` integral type | `%d` |
+| for an `unsigned` integral type | `%u` |
 
-</div>
 
 For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
-[[facet.num.put.fp]].
+@@REF:facet.num.put.fp@@.
 
-<div class="floattable">
+**Table: Floating-point conversions**
 
-Floating-point conversionsfacet.num.put.fp lc & `stdio` equivalent  
-`floatfield == ios_base::fixed` & `%f`  
-`floatfield == ios_base::scientific && !uppercase` & `%e`  
-`floatfield == ios_base::scientific` & `%E`  
-`floatfield == (ios_base::fixed | ios_base::scientific) && !uppercase` &
-`%a`  
-`floatfield == (ios_base::fixed | ios_base::scientific)` & `%A`  
-`!uppercase` & `%g`  
-*otherwise* & `%G`  
+| State |
+| ----- |
+| `floatfield == ios_base::fixed` | `%f` |
+| `floatfield == ios_base::scientific && !uppercase` | `%e` |
+| `floatfield == ios_base::scientific` | `%E` |
+| `floatfield == (ios_base::fixed | ios_base::scientific) && !uppercase` | `%a` |
+| `floatfield == (ios_base::fixed | ios_base::scientific)` | `%A` |
+| `!uppercase` | `%g` |
+| otherwise | `%G` |
 
-</div>
 
 For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
-[[facet.num.put.length]].
+@@REF:facet.num.put.length@@.
 
-<div class="floattable">
+**Table: Length modifier**
 
-Length modifierfacet.num.put.length lc & Length modifier  
-`long` & `l`  
-`long long` & `ll`  
-`unsigned long` & `l`  
-`unsigned long long` & `ll`  
-`long double` & `L`  
-*otherwise* & *none*  
+| Type |
+| ---- |
+| `long` | `l` |
+| `long long` | `ll` |
+| `unsigned long` | `l` |
+| `unsigned long long` | `ll` |
+| `long double` | `L` |
+| otherwise | none |
 
-</div>
 
 The conversion specifier has the following optional additional
-qualifiers prepended as indicated in [[facet.num.put.conv]].
+qualifiers prepended as indicated in @@REF:facet.num.put.conv@@.
 
-<div class="floattable">
+**Table: Numeric conversions**
 
-Numeric conversionsfacet.num.put.conv llc & & `stdio` equivalent  
-an integral type & `showpos` & `+`  
-& `showbase` & `#`  
-a floating-point type & `showpos` & `+`  
-& `showpoint` & `#`  
+| Type(s) | State |
+| ------- | ----- |
+| an integral type | `showpos` | `+` |
+|         | `showbase` | `#` |
+| a floating-point type | `showpos` | `+` |
+|         | `showpoint` | `#` |
 
-</div>
 
 For conversion from a floating-point type, if
 `floatfield != (ios_base::fixed | ios_base::scientific)`,
@@ -2002,51 +1868,44 @@ The representations at the end of stage 1 consists of the `char`’s that
 would be printed by a call of `printf(s, val)` where `s` is the
 conversion specifier determined above.
 
+- **Stage 2:**
+
 Any character `c` other than a decimal point(.) is converted to a
 `charT` via
 
-``` cpp
-use_facet<ctype<charT>>(loc).widen(c)
-```
+    use_facet<ctype<charT>>(loc).widen(c)
 
 A local variable `punct` is initialized via
 
-``` cpp
-const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
-```
+    const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
 
 For arithmetic types, `punct.thousands_sep()` characters are inserted
 into the sequence as determined by the value returned by
 `punct.do_grouping()` using the method described
-in  [[facet.numpunct.virtuals]].
+in @@REF:facet.numpunct.virtuals@@.
 
 Decimal point characters(.) are replaced by `punct.decimal_point()`.
 
+- **Stage 3:**
+
 A local variable is initialized as
 
-``` cpp
-fmtflags adjustfield = (flags & (ios_base::adjustfield));
-```
+    fmtflags adjustfield = (flags & (ios_base::adjustfield));
 
 The location of any padding
 
-The conversion specification `#o` generates a leading `0` which is *not*
-a padding character.
+is determined according to @@REF:facet.num.put.fill@@.
 
-is determined according to [[facet.num.put.fill]].
+**Table: Fill padding**
 
-<div class="floattable">
+| State                                                                          | Location           |
+| ------------------------------------------------------------------------------ | ------------------ |
+| `adjustfield == ios_base::left`                                                | pad after          |
+| `adjustfield == ios_base::right`                                               | pad before         |
+| `adjustfield == internal` and a sign occurs in the representation              | pad after the sign |
+| `adjustfield == internal` and representation after stage 1 began with 0x or 0X | pad after x or X   |
+| otherwise                                                                      | pad before         |
 
-Fill paddingfacet.num.put.fill p3inl &  
-`adjustfield == ios_base::left` & pad after  
-`adjustfield == ios_base::right` & pad before  
-`adjustfield == internal` and a sign occurs in the representation & pad
-after the sign  
-`adjustfield == internal` and representation after stage 1 began with 0x
-or 0X & pad after x or X  
-*otherwise* & pad before  
-
-</div>
 
 If `str.width()` is nonzero and the number of `charT`’s in the sequence
 after stage 2 is less than `str.width()`, then enough `fill` characters
@@ -2055,13 +1914,11 @@ the length of the sequence to `str.width()`.
 
 `str.width(0)` is called.
 
+- **Stage 4:**
+
 The sequence of `charT`’s at the end of stage 3 are output via
 
-``` cpp
-*out++ = c
-```
-
-</div>
+    *out++ = c
 
 ``` cpp
 iter_type do_put(iter_type out, ios_base& str, char_type fill, bool val) const;
@@ -2225,11 +2082,7 @@ string do_grouping() const;
 ```
 
 *Returns:* A `string` `vec` used as a vector of integer values, in which
-each element `vec[i]` represents the number of digits
-
-Thus, the string `"\003"` specifies groups of 3 digits each, and `"3"`
-probably indicates groups of 51 (!) digits each, because 51 is the ASCII
-value of `"3"`.
+each element `vec[i]` represents the number of digits[^12]
 
 in the group at position `i`, starting with position 0 as the rightmost
 group. If `vec.size() <= i`, the number is the same as group `(i - 1)`;
@@ -2356,10 +2209,7 @@ string_type do_transform(const charT* low, const charT* high) const;
 *Returns:* A `basic_string<charT>` value that, compared
 lexicographically with the result of calling `transform()` on another
 string, yields the same result as calling `do_compare()` on the same two
-strings.
-
-This function is useful when one string is being compared to many other
-strings.
+strings.[^13]
 
 ``` cpp
 long do_hash(const charT* low, const charT* high) const;
@@ -2468,7 +2318,7 @@ as produced by a corresponding format specifier to `time_put<>::put`. If
 the sequence being parsed matches the correct format, the corresponding
 members of the `tm` argument are set to the values used to produce the
 sequence; otherwise either an error is reported or unspecified values
-are assigned.[^7]
+are assigned.[^14]
 
 If the end iterator is reached during parsing by any of the `get()`
 member functions, the member sets `ios_base::eofbit` in `err`.
@@ -2574,10 +2424,7 @@ dateorder do_date_order() const;
 
 *Returns:* An enumeration value indicating the preferred order of
 components for those date formats that are composed of day, month, and
-year.
-
-This function is intended as a convenience only, for common formats, and
-can return `no_order` in valid locales.
+year.[^15]
 
 Returns `no_order` if the date format specified by `’x’` contains other
 variable components (e.g., Julian day, week number, week day).
@@ -2605,17 +2452,6 @@ iter_type do_get_date(iter_type s, iter_type end, ios_base& str,
 to produce one of the following formats, or until it encounters an
 error. The format depends on the value returned by `date_order()` as
 shown in [[locale.time.get.dogetdate]].
-
-<div class="libtab2">
-
-`do_get_date` effectslocale.time.get.dogetdate ll`date_order()`Format
-`no_order` & `"%m%d%y"`  
-`dmy` & `"%d%m%y"`  
-`mdy` & `"%m%d%y"`  
-`ymd` & `"%y%m%d"`  
-`ydm` & `"%y%d%m"`  
-
-</div>
 
 An implementation may also accept additional *implementation-defined*
 formats.
@@ -2753,10 +2589,7 @@ pattern. Format sequences are identified by converting each character
 `c` to a `char` value as if by `ct.narrow(c, 0)`, where `ct` is a
 reference to `ctype<charT>` obtained from `str.getloc()`. The first
 character of each sequence is equal to `’%’`, followed by an optional
-modifier character `mod`
-
-Although the C programming language defines no modifiers, most vendors
-do.
+modifier character `mod`[^16]
 
 and a format specifier character `spec` as defined for the function
 `strftime`. If no modifier character is present, `mod` is zero. For each
@@ -2894,8 +2727,8 @@ facet reference `mp` and the character mapping specified by a
 `ctype<charT>` facet reference `ct` obtained from the locale returned by
 `str.getloc()`, and `str.flags()`. If a valid sequence is recognized,
 does not change `err`; otherwise, sets `err` to `(err|str.failbit)`, or
-`(err|str.failbit|str.eofbit)` if no more characters are available, and
-does not change `units` or `digits`. Uses the pattern returned by
+`(err|str.failbit|str.eof``bit)` if no more characters are available,
+and does not change `units` or `digits`. Uses the pattern returned by
 `mp.neg_format()` to parse all values. The result is returned as an
 integral value stored in `units` or as a sequence of digits possibly
 preceded by a minus sign (as produced by `ct.widen(c)` where `c` is
@@ -2945,9 +2778,7 @@ Digits in the numeric monetary component are extracted and placed in
 `digits`, or into a character buffer `buf1` for conversion to produce a
 value for `units`, in the order in which they appear, preceded by a
 minus sign if and only if the result is negative. The value `units` is
-produced as if by
-
-The semantics here are different from `ct.narrow`.
+produced as if by[^17]
 
 ``` cpp
 for (int i = 0; i < n; ++i)
@@ -3108,7 +2939,7 @@ The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
 value `static_cast<part>(p.field[i])` determines the `i`^\text{th}
-component of the format[^8]
+component of the format[^18]
 
 In the `field` member of a `pattern` object, each value `symbol`,
 `sign`, `value`, and either `space` or `none` appears exactly once. The
@@ -3199,27 +3030,21 @@ charT do_decimal_point() const;
 ```
 
 *Returns:* The radix separator to use in case `do_frac_digits()` is
-greater than zero.
-
-In common U.S. locales this is `’.’`.
+greater than zero.[^19]
 
 ``` cpp
 charT do_thousands_sep() const;
 ```
 
 *Returns:* The digit group separator to use in case `do_grouping()`
-specifies a digit grouping pattern.
-
-In common U.S. locales this is `’,’`.
+specifies a digit grouping pattern.[^20]
 
 ``` cpp
 string do_grouping() const;
 ```
 
 *Returns:* A pattern defined identically as, but not necessarily equal
-to, the result of `numpunct<charT>::do_grouping()`.
-
-To specify grouping by 3s, the value is `"\003"` *not* `"3"`.
+to, the result of `numpunct<charT>::do_grouping()`.[^21]
 
 ``` cpp
 string_type do_curr_symbol() const;
@@ -3237,9 +3062,7 @@ string_type do_negative_sign() const;
 ```
 
 *Returns:* `do_positive_sign()` returns the string to use to indicate a
-positive monetary value;
-
-This is usually the empty string.
+positive monetary value;[^22]
 
 `do_negative_sign()` returns the string to use to indicate a negative
 value.
@@ -3249,9 +3072,7 @@ int do_frac_digits() const;
 ```
 
 *Returns:* The number of digits after the decimal radix separator, if
-any.
-
-In common U.S. locales, this is 2.
+any.[^23]
 
 ``` cpp
 pattern do_pos_format() const;
@@ -3267,10 +3088,7 @@ pattern do_neg_format() const;
 - `moneypunct<wchar_t, true>`,
 
 return an object of type `pattern` initialized to
-`{ symbol, sign, none, value }`.
-
-Note that the international symbol returned by `do_curr_symbol()`
-usually contains a space, itself; for example, `"USD "`.
+`{ symbol, sign, none, value }`.[^24]
 
 #### Class template `moneypunct_byname` <a id="locale.moneypunct.byname">[[locale.moneypunct.byname]]</a>
 
@@ -3569,14 +3387,6 @@ the functions listed in [[setlocale.data.races]].
 [category.monetary]: #category.monetary
 [category.numeric]: #category.numeric
 [category.time]: #category.time
-[facet.num.get.int]: #facet.num.get.int
-[facet.num.get.length]: #facet.num.get.length
-[facet.num.put.conv]: #facet.num.put.conv
-[facet.num.put.fill]: #facet.num.put.fill
-[facet.num.put.fp]: #facet.num.put.fp
-[facet.num.put.int]: #facet.num.put.int
-[facet.num.put.length]: #facet.num.put.length
-[facet.numpunct.virtuals]: #facet.numpunct.virtuals
 [file.streams]: input.md#file.streams
 [ios.base]: input.md#ios.base
 [istream.formatted]: input.md#istream.formatted
@@ -3618,19 +3428,67 @@ the functions listed in [[setlocale.data.races]].
 [^4]: When used in a loop, it is faster to cache the `ctype<>` facet and
     use it directly, or use the vector form of `ctype<>::is`.
 
-[^5]: Only the `char` (not `unsigned char` and `signed char`) form is
+[^5]: The parameter `c` of `do_widen` is intended to accept values
+    derived from *character-literal*s for conversion to the locale’s
+    encoding.
+
+[^6]: In other words, the transformed character is not a member of any
+    character classification that `c` is not also a member of.
+
+[^7]: Only the `char` (not `unsigned char` and `signed char`) form is
     provided. The specialization is specified in the standard, and not
     left as an implementation detail, because it affects the derivation
     interface for `ctype<char>`.
 
-[^6]: Parsing `"-1"` correctly into, e.g., an `unsigned short` requires
+[^8]: Informally, this means that `basic_filebuf` assumes that the
+    mappings from internal to external characters is 1 to N: that a
+    `codecvt` facet that is used by `basic_filebuf` can translate
+    characters one internal character at a time.
+
+[^9]: Typically these will be characters to return the state to
+    `stateT()`.
+
+[^10]: If `encoding()` yields `-1`, then more than `max_length()`
+    `externT` elements can be consumed when producing a single `internT`
+    character, and additional `externT` elements can appear at the end
+    of a sequence after those that yield the final `internT` character.
+
+[^11]: Parsing `"-1"` correctly into, e.g., an `unsigned short` requires
     that the corresponding member `get()` at least extract the sign
     before delegating.
 
-[^7]: In other words, user confirmation is required for reliable parsing
-    of user-entered dates and times, but machine-generated formats can
-    be parsed reliably. This allows parsers to be aggressive about
-    interpreting user variations on standard formats.
+[^12]: Thus, the string `"\003"` specifies groups of 3 digits each, and
+    `"3"` probably indicates groups of 51 (!) digits each, because 51 is
+    the ASCII value of `"3"`.
 
-[^8]: An array of `char`, rather than an array of `part`, is specified
+[^13]: This function is useful when one string is being compared to many
+    other strings.
+
+[^14]: In other words, user confirmation is required for reliable
+    parsing of user-entered dates and times, but machine-generated
+    formats can be parsed reliably. This allows parsers to be aggressive
+    about interpreting user variations on standard formats.
+
+[^15]: This function is intended as a convenience only, for common
+    formats, and can return `no_order` in valid locales.
+
+[^16]: Although the C programming language defines no modifiers, most
+    vendors do.
+
+[^17]: The semantics here are different from `ct.narrow`.
+
+[^18]: An array of `char`, rather than an array of `part`, is specified
     for `pattern::field` purely for efficiency.
+
+[^19]: In common U.S. locales this is `’.’`.
+
+[^20]: In common U.S. locales this is `’,’`.
+
+[^21]: To specify grouping by 3s, the value is `"\003"` *not* `"3"`.
+
+[^22]: This is usually the empty string.
+
+[^23]: In common U.S. locales, this is 2.
+
+[^24]: Note that the international symbol returned by `do_curr_symbol()`
+    usually contains a space, itself; for example, `"USD "`.

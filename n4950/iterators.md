@@ -3302,7 +3302,7 @@ constexpr const auto* operator->() const
 ```
 
 *Returns:* If `Iterator` models `contiguous_iterator`,
-`to_address(`*`current_`*`)`; otherwise, `addressof(*`*`current_`*`)`.
+`to_address(`*`current_`*`)`; otherwise, `address``of(*`*`current_`*`)`.
 
 ``` cpp
 constexpr basic_const_iterator& operator++();
@@ -4165,7 +4165,7 @@ common_iterator tmp = *this;
 return tmp;
 ```
 
-Otherwise, if `requires(I& i) { { *i++ } -> ; }` is `true` or
+Otherwise, if `requires(I& i) { { *i++ } -> ``; }` is `true` or
 
 ``` cpp
 indirectly_readable<I> && constructible_from<iter_value_t<I>, iter_reference_t<I>> &&

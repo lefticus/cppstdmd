@@ -1323,24 +1323,10 @@ The following macro names shall be defined by the implementation:
 
 The integer literal `202302L`.
 
-<div class="note">
-
-Future revisions of C++ will replace the value of this macro with a
-greater value.
-
-</div>
-
 - **The names listed in \tref{cpp.predefined.ft}.**
 
 The macros defined in shall be defined to the corresponding integer
 literal.
-
-<div class="note">
-
-Future revisions of C++ might replace the values of these macros with
-greater values.
-
-</div>
 
 - **`__DATE__`**
 
@@ -1356,22 +1342,10 @@ shall be supplied.
 The presumed name of the current source file (a character string
 literal).
 
-<div class="footnote">
-
-The presumed source file name can be changed by the `#line` directive.
-
-</div>
-
 - **`__LINE__`**
 
 The presumed line number (within the current source file) of the current
 source line (an integer literal).
-
-<div class="footnote">
-
-The presumed line number can be changed by the `#line` directive.
-
-</div>
 
 - **`__STDC_HOSTED__`**
 
@@ -1384,13 +1358,6 @@ or the integer literal `0` if it is a freestanding implementation
 An integer literal of type `std::size_t` whose value is the alignment
 guaranteed by a call to `operator new(std::size_t)` or
 `operator new[](std::size_t)`.
-
-<div class="note">
-
-Larger alignments will be passed to
-`operator new(std::size_t, std::align_val_t)`, etc. \[\[expr.new\]\].
-
-</div>
 
 - **`__STDCPP_FLOAT16_T__`**
 
@@ -1420,9 +1387,7 @@ binary128 as an extended floating-point type.
 
 Defined as the integer literal `1` if and only if the implementation
 supports an extended floating-point type with the properties of the
-\*typedef-name\* `std::bfloat16_t` as described in
-<a href="#basic.extended.fp" data-reference-type="ref"
-data-reference="basic.extended.fp">[basic.extended.fp]</a>.
+\*typedef-name\* `std::bfloat16_t` as described in .
 
 - **`__TIME__`**
 

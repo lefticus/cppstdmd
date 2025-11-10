@@ -1649,7 +1649,7 @@ where *`units-suffix`* depends on the type `Period::type` as follows:
 - Otherwise, if `Period::type` is `pico`, *`units-suffix`* is `"ps"`.
 - Otherwise, if `Period::type` is `nano`, *`units-suffix`* is `"ns"`.
 - Otherwise, if `Period::type` is `micro`, it is
-  *implementation-defined* whether *`units-suffix`* is `"s"`
+  *implementation-defined* whether *`units-suffix`* is `"`\textmu`s"`
   (`"\u00b5\u0073"`) or `"us"`.
 - Otherwise, if `Period::type` is `milli`, *`units-suffix`* is `"ms"`.
 - Otherwise, if `Period::type` is `centi`, *`units-suffix`* is `"cs"`.
@@ -2226,14 +2226,16 @@ for (auto i = 0; i < 8; ++i, u += 250ms)
 
 Produces this output:
 
-<div class="outputblock">
-
-2015-06-30 23:59:59.500 UTC 2015-06-30 23:59:59.750 UTC 2015-06-30
-23:59:60.000 UTC 2015-06-30 23:59:60.250 UTC 2015-06-30 23:59:60.500 UTC
-2015-06-30 23:59:60.750 UTC 2015-07-01 00:00:00.000 UTC 2015-07-01
-00:00:00.250 UTC
-
-</div>
+``` text
+2015-06-30 23:59:59.500 UTC
+2015-06-30 23:59:59.750 UTC
+2015-06-30 23:59:60.000 UTC
+2015-06-30 23:59:60.250 UTC
+2015-06-30 23:59:60.500 UTC
+2015-06-30 23:59:60.750 UTC
+2015-07-01 00:00:00.000 UTC
+2015-07-01 00:00:00.250 UTC
+```
 
 — *end example*\]
 
@@ -2394,11 +2396,9 @@ cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, tt);
 
 Produces this output:
 
-<div class="outputblock">
-
+``` text
 2000-01-01 00:00:00 UTC == 2000-01-01 00:00:32 TAI
-
-</div>
+```
 
 — *end example*\]
 
@@ -2536,11 +2536,9 @@ cout << format("{0:%F %T %Z} == {1:%F %T %Z}\n", st, gt);
 
 Produces this output:
 
-<div class="outputblock">
-
+``` text
 2000-01-01 00:00:00 UTC == 2000-01-01 00:00:13 GPS
-
-</div>
+```
 
 — *end example*\]
 
@@ -6012,28 +6010,25 @@ See  [[time.hms.width]] for some durations, the resulting
 `fractional_width`, and the formatted fractional second output of
 `Duration{1}`.
 
-<div class="LongTable">
+**Table: Examples for `fractional_width`**
 
-Examples for `fractional_width` time.hms.width llx.3  
-& &  
-  
-& &  
-`hours`, `minutes`, and `seconds` & `0` &  
-`milliseconds` & `3` & `0.001`  
-`microseconds` & `6` & `0.000001`  
-`nanoseconds` & `9` & `0.000000001`  
-`duration<int, ratio<1, 2>>` & `1` & `0.5`  
-`duration<int, ratio<1, 3>>` & `6` & `0.333333`  
-`duration<int, ratio<1, 4>>` & `2` & `0.25`  
-`duration<int, ratio<1, 5>>` & `1` & `0.2`  
-`duration<int, ratio<1, 6>>` & `6` & `0.166666`  
-`duration<int, ratio<1, 7>>` & `6` & `0.142857`  
-`duration<int, ratio<1, 8>>` & `3` & `0.125`  
-`duration<int, ratio<1, 9>>` & `6` & `0.111111`  
-`duration<int, ratio<1, 10>>` & `1` & `0.1`  
-`duration<int, ratio<756, 625>>` & `4` & `0.2096`  
+|                                   |     |               |
+| --------------------------------- | --- | ------------- |
+| `hours`, `minutes`, and `seconds` | `0` |               |
+| `milliseconds`                    | `3` | `0.001`       |
+| `microseconds`                    | `6` | `0.000001`    |
+| `nanoseconds`                     | `9` | `0.000000001` |
+| `duration<int, ratio<1, 2>>`      | `1` | `0.5`         |
+| `duration<int, ratio<1, 3>>`      | `6` | `0.333333`    |
+| `duration<int, ratio<1, 4>>`      | `2` | `0.25`        |
+| `duration<int, ratio<1, 5>>`      | `1` | `0.2`         |
+| `duration<int, ratio<1, 6>>`      | `6` | `0.166666`    |
+| `duration<int, ratio<1, 7>>`      | `6` | `0.142857`    |
+| `duration<int, ratio<1, 8>>`      | `3` | `0.125`       |
+| `duration<int, ratio<1, 9>>`      | `6` | `0.111111`    |
+| `duration<int, ratio<1, 10>>`     | `1` | `0.1`         |
+| `duration<int, ratio<756, 625>>`  | `4` | `0.2096`      |
 
-</div>
 
 — *end example*\]
 
@@ -6290,7 +6285,7 @@ const tzdb& front() const noexcept;
 *Synchronization:* This operation is thread-safe with respect to
 `reload_tzdb()`.
 
-\[*Note 2*: `reload_tzdb()` pushes a new `tzdb` onto the front of this
+\[*Note 1*: `reload_tzdb()` pushes a new `tzdb` onto the front of this
 container. — *end note*\]
 
 *Returns:* A reference to the first `tzdb` in the container.
@@ -6306,7 +6301,7 @@ const_iterator erase_after(const_iterator p);
 *Ensures:* No pointers, references, or iterators are invalidated except
 those referring to the erased `tzdb`.
 
-\[*Note 3*: It is not possible to erase the `tzdb` referred to by
+\[*Note 2*: It is not possible to erase the `tzdb` referred to by
 `begin()`. — *end note*\]
 
 *Returns:* An iterator pointing to the element following the one that
@@ -6475,13 +6470,12 @@ int main() {
 
 Produces the output:
 
-<div class="outputblock">
-
-2016-03-13 02:30:00 is in a gap between 2016-03-13 02:00:00 EST and
-2016-03-13 03:00:00 EDT which are both equivalent to 2016-03-13 07:00:00
-UTC
-
-</div>
+``` text
+2016-03-13 02:30:00 is in a gap between
+2016-03-13 02:00:00 EST and
+2016-03-13 03:00:00 EDT which are both equivalent to
+2016-03-13 07:00:00 UTC
+```
 
 — *end example*\]
 
@@ -6539,13 +6533,11 @@ int main() {
 
 Produces the output:
 
-<div class="outputblock">
-
-2016-11-06 01:30:00 is ambiguous. It could be 2016-11-06 01:30:00 EDT ==
-2016-11-06 05:30:00 UTC or 2016-11-06 01:30:00 EST == 2016-11-06
-06:30:00 UTC
-
-</div>
+``` text
+2016-11-06 01:30:00 is ambiguous.  It could be
+2016-11-06 01:30:00 EDT == 2016-11-06 05:30:00 UTC or
+2016-11-06 01:30:00 EST == 2016-11-06 06:30:00 UTC
+```
 
 — *end example*\]
 

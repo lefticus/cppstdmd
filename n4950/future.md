@@ -436,16 +436,6 @@ strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.alloc]].
 
-<div class="libtab2">
-
-`strstreambuf(void* (*)(size_t), void (*)(void*))` effects
-depr.strstreambuf.cons.alloc ll ElementValue `strmode` & `dynamic`  
-`alsize` & an unspecified value  
-`palloc` & `palloc_arg`  
-`pfree` & `pfree_arg`  
-
-</div>
-
 ``` cpp
 strstreambuf(char* gnext_arg, streamsize n, char* pbeg_arg = nullptr);
 strstreambuf(signed char* gnext_arg, streamsize n,
@@ -458,24 +448,12 @@ strstreambuf(unsigned char* gnext_arg, streamsize n,
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.ptr]].
 
-<div class="libtab2">
-
-`strstreambuf(charT*, streamsize, charT*)` effects
-depr.strstreambuf.cons.ptr ll ElementValue `strmode` & 0  
-`alsize` & an unspecified value  
-`palloc` & a null pointer  
-`pfree` & a null pointer  
-
-</div>
-
 `gnext_arg` shall point to the first element of an array object whose
 number of elements `N` is determined as follows:
 
 - If `n > 0`, `N` is `n`.
 - If `n == 0`, `N` is `std::strlen(gnext_arg)`.
-- If `n < 0`, `N` is `INT_MAX`. The function signature
-  `strlen(const char*)` is declared in `<cstring>`. The macro `INT_MAX`
-  is defined in `<climits>`.
+- If `n < 0`, `N` is `INT_MAX`.[^1]
 
 If `pbeg_arg` is a null pointer, the function executes:
 
@@ -633,33 +611,9 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 sequences, if possible, as indicated in
 [[depr.strstreambuf.seekoff.pos]].
 
-<div class="libtab2">
-
-`seekoff` positioningdepr.strstreambuf.seekoff.pos
-p2.5inlConditionsResult `(which & ios::in) != 0` & positions the input
-sequence  
-`(which & ios::out) != 0` & positions the output sequence  
-`(which & (ios::in | ios::out)) ==` `(ios::in | ios::out)` and either
-`way == ios::beg` or `way == ios::end` & positions both the input and
-the output sequences  
-Otherwise & the positioning operation fails.  
-
-</div>
-
 For a sequence to be positioned, if its next pointer is a null pointer,
 the positioning operation fails. Otherwise, the function determines
 `newoff` as indicated in [[depr.strstreambuf.seekoff.newoff]].
-
-<div class="libtab2">
-
-`newoff` valuesdepr.strstreambuf.seekoff.newoff
-p2.0inp2.0inCondition`newoff` Value `way == ios::beg` & 0  
-`way == ios::cur` & the next pointer minus the beginning pointer
-(`xnext - xbeg`).  
-`way == ios::end` & `seekhigh` minus the beginning pointer
-(`seekhigh - xbeg`).  
-
-</div>
 
 If `(newoff + off) < (seeklow - xbeg)` or
 `(seekhigh - xbeg) < (newoff + off)`, the positioning operation fails.
@@ -820,8 +774,7 @@ one of two constructors:
 - If `(mode & app) != 0`, then `s` shall designate the first element of
   an array of `n` elements that contains an NTBS whose first element is
   designated by `s`. The constructor is
-  `strstreambuf(s, n, s + std::strlen(s))`. The function signature
-  `strlen(const char*)` is declared in `<cstring>`.
+  `strstreambuf(s, n, s + std::strlen(s))`.[^2]
 
 #### Member functions <a id="depr.ostrstream.members">[[depr.ostrstream.members]]</a>
 
@@ -2109,3 +2062,9 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 [system.error.syn]: diagnostics.md#system.error.syn
 [temp.names]: temp.md#temp.names
 [term.unevaluated.operand]: #term.unevaluated.operand
+
+[^1]: The function signature `strlen(const char*)` is declared in
+    `<cstring>`. The macro `INT_MAX` is defined in `<climits>`.
+
+[^2]: The function signature `strlen(const char*)` is declared in
+    `<cstring>`.

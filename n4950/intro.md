@@ -51,19 +51,13 @@ where they are used and italicized where they are defined.
 ⟨execution-time action⟩ read or modify the value of an object
 
 \[*Note 1 to entry*: Only glvalues of scalar type can be used to access
-objects. Reads of scalar objects are described in
-<a href="#conv.lval" data-reference-type="ref"
-data-reference="conv.lval">[conv.lval]</a> and modifications of scalar
-objects are described in <a href="#expr.ass" data-reference-type="ref"
-data-reference="expr.ass">[expr.ass]</a>,
-<a href="#expr.post.incr" data-reference-type="ref"
-data-reference="expr.post.incr">[expr.post.incr]</a>, and
-<a href="#expr.pre.incr" data-reference-type="ref"
-data-reference="expr.pre.incr">[expr.pre.incr]</a>. Attempts to read or
-modify an object of class type typically invoke a constructor or
-assignment operator; such invocations do not themselves constitute
-accesses, although they may involve accesses of scalar
-subobjects. — *end note*\]
+objects. Reads of scalar objects are described in [[conv.lval]] and
+modifications of scalar objects are described in [[expr.ass]],
+[[expr.post.incr]], and [[expr.pre.incr]]. Attempts to read or modify an
+object of class type typically invoke a constructor [[class.ctor]] or
+assignment operator [[class.copy.assign]]; such invocations do not
+themselves constitute accesses, although they may involve accesses of
+scalar subobjects. — *end note*\]
 
 #### 2 arbitrary-positional stream <a id="defns.arbitrary.stream">[defns.arbitrary.stream]</a>
 
@@ -71,7 +65,7 @@ subobjects. — *end note*\]
 length of the stream
 
 \[*Note 1 to entry*: Every arbitrary-positional stream is also a
-repositional stream. — *end note*\]
+repositional stream [[defns.repositional.stream]]. — *end note*\]
 
 #### 3 argument <a id="defns.argument">[defns.argument]</a>
 
@@ -107,16 +101,11 @@ satisfied before continuing execution past the blocking operation
 
 ⟨library⟩ object which, when treated sequentially, can represent text
 
-\[*Note 1 to entry*: The term does not mean only , `char8_t`,
-`char16_t`, `char32_t`, and `wchar_t` objects, but any value that can be
-represented by a type that provides the definitions specified in
-<a href="#strings" data-reference-type="ref"
-data-reference="strings">[strings]</a>,
-<a href="#localization" data-reference-type="ref"
-data-reference="localization">[localization]</a>,
-<a href="#input.output" data-reference-type="ref"
-data-reference="input.output">[input.output]</a>,
-or <a href="#re" data-reference-type="ref" data-reference="re">[re]</a>. — *end note*\]
+\[*Note 1 to entry*: The term does not mean only `char`, `char8_t`,
+`char16_t`, `char32_t`, and `wchar_t` objects [[basic.fundamental]], but
+any value that can be represented by a type that provides the
+definitions specified in [[strings]], [[localization]],
+[[input.output]], or  [[re]]. — *end note*\]
 
 #### 10 character container type <a id="defns.character.container">[defns.character.container]</a>
 
@@ -136,9 +125,9 @@ collate as if they were a single character
 ⟨library⟩ group of library entities directly related as members,
 parameters, or return types
 
-\[*Note 1 to entry*: For example, the class template and the non-member
-function templates that operate on strings are referred to as the
-*string component*. — *end note*\]
+\[*Note 1 to entry*: For example, the class template `basic_string` and
+the non-member function templates that operate on strings are referred
+to as the *string component*. — *end note*\]
 
 #### 13 conditionally-supported <a id="defns.cond.supp">[defns.cond.supp]</a>
 
@@ -215,8 +204,8 @@ C++ program
 
 \[*Note 1 to entry*: A C++ program may designate a handler function at
 various points in its execution by supplying a pointer to the function
-when calling any of the library functions that install handler
-functions. — *end note*\]
+when calling any of the library functions that install handler functions
+[[support]]. — *end note*\]
 
 #### 25 ill-formed program <a id="defns.ill.formed">[defns.ill.formed]</a>
 
@@ -242,11 +231,11 @@ restrictions imposed upon programs by the implementation
 ⟨library⟩ templates that are declared in header `<iosfwd>` and take two
 template arguments
 
-\[*Note 1 to entry*: The arguments are named and . The argument is a
-character container class, and the argument is a class which defines
-additional characteristics and functions of the character type
-represented by necessary to implement the iostream class
-templates. — *end note*\]
+\[*Note 1 to entry*: The arguments are named `charT` and `traits`. The
+argument `charT` is a character container class, and the argument
+`traits` is a class which defines additional characteristics and
+functions of the character type represented by `charT` necessary to
+implement the iostream class templates. — *end note*\]
 
 #### 30 locale-specific behavior <a id="defns.locale.specific">[defns.locale.specific]</a>
 
@@ -327,7 +316,8 @@ closure type of a non-implementation-provided lambda expression, or an
 instantiation of a program-defined specialization
 
 \[*Note 1 to entry*: Types defined by the implementation include
-extensions and internal types used by the library. — *end note*\]
+extensions [[intro.compliance]] and internal types used by the
+library. — *end note*\]
 
 #### 44 projection <a id="defns.projection">[defns.projection]</a>
 
@@ -368,8 +358,8 @@ program
 
 \[*Note 1 to entry*: Only one definition for such a function is in
 effect for the duration of the program’s execution, as the result of
-creating the program and resolving the definitions of all translation
-units. — *end note*\]
+creating the program [[lex.phases]] and resolving the definitions of all
+translation units [[basic.link]]. — *end note*\]
 
 #### 48 repositional stream <a id="defns.repositional.stream">[defns.repositional.stream]</a>
 
@@ -384,7 +374,7 @@ and the behavior of any such function definition in the program
 
 \[*Note 1 to entry*: If such a function defined in a C++ program fails
 to meet the required behavior when it executes, the behavior is
-undefined. — *end note*\]
+undefined.  — *end note*\]
 
 #### 50 reserved function <a id="defns.reserved.function">[defns.reserved.function]</a>
 
@@ -392,7 +382,7 @@ undefined. — *end note*\]
 is defined by the implementation
 
 \[*Note 1 to entry*: If a C++ program provides a definition for any
-reserved function, the results are undefined. — *end note*\]
+reserved function, the results are undefined.  — *end note*\]
 
 #### 51 signature <a id="defns.signature">[defns.signature]</a>
 
@@ -455,8 +445,7 @@ parameter names and default arguments, and *requires-clause* (if any)
 algorithm, the order of elements
 
 \[*Note 1 to entry*: Requirements for stable algorithms are given in
-<a href="#algorithm.stable" data-reference-type="ref"
-data-reference="algorithm.stable">[algorithm.stable]</a>. — *end note*\]
+[[algorithm.stable]]. — *end note*\]
 
 #### 61 static type <a id="defns.static.type">[defns.static.type]</a>
 
@@ -497,10 +486,8 @@ or without the issuance of a diagnostic message), to terminating a
 translation or execution (with the issuance of a diagnostic message).
 Many erroneous program constructs do not engender undefined behavior;
 they are required to be diagnosed. Evaluation of a constant expression
-never exhibits behavior explicitly specified as undefined in
-<a href="#intro" data-reference-type="ref"
-data-reference="intro">[intro]</a> through
-<a href="#cpp" data-reference-type="ref" data-reference="cpp">[cpp]</a>. — *end note*\]
+[[expr.const]] never exhibits behavior explicitly specified as undefined
+in [[intro]] through [[cpp]]. — *end note*\]
 
 #### 66 unspecified behavior <a id="defns.unspecified">[defns.unspecified]</a>
 
@@ -725,29 +712,45 @@ the following rules:
 [syntax]: #syntax
 
 <!-- Link reference definitions -->
+[algorithm.stable]: library.md#algorithm.stable
+[basic.fundamental]: basic.md#basic.fundamental
 [basic.link]: basic.md#basic.link
 [class.access]: class.md#class.access
+[class.copy.assign]: class.md#class.copy.assign
+[class.ctor]: class.md#class.ctor
 [class.derived]: class.md#class.derived
 [compliance]: library.md#compliance
+[conv.lval]: expr.md#conv.lval
 [cpp]: cpp.md#cpp
 [cpp.error]: cpp.md#cpp.error
 [dcl.pre]: dcl.md#dcl.pre
 [dcl.ptr]: dcl.md#dcl.ptr
 [dcl.ref]: dcl.md#dcl.ref
+[defns.repositional.stream]: #defns.repositional.stream
 [defns.well.formed]: #defns.well.formed
 [depr]: #depr
 [diff]: #diff
 [diff.library]: compatibility.md#diff.library
+[expr.ass]: expr.md#expr.ass
 [expr.call]: expr.md#expr.call
+[expr.const]: expr.md#expr.const
+[expr.post.incr]: expr.md#expr.post.incr
+[expr.pre.incr]: expr.md#expr.pre.incr
 [gram]: #gram
 [implimits]: #implimits
+[input.output]: input.md#input.output
+[intro]: #intro
 [intro.abstract]: #intro.abstract
+[intro.compliance]: #intro.compliance
 [intro.compliance.general]: #intro.compliance.general
 [intro.defs]: #intro.defs
 [intro.execution]: basic.md#intro.execution
 [lex]: lex.md#lex
 [lex.phases]: lex.md#lex.phases
 [library]: library.md#library
+[localization]: localization.md#localization
+[re]: re.md#re
+[strings]: strings.md#strings
 [support]: support.md#support
 [syntax]: #syntax
 [temp.deduct]: temp.md#temp.deduct

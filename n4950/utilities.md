@@ -878,7 +878,7 @@ template<pair-like P> constexpr pair& operator=(P&& p);
   `true`.
 
 *Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
-`get<1>(std::forward<P>(p))` to `second`.
+`get<1>(std::forward<P>(p))` to `sec``ond`.
 
 *Returns:* `*this`.
 
@@ -896,7 +896,7 @@ template<pair-like P> constexpr const pair& operator=(P&& p) const;
   `true`.
 
 *Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
-`get<1>(std::forward<P>(p))` to `second`.
+`get<1>(std::forward<P>(p))` to `sec``ond`.
 
 *Returns:* `*this`.
 
@@ -1408,7 +1408,7 @@ Let *disambiguating-constraint* be:
 - `negation<is_same<remove_cvref_t<``U₀``>, tuple>>` if
   `sizeof...(Types)` is 1;
 - otherwise,
-  `bool_constant<!is_same_v<remove_cvref_t<``U₀``>, allocator_arg_t> || is_-same_v<remove_cvref_t<``T₀``>, allocator_arg_t>>`
+  `bool_constant<!is_same_v<remove_cvref_t<``U₀``>, allocator_arg_t> || is_-`\newline`same_v<remove_cvref_t<``T₀``>, allocator_arg_t>>`
   if `sizeof...(Types)` is 2 or 3;
 - otherwise, `true_type`.
 
@@ -1541,7 +1541,7 @@ Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
 - `(is_constructible_v<Types, decltype(get<I>(std::forward<UTuple>(u)))> && ...)`
-  is `true`, and
+  is\linebreak `true`, and
 - either `sizeof...(Types)` is not `1`, or (when `Types...` expands to
   `T`) `is_convertible_v<UTuple, T>` and `is_constructible_v<T, UTuple>`
   are both `false`.
@@ -2097,15 +2097,15 @@ template<size_t I, class... Types>
 *Returns:* A reference to the `I`^\text{th} element of `t`, where
 indexing is zero-based.
 
-\[*Note 1*: If a type `T` in `Types` is some reference type `X&`, the
-return type is `X&`, not `X&&`. However, if the element type is a
-non-reference type `T`, the return type is `T&&`. — *end note*\]
+\[*Note 1*: \[Note A\]If a type `T` in `Types` is some reference type
+`X&`, the return type is `X&`, not `X&&`. However, if the element type
+is a non-reference type `T`, the return type is `T&&`. — *end note*\]
 
-\[*Note 2*: Constness is shallow. If a type `T` in `Types` is some
-reference type `X&`, the return type is `X&`, not `const X&`. However,
-if the element type is a non-reference type `T`, the return type is
-`const T&`. This is consistent with how constness is defined to work for
-non-static data members of reference type. — *end note*\]
+\[*Note 2*: \[Note B\]Constness is shallow. If a type `T` in `Types` is
+some reference type `X&`, the return type is `X&`, not `const X&`.
+However, if the element type is a non-reference type `T`, the return
+type is `const T&`. This is consistent with how constness is defined to
+work for non-static data members of reference type. — *end note*\]
 
 ``` cpp
 template<class T, class... Types>
@@ -2134,7 +2134,7 @@ const double& d = get<double>(t);               // error: type double is not uni
 
 — *end example*\]
 
-\[*Note 3*: The reason `get` is a non-member function is that if this
+\[*Note 1*: The reason `get` is a non-member function is that if this
 functionality had been provided as a member function, code where the
 type depended on a template parameter would have required using the
 `template` keyword. — *end note*\]
@@ -2199,7 +2199,7 @@ first element of `r`.
 *Remarks:* The second overload is to be found via argument-dependent
 lookup [[basic.lookup.argdep]] only.
 
-\[*Note 2*: The above definition does not require `t_{tail}` (or
+\[*Note 1*: The above definition does not require `t_{tail}` (or
 `u_{tail}`) to be constructed. It might not even be possible, as `t` and
 `u` are not required to be copy constructible. Also, all comparison
 operator functions are short circuited; they do not perform element
@@ -2236,7 +2236,7 @@ struct basic_common_reference<TTuple, UTuple, TQual, UQual> {
   type.
 
 The member *typedef-name* `type` denotes the type
-`tuple<common_reference_t<TQual<TTypes>, UQual<UTypes>>...>`.
+`tuple<common_reference_t<TQual<TTypes>, `\linebreak`UQual<UTypes>>...>`.
 
 ``` cpp
 template<tuple-like TTuple, tuple-like UTuple>
@@ -2684,18 +2684,6 @@ constexpr optional<T>& operator=(const optional& rhs);
 
 *Effects:* See [[optional.assign.copy]].
 
-<div class="lib2dtab2">
-
-`optional::operator=(const optional&)` effectsoptional.assign.copy
-`*this` contains a value `*this` does not contain a value
-
-& assigns `*rhs` to the contained value & direct-non-list-initializes
-the contained value with `*rhs`  
-
-& destroys the contained value by calling `val->T::T̃()` & no effect  
-
-</div>
-
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
 *Returns:* `*this`.
@@ -2720,18 +2708,6 @@ constexpr optional& operator=(optional&& rhs) noexcept(see below);
 
 *Effects:* See [[optional.assign.move]]. The result of the expression
 `rhs.has_value()` remains unchanged.
-
-<div class="lib2dtab2">
-
-`optional::operator=(optional&&)` effectsoptional.assign.move `*this`
-contains a value `*this` does not contain a value
-
-& assigns `std::move(*rhs)` to the contained value &
-direct-non-list-initializes the contained value with `std::move(*rhs)`  
-
-& destroys the contained value by calling `val->T::T̃()` & no effect  
-
-</div>
 
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
@@ -2794,19 +2770,6 @@ template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 
 *Effects:* See [[optional.assign.copy.templ]].
 
-<div class="lib2dtab2">
-
-`optional::operator=(const optional<U>&)`
-effectsoptional.assign.copy.templ `*this` contains a value `*this` does
-not contain a value
-
-& assigns `*rhs` to the contained value & direct-non-list-initializes
-the contained value with `*rhs`  
-
-& destroys the contained value by calling `val->T::T̃()` & no effect  
-
-</div>
-
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
 *Returns:* `*this`.
@@ -2835,18 +2798,6 @@ template<class U> constexpr optional<T>& operator=(optional<U>&& rhs);
 
 *Effects:* See [[optional.assign.move.templ]]. The result of the
 expression `rhs.has_value()` remains unchanged.
-
-<div class="lib2dtab2">
-
-`optional::operator=(optional<U>&&)` effectsoptional.assign.move.templ
-`*this` contains a value `*this` does not contain a value
-
-& assigns `std::move(*rhs)` to the contained value &
-direct-non-list-initializes the contained value with `std::move(*rhs)`  
-
-& destroys the contained value by calling `val->T::T̃()` & no effect  
-
-</div>
 
 *Ensures:* `rhs.has_value() == this->has_value()`.
 
@@ -2911,23 +2862,6 @@ constexpr void swap(optional& rhs) noexcept(see below);
 requirements [[swappable.requirements]].
 
 *Effects:* See [[optional.swap]].
-
-<div class="lib2dtab2">
-
-`optional::swap(optional&)` effectsoptional.swap `*this` contains a
-value `*this` does not contain a value
-
-& calls `swap(*(*this), *rhs)` & direct-non-list-initializes the
-contained value of `*this` with `std::move(*rhs)`, followed by
-`rhs.val->T::T̃()`; postcondition is that `*this` contains a value and
-`rhs` does not contain a value  
-
-& direct-non-list-initializes the contained value of `rhs` with
-`std::move(*(*this))`, followed by `val->T::T̃()`; postcondition is that
-`*this` does not contain a value and `rhs` contains a value & no
-effect  
-
-</div>
 
 *Throws:* Any exceptions thrown by the operations in the relevant part
 of [[optional.swap]].
@@ -3743,7 +3677,7 @@ the `variant` to not hold a value.
 *Throws:* Any exception thrown by move-constructing any `Tᵢ` for all i.
 
 *Remarks:* The exception specification is equivalent to the logical of
-`is_nothrow_move_constructible_v<``Tᵢ``>` for all i. If
+`is_nothrow_move_con``structible_v<``Tᵢ``>` for all i. If
 `is_trivially_move_constructible_v<``Tᵢ``>` is `true` for all i, this
 constructor is trivial.
 
@@ -3768,9 +3702,7 @@ which is the type of the contained value after construction.
 - the expression *FUN*(`std::forward<T>(t))` (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
   \[*Note 1*:
-  ``` cpp
-  variant<string, string> v("abc");
-  ```
+      variant<string, string> v("abc");
 
   is ill-formed, as both alternative types have an equally viable
   constructor for the argument.
@@ -3897,7 +3829,7 @@ Let j be `rhs.index()`.
 - Otherwise, if `index() == `j, assigns the value contained in `rhs` to
   the value contained in `*this`.
 - Otherwise, if either `is_nothrow_copy_constructible_v<``Tⱼ``>` is
-  `true` or `is_nothrow_move_constructible_v<``Tⱼ``>` is `false`,
+  `true` or `is_nothrow_move_con``structible_v<``Tⱼ``>` is `false`,
   equivalent to `emplace<`j`>(get<`j`>(rhs))`.
 - Otherwise, equivalent to `operator=(variant(rhs))`.
 
@@ -3965,10 +3897,8 @@ which is the type of the contained value after assignment.
 - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
   \[*Note 2*:
-  ``` cpp
-  variant<string, string> v;
-  v = "abc";
-  ```
+      variant<string, string> v;
+      v = "abc";
 
   is ill-formed, as both alternative types have an equally viable
   constructor for the argument.
@@ -4047,7 +3977,7 @@ template<size_t I, class... Args>
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then direct-non-list-initializes
 the contained value of type `T_I` with the arguments
-`std::forward<Args>(args)...`.
+`std::forward<Ar``gs>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
@@ -4778,7 +4708,7 @@ Let `VT` be `decay_t<T>`.
 *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
 
 *Effects:* Calls `reset()`. Then direct-non-list-initializes the
-contained value of type `VT` with `std::forward<Args>(args)...`.
+contained value of type `VT` with `std::for``ward<Args>(args)...`.
 
 *Ensures:* `*this` contains a value.
 
@@ -5658,7 +5588,7 @@ template<class U = T>
 - `remove_cvref_t<U>` is not a specialization of `unexpected`; and
 - `is_constructible_v<T, U>` is `true`; and
 - `is_assignable_v<T&, U>` is `true`; and
-- `is_nothrow_constructible_v<T, U> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+- `is_nothrow_constructible_v<T, U> || is_nothrow_move_constructible_v<T> ||`` is_nothrow_move_constructible_v<E>`
   is `true`.
 
 *Effects:*
@@ -5687,7 +5617,7 @@ overload.
 
 - `is_constructible_v<E, GF>` is `true`; and
 - `is_assignable_v<E&, GF>` is `true`; and
-- `is_nothrow_constructible_v<E, GF> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
+- `is_nothrow_constructible_v<E, GF> || is_nothrow_move_constructible_v<T> ||`` is_nothrow_move_constructible_v<E>`
   is `true`.
 
 *Effects:*
@@ -5758,15 +5688,11 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 *Effects:* See [[expected.object.swap]].
 
-<div class="floattable">
+**Table: `swap(expected&)` effects**
 
-`swap(expected&)` effectsexpected.object.swap lx0.35x0.35 & &  
-& equivalent to: `using std::swap; swap(`*`val`*`, rhs.`*`val`*`);` &
-calls `rhs.swap(*this)`  
-& *see below*& equivalent to:
-`using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
+| `this->has_value()` | `!this->has_value()` |
+| ------------------- | -------------------- |
 
-</div>
 
 For the case where `rhs.value()` is `false` and `this->has_value()` is
 `true`, equivalent to:
@@ -5799,7 +5725,7 @@ has_val = false;
 rhs.has_val = true;
 ```
 
-*Throws:* Any exception thrown by the expressions in the .
+*Throws:* Any exception thrown by the expressions in the *Effects*.
 
 *Remarks:* The exception specification is equivalent to:
 
@@ -5868,7 +5794,8 @@ constexpr const T&& value() const &&;
 ```
 
 *Mandates:* `is_copy_constructible_v<E>` is `true` and
-`is_constructible_v<E, decltype(std::move(error()))>` is `true`.
+`is_constructible_v<E, decltype(std::`\linebreak`move(error()))>` is
+`true`.
 
 *Returns:* `std::move(`*`val`*`)`, if `has_value()` is `true`.
 
@@ -6340,7 +6267,7 @@ overload.
 - `is_constructible_v<unexpected<E>, const expected<U, G>>` is `false`.
 
 *Effects:* If `rhs.has_value()` is `false`, direct-non-list-initializes
-*unex* with `std::forward<GF>(rhs.error())`.
+*unex* with `std::forward<GF>(rhs.er``ror())`.
 
 *Ensures:* `rhs.has_value()` is unchanged;
 `rhs.has_value() == this->has_value()` is `true`.
@@ -6499,14 +6426,11 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 *Effects:* See [[expected.void.swap]].
 
-<div class="floattable">
+**Table: `swap(expected&)` effects**
 
-`swap(expected&)` effectsexpected.void.swap lx0.35x0.35 & &  
-& no effects & calls `rhs.swap(*this)`  
-& *see below*& equivalent to:
-`using std::swap; swap(`*`unex`*`, rhs.`*`unex`*`);`  
+| `this->has_value()` | `!this->has_value()` |
+| ------------------- | -------------------- |
 
-</div>
 
 For the case where `rhs.value()` is `false` and `this->has_value()` is
 `true`, equivalent to:
@@ -6518,7 +6442,7 @@ has_val = false;
 rhs.has_val = true;
 ```
 
-*Throws:* Any exception thrown by the expressions in the .
+*Throws:* Any exception thrown by the expressions in the *Effects*.
 
 *Remarks:* The exception specification is equivalent to
 `is_nothrow_move_constructible_v<E> && is_nothrow_swappable_v<E>`.
@@ -6755,7 +6679,7 @@ is well-formed.
 *Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise, an
 `expected<T, G>` object whose *has_val* member is `false` and *unex*
 member is direct-non-list-initialized with
-`invoke(std::forward<F>(f), error())`.
+`invoke(std::for``ward<F>(f), error())`.
 
 ``` cpp
 template<class F> constexpr auto transform_error(F&& f) &&;
@@ -6777,7 +6701,7 @@ is well-formed.
 *Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise, an
 `expected<T, G>` object whose *has_val* member is `false` and *unex*
 member is direct-non-list-initialized with
-`invoke(std::forward<F>(f), std::move(error()))`.
+`invoke(std::for``ward<F>(f), std::move(error()))`.
 
 #### Equality operators <a id="expected.void.eq">[[expected.void.eq]]</a>
 
@@ -7284,7 +7208,7 @@ template<size_t N>
   constexpr bitset<N> operator^(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
-*Returns:* `bitset<N>(lhs) = rhs`.
+*Returns:* `bitset<N>(lhs) `^`= rhs`.
 
 ``` cpp
 template<class charT, class traits, size_t N>
@@ -8605,7 +8529,7 @@ template<class T = void> struct bit_xor {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-*Returns:* `x y`.
+*Returns:* `x `^` y`.
 
 ``` cpp
 template<> struct bit_xor<void> {
@@ -8621,7 +8545,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) ^ std::forward<U>(u));
 ```
 
-*Returns:* `std::forward<T>(t) std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) `^` std::forward<U>(u)`.
 
 #### Class template `bit_not` <a id="bitwise.operations.not">[[bitwise.operations.not]]</a>
 
@@ -8820,7 +8744,7 @@ template<class R, class F, class... BoundArgs>
 ```
 
 *Mandates:* `is_constructible_v<FD, F>` is `true`. For each `Tᵢ` in
-`BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` is `true`.
+`BoundArgs`, `is_cons``tructible_v<``TDᵢ``, ``Tᵢ``>` is `true`.
 
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
 and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
@@ -9435,7 +9359,7 @@ Let `VT` be `decay_t<T>`.
 *Cpp17MoveConstructible* requirements.
 
 *Ensures:* `*this` has a target object of type `VT`
-direct-non-list-initialized with `ilist, std::forward<Args>(args)...`.
+direct-non-list-initialized with `ilist, std::for``ward<Args>(args)...`.
 
 *Throws:* Any exception thrown by the initialization of the target
 object. May throw `bad_alloc` unless `VT` is a function pointer or a
@@ -9578,8 +9502,8 @@ constexpr default_searcher(ForwardIterator1 pat_first, ForwardIterator1 pat_last
 ```
 
 *Effects:* Constructs a `default_searcher` object, initializing
-`pat_first_` with `pat_first`, `pat_last_` with `pat_last`, and `pred_`
-with `pred`.
+`pat_first_` with `pat_first`, \texttt{pat_last\_} with `pat_last`, and
+`pred_` with `pred`.
 
 *Throws:* Any exception thrown by the copy constructor of
 `BinaryPredicate` or `ForwardIterator1`.
@@ -9634,17 +9558,17 @@ boyer_moore_searcher(RandomAccessIterator1 pat_first,
 *Cpp17DefaultConstructible*, the *Cpp17CopyConstructible*, and the
 *Cpp17CopyAssignable* requirements.
 
-Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For any
-two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
+Let `V` be `iterator_traits<RandomAccessIterator1>::val``ue_type`. For
+any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
 `hf(A) == hf(B)` is `true`.
 
 *Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
-`pat_last`, `hash_` with `hf`, and `pred_` with `pred`.
+`pat_last`, `hash_` with `hf`, and \texttt{pred\_} with `pred`.
 
 *Throws:* Any exception thrown by the copy constructor of
 `RandomAccessIterator1`, or by the default constructor, copy
 constructor, or the copy assignment operator of the value type of
-`RandomAccessIterator1`, or the copy constructor or `operator()` of
+`RandomAccess``Iterator1`, or the copy constructor or `operator()` of
 `BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional memory
 needed for internal data structures cannot be allocated.
 
@@ -9712,17 +9636,17 @@ boyer_moore_horspool_searcher(RandomAccessIterator1 pat_first,
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and
 *Cpp17CopyAssignable* requirements.
 
-Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For any
-two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
+Let `V` be `iterator_traits<RandomAccessIterator1>::val``ue_type`. For
+any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
 `hf(A) == hf(B)` is `true`.
 
 *Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
-`pat_last`, `hash_` with `hf`, and `pred_` with `pred`.
+`pat_last`, `hash_` with `hf`, and \texttt{pred\_} with `pred`.
 
 *Throws:* Any exception thrown by the copy constructor of
 `RandomAccessIterator1`, or by the default constructor, copy
 constructor, or the copy assignment operator of the value type of
-`RandomAccessIterator1`, or the copy constructor or `operator()` of
+`RandomAccess``Iterator1`, or the copy constructor or `operator()` of
 `BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional memory
 needed for internal data structures cannot be allocated.
 
@@ -12092,7 +12016,8 @@ template<class T> explicit basic_format_arg(T& v) noexcept;
 *Constraints:* `T` satisfies `formattable-with<Context>`.
 
 *Preconditions:* If `decay_t<T>` is `char_type*` or `const char_type*`,
-`static_cast<const char_type*>(v)` points to a NTCTS [[defns.ntcts]].
+`static_cast<const char_`\linebreak`type*>(v)` points to a
+NTCTS [[defns.ntcts]].
 
 *Effects:* Let `TD` be `remove_const_t<T>`.
 
@@ -12210,7 +12135,7 @@ template<class Context = format_context, class... Args>
 ```
 
 *Preconditions:* The type
-`typename Context::template formatter_type<remove_cvref_t<``Tᵢ``>>`
+`typename Context::template formatter_type<remove_cvref_t<``Tᵢ``>>`\linebreak
 meets the requirements [[formatter.requirements]] for each `Tᵢ` in
 `Args`.
 

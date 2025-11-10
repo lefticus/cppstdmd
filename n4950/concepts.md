@@ -371,7 +371,7 @@ equality-preserving expressions [[concepts.equality]] such that
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
-\[*Note 2*: Users can customize the behavior of `common_reference_with`
+\[*Note 1*: Users can customize the behavior of `common_reference_with`
 by specializing the `basic_common_reference` class
 template [[meta.trans.other]]. — *end note*\]
 
@@ -411,7 +411,7 @@ only if:
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
-\[*Note 2*: Users can customize the behavior of `common_with` by
+\[*Note 1*: Users can customize the behavior of `common_with` by
 specializing the `common_type` class
 template [[meta.trans.other]]. — *end note*\]
 

@@ -194,7 +194,7 @@ v.value(c, I)
 *Returns:* Returns the value represented by the digit *c* in base *I* if
 the character *c* is a valid digit in base *I*; otherwise returns `-1`.
 
-\[*Note 2*: The value of *I* will only be 8, 10, or 16. — *end note*\]
+\[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*\]
 
 ``` cpp
 u.imbue(loc)
@@ -213,7 +213,7 @@ v.getloc()
 
 *Returns:* Returns the current locale used by `v`, if any.
 
-\[*Note 3*: Class template `regex_traits` meets the requirements for a
+\[*Note 2*: Class template `regex_traits` meets the requirements for a
 regular expression traits class when it is specialized for `char` or
 `wchar_t`. This class template is described in the header `<regex>`, and
 is described in [[re.traits]]. — *end note*\]
@@ -744,10 +744,7 @@ classification named by the character sequence designated by the
 iterator range \[`first`, `last`). If the parameter `icase` is `true`
 then the returned mask identifies the character classification without
 regard to the case of the characters being matched, otherwise it does
-honor the case of the characters being matched.
-
-For example, if the parameter `icase` is `true` then `[[:lower:]]` is
-the same as `[[:alpha:]]`.
+honor the case of the characters being matched.[^1]
 
 The value returned shall be independent of the case of the characters in
 the character sequence. If the name is not recognized then returns
@@ -1315,7 +1312,7 @@ std::swap(matched, s.matched);
 ```
 
 *Remarks:* The exception specification is equivalent to
-`is_nothrow_swappable_v<BidirectionalIterator>`.
+`is_nothrow_swappable_v<BidirectionalIter``ator>`.
 
 ### Non-member operators <a id="re.submatch.op">[[re.submatch.op]]</a>
 
@@ -1965,7 +1962,7 @@ template<class BidirectionalIterator, class charT, class traits>
 ```
 
 *Effects:* Behaves “as if” by constructing an object `what` of type
-`match_results<BidirectionalIterator>` and returning
+`match_results<Bidirectional``Iterator>` and returning
 `regex_search(first, last, what, e, flags)`.
 
 ``` cpp
@@ -2782,3 +2779,6 @@ ECMA-262 15.10
 [re.results]: #re.results
 [re.submatch]: #re.submatch
 [re.traits]: #re.traits
+
+[^1]: For example, if the parameter `icase` is `true` then `[[:lower:]]`
+    is the same as `[[:alpha:]]`.

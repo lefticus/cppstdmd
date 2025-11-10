@@ -1900,7 +1900,7 @@ using ranlux24_base =
 ```
 
 *Required behavior:* The 10000ᵗʰ consecutive invocation of a
-default-constructed object of type `ranlux24_base` produces the value
+default-constructed object of type `ran``lux24_base` produces the value
 7937952.
 
 ``` cpp
@@ -1909,7 +1909,7 @@ using ranlux48_base =
 ```
 
 *Required behavior:* The 10000ᵗʰ consecutive invocation of a
-default-constructed object of type `ranlux48_base` produces the value
+default-constructed object of type `ran``lux48_base` produces the value
 61839128582725.
 
 ``` cpp
@@ -1995,21 +1995,14 @@ explicit random_device(const string& token);
 `exception` if the `random_device` cannot be initialized.
 
 *Remarks:* The semantics of the `token` parameter and the token value
-used by the default constructor are *implementation-defined*.
-
-The parameter is intended to allow an implementation to differentiate
-between different sources of randomness.
+used by the default constructor are *implementation-defined*.[^4]
 
 ``` cpp
 double entropy() const noexcept;
 ```
 
 *Returns:* If the implementation employs a random number engine, returns
-0.0. Otherwise, returns an entropy estimate
-
-If a device has n states whose respective probabilities are P₀, …, Pₙ₋₁,
-the device entropy S is defined as  
-$S = - \sum_{i=0}^{n-1} P_i \cdot \log P_i$.
+0.0. Otherwise, returns an entropy estimate[^5]
 
 for the random numbers returned by `operator()`, in the range `min()` to
 \log_2( `max()`+1).
@@ -2206,10 +2199,7 @@ $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
 
 *Complexity:* Exactly
 $k = \max(1, \left\lceil b / \log_2 R \right\rceil)$ invocations of `g`,
-where b
-
-b is introduced to avoid any attempt to produce more bits of randomness
-than can be held in `RealType`.
+where b[^6]
 
 is the lesser of `numeric_limits<RealType>::digits` and `bits`, and R is
 the value of `g.max()` - `g.min()` + 1.
@@ -2954,7 +2944,7 @@ constructed.
 
 An `extreme_value_distribution` random number distribution produces
 random numbers x distributed according to the probability density
-function[^4]
+function[^7]
 
 $$p(x\,|\,a,b) = \frac{1}{b}
      \cdot \exp\left(\frac{a-x}{b} - \exp\left(\frac{a-x}{b}\right)\right)
@@ -3891,7 +3881,7 @@ in the C standard library.
 functions may call `rand`. It is *implementation-defined* whether the
 `rand` function may introduce data races [[res.on.data.races]].
 
-\[*Note 2*: The other random number generation facilities in this
+\[*Note 1*: The other random number generation facilities in this
 document [[rand]] are often preferable to `rand`, because `rand`’s
 underlying algorithm is unspecified. Use of `rand` therefore continues
 to be non-portable, with unpredictable and oft-questionable quality and
@@ -4065,7 +4055,7 @@ Any function returning a `valarray<T>` is permitted to return an object
 of another type, provided all the const member functions of
 `valarray<T>` are also applicable to this type. This return type shall
 not add more than two levels of template nesting over the most deeply
-nested argument type.[^5]
+nested argument type.[^8]
 
 Implementations introducing such replacement types shall provide
 additional functions and operators as follows:
@@ -4190,7 +4180,7 @@ object of type `valarray<T>` is referred to as an “array” throughout the
 remainder of  [[numarray]]. The illusion of higher dimensionality may be
 produced by the familiar idiom of computed indices, together with the
 powerful subsetting capabilities provided by the generalized subscript
-operators.[^6]
+operators.[^9]
 
 #### Constructors <a id="valarray.cons">[[valarray.cons]]</a>
 
@@ -4198,11 +4188,7 @@ operators.[^6]
 valarray();
 ```
 
-*Effects:* Constructs a `valarray` that has zero length.
-
-This default constructor is essential, since arrays of `valarray` can be
-useful. After initialization, the length of an empty array can be
-increased with the `resize` member function.
+*Effects:* Constructs a `valarray` that has zero length.[^10]
 
 ``` cpp
 explicit valarray(size_t n);
@@ -4226,10 +4212,7 @@ valarray(const T* p, size_t n);
 
 *Effects:* Constructs a `valarray` that has length `n`. The values of
 the elements of the array are initialized with the first `n` values
-pointed to by the first argument.
-
-This constructor is the preferred method for converting a C array to a
-`valarray` object.
+pointed to by the first argument.[^11]
 
 ``` cpp
 valarray(const valarray& v);
@@ -4237,12 +4220,7 @@ valarray(const valarray& v);
 
 *Effects:* Constructs a `valarray` that has the same length as `v`. The
 elements are initialized with the values of the corresponding elements
-of `v`.
-
-This copy constructor creates a distinct array rather than an alias.
-Implementations in which arrays share storage are permitted, but they
-would need to implement a copy-on-reference mechanism to ensure that
-arrays are conceptually distinct.
+of `v`.[^12]
 
 ``` cpp
 valarray(valarray&& v) noexcept;
@@ -4915,7 +4893,7 @@ namespace std {
 ```
 
 The `slice` class represents a BLAS-like slice from an array. Such a
-slice is specified by a starting index, a length, and a stride.[^7]
+slice is specified by a starting index, a length, and a stride.[^13]
 
 #### Constructors <a id="cons.slice">[[cons.slice]]</a>
 
@@ -5896,7 +5874,7 @@ respectively.
 `is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int` by
 integral promotion [[conv.prom]], the program is ill-formed.
 
-\[*Note 2*: Arguments that can be promoted to `int` are permitted for
+\[*Note 1*: Arguments that can be promoted to `int` are permitted for
 compatibility with C. — *end note*\]
 
 ``` cpp
@@ -5955,7 +5933,7 @@ error for just those argument values for which:
 - the corresponding mathematical function value has a nonzero imaginary
   component, or
 - the corresponding mathematical function is not mathematically
-  defined.[^8]
+  defined.[^14]
 
 Unless otherwise specified, each function is defined for all finite
 values, for negative infinity, and for positive infinity.
@@ -6689,29 +6667,51 @@ constant variable template is ill-formed.
     period: For properly-selected values of the parameters, the period
     is closely related to a large Mersenne prime number.
 
-[^4]: The distribution corresponding to this probability density
+[^4]: The parameter is intended to allow an implementation to
+    differentiate between different sources of randomness.
+
+[^5]: If a device has n states whose respective probabilities are
+    P₀, …, Pₙ₋₁, the device entropy S is defined as  
+    $S = - \sum_{i=0}^{n-1} P_i \cdot \log P_i$.
+
+[^6]: b is introduced to avoid any attempt to produce more bits of
+    randomness than can be held in `RealType`.
+
+[^7]: The distribution corresponding to this probability density
     function is also known (with a possible change of variable) as the
     Gumbel Type I, the log-Weibull, or the Fisher-Tippett Type I
     distribution.
 
-[^5]:  [[implimits]] recommends a minimum number of recursively nested
+[^8]:  [[implimits]] recommends a minimum number of recursively nested
     template instantiations. This requirement thus indirectly suggests a
     minimum allowable complexity for valarray expressions.
 
-[^6]: The intent is to specify an array template that has the minimum
+[^9]: The intent is to specify an array template that has the minimum
     functionality necessary to address aliasing ambiguities and the
     proliferation of temporary objects. Thus, the `valarray` template is
     neither a matrix class nor a field class. However, it is a very
     useful building block for designing such classes.
 
-[^7]: BLAS stands for *Basic Linear Algebra Subprograms*. C++ programs
+[^10]: This default constructor is essential, since arrays of `valarray`
+    can be useful. After initialization, the length of an empty array
+    can be increased with the `resize` member function.
+
+[^11]: This constructor is the preferred method for converting a C array
+    to a `valarray` object.
+
+[^12]: This copy constructor creates a distinct array rather than an
+    alias. Implementations in which arrays share storage are permitted,
+    but they would need to implement a copy-on-reference mechanism to
+    ensure that arrays are conceptually distinct.
+
+[^13]: BLAS stands for *Basic Linear Algebra Subprograms*. C++ programs
     can instantiate this class. See, for example, Dongarra, Du Croz,
     Duff, and Hammerling: *A set of Level 3 Basic Linear Algebra
     Subprograms*; Technical Report MCS-P1-0888, Argonne National
     Laboratory (USA), Mathematics and Computer Science Division, August,
     1988.
 
-[^8]: A mathematical function is mathematically defined for a given set
+[^14]: A mathematical function is mathematically defined for a given set
     of argument values (a) if it is explicitly defined for that set of
     argument values, or (b) if its limiting value exists and does not
     depend on the direction of approach.

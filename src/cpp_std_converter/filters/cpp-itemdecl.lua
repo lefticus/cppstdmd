@@ -203,8 +203,9 @@ local expand_itemdescr_macros
 -- Unified function to process note or example environments in itemdescr
 -- env_type: "note" or "example"
 -- counter_ref: table with counter value (pass by reference)
+-- already_expanded: (optional) if true, skip macro expansion (content already processed)
 -- Returns: result blocks
-local function process_itemdescr_environment(content, env_type, counter_ref)
+local function process_itemdescr_environment(content, env_type, counter_ref, already_expanded)
   counter_ref[1] = counter_ref[1] + 1
   local counter_val = counter_ref[1]
 
@@ -212,7 +213,10 @@ local function process_itemdescr_environment(content, env_type, counter_ref)
   content = trim(content)
 
   -- Expand macros before Pandoc processing to preserve cross-references
-  content = expand_itemdescr_macros(content)
+  -- Skip if content was already expanded (e.g., from RawBlock processing with +raw_tex)
+  if not already_expanded then
+    content = expand_itemdescr_macros(content)
+  end
 
   -- Parse the LaTeX content to get Pandoc AST elements
   -- Use +raw_tex to ensure nested custom environments (like libtab2) are passed as RawBlocks
@@ -325,7 +329,8 @@ local function process_notes_examples_blocks(blocks)
       local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
       if note_content then
         local note_counter_ref = {itemdescr_note_counter}
-        local blocks_to_insert = process_itemdescr_environment(note_content, "note", note_counter_ref)
+        -- Pass true for already_expanded since content comes from RawBlock after macro expansion
+        local blocks_to_insert = process_itemdescr_environment(note_content, "note", note_counter_ref, true)
         itemdescr_note_counter = note_counter_ref[1]
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
@@ -337,7 +342,8 @@ local function process_notes_examples_blocks(blocks)
       local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
       if example_content then
         local example_counter_ref = {itemdescr_example_counter}
-        local blocks_to_insert = process_itemdescr_environment(example_content, "example", example_counter_ref)
+        -- Pass true for already_expanded since content comes from RawBlock after macro expansion
+        local blocks_to_insert = process_itemdescr_environment(example_content, "example", example_counter_ref, true)
         itemdescr_example_counter = example_counter_ref[1]
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)

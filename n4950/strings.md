@@ -64,10 +64,7 @@ using int_type = see below;
 
 *Preconditions:* `int_type` shall be able to represent all of the valid
 characters converted from the corresponding `char_type` values, as well
-as an end-of-file value, `eof()`.
-
-If `eof()` can be held in `char_type` then some iostreams operations can
-give surprising results.
+as an end-of-file value, `eof()`.[^1]
 
 ``` cpp
 using state_type = see below;
@@ -817,15 +814,6 @@ compare. The function then compares the two strings by calling
 *Returns:* The nonzero result if the result of the comparison is
 nonzero. Otherwise, returns a value as indicated in
 [[string.view.compare]].
-
-<div class="libtab2">
-
-`compare()` resultsstring.view.compareccConditionReturn Value
-`size() < str.size()` & `< 0`  
-`size() == str.size()` & `  0`  
-`size() > str.size()` & `> 0`  
-
-</div>
 
 *Complexity:* 𝑂(`rlen)`.
 
@@ -1744,7 +1732,7 @@ References, pointers, and iterators referring to the elements of a
 `basic_string` object:
 
 - Passing as an argument to any standard library function taking a
-  reference to non-const `basic_string` as an argument.[^1]
+  reference to non-const `basic_string` as an argument.[^2]
 - Calling non-const member functions, except `operator[]`, `at`, `data`,
   `front`, `back`, `begin`, `rbegin`, `end`, and `rend`.
 
@@ -3932,14 +3920,16 @@ of the corresponding UTF-8 code units and then, if `pc8` is not a null
 pointer, stores the value of the first (or only) such code unit in the
 object pointed to by `pc8`. Subsequent calls will store successive UTF-8
 code units without consuming any additional input until all the code
-units have been stored. If the corresponding Unicode character is , the
-resulting state described is the initial conversion state.
+units have been stored. If the corresponding Unicode character is
+U+0000 (null), the resulting state described is the initial conversion
+state.
 
 *Returns:* The first of the following that applies (given the current
 conversion state):
 
 - `0`, if the next `n` or fewer bytes complete the multibyte character
-  that corresponds to the Unicode character (which is the value stored).
+  that corresponds to the U+0000 (null) Unicode character (which is the
+  value stored).
 - between `1` and `n` (inclusive), if the next n or fewer bytes complete
   a valid multibyte character (whose first (or only) code unit is
   stored); the value returned is the number of bytes that complete the
@@ -4101,6 +4091,9 @@ introduce a data race [[res.on.data.races]] with other calls to
 [unord.hash]: utilities.md#unord.hash
 [utility.swap]: utilities.md#utility.swap
 
-[^1]: For example, as an argument to non-member functions `swap()`
+[^1]: If `eof()` can be held in `char_type` then some iostreams
+    operations can give surprising results.
+
+[^2]: For example, as an argument to non-member functions `swap()`
     [[string.special]], `operator>{}>()` [[string.io]], and `getline()`
     [[string.io]], or as an argument to `basic_string::swap()`.

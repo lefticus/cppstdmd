@@ -48,9 +48,7 @@ using streamoff = implementation-defined  // type of streamoff;
 
 The type `streamoff` is a synonym for one of the signed basic integral
 types of sufficient size to represent the maximum possible file size for
-the operating system.
-
-Typically `long long`.
+the operating system.[^1]
 
 ``` cpp
 using streamsize = implementation-defined;
@@ -58,10 +56,7 @@ using streamsize = implementation-defined;
 
 The type `streamsize` is a synonym for one of the signed basic integral
 types. It is used to represent the number of characters transferred in
-an I/O operation, or the size of I/O buffers.
-
-Most places where `streamsize` is used would use `size_t` in ISO C, or
-`ssize_t` in POSIX.
+an I/O operation, or the size of I/O buffers.[^2]
 
 ### Positioning type limitations <a id="iostreams.limits.pos">[[iostreams.limits.pos]]</a>
 
@@ -227,7 +222,7 @@ namespace std {
 
 Default template arguments are described as appearing both in `<iosfwd>`
 and in the synopsis of other headers but it is well-formed to include
-both `<iosfwd>` and one or more of the other headers.[^1]
+both `<iosfwd>` and one or more of the other headers.[^3]
 
 ### Overview <a id="iostream.forward.overview">[[iostream.forward.overview]]</a>
 
@@ -307,7 +302,7 @@ The objects are constructed and the associations are established at some
 time prior to or during the first time an object of class
 `ios_base::Init` is constructed, and in any case before the body of
 `main` [[basic.start.main]] begins execution. The objects are not
-destroyed during program execution.[^2]
+destroyed during program execution.[^4]
 
 *Recommended practice:* If it is possible for them to do so,
 implementations should initialize the objects earlier than required.
@@ -670,49 +665,38 @@ using fmtflags = T1;
 The type `fmtflags` is a bitmask type [[bitmask.types]]. Setting its
 elements has the effects indicated in [[ios.fmtflags]].
 
-<div class="libefftab">
+**Table: `fmtflags` effects**
 
-`fmtflags` effectsios.fmtflags `boolalpha` & insert and extract `bool`
-type in alphabetic format  
-`dec` & converts integer input or generates integer output in decimal
-base  
-`fixed` & generate floating-point output in fixed-point notation  
-`hex` & converts integer input or generates integer output in
-hexadecimal base  
-`internal` & adds fill characters at a designated internal point in
-certain generated output, or identical to `right` if no such point is
-designated  
-`left` & adds fill characters on the right (final positions) of certain
-generated output  
-`oct` & converts integer input or generates integer output in octal
-base  
-`right` & adds fill characters on the left (initial positions) of
-certain generated output  
-`scientific` & generates floating-point output in scientific notation  
-`showbase` & generates a prefix indicating the numeric base of generated
-integer output  
-`showpoint` & generates a decimal-point character unconditionally in
-generated floating-point output  
-`showpos` & generates a `+` sign in non-negative generated numeric
-output  
-`skipws` & skips leading whitespace before certain input operations  
-`unitbuf` & flushes output after each output operation  
-`uppercase` & replaces certain lowercase letters with their uppercase
-equivalents in generated output  
+| Element      | Effect(s) if set                                                                                                                        |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `boolalpha`  | insert and extract `bool` type in alphabetic format                                                                                     |
+| `dec`        | converts integer input or generates integer output in decimal base                                                                      |
+| `fixed`      | generate floating-point output in fixed-point notation                                                                                  |
+| `hex`        | converts integer input or generates integer output in hexadecimal base                                                                  |
+| `internal`   | adds fill characters at a designated internal point in certain generated output, or identical to `right` if no such point is designated |
+| `left`       | adds fill characters on the right (final positions) of certain generated output                                                         |
+| `oct`        | converts integer input or generates integer output in octal base                                                                        |
+| `right`      | adds fill characters on the left (initial positions) of certain generated output                                                        |
+| `scientific` | generates floating-point output in scientific notation                                                                                  |
+| `showbase`   | generates a prefix indicating the numeric base of generated integer output                                                              |
+| `showpoint`  | generates a decimal-point character unconditionally in generated floating-point output                                                  |
+| `showpos`    | generates a `+` sign in non-negative generated numeric output                                                                           |
+| `skipws`     | skips leading whitespace before certain input operations                                                                                |
+| `unitbuf`    | flushes output after each output operation                                                                                              |
+| `uppercase`  | replaces certain lowercase letters with their uppercase equivalents in generated output                                                 |
 
-</div>
 
 Type `fmtflags` also defines the constants indicated in
 [[ios.fmtflags.const]].
 
-<div class="floattable">
+**Table: `fmtflags` constants**
 
-`fmtflags` constantsios.fmtflags.const ll &  
-`adjustfield` & `left | right | internal`  
-`basefield` & `dec | oct | hex`  
-`floatfield` & `scientific | fixed`  
+| Constant      | Allowable values          |
+| ------------- | ------------------------- |
+| `adjustfield` | `left | right | internal` |
+| `basefield`   | `dec | oct | hex`         |
+| `floatfield`  | `scientific | fixed`      |
 
-</div>
 
 ##### Type `ios_base::iostate` <a id="ios.iostate">[[ios.iostate]]</a>
 
@@ -723,18 +707,14 @@ using iostate = T2;
 The type `iostate` is a bitmask type [[bitmask.types]] that contains the
 elements indicated in [[ios.iostate]].
 
-<div class="libefftab">
+**Table: `iostate` effects**
 
-`iostate` effectsios.iostate `badbit` & indicates a loss of integrity in
-an input or output sequence (such as an irrecoverable read error from a
-file);  
-`eofbit` & indicates that an input operation reached the end of an input
-sequence;  
-`failbit` & indicates that an input operation failed to read the
-expected characters, or that an output operation failed to generate the
-desired characters.  
+| Element   | Effect(s) if set                                                                                                                                 |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `badbit`  | indicates a loss of integrity in an input or output sequence (such as an irrecoverable read error from a file);                                  |
+| `eofbit`  | indicates that an input operation reached the end of an input sequence;                                                                          |
+| `failbit` | indicates that an input operation failed to read the expected characters, or that an output operation failed to generate the desired characters. |
 
-</div>
 
 Type `iostate` also defines the constant:
 
@@ -749,18 +729,18 @@ using openmode = T3;
 The type `openmode` is a bitmask type [[bitmask.types]]. It contains the
 elements indicated in [[ios.openmode]].
 
-<div class="libefftab">
+**Table: `openmode` effects**
 
-`openmode` effectsios.openmode `app` & seek to end before each write  
-`ate` & open and seek to end immediately after opening  
-`binary` & perform input and output in binary mode (as opposed to text
-mode)  
-`in` & open for input  
-`noreplace` & open in exclusive mode  
-`out` & open for output  
-`trunc` & truncate an existing stream when opening  
+| Element     | Effect(s) if set                                                  |
+| ----------- | ----------------------------------------------------------------- |
+| `app`       | seek to end before each write                                     |
+| `ate`       | open and seek to end immediately after opening                    |
+| `binary`    | perform input and output in binary mode (as opposed to text mode) |
+| `in`        | open for input                                                    |
+| `noreplace` | open in exclusive mode                                            |
+| `out`       | open for output                                                   |
+| `trunc`     | truncate an existing stream when opening                          |
 
-</div>
 
 ##### Type `ios_base::seekdir` <a id="ios.seekdir">[[ios.seekdir]]</a>
 
@@ -770,16 +750,6 @@ using seekdir = T4;
 
 The type `seekdir` is an enumerated type [[enumerated.types]] that
 contains the elements indicated in [[ios.seekdir]].
-
-<div class="libefftabmean">
-
-`seekdir` effectsios.seekdir `beg` & request a seek (for subsequent
-input or output) relative to the beginning of the stream  
-`cur` & request a seek relative to the current position within the
-sequence  
-`end` & request a seek relative to the current end of the sequence  
-
-</div>
 
 ##### Class `ios_base::Init` <a id="ios.init">[[ios.init]]</a>
 
@@ -970,12 +940,7 @@ is the same as the effect of
 str.rdbuf()->sputbackc(c);
 ```
 
-for any sequence of characters.
-
-This implies that operations on a standard iostream object can be mixed
-arbitrarily with operations on the corresponding stdio stream. In
-practical terms, synchronization usually means that a standard iostream
-object and a standard stdio object share a buffer.
+for any sequence of characters.[^5]
 
 #### Storage functions <a id="ios.base.storage">[[ios.base.storage]]</a>
 
@@ -999,17 +964,11 @@ of unspecified size and stores a pointer to its first element in
 `iarray`. The function then extends the array pointed at by `iarray` as
 necessary to include the element `iarray[idx]`. Each newly allocated
 element of the array is initialized to zero. The reference returned is
-invalid after any other operation on the object.
-
-An implementation is free to implement both the integer array pointed at
-by `iarray` and the pointer array pointed at by `parray` as sparse data
-structures, possibly with a one-element cache for each.
+invalid after any other operation on the object.[^6]
 
 However, the value of the storage referred to is retained, so that until
 the next call to `copyfmt`, calling `iword` with the same index yields
-another reference to the same value. If the function fails
-
-For example, because it cannot allocate space.
+another reference to the same value. If the function fails[^7]
 
 and `*this` is a base class subobject of a `basic_ios<>` object or
 subobject, the effect is equivalent to calling
@@ -1033,9 +992,7 @@ element of the array is initialized to a null pointer. The reference
 returned is invalid after any other operation on the object. However,
 the value of the storage referred to is retained, so that until the next
 call to `copyfmt`, calling `pword` with the same index yields another
-reference to the same value. If the function fails
-
-For example, because it cannot allocate space.
+reference to the same value. If the function fails[^8]
 
 and `*this` is a base class subobject of a `basic_ios<>` object or
 subobject, the effect is equivalent to calling
@@ -1244,23 +1201,6 @@ void init(basic_streambuf<charT, traits>* sb);
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.cons]].
 
-<div class="libefftabvalue">
-
-`basic_ios::init()` effectsbasic.ios.cons `rdbuf()` & `sb`  
-`tie()` & `0`  
-`rdstate()` & `goodbit` if `sb` is not a null pointer, otherwise
-`badbit`.  
-`exceptions()` & `goodbit`  
-`flags()` & `skipws | dec`  
-`width()` & `0`  
-`precision()` & `6`  
-`fill()` & `widen(’ ’)`  
-`getloc()` & a copy of the value returned by `locale()`  
-*`iarray`* & a null pointer  
-*`parray`* & a null pointer  
-
-</div>
-
 #### Member functions <a id="basic.ios.members">[[basic.ios.members]]</a>
 
 ``` cpp
@@ -1348,9 +1288,7 @@ member objects of `rhs` as follows:
   member objects of `rhs`, except that
   - `rdstate()`, `rdbuf()`, and `exceptions()` are left unchanged;
   - the contents of arrays pointed at by `pword` and `iword` are copied,
-    not the pointers themselves; This suggests an infinite amount of
-    copying, but the implementation can keep track of the maximum
-    element of the arrays that is nonzero. and
+    not the pointers themselves;[^9] and
   - if any newly stored pointer values in `*this` point at objects
     stored outside the object `rhs` and those objects are destroyed when
     `rhs` is destroyed, the newly stored pointer values are altered to
@@ -1365,21 +1303,6 @@ reference counted, or to have other special action taken. — *end note*\]
 
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.copyfmt]].
-
-<div class="LibEffTab">
-
-`basic_ios::copyfmt()` effects basic.ios.copyfmtValue1.2in `rdbuf()` &
-*unchanged*  
-`tie()` & `rhs.tie()`  
-`rdstate()` & *unchanged*  
-`exceptions()` & `rhs.exceptions()`  
-`flags()` & `rhs.flags()`  
-`width()` & `rhs.width()`  
-`precision()` & `rhs.precision()`  
-`fill()` & `rhs.fill()`  
-`getloc()` & `rhs.getloc()`  
-
-</div>
 
 *Returns:* `*this`.
 
@@ -1471,9 +1394,7 @@ bool eof() const;
 bool fail() const;
 ```
 
-*Returns:* `true` if `failbit` or `badbit` is set in `rdstate()`.
-
-Checking `badbit` also for `fail()` is historical practice.
+*Returns:* `true` if `failbit` or `badbit` is set in `rdstate()`.[^10]
 
 ``` cpp
 bool bad() const;
@@ -1655,12 +1576,7 @@ ios_base& dec(ios_base& str);
 
 *Effects:* Calls `str.setf(ios_base::dec, ios_base::basefield)`.
 
-*Returns:* `str`.
-
-The function signature `dec(ios_base&)` can be called by the function
-signature `basic_ostream& stream::operator<<(ios_base& (*)(ios_base&))`
-to permit expressions of the form `cout << dec` to change the format
-flags stored in `cout`.
+*Returns:* `str`.[^11]
 
 ``` cpp
 ios_base& hex(ios_base& str);
@@ -1924,11 +1840,7 @@ for deriving various *stream buffers* whose objects each control two
 basic_streambuf();
 ```
 
-*Effects:* Initializes:
-
-The default constructor is protected for class `basic_streambuf` to
-assure that only objects for classes derived from this class can be
-constructed.
+*Effects:* Initializes:[^12]
 
 - all pointer member objects to null pointers,
 - the `getloc()` member to a copy of the global locale, `locale()`, at
@@ -2262,11 +2174,7 @@ sequence, or -1. If it returns a positive value, then successive calls
 to `underflow()` will not return `traits::eof()` until at least that
 number of characters have been extracted from the stream. If
 `showmanyc()` returns -1, then calls to `underflow()` or `uflow()` will
-fail.
-
-`underflow` or `uflow` can fail by throwing an exception prematurely.
-The intention is not only that the calls will not return `eof()` but
-that they will return “immediately”.
+fail.[^13]
 
 *Default behavior:* Returns zero.
 
@@ -2282,11 +2190,7 @@ are read from the input sequence as if by repeated calls to `sbumpc()`.
 Assigning stops when either `n` characters have been assigned or a call
 to `sbumpc()` would return `traits::eof()`.
 
-*Returns:* The number of characters assigned.
-
-Classes derived from `basic_streambuf` can provide more efficient ways
-to implement `xsgetn()` and `xsputn()` by overriding these definitions
-from the base class.
+*Returns:* The number of characters assigned.[^14]
 
 *Remarks:* Uses `traits::eof()`.
 
@@ -2415,11 +2319,7 @@ of
 obeys the following constraints:
 
 - The effect of consuming a character on the associated output sequence
-  is specified. That is, for each class derived from a specialization of
-  `basic_streambuf` in this Clause [[stringbuf,filebuf]], a
-  specification of how consuming a character effects the associated
-  output sequence is given. There is no requirement on a program-defined
-  class.
+  is specified.[^15]
 - Let `r` be the number of characters in the pending sequence not
   consumed. If `r` is nonzero then `pbase()` and `pptr()` are set so
   that: `pptr() - pbase() == r` and the `r` characters starting at
@@ -2434,11 +2334,7 @@ obeys the following constraints:
 *Returns:* `traits::eof()` or throws an exception if the function fails.
 
 Otherwise, returns some value other than `traits::eof()` to indicate
-success.
-
-Typically, `overflow` returns `c` to indicate success, except when
-`traits::eq_int_type(c, traits::eof())` returns `true`, in which case it
-returns `traits::not_eof(c)`.
+success.[^16]
 
 *Default behavior:* Returns `traits::eof()`.
 
@@ -2761,10 +2657,7 @@ stream. Except that this call can be suppressed if the put area of
 `is.tie()` is empty. Further an implementation is allowed to defer the
 call to `flush` until a call of `is.rdbuf()->underflow()` occurs. If no
 such call occurs before the `sentry` object is destroyed, the call to
-`flush` may be eliminated entirely.
-
-This will be possible only in functions that are part of the library.
-The semantics of the constructor used in user code is as specified.
+`flush` may be eliminated entirely.[^17]
 
 If `noskipws` is zero and `is.flags() & ios_base::skipws` is nonzero,
 the function extracts and discards each character as long as the next
@@ -2794,10 +2687,7 @@ if (ctype.is(ctype.space, c) != 0)
 If, after any preparation is completed, `is.good()` is `true`,
 `ok_ != false` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
-
-The `sentry` constructor and destructor can also perform additional
-implementation-dependent operations.
+`ios_base::failure`[[iostate.flags]]).[^18]
 
 ``` cpp
 ~sentry();
@@ -2969,10 +2859,7 @@ basic_istream& operator>>(basic_istream& (*pf)(basic_istream&));
 *Effects:* None. This extractor does not behave as a formatted input
 function (as described in  [[istream.formatted.reqmts]]).
 
-*Returns:* `pf(*this)`.
-
-See, for example, the function signature
-`ws(basic_istream&)`[[istream.manip]].
+*Returns:* `pf(*this)`. [^19]
 
 ``` cpp
 basic_istream& operator>>(basic_ios<charT, traits>& (*pf)(basic_ios<charT, traits>&));
@@ -2988,10 +2875,7 @@ in  [[istream.formatted.reqmts]]).
 basic_istream& operator>>(ios_base& (*pf)(ios_base&));
 ```
 
-*Effects:* Calls `pf(*this)`.
-
-See, for example, the function signature
-`dec(ios_base&)`[[basefield.manip]].
+*Effects:* Calls `pf(*this)`.[^20]
 
 This extractor does not behave as a formatted input function (as
 described in  [[istream.formatted.reqmts]]).
@@ -3052,7 +2936,7 @@ basic_istream& operator>>(basic_streambuf<charT, traits>* sb);
 
 *Effects:* Behaves as an unformatted input
 function [[istream.unformatted]]. If `sb` is null, calls
-`setstate(failbit)`, which may throw
+`setstate(fail``bit)`, which may throw
 `ios_base::failure`[[iostate.flags]]. After a `sentry` object is
 constructed, extracts characters from `*this` and inserts them in the
 output sequence controlled by `sb`. Characters are extracted and
@@ -3123,10 +3007,7 @@ basic_istream& get(char_type& c);
 
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a `sentry` object, extracts a character, if
-one is available, and assigns it to `c`.
-
-Note that this function is not overloaded on types `signed char` and
-`unsigned char`.
+one is available, and assigns it to `c`.[^21]
 
 Otherwise, `ios_base::failbit` is set in the input function’s local
 error state before `setstate` is called.
@@ -3140,10 +3021,7 @@ basic_istream& get(char_type* s, streamsize n, char_type delim);
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a `sentry` object, extracts characters and
 stores them into successive locations of an array whose first element is
-designated by `s`.
-
-Note that this function is not overloaded on types `signed char` and
-`unsigned char`.
+designated by `s`.[^22]
 
 Characters are extracted and stored until any of the following occurs:
 
@@ -3204,31 +3082,21 @@ basic_istream& getline(char_type* s, streamsize n, char_type delim);
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a `sentry` object, extracts characters and
 stores them into successive locations of an array whose first element is
-designated by `s`.
-
-Note that this function is not overloaded on types `signed char` and
-`unsigned char`.
+designated by `s`.[^23]
 
 Characters are extracted and stored until one of the following occurs:
 
 1.  end-of-file occurs on the input sequence;
 2.  `traits::eq(c, delim)` for the next available input character `c`
-    (in which case the input character is extracted but not stored);
-    Since the final input character is “extracted”, it is counted in the
-    `gcount()`, even though it is not stored.
+    (in which case the input character is extracted but not
+    stored);[^24]
 3.  `n` is less than one or `n - 1` characters are stored (in which case
     the function calls `setstate(failbit)`).
 
-These conditions are tested in the order shown.
-
-This allows an input line which exactly fills the buffer, without
-setting `failbit`. This is different behavior than the historical AT&T
-implementation.
+These conditions are tested in the order shown.[^25]
 
 If the function extracts no characters, `ios_base::failbit` is set in
-the input function’s local error state before `setstate` is called.
-
-This implies an empty input line will not cause `failbit` to be set.
+the input function’s local error state before `setstate` is called.[^26]
 
 In any case, if `n` is greater than zero, it then stores a null
 character (using `charT()`) into the next successive location of the
@@ -3312,10 +3180,7 @@ basic_istream& read(char_type* s, streamsize n);
 above). After constructing a `sentry` object, if `!good()` calls
 `setstate(failbit)` which may throw an exception, and return. Otherwise
 extracts characters and stores them into successive locations of an
-array whose first element is designated by `s`.
-
-Note that this function is not overloaded on types `signed char` and
-`unsigned char`.
+array whose first element is designated by `s`.[^27]
 
 Characters are extracted and stored until either of the following
 occurs:
@@ -3794,18 +3659,12 @@ explicit sentry(basic_ostream& os);
 ```
 
 If `os.good()` is nonzero, prepares for formatted or unformatted output.
-If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.
-
-The call `os.tie()->flush()` does not necessarily occur if the function
-can determine that no synchronization is necessary.
+If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.[^28]
 
 If, after any preparation is completed, `os.good()` is `true`,
 `ok_ == true` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
-
-The `sentry` constructor and destructor can also perform additional
-implementation-dependent operations.
+`ios_base::failure`[[iostate.flags]]).[^29]
 
 ``` cpp
 ~sentry();
@@ -3832,7 +3691,7 @@ pos_type tellp();
 ```
 
 *Returns:* If `fail() != false`, returns `pos_type(-1)` to indicate
-failure. Otherwise, returns `rdbuf()->pubseekoff(0, cur, out)`.
+failure. Otherwise, returns `rdbuf()->pub``seek``off(0, cur, out)`.
 
 ``` cpp
 basic_ostream& seekp(pos_type pos);
@@ -3866,7 +3725,7 @@ to a value of type `bool`, the function endeavors to generate the
 requested output. If the generation fails, then the formatted output
 function does `setstate(ios_base::failbit)`, which can throw an
 exception. If an exception is thrown during output, then
-`ios_base::badbit` is set[^3]
+`ios_base::badbit` is set[^30]
 
 in `*this`’s error state. If `(exceptions()&badbit) != 0` then the
 exception is rethrown. Whether or not an exception is thrown, the
@@ -4028,10 +3887,7 @@ basic_ostream& operator<<(basic_ostream& (*pf)(basic_ostream&));
 *Effects:* None. Does not behave as a formatted output function (as
 described in  [[ostream.formatted.reqmts]]).
 
-*Returns:* `pf(*this)`.
-
-See, for example, the function signature
-`endl(basic_ostream&)`[[ostream.manip]].
+*Returns:* `pf(*this)`.[^31]
 
 ``` cpp
 basic_ostream& operator<<(basic_ios<charT, traits>& (*pf)(basic_ios<charT, traits>&));
@@ -4041,10 +3897,7 @@ basic_ostream& operator<<(basic_ios<charT, traits>& (*pf)(basic_ios<charT, trait
 formatted output function (as described
 in  [[ostream.formatted.reqmts]]).
 
-*Returns:* `*this`.
-
-See, for example, the function signature
-`dec(ios_base&)`[[basefield.manip]].
+*Returns:* `*this`.[^32]
 
 ``` cpp
 basic_ostream& operator<<(ios_base& (*pf)(ios_base&));
@@ -4224,8 +4077,8 @@ native Unicode API is used, the function flushes `os` before writing
 
 *Recommended practice:* For `vprint_unicode`, if invoking the native
 Unicode API requires transcoding, implementations should substitute
-invalid code units with per the Unicode Standard, Chapter 3.9
-Substitution in Conversion.
+invalid code units with U+fffd (replacement character) per the Unicode
+Standard, Chapter 3.9 `U+fffd` Substitution in Conversion.
 
 #### Unformatted output functions <a id="ostream.unformatted">[[ostream.unformatted]]</a>
 
@@ -4233,7 +4086,7 @@ Each unformatted output function begins execution by constructing an
 object of class `sentry`. If that object returns `true`, while
 converting to a value of type `bool`, the function endeavors to generate
 the requested output. If an exception is thrown during output, then
-`ios_base::badbit` is set[^4]
+`ios_base::badbit` is set[^33]
 
 in `*this`’s error state. If `(exceptions() & badbit) != 0` then the
 exception is rethrown. In any case, the unformatted output function ends
@@ -4246,10 +4099,7 @@ basic_ostream& put(char_type c);
 
 *Effects:* Behaves as an unformatted output function (as described
 above). After constructing a `sentry` object, inserts the character `c`,
-if possible.
-
-Note that this function is not overloaded on types `signed char` and
-`unsigned char`.
+if possible.[^34]
 
 Otherwise, calls `setstate(badbit)` (which may throw
 `ios_base::failure`[[iostate.flags]]).
@@ -4263,10 +4113,7 @@ basic_ostream& write(const char_type* s, streamsize n);
 *Effects:* Behaves as an unformatted output function (as described
 above). After constructing a `sentry` object, obtains characters to
 insert from successive locations of an array whose first element is
-designated by `s`.
-
-Note that this function is not overloaded on types `signed char` and
-`unsigned char`.
+designated by `s`.[^35]
 
 Characters are inserted until either of the following occurs:
 
@@ -4397,15 +4244,7 @@ of type `basic_ostream<charT, traits>` then the expression
 `out << resetiosflags(mask)` behaves as if it called `f(out, mask)`, or
 if `in` is an object of type `basic_istream<charT, traits>` then the
 expression `in >> resetiosflags(mask)` behaves as if it called
-`f(in, mask)`, where the function `f` is defined as:
-
-The expression `cin >> resetiosflags(ios_base::skipws)` clears
-`ios_base::skipws` in the format flags stored in the
-`basic_istream<charT, traits>` object `cin` (the same as
-`cin >> noskipws`), and the expression
-`cout << resetiosflags(ios_base::showbase)` clears `ios_base::showbase`
-in the format flags stored in the `basic_ostream<charT, traits>` object
-`cout` (the same as `cout << noshowbase`).
+`f(in, mask)`, where the function `f` is defined as:[^36]
 
 ``` cpp
 void f(ios_base& str, ios_base::fmtflags mask) {
@@ -4826,7 +4665,7 @@ If the native Unicode API is used, the function flushes `stream` before
 writing `out`.
 
 \[*Note 1*: On POSIX and Windows, `stream` referring to a terminal means
-that, respectively, `isatty(fileno(stream))` and
+that, respectively, `isatty(fileno(`\linebreak`stream))` and
 `GetConsoleMode(_get_osfhandle(_fileno(stream)), ...)` return
 nonzero. — *end note*\]
 
@@ -4839,7 +4678,8 @@ terminal or `stream` fails. May throw `bad_alloc`.
 
 *Recommended practice:* If invoking the native Unicode API requires
 transcoding, implementations should substitute invalid code units with
-per the Unicode Standard, Chapter 3.9 Substitution in Conversion.
+U+fffd (replacement character) per the Unicode Standard, Chapter 3.9
+`U+fffd` Substitution in Conversion.
 
 ``` cpp
 void vprint_nonunicode(string_view fmt, format_args args);
@@ -5360,33 +5200,10 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 *Effects:* Alters the stream position within one of the controlled
 sequences, if possible, as indicated in [[stringbuf.seekoff.pos]].
 
-<div class="libtab2">
-
-`seekoff` positioningstringbuf.seekoff.pos p2.5inlConditionsResult
-`ios_base::in` is set in `which` & positions the input sequence  
-`ios_base::out` is set in `which` & positions the output sequence  
-both `ios_base::in` and `ios_base::out` are set in `which` and either
-`way == ios_base::beg` or `way == ios_base::end` & positions both the
-input and the output sequences  
-Otherwise & the positioning operation fails.  
-
-</div>
-
 For a sequence to be positioned, the function determines `newoff` as
 indicated in [[stringbuf.seekoff.newoff]]. If the sequence’s next
 pointer (either `gptr()` or `pptr()`) is a null pointer and `newoff` is
 nonzero, the positioning operation fails.
-
-<div class="libtab2">
-
-`newoff` valuesstringbuf.seekoff.newoff lp2.0inCondition`newoff` Value
-`way == ios_base::beg` & 0  
-`way == ios_base::cur` & the next pointer minus the beginning pointer
-(`xnext - xbeg`).  
-`way == ios_base::end` & the high mark pointer minus the beginning
-pointer (`high_mark - xbeg`).  
-
-</div>
 
 If `(newoff + off) < 0`, or if `newoff + off` refers to an uninitialized
 character [[stringbuf.members]], the positioning operation fails.
@@ -5944,7 +5761,7 @@ explicit basic_stringstream(ios_base::openmode which);
 
 *Effects:* Initializes the base class with
 `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_stringbuf<charT, traits, Allocator>(which)`.
+with `basic_string``buf<charT, traits, Allocator>(which)`.
 
 ``` cpp
 explicit basic_stringstream(
@@ -5954,7 +5771,7 @@ explicit basic_stringstream(
 
 *Effects:* Initializes the base class with
 `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_stringbuf<charT, traits, Allocator>(s, which)`.
+with `basic_string``buf<charT, traits, Allocator>(s, which)`.
 
 ``` cpp
 basic_stringstream(ios_base::openmode which, const Allocator& a);
@@ -6968,45 +6785,40 @@ argument determined from `mode & ~ios_base::ate` as indicated in
 [[filebuf.open.modes]]. If `mode` is not some combination of flags shown
 in the table then the open fails.
 
-<div class="floattable">
+**Table: File open modes**
 
-File open modesfilebuf.open.modes ccccccl & `stdio` equivalent  
-`binary` & `in` & `out` & `trunc` & `app` & `noreplace`  
-& & + & & & & `"w"`  
-& & + & & & + & `"wx"`  
-& & + & + & & & `"w"`  
-& & + & + & & + & `"wx"`  
-& & + & & + & & `"a"`  
-& & & & + & & `"a"`  
-& + & & & & & `"r"`  
-& + & + & & & & `"r+"`  
-& + & + & + & & & `"w+"`  
-& + & + & + & & + & `"w+x"`  
-& + & + & & + & & `"a+"`  
-& + & & & + & & `"a+"`  
-+ & & + & & & & `"wb"`  
-+ & & + & & & + & `"wbx"`  
-+ & & + & + & & & `"wb"`  
-+ & & + & + & & + & `"wbx"`  
-+ & & + & & + & & `"ab"`  
-+ & & & & + & & `"ab"`  
-+ & + & & & & & `"rb"`  
-+ & + & + & & & & `"r+b"`  
-+ & + & + & + & & & `"w+b"`  
-+ & + & + & + & & + & `"w+bx"`  
-+ & + & + & & + & & `"a+b"`  
-+ & + & & & + & & `"a+b"`  
+|     |     |     |     |     |     |          |
+| --- | --- | --- | --- | --- | --- | -------- |
+|     |     | +   |     |     |     | `"w"`    |
+|     |     | +   |     |     | +   | `"wx"`   |
+|     |     | +   | +   |     |     | `"w"`    |
+|     |     | +   | +   |     | +   | `"wx"`   |
+|     |     | +   |     | +   |     | `"a"`    |
+|     |     |     |     | +   |     | `"a"`    |
+|     | +   |     |     |     |     | `"r"`    |
+|     | +   | +   |     |     |     | `"r+"`   |
+|     | +   | +   | +   |     |     | `"w+"`   |
+|     | +   | +   | +   |     | +   | `"w+x"`  |
+|     | +   | +   |     | +   |     | `"a+"`   |
+|     | +   |     |     | +   |     | `"a+"`   |
+| +   |     | +   |     |     |     | `"wb"`   |
+| +   |     | +   |     |     | +   | `"wbx"`  |
+| +   |     | +   | +   |     |     | `"wb"`   |
+| +   |     | +   | +   |     | +   | `"wbx"`  |
+| +   |     | +   |     | +   |     | `"ab"`   |
+| +   |     |     |     | +   |     | `"ab"`   |
+| +   | +   |     |     |     |     | `"rb"`   |
+| +   | +   | +   |     |     |     | `"r+b"`  |
+| +   | +   | +   | +   |     |     | `"w+b"`  |
+| +   | +   | +   | +   |     | +   | `"w+bx"` |
+| +   | +   | +   |     | +   |     | `"a+b"`  |
+| +   | +   |     |     | +   |     | `"a+b"`  |
 
-</div>
 
 If the open operation succeeds and `ios_base::ate` is set in `mode`,
 positions the file to the end (as if by calling
 `fseek(file, 0, SEEK_END)`, where `file` is the pointer returned by
-calling `fopen`).
-
-The macro `SEEK_END` is defined, and the function signatures
-`fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
-declared, in `<cstdio>`.
+calling `fopen`).[^37]
 
 If the repositioning operation fails, calls `close()` and returns a null
 pointer to indicate failure.
@@ -7189,15 +7001,6 @@ unshift sequence” means, if `width` if less than zero then call
 resulting unshift sequence. The function determines one of three values
 for the argument `whence`, of type `int`, as indicated in
 [[filebuf.seekoff]].
-
-<div class="libtab2">
-
-`seekoff` effectsfilebuf.seekoff ll`way` Value`stdio` Equivalent
-`basic_ios::beg` & `SEEK_SET`  
-`basic_ios::cur` & `SEEK_CUR`  
-`basic_ios::end` & `SEEK_END`  
-
-</div>
 
 ``` cpp
 pos_type seekpos(pos_type sp,
@@ -7491,7 +7294,7 @@ explicit basic_ofstream(const filesystem::path::value_type* s,
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream.cons]] and `sb`
 with `basic_filebuf<charT, traits>()`[[filebuf.cons]], then calls
 `rdbuf()->open(s, mode | ios_base::out)`. If that function returns a
-null pointer, calls `setstate(failbit)`.
+null pointer, calls `setstate(fail``bit)`.
 
 ``` cpp
 explicit basic_ofstream(const string& s,
@@ -8163,11 +7966,10 @@ it again with an `osyncstream`. For example,
 
 produces the *uninterleaved* output
 
-<div class="outputblock">
-
-Goodbye, Planet! Hello, World!
-
-</div>
+``` text
+Goodbye, Planet!
+Hello, World!
+```
 
 — *end example*\]
 
@@ -9455,7 +9257,7 @@ Generic format observer functions return strings formatted according to
 the generic pathname format [[fs.path.generic]]. A single slash (`'/'`)
 character is used as the *directory-separator*.
 
-\[*Example 6*:
+\[*Example 1*:
 
 On an operating system that uses backslash as its *preferred-separator*,
 
@@ -9568,7 +9370,7 @@ path filename() const;
 
 *Returns:* `relative_path().empty() ? path() : *–end()`.
 
-\[*Example 7*:
+\[*Example 6*:
 
 ``` cpp
 path("/foo/bar.txt").filename();        // yields "bar.txt"
@@ -9593,7 +9395,7 @@ Returns a path whose pathname in the generic format is
   solely of one or two periods;
 - otherwise, the prefix of `f` ending before its last period.
 
-\[*Example 8*:
+\[*Example 7*:
 
 ``` cpp
 std::cout << path("/foo/bar.txt").stem();       // outputs "bar"
@@ -9614,7 +9416,7 @@ path extension() const;
 *Returns:* A path whose pathname in the generic format is the suffix of
 `filename()` not included in `stem()`.
 
-\[*Example 9*:
+\[*Example 8*:
 
 ``` cpp
 path("/foo/bar.txt").extension();       // yields ".txt" and stem() is "bar"
@@ -9698,7 +9500,7 @@ bool is_absolute() const;
 *Returns:* `true` if the pathname in the native format contains an
 absolute path [[fs.class.path]], otherwise `false`.
 
-\[*Example 10*: `path("/").is_absolute()` is `true` for POSIX-based
+\[*Example 9*: `path("/").is_absolute()` is `true` for POSIX-based
 operating systems, and `false` for Windows-based operating
 systems. — *end example*\]
 
@@ -9718,7 +9520,7 @@ path lexically_normal() const;
 form [[fs.path.generic]] of the pathname in the generic format of
 `*this`.
 
-\[*Example 11*:
+\[*Example 10*:
 
 ``` cpp
 assert(path("foo/./bar/..").lexically_normal() == "foo/");
@@ -9771,7 +9573,7 @@ Then,
 resolve [[fs.class.path]] symlinks. Does not first
 normalize [[fs.path.generic]] `*this` or `base`.
 
-\[*Example 12*:
+\[*Example 11*:
 
 ``` cpp
 assert(path("/a/d").lexically_relative("/a/b/c") == "../../d");
@@ -11155,7 +10957,7 @@ Effects are then as follows:
     `(options & copy_options::directories_only) != copy_options::none`,
     then return.
   - Otherwise, if
-    `(options & copy_options::create_symlinks) != copy_options::none`,
+    `(options & copy_options::create_symlinks) `` != copy_options::none`,
     then create a symbolic link to the source file.
   - Otherwise, if
     `(options & copy_options::create_hard_links) != copy_options::none`,
@@ -11279,7 +11081,7 @@ group [[fs.enum.copy.opts]] is set in `options`.
   - `exists(to)` is `false`, or
   - `(options & copy_options::overwrite_existing) != copy_options::none`,
     or
-  - `(options & copy_options::update_existing) != copy_options::none`
+  - `(options & copy_options::update_existing) `` `` != copy_options::none`
     and `from` is more recent than `to`, determined as if by use of the
     `last_write_time` function [[fs.op.last.write.time]].
 - Otherwise, no effects.
@@ -12633,7 +12435,6 @@ modifier for the type.
 
 <!-- Link reference definitions -->
 [allocator.requirements.general]: library.md#allocator.requirements.general
-[basefield.manip]: #basefield.manip
 [basic.fundamental]: basic.md#basic.fundamental
 [basic.ios.cons]: #basic.ios.cons
 [basic.ios.copyfmt]: #basic.ios.copyfmt
@@ -12711,7 +12512,6 @@ modifier for the type.
 [istream.cons]: #istream.cons
 [istream.extractors]: #istream.extractors
 [istream.formatted.reqmts]: #istream.formatted.reqmts
-[istream.manip]: #istream.manip
 [istream.sentry]: #istream.sentry
 [istream.unformatted]: #istream.unformatted
 [lex.charset]: lex.md#lex.charset
@@ -12722,7 +12522,6 @@ modifier for the type.
 [ostream]: #ostream
 [ostream.cons]: #ostream.cons
 [ostream.formatted.reqmts]: #ostream.formatted.reqmts
-[ostream.manip]: #ostream.manip
 [ostream.unformatted]: #ostream.unformatted
 [quoted.manip]: #quoted.manip
 [res.on.data.races]: library.md#res.on.data.races
@@ -12765,14 +12564,133 @@ modifier for the type.
 [string.streams]: #string.streams
 [syncstream]: #syncstream
 
-[^1]: It is the implementation’s responsibility to implement headers so
+[^1]: Typically `long long`.
+
+[^2]: Most places where `streamsize` is used would use `size_t` in ISO
+    C, or `ssize_t` in POSIX.
+
+[^3]: It is the implementation’s responsibility to implement headers so
     that including `<iosfwd>` and other headers does not violate the
     rules about multiple occurrences of default arguments.
 
-[^2]: Constructors and destructors for objects with static storage
+[^4]: Constructors and destructors for objects with static storage
     duration can access these objects to read input from `stdin` or
     write output to `stdout` or `stderr`.
 
-[^3]: This is done without causing an `ios_base::failure` to be thrown.
+[^5]: This implies that operations on a standard iostream object can be
+    mixed arbitrarily with operations on the corresponding stdio stream.
+    In practical terms, synchronization usually means that a standard
+    iostream object and a standard stdio object share a buffer.
 
-[^4]: This is done without causing an `ios_base::failure` to be thrown.
+[^6]: An implementation is free to implement both the integer array
+    pointed at by `iarray` and the pointer array pointed at by `parray`
+    as sparse data structures, possibly with a one-element cache for
+    each.
+
+[^7]: For example, because it cannot allocate space.
+
+[^8]: For example, because it cannot allocate space.
+
+[^9]: This suggests an infinite amount of copying, but the
+    implementation can keep track of the maximum element of the arrays
+    that is nonzero.
+
+[^10]: Checking `badbit` also for `fail()` is historical practice.
+
+[^11]: The function signature `dec(ios_base&)` can be called by the
+    function signature
+    `basic_ostream& stream::operator<<(ios_base& (*)(ios_base&))` to
+    permit expressions of the form `cout << dec` to change the format
+    flags stored in `cout`.
+
+[^12]: The default constructor is protected for class `basic_streambuf`
+    to assure that only objects for classes derived from this class can
+    be constructed.
+
+[^13]: `underflow` or `uflow` can fail by throwing an exception
+    prematurely. The intention is not only that the calls will not
+    return `eof()` but that they will return “immediately”.
+
+[^14]: Classes derived from `basic_streambuf` can provide more efficient
+    ways to implement `xsgetn()` and `xsputn()` by overriding these
+    definitions from the base class.
+
+[^15]: That is, for each class derived from a specialization of
+    `basic_streambuf` in this Clause@@REF:stringbuf,filebuf@@, a
+    specification of how consuming a character effects the associated
+    output sequence is given. There is no requirement on a
+    program-defined class.
+
+[^16]: Typically, `overflow` returns `c` to indicate success, except
+    when `traits::eq_int_type(c, traits::eof())` returns `true`, in
+    which case it returns `traits::not_eof(c)`.
+
+[^17]: This will be possible only in functions that are part of the
+    library. The semantics of the constructor used in user code is as
+    specified.
+
+[^18]: The `sentry` constructor and destructor can also perform
+    additional implementation-dependent operations.
+
+[^19]: See, for example, the function signature
+    `ws(basic_istream&)`@@REF:istream.manip@@.
+
+[^20]: See, for example, the function signature
+    `dec(ios_base&)`@@REF:basefield.manip@@.
+
+[^21]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^22]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^23]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^24]: Since the final input character is “extracted”, it is counted in
+    the `gcount()`, even though it is not stored.
+
+[^25]: This allows an input line which exactly fills the buffer, without
+    setting `failbit`. This is different behavior than the historical
+    AT&T implementation.
+
+[^26]: This implies an empty input line will not cause `failbit` to be
+    set.
+
+[^27]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^28]: The call `os.tie()->flush()` does not necessarily occur if the
+    function can determine that no synchronization is necessary.
+
+[^29]: The `sentry` constructor and destructor can also perform
+    additional implementation-dependent operations.
+
+[^30]: This is done without causing an `ios_base::failure` to be thrown.
+
+[^31]: See, for example, the function signature
+    `endl(basic_ostream&)`@@REF:ostream.manip@@.
+
+[^32]: See, for example, the function signature
+    `dec(ios_base&)`@@REF:basefield.manip@@.
+
+[^33]: This is done without causing an `ios_base::failure` to be thrown.
+
+[^34]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^35]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^36]: The expression `cin >> resetiosflags(ios_base::skipws)` clears
+    `ios_base::skipws` in the format flags stored in the
+    `basic_istream<charT, traits>` object `cin` (the same as
+    `cin >> noskipws`), and the expression
+    `cout << resetiosflags(ios_base::showbase)` clears
+    `ios_base::showbase` in the format flags stored in the
+    `basic_ostream<charT, traits>` object `cout` (the same as
+    `cout << noshowbase`).
+
+[^37]: The macro `SEEK_END` is defined, and the function signatures
+    `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
+    declared, in `<cstdio>`.

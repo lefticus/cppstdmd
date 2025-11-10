@@ -3920,7 +3920,7 @@ such that `equal(first1, last1, begin, pred)` returns `true`; otherwise,
 returns `false`.
 
 *Complexity:* No applications of the corresponding predicate if
-`ForwardIterator1` and `ForwardIterator2` meet the requirements of
+`ForwardIterator1` and `Forward``Iter``ator2` meet the requirements of
 random access iterators and `last1 - first1 != last2 - first2`.
 Otherwise, exactly `last1 - first1` applications of the corresponding
 predicate if `equal(first1, last1, first2, last2, pred)` would return
@@ -4420,9 +4420,9 @@ which the condition E holds.
 `result + (last - first)`) do not overlap.
 
 \[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
-performance cost if `iterator_traits<ForwardIterator1>::value_type` is
-not *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]). — *end note*\]
+performance cost if
+`iterator_traits<For``ward``It``er``ator1>::value_type` is not
+*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]). — *end note*\]
 
 *Effects:* Copies all of the elements referred to by the iterator `i` in
 the range \[`first`, `last`) for which E is `true`.
@@ -4460,10 +4460,7 @@ Let N be `last - first`.
 
 *Effects:* Copies elements in the range \[`first`, `last`) into the
 range \[`result - `N, `result`) starting from `last - 1` and proceeding
-to `first`.
-
-`copy_backward` can be used instead of `copy` when `last` is in the
-range \[`result - `N, `result`).
+to `first`.[^2]
 
 For each positive integer n ≤ N, performs
 `*(result - `n`) = *(last - `n`)`.
@@ -4562,10 +4559,7 @@ Let N be `last - first`.
 
 *Effects:* Moves elements in the range \[`first`, `last`) into the range
 \[`result - `N, `result`) starting from `last - 1` and proceeding to
-`first`.
-
-`move_backward` can be used instead of `move` when `last` is in the
-range \[`result - `N, `result`).
+`first`.[^3]
 
 For each positive integer n ≤ N, performs `*(result - `n`) = `E.
 
@@ -4704,7 +4698,7 @@ Let:
     binary transforms defined in namespace `std`;
   - `invoke(op, invoke(proj, *(first1 + (i - result))))` for unary
     transforms defined in namespace `ranges`;
-  - `invoke(binary_op, invoke(proj1, *(first1 + (i - result))), invoke(proj2,(first2 + (i - result))))`
+  - `invoke(binary_op, invoke(proj1, *(first1 + (i - result))), invoke(proj2,``(first2 + (i - result))))`
     for binary transforms defined in namespace `ranges`.
 
 *Preconditions:* `op` and `binary_op` do not invalidate iterators or
@@ -4712,8 +4706,7 @@ subranges, nor modify elements in the ranges
 
 - \[`first1`, `first1 + `N\],
 - \[`first2`, `first2 + `N\], and
-- \[`result`, `result + `N\]. The use of fully closed ranges is
-  intentional.
+- \[`result`, `result + `N\].[^4]
 
 *Effects:* Assigns through every iterator `i` in the range \[`result`,
 `result + `N) a new corresponding value equal to E.
@@ -4852,7 +4845,7 @@ Let E be
 - `bool(invoke(proj, *(first + (i - result))) == old_value)` for
   `ranges::replace_copy`;
 - `bool(invoke(pred, invoke(proj, *(first + (i - result)))))` for
-  `ranges::replace_copy_if`.
+  `ranges::replace_``copy_if`.
 
 *Mandates:* The results of the expressions `*first` and `new_value` are
 writable [[iterator.requirements.general]] to `result`.
@@ -5429,8 +5422,9 @@ overload in namespace `std`:
 - `SampleIterator` meets the *Cpp17OutputIterator*
   requirements [[output.iterators]].
 - `SampleIterator` meets the *Cpp17RandomAccessIterator*
-  requirements [[random.access.iterators]] unless `PopulationIterator`
-  models `forward_iterator`[[iterator.concept.forward]].
+  requirements [[random.access.iterators]] unless
+  `Pop``ulat``ion``Iter``ator` models
+  `forward_iterator`[[iterator.concept.forward]].
 - `remove_reference_t<UniformRandomBitGenerator>` meets the requirements
   of a uniform random bit generator type [[rand.req.urng]].
 
@@ -5560,7 +5554,7 @@ Does so in order starting from `i = (last - first) - n - 1` and
 proceeding to `i = 0` if:
 
 - for the overload in namespace `std` without an `ExecutionPolicy`
-  template parameter, `ForwardIterator` meets the
+  template parameter, `Forward``Iterator` meets the
   *Cpp17BidirectionalIterator* requirements,
 - for the overloads in namespace `ranges`, `I` models
   `bidirectional_iterator`.
@@ -7470,9 +7464,7 @@ template<forward_range R, class Proj = identity,
 *Returns:* `{first, first}` if \[`first`, `last`) is empty, otherwise
 `{m, M}`, where `m` is the first iterator in \[`first`, `last`) such
 that no iterator in the range refers to a smaller element, and where `M`
-is the last iterator
-
-This behavior intentionally differs from `max_element`.
+is the last iterator[^5]
 
 in \[`first`, `last`) such that no iterator in the range refers to a
 larger element.
@@ -7977,18 +7969,12 @@ template<class InputIterator, class T, class BinaryOperation>
 ( [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
 ( [[cpp17.copyassignable]]) requirements. In the range \[`first`,
 `last`\], `binary_op` neither modifies elements nor invalidates
-iterators or subranges.
-
-The use of fully closed ranges is intentional.
+iterators or subranges.[^6]
 
 *Effects:* Computes its result by initializing the accumulator `acc`
 with the initial value `init` and then modifies it with
 `acc = std::move(acc) + *i` or `acc = binary_op(std::move(acc), *i)` for
-every iterator `i` in the range \[`first`, `last`) in order.
-
-`accumulate` is similar to the APL reduction operator and Common Lisp
-reduce function, but it avoids the difficulty of defining the result of
-reduction on an empty sequence by always requiring an initial value.
+every iterator `i` in the range \[`first`, `last`) in order.[^7]
 
 ### Reduce <a id="reduce">[[reduce]]</a>
 
@@ -8097,9 +8083,7 @@ template<class InputIterator1, class InputIterator2, class T,
 ( [[cpp17.copyassignable]]) requirements. In the ranges \[`first1`,
 `last1`\] and \[`first2`, `first2 + (last1 - first1)`\] `binary_op1` and
 `binary_op2` neither modifies elements nor invalidates iterators or
-subranges.
-
-The use of fully closed ranges is intentional.
+subranges.[^8]
 
 *Effects:* Computes its result by initializing the accumulator `acc`
 with the initial value `init` and then modifying it with
@@ -8245,14 +8229,12 @@ template<class InputIterator, class OutputIterator, class BinaryOperation>
 *Mandates:* `InputIterator`’s value type is constructible from `*first`.
 The result of the expression `std::move(acc) + *i` or
 `binary_op(std::move(acc), *i)` is implicitly convertible to
-`InputIterator`’s value type. `acc` is
+`InputIt``er``a``tor`’s value type. `acc` is
 writable [[iterator.requirements.general]] to `result`.
 
 *Preconditions:* In the ranges \[`first`, `last`\] and \[`result`,
 `result + (last - first)`\] `binary_op` neither modifies elements nor
-invalidates iterators or subranges.
-
-The use of fully closed ranges is intentional.
+invalidates iterators or subranges.[^9]
 
 *Effects:* For a non-empty range, the function creates an accumulator
 `acc` whose type is `InputIterator`’s value type, initializes it with
@@ -8493,8 +8475,8 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 *Remarks:* `result` may be equal to `first`.
 
 \[*Note 1*: The difference between `transform_exclusive_scan` and
-`transform_inclusive_scan` is that `transform_exclusive_scan` excludes
-the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
+`transform_inclusive_scan` is that `trans``form``_``exclusive_scan`
+excludes the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_exclusive_scan`
 can be nondeterministic. `transform_exclusive_scan` does not apply
 `unary_op` to `init`. — *end note*\]
@@ -8576,8 +8558,8 @@ through `result + K` the value of
 *Remarks:* `result` may be equal to `first`.
 
 \[*Note 1*: The difference between `transform_exclusive_scan` and
-`transform_inclusive_scan` is that `transform_inclusive_scan` includes
-the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
+`transform_inclusive_scan` is that `trans``form``_``inclusive_scan`
+includes the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_inclusive_scan`
 can be nondeterministic. `transform_inclusive_scan` does not apply
 `unary_op` to `init`. — *end note*\]
@@ -8627,8 +8609,7 @@ denotes an object of type `minus<>`.
   *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
 - For all overloads, in the ranges \[`first`, `last`\] and \[`result`,
   `result + (last - first)`\], `binary_op` neither modifies elements nor
-  invalidates iterators or subranges. The use of fully closed ranges is
-  intentional.
+  invalidates iterators or subranges.[^10]
 
 *Effects:* For the overloads with no `ExecutionPolicy` and a non-empty
 range, the function creates an accumulator `acc` of type `T`,
@@ -9515,3 +9496,26 @@ standard library.
     included. For example, `sort_copy` is not included because the cost
     of sorting is much more significant, and users can invoke `copy`
     followed by `sort`.
+
+[^2]: `copy_backward` can be used instead of `copy` when `last` is in
+    the range \[`result - `N, `result`).
+
+[^3]: `move_backward` can be used instead of `move` when `last` is in
+    the range \[`result - `N, `result`).
+
+[^4]: The use of fully closed ranges is intentional.
+
+[^5]: This behavior intentionally differs from `max_element`.
+
+[^6]: The use of fully closed ranges is intentional.
+
+[^7]: `accumulate` is similar to the APL reduction operator and Common
+    Lisp reduce function, but it avoids the difficulty of defining the
+    result of reduction on an empty sequence by always requiring an
+    initial value.
+
+[^8]: The use of fully closed ranges is intentional.
+
+[^9]: The use of fully closed ranges is intentional.
+
+[^10]: The use of fully closed ranges is intentional.
