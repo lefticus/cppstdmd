@@ -787,3 +787,14 @@ def test_doccite_with_nested_cpp_macro():
     # Should NOT have truncated content or unexpanded macros
     assert "\\Cpp{" not in output
     assert "*The \\Cpp{*" not in output
+
+def test_discretionary_hyphen_in_tcode():
+    """Test that discretionary hyphens (\-) are removed from \tcode{} content"""
+    latex = r"If \tcode{Forward\-Iter\-ator2} meets the requirements."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have single continuous code span, no doubled backticks
+    assert "`ForwardIterator2`" in output
+    # Should NOT have broken code spans
+    assert "``" not in output
+    assert "`Forward``Iter``ator2`" not in output

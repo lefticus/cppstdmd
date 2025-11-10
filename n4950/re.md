@@ -1312,7 +1312,7 @@ std::swap(matched, s.matched);
 ```
 
 *Remarks:* The exception specification is equivalent to
-`is_nothrow_swappable_v<BidirectionalIter``ator>`.
+`is_nothrow_swappable_v<BidirectionalIterator>`.
 
 ### Non-member operators <a id="re.submatch.op">[[re.submatch.op]]</a>
 
@@ -1962,7 +1962,7 @@ template<class BidirectionalIterator, class charT, class traits>
 ```
 
 *Effects:* Behaves “as if” by constructing an object `what` of type
-`match_results<Bidirectional``Iterator>` and returning
+`match_results<BidirectionalIterator>` and returning
 `regex_search(first, last, what, e, flags)`.
 
 ``` cpp

@@ -1364,7 +1364,7 @@ original feature:** The following C++ headers are new: `<array>`,
 `<atomic>`, `<chrono>`, , `<condition_variable>`, `<forward_list>`,
 `<future>`, `<initializer_list>`, `<mutex>`, `<random>`, `<ratio>`,
 `<regex>`, `<scoped_allocator>`, `<system_error>`, `<thread>`,
-`<tuple>`, `<type\-index>`, `<type_traits>`, `<unordered_map>`, and
+`<tuple>`, `<typeindex>`, `<type_traits>`, `<unordered_map>`, and
 `<unordered_set>`. In addition the following C compatibility headers are
 new: `<cfenv>`, `<cinttypes>`, `<cstdint>`, and `<cuchar>`. Valid C++03
 code that `#include`s headers with these names may be invalid in this

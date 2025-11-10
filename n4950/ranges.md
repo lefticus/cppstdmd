@@ -693,8 +693,7 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 \[*Note 1*: Whenever `ranges::cend(E)` is a valid expression, the types
 `S` and `I` of the expressions `ranges::cend(E)` and `ranges::cbegin(E)`
 model `sentinel_for<S, I>`. If `S` models `input_iterator`, then `S`
-also models
-\exposconceptx{constant-iterator}{constant-iterator}. — *end note*\]
+also models . — *end note*\]
 
 ### `ranges::rbegin` <a id="range.access.rbegin">[[range.access.rbegin]]</a>
 
@@ -797,8 +796,7 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 \[*Note 1*: Whenever `ranges::crend(E)` is a valid expression, the types
 `S` and `I` of the expressions `ranges::crend(E)` and
 `ranges::crbegin(E)` model `sentinel_for<S, I>`. If `S` models
-`input_iterator`, then `S` also models
-\exposconceptx{constant-iterator}{constant-iterator}. — *end note*\]
+`input_iterator`, then `S` also models . — *end note*\]
 
 ### `ranges::size` <a id="range.prim.size">[[range.prim.size]]</a>
 
@@ -4553,7 +4551,7 @@ friend constexpr bool operator==(const CI<OtherConst>& y, const sentinel& x);
 #### Overview <a id="range.take.while.overview">[[range.take.while.overview]]</a>
 
 Given a unary predicate `pred` and a view `r`, `take_while_view`
-produces a view of the range \[`ranges::be``gin(r)`,
+produces a view of the range \[`ranges::begin(r)`,
 `ranges::find_if_not(r, pred)`).
 
 The name `views::take_while` denotes a range adaptor object
@@ -5106,9 +5104,8 @@ namespace std::ranges {
   `common_range`, then `iterator_concept` denotes
   `bidirectional_iterator_tag`.
 - Otherwise, if *ref-is-glvalue* is `true` and *Base* and
-  `range_reference_t<Base>` each model
-  \libconceptx{forward_range}{forward_range}, then `iterator_concept`
-  denotes `forward_iterator_tag`.
+  `range_reference_t<Base>` each model , then `iterator_concept` denotes
+  `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
@@ -5483,7 +5480,7 @@ constexpr explicit join_with_view(R&& r, range_value_t<InnerRng> e);
 ```
 
 *Effects:* Initializes *base\_* with `views::all(std::forward<R>(r))`
-and *pattern\_* with `views::sin``gle(std::move(e))`.
+and *pattern\_* with `views::single(std::move(e))`.
 
 #### Class template `join_with_view::iterator` <a id="range.join.with.iterator">[[range.join.with.iterator]]</a>
 
@@ -10783,7 +10780,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y);
 
 *Returns:* If *last_ele\_* is present,
 `x.`*`last_ele_`*` == y.`*`last_ele_`*; otherwise,
-`x.`*`current_`*` == y.`*`cur``rent_`*.
+`x.`*`current_`*` == y.`*`current_`*.
 
 ``` cpp
 friend constexpr bool operator<(const iterator& x, const iterator& y)
@@ -10856,7 +10853,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
 
 *Returns:* If *last_ele\_* is present,
 `x.`*`last_ele_`*` - y.`*`last_ele_`*; otherwise,
-`x.`*`current_`*` - y.`*`cur``rent_`*.
+`x.`*`current_`*` - y.`*`current_`*.
 
 #### Class `slide_view::sentinel` <a id="range.slide.sentinel">[[range.slide.sentinel]]</a>
 
@@ -11980,7 +11977,7 @@ Let:
   and $\textit{scaled-size}(N+1)$ if N \le `sizeof...(Vs)`, otherwise
   `static_cast<difference_type>(1)`;
 - $\textit{scaled-distance}(N)$ be the product of
-  `static_cast<difference_type>(std::get<`N`>(`*`cur``rent_`*`) - std::get<`N`>(t))`
+  `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
   and $\textit{scaled-size}(N+1)$; and
 - *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
   integer 0 \le N \le `sizeof...(Vs)`.
@@ -12175,7 +12172,7 @@ Let *end-tuple* be an object of a type that is a specialization of
 `tuple`, such that:
 
 - `std::get<0>(`*`end-tuple`*`)` has the same value as
-  `ranges::end(std::get<0>(i.`*`parent_`*`->`*`ba``ses_`*`))`;
+  `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
 - `std::get<`N`>(`*`end-tuple`*`)` has the same value as
   `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
   every integer 1 \le N \le `sizeof...(Vs)`.
@@ -12522,8 +12519,8 @@ into which `g.range` is moved, whose member `await_ready` returns
 `g.range.`\textit{coroutine\_} into `*x.`*`active_`* and resumes
 execution of the coroutine referred to by `g.range.`*`coroutine_`*, and
 whose member `await_resume` evaluates `rethrow_exception(`*`except_`*`)`
-if `bool(`*`ex``cept_`*`)` is `true`. If `bool(`*`except_`*`)` is
-`false`, the `await_resume` member has no effects.
+if `bool(`*`except_`*`)` is `true`. If `bool(`*`except_`*`)` is `false`,
+the `await_resume` member has no effects.
 
 *Remarks:* A *yield-expression* that calls this function has type
 `void`[[expr.yield]].

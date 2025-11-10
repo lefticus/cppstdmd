@@ -1305,7 +1305,7 @@ typename X::template rebind<U>::other
 `SomeAllocator<T, Args>`, where `Args` is zero or more type arguments,
 and `Allocator` does not supply a `rebind` member template, the standard
 `allocator_traits` template uses `SomeAllocator<U, Args>` in place of
-`Allocator::re``bind<U>::other` by default. For allocator types that are
+`Allocator::rebind<U>::other` by default. For allocator types that are
 not template instantiations of the above form, no default is provided.
 
 \[*Note 1*: The member class template `rebind` of `X` is effectively a

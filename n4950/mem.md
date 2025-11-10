@@ -1197,7 +1197,7 @@ using difference_type = see below;
 
 *Type:* `Alloc::difference_type` if the *qualified-id*
 `Alloc::difference_type` is valid and denotes a type [[temp.deduct]];
-otherwise, `pointer_traits<pointer>::dif``ference_type`.
+otherwise, `pointer_traits<pointer>::difference_type`.
 
 ``` cpp
 using size_type = see below;
@@ -1805,7 +1805,7 @@ meets the *Cpp17CopyAssignable* requirements and assignment of the
 deleter from an lvalue of type `D` does not throw an exception.
 
 *Effects:* Calls `reset(u.release())` followed by
-`get_deleter() = std::forward<D>(u.get_dele``ter())`.
+`get_deleter() = std::forward<D>(u.get_deleter())`.
 
 *Ensures:* If `this != addressof(u)`, `u.get() == nullptr`, otherwise
 `u.get()` is unchanged.
@@ -1830,7 +1830,7 @@ deleter from an lvalue of type `E` is well-formed and does not throw an
 exception.
 
 *Effects:* Calls `reset(u.release())` followed by
-`get_deleter() = std::forward<E>(u.get_dele``ter())`.
+`get_deleter() = std::forward<E>(u.get_deleter())`.
 
 *Ensures:* `u.get() == nullptr`.
 

@@ -709,7 +709,7 @@ a = rv
 *Result:* `X&`.
 
 *Preconditions:* If
-`allocator_traits<allocator_type>::propagate_on_container_move_assign``ment::value`
+`allocator_traits<allocator_type>::propagate_on_container_move_assignment::value`
 is `false`, `T` is *Cpp17MoveInsertable* into `X` and
 *Cpp17MoveAssignable*.
 
@@ -1390,8 +1390,8 @@ node-handle& operator=(node-handle&& nh);
 ```
 
 *Preconditions:* Either `!alloc_`, or
-`ator_traits::propagate_on_container_move_assignment::``value` is
-`true`, or `alloc_ == nh.alloc_`.
+`ator_traits::propagate_on_container_move_assignment::value` is `true`,
+or `alloc_ == nh.alloc_`.
 
 *Effects:*
 
@@ -1440,8 +1440,8 @@ key_type& key() const;
 *Preconditions:* `empty() == false`.
 
 *Returns:* A non-const reference to the `key_type` member of the
-`value_type` subobject in the `contain``er_node_type` object pointed to
-by `ptr_`.
+`value_type` subobject in the `container_node_type` object pointed to by
+`ptr_`.
 
 *Throws:* Nothing.
 
@@ -4606,7 +4606,7 @@ template<container-compatible-range<T> R>
 ```
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `forward_list`
-from `*ranges::begin(rg)`. `posi``tion` is `before_begin()` or is a
+from `*ranges::begin(rg)`. `position` is `before_begin()` or is a
 dereferenceable iterator in the range \[`begin()`, `end()`). `rg` and
 `*this` do not overlap.
 
@@ -6501,7 +6501,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `piecewise_construct`, `for``ward_as_tuple(k)`,
+from `piecewise_construct`, `forward_as_tuple(k)`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
 *Effects:* If the map already contains an element whose key is
@@ -6523,7 +6523,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `piecewise_construct`, `for``ward_as_tuple(std::move(k))`,
+from `piecewise_construct`, `forward_as_tuple(std::move(k))`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
 *Effects:* If the map already contains an element whose key is
@@ -6551,7 +6551,7 @@ template<class M>
 from `k`, `std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with `k`,
 `std::forward<M>(obj)`.
 
@@ -6571,10 +6571,10 @@ template<class M>
 *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `std::move(k)`, `std::for``ward<M>(obj)`.
+from `std::move(k)`, `std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with
 `std::move(k)`, `std::forward<M>(obj)`.
 
@@ -7970,7 +7970,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `piecewise_con``struct`, `forward_as_tuple(k)`,
+`unordered_map` from `piecewise_construct`, `forward_as_tuple(k)`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
 *Effects:* If the map already contains an element whose key is
@@ -7992,7 +7992,7 @@ template<class... Args>
 ```
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `piecewise_con``struct`,
+`unordered_map` from `piecewise_construct`,
 `forward_as_tuple(std::move(k))`,
 `forward_as_tuple(std::forward<Args>(args)...)`.
 
@@ -8018,10 +8018,10 @@ template<class M>
 *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `k`, `std::for``ward<M>(obj)`.
+`unordered_map` from `k`, `std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with `k`,
 `std::forward<M>(obj)`.
 
@@ -8044,7 +8044,7 @@ template<class M>
 `unordered_map` from `std::move(k)`, `std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::for``ward<M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
 Otherwise inserts an object of type `value_type` constructed with
 `std::move(k)`, `std::forward<M>(obj)`.
 
@@ -11604,7 +11604,7 @@ template<class Allocator>
 
 *Effects:* Equivalent to `flat_multimap(s, key_cont, mapped_cont)` and
 `flat_multimap(s, key_cont, mapped_cont, comp)`, respectively, except
-that `c.keys` and `c.val``ues` are constructed with uses-allocator
+that `c.keys` and `c.values` are constructed with uses-allocator
 construction [[allocator.uses.construction]].
 
 *Complexity:* Linear.
@@ -12083,7 +12083,7 @@ template<class K> iterator insert(const_iterator hint, K&& x);
 ```
 
 *Constraints:* The *qualified-id* `Compare::is_transparent` is valid and
-denotes a type. `is_constructi``ble_v<value_type, K>` is `true`.
+denotes a type. `is_constructible_v<value_type, K>` is `true`.
 
 *Preconditions:* The conversion from `x` into `value_type` constructs an
 object `u`, for which `find(x) == find(u)` is true.

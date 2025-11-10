@@ -878,7 +878,7 @@ template<pair-like P> constexpr pair& operator=(P&& p);
   `true`.
 
 *Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
-`get<1>(std::forward<P>(p))` to `sec``ond`.
+`get<1>(std::forward<P>(p))` to `second`.
 
 *Returns:* `*this`.
 
@@ -896,7 +896,7 @@ template<pair-like P> constexpr const pair& operator=(P&& p) const;
   `true`.
 
 *Effects:* Assigns `get<0>(std::forward<P>(p))` to `first` and
-`get<1>(std::forward<P>(p))` to `sec``ond`.
+`get<1>(std::forward<P>(p))` to `second`.
 
 *Returns:* `*this`.
 
@@ -3717,7 +3717,7 @@ the `variant` to not hold a value.
 *Throws:* Any exception thrown by move-constructing any `Tᵢ` for all i.
 
 *Remarks:* The exception specification is equivalent to the logical of
-`is_nothrow_move_con``structible_v<``Tᵢ``>` for all i. If
+`is_nothrow_move_constructible_v<``Tᵢ``>` for all i. If
 `is_trivially_move_constructible_v<``Tᵢ``>` is `true` for all i, this
 constructor is trivial.
 
@@ -3869,7 +3869,7 @@ Let j be `rhs.index()`.
 - Otherwise, if `index() == `j, assigns the value contained in `rhs` to
   the value contained in `*this`.
 - Otherwise, if either `is_nothrow_copy_constructible_v<``Tⱼ``>` is
-  `true` or `is_nothrow_move_con``structible_v<``Tⱼ``>` is `false`,
+  `true` or `is_nothrow_move_constructible_v<``Tⱼ``>` is `false`,
   equivalent to `emplace<`j`>(get<`j`>(rhs))`.
 - Otherwise, equivalent to `operator=(variant(rhs))`.
 
@@ -4017,7 +4017,7 @@ template<size_t I, class... Args>
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then direct-non-list-initializes
 the contained value of type `T_I` with the arguments
-`std::forward<Ar``gs>(args)...`.
+`std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
@@ -4748,7 +4748,7 @@ Let `VT` be `decay_t<T>`.
 *Preconditions:* `VT` meets the *Cpp17CopyConstructible* requirements.
 
 *Effects:* Calls `reset()`. Then direct-non-list-initializes the
-contained value of type `VT` with `std::for``ward<Args>(args)...`.
+contained value of type `VT` with `std::forward<Args>(args)...`.
 
 *Ensures:* `*this` contains a value.
 
@@ -6307,7 +6307,7 @@ overload.
 - `is_constructible_v<unexpected<E>, const expected<U, G>>` is `false`.
 
 *Effects:* If `rhs.has_value()` is `false`, direct-non-list-initializes
-*unex* with `std::forward<GF>(rhs.er``ror())`.
+*unex* with `std::forward<GF>(rhs.error())`.
 
 *Ensures:* `rhs.has_value()` is unchanged;
 `rhs.has_value() == this->has_value()` is `true`.
@@ -6719,7 +6719,7 @@ is well-formed.
 *Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise, an
 `expected<T, G>` object whose *has_val* member is `false` and *unex*
 member is direct-non-list-initialized with
-`invoke(std::for``ward<F>(f), error())`.
+`invoke(std::forward<F>(f), error())`.
 
 ``` cpp
 template<class F> constexpr auto transform_error(F&& f) &&;
@@ -6741,7 +6741,7 @@ is well-formed.
 *Returns:* If `has_value()` is `true`, `expected<T, G>()`; otherwise, an
 `expected<T, G>` object whose *has_val* member is `false` and *unex*
 member is direct-non-list-initialized with
-`invoke(std::for``ward<F>(f), std::move(error()))`.
+`invoke(std::forward<F>(f), std::move(error()))`.
 
 #### Equality operators <a id="expected.void.eq">[[expected.void.eq]]</a>
 
@@ -8784,7 +8784,7 @@ template<class R, class F, class... BoundArgs>
 ```
 
 *Mandates:* `is_constructible_v<FD, F>` is `true`. For each `Tᵢ` in
-`BoundArgs`, `is_cons``tructible_v<``TDᵢ``, ``Tᵢ``>` is `true`.
+`BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` is `true`.
 
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
 and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
@@ -9399,7 +9399,7 @@ Let `VT` be `decay_t<T>`.
 *Cpp17MoveConstructible* requirements.
 
 *Ensures:* `*this` has a target object of type `VT`
-direct-non-list-initialized with `ilist, std::for``ward<Args>(args)...`.
+direct-non-list-initialized with `ilist, std::forward<Args>(args)...`.
 
 *Throws:* Any exception thrown by the initialization of the target
 object. May throw `bad_alloc` unless `VT` is a function pointer or a
@@ -9598,8 +9598,8 @@ boyer_moore_searcher(RandomAccessIterator1 pat_first,
 *Cpp17DefaultConstructible*, the *Cpp17CopyConstructible*, and the
 *Cpp17CopyAssignable* requirements.
 
-Let `V` be `iterator_traits<RandomAccessIterator1>::val``ue_type`. For
-any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
+Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For any
+two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
 `hf(A) == hf(B)` is `true`.
 
 *Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
@@ -9608,7 +9608,7 @@ any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
 *Throws:* Any exception thrown by the copy constructor of
 `RandomAccessIterator1`, or by the default constructor, copy
 constructor, or the copy assignment operator of the value type of
-`RandomAccess``Iterator1`, or the copy constructor or `operator()` of
+`RandomAccessIterator1`, or the copy constructor or `operator()` of
 `BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional memory
 needed for internal data structures cannot be allocated.
 
@@ -9676,8 +9676,8 @@ boyer_moore_horspool_searcher(RandomAccessIterator1 pat_first,
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*, and
 *Cpp17CopyAssignable* requirements.
 
-Let `V` be `iterator_traits<RandomAccessIterator1>::val``ue_type`. For
-any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
+Let `V` be `iterator_traits<RandomAccessIterator1>::value_type`. For any
+two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
 `hf(A) == hf(B)` is `true`.
 
 *Effects:* Initializes `pat_first_` with `pat_first`, `pat_last_` with
@@ -9686,7 +9686,7 @@ any two values `A` and `B` of type `V`, if `pred(A, B) == true`, then
 *Throws:* Any exception thrown by the copy constructor of
 `RandomAccessIterator1`, or by the default constructor, copy
 constructor, or the copy assignment operator of the value type of
-`RandomAccess``Iterator1`, or the copy constructor or `operator()` of
+`RandomAccessIterator1`, or the copy constructor or `operator()` of
 `BinaryPredicate` or `Hash`. May throw `bad_alloc` if additional memory
 needed for internal data structures cannot be allocated.
 

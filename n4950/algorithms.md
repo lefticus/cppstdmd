@@ -3920,7 +3920,7 @@ such that `equal(first1, last1, begin, pred)` returns `true`; otherwise,
 returns `false`.
 
 *Complexity:* No applications of the corresponding predicate if
-`ForwardIterator1` and `Forward``Iter``ator2` meet the requirements of
+`ForwardIterator1` and `ForwardIterator2` meet the requirements of
 random access iterators and `last1 - first1 != last2 - first2`.
 Otherwise, exactly `last1 - first1` applications of the corresponding
 predicate if `equal(first1, last1, first2, last2, pred)` would return
@@ -4420,9 +4420,9 @@ which the condition E holds.
 `result + (last - first)`) do not overlap.
 
 \[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
-performance cost if
-`iterator_traits<For``ward``It``er``ator1>::value_type` is not
-*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]). — *end note*\]
+performance cost if `iterator_traits<ForwardIterator1>::value_type` is
+not *Cpp17MoveConstructible*
+( [[cpp17.moveconstructible]]). — *end note*\]
 
 *Effects:* Copies all of the elements referred to by the iterator `i` in
 the range \[`first`, `last`) for which E is `true`.
@@ -4845,7 +4845,7 @@ Let E be
 - `bool(invoke(proj, *(first + (i - result))) == old_value)` for
   `ranges::replace_copy`;
 - `bool(invoke(pred, invoke(proj, *(first + (i - result)))))` for
-  `ranges::replace_``copy_if`.
+  `ranges::replace_copy_if`.
 
 *Mandates:* The results of the expressions `*first` and `new_value` are
 writable [[iterator.requirements.general]] to `result`.
@@ -5422,9 +5422,8 @@ overload in namespace `std`:
 - `SampleIterator` meets the *Cpp17OutputIterator*
   requirements [[output.iterators]].
 - `SampleIterator` meets the *Cpp17RandomAccessIterator*
-  requirements [[random.access.iterators]] unless
-  `Pop``ulat``ion``Iter``ator` models
-  `forward_iterator`[[iterator.concept.forward]].
+  requirements [[random.access.iterators]] unless `PopulationIterator`
+  models `forward_iterator`[[iterator.concept.forward]].
 - `remove_reference_t<UniformRandomBitGenerator>` meets the requirements
   of a uniform random bit generator type [[rand.req.urng]].
 
@@ -5554,7 +5553,7 @@ Does so in order starting from `i = (last - first) - n - 1` and
 proceeding to `i = 0` if:
 
 - for the overload in namespace `std` without an `ExecutionPolicy`
-  template parameter, `Forward``Iterator` meets the
+  template parameter, `ForwardIterator` meets the
   *Cpp17BidirectionalIterator* requirements,
 - for the overloads in namespace `ranges`, `I` models
   `bidirectional_iterator`.
@@ -8229,7 +8228,7 @@ template<class InputIterator, class OutputIterator, class BinaryOperation>
 *Mandates:* `InputIterator`’s value type is constructible from `*first`.
 The result of the expression `std::move(acc) + *i` or
 `binary_op(std::move(acc), *i)` is implicitly convertible to
-`InputIt``er``a``tor`’s value type. `acc` is
+`InputIterator`’s value type. `acc` is
 writable [[iterator.requirements.general]] to `result`.
 
 *Preconditions:* In the ranges \[`first`, `last`\] and \[`result`,
@@ -8475,8 +8474,8 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 *Remarks:* `result` may be equal to `first`.
 
 \[*Note 1*: The difference between `transform_exclusive_scan` and
-`transform_inclusive_scan` is that `trans``form``_``exclusive_scan`
-excludes the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
+`transform_inclusive_scan` is that `transform_exclusive_scan` excludes
+the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_exclusive_scan`
 can be nondeterministic. `transform_exclusive_scan` does not apply
 `unary_op` to `init`. — *end note*\]
@@ -8558,8 +8557,8 @@ through `result + K` the value of
 *Remarks:* `result` may be equal to `first`.
 
 \[*Note 1*: The difference between `transform_exclusive_scan` and
-`transform_inclusive_scan` is that `trans``form``_``inclusive_scan`
-includes the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
+`transform_inclusive_scan` is that `transform_inclusive_scan` includes
+the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_inclusive_scan`
 can be nondeterministic. `transform_inclusive_scan` does not apply
 `unary_op` to `init`. — *end note*\]

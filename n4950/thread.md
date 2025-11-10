@@ -8117,7 +8117,7 @@ as follows (if more than one of these conditions applies, the
 implementation may choose any of the corresponding policies):
 
 - If `launch::async` is set in `policy`, calls
-  `invoke(auto(std::forward<F>(f)), auto(std::for``ward<Args>(args))...)`[[func.invoke,thread.thread.constr]]
+  `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`[[func.invoke,thread.thread.constr]]
   as if in a new thread of execution represented by a `thread` object
   with the values produced by `auto` being materialized [[conv.rval]] in
   the thread that called `async`. Any return value is stored as the
@@ -8128,8 +8128,8 @@ implementation may choose any of the corresponding policies):
   object is stored in the shared state and affects the behavior of any
   asynchronous return objects that reference that state.
 - If `launch::deferred` is set in `policy`, stores
-  `auto(std::forward<F>(f))` and `auto(std::for``ward<Args>(args))...`
-  in the shared state. These copies of `f` and `args` constitute a
+  `auto(std::forward<F>(f))` and `auto(std::forward<Args>(args))...` in
+  the shared state. These copies of `f` and `args` constitute a
   *deferred function*. Invocation of the deferred function evaluates
   `invoke(std::move(g), std::move(xyz))` where `g` is the stored value
   of `auto(std::forward<F>(f))` and `xyz` is the stored copy of

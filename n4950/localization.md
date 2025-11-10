@@ -2738,8 +2738,8 @@ facet reference `mp` and the character mapping specified by a
 `ctype<charT>` facet reference `ct` obtained from the locale returned by
 `str.getloc()`, and `str.flags()`. If a valid sequence is recognized,
 does not change `err`; otherwise, sets `err` to `(err|str.failbit)`, or
-`(err|str.failbit|str.eof``bit)` if no more characters are available,
-and does not change `units` or `digits`. Uses the pattern returned by
+`(err|str.failbit|str.eofbit)` if no more characters are available, and
+does not change `units` or `digits`. Uses the pattern returned by
 `mp.neg_format()` to parse all values. The result is returned as an
 integral value stored in `units` or as a sequence of digits possibly
 preceded by a minus sign (as produced by `ct.widen(c)` where `c` is

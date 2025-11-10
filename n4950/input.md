@@ -2936,7 +2936,7 @@ basic_istream& operator>>(basic_streambuf<charT, traits>* sb);
 
 *Effects:* Behaves as an unformatted input
 function [[istream.unformatted]]. If `sb` is null, calls
-`setstate(fail``bit)`, which may throw
+`setstate(failbit)`, which may throw
 `ios_base::failure`[[iostate.flags]]. After a `sentry` object is
 constructed, extracts characters from `*this` and inserts them in the
 output sequence controlled by `sb`. Characters are extracted and
@@ -3691,7 +3691,7 @@ pos_type tellp();
 ```
 
 *Returns:* If `fail() != false`, returns `pos_type(-1)` to indicate
-failure. Otherwise, returns `rdbuf()->pub``seek``off(0, cur, out)`.
+failure. Otherwise, returns `rdbuf()->pubseekoff(0, cur, out)`.
 
 ``` cpp
 basic_ostream& seekp(pos_type pos);
@@ -5780,7 +5780,7 @@ explicit basic_stringstream(ios_base::openmode which);
 
 *Effects:* Initializes the base class with
 `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_string``buf<charT, traits, Allocator>(which)`.
+with `basic_stringbuf<charT, traits, Allocator>(which)`.
 
 ``` cpp
 explicit basic_stringstream(
@@ -5790,7 +5790,7 @@ explicit basic_stringstream(
 
 *Effects:* Initializes the base class with
 `basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_string``buf<charT, traits, Allocator>(s, which)`.
+with `basic_stringbuf<charT, traits, Allocator>(s, which)`.
 
 ``` cpp
 basic_stringstream(ios_base::openmode which, const Allocator& a);
@@ -7321,7 +7321,7 @@ explicit basic_ofstream(const filesystem::path::value_type* s,
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream.cons]] and `sb`
 with `basic_filebuf<charT, traits>()`[[filebuf.cons]], then calls
 `rdbuf()->open(s, mode | ios_base::out)`. If that function returns a
-null pointer, calls `setstate(fail``bit)`.
+null pointer, calls `setstate(failbit)`.
 
 ``` cpp
 explicit basic_ofstream(const string& s,

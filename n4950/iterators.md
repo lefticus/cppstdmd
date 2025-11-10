@@ -3302,7 +3302,7 @@ constexpr const auto* operator->() const
 ```
 
 *Returns:* If `Iterator` models `contiguous_iterator`,
-`to_address(`*`current_`*`)`; otherwise, `address``of(*`*`current_`*`)`.
+`to_address(`*`current_`*`)`; otherwise, `addressof(*`*`current_`*`)`.
 
 ``` cpp
 constexpr basic_const_iterator& operator++();

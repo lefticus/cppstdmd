@@ -1900,7 +1900,7 @@ using ranlux24_base =
 ```
 
 *Required behavior:* The 10000ᵗʰ consecutive invocation of a
-default-constructed object of type `ran``lux24_base` produces the value
+default-constructed object of type `ranlux24_base` produces the value
 7937952.
 
 ``` cpp
@@ -1909,7 +1909,7 @@ using ranlux48_base =
 ```
 
 *Required behavior:* The 10000ᵗʰ consecutive invocation of a
-default-constructed object of type `ran``lux48_base` produces the value
+default-constructed object of type `ranlux48_base` produces the value
 61839128582725.
 
 ``` cpp
