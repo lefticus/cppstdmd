@@ -64,7 +64,8 @@ function Blocks(blocks)
         note_content = trim(note_content)
 
         -- Parse the LaTeX content to get Pandoc inlines
-        local parsed = pandoc.read(note_content, "latex")
+        -- Use +raw_tex to ensure nested custom environments are handled correctly
+        local parsed = pandoc.read(note_content, "latex+raw_tex")
         local note_inlines = {}
         -- Extract all inlines from the parsed document
         for _, block in ipairs(parsed.blocks) do

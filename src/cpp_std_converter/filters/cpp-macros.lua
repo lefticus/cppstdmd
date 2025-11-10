@@ -1087,7 +1087,8 @@ function RawBlock(elem)
       -- Parse and add description content
       if rest and #rest > 0 then
         rest = expand_macros(rest)
-        local parsed = pandoc.read(rest, "latex")
+        -- Use +raw_tex to ensure nested custom environments (like tables) are passed as RawBlocks
+        local parsed = pandoc.read(rest, "latex+raw_tex")
         for _, block in ipairs(parsed.blocks) do
           table.insert(blocks, block)
         end

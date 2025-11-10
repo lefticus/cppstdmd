@@ -926,6 +926,13 @@ function Blocks(blocks)
       -- Handle other div classes (like "indented", "center", "ncbnf") - unwrap by outputting content as blockquote
       -- This preserves content from LaTeX environments like \begin{indented} that would otherwise be lost
       if block.classes[1] then
+        -- Skip table-related Div blocks - let cpp-tables.lua handle them
+        if block.classes[1] == "libtab2" or block.classes[1] == "lib2dtab2" or
+           block.classes[1] == "libtab3" or block.classes[1] == "lib2dtab3" then
+          table.insert(result, block)
+          goto continue
+        end
+
         -- Convert to blockquote to preserve indentation/centering visually
         table.insert(result, pandoc.BlockQuote(block.content))
         goto continue

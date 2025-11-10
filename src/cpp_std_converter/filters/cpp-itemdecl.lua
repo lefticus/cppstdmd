@@ -197,6 +197,9 @@ local function convert_ref_placeholders_in_blocks(blocks)
   return result
 end
 
+-- Forward declaration (defined later, after all helper functions)
+local expand_itemdescr_macros
+
 -- Unified function to process note or example environments in itemdescr
 -- env_type: "note" or "example"
 -- counter_ref: table with counter value (pass by reference)
@@ -212,7 +215,8 @@ local function process_itemdescr_environment(content, env_type, counter_ref)
   content = expand_itemdescr_macros(content)
 
   -- Parse the LaTeX content to get Pandoc AST elements
-  local parsed = pandoc.read(content, "latex")
+  -- Use +raw_tex to ensure nested custom environments (like libtab2) are passed as RawBlocks
+  local parsed = pandoc.read(content, "latex+raw_tex")
   local has_blocks = false
 
   -- Check if content has non-Para blocks (like code blocks, itemize)
@@ -352,7 +356,8 @@ local function process_notes_examples_blocks(blocks)
 end
 
 -- Helper function to expand macros in itemdescr text before Pandoc processing
-local function expand_itemdescr_macros(text)
+-- (Forward declared earlier, defined here)
+expand_itemdescr_macros = function(text)
   -- Expand custom macros to standard LaTeX that Pandoc understands
   -- We use \texttt{} for code and \textit{} for emphasis
 
@@ -785,7 +790,8 @@ function RawBlock(elem)
     content = expand_itemdescr_macros(content)
 
     -- Now process with Pandoc to convert LaTeX to Markdown
-    local blocks = pandoc.read(content, "latex").blocks
+    -- Use +raw_tex to ensure nested custom environments (like libtab2) are passed as RawBlocks
+    local blocks = pandoc.read(content, "latex+raw_tex").blocks
 
     -- Process any note/example blocks in the result
     -- This handles nested environments like \begin{itemize} properly
