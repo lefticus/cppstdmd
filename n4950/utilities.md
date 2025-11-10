@@ -1541,7 +1541,7 @@ Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
 - `(is_constructible_v<Types, decltype(get<I>(std::forward<UTuple>(u)))> && ...)`
-  is\linebreak `true`, and
+  is `true`, and
 - either `sizeof...(Types)` is not `1`, or (when `Types...` expands to
   `T`) `is_convertible_v<UTuple, T>` and `is_constructible_v<T, UTuple>`
   are both `false`.
@@ -2236,7 +2236,7 @@ struct basic_common_reference<TTuple, UTuple, TQual, UQual> {
   type.
 
 The member *typedef-name* `type` denotes the type
-`tuple<common_reference_t<TQual<TTypes>, `\linebreak`UQual<UTypes>>...>`.
+`tuple<common_reference_t<TQual<TTypes>, UQual<UTypes>>...>`.
 
 ``` cpp
 template<tuple-like TTuple, tuple-like UTuple>
@@ -5834,8 +5834,7 @@ constexpr const T&& value() const &&;
 ```
 
 *Mandates:* `is_copy_constructible_v<E>` is `true` and
-`is_constructible_v<E, decltype(std::`\linebreak`move(error()))>` is
-`true`.
+`is_constructible_v<E, decltype(std::move(error()))>` is `true`.
 
 *Returns:* `std::move(`*`val`*`)`, if `has_value()` is `true`.
 
@@ -12056,8 +12055,7 @@ template<class T> explicit basic_format_arg(T& v) noexcept;
 *Constraints:* `T` satisfies `formattable-with<Context>`.
 
 *Preconditions:* If `decay_t<T>` is `char_type*` or `const char_type*`,
-`static_cast<const char_`\linebreak`type*>(v)` points to a
-NTCTS [[defns.ntcts]].
+`static_cast<const char_type*>(v)` points to a NTCTS [[defns.ntcts]].
 
 *Effects:* Let `TD` be `remove_const_t<T>`.
 
@@ -12175,7 +12173,7 @@ template<class Context = format_context, class... Args>
 ```
 
 *Preconditions:* The type
-`typename Context::template formatter_type<remove_cvref_t<``Tᵢ``>>`\linebreak
+`typename Context::template formatter_type<remove_cvref_t<``Tᵢ``>>`
 meets the requirements [[formatter.requirements]] for each `Tᵢ` in
 `Args`.
 

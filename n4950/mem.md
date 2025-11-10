@@ -902,7 +902,7 @@ template<class T, class Alloc, class... Args>
 *Returns:* A `tuple` value determined as follows:
 
 - If `uses_allocator_v<remove_cv_t<T>, Alloc>` is `false` and
-  `is_constructible_v<T,``Args...>` is `true`, return
+  `is_constructible_v<T,Args...>` is `true`, return
   `forward_as_tuple(std::forward<Args>(args)...)`.
 - Otherwise, if `uses_allocator_v<remove_cv_t<T>, Alloc>` is `true` and
   `is_constructible_v<T, allocator_arg_t, const Alloc&, Args...>` is

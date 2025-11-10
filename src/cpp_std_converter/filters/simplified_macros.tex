@@ -14,8 +14,9 @@
 %% Category A: Simple Text Substitutions (20 macros)
 %% These are constant strings with no arguments
 %%--------------------------------------------------
-%% Remove discretionary hyphens (\-) - these are just line-breaking hints
-\renewcommand{\-}{}
+%% Remove line-breaking hints - these don't apply to markdown
+\renewcommand{\-}{}           % Discretionary hyphen
+\renewcommand{\linebreak}{}   % Line break hint
 \renewcommand{\Cpp}{C++}
 \renewcommand{\CppIII}{C++03}
 \renewcommand{\CppXI}{C++11}

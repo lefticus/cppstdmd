@@ -2689,10 +2689,10 @@ constexpr explicit repeat_view(piecewise_construct_t,
 ```
 
 *Effects:* Initializes *value\_* with
-`make_from_tuple<T>(std::move(value_args))` and initializes\linebreak
-*bound\_* with `make_from_tuple<Bound>(std::move(bound_args))`. The
-behavior is undefined if `Bound` is not `unreachable_sentinel_t` and
-*bound\_* is negative.
+`make_from_tuple<T>(std::move(value_args))` and initializes *bound\_*
+with `make_from_tuple<Bound>(std::move(bound_args))`. The behavior is
+undefined if `Bound` is not `unreachable_sentinel_t` and *bound\_* is
+negative.
 
 ``` cpp
 constexpr iterator begin() const;
@@ -4357,8 +4357,8 @@ expression `views::take(E, F)` is expression-equivalent to:
 - otherwise, if `T` is a specialization of `iota_view`
   [[range.iota.view]] that models `random_access_range` and
   `sized_range`, then `iota_view(*ranges::begin(E),
-  *(ranges::begin(E) + std::\linebreak{}min<D>(ranges::distance(E), F)))`,
-  except that `E` is evaluated only once.
+  *(ranges::begin(E) + std::{}min<D>(ranges::distance(E), F)))`, except
+  that `E` is evaluated only once.
 - Otherwise, if `T` is a specialization of `repeat_view`
   [[range.repeat.view]]:
   - if `T` models `sized_range`, then
@@ -4724,7 +4724,7 @@ expression `views::drop(E, F)` is expression-equivalent to:
   and `T` otherwise.
 - Otherwise, if `T` is a specialization of `subrange` [[range.subrange]]
   that models `random_access_range` and `sized_range`, then
-  `T(ranges::begin(E) + std::min<D>(ranges::distance(E), F), ranges::\linebreak{}end(E),
+  `T(ranges::begin(E) + std::min<D>(ranges::distance(E), F), ranges::{}end(E),
   to-unsigned-like(ranges::distance(E) -
   std::min<D>(ranges::distance(E), F)))`, except that `E` and `F` are
   each evaluated only once.
@@ -5581,7 +5581,7 @@ as follows:
 - Let *OUTERC* denote `iterator_traits<OuterIter>::iterator_category`,
   let *INNERC* denote `iterator_traits<InnerIter>::iterator_category`,
   and let *PATTERNC* denote
-  `iterator_-\linebreak traits<PatternIter>::iterator_category`.
+  `iterator_-traits<PatternIter>::iterator_category`.
 - If
   ``` cpp
   is_reference_v<common_reference_t<iter_reference_t<InnerIter>,
@@ -5988,7 +5988,7 @@ constexpr explicit lazy_split_view(R&& r, range_value_t<R> e);
 ```
 
 *Effects:* Initializes *base\_* with `views::all(std::forward<R>(r))`,
-and *pattern\_* with `views::``single(std::move(e))`.
+and *pattern\_* with `views::single(std::move(e))`.
 
 #### Class template `lazy_split_view::outer-iterator` <a id="range.lazy.split.outer">[[range.lazy.split.outer]]</a>
 
@@ -6421,7 +6421,7 @@ constexpr explicit split_view(R&& r, range_value_t<R> e);
 ```
 
 *Effects:* Initializes *base\_* with `views::all(std::forward<R>(r))`,
-and *pattern\_* with `views::``single(std::move(e))`.
+and *pattern\_* with `views::single(std::move(e))`.
 
 ``` cpp
 constexpr iterator begin();
@@ -6598,7 +6598,7 @@ instantiation. — *end note*\]
 Otherwise, `views::counted(E, F)` is expression-equivalent to:
 
 - If `T` models `contiguous_iterator`, then
-  `span(to_address(E), static_cast<size_t>(static_-\linebreak{}cast<D>(F)))`.
+  `span(to_address(E), static_cast<size_t>(static_-{}cast<D>(F)))`.
 - Otherwise, if `T` models `random_access_iterator`, then
   `subrange(E, E + static_cast<D>(F))`, except that `E` is evaluated
   only once.
@@ -10203,7 +10203,7 @@ constexpr iterator(Parent* parent, iterator_t<Base> current,
 ```
 
 *Effects:* Initializes *current\_* with `current`, *end\_* with
-`ranges::end(parent->`*`base_`*`)`, *n\_* with `parent``->`*`n_`*, and
+`ranges::end(parent->`*`base_`*`)`, *n\_* with `parent->`*`n_`*, and
 *missing\_* with `missing`.
 
 ``` cpp

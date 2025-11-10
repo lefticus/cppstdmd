@@ -4706,7 +4706,7 @@ If the native Unicode API is used, the function flushes `stream` before
 writing `out`.
 
 \[*Note 1*: On POSIX and Windows, `stream` referring to a terminal means
-that, respectively, `isatty(fileno(`\linebreak`stream))` and
+that, respectively, `isatty(fileno(stream))` and
 `GetConsoleMode(_get_osfhandle(_fileno(stream)), ...)` return
 nonzero. — *end note*\]
 
@@ -5389,7 +5389,7 @@ explicit basic_istringstream(
 
 *Effects:* Initializes the base class with
 `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`:stringbuf.cons@@.
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`[[stringbuf.cons]].
 
 ``` cpp
 basic_istringstream(ios_base::openmode which, const Allocator& a);
@@ -5418,7 +5418,7 @@ template<class SAlloc>
 
 *Effects:* Initializes the base class with
 `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`:stringbuf.cons@@.
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -5608,7 +5608,7 @@ explicit basic_ostringstream(
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`:stringbuf.cons@@.
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`[[stringbuf.cons]].
 
 ``` cpp
 basic_ostringstream(ios_base::openmode which, const Allocator& a);
@@ -5616,7 +5616,7 @@ basic_ostringstream(ios_base::openmode which, const Allocator& a);
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`:stringbuf.cons@@.
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_ostringstream(
@@ -5637,7 +5637,7 @@ template<class SAlloc>
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`:stringbuf.cons@@.
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -5650,7 +5650,7 @@ template<class SAlloc>
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`:stringbuf.cons@@.
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`[[stringbuf.cons]].
 
 ``` cpp
 basic_ostringstream(basic_ostringstream&& rhs);

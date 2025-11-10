@@ -4698,7 +4698,7 @@ Let:
     binary transforms defined in namespace `std`;
   - `invoke(op, invoke(proj, *(first1 + (i - result))))` for unary
     transforms defined in namespace `ranges`;
-  - `invoke(binary_op, invoke(proj1, *(first1 + (i - result))), invoke(proj2,``(first2 + (i - result))))`
+  - `invoke(binary_op, invoke(proj1, *(first1 + (i - result))), invoke(proj2,*(first2 + (i - result))))`
     for binary transforms defined in namespace `ranges`.
 
 *Preconditions:* `op` and `binary_op` do not invalidate iterators or

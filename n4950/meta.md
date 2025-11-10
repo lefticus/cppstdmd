@@ -965,7 +965,7 @@ follows:
   types in the pack `T`. Then
   - Let `R` be `COMMON-REF(T1, T2)`. If `T1` and `T2` are reference
     types, `R` is well-formed, and
-    `is_convertible_v<add_pointer_t<T1>, add_pointer_t<R>> && is_convertible_v<add_poin\linebreak{}ter_t<T2>, add_pointer_t<R>>`
+    `is_convertible_v<add_pointer_t<T1>, add_pointer_t<R>> && is_convertible_v<add_poin{}ter_t<T2>, add_pointer_t<R>>`
     is `true`, then the member typedef `type` denotes `R`.
   - Otherwise, if
     `basic_common_reference<remove_cvref_t<T1>, remove_cvref_t<T2>,

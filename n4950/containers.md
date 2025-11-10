@@ -4629,11 +4629,11 @@ template<class... Args>
 ```
 
 *Preconditions:* `T` is *Cpp17EmplaceConstructible* into `forward_list`
-from `std::forward<Args>(``args)...`. `position` is `before_begin()` or
-is a dereferenceable iterator in the range \[`begin()`, `end()`).
+from `std::forward<Args>(args)...`. `position` is `before_begin()` or is
+a dereferenceable iterator in the range \[`begin()`, `end()`).
 
 *Effects:* Inserts an object of type `value_type`
-direct-non-list-initialized with `std::forward<Args>(``args)...` after
+direct-non-list-initialized with `std::forward<Args>(args)...` after
 `position`.
 
 *Returns:* An iterator pointing to the new object.
@@ -5975,9 +5975,8 @@ template<class T>
 ```
 
 The expression *`is-vector-bool-reference`*`<T>` is `true` if `T`
-denotes the type `vector<bool, Alloc>::`\linebreak`reference` for some
-type `Alloc` and `vector<bool, Alloc>` is not a program-defined
-specialization.
+denotes the type `vector<bool, Alloc>::reference` for some type `Alloc`
+and `vector<bool, Alloc>` is not a program-defined specialization.
 
 #### Formatter specialization for `vector<bool>` <a id="vector.bool.fmt">[[vector.bool.fmt]]</a>
 
@@ -9902,7 +9901,7 @@ template<container-compatible-range<T> R, class Alloc>
 
 *Effects:* Initializes `c` with
 `ranges::to<Container>(std::forward<R>(rg), a)`; calls
-`make_heap(c.``begin(), c.end(), comp)`.
+`make_heap(c.begin(), c.end(), comp)`.
 
 #### Members <a id="priqueue.members">[[priqueue.members]]</a>
 
@@ -10698,8 +10697,8 @@ template<class Allocator>
 `true`.
 
 *Effects:* Equivalent to `flat_map(s, key_cont, mapped_cont)` and
-`flat_map(s, key_cont, `\linebreak`mapped_cont, comp)`, respectively,
-except that `c.keys` and `c.values` are constructed with uses-allocator
+`flat_map(s, key_cont, mapped_cont, comp)`, respectively, except that
+`c.keys` and `c.values` are constructed with uses-allocator
 construction [[allocator.uses.construction]].
 
 *Complexity:* Linear.
@@ -10822,9 +10821,9 @@ template<class... Args> pair<iterator, bool> emplace(Args&&... args);
 `is_constructible_v<pair<key_type, mapped_type>, Args...>` is `true`.
 
 *Effects:* Initializes an object `t` of type
-`pair<key_type, mapped_type>` with `std::forward<Args>(``args)...`; if
-the map already contains an element whose key is equivalent to
-`t.first`, `*this` is unchanged. Otherwise, equivalent to:
+`pair<key_type, mapped_type>` with `std::forward<Args>(args)...`; if the
+map already contains an element whose key is equivalent to `t.first`,
+`*this` is unchanged. Otherwise, equivalent to:
 
 ``` cpp
 auto key_it = ranges::upper_bound(c.keys, t.first, compare);
@@ -11031,7 +11030,7 @@ template<class M>
 `is_constructible_v<mapped_type, M>` is `true`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<``M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
 Otherwise, equivalent to
 
 ``` cpp
@@ -11073,7 +11072,7 @@ template<class K, class M>
 object `u`, for which `find(k) == find(u)` is `true`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<``M>(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M>(obj)` to `e.second`.
 Otherwise, equivalent to
 
 ``` cpp
@@ -11571,12 +11570,12 @@ template<class Allocator>
 `true`.
 
 *Effects:* Equivalent to `flat_multimap(key_cont, mapped_cont)` and
-`flat_multimap(key_cont, `\linebreak`mapped_cont, comp)`, respectively,
-except that `c.keys` and `c.values` are constructed with uses-allocator
+`flat_multimap(key_cont, mapped_cont, comp)`, respectively, except that
+`c.keys` and `c.values` are constructed with uses-allocator
 construction [[allocator.uses.construction]].
 
 *Complexity:* Same as `flat_multimap(key_cont, mapped_cont)` and
-`flat_multimap(key_cont, `\linebreak`mapped_cont, comp)`, respectively.
+`flat_multimap(key_cont, mapped_cont, comp)`, respectively.
 
 ``` cpp
 flat_multimap(sorted_equivalent_t, key_container_type key_cont, mapped_container_type mapped_cont,
