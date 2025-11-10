@@ -4465,7 +4465,7 @@ to `first`.
 `copy_backward` can be used instead of `copy` when `last` is in the
 range \[`result - `N, `result`).
 
-For each positive integer $n \le N$, performs
+For each positive integer n ≤ N, performs
 `*(result - `n`) = *(last - `n`)`.
 
 *Returns:*
@@ -4567,7 +4567,7 @@ Let N be `last - first`.
 `move_backward` can be used instead of `move` when `last` is in the
 range \[`result - `N, `result`).
 
-For each positive integer $n \le N$, performs `*(result - `n`) = `E.
+For each positive integer n ≤ N, performs `*(result - `n`) = `E.
 
 *Returns:*
 
@@ -8342,9 +8342,9 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 *Remarks:* `result` may be equal to `first`.
 
 \[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
-is that `exclusive_scan` excludes the $i^\text{th}$ input element from
-the $i^\text{th}$ sum. If `binary_op` is not mathematically associative,
-the behavior of `exclusive_scan` can be nondeterministic. — *end note*\]
+is that `exclusive_scan` excludes the iᵗʰ input element from the iᵗʰ
+sum. If `binary_op` is not mathematically associative, the behavior of
+`exclusive_scan` can be nondeterministic. — *end note*\]
 
 ### Inclusive scan <a id="inclusive.scan">[[inclusive.scan]]</a>
 
@@ -8437,9 +8437,9 @@ through `result + K` the value of
 *Remarks:* `result` may be equal to `first`.
 
 \[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
-is that `inclusive_scan` includes the $i^\text{th}$ input element in the
-$i^\text{th}$ sum. If `binary_op` is not mathematically associative, the
-behavior of `inclusive_scan` can be nondeterministic. — *end note*\]
+is that `inclusive_scan` includes the iᵗʰ input element in the iᵗʰ sum.
+If `binary_op` is not mathematically associative, the behavior of
+`inclusive_scan` can be nondeterministic. — *end note*\]
 
 ### Transform exclusive scan <a id="transform.exclusive.scan">[[transform.exclusive.scan]]</a>
 
@@ -8494,11 +8494,10 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 \[*Note 1*: The difference between `transform_exclusive_scan` and
 `transform_inclusive_scan` is that `transform_exclusive_scan` excludes
-the $i^\text{th}$ input element from the $i^\text{th}$ sum. If
-`binary_op` is not mathematically associative, the behavior of
-`transform_exclusive_scan` can be nondeterministic.
-`transform_exclusive_scan` does not apply `unary_op` to
-`init`. — *end note*\]
+the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
+mathematically associative, the behavior of `transform_exclusive_scan`
+can be nondeterministic. `transform_exclusive_scan` does not apply
+`unary_op` to `init`. — *end note*\]
 
 ### Transform inclusive scan <a id="transform.inclusive.scan">[[transform.inclusive.scan]]</a>
 
@@ -8578,11 +8577,10 @@ through `result + K` the value of
 
 \[*Note 1*: The difference between `transform_exclusive_scan` and
 `transform_inclusive_scan` is that `transform_inclusive_scan` includes
-the $i^\text{th}$ input element in the $i^\text{th}$ sum. If `binary_op`
-is not mathematically associative, the behavior of
-`transform_inclusive_scan` can be nondeterministic.
-`transform_inclusive_scan` does not apply `unary_op` to
-`init`. — *end note*\]
+the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
+mathematically associative, the behavior of `transform_inclusive_scan`
+can be nondeterministic. `transform_inclusive_scan` does not apply
+`unary_op` to `init`. — *end note*\]
 
 ### Adjacent difference <a id="adjacent.difference">[[adjacent.difference]]</a>
 

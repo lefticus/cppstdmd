@@ -3679,16 +3679,16 @@ defined.
   [[expr.new]], [[expr.type.conv]], [[class.base.init]].
   — *end note*\]
 - Otherwise, if the destination type is an array, the object is
-  initialized as follows. Let x₁, $\dotsc$, xₖ be the elements of the
+  initialized as follows. Let x₁, …, xₖ be the elements of the
   *expression-list*. If the destination type is an array of unknown
   bound, it is defined as having k elements. Let n denote the array size
   after this potential adjustment. If k is greater than n, the program
-  is ill-formed. Otherwise, the $i^\text{th}$ array element is
-  copy-initialized with xᵢ for each 1 ≤ i ≤ k, and value-initialized for
-  each k < i ≤ n. For each 1 ≤ i < j ≤ n, every value computation and
-  side effect associated with the initialization of the $i^\text{th}$
-  element of the array is sequenced before those associated with the
-  initialization of the $j^\text{th}$ element.
+  is ill-formed. Otherwise, the iᵗʰ array element is copy-initialized
+  with xᵢ for each 1 ≤ i ≤ k, and value-initialized for each k < i ≤ n.
+  For each 1 ≤ i < j ≤ n, every value computation and side effect
+  associated with the initialization of the iᵗʰ element of the array is
+  sequenced before those associated with the initialization of the jᵗʰ
+  element.
 - Otherwise, if the destination type is a (possibly cv-qualified) class
   type:
   - If the initializer expression is a prvalue and the cv-unqualified
@@ -3708,9 +3708,9 @@ defined.
     - Otherwise, if no constructor is viable, the destination type is an
       aggregate class, and the initializer is a parenthesized
       *expression-list*, the object is initialized as follows. Let e₁,
-      $\dotsc$, eₙ be the elements of the aggregate [[dcl.init.aggr]].
-      Let x₁, $\dotsc$, xₖ be the elements of the *expression-list*. If
-      k is greater than n, the program is ill-formed. The element eᵢ is
+      …, eₙ be the elements of the aggregate [[dcl.init.aggr]]. Let x₁,
+      …, xₖ be the elements of the *expression-list*. If k is greater
+      than n, the program is ill-formed. The element eᵢ is
       copy-initialized with xᵢ for 1 ≤ i ≤ k. The remaining elements are
       initialized with their default member initializers, if any, and
       otherwise are value-initialized. For each 1 ≤ i < j ≤ n, every
@@ -5235,12 +5235,11 @@ object parameter [[dcl.fct]] if the coroutine is a non-static member
 function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
-object parameter and `p_i+1` denotes the $i^\text{th}$ non-object
-function parameter for a non-static member function, and `pᵢ` denotes
-the $i^\text{th}$ function parameter otherwise. For a non-static member
-function, `q₁` is an lvalue that denotes `*this`; any other `qᵢ` is an
-lvalue that denotes the parameter copy corresponding to `pᵢ`, as
-described below.
+object parameter and `p_i+1` denotes the iᵗʰ non-object function
+parameter for a non-static member function, and `pᵢ` denotes the iᵗʰ
+function parameter otherwise. For a non-static member function, `q₁` is
+an lvalue that denotes `*this`; any other `qᵢ` is an lvalue that denotes
+the parameter copy corresponding to `pᵢ`, as described below.
 
 A coroutine behaves as if its *function-body* were replaced by:
 

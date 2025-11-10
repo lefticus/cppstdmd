@@ -1350,9 +1350,9 @@ namespace std {
 #### Construction <a id="tuple.cnstr">[[tuple.cnstr]]</a>
 
 In the descriptions that follow, let i be in the range \[`0`,
-`sizeof...(Types)`) in order, `Tᵢ` be the $i^\text{th}$ type in `Types`,
-and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack named
-`UTypes`, where indexing is zero-based.
+`sizeof...(Types)`) in order, `Tᵢ` be the iᵗʰ type in `Types`, and `Uᵢ`
+be the iᵗʰ type in a template parameter pack named `UTypes`, where
+indexing is zero-based.
 
 For each `tuple` constructor, an exception is thrown only if the
 construction of one of the types in `Types` throws an exception.
@@ -1451,8 +1451,8 @@ tuple(tuple&& u) = default;
 
 *Constraints:* `is_move_constructible_v<``Tᵢ``>` is `true` for all i.
 
-*Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
-with `std::forward<``Tᵢ``>(get<`i`>(u))`.
+*Effects:* For all i, initializes the iᵗʰ element of `*this` with
+`std::forward<``Tᵢ``>(get<`i`>(u))`.
 
 ``` cpp
 template<class... UTypes> constexpr explicit(see below) tuple(tuple<UTypes...>& u);
@@ -1546,8 +1546,8 @@ Let `I` be the pack `0, 1, …, (sizeof...(Types) - 1)`.
   `T`) `is_convertible_v<UTuple, T>` and `is_constructible_v<T, UTuple>`
   are both `false`.
 
-*Effects:* For all i, initializes the $i^\text{th}$ element of `*this`
-with `get<`i`>(std::forward<UTuple>(u))`.
+*Effects:* For all i, initializes the iᵗʰ element of `*this` with
+`get<`i`>(std::forward<UTuple>(u))`.
 
 *Remarks:* The expression inside `explicit` is equivalent to:
 
@@ -1610,9 +1610,9 @@ construction [[allocator.uses.construction]].
 For each `tuple` assignment operator, an exception is thrown only if the
 assignment of one of the types in `Types` throws an exception. In the
 function descriptions that follow, let i be in the range \[`0`,
-`sizeof...(Types)`) in order, `Tᵢ` be the $i^\text{th}$ type in `Types`,
-and `Uᵢ` be the $i^\text{th}$ type in a template parameter pack named
-`UTypes`, where indexing is zero-based.
+`sizeof...(Types)`) in order, `Tᵢ` be the iᵗʰ type in `Types`, and `Uᵢ`
+be the iᵗʰ type in a template parameter pack named `UTypes`, where
+indexing is zero-based.
 
 ``` cpp
 constexpr tuple& operator=(const tuple& u);
@@ -1655,7 +1655,7 @@ the following expressions:
 is_nothrow_move_assignable_v<$\mathtt{T}_i$>
 ```
 
-where Tᵢ is the $i^\text{th}$ type in `Types`.
+where Tᵢ is the iᵗʰ type in `Types`.
 
 ``` cpp
 constexpr const tuple& operator=(tuple&& u) const;
@@ -1919,10 +1919,9 @@ template<tuple-like... Tuples>
 
 Let n be `sizeof...(Tuples)`. For every integer 0 ≤ i < n:
 
-- Let `Tᵢ` be the $i^\text{th}$ type in `Tuples`.
+- Let `Tᵢ` be the iᵗʰ type in `Tuples`.
 - Let `Uᵢ` be `remove_cvref_t<``Tᵢ``>`.
-- Let `tpᵢ` be the $i^\text{th}$ element in the function parameter pack
-  `tpls`.
+- Let `tpᵢ` be the iᵗʰ element in the function parameter pack `tpls`.
 - Let Sᵢ be `tuple_size_v<``Uᵢ``>`.
 - Let $E_i^k$ be `tuple_element_t<`k`, ``Uᵢ``>`.
 - Let $e_i^k$ be `get<`k`>(std::forward<``Tᵢ``>(``tpᵢ``))`.
@@ -1931,9 +1930,9 @@ Let n be `sizeof...(Tuples)`. For every integer 0 ≤ i < n:
   $e_i^0, \dotsc, e_i^{S_{i-1}}$.
 
 The types in `CTypes` are equal to the ordered sequence of the expanded
-packs of types Elems₀`...`, Elems₁`...`, …, $Elems_{n-1}$`...`. Let
-`celems` be the ordered sequence of the expanded packs of expressions
-elems₀`...`, …, $elems_{n-1}$`...`.
+packs of types Elems₀`...`, Elems₁`...`, …, Elemsₙ₋₁`...`. Let `celems`
+be the ordered sequence of the expanded packs of expressions
+elems₀`...`, …, elemsₙ₋₁`...`.
 
 *Mandates:* `(is_constructible_v<CTypes, decltype(celems)> && ...)` is
 `true`.
@@ -3691,7 +3690,7 @@ arguments is ill-formed.
 #### Constructors <a id="variant.ctor">[[variant.ctor]]</a>
 
 In the descriptions that follow, let i be in the range \[`0`,
-`sizeof...(Types)`), and `Tᵢ` be the $i^\text{th}$ type in `Types`.
+`sizeof...(Types)`), and `Tᵢ` be the iᵗʰ type in `Types`.
 
 ``` cpp
 constexpr variant() noexcept(see below);
@@ -8803,17 +8802,15 @@ In the text that follows:
 - `FD` is the type `decay_t<F>`,
 - `fd` is an lvalue that is a target object of `g` [[func.def]] of type
   `FD` direct-non-list-initialized with `std::forward<F>(f)`,
-- `Tᵢ` is the $i^\text{th}$ type in the template parameter pack
-  `BoundArgs`,
+- `Tᵢ` is the iᵗʰ type in the template parameter pack `BoundArgs`,
 - `TDᵢ` is the type `decay_t<\tcode{T}_i>`,
-- `tᵢ` is the $i^\text{th}$ argument in the function parameter pack
-  `bound_args`,
+- `tᵢ` is the iᵗʰ argument in the function parameter pack `bound_args`,
 - `tdᵢ` is a bound argument entity of `g` [[func.def]] of type `TDᵢ`
   direct-non-list-initialized with
   `std::forward<{}\tcode{T}_i>(\tcode{t}_i)`,
-- `Uⱼ` is the $j^\text{th}$ deduced type of the `UnBoundArgs&&...`
-  parameter of the argument forwarding call wrapper, and
-- `uⱼ` is the $j^\text{th}$ argument associated with `Uⱼ`.
+- `Uⱼ` is the jᵗʰ deduced type of the `UnBoundArgs&&...` parameter of
+  the argument forwarding call wrapper, and
+- `uⱼ` is the jᵗʰ argument associated with `Uⱼ`.
 
 ``` cpp
 template<class F, class... BoundArgs>
@@ -8826,14 +8823,14 @@ template<class R, class F, class... BoundArgs>
 `BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` is `true`.
 
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
-and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, $\dotsc$,
+and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
-`w₂`, $\dotsc{}$, `w_N`, where N has the value `sizeof...(bound_args)`.
+`w₂`, …{}, `w_N`, where N has the value `sizeof...(bound_args)`.
 
 *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.
 When `g` is not volatile-qualified, invocation of
-`g(``u₁``, ``u₂``, `$\dotsc$`, ``u_M``)` is
+`g(``u₁``, ``u₂``, `…`, ``u_M``)` is
 expression-equivalent [[defns.expression.equivalent]] to
 
 ``` cpp
@@ -8849,8 +8846,8 @@ INVOKE<R>(static_cast<$V_fd$>($v_fd$),
 ```
 
 for the second overload, where the values and types of the target
-argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, $\dotsc$, `v_N`
-are determined as specified below.
+argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, …, `v_N` are
+determined as specified below.
 
 *Throws:* Any exception thrown by the initialization of the state
 entities of `g`.
@@ -8859,10 +8856,10 @@ entities of `g`.
 *Cpp17CopyConstructible*, then the return type meets the requirements of
 *Cpp17CopyConstructible*. — *end note*\]
 
-The values of the *bound arguments* `v₁`, `v₂`, $\dotsc$, `v_N` and
-their corresponding types `V₁`, `V₂`, $\dotsc$, `V_N` depend on the
-types `TDᵢ` derived from the call to `bind` and the cv-qualifiers cv of
-the call wrapper `g` as follows:
+The values of the *bound arguments* `v₁`, `v₂`, …, `v_N` and their
+corresponding types `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ`
+derived from the call to `bind` and the cv-qualifiers cv of the call
+wrapper `g` as follows:
 
 - if `TDᵢ` is `reference_wrapper<T>`, the argument is
   `\tcode{td}_i.get()` and its type `Vᵢ` is `T&`;

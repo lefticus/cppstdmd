@@ -43,6 +43,8 @@ local subscripts = {
   ["t"] = "ₜ",
   ["i"] = "ᵢ",
   ["j"] = "ⱼ",
+  ["+"] = "₊",  -- Subscript plus sign for arithmetic like x_{i+1}
+  ["-"] = "₋",  -- Subscript minus sign for arithmetic like x_{n-1}
 }
 
 -- Helper function to trim leading and trailing whitespace

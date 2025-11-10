@@ -20,8 +20,13 @@ local math_operators = {
   ["\\cdots"] = "⋯",
   ["\\ldots"] = "…",   -- Horizontal ellipsis
   ["\\vdots"] = "⋮",   -- Vertical ellipsis
+  ["\\dotsc"] = "…",   -- Dots for series/commas
+  ["\\dotsb"] = "…",   -- Dots for binary operators
   ["\\land"] = "∧",
   ["\\lor"] = "∨",
+  ["\\le"] = "≤",      -- Short form of \leq
+  ["\\ge"] = "≥",      -- Short form of \geq
+  ["\\to"] = "→",      -- Short form of \rightarrow
   ["<"] = "<",
   [">"] = ">",
   ["="] = "=",
@@ -37,11 +42,15 @@ local greek_letters = {
   ["\\gamma"] = "γ",
   ["\\delta"] = "δ",
   ["\\epsilon"] = "ε",
+  ["\\zeta"] = "ζ",
   ["\\lambda"] = "λ",
   ["\\mu"] = "μ",
-  ["\\sigma"] = "σ",
   ["\\pi"] = "π",
+  ["\\rho"] = "ρ",
+  ["\\sigma"] = "σ",
   ["\\theta"] = "θ",
+  ["\\phi"] = "φ",
+  ["\\ell"] = "ℓ",
 }
 
 local arrows = {
@@ -133,10 +142,14 @@ local function is_complex_math(text)
 
   -- Check for complex subscripts/superscripts (more than one character in braces)
   -- Pattern: _{...} or ^{...} where ... has length > 1
+  -- BUT: Allow simple arithmetic like _{n-1} or _{i+1} (single char + operator + single char)
   for subscript in text:gmatch("_(%b{})") do
     local content = subscript:sub(2, -2)  -- Remove braces
+    -- Check if it's simple arithmetic: single char, +/-, single char
+    local is_simple_arithmetic = content:match("^%w[-+]%w$")
     -- If content has more than one character (excluding whitespace) or contains backslash, it's complex
-    if content:match("%S.*%S") or content:match("\\") then
+    -- UNLESS it's simple arithmetic which we can convert
+    if not is_simple_arithmetic and (content:match("%S.*%S") or content:match("\\")) then
       return true
     end
   end
@@ -252,6 +265,13 @@ local function try_unicode_conversion(text)
   -- Convert \mathsf{text} -> text (sans-serif font)
   result = result:gsub("\\mathsf{([^}]*)}", "%1")
 
+  -- Convert ordinal superscripts BEFORE \text{} conversion
+  -- Patterns like $i^\text{th}$ -> iᵗʰ, $1^\text{st}$ -> 1ˢᵗ
+  result = result:gsub("%^\\text{th}", "ᵗʰ")
+  result = result:gsub("%^\\text{st}", "ˢᵗ")
+  result = result:gsub("%^\\text{nd}", "ⁿᵈ")
+  result = result:gsub("%^\\text{rd}", "ʳᵈ")
+
   -- Convert \text{text} -> text (text mode in math)
   result = result:gsub("\\text{([^}]*)}", "%1")
 
@@ -357,11 +377,27 @@ local function try_unicode_conversion(text)
     end
   end)
 
+  -- Check arithmetic subscripts: x_{n-1}, x_{i+1}
+  result:gsub("(%w)_{(%w)([-+])(%w)}", function(base, sub1, op, sub2)
+    if not convert_subscript(sub1) or not convert_subscript(op) or not convert_subscript(sub2) then
+      has_unconvertible_sub = true
+    end
+  end)
+
   if has_unconvertible_sub then
     return nil  -- Abort conversion if any subscript can't be converted
   end
 
-  -- Second pass: actually convert
+  -- Second pass: actually convert arithmetic subscripts first (before simple ones)
+  -- Pattern: x_{n-1} → xₙ₋₁, p_{i+1} → pᵢ₊₁
+  result = result:gsub("(%w)_{(%w)([-+])(%w)}", function(base, sub1, op, sub2)
+    local unicode_sub1 = convert_subscript(sub1)
+    local unicode_op = convert_subscript(op)
+    local unicode_sub2 = convert_subscript(sub2)
+    return base .. unicode_sub1 .. unicode_op .. unicode_sub2
+  end)
+
+  -- Then convert simple subscripts
   result = result:gsub("(%w)_(%w)", function(base, sub)
     local unicode_sub = convert_subscript(sub)
     return base .. unicode_sub

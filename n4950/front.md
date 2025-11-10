@@ -7,11 +7,7 @@
 |                      | Google DeepMind     |
 |                      | cxxeditor@gmail.com |
 
-<div class="center">
-
-** Working Draft, Standard for Programming Language C++**
-
-</div>
+> ** Working Draft, Standard for Programming Language C++**
 
 **Note: this is an early draft. It’s known to be incomplet and
 incorrekt, and it has lots of badformatting.**

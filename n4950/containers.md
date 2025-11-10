@@ -3395,10 +3395,10 @@ the predicate returned by `key_eq()`, and to the hasher returned by
 the worst case, where N is `a.size()`. For `unordered_multiset` and
 `unordered_multimap`, the complexity of `operator==` is proportional to
 $\sum E_i^2$ in the average case and to N² in the worst case, where N is
-`a.size()`, and Eᵢ is the size of the $i^\text{th}$ equivalent-key group
-in `a`. However, if the respective elements of each corresponding pair
-of equivalent-key groups Eaᵢ and Ebᵢ are arranged in the same order (as
-is commonly the case, e.g., if `a` and `b` are unmodified copies of the
+`a.size()`, and Eᵢ is the size of the iᵗʰ equivalent-key group in `a`.
+However, if the respective elements of each corresponding pair of
+equivalent-key groups Eaᵢ and Ebᵢ are arranged in the same order (as is
+commonly the case, e.g., if `a` and `b` are unmodified copies of the
 same container), then the average-case complexity for
 `unordered_multiset` and `unordered_multimap` becomes proportional to N
 (but worst-case complexity remains , e.g., for a pathologically bad hash
@@ -3873,7 +3873,7 @@ is `true`.
 
 *Preconditions:* `T` meets the *Cpp17CopyConstructible* requirements.
 
-*Returns:* `{{ a[0], `$\dotsc$`, a[N - 1] }}`.
+*Returns:* `{{ a[0], `…`, a[N - 1] }}`.
 
 ``` cpp
 template<class T, size_t N>
@@ -3885,7 +3885,7 @@ is `true`.
 
 *Preconditions:* `T` meets the *Cpp17MoveConstructible* requirements.
 
-*Returns:* `{{ std::move(a[0]), `$\dotsc$`, std::move(a[N - 1]) }}`.
+*Returns:* `{{ std::move(a[0]), `…`, std::move(a[N - 1]) }}`.
 
 #### Tuple interface <a id="array.tuple">[[array.tuple]]</a>
 
@@ -13292,11 +13292,11 @@ is the return type.
 
 A *multidimensional index space* is a Cartesian product of integer
 intervals. Each interval can be represented by a half-open range
-[Lᵢ, Uᵢ), where Lᵢ and Uᵢ are the lower and upper bounds of the
-$i^\text{th}$ dimension. The *rank* of a multidimensional index space is
-the number of intervals it represents. The *size of a multidimensional
-index space* is the product of Uᵢ - Lᵢ for each dimension i if its rank
-is greater than 0, and 1 otherwise.
+[Lᵢ, Uᵢ), where Lᵢ and Uᵢ are the lower and upper bounds of the iᵗʰ
+dimension. The *rank* of a multidimensional index space is the number of
+intervals it represents. The *size of a multidimensional index space* is
+the product of Uᵢ - Lᵢ for each dimension i if its rank is greater than
+0, and 1 otherwise.
 
 An integer r is a *rank index* of an index space S if r is in the range
 [0, rank of $S$).
@@ -13306,8 +13306,8 @@ multidimensional index space S (or representation thereof) if both of
 the following are true:
 
 - `sizeof...(idx)` is equal to the rank of S, and
-- for every rank index i of S, the $i^\text{th}$ value of `idx` is an
-  integer in the interval [Lᵢ, Uᵢ) of S.
+- for every rank index i of S, the iᵗʰ value of `idx` is an integer in
+  the interval [Lᵢ, Uᵢ) of S.
 
 #### Header `<mdspan>` synopsis <a id="mdspan.syn">[[mdspan.syn]]</a>
 
@@ -13407,14 +13407,14 @@ namespace std {
 Each specialization of `extents` models `regular` and is trivially
 copyable.
 
-Let $E_r$ be the $r^\text{th}$ element of `Extents`. $E_r$ is a
-*dynamic extent* if it is equal to `dynamic_extent`, otherwise $E_r$ is
-a *static extent*. Let $D_r$ be the value of
+Let $E_r$ be the rᵗʰ element of `Extents`. $E_r$ is a *dynamic extent*
+if it is equal to `dynamic_extent`, otherwise $E_r$ is a
+*static extent*. Let $D_r$ be the value of
 `dynamic-extents[dynamic-index(r)]` if $E_r$ is a dynamic extent,
 otherwise $E_r$.
 
-The $r^\text{th}$ interval of the multidimensional index space
-represented by an `extents` object is $[0, D_r)$.
+The rᵗʰ interval of the multidimensional index space represented by an
+`extents` object is $[0, D_r)$.
 
 ##### Exposition-only helpers <a id="mdspan.extents.expo">[[mdspan.extents.expo]]</a>
 
@@ -13632,9 +13632,8 @@ In subclauses [[mdspan.layout.reqmts]] and
   integer type. — *end note*\]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
 - `d_r` is a pack of (possibly const) integers for which
-  `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the
-  $r^\text{th}$ element is equal to 1, and all other elements are equal
-  to 0.
+  `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the rᵗʰ
+  element is equal to 1, and all other elements are equal to 0.
 
 In subclauses [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]],
 let *is-mapping-of* be the exposition-only variable template defined as
@@ -13756,7 +13755,7 @@ multidimensional index in `m.extents()`[[mdspan.overview]],
 `m((i + `$d_r$`)...) - m(i...)` equals $s_r$.
 
 \[*Note 3*: This implies that for a strided layout
-$m(i_0, \dotsc, i_k) = m(0, \dotsc, 0) + i_0 \times s_0 + \dotsb + i_k \times s_k$. — *end note*\]
+m(i₀, …, iₖ) = m(0, …, 0) + i₀ × s₀ + … + iₖ × sₖ. — *end note*\]
 
 \[*Note 4*: A mapping can return `false` even if the condition is met.
 For certain layouts, it is possibly not feasible to determine
@@ -14375,11 +14374,10 @@ template<class OtherIndexType>
   `index_type`[[basic.fundamental]].
 - If *rank\_* is greater than 0, then there exists a permutation P of
   the integers in the range $[0, \textit{rank_})$, such that
-  `s[`pᵢ`] >= s[`$p_{i-1}$`] * e.extent(p`$_{i-1}$`)` is `true` for all
-  i in the range $[1, \textit{rank_})$, where pᵢ is the $i^\text{th}$
-  element of P. \[*Note 10*: For `layout_stride`, this condition is
-  necessary and sufficient for `is_unique()` to be
-  `true`. — *end note*\]
+  `s[`pᵢ`] >= s[`pᵢ₋₁`] * e.extent(p`$_{i-1}$`)` is `true` for all i in
+  the range $[1, \textit{rank_})$, where pᵢ is the iᵗʰ element of P.
+  \[*Note 10*: For `layout_stride`, this condition is necessary and
+  sufficient for `is_unique()` to be `true`. — *end note*\]
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`, and for all
 d in the range $[0, \textit{rank_})$, direct-non-list-initializes
@@ -14467,9 +14465,8 @@ constexpr bool is_exhaustive() const noexcept;
 - `true` if *rank\_* is 0.
 - Otherwise, `true` if there is a permutation P of the integers in the
   range $[0, \textit{rank_})$ such that `stride(`p₀`)` equals 1, and
-  `stride(`pᵢ`)` equals
-  `stride(`$p_{i-1}$`) * extents().extent(`$p_{i-1}$`)` for i in the
-  range $[1, \textit{rank_})$, where pᵢ is the $i^\text{th}$ element of
+  `stride(`pᵢ`)` equals `stride(`pᵢ₋₁`) * extents().extent(`pᵢ₋₁`)` for
+  i in the range $[1, \textit{rank_})$, where pᵢ is the iᵗʰ element of
   P.
 - Otherwise, `false`.
 

@@ -922,6 +922,14 @@ function Blocks(blocks)
         end
         goto continue
       end
+
+      -- Handle other div classes (like "indented", "center", "ncbnf") - unwrap by outputting content as blockquote
+      -- This preserves content from LaTeX environments like \begin{indented} that would otherwise be lost
+      if block.classes[1] then
+        -- Convert to blockquote to preserve indentation/centering visually
+        table.insert(result, pandoc.BlockQuote(block.content))
+        goto continue
+      end
     end
 
     -- Keep other blocks as-is

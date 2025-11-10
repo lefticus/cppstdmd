@@ -4233,9 +4233,9 @@ namespace std::chrono {
 }
 ```
 
-`month_weekday` represents the $n^\text{th}$ weekday of a month, of an
-as yet unspecified year. To do this the `month_weekday` stores a `month`
-and a `weekday_indexed`.
+`month_weekday` represents the nᵗʰ weekday of a month, of an as yet
+unspecified year. To do this the `month_weekday` stores a `month` and a
+`weekday_indexed`.
 
 \[*Example 1*:
 
@@ -5175,9 +5175,9 @@ namespace std::chrono {
 }
 ```
 
-`year_month_weekday` represents a specific year, month, and
-$n^\text{th}$ weekday of the month. `year_month_weekday` is a
-field-based time point with a resolution of `days`.
+`year_month_weekday` represents a specific year, month, and nᵗʰ weekday
+of the month. `year_month_weekday` is a field-based time point with a
+resolution of `days`.
 
 \[*Note 1*: `year_month_weekday` supports `years`- and `months`-oriented
 arithmetic, but not `days`-oriented arithmetic. For the latter, there is

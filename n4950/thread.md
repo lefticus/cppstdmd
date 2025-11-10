@@ -8362,14 +8362,13 @@ other. — *end note*\]
 void operator()(ArgTypes... args);
 ```
 
-*Effects:* As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$,
-t_N) [[func.require]], where `f` is the stored task of `*this` and
-`t`_1`, t`_2`, `$\dotsc$`, t`_N are the values in `args...`. If the task
-returns normally, the return value is stored as the asynchronous result
-in the shared state of `*this`, otherwise the exception thrown by the
-task is stored. The shared state of `*this` is made ready, and any
-threads blocked in a function waiting for the shared state of `*this` to
-become ready are unblocked.
+*Effects:* As if by *INVOKE*\<R\>(f, t_1, t_2, …, t_N) [[func.require]],
+where `f` is the stored task of `*this` and `t`_1`, t`_2`, `…`, t`_N are
+the values in `args...`. If the task returns normally, the return value
+is stored as the asynchronous result in the shared state of `*this`,
+otherwise the exception thrown by the task is stored. The shared state
+of `*this` is made ready, and any threads blocked in a function waiting
+for the shared state of `*this` to become ready are unblocked.
 
 *Throws:* A `future_error` exception object if there is no shared state
 or the stored task has already been invoked.
@@ -8384,15 +8383,15 @@ or the stored task has already been invoked.
 void make_ready_at_thread_exit(ArgTypes... args);
 ```
 
-*Effects:* As if by *INVOKE*\<R\>(f, t_1, t_2, $\dotsc$,
-t_N) [[func.require]], where `f` is the stored task and
-`t`_1`, t`_2`, `$\dotsc$`, t`_N are the values in `args...`. If the task
-returns normally, the return value is stored as the asynchronous result
-in the shared state of `*this`, otherwise the exception thrown by the
-task is stored. In either case, this is done without making that state
-ready [[futures.state]] immediately. Schedules the shared state to be
-made ready when the current thread exits, after all objects of thread
-storage duration associated with the current thread have been destroyed.
+*Effects:* As if by *INVOKE*\<R\>(f, t_1, t_2, …, t_N) [[func.require]],
+where `f` is the stored task and `t`_1`, t`_2`, `…`, t`_N are the values
+in `args...`. If the task returns normally, the return value is stored
+as the asynchronous result in the shared state of `*this`, otherwise the
+exception thrown by the task is stored. In either case, this is done
+without making that state ready [[futures.state]] immediately. Schedules
+the shared state to be made ready when the current thread exits, after
+all objects of thread storage duration associated with the current
+thread have been destroyed.
 
 *Throws:* `future_error` if an error condition occurs.
 

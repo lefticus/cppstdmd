@@ -169,8 +169,8 @@ A class `S` is a *standard-layout class* if it:
     member of `X` (where said member may be an anonymous union), the set
     M(X) consists of X₀ and the elements of M(X₀).
   - If `X` is a union type, the set M(X) is the union of all M(Uᵢ) and
-    the set containing all Uᵢ, where each Uᵢ is the type of the
-    $i^\text{th}$ non-static data member of `X`.
+    the set containing all Uᵢ, where each Uᵢ is the type of the iᵗʰ
+    non-static data member of `X`.
   - If `X` is an array type with element type Xₑ, the set M(X) consists
     of Xₑ and the elements of M(Xₑ).
   - If `X` is a non-class, non-array type, the set M(X) is empty.
@@ -5354,11 +5354,11 @@ non-static data members of `C`, in the order of their declaration in the
 *member-specification* of `C`, form a list of subobjects. In that list,
 any subobject of array type is recursively expanded to the sequence of
 its elements, in the order of increasing subscript. Let `xᵢ` be an
-lvalue denoting the $i^\text{th}$ element in the expanded list of
-subobjects for an object `x` (of length n), where `xᵢ` is formed by a
-sequence of derived-to-base conversions [[over.best.ics]], class member
-access expressions [[expr.ref]], and array subscript expressions
-[[expr.sub]] applied to `x`.
+lvalue denoting the iᵗʰ element in the expanded list of subobjects for
+an object `x` (of length n), where `xᵢ` is formed by a sequence of
+derived-to-base conversions [[over.best.ics]], class member access
+expressions [[expr.ref]], and array subscript expressions [[expr.sub]]
+applied to `x`.
 
 ### Equality operator <a id="class.eq">[[class.eq]]</a>
 
@@ -5434,7 +5434,7 @@ subobjects for an object `x` of type `C`.
   `xᵢ`` <=> ``xᵢ`. The operator function is defined as deleted if that
   expression is not usable or if `Rᵢ` is not a comparison category type
   [[cmp.categories.pre]] for any i. The return type is deduced as the
-  common comparison type (see below) of `R₀`, `R₁`, $\dotsc$, `R_n-1`.
+  common comparison type (see below) of `R₀`, `R₁`, …, `R_n-1`.
 - Otherwise, `R` shall not contain a placeholder type. If the
   synthesized three-way comparison of type `R` between any objects `xᵢ`
   and `xᵢ` is not defined, the operator function is defined as deleted.
@@ -5450,8 +5450,7 @@ type `R` between `xᵢ` and `yᵢ` yields a result value `vᵢ` where
 `static_cast<R>(std::strong_ordering::equal)`.
 
 The *common comparison type* `U` of a possibly-empty list of n
-comparison category types `T₀`, `T₁`, $\dotsc$, `T_n-1` is defined as
-follows:
+comparison category types `T₀`, `T₁`, …, `T_n-1` is defined as follows:
 
 - If at least one `Tᵢ` is `std::partial_ordering`, `U` is
   `std::partial_ordering` [[cmp.partialord]].

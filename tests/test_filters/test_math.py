@@ -138,7 +138,8 @@ def test_complex_subscript_unchanged():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "$x_{tail}$" in output
-    assert "$x_{i+1}$" in output
+    # Note: x_{i+1} is now converted to Unicode since we support arithmetic subscripts
+    assert "xᵢ₊₁" in output
     assert "$x_{\\mathrm{max}}$" in output
 
 
@@ -437,3 +438,147 @@ def test_control_space_in_math():
     assert "min" in output
     assert "x" in output
     assert "y" in output
+
+
+def test_to_arrow_alias():
+    """Test \\to converts to Unicode arrow (alias for \\rightarrow)"""
+    latex = r"$f: A \to B$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "f: A → B" in output
+    assert "$" not in output
+
+
+def test_le_ge_aliases():
+    """Test \\le and \\ge convert to Unicode (aliases for \\leq and \\geq)"""
+    latex = r"$x \le y$ and $a \ge b$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "x ≤ y" in output
+    assert "a ≥ b" in output
+    assert "$" not in output
+
+
+def test_dotsc_ellipsis():
+    """Test \\dotsc converts to Unicode ellipsis (dots for series/commas)"""
+    latex = r"$a_1, a_2, \dotsc, a_n$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "a₁, a₂, …, aₙ" in output
+    assert "$" not in output
+
+
+def test_dotsb_ellipsis():
+    """Test \\dotsb converts to Unicode ellipsis (dots for binary operators)"""
+    latex = r"$x_1 + x_2 + \dotsb + x_n$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "x₁ + x₂ + … + xₙ" in output
+    assert "$" not in output
+
+
+def test_additional_greek_letters():
+    """Test additional Greek letters (rho, phi, ell, zeta)"""
+    latex = r"$\rho$, $\phi$, $\ell$, $\zeta$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "ρ" in output
+    assert "φ" in output
+    assert "ℓ" in output
+    assert "ζ" in output
+    assert "$" not in output
+
+
+# Arithmetic subscript tests
+def test_arithmetic_subscript_minus():
+    """Test arithmetic subscripts with minus: x_{n-1} → xₙ₋₁"""
+    latex = r"$x_{n-1}$ and $p_{i-1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "xₙ₋₁" in output
+    assert "pᵢ₋₁" in output
+    assert "$" not in output
+
+
+def test_arithmetic_subscript_plus():
+    """Test arithmetic subscripts with plus: x_{i+1} → xᵢ₊₁"""
+    latex = r"$x_{i+1}$ and $a_{k+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "xᵢ₊₁" in output
+    assert "aₖ₊₁" in output
+    assert "$" not in output
+
+
+def test_arithmetic_subscript_with_digits():
+    """Test arithmetic subscripts with digits: a_{0-1}, b_{1+1}"""
+    latex = r"$a_{0-1}$ and $b_{1+2}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "a₀₋₁" in output
+    assert "b₁₊₂" in output
+    assert "$" not in output
+
+
+def test_arithmetic_subscript_unconvertible():
+    """Test that unconvertible arithmetic subscripts stay as LaTeX"""
+    # Capital letters don't have subscript equivalents
+    latex = r"$X_{N-1}$ and $E_{M+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should stay as LaTeX since N, M have no subscript form
+    assert "$X_{N-1}$" in output
+    assert "$E_{M+1}$" in output
+
+
+def test_mixed_simple_and_arithmetic_subscripts():
+    """Test mixed simple and arithmetic subscripts in same expression"""
+    latex = r"$x_i$ and $x_{i-1}$ and $x_{i+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "xᵢ" in output
+    assert "xᵢ₋₁" in output
+    assert "xᵢ₊₁" in output
+    assert "$" not in output
+
+
+# Ordinal superscript tests
+def test_ordinal_superscript_th():
+    """Test ordinal superscripts with 'th': i^\text{th} → iᵗʰ"""
+    latex = r"$i^\text{th}$ element and $n^\text{th}$ item."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "iᵗʰ" in output
+    assert "nᵗʰ" in output
+    assert "$" not in output
+
+
+def test_ordinal_superscript_st_nd_rd():
+    """Test ordinal superscripts with st/nd/rd: 1^\text{st}, 2^\text{nd}, 3^\text{rd}"""
+    latex = r"$1^\text{st}$, $2^\text{nd}$, and $3^\text{rd}$ elements."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "1ˢᵗ" in output
+    assert "2ⁿᵈ" in output
+    assert "3ʳᵈ" in output
+    assert "$" not in output
+
+
+# Absolute value tests
+def test_absolute_value_with_comparison():
+    """Test absolute value with comparison operators: |k| ≤ 1"""
+    latex = r"$|k| \le 1$ and $|x| \ge 0$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "|k| ≤ 1" in output
+    assert "|x| ≥ 0" in output
+    assert "$" not in output
+
+
+def test_absolute_value_simple():
+    """Test simple absolute value expressions"""
+    latex = r"$|a + b| = |c|$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "|a + b| = |c|" in output
+    assert "$" not in output

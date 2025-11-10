@@ -860,12 +860,12 @@ that any dependent base class has no virtual functions and no virtual
 base classes, and the initializer is a non-empty *braced-init-list* or
 parenthesized *expression-list*, and there are no *deduction-guide*s for
 `C`, the set contains an additional function template, called the
-*aggregate deduction candidate*, defined as follows. Let
-$x_1, \dotsc, x_n$ be the elements of the *initializer-list* or
-*designated-initializer-list* of the *braced-init-list*, or of the
-*expression-list*. For each xᵢ, let eᵢ be the corresponding aggregate
-element of `C` or of one of its (possibly recursive) subaggregates that
-would be initialized by xᵢ [[dcl.init.aggr]] if
+*aggregate deduction candidate*, defined as follows. Let x₁, …, xₙ be
+the elements of the *initializer-list* or *designated-initializer-list*
+of the *braced-init-list*, or of the *expression-list*. For each xᵢ, let
+eᵢ be the corresponding aggregate element of `C` or of one of its
+(possibly recursive) subaggregates that would be initialized by xᵢ
+[[dcl.init.aggr]] if
 
 - brace elision is not considered for any aggregate element that has
   - a dependent non-array type,
@@ -1217,7 +1217,7 @@ parameters to agree in number with the arguments in the list.
   corresponding parameter is considered to “match the ellipsis”
   [[over.ics.ellipsis]].
 - A candidate function having more than m parameters is viable only if
-  all parameters following the $m^\text{th}$ have default arguments
+  all parameters following the mᵗʰ have default arguments
   [[dcl.fct.default]]. For the purposes of overload resolution, the
   parameter list is truncated on the right, so that there are exactly m
   parameters.
@@ -1240,11 +1240,11 @@ function (see  [[over.ics.ref]]).
 #### General <a id="over.match.best.general">[[over.match.best.general]]</a>
 
 Define \text{ICS}^i(`F`) as the implicit conversion sequence that
-converts the $i^\text{th}$ argument in the list to the type of the
-$i^\text{th}$ parameter of viable function `F`. [[over.best.ics]]
-defines the implicit conversion sequences and [[over.ics.rank]] defines
-what it means for one implicit conversion sequence to be a better
-conversion sequence or worse conversion sequence than another.
+converts the iᵗʰ argument in the list to the type of the iᵗʰ parameter
+of viable function `F`. [[over.best.ics]] defines the implicit
+conversion sequences and [[over.ics.rank]] defines what it means for one
+implicit conversion sequence to be a better conversion sequence or worse
+conversion sequence than another.
 
 Given these definitions, a viable function `F₁` is defined to be a
 *better* function than another viable function `F₂` if for all arguments

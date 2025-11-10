@@ -1360,11 +1360,11 @@ register defined by shift values n and m, a twist value r, and a
 conditional xor-mask a. To improve the uniformity of the result, the
 bits of the raw shift register are additionally *tempered* (i.e.,
 scrambled) according to a bit-scrambling matrix defined by values u, d,
-s, b, t, c, and $\ell$.
+s, b, t, c, and ℓ.
 
 The state transition is performed as follows:
 
-- Concatenate the upper w-r bits of $X_{i-n}$ with the lower r bits of
+- Concatenate the upper w-r bits of Xᵢ₋ₙ with the lower r bits of
   $X_{i+1-n}$ to obtain an unsigned integer value Y.
 - With $\alpha = a \cdot (Y \bitand 1)$, set Xᵢ to
   $X_{i+m-n} \xor (Y \rightshift 1) \xor \alpha$.
@@ -1448,7 +1448,7 @@ explicit mersenne_twister_engine(result_type value);
 ```
 
 *Effects:* Sets $X_{-n}$ to `value` \bmod 2^w. Then, iteratively for
-$i = 1 - n, \dotsc, -1$, sets Xᵢ to $$%
+i = 1 - n, …, -1, sets Xᵢ to $$%
  \bigl[f \cdot
        \bigl(X_{i-1} \xor \bigl(X_{i-1} \rightshift (w-2)\bigr)
        \bigr)
@@ -1464,7 +1464,7 @@ template<class Sseq> explicit mersenne_twister_engine(Sseq& q);
 
 *Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array (or
 equivalent) of length n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and
-then, iteratively for $i = -n,\dotsc,-1$, sets Xᵢ to
+then, iteratively for i = -n,…,-1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
 Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
 each of the other resulting Xᵢ is 0, changes $X_{-n}$ to $2^{w-1}$.
@@ -1558,8 +1558,8 @@ linear_congruential_engine<result_type,
                           40014u,0u,2147483563u> e(value == 0u ? default_seed : value);
 ```
 
-Then, to set each Xₖ, obtain new values $z_0, \dotsc, z_{n-1}$ from
-n = ⌈ w/32 ⌉ successive invocations of `e`. Set Xₖ to
+Then, to set each Xₖ, obtain new values z₀, …, zₙ₋₁ from n = ⌈ w/32 ⌉
+successive invocations of `e`. Set Xₖ to
 $\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
 
 *Complexity:* Exactly n \cdot `r` invocations of `e`.
@@ -1570,7 +1570,7 @@ template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
 
 *Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array (or
 equivalent) of length r ⋅ k, invokes `q.generate(`a + 0`, `a + r ⋅ k`)`
-and then, iteratively for $i = -r, \dotsc, -1$, sets Xᵢ to
+and then, iteratively for i = -r, …, -1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
 $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
@@ -1860,7 +1860,7 @@ using minstd_rand0 =
       linear_congruential_engine<uint_fast32_t, 16'807, 0, 2'147'483'647>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `minstd_rand0` produces the value
 1043618065.
 
@@ -1869,7 +1869,7 @@ using minstd_rand =
       linear_congruential_engine<uint_fast32_t, 48'271, 0, 2'147'483'647>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `minstd_rand` produces the value
 399268537.
 
@@ -1879,7 +1879,7 @@ using mt19937 =
        0x9908'b0df, 11, 0xffff'ffff, 7, 0x9d2c'5680, 15, 0xefc6'0000, 18, 1'812'433'253>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `mt19937` produces the value
 4123659995.
 
@@ -1890,7 +1890,7 @@ using mt19937_64 =
        0x71d6'7fff'eda6'0000, 37, 0xfff7'eee0'0000'0000, 43, 6'364'136'223'846'793'005>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `mt19937_64` produces the value
 9981545732273789042.
 
@@ -1899,7 +1899,7 @@ using ranlux24_base =
       subtract_with_carry_engine<uint_fast32_t, 24, 10, 24>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `ranlux24_base` produces the value
 7937952.
 
@@ -1908,7 +1908,7 @@ using ranlux48_base =
       subtract_with_carry_engine<uint_fast64_t, 48, 5, 12>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `ranlux48_base` produces the value
 61839128582725.
 
@@ -1916,7 +1916,7 @@ default-constructed object of type `ranlux48_base` produces the value
 using ranlux24 = discard_block_engine<ranlux24_base, 223, 23>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `ranlux24` produces the value
 9901578.
 
@@ -1924,7 +1924,7 @@ default-constructed object of type `ranlux24` produces the value
 using ranlux48 = discard_block_engine<ranlux48_base, 389, 11>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `ranlux48` produces the value
 249142670248501.
 
@@ -1932,7 +1932,7 @@ default-constructed object of type `ranlux48` produces the value
 using knuth_b = shuffle_order_engine<minstd_rand0,256>;
 ```
 
-*Required behavior:* The $10000^\text{th}$ consecutive invocation of a
+*Required behavior:* The 10000ᵗʰ consecutive invocation of a
 default-constructed object of type `knuth_b` produces the value
 1112339016.
 
@@ -2007,8 +2007,8 @@ double entropy() const noexcept;
 *Returns:* If the implementation employs a random number engine, returns
 0.0. Otherwise, returns an entropy estimate
 
-If a device has n states whose respective probabilities are
-$P_0, \dotsc, P_{n-1}$, the device entropy S is defined as  
+If a device has n states whose respective probabilities are P₀, …, Pₙ₋₁,
+the device entropy S is defined as  
 $S = - \sum_{i=0}^{n-1} P_i \cdot \log P_i$.
 
 for the random numbers returned by `operator()`, in the range `min()` to
@@ -2119,7 +2119,7 @@ $x \xor (x \rightshift 27)$:
   p = (n - t) / 2 and let q = p + t, where $$%
        t = (n \ge 623) \mbox{ ? } 11 \mbox{ : } (n \ge 68) \mbox{ ? } 7 \mbox{ : } (n \ge 39) \mbox{ ? } 5 \mbox{ : } (n \ge 7) \mbox{ ? } 3 \mbox{ : } (n - 1)/2;$$
 - With m as the larger of s + 1 and n, transform the elements of the
-  range: iteratively for $k = 0, \dotsc, m - 1$, calculate values
+  range: iteratively for k = 0, …, m - 1, calculate values
   $$\begin{aligned}
        r_1 & = &
          1664525 \cdot T(    \texttt{begin[}k\texttt{]}
@@ -2140,8 +2140,8 @@ $x \xor (x \rightshift 27)$:
   \end{aligned}$$ and, in order, increment `begin[`k+p`]` by r₁,
   increment `begin[`k+q`]` by r₂, and set `begin[`k`]` to r₂.
 - Transform the elements of the range again, beginning where the
-  previous step ended: iteratively for $k = m, \dotsc, m + n - 1$,
-  calculate values $$\begin{aligned}
+  previous step ended: iteratively for k = m, …, m + n - 1, calculate
+  values $$\begin{aligned}
        r_3 & = &
          1566083941 \cdot T( \texttt{begin[}k  \texttt{]}
                            + \texttt{begin[}k+p\texttt{]}
@@ -2193,8 +2193,8 @@ template<class RealType, size_t bits, class URBG>
   RealType generate_canonical(URBG& g);
 ```
 
-*Effects:* Invokes `g()` k times to obtain values
-$g_0, \dotsc, g_{k-1}$, respectively. Calculates a quantity
+*Effects:* Invokes `g()` k times to obtain values g₀, …, gₖ₋₁,
+respectively. Calculates a quantity
 $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
                         \cdot R^i$$ using arithmetic of type `RealType`.
 
@@ -3322,8 +3322,7 @@ constructed.
 ##### Class template `fisher_f_distribution` <a id="rand.dist.norm.f">[[rand.dist.norm.f]]</a>
 
 A `fisher_f_distribution` random number distribution produces random
-numbers $x \ge 0$ distributed according to the probability density
-function
+numbers x ≥ 0 distributed according to the probability density function
 $$p(x\,|\,m,n) = \frac{\Gamma\big((m+n)/2\big)}{\Gamma(m/2) \; \Gamma(n/2)}
      \cdot \left(\frac{m}{n}\right)^{m/2}
      \cdot x^{(m/2)-1}
@@ -3471,8 +3470,8 @@ integers i, 0 ≤ i < n, distributed according to the discrete probability
 function $$P(i \,|\, p_0, \dotsc, p_{n-1}) = p_i \text{ .}$$
 
 Unless specified otherwise, the distribution parameters are calculated
-as: pₖ = {wₖ / S} for $k = 0, \dotsc, n - 1$, in which the values wₖ,
-commonly known as the *weights* , shall be non-negative, non-NaN, and
+as: pₖ = {wₖ / S} for k = 0, …, n - 1, in which the values wₖ, commonly
+known as the *weights* , shall be non-negative, non-NaN, and
 non-infinity. Moreover, the following relation shall hold:
 $0 < S = w_0 + \dotsb + w_{n - 1}$.
 
@@ -3569,8 +3568,7 @@ relation 0 < \delta = (`xmax` - `xmin`) / n holds.
 *Effects:* Constructs a `discrete_distribution` object with
 probabilities given by the formula above, using the following values: If
 `nw` = 0, let w₀ = 1. Otherwise, let
-w_k = `fw`(`xmin` + k \cdot \delta + \delta / 2) for
-$k = 0, \dotsc, n - 1$.
+w_k = `fw`(`xmin` + k \cdot \delta + \delta / 2) for k = 0, …, n - 1.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3580,25 +3578,24 @@ vector<double> probabilities() const;
 
 *Returns:* A `vector<double>` whose `size` member returns n and whose
 `operator[]` member returns pₖ when invoked with argument k for
-$k = 0, \dotsc, n - 1$.
+k = 0, …, n - 1.
 
 ##### Class template `piecewise_constant_distribution` <a id="rand.dist.samp.pconst">[[rand.dist.samp.pconst]]</a>
 
 A `piecewise_constant_distribution` random number distribution produces
 random numbers x, b₀ ≤ x < bₙ, uniformly distributed over each
-subinterval $[ b_i, b_{i+1} )$ according to the probability density
-function
+subinterval [ bᵢ, bᵢ₊₁ ) according to the probability density function
 $$p(x \,|\, b_0, \dotsc, b_n, \; \rho_0, \dotsc, \rho_{n-1}) = \rho_i
    \text{ , for $b_i \le x < b_{i+1}$.}$$
 
 The n + 1 distribution parameters bᵢ, also known as this distribution’s
 *interval boundaries* , shall satisfy the relation $b_i < b_{i + 1}$ for
-$i = 0, \dotsc, n - 1$. Unless specified otherwise, the remaining n
+i = 0, …, n - 1. Unless specified otherwise, the remaining n
 distribution parameters are calculated as:
 $$\rho_k = \frac{w_k}{S \cdot (b_{k+1}-b_k)} \text{ for } k = 0, \dotsc, n - 1 \text{ ,}$$
 in which the values wₖ, commonly known as the *weights* , shall be
 non-negative, non-NaN, and non-infinity. Moreover, the following
-relation shall hold: $0 < S = w_0 + \dotsb + w_{n-1}$.
+relation shall hold: 0 < S = w₀ + … + wₙ₋₁.
 
 ``` cpp
 namespace std {
@@ -3656,7 +3653,7 @@ piecewise_constant_distribution();
 ```
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
-n = 1, $\rho_0 = 1$, b₀ = 0, and b₁ = 1.
+n = 1, ρ_0 = 1, b₀ = 0, and b₁ = 1.
 
 ``` cpp
 template<class InputIteratorB, class InputIteratorW>
@@ -3692,9 +3689,8 @@ template<class UnaryOperation>
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters taken or calculated from the following values: If
 `bl.size()` < 2, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1. Otherwise, let
-\bigl[`bl.begin()`, `bl.end()`\bigr) form a sequence $b_0, \dotsc, b_n$,
-and let w_k = `fw`\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr) for
-$k = 0, \dotsc, n - 1$.
+\bigl[`bl.begin()`, `bl.end()`\bigr) form a sequence b₀, …, bₙ, and let
+w_k = `fw`\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr) for k = 0, …, n - 1.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3711,8 +3707,8 @@ relation 0 < \delta = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters taken or calculated from the following values: Let
-b_k = `xmin` + k \cdot \delta for $k = 0, \dotsc, n$, and
-w_k = `fw`(b_k + \delta / 2) for $k = 0, \dotsc, n - 1$.
+b_k = `xmin` + k \cdot \delta for k = 0, …, n, and
+w_k = `fw`(b_k + \delta / 2) for k = 0, …, n - 1.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3722,33 +3718,33 @@ vector<result_type> intervals() const;
 
 *Returns:* A `vector<result_type>` whose `size` member returns n + 1 and
 whose `operator[]` member returns bₖ when invoked with argument k for
-$k = 0, \dotsc, n$.
+k = 0, …, n.
 
 ``` cpp
 vector<result_type> densities() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n and
-whose `operator[]` member returns $\rho_k$ when invoked with argument k
-for $k = 0, \dotsc, n - 1$.
+whose `operator[]` member returns ρ_k when invoked with argument k for
+k = 0, …, n - 1.
 
 ##### Class template `piecewise_linear_distribution` <a id="rand.dist.samp.plinear">[[rand.dist.samp.plinear]]</a>
 
 A `piecewise_linear_distribution` random number distribution produces
 random numbers x, b₀ ≤ x < bₙ, distributed over each subinterval
-$[b_i, b_{i+1})$ according to the probability density function
+[bᵢ, bᵢ₊₁) according to the probability density function
 $$p(x \,|\, b_0, \dotsc, b_n, \; \rho_0, \dotsc, \rho_n)
      = \rho_{i}   \cdot {\frac{b_{i+1} - x}{b_{i+1} - b_i}}
      + \rho_{i+1} \cdot {\frac{x - b_i}{b_{i+1} - b_i}}
      \text{ , for $b_i \le x < b_{i+1}$.}$$
 
 The n + 1 distribution parameters bᵢ, also known as this distribution’s
-*interval boundaries* , shall satisfy the relation $b_i < b_{i+1}$ for
-$i = 0, \dotsc, n - 1$. Unless specified otherwise, the remaining n + 1
-distribution parameters are calculated as $\rho_k = {w_k / S}$ for
-$k = 0, \dotsc, n$, in which the values wₖ, commonly known as the
-*weights at boundaries* , shall be non-negative, non-NaN, and
-non-infinity. Moreover, the following relation shall hold:
+*interval boundaries* , shall satisfy the relation bᵢ < bᵢ₊₁ for
+i = 0, …, n - 1. Unless specified otherwise, the remaining n + 1
+distribution parameters are calculated as ρ_k = {wₖ / S} for
+k = 0, …, n, in which the values wₖ, commonly known as the *weights at
+boundaries* , shall be non-negative, non-NaN, and non-infinity.
+Moreover, the following relation shall hold:
 $$0 < S = \frac{1}{2} \cdot \sum_{k=0}^{n-1} (w_k + w_{k+1}) \cdot (b_{k+1} - b_k) \text{ .}$$
 
 ``` cpp
@@ -3806,7 +3802,7 @@ piecewise_linear_distribution();
 ```
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
-n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1.
+n = 1, ρ_0 = ρ_1 = 1, b₀ = 0, and b₁ = 1.
 
 ``` cpp
 template<class InputIteratorB, class InputIteratorW>
@@ -3819,11 +3815,11 @@ template<class InputIteratorB, class InputIteratorW>
 
 *Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
 *Cpp17InputIterator* requirements [[input.iterators]]. If
-`firstB == lastB` or `++firstB == lastB`, let n = 1,
-$\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1. Otherwise,
-\bigl[`firstB`, `lastB`\bigr) forms a sequence b of length n+1, the
-length of the sequence w starting from `firstW` is at least n+1, and any
-wₖ for k ≥ n + 1 are ignored by the distribution.
+`firstB == lastB` or `++firstB == lastB`, let n = 1, ρ_0 = ρ_1 = 1,
+b₀ = 0, and b₁ = 1. Otherwise, \bigl[`firstB`, `lastB`\bigr) forms a
+sequence b of length n+1, the length of the sequence w starting from
+`firstW` is at least n+1, and any wₖ for k ≥ n + 1 are ignored by the
+distribution.
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters as specified above.
@@ -3838,9 +3834,9 @@ template<class UnaryOperation>
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: If
-`bl.size()` < 2, let n = 1, $\rho_0 = \rho_1 = 1$, b₀ = 0, and b₁ = 1.
+`bl.size()` < 2, let n = 1, ρ_0 = ρ_1 = 1, b₀ = 0, and b₁ = 1.
 Otherwise, let \bigl[`bl.begin(),` `bl.end()`\bigr) form a sequence
-$b_0, \dotsc, b_n$, and let w_k = `fw`(b_k) for $k = 0, \dotsc, n$.
+b₀, …, bₙ, and let w_k = `fw`(b_k) for k = 0, …, n.
 
 *Complexity:* The number of invocations of `fw` does not exceed n+1.
 
@@ -3857,8 +3853,8 @@ relation 0 < \delta = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: Let
-b_k = `xmin` + k \cdot \delta for $k = 0, \dotsc, n$, and
-w_k = `fw`(b_k) for $k = 0, \dotsc, n$.
+b_k = `xmin` + k \cdot \delta for k = 0, …, n, and w_k = `fw`(b_k) for
+k = 0, …, n.
 
 *Complexity:* The number of invocations of `fw` does not exceed n+1.
 
@@ -3868,15 +3864,15 @@ vector<result_type> intervals() const;
 
 *Returns:* A `vector<result_type>` whose `size` member returns n + 1 and
 whose `operator[]` member returns bₖ when invoked with argument k for
-$k = 0, \dotsc, n$.
+k = 0, …, n.
 
 ``` cpp
 vector<result_type> densities() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n and
-whose `operator[]` member returns $\rho_k$ when invoked with argument k
-for $k = 0, \dotsc, n$.
+whose `operator[]` member returns ρ_k when invoked with argument k for
+k = 0, …, n.
 
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
@@ -4934,7 +4930,7 @@ slices. The constructor with arguments for a slice takes a start,
 length, and stride parameter.
 
 \[*Example 1*: `slice(3, 8, 2)` constructs a slice which selects
-elements $3, 5, 7, \dotsc, 17$ from an array. — *end example*\]
+elements 3, 5, 7, …, 17 from an array. — *end example*\]
 
 #### Access functions <a id="slice.access">[[slice.access]]</a>
 
@@ -5005,7 +5001,7 @@ It has reference semantics to a subset of an array specified by a
 \[*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
 assigning the elements of `b` to a slice of the elements in `a`. For the
 slice shown, the elements selected from `a` are
-$1, 4, \dotsc, 13$. — *end example*\]
+1, 4, …, 13. — *end example*\]
 
 #### Assignment <a id="slice.arr.assign">[[slice.arr.assign]]</a>
 
@@ -6195,8 +6191,7 @@ measured in radians).
 
 *Returns:* $$\mathsf{F}(k, \phi) =
      \int_0^\phi \! \frac{\mathsf{d}\theta}{\sqrt{1 - k^2 \sin^2 \theta}}
-     \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is
-`phi`.
+     \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and φ is `phi`.
 
 #### Incomplete elliptic integral of the second kind <a id="sf.cmath.ellint.2">[[sf.cmath.ellint.2]]</a>
 
@@ -6212,7 +6207,7 @@ measured in radians).
 
 *Returns:*
 $$\mathsf{E}(k, \phi) = \int_0^\phi \! \sqrt{1 - k^2 \sin^2 \theta} \, \mathsf{d}\theta
-   \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and $\phi$ is `phi`.
+   \text{ ,\quad for $|k| \le 1$,}$$ where k is `k` and φ is `phi`.
 
 #### Incomplete elliptic integral of the third kind <a id="sf.cmath.ellint.3">[[sf.cmath.ellint.3]]</a>
 
@@ -6229,7 +6224,7 @@ measured in radians).
 
 *Returns:* $$\mathsf{\Pi}(\nu, k, \phi) = \int_0^\phi \!
    \frac{ \mathsf{d}\theta }{ (1 - \nu \, \sin^2 \theta) \sqrt{1 - k^2 \sin^2 \theta} } \text{ ,\quad for $|k| \le 1$,}$$
-where $\nu$ is `nu`, k is `k`, and $\phi$ is `phi`.
+where $\nu$ is `nu`, k is `k`, and φ is `phi`.
 
 #### Exponential integral <a id="sf.cmath.expint">[[sf.cmath.expint]]</a>
 
@@ -6461,7 +6456,7 @@ variable templates are initialized with the nearest representable values
 of e, log₂ e, $\log_{10} \mathrm{e}$, π, $\frac{1}{\pi}$,
 $\frac{1}{\sqrt{\pi}}$, $\ln 2$, $\ln 10$, $\sqrt{2}$, $\sqrt{3}$,
 $\frac{1}{\sqrt{3}}$, the Euler-Mascheroni γ constant, and the golden
-ratio $\phi$ constant $\frac{1+\sqrt{5}}{2}$, respectively.
+ratio φ constant $\frac{1+\sqrt{5}}{2}$, respectively.
 
 Pursuant to [[namespace.std]], a program may partially or explicitly
 specialize a mathematical constant variable template provided that the

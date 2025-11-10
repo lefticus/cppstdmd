@@ -555,9 +555,8 @@ to `const int`”, and as “pointer to pointer to
 `const int`”. — *end example*\]
 
 The n-tuple of cv-qualifiers after the first one in the longest
-qualification-decomposition of `T`, that is,
-$cv{}_1, cv{}_2, \dotsc, cv{}_n$, is called the *cv-qualification
-signature* of `T`.
+qualification-decomposition of `T`, that is, cv{}_1, cv{}_2, …, cv{}_n,
+is called the *cv-qualification signature* of `T`.
 
 Two types `T1` and `T2` are *similar* if they have
 qualification-decompositions with the same n such that corresponding Pᵢ
@@ -4822,10 +4821,9 @@ from an expression `P` of pointer type, the result has the type of `P`.
 - Otherwise, if `P` points to an array element i of an array object `x`
   with n elements [[dcl.array]],[^29] the expressions `P + J` and
   `J + P` (where `J` has the value j) point to the
-  (possibly-hypothetical) array element i + j of `x` if
-  $0 \le i + j \le n$ and the expression `P - J` points to the
-  (possibly-hypothetical) array element i - j of `x` if
-  $0 \le i - j \le n$.
+  (possibly-hypothetical) array element i + j of `x` if 0 ≤ i + j ≤ n
+  and the expression `P - J` points to the (possibly-hypothetical) array
+  element i - j of `x` if 0 ≤ i - j ≤ n.
 - Otherwise, the behavior is undefined.
 
 \[*Note 1*: Adding a value other than 0 or 1 to a pointer to a base

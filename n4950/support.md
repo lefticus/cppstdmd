@@ -2317,23 +2317,19 @@ static consteval source_location current() noexcept;
   \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only data
   members of the returned `source_location` object are indicated in
   [[support.srcloc.current]].
-  <div class="libefftabvalue">
-
-  Value of object returned by `current` support.srcloc.current `line_` &
-  A presumed line number [[cpp.predefined]]. Line numbers are presumed
-  to be 1-indexed; however, an implementation is encouraged to use 0
-  when the line number is unknown.  
-  `column_` & An *implementation-defined* value denoting some offset
-  from the start of the line denoted by `line_`. Column numbers are
-  presumed to be 1-indexed; however, an implementation is encouraged to
-  use 0 when the column number is unknown.  
-  `file_name_` & A presumed name of the current source
-  file [[cpp.predefined]] as an NTBS.  
-  `function_name_` & A name of the current function such as in
-  \_\_func\_\_ [[dcl.fct.def.general]] if any, an empty string
-  otherwise.  
-
-  </div>
+  > Value of object returned by `current` support.srcloc.current `line_`
+  > & A presumed line number [[cpp.predefined]]. Line numbers are
+  > presumed to be 1-indexed; however, an implementation is encouraged
+  > to use 0 when the line number is unknown.  
+  > `column_` & An *implementation-defined* value denoting some offset
+  > from the start of the line denoted by `line_`. Column numbers are
+  > presumed to be 1-indexed; however, an implementation is encouraged
+  > to use 0 when the column number is unknown.  
+  > `file_name_` & A presumed name of the current source
+  > file [[cpp.predefined]] as an NTBS.  
+  > `function_name_` & A name of the current function such as in
+  > \_\_func\_\_ [[dcl.fct.def.general]] if any, an empty string
+  > otherwise.  
 - Otherwise, when invoked in some other way, returns a `source_location`
   whose data members are initialized with valid but unspecified values.
 

@@ -6901,8 +6901,8 @@ constexpr explicit as_const_view(V base);
 #### Overview <a id="range.elements.overview">[[range.elements.overview]]</a>
 
 `elements_view` takes a view of tuple-like values and a `size_t`, and
-produces a view with a value-type of the $N^\text{th}$ element of the
-adapted view’s value-type.
+produces a view with a value-type of the Nᵗʰ element of the adapted
+view’s value-type.
 
 The name `views::elements<N>` denotes a range adaptor object
 [[range.adaptor.object]]. Given a subexpression `E` and constant
@@ -8317,9 +8317,8 @@ friend constexpr common_type_t<range_difference_t<maybe-const<OtherConst, Views>
 #### Overview <a id="range.zip.transform.overview">[[range.zip.transform.overview]]</a>
 
 `zip_transform_view` takes an invocable object and any number of views
-and produces a view whose $M^\text{th}$ element is the result of
-applying the invocable object to the $M^\text{th}$ elements of all
-views.
+and produces a view whose Mᵗʰ element is the result of applying the
+invocable object to the Mᵗʰ elements of all views.
 
 The name `views::zip_transform` denotes a customization point object
 [[customization.point.object]]. Let `F` be a subexpression, and let
@@ -8739,10 +8738,10 @@ friend constexpr range_difference_t<maybe-const<OtherConst, InnerView>>
 
 #### Overview <a id="range.adjacent.overview">[[range.adjacent.overview]]</a>
 
-`adjacent_view` takes a view and produces a view whose $M^\text{th}$
-element is a tuple of references to the $M^\text{th}$ through
-(M + N - 1)^th elements of the original view. If the original view has
-fewer than N elements, the resulting view is empty.
+`adjacent_view` takes a view and produces a view whose Mᵗʰ element is a
+tuple of references to the Mᵗʰ through (M + N - 1)ᵗʰ elements of the
+original view. If the original view has fewer than N elements, the
+resulting view is empty.
 
 The name `views::adjacent<N>` denotes a range adaptor object
 [[range.adaptor.object]]. Given a subexpression `E` and a constant
@@ -9229,10 +9228,10 @@ friend constexpr range_difference_t<maybe-const<OtherConst, V>>
 #### Overview <a id="range.adjacent.transform.overview">[[range.adjacent.transform.overview]]</a>
 
 `adjacent_transform_view` takes an invocable object and a view and
-produces a view whose $M^\text{th}$ element is the result of applying
-the invocable object to the $M^\text{th}$ through (M + N - 1)^th
-elements of the original view. If the original view has fewer than N
-elements, the resulting view is empty.
+produces a view whose Mᵗʰ element is the result of applying the
+invocable object to the Mᵗʰ through (M + N - 1)ᵗʰ elements of the
+original view. If the original view has fewer than N elements, the
+resulting view is empty.
 
 The name `views::adjacent_transform<N>` denotes a range adaptor object
 [[range.adaptor.object]]. Given subexpressions `E` and `F` and a
@@ -10425,10 +10424,10 @@ friend constexpr difference_type operator-(const iterator& x, default_sentinel_t
 
 #### Overview <a id="range.slide.overview">[[range.slide.overview]]</a>
 
-`slide_view` takes a view and a number N and produces a view whose
-$M^\text{th}$ element is a view over the $M^\text{th}$ through
-(M + N - 1)^th elements of the original view. If the original view has
-fewer than N elements, the resulting view is empty.
+`slide_view` takes a view and a number N and produces a view whose Mᵗʰ
+element is a view over the Mᵗʰ through (M + N - 1)ᵗʰ elements of the
+original view. If the original view has fewer than N elements, the
+resulting view is empty.
 
 The name `views::slide` denotes a range adaptor object
 [[range.adaptor.object]]. Given subexpressions `E` and `N`, the

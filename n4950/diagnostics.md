@@ -1188,7 +1188,7 @@ information about the stored stacktrace at runtime.
 
 The *invocation sequence* of the current evaluation x₀ in the current
 thread of execution is a sequence (x₀, …, xₙ) of evaluations such that,
-for i ≥ 0, xᵢ is within the function invocation $x_{i+1}$
+for i ≥ 0, xᵢ is within the function invocation xᵢ₊₁
 [[intro.execution]].
 
 A *stacktrace* is an approximate representation of an invocation
@@ -1681,11 +1681,7 @@ template<> struct formatter<stacktrace_entry>;
 *stacktrace-entry-format-spec*. The syntax of format specifications is
 as follows:
 
-<div class="ncbnf">
-
-fill-and-alignₒₚₜ widthₒₚₜ
-
-</div>
+> fill-and-alignₒₚₜ widthₒₚₜ
 
 \[*Note 1*: The productions *fill-and-align* and *width* are described
 in [[format.string.std]]. — *end note*\]
