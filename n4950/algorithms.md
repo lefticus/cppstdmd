@@ -9428,11 +9428,16 @@ standard library.
 
 <!-- Link reference definitions -->
 [alg.binary.search]: #alg.binary.search
+[alg.c.library]: #alg.c.library
+[alg.modifying.operations]: #alg.modifying.operations
+[alg.nonmodifying]: #alg.nonmodifying
 [alg.set.operations]: #alg.set.operations
 [alg.sorting]: #alg.sorting
 [algorithm.stable]: library.md#algorithm.stable
+[algorithms.parallel]: #algorithms.parallel
 [algorithms.parallel.exec]: #algorithms.parallel.exec
 [algorithms.requirements]: #algorithms.requirements
+[algorithms.results]: #algorithms.results
 [algorithms.summary]: #algorithms.summary
 [basic.compound]: basic.md#basic.compound
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
@@ -9477,17 +9482,6 @@ standard library.
 [term.unevaluated.operand]: #term.unevaluated.operand
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class
-
-<!-- Link reference definitions -->
-[alg.c.library]: #alg.c.library
-[alg.modifying.operations]: #alg.modifying.operations
-[alg.nonmodifying]: #alg.nonmodifying
-[alg.sorting]: #alg.sorting
-[algorithms.parallel]: #algorithms.parallel
-[algorithms.requirements]: #algorithms.requirements
-[algorithms.results]: #algorithms.results
-[numeric.ops]: #numeric.ops
-[specialized.algorithms]: #specialized.algorithms
 
 [^1]: The decision whether to include a copying version was usually
     based on complexity considerations. When the cost of doing the

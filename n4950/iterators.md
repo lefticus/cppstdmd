@@ -5568,6 +5568,7 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [iterator.concept.writable]: #iterator.concept.writable
 [iterator.concepts]: #iterator.concepts
 [iterator.iterators]: #iterator.iterators
+[iterator.primitives]: #iterator.primitives
 [iterator.range]: #iterator.range
 [iterator.requirements]: #iterator.requirements
 [iterator.traits]: #iterator.traits
@@ -5578,6 +5579,7 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [numeric.limits]: support.md#numeric.limits
 [output.iterators]: #output.iterators
 [outputiterator]: #outputiterator
+[predef.iterators]: #predef.iterators
 [random.access.iterators]: #random.access.iterators
 [randomaccessiterator]: #randomaccessiterator
 [range.cmp]: utilities.md#range.cmp
@@ -5588,18 +5590,12 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [reverse.iter.nav]: #reverse.iter.nav
 [reverse.iter.nonmember]: #reverse.iter.nonmember
 [stream.buffers]: input.md#stream.buffers
+[stream.iterators]: #stream.iterators
 [swappable.requirements]: library.md#swappable.requirements
 [temp.deduct]: temp.md#temp.deduct
 [temp.func.order]: temp.md#temp.func.order
 [temp.inst]: temp.md#temp.inst
 [utility.arg.requirements]: library.md#utility.arg.requirements
-
-<!-- Link reference definitions -->
-[iterator.primitives]: #iterator.primitives
-[iterator.range]: #iterator.range
-[iterator.requirements]: #iterator.requirements
-[predef.iterators]: #predef.iterators
-[stream.iterators]: #stream.iterators
 
 [^1]: The sentinel denoting the end of a range can have the same type as
     the iterator denoting the beginning of the range, or a different

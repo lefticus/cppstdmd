@@ -2197,11 +2197,11 @@ Otherwise, equivalent to:
 
 ``` cpp
 if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
-return t_tail <=> u_tail;
+return $t_tail$ <=> $u_tail$;
 ```
 
-where `r`_\mathrm{tail} for some `r` is a tuple containing all but the
-first element of `r`.
+where `r_tail` for some `r` is a tuple containing all but the first
+element of `r`.
 
 *Remarks:* The second overload is to be found via argument-dependent
 lookup [[basic.lookup.argdep]] only.
@@ -7254,7 +7254,7 @@ template<size_t N>
   constexpr bitset<N> operator^(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
-*Returns:* `bitset<N>(lhs) `^`= rhs`.
+*Returns:* `bitset<N>(lhs) ^= rhs`.
 
 ``` cpp
 template<class charT, class traits, size_t N>
@@ -8575,7 +8575,7 @@ template<class T = void> struct bit_xor {
 constexpr T operator()(const T& x, const T& y) const;
 ```
 
-*Returns:* `x `^` y`.
+*Returns:* `x ^ y`.
 
 ``` cpp
 template<> struct bit_xor<void> {
@@ -8591,7 +8591,7 @@ template<class T, class U> constexpr auto operator()(T&& t, U&& u) const
     -> decltype(std::forward<T>(t) ^ std::forward<U>(u));
 ```
 
-*Returns:* `std::forward<T>(t) `^` std::forward<U>(u)`.
+*Returns:* `std::forward<T>(t) ^ std::forward<U>(u)`.
 
 #### Class template `bit_not` <a id="bitwise.operations.not">[[bitwise.operations.not]]</a>
 
@@ -12958,7 +12958,10 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
 [basic.indet]: basic.md#basic.indet
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
 [basic.types.general]: basic.md#basic.types.general
+[bit]: #bit
 [bitmask.types]: library.md#bitmask.types
+[bitset]: #bitset
+[charconv]: #charconv
 [class.base.init]: class.md#class.base.init
 [class.copy.ctor]: class.md#class.copy.ctor
 [concepts.equality]: concepts.md#concepts.equality
@@ -12994,6 +12997,7 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
 [expr.rel]: expr.md#expr.rel
 [expr.unary.op]: expr.md#expr.unary.op
 [expr.xor]: expr.md#expr.xor
+[format]: #format
 [format.align]: #format.align
 [format.err.report]: #format.err.report
 [format.escape.sequences]: #format.escape.sequences
@@ -13065,24 +13069,10 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
 [tuple]: #tuple
 [tuple.elem]: #tuple.elem
 [tuple.helper]: #tuple.helper
+[type.index]: #type.index
 [unord]: containers.md#unord
 [unord.hash]: #unord.hash
 [utilities.summary]: #utilities.summary
-
-<!-- Link reference definitions -->
-[any]: #any
-[bit]: #bit
-[bitset]: #bitset
-[charconv]: #charconv
-[execpol]: #execpol
-[expected]: #expected
-[format]: #format
-[format.type.int]: #format.type.int
-[function.objects]: #function.objects
-[optional]: #optional
-[pairs]: #pairs
-[tuple]: #tuple
-[type.index]: #type.index
 [utility]: #utility
 [variant]: #variant
 

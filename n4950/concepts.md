@@ -1117,6 +1117,7 @@ Under these conditions, it can be shown that
 [concepts.compare]: #concepts.compare
 [concepts.equality]: #concepts.equality
 [concepts.lang]: #concepts.lang
+[concepts.object]: #concepts.object
 [concepts.summary]: #concepts.summary
 [cpp17.destructible]: #cpp17.destructible
 [customization.point.object]: library.md#customization.point.object
@@ -1141,12 +1142,5 @@ Under these conditions, it can be shown that
 [temp.func.order]: temp.md#temp.func.order
 [template.bitset]: utilities.md#template.bitset
 [term.literal.type]: #term.literal.type
-
-<!-- Link reference definitions -->
-[concepts.callable]: #concepts.callable
-[concepts.compare]: #concepts.compare
-[concepts.equality]: #concepts.equality
-[concepts.lang]: #concepts.lang
-[concepts.object]: #concepts.object
 
 [^1]: The name `swap` is used here unqualified.

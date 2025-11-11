@@ -12878,6 +12878,7 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [concepts.equality]: concepts.md#concepts.equality
 [containers]: containers.md#containers
 [conv.rval]: expr.md#conv.rval
+[coro.generator]: #coro.generator
 [customization.point.object]: library.md#customization.point.object
 [dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
 [dcl.init.general]: dcl.md#dcl.init.general
@@ -12903,6 +12904,7 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [range.prim.data]: #range.prim.data
 [range.range]: #range.range
 [range.repeat.view]: #range.repeat.view
+[range.req]: #range.req
 [range.sized]: #range.sized
 [range.subrange]: #range.subrange
 [range.summary]: #range.summary
@@ -12912,11 +12914,3 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [term.array.type]: #term.array.type
 [term.perfect.forwarding.call.wrapper]: #term.perfect.forwarding.call.wrapper
 [views.span]: containers.md#views.span
-
-<!-- Link reference definitions -->
-[coro.generator]: #coro.generator
-[range.access]: #range.access
-[range.adaptors]: #range.adaptors
-[range.factories]: #range.factories
-[range.req]: #range.req
-[range.utility]: #range.utility

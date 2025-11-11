@@ -6054,7 +6054,7 @@ long double  cyl_bessel_il(long double nu, long double x);
 Bessel functions of their respective arguments `nu` and `x`.
 
 *Returns:* $$\mathsf{I}_\nu(x) =
-     \mathrm{i}^{-\nu} \mathsf{J}_\nu(\mathrm{i}x) =
+     i^{-\nu} \mathsf{J}_\nu(ix) =
      \sum_{k=0}^\infty \frac{(x/2)^{\nu+2k}}{k! \: \Gamma(\nu+k+1)}
      \text{ ,\quad for $x \ge 0$,}$$ where $\nu$ is `nu` and x is `x`.
 
@@ -6094,8 +6094,8 @@ Bessel functions of their respective arguments `nu` and `x`.
 
 *Returns:* $$%
   \mathsf{K}_\nu(x) =
-  (\pi/2)\mathrm{i}^{\nu+1} (            \mathsf{J}_\nu(\mathrm{i}x)
-                + \mathrm{i} \mathsf{N}_\nu(\mathrm{i}x)
+  (\pi/2)i^{\nu+1} (            \mathsf{J}_\nu(ix)
+                + i \mathsf{N}_\nu(ix)
                 )
   =
   \left\{
@@ -6597,8 +6597,11 @@ constant variable template is ill-formed.
 [bad.alloc]: support.md#bad.alloc
 [basic.fundamental]: basic.md#basic.fundamental
 [basic.stc.thread]: basic.md#basic.stc.thread
+[c.math]: #c.math
 [c.math.hypot3]: #c.math.hypot3
 [c.math.lerp]: #c.math.lerp
+[cfenv]: #cfenv
+[complex.numbers]: #complex.numbers
 [conv.prom]: expr.md#conv.prom
 [cpp.pragma]: cpp.md#cpp.pragma
 [cpp17.copyassignable]: #cpp17.copyassignable
@@ -6615,6 +6618,8 @@ constant variable template is ill-formed.
 [library.c]: library.md#library.c
 [namespace.std]: library.md#namespace.std
 [numarray]: #numarray
+[numbers]: #numbers
+[numeric.requirements]: #numeric.requirements
 [numerics.summary]: #numerics.summary
 [output.iterators]: iterators.md#output.iterators
 [over.match.general]: over.md#over.match.general
@@ -6645,15 +6650,6 @@ constant variable template is ill-formed.
 [utility.arg.requirements]: library.md#utility.arg.requirements
 [valarray.members]: #valarray.members
 [valarray.range]: #valarray.range
-
-<!-- Link reference definitions -->
-[c.math]: #c.math
-[cfenv]: #cfenv
-[complex.numbers]: #complex.numbers
-[numarray]: #numarray
-[numbers]: #numbers
-[numeric.requirements]: #numeric.requirements
-[rand]: #rand
 
 [^1]: In other words, value types. These include arithmetic types,
     pointers, the library class `complex`, and instantiations of

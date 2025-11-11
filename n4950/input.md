@@ -4119,7 +4119,7 @@ native Unicode API is used, the function flushes `os` before writing
 *Recommended practice:* For `vprint_unicode`, if invoking the native
 Unicode API requires transcoding, implementations should substitute
 invalid code units with U+fffd (replacement character) per the Unicode
-Standard, Chapter 3.9 `U+fffd` Substitution in Conversion.
+Standard, Chapter 3.9 ‘U+fffd‘ Substitution in Conversion.
 
 #### Unformatted output functions <a id="ostream.unformatted">[[ostream.unformatted]]</a>
 
@@ -4720,7 +4720,7 @@ terminal or `stream` fails. May throw `bad_alloc`.
 *Recommended practice:* If invoking the native Unicode API requires
 transcoding, implementations should substitute invalid code units with
 U+fffd (replacement character) per the Unicode Standard, Chapter 3.9
-`U+fffd` Substitution in Conversion.
+‘U+fffd‘ Substitution in Conversion.
 
 ``` cpp
 void vprint_nonunicode(string_view fmt, format_args args);
@@ -12574,7 +12574,11 @@ modifier for the type.
 [ios.seekdir]: #ios.seekdir
 [iostate.flags]: #iostate.flags
 [iostream.cons]: #iostream.cons
+[iostream.format]: #iostream.format
+[iostream.forward]: #iostream.forward
 [iostream.objects]: #iostream.objects
+[iostreams.base]: #iostreams.base
+[iostreams.requirements]: #iostreams.requirements
 [iostreams.summary]: #iostreams.summary
 [istream]: #istream
 [istream.cons]: #istream.cons
@@ -12613,24 +12617,11 @@ modifier for the type.
 [stringbuf.seekoff.pos]: #stringbuf.seekoff.pos
 [stringbuf.virtuals,filebuf.virtuals]: #stringbuf.virtuals,filebuf.virtuals
 [strings]: strings.md#strings
+[syncstream]: #syncstream
 [syncstream.syncbuf.cons]: #syncstream.syncbuf.cons
 [temp.deduct]: temp.md#temp.deduct
 [term.unevaluated.operand]: #term.unevaluated.operand
 [views.span]: containers.md#views.span
-
-<!-- Link reference definitions -->
-[c.files]: #c.files
-[file.streams]: #file.streams
-[filesystems]: #filesystems
-[iostream.format]: #iostream.format
-[iostream.forward]: #iostream.forward
-[iostream.objects]: #iostream.objects
-[iostreams.base]: #iostreams.base
-[iostreams.requirements]: #iostreams.requirements
-[span.streams]: #span.streams
-[stream.buffers]: #stream.buffers
-[string.streams]: #string.streams
-[syncstream]: #syncstream
 
 [^1]: Typically `long long`.
 

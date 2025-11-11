@@ -8103,6 +8103,7 @@ required to avoid data races [[res.on.data.races]].
 [swappable.requirements]: library.md#swappable.requirements
 [temp.deduct]: temp.md#temp.deduct
 [term.unevaluated.operand]: #term.unevaluated.operand
+[time.12]: #time.12
 [time.cal]: #time.cal
 [time.clock]: #time.clock
 [time.clock.cast.id]: #time.clock.cast.id
@@ -8110,27 +8111,18 @@ required to avoid data races [[res.on.data.races]].
 [time.clock.cast.sys.utc]: #time.clock.cast.sys.utc
 [time.clock.cast.utc]: #time.clock.cast.utc
 [time.clock.req]: #time.clock.req
-[time.format.spec]: #time.format.spec
-[time.hms.width]: #time.hms.width
-[time.parse]: #time.parse
-[time.parse.spec]: #time.parse.spec
-[time.point.general]: #time.point.general
-[time.summary]: #time.summary
-[time.syn]: #time.syn
-[time.zone]: #time.zone
-
-<!-- Link reference definitions -->
-[ctime.syn]: #ctime.syn
-[time.12]: #time.12
-[time.cal]: #time.cal
-[time.clock]: #time.clock
-[time.clock.req]: #time.clock.req
 [time.duration]: #time.duration
 [time.duration.io]: #time.duration.io
 [time.format]: #time.format
+[time.format.spec]: #time.format.spec
 [time.hms]: #time.hms
+[time.hms.width]: #time.hms.width
 [time.parse]: #time.parse
+[time.parse.spec]: #time.parse.spec
 [time.point]: #time.point
+[time.point.general]: #time.point.general
+[time.summary]: #time.summary
+[time.syn]: #time.syn
 [time.traits]: #time.traits
 [time.zone]: #time.zone
 

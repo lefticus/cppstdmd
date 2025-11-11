@@ -1466,6 +1466,7 @@ representable by `intmax_t`, the typedef is not defined.
 [expr.unary.noexcept]: expr.md#expr.unary.noexcept
 [func.require]: utilities.md#func.require
 [functional.syn]: utilities.md#functional.syn
+[intseq]: #intseq
 [meta.help]: #meta.help
 [meta.rqmts]: #meta.rqmts
 [meta.summary]: #meta.summary
@@ -1488,9 +1489,4 @@ representable by `intmax_t`, the typedef is not defined.
 [term.trivially.copyable.type]: #term.trivially.copyable.type
 [term.unevaluated.operand]: #term.unevaluated.operand
 [tuple.apply]: utilities.md#tuple.apply
-[type.traits]: #type.traits
-
-<!-- Link reference definitions -->
-[intseq]: #intseq
-[ratio]: #ratio
 [type.traits]: #type.traits

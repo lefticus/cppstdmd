@@ -15279,6 +15279,7 @@ swap(x.acc_, y.acc_);
 [allocator.requirements.completeness]: library.md#allocator.requirements.completeness
 [allocator.traits.members]: mem.md#allocator.traits.members
 [allocator.uses.construction]: mem.md#allocator.uses.construction
+[associative]: #associative
 [associative.general]: #associative.general
 [associative.reqmts]: #associative.reqmts
 [associative.reqmts.except]: #associative.reqmts.except
@@ -15287,6 +15288,7 @@ swap(x.acc_, y.acc_);
 [class.copy.ctor]: class.md#class.copy.ctor
 [class.default.ctor]: class.md#class.default.ctor
 [class.dtor]: class.md#class.dtor
+[container.adaptors]: #container.adaptors
 [container.alloc.reqmts]: #container.alloc.reqmts
 [container.gen.reqmts]: #container.gen.reqmts
 [container.node]: #container.node
@@ -15323,6 +15325,7 @@ swap(x.acc_, y.acc_);
 [random.access.iterators]: iterators.md#random.access.iterators
 [res.on.data.races]: library.md#res.on.data.races
 [sequence.reqmts]: #sequence.reqmts
+[sequences]: #sequences
 [sequences.general]: #sequences.general
 [strings]: strings.md#strings
 [swappable.requirements]: library.md#swappable.requirements
@@ -15330,6 +15333,7 @@ swap(x.acc_, y.acc_);
 [temp.param]: temp.md#temp.param
 [temp.type]: temp.md#temp.type
 [term.trivially.copyable.type]: #term.trivially.copyable.type
+[unord]: #unord
 [unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map
 [unord.multimap]: #unord.multimap
@@ -15339,14 +15343,6 @@ swap(x.acc_, y.acc_);
 [unord.set]: #unord.set
 [vector]: #vector
 [vector.modifiers]: #vector.modifiers
-[views]: #views
-
-<!-- Link reference definitions -->
-[associative]: #associative
-[container.adaptors]: #container.adaptors
-[container.requirements]: #container.requirements
-[sequences]: #sequences
-[unord]: #unord
 [views]: #views
 
 [^1]: Equality comparison is a refinement of partitioning if no two

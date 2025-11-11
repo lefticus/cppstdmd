@@ -1780,6 +1780,7 @@ The specializations are enabled [[unord.hash]].
 [underflow.error]: #underflow.error
 
 <!-- Link reference definitions -->
+[assertions]: #assertions
 [bad.alloc]: support.md#bad.alloc
 [cmp.concept]: support.md#cmp.concept
 [comparisons.three.way]: utilities.md#comparisons.three.way
@@ -1798,14 +1799,8 @@ The specializations are enabled [[unord.hash]].
 [res.on.exception.handling]: library.md#res.on.exception.handling
 [sequence.reqmts]: containers.md#sequence.reqmts
 [stacktrace]: #stacktrace
+[std.exceptions]: #std.exceptions
 [syserr]: #syserr
 [syserr.errcat]: #syserr.errcat
 [syserr.errcode]: #syserr.errcode
 [unord.hash]: utilities.md#unord.hash
-
-<!-- Link reference definitions -->
-[assertions]: #assertions
-[errno]: #errno
-[stacktrace]: #stacktrace
-[std.exceptions]: #std.exceptions
-[syserr]: #syserr

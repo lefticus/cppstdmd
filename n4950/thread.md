@@ -8635,6 +8635,7 @@ template<class R, class... ArgTypes>
 [syserr.syserr]: diagnostics.md#syserr.syserr
 [term.padding.bits]: #term.padding.bits
 [term.unevaluated.operand]: #term.unevaluated.operand
+[thread.condition]: #thread.condition
 [thread.condition.condvarany]: #thread.condition.condvarany
 [thread.condvarany.intwait]: #thread.condvarany.intwait
 [thread.coord]: #thread.coord
@@ -8646,6 +8647,7 @@ template<class R, class... ArgTypes>
 [thread.mutex]: #thread.mutex
 [thread.mutex.requirements]: #thread.mutex.requirements
 [thread.mutex.requirements.mutex]: #thread.mutex.requirements.mutex
+[thread.req]: #thread.req
 [thread.req.exception]: #thread.req.exception
 [thread.req.lockable]: #thread.req.lockable
 [thread.req.lockable.basic]: #thread.req.lockable.basic
@@ -8654,6 +8656,7 @@ template<class R, class... ArgTypes>
 [thread.req.lockable.shared.timed]: #thread.req.lockable.shared.timed
 [thread.req.lockable.timed]: #thread.req.lockable.timed
 [thread.req.timing]: #thread.req.timing
+[thread.sema]: #thread.sema
 [thread.sharedmutex.requirements]: #thread.sharedmutex.requirements
 [thread.sharedtimedmutex.requirements]: #thread.sharedtimedmutex.requirements
 [thread.stoptoken]: #thread.stoptoken
@@ -8670,17 +8673,6 @@ template<class R, class... ArgTypes>
 [unord.hash]: utilities.md#unord.hash
 [util.sharedptr]: mem.md#util.sharedptr
 [util.smartptr.atomic]: #util.smartptr.atomic
-
-<!-- Link reference definitions -->
-[atomics]: #atomics
-[futures]: #futures
-[thread.condition]: #thread.condition
-[thread.coord]: #thread.coord
-[thread.mutex]: #thread.mutex
-[thread.req]: #thread.req
-[thread.sema]: #thread.sema
-[thread.stoptoken]: #thread.stoptoken
-[thread.threads]: #thread.threads
 
 [^1]: Implementations for which standard time units are meaningful will
     typically have a steady clock within their hardware implementation.

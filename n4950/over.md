@@ -3080,8 +3080,18 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [class.member.lookup]: basic.md#class.member.lookup
 [class.mfct]: class.md#class.mfct
 [conv]: expr.md#conv
+[conv.array]: expr.md#conv.array
+[conv.bool]: expr.md#conv.bool
+[conv.double]: expr.md#conv.double
 [conv.fctptr]: expr.md#conv.fctptr
+[conv.fpint]: expr.md#conv.fpint
+[conv.fpprom]: expr.md#conv.fpprom
+[conv.func]: expr.md#conv.func
+[conv.integral]: expr.md#conv.integral
+[conv.lval]: expr.md#conv.lval
+[conv.mem]: expr.md#conv.mem
 [conv.prom]: expr.md#conv.prom
+[conv.ptr]: expr.md#conv.ptr
 [conv.qual]: expr.md#conv.qual
 [conv.rank]: basic.md#conv.rank
 [cpp.concat]: cpp.md#cpp.concat
@@ -3145,6 +3155,8 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [over.match.viable]: #over.match.viable
 [over.oper]: #over.oper
 [over.over]: #over.over
+[over.ref]: #over.ref
+[over.sub]: #over.sub
 [over.unary]: #over.unary
 [stmt.return]: stmt.md#stmt.return
 [temp.arg.explicit]: temp.md#temp.arg.explicit
@@ -3162,13 +3174,6 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [temp.over]: temp.md#temp.over
 [temp.variadic]: temp.md#temp.variadic
 [usrlit.suffix]: library.md#usrlit.suffix
-
-<!-- Link reference definitions -->
-[conv.integral]: #conv.integral
-[conv.prom]: #conv.prom
-[over.ass]: #over.ass
-[over.ref]: #over.ref
-[over.sub]: #over.sub
 
 [^1]: The process of argument deduction fully determines the parameter
     types of the function template specializations, i.e., the parameters

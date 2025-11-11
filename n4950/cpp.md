@@ -1326,10 +1326,10 @@ The integer literal `202302L`.
 \[*Note 1*: Future revisions of C++ will replace the value of this macro
 with a greater value. — *end note*\]
 
-- **The names listed in \tref{cpp.predefined.ft}.**
+- **The names listed in \[\[cpp.predefined.ft\]\].**
 
-The macros defined in shall be defined to the corresponding integer
-literal.
+The macros defined in \[\[cpp.predefined.ft\]\] shall be defined to the
+corresponding integer literal.
 
 \[*Note 2*: Future revisions of C++ might replace the values of these
 macros with greater values. — *end note*\]
@@ -1397,7 +1397,8 @@ binary128 as an extended floating-point type.
 
 Defined as the integer literal `1` if and only if the implementation
 supports an extended floating-point type with the properties of the
-\*typedef-name\* `std::bfloat16_t` as described in .
+\*typedef-name\* `std::bfloat16_t` as described in
+\[\[basic.extended.fp\]\].
 
 - **`__TIME__`**
 
@@ -1588,6 +1589,7 @@ LISTING( ..\listing.dir )
 [cpp.import]: #cpp.import
 [cpp.pragma.op]: #cpp.pragma.op
 [cpp.predefined]: #cpp.predefined
+[cpp.predefined.ft]: #cpp.predefined.ft
 [cpp.replace]: #cpp.replace
 [cpp.rescan]: #cpp.rescan
 [cpp.stringize]: #cpp.stringize

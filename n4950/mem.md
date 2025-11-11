@@ -5158,6 +5158,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 
 <!-- Link reference definitions -->
 [alg.sorting]: algorithms.md#alg.sorting
+[allocator.adaptor]: #allocator.adaptor
 [allocator.requirements.completeness]: library.md#allocator.requirements.completeness
 [allocator.requirements.general]: library.md#allocator.requirements.general
 [allocator.uses.construction]: #allocator.uses.construction
@@ -5178,6 +5179,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [intro.multithread]: basic.md#intro.multithread
 [intro.object]: basic.md#intro.object
 [intro.races]: basic.md#intro.races
+[mem.res]: #mem.res
 [mem.res.class]: #mem.res.class
 [mem.res.monotonic.buffer]: #mem.res.monotonic.buffer
 [mem.summary]: #mem.summary
@@ -5201,9 +5203,3 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [unord.hash]: utilities.md#unord.hash
 [util.smartptr.enab]: #util.smartptr.enab
 [util.smartptr.shared.mod]: #util.smartptr.shared.mod
-
-<!-- Link reference definitions -->
-[allocator.adaptor]: #allocator.adaptor
-[mem.res]: #mem.res
-[memory]: #memory
-[smartptr]: #smartptr

@@ -4078,6 +4078,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [basic.indet]: basic.md#basic.indet
 [basic.string]: #basic.string
 [basic.string.hash]: #basic.string.hash
+[c.strings]: #c.strings
 [char.traits]: #char.traits
 [char.traits.req]: #char.traits.req
 [char.traits.require]: #char.traits.require
@@ -4093,6 +4094,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [defns.character.container]: #defns.character.container
 [input.output]: input.md#input.output
 [intro.object]: basic.md#intro.object
+[iostream.forward]: input.md#iostream.forward
 [iostreams.limits.pos]: input.md#iostreams.limits.pos
 [istream.formatted.reqmts]: input.md#istream.formatted.reqmts
 [istream.unformatted]: input.md#istream.unformatted

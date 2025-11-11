@@ -307,7 +307,7 @@ return static_cast<byte>(static_cast<unsigned int>(l) & static_cast<unsigned int
 constexpr byte& operator^=(byte& l, byte r) noexcept;
 ```
 
-*Effects:* Equivalent to: `return l = l `^` r;`
+*Effects:* Equivalent to: `return l = l ^ r;`
 
 \indexlibrarymember{operator^}{byte}
 
@@ -4266,6 +4266,7 @@ names within the namespace `std`. — *end example*\]
 [class.mem]: class.md#class.mem
 [class.prop]: class.md#class.prop
 [class.spaceship]: class.md#class.spaceship
+[cmp]: #cmp
 [cmp.categories]: #cmp.categories
 [complex]: numerics.md#complex
 [concept.totallyordered]: concepts.md#concept.totallyordered
@@ -4316,11 +4317,20 @@ names within the namespace `std`. — *end example*\]
 [sf.cmath]: numerics.md#sf.cmath
 [stmt.dcl]: stmt.md#stmt.dcl
 [string.classes,locale.codecvt]: #string.classes,locale.codecvt
+[support.arith.types]: #support.arith.types
+[support.coroutine]: #support.coroutine
+[support.dynamic]: #support.dynamic
+[support.exception]: #support.exception
 [support.initlist]: #support.initlist
+[support.limits]: #support.limits
+[support.rtti]: #support.rtti
+[support.runtime]: #support.runtime
 [support.signal]: #support.signal
+[support.srcloc]: #support.srcloc
 [support.srcloc.current]: #support.srcloc.current
 [support.start.term]: #support.start.term
 [support.summary]: #support.summary
+[support.types]: #support.types
 [support.types.byteops]: #support.types.byteops
 [support.types.layout]: #support.types.layout
 [support.types.nullptr]: #support.types.nullptr
@@ -4332,20 +4342,6 @@ names within the namespace `std`. — *end example*\]
 [term.odr.use]: #term.odr.use
 [unord.hash]: utilities.md#unord.hash
 [utility.arg.requirements]: library.md#utility.arg.requirements
-
-<!-- Link reference definitions -->
-[cmp]: #cmp
-[support.arith.types]: #support.arith.types
-[support.coroutine]: #support.coroutine
-[support.dynamic]: #support.dynamic
-[support.exception]: #support.exception
-[support.initlist]: #support.initlist
-[support.limits]: #support.limits
-[support.rtti]: #support.rtti
-[support.runtime]: #support.runtime
-[support.srcloc]: #support.srcloc
-[support.start.term]: #support.start.term
-[support.types]: #support.types
 
 [^1]: Possible definitions include `0` and `0L`, but not `(void*)0`.
 

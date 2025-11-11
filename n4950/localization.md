@@ -1784,13 +1784,15 @@ The first action of stage 1 is to determine a conversion specifier. The
 tables that describe this determination use the following local
 variables
 
-    fmtflags flags = str.flags();
-    fmtflags basefield =  (flags & (ios_base::basefield));
-    fmtflags uppercase =  (flags & (ios_base::uppercase));
-    fmtflags floatfield = (flags & (ios_base::floatfield));
-    fmtflags showpos =    (flags & (ios_base::showpos));
-    fmtflags showbase =   (flags & (ios_base::showbase));
-    fmtflags showpoint =  (flags & (ios_base::showpoint));
+``` cpp
+fmtflags flags = str.flags();
+fmtflags basefield =  (flags & (ios_base::basefield));
+fmtflags uppercase =  (flags & (ios_base::uppercase));
+fmtflags floatfield = (flags & (ios_base::floatfield));
+fmtflags showpos =    (flags & (ios_base::showpos));
+fmtflags showbase =   (flags & (ios_base::showbase));
+fmtflags showpoint =  (flags & (ios_base::showpoint));
+```
 
 All tables used in describing stage 1 are ordered. That is, the first
 line whose condition is true applies. A line without a condition is the
@@ -1798,7 +1800,7 @@ default behavior when none of the earlier lines apply.
 
 For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
-@@REF:facet.num.put.int@@.
+\[\[facet.num.put.int\]\].
 
 **Table: Integer conversions**
 
@@ -1813,7 +1815,7 @@ function determines the integral conversion specifier as indicated in
 
 For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
-@@REF:facet.num.put.fp@@.
+\[\[facet.num.put.fp\]\].
 
 **Table: Floating-point conversions**
 
@@ -1830,7 +1832,7 @@ floating-point conversion specifier as indicated in
 
 For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
-@@REF:facet.num.put.length@@.
+\[\[facet.num.put.length\]\].
 
 **Table: Length modifier**
 
@@ -1845,7 +1847,7 @@ modifier is added to the conversion specifier as indicated in
 
 
 The conversion specifier has the following optional additional
-qualifiers prepended as indicated in @@REF:facet.num.put.conv@@.
+qualifiers prepended as indicated in \[\[facet.num.put.conv\]\].
 
 **Table: Numeric conversions**
 
@@ -1873,16 +1875,20 @@ conversion specifier determined above.
 Any character `c` other than a decimal point(.) is converted to a
 `charT` via
 
-    use_facet<ctype<charT>>(loc).widen(c)
+``` cpp
+use_facet<ctype<charT>>(loc).widen(c)
+```
 
 A local variable `punct` is initialized via
 
-    const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
+``` cpp
+const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
+```
 
 For arithmetic types, `punct.thousands_sep()` characters are inserted
 into the sequence as determined by the value returned by
 `punct.do_grouping()` using the method described
-in @@REF:facet.numpunct.virtuals@@.
+in \[\[facet.numpunct.virtuals\]\].
 
 Decimal point characters(.) are replaced by `punct.decimal_point()`.
 
@@ -1890,11 +1896,13 @@ Decimal point characters(.) are replaced by `punct.decimal_point()`.
 
 A local variable is initialized as
 
-    fmtflags adjustfield = (flags & (ios_base::adjustfield));
+``` cpp
+fmtflags adjustfield = (flags & (ios_base::adjustfield));
+```
 
 The location of any padding[^12]
 
-is determined according to @@REF:facet.num.put.fill@@.
+is determined according to \[\[facet.num.put.fill\]\].
 
 **Table: Fill padding**
 
@@ -1918,7 +1926,9 @@ the length of the sequence to `str.width()`.
 
 The sequence of `charT`’s at the end of stage 3 are output via
 
-    *out++ = c
+``` cpp
+*out++ = c
+```
 
 ``` cpp
 iter_type do_put(iter_type out, ios_base& str, char_type fill, bool val) const;
@@ -3413,6 +3423,7 @@ the functions listed in [[setlocale.data.races]].
 [locale.facet]: #locale.facet
 [locale.spec]: #locale.spec
 [locale.time.get.dogetdate]: #locale.time.get.dogetdate
+[locales]: #locales
 [localization.summary]: #localization.summary
 [ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
 [res.on.data.races]: library.md#res.on.data.races
@@ -3420,11 +3431,6 @@ the functions listed in [[setlocale.data.races]].
 [setlocale.data.races]: #setlocale.data.races
 [tab:locale.category.facets]: #tab:locale.category.facets
 [tab:locale.spec]: #tab:locale.spec
-
-<!-- Link reference definitions -->
-[c.locales]: #c.locales
-[locale.categories]: #locale.categories
-[locales]: #locales
 
 [^1]: In this subclause, the type name `tm` is an incomplete type that
     is defined in `<ctime>`.

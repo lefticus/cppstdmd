@@ -2472,6 +2472,7 @@ unspecified state.
 [allocator.traits]: mem.md#allocator.traits
 [alt.headers]: #alt.headers
 [array.creation]: containers.md#array.creation
+[atomics]: thread.md#atomics
 [bad.alloc]: support.md#bad.alloc
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.fundamental]: basic.md#basic.fundamental
@@ -2483,6 +2484,7 @@ unspecified state.
 [basic.scope.namespace]: basic.md#basic.scope.namespace
 [basic.start]: basic.md#basic.start
 [basic.stc.dynamic]: basic.md#basic.stc.dynamic
+[bit]: utilities.md#bit
 [c.annex.k.names]: #c.annex.k.names
 [cassert.syn]: diagnostics.md#cassert.syn
 [cerrno.syn]: diagnostics.md#cerrno.syn
@@ -2492,6 +2494,7 @@ unspecified state.
 [class.mem]: class.md#class.mem
 [class.virtual]: class.md#class.virtual
 [clocale.syn]: localization.md#clocale.syn
+[cmp]: support.md#cmp
 [compliance]: #compliance
 [concept.destructible]: concepts.md#concept.destructible
 [concept.invocable]: concepts.md#concept.invocable
@@ -2517,6 +2520,7 @@ unspecified state.
 [cpp17.nullablepointer]: #cpp17.nullablepointer
 [cstdarg.syn]: support.md#cstdarg.syn
 [cstddef.syn]: support.md#cstddef.syn
+[cstdint.syn]: support.md#cstdint.syn
 [dcl.array]: dcl.md#dcl.array
 [dcl.attr]: dcl.md#dcl.attr
 [dcl.constexpr]: dcl.md#dcl.constexpr
@@ -2565,6 +2569,7 @@ unspecified state.
 [macro.names]: #macro.names
 [mem]: mem.md#mem
 [member.functions]: #member.functions
+[memory]: mem.md#memory
 [meta]: meta.md#meta
 [module.import]: module.md#module.import
 [namespace.def]: dcl.md#namespace.def
@@ -2584,6 +2589,7 @@ unspecified state.
 [protection.within.classes]: #protection.within.classes
 [random.access.iterators]: iterators.md#random.access.iterators
 [ranges]: ranges.md#ranges
+[ratio]: meta.md#ratio
 [re]: re.md#re
 [replacement.functions]: #replacement.functions
 [requirements]: #requirements
@@ -2602,7 +2608,15 @@ unspecified state.
 [support]: support.md#support
 [support.c.headers]: support.md#support.c.headers
 [support.c.headers.other]: support.md#support.c.headers.other
+[support.coroutine]: support.md#support.coroutine
+[support.dynamic]: support.md#support.dynamic
 [support.exception]: support.md#support.exception
+[support.initlist]: support.md#support.initlist
+[support.limits]: support.md#support.limits
+[support.rtti]: support.md#support.rtti
+[support.runtime]: support.md#support.runtime
+[support.srcloc]: support.md#support.srcloc
+[support.start.term]: support.md#support.start.term
 [support.types]: support.md#support.types
 [swappable.requirements]: #swappable.requirements
 [syserr]: diagnostics.md#syserr
@@ -2619,52 +2633,16 @@ unspecified state.
 [terminate.handler]: support.md#terminate.handler
 [thread]: thread.md#thread
 [time]: time.md#time
+[tuple]: utilities.md#tuple
 [type.descriptions]: #type.descriptions
+[type.traits]: meta.md#type.traits
 [using]: #using
 [using.headers]: #using.headers
 [using.linkage]: #using.linkage
 [utilities]: utilities.md#utilities
+[utility]: utilities.md#utility
 [utility.arg.requirements]: #utility.arg.requirements
 [utility.requirements]: #utility.requirements
-
-<!-- Link reference definitions -->
-[algorithms]: #algorithms
-[atomics]: #atomics
-[bit]: #bit
-[cmp]: #cmp
-[concepts]: #concepts
-[containers]: #containers
-[cstdint.syn]: #cstdint.syn
-[diagnostics]: #diagnostics
-[function.objects]: #function.objects
-[input.output]: #input.output
-[iterators]: #iterators
-[localization]: #localization
-[mem]: #mem
-[memory]: #memory
-[meta]: #meta
-[numerics]: #numerics
-[ranges]: #ranges
-[ratio]: #ratio
-[re]: #re
-[strings]: #strings
-[support]: #support
-[support.coroutine]: #support.coroutine
-[support.dynamic]: #support.dynamic
-[support.exception]: #support.exception
-[support.initlist]: #support.initlist
-[support.limits]: #support.limits
-[support.rtti]: #support.rtti
-[support.runtime]: #support.runtime
-[support.srcloc]: #support.srcloc
-[support.start.term]: #support.start.term
-[support.types]: #support.types
-[thread]: #thread
-[time]: #time
-[tuple]: #tuple
-[type.traits]: #type.traits
-[utilities]: #utilities
-[utility]: #utility
 
 [^1]: See also ISO/IEC 9899:2018 section 7.6.
 

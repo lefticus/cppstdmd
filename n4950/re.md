@@ -2805,13 +2805,17 @@ ECMA-262 15.10
 [re.alg]: #re.alg
 [re.alg.match]: #re.alg.match
 [re.alg.search]: #re.alg.search
+[re.badexp]: #re.badexp
+[re.const]: #re.const
 [re.err]: #re.err
 [re.grammar]: #re.grammar
 [re.iter]: #re.iter
 [re.matchflag]: #re.matchflag
 [re.regex]: #re.regex
 [re.req]: #re.req
+[re.results]: #re.results
 [re.results.const]: #re.results.const
+[re.submatch]: #re.submatch
 [re.summary]: #re.summary
 [re.synopt]: #re.synopt
 [re.traits]: #re.traits
@@ -2819,18 +2823,6 @@ ECMA-262 15.10
 [sequence.reqmts]: containers.md#sequence.reqmts
 [strings.general]: strings.md#strings.general
 [swappable.requirements]: library.md#swappable.requirements
-
-<!-- Link reference definitions -->
-[re.alg]: #re.alg
-[re.badexp]: #re.badexp
-[re.const]: #re.const
-[re.grammar]: #re.grammar
-[re.iter]: #re.iter
-[re.regex]: #re.regex
-[re.req]: #re.req
-[re.results]: #re.results
-[re.submatch]: #re.submatch
-[re.traits]: #re.traits
 
 [^1]: For example, if the parameter `icase` is `true` then `[[:lower:]]`
     is the same as `[[:alpha:]]`.
