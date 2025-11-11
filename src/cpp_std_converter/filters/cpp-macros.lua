@@ -25,6 +25,7 @@ local parse_impdefx_description_to_inlines = common.parse_impdefx_description_to
 local extract_multi_arg_macro = common.extract_multi_arg_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
 local remove_macro = common.remove_macro
+local split_refs_text = common.split_refs_text
 
 -- Table to collect all references for link definitions
 -- Made global so cpp-tables.lua can also track references
@@ -227,16 +228,10 @@ local function expand_macros(text, skip_special_chars)
   text = text:gsub("\\mathit{([^}]*)}", "*%1*")
   text = text:gsub("\\mathrm{([^}]*)}", "%1")  -- Restored: different meaning in math mode
 
-  -- Helper function to split comma-separated references and create individual links
+  -- Use shared function from cpp-common to split comma-separated references
   -- E.g., "a,b,c" -> "[[a]], [[b]], [[c]]"
   local function split_refs(refs_str)
-    local parts = {}
-    for ref in refs_str:gmatch("([^,]+)") do
-      ref = trim(ref)  -- trim whitespace
-      references[ref] = true
-      table.insert(parts, "[[" .. ref .. "]]")
-    end
-    return table.concat(parts, ", ")
+    return split_refs_text(refs_str, references)
   end
 
   -- Cross-references - convert to reference-style links for consistency

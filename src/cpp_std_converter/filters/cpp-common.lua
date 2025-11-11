@@ -1039,6 +1039,25 @@ local function clean_code_common(code, handle_textbackslash)
   return code
 end
 
+-- Helper function to split comma-separated references and create individual links
+-- E.g., "a,b,c" -> "[[a]], [[b]], [[c]]"
+-- Parameters:
+--   refs_str: Comma-separated reference string
+--   references_table: Optional table to track references (ref -> true)
+-- Returns:
+--   Text string with formatted references
+local function split_refs_text(refs_str, references_table)
+  local parts = {}
+  for ref in refs_str:gmatch("([^,]+)") do
+    ref = trim(ref)  -- trim whitespace
+    if references_table then
+      references_table[ref] = true
+    end
+    table.insert(parts, "[[" .. ref .. "]]")
+  end
+  return table.concat(parts, ", ")
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -1066,4 +1085,5 @@ return {
   convert_math_in_code = convert_math_in_code,
   clean_code_common = clean_code_common,
   code_block_macro_patterns = code_block_macro_patterns,
+  split_refs_text = split_refs_text,
 }

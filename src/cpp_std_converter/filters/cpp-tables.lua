@@ -27,6 +27,7 @@ local expand_balanced_command = common.expand_balanced_command
 local replace_code_macro_special_chars = common.replace_code_macro_special_chars
 local process_code_macro = common.process_code_macro
 local extract_multi_arg_macro = common.extract_multi_arg_macro
+local split_refs_text = common.split_refs_text
 
 -- Initialize references table if not already created by cpp-macros.lua
 -- This allows cpp-tables.lua to work standalone or as part of filter chain
@@ -206,16 +207,10 @@ local function expand_table_macros(text)
   text = text:gsub("\\\\%s*\\rowsep[^a-zA-Z]*", "")  -- Remove \\ \rowsep
   text = text:gsub("\\\\%s*", "")  -- Remove remaining bare \\
 
-  -- Cross-reference macros - unified helper handles \ref, \iref, \tref identically
+  -- Cross-reference macros - use shared function from cpp-common
   -- Track references and handle comma-separated refs: {a,b,c} → [[a]], [[b]], [[c]]
   local function process_refs(refs)
-    local parts = {}
-    for ref in refs:gmatch("([^,]+)") do
-      ref = trim(ref)  -- trim whitespace
-      references[ref] = true
-      table.insert(parts, "[[" .. ref .. "]]")
-    end
-    return table.concat(parts, ", ")
+    return split_refs_text(refs, references)
   end
 
   text = text:gsub("\\ref{([^}]*)}", process_refs)
