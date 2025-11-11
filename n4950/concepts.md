@@ -36,12 +36,12 @@ largest subexpressions that include only:
 - invocations of the library function templates `std::move`,
   `std::forward`, and `std::declval` [[forward]], [[declval]].
 
-\[*Example 1*: The operands of the expression `a = std::move(b)` are `a`
+[*Example 1*: The operands of the expression `a = std::move(b)` are `a`
 and `std::move(b)`. — *end example*\]
 
 Not all input values need be valid for a given expression.
 
-\[*Example 2*: For integers `a` and `b`, the expression `a / b` is not
+[*Example 2*: For integers `a` and `b`, the expression `a / b` is not
 well-defined when `b` is `0`. This does not preclude the expression
 `a / b` being equality-preserving. — *end example*\]
 
@@ -53,7 +53,7 @@ be stable: two evaluations of such an expression with the same input
 objects are required to have equal outputs absent any explicit
 intervening modification of those input objects.
 
-\[*Note 1*: This requirement allows generic code to reason about the
+[*Note 1*: This requirement allows generic code to reason about the
 current values of objects based on knowledge of the prior values as
 observed via equality-preserving expressions. It effectively forbids
 spontaneous changes to an object, changes to an object from another
@@ -88,7 +88,7 @@ These *implicit expression variations* are required to meet the semantic
 requirements of the declared expression. The extent to which an
 implementation validates the syntax of the variations is unspecified.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 template<class T> concept C = requires(T a, T b, const T c, const T d) {
@@ -128,7 +128,7 @@ For the above example:
 
 — *end example*\]
 
-\[*Example 4*:
+[*Example 4*:
 
 The following type `T` meets the explicitly stated syntactic
 requirements of concept `C` above but does not meet the additional
@@ -287,7 +287,7 @@ template<class T, class U>
   concept same_as = same-as-impl<T, U> && same-as-impl<U, T>;
 ```
 
-\[*Note 1*: `same_as<T, U>` subsumes `same_as<U, T>` and vice
+[*Note 1*: `same_as<T, U>` subsumes `same_as<U, T>` and vice
 versa. — *end note*\]
 
 ### Concept  <a id="concept.derived">[[concept.derived]]</a>
@@ -299,7 +299,7 @@ template<class Derived, class Base>
     is_convertible_v<const volatile Derived*, const volatile Base*>;
 ```
 
-\[*Note 1*: `derived_from<Derived, Base>` is satisfied if and only if
+[*Note 1*: `derived_from<Derived, Base>` is satisfied if and only if
 `Derived` is publicly and unambiguously derived from `Base`, or
 `Derived` and `Base` are the same class type ignoring
 cv-qualifiers. — *end note*\]
@@ -350,7 +350,7 @@ and denotes a type `C` such that both `convertible_to<T, C>` and
 `convertible_to<U, C>` are modeled, then `T` and `U` share a *common
 reference type*, `C`.
 
-\[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
+[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` can be a reference type. — *end note*\]
 
 ``` cpp
@@ -371,7 +371,7 @@ equality-preserving expressions [[concepts.equality]] such that
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
-\[*Note 1*: Users can customize the behavior of `common_reference_with`
+[*Note 1*: Users can customize the behavior of `common_reference_with`
 by specializing the `basic_common_reference` class
 template [[meta.trans.other]]. — *end note*\]
 
@@ -380,7 +380,7 @@ template [[meta.trans.other]]. — *end note*\]
 If `T` and `U` can both be explicitly converted to some third type, `C`,
 then `T` and `U` share a *common type*, `C`.
 
-\[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
+[*Note 1*: `C` can be the same as `T` or `U`, or can be a different
 type. `C` is not necessarily unique. — *end note*\]
 
 ``` cpp
@@ -411,7 +411,7 @@ only if:
 - `C(t1)` equals `C(t2)` if and only if `t1` equals `t2`, and
 - `C(u1)` equals `C(u2)` if and only if `u1` equals `u2`.
 
-\[*Note 1*: Users can customize the behavior of `common_with` by
+[*Note 1*: Users can customize the behavior of `common_with` by
 specializing the `common_type` class
 template [[meta.trans.other]]. — *end note*\]
 
@@ -428,11 +428,11 @@ template<class T>
   concept floating_point = is_floating_point_v<T>;
 ```
 
-\[*Note 1*: `signed_integral` can be modeled even by types that are not
+[*Note 1*: `signed_integral` can be modeled even by types that are not
 signed integer types [[basic.fundamental]]; for example,
 `char`. — *end note*\]
 
-\[*Note 2*: `unsigned_integral` can be modeled even by types that are
+[*Note 2*: `unsigned_integral` can be modeled even by types that are
 not unsigned integer types [[basic.fundamental]]; for example,
 `bool`. — *end note*\]
 
@@ -466,7 +466,7 @@ Let:
   - Otherwise, if `rhs` is a glvalue, the object to which it refers is
     not modified.
 
-\[*Note 1*: Assignment need not be a total
+[*Note 1*: Assignment need not be a total
 function [[structure.requirements]]; in particular, if assignment to an
 object `x` can result in a modification of some other object `y`, then
 `x = y` is likely not in the domain of `=`. — *end note*\]
@@ -477,7 +477,7 @@ Let `t1` and `t2` be equality-preserving expressions that denote
 distinct equal objects of type `T`, and let `u1` and `u2` similarly
 denote distinct equal objects of type `U`.
 
-\[*Note 1*: `t1` and `u1` can denote distinct objects, or the same
+[*Note 1*: `t1` and `u1` can denote distinct objects, or the same
 object. — *end note*\]
 
 An operation *exchanges the values* denoted by `t1` and `u1` if and only
@@ -537,7 +537,7 @@ expression `S` determined as follows:
   can result in substitution failure when `ranges::swap(E1, E2)` appears
   in the immediate context of a template instantiation. — *end note*\]
 
-\[*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
+[*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type
 `void`. — *end note*\]
 
@@ -558,11 +558,11 @@ template<class T, class U>
     };
 ```
 
-\[*Note 3*: The semantics of the `swappable` and `swappable_with`
+[*Note 3*: The semantics of the `swappable` and `swappable_with`
 concepts are fully defined by the `ranges::swap` customization point
 object. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 User code can ensure that the evaluation of `swap` calls is performed in
 an appropriate context under the various conditions as follows:
@@ -620,7 +620,7 @@ template<class T>
   concept destructible = is_nothrow_destructible_v<T>;
 ```
 
-\[*Note 1*: Unlike the *Cpp17Destructible*
+[*Note 1*: Unlike the *Cpp17Destructible*
 requirements ( [[cpp17.destructible]]), this concept forbids destructors
 that are potentially throwing, even if a particular invocation of the
 destructor does not actually throw. — *end note*\]
@@ -750,7 +750,7 @@ class template that has the same innermost enclosing non-inline
 namespace as `D`, and `X` contains at least one template parameter that
 participates in template argument deduction.
 
-\[*Example 1*:
+[*Example 1*:
 
 In
 
@@ -780,7 +780,7 @@ A *disqualifying declaration* is
   - the declaration declares a function template to which no name is
     bound [[dcl.meaning]].
 
-\[*Note 1*: The intention is to ensure that given two types `T1` and
+[*Note 1*: The intention is to ensure that given two types `T1` and
 `T2` that each model `boolean-testable-impl`, the `&&` and `||`
 operators within the expressions `declval<T1>() && declval<T2>()` and
 `declval<T1>() || declval<T2>()` resolve to the corresponding built-in
@@ -797,7 +797,7 @@ template<class T>
 Let `e` be an expression such that `decltype((e))` is `T`. `T` models
 `boolean-testable` only if `bool(e) == !bool(!e)`.
 
-\[*Example 2*: The types `bool`, `true_type` [[meta.type.synop]],
+[*Example 2*: The types `bool`, `true_type` [[meta.type.synop]],
 `int*`, and `bitset<N>::reference` [[template.bitset]] model
 `boolean-testable`. — *end example*\]
 
@@ -862,7 +862,7 @@ Let `a` and `b` be objects of type `T`. `T` models `equality_comparable`
 only if `bool(a == b)` is `true` when `a` is equal to
 `b`[[concepts.equality]], and `false` otherwise.
 
-\[*Note 1*: The requirement that the expression `a == b` is
+[*Note 1*: The requirement that the expression `a == b` is
 equality-preserving implies that `==` is transitive and
 symmetric. — *end note*\]
 
@@ -962,11 +962,11 @@ template<class T>
   concept regular = semiregular<T> && equality_comparable<T>;
 ```
 
-\[*Note 1*: The `semiregular` concept is modeled by types that behave
+[*Note 1*: The `semiregular` concept is modeled by types that behave
 similarly to fundamental types like `int`, except that they need not be
 comparable with `==`. — *end note*\]
 
-\[*Note 2*: The `regular` concept is modeled by types that behave
+[*Note 2*: The `regular` concept is modeled by types that behave
 similarly to fundamental types like `int` and that are comparable with
 `==`. — *end note*\]
 
@@ -991,7 +991,7 @@ template<class F, class... Args>
   };
 ```
 
-\[*Example 1*: A function that generates random numbers can model
+[*Example 1*: A function that generates random numbers can model
 `invocable`, since the `invoke` function call expression is not required
 to be equality-preserving [[concepts.equality]]. — *end example*\]
 
@@ -1006,13 +1006,13 @@ The `invoke` function call expression shall be
 equality-preserving [[concepts.equality]] and shall not modify the
 function object or the arguments.
 
-\[*Note 1*: This requirement supersedes the annotation in the definition
+[*Note 1*: This requirement supersedes the annotation in the definition
 of `invocable`. — *end note*\]
 
-\[*Example 1*: A random number generator does not model
+[*Example 1*: A random number generator does not model
 `regular_invocable`. — *end example*\]
 
-\[*Note 2*: The distinction between `invocable` and `regular_invocable`
+[*Note 2*: The distinction between `invocable` and `regular_invocable`
 is purely semantic. — *end note*\]
 
 ### Concept  <a id="concept.predicate">[[concept.predicate]]</a>
@@ -1062,7 +1062,7 @@ for a partial ordering. If we define `equiv(a, b)` as
 - `comp(a, b) && comp(b, c)` implies `comp(a, c)`
 - `equiv(a, b) && equiv(b, c)` implies `equiv(a, c)`
 
-\[*Note 1*:
+[*Note 1*:
 
 Under these conditions, it can be shown that
 

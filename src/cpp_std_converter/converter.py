@@ -20,6 +20,34 @@ from .label_indexer import LabelIndexer
 from .stable_name import extract_stable_name_from_tex
 
 
+def unescape_wikilinks(markdown: str) -> str:
+    r"""
+    Unescape wikilinks that Pandoc's markdown writer escaped.
+
+    Pandoc escapes square brackets in certain contexts to prevent ambiguity:
+    - [[ref]] inside bold/emphasis becomes \[\[ref\]\]
+    - [*Note* at start of line becomes \[*Note*
+
+    This function reverses that escaping for our wikilink syntax.
+
+    Args:
+        markdown: The markdown text with escaped wikilinks
+
+    Returns:
+        Markdown with unescaped wikilinks
+    """
+    # Unescape wikilink patterns: \[\[ref\]\] → [[ref]]
+    # This handles references that were escaped when inside bold/emphasis
+    markdown = re.sub(r'\\\[\\\[([^\]]+)\\\]\\\]', r'[[\1]]', markdown)
+
+    # Unescape opening brackets at start of notes/examples: \[*Note* → [*Note*
+    # This handles the pattern where Pandoc escapes [ at line start
+    markdown = re.sub(r'^\\\[\*', r'[*', markdown, flags=re.MULTILINE)
+    markdown = re.sub(r'^\\\[\*\*', r'[**', markdown, flags=re.MULTILINE)
+
+    return markdown
+
+
 class ConverterError(Exception):
     """Base exception for converter errors"""
     pass
@@ -166,11 +194,18 @@ class Converter:
                 check=True,
             )
 
+            # Post-process: unescape wikilinks that Pandoc escaped
             if output_file:
+                # Read generated markdown, unescape, and write back
+                markdown = output_file.read_text()
+                markdown = unescape_wikilinks(markdown)
+                output_file.write_text(markdown)
                 click.echo(f"Converted: {input_file} -> {output_file}", err=True)
-                return output_file.read_text()
+                return markdown
             else:
-                return result.stdout
+                # Unescape stdout before returning
+                markdown = result.stdout
+                return unescape_wikilinks(markdown)
 
         except subprocess.CalledProcessError as e:
             raise ConverterError(

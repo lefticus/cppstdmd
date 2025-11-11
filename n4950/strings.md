@@ -303,7 +303,7 @@ objects with the first element of the sequence at position zero. In the
 rest of [[string.view]], the type of the char-like objects held in a
 `basic_string_view` object is designated by `charT`.
 
-\[*Note 1*: The library provides implicit conversions from
+[*Note 1*: The library provides implicit conversions from
 `const charT*` and `std::basic_string<charT, ...>` to
 `std::basic_string_view<charT, ...>` so that user code can accept just
 `std::basic_string_view<charT>` as a non-templated parameter wherever a
@@ -510,7 +510,7 @@ Because basic_string_view refers to a constant sequence, iterator and const_iter
 In every specialization `basic_string_view<charT, traits>`, the type
 `traits` shall meet the character traits requirements [[char.traits]].
 
-\[*Note 1*: The program is ill-formed if `traits::char_type` is not the
+[*Note 1*: The program is ill-formed if `traits::char_type` is not the
 same type as `charT`. — *end note*\]
 
 For a `basic_string_view str`, any operation that invalidates a pointer
@@ -702,7 +702,7 @@ constexpr const_reference operator[](size_type pos) const;
 
 *Throws:* Nothing.
 
-\[*Note 1*: Unlike `basic_string::operator[]`,
+[*Note 1*: Unlike `basic_string::operator[]`,
 `basic_string_view::operator[](size())` has undefined behavior instead
 of returning `charT()`. — *end note*\]
 
@@ -740,7 +740,7 @@ constexpr const_pointer data() const noexcept;
 
 *Returns:* `data_`.
 
-\[*Note 2*: Unlike `basic_string::data()` and *string-literal*s,
+[*Note 2*: Unlike `basic_string::data()` and *string-literal*s,
 `data()` can return a pointer to a buffer that is not null-terminated.
 Therefore it is typically a mistake to pass `data()` to a function that
 takes just a `const charT*` and expects a null-terminated
@@ -1067,7 +1067,7 @@ conversion to `S` can be compared according to
 | `sv <=> t` | `sv <=> S(t)` |
 
 
-\[*Example 1*:
+[*Example 1*:
 
 A sample conforming implementation for `operator==` would be:
 
@@ -1138,7 +1138,7 @@ template<> struct hash<wstring_view>;
 
 The specialization is enabled [[unord.hash]].
 
-\[*Note 1*: The hash value of a string view object is equal to the hash
+[*Note 1*: The hash value of a string view object is equal to the hash
 value of the corresponding string
 object [[basic.string.hash]]. — *end note*\]
 
@@ -1748,12 +1748,12 @@ in [[container.requirements.general]]. In every specialization
 `basic_string<charT, traits, Allocator>`, the type `traits` shall meet
 the character traits requirements [[char.traits]].
 
-\[*Note 1*: Every specialization
+[*Note 1*: Every specialization
 `basic_string<charT, traits, Allocator>` is an allocator-aware
 container, but does not use the allocator’s `construct` and `destroy`
 member functions [[container.requirements.general]]. — *end note*\]
 
-\[*Note 2*: The program is ill-formed if `traits::char_type` is not the
+[*Note 2*: The program is ill-formed if `traits::char_type` is not the
 same type as `charT`. — *end note*\]
 
 References, pointers, and iterators referring to the elements of a
@@ -1863,7 +1863,7 @@ constexpr basic_string(const charT* s, const Allocator& a = Allocator());
 *Constraints:* `Allocator` is a type that qualifies as an
 allocator [[container.requirements.general]].
 
-\[*Note 1*: This affects class template argument
+[*Note 1*: This affects class template argument
 deduction. — *end note*\]
 
 *Effects:* Equivalent to: `basic_string(s, traits::length(s), a)`.
@@ -1875,7 +1875,7 @@ constexpr basic_string(size_type n, charT c, const Allocator& a = Allocator());
 *Constraints:* `Allocator` is a type that qualifies as an
 allocator [[container.requirements.general]].
 
-\[*Note 2*: This affects class template argument
+[*Note 2*: This affects class template argument
 deduction. — *end note*\]
 
 *Effects:* Constructs an object whose value consists of `n` copies of
@@ -2152,7 +2152,7 @@ constexpr void shrink_to_fit();
 *Effects:* `shrink_to_fit` is a non-binding request to reduce
 `capacity()` to `size()`.
 
-\[*Note 1*: The request is non-binding to allow latitude for
+[*Note 1*: The request is non-binding to allow latitude for
 implementation-specific optimizations. — *end note*\]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
@@ -2165,7 +2165,7 @@ the size of the sequence; otherwise constant.
 iterators referring to the elements in the sequence, as well as the
 past-the-end iterator.
 
-\[*Note 2*: If no reallocation happens, they remain
+[*Note 2*: If no reallocation happens, they remain
 valid. — *end note*\]
 
 ``` cpp
@@ -2892,7 +2892,7 @@ constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
 *Effects:* Equivalent to:
 `return basic_string_view<charT, traits>(*this).copy(s, n, pos);`
 
-\[*Note 1*: This does not terminate `s` with a null
+[*Note 1*: This does not terminate `s` with a null
 object. — *end note*\]
 
 ##### `basic_string::swap` <a id="string.swap">[[string.swap]]</a>
@@ -3239,7 +3239,7 @@ return std::move(lhs);
 except that both `lhs` and `rhs` are left in valid but unspecified
 states.
 
-\[*Note 1*: If `lhs` and `rhs` have equal allocators, the implementation
+[*Note 1*: If `lhs` and `rhs` have equal allocators, the implementation
 can move from either. — *end note*\]
 
 ``` cpp
@@ -3662,7 +3662,7 @@ constexpr wstring operator""s(const wchar_t* str, size_t len);
 
 *Returns:* `wstring{str, len}`.
 
-\[*Note 1*: The same suffix `s` is used for `chrono::duration` literals
+[*Note 1*: The same suffix `s` is used for `chrono::duration` literals
 denoting seconds but there is no conflict, since duration suffixes apply
 to numbers and string literal suffixes apply to character array
 literals. — *end note*\]
@@ -3776,7 +3776,7 @@ Both functions implicitly create objects [[intro.object]] in the
 destination region of storage immediately prior to copying the sequence
 of characters to the destination.
 
-\[*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
+[*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
 `memchr`, have different signatures in this document, but they have the
 same behavior as in the C standard library [[library.c]]. — *end note*\]
 
@@ -3868,7 +3868,7 @@ The contents and meaning of the header `<cwchar>` are the same as the C
 standard library header `<wchar.h>`, except that it does not declare a
 type `wchar_t`.
 
-\[*Note 1*: The functions `wcschr`, `wcspbrk`, `wcsrchr`, `wcsstr`, and
+[*Note 1*: The functions `wcschr`, `wcspbrk`, `wcsrchr`, `wcsstr`, and
 `wmemchr` have different signatures in this document, but they have the
 same behavior as in the C standard library [[library.c]]. — *end note*\]
 
@@ -3895,7 +3895,7 @@ additional `mbrtoc8` and `c8rtomb` functions and does not declare types
 
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
-\[*Note 1*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
+[*Note 1*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
 the functions described in this subclause. — *end note*\]
 
 ``` cpp

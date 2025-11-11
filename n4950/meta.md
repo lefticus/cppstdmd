@@ -23,7 +23,7 @@ sequence. When used as an argument to a function template the template
 parameter pack defining the sequence can be deduced and used in a pack
 expansion.
 
-\[*Note 1*: The `index_sequence` alias template is provided for the
+[*Note 1*: The `index_sequence` alias template is provided for the
 common case of an integer sequence of type `size_t`; see also
 [[tuple.apply]]. — *end note*\]
 
@@ -54,7 +54,7 @@ The alias template `make_integer_sequence` denotes a specialization of
 `make_integer_sequence<T, N>` is an alias for the type
 `integer_sequence<T, 0, 1, ..., N-1>`.
 
-\[*Note 1*: `make_integer_sequence<int, 0>` is an alias for the type
+[*Note 1*: `make_integer_sequence<int, 0>` is an alias for the type
 `integer_sequence<int>`. — *end note*\]
 
 ## Metaprogramming and type traits <a id="type.traits">[[type.traits]]</a>
@@ -595,7 +595,7 @@ subclause  [[basic.types]] of the C++ standard.
 For any given type `T`, the result of applying one of these templates to
 `T` and to cv `T` shall yield the same result.
 
-\[*Note 1*: For any given type `T`, exactly one of the primary type
+[*Note 1*: For any given type `T`, exactly one of the primary type
 categories has a `value` member that evaluates to `true`. — *end note*\]
 
 #### Composite type traits <a id="meta.unary.comp">[[meta.unary.comp]]</a>
@@ -637,7 +637,7 @@ For the purpose of defining the templates in this subclause, let
   \[*Note 1*: If `T` is cv-qualified, the cv-qualification is subject to
   adjustment [[expr.type]]. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 is_const_v<const volatile int>      // true
@@ -649,7 +649,7 @@ is_const_v<const int[3]>            // true
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 remove_const_t<const volatile int>  // volatile int
@@ -660,7 +660,7 @@ remove_const_t<const int[3]>        // int[3]
 
 — *end example*\]
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 // Given:
@@ -686,14 +686,14 @@ variable `t`:
 T t(declval<Args>()...);
 ```
 
-\[*Note 1*: These tokens are never interpreted as a function
+[*Note 1*: These tokens are never interpreted as a function
 declaration. — *end note*\]
 
 Access checking is performed as if in a context unrelated to `T` and any
 of the `Args`. Only the validity of the immediate context of the
 variable initialization is considered.
 
-\[*Note 2*: The evaluation of the initialization can result in side
+[*Note 2*: The evaluation of the initialization can result in side
 effects such as the instantiation of class template specializations and
 function template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
@@ -714,7 +714,7 @@ if:
 The set of scalar types for which this condition holds is
 *implementation-defined*.
 
-\[*Note 3*: If a type has padding bits, the condition does not hold;
+[*Note 3*: If a type has padding bits, the condition does not hold;
 otherwise, the condition holds true for integral types. — *end note*\]
 
 ### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
@@ -725,7 +725,7 @@ of types at compile time.
 Each of these templates shall be a *Cpp17UnaryTypeTrait* [[meta.rqmts]]
 with a base characteristic of `integral_constant<size_t, Value>`.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 // the following assertions hold:
@@ -736,7 +736,7 @@ assert(rank_v<int[][4]> == 2);
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 // the following assertions hold:
@@ -768,7 +768,7 @@ odr-use [[term.odr.use]] of `declval` in the context of the
 corresponding definition notwithstanding the restrictions of 
 [[declval]].
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 struct B {};
@@ -799,7 +799,7 @@ To test() {
 }
 ```
 
-\[*Note 1*: This requirement gives well-defined results for reference
+[*Note 1*: This requirement gives well-defined results for reference
 types, array types, function types, and cv `void`. — *end note*\]
 
 Access checking is performed in a context unrelated to `To` and `From`.
@@ -807,7 +807,7 @@ Only the validity of the immediate context of the *expression* of the
 `return` statement [[stmt.return]] (including initialization of the
 returned object or reference) is considered.
 
-\[*Note 2*: The initialization can result in side effects such as the
+[*Note 2*: The initialization can result in side effects such as the
 instantiation of class template specializations and function template
 specializations, the generation of implicitly-defined functions, and so
 on. Such side effects are not in the “immediate context” and can result
@@ -828,7 +828,7 @@ Each of the templates in [[meta.trans]] shall be a
 
 #### Array modifications <a id="meta.trans.arr">[[meta.trans.arr]]</a>
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 // the following assertions hold:
@@ -840,7 +840,7 @@ assert((is_same_v<remove_extent_t<int[][3]>, int[3]>));
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 // the following assertions hold:
@@ -856,7 +856,7 @@ assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 
 #### Other transformations <a id="meta.trans.other">[[meta.trans.other]]</a>
 
-\[*Note 1*: The compilation of the expression can result in side effects
+[*Note 1*: The compilation of the expression can result in side effects
 such as the instantiation of class template specializations and function
 template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
@@ -943,7 +943,7 @@ pursuant to [[namespace.std]], a program may specialize
 `is_same_v<T1, decay_t<T1>>` and `is_same_v<T2, decay_t<T2>>` are each
 `true`.
 
-\[*Note 2*: Such specializations are needed when only explicit
+[*Note 2*: Such specializations are needed when only explicit
 conversions are desired between the template arguments. — *end note*\]
 
 Such a specialization need not have a member named `type`, but if it
@@ -990,7 +990,7 @@ pursuant to [[namespace.std]], a program may partially specialize
 that `is_same_v<T, decay_t<T>>` and `is_same_v<U, decay_t<U>>` are each
 `true`.
 
-\[*Note 3*: Such specializations can be used to influence the result of
+[*Note 3*: Such specializations can be used to influence the result of
 `common_reference`, and are needed when only explicit conversions are
 desired between the template arguments. — *end note*\]
 
@@ -1003,7 +1003,7 @@ denote the same type, if any, as does
 `basic_common_reference<U, T, UQual, TQual>::type`. No diagnostic is
 required for a violation of these rules.
 
-\[*Example 1*:
+[*Example 1*:
 
 Given these definitions:
 
@@ -1052,7 +1052,7 @@ template type argument `Bᵢ` for which `bool(``Bᵢ``::value)` is `false`,
 then instantiating `conjunction<``B₁``, `…`, ``B_N``>::value` does not
 require the instantiation of `Bⱼ``::value` for j > i.
 
-\[*Note 1*: This is analogous to the short-circuiting behavior of the
+[*Note 1*: This is analogous to the short-circuiting behavior of the
 built-in operator `&&`. — *end note*\]
 
 Every template type argument for which `Bᵢ``::value` is instantiated
@@ -1067,7 +1067,7 @@ unambiguous base that is either
   which `bool(``Bᵢ``::value)` is `false`, or
 - if there is no such `Bᵢ`, the last type in the list.
 
-\[*Note 2*: This means a specialization of `conjunction` does not
+[*Note 2*: This means a specialization of `conjunction` does not
 necessarily inherit from either `true_type` or
 `false_type`. — *end note*\]
 
@@ -1087,7 +1087,7 @@ template type argument `Bᵢ` for which `bool(``Bᵢ``::value)` is `true`,
 then instantiating `disjunction<``B₁``, `…`, ``B_N``>::value` does not
 require the instantiation of `Bⱼ``::value` for j > i.
 
-\[*Note 3*: This is analogous to the short-circuiting behavior of the
+[*Note 3*: This is analogous to the short-circuiting behavior of the
 built-in operator `||`. — *end note*\]
 
 Every template type argument for which `Bᵢ``::value` is instantiated
@@ -1102,7 +1102,7 @@ unambiguous base that is either
   which `bool(``Bᵢ``::value)` is `true`, or
 - if there is no such `Bᵢ`, the last type in the list.
 
-\[*Note 4*: This means a specialization of `disjunction` does not
+[*Note 4*: This means a specialization of `disjunction` does not
 necessarily inherit from either `true_type` or
 `false_type`. — *end note*\]
 
@@ -1143,13 +1143,13 @@ struct [[class.prop]] types, `M1` and `M2` are object types, `m1` and
 `m2` are not null, and `m1` and `m2` point to corresponding members of
 the common initial sequence [[class.mem]] of `S1` and `S2`.
 
-\[*Note 1*:
+[*Note 1*:
 
 The type of a pointer-to-member expression `&C::b` is not always a
 pointer to member of `C`, leading to potentially surprising results when
 using these functions in conjunction with inheritance.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 struct A { int a; };                    // a standard-layout class
@@ -1190,7 +1190,7 @@ if consteval {
 }
 ```
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 constexpr void f(unsigned char *p, int n) {
@@ -1294,7 +1294,7 @@ If the template argument `D` is zero or the absolute values of either of
 the template arguments `N` and `D` is not representable by type
 `intmax_t`, the program is ill-formed.
 
-\[*Note 1*: These rules ensure that infinite ratios are avoided and that
+[*Note 1*: These rules ensure that infinite ratios are avoided and that
 for any negative input, there exists a representable value of its
 absolute value which is positive. This excludes the most negative
 value. — *end note*\]
@@ -1335,7 +1335,7 @@ yields correct values of `U` and `V`.
 | `ratio_divide<R1, R2>`   | `R1::num * R2::den`   | `R1::den * R2::num` |
 
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 static_assert(ratio_add<ratio<1, 3>, ratio<1, 6>>::num == 1, "1/3+1/6 == 1/2");

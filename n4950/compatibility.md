@@ -641,7 +641,7 @@ specification will be rejected as ill-formed in this revision of C++. It
 should simply be replaced with `noexcept` for no change of meaning since
 C++17.
 
-\[*Note 1*: There is no way to write a function declaration that is
+[*Note 1*: There is no way to write a function declaration that is
 non-throwing in this revision of C++ and is also non-throwing in C++03
 except by using the preprocessor to generate a different token sequence
 in each case. — *end note*\]

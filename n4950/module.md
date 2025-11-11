@@ -50,11 +50,11 @@ or indirectly exported by the primary module interface unit
 [[module.import]]. No diagnostic is required for a violation of these
 rules.
 
-\[*Note 1*: Module partitions can be imported only by other module units
+[*Note 1*: Module partitions can be imported only by other module units
 in the same module. The division of a module into module units is not
 visible outside the module. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 Translation unit #1
 
@@ -111,7 +111,7 @@ and all translation units that are not module units. Declarations
 appearing in such a context are said to be in the *purview* of the
 global module.
 
-\[*Note 2*: The global module has no name, no module interface unit, and
+[*Note 2*: The global module has no name, no module interface unit, and
 is not introduced by any *module-declaration*. — *end note*\]
 
 A *module* is either a named module or the global module. A declaration
@@ -135,7 +135,7 @@ A *module-declaration* that contains neither an *export-keyword* nor a
 *module-partition* implicitly imports the primary module interface unit
 of the module as if by a *module-import-declaration*.
 
-\[*Example 2*:
+[*Example 2*:
 
 Translation unit #1
 
@@ -196,7 +196,7 @@ effects of its *name-declaration*, *declaration-seq* (if any), or
 shall not contain an *export-declaration* or
 *module-import-declaration*.
 
-\[*Note 1*: An *export-declaration* does not establish a
+[*Note 1*: An *export-declaration* does not establish a
 scope. — *end note*\]
 
 A declaration is *exported* if it is declared within an
@@ -209,7 +209,7 @@ A declaration is *exported* if it is declared within an
 If an exported declaration is not within a header unit, it shall not
 declare a name with internal linkage.
 
-\[*Example 1*:
+[*Example 1*:
 
 Source file \`"a.h"\`
 
@@ -241,7 +241,7 @@ and is not within a header unit, all entities to which all of the
 *using-declarator*s ultimately refer (if any) shall have been introduced
 with a name having external linkage.
 
-\[*Example 2*:
+[*Example 2*:
 
 Source file \`"b.h"\`
 
@@ -282,12 +282,12 @@ export using N::h;              // error: #1 has internal linkage
 
 — *end example*\]
 
-\[*Note 2*:
+[*Note 2*:
 
 These constraints do not apply to type names introduced by `typedef`
 declarations and *alias-declaration*s.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 export module M;
@@ -303,7 +303,7 @@ A redeclaration of an entity X is implicitly exported if X was
 introduced by an exported declaration; otherwise it shall not be
 exported.
 
-\[*Example 4*:
+[*Example 4*:
 
 ``` cpp
 export module M;
@@ -315,14 +315,14 @@ export struct S;                // error: exported declaration follows non-expor
 
 — *end example*\]
 
-\[*Note 3*: Names introduced by exported declarations have either
+[*Note 3*: Names introduced by exported declarations have either
 external linkage or no linkage; see [[basic.link]]. Namespace-scope
 declarations exported by a module can be found by name lookup in any
 translation unit importing that module [[basic.lookup]]. Class and
 enumeration member names can be found by name lookup in any context in
 which a definition of the type is reachable. — *end note*\]
 
-\[*Example 5*:
+[*Example 5*:
 
 Interface unit of \`M\`
 
@@ -372,13 +372,13 @@ int main() {
 
 — *end example*\]
 
-\[*Note 4*:
+[*Note 4*:
 
 Declarations in an exported *namespace-definition* or in an exported
 *linkage-specification* [[dcl.link]] are exported and subject to the
 rules of exported declarations.
 
-\[*Example 6*:
+[*Example 6*:
 
 ``` cpp
 export module M;
@@ -413,7 +413,7 @@ optional *attribute-specifier-seq* appertains to the
 A *module-import-declaration* *imports* a set of translation units
 determined as described below.
 
-\[*Note 1*: Namespace-scope declarations exported by the imported
+[*Note 1*: Namespace-scope declarations exported by the imported
 translation units can be found by name lookup [[basic.lookup]] in the
 importing translation unit and declarations within the imported
 translation units become reachable [[module.reach]] in the importing
@@ -433,7 +433,7 @@ applying phases 1 to 7 of translation [[lex.phases]] to the source file
 or header nominated by `H`, which shall not contain a
 *module-declaration*.
 
-\[*Note 2*: All declarations within a header unit are implicitly
+[*Note 2*: All declarations within a header unit are implicitly
 exported [[module.interface]], and are attached to the global module
 [[module.unit]]. — *end note*\]
 
@@ -451,7 +451,7 @@ headers that includes all importable C++ library headers [[headers]].
   entities declared with internal linkage in an importable
   header. — *end note*\]
 
-\[*Note 3*: A *module-import-declaration* nominating a *header-name* is
+[*Note 3*: A *module-import-declaration* nominating a *header-name* is
 also recognized by the preprocessor, and results in macros defined at
 the end of phase 4 of translation of the header unit being made visible
 as described in [[cpp.import]]. Any other *module-import-declaration*
@@ -461,7 +461,7 @@ A declaration of a name with internal linkage is permitted within a
 header unit despite all declarations being implicitly exported
 [[module.interface]].
 
-\[*Note 4*: A definition that appears in multiple translation units
+[*Note 4*: A definition that appears in multiple translation units
 cannot in general refer to such names [[basic.def.odr]]. — *end note*\]
 
 A header unit shall not contain a definition of a non-inline function or
@@ -478,14 +478,14 @@ imports all translation units imported by non-exported
 These rules can in turn lead to the importation of yet more translation
 units.
 
-\[*Note 5*: Such indirect importation does not make macros available,
+[*Note 5*: Such indirect importation does not make macros available,
 because a translation unit is a sequence of tokens in translation phase
 7 [[lex.phases]]. Macros can be made available by directly importing
 header units as described in [[cpp.import]]. — *end note*\]
 
 A module implementation unit shall not be exported.
 
-\[*Example 1*:
+[*Example 1*:
 
 Translation unit #1
 
@@ -506,7 +506,7 @@ A module implementation unit of a module `M` that is not a module
 partition shall not contain a *module-import-declaration* nominating
 `M`.
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 module M;
@@ -521,7 +521,7 @@ imports `U` or if it has an interface dependency on a translation unit
 that has an interface dependency on `U`. A translation unit shall not
 have an interface dependency on itself.
 
-\[*Example 3*:
+[*Example 3*:
 
 Interface unit of \`M1\`
 
@@ -553,7 +553,7 @@ global-module-fragment:
     module-keyword ';' declaration-seqₒₚₜ
 ```
 
-\[*Note 1*: Prior to phase 4 of translation, only preprocessing
+[*Note 1*: Prior to phase 4 of translation, only preprocessing
 directives can appear in the *declaration-seq*
 [[cpp.pre]]. — *end note*\]
 
@@ -617,13 +617,13 @@ A declaration `D` in a global module fragment of a module unit is
 *discarded* if `D` is not decl-reachable from any *declaration* in the
 *declaration-seq* of the *translation-unit*.
 
-\[*Note 2*: A discarded declaration is neither reachable nor visible to
+[*Note 2*: A discarded declaration is neither reachable nor visible to
 name lookup outside the module unit, nor in template instantiations
 whose points of instantiation [[temp.point]] are outside the module
 unit, even when the instantiation context [[module.context]] includes
 the module unit. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 const int size = 2;
@@ -644,7 +644,7 @@ void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 Source file \`"foo.h"\`
 
@@ -713,7 +713,7 @@ interface unit [[module.unit]]. A module unit with a
 *private-module-fragment* shall be the only module unit of its module;
 no diagnostic is required.
 
-\[*Note 1*:
+[*Note 1*:
 
 A *private-module-fragment* ends the portion of the module interface
 unit that can affect the behavior of other translation units. A
@@ -736,7 +736,7 @@ affects:
 
 — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 export module A;
@@ -796,7 +796,7 @@ template.
 In any other case, the instantiation context at a point within the
 program comprises that point.
 
-\[*Example 1*:
+[*Example 1*:
 
 Translation unit #1
 
@@ -869,7 +869,7 @@ module interface unit on which the translation unit containing P has an
 interface dependency, or the translation unit containing P imports U, in
 either case prior to P [[module.import]].
 
-\[*Note 1*: While module interface units are reachable even when they
+[*Note 1*: While module interface units are reachable even when they
 are only transitively imported via a non-exported import declaration,
 namespace-scope names from such module interface units are not found by
 name lookup [[basic.lookup]]. — *end note*\]
@@ -879,7 +879,7 @@ Additional translation units on which the point within the program has
 an interface dependency may be considered reachable, but it is
 unspecified which are and under what circumstances.[^3]
 
-\[*Note 2*: It is advisable to avoid depending on the reachability of
+[*Note 2*: It is advisable to avoid depending on the reachability of
 any additional translation units in programs intending to be
 portable. — *end note*\]
 
@@ -893,14 +893,14 @@ A declaration D is *reachable from* a point P if
 A declaration is *reachable* if it is reachable from any point in the
 instantiation context [[module.context]].
 
-\[*Note 3*: Whether a declaration is exported has no bearing on whether
+[*Note 3*: Whether a declaration is exported has no bearing on whether
 it is reachable. — *end note*\]
 
 The accumulated properties of all reachable declarations of an entity
 within a context determine the behavior of the entity within that
 context.
 
-\[*Note 4*:
+[*Note 4*:
 
 These reachable semantic properties include type completeness, type
 definitions, initializers, default arguments of functions or template
@@ -908,7 +908,7 @@ declarations, attributes, names bound, etc. Since default arguments are
 evaluated in the context of the call expression, the reachable semantic
 properties of the corresponding parameter types apply in that context.
 
-\[*Example 1*:
+[*Example 1*:
 
 Translation unit #1
 
@@ -956,10 +956,10 @@ void g() { f(); }               // error: no reachable definition of struct B
 
 — *end note*\]
 
-\[*Note 5*: Declarations of an entity can be reachable even where they
+[*Note 5*: Declarations of an entity can be reachable even where they
 cannot be found by name lookup. — *end note*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 Translation unit #1
 

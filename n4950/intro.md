@@ -50,7 +50,7 @@ where they are used and italicized where they are defined.
 
 ⟨execution-time action⟩ read or modify the value of an object
 
-\[*Note 1 to entry*: Only glvalues of scalar type can be used to access
+[*Note 1 to entry*: Only glvalues of scalar type can be used to access
 objects. Reads of scalar objects are described in [[conv.lval]] and
 modifications of scalar objects are described in [[expr.ass]],
 [[expr.post.incr]], and [[expr.pre.incr]]. Attempts to read or modify an
@@ -64,7 +64,7 @@ scalar subobjects. — *end note*\]
 ⟨library⟩ stream that can seek to any integral position within the
 length of the stream
 
-\[*Note 1 to entry*: Every arbitrary-positional stream is also a
+[*Note 1 to entry*: Every arbitrary-positional stream is also a
 repositional stream [[defns.repositional.stream]]. — *end note*\]
 
 #### 3 argument <a id="defns.argument">[defns.argument]</a>
@@ -101,7 +101,7 @@ satisfied before continuing execution past the blocking operation
 
 ⟨library⟩ object which, when treated sequentially, can represent text
 
-\[*Note 1 to entry*: The term does not mean only `char`, `char8_t`,
+[*Note 1 to entry*: The term does not mean only `char`, `char8_t`,
 `char16_t`, `char32_t`, and `wchar_t` objects [[basic.fundamental]], but
 any value that can be represented by a type that provides the
 definitions specified in [[strings]], [[localization]],
@@ -111,7 +111,7 @@ definitions specified in [[strings]], [[localization]],
 
 ⟨library⟩ class or a type used to represent a character
 
-\[*Note 1 to entry*: It is used for one of the template parameters of
+[*Note 1 to entry*: It is used for one of the template parameters of
 the string, iostream, and regular expression class
 templates. — *end note*\]
 
@@ -125,7 +125,7 @@ collate as if they were a single character
 ⟨library⟩ group of library entities directly related as members,
 parameters, or return types
 
-\[*Note 1 to entry*: For example, the class template `basic_string` and
+[*Note 1 to entry*: For example, the class template `basic_string` and
 the non-member function templates that operate on strings are referred
 to as the *string component*. — *end note*\]
 
@@ -133,7 +133,7 @@ to as the *string component*. — *end note*\]
 
 program construct that an implementation is not required to support
 
-\[*Note 1 to entry*: Each implementation documents all
+[*Note 1 to entry*: Each implementation documents all
 conditionally-supported constructs that it does not
 support. — *end note*\]
 
@@ -167,7 +167,7 @@ direct-initialization that is not list-initialization
 
 ⟨glvalue⟩ type of the most derived object to which the glvalue refers
 
-\[*Example 1*: If a pointer [[dcl.ptr]] `p` whose static type is
+[*Example 1*: If a pointer [[dcl.ptr]] `p` whose static type is
 “pointer to class `B`” is pointing to an object of class `D`, derived
 from `B` [[class.derived]], the dynamic type of the expression `*p` is
 “`D`”. References [[dcl.ref]] are treated similarly. — *end example*\]
@@ -182,7 +182,7 @@ from `B` [[class.derived]], the dynamic type of the expression `*p` is
 potentially-throwing or are all not potentially-throwing, and either are
 all constant subexpressions or are all not constant subexpressions
 
-\[*Example 1*: For a value `x` of type `int` and a function `f` that
+[*Example 1*: For a value `x` of type `int` and a function `f` that
 accepts integer arguments, the expressions `f(x + 2)`, `f(2 + x)`, and
 `f(1 + x + 1)` are expression-equivalent. — *end example*\]
 
@@ -202,7 +202,7 @@ replaced with some part of a regular expression match
 ⟨library⟩ non-reserved function whose definition may be provided by a
 C++ program
 
-\[*Note 1 to entry*: A C++ program may designate a handler function at
+[*Note 1 to entry*: A C++ program may designate a handler function at
 various points in its execution by supplying a pointer to the function
 when calling any of the library functions that install handler functions
 [[support]]. — *end note*\]
@@ -231,7 +231,7 @@ restrictions imposed upon programs by the implementation
 ⟨library⟩ templates that are declared in header `<iosfwd>` and take two
 template arguments
 
-\[*Note 1 to entry*: The arguments are named `charT` and `traits`. The
+[*Note 1 to entry*: The arguments are named `charT` and `traits`. The
 argument `charT` is a character container class, and the argument
 `traits` is a class which defines additional characteristics and
 functions of the character type represented by `charT` necessary to
@@ -277,7 +277,7 @@ terminating null character type value `charT()`
 ⟨library⟩ class member function that accesses the state of an object of
 the class but does not alter that state
 
-\[*Note 1 to entry*: Observer functions are specified as `const` member
+[*Note 1 to entry*: Observer functions are specified as `const` member
 functions. — *end note*\]
 
 #### 38 parameter <a id="defns.parameter">[defns.parameter]</a>
@@ -315,7 +315,7 @@ the C++ standard library and not defined by the implementation, or a
 closure type of a non-implementation-provided lambda expression, or an
 instantiation of a program-defined specialization
 
-\[*Note 1 to entry*: Types defined by the implementation include
+[*Note 1 to entry*: Types defined by the implementation include
 extensions [[intro.compliance]] and internal types used by the
 library. — *end note*\]
 
@@ -324,7 +324,7 @@ library. — *end note*\]
 ⟨library⟩ transformation that an algorithm applies before inspecting the
 values of elements
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 std::pair<int, std::string_view> pairs[] = {{2, "foo"}, {1, "bar"}, {0, "baz"}};
@@ -344,7 +344,7 @@ sorts the pairs in increasing order of their `first` members:
 type that is either an object type, a function type that does not have
 cv-qualifiers or a *ref-qualifier*, or a reference type
 
-\[*Note 1 to entry*: The term describes a type to which a reference can
+[*Note 1 to entry*: The term describes a type to which a reference can
 be created, including reference types. — *end note*\]
 
 #### 46 regular expression <a id="defns.regex.regular.expression">[defns.regex.regular.expression]</a>
@@ -356,7 +356,7 @@ pattern that selects specific strings from a set of character strings
 ⟨library⟩ non-reserved function whose definition is provided by a C++
 program
 
-\[*Note 1 to entry*: Only one definition for such a function is in
+[*Note 1 to entry*: Only one definition for such a function is in
 effect for the duration of the program’s execution, as the result of
 creating the program [[lex.phases]] and resolving the definitions of all
 translation units [[basic.link]]. — *end note*\]
@@ -372,7 +372,7 @@ encountered
 semantics applicable to both the behavior provided by the implementation
 and the behavior of any such function definition in the program
 
-\[*Note 1 to entry*: If such a function defined in a C++ program fails
+[*Note 1 to entry*: If such a function defined in a C++ program fails
 to meet the required behavior when it executes, the behavior is
 undefined.  — *end note*\]
 
@@ -381,14 +381,14 @@ undefined.  — *end note*\]
 ⟨library⟩ function, specified as part of the C++ standard library, that
 is defined by the implementation
 
-\[*Note 1 to entry*: If a C++ program provides a definition for any
+[*Note 1 to entry*: If a C++ program provides a definition for any
 reserved function, the results are undefined.  — *end note*\]
 
 #### 51 signature <a id="defns.signature">[defns.signature]</a>
 
 ⟨function⟩ name, parameter-type-list, and enclosing namespace
 
-\[*Note 1 to entry*: Signatures are used as a basis for name mangling
+[*Note 1 to entry*: Signatures are used as a basis for name mangling
 and linking. — *end note*\]
 
 #### 52 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
@@ -444,7 +444,7 @@ parameter names and default arguments, and *requires-clause* (if any)
 ⟨library⟩ algorithm that preserves, as appropriate to the particular
 algorithm, the order of elements
 
-\[*Note 1 to entry*: Requirements for stable algorithms are given in
+[*Note 1 to entry*: Requirements for stable algorithms are given in
 [[algorithm.stable]]. — *end note*\]
 
 #### 61 static type <a id="defns.static.type">[defns.static.type]</a>
@@ -452,7 +452,7 @@ algorithm, the order of elements
 type of an expression resulting from analysis of the program without
 considering execution semantics
 
-\[*Note 1 to entry*: The static type of an expression depends only on
+[*Note 1 to entry*: The static type of an expression depends only on
 the form of the program in which the expression appears, and does not
 change while the program is executing. — *end note*\]
 
@@ -476,7 +476,7 @@ waiting for
 
 behavior for which this document imposes no requirements
 
-\[*Note 1 to entry*: Undefined behavior may be expected when this
+[*Note 1 to entry*: Undefined behavior may be expected when this
 document omits any explicit definition of behavior or when a program
 uses an erroneous construct or erroneous data. Permissible undefined
 behavior ranges from ignoring the situation completely with
@@ -494,7 +494,7 @@ in [[intro]] through [[cpp]]. — *end note*\]
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation
 
-\[*Note 1 to entry*: The implementation is not required to document
+[*Note 1 to entry*: The implementation is not required to document
 which behavior occurs. The range of possible behaviors is usually
 delineated by this document. — *end note*\]
 
@@ -504,7 +504,7 @@ delineated by this document. — *end note*\]
 object’s invariants are met and operations on the object behave as
 specified for its type
 
-\[*Example 1*: If an object `x` of type `std::vector<int>` is in a valid
+[*Example 1*: If an object `x` of type `std::vector<int>` is in a valid
 but unspecified state, `x.empty()` can be called unconditionally, and
 `x.front()` can be called only if `x.empty()` returns
 `false`. — *end example*\]
@@ -542,7 +542,7 @@ Such requirements have the following meaning:
   that construct, a conforming implementation shall issue at least one
   diagnostic message.
 
-\[*Note 1*: During template argument deduction and substitution, certain
+[*Note 1*: During template argument deduction and substitution, certain
 constructs that in other contexts require a diagnostic are treated
 differently; see  [[temp.deduct]]. — *end note*\]
 
@@ -623,7 +623,7 @@ for a given program and a given input.
 Certain other operations are described in this document as undefined
 (for example, the effect of attempting to modify a const object).
 
-\[*Note 1*: This document imposes no requirements on the behavior of
+[*Note 1*: This document imposes no requirements on the behavior of
 programs that contain undefined behavior. — *end note*\]
 
 A conforming implementation executing a well-formed program shall
@@ -649,7 +649,7 @@ The least requirements on a conforming implementation are:
 These collectively are referred to as the *observable behavior* of the
 program.
 
-\[*Note 2*: More stringent correspondences between abstract and actual
+[*Note 2*: More stringent correspondences between abstract and actual
 semantics can be defined by each implementation. — *end note*\]
 
 ## Structure of this document <a id="intro.structure">[[intro.structure]]</a>

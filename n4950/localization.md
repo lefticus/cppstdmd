@@ -159,7 +159,7 @@ locale’s set of facets.
 Access to the facets of a `locale` is via two function templates,
 `use_facet<>` and `has_facet<>`.
 
-\[*Example 1*:
+[*Example 1*:
 
 An iostream `operator<<` can be implemented as:
 
@@ -191,7 +191,7 @@ program can check if a locale implements a particular facet with the
 function template `has_facet<Facet>()`. User-defined facets may be
 installed in a locale, and used identically as may standard facets.
 
-\[*Note 1*:
+[*Note 1*:
 
 All locale semantics are accessed via `use_facet<>` and `has_facet<>`,
 except that:
@@ -407,7 +407,7 @@ The class `locale::id` provides identification of a locale facet
 interface, used as an index for lookup and to encapsulate
 initialization.
 
-\[*Note 1*: Because facets are used by iostreams, potentially while
+[*Note 1*: Because facets are used by iostreams, potentially while
 static constructors are running, their initialization cannot depend on
 programmed static initialization. One initialization strategy is for
 `locale` to initialize each facet’s `id` member the first time an
@@ -426,7 +426,7 @@ locale() noexcept;
 facets have virtual function semantics identical to those of
 `locale::classic()`.
 
-\[*Note 1*: This constructor yields a copy of the current global locale.
+[*Note 1*: This constructor yields a copy of the current global locale.
 It is commonly used as a default argument for function parameters of
 type `const locale&`. — *end note*\]
 
@@ -556,7 +556,7 @@ use_facet<collate<charT>>(*this).compare(s1.data(), s1.data() + s1.size(),
 meets the requirements for a comparator predicate template
 argument [[algorithms]] applied to strings.
 
-\[*Example 1*:
+[*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
 locale `loc` simply by [[alg.sort,vector]]:
@@ -589,7 +589,7 @@ otherwise, the effect on the C locale, if any, is
 *Remarks:* No library function other than `locale::global()` affects the
 value returned by `locale()`.
 
-\[*Note 1*: See  [[c.locales]] for data race considerations when
+[*Note 1*: See  [[c.locales]] for data race considerations when
 `setlocale` is invoked. — *end note*\]
 
 ``` cpp
@@ -1340,7 +1340,7 @@ do_in(state, from, from_end, from_next, to, to + 1, to_next)
 
 shall also return `ok`.[^8]
 
-\[*Note 1*: As a result of operations on `state`, it can return `ok` or
+[*Note 1*: As a result of operations on `state`, it can return `ok` or
 `partial` and set `from_next == from` and
 `to_next != to`. — *end note*\]
 
@@ -1364,7 +1364,7 @@ before another destination element can be produced.
 
 *Remarks:* Its operations on `state` are unspecified.
 
-\[*Note 2*: This argument can be used, for example, to maintain shift
+[*Note 2*: This argument can be used, for example, to maintain shift
 state, to specify conversion options (such as count only), or to
 identify a cache of seek offsets. — *end note*\]
 
@@ -1618,7 +1618,7 @@ The details of this operation occur in three stages
 
 The details of the stages are presented below.
 
-\[*Example 1*:
+[*Example 1*:
 
 Given an input sequence of `"0x1a.bp+07p"`,
 
@@ -1671,7 +1671,7 @@ match, it is found that `(in == end)`. If `val` is not set, then `err`
 is set to `str.failbit`; or to `(str.failbit|str.eofbit)` if the reason
 for the failure was that `(in == end)`.
 
-\[*Example 2*: For targets `true`: `"a"` and `false`: `"abb"`, the input
+[*Example 2*: For targets `true`: `"a"` and `false`: `"abb"`, the input
 sequence `"a"` yields `val == true` and `err == str.eofbit`; the input
 sequence `"abc"` yields `err = str.failbit`, with `in` ending at the
 `’c’` element. For targets `true`: `"1"` and `false`: `"0"`, the input
@@ -1800,7 +1800,7 @@ default behavior when none of the earlier lines apply.
 
 For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
-\[\[facet.num.put.int\]\].
+[[facet.num.put.int]].
 
 **Table: Integer conversions**
 
@@ -1815,7 +1815,7 @@ function determines the integral conversion specifier as indicated in
 
 For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
-\[\[facet.num.put.fp\]\].
+[[facet.num.put.fp]].
 
 **Table: Floating-point conversions**
 
@@ -1832,7 +1832,7 @@ floating-point conversion specifier as indicated in
 
 For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
-\[\[facet.num.put.length\]\].
+[[facet.num.put.length]].
 
 **Table: Length modifier**
 
@@ -1847,7 +1847,7 @@ modifier is added to the conversion specifier as indicated in
 
 
 The conversion specifier has the following optional additional
-qualifiers prepended as indicated in \[\[facet.num.put.conv\]\].
+qualifiers prepended as indicated in [[facet.num.put.conv]].
 
 **Table: Numeric conversions**
 
@@ -1888,7 +1888,7 @@ const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
 For arithmetic types, `punct.thousands_sep()` characters are inserted
 into the sequence as determined by the value returned by
 `punct.do_grouping()` using the method described
-in \[\[facet.numpunct.virtuals\]\].
+in [[facet.numpunct.virtuals]].
 
 Decimal point characters(.) are replaced by `punct.decimal_point()`.
 
@@ -1902,7 +1902,7 @@ fmtflags adjustfield = (flags & (ios_base::adjustfield));
 
 The location of any padding[^12]
 
-is determined according to \[\[facet.num.put.fill\]\].
+is determined according to [[facet.num.put.fill]].
 
 **Table: Fill padding**
 
@@ -2418,7 +2418,7 @@ the first of the following conditions holds:
   evaluates `++fmt, ++s` and continues looping. Otherwise, the function
   evaluates `err = ios_base::failbit`.
 
-\[*Note 1*: The function uses the `ctype<charT>` facet installed in
+[*Note 1*: The function uses the `ctype<charT>` facet installed in
 `f`’s locale to determine valid whitespace characters. It is unspecified
 by what means the function performs case-insensitive comparison or
 whether multi-character sequences are considered while doing
@@ -2619,7 +2619,7 @@ valid format sequence identified, calls
 
 The second form calls `do_put(s, str, fill, t, format, modifier)`.
 
-\[*Note 1*: The `fill` argument can be used in the
+[*Note 1*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
 reasonable default for this argument. — *end note*\]
 
@@ -2641,13 +2641,13 @@ function `strftime()`, except that the sequence of characters produced
 for those specifiers that are described as depending on the C locale are
 instead *implementation-defined*.
 
-\[*Note 2*: Interpretation of the `modifier` argument is
+[*Note 2*: Interpretation of the `modifier` argument is
 implementation-defined. — *end note*\]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
 
-\[*Note 3*: The `fill` argument can be used in the
+[*Note 3*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
 reasonable default for this argument. — *end note*\]
 
@@ -2756,7 +2756,7 @@ preceded by a minus sign (as produced by `ct.widen(c)` where `c` is
 `’-’` or in the range from `’0’` through `’9’` (inclusive)) stored in
 `digits`.
 
-\[*Example 1*: The sequence `$1,056.23` in a common United States locale
+[*Example 1*: The sequence `$1,056.23` in a common United States locale
 would yield, for `units`, `105623`, or, for `digits`,
 `"105623"`. — *end example*\]
 
@@ -2782,7 +2782,7 @@ If the first character (if any) in the string `pos` returned by
 in the format pattern, it is consumed and any remaining characters in
 the string are required after all the other format components.
 
-\[*Example 2*: If `showbase` is off, then for a `neg` value of `"()"`
+[*Example 2*: If `showbase` is off, then for a `neg` value of `"()"`
 and a currency symbol of `"L"`, in `"(100 L)"` the `"L"` is consumed;
 but if `neg` is `"-"`, the `"L"` in `"-100 L"` is not
 consumed. — *end example*\]
@@ -2904,7 +2904,7 @@ in the formatting pattern; otherwise if `(af == str.left)` is `true`,
 they are placed after the other characters; otherwise, they are placed
 before the other characters.
 
-\[*Note 1*: It is possible, with some combinations of format patterns
+[*Note 1*: It is possible, with some combinations of format patterns
 and flag values, to produce output that cannot be parsed using
 `num_get<>::get`. — *end note*\]
 
@@ -3073,7 +3073,7 @@ string_type do_curr_symbol() const;
 
 *Returns:* A string to use as the currency identifier symbol.
 
-\[*Note 1*: For specializations where the second template parameter is
+[*Note 1*: For specializations where the second template parameter is
 `true`, this is typically four characters long: a three-letter code as
 specified by ISO 4217 followed by a space. — *end note*\]
 

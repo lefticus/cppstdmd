@@ -9,10 +9,10 @@ source files included [[cpp.include]] via the preprocessing directive
 inclusion [[cpp.cond]] preprocessing directives, is called a
 *preprocessing translation unit*.
 
-\[*Note 1*: A C++ program need not all be translated at the same
+[*Note 1*: A C++ program need not all be translated at the same
 time. — *end note*\]
 
-\[*Note 2*: Previously translated translation units and instantiation
+[*Note 2*: Previously translated translation units and instantiation
 units can be preserved individually or in libraries. The separate
 translation units of a program communicate [[basic.link]] by (for
 example) calls to functions whose identifiers have external or module
@@ -133,7 +133,7 @@ The *translation character set* consists of the following elements:
 - a distinct character for each Unicode scalar value not assigned to an
   abstract character.
 
-\[*Note 1*: Unicode code points are integers in the range [0, 10FFFF]
+[*Note 1*: Unicode code points are integers in the range [0, 10FFFF]
 (hexadecimal). A surrogate code point is a value in the range
 [D800, DFFF] (hexadecimal). A Unicode scalar value is any code point
 that is not a surrogate code point. — *end note*\]
@@ -141,7 +141,7 @@ that is not a surrogate code point. — *end note*\]
 The *basic character set* is a subset of the translation character set,
 consisting of 96 characters as specified in [[lex.charset.basic]].
 
-\[*Note 2*: Unicode short names are given only as a means to identifying
+[*Note 2*: Unicode short names are given only as a means to identifying
 the character; the numerical value has no other meaning in this
 context. — *end note*\]
 
@@ -241,7 +241,7 @@ designates the corresponding character in the Unicode Standard (chapter
 one of its character name aliases of type “control”, “correction”, or
 “alternate”; otherwise, the program is ill-formed.
 
-\[*Note 3*: These aliases are listed in the Unicode Character Database’s
+[*Note 3*: These aliases are listed in the Unicode Character Database’s
 `NameAliases.txt`. None of these names or aliases have leading or
 trailing spaces. — *end note*\]
 
@@ -251,7 +251,7 @@ If a *universal-character-name* outside the *c-char-sequence*,
 *user-defined-literal*) corresponds to a control character or to a
 character in the basic character set, the program is ill-formed.
 
-\[*Note 4*: A sequence of characters resembling a
+[*Note 4*: A sequence of characters resembling a
 *universal-character-name* in an *r-char-sequence* [[lex.string]] does
 not form a *universal-character-name*. — *end note*\]
 
@@ -284,7 +284,7 @@ character sets [[character.seq]] encodes each element of the basic
 literal character set as a single code unit with non-negative value,
 distinct from the code unit for any other such element.
 
-\[*Note 5*: A character not in the basic literal character set can be
+[*Note 5*: A character not in the basic literal character set can be
 encoded with more than one code unit; the value of such a code unit can
 be the same as that of a code unit for an element of the basic literal
 character set. — *end note*\]
@@ -369,7 +369,7 @@ given character:
     [[cpp.include]] or `import` [[cpp.import]] directive, or
   - within a *has-include-expression*.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 #define R "x"
@@ -383,9 +383,9 @@ The *import-keyword* is produced by processing an `import` directive
 `module` directive [[cpp.module]], and the *export-keyword* is produced
 by preprocessing either of the previous two directives.
 
-\[*Note 1*: None has any observable spelling. — *end note*\]
+[*Note 1*: None has any observable spelling. — *end note*\]
 
-\[*Example 2*: The program fragment `0xe+foo` is parsed as a
+[*Example 2*: The program fragment `0xe+foo` is parsed as a
 preprocessing number token (one that is not a valid *integer-literal* or
 *floating-point-literal* token), even though a parse as three
 preprocessing tokens `0xe`, `+`, and `foo` can produce a valid
@@ -394,7 +394,7 @@ the program fragment `1E1` is parsed as a preprocessing number (one that
 is a valid *floating-point-literal* token), whether or not `E` is a
 macro name. — *end example*\]
 
-\[*Example 3*: The program fragment `x+++++y` is parsed as `x
+[*Example 3*: The program fragment `x+++++y` is parsed as `x
 ++ ++ + y`, which, if `x` and `y` have integral types, violates a
 constraint on increment operators, even though the parse `x ++ + ++ y`
 can yield a correct expression. — *end example*\]
@@ -425,7 +425,7 @@ operators, and other separators. Blanks, horizontal and vertical tabs,
 newlines, formfeeds, and comments (collectively, “whitespace”), as
 described below, are ignored except as they serve to separate tokens.
 
-\[*Note 1*: Some whitespace is required to separate otherwise adjacent
+[*Note 1*: Some whitespace is required to separate otherwise adjacent
 identifiers, keywords, numeric literals, and alternative tokens
 containing alphabetic characters. — *end note*\]
 
@@ -438,7 +438,7 @@ character. If there is a form-feed or a vertical-tab character in such a
 comment, only whitespace characters shall appear between it and the
 new-line that terminates the comment; no diagnostic is required.
 
-\[*Note 1*: The comment characters `//`, `/*`, and `*/` have no special
+[*Note 1*: The comment characters `//`, `/*`, and `*/` have no special
 meaning within a `//` comment and are treated just like other
 characters. Similarly, the comment characters `//` and `/*` have no
 special meaning within a `/*` comment. — *end note*\]
@@ -473,7 +473,7 @@ q-char:
     any member of the translation character set except new-line and "{quotation mark}
 ```
 
-\[*Note 1*: Header name preprocessing tokens only appear within a
+[*Note 1*: Header name preprocessing tokens only appear within a
 `#include` preprocessing directive, a `__has_include` preprocessing
 expression, or after certain occurrences of an `import` token (see 
 [[lex.pptoken]]). — *end note*\]
@@ -546,7 +546,7 @@ digit: one of
     '0 1 2 3 4 5 6 7 8 9'
 ```
 
-\[*Note 1*:
+[*Note 1*:
 
 The character properties XID_Start and XID_Continue are Derived Core
 Properties as described by UAX \#44 of the Unicode Standard.
@@ -558,9 +558,9 @@ Properties as described by UAX \#44 of the Unicode Standard.
 The program is ill-formed if an *identifier* does not conform to
 Normalization Form C as specified in the Unicode Standard.
 
-\[*Note 2*: Identifiers are case-sensitive. — *end note*\]
+[*Note 2*: Identifiers are case-sensitive. — *end note*\]
 
-\[*Note 3*: In translation phase 4, *identifier* also includes those
+[*Note 3*: In translation phase 4, *identifier* also includes those
 *preprocessing-token*s [[lex.pptoken]] differentiated as keywords
 [[lex.key]] in the later translation phase 7
 [[lex.token]]. — *end note*\]
@@ -596,7 +596,7 @@ The identifiers shown in [[lex.key]] are reserved for use as keywords
 (that is, they are unconditionally treated as keywords in phase 7)
 except in an *attribute-token* [[dcl.attr.grammar]].
 
-\[*Note 1*: The `register` keyword is unused but is reserved for future
+[*Note 1*: The `register` keyword is unused but is reserved for future
 use. — *end note*\]
 
 Furthermore, the alternative representations shown in
@@ -661,7 +661,7 @@ literal:
     user-defined-literal
 ```
 
-\[*Note 1*: When appearing as an *expression*, a literal has a type and
+[*Note 1*: When appearing as an *expression*, a literal has a type and
 a value category [[expr.prim.literal]]. — *end note*\]
 
 ### Integer literals <a id="lex.icon">[[lex.icon]]</a>
@@ -766,7 +766,7 @@ In an *integer-literal*, the sequence of *binary-digit*s,
 base N integer as shown in table [[lex.icon.base]]; the lexically first
 digit of the sequence of digits is the most significant.
 
-\[*Note 1*: The prefix and any optional separating single quotes are
+[*Note 1*: The prefix and any optional separating single quotes are
 ignored when determining the value. — *end note*\]
 
 **Table: Base of *integer-literal*{s}**
@@ -782,7 +782,7 @@ ignored when determining the value. — *end note*\]
 The *hexadecimal-digit*s `a` through `f` and `A` through `F` have
 decimal values ten through fifteen.
 
-\[*Example 1*: The number twelve can be written `12`, `014`, `0XC`, or
+[*Example 1*: The number twelve can be written `12`, `014`, `0XC`, or
 `0b1100`. The *integer-literal*s `1048576`, `1'048'576`, `0X100000`,
 `0x10'0000`, and `0'004'000'000` all have the same
 value. — *end example*\]
@@ -932,7 +932,7 @@ character encoding [[lex.charset]] are determined by its
 [[lex.ccon.literal]]. The special cases for non-encodable character
 literals and multicharacter literals take precedence over the base kind.
 
-\[*Note 1*: The associated character encoding for ordinary character
+[*Note 1*: The associated character encoding for ordinary character
 literals determines encodability, but does not determine the value of
 non-encodable ordinary character literals or ordinary multicharacter
 literals. The examples in [[lex.ccon.literal]] for non-encodable
@@ -988,7 +988,7 @@ of any other kind of *character-literal* is determined as follows:
 The character specified by a *simple-escape-sequence* is specified in
 [[lex.ccon.esc]].
 
-\[*Note 2*: Using an escape sequence for a question mark is supported
+[*Note 2*: Using an escape sequence for a question mark is supported
 for compatibility with ISO C++14 and ISO C. — *end note*\]
 
 **Table: Simple escape sequences**
@@ -1072,7 +1072,7 @@ The type of a *floating-point-literal*
 [[basic.fundamental]], [[basic.extended.fp]] is determined by its
 *floating-point-suffix* as specified in [[lex.fcon.type]].
 
-\[*Note 1*: The floating-point suffixes `f16`, `f32`, `f64`, `f128`,
+[*Note 1*: The floating-point suffixes `f16`, `f32`, `f64`, `f128`,
 `bf16`, `F16`, `F32`, `F64`, `F128`, and `BF16` are
 conditionally-supported. See [[basic.extended.fp]]. — *end note*\]
 
@@ -1100,7 +1100,7 @@ as a base N real number s, where N is 10 for a
 *decimal-floating-point-literal* and 16 for a
 *hexadecimal-floating-point-literal*.
 
-\[*Note 2*: Any optional separating single quotes are ignored when
+[*Note 2*: Any optional separating single quotes are ignored when
 determining the value. — *end note*\]
 
 If an *exponent-part* or *binary-exponent-part* is present, the exponent
@@ -1110,7 +1110,7 @@ Otherwise, the exponent e is 0. The scaled value of the literal is
 $s \times 10^e$ for a *decimal-floating-point-literal* and
 $s \times 2^e$ for a *hexadecimal-floating-point-literal*.
 
-\[*Example 1*: The *floating-point-literal*s `49.625` and `0xC.68p+2`
+[*Example 1*: The *floating-point-literal*s `49.625` and `0xC.68p+2`
 have the same value. The *floating-point-literal*s `1.602'176'565e-19`
 and `1.602176565e-19` have the same value. — *end example*\]
 
@@ -1199,11 +1199,11 @@ literal*. The *d-char-sequence* serves as a delimiter. The terminating
 as the initial *d-char-sequence*. A *d-char-sequence* shall consist of
 at most 16 characters.
 
-\[*Note 1*: The characters `'('` and `')'` are permitted in a
+[*Note 1*: The characters `'('` and `')'` are permitted in a
 *raw-string*. Thus, `R"delimiter((a|b))delimiter"` is equivalent to
 `"(a|b)"`. — *end note*\]
 
-\[*Note 2*:
+[*Note 2*:
 
 A source-file new-line in a raw string literal results in a new-line in
 the resulting execution string literal. Assuming no whitespace at the
@@ -1218,7 +1218,7 @@ assert(std::strcmp(p, "a\\\nb\nc") == 0);
 
 — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 The raw string
 
@@ -1249,14 +1249,14 @@ The common *encoding-prefix* for a sequence of adjacent
 no *encoding-prefix*, the common *encoding-prefix* is that of the other
 *string-literal*. Any other combinations are ill-formed.
 
-\[*Note 3*: A *string-literal*’s rawness has no effect on the
+[*Note 3*: A *string-literal*’s rawness has no effect on the
 determination of the common *encoding-prefix*. — *end note*\]
 
 In translation phase 6 [[lex.phases]], adjacent *string-literal*s are
 concatenated. The lexical structure and grouping of the contents of the
 individual *string-literal*s is retained.
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 "\xA" "B"
@@ -1293,7 +1293,7 @@ distinct (that is, are stored in nonoverlapping objects) and whether
 successive evaluations of a *string-literal* yield the same or a
 different object is unspecified.
 
-\[*Note 4*:  The effect of attempting to modify a string literal object
+[*Note 4*:  The effect of attempting to modify a string literal object
 is undefined. — *end note*\]
 
 String literal objects are initialized with the sequence of code unit
@@ -1361,7 +1361,7 @@ pointer-literal:
 The pointer literal is the keyword `nullptr`. It has type
 `std::nullptr_t`.
 
-\[*Note 1*: `std::nullptr_t` is a distinct type that is neither a
+[*Note 1*: `std::nullptr_t` is a distinct type that is neither a
 pointer type nor a pointer-to-member type; rather, a prvalue of this
 type is a null pointer constant and can be converted to a null pointer
 value or null member pointer value. See  [[conv.ptr]] and 
@@ -1411,7 +1411,7 @@ ud-suffix:
 If a token matches both *user-defined-literal* and another *literal*
 kind, it is treated as the latter.
 
-\[*Example 1*:
+[*Example 1*:
 
 `123_km`
 
@@ -1456,7 +1456,7 @@ operator ""X<'c₁', 'c₂', ... 'cₖ'>()
 
 where *n* is the source character sequence c₁c₂...cₖ.
 
-\[*Note 1*: The sequence c₁c₂...cₖ can only contain characters from the
+[*Note 1*: The sequence c₁c₂...cₖ can only contain characters from the
 basic character set. — *end note*\]
 
 If *L* is a *user-defined-floating-point-literal*, let *f* be the
@@ -1485,7 +1485,7 @@ operator ""X<'c₁', 'c₂', ... 'cₖ'>()
 
 where *f* is the source character sequence c₁c₂...cₖ.
 
-\[*Note 2*: The sequence c₁c₂...cₖ can only contain characters from the
+[*Note 2*: The sequence c₁c₂...cₖ can only contain characters from the
 basic character set. — *end note*\]
 
 If *L* is a *user-defined-string-literal*, let *str* be the literal
@@ -1514,7 +1514,7 @@ literal *L* is treated as a call of the form
 operator ""X(ch)
 ```
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 long double operator ""_w(long double);
@@ -1540,7 +1540,7 @@ described in  [[lex.string]]. At the end of phase 6, if a
 *user-defined-string-literal*s shall have the same *ud-suffix* and that
 suffix is applied to the result of the concatenation.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 int main() {

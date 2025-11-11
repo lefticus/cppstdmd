@@ -684,7 +684,7 @@ static element_type* to_address(pointer p) noexcept;
 *Returns:* A pointer of type `element_type*` that references the same
 location as the argument `p`.
 
-\[*Note 1*: This function is intended to be the inverse of `pointer_to`.
+[*Note 1*: This function is intended to be the inverse of `pointer_to`.
 If defined, it customizes the behavior of the non-member function
 `to_address`[[pointer.conversion]]. — *end note*\]
 
@@ -727,7 +727,7 @@ Otherwise, the function does nothing.
 *Returns:* A null pointer if the requested aligned buffer would not fit
 into the available space, otherwise the adjusted value of `ptr`.
 
-\[*Note 1*: The function updates its `ptr` and `space` arguments so that
+[*Note 1*: The function updates its `ptr` and `space` arguments so that
 it can be called repeatedly with possibly different `alignment` and
 `size` arguments for the same buffer. — *end note*\]
 
@@ -746,7 +746,7 @@ similar [[conv.qual]] to `T`, where `X` has alignment
 
 *Throws:* Nothing.
 
-\[*Note 2*: The alignment assumption on an object `X` expressed by a
+[*Note 2*: The alignment assumption on an object `X` expressed by a
 call to `assume_aligned` might result in generation of more efficient
 code. It is up to the program to ensure that the assumption actually
 holds. The call does not cause the implementation to verify or enforce
@@ -784,7 +784,7 @@ call to `bit_cast<U>(E)`[[bit.cast]], where `E` is an lvalue of type `U`
 denoting *o*, except that the storage is not accessed. The value of any
 other created object is unspecified.
 
-\[*Note 1*: The unspecified value can be indeterminate. — *end note*\]
+[*Note 1*: The unspecified value can be indeterminate. — *end note*\]
 
 *Returns:* A pointer to the *a* defined in the *Effects* paragraph.
 
@@ -887,7 +887,7 @@ members. The `make_obj_using_allocator` and
 modified constructor arguments to construct an object of type `T` as a
 return value or in-place, respectively.
 
-\[*Note 1*: For `uses_allocator_construction_args` and
+[*Note 1*: For `uses_allocator_construction_args` and
 `make_obj_using_allocator`, type `T` is not deduced and must therefore
 be specified explicitly by the caller. — *end note*\]
 
@@ -916,7 +916,7 @@ template<class T, class Alloc, class... Args>
   `forward_as_tuple(std::forward<Args>(args)..., alloc)`.
 - Otherwise, the program is ill-formed.
 
-\[*Note 1*: This definition prevents a silent failure to pass the
+[*Note 1*: This definition prevents a silent failure to pass the
 allocator to a constructor of a type for which
 `uses_allocator_v<T, Alloc>` is `true`. — *end note*\]
 
@@ -1108,7 +1108,7 @@ The class template `allocator_traits` supplies a uniform interface to
 all allocator types. An allocator cannot be a non-class type, however,
 even if `allocator_traits` supplies the entire required interface.
 
-\[*Note 1*: Thus, it is always possible to create a derived class from
+[*Note 1*: Thus, it is always possible to create a derived class from
 an allocator. — *end note*\]
 
 If a program declares an explicit or partial specialization of
@@ -1437,7 +1437,7 @@ subexpression.
 
 ### C library memory allocation <a id="c.malloc">[[c.malloc]]</a>
 
-\[*Note 1*: The header `<cstdlib>` declares the functions described in
+[*Note 1*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
 
 ``` cpp
@@ -1498,7 +1498,7 @@ semantics, each such `U` is *Cpp17MoveConstructible* and
 *Cpp17CopyAssignable*. The template parameter `T` of `unique_ptr` may be
 an incomplete type.
 
-\[*Note 1*: The uses of `unique_ptr` include providing exception safety
+[*Note 1*: The uses of `unique_ptr` include providing exception safety
 for dynamically allocated memory, passing ownership of dynamically
 allocated memory to a function, and returning dynamically allocated
 memory from a function. — *end note*\]
@@ -1643,7 +1643,7 @@ Otherwise `unique_ptr<T, D>::pointer` shall be a synonym for
 D>::pointer` shall meet the *Cpp17NullablePointer* requirements (
 [[cpp17.nullablepointer]]).
 
-\[*Example 1*: Given an allocator type `X`
+[*Example 1*: Given an allocator type `X`
 [[allocator.requirements.general]] and letting `A` be a synonym for
 `allocator_traits<X>`, the types `A::pointer`, `A::const_pointer`,
 `A::void_pointer`, and `A::const_void_pointer` may be used as
@@ -1710,7 +1710,7 @@ a reference to the lvalue `d`.
 *Remarks:* If `D` is a reference type, the second constructor is defined
 as deleted.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 D d;
@@ -1738,7 +1738,7 @@ exception.
 type, this deleter is copy constructed from `u`’s deleter; otherwise,
 this deleter is move constructed from `u`’s deleter.
 
-\[*Note 1*: The construction of the deleter can be implemented with
+[*Note 1*: The construction of the deleter can be implemented with
 `std::forward<D>`. — *end note*\]
 
 *Ensures:* `get()` yields the value `u.get()` yielded before the
@@ -1768,7 +1768,7 @@ exception.
 type, this deleter is copy constructed from `u`’s deleter; otherwise,
 this deleter is move constructed from `u`’s deleter.
 
-\[*Note 2*: The deleter constructor can be implemented with
+[*Note 2*: The deleter constructor can be implemented with
 `std::forward<E>`. — *end note*\]
 
 *Ensures:* `get()` yields the value `u.get()` yielded before the
@@ -1783,7 +1783,7 @@ constexpr ~unique_ptr();
 
 *Effects:* Equivalent to: `if (get()) get_deleter()(get());`
 
-\[*Note 3*: The use of `default_delete` requires `T` to be a complete
+[*Note 3*: The use of `default_delete` requires `T` to be a complete
 type. — *end note*\]
 
 *Remarks:* The behavior is undefined if the evaluation of
@@ -1864,7 +1864,7 @@ constexpr pointer operator->() const noexcept;
 
 *Returns:* `get()`.
 
-\[*Note 4*: The use of this function typically requires that `T` be a
+[*Note 4*: The use of this function typically requires that `T` be a
 complete type. — *end note*\]
 
 ``` cpp
@@ -1904,12 +1904,12 @@ constexpr void reset(pointer p = pointer()) noexcept;
 value of the stored pointer, `old_p`, evaluates
 `if (old_p) get_deleter()(old_p);`
 
-\[*Note 5*: The order of these operations is significant because the
+[*Note 5*: The order of these operations is significant because the
 call to `get_deleter()` might destroy `*this`. — *end note*\]
 
 *Ensures:* `get() == p`.
 
-\[*Note 6*: The postcondition does not hold if the call to
+[*Note 6*: The postcondition does not hold if the call to
 `get_deleter()` destroys `*this` since `this->get()` is no longer a
 valid expression. — *end note*\]
 
@@ -2040,7 +2040,7 @@ This constructor behaves the same as in the primary template.
 - either `D` is a reference type and `E` is the same type as `D`, or `D`
   is not a reference type and `E` is implicitly convertible to `D`.
 
-\[*Note 1*: This replaces the *Constraints:* specification of the
+[*Note 1*: This replaces the *Constraints:* specification of the
 primary template. — *end note*\]
 
 ##### Assignment <a id="unique.ptr.runtime.asgn">[[unique.ptr.runtime.asgn]]</a>
@@ -2059,7 +2059,7 @@ This operator behaves the same as in the primary template.
 - `UP::element_type(*)[]` is convertible to `element_type(*)[]`, and
 - `is_assignable_v<D&, E&&>` is `true`.
 
-\[*Note 2*: This replaces the *Constraints:* specification of the
+[*Note 2*: This replaces the *Constraints:* specification of the
 primary template. — *end note*\]
 
 ##### Observers <a id="unique.ptr.runtime.observers">[[unique.ptr.runtime.observers]]</a>
@@ -2417,9 +2417,9 @@ expressions and declarations in conditions.
 
 The template parameter `T` of `shared_ptr` may be an incomplete type.
 
-\[*Note 1*: `T` can be a function type. — *end note*\]
+[*Note 1*: `T` can be a function type. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 if (shared_ptr<X> px = dynamic_pointer_cast<X>(py)) {
@@ -2534,11 +2534,11 @@ ownership with the initial value of `r`.
 *Ensures:* `get() == p`. For the second overload, `r` is empty and
 `r.get() == nullptr`.
 
-\[*Note 1*: Use of this constructor leads to a dangling pointer unless
+[*Note 1*: Use of this constructor leads to a dangling pointer unless
 `p` remains valid at least until the ownership group of `r` is
 destroyed. — *end note*\]
 
-\[*Note 2*: This constructor allows creation of an empty `shared_ptr`
+[*Note 2*: This constructor allows creation of an empty `shared_ptr`
 instance with a non-null stored pointer. — *end note*\]
 
 ``` cpp
@@ -2607,7 +2607,7 @@ exception is thrown, the constructor has no effect.
   called.
 - Otherwise, `*this` owns a pointer `p`, and `delete p` is called.
 
-\[*Note 2*: Since the destruction of `*this` decreases the number of
+[*Note 2*: Since the destruction of `*this` decreases the number of
 instances that share ownership with `*this` by one, after `*this` has
 been destroyed all `shared_ptr` instances that shared ownership with
 `*this` will report a `use_count()` that is one less than its previous
@@ -2624,7 +2624,7 @@ template<class Y> shared_ptr& operator=(const shared_ptr<Y>& r) noexcept;
 
 *Returns:* `*this`.
 
-\[*Note 3*:
+[*Note 3*:
 
 The use count updates caused by the temporary object construction and
 destruction are not observable side effects, so the implementation can
@@ -2751,13 +2751,13 @@ long use_count() const noexcept;
 *Returns:* The number of `shared_ptr` objects, `*this` included, that
 share ownership with `*this`, or `0` when `*this` is empty.
 
-\[*Note 4*: `get() == nullptr` does not imply a specific return value of
+[*Note 4*: `get() == nullptr` does not imply a specific return value of
 `use_count()`. — *end note*\]
 
-\[*Note 5*: `weak_ptr<T>::lock()` can affect the return value of
+[*Note 5*: `weak_ptr<T>::lock()` can affect the return value of
 `use_count()`. — *end note*\]
 
-\[*Note 6*: When multiple threads might affect the return value of
+[*Note 6*: When multiple threads might affect the return value of
 `use_count()`, the result is approximate. In particular,
 `use_count() == 1` does not imply that accesses through a previously
 destroyed `shared_ptr` have in any sense completed. — *end note*\]
@@ -2879,7 +2879,7 @@ the initialization of the object.
   rebound copy of the allocator `a` passed to `allocate_shared` such
   that its `value_type` is `remove_cv_t<U>`.
 
-\[*Note 7*: These functions will typically allocate more memory than
+[*Note 7*: These functions will typically allocate more memory than
 `sizeof(T)` to allow for internal bookkeeping structures such as
 reference counts. — *end note*\]
 
@@ -2899,7 +2899,7 @@ template<class T, class A, class... Args>
 enable `shared_from_this` with the address of the newly constructed
 object of type `T`.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 shared_ptr<int> p = make_shared<int>(); // shared_ptr to int()
@@ -2921,7 +2921,7 @@ template<class T, class A>
 *Returns:* A `shared_ptr` to an object of type `U[N]` with a default
 initial value, where `U` is `remove_extent_t<T>`.
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 shared_ptr<double[]> p = make_shared<double[]>(1024);
@@ -2944,7 +2944,7 @@ template<class T, class A>
 *Returns:* A `shared_ptr` to an object of type `T` with a default
 initial value.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 shared_ptr<double[1024]> p = make_shared<double[1024]>();
@@ -2969,7 +2969,7 @@ template<class T, class A>
 *Returns:* A `shared_ptr` to an object of type `U[N]`, where `U` is
 `remove_extent_t<T>` and each array element has an initial value of `u`.
 
-\[*Example 4*:
+[*Example 4*:
 
 ``` cpp
 shared_ptr<double[]> p = make_shared<double[]>(1024, 1.0);
@@ -2995,7 +2995,7 @@ template<class T, class A>
 *Returns:* A `shared_ptr` to an object of type `T`, where each array
 element of type `remove_extent_t<T>` has an initial value of `u`.
 
-\[*Example 5*:
+[*Example 5*:
 
 ``` cpp
 shared_ptr<double[1024]> p = make_shared<double[1024]>(1.0);
@@ -3019,7 +3019,7 @@ template<class T, class A>
 
 *Returns:* A `shared_ptr` to an object of type `T`.
 
-\[*Example 6*:
+[*Example 6*:
 
 ``` cpp
 struct X { double data[1024]; };
@@ -3044,7 +3044,7 @@ template<class T, class A>
 *Returns:* A `shared_ptr` to an object of type `U[N]`, where `U` is
 `remove_extent_t<T>`.
 
-\[*Example 7*:
+[*Example 7*:
 
 ``` cpp
 shared_ptr<double[]> p = make_shared_for_overwrite<double[]>(1024);
@@ -3076,7 +3076,7 @@ template<class T, class U>
 
 *Returns:* `compare_three_way()(a.get(), b.get())`.
 
-\[*Note 8*: Defining a comparison operator function allows `shared_ptr`
+[*Note 8*: Defining a comparison operator function allows `shared_ptr`
 objects to be used as keys in associative containers. — *end note*\]
 
 ``` cpp
@@ -3120,7 +3120,7 @@ shared_ptr<T>(R, static_cast<typename shared_ptr<T>::element_type*>(r.get()))
 where *`R`* is `r` for the first overload, and `std::move(r)` for the
 second.
 
-\[*Note 9*: The seemingly equivalent expression
+[*Note 9*: The seemingly equivalent expression
 `shared_ptr<T>(static_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
 twice. — *end note*\]
@@ -3148,7 +3148,7 @@ well-defined behavior.
   is `r` for the first overload, and `std::move(r)` for the second.
 - Otherwise, `shared_ptr<T>()`.
 
-\[*Note 10*: The seemingly equivalent expression
+[*Note 10*: The seemingly equivalent expression
 `shared_ptr<T>(dynamic_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
 twice. — *end note*\]
@@ -3171,7 +3171,7 @@ shared_ptr<T>(R, const_cast<typename shared_ptr<T>::element_type*>(r.get()))
 where *`R`* is `r` for the first overload, and `std::move(r)` for the
 second.
 
-\[*Note 11*: The seemingly equivalent expression
+[*Note 11*: The seemingly equivalent expression
 `shared_ptr<T>(const_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
 twice. — *end note*\]
@@ -3195,7 +3195,7 @@ shared_ptr<T>(R, reinterpret_cast<typename shared_ptr<T>::element_type*>(r.get()
 where *`R`* is `r` for the first overload, and `std::move(r)` for the
 second.
 
-\[*Note 12*: The seemingly equivalent expression
+[*Note 12*: The seemingly equivalent expression
 `shared_ptr<T>(reinterpret_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
 twice. — *end note*\]
@@ -3212,7 +3212,7 @@ template<class D, class T>
 remains valid as long as there exists a `shared_ptr` instance that owns
 `d`.
 
-\[*Note 13*: It is unspecified whether the pointer remains valid longer
+[*Note 13*: It is unspecified whether the pointer remains valid longer
 than that. This can happen if the implementation doesn’t destroy the
 deleter until all `weak_ptr` instances that share ownership with `p`
 have been destroyed. — *end note*\]
@@ -3458,7 +3458,7 @@ namespace std {
 
 `operator()(x, y)` returns `x.owner_before(y)`.
 
-\[*Note 1*:
+[*Note 1*:
 
 Note that
 
@@ -3477,7 +3477,7 @@ A class `T` can inherit from `enable_shared_from_this<T>` to inherit the
 `shared_from_this` member functions that obtain a `shared_ptr` instance
 pointing to `*this`.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 struct X: public enable_shared_from_this<X> { };
@@ -3529,7 +3529,7 @@ enable_shared_from_this<T>& operator=(const enable_shared_from_this<T>&) noexcep
 
 *Returns:* `*this`.
 
-\[*Note 1*: `weak_this` is not changed. — *end note*\]
+[*Note 1*: `weak_this` is not changed. — *end note*\]
 
 ``` cpp
 shared_ptr<T>       shared_from_this();
@@ -3572,7 +3572,7 @@ evaluates to the same value as
 `out_ptr_t` is a class template used to adapt types such as smart
 pointers [[smartptr]] for functions that use output pointer parameters.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 #include <memory>
@@ -3628,7 +3628,7 @@ namespace std {
 is a specialization of `shared_ptr` and `sizeof...(Args) == 0`, the
 program is ill-formed.
 
-\[*Note 1*: It is typically a user error to reset a `shared_ptr` without
+[*Note 1*: It is typically a user error to reset a `shared_ptr` without
 specifying a deleter, as `shared_ptr` will replace a custom deleter upon
 usage of `reset`, as specified in
 [[util.smartptr.shared.mod]]. — *end note*\]
@@ -3663,7 +3663,7 @@ equivalent to:
 
 - otherwise, the program is ill-formed.
 
-\[*Note 1*: The constructor is not `noexcept` to allow for a variety of
+[*Note 1*: The constructor is not `noexcept` to allow for a variety of
 non-terminating and safe implementation strategies. For example, an
 implementation can allocate a `shared_ptr`’s internal node in the
 constructor and let implementation-defined exceptions escape safely. The
@@ -3728,7 +3728,7 @@ operator void**() const noexcept;
 *Remarks:* Accessing `*v` outside the lifetime of `*this` has undefined
 behavior.
 
-\[*Note 2*: `reinterpret_cast<void**>(static_cast<Pointer*>(*this))` can
+[*Note 2*: `reinterpret_cast<void**>(static_cast<Pointer*>(*this))` can
 be a viable implementation strategy for some
 implementations. — *end note*\]
 
@@ -3752,7 +3752,7 @@ pointers [[smartptr]] for functions that use output pointer parameters
 whose dereferenced values may first be deleted before being set to
 another allocated value.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 #include <memory>
@@ -3806,7 +3806,7 @@ namespace std {
 `Pointer` shall meet the *Cpp17NullablePointer* requirements. If `Smart`
 is a specialization of `shared_ptr`, the program is ill-formed.
 
-\[*Note 1*: It is impossible to properly acquire unique ownership of the
+[*Note 1*: It is impossible to properly acquire unique ownership of the
 managed resource from a `shared_ptr` given its shared ownership
 model. — *end note*\]
 
@@ -3829,7 +3829,7 @@ explicit inout_ptr_t(Smart& smart, Args... args);
 
 *Remarks:* An implementation can call `s.release()`.
 
-\[*Note 1*: The constructor is not `noexcept` to allow for a variety of
+[*Note 1*: The constructor is not `noexcept` to allow for a variety of
 non-terminating and safe implementation strategies. For example, an
 intrusive pointer implementation with a control block can allocate in
 the constructor and safely fail with an exception. — *end note*\]
@@ -3906,7 +3906,7 @@ operator void**() const noexcept;
 *Remarks:* Accessing `*v` outside the lifetime of `*this` has undefined
 behavior.
 
-\[*Note 2*: `reinterpret_cast<void**>(static_cast<Pointer*>(*this))` can
+[*Note 2*: `reinterpret_cast<void**>(static_cast<Pointer*>(*this))` can
 be a viable implementation strategy for some
 implementations. — *end note*\]
 
@@ -4057,7 +4057,7 @@ virtual bool do_is_equal(const memory_resource& other) const noexcept = 0;
 `true` if memory allocated from `this` can be deallocated from `other`
 and vice-versa, otherwise `false`.
 
-\[*Note 1*: It is possible that the most-derived type of `other` does
+[*Note 1*: It is possible that the most-derived type of `other` does
 not match the type of `this`. For a derived class `D`, an implementation
 of this function can immediately return `false` if
 `dynamic_cast<const D*>(&other) == nullptr`. — *end note*\]
@@ -4153,7 +4153,7 @@ polymorphic_allocator(memory_resource* r);
 
 *Throws:* Nothing.
 
-\[*Note 1*: This constructor provides an implicit conversion from
+[*Note 1*: This constructor provides an implicit conversion from
 `memory_resource*`. — *end note*\]
 
 ``` cpp
@@ -4194,7 +4194,7 @@ void deallocate(Tp* p, size_t n);
 *Effects:* Equivalent to:
 `return memory_rsrc->allocate(nbytes, alignment);`
 
-\[*Note 1*: The return type is `void*` (rather than, e.g., `byte*`) to
+[*Note 1*: The return type is `void*` (rather than, e.g., `byte*`) to
 support conversion to an arbitrary pointer type `U*` by
 `static_cast<U*>`, thus facilitating construction of a `U` object in the
 allocated memory. — *end note*\]
@@ -4221,7 +4221,7 @@ of type `T`, as follows:
   return static_cast<T*>(allocate_bytes(n*sizeof(T), alignof(T)));
   ```
 
-\[*Note 2*: `T` is not deduced and must therefore be provided as a
+[*Note 2*: `T` is not deduced and must therefore be provided as a
 template argument. — *end note*\]
 
 ``` cpp
@@ -4250,7 +4250,7 @@ try {
 return p;
 ```
 
-\[*Note 3*: `T` is not deduced and must therefore be provided as a
+[*Note 3*: `T` is not deduced and must therefore be provided as a
 template argument. — *end note*\]
 
 ``` cpp
@@ -4286,7 +4286,7 @@ polymorphic_allocator select_on_container_copy_construction() const;
 
 *Returns:* `polymorphic_allocator()`.
 
-\[*Note 4*: The memory resource is not propagated. — *end note*\]
+[*Note 4*: The memory resource is not propagated. — *end note*\]
 
 ``` cpp
 memory_resource* resource() const;
@@ -4494,7 +4494,7 @@ request from its own internal data structures. The resulting object will
 hold a copy of `upstream`, but will not own the resource to which
 `upstream` points.
 
-\[*Note 1*: The intention is that calls to `upstream->allocate()` will
+[*Note 1*: The intention is that calls to `upstream->allocate()` will
 be substantially fewer than calls to `this->allocate()` in most
 cases. — *end note*\]
 
@@ -4521,7 +4521,7 @@ void release();
 *Effects:* Calls `upstream_resource()->deallocate()` as necessary to
 release all allocated memory.
 
-\[*Note 1*: The memory is released back to `upstream_resource()` even if
+[*Note 1*: The memory is released back to `upstream_resource()` even if
 `deallocate` has not been called for some of the allocated
 blocks. — *end note*\]
 
@@ -4665,7 +4665,7 @@ void release();
 all allocated memory. Resets `current_buffer` and `next_buffer_size` to
 their initial values at construction.
 
-\[*Note 1*: The memory is released back to `upstream_rsrc` even if some
+[*Note 1*: The memory is released back to `upstream_rsrc` even if some
 blocks that were allocated from `this` have not been deallocated from
 `this`. — *end note*\]
 
@@ -4749,7 +4749,7 @@ a depth greater than the number of allocators, the last allocator is
 used repeatedly, as in the single-allocator case, for any remaining
 recursions.
 
-\[*Note 1*: The `scoped_allocator_adaptor` is derived from the outer
+[*Note 1*: The `scoped_allocator_adaptor` is derived from the outer
 allocator type so it can be substituted for the outer allocator type in
 most expressions. — *end note*\]
 
@@ -4937,7 +4937,7 @@ In the `construct` member functions, `OUTERMOST(x)` is
 is valid  [[temp.deduct]] and `x` otherwise; `OUTERMOST_ALLOC_TRAITS(x)`
 is `allocator_traits<remove_reference_t<decltype(OUTERMOST(x))>>`.
 
-\[*Note 1*: `OUTERMOST(x)` and `OUTERMOST_ALLOC_TRAITS(x)` are recursive
+[*Note 1*: `OUTERMOST(x)` and `OUTERMOST_ALLOC_TRAITS(x)` are recursive
 operations. It is incumbent upon the definition of `outer_allocator()`
 to ensure that the recursion terminates. It will terminate for all
 instantiations of `scoped_allocator_adaptor`. — *end note*\]

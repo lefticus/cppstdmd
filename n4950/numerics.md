@@ -40,7 +40,7 @@ successfully instantiated and will exhibit well-defined behavior if and
 only if `T` meets additional requirements specified for each such member
 or related function.
 
-\[*Example 1*: It is valid to instantiate `valarray<complex>`, but
+[*Example 1*: It is valid to instantiate `valarray<complex>`, but
 `operator>()` will not be successfully instantiated for
 `valarray<complex>` operands, since `complex` does not have any ordering
 operators. — *end example*\]
@@ -89,7 +89,7 @@ namespace std {
 The contents and meaning of the header `<cfenv>` are the same as the C
 standard library header `<fenv.h>`.
 
-\[*Note 1*: This document does not require an implementation to support
+[*Note 1*: This document does not require an implementation to support
 the `FENV_ACCESS` pragma; it is *implementation-defined* [[cpp.pragma]]
 whether the pragma is supported. As a consequence, it is
 *implementation-defined* whether these functions can be used to test
@@ -108,7 +108,7 @@ that constructs the corresponding `thread` object
 [[thread.thread.class]] or `jthread` object [[thread.jthread.class]] at
 the time it constructed the object.
 
-\[*Note 1*: That is, the child thread gets the floating-point state of
+[*Note 1*: That is, the child thread gets the floating-point state of
 the parent thread at the time of the child’s creation. — *end note*\]
 
 A separate floating-point environment is maintained for each thread.
@@ -482,7 +482,7 @@ s << '(' << x.real() << ',' << x.imag() << ')';
 return o << s.str();
 ```
 
-\[*Note 1*: In a locale in which comma is used as a decimal point
+[*Note 1*: In a locale in which comma is used as a decimal point
 character, the use of comma as a field separator can be ambiguous.
 Inserting `showpoint` into the output stream forces all outputs to show
 an explicit decimal point character; as a result, all inserted sequences
@@ -618,7 +618,7 @@ template<class T> complex<T> log(const complex<T>& x);
 *Returns:* The complex natural (base-e) logarithm of `x`. For all `x`,
 `imag(log(x))` lies in the interval \[-π, π\].
 
-\[*Note 1*: The semantics of this function are intended to be the same
+[*Note 1*: The semantics of this function are intended to be the same
 in C++ as they are for `clog` in C. — *end note*\]
 
 *Remarks:* The branch cuts are along the negative real axis.
@@ -663,7 +663,7 @@ template<class T> complex<T> sqrt(const complex<T>& x);
 *Returns:* The complex square root of `x`, in the range of the right
 half-plane.
 
-\[*Note 2*: The semantics of this function are intended to be the same
+[*Note 2*: The semantics of this function are intended to be the same
 in C++ as they are for `csqrt` in C. — *end note*\]
 
 *Remarks:* The branch cuts are along the negative real axis.
@@ -748,7 +748,7 @@ These categorizations are applicable to types that meet the
 corresponding requirements, to objects instantiated from such types, and
 to templates producing such types when instantiated.
 
-\[*Note 1*: These entities are specified in such a way as to permit the
+[*Note 1*: These entities are specified in such a way as to permit the
 binding of any uniform random bit generator object `e` as the argument
 to any random number distribution object `d`, thus producing a
 zero-argument function object such as given by
@@ -963,7 +963,7 @@ A *seed sequence* is an object that consumes a sequence of
 integer-valued data and produces a requested number of unsigned integer
 values i, $0 \le i < 2^{32}$, based on the consumed data.
 
-\[*Note 1*: Such an object provides a mechanism to avoid replication of
+[*Note 1*: Such an object provides a mechanism to avoid replication of
 streams of random variates. This can be useful, for example, in
 applications requiring large numbers of random number
 engines. — *end note*\]
@@ -990,7 +990,7 @@ A *uniform random bit generator* `g` of type `G` is a function object
 returning unsigned integer values such that each value in the range of
 possible results has (ideally) equal probability of being returned.
 
-\[*Note 1*: The degree to which `g`’s results approximate the ideal is
+[*Note 1*: The degree to which `g`’s results approximate the ideal is
 often determined statistically. — *end note*\]
 
 ``` cpp
@@ -1320,7 +1320,7 @@ If the template parameter `m` is 0, the modulus m used throughout this
 subclause  [[rand.eng.lcong]] is `numeric_limits<result_type>::max()`
 plus 1.
 
-\[*Note 1*: m need not be representable as a value of type
+[*Note 1*: m need not be representable as a value of type
 `result_type`. — *end note*\]
 
 If the template parameter `m` is not 0, the following relations shall
@@ -1485,7 +1485,7 @@ The state transition is performed as follows:
 - Let $Y = X_{i-s} - X_{i-r} - c$.
 - Set Xᵢ to y = Y  mod  m. Set c to 1 if Y < 0, otherwise set c to 0.
 
-\[*Note 1*: This algorithm corresponds to a modular linear function of
+[*Note 1*: This algorithm corresponds to a modular linear function of
 the form $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$,
 where b is of the form $m^r - m^s + 1$ and
 a = b - (b - 1) / m. — *end note*\]
@@ -1700,7 +1700,7 @@ following integral constants:
   $R - y_0 \leq \left\lfloor y_0 / n \right\rfloor$ holds as a result.
   Otherwise let $n = 1 + \left\lceil w / m \right\rceil$.
 
-\[*Note 1*: The relation w = n₀ w₀ + (n - n₀)(w₀ + 1) always
+[*Note 1*: The relation w = n₀ w₀ + (n - n₀)(w₀ + 1) always
 holds. — *end note*\]
 
 The transition algorithm is carried out by invoking `e()` as often as
@@ -1943,7 +1943,7 @@ using default_random_engine = implementation-defined;
 *Remarks:* The choice of engine type named by this `typedef` is
 *implementation-defined*.
 
-\[*Note 1*: The implementation can select this type on the basis of
+[*Note 1*: The implementation can select this type on the basis of
 performance, size, quality, or any combination of such factors, so as to
 provide at least acceptable engine behavior for relatively casual,
 inexpert, and/or lightweight use. Because different implementations can
@@ -2193,7 +2193,7 @@ $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
 
 *Returns:* $S / R^k$.
 
-\[*Note 1*: $0 \leq S / R^k < 1$. — *end note*\]
+[*Note 1*: $0 \leq S / R^k < 1$. — *end note*\]
 
 *Throws:* What and when `g` throws.
 
@@ -2204,7 +2204,7 @@ where b[^6]
 is the lesser of `numeric_limits<RealType>::digits` and `bits`, and R is
 the value of `g.max()` - `g.min()` + 1.
 
-\[*Note 2*: If the values gᵢ produced by `g` are uniformly distributed,
+[*Note 2*: If the values gᵢ produced by `g` are uniformly distributed,
 the instantiation’s results are distributed as uniformly as possible.
 Obtaining a value in this way can be a useful step in the process of
 transforming a value generated by a uniform random bit generator into a
@@ -2313,7 +2313,7 @@ A `uniform_real_distribution` random number distribution produces random
 numbers x, a ≤ x < b, distributed according to the constant probability
 density function $$p(x\,|\,a,b) = 1 / (b - a) \text{ .}$$
 
-\[*Note 1*: This implies that p(x | a,b) is undefined when
+[*Note 1*: This implies that p(x | a,b) is undefined when
 `a == b`. — *end note*\]
 
 ``` cpp
@@ -2593,7 +2593,7 @@ random integers i ≥ 0 distributed according to the discrete probability
 function
 $$P(i\,|\,k,p) = \binom{k+i-1}{i} \cdot p^k \cdot (1-p)^i \text{ .}$$
 
-\[*Note 1*: This implies that P(i | k,p) is undefined when
+[*Note 1*: This implies that P(i | k,p) is undefined when
 `p == 1`. — *end note*\]
 
 ``` cpp
@@ -3518,7 +3518,7 @@ discrete_distribution();
 *Effects:* Constructs a `discrete_distribution` object with n = 1 and
 p₀ = 1.
 
-\[*Note 1*: Such an object will always deliver the value
+[*Note 1*: Such an object will always deliver the value
 0. — *end note*\]
 
 ``` cpp
@@ -3866,7 +3866,7 @@ k = 0, …, n.
 
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
-\[*Note 1*: The header `<cstdlib>` declares the functions described in
+[*Note 1*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
 
 ``` cpp
@@ -3881,7 +3881,7 @@ in the C standard library.
 functions may call `rand`. It is *implementation-defined* whether the
 `rand` function may introduce data races [[res.on.data.races]].
 
-\[*Note 1*: The other random number generation facilities in this
+[*Note 1*: The other random number generation facilities in this
 document [[rand]] are often preferable to `rand`, because `rand`’s
 underlying algorithm is unspecified. Use of `rand` therefore continues
 to be non-portable, with unpredictable and oft-questionable quality and
@@ -4322,7 +4322,7 @@ T& operator[](size_t n);
 
 *Returns:* A reference to the corresponding element of the array.
 
-\[*Note 1*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
+[*Note 1*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
 for any non-constant `valarray<T> a`, any `T q`, and for any `size_t i`
 such that the value of `i` is less than the length of
 `a`. — *end note*\]
@@ -4335,7 +4335,7 @@ The expression `addressof(a[i]) != addressof(b[j])` evaluates to `true`
 for any two arrays `a` and `b` and for any `size_t i` and `size_t j`
 such that `i < a.size()` and `j < b.size()`.
 
-\[*Note 2*: This property indicates an absence of aliasing and can be
+[*Note 2*: This property indicates an absence of aliasing and can be
 used to advantage by optimizing compilers. Compilers can take advantage
 of inlining, constant propagation, loop fusion, tracking of pointers
 obtained from `operator new`, and other techniques to generate efficient
@@ -4365,7 +4365,7 @@ valarray operator[](slice slicearr) const;
 *Returns:* A `valarray` containing those elements of the controlled
 sequence designated by `slicearr`.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
@@ -4381,7 +4381,7 @@ slice_array<T> operator[](slice slicearr);
 *Returns:* An object that holds references to elements of the controlled
 sequence selected by `slicearr`.
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 valarray<char> v0("abcdefghijklmnop", 16);
@@ -4399,7 +4399,7 @@ valarray operator[](const gslice& gslicearr) const;
 *Returns:* A `valarray` containing those elements of the controlled
 sequence designated by `gslicearr`.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
@@ -4419,7 +4419,7 @@ gslice_array<T> operator[](const gslice& gslicearr);
 *Returns:* An object that holds references to elements of the controlled
 sequence selected by `gslicearr`.
 
-\[*Example 4*:
+[*Example 4*:
 
 ``` cpp
 valarray<char> v0("abcdefghijklmnop", 16);
@@ -4440,7 +4440,7 @@ valarray operator[](const valarray<bool>& boolarr) const;
 *Returns:* A `valarray` containing those elements of the controlled
 sequence designated by `boolarr`.
 
-\[*Example 5*:
+[*Example 5*:
 
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
@@ -4458,7 +4458,7 @@ mask_array<T> operator[](const valarray<bool>& boolarr);
 *Returns:* An object that holds references to elements of the controlled
 sequence selected by `boolarr`.
 
-\[*Example 6*:
+[*Example 6*:
 
 ``` cpp
 valarray<char> v0("abcdefghijklmnop", 16);
@@ -4477,7 +4477,7 @@ valarray operator[](const valarray<size_t>& indarr) const;
 *Returns:* A `valarray` containing those elements of the controlled
 sequence designated by `indarr`.
 
-\[*Example 7*:
+[*Example 7*:
 
 ``` cpp
 const valarray<char> v0("abcdefghijklmnop", 16);
@@ -4495,7 +4495,7 @@ indirect_array<T> operator[](const valarray<size_t>& indarr);
 *Returns:* An object that holds references to elements of the controlled
 sequence selected by `indarr`.
 
-\[*Example 8*:
+[*Example 8*:
 
 ``` cpp
 valarray<char> v0("abcdefghijklmnop", 16);
@@ -4646,11 +4646,11 @@ valarray shift(int n) const;
 is `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
 `size()`, otherwise `T()`.
 
-\[*Note 1*: If element zero is taken as the leftmost element, a positive
+[*Note 1*: If element zero is taken as the leftmost element, a positive
 value of `n` shifts the elements left `n` places, with zero
 fill. — *end note*\]
 
-\[*Example 1*: If the argument has the value -2, the first two elements
+[*Example 1*: If the argument has the value -2, the first two elements
 of the result will be value-initialized [[dcl.init]]; the third element
 of the result will be assigned the value of the first element of
 `*this`; etc. — *end example*\]
@@ -4907,7 +4907,7 @@ constructor is provided only to permit the declaration of arrays of
 slices. The constructor with arguments for a slice takes a start,
 length, and stride parameter.
 
-\[*Example 1*: `slice(3, 8, 2)` constructs a slice which selects
+[*Example 1*: `slice(3, 8, 2)` constructs a slice which selects
 elements 3, 5, 7, …, 17 from an array. — *end example*\]
 
 #### Access functions <a id="slice.access">[[slice.access]]</a>
@@ -4976,7 +4976,7 @@ slice_array<T> valarray<T>::operator[](slice);
 It has reference semantics to a subset of an array specified by a
 `slice` object.
 
-\[*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
+[*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
 assigning the elements of `b` to a slice of the elements in `a`. For the
 slice shown, the elements selected from `a` are
 1, 4, …, 13. — *end example*\]
@@ -5053,7 +5053,7 @@ which is one-dimensional. The set of one-dimensional index values
 specified by a `gslice` are $$k = s + \sum_j i_j d_j$$ where the
 multidimensional indices iⱼ range in value from 0 to $l_{ij} - 1$.
 
-\[*Example 1*:
+[*Example 1*:
 
 The `gslice` specification
 
@@ -5074,7 +5074,7 @@ That is, the highest-ordered index turns fastest.
 It is possible to have degenerate generalized slices in which an address
 is repeated.
 
-\[*Example 2*:
+[*Example 2*:
 
 If the stride parameters in the previous example are changed to {1, 1,
 1}, the first few elements of the resulting sequence of indices will be
@@ -5342,7 +5342,7 @@ values of the argument array elements to selected elements of the
 If the `indirect_array` specifies an element in the `valarray<T>` object
 to which it refers more than once, the behavior is undefined.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 int addr[] = {2, 3, 1, 4, 4};
@@ -5828,7 +5828,7 @@ three-dimensional hypotenuse function [[c.math.hypot3]], a linear
 interpolation function [[c.math.lerp]], and the mathematical special
 functions described in [[sf.cmath]].
 
-\[*Note 1*: Several functions have additional overloads in this
+[*Note 1*: Several functions have additional overloads in this
 document, but they have the same behavior as in the C standard library
 [[library.c]]. — *end note*\]
 
@@ -5857,7 +5857,7 @@ floating-point type.
 
 ### Absolute values <a id="c.math.abs">[[c.math.abs]]</a>
 
-\[*Note 1*: The headers `<cstdlib>` and `<cmath>` declare the functions
+[*Note 1*: The headers `<cstdlib>` and `<cmath>` declare the functions
 described in this subclause. — *end note*\]
 
 ``` cpp
@@ -5874,7 +5874,7 @@ respectively.
 `is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int` by
 integral promotion [[conv.prom]], the program is ill-formed.
 
-\[*Note 1*: Arguments that can be promoted to `int` are permitted for
+[*Note 1*: Arguments that can be promoted to `int` are permitted for
 compatibility with C. — *end note*\]
 
 ``` cpp

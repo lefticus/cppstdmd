@@ -335,7 +335,7 @@ An expression `assert(E)` is a constant subexpression
 The contents of the header `<cerrno>` are the same as the POSIX header
 `<errno.h>`, except that `errno` shall be defined as a macro.
 
-\[*Note 1*: The intent is to remain in close alignment with the POSIX
+[*Note 1*: The intent is to remain in close alignment with the POSIX
 standard. — *end note*\]
 
 A separate `errno` value is provided for each thread.
@@ -587,7 +587,7 @@ Classes may be derived from `error_category` to support categories of
 errors in addition to those defined in this document. Such classes shall
 behave as specified in subclause  [[syserr.errcat]].
 
-\[*Note 1*: `error_category` objects are passed by reference, and two
+[*Note 1*: `error_category` objects are passed by reference, and two
 such objects are equal if they have the same address. If there is more
 than a single object of a custom `error_category` type, such equality
 comparisons can evaluate to `false` even for objects holding the same
@@ -662,7 +662,7 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 
 *Returns:* `compare_three_way()(this, &rhs)`.
 
-\[*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
+[*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
 total ordering for pointers. — *end note*\]
 
 #### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
@@ -728,7 +728,7 @@ to a POSIX `errno` value `pxv`, the function returns
 returns `error_condition(ev, system_category())`. What constitutes
 correspondence for any given operating system is unspecified.
 
-\[*Note 1*: The number of potential system error codes is large and
+[*Note 1*: The number of potential system error codes is large and
 unbounded, and some might not correspond to any POSIX `errno` value.
 Thus implementations are given latitude in determining
 correspondence. — *end note*\]
@@ -741,7 +741,7 @@ The class `error_code` describes an object used to hold error code
 values, such as those originating from the operating system or other
 low-level application program interfaces.
 
-\[*Note 1*: Class `error_code` is an adjunct to error reporting by
+[*Note 1*: Class `error_code` is an adjunct to error reporting by
 exception. — *end note*\]
 
 ``` cpp
@@ -895,7 +895,7 @@ template<class charT, class traits>
 The class `error_condition` describes an object used to hold values
 identifying error conditions.
 
-\[*Note 1*: `error_condition` values are portable abstractions, while
+[*Note 1*: `error_condition` values are portable abstractions, while
 `error_code` values [[syserr.errcode]] are implementation
 specific. — *end note*\]
 
@@ -1095,7 +1095,7 @@ error conditions that have an associated error code. Such error
 conditions typically originate from the operating system or other
 low-level application program interfaces.
 
-\[*Note 1*: If an error represents an out-of-memory condition,
+[*Note 1*: If an error represents an out-of-memory condition,
 implementations are encouraged to throw an exception object of type
 `bad_alloc` [[bad.alloc]] rather than `system_error`. — *end note*\]
 
@@ -1175,7 +1175,7 @@ const char* what() const noexcept override;
 *Returns:* An NTBS incorporating the arguments supplied in the
 constructor.
 
-\[*Note 1*: The returned NTBS might be the contents of
+[*Note 1*: The returned NTBS might be the contents of
 `what_arg + ": " + code.message()`. — *end note*\]
 
 ## Stacktrace <a id="stacktrace">[[stacktrace]]</a>
@@ -1307,7 +1307,7 @@ constexpr explicit operator bool() const noexcept;
 
 #### Query <a id="stacktrace.entry.query">[[stacktrace.entry.query]]</a>
 
-\[*Note 1*: All the `stacktrace_entry` query functions treat errors
+[*Note 1*: All the `stacktrace_entry` query functions treat errors
 other than memory allocation errors as “no information available” and do
 not throw in that case. — *end note*\]
 
@@ -1456,7 +1456,7 @@ stacktrace of the current evaluation in the current thread of execution,
 or an empty `basic_stacktrace` object if the initialization of `frames_`
 failed. `alloc` is passed to the constructor of the `frames_` object.
 
-\[*Note 1*: If the stacktrace was successfully obtained, then
+[*Note 1*: If the stacktrace was successfully obtained, then
 `frames_.front()` is the `stacktrace_entry` representing approximately
 the current evaluation, and `frames_.back()` is the `stacktrace_entry`
 representing approximately the initial function of the current thread of
@@ -1655,7 +1655,7 @@ string to_string(const basic_stacktrace<Allocator>& st);
 
 *Returns:* A string with a description of `st`.
 
-\[*Note 1*: The number of lines is not guaranteed to be equal to
+[*Note 1*: The number of lines is not guaranteed to be equal to
 `st.size()`. — *end note*\]
 
 ``` cpp
@@ -1686,7 +1686,7 @@ as follows:
     fill-and-alignₒₚₜ widthₒₚₜ
 ```
 
-\[*Note 1*: The productions *fill-and-align* and *width* are described
+[*Note 1*: The productions *fill-and-align* and *width* are described
 in [[format.string.std]]. — *end note*\]
 
 A `stacktrace_entry` object `se` is formatted as if by copying

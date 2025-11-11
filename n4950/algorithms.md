@@ -33,7 +33,7 @@ When found by unqualified [[basic.lookup.unqual]] name lookup for the
 *postfix-expression* in a function call [[expr.call]], they inhibit
 argument-dependent name lookup.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 void foo() {
@@ -93,7 +93,7 @@ requirements.
   iterator, or model `random_access_iterator`
   [[iterator.concept.random.access]] otherwise.
 
-\[*Note 1*: These requirements do not affect iterator arguments that are
+[*Note 1*: These requirements do not affect iterator arguments that are
 constrained, for which iterator category and mutability requirements are
 expressed explicitly. — *end note*\]
 
@@ -143,7 +143,7 @@ The parameters `UnaryOperation`, `BinaryOperation`, `BinaryOperation1`,
 and `BinaryOperation2` are used whenever an algorithm expects a function
 object [[function.objects]].
 
-\[*Note 2*: Unless otherwise specified, algorithms that take function
+[*Note 2*: Unless otherwise specified, algorithms that take function
 objects as arguments can copy those function objects freely. If object
 identity is important, a wrapper class that points to a non-copied
 implementation object such as `reference_wrapper<T>` [[refwrap]], or
@@ -202,7 +202,7 @@ The well-formedness and behavior of a call to an algorithm with an
 explicitly-specified template argument list is unspecified, except where
 explicitly stated otherwise.
 
-\[*Note 3*: Consequently, an implementation can declare an algorithm
+[*Note 3*: Consequently, an implementation can declare an algorithm
 with different template parameters than those presented. — *end note*\]
 
 ## Parallel algorithms <a id="algorithms.parallel">[[algorithms.parallel]]</a>
@@ -226,7 +226,7 @@ arguments by invoking the following functions:
 
 These functions are herein called *element access functions*.
 
-\[*Example 1*:
+[*Example 1*:
 
 The `sort` function may invoke the following element access functions:
 
@@ -244,12 +244,12 @@ to synchronize with another function invocation, or another function
 invocation is specified to synchronize with it, and if it is not a
 memory allocation or deallocation function.
 
-\[*Note 1*: Implementations must ensure that internal synchronization
+[*Note 1*: Implementations must ensure that internal synchronization
 inside standard library functions does not prevent forward progress when
 those functions are executed by threads of execution with weakly
 parallel forward progress guarantees. — *end note*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 int x = 0;
@@ -293,7 +293,7 @@ will perform no other unsynchronized accesses to that object. The
 modifying element access functions are those which are specified as
 modifying the object.
 
-\[*Note 1*: For example, `swap`, `++`, `--`, `@=`, and assignments
+[*Note 1*: For example, `swap`, `++`, `--`, `@=`, and assignments
 modify the object. For the assignment and `@=` operators, only the left
 argument is modified. — *end note*\]
 
@@ -302,7 +302,7 @@ elements (with type `T`) from sequences where
 `is_trivially_copy_constructible_v<T>` and
 `is_trivially_destructible_v<T>` are `true`.
 
-\[*Note 2*: This implies that user-supplied function objects cannot rely
+[*Note 2*: This implies that user-supplied function objects cannot rely
 on object identity of arguments for such input sequences. If object
 identity of the arguments to these function objects is important, a
 wrapping iterator that returns a non-copied implementation object such
@@ -314,7 +314,7 @@ invoked with an execution policy object of type
 `execution::sequenced_policy` all occur in the calling thread of
 execution.
 
-\[*Note 3*: The invocations are not interleaved; see 
+[*Note 3*: The invocations are not interleaved; see 
 [[intro.execution]]. — *end note*\]
 
 The invocations of element access functions in parallel algorithms
@@ -323,7 +323,7 @@ invoked with an execution policy object of type
 fashion in the calling thread of execution, unsequenced with respect to
 one another in the calling thread of execution.
 
-\[*Note 4*: This means that multiple function object invocations can be
+[*Note 4*: This means that multiple function object invocations can be
 interleaved on a single thread of execution, which overrides the usual
 guarantee from [[intro.execution]] that function executions do not
 overlap with one another. — *end note*\]
@@ -332,7 +332,7 @@ The behavior of a program is undefined if it invokes a
 vectorization-unsafe standard library function from user code called
 from an `execution::unsequenced_policy` algorithm.
 
-\[*Note 5*: Because `execution::unsequenced_policy` allows the execution
+[*Note 5*: Because `execution::unsequenced_policy` allows the execution
 of element access functions to be interleaved on a single thread of
 execution, blocking synchronization, including the use of mutexes, risks
 deadlock. — *end note*\]
@@ -351,10 +351,10 @@ guarantees; otherwise, the provided forward progress guarantee is
 thread of execution are indeterminately sequenced with respect to each
 other.
 
-\[*Note 6*: It is the caller’s responsibility to ensure that the
+[*Note 6*: It is the caller’s responsibility to ensure that the
 invocation does not introduce data races or deadlocks. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 int a[] = {0,1};
@@ -369,7 +369,7 @@ to the container `v`.
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 std::atomic<int> x{0};
@@ -387,7 +387,7 @@ the same thread of execution.
 
 — *end example*\]
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 int x = 0;
@@ -413,7 +413,7 @@ threads of execution are either the invoking thread of execution or
 threads of execution implicitly created by the library; the latter will
 provide weakly parallel forward progress guarantees.
 
-\[*Note 7*: This means that multiple function object invocations can be
+[*Note 7*: This means that multiple function object invocations can be
 interleaved on a single thread of execution, which overrides the usual
 guarantee from [[intro.execution]] that function executions do not
 overlap with one another. — *end note*\]
@@ -422,12 +422,12 @@ The behavior of a program is undefined if it invokes a
 vectorization-unsafe standard library function from user code called
 from an `execution::parallel_unsequenced_policy` algorithm.
 
-\[*Note 8*: Because `execution::parallel_unsequenced_policy` allows the
+[*Note 8*: Because `execution::parallel_unsequenced_policy` allows the
 execution of element access functions to be interleaved on a single
 thread of execution, blocking synchronization, including the use of
 mutexes, risks deadlock. — *end note*\]
 
-\[*Note 9*: The semantics of invocation with
+[*Note 9*: The semantics of invocation with
 `execution::unsequenced_policy`, `execution::parallel_policy`, or
 `execution::parallel_unsequenced_policy` allow the implementation to
 fall back to sequential execution if the system cannot parallelize an
@@ -445,7 +445,7 @@ will either
 the thread of execution will continue to do so until the algorithm is
 finished.
 
-\[*Note 10*: In blocking with forward progress guarantee delegation in
+[*Note 10*: In blocking with forward progress guarantee delegation in
 this context, a thread of execution created by the library is considered
 to have finished execution as soon as it has finished the execution of
 the particular element access function that the invoking thread of
@@ -472,7 +472,7 @@ overload has an additional template type parameter named
 each parallel algorithm overload has an additional function parameter of
 type `ExecutionPolicy&&`, which is the first function parameter.
 
-\[*Note 1*: Not all algorithms have parallel algorithm
+[*Note 1*: Not all algorithms have parallel algorithm
 overloads. — *end note*\]
 
 Unless otherwise specified, the semantics of `ExecutionPolicy` algorithm
@@ -3233,14 +3233,14 @@ template<class InputIterator, class Function>
 *Preconditions:* `Function` meets the *Cpp17MoveConstructible*
 requirements ( [[cpp17.moveconstructible]]).
 
-\[*Note 1*: `Function` need not meet the requirements of
+[*Note 1*: `Function` need not meet the requirements of
 *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]). — *end note*\]
 
 *Effects:* Applies `f` to the result of dereferencing every iterator in
 the range \[`first`, `last`), starting from `first` and proceeding to
 `last - 1`.
 
-\[*Note 2*: If the type of `first` meets the requirements of a mutable
+[*Note 2*: If the type of `first` meets the requirements of a mutable
 iterator, `f` can apply non-constant functions through the dereferenced
 iterator. — *end note*\]
 
@@ -3263,7 +3263,7 @@ requirements.
 *Effects:* Applies `f` to the result of dereferencing every iterator in
 the range \[`first`, `last`).
 
-\[*Note 3*: If the type of `first` meets the requirements of a mutable
+[*Note 3*: If the type of `first` meets the requirements of a mutable
 iterator, `f` can apply non-constant functions through the dereferenced
 iterator. — *end note*\]
 
@@ -3274,7 +3274,7 @@ Implementations do not have the freedom granted under
 [[algorithms.parallel.exec]] to make arbitrary copies of elements from
 the input sequence.
 
-\[*Note 4*: Does not return a copy of its `Function` parameter, since
+[*Note 4*: Does not return a copy of its `Function` parameter, since
 parallelization often does not permit efficient state
 accumulation. — *end note*\]
 
@@ -3293,7 +3293,7 @@ template<input_range R, class Proj = identity,
 the range \[`first`, `last`), starting from `first` and proceeding to
 `last - 1`.
 
-\[*Note 5*: If the result of `invoke(proj, *i)` is a mutable reference,
+[*Note 5*: If the result of `invoke(proj, *i)` is a mutable reference,
 `f` can apply non-constant functions. — *end note*\]
 
 *Returns:* `{last, std::move(f)}`.
@@ -3302,7 +3302,7 @@ the range \[`first`, `last`), starting from `first` and proceeding to
 
 *Remarks:* If `f` returns a result, the result is ignored.
 
-\[*Note 6*: The overloads in namespace `ranges` require `Fun` to model
+[*Note 6*: The overloads in namespace `ranges` require `Fun` to model
 `copy_constructible`. — *end note*\]
 
 ``` cpp
@@ -3316,13 +3316,13 @@ type [[conv.integral,class.conv]].
 *Preconditions:* `n >= 0` is `true`. `Function` meets the
 *Cpp17MoveConstructible* requirements.
 
-\[*Note 7*: `Function` need not meet the requirements of
+[*Note 7*: `Function` need not meet the requirements of
 *Cpp17CopyConstructible*. — *end note*\]
 
 *Effects:* Applies `f` to the result of dereferencing every iterator in
 the range \[`first`, `first + n`) in order.
 
-\[*Note 8*: If the type of `first` meets the requirements of a mutable
+[*Note 8*: If the type of `first` meets the requirements of a mutable
 iterator, `f` can apply non-constant functions through the dereferenced
 iterator. — *end note*\]
 
@@ -3345,7 +3345,7 @@ type [[conv.integral,class.conv]].
 *Effects:* Applies `f` to the result of dereferencing every iterator in
 the range \[`first`, `first + n`).
 
-\[*Note 9*: If the type of `first` meets the requirements of a mutable
+[*Note 9*: If the type of `first` meets the requirements of a mutable
 iterator, `f` can apply non-constant functions through the dereferenced
 iterator. — *end note*\]
 
@@ -3368,14 +3368,14 @@ template<input_iterator I, class Proj = identity,
 *Effects:* Calls `invoke(f, invoke(proj, *i))` for every iterator `i` in
 the range \[`first`, `first + n`) in order.
 
-\[*Note 10*: If the result of `invoke(proj, *i)` is a mutable reference,
+[*Note 10*: If the result of `invoke(proj, *i)` is a mutable reference,
 `f` can apply non-constant functions. — *end note*\]
 
 *Returns:* `{first + n, std::move(f)}`.
 
 *Remarks:* If `f` returns a result, the result is ignored.
 
-\[*Note 11*: The overload in namespace `ranges` requires `Fun` to model
+[*Note 11*: The overload in namespace `ranges` requires `Fun` to model
 `copy_constructible`. — *end note*\]
 
 ### Find <a id="alg.find">[[alg.find]]</a>
@@ -4419,7 +4419,7 @@ which the condition E holds.
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + (last - first)`) do not overlap.
 
-\[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
+[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
 performance cost if `iterator_traits<ForwardIterator1>::value_type` is
 not *Cpp17MoveConstructible*
 ( [[cpp17.moveconstructible]]). — *end note*\]
@@ -5008,7 +5008,7 @@ predicate and any projection.
 
 *Remarks:* Stable [[algorithm.stable]].
 
-\[*Note 1*: Each element in the range \[`ret`, `last`), where `ret` is
+[*Note 1*: Each element in the range \[`ret`, `last`), where `ret` is
 the returned value, has a valid but unspecified state, because the
 algorithms can eliminate elements by moving from elements that were
 originally in that range. — *end note*\]
@@ -5075,7 +5075,7 @@ Let N be the number of elements in \[`first`, `last`) for which E is
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + (last - first)`) do not overlap.
 
-\[*Note 2*: For the overloads with an `ExecutionPolicy`, there might be
+[*Note 2*: For the overloads with an `ExecutionPolicy`, there might be
 a performance cost if `iterator_traits<ForwardIterator1>::value_type`
 does not meet the *Cpp17MoveConstructible*
 ( [[cpp17.moveconstructible]]) requirements. — *end note*\]
@@ -5322,7 +5322,7 @@ the type of `*first` meets the *Cpp17MoveConstructible*
 the element from the position `first + i` into position
 `first + (i + (last - middle)) % (last - first)`.
 
-\[*Note 1*: This is a left rotate. — *end note*\]
+[*Note 1*: This is a left rotate. — *end note*\]
 
 *Returns:*
 
@@ -5431,7 +5431,7 @@ overload in namespace `std`:
 from \[`first`, `last`) (the *population*) to `out` such that each
 possible sample has equal probability of appearance.
 
-\[*Note 1*: Algorithms that obtain such effects include *selection
+[*Note 1*: Algorithms that obtain such effects include *selection
 sampling* and *reservoir sampling*. — *end note*\]
 
 *Returns:* The end of the resulting sample range.
@@ -5598,7 +5598,7 @@ for a partial ordering. If we define `equiv(a, b)` as
 - `comp(a, b) && comp(b, c)` implies `comp(a, c)`
 - `equiv(a, b) && equiv(b, c)` implies `equiv(a, c)`
 
-\[*Note 1*:
+[*Note 1*:
 
 Under these conditions, it can be shown that
 
@@ -5873,7 +5873,7 @@ Then, after evaluating the assignment `*x2 = *a1`, E is equal to
 bool(invoke(comp, invoke(proj2, *x2), invoke(proj2, *y2))).
 ```
 
-\[*Note 1*: Writing a value from the input range into the output range
+[*Note 1*: Writing a value from the input range into the output range
 does not affect how it is ordered by `comp` and `proj1` or
 `proj2`. — *end note*\]
 
@@ -6379,7 +6379,7 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 
 *Preconditions:* The input range and output ranges do not overlap.
 
-\[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
+[*Note 1*: For the overload with an `ExecutionPolicy`, there might be a
 performance cost if `first`’s value type does not meet the
 *Cpp17CopyConstructible* requirements. — *end note*\]
 
@@ -6622,7 +6622,7 @@ respectively.
 *Returns:* `true` if and only if \[`first2`, `last2`) is a subsequence
 of \[`first1`, `last1`).
 
-\[*Note 1*: A sequence S is a subsequence of another sequence T if S can
+[*Note 1*: A sequence S is a subsequence of another sequence T if S can
 be obtained from T by removing some, all, or none of T’s elements and
 keeping the remaining elements in the same order. — *end note*\]
 
@@ -7498,7 +7498,7 @@ requirements ( [[cpp17.lessthancomparable]]).
 if `bool(invoke(comp, invoke(proj, hi), invoke(proj, v)))` is `true`,
 otherwise `v`.
 
-\[*Note 1*: If NaN is avoided, `T` can be a floating-point
+[*Note 1*: If NaN is avoided, `T` can be a floating-point
 type. — *end note*\]
 
 *Complexity:* At most two comparisons and three applications of the
@@ -7562,7 +7562,7 @@ than the longer sequence. Otherwise, the lexicographical comparison of
 the sequences yields the same result as the comparison of the first
 corresponding pair of elements that are not equivalent.
 
-\[*Example 1*:
+[*Example 1*:
 
 `ranges::lexicographical_compare(I1, S1, I2, S2, Comp, Proj1, Proj2)`
 can be implemented as:
@@ -7577,7 +7577,7 @@ return first1 == last1 && first2 != last2;
 
 — *end example*\]
 
-\[*Note 1*: An empty sequence is lexicographically less than any
+[*Note 1*: An empty sequence is lexicographically less than any
 non-empty sequence, but not less than any empty sequence. — *end note*\]
 
 ### Three-way comparison algorithms <a id="alg.three.way">[[alg.three.way]]</a>
@@ -7937,7 +7937,7 @@ namespace std {
 
 ### General <a id="numeric.ops.general">[[numeric.ops.general]]</a>
 
-\[*Note 1*: The use of closed ranges as well as semi-open ranges to
+[*Note 1*: The use of closed ranges as well as semi-open ranges to
 specify requirements throughout [[numeric.ops]] is
 intentional. — *end note*\]
 
@@ -8058,7 +8058,7 @@ are convertible to `T`.
 
 *Complexity:* 𝑂(`last - first)` applications of `binary_op`.
 
-\[*Note 1*: The difference between `reduce` and `accumulate` is that
+[*Note 1*: The difference between `reduce` and `accumulate` is that
 `reduce` applies `binary_op` in an unspecified order, which yields a
 nondeterministic result for non-associative or non-commutative
 `binary_op` such as floating-point addition. — *end note*\]
@@ -8209,7 +8209,7 @@ for every iterator `i` in \[`first`, `last`).
 *Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
 `binary_op`.
 
-\[*Note 1*: `transform_reduce` does not apply `unary_op` to
+[*Note 1*: `transform_reduce` does not apply `unary_op` to
 `init`. — *end note*\]
 
 ### Partial sum <a id="partial.sum">[[partial.sum]]</a>
@@ -8322,7 +8322,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
+[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
 is that `exclusive_scan` excludes the iᵗʰ input element from the iᵗʰ
 sum. If `binary_op` is not mathematically associative, the behavior of
 `exclusive_scan` can be nondeterministic. — *end note*\]
@@ -8417,7 +8417,7 @@ through `result + K` the value of
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
+[*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
 is that `inclusive_scan` includes the iᵗʰ input element in the iᵗʰ sum.
 If `binary_op` is not mathematically associative, the behavior of
 `inclusive_scan` can be nondeterministic. — *end note*\]
@@ -8473,7 +8473,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 1*: The difference between `transform_exclusive_scan` and
+[*Note 1*: The difference between `transform_exclusive_scan` and
 `transform_inclusive_scan` is that `transform_exclusive_scan` excludes
 the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_exclusive_scan`
@@ -8556,7 +8556,7 @@ through `result + K` the value of
 
 *Remarks:* `result` may be equal to `first`.
 
-\[*Note 1*: The difference between `transform_exclusive_scan` and
+[*Note 1*: The difference between `transform_exclusive_scan` and
 `transform_inclusive_scan` is that `transform_inclusive_scan` includes
 the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_inclusive_scan`
@@ -8680,7 +8680,7 @@ template<class M, class N>
 *Preconditions:* |`m`| and |`n`| are representable as a value of
 `common_type_t<M, N>`.
 
-\[*Note 1*: These requirements ensure, for example, that
+[*Note 1*: These requirements ensure, for example, that
 `gcd(m, m)` = |`m`| is representable as a value of type
 `M`. — *end note*\]
 
@@ -8734,7 +8734,7 @@ template<class T>
 *Preconditions:* `a` and `b` point to, respectively, elements i and j of
 the same array object `x`.
 
-\[*Note 1*: As specified in [[basic.compound]], an object that is not an
+[*Note 1*: As specified in [[basic.compound]], an object that is not an
 array element is considered to belong to a single-element array for this
 purpose and a pointer past the last element of an array of n elements is
 considered to be equivalent to a pointer to a hypothetical array element
@@ -8782,7 +8782,7 @@ A type `I` models `nothrow-input-iterator` only if no exceptions are
 thrown from increment, copy construction, move construction, copy
 assignment, move assignment, or indirection through valid iterators.
 
-\[*Note 1*: This concept allows some
+[*Note 1*: This concept allows some
 `input_iterator`[[iterator.concept.input]] operations to throw
 exceptions. — *end note*\]
 
@@ -8795,7 +8795,7 @@ Types `S` and `I` model `nothrow-sentinel-for` only if no exceptions are
 thrown from copy construction, move construction, copy assignment, move
 assignment, or comparisons between valid values of type `I` and `S`.
 
-\[*Note 2*: This concept allows some
+[*Note 2*: This concept allows some
 `sentinel_for`[[iterator.concept.sentinel]] operations to throw
 exceptions. — *end note*\]
 
@@ -8819,7 +8819,7 @@ concept nothrow-forward-iterator = // exposition only
   nothrow-sentinel-for<I, I>;
 ```
 
-\[*Note 3*: This concept allows some
+[*Note 3*: This concept allows some
 `forward_iterator`[[iterator.concept.forward]] operations to throw
 exceptions. — *end note*\]
 
@@ -9087,7 +9087,7 @@ for (; ifirst != ilast && ofirst != olast; ++ofirst, (void)++ifirst)
 return {std::move(ifirst), ofirst};
 ```
 
-\[*Note 1*: If an exception is thrown, some objects in the range
+[*Note 1*: If an exception is thrown, some objects in the range
 \[`ifirst`, `ilast`) are left in a valid, but unspecified
 state. — *end note*\]
 
@@ -9129,7 +9129,7 @@ auto t = uninitialized_move(counted_iterator(std::move(ifirst), n),
 return {std::move(t.in).base(), t.out};
 ```
 
-\[*Note 2*: If an exception is thrown, some objects in the range
+[*Note 2*: If an exception is thrown, some objects in the range
 `ifirst`+\[0, `n`) are left in a valid but unspecified
 state. — *end note*\]
 
@@ -9294,7 +9294,7 @@ return destroy(counted_iterator(std::move(first), n), default_sentinel).base();
 
 ## C library algorithms <a id="alg.c.library">[[alg.c.library]]</a>
 
-\[*Note 1*: The header `<cstdlib>` declares the functions described in
+[*Note 1*: The header `<cstdlib>` declares the functions described in
 this subclause. — *end note*\]
 
 ``` cpp

@@ -41,13 +41,13 @@ appertains to the parameter of the catch clause [[except.handle]].
 
 A *try-block* is a *statement* [[stmt.pre]].
 
-\[*Note 1*: Within this Clause “try block” is taken to mean both
+[*Note 1*: Within this Clause “try block” is taken to mean both
 *try-block* and *function-try-block*. — *end note*\]
 
 The *compound-statement* of a try block or of a handler is a
 control-flow-limited statement [[stmt.label]].
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 void f() {
@@ -72,7 +72,7 @@ transfer control out of a try block or handler. When this happens, each
 variable declared in the try block will be destroyed in the context that
 directly contains its declaration.
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 lab:  try {
@@ -101,7 +101,7 @@ to a handler in a *function-try-block* in the same way as an exception
 thrown during the execution of a *try-block* transfers control to other
 handlers.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 int f(int);
@@ -129,7 +129,7 @@ relation [[intro.execution]].
 
 Throwing an exception transfers control to a handler.
 
-\[*Note 1*: An exception can be thrown from one of the following
+[*Note 1*: An exception can be thrown from one of the following
 contexts: *throw-expression*s [[expr.throw]], allocation functions
 [[basic.stc.dynamic.allocation]], `dynamic_cast` [[expr.dynamic.cast]],
 `typeid` [[expr.typeid]], *new-expression*s [[expr.new]], and standard
@@ -138,7 +138,7 @@ library functions [[structure.specifications]]. — *end note*\]
 An object is passed and the type of that object determines which
 handlers can catch it.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 throw "Help!";
@@ -208,13 +208,13 @@ Among all points of potential destruction for the exception object,
 there is an unspecified last one where the exception object is
 destroyed. All other points happen before that last one [[intro.races]].
 
-\[*Note 2*: No other thread synchronization is implied in exception
+[*Note 2*: No other thread synchronization is implied in exception
 handling. — *end note*\]
 
 The implementation may then deallocate the memory for the exception
 object; any such deallocation is done in an unspecified way.
 
-\[*Note 3*: A thrown exception does not propagate to other threads
+[*Note 3*: A thrown exception does not propagate to other threads
 unless caught, stored, and rethrown using appropriate library functions;
 see  [[propagation]] and  [[futures]]. — *end note*\]
 
@@ -228,7 +228,7 @@ non-deleted and accessible, even if the copy/move operation is elided
 An exception is considered caught when a handler for that exception
 becomes active [[except.handle]].
 
-\[*Note 4*: An exception can have active handlers and still be
+[*Note 4*: An exception can have active handlers and still be
 considered uncaught if it is rethrown. — *end note*\]
 
 If the exception handling mechanism handling an uncaught exception
@@ -236,7 +236,7 @@ If the exception handling mechanism handling an uncaught exception
 exception, the function `std::terminate` is invoked
 [[except.terminate]].
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 struct C {
@@ -258,7 +258,7 @@ int main() {
 
 — *end example*\]
 
-\[*Note 5*: If a destructor directly invoked by stack unwinding exits
+[*Note 5*: If a destructor directly invoked by stack unwinding exits
 via an exception, `std::terminate` is invoked. — *end note*\]
 
 ## Constructors and destructors <a id="except.ctor">[[except.ctor]]</a>
@@ -274,7 +274,7 @@ variables for a `return` statement [[stmt.return]], the destructor for
 the returned object (if any) is also invoked. The objects are destroyed
 in the reverse order of the completion of their construction.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 struct A { };
@@ -306,7 +306,7 @@ is terminated by an exception, the destructor is invoked for each of the
 object’s subobjects that were known to be initialized by the object’s
 initialization and whose initialization has completed [[dcl.init]].
 
-\[*Note 1*: If such an object has a reference member that extends the
+[*Note 1*: If such an object has a reference member that extends the
 lifetime of a temporary object, this ends the lifetime of the reference
 member, so the lifetime of the temporary object is effectively not
 extended. — *end note*\]
@@ -324,7 +324,7 @@ specified
 - in [[dcl.init.general]] for default-initialization,
   value-initialization, or direct-initialization of an array.
 
-\[*Note 2*: This includes virtual base class subobjects if the
+[*Note 2*: This includes virtual base class subobjects if the
 initialization is for a complete object, and can include variant members
 that were nominated explicitly by a *mem-initializer* or
 *designated-initializer-clause* or that have a default member
@@ -335,7 +335,7 @@ destructor invocation that would be performed after executing the body
 of the destructor [[class.dtor]] and that has not yet begun execution is
 performed.
 
-\[*Note 3*: This includes virtual base class subobjects if the
+[*Note 3*: This includes virtual base class subobjects if the
 destructor was invoked for a complete object. — *end note*\]
 
 The subobjects are destroyed in the reverse order of the completion of
@@ -349,7 +349,7 @@ destructor is invoked. Such destruction is sequenced before entering a
 handler of the *function-try-block* of a delegating constructor for that
 object, if any.
 
-\[*Note 4*: If the object was allocated by a *new-expression*
+[*Note 4*: If the object was allocated by a *new-expression*
 [[expr.new]], the matching deallocation function
 [[basic.stc.dynamic.deallocation]], if any, is called to free the
 storage occupied by the object. — *end note*\]
@@ -382,12 +382,12 @@ A *handler* is a match for an exception object of type `E` if
 - the *handler* is of type cv `T` or `const T&` where `T` is a pointer
   or pointer-to-member type and `E` is `std::nullptr_t`.
 
-\[*Note 1*: A *throw-expression* whose operand is an integer literal
+[*Note 1*: A *throw-expression* whose operand is an integer literal
 with value zero does not match a handler of pointer or pointer-to-member
 type. A handler of reference to array or function type is never a match
 for any exception object [[expr.throw]]. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 class Matherr { ... virtual void vf(); };
@@ -415,7 +415,7 @@ all types publicly derived from `Matherr` including exceptions of type
 
 The handlers for a try block are tried in order of appearance.
 
-\[*Note 2*: This makes it possible to write handlers that can never be
+[*Note 2*: This makes it possible to write handlers that can never be
 executed, for example by placing a handler for a final derived class
 after a handler for a corresponding unambiguous public base
 class. — *end note*\]
@@ -432,7 +432,7 @@ the same thread.
 A handler is considered *active* when initialization is complete for the
 parameter (if any) of the catch clause.
 
-\[*Note 3*: The stack will have been unwound at that
+[*Note 3*: The stack will have been unwound at that
 point. — *end note*\]
 
 Also, an implicit handler is considered active when the function
@@ -512,7 +512,7 @@ does not commence an initializer [[dcl.init]]. The *noexcept-specifier*
 `noexcept` without a *constant-expression* is equivalent to the
 *noexcept-specifier* `noexcept(true)`.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 void f() noexcept(sizeof(char[2])); // error: narrowing conversion of value 2 to type bool
@@ -540,7 +540,7 @@ that virtual function in any derived class shall have a non-throwing
 exception specification, unless the overriding function is defined as
 deleted.
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 struct B {
@@ -567,12 +567,12 @@ Whenever an exception is thrown and the search for a handler
 non-throwing exception specification, the function `std::terminate` is
 invoked [[except.terminate]].
 
-\[*Note 1*: An implementation is not permitted to reject an expression
+[*Note 1*: An implementation is not permitted to reject an expression
 merely because, when executed, it throws or might throw an exception
 from a function with a non-throwing exception
 specification. — *end note*\]
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 extern void f();                // potentially-throwing
@@ -619,7 +619,7 @@ only if any of the following constructs is potentially-throwing:
   expression, or,
 - for a default constructor, a default member initializer.
 
-\[*Note 2*: Even though destructors for fully-constructed subobjects are
+[*Note 2*: Even though destructors for fully-constructed subobjects are
 invoked when an exception is thrown during the execution of a
 constructor [[except.ctor]], their exception specifications do not
 contribute to the exception specification of the constructor, because an
@@ -649,7 +649,7 @@ The exception specification for a comparison operator function
 first declaration is potentially-throwing if and only if any expression
 in the implicit definition is potentially-throwing.
 
-\[*Example 4*:
+[*Example 4*:
 
 ``` cpp
 struct A {
@@ -719,7 +719,7 @@ capture the currently handled exception.
 In some situations exception handling is abandoned for less subtle error
 handling techniques.
 
-\[*Note 1*:
+[*Note 1*:
 
 These situations are:
 
@@ -782,7 +782,7 @@ An exception is considered uncaught after completing the initialization
 of the exception object [[except.throw]] until completing the activation
 of a handler for the exception [[except.handle]].
 
-\[*Note 1*: As a consequence, an exception is considered uncaught during
+[*Note 1*: As a consequence, an exception is considered uncaught during
 any stack unwinding resulting from it being thrown. — *end note*\]
 
 If an exception is rethrown [[expr.throw]], [[propagation]], it is

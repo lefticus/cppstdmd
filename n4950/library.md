@@ -119,11 +119,11 @@ Annex F of the C standard[^1]
 to the extent applicable to the floating-point types
 [[basic.fundamental]] that are parameter types of the called function.
 
-\[*Note 1*: Annex F specifies the conditions under which floating-point
+[*Note 1*: Annex F specifies the conditions under which floating-point
 exceptions are raised and the behavior when NaNs and/or infinities are
 passed as arguments. — *end note*\]
 
-\[*Note 2*: Equivalently, a call to a C standard library function is a
+[*Note 2*: Equivalently, a call to a C standard library function is a
 non-constant library call if `errno` is set when
 `math_errhandling & MATH_ERRNO` is `true`. — *end note*\]
 
@@ -215,7 +215,7 @@ Required operations of any concept defined in this document need not be
 total functions; that is, some arguments to a required operation may
 result in the required semantics failing to be met.
 
-\[*Example 1*: The required `<` operator of the `totally_ordered`
+[*Example 1*: The required `<` operator of the `totally_ordered`
 concept [[concept.totallyordered]] does not meet the semantic
 requirements of that concept when operating on NaNs. — *end example*\]
 
@@ -614,7 +614,7 @@ freestanding implementation are the same as the corresponding
 requirements for a hosted implementation, except that not all of the
 members of the namespaces are required to be present.
 
-\[*Note 1*: This implies that freestanding item enumerations have the
+[*Note 1*: This implies that freestanding item enumerations have the
 same enumerators on freestanding implementations and hosted
 implementations. Furthermore, class types have the same members and
 class templates have the same deduction guides on freestanding
@@ -641,7 +641,7 @@ A macro is a freestanding item if it is defined in a header synopsis and
 - the header synopsis begins with a comment that includes *all
   freestanding*.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 #define NULL see below      // freestanding
@@ -649,7 +649,7 @@ A macro is a freestanding item if it is defined in a header synopsis and
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 // all freestanding
@@ -705,17 +705,17 @@ in [[support]] through [[thread]] or [[depr]], its meaning is
 established as-if by performing unqualified name lookup
 [[basic.lookup.unqual]] in the context of `D`.
 
-\[*Note 1*: Argument-dependent lookup is not performed. — *end note*\]
+[*Note 1*: Argument-dependent lookup is not performed. — *end note*\]
 
 Similarly, the meaning of a *qualified-id* is established as-if by
 performing qualified name lookup [[basic.lookup.qual]] in the context of
 `D`.
 
-\[*Example 1*: The reference to `is_array_v` in the specification of
+[*Example 1*: The reference to `is_array_v` in the specification of
 `std::to_array` [[array.creation]] refers to
 `::std::is_array_v`. — *end example*\]
 
-\[*Note 2*: Operators in expressions [[over.match.oper]] are not so
+[*Note 2*: Operators in expressions [[over.match.oper]] are not so
 constrained; see [[global.functions]]. — *end note*\]
 
 The meaning of the unqualified name `swap` is established in an overload
@@ -740,10 +740,10 @@ implementation, the subset of such headers that are provided by the
 implementation, are collectively known as the
 *importable C++ library headers*.
 
-\[*Note 1*: Importable C++ library headers can be imported
+[*Note 1*: Importable C++ library headers can be imported
 [[module.import]]. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 import <vector>;                // imports the <vector> header unit
@@ -767,7 +767,7 @@ Names which are defined as macros in C shall be defined as macros in the
 C++ standard library, even if C grants license for implementation as
 functions.
 
-\[*Note 2*: The names defined as macros in C include the following:
+[*Note 2*: The names defined as macros in C include the following:
 `assert`, `offsetof`, `setjmp`, `va_arg`, `va_end`, and
 `va_start`. — *end note*\]
 
@@ -815,7 +815,7 @@ described in [[support.c.headers.other]].
 It is unspecified to which module a declaration in the standard library
 is attached.
 
-\[*Note 1*: Implementations are required to ensure that mixing
+[*Note 1*: Implementations are required to ensure that mixing
 `#include` and `import` does not result in conflicting attachments
 [[basic.link]]. — *end note*\]
 
@@ -830,7 +830,7 @@ header unit, or importing a C++ library module.
 *Recommended practice:* Implementations should avoid exporting any other
 declarations from the C++ library modules.
 
-\[*Note 2*: Like all named modules, the C++ library modules do not make
+[*Note 2*: Like all named modules, the C++ library modules do not make
 macros visible [[module.import]], such as `assert` [[cassert.syn]],
 `errno` [[cerrno.syn]], `offsetof` [[cstddef.syn]], and `va_arg`
 [[cstdarg.syn]]. — *end note*\]
@@ -1046,13 +1046,13 @@ overload resolution [[over.match]] on a candidate set that includes:
 - the lookup set produced by argument-dependent lookup
   [[basic.lookup.argdep]].
 
-\[*Note 1*: If `T` and `U` are both fundamental types or arrays of
+[*Note 1*: If `T` and `U` are both fundamental types or arrays of
 fundamental types and the declarations from the header `<utility>` are
 in scope, the overall lookup set described above is equivalent to that
 of the qualified name lookup applied to the expression `std::swap(t, u)`
 or `std::swap(u, t)` as appropriate. — *end note*\]
 
-\[*Note 2*: It is unspecified whether a library component that has a
+[*Note 2*: It is unspecified whether a library component that has a
 swappable requirement includes the header `<utility>` to ensure an
 appropriate evaluation context. — *end note*\]
 
@@ -1066,7 +1066,7 @@ A type `X` meeting any of the iterator requirements
 [[iterator.requirements]] meets the *Cpp17ValueSwappable* requirements
 if, for any dereferenceable object `x` of type `X`, `*x` is swappable.
 
-\[*Example 1*:
+[*Example 1*:
 
 User code can ensure that the evaluation of `swap` calls is performed in
 an appropriate context under the various conditions as follows:
@@ -1131,7 +1131,7 @@ A value-initialized object of type `P` produces the null value of the
 type. The null value shall be equivalent only to itself. A
 default-initialized object of type `P` may have an indeterminate value.
 
-\[*Note 1*: Operations involving indeterminate values can cause
+[*Note 1*: Operations involving indeterminate values can cause
 undefined behavior. — *end note*\]
 
 An object `p` of type `P` can be contextually converted to `bool`
@@ -1176,7 +1176,7 @@ Given `Key` is an argument type for function objects of type `H`, in
 lvalue of type `Key`, and `k` is a value of a type convertible to
 (possibly const) `Key`.
 
-\[*Note 1*: Thus all evaluations of the expression `h(k)` with the same
+[*Note 1*: Thus all evaluations of the expression `h(k)` with the same
 value for `k` yield the same result for a given execution of the
 program. — *end note*\]
 
@@ -1231,7 +1231,7 @@ type or expression is specified. Within the standard library
 supplied by an allocator is replaced by the specified default type or
 expression.
 
-\[*Note 1*: There are no program-defined specializations of
+[*Note 1*: There are no program-defined specializations of
 `allocator_traits`. — *end note*\]
 
 ``` cpp
@@ -1308,7 +1308,7 @@ and `Allocator` does not supply a `rebind` member template, the standard
 `Allocator::rebind<U>::other` by default. For allocator types that are
 not template instantiations of the above form, no default is provided.
 
-\[*Note 1*: The member class template `rebind` of `X` is effectively a
+[*Note 1*: The member class template `rebind` of `X` is effectively a
 typedef template. In general, if the name `Allocator` is bound to
 `SomeAllocator<T>`, then `Allocator::rebind<U>::other` is the same type
 as `SomeAllocator<U>`, where `SomeAllocator<T>::value_type` is `T` and
@@ -1381,14 +1381,14 @@ a.allocate(n)
 *Effects:* Memory is allocated for an array of `n` `T` and such an
 object is created but array elements are not constructed.
 
-\[*Example 1*: When reusing storage denoted by some pointer value `p`,
+[*Example 1*: When reusing storage denoted by some pointer value `p`,
 `launder(reinterpret_cast<T*>(new (p) byte[n * sizeof(T)]))` can be used
 to implicitly create a suitable array object and obtain a pointer to
 it. — *end example*\]
 
 *Throws:* `allocate` may throw an appropriate exception.
 
-\[*Note 2*: It is intended that `a.allocate` be an efficient means of
+[*Note 2*: It is intended that `a.allocate` be an efficient means of
 allocating a single object of type `T`, even when `sizeof(T)` is small.
 That is, there is no need for a container to maintain its own free
 list. — *end note*\]
@@ -1668,10 +1668,10 @@ supported by an allocator, instantiation of the allocator for that type
 may fail. The allocator also may silently ignore the requested
 alignment.
 
-\[*Note 2*: Additionally, the member function `allocate` for that type
+[*Note 2*: Additionally, the member function `allocate` for that type
 can fail by throwing an object of type `bad_alloc`. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 The following is an allocator class template supporting the minimal
 interface that meets the requirements of
@@ -1736,7 +1736,7 @@ partial specialization of any standard library variable template, except
 where explicitly permitted by the specification of that variable
 template.
 
-\[*Note 1*: The requirements on an explicit or partial specialization
+[*Note 1*: The requirements on an explicit or partial specialization
 are stated by each variable template that grants such
 permission. — *end note*\]
 
@@ -1762,7 +1762,7 @@ standard library function template. Unless `F` is designated an
 (possibly ill-formed) if it explicitly or implicitly attempts to form a
 pointer to `F`.
 
-\[*Note 2*: Possible means of forming such pointers include application
+[*Note 2*: Possible means of forming such pointers include application
 of the unary `&` operator [[expr.unary.op]], `addressof`
 [[specialized.addressof]], or a function-to-pointer standard conversion
 [[conv.func]]. — *end note*\]
@@ -1790,7 +1790,7 @@ by one or more *digit*s [[lex.name]] are reserved for future
 standardization. The behavior of a C++ program is undefined if it adds
 declarations or definitions to such a namespace.
 
-\[*Example 1*: The top-level namespace `std2` is reserved for use by
+[*Example 1*: The top-level namespace `std2` is reserved for use by
 future revisions of this International Standard. — *end example*\]
 
 #### Reserved names <a id="reserved.names">[[reserved.names]]</a>
@@ -2076,7 +2076,7 @@ functions from different threads may introduce a data race. The
 conditions under which this may occur are specified in 
 [[res.on.data.races]].
 
-\[*Note 1*: Modifying an object of a standard library type that is
+[*Note 1*: Modifying an object of a standard library type that is
 shared between threads risks undefined behavior unless objects of that
 type are explicitly specified as being shareable without data races or
 the user supplies a locking mechanism. — *end note*\]
@@ -2086,7 +2086,7 @@ of the object’s lifetime [[basic.life]] does not happen before the
 access, or the access does not happen before the end of the object’s
 lifetime, the behavior is undefined unless otherwise specified.
 
-\[*Note 2*: This applies even to objects such as mutexes intended for
+[*Note 2*: This applies even to objects such as mutexes intended for
 thread synchronization. — *end note*\]
 
 #### Semantic requirements <a id="res.on.requirements">[[res.on.requirements]]</a>
@@ -2160,7 +2160,7 @@ library to non-operator, non-member functions do not use functions from
 another namespace which are found through argument-dependent name lookup
 [[basic.lookup.argdep]].
 
-\[*Note 1*:
+[*Note 1*:
 
 The phrase “unless otherwise specified” applies to cases such as the
 swappable with requirements [[swappable.requirements]]. The exception
@@ -2189,7 +2189,7 @@ signatures, provided that any call to the member function that would
 select an overload from the set of declarations described in this
 document behaves as if that overload were selected.
 
-\[*Note 1*: For instance, an implementation can add parameters with
+[*Note 1*: For instance, an implementation can add parameters with
 default values, or replace a member function with default arguments with
 two or more member functions with equivalent behavior, or add additional
 signatures for a member function name. — *end note*\]
@@ -2201,11 +2201,11 @@ function template within a class or class template definition, that
 declaration shall be the only declaration of that function or function
 template provided by an implementation.
 
-\[*Note 1*: In particular, an implementation is not allowed to provide
+[*Note 1*: In particular, an implementation is not allowed to provide
 an additional declaration of that function or function template at
 namespace scope. — *end note*\]
 
-\[*Note 2*: Such a friend function or function template declaration is
+[*Note 2*: Such a friend function or function template declaration is
 known as a hidden friend, as it is visible neither to ordinary
 unqualified lookup [[basic.lookup.unqual]] nor to qualified lookup
 [[basic.lookup.qual]]. — *end note*\]
@@ -2257,7 +2257,7 @@ objects [[intro.multithread]] accessible by threads other than the
 current thread unless the objects are accessed directly or indirectly
 via the function’s non-const arguments, including `this`.
 
-\[*Note 1*: This means, for example, that implementations can’t use an
+[*Note 1*: This means, for example, that implementations can’t use an
 object with static storage duration for internal purposes without
 synchronization because doing so can cause a data race even in programs
 that do not explicitly share objects between threads. — *end note*\]
@@ -2271,7 +2271,7 @@ Operations on iterators obtained by calling a standard library container
 or string member function may access the underlying container, but shall
 not modify it.
 
-\[*Note 2*: In particular, container operations that invalidate
+[*Note 2*: In particular, container operations that invalidate
 iterators conflict with operations on iterators associated with that
 container. — *end note*\]
 
@@ -2283,7 +2283,7 @@ Unless otherwise specified, C++ standard library functions shall perform
 all operations solely within the current thread if those operations have
 effects that are visible [[intro.multithread]] to users.
 
-\[*Note 3*: This allows implementations to parallelize operations if
+[*Note 3*: This allows implementations to parallelize operations if
 there are no visible side effects. — *end note*\]
 
 #### Protection within classes <a id="protection.within.classes">[[protection.within.classes]]</a>
@@ -2354,7 +2354,7 @@ originating from the operating system, or a reference to an
 elsewhere. The implementation shall define the possible values of
 `value()` for each of these error categories.
 
-\[*Example 1*: For operating systems that are based on POSIX,
+[*Example 1*: For operating systems that are based on POSIX,
 implementations should define the `std::system_category()` values as
 identical to the POSIX `errno` values, with additional values as defined
 by the operating system’s documentation. Implementations for operating

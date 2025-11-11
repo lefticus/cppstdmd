@@ -35,7 +35,7 @@ summarized in [[re.summary]].
 This subclause defines requirements on classes representing regular
 expression traits.
 
-\[*Note 1*: The class template `regex_traits`, defined in [[re.traits]],
+[*Note 1*: The class template `regex_traits`, defined in [[re.traits]],
 meets these requirements. — *end note*\]
 
 The class template `basic_regex`, defined in [[re.regex]], needs a set
@@ -194,7 +194,7 @@ v.value(c, I)
 *Returns:* Returns the value represented by the digit *c* in base *I* if
 the character *c* is a valid digit in base *I*; otherwise returns `-1`.
 
-\[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*\]
+[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*\]
 
 ``` cpp
 u.imbue(loc)
@@ -213,7 +213,7 @@ v.getloc()
 
 *Returns:* Returns the current locale used by `v`, if any.
 
-\[*Note 2*: Class template `regex_traits` meets the requirements for a
+[*Note 2*: Class template `regex_traits` meets the requirements for a
 regular expression traits class when it is specialized for `char` or
 `wchar_t`. This class template is described in the header `<regex>`, and
 is described in [[re.traits]]. — *end note*\]
@@ -788,7 +788,7 @@ if (ct.is(m, c)) {
 }
 ```
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 regex_traits<char> t;
@@ -802,7 +802,7 @@ ctype_base::mask m = convert<char>(f);  // m == ctype_base::digit|ctype_base::up
 
 — *end example*\]
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 regex_traits<char> t;
@@ -832,7 +832,7 @@ locale_type imbue(locale_type loc);
 
 *Effects:* Imbues `this` with a copy of the locale `loc`.
 
-\[*Note 1*: Calling `imbue` with a different locale than the one
+[*Note 1*: Calling `imbue` with a different locale than the one
 currently in use invalidates all cached data held by
 `*this`. — *end note*\]
 
@@ -888,7 +888,7 @@ representation. It is not specified what form this representation takes,
 nor how it is accessed by algorithms that operate on regular
 expressions.
 
-\[*Note 1*: Implementations will typically declare some function
+[*Note 1*: Implementations will typically declare some function
 templates as friends of `basic_regex` to achieve this. — *end note*\]
 
 The functions described in [[re.regex]] report errors by throwing
@@ -1441,7 +1441,7 @@ the `sub_match` member `matched` evaluates to `true`, and members
 which formed that match. Otherwise `matched` is `false`, and members
 `first` and `second` point to the end of the sequence that was searched.
 
-\[*Note 1*: The `sub_match` objects representing different
+[*Note 1*: The `sub_match` objects representing different
 sub-expressions that did not participate in a regular expression match
 need not be distinct. — *end note*\]
 
@@ -1609,7 +1609,7 @@ size_type size() const;
 expression that was matched if `*this` represents the result of a
 successful match. Otherwise returns `0`.
 
-\[*Note 1*: The state of a `match_results` object can be modified only
+[*Note 1*: The state of a `match_results` object can be modified only
 by passing that object to `regex_match` or `regex_search`.
 Subclauses  [[re.alg.match]] and  [[re.alg.search]] specify the effects
 of those algorithms on their `match_results` arguments. — *end note*\]
@@ -1826,7 +1826,7 @@ returns `true` only if:
     and
   - `m1.suffix() == m2.suffix()`.
 
-\[*Note 1*: The algorithm `equal` is defined in
+[*Note 1*: The algorithm `equal` is defined in
 [[algorithms]]. — *end note*\]
 
 ## Regular expression algorithms <a id="re.alg">[[re.alg]]</a>
@@ -1853,7 +1853,7 @@ against the character sequence. When determining if there is a match,
 only potential matches that match the entire character sequence are
 considered. Returns `true` if such a match exists, `false` otherwise.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 std::regex re("Get|GetValue");
@@ -2201,7 +2201,7 @@ An object of type `regex_iterator` that is not an end-of-sequence
 iterator holds a *zero-length match* if `match[0].matched == true` and
 `match[0].first == match[0].second`.
 
-\[*Note 1*: For example, this can occur when the part of the regular
+[*Note 1*: For example, this can occur when the part of the regular
 expression that matched consists only of an assertion (such as `'^'`,
 `'$'`, `'\backslashb'`, `'\backslashB'`). — *end note*\]
 
@@ -2293,14 +2293,14 @@ In all cases in which the call to `regex_search` returns `true`,
 `[0, match.size())` for which `match[i].matched` is `true`,
 `match.position(i)` shall return `distance(begin, match[i].first)`.
 
-\[*Note 1*: This means that `match.position(i)` gives the offset from
+[*Note 1*: This means that `match.position(i)` gives the offset from
 the beginning of the target sequence, which is often not the same as the
 offset from the sequence passed in the call to
 `regex_search`. — *end note*\]
 
 It is unspecified how the implementation makes these adjustments.
 
-\[*Note 2*: This means that an implementation can call an
+[*Note 2*: This means that an implementation can call an
 implementation-specific search function, in which case a program-defined
 specialization of `regex_search` will not be called. — *end note*\]
 
@@ -2449,7 +2449,7 @@ suffix iterator the member `result` holds a pointer to the data member
 `suffix.first` points to the beginning of the final sequence, and
 `suffix.second` points to the end of the final sequence.
 
-\[*Note 1*: For a suffix iterator, data member `suffix.first` is the
+[*Note 1*: For a suffix iterator, data member `suffix.first` is the
 same as the end of the last match found, and `suffix.second` is the same
 as the end of the target sequence. — *end note*\]
 
@@ -2677,7 +2677,7 @@ If the *CV* of a *UnicodeEscapeSequence* is greater than the largest
 value that can be held in an object of type `charT` the translator shall
 throw an exception object of type `regex_error`.
 
-\[*Note 1*: This means that values of the form `"uxxxx"` that do not fit
+[*Note 1*: This means that values of the form `"uxxxx"` that do not fit
 in a character are invalid. — *end note*\]
 
 Where the regular expression grammar requires the conversion of a

@@ -16,10 +16,10 @@ The ability to apply the usual arithmetic conversions
 other is of a different enumeration type or a floating-point type is
 deprecated.
 
-\[*Note 1*: Three-way comparisons [[expr.spaceship]] between such
+[*Note 1*: Three-way comparisons [[expr.spaceship]] between such
 operands are ill-formed. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 enum E1 { e };
@@ -37,7 +37,7 @@ For compatibility with prior revisions of C++, a *lambda-expression*
 with *capture-default* `=` [[expr.prim.lambda.capture]] may implicitly
 capture `*this` by reference.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 struct X {
@@ -56,10 +56,10 @@ struct X {
 Equality and relational comparisons [[expr.eq]], [[expr.rel]] between
 two operands of array type are deprecated.
 
-\[*Note 1*: Three-way comparisons [[expr.spaceship]] between such
+[*Note 1*: Three-way comparisons [[expr.spaceship]] between such
 operands are ill-formed. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 int arr1[5];
@@ -77,7 +77,7 @@ Postfix `++` and `--` expressions [[expr.post.incr]] and prefix `++` and
 `--` expressions [[expr.pre.incr]] of volatile-qualified arithmetic and
 pointer types are deprecated.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 volatile int velociraptor;
@@ -89,7 +89,7 @@ volatile int velociraptor;
 Certain assignments where the left operand is a volatile-qualified
 non-class type are deprecated; see  [[expr.ass]].
 
-\[*Example 2*:
+[*Example 2*:
 
 ``` cpp
 int neck, tail;
@@ -105,7 +105,7 @@ brachiosaur += neck;                // OK
 A function type [[dcl.fct]] with a parameter with volatile-qualified
 type or with a volatile-qualified return type is deprecated.
 
-\[*Example 3*:
+[*Example 3*:
 
 ``` cpp
 volatile struct amber jurassic();                               // deprecated
@@ -118,7 +118,7 @@ void fly(volatile struct pterosaur* pteranodon);                // OK
 A structured binding [[dcl.struct.bind]] of a volatile-qualified type is
 deprecated.
 
-\[*Example 4*:
+[*Example 4*:
 
 ``` cpp
 struct linhenykus { short forelimb; };
@@ -136,7 +136,7 @@ For compatibility with prior revisions of C++, a `constexpr` static data
 member may be redundantly redeclared outside the class with no
 initializer. This usage is deprecated.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 struct A {
@@ -153,10 +153,10 @@ constexpr int A::n;             // redundant declaration (definition in C++14{})
 A declaration of a non-TU-local entity that is an exposure
 [[basic.link]] is deprecated.
 
-\[*Note 1*: Such a declaration in an importable module unit is
+[*Note 1*: Such a declaration in an importable module unit is
 ill-formed. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 namespace {
@@ -382,7 +382,7 @@ output sequence, with an object of some *character* array type, whose
 elements store arbitrary values. The array object has several
 attributes.
 
-\[*Note 1*:
+[*Note 1*:
 
 For the sake of exposition, these are represented as elements of a
 bitmask type (indicated here as `T1`) called `strstate`. The elements
@@ -399,7 +399,7 @@ are:
 
 — *end note*\]
 
-\[*Note 2*:
+[*Note 2*:
 
 For the sake of exposition, the maintained data is presented here as:
 
@@ -1048,7 +1048,7 @@ non-POD class (or array thereof). A POD type is a scalar type, a POD
 class, an array of such a type, or a cv-qualified version of one of
 these types.
 
-\[*Note 1*: It is unspecified whether a closure
+[*Note 1*: It is unspecified whether a closure
 type [[expr.prim.lambda.closure]] is a POD type. — *end note*\]
 
 ``` cpp
@@ -1067,11 +1067,11 @@ The member typedef `type` denotes a trivial standard-layout type
 suitable for use as uninitialized storage for any object whose size is
 at most `Len` and whose alignment is a divisor of `Align`.
 
-\[*Note 2*: Uses of `aligned_storage<Len, Align>::type` can be replaced
+[*Note 2*: Uses of `aligned_storage<Len, Align>::type` can be replaced
 by an array `std::byte[Len]` declared with
 `alignas(Align)`. — *end note*\]
 
-\[*Note 3*:
+[*Note 3*:
 
 A typical implementation would define `aligned_storage` as:
 
@@ -1209,11 +1209,11 @@ namespace std {
 The `iterator` template may be used as a base class to ease the
 definition of required types for new iterators.
 
-\[*Note 1*: If the new iterator type is a class template, then these
+[*Note 1*: If the new iterator type is a class template, then these
 aliases will not be visible from within the iterator class’s template
 definition, but only to callers of that class. — *end note*\]
 
-\[*Example 1*:
+[*Example 1*:
 
 If a C++ program wants to define a bidirectional iterator for some data
 structure containing `double` and such that it works on a large memory
@@ -1455,7 +1455,7 @@ void reserve();
 *Effects:* After this call, `capacity()` has an unspecified value
 greater than or equal to `size()`.
 
-\[*Note 1*: This is a non-binding shrink to fit request. — *end note*\]
+[*Note 1*: This is a non-binding shrink to fit request. — *end note*\]
 
 ## Deprecated standard code conversion facets <a id="depr.locale.stdcvt">[[depr.locale.stdcvt]]</a>
 
@@ -1572,7 +1572,7 @@ string and a byte string. It lets you specify a code conversion facet
 (like class template `codecvt`) to perform the conversions, without
 affecting any streams or locales.
 
-\[*Example 1*:
+[*Example 1*:
 
 If you want to use the code conversion facet `codecvt_utf8` to output to
 `cout` a UTF-8 multibyte sequence corresponding to a wide string, but
@@ -1891,7 +1891,7 @@ encoded. The value type of `Source` and `InputIterator` is `char` or
 arguments for these functions. How Unicode encoding conversions are
 performed is unspecified.
 
-\[*Example 1*:
+[*Example 1*:
 
 A string is to be read from a database that is encoded in UTF-8, and
 used to create a directory using the native encoding for filenames:
@@ -1915,7 +1915,7 @@ occurs.
 
 — *end example*\]
 
-\[*Note 1*: The example above is representative of a historical use of
+[*Note 1*: The example above is representative of a historical use of
 `filesystem::u8path`. To indicate a UTF-8 encoding, passing a
 `std::u8string` to `path`’s constructor is preferred as it is consistent
 with `path`’s handling of other encodings. — *end note*\]
@@ -1984,13 +1984,13 @@ The macro expands to a token sequence suitable for constant
 initialization of an atomic variable of static storage duration of a
 type that is initialization-compatible with `value`.
 
-\[*Note 1*: This operation possibly needs to initialize
+[*Note 1*: This operation possibly needs to initialize
 locks. — *end note*\]
 
 Concurrent access to the variable being initialized, even via an atomic
 operation, constitutes a data race.
 
-\[*Example 1*:
+[*Example 1*:
 
 ``` cpp
 atomic<int> v = ATOMIC_VAR_INIT(5);
