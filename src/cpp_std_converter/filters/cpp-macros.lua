@@ -26,6 +26,9 @@ local extract_multi_arg_macro = common.extract_multi_arg_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
 local remove_macro = common.remove_macro
 local split_refs_text = common.split_refs_text
+local convert_latex_spacing = common.convert_latex_spacing
+local convert_mname = common.convert_mname
+local expand_macros_common = common.expand_macros_common
 
 -- Table to collect all references for link definitions
 -- Made global so cpp-tables.lua can also track references
@@ -109,124 +112,10 @@ local function generate_link_target(ref)
   end
 end
 
--- extract_braced_content is now imported from cpp-common
-
--- Helper function to convert LaTeX spacing commands to regular spaces
--- Used in code processing to normalize LaTeX spacing to plain spaces
-local function convert_latex_spacing(text)
-  text = text:gsub("\\;", " ")        -- Medium space
-  text = text:gsub("\\,", " ")        -- Thin space
-  text = text:gsub("\\quad ", " ")    -- Wide space (with following space)
-  text = text:gsub("\\quad", " ")     -- Wide space (standalone)
-  text = text:gsub("\\qquad ", " ")   -- Very wide space (with following space)
-  text = text:gsub("\\qquad", " ")    -- Very wide space (standalone)
-  text = text:gsub("\\! ", " ")       -- Negative space (convert to regular space)
-  text = text:gsub("\\!", " ")        -- Negative space (standalone)
-  return text
-end
-
--- convert_special_chars is now imported from cpp-common
-
--- Helper function to convert \mname{} macros
--- Handles special cases like VA_ARGS and VA_OPT first, then generic pattern
-local function convert_mname(text)
-  text = text:gsub("\\mname{VA_ARGS}", "__VA_ARGS__")
-  text = text:gsub("\\mname{VA_OPT}", "__VA_OPT__")
-  text = text:gsub("\\mname{([^}]*)}", "__%1__")
-  return text
-end
-
--- Helper function to expand macros in text
+-- Helper function to expand macros in text using shared implementation
+-- Wrapper around expand_macros_common with cpp-macros context
 local function expand_macros(text, skip_special_chars)
   if not text then return text end
-
-  -- Tier 1: Most Critical Macros
-
-  -- Strip discretionary hyphen \- used for line breaking (BEFORE processing \tcode)
-  text = text:gsub("\\%-", "")
-
-  -- Strip \itcorr[...] italic correction markers (PDF spacing corrections)
-  text = text:gsub("\\itcorr%[%-?%d*%]", "")
-
-  -- Convert LaTeX spacing commands to regular spaces (BEFORE processing \tcode)
-  -- These need to be processed before \tcode{} → \texttt{} conversion
-  text = convert_latex_spacing(text)
-  -- NOTE: Control space (\<space>) is NOT converted here because it would
-  -- conflict with table row breaks (\\) when followed by space
-
-  -- \impdefx{description} renders as "implementation-defined  // description"
-  -- MUST be processed BEFORE \tcode{} conversion to handle nested \tcode{}
-  text = expand_impdefx_in_text(text, "\\impdefx{", 9, nil)
-
-  -- Code formatting macros - convert to \texttt{x} for Pandoc to handle
-  -- Pandoc's LaTeX reader will convert \texttt{} to Code elements properly
-  -- NOTE: \keyword{} primarily handled in simplified_macros.tex (Issue #63)
-  -- but keep fallback for tests that don't use preprocessing
-  text = text:gsub("\\keyword{", "\\texttt{")
-  text = text:gsub("\\ctype{", "\\texttt{")
-  text = text:gsub("\\tcode{", "\\texttt{")
-
-
-  -- Tier 2: Grammar and Special Identifiers
-
-  -- \grammarterm{x} renders as *x* (italics) - RESTORED: context-dependent
-  text = text:gsub("\\grammarterm{([^}]*)}", "*%1*")
-
-  -- \placeholder{x} and \placeholdernc{x} render as *x* - RESTORED: context-dependent
-  text = text:gsub("\\placeholder{([^}]*)}", "*%1*")
-  text = text:gsub("\\placeholdernc{([^}]*)}", "*%1*")
-
-  -- Tier 3: C++ Version Macros
-
-  -- Library chapter reference macros (dynamic, loaded from config.tex in Meta())
-  -- Handle with braces first (more specific pattern)
-  text = text:gsub("\\firstlibchapter{}", FIRSTLIB)
-  text = text:gsub("\\lastlibchapter{}", LASTLIB)
-  -- Then without braces
-  text = text:gsub("\\firstlibchapter", FIRSTLIB)
-  text = text:gsub("\\lastlibchapter", LASTLIB)
-
-  -- \stage{N} - keep for RawBlock description list processing
-  -- (simplified_macros.tex handles it in regular context, but RawBlocks need Lua)
-  text = text:gsub("\\stage{([^}]*)}", "Stage %1:")
-
-  -- Tier 7: Special characters and preprocessor macros
-  -- Skip for BNF blocks (cpp-grammar.lua handles \textbackslash specially)
-  if not skip_special_chars then
-    text = convert_special_chars(text)
-  end
-
-  -- \caret and \unun - special characters that Pandoc macro preprocessing can't handle
-  text = text:gsub("\\caret{}", "^")
-  text = text:gsub("\\caret%s", "^ ")  -- Handle \caret followed by space
-  text = text:gsub("\\caret([^a-zA-Z])", "^%1")  -- Handle \caret not followed by letter
-  text = text:gsub("\\unun{}", "__")
-  text = text:gsub("\\unun%s", "__ ")
-  text = text:gsub("\\unun([^a-zA-Z])", "__%1")
-
-  -- \mname{X} renders as __X__ (preprocessor macro names with underscore wrapper)
-  -- \xname{X} renders as __X (special identifiers with underscore prefix)
-  -- Note: \defnxname and \defnlibxname are handled in RawInline filter with proper emphasis
-  -- (can't use literal asterisks here as they get escaped by Pandoc)
-  text = convert_mname(text)
-  text = text:gsub("\\xname{([^}]*)}", "__%1")
-
-  -- Note: \defnx, \defnadj, \defexposconcept are now handled in RawInline
-  -- with proper emphasis using pandoc.Emph() instead of literal asterisks
-
-  -- \ucode{XXXX} renders Unicode code point as U+XXXX
-  -- The LaTeX macro does complex text scaling, but for Markdown we simplify to standard format
-  text = text:gsub("\\ucode{([^}]*)}", "`U+%1`")
-
-  -- Note: \NTS{text} still needs Lua handling for uppercase conversion
-  text = text:gsub("\\NTS{([^}]*)}", function(s) return s:upper() end)
-
-  -- \colcol{} renders as :: (restored - context-dependent)
-  text = text:gsub("\\colcol{}", "::")
-
-  -- Math formatting
-  text = text:gsub("\\mathit{([^}]*)}", "*%1*")
-  text = text:gsub("\\mathrm{([^}]*)}", "%1")  -- Restored: different meaning in math mode
 
   -- Use shared function from cpp-common to split comma-separated references
   -- E.g., "a,b,c" -> "[[a]], [[b]], [[c]]"
@@ -234,44 +123,15 @@ local function expand_macros(text, skip_special_chars)
     return split_refs_text(refs_str, references)
   end
 
-  -- Cross-references - convert to reference-style links for consistency
-  -- with C++ standard's stable name convention [section.name]
-  -- Add space before reference for readability if not already present
-  -- Handles comma-separated refs: \ref{a,b,c} -> [a], [b], [c]
-  text = text:gsub("([^%s])\\ref{([^}]*)}", function(before, refs)
-    return before .. " " .. split_refs(refs)
-  end)
-  text = text:gsub("^\\ref{([^}]*)}", function(refs)
-    return split_refs(refs)
-  end)
+  -- Set global FIRSTLIB and LASTLIB for expand_macros_common to use
+  _G.FIRSTLIB = FIRSTLIB
+  _G.LASTLIB = LASTLIB
 
-  -- \iref is "inline ref" - also should use [section.name] format
-  -- Add space before reference for readability if not already present
-  -- Handles comma-separated refs: \iref{a,b,c} -> [a], [b], [c]
-  text = text:gsub("([^%s])\\iref{([^}]*)}", function(before, refs)
-    return before .. " " .. split_refs(refs)
-  end)
-  text = text:gsub("^\\iref{([^}]*)}", function(refs)
-    return split_refs(refs)
-  end)
-
-  -- \tref is "table ref" - also should use [section.name] format
-  -- Add space before reference for readability if not already present
-  -- Handles comma-separated refs: \tref{a,b,c} -> [a], [b], [c]
-  text = text:gsub("([^%s])\\tref{([^}]*)}", function(before, refs)
-    return before .. " " .. split_refs(refs)
-  end)
-  text = text:gsub("^\\tref{([^}]*)}", function(refs)
-    return split_refs(refs)
-  end)
-
-  -- Strip empty braces {} that appear after C++ version identifiers
-  -- (LaTeX idiom to prevent space-eating: \Cpp{} → C++{}, \CppXX{} → C++20{})
-  -- BUT preserve = {} (default initializers in function signatures)
-  text = text:gsub("(%S){}%s", "%1 ")  -- foo{} followed by space → foo
-  text = text:gsub("(%S){}$", "%1")     -- foo{} at end of line → foo
-
-  return text
+  -- Call consolidated function with cpp-macros context options
+  return expand_macros_common(text, {
+    skip_special_chars = skip_special_chars,
+    ref_format = split_refs,  -- Custom function that tracks references
+  })
 end
 
 -- Apply to all string elements
@@ -1082,9 +942,42 @@ function RawBlock(elem)
       -- Parse and add description content
       if rest and #rest > 0 then
         rest = expand_macros(rest)
+        -- Convert @@REF:label@@ placeholders to [[label]] (from itemdescr processing)
+        rest = rest:gsub("@@REF:([^@]+)@@", "[[%1]]")
         -- Use +raw_tex to ensure nested custom environments (like tables) are passed as RawBlocks
         local parsed = pandoc.read(rest, "latex+raw_tex")
         for _, block in ipairs(parsed.blocks) do
+          -- Process RawBlocks that contain code blocks (since cpp-code-blocks.lua already ran)
+          if block.tag == "RawBlock" and block.format == "latex" then
+            local text = block.text
+            -- Check if this is a codeblock environment
+            local code = text:match("\\begin{codeblock}(.-)\\end{codeblock}")
+            if code then
+              -- Clean up code: remove leading/trailing whitespace
+              code = code:gsub("^%s+", ""):gsub("%s+$", "")
+              block = pandoc.CodeBlock(code, {class = "cpp"})
+            end
+            -- Check for outputblock
+            if not code then
+              code = text:match("\\begin{outputblock}(.-)\\end{outputblock}")
+              if code then
+                code = code:gsub("^%s+", ""):gsub("%s+$", "")
+                block = pandoc.CodeBlock(code, {class = "text"})
+              end
+            end
+            -- Check for codeblocktu
+            if not code then
+              code = text:match("\\begin{codeblocktu}{[^}]*}(.-)\\end{codeblocktu}")
+              if code then
+                code = code:gsub("^%s+", ""):gsub("%s+$", "")
+                block = pandoc.CodeBlock(code, {class = "cpp"})
+              end
+            end
+          end
+          -- Upgrade indented code blocks to fenced (add cpp class if missing)
+          if block.tag == "CodeBlock" and not block.attr.classes[1] then
+            block.attr = pandoc.Attr("", {"cpp"}, {})
+          end
           table.insert(blocks, block)
         end
       end

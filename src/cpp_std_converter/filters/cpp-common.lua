@@ -1058,6 +1058,332 @@ local function split_refs_text(refs_str, references_table)
   return table.concat(parts, ", ")
 end
 
+-- Helper function to convert LaTeX spacing commands to regular spaces
+-- Used by expand_macros_common() and cpp-macros.lua
+-- Converts various LaTeX spacing commands to regular spaces
+local function convert_latex_spacing(text)
+  text = text:gsub("\\enspace", " ")
+  -- Handle \quad and \qquad with following space FIRST to avoid double spacing
+  text = text:gsub("\\quad ", " ")    -- Wide space (with following space)
+  text = text:gsub("\\quad", " ")     -- Wide space (standalone)
+  text = text:gsub("\\qquad ", " ")   -- Very wide space (with following space)
+  text = text:gsub("\\qquad", " ")    -- Very wide space (standalone)
+  text = text:gsub("\\;", " ")        -- Medium space
+  text = text:gsub("\\,", " ")        -- Thin space
+  text = text:gsub("\\!", " ")        -- Negative thin space (convert to regular space)
+  -- NOTE: Bare ~ (non-breaking space) is NOT converted here because it can
+  -- interfere with escaped sequences like \~ (tilde) after backslash processing
+  return text
+end
+
+-- Helper function to convert \mname{} macro
+-- Used by expand_macros_common() and individual filters
+-- \mname{X} renders as __X__ (preprocessor macro names with underscore wrapper)
+-- Handles special cases: VA_ARGS, VA_OPT
+local function convert_mname(text)
+  -- Handle specific cases first
+  text = text:gsub("\\mname{VA_ARGS}", "__VA_ARGS__")
+  text = text:gsub("\\mname{VA_OPT}", "__VA_OPT__")
+  -- Then handle generic case
+  text = text:gsub("\\mname{([^}]*)}", "__%1__")
+  return text
+end
+
+-- Consolidated macro expansion function for use across multiple filters
+-- Handles common macro expansion patterns with context-specific options
+--
+-- Parameters:
+--   text: The text to process
+--   options: Table of options controlling behavior:
+--     .skip_special_chars: Skip special character conversion (for BNF blocks)
+--     .spec_labels: Convert specification labels (expects, requires, etc.) to \textit{}
+--     .ref_format: "wikilink" for [[ref]], "placeholder" for @@REF:ref@@, or function(refs) for custom
+--     .escape_at_macros: Handle @ escaped macros for code blocks
+--     .convert_to_latex: Use \textit{} and \texttt{} instead of markdown *x* and `x`
+--     .minimal: Only expand minimal set (for notes/examples context)
+--     .strip_indexlibrary: Strip \indexlibrary{} macros
+--
+-- Returns:
+--   Text with macros expanded according to options
+local function expand_macros_common(text, options)
+  if not text then return text end
+  options = options or {}
+
+  -- Tier 1: Critical preprocessing (always done unless minimal mode)
+  if not options.minimal then
+    -- Strip discretionary hyphen \- used for line breaking (BEFORE processing \tcode)
+    text = text:gsub("\\%-", "")
+
+    -- Strip \itcorr[...] italic correction markers (PDF spacing corrections)
+    text = text:gsub("\\itcorr%[%-?%d*%]", "")
+
+    -- Convert LaTeX spacing commands to regular spaces (BEFORE processing \tcode)
+    -- Skip when convert_to_latex=true: Pandoc will handle \, correctly in math vs text
+    if not options.convert_to_latex then
+      text = convert_latex_spacing(text)
+    end
+
+    -- \impdefx{description} renders as "implementation-defined  // description"
+    -- MUST be processed BEFORE \tcode{} conversion to handle nested \tcode{}
+    text = expand_impdefx_in_text(text, "\\impdefx{", 9, nil)
+
+    -- Strip indexlibrary if requested (itemdecl context)
+    if options.strip_indexlibrary then
+      text = remove_macro(text, "indexlibrary", false)
+    end
+  end
+
+  -- Tier 2: Specification labels (itemdecl context only)
+  if options.spec_labels then
+    local spec_label_macros = {
+      {pattern = "\\expects", replacement = "\\textit{Preconditions:}"},
+      {pattern = "\\requires", replacement = "\\textit{Requires:}"},
+      {pattern = "\\constraints", replacement = "\\textit{Constraints:}"},
+      {pattern = "\\effects", replacement = "\\textit{Effects:}"},
+      {pattern = "\\ensures", replacement = "\\textit{Ensures:}"},
+      {pattern = "\\returns", replacement = "\\textit{Returns:}"},
+      {pattern = "\\result", replacement = "\\textit{Result:}"},
+      {pattern = "\\postconditions", replacement = "\\textit{Postconditions:}"},
+      {pattern = "\\complexity", replacement = "\\textit{Complexity:}"},
+      {pattern = "\\remarks", replacement = "\\textit{Remarks:}"},
+      {pattern = "\\throws", replacement = "\\textit{Throws:}"},
+      {pattern = "\\errors", replacement = "\\textit{Error conditions:}"},
+      {pattern = "\\mandates", replacement = "\\textit{Mandates:}"},
+      {pattern = "\\recommended", replacement = "\\textit{Recommended practice:}"},
+      {pattern = "\\required", replacement = "\\textit{Required behavior:}"},
+      {pattern = "\\default", replacement = "\\textit{Default behavior:}"},
+      {pattern = "\\sync", replacement = "\\textit{Synchronization:}"},
+      {pattern = "\\replaceable", replacement = "\\textit{Replaceable:}"},
+      {pattern = "\\returntype", replacement = "\\textit{Return type:}"},
+      {pattern = "\\ctype", replacement = "\\textit{Type:}"},
+      {pattern = "\\templalias", replacement = "\\textit{Alias template:}"},
+      {pattern = "\\implimits", replacement = "\\textit{Implementation limits:}"},
+    }
+
+    for _, macro in ipairs(spec_label_macros) do
+      -- Handle both \macro\n and \macro<space> patterns
+      text = text:gsub(macro.pattern .. "%s*\n", macro.replacement .. " ")
+      text = text:gsub(macro.pattern .. "%s+", macro.replacement .. " ")
+    end
+  end
+
+  -- Tier 3: @ escaped macros (itemdecl code blocks context)
+  if options.escape_at_macros then
+    -- These convert @ delimited macros to plain text for code blocks
+    text = text:gsub("@\\placeholdernc{([^}]*)}@", "%1")
+    text = text:gsub("@\\placeholder{([^}]*)}@", "%1")
+    text = text:gsub("@\\tcode{([^}]*)}@", "%1")
+    text = text:gsub("@\\exposid{([^}]*)}@", "%1")
+    text = text:gsub("@\\libconcept{([^}]*)}@", "%1")
+    text = text:gsub("@\\exposconcept{([^}]*)}@", "%1")
+    text = text:gsub("@\\defexposconcept{([^}]*)}@", "%1")
+    text = text:gsub("@\\commentellip@", "...")
+    text = text:gsub("@", "")
+  end
+
+  -- Tier 4: Code formatting macros
+  if options.convert_to_latex then
+    -- Convert to LaTeX commands that Pandoc will process
+    text = text:gsub("\\keyword{", "\\texttt{")
+    text = text:gsub("\\ctype{", "\\texttt{")
+    text = text:gsub("\\tcode{", "\\texttt{")
+    text = text:gsub("\\libconcept{", "\\texttt{")
+    text = text:gsub("\\exposconcept{", "\\texttt{")
+  elseif not options.minimal then
+    -- Convert to \texttt for Pandoc (standard behavior for cpp-macros.lua)
+    text = text:gsub("\\keyword{", "\\texttt{")
+    text = text:gsub("\\ctype{", "\\texttt{")
+    text = text:gsub("\\tcode{", "\\texttt{")
+  end
+
+  -- Tier 5: Grammar and special identifiers
+  if not options.minimal then
+    if options.convert_to_latex then
+      -- Use \textit{} for Pandoc to process
+      text = text:gsub("\\grammarterm{", "\\textit{")
+      text = text:gsub("\\placeholder{", "\\textit{")
+      text = text:gsub("\\placeholdernc{", "\\textit{")
+      text = text:gsub("\\exposid{", "\\textit{")
+      text = text:gsub("\\oldconcept{([^}]*)}", "\\textit{Cpp17%1}")
+    else
+      -- Use *italic* markdown (cpp-macros.lua behavior)
+      text = text:gsub("\\grammarterm{([^}]*)}", "*%1*")
+      text = text:gsub("\\placeholder{([^}]*)}", "*%1*")
+      text = text:gsub("\\placeholdernc{([^}]*)}", "*%1*")
+    end
+  end
+
+  -- Tier 6: C++ and library version macros
+  if options.minimal then
+    -- Minimal mode: just expand \Cpp variants
+    text = text:gsub("\\Cpp{}", "C++")
+    text = text:gsub("\\Cpp%s", "C++ ")
+    text = text:gsub("\\Cpp([^%w])", "C++%1")
+    text = text:gsub("\\IsoC{}", "ISO/IEC 9899:2018 (C)")
+  else
+    -- Full mode: expand all C++ versions
+    text = expand_cpp_version_macros(text)
+
+    -- Library chapter references (if FIRSTLIB and LASTLIB are set)
+    -- Note: These globals are set in Meta() by cpp-macros.lua
+    if _G.FIRSTLIB then
+      text = text:gsub("\\firstlibchapter{}", _G.FIRSTLIB)
+      text = text:gsub("\\firstlibchapter", _G.FIRSTLIB)
+    end
+    if _G.LASTLIB then
+      text = text:gsub("\\lastlibchapter{}", _G.LASTLIB)
+      text = text:gsub("\\lastlibchapter", _G.LASTLIB)
+    end
+
+    -- \stage{N} -> Stage N: (skip when convert_to_latex=true to preserve for Pandoc)
+    if not options.convert_to_latex then
+      text = text:gsub("\\stage{([^}]*)}", "Stage %1:")
+    end
+  end
+
+  -- Tier 7: Term/definition macros
+  if options.minimal or options.convert_to_latex then
+    text = text:gsub("\\term{", "\\emph{")
+    text = text:gsub("\\defn{", "\\emph{")
+  end
+
+  -- Tier 8: Special characters (skip for BNF context and LaTeX output mode)
+  if not options.skip_special_chars and not options.minimal then
+    -- IMPORTANT: When convert_to_latex=true, we're preparing text for Pandoc's LaTeX reader
+    -- Pandoc will handle \textbackslash → \ conversion itself
+    -- Converting too early breaks Pandoc's parsing (e.g., '\n' becomes '``')
+    if not options.convert_to_latex then
+      text = convert_special_chars(text)
+    end
+  end
+
+  -- Tier 9: Preprocessor and special macros
+  if not options.minimal then
+    -- \caret, \unun - special characters that Pandoc macro preprocessing can't handle
+    text = text:gsub("\\caret{}", "^")
+    text = text:gsub("\\caret%s", "^ ")
+    text = text:gsub("\\caret([^a-zA-Z])", "^%1")
+    text = text:gsub("\\unun{}", "__")
+    text = text:gsub("\\unun%s", "__ ")
+    text = text:gsub("\\unun([^a-zA-Z])", "__%1")
+
+    -- \mname{X} -> __X__ (preprocessor macro names)
+    text = convert_mname(text)
+
+    -- \xname{X} -> __X (special identifiers with underscore prefix)
+    text = text:gsub("\\xname{([^}]*)}", "__%1")
+
+    -- \NTS{text} -> UPPERCASE
+    text = text:gsub("\\NTS{([^}]*)}", function(s) return s:upper() end)
+
+    -- \ucode{XXXX} -> `U+XXXX`
+    text = text:gsub("\\ucode{([^}]*)}", "`U+%1`")
+
+    -- \colcol{} -> ::
+    text = text:gsub("\\colcol{}", "::")
+
+    -- \ntbs{} and \ntmbs{} - null-terminated string abbreviations
+    text = text:gsub("\\ntbs{}", "NTBS")
+    text = text:gsub("\\ntmbs{}", "NTMBS")
+  end
+
+  -- Tier 10: Math formatting
+  if not options.minimal then
+    text = text:gsub("\\mathit{([^}]*)}", "*%1*")
+    text = text:gsub("\\mathrm{([^}]*)}", "%1")
+
+    -- \bigoh{x} -> 𝑂(x) (only for itemdecl context)
+    if options.convert_to_latex then
+      text = text:gsub("\\bigoh{([^}]*)}", function(content)
+        content = content:gsub("\\log", "log")
+        content = content:gsub("\\min", "min")
+        content = content:gsub("\\max", "max")
+        content = content:gsub("\\sqrt", "sqrt")
+        return "𝑂(" .. content .. ")"
+      end)
+    end
+  end
+
+  -- Tier 11: Range macros (itemdecl context only)
+  if options.convert_to_latex then
+    text = text:gsub("\\range{([^}]*)}{([^}]*)}", "[\\texttt{%1}, \\texttt{%2})")
+    text = text:gsub("\\crange{([^}]*)}{([^}]*)}", "[\\texttt{%1}, \\texttt{%2}]")
+    text = text:gsub("\\countedrange{([^}]*)}{([^}]*)}", "\\texttt{%1}+[0, \\texttt{%2})")
+    text = text:gsub("\\brange{([^}]*)}{([^}]*)}", "(\\texttt{%1}, \\texttt{%2})")
+    text = text:gsub("\\orange{([^}]*)}{([^}]*)}", "(\\texttt{%1}, \\texttt{%2})")
+  end
+
+  -- Tier 12: \impldef handling (itemdecl context)
+  if options.convert_to_latex then
+    text = process_macro_with_replacement(text, "impldef", function(content)
+      return "\\textit{implementation-defined}"
+    end)
+  end
+
+  -- Tier 13: \phantom{} spacing (itemdecl context)
+  if options.convert_to_latex then
+    text = text:gsub("\\phantom{([^}]*)}", "%1")
+  end
+
+  -- Tier 14: Cross-references
+  if type(options.ref_format) == "function" then
+    -- Custom reference formatting function provided
+    local function process_refs(refs_str)
+      return options.ref_format(refs_str)
+    end
+
+    -- Process \ref, \iref, \tref with space handling
+    -- Three patterns for each: preceded by non-space (add space), preceded by space (keep space), at start
+    text = text:gsub("([^%s])\\ref{([^}]*)}", function(before, refs)
+      return before .. " " .. process_refs(refs)
+    end)
+    text = text:gsub("(%s)\\ref{([^}]*)}", function(space, refs)
+      return space .. process_refs(refs)
+    end)
+    text = text:gsub("^\\ref{([^}]*)}", function(refs)
+      return process_refs(refs)
+    end)
+
+    text = text:gsub("([^%s])\\iref{([^}]*)}", function(before, refs)
+      return before .. " " .. process_refs(refs)
+    end)
+    text = text:gsub("(%s)\\iref{([^}]*)}", function(space, refs)
+      return space .. process_refs(refs)
+    end)
+    text = text:gsub("^\\iref{([^}]*)}", function(refs)
+      return process_refs(refs)
+    end)
+
+    text = text:gsub("([^%s])\\tref{([^}]*)}", function(before, refs)
+      return before .. " " .. process_refs(refs)
+    end)
+    text = text:gsub("(%s)\\tref{([^}]*)}", function(space, refs)
+      return space .. process_refs(refs)
+    end)
+    text = text:gsub("^\\tref{([^}]*)}", function(refs)
+      return process_refs(refs)
+    end)
+  elseif options.ref_format == "placeholder" then
+    -- Use @@REF:label@@ placeholders (itemdecl context)
+    text = text:gsub("\\ref{([^}]*)}", "@@REF:%1@@")
+    text = text:gsub("\\iref{([^}]*)}", "@@REF:%1@@")
+    text = text:gsub("\\tref{([^}]*)}", "@@REF:%1@@")
+  elseif options.ref_format == "wikilink" and not options.minimal then
+    -- Default [[ref]] format - but we need a split function
+    -- This is incomplete without the split function, so skip for now
+  end
+
+  -- Tier 15: Empty braces cleanup (cpp-macros context only)
+  if not options.minimal and not options.convert_to_latex then
+    -- Strip empty braces {} that appear after C++ version identifiers
+    -- BUT preserve = {} (default initializers in function signatures)
+    text = text:gsub("(%S){}%s", "%1 ")
+    text = text:gsub("(%S){}$", "%1")
+  end
+
+  return text
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -1086,4 +1412,7 @@ return {
   clean_code_common = clean_code_common,
   code_block_macro_patterns = code_block_macro_patterns,
   split_refs_text = split_refs_text,
+  convert_latex_spacing = convert_latex_spacing,
+  convert_mname = convert_mname,
+  expand_macros_common = expand_macros_common,
 }
