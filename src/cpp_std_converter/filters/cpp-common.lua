@@ -981,6 +981,16 @@ local function clean_code_common(code, handle_textbackslash)
   -- \ref{x} cross-references
   code = code:gsub("\\ref{([^}]*)}", "[%1]")
 
+  -- \tref{x} table cross-references (also use [label] format)
+  code = code:gsub("\\tref{([^}]*)}", "[%1]")
+
+  -- \range{first}{last} macro for half-open ranges
+  code = code:gsub("\\range{([^}]*)}{([^}]*)}", "[%1, %2)")
+
+  -- Strip indexing commands (these should not appear in code blocks but handle defensively)
+  code = code:gsub("\\indexlibrary[^{]*{[^}]*}", "")
+  code = code:gsub("\\indexlibraryglobal{[^}]*}", "")
+
   -- \impldef{description} -> "implementation-defined" (used in @\UNSP{\impldef{}}@)
   -- Handle this before \UNSP{} so nested macros get expanded
   code = code:gsub("\\impldef{([^}]*)}", "implementation-defined")

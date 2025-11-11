@@ -27,6 +27,7 @@ local convert_cross_references_in_code = common.convert_cross_references_in_code
 local expand_library_spec_macros = common.expand_library_spec_macros
 local remove_macro = common.remove_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
+local clean_code_common = common.clean_code_common
 
 -- Track note and example counters across itemdescr processing
 local itemdescr_note_counter = 0
@@ -629,52 +630,8 @@ expand_itemdescr_macros = function(text)
   -- Pandoc doesn't recognize the custom codeblock environment and strips it
   -- We need to convert it to \begin{verbatim}...\end{verbatim} before pandoc.read()
   text = text:gsub("\\begin{codeblock}(.-)\\end{codeblock}", function(code)
-    -- Clean up the code inline (can't call clean_itemdecl_code - it's defined later)
-    -- Just do the essential cleaning: remove @ delimiters and common macros
-
-    -- Remove @ escape delimiters
-    code = code:gsub("@\\commentellip@", "...")
-    code = code:gsub("@\\tcode{([^}]*)}@", "%1")
-    code = code:gsub("@\\placeholder{([^}]*)}@", "%1")
-    code = code:gsub("@\\placeholdernc{([^}]*)}@", "%1")
-    code = code:gsub("@\\exposid{([^}]*)}@", "%1")
-    code = code:gsub("@\\exposidnc{([^}]*)}@", "%1")
-    code = code:gsub("@\\libglobal{([^}]*)}@", "%1")
-    code = code:gsub("@\\libmember{([^}]*)}{([^}]*)}@", "%1")
-    code = code:gsub("@\\libconcept{([^}]*)}@", "%1")
-    code = code:gsub("@\\exposconcept{([^}]*)}@", "%1")
-    code = code:gsub("@", "")
-
-    -- Expand macros
-    code = code:gsub("\\tcode{([^}]*)}", "%1")
-    code = code:gsub("\\placeholder{([^}]*)}", "%1")
-    code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
-    code = code:gsub("\\exposid{([^}]*)}", "%1")
-    code = code:gsub("\\exposidnc{([^}]*)}", "%1")
-    code = code:gsub("\\libglobal{([^}]*)}", "%1")
-    code = code:gsub("\\libmember{([^}]*)}{([^}]*)}", "%1")
-    code = code:gsub("\\libconcept{([^}]*)}", "%1")
-    code = code:gsub("\\exposconcept{([^}]*)}", "%1")
-    code = code:gsub("\\oldconcept{([^}]*)}", "%1")
-    code = code:gsub("\\iref{([^}]*)}", "[%1]")
-    code = code:gsub("\\tref{([^}]*)}", "[%1]")
-    code = code:gsub("\\ref{([^}]*)}", "[%1]")
-    code = code:gsub("\\range{([^}]*)}{([^}]*)}", "[%1, %2)")
-    code = code:gsub("\\brk{}", "")
-    code = code:gsub("\\cv{}", "cv")
-    code = code:gsub("\\seebelow", "see below")
-    code = code:gsub("\\unspec", "unspecified")
-    -- Use pattern that requires \expos to NOT be followed by 'i' to avoid matching \exposid or \exposidnc
-    code = code:gsub("\\expos([^i])", "exposition only%1")
-    code = code:gsub("\\expos$", "exposition only")
-
-    -- Remove font switch commands (bare commands without arguments)
-    code = remove_font_switches(code)
-
-    -- Handle layout overlap commands: \rlap{}, \llap{}, \clap{}
-    code = code:gsub("\\rlap{([^}]+)}", "%1")
-    code = code:gsub("\\llap{([^}]+)}", "%1")
-    code = code:gsub("\\clap{([^}]+)}", "%1")
+    -- Clean up the code using shared function from cpp-common
+    code = clean_code_common(code, false)
 
     -- Trim leading/trailing whitespace
     code = code:gsub("^%s+", "")
@@ -686,81 +643,6 @@ expand_itemdescr_macros = function(text)
   end)
 
   return text
-end
-
--- Helper function to clean up code in itemdecl
-local function clean_itemdecl_code(code)
-  -- These are similar to code blocks, use same cleaning approach
-
-  -- Remove @ escape delimiters and expand common macros
-  code = code:gsub("@\\commentellip@", "...")
-
-  -- \tcode{x} represents inline code (just extract the content)
-  code = code:gsub("@\\tcode{([^}]*)}@", "%1")
-  code = code:gsub("\\tcode{([^}]*)}", "%1")
-
-  -- \placeholder{x} represents a placeholder
-  code = code:gsub("@\\placeholder{([^}]*)}@", "%1")
-  code = code:gsub("\\placeholder{([^}]*)}", "%1")
-
-  -- \placeholdernc{x} represents a placeholder (non-code variant)
-  code = code:gsub("@\\placeholdernc{([^}]*)}@", "%1")
-  code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
-
-  -- \exposid{x} represents exposition-only identifier
-  code = code:gsub("@\\exposid{([^}]*)}@", "%1")
-  code = code:gsub("\\exposid{([^}]*)}", "%1")
-
-  -- \libglobal{x} represents a library-level global name (Issue #24)
-  code = code:gsub("@\\libglobal{([^}]*)}@", "%1")
-  code = code:gsub("\\libglobal{([^}]*)}", "%1")
-
-  -- \libmember{member}{class} represents a library class member name (Issue #24)
-  -- Takes 2 parameters but only outputs the first (member name)
-  code = code:gsub("@\\libmember{([^}]*)}{([^}]*)}@", "%1")
-  code = code:gsub("\\libmember{([^}]*)}{([^}]*)}", "%1")
-
-  -- Concept macros (library, exposition-only, and old-style concepts)
-  code = expand_concept_macros(code, true)
-
-  -- Cross-references - convert to [label]
-  code = convert_cross_references_in_code(code, true)
-
-  -- \defn{x} definition terms
-  code = code:gsub("@\\defn{([^}]*)}@", "%1")
-  code = code:gsub("\\defn{([^}]*)}", "%1")
-
-  -- \defexposconcept{x} exposition-only concept definition
-  code = code:gsub("@\\defexposconcept{([^}]*)}@", "%1")
-  code = code:gsub("\\defexposconcept{([^}]*)}", "%1")
-
-  -- \cv represents "cv"
-  code = code:gsub("@\\cv{}@", "cv")
-  code = code:gsub("\\cv{}", "cv")
-
-  -- Library specification macros
-  code = expand_library_spec_macros(code, true)
-
-  -- Additional cross-references not in shared function
-  code = code:gsub("\\tref{([^}]*)}", "[%1]")
-
-  -- \range{first}{last} macro
-  code = code:gsub("\\range{([^}]*)}{([^}]*)}", "[%1, %2)")
-
-  -- Strip \brk{} line break hints
-  code = code:gsub("\\brk{}", "")
-
-  -- Strip indexing commands
-  code = code:gsub("\\indexlibrary[^{]*{[^}]*}", "")
-  code = code:gsub("\\indexlibraryglobal{[^}]*}", "")
-
-  -- Remove any remaining @ delimiters
-  code = code:gsub("@", "")
-
-  -- Clean up extra whitespace but preserve indentation
-  code = code:gsub("[ \\t]+\\n", "\\n")
-
-  return code
 end
 
 -- Main filter function for raw blocks
@@ -775,8 +657,8 @@ function RawBlock(elem)
   local content = text:match("\\begin{itemdecl}(.-)\\end{itemdecl}")
 
   if content then
-    -- Clean up the code
-    content = clean_itemdecl_code(content)
+    -- Clean up the code using shared function from cpp-common
+    content = clean_code_common(content, false)
 
     -- Trim leading/trailing whitespace
     content = content:gsub("^%s+", "")

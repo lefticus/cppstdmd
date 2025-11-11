@@ -134,29 +134,20 @@ def test_clone_failure(mock_run, temp_dir):
 
 @patch('subprocess.run')
 def test_checkout_success(mock_run, mock_repo):
-    """Test successful checkout"""
+    """Test successful checkout when ref exists locally"""
     manager = DraftRepoManager(mock_repo)
 
-    # Mock successful fetch and checkout
+    # Mock successful local checkout (returncode=0 means ref exists locally)
     mock_run.return_value = Mock(returncode=0)
 
     manager.checkout("n4659")
 
-    # Should call git fetch and git checkout
-    assert mock_run.call_count == 2
-    calls = mock_run.call_args_list
-
-    # First call: git fetch --tags
-    fetch_args = calls[0][0][0]
-    assert "git" in fetch_args
-    assert "fetch" in fetch_args
-    assert "--tags" in fetch_args
-
-    # Second call: git checkout n4659
-    checkout_args = calls[1][0][0]
-    assert "git" in checkout_args
-    assert "checkout" in checkout_args
-    assert "n4659" in checkout_args
+    # Should call git checkout once (local checkout succeeds)
+    assert mock_run.call_count == 1
+    call_args = mock_run.call_args_list[0][0][0]
+    assert "git" in call_args
+    assert "checkout" in call_args
+    assert "n4659" in call_args
 
 
 @patch('subprocess.run')
@@ -176,10 +167,11 @@ def test_checkout_failure(mock_run, mock_repo):
     """Test checkout failure handling"""
     manager = DraftRepoManager(mock_repo)
 
-    # Mock successful fetch but failed checkout
+    # Mock the sequence: local checkout fails, fetch succeeds, second checkout fails
     mock_run.side_effect = [
+        Mock(returncode=1, stderr="error: pathspec 'invalid' did not match"),  # local checkout fails
         Mock(returncode=0),  # fetch succeeds
-        subprocess.CalledProcessError(1, "git checkout", stderr="error: pathspec 'invalid' did not match")
+        subprocess.CalledProcessError(1, "git checkout", stderr="error: pathspec 'invalid' did not match")  # checkout fails
     ]
 
     with pytest.raises(RepoManagerError) as exc_info:
@@ -407,12 +399,12 @@ def test_ensure_ready_only_checkout_if_exists(mock_run, mock_repo):
 
     manager.ensure_ready(ref="n4659")
 
-    # Should only call git fetch and git checkout (not clone)
-    assert mock_run.call_count == 2
-    calls_str = str(mock_run.call_args_list)
-    assert "clone" not in calls_str
-    assert "fetch" in calls_str
-    assert "checkout" in calls_str
+    # Should only call git checkout once (local checkout succeeds, not clone)
+    assert mock_run.call_count == 1
+    call_args = mock_run.call_args_list[0][0][0]
+    assert "git" in call_args
+    assert "checkout" in call_args
+    assert "clone" not in call_args
 
 
 @patch('subprocess.run')

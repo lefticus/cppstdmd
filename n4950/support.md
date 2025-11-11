@@ -1452,7 +1452,11 @@ namespace std {
   inline constexpr destroying_delete_t destroying_delete{};
 
   // global operator new control%
-  \indexlibraryglobal{align_val_t  \indexlibraryglobal{destroying_delete_t  \indexlibraryglobal{destroying_delete  \indexlibraryglobal{nothrow_t  \indexlibraryglobal{nothrow}
+  %
+  %
+  %
+  %
+
   enum class align_val_t : size_t {};
 
   struct nothrow_t { explicit nothrow_t() = default; };

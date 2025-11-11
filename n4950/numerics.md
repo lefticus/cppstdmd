@@ -1937,7 +1937,7 @@ default-constructed object of type `knuth_b` produces the value
 1112339016.
 
 ``` cpp
-using default_random_engine = \textit{implementation-defined};
+using default_random_engine = implementation-defined;
 ```
 
 *Remarks:* The choice of engine type named by this `typedef` is

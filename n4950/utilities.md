@@ -100,7 +100,9 @@ namespace std {
   [[noreturn]] void unreachable();
 
   // [intseq], compile-time integer sequences%
-\indexlibraryglobal{index_sequence\indexlibraryglobal{make_index_sequence\indexlibraryglobal{index_sequence_for}
+%
+%
+
   template<class T, T...>
     struct integer_sequence;
   template<size_t... I>
@@ -190,7 +192,12 @@ namespace std {
   template<class... Types> class tuple;         // defined in <tuple>
 
   // in-place construction%
-\indexlibraryglobal{in_place_t\indexlibraryglobal{in_place\indexlibraryglobal{in_place_type_t\indexlibraryglobal{in_place_type\indexlibraryglobal{in_place_index_t\indexlibraryglobal{in_place_index}
+%
+%
+%
+%
+%
+
   struct in_place_t {
     explicit in_place_t() = default;
   };
@@ -295,7 +302,7 @@ struct A {
 };
 
 void g() {
-  shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to int\&
+  shared_ptr<A> sp1 = factory<A>(2, 1.414); // error: 2 will not bind to int&
   int i = 2;
   shared_ptr<A> sp2 = factory<A>(i, 1.414); // OK
 }
@@ -343,7 +350,7 @@ void g() {
   accessor a{&v};
   string& x = a[0];                             // OK, binds to lvalue reference
   string&& y = std::move(a)[0];                 // OK, is rvalue reference
-  string const&& z = std::move(as_const(a))[1]; // OK, is const\&\&
+  string const&& z = std::move(as_const(a))[1]; // OK, is const&&
   string& w = as_const(a)[1];                   // error: will not bind to non-const
 }
 ```
@@ -372,8 +379,8 @@ struct A {
 
 void g() {
   A a;
-  shared_ptr<A> sp1 = factory<A>(a);                // ``a\!'' binds to A(const A\&)
-  shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``a\!'' binds to A(A\&\&)
+  shared_ptr<A> sp1 = factory<A>(a);                // ``a'' binds to A(const A&)
+  shared_ptr<A> sp2 = factory<A>(std::move(a));     // ``a'' binds to A(A&&)
 }
 ```
 
@@ -1652,7 +1659,7 @@ constexpr tuple& operator=(tuple&& u) noexcept(see below);
 the following expressions:
 
 ``` cpp
-is_nothrow_move_assignable_v<$\mathtt{T}_i$>
+is_nothrow_move_assignable_v<T_i>
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -2190,7 +2197,7 @@ Otherwise, equivalent to:
 
 ``` cpp
 if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
-return $t_\mathrm{tail}$ <=> $u_\mathrm{tail}$;
+return t_tail <=> u_tail;
 ```
 
 where `r`_\mathrm{tail} for some `r` is a tuple containing all but the
@@ -10051,7 +10058,8 @@ floating-point types [[basic.fundamental]] in lieu of
 
 ``` cpp
 %
-\indexlibraryglobal{chars_format\indexlibrarymember{scientific}{chars_format\indexlibrarymember{fixed}{chars_format\indexlibrarymember{hex}{chars_format\indexlibrarymember{general}{chars_formatnamespace std {
+%
+{chars_format{chars_format{chars_format{chars_formatnamespace std {
   // floating-point format for primitive numerical conversion
   enum class chars_format {
     scientific = unspecified,
@@ -10060,7 +10068,8 @@ floating-point types [[basic.fundamental]] in lieu of
     general = fixed | scientific
   };
 %
-\indexlibraryglobal{to_chars_result\indexlibrarymember{ptr}{to_chars_result\indexlibrarymember{ec}{to_chars_result}
+%
+{to_chars_result{to_chars_result}
 
   // [charconv.to.chars], primitive numerical output conversion
   struct to_chars_result {
@@ -10077,7 +10086,8 @@ floating-point types [[basic.fundamental]] in lieu of
   to_chars_result to_chars(char* first, char* last, floating-point-type value,
                            chars_format fmt, int precision);
 %
-\indexlibraryglobal{from_chars_result\indexlibrarymember{ptr}{from_chars_result\indexlibrarymember{ec}{from_chars_result}
+%
+{from_chars_result{from_chars_result}
 
   // [charconv.from.chars], primitive numerical input conversion
   struct from_chars_result {
