@@ -20,6 +20,7 @@ local common = require("cpp-common")
 local trim = common.trim
 local clean_code_common = common.clean_code_common
 local extract_braced_content = common.extract_braced_content
+local expand_macros_common = common.expand_macros_common
 
 -- Track note and example counters
 local note_counter = 0
@@ -205,28 +206,10 @@ local function extract_codeblocks(content)
   return modified_content, codeblocks, titles, counter
 end
 
--- Macro expansion lookup table for better performance
-local macro_expansions = {
-  ["\\Cpp{}"] = "C++",
-  ["\\IsoC{}"] = "ISO/IEC 9899:2018 (C)",
-}
-
--- Optimized macro expansion using single pass
+-- Optimized macro expansion using shared function from cpp-common
 local function expand_macros(content)
-  -- Expand table-based macros first
-  for pattern, replacement in pairs(macro_expansions) do
-    content = content:gsub(pattern:gsub("%p", "%%%1"), replacement)  -- Escape pattern chars
-  end
-
-  -- Expand context-sensitive macros (those with optional whitespace/delimiters)
-  content = content:gsub("\\Cpp%s", "C++ ")
-  content = content:gsub("\\Cpp([^%w])", "C++%1")
-
-  -- Expand \term{} and \defn{} to \emph{}
-  content = content:gsub("\\term{([^}]*)}", "\\emph{%1}")
-  content = content:gsub("\\defn{([^}]*)}", "\\emph{%1}")
-
-  return content
+  -- Use shared expand_macros_common with minimal mode for notes/examples context
+  return expand_macros_common(content, {minimal = true})
 end
 
 -- Forward declarations for recursive processing

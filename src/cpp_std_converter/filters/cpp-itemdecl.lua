@@ -28,6 +28,7 @@ local expand_library_spec_macros = common.expand_library_spec_macros
 local remove_macro = common.remove_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
 local clean_code_common = common.clean_code_common
+local expand_macros_common = common.expand_macros_common
 
 -- Track note and example counters across itemdescr processing
 local itemdescr_note_counter = 0
@@ -364,150 +365,12 @@ end
 
 -- Helper function to expand macros in itemdescr text before Pandoc processing
 -- (Forward declared earlier, defined here)
+-- Uses hybrid approach: specialized logic FIRST, then expand_macros_common for standard processing
 expand_itemdescr_macros = function(text)
-  -- Expand custom macros to standard LaTeX that Pandoc understands
-  -- We use \texttt{} for code and \textit{} for emphasis
+  -- PHASE 1: Itemdecl-specific specialized logic that must run BEFORE expand_macros_common
+  -- These transformations need to see the raw LaTeX before other macros are expanded
 
-  -- Strip \indexlibrary{} macro (used for index generation, not content)
-  -- Must handle nested braces like \indexlibrary{\idxcode{terminate}}
-  text = remove_macro(text, "indexlibrary", false)
-
-  -- Specification section labels - convert to italic with colon using LaTeX commands
-  -- Use \textit{...}: for italic that Pandoc will convert properly
-  -- \expects -> \textit{Preconditions:}
-  text = text:gsub("\\expects%s*\n", "\\textit{Preconditions:} ")
-  text = text:gsub("\\expects%s+", "\\textit{Preconditions:} ")
-
-  -- \requires -> \textit{Requires:}
-  text = text:gsub("\\requires%s*\n", "\\textit{Requires:} ")
-  text = text:gsub("\\requires%s+", "\\textit{Requires:} ")
-
-  -- \constraints -> \textit{Constraints:}
-  text = text:gsub("\\constraints%s*\n", "\\textit{Constraints:} ")
-  text = text:gsub("\\constraints%s+", "\\textit{Constraints:} ")
-
-  -- \effects -> \textit{Effects:}
-  text = text:gsub("\\effects%s*\n", "\\textit{Effects:} ")
-  text = text:gsub("\\effects%s+", "\\textit{Effects:} ")
-
-  -- \ensures -> \textit{Ensures:}
-  text = text:gsub("\\ensures%s*\n", "\\textit{Ensures:} ")
-  text = text:gsub("\\ensures%s+", "\\textit{Ensures:} ")
-
-  -- \returns -> \textit{Returns:}
-  text = text:gsub("\\returns%s*\n", "\\textit{Returns:} ")
-  text = text:gsub("\\returns%s+", "\\textit{Returns:} ")
-
-  -- \result -> \textit{Result:}
-  text = text:gsub("\\result%s*\n", "\\textit{Result:} ")
-  text = text:gsub("\\result%s+", "\\textit{Result:} ")
-
-  -- \postconditions -> \textit{Postconditions:}
-  text = text:gsub("\\postconditions%s*\n", "\\textit{Postconditions:} ")
-  text = text:gsub("\\postconditions%s+", "\\textit{Postconditions:} ")
-
-  -- \complexity -> \textit{Complexity:}
-  text = text:gsub("\\complexity%s*\n", "\\textit{Complexity:} ")
-  text = text:gsub("\\complexity%s+", "\\textit{Complexity:} ")
-
-  -- \remarks -> \textit{Remarks:}
-  text = text:gsub("\\remarks%s*\n", "\\textit{Remarks:} ")
-  text = text:gsub("\\remarks%s+", "\\textit{Remarks:} ")
-
-  -- \throws -> \textit{Throws:}
-  text = text:gsub("\\throws%s*\n", "\\textit{Throws:} ")
-  text = text:gsub("\\throws%s+", "\\textit{Throws:} ")
-
-  -- \errors -> \textit{Error conditions:}
-  text = text:gsub("\\errors%s*\n", "\\textit{Error conditions:} ")
-  text = text:gsub("\\errors%s+", "\\textit{Error conditions:} ")
-
-  -- \mandates -> \textit{Mandates:}
-  text = text:gsub("\\mandates%s*\n", "\\textit{Mandates:} ")
-  text = text:gsub("\\mandates%s+", "\\textit{Mandates:} ")
-
-  -- \recommended -> \textit{Recommended practice:}
-  text = text:gsub("\\recommended%s*\n", "\\textit{Recommended practice:} ")
-  text = text:gsub("\\recommended%s+", "\\textit{Recommended practice:} ")
-
-  -- \required -> \textit{Required behavior:}
-  text = text:gsub("\\required%s*\n", "\\textit{Required behavior:} ")
-  text = text:gsub("\\required%s+", "\\textit{Required behavior:} ")
-
-  -- \default -> \textit{Default behavior:}
-  text = text:gsub("\\default%s*\n", "\\textit{Default behavior:} ")
-  text = text:gsub("\\default%s+", "\\textit{Default behavior:} ")
-
-  -- \sync -> \textit{Synchronization:}
-  text = text:gsub("\\sync%s*\n", "\\textit{Synchronization:} ")
-  text = text:gsub("\\sync%s+", "\\textit{Synchronization:} ")
-
-  -- \replaceable -> \textit{Replaceable:}
-  text = text:gsub("\\replaceable%s*\n", "\\textit{Replaceable:} ")
-  text = text:gsub("\\replaceable%s+", "\\textit{Replaceable:} ")
-
-  -- \returntype -> \textit{Return type:}
-  text = text:gsub("\\returntype%s*\n", "\\textit{Return type:} ")
-  text = text:gsub("\\returntype%s+", "\\textit{Return type:} ")
-
-  -- \ctype -> \textit{Type:} (Fundesc label variant)
-  text = text:gsub("\\ctype%s*\n", "\\textit{Type:} ")
-  text = text:gsub("\\ctype%s+", "\\textit{Type:} ")
-
-  -- \templalias -> \textit{Alias template:}
-  text = text:gsub("\\templalias%s*\n", "\\textit{Alias template:} ")
-  text = text:gsub("\\templalias%s+", "\\textit{Alias template:} ")
-
-  -- \implimits -> \textit{Implementation limits:}
-  text = text:gsub("\\implimits%s*\n", "\\textit{Implementation limits:} ")
-  text = text:gsub("\\implimits%s+", "\\textit{Implementation limits:} ")
-
-  -- Handle @ escaped macros FIRST (before regular conversions)
-  -- The @ delimiters mark where LaTeX macros appear in code blocks
-  -- These should be converted to PLAIN TEXT since they're in code blocks
-  -- NOT to \textit{} or \texttt{} which will leak into the output
-
-  -- @\placeholdernc{x}@ -> x (plain text)
-  text = text:gsub("@\\placeholdernc{([^}]*)}@", "%1")
-
-  -- @\placeholder{x}@ -> x (plain text)
-  text = text:gsub("@\\placeholder{([^}]*)}@", "%1")
-
-  -- @\tcode{x}@ -> x (plain text, not \texttt)
-  text = text:gsub("@\\tcode{([^}]*)}@", "%1")
-
-  -- @\exposid{x}@ -> x (plain text)
-  text = text:gsub("@\\exposid{([^}]*)}@", "%1")
-
-  -- @\libconcept{x}@ -> x (plain text)
-  text = text:gsub("@\\libconcept{([^}]*)}@", "%1")
-
-  -- @\exposconcept{x}@ -> x (plain text)
-  text = text:gsub("@\\exposconcept{([^}]*)}@", "%1")
-
-  -- @\defexposconcept{x}@ -> x (plain text)
-  text = text:gsub("@\\defexposconcept{([^}]*)}@", "%1")
-
-  -- @\commentellip@ -> ... (plain text)
-  text = text:gsub("@\\commentellip@", "...")
-
-  -- Remove any remaining @ delimiters
-  text = text:gsub("@", "")
-
-  -- \bigoh{x} -> 𝑂(x) using Unicode Mathematical Italic Capital O (U+1D442)
-  -- Must be done BEFORE \tcode conversion to handle nested macros
-  -- Pandoc strips \bigoh when outside math mode, so we expand it
-  -- Also expand common math commands inside bigoh to plain text
-  text = text:gsub("\\bigoh{([^}]*)}", function(content)
-    -- Expand math commands to plain text
-    content = content:gsub("\\log", "log")
-    content = content:gsub("\\min", "min")
-    content = content:gsub("\\max", "max")
-    content = content:gsub("\\sqrt", "sqrt")
-    return "𝑂(" .. content .. ")"
-  end)
-
-  -- Handle \tcode{\placeholdernc{...}...} special case with proper brace balancing
+  -- COMPLEXITY #1: Handle \tcode{\placeholdernc{...}...} special case with proper brace balancing
   -- When \tcode wraps \placeholdernc, the placeholder dominates and we want italic, not code
   -- This pattern can contain nested \tcode{} inside, like: \tcode{\placeholdernc{FUN}($\tcode{T}_j$)}
   -- We need to strip ALL \tcode{} wrappers while converting \placeholdernc{} -> \textit{}
@@ -532,12 +395,7 @@ expand_itemdescr_macros = function(text)
     end
   end
 
-  -- \placeholdernc{x} -> \textit{x}
-  -- Must be done BEFORE \tcode conversion to avoid nested macros getting trapped
-  -- in code blocks (e.g., \tcode{\placeholdernc{X}} should become italic, not code)
-  text = text:gsub("\\placeholdernc{", "\\textit{")
-
-  -- Process \tcode{} blocks to strip nested \texttt{} from simplified_macros.tex preprocessing
+  -- COMPLEXITY #2: Process \tcode{} blocks to strip nested \texttt{} from simplified_macros.tex preprocessing
   -- This prevents nested backticks like `const_cast``<X ``const``&>` in the final markdown
   -- Example: \tcode{\texttt{const_cast}<X \texttt{const}\&>} -> \texttt{const_cast<X const\&>}
   -- When simplified_macros.tex converts \keyword{} to \texttt{}, we need to strip those
@@ -561,72 +419,18 @@ expand_itemdescr_macros = function(text)
     end
   end
 
-  -- Range macros
-  -- \range{first}{last} -> [first, last) (half-open range)
-  text = text:gsub("\\range{([^}]*)}{([^}]*)}", "[\\texttt{%1}, \\texttt{%2})")
+  -- PHASE 2: Use shared expand_macros_common for standard macro processing
+  -- This handles: spec labels, @ escaped macros, range macros, bigoh, impldef, phantom, references
+  -- NOTE: We run this AFTER specialized logic so \placeholdernc is already converted to \textit
+  text = expand_macros_common(text, {
+    spec_labels = true,            -- Convert \expects, \returns, etc. to \textit{Labels:}
+    escape_at_macros = true,       -- Handle @\tcode{}@ patterns in code blocks
+    convert_to_latex = true,       -- Use \textit{} and \texttt{} for Pandoc
+    strip_indexlibrary = true,     -- Remove \indexlibrary{} index generation
+    ref_format = "placeholder",    -- Use @@REF:label@@ format for cross-refs
+  })
 
-  -- \crange{first}{last} -> [first, last] (closed range - both inclusive)
-  text = text:gsub("\\crange{([^}]*)}{([^}]*)}", "[\\texttt{%1}, \\texttt{%2}]")
-
-  -- \countedrange{first}{n} -> first+[0, n) (counted range)
-  text = text:gsub("\\countedrange{([^}]*)}{([^}]*)}", "\\texttt{%1}+[0, \\texttt{%2})")
-
-  -- \brange{first}{last} -> (first, last) (both exclusive)
-  text = text:gsub("\\brange{([^}]*)}{([^}]*)}", "(\\texttt{%1}, \\texttt{%2})")
-
-  -- \orange{first}{last} -> (first, last) (open range - both exclusive, alias for \brange)
-  text = text:gsub("\\orange{([^}]*)}{([^}]*)}", "(\\texttt{%1}, \\texttt{%2})")
-
-  -- \libconcept{x} -> \texttt{x}
-  text = text:gsub("\\libconcept{", "\\texttt{")
-
-  -- \exposconcept{x} -> \texttt{x}
-  text = text:gsub("\\exposconcept{", "\\texttt{")
-
-  -- \oldconcept{x} -> \textit{Cpp17x} (prepend Cpp17 prefix)
-  text = text:gsub("\\oldconcept{([^}]*)}", "\\textit{Cpp17%1}")
-
-  -- \grammarterm{x} -> \textit{x} (grammar terms)
-  text = text:gsub("\\grammarterm{", "\\textit{")
-
-  -- \impldef{description} -> \textit{implementation-defined}
-  -- The description is for implementers, we just show "implementation-defined"
-  -- Use brace-balanced extraction because description may contain nested \tcode{}
-  text = process_macro_with_replacement(text, "impldef", function(content)
-    return "\\textit{implementation-defined}"
-  end)
-
-  -- \mname{X} -> __X__ (preprocessor macro names with underscore wrapper)
-  -- Handle specific cases first
-  text = text:gsub("\\mname{VA_ARGS}", "__VA_ARGS__")
-  text = text:gsub("\\mname{VA_OPT}", "__VA_OPT__")
-  -- Then handle generic case
-  text = text:gsub("\\mname{([^}]*)}", "__%1__")
-
-  -- \ntbs{} and \ntmbs{} - null-terminated string abbreviations
-  text = text:gsub("\\ntbs{}", "NTBS")
-  text = text:gsub("\\ntmbs{}", "NTMBS")
-  text = text:gsub("\\NTS{([^}]*)}", function(s) return s:upper() end)
-
-  -- \placeholder{x} -> \textit{x}
-  text = text:gsub("\\placeholder{", "\\textit{")
-
-  -- \exposid{x} -> \textit{x}
-  text = text:gsub("\\exposid{", "\\textit{")
-
-  -- Cross-references - Pandoc strips these, so we need to preserve them
-  -- Use a temporary placeholder that Pandoc will accept as LaTeX
-  -- We'll convert these to markdown links after Pandoc processes the content
-  -- Using @@REF: prefix as a marker that we can find and replace later
-  text = text:gsub("\\ref{([^}]*)}", "@@REF:%1@@")
-  text = text:gsub("\\iref{([^}]*)}", "@@REF:%1@@")
-  text = text:gsub("\\tref{([^}]*)}", "@@REF:%1@@")
-
-  -- \phantom{x} -> x (extract content for spacing)
-  -- LaTeX spacing command, just extract the content
-  text = text:gsub("\\phantom{([^}]*)}", "%1")
-
-  -- Convert \begin{codeblock}...\end{codeblock} to LaTeX verbatim
+  -- COMPLEXITY #3: Convert \begin{codeblock}...\end{codeblock} to LaTeX verbatim
   -- Pandoc doesn't recognize the custom codeblock environment and strips it
   -- We need to convert it to \begin{verbatim}...\end{verbatim} before pandoc.read()
   text = text:gsub("\\begin{codeblock}(.-)\\end{codeblock}", function(code)
