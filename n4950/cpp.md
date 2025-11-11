@@ -1323,10 +1323,16 @@ The following macro names shall be defined by the implementation:
 
 The integer literal `202302L`.
 
+\[*Note 1*: Future revisions of C++ will replace the value of this macro
+with a greater value. — *end note*\]
+
 - **The names listed in \tref{cpp.predefined.ft}.**
 
 The macros defined in shall be defined to the corresponding integer
 literal.
+
+\[*Note 2*: Future revisions of C++ might replace the values of these
+macros with greater values. — *end note*\]
 
 - **`__DATE__`**
 
@@ -1340,12 +1346,12 @@ shall be supplied.
 - **`__FILE__`**
 
 The presumed name of the current source file (a character string
-literal).
+literal).[^9]
 
 - **`__LINE__`**
 
 The presumed line number (within the current source file) of the current
-source line (an integer literal).
+source line (an integer literal).[^10]
 
 - **`__STDC_HOSTED__`**
 
@@ -1358,6 +1364,10 @@ or the integer literal `0` if it is a freestanding implementation
 An integer literal of type `std::size_t` whose value is the alignment
 guaranteed by a call to `operator new(std::size_t)` or
 `operator new[](std::size_t)`.
+
+\[*Note 3*: Larger alignments will be passed to
+`operator new(std::size_t, std::align_val_t)`, etc.
+\[\[expr.new\]\]. — *end note*\]
 
 - **`__STDCPP_FLOAT16_T__`**
 
@@ -1632,3 +1642,8 @@ LISTING( ..\listing.dir )
 [^8]: Placemarker preprocessing tokens do not appear in the syntax
     because they are temporary entities that exist only within
     translation phase 4.
+
+[^9]: The presumed source file name can be changed by the `#line`
+    directive.
+
+[^10]: The presumed line number can be changed by the `#line` directive.

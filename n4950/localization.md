@@ -1892,7 +1892,7 @@ A local variable is initialized as
 
     fmtflags adjustfield = (flags & (ios_base::adjustfield));
 
-The location of any padding
+The location of any padding[^12]
 
 is determined according to @@REF:facet.num.put.fill@@.
 
@@ -2082,7 +2082,7 @@ string do_grouping() const;
 ```
 
 *Returns:* A `string` `vec` used as a vector of integer values, in which
-each element `vec[i]` represents the number of digits[^12]
+each element `vec[i]` represents the number of digits[^13]
 
 in the group at position `i`, starting with position 0 as the rightmost
 group. If `vec.size() <= i`, the number is the same as group `(i - 1)`;
@@ -2209,7 +2209,7 @@ string_type do_transform(const charT* low, const charT* high) const;
 *Returns:* A `basic_string<charT>` value that, compared
 lexicographically with the result of calling `transform()` on another
 string, yields the same result as calling `do_compare()` on the same two
-strings.[^13]
+strings.[^14]
 
 ``` cpp
 long do_hash(const charT* low, const charT* high) const;
@@ -2318,7 +2318,7 @@ as produced by a corresponding format specifier to `time_put<>::put`. If
 the sequence being parsed matches the correct format, the corresponding
 members of the `tm` argument are set to the values used to produce the
 sequence; otherwise either an error is reported or unspecified values
-are assigned.[^14]
+are assigned.[^15]
 
 If the end iterator is reached during parsing by any of the `get()`
 member functions, the member sets `ios_base::eofbit` in `err`.
@@ -2424,7 +2424,7 @@ dateorder do_date_order() const;
 
 *Returns:* An enumeration value indicating the preferred order of
 components for those date formats that are composed of day, month, and
-year.[^15]
+year.[^16]
 
 Returns `no_order` if the date format specified by `’x’` contains other
 variable components (e.g., Julian day, week number, week day).
@@ -2600,7 +2600,7 @@ pattern. Format sequences are identified by converting each character
 `c` to a `char` value as if by `ct.narrow(c, 0)`, where `ct` is a
 reference to `ctype<charT>` obtained from `str.getloc()`. The first
 character of each sequence is equal to `’%’`, followed by an optional
-modifier character `mod`[^16]
+modifier character `mod`[^17]
 
 and a format specifier character `spec` as defined for the function
 `strftime`. If no modifier character is present, `mod` is zero. For each
@@ -2789,7 +2789,7 @@ Digits in the numeric monetary component are extracted and placed in
 `digits`, or into a character buffer `buf1` for conversion to produce a
 value for `units`, in the order in which they appear, preceded by a
 minus sign if and only if the result is negative. The value `units` is
-produced as if by[^17]
+produced as if by[^18]
 
 ``` cpp
 for (int i = 0; i < n; ++i)
@@ -2950,7 +2950,7 @@ The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
 value `static_cast<part>(p.field[i])` determines the `i`^\text{th}
-component of the format[^18]
+component of the format[^19]
 
 In the `field` member of a `pattern` object, each value `symbol`,
 `sign`, `value`, and either `space` or `none` appears exactly once. The
@@ -3041,21 +3041,21 @@ charT do_decimal_point() const;
 ```
 
 *Returns:* The radix separator to use in case `do_frac_digits()` is
-greater than zero.[^19]
+greater than zero.[^20]
 
 ``` cpp
 charT do_thousands_sep() const;
 ```
 
 *Returns:* The digit group separator to use in case `do_grouping()`
-specifies a digit grouping pattern.[^20]
+specifies a digit grouping pattern.[^21]
 
 ``` cpp
 string do_grouping() const;
 ```
 
 *Returns:* A pattern defined identically as, but not necessarily equal
-to, the result of `numpunct<charT>::do_grouping()`.[^21]
+to, the result of `numpunct<charT>::do_grouping()`.[^22]
 
 ``` cpp
 string_type do_curr_symbol() const;
@@ -3073,7 +3073,7 @@ string_type do_negative_sign() const;
 ```
 
 *Returns:* `do_positive_sign()` returns the string to use to indicate a
-positive monetary value;[^22]
+positive monetary value;[^23]
 
 `do_negative_sign()` returns the string to use to indicate a negative
 value.
@@ -3083,7 +3083,7 @@ int do_frac_digits() const;
 ```
 
 *Returns:* The number of digits after the decimal radix separator, if
-any.[^23]
+any.[^24]
 
 ``` cpp
 pattern do_pos_format() const;
@@ -3099,7 +3099,7 @@ pattern do_neg_format() const;
 - `moneypunct<wchar_t, true>`,
 
 return an object of type `pattern` initialized to
-`{ symbol, sign, none, value }`.[^24]
+`{ symbol, sign, none, value }`.[^25]
 
 #### Class template `moneypunct_byname` <a id="locale.moneypunct.byname">[[locale.moneypunct.byname]]</a>
 
@@ -3468,38 +3468,41 @@ the functions listed in [[setlocale.data.races]].
     that the corresponding member `get()` at least extract the sign
     before delegating.
 
-[^12]: Thus, the string `"\003"` specifies groups of 3 digits each, and
+[^12]: The conversion specification `#o` generates a leading `0` which
+    is *not* a padding character.
+
+[^13]: Thus, the string `"\003"` specifies groups of 3 digits each, and
     `"3"` probably indicates groups of 51 (!) digits each, because 51 is
     the ASCII value of `"3"`.
 
-[^13]: This function is useful when one string is being compared to many
+[^14]: This function is useful when one string is being compared to many
     other strings.
 
-[^14]: In other words, user confirmation is required for reliable
+[^15]: In other words, user confirmation is required for reliable
     parsing of user-entered dates and times, but machine-generated
     formats can be parsed reliably. This allows parsers to be aggressive
     about interpreting user variations on standard formats.
 
-[^15]: This function is intended as a convenience only, for common
+[^16]: This function is intended as a convenience only, for common
     formats, and can return `no_order` in valid locales.
 
-[^16]: Although the C programming language defines no modifiers, most
+[^17]: Although the C programming language defines no modifiers, most
     vendors do.
 
-[^17]: The semantics here are different from `ct.narrow`.
+[^18]: The semantics here are different from `ct.narrow`.
 
-[^18]: An array of `char`, rather than an array of `part`, is specified
+[^19]: An array of `char`, rather than an array of `part`, is specified
     for `pattern::field` purely for efficiency.
 
-[^19]: In common U.S. locales this is `’.’`.
+[^20]: In common U.S. locales this is `’.’`.
 
-[^20]: In common U.S. locales this is `’,’`.
+[^21]: In common U.S. locales this is `’,’`.
 
-[^21]: To specify grouping by 3s, the value is `"\003"` *not* `"3"`.
+[^22]: To specify grouping by 3s, the value is `"\003"` *not* `"3"`.
 
-[^22]: This is usually the empty string.
+[^23]: This is usually the empty string.
 
-[^23]: In common U.S. locales, this is 2.
+[^24]: In common U.S. locales, this is 2.
 
-[^24]: Note that the international symbol returned by `do_curr_symbol()`
+[^25]: Note that the international symbol returned by `do_curr_symbol()`
     usually contains a space, itself; for example, `"USD "`.

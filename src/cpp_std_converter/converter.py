@@ -56,6 +56,7 @@ class Converter:
             self.filters_dir / "cpp-math.lua",
             self.filters_dir / "cpp-grammar.lua",
             self.filters_dir / "cpp-tables.lua",
+            self.filters_dir / "cpp-notes-examples.lua",  # Second pass: catch notes from cpp-macros.lua's pandoc.read()
             self.filters_dir / "strip-metadata.lua",  # Must be LAST
         ]
 

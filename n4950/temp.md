@@ -6367,6 +6367,8 @@ Type deduction can fail for the following reasons:
   - the specified member is not a template where a template is required,
     or
   - the specified member is not a non-type where a non-type is required.
+
+  \[*Example 1*: \_\_CODEBLOCK_3\_\_ — *end example*\]
 - Attempting to create a pointer to reference type.
 - Attempting to create a reference to `void`.
 - Attempting to create “pointer to member of `T`” when `T` is not a
