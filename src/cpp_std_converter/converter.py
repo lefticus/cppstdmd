@@ -132,6 +132,15 @@ class Converter:
             # Read input content
             input_content = input_file.read_text(encoding='utf-8')
 
+            # Fix n3337-specific LaTeX syntax errors before processing
+            # Issue: n3337 has `[\textit{Example}` instead of `\enterexample`
+            # This confuses Pandoc's LaTeX parser (different from filter issues)
+            input_content = re.sub(
+                r'\[\\textit\{Example\}',
+                r'\\enterexample',
+                input_content
+            )
+
             # Read macro definitions
             macros_content = macros_file.read_text(encoding='utf-8')
 

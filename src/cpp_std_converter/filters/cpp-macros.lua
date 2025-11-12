@@ -851,34 +851,92 @@ function RawBlock(elem)
     local blocks = {}
     local items = {}
 
+    -- Helper function to find next \item or \stage that's not inside a nested environment
+    local function find_next_item_or_stage(content, start_pos)
+      local pos = start_pos
+      while pos <= #content do
+        local item_pos = content:find("\\item%s*", pos)
+        local stage_pos = content:find("\\stage{[^}]*}", pos)
+
+        -- Find which comes first
+        local candidate_pos, candidate_end, is_stage
+        if item_pos and (not stage_pos or item_pos < stage_pos) then
+          candidate_pos = item_pos
+          candidate_end = content:find("%s*", item_pos + 5) or item_pos + 5
+          is_stage = false
+        elseif stage_pos then
+          candidate_pos = stage_pos
+          _, candidate_end = content:find("\\stage{[^}]*}", stage_pos)
+          is_stage = true
+        else
+          return nil, nil, nil -- No more candidates
+        end
+
+        -- Check if this candidate is inside an itemize/enumerate environment
+        -- by scanning backwards from candidate_pos to start_pos
+        local nested_depth = 0
+        local check_pos = start_pos
+        while check_pos < candidate_pos do
+          local begin_item = content:find("\\begin{itemize}", check_pos, true)
+          local begin_enum = content:find("\\begin{enumerate}", check_pos, true)
+          local end_item = content:find("\\end{itemize}", check_pos, true)
+          local end_enum = content:find("\\end{enumerate}", check_pos, true)
+
+          -- Find earliest event
+          local next_event = math.huge
+          local event_type = nil
+          if begin_item and begin_item < candidate_pos and begin_item < next_event then
+            next_event = begin_item
+            event_type = "begin"
+          end
+          if begin_enum and begin_enum < candidate_pos and begin_enum < next_event then
+            next_event = begin_enum
+            event_type = "begin"
+          end
+          if end_item and end_item < candidate_pos and end_item < next_event then
+            next_event = end_item
+            event_type = "end"
+          end
+          if end_enum and end_enum < candidate_pos and end_enum < next_event then
+            next_event = end_enum
+            event_type = "end"
+          end
+
+          if event_type == "begin" then
+            nested_depth = nested_depth + 1
+            check_pos = next_event + 15
+          elseif event_type == "end" then
+            nested_depth = nested_depth - 1
+            check_pos = next_event + 13
+          else
+            break
+          end
+        end
+
+        -- If we're at depth 0, this is a valid item/stage boundary
+        if nested_depth == 0 then
+          return candidate_pos, candidate_end, is_stage
+        end
+
+        -- Otherwise, skip this one and keep searching
+        pos = candidate_end + 1
+      end
+
+      return nil, nil, nil
+    end
+
     -- Split content by \item or \stage{N}
     local pos = 1
     while true do
-      -- Look for either \item or \stage{...}
-      local item_start, item_end = desc_content:find("\\item%s*", pos)
-      local stage_start, stage_end = desc_content:find("\\stage{[^}]*}", pos)
+      -- Look for either \item or \stage{...} that's not inside nested environments
+      local start_pos, end_pos, is_stage = find_next_item_or_stage(desc_content, pos)
 
-      -- Use whichever comes first
-      local start_pos, end_pos, is_stage
-      if item_start and (not stage_start or item_start < stage_start) then
-        start_pos, end_pos = item_start, item_end
-        is_stage = false
-      elseif stage_start then
-        start_pos, end_pos = stage_start, stage_end
-        is_stage = true
-      else
+      if not start_pos then
         break -- No more items
       end
 
       -- Get text until next \item/\stage or end
-      local next_item = desc_content:find("\\item%s*", end_pos + 1)
-      local next_stage = desc_content:find("\\stage{[^}]*}", end_pos + 1)
-      local next_start
-      if next_item and (not next_stage or next_item < next_stage) then
-        next_start = next_item
-      else
-        next_start = next_stage
-      end
+      local next_start, _, _ = find_next_item_or_stage(desc_content, end_pos + 1)
 
       local item_content
       if is_stage then
@@ -945,7 +1003,14 @@ function RawBlock(elem)
         -- Convert @@REF:label@@ placeholders to [[label]] (from itemdescr processing)
         rest = rest:gsub("@@REF:([^@]+)@@", "[[%1]]")
         -- Use +raw_tex to ensure nested custom environments (like tables) are passed as RawBlocks
-        local parsed = pandoc.read(rest, "latex+raw_tex")
+        local success, parsed = pcall(pandoc.read, rest, "latex+raw_tex")
+        if not success then
+          io.stderr:write("ERROR: Failed to parse description item content:\n")
+          io.stderr:write("Term: " .. (term or "nil") .. "\n")
+          io.stderr:write("Rest (first 500 chars): " .. rest:sub(1, 500) .. "\n")
+          io.stderr:write("Error: " .. tostring(parsed) .. "\n")
+          error("Failed to parse description item: " .. tostring(parsed))
+        end
         for _, block in ipairs(parsed.blocks) do
           -- Process RawBlocks that contain code blocks (since cpp-code-blocks.lua already ran)
           if block.tag == "RawBlock" and block.format == "latex" then

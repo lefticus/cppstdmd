@@ -180,6 +180,27 @@ cpp-std-convert --build-separate \
 success "n4950 conversion complete"
 
 # ============================================================================
+# Step 7: Convert n3337 (C++11) into n3337 directory
+# ============================================================================
+info "Step 7: Converting C++11 standard (n3337) to Markdown..."
+
+# Check if n3337 directory exists, create if not
+if [ ! -d "n3337" ]; then
+    info "Creating n3337 directory..."
+    mkdir -p n3337
+fi
+
+# Convert using the installed tool, using local draft repo
+info "Building separate markdown files with collision detection and merging..."
+cpp-std-convert --build-separate \
+    --draft-repo "$DRAFT_DIR" \
+    --git-ref n3337 \
+    --toc-depth 3 \
+    -o n3337/ || abort "Failed to convert n3337 standard"
+
+success "n3337 conversion complete"
+
+# ============================================================================
 # All done!
 # ============================================================================
 echo ""
@@ -191,10 +212,12 @@ info "Summary:"
 echo "  - Virtual environment: venv/"
 echo "  - C++ draft repository: $DRAFT_DIR"
 echo "  - Test results: All passing"
-echo "  - n4950 output: n4950/"
+echo "  - n4950 output: n4950/ (C++23)"
+echo "  - n3337 output: n3337/ (C++11)"
 echo ""
 info "Next steps:"
 echo "  - Run tests: ./venv/bin/pytest tests/ -v"
 echo "  - Convert a file: cpp-std-convert intro.tex -o intro.md"
+echo "  - Compare versions: diff n3337/class.md n4950/class.md"
 echo "  - See CLAUDE.md for more commands"
 echo ""

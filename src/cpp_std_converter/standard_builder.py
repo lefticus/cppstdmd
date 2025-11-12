@@ -8,7 +8,7 @@ Builds a complete C++ standard document from std.tex by:
 """
 
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 import re
 import sys
 import tempfile
@@ -231,6 +231,110 @@ class StandardBuilder:
 
         # Fallback: use filename stem
         return tex_file.stem
+
+    def detect_stable_name_collisions(
+        self,
+        chapters: List[str],
+        chapter_to_stable: Dict[str, str],
+        verbose: bool = False
+    ) -> Dict[str, List[str]]:
+        """
+        Detect stable name collisions and group chapters that need to be merged.
+
+        When multiple source files have the same stable name prefix (e.g., classes.tex,
+        access.tex, derived.tex all have 'class' prefix), they must be merged into a
+        single output file to avoid data loss.
+
+        This happens in older C++ standards (C++11/n3337) where topics were split across
+        multiple files but later consolidated.
+
+        Args:
+            chapters: Ordered list of chapter names from std.tex
+            chapter_to_stable: Mapping from chapter name to stable name
+            verbose: Print collision information
+
+        Returns:
+            Dictionary mapping stable_prefix -> [ordered_list_of_chapters]
+            Only includes entries with 2+ chapters (collision groups)
+
+        Example:
+            Input:
+                chapters = ['classes', 'derived', 'access', 'declarations', 'declarators']
+                chapter_to_stable = {'classes': 'class', 'derived': 'class', 'access': 'class',
+                                    'declarations': 'dcl', 'declarators': 'dcl'}
+            Output:
+                {'class': ['classes', 'derived', 'access'],
+                 'dcl': ['declarations', 'declarators']}
+        """
+        # Group chapters by stable name
+        stable_to_chapters = {}
+        for chapter in chapters:
+            stable_name = chapter_to_stable.get(chapter)
+            if not stable_name:
+                continue
+
+            if stable_name not in stable_to_chapters:
+                stable_to_chapters[stable_name] = []
+            stable_to_chapters[stable_name].append(chapter)
+
+        # Find collision groups (stable names with 2+ chapters)
+        collision_groups = {
+            stable: chapters_list
+            for stable, chapters_list in stable_to_chapters.items()
+            if len(chapters_list) > 1
+        }
+
+        if verbose and collision_groups:
+            print(f"\nDetected {len(collision_groups)} stable name collision(s):")
+            for stable_name, chapters_list in collision_groups.items():
+                print(f"  {stable_name}: {len(chapters_list)} files will be merged")
+                for chapter in chapters_list:
+                    print(f"    - {chapter}.tex")
+
+        return collision_groups
+
+    def _merge_tex_files(
+        self,
+        chapter_files: List[Path],
+        verbose: bool = False
+    ) -> Path:
+        """
+        Merge multiple LaTeX files into a single temporary file.
+
+        Concatenates the content of multiple .tex files in order, preserving
+        all \rSec0, \label{}, and other LaTeX commands. The merged file can
+        then be converted as a single unit.
+
+        Args:
+            chapter_files: Ordered list of .tex files to merge
+            verbose: Print merge information
+
+        Returns:
+            Path to temporary file containing merged content
+        """
+        if verbose:
+            print(f"    Merging {len(chapter_files)} files:")
+            for f in chapter_files:
+                print(f"      + {f.name}")
+
+        # Concatenate file contents with separators
+        merged_content = []
+        for tex_file in chapter_files:
+            content = tex_file.read_text(encoding='utf-8')
+            merged_content.append(content)
+
+        # Create temporary file with merged content
+        tmp = tempfile.NamedTemporaryFile(
+            mode='w',
+            suffix='.tex',
+            delete=False,
+            encoding='utf-8'
+        )
+        # Join with double newline to ensure proper spacing
+        tmp.write('\n\n'.join(merged_content))
+        tmp.close()
+
+        return Path(tmp.name)
 
     def build_full_standard(
         self,
@@ -542,6 +646,11 @@ class StandardBuilder:
                 if verbose and stable_name != chapter:
                     print(f"  {chapter}.tex → {stable_name}.md")
 
+        # Detect stable name collisions
+        collision_groups = self.detect_stable_name_collisions(
+            chapters, chapter_to_stable, verbose
+        )
+
         # Build label index for cross-file references
         if verbose:
             print("\nBuilding label index for cross-file references...")
@@ -563,7 +672,14 @@ class StandardBuilder:
             if stats['duplicates'] > 0:
                 print(f"Warning: Found {stats['duplicates']} duplicate labels")
 
+        # Track which chapters have been processed (for collision groups)
+        processed_chapters = set()
+
         for i, chapter in enumerate(chapters, 1):
+            # Skip if already processed as part of a collision group
+            if chapter in processed_chapters:
+                continue
+
             chapter_file = self.draft_dir / f"{chapter}.tex"
 
             if not chapter_file.exists():
@@ -574,18 +690,43 @@ class StandardBuilder:
             # Get stable name for this chapter
             stable_name = chapter_to_stable.get(chapter, chapter)
 
-            if verbose:
-                print(f"[{i}/{len(chapters)}] Converting {chapter}.tex...")
+            # Check if this chapter is part of a collision group
+            is_collision = stable_name in collision_groups
 
-            # Expand \input{} commands for chapters that use them
-            file_to_convert = chapter_file
-            if chapter in ['front', 'back']:
-                try:
-                    file_to_convert = self._expand_input_commands(chapter_file)
-                    temp_files.append(file_to_convert)
-                except Exception as e:
-                    if verbose:
-                        print(f"Warning: Could not expand inputs in {chapter}.tex: {e}")
+            if is_collision:
+                # This chapter is part of a collision group - merge all files
+                chapters_to_merge = collision_groups[stable_name]
+                if verbose:
+                    print(f"[{i}/{len(chapters)}] Converting {stable_name}.md (merging {len(chapters_to_merge)} files)...")
+
+                # Get all chapter files that need to be merged
+                chapter_files = []
+                for ch in chapters_to_merge:
+                    ch_file = self.draft_dir / f"{ch}.tex"
+                    if ch_file.exists():
+                        chapter_files.append(ch_file)
+                        processed_chapters.add(ch)  # Mark as processed
+
+                # Merge files into temporary file
+                file_to_convert = self._merge_tex_files(chapter_files, verbose)
+                temp_files.append(file_to_convert)
+
+            else:
+                # Normal single-file conversion
+                if verbose:
+                    print(f"[{i}/{len(chapters)}] Converting {chapter}.tex...")
+
+                file_to_convert = chapter_file
+                processed_chapters.add(chapter)
+
+                # Expand \input{} commands for chapters that use them
+                if chapter in ['front', 'back']:
+                    try:
+                        file_to_convert = self._expand_input_commands(chapter_file)
+                        temp_files.append(file_to_convert)
+                    except Exception as e:
+                        if verbose:
+                            print(f"Warning: Could not expand inputs in {chapter}.tex: {e}")
 
             # Convert chapter to markdown using stable name for output
             output_file = output_dir / f"{stable_name}.md"
