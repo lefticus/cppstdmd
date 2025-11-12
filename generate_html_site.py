@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import sys
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -114,6 +115,121 @@ def sanitize_filename(name: str) -> str:
     """
     # Most stable names are already safe, but handle edge cases
     return re.sub(r'[^\w.-]', '_', name)
+
+
+# Stable name prefix to chapter mapping for special cases
+STABLE_NAME_TO_CHAPTER = {
+    # Top-level container types (no dots) map to containers chapter
+    'array': 'containers',
+    'vector': 'containers',
+    'deque': 'containers',
+    'list': 'containers',
+    'forwardlist': 'containers',
+    'map': 'containers',
+    'multimap': 'containers',
+    'set': 'containers',
+    'multiset': 'containers',
+    'unord': 'containers',
+    'stack': 'containers',
+    'queue': 'containers',
+    'priority': 'containers',
+
+    # Container-related prefixes
+    'container': 'containers',
+    'sequence': 'containers',
+    'associative': 'containers',
+
+    # Algorithm-related prefixes
+    'alg': 'algorithms',
+    'algorithms': 'algorithms',
+
+    # Other top-level stable names
+    'iterators': 'iterators',
+    'utilities': 'utilities',
+    'strings': 'strings',
+    'numerics': 'numerics',
+    'localization': 'localization',
+    'input': 'input.output',
+    'iostream': 'input.output',
+    'thread': 'thread',
+    'atomics': 'atomics',
+}
+
+
+def get_chapter_from_stable_name(stable_name: str) -> str:
+    """Map stable name to chapter file name.
+
+    Uses the prefix before the first dot, with special cases for
+    top-level stable names that don't follow the pattern.
+
+    Args:
+        stable_name: Stable name like "array.size" or "stmt.if"
+
+    Returns:
+        Chapter file name without extension (e.g., "containers", "stmt")
+
+    Examples:
+        "array" → "containers"
+        "array.size" → "containers"
+        "stmt.if" → "stmt"
+        "dcl.ptr" → "dcl"
+    """
+    # Check direct lookup first (for special cases)
+    if stable_name in STABLE_NAME_TO_CHAPTER:
+        return STABLE_NAME_TO_CHAPTER[stable_name]
+
+    # Extract prefix before first dot
+    prefix = stable_name.split('.')[0]
+
+    # Check prefix lookup
+    if prefix in STABLE_NAME_TO_CHAPTER:
+        return STABLE_NAME_TO_CHAPTER[prefix]
+
+    # Default: prefix is the chapter name
+    return prefix
+
+
+def get_timsong_url(version: str, stable_name: str) -> Optional[str]:
+    """Generate URL to timsong-cpp.github.io archived standard.
+
+    Args:
+        version: Version tag (e.g., 'n4950', 'n3337')
+        stable_name: Stable name (e.g., 'array.size')
+
+    Returns:
+        Full URL to archived version, or None if not available
+
+    Examples:
+        ('n3337', 'stmt.expr') → 'https://timsong-cpp.github.io/cppwp/n3337/stmt.expr'
+    """
+    # trunk is not published on timsong, skip it
+    if version == 'trunk':
+        return None
+
+    return f'https://timsong-cpp.github.io/cppwp/{version}/{stable_name}'
+
+
+def get_github_markdown_url(version: str, stable_name: str,
+                            repo_owner: str = 'lefticus',
+                            repo_name: str = 'cppstdmd') -> str:
+    """Generate GitHub URL to markdown source for a stable name.
+
+    Args:
+        version: Version tag (e.g., 'n4950', 'trunk')
+        stable_name: Stable name (e.g., 'array.overview')
+        repo_owner: GitHub repository owner
+        repo_name: GitHub repository name
+
+    Returns:
+        Full GitHub URL with fragment anchor
+
+    Examples:
+        ('n4950', 'array.overview') →
+            'https://github.com/lefticus/cppstdmd/blob/main/n4950/containers.md#array.overview'
+    """
+    chapter = get_chapter_from_stable_name(stable_name)
+    return (f'https://github.com/{repo_owner}/{repo_name}/blob/main/'
+            f'{version}/{chapter}.md#{stable_name}')
 
 
 def get_file_size_kb(path: Path) -> float:
@@ -306,10 +422,60 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
             href=f'https://github.com/cplusplus/draft',
             target='_blank',
             rel='noopener noreferrer')
-        github_link.string = 'GitHub Source'
+        github_link.string = 'LaTeX Source'
         links_div.append(github_link)
 
         header.append(links_div)
+
+        # Archived versions (timsong-cpp.github.io)
+        from_timsong = get_timsong_url(context['from_tag'], context['stable_name'])
+        to_timsong = get_timsong_url(context['to_tag'], context['stable_name'])
+
+        if from_timsong or to_timsong:
+            archived_div = soup.new_tag('div', **{'class': 'external-links'})
+            archived_div.append('📚 Archived: ')
+
+            if from_timsong:
+                from_archived_link = soup.new_tag('a',
+                    href=from_timsong,
+                    target='_blank',
+                    rel='noopener noreferrer')
+                from_archived_link.string = context['from_version']
+                archived_div.append(from_archived_link)
+
+            if from_timsong and to_timsong:
+                archived_div.append(' | ')
+
+            if to_timsong:
+                to_archived_link = soup.new_tag('a',
+                    href=to_timsong,
+                    target='_blank',
+                    rel='noopener noreferrer')
+                to_archived_link.string = context['to_version']
+                archived_div.append(to_archived_link)
+
+            header.append(archived_div)
+
+        # Markdown source links
+        md_links_div = soup.new_tag('div', **{'class': 'external-links'})
+        md_links_div.append('📝 Markdown: ')
+
+        from_md_link = soup.new_tag('a',
+            href=get_github_markdown_url(context['from_tag'], context['stable_name']),
+            target='_blank',
+            rel='noopener noreferrer')
+        from_md_link.string = context['from_version']
+        md_links_div.append(from_md_link)
+        md_links_div.append(' | ')
+
+        to_md_link = soup.new_tag('a',
+            href=get_github_markdown_url(context['to_tag'], context['stable_name']),
+            target='_blank',
+            rel='noopener noreferrer')
+        to_md_link.string = context['to_version']
+        md_links_div.append(to_md_link)
+
+        header.append(md_links_div)
 
         # Large file warning
         if size_kb > 100:
@@ -382,10 +548,45 @@ def collect_stable_names(diff_dir: Path, tier: int = 1, limit: Optional[int] = N
     return stable_names
 
 
+def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
+    """Worker function to generate a single diff HTML (for parallel execution).
+
+    This function is designed to be called from ProcessPoolExecutor.
+
+    Args:
+        args: Tuple of (item, diff_output_dir, context) where:
+            item: Dict with stable name info (name, file, path, size_kb, line_count)
+            diff_output_dir: Path to output directory for diff HTML files
+            context: Dict with metadata for the diff
+
+    Returns:
+        Tuple of (success, stable_name, message) for logging
+    """
+    item, diff_output_dir, context = args
+
+    stable_name = item['name']
+    output_file = Path(diff_output_dir) / f'{item["file"]}.html'
+
+    try:
+        # Generate HTML with diff2html
+        if not generate_diff_html(item['path'], output_file, context):
+            return (False, stable_name, "diff2html failed")
+
+        # Inject custom navigation
+        if not inject_navigation(output_file, context):
+            return (False, stable_name, "navigation injection failed")
+
+        return (True, stable_name, "success")
+
+    except Exception as e:
+        return (False, stable_name, f"exception: {e}")
+
+
 def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
                          to_name: str, slug: str, output_path: Path,
                          env: Environment, tier: int = 1,
-                         limit: Optional[int] = None) -> int:
+                         limit: Optional[int] = None,
+                         max_workers: Optional[int] = None) -> int:
     """Generate pages for one version pair.
 
     Args:
@@ -398,6 +599,7 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
         env: Jinja2 environment
         tier: Tier to filter (1 or 2)
         limit: Maximum number of diffs to process (for testing)
+        max_workers: Number of parallel workers (defaults to CPU count)
 
     Returns:
         Number of diffs successfully generated
@@ -436,15 +638,13 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     overview_file.write_text(content, encoding='utf-8')
     print(f"  ✓ Generated overview: {overview_file}")
 
-    # Generate individual diff pages
+    # Generate individual diff pages in parallel
     diff_output_dir = output_path / 'diffs' / slug
     diff_output_dir.mkdir(parents=True, exist_ok=True)
 
-    success_count = 0
-
-    for i, item in enumerate(stable_names, 1):
-        print(f"  [{i}/{len(stable_names)}] Processing [{item['name']}]...", end='')
-
+    # Prepare tasks for parallel execution
+    tasks = []
+    for item in stable_names:
         context = {
             'title': f'[{item["name"]}] - {from_name} → {to_name}',
             'stable_name': item['name'],
@@ -457,19 +657,37 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
             'file_size_kb': item['size_kb'],
             'line_count': item['line_count']
         }
+        tasks.append((item, str(diff_output_dir), context))
 
-        output_file = diff_output_dir / f'{item["file"]}.html'
+    # Execute tasks in parallel
+    success_count = 0
+    completed_count = 0
 
-        # Generate HTML with diff2html
-        if generate_diff_html(item['path'], output_file, context):
-            # Inject custom navigation
-            if inject_navigation(output_file, context):
-                print(" ✓")
-                success_count += 1
-            else:
-                print(" ⚠️ (navigation injection failed)")
-        else:
-            print(" ✗ (diff2html failed)")
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all tasks
+        future_to_name = {
+            executor.submit(generate_single_diff, task): task[0]['name']
+            for task in tasks
+        }
+
+        # Process completed tasks
+        for future in as_completed(future_to_name):
+            completed_count += 1
+            stable_name = future_to_name[future]
+
+            try:
+                success, name, message = future.result()
+                status_symbol = "✓" if success else "✗"
+                print(f"  [{completed_count}/{len(stable_names)}] [{name}] {status_symbol}")
+
+                if success:
+                    success_count += 1
+                elif message != "success":
+                    print(f"      └─ {message}")
+
+            except Exception as e:
+                print(f"  [{completed_count}/{len(stable_names)}] [{stable_name}] ✗")
+                print(f"      └─ exception: {e}")
 
     print(f"  ✓ Successfully generated {success_count}/{len(stable_names)} diffs")
     return success_count
@@ -527,7 +745,8 @@ def copy_static_assets(output_path: Path):
 
 
 def generate_site(output_dir: str = 'site', tier: int = 1,
-                 limit: Optional[int] = None, test_mode: bool = False):
+                 limit: Optional[int] = None, test_mode: bool = False,
+                 max_workers: Optional[int] = None):
     """Main generation logic.
 
     Args:
@@ -535,6 +754,7 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
         tier: Tier to filter (1 or 2)
         limit: Maximum number of diffs per version pair (for testing)
         test_mode: If True, only process first version pair with limit=10
+        max_workers: Number of parallel workers (defaults to CPU count)
     """
     # Check dependencies
     check_dependencies()
@@ -552,9 +772,14 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
+    # Determine worker count
+    if max_workers is None:
+        max_workers = os.cpu_count()
+
     print(f"🚀 C++ Standard Evolution Viewer - Site Generator")
     print(f"   Output directory: {output_path.absolute()}")
     print(f"   Tier: {tier} (0-{1 if tier == 1 else '2+'} dots)")
+    print(f"   Workers: {max_workers} (parallel processing)")
     if limit:
         print(f"   Limit: {limit} diffs per version pair")
     if test_mode:
@@ -573,7 +798,8 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
     for from_tag, to_tag, from_name, to_name, slug in pairs_to_process:
         count = generate_version_pair(
             from_tag, to_tag, from_name, to_name, slug,
-            output_path, env, tier=tier, limit=test_limit
+            output_path, env, tier=tier, limit=test_limit,
+            max_workers=max_workers
         )
 
         stats['total_diffs'] += count
@@ -614,6 +840,9 @@ Examples:
 
   # Generate with limit (for debugging)
   python3 generate_html_site.py --output site/ --limit 50
+
+  # Use more workers for faster generation
+  python3 generate_html_site.py --output site/ --workers 8
         """
     )
 
@@ -623,6 +852,8 @@ Examples:
                        help='Tier to generate: 1 (0-1 dots) or 2 (2+ dots) (default: 1)')
     parser.add_argument('--limit', type=int, metavar='N',
                        help='Limit number of diffs per version pair (for testing)')
+    parser.add_argument('--workers', '-w', type=int, metavar='N',
+                       help='Number of parallel workers (default: CPU count)')
     parser.add_argument('--test', action='store_true',
                        help='Test mode: only process first 10 diffs from one version pair')
 
@@ -633,7 +864,8 @@ Examples:
             output_dir=args.output,
             tier=args.tier,
             limit=args.limit,
-            test_mode=args.test
+            test_mode=args.test,
+            max_workers=args.workers
         )
     except KeyboardInterrupt:
         print("\n\n⚠️  Generation interrupted by user")
