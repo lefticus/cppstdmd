@@ -660,12 +660,12 @@ def test_bitwise_xor_operator():
 
 
 def test_bitwise_shift_operators():
-    """Test \\ll and \\gg shift operators"""
+    """Test \\ll and \\gg shift operators convert to ASCII << and >>"""
     latex = r"Shifts: $x \ll 2$ and $y \gg 3$."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "x ≪ 2" in output
-    assert "y ≫ 3" in output
+    assert "x << 2" in output
+    assert "y >> 3" in output
     assert "$" not in output
 
 
@@ -714,4 +714,44 @@ def test_combined_improvements():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "cvᵢ ⊕ xᵃ + 2ᴺ" in output
+    assert "$" not in output
+
+
+# Tests for additional operators (sim, backslash) and ordinals without \text{}
+def test_sim_operator():
+    """Test \\sim (similar to) operator converts to ~ (ASCII tilde)"""
+    latex = r"Type $T_1 \sim T_2$ means similar."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "T₁ ~ T₂" in output
+    assert "$" not in output
+
+
+def test_backslash_operator():
+    """Test \\backslash operator converts to \\ (ASCII backslash)"""
+    latex = r"Set difference $A \backslash B$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "A \\ B" in output or "A \\\\ B" in output  # Markdown may escape it
+    assert "$" not in output
+
+
+def test_ordinal_without_text_th():
+    """Test ordinal ^{th} without \\text{} wrapper"""
+    latex = r"The $i^{th}$ element and $j^{th}$ item."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "iᵗʰ" in output
+    assert "jᵗʰ" in output
+    assert "$" not in output
+
+
+def test_ordinal_without_text_st_nd_rd():
+    """Test ordinals ^{st}, ^{nd}, ^{rd} without \\text{} wrapper"""
+    latex = r"The $1^{st}$, $2^{nd}$, and $3^{rd}$ items."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "1ˢᵗ" in output
+    assert "2ⁿᵈ" in output
+    assert "3ʳᵈ" in output
     assert "$" not in output

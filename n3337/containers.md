@@ -535,8 +535,8 @@ returned by `key_equal()`, and to the hasher returned by
 the worst case, where N is a.size(). For `unordered_multiset` and
 `unordered_multimap`, the complexity of `operator==` is proportional to
 $\sum E_i^2$ in the average case and to N² in the worst case, where N is
-`a.size()`, and Eᵢ is the size of the $i^{th}$ equivalent-key group in
-`a`. However, if the respective elements of each corresponding pair of
+`a.size()`, and Eᵢ is the size of the iᵗʰ equivalent-key group in `a`.
+However, if the respective elements of each corresponding pair of
 equivalent-key groups Eaᵢ and Ebᵢ are arranged in the same order (as is
 commonly the case, e.g., if `a` and `b` are unmodified copies of the
 same container), then the average-case complexity for

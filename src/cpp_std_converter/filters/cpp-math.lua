@@ -29,11 +29,13 @@ local math_operators = {
   ["\\to"] = "→",      -- Short form of \rightarrow
   -- Bitwise/set operators
   ["\\oplus"] = "⊕",   -- XOR / exclusive or
-  ["\\ll"] = "≪",      -- Much less than / left shift
-  ["\\gg"] = "≫",      -- Much greater than / right shift
+  ["\\ll"] = "<<",     -- Much less than / left shift
+  ["\\gg"] = ">>",     -- Much greater than / right shift
   ["\\wedge"] = "∧",   -- AND (synonym for \land)
   ["\\vee"] = "∨",     -- OR (synonym for \lor)
   ["\\mid"] = "|",     -- Divides / bitwise OR
+  ["\\sim"] = "~",     -- Similar to / tilde operator (ASCII)
+  ["\\backslash"] = "\\", -- Backslash character (ASCII)
   ["<"] = "<",
   [">"] = ">",
   ["="] = "=",
@@ -288,8 +290,9 @@ end
 -- Check if text is fully converted to Unicode (no LaTeX remaining)
 -- Returns true if 100% Unicode, false if any LaTeX patterns detected
 local function is_fully_converted(text)
-  -- Check for backslash commands (indicates unconverted LaTeX)
-  if text:match("\\") then
+  -- Check for LaTeX commands (backslash followed by letter)
+  -- Allow bare backslashes (from \backslash conversion) and >> << (ASCII operators)
+  if text:match("\\[a-zA-Z]") then
     return false
   end
 
@@ -341,6 +344,12 @@ local function try_unicode_conversion(text)
   result = result:gsub("%^\\text{st}", "ˢᵗ")
   result = result:gsub("%^\\text{nd}", "ⁿᵈ")
   result = result:gsub("%^\\text{rd}", "ʳᵈ")
+
+  -- Also handle ordinals without \text{} wrapper: $i^{th}$ -> iᵗʰ
+  result = result:gsub("(%w)%^{th}", "%1ᵗʰ")
+  result = result:gsub("(%w)%^{st}", "%1ˢᵗ")
+  result = result:gsub("(%w)%^{nd}", "%1ⁿᵈ")
+  result = result:gsub("(%w)%^{rd}", "%1ʳᵈ")
 
   -- Convert \text{text} -> text (text mode in math)
   result = result:gsub("\\text{([^}]*)}", "%1")

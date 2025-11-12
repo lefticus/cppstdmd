@@ -775,9 +775,9 @@ For each `tuple` constructor, an exception is thrown only if the
 construction of one of the types in `Types` throws an exception.
 
 In the constructor descriptions that follow, let i be in the range
-\[`0`, `sizeof...(Types)`) in order, Tᵢ be the $i^{th}$ type in `Types`,
-and Uᵢ be the $i^{th}$ type in a template parameter pack named `UTypes`,
-where indexing is zero-based.
+\[`0`, `sizeof...(Types)`) in order, Tᵢ be the iᵗʰ type in `Types`, and
+Uᵢ be the iᵗʰ type in a template parameter pack named `UTypes`, where
+indexing is zero-based.
 
 ``` cpp
 constexpr tuple();
@@ -826,7 +826,7 @@ tuple(tuple&& u) = default;
 
 *Requires:* `is_move_constructible<`Tᵢ`>::value` is `true` for all i.
 
-*Effects:* For all i, initializes the $i^{th}$ element of `*this` with
+*Effects:* For all i, initializes the iᵗʰ element of `*this` with
 `std::forward<`Tᵢ`>(get<`i`>(u))`.
 
 ``` cpp
@@ -849,7 +849,7 @@ template <class... UTypes> tuple(tuple<UTypes...>&& u);
 *Requires:* `sizeof...(Types)` `==` `sizeof...(UTypes)`.
 `is_constructible<`Tᵢ`, `Uᵢ`&&>::value` is `true` for all i.
 
-*Effects:* For all i, initializes the $i^{th}$ element of `*this` with
+*Effects:* For all i, initializes the iᵗʰ element of `*this` with
 `std::forward<`Uᵢ`>(get<`i`>(u))`.
 
 This constructor shall not participate in overload resolution unless
@@ -922,9 +922,9 @@ construction ( [[allocator.uses.construction]]).
 For each `tuple` assignment operator, an exception is thrown only if the
 assignment of one of the types in `Types` throws an exception. In the
 function descriptions that follow, let i be in the range \[`0`,
-`sizeof...(Types)`) in order, Tᵢ be the $i^{th}$ type in `Types`, and Uᵢ
-be the $i^{th}$ type in a template parameter pack named `UTypes`, where
-indexing is zero-based.
+`sizeof...(Types)`) in order, Tᵢ be the iᵗʰ type in `Types`, and Uᵢ be
+the iᵗʰ type in a template parameter pack named `UTypes`, where indexing
+is zero-based.
 
 ``` cpp
 tuple& operator=(const tuple& u);
@@ -948,7 +948,7 @@ The expression inside `noexcept` is equivalent to the logical
 is_nothrow_move_assignable<$T_i$>::value
 ```
 
-where Tᵢ is the $i^{th}$ type in `Types`.
+where Tᵢ is the iᵗʰ type in `Types`.
 
 *Requires:* `is_move_assignable<`Tᵢ`>::value` is `true` for all i.
 
@@ -1026,7 +1026,7 @@ The expression inside `noexcept` is equivalent to the logical
 noexcept(swap(declval<$T_i$&>>(), declval<$T_i$&>()))
 ```
 
-where T₁ is the $i^{th}$ type in `Types`.
+where T₁ is the iᵗʰ type in `Types`.
 
 *Requires:* Each element in `*this` shall be swappable
 with ( [[swappable.requirements]]) the corresponding element in `rhs`.
@@ -1040,9 +1040,9 @@ exception.
 #### Tuple creation functions <a id="tuple.creation">[[tuple.creation]]</a>
 
 In the function descriptions that follow, let i be in the range \[`0`,
-`sizeof...(TTypes)`) in order and let Tᵢ be the $i^{th}$ type in a
-template parameter pack named `TTypes`; let j be in the range \[`0`,
-`sizeof...(UTypes)`) in order and Uⱼ be the $j^{th}$ type in a template
+`sizeof...(TTypes)`) in order and let Tᵢ be the iᵗʰ type in a template
+parameter pack named `TTypes`; let j be in the range \[`0`,
+`sizeof...(UTypes)`) in order and Uⱼ be the jᵗʰ type in a template
 parameter pack named `UTypes`, where indexing is zero-based.
 
 ``` cpp
@@ -1103,14 +1103,14 @@ template <class... Tuples>
   tuple<CTypes...> tuple_cat(Tuples&&... tpls);
 ```
 
-In the following paragraphs, let Tᵢ be the $i^{th}$ type in `Tuples`, Uᵢ
-be `remove_reference<Ti>::type`, and tpᵢ be the $i^{th}$ parameter in
-the function parameter pack `tpls`, where all indexing is zero-based.
+In the following paragraphs, let Tᵢ be the iᵗʰ type in `Tuples`, Uᵢ be
+`remove_reference<Ti>::type`, and tpᵢ be the iᵗʰ parameter in the
+function parameter pack `tpls`, where all indexing is zero-based.
 
 *Requires:* For all i, Uᵢ shall be the type cvᵢ `tuple<`Argsᵢ...`>`,
-where cvᵢ is the (possibly empty) $i^{th}$ cv-qualifier-seq and Argsᵢ is
-the parameter pack representing the element types in Uᵢ. Let ${A_{ik}}$
-be the ${k_i}^{th}$ type in Argsᵢ. For all $A_{ik}$ the following
+where cvᵢ is the (possibly empty) iᵗʰ cv-qualifier-seq and Argsᵢ is the
+parameter pack representing the element types in Uᵢ. Let ${A_{ik}}$ be
+the ${k_i}^{th}$ type in Argsᵢ. For all $A_{ik}$ the following
 requirements shall be satisfied: If Tᵢ is deduced as an lvalue reference
 type, then
 `is_constructible<`$A_{ik}$`, `cvᵢ` `$A_{ik}$`&>::value == true`,
@@ -1119,9 +1119,9 @@ otherwise
 
 *Remarks:* The types in *`Ctypes`* shall be equal to the ordered
 sequence of the extended types Args₀`..., `Args₁`...,` ... Argsₙ₋₁`...`,
-where n is equal to `sizeof...(Tuples)`. Let eᵢ`...` be the $i^{th}$
-ordered sequence of tuple elements of the resulting `tuple` object
-corresponding to the type sequence Argsᵢ.
+where n is equal to `sizeof...(Tuples)`. Let eᵢ`...` be the iᵗʰ ordered
+sequence of tuple elements of the resulting `tuple` object corresponding
+to the type sequence Argsᵢ.
 
 *Returns:* A `tuple` object constructed by initializing the ${k_i}^{th}$
 type element $e_{ik}$ in eᵢ`...` with  
@@ -5507,15 +5507,14 @@ meanings:
 
 - `FD` is the type `decay<F>::type`,
 - `fd` is an lvalue of type `FD` constructed from `std::forward<F>(f)`,
-- `Ti` is the $i^{th}$ type in the template parameter back `BoundArgs`,
+- `Ti` is the iᵗʰ type in the template parameter back `BoundArgs`,
 - `TiD` is the type `decay<Ti>::type`,
-- `ti` is the $i^{th}$ argument in the function parameter pack
-  `bound_args`,
+- `ti` is the iᵗʰ argument in the function parameter pack `bound_args`,
 - `tid` is an lvalue of type `TiD` constructed from
   `std::forward<Ti>(ti)`,
-- `Uj` is the $j^{th}$ deduced type of the `UnBoundArgs&&...` parameter
-  of the forwarding call wrapper, and
-- `uj` is the $j^{th}$ argument associated with `Uj`.
+- `Uj` is the jᵗʰ deduced type of the `UnBoundArgs&&...` parameter of
+  the forwarding call wrapper, and
+- `uj` is the jᵗʰ argument associated with `Uj`.
 
 ``` cpp
 template<class F, class... BoundArgs>

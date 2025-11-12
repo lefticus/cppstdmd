@@ -3979,9 +3979,9 @@ size_t c8rtomb(char* s, char8_t c8, mbstate_t* ps);
 ```
 
 *Effects:* If `s` is a null pointer, equivalent to
-`c8rtomb(buf, u8’`$\backslash$`0’, ps)` where `buf` is an internal
-buffer. Otherwise, if `c8` completes a sequence of valid UTF-8 code
-units, determines the number of bytes needed to represent the multibyte
+`c8rtomb(buf, u8’`\`0’, ps)` where `buf` is an internal buffer.
+Otherwise, if `c8` completes a sequence of valid UTF-8 code units,
+determines the number of bytes needed to represent the multibyte
 character (including any shift sequences), and stores the multibyte
 character representation in the array whose first element is pointed to
 by `s`. At most `MB_CUR_MAX` bytes are stored. If the multibyte

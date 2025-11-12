@@ -5031,7 +5031,7 @@ basic_filebuf<charT,traits>* open(const char* s,
 initializes the `filebuf` as required. It then opens a file, if
 possible, whose name is the NTBS`s` (as if by calling
 `std::fopen(s,modstr)`). The NTBS`modstr` is determined from
-`mode & `$\sim$`ios_base::ate` as indicated in
+`mode & `~`ios_base::ate` as indicated in
 Table  [[tab:iostreams.file.open.modes]]. If `mode` is not some
 combination of flags shown in the table then the open fails.
 

@@ -505,7 +505,7 @@ The following terms apply to objects and values of bitmask types:
 - To *set* a value *Y* in an object *X* is to evaluate the expression
   *X* |= *Y*.
 - To *clear* a value *Y* in an object *X* is to evaluate the expression
-  *X* &= $\sim$*Y*.
+  *X* &= ~*Y*.
 - The value *Y* *is set* in the object *X* if the expression *X* & *Y*
   is nonzero.
 
