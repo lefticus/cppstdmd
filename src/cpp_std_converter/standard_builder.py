@@ -12,7 +12,162 @@ from typing import List, Tuple, Dict
 import re
 import sys
 import tempfile
+import os
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pylatexenc.latexwalker import LatexWalker, LatexMacroNode
+
+
+def _convert_chapter_worker(
+    work_unit: Dict,
+    draft_dir: Path,
+    output_dir: Path,
+    label_index_file: Path,
+    verbose: bool = False
+) -> Dict:
+    """
+    Worker function for parallel chapter conversion.
+
+    Must be at module level to be picklable for multiprocessing.
+
+    Args:
+        work_unit: Dictionary describing the work to do:
+            - type: 'single' or 'collision'
+            - stable_name: Output file stem
+            - chapter: Chapter name (for single)
+            - chapters: List of chapter names (for collision/merge)
+        draft_dir: Path to cplusplus/draft source directory
+        output_dir: Path to output directory
+        label_index_file: Path to label index Lua file
+        verbose: Print progress (usually False for parallel workers)
+
+    Returns:
+        Dictionary with conversion results:
+            - success: bool
+            - output_file: Path to output file (if successful)
+            - stable_name: str
+            - error: str (if failed)
+    """
+    from .converter import Converter
+
+    draft_dir = Path(draft_dir)
+    output_dir = Path(output_dir)
+    stable_name = work_unit['stable_name']
+
+    try:
+        # Create converter instance for this worker
+        converter = Converter()
+
+        # Determine input file(s)
+        temp_files = []
+
+        if work_unit['type'] == 'collision':
+            # Merge multiple files
+            chapters = work_unit['chapters']
+            chapter_files = []
+            for ch in chapters:
+                ch_file = draft_dir / f"{ch}.tex"
+                if ch_file.exists():
+                    chapter_files.append(ch_file)
+
+            # Merge files into temporary file
+            merged_content = []
+            for tex_file in chapter_files:
+                content = tex_file.read_text(encoding='utf-8')
+                merged_content.append(content)
+
+            # Create temporary merged file
+            tmp = tempfile.NamedTemporaryFile(
+                mode='w',
+                suffix='.tex',
+                delete=False,
+                encoding='utf-8'
+            )
+            tmp.write('\n\n'.join(merged_content))
+            tmp.close()
+            file_to_convert = Path(tmp.name)
+            temp_files.append(file_to_convert)
+
+        else:
+            # Single file conversion
+            chapter = work_unit['chapter']
+            chapter_file = draft_dir / f"{chapter}.tex"
+
+            if not chapter_file.exists():
+                return {
+                    'success': False,
+                    'stable_name': stable_name,
+                    'error': f"{chapter}.tex not found"
+                }
+
+            file_to_convert = chapter_file
+
+            # Expand \input{} commands for front/back
+            if chapter in ['front', 'back']:
+                content = chapter_file.read_text(encoding='utf-8')
+                base_dir = chapter_file.parent
+
+                def expand_input(match):
+                    filename = match.group(1)
+                    input_file = base_dir / f"{filename}.tex"
+                    if input_file.exists():
+                        return input_file.read_text(encoding='utf-8')
+                    else:
+                        return match.group(0)
+
+                expanded = re.sub(
+                    r'\\input\s*\{([^}]+)\}',
+                    expand_input,
+                    content
+                )
+
+                tmp = tempfile.NamedTemporaryFile(
+                    mode='w',
+                    suffix='.tex',
+                    delete=False,
+                    encoding='utf-8'
+                )
+                tmp.write(expanded)
+                tmp.close()
+                file_to_convert = Path(tmp.name)
+                temp_files.append(file_to_convert)
+
+        # Convert to markdown
+        output_file = output_dir / f"{stable_name}.md"
+        converter.convert_file(
+            file_to_convert,
+            output_file=output_file,
+            standalone=True,
+            verbose=False,
+            current_file_stem=stable_name,
+            label_index_file=label_index_file,
+        )
+
+        # Cleanup temporary files
+        for temp_file in temp_files:
+            try:
+                temp_file.unlink()
+            except Exception:
+                pass
+
+        return {
+            'success': True,
+            'output_file': output_file,
+            'stable_name': stable_name
+        }
+
+    except Exception as e:
+        # Cleanup temporary files on error
+        for temp_file in temp_files:
+            try:
+                temp_file.unlink()
+            except Exception:
+                pass
+
+        return {
+            'success': False,
+            'stable_name': stable_name,
+            'error': str(e)
+        }
 
 
 class StandardBuilder:
@@ -298,7 +453,7 @@ class StandardBuilder:
         chapter_files: List[Path],
         verbose: bool = False
     ) -> Path:
-        """
+        r"""
         Merge multiple LaTeX files into a single temporary file.
 
         Concatenates the content of multiple .tex files in order, preserving
@@ -672,16 +827,17 @@ class StandardBuilder:
             if stats['duplicates'] > 0:
                 print(f"Warning: Found {stats['duplicates']} duplicate labels")
 
-        # Track which chapters have been processed (for collision groups)
+        # Create work units for parallel processing
+        # Each work unit is either a single chapter or a collision group
+        work_units = []
         processed_chapters = set()
 
-        for i, chapter in enumerate(chapters, 1):
+        for chapter in chapters:
             # Skip if already processed as part of a collision group
             if chapter in processed_chapters:
                 continue
 
             chapter_file = self.draft_dir / f"{chapter}.tex"
-
             if not chapter_file.exists():
                 if verbose:
                     print(f"Warning: {chapter}.tex not found, skipping")
@@ -691,63 +847,77 @@ class StandardBuilder:
             stable_name = chapter_to_stable.get(chapter, chapter)
 
             # Check if this chapter is part of a collision group
-            is_collision = stable_name in collision_groups
-
-            if is_collision:
-                # This chapter is part of a collision group - merge all files
+            if stable_name in collision_groups:
+                # Collision group - create work unit for merged files
                 chapters_to_merge = collision_groups[stable_name]
-                if verbose:
-                    print(f"[{i}/{len(chapters)}] Converting {stable_name}.md (merging {len(chapters_to_merge)} files)...")
-
-                # Get all chapter files that need to be merged
-                chapter_files = []
-                for ch in chapters_to_merge:
-                    ch_file = self.draft_dir / f"{ch}.tex"
-                    if ch_file.exists():
-                        chapter_files.append(ch_file)
-                        processed_chapters.add(ch)  # Mark as processed
-
-                # Merge files into temporary file
-                file_to_convert = self._merge_tex_files(chapter_files, verbose)
-                temp_files.append(file_to_convert)
-
+                work_units.append({
+                    'type': 'collision',
+                    'stable_name': stable_name,
+                    'chapters': chapters_to_merge,
+                })
+                processed_chapters.update(chapters_to_merge)
             else:
                 # Normal single-file conversion
-                if verbose:
-                    print(f"[{i}/{len(chapters)}] Converting {chapter}.tex...")
-
-                file_to_convert = chapter_file
+                work_units.append({
+                    'type': 'single',
+                    'stable_name': stable_name,
+                    'chapter': chapter,
+                })
                 processed_chapters.add(chapter)
 
-                # Expand \input{} commands for chapters that use them
-                if chapter in ['front', 'back']:
-                    try:
-                        file_to_convert = self._expand_input_commands(chapter_file)
-                        temp_files.append(file_to_convert)
-                    except Exception as e:
-                        if verbose:
-                            print(f"Warning: Could not expand inputs in {chapter}.tex: {e}")
+        # Process work units in parallel
+        if verbose:
+            print(f"\nConverting {len(work_units)} chapters in parallel...")
 
-            # Convert chapter to markdown using stable name for output
-            output_file = output_dir / f"{stable_name}.md"
-            try:
-                converter.convert_file(
-                    file_to_convert,
-                    output_file=output_file,
-                    standalone=True,
-                    verbose=False,
-                    current_file_stem=stable_name,
-                    label_index_file=label_index_file,
+        # Use conservative worker count (4 workers, or CPU count if less)
+        max_workers = min(4, os.cpu_count() or 1)
+
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            # Submit all work units
+            future_to_unit = {}
+            for work_unit in work_units:
+                future = executor.submit(
+                    _convert_chapter_worker,
+                    work_unit,
+                    self.draft_dir,
+                    output_dir,
+                    label_index_file,
+                    verbose=False  # Workers don't print progress
                 )
-                output_files.append(output_file)
+                future_to_unit[future] = work_unit
 
-            except Exception as e:
-                # Always print conversion errors to prevent silent failures
-                print(f"ERROR: Failed to convert {chapter}.tex: {e}", file=sys.stderr)
-                if verbose:
-                    import traceback
-                    traceback.print_exc()
-                continue
+            # Collect results as they complete (but preserve chapter order later)
+            results_by_stable_name = {}
+            completed = 0
+            for future in as_completed(future_to_unit):
+                work_unit = future_to_unit[future]
+                completed += 1
+
+                try:
+                    result = future.result()
+
+                    if result['success']:
+                        # Store result by stable_name for ordering later
+                        results_by_stable_name[result['stable_name']] = result['output_file']
+                        if verbose:
+                            print(f"[{completed}/{len(work_units)}] Completed {result['stable_name']}.md")
+                    else:
+                        # Print conversion errors
+                        print(f"ERROR: Failed to convert {result['stable_name']}: {result.get('error', 'Unknown error')}", file=sys.stderr)
+
+                except Exception as e:
+                    # Handle worker exceptions
+                    stable_name = work_unit.get('stable_name', 'unknown')
+                    print(f"ERROR: Worker exception for {stable_name}: {e}", file=sys.stderr)
+                    if verbose:
+                        import traceback
+                        traceback.print_exc()
+
+        # Reconstruct output_files in correct chapter order
+        for work_unit in work_units:
+            stable_name = work_unit['stable_name']
+            if stable_name in results_by_stable_name:
+                output_files.append(results_by_stable_name[stable_name])
 
         # Note: Cross-file links are now handled during conversion via label indexing
         # The old post-processing approach (fix_cross_file_links) is no longer needed
