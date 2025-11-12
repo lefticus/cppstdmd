@@ -3868,8 +3868,8 @@ each of the extended signed integer types, there exists a corresponding
 *extended unsigned integer type*. The standard and extended unsigned
 integer types are collectively called . An unsigned integer type has the
 same width *N* as the corresponding signed integer type. The range of
-representable values for the unsigned type is 0 to $2^N-1$ (inclusive);
-arithmetic for the unsigned type is performed modulo $2^N$.
+representable values for the unsigned type is 0 to 2ᴺ-1 (inclusive);
+arithmetic for the unsigned type is performed modulo 2ᴺ.
 
 [*Note 2*: Unsigned arithmetic does not overflow. Overflow for signed
 arithmetic yields undefined behavior [[expr.pre]]. — *end note*\]
@@ -3878,7 +3878,7 @@ An unsigned integer type has the same object representation, value
 representation, and alignment requirements [[basic.align]] as the
 corresponding signed integer type. For each value x of a signed integer
 type, the value of the corresponding unsigned integer type congruent to
-x modulo $2^N$ has the same value of corresponding bits in its value
+x modulo 2ᴺ has the same value of corresponding bits in its value
 representation.[^18]
 
 [*Example 1*: The value -1 of a signed integer type has the same

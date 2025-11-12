@@ -1310,8 +1310,8 @@ engine’s state to S.
 #### Class template `mersenne_twister_engine` <a id="rand.eng.mers">[[rand.eng.mers]]</a>
 
 A `mersenne_twister_engine` random number engine[^2] produces unsigned
-integer random numbers in the closed interval $[0,2^w-1]$. The state of
-a `mersenne_twister_engine` object `x` is of size n and consists of a
+integer random numbers in the closed interval [0,2ʷ-1]. The state of a
+`mersenne_twister_engine` object `x` is of size n and consists of a
 sequence X of n values of the type delivered by `x`; all subscripts
 applied to X are to be taken modulo n.
 
@@ -1413,16 +1413,15 @@ A `subtract_with_carry_engine` random number engine produces unsigned
 integer random numbers.
 
 The state of a `subtract_with_carry_engine` object `x` is of size , and
-consists of a sequence X of r integer values $0 \leq X_i < m \,= 2^w$;
-all subscripts applied to X are to be taken modulo r. The state
-additionally consists of an integer c (known as the ) whose value is
-either 0 or 1.
+consists of a sequence X of r integer values 0 ≤ Xᵢ < m  = 2ʷ; all
+subscripts applied to X are to be taken modulo r. The state additionally
+consists of an integer c (known as the ) whose value is either 0 or 1.
 
 The state transition is performed as follows:
 
 This algorithm corresponds to a modular linear function of the form
 $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$, where b is
-of the form $m^r - m^s + 1$ and a = b - (b-1) / m.
+of the form mʳ - mˢ + 1 and a = b - (b-1) / m.
 
 The generation algorithm is given by $\mathsf{GA}(\state{x}{i}) = y$,
 where y is the value produced as a result of advancing the engine’s
@@ -2030,7 +2029,7 @@ respectively. Calculates a quantity
 $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
                         \cdot R^i$$ using arithmetic of type `RealType`.
 
-*Returns:* $S / R^k$.
+*Returns:* S / Rᵏ.
 
 *Throws:* What and when `g` throws.
 
@@ -3271,7 +3270,7 @@ piecewise_constant_distribution();
 ```
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
-n = 1, ρ_0 = 1, b₀ = 0, and b₁ = 1.
+n = 1, ρ₀ = 1, b₀ = 0, and b₁ = 1.
 
 ``` cpp
 template<class InputIteratorB, class InputIteratorW>
@@ -3342,7 +3341,7 @@ vector<result_type> densities() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n and
-whose `operator[]` member returns ρ_k when invoked with argument k for
+whose `operator[]` member returns ρₖ when invoked with argument k for
 k = 0, …, n-1.
 
 ##### Class template `piecewise_linear_distribution` <a id="rand.dist.samp.plinear">[[rand.dist.samp.plinear]]</a>
@@ -3409,7 +3408,7 @@ piecewise_linear_distribution();
 ```
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
-n = 1, ρ_0 = ρ_1 = 1, b₀ = 0, and b₁ = 1.
+n = 1, ρ₀ = ρ₁ = 1, b₀ = 0, and b₁ = 1.
 
 ``` cpp
 template<class InputIteratorB, class InputIteratorW>
@@ -3423,7 +3422,7 @@ requirements of an input iterator
 `iterator_traits<InputIteratorB>::value_type` and
 `iterator_traits<InputIteratorW>::value_type` shall each denote a type
 that is convertible to `double`. If `firstB == lastB` or
-`++firstB == lastB`, let n = 1, ρ_0 = ρ_1 = 1, b₀ = 0, and b₁ = 1.
+`++firstB == lastB`, let n = 1, ρ₀ = ρ₁ = 1, b₀ = 0, and b₁ = 1.
 Otherwise, \bigl[`firstB`, `lastB`\bigr) shall form a sequence b of
 length n+1, the length of the sequence w starting from `firstW` shall be
 at least n+1, and any wₖ for k ≥ n+1 shall be ignored by the
@@ -3444,9 +3443,9 @@ object ( [[function.objects]]) whose return type shall be convertible to
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: If
-`bl.size()` < 2, let n = 1, ρ_0 = ρ_1 = 1, b₀ = 0, and b₁ = 1.
-Otherwise, let \bigl[`bl.begin(),` `bl.end()`\bigr) form a sequence
-b₀, …, bₙ, and let w_k = `fw`(b_k) for k = 0, …, n.
+`bl.size()` < 2, let n = 1, ρ₀ = ρ₁ = 1, b₀ = 0, and b₁ = 1. Otherwise,
+let \bigl[`bl.begin(),` `bl.end()`\bigr) form a sequence b₀, …, bₙ, and
+let w_k = `fw`(b_k) for k = 0, …, n.
 
 *Complexity:* The number of invocations of `fw` shall not exceed n+1.
 
@@ -3481,7 +3480,7 @@ vector<result_type> densities() const;
 ```
 
 *Returns:* A `vector<result_type>` whose `size` member returns n and
-whose `operator[]` member returns ρ_k when invoked with argument k for
+whose `operator[]` member returns ρₖ when invoked with argument k for
 k = 0, …, n.
 
 ## Numeric arrays <a id="numarray">[[numarray]]</a>

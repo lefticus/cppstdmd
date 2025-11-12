@@ -539,15 +539,14 @@ int k = X().n;      // OK, X() prvalue is converted to xvalue
 
 ### Qualification conversions <a id="conv.qual">[[conv.qual]]</a>
 
-A *qualification-decomposition* of a type `T` is a sequence of $cv{}_i$
-and Pᵢ such that `T` is
+A *qualification-decomposition* of a type `T` is a sequence of cvᵢ and
+Pᵢ such that `T` is
 
-where each $cv{}_i$ is a set of cv-qualifiers [[basic.type.qualifier]],
-and each Pᵢ is “pointer to” [[dcl.ptr]], “pointer to member of class Cᵢ
-of type” [[dcl.mptr]], “array of Nᵢ”, or “array of unknown bound of”
-[[dcl.array]]. If Pᵢ designates an array, the cv-qualifiers $cv{}_{i+1}$
-on the element type are also taken as the cv-qualifiers $cv{}_i$ of the
-array.
+where each cvᵢ is a set of cv-qualifiers [[basic.type.qualifier]], and
+each Pᵢ is “pointer to” [[dcl.ptr]], “pointer to member of class Cᵢ of
+type” [[dcl.mptr]], “array of Nᵢ”, or “array of unknown bound of”
+[[dcl.array]]. If Pᵢ designates an array, the cv-qualifiers cvᵢ₊₁ on the
+element type are also taken as the cv-qualifiers cvᵢ of the array.
 
 [*Example 1*: The type denoted by the *type-id* `const int **` has
 three qualification-decompositions, taking `U` as “`int`”, as “pointer
@@ -555,9 +554,8 @@ to `const int`”, and as “pointer to pointer to
 `const int`”. — *end example*\]
 
 The n-tuple of cv-qualifiers after the first one in the longest
-qualification-decomposition of `T`, that is,
-$cv{}_1, cv{}_2, \dotsc, cv{}_n$, is called the *cv-qualification
-signature* of `T`.
+qualification-decomposition of `T`, that is, cv₁, cv₂, …, cvₙ, is called
+the *cv-qualification signature* of `T`.
 
 Two types `T1` and `T2` are *similar* if they have
 qualification-decompositions with the same n such that corresponding Pᵢ
@@ -567,17 +565,16 @@ components are either the same or one is “array of Nᵢ” and the other is
 The *qualification-combined type* of two types `T1` and `T2` is the type
 `T3` similar to `T1` whose qualification-decomposition is such that:
 
-- for every i > 0, $cv{}^3_i$ is the union of $cv{}^1_i$ and $cv{}^2_i$,
-- if either P¹_i or P²_i is “array of unknown bound of”, P³_i is “array
-  of unknown bound of”, otherwise it is P¹_i, and
-- if the resulting $cv{}^3_i$ is different from $cv{}^1_i$ or
-  $cv{}^2_i$, or the resulting P³_i is different from P¹_i or P²_i, then
-  `const` is added to every $cv{}^3_k$ for 0 < k < i,
+- for every i > 0, cv³ᵢ is the union of cv¹ᵢ and cv²ᵢ,
+- if either P¹ᵢ or P²ᵢ is “array of unknown bound of”, P³ᵢ is “array of
+  unknown bound of”, otherwise it is P¹ᵢ, and
+- if the resulting cv³ᵢ is different from cv¹ᵢ or cv²ᵢ, or the resulting
+  P³ᵢ is different from P¹ᵢ or P²ᵢ, then `const` is added to every cv³ₖ
+  for 0 < k < i,
 
-where $cv{}^j_i$ and $P^j_i$ are the components of the
-qualification-decomposition of `T`j. A prvalue of type `T1` can be
-converted to type `T2` if the qualification-combined type of `T1` and
-`T2` is `T2`.
+where cvʲᵢ and Pʲᵢ are the components of the qualification-decomposition
+of `T`j. A prvalue of type `T1` can be converted to type `T2` if the
+qualification-combined type of `T1` and `T2` is `T2`.
 
 [*Note 1*:
 
@@ -680,7 +677,7 @@ type is `bool`, the value `false` is converted to zero and the value
 `true` is converted to one.
 
 Otherwise, the result is the unique value of the destination type that
-is congruent to the source integer modulo $2^N$, where N is the width of
+is congruent to the source integer modulo 2ᴺ, where N is the width of
 the destination type.
 
 The conversions allowed as integral promotions are excluded from the set
@@ -3497,9 +3494,9 @@ operator. — *end note*\]
 
 For two similar types `T1` and `T2` [[conv.qual]], a prvalue of type
 `T1` may be explicitly converted to the type `T2` using a `const_cast`
-if, considering the qualification-decompositions of both types, each
-P¹_i is the same as P²_i for all i. The result of a `const_cast` refers
-to the original entity.
+if, considering the qualification-decompositions of both types, each P¹ᵢ
+is the same as P²ᵢ for all i. The result of a `const_cast` refers to the
+original entity.
 
 [*Example 1*:
 
@@ -4877,7 +4874,7 @@ negative, or greater than or equal to the width of the promoted left
 operand.
 
 The value of `E1 << E2` is the unique value congruent to
-`E1` \times 2^`E2` modulo $2^N$, where N is the width of the type of the
+`E1` \times 2^`E2` modulo 2ᴺ, where N is the width of the type of the
 result.
 
 [*Note 1*: `E1` is left-shifted `E2` bit positions; vacated bits are

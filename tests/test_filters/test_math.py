@@ -61,11 +61,11 @@ def test_superscript_letters():
 
 def test_superscript_unavailable_letter():
     """Test superscript with unavailable letter stays as LaTeX"""
-    latex = r"Result $x^a$."
+    latex = r"Result $x^q$."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    # Should keep as LaTeX since 'a' superscript not available
-    assert "$x^a$" in output
+    # Should keep as LaTeX since 'q' superscript not available
+    assert "$x^q$" in output
 
 
 def test_complex_superscript_unchanged():
@@ -581,4 +581,137 @@ def test_absolute_value_simple():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "|a + b| = |c|" in output
+    assert "$" not in output
+
+
+# Tests for improved Unicode conversions (empty braces, new superscripts, bitwise ops)
+def test_empty_braces_stripped():
+    """Test empty braces {} are stripped from math expressions"""
+    latex = r"Value $x{}^2$ and $a_1, \dotsc{}, a_n$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "x²" in output
+    assert "a₁, …, aₙ" in output
+    assert "$" not in output
+
+
+def test_cv_macro_conversion():
+    """Test \\cv{} macro converts to plain text 'cv'"""
+    latex = r"Type is $\cv{}_i$ where i is the index."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "cvᵢ" in output
+    assert "$" not in output
+
+
+def test_cv_macro_with_multiple_subscripts():
+    """Test \\cv{} with multiple subscript patterns"""
+    latex = r"Qualifiers $\cv{}_1$ and $\cv{}_2$ are related."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "cv₁" in output
+    assert "cv₂" in output
+    assert "$" not in output
+
+
+def test_expanded_superscript_letters():
+    """Test expanded superscript character set (29 new letters)"""
+    latex = r"Values $x^a$, $y^b$, $z^c$, $n^d$, $f^e$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "xᵃ" in output
+    assert "yᵇ" in output
+    assert "zᶜ" in output
+    assert "nᵈ" in output
+    assert "fᵉ" in output
+    assert "$" not in output
+
+
+def test_superscript_letters_extended():
+    """Test additional superscript letters"""
+    latex = r"More letters: $g^h$, $i^j$, $k^l$, $m^o$, $p^r$, $s^t$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "gʰ" in output
+    assert "iʲ" in output
+    assert "kˡ" in output
+    assert "mᵒ" in output
+    assert "pʳ" in output
+    assert "sᵗ" in output
+    assert "$" not in output
+
+
+def test_superscript_uppercase_N():
+    """Test superscript uppercase N"""
+    latex = r"Modulo $2^N$ where N is width."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "2ᴺ" in output
+    assert "$" not in output
+
+
+def test_bitwise_xor_operator():
+    """Test \\oplus (XOR) bitwise operator"""
+    latex = r"Result is $a \oplus b$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "a ⊕ b" in output
+    assert "$" not in output
+
+
+def test_bitwise_shift_operators():
+    """Test \\ll and \\gg shift operators"""
+    latex = r"Shifts: $x \ll 2$ and $y \gg 3$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "x ≪ 2" in output
+    assert "y ≫ 3" in output
+    assert "$" not in output
+
+
+def test_bitwise_logical_synonyms():
+    """Test \\wedge and \\vee (synonyms for \\land and \\lor)"""
+    latex = r"Logical: $p \wedge q$ and $r \vee s$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "p ∧ q" in output
+    assert "r ∨ s" in output
+    assert "$" not in output
+
+
+def test_bitwise_mid_operator():
+    """Test \\mid (divides) operator"""
+    latex = r"Relation $n \mid m$ means n divides m."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "n | m" in output
+    assert "$" not in output
+
+
+def test_superscript_and_subscript_combined():
+    """Test superscript followed by subscript (e.g., cvʲᵢ)"""
+    latex = r"Pattern $cv{}^j_i$ converts fully."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "cvʲᵢ" in output
+    assert "$" not in output
+
+
+def test_superscript_subscript_multiple():
+    """Test multiple superscript+subscript combinations"""
+    latex = r"Components $cv{}^1_i$, $cv{}^2_i$, and $cv{}^3_i$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "cv¹ᵢ" in output
+    assert "cv²ᵢ" in output
+    assert "cv³ᵢ" in output
+    assert "$" not in output
+
+
+def test_combined_improvements():
+    """Test all improvements working together"""
+    latex = r"Expression $\cv{}_i \oplus x^a + 2^N$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "cvᵢ ⊕ xᵃ + 2ᴺ" in output
     assert "$" not in output

@@ -1930,8 +1930,8 @@ Let n be `sizeof...(Tuples)`. For every integer 0 ≤ i < n:
 - Let `Uᵢ` be `remove_cvref_t<``Tᵢ``>`.
 - Let `tpᵢ` be the iᵗʰ element in the function parameter pack `tpls`.
 - Let Sᵢ be `tuple_size_v<``Uᵢ``>`.
-- Let $E_i^k$ be `tuple_element_t<`k`, ``Uᵢ``>`.
-- Let $e_i^k$ be `get<`k`>(std::forward<``Tᵢ``>(``tpᵢ``))`.
+- Let Eᵢᵏ be `tuple_element_t<`k`, ``Uᵢ``>`.
+- Let eᵢᵏ be `get<`k`>(std::forward<``Tᵢ``>(``tpᵢ``))`.
 - Let Elemsᵢ be a pack of the types $E_i^0, \dotsc, E_i^{S_{i-1}}$.
 - Let elemsᵢ be a pack of the expressions
   $e_i^0, \dotsc, e_i^{S_{i-1}}$.
@@ -8795,7 +8795,7 @@ template<class R, class F, class... BoundArgs>
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
 and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
-`w₂`, $\dotsc{}$, `w_N`, where N has the value `sizeof...(bound_args)`.
+`w₂`, …, `w_N`, where N has the value `sizeof...(bound_args)`.
 
 *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.

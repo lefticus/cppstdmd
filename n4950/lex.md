@@ -978,8 +978,8 @@ of any other kind of *character-literal* is determined as follows:
     or `L`, and v does not exceed the range of representable values of
     the corresponding unsigned type for the underlying type of the
     *character-literal*’s type, then the value is the unique value of
-    the *character-literal*’s type `T` that is congruent to v modulo
-    $2^N$, where N is the width of `T`.
+    the *character-literal*’s type `T` that is congruent to v modulo 2ᴺ,
+    where N is the width of `T`.
   - Otherwise, the *character-literal* is ill-formed.
 - A *character-literal* with a *c-char-sequence* consisting of a single
   *conditional-escape-sequence* is conditionally-supported and has an
@@ -1107,8 +1107,8 @@ If an *exponent-part* or *binary-exponent-part* is present, the exponent
 e of the *floating-point-literal* is the result of interpreting the
 sequence of an optional *sign* and the *digit*s as a base 10 integer.
 Otherwise, the exponent e is 0. The scaled value of the literal is
-$s \times 10^e$ for a *decimal-floating-point-literal* and
-$s \times 2^e$ for a *hexadecimal-floating-point-literal*.
+s × 10ᵉ for a *decimal-floating-point-literal* and s × 2ᵉ for a
+*hexadecimal-floating-point-literal*.
 
 [*Example 1*: The *floating-point-literal*s `49.625` and `0xC.68p+2`
 have the same value. The *floating-point-literal*s `1.602'176'565e-19`
@@ -1330,7 +1330,7 @@ order as follows:
     corresponding unsigned type for the underlying type of the
     *string-literal*’s array element type, then the value is the unique
     value of the *string-literal*’s array element type `T` that is
-    congruent to v modulo $2^N$, where N is the width of `T`.
+    congruent to v modulo 2ᴺ, where N is the width of `T`.
   - Otherwise, the *string-literal* is ill-formed.
 
   When encoding a stateful character encoding, these sequences should

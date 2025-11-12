@@ -1213,10 +1213,10 @@ The range of representable values of an integer-class type is the
 continuous set of values over which it is defined. For any integer-class
 type, its range of representable values is either $-2^{N-1}$ to
 $2^{N-1}-1$ (inclusive) for some integer N, in which case it is a
-*signed-integer-class type*, or 0 to $2^{N}-1$ (inclusive) for some
-integer N, in which case it is an *unsigned-integer-class type*. In both
-cases, N is called the *width* of the integer-class type. The width of
-an integer-class type is greater than that of every integral type of the
+*signed-integer-class type*, or 0 to 2ᴺ-1 (inclusive) for some integer
+N, in which case it is an *unsigned-integer-class type*. In both cases,
+N is called the *width* of the integer-class type. The width of an
+integer-class type is greater than that of every integral type of the
 same signedness.
 
 A type `I` other than cv `bool` is *integer-like* if it models
@@ -1243,8 +1243,8 @@ integral type are both implicitly and explicitly convertible to any
 integer-class type. Conversions between integral and integer-class types
 and between two integer-class types do not exit via an exception. The
 result of such a conversion is the unique value of the destination type
-that is congruent to the source modulo $2^N$, where N is the width of
-the destination type.
+that is congruent to the source modulo 2ᴺ, where N is the width of the
+destination type.
 
 Let `a` be an object of integer-class type `I`, let `b` be an object of
 integer-like type `I2` such that the expression `b` is implicitly

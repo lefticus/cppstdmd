@@ -27,6 +27,13 @@ local math_operators = {
   ["\\le"] = "≤",      -- Short form of \leq
   ["\\ge"] = "≥",      -- Short form of \geq
   ["\\to"] = "→",      -- Short form of \rightarrow
+  -- Bitwise/set operators
+  ["\\oplus"] = "⊕",   -- XOR / exclusive or
+  ["\\ll"] = "≪",      -- Much less than / left shift
+  ["\\gg"] = "≫",      -- Much greater than / right shift
+  ["\\wedge"] = "∧",   -- AND (synonym for \land)
+  ["\\vee"] = "∨",     -- OR (synonym for \lor)
+  ["\\mid"] = "|",     -- Divides / bitwise OR
   ["<"] = "<",
   [">"] = ">",
   ["="] = "=",
@@ -80,6 +87,7 @@ local math_functions = {
 
 -- Superscript mappings (limited Unicode support)
 local superscripts = {
+  -- Digits
   ["0"] = "⁰",
   ["1"] = "¹",
   ["2"] = "²",
@@ -90,8 +98,40 @@ local superscripts = {
   ["7"] = "⁷",
   ["8"] = "⁸",
   ["9"] = "⁹",
+  -- Lowercase letters
+  ["a"] = "ᵃ",
+  ["b"] = "ᵇ",
+  ["c"] = "ᶜ",
+  ["d"] = "ᵈ",
+  ["e"] = "ᵉ",
+  ["f"] = "ᶠ",
+  ["g"] = "ᵍ",
+  ["h"] = "ʰ",
   ["i"] = "ⁱ",
+  ["j"] = "ʲ",
+  ["k"] = "ᵏ",
+  ["l"] = "ˡ",
+  ["m"] = "ᵐ",
   ["n"] = "ⁿ",
+  ["o"] = "ᵒ",
+  ["p"] = "ᵖ",
+  ["r"] = "ʳ",
+  ["s"] = "ˢ",
+  ["t"] = "ᵗ",
+  ["u"] = "ᵘ",
+  ["v"] = "ᵛ",
+  ["w"] = "ʷ",
+  ["x"] = "ˣ",
+  ["y"] = "ʸ",
+  ["z"] = "ᶻ",
+  -- Uppercase letters (limited Unicode support)
+  ["N"] = "ᴺ",
+  -- Operators
+  ["+"] = "⁺",
+  ["-"] = "⁻",
+  ["="] = "⁼",
+  ["("] = "⁽",
+  [")"] = "⁾",
 }
 
 -- subscripts is now imported from cpp-common
@@ -292,6 +332,9 @@ local function try_unicode_conversion(text)
   -- Convert \mathsf{text} -> text (sans-serif font)
   result = result:gsub("\\mathsf{([^}]*)}", "%1")
 
+  -- Convert \cv{} (cv-qualifiers) to plain text
+  result = result:gsub("\\cv{}", "cv")
+
   -- Convert ordinal superscripts BEFORE \text{} conversion
   -- Patterns like $i^\text{th}$ -> iᵗʰ, $1^\text{st}$ -> 1ˢᵗ
   result = result:gsub("%^\\text{th}", "ᵗʰ")
@@ -354,6 +397,11 @@ local function try_unicode_conversion(text)
   for latex, text_replacement in pairs(math_functions) do
     result = plain_replace(result, latex, text_replacement)
   end
+
+  -- Strip empty braces (used for spacing in LaTeX, e.g., cv{}_i)
+  -- Do this AFTER all macro conversions but BEFORE complexity check
+  -- so empty braces don't cause unnecessary conversion failures
+  result = result:gsub("{}", "")
 
   -- NOW check if this is complex math that shouldn't be converted
   -- (after simple conversions, so we don't have false positives)
@@ -433,6 +481,29 @@ local function try_unicode_conversion(text)
   result = result:gsub("(%w)_{(%w)}", function(base, sub)
     local unicode_sub = convert_subscript(sub)
     return base .. unicode_sub
+  end)
+
+  -- Handle subscripts after Unicode superscripts (e.g., xⁱ_j → xⁱⱼ, cvʲ_i → cvʲᵢ)
+  -- This needs to run AFTER superscript conversion
+  -- Match any Unicode superscript character followed by _char or _{char}
+  local superscript_chars = "[⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᴺ⁺⁻⁼⁽⁾]"
+
+  result = result:gsub("(" .. superscript_chars .. ")_(%w)", function(super_char, sub_char)
+    local unicode_sub = convert_subscript(sub_char)
+    if unicode_sub then
+      return super_char .. unicode_sub
+    else
+      return super_char .. "_" .. sub_char  -- Keep original if conversion fails
+    end
+  end)
+
+  result = result:gsub("(" .. superscript_chars .. ")_{(%w)}", function(super_char, sub_char)
+    local unicode_sub = convert_subscript(sub_char)
+    if unicode_sub then
+      return super_char .. unicode_sub
+    else
+      return super_char .. "_{" .. sub_char .. "}"  -- Keep original if conversion fails
+    end
   end)
 
   -- If we still have LaTeX commands, we can't fully convert
