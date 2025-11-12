@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore how the C++ standard evolved across versions with interactive side-by-side diffs">
+    <title>C++ Standard Evolution Viewer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <header class="landing-header">
+        <h1>C++ Standard Evolution Viewer</h1>
+        <p class="subtitle">Explore how the C++ standard evolved across versions with interactive side-by-side diffs</p>
+    </header>
+
+    <main class="landing-main">
+        <section class="intro">
+            <p>
+                This site provides an interactive way to explore changes in the C++ standard by viewing
+                side-by-side diffs of individual sections (identified by stable names like <code>[array]</code>,
+                <code>[class.copy]</code>, <code>[ranges.adaptors]</code>).
+            </p>
+            <p>
+                Each version transition below focuses on <strong>Tier 1 sections</strong> (major library
+                components and language features) to provide the most educational value.
+            </p>
+        </section>
+
+        <section class="version-pairs">
+            <h2>Choose a Version Transition</h2>
+
+            {% for from_tag, to_tag, from_name, to_name, slug in version_pairs %}
+            <div class="version-card">
+                <div class="version-card-header">
+                    <h3>
+                        <a href="versions/{{ slug }}.html">
+                            {{ from_name }} → {{ to_name }}
+                        </a>
+                    </h3>
+                    {% set pair_stats = stats.version_pairs | selectattr('slug', 'equalto', slug) | list %}
+                    {% if pair_stats %}
+                    <span class="diff-count">{{ pair_stats[0].count }} sections</span>
+                    {% endif %}
+                </div>
+
+                <div class="version-card-body">
+                    <p class="version-description">
+                        {% if from_name == "C++11" %}
+                        The foundation: auto, lambdas, move semantics, variadic templates, and the modern STL.
+                        {% elif from_name == "C++14" %}
+                        Refinements to C++11: generic lambdas, relaxed constexpr, variable templates.
+                        {% elif from_name == "C++17" %}
+                        Structured bindings, if constexpr, fold expressions, std::optional, std::variant, parallel algorithms.
+                        {% elif from_name == "C++20" %}
+                        The big one: concepts, ranges, coroutines, modules, three-way comparison, constexpr everything.
+                        {% elif from_name == "C++23" %}
+                        Latest refinements: deducing this, if consteval, multidimensional subscript, ranges improvements.
+                        {% endif %}
+                    </p>
+
+                    <div class="version-card-actions">
+                        <a href="versions/{{ slug }}.html" class="btn btn-primary">
+                            Browse {{ pair_stats[0].count if pair_stats else "all" }} sections →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section class="statistics">
+            <h2>Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">{{ stats.total_diffs }}</div>
+                    <div class="stat-label">Total Diffs Generated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ version_pairs | length }}</div>
+                    <div class="stat-label">Version Transitions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Tier 1</div>
+                    <div class="stat-label">Sections (0-1 dots)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>About This Project</h2>
+            <p>
+                This site is generated from the <a href="https://github.com/cplusplus/draft" target="_blank" rel="noopener noreferrer">cplusplus/draft</a>
+                repository using a custom conversion pipeline that:
+            </p>
+            <ol>
+                <li>Converts LaTeX sources to GitHub Flavored Markdown</li>
+                <li>Splits chapters by stable names (section identifiers)</li>
+                <li>Generates diffs between adjacent C++ versions</li>
+                <li>Renders interactive side-by-side views with <a href="https://github.com/rtfpessoa/diff2html" target="_blank" rel="noopener noreferrer">diff2html</a></li>
+            </ol>
+
+            <h3>What are Stable Names?</h3>
+            <p>
+                Stable names are section identifiers used throughout the C++ standard to create consistent references.
+                For example:
+            </p>
+            <ul>
+                <li><code>[array]</code> - std::array container</li>
+                <li><code>[class.copy]</code> - Copy constructors and copy assignment</li>
+                <li><code>[ranges.adaptors]</code> - Range adaptors</li>
+                <li><code>[concepts.callable]</code> - Callable concepts</li>
+            </ul>
+            <p>
+                <strong>Tier 1 sections</strong> (0-1 dots in the name) represent major library components and
+                language features, making them ideal for learning how C++ evolved.
+            </p>
+
+            <h3>Useful Links</h3>
+            <ul>
+                <li><a href="https://eel.is/c++draft/" target="_blank" rel="noopener noreferrer">Current C++ Draft (eel.is)</a> - Latest working draft</li>
+                <li><a href="https://en.cppreference.com/" target="_blank" rel="noopener noreferrer">cppreference.com</a> - Practical C++ documentation</li>
+                <li><a href="https://github.com/cplusplus/draft" target="_blank" rel="noopener noreferrer">cplusplus/draft</a> - Official LaTeX sources</li>
+                <li><a href="https://www.open-std.org/jtc1/sc22/wg21/" target="_blank" rel="noopener noreferrer">WG21 Papers</a> - C++ standardization papers</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <p>
+            Generated from <a href="https://github.com/cplusplus/draft" target="_blank" rel="noopener noreferrer">cplusplus/draft</a>
+            using <a href="https://github.com/rtfpessoa/diff2html" target="_blank" rel="noopener noreferrer">diff2html</a>
+        </p>
+        <p>
+            Last updated: {{ stats.get('generated_date', 'recently') }}
+        </p>
+    </footer>
+
+    <script src="js/navigation.js"></script>
+</body>
+</html>

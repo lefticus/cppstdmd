@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse all sections that changed between {{ from_name }} and {{ to_name }}">
+    <title>{{ from_name }} → {{ to_name }} - C++ Standard Evolution</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+<body>
+    <header class="page-header">
+        <nav class="breadcrumb">
+            <a href="../index.html">🏠 Home</a> &gt;
+            <span class="current">{{ from_name }} → {{ to_name }}</span>
+        </nav>
+
+        <h1>{{ from_name }} → {{ to_name }}</h1>
+        <p class="subtitle">Browse {{ stable_names | length }} sections that changed between these versions</p>
+
+        <div class="version-timeline">
+            <span class="timeline-label">Jump to: </span>
+            {% for from_tag_iter, to_tag_iter, from_name_iter, to_name_iter, slug_iter in version_pairs %}
+            <a href="{{ slug_iter }}.html"
+               class="{% if slug_iter == slug %}active{% endif %}">
+                {{ from_name_iter }}→{{ to_name_iter }}
+            </a>
+            {% if not loop.last %}|{% endif %}
+            {% endfor %}
+        </div>
+    </header>
+
+    <main class="overview-main">
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="Search sections... (e.g., 'array', 'copy', 'ranges')" />
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All ({{ stable_names | length }})</button>
+                <button class="filter-btn" data-filter="small">Small Changes</button>
+                <button class="filter-btn" data-filter="medium">Medium Changes</button>
+                <button class="filter-btn" data-filter="large">Large Changes</button>
+            </div>
+        </div>
+
+        <div class="sections-list" id="sections-list">
+            {% for item in stable_names | sort(attribute='name') %}
+            <div class="section-item {% if item.size_kb < 10 %}small{% elif item.size_kb < 50 %}medium{% else %}large{% endif %}"
+                 data-name="{{ item.name }}"
+                 data-size="{{ item.size_kb }}">
+                <div class="section-header">
+                    <h3>
+                        <a href="../diffs/{{ slug }}/{{ item.file }}.html">
+                            [{{ item.name }}]
+                        </a>
+                    </h3>
+                    <div class="section-badges">
+                        <span class="badge size-badge {% if item.size_kb > 100 %}large{% endif %}">
+                            {{ item.size_kb }} KB
+                        </span>
+                        {% if item.line_count > 0 %}
+                        <span class="badge line-badge">
+                            {{ item.line_count }} lines
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <a href="../diffs/{{ slug }}/{{ item.file }}.html" class="btn btn-small">
+                        View Diff →
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <p>No sections match your search.</p>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <p>
+            <a href="../index.html">← Back to home</a>
+        </p>
+    </footer>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const sectionsList = document.getElementById('sections-list');
+        const noResults = document.getElementById('no-results');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'all';
+
+        function filterSections() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const items = sectionsList.querySelectorAll('.section-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const name = item.dataset.name.toLowerCase();
+                const size = parseFloat(item.dataset.size);
+                const matchesSearch = name.includes(searchTerm);
+                const matchesFilter =
+                    currentFilter === 'all' ||
+                    (currentFilter === 'small' && size < 10) ||
+                    (currentFilter === 'medium' && size >= 10 && size < 50) ||
+                    (currentFilter === 'large' && size >= 50);
+
+                if (matchesSearch && matchesFilter) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                sectionsList.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                sectionsList.style.display = 'block';
+            }
+        }
+
+        searchInput.addEventListener('input', filterSections);
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Update filter and re-filter
+                currentFilter = button.dataset.filter;
+                filterSections();
+            });
+        });
+    </script>
+
+    <script src="../js/navigation.js"></script>
+</body>
+</html>
