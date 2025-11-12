@@ -162,194 +162,73 @@ pytest tests/ -v -n auto \
 success "All tests passed"
 
 # ============================================================================
-# Step 6: Convert n4950 (C++23) - separate and full builds in parallel
+# Function: Convert a C++ standard version (separate + full builds in parallel)
 # ============================================================================
-info "Step 6: Converting C++23 standard (n4950) to Markdown..."
+convert_standard_version() {
+    local git_ref="$1"
+    local version_name="$2"
+    local output_dir="${3:-$git_ref}"  # Default to git_ref if not provided
 
-# Check if directories exist, create if not
-if [ ! -d "n4950" ]; then
-    mkdir -p n4950
-fi
-if [ ! -d "full" ]; then
+    info "Converting $version_name standard ($git_ref) to Markdown..."
+
+    # Create directories if needed
+    mkdir -p "$output_dir"
     mkdir -p full
-fi
 
-# Launch separate build in background
-info "Building separate markdown files with cross-file linking..."
-cpp-std-convert --build-separate \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4950 \
-    --toc-depth 3 \
-    -o n4950/ &
-separate_pid=$!
+    # Launch separate build in background
+    info "Building separate markdown files with cross-file linking..."
+    cpp-std-convert --build-separate \
+        --draft-repo "$DRAFT_DIR" \
+        --git-ref "$git_ref" \
+        --toc-depth 3 \
+        -o "$output_dir/" &
+    local separate_pid=$!
 
-# Launch full build in background
-info "Building full standard file..."
-cpp-std-convert --build-full \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4950 \
-    --toc-depth 3 \
-    -o full/n4950.md &
-full_pid=$!
+    # Launch full build in background
+    info "Building full standard file..."
+    cpp-std-convert --build-full \
+        --draft-repo "$DRAFT_DIR" \
+        --git-ref "$git_ref" \
+        --toc-depth 3 \
+        -o "full/$output_dir.md" &
+    local full_pid=$!
 
-# Wait for both builds to complete
-wait $separate_pid || abort "Failed to convert n4950 separate chapters"
-wait $full_pid || abort "Failed to convert n4950 full standard"
+    # Wait for both builds to complete
+    wait $separate_pid || abort "Failed to convert $output_dir separate chapters"
+    wait $full_pid || abort "Failed to convert $output_dir full standard"
 
-success "n4950 conversion complete (separate + full)"
-
-# ============================================================================
-# Step 7: Convert n3337 (C++11) - separate and full builds in parallel
-# ============================================================================
-info "Step 7: Converting C++11 standard (n3337) to Markdown..."
-
-# Check if directories exist, create if not
-if [ ! -d "n3337" ]; then
-    mkdir -p n3337
-fi
-if [ ! -d "full" ]; then
-    mkdir -p full
-fi
-
-# Launch separate build in background
-info "Building separate markdown files with collision detection and merging..."
-cpp-std-convert --build-separate \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n3337 \
-    --toc-depth 3 \
-    -o n3337/ &
-separate_pid=$!
-
-# Launch full build in background
-info "Building full standard file..."
-cpp-std-convert --build-full \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n3337 \
-    --toc-depth 3 \
-    -o full/n3337.md &
-full_pid=$!
-
-# Wait for both builds to complete
-wait $separate_pid || abort "Failed to convert n3337 separate chapters"
-wait $full_pid || abort "Failed to convert n3337 full standard"
-
-success "n3337 conversion complete (separate + full)"
+    success "$output_dir conversion complete (separate + full)"
+}
 
 # ============================================================================
-# Step 8: Convert n4140 (C++14) - separate and full builds in parallel
+# Step 6: Convert n4950 (C++23)
 # ============================================================================
-info "Step 8: Converting C++14 standard (n4140) to Markdown..."
-
-# Check if directories exist, create if not
-if [ ! -d "n4140" ]; then
-    mkdir -p n4140
-fi
-if [ ! -d "full" ]; then
-    mkdir -p full
-fi
-
-# Launch separate build in background
-info "Building separate markdown files with collision detection and merging..."
-cpp-std-convert --build-separate \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4140 \
-    --toc-depth 3 \
-    -o n4140/ &
-separate_pid=$!
-
-# Launch full build in background
-info "Building full standard file..."
-cpp-std-convert --build-full \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4140 \
-    --toc-depth 3 \
-    -o full/n4140.md &
-full_pid=$!
-
-# Wait for both builds to complete
-wait $separate_pid || abort "Failed to convert n4140 separate chapters"
-wait $full_pid || abort "Failed to convert n4140 full standard"
-
-success "n4140 conversion complete (separate + full)"
+convert_standard_version "n4950" "C++23"
 
 # ============================================================================
-# Step 9: Convert n4659 (C++17) - separate and full builds in parallel
+# Step 7: Convert n3337 (C++11)
 # ============================================================================
-info "Step 9: Converting C++17 standard (n4659) to Markdown..."
-
-# Check if directories exist, create if not
-if [ ! -d "n4659" ]; then
-    mkdir -p n4659
-fi
-if [ ! -d "full" ]; then
-    mkdir -p full
-fi
-
-# Launch separate build in background
-info "Building separate markdown files with cross-file linking..."
-cpp-std-convert --build-separate \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4659 \
-    --toc-depth 3 \
-    -o n4659/ &
-separate_pid=$!
-
-# Launch full build in background
-info "Building full standard file..."
-cpp-std-convert --build-full \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4659 \
-    --toc-depth 3 \
-    -o full/n4659.md &
-full_pid=$!
-
-# Wait for both builds to complete
-wait $separate_pid || abort "Failed to convert n4659 separate chapters"
-wait $full_pid || abort "Failed to convert n4659 full standard"
-
-success "n4659 conversion complete (separate + full)"
+convert_standard_version "n3337" "C++11"
 
 # ============================================================================
-# Step 10: Convert n4861 (C++20) - separate and full builds in parallel
+# Step 8: Convert n4140 (C++14)
 # ============================================================================
-info "Step 10: Converting C++20 standard (n4861) to Markdown..."
-
-# Check if directories exist, create if not
-if [ ! -d "n4861" ]; then
-    mkdir -p n4861
-fi
-if [ ! -d "full" ]; then
-    mkdir -p full
-fi
-
-# Launch separate build in background
-info "Building separate markdown files with cross-file linking..."
-cpp-std-convert --build-separate \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4861 \
-    --toc-depth 3 \
-    -o n4861/ &
-separate_pid=$!
-
-# Launch full build in background
-info "Building full standard file..."
-cpp-std-convert --build-full \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref n4861 \
-    --toc-depth 3 \
-    -o full/n4861.md &
-full_pid=$!
-
-# Wait for both builds to complete
-wait $separate_pid || abort "Failed to convert n4861 separate chapters"
-wait $full_pid || abort "Failed to convert n4861 full standard"
-
-success "n4861 conversion complete (separate + full)"
+convert_standard_version "n4140" "C++14"
 
 # ============================================================================
-# Step 11: Update repo and convert main branch (trunk) - parallel builds
+# Step 9: Convert n4659 (C++17)
 # ============================================================================
-info "Step 11: Converting latest development version (main branch) to Markdown..."
+convert_standard_version "n4659" "C++17"
+
+# ============================================================================
+# Step 10: Convert n4861 (C++20)
+# ============================================================================
+convert_standard_version "n4861" "C++20"
+
+# ============================================================================
+# Step 11: Update repo and convert main branch (trunk)
+# ============================================================================
+info "Step 11: Updating repository and converting latest development version (main branch)..."
 
 # Update the repository to get latest changes
 cd "$DRAFT_DIR"
@@ -371,37 +250,8 @@ else
 fi
 cd "$SCRIPT_DIR"
 
-# Check if directories exist, create if not
-if [ ! -d "trunk" ]; then
-    mkdir -p trunk
-fi
-if [ ! -d "full" ]; then
-    mkdir -p full
-fi
-
-# Launch separate build in background
-info "Building separate markdown files from main branch..."
-cpp-std-convert --build-separate \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref main \
-    --toc-depth 3 \
-    -o trunk/ &
-separate_pid=$!
-
-# Launch full build in background
-info "Building full standard file from main branch..."
-cpp-std-convert --build-full \
-    --draft-repo "$DRAFT_DIR" \
-    --git-ref main \
-    --toc-depth 3 \
-    -o full/trunk.md &
-full_pid=$!
-
-# Wait for both builds to complete
-wait $separate_pid || abort "Failed to convert trunk separate chapters"
-wait $full_pid || abort "Failed to convert trunk full standard"
-
-success "trunk conversion complete (separate + full)"
+# Convert main branch to trunk output directory
+convert_standard_version "main" "C++26 (working draft)" "trunk"
 
 # ============================================================================
 # All done!
