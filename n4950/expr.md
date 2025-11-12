@@ -539,14 +539,14 @@ int k = X().n;      // OK, X() prvalue is converted to xvalue
 
 ### Qualification conversions <a id="conv.qual">[[conv.qual]]</a>
 
-A *qualification-decomposition* of a type `T` is a sequence of cv{}_i
+A *qualification-decomposition* of a type `T` is a sequence of $cv{}_i$
 and Pᵢ such that `T` is
 
-where each cv{}_i is a set of cv-qualifiers [[basic.type.qualifier]],
+where each $cv{}_i$ is a set of cv-qualifiers [[basic.type.qualifier]],
 and each Pᵢ is “pointer to” [[dcl.ptr]], “pointer to member of class Cᵢ
 of type” [[dcl.mptr]], “array of Nᵢ”, or “array of unknown bound of”
 [[dcl.array]]. If Pᵢ designates an array, the cv-qualifiers $cv{}_{i+1}$
-on the element type are also taken as the cv-qualifiers cv{}_i of the
+on the element type are also taken as the cv-qualifiers $cv{}_i$ of the
 array.
 
 [*Example 1*: The type denoted by the *type-id* `const int **` has
@@ -555,8 +555,9 @@ to `const int`”, and as “pointer to pointer to
 `const int`”. — *end example*\]
 
 The n-tuple of cv-qualifiers after the first one in the longest
-qualification-decomposition of `T`, that is, cv{}_1, cv{}_2, …, cv{}_n,
-is called the *cv-qualification signature* of `T`.
+qualification-decomposition of `T`, that is,
+$cv{}_1, cv{}_2, \dotsc, cv{}_n$, is called the *cv-qualification
+signature* of `T`.
 
 Two types `T1` and `T2` are *similar* if they have
 qualification-decompositions with the same n such that corresponding Pᵢ
@@ -566,14 +567,14 @@ components are either the same or one is “array of Nᵢ” and the other is
 The *qualification-combined type* of two types `T1` and `T2` is the type
 `T3` similar to `T1` whose qualification-decomposition is such that:
 
-- for every i > 0, cv{}^3ᵢ is the union of cv{}^1ᵢ and cv{}^2ᵢ,
+- for every i > 0, $cv{}^3_i$ is the union of $cv{}^1_i$ and $cv{}^2_i$,
 - if either P¹_i or P²_i is “array of unknown bound of”, P³_i is “array
   of unknown bound of”, otherwise it is P¹_i, and
-- if the resulting cv{}^3ᵢ is different from cv{}^1ᵢ or cv{}^2ᵢ, or the
-  resulting P³_i is different from P¹_i or P²_i, then `const` is added
-  to every cv{}^3ₖ for 0 < k < i,
+- if the resulting $cv{}^3_i$ is different from $cv{}^1_i$ or
+  $cv{}^2_i$, or the resulting P³_i is different from P¹_i or P²_i, then
+  `const` is added to every $cv{}^3_k$ for 0 < k < i,
 
-where cv{}^jᵢ and $P^j_i$ are the components of the
+where $cv{}^j_i$ and $P^j_i$ are the components of the
 qualification-decomposition of `T`j. A prvalue of type `T1` can be
 converted to type `T2` if the qualification-combined type of `T1` and
 `T2` is `T2`.

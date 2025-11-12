@@ -8795,7 +8795,7 @@ template<class R, class F, class... BoundArgs>
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
 and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
-`w₂`, …{}, `w_N`, where N has the value `sizeof...(bound_args)`.
+`w₂`, $\dotsc{}$, `w_N`, where N has the value `sizeof...(bound_args)`.
 
 *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.

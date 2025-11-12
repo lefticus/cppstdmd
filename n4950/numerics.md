@@ -3460,8 +3460,8 @@ integers i, 0 ≤ i < n, distributed according to the discrete probability
 function $$P(i \,|\, p_0, \dotsc, p_{n-1}) = p_i \text{ .}$$
 
 Unless specified otherwise, the distribution parameters are calculated
-as: pₖ = {wₖ / S} for k = 0, …, n - 1, in which the values wₖ, commonly
-known as the *weights* , shall be non-negative, non-NaN, and
+as: $p_k = {w_k / S}$ for k = 0, …, n - 1, in which the values wₖ,
+commonly known as the *weights* , shall be non-negative, non-NaN, and
 non-infinity. Moreover, the following relation shall hold:
 $0 < S = w_0 + \dotsb + w_{n - 1}$.
 
@@ -3731,7 +3731,7 @@ $$p(x \,|\, b_0, \dotsc, b_n, \; \rho_0, \dotsc, \rho_n)
 The n + 1 distribution parameters bᵢ, also known as this distribution’s
 *interval boundaries* , shall satisfy the relation bᵢ < bᵢ₊₁ for
 i = 0, …, n - 1. Unless specified otherwise, the remaining n + 1
-distribution parameters are calculated as ρ_k = {wₖ / S} for
+distribution parameters are calculated as $\rho_k = {w_k / S}$ for
 k = 0, …, n, in which the values wₖ, commonly known as the *weights at
 boundaries* , shall be non-negative, non-NaN, and non-infinity.
 Moreover, the following relation shall hold:

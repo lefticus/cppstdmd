@@ -245,6 +245,33 @@ local function extract_code_macro(text, macro_name)
   return results
 end
 
+-- Check if text is fully converted to Unicode (no LaTeX remaining)
+-- Returns true if 100% Unicode, false if any LaTeX patterns detected
+local function is_fully_converted(text)
+  -- Check for backslash commands (indicates unconverted LaTeX)
+  if text:match("\\") then
+    return false
+  end
+
+  -- Check for complex superscripts (^{...})
+  if text:match("%^{") then
+    return false
+  end
+
+  -- Check for complex subscripts (_{...})
+  if text:match("_{") then
+    return false
+  end
+
+  -- Check for remaining braces (usually indicates LaTeX structures)
+  if text:match("[{}]") then
+    return false
+  end
+
+  -- Text is fully converted
+  return true
+end
+
 -- Try to convert math to Unicode
 local function try_unicode_conversion(text)
   -- Trim whitespace
@@ -426,6 +453,7 @@ function Math(elem)
   -- Only process inline math
   if elem.mathtype == "InlineMath" then
     local text = elem.text
+    local original_text = text  -- Save original for potential revert
 
     -- Special case: Math containing \tcode{} or \texttt{} (code with subscripts/operators)
     -- Examples: $\tcode{\placeholder{C}}_0$, $\texttt{count} \geq \texttt{n}$
@@ -501,8 +529,16 @@ function Math(elem)
     local converted = try_unicode_conversion(text)
 
     if converted then
-      -- Use RawInline to prevent GFM from escaping < and > characters
-      return pandoc.RawInline('markdown', converted)
+      -- All-or-nothing approach: Check if 100% converted to Unicode
+      -- If ANY LaTeX remains, revert to original $...$ form
+      if is_fully_converted(converted) then
+        -- 100% converted - use Unicode version
+        return pandoc.RawInline('markdown', converted)
+      else
+        -- Partial conversion detected - revert to original LaTeX
+        -- This ensures consistency: either fully readable or fully LaTeX for MathJax
+        return pandoc.RawInline('markdown', "$" .. original_text .. "$")
+      end
     end
   end
 
