@@ -204,6 +204,110 @@ cpp-std-convert --build-separate \
 success "n3337 conversion complete"
 
 # ============================================================================
+# Step 8: Convert n4140 (C++14) into n4140 directory
+# ============================================================================
+info "Step 8: Converting C++14 standard (n4140) to Markdown..."
+
+# Check if n4140 directory exists, create if not
+if [ ! -d "n4140" ]; then
+    info "Creating n4140 directory..."
+    mkdir -p n4140
+fi
+
+# Convert using the installed tool, using local draft repo
+info "Building separate markdown files with collision detection and merging..."
+cpp-std-convert --build-separate \
+    --draft-repo "$DRAFT_DIR" \
+    --git-ref n4140 \
+    --toc-depth 3 \
+    -o n4140/ || abort "Failed to convert n4140 standard"
+
+success "n4140 conversion complete"
+
+# ============================================================================
+# Step 9: Convert n4659 (C++17) into n4659 directory
+# ============================================================================
+info "Step 9: Converting C++17 standard (n4659) to Markdown..."
+
+# Check if n4659 directory exists, create if not
+if [ ! -d "n4659" ]; then
+    info "Creating n4659 directory..."
+    mkdir -p n4659
+fi
+
+# Convert using the installed tool, using local draft repo
+info "Building separate markdown files with cross-file linking..."
+cpp-std-convert --build-separate \
+    --draft-repo "$DRAFT_DIR" \
+    --git-ref n4659 \
+    --toc-depth 3 \
+    -o n4659/ || abort "Failed to convert n4659 standard"
+
+success "n4659 conversion complete"
+
+# ============================================================================
+# Step 10: Convert n4861 (C++20) into n4861 directory
+# ============================================================================
+info "Step 10: Converting C++20 standard (n4861) to Markdown..."
+
+# Check if n4861 directory exists, create if not
+if [ ! -d "n4861" ]; then
+    info "Creating n4861 directory..."
+    mkdir -p n4861
+fi
+
+# Convert using the installed tool, using local draft repo
+info "Building separate markdown files with cross-file linking..."
+cpp-std-convert --build-separate \
+    --draft-repo "$DRAFT_DIR" \
+    --git-ref n4861 \
+    --toc-depth 3 \
+    -o n4861/ || abort "Failed to convert n4861 standard"
+
+success "n4861 conversion complete"
+
+# ============================================================================
+# Step 11: Update repo and convert main branch (trunk) into trunk directory
+# ============================================================================
+info "Step 11: Converting latest development version (main branch) to Markdown..."
+
+# Update the repository to get latest changes
+cd "$DRAFT_DIR"
+if git rev-parse --git-dir &>/dev/null; then
+    info "Updating cplusplus/draft repository..."
+    if timeout 10 git fetch --tags 2>/dev/null; then
+        # Checkout main branch
+        git checkout main 2>/dev/null || warn "Could not checkout main branch"
+        # Try to pull latest changes
+        if git symbolic-ref --short HEAD &>/dev/null; then
+            timeout 10 git pull 2>/dev/null || warn "Could not pull latest changes (offline or timeout)"
+        fi
+        success "Repository updated to main branch"
+    else
+        warn "Could not fetch from remote (offline, timeout, or network error)"
+    fi
+else
+    warn "Repository appears corrupted, using existing state"
+fi
+cd "$SCRIPT_DIR"
+
+# Check if trunk directory exists, create if not
+if [ ! -d "trunk" ]; then
+    info "Creating trunk directory..."
+    mkdir -p trunk
+fi
+
+# Convert using the installed tool, using local draft repo at main branch
+info "Building separate markdown files from main branch..."
+cpp-std-convert --build-separate \
+    --draft-repo "$DRAFT_DIR" \
+    --git-ref main \
+    --toc-depth 3 \
+    -o trunk/ || abort "Failed to convert main branch"
+
+success "trunk conversion complete"
+
+# ============================================================================
 # All done!
 # ============================================================================
 echo ""
@@ -215,12 +319,17 @@ info "Summary:"
 echo "  - Virtual environment: venv/"
 echo "  - C++ draft repository: $DRAFT_DIR"
 echo "  - Test results: All passing"
-echo "  - n4950 output: n4950/ (C++23)"
 echo "  - n3337 output: n3337/ (C++11)"
+echo "  - n4140 output: n4140/ (C++14)"
+echo "  - n4659 output: n4659/ (C++17)"
+echo "  - n4861 output: n4861/ (C++20)"
+echo "  - n4950 output: n4950/ (C++23)"
+echo "  - trunk output: trunk/ (C++26 working draft - main branch)"
 echo ""
 info "Next steps:"
 echo "  - Run tests: ./venv/bin/pytest tests/ -v"
 echo "  - Convert a file: cpp-std-convert intro.tex -o intro.md"
 echo "  - Compare versions: diff n3337/class.md n4950/class.md"
+echo "  - Compare evolution: diff n4950/class.md trunk/class.md"
 echo "  - See CLAUDE.md for more commands"
 echo ""
