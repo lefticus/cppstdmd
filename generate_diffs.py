@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import List, Tuple, Dict, Set
 
 
-# Version metadata
+# Version metadata (in chronological order)
 VERSIONS = {
     'n3337': 'C++11',
     'n4140': 'C++14',
@@ -30,16 +30,26 @@ VERSIONS = {
     'trunk': 'C++26 (working draft)',
 }
 
-# Common version pairs to compare
-DEFAULT_PAIRS = [
-    ('n3337', 'n4140'),  # C++11 → C++14
-    ('n4140', 'n4659'),  # C++14 → C++17
-    ('n4659', 'n4861'),  # C++17 → C++20
-    ('n4861', 'n4950'),  # C++20 → C++23
-    ('n4950', 'trunk'),  # C++23 → C++26
-    ('n3337', 'n4950'),  # C++11 → C++23 (major evolution)
-    ('n3337', 'trunk'),  # C++11 → C++26 (complete evolution)
-]
+# Ordered list of version tags for generating pairs
+VERSION_ORDER = ['n3337', 'n4140', 'n4659', 'n4861', 'n4950', 'trunk']
+
+
+def generate_all_version_pairs() -> List[Tuple[str, str]]:
+    """
+    Generate all possible version pairs in chronological order.
+
+    Returns pairs from older to newer versions.
+    Example: (n3337, n4140), (n3337, n4659), ..., (n4950, trunk)
+    """
+    pairs = []
+    for i, from_version in enumerate(VERSION_ORDER):
+        for to_version in VERSION_ORDER[i + 1:]:
+            pairs.append((from_version, to_version))
+    return pairs
+
+
+# Default: Generate all pairs (15 total)
+DEFAULT_PAIRS = generate_all_version_pairs()
 
 
 def find_common_chapters(from_version: str, to_version: str) -> Tuple[Set[str], Set[str], Set[str]]:
@@ -291,9 +301,14 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  ./generate_diffs.py                    # Generate all default version pairs
+  ./generate_diffs.py                    # Generate all 15 version pairs
   ./generate_diffs.py n3337 n4950       # Generate specific version pair
   ./generate_diffs.py --list            # List available versions
+
+By default, generates all possible pairs (15 total):
+  - Adjacent versions: C++11→C++14, C++14→C++17, etc.
+  - Intermediate spans: C++11→C++17, C++14→C++20, etc.
+  - Major evolution: C++11→C++23, C++17→C++26, etc.
         """
     )
     parser.add_argument('from_version', nargs='?', help='Source version (e.g., n3337)')
@@ -307,6 +322,7 @@ Examples:
         print("Available versions:")
         for version, name in VERSIONS.items():
             print(f"  {version:8} - {name}")
+        print(f"\nBy default, generates all {len(DEFAULT_PAIRS)} possible version pairs")
         return 0
 
     output_root = Path(args.output)

@@ -51,6 +51,11 @@ htmlcov/
 /validation_output_fixed/
 validation_results*.json
 
+# Generated files (too large for git)
+/full/
+/diffs/*/
+!/diffs/README.md
+
 # Temporary files
 *.tmp
 .DS_Store
