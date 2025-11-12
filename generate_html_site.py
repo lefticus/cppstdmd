@@ -46,6 +46,23 @@ VERSION_PAIRS = [
     ('n4950', 'trunk', 'C++23', 'C++26', 'cpp23-to-cpp26'),
 ]
 
+# Author branding configuration
+# Update these URLs with your actual social media handles
+AUTHOR_INFO = {
+    'name': 'Jason Turner',
+    'tagline': 'Professional C++ training and code review services',
+    'links': {
+        'twitter': 'https://twitter.com/lefticus',
+        'mastodon': 'https://mastodon.social/@lefticus',  # UPDATE WITH YOUR HANDLE
+        'bluesky': 'https://bsky.app/profile/lefticus.bsky.social',  # UPDATE WITH YOUR HANDLE
+        'linkedin': 'https://linkedin.com/in/jasonturner',  # UPDATE WITH YOUR PROFILE
+        'youtube': 'https://youtube.com/@cppweekly',
+        'github': 'https://github.com/lefticus',
+        'project_github': 'https://github.com/lefticus/cppstd-evolution',
+        'website': 'https://emptycrate.com',
+    }
+}
+
 
 def check_dependencies():
     """Check if required external tools are available."""
@@ -358,6 +375,38 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
 
         header.append(breadcrumb_nav)
 
+        # Author badge (compact header)
+        author_badge = soup.new_tag('div', **{'class': 'author-badge'})
+        author_text = soup.new_tag('span', **{'class': 'author-text'})
+        author_text.string = f'By {AUTHOR_INFO["name"]}'
+        author_badge.append(author_text)
+
+        # Social media icons
+        social_icons = soup.new_tag('span', **{'class': 'social-icons'})
+
+        icon_map = [
+            ('twitter', '🐦', 'Twitter'),
+            ('mastodon', '🐘', 'Mastodon'),
+            ('bluesky', '🦋', 'Bluesky'),
+            ('linkedin', '💼', 'LinkedIn'),
+            ('youtube', '📺', 'YouTube'),
+            ('github', '💻', 'GitHub'),
+            ('website', '🏢', 'emptycrate.com'),
+        ]
+
+        for key, emoji, title in icon_map:
+            icon_link = soup.new_tag('a',
+                href=AUTHOR_INFO['links'][key],
+                target='_blank',
+                rel='noopener noreferrer',
+                title=title)
+            icon_link.string = emoji
+            social_icons.append(icon_link)
+            social_icons.append(' ')
+
+        author_badge.append(social_icons)
+        header.append(author_badge)
+
         # Title section
         title_section = soup.new_tag('div', **{'class': 'title-section'})
         title_h1 = soup.new_tag('h1')
@@ -486,6 +535,73 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         # Insert header at beginning of body
         if soup.body:
             soup.body.insert(0, header)
+
+        # Create and insert footer
+        footer = soup.new_tag('footer', **{'class': 'author-footer'})
+
+        # Footer content
+        footer_content = soup.new_tag('div', **{'class': 'footer-content'})
+
+        # Project attribution
+        project_line = soup.new_tag('p', **{'class': 'footer-project'})
+        project_line.string = f'A project by {AUTHOR_INFO["name"]}'
+        footer_content.append(project_line)
+
+        # Tagline
+        tagline = soup.new_tag('p', **{'class': 'footer-tagline'})
+        tagline.string = AUTHOR_INFO['tagline']
+        footer_content.append(tagline)
+
+        # Links section
+        links_section = soup.new_tag('p', **{'class': 'footer-links'})
+        links_section.append('Connect: ')
+
+        link_items = [
+            ('twitter', 'Twitter'),
+            ('mastodon', 'Mastodon'),
+            ('bluesky', 'Bluesky'),
+            ('linkedin', 'LinkedIn'),
+            ('youtube', 'YouTube'),
+            ('github', 'GitHub'),
+        ]
+
+        for i, (key, label) in enumerate(link_items):
+            if i > 0:
+                links_section.append(' | ')
+            footer_link = soup.new_tag('a',
+                href=AUTHOR_INFO['links'][key],
+                target='_blank',
+                rel='noopener noreferrer')
+            footer_link.string = label
+            links_section.append(footer_link)
+
+        footer_content.append(links_section)
+
+        # More info line
+        more_info = soup.new_tag('p', **{'class': 'footer-more'})
+        more_info.append('More info: ')
+
+        website_link = soup.new_tag('a',
+            href=AUTHOR_INFO['links']['website'],
+            target='_blank',
+            rel='noopener noreferrer')
+        website_link.string = 'emptycrate.com'
+        more_info.append(website_link)
+        more_info.append(' | ')
+
+        project_link = soup.new_tag('a',
+            href=AUTHOR_INFO['links']['project_github'],
+            target='_blank',
+            rel='noopener noreferrer')
+        project_link.string = 'This project on GitHub'
+        more_info.append(project_link)
+
+        footer_content.append(more_info)
+        footer.append(footer_content)
+
+        # Insert footer at end of body
+        if soup.body:
+            soup.body.append(footer)
 
         # Add custom CSS link to head
         if soup.head:
