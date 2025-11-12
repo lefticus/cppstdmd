@@ -216,3 +216,100 @@ The `--git-ref` parameter accepts:
 - SHAs: `abc123def`
 
 Use `--list-tags` to see available C++ standard versions.
+
+## Generating Diffs Between Standard Versions
+
+The `generate_diffs.py` script creates comprehensive diffs between C++ standard versions, useful for understanding language evolution.
+
+### Quick Start
+
+```bash
+# Generate all default version pairs
+./generate_diffs.py
+
+# Generate specific version pair
+./generate_diffs.py n3337 n4950     # C++11 → C++23
+
+# List available versions
+./generate_diffs.py --list
+```
+
+### What Gets Generated
+
+For each version pair (e.g., `n3337_to_n4950/`):
+- **README.md** - Summary with statistics and links to chapter diffs
+- **Per-chapter diffs** (e.g., `class.diff`, `expr.diff`) - Render well on GitHub (<512 KB)
+- **full_standard.diff** - Complete diff of all chapters (for local viewing, ~9 MB)
+
+### Output Structure
+
+```
+diffs/
+  n3337_to_n4140/        # C++11 → C++14
+    README.md            # Summary with new/removed chapters, statistics
+    class.diff           # Individual chapter diffs
+    expr.diff
+    ...
+    full_standard.diff   # Complete standard diff
+  n4950_to_trunk/        # C++23 → C++26 (latest)
+    README.md
+    ...
+```
+
+### Default Version Pairs
+
+The script generates diffs for these pairs by default:
+- `n3337 → n4140` - C++11 → C++14
+- `n4140 → n4659` - C++14 → C++17
+- `n4659 → n4861` - C++17 → C++20
+- `n4861 → n4950` - C++20 → C++23
+- `n4950 → trunk` - C++23 → C++26 (working draft)
+- `n3337 → n4950` - C++11 → C++23 (major evolution)
+- `n3337 → trunk` - C++11 → C++26 (complete evolution)
+
+### Viewing Diffs
+
+**On GitHub:**
+```bash
+# Per-chapter diffs render well (under 512 KB)
+cat diffs/n3337_to_n4950/class.diff
+```
+
+**Locally:**
+```bash
+# View specific chapter diff with pager
+less diffs/n3337_to_n4950/class.diff
+
+# View with side-by-side comparison
+diff -y n3337/class.md n4950/class.md | less
+
+# View full standard diff (warning: large file)
+less diffs/n3337_to_n4950/full_standard.diff
+
+# Use git diff for better formatting
+git diff --no-index --word-diff n3337/class.md n4950/class.md
+```
+
+### Summary File Format
+
+Each `README.md` contains:
+- **New Chapters** - Features added in the new version (e.g., concepts, ranges)
+- **Removed Chapters** - Sections merged or restructured
+- **Modified Chapters Table** - Size/line count changes with percentages
+- **Links** - Direct links to individual chapter diffs
+
+Example output:
+```markdown
+| Chapter | Old Size | New Size | Change | Old Lines | New Lines | Change |
+|---------|----------|----------|--------|-----------|-----------|--------|
+| class   | 95.1 KB  | 183.8 KB | +88.6 KB (+93.2%) | 2,744 | 5,775 | +3,031 (+110.5%) |
+| containers | 215.0 KB | 543.7 KB | +328.7 KB (+152.9%) | 5,681 | 15,358 | +9,677 (+170.3%) |
+```
+
+### Requirements
+
+Diffs require both separate chapter files AND full standard files:
+- **Separate files**: Built by `./setup-and-build.sh` into `n3337/`, `n4950/`, etc.
+- **Full files**: Built by `./setup-and-build.sh` (Step 12) into `full/n3337.md`, etc.
+
+Both are generated automatically when you run `./setup-and-build.sh`.
