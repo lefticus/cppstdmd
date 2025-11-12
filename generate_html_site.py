@@ -43,7 +43,7 @@ VERSION_PAIRS = [
     ('n4140', 'n4659', 'C++14', 'C++17', 'cpp14-to-cpp17'),
     ('n4659', 'n4861', 'C++17', 'C++20', 'cpp17-to-cpp20'),
     ('n4861', 'n4950', 'C++20', 'C++23', 'cpp20-to-cpp23'),
-    ('n4950', 'trunk', 'C++23', 'C++26', 'cpp23-to-cpp26'),
+    ('n4950', 'trunk', 'C++23', 'Trunk', 'cpp23-to-trunk'),
 ]
 
 # Author branding configuration
@@ -62,6 +62,38 @@ AUTHOR_INFO = {
         'website': 'https://emptycrate.com',
     }
 }
+
+# Nerd Font icon mappings (Font Awesome icons from Source Code Pro Nerd Font)
+# See: https://github.com/ryanoasis/nerd-fonts/wiki/Icon-Names-in-Shell
+NERD_FONT_ICONS = {
+    'home': '\uf015',           # fa-home
+    'link': '\uf0c1',           # fa-link
+    'book': '\uf02d',           # fa-book
+    'markdown': '\uf48a',       # fa-markdown
+    'warning': '\uf071',        # fa-exclamation-triangle
+    'twitter': '\uf099',        # fa-twitter (legacy)
+    'mastodon': '\uf4f6',       # fa-mastodon
+    'bluesky': '\uf099',        # fa-twitter (repurpose for bluesky - similar bird)
+    'linkedin': '\uf0e1',       # fa-linkedin
+    'youtube': '\uf167',        # fa-youtube
+    'github': '\uf09b',         # fa-github
+    'website': '\uf0ac',        # fa-globe
+}
+
+
+def create_icon(icon_name, css_class='nf-icon'):
+    """
+    Create a span element with a Nerd Font icon.
+
+    Args:
+        icon_name: Key from NERD_FONT_ICONS dict
+        css_class: CSS class for the icon (default: 'nf-icon')
+
+    Returns:
+        str: HTML span element with the icon
+    """
+    icon_char = NERD_FONT_ICONS.get(icon_name, '\uf128')  # Default to question mark
+    return f'<span class="{css_class}">{icon_char}</span>'
 
 
 def check_dependencies():
@@ -358,7 +390,13 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
 
         # Breadcrumbs
         breadcrumb_nav = soup.new_tag('nav', **{'class': 'breadcrumb'})
-        breadcrumb_nav.append('🏠 ')
+
+        # Add home icon
+        home_icon = soup.new_tag('span', **{'class': 'nf-icon'})
+        home_icon.string = NERD_FONT_ICONS['home']
+        breadcrumb_nav.append(home_icon)
+        breadcrumb_nav.append(' ')
+
         home_link = soup.new_tag('a', href='../../index.html')
         home_link.string = 'Home'
         breadcrumb_nav.append(home_link)
@@ -385,22 +423,27 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         social_icons = soup.new_tag('span', **{'class': 'social-icons'})
 
         icon_map = [
-            ('twitter', '🐦', 'Twitter'),
-            ('mastodon', '🐘', 'Mastodon'),
-            ('bluesky', '🦋', 'Bluesky'),
-            ('linkedin', '💼', 'LinkedIn'),
-            ('youtube', '📺', 'YouTube'),
-            ('github', '💻', 'GitHub'),
-            ('website', '🏢', 'emptycrate.com'),
+            ('twitter', 'twitter', 'Twitter'),
+            ('mastodon', 'mastodon', 'Mastodon'),
+            ('bluesky', 'bluesky', 'Bluesky'),
+            ('linkedin', 'linkedin', 'LinkedIn'),
+            ('youtube', 'youtube', 'YouTube'),
+            ('github', 'github', 'GitHub'),
+            ('website', 'website', 'emptycrate.com'),
         ]
 
-        for key, emoji, title in icon_map:
+        for key, icon_name, title in icon_map:
             icon_link = soup.new_tag('a',
                 href=AUTHOR_INFO['links'][key],
                 target='_blank',
                 rel='noopener noreferrer',
                 title=title)
-            icon_link.string = emoji
+
+            # Create icon span with Nerd Font character
+            icon_span = soup.new_tag('span', **{'class': 'nf-icon'})
+            icon_span.string = NERD_FONT_ICONS[icon_name]
+            icon_link.append(icon_span)
+
             social_icons.append(icon_link)
             social_icons.append(' ')
 
@@ -457,7 +500,12 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
 
         # External links
         links_div = soup.new_tag('div', **{'class': 'external-links'})
-        links_div.append('🔗 ')
+
+        # Add link icon
+        link_icon = soup.new_tag('span', **{'class': 'nf-icon'})
+        link_icon.string = NERD_FONT_ICONS['link']
+        links_div.append(link_icon)
+        links_div.append(' ')
 
         eelis_link = soup.new_tag('a',
             href=f'https://eel.is/c++draft/{context["stable_name"]}',
@@ -482,7 +530,12 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
 
         if from_timsong or to_timsong:
             archived_div = soup.new_tag('div', **{'class': 'external-links'})
-            archived_div.append('📚 Archived: ')
+
+            # Add book icon
+            book_icon = soup.new_tag('span', **{'class': 'nf-icon'})
+            book_icon.string = NERD_FONT_ICONS['book']
+            archived_div.append(book_icon)
+            archived_div.append(' Archived: ')
 
             if from_timsong:
                 from_archived_link = soup.new_tag('a',
@@ -507,7 +560,12 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
 
         # Markdown source links
         md_links_div = soup.new_tag('div', **{'class': 'external-links'})
-        md_links_div.append('📝 Markdown: ')
+
+        # Add markdown icon
+        markdown_icon = soup.new_tag('span', **{'class': 'nf-icon'})
+        markdown_icon.string = NERD_FONT_ICONS['markdown']
+        md_links_div.append(markdown_icon)
+        md_links_div.append(' Markdown: ')
 
         from_md_link = soup.new_tag('a',
             href=get_github_markdown_url(context['from_tag'], context['stable_name']),
@@ -529,7 +587,13 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         # Large file warning
         if size_kb > 100:
             warning_div = soup.new_tag('div', **{'class': 'warning large-file-warning'})
-            warning_div.string = f'⚠️ Large diff ({size_kb} KB) - rendering may be slow on some devices'
+
+            # Add warning icon
+            warning_icon = soup.new_tag('span', **{'class': 'nf-icon'})
+            warning_icon.string = NERD_FONT_ICONS['warning']
+            warning_div.append(warning_icon)
+            warning_div.append(f' Large diff ({size_kb} KB) - rendering may be slow on some devices')
+
             header.append(warning_div)
 
         # Insert header at beginning of body
@@ -853,6 +917,17 @@ def copy_static_assets(output_path: Path):
     if Path('templates/js/navigation.js').exists():
         shutil.copy('templates/js/navigation.js', js_dir / 'navigation.js')
         print(f"  ✓ Copied navigation.js")
+
+    # Copy fonts directory
+    fonts_src = Path('templates/fonts')
+    if fonts_src.exists():
+        fonts_dest = output_path / 'fonts'
+        fonts_dest.mkdir(exist_ok=True, parents=True)
+
+        # Copy all .woff2 files
+        for font_file in fonts_src.glob('*.woff2'):
+            shutil.copy(font_file, fonts_dest / font_file.name)
+            print(f"  ✓ Copied {font_file.name}")
 
     # Create .nojekyll file to disable Jekyll processing
     nojekyll_file = output_path / '.nojekyll'
