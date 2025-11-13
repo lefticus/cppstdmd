@@ -599,15 +599,29 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
         timeline_label.string = 'Evolution Timeline: '
         timeline_nav.append(timeline_label)
 
+        # Get availability lookup from context (pre-built to avoid race conditions)
+        availability = context.get('stable_name_availability', {})
+
         for i, (from_tag, to_tag, from_name, to_name, slug) in enumerate(VERSION_PAIRS):
             if i > 0:
                 timeline_nav.append(' | ')
 
-            timeline_link = soup.new_tag('a',
-                href=f'../{slug}/{context["stable_name_file"]}.html',
-                **{'class': 'active' if slug == context['version_slug'] else ''})
-            timeline_link.string = f'{from_name}→{to_name}'
-            timeline_nav.append(timeline_link)
+            # Check if this version pair has this stable name (from pre-built lookup)
+            is_available = availability.get(slug, False)
+            is_current = slug == context['version_slug']
+
+            if is_available or is_current:
+                # Create link for available diffs or current version
+                timeline_link = soup.new_tag('a',
+                    href=f'../{slug}/{context["stable_name_file"]}.html',
+                    **{'class': 'active' if is_current else ''})
+                timeline_link.string = f'{from_name}→{to_name}'
+                timeline_nav.append(timeline_link)
+            else:
+                # Create disabled span for non-existent diffs
+                disabled_span = soup.new_tag('span', **{'class': 'disabled'})
+                disabled_span.string = f'{from_name}→{to_name}'
+                timeline_nav.append(disabled_span)
 
         header.append(timeline_nav)
 
@@ -862,6 +876,34 @@ def collect_stable_names(diff_dir: Path, tier: int = 1, limit: Optional[int] = N
     return stable_names
 
 
+def build_stable_name_availability(stable_name: str,
+                                   version_pairs: List[Tuple],
+                                   base_diffs_path: Path) -> Dict[str, bool]:
+    """Check which version pairs have this stable name by scanning .diff files.
+
+    This pre-builds a lookup table to avoid race conditions during parallel
+    HTML generation. Checks for the existence of .diff files (which are already
+    generated) rather than .html files (which may be concurrently created).
+
+    Args:
+        stable_name: The stable name to check (e.g., "concepts", "alg.copy")
+        version_pairs: List of version pair tuples from VERSION_PAIRS
+        base_diffs_path: Base path to diffs directory (e.g., Path('diffs'))
+
+    Returns:
+        Dict mapping slug → exists (bool)
+        Example: {'cpp11-to-cpp14': True, 'cpp14-to-cpp17': False, ...}
+    """
+    availability = {}
+    safe_name = sanitize_filename(stable_name)
+
+    for from_tag, to_tag, from_name, to_name, slug in version_pairs:
+        diff_file = base_diffs_path / f'{from_tag}_to_{to_tag}' / 'by_stable_name' / f'{safe_name}.diff'
+        availability[slug] = diff_file.exists()
+
+    return availability
+
+
 def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
     """Worker function to generate a single diff HTML (for parallel execution).
 
@@ -991,6 +1033,13 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     # Prepare tasks for parallel execution
     tasks = []
     for item in stable_names:
+        # Build availability lookup to avoid race conditions during parallel processing
+        stable_name_availability = build_stable_name_availability(
+            stable_name=item['name'],
+            version_pairs=VERSION_PAIRS,
+            base_diffs_path=output_path.parent / 'diffs'
+        )
+
         context = {
             'title': f'[{item["name"]}] - {from_name} → {to_name}',
             'stable_name': item['name'],
@@ -1002,7 +1051,8 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
             'version_slug': slug,
             'file_size_kb': item['size_kb'],
             'line_count': item['line_count'],
-            'generated_date': datetime.now().strftime('%Y-%m-%d')
+            'generated_date': datetime.now().strftime('%Y-%m-%d'),
+            'stable_name_availability': stable_name_availability
         }
         # Get templates directory from env.loader
         templates_dir = Path(env.loader.searchpath[0])

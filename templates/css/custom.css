@@ -351,6 +351,15 @@ code {
     font-weight: 600;
 }
 
+.version-timeline span.disabled {
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    color: var(--text-muted);
+    opacity: 0.5;
+    cursor: not-allowed;
+    font-style: italic;
+}
+
 /* Overview Page */
 .overview-main {
     max-width: 1200px;
