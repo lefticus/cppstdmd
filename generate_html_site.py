@@ -866,7 +866,7 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
                          to_name: str, slug: str, output_path: Path,
                          env: Environment, tier: int = 1,
                          limit: Optional[int] = None,
-                         max_workers: Optional[int] = None) -> int:
+                         max_workers: Optional[int] = None) -> Dict:
     """Generate pages for one version pair.
 
     Args:
@@ -882,7 +882,7 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
         max_workers: Number of parallel workers (defaults to CPU count)
 
     Returns:
-        Number of diffs successfully generated
+        Dictionary with statistics (count, total_size_kb, total_lines, sections, etc.)
     """
     print(f"\n📦 Processing {from_name} → {to_name}...")
 
@@ -890,7 +890,16 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
 
     if not diff_dir.exists():
         print(f"  ⚠️  Directory not found: {diff_dir}")
-        return 0
+        return {
+            'count': 0,
+            'total_size_kb': 0,
+            'total_lines': 0,
+            'avg_size_kb': 0,
+            'sections': [],
+            'from_name': from_name,
+            'to_name': to_name,
+            'slug': slug
+        }
 
     # Collect Tier 1 stable names
     stable_names = collect_stable_names(diff_dir, tier=tier, limit=limit)
@@ -898,7 +907,16 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     print(f"  Found {len(stable_names)} Tier {tier} stable names")
 
     if not stable_names:
-        return 0
+        return {
+            'count': 0,
+            'total_size_kb': 0,
+            'total_lines': 0,
+            'avg_size_kb': 0,
+            'sections': [],
+            'from_name': from_name,
+            'to_name': to_name,
+            'slug': slug
+        }
 
     # Generate overview page
     template = env.get_template('version_overview.html')
@@ -982,7 +1000,35 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
                 print(f"      └─ exception: {e}")
 
     print(f"  ✓ Successfully generated {success_count}/{len(stable_names)} diffs")
-    return success_count
+
+    # Calculate statistics
+    total_size_kb = sum(item['size_kb'] for item in stable_names)
+    total_lines = sum(item['line_count'] for item in stable_names)
+    avg_size_kb = round(total_size_kb / len(stable_names), 1) if stable_names else 0
+
+    # Build sections list for statistics
+    sections = [
+        {
+            'name': item['name'],
+            'size_kb': item['size_kb'],
+            'lines': item['line_count'],
+            'from_name': from_name,
+            'to_name': to_name,
+            'slug': slug
+        }
+        for item in stable_names
+    ]
+
+    return {
+        'count': success_count,
+        'total_size_kb': round(total_size_kb, 1),
+        'total_lines': total_lines,
+        'avg_size_kb': avg_size_kb,
+        'sections': sections,
+        'from_name': from_name,
+        'to_name': to_name,
+        'slug': slug
+    }
 
 
 def generate_landing_page(output_path: Path, env: Environment, stats: Dict):
@@ -1005,6 +1051,75 @@ def generate_landing_page(output_path: Path, env: Environment, stats: Dict):
     index_file = output_path / 'index.html'
     index_file.write_text(content, encoding='utf-8')
     print(f"  ✓ Generated: {index_file}")
+
+
+def generate_statistics_page(output_path: Path, env: Environment, stats: Dict):
+    """Generate the statistics page with metrics and insights.
+
+    Args:
+        output_path: Base output directory
+        env: Jinja2 environment
+        stats: Dictionary with statistics about generated pages
+    """
+    print("\n📊 Generating statistics page...")
+
+    # Add custom filter for number formatting (must be before template load)
+    def format_number(value):
+        """Format number with thousands separator."""
+        try:
+            return f"{int(value):,}"
+        except (ValueError, TypeError):
+            return str(value)
+
+    env.filters['format_number'] = format_number
+
+    # Calculate aggregate statistics
+    all_sections = []
+    total_size_kb = 0
+    total_lines = 0
+
+    for pair_stats in stats.get('version_pairs', []):
+        total_size_kb += pair_stats.get('total_size_kb', 0)
+        total_lines += pair_stats.get('total_lines', 0)
+
+        # Collect all sections for top sections list
+        for section in pair_stats.get('sections', []):
+            all_sections.append(section)
+
+    # Sort sections by size (descending)
+    top_sections = sorted(all_sections, key=lambda x: x['size_kb'], reverse=True)
+
+    # Find largest single diff
+    largest_diff = top_sections[0] if top_sections else None
+
+    # Find most active transition (by count)
+    most_active = max(stats.get('version_pairs', []),
+                     key=lambda x: x.get('count', 0),
+                     default={})
+
+    # Find largest transition (by total size)
+    largest_transition = max(stats.get('version_pairs', []),
+                           key=lambda x: x.get('total_size_kb', 0),
+                           default={})
+
+    # Load template after adding filters
+    template = env.get_template('statistics.html')
+
+    content = template.render(
+        version_pairs=stats.get('version_pairs', []),
+        total_diffs=stats.get('total_diffs', 0),
+        total_size_mb=round(total_size_kb / 1024, 1),
+        total_lines=total_lines,
+        top_sections=top_sections,
+        largest_diff=largest_diff,
+        most_active=most_active,
+        largest_transition=largest_transition,
+        generated_date=stats.get('generated_date', 'recently')
+    )
+
+    stats_file = output_path / 'statistics.html'
+    stats_file.write_text(content, encoding='utf-8')
+    print(f"  ✓ Generated: {stats_file}")
 
 
 def copy_static_assets(output_path: Path):
@@ -1206,22 +1321,20 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
     }
 
     for from_tag, to_tag, from_name, to_name, slug in pairs_to_process:
-        count = generate_version_pair(
+        pair_stats = generate_version_pair(
             from_tag, to_tag, from_name, to_name, slug,
             output_path, env, tier=tier, limit=test_limit,
             max_workers=max_workers
         )
 
-        stats['total_diffs'] += count
-        stats['version_pairs'].append({
-            'from_name': from_name,
-            'to_name': to_name,
-            'slug': slug,
-            'count': count
-        })
+        stats['total_diffs'] += pair_stats['count']
+        stats['version_pairs'].append(pair_stats)
 
     # Generate landing page
     generate_landing_page(output_path, env, stats)
+
+    # Generate statistics page
+    generate_statistics_page(output_path, env, stats)
 
     # Copy static assets
     copy_static_assets(output_path)

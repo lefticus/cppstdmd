@@ -23,8 +23,8 @@
         // Enhance external links
         enhanceExternalLinks();
 
-        // Add theme toggle (optional)
-        // addThemeToggle();
+        // Add theme toggle
+        addThemeToggle();
     }
 
     /**
@@ -43,6 +43,16 @@
                 if (homeLink) {
                     window.location.href = homeLink.href;
                 }
+            }
+
+            // 'j' - Next version in timeline
+            if (e.key === 'j' || e.key === 'J') {
+                navigateTimeline('next');
+            }
+
+            // 'k' - Previous version in timeline
+            if (e.key === 'k' || e.key === 'K') {
+                navigateTimeline('previous');
             }
 
             // '/' - Focus search (if available)
@@ -64,6 +74,42 @@
                 }
             }
         });
+    }
+
+    /**
+     * Navigate through version timeline (j/k navigation)
+     */
+    function navigateTimeline(direction) {
+        const timeline = document.querySelector('.version-timeline');
+        if (!timeline) return;
+
+        const links = Array.from(timeline.querySelectorAll('a'));
+        if (links.length === 0) return;
+
+        // Find the active link
+        const activeLink = links.find(link => link.classList.contains('active'));
+
+        if (!activeLink) return;
+
+        const currentIndex = links.indexOf(activeLink);
+        let targetIndex;
+
+        if (direction === 'next') {
+            targetIndex = currentIndex + 1;
+            if (targetIndex >= links.length) {
+                targetIndex = 0; // Wrap around to first
+            }
+        } else if (direction === 'previous') {
+            targetIndex = currentIndex - 1;
+            if (targetIndex < 0) {
+                targetIndex = links.length - 1; // Wrap around to last
+            }
+        }
+
+        const targetLink = links[targetIndex];
+        if (targetLink && targetLink.href) {
+            window.location.href = targetLink.href;
+        }
     }
 
     /**
@@ -193,7 +239,7 @@
     }
 
     /**
-     * Add theme toggle (dark mode) - Optional
+     * Add theme toggle (dark mode)
      */
     function addThemeToggle() {
         // Check if user has a theme preference
@@ -202,41 +248,30 @@
         // Create toggle button
         const toggleBtn = document.createElement('button');
         toggleBtn.id = 'theme-toggle';
-        toggleBtn.innerHTML = currentTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-        toggleBtn.title = 'Toggle dark mode';
-        toggleBtn.style.cssText = `
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 0.75rem;
-            border: none;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-            font-size: 1.5rem;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        `;
+        toggleBtn.setAttribute('aria-label', 'Toggle dark mode');
+        toggleBtn.title = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+        toggleBtn.innerHTML = currentTheme === 'dark'
+            ? '<i class="fa-solid fa-sun"></i>'
+            : '<i class="fa-solid fa-moon"></i>';
 
         toggleBtn.addEventListener('click', function() {
-            const newTheme = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
+            const isDark = document.body.classList.contains('dark-theme');
+            const newTheme = isDark ? 'light' : 'dark';
+
             document.body.classList.toggle('dark-theme');
-            toggleBtn.innerHTML = newTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+            toggleBtn.innerHTML = newTheme === 'dark'
+                ? '<i class="fa-solid fa-sun"></i>'
+                : '<i class="fa-solid fa-moon"></i>';
+            toggleBtn.title = newTheme === 'dark'
+                ? 'Switch to light mode'
+                : 'Switch to dark mode';
+
             localStorage.setItem('theme', newTheme);
-        });
-
-        toggleBtn.addEventListener('mouseenter', function() {
-            toggleBtn.style.transform = 'scale(1.1)';
-        });
-
-        toggleBtn.addEventListener('mouseleave', function() {
-            toggleBtn.style.transform = 'scale(1)';
         });
 
         document.body.appendChild(toggleBtn);
 
-        // Apply saved theme
+        // Apply saved theme on page load
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-theme');
         }
@@ -283,6 +318,8 @@
     // Log keyboard shortcuts hint
     console.log('%cKeyboard Shortcuts:', 'font-weight: bold; font-size: 14px');
     console.log('  h - Go to home page');
+    console.log('  j - Next version in timeline');
+    console.log('  k - Previous version in timeline');
     console.log('  / - Focus search (on overview pages)');
     console.log('  Esc - Clear search');
 

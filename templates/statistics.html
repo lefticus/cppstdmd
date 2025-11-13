@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Statistics and metrics for C++ Standard Evolution Viewer">
+    <meta name="theme-color" content="#00a500">
+    <title>Statistics - C++ Standard Evolution Viewer</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cppstdmd.com/statistics.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Statistics - C++ Standard Evolution Viewer">
+    <meta property="og:description" content="View statistics and metrics about C++ standard evolution">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cppstdmd.com/statistics.html">
+    <meta property="og:site_name" content="C++ Standard Evolution Viewer">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Statistics - C++ Standard Evolution Viewer">
+    <meta name="twitter:description" content="View statistics and metrics about C++ standard evolution">
+    <meta name="twitter:creator" content="@lefticus">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css"
+          integrity="sha384-iBvSlI3tNrrSIy7s6mvLg+5B2Z/QXbR4L0Pzg1nRf8zkXrz5JF316MLm2igMIpi2"
+          crossorigin="anonymous">
+    <!-- Font Awesome 7 Free -->
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+    <link rel="stylesheet" href="css/solid.min.css">
+    <link rel="stylesheet" href="css/brands.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% include '_author_banner.html' %}
+
+    <header class="page-header">
+        <nav class="breadcrumb">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a> &gt;
+            <span class="current">Statistics</span>
+        </nav>
+
+        <h1>C++ Standard Evolution Statistics</h1>
+        <p class="subtitle">Metrics and insights from analyzing changes across C++ versions</p>
+    </header>
+
+    <main class="landing-main" id="main-content">
+        <section class="statistics">
+            <h2>Overall Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">{{ total_diffs }}</div>
+                    <div class="stat-label">Total Sections Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ version_pairs | length }}</div>
+                    <div class="stat-label">Version Transitions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ total_size_mb }}</div>
+                    <div class="stat-label">Total Diff Size (MB)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ total_lines | format_number }}</div>
+                    <div class="stat-label">Total Changed Lines</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="version-breakdown">
+            <h2>Breakdown by Version Transition</h2>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Transition</th>
+                        <th>Sections</th>
+                        <th>Total Size</th>
+                        <th>Changed Lines</th>
+                        <th>Avg Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pair in version_pairs %}
+                    <tr>
+                        <td>
+                            <a href="versions/{{ pair.slug }}.html">
+                                <strong>{{ pair.from_name }} &rarr; {{ pair.to_name }}</strong>
+                            </a>
+                        </td>
+                        <td>{{ pair.count }}</td>
+                        <td>{{ pair.total_size_kb }} KB</td>
+                        <td>{{ pair.total_lines | format_number }}</td>
+                        <td>{{ pair.avg_size_kb }} KB</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="top-sections">
+            <h2>Most Changed Sections (by size)</h2>
+            <p class="section-description">
+                These sections had the largest diffs across all version transitions, indicating
+                significant evolution in these areas of the standard.
+            </p>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Versions</th>
+                        <th>Size</th>
+                        <th>Lines</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for section in top_sections[:20] %}
+                    <tr>
+                        <td>
+                            <code>[{{ section.name }}]</code>
+                        </td>
+                        <td>
+                            <a href="versions/{{ section.slug }}.html">
+                                {{ section.from_name }} &rarr; {{ section.to_name }}
+                            </a>
+                        </td>
+                        <td>{{ section.size_kb }} KB</td>
+                        <td>{{ section.lines }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="insights">
+            <h2>Insights</h2>
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <h3><i class="fa-solid fa-trophy"></i> Largest Single Diff</h3>
+                    <p>
+                        <code>[{{ largest_diff.name }}]</code> in
+                        <a href="versions/{{ largest_diff.slug }}.html">{{ largest_diff.from_name }} &rarr; {{ largest_diff.to_name }}</a>
+                    </p>
+                    <p class="insight-stat">{{ largest_diff.size_kb }} KB, {{ largest_diff.lines }} lines</p>
+                </div>
+
+                <div class="insight-card">
+                    <h3><i class="fa-solid fa-chart-line"></i> Most Active Transition</h3>
+                    <p>
+                        <a href="versions/{{ most_active.slug }}.html">{{ most_active.from_name }} &rarr; {{ most_active.to_name }}</a>
+                    </p>
+                    <p class="insight-stat">{{ most_active.count }} sections changed</p>
+                </div>
+
+                <div class="insight-card">
+                    <h3><i class="fa-solid fa-fire"></i> Largest Transition</h3>
+                    <p>
+                        <a href="versions/{{ largest_transition.slug }}.html">{{ largest_transition.from_name }} &rarr; {{ largest_transition.to_name }}</a>
+                    </p>
+                    <p class="insight-stat">{{ largest_transition.total_size_kb }} KB total changes</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>About These Statistics</h2>
+            <p>
+                These statistics are generated from analyzing Tier 1 sections (0-1 dots in stable name)
+                across all version transitions. Tier 1 sections represent major library components and
+                language features, making them ideal for understanding how C++ evolved.
+            </p>
+            <p>
+                <strong>Note:</strong> Diff sizes and line counts reflect the unified diff format, which
+                includes context lines and metadata. Larger diffs typically indicate more substantial
+                changes or additions to that section of the standard.
+            </p>
+        </section>
+    </main>
+
+    {% include '_footer.html' %}
+
+    <script src="js/navigation.js"></script>
+</body>
+</html>
