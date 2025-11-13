@@ -17,6 +17,7 @@ Options:
 """
 
 import argparse
+import json
 import os
 import re
 import shutil
@@ -320,6 +321,73 @@ def count_diff_lines(diff_file: Path) -> int:
         return count
     except Exception:
         return 0
+
+
+def extract_diff_keywords(diff_file: Path) -> List[str]:
+    """Extract C++ keywords, types, and identifiers from diff content.
+
+    Args:
+        diff_file: Path to .diff file
+
+    Returns:
+        List of unique keywords found in changed lines (max 150)
+    """
+    import re
+
+    try:
+        content = diff_file.read_text(encoding='utf-8', errors='ignore')
+    except Exception:
+        return []
+
+    keywords = set()
+
+    # Extract changed lines only (+ or - markers)
+    for line in content.split('\n'):
+        if line.startswith('+') or line.startswith('-'):
+            # Skip metadata lines
+            if line.startswith('+++') or line.startswith('---'):
+                continue
+
+            clean_line = line[1:].strip()
+
+            # Extract C++ identifiers: [A-Za-z_][A-Za-z0-9_]*
+            identifiers = re.findall(r'\b[A-Za-z_][A-Za-z0-9_]*\b', clean_line)
+            keywords.update(identifiers)
+
+    # Filter out very common words and single characters
+    stop_words = {'the', 'and', 'for', 'this', 'that', 'with', 'from', 'have',
+                  'are', 'was', 'were', 'been', 'has', 'had', 'can', 'may', 'will'}
+    keywords = {k for k in keywords if len(k) > 2 and k.lower() not in stop_words}
+
+    # Limit to 150 most frequent keywords
+    return sorted(list(keywords))[:150]
+
+
+def generate_search_index(stable_names: List[Dict], output_dir: Path, slug: str):
+    """Generate JSON search index with keywords for each stable name.
+
+    Args:
+        stable_names: List of dicts with 'name' and 'path' keys
+        output_dir: Directory to write search index JSON
+        slug: Version pair slug (e.g., 'cpp11-to-cpp14')
+    """
+    search_index = []
+
+    print(f"  Generating search index...")
+    for item in stable_names:
+        keywords = extract_diff_keywords(item['path'])
+        search_index.append({
+            'name': item['name'],
+            'keywords': keywords
+        })
+
+    # Write JSON file
+    index_file = output_dir / f'{slug}_search_index.json'
+    index_file.write_text(json.dumps(search_index), encoding='utf-8')
+
+    # Report size
+    size_kb = index_file.stat().st_size / 1024
+    print(f"  ✓ Generated search index: {len(search_index)} sections, {size_kb:.1f} KB")
 
 
 def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> bool:
@@ -817,6 +885,9 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     overview_file = version_dir / f'{slug}.html'
     overview_file.write_text(content, encoding='utf-8')
     print(f"  ✓ Generated overview: {overview_file}")
+
+    # Generate search index
+    generate_search_index(stable_names, version_dir, slug)
 
     # Generate individual diff pages in parallel
     diff_output_dir = output_path / 'diffs' / slug

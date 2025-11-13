@@ -479,6 +479,42 @@ code {
     margin-left: 1rem;
 }
 
+/* Content match indicator */
+.section-item.content-match {
+    border-left: 4px solid var(--success-color);
+    position: relative;
+}
+
+.section-item.content-match::before {
+    content: '\uf002 ';
+    font-family: 'Source Code Pro Nerd Font', monospace;
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--success-color);
+    opacity: 0.8;
+}
+
+.section-item.content-match .section-header h3 a {
+    color: var(--success-color);
+}
+
+/* Animate content match appearance */
+.section-item.content-match {
+    animation: contentMatchFade 0.3s ease-in-out;
+}
+
+@keyframes contentMatchFade {
+    from {
+        border-left-color: transparent;
+    }
+    to {
+        border-left-color: var(--success-color);
+    }
+}
+
 .no-results {
     text-align: center;
     padding: 3rem;

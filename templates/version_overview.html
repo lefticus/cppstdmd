@@ -11,7 +11,7 @@
 <body>
     <header class="page-header">
         <nav class="breadcrumb">
-            <a href="../index.html">🏠 Home</a> &gt;
+            <a href="../index.html"><span class="nf-icon"></span> Home</a> &gt;
             <span class="current">{{ from_name }} → {{ to_name }}</span>
         </nav>
 
@@ -32,7 +32,7 @@
 
     <main class="overview-main">
         <div class="controls">
-            <input type="text" id="search-input" placeholder="Search sections... (e.g., 'array', 'copy', 'ranges')" />
+            <input type="text" id="search-input" placeholder="Search sections (name or content, min 3 chars)..." autocomplete="off" />
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="all">All ({{ stable_names | length }})</button>
                 <button class="filter-btn" data-filter="small">Small Changes</button>
@@ -85,33 +85,81 @@
     </footer>
 
     <script>
-        // Search functionality
+        // Search functionality with content-based search
         const searchInput = document.getElementById('search-input');
         const sectionsList = document.getElementById('sections-list');
         const noResults = document.getElementById('no-results');
         const filterButtons = document.querySelectorAll('.filter-btn');
         let currentFilter = 'all';
 
+        // Search index (loaded on demand)
+        let searchIndex = [];
+        let indexLoaded = false;
+
+        // Load search index (lazy)
+        function loadSearchIndex() {
+            if (indexLoaded) return Promise.resolve();
+
+            const slug = '{{ slug }}';
+            return fetch(`${slug}_search_index.json`)
+                .then(r => r.json())
+                .then(data => {
+                    searchIndex = data;
+                    indexLoaded = true;
+                    console.log(`✓ Loaded search index: ${searchIndex.length} sections`);
+                })
+                .catch(err => {
+                    console.warn('Failed to load search index:', err);
+                    searchIndex = [];
+                });
+        }
+
         function filterSections() {
-            const searchTerm = searchInput.value.toLowerCase();
+            const searchTerm = searchInput.value.toLowerCase().trim();
             const items = sectionsList.querySelectorAll('.section-item');
             let visibleCount = 0;
 
             items.forEach(item => {
                 const name = item.dataset.name.toLowerCase();
                 const size = parseFloat(item.dataset.size);
-                const matchesSearch = name.includes(searchTerm);
+
+                // Name-based search (always active)
+                let nameMatch = !searchTerm || name.includes(searchTerm);
+                let contentMatch = false;
+
+                // Content search (only if ≥3 characters and index is loaded)
+                if (searchTerm.length >= 3 && indexLoaded) {
+                    const indexEntry = searchIndex.find(e => e.name === item.dataset.name);
+                    if (indexEntry) {
+                        contentMatch = indexEntry.keywords.some(k =>
+                            k.toLowerCase().includes(searchTerm)
+                        );
+                    }
+                }
+
+                const matchesSearch = nameMatch || contentMatch;
+
+                // Size filter
                 const matchesFilter =
                     currentFilter === 'all' ||
                     (currentFilter === 'small' && size < 10) ||
                     (currentFilter === 'medium' && size >= 10 && size < 50) ||
                     (currentFilter === 'large' && size >= 50);
 
+                // Show/hide item
                 if (matchesSearch && matchesFilter) {
-                    item.style.display = 'block';
+                    item.style.display = 'flex';
                     visibleCount++;
+
+                    // Visual indicator for content matches
+                    if (contentMatch && !nameMatch) {
+                        item.classList.add('content-match');
+                    } else {
+                        item.classList.remove('content-match');
+                    }
                 } else {
                     item.style.display = 'none';
+                    item.classList.remove('content-match');
                 }
             });
 
@@ -121,11 +169,21 @@
                 sectionsList.style.display = 'none';
             } else {
                 noResults.style.display = 'none';
-                sectionsList.style.display = 'block';
+                sectionsList.style.display = 'grid';
             }
         }
 
-        searchInput.addEventListener('input', filterSections);
+        // Event listeners
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.trim();
+
+            // Load index on first meaningful search
+            if (searchTerm.length >= 3 && !indexLoaded) {
+                loadSearchIndex().then(filterSections);
+            } else {
+                filterSections();
+            }
+        });
 
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -138,6 +196,9 @@
                 filterSections();
             });
         });
+
+        // Initial state
+        filterSections();
     </script>
 
     <script src="../js/navigation.js"></script>
