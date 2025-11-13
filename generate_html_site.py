@@ -685,6 +685,14 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
         if soup.body and footer_soup.footer:
             soup.body.append(footer_soup.footer)
 
+        # Update page title
+        if soup.title:
+            soup.title.string = context.get('title', 'C++ Standard Diff')
+        elif soup.head:
+            title_tag = soup.new_tag('title')
+            title_tag.string = context.get('title', 'C++ Standard Diff')
+            soup.head.insert(0, title_tag)
+
         # Add CSS links to head
         if soup.head:
             # Add Font Awesome CSS
