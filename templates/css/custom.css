@@ -476,6 +476,7 @@ code {
 .section-item.content-match {
     border-left: 4px solid var(--success-color);
     position: relative;
+    padding-left: 3rem; /* Make room for the magnifying glass icon */
 }
 
 .section-item.content-match::before {
@@ -483,7 +484,7 @@ code {
     font-family: 'Font Awesome 7 Free';
     font-weight: 900;
     position: absolute;
-    left: 8px;
+    left: 1rem; /* Position icon in the extra padding space */
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.2rem;
