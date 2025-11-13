@@ -158,4 +158,19 @@ MIT License
 
 ## Contributing
 
-This is a personal project by Jason Turner. Contributions and suggestions are welcome!
+This is a personal project by Jason Turner. Bug reports and suggestions are welcome. PR's are will be handled by Claude, see below.
+
+# Claude Usage
+
+Note: this project is 100% coded by Claude. This is partially an experiment by myself to learn what the limitations and successes are
+
+Lessons learned so far:
+
+1. Make sure you have the tool generate tests.
+2. Make sure the tool runs the tests (even with a single script to generate all the things it will work around me and run things on its own!)
+3. I'm still having problems with conversation compaction and it forgetting important details
+4. About every 3 days of work Claude will generate so much technical debt that it can no longer effectively generate new features or fix bugs
+5. When Claude reaches that point, I have to tell it to stop (from a fresh context window) and work on paying down technical debt
+   1. Go into planning mode
+   2. "Exhaustively search for code improvements and deduplications you can do. THANK HARDER"
+
