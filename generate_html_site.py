@@ -25,6 +25,7 @@ import subprocess
 import sys
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -59,7 +60,7 @@ AUTHOR_INFO = {
         'linkedin': 'https://linkedin.com/in/jasonturner',  # UPDATE WITH YOUR PROFILE
         'youtube': 'https://youtube.com/@cppweekly',
         'github': 'https://github.com/lefticus',
-        'project_github': 'https://github.com/lefticus/cppstd-evolution',
+        'project_github': 'https://github.com/lefticus/cppstdmd',
         'website': 'https://emptycrate.com',
     }
 }
@@ -432,7 +433,49 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> boo
         return False
 
 
-def inject_navigation(html_file: Path, context: Dict) -> bool:
+def create_author_banner(soup):
+    """Create the author banner that appears at the top of every page."""
+    banner = soup.new_tag('div', **{'class': 'author-banner'})
+    banner_content = soup.new_tag('div', **{'class': 'author-banner-content'})
+
+    # Author name
+    author_name = soup.new_tag('span', **{'class': 'author-name'})
+    author_name.string = f'From {AUTHOR_INFO["name"]}'
+    banner_content.append(author_name)
+
+    # Social links
+    author_links = soup.new_tag('div', **{'class': 'author-links'})
+
+    icon_map = [
+        ('twitter', 'twitter', 'Twitter/X'),
+        ('mastodon', 'mastodon', 'Mastodon'),
+        ('bluesky', 'bluesky', 'Bluesky'),
+        ('linkedin', 'linkedin', 'LinkedIn'),
+        ('youtube', 'youtube', 'YouTube'),
+        ('github', 'github', 'GitHub'),
+        ('website', 'website', 'Website'),
+    ]
+
+    for key, icon_name, title in icon_map:
+        icon_link = soup.new_tag('a',
+            href=AUTHOR_INFO['links'][key],
+            target='_blank',
+            rel='noopener noreferrer',
+            title=title)
+
+        icon_elem = soup.new_tag('i')
+        icon_elem['class'] = FONT_AWESOME_ICONS[icon_name].split()
+        icon_link.append(icon_elem)
+
+        author_links.append(icon_link)
+
+    banner_content.append(author_links)
+    banner.append(banner_content)
+
+    return banner
+
+
+def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
     """Inject custom navigation into generated HTML.
 
     This post-processes the diff2html output to add:
@@ -444,6 +487,7 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
     Args:
         html_file: Path to HTML file to modify
         context: Dictionary with navigation data
+        env: Jinja2 Environment for template rendering
 
     Returns:
         True if successful, False otherwise
@@ -479,43 +523,6 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         breadcrumb_nav.append(stable_name_span)
 
         header.append(breadcrumb_nav)
-
-        # Author badge (compact header)
-        author_badge = soup.new_tag('div', **{'class': 'author-badge'})
-        author_text = soup.new_tag('span', **{'class': 'author-text'})
-        author_text.string = f'By {AUTHOR_INFO["name"]}'
-        author_badge.append(author_text)
-
-        # Social media icons
-        social_icons = soup.new_tag('span', **{'class': 'social-icons'})
-
-        icon_map = [
-            ('twitter', 'twitter', 'Twitter'),
-            ('mastodon', 'mastodon', 'Mastodon'),
-            ('bluesky', 'bluesky', 'Bluesky'),
-            ('linkedin', 'linkedin', 'LinkedIn'),
-            ('youtube', 'youtube', 'YouTube'),
-            ('github', 'github', 'GitHub'),
-            ('website', 'website', 'emptycrate.com'),
-        ]
-
-        for key, icon_name, title in icon_map:
-            icon_link = soup.new_tag('a',
-                href=AUTHOR_INFO['links'][key],
-                target='_blank',
-                rel='noopener noreferrer',
-                title=title)
-
-            # Create icon with Font Awesome classes
-            icon_elem = soup.new_tag('i')
-            icon_elem['class'] = FONT_AWESOME_ICONS[icon_name].split()
-            icon_link.append(icon_elem)
-
-            social_icons.append(icon_link)
-            social_icons.append(' ')
-
-        author_badge.append(social_icons)
-        header.append(author_badge)
 
         # Title section
         title_section = soup.new_tag('div', **{'class': 'title-section'})
@@ -663,76 +670,20 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
 
             header.append(warning_div)
 
-        # Insert header at beginning of body
+        # Insert author banner and header at beginning of body
         if soup.body:
+            author_banner = create_author_banner(soup)
             soup.body.insert(0, header)
+            soup.body.insert(0, author_banner)
 
-        # Create and insert footer
-        footer = soup.new_tag('footer', **{'class': 'author-footer'})
-
-        # Footer content
-        footer_content = soup.new_tag('div', **{'class': 'footer-content'})
-
-        # Project attribution
-        project_line = soup.new_tag('p', **{'class': 'footer-project'})
-        project_line.string = f'A project by {AUTHOR_INFO["name"]}'
-        footer_content.append(project_line)
-
-        # Tagline
-        tagline = soup.new_tag('p', **{'class': 'footer-tagline'})
-        tagline.string = AUTHOR_INFO['tagline']
-        footer_content.append(tagline)
-
-        # Links section
-        links_section = soup.new_tag('p', **{'class': 'footer-links'})
-        links_section.append('Connect: ')
-
-        link_items = [
-            ('twitter', 'Twitter'),
-            ('mastodon', 'Mastodon'),
-            ('bluesky', 'Bluesky'),
-            ('linkedin', 'LinkedIn'),
-            ('youtube', 'YouTube'),
-            ('github', 'GitHub'),
-        ]
-
-        for i, (key, label) in enumerate(link_items):
-            if i > 0:
-                links_section.append(' | ')
-            footer_link = soup.new_tag('a',
-                href=AUTHOR_INFO['links'][key],
-                target='_blank',
-                rel='noopener noreferrer')
-            footer_link.string = label
-            links_section.append(footer_link)
-
-        footer_content.append(links_section)
-
-        # More info line
-        more_info = soup.new_tag('p', **{'class': 'footer-more'})
-        more_info.append('More info: ')
-
-        website_link = soup.new_tag('a',
-            href=AUTHOR_INFO['links']['website'],
-            target='_blank',
-            rel='noopener noreferrer')
-        website_link.string = 'emptycrate.com'
-        more_info.append(website_link)
-        more_info.append(' | ')
-
-        project_link = soup.new_tag('a',
-            href=AUTHOR_INFO['links']['project_github'],
-            target='_blank',
-            rel='noopener noreferrer')
-        project_link.string = 'This project on GitHub'
-        more_info.append(project_link)
-
-        footer_content.append(more_info)
-        footer.append(footer_content)
+        # Render footer from template
+        footer_template = env.get_template('_footer.html')
+        footer_html = footer_template.render(generated_date=context.get('generated_date', 'recently'))
+        footer_soup = BeautifulSoup(footer_html, 'html.parser')
 
         # Insert footer at end of body
-        if soup.body:
-            soup.body.append(footer)
+        if soup.body and footer_soup.footer:
+            soup.body.append(footer_soup.footer)
 
         # Add CSS links to head
         if soup.head:
@@ -757,6 +708,11 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
                 rel='stylesheet',
                 href='../../css/custom.css')
             soup.head.append(css_link)
+
+        # Add navigation.js script before closing body
+        if soup.body:
+            script_tag = soup.new_tag('script', src='../../js/navigation.js')
+            soup.body.append(script_tag)
 
         # Write modified HTML
         with open(html_file, 'w', encoding='utf-8') as f:
@@ -818,26 +774,31 @@ def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
     This function is designed to be called from ProcessPoolExecutor.
 
     Args:
-        args: Tuple of (item, diff_output_dir, context) where:
+        args: Tuple of (item, diff_output_dir, context, templates_dir) where:
             item: Dict with stable name info (name, file, path, size_kb, line_count)
             diff_output_dir: Path to output directory for diff HTML files
             context: Dict with metadata for the diff
+            templates_dir: Path to templates directory for Jinja2
 
     Returns:
         Tuple of (success, stable_name, message) for logging
     """
-    item, diff_output_dir, context = args
+    item, diff_output_dir, context, templates_dir = args
 
     stable_name = item['name']
     output_file = Path(diff_output_dir) / f'{item["file"]}.html'
 
     try:
+        # Create Jinja2 environment for this worker
+        from jinja2 import Environment, FileSystemLoader
+        env = Environment(loader=FileSystemLoader(str(templates_dir)))
+
         # Generate HTML with diff2html
         if not generate_diff_html(item['path'], output_file, context):
             return (False, stable_name, "diff2html failed")
 
         # Inject custom navigation
-        if not inject_navigation(output_file, context):
+        if not inject_navigation(output_file, context, env):
             return (False, stable_name, "navigation injection failed")
 
         return (True, stable_name, "success")
@@ -886,6 +847,10 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
 
     # Generate overview page
     template = env.get_template('version_overview.html')
+    generated_date = datetime.now().strftime('%Y-%m-%d')
+    stats = {
+        'generated_date': generated_date
+    }
     content = template.render(
         from_name=from_name,
         to_name=to_name,
@@ -893,7 +858,9 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
         to_tag=to_tag,
         slug=slug,
         stable_names=stable_names,
-        version_pairs=VERSION_PAIRS
+        version_pairs=VERSION_PAIRS,
+        stats=stats,
+        generated_date=generated_date
     )
 
     version_dir = output_path / 'versions'
@@ -922,9 +889,12 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
             'to_tag': to_tag,
             'version_slug': slug,
             'file_size_kb': item['size_kb'],
-            'line_count': item['line_count']
+            'line_count': item['line_count'],
+            'generated_date': datetime.now().strftime('%Y-%m-%d')
         }
-        tasks.append((item, str(diff_output_dir), context))
+        # Get templates directory from env.loader
+        templates_dir = Path(env.loader.searchpath[0])
+        tasks.append((item, str(diff_output_dir), context, str(templates_dir)))
 
     # Execute tasks in parallel
     success_count = 0
@@ -973,7 +943,8 @@ def generate_landing_page(output_path: Path, env: Environment, stats: Dict):
     template = env.get_template('index.html')
     content = template.render(
         version_pairs=VERSION_PAIRS,
-        stats=stats
+        stats=stats,
+        generated_date=stats.get('generated_date', 'recently')
     )
 
     index_file = output_path / 'index.html'
@@ -1092,7 +1063,8 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
     # Generate pages for each version pair
     stats = {
         'total_diffs': 0,
-        'version_pairs': []
+        'version_pairs': [],
+        'generated_date': datetime.now().strftime('%Y-%m-%d')
     }
 
     for from_tag, to_tag, from_name, to_name, slug in pairs_to_process:

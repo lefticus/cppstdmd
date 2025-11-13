@@ -1,0 +1,32 @@
+<footer class="author-footer">
+    <div class="footer-content">
+        <div class="footer-project">A project from Jason Turner</div>
+        <div class="footer-tagline">Professional C++ training and code review services</div>
+
+        <div class="footer-links">
+            <a href="https://twitter.com/lefticus" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> Twitter/X</a> |
+            <a href="https://mastodon.social/@lefticus" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-mastodon"></i> Mastodon</a> |
+            <a href="https://bsky.app/profile/lefticus.bsky.social" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-bluesky"></i> Bluesky</a> |
+            <a href="https://linkedin.com/in/jasonturner" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a> |
+            <a href="https://youtube.com/@cppweekly" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i> YouTube</a> |
+            <a href="https://github.com/lefticus" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+        </div>
+
+        <div class="footer-tools">
+            <p>Generated from <a href="https://github.com/cplusplus/draft" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> cplusplus/draft</a> LaTeX sources</p>
+            <p>Built with:
+                <a href="https://pandoc.org" target="_blank" rel="noopener noreferrer">Pandoc</a>,
+                <a href="https://python.org" target="_blank" rel="noopener noreferrer">Python</a>,
+                <a href="https://github.com/rtfpessoa/diff2html" target="_blank" rel="noopener noreferrer">diff2html</a>,
+                <a href="https://fontawesome.com" target="_blank" rel="noopener noreferrer">Font Awesome</a>
+            </p>
+            <p>Last updated: {{ generated_date }}</p>
+        </div>
+
+        <div class="footer-more">
+            <a href="https://emptycrate.com" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i> emptycrate.com</a> |
+            <a href="https://github.com/lefticus/cppstdmd" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> This project on GitHub</a>{% if back_link %} |
+            <a href="{{ back_link }}"><i class="fa-solid fa-house"></i> Back to home</a>{% endif %}
+        </div>
+    </div>
+</footer>

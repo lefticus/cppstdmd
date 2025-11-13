@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../css/custom.css">
 </head>
 <body>
+    {% include '_author_banner.html' %}
+
     <header class="page-header">
         <nav class="breadcrumb">
             <a href="../index.html"><i class="fa-solid fa-house"></i> Home</a> &gt;
@@ -82,11 +84,8 @@
         </div>
     </main>
 
-    <footer class="page-footer">
-        <p>
-            <a href="../index.html">← Back to home</a>
-        </p>
-    </footer>
+    {% set back_link = "../index.html" %}
+    {% include '_footer.html' %}
 
     <script>
         // Search functionality with content-based search

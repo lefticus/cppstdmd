@@ -50,8 +50,8 @@
 }
 
 :root {
-    --primary-color: #0066cc;
-    --primary-hover: #0052a3;
+    --primary-color: #006400;
+    --primary-hover: #004d00;
     --secondary-color: #6c757d;
     --success-color: #28a745;
     --warning-color: #ffc107;
@@ -449,8 +449,8 @@ code {
 }
 
 .size-badge {
-    background-color: #e3f2fd;
-    color: #1976d2;
+    background-color: #e8f5e9;
+    color: var(--primary-color);
 }
 
 .size-badge.large {
@@ -615,6 +615,53 @@ code {
     text-decoration: none;
 }
 
+/* Author Banner (Top of Page) */
+.author-banner {
+    background: #00a500;
+    color: white;
+    padding: 0.75rem 2rem;
+    text-align: center;
+    border-bottom: 2px solid #008000;
+}
+
+.author-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.author-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.author-links a {
+    color: white;
+    font-size: 1.3rem;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.author-links a:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.author-links i {
+    margin: 0;
+}
+
 .author-footer {
     background: #00a500;
     color: white;
@@ -641,12 +688,23 @@ code {
 }
 
 .footer-links,
+.footer-tools,
 .footer-more {
     font-size: 0.95rem;
     margin: 0.5rem 0;
 }
 
+.footer-tools {
+    margin: 1.5rem 0;
+    opacity: 0.9;
+}
+
+.footer-tools p {
+    margin: 0.5rem 0;
+}
+
 .footer-links a,
+.footer-tools a,
 .footer-more a {
     color: white;
     text-decoration: none;
@@ -655,6 +713,7 @@ code {
 }
 
 .footer-links a:hover,
+.footer-tools a:hover,
 .footer-more a:hover {
     opacity: 0.8;
     text-decoration: underline;

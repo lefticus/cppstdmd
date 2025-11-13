@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
+    {% include '_author_banner.html' %}
+
     <header class="landing-header">
         <h1>C++ Standard Evolution Viewer</h1>
         <p class="subtitle">Explore how the C++ standard evolved across versions with interactive side-by-side diffs</p>
@@ -130,15 +132,7 @@
         </section>
     </main>
 
-    <footer class="landing-footer">
-        <p>
-            Generated from <a href="https://github.com/cplusplus/draft" target="_blank" rel="noopener noreferrer">cplusplus/draft</a>
-            using <a href="https://github.com/rtfpessoa/diff2html" target="_blank" rel="noopener noreferrer">diff2html</a>
-        </p>
-        <p>
-            Last updated: {{ stats.get('generated_date', 'recently') }}
-        </p>
-    </footer>
+    {% include '_footer.html' %}
 
     <script src="js/navigation.js"></script>
 </body>
