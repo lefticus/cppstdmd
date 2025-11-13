@@ -64,37 +64,36 @@ AUTHOR_INFO = {
     }
 }
 
-# Nerd Font icon mappings (Font Awesome icons from Source Code Pro Nerd Font)
-# See: https://github.com/ryanoasis/nerd-fonts/wiki/Icon-Names-in-Shell
-NERD_FONT_ICONS = {
-    'home': '\uf015',           # fa-home
-    'link': '\uf0c1',           # fa-link
-    'book': '\uf02d',           # fa-book
-    'markdown': '\uf48a',       # fa-markdown
-    'warning': '\uf071',        # fa-exclamation-triangle
-    'twitter': '\uf099',        # fa-twitter (legacy)
-    'mastodon': '\uf4f6',       # fa-mastodon
-    'bluesky': '\uf099',        # fa-twitter (repurpose for bluesky - similar bird)
-    'linkedin': '\uf0e1',       # fa-linkedin
-    'youtube': '\uf167',        # fa-youtube
-    'github': '\uf09b',         # fa-github
-    'website': '\uf0ac',        # fa-globe
+# Font Awesome 7 Free icon mappings
+# See: https://fontawesome.com/search?o=r&m=free
+FONT_AWESOME_ICONS = {
+    'home': 'fa-solid fa-house',
+    'link': 'fa-solid fa-link',
+    'book': 'fa-solid fa-book',
+    'markdown': 'fa-brands fa-markdown',
+    'warning': 'fa-solid fa-triangle-exclamation',
+    'twitter': 'fa-brands fa-x-twitter',
+    'mastodon': 'fa-brands fa-mastodon',
+    'bluesky': 'fa-brands fa-bluesky',      # Butterfly icon! 🦋
+    'linkedin': 'fa-brands fa-linkedin',
+    'youtube': 'fa-brands fa-youtube',
+    'github': 'fa-brands fa-github',
+    'website': 'fa-solid fa-globe',
 }
 
 
-def create_icon(icon_name, css_class='nf-icon'):
+def create_icon(icon_name):
     """
-    Create a span element with a Nerd Font icon.
+    Create an <i> element with Font Awesome icon classes.
 
     Args:
-        icon_name: Key from NERD_FONT_ICONS dict
-        css_class: CSS class for the icon (default: 'nf-icon')
+        icon_name: Key from FONT_AWESOME_ICONS dict
 
     Returns:
-        str: HTML span element with the icon
+        str: HTML <i> element with Font Awesome classes
     """
-    icon_char = NERD_FONT_ICONS.get(icon_name, '\uf128')  # Default to question mark
-    return f'<span class="{css_class}">{icon_char}</span>'
+    icon_classes = FONT_AWESOME_ICONS.get(icon_name, 'fa-solid fa-question')  # Default to question mark
+    return f'<i class="{icon_classes}"></i>'
 
 
 def check_dependencies():
@@ -460,8 +459,8 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         breadcrumb_nav = soup.new_tag('nav', **{'class': 'breadcrumb'})
 
         # Add home icon
-        home_icon = soup.new_tag('span', **{'class': 'nf-icon'})
-        home_icon.string = NERD_FONT_ICONS['home']
+        home_icon = soup.new_tag('i')
+        home_icon['class'] = FONT_AWESOME_ICONS['home'].split()
         breadcrumb_nav.append(home_icon)
         breadcrumb_nav.append(' ')
 
@@ -507,10 +506,10 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
                 rel='noopener noreferrer',
                 title=title)
 
-            # Create icon span with Nerd Font character
-            icon_span = soup.new_tag('span', **{'class': 'nf-icon'})
-            icon_span.string = NERD_FONT_ICONS[icon_name]
-            icon_link.append(icon_span)
+            # Create icon with Font Awesome classes
+            icon_elem = soup.new_tag('i')
+            icon_elem['class'] = FONT_AWESOME_ICONS[icon_name].split()
+            icon_link.append(icon_elem)
 
             social_icons.append(icon_link)
             social_icons.append(' ')
@@ -570,8 +569,8 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         links_div = soup.new_tag('div', **{'class': 'external-links'})
 
         # Add link icon
-        link_icon = soup.new_tag('span', **{'class': 'nf-icon'})
-        link_icon.string = NERD_FONT_ICONS['link']
+        link_icon = soup.new_tag('i')
+        link_icon['class'] = FONT_AWESOME_ICONS['link'].split()
         links_div.append(link_icon)
         links_div.append(' ')
 
@@ -600,8 +599,8 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
             archived_div = soup.new_tag('div', **{'class': 'external-links'})
 
             # Add book icon
-            book_icon = soup.new_tag('span', **{'class': 'nf-icon'})
-            book_icon.string = NERD_FONT_ICONS['book']
+            book_icon = soup.new_tag('i')
+            book_icon['class'] = FONT_AWESOME_ICONS['book'].split()
             archived_div.append(book_icon)
             archived_div.append(' Archived: ')
 
@@ -630,8 +629,8 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         md_links_div = soup.new_tag('div', **{'class': 'external-links'})
 
         # Add markdown icon
-        markdown_icon = soup.new_tag('span', **{'class': 'nf-icon'})
-        markdown_icon.string = NERD_FONT_ICONS['markdown']
+        markdown_icon = soup.new_tag('i')
+        markdown_icon['class'] = FONT_AWESOME_ICONS['markdown'].split()
         md_links_div.append(markdown_icon)
         md_links_div.append(' Markdown: ')
 
@@ -657,8 +656,8 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
             warning_div = soup.new_tag('div', **{'class': 'warning large-file-warning'})
 
             # Add warning icon
-            warning_icon = soup.new_tag('span', **{'class': 'nf-icon'})
-            warning_icon.string = NERD_FONT_ICONS['warning']
+            warning_icon = soup.new_tag('i')
+            warning_icon['class'] = FONT_AWESOME_ICONS['warning'].split()
             warning_div.append(warning_icon)
             warning_div.append(f' Large diff ({size_kb} KB) - rendering may be slow on some devices')
 
@@ -735,8 +734,25 @@ def inject_navigation(html_file: Path, context: Dict) -> bool:
         if soup.body:
             soup.body.append(footer)
 
-        # Add custom CSS link to head
+        # Add CSS links to head
         if soup.head:
+            # Add Font Awesome CSS
+            fa_css_link = soup.new_tag('link',
+                rel='stylesheet',
+                href='../../css/fontawesome.min.css')
+            soup.head.append(fa_css_link)
+
+            fa_solid_link = soup.new_tag('link',
+                rel='stylesheet',
+                href='../../css/solid.min.css')
+            soup.head.append(fa_solid_link)
+
+            fa_brands_link = soup.new_tag('link',
+                rel='stylesheet',
+                href='../../css/brands.min.css')
+            soup.head.append(fa_brands_link)
+
+            # Add custom CSS
             css_link = soup.new_tag('link',
                 rel='stylesheet',
                 href='../../css/custom.css')
@@ -966,7 +982,7 @@ def generate_landing_page(output_path: Path, env: Environment, stats: Dict):
 
 
 def copy_static_assets(output_path: Path):
-    """Copy CSS and JS assets to output directory.
+    """Copy CSS, JS, fonts, and webfonts assets to output directory.
 
     Args:
         output_path: Base output directory
@@ -979,7 +995,15 @@ def copy_static_assets(output_path: Path):
     css_dir.mkdir(exist_ok=True, parents=True)
     js_dir.mkdir(exist_ok=True, parents=True)
 
-    # Copy CSS if exists
+    # Copy Font Awesome CSS files (minified versions)
+    fa_css_files = ['fontawesome.min.css', 'solid.min.css', 'brands.min.css']
+    for css_file in fa_css_files:
+        src = Path(f'templates/css/{css_file}')
+        if src.exists():
+            shutil.copy(src, css_dir / css_file)
+            print(f"  ✓ Copied {css_file}")
+
+    # Copy custom CSS if exists
     if Path('templates/css/custom.css').exists():
         shutil.copy('templates/css/custom.css', css_dir / 'custom.css')
         print(f"  ✓ Copied custom.css")
@@ -989,16 +1013,30 @@ def copy_static_assets(output_path: Path):
         shutil.copy('templates/js/navigation.js', js_dir / 'navigation.js')
         print(f"  ✓ Copied navigation.js")
 
-    # Copy fonts directory
+    # Copy Source Sans Pro and Source Code Pro fonts
     fonts_src = Path('templates/fonts')
     if fonts_src.exists():
         fonts_dest = output_path / 'fonts'
         fonts_dest.mkdir(exist_ok=True, parents=True)
 
-        # Copy all .woff2 files
-        for font_file in fonts_src.glob('*.woff2'):
+        # Copy Source font files (keep pattern specific to avoid copying Nerd Fonts)
+        for font_file in fonts_src.glob('Source*.woff2'):
             shutil.copy(font_file, fonts_dest / font_file.name)
             print(f"  ✓ Copied {font_file.name}")
+
+    # Copy Font Awesome webfonts
+    webfonts_src = Path('templates/webfonts')
+    if webfonts_src.exists():
+        webfonts_dest = output_path / 'webfonts'
+        webfonts_dest.mkdir(exist_ok=True, parents=True)
+
+        # Copy Font Awesome font files
+        fa_fonts = ['fa-solid-900.woff2', 'fa-brands-400.woff2']
+        for font_file in fa_fonts:
+            src = webfonts_src / font_file
+            if src.exists():
+                shutil.copy(src, webfonts_dest / font_file)
+                print(f"  ✓ Copied {font_file}")
 
     # Create .nojekyll file to disable Jekyll processing
     nojekyll_file = output_path / '.nojekyll'

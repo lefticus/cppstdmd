@@ -34,7 +34,7 @@
 }
 
 @font-face {
-    font-family: 'Source Code Pro Nerd Font';
+    font-family: 'Source Code Pro';
     src: url('../fonts/SourceCodeProNerdFont-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
@@ -42,7 +42,7 @@
 }
 
 @font-face {
-    font-family: 'Source Code Pro Nerd Font';
+    font-family: 'Source Code Pro';
     src: url('../fonts/SourceCodeProNerdFont-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
@@ -95,16 +95,9 @@ code {
     font-size: 0.9em;
 }
 
-/* Nerd Font Icons */
-.nf-icon {
-    font-family: 'Source Code Pro Nerd Font', monospace;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* Font Awesome Icons - Add spacing */
+.fa-solid, .fa-brands, .fa-regular {
+    margin-right: 0.4em;
 }
 
 /* Landing Page */
@@ -486,8 +479,9 @@ code {
 }
 
 .section-item.content-match::before {
-    content: '\uf002 ';
-    font-family: 'Source Code Pro Nerd Font', monospace;
+    content: '\f002';
+    font-family: 'Font Awesome 7 Free';
+    font-weight: 900;
     position: absolute;
     left: 8px;
     top: 50%;

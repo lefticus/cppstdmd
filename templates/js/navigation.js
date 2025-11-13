@@ -97,7 +97,7 @@
             if (text.startsWith('[') && text.endsWith(']')) {
                 const copyBtn = document.createElement('button');
                 copyBtn.className = 'copy-btn';
-                copyBtn.innerHTML = '📋';
+                copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i>';
                 copyBtn.title = 'Copy stable name to clipboard';
                 copyBtn.style.cssText = `
                     margin-left: 0.5rem;
@@ -112,13 +112,13 @@
 
                 copyBtn.addEventListener('click', function() {
                     copyToClipboard(text);
-                    copyBtn.innerHTML = '✓';
+                    copyBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
                     copyBtn.style.backgroundColor = '#28a745';
                     copyBtn.style.color = 'white';
                     copyBtn.style.borderColor = '#28a745';
 
                     setTimeout(() => {
-                        copyBtn.innerHTML = '📋';
+                        copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i>';
                         copyBtn.style.backgroundColor = 'white';
                         copyBtn.style.color = '';
                         copyBtn.style.borderColor = '#dee2e6';
@@ -126,13 +126,13 @@
                 });
 
                 copyBtn.addEventListener('mouseenter', function() {
-                    if (copyBtn.innerHTML === '📋') {
+                    if (copyBtn.innerHTML === '<i class="fa-solid fa-copy"></i>') {
                         copyBtn.style.backgroundColor = '#f8f9fa';
                     }
                 });
 
                 copyBtn.addEventListener('mouseleave', function() {
-                    if (copyBtn.innerHTML === '📋') {
+                    if (copyBtn.innerHTML === '<i class="fa-solid fa-copy"></i>') {
                         copyBtn.style.backgroundColor = 'white';
                     }
                 });
@@ -201,7 +201,7 @@
         // Create toggle button
         const toggleBtn = document.createElement('button');
         toggleBtn.id = 'theme-toggle';
-        toggleBtn.innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
+        toggleBtn.innerHTML = currentTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
         toggleBtn.title = 'Toggle dark mode';
         toggleBtn.style.cssText = `
             position: fixed;
@@ -221,7 +221,7 @@
         toggleBtn.addEventListener('click', function() {
             const newTheme = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
             document.body.classList.toggle('dark-theme');
-            toggleBtn.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+            toggleBtn.innerHTML = newTheme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
             localStorage.setItem('theme', newTheme);
         });
 
