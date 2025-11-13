@@ -21,6 +21,19 @@ A Pandoc-first tool for converting C++ draft standard LaTeX sources from [cplusp
   - Separate files: Individual chapters with automatic cross-file link fixing
 - **High quality**: 163/163 tests passing (99.4% coverage)
 
+## Generated Markdown Versions
+
+Pre-converted C++ standard versions (individual chapter files with cross-linking):
+
+- **[C++11 (n3337)](n3337/front.md)**
+- **[C++14 (n4140)](n4140/front.md)**
+- **[C++17 (n4659)](n4659/front.md)**
+- **[C++20 (n4861)](n4861/front.md)**
+- **[C++23 (n4950)](n4950/front.md)**
+- **[C++26 (trunk)](trunk/front.md)**
+
+Each version contains separate markdown files for all chapters with stable cross-references.
+
 ## Architecture
 
 ### Three-Stage Pipeline
