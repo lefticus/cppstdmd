@@ -676,6 +676,13 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
             soup.body.insert(0, header)
             soup.body.insert(0, author_banner)
 
+            # Add main-content id to the diff div for skip-link
+            diff_div = soup.find('div', id='diff')
+            if diff_div:
+                # Create a wrapper with main-content id
+                wrapper = soup.new_tag('div', id='main-content')
+                diff_div.wrap(wrapper)
+
         # Render footer from template
         footer_template = env.get_template('_footer.html')
         footer_html = footer_template.render(generated_date=context.get('generated_date', 'recently'))
@@ -692,6 +699,46 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
             title_tag = soup.new_tag('title')
             title_tag.string = context.get('title', 'C++ Standard Diff')
             soup.head.insert(0, title_tag)
+
+        # Add meta tags
+        if soup.head:
+            # Theme color
+            theme_meta = soup.new_tag('meta', attrs={'name': 'theme-color', 'content': '#00a500'})
+            soup.head.append(theme_meta)
+
+            # Canonical URL
+            canonical_url = f"https://cppstdmd.com/diffs/{context['version_slug']}/{Path(html_file).name}"
+            canonical_link = soup.new_tag('link', rel='canonical', href=canonical_url)
+            soup.head.append(canonical_link)
+
+            # Open Graph
+            og_tags = [
+                ('og:title', context.get('title', 'C++ Standard Diff')),
+                ('og:description', f"View changes in section {context['stable_name']} between {context['from_version']} and {context['to_version']}"),
+                ('og:type', 'website'),
+                ('og:url', canonical_url),
+                ('og:site_name', 'C++ Standard Evolution Viewer'),
+            ]
+            for prop, content_val in og_tags:
+                og_meta = soup.new_tag('meta', property=prop, content=content_val)
+                soup.head.append(og_meta)
+
+            # Twitter Card
+            twitter_tags = [
+                ('twitter:card', 'summary'),
+                ('twitter:title', context.get('title', 'C++ Standard Diff')),
+                ('twitter:description', f"Changes in {context['stable_name']} between {context['from_version']} and {context['to_version']}"),
+                ('twitter:creator', '@lefticus'),
+            ]
+            for name, content_val in twitter_tags:
+                twitter_meta = soup.new_tag('meta', attrs={'name': name, 'content': content_val})
+                soup.head.append(twitter_meta)
+
+        # Add skip-to-content link at start of body
+        if soup.body:
+            skip_link = soup.new_tag('a', href='#main-content', **{'class': 'skip-link'})
+            skip_link.string = 'Skip to main content'
+            soup.body.insert(0, skip_link)
 
         # Add CSS links to head
         if soup.head:
@@ -1017,10 +1064,93 @@ def copy_static_assets(output_path: Path):
                 shutil.copy(src, webfonts_dest / font_file)
                 print(f"  ✓ Copied {font_file}")
 
+    # Copy 404 page
+    src_404 = Path('templates/404.html')
+    if src_404.exists():
+        # Need to render it with Jinja2 first
+        from jinja2 import Environment, FileSystemLoader
+        env = Environment(loader=FileSystemLoader('templates'))
+        template = env.get_template('404.html')
+        content = template.render()
+        (output_path / '404.html').write_text(content, encoding='utf-8')
+        print(f"  ✓ Generated 404.html")
+
     # Create .nojekyll file to disable Jekyll processing
     nojekyll_file = output_path / '.nojekyll'
     nojekyll_file.touch()
     print(f"  ✓ Created .nojekyll")
+
+
+def generate_seo_files(output_path: Path, stats: Dict, base_url: str = 'https://cppstdmd.com'):
+    """Generate robots.txt and sitemap.xml for SEO.
+
+    Args:
+        output_path: Base output directory
+        stats: Dictionary with statistics including generated pages
+        base_url: Base URL of the deployed site
+    """
+    print("\n🔍 Generating SEO files...")
+
+    # Generate robots.txt
+    robots_content = """# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: {base_url}/sitemap.xml
+""".format(base_url=base_url)
+
+    robots_file = output_path / 'robots.txt'
+    robots_file.write_text(robots_content, encoding='utf-8')
+    print(f"  ✓ Generated robots.txt")
+
+    # Generate sitemap.xml
+    sitemap_urls = []
+
+    # Add homepage
+    sitemap_urls.append({
+        'loc': f'{base_url}/',
+        'priority': '1.0',
+        'changefreq': 'weekly'
+    })
+
+    # Add version overview pages
+    for from_tag, to_tag, from_name, to_name, slug in VERSION_PAIRS:
+        sitemap_urls.append({
+            'loc': f'{base_url}/versions/{slug}.html',
+            'priority': '0.8',
+            'changefreq': 'weekly'
+        })
+
+    # Add all diff pages
+    for pair_stats in stats.get('version_pairs', []):
+        slug = pair_stats['slug']
+        diff_dir = output_path / 'diffs' / slug
+        if diff_dir.exists():
+            for diff_file in sorted(diff_dir.glob('*.html')):
+                sitemap_urls.append({
+                    'loc': f'{base_url}/diffs/{slug}/{diff_file.name}',
+                    'priority': '0.6',
+                    'changefreq': 'monthly'
+                })
+
+    # Build XML
+    xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml_lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+
+    for url_data in sitemap_urls:
+        xml_lines.append('  <url>')
+        xml_lines.append(f'    <loc>{url_data["loc"]}</loc>')
+        xml_lines.append(f'    <priority>{url_data["priority"]}</priority>')
+        xml_lines.append(f'    <changefreq>{url_data["changefreq"]}</changefreq>')
+        xml_lines.append('  </url>')
+
+    xml_lines.append('</urlset>')
+
+    sitemap_content = '\n'.join(xml_lines)
+    sitemap_file = output_path / 'sitemap.xml'
+    sitemap_file.write_text(sitemap_content, encoding='utf-8')
+    print(f"  ✓ Generated sitemap.xml ({len(sitemap_urls)} URLs)")
 
 
 def generate_site(output_dir: str = 'site', tier: int = 1,
@@ -1095,6 +1225,9 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
 
     # Copy static assets
     copy_static_assets(output_path)
+
+    # Generate SEO files
+    generate_seo_files(output_path, stats)
 
     print(f"\n✅ Site generation complete!")
     print(f"   Total diffs generated: {stats['total_diffs']}")

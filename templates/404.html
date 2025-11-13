@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found - C++ Standard Evolution Viewer">
+    <meta name="theme-color" content="#00a500">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/css/solid.min.css">
+    <link rel="stylesheet" href="/css/brands.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% include '_author_banner.html' %}
+
+    <main id="main-content" style="max-width: 800px; margin: 4rem auto; padding: 2rem; text-align: center;">
+        <h1 style="font-size: 4rem; color: var(--primary-color); margin-bottom: 1rem;">404</h1>
+        <h2 style="margin-bottom: 2rem;">Page Not Found</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+            Sorry, the page you're looking for doesn't exist or has been moved.
+        </p>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/index.html" class="btn btn-primary">
+                <i class="fa-solid fa-house"></i> Go to Home
+            </a>
+            <a href="/versions/cpp11-to-cpp14.html" class="btn btn-primary">
+                <i class="fa-solid fa-list"></i> Browse Versions
+            </a>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 2rem; background: var(--light-bg); border-radius: 8px;">
+            <h3>Popular Pages</h3>
+            <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+                <li style="margin: 0.5rem 0;"><a href="/versions/cpp20-to-cpp23.html">C++20 → C++23</a></li>
+                <li style="margin: 0.5rem 0;"><a href="/versions/cpp17-to-cpp20.html">C++17 → C++20</a></li>
+                <li style="margin: 0.5rem 0;"><a href="/versions/cpp23-to-trunk.html">C++23 → Trunk</a></li>
+            </ul>
+        </div>
+    </main>
+
+    {% set generated_date = "2025-11-13" %}
+    {% include '_footer.html' %}
+
+    <script src="/js/navigation.js"></script>
+</body>
+</html>

@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore how the C++ standard evolved across versions with interactive side-by-side diffs">
+    <meta name="theme-color" content="#00a500">
     <title>C++ Standard Evolution Viewer</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cppstdmd.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="C++ Standard Evolution Viewer">
+    <meta property="og:description" content="Explore how the C++ standard evolved across versions with interactive side-by-side diffs">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cppstdmd.com/">
+    <meta property="og:site_name" content="C++ Standard Evolution Viewer">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C++ Standard Evolution Viewer">
+    <meta name="twitter:description" content="Explore how the C++ standard evolved across versions with interactive side-by-side diffs">
+    <meta name="twitter:creator" content="@lefticus">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css">
     <!-- Font Awesome 7 Free -->
     <link rel="stylesheet" href="css/fontawesome.min.css">
@@ -13,6 +31,7 @@
     <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     {% include '_author_banner.html' %}
 
     <header class="landing-header">
@@ -20,7 +39,7 @@
         <p class="subtitle">Explore how the C++ standard evolved across versions with interactive side-by-side diffs</p>
     </header>
 
-    <main class="landing-main">
+    <main class="landing-main" id="main-content">
         <section class="intro">
             <p>
                 This site provides an interactive way to explore changes in the C++ standard by viewing

@@ -99,6 +99,7 @@
                 copyBtn.className = 'copy-btn';
                 copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i>';
                 copyBtn.title = 'Copy stable name to clipboard';
+                copyBtn.setAttribute('aria-label', `Copy ${text} to clipboard`);
                 copyBtn.style.cssText = `
                     margin-left: 0.5rem;
                     padding: 0.25rem 0.5rem;
