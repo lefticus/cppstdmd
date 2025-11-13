@@ -55,6 +55,13 @@ validation_results*.json
 /full/
 /diffs/*/
 !/diffs/README.md
+/site/
+/site_test/
+*.tbz2
+
+# Downloaded dependencies
+fontawesome-free-*.zip
+fontawesome-free-*-web/
 
 # Temporary files
 *.tmp

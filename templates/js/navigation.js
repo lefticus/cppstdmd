@@ -23,8 +23,8 @@
         // Enhance external links
         enhanceExternalLinks();
 
-        // Add theme toggle
-        addThemeToggle();
+        // TODO: Dark mode toggle disabled - needs fix for diff2html compatibility
+        // addThemeToggle();
     }
 
     /**
@@ -259,6 +259,19 @@
             const newTheme = isDark ? 'light' : 'dark';
 
             document.body.classList.toggle('dark-theme');
+
+            // Toggle diff2html color scheme for all diff elements
+            const diffElements = document.querySelectorAll('.d2h-auto-color-scheme, .d2h-dark-color-scheme');
+            diffElements.forEach(function(element) {
+                if (newTheme === 'dark') {
+                    element.classList.remove('d2h-auto-color-scheme');
+                    element.classList.add('d2h-dark-color-scheme');
+                } else {
+                    element.classList.remove('d2h-dark-color-scheme');
+                    element.classList.add('d2h-auto-color-scheme');
+                }
+            });
+
             toggleBtn.innerHTML = newTheme === 'dark'
                 ? '<i class="fa-solid fa-sun"></i>'
                 : '<i class="fa-solid fa-moon"></i>';
@@ -274,6 +287,13 @@
         // Apply saved theme on page load
         if (currentTheme === 'dark') {
             document.body.classList.add('dark-theme');
+
+            // Apply diff2html dark mode class to all diff elements
+            const diffElements = document.querySelectorAll('.d2h-auto-color-scheme');
+            diffElements.forEach(function(element) {
+                element.classList.remove('d2h-auto-color-scheme');
+                element.classList.add('d2h-dark-color-scheme');
+            });
         }
     }
 

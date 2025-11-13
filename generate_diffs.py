@@ -157,7 +157,8 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
     try:
         # Use git diff --no-index for better formatting
         result = subprocess.run(
-            ['git', 'diff', '--no-index', '--unified=3', str(from_file), str(to_file)],
+            ['git', 'diff', '--no-index', '--unified=3', '--ignore-all-space',
+             str(from_file), str(to_file)],
             capture_output=True,
             text=True,
             timeout=60
@@ -225,7 +226,7 @@ def generate_stable_name_diff(stable_name: str, from_content: Optional[str],
                     'git', 'diff', '--no-index',
                     '--patience',           # Better algorithm for moved sections
                     '--unified=5',          # More context lines
-                    '--ignore-space-change', # Reduce whitespace noise
+                    '--ignore-all-space',   # Ignore all whitespace differences
                     str(from_file), str(to_file)
                 ],
                 capture_output=True,
@@ -404,8 +405,8 @@ def generate_stable_name_readme(from_version: str, to_version: str, readme_path:
     lines.append("# View a specific ranges section")
     lines.append("less ranges.general.diff")
     lines.append("```\n")
-    lines.append("**Diff Quality**: Generated with `git diff --patience --unified=5 --ignore-space-change` ")
-    lines.append("for best section matching and readability.\n")
+    lines.append("**Diff Quality**: Generated with `git diff --patience --unified=5 --ignore-all-space` ")
+    lines.append("for best section matching and readability, ignoring all whitespace differences.\n")
 
     with open(readme_path, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines))

@@ -99,21 +99,33 @@ def create_icon(icon_name):
 
 def check_dependencies():
     """Check if required external tools are available."""
-    # Check for diff2html-cli
+    # Check for diff2html-cli or npx
     try:
         result = subprocess.run(['diff2html', '--version'],
                               capture_output=True, text=True, check=False)
-        if result.returncode != 0:
-            raise FileNotFoundError()
+        if result.returncode == 0:
+            return  # diff2html is available
     except FileNotFoundError:
-        print("Error: diff2html-cli is not installed or not in PATH")
-        print()
-        print("To install diff2html-cli:")
-        print("  npm install -g diff2html-cli")
-        print()
-        print("Or using npx (no installation required):")
-        print("  The script will use 'npx diff2html' if available")
-        sys.exit(1)
+        pass
+
+    # Try npx as fallback
+    try:
+        result = subprocess.run(['npx', '--version'],
+                              capture_output=True, text=True, check=False)
+        if result.returncode == 0:
+            return  # npx is available
+    except FileNotFoundError:
+        pass
+
+    # Neither available
+    print("Error: diff2html-cli is not installed and npx is not available")
+    print()
+    print("To install diff2html-cli:")
+    print("  npm install -g diff2html-cli")
+    print()
+    print("Or install npx (part of npm):")
+    print("  sudo apt install npm")
+    sys.exit(1)
 
 
 def extract_stable_name(diff_file: Path) -> Optional[str]:
@@ -405,15 +417,42 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> boo
         # Create output directory if needed
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
-        # Use diff2html-cli to generate HTML
-        cmd = [
-            'diff2html',
+        # Try diff2html first, fall back to npx
+        diff2html_cmd = None
+        try:
+            result = subprocess.run(['diff2html', '--version'],
+                                  capture_output=True, check=False)
+            if result.returncode == 0:
+                diff2html_cmd = 'diff2html'
+        except FileNotFoundError:
+            pass
+
+        if diff2html_cmd is None:
+            # Try npx
+            try:
+                result = subprocess.run(['npx', '--version'],
+                                      capture_output=True, check=False)
+                if result.returncode == 0:
+                    diff2html_cmd = 'npx'
+            except FileNotFoundError:
+                return False
+
+        if diff2html_cmd is None:
+            return False
+
+        # Build command
+        if diff2html_cmd == 'npx':
+            cmd = ['npx', 'diff2html']
+        else:
+            cmd = ['diff2html']
+
+        cmd.extend([
             '-i', 'file',
             '-F', str(output_file),
             '-s', 'side',
             '--',
             str(diff_file)
-        ]
+        ])
 
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
 
