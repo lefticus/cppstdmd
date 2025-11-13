@@ -150,20 +150,22 @@ def extract_stable_name(diff_file: Path) -> Optional[str]:
     return None
 
 
-def classify_stable_name(name: str) -> int:
-    """Determine tier (1 = featured, 2 = detailed).
-
-    Tier 1: 0-1 dots (e.g., "array", "class.copy")
-    Tier 2: 2+ dots (e.g., "class.copy.ctor", "alg.binary.search")
+def get_dot_count(name: str) -> int:
+    """Count hierarchy depth by counting dots only (not :: or _).
 
     Args:
         name: Stable name string
 
     Returns:
-        Tier number (1 or 2)
+        Number of dots in the name
+
+    Examples:
+        get_dot_count("alg.copy") -> 1
+        get_dot_count("alg.find.first.of") -> 3
+        get_dot_count("string::append") -> 0  # Legacy C++11 notation
+        get_dot_count("alg.all_of") -> 1  # Underscore is within name
     """
-    dot_count = name.count('.')
-    return 1 if dot_count <= 1 else 2
+    return name.count('.')
 
 
 def sanitize_filename(name: str) -> str:
@@ -833,12 +835,12 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
         return False
 
 
-def collect_stable_names(diff_dir: Path, tier: int = 1, limit: Optional[int] = None) -> List[Dict]:
+def collect_stable_names(diff_dir: Path, max_dots: Optional[int] = None, limit: Optional[int] = None) -> List[Dict]:
     """Collect stable names from a diff directory.
 
     Args:
         diff_dir: Path to directory containing .diff files
-        tier: Tier to filter (1 or 2)
+        max_dots: Maximum number of dots allowed (None = no limit)
         limit: Maximum number of diffs to collect (for testing)
 
     Returns:
@@ -859,7 +861,8 @@ def collect_stable_names(diff_dir: Path, tier: int = 1, limit: Optional[int] = N
             # Fallback: use filename
             name = diff_file.stem
 
-        if classify_stable_name(name) != tier:
+        # Filter by dot count if max_dots is specified
+        if max_dots is not None and get_dot_count(name) > max_dots:
             continue
 
         stable_names.append({
@@ -945,7 +948,7 @@ def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
 
 def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
                          to_name: str, slug: str, output_path: Path,
-                         env: Environment, tier: int = 1,
+                         env: Environment, max_dots: Optional[int] = None,
                          limit: Optional[int] = None,
                          max_workers: Optional[int] = None) -> Dict:
     """Generate pages for one version pair.
@@ -982,10 +985,13 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
             'slug': slug
         }
 
-    # Collect Tier 1 stable names
-    stable_names = collect_stable_names(diff_dir, tier=tier, limit=limit)
+    # Collect stable names
+    stable_names = collect_stable_names(diff_dir, max_dots=max_dots, limit=limit)
 
-    print(f"  Found {len(stable_names)} Tier {tier} stable names")
+    if max_dots is not None:
+        print(f"  Found {len(stable_names)} stable names (max {max_dots} dots)")
+    else:
+        print(f"  Found {len(stable_names)} stable names")
 
     if not stable_names:
         return {
@@ -1357,14 +1363,14 @@ Sitemap: {base_url}/sitemap.xml
     print(f"  ✓ Generated sitemap.xml ({len(sitemap_urls)} URLs)")
 
 
-def generate_site(output_dir: str = 'site', tier: int = 1,
+def generate_site(output_dir: str = 'site', max_dots: Optional[int] = None,
                  limit: Optional[int] = None, test_mode: bool = False,
                  max_workers: Optional[int] = None):
     """Main generation logic.
 
     Args:
         output_dir: Output directory for generated site
-        tier: Tier to filter (1 or 2)
+        max_dots: Maximum number of dots in stable names (None = all levels)
         limit: Maximum number of diffs per version pair (for testing)
         test_mode: If True, only process first version pair with limit=10
         max_workers: Number of parallel workers (defaults to CPU count)
@@ -1391,7 +1397,10 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
 
     print(f"🚀 C++ Standard Evolution Viewer - Site Generator")
     print(f"   Output directory: {output_path.absolute()}")
-    print(f"   Tier: {tier} (0-{1 if tier == 1 else '2+'} dots)")
+    if max_dots is not None:
+        print(f"   Max dots: {max_dots} (0-{max_dots} dots)")
+    else:
+        print(f"   Max dots: unlimited (all levels)")
     print(f"   Workers: {max_workers} (parallel processing)")
     if limit:
         print(f"   Limit: {limit} diffs per version pair")
@@ -1412,7 +1421,7 @@ def generate_site(output_dir: str = 'site', tier: int = 1,
     for from_tag, to_tag, from_name, to_name, slug in pairs_to_process:
         pair_stats = generate_version_pair(
             from_tag, to_tag, from_name, to_name, slug,
-            output_path, env, tier=tier, limit=test_limit,
+            output_path, env, max_dots=max_dots, limit=test_limit,
             max_workers=max_workers
         )
 
@@ -1450,11 +1459,14 @@ Examples:
   # Test mode: Generate 10 diffs from one version pair
   python3 generate_html_site.py --test
 
-  # Generate full Tier 1 site (all 5 version pairs)
+  # Generate site with all levels (no filtering)
   python3 generate_html_site.py --output site/
 
-  # Generate with limit (for debugging)
-  python3 generate_html_site.py --output site/ --limit 50
+  # Generate site with only 0-1 dots (old Tier 1)
+  python3 generate_html_site.py --output site/ --max-dots 1
+
+  # Generate site with up to 2 dots
+  python3 generate_html_site.py --output site/ --max-dots 2
 
   # Use more workers for faster generation
   python3 generate_html_site.py --output site/ --workers 8
@@ -1463,8 +1475,8 @@ Examples:
 
     parser.add_argument('--output', '-o', default='site',
                        help='Output directory for generated site (default: site/)')
-    parser.add_argument('--tier', type=int, default=1, choices=[1, 2],
-                       help='Tier to generate: 1 (0-1 dots) or 2 (2+ dots) (default: 1)')
+    parser.add_argument('--max-dots', type=int, metavar='N',
+                       help='Maximum number of dots in stable names (default: no limit, all levels)')
     parser.add_argument('--limit', type=int, metavar='N',
                        help='Limit number of diffs per version pair (for testing)')
     parser.add_argument('--workers', '-w', type=int, metavar='N',
@@ -1477,7 +1489,7 @@ Examples:
     try:
         generate_site(
             output_dir=args.output,
-            tier=args.tier,
+            max_dots=args.max_dots,
             limit=args.limit,
             test_mode=args.test,
             max_workers=args.workers

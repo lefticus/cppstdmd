@@ -251,13 +251,22 @@ def generate_stable_name_diff(stable_name: str, from_content: Optional[str],
         return False
 
 
-def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: Path) -> int:
+def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: Path, max_dots: Optional[int] = None) -> int:
     """
     Generate diffs for all stable names across all chapters.
 
+    Args:
+        from_version: Starting version directory
+        to_version: Ending version directory
+        output_dir: Output directory for diffs
+        max_dots: Maximum number of dots in stable names (None = all levels)
+
     Returns the number of diffs successfully generated.
     """
-    print(f"  Generating stable name diffs...")
+    if max_dots is not None:
+        print(f"  Generating stable name diffs (max {max_dots} dots)...")
+    else:
+        print(f"  Generating stable name diffs...")
 
     # Collect all stable names from both versions
     from_stable_names = {}  # stable_name -> (chapter, content, start, end)
@@ -289,6 +298,12 @@ def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: P
     print(f"    - {len(to_stable_names)} in {to_version}")
     print(f"    - {len(removed_names)} removed")
     print(f"    - {len(added_names)} added")
+
+    # Filter by dot count if max_dots is specified
+    if max_dots is not None:
+        filtered_names = {name for name in all_stable_names if name.count('.') <= max_dots}
+        print(f"    Filtering to {len(filtered_names)} stable names (max {max_dots} dots)")
+        all_stable_names = filtered_names
 
     # Create output directory
     stable_name_dir = output_dir / 'by_stable_name'
@@ -522,8 +537,15 @@ def generate_summary(from_version: str, to_version: str, diff_dir: Path,
     return '\n'.join(lines)
 
 
-def generate_diff_pair(from_version: str, to_version: str, output_base: Path) -> None:
-    """Generate all diffs for a version pair."""
+def generate_diff_pair(from_version: str, to_version: str, output_base: Path, max_dots: Optional[int] = None) -> None:
+    """Generate all diffs for a version pair.
+
+    Args:
+        from_version: Starting version directory
+        to_version: Ending version directory
+        output_base: Output directory for diffs
+        max_dots: Maximum number of dots in stable names (None = all levels)
+    """
     from_name = VERSIONS.get(from_version, from_version)
     to_name = VERSIONS.get(to_version, to_version)
 
@@ -562,7 +584,7 @@ def generate_diff_pair(from_version: str, to_version: str, output_base: Path) ->
         print(f"  Warning: Could not generate full standard diff")
 
     # Generate stable name diffs
-    stable_name_count = generate_stable_name_diffs(from_version, to_version, output_base)
+    stable_name_count = generate_stable_name_diffs(from_version, to_version, output_base, max_dots=max_dots)
 
     # Generate summary
     print("  Generating summary...")
@@ -583,6 +605,7 @@ def main():
 Examples:
   ./generate_diffs.py                    # Generate all 15 version pairs
   ./generate_diffs.py n3337 n4950       # Generate specific version pair
+  ./generate_diffs.py n3337 n4950 --max-dots 1   # Only 0-1 dots
   ./generate_diffs.py --list            # List available versions
 
 By default, generates all possible pairs (15 total):
@@ -595,6 +618,8 @@ By default, generates all possible pairs (15 total):
     parser.add_argument('to_version', nargs='?', help='Target version (e.g., n4950)')
     parser.add_argument('--list', action='store_true', help='List available versions')
     parser.add_argument('--output', '-o', default='diffs', help='Output directory (default: diffs)')
+    parser.add_argument('--max-dots', type=int, metavar='N',
+                       help='Maximum number of dots in stable names (default: no limit, all levels)')
 
     args = parser.parse_args()
 
@@ -619,7 +644,7 @@ By default, generates all possible pairs (15 total):
     for from_v, to_v in pairs:
         output_dir = output_root / f"{from_v}_to_{to_v}"
         try:
-            generate_diff_pair(from_v, to_v, output_dir)
+            generate_diff_pair(from_v, to_v, output_dir, max_dots=args.max_dots)
         except Exception as e:
             print(f"Error generating diff pair {from_v} → {to_v}: {e}", file=sys.stderr)
             continue
