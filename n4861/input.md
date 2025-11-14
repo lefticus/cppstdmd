@@ -63,7 +63,7 @@ components can be instantiated.
 
 ### Thread safety <a id="iostreams.threadsafety">[[iostreams.threadsafety]]</a>
 
-Concurrent access to a stream object ( [[string.streams]],
+Concurrent access to a stream object ([[string.streams]],
 [[file.streams]]), stream buffer object [[stream.buffers]], or C Library
 stream [[c.files]] by multiple threads may result in a data race
 [[intro.multithread]] unless otherwise specified [[iostream.objects]].
@@ -1057,7 +1057,7 @@ has a trivial copy assignment operator. If
 a trivial destructor. All specializations of `fpos` meet the
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
 *Cpp17CopyAssignable*, *Cpp17Destructible*, and
-*Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) requirements.
+*Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]) requirements.
 In addition, the expressions shown in [[fpos.operations]] are valid and
 have the indicated semantics. In that table,
 
@@ -2116,7 +2116,7 @@ basic_streambuf* setbuf(char_type* s, streamsize n);
 
 *Effects:* Influences stream buffering in a way that is defined
 separately for each class derived from `basic_streambuf` in this
-Clause ( [[stringbuf.virtuals]], [[filebuf.virtuals]]).
+Clause ([[stringbuf.virtuals]], [[filebuf.virtuals]]).
 
 *Default behavior:* Does nothing. Returns `this`.
 
@@ -2128,7 +2128,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 
 *Effects:* Alters the stream positions within one or more of the
 controlled sequences in a way that is defined separately for each class
-derived from `basic_streambuf` in this Clause ( [[stringbuf.virtuals]],
+derived from `basic_streambuf` in this Clause ([[stringbuf.virtuals]],
 [[filebuf.virtuals]]).
 
 *Default behavior:* Returns `pos_type(off_type(-1))`.
@@ -2141,7 +2141,7 @@ pos_type seekpos(pos_type sp,
 
 *Effects:* Alters the stream positions within one or more of the
 controlled sequences in a way that is defined separately for each class
-derived from `basic_streambuf` in this Clause ( [[stringbuf]],
+derived from `basic_streambuf` in this Clause ([[stringbuf]],
 [[filebuf]]).
 
 *Default behavior:* Returns `pos_type(off_type(-1))`.
@@ -4999,7 +4999,7 @@ explicit basic_istringstream(
 
 *Effects:* Initializes the base class with
 `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`([[stringbuf.cons]]).
 
 ``` cpp
 basic_istringstream(ios_base::openmode which, const Allocator& a);
@@ -5028,7 +5028,7 @@ template<class SAlloc>
 
 *Effects:* Initializes the base class with
 `basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`([[stringbuf.cons]]).
 
 ``` cpp
 template<class SAlloc>
@@ -5219,7 +5219,7 @@ explicit basic_ostringstream(
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`([[stringbuf.cons]]).
 
 ``` cpp
 basic_ostringstream(ios_base::openmode which, const Allocator& a);
@@ -5227,7 +5227,7 @@ basic_ostringstream(ios_base::openmode which, const Allocator& a);
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`([[stringbuf.cons]]).
 
 ``` cpp
 explicit basic_ostringstream(
@@ -5248,7 +5248,7 @@ template<class SAlloc>
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`([[stringbuf.cons]]).
 
 ``` cpp
 template<class SAlloc>
@@ -5261,7 +5261,7 @@ template<class SAlloc>
 
 *Effects:* Initializes the base class with
 `basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`([[stringbuf.cons]]).
 
 ``` cpp
 basic_ostringstream(basic_ostringstream&& rhs);
@@ -7104,7 +7104,7 @@ no implied character set and encoding, they are not included as
 permitted types. — *end note*]
 
 Template parameters named `Allocator` shall meet the *Cpp17Allocator*
-requirements ( [[cpp17.allocator]]).
+requirements ([[cpp17.allocator]]).
 
 #### Namespaces and headers <a id="fs.req.namespace">[[fs.req.namespace]]</a>
 

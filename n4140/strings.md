@@ -3,7 +3,7 @@
 ## General <a id="strings.general">[[strings.general]]</a>
 
 This Clause describes components for manipulating sequences of any
-non-array POD ( [[basic.types]]) type. In this Clause such types are
+non-array POD ([[basic.types]]) type. In this Clause such types are
 called *char-like types*, and objects of char-like types are called
 *char-like objects* or simply *characters*.
 
@@ -563,9 +563,9 @@ The functions described in this Clause can report two kinds of errors,
 each associated with an exception type:
 
 - a *length* error is associated with exceptions of type
-  `length_error` ( [[length.error]]);
+  `length_error` ([[length.error]]);
 - an *out-of-range* error is associated with exceptions of type
-  `out_of_range` ( [[out.of.range]]).
+  `out_of_range` ([[out.of.range]]).
 
 ``` cpp
 namespace std {
@@ -2435,7 +2435,7 @@ template<class charT, class traits, class Allocator>
 ```
 
 *Effects:* Behaves as a formatted input
-function ( [[istream.formatted.reqmts]]). After constructing a `sentry`
+function ([[istream.formatted.reqmts]]). After constructing a `sentry`
 object, if the sentry converts to true, calls `str.erase()` and then
 extracts characters from `is` and appends them to `str` as if by calling
 `str.append(1,c)`. If `is.width()` is greater than zero, the maximum
@@ -2453,7 +2453,7 @@ and the `sentry` object `k` is destroyed.
 
 If the function extracts no characters, it calls
 `is.setstate(ios::failbit)`, which may throw
-`ios_base::failure` ( [[iostate.flags]]).
+`ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `is`
 
@@ -2465,7 +2465,7 @@ template<class charT, class traits, class Allocator>
 ```
 
 *Effects:* Behaves as a formatted output
-function ( [[ostream.formatted.reqmts]]) of `os`. Forms a character
+function ([[ostream.formatted.reqmts]]) of `os`. Forms a character
 sequence `seq`, initially consisting of the elements defined by the
 range \[`str.begin(), str.end()`). Determines padding for `seq` as
 described in  [[ostream.formatted.reqmts]]. Then inserts `seq` as if by
@@ -2488,7 +2488,7 @@ template<class charT, class traits, class Allocator>
 ```
 
 *Effects:* Behaves as an unformatted input
-function ( [[istream.unformatted]]), except that it does not affect the
+function ([[istream.unformatted]]), except that it does not affect the
 value returned by subsequent calls to `basic_istream<>::gcount()`. After
 constructing a `sentry` object, if the sentry converts to true, calls
 `str.erase()` and then extracts characters from `is` and appends them to
@@ -2498,16 +2498,16 @@ occurs:
 - end-of-file occurs on the input sequence (in which case, the `getline`
   function calls `is.setstate(ios_base::eofbit)`).
 - `traits::eq(c, delim)` for the next available input character *c* (in
-  which case, *c* is extracted but not appended) ( [[iostate.flags]])
+  which case, *c* is extracted but not appended) ([[iostate.flags]])
 - `str.max_size()` characters are stored (in which case, the function
-  calls `is.setstate(ios_base::failbit))` ( [[iostate.flags]])
+  calls `is.setstate(ios_base::failbit))` ([[iostate.flags]])
 
 The conditions are tested in the order shown. In any case, after the
 last character is extracted, the `sentry` object `k` is destroyed.
 
 If the function extracts no characters, it calls
 `is.setstate(ios_base::failbit)` which may throw
-`ios_base::failure` ( [[iostate.flags]]).
+`ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `is`.
 
@@ -2666,7 +2666,7 @@ template <> struct hash<wstring>;
 ```
 
 The template specializations shall meet the requirements of class
-template `hash` ( [[unord.hash]]).
+template `hash` ([[unord.hash]]).
 
 ## Suffix for `basic_string` literals <a id="basic.string.literals">[[basic.string.literals]]</a>
 
@@ -2712,7 +2712,7 @@ and `<stdlib.h>` and the C Unicode TR header `<uchar.h>`, respectively,
 with the following modifications:
 
 The headers shall not define the types `char16_t`, `char32_t`, and
-`wchar_t` ( [[lex.key]]).
+`wchar_t` ([[lex.key]]).
 
 The function signature `strchr(const char*, int)` shall be replaced by
 the two declarations:
@@ -2815,7 +2815,7 @@ const wchar_t* wmemchr(const wchar_t* s, wchar_t c, size_t n);
 both of which shall have the same behavior as the original declaration.
 
 The functions `strerror` and `strtok` are not required to avoid data
-races ( [[res.on.data.races]]).
+races ([[res.on.data.races]]).
 
 Calling the functions listed in Table  [[tab:mbstate.data.races]] with
 an `mbstate_t*` argument of `NULL` may introduce a data race (
@@ -2939,8 +2939,8 @@ ISO C 7.3, 7.10.7, 7.10.8, and 7.11. Amendment 1 4.4, 4.5, and 4.6.
     [[string.require]]).
 
 [^3]: For example, as an argument to non-member functions `swap()` (
-    [[string.special]]), `operator>{}>()` ( [[string.io]]), and
-    `getline()` ( [[string.io]]), or as an argument to
+    [[string.special]]), `operator>{}>()` ([[string.io]]), and
+    `getline()` ([[string.io]]), or as an argument to
     `basic_string::swap()`
 
 [^4]: `reserve()` uses `allocator_traits<Allocator>::allocate()` which

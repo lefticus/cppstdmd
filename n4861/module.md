@@ -785,7 +785,7 @@ determines which names are visible to argument-dependent name lookup
 [[module.reach]] in the context of a particular declaration or template
 instantiation.
 
-During the implicit definition of a defaulted function ( [[special]],
+During the implicit definition of a defaulted function ([[special]],
 [[class.compare.default]]), the instantiation context is the union of
 the instantiation context from the definition of the class and the
 instantiation context of the program construct that resulted in the
@@ -864,7 +864,7 @@ comprises
 - the point at the end of translation unit \#2, and
 - the point of the call to `f(0)`,
 
-so the definition of `X` is reachable ( [[module.reach]]).
+so the definition of `X` is reachable ([[module.reach]]).
 
 It is unspecified whether the call to `g(0)` is valid: the instantiation
 context of `bar<int, X>` comprises
@@ -883,7 +883,7 @@ so the definition of `X` need not be reachable, as described in
 A translation unit U is *necessarily reachable* from a point P if U is a
 module interface unit on which the translation unit containing P has an
 interface dependency, or the translation unit containing P imports U, in
-either case prior to P ( [[module.import]]).
+either case prior to P ([[module.import]]).
 
 [*Note 1*: While module interface units are reachable even when they
 are only transitively imported via a non-exported import declaration,

@@ -6,7 +6,7 @@ This Clause describes components that C++programs may use to perform
 operations involving regular expression matching and searching.
 
 The following subclauses describe a basic regular expression class
-template and its traits that can handle char-like ( [[strings.general]])
+template and its traits that can handle char-like ([[strings.general]])
 template arguments, two specializations of this class template that
 handle sequences of `char` and `wchar_t`, a class template that holds
 the result of a regular expression match, a series of algorithms that
@@ -92,7 +92,7 @@ In Table  [[tab:re:RegexpTraits]] `X` denotes a traits class defining
 types and functions for the character container type `charT`; `u` is an
 object of type `X`; `v` is an object of type `const
 X`; `p` is a value of type `const charT*`; `I1` and `I2` are input
-iterators ( [[input.iterators]]); `F1` and `F2` are forward iterators (
+iterators ([[input.iterators]]); `F1` and `F2` are forward iterators (
 [[forward.iterators]]); `c` is a value of type `const charT`; `s` is an
 object of type `X::string_type`; `cs` is an object of type
 `const X::string_type`; `b` is a value of type `bool`; `I` is a value of
@@ -487,7 +487,7 @@ namespace std::regex_constants {
 ```
 
 The type `syntax_option_type` is an *implementation-defined* bitmask
-type ( [[bitmask.types]]). Setting its elements has the effects listed
+type ([[bitmask.types]]). Setting its elements has the effects listed
 in Table  [[tab:re:syntaxoption]]. A valid value of type
 `syntax_option_type` shall have at most one of the grammar elements
 `ECMAScript`, `basic`, `extended`, `awk`, `grep`, `egrep`, set. If no
@@ -553,7 +553,7 @@ set.
 | % \indexlibrary{\idxcode{match_any}}% `match_any`                 | If more than one match is possible then any match is an acceptable result.                                                                                                                                                                                                                                                                                                                                                                                                  |
 | % \indexlibrary{\idxcode{match_not_null}}% `match_not_null`       | The expression shall not match an empty sequence.                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | % \indexlibrary{\idxcode{match_continuous}}% `match_continuous`   | The expression shall only match a sub-sequence that begins at `first`.                                                                                                                                                                                                                                                                                                                                                                                                      |
-| % \indexlibrary{\idxcode{match_prev_avail}}% `match_prev_avail`   | \verb!--first! is a valid iterator position. When this flag is set the flags `match_not_bol` and `match_not_bow` shall be ignored by the regular expression algorithms~( [[re.alg]]) and iterators~( [[re.iter]]).                                                                                                                                                                                                                                                          |
+| % \indexlibrary{\idxcode{match_prev_avail}}% `match_prev_avail`   | \verb!--first! is a valid iterator position. When this flag is set the flags `match_not_bol` and `match_not_bow` shall be ignored by the regular expression algorithms~([[re.alg]]) and iterators~([[re.iter]]).                                                                                                                                                                                                                                                          |
 | % \indexlibrary{\idxcode{format_default}}% `format_default`       | When a regular expression match is to be replaced by a new string, the new string shall be constructed using the rules used by the ECMAScript replace function in ECMA-262, part 15.5.4.11 String.prototype.replace. In addition, during search and replace operations all non-overlapping occurrences of the regular expression shall be located and replaced, and sections of the input that did not match the expression shall be copied unchanged to the output string. |
 | % \indexlibrary{\idxcode{format_sed}}% `format_sed`               | When a regular expression match is to be replaced by a new string, the new string shall be constructed using the rules used by the sed utility in POSIX.                                                                                                                                                                                                                                                                                                                    |
 | % \indexlibrary{\idxcode{format_no_copy}}% `format_no_copy`       | During a search and replace operation, sections of the character container sequence being searched that do not match the regular expression shall not be copied to the output string.                                                                                                                                                                                                                                                                                       |
@@ -667,7 +667,7 @@ namespace std {
 
 The specializations `regex_traits<char>` and `regex_traits<wchar_t>`
 shall be valid and shall satisfy the requirements for a regular
-expression traits class ( [[re.req]]).
+expression traits class ([[re.req]]).
 
 ``` cpp
 using char_class_type = bitmask_type;
@@ -1200,7 +1200,7 @@ template <class InputIterator>
 ```
 
 *Requires:* The type `InputIterator` shall satisfy the requirements for
-an Input Iterator ( [[input.iterators]]).
+an Input Iterator ([[input.iterators]]).
 
 *Returns:* `assign(string_type(first, last), f)`.
 
@@ -2007,7 +2007,7 @@ template <class OutputIter>
 ```
 
 *Requires:* `ready() == true` and `OutputIter` shall satisfy the
-requirements for an Output Iterator ( [[output.iterators]]).
+requirements for an Output Iterator ([[output.iterators]]).
 
 *Effects:* Copies the character sequence \[`fmt_first`, `fmt_last`) to
 OutputIter `out`. Replaces each format specifier or escape sequence in
@@ -2145,7 +2145,7 @@ template <class BidirectionalIterator, class Allocator, class charT, class trait
 ```
 
 *Requires:* The type `BidirectionalIterator` shall satisfy the
-requirements of a Bidirectional Iterator ( [[bidirectional.iterators]]).
+requirements of a Bidirectional Iterator ([[bidirectional.iterators]]).
 
 *Effects:* Determines whether there is a match between the regular
 expression `e`, and all of the character sequence \[`first`, `last`).
@@ -2254,7 +2254,7 @@ template <class BidirectionalIterator, class Allocator, class charT, class trait
 ```
 
 *Requires:* Type `BidirectionalIterator` shall satisfy the requirements
-of a Bidirectional Iterator ( [[bidirectional.iterators]]).
+of a Bidirectional Iterator ([[bidirectional.iterators]]).
 
 *Effects:* Determines whether there is some sub-sequence within
 \[`first`, `last`) that matches the regular expression `e`. The
@@ -2988,7 +2988,7 @@ The behavior of the internal finite state machine representation when
 used to match a sequence of characters is as described in ECMA-262. The
 behavior is modified according to any match_flag_type flags (
 [[re.matchflag]]) specified when using the regular expression object in
-one of the regular expression algorithms ( [[re.alg]]). The behavior is
+one of the regular expression algorithms ([[re.alg]]). The behavior is
 also localized by interaction with the traits class template parameter
 as follows:
 

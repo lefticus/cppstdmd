@@ -920,8 +920,8 @@ A type `TC` meets the *Cpp17TrivialClock* requirements if:
 
 - `TC` meets the *Cpp17Clock* requirements [[time.clock.req]],
 - the types `TC::rep`, `TC::duration`, and `TC::time_point` meet the
-  *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
-  *Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) requirements
+  *Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]) and
+  *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]) requirements
   and the requirements of numeric types [[numeric.requirements]].
   \[*Note 1*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*]
@@ -3031,8 +3031,8 @@ namespace std::chrono {
 1 to 31, but may hold non-negative values outside this range. It can be
 constructed with any `unsigned` value, which will be subsequently
 truncated to fit into `day`’s unspecified internal storage. `day` meets
-the *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
-*Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) requirements,
+the *Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]) and
+*Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]) requirements,
 and participates in basic arithmetic with `days` objects, which
 represent a difference between two `day` objects.
 
@@ -3216,8 +3216,8 @@ namespace std::chrono {
 range 1 to 12, but may hold non-negative values outside this range. It
 can be constructed with any `unsigned` value, which will be subsequently
 truncated to fit into `month`’s unspecified internal storage. `month`
-meets the *Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) and
-*Cpp17LessThanComparable* ( [[cpp17.lessthancomparable]]) requirements,
+meets the *Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]) and
+*Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]) requirements,
 and participates in basic arithmetic with `months` objects, which
 represent a difference between two `month` objects.
 
@@ -3423,7 +3423,7 @@ namespace std::chrono {
 in the range \[`min()`, `max()`\]. It can be constructed with any `int`
 value, which will be subsequently truncated to fit into `year`’s
 unspecified internal storage. `year` meets the *Cpp17EqualityComparable*
-( [[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+([[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
 [[cpp17.lessthancomparable]]) requirements, and participates in basic
 arithmetic with `years` objects, which represent a difference between
 two `year` objects.
@@ -4400,7 +4400,7 @@ namespace std::chrono {
 `year_month` represents a specific month of a specific year, but with an
 unspecified day. `year_month` is a field-based time point with a
 resolution of `months`. `year_month` meets the *Cpp17EqualityComparable*
-( [[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
+([[cpp17.equalitycomparable]]) and *Cpp17LessThanComparable* (
 [[cpp17.lessthancomparable]]) requirements.
 
 `year_month` is a trivially copyable and standard-layout class type.

@@ -21,7 +21,7 @@ guidelines and do not determine compliance.
   a full-expression \[256\].
 - Number of characters in an internal identifier [[lex.name]] or macro
   name [[cpp.replace]] \[1 024\].
-- Number of characters in an external identifier ( [[lex.name]],
+- Number of characters in an external identifier ([[lex.name]],
   [[basic.link]]) \[1 024\].
 - External identifiers [[basic.link]] in one translation unit
   \[65 536\].

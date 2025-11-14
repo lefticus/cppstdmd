@@ -1737,7 +1737,7 @@ such an algorithm should be a single pass algorithm.
 [*Note 1*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
 transparency.) Value type `T` is not required to be a
-*Cpp17CopyAssignable* type ( [[cpp17.copyassignable]]). Such an
+*Cpp17CopyAssignable* type ([[cpp17.copyassignable]]). Such an
 algorithm can be used with istreams as the source of the input data
 through the `istream_iterator` class template. — *end note*]
 

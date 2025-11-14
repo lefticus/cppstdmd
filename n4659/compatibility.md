@@ -1014,17 +1014,17 @@ void operator delete(void*, std::size_t) noexcept;
 
 In this International Standard, however, the declaration of
 `operator delete` might match a predefined usual (non-placement)
-`operator delete` ( [[basic.stc.dynamic]]). If so, the program is
+`operator delete` ([[basic.stc.dynamic]]). If so, the program is
 ill-formed, as it was for class member allocation functions and
-deallocation functions ( [[expr.new]]).
+deallocation functions ([[expr.new]]).
 
 ### Clause  [[expr]]: expressions <a id="diff.cpp11.expr">[[diff.cpp11.expr]]</a>
 
 [[expr.cond]] **Change:** A conditional expression with a throw
 expression as its second or third operand keeps the type and value
 category of the other operand. **Rationale:** Formerly mandated
-conversions (lvalue-to-rvalue ( [[conv.lval]]), array-to-pointer (
-[[conv.array]]), and function-to-pointer ( [[conv.func]]) standard
+conversions (lvalue-to-rvalue ([[conv.lval]]), array-to-pointer (
+[[conv.array]]), and function-to-pointer ([[conv.func]]) standard
 conversions), especially the creation of the temporary due to
 lvalue-to-rvalue conversion, were considered gratuitous and surprising.
 **Effect on original feature:** Valid C++11code that relies on the
@@ -1373,16 +1373,16 @@ There are no C++headers for the C headers `<stdatomic.h>`,
 `<stdnoreturn.h>`, and `<threads.h>`, nor are the C headers themselves
 part of C++.
 
-The C++headers `<ccomplex>` ( [[depr.ccomplex.syn]]) and `<ctgmath>` (
+The C++headers `<ccomplex>` ([[depr.ccomplex.syn]]) and `<ctgmath>` (
 [[depr.ctgmath.syn]]), as well as their corresponding C headers
 `<complex.h>` and `<tgmath.h>`, do not contain any of the content from
 the C standard library and instead merely include other headers from the
 C++standard library.
 
-The headers `<ciso646>`, `<cstdalign>` ( [[depr.cstdalign.syn]]), and
-`<cstdbool>` ( [[depr.cstdbool.syn]]) are meaningless in C++. Use of the
+The headers `<ciso646>`, `<cstdalign>` ([[depr.cstdalign.syn]]), and
+`<cstdbool>` ([[depr.cstdbool.syn]]) are meaningless in C++. Use of the
 C++headers `<ccomplex>`, `<cstdalign>`, `<cstdbool>`, and `<ctgmath>` is
-deprecated ( [[depr.c.headers]]).
+deprecated ([[depr.c.headers]]).
 
 ### Modifications to definitions <a id="diff.mods.to.definitions">[[diff.mods.to.definitions]]</a>
 
@@ -1390,7 +1390,7 @@ deprecated ( [[depr.c.headers]]).
 
 The types `char16_t` and `char32_t` are distinct types rather than
 typedefs to existing integral types. The tokens `char16_t` and
-`char32_t` are keywords in this International Standard ( [[lex.key]]).
+`char32_t` are keywords in this International Standard ([[lex.key]]).
 They do not appear as macro names defined in `<cuchar>` (
 [[cuchar.syn]]).
 
@@ -1398,47 +1398,47 @@ They do not appear as macro names defined in `<cuchar>` (
 
 The type `wchar_t` is a distinct type rather than a typedef to an
 existing integral type. The token `wchar_t` is a keyword in this
-International Standard ( [[lex.key]]). It does not appear as a type name
-defined in any of `<cstddef>` ( [[cstddef.syn]]), `<cstdlib>` (
-[[cstdlib.syn]]), or `<cwchar>` ( [[cwchar.syn]]).
+International Standard ([[lex.key]]). It does not appear as a type name
+defined in any of `<cstddef>` ([[cstddef.syn]]), `<cstdlib>` (
+[[cstdlib.syn]]), or `<cwchar>` ([[cwchar.syn]]).
 
 #### Header `<assert.h>` <a id="diff.header.assert.h">[[diff.header.assert.h]]</a>
 
 The token `static_assert` is a keyword in this International Standard (
 [[lex.key]]). It does not appear as a macro name defined in
-`<cassert>` ( [[cassert.syn]]).
+`<cassert>` ([[cassert.syn]]).
 
 #### Header `<iso646.h>` <a id="diff.header.iso646.h">[[diff.header.iso646.h]]</a>
 
 The tokens `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not_eq`, `not`,
 `or`, `or_eq`, `xor`, and `xor_eq` are keywords in this International
-Standard ( [[lex.key]]). They do not appear as macro names defined in
+Standard ([[lex.key]]). They do not appear as macro names defined in
 `<ciso646>`.
 
 #### Header `<stdalign.h>` <a id="diff.header.stdalign.h">[[diff.header.stdalign.h]]</a>
 
 The token `alignas` is a keyword in this International Standard (
 [[lex.key]]). It does not appear as a macro name defined in
-`<cstdalign>` ( [[depr.cstdalign.syn]]).
+`<cstdalign>` ([[depr.cstdalign.syn]]).
 
 #### Header `<stdbool.h>` <a id="diff.header.stdbool.h">[[diff.header.stdbool.h]]</a>
 
 The tokens `bool`, `true`, and `false` are keywords in this
-International Standard ( [[lex.key]]). They do not appear as macro names
-defined in `<cstdbool>` ( [[depr.cstdbool.syn]]).
+International Standard ([[lex.key]]). They do not appear as macro names
+defined in `<cstdbool>` ([[depr.cstdbool.syn]]).
 
 #### Macro `NULL` <a id="diff.null">[[diff.null]]</a>
 
-The macro `NULL`, defined in any of `<clocale>` ( [[c.locales]]),
-`<cstddef>` ( [[cstddef.syn]]), `<cstdio>` ( [[cstdio.syn]]),
-`<cstdlib>` ( [[cstdlib.syn]]), `<cstring>` ( [[cstring.syn]]),
-`<ctime>` ( [[ctime.syn]]), or `<cwchar>` ( [[cwchar.syn]]), is an
+The macro `NULL`, defined in any of `<clocale>` ([[c.locales]]),
+`<cstddef>` ([[cstddef.syn]]), `<cstdio>` ([[cstdio.syn]]),
+`<cstdlib>` ([[cstdlib.syn]]), `<cstring>` ([[cstring.syn]]),
+`<ctime>` ([[ctime.syn]]), or `<cwchar>` ([[cwchar.syn]]), is an
 *implementation-defined* C++null pointer constant in this International
-Standard ( [[support.types]]).
+Standard ([[support.types]]).
 
 ### Modifications to declarations <a id="diff.mods.to.declarations">[[diff.mods.to.declarations]]</a>
 
-Header `<cstring>` ( [[cstring.syn]]): The following functions have
+Header `<cstring>` ([[cstring.syn]]): The following functions have
 different declarations:
 
 - `strchr`
@@ -1449,7 +1449,7 @@ different declarations:
 
 Subclause [[cstring.syn]] describes the changes.
 
-Header `<cwchar>` ( [[cwchar.syn]]): The following functions have
+Header `<cwchar>` ([[cwchar.syn]]): The following functions have
 different declarations:
 
 - `wcschr`
@@ -1460,13 +1460,13 @@ different declarations:
 
 Subclause [[cwchar.syn]] describes the changes.
 
-Header `<cstddef>` ( [[cstddef.syn]]) declares the name `nullptr_t` in
+Header `<cstddef>` ([[cstddef.syn]]) declares the name `nullptr_t` in
 addition to the names declared in `<stddef.h>` in the C standard
 library.
 
 ### Modifications to behavior <a id="diff.mods.to.behavior">[[diff.mods.to.behavior]]</a>
 
-Header `<cstdlib>` ( [[cstdlib.syn]]): The following functions have
+Header `<cstdlib>` ([[cstdlib.syn]]): The following functions have
 different behavior:
 
 - `atexit`
@@ -1475,7 +1475,7 @@ different behavior:
 
 Subclause [[support.start.term]] describes the changes.
 
-Header `<csetjmp>` ( [[csetjmp.syn]]): The following functions have
+Header `<csetjmp>` ([[csetjmp.syn]]): The following functions have
 different behavior:
 
 - `longjmp`
@@ -1484,7 +1484,7 @@ Subclause [[csetjmp.syn]] describes the changes.
 
 #### Macro `offsetof(type, member-designator)` <a id="diff.offsetof">[[diff.offsetof]]</a>
 
-The macro `offsetof`, defined in `<cstddef>` ( [[cstddef.syn]]), accepts
+The macro `offsetof`, defined in `<cstddef>` ([[cstddef.syn]]), accepts
 a restricted set of `type` arguments in this International Standard.
 Subclause [[support.types.layout]] describes the change.
 

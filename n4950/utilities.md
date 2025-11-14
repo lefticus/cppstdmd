@@ -228,8 +228,8 @@ template<class T>
 `is_move_assignable_v<T>` is `true`.
 
 *Preconditions:* Type `T` meets the *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-( [[cpp17.moveassignable]]) requirements.
+([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Exchanges values stored in two locations.
 
@@ -2489,7 +2489,7 @@ When an `optional<T>` object contains a value, member `val` points to
 the contained value.
 
 `T` shall be a type other than cv `in_place_t` or cv `nullopt_t` that
-meets the *Cpp17Destructible* requirements ( [[cpp17.destructible]]).
+meets the *Cpp17Destructible* requirements ([[cpp17.destructible]]).
 
 #### Constructors <a id="optional.ctor">[[optional.ctor]]</a>
 
@@ -5310,7 +5310,7 @@ for the `E` parameter that is not a valid template argument for
 `unexpected` is ill-formed.
 
 When `T` is not cv `void`, it shall meet the *Cpp17Destructible*
-requirements ( [[cpp17.destructible]]). `E` shall meet the
+requirements ([[cpp17.destructible]]). `E` shall meet the
 *Cpp17Destructible* requirements.
 
 #### Constructors <a id="expected.object.cons">[[expected.object.cons]]</a>
@@ -9513,7 +9513,7 @@ requirements. Template parameters named
 of templates specified in [[func.search]] shall meet the same
 requirements and semantics as specified in [[algorithms.general]].
 Template parameters named `Hash` shall meet the *Cpp17Hash* requirements
-( [[cpp17.hash]]).
+([[cpp17.hash]]).
 
 The Boyer-Moore searcher implements the Boyer-Moore search algorithm.
 The Boyer-Moore-Horspool searcher implements the Boyer-Moore-Horspool
@@ -9755,10 +9755,10 @@ attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*]
 
 An enabled specialization `hash<Key>` will:
 
-- meet the *Cpp17Hash* requirements ( [[cpp17.hash]]), with `Key` as the
+- meet the *Cpp17Hash* requirements ([[cpp17.hash]]), with `Key` as the
   function call argument type, the *Cpp17DefaultConstructible*
-  requirements ( [[cpp17.defaultconstructible]]), the
-  *Cpp17CopyAssignable* requirements ( [[cpp17.copyassignable]]), the
+  requirements ([[cpp17.defaultconstructible]]), the
+  *Cpp17CopyAssignable* requirements ([[cpp17.copyassignable]]), the
   *Cpp17Swappable* requirements [[swappable.requirements]],
 - meet the requirement that if `k1 == k2` is `true`, `h(k1) == h(k2)` is
   also `true`, where `h` is an object of type `hash<Key>` and `k1` and
@@ -11142,11 +11142,11 @@ in `fmt`. If present, `loc` is used for locale-specific formatting.
 
 A type `F` meets the requirements if it meets the
 
-- *Cpp17DefaultConstructible* ( [[cpp17.defaultconstructible]]),
-- *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]),
-- *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]),
+- *Cpp17DefaultConstructible* ([[cpp17.defaultconstructible]]),
+- *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]),
+- *Cpp17CopyAssignable* ([[cpp17.copyassignable]]),
 - *Cpp17Swappable* [[swappable.requirements]], and
-- *Cpp17Destructible* ( [[cpp17.destructible]])
+- *Cpp17Destructible* ([[cpp17.destructible]])
 
 requirements, and the expressions shown in [[formatter.basic]] are valid
 and have the indicated semantics.
@@ -11312,7 +11312,7 @@ suitable for debugging or for logging.
 
 The escaped string *E* representation of a string *S* is constructed by
 encoding a sequence of characters as follows. The associated character
-encoding *CE* for `charT` ( [[lex.string.literal]]) is used to both
+encoding *CE* for `charT` ([[lex.string.literal]]) is used to both
 interpret *S* and construct *E*.
 
 - U+0022 (quotation mark) (`"`) is appended to *E*.

@@ -240,7 +240,7 @@ The header `<utility>` defines several types and function templates that
 are described in this Clause. It also defines the template `pair` and
 various function templates that operate on `pair` objects.
 
-The type `chars_format` is a bitmask type ( [[bitmask.types]]) with
+The type `chars_format` is a bitmask type ([[bitmask.types]]) with
 elements `scientific`, `fixed`, and `hex`.
 
 ### Operators <a id="operators">[[operators]]</a>
@@ -320,7 +320,7 @@ template <class T, size_t N>
 *Remarks:* This function shall not participate in overload resolution
 unless `is_swappable_v<T>` is `true`.
 
-*Requires:* `a[i]` shall be swappable with ( [[swappable.requirements]])
+*Requires:* `a[i]` shall be swappable with ([[swappable.requirements]])
 `b[i]` for all `i` in the range \[`0`, `N`).
 
 *Effects:* As if by `swap_ranges(a, a + N, b)`.
@@ -344,7 +344,7 @@ return old_val;
 The library provides templated helper functions to simplify applying
 move semantics to an lvalue and to simplify the implementation of
 forwarding functions. All functions specified in this subclause are
-signal-safe ( [[csignal.syn]]).
+signal-safe ([[csignal.syn]]).
 
 ``` cpp
 template <class T> constexpr T&& forward(remove_reference_t<T>& t) noexcept;
@@ -445,7 +445,7 @@ definition of expressions which occur as unevaluated operands (Clause 
 template <class T> add_rvalue_reference_t<T> declval() noexcept;    // as unevaluated operand
 ```
 
-*Remarks:* If this function is odr-used ( [[basic.def.odr]]), the
+*Remarks:* If this function is odr-used ([[basic.def.odr]]), the
 program is ill-formed.
 
 *Remarks:* The template parameter `T` of `declval` may be an incomplete
@@ -873,7 +873,7 @@ void swap(pair& p) noexcept(see below);
 ```
 
 *Requires:* `first` shall be swappable
-with ( [[swappable.requirements]]) `p.first` and `second` shall be
+with ([[swappable.requirements]]) `p.first` and `second` shall be
 swappable with `p.second`.
 
 *Effects:* Swaps `first` with `p.first` and `second` with `p.second`.
@@ -1043,7 +1043,7 @@ inline constexpr piecewise_construct_t piecewise_construct{};
 The `struct` `piecewise_construct_t` is an empty structure type used as
 a unique type to disambiguate constructor and function overloading.
 Specifically, `pair` has a constructor with `piecewise_construct_t` as
-the first argument, immediately followed by two `tuple` ( [[tuple]])
+the first argument, immediately followed by two `tuple` ([[tuple]])
 arguments used for piecewise construction of the elements of the `pair`
 object.
 
@@ -1404,11 +1404,11 @@ template <class Alloc, class U1, class U2>
 ```
 
 *Requires:* `Alloc` shall meet the requirements for an
-`Allocator` ( [[allocator.requirements]]).
+`Allocator` ([[allocator.requirements]]).
 
 *Effects:* Equivalent to the preceding constructors except that each
 element is constructed with uses-allocator
-construction ( [[allocator.uses.construction]]).
+construction ([[allocator.uses.construction]]).
 
 #### Assignment <a id="tuple.assign">[[tuple.assign]]</a>
 
@@ -1516,7 +1516,7 @@ void swap(tuple& rhs) noexcept(see below);
 ```
 
 *Requires:* Each element in `*this` shall be swappable
-with ( [[swappable.requirements]]) the corresponding element in `rhs`.
+with ([[swappable.requirements]]) the corresponding element in `rhs`.
 
 *Effects:* Calls `swap` for each element in `*this` and its
 corresponding element in `rhs`.
@@ -1692,7 +1692,7 @@ template <class T> struct tuple_size;
 ```
 
 *Remarks:* All specializations of `tuple_size` shall meet the
-`UnaryTypeTrait` requirements ( [[meta.rqmts]]) with a base
+`UnaryTypeTrait` requirements ([[meta.rqmts]]) with a base
 characteristic of `integral_constant<size_t, N>` for some `N`.
 
 ``` cpp
@@ -1723,7 +1723,7 @@ template <class T> class tuple_size<const volatile T>;
 Let *`TS`* denote `tuple_size<T>` of the cv-unqualified type `T`. If the
 expression *`TS`*`::value` is well-formed when treated as an unevaluated
 operand, then each of the three templates shall meet the
-`UnaryTypeTrait` requirements ( [[meta.rqmts]]) with a base
+`UnaryTypeTrait` requirements ([[meta.rqmts]]) with a base
 characteristic of
 
 ``` cpp
@@ -1754,7 +1754,7 @@ template <size_t I, class T> class tuple_element<I, const volatile T>;
 
 Let *`TE`* denote `tuple_element_t<I, T>` of the cv-unqualified type
 `T`. Then each of the three templates shall meet the
-`TransformationTrait` requirements ( [[meta.rqmts]]) with a member
+`TransformationTrait` requirements ([[meta.rqmts]]) with a member
 typedef `type` that names the following type:
 
 - for the first specialization, `add_const_t<`*`TE`*`>`,
@@ -1909,7 +1909,7 @@ template <class... Types, class Alloc>
 ```
 
 *Requires:* `Alloc` shall be an
-`Allocator` ( [[allocator.requirements]]).
+`Allocator` ([[allocator.requirements]]).
 
 [*Note 1*: Specialization of this trait informs other library
 components that `tuple` can be constructed with an allocator, even
@@ -2117,7 +2117,7 @@ constexpr optional(nullopt_t) noexcept;
 *Postconditions:* `*this` does not contain a value.
 
 *Remarks:* No contained value is initialized. For every object type `T`
-these constructors shall be constexpr constructors ( [[dcl.constexpr]]).
+these constructors shall be constexpr constructors ([[dcl.constexpr]]).
 
 ``` cpp
 constexpr optional(const optional& rhs);
@@ -2995,7 +2995,7 @@ template <class T, class U, class... Args>
 template <class T> struct hash<optional<T>>;
 ```
 
-The specialization `hash<optional<T>>` is enabled ( [[unord.hash]]) if
+The specialization `hash<optional<T>>` is enabled ([[unord.hash]]) if
 and only if `hash<remove_const_t<T>>` is enabled. When enabled, for an
 object `o` of type `optional<T>`, if `bool(o) == true`, then
 `hash<optional<T>>()(o)` shall evaluate to the same value as
@@ -3421,11 +3421,11 @@ template <class Alloc, size_t I, class U, class... Args>
 ```
 
 *Requires:* `Alloc` shall meet the requirements for an
-Allocator ( [[allocator.requirements]]).
+Allocator ([[allocator.requirements]]).
 
 *Effects:* Equivalent to the preceding constructors except that the
 contained value is constructed with uses-allocator
-construction ( [[allocator.uses.construction]]).
+construction ([[allocator.uses.construction]]).
 
 #### Destructor <a id="variant.dtor">[[variant.dtor]]</a>
 
@@ -3670,7 +3670,7 @@ void swap(variant& rhs) noexcept(see below);
 ```
 
 *Requires:* Lvalues of type `Tᵢ` shall be
-swappable ( [[swappable.requirements]]) and
+swappable ([[swappable.requirements]]) and
 `is_move_constructible_v<``Tᵢ``>` shall be `true` for all i.
 
 *Effects:*
@@ -3705,7 +3705,7 @@ template <class T> struct variant_size;
 ```
 
 *Remarks:* All specializations of `variant_size` shall meet the
-`UnaryTypeTrait` requirements ( [[meta.rqmts]]) with a base
+`UnaryTypeTrait` requirements ([[meta.rqmts]]) with a base
 characteristic of `integral_constant<size_t, N>` for some `N`.
 
 ``` cpp
@@ -3716,7 +3716,7 @@ template <class T> class variant_size<const volatile T>;
 
 Let `VS` denote `variant_size<T>` of the cv-unqualified type `T`. Then
 each of the three templates shall meet the `UnaryTypeTrait`
-requirements ( [[meta.rqmts]]) with a base characteristic of
+requirements ([[meta.rqmts]]) with a base characteristic of
 `integral_constant<size_t, VS::value>`.
 
 ``` cpp
@@ -3732,7 +3732,7 @@ template <size_t I, class T> class variant_alternative<I, const volatile T>;
 
 Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
 `T`. Then each of the three templates shall meet the
-`TransformationTrait` requirements ( [[meta.rqmts]]) with a member
+`TransformationTrait` requirements ([[meta.rqmts]]) with a member
 typedef `type` that names the following type:
 
 - for the first specialization, `add_const_t<VA::type>`,
@@ -3994,7 +3994,7 @@ template <class... Types> struct hash<variant<Types...>>;
 ```
 
 The specialization `hash<variant<Types...>>` is
-enabled ( [[unord.hash]]) if and only if every specialization in
+enabled ([[unord.hash]]) if and only if every specialization in
 `hash<remove_const_t<Types>>...` is enabled. The member functions are
 not guaranteed to be `noexcept`.
 
@@ -4002,7 +4002,7 @@ not guaranteed to be `noexcept`.
 template <> struct hash<monostate>;
 ```
 
-The specialization is enabled ( [[unord.hash]]).
+The specialization is enabled ([[unord.hash]]).
 
 ### Allocator-related traits <a id="variant.traits">[[variant.traits]]</a>
 
@@ -4011,7 +4011,7 @@ template <class... Types, class Alloc>
   struct uses_allocator<variant<Types...>, Alloc> : true_type { };
 ```
 
-*Requires:* `Alloc` shall be an Allocator ( [[allocator.requirements]]).
+*Requires:* `Alloc` shall be an Allocator ([[allocator.requirements]]).
 
 [*Note 1*: Specialization of this trait informs other library
 components that variant can be constructed with an allocator, even
@@ -4080,8 +4080,8 @@ const char* what() const noexcept override;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a wstring ( [[string.classes]], [[locale.codecvt]]).
+string ([[multibyte.strings]]), suitable for conversion and display as
+a wstring ([[string.classes]], [[locale.codecvt]]).
 
 ### Class `any` <a id="any.class">[[any.class]]</a>
 
@@ -4597,11 +4597,11 @@ The functions described in this subclause can report three kinds of
 errors, each associated with a distinct exception:
 
 - an *invalid-argument* error is associated with exceptions of type
-  `invalid_argument` ( [[invalid.argument]]);
+  `invalid_argument` ([[invalid.argument]]);
 - an *out-of-range* error is associated with exceptions of type
-  `out_of_range` ( [[out.of.range]]);
+  `out_of_range` ([[out.of.range]]);
 - an *overflow* error is associated with exceptions of type
-  `overflow_error` ( [[overflow.error]]).
+  `overflow_error` ([[overflow.error]]).
 
 #### `bitset` constructors <a id="bitset.cons">[[bitset.cons]]</a>
 
@@ -4619,7 +4619,7 @@ constexpr bitset(unsigned long long val) noexcept;
 *Effects:* Constructs an object of class `bitset<N>`, initializing the
 first `M` bit positions to the corresponding bit values in `val`. `M` is
 the smaller of `N` and the number of bits in the value
-representation ( [[basic.types]]) of `unsigned long long`. If `M < N`,
+representation ([[basic.types]]) of `unsigned long long`. If `M < N`,
 the remaining bit positions are initialized to zero.
 
 ``` cpp
@@ -4926,7 +4926,7 @@ equivalent to `this->set(pos, val)`.
 *Throws:* Nothing.
 
 *Remarks:* For the purpose of determining the presence of a data
-race ( [[intro.multithread]]), any access or update through the
+race ([[intro.multithread]]), any access or update through the
 resulting reference potentially accesses or modifies, respectively, the
 entire underlying bitset.
 
@@ -4936,7 +4936,7 @@ entire underlying bitset.
 template <size_t N> struct hash<bitset<N>>;
 ```
 
-The specialization is enabled ( [[unord.hash]]).
+The specialization is enabled ([[unord.hash]]).
 
 ### `bitset` operators <a id="bitset.operators">[[bitset.operators]]</a>
 
@@ -4966,7 +4966,7 @@ template <class charT, class traits, size_t N>
   operator>>(basic_istream<charT, traits>& is, bitset<N>& x);
 ```
 
-A formatted input function ( [[istream.formatted]]).
+A formatted input function ([[istream.formatted]]).
 
 *Effects:* Extracts up to `N` characters from `is`. Stores these
 characters in a temporary object `str` of type
@@ -4981,7 +4981,7 @@ the following occurs:
 
 If no characters are stored in `str`, calls
 `is.setstate(ios_base::failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `is`.
 
@@ -5014,10 +5014,10 @@ This subclause describes the contents of the header `<memory>` (
 The header `<memory>` defines several types and function templates that
 describe properties of pointers and pointer-like types, manage memory
 for containers and other template types, destroy objects, and construct
-multiple objects in uninitialized memory buffers ( [[pointer.traits]]–
+multiple objects in uninitialized memory buffers ([[pointer.traits]]–
 [[specialized.algorithms]]). The header also defines the templates
 `unique_ptr`, `shared_ptr`, `weak_ptr`, and various function templates
-that operate on objects of these types ( [[smartptr]]).
+that operate on objects of these types ([[smartptr]]).
 
 ``` cpp
 namespace std {
@@ -5343,7 +5343,7 @@ using element_type = see below;
 ```
 
 *Type:* `Ptr::element_type` if the *qualified-id* `Ptr::element_type` is
-valid and denotes a type ( [[temp.deduct]]); otherwise, `T` if `Ptr` is
+valid and denotes a type ([[temp.deduct]]); otherwise, `T` if `Ptr` is
 a class template instantiation of the form `SomePointer<T, Args>`, where
 `Args` is zero or more type arguments; otherwise, the specialization is
 ill-formed.
@@ -5353,7 +5353,7 @@ using difference_type = see below;
 ```
 
 *Type:* `Ptr::difference_type` if the *qualified-id*
-`Ptr::difference_type` is valid and denotes a type ( [[temp.deduct]]);
+`Ptr::difference_type` is valid and denotes a type ([[temp.deduct]]);
 otherwise, `ptrdiff_t`.
 
 ``` cpp
@@ -5361,7 +5361,7 @@ template <class U> using rebind = see below;
 ```
 
 *Alias template:* `Ptr::rebind<U>` if the *qualified-id*
-`Ptr::rebind<U>` is valid and denotes a type ( [[temp.deduct]]);
+`Ptr::rebind<U>` is valid and denotes a type ([[temp.deduct]]);
 otherwise, `SomePointer<U, Args>` if `Ptr` is a class template
 instantiation of the form `SomePointer<T, Args>`, where `Args` is zero
 or more type arguments; otherwise, the instantiation of `rebind` is
@@ -5394,10 +5394,10 @@ void declare_reachable(void* p);
 ```
 
 *Requires:* `p` shall be a safely-derived
-pointer ( [[basic.stc.dynamic.safety]]) or a null pointer value.
+pointer ([[basic.stc.dynamic.safety]]) or a null pointer value.
 
 *Effects:* If `p` is not null, the complete object referenced by `p` is
-subsequently declared reachable ( [[basic.stc.dynamic.safety]]).
+subsequently declared reachable ([[basic.stc.dynamic.safety]]).
 
 *Throws:* May throw `bad_alloc` if the system cannot allocate additional
 memory that may be required to track objects declared reachable.
@@ -5408,7 +5408,7 @@ template <class T> T* undeclare_reachable(T* p);
 
 *Requires:* If `p` is not null, the complete object referenced by `p`
 shall have been previously declared reachable, and shall be
-live ( [[basic.life]]) from the time of the call until the last
+live ([[basic.life]]) from the time of the call until the last
 `undeclare_reachable(p)` call on the object.
 
 *Returns:* A safely derived copy of `p` which shall compare equal to
@@ -5468,7 +5468,7 @@ pointer_safety get_pointer_safety() noexcept;
 ```
 
 *Returns:* `pointer_safety::strict` if the implementation has strict
-pointer safety ( [[basic.stc.dynamic.safety]]). It is
+pointer safety ([[basic.stc.dynamic.safety]]). It is
 *implementation-defined* whether `get_pointer_safety` returns
 `pointer_safety::relaxed` or `pointer_safety::preferred` if the
 implementation has relaxed pointer safety.[^1]
@@ -5524,10 +5524,10 @@ template <class T, class Alloc> struct uses_allocator;
 
 *Remarks:* Automatically detects whether `T` has a nested
 `allocator_type` that is convertible from `Alloc`. Meets the
-`BinaryTypeTrait` requirements ( [[meta.rqmts]]). The implementation
+`BinaryTypeTrait` requirements ([[meta.rqmts]]). The implementation
 shall provide a definition that is derived from `true_type` if the
 *qualified-id* `T::allocator_type` is valid and denotes a
-type ( [[temp.deduct]]) and
+type ([[temp.deduct]]) and
 `is_convertible_v<Alloc, T::allocator_type> != false`, otherwise it
 shall be derived from `false_type`. A program may specialize this
 template to derive from `true_type` for a user-defined type `T` that
@@ -5618,14 +5618,14 @@ using pointer = see below;
 ```
 
 *Type:* `Alloc::pointer` if the *qualified-id* `Alloc::pointer` is valid
-and denotes a type ( [[temp.deduct]]); otherwise, `value_type*`.
+and denotes a type ([[temp.deduct]]); otherwise, `value_type*`.
 
 ``` cpp
 using const_pointer = see below;
 ```
 
 *Type:* `Alloc::const_pointer` if the *qualified-id*
-`Alloc::const_pointer` is valid and denotes a type ( [[temp.deduct]]);
+`Alloc::const_pointer` is valid and denotes a type ([[temp.deduct]]);
 otherwise, `pointer_traits<pointer>::rebind<const value_type>`.
 
 ``` cpp
@@ -5633,7 +5633,7 @@ using void_pointer = see below;
 ```
 
 *Type:* `Alloc::void_pointer` if the *qualified-id*
-`Alloc::void_pointer` is valid and denotes a type ( [[temp.deduct]]);
+`Alloc::void_pointer` is valid and denotes a type ([[temp.deduct]]);
 otherwise, `pointer_traits<pointer>::rebind<void>`.
 
 ``` cpp
@@ -5642,7 +5642,7 @@ using const_void_pointer = see below;
 
 *Type:* `Alloc::const_void_pointer` if the *qualified-id*
 `Alloc::const_void_pointer` is valid and denotes a
-type ( [[temp.deduct]]); otherwise,
+type ([[temp.deduct]]); otherwise,
 `pointer_traits<pointer>::rebind<const void>`.
 
 ``` cpp
@@ -5650,7 +5650,7 @@ using difference_type = see below;
 ```
 
 *Type:* `Alloc::difference_type` if the *qualified-id*
-`Alloc::difference_type` is valid and denotes a type ( [[temp.deduct]]);
+`Alloc::difference_type` is valid and denotes a type ([[temp.deduct]]);
 otherwise, `pointer_traits<pointer>::difference_type`.
 
 ``` cpp
@@ -5658,7 +5658,7 @@ using size_type = see below;
 ```
 
 *Type:* `Alloc::size_type` if the *qualified-id* `Alloc::size_type` is
-valid and denotes a type ( [[temp.deduct]]); otherwise,
+valid and denotes a type ([[temp.deduct]]); otherwise,
 `make_unsigned_t<difference_type>`.
 
 ``` cpp
@@ -5667,7 +5667,7 @@ using propagate_on_container_copy_assignment = see below;
 
 *Type:* `Alloc::propagate_on_container_copy_assignment` if the
 *qualified-id* `Alloc::propagate_on_container_copy_assignment` is valid
-and denotes a type ( [[temp.deduct]]); otherwise `false_type`.
+and denotes a type ([[temp.deduct]]); otherwise `false_type`.
 
 ``` cpp
 using propagate_on_container_move_assignment = see below;
@@ -5675,7 +5675,7 @@ using propagate_on_container_move_assignment = see below;
 
 *Type:* `Alloc::propagate_on_container_move_assignment` if the
 *qualified-id* `Alloc::propagate_on_container_move_assignment` is valid
-and denotes a type ( [[temp.deduct]]); otherwise `false_type`.
+and denotes a type ([[temp.deduct]]); otherwise `false_type`.
 
 ``` cpp
 using propagate_on_container_swap = see below;
@@ -5683,14 +5683,14 @@ using propagate_on_container_swap = see below;
 
 *Type:* `Alloc::propagate_on_container_swap` if the *qualified-id*
 `Alloc::propagate_on_container_swap` is valid and denotes a
-type ( [[temp.deduct]]); otherwise `false_type`.
+type ([[temp.deduct]]); otherwise `false_type`.
 
 ``` cpp
 using is_always_equal = see below;
 ```
 
 *Type:* `Alloc::is_always_equal` if the *qualified-id*
-`Alloc::is_always_equal` is valid and denotes a type ( [[temp.deduct]]);
+`Alloc::is_always_equal` is valid and denotes a type ([[temp.deduct]]);
 otherwise `is_empty<Alloc>::type`.
 
 ``` cpp
@@ -5699,7 +5699,7 @@ template <class T> using rebind_alloc = see below;
 
 *Alias template:* `Alloc::rebind<T>::other` if the *qualified-id*
 `Alloc::rebind<T>::other` is valid and denotes a
-type ( [[temp.deduct]]); otherwise, `Alloc<T, Args>` if `Alloc` is a
+type ([[temp.deduct]]); otherwise, `Alloc<T, Args>` if `Alloc` is a
 class template instantiation of the form `Alloc<U, Args>`, where `Args`
 is zero or more type arguments; otherwise, the instantiation of
 `rebind_alloc` is ill-formed.
@@ -5761,7 +5761,7 @@ expression is well-formed; otherwise, `rhs`.
 ### The default allocator <a id="default.allocator">[[default.allocator]]</a>
 
 All specializations of the default allocator satisfy the allocator
-completeness requirements ( [[allocator.requirements.completeness]]).
+completeness requirements ([[allocator.requirements.completeness]]).
 
 ``` cpp
 namespace std {
@@ -5785,7 +5785,7 @@ namespace std {
 #### `allocator` members <a id="allocator.members">[[allocator.members]]</a>
 
 Except for the destructor, member functions of the default allocator
-shall not introduce data races ( [[intro.multithread]]) as a result of
+shall not introduce data races ([[intro.multithread]]) as a result of
 concurrent calls to those member functions from different threads. Calls
 to these functions that allocate or deallocate a particular unit of
 storage shall occur in a single total order, and each such deallocation
@@ -5799,7 +5799,7 @@ T* allocate(size_t n);
 size `n` `* sizeof(T)`, aligned appropriately for objects of type `T`.
 
 *Remarks:* the storage is obtained by calling
-`::operator new` ( [[new.delete]]), but it is unspecified when or how
+`::operator new` ([[new.delete]]), but it is unspecified when or how
 often this function is called.
 
 *Throws:* `bad_alloc` if the storage cannot be obtained.
@@ -5814,7 +5814,7 @@ allocate which returned `p`.
 
 *Effects:* Deallocates the storage referenced by `p` .
 
-*Remarks:* Uses `::operator delete` ( [[new.delete]]), but it is
+*Remarks:* Uses `::operator delete` ([[new.delete]]), but it is
 unspecified when this function is called.
 
 #### `allocator` globals <a id="allocator.globals">[[allocator.globals]]</a>
@@ -5840,10 +5840,10 @@ express type requirements.
 
 - If an algorithm’s template parameter is named `InputIterator`, the
   template argument shall satisfy the requirements of an input
-  iterator ( [[input.iterators]]).
+  iterator ([[input.iterators]]).
 - If an algorithm’s template parameter is named `ForwardIterator`, the
   template argument shall satisfy the requirements of a forward
-  iterator ( [[forward.iterators]]), and is required to have the
+  iterator ([[forward.iterators]]), and is required to have the
   property that no exceptions are thrown from increment, assignment,
   comparison, or indirection through valid iterators.
 
@@ -5860,7 +5860,7 @@ template <class T> constexpr T* addressof(T& r) noexcept;
 `r`, even in the presence of an overloaded `operator&`.
 
 *Remarks:* An expression `addressof(E)` is a constant
-subexpression ( [[defns.const.subexpr]]) if `E` is an lvalue constant
+subexpression ([[defns.const.subexpr]]) if `E` is an lvalue constant
 subexpression.
 
 #### `uninitialized_default_construct` <a id="uninitialized.construct.default">[[uninitialized.construct.default]]</a>
@@ -6065,7 +6065,7 @@ return first;
 
 ### C library memory allocation <a id="c.malloc">[[c.malloc]]</a>
 
-[*Note 1*: The header `<cstdlib>` ( [[cstdlib.syn]]) declares the
+[*Note 1*: The header `<cstdlib>` ([[cstdlib.syn]]) declares the
 functions described in this subclause. — *end note*]
 
 ``` cpp
@@ -6079,7 +6079,7 @@ void* realloc(void* ptr, size_t size);
 standard library.
 
 *Remarks:* These functions do not attempt to allocate storage by calling
-`::operator new()` ( [[support.dynamic]]).
+`::operator new()` ([[support.dynamic]]).
 
 Storage allocated directly with these functions is implicitly declared
 reachable (see  [[basic.stc.dynamic.safety]]) on allocation, ceases to
@@ -6117,7 +6117,7 @@ A *unique pointer* is an object that owns another object and manages
 that other object through a pointer. More precisely, a unique pointer is
 an object *u* that stores a pointer to a second object *p* and will
 dispose of *p* when *u* is itself destroyed (e.g., when leaving block
-scope ( [[stmt.dcl]])). In this context, *u* is said to *own* `p`.
+scope ([[stmt.dcl]])). In this context, *u* is said to *own* `p`.
 
 The mechanism by which *u* disposes of *p* is known as *p*’s associated
 *deleter*, a function object whose correct invocation results in *p*’s
@@ -6344,14 +6344,14 @@ If the deleter’s type `D` is not a reference type, `D` shall satisfy the
 requirements of `Destructible` (Table  [[tab:destructible]]).
 
 If the *qualified-id* `remove_reference_t<D>::pointer` is valid and
-denotes a type ( [[temp.deduct]]), then `unique_ptr<T,
+denotes a type ([[temp.deduct]]), then `unique_ptr<T,
 D>::pointer` shall be a synonym for `remove_reference_t<D>::pointer`.
 Otherwise `unique_ptr<T, D>::pointer` shall be a synonym for
 `element_type*`. The type `unique_ptr<T,
 D>::pointer` shall satisfy the requirements of `NullablePointer` (
 [[nullablepointer.requirements]]).
 
-[*Example 1*: Given an allocator type `X` ( [[allocator.requirements]])
+[*Example 1*: Given an allocator type `X` ([[allocator.requirements]])
 and letting `A` be a synonym for `allocator_traits<X>`, the types
 `A::pointer`, `A::const_pointer`, `A::void_pointer`, and
 `A::const_void_pointer` may be used as
@@ -6395,7 +6395,7 @@ the stored deleter.
 *Remarks:* If `is_pointer_v<deleter_type>` is `true` or
 `is_default_constructible_v<deleter_type>` is `false`, this constructor
 shall not participate in overload resolution. If class template argument
-deduction ( [[over.match.class.deduct]]) would select the function
+deduction ([[over.match.class.deduct]]) would select the function
 template corresponding to this constructor, then the program is
 ill-formed.
 
@@ -6439,7 +6439,7 @@ the stored deleter. If `D` is a reference type then `get_deleter()`
 returns a reference to the lvalue `d`.
 
 *Remarks:* If class template argument
-deduction ( [[over.match.class.deduct]]) would select a function
+deduction ([[over.match.class.deduct]]) would select a function
 template corresponding to either of these constructors, then the program
 is ill-formed.
 
@@ -6652,7 +6652,7 @@ void swap(unique_ptr& u) noexcept;
 ```
 
 *Requires:* `get_deleter()` shall be
-swappable ( [[swappable.requirements]]) and shall not throw an exception
+swappable ([[swappable.requirements]]) and shall not throw an exception
 under `swap`.
 
 *Effects:* Invokes `swap` on the stored pointers and on the stored
@@ -6889,8 +6889,8 @@ common_type_t<typename unique_ptr<T1, D1>::pointer,
 ```
 
 Then the specialization `less<`*`CT`*`>` shall be a function object
-type ( [[function.objects]]) that induces a strict weak
-ordering ( [[alg.sorting]]) on the pointer values.
+type ([[function.objects]]) that induces a strict weak
+ordering ([[alg.sorting]]) on the pointer values.
 
 *Returns:* `less<`*`CT`*`>()(x.get(), y.get())`.
 
@@ -6945,8 +6945,8 @@ template <class T, class D>
 ```
 
 *Requires:* The specialization `less<unique_ptr<T, D>::pointer>` shall
-be a function object type ( [[function.objects]]) that induces a strict
-weak ordering ( [[alg.sorting]]) on the pointer values.
+be a function object type ([[function.objects]]) that induces a strict
+weak ordering ([[alg.sorting]]) on the pointer values.
 
 *Returns:* The first function template returns
 `less<unique_ptr<T, D>::pointer>()(x.get(),`  
@@ -7168,7 +7168,7 @@ convertible to `T*` or `Y` is `U[N]` and `T` is cv `U[]`.
 In the constructor definitions below, enables `shared_from_this` with
 `p`, for a pointer `p` of type `Y*`, means that if `Y` has an
 unambiguous and accessible base class that is a specialization of
-`enable_shared_from_this` ( [[util.smartptr.enab]]), then
+`enable_shared_from_this` ([[util.smartptr.enab]]), then
 `remove_cv_t<Y>*` shall be implicitly convertible to `T*` and the
 constructor evaluates the statement:
 
@@ -7227,7 +7227,7 @@ template <class D, class A> shared_ptr(nullptr_t p, D d, A a);
 *Requires:* Construction of `d` and a deleter of type `D` initialized
 with `std::move(d)` shall not throw exceptions. The expression `d(p)`
 shall have well-defined behavior and shall not throw exceptions. `A`
-shall be an allocator ( [[allocator.requirements]]).
+shall be an allocator ([[allocator.requirements]]).
 
 *Effects:* Constructs a `shared_ptr` object that owns the object `p` and
 the deleter `d`. When `T` is not an array type, the first and second
@@ -7522,7 +7522,7 @@ template<class T, class A, class... Args>
 *Requires:* The expression `::new (pv) T(std::forward<Args>(args)...)`,
 where `pv` has type `void*` and points to storage suitable to hold an
 object of type `T`, shall be well formed. `A` shall be an
-allocator ( [[allocator.requirements]]). The copy constructor and
+allocator ([[allocator.requirements]]). The copy constructor and
 destructor of `A` shall not throw exceptions.
 
 *Effects:* Allocates memory suitable for an object of type `T` and
@@ -8208,7 +8208,7 @@ template <class T, class D> struct hash<unique_ptr<T, D>>;
 ```
 
 Letting `UP` be `unique_ptr<T,D>`, the specialization `hash<UP>` is
-enabled ( [[unord.hash]]) if and only if `hash<typename UP::pointer>` is
+enabled ([[unord.hash]]) if and only if `hash<typename UP::pointer>` is
 enabled. When enabled, for an object `p` of type `UP`, `hash<UP>()(p)`
 shall evaluate to the same value as
 `hash<typename UP::pointer>()(p.get())`. The member functions are not
@@ -8318,9 +8318,9 @@ virtual void* do_allocate(size_t bytes, size_t alignment) = 0;
 *Requires:* `alignment` shall be a power of two.
 
 *Returns:* A derived class shall implement this function to return a
-pointer to allocated storage ( [[basic.stc.dynamic.deallocation]]) with
+pointer to allocated storage ([[basic.stc.dynamic.deallocation]]) with
 a size of at least `bytes`. The returned storage is aligned to the
-specified alignment, if such alignment is supported ( [[basic.align]]);
+specified alignment, if such alignment is supported ([[basic.align]]);
 otherwise it is aligned to `max_align`.
 
 *Throws:* A derived class implementation shall throw an appropriate
@@ -8370,7 +8370,7 @@ bool operator!=(const memory_resource& a, const memory_resource& b) noexcept;
 ### Class template `polymorphic_allocator` <a id="mem.poly.allocator.class">[[mem.poly.allocator.class]]</a>
 
 A specialization of class template `pmr::polymorphic_allocator` conforms
-to the `Allocator` requirements ( [[allocator.requirements]]).
+to the `Allocator` requirements ([[allocator.requirements]]).
 Constructed with different memory resources, different instances of the
 same specialization of `pmr::polymorphic_allocator` can exhibit entirely
 different allocation behavior. This runtime polymorphism allows objects
@@ -8504,7 +8504,7 @@ template <class T1, class T2, class... Args1, class... Args2>
 
 [*Note 2*: This method and the `construct` methods that follow are
 overloads for piecewise construction of
-pairs ( [[pairs.pair]]). — *end note*]
+pairs ([[pairs.pair]]). — *end note*]
 
 *Effects:* Let `xprime` be a `tuple` constructed from `x` according to
 the appropriate rule from the following list.
@@ -8512,7 +8512,7 @@ the appropriate rule from the following list.
 [*Note 3*: The following description can be summarized as constructing
 a `pair<T1, T2>` object in the storage whose address is represented by
 `p`, as if by separate uses-allocator construction with allocator
-`resource()` ( [[allocator.uses.construction]]) of `p->first` using the
+`resource()` ([[allocator.uses.construction]]) of `p->first` using the
 elements of `x` and `p->second` using the elements of
 `y`. — *end note*]
 
@@ -8799,7 +8799,7 @@ size_t max_blocks_per_chunk;
 ```
 
 The maximum number of blocks that will be allocated at once from the
-upstream memory resource ( [[mem.res.monotonic.buffer]]) to replenish a
+upstream memory resource ([[mem.res.monotonic.buffer]]) to replenish a
 pool. If the value of `max_blocks_per_chunk` is zero or is greater than
 an *implementation-defined* limit, that limit is used instead. The
 implementation may choose to use a smaller value than is specified in
@@ -8885,9 +8885,9 @@ void* do_allocate(size_t bytes, size_t alignment) override;
 ```
 
 *Returns:* A pointer to allocated storage
-( [[basic.stc.dynamic.deallocation]]) with a size of at least `bytes`.
+([[basic.stc.dynamic.deallocation]]) with a size of at least `bytes`.
 The size and alignment of the allocated memory shall meet the
-requirements for a class derived from `memory_resource` ( [[mem.res]]).
+requirements for a class derived from `memory_resource` ([[mem.res]]).
 
 *Effects:* If the pool selected for a block of size `bytes` is unable to
 satisfy the memory request from its own internal data structures, it
@@ -9038,9 +9038,9 @@ void* do_allocate(size_t bytes, size_t alignment) override;
 ```
 
 *Returns:* A pointer to allocated storage
-( [[basic.stc.dynamic.deallocation]]) with a size of at least `bytes`.
+([[basic.stc.dynamic.deallocation]]) with a size of at least `bytes`.
 The size and alignment of the allocated memory shall meet the
-requirements for a class derived from `memory_resource` ( [[mem.res]]).
+requirements for a class derived from `memory_resource` ([[mem.res]]).
 
 *Effects:* If the unused space in `current_buffer` can fit a block with
 the specified `bytes` and `alignment`, then allocate the return block
@@ -9561,7 +9561,7 @@ template <class OuterA1, class OuterA2, class... InnerAllocs>
 
 ## Function objects <a id="function.objects">[[function.objects]]</a>
 
-A *function object type* is an object type ( [[basic.types]]) that can
+A *function object type* is an object type ([[basic.types]]) that can
 be the type of the *postfix-expression* in a function call (
 [[expr.call]],  [[over.match.call]]).[^2] A *function object* is an
 object of a function object type. In the places where one would expect
@@ -9736,7 +9736,7 @@ The following definitions apply to this Clause:
 A *call signature* is the name of a return type followed by a
 parenthesized comma-separated list of zero or more argument types.
 
-A *callable type* is a function object type ( [[function.objects]]) or a
+A *callable type* is a function object type ([[function.objects]]) or a
 pointer to member.
 
 A *callable object* is an object of a callable type.
@@ -9772,7 +9772,7 @@ Define `INVOKE<R>(f, t1, t2, ..., tN)` as
 `static_cast<void>(INVOKE(f, t1, t2, ..., tN))` if `R` is cv `void`,
 otherwise `INVOKE(f, t1, t2, ..., tN)` implicitly converted to `R`.
 
-Every call wrapper ( [[func.def]]) shall be `MoveConstructible`. A
+Every call wrapper ([[func.def]]) shall be `MoveConstructible`. A
 *forwarding call wrapper* is a call wrapper that can be called with an
 arbitrary argument list and delivers the arguments to the wrapped
 callable object as references. This forwarding step shall ensure that
@@ -9803,7 +9803,7 @@ template <class F, class... Args>
 ```
 
 *Returns:* *INVOKE*(std::forward\<F\>(f),
-std::forward\<Args\>(args)...) ( [[func.require]]).
+std::forward\<Args\>(args)...) ([[func.require]]).
 
 ### Class template `reference_wrapper` <a id="refwrap">[[refwrap]]</a>
 
@@ -9890,7 +9890,7 @@ template <class... ArgTypes>
 ```
 
 *Returns:* *INVOKE*(get(),
-std::forward\<ArgTypes\>(args)...). ( [[func.require]])
+std::forward\<ArgTypes\>(args)...). ([[func.require]])
 
 #### `reference_wrapper` helper functions <a id="refwrap.helpers">[[refwrap.helpers]]</a>
 
@@ -9921,7 +9921,7 @@ template <class T> reference_wrapper<const T> cref(reference_wrapper<T> t) noexc
 ### Arithmetic operations <a id="arithmetic.operations">[[arithmetic.operations]]</a>
 
 The library provides basic function object classes for all of the
-arithmetic operators in the language ( [[expr.mul]], [[expr.add]]).
+arithmetic operators in the language ([[expr.mul]], [[expr.add]]).
 
 #### Class template `plus` <a id="arithmetic.operations.plus">[[arithmetic.operations.plus]]</a>
 
@@ -10106,7 +10106,7 @@ template <class T> constexpr auto operator()(T&& t) const
 ### Comparisons <a id="comparisons">[[comparisons]]</a>
 
 The library provides basic function object classes for all of the
-comparison operators in the language ( [[expr.rel]], [[expr.eq]]).
+comparison operators in the language ([[expr.rel]], [[expr.eq]]).
 
 For templates `less`, `greater`, `less_equal`, and `greater_equal`, the
 specializations for any pointer type yield a strict total order that is
@@ -10307,7 +10307,7 @@ template <class T, class U> constexpr auto operator()(T&& t, U&& u) const
 ### Logical operations <a id="logical.operations">[[logical.operations]]</a>
 
 The library provides basic function object classes for all of the
-logical operators in the language ( [[expr.log.and]], [[expr.log.or]],
+logical operators in the language ([[expr.log.and]], [[expr.log.or]],
 [[expr.unary.op]]).
 
 #### Class template `logical_and` <a id="logical.operations.and">[[logical.operations.and]]</a>
@@ -10403,7 +10403,7 @@ template <class T> constexpr auto operator()(T&& t) const
 ### Bitwise operations <a id="bitwise.operations">[[bitwise.operations]]</a>
 
 The library provides basic function object classes for all of the
-bitwise operators in the language ( [[expr.bit.and]], [[expr.or]],
+bitwise operators in the language ([[expr.bit.and]], [[expr.or]],
 [[expr.xor]], [[expr.unary.op]]).
 
 #### Class template `bit_and` <a id="bitwise.operations.and">[[bitwise.operations.and]]</a>
@@ -10571,7 +10571,7 @@ explicit call_wrapper(F&& f);
 
 *Requires:* `FD` shall satisfy the requirements of `MoveConstructible`.
 `is_constructible_v<FD, F>` shall be `true`. `fd` shall be a callable
-object ( [[func.def]]).
+object ([[func.def]]).
 
 *Effects:* Initializes `fd` from `std::forward<F>(f)`.
 
@@ -10625,7 +10625,7 @@ objects generated by `bind`. The function template `bind` uses
 `is_bind_expression` to detect subexpressions.
 
 Instantiations of the `is_bind_expression` template shall meet the
-`UnaryTypeTrait` requirements ( [[meta.rqmts]]). The implementation
+`UnaryTypeTrait` requirements ([[meta.rqmts]]). The implementation
 shall provide a definition that has a base characteristic of `true_type`
 if `T` is a type returned from `bind`, otherwise it shall have a base
 characteristic of `false_type`. A program may specialize this template
@@ -10646,7 +10646,7 @@ placeholders `_1`, `_2`, and so on. The function template `bind` uses
 `is_placeholder` to detect placeholders.
 
 Instantiations of the `is_placeholder` template shall meet the
-`UnaryTypeTrait` requirements ( [[meta.rqmts]]). The implementation
+`UnaryTypeTrait` requirements ([[meta.rqmts]]). The implementation
 shall provide a definition that has the base characteristic of
 `integral_constant<int, J>` if `T` is the type of
 `std::placeholders::_J`, otherwise it shall have a base characteristic
@@ -10677,12 +10677,12 @@ template<class F, class... BoundArgs>
 
 *Requires:* `is_constructible_v<FD, F>` shall be `true`. For each `Tᵢ`
 in `BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` shall be `true`.
-*INVOKE*(fd, w₁, w₂, …, $w_N$) ( [[func.require]]) shall be a valid
+*INVOKE*(fd, w₁, w₂, …, $w_N$) ([[func.require]]) shall be a valid
 expression for some values `w₁`, `w₂`, …, `w_N`, where N has the value
 `sizeof...(bound_args)`. The cv-qualifiers cv of the call wrapper `g`,
 as specified below, shall be neither `volatile` nor `const volatile`.
 
-*Returns:* A forwarding call wrapper `g` ( [[func.require]]). The effect
+*Returns:* A forwarding call wrapper `g` ([[func.require]]). The effect
 of `g(``u₁``, ``u₂``, …, ``u_M``)` shall be
 
 ``` cpp
@@ -10718,7 +10718,7 @@ values `w₁`, `w₂`, …, `w_N`, where N has the value
 `sizeof...(bound_args)`. The cv-qualifiers cv of the call wrapper `g`,
 as specified below, shall be neither `volatile` nor `const volatile`.
 
-*Returns:* A forwarding call wrapper `g` ( [[func.require]]). The effect
+*Returns:* A forwarding call wrapper `g` ([[func.require]]). The effect
 of `g(``u₁``, ``u₂``, …, ``u_M``)` shall be
 
 ``` cpp
@@ -10796,9 +10796,9 @@ extern unspecified _1;
 template<class R, class T> unspecified mem_fn(R T::* pm) noexcept;
 ```
 
-*Returns:* A simple call wrapper ( [[func.def]]) `fn` such that the
+*Returns:* A simple call wrapper ([[func.def]]) `fn` such that the
 expression `fn(t, a2, ..., aN)` is equivalent to *INVOKE*(pm, t, a2,
-..., aN) ( [[func.require]]).
+..., aN) ([[func.require]]).
 
 ### Polymorphic function wrappers <a id="func.wrap">[[func.wrap]]</a>
 
@@ -10808,7 +10808,7 @@ arbitrary callable objects.
 #### Class `bad_function_call` <a id="func.wrap.badcall">[[func.wrap.badcall]]</a>
 
 An exception of type `bad_function_call` is thrown by
-`function::operator()` ( [[func.wrap.func.inv]]) when the function
+`function::operator()` ([[func.wrap.func.inv]]) when the function
 wrapper object has no target.
 
 ``` cpp
@@ -10898,17 +10898,17 @@ namespace std {
 
 The `function` class template provides polymorphic wrappers that
 generalize the notion of a function pointer. Wrappers can store, copy,
-and call arbitrary callable objects ( [[func.def]]), given a call
-signature ( [[func.def]]), allowing functions to be first-class objects.
+and call arbitrary callable objects ([[func.def]]), given a call
+signature ([[func.def]]), allowing functions to be first-class objects.
 
-A callable type ( [[func.def]]) `F` is *Lvalue-Callable* for argument
+A callable type ([[func.def]]) `F` is *Lvalue-Callable* for argument
 types `ArgTypes` and return type `R` if the expression
 `INVOKE<R>(declval<F&>(), declval<ArgTypes>()...)`, considered as an
 unevaluated operand (Clause  [[expr]]), is well formed (
 [[func.require]]).
 
-The `function` class template is a call wrapper ( [[func.def]]) whose
-call signature ( [[func.def]]) is `R(ArgTypes...)`.
+The `function` class template is a call wrapper ([[func.def]]) whose
+call signature ([[func.def]]) is `R(ArgTypes...)`.
 
 [*Note 1*: The types deduced by the deduction guides for `function` may
 change in future versions of this International Standard. — *end note*]
@@ -10969,7 +10969,7 @@ template<class F> function(F f);
 *Requires:* `F` shall be `CopyConstructible`.
 
 *Remarks:* This constructor template shall not participate in overload
-resolution unless `F` is Lvalue-Callable ( [[func.wrap.func]]) for
+resolution unless `F` is Lvalue-Callable ([[func.wrap.func]]) for
 argument types `ArgTypes...` and return type `R`.
 
 *Postconditions:* `!*this` if any of the following hold:
@@ -11046,7 +11046,7 @@ template<class F> function& operator=(F&& f);
 *Returns:* `*this`.
 
 *Remarks:* This assignment operator shall not participate in overload
-resolution unless `decay_t<F>` is Lvalue-Callable ( [[func.wrap.func]])
+resolution unless `decay_t<F>` is Lvalue-Callable ([[func.wrap.func]])
 for argument types `ArgTypes...` and return type `R`.
 
 ``` cpp
@@ -11086,8 +11086,8 @@ R operator()(ArgTypes... args) const;
 ```
 
 *Returns:* *INVOKE*\<R\>(f,
-std::forward\<ArgTypes\>(args)...) ( [[func.require]]), where `f` is the
-target object ( [[func.def]]) of `*this`.
+std::forward\<ArgTypes\>(args)...) ([[func.require]]), where `f` is the
+target object ([[func.def]]) of `*this`.
 
 *Throws:* `bad_function_call` if `!*this`; otherwise, any exception
 thrown by the wrapped callable object.
@@ -11140,7 +11140,7 @@ template<class R, class... ArgTypes>
 
 ### Searchers <a id="func.search">[[func.search]]</a>
 
-This subclause provides function object types ( [[function.objects]])
+This subclause provides function object types ([[function.objects]])
 for operations that search for a sequence \[`pat``first`, `pat_last`) in
 another sequence \[`first`, `last`) that is provided to the object’s
 function call operator. The first sequence (the pattern to be searched
@@ -11370,7 +11370,7 @@ applications of the predicate.
 ### Class template `hash` <a id="unord.hash">[[unord.hash]]</a>
 
 The unordered associative containers defined in [[unord]] use
-specializations of the class template `hash` ( [[functional.syn]]) as
+specializations of the class template `hash` ([[functional.syn]]) as
 the default hash function.
 
 Each specialization of `hash` is either enabled or disabled, as
@@ -11393,18 +11393,18 @@ If `H` is a disabled specialization of `hash`, these values are `false`:
 `is_default_constructible_v<H>`, `is_copy_constructible_v<H>`,
 `is_move_constructible_v<H>`, `is_copy_assignable_v<H>`, and
 `is_move_assignable_v<H>`. Disabled specializations of `hash` are not
-function object types ( [[function.objects]]).
+function object types ([[function.objects]]).
 
 [*Note 2*: This means that the specialization of `hash` exists, but any
 attempts to use it as a `Hash` will be ill-formed. — *end note*]
 
 An enabled specialization `hash<Key>` will:
 
-- satisfy the `Hash` requirements ( [[hash.requirements]]), with `Key`
+- satisfy the `Hash` requirements ([[hash.requirements]]), with `Key`
   as the function call argument type, the `DefaultConstructible`
   requirements (Table  [[tab:defaultconstructible]]), the
   `CopyAssignable` requirements (Table  [[tab:copyassignable]]),
-- be swappable ( [[swappable.requirements]]) for lvalues,
+- be swappable ([[swappable.requirements]]) for lvalues,
 - satisfy the requirement that if `k1 == k2` is `true`, `h(k1) == h(k2)`
   is also `true`, where `h` is an object of type `hash<Key>` and `k1`
   and `k2` are objects of type `Key`;
@@ -11438,7 +11438,7 @@ additional arguments that help define the property being described. It
 shall be `DefaultConstructible`, `CopyConstructible`, and publicly and
 unambiguously derived, directly or indirectly, from its *base
 characteristic*, which is a specialization of the template
-`integral_constant` ( [[meta.help]]), with the arguments to the template
+`integral_constant` ([[meta.help]]), with the arguments to the template
 `integral_constant` determined by the requirements for the particular
 property being described. The member names of the base characteristic
 shall not be hidden and shall be unambiguously available in the
@@ -11450,7 +11450,7 @@ optionally, additional arguments that help define the relationship being
 described. It shall be `DefaultConstructible`, `CopyConstructible`, and
 publicly and unambiguously derived, directly or indirectly, from its
 *base characteristic*, which is a specialization of the template
-`integral_constant` ( [[meta.help]]), with the arguments to the template
+`integral_constant` ([[meta.help]]), with the arguments to the template
 `integral_constant` determined by the requirements for the particular
 relationship being described. The member names of the base
 characteristic shall not be hidden and shall be unambiguously available
@@ -11866,7 +11866,7 @@ as base classes to define the interface for various type traits.
 This subclause contains templates that may be used to query the
 properties of a type at compile time.
 
-Each of these templates shall be a `UnaryTypeTrait` ( [[meta.rqmts]])
+Each of these templates shall be a `UnaryTypeTrait` ([[meta.rqmts]])
 with a base characteristic of `true_type` if the corresponding condition
 is `true`, otherwise `false_type`.
 
@@ -11906,8 +11906,8 @@ argument must be a complete type.
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
-trivial ( [[basic.types]], [[special]]) function call that is not an
-odr-use ( [[basic.def.odr]]) of `declval` in the context of the
+trivial ([[basic.types]], [[special]]) function call that is not an
+odr-use ([[basic.def.odr]]) of `declval` in the context of the
 corresponding definition notwithstanding the restrictions of 
 [[declval]].
 
@@ -12000,7 +12000,7 @@ types. — *end note*]
 This subclause contains templates that may be used to query properties
 of types at compile time.
 
-Each of these templates shall be a `UnaryTypeTrait` ( [[meta.rqmts]])
+Each of these templates shall be a `UnaryTypeTrait` ([[meta.rqmts]])
 with a base characteristic of `integral_constant<size_t, Value>`.
 
 [*Example 1*:
@@ -12035,7 +12035,7 @@ assert((extent_v<int[][4], 1>) == 4);
 This subclause contains templates that may be used to query
 relationships between types at compile time.
 
-Each of these templates shall be a `BinaryTypeTrait` ( [[meta.rqmts]])
+Each of these templates shall be a `BinaryTypeTrait` ([[meta.rqmts]])
 with a base characteristic of `true_type` if the corresponding condition
 is true, otherwise `false_type`.
 
@@ -12044,8 +12044,8 @@ nonetheless, base classes. — *end note*]
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
-trivial ( [[basic.types]], [[special]]) function call that is not an
-odr-use ( [[basic.def.odr]]) of `declval` in the context of the
+trivial ([[basic.types]], [[special]]) function call that is not an
+odr-use ([[basic.def.odr]]) of `declval` in the context of the
 corresponding definition notwithstanding the restrictions of 
 [[declval]].
 
@@ -12097,7 +12097,7 @@ in the program being ill-formed. — *end note*]
 ### Transformations between types <a id="meta.trans">[[meta.trans]]</a>
 
 Each of the templates in this subclause shall be a
-`TransformationTrait` ( [[meta.rqmts]]).
+`TransformationTrait` ([[meta.rqmts]]).
 
 #### Const-volatile modifications <a id="meta.trans.cv">[[meta.trans.cv]]</a>
 
@@ -12147,8 +12147,8 @@ assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 #### Other transformations <a id="meta.trans.other">[[meta.trans.other]]</a>
 
 [*Note 1*: This behavior is similar to the lvalue-to-rvalue (
-[[conv.lval]]), array-to-pointer ( [[conv.array]]), and
-function-to-pointer ( [[conv.func]]) conversions applied when an lvalue
+[[conv.lval]]), array-to-pointer ([[conv.array]]), and
+function-to-pointer ([[conv.func]]) conversions applied when an lvalue
 expression is used as an rvalue, but also strips cv-qualifiers from
 class types in order to more closely model by-value argument
 passing. — *end note*]
@@ -12169,7 +12169,7 @@ struct aligned_storage {
 — *end note*]
 
 It is *implementation-defined* whether any extended alignment is
-supported ( [[basic.align]]).
+supported ([[basic.align]]).
 
 Note A: For the `common_type` trait applied to a parameter pack `T` of
 types, the member `type` shall be either defined or not present as
@@ -12535,8 +12535,8 @@ not representable by `intmax_t`, the typedef shall not be defined.
 
 ### In general <a id="time.general">[[time.general]]</a>
 
-This subclause describes the chrono library ( [[time.syn]]) and various
-C functions ( [[ctime.syn]]) that provide generally useful time
+This subclause describes the chrono library ([[time.syn]]) and various
+C functions ([[ctime.syn]]) that provide generally useful time
 utilities.
 
 ### Header `<chrono>` synopsis <a id="time.syn">[[time.syn]]</a>
@@ -12730,7 +12730,7 @@ shall meet the requirements in Table  [[tab:time.clock]].
 
 In Table  [[tab:time.clock]] `C1` and `C2` denote clock types. `t1` and
 `t2` are values returned by `C1::now()` where the call returning `t1`
-happens before ( [[intro.multithread]]) the call returning `t2` and both
+happens before ([[intro.multithread]]) the call returning `t2` and both
 of these calls occur before `C1::time_point::max()`.
 
 [*Note 1*: This means `C1` did not wrap around between `t1` and
@@ -12742,7 +12742,7 @@ implementation. — *end note*]
 
 A type `TC` meets the `TrivialClock` requirements if:
 
-- `TC` satisfies the `Clock` requirements ( [[time.clock.req]]),
+- `TC` satisfies the `Clock` requirements ([[time.clock.req]]),
 - the types `TC::rep`, `TC::duration`, and `TC::time_point` satisfy the
   requirements of `EqualityComparable` (Table 
   [[tab:equalitycomparable]]), `LessThanComparable` (Table 
@@ -12750,11 +12750,11 @@ A type `TC` meets the `TrivialClock` requirements if:
   [[tab:defaultconstructible]]), `CopyConstructible` (Table 
   [[tab:copyconstructible]]), `CopyAssignable` (Table 
   [[tab:copyassignable]]), `Destructible` (Table  [[tab:destructible]]),
-  and the requirements of numeric types ( [[numeric.requirements]]).
+  and the requirements of numeric types ([[numeric.requirements]]).
   \[*Note 5*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*]
 - lvalues of the types `TC::rep`, `TC::duration`, and `TC::time_point`
-  are swappable ( [[swappable.requirements]]),
+  are swappable ([[swappable.requirements]]),
 - the function `TC::now()` does not throw exceptions, and
 - the type `TC::time_point::clock` meets the `TrivialClock`
   requirements, recursively.
@@ -13450,7 +13450,7 @@ public:
 };
 ```
 
-`Clock` shall meet the Clock requirements ( [[time.clock.req]]).
+`Clock` shall meet the Clock requirements ([[time.clock.req]]).
 
 If `Duration` is not an instance of `duration`, the program is
 ill-formed.
@@ -13666,7 +13666,7 @@ unless `ToDuration` is a specialization of `duration`, and
 ### Clocks <a id="time.clock">[[time.clock]]</a>
 
 The types defined in this subclause shall satisfy the `TrivialClock`
-requirements ( [[time.clock.req]]).
+requirements ([[time.clock.req]]).
 
 #### Class `system_clock` <a id="time.clock.system">[[time.clock.system]]</a>
 
@@ -13789,7 +13789,7 @@ The contents of the header `<ctime>` are the same as the C standard
 library header `<time.h>`. [^3]
 
 The functions `asctime`, `ctime`, `gmtime`, and `localtime` are not
-required to avoid data races ( [[res.on.data.races]]).
+required to avoid data races ([[res.on.data.races]]).
 
 ISO C 7.27.
 
@@ -13831,7 +13831,7 @@ namespace std {
 
 The class `type_index` provides a simple wrapper for `type_info` which
 can be used as an index type in associative containers (
-[[associative]]) and in unordered associative containers ( [[unord]]).
+[[associative]]) and in unordered associative containers ([[unord]]).
 
 ### `type_index` members <a id="type.index.members">[[type.index.members]]</a>
 

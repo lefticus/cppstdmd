@@ -205,8 +205,8 @@ template<class T>
 `is_move_assignable_v<T>` is `true`.
 
 *Preconditions:* Type `T` meets the *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-( [[cpp17.moveassignable]]) requirements.
+([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Exchanges values stored in two locations.
 
@@ -1283,7 +1283,7 @@ template<class Alloc, class U1, class U2>
 ```
 
 *Preconditions:* `Alloc` meets the *Cpp17Allocator* requirements
-( [[cpp17.allocator]]).
+([[cpp17.allocator]]).
 
 *Effects:* Equivalent to the preceding constructors except that each
 element is constructed with uses-allocator
@@ -1747,7 +1747,7 @@ template<class... Types, class Alloc>
 ```
 
 *Preconditions:* `Alloc` meets the *Cpp17Allocator* requirements
-( [[cpp17.allocator]]).
+([[cpp17.allocator]]).
 
 [*Note 1*: Specialization of this trait informs other library
 components that `tuple` can be constructed with an allocator, even
@@ -1941,7 +1941,7 @@ Member `val` is provided for exposition only. When an `optional<T>`
 object contains a value, `val` points to the contained value.
 
 `T` shall be a type other than cv `in_place_t` or cv `nullopt_t` that
-meets the *Cpp17Destructible* requirements ( [[cpp17.destructible]]).
+meets the *Cpp17Destructible* requirements ([[cpp17.destructible]]).
 
 #### Constructors <a id="optional.ctor">[[optional.ctor]]</a>
 
@@ -4765,7 +4765,7 @@ and some of the contents of the header `<cstdlib>`.
 The header `<memory>` defines several types and function templates that
 describe properties of pointers and pointer-like types, manage memory
 for containers and other template types, destroy objects, and construct
-objects in uninitialized memory buffers ( [[pointer.traits]]–
+objects in uninitialized memory buffers ([[pointer.traits]]–
 [[specialized.addressof]] and [[specialized.algorithms]]). The header
 also defines the templates `unique_ptr`, `shared_ptr`, `weak_ptr`, and
 various function templates that operate on objects of these types
@@ -6195,7 +6195,7 @@ is valid and has the effect of disposing of the pointer as appropriate
 for that deleter.
 
 If the deleter’s type `D` is not a reference type, `D` shall meet the
-*Cpp17Destructible* requirements ( [[cpp17.destructible]]).
+*Cpp17Destructible* requirements ([[cpp17.destructible]]).
 
 If the *qualified-id* `remove_reference_t<D>::pointer` is valid and
 denotes a type [[temp.deduct]], then `unique_ptr<T,
@@ -6205,7 +6205,7 @@ Otherwise `unique_ptr<T, D>::pointer` shall be a synonym for
 D>::pointer` shall meet the *Cpp17NullablePointer* requirements (
 [[cpp17.nullablepointer]]).
 
-[*Example 1*: Given an allocator type `X` ( [[cpp17.allocator]]) and
+[*Example 1*: Given an allocator type `X` ([[cpp17.allocator]]) and
 letting `A` be a synonym for `allocator_traits<X>`, the types
 `A::pointer`, `A::const_pointer`, `A::void_pointer`, and
 `A::const_void_pointer` may be used as
@@ -6219,7 +6219,7 @@ constexpr unique_ptr(nullptr_t) noexcept;
 ```
 
 *Preconditions:* `D` meets the *Cpp17DefaultConstructible* requirements
-( [[cpp17.defaultconstructible]]), and that construction does not throw
+([[cpp17.defaultconstructible]]), and that construction does not throw
 an exception.
 
 *Constraints:* `is_pointer_v<deleter_type>` is `false` and
@@ -6242,7 +6242,7 @@ explicit unique_ptr(pointer p) noexcept;
 deduction [[over.match.class.deduct]].
 
 *Preconditions:* `D` meets the *Cpp17DefaultConstructible* requirements
-( [[cpp17.defaultconstructible]]), and that construction does not throw
+([[cpp17.defaultconstructible]]), and that construction does not throw
 an exception.
 
 *Effects:* Constructs a `unique_ptr` which owns `p`, initializing the
@@ -6298,7 +6298,7 @@ unique_ptr(unique_ptr&& u) noexcept;
 *Constraints:* `is_move_constructible_v<D>` is `true`.
 
 *Preconditions:* If `D` is not a reference type, `D` meets the
-*Cpp17MoveConstructible* requirements ( [[cpp17.moveconstructible]]).
+*Cpp17MoveConstructible* requirements ([[cpp17.moveconstructible]]).
 Construction of the deleter from an rvalue of type `D` does not throw an
 exception.
 
@@ -6367,7 +6367,7 @@ unique_ptr& operator=(unique_ptr&& u) noexcept;
 *Constraints:* `is_move_assignable_v<D>` is `true`.
 
 *Preconditions:* If `D` is not a reference type, `D` meets the
-*Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]) and
+*Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]) and
 assignment of the deleter from an rvalue of type `D` does not throw an
 exception. Otherwise, `D` is a reference type; `remove_reference_t<D>`
 meets the *Cpp17CopyAssignable* requirements and assignment of the
@@ -7067,7 +7067,7 @@ well-formed expression. For the first two overloads:
 *Preconditions:* Construction of `d` and a deleter of type `D`
 initialized with `std::move(d)` do not throw exceptions. The expression
 `d(p)` has well-defined behavior and does not throw exceptions. `A`
-meets the *Cpp17Allocator* requirements ( [[cpp17.allocator]]).
+meets the *Cpp17Allocator* requirements ([[cpp17.allocator]]).
 
 *Effects:* Constructs a `shared_ptr` object that owns the object `p` and
 the deleter `d`. When `T` is not an array type, the first and second
@@ -7358,7 +7358,7 @@ template<class T, class A, ...>
 ```
 
 *Preconditions:* `A` meets the *Cpp17Allocator* requirements
-( [[cpp17.allocator]]).
+([[cpp17.allocator]]).
 
 *Effects:* Allocates memory for an object of type `T` (or `U[N]` when
 `T` is `U[]`, where `N` is determined from *args* as specified by the
@@ -8260,7 +8260,7 @@ bool operator==(const memory_resource& a, const memory_resource& b) noexcept;
 ### Class template `polymorphic_allocator` <a id="mem.poly.allocator.class">[[mem.poly.allocator.class]]</a>
 
 A specialization of class template `pmr::polymorphic_allocator` meets
-the *Cpp17Allocator* requirements ( [[cpp17.allocator]]). Constructed
+the *Cpp17Allocator* requirements ([[cpp17.allocator]]). Constructed
 with different memory resources, different instances of the same
 specialization of `pmr::polymorphic_allocator` can exhibit entirely
 different allocation behavior. This runtime polymorphism allows objects
@@ -9244,7 +9244,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 ## Function objects <a id="function.objects">[[function.objects]]</a>
 
 A *function object type* is an object type [[basic.types]] that can be
-the type of the *postfix-expression* in a function call ( [[expr.call]],
+the type of the *postfix-expression* in a function call ([[expr.call]],
 [[over.match.call]]).[^2] A *function object* is an object of a function
 object type. In the places where one would expect to pass a pointer to a
 function to an algorithmic template [[algorithms]], the interface is
@@ -9674,7 +9674,7 @@ template<class T> constexpr reference_wrapper<const T> cref(reference_wrapper<T>
 ### Arithmetic operations <a id="arithmetic.operations">[[arithmetic.operations]]</a>
 
 The library provides basic function object classes for all of the
-arithmetic operators in the language ( [[expr.mul]], [[expr.add]]).
+arithmetic operators in the language ([[expr.mul]], [[expr.add]]).
 
 #### Class template `plus` <a id="arithmetic.operations.plus">[[arithmetic.operations.plus]]</a>
 
@@ -9859,7 +9859,7 @@ template<class T> constexpr auto operator()(T&& t) const
 ### Comparisons <a id="comparisons">[[comparisons]]</a>
 
 The library provides basic function object classes for all of the
-comparison operators in the language ( [[expr.rel]], [[expr.eq]]).
+comparison operators in the language ([[expr.rel]], [[expr.eq]]).
 
 For templates `less`, `greater`, `less_equal`, and `greater_equal`, the
 specializations for any pointer type yield a result consistent with the
@@ -10231,7 +10231,7 @@ return !ranges::less{}(std::forward<U>(u), std::forward<T>(t));
 ### Logical operations <a id="logical.operations">[[logical.operations]]</a>
 
 The library provides basic function object classes for all of the
-logical operators in the language ( [[expr.log.and]], [[expr.log.or]],
+logical operators in the language ([[expr.log.and]], [[expr.log.or]],
 [[expr.unary.op]]).
 
 #### Class template `logical_and` <a id="logical.operations.and">[[logical.operations.and]]</a>
@@ -10327,7 +10327,7 @@ template<class T> constexpr auto operator()(T&& t) const
 ### Bitwise operations <a id="bitwise.operations">[[bitwise.operations]]</a>
 
 The library provides basic function object classes for all of the
-bitwise operators in the language ( [[expr.bit.and]], [[expr.or]],
+bitwise operators in the language ([[expr.bit.and]], [[expr.or]],
 [[expr.xor]], [[expr.unary.op]]).
 
 #### Class template `bit_and` <a id="bitwise.operations.and">[[bitwise.operations.and]]</a>
@@ -11042,7 +11042,7 @@ Each specialization of a class template specified in this subclause
 of templates specified in this subclause [[func.search]] shall meet the
 same requirements and semantics as specified in [[algorithms.general]].
 Template parameters named `Hash` shall meet the *Cpp17Hash* requirements
-( [[cpp17.hash]]).
+([[cpp17.hash]]).
 
 The Boyer-Moore searcher implements the Boyer-Moore search algorithm.
 The Boyer-Moore-Horspool searcher implements the Boyer-Moore-Horspool
@@ -11280,10 +11280,10 @@ attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*]
 
 An enabled specialization `hash<Key>` will:
 
-- meet the *Cpp17Hash* requirements ( [[cpp17.hash]]), with `Key` as the
+- meet the *Cpp17Hash* requirements ([[cpp17.hash]]), with `Key` as the
   function call argument type, the *Cpp17DefaultConstructible*
-  requirements ( [[cpp17.defaultconstructible]]), the
-  *Cpp17CopyAssignable* requirements ( [[cpp17.copyassignable]]),
+  requirements ([[cpp17.defaultconstructible]]), the
+  *Cpp17CopyAssignable* requirements ([[cpp17.copyassignable]]),
 - be swappable [[swappable.requirements]] for lvalues,
 - meet the requirement that if `k1 == k2` is `true`, `h(k1) == h(k2)` is
   also `true`, where `h` is an object of type `hash<Key>` and `k1` and
@@ -11846,7 +11846,7 @@ argument is a complete type.
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
-trivial ( [[basic.types]], [[special]]) function call that is not an
+trivial ([[basic.types]], [[special]]) function call that is not an
 odr-use [[basic.def.odr]] of `declval` in the context of the
 corresponding definition notwithstanding the restrictions of 
 [[declval]].
@@ -11983,7 +11983,7 @@ nonetheless, base classes. — *end note*]
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
-trivial ( [[basic.types]], [[special]]) function call that is not an
+trivial ([[basic.types]], [[special]]) function call that is not an
 odr-use [[basic.def.odr]] of `declval` in the context of the
 corresponding definition notwithstanding the restrictions of 
 [[declval]].
@@ -13904,10 +13904,10 @@ in `fmt`. If present, `loc` is used for locale-specific formatting.
 A type `F` meets the requirements if:
 
 - it meets the
-  - *Cpp17DefaultConstructible* ( [[cpp17.defaultconstructible]]),
-  - *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]),
-  - *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]), and
-  - *Cpp17Destructible* ( [[cpp17.destructible]])
+  - *Cpp17DefaultConstructible* ([[cpp17.defaultconstructible]]),
+  - *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]),
+  - *Cpp17CopyAssignable* ([[cpp17.copyassignable]]), and
+  - *Cpp17Destructible* ([[cpp17.destructible]])
 
   requirements,
 - it is swappable [[swappable.requirements]] for lvalues, and

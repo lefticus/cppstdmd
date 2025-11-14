@@ -61,9 +61,9 @@ guidelines and do not determine compliance.
   \[1 048 576\].
 - Template arguments in a template declaration \[1 024\].
 - Recursively nested template instantiations, including substitution
-  during template argument deduction ( [[temp.deduct]]) \[1 024\].
+  during template argument deduction ([[temp.deduct]]) \[1 024\].
 - Handlers per try block \[256\].
-- Number of placeholders ( [[func.bind.place]]) \[10\].
+- Number of placeholders ([[func.bind.place]]) \[10\].
 
 <!-- Link reference definitions -->
 [func.bind.place]: utilities.md#func.bind.place

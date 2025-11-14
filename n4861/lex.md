@@ -73,7 +73,7 @@ following phases.[^1]
     *string-literal*, as well as each escape sequence and
     *universal-character-name* in a *character-literal* or a non-raw
     string literal, is converted to the corresponding member of the
-    execution character set ( [[lex.ccon]], [[lex.string]]); if there is
+    execution character set ([[lex.ccon]], [[lex.string]]); if there is
     no corresponding member, it is converted to an
     *implementation-defined* member other than the null (wide)
     character.[^3]

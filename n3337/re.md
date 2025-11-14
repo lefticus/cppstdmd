@@ -496,7 +496,7 @@ namespace std {
 ```
 
 The type `syntax_option_type` is an implementation-defined bitmask
-type ( [[bitmask.types]]). Setting its elements has the effects listed
+type ([[bitmask.types]]). Setting its elements has the effects listed
 in table  [[tab:re:syntaxoption]]. A valid value of type
 `syntax_option_type` shall have exactly one of the elements
 `ECMAScript`, `basic`, `extended`, `awk`, `grep`, `egrep`, set.
@@ -541,7 +541,7 @@ namespace std {
 ```
 
 The type `regex_constants::match_flag_type` is an implementation-defined
-bitmask type ( [[bitmask.types]]). Matching a regular expression against
+bitmask type ([[bitmask.types]]). Matching a regular expression against
 a sequence of characters \[`first`, `last`) proceeds according to the
 rules of the grammar specified for the regular expression object,
 modified according to the effects listed in Table  [[tab:re:matchflag]]
@@ -676,7 +676,7 @@ namespace std {
 
 The specializations `regex_traits<char>` and `regex_traits<wchar_t>`
 shall be valid and shall satisfy the requirements for a regular
-expression traits class ( [[re.req]]).
+expression traits class ([[re.req]]).
 
 ``` cpp
 typedef bitmask_type                 char_class_type;
@@ -1143,7 +1143,7 @@ template <class InputIterator>
 ```
 
 *Requires:* The type `InputIterator` shall satisfy the requirements for
-an Input Iterator ( [[input.iterators]]).
+an Input Iterator ([[input.iterators]]).
 
 *Returns:* `assign(string_type(first, last), f)`.
 
@@ -1935,7 +1935,7 @@ template <class OutputIter>
 ```
 
 *Requires:*  ready() == true and `OutputIter` shall satisfy the
-requirements for an Output Iterator ( [[output.iterators]]).
+requirements for an Output Iterator ([[output.iterators]]).
 
 *Effects:* Copies the character sequence \[`fmt_first`, `fmt_last`) to
 OutputIter `out`. Replaces each format specifier or escape sequence in
@@ -2067,7 +2067,7 @@ template <class BidirectionalIterator, class Allocator, class charT, class trait
 
 *Requires:* The type `BidirectionalIterator` shall satisfy the
 requirements of a Bidirectional Iterator
- ( [[bidirectional.iterators]]).
+ ([[bidirectional.iterators]]).
 
 *Effects:* Determines whether there is a match between the regular
 expression `e`, and all of the character sequence \[`first`, `last`).
@@ -2169,7 +2169,7 @@ template <class BidirectionalIterator, class Allocator, class charT, class trait
 ```
 
 *Requires:* Type `BidirectionalIterator` shall satisfy the requirements
-of a Bidirectional Iterator ( [[bidirectional.iterators]]).
+of a Bidirectional Iterator ([[bidirectional.iterators]]).
 
 *Effects:* Determines whether there is some sub-sequence within
 \[`first`, `last`) that matches the regular expression `e`. The

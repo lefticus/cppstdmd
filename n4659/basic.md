@@ -17,15 +17,15 @@ An *entity* is a value, object, reference, function, enumerator, type,
 class member, bit-field, template, template specialization, namespace,
 or parameter pack.
 
-A *name* is a use of an *identifier* ( [[lex.name]]),
-*operator-function-id* ( [[over.oper]]), *literal-operator-id* (
-[[over.literal]]), *conversion-function-id* ( [[class.conv.fct]]), or
-*template-id* ( [[temp.names]]) that denotes an entity or label (
+A *name* is a use of an *identifier* ([[lex.name]]),
+*operator-function-id* ([[over.oper]]), *literal-operator-id* (
+[[over.literal]]), *conversion-function-id* ([[class.conv.fct]]), or
+*template-id* ([[temp.names]]) that denotes an entity or label (
 [[stmt.goto]], [[stmt.label]]).
 
 Every name that denotes an entity is introduced by a *declaration*.
 Every name that denotes a label is introduced either by a `goto`
-statement ( [[stmt.goto]]) or a *labeled-statement* ( [[stmt.label]]).
+statement ([[stmt.goto]]) or a *labeled-statement* ([[stmt.label]]).
 
 A *variable* is introduced by the declaration of a reference other than
 a non-static data member or of an object. The variable’s name, if any,
@@ -43,8 +43,8 @@ Two names are *the same* if
 - they are *operator-function-id*s formed with the same operator, or
 - they are *conversion-function-id*s formed with the same type, or
 - they are *template-id*s that refer to the same class, function, or
-  variable ( [[temp.type]]), or
-- they are the names of literal operators ( [[over.literal]]) formed
+  variable ([[temp.type]]), or
+- they are the names of literal operators ([[over.literal]]) formed
   with the same literal suffix identifier.
 
 A name used in more than one translation unit can potentially refer to
@@ -60,7 +60,7 @@ attributes of these names. A declaration may also have effects
 including:
 
 - a static assertion (Clause  [[dcl.dcl]]),
-- controlling template instantiation ( [[temp.explicit]]),
+- controlling template instantiation ([[temp.explicit]]),
 - guiding template argument deduction for constructors (
   [[temp.deduct.guide]]),
 - use of attributes (Clause  [[dcl.dcl]]), and
@@ -70,29 +70,29 @@ A declaration is a *definition* unless
 
 - it declares a function without specifying the function’s body (
   [[dcl.fct.def]]),
-- it contains the `extern` specifier ( [[dcl.stc]]) or a
-  *linkage-specification*[^1] ( [[dcl.link]]) and neither an
+- it contains the `extern` specifier ([[dcl.stc]]) or a
+  *linkage-specification*[^1] ([[dcl.link]]) and neither an
   *initializer* nor a *function-body*,
 - it declares a non-inline static data member in a class definition (
   [[class.mem]],  [[class.static]]),
 - it declares a static data member outside a class definition and the
   variable was defined within the class with the `constexpr` specifier
   (this usage is deprecated; see [[depr.static_constexpr]]),
-- it is a class name declaration ( [[class.name]]),
-- it is an *opaque-enum-declaration* ( [[dcl.enum]]),
-- it is a *template-parameter* ( [[temp.param]]),
-- it is a *parameter-declaration* ( [[dcl.fct]]) in a function
+- it is a class name declaration ([[class.name]]),
+- it is an *opaque-enum-declaration* ([[dcl.enum]]),
+- it is a *template-parameter* ([[temp.param]]),
+- it is a *parameter-declaration* ([[dcl.fct]]) in a function
   declarator that is not the *declarator* of a *function-definition*,
-- it is a `typedef` declaration ( [[dcl.typedef]]),
-- it is an *alias-declaration* ( [[dcl.typedef]]),
-- it is a *using-declaration* ( [[namespace.udecl]]),
-- it is a *deduction-guide* ( [[temp.deduct.guide]]),
+- it is a `typedef` declaration ([[dcl.typedef]]),
+- it is an *alias-declaration* ([[dcl.typedef]]),
+- it is a *using-declaration* ([[namespace.udecl]]),
+- it is a *deduction-guide* ([[temp.deduct.guide]]),
 - it is a *static_assert-declaration* (Clause  [[dcl.dcl]]),
 - it is an *attribute-declaration* (Clause  [[dcl.dcl]]),
 - it is an *empty-declaration* (Clause  [[dcl.dcl]]),
-- it is a *using-directive* ( [[namespace.udir]]),
-- it is an explicit instantiation declaration ( [[temp.explicit]]), or
-- it is an explicit specialization ( [[temp.expl.spec]]) whose
+- it is a *using-directive* ([[namespace.udir]]),
+- it is an explicit instantiation declaration ([[temp.explicit]]), or
+- it is an explicit specialization ([[temp.expl.spec]]) whose
   *declaration* is not a definition.
 
 [*Example 1*:
@@ -131,10 +131,10 @@ using N::d;                     // declares d
 — *end example*]
 
 [*Note 1*:  In some circumstances, C++implementations implicitly define
-the default constructor ( [[class.ctor]]), copy constructor (
-[[class.copy]]), move constructor ( [[class.copy]]), copy assignment
-operator ( [[class.copy]]), move assignment operator ( [[class.copy]]),
-or destructor ( [[class.dtor]]) member functions. — *end note*]
+the default constructor ([[class.ctor]]), copy constructor (
+[[class.copy]]), move constructor ([[class.copy]]), copy assignment
+operator ([[class.copy]]), move assignment operator ([[class.copy]]),
+or destructor ([[class.dtor]]) member functions. — *end note*]
 
 [*Example 2*:
 
@@ -174,10 +174,10 @@ struct C {
 — *end example*]
 
 [*Note 2*: A class name can also be implicitly declared by an
-*elaborated-type-specifier* ( [[dcl.type.elab]]). — *end note*]
+*elaborated-type-specifier* ([[dcl.type.elab]]). — *end note*]
 
 A program is ill-formed if the definition of any object gives the object
-an incomplete type ( [[basic.types]]).
+an incomplete type ([[basic.types]]).
 
 ## One-definition rule <a id="basic.def.odr">[[basic.def.odr]]</a>
 
@@ -188,21 +188,21 @@ An expression is *potentially evaluated* unless it is an unevaluated
 operand (Clause  [[expr]]) or a subexpression thereof. The set of
 *potential results* of an expression `e` is defined as follows:
 
-- If `e` is an *id-expression* ( [[expr.prim.id]]), the set contains
+- If `e` is an *id-expression* ([[expr.prim.id]]), the set contains
   only `e`.
-- If `e` is a subscripting operation ( [[expr.sub]]) with an array
+- If `e` is a subscripting operation ([[expr.sub]]) with an array
   operand, the set contains the potential results of that operand.
-- If `e` is a class member access expression ( [[expr.ref]]), the set
+- If `e` is a class member access expression ([[expr.ref]]), the set
   contains the potential results of the object expression.
-- If `e` is a pointer-to-member expression ( [[expr.mptr.oper]]) whose
+- If `e` is a pointer-to-member expression ([[expr.mptr.oper]]) whose
   second operand is a constant expression, the set contains the
   potential results of the object expression.
 - If `e` has the form `(e1)`, the set contains the potential results of
   `e1`.
-- If `e` is a glvalue conditional expression ( [[expr.cond]]), the set
+- If `e` is a glvalue conditional expression ([[expr.cond]]), the set
   is the union of the sets of potential results of the second and third
   operands.
-- If `e` is a comma expression ( [[expr.comma]]), the set contains the
+- If `e` is a comma expression ([[expr.comma]]), the set contains the
   potential results of the right operand.
 - Otherwise, the set is empty.
 
@@ -230,7 +230,7 @@ int n = b ? (1, S::x)  // S::x is not odr-used here
 
 A variable `x` whose name appears as a potentially-evaluated expression
 `ex` is *odr-used* by `ex` unless applying the lvalue-to-rvalue
-conversion ( [[conv.lval]]) to `x` yields a constant expression (
+conversion ([[conv.lval]]) to `x` yields a constant expression (
 [[expr.const]]) that does not invoke any non-trivial functions and, if
 `x` is an object, `ex` is an element of the set of potential results of
 an expression `e`, where either the lvalue-to-rvalue conversion (
@@ -241,18 +241,18 @@ implicit transformation in the body of a non-static member function (
 [[class.mfct.non-static]])). A virtual member function is odr-used if it
 is not pure. A function whose name appears as a potentially-evaluated
 expression is odr-used if it is the unique lookup result or the selected
-member of a set of overloaded functions ( [[basic.lookup]],
+member of a set of overloaded functions ([[basic.lookup]],
 [[over.match]], [[over.over]]), unless it is a pure virtual function and
 either its name is not explicitly qualified or the expression forms a
-pointer to member ( [[expr.unary.op]]).
+pointer to member ([[expr.unary.op]]).
 
-[*Note 2*: This covers calls to named functions ( [[expr.call]]),
+[*Note 2*: This covers calls to named functions ([[expr.call]]),
 operator overloading (Clause  [[over]]), user-defined conversions (
 [[class.conv.fct]]), allocation functions for placement
-*new-expression*s ( [[expr.new]]), as well as non-default
-initialization ( [[dcl.init]]). A constructor selected to copy or move
+*new-expression*s ([[expr.new]]), as well as non-default
+initialization ([[dcl.init]]). A constructor selected to copy or move
 an object of class type is odr-used even if the call is actually elided
-by the implementation ( [[class.copy]]). — *end note*]
+by the implementation ([[class.copy]]). — *end note*]
 
 An allocation or deallocation function for a class is odr-used by a
 *new-expression* appearing in a potentially-evaluated expression as
@@ -273,7 +273,7 @@ destructor for a class is odr-used if it is potentially invoked (
 
 Every program shall contain exactly one definition of every non-inline
 function or variable that is odr-used in that program outside of a
-discarded statement ( [[stmt.if]]); no diagnostic required. The
+discarded statement ([[stmt.if]]); no diagnostic required. The
 definition can appear explicitly in the program, it can be found in the
 standard or a user-defined library, or (when appropriate) it is
 implicitly defined (see  [[class.ctor]], [[class.dtor]] and
@@ -302,45 +302,45 @@ X* x2;                          // use X in pointer formation
 The rules for declarations and expressions describe in which contexts
 complete class types are required. A class type `T` must be complete if:
 
-- an object of type `T` is defined ( [[basic.def]]), or
+- an object of type `T` is defined ([[basic.def]]), or
 - a non-static class data member of type `T` is declared (
   [[class.mem]]), or
 - `T` is used as the allocated type or array element type in a
-  *new-expression* ( [[expr.new]]), or
+  *new-expression* ([[expr.new]]), or
 - an lvalue-to-rvalue conversion is applied to a glvalue referring to an
-  object of type `T` ( [[conv.lval]]), or
+  object of type `T` ([[conv.lval]]), or
 - an expression is converted (either implicitly or explicitly) to type
   `T` (Clause  [[conv]], [[expr.type.conv]], [[expr.dynamic.cast]],
   [[expr.static.cast]], [[expr.cast]]), or
 - an expression that is not a null pointer constant, and has type other
   than cv `void*`, is converted to the type pointer to `T` or reference
   to `T` using a standard conversion (Clause  [[conv]]), a
-  `dynamic_cast` ( [[expr.dynamic.cast]]) or a `static_cast` (
+  `dynamic_cast` ([[expr.dynamic.cast]]) or a `static_cast` (
   [[expr.static.cast]]), or
 - a class member access operator is applied to an expression of type
-  `T` ( [[expr.ref]]), or
-- the `typeid` operator ( [[expr.typeid]]) or the `sizeof` operator (
+  `T` ([[expr.ref]]), or
+- the `typeid` operator ([[expr.typeid]]) or the `sizeof` operator (
   [[expr.sizeof]]) is applied to an operand of type `T`, or
 - a function with a return type or argument type of type `T` is
-  defined ( [[basic.def]]) or called ( [[expr.call]]), or
+  defined ([[basic.def]]) or called ([[expr.call]]), or
 - a class with a base class of type `T` is defined (Clause 
   [[class.derived]]), or
-- an lvalue of type `T` is assigned to ( [[expr.ass]]), or
+- an lvalue of type `T` is assigned to ([[expr.ass]]), or
 - the type `T` is the subject of an `alignof` expression (
   [[expr.alignof]]), or
 - an *exception-declaration* has type `T`, reference to `T`, or pointer
-  to `T` ( [[except.handle]]).
+  to `T` ([[except.handle]]).
 
 — *end note*]
 
 There can be more than one definition of a class type (Clause 
-[[class]]), enumeration type ( [[dcl.enum]]), inline function with
-external linkage ( [[dcl.inline]]), inline variable with external
-linkage ( [[dcl.inline]]), class template (Clause  [[temp]]), non-static
-function template ( [[temp.fct]]), static data member of a class
-template ( [[temp.static]]), member function of a class template (
+[[class]]), enumeration type ([[dcl.enum]]), inline function with
+external linkage ([[dcl.inline]]), inline variable with external
+linkage ([[dcl.inline]]), class template (Clause  [[temp]]), non-static
+function template ([[temp.fct]]), static data member of a class
+template ([[temp.static]]), member function of a class template (
 [[temp.mem.func]]), or template specialization for which some template
-parameters are not specified ( [[temp.spec]], [[temp.class.spec]]) in a
+parameters are not specified ([[temp.spec]], [[temp.class.spec]]) in a
 program provided that each definition appears in a different translation
 unit, and provided the definitions satisfy the following requirements.
 Given such an entity named `D` defined in more than one translation
@@ -351,12 +351,12 @@ unit, then
 - in each definition of `D`, corresponding names, looked up according
   to  [[basic.lookup]], shall refer to an entity defined within the
   definition of `D`, or shall refer to the same entity, after overload
-  resolution ( [[over.match]]) and after matching of partial template
-  specialization ( [[temp.over]]), except that a name can refer to
+  resolution ([[over.match]]) and after matching of partial template
+  specialization ([[temp.over]]), except that a name can refer to
   - a non-volatile `const` object with internal or no linkage if the
     object
     - has the same literal type in all definitions of `D`,
-    - is initialized with a constant expression ( [[expr.const]]),
+    - is initialized with a constant expression ([[expr.const]]),
     - is not odr-used in any definition of `D`, and
     - has the same value in all definitions of `D`,
 
@@ -415,7 +415,7 @@ If `D` is a template and is defined in more than one translation unit,
 then the preceding requirements shall apply both to names from the
 template’s enclosing scope used in the template definition (
 [[temp.nondep]]), and also to dependent names at the point of
-instantiation ( [[temp.dep]]). If the definitions of `D` satisfy all
+instantiation ([[temp.dep]]). If the definitions of `D` satisfy all
 these requirements, then the behavior is as if there were a single
 definition of `D`. If the definitions of `D` do not satisfy these
 requirements, then the behavior is undefined.
@@ -463,9 +463,9 @@ same as its potential scope.
 
 The names declared by a declaration are introduced into the scope in
 which the declaration occurs, except that the presence of a `friend`
-specifier ( [[class.friend]]), certain uses of the
-*elaborated-type-specifier* ( [[dcl.type.elab]]), and
-*using-directive*s ( [[namespace.udir]]) alter this general behavior.
+specifier ([[class.friend]]), certain uses of the
+*elaborated-type-specifier* ([[dcl.type.elab]]), and
+*using-directive*s ([[namespace.udir]]) alter this general behavior.
 
 Given a set of declarations in a single declarative region, each of
 which specifies the same unqualified name,
@@ -476,18 +476,18 @@ which specifies the same unqualified name,
   that is not a typedef name and the other declarations shall all refer
   to the same variable, non-static data member, or enumerator, or all
   refer to functions and function templates; in this case the class name
-  or enumeration name is hidden ( [[basic.scope.hiding]]). \[*Note 1*: A
+  or enumeration name is hidden ([[basic.scope.hiding]]). \[*Note 1*: A
   namespace name or a class template name must be unique in its
-  declarative region ( [[namespace.alias]], Clause 
+  declarative region ([[namespace.alias]], Clause 
   [[temp]]). — *end note*]
 
 [*Note 1*: These restrictions apply to the declarative region into
 which a name is introduced, which is not necessarily the same as the
 region in which the declaration occurs. In particular,
-*elaborated-type-specifier*s ( [[dcl.type.elab]]) and friend
-declarations ( [[class.friend]]) may introduce a (possibly not visible)
+*elaborated-type-specifier*s ([[dcl.type.elab]]) and friend
+declarations ([[class.friend]]) may introduce a (possibly not visible)
 name into an enclosing namespace; these restrictions apply to that
-region. Local extern declarations ( [[basic.link]]) may introduce a name
+region. Local extern declarations ([[basic.link]]) may introduce a name
 into the declarative region where the declaration appears and also
 introduce a (possibly not visible) name into an enclosing namespace;
 these restrictions apply to both regions. — *end note*]
@@ -534,8 +534,8 @@ The point of declaration for a class or class template first declared by
 a *class-specifier* is immediately after the *identifier* or
 *simple-template-id* (if any) in its *class-head* (Clause  [[class]]).
 The point of declaration for an enumeration is immediately after the
-*identifier* (if any) in either its *enum-specifier* ( [[dcl.enum]]) or
-its first *opaque-enum-declaration* ( [[dcl.enum]]), whichever comes
+*identifier* (if any) in either its *enum-specifier* ([[dcl.enum]]) or
+its first *opaque-enum-declaration* ([[dcl.enum]]), whichever comes
 first. The point of declaration of an alias or alias template
 immediately follows the *type-id* to which the alias refers.
 
@@ -616,7 +616,7 @@ template<class T
 
 [*Note 3*: Friend declarations refer to functions or classes that are
 members of the nearest enclosing namespace, but they do not introduce
-new names into that namespace ( [[namespace.memdef]]). Function
+new names into that namespace ([[namespace.memdef]]). Function
 declarations at block scope and variable declarations with the `extern`
 specifier at block scope refer to declarations that are members of an
 enclosing namespace, but they do not introduce new names into that
@@ -627,14 +627,14 @@ scope. — *end note*]
 
 ### Block scope <a id="basic.scope.block">[[basic.scope.block]]</a>
 
-A name declared in a block ( [[stmt.block]]) is local to that block; it
+A name declared in a block ([[stmt.block]]) is local to that block; it
 has *block scope*. Its potential scope begins at its point of
-declaration ( [[basic.scope.pdecl]]) and ends at the end of its block. A
+declaration ([[basic.scope.pdecl]]) and ends at the end of its block. A
 variable declared at block scope is a *local variable*.
 
 The potential scope of a function parameter name (including one
 appearing in a *lambda-declarator*) or of a function-local predefined
-variable in a function definition ( [[dcl.fct.def]]) begins at its point
+variable in a function definition ([[dcl.fct.def]]) begins at its point
 of declaration. If the function has a *function-try-block* the potential
 scope of a parameter or of a function-local predefined variable ends at
 the end of the last associated handler, otherwise it ends at the end of
@@ -658,13 +658,13 @@ see  [[stmt.select]].
 ### Function prototype scope <a id="basic.scope.proto">[[basic.scope.proto]]</a>
 
 In a function declaration, or in any function declarator except the
-declarator of a function definition ( [[dcl.fct.def]]), names of
+declarator of a function definition ([[dcl.fct.def]]), names of
 parameters (if supplied) have function prototype scope, which terminates
 at the end of the nearest enclosing function declarator.
 
 ### Function scope <a id="basic.funscope">[[basic.funscope]]</a>
 
-Labels ( [[stmt.label]]) have *function scope* and may be used anywhere
+Labels ([[stmt.label]]) have *function scope* and may be used anywhere
 in the function in which they are declared. Only labels have function
 scope.
 
@@ -676,8 +676,8 @@ The declarative region of a *namespace-definition* is its
 into the declarative region of the namespace are said to be *member
 names* of the namespace. A namespace member name has namespace scope.
 Its potential scope includes its namespace from the name’s point of
-declaration ( [[basic.scope.pdecl]]) onwards; and for each
-*using-directive* ( [[namespace.udir]]) that nominates the member’s
+declaration ([[basic.scope.pdecl]]) onwards; and for each
+*using-directive* ([[namespace.udir]]) that nominates the member’s
 namespace, the member’s potential scope includes that portion of the
 potential scope of the *using-directive* that follows the member’s point
 of declaration.
@@ -712,7 +712,7 @@ namespace N {
 — *end example*]
 
 A namespace member can also be referred to after the `::` scope
-resolution operator ( [[expr.prim]]) applied to the name of its
+resolution operator ([[expr.prim]]) applied to the name of its
 namespace or the name of a namespace which nominates the member’s
 namespace in a *using-directive*; see  [[namespace.qual]].
 
@@ -747,7 +747,7 @@ definitions, even if the members are defined lexically outside the class
 and member function definitions, including the member function body and
 any portion of the declarator part of such definitions which follows the
 *declarator-id*, including a *parameter-declaration-clause* and any
-default arguments ( [[dcl.fct.default]])).
+default arguments ([[dcl.fct.default]])).
 
 [*Example 1*:
 
@@ -782,15 +782,15 @@ The name of a class member shall only be used as follows:
 - in the scope of its class (as described above) or a class derived
   (Clause  [[class.derived]]) from its class,
 - after the `.` operator applied to an expression of the type of its
-  class ( [[expr.ref]]) or a class derived from its class,
+  class ([[expr.ref]]) or a class derived from its class,
 - after the `->` operator applied to a pointer to an object of its
-  class ( [[expr.ref]]) or a class derived from its class,
-- after the `::` scope resolution operator ( [[expr.prim]]) applied to
+  class ([[expr.ref]]) or a class derived from its class,
+- after the `::` scope resolution operator ([[expr.prim]]) applied to
   the name of its class or a class derived from its class.
 
 ### Enumeration scope <a id="basic.scope.enum">[[basic.scope.enum]]</a>
 
-The name of a scoped enumerator ( [[dcl.enum]]) has *enumeration scope*.
+The name of a scoped enumerator ([[dcl.enum]]) has *enumeration scope*.
 Its potential scope begins at its point of declaration and terminates at
 the end of the *enum-specifier*.
 
@@ -830,7 +830,7 @@ qualified and unqualified name lookup.)
 — *end example*]
 
 The potential scope of a template parameter name begins at its point of
-declaration ( [[basic.scope.pdecl]]) and ends at the end of its
+declaration ([[basic.scope.pdecl]]) and ends at the end of its
 declarative region.
 
 [*Note 1*:
@@ -865,7 +865,7 @@ within the immediately-enclosing declarative region.
 [*Note 2*:
 
 As a result, a *template-parameter* hides any entity with the same name
-in an enclosing scope ( [[basic.scope.hiding]]).
+in an enclosing scope ([[basic.scope.hiding]]).
 
 [*Example 2*:
 
@@ -883,7 +883,7 @@ parameter of `A`.
 — *end note*]
 
 [*Note 3*: Because the name of a template parameter cannot be
-redeclared within its potential scope ( [[temp.local]]), a template
+redeclared within its potential scope ([[temp.local]]), a template
 parameter’s scope is often its potential scope. However, it is still
 possible for a template parameter name to be hidden; see 
 [[temp.local]]. — *end note*]
@@ -891,9 +891,9 @@ possible for a template parameter name to be hidden; see 
 ### Name hiding <a id="basic.scope.hiding">[[basic.scope.hiding]]</a>
 
 A name can be hidden by an explicit declaration of that same name in a
-nested declarative region or derived class ( [[class.member.lookup]]).
+nested declarative region or derived class ([[class.member.lookup]]).
 
-A class name ( [[class.name]]) or enumeration name ( [[dcl.enum]]) can
+A class name ([[class.name]]) or enumeration name ([[dcl.enum]]) can
 be hidden by the name of a variable, data member, function, or
 enumerator declared in the same scope. If a class or enumeration name
 and a variable, data member, function, or enumerator are declared in the
@@ -917,14 +917,14 @@ If a name is in scope and is not hidden it is said to be *visible*.
 ## Name lookup <a id="basic.lookup">[[basic.lookup]]</a>
 
 The name lookup rules apply uniformly to all names (including
-*typedef-name*s ( [[dcl.typedef]]), *namespace-name*s (
-[[basic.namespace]]), and *class-name*s ( [[class.name]])) wherever the
+*typedef-name*s ([[dcl.typedef]]), *namespace-name*s (
+[[basic.namespace]]), and *class-name*s ([[class.name]])) wherever the
 grammar allows such names in the context discussed by a particular rule.
 Name lookup associates the use of a name with a set of declarations (
 [[basic.def]]) of that name. The declarations found by name lookup shall
 either all declare the same entity or shall all declare functions; in
 the latter case, the declarations are said to form a set of overloaded
-functions ( [[over.load]]). Overload resolution ( [[over.match]]) takes
+functions ([[over.load]]). Overload resolution ([[over.match]]) takes
 place after name lookup has succeeded. The access rules (Clause 
 [[class.access]]) are considered only once name lookup and function
 overload resolution (if applicable) have succeeded. Only after name
@@ -981,7 +981,7 @@ namespace N {
 ```
 
 Because the expression is not a function call, the argument-dependent
-name lookup ( [[basic.lookup.argdep]]) does not apply and the friend
+name lookup ([[basic.lookup.argdep]]) does not apply and the friend
 function `f` is not found.
 
 — *end note*]
@@ -997,7 +997,7 @@ or before its use in a namespace enclosing its namespace.
 In the definition of a function that is a member of namespace `N`, a
 name used after the function’s *declarator-id*[^4] shall be declared
 before its use in the block in which it is used or in one of its
-enclosing blocks ( [[stmt.block]]) or shall be declared before its use
+enclosing blocks ([[stmt.block]]) or shall be declared before its use
 in namespace `N` or, if `N` is a nested namespace, shall be declared
 before its use in one of `N`’s enclosing namespaces.
 
@@ -1028,11 +1028,11 @@ class definition[^5] shall be declared in one of the following ways:
 
 - before its use in class `X` or be a member of a base class of `X` (
   [[class.member.lookup]]), or
-- if `X` is a nested class of class `Y` ( [[class.nest]]), before the
+- if `X` is a nested class of class `Y` ([[class.nest]]), before the
   definition of `X` in `Y`, or shall be a member of a base class of `Y`
   (this lookup applies in turn to `Y`’s enclosing classes, starting with
   the innermost enclosing class),[^6] or
-- if `X` is a local class ( [[class.local]]) or is a nested class of a
+- if `X` is a local class ([[class.local]]) or is a nested class of a
   local class, before the definition of class `X` in a block enclosing
   the definition of class `X`, or
 - if `X` is a member of namespace `N`, or is a nested class of a class
@@ -1087,14 +1087,14 @@ definition of `X`, following the member’s *declarator-id*[^7], shall be
 declared in one of the following ways:
 
 - before its use in the block in which it is used or in an enclosing
-  block ( [[stmt.block]]), or
+  block ([[stmt.block]]), or
 - shall be a member of class `X` or be a member of a base class of `X` (
   [[class.member.lookup]]), or
-- if `X` is a nested class of class `Y` ( [[class.nest]]), shall be a
+- if `X` is a nested class of class `Y` ([[class.nest]]), shall be a
   member of `Y`, or shall be a member of a base class of `Y` (this
   lookup applies in turn to `Y`’s enclosing classes, starting with the
   innermost enclosing class),[^8] or
-- if `X` is a local class ( [[class.local]]) or is a nested class of a
+- if `X` is a local class ([[class.local]]) or is a nested class of a
   local class, before the definition of class `X` in a block enclosing
   the definition of class `X`, or
 - if `X` is a member of namespace `N`, or is a nested class of a class
@@ -1145,7 +1145,7 @@ for lookup in namespace member function definitions.
 In a `friend` declaration naming a member function, a name used in the
 function declarator and not part of a *template-argument* in the
 *declarator-id* is first looked up in the scope of the member function’s
-class ( [[class.member.lookup]]). If it is not found, or if the name is
+class ([[class.member.lookup]]). If it is not found, or if the name is
 part of a *template-argument* in the *declarator-id*, the look up is as
 described for unqualified names in the definition of the class granting
 friendship.
@@ -1230,11 +1230,11 @@ described in  [[temp.res]]. — *end note*]
 
 ### Argument-dependent name lookup <a id="basic.lookup.argdep">[[basic.lookup.argdep]]</a>
 
-When the *postfix-expression* in a function call ( [[expr.call]]) is an
+When the *postfix-expression* in a function call ([[expr.call]]) is an
 *unqualified-id*, other namespaces not considered during the usual
-unqualified lookup ( [[basic.lookup.unqual]]) may be searched, and in
+unqualified lookup ([[basic.lookup.unqual]]) may be searched, and in
 those namespaces, namespace-scope friend function or function template
-declarations ( [[class.friend]]) not otherwise visible may be found.
+declarations ([[class.friend]]) not otherwise visible may be found.
 These modifications to the search depend on the types of the arguments
 (and for template template arguments, the namespace of the template
 argument).
@@ -1296,7 +1296,7 @@ way:
   namespaces and classes are those associated with the member type
   together with those associated with `X`.
 
-If an associated namespace is an inline namespace ( [[namespace.def]]),
+If an associated namespace is an inline namespace ([[namespace.def]]),
 its enclosing namespace is also included in the set. If an associated
 namespace directly contains inline namespaces, those inline namespaces
 are also included in the set. In addition, if the argument is the name
@@ -1360,7 +1360,7 @@ lookup performed when the associated namespace is used as a qualifier (
 ### Qualified name lookup <a id="basic.lookup.qual">[[basic.lookup.qual]]</a>
 
 The name of a class or namespace member or enumerator can be referred to
-after the `::` scope resolution operator ( [[expr.prim]]) applied to a
+after the `::` scope resolution operator ([[expr.prim]]) applied to a
 *nested-name-specifier* that denotes its class, namespace, or
 enumeration. If a `::` scope resolution operator in a
 *nested-name-specifier* is not preceded by a *decltype-specifier*,
@@ -1386,7 +1386,7 @@ int main() {
 — *end example*]
 
 [*Note 1*: Multiply qualified names, such as `N1::N2::N3::n`, can be
-used to refer to members of nested classes ( [[class.nest]]) or members
+used to refer to members of nested classes ([[class.nest]]) or members
 of nested namespaces. — *end note*]
 
 In a declaration in which the *declarator-id* is a *qualified-id*, names
@@ -1410,18 +1410,18 @@ X C::arr[number];   // ill-formed:
 
 — *end example*]
 
-A name prefixed by the unary scope operator `::` ( [[expr.prim]]) is
+A name prefixed by the unary scope operator `::` ([[expr.prim]]) is
 looked up in global scope, in the translation unit where it is used. The
 name shall be declared in global namespace scope or shall be a name
 whose declaration is visible in global scope because of a
-*using-directive* ( [[namespace.qual]]). The use of `::` allows a global
+*using-directive* ([[namespace.qual]]). The use of `::` allows a global
 name to be referred to even if its identifier has been hidden (
 [[basic.scope.hiding]]).
 
 A name prefixed by a *nested-name-specifier* that nominates an
 enumeration type shall represent an *enumerator* of that enumeration.
 
-If a *pseudo-destructor-name* ( [[expr.pseudo]]) contains a
+If a *pseudo-destructor-name* ([[expr.pseudo]]) contains a
 *nested-name-specifier*, the *type-name*s are looked up as types in the
 scope designated by the *nested-name-specifier*. Similarly, in a
 *qualified-id* of the form:
@@ -1463,7 +1463,7 @@ proceeds after the `.` and `->` operators. — *end note*]
 
 If the *nested-name-specifier* of a *qualified-id* nominates a class,
 the name specified after the *nested-name-specifier* is looked up in the
-scope of the class ( [[class.member.lookup]]), except for the cases
+scope of the class ([[class.member.lookup]]), except for the cases
 listed below. The name shall represent one or more members of that class
 or of one of its base classes (Clause  [[class.derived]]).
 
@@ -1481,7 +1481,7 @@ The exceptions to the name lookup rule above are the following:
   the context in which the entire *postfix-expression* occurs.
 - the lookup for a name specified in a *using-declaration* (
   [[namespace.udecl]]) also finds class or enumeration names hidden
-  within the same scope ( [[basic.scope.hiding]]).
+  within the same scope ([[basic.scope.hiding]]).
 
 In a lookup in which function names are not ignored[^9] and the
 *nested-name-specifier* nominates a class `C`:
@@ -1723,7 +1723,7 @@ nested-name-specifier unqualified-id
 
 the *unqualified-id* shall name a member of the namespace designated by
 the *nested-name-specifier* or of an element of the inline namespace
-set ( [[namespace.def]]) of that namespace.
+set ([[namespace.def]]) of that namespace.
 
 [*Example 5*:
 
@@ -1767,7 +1767,7 @@ void B::f1(int){ }  // OK, defines A::B::f1(int)
 
 ### Elaborated type specifiers <a id="basic.lookup.elab">[[basic.lookup.elab]]</a>
 
-An *elaborated-type-specifier* ( [[dcl.type.elab]]) may be used to refer
+An *elaborated-type-specifier* ([[dcl.type.elab]]) may be used to refer
 to a previously declared *class-name* or *enum-name* even though the
 name has been hidden by a non-type declaration (
 [[basic.scope.hiding]]).
@@ -1838,19 +1838,19 @@ struct Base::Data* pBase;       // OK: refers to nested Data
 
 ### Class member access <a id="basic.lookup.classref">[[basic.lookup.classref]]</a>
 
-In a class member access expression ( [[expr.ref]]), if the `.` or `->`
+In a class member access expression ([[expr.ref]]), if the `.` or `->`
 token is immediately followed by an *identifier* followed by a `<`, the
 identifier must be looked up to determine whether the `<` is the
-beginning of a template argument list ( [[temp.names]]) or a less-than
+beginning of a template argument list ([[temp.names]]) or a less-than
 operator. The identifier is first looked up in the class of the object
 expression. If the identifier is not found, it is then looked up in the
 context of the entire *postfix-expression* and shall name a class
 template.
 
-If the *id-expression* in a class member access ( [[expr.ref]]) is an
+If the *id-expression* in a class member access ([[expr.ref]]) is an
 *unqualified-id*, and the type of the object expression is of a class
 type `C`, the *unqualified-id* is looked up in the scope of class `C`.
-For a pseudo-destructor call ( [[expr.pseudo]]), the *unqualified-id* is
+For a pseudo-destructor call ([[expr.pseudo]]), the *unqualified-id* is
 looked up in the context of the complete *postfix-expression*.
 
 If the *unqualified-id* is `~`*type-name*, the *type-name* is looked up
@@ -1960,7 +1960,7 @@ introduced by a declaration in another scope:
 - When a name has *no linkage*, the entity it denotes cannot be referred
   to by names from other scopes.
 
-A name having namespace scope ( [[basic.scope.namespace]]) has internal
+A name having namespace scope ([[basic.scope.namespace]]) has internal
 linkage if it is the name of
 
 - a variable, function or function template that is explicitly declared
@@ -1980,16 +1980,16 @@ namespace if it is the name of
 - a function; or
 - a named class (Clause  [[class]]), or an unnamed class defined in a
   typedef declaration in which the class has the typedef name for
-  linkage purposes ( [[dcl.typedef]]); or
-- a named enumeration ( [[dcl.enum]]), or an unnamed enumeration defined
+  linkage purposes ([[dcl.typedef]]); or
+- a named enumeration ([[dcl.enum]]), or an unnamed enumeration defined
   in a typedef declaration in which the enumeration has the typedef name
-  for linkage purposes ( [[dcl.typedef]]); or
+  for linkage purposes ([[dcl.typedef]]); or
 - a template.
 
 In addition, a member function, static data member, a named class or
 enumeration of class scope, or an unnamed class or enumeration defined
 in a class-scope typedef declaration such that the class or enumeration
-has the typedef name for linkage purposes ( [[dcl.typedef]]), has the
+has the typedef name for linkage purposes ([[dcl.typedef]]), has the
 same linkage, if any, as the name of the class of which it is a member.
 
 The name of a function declared in block scope and the name of a
@@ -2053,27 +2053,27 @@ void q() { ... }          // some other, unrelated q
 — *end example*]
 
 Names not covered by these rules have no linkage. Moreover, except as
-noted, a name declared at block scope ( [[basic.scope.block]]) has no
+noted, a name declared at block scope ([[basic.scope.block]]) has no
 linkage. A type is said to have linkage if and only if:
 
 - it is a class or enumeration type that is named (or has a name for
-  linkage purposes ( [[dcl.typedef]])) and the name has linkage; or
+  linkage purposes ([[dcl.typedef]])) and the name has linkage; or
 - it is an unnamed class or unnamed enumeration that is a member of a
   class with linkage; or
 - it is a specialization of a class template (Clause  [[temp]])[^10]; or
-- it is a fundamental type ( [[basic.fundamental]]); or
-- it is a compound type ( [[basic.compound]]) other than a class or
+- it is a fundamental type ([[basic.fundamental]]); or
+- it is a compound type ([[basic.compound]]) other than a class or
   enumeration, compounded exclusively from types that have linkage; or
-- it is a cv-qualified ( [[basic.type.qualifier]]) version of a type
+- it is a cv-qualified ([[basic.type.qualifier]]) version of a type
   that has linkage.
 
 A type without linkage shall not be used as the type of a variable or
 function with external linkage unless
 
-- the entity has C language linkage ( [[dcl.link]]), or
+- the entity has C language linkage ([[dcl.link]]), or
 - the entity is declared within an unnamed namespace (
   [[namespace.def]]), or
-- the entity is not odr-used ( [[basic.def.odr]]) or is defined in the
+- the entity is not odr-used ([[basic.def.odr]]) or is defined in the
   same translation unit.
 
 [*Note 1*: In other words, a type without linkage contains a class or
@@ -2115,30 +2115,30 @@ template or namespace if
 - both names refer to members of the same namespace or to members, not
   by inheritance, of the same class; and
 - when both names denote functions, the parameter-type-lists of the
-  functions ( [[dcl.fct]]) are identical; and
+  functions ([[dcl.fct]]) are identical; and
 - when both names denote function templates, the signatures (
   [[temp.over.link]]) are the same.
 
-After all adjustments of types (during which typedefs ( [[dcl.typedef]])
+After all adjustments of types (during which typedefs ([[dcl.typedef]])
 are replaced by their definitions), the types specified by all
 declarations referring to a given variable or function shall be
 identical, except that declarations for an array object can specify
 array types that differ by the presence or absence of a major array
-bound ( [[dcl.array]]). A violation of this rule on type identity does
+bound ([[dcl.array]]). A violation of this rule on type identity does
 not require a diagnostic.
 
 [*Note 2*: Linkage to non-C++declarations can be achieved using a
-*linkage-specification* ( [[dcl.link]]). — *end note*]
+*linkage-specification* ([[dcl.link]]). — *end note*]
 
 ## Start and termination <a id="basic.start">[[basic.start]]</a>
 
 ### `main` function <a id="basic.start.main">[[basic.start.main]]</a>
 
 A program shall contain a global function called `main`. Executing a
-program starts a main thread of execution ( [[intro.multithread]],
+program starts a main thread of execution ([[intro.multithread]],
 [[thread.threads]]) in which the `main` function is invoked, and in
 which variables of static storage duration might be initialized (
-[[basic.start.static]]) and destroyed ( [[basic.start.term]]). It is
+[[basic.start.static]]) and destroyed ([[basic.start.term]]). It is
 *implementation-defined* whether a program in a freestanding environment
 is required to define a `main` function.
 
@@ -2156,7 +2156,7 @@ is *implementation-defined*. An implementation shall allow both
 - a function of `()` returning `int` and
 - a function of `(int`, pointer to pointer to `char)` returning `int`
 
-as the type of `main` ( [[dcl.fct]]). In the latter form, for purposes
+as the type of `main` ([[dcl.fct]]). In the latter form, for purposes
 of exposition, the first function parameter is called `argc` and the
 second function parameter is called `argv`, where `argc` shall be the
 number of arguments passed to the program from the environment in which
@@ -2175,7 +2175,7 @@ The function `main` shall not be used within a program. The linkage (
 [[basic.link]]) of `main` is *implementation-defined*. A program that
 defines `main` as deleted or that declares `main` to be `inline`,
 `static`, or `constexpr` is ill-formed. The `main` function shall not be
-declared with a *linkage-specification* ( [[dcl.link]]). A program that
+declared with a *linkage-specification* ([[dcl.link]]). A program that
 declares a variable `main` at global scope or that declares the name
 `main` with C language linkage (in any namespace) is ill-formed. The
 name `main` is not otherwise reserved.
@@ -2184,7 +2184,7 @@ name `main` is not otherwise reserved.
 `main`, as can entities in other namespaces. — *end example*]
 
 Terminating the program without leaving the current block (e.g., by
-calling the function `std::exit(int)` ( [[support.start.term]])) does
+calling the function `std::exit(int)` ([[support.start.term]])) does
 not destroy any objects with automatic storage duration (
 [[class.dtor]]). If `std::exit` is called to end a program during the
 destruction of an object with static or thread storage duration, the
@@ -2215,8 +2215,8 @@ destructor. — *end note*]
 *Constant initialization* is performed if a variable or temporary object
 with static or thread storage duration is initialized by a constant
 initializer for the entity. If constant initialization is not performed,
-a variable with static storage duration ( [[basic.stc.static]]) or
-thread storage duration ( [[basic.stc.thread]]) is zero-initialized (
+a variable with static storage duration ([[basic.stc.static]]) or
+thread storage duration ([[basic.stc.thread]]) is zero-initialized (
 [[dcl.init]]). Together, zero-initialization and constant initialization
 are called *static initialization*; all other initialization is *dynamic
 initialization*. All static initialization strongly happens before (
@@ -2281,8 +2281,8 @@ storage duration are ordered as follows:
 - If `V` has partially-ordered initialization, `W` does not have
   unordered initialization, and `V` is defined before `W` in every
   translation unit in which `W` is defined, then
-  - if the program starts a thread ( [[intro.multithread]]) other than
-    the main thread ( [[basic.start.main]]), the initialization of `V`
+  - if the program starts a thread ([[intro.multithread]]) other than
+    the main thread ([[basic.start.main]]), the initialization of `V`
     strongly happens before the initialization of `W`;
   - otherwise, the initialization of `V` is sequenced before the
     initialization of `W`.
@@ -2296,7 +2296,7 @@ storage duration are ordered as follows:
 [*Note 2*: This definition permits initialization of a sequence of
 ordered variables concurrently with another sequence. — *end note*]
 
-A *non-initialization odr-use* is an odr-use ( [[basic.def.odr]]) not
+A *non-initialization odr-use* is an odr-use ([[basic.def.odr]]) not
 caused directly or indirectly by the initialization of a non-local
 static or thread storage duration variable.
 
@@ -2373,10 +2373,10 @@ storage duration exits via an exception, `std::terminate` is called (
 
 ### Termination <a id="basic.start.term">[[basic.start.term]]</a>
 
-Destructors ( [[class.dtor]]) for initialized objects (that is, objects
-whose lifetime ( [[basic.life]]) has begun) with static storage
+Destructors ([[class.dtor]]) for initialized objects (that is, objects
+whose lifetime ([[basic.life]]) has begun) with static storage
 duration, and functions registered with `std::atexit`, are called as
-part of a call to `std::exit` ( [[support.start.term]]). The call to
+part of a call to `std::exit` ([[support.start.term]]). The call to
 `std::exit` is sequenced before the invocations of the destructors and
 the registered functions.
 
@@ -2429,10 +2429,10 @@ sequenced before the call to the function passed to the first
 `std::atexit` call.
 
 If there is a use of a standard library object or function not permitted
-within signal handlers ( [[support.runtime]]) that does not happen
-before ( [[intro.multithread]]) completion of destruction of objects
+within signal handlers ([[support.runtime]]) that does not happen
+before ([[intro.multithread]]) completion of destruction of objects
 with static storage duration and execution of `std::atexit` registered
-functions ( [[support.start.term]]), the program has undefined behavior.
+functions ([[support.start.term]]), the program has undefined behavior.
 
 [*Note 2*: If there is a use of an object with static storage duration
 that does not happen before the object’s destruction, the program has
@@ -2458,16 +2458,16 @@ object and is one of the following:
 - dynamic storage duration
 
 Static, thread, and automatic storage durations are associated with
-objects introduced by declarations ( [[basic.def]]) and implicitly
-created by the implementation ( [[class.temporary]]). The dynamic
+objects introduced by declarations ([[basic.def]]) and implicitly
+created by the implementation ([[class.temporary]]). The dynamic
 storage duration is associated with objects created by a
-*new-expression* ( [[expr.new]]).
+*new-expression* ([[expr.new]]).
 
 The storage duration categories apply to references as well.
 
 When the end of the duration of a region of storage is reached, the
 values of all pointers representing the address of any part of that
-region of storage become invalid pointer values ( [[basic.compound]]).
+region of storage become invalid pointer values ([[basic.compound]]).
 Indirection through an invalid pointer value and passing an invalid
 pointer value to a deallocation function have undefined behavior. Any
 other use of an invalid pointer value has *implementation-defined*
@@ -2478,7 +2478,7 @@ behavior.[^12]
 All variables which do not have dynamic storage duration, do not have
 thread storage duration, and are not local have *static storage
 duration*. The storage for these entities shall last for the duration of
-the program ( [[basic.start.static]], [[basic.start.term]]).
+the program ([[basic.start.static]], [[basic.start.term]]).
 
 If a variable with static storage duration has initialization or a
 destructor with side effects, it shall not be eliminated even if it
@@ -2504,7 +2504,7 @@ object or reference per thread, and use of the declared name refers to
 the entity associated with the current thread.
 
 A variable with thread storage duration shall be initialized before its
-first odr-use ( [[basic.def.odr]]) and, if constructed, shall be
+first odr-use ([[basic.def.odr]]) and, if constructed, shall be
 destroyed on thread exit.
 
 ### Automatic storage duration <a id="basic.stc.auto">[[basic.stc.auto]]</a>
@@ -2525,8 +2525,8 @@ be eliminated as specified in  [[class.copy]].
 ### Dynamic storage duration <a id="basic.stc.dynamic">[[basic.stc.dynamic]]</a>
 
 Objects can be created dynamically during program execution (
-[[intro.execution]]), using *new-expression*s ( [[expr.new]]), and
-destroyed using *delete-expression*s ( [[expr.delete]]). A
+[[intro.execution]]), using *new-expression*s ([[expr.new]]), and
+destroyed using *delete-expression*s ([[expr.delete]]). A
 C++implementation provides access to, and management of, dynamic storage
 via the global *allocation functions* `operator new` and `operator
 new[]` and the global *deallocation functions* `operator
@@ -2538,11 +2538,11 @@ deallocation. — *end note*]
 
 The library provides default definitions for the global allocation and
 deallocation functions. Some global allocation and deallocation
-functions are replaceable ( [[new.delete]]). A C++program shall provide
+functions are replaceable ([[new.delete]]). A C++program shall provide
 at most one definition of a replaceable allocation or deallocation
 function. Any such function definition replaces the default version
-provided in the library ( [[replacement.functions]]). The following
-allocation and deallocation functions ( [[support.dynamic]]) are
+provided in the library ([[replacement.functions]]). The following
+allocation and deallocation functions ([[support.dynamic]]) are
 implicitly declared in global scope in each translation unit of a
 program.
 
@@ -2578,7 +2578,7 @@ unless the name has been declared by including the appropriate
 header. — *end note*]
 
 Allocation and/or deallocation functions may also be declared and
-defined for any class ( [[class.free]]).
+defined for any class ([[class.free]]).
 
 Any allocation and/or deallocation functions defined in a C++program,
 including the default versions in the library, shall conform to the
@@ -2591,8 +2591,8 @@ An allocation function shall be a class member function or a global
 function; a program is ill-formed if an allocation function is declared
 in a namespace scope other than global scope or declared static in
 global scope. The return type shall be `void*`. The first parameter
-shall have type `std::size_t` ( [[support.types]]). The first parameter
-shall not have an associated default argument ( [[dcl.fct.default]]).
+shall have type `std::size_t` ([[support.types]]). The first parameter
+shall not have an associated default argument ([[dcl.fct.default]]).
 The value of the first parameter shall be interpreted as the requested
 size of the allocation. An allocation function can be a function
 template. Such a template shall declare its return type and first
@@ -2608,12 +2608,12 @@ allocated storage on return from the allocation function. The order,
 contiguity, and initial value of storage allocated by successive calls
 to an allocation function are unspecified. The pointer returned shall be
 suitably aligned so that it can be converted to a pointer to any
-suitable complete object type ( [[new.delete.single]]) and then used to
+suitable complete object type ([[new.delete.single]]) and then used to
 access the object or array in the storage allocated (until the storage
 is explicitly deallocated by a call to a corresponding deallocation
 function). Even if the size of the space requested is zero, the request
 can fail. If the request succeeds, the value returned shall be a
-non-null pointer value ( [[conv.ptr]]) `p0` different from any
+non-null pointer value ([[conv.ptr]]) `p0` different from any
 previously returned value `p1`, unless that value `p1` was subsequently
 passed to an `operator` `delete`. Furthermore, for the library
 allocation functions in  [[new.delete.single]] and 
@@ -2623,28 +2623,28 @@ caller. The effect of indirecting through a pointer returned as a
 request for zero size is undefined.[^13]
 
 An allocation function that fails to allocate storage can invoke the
-currently installed new-handler function ( [[new.handler]]), if any.
+currently installed new-handler function ([[new.handler]]), if any.
 
 [*Note 1*:  A program-supplied allocation function can obtain the
 address of the currently installed `new_handler` using the
-`std::get_new_handler` function ( [[set.new.handler]]). — *end note*]
+`std::get_new_handler` function ([[set.new.handler]]). — *end note*]
 
 If an allocation function that has a non-throwing exception
-specification ( [[except.spec]]) fails to allocate storage, it shall
+specification ([[except.spec]]) fails to allocate storage, it shall
 return a null pointer. Any other allocation function that fails to
 allocate storage shall indicate failure only by throwing an exception (
 [[except.throw]]) of a type that would match a handler (
-[[except.handle]]) of type `std::bad_alloc` ( [[bad.alloc]]).
+[[except.handle]]) of type `std::bad_alloc` ([[bad.alloc]]).
 
 A global allocation function is only called as the result of a new
-expression ( [[expr.new]]), or called directly using the function call
-syntax ( [[expr.call]]), or called indirectly through calls to the
+expression ([[expr.new]]), or called directly using the function call
+syntax ([[expr.call]]), or called indirectly through calls to the
 functions in the C++standard library.
 
 [*Note 2*: In particular, a global allocation function is not called to
 allocate storage for objects with static storage duration (
 [[basic.stc.static]]), for objects or references with thread storage
-duration ( [[basic.stc.thread]]), for objects of type `std::type_info` (
+duration ([[basic.stc.thread]]), for objects of type `std::type_info` (
 [[expr.typeid]]), or for an exception object (
 [[except.throw]]). — *end note*]
 
@@ -2685,7 +2685,7 @@ deallocation function is one supplied in the standard library, the call
 has no effect.
 
 If the argument given to a deallocation function in the standard library
-is a pointer that is not the null pointer value ( [[conv.ptr]]), the
+is a pointer that is not the null pointer value ([[conv.ptr]]), the
 deallocation function shall deallocate the storage referenced by the
 pointer, ending the duration of the region of storage.
 
@@ -2693,7 +2693,7 @@ pointer, ending the duration of the region of storage.
 
 A *traceable pointer object* is
 
-- an object of an object pointer type ( [[basic.compound]]), or
+- an object of an object pointer type ([[basic.compound]]), or
 - an object of an integral type that is at least as large as
   `std::intptr_t`, or
 - a sequence of elements in an array of narrow character type (
@@ -2709,9 +2709,9 @@ if it has an object pointer type and it is one of the following:
 - the result of taking the address of an object (or one of its
   subobjects) designated by an lvalue resulting from indirection through
   a safely-derived pointer value;
-- the result of well-defined pointer arithmetic ( [[expr.add]]) using a
+- the result of well-defined pointer arithmetic ([[expr.add]]) using a
   safely-derived pointer value;
-- the result of a well-defined pointer conversion ( [[conv.ptr]], 
+- the result of a well-defined pointer conversion ([[conv.ptr]], 
   [[expr.cast]]) of a safely-derived pointer value;
 - the result of a `reinterpret_cast` of a safely-derived pointer value;
 - the result of a `reinterpret_cast` of an integer representation of a
@@ -2757,7 +2757,7 @@ strict pointer safety.
 ### Duration of subobjects <a id="basic.stc.inherit">[[basic.stc.inherit]]</a>
 
 The storage duration of subobjects and reference members is that of
-their complete object ( [[intro.object]]).
+their complete object ([[intro.object]]).
 
 ## Object lifetime <a id="basic.life">[[basic.life]]</a>
 
@@ -2779,13 +2779,13 @@ The lifetime of an object of type `T` begins when:
 
 except that if the object is a union member or subobject thereof, its
 lifetime only begins if that union member is the initialized member in
-the union ( [[dcl.init.aggr]], [[class.base.init]]), or as described in
+the union ([[dcl.init.aggr]], [[class.base.init]]), or as described in
 [[class.union]]. The lifetime of an object *o* of type `T` ends when:
 
 - if `T` is a class type with a non-trivial destructor (
   [[class.dtor]]), the destructor call starts, or
 - the storage which the object occupies is released, or is reused by an
-  object that is not nested within *o* ( [[intro.object]]).
+  object that is not nested within *o* ([[intro.object]]).
 
 The lifetime of a reference begins when its initialization is complete.
 The lifetime of a reference ends as if it were a scalar object.
@@ -2812,7 +2812,7 @@ object of a class type with a non-trivial destructor. For an object of a
 class type with a non-trivial destructor, the program is not required to
 call the destructor explicitly before the storage which the object
 occupies is reused or released; however, if there is no explicit call to
-the destructor or if a *delete-expression* ( [[expr.delete]]) is not
+the destructor or if a *delete-expression* ([[expr.delete]]) is not
 used to release the storage, the destructor shall not be implicitly
 called and any program that depends on the side effects produced by the
 destructor has undefined behavior.
@@ -2824,7 +2824,7 @@ reused or released, any pointer that represents the address of the
 storage location where the object will be or was located may be used but
 only in limited ways. For an object under construction or destruction,
 see  [[class.cdtor]]. Otherwise, such a pointer refers to allocated
-storage ( [[basic.stc.dynamic.deallocation]]), and using the pointer as
+storage ([[basic.stc.dynamic.deallocation]]), and using the pointer as
 if the pointer were of type `void*`, is well-defined. Indirection
 through such a pointer is permitted but the resulting lvalue may only be
 used in limited ways, as described below. The program has undefined
@@ -2835,12 +2835,12 @@ behavior if:
   *delete-expression*,
 - the pointer is used to access a non-static data member or call a
   non-static member function of the object, or
-- the pointer is implicitly converted ( [[conv.ptr]]) to a pointer to a
+- the pointer is implicitly converted ([[conv.ptr]]) to a pointer to a
   virtual base class, or
 - the pointer is used as the operand of a `static_cast` (
   [[expr.static.cast]]), except when the conversion is to pointer to
   cv `void`, or to pointer to cv `void` and subsequently to pointer to
-  cv `char`, cv `unsigned char`, or cv `std::byte` ( [[cstddef.syn]]),
+  cv `char`, cv `unsigned char`, or cv `std::byte` ([[cstddef.syn]]),
   or
 - the pointer is used as the operand of a `dynamic_cast` (
   [[expr.dynamic.cast]]).
@@ -2911,7 +2911,7 @@ started, can be used to manipulate the new object, if:
 - the type of the original object is not const-qualified, and, if a
   class type, does not contain any non-static data member whose type is
   const-qualified or a reference type, and
-- the original object was a most derived object ( [[intro.object]]) of
+- the original object was a most derived object ([[intro.object]]) of
   type `T` and the new object is a most derived object of type `T` (that
   is, they are not base class subobjects).
 
@@ -2943,10 +2943,10 @@ c1.f();                         // well-defined; c1 refers to a new object of ty
 
 [*Note 4*: If these conditions are not met, a pointer to the new object
 can be obtained from a pointer that represents the address of its
-storage by calling `std::launder` ( [[support.dynamic]]). — *end note*]
+storage by calling `std::launder` ([[support.dynamic]]). — *end note*]
 
 If a program ends the lifetime of an object of type `T` with static (
-[[basic.stc.static]]), thread ( [[basic.stc.thread]]), or automatic (
+[[basic.stc.static]]), thread ([[basic.stc.thread]]), or automatic (
 [[basic.stc.auto]]) storage duration and if `T` has a non-trivial
 destructor,[^17] the program must ensure that an object of the original
 type occupies that same storage location when the implicit destructor
@@ -2993,7 +2993,7 @@ void h() {
 — *end example*]
 
 In this section, “before” and “after” refer to the “happens before”
-relation ( [[intro.multithread]]).
+relation ([[intro.multithread]]).
 
 [*Note 5*: Therefore, undefined behavior results if an object that is
 being constructed in one thread is referenced from another thread
@@ -3004,12 +3004,12 @@ without adequate synchronization. — *end note*]
 [*Note 1*:  [[basic.types]] and the subclauses thereof impose
 requirements on implementations regarding the representation of types.
 There are two kinds of types: fundamental types and compound types.
-Types describe objects ( [[intro.object]]), references ( [[dcl.ref]]),
-or functions ( [[dcl.fct]]). — *end note*]
+Types describe objects ([[intro.object]]), references ([[dcl.ref]]),
+or functions ([[dcl.fct]]). — *end note*]
 
 For any object (other than a base-class subobject) of trivially copyable
 type `T`, whether or not the object holds a valid value of type `T`, the
-underlying bytes ( [[intro.memory]]) making up the object can be copied
+underlying bytes ([[intro.memory]]) making up the object can be copied
 into an array of `char`, `unsigned char`, or `std::byte` (
 [[cstddef.syn]]). [^18] If the content of that array is copied back into
 the object, the object shall subsequently hold its original value.
@@ -3028,7 +3028,7 @@ std::memcpy(&obj, buf, N);      // at this point, each subobject of obj of scala
 
 For any trivially copyable type `T`, if two pointers to `T` point to
 distinct `T` objects `obj1` and `obj2`, where neither `obj1` nor `obj2`
-is a base-class subobject, if the underlying bytes ( [[intro.memory]])
+is a base-class subobject, if the underlying bytes ([[intro.memory]])
 making up `obj1` are copied into `obj2`,[^19] `obj2` shall subsequently
 hold the same value as `obj1`.
 
@@ -3054,7 +3054,7 @@ representation that determines a *value*, which is one discrete element
 of an *implementation-defined* set of values.[^20]
 
 A class that has been declared but not defined, an enumeration type in
-certain contexts ( [[dcl.enum]]), or an array of unknown bound or of
+certain contexts ([[dcl.enum]]), or an array of unknown bound or of
 incomplete element type, is an *incompletely-defined object type*. [^21]
 Incompletely-defined object types and cv `void` are *incomplete types* (
 [[basic.fundamental]]). Objects shall not be defined to have an
@@ -3110,9 +3110,9 @@ contexts incomplete types are prohibited. — *end note*]
 An *object type* is a (possibly cv-qualified) type that is not a
 function type, not a reference type, and not cv `void`.
 
-Arithmetic types ( [[basic.fundamental]]), enumeration types, pointer
-types, pointer to member types ( [[basic.compound]]), `std::nullptr_t`,
-and cv-qualified ( [[basic.type.qualifier]]) versions of these types are
+Arithmetic types ([[basic.fundamental]]), enumeration types, pointer
+types, pointer to member types ([[basic.compound]]), `std::nullptr_t`,
+and cv-qualified ([[basic.type.qualifier]]) versions of these types are
 collectively called *scalar types*. Scalar types, POD classes (Clause 
 [[class]]), arrays of such types and cv-qualified versions of these
 types are collectively called *POD types*. Cv-unqualified scalar types,
@@ -3134,8 +3134,8 @@ A type is a *literal type* if it is:
 - a possibly cv-qualified class type (Clause  [[class]]) that has all of
   the following properties:
   - it has a trivial destructor,
-  - it is either a closure type ( [[expr.prim.lambda.closure]]), an
-    aggregate type ( [[dcl.init.aggr]]), or has at least one constexpr
+  - it is either a closure type ([[expr.prim.lambda.closure]]), an
+    aggregate type ([[dcl.init.aggr]]), or has at least one constexpr
     constructor or constructor template (possibly inherited (
     [[namespace.udecl]]) from a base class) that is not a copy or move
     constructor,
@@ -3152,8 +3152,8 @@ expression. — *end note*]
 
 Two types cv-qualifiercv1 `T1` and cv-qualifiercv2 `T2` are
 *layout-compatible* types if `T1` and `T2` are the same type,
-layout-compatible enumerations ( [[dcl.enum]]), or layout-compatible
-standard-layout class types ( [[class.mem]]).
+layout-compatible enumerations ([[dcl.enum]]), or layout-compatible
+standard-layout class types ([[class.mem]]).
 
 ### Fundamental types <a id="basic.fundamental">[[basic.fundamental]]</a>
 
@@ -3167,7 +3167,7 @@ declared `unsigned` or `signed`. Plain `char`, `signed char`, and
 `unsigned char` are three distinct types, collectively called
 *narrow character types*. A `char`, a `signed char`, and an
 `unsigned char` occupy the same amount of storage and have the same
-alignment requirements ( [[basic.align]]); that is, they have the same
+alignment requirements ([[basic.align]]); that is, they have the same
 object representation. For narrow character types, all bits of the
 object representation participate in the value representation.
 
@@ -3201,7 +3201,7 @@ corresponding (but different) *standard unsigned integer type*:
 “`unsigned char`”, “`unsigned short int`”, “`unsigned int`”,
 “`unsigned long int`”, and “`unsigned long long int`”, each of which
 occupies the same amount of storage and has the same alignment
-requirements ( [[basic.align]]) as the corresponding signed integer
+requirements ([[basic.align]]) as the corresponding signed integer
 type[^23]; that is, each signed integer type has the same object
 representation as its corresponding unsigned integer type. Likewise, for
 each of the extended signed integer types there exists a corresponding
@@ -3225,8 +3225,8 @@ of integer.[^24]
 
 Type `wchar_t` is a distinct type whose values can represent distinct
 codes for all members of the largest extended character set specified
-among the supported locales ( [[locale]]). Type `wchar_t` shall have the
-same size, signedness, and alignment requirements ( [[basic.align]]) as
+among the supported locales ([[locale]]). Type `wchar_t` shall have the
+same size, signedness, and alignment requirements ([[basic.align]]) as
 one of the other integral types, called its *underlying type*. Types
 `char16_t` and `char32_t` denote distinct types with the same size,
 signedness, and alignment as `uint_least16_t` and `uint_least32_t`,
@@ -3271,18 +3271,18 @@ arithmetic type for an implementation.
 A type cv `void` is an incomplete type that cannot be completed; such a
 type has an empty set of values. It is used as the return type for
 functions that do not return a value. Any expression can be explicitly
-converted to type cv `void` ( [[expr.cast]]). An expression of type
+converted to type cv `void` ([[expr.cast]]). An expression of type
 cv `void` shall be used only as an expression statement (
-[[stmt.expr]]), as an operand of a comma expression ( [[expr.comma]]),
-as a second or third operand of `?:` ( [[expr.cond]]), as the operand of
+[[stmt.expr]]), as an operand of a comma expression ([[expr.comma]]),
+as a second or third operand of `?:` ([[expr.cond]]), as the operand of
 `typeid`, `noexcept`, or `decltype`, as the expression in a return
-statement ( [[stmt.return]]) for a function with the return type
+statement ([[stmt.return]]) for a function with the return type
 cv `void`, or as the operand of an explicit conversion to type
 cv `void`.
 
 A value of type `std::nullptr_t` is a null pointer constant (
 [[conv.ptr]]). Such values participate in the pointer and the pointer to
-member conversions ( [[conv.ptr]], [[conv.mem]]).
+member conversions ([[conv.ptr]], [[conv.mem]]).
 `sizeof(std::nullptr_t)` shall be equal to `sizeof(void*)`.
 
 [*Note 4*: Even if the implementation defines two or more basic types
@@ -3304,7 +3304,7 @@ Compound types can be constructed in the following ways:
   - *rvalue reference*
 - *classes* containing a sequence of objects of various types (Clause 
   [[class]]), a set of types, enumerations and functions for
-  manipulating these objects ( [[class.mfct]]), and a set of
+  manipulating these objects ([[class.mfct]]), and a set of
   restrictions on the access to these entities (Clause 
   [[class.access]]);
 - *unions*, which are classes capable of containing objects of different
@@ -3319,7 +3319,7 @@ These methods of constructing types can be applied recursively;
 restrictions are mentioned in  [[dcl.ptr]], [[dcl.array]], [[dcl.fct]],
 and  [[dcl.ref]]. Constructing a type such that the number of bytes in
 its object representation exceeds the maximum value representable in the
-type `std::size_t` ( [[support.types]]) is ill-formed.
+type `std::size_t` ([[support.types]]) is ill-formed.
 
 The type of a pointer to cv `void` or a pointer to an object type is
 called an *object pointer type*.
@@ -3342,8 +3342,8 @@ allowed although there are restrictions on what can be done with them (
 
 - a *pointer to* an object or function (the pointer is said to *point*
   to the object or function), or
-- a *pointer past the end of* an object ( [[expr.add]]), or
-- the *null pointer value* ( [[conv.ptr]]) for that type, or
+- a *pointer past the end of* an object ([[expr.add]]), or
+- the *null pointer value* ([[conv.ptr]]) for that type, or
 - an *invalid pointer value*.
 
 A value of a pointer type that is a pointer to or past the end of an
@@ -3352,21 +3352,21 @@ object *represents the address* of the first byte in memory (
 memory after the end of the storage occupied by the object,
 respectively.
 
-[*Note 2*: A pointer past the end of an object ( [[expr.add]]) is not
+[*Note 2*: A pointer past the end of an object ([[expr.add]]) is not
 considered to point to an unrelated object of the object’s type that
 might be located at that address. A pointer value becomes invalid when
 the storage it denotes reaches the end of its storage duration; see
 [[basic.stc]]. — *end note*]
 
-For purposes of pointer arithmetic ( [[expr.add]]) and comparison (
+For purposes of pointer arithmetic ([[expr.add]]) and comparison (
 [[expr.rel]], [[expr.eq]]), a pointer past the end of the last element
 of an array `x` of n elements is considered to be equivalent to a
 pointer to a hypothetical element `x[n]`. The value representation of
 pointer types is *implementation-defined*. Pointers to layout-compatible
 types shall have the same value representation and alignment
-requirements ( [[basic.align]]).
+requirements ([[basic.align]]).
 
-[*Note 3*: Pointers to over-aligned types ( [[basic.align]]) have no
+[*Note 3*: Pointers to over-aligned types ([[basic.align]]) have no
 special representation, but their range of valid values is restricted by
 the extended alignment requirement. — *end note*]
 
@@ -3374,24 +3374,24 @@ Two objects *a* and *b* are *pointer-interconvertible* if:
 
 - they are the same object, or
 - one is a standard-layout union object and the other is a non-static
-  data member of that object ( [[class.union]]), or
+  data member of that object ([[class.union]]), or
 - one is a standard-layout class object and the other is the first
   non-static data member of that object, or, if the object has no
   non-static data members, the first base class subobject of that
-  object ( [[class.mem]]), or
+  object ([[class.mem]]), or
 - there exists an object *c* such that *a* and *c* are
   pointer-interconvertible, and *c* and *b* are
   pointer-interconvertible.
 
 If two objects are pointer-interconvertible, then they have the same
 address, and it is possible to obtain a pointer to one from a pointer to
-the other via a `reinterpret_cast` ( [[expr.reinterpret.cast]]).
+the other via a `reinterpret_cast` ([[expr.reinterpret.cast]]).
 
 [*Note 4*: An array object and its first element are not
 pointer-interconvertible, even though they have the same
 address. — *end note*]
 
-A pointer to cv-qualified ( [[basic.type.qualifier]]) or cv-unqualified
+A pointer to cv-qualified ([[basic.type.qualifier]]) or cv-unqualified
 `void` can be used to point to objects of unknown type. Such a pointer
 shall be able to hold any object pointer. An object of type cv `void*`
 shall have the same representation and alignment requirements as
@@ -3401,13 +3401,13 @@ cv `char*`.
 
 A type mentioned in  [[basic.fundamental]] and  [[basic.compound]] is a
 *cv-unqualified type*. Each type which is a cv-unqualified complete or
-incomplete object type or is `void` ( [[basic.types]]) has three
+incomplete object type or is `void` ([[basic.types]]) has three
 corresponding cv-qualified versions of its type: a *const-qualified*
 version, a *volatile-qualified* version, and a
 *const-volatile-qualified* version. The type of an object (
 [[intro.object]]) includes the *cv-qualifier*s specified in the
-*decl-specifier-seq* ( [[dcl.spec]]), *declarator* (Clause 
-[[dcl.decl]]), *type-id* ( [[dcl.name]]), or *new-type-id* (
+*decl-specifier-seq* ([[dcl.spec]]), *declarator* (Clause 
+[[dcl.decl]]), *type-id* ([[dcl.name]]), or *new-type-id* (
 [[expr.new]]) when the object is created.
 
 - A *const object* is an object of type `const T` or a non-mutable
@@ -3421,9 +3421,9 @@ version, a *volatile-qualified* version, and a
 
 The cv-qualified or cv-unqualified versions of a type are distinct
 types; however, they shall have the same representation and alignment
-requirements ( [[basic.align]]).[^30]
+requirements ([[basic.align]]).[^30]
 
-A compound type ( [[basic.compound]]) is not cv-qualified by the
+A compound type ([[basic.compound]]) is not cv-qualified by the
 cv-qualifiers (if any) of the types from which it is compounded. Any
 cv-qualifiers applied to an array type affect the array element type (
 [[dcl.array]]).
@@ -3490,7 +3490,7 @@ array type is considered to be const-qualified.
 - An *xvalue* is a glvalue that denotes an object or bit-field whose
   resources can be reused (usually because it is near the end of its
   lifetime). \[*Example 2*: Certain kinds of expressions involving
-  rvalue references ( [[dcl.ref]]) yield xvalues, such as a call to a
+  rvalue references ([[dcl.ref]]) yield xvalues, such as a call to a
   function whose return type is an rvalue reference or a cast to an
   rvalue reference type. — *end example*]
 - An *lvalue* is a glvalue that is not an xvalue.
@@ -3536,8 +3536,8 @@ reference to an lvalue is not such a context; see 
 [[dcl.init.ref]]. — *end note*]
 
 [*Note 5*: There are no prvalue bit-fields; if a bit-field is converted
-to a prvalue ( [[conv.lval]]), a prvalue of the type of the bit-field is
-created, which might then be promoted ( [[conv.prom]]). — *end note*]
+to a prvalue ([[conv.lval]]), a prvalue of the type of the bit-field is
+created, which might then be promoted ([[conv.prom]]). — *end note*]
 
 [*Note 6*: Whenever a prvalue appears in a context where a glvalue is
 expected, the prvalue is converted to an xvalue; see 
@@ -3547,7 +3547,7 @@ The discussion of reference initialization in  [[dcl.init.ref]] and of
 temporaries in  [[class.temporary]] indicates the behavior of lvalues
 and rvalues in other significant contexts.
 
-Unless otherwise indicated ( [[expr.call]]), a prvalue shall always have
+Unless otherwise indicated ([[expr.call]]), a prvalue shall always have
 complete type or the `void` type. A glvalue shall not have type
 cv `void`.
 
@@ -3560,7 +3560,7 @@ function type.
 
 [*Note 8*: A program that attempts to modify an object through a
 nonmodifiable lvalue expression or through an rvalue expression is
-ill-formed ( [[expr.ass]], [[expr.post.incr]],
+ill-formed ([[expr.ass]], [[expr.post.incr]],
 [[expr.pre.incr]]). — *end note*]
 
 If a program attempts to access the stored value of an object through a
@@ -3585,14 +3585,14 @@ undefined:[^31]
 
 ## Alignment <a id="basic.align">[[basic.align]]</a>
 
-Object types have *alignment requirements* ( [[basic.fundamental]], 
+Object types have *alignment requirements* ([[basic.fundamental]], 
 [[basic.compound]]) which place restrictions on the addresses at which
 an object of that type may be allocated. An *alignment* is an
 *implementation-defined* integer value representing the number of bytes
 between successive addresses at which a given object can be allocated.
 An object type imposes an alignment requirement on every object of that
 type; stricter alignment can be requested using the alignment
-specifier ( [[dcl.align]]).
+specifier ([[dcl.align]]).
 
 A *fundamental alignment* is represented by an alignment less than or
 equal to the greatest alignment supported by the implementation in all
@@ -3622,7 +3622,7 @@ of the type in the complete-object case.
 An *extended alignment* is represented by an alignment greater than
 `alignof(std::max_align_t)`. It is *implementation-defined* whether any
 extended alignments are supported and the contexts in which they are
-supported ( [[dcl.align]]). A type having an extended alignment
+supported ([[dcl.align]]). A type having an extended alignment
 requirement is an *over-aligned type*.
 
 [*Note 1*: Every over-aligned type is or contains a class type to which
@@ -3630,7 +3630,7 @@ extended alignment applies (possibly through a non-static data
 member). — *end note*]
 
 A *new-extended alignment* is represented by an alignment greater than
-`__STDCPP_DEFAULT_NEW_ALIGNMENT__` ( [[cpp.predefined]]).
+`__STDCPP_DEFAULT_NEW_ALIGNMENT__` ([[cpp.predefined]]).
 
 Alignments are represented as values of the type `std::size_t`. Valid
 alignments include only those values returned by an `alignof` expression
@@ -3644,8 +3644,8 @@ that satisfies an alignment requirement also satisfies any weaker valid
 alignment requirement.
 
 The alignment requirement of a complete type can be queried using an
-`alignof` expression ( [[expr.alignof]]). Furthermore, the narrow
-character types ( [[basic.fundamental]]) shall have the weakest
+`alignof` expression ([[expr.alignof]]). Furthermore, the narrow
+character types ([[basic.fundamental]]) shall have the weakest
 alignment requirement.
 
 [*Note 2*: This enables the narrow character types to be used as the
@@ -3659,9 +3659,9 @@ Comparing alignments is meaningful and provides the obvious results:
 - When an alignment is larger than another it represents a stricter
   alignment.
 
-[*Note 3*: The runtime pointer alignment function ( [[ptr.align]]) can
+[*Note 3*: The runtime pointer alignment function ([[ptr.align]]) can
 be used to obtain an aligned pointer within a buffer; the
-aligned-storage templates in the library ( [[meta.trans.other]]) can be
+aligned-storage templates in the library ([[meta.trans.other]]) can be
 used to obtain aligned storage. — *end note*]
 
 If a request for a specific extended alignment in a specific context is
@@ -3931,7 +3931,7 @@ not supported by an implementation, the program is ill-formed.
 
 [^6]: This lookup applies whether the definition of `X` is nested within
     `Y`’s definition or whether `X`’s definition appears in a namespace
-    scope enclosing `Y`’s definition ( [[class.nest]]).
+    scope enclosing `Y`’s definition ([[class.nest]]).
 
 [^7]: That is, an unqualified name that occurs, for instance, in a type
     in the *parameter-declaration-clause* or in the
@@ -3950,7 +3950,7 @@ not supported by an implementation, the program is ill-formed.
 
 [^11]: A non-local variable with static storage duration having
     initialization with side effects is initialized in this case, even
-    if it is not itself odr-used ( [[basic.def.odr]], 
+    if it is not itself odr-used ([[basic.def.odr]], 
     [[basic.stc.static]]).
 
 [^12]: Some implementations might define that copying an invalid pointer
@@ -3963,7 +3963,7 @@ not supported by an implementation, the program is ill-formed.
 
 [^14]: The global `operator delete(void*, std::size_t)` precludes use of
     an allocation function `void operator new(std::size_t, std::size_t)`
-    as a placement allocation function ( [[diff.cpp11.basic]]).
+    as a placement allocation function ([[diff.cpp11.basic]]).
 
 [^15]: This section does not impose restrictions on indirection through
     pointers to memory not allocated by `::operator new`. This maintains
@@ -3973,7 +3973,7 @@ not supported by an implementation, the program is ill-formed.
     allocated by `std::malloc` is not restricted.
 
 [^16]: For example, before the construction of a global object of
-    non-POD class type ( [[class.cdtor]]).
+    non-POD class type ([[class.cdtor]]).
 
 [^17]: That is, an object for which a destructor will be called
     implicitly—upon exit from the block for an object with automatic
@@ -3981,10 +3981,10 @@ not supported by an implementation, the program is ill-formed.
     thread storage duration, or upon exit from the program for an object
     with static storage duration.
 
-[^18]: By using, for example, the library functions ( [[headers]])
+[^18]: By using, for example, the library functions ([[headers]])
     `std::memcpy` or `std::memmove`.
 
-[^19]: By using, for example, the library functions ( [[headers]])
+[^19]: By using, for example, the library functions ([[headers]])
     `std::memcpy` or `std::memmove`.
 
 [^20]: The intent is that the memory model of C++is compatible with that
@@ -4010,7 +4010,7 @@ not supported by an implementation, the program is ill-formed.
     uninitialized automatic object, might cause it to behave as if it is
     neither `true` nor `false`.
 
-[^26]: Therefore, enumerations ( [[dcl.enum]]) are not integral;
+[^26]: Therefore, enumerations ([[dcl.enum]]) are not integral;
     however, enumerations can be promoted to integral types as specified
     in  [[conv.prom]].
 

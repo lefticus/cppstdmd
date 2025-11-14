@@ -23,7 +23,7 @@ variable for error number codes, as summarized in Table 
 ## Exception classes <a id="std.exceptions">[[std.exceptions]]</a>
 
 The Standard C++library provides classes to be used to report certain
-errors ( [[res.on.exception.handling]]) in C++programs. In the error
+errors ([[res.on.exception.handling]]) in C++programs. In the error
 model reflected in these classes, errors are divided into two broad
 categories: *logic* errors and *runtime* errors.
 
@@ -359,7 +359,7 @@ C++programs may use to report error conditions originating from the
 operating system or other low-level application program interfaces.
 
 Components described in this subclause shall not change the value of
-`errno` ( [[errno]]). Implementations should leave the error states
+`errno` ([[errno]]). Implementations should leave the error states
 provided by other libraries unchanged.
 
 ``` cpp
@@ -579,7 +579,7 @@ bool operator<(const error_category& rhs) const noexcept;
 
 *Returns:* `less<const error_category*>()(this, &rhs)`.
 
-`less` ( [[comparisons]]) provides a total ordering for pointers.
+`less` ([[comparisons]]) provides a total ordering for pointers.
 
 #### Program defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
 
@@ -811,7 +811,7 @@ template <class charT, class traits>
 
 The class `error_condition` describes an object used to hold values
 identifying error conditions. `error_condition` values are portable
-abstractions, while `error_code` values ( [[syserr.errcode]]) are
+abstractions, while `error_code` values ([[syserr.errcode]]) are
 implementation specific.
 
 ``` cpp
@@ -990,7 +990,7 @@ template <> struct hash<error_code>;
 ```
 
 *Requires:* the template specialization shall meet the requirements of
-class template `hash` ( [[unord.hash]]).
+class template `hash` ([[unord.hash]]).
 
 ### Class `system_error` <a id="syserr.syserr">[[syserr.syserr]]</a>
 

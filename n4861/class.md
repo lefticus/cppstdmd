@@ -104,8 +104,8 @@ struct X {
 subobjects and members declared with the `no_unique_address` attribute
 [[dcl.attr.nouniqueaddr]] are not so constrained. — *end note*]
 
-[*Note 4*: Class objects can be assigned ( [[over.ass]],
-[[class.copy.assign]]), passed as arguments to functions ( [[dcl.init]],
+[*Note 4*: Class objects can be assigned ([[over.ass]],
+[[class.copy.assign]]), passed as arguments to functions ([[dcl.init]],
 [[class.copy.ctor]]), and returned by functions (except objects of
 classes for which copying or moving has been restricted; see 
 [[dcl.fct.def.delete]] and [[class.access]]). Other plausible operators,
@@ -117,7 +117,7 @@ such as equality comparison, can be defined by the user; see 
 A *trivially copyable class* is a class:
 
 - that has at least one eligible copy constructor, move constructor,
-  copy assignment operator, or move assignment operator ( [[special]],
+  copy assignment operator, or move assignment operator ([[special]],
   [[class.copy.ctor]], [[class.copy.assign]]),
 - where each eligible copy constructor, move constructor, copy
   assignment operator, and move assignment operator is trivial, and
@@ -455,7 +455,7 @@ the class or declare at least one unnamed bit-field.
 
 A *data member* is a non-function member introduced by a
 *member-declarator*. A *member function* is a member that is a function.
-Nested types are classes ( [[class.name]], [[class.nest]]) and
+Nested types are classes ([[class.name]], [[class.nest]]) and
 enumerations [[dcl.enum]] declared in the class and arbitrary types
 declared as members by use of a typedef declaration [[dcl.typedef]] or
 *alias-declaration*. The enumerators of an unscoped enumeration
@@ -712,7 +712,7 @@ its beginning, as necessary to achieve appropriate
 alignment. — *end note*]
 
 [*Note 11*: The object and its first subobject are
-pointer-interconvertible ( [[basic.compound]],
+pointer-interconvertible ([[basic.compound]],
 [[expr.static.cast]]). — *end note*]
 
 ### Member functions <a id="class.mfct">[[class.mfct]]</a>
@@ -809,9 +809,9 @@ Also see  [[temp.arg]].
 
 A non-static member function may be called for an object of its class
 type, or for an object of a class derived [[class.derived]] from its
-class type, using the class member access syntax ( [[expr.ref]],
+class type, using the class member access syntax ([[expr.ref]],
 [[over.match.call]]). A non-static member function may also be called
-directly using the function call syntax ( [[expr.call]],
+directly using the function call syntax ([[expr.call]],
 [[over.match.call]]) from within its class or a class derived from its
 class, or a member thereof, as described below.
 
@@ -1190,7 +1190,7 @@ have an implicit exception specification, see 
 [[dcl.fct.def]]. — *end note*]
 
 Default constructors are called implicitly to create class objects of
-static, thread, or automatic storage duration ( [[basic.stc.static]],
+static, thread, or automatic storage duration ([[basic.stc.static]],
 [[basic.stc.thread]], [[basic.stc.auto]]) defined without an initializer
 [[dcl.init]], are called to create class objects of dynamic storage
 duration [[basic.stc.dynamic]] created by a *new-expression* in which
@@ -1375,7 +1375,7 @@ defined as deleted [[dcl.fct.def.delete]] if `X` has:
   type.
 
 [*Note 4*: A defaulted move constructor that is defined as deleted is
-ignored by overload resolution ( [[over.match]], [[over.over]]). Such a
+ignored by overload resolution ([[over.match]], [[over.over]]). Such a
 constructor would otherwise interfere with initialization from an rvalue
 which can use the copy constructor instead. — *end note*]
 
@@ -1398,7 +1398,7 @@ needed for constant evaluation [[expr.const]], or when it is explicitly
 defaulted after its first declaration.
 
 [*Note 5*: The copy/move constructor is implicitly defined even if the
-implementation elided its odr-use ( [[basic.def.odr]],
+implementation elided its odr-use ([[basic.def.odr]],
 [[class.temporary]]). — *end note*]
 
 If the implicitly-defined constructor would satisfy the requirements of
@@ -1581,7 +1581,7 @@ deleted if `X` has:
   operator.
 
 [*Note 6*: A defaulted move assignment operator that is defined as
-deleted is ignored by overload resolution ( [[over.match]],
+deleted is ignored by overload resolution ([[over.match]],
 [[over.over]]). — *end note*]
 
 Because a copy/move assignment operator is implicitly declared for a
@@ -1932,7 +1932,7 @@ Type conversions of class objects can be specified by constructors and
 by conversion functions. These conversions are called
 *user-defined conversions* and are used for implicit type conversions
 [[conv]], for initialization [[dcl.init]], and for explicit type
-conversions ( [[expr.type.conv]], [[expr.cast]], [[expr.static.cast]]).
+conversions ([[expr.type.conv]], [[expr.cast]], [[expr.static.cast]]).
 
 User-defined conversions are applied only where they are unambiguous (
 [[class.member.lookup]], [[class.conv.fct]]). Conversions obey the
@@ -2018,7 +2018,7 @@ void f(X arg) {
 
 An explicit constructor constructs objects just like non-explicit
 constructors, but does so only where the direct-initialization syntax
-[[dcl.init]] or where casts ( [[expr.static.cast]], [[expr.cast]]) are
+[[dcl.init]] or where casts ([[expr.static.cast]], [[expr.cast]]) are
 explicitly used; see also  [[over.match.copy]]. A default constructor
 may be an explicit constructor; such a constructor will be used to
 perform default-initialization or value-initialization [[dcl.init]].
@@ -2334,7 +2334,7 @@ is odr-used [[basic.def.odr]] in a valid program. — *end note*]
 linkage of the name of the class [[basic.link]]. — *end note*]
 
 Static data members are initialized and destroyed exactly like non-local
-variables ( [[basic.start.static]], [[basic.start.dynamic]],
+variables ([[basic.start.static]], [[basic.start.dynamic]],
 [[basic.start.term]]).
 
 ### Bit-fields <a id="class.bit">[[class.bit]]</a>
@@ -2542,7 +2542,7 @@ non-static data members. Each non-static data member is allocated as if
 it were the sole member of a non-union class.
 
 [*Note 2*: A union object and its non-static data members are
-pointer-interconvertible ( [[basic.compound]], [[expr.static.cast]]). As
+pointer-interconvertible ([[basic.compound]], [[expr.static.cast]]). As
 a consequence, all non-static data members of a union object have the
 same address. — *end note*]
 
@@ -3407,7 +3407,7 @@ function.
 
 [*Note 3*: An abstract class can be used only as a base class of some
 other class; no objects of an abstract class can be created except as
-subobjects of a class derived from it ( [[basic.def]],
+subobjects of a class derived from it ([[basic.def]],
 [[class.mem]]). — *end note*]
 
 A pure virtual function need be defined only if called with, or as if
@@ -3446,7 +3446,7 @@ struct C {
 return type of a function being defined [[dcl.fct]] or called
 [[expr.call]], except as specified in [[dcl.type.simple]]. Further, an
 abstract class type cannot be used as the type of an explicit type
-conversion ( [[expr.static.cast]], [[expr.reinterpret.cast]],
+conversion ([[expr.static.cast]], [[expr.reinterpret.cast]],
 [[expr.const.cast]]), because the resulting prvalue would be of abstract
 class type [[basic.lval]]. However, pointers and references to abstract
 class types can appear in such contexts. — *end note*]
@@ -4002,7 +4002,7 @@ Here `B` is a public base of `D2`, `D4`, and `D6`, a private base of
 
 A member of a private base class might be inaccessible as an inherited
 member name, but accessible directly. Because of the rules on pointer
-conversions [[conv.ptr]] and explicit casts ( [[expr.type.conv]],
+conversions [[conv.ptr]] and explicit casts ([[expr.type.conv]],
 [[expr.static.cast]], [[expr.cast]]), a conversion from a pointer to a
 derived class to a pointer to an inaccessible base class might be
 ill-formed if an implicit conversion is used, but well-formed if an
@@ -4070,7 +4070,7 @@ class N: private S {
 — *end example*]
 
 If a base class is accessible, one can implicitly convert a pointer to a
-derived class to a pointer to that base class ( [[conv.ptr]],
+derived class to a pointer to that base class ([[conv.ptr]],
 [[conv.mem]]).
 
 [*Note 2*: It follows that members and friends of a class `X` can
@@ -4220,7 +4220,7 @@ friend typename-specifier ';'
 ```
 
 [*Note 1*: A friend declaration may be the *declaration* in a
-*template-declaration* ( [[temp.pre]], [[temp.friend]]). — *end note*]
+*template-declaration* ([[temp.pre]], [[temp.friend]]). — *end note*]
 
 If the type specifier in a `friend` declaration designates a (possibly
 cv-qualified) class type, that class is declared as a friend; otherwise,
@@ -4253,7 +4253,7 @@ R<int> Ri;                      // OK: "friend int;" is ignored
 — *end example*]
 
 A function first declared in a friend declaration has the linkage of the
-namespace of which it is a member ( [[basic.link]],
+namespace of which it is a member ([[basic.link]],
 [[namespace.memdef]]). Otherwise, the function retains its previous
 linkage [[dcl.stc]].
 
@@ -6131,7 +6131,7 @@ have been ill-formed. — *end example*]
     `volatile` lvalue; see  [[diff.class]].
 
 [^6]: These conversions are considered as standard conversions for the
-    purposes of overload resolution ( [[over.best.ics]],
+    purposes of overload resolution ([[over.best.ics]],
     [[over.ics.ref]]) and therefore initialization [[dcl.init]] and
     explicit casts [[expr.static.cast]]. A conversion to `void` does not
     invoke any conversion function [[expr.static.cast]]. Even though

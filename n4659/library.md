@@ -6,8 +6,8 @@ This Clause describes the contents of the *C++standard library*, how a
 well-formed C++program makes use of the library, and how a conforming
 implementation may provide the entities in the library.
 
-The following subclauses describe the definitions ( [[definitions]]),
-method of description ( [[description]]), and organization (
+The following subclauses describe the definitions ([[definitions]]),
+method of description ([[description]]), and organization (
 [[organization]]) of the library. Clause  [[requirements]], Clauses 
 [[support]] through  [[thread]], and Annex  [[depr]] specify the
 contents of the library, as well as library requirements and constraints
@@ -19,7 +19,7 @@ Clauses  [[support]]– [[thread]], as shown in Table 
 
 The language support library (Clause  [[language.support]]) provides
 components that are required by certain parts of the C++language, such
-as memory allocation ( [[expr.new]], [[expr.delete]]) and exception
+as memory allocation ([[expr.new]], [[expr.delete]]) and exception
 processing (Clause  [[except]]).
 
 The diagnostics library (Clause  [[diagnostics]]) provides a consistent
@@ -28,7 +28,7 @@ exception classes.
 
 The general utilities library (Clause  [[utilities]]) includes
 components used by other library elements, such as a predefined storage
-allocator for dynamic storage management ( [[basic.stc.dynamic]]), and
+allocator for dynamic storage management ([[basic.stc.dynamic]]), and
 components used as infrastructure in C++programs, such as tuples,
 function wrappers, and time facilities.
 
@@ -103,10 +103,10 @@ a class or a type used to represent a *character*
 
 [*Note 4*: It is used for one of the template parameters of the string,
 iostream, and regular expression class templates. A character container
-type is a POD ( [[basic.types]]) type. — *end note*]
+type is a POD ([[basic.types]]) type. — *end note*]
 
-an operator function ( [[over.oper]]) for any of the equality (
-[[expr.eq]]) or relational ( [[expr.rel]]) operators
+an operator function ([[over.oper]]) for any of the equality (
+[[expr.eq]]) or relational ([[expr.rel]]) operators
 
 a group of library entities directly related as members, parameters, or
 return types  
@@ -116,8 +116,8 @@ non-member function templates that operate on strings are referred to as
 the *string component*. — *end note*]
 
 an expression whose evaluation as subexpression of a
-*conditional-expression* `CE` ( [[expr.cond]]) would not prevent `CE`
-from being a core constant expression ( [[expr.const]])
+*conditional-expression* `CE` ([[expr.cond]]) would not prevent `CE`
+from being a core constant expression ([[expr.const]])
 
 one or more threads are unable to continue execution because each is
 blocked waiting for one or more of the others to satisfy some condition
@@ -127,8 +127,8 @@ of the *required behavior*
 
 a description of *replacement function* and *handler function* semantics
 
-a direct-initialization ( [[dcl.init]]) that is not
-list-initialization ( [[dcl.init.list]])
+a direct-initialization ([[dcl.init]]) that is not
+list-initialization ([[dcl.init.list]])
 
 a *non-reserved function* whose definition may be provided by a
 C++program  
@@ -147,7 +147,7 @@ class which defines additional characteristics and functions of the
 character type represented by `charT` necessary to implement the
 iostream class templates. — *end note*]
 
-a class member function ( [[class.mfct]]) other than a constructor,
+a class member function ([[class.mfct]]) other than a constructor,
 assignment operator, or destructor that alters the state of an object of
 the class
 
@@ -160,11 +160,11 @@ same type
 a sequence of values that have *character type* that precede the
 terminating null character type value `charT()`
 
-a class member function ( [[class.mfct]]) that accesses the state of an
+a class member function ([[class.mfct]]) that accesses the state of an
 object of the class but does not alter that state  
 
 [*Note 8*: Observer functions are specified as `const` member
-functions ( [[class.this]]). — *end note*]
+functions ([[class.this]]). — *end note*]
 
 an object type, a function type that does not have cv-qualifiers or a
 *ref-qualifier*, or a reference type
@@ -176,8 +176,8 @@ a *non-reserved function* whose definition is provided by a C++program
 
 [*Note 10*: Only one definition for such a function is in effect for
 the duration of the program’s execution, as the result of creating the
-program ( [[lex.phases]]) and resolving the definitions of all
-translation units ( [[basic.link]]). — *end note*]
+program ([[lex.phases]]) and resolving the definitions of all
+translation units ([[basic.link]]). — *end note*]
 
 a stream (described in Clause  [[input.output]]) that can seek to a
 position that was previously encountered
@@ -358,7 +358,7 @@ satisfy the requirements.
 
 Error conditions specify conditions where a function may fail. The
 conditions are listed, together with a suitable explanation, as the
-`enum class errc` constants ( [[syserr]]).
+`enum class errc` constants ([[syserr]]).
 
 #### C library <a id="structure.see.also">[[structure.see.also]]</a>
 
@@ -369,8 +369,8 @@ of this International Standard and the ISO C standard.
 
 This subclause describes several editorial conventions used to describe
 the contents of the C++standard library. These conventions are for
-describing implementation-defined types ( [[type.descriptions]]), and
-member functions ( [[functions.within.classes]]).
+describing implementation-defined types ([[type.descriptions]]), and
+member functions ([[functions.within.classes]]).
 
 #### Type descriptions <a id="type.descriptions">[[type.descriptions]]</a>
 
@@ -432,7 +432,7 @@ this particular enumerated type. All such elements have distinct values.
 Several types defined in Clauses  [[support]] through  [[thread]] and
 Annex  [[depr]] are *bitmask types*. Each bitmask type can be
 implemented as an enumerated type that overloads certain operators, as
-an integer type, or as a `bitset` ( [[template.bitset]]).
+an integer type, or as a `bitset` ([[template.bitset]]).
 
 The bitmask type *bitmask* can be written:
 
@@ -506,9 +506,9 @@ sequences that follow a few uniform conventions:
   locale, but may change during program execution by a call to
   `setlocale(int, const char*)`,[^8] or by a change to a `locale`
   object, as described in Clauses  [[locales]] and  [[input.output]].
-- A *character sequence* is an array object ( [[dcl.array]]) `A` that
+- A *character sequence* is an array object ([[dcl.array]]) `A` that
   can be declared as `T A[N]`, where `T` is any of the types `char`,
-  `unsigned char`, or `signed char` ( [[basic.fundamental]]), optionally
+  `unsigned char`, or `signed char` ([[basic.fundamental]]), optionally
   qualified by any combination of `const` or `volatile`. The initial
   elements of the array have defined contents up to and including an
   element determined by some predicate. A character sequence can be
@@ -542,14 +542,14 @@ A *static* NTMBS is an NTMBSwith static storage duration.
 For the sake of exposition, Clauses  [[support]] through  [[thread]] and
 Annex  [[depr]] do not describe copy/move constructors, assignment
 operators, or (non-virtual) destructors with the same apparent semantics
-as those that can be generated by default ( [[class.ctor]],
+as those that can be generated by default ([[class.ctor]],
 [[class.dtor]], [[class.copy]]). It is unspecified whether the
 implementation provides explicit definitions for such member function
 signatures, or for virtual destructors that can be generated by default.
 
 For the sake of exposition, the library clauses sometimes annotate
 constructors with \EXPLICIT. Such a constructor is conditionally
-declared as either explicit or non-explicit ( [[class.conv.ctor]]).
+declared as either explicit or non-explicit ([[class.conv.ctor]]).
 
 [*Note 1*: This is typically implemented by declaring two such
 constructors, of which at most one participates in overload
@@ -559,7 +559,7 @@ resolution. — *end note*]
 
 Clauses  [[support]] through  [[thread]] and Annex  [[depr]] do not
 specify the representation of classes, and intentionally omit
-specification of class members ( [[class.mem]]). An implementation may
+specification of class members ([[class.mem]]). An implementation may
 define static or non-static class members, or both, as needed to
 implement the semantics of the member functions specified in Clauses 
 [[support]] through  [[thread]] and Annex  [[depr]].
@@ -669,7 +669,7 @@ Except as noted in Clauses  [[library]] through  [[thread]] and Annex 
 corresponding header `name.h` as specified in the C standard library
 (Clause  [[intro.refs]]). In the C++standard library, however, the
 declarations (except for names which are defined as macros in C) are
-within namespace scope ( [[basic.scope.namespace]]) of the namespace
+within namespace scope ([[basic.scope.namespace]]) of the namespace
 `std`. It is unspecified whether these names (including any overloads
 added in Clauses  [[support]] through  [[thread]] and Annex  [[depr]])
 are first declared within the global namespace scope and are then
@@ -763,7 +763,7 @@ headers. This set shall include at least the headers shown in Table 
 
 The supplied version of the header `<cstdlib>` shall declare at least
 the functions `abort`, `atexit`, `at_quick_exit`, `exit`, and
-`quick_exit` ( [[support.start.term]]). The other headers listed in this
+`quick_exit` ([[support.start.term]]). The other headers listed in this
 table shall meet the same requirements as for a hosted implementation.
 
 ### Using the library <a id="using">[[using]]</a>
@@ -773,13 +773,13 @@ table shall meet the same requirements as for a hosted implementation.
 This section describes how a C++program gains access to the facilities
 of the C++standard library. [[using.headers]] describes effects during
 translation phase 4, while  [[using.linkage]] describes effects during
-phase 8 ( [[lex.phases]]).
+phase 8 ([[lex.phases]]).
 
 #### Headers <a id="using.headers">[[using.headers]]</a>
 
 The entities in the C++standard library are defined in headers, whose
 contents are made available to a translation unit when it contains the
-appropriate `#include` preprocessing directive ( [[cpp.include]]).
+appropriate `#include` preprocessing directive ([[cpp.include]]).
 
 A translation unit may include library headers in any order (Clause 
 [[lex]]). Each may be included more than once, with no effect different
@@ -796,7 +796,7 @@ declared in that header. No diagnostic is required.
 
 Entities in the C++standard library have external linkage (
 [[basic.link]]). Unless otherwise specified, objects and functions have
-the default `extern "C++"` linkage ( [[dcl.link]]).
+the default `extern "C++"` linkage ([[dcl.link]]).
 
 Whether a name from the C standard library declared with external
 linkage has `extern "C"` or `extern "C++"` linkage is
@@ -806,8 +806,8 @@ linkage has `extern "C"` or `extern "C++"` linkage is
 Objects and functions defined in the library and required by a
 C++program are included in the program prior to program startup.
 
-See also replacement functions ( [[replacement.functions]]), runtime
-changes ( [[handler.functions]]).
+See also replacement functions ([[replacement.functions]]), runtime
+changes ([[handler.functions]]).
 
 ### Requirements on types and expressions <a id="utility.requirements">[[utility.requirements]]</a>
 
@@ -834,8 +834,8 @@ lvalue of type (possibly `const`) `T` or an rvalue of type `const T`.
 
 In general, a default constructor is not required. Certain container
 class member function signatures specify `T()` as a default argument.
-`T()` shall be a well-defined expression ( [[dcl.init]]) if one of those
-signatures is called using the default argument ( [[dcl.fct.default]]).
+`T()` shall be a well-defined expression ([[dcl.init]]) if one of those
+signatures is called using the default argument ([[dcl.fct.default]]).
 
 **Table: `EqualityComparable` requirements**
 
@@ -847,7 +847,7 @@ signatures is called using the default argument ( [[dcl.fct.default]]).
 
 | Expression | Return type           | Requirement                                               |
 | ---------- | --------------------- | --------------------------------------------------------- |
-| `a < b`    | convertible to `bool` | `<` is a strict weak ordering relation~( [[alg.sorting]]) |
+| `a < b`    | convertible to `bool` | `<` is a strict weak ordering relation~([[alg.sorting]]) |
 
 **Table: `DefaultConstructible` requirements**
 
@@ -905,7 +905,7 @@ An object `t` is *swappable with* an object `u` if and only if:
 
 The context in which `swap(t, u)` and `swap(u, t)` are evaluated shall
 ensure that a binary non-member function named “swap” is selected via
-overload resolution ( [[over.match]]) on a candidate set that includes:
+overload resolution ([[over.match]]) on a candidate set that includes:
 
 - the two `swap` function templates defined in `<utility>` (
   [[utility]]) and
@@ -986,7 +986,7 @@ values. A type `P` meets the requirements of `NullablePointer` if:
 - `P` satisfies the requirements of `EqualityComparable`,
   `DefaultConstructible`, `CopyConstructible`, `CopyAssignable`, and
   `Destructible`,
-- lvalues of type `P` are swappable ( [[swappable.requirements]]),
+- lvalues of type `P` are swappable ([[swappable.requirements]]),
 - the expressions shown in Table  [[tab:nullablepointer]] are valid and
   have the indicated semantics, and
 - `P` satisfies all the other requirements of this subclause.
@@ -1029,9 +1029,9 @@ type (possibly `const`) `P`, and `np` denotes a value of type (possibly
 
 A type `H` meets the `Hash` requirements if:
 
-- it is a function object type ( [[function.objects]]),
+- it is a function object type ([[function.objects]]),
 - it satisfies the requirements of `CopyConstructible` and
-  `Destructible` ( [[utility.arg.requirements]]), and
+  `Destructible` ([[utility.arg.requirements]]), and
 - the expressions shown in Table  [[tab:hash]] are valid and have the
   indicated semantics.
 
@@ -1056,7 +1056,7 @@ containers (Clause  [[containers]]) (except array), string buffers and
 string streams (Clause  [[input.output]]), and `match_results` (Clause 
 [[re]]) are parameterized in terms of allocators.
 
-The class template `allocator_traits` ( [[allocator.traits]]) supplies a
+The class template `allocator_traits` ([[allocator.traits]]) supplies a
 uniform interface to all allocator types. Table  [[tab:desc.var.def]]
 describes the types manipulated through allocators. Table 
 [[tab:utilities.allocator.requirements]] describes the requirements on
@@ -1096,11 +1096,11 @@ exceptions. If `X::propagate_on_container_move_assignment::value` is
 `true`, `X` shall satisfy the `MoveAssignable` requirements (Table 
 [[tab:moveassignable]]) and the move operation shall not throw
 exceptions. If `X::propagate_on_container_swap::value` is `true`,
-lvalues of type `X` shall be swappable ( [[swappable.requirements]]) and
+lvalues of type `X` shall be swappable ([[swappable.requirements]]) and
 the `swap` operation shall not throw exceptions.
 
 An allocator type `X` shall satisfy the requirements of
-`CopyConstructible` ( [[utility.arg.requirements]]). The `X::pointer`,
+`CopyConstructible` ([[utility.arg.requirements]]). The `X::pointer`,
 `X::const_pointer`, `X::void_pointer`, and `X::const_void_pointer` types
 shall satisfy the requirements of `NullablePointer` (
 [[nullablepointer.requirements]]). No constructor, comparison function,
@@ -1192,7 +1192,7 @@ the allocator completeness requirements if, whether or not `T` is a
 complete type:
 
 - `X` is a complete type, and
-- all the member types of `allocator_traits<X>` ( [[allocator.traits]])
+- all the member types of `allocator_traits<X>` ([[allocator.traits]])
   other than `value_type` are complete types.
 
 ### Constraints on programs <a id="constraints">[[constraints]]</a>
@@ -1201,12 +1201,12 @@ complete type:
 
 This section describes restrictions on C++programs that use the
 facilities of the C++standard library. The following subclauses specify
-constraints on the program’s use of namespaces ( [[namespace.std]]), its
-use of various reserved names ( [[reserved.names]]), its use of
-headers ( [[alt.headers]]), its use of standard library classes as base
-classes ( [[derived.classes]]), its definitions of replacement
-functions ( [[replacement.functions]]), and its installation of handler
-functions during execution ( [[handler.functions]]).
+constraints on the program’s use of namespaces ([[namespace.std]]), its
+use of various reserved names ([[reserved.names]]), its use of
+headers ([[alt.headers]]), its use of standard library classes as base
+classes ([[derived.classes]]), its definitions of replacement
+functions ([[replacement.functions]]), and its installation of handler
+functions during execution ([[handler.functions]]).
 
 #### Namespace use <a id="namespace.constraints">[[namespace.constraints]]</a>
 
@@ -1236,7 +1236,7 @@ type and the instantiation meets the standard library requirements for
 the original template.
 
 A translation unit shall not declare namespace `std` to be an inline
-namespace ( [[namespace.def]]).
+namespace ([[namespace.def]]).
 
 ##### Namespace `posix` <a id="namespace.posix">[[namespace.posix]]</a>
 
@@ -1336,7 +1336,7 @@ shall be identical to `std::T`.
 
 ##### User-defined literal suffixes <a id="usrlit.suffix">[[usrlit.suffix]]</a>
 
-Literal suffix identifiers ( [[over.literal]]) that do not start with an
+Literal suffix identifiers ([[over.literal]]) that do not start with an
 underscore are reserved for future standardization.
 
 #### Headers <a id="alt.headers">[[alt.headers]]</a>
@@ -1344,14 +1344,14 @@ underscore are reserved for future standardization.
 If a file with a name equivalent to the derived file name for one of the
 C++standard library headers is not provided as part of the
 implementation, and a file with that name is placed in any of the
-standard places for a source file to be included ( [[cpp.include]]), the
+standard places for a source file to be included ([[cpp.include]]), the
 behavior is undefined.
 
 #### Derived classes <a id="derived.classes">[[derived.classes]]</a>
 
 Virtual member function signatures defined for a base class in the
 C++standard library may be overridden in a derived class defined in the
-program ( [[class.virtual]]).
+program ([[class.virtual]]).
 
 #### Replacement functions <a id="replacement.functions">[[replacement.functions]]</a>
 
@@ -1359,7 +1359,7 @@ Clauses  [[support]] through  [[thread]] and Annex  [[depr]] describe
 the behavior of numerous functions defined by the C++standard library.
 Under some circumstances, however, certain of these function
 descriptions also apply to replacement functions defined in the
-program ( [[definitions]]).
+program ([[definitions]]).
 
 A C++program may provide the definition for any of the following dynamic
 memory allocation function signatures declared in header `<new>` (
@@ -1398,8 +1398,8 @@ operator delete[](void*, std::align_val_t, const std::nothrow_t&)
 ```
 
 The program’s definitions are used instead of the default versions
-supplied by the implementation ( [[support.dynamic]]). Such replacement
-occurs prior to program startup ( [[basic.def.odr]], [[basic.start]]).
+supplied by the implementation ([[support.dynamic]]). Such replacement
+occurs prior to program startup ([[basic.def.odr]], [[basic.start]]).
 The program’s declarations shall not be specified as `inline`. No
 diagnostic is required.
 
@@ -1441,10 +1441,10 @@ Standard places no requirements on the implementation.
 
 In particular, the effects are undefined in the following cases:
 
-- for replacement functions ( [[new.delete]]), if the installed
+- for replacement functions ([[new.delete]]), if the installed
   replacement function does not implement the semantics of the
   applicable *Required behavior:* paragraph.
-- for handler functions ( [[new.handler]], [[terminate.handler]]), if
+- for handler functions ([[new.handler]], [[terminate.handler]]), if
   the installed handler function does not implement the semantics of the
   applicable *Required behavior:* paragraph
 - for types used as template arguments when instantiating a template
@@ -1457,7 +1457,7 @@ In particular, the effects are undefined in the following cases:
 - if any replacement function or handler function or destructor
   operation exits via an exception, unless specifically allowed in the
   applicable *Required behavior:* paragraph.
-- if an incomplete type ( [[basic.types]]) is used as a template
+- if an incomplete type ([[basic.types]]) is used as a template
   argument when instantiating a template component, unless specifically
   allowed for that component.
 
@@ -1478,7 +1478,7 @@ the C++standard library, unless explicitly stated otherwise.
   implementation may assume that this parameter is a unique reference to
   this argument. \[*Note 1*: If the parameter is a generic parameter of
   the form `T&&` and an lvalue of type `A` is bound, the argument binds
-  to an lvalue reference ( [[temp.deduct.call]]) and thus is not covered
+  to an lvalue reference ([[temp.deduct.call]]) and thus is not covered
   by the previous sentence. — *end note*] \[*Note 2*: If a program
   casts an lvalue to an xvalue while passing that lvalue to a library
   function (e.g. by calling the function with the argument
@@ -1500,7 +1500,7 @@ type are explicitly specified as being sharable without data races or
 the user supplies a locking mechanism. — *end note*]
 
 If an object of a standard library type is accessed, and the beginning
-of the object’s lifetime ( [[basic.life]]) does not happen before the
+of the object’s lifetime ([[basic.life]]) does not happen before the
 access, or the access does not happen before the end of the object’s
 lifetime, the behavior is undefined unless otherwise specified.
 
@@ -1541,7 +1541,7 @@ entity shall be defined such that any header that defines it may be
 included after any other header that also defines it (
 [[basic.def.odr]]).
 
-The C standard library headers ( [[depr.c.headers]]) shall include only
+The C standard library headers ([[depr.c.headers]]) shall include only
 their corresponding C++standard library header, as described in 
 [[headers]].
 
@@ -1558,7 +1558,7 @@ stated otherwise.
 #### Non-member functions <a id="global.functions">[[global.functions]]</a>
 
 It is unspecified whether any non-member functions in the C++standard
-library are defined as `inline` ( [[dcl.inline]]).
+library are defined as `inline` ([[dcl.inline]]).
 
 A call to a non-member function signature described in Clauses 
 [[support]] through  [[thread]] and Annex  [[depr]] shall behave as if
@@ -1571,14 +1571,14 @@ additional default arguments.
 Unless otherwise specified, calls made by functions in the standard
 library to non-operator, non-member functions do not use functions from
 another namespace which are found through *argument-dependent name
-lookup* ( [[basic.lookup.argdep]]).
+lookup* ([[basic.lookup.argdep]]).
 
 [*Note 1*:
 
 The phrase “unless otherwise specified” applies to cases such as the
-swappable with requirements ( [[swappable.requirements]]). The exception
+swappable with requirements ([[swappable.requirements]]). The exception
 for overloaded operators allows argument-dependent lookup in cases like
-that of `ostream_iterator::operator=` ( [[ostream.iterator.ops]]):
+that of `ostream_iterator::operator=` ([[ostream.iterator.ops]]):
 
 *Effects:*
 
@@ -1594,7 +1594,7 @@ return *this;
 #### Member functions <a id="member.functions">[[member.functions]]</a>
 
 It is unspecified whether any member functions in the C++standard
-library are defined as `inline` ( [[dcl.inline]]).
+library are defined as `inline` ([[dcl.inline]]).
 
 For a non-virtual member function described in the C++standard library,
 an implementation may declare a different set of member function
@@ -1610,7 +1610,7 @@ signatures for a member function name. — *end note*]
 #### Constexpr functions and constructors <a id="constexpr.functions">[[constexpr.functions]]</a>
 
 This International Standard explicitly requires that certain standard
-library functions are `constexpr` ( [[dcl.constexpr]]). An
+library functions are `constexpr` ([[dcl.constexpr]]). An
 implementation shall not declare any standard library function signature
 as `constexpr` except for those where it is explicitly required. Within
 any header that provides any non-defining declarations of constexpr
@@ -1640,18 +1640,18 @@ be recursively reentered.
 #### Data race avoidance <a id="res.on.data.races">[[res.on.data.races]]</a>
 
 This section specifies requirements that implementations shall meet to
-prevent data races ( [[intro.multithread]]). Every standard library
+prevent data races ([[intro.multithread]]). Every standard library
 function shall meet each requirement unless otherwise specified.
 Implementations may prevent data races in cases other than those
 specified below.
 
 A C++standard library function shall not directly or indirectly access
-objects ( [[intro.multithread]]) accessible by threads other than the
+objects ([[intro.multithread]]) accessible by threads other than the
 current thread unless the objects are accessed directly or indirectly
 via the function’s arguments, including `this`.
 
 A C++standard library function shall not directly or indirectly modify
-objects ( [[intro.multithread]]) accessible by threads other than the
+objects ([[intro.multithread]]) accessible by threads other than the
 current thread unless the objects are accessed directly or indirectly
 via the function’s non-const arguments, including `this`.
 
@@ -1679,7 +1679,7 @@ races.
 
 Unless otherwise specified, C++standard library functions shall perform
 all operations solely within the current thread if those operations have
-effects that are visible ( [[intro.multithread]]) to users.
+effects that are visible ([[intro.multithread]]) to users.
 
 [*Note 3*: This allows implementations to parallelize operations if
 there are no visible side effects. — *end note*]
@@ -1731,7 +1731,7 @@ Functions defined in the C++standard library that do not have a
 *Throws:* paragraph but do have a potentially-throwing exception
 specification may throw *implementation-defined* exceptions. [^30]
 Implementations should report errors by throwing exceptions of or
-derived from the standard exception classes ( [[bad.alloc]],
+derived from the standard exception classes ([[bad.alloc]],
 [[support.exception]], [[std.exceptions]]).
 
 An implementation may strengthen the exception specification for a
@@ -1753,7 +1753,7 @@ traceable pointer location. — *end note*]
 #### Value of error codes <a id="value.error.codes">[[value.error.codes]]</a>
 
 Certain functions in the C++standard library report errors via a
-`std::error_code` ( [[syserr.errcode.overview]]) object. That object’s
+`std::error_code` ([[syserr.errcode.overview]]) object. That object’s
 `category()` member shall return `std::system_category()` for errors
 originating from the operating system, or a reference to an
 *implementation-defined* `error_category` object for errors originating
@@ -2033,10 +2033,10 @@ objects shall be placed in a valid but unspecified state.
 [^7]: Such as an integer type, with constant integer values (
     [[basic.fundamental]]).
 
-[^8]: declared in `<clocale>` ( [[c.locales]]).
+[^8]: declared in `<clocale>` ([[c.locales]]).
 
 [^9]: Many of the objects manipulated by function signatures declared in
-    `<cstring>` ( [[c.strings]]) are character sequences or NTBSs. The
+    `<cstring>` ([[c.strings]]) are character sequences or NTBSs. The
     size of some of these character sequences is limited by a length
     value, maintained separately from the character sequence.
 
@@ -2048,7 +2048,7 @@ objects shall be placed in a valid but unspecified state.
 
 [^12]: The C standard library headers (Annex  [[depr.c.headers]]) also
     define names within the global namespace, while the C++headers for C
-    library facilities ( [[headers]]) may also define names within the
+    library facilities ([[headers]]) may also define names within the
     global namespace.
 
 [^13]: This gives implementers freedom to use inline namespaces to
@@ -2056,7 +2056,7 @@ objects shall be placed in a valid but unspecified state.
 
 [^14]: A header is not necessarily a source file, nor are the sequences
     delimited by `<` and `>` in header names necessarily valid source
-    file names ( [[cpp.include]]).
+    file names ([[cpp.include]]).
 
 [^15]: It is intentional that there is no C++header for any of these C
     headers: `<stdatomic.h>`, `<stdnoreturn.h>`, `<threads.h>`.
@@ -2108,16 +2108,16 @@ objects shall be placed in a valid but unspecified state.
 
 [^27]: There is an implicit exception to this rule for types that are
     described as synonyms for basic integral types, such as `size_t` (
-    [[support.types]]) and `streamoff` ( [[stream.types]]).
+    [[support.types]]) and `streamoff` ([[stream.types]]).
 
 [^28]: That is, the C library functions can all be treated as if they
     are marked `noexcept`. This allows implementations to make
     performance optimizations based on the absence of exceptions at
     runtime.
 
-[^29]: The functions `qsort()` and `bsearch()` ( [[alg.c.library]]) meet
+[^29]: The functions `qsort()` and `bsearch()` ([[alg.c.library]]) meet
     this condition.
 
 [^30]: In particular, they can report a failure to allocate storage by
     throwing an exception of type `bad_alloc`, or a class derived from
-    `bad_alloc` ( [[bad.alloc]]).
+    `bad_alloc` ([[bad.alloc]]).

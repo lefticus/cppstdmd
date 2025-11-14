@@ -3,7 +3,7 @@
 ## General <a id="thread.general">[[thread.general]]</a>
 
 The following subclauses describe components to create and manage
-threads ( [[intro.multithread]]), perform mutual exclusion, and
+threads ([[intro.multithread]]), perform mutual exclusion, and
 communicate conditions and values between threads, as summarized in
 Table  [[tab:thread.lib.summary]].
 
@@ -31,7 +31,7 @@ is convertible to `bool`.
 ### Exceptions <a id="thread.req.exception">[[thread.req.exception]]</a>
 
 Some functions described in this Clause are specified to throw
-exceptions of type `system_error` ( [[syserr.syserr]]). Such exceptions
+exceptions of type `system_error` ([[syserr.syserr]]). Such exceptions
 shall be thrown if any of the function’s error conditions is detected or
 a call to an operating system or other underlying API results in an
 error that prevents the library function from meeting its
@@ -46,7 +46,7 @@ execution of this function, an `errno` of `EPERM` is reported by a POSIX
 API call used by the implementation. Since POSIX specifies an `errno` of
 `EPERM` when “the caller does not have the privilege to perform the
 operation”, the implementation maps `EPERM` to an `error_condition` of
-`operation_not_permitted` ( [[syserr]]) and an exception of type
+`operation_not_permitted` ([[syserr]]) and an exception of type
 `system_error` is thrown. — *end example*]
 
 The `error_code` reported by such an exception’s `code()` member
@@ -122,7 +122,7 @@ operating system and hardware. The finest resolution provided by an
 implementation is called the *native resolution*.
 
 Implementation-provided clocks that are used for these functions shall
-meet the `TrivialClock` requirements ( [[time.clock.req]]).
+meet the `TrivialClock` requirements ([[time.clock.req]]).
 
 A function that takes an argument which specifies a timeout will throw
 if, during its execution, a clock, time point, or time duration throws
@@ -150,10 +150,10 @@ contains the call, and so on.
 work for any execution agent model because they do not determine or
 store the agent’s ID (e.g., an ordinary spin lock). — *end note*]
 
-The standard library templates `unique_lock` ( [[thread.lock.unique]]),
-`shared_lock` ( [[thread.lock.shared]]), `scoped_lock` (
-[[thread.lock.scoped]]), `lock_guard` ( [[thread.lock.guard]]), `lock`,
-`try_lock` ( [[thread.lock.algorithm]]), and `condition_variable_any` (
+The standard library templates `unique_lock` ([[thread.lock.unique]]),
+`shared_lock` ([[thread.lock.shared]]), `scoped_lock` (
+[[thread.lock.scoped]]), `lock_guard` ([[thread.lock.guard]]), `lock`,
+`try_lock` ([[thread.lock.algorithm]]), and `condition_variable_any` (
 [[thread.condition.condvarany]]) all operate on user-supplied lockable
 objects. The `BasicLockable` requirements, the `Lockable` requirements,
 and the `TimedLockable` requirements list the requirements imposed by
@@ -213,14 +213,14 @@ A type `L` meets the `TimedLockable` requirements if it meets the
 and have the specified semantics (`m` denotes a value of type `L`,
 `rel_time` denotes a value of an instantiation of `duration` (
 [[time.duration]]), and `abs_time` denotes a value of an instantiation
-of `time_point` ( [[time.point]])).
+of `time_point` ([[time.point]])).
 
 ``` cpp
 m.try_lock_for(rel_time)
 ```
 
 *Effects:* Attempts to acquire a lock for the current execution agent
-within the relative timeout ( [[thread.req.timing]]) specified by
+within the relative timeout ([[thread.req.timing]]) specified by
 `rel_time`. The function shall not return within the timeout specified
 by `rel_time` unless it has obtained a lock on `m` for the current
 execution agent. If an exception is thrown then a lock shall not have
@@ -235,7 +235,7 @@ m.try_lock_until(abs_time)
 ```
 
 *Effects:* Attempts to acquire a lock for the current execution agent
-before the absolute timeout ( [[thread.req.timing]]) specified by
+before the absolute timeout ([[thread.req.timing]]) specified by
 `abs_time`. The function shall not return before the timeout specified
 by `abs_time` unless it has obtained a lock on `m` for the current
 execution agent. If an exception is thrown then a lock shall not have
@@ -360,7 +360,7 @@ namespace std {
 
 An object of type `thread::id` provides a unique identifier for each
 thread of execution and a single distinct value for all `thread` objects
-that do not represent a thread of execution ( [[thread.thread.class]]).
+that do not represent a thread of execution ([[thread.thread.class]]).
 Each thread of execution has an associated `thread::id` object that is
 not equal to the `thread::id` object of any other thread of execution
 and that is not equal to the `thread::id` object of any `thread` object
@@ -438,7 +438,7 @@ representations.
 template <> struct hash<thread::id>;
 ```
 
-The specialization is enabled ( [[unord.hash]]).
+The specialization is enabled ([[unord.hash]]).
 
 #### `thread` constructors <a id="thread.thread.constr">[[thread.thread.constr]]</a>
 
@@ -457,7 +457,7 @@ template <class F, class... Args> explicit thread(F&& f, Args&&... args);
 
 *Requires:*  `F` and each `Ti` in `Args` shall satisfy the
 `MoveConstructible` requirements.
-` `*`INVOKE`*`( `*`DECAY_COPY`*`( std::forward<F>(f)), `*`DECAY_COPY`*`( std::forward<Args>(args))...)` ( [[func.require]])
+` `*`INVOKE`*`( `*`DECAY_COPY`*`( std::forward<F>(f)), `*`DECAY_COPY`*`( std::forward<Args>(args))...)` ([[func.require]])
 shall be a valid expression.
 
 *Remarks:* This constructor shall not participate in overload resolution
@@ -551,7 +551,7 @@ void join();
 completed.
 
 *Synchronization:* The completion of the thread represented by `*this`
-synchronizes with ( [[intro.multithread]]) the corresponding successful
+synchronizes with ([[intro.multithread]]) the corresponding successful
 `join()` return.
 
 [*Note 1*: Operations on `*this` are not synchronized. — *end note*]
@@ -560,7 +560,7 @@ synchronizes with ( [[intro.multithread]]) the corresponding successful
 `get_id() == id()`.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -582,7 +582,7 @@ shall release any owned resources.
 *Postconditions:* `get_id() == id()`.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -657,11 +657,11 @@ template <class Clock, class Duration>
 ```
 
 *Effects:* Blocks the calling thread for the absolute
-timeout ( [[thread.req.timing]]) specified by `abs_time`.
+timeout ([[thread.req.timing]]) specified by `abs_time`.
 
 *Synchronization:* None.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Rep, class Period>
@@ -669,17 +669,17 @@ template <class Rep, class Period>
 ```
 
 *Effects:* Blocks the calling thread for the relative
-timeout ( [[thread.req.timing]]) specified by `rel_time`.
+timeout ([[thread.req.timing]]) specified by `rel_time`.
 
 *Synchronization:* None.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ## Mutual exclusion <a id="thread.mutex">[[thread.mutex]]</a>
 
 This section provides mechanisms for mutual exclusion: mutexes, locks,
 and call once. These mechanisms ease the production of race-free
-programs ( [[intro.multithread]]).
+programs ([[intro.multithread]]).
 
 ### Header `<mutex>` synopsis <a id="mutex.syn">[[mutex.syn]]</a>
 
@@ -767,7 +767,7 @@ functions of the mutex types shall be:
 
 The implementation shall provide lock and unlock operations, as
 described below. For purposes of determining the existence of a data
-race, these behave as atomic operations ( [[intro.multithread]]). The
+race, these behave as atomic operations ([[intro.multithread]]). The
 lock and unlock operations on a single mutex shall appear to occur in a
 single total order.
 
@@ -793,10 +793,10 @@ obtained for the calling thread.
 *Return type:* `void`.
 
 *Synchronization:* Prior `unlock()` operations on the same object shall
-*synchronize with* ( [[intro.multithread]]) this operation.
+*synchronize with* ([[intro.multithread]]) this operation.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -830,7 +830,7 @@ thread, otherwise `false`.
 
 *Synchronization:* If `try_lock()` returns `true`, prior `unlock()`
 operations on the same object *synchronize
-with* ( [[intro.multithread]]) this operation.
+with* ([[intro.multithread]]) this operation.
 
 [*Note 2*: Since `lock()` does not synchronize with a failed subsequent
 `try_lock()`, the visibility rules are weak enough that little would be
@@ -849,7 +849,7 @@ semantics:
 *Return type:* `void`.
 
 *Synchronization:* This operation synchronizes
-with ( [[intro.multithread]]) subsequent lock operations that obtain
+with ([[intro.multithread]]) subsequent lock operations that obtain
 ownership on the same object.
 
 *Throws:* Nothing.
@@ -933,7 +933,7 @@ attempts by another thread to acquire ownership of that object will fail
 completely released ownership.
 
 The class `recursive_mutex` shall satisfy all of the mutex
-requirements ( [[thread.mutex.requirements]]). It shall be a
+requirements ([[thread.mutex.requirements]]). It shall be a
 standard-layout class (Clause  [[class]]).
 
 A thread that owns a `recursive_mutex` object may acquire additional
@@ -958,8 +958,8 @@ The *timed mutex types* are the standard library types `timed_mutex`,
 `recursive_timed_mutex`, and `shared_timed_mutex`. They shall meet the
 requirements set out below. In this description, `m` denotes an object
 of a mutex type, `rel_time` denotes an object of an instantiation of
-`duration` ( [[time.duration]]), and `abs_time` denotes an object of an
-instantiation of `time_point` ( [[time.point]]).
+`duration` ([[time.duration]]), and `abs_time` denotes an object of an
+instantiation of `time_point` ([[time.point]]).
 
 The timed mutex types shall meet the `TimedLockable` requirements (
 [[thread.req.lockable.timed]]).
@@ -971,7 +971,7 @@ the following semantics:
 calling thread does not own the mutex.
 
 *Effects:* The function attempts to obtain ownership of the mutex within
-the relative timeout ( [[thread.req.timing]]) specified by `rel_time`.
+the relative timeout ([[thread.req.timing]]) specified by `rel_time`.
 If the time specified by `rel_time` is less than or equal to
 `rel_time.zero()`, the function attempts to obtain ownership without
 blocking (as if by calling `try_lock()`). The function shall return
@@ -988,9 +988,9 @@ expected to make a strong effort to do so. — *end note*]
 
 *Synchronization:* If `try_lock_for()` returns `true`, prior `unlock()`
 operations on the same object *synchronize
-with* ( [[intro.multithread]]) this operation.
+with* ([[intro.multithread]]) this operation.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 The expression `m.try_lock_until(abs_time)` shall be well-formed and
 have the following semantics:
@@ -1001,7 +1001,7 @@ calling thread does not own the mutex.
 *Effects:* The function attempts to obtain ownership of the mutex. If
 `abs_time` has already passed, the function attempts to obtain ownership
 without blocking (as if by calling `try_lock()`). The function shall
-return before the absolute timeout ( [[thread.req.timing]]) specified by
+return before the absolute timeout ([[thread.req.timing]]) specified by
 `abs_time` only if it has obtained ownership of the mutex object.
 
 [*Note 2*: As with `try_lock()`, there is no guarantee that ownership
@@ -1014,9 +1014,9 @@ expected to make a strong effort to do so. — *end note*]
 
 *Synchronization:* If `try_lock_until()` returns `true`, prior
 `unlock()` operations on the same object *synchronize
-with* ( [[intro.multithread]]) this operation.
+with* ([[intro.multithread]]) this operation.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ##### Class `timed_mutex` <a id="thread.timedmutex.class">[[thread.timedmutex.class]]</a>
 
@@ -1053,7 +1053,7 @@ a call to `unlock()` or the call to `try_lock_for()` or
 `try_lock_until()` times out (having failed to obtain ownership).
 
 The class `timed_mutex` shall satisfy all of the timed mutex
-requirements ( [[thread.timedmutex.requirements]]). It shall be a
+requirements ([[thread.timedmutex.requirements]]). It shall be a
 standard-layout class (Clause  [[class]]).
 
 The behavior of a program is undefined if:
@@ -1099,7 +1099,7 @@ thread has completely released ownership or the call to `try_lock_for()`
 or `try_lock_until()` times out (having failed to obtain ownership).
 
 The class `recursive_timed_mutex` shall satisfy all of the timed mutex
-requirements ( [[thread.timedmutex.requirements]]). It shall be a
+requirements ([[thread.timedmutex.requirements]]). It shall be a
 standard-layout class (Clause  [[class]]).
 
 A thread that owns a `recursive_timed_mutex` object may acquire
@@ -1124,7 +1124,7 @@ The behavior of a program is undefined if:
 
 The standard library types `shared_mutex` and `shared_timed_mutex` are
 *shared mutex types*. Shared mutex types shall meet the requirements of
-mutex types ( [[thread.mutex.requirements.mutex]]), and additionally
+mutex types ([[thread.mutex.requirements.mutex]]), and additionally
 shall meet the requirements set out below. In this description, `m`
 denotes an object of a shared mutex type.
 
@@ -1155,10 +1155,10 @@ shared lock shall not have been acquired for the current thread.
 *Return type:* `void`.
 
 *Synchronization:* Prior `unlock()` operations on the same object shall
-synchronize with ( [[intro.multithread]]) this operation.
+synchronize with ([[intro.multithread]]) this operation.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -1178,7 +1178,7 @@ thread.
 *Return type:* `void`.
 
 *Synchronization:* This operation synchronizes
-with ( [[intro.multithread]]) subsequent `lock()` operations that obtain
+with ([[intro.multithread]]) subsequent `lock()` operations that obtain
 ownership on the same object.
 
 *Throws:* Nothing.
@@ -1201,7 +1201,7 @@ otherwise.
 
 *Synchronization:* If `try_lock_shared()` returns `true`, prior
 `unlock()` operations on the same object synchronize
-with ( [[intro.multithread]]) this operation.
+with ([[intro.multithread]]) this operation.
 
 *Throws:* Nothing.
 
@@ -1237,7 +1237,7 @@ The class `shared_mutex` provides a non-recursive mutex with shared
 ownership semantics.
 
 The class `shared_mutex` shall satisfy all of the shared mutex
-requirements ( [[thread.sharedmutex.requirements]]). It shall be a
+requirements ([[thread.sharedmutex.requirements]]). It shall be a
 standard-layout class (Clause  [[class]]).
 
 The behavior of a program is undefined if:
@@ -1254,12 +1254,12 @@ The behavior of a program is undefined if:
 
 The standard library type `shared_timed_mutex` is a *shared timed mutex
 type*. Shared timed mutex types shall meet the requirements of timed
-mutex types ( [[thread.timedmutex.requirements]]), shared mutex types (
+mutex types ([[thread.timedmutex.requirements]]), shared mutex types (
 [[thread.sharedmutex.requirements]]), and additionally shall meet the
 requirements set out below. In this description, `m` denotes an object
 of a shared timed mutex type, `rel_type` denotes an object of an
-instantiation of `duration` ( [[time.duration]]), and `abs_time` denotes
-an object of an instantiation of `time_point` ( [[time.point]]).
+instantiation of `duration` ([[time.duration]]), and `abs_time` denotes
+an object of an instantiation of `time_point` ([[time.point]]).
 
 The expression `m.try_lock_shared_for(rel_time)` shall be well-formed
 and have the following semantics:
@@ -1267,7 +1267,7 @@ and have the following semantics:
 *Requires:* The calling thread has no ownership of the mutex.
 
 *Effects:* Attempts to obtain shared lock ownership for the calling
-thread within the relative timeout ( [[thread.req.timing]]) specified by
+thread within the relative timeout ([[thread.req.timing]]) specified by
 `rel_time`. If the time specified by `rel_time` is less than or equal to
 `rel_time.zero()`, the function attempts to obtain ownership without
 blocking (as if by calling `try_lock_shared()`). The function shall
@@ -1287,9 +1287,9 @@ acquired for the current thread.
 
 *Synchronization:* If `try_lock_shared_for()` returns `true`, prior
 `unlock()` operations on the same object synchronize
-with ( [[intro.multithread]]) this operation.
+with ([[intro.multithread]]) this operation.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 The expression `m.try_lock_shared_until(abs_time)` shall be well-formed
 and have the following semantics:
@@ -1300,7 +1300,7 @@ and have the following semantics:
 mutex. If `abs_time` has already passed, the function attempts to obtain
 shared ownership without blocking (as if by calling
 `try_lock_shared()`). The function shall return before the absolute
-timeout ( [[thread.req.timing]]) specified by `abs_time` only if it has
+timeout ([[thread.req.timing]]) specified by `abs_time` only if it has
 obtained shared ownership of the mutex object.
 
 [*Note 2*: As with `try_lock()`, there is no guarantee that ownership
@@ -1316,9 +1316,9 @@ acquired for the current thread.
 
 *Synchronization:* If `try_lock_shared_until()` returns `true`, prior
 `unlock()` operations on the same object synchronize
-with ( [[intro.multithread]]) this operation.
+with ([[intro.multithread]]) this operation.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ##### Class `shared_timed_mutex` <a id="thread.sharedtimedmutex.class">[[thread.sharedtimedmutex.class]]</a>
 
@@ -1359,7 +1359,7 @@ The class `shared_timed_mutex` provides a non-recursive mutex with
 shared ownership semantics.
 
 The class `shared_timed_mutex` shall satisfy all of the shared timed
-mutex requirements ( [[thread.sharedtimedmutex.requirements]]). It shall
+mutex requirements ([[thread.sharedtimedmutex.requirements]]). It shall
 be a standard-layout class (Clause  [[class]]).
 
 The behavior of a program is undefined if:
@@ -1431,7 +1431,7 @@ lockable object throughout the `lock_guard` object’s lifetime (
 [[basic.life]]). The behavior of a program is undefined if the lockable
 object referenced by `pm` does not exist for the entire lifetime of the
 `lock_guard` object. The supplied `Mutex` type shall meet the
-`BasicLockable` requirements ( [[thread.req.lockable.basic]]).
+`BasicLockable` requirements ([[thread.req.lockable.basic]]).
 
 ``` cpp
 explicit lock_guard(mutex_type& m);
@@ -1493,7 +1493,7 @@ objects referenced by `pm` do not exist for the entire lifetime of the
 `scoped_lock` object. When `sizeof...(MutexTypes)` is `1`, the supplied
 `Mutex` type shall meet the `BasicLockable` requirements (
 [[thread.req.lockable.basic]]). Otherwise, each of the mutex types shall
-meet the `Lockable` requirements ( [[thread.req.lockable.req]]).
+meet the `Lockable` requirements ([[thread.req.lockable.req]]).
 
 ``` cpp
 explicit scoped_lock(MutexTypes&... m);
@@ -1590,7 +1590,7 @@ acquisition, to another `unique_lock` object. Objects of type
 `unique_lock` are not copyable but are movable. The behavior of a
 program is undefined if the contained pointer `pm` is not null and the
 lockable object pointed to by `pm` does not exist for the entire
-remaining lifetime ( [[basic.life]]) of the `unique_lock` object. The
+remaining lifetime ([[basic.life]]) of the `unique_lock` object. The
 supplied `Mutex` type shall meet the `BasicLockable` requirements (
 [[thread.req.lockable.basic]]).
 
@@ -1598,7 +1598,7 @@ supplied `Mutex` type shall meet the `BasicLockable` requirements (
 If `Mutex` meets the `Lockable` requirements (
 [[thread.req.lockable.req]]), `unique_lock<Mutex>` also meets the
 `Lockable` requirements; if `Mutex` meets the `TimedLockable`
-requirements ( [[thread.req.lockable.timed]]), `unique_lock<Mutex>` also
+requirements ([[thread.req.lockable.timed]]), `unique_lock<Mutex>` also
 meets the `TimedLockable` requirements. — *end note*]
 
 ##### `unique_lock` constructors, destructor, and assignment <a id="thread.lock.unique.cons">[[thread.lock.unique.cons]]</a>
@@ -1636,7 +1636,7 @@ unique_lock(mutex_type& m, try_to_lock_t);
 ```
 
 *Requires:* The supplied `Mutex` type shall meet the `Lockable`
-requirements ( [[thread.req.lockable.req]]). If `mutex_type` is not a
+requirements ([[thread.req.lockable.req]]). If `mutex_type` is not a
 recursive mutex the calling thread does not own the mutex.
 
 *Effects:* Constructs an object of type `unique_lock` and calls
@@ -1664,7 +1664,7 @@ template <class Clock, class Duration>
 
 *Requires:* If `mutex_type` is not a recursive mutex the calling thread
 does not own the mutex. The supplied `Mutex` type shall meet the
-`TimedLockable` requirements ( [[thread.req.lockable.timed]]).
+`TimedLockable` requirements ([[thread.req.lockable.timed]]).
 
 *Effects:* Constructs an object of type `unique_lock` and calls
 `m.try_lock_until(abs_time)`.
@@ -1679,7 +1679,7 @@ template <class Rep, class Period>
 
 *Requires:* If `mutex_type` is not a recursive mutex the calling thread
 does not own the mutex. The supplied `Mutex` type shall meet the
-`TimedLockable` requirements ( [[thread.req.lockable.timed]]).
+`TimedLockable` requirements ([[thread.req.lockable.timed]]).
 
 *Effects:* Constructs an object of type `unique_lock` and calls
 `m.try_lock_for(rel_time)`.
@@ -1728,7 +1728,7 @@ void lock();
 *Postconditions:* `owns == true`.
 
 *Throws:* Any exception thrown by `pm->lock()`. `system_error` when an
-exception is required ( [[thread.req.exception]]).
+exception is required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -1740,7 +1740,7 @@ bool try_lock();
 ```
 
 *Requires:* The supplied `Mutex` shall meet the `Lockable`
-requirements ( [[thread.req.lockable.req]]).
+requirements ([[thread.req.lockable.req]]).
 
 *Effects:* As if by `pm->try_lock()`.
 
@@ -1750,7 +1750,7 @@ requirements ( [[thread.req.lockable.req]]).
 the call to `try_lock()`.
 
 *Throws:* Any exception thrown by `pm->try_lock()`. `system_error` when
-an exception is required ( [[thread.req.exception]]).
+an exception is required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -1763,7 +1763,7 @@ template <class Clock, class Duration>
 ```
 
 *Requires:* The supplied `Mutex` type shall meet the `TimedLockable`
-requirements ( [[thread.req.lockable.timed]]).
+requirements ([[thread.req.lockable.timed]]).
 
 *Effects:* As if by `pm->try_lock_until(abs_time)`.
 
@@ -1773,7 +1773,7 @@ requirements ( [[thread.req.lockable.timed]]).
 the call to `try_lock_until(abs_time)`.
 
 *Throws:* Any exception thrown by `pm->try_lock_until()`. `system_error`
-when an exception is required ( [[thread.req.exception]]).
+when an exception is required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -1786,7 +1786,7 @@ template <class Rep, class Period>
 ```
 
 *Requires:* The supplied `Mutex` type shall meet the `TimedLockable`
-requirements ( [[thread.req.lockable.timed]]).
+requirements ([[thread.req.lockable.timed]]).
 
 *Effects:* As if by `pm->try_lock_for(rel_time)`.
 
@@ -1796,7 +1796,7 @@ requirements ( [[thread.req.lockable.timed]]).
 the call to `try_lock_for(rel_time)`.
 
 *Throws:* Any exception thrown by `pm->try_lock_for()`. `system_error`
-when an exception is required ( [[thread.req.exception]]).
+when an exception is required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -1812,7 +1812,7 @@ void unlock();
 *Postconditions:* `owns == false`.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -1927,12 +1927,12 @@ transferred, after acquisition, to another `shared_lock` object. Objects
 of type `shared_lock` are not copyable but are movable. The behavior of
 a program is undefined if the contained pointer `pm` is not null and the
 lockable object pointed to by `pm` does not exist for the entire
-remaining lifetime ( [[basic.life]]) of the `shared_lock` object. The
+remaining lifetime ([[basic.life]]) of the `shared_lock` object. The
 supplied `Mutex` type shall meet the shared mutex requirements (
 [[thread.sharedtimedmutex.requirements]]).
 
 [*Note 1*: `shared_lock<Mutex>` meets the `TimedLockable`
-requirements ( [[thread.req.lockable.timed]]). — *end note*]
+requirements ([[thread.req.lockable.timed]]). — *end note*]
 
 ##### `shared_lock` constructors, destructor, and assignment <a id="thread.lock.shared.cons">[[thread.lock.shared.cons]]</a>
 
@@ -2052,7 +2052,7 @@ void lock();
 *Postconditions:* `owns == true`.
 
 *Throws:* Any exception thrown by `pm->lock_shared()`. `system_error`
-when an exception is required ( [[thread.req.exception]]).
+when an exception is required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2072,7 +2072,7 @@ the call to `pm->try_lock_shared()`.
 
 *Throws:* Any exception thrown by `pm->try_lock_shared()`.
 `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2095,7 +2095,7 @@ the call to `pm->try_lock_shared_until(abs_time)`.
 
 *Throws:* Any exception thrown by `pm->try_lock_shared_until(abs_time)`.
 `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2117,7 +2117,7 @@ the call to `pm->try_lock_shared_for(rel_time)`.
 
 *Throws:* Any exception thrown by `pm->try_lock_shared_for(rel_time)`.
 `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2133,7 +2133,7 @@ void unlock();
 *Postconditions:* `owns == false`.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2290,12 +2290,12 @@ the results produced by the earlier returning execution. — *end note*]
 
 *Synchronization:* For any given `once_flag`: all active executions
 occur in a total order; completion of an active execution synchronizes
-with ( [[intro.multithread]]) the start of the next one in this total
+with ([[intro.multithread]]) the start of the next one in this total
 order; and the returning execution synchronizes with the return from all
 passive executions.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]), or any exception thrown by `func`.
+required ([[thread.req.exception]]), or any exception thrown by `func`.
 
 [*Example 1*:
 
@@ -2464,7 +2464,7 @@ condition_variable();
 *Effects:* Constructs an object of type `condition_variable`.
 
 *Throws:* `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2523,7 +2523,7 @@ the calling thread, and either
   a call to `notify_all()`, or spuriously.
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 2*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2554,7 +2554,7 @@ while (!pred())
 ```
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 3*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2585,13 +2585,13 @@ the calling thread, and either
   then returns.
 - The function will unblock when signaled by a call to `notify_one()`, a
   call to `notify_all()`, expiration of the absolute
-  timeout ( [[thread.req.timing]]) specified by `abs_time`, or
+  timeout ([[thread.req.timing]]) specified by `abs_time`, or
   spuriously.
 - If the function exits via an exception, `lock.lock()` shall be called
   prior to exiting the function.
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 4*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2600,10 +2600,10 @@ exception. — *end note*]
 locked by the calling thread.
 
 *Returns:* `cv_status::timeout` if the absolute
-timeout ( [[thread.req.timing]]) specified by `abs_time` expired,
+timeout ([[thread.req.timing]]) specified by `abs_time` expired,
 otherwise `cv_status::no_timeout`.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Rep, class Period>
@@ -2626,11 +2626,11 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time);
 ```
 
 *Returns:* `cv_status::timeout` if the relative
-timeout ( [[thread.req.timing]]) specified by `rel_time` expired,
+timeout ([[thread.req.timing]]) specified by `rel_time` expired,
 otherwise `cv_status::no_timeout`.
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 5*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2638,7 +2638,7 @@ exception. — *end note*]
 *Postconditions:* `lock.owns_lock()` is `true` and `lock.mutex()` is
 locked by the calling thread.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Clock, class Duration, class Predicate>
@@ -2665,7 +2665,7 @@ return true;
 ```
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 6*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2677,7 +2677,7 @@ locked by the calling thread.
 to `true` regardless of whether the timeout was
 triggered. — *end note*]
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]) or any
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]) or any
 exception thrown by `pred`.
 
 ``` cpp
@@ -2705,7 +2705,7 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred))
 if the timeout has already expired. — *end note*]
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 9*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2717,7 +2717,7 @@ locked by the calling thread.
 evaluates to `true` regardless of whether the timeout was
 triggered. — *end note*]
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]) or any
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]) or any
 exception thrown by `pred`.
 
 ### Class `condition_variable_any` <a id="thread.condition.condvarany">[[thread.condition.condvarany]]</a>
@@ -2770,7 +2770,7 @@ condition_variable_any();
 *Effects:* Constructs an object of type `condition_variable_any`.
 
 *Throws:* `bad_alloc` or `system_error` when an exception is
-required ( [[thread.req.exception]]).
+required ([[thread.req.exception]]).
 
 *Error conditions:*
 
@@ -2828,7 +2828,7 @@ allows to query that, such as the `unique_lock` wrapper. — *end note*]
   call to `notify_all()`, or spuriously.
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 3*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2861,13 +2861,13 @@ template <class Lock, class Clock, class Duration>
   and returns.
 - The function will unblock when signaled by a call to `notify_one()`, a
   call to `notify_all()`, expiration of the absolute
-  timeout ( [[thread.req.timing]]) specified by `abs_time`, or
+  timeout ([[thread.req.timing]]) specified by `abs_time`, or
   spuriously.
 - If the function exits via an exception, `lock.lock()` shall be called
   prior to exiting the function.
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 4*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
@@ -2875,10 +2875,10 @@ exception. — *end note*]
 *Postconditions:* `lock` is locked by the calling thread.
 
 *Returns:* `cv_status::timeout` if the absolute
-timeout ( [[thread.req.timing]]) specified by `abs_time` expired,
+timeout ([[thread.req.timing]]) specified by `abs_time` expired,
 otherwise `cv_status::no_timeout`.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Lock, class Rep, class Period>
@@ -2892,18 +2892,18 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time);
 ```
 
 *Returns:* `cv_status::timeout` if the relative
-timeout ( [[thread.req.timing]]) specified by `rel_time` expired,
+timeout ([[thread.req.timing]]) specified by `rel_time` expired,
 otherwise `cv_status::no_timeout`.
 
 *Remarks:* If the function fails to meet the postcondition,
-`terminate()` shall be called ( [[except.terminate]]).
+`terminate()` shall be called ([[except.terminate]]).
 
 [*Note 5*: This can happen if the re-locking of the mutex throws an
 exception. — *end note*]
 
 *Postconditions:* `lock` is locked by the calling thread.
 
-*Throws:* Timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* Timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Lock, class Clock, class Duration, class Predicate>
@@ -3017,7 +3017,7 @@ namespace std {
 }
 ```
 
-The `enum` type `launch` is a bitmask type ( [[bitmask.types]]) with
+The `enum` type `launch` is a bitmask type ([[bitmask.types]]) with
 elements `launch::async` and `launch::deferred`.
 
 [*Note 1*: Implementations can provide bitmasks to specify restrictions
@@ -3106,7 +3106,7 @@ An *asynchronous return object* is an object that reads results from a
 shared state. A *waiting function* of an asynchronous return object is
 one that potentially blocks to wait for the shared state to be made
 ready. If a waiting function can return before the state is made ready
-because of a timeout ( [[thread.req.lockable]]), then it is a *timed
+because of a timeout ([[thread.req.lockable]]), then it is a *timed
 waiting function*, otherwise it is a *non-timed waiting function*.
 
 An *asynchronous provider* is an object that provides a result to a
@@ -3153,10 +3153,10 @@ code to compute the result on the waiting thread if so specified in the
 description of the class or function that creates the state object.
 
 Calls to functions that successfully set the stored result of a shared
-state synchronize with ( [[intro.multithread]]) calls to functions
+state synchronize with ([[intro.multithread]]) calls to functions
 successfully detecting the ready state resulting from that setting. The
 storage of the result (whether normal or exceptional) into the shared
-state synchronizes with ( [[intro.multithread]]) the successful return
+state synchronizes with ([[intro.multithread]]) the successful return
 from a call to a waiting function on the shared state.
 
 Some functions (e.g., `promise::set_value_at_thread_exit`) delay making
@@ -3170,7 +3170,7 @@ Access to the result of the same shared state may conflict (
 
 [*Note 4*: This explicitly specifies that the result of the shared
 state is visible in the objects that reference this state in the sense
-of data race avoidance ( [[res.on.data.races]]). For example, concurrent
+of data race avoidance ([[res.on.data.races]]). For example, concurrent
 accesses through references returned by `shared_future::get()` (
 [[futures.shared_future]]) must either use read-only operations or
 provide additional synchronization. — *end note*]
@@ -3228,7 +3228,7 @@ template <class R, class Alloc>
     : true_type { };
 ```
 
-*Requires:* `Alloc` shall be an Allocator ( [[allocator.requirements]]).
+*Requires:* `Alloc` shall be an Allocator ([[allocator.requirements]]).
 
 ``` cpp
 promise();
@@ -3253,13 +3253,13 @@ the shared state of `rhs` (if any) to the newly-constructed object.
 ~promise();
 ```
 
-*Effects:* Abandons any shared state ( [[futures.state]]).
+*Effects:* Abandons any shared state ([[futures.state]]).
 
 ``` cpp
 promise& operator=(promise&& rhs) noexcept;
 ```
 
-*Effects:* Abandons any shared state ( [[futures.state]]) and then as if
+*Effects:* Abandons any shared state ([[futures.state]]) and then as if
 `promise(std::move(rhs)).swap(*this)`.
 
 *Returns:* `*this`.
@@ -3298,7 +3298,7 @@ void promise<void>::set_value();
 ```
 
 *Effects:* Atomically stores the value `r` in the shared state and makes
-that state ready ( [[futures.state]]).
+that state ready ([[futures.state]]).
 
 *Throws:*
 
@@ -3322,7 +3322,7 @@ void set_exception(exception_ptr p);
 *Requires:* `p` is not null.
 
 *Effects:* Atomically stores the exception pointer `p` in the shared
-state and makes that state ready ( [[futures.state]]).
+state and makes that state ready ([[futures.state]]).
 
 *Throws:* `future_error` if its shared state already has a stored value
 or exception.
@@ -3392,7 +3392,7 @@ The class template `future` defines a type for asynchronous return
 objects which do not share their shared state with other asynchronous
 return objects. A default-constructed `future` object has no shared
 state. A `future` object with shared state can be created by functions
-on asynchronous providers ( [[futures.state]]) or by the move
+on asynchronous providers ([[futures.state]]) or by the move
 constructor and shares its shared state with the original asynchronous
 provider. The result (value or exception) of a `future` object can be
 set by calling a respective function on an object that shares the same
@@ -3473,7 +3473,7 @@ state that was originally referred to by `rhs` (if any).
 
 *Effects:*
 
-- Releases any shared state ( [[futures.state]]);
+- Releases any shared state ([[futures.state]]);
 - destroys `*this`.
 
 ``` cpp
@@ -3482,7 +3482,7 @@ future& operator=(future&& rhs) noexcept;
 
 *Effects:*
 
-- Releases any shared state ( [[futures.state]]).
+- Releases any shared state ([[futures.state]]).
 - move assigns the contents of `rhs` to `*this`.
 
 *Postconditions:*
@@ -3513,7 +3513,7 @@ member function `get`. — *end note*]
 
 - `wait()`s until the shared state is ready, then retrieves the value
   stored in the shared state;
-- releases any shared state ( [[futures.state]]).
+- releases any shared state ([[futures.state]]).
 
 *Returns:*
 
@@ -3546,8 +3546,8 @@ template <class Rep, class Period>
 ```
 
 *Effects:* None if the shared state contains a deferred
-function ( [[futures.async]]), otherwise blocks until the shared state
-is ready or until the relative timeout ( [[thread.req.timing]])
+function ([[futures.async]]), otherwise blocks until the shared state
+is ready or until the relative timeout ([[thread.req.timing]])
 specified by `rel_time` has expired.
 
 *Returns:*
@@ -3556,10 +3556,10 @@ specified by `rel_time` has expired.
   function.
 - `future_status::ready` if the shared state is ready.
 - `future_status::timeout` if the function is returning because the
-  relative timeout ( [[thread.req.timing]]) specified by `rel_time` has
+  relative timeout ([[thread.req.timing]]) specified by `rel_time` has
   expired.
 
-*Throws:* timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Clock, class Duration>
@@ -3567,8 +3567,8 @@ template <class Clock, class Duration>
 ```
 
 *Effects:* None if the shared state contains a deferred
-function ( [[futures.async]]), otherwise blocks until the shared state
-is ready or until the absolute timeout ( [[thread.req.timing]])
+function ([[futures.async]]), otherwise blocks until the shared state
+is ready or until the absolute timeout ([[thread.req.timing]])
 specified by `abs_time` has expired.
 
 *Returns:*
@@ -3577,10 +3577,10 @@ specified by `abs_time` has expired.
   function.
 - `future_status::ready` if the shared state is ready.
 - `future_status::timeout` if the function is returning because the
-  absolute timeout ( [[thread.req.timing]]) specified by `abs_time` has
+  absolute timeout ([[thread.req.timing]]) specified by `abs_time` has
   expired.
 
-*Throws:* timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* timeout-related exceptions ([[thread.req.timing]]).
 
 ### Class template `shared_future` <a id="futures.shared_future">[[futures.shared_future]]</a>
 
@@ -3679,7 +3679,7 @@ shared state that was originally referred to by `rhs` (if any).
 
 *Effects:*
 
-- Releases any shared state ( [[futures.state]]);
+- Releases any shared state ([[futures.state]]);
 - destroys `*this`.
 
 ``` cpp
@@ -3688,7 +3688,7 @@ shared_future& operator=(shared_future&& rhs) noexcept;
 
 *Effects:*
 
-- Releases any shared state ( [[futures.state]]);
+- Releases any shared state ([[futures.state]]);
 - move assigns the contents of `rhs` to `*this`.
 
 *Postconditions:*
@@ -3703,7 +3703,7 @@ shared_future& operator=(const shared_future& rhs) noexcept;
 
 *Effects:*
 
-- Releases any shared state ( [[futures.state]]);
+- Releases any shared state ([[futures.state]]);
 - assigns the contents of `rhs` to `*this`. \[*Note 3*: As a result,
   `*this` refers to the same shared state as `rhs` (if
   any). — *end note*]
@@ -3723,7 +3723,7 @@ member function `get`. — *end note*]
 [*Note 2*: Access to a value object stored in the shared state is
 unsynchronized, so programmers should apply only those operations on `R`
 that do not introduce a data
-race ( [[intro.multithread]]). — *end note*]
+race ([[intro.multithread]]). — *end note*]
 
 *Effects:* `wait()`s until the shared state is ready, then retrieves the
 value stored in the shared state.
@@ -3761,8 +3761,8 @@ template <class Rep, class Period>
 ```
 
 *Effects:* None if the shared state contains a deferred
-function ( [[futures.async]]), otherwise blocks until the shared state
-is ready or until the relative timeout ( [[thread.req.timing]])
+function ([[futures.async]]), otherwise blocks until the shared state
+is ready or until the relative timeout ([[thread.req.timing]])
 specified by `rel_time` has expired.
 
 *Returns:*
@@ -3771,10 +3771,10 @@ specified by `rel_time` has expired.
   function.
 - `future_status::ready` if the shared state is ready.
 - `future_status::timeout` if the function is returning because the
-  relative timeout ( [[thread.req.timing]]) specified by `rel_time` has
+  relative timeout ([[thread.req.timing]]) specified by `rel_time` has
   expired.
 
-*Throws:* timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* timeout-related exceptions ([[thread.req.timing]]).
 
 ``` cpp
 template <class Clock, class Duration>
@@ -3782,8 +3782,8 @@ template <class Clock, class Duration>
 ```
 
 *Effects:* None if the shared state contains a deferred
-function ( [[futures.async]]), otherwise blocks until the shared state
-is ready or until the absolute timeout ( [[thread.req.timing]])
+function ([[futures.async]]), otherwise blocks until the shared state
+is ready or until the absolute timeout ([[thread.req.timing]])
 specified by `abs_time` has expired.
 
 *Returns:*
@@ -3792,10 +3792,10 @@ specified by `abs_time` has expired.
   function.
 - `future_status::ready` if the shared state is ready.
 - `future_status::timeout` if the function is returning because the
-  absolute timeout ( [[thread.req.timing]]) specified by `abs_time` has
+  absolute timeout ([[thread.req.timing]]) specified by `abs_time` has
   expired.
 
-*Throws:* timeout-related exceptions ( [[thread.req.timing]]).
+*Throws:* timeout-related exceptions ([[thread.req.timing]]).
 
 ### Function template `async` <a id="futures.async">[[futures.async]]</a>
 
@@ -3832,7 +3832,7 @@ implementation may choose any of the corresponding policies):
 
 - If `launch::async` is set in `policy`, calls
   *INVOKE*(*DECAY_COPY*(std::forward\<F\>(f)),
-  *DECAY_COPY*(std::forward\<Args\>(args))...) ( [[func.require]],
+  *DECAY_COPY*(std::forward\<Args\>(args))...) ([[func.require]],
   [[thread.thread.constr]]) as if in a new thread of execution
   represented by a `thread` object with the calls to *DECAY_COPY*()
   being evaluated in the thread that called `async`. Any return value is
@@ -3854,7 +3854,7 @@ implementation may choose any of the corresponding policies):
   from the execution of the deferred function is stored as the
   exceptional result in the shared state. The shared state is not made
   ready until the function has completed. The first call to a non-timed
-  waiting function ( [[futures.state]]) on an asynchronous return object
+  waiting function ([[futures.state]]) on an asynchronous return object
   referring to this shared state shall invoke the deferred function in
   the thread that called the waiting function. Once evaluation of
   *INVOKE*(std::move(g), std::move(xyz)) begins, the function is no
@@ -3878,12 +3878,12 @@ ready. — *end note*]
 
 *Synchronization:* Regardless of the provided `policy` argument,
 
-- the invocation of `async` synchronizes with ( [[intro.multithread]])
+- the invocation of `async` synchronizes with ([[intro.multithread]])
   the invocation of `f`. \[*Note 6*: This statement applies even when
   the corresponding `future` object is moved to another
   thread. — *end note*] ; and
 - the completion of the function `f` is sequenced
-  before ( [[intro.multithread]]) the shared state is made ready.
+  before ([[intro.multithread]]) the shared state is made ready.
   \[*Note 7*: `f` might not be called at all, so its completion might
   never happen. — *end note*]
 
@@ -3892,9 +3892,9 @@ If the implementation chooses the `launch::async` policy,
 - a call to a waiting function on an asynchronous return object that
   shares the shared state created by this `async` call shall block until
   the associated thread has completed, as if joined, or else time
-  out ( [[thread.thread.member]]);
+  out ([[thread.thread.member]]);
 - the associated thread completion synchronizes
-  with ( [[intro.multithread]]) the return from the first function that
+  with ([[intro.multithread]]) the return from the first function that
   successfully detects the ready status of the shared state or with the
   return from the last function that releases the shared state,
   whichever happens first.
@@ -4015,14 +4015,14 @@ packaged_task& operator=(packaged_task&& rhs) noexcept;
 
 *Effects:*
 
-- Releases any shared state ( [[futures.state]]);
+- Releases any shared state ([[futures.state]]);
 - calls `packaged_task(std::move(rhs)).swap(*this)`.
 
 ``` cpp
 ~packaged_task();
 ```
 
-*Effects:* Abandons any shared state ( [[futures.state]]).
+*Effects:* Abandons any shared state ([[futures.state]]).
 
 ``` cpp
 void swap(packaged_task& other) noexcept;
@@ -4086,7 +4086,7 @@ stored task and `t1, t2, ..., tN` are the values in `args...`. If the
 task returns normally, the return value is stored as the asynchronous
 result in the shared state of `*this`, otherwise the exception thrown by
 the task is stored. In either case, this shall be done without making
-that state ready ( [[futures.state]]) immediately. Schedules the shared
+that state ready ([[futures.state]]) immediately. Schedules the shared
 state to be made ready when the current thread exits, after all objects
 of thread storage duration associated with the current thread have been
 destroyed.
@@ -4107,7 +4107,7 @@ void reset();
 task stored in `*this`.
 
 [*Note 1*: This constructs a new shared state for `*this`. The old
-state is abandoned ( [[futures.state]]). — *end note*]
+state is abandoned ([[futures.state]]). — *end note*]
 
 *Throws:*
 
@@ -4132,7 +4132,7 @@ template <class R, class Alloc>
     : true_type { };
 ```
 
-*Requires:* `Alloc` shall be an Allocator ( [[allocator.requirements]]).
+*Requires:* `Alloc` shall be an Allocator ([[allocator.requirements]]).
 
 <!-- Section link definitions -->
 [condition_variable.syn]: #condition_variable.syn

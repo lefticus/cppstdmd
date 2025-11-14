@@ -1613,7 +1613,7 @@ property *p*). — *end example*]
 transparency.) Algorithms on input iterators should never attempt to
 pass through the same iterator twice. They should be *single pass*
 algorithms. Value type `T` is not required to be a *Cpp17CopyAssignable*
-type ( [[cpp17.copyassignable]]). These algorithms can be used with
+type ([[cpp17.copyassignable]]). These algorithms can be used with
 istreams as the source of the input data through the `istream_iterator`
 class template. — *end note*]
 
@@ -1694,12 +1694,12 @@ requirements, the following expressions are valid as shown in
 #### General <a id="indirectcallable.general">[[indirectcallable.general]]</a>
 
 There are several concepts that group requirements of algorithms that
-take callable objects ( [[func.def]]) as arguments.
+take callable objects ([[func.def]]) as arguments.
 
 #### Indirect callables <a id="indirectcallable.indirectinvocable">[[indirectcallable.indirectinvocable]]</a>
 
 The indirect callable concepts are used to constrain those algorithms
-that accept callable objects ( [[func.def]]) as arguments.
+that accept callable objects ([[func.def]]) as arguments.
 
 ``` cpp
 namespace std {
@@ -2122,7 +2122,7 @@ void foo() {
 The function call expression at `#1` invokes `std::ranges::distance`,
 not `std::distance`, despite that (a) the iterator type returned from
 `begin(vec)` and `end(vec)` may be associated with namespace `std` and
-(b) `std::distance` is more specialized ( [[temp.func.order]]) than
+(b) `std::distance` is more specialized ([[temp.func.order]]) than
 `std::ranges::distance` since the former requires its first two
 parameters to have the same type.
 

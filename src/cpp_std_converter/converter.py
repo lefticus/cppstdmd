@@ -50,6 +50,10 @@ def unescape_wikilinks(markdown: str) -> str:
     # Pandoc escapes ] after emphasis to avoid ambiguity with link syntax
     markdown = re.sub(r"\*\\\]", r"*]", markdown)
 
+    # Fix spacing after opening parenthesis: ( [[ → ([[
+    # This improves readability for patterns like ( [[tag]]) -> ([[tag]])
+    markdown = re.sub(r"\( \[\[", r"([[", markdown)
+
     return markdown
 
 

@@ -551,7 +551,7 @@ template argument shall satisfy the requirements of a forward iterator (
 [[forward.iterators]]). If an algorithm’s template parameter is
 `BidirectionalIterator`, `BidirectionalIterator1`, or
 `BidirectionalIterator2`, the actual template argument shall satisfy the
-requirements of a bidirectional iterator ( [[bidirectional.iterators]]).
+requirements of a bidirectional iterator ([[bidirectional.iterators]]).
 If an algorithm’s template parameter is `RandomAccessIterator`,
 `RandomAccessIterator1`, or `RandomAccessIterator2`, the actual template
 argument shall satisfy the requirements of a random-access iterator (
@@ -560,7 +560,7 @@ argument shall satisfy the requirements of a random-access iterator (
 If an algorithm’s section says that a value pointed to by any iterator
 passed as an argument is modified, then that algorithm has an additional
 type requirement: The type of that argument shall satisfy the
-requirements of a mutable iterator ( [[iterator.requirements]]). This
+requirements of a mutable iterator ([[iterator.requirements]]). This
 requirement does not affect arguments that are declared as
 `OutputIterator`, `OutputIterator1`, or `OutputIterator2`, because
 output iterators must always be mutable.
@@ -571,7 +571,7 @@ called *algorithm`_copy`*. Algorithms that take predicates end with the
 suffix `_if` (which follows the suffix `_copy`).
 
 The `Predicate` parameter is used whenever an algorithm expects a
-function object ( [[function.objects]]) that, when applied to the result
+function object ([[function.objects]]) that, when applied to the result
 of dereferencing the corresponding iterator, returns a value testable as
 `true`. In other words, if an algorithm takes `Predicate pred` as its
 argument and `first` as its iterator argument, it should work correctly
@@ -597,7 +597,7 @@ Unless otherwise specified, algorithms that take function objects as
 arguments are permitted to copy those function objects freely.
 Programmers for whom object identity is important should consider using
 a wrapper class that points to a noncopied implementation object such as
-`reference_wrapper<T>` ( [[refwrap]]), or some equivalent solution.
+`reference_wrapper<T>` ([[refwrap]]), or some equivalent solution.
 
 When the description of an algorithm gives an expression such as
 `*first == value` for a condition, the expression shall evaluate to
@@ -924,7 +924,7 @@ template<class ForwardIterator, class Size, class T,
 ```
 
 *Requires:* The type `Size` shall be convertible to integral
-type ( [[conv.integral]], [[class.conv]]).
+type ([[conv.integral]], [[class.conv]]).
 
 *Effects:* Finds a subsequence of equal values in a sequence.
 
@@ -1060,7 +1060,7 @@ performs: `swap(*(first1 + n), *(first2 + n))`.
 
 *Requires:* The two ranges \[`first1`, `last1`) and \[`first2`,
 `first2 + (last1 - first1)`) shall not overlap. `*(first1 + n)` shall be
-swappable with ( [[swappable.requirements]]) `*(first2 + n)`.
+swappable with ([[swappable.requirements]]) `*(first2 + n)`.
 
 *Returns:* `first2 + (last1 - first1)`.
 
@@ -1074,7 +1074,7 @@ template<class ForwardIterator1, class ForwardIterator2>
 *Effects:* `swap(*a, *b)`.
 
 *Requires:* `a` and `b` shall be dereferenceable. `*a` shall be
-swappable with ( [[swappable.requirements]]) `*b`.
+swappable with ([[swappable.requirements]]) `*b`.
 
 ### Transform <a id="alg.transform">[[alg.transform]]</a>
 
@@ -1177,7 +1177,7 @@ template<class OutputIterator, class Size, class T>
 
 *Requires:* The expression `value` shall be writable to the output
 iterator. The type `Size` shall be convertible to an integral
-type ( [[conv.integral]], [[class.conv]]).
+type ([[conv.integral]], [[class.conv]]).
 
 *Effects:* The first algorithm assigns `value` through all the iterators
 in the range \[`first`, `last`). The second algorithm assigns `value`
@@ -1209,7 +1209,7 @@ the range \[`first`, `first + n`) if `n` is positive, otherwise it does
 nothing.
 
 *Requires:* `gen` takes no arguments, `Size` shall be convertible to an
-integral type ( [[conv.integral]], [[class.conv]]).
+integral type ([[conv.integral]], [[class.conv]]).
 
 *Returns:* `generate_n` returns `first + n` for non-negative values of
 `n` and `first` for negative values.
@@ -1343,7 +1343,7 @@ template<class BidirectionalIterator>
 applies `iter_swap` to all pairs of iterators
 `first + i, (last - i) - 1`.
 
-*Requires:* `*first` shall be swappable ( [[swappable.requirements]]).
+*Requires:* `*first` shall be swappable ([[swappable.requirements]]).
 
 *Complexity:* Exactly `(last - first)/2` swaps.
 
@@ -1384,7 +1384,7 @@ This is a left rotate.
 
 *Requires:* \[`first`, `middle`) and \[`middle`, `last`) shall be valid
 ranges. `ForwardIterator` shall satisfy the requirements of
-ValueSwappable ( [[swappable.requirements]]). The type of `*first` shall
+ValueSwappable ([[swappable.requirements]]). The type of `*first` shall
 satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and the requirements of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1433,14 +1433,14 @@ that each possible permutation of those elements has equal probability
 of appearance.
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The random number
+`ValueSwappable` ([[swappable.requirements]]). The random number
 generating function object `rand` shall have a return type that is
 convertible to `iterator_traits<RandomAccessIterator>::difference_type`,
 and the call `rand(n)` shall return a randomly chosen value in the
 interval \[`0`, `n`), for `n > 0` of type
 `iterator_traits<RandomAccessIterator>::difference_type`. The type
 `UniformRandomNumberGenerator` shall meet the requirements of a uniform
-random number generator ( [[rand.req.urng]]) type whose return type is
+random number generator ([[rand.req.urng]]) type whose return type is
 convertible to `iterator_traits<RandomAccessIterator>::difference_type`.
 
 *Complexity:* Exactly `(last - first) - 1` swaps.
@@ -1490,7 +1490,7 @@ satisfy `pred` before all the elements that do not satisfy it.
 range \[`i`, `last`), `pred(*k) == false`.
 
 *Requires:* `ForwardIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]).
+`ValueSwappable` ([[swappable.requirements]]).
 
 *Complexity:* If ForwardIterator meets the requirements for a
 BidirectionalIterator, at most `(last - first) / 2` swaps are done;
@@ -1513,7 +1513,7 @@ range \[`i`, `last`), `pred(*k) == false`. The relative order of the
 elements in both groups is preserved.
 
 *Requires:* `BidirectionalIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1570,9 +1570,9 @@ a function object of type `Compare` and one that uses an `operator<`.
 
 `Compare`
 
-is a function object type ( [[function.objects]]). The return value of
+is a function object type ([[function.objects]]). The return value of
 the function call operation applied to an object of type `Compare`, when
-contextually converted to `bool` ( [[conv]]), yields `true` if the first
+contextually converted to `bool` ([[conv]]), yields `true` if the first
 argument of the call is less than the second, and `false` otherwise.
 `Compare comp` is used throughout for algorithms assuming an ordering
 relation. It is assumed that `comp` will not apply any non-constant
@@ -1630,7 +1630,7 @@ template<class RandomAccessIterator, class Compare>
 *Effects:* Sorts the elements in the range \[`first`, `last`).
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1651,7 +1651,7 @@ template<class RandomAccessIterator, class Compare>
 *Effects:* Sorts the elements in the range \[`first`, `last`).
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1682,7 +1682,7 @@ of the elements in the range \[`middle`, `last`) are placed in an
 unspecified order.
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1717,7 +1717,7 @@ range \[`result_first`,
 `result_first + (last - first)`.
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of
+`ValueSwappable` ([[swappable.requirements]]). The type of
 `*result_first` shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1776,7 +1776,7 @@ iterator `j` in the range \[`nth`, `last`) it holds that: `!(*i > *j)`
 or `comp(*j, *i) == false`.
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1963,7 +1963,7 @@ that is, for every iterator `i` in \[`first`, `last`) other than
 *Requires:* The ranges \[`first`, `middle`) and \[`middle`, `last`)
 shall be sorted with respect to `operator<` or `comp`.
 `BidirectionalIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -1978,7 +1978,7 @@ Stable.
 ### Set operations on sorted structures <a id="alg.set.operations">[[alg.set.operations]]</a>
 
 This section defines all the basic set operations on sorted structures.
-They also work with `multiset`s ( [[multiset]]) containing multiple
+They also work with `multiset`s ([[multiset]]) containing multiple
 copies of equivalent elements. The semantics of the set operations are
 generalized to `multiset`s in a standard way by defining `set_union()`
 to contain the maximum number of occurrences of every element,
@@ -2208,7 +2208,7 @@ template<class RandomAccessIterator, class Compare>
 
 *Requires:* The range \[`first`, `last`) shall be a valid non-empty
 heap. `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -2252,7 +2252,7 @@ template<class RandomAccessIterator, class Compare>
 
 *Requires:* The range \[`first`, `last`) shall be a valid heap.
 `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The type of `*first`
+`ValueSwappable` ([[swappable.requirements]]). The type of `*first`
 shall satisfy the requirements of `MoveConstructible`
 (Table  [[moveconstructible]]) and of `MoveAssignable`
 (Table  [[moveassignable]]).
@@ -2498,7 +2498,7 @@ returns `true`. Otherwise, it transforms the sequence into the smallest
 permutation, that is, the ascendingly sorted one, and returns `false`.
 
 *Requires:* `BidirectionalIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]).
+`ValueSwappable` ([[swappable.requirements]]).
 
 *Complexity:* At most `(last - first)/2` swaps.
 
@@ -2522,7 +2522,7 @@ the sequence into the largest permutation, that is, the descendingly
 sorted one, and returns `false`.
 
 *Requires:* `BidirectionalIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]).
+`ValueSwappable` ([[swappable.requirements]]).
 
 *Complexity:* At most `(last - first)/2` swaps.
 

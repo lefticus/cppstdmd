@@ -200,7 +200,7 @@ except that:
 - Convenient global interfaces are provided for traditional `ctype`
   functions such as `isdigit()` and `isspace()`, so that given a locale
   object `loc` a C++program can call `isspace(c, loc)`. (This eases
-  upgrading existing extractors ( [[istream.formatted]]).)
+  upgrading existing extractors ([[istream.formatted]]).)
 
 — *end note*]
 
@@ -568,7 +568,7 @@ use_facet<collate<charT>>(*this).compare(s1.data(), s1.data() + s1.size(),
 [*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
-locale `loc` simply by ( [[alg.sort]], [[vector]]):
+locale `loc` simply by ([[alg.sort]], [[vector]]):
 
 ``` cpp
 std::sort(v.begin(), v.end(), loc);
@@ -661,7 +661,7 @@ use_facet<ctype<charT>>(loc).is(ctype_base::F, c)
 ```
 
 where `F` is the `ctype_base::mask` value corresponding to that
-function ( [[category.ctype]]).[^4]
+function ([[category.ctype]]).[^4]
 
 #### Conversions <a id="conversions">[[conversions]]</a>
 
@@ -686,7 +686,7 @@ these implement formatting or parsing of a datum, for use by standard or
 users’ iostream operators `<<` and `>>`, as members `put()` and `get()`,
 respectively. Each such member function takes an `ios_base&` argument
 whose members `flags()`, `precision()`, and `width()`, specify the
-format of the corresponding datum ( [[ios.base]]). Those functions which
+format of the corresponding datum ([[ios.base]]). Those functions which
 need to use other facets call its member `getloc()` to retrieve the
 locale imbued there. Formatting facets use the character argument `fill`
 to fill out the specified width where necessary.
@@ -725,7 +725,7 @@ namespace std {
 }
 ```
 
-The type `mask` is a bitmask type ( [[bitmask.types]]).
+The type `mask` is a bitmask type ([[bitmask.types]]).
 
 #### Class template `ctype` <a id="locale.ctype">[[locale.ctype]]</a>
 
@@ -778,7 +778,7 @@ members are required to use `ctype<>` for character classing during
 input parsing.
 
 The specializations required in Table 
-[[tab:localization.category.facets]] ( [[locale.category]]), namely
+[[tab:localization.category.facets]] ([[locale.category]]), namely
 `ctype<char>` and `ctype<wchar_t>`, implement character classing
 appropriate to the implementation’s native character set.
 
@@ -909,7 +909,7 @@ const char*  do_widen(const char* low, const char* high,
 *Effects:* Applies the simplest reasonable transformation from a `char`
 value or sequence of `char` values to the corresponding `charT` value or
 values.[^5] The only characters for which unique transformations are
-required are those in the basic source character set ( [[lex.charset]]).
+required are those in the basic source character set ([[lex.charset]]).
 
 For any named `ctype` category with a `ctype <charT>` facet `ctc` and
 valid `ctype_base::mask` value `M`,
@@ -932,7 +932,7 @@ value or sequence of `charT` values to the corresponding `char` value or
 values.
 
 For any character `c` in the basic source character
-set ( [[lex.charset]]) the transformation is such that
+set ([[lex.charset]]) the transformation is such that
 
 ``` cpp
 do_widen(do_narrow(c, 0)) == c
@@ -1161,7 +1161,7 @@ virtual const char* do_narrow(const char* low,
 ```
 
 These functions are described identically as those members of the same
-name in the `ctype` class template ( [[locale.ctype.members]]).
+name in the `ctype` class template ([[locale.ctype.members]]).
 
 #### Class template `codecvt` <a id="locale.codecvt">[[locale.codecvt]]</a>
 
@@ -1233,7 +1233,7 @@ The `stateT` argument selects the pair of character encodings being
 mapped between.
 
 The specializations required in Table 
-[[tab:localization.category.facets]] ( [[locale.category]]) convert the
+[[tab:localization.category.facets]] ([[locale.category]]) convert the
 implementation-defined native character set.
 `codecvt<char, char, mbstate_t>` implements a degenerate conversion; it
 does not convert at all. The specialization
@@ -1332,7 +1332,7 @@ the input sequence \[`from`, `from``next`). `to_next` is set equal to
 `to`, the value of `state` is unchanged, and there are no changes to the
 values in \[`to`, `to_end`).
 
-A `codecvt` facet that is used by `basic_filebuf` ( [[file.streams]])
+A `codecvt` facet that is used by `basic_filebuf` ([[file.streams]])
 shall have the property that if
 
 ``` cpp
@@ -1493,7 +1493,7 @@ facet to identify all numeric punctuation preferences, and also for the
 
 Extractor and inserter members of the standard iostreams use `num_get<>`
 and `num_put<>` member functions for formatting and parsing numeric
-values ( [[istream.formatted.reqmts]], [[ostream.formatted.reqmts]]).
+values ([[istream.formatted.reqmts]], [[ostream.formatted.reqmts]]).
 
 #### Class template `num_get` <a id="locale.num.get">[[locale.num.get]]</a>
 
@@ -1874,7 +1874,7 @@ locale loc = str.getloc();
 The details of this operation occur in several stages:
 
 - Stage 1: Determine a printf conversion specifier `spec` and determine
-  the characters that would be printed by `printf` ( [[c.files]]) given
+  the characters that would be printed by `printf` ([[c.files]]) given
   this conversion specifier for
   ``` cpp
   printf(spec, val)
@@ -2092,7 +2092,7 @@ namespace std {
 `numpunct<>`
 
 specifies numeric punctuation. The specializations required in Table 
-[[tab:localization.category.facets]] ( [[locale.category]]), namely
+[[tab:localization.category.facets]] ([[locale.category]]), namely
 `numpunct<{}wchar_t>` and `numpunct<char>`, provide classic `"C"`
 numeric formats, i.e., they contain information equivalent to that
 contained in the `"C"` locale or their wide character counterparts as if
@@ -2248,7 +2248,7 @@ as the predicate argument for standard algorithms (Clause 
 [[algorithms]]) and containers operating on strings. The specializations
 required in Table  [[tab:localization.category.facets]] (
 [[locale.category]]), namely `collate<char>` and `collate<wchar_t>`,
-apply lexicographic ordering ( [[alg.lex.comparison]]).
+apply lexicographic ordering ([[alg.lex.comparison]]).
 
 Each function compares a string of characters `*p` in the range \[`low`,
 `high`).
@@ -2283,9 +2283,9 @@ int do_compare(const charT* low1, const charT* high1,
 
 *Returns:* `1` if the first string is greater than the second, `-1` if
 less, zero otherwise. The specializations required in
-Table  [[tab:localization.category.facets]] ( [[locale.category]]),
+Table  [[tab:localization.category.facets]] ([[locale.category]]),
 namely `collate<char>` and `collate<wchar_t>`, implement a
-lexicographical comparison ( [[alg.lex.comparison]]).
+lexicographical comparison ([[alg.lex.comparison]]).
 
 ``` cpp
 string_type do_transform(const charT* low, const charT* high) const;
@@ -3144,7 +3144,7 @@ pattern do_neg_format() const;
 ```
 
 *Returns:* The specializations required in
-Table  [[tab:localization.required.specializations]] ( [[locale.category]]),
+Table  [[tab:localization.required.specializations]] ([[locale.category]]),
 namely `moneypunct<char>`, `moneypunct<wchar_t>`,
 `moneypunct<char, true>`, and `moneypunct<wchar_t, true>`, return an
 object of type `pattern` initialized to

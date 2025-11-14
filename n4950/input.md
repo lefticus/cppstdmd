@@ -1099,7 +1099,7 @@ has a trivial copy assignment operator. If
 a trivial destructor. All specializations of `fpos` meet the
 *Cpp17DefaultConstructible*, *Cpp17CopyConstructible*,
 *Cpp17CopyAssignable*, *Cpp17Destructible*, and
-*Cpp17EqualityComparable* ( [[cpp17.equalitycomparable]]) requirements.
+*Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]) requirements.
 In addition, the expressions shown in [[fpos.operations]] are valid and
 have the indicated semantics. In that table,
 
@@ -1667,7 +1667,7 @@ ios_base& hexfloat(ios_base& str);
 
 [*Note 1*: `ios_base::hex` cannot be used to specify a hexadecimal
 floating-point format, because it is not part of `ios_base::floatfield`
-( [[ios.fmtflags.const]]). — *end note*]
+([[ios.fmtflags.const]]). — *end note*]
 
 ``` cpp
 ios_base& defaultfloat(ios_base& str);

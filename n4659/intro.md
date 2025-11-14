@@ -76,12 +76,12 @@ expression in the comma-separated list bounded by the parentheses (
 [[expr.call]])
 
 sequence of preprocessing tokens in the comma-separated list bounded by
-the parentheses ( [[cpp.replace]])
+the parentheses ([[cpp.replace]])
 
-the operand of `throw` ( [[expr.throw]])
+the operand of `throw` ([[expr.throw]])
 
 *constant-expression*, *type-id*, or *id-expression* in the
-comma-separated list bounded by the angle brackets ( [[temp.arg]])
+comma-separated list bounded by the angle brackets ([[temp.arg]])
 
 a thread of execution that blocks is waiting for some condition (other
 than for the implementation to execute its execution steps) to be
@@ -95,18 +95,18 @@ constructs that it does not support. — *end note*]
 message belonging to an *implementation-defined* subset of the
 implementation’s output messages
 
-type of the most derived object ( [[intro.object]]) to which the glvalue
+type of the most derived object ([[intro.object]]) to which the glvalue
 refers  
 
-[*Example 1*: If a pointer ( [[dcl.ptr]]) `p` whose static type is
+[*Example 1*: If a pointer ([[dcl.ptr]]) `p` whose static type is
 “pointer to class `B`” is pointing to an object of class `D`, derived
 from `B` (Clause  [[class.derived]]), the dynamic type of the expression
-`*p` is “`D`”. References ( [[dcl.ref]]) are treated
+`*p` is “`D`”. References ([[dcl.ref]]) are treated
 similarly. — *end example*]
 
 static type of the prvalue expression
 
-program that is not well-formed ( [[defns.well.formed]])
+program that is not well-formed ([[defns.well.formed]])
 
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation and that each implementation documents
@@ -120,7 +120,7 @@ sequence of one or more bytes representing a member of the extended
 character set of either the source or the execution environment  
 
 [*Note 2*: The extended character set is a superset of the basic
-character set ( [[lex.charset]]). — *end note*]
+character set ([[lex.charset]]). — *end note*]
 
 object or reference declared as part of a function declaration or
 definition or in the catch clause of an exception handler that acquires
@@ -131,22 +131,22 @@ immediately following the macro name
 
 member of a *template-parameter-list*
 
-name, parameter type list ( [[dcl.fct]]), and enclosing namespace (if
+name, parameter type list ([[dcl.fct]]), and enclosing namespace (if
 any)  
 
 [*Note 3*: Signatures are used as a basis for name mangling and
 linking. — *end note*]
 
-name, parameter type list ( [[dcl.fct]]), enclosing namespace (if any),
+name, parameter type list ([[dcl.fct]]), enclosing namespace (if any),
 return type, and template parameter list
 
 signature of the template of which it is a specialization and its
 template arguments (whether explicitly specified or deduced)
 
-name, parameter type list ( [[dcl.fct]]), class of which the function is
+name, parameter type list ([[dcl.fct]]), class of which the function is
 a member, cv-qualifiers (if any), and *ref-qualifier* (if any)
 
-name, parameter type list ( [[dcl.fct]]), class of which the function is
+name, parameter type list ([[dcl.fct]]), class of which the function is
 a member, cv-qualifiers (if any), *ref-qualifier* (if any), return type
 (if any), and template parameter list
 
@@ -154,7 +154,7 @@ signature of the member function template of which it is a
 specialization and its template arguments (whether explicitly specified
 or deduced)
 
-type of an expression ( [[basic.types]]) resulting from analysis of the
+type of an expression ([[basic.types]]) resulting from analysis of the
 program without considering execution semantics  
 
 [*Note 4*: The static type of an expression depends only on the form of
@@ -187,7 +187,7 @@ behavior occurs. The range of possible behaviors is usually delineated
 by this International Standard. — *end note*]
 
 C++program constructed according to the syntax rules, diagnosable
-semantic rules, and the one-definition rule ( [[basic.def.odr]]).
+semantic rules, and the one-definition rule ([[basic.def.odr]]).
 
 # General principles <a id="intro">[[intro]]</a>
 
@@ -229,14 +229,14 @@ Clauses specify declarations. Implementations shall supply definitions
 consistent with the descriptions in the library Clauses.
 
 The names defined in the library have namespace scope (
-[[basic.namespace]]). A C++translation unit ( [[lex.phases]]) obtains
+[[basic.namespace]]). A C++translation unit ([[lex.phases]]) obtains
 access to these names by including the appropriate standard library
-header ( [[cpp.include]]).
+header ([[cpp.include]]).
 
 The templates, classes, functions, and objects in the library have
-external linkage ( [[basic.link]]). The implementation provides
+external linkage ([[basic.link]]). The implementation provides
 definitions for standard library entities, as necessary, while combining
-translation units to form a complete C++program ( [[lex.phases]]).
+translation units to form a complete C++program ([[lex.phases]]).
 
 Two kinds of implementations are defined: a *hosted implementation* and
 a *freestanding implementation*. For a hosted implementation, this
@@ -244,7 +244,7 @@ International Standard defines the set of available libraries. A
 freestanding implementation is one in which execution may take place
 without the benefit of an operating system, and has an
 *implementation-defined* set of libraries that includes certain
-language-support libraries ( [[compliance]]).
+language-support libraries ([[compliance]]).
 
 A conforming implementation may have extensions (including additional
 library functions), provided they do not alter the behavior of any
@@ -314,7 +314,7 @@ the following rules:
 
 The fundamental storage unit in the C++memory model is the *byte*. A
 byte is at least large enough to contain any member of the basic
-execution character set ( [[lex.charset]]) and the eight-bit code units
+execution character set ([[lex.charset]]) and the eight-bit code units
 of the Unicode UTF-8 encoding form and is composed of a contiguous
 sequence of bits,[^4] the number of which is *implementation-defined*.
 The least significant bit is called the *low-order bit*; the most
@@ -333,7 +333,7 @@ virtual functions, might involve additional memory locations that are
 not accessible to programs but are managed by the
 implementation. — *end note*]
 
-Two or more threads of execution ( [[intro.multithread]]) can access
+Two or more threads of execution ([[intro.multithread]]) can access
 separate memory locations without interfering with each other.
 
 [*Note 3*: Thus a bit-field and an adjacent non-bit-field are in
@@ -374,28 +374,28 @@ can be.
 
 The constructs in a C++program create, destroy, refer to, access, and
 manipulate objects. An *object* is created by a definition (
-[[basic.def]]), by a *new-expression* ( [[expr.new]]), when implicitly
-changing the active member of a union ( [[class.union]]), or when a
-temporary object is created ( [[conv.rval]], [[class.temporary]]). An
+[[basic.def]]), by a *new-expression* ([[expr.new]]), when implicitly
+changing the active member of a union ([[class.union]]), or when a
+temporary object is created ([[conv.rval]], [[class.temporary]]). An
 object occupies a region of storage in its period of construction (
-[[class.cdtor]]), throughout its lifetime ( [[basic.life]]), and in its
-period of destruction ( [[class.cdtor]]).
+[[class.cdtor]]), throughout its lifetime ([[basic.life]]), and in its
+period of destruction ([[class.cdtor]]).
 
 [*Note 1*: A function is not an object, regardless of whether or not it
 occupies storage in the way that objects do. — *end note*]
 
 The properties of an object are determined when the object is created.
 An object can have a name (Clause  [[basic]]). An object has a storage
-duration ( [[basic.stc]]) which influences its lifetime (
-[[basic.life]]). An object has a type ( [[basic.types]]). Some objects
-are polymorphic ( [[class.virtual]]); the implementation generates
+duration ([[basic.stc]]) which influences its lifetime (
+[[basic.life]]). An object has a type ([[basic.types]]). Some objects
+are polymorphic ([[class.virtual]]); the implementation generates
 information associated with each such object that makes it possible to
 determine that object’s type during program execution. For other
 objects, the interpretation of the values found therein is determined by
 the type of the *expression*s (Clause  [[expr]]) used to access them.
 
 Objects can contain other objects, called *subobjects*. A subobject can
-be a *member subobject* ( [[class.mem]]), a *base class subobject*
+be a *member subobject* ([[class.mem]]), a *base class subobject*
 (Clause  [[class.derived]]), or an array element. An object that is not
 a subobject of any other object is called a *complete object*. If an
 object is created in storage associated with a member subobject or array
@@ -409,7 +409,7 @@ object is a subobject of *e*’s containing object if:
 
 [*Note 2*: If the subobject contains a reference member or a `const`
 subobject, the name of the original subobject cannot be used to access
-the new object ( [[basic.life]]). — *end note*]
+the new object ([[basic.life]]). — *end note*]
 
 [*Example 1*:
 
@@ -428,9 +428,9 @@ void tong() {
 
 — *end example*]
 
-If a complete object is created ( [[expr.new]]) in storage associated
+If a complete object is created ([[expr.new]]) in storage associated
 with another object *e* of type “array of N `unsigned char`” or of type
-“array of N `std::byte`” ( [[cstddef.syn]]), that array *provides
+“array of N `std::byte`” ([[cstddef.syn]]), that array *provides
 storage* for the created object if:
 
 - the lifetime of *e* has begun and not ended, and
@@ -439,7 +439,7 @@ storage* for the created object if:
 
 [*Note 3*: If that portion of the array previously provided storage for
 another object, the lifetime of that object ends because its storage was
-reused ( [[basic.life]]). — *end note*]
+reused ([[basic.life]]). — *end note*]
 
 [*Example 2*:
 
@@ -482,16 +482,16 @@ of* `x`, determined as follows:
 - Otherwise, the complete object of `x` is the complete object of the
   (unique) object that contains `x`.
 
-If a complete object, a data member ( [[class.mem]]), or an array
+If a complete object, a data member ([[class.mem]]), or an array
 element is of class type, its type is considered the *most derived
 class*, to distinguish it from the class type of any base class
 subobject; an object of a most derived class type or of a non-class type
 is called a *most derived object*.
 
-Unless it is a bit-field ( [[class.bit]]), a most derived object shall
+Unless it is a bit-field ([[class.bit]]), a most derived object shall
 have a nonzero size and shall occupy one or more bytes of storage. Base
 class subobjects may have zero size. An object of trivially copyable or
-standard-layout type ( [[basic.types]]) shall occupy contiguous bytes of
+standard-layout type ([[basic.types]]) shall occupy contiguous bytes of
 storage.
 
 Unless an object is a bit-field or a base class subobject of zero size,
@@ -536,7 +536,7 @@ that implementation (referred to as the “corresponding instance” below).
 Certain other aspects and operations of the abstract machine are
 described in this International Standard as unspecified (for example,
 evaluation of expressions in a *new-initializer* if the allocation
-function fails to allocate memory ( [[expr.new]])). Where possible, this
+function fails to allocate memory ([[expr.new]])). Where possible, this
 International Standard defines a set of allowable behaviors. These
 define the nondeterministic aspects of the abstract machine. An instance
 of the abstract machine can thus have more than one possible execution
@@ -659,13 +659,13 @@ The *immediate subexpressions* of an expression `e` are
 
 - the constituent expressions of `e`’s operands (Clause [[expr]]),
 - any function call that `e` implicitly invokes,
-- if `e` is a *lambda-expression* ( [[expr.prim.lambda]]), the
+- if `e` is a *lambda-expression* ([[expr.prim.lambda]]), the
   initialization of the entities captured by copy and the constituent
   expressions of the *initializer* of the *init-capture*s,
-- if `e` is a function call ( [[expr.call]]) or implicitly invokes a
+- if `e` is a function call ([[expr.call]]) or implicitly invokes a
   function, the constituent expressions of each default argument (
   [[dcl.fct.default]]) used in the call, or
-- if `e` creates an aggregate object ( [[dcl.init.aggr]]), the
+- if `e` creates an aggregate object ([[dcl.init.aggr]]), the
   constituent expressions of each default member initializer (
   [[class.mem]]) used in the initialization.
 
@@ -679,12 +679,12 @@ A *subexpression* of an expression `e` is an immediate subexpression of
 A *full-expression* is
 
 - an unevaluated operand (Clause [[expr]]),
-- a *constant-expression* ( [[expr.const]]),
+- a *constant-expression* ([[expr.const]]),
 - an *init-declarator* (Clause [[dcl.decl]]) or a *mem-initializer* (
   [[class.base.init]]), including the constituent expressions of the
   initializer,
 - an invocation of a destructor generated at the end of the lifetime of
-  an object other than a temporary object ( [[class.temporary]]), or
+  an object other than a temporary object ([[class.temporary]]), or
 - an expression that is not a subexpression of another expression and
   that is not otherwise part of a full-expression.
 
@@ -732,11 +732,11 @@ struct B {
 [*Note 5*: The evaluation of a full-expression can include the
 evaluation of subexpressions that are not lexically part of the
 full-expression. For example, subexpressions involved in evaluating
-default arguments ( [[dcl.fct.default]]) are considered to be created in
+default arguments ([[dcl.fct.default]]) are considered to be created in
 the expression that calls the function, not the expression that defines
 the default argument. — *end note*]
 
-Reading an object designated by a `volatile` glvalue ( [[basic.lval]]),
+Reading an object designated by a `volatile` glvalue ([[basic.lval]]),
 modifying an object, calling a library I/O function, or calling a
 function that does any of those operations are all *side effects*, which
 are changes in the state of the execution environment. *Evaluation* of
@@ -787,10 +787,10 @@ different evaluations. — *end note*]
 
 The value computations of the operands of an operator are sequenced
 before the value computation of the result of the operator. If a side
-effect on a memory location ( [[intro.memory]]) is unsequenced relative
+effect on a memory location ([[intro.memory]]) is unsequenced relative
 to either another side effect on the same memory location or a value
 computation using the value of any object in the same memory location,
-and they are not potentially concurrent ( [[intro.multithread]]), the
+and they are not potentially concurrent ([[intro.multithread]]), the
 behavior is undefined.
 
 [*Note 9*: The next section imposes similar, but more complex
@@ -828,7 +828,7 @@ no corresponding function call syntax appears in the translation unit.
 
 [*Example 4*: Evaluation of a *new-expression* invokes one or more
 allocation and constructor functions; see  [[expr.new]]. For another
-example, invocation of a conversion function ( [[class.conv.fct]]) can
+example, invocation of a conversion function ([[class.conv.fct]]) can
 arise in contexts in which no function call syntax
 appears. — *end example*]
 
@@ -888,7 +888,7 @@ implicitly supports a simpler view for more restricted
 programs. — *end note*]
 
 Two expression evaluations *conflict* if one of them modifies a memory
-location ( [[intro.memory]]) and the other one reads or modifies the
+location ([[intro.memory]]) and the other one reads or modifies the
 same memory location.
 
 The library defines a number of atomic operations (Clause  [[atomics]])
@@ -950,7 +950,7 @@ An evaluation *A* *carries a dependency* to an evaluation *B* if
 
 - the value of *A* is used as an operand of *B*, unless:
   - *B* is an invocation of any specialization of
-    `std::kill_dependency` ( [[atomics.order]]), or
+    `std::kill_dependency` ([[atomics.order]]), or
   - *A* is the left operand of a built-in logical AND (`&&`, see 
     [[expr.log.and]]) or logical OR (`||`, see  [[expr.log.or]])
     operator, or
@@ -1178,10 +1178,10 @@ removal of empty loops, even when termination cannot be
 proven. — *end note*]
 
 Executions of atomic functions that are either defined to be lock-free (
-[[atomics.flag]]) or indicated as lock-free ( [[atomics.lockfree]]) are
+[[atomics.flag]]) or indicated as lock-free ([[atomics.lockfree]]) are
 *lock-free executions*.
 
-- If there is only one thread that is not blocked ( [[defns.block]]) in
+- If there is only one thread that is not blocked ([[defns.block]]) in
   a standard library function, a lock-free execution in that thread
   shall complete. \[*Note 1*: Concurrently executing threads may prevent
   progress of a lock-free execution. For example, this situation can
@@ -1237,8 +1237,8 @@ fulfill this requirement means that this will happen in an unspecified
 but finite amount of time. — *end note*]
 
 It is *implementation-defined* whether the implementation-created thread
-of execution that executes `main` ( [[basic.start.main]]) and the
-threads of execution created by `std::thread` ( [[thread.thread.class]])
+of execution that executes `main` ([[basic.start.main]]) and the
+threads of execution created by `std::thread` ([[thread.thread.class]])
 provide concurrent forward progress guarantees.
 
 [*Note 4*: General-purpose implementations are encouraged to provide
@@ -1445,7 +1445,7 @@ All rights in these originals are reserved.
 
 [^5]: Under the “as-if” rule an implementation is allowed to store two
     objects at the same machine address or not store an object at all if
-    the program cannot observe the difference ( [[intro.execution]]).
+    the program cannot observe the difference ([[intro.execution]]).
 
 [^6]: This provision is sometimes called the “as-if” rule, because an
     implementation is free to disregard any requirement of this
@@ -1473,4 +1473,4 @@ All rights in these originals are reserved.
 [^11]: An object with automatic or thread storage duration (
     [[basic.stc]]) is associated with one specific thread, and can be
     accessed by a different thread only indirectly through a pointer or
-    reference ( [[basic.compound]]).
+    reference ([[basic.compound]]).

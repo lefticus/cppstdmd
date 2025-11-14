@@ -367,7 +367,7 @@ template <class T>
 ```
 
 *Effects:* The argument does not carry a dependency to the return
-value ( [[intro.multithread]]).
+value ([[intro.multithread]]).
 
 *Returns:* `y`.
 
@@ -394,7 +394,7 @@ indicates that the types are never lock-free. A value of 1 indicates
 that the types are sometimes lock-free. A value of 2 indicates that the
 types are always lock-free.
 
-The function `atomic_is_lock_free` ( [[atomics.types.operations]])
+The function `atomic_is_lock_free` ([[atomics.types.operations]])
 indicates whether the object is lock-free. In any given program
 execution, the result of the lock-free query shall be consistent for all
 pointers of the same type.
@@ -546,7 +546,7 @@ namespace std {
 ```
 
 There is a generic class template `atomic<T>`. The type of the template
-argument `T` shall be trivially copyable ( [[basic.types]]). Type
+argument `T` shall be trivially copyable ([[basic.types]]). Type
 arguments that are not also statically initializable may be difficult to
 use.
 
@@ -671,7 +671,7 @@ constexpr A::A(C desired) noexcept;
 ```
 
 *Effects:* Initializes the object with the value `desired`.
-Initialization is not an atomic operation ( [[intro.multithread]]). it
+Initialization is not an atomic operation ([[intro.multithread]]). it
 is possible to have an access to an atomic object `A` race with its
 construction, for example by communicating the address of the
 just-constructed object `A` to another thread via `memory_order_relaxed`
@@ -777,7 +777,7 @@ C A::exchange(C desired, memory_order order = memory_order_seq_cst) noexcept;
 *Effects:* Atomically replaces the value pointed to by `object` or by
 `this` with `desired`. Memory is affected according to the value of
 `order`. These operations are atomic read-modify-write
-operations ( [[intro.multithread]]).
+operations ([[intro.multithread]]).
 
 *Returns:* Atomically returns the value pointed to by `object` or by
 `this` immediately before the effects.
@@ -831,7 +831,7 @@ and the value of `failure` is `order` except that a value of
 `memory_order_acquire` and a value of `memory_order_release` shall be
 replaced by the value `memory_order_relaxed`. If the operation returns
 `true`, these operations are atomic read-modify-write
-operations ( [[intro.multithread]]). Otherwise, these operations are
+operations ([[intro.multithread]]). Otherwise, these operations are
 atomic load operations.
 
 *Returns:* The result of the comparison.
@@ -906,7 +906,7 @@ C A::fetch_key(M operand, memory_order order = memory_order_seq_cst) noexcept;
 `this` with the result of the *computation* applied to the value pointed
 to by `object` or by `this` and the given `operand`. Memory is affected
 according to the value of `order`. These operations are atomic
-read-modify-write operations ( [[intro.multithread]]).
+read-modify-write operations ([[intro.multithread]]).
 
 *Returns:* Atomically, the value pointed to by `object` or by `this`
 immediately before the effects.
@@ -1022,7 +1022,7 @@ bool atomic_flag::test_and_set(memory_order order = memory_order_seq_cst) noexce
 *Effects:* Atomically sets the value pointed to by `object` or by `this`
 to true. Memory is affected according to the value of `order`. These
 operations are atomic read-modify-write
-operations ( [[intro.multithread]]).
+operations ([[intro.multithread]]).
 
 *Returns:* Atomically, the value of the object immediately before the
 effects.

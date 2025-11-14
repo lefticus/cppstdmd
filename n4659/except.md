@@ -36,7 +36,7 @@ exception-declaration:
 ```
 
 The optional *attribute-specifier-seq* in an *exception-declaration*
-appertains to the parameter of the catch clause ( [[except.handle]]).
+appertains to the parameter of the catch clause ([[except.handle]]).
 
 A *try-block* is a *statement* (Clause  [[stmt.stmt]]).
 
@@ -122,16 +122,16 @@ try : i(f(ii)), d(id) {
 — *end example*]
 
 In this section, “before” and “after” refer to the “sequenced before”
-relation ( [[intro.execution]]).
+relation ([[intro.execution]]).
 
 ## Throwing an exception <a id="except.throw">[[except.throw]]</a>
 
 Throwing an exception transfers control to a handler.
 
 [*Note 1*: An exception can be thrown from one of the following
-contexts: *throw-expression*s ( [[expr.throw]]), allocation functions (
+contexts: *throw-expression*s ([[expr.throw]]), allocation functions (
 [[basic.stc.dynamic.allocation]]), `dynamic_cast` (
-[[expr.dynamic.cast]]), `typeid` ( [[expr.typeid]]), *new-expression*s (
+[[expr.dynamic.cast]]), `typeid` ([[expr.typeid]]), *new-expression*s (
 [[expr.new]]), and standard library functions (
 [[structure.specifications]]). — *end note*]
 
@@ -180,15 +180,15 @@ try {
 — *end example*]
 
 When an exception is thrown, control is transferred to the nearest
-handler with a matching type ( [[except.handle]]); “nearest” means the
+handler with a matching type ([[except.handle]]); “nearest” means the
 handler for which the *compound-statement* or *ctor-initializer*
 following the `try` keyword was most recently entered by the thread of
 control and not yet exited.
 
-Throwing an exception copy-initializes ( [[dcl.init]], [[class.copy]]) a
+Throwing an exception copy-initializes ([[dcl.init]], [[class.copy]]) a
 temporary object, called the *exception object*. An lvalue denoting the
 temporary is used to initialize the variable declared in the matching
-*handler* ( [[except.handle]]). If the type of the exception object
+*handler* ([[except.handle]]). If the type of the exception object
 would be an incomplete type or a pointer to an incomplete type other
 than cv `void` the program is ill-formed.
 
@@ -201,7 +201,7 @@ object are:
 - when an active handler for the exception exits by any means other than
   rethrowing, immediately after the destruction of the object (if any)
   declared in the *exception-declaration* in the handler;
-- when an object of type `std::exception_ptr` ( [[propagation]]) that
+- when an object of type `std::exception_ptr` ([[propagation]]) that
   refers to the exception object is destroyed, before the destructor of
   `std::exception_ptr` returns.
 
@@ -228,14 +228,14 @@ non-deleted and accessible, even if the copy/move operation is elided (
 [[class.dtor]]).
 
 An exception is considered caught when a handler for that exception
-becomes active ( [[except.handle]]).
+becomes active ([[except.handle]]).
 
 [*Note 4*: An exception can have active handlers and still be
 considered uncaught if it is rethrown. — *end note*]
 
 If the exception handling mechanism handling an uncaught exception (
 [[except.uncaught]]) directly invokes a function that exits via an
-exception, `std::terminate` is called ( [[except.terminate]]).
+exception, `std::terminate` is called ([[except.terminate]]).
 
 [*Example 2*:
 
@@ -271,7 +271,7 @@ section, called *stack unwinding*.
 The destructor is invoked for each automatic object of class type
 constructed, but not yet destroyed, since the try block was entered. If
 an exception is thrown during the destruction of temporaries or local
-variables for a `return` statement ( [[stmt.return]]), the destructor
+variables for a `return` statement ([[stmt.return]]), the destructor
 for the returned object (if any) is also invoked. The objects are
 destroyed in the reverse order of the completion of their construction.
 
@@ -295,7 +295,7 @@ A f() {
 ```
 
 At \#1, the returned object of type `A` is constructed. Then, the local
-variable `b` is destroyed ( [[stmt.jump]]). Next, the local variable `y`
+variable `b` is destroyed ([[stmt.jump]]). Next, the local variable `y`
 is destroyed, causing stack unwinding, resulting in the destruction of
 the returned object, followed by the destruction of the local variable
 `a`. Finally, the returned object is constructed again at \#2.
@@ -306,7 +306,7 @@ If the initialization or destruction of an object other than by
 delegating constructor is terminated by an exception, the destructor is
 invoked for each of the object’s direct subobjects and, for a complete
 object, virtual base class subobjects, whose initialization has
-completed ( [[dcl.init]]) and whose destructor has not yet begun
+completed ([[dcl.init]]) and whose destructor has not yet begun
 execution, except that in the case of destruction, the variant members
 of a union-like class are not destroyed. The subobjects are destroyed in
 the reverse order of the completion of their construction. Such
@@ -346,17 +346,17 @@ A *handler* is a match for an exception object of type `E` if
 - the *handler* is of type cv `T` or `const T&` where `T` is a pointer
   or pointer to member type and `E` is a pointer or pointer to member
   type that can be converted to `T` by one or more of
-  - a standard pointer conversion ( [[conv.ptr]]) not involving
+  - a standard pointer conversion ([[conv.ptr]]) not involving
     conversions to pointers to private or protected or ambiguous classes
-  - a function pointer conversion ( [[conv.fctptr]])
-  - a qualification conversion ( [[conv.qual]]), or
+  - a function pointer conversion ([[conv.fctptr]])
+  - a qualification conversion ([[conv.qual]]), or
 - the *handler* is of type cv `T` or `const T&` where `T` is a pointer
   or pointer to member type and `E` is `std::nullptr_t`.
 
 [*Note 1*: A *throw-expression* whose operand is an integer literal
 with value zero does not match a handler of pointer or pointer to member
 type. A handler of reference to array or function type is never a match
-for any exception object ( [[expr.throw]]). — *end note*]
+for any exception object ([[expr.throw]]). — *end note*]
 
 [*Example 1*:
 
@@ -415,7 +415,7 @@ active is called the *currently handled exception*.
 
 If no matching handler is found, the function `std::terminate()` is
 called; whether or not the stack is unwound before this call to
-`std::terminate()` is *implementation-defined* ( [[except.terminate]]).
+`std::terminate()` is *implementation-defined* ([[except.terminate]]).
 
 Referring to any non-static member or base class of an object in the
 handler for a *function-try-block* of a constructor or destructor for
@@ -427,7 +427,7 @@ extend into the handlers of a *function-try-block*.
 Exceptions thrown in destructors of objects with static storage duration
 or in constructors of namespace-scope objects with static storage
 duration are not caught by a *function-try-block* on the `main`
-function ( [[basic.start.main]]). Exceptions thrown in destructors of
+function ([[basic.start.main]]). Exceptions thrown in destructors of
 objects with thread storage duration or in constructors of
 namespace-scope objects with thread storage duration are not caught by a
 *function-try-block* on the initial function of the thread.
@@ -448,7 +448,7 @@ follows:
 - if `T` is a base class of `E`, the variable is copy-initialized (
   [[dcl.init]]) from the corresponding base class subobject of the
   exception object;
-- otherwise, the variable is copy-initialized ( [[dcl.init]]) from the
+- otherwise, the variable is copy-initialized ([[dcl.init]]) from the
   exception object.
 
 The lifetime of the variable ends when the handler exits, after the
@@ -483,10 +483,10 @@ be a contextually converted constant expression of type `bool` (
 [[expr.const]]); that constant expression is the exception specification
 of the function type in which the *noexcept-specifier* appears. A `(`
 token that follows `noexcept` is part of the *noexcept-specifier* and
-does not commence an initializer ( [[dcl.init]]). The
+does not commence an initializer ([[dcl.init]]). The
 *noexcept-specifier* `noexcept` without a *constant-expression* is
 equivalent to the *noexcept-specifier* `noexcept(true)`. The
-*noexcept-specifier* `throw()` is deprecated ( [[depr.except.spec]]),
+*noexcept-specifier* `throw()` is deprecated ([[depr.except.spec]]),
 and equivalent to the *noexcept-specifier* `noexcept(true)`.
 
 If a declaration of a function does not have a *noexcept-specifier*, the
@@ -494,7 +494,7 @@ declaration has a potentially throwing exception specification unless it
 is a destructor or a deallocation function or is defaulted on its first
 declaration, in which cases the exception specfication is as specified
 below and no other declaration for that function shall have a
-*noexcept-specifier*. In an explicit instantiation ( [[temp.explicit]])
+*noexcept-specifier*. In an explicit instantiation ([[temp.explicit]])
 a *noexcept-specifier* may be specified, but is not required. If a
 *noexcept-specifier* is specified in an explicit instantiation
 directive, the exception specification shall be the same as the
@@ -533,7 +533,7 @@ non-throwing exception specification.
 Whenever an exception is thrown and the search for a handler (
 [[except.handle]]) encounters the outermost block of a function with a
 non-throwing exception specification, the function `std::terminate()` is
-called ( [[except.terminate]]).
+called ([[except.terminate]]).
 
 [*Note 1*: An implementation shall not reject an expression merely
 because, when executed, it throws or might throw an exception from a
@@ -557,20 +557,20 @@ an exception.
 
 An expression `e` is *potentially-throwing* if
 
-- `e` is a function call ( [[expr.call]]) whose *postfix-expression* has
+- `e` is a function call ([[expr.call]]) whose *postfix-expression* has
   a function type, or a pointer-to-function type, with a
   potentially-throwing exception specification, or
 - `e` implicitly invokes a function (such as an overloaded operator, an
   allocation function in a *new-expression*, a constructor for a
   function argument, or a destructor if `e` is a full-expression (
   [[intro.execution]])) that is potentially-throwing, or
-- `e` is a *throw-expression* ( [[expr.throw]]), or
+- `e` is a *throw-expression* ([[expr.throw]]), or
 - `e` is a `dynamic_cast` expression that casts to a reference type and
-  requires a runtime check ( [[expr.dynamic.cast]]), or
+  requires a runtime check ([[expr.dynamic.cast]]), or
 - `e` is a `typeid` expression applied to a (possibly parenthesized)
   built-in unary `*` operator applied to a pointer to a polymorphic
-  class type ( [[expr.typeid]]), or
-- any of the immediate subexpressions ( [[intro.execution]]) of `e` is
+  class type ([[expr.typeid]]), or
+- any of the immediate subexpressions ([[intro.execution]]) of `e` is
   potentially-throwing.
 
 An implicitly-declared constructor for a class `X`, or a constructor
@@ -587,10 +587,10 @@ only if any of the following constructs is potentially-throwing:
 
 [*Note 2*: Even though destructors for fully-constructed subobjects are
 invoked when an exception is thrown during the execution of a
-constructor ( [[except.ctor]]), their exception specifications do not
+constructor ([[except.ctor]]), their exception specifications do not
 contribute to the exception specification of the constructor, because an
 exception thrown from such a destructor would call `std::terminate`
-rather than escape the constructor ( [[except.throw]],
+rather than escape the constructor ([[except.throw]],
 [[except.terminate]]). — *end note*]
 
 The exception specification for an implicitly-declared destructor, or a
@@ -604,7 +604,7 @@ is defaulted on its first declaration, is potentially-throwing if and
 only if the invocation of any assignment operator in the implicit
 definition is potentially-throwing.
 
-A deallocation function ( [[basic.stc.dynamic.deallocation]]) with no
+A deallocation function ([[basic.stc.dynamic.deallocation]]) with no
 explicit *noexcept-specifier* has a non-throwing exception
 specification.
 
@@ -643,9 +643,9 @@ base class function has a non-throwing exception specification.
 An exception specification is considered to be *needed* when:
 
 - in an expression, the function is the unique lookup result or the
-  selected member of a set of overloaded functions ( [[basic.lookup]],
+  selected member of a set of overloaded functions ([[basic.lookup]],
   [[over.match]], [[over.over]]);
-- the function is odr-used ( [[basic.def.odr]]) or, if it appears in an
+- the function is odr-used ([[basic.def.odr]]) or, if it appears in an
   unevaluated operand, would be odr-used if the expression were
   potentially-evaluated;
 - the exception specification is compared to that of another declaration
@@ -666,11 +666,11 @@ member function of a class template is instantiated only when needed.
 
 ## Special functions <a id="except.special">[[except.special]]</a>
 
-The function `std::terminate()` ( [[except.terminate]]) is used by the
+The function `std::terminate()` ([[except.terminate]]) is used by the
 exception handling mechanism for coping with errors related to the
 exception handling mechanism itself. The function
-`std::current_exception()` ( [[propagation]]) and the class
-`std::nested_exception` ( [[except.nested]]) can be used by a program to
+`std::current_exception()` ([[propagation]]) and the class
+`std::nested_exception` ([[except.nested]]) can be used by a program to
 capture the currently handled exception.
 
 ### The `std::terminate()` function <a id="except.terminate">[[except.terminate]]</a>
@@ -684,49 +684,49 @@ These situations are:
 
 - when the exception handling mechanism, after completing the
   initialization of the exception object but before activation of a
-  handler for the exception ( [[except.throw]]), calls a function that
+  handler for the exception ([[except.throw]]), calls a function that
   exits via an exception, or
 - when the exception handling mechanism cannot find a handler for a
-  thrown exception ( [[except.handle]]), or
-- when the search for a handler ( [[except.handle]]) encounters the
+  thrown exception ([[except.handle]]), or
+- when the search for a handler ([[except.handle]]) encounters the
   outermost block of a function with a non-throwing exception
-  specification ( [[except.spec]]), or
+  specification ([[except.spec]]), or
 - when the destruction of an object during stack unwinding (
   [[except.ctor]]) terminates by throwing an exception, or
 - when initialization of a non-local variable with static or thread
-  storage duration ( [[basic.start.dynamic]]) exits via an exception, or
+  storage duration ([[basic.start.dynamic]]) exits via an exception, or
 - when destruction of an object with static or thread storage duration
-  exits via an exception ( [[basic.start.term]]), or
+  exits via an exception ([[basic.start.term]]), or
 - when execution of a function registered with `std::atexit` or
-  `std::at_quick_exit` exits via an exception ( [[support.start.term]]),
+  `std::at_quick_exit` exits via an exception ([[support.start.term]]),
   or
-- when a *throw-expression* ( [[expr.throw]]) with no operand attempts
+- when a *throw-expression* ([[expr.throw]]) with no operand attempts
   to rethrow an exception and no exception is being handled (
   [[except.throw]]), or
 - when the function `std::nested_exception::rethrow_nested` is called
-  for an object that has captured no exception ( [[except.nested]]), or
+  for an object that has captured no exception ([[except.nested]]), or
 - when execution of the initial function of a thread exits via an
-  exception ( [[thread.thread.constr]]), or
+  exception ([[thread.thread.constr]]), or
 - for a parallel algorithm whose `ExecutionPolicy` specifies such
-  behavior ( [[execpol.seq]], [[execpol.par]], [[execpol.parunseq]]),
+  behavior ([[execpol.seq]], [[execpol.par]], [[execpol.parunseq]]),
   when execution of an element access function (
   [[algorithms.parallel.defns]]) of the parallel algorithm exits via an
-  exception ( [[algorithms.parallel.exceptions]]), or
+  exception ([[algorithms.parallel.exceptions]]), or
 - when the destructor or the copy assignment operator is invoked on an
   object of type `std::thread` that refers to a joinable thread (
   [[thread.thread.destr]],  [[thread.thread.assign]]), or
 - when a call to a `wait()`, `wait_until()`, or `wait_for()` function on
-  a condition variable ( [[thread.condition.condvar]], 
+  a condition variable ([[thread.condition.condvar]], 
   [[thread.condition.condvarany]]) fails to meet a postcondition.
 
 — *end note*]
 
-In such cases, `std::terminate()` is called ( [[exception.terminate]]).
+In such cases, `std::terminate()` is called ([[exception.terminate]]).
 In the situation where no matching handler is found, it is
 *implementation-defined* whether or not the stack is unwound before
 `std::terminate()` is called. In the situation where the search for a
-handler ( [[except.handle]]) encounters the outermost block of a
-function with a non-throwing exception specification ( [[except.spec]]),
+handler ([[except.handle]]) encounters the outermost block of a
+function with a non-throwing exception specification ([[except.spec]]),
 it is *implementation-defined* whether the stack is unwound, unwound
 partially, or not unwound at all before `std::terminate()` is called. In
 all other situations, the stack shall not be unwound before
@@ -737,12 +737,12 @@ unwind process will eventually cause a call to `std::terminate()`.
 ### The `std::uncaught_exceptions()` function <a id="except.uncaught">[[except.uncaught]]</a>
 
 An exception is considered uncaught after completing the initialization
-of the exception object ( [[except.throw]]) until completing the
-activation of a handler for the exception ( [[except.handle]]). This
-includes stack unwinding. If an exception is rethrown ( [[expr.throw]],
+of the exception object ([[except.throw]]) until completing the
+activation of a handler for the exception ([[except.handle]]). This
+includes stack unwinding. If an exception is rethrown ([[expr.throw]],
 [[propagation]]), it is considered uncaught from the point of rethrow
 until the rethrown exception is caught. The function
-`std::uncaught_exceptions()` ( [[uncaught.exceptions]]) returns the
+`std::uncaught_exceptions()` ([[uncaught.exceptions]]) returns the
 number of uncaught exceptions in the current thread.
 
 <!-- Section link definitions -->

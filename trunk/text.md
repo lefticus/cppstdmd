@@ -5029,11 +5029,11 @@ in `fmt`. If present, `loc` is used for locale-specific formatting.
 
 A type `F` meets the requirements if it meets the
 
-- *Cpp17DefaultConstructible* ( [[cpp17.defaultconstructible]]),
-- *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]),
-- *Cpp17CopyAssignable* ( [[cpp17.copyassignable]]),
+- *Cpp17DefaultConstructible* ([[cpp17.defaultconstructible]]),
+- *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]),
+- *Cpp17CopyAssignable* ([[cpp17.copyassignable]]),
 - *Cpp17Swappable* [[swappable.requirements]], and
-- *Cpp17Destructible* ( [[cpp17.destructible]])
+- *Cpp17Destructible* ([[cpp17.destructible]])
 
 requirements, and the expressions shown in [[formatter.basic]] are valid
 and have the indicated semantics.
@@ -5233,7 +5233,7 @@ suitable for debugging or for logging.
 
 The escaped string *E* representation of a string *S* is constructed by
 encoding a sequence of characters as follows. The associated character
-encoding *CE* for `charT` ( [[lex.string.literal]]) is used to both
+encoding *CE* for `charT` ([[lex.string.literal]]) is used to both
 interpret *S* and construct *E*.
 
 - U+0022 (quotation mark) (`"`) is appended to *E*.

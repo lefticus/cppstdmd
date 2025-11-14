@@ -90,7 +90,7 @@ In Table  [[tab:re:RegexpTraits]] `X` denotes a traits class defining
 types and functions for the character container type `charT`; `u` is an
 object of type `X`; `v` is an object of type `const 
 X`; `p` is a value of type `const charT*`; `I1` and `I2` are input
-iterators ( [[input.iterators]]); `F1` and `F2` are forward iterators (
+iterators ([[input.iterators]]); `F1` and `F2` are forward iterators (
 [[forward.iterators]]); `c` is a value of type `const charT`; `s` is an
 object of type `X::string_type`; `cs` is an object of type
 `const X::string_type`; `b` is a value of type `bool`; `I` is a value of
@@ -513,7 +513,7 @@ namespace std {
 ```
 
 The type `syntax_option_type` is an implementation-defined bitmask
-type ( [[bitmask.types]]). Setting its elements has the effects listed
+type ([[bitmask.types]]). Setting its elements has the effects listed
 in table  [[tab:re:syntaxoption]]. A valid value of type
 `syntax_option_type` shall have at most one of the grammar elements
 `ECMAScript`, `basic`, `extended`, `awk`, `grep`, `egrep`, set. If no
@@ -559,7 +559,7 @@ namespace std {
 ```
 
 The type `regex_constants::match_flag_type` is an implementation-defined
-bitmask type ( [[bitmask.types]]). The constants of that type, except
+bitmask type ([[bitmask.types]]). The constants of that type, except
 for `match_default` and `format_default`, are bitmask elements. The
 `match_default` and `format_default` constants are empty bitmasks.
 Matching a regular expression against a sequence of characters
@@ -697,7 +697,7 @@ namespace std {
 
 The specializations `regex_traits<char>` and `regex_traits<wchar_t>`
 shall be valid and shall satisfy the requirements for a regular
-expression traits class ( [[re.req]]).
+expression traits class ([[re.req]]).
 
 ``` cpp
 typedef bitmask_type                 char_class_type;
@@ -1218,7 +1218,7 @@ template <class InputIterator>
 ```
 
 *Requires:* The type `InputIterator` shall satisfy the requirements for
-an Input Iterator ( [[input.iterators]]).
+an Input Iterator ([[input.iterators]]).
 
 *Returns:* `assign(string_type(first, last), f)`.
 
@@ -2010,7 +2010,7 @@ template <class OutputIter>
 ```
 
 *Requires:*  ready() == true and `OutputIter` shall satisfy the
-requirements for an Output Iterator ( [[output.iterators]]).
+requirements for an Output Iterator ([[output.iterators]]).
 
 *Effects:* Copies the character sequence \[`fmt_first`, `fmt_last`) to
 OutputIter `out`. Replaces each format specifier or escape sequence in
@@ -2142,7 +2142,7 @@ template <class BidirectionalIterator, class Allocator, class charT, class trait
 
 *Requires:* The type `BidirectionalIterator` shall satisfy the
 requirements of a Bidirectional Iterator
- ( [[bidirectional.iterators]]).
+ ([[bidirectional.iterators]]).
 
 *Effects:* Determines whether there is a match between the regular
 expression `e`, and all of the character sequence \[`first`, `last`).
@@ -2244,7 +2244,7 @@ template <class BidirectionalIterator, class Allocator, class charT, class trait
 ```
 
 *Requires:* Type `BidirectionalIterator` shall satisfy the requirements
-of a Bidirectional Iterator ( [[bidirectional.iterators]]).
+of a Bidirectional Iterator ([[bidirectional.iterators]]).
 
 *Effects:* Determines whether there is some sub-sequence within
 \[`first`, `last`) that matches the regular expression `e`. The

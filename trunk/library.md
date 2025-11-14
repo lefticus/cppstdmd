@@ -201,7 +201,7 @@ The library specification uses a typographical convention for naming
 requirements. Names in *italic* type that begin with the prefix *Cpp17*
 refer to sets of well-defined expression requirements typically
 presented in tabular form, possibly with additional prose semantic
-requirements. For example, *Cpp17Destructible* ( [[cpp17.destructible]])
+requirements. For example, *Cpp17Destructible* ([[cpp17.destructible]])
 is such a named requirement. Names in `constant width` type refer to
 library concepts which are presented as a concept definition [[temp]],
 possibly with additional prose semantic requirements. For example,
@@ -927,9 +927,9 @@ header. These names are also subject to the restrictions of 
 The C++ standard library provides the following *C++ library modules*.
 
 The named module `std` exports declarations in namespace `std` that are
-provided by the importable C++ library headers ( [[headers.cpp]] or the
+provided by the importable C++ library headers ([[headers.cpp]] or the
 subset provided by a freestanding implementation) and the C++ headers
-for C library facilities ( [[headers.cpp.c]]). It additionally exports
+for C library facilities ([[headers.cpp.c]]). It additionally exports
 declarations in the global namespace for the storage allocation and
 deallocation functions that are provided by `<new>`.
 
@@ -938,7 +938,7 @@ module `std`, and additionally exports
 
 - declarations in the global namespace corresponding to the declarations
   in namespace `std` that are provided by the C++ headers for C library
-  facilities ( [[headers.cpp.c]]), except the explicitly excluded
+  facilities ([[headers.cpp.c]]), except the explicitly excluded
   declarations described in [[support.c.headers.other]] and
 - declarations provided by the headers `<stdbit.h>` and `<stdckdint.h>`.
 
@@ -1337,8 +1337,8 @@ non-`const` lvalue of type `P`, `a` and `b` denote values of type
 A type `H` meets the requirements if
 
 - it is a function object type [[function.objects]],
-- it meets the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]])
-  and *Cpp17Destructible* ( [[cpp17.destructible]]) requirements, and
+- it meets the *Cpp17CopyConstructible* ([[cpp17.copyconstructible]])
+  and *Cpp17Destructible* ([[cpp17.destructible]]) requirements, and
 - the expressions shown in [[cpp17.hash]] are valid and have the
   indicated semantics.
 
@@ -1733,7 +1733,7 @@ typename X::propagate_on_container_copy_assignment
 
 *Returns:* `true_type` only if an allocator of type `X` should be copied
 when the client container is copy-assigned; if so, `X` shall meet the
-*Cpp17CopyAssignable* requirements ( [[cpp17.copyassignable]]) and the
+*Cpp17CopyAssignable* requirements ([[cpp17.copyassignable]]) and the
 copy operation shall not throw exceptions.
 
 *Remarks:* Default: `false_type`
@@ -1746,7 +1746,7 @@ typename X::propagate_on_container_move_assignment
 
 *Returns:* `true_type` only if an allocator of type `X` should be moved
 when the client container is move-assigned; if so, `X` shall meet the
-*Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]) and the
+*Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]) and the
 move operation shall not throw exceptions.
 
 *Remarks:* Default: `false_type`
@@ -1776,7 +1776,7 @@ to be `true` for any two (possibly const) values `a1`, `a2` of type `X`.
 *Remarks:* Default: `is_empty<X>::type`
 
 An allocator type `X` shall meet the *Cpp17CopyConstructible*
-requirements ( [[cpp17.copyconstructible]]). The `XX::pointer`,
+requirements ([[cpp17.copyconstructible]]). The `XX::pointer`,
 `XX::const_pointer`, `XX::void_pointer`, and `XX::const_void_pointer`
 types shall meet the *Cpp17NullablePointer* requirements (
 [[cpp17.nullablepointer]]). No constructor, comparison operator

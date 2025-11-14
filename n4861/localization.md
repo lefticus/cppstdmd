@@ -546,7 +546,7 @@ use_facet<collate<charT>>(*this).compare(s1.data(), s1.data() + s1.size(),
 [*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
-locale `loc` simply by ( [[alg.sort]], [[vector]]):
+locale `loc` simply by ([[alg.sort]], [[vector]]):
 
 ``` cpp
 std::sort(v.begin(), v.end(), loc);
@@ -1450,7 +1450,7 @@ also for the `ctype<>` facet to perform character classification.
 
 Extractor and inserter members of the standard iostreams use `num_get<>`
 and `num_put<>` member functions for formatting and parsing numeric
-values ( [[istream.formatted.reqmts]], [[ostream.formatted.reqmts]]).
+values ([[istream.formatted.reqmts]], [[ostream.formatted.reqmts]]).
 
 #### Class template `num_get` <a id="locale.num.get">[[locale.num.get]]</a>
 

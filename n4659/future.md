@@ -5,7 +5,7 @@ These are deprecated features, where *deprecated* is defined as:
 Normative for the current edition of this International Standard, but
 having been identified as a candidate for removal from future revisions.
 An implementation may declare library names and entities described in
-this section with the `deprecated` attribute ( [[dcl.attr.deprecated]]).
+this section with the `deprecated` attribute ([[dcl.attr.deprecated]]).
 
 ## Redeclaration of `static constexpr` data members <a id="depr.static_constexpr">[[depr.static_constexpr]]</a>
 
@@ -31,9 +31,9 @@ The implicit definition of a copy constructor as defaulted is deprecated
 if the class has a user-declared copy assignment operator or a
 user-declared destructor. The implicit definition of a copy assignment
 operator as defaulted is deprecated if the class has a user-declared
-copy constructor or a user-declared destructor ( [[class.dtor]], 
+copy constructor or a user-declared destructor ([[class.dtor]], 
 [[class.copy]]). In a future revision of this International Standard,
-these implicit definitions could become deleted ( [[dcl.fct.def]]).
+these implicit definitions could become deleted ([[dcl.fct.def]]).
 
 ## Deprecated exception specifications <a id="depr.except.spec">[[depr.except.spec]]</a>
 
@@ -42,9 +42,9 @@ The *noexcept-specifier* `throw()` is deprecated.
 ## C++standard library headers <a id="depr.cpp.headers">[[depr.cpp.headers]]</a>
 
 For compatibility with prior C++International Standards, the C++standard
-library provides headers `<ccomplex>` ( [[depr.ccomplex.syn]]),
-`<cstdalign>` ( [[depr.cstdalign.syn]]), `<cstdbool>` (
-[[depr.cstdbool.syn]]), and `<ctgmath>` ( [[depr.ctgmath.syn]]). The use
+library provides headers `<ccomplex>` ([[depr.ccomplex.syn]]),
+`<cstdalign>` ([[depr.cstdalign.syn]]), `<cstdbool>` (
+[[depr.cstdbool.syn]]), and `<ctgmath>` ([[depr.ctgmath.syn]]). The use
 of these headers is deprecated.
 
 ### Header `<ccomplex>` synopsis <a id="depr.ccomplex.syn">[[depr.ccomplex.syn]]</a>
@@ -54,7 +54,7 @@ of these headers is deprecated.
 ```
 
 The header `<ccomplex>` behaves as if it simply includes the header
-`<complex>` ( [[complex.syn]]).
+`<complex>` ([[complex.syn]]).
 
 ### Header `<cstdalign>` synopsis <a id="depr.cstdalign.syn">[[depr.cstdalign.syn]]</a>
 
@@ -90,7 +90,7 @@ ISO C 7.18.
 ```
 
 The header `<ctgmath>` simply includes the headers `<complex>` (
-[[complex.syn]]) and `<cmath>` ( [[cmath.syn]]).
+[[complex.syn]]) and `<cmath>` ([[cmath.syn]]).
 
 [*Note 1*: The overloads provided in C by type-generic macros are
 already provided in `<complex>` and `<cmath>` by “sufficient” additional
@@ -121,12 +121,12 @@ Every other C header, each of which has a name of the form `name.h`,
 behaves as if each name placed in the standard library namespace by the
 corresponding `cname` header is placed within the global namespace
 scope, except for the functions described in [[sf.cmath]], the
-declaration of `std::byte` ( [[cstddef.syn]]), and the functions and
+declaration of `std::byte` ([[cstddef.syn]]), and the functions and
 function templates described in [[support.types.byteops]]. It is
 unspecified whether these names are first declared or defined within
-namespace scope ( [[basic.scope.namespace]]) of the namespace `std` and
+namespace scope ([[basic.scope.namespace]]) of the namespace `std` and
 are then injected into the global namespace scope by explicit
-*using-declaration*s ( [[namespace.udecl]]).
+*using-declaration*s ([[namespace.udecl]]).
 
 [*Example 1*: The header `<cstdlib>` assuredly provides its
 declarations and definitions within the namespace `std`. It may also
@@ -326,7 +326,7 @@ virtual ~strstreambuf();
 *Effects:* Destroys an object of class `strstreambuf`. The function
 frees the dynamically allocated array object only if
 `(strmode & allocated) != 0` and
-`(strmode & frozen) == 0`. ( [[depr.strstreambuf.virtuals]] describes
+`(strmode & frozen) == 0`. ([[depr.strstreambuf.virtuals]] describes
 how a dynamically allocated array object is freed.)
 
 #### Member functions <a id="depr.strstreambuf.members">[[depr.strstreambuf.members]]</a>
@@ -777,7 +777,7 @@ bool uncaught_exception() noexcept;
 
 ### Weak result types <a id="depr.weak.result_type">[[depr.weak.result_type]]</a>
 
-A call wrapper ( [[func.def]]) may have a *weak result type*. If it
+A call wrapper ([[func.def]]) may have a *weak result type*. If it
 does, the type of its member type `result_type` is based on the type `T`
 of the wrapper’s target object:
 
@@ -786,7 +786,7 @@ of the wrapper’s target object:
 - if `T` is a pointer to member function, `result_type` shall be a
   synonym for the return type of `T`;
 - if `T` is a class type and the *qualified-id* `T::result_type` is
-  valid and denotes a type ( [[temp.deduct]]), then `result_type` shall
+  valid and denotes a type ([[temp.deduct]]), then `result_type` shall
   be a synonym for `T::result_type`;
 - otherwise `result_type` shall not be defined.
 
@@ -963,7 +963,7 @@ any of the following:
 - a pointer to member function `R T0::f()` cv (where cv represents the
   member function’s cv-qualifiers); the type `T1` is cv `T0*`
 - a class type where the *qualified-id* `T::argument_type` is valid and
-  denotes a type ( [[temp.deduct]]); the type `T1` is
+  denotes a type ([[temp.deduct]]); the type `T1` is
   `T::argument_type`.
 
 The template instantiation `reference_wrapper<T>` shall define two
@@ -980,16 +980,16 @@ the following:
   [[temp.deduct]]); the type `T1` is `T::first_argument_type` and the
   type `T2` is `T::second_argument_type`.
 
-All enabled specializations `hash<Key>` of `hash` ( [[unord.hash]])
+All enabled specializations `hash<Key>` of `hash` ([[unord.hash]])
 provide two nested types, `result_type` and `argument_type`, which shall
 be synonyms for `size_t` and `Key`, respectively.
 
 The forwarding call wrapper `g` returned by a call to
-`bind(f, bound_args...)` ( [[func.bind.bind]]) shall have a weak result
-type ( [[depr.weak.result_type]]).
+`bind(f, bound_args...)` ([[func.bind.bind]]) shall have a weak result
+type ([[depr.weak.result_type]]).
 
 The forwarding call wrapper `g` returned by a call to
-`bind<R>(f, bound_args...)` ( [[func.bind.bind]]) shall have a nested
+`bind<R>(f, bound_args...)` ([[func.bind.bind]]) shall have a nested
 type `result_type` defined as a synonym for `R`.
 
 The simple call wrapper returned from a call to `mem_fn(pm)` shall have
@@ -1048,7 +1048,7 @@ namespace std {
 ```
 
 Negators `not1` and `not2` take a unary and a binary predicate,
-respectively, and return their logical negations ( [[expr.unary.op]]).
+respectively, and return their logical negations ([[expr.unary.op]]).
 
 ``` cpp
 template <class Predicate>
@@ -1159,10 +1159,10 @@ T* allocate(size_t n, const void* hint);
 *Returns:* A pointer to the initial element of an array of storage of
 size `n` `* sizeof(T)`, aligned appropriately for objects of type `T`.
 It is *implementation-defined* whether over-aligned types are
-supported ( [[basic.align]]).
+supported ([[basic.align]]).
 
 *Remarks:* The storage is obtained by calling
-`::operator new(std::size_t)` ( [[new.delete]]), but it is unspecified
+`::operator new(std::size_t)` ([[new.delete]]), but it is unspecified
 when or how often this function is called.
 
 *Throws:* `bad_alloc` if the storage cannot be obtained.
@@ -1299,7 +1299,7 @@ template <class T>
 *Effects:* Obtains a pointer to uninitialized, contiguous storage for N
 adjacent objects of type `T`, for some non-negative number N. It is
 *implementation-defined* whether over-aligned types are
-supported ( [[basic.align]]).
+supported ([[basic.align]]).
 
 *Remarks:* Calling `get_temporary_buffer` with a positive number `n` is
 a non-binding request to return storage for `n` objects of type `T`. In
@@ -1351,7 +1351,7 @@ complete type or cv `void`. For `result_of<Fn(ArgTypes...)>`, `Fn` and
 all types in the parameter pack `ArgTypes` shall be complete types,
 cv `void`, or arrays of unknown bound.
 
-`is_literal_type<T>` is a `UnaryTypeTrait` ( [[meta.rqmts]]) with a base
+`is_literal_type<T>` is a `UnaryTypeTrait` ([[meta.rqmts]]) with a base
 characteristic of `true_type` if `T` is a literal type (
 [[basic.types]]), and `false_type` otherwise. The partial specialization
 `result_of<Fn(ArgTypes...)>` is a `TransformationTrait` whose member

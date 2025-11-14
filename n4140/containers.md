@@ -138,7 +138,7 @@ iterator with value `a.end()` before the swap will have value `b.end()`
 after the swap.
 
 If the iterator type of a container belongs to the bidirectional or
-random access iterator categories ( [[iterator.requirements]]), the
+random access iterator categories ([[iterator.requirements]]), the
 container is called *reversible* and satisfies the additional
 requirements in Table  [[tab:containers.reversible.requirements]].
 
@@ -177,7 +177,7 @@ unless otherwise stated.
 Note: the algorithm `lexicographical_compare()` is defined in Clause 
 [[algorithms]].
 
-All of the containers defined in this Clause and in ( [[basic.string]])
+All of the containers defined in this Clause and in ([[basic.string]])
 except `array` meet the additional requirements of an allocator-aware
 container, as described in Table  [[tab:containers.allocatoraware]].
 
@@ -249,13 +249,13 @@ value of type `A`.
 
 ### Container data races <a id="container.requirements.dataraces">[[container.requirements.dataraces]]</a>
 
-For purposes of avoiding data races ( [[res.on.data.races]]),
+For purposes of avoiding data races ([[res.on.data.races]]),
 implementations shall consider the following functions to be `const`:
 `begin`, `end`, `rbegin`, `rend`, `front`, `back`, `data`, `find`,
 `lower_bound`, `upper_bound`, `equal_range`, `at` and, except in
 associative or unordered associative containers, `operator[]`.
 
-Notwithstanding ( [[res.on.data.races]]), implementations are required
+Notwithstanding ([[res.on.data.races]]), implementations are required
 to avoid data races when the contents of the contained object in
 different elements in the same container, excepting `vector<bool>`, are
 modified concurrently.
@@ -417,7 +417,7 @@ violating the One Definition Rule by always using `const_iterator` in
 their function parameter lists.
 
 The associative containers meet all the requirements of Allocator-aware
-containers ( [[container.requirements.general]]), except that for `map`
+containers ([[container.requirements.general]]), except that for `map`
 and `multimap`, the requirements placed on `value_type` in Table 
 [[tab:containers.container.requirements]] apply instead to `key_type`
 and `mapped_type`. For example, in some cases `key_type` and
@@ -430,7 +430,7 @@ associative container class, `a` denotes a value of `X`, `a_uniq`
 denotes a value of `X` when `X` supports unique keys, `a_eq` denotes a
 value of `X` when `X` supports multiple keys, `a_tran` denotes a value
 of `X` when the qualified-id `X::key_compare::is_transparent` is valid
-and denotes a type ( [[temp.deduct]]), `i` and `j` satisfy input
+and denotes a type ([[temp.deduct]]), `i` and `j` satisfy input
 iterator requirements and refer to elements implicitly convertible to
 `value_type`, \[`i`, `j`) denotes a valid range, `p` denotes a valid
 const iterator to `a`, `q` denotes a valid dereferenceable const
@@ -438,7 +438,7 @@ iterator to `a`, `[q1, q2)` denotes a valid range of const iterators in
 `a`, `il` designates an object of type `initializer_list<value_type>`,
 `t` denotes a value of `X::value_type`, `k` denotes a value of
 `X::key_type` and `c` denotes a value of type `X::key_compare`; `kl` is
-a value such that `a` is partitioned ( [[alg.sorting]]) with respect to
+a value such that `a` is partitioned ([[alg.sorting]]) with respect to
 `c(r, kl)`, with `r` the key value of `e` and `e` in `a`; `ku` is a
 value such that `a` is partitioned with respect to `!c(ku, r)`; `ke` is
 a value such that `a` is partitioned with respect to `c(r, ke)` and
@@ -479,7 +479,7 @@ been passed to the target container in its constructor.
 The member function templates `find`, `count`, `lower_bound`,
 `upper_bound`, and `equal_range` shall not participate in overload
 resolution unless the qualified-id `Compare::is_transparent` is valid
-and denotes a type ( [[temp.deduct]]).
+and denotes a type ([[temp.deduct]]).
 
 #### Exception safety guarantees <a id="associative.reqmts.except">[[associative.reqmts.except]]</a>
 
@@ -504,7 +504,7 @@ unordered associative containers: `unordered_set`, `unordered_map`,
 `unordered_multiset`, and `unordered_multimap`.
 
 Unordered associative containers conform to the requirements for
-Containers ( [[container.requirements]]), except that the expressions
+Containers ([[container.requirements]]), except that the expressions
 `a == b` and `a != b` have different semantics than for the other
 container types.
 
@@ -568,7 +568,7 @@ For `unordered_multiset` and `unordered_multimap`, rehashing preserves
 the relative ordering of equivalent elements.
 
 The unordered associative containers meet all the requirements of
-Allocator-aware containers ( [[container.requirements.general]]), except
+Allocator-aware containers ([[container.requirements.general]]), except
 that for `unordered_map` and `unordered_multimap`, the requirements
 placed on `value_type` in Table 
 [[tab:containers.container.requirements]] apply instead to `key_type`
@@ -815,7 +815,7 @@ instance of `array<T, N>` stores `N` elements of type `T`, so that
 contiguously, meaning that if `a` is an `array<T, N>` then it obeys the
 identity `&a[n] == &a[0] + n` for all `0 <= n < N`.
 
-An `array` is an aggregate ( [[dcl.init.aggr]]) that can be initialized
+An `array` is an aggregate ([[dcl.init.aggr]]) that can be initialized
 with the syntax
 
 ``` cpp
@@ -826,10 +826,10 @@ where *initializer-list* is a comma-separated list of up to `N` elements
 whose types are convertible to `T`.
 
 An `array` satisfies all of the requirements of a container and of a
-reversible container ( [[container.requirements]]), except that a
+reversible container ([[container.requirements]]), except that a
 default constructed `array` object is not empty and that `swap` does not
 have constant complexity. An `array` satisfies some of the requirements
-of a sequence container ( [[sequence.reqmts]]). Descriptions are
+of a sequence container ([[sequence.reqmts]]). Descriptions are
 provided here only for operations on `array` that are not described in
 one of these tables and for operations where there is additional
 semantic information.
@@ -901,7 +901,7 @@ that `array` is a class aggregate. The name `elems` is not part of
 
 #### `array` constructors, copy, and assignment <a id="array.cons">[[array.cons]]</a>
 
-The conditions for an aggregate ( [[dcl.init.aggr]]) shall be met. Class
+The conditions for an aggregate ([[dcl.init.aggr]]) shall be met. Class
 `array` relies on the implicitly-declared special member functions (
 [[class.ctor]], [[class.dtor]], and [[class.copy]]) to conform to the
 container requirements table in  [[container.requirements]]. In addition
@@ -1024,7 +1024,7 @@ is zero-based.
 
 #### Class template `deque` overview <a id="deque.overview">[[deque.overview]]</a>
 
-A `deque` is a sequence container that, like a `vector` ( [[vector]]),
+A `deque` is a sequence container that, like a `vector` ([[vector]]),
 supports random access iterators. In addition, it supports constant time
 insert and erase operations at the beginning or the end; insert and
 erase in the middle take linear time. That is, a deque is especially
@@ -1034,7 +1034,7 @@ with vectors, storage management is handled automatically.
 A `deque` satisfies all of the requirements of a container, of a
 reversible container (given in tables in  [[container.requirements]]),
 of a sequence container, including the optional sequence container
-requirements ( [[sequence.reqmts]]), and of an allocator-aware container
+requirements ([[sequence.reqmts]]), and of an allocator-aware container
 (Table  [[tab:containers.allocatoraware]]). Descriptions are provided
 here only for operations on `deque` that are not described in one of
 these tables or for operations where there is additional semantic
@@ -1772,7 +1772,7 @@ the iterators and references to the erased elements.
 *Throws:* Nothing unless an exception is thrown by the equality
 comparison or the predicate.
 
-*Remarks:* Stable ( [[algorithm.stable]]).
+*Remarks:* Stable ([[algorithm.stable]]).
 
 *Complexity:* Exactly `distance(begin(), end())` applications of the
 corresponding predicate.
@@ -1803,7 +1803,7 @@ template <class Compare> void merge(forward_list& x, Compare comp);
 template <class Compare> void merge(forward_list&& x, Compare comp);
 ```
 
-*Requires:* `comp` defines a strict weak ordering ( [[alg.sorting]]),
+*Requires:* `comp` defines a strict weak ordering ([[alg.sorting]]),
 and `*this` and `x` are both sorted according to this ordering.
 `get_allocator() == x.get_allocator()`.
 
@@ -1815,7 +1815,7 @@ but as members of `*this`. Iterators referring to the moved elements
 will continue to refer to their elements, but they now behave as
 iterators into `*this`, not into `x`.
 
-*Remarks:* Stable ( [[algorithm.stable]]). The behavior is undefined if
+*Remarks:* Stable ([[algorithm.stable]]). The behavior is undefined if
 `this->get_allocator() != x.get_allocator()`.
 
 *Complexity:* At most
@@ -1829,14 +1829,14 @@ template <class Compare> void sort(Compare comp);
 
 *Requires:* `operator<` (for the version with no arguments) or `comp`
 (for the version with a comparison argument) defines a strict weak
-ordering ( [[alg.sorting]]).
+ordering ([[alg.sorting]]).
 
 *Effects:* Sorts the list according to the `operator<` or the `comp`
 function object. If an exception is thrown the order of the elements in
 `*this` is unspecified. Does not affect the validity of iterators and
 references.
 
-*Remarks:* Stable ( [[algorithm.stable]]).
+*Remarks:* Stable ([[algorithm.stable]]).
 
 *Complexity:* Approximately N log N comparisons, where N is
 `distance(begin(), end())`.
@@ -1866,14 +1866,14 @@ template <class T, class Allocator>
 A `list` is a sequence container that supports bidirectional iterators
 and allows constant time insert and erase operations anywhere within the
 sequence, with storage management handled automatically. Unlike
-vectors ( [[vector]]) and deques ( [[deque]]), fast random access to
+vectors ([[vector]]) and deques ([[deque]]), fast random access to
 list elements is not supported, but many algorithms only need sequential
 access anyway.
 
 A `list` satisfies all of the requirements of a container, of a
 reversible container (given in two tables in
 [[container.requirements]]), of a sequence container, including most of
-the optional sequence container requirements ( [[sequence.reqmts]]), and
+the optional sequence container requirements ([[sequence.reqmts]]), and
 of an allocator-aware container (Table 
 [[tab:containers.allocatoraware]]). The exceptions are the `operator[]`
 and `at` member functions, which are not provided.[^2] Descriptions are
@@ -2228,7 +2228,7 @@ references to the erased elements.
 *Throws:* Nothing unless an exception is thrown by `*i == value` or
 `pred(*i) != false`.
 
-*Remarks:* Stable ( [[algorithm.stable]]).
+*Remarks:* Stable ([[algorithm.stable]]).
 
 *Complexity:* Exactly `size()` applications of the corresponding
 predicate.
@@ -2260,7 +2260,7 @@ template <class Compare> void merge(list&& x, Compare comp);
 ```
 
 *Requires:* `comp` shall define a strict weak
-ordering ( [[alg.sorting]]), and both the list and the argument list
+ordering ([[alg.sorting]]), and both the list and the argument list
 shall be sorted according to this ordering.
 
 *Effects:* If `(&x == this)` does nothing; otherwise, merges the two
@@ -2274,7 +2274,7 @@ elements of `x` now refer to those same elements but as members of
 refer to their elements, but they now behave as iterators into `*this`,
 not into `x`.
 
-*Remarks:* Stable ( [[algorithm.stable]]). If `(&x != this)` the range
+*Remarks:* Stable ([[algorithm.stable]]). If `(&x != this)` the range
 `[x.begin(), x.end())` is empty after the merge. No elements are copied
 by this operation. The behavior is undefined if
 `this->get_allocator() != x.get_allocator()`.
@@ -2298,13 +2298,13 @@ template <class Compare> void sort(Compare comp);
 ```
 
 *Requires:* `operator<` (for the first version) or `comp` (for the
-second version) shall define a strict weak ordering ( [[alg.sorting]]).
+second version) shall define a strict weak ordering ([[alg.sorting]]).
 
 *Effects:* Sorts the list according to the `operator<` or a `Compare`
 function object. Does not affect the validity of iterators and
 references.
 
-*Remarks:* Stable ( [[algorithm.stable]]).
+*Remarks:* Stable ([[algorithm.stable]]).
 
 *Complexity:* Approximately N log(N) comparisons, where `N == size()`.
 
@@ -2337,7 +2337,7 @@ is some type other than `bool`, then it obeys the identity
 A `vector` satisfies all of the requirements of a container and of a
 reversible container (given in two tables in 
 [[container.requirements]]), of a sequence container, including most of
-the optional sequence container requirements ( [[sequence.reqmts]]), and
+the optional sequence container requirements ([[sequence.reqmts]]), and
 of an allocator-aware container (Table 
 [[tab:containers.allocatoraware]]). The exceptions are the `push_front`,
 `pop_front`, and `emplace_front` member functions, which are not
@@ -2786,7 +2786,7 @@ namespace std {
 Unless described below, all operations have the same requirements and
 semantics as the primary `vector` template, except that operations
 dealing with the `bool` value type map to bit values in the container
-storage and allocator_traits::construct ( [[allocator.traits.members]])
+storage and allocator_traits::construct ([[allocator.traits.members]])
 is not used to construct these values.
 
 There is no requirement that the data be stored as a contiguous
@@ -2824,7 +2824,7 @@ template <class Allocator> struct hash<vector<bool, Allocator> >;
 ```
 
 The template specialization shall meet the requirements of class
-template `hash` ( [[unord.hash]]).
+template `hash` ([[unord.hash]]).
 
 ## Associative containers <a id="associative">[[associative]]</a>
 
@@ -2961,10 +2961,10 @@ of another type `T` based on the keys. The `map` class supports
 bidirectional iterators.
 
 A `map` satisfies all of the requirements of a container, of a
-reversible container ( [[container.requirements]]), of an associative
-container ( [[associative.reqmts]]), and of an allocator-aware container
+reversible container ([[container.requirements]]), of an associative
+container ([[associative.reqmts]]), and of an allocator-aware container
 (Table  [[tab:containers.allocatoraware]]). A `map` also provides most
-operations described in ( [[associative.reqmts]]) for unique keys. This
+operations described in ([[associative.reqmts]]) for unique keys. This
 means that a `map` supports the `a_uniq` operations in (
 [[associative.reqmts]]) but not the `a_eq` operations. For a
 `map<Key,T>` the `key_type` is `Key` and the `value_type` is
@@ -3253,10 +3253,10 @@ for fast retrieval of values of another type `T` based on the keys. The
 `multimap` class supports bidirectional iterators.
 
 A `multimap` satisfies all of the requirements of a container and of a
-reversible container ( [[container.requirements]]), of an associative
-container ( [[associative.reqmts]]), and of an allocator-aware container
+reversible container ([[container.requirements]]), of an associative
+container ([[associative.reqmts]]), and of an allocator-aware container
 (Table  [[tab:containers.allocatoraware]]). A `multimap` also provides
-most operations described in ( [[associative.reqmts]]) for equal keys.
+most operations described in ([[associative.reqmts]]) for equal keys.
 This means that a `multimap` supports the `a_eq` operations in (
 [[associative.reqmts]]) but not the `a_uniq` operations. For a
 `multimap<Key,T>` the `key_type` is `Key` and the `value_type` is
@@ -3493,10 +3493,10 @@ at most one of each key value) and provides for fast retrieval of the
 keys themselves. The `set` class supports bidirectional iterators.
 
 A `set` satisfies all of the requirements of a container, of a
-reversible container ( [[container.requirements]]), of an associative
-container ( [[associative.reqmts]]), and of an allocator-aware container
+reversible container ([[container.requirements]]), of an associative
+container ([[associative.reqmts]]), and of an allocator-aware container
 (Table  [[tab:containers.allocatoraware]]). A `set` also provides most
-operations described in ( [[associative.reqmts]]) for unique keys. This
+operations described in ([[associative.reqmts]]) for unique keys. This
 means that a `set` supports the `a_uniq` operations in (
 [[associative.reqmts]]) but not the `a_eq` operations. For a `set<Key>`
 both the `key_type` and `value_type` are `Key`. Descriptions are
@@ -3701,10 +3701,10 @@ for fast retrieval of the keys themselves. The `multiset` class supports
 bidirectional iterators.
 
 A `multiset` satisfies all of the requirements of a container, of a
-reversible container ( [[container.requirements]]), of an associative
-container ( [[associative.reqmts]]), and of an allocator-aware container
+reversible container ([[container.requirements]]), of an associative
+container ([[associative.reqmts]]), and of an allocator-aware container
 (Table  [[tab:containers.allocatoraware]]). `multiset` also provides
-most operations described in ( [[associative.reqmts]]) for duplicate
+most operations described in ([[associative.reqmts]]) for duplicate
 keys. This means that a `multiset` supports the `a_eq` operations in (
 [[associative.reqmts]]) but not the `a_uniq` operations. For a
 `multiset<Key>` both the `key_type` and `value_type` are `Key`.
@@ -4989,7 +4989,7 @@ namespace std {
 
 Any sequence container supporting operations `front()`, `back()`,
 `push_back()` and `pop_front()` can be used to instantiate `queue`. In
-particular, `list` ( [[list]]) and `deque` ( [[deque]]) can be used.
+particular, `list` ([[list]]) and `deque` ([[deque]]) can be used.
 
 ``` cpp
 namespace std {
@@ -5172,11 +5172,11 @@ template <class T, class Container>
 
 Any sequence container with random access iterator and supporting
 operations `front()`, `push_back()` and `pop_back()` can be used to
-instantiate `priority_queue`. In particular, `vector` ( [[vector]]) and
-`deque` ( [[deque]]) can be used. Instantiating `priority_queue` also
+instantiate `priority_queue`. In particular, `vector` ([[vector]]) and
+`deque` ([[deque]]) can be used. Instantiating `priority_queue` also
 involves supplying a function or function object for making priority
 comparisons; the library assumes that the function or function object
-defines a strict weak ordering ( [[alg.sorting]]).
+defines a strict weak ordering ([[alg.sorting]]).
 
 ``` cpp
 namespace std {
@@ -5242,7 +5242,7 @@ explicit priority_queue(const Compare& x = Compare(),
                Container&& y = Container());
 ```
 
-*Requires:* `x` shall define a strict weak ordering ( [[alg.sorting]]).
+*Requires:* `x` shall define a strict weak ordering ([[alg.sorting]]).
 
 *Effects:* Initializes `comp` with `x` and `c` with `y` (copy
 constructing or move constructing as appropriate); calls
@@ -5259,7 +5259,7 @@ template <class InputIterator>
                  Container&& y = Container());
 ```
 
-*Requires:* `x` shall define a strict weak ordering ( [[alg.sorting]]).
+*Requires:* `x` shall define a strict weak ordering ([[alg.sorting]]).
 
 *Effects:* Initializes `comp` with `x` and `c` with `y` (copy
 constructing or move constructing as appropriate); calls
@@ -5380,7 +5380,7 @@ template <class T, class Container, Compare>
 
 Any sequence container supporting operations `back()`, `push_back()` and
 `pop_back()` can be used to instantiate `stack`. In particular,
-`vector` ( [[vector]]), `list` ( [[list]]) and `deque` ( [[deque]]) can
+`vector` ([[vector]]), `list` ([[list]]) and `deque` ([[deque]]) can
 be used.
 
 #### Header `<stack>` synopsis <a id="stack.syn">[[stack.syn]]</a>

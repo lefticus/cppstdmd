@@ -30,7 +30,7 @@ and some of the contents of the header `<cstdlib>`.
 The header `<memory>` defines several types and function templates that
 describe properties of pointers and pointer-like types, manage memory
 for containers and other template types, destroy objects, and construct
-objects in uninitialized memory buffers ( [[pointer.traits]]–
+objects in uninitialized memory buffers ([[pointer.traits]]–
 [[specialized.addressof]] and [[specialized.algorithms]]). The header
 also defines the templates `unique_ptr`, `shared_ptr`, `weak_ptr`,
 `out_ptr_t`, `inout_ptr_t`, and various function templates that operate
@@ -1633,7 +1633,7 @@ is valid and has the effect of disposing of the pointer as appropriate
 for that deleter.
 
 If the deleter’s type `D` is not a reference type, `D` shall meet the
-*Cpp17Destructible* requirements ( [[cpp17.destructible]]).
+*Cpp17Destructible* requirements ([[cpp17.destructible]]).
 
 If the *qualified-id* `remove_reference_t<D>::pointer` is valid and
 denotes a type [[temp.deduct]], then `unique_ptr<T,
@@ -1660,7 +1660,7 @@ constexpr unique_ptr(nullptr_t) noexcept;
 `is_default_constructible_v<deleter_type>` is `true`.
 
 *Preconditions:* `D` meets the *Cpp17DefaultConstructible* requirements
-( [[cpp17.defaultconstructible]]), and that construction does not throw
+([[cpp17.defaultconstructible]]), and that construction does not throw
 an exception.
 
 *Effects:* Constructs a `unique_ptr` object that owns nothing,
@@ -1677,7 +1677,7 @@ constexpr explicit unique_ptr(type_identity_t<pointer> p) noexcept;
 `is_default_constructible_v<deleter_type>` is `true`.
 
 *Preconditions:* `D` meets the *Cpp17DefaultConstructible* requirements
-( [[cpp17.defaultconstructible]]), and that construction does not throw
+([[cpp17.defaultconstructible]]), and that construction does not throw
 an exception.
 
 *Effects:* Constructs a `unique_ptr` which owns `p`, initializing the
@@ -1730,7 +1730,7 @@ constexpr unique_ptr(unique_ptr&& u) noexcept;
 *Constraints:* `is_move_constructible_v<D>` is `true`.
 
 *Preconditions:* If `D` is not a reference type, `D` meets the
-*Cpp17MoveConstructible* requirements ( [[cpp17.moveconstructible]]).
+*Cpp17MoveConstructible* requirements ([[cpp17.moveconstructible]]).
 Construction of the deleter from an rvalue of type `D` does not throw an
 exception.
 
@@ -1798,7 +1798,7 @@ constexpr unique_ptr& operator=(unique_ptr&& u) noexcept;
 *Constraints:* `is_move_assignable_v<D>` is `true`.
 
 *Preconditions:* If `D` is not a reference type, `D` meets the
-*Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]) and
+*Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]) and
 assignment of the deleter from an rvalue of type `D` does not throw an
 exception. Otherwise, `D` is a reference type; `remove_reference_t<D>`
 meets the *Cpp17CopyAssignable* requirements and assignment of the

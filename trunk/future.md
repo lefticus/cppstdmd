@@ -394,7 +394,7 @@ template<class T> bool operator!=(const T& x, const T& y);
 ```
 
 *Preconditions:* `T` meets the *Cpp17EqualityComparable* requirements
-( [[cpp17.equalitycomparable]]).
+([[cpp17.equalitycomparable]]).
 
 *Returns:* `!(x == y)`.
 
@@ -403,7 +403,7 @@ template<class T> bool operator>(const T& x, const T& y);
 ```
 
 *Preconditions:* `T` meets the *Cpp17LessThanComparable* requirements
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* `y < x`.
 
@@ -412,7 +412,7 @@ template<class T> bool operator<=(const T& x, const T& y);
 ```
 
 *Preconditions:* `T` meets the *Cpp17LessThanComparable* requirements
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* `!(y < x)`.
 
@@ -421,7 +421,7 @@ template<class T> bool operator>=(const T& x, const T& y);
 ```
 
 *Preconditions:* `T` meets the *Cpp17LessThanComparable* requirements
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* `!(x < y)`.
 

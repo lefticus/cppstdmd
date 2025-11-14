@@ -62,10 +62,10 @@ components can be instantiated.
 
 ### Thread safety <a id="iostreams.threadsafety">[[iostreams.threadsafety]]</a>
 
-Concurrent access to a stream object ( [[string.streams]], 
-[[file.streams]]), stream buffer object ( [[stream.buffers]]), or C
-Library stream ( [[c.files]]) by multiple threads may result in a data
-race ( [[intro.multithread]]) unless otherwise specified (
+Concurrent access to a stream object ([[string.streams]], 
+[[file.streams]]), stream buffer object ([[stream.buffers]]), or C
+Library stream ([[c.files]]) by multiple threads may result in a data
+race ([[intro.multithread]]) unless otherwise specified (
 [[iostream.objects]]).
 
 [*Note 1*: Data races result in undefined behavior (
@@ -249,17 +249,17 @@ namespace std {
 ### Overview <a id="iostream.objects.overview">[[iostream.objects.overview]]</a>
 
 In this Clause, the type name `FILE` refers to the type `FILE` declared
-in `<cstdio>` ( [[cstdio.syn]]).
+in `<cstdio>` ([[cstdio.syn]]).
 
 The header `<iostream>` declares objects that associate objects with the
 standard C streams provided for by the functions declared in
-`<cstdio>` ( [[c.files]]), and includes all the headers necessary to use
+`<cstdio>` ([[c.files]]), and includes all the headers necessary to use
 these objects.
 
 The objects are constructed and the associations are established at some
 time prior to or during the first time an object of class
 `ios_base::Init` is constructed, and in any case before the body of
-`main` ( [[basic.start.main]]) begins execution.[^2] The objects are not
+`main` ([[basic.start.main]]) begins execution.[^2] The objects are not
 destroyed during program execution.[^3] The results of including
 `<iostream>` in a translation unit shall be as if `<iostream>` defined
 an instance of `ios_base::Init` with static storage duration.
@@ -268,10 +268,10 @@ Mixing operations on corresponding wide- and narrow-character streams
 follows the same semantics as mixing such operations on `FILE`s, as
 specified in the C standard library.
 
-Concurrent access to a synchronized ( [[ios.members.static]]) standard
-iostream object’s formatted and unformatted input ( [[istream]]) and
-output ( [[ostream]]) functions or a standard C stream by multiple
-threads shall not result in a data race ( [[intro.multithread]]).
+Concurrent access to a synchronized ([[ios.members.static]]) standard
+iostream object’s formatted and unformatted input ([[istream]]) and
+output ([[ostream]]) functions or a standard C stream by multiple
+threads shall not result in a data race ([[intro.multithread]]).
 
 [*Note 1*: Users must still synchronize concurrent use of these objects
 and streams by multiple threads if they wish to avoid interleaved
@@ -286,36 +286,36 @@ istream cin;
 ```
 
 The object `cin` controls input from a stream buffer associated with the
-object `stdin`, declared in `<cstdio>` ( [[cstdio.syn]]).
+object `stdin`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 After the object `cin` is initialized, `cin.tie()` returns `&cout`. Its
 state is otherwise the same as required for
-`basic_ios<char>::init` ( [[basic.ios.cons]]).
+`basic_ios<char>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 ostream cout;
 ```
 
 The object `cout` controls output to a stream buffer associated with the
-object `stdout`, declared in `<cstdio>` ( [[cstdio.syn]]).
+object `stdout`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 ``` cpp
 ostream cerr;
 ```
 
 The object `cerr` controls output to a stream buffer associated with the
-object `stderr`, declared in `<cstdio>` ( [[cstdio.syn]]).
+object `stderr`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 After the object `cerr` is initialized, `cerr.flags() & unitbuf` is
 nonzero and `cerr.tie()` returns `&cout`. Its state is otherwise the
-same as required for `basic_ios<char>::init` ( [[basic.ios.cons]]).
+same as required for `basic_ios<char>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 ostream clog;
 ```
 
 The object `clog` controls output to a stream buffer associated with the
-object `stderr`, declared in `<cstdio>` ( [[cstdio.syn]]).
+object `stderr`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 ### Wide stream objects <a id="wide.stream.objects">[[wide.stream.objects]]</a>
 
@@ -324,36 +324,36 @@ wistream wcin;
 ```
 
 The object `wcin` controls input from a stream buffer associated with
-the object `stdin`, declared in `<cstdio>` ( [[cstdio.syn]]).
+the object `stdin`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 After the object `wcin` is initialized, `wcin.tie()` returns `&wcout`.
 Its state is otherwise the same as required for
-`basic_ios<wchar_t>::init` ( [[basic.ios.cons]]).
+`basic_ios<wchar_t>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 wostream wcout;
 ```
 
 The object `wcout` controls output to a stream buffer associated with
-the object `stdout`, declared in `<cstdio>` ( [[cstdio.syn]]).
+the object `stdout`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 ``` cpp
 wostream wcerr;
 ```
 
 The object `wcerr` controls output to a stream buffer associated with
-the object `stderr`, declared in `<cstdio>` ( [[cstdio.syn]]).
+the object `stderr`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 After the object `wcerr` is initialized, `wcerr.flags() & unitbuf` is
 nonzero and `wcerr.tie()` returns `&wcout`. Its state is otherwise the
-same as required for `basic_ios<wchar_t>::init` ( [[basic.ios.cons]]).
+same as required for `basic_ios<wchar_t>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 wostream wclog;
 ```
 
 The object `wclog` controls output to a stream buffer associated with
-the object `stderr`, declared in `<cstdio>` ( [[cstdio.syn]]).
+the object `stderr`, declared in `<cstdio>` ([[cstdio.syn]]).
 
 ## Iostreams base classes <a id="iostreams.base">[[iostreams.base]]</a>
 
@@ -626,7 +626,7 @@ base class with `msg` and `ec`.
 using fmtflags = T1;
 ```
 
-The type `fmtflags` is a bitmask type ( [[bitmask.types]]). Setting its
+The type `fmtflags` is a bitmask type ([[bitmask.types]]). Setting its
 elements has the effects indicated in
 Table  [[tab:iostreams.fmtflags.effects]].
 
@@ -669,7 +669,7 @@ Table  [[tab:iostreams.fmtflags.constants]].
 using iostate = T2;
 ```
 
-The type `iostate` is a bitmask type ( [[bitmask.types]]) that contains
+The type `iostate` is a bitmask type ([[bitmask.types]]) that contains
 the elements indicated in Table  [[tab:iostreams.iostate.effects]].
 
 **Table: `iostate` effects**
@@ -691,7 +691,7 @@ Type `iostate` also defines the constant:
 using openmode = T3;
 ```
 
-The type `openmode` is a bitmask type ( [[bitmask.types]]). It contains
+The type `openmode` is a bitmask type ([[bitmask.types]]). It contains
 the elements indicated in Table  [[tab:iostreams.openmode.effects]].
 
 **Table: `openmode` effects**
@@ -712,7 +712,7 @@ the elements indicated in Table  [[tab:iostreams.openmode.effects]].
 using seekdir = T4;
 ```
 
-The type `seekdir` is an enumerated type ( [[enumerated.types]]) that
+The type `seekdir` is an enumerated type ([[enumerated.types]]) that
 contains the elements indicated in
 Table  [[tab:iostreams.seekdir.effects]].
 
@@ -743,7 +743,7 @@ The class `Init` describes an object whose construction ensures the
 construction of the eight objects declared in `<iostream>` (
 [[iostream.objects]]) that associate file stream buffers with the
 standard C streams provided for by the functions declared in
-`<cstdio>` ( [[cstdio.syn]]).
+`<cstdio>` ([[cstdio.syn]]).
 
 For the sake of exposition, the maintained data is presented here as:
 
@@ -842,7 +842,7 @@ locale imbue(const locale& loc);
 ```
 
 *Effects:* Calls each registered callback pair
-`(fn, index)` ( [[ios.base.callback]]) as
+`(fn, index)` ([[ios.base.callback]]) as
 `(*fn)(imbue_event, *this, index)` at such a time that a call to
 `ios_base::getloc()` from within `fn` returns the new locale value
 `loc`.
@@ -867,7 +867,7 @@ bool sync_with_stdio(bool sync = true);
 ```
 
 *Returns:* `true` if the previous state of the standard iostream
-objects ( [[iostream.objects]]) was synchronized and otherwise returns
+objects ([[iostream.objects]]) was synchronized and otherwise returns
 `false`. The first time it is called, the function returns `true`.
 
 *Effects:* If any input or output operation has occurred using the
@@ -926,7 +926,7 @@ static int xalloc();
 *Returns:* `index` `++`.
 
 *Remarks:* Concurrent access to this function by multiple threads shall
-not result in a data race ( [[intro.multithread]]).
+not result in a data race ([[intro.multithread]]).
 
 ``` cpp
 long& iword(int idx);
@@ -978,8 +978,8 @@ void register_callback(event_callback fn, int index);
 ```
 
 *Effects:* Registers the pair `(fn, index)` such that during calls to
-`imbue()` ( [[ios.base.locales]]), `copyfmt()`, or
-`~ios_base()` ( [[ios.base.cons]]), the function `fn` is called with
+`imbue()` ([[ios.base.locales]]), `copyfmt()`, or
+`~ios_base()` ([[ios.base.cons]]), the function `fn` is called with
 argument `index`. Functions registered are called when an event occurs,
 in opposite order of registration. Functions registered while a callback
 function is active are not called until the next event.
@@ -1005,7 +1005,7 @@ destroyed, whichever comes first; otherwise the behavior is undefined.
 ```
 
 *Effects:* Destroys an object of class `ios_base`. Calls each registered
-callback pair `(fn, index)` ( [[ios.base.callback]]) as
+callback pair `(fn, index)` ([[ios.base.callback]]) as
 `(*fn)(erase_event, *this, index)` at such time that any `ios_base`
 member function called from within `fn` has well defined results.
 
@@ -1141,7 +1141,7 @@ basic_ios();
 ```
 
 *Effects:* Constructs an object of class
-`basic_ios` ( [[ios.base.cons]]) leaving its member objects
+`basic_ios` ([[ios.base.cons]]) leaving its member objects
 uninitialized. The object shall be initialized by calling
 `basic_ios::init` before its first use or before it is destroyed,
 whichever comes first; otherwise the behavior is undefined.
@@ -1217,8 +1217,8 @@ basic_streambuf<charT, traits>* rdbuf(basic_streambuf<charT, traits>* sb);
 locale imbue(const locale& loc);
 ```
 
-*Effects:* Calls `ios_base::imbue(loc)` ( [[ios.base.locales]]) and if
-`rdbuf() != 0` then `rdbuf()->pubimbue(loc)` ( [[streambuf.locales]]).
+*Effects:* Calls `ios_base::imbue(loc)` ([[ios.base.locales]]) and if
+`rdbuf() != 0` then `rdbuf()->pubimbue(loc)` ([[streambuf.locales]]).
 
 *Returns:* The prior value of `ios_base::imbue()`.
 
@@ -1359,7 +1359,7 @@ void clear(iostate state = goodbit);
 *Effects:* If
 `((state | (rdbuf() ? goodbit : badbit)) & exceptions()) == 0`, returns.
 Otherwise, the function throws an object of class
-`basic_ios::failure` ( [[ios::failure]]), constructed with
+`basic_ios::failure` ([[ios::failure]]), constructed with
 *implementation-defined* argument values.
 
 ``` cpp
@@ -1367,7 +1367,7 @@ void setstate(iostate state);
 ```
 
 *Effects:* Calls `clear(rdstate() | state)` (which may throw
-`basic_ios::failure` ( [[ios::failure]])).
+`basic_ios::failure` ([[ios::failure]])).
 
 ``` cpp
 bool good() const;
@@ -1912,7 +1912,7 @@ streamsize in_avail();
 ```
 
 *Returns:* If a read position is available, returns `egptr() - gptr()`.
-Otherwise returns `showmanyc()` ( [[streambuf.virt.get]]).
+Otherwise returns `showmanyc()` ([[streambuf.virt.get]]).
 
 ``` cpp
 int_type snextc();
@@ -2100,7 +2100,7 @@ basic_streambuf* setbuf(char_type* s, streamsize n);
 
 *Effects:* Influences stream buffering in a way that is defined
 separately for each class derived from `basic_streambuf` in this
-Clause ( [[stringbuf.virtuals]], [[filebuf.virtuals]]).
+Clause ([[stringbuf.virtuals]], [[filebuf.virtuals]]).
 
 *Default behavior:* Does nothing. Returns `this`.
 
@@ -2112,7 +2112,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 
 *Effects:* Alters the stream positions within one or more of the
 controlled sequences in a way that is defined separately for each class
-derived from `basic_streambuf` in this Clause ( [[stringbuf.virtuals]],
+derived from `basic_streambuf` in this Clause ([[stringbuf.virtuals]],
 [[filebuf.virtuals]]).
 
 *Default behavior:* Returns `pos_type(off_type(-1))`.
@@ -2125,7 +2125,7 @@ pos_type seekpos(pos_type sp,
 
 *Effects:* Alters the stream positions within one or more of the
 controlled sequences in a way that is defined separately for each class
-derived from `basic_streambuf` in this Clause ( [[stringbuf]],
+derived from `basic_streambuf` in this Clause ([[stringbuf]],
 [[filebuf]]).
 
 *Default behavior:* Returns `pos_type(off_type(-1))`.
@@ -2140,7 +2140,7 @@ is, if `pbase()` is non-null the characters between `pbase()` and
 be reset as appropriate.
 
 *Returns:* `-1` on failure. What constitutes failure is determined by
-each derived class ( [[filebuf.virtuals]]).
+each derived class ([[filebuf.virtuals]]).
 
 *Default behavior:* Returns zero.
 
@@ -2522,7 +2522,7 @@ or `rdbuf()->sgetc()`. They may use other public members of `istream`.
 If `rdbuf()->sbumpc()` or `rdbuf()->sgetc()` returns `traits::eof()`,
 then the input function, except as explicitly noted otherwise, completes
 its actions and does `setstate(eofbit)`, which may throw
-`ios_base::failure` ( [[iostate.flags]]), before returning.
+`ios_base::failure` ([[iostate.flags]]), before returning.
 
 If one of these called functions throws an exception, then unless
 explicitly noted otherwise, the input function sets `badbit` in error
@@ -2539,7 +2539,7 @@ explicit basic_istream(basic_streambuf<charT, traits>* sb);
 
 *Effects:* Constructs an object of class `basic_istream`, initializing
 the base class subobject with
-`basic_ios::init(sb)` ( [[basic.ios.cons]]).
+`basic_ios::init(sb)` ([[basic.ios.cons]]).
 
 *Postconditions:* `gcount() == 0`.
 
@@ -2638,7 +2638,7 @@ if (ctype.is(ctype.space, c) != 0)
 If, after any preparation is completed, `is.good()` is `true`,
 `ok_ != false` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]]))[^19]
+`ios_base::failure` ([[iostate.flags]]))[^19]
 
 ``` cpp
 ~sentry();
@@ -2683,7 +2683,7 @@ operator>>(void*& val);
 ```
 
 As in the case of the inserters, these extractors depend on the locale’s
-`num_get<>` ( [[locale.num.get]]) object to perform parsing the input
+`num_get<>` ([[locale.num.get]]) object to perform parsing the input
 stream data. These extractors behave as formatted input functions (as
 described in  [[istream.formatted.reqmts]]). After a sentry object is
 constructed, the conversion occurs as if performed by the following code
@@ -2816,7 +2816,7 @@ which may be the first position if no characters were extracted.
 `operator>>` then calls `width(0)`.
 
 If the function extracted no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]).
+which may throw `ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `in`.
 
@@ -2841,8 +2841,8 @@ basic_istream<charT, traits>& operator>>(basic_streambuf<charT, traits>* sb);
 ```
 
 *Effects:* Behaves as an unformatted input function
-( [[istream.unformatted]]). If `sb` is null, calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]). After a sentry
+([[istream.unformatted]]). If `sb` is null, calls `setstate(failbit)`,
+which may throw `ios_base::failure` ([[iostate.flags]]). After a sentry
 object is constructed, extracts characters from `*this` and inserts them
 in the output sequence controlled by `sb`. Characters are extracted and
 inserted until any of the following occurs:
@@ -2853,10 +2853,10 @@ inserted until any of the following occurs:
 - an exception occurs (in which case the exception is caught).
 
 If the function inserts no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]). If it inserted
+which may throw `ios_base::failure` ([[iostate.flags]]). If it inserted
 no characters because it caught an exception thrown while extracting
 characters from `*this` and `failbit` is on in
-`exceptions()` ( [[iostate.flags]]), then the caught exception is
+`exceptions()` ([[iostate.flags]]), then the caught exception is
 rethrown.
 
 *Returns:* `*this`.
@@ -2899,7 +2899,7 @@ int_type get();
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a sentry object, extracts a character `c`, if
 one is available. Otherwise, the function calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]),
+which may throw `ios_base::failure` ([[iostate.flags]]),
 
 *Returns:* `c` if available, otherwise `traits::eof()`.
 
@@ -2911,7 +2911,7 @@ basic_istream<charT, traits>& get(char_type& c);
 above). After constructing a sentry object, extracts a character, if one
 is available, and assigns it to `c`.[^24] Otherwise, the function calls
 `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -2932,7 +2932,7 @@ the following occurs:
   which case `c` is not extracted).
 
 If the function stores no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])). In any case,
+(which may throw `ios_base::failure` ([[iostate.flags]])). In any case,
 if `n` is greater than zero it then stores a null character into the
 next successive location of the array.
 
@@ -2964,7 +2964,7 @@ extracted and inserted until any of the following occurs:
   rethrown).
 
 If the function inserts no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]).
+which may throw `ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `*this`.
 
@@ -2997,7 +2997,7 @@ the following occurs:
 These conditions are tested in the order shown.[^28]
 
 If the function extracts no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])).[^29]
+(which may throw `ios_base::failure` ([[iostate.flags]])).[^29]
 
 In any case, if `n` is greater than zero, it then stores a null
 character (using `charT()`) into the next successive location of the
@@ -3049,11 +3049,11 @@ above). After constructing a sentry object, extracts characters and
 discards them. Characters are extracted until any of the following
 occurs:
 
-- `n != numeric_limits<streamsize>::max()` ( [[numeric.limits]]) and `n`
+- `n != numeric_limits<streamsize>::max()` ([[numeric.limits]]) and `n`
   characters have been extracted so far
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(eofbit)`, which may throw
-  `ios_base::failure` ( [[iostate.flags]]));
+  `ios_base::failure` ([[iostate.flags]]));
 - `traits::eq_int_type(traits::to_int_type(c), delim)` for the next
   available input character `c` (in which case `c` is extracted).
 
@@ -3087,7 +3087,7 @@ extracted and stored until either of the following occurs:
 - `n` characters are stored;
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(failbit | eofbit)`, which may throw
-  `ios_base::failure` ( [[iostate.flags]])).
+  `ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -3101,7 +3101,7 @@ above). After constructing a sentry object, if `!good()` calls
 extracts characters and stores them into successive locations of an
 array whose first element is designated by `s`. If
 `rdbuf()->in_avail() == -1`, calls `setstate(eofbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])), and extracts no characters;
+`ios_base::failure` ([[iostate.flags]])), and extracts no characters;
 
 - If `rdbuf()->in_avail() == 0`, extracts no characters
 - If `rdbuf()->in_avail() > 0`, extracts `min(rdbuf()->in_avail(), n))`.
@@ -3118,7 +3118,7 @@ constructing a sentry object, if `!good()` calls `setstate(failbit)`
 which may throw an exception, and return. If `rdbuf()` is not null,
 calls `rdbuf->sputbackc()`. If `rdbuf()` is null, or if `sputbackc()`
 returns `traits::eof()`, calls `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 [*Note 1*: This function extracts no characters, so the value returned
 by the next call to `gcount()` is 0. — *end note*]
@@ -3135,7 +3135,7 @@ constructing a sentry object, if `!good()` calls `setstate(failbit)`
 which may throw an exception, and return. If `rdbuf()` is not null,
 calls `rdbuf()->sungetc()`. If `rdbuf()` is null, or if `sungetc()`
 returns `traits::eof()`, calls `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 [*Note 2*: This function extracts no characters, so the value returned
 by the next call to `gcount()` is 0. — *end note*]
@@ -3152,7 +3152,7 @@ and does not affect the value returned by subsequent calls to
 `gcount()`. After constructing a sentry object, if `rdbuf()` is a null
 pointer, returns `-1`. Otherwise, calls `rdbuf()->pubsync()` and, if
 that function returns `-1` calls `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]]), and returns `-1`. Otherwise,
+`ios_base::failure` ([[iostate.flags]]), and returns `-1`. Otherwise,
 returns zero.
 
 ``` cpp
@@ -3206,13 +3206,13 @@ template <class charT, class traits>
 ```
 
 *Effects:* Behaves as an unformatted input function
-( [[istream.unformatted]]), except that it does not count the number of
+([[istream.unformatted]]), except that it does not count the number of
 characters extracted and does not affect the value returned by
 subsequent calls to is.gcount(). After constructing a sentry object
 extracts characters as long as the next available character `c` is
 whitespace or until there are no more characters in the sequence.
 Whitespace characters are distinguished with the same criterion as used
-by `sentry::sentry` ( [[istream::sentry]]). If `ws` stops extracting
+by `sentry::sentry` ([[istream::sentry]]). If `ws` stops extracting
 characters because there are no more available it sets `eofbit`, but not
 `failbit`.
 
@@ -3281,8 +3281,8 @@ explicit basic_iostream(basic_streambuf<charT, traits>* sb);
 
 *Effects:* Constructs an object of class `basic_iostream`, initializing
 the base class subobjects with
-`basic_istream<charT, traits>(sb)` ( [[istream]]) and
-`basic_ostream<charT, traits>(sb)` ( [[ostream]]).
+`basic_istream<charT, traits>(sb)` ([[istream]]) and
+`basic_ostream<charT, traits>(sb)` ([[ostream]]).
 
 *Postconditions:* `rdbuf() == sb` and `gcount() == 0`.
 
@@ -3444,7 +3444,7 @@ explicit basic_ostream(basic_streambuf<charT, traits>* sb);
 
 *Effects:* Constructs an object of class `basic_ostream`, initializing
 the base class subobject with
-`basic_ios<charT, traits>::init(sb)` ( [[basic.ios.cons]]).
+`basic_ios<charT, traits>::init(sb)` ([[basic.ios.cons]]).
 
 *Postconditions:* `rdbuf() == sb`.
 
@@ -3511,7 +3511,7 @@ If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.[^31]
 If, after any preparation is completed, `os.good()` is `true`,
 `ok_ == true` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]]))[^32]
+`ios_base::failure` ([[iostate.flags]]))[^32]
 
 ``` cpp
 ~sentry();
@@ -3718,7 +3718,7 @@ basic_ostream<charT, traits>& operator<<(basic_streambuf<charT, traits>* sb);
 ```
 
 *Effects:* Behaves as an unformatted output function
-( [[ostream.unformatted]]). After the sentry object is constructed, if
+([[ostream.unformatted]]). After the sentry object is constructed, if
 `sb` is null calls `setstate(badbit)` (which may throw
 `ios_base::failure`).
 
@@ -3731,7 +3731,7 @@ read from `sb` and inserted until any of the following occurs:
 - an exception occurs while getting a character from `sb`.
 
 If the function inserts no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])). If an
+(which may throw `ios_base::failure` ([[iostate.flags]])). If an
 exception was thrown while extracting a character, the function sets
 `failbit` in error state, and if `failbit` is on in `exceptions()` the
 caught exception is rethrown.
@@ -3748,7 +3748,7 @@ basic_ostream<charT, traits>& operator<<(nullptr_t);
 return *this << s;
 ```
 
-where `s` is an *implementation-defined* NTCTS ( [[defns.ntcts]]).
+where `s` is an *implementation-defined* NTCTS ([[defns.ntcts]]).
 
 ##### Character inserter function templates <a id="ostream.inserters.character">[[ostream.inserters.character]]</a>
 
@@ -3768,7 +3768,7 @@ template<class traits>
 ```
 
 *Effects:* Behaves as a formatted output
-function ( [[ostream.formatted.reqmts]]) of `out`. Constructs a
+function ([[ostream.formatted.reqmts]]) of `out`. Constructs a
 character sequence `seq`. If `c` has type `char` and the character type
 of the stream is not `char`, then `seq` consists of `out.widen(c)`;
 otherwise `seq` consists of `c`. Determines padding for `seq` as
@@ -3796,7 +3796,7 @@ template<class traits>
 *Effects:* Behaves like a formatted inserter (as described
 in  [[ostream.formatted.reqmts]]) of `out`. Creates a character sequence
 `seq` of `n` characters starting at `s`, each widened using
-`out.widen()` ( [[basic.ios.members]]), where `n` is the number that
+`out.widen()` ([[basic.ios.members]]), where `n` is the number that
 would be computed as if by:
 
 - `traits::length(s)` for the overload where the first argument is of
@@ -3837,7 +3837,7 @@ above). After constructing a sentry object, inserts the character `c`,
 if possible.[^37]
 
 Otherwise, calls `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -3854,7 +3854,7 @@ occurs:
 - `n` characters are inserted;
 - inserting in the output sequence fails (in which case the function
   calls `setstate(badbit)`, which may throw
-  `ios_base::failure` ( [[iostate.flags]])).
+  `ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -3867,7 +3867,7 @@ above). If `rdbuf()` is not a null pointer, constructs a sentry object.
 If this object returns `true` when converted to a value of type `bool`
 the function calls `rdbuf()->pubsync()`. If that function returns -1
 calls `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])). Otherwise, if the sentry
+`ios_base::failure` ([[iostate.flags]])). Otherwise, if the sentry
 object returns `false`, does nothing.
 
 *Returns:* `*this`.
@@ -4074,7 +4074,7 @@ template <class moneyT> unspecified get_money(moneyT& mon, bool intl = false);
 specialization of the `basic_string` template (Clause  [[strings]]).
 
 *Effects:* The expression `in >> get_money(mon, intl)` described below
-behaves as a formatted input function ( [[istream.formatted.reqmts]]).
+behaves as a formatted input function ([[istream.formatted.reqmts]]).
 
 *Returns:* An object of unspecified type such that if `in` is an object
 of type `basic_istream<charT, traits>` then the expression
@@ -4110,7 +4110,7 @@ specialization of the `basic_string` template (Clause  [[strings]]).
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
 `out << put_money(mon, intl)` behaves as a formatted output
-function ( [[ostream.formatted.reqmts]]) that calls `f(out, mon, intl)`,
+function ([[ostream.formatted.reqmts]]) that calls `f(out, mon, intl)`,
 where the function `f` is defined as:
 
 ``` cpp
@@ -4220,7 +4220,7 @@ instance of `basic_ostream` with member type `char_type` the same as
 `charT` and with member type `traits_type`, which in the second and
 third forms is the same as `traits`, then the expression
 `out << quoted(s, delim, escape)` behaves as a formatted output
-function ( [[ostream.formatted.reqmts]]) of `out`. This forms a
+function ([[ostream.formatted.reqmts]]) of `out`. This forms a
 character sequence `seq`, initially consisting of the following
 elements:
 
@@ -4249,8 +4249,8 @@ template <class charT, class traits, class Allocator>
   `char_type` and `traits_type` the same as `charT` and `traits`,
   respectively, then the expression `in >> quoted(s, delim, escape)`
   behaves as if it extracts the following characters from `in` using
-  `operator>>(basic_istream<charT, traits>&, charT&)` ( [[istream.extractors]])
-  which may throw `ios_base::failure` ( [[ios::failure]]):
+  `operator>>(basic_istream<charT, traits>&, charT&)` ([[istream.extractors]])
+  which may throw `ios_base::failure` ([[ios::failure]]):
   - If the first character extracted is equal to `delim`, as determined
     by `traits_type::eq`, then:
     - Turn off the `skipws` flag.
@@ -4388,7 +4388,7 @@ explicit basic_stringbuf(
 ```
 
 *Effects:* Constructs an object of class `basic_stringbuf`, initializing
-the base class with `basic_streambuf()` ( [[streambuf.cons]]), and
+the base class with `basic_streambuf()` ([[streambuf.cons]]), and
 initializing `mode` with `which`.
 
 *Postconditions:* `str() == ""`.
@@ -4400,7 +4400,7 @@ explicit basic_stringbuf(
 ```
 
 *Effects:* Constructs an object of class `basic_stringbuf`, initializing
-the base class with `basic_streambuf()` ( [[streambuf.cons]]), and
+the base class with `basic_streambuf()` ([[streambuf.cons]]), and
 initializing `mode` with `which`. Then calls `str(s)`.
 
 ``` cpp
@@ -4593,7 +4593,7 @@ as indicated in Table  [[tab:iostreams.newoff.values]].
 
 
 If `(newoff + off) < 0`, or if `newoff + off` refers to an uninitialized
-character ( [[stringbuf.members]]), the positioning operation fails.
+character ([[stringbuf.members]]), the positioning operation fails.
 Otherwise, the function assigns `xbeg + newoff + off` to the next
 pointer `xnext`.
 
@@ -4684,7 +4684,7 @@ explicit basic_istringstream(ios_base::openmode which = ios_base::in);
 *Effects:* Constructs an object of class
 `basic_istringstream<charT, traits>`, initializing the base class with
 `basic_istream(&sb)` and initializing `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in))` ([[stringbuf.cons]]).
 
 ``` cpp
 explicit basic_istringstream(
@@ -4695,7 +4695,7 @@ explicit basic_istringstream(
 *Effects:* Constructs an object of class
 `basic_istringstream<charT, traits>`, initializing the base class with
 `basic_istream(&sb)` and initializing `sb` with
-`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::in))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::in))` ([[stringbuf.cons]]).
 
 ``` cpp
 basic_istringstream(basic_istringstream&& rhs);
@@ -4814,7 +4814,7 @@ explicit basic_ostringstream(
 *Effects:* Constructs an object of class `basic_ostringstream`,
 initializing the base class with `basic_ostream(&sb)` and initializing
 `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out))` ([[stringbuf.cons]]).
 
 ``` cpp
 explicit basic_ostringstream(
@@ -4825,7 +4825,7 @@ explicit basic_ostringstream(
 *Effects:* Constructs an object of class
 `basic_ostringstream<charT, traits>`, initializing the base class with
 `basic_ostream(&sb)` and initializing `sb` with
-`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::out))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::out))` ([[stringbuf.cons]]).
 
 ``` cpp
 basic_ostringstream(basic_ostringstream&& rhs);
@@ -5054,7 +5054,7 @@ character sequences. — *end note*]
 
 In this subclause, member functions taking arguments of
 `const filesystem::path::value_type*` are only be provided on systems
-where `filesystem::path::value_type` ( [[fs.class.path]]) is not `char`.
+where `filesystem::path::value_type` ([[fs.class.path]]) is not `char`.
 
 [*Note 2*: These functions enable class `path` support for systems with
 a wide native path character type, such as `wchar_t`. — *end note*]
@@ -5156,7 +5156,7 @@ basic_filebuf();
 
 *Effects:* Constructs an object of class `basic_filebuf<charT, traits>`,
 initializing the base class with
-`basic_streambuf<charT, traits>()` ( [[streambuf.cons]]).
+`basic_streambuf<charT, traits>()` ([[streambuf.cons]]).
 
 *Postconditions:* `is_open() == false`.
 
@@ -5315,7 +5315,7 @@ streamsize showmanyc() override;
 ```
 
 *Effects:* Behaves the same as
-`basic_streambuf::showmanyc()` ( [[streambuf.virtuals]]).
+`basic_streambuf::showmanyc()` ([[streambuf.virtuals]]).
 
 *Remarks:* An implementation might well provide an overriding definition
 for this function signature if it can determine that more characters can
@@ -5507,7 +5507,7 @@ void imbue(const locale& loc) override;
 
 *Requires:* If the file is not positioned at its beginning and the
 encoding of the current locale as determined by `a_codecvt.encoding()`
-is state-dependent ( [[locale.codecvt.virtuals]]) then that facet is the
+is state-dependent ([[locale.codecvt.virtuals]]) then that facet is the
 same as the corresponding facet of `loc`.
 
 *Effects:* Causes characters inserted or extracted after this call to be
@@ -5584,7 +5584,7 @@ basic_ifstream();
 *Effects:* Constructs an object of class
 `basic_ifstream<charT, traits>`, initializing the base class with
 `basic_istream(&sb)` and initializing `sb` with
-`basic_filebuf<charT, traits>())` ( [[istream.cons]], [[filebuf.cons]]).
+`basic_filebuf<charT, traits>())` ([[istream.cons]], [[filebuf.cons]]).
 
 ``` cpp
 explicit basic_ifstream(const char* s,
@@ -5595,7 +5595,7 @@ explicit basic_ifstream(const filesystem::path::value_type* s,
 
 *Effects:* Constructs an object of class `basic_ifstream`, initializing
 the base class with `basic_istream(&sb)` and initializing `sb` with
-`basic_filebuf<charT, traits>())` ( [[istream.cons]], [[filebuf.cons]]),
+`basic_filebuf<charT, traits>())` ([[istream.cons]], [[filebuf.cons]]),
 then calls `rdbuf()->open(s, mode | ios_base::in)`. If that function
 returns a null pointer, calls `setstate(failbit)`.
 
@@ -5666,7 +5666,7 @@ void open(const filesystem::path::value_type* s,
 *Effects:* Calls `rdbuf()->open(s, mode | ios_base::in)`. If that
 function does not return a null pointer calls `clear()`, otherwise calls
 `setstate(failbit)` (which may throw `ios_base::failure`)
-( [[iostate.flags]]).
+([[iostate.flags]]).
 
 ``` cpp
 void open(const string& s, ios_base::openmode mode = ios_base::in);
@@ -5681,7 +5681,7 @@ void close();
 
 *Effects:* Calls `rdbuf()->close()` and, if that function returns a null
 pointer, calls `setstate(failbit)` (which may throw
-`ios_base::failure`) ( [[iostate.flags]]).
+`ios_base::failure`) ([[iostate.flags]]).
 
 ### Class template `basic_ofstream` <a id="ofstream">[[ofstream]]</a>
 
@@ -5750,7 +5750,7 @@ basic_ofstream();
 *Effects:* Constructs an object of class
 `basic_ofstream<charT, traits>`, initializing the base class with
 `basic_ostream(&sb)` and initializing `sb` with
-`basic_filebuf<charT, traits>())` ( [[ostream.cons]], [[filebuf.cons]]).
+`basic_filebuf<charT, traits>())` ([[ostream.cons]], [[filebuf.cons]]).
 
 ``` cpp
 explicit basic_ofstream(const char* s,
@@ -5762,7 +5762,7 @@ explicit basic_ofstream(const filesystem::path::value_type* s,
 *Effects:* Constructs an object of class
 `basic_ofstream<charT, traits>`, initializing the base class with
 `basic_ostream(&sb)` and initializing `sb` with
-`basic_filebuf<charT, traits>())` ( [[ostream.cons]], [[filebuf.cons]]),
+`basic_filebuf<charT, traits>())` ([[ostream.cons]], [[filebuf.cons]]),
 then calls `rdbuf()->open(s, mode | ios_base::out)`. If that function
 returns a null pointer, calls `setstate(failbit)`.
 
@@ -5833,7 +5833,7 @@ void open(const filesystem::path::value_type* s,
 *Effects:* Calls `rdbuf()->open(s, mode | ios_base::out)`. If that
 function does not return a null pointer calls `clear()`, otherwise calls
 `setstate(failbit)` (which may throw `ios_base::failure`)
-( [[iostate.flags]]).
+([[iostate.flags]]).
 
 ``` cpp
 void close();
@@ -5841,7 +5841,7 @@ void close();
 
 *Effects:* Calls `rdbuf()->close()` and, if that function fails (returns
 a null pointer), calls `setstate(failbit)` (which may throw
-`ios_base::failure`) ( [[iostate.flags]]).
+`ios_base::failure`) ([[iostate.flags]]).
 
 ``` cpp
 void open(const string& s, ios_base::openmode mode = ios_base::out);
@@ -6016,7 +6016,7 @@ void open(
 *Effects:* Calls `rdbuf()->open(s, mode)`. If that function does not
 return a null pointer calls `clear()`, otherwise calls
 `setstate(failbit)` (which may throw
-`ios_base::failure`) ( [[iostate.flags]]).
+`ios_base::failure`) ([[iostate.flags]]).
 
 ``` cpp
 void open(
@@ -6035,7 +6035,7 @@ void close();
 
 *Effects:* Calls `rdbuf()->close()` and, if that function returns a null
 pointer, calls `setstate(failbit)` (which may throw
-`ios_base::failure`) ( [[iostate.flags]]).
+`ios_base::failure`) ([[iostate.flags]]).
 
 ## File systems <a id="filesystems">[[filesystems]]</a>
 
@@ -6086,7 +6086,7 @@ system.
 #### File system race behavior <a id="fs.race.behavior">[[fs.race.behavior]]</a>
 
 Behavior is undefined if calls to functions provided by this subclause
-introduce a file system race ( [[fs.def.race]]).
+introduce a file system race ([[fs.def.race]]).
 
 If the possibility of a file system race would make it unreliable for a
 program to test for a precondition before calling a function described
@@ -6114,7 +6114,7 @@ other directory files.
 An object within a file system that holds user or system data. Files can
 be written to, or read from, or both. A file has certain attributes,
 including type. File types include regular files and directories. Other
-types of files, such as symbolic links ( [[fs.def.symlink]]), may be
+types of files, such as symbolic links ([[fs.def.symlink]]), may be
 supported by the implementation.
 
 A collection of files and their attributes.
@@ -6137,7 +6137,7 @@ following characteristics of filenames are operating system dependent:
 - Special rules that may apply to file types other than regular files,
   such as directories.
 
-A link ( [[fs.def.link]]) to an existing file. Some file systems support
+A link ([[fs.def.link]]) to an existing file. Some file systems support
 multiple hard links to a file. If the last hard link to a file is
 removed, the file itself is removed.
 
@@ -6148,9 +6148,9 @@ An object that associates a filename with a file. Several links can
 associate names with the same file.
 
 For narrow character strings, the operating system dependent current
-encoding for pathnames ( [[fs.def.pathname]]). For wide character
+encoding for pathnames ([[fs.def.pathname]]). For wide character
 strings, the implementation-defined execution wide-character set
-encoding ( [[lex.charset]]).
+encoding ([[lex.charset]]).
 
 The operating system dependent pathname format accepted by the host
 operating system.
@@ -6165,7 +6165,7 @@ Normalization of a generic format pathname means:
 2.  Replace each slash character in the *root-name* with a
     *preferred-separator*.
 3.  Replace each *directory-separator* with a *preferred-separator*.
-    \[*Note 1*: The generic pathname grammar ( [[fs.path.generic]])
+    \[*Note 1*: The generic pathname grammar ([[fs.path.generic]])
     defines *directory-separator* as one or more slashes and
     *preferred-separator*s. — *end note*]
 4.  Remove each *dot* filename and any immediately following
@@ -6208,7 +6208,7 @@ be multiple pathnames that resolve to the same file.
 resolution. — *end example*]
 
 A path that is not absolute, and as such, only unambiguously identifies
-the location of a file when resolved ( [[fs.def.pathres]]) relative to
+the location of a file when resolved ([[fs.def.pathres]]) relative to
 an implied starting location. The elements of a path that determine if
 it is relative are operating system dependent.
 
@@ -6233,7 +6233,7 @@ in overload resolution unless `EcharT` is one of the encoded character
 types.
 
 Template parameters named `InputIterator` shall meet the input iterator
-requirements ( [[input.iterators]]) and shall have a value type that is
+requirements ([[input.iterators]]) and shall have a value type that is
 one of the encoded character types.
 
 [*Note 1*: Use of an encoded character type implies an associated
@@ -6242,7 +6242,7 @@ no implied character set and encoding, they are not included as
 permitted types. — *end note*]
 
 Template parameters named `Allocator` shall meet the Allocator
-requirements ( [[allocator.requirements]]).
+requirements ([[allocator.requirements]]).
 
 #### Namespaces and headers <a id="fs.req.namespace">[[fs.req.namespace]]</a>
 
@@ -6472,7 +6472,7 @@ namespace std::filesystem {
 ```
 
 `trivial-clock` is an *implementation-defined* type that satisfies the
-`TrivialClock` requirements ( [[time.clock.req]]) and that is capable of
+`TrivialClock` requirements ([[time.clock.req]]) and that is capable of
 representing and measuring file time values. Implementations should
 ensure that the resolution and range of `file_time_type` reflect the
 operating system dependent resolution and range of file time values.
@@ -6525,8 +6525,8 @@ follows, unless otherwise specified:
 
 ### Class `path` <a id="fs.class.path">[[fs.class.path]]</a>
 
-An object of class `path` represents a path ( [[fs.def.path]]) and
-contains a pathname ( [[fs.def.pathname]]). Such an object is concerned
+An object of class `path` represents a path ([[fs.def.path]]) and
+contains a pathname ([[fs.def.pathname]]). Such an object is concerned
 only with the lexical and syntactic aspects of a path. The path does not
 necessarily exist in external storage, and the pathname is not
 necessarily valid for the current operating system or for a particular
@@ -6681,7 +6681,7 @@ namespace std::filesystem {
 character type used to represent pathnames.
 
 The value of the `preferred_separator` member is the operating system
-dependent *preferred-separator* character ( [[fs.path.generic]]).
+dependent *preferred-separator* character ([[fs.path.generic]]).
 
 [*Example 1*: For POSIX-based operating systems, `value_type` is `char`
 and `preferred_separator` is the slash character (`'/'`). For
@@ -6747,8 +6747,8 @@ Except in a *root-name*, multiple successive *directory-separator*
 characters are considered to be the same as one *directory-separator*
 character.
 
-The filename *dot* ( [[fs.def.filename]]) is treated as a reference to
-the current directory. The filename *dot-dot* ( [[fs.def.filename]]) is
+The filename *dot* ([[fs.def.filename]]) is treated as a reference to
+the current directory. The filename *dot-dot* ([[fs.def.filename]]) is
 treated as a reference to the parent directory. What the filename
 *dot-dot* refers to relative to *root-directory* is
 *implementation-defined*. Specific filenames may have special meanings
@@ -6874,7 +6874,7 @@ of type `path::value_type`.
 
 #### `path` requirements <a id="fs.path.req">[[fs.path.req]]</a>
 
-In addition to the requirements ( [[fs.req]]), function template
+In addition to the requirements ([[fs.req]]), function template
 parameters named `Source` shall be one of:
 
 - `basic_string<EcharT, traits, Allocator>`. A function argument
@@ -6904,7 +6904,7 @@ participate in overload resolution unless either
   valid and denotes a possibly `const` encoded character type (
   [[temp.deduct]]).
 
-[*Note 1*: See path conversions ( [[fs.path.cvt]]) for how the value
+[*Note 1*: See path conversions ([[fs.path.cvt]]) for how the value
 types above and their encodings convert to `path::value_type` and its
 encoding. — *end note*]
 
@@ -6938,8 +6938,8 @@ path(string_type&& source, format fmt = auto_format);
 
 *Effects:* Constructs an object of class `path` for which the pathname
 in the detected-format of `source` has the original value of
-`source` ( [[fs.path.fmt.cvt]]), converting format if
-required ( [[fs.path.fmt.cvt]]). `source` is left in a valid but
+`source` ([[fs.path.fmt.cvt]]), converting format if
+required ([[fs.path.fmt.cvt]]). `source` is left in a valid but
 unspecified state.
 
 ``` cpp
@@ -6949,10 +6949,10 @@ template <class InputIterator>
   path(InputIterator first, InputIterator last, format fmt = auto_format);
 ```
 
-*Effects:* Let `s` be the effective range of `source` ( [[fs.path.req]])
+*Effects:* Let `s` be the effective range of `source` ([[fs.path.req]])
 or the range \[`first`, `last`), with the encoding converted if
-required ( [[fs.path.cvt]]). Finds the detected-format of
-`s` ( [[fs.path.fmt.cvt]]) and constructs an object of class `path` for
+required ([[fs.path.cvt]]). Finds the detected-format of
+`s` ([[fs.path.fmt.cvt]]) and constructs an object of class `path` for
 which the pathname in that format is `s`.
 
 ``` cpp
@@ -6968,13 +6968,13 @@ template <class InputIterator>
 \[`first`, `last`), after converting the encoding as follows:
 
 - If `value_type` is `wchar_t`, converts to the native wide
-  encoding ( [[fs.def.native.encode]]) using the
+  encoding ([[fs.def.native.encode]]) using the
   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`.
 - Otherwise a conversion is performed using the
   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`, and then a second
   conversion to the current narrow encoding.
 
-Finds the detected-format of `s` ( [[fs.path.fmt.cvt]]) and constructs
+Finds the detected-format of `s` ([[fs.path.fmt.cvt]]) and constructs
 an object of class `path` for which the pathname in that format is `s`.
 
 [*Example 1*:
@@ -6993,7 +6993,7 @@ fs::create_directory(fs::path(latin1_string, latin1_locale));
 For POSIX-based operating systems, the path is constructed by first
 using `latin1_facet` to convert ISO/IEC 8859-1 encoded `latin1_string`
 to a wide character string in the native wide
-encoding ( [[fs.def.native.encode]]). The resulting wide string is then
+encoding ([[fs.def.native.encode]]). The resulting wide string is then
 converted to a narrow character pathname string in the current native
 narrow encoding. If the native wide encoding is UTF-16 or UTF-32, and
 the current native narrow encoding is UTF-8, all of the characters in
@@ -7053,10 +7053,10 @@ template <class InputIterator>
   path& assign(InputIterator first, InputIterator last);
 ```
 
-*Effects:* Let `s` be the effective range of `source` ( [[fs.path.req]])
+*Effects:* Let `s` be the effective range of `source` ([[fs.path.req]])
 or the range \[`first`, `last`), with the encoding converted if
-required ( [[fs.path.cvt]]). Finds the detected-format of
-`s` ( [[fs.path.fmt.cvt]]) and sets the pathname in that format to `s`.
+required ([[fs.path.cvt]]). Finds the detected-format of
+`s` ([[fs.path.fmt.cvt]]) and sets the pathname in that format to `s`.
 
 *Returns:* `*this`.
 
@@ -7270,7 +7270,7 @@ void swap(path& rhs) noexcept;
 ##### `path` native format observers <a id="fs.path.native.obs">[[fs.path.native.obs]]</a>
 
 The string returned by all native format observers is in the native
-pathname format ( [[fs.def.native]]).
+pathname format ([[fs.def.native]]).
 
 ``` cpp
 const string_type& native() const noexcept;
@@ -7324,7 +7324,7 @@ always UTF-8.
 ##### `path` generic format observers <a id="fs.path.generic.obs">[[fs.path.generic.obs]]</a>
 
 Generic format observer functions return strings formatted according to
-the generic pathname format ( [[fs.path.generic]]). A single slash
+the generic pathname format ([[fs.path.generic]]). A single slash
 (`'/'`) character is used as the *directory-separator*.
 
 [*Example 1*:
@@ -7569,7 +7569,7 @@ bool is_absolute() const;
 ```
 
 *Returns:* `true` if the pathname in the native format contains an
-absolute path ( [[fs.def.absolute.path]]), else `false`.
+absolute path ([[fs.def.absolute.path]]), else `false`.
 
 [*Example 9*: `path("/").is_absolute()` is `true` for POSIX-based
 operating systems, and `false` for Windows-based operating
@@ -7588,7 +7588,7 @@ path lexically_normal() const;
 ```
 
 *Returns:* A path whose pathname in the generic format is the normal
-form ( [[fs.def.normal.form]]) of the pathname in the generic format of
+form ([[fs.def.normal.form]]) of the pathname in the generic format of
 `*this`.
 
 [*Example 10*:
@@ -7609,8 +7609,8 @@ path lexically_relative(const path& base) const;
 ```
 
 *Returns:* `*this` made relative to `base`. Does not
-resolve ( [[fs.def.pathres]]) symlinks. Does not first
-normalize ( [[fs.def.normal.form]]) `*this` or `base`.
+resolve ([[fs.def.pathres]]) symlinks. Does not first
+normalize ([[fs.def.normal.form]]) `*this` or `base`.
 
 *Effects:* If `root_name() != base.root_name()` is `true` or
 `is_absolute() != base.is_absolute()` is `true` or
@@ -7653,7 +7653,7 @@ slashes, but that does not affect `path` equality.
 [*Note 6*: If symlink following semantics are desired, use the
 operational function `relative()`. — *end note*]
 
-[*Note 7*: If normalization ( [[fs.def.normal.form]]) is needed to
+[*Note 7*: If normalization ([[fs.def.normal.form]]) is needed to
 ensure consistent matching of elements, apply `lexically_normal()` to
 `*this`, `base`, or both. — *end note*]
 
@@ -7667,17 +7667,17 @@ path, return it. Otherwise return `*this`.
 [*Note 8*: If symlink following semantics are desired, use the
 operational function `proximate()`. — *end note*]
 
-[*Note 9*: If normalization ( [[fs.def.normal.form]]) is needed to
+[*Note 9*: If normalization ([[fs.def.normal.form]]) is needed to
 ensure consistent matching of elements, apply `lexically_normal()` to
 `*this`, `base`, or both. — *end note*]
 
 #### `path` iterators <a id="fs.path.itr">[[fs.path.itr]]</a>
 
 Path iterators iterate over the elements of the pathname in the generic
-format ( [[fs.path.generic]]).
+format ([[fs.path.generic]]).
 
 A `path::iterator` is a constant iterator satisfying all the
-requirements of a bidirectional iterator ( [[bidirectional.iterators]])
+requirements of a bidirectional iterator ([[bidirectional.iterators]])
 except that, for dereferenceable iterators `a` and `b` of type
 `path::iterator` with `a == b`, there is no requirement that `*a` and
 `*b` are bound to the same object. Its `value_type` is `path`.
@@ -7765,7 +7765,7 @@ Path equality and path equivalence have different semantics.
   \[*Example 2*: `path("foo") == "bar"` is never
   `true`. — *end example*]
 - Equivalence is determined by the `equivalent()` non-member function,
-  which determines if two paths resolve ( [[fs.def.pathres]]) to the
+  which determines if two paths resolve ([[fs.def.pathres]]) to the
   same file system entity. \[*Example 3*: `equivalent("foo", "bar")`
   will be `true` when both paths resolve to the same
   file. — *end example*]
@@ -7834,7 +7834,7 @@ encoded. The value type of `Source` and `InputIterator` is `char`.
 *Returns:*
 
 - If `value_type` is `char` and the current native narrow
-  encoding ( [[fs.def.native.encode]]) is UTF-8, return `path(source)`
+  encoding ([[fs.def.native.encode]]) is UTF-8, return `path(source)`
   or `path(first, last)`; otherwise,
 - if `value_type` is `wchar_t` and the native wide encoding is UTF-16,
   or if `value_type` is `char16_t` or `char32_t`, convert `source` or
@@ -7843,7 +7843,7 @@ encoded. The value type of `Source` and `InputIterator` is `char`.
 - convert `source` or \[`first`, `last`) to a temporary, `tmp`, of type
   `u32string` and return `path(tmp)`.
 
-*Remarks:* Argument format conversion ( [[fs.path.fmt.cvt]]) applies to
+*Remarks:* Argument format conversion ([[fs.path.fmt.cvt]]) applies to
 the arguments for these functions. How Unicode encoding conversions are
 performed is unspecified.
 
@@ -8017,7 +8017,7 @@ exposition; implementations shall provide only a single definition.
 
 #### Enum class `perms` <a id="fs.enum.perms">[[fs.enum.perms]]</a>
 
-The `enum class` type `perms` is a bitmask type ( [[bitmask.types]])
+The `enum class` type `perms` is a bitmask type ([[bitmask.types]])
 that specifies bitmask constants used to identify file permissions, with
 the meanings listed in Table  [[tab:fs.enum.perms]].
 
@@ -8229,7 +8229,7 @@ symlink status, file size, and last write time.
 Implementations are encouraged to store such additional file attributes
 during directory iteration if their values are available and storing the
 values would allow the implementation to eliminate file system accesses
-by `directory_entry` observer functions ( [[fs.op.funcs]]). Such stored
+by `directory_entry` observer functions ([[fs.op.funcs]]). Such stored
 file attribute values are said to be *cached*.
 
 [*Note 1*: For purposes of exposition, class `directory_iterator` (
@@ -8315,13 +8315,13 @@ void refresh(error_code& ec) noexcept;
 
 *Effects:* Stores the current values of any cached attributes of the
 file `p` resolves to. If an error occurs, an error is
-reported ( [[fs.err.report]]) and the values of any cached attributes
+reported ([[fs.err.report]]) and the values of any cached attributes
 are unspecified.
 
 *Throws:* As specified in  [[fs.err.report]].
 
 [*Note 1*: Implementations of
-`directory_iterator` ( [[fs.class.directory_iterator]]) are prohibited
+`directory_iterator` ([[fs.class.directory_iterator]]) are prohibited
 from directly or indirectly calling the `refresh` function since it must
 access the external file system, and the objective of caching is to
 avoid unnecessary file system accesses. — *end note*]
@@ -8521,7 +8521,7 @@ bool operator>=(const directory_entry& rhs) const noexcept;
 
 An object of type `directory_iterator` provides an iterator for a
 sequence of `directory_entry` elements representing the path and any
-cached attribute values ( [[fs.class.directory_entry]]) for each file in
+cached attribute values ([[fs.class.directory_entry]]) for each file in
 a directory or in an *implementation-defined* directory-like file type.
 
 [*Note 1*: For iteration into sub-directories, see class
@@ -8589,7 +8589,7 @@ The order of directory entries obtained by dereferencing successive
 increments of a `directory_iterator` is unspecified.
 
 Constructors and non-const `directory_iterator` member functions store
-the values of any cached attributes ( [[fs.class.directory_entry]]) in
+the values of any cached attributes ([[fs.class.directory_entry]]) in
 the `directory_entry` element returned by `operator*()`.
 `directory_iterator` member functions shall not directly or indirectly
 call any `directory_entry` `refresh` function.
@@ -8672,7 +8672,7 @@ directory_iterator& increment(error_code& ec) noexcept;
 ```
 
 *Effects:* As specified for the prefix increment operation of Input
-iterators ( [[input.iterators]]).
+iterators ([[input.iterators]]).
 
 *Returns:* `*this`.
 
@@ -8885,7 +8885,7 @@ recursive_directory_iterator& increment(error_code& ec) noexcept;
 ```
 
 *Effects:* As specified for the prefix increment operation of Input
-iterators ( [[input.iterators]]), except that:
+iterators ([[input.iterators]]), except that:
 
 - If there are no more entries at the current depth, then if
   `depth() != 0` iteration over the parent directory resumes; otherwise
@@ -8955,7 +8955,7 @@ Filesystem operation functions query or modify files, including
 directories, in external storage.
 
 [*Note 1*: Because hardware failures, network failures, file system
-races ( [[fs.def.race]]), and many other kinds of errors occur
+races ([[fs.def.race]]), and many other kinds of errors occur
 frequently in file system operations, users should be aware that any
 filesystem operation function, no matter how apparently innocuous, may
 encounter an error; see  [[fs.err.report]]. — *end note*]
@@ -8968,7 +8968,7 @@ path absolute(const path& p, error_code& ec);
 ```
 
 *Effects:* Composes an absolute path referencing the same file system
-location as `p` according to the operating system ( [[fs.conform.os]]).
+location as `p` according to the operating system ([[fs.conform.os]]).
 
 *Returns:* The composed path. The signature with argument `ec` returns
 `path()` if an error occurs.
@@ -8980,7 +8980,7 @@ unless an error occurs. — *end note*]
 
 [*Note 2*: To resolve symlinks, or perform other sanitization which
 might require queries to secondary storage, such as hard disks, consider
-`canonical` ( [[fs.op.canonical]]). — *end note*]
+`canonical` ([[fs.op.canonical]]). — *end note*]
 
 [*Note 3*: Implementations are strongly encouraged to not query
 secondary storage, and not consider `!exists(p)` an
@@ -9033,7 +9033,7 @@ void copy(const path& from, const path& to, copy_options options,
 ```
 
 *Requires:* At most one element from each option group
-( [[fs.enum.copy.opts]]) is set in `options`.
+([[fs.enum.copy.opts]]) is set in `options`.
 
 *Effects:* Before the first use of `f` and `t`:
 
@@ -9058,7 +9058,7 @@ void copy(const path& from, const path& to, copy_options options,
 Effects are then as follows:
 
 - If `f.type()` or `t.type()` is an implementation-defined file
-  type ( [[fs.enum.file_type]]), then the effects are
+  type ([[fs.enum.file_type]]), then the effects are
   *implementation-defined*.
 - Otherwise, an error is reported as specified in  [[fs.err.report]] if:
   - `!exists(f)`, or
@@ -9173,7 +9173,7 @@ bool copy_file(const path& from, const path& to, copy_options options,
 ```
 
 *Requires:* At most one element from each option group
-( [[fs.enum.copy.opts]]) is set in `options`.
+([[fs.enum.copy.opts]]) is set in `options`.
 
 *Effects:* As follows:
 
@@ -9195,7 +9195,7 @@ bool copy_file(const path& from, const path& to, copy_options options,
     or
   - `(options & copy_options::update_existing) `` `` != copy_options::none`
     and `from` is more recent than `to`, determined as if by use of the
-    `last_write_time` function ( [[fs.op.last_write_time]]).
+    `last_write_time` function ([[fs.op.last_write_time]]).
 - Otherwise, no effects.
 
 *Returns:* `true` if the `from` file was copied, otherwise `false`. The
@@ -9406,7 +9406,7 @@ and `status(p2)`, respectively.
 
 *Effects:* Determines `s1` and `s2`. If
 `(!exists(s1) && !exists(s2)) || (is_other(s1) && is_other(s2))` an
-error is reported ( [[fs.err.report]]).
+error is reported ([[fs.err.report]]).
 
 *Returns:* `true`, if `s1 == s2` and `p1` and `p2` resolve to the same
 file system entity, else `false`. The signature with argument `ec`
@@ -9452,7 +9452,7 @@ uintmax_t file_size(const path& p, error_code& ec) noexcept;
 
 *Returns:*
 
-- If `!exists(p)` an error is reported ( [[fs.err.report]]).
+- If `!exists(p)` an error is reported ([[fs.err.report]]).
 - Otherwise, if `is_regular_file(p)`, the size in bytes of the file `p`
   resolves to, determined as if by the value of the POSIX `stat`
   structure member `st_size` obtained as if by POSIX `stat()`.
@@ -9980,7 +9980,7 @@ determined as if by converting the `st_mode` member of the obtained
   - Otherwise, if the attributes indicate a socket, as if by POSIX
     `S_ISSOCK`, returns `file_status(file_type::socket, prms)`.
   - Otherwise, if the attributes indicate an implementation-defined file
-    type ( [[fs.enum.file_type]]), returns
+    type ([[fs.enum.file_type]]), returns
     `file_status(file_type::`*`A`*`, prms)`, where *A* is the constant
     for the *implementation-defined* file type.
   - Otherwise, returns `file_status(file_type::unknown, prms)`.
@@ -10049,7 +10049,7 @@ path weakly_canonical(const path& p, error_code& ec);
 ```
 
 *Returns:* `p` with symlinks resolved and the result
-normalized ( [[fs.def.normal.form]]).
+normalized ([[fs.def.normal.form]]).
 
 *Effects:* Using `status(p)` or `status(p, ec)`, respectively, to
 determine existence, return a path composed by `operator/=` from the
@@ -10062,7 +10062,7 @@ For the second form, `canonical()` is called with `ec` as an
 occurrence, if any.
 
 *Postconditions:* The returned path is in normal
-form ( [[fs.def.normal.form]]).
+form ([[fs.def.normal.form]]).
 
 *Remarks:* Implementations are encouraged to avoid unnecessary
 normalization such as when `canonical` has already been called on the
@@ -10151,7 +10151,7 @@ The contents and meaning of the header `<cstdio>` are the same as the C
 standard library header `<stdio.h>`.
 
 Calls to the function `tmpnam` with an argument that is a null pointer
-value may introduce a data race ( [[res.on.data.races]]) with other
+value may introduce a data race ([[res.on.data.races]]) with other
 calls to `tmpnam` with an argument that is a null pointer value.
 
 ISO C 7.21.
@@ -10238,7 +10238,7 @@ C standard library header `<inttypes.h>`, with the following changes:
 - The header `<cinttypes>` includes the header `<cstdint>` instead of
   `<stdint.h>`, and
 - if and only if the type `intmax_t` designates an extended integer
-  type ( [[basic.fundamental]]), the following function signatures are
+  type ([[basic.fundamental]]), the following function signatures are
   added:
   ``` cpp
   intmax_t abs(intmax_t);

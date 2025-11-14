@@ -439,7 +439,7 @@ friend void swap(stop_token& x, stop_token& y) noexcept;
 
 The class `stop_source` implements the semantics of making a stop
 request. A stop request made on a `stop_source` object is visible to all
-associated `stop_source` and `stop_token` ( [[stoptoken]]) objects. Once
+associated `stop_source` and `stop_token` ([[stoptoken]]) objects. Once
 a stop request has been made it cannot be withdrawn (a subsequent stop
 request has no effect).
 
@@ -4025,13 +4025,13 @@ its destructor, do not introduce data races. The member functions
 The default value of the `CompletionFunction` template parameter is an
 unspecified type, such that, in addition to satisfying the requirements
 of `CompletionFunction`, it meets the *Cpp17DefaultConstructible*
-requirements ( [[cpp17.defaultconstructible]]) and `completion()` has no
+requirements ([[cpp17.defaultconstructible]]) and `completion()` has no
 effects.
 
 `barrier::arrival_token` is an unspecified type, such that it meets the
-*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]),
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]), and
-*Cpp17Destructible* ( [[cpp17.destructible]]) requirements.
+*Cpp17MoveConstructible* ([[cpp17.moveconstructible]]),
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]), and
+*Cpp17Destructible* ([[cpp17.destructible]]) requirements.
 
 ``` cpp
 static constexpr ptrdiff_t max() noexcept;
@@ -4422,7 +4422,7 @@ template<class R, class Alloc>
 ```
 
 *Preconditions:* `Alloc` meets the *Cpp17Allocator* requirements
-( [[cpp17.allocator]]).
+([[cpp17.allocator]]).
 
 ``` cpp
 promise();
@@ -5028,7 +5028,7 @@ implementation may choose any of the corresponding policies):
 
 - If `launch::async` is set in `policy`, calls
   `invoke(`*`decay-copy`*`(std::forward<F>(f)),`
-  *decay-copy*(std::forward\<Args\>(args))...) ( [[func.require]],
+  *decay-copy*(std::forward\<Args\>(args))...) ([[func.require]],
   [[thread.thread.constr]]) as if in a new thread of execution
   represented by a `thread` object with the calls to *`decay-copy`*
   being evaluated in the thread that called `async`. Any return value is

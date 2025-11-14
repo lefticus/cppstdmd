@@ -2530,7 +2530,7 @@ nor can the preprocessing symbols `#` [[cpp.stringize]] and `##`
 — *end note*]
 
 Operator functions are usually not called directly; instead they are
-invoked to evaluate the operators they implement ( [[over.unary]] –
+invoked to evaluate the operators they implement ([[over.unary]] –
 [[over.inc]]). They can be explicitly called, however, using the
 *operator-function-id* as the name of the function in the function call
 syntax [[expr.call]].

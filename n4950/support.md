@@ -2526,7 +2526,7 @@ using exception_ptr = unspecified;
 The type `exception_ptr` can be used to refer to an exception object.
 
 `exception_ptr` meets the requirements of *Cpp17NullablePointer*
-( [[cpp17.nullablepointer]]).
+([[cpp17.nullablepointer]]).
 
 Two non-null values of type `exception_ptr` are equivalent and compare
 equal if and only if they refer to the same exception.

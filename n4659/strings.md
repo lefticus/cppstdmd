@@ -3,7 +3,7 @@
 ## General <a id="strings.general">[[strings.general]]</a>
 
 This Clause describes components for manipulating sequences of any
-non-array POD ( [[basic.types]]) type. Such types are called *char-like
+non-array POD ([[basic.types]]) type. Such types are called *char-like
 types*, and objects of char-like types are called *char-like objects* or
 simply *characters*.
 
@@ -575,9 +575,9 @@ The functions described in this Clause can report two kinds of errors,
 each associated with an exception type:
 
 - a *length* error is associated with exceptions of type
-  `length_error` ( [[length.error]]);
+  `length_error` ([[length.error]]);
 - an *out-of-range* error is associated with exceptions of type
-  `out_of_range` ( [[out.of.range]]).
+  `out_of_range` ([[out.of.range]]).
 
 ``` cpp
 namespace std {
@@ -869,7 +869,7 @@ as `charT`. Every object of type
 objects as needed. The `Allocator` object used shall be obtained as
 described in [[container.requirements.general]]. In every specialization
 `basic_string<charT, traits, Allocator>`, the type `traits` shall
-satisfy the character traits requirements ( [[char.traits]]), and the
+satisfy the character traits requirements ([[char.traits]]), and the
 type `traits::char_type` shall name the same type as `charT`.
 
 References, pointers, and iterators referring to the elements of a
@@ -1088,7 +1088,7 @@ template<class InputIterator,
 *Remarks:* Shall not participate in overload resolution if
 `InputIterator` is a type that does not qualify as an input iterator, or
 if `Allocator` is a type that does not qualify as an
-allocator ( [[container.requirements.general]]).
+allocator ([[container.requirements.general]]).
 
 ``` cpp
 basic_string& operator=(const basic_string& str);
@@ -1116,7 +1116,7 @@ basic_string& operator=(basic_string&& str)
 ```
 
 *Effects:* Move assigns as a sequence
-container ( [[container.requirements]]), except that iterators, pointers
+container ([[container.requirements]]), except that iterators, pointers
 and references may be invalidated.
 
 *Returns:* `*this`.
@@ -2738,7 +2738,7 @@ template<class charT, class traits, class Allocator>
 ```
 
 *Effects:* Behaves as a formatted input
-function ( [[istream.formatted.reqmts]]). After constructing a `sentry`
+function ([[istream.formatted.reqmts]]). After constructing a `sentry`
 object, if the sentry converts to `true`, calls `str.erase()` and then
 extracts characters from `is` and appends them to `str` as if by calling
 `str.append(1, c)`. If `is.width()` is greater than zero, the maximum
@@ -2756,7 +2756,7 @@ and the `sentry` object is destroyed.
 
 If the function extracts no characters, it calls
 `is.setstate(ios::failbit)`, which may throw
-`ios_base::failure` ( [[iostate.flags]]).
+`ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `is`.
 
@@ -2784,7 +2784,7 @@ template<class charT, class traits, class Allocator>
 ```
 
 *Effects:* Behaves as an unformatted input
-function ( [[istream.unformatted]]), except that it does not affect the
+function ([[istream.unformatted]]), except that it does not affect the
 value returned by subsequent calls to `basic_istream<>::gcount()`. After
 constructing a `sentry` object, if the sentry converts to `true`, calls
 `str.erase()` and then extracts characters from `is` and appends them to
@@ -2794,16 +2794,16 @@ occurs:
 - end-of-file occurs on the input sequence (in which case, the `getline`
   function calls `is.setstate(ios_base::eofbit)`).
 - `traits::eq(c, delim)` for the next available input character *c* (in
-  which case, *c* is extracted but not appended) ( [[iostate.flags]])
+  which case, *c* is extracted but not appended) ([[iostate.flags]])
 - `str.max_size()` characters are stored (in which case, the function
-  calls `is.setstate(ios_base::failbit))` ( [[iostate.flags]])
+  calls `is.setstate(ios_base::failbit))` ([[iostate.flags]])
 
 The conditions are tested in the order shown. In any case, after the
 last character is extracted, the `sentry` object is destroyed.
 
 If the function extracts no characters, it calls
 `is.setstate(ios_base::failbit)` which may throw
-`ios_base::failure` ( [[iostate.flags]]).
+`ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `is`.
 
@@ -3223,15 +3223,15 @@ using const_iterator = implementation-defined  // type of basic_string_view::con
 ```
 
 A type that meets the requirements of a constant random access
-iterator ( [[random.access.iterators]]) and of a contiguous
-iterator ( [[iterator.requirements.general]]) whose `value_type` is the
+iterator ([[random.access.iterators]]) and of a contiguous
+iterator ([[iterator.requirements.general]]) whose `value_type` is the
 template parameter `charT`.
 
 For a `basic_string_view str`, any operation that invalidates a pointer
 in the range \[`str.data()`, `str.data() + str.size()`) invalidates
 pointers, iterators, and references returned from `str`’s methods.
 
-All requirements on container iterators ( [[container.requirements]])
+All requirements on container iterators ([[container.requirements]])
 apply to `basic_string_view::const_iterator` as well.
 
 ``` cpp
@@ -3707,7 +3707,7 @@ template<class charT, class traits>
 ```
 
 *Effects:* Behaves as a formatted output
-function ( [[ostream.formatted.reqmts]]) of `os`. Forms a character
+function ([[ostream.formatted.reqmts]]) of `os`. Forms a character
 sequence `seq`, initially consisting of the elements defined by the
 range \[`str.begin()`, `str.end()`). Determines padding for `seq` as
 described in  [[ostream.formatted.reqmts]]. Then inserts `seq` as if by
@@ -3725,11 +3725,11 @@ template<> struct hash<u32string_view>;
 template<> struct hash<wstring_view>;
 ```
 
-The specialization is enabled ( [[unord.hash]]).
+The specialization is enabled ([[unord.hash]]).
 
 [*Note 1*: The hash value of a string view object is equal to the hash
 value of the corresponding string object
-( [[basic.string.hash]]). — *end note*]
+([[basic.string.hash]]). — *end note*]
 
 ### Suffix for `basic_string_view` literals <a id="string.view.literals">[[string.view.literals]]</a>
 
@@ -3863,9 +3863,9 @@ The contents and meaning of the header `<cstring>` are the same as the C
 standard library header `<string.h>`.
 
 The functions `strerror` and `strtok` are not required to avoid data
-races ( [[res.on.data.races]]).
+races ([[res.on.data.races]]).
 
-The functions `memcpy` and `memmove` are signal-safe ( [[csignal.syn]]).
+The functions `memcpy` and `memmove` are signal-safe ([[csignal.syn]]).
 
 [*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
 `memchr`, have different signatures in this International Standard, but
@@ -3991,7 +3991,7 @@ ISO C 7.28
 
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
-[*Note 1*: The headers `<cstdlib>` ( [[cstdlib.syn]]) and `<cwchar>` (
+[*Note 1*: The headers `<cstdlib>` ([[cstdlib.syn]]) and `<cwchar>` (
 [[cwchar.syn]]) declare the functions described in this
 subclause. — *end note*]
 
@@ -4016,7 +4016,7 @@ int wctomb(char* s, wchar_t wchar);
 standard library.
 
 *Remarks:* Calls to these functions may introduce a data
-race ( [[res.on.data.races]]) with other calls to the same function.
+race ([[res.on.data.races]]) with other calls to the same function.
 
 ISO C 7.22.7
 
@@ -4032,7 +4032,7 @@ size_t wcsrtombs(char* dst, const wchar_t** src, size_t len, mbstate_t* ps);
 standard library.
 
 *Remarks:* Calling these functions with an `mbstate_t*` argument that is
-a null pointer value may introduce a data race ( [[res.on.data.races]])
+a null pointer value may introduce a data race ([[res.on.data.races]])
 with other calls to the same function with an `mbstate_t*` argument that
 is a null pointer value.
 
@@ -4172,8 +4172,8 @@ ISO C 7.29.6.3
     [[string.require]]).
 
 [^3]: For example, as an argument to non-member functions `swap()` (
-    [[string.special]]), `operator>{}>()` ( [[string.io]]), and
-    `getline()` ( [[string.io]]), or as an argument to
+    [[string.special]]), `operator>{}>()` ([[string.io]]), and
+    `getline()` ([[string.io]]), or as an argument to
     `basic_string::swap()`.
 
 [^4]: `reserve()` uses `allocator_traits<Allocator>::allocate()` which

@@ -61,10 +61,10 @@ components can be instantiated.
 
 ### Thread safety <a id="iostreams.threadsafety">[[iostreams.threadsafety]]</a>
 
-Concurrent access to a stream object ( [[string.streams]], 
-[[file.streams]]), stream buffer object ( [[stream.buffers]]), or C
-Library stream ( [[c.files]]) by multiple threads may result in a data
-race ( [[intro.multithread]]) unless otherwise specified (
+Concurrent access to a stream object ([[string.streams]], 
+[[file.streams]]), stream buffer object ([[stream.buffers]]), or C
+Library stream ([[c.files]]) by multiple threads may result in a data
+race ([[intro.multithread]]) unless otherwise specified (
 [[iostream.objects]]). Data races result in undefined behavior (
 [[intro.multithread]]).
 
@@ -238,7 +238,7 @@ namespace std {
 
 The header `<iostream>` declares objects that associate objects with the
 standard C streams provided for by the functions declared in
-`<cstdio>` ( [[c.files]]), and includes all the headers necessary to use
+`<cstdio>` ([[c.files]]), and includes all the headers necessary to use
 these objects.
 
 The objects are constructed and the associations are established at some
@@ -255,10 +255,10 @@ Mixing operations on corresponding wide- and narrow-character streams
 follows the same semantics as mixing such operations on `FILE`s, as
 specified in Amendment 1 of the ISO C standard.
 
-Concurrent access to a synchronized ( [[ios.members.static]]) standard
-iostream object’s formatted and unformatted input ( [[istream]]) and
-output ( [[ostream]]) functions or a standard C stream by multiple
-threads shall not result in a data race ( [[intro.multithread]]). Users
+Concurrent access to a synchronized ([[ios.members.static]]) standard
+iostream object’s formatted and unformatted input ([[istream]]) and
+output ([[ostream]]) functions or a standard C stream by multiple
+threads shall not result in a data race ([[intro.multithread]]). Users
 must still synchronize concurrent use of these objects and streams by
 multiple threads if they wish to avoid interleaved characters.
 
@@ -273,32 +273,32 @@ object `stdin`, declared in `<cstdio>`.
 
 After the object `cin` is initialized, `cin.tie()` returns `&cout`. Its
 state is otherwise the same as required for
-`basic_ios<char>::init` ( [[basic.ios.cons]]).
+`basic_ios<char>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 ostream cout;
 ```
 
 The object `cout` controls output to a stream buffer associated with the
-object `stdout`, declared in `<cstdio>` ( [[c.files]]).
+object `stdout`, declared in `<cstdio>` ([[c.files]]).
 
 ``` cpp
 ostream cerr;
 ```
 
 The object `cerr` controls output to a stream buffer associated with the
-object `stderr`, declared in `<cstdio>` ( [[c.files]]).
+object `stderr`, declared in `<cstdio>` ([[c.files]]).
 
 After the object `cerr` is initialized, `cerr.flags() & unitbuf` is
 nonzero and `cerr.tie()` returns `&cout`. Its state is otherwise the
-same as required for `basic_ios<char>::init` ( [[basic.ios.cons]]).
+same as required for `basic_ios<char>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 ostream clog;
 ```
 
 The object `clog` controls output to a stream buffer associated with the
-object `stderr`, declared in `<cstdio>` ( [[c.files]]).
+object `stderr`, declared in `<cstdio>` ([[c.files]]).
 
 ### Wide stream objects <a id="wide.stream.objects">[[wide.stream.objects]]</a>
 
@@ -311,32 +311,32 @@ the object `stdin`, declared in `<cstdio>`.
 
 After the object `wcin` is initialized, `wcin.tie()` returns `&wcout`.
 Its state is otherwise the same as required for
-`basic_ios<wchar_t>::init` ( [[basic.ios.cons]]).
+`basic_ios<wchar_t>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 wostream wcout;
 ```
 
 The object `wcout` controls output to a stream buffer associated with
-the object `stdout`, declared in `<cstdio>` ( [[c.files]]).
+the object `stdout`, declared in `<cstdio>` ([[c.files]]).
 
 ``` cpp
 wostream wcerr;
 ```
 
 The object `wcerr` controls output to a stream buffer associated with
-the object `stderr`, declared in `<cstdio>` ( [[c.files]]).
+the object `stderr`, declared in `<cstdio>` ([[c.files]]).
 
 After the object `wcerr` is initialized, `wcerr.flags() & unitbuf` is
 nonzero and `wcerr.tie()` returns `&wcout`. Its state is otherwise the
-same as required for `basic_ios<wchar_t>::init` ( [[basic.ios.cons]]).
+same as required for `basic_ios<wchar_t>::init` ([[basic.ios.cons]]).
 
 ``` cpp
 wostream wclog;
 ```
 
 The object `wclog` controls output to a stream buffer associated with
-the object `stderr`, declared in `<cstdio>` ( [[c.files]]).
+the object `stderr`, declared in `<cstdio>` ([[c.files]]).
 
 ## Iostreams base classes <a id="iostreams.base">[[iostreams.base]]</a>
 
@@ -594,7 +594,7 @@ base class with `msg` and `ec`.
 typedef T1 fmtflags;
 ```
 
-The type `fmtflags` is a bitmask type ( [[bitmask.types]]). Setting its
+The type `fmtflags` is a bitmask type ([[bitmask.types]]). Setting its
 elements has the effects indicated in
 Table  [[tab:iostreams.fmtflags.effects]].
 
@@ -637,7 +637,7 @@ Table  [[tab:iostreams.fmtflags.constants]].
 typedef T2 iostate;
 ```
 
-The type `iostate` is a bitmask type ( [[bitmask.types]]) that contains
+The type `iostate` is a bitmask type ([[bitmask.types]]) that contains
 the elements indicated in Table  [[tab:iostreams.iostate.effects]].
 
 **Table: `iostate` effects**
@@ -659,7 +659,7 @@ Type `iostate` also defines the constant:
 typedef T3 openmode;
 ```
 
-The type `openmode` is a bitmask type ( [[bitmask.types]]). It contains
+The type `openmode` is a bitmask type ([[bitmask.types]]). It contains
 the elements indicated in Table  [[tab:iostreams.openmode.effects]].
 
 **Table: `openmode` effects**
@@ -680,7 +680,7 @@ the elements indicated in Table  [[tab:iostreams.openmode.effects]].
 typedef T4 seekdir;
 ```
 
-The type `seekdir` is an enumerated type ( [[enumerated.types]]) that
+The type `seekdir` is an enumerated type ([[enumerated.types]]) that
 contains the elements indicated in
 Table  [[tab:iostreams.seekdir.effects]].
 
@@ -711,7 +711,7 @@ The class `Init` describes an object whose construction ensures the
 construction of the eight objects declared in `<iostream>` (
 [[iostream.objects]]) that associate file stream buffers with the
 standard C streams provided for by the functions declared in
-`<cstdio>` ( [[c.files]]).
+`<cstdio>` ([[c.files]]).
 
 For the sake of exposition, the maintained data is presented here as:
 
@@ -810,7 +810,7 @@ locale imbue(const locale& loc);
 ```
 
 *Effects:* Calls each registered callback pair
-`(fn,index)` ( [[ios.base.callback]]) as
+`(fn,index)` ([[ios.base.callback]]) as
 `(*fn)(imbue_event,*this,index)` at such a time that a call to
 `ios_base::getloc()` from within `fn` returns the new locale value
 `loc`.
@@ -835,7 +835,7 @@ bool sync_with_stdio(bool sync = true);
 ```
 
 *Returns:* `true` if the previous state of the standard iostream
-objects ( [[iostream.objects]]) was synchronized and otherwise returns
+objects ([[iostream.objects]]) was synchronized and otherwise returns
 `false`. The first time it is called, the function returns `true`.
 
 *Effects:* If any input or output operation has occurred using the
@@ -894,7 +894,7 @@ static int xalloc();
 *Returns:* `index` `++`.
 
 *Remarks:* Concurrent access to this function by multiple threads shall
-not result in a data race ( [[intro.multithread]]).
+not result in a data race ([[intro.multithread]]).
 
 ``` cpp
 long& iword(int idx);
@@ -946,8 +946,8 @@ void register_callback(event_callback fn, int index);
 ```
 
 *Effects:* Registers the pair `(fn,index)` such that during calls to
-`imbue()` ( [[ios.base.locales]]), `copyfmt()`, or
-`~ios_base()` ( [[ios.base.cons]]), the function `fn` is called with
+`imbue()` ([[ios.base.locales]]), `copyfmt()`, or
+`~ios_base()` ([[ios.base.cons]]), the function `fn` is called with
 argument `index`. Functions registered are called when an event occurs,
 in opposite order of registration. Functions registered while a callback
 function is active are not called until the next event.
@@ -973,7 +973,7 @@ destroyed, whichever comes first; otherwise the behavior is undefined.
 ```
 
 *Effects:* Destroys an object of class `ios_base`. Calls each registered
-callback pair `(fn, index)` ( [[ios.base.callback]]) as
+callback pair `(fn, index)` ([[ios.base.callback]]) as
 `(*fn)(erase_event, *this, index)` at such time that any `ios_base`
 member function called from within `fn` has well defined results.
 
@@ -1109,7 +1109,7 @@ basic_ios();
 ```
 
 *Effects:* Constructs an object of class
-`basic_ios` ( [[ios.base.cons]]) leaving its member objects
+`basic_ios` ([[ios.base.cons]]) leaving its member objects
 uninitialized. The object shall be initialized by calling
 `basic_ios::init` before its first use or before it is destroyed,
 whichever comes first; otherwise the behavior is undefined.
@@ -1185,8 +1185,8 @@ basic_streambuf<charT,traits>* rdbuf(basic_streambuf<charT,traits>* sb);
 locale imbue(const locale& loc);
 ```
 
-*Effects:* Calls `ios_base::imbue(loc)` ( [[ios.base.locales]]) and if
-`rdbuf()!=0` then `rdbuf()->pubimbue(loc)` ( [[streambuf.locales]]).
+*Effects:* Calls `ios_base::imbue(loc)` ([[ios.base.locales]]) and if
+`rdbuf()!=0` then `rdbuf()->pubimbue(loc)` ([[streambuf.locales]]).
 
 *Returns:* The prior value of `ios_base::imbue()`.
 
@@ -1327,7 +1327,7 @@ If `rdbuf()!=0` then `state == rdstate()`; otherwise
 *Effects:* If
 `((state | (rdbuf() ? goodbit : badbit)) & exceptions()) == 0`, returns.
 Otherwise, the function throws an object `fail` of class
-`basic_ios::failure` ( [[ios::failure]]), constructed with
+`basic_ios::failure` ([[ios::failure]]), constructed with
 *implementation-defined* argument values.
 
 ``` cpp
@@ -1335,7 +1335,7 @@ void setstate(iostate state);
 ```
 
 *Effects:* Calls `clear(rdstate() | state)` (which may throw
-`basic_ios::failure` ( [[ios::failure]])).
+`basic_ios::failure` ([[ios::failure]])).
 
 ``` cpp
 bool good() const;
@@ -1880,7 +1880,7 @@ streamsize in_avail();
 ```
 
 *Returns:* If a read position is available, returns `egptr() - gptr()`.
-Otherwise returns `showmanyc()` ( [[streambuf.virt.get]]).
+Otherwise returns `showmanyc()` ([[streambuf.virt.get]]).
 
 ``` cpp
 int_type snextc();
@@ -2068,7 +2068,7 @@ basic_streambuf* setbuf(char_type* s, streamsize n);
 
 *Effects:* Influences stream buffering in a way that is defined
 separately for each class derived from `basic_streambuf` in this
-Clause ( [[stringbuf.virtuals]], [[filebuf.virtuals]]).
+Clause ([[stringbuf.virtuals]], [[filebuf.virtuals]]).
 
 *Default behavior:* Does nothing. Returns `this`.
 
@@ -2080,7 +2080,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 
 *Effects:* Alters the stream positions within one or more of the
 controlled sequences in a way that is defined separately for each class
-derived from `basic_streambuf` in this Clause ( [[stringbuf.virtuals]],
+derived from `basic_streambuf` in this Clause ([[stringbuf.virtuals]],
 [[filebuf.virtuals]]).
 
 *Default behavior:* Returns `pos_type(off_type(-1))`.
@@ -2093,7 +2093,7 @@ pos_type seekpos(pos_type sp,
 
 *Effects:* Alters the stream positions within one or more of the
 controlled sequences in a way that is defined separately for each class
-derived from `basic_streambuf` in this Clause ( [[stringbuf]],
+derived from `basic_streambuf` in this Clause ([[stringbuf]],
 [[filebuf]]).
 
 *Default behavior:* Returns `pos_type(off_type(-1))`.
@@ -2108,7 +2108,7 @@ is, if `pbase()` is non-null the characters between `pbase()` and
 be reset as appropriate.
 
 *Returns:* -1 on failure. What constitutes failure is determined by each
-derived class ( [[filebuf.virtuals]]).
+derived class ([[filebuf.virtuals]]).
 
 *Default behavior:* Returns zero.
 
@@ -2459,7 +2459,7 @@ or `rdbuf()->sgetc()`. They may use other public members of `istream`.
 If `rdbuf()->sbumpc()` or `rdbuf()->sgetc()` returns `traits::eof()`,
 then the input function, except as explicitly noted otherwise, completes
 its actions and does `setstate(eofbit)`, which may throw
-`ios_base::failure` ( [[iostate.flags]]), before returning.
+`ios_base::failure` ([[iostate.flags]]), before returning.
 
 If one of these called functions throws an exception, then unless
 explicitly noted otherwise, the input function sets `badbit` in error
@@ -2476,7 +2476,7 @@ explicit basic_istream(basic_streambuf<charT,traits>* sb);
 
 *Effects:* Constructs an object of class `basic_istream`, assigning
 initial values to the base class by calling
-`basic_ios::init(sb)` ( [[basic.ios.cons]]).
+`basic_ios::init(sb)` ([[basic.ios.cons]]).
 
 `gcount() == 0`
 
@@ -2571,7 +2571,7 @@ if (ctype.is(ctype.space,c)!=0)
 If, after any preparation is completed, `is.good()` is `true`,
 `ok_ != false` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]]))[^18]
+`ios_base::failure` ([[iostate.flags]]))[^18]
 
 ``` cpp
 ~sentry();
@@ -2616,7 +2616,7 @@ operator>>(void*& val);
 ```
 
 As in the case of the inserters, these extractors depend on the locale’s
-`num_get<>` ( [[locale.num.get]]) object to perform parsing the input
+`num_get<>` ([[locale.num.get]]) object to perform parsing the input
 stream data. These extractors behave as formatted input functions (as
 described in  [[istream.formatted.reqmts]]). After a sentry object is
 constructed, the conversion occurs as if performed by the following code
@@ -2749,7 +2749,7 @@ which may be the first position if no characters were extracted.
 `operator` then calls `width(0)`.
 
 If the function extracted no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]).
+which may throw `ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `in`.
 
@@ -2780,7 +2780,7 @@ basic_istream<charT,traits>& operator>>
 *Effects:* Behaves as an unformatted input function (as described
 in  [[istream.unformatted]], paragraph 1). If `sb` is null, calls
 `setstate(failbit)`, which may throw
-`ios_base::failure` ( [[iostate.flags]]). After a sentry object is
+`ios_base::failure` ([[iostate.flags]]). After a sentry object is
 constructed, extracts characters from `*this` and inserts them in the
 output sequence controlled by `sb`. Characters are extracted and
 inserted until any of the following occurs:
@@ -2791,10 +2791,10 @@ inserted until any of the following occurs:
 - an exception occurs (in which case the exception is caught).
 
 If the function inserts no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]). If it inserted
+which may throw `ios_base::failure` ([[iostate.flags]]). If it inserted
 no characters because it caught an exception thrown while extracting
 characters from `*this` and `failbit` is on in
-`exceptions()` ( [[iostate.flags]]), then the caught exception is
+`exceptions()` ([[iostate.flags]]), then the caught exception is
 rethrown.
 
 *Returns:* `*this`.
@@ -2838,7 +2838,7 @@ int_type get();
 in  [[istream.unformatted]], paragraph 1). After constructing a sentry
 object, extracts a character `c`, if one is available. Otherwise, the
 function calls `setstate(failbit)`, which may throw
-`ios_base::failure` ( [[iostate.flags]]),
+`ios_base::failure` ([[iostate.flags]]),
 
 *Returns:* `c` if available, otherwise `traits::eof()`.
 
@@ -2850,7 +2850,7 @@ basic_istream<charT,traits>& get(char_type& c);
 in  [[istream.unformatted]], paragraph 1). After constructing a sentry
 object, extracts a character, if one is available, and assigns it to
 `c`.[^23] Otherwise, the function calls `setstate(failbit)` (which may
-throw `ios_base::failure` ( [[iostate.flags]])).
+throw `ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -2872,7 +2872,7 @@ extracted and stored until any of the following occurs:
   which case `c` is not extracted).
 
 If the function stores no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])). In any case,
+(which may throw `ios_base::failure` ([[iostate.flags]])). In any case,
 if `n` is greater than zero it then stores a null character into the
 next successive location of the array.
 
@@ -2906,7 +2906,7 @@ the following occurs:
   rethrown).
 
 If the function inserts no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure` ( [[iostate.flags]]).
+which may throw `ios_base::failure` ([[iostate.flags]]).
 
 *Returns:* `*this`.
 
@@ -2940,7 +2940,7 @@ extracted and stored until one of the following occurs:
 These conditions are tested in the order shown.[^27]
 
 If the function extracts no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])).[^28]
+(which may throw `ios_base::failure` ([[iostate.flags]])).[^28]
 
 In any case, if `n` is greater than zero, it then stores a null
 character (using `charT()`) into the next successive location of the
@@ -2989,11 +2989,11 @@ in  [[istream.unformatted]], paragraph 1). After constructing a sentry
 object, extracts characters and discards them. Characters are extracted
 until any of the following occurs:
 
-- `n != numeric_limits<streamsize>::max()` ( [[limits]]) and `n`
+- `n != numeric_limits<streamsize>::max()` ([[limits]]) and `n`
   characters have been extracted so far
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(eofbit)`, which may throw
-  `ios_base::failure` ( [[iostate.flags]]));
+  `ios_base::failure` ([[iostate.flags]]));
 - `traits::eq_int_type(traits::to_int_type(c), delim)` for the next
   available input character `c` (in which case `c` is extracted).
 
@@ -3028,7 +3028,7 @@ following occurs:
 - `n` characters are stored;
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(failbit | eofbit)`, which may throw
-  `ios_base::failure` ( [[iostate.flags]])).
+  `ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -3042,7 +3042,7 @@ object, if `!good()` calls `setstate(failbit)` which may throw an
 exception, and return. Otherwise extracts characters and stores them
 into successive locations of an array whose first element is designated
 by `s`. If `rdbuf()->in_avail() == -1`, calls `setstate(eofbit)` (which
-may throw `ios_base::failure` ( [[iostate.flags]])), and extracts no
+may throw `ios_base::failure` ([[iostate.flags]])), and extracts no
 characters;
 
 - If `rdbuf()->in_avail() == 0`, extracts no characters
@@ -3060,7 +3060,7 @@ first clears `eofbit`. After constructing a sentry object, if `!good()`
 calls `setstate(failbit)` which may throw an exception, and return. If
 `rdbuf()` is not null, calls `rdbuf->sputbackc()`. If `rdbuf()` is null,
 or if `sputbackc()` returns `traits::eof()`, calls `setstate(badbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])). This
+(which may throw `ios_base::failure` ([[iostate.flags]])). This
 function extracts no characters, so the value returned by the next call
 to `gcount()` is 0.
 
@@ -3076,7 +3076,7 @@ first clears `eofbit`. After constructing a sentry object, if `!good()`
 calls `setstate(failbit)` which may throw an exception, and return. If
 `rdbuf()` is not null, calls `rdbuf()->sungetc()`. If `rdbuf()` is null,
 or if `sungetc()` returns `traits::eof()`, calls `setstate(badbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])). This
+(which may throw `ios_base::failure` ([[iostate.flags]])). This
 function extracts no characters, so the value returned by the next call
 to `gcount()` is 0.
 
@@ -3093,7 +3093,7 @@ returned by subsequent calls to `gcount()`. After constructing a sentry
 object, if `rdbuf()` is a null pointer, returns -1 . Otherwise, calls
 `rdbuf()->pubsync()` and, if that function returns -1 calls
 `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]]), and returns `-1`. Otherwise,
+`ios_base::failure` ([[iostate.flags]]), and returns `-1`. Otherwise,
 returns zero.
 
 ``` cpp
@@ -3155,7 +3155,7 @@ returned by subsequent calls to is.gcount(). After constructing a sentry
 object extracts characters as long as the next available character `c`
 is whitespace or until there are no more characters in the sequence.
 Whitespace characters are distinguished with the same criterion as used
-by `sentry::sentry` ( [[istream::sentry]]). If `ws` stops extracting
+by `sentry::sentry` ([[istream::sentry]]). If `ws` stops extracting
 characters because there are no more available it sets `eofbit`, but not
 `failbit`.
 
@@ -3205,8 +3205,8 @@ explicit basic_iostream(basic_streambuf<charT,traits>* sb);
 
 *Effects:* Constructs an object of class `basic_iostream`, assigning
 initial values to the base classes by calling
-`basic_istream<charT,traits>(sb)` ( [[istream]]) and
-`basic_ostream<charT,traits>(sb)` ( [[ostream]])
+`basic_istream<charT,traits>(sb)` ([[istream]]) and
+`basic_ostream<charT,traits>(sb)` ([[ostream]])
 
 `rdbuf()==sb` and `gcount()==0`.
 
@@ -3447,7 +3447,7 @@ If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.[^30]
 If, after any preparation is completed, `os.good()` is `true`,
 `ok_ == true` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]]))[^31]
+`ios_base::failure` ([[iostate.flags]]))[^31]
 
 ``` cpp
 ~sentry();
@@ -3659,7 +3659,7 @@ read from `sb` and inserted until any of the following occurs:
 - an exception occurs while getting a character from `sb`.
 
 If the function inserts no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure` ( [[iostate.flags]])). If an
+(which may throw `ios_base::failure` ([[iostate.flags]])). If an
 exception was thrown while extracting a character, the function sets
 `failbit` in error state, and if `failbit` is on in `exceptions()` the
 caught exception is rethrown.
@@ -3721,7 +3721,7 @@ template<class traits>
 *Effects:* Behaves like a formatted inserter (as described
 in  [[ostream.formatted.reqmts]]) of `out`. Creates a character sequence
 `seq` of `n` characters starting at `s`, each widened using
-`out.widen()` ( [[basic.ios.members]]), where `n` is the number that
+`out.widen()` ([[basic.ios.members]]), where `n` is the number that
 would be computed as if by:
 
 - `traits::length(s)` for the overload where the first argument is of
@@ -3762,7 +3762,7 @@ in  [[ostream.unformatted]], paragraph 1). After constructing a sentry
 object, inserts the character `c`, if possible.[^36]
 
 Otherwise, calls `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -3779,7 +3779,7 @@ inserted until either of the following occurs:
 - `n` characters are inserted;
 - inserting in the output sequence fails (in which case the function
   calls `setstate(badbit)`, which may throw
-  `ios_base::failure` ( [[iostate.flags]])).
+  `ios_base::failure` ([[iostate.flags]])).
 
 *Returns:* `*this`.
 
@@ -3793,7 +3793,7 @@ null pointer, constructs a sentry object. If this object returns `true`
 when converted to a value of type `bool` the function calls
 `rdbuf()->pubsync()`. If that function returns -1 calls
 `setstate(badbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])). Otherwise, if the sentry
+`ios_base::failure` ([[iostate.flags]])). Otherwise, if the sentry
 object returns `false`, does nothing.
 
 *Returns:* `*this`.
@@ -4004,7 +4004,7 @@ template <class moneyT> unspecified get_money(moneyT& mon, bool intl = false);
 specialization of the `basic_string` template (Clause  [[strings]]).
 
 *Effects:* The expression `in ``get_money(mon, intl)` described below
-behaves as a formatted input function ( [[istream.formatted.reqmts]]).
+behaves as a formatted input function ([[istream.formatted.reqmts]]).
 
 *Returns:* An object of unspecified type such that if `in` is an object
 of type `basic_istream<charT, traits>` then the expression
@@ -4145,7 +4145,7 @@ instance of `basic_ostream` with member type `char_type` the same as
 `charT` and with member type `traits_type`, which in the second form is
 the same as `traits`, then the expression
 `out `` quoted(s, delim, escape)` behaves as a formatted output
-function ( [[ostream.formatted.reqmts]]) of `out`. This forms a
+function ([[ostream.formatted.reqmts]]) of `out`. This forms a
 character sequence `seq`, initially consisting of the following
 elements:
 
@@ -4174,8 +4174,8 @@ template <class charT, class traits, class Allocator>
   `char_type` and `traits_type` the same as `charT` and `traits`,
   respectively, then the expression `in `` quoted(s, delim, escape)`
   behaves as if it extracts the following characters from `in` using
-  `basic_istream::operator` ( [[istream::extractors]]) which may throw
-  `ios_base::failure` ( [[ios::failure]]):
+  `basic_istream::operator` ([[istream::extractors]]) which may throw
+  `ios_base::failure` ([[ios::failure]]):
   - If the first character extracted is equal to `delim`, as determined
     by `traits_type::eq`, then:
     - Turn off the `skipws` flag.
@@ -4314,7 +4314,7 @@ explicit basic_stringbuf(ios_base::openmode which =
 ```
 
 *Effects:* Constructs an object of class `basic_stringbuf`, initializing
-the base class with `basic_streambuf()` ( [[streambuf.cons]]), and
+the base class with `basic_streambuf()` ([[streambuf.cons]]), and
 initializing `mode` with `which`.
 
 `str() == ""`.
@@ -4325,7 +4325,7 @@ explicit basic_stringbuf(const basic_string<charT,traits,Allocator>& s,
 ```
 
 *Effects:* Constructs an object of class `basic_stringbuf`, initializing
-the base class with `basic_streambuf()` ( [[streambuf.cons]]), and
+the base class with `basic_streambuf()` ([[streambuf.cons]]), and
 initializing `mode` with `which`. Then calls `str(s)`.
 
 ``` cpp
@@ -4607,7 +4607,7 @@ explicit basic_istringstream(ios_base::openmode which = ios_base::in);
 *Effects:* Constructs an object of class
 `basic_istringstream<charT, traits>`, initializing the base class with
 `basic_istream(&sb)` and initializing `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in))` ([[stringbuf.cons]]).
 
 ``` cpp
 explicit basic_istringstream(
@@ -4618,7 +4618,7 @@ explicit basic_istringstream(
 *Effects:* Constructs an object of class
 `basic_istringstream<charT, traits>`, initializing the base class with
 `basic_istream(&sb)` and initializing `sb` with
-`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::in))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::in))` ([[stringbuf.cons]]).
 
 ``` cpp
 basic_istringstream(basic_istringstream&& rhs);
@@ -4736,7 +4736,7 @@ explicit basic_ostringstream(ios_base::openmode which = ios_base::out);
 *Effects:* Constructs an object of class `basic_ostringstream`,
 initializing the base class with `basic_ostream(&sb)` and initializing
 `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out))` ([[stringbuf.cons]]).
 
 ``` cpp
 explicit basic_ostringstream(
@@ -4747,7 +4747,7 @@ explicit basic_ostringstream(
 *Effects:* Constructs an object of class
 `basic_ostringstream<charT, traits>`, initializing the base class with
 `basic_ostream(&sb)` and initializing `sb` with
-`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::out))` ( [[stringbuf.cons]]).
+`basic_stringbuf<charT, traits, Allocator>(str, which | ios_base::out))` ([[stringbuf.cons]]).
 
 ``` cpp
 basic_ostringstream(basic_ostringstream&& rhs);
@@ -4971,7 +4971,7 @@ namespace std {
 ```
 
 In this subclause, the type name `FILE` refers to the type `FILE`
-declared in `<cstdio>` ( [[c.files]]).
+declared in `<cstdio>` ([[c.files]]).
 
 The class template `basic_filebuf` treats a file as a source or sink of
 bytes. In an environment that uses a large character set, the file
@@ -5070,7 +5070,7 @@ basic_filebuf();
 
 *Effects:* Constructs an object of class `basic_filebuf<charT,traits>`,
 initializing the base class with
-`basic_streambuf<charT,traits>()` ( [[streambuf.cons]]).
+`basic_streambuf<charT,traits>()` ([[streambuf.cons]]).
 
 `is_open() == false`.
 
@@ -5228,7 +5228,7 @@ streamsize showmanyc();
 ```
 
 *Effects:* Behaves the same as
-`basic_streambuf::showmanyc()` ( [[streambuf.virtuals]]).
+`basic_streambuf::showmanyc()` ([[streambuf.virtuals]]).
 
 An implementation might well provide an overriding definition for this
 function signature if it can determine that more characters can be read
@@ -5417,7 +5417,7 @@ void imbue(const locale& loc);
 
 If the file is not positioned at its beginning and the encoding of the
 current locale as determined by `a_codecvt.encoding()` is
-state-dependent ( [[locale.codecvt.virtuals]]) then that facet is the
+state-dependent ([[locale.codecvt.virtuals]]) then that facet is the
 same as the corresponding facet of `loc`.
 
 *Effects:* Causes characters inserted or extracted after this call to be
@@ -5486,7 +5486,7 @@ basic_ifstream();
 
 *Effects:* Constructs an object of class `basic_ifstream<charT,traits>`,
 initializing the base class with `basic_istream(&sb)` and initializing
-`sb` with `basic_filebuf<charT,traits>())` ( [[istream.cons]],
+`sb` with `basic_filebuf<charT,traits>())` ([[istream.cons]],
 [[filebuf.cons]]).
 
 ``` cpp
@@ -5496,7 +5496,7 @@ explicit basic_ifstream(const char* s,
 
 *Effects:* Constructs an object of class `basic_ifstream`, initializing
 the base class with `basic_istream(&sb)` and initializing `sb` with
-`basic_filebuf<charT, traits>())` ( [[istream.cons]], [[filebuf.cons]]),
+`basic_filebuf<charT, traits>())` ([[istream.cons]], [[filebuf.cons]]),
 then calls `rdbuf()->open(s, mode | ios_base::in)`. If that function
 returns a null pointer, calls `setstate(failbit)`.
 
@@ -5563,7 +5563,7 @@ void open(const char* s, ios_base::openmode mode = ios_base::in);
 *Effects:* Calls `rdbuf()->open(s, mode | ios_base::in)`. If that
 function does not return a null pointer calls `clear()`, otherwise calls
 `setstate(failbit)` (which may throw `ios_base::failure`
-( [[iostate.flags]])).
+([[iostate.flags]])).
 
 ``` cpp
 void open(const string& s, ios_base::openmode mode = ios_base::in);
@@ -5577,7 +5577,7 @@ void close();
 
 *Effects:* Calls `rdbuf()->close()` and, if that function returns a null
 pointer, calls `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 #### Class template `basic_ofstream` <a id="ofstream">[[ofstream]]</a>
 
@@ -5638,7 +5638,7 @@ basic_ofstream();
 
 *Effects:* Constructs an object of class `basic_ofstream<charT,traits>`,
 initializing the base class with `basic_ostream(&sb)` and initializing
-`sb` with `basic_filebuf<charT,traits>())` ( [[ostream.cons]],
+`sb` with `basic_filebuf<charT,traits>())` ([[ostream.cons]],
 [[filebuf.cons]]).
 
 ``` cpp
@@ -5648,7 +5648,7 @@ explicit basic_ofstream(const char* s,
 
 *Effects:* Constructs an object of class `basic_ofstream<charT,traits>`,
 initializing the base class with `basic_ostream(&sb)` and initializing
-`sb` with `basic_filebuf<charT,traits>())` ( [[ostream.cons]],
+`sb` with `basic_filebuf<charT,traits>())` ([[ostream.cons]],
 [[filebuf.cons]]), then calls `rdbuf()->open(s, mode|ios_base::out)`. If
 that function returns a null pointer, calls `setstate(failbit)`.
 
@@ -5715,7 +5715,7 @@ void open(const char* s, ios_base::openmode mode = ios_base::out);
 *Effects:* Calls `rdbuf()->open(s, mode | ios_base::out)`. If that
 function does not return a null pointer calls `clear()`, otherwise calls
 `setstate(failbit)` (which may throw `ios_base::failure`
-( [[iostate.flags]])).
+([[iostate.flags]])).
 
 ``` cpp
 void close();
@@ -5723,7 +5723,7 @@ void close();
 
 *Effects:* Calls `rdbuf()->close()` and, if that function fails (returns
 a null pointer), calls `setstate(failbit)` (which may throw
-`ios_base::failure` ( [[iostate.flags]])).
+`ios_base::failure` ([[iostate.flags]])).
 
 ``` cpp
 void open(const string& s, ios_base::openmode mode = ios_base::out);
@@ -5871,7 +5871,7 @@ void open(const char* s,
 *Effects:* Calls `rdbuf()->open(s,mode)`. If that function does not
 return a null pointer calls `clear()`, otherwise calls
 `setstate(failbit)`, (which may throw
-`ios_base::failure`) ( [[iostate.flags]]).
+`ios_base::failure`) ([[iostate.flags]]).
 
 ``` cpp
 void open(const string& s,
@@ -5885,7 +5885,7 @@ void close();
 ```
 
 *Effects:* Calls `rdbuf()->close()` and, if that function returns
-returns a null pointer, calls `setstate(failbit)` ( [[iostate.flags]])
+returns a null pointer, calls `setstate(failbit)` ([[iostate.flags]])
 (which may throw `ios_base::failure`).
 
 ### C library files <a id="c.files">[[c.files]]</a>
@@ -5894,7 +5894,7 @@ Table  [[tab:iostreams.hdr.cstdio]] describes header `<cstdio>`. C++does
 not define the function `gets`.
 
 Calls to the function `tmpnam` with an argument of `NULL` may introduce
-a data race ( [[res.on.data.races]]) with other calls to `tmpnam` with
+a data race ([[res.on.data.races]]) with other calls to `tmpnam` with
 an argument of `NULL`.
 
 ISO C 7.9, Amendment 1 4.6.2.
@@ -5910,7 +5910,7 @@ Library header `<inttypes.h>`, with the following changes:
 - the header `<cinttypes>` includes the header `<cstdint>` instead of
   `<stdint.h>`, and
 - if and only if the type `intmax_t` designates an extended integer
-  type ( [[basic.fundamental]]), the following function signatures are
+  type ([[basic.fundamental]]), the following function signatures are
   added:
   ``` cpp
   intmax_t abs(intmax_t);

@@ -15,7 +15,7 @@ template-parameter-list:
 ```
 
 The `>` token following the of a may be the product of replacing a
-`>{>}` token by two consecutive `>` tokens ( [[temp.names]]).
+`>{>}` token by two consecutive `>` tokens ([[temp.names]]).
 
 The *declaration* in a *template-declaration* shall
 
@@ -44,7 +44,7 @@ instantiation the *init-declarator-list* in the declaration shall
 contain at most one declarator. When such a declaration is used to
 declare a class template, no declarator is permitted.
 
-A template name has linkage ( [[basic.link]]). A non-member function
+A template name has linkage ([[basic.link]]). A non-member function
 template can have internal linkage; any other template name shall have
 external linkage. Specializations (explicit or implicit) of a template
 that has internal linkage are distinct from all specializations in other
@@ -53,23 +53,23 @@ translation units. A template, a template explicit specialization (
 not have C linkage. Use of a linkage specification other than C or C++
 with any of these constructs is conditionally-supported, with
 *implementation-defined* semantics. Template definitions shall obey the
-one definition rule ( [[basic.def.odr]]). Default arguments for function
+one definition rule ([[basic.def.odr]]). Default arguments for function
 templates and for member functions of class templates are considered
-definitions for the purpose of template instantiation ( [[temp.decls]])
+definitions for the purpose of template instantiation ([[temp.decls]])
 and must also obey the one definition rule.
 
 A class template shall not have the same name as any other template,
 class, function, variable, enumeration, enumerator, namespace, or type
-in the same scope ( [[basic.scope]]), except as specified in (
+in the same scope ([[basic.scope]]), except as specified in (
 [[temp.class.spec]]). Except that a function template can be overloaded
 either by (non-template) functions with the same name or by other
-function templates with the same name ( [[temp.over]]), a template name
+function templates with the same name ([[temp.over]]), a template name
 declared in namespace scope or in class scope shall be unique in that
 scope.
 
 A function template, member function of a class template, or static data
 member of a class template shall be defined in every translation unit in
-which it is implicitly instantiated ( [[temp.inst]]) unless the
+which it is implicitly instantiated ([[temp.inst]]) unless the
 corresponding specialization is explicitly instantiated (
 [[temp.explicit]]) in some translation unit; no diagnostic is required.
 
@@ -97,7 +97,7 @@ type-parameter:
 ```
 
 The `>` token following the of a may be the product of replacing a
-`>{>}` token by two consecutive `>` tokens ( [[temp.names]]).
+`>{>}` token by two consecutive `>` tokens ([[temp.names]]).
 
 There is no semantic difference between `class` and `typename` in a
 *template-parameter*. `typename` followed by an *unqualified-id* names a
@@ -148,7 +148,7 @@ A non-type *template-parameter* shall have one of the following
 - `std::nullptr_t`.
 
 Other types are disallowed either explicitly below or implicitly by the
-rules governing the form of *template-argument*s ( [[temp.arg]]). The
+rules governing the form of *template-argument*s ([[temp.arg]]). The
 top-level *cv-qualifiers* on the *template-parameter* are ignored when
 determining its type.
 
@@ -194,11 +194,11 @@ R<v> y;                         // OK due to implicit argument conversion
 S<v> z;                         // OK due to both adjustment and conversion
 ```
 
-A *default template-argument* is a *template-argument* ( [[temp.arg]])
+A *default template-argument* is a *template-argument* ([[temp.arg]])
 specified after `=` in a *template-parameter*. A default
 *template-argument* may be specified for any kind of
 *template-parameter* (type, non-type, template) that is not a template
-parameter pack ( [[temp.variadic]]). A default *template-argument* may
+parameter pack ([[temp.variadic]]). A default *template-argument* may
 be specified in a template declaration. A default *template-argument*
 shall not be specified in the *template-parameter-list*s of the
 definition of a member of a class template that appears outside of the
@@ -232,7 +232,7 @@ parameter pack. If a *template-parameter* of a primary class template or
 alias template is a template parameter pack, it shall be the last
 *template-parameter*. A template parameter pack of a function template
 shall not be followed by another template parameter unless that template
-parameter can be deduced or has a default argument ( [[temp.deduct]]).
+parameter can be deduced or has a default argument ([[temp.deduct]]).
 
 ``` cpp
 template<class T1 = int, class T2> class B;   // error
@@ -283,8 +283,8 @@ template <template <class TT = char> class T> void A<T>::g() {
 
 If a *template-parameter* is a *type-parameter* with an ellipsis prior
 to its optional *identifier* or is a *parameter-declaration* that
-declares a parameter pack ( [[dcl.fct]]), then the *template-parameter*
-is a template parameter pack ( [[temp.variadic]]). A template parameter
+declares a parameter pack ([[dcl.fct]]), then the *template-parameter*
+is a template parameter pack ([[temp.variadic]]). A template parameter
 pack that is a *parameter-declaration* whose type contains one or more
 unexpanded parameter packs is a pack expansion. Similarly, a template
 parameter pack that is a *type-parameter* with a
@@ -308,7 +308,7 @@ template<class... T, T... Values> struct static_array;// error: Values expands t
 
 ## Names of template specializations <a id="temp.names">[[temp.names]]</a>
 
-A template specialization ( [[temp.spec]]) can be referred to by a
+A template specialization ([[temp.spec]]) can be referred to by a
 *template-id*:
 
 ``` bnf
@@ -341,14 +341,14 @@ template-argument:
   id-expression
 ```
 
-The name lookup rules ( [[basic.lookup]]) are used to associate the use
+The name lookup rules ([[basic.lookup]]) are used to associate the use
 of a name with a template declaration; that is, to identify a name as a
 *template-name*.
 
 For a *template-name* to be explicitly qualified by the template
 arguments, the name must be known to refer to a template.
 
-After name lookup ( [[basic.lookup]]) finds that a name is a
+After name lookup ([[basic.lookup]]) finds that a name is a
 *template-name* or that an *operator-function-id* or a
 *literal-operator-id* refers to a set of overloaded functions any member
 of which is a function template if this is followed by a `<`, the `<` is
@@ -378,7 +378,7 @@ When the name of a member template specialization appears after `.` or
 *qualified-id*, and the object expression of the *postfix-expression* is
 type-dependent or the *nested-name-specifier* in the *qualified-id*
 refers to a dependent type, but the name is not a member of the current
-instantiation ( [[temp.dep.type]]), the member template name must be
+instantiation ([[temp.dep.type]]), the member template name must be
 prefixed by the keyword `template`. Otherwise the name is assumed to
 name a non-template.
 
@@ -530,7 +530,7 @@ Tuple<>* t;                     // OK: Elements is empty
 Tuple* u;                       // syntax error
 ```
 
-An explicit destructor call ( [[class.dtor]]) for an object that has a
+An explicit destructor call ([[class.dtor]]) for an object that has a
 type that is a class template specialization may explicitly specify the
 *template-argument*s.
 
@@ -581,7 +581,7 @@ void f() {
 }
 ```
 
-A template type argument may be an incomplete type ( [[basic.types]]).
+A template type argument may be an incomplete type ([[basic.types]]).
 
 If a declaration acquires a function type through a type dependent on a
 *template-parameter* and this causes a declaration that does not use the
@@ -603,10 +603,10 @@ A *template-argument* for a non-type, non-template *template-parameter*
 shall be one of:
 
 - for a non-type *template-parameter* of integral or enumeration type, a
-  converted constant expression ( [[expr.const]]) of the type of the
+  converted constant expression ([[expr.const]]) of the type of the
   *template-parameter*; or
 - the name of a non-type *template-parameter*; or
-- a constant expression ( [[expr.const]]) that designates the address of
+- a constant expression ([[expr.const]]) that designates the address of
   an object with static storage duration and external or internal
   linkage or a function with external or internal linkage, including
   function templates and function *template-id*s but excluding
@@ -620,7 +620,7 @@ shall be one of:
   [[conv.mem]]); or
 - a pointer to member expressed as described in  [[expr.unary.op]].
 
-A string literal ( [[lex.string]]) does not satisfy the requirements of
+A string literal ([[lex.string]]) does not satisfy the requirements of
 any of these categories and thus is not an acceptable
 *template-argument*.
 
@@ -672,12 +672,12 @@ the program is ill-formed.
   conversions permitted in a converted constant expression (
   [[expr.const]]) are applied.
 - for a non-type *template-parameter* of type pointer to object,
-  qualification conversions ( [[conv.qual]]) and the array-to-pointer
-  conversion ( [[conv.array]]) are applied; if the *template-argument*
+  qualification conversions ([[conv.qual]]) and the array-to-pointer
+  conversion ([[conv.array]]) are applied; if the *template-argument*
   is of type `std::nullptr_t`, the null pointer conversion (
   [[conv.ptr]]) is applied. In particular, neither the null pointer
   conversion for a zero-valued integral constant expression (
-  [[conv.ptr]]) nor the derived-to-base conversion ( [[conv.ptr]]) are
+  [[conv.ptr]]) nor the derived-to-base conversion ([[conv.ptr]]) are
   applied. Although `0` is a valid *template-argument* for a non-type
   *template-parameter* of integral type, it is not a valid
   *template-argument* for a non-type *template-parameter* of pointer
@@ -690,25 +690,25 @@ the program is ill-formed.
   *template-argument*. The *template-parameter* is bound directly to the
   *template-argument*, which shall be an lvalue.
 - For a non-type *template-parameter* of type pointer to function, the
-  function-to-pointer conversion ( [[conv.func]]) is applied; if the
+  function-to-pointer conversion ([[conv.func]]) is applied; if the
   *template-argument* is of type `std::nullptr_t`, the null pointer
-  conversion ( [[conv.ptr]]) is applied. If the *template-argument*
+  conversion ([[conv.ptr]]) is applied. If the *template-argument*
   represents a set of overloaded functions (or a pointer to such), the
-  matching function is selected from the set ( [[over.over]]).
+  matching function is selected from the set ([[over.over]]).
 - For a non-type *template-parameter* of type reference to function, no
   conversions apply. If the *template-argument* represents a set of
   overloaded functions, the matching function is selected from the set (
   [[over.over]]).
 - For a non-type *template-parameter* of type pointer to member
   function, if the *template-argument* is of type `std::nullptr_t`, the
-  null member pointer conversion ( [[conv.mem]]) is applied; otherwise,
+  null member pointer conversion ([[conv.mem]]) is applied; otherwise,
   no conversions apply. If the *template-argument* represents a set of
   overloaded member functions, the matching member function is selected
-  from the set ( [[over.over]]).
+  from the set ([[over.over]]).
 - For a non-type *template-parameter* of type pointer to data member,
-  qualification conversions ( [[conv.qual]]) are applied; if the
+  qualification conversions ([[conv.qual]]) are applied; if the
   *template-argument* is of type `std::nullptr_t`, the null member
-  pointer conversion ( [[conv.mem]]) is applied.
+  pointer conversion ([[conv.mem]]) is applied.
 
 ``` cpp
 template<const int* pci> struct X { /* ... */ };
@@ -742,7 +742,7 @@ template argument with the corresponding parameter; partial
 specializations are not considered even if their parameter lists match
 that of the template template parameter.
 
-Any partial specializations ( [[temp.class.spec]]) associated with the
+Any partial specializations ([[temp.class.spec]]) associated with the
 primary class template are considered when a specialization based on the
 template *template-parameter* is instantiated. If a specialization is
 not visible at the point of instantiation, and it would have been
@@ -881,7 +881,7 @@ template<class T1, int I> void sort<T1, I>(T1 data[I]);         // error
 ```
 
 However, this syntax is allowed in class template partial
-specializations ( [[temp.class.spec]]).
+specializations ([[temp.class.spec]]).
 
 For purposes of name lookup and instantiation, default arguments of
 function templates and default arguments of member functions of class
@@ -1145,13 +1145,13 @@ list for these function templates.
 A specialization of a conversion function template is not found by name
 lookup. Instead, any conversion function templates visible in the
 context of the use are considered. For each such operator, if argument
-deduction succeeds ( [[temp.deduct.conv]]), the resulting specialization
+deduction succeeds ([[temp.deduct.conv]]), the resulting specialization
 is used as if found by name lookup.
 
 A *using-declaration* in a derived class cannot refer to a
 specialization of a conversion function template in a base class.
 
-Overload resolution ( [[over.ics.rank]]) and partial ordering (
+Overload resolution ([[over.ics.rank]]) and partial ordering (
 [[temp.func.order]]) are used to select the best conversion function
 among multiple specializations of conversion function templates and/or
 non-template conversion functions.
@@ -1190,7 +1190,7 @@ pattern in a list (described below). The form of the pattern depends on
 the context in which the expansion occurs. Pack expansions can occur in
 the following contexts:
 
-- In a function parameter pack ( [[dcl.fct]]); the pattern is the
+- In a function parameter pack ([[dcl.fct]]); the pattern is the
   *parameter-declaration* without the ellipsis.
 - In a template parameter pack that is a pack expansion (
   [[temp.param]]):
@@ -1199,23 +1199,23 @@ the following contexts:
   - if the template parameter pack is a *type-parameter* with a
     *template-parameter-list*; the pattern is the corresponding
     *type-parameter* without the ellipsis.
-- In an *initializer-list* ( [[dcl.init]]); the pattern is an
+- In an *initializer-list* ([[dcl.init]]); the pattern is an
   *initializer-clause*.
 - In a *base-specifier-list* (Clause  [[class.derived]]); the pattern is
   a *base-specifier*.
-- In a *mem-initializer-list* ( [[class.base.init]]); the pattern is a
+- In a *mem-initializer-list* ([[class.base.init]]); the pattern is a
   *mem-initializer*.
-- In a *template-argument-list* ( [[temp.arg]]); the pattern is a
+- In a *template-argument-list* ([[temp.arg]]); the pattern is a
   *template-argument*.
-- In a *dynamic-exception-specification* ( [[except.spec]]); the pattern
+- In a *dynamic-exception-specification* ([[except.spec]]); the pattern
   is a *type-id*.
-- In an *attribute-list* ( [[dcl.attr.grammar]]); the pattern is an
+- In an *attribute-list* ([[dcl.attr.grammar]]); the pattern is an
   *attribute*.
-- In an *alignment-specifier* ( [[dcl.align]]); the pattern is the
+- In an *alignment-specifier* ([[dcl.align]]); the pattern is the
   *alignment-specifier* without the ellipsis.
-- In a *capture-list* ( [[expr.prim.lambda]]); the pattern is a
+- In a *capture-list* ([[expr.prim.lambda]]); the pattern is a
   *capture*.
-- In a `sizeof...` expression ( [[expr.sizeof]]); the pattern is an
+- In a `sizeof...` expression ([[expr.sizeof]]); the pattern is an
   *identifier*.
 
 ``` cpp
@@ -1284,7 +1284,7 @@ template void f<>();  // OK: X<> has no base classes
                       // x is a variable of type X<> that is value-initialized
 ```
 
-The instantiation of a `sizeof...` expression ( [[expr.sizeof]])
+The instantiation of a `sizeof...` expression ([[expr.sizeof]])
 produces an integral constant containing the number of elements in the
 parameter pack it expands.
 
@@ -1304,7 +1304,7 @@ function declaration that is not a template declaration:
 - if the name of the friend is a *qualified-id* and a matching function
   template is found in the specified class or namespace, the friend
   declaration refers to the deduced specialization of that function
-  template ( [[temp.deduct.decl]]), otherwise,
+  template ([[temp.deduct.decl]]), otherwise,
 - the name shall be an *unqualified-id* that declares (or redeclares) an
   ordinary (non-template) function.
 
@@ -1351,8 +1351,8 @@ class A {
 ```
 
 A template friend declaration specifies that all specializations of that
-template, whether they are implicitly instantiated ( [[temp.inst]]),
-partially specialized ( [[temp.class.spec]]) or explicitly specialized (
+template, whether they are implicitly instantiated ([[temp.inst]]),
+partially specialized ([[temp.class.spec]]) or explicitly specialized (
 [[temp.expl.spec]]), are friends of the class containing the template
 friend declaration.
 
@@ -1408,7 +1408,7 @@ class C {
 ```
 
 A friend declaration may first declare a member of an enclosing
-namespace scope ( [[temp.inject]]).
+namespace scope ([[temp.inject]]).
 
 A friend template shall not be declared in a local class.
 
@@ -1434,7 +1434,7 @@ specialization* of the class template named in the *simple-template-id*.
 A partial specialization of a class template provides an alternative
 definition of the template that is used instead of the primary
 definition when the arguments in a specialization match those given in
-the partial specialization ( [[temp.class.spec.match]]). The primary
+the partial specialization ([[temp.class.spec.match]]). The primary
 template shall be declared before any specializations of that template.
 A partial specialization shall be declared before the first use of a
 class template specialization that would make use of the partial
@@ -1444,7 +1444,7 @@ required.
 
 Each class template partial specialization is a distinct template and
 definitions shall be provided for the members of a template partial
-specialization ( [[temp.class.spec.mfunc]]).
+specialization ([[temp.class.spec.mfunc]]).
 
 ``` cpp
 template<class T1, class T2, int I> class A             { };    // #1
@@ -1545,7 +1545,7 @@ following restrictions apply:
 - The template parameter list of a specialization shall not contain
   default template argument values.[^4]
 - An argument shall not contain an unexpanded parameter pack. If an
-  argument is a pack expansion ( [[temp.variadic]]), it shall be the
+  argument is a pack expansion ([[temp.variadic]]), it shall be the
   last argument in the template argument list.
 
 #### Matching of class template partial specializations <a id="temp.class.spec.match">[[temp.class.spec.match]]</a>
@@ -1560,7 +1560,7 @@ argument lists of the partial specializations.
 - If exactly one matching specialization is found, the instantiation is
   generated from that specialization.
 - If more than one matching specialization is found, the partial order
-  rules ( [[temp.class.order]]) are used to determine whether one of the
+  rules ([[temp.class.order]]) are used to determine whether one of the
   specializations is more specialized than the others. If none of the
   specializations is more specialized than all of the other matching
   specializations, then the use of the class template is ambiguous and
@@ -1570,7 +1570,7 @@ argument lists of the partial specializations.
 
 A partial specialization matches a given actual template argument list
 if the template arguments of the partial specialization can be deduced
-from the actual template argument list ( [[temp.deduct]]).
+from the actual template argument list ([[temp.deduct]]).
 
 ``` cpp
 A<int, int, 1>   a1;            // uses #1
@@ -1595,7 +1595,7 @@ For two class template partial specializations, the first is at least as
 specialized as the second if, given the following rewrite to two
 function templates, the first function template is at least as
 specialized as the second according to the ordering rules for function
-templates ( [[temp.func.order]]):
+templates ([[temp.func.order]]):
 
 - the first function template has the same template parameters as the
   first partial specialization and has a single function parameter whose
@@ -1674,7 +1674,7 @@ int main() {
 If a member template of a class template is partially specialized, the
 member template partial specializations are member templates of the
 enclosing class template; if the enclosing class template is
-instantiated ( [[temp.inst]], [[temp.explicit]]), a declaration for
+instantiated ([[temp.inst]], [[temp.explicit]]), a declaration for
 every member template partial specialization is also instantiated as
 part of creating the members of the class template specialization. If
 the primary member template is explicitly specialized for a given
@@ -1739,7 +1739,7 @@ void h(int* p) {
 ```
 
 Such specializations are distinct functions and do not violate the one
-definition rule ( [[basic.def.odr]]).
+definition rule ([[basic.def.odr]]).
 
 The signature of a function template is defined in  [[intro.defs]]. The
 names of the template parameters are significant only for establishing
@@ -1776,7 +1776,7 @@ parameter. For example, a template type parameter can be used in the
 
 Two expressions involving template parameters are considered
 *equivalent* if two function definitions containing the expressions
-would satisfy the one definition rule ( [[basic.def.odr]]), except that
+would satisfy the one definition rule ([[basic.def.odr]]), except that
 the tokens used to name the template parameters may differ as long as a
 token used to name a template parameter in one expression is replaced by
 another token that names the same template parameter in the other
@@ -1834,13 +1834,13 @@ contexts to select the function template to which a function template
 specialization refers:
 
 - during overload resolution for a call to a function template
-  specialization ( [[over.match.best]]);
+  specialization ([[over.match.best]]);
 - when the address of a function template specialization is taken;
 - when a placement operator delete that is a function template
   specialization is selected to match a placement operator new (
   [[basic.stc.dynamic.deallocation]], [[expr.new]]);
-- when a friend function declaration ( [[temp.friend]]), an explicit
-  instantiation ( [[temp.explicit]]) or an explicit specialization (
+- when a friend function declaration ([[temp.friend]]), an explicit
+  instantiation ([[temp.explicit]]) or an explicit specialization (
   [[temp.expl.spec]]) refers to a function template specialization.
 
 Partial ordering selects which of two function templates is more
@@ -2013,7 +2013,7 @@ Three kinds of names can be used within a template definition:
 
 - The name of the template itself, and names declared within the
   template itself.
-- Names dependent on a *template-parameter* ( [[temp.dep]]).
+- Names dependent on a *template-parameter* ([[temp.dep]]).
 - Names from scopes which are visible within the template definition.
 
 A name used in a template declaration or definition and that is
@@ -2048,7 +2048,7 @@ template<class T> class Y {
 ```
 
 When a is intended to refer to a type that is not a member of the
-current instantiation ( [[temp.dep.type]]) and its refers to a dependent
+current instantiation ([[temp.dep.type]]) and its refers to a dependent
 type, it shall be prefixed by the keyword `typename`, forming a . If the
 *qualified-id* in a *typename-specifier* does not denote a type, the
 program is ill-formed.
@@ -2062,7 +2062,7 @@ typename-specifier:
 If a specialization of a template is instantiated for a set of
 *template-argument*s such that the *qualified-id* prefixed by `typename`
 does not denote a type, the specialization is ill-formed. The usual
-qualified name lookup ( [[basic.lookup.qual]]) is used to find the
+qualified name lookup ([[basic.lookup.qual]]) is used to find the
 *qualified-id* even in the presence of `typename`.
 
 ``` cpp
@@ -2123,11 +2123,11 @@ Within the definition of a class template or within the definition of a
 member of a class template following the *declarator-id*, the keyword
 `typename` is not required when referring to the name of a previously
 declared member of the class template that declares a type. such names
-can be found using unqualified name lookup ( [[basic.lookup.unqual]]),
-class member lookup ( [[class.qual]]) into the current instantiation (
+can be found using unqualified name lookup ([[basic.lookup.unqual]]),
+class member lookup ([[class.qual]]) into the current instantiation (
 [[temp.dep.type]]), or class member access expression lookup (
 [[basic.lookup.classref]]) when the type of the object expression is the
-current instantiation ( [[temp.dep.expr]]).
+current instantiation ([[temp.dep.expr]]).
 
 ``` cpp
 template<class T> struct A {
@@ -2178,10 +2178,10 @@ template<class... T> struct A : T...,  T... { };// error: duplicate base class
 ```
 
 When looking for the declaration of a name used in a template
-definition, the usual lookup rules ( [[basic.lookup.unqual]],
+definition, the usual lookup rules ([[basic.lookup.unqual]],
 [[basic.lookup.argdep]]) are used for non-dependent names. The lookup of
 names dependent on the template parameters is postponed until the actual
-template argument is known ( [[temp.dep]]).
+template argument is known ([[temp.dep]]).
 
 ``` cpp
 #include <iostream>
@@ -2208,7 +2208,7 @@ the actual *template-argument*s are known. For example, even though the
 name `operator\shl` is known within the definition of `printall()` and a
 declaration of it can be found in `<iostream>`, the actual declaration
 of `operator\shl` needed to print `p[i]` cannot be known until it is
-known what type `T` is ( [[temp.dep]]).
+known what type `T` is ([[temp.dep]]).
 
 If a name does not depend on a *template-parameter* (as defined in 
 [[temp.dep]]), a declaration (or set of declarations) for that name
@@ -2241,7 +2241,7 @@ void h() {
 
 For purposes of name lookup, default arguments of function templates and
 default arguments of member functions of class templates are considered
-definitions ( [[temp.decls]]).
+definitions ([[temp.decls]]).
 
 ### Locally declared names <a id="temp.local">[[temp.local]]</a>
 
@@ -2291,7 +2291,7 @@ template<class T, template<class> class U = T::template Base> struct Third { };
 Third<Base<int> > t;            // OK: default argument uses injected-class-name as a template
 ```
 
-A lookup that finds an injected-class-name ( [[class.member.lookup]])
+A lookup that finds an injected-class-name ([[class.member.lookup]])
 can result in an ambiguity in certain cases (for example, if it is found
 in more than one base class). If all of the injected-class-names that
 are found refer to specializations of the same class template, and if
@@ -2413,13 +2413,13 @@ where the *postfix-expression* is an *id-expression*, the
 - any of the expressions in the *expression-list* is a pack expansion (
   [[temp.variadic]]),
 - any of the expressions in the *expression-list* is a type-dependent
-  expression ( [[temp.dep.expr]]), or
+  expression ([[temp.dep.expr]]), or
 - if the *unqualified-id* of the *id-expression* is a *template-id* in
   which any of the template arguments depends on a template parameter.
 
 If an operand of an operator is a type-dependent expression, the
 operator also denotes a dependent name. Such names are unbound and are
-looked up at the point of the template instantiation ( [[temp.point]])
+looked up at the point of the template instantiation ([[temp.point]])
 in both the context of the template definition and the context of the
 point of instantiation.
 
@@ -2498,14 +2498,14 @@ A name refers to the *current instantiation* if it is
   template argument list of the partial specialization enclosed in `<>`
   (or an equivalent template alias specialization). If the *n*th
   template parameter is a parameter pack, the *n*th template argument is
-  a pack expansion ( [[temp.variadic]]) whose pattern is the name of the
+  a pack expansion ([[temp.variadic]]) whose pattern is the name of the
   parameter pack.
 
 The template argument list of a primary template is a template argument
 list in which the *n*th template argument has the value of the *n*th
 template parameter of the class template. If the *n*th template
-parameter is a template parameter pack ( [[temp.variadic]]), the *n*th
-template argument is a pack expansion ( [[temp.variadic]]) whose pattern
+parameter is a template parameter pack ([[temp.variadic]]), the *n*th
+template argument is a pack expansion ([[temp.variadic]]) whose pattern
 is the name of the template parameter pack.
 
 A template argument that is equivalent to a template parameter (i.e.,
@@ -2561,9 +2561,9 @@ A name is a *member of the current instantiation* if it is
   any dependent base classes, then the *qualified-id* is a member of an
   unknown specialization; see below.
 - An *id-expression* denoting the member in a class member access
-  expression ( [[expr.ref]]) for which the type of the object expression
+  expression ([[expr.ref]]) for which the type of the object expression
   is the current instantiation, and the *id-expression*, when looked
-  up ( [[basic.lookup.classref]]), refers to at least one member of the
+  up ([[basic.lookup.classref]]), refers to at least one member of the
   current instantiation or a non-dependent base class thereof. if no
   such member is found, and the current instantiation has any dependent
   base classes, then the *id-expression* is a member of an unknown
@@ -2593,7 +2593,7 @@ A name is a *member of an unknown specialization* if it is
   find any member of the current instantiation or a non-dependent base
   class thereof.
 - An *id-expression* denoting the member in a class member access
-  expression ( [[expr.ref]]) in which either
+  expression ([[expr.ref]]) in which either
   - the type of the object expression is the current instantiation, the
     current instantiation has at least one dependent base class, and
     name lookup of the *id-expression* does not find a member of the
@@ -2649,7 +2649,7 @@ A type is dependent if it is
   parameter or any of the template arguments is a dependent type or an
   expression that is type-dependent or value-dependent, or
 - denoted by `decltype(`*expression*`)`, where *expression* is
-  type-dependent ( [[temp.dep.expr]]).
+  type-dependent ([[temp.dep.expr]]).
 
 Because typedefs do not introduce new types, but instead simply refer to
 other types, a name that refers to a typedef that is a member of the
@@ -2664,7 +2664,7 @@ subexpression is type-dependent.
 `this`
 
 is type-dependent if the class type of the enclosing member function is
-dependent ( [[temp.dep.type]]).
+dependent ([[temp.dep.type]]).
 
 An *id-expression* is type-dependent if it contains
 
@@ -2686,7 +2686,7 @@ type of the expression cannot be dependent):
 
 For the standard library macro `offsetof`, see  [[support.types]].
 
-A class member access expression ( [[expr.ref]]) is type-dependent if
+A class member access expression ([[expr.ref]]) is type-dependent if
 the expression refers to a member of the current instantiation and the
 type of the referenced member is dependent, or the class member access
 expression refers to a member of an unknown specialization. In an
@@ -2773,7 +2773,7 @@ considered:
 - Declarations that are visible at the point of definition of the
   template.
 - Declarations from namespaces associated with the types of the function
-  arguments both from the instantiation context ( [[temp.point]]) and
+  arguments both from the instantiation context ([[temp.point]]) and
   from the definition context.
 
 #### Point of instantiation <a id="temp.point">[[temp.point]]</a>
@@ -2868,7 +2868,7 @@ As with non-template classes, the names of namespace-scope friend
 functions of a class template specialization are not visible during an
 ordinary lookup unless explicitly declared at namespace scope (
 [[class.friend]]). Such names may be found under the rules for
-associated classes ( [[basic.lookup.argdep]]).[^6]
+associated classes ([[basic.lookup.argdep]]).[^6]
 
 ``` cpp
 template<typename T> struct number {
@@ -2932,10 +2932,10 @@ template<> int B<>::x = 1;              // specialize for T == int
 ```
 
 An instantiated template specialization can be either implicitly
-instantiated ( [[temp.inst]]) for a given argument list or be explicitly
-instantiated ( [[temp.explicit]]). A specialization is a class,
+instantiated ([[temp.inst]]) for a given argument list or be explicitly
+instantiated ([[temp.explicit]]). A specialization is a class,
 function, or class member that is either instantiated or explicitly
-specialized ( [[temp.expl.spec]]).
+specialized ([[temp.expl.spec]]).
 
 For a given template and a given set of *template-argument*s,
 
@@ -2969,7 +2969,7 @@ has a static member `s` of type `int` and `X<char*>` has a static member
 ### Implicit instantiation <a id="temp.inst">[[temp.inst]]</a>
 
 Unless a class template specialization has been explicitly
-instantiated ( [[temp.explicit]]) or explicitly specialized (
+instantiated ([[temp.explicit]]) or explicitly specialized (
 [[temp.expl.spec]]), the class template specialization is implicitly
 instantiated when the specialization is referenced in a context that
 requires a completely-defined object type or when the completeness of
@@ -3101,7 +3101,7 @@ data members of that class to be implicitly instantiated.
 
 If a function template or a member function template specialization is
 used in a way that involves overload resolution, a declaration of the
-specialization is implicitly instantiated ( [[temp.over]]).
+specialization is implicitly instantiated ([[temp.over]]).
 
 An implementation shall not implicitly instantiate a function template,
 a member template, a non-virtual member function, a member class, or a
@@ -3224,7 +3224,7 @@ in the *qualified-id* for the member name shall be a
 enclosing namespace of its template. If the name declared in the
 explicit instantiation is an unqualified name, the explicit
 instantiation shall appear in the namespace where its template is
-declared or, if that namespace is inline ( [[namespace.def]]), any
+declared or, if that namespace is inline ([[namespace.def]]), any
 namespace from its enclosing namespace set. Regarding qualified names in
 declarators, see  [[dcl.meaning]].
 
@@ -3288,7 +3288,7 @@ template void N::Y<double>::mf();       // OK: explicit instantiation
 A trailing *template-argument* can be left unspecified in an explicit
 instantiation of a function template specialization or of a member
 function template specialization provided it can be deduced from the
-type of a function parameter ( [[temp.deduct]]).
+type of a function parameter ([[temp.deduct]]).
 
 ``` cpp
 template<class T> class Array { /* ... */ };
@@ -3325,7 +3325,7 @@ declaration and an explicit instantiation definition in the same
 translation unit, the definition shall follow the declaration. An entity
 that is the subject of an explicit instantiation declaration and that is
 also used in a way that would otherwise cause an implicit
-instantiation ( [[temp.inst]]) in the translation unit shall be the
+instantiation ([[temp.inst]]) in the translation unit shall be the
 subject of an explicit instantiation definition somewhere in the
 program; otherwise the program is ill-formed, no diagnostic required.
 This rule does apply to inline functions even though an explicit
@@ -3585,7 +3585,7 @@ template<> void sort(Array<int>&);
 
 A function with the same name as a template and a type that exactly
 matches that of a template specialization is not an explicit
-specialization ( [[temp.fct]]).
+specialization ([[temp.fct]]).
 
 An explicit specialization of a function template is inline only if it
 is declared with the `inline` specifier or defined as deleted, and
@@ -3769,7 +3769,7 @@ specialization of a function template
 - in an explicit instantiation, or
 - in a friend declaration.
 
-Trailing template arguments that can be deduced ( [[temp.deduct]]) or
+Trailing template arguments that can be deduced ([[temp.deduct]]) or
 obtained from default *template-argument*s may be omitted from the list
 of explicit *template-argument*s. A trailing template parameter pack (
 [[temp.variadic]]) not otherwise deduced will be deduced to an empty
@@ -3857,7 +3857,7 @@ list for these function templates.
 For simple function names, argument dependent lookup (
 [[basic.lookup.argdep]]) applies even when the function name is not
 visible within the scope of the call. This is because the call still has
-the syntactic form of a function call ( [[basic.lookup.unqual]]). But
+the syntactic form of a function call ([[basic.lookup.unqual]]). But
 when a function template with explicit template arguments is used, the
 call does not have the correct syntactic form unless there is a function
 template with that name visible at the point of the call. If no such
@@ -4116,12 +4116,12 @@ Type deduction may fail for the following reasons:
   of `void`, or in which the return type is a function type or array
   type.
 - Attempting to create a function type in which a parameter type or the
-  return type is an abstract class type ( [[class.abstract]]).
+  return type is an abstract class type ([[class.abstract]]).
 
 Except as described above, the use of an invalid value shall not cause
 type deduction to fail. In the following example 1000 is converted to
 `signed char` and results in an implementation-defined value as
-specified in ( [[conv.integral]]). In other words, both templates are
+specified in ([[conv.integral]]). In other words, both templates are
 considered even though 1000, when converted to `signed char`, results in
 an implementation-defined value.
 
@@ -4138,7 +4138,7 @@ Template argument deduction is done by comparing each function template
 parameter type (call it `P`) with the type of the corresponding argument
 of the call (call it `A`) as described below. If removing references and
 cv-qualifiers from `P` gives `std::initializer_list<P^\prime>` for some
-`P^\prime` and the argument is an initializer list ( [[dcl.init.list]]),
+`P^\prime` and the argument is an initializer list ([[dcl.init.list]]),
 then deduction is performed instead for each element of the initializer
 list, taking `P^\prime` as a function template parameter type and the
 initializer element as its argument. Otherwise, an initializer list
@@ -4177,10 +4177,10 @@ void h(int x, float& y) {
 If `P` is not a reference type:
 
 - If `A` is an array type, the pointer type produced by the
-  array-to-pointer standard conversion ( [[conv.array]]) is used in
+  array-to-pointer standard conversion ([[conv.array]]) is used in
   place of `A` for type deduction; otherwise,
 - If `A` is a function type, the pointer type produced by the
-  function-to-pointer standard conversion ( [[conv.func]]) is used in
+  function-to-pointer standard conversion ([[conv.func]]) is used in
   place of `A` for type deduction; otherwise,
 - If `A` is a cv-qualified type, the top level cv-qualifiers of `A`’s
   type are ignored for type deduction.
@@ -4212,7 +4212,7 @@ that allow a difference:
   transformed `A`.
 - The transformed `A` can be another pointer or pointer to member type
   that can be converted to the deduced `A` via a qualification
-  conversion ( [[conv.qual]]).
+  conversion ([[conv.qual]]).
 - If `P` is a class and `P` has the form *simple-template-id*, then the
   transformed `A` can be a derived class of the deduced `A`. Likewise,
   if `P` is a pointer to a class of the form *simple-template-id*, the
@@ -4275,7 +4275,7 @@ member function type:
 #### Deducing template arguments taking the address of a function template <a id="temp.deduct.funcaddr">[[temp.deduct.funcaddr]]</a>
 
 Template arguments can be deduced from the type specified when taking
-the address of an overloaded function ( [[over.over]]). The function
+the address of an overloaded function ([[over.over]]). The function
 template’s function type and the specified type are used as the types of
 `P` and `A`, and the deduction is done as described in 
 [[temp.deduct.type]].
@@ -4295,10 +4295,10 @@ transformations of `P` in the remainder of this section.
 If `A` is not a reference type:
 
 - If `P` is an array type, the pointer type produced by the
-  array-to-pointer standard conversion ( [[conv.array]]) is used in
+  array-to-pointer standard conversion ([[conv.array]]) is used in
   place of `P` for type deduction; otherwise,
 - If `P` is a function type, the pointer type produced by the
-  function-to-pointer standard conversion ( [[conv.func]]) is used in
+  function-to-pointer standard conversion ([[conv.func]]) is used in
   place of `P` for type deduction; otherwise,
 - If `P` is a cv-qualified type, the top level cv-qualifiers of `P`’s
   type are ignored for type deduction.
@@ -4362,7 +4362,7 @@ the partial ordering is done:
   parameter types for which the function call has arguments.[^7]
 - In the context of a call to a conversion operator, the return types of
   the conversion function templates are used.
-- In other contexts ( [[temp.func.order]]) the function template’s
+- In other contexts ([[temp.func.order]]) the function template’s
   function type is used.
 
 Each type nominated above from the parameter template and the
@@ -4515,7 +4515,7 @@ The non-deduced contexts are:
   for which argument deduction is being done.
 - A function parameter for which argument deduction cannot be done
   because the associated function argument is a function, or a set of
-  overloaded functions ( [[over.over]]), and one or more of the
+  overloaded functions ([[over.over]]), and one or more of the
   following apply:
   - more than one function matches the function parameter type
     (resulting in an ambiguous deduction), or
@@ -4523,7 +4523,7 @@ The non-deduced contexts are:
   - the set of functions supplied as an argument contains one or more
     function templates.
 - A function parameter for which the associated argument is an
-  initializer list ( [[dcl.init.list]]) but the parameter does not have
+  initializer list ([[dcl.init.list]]) but the parameter does not have
   `std::initializer_list` or reference to possibly cv-qualified
   `std::initializer_list` type.
   ``` cpp
@@ -4652,7 +4652,7 @@ a non-deduced context. If `Pᵢ` is a pack expansion, then the pattern of
 `Pᵢ` is compared with each remaining argument in the template argument
 list of `A`. Each comparison deduces template arguments for subsequent
 positions in the template parameter packs expanded by `Pᵢ`. During
-partial ordering ( [[temp.deduct.partial]]), if `Aᵢ` was originally a
+partial ordering ([[temp.deduct.partial]]), if `Aᵢ` was originally a
 pack expansion:
 
 - if `P` does not contain a template argument corresponding to `Aᵢ` then
@@ -4677,8 +4677,8 @@ type `Pᵢ` of the respective *parameter-type-list* of `P` is compared
 with the corresponding parameter type `Aᵢ` of the corresponding
 *parameter-type-list* of `A`. If `P` and `A` are function types that
 originated from deduction when taking the address of a function
-template ( [[temp.deduct.funcaddr]]) or when deducing template arguments
-from a function declaration ( [[temp.deduct.decl]]) and `Pᵢ` and `Aᵢ`
+template ([[temp.deduct.funcaddr]]) or when deducing template arguments
+from a function declaration ([[temp.deduct.decl]]) and `Pᵢ` and `Aᵢ`
 are parameters of the top-level *parameter-type-list* of `P` and `A`,
 respectively, `Pᵢ` is adjusted if it is an rvalue reference to a
 cv-unqualified template parameter and `Aᵢ` is an lvalue reference, in
@@ -4702,7 +4702,7 @@ parameter pack, then the type of its *declarator-id* is compared with
 each remaining parameter type in the *parameter-type-list* of `A`. Each
 comparison deduces template arguments for subsequent positions in the
 template parameter packs expanded by the function parameter pack. During
-partial ordering ( [[temp.deduct.partial]]), if `Aᵢ` was originally a
+partial ordering ([[temp.deduct.partial]]), if `Aᵢ` was originally a
 function parameter pack:
 
 - if `P` does not contain a function parameter type corresponding to
@@ -4897,8 +4897,8 @@ int fv = f(g);                  // OK; Types contains int, float
 In a declaration whose *declarator-id* refers to a specialization of a
 function template, template argument deduction is performed to identify
 the specialization to which the declaration refers. Specifically, this
-is done for explicit instantiations ( [[temp.explicit]]), explicit
-specializations ( [[temp.expl.spec]]), and certain friend declarations (
+is done for explicit instantiations ([[temp.explicit]]), explicit
+specializations ([[temp.expl.spec]]), and certain friend declarations (
 [[temp.friend]]). This is also done to determine whether a deallocation
 function template specialization matches a placement `operator new` (
 [[basic.stc.dynamic.deallocation]],  [[expr.new]]). In all these cases,
@@ -4910,7 +4910,7 @@ described in  [[temp.deduct.type]].
 
 If, for the set of function templates so considered, there is either no
 match or more than one match after partial ordering has been
-considered ( [[temp.func.order]]), deduction fails and, in the
+considered ([[temp.func.order]]), deduction fails and, in the
 declaration cases, the program is ill-formed.
 
 ### Overload resolution <a id="temp.over">[[temp.over]]</a>
@@ -4918,8 +4918,8 @@ declaration cases, the program is ill-formed.
 A function template can be overloaded either by (non-template) functions
 of its name or by (other) function templates of the same name. When a
 call to that name is written (explicitly, or implicitly using the
-operator notation), template argument deduction ( [[temp.deduct]]) and
-checking of any explicit template arguments ( [[temp.arg]]) are
+operator notation), template argument deduction ([[temp.deduct]]) and
+checking of any explicit template arguments ([[temp.arg]]) are
 performed for each function template to find the template argument
 values (if any) that can be used with that function template to
 instantiate a function template specialization that can be invoked with

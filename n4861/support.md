@@ -2051,7 +2051,7 @@ const char* name() const noexcept;
 
 *Remarks:* The message may be a null-terminated multibyte
 string [[multibyte.strings]], suitable for conversion and display as a
-`wstring` ( [[string.classes]], [[locale.codecvt]]).
+`wstring` ([[string.classes]], [[locale.codecvt]]).
 
 ### Class `bad_cast` <a id="bad.cast">[[bad.cast]]</a>
 
@@ -2338,7 +2338,7 @@ virtual const char* what() const noexcept;
 
 *Remarks:* The message may be a null-terminated multibyte
 string [[multibyte.strings]], suitable for conversion and display as a
-`wstring` ( [[string.classes]], [[locale.codecvt]]). The return value
+`wstring` ([[string.classes]], [[locale.codecvt]]). The return value
 remains valid until the exception object from which it is obtained is
 destroyed or a non-`const` member function of the exception object is
 called.
@@ -2445,7 +2445,7 @@ using exception_ptr = unspecified;
 The type `exception_ptr` can be used to refer to an exception object.
 
 `exception_ptr` meets the requirements of *Cpp17NullablePointer*
-( [[cpp17.nullablepointer]]).
+([[cpp17.nullablepointer]]).
 
 Two non-null values of type `exception_ptr` are equivalent and compare
 equal if and only if they refer to the same exception.
@@ -2796,7 +2796,7 @@ that is accessible via the argument’s public const members.
 
 The `partial_ordering` type is typically used as the result type of a
 three-way comparison operator [[expr.spaceship]] that (a) admits all of
-the six two-way comparison operators ( [[expr.rel]], [[expr.eq]]), (b)
+the six two-way comparison operators ([[expr.rel]], [[expr.eq]]), (b)
 does not imply substitutability, and (c) permits two values to be
 incomparable. [^34]
 
@@ -2880,7 +2880,7 @@ constexpr partial_ordering operator<=>(unspecified, partial_ordering v) noexcept
 
 The `weak_ordering` type is typically used as the result type of a
 three-way comparison operator [[expr.spaceship]] that (a) admits all of
-the six two-way comparison operators ( [[expr.rel]], [[expr.eq]]), and
+the six two-way comparison operators ([[expr.rel]], [[expr.eq]]), and
 (b) does not imply substitutability.
 
 ``` cpp
@@ -2971,7 +2971,7 @@ constexpr weak_ordering operator<=>(unspecified, weak_ordering v) noexcept;
 
 The `strong_ordering` type is typically used as the result type of a
 three-way comparison operator [[expr.spaceship]] that (a) admits all of
-the six two-way comparison operators ( [[expr.rel]], [[expr.eq]]), and
+the six two-way comparison operators ([[expr.rel]], [[expr.eq]]), and
 (b) does imply substitutability.
 
 ``` cpp
@@ -3819,7 +3819,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - throwing of an exception;
 - control entering a *try-block* or *function-try-block*;
 - initialization of a variable with static storage duration requiring
-  dynamic initialization ( [[basic.start.dynamic]], [[stmt.dcl]]) [^36];
+  dynamic initialization ([[basic.start.dynamic]], [[stmt.dcl]]) [^36];
   or
 - waiting for the completion of the initialization of a variable with
   static storage duration [[stmt.dcl]].

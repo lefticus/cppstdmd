@@ -82,7 +82,7 @@ requirements:[^1]
   — *end example*]
   If the distinction between initialization and assignment is important
   for a class, or if it fails to satisfy any of the other conditions
-  listed above, the programmer should use `vector` ( [[vector]]) instead
+  listed above, the programmer should use `vector` ([[vector]]) instead
   of `valarray` for that class.
   — *end note*]
 - If `T` is a class, it does not overload unary `operator&`.
@@ -145,7 +145,7 @@ standard library header `<fenv.h>`.
 
 [*Note 1*: This International Standard does not require an
 implementation to support the `FENV_ACCESS` pragma; it is
-*implementation-defined* ( [[cpp.pragma]]) whether the pragma is
+*implementation-defined* ([[cpp.pragma]]) whether the pragma is
 supported. As a consequence, it is *implementation-defined* whether
 these functions can be used to test floating-point status flags, set
 floating-point control modes, or run under non-default mode settings. If
@@ -176,7 +176,7 @@ for representing and manipulating complex numbers.
 The effect of instantiating the template `complex` for any type other
 than `float`, `double`, or `long double` is unspecified. The
 specializations `complex<float>`, `complex<double>`, and
-`complex<long double>` are literal types ( [[basic.types]]).
+`complex<long double>` are literal types ([[basic.types]]).
 
 If the result of a function is not mathematically defined or not in the
 range of representable values for its type, the behavior is undefined.
@@ -612,10 +612,10 @@ operator>>(basic_istream<charT, traits>& is, complex<T>& x);
 
 *Effects:* Extracts a complex number `x` of the form: `u`, `(u)`, or
 `(u,v)`, where `u` is the real part and `v` is the imaginary
-part ( [[istream.formatted]]).
+part ([[istream.formatted]]).
 
 If bad input is encountered, calls `is.setstate(ios_base::failbit)`
-(which may throw `ios::failure` ( [[iostate.flags]])).
+(which may throw `ios::failure` ([[iostate.flags]])).
 
 *Returns:* `is`.
 
@@ -915,7 +915,7 @@ zero-argument function object such as given by
 `bind(d,e)`. — *end note*]
 
 Each of the entities specified via this subclause has an associated
-arithmetic type ( [[basic.fundamental]]) identified as `result_type`.
+arithmetic type ([[basic.fundamental]]) identified as `result_type`.
 With `T` as the `result_type` thus associated with such an entity, that
 entity is characterized:
 
@@ -992,7 +992,7 @@ suitable `operator>>`.
 `E`’s specification shall define:
 
 A class `E` that satisfies the requirements of a uniform random bit
-generator ( [[rand.req.urng]]) also satisfies the requirements of a if
+generator ([[rand.req.urng]]) also satisfies the requirements of a if
 the expressions shown in Table  [[tab:RandomEngine]] are valid and have
 the indicated semantics, and if `E` also satisfies all other
 requirements of this section [[rand.req.eng]]. In that Table and
@@ -1294,7 +1294,7 @@ parameter(s), to hold. A program instantiating any of these templates is
 ill-formed if any such required relationship fails to hold.
 
 For every random number engine and for every random number engine
-adaptor `X` defined in this subclause ( [[rand.eng]]) and in subclause 
+adaptor `X` defined in this subclause ([[rand.eng]]) and in subclause 
 [[rand.adapt]]:
 
 - if the constructor
@@ -1577,7 +1577,7 @@ $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
 Each type instantiated from a class template specified in this section 
 [[rand.adapt]] satisfies the requirements of a random number engine
-adaptor ( [[rand.req.adapt]]) type.
+adaptor ([[rand.req.adapt]]) type.
 
 Except where specified otherwise, the complexity of each function
 specified in this section  [[rand.adapt]] is constant.
@@ -2038,7 +2038,7 @@ template<class RandomAccessIterator>
 ```
 
 *Requires:* `RandomAccessIterator` shall meet the requirements of a
-mutable random access iterator ( [[random.access.iterators]]). Moreover,
+mutable random access iterator ([[random.access.iterators]]). Moreover,
 `iterator_traits<RandomAccessIterator>::value_type` shall denote an
 unsigned integer type capable of accommodating 32-bit quantities.
 
@@ -2067,7 +2067,7 @@ template<class OutputIterator>
 ```
 
 *Requires:* `OutputIterator` shall satisfy the requirements of an output
-iterator ( [[output.iterators]]). Moreover, the expression `*dest = rt`
+iterator ([[output.iterators]]). Moreover, the expression `*dest = rt`
 shall be valid for a value `rt` of type `result_type`.
 
 *Effects:* Copies the sequence of prepared 32-bit units to the given
@@ -2118,7 +2118,7 @@ $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
 
 Each type instantiated from a class template specified in this section 
 [[rand.dist]] satisfies the requirements of a random number
-distribution ( [[rand.req.dist]]) type.
+distribution ([[rand.req.dist]]) type.
 
 Descriptions are provided in this section  [[rand.dist]] only for
 distribution operations that are not described in [[rand.req.dist]] or
@@ -3233,7 +3233,7 @@ template<class InputIterator>
 ```
 
 *Requires:* `InputIterator` shall satisfy the requirements of an input
-iterator ( [[input.iterators]]). Moreover,
+iterator ([[input.iterators]]). Moreover,
 `iterator_traits<InputIterator>::value_type` shall denote a type that is
 convertible to `double`. If `firstW == lastW`, let n = 1 and w₀ = 1.
 Otherwise, \bigl[`firstW`, `lastW`\bigr) shall form a sequence w of
@@ -3254,7 +3254,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter. If `nw` = 0, let n = 1, otherwise let
 n = `nw`. The relation 0 < \delta = (`xmax` - `xmin`) / n shall hold.
@@ -3367,7 +3367,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter.
 
@@ -3385,7 +3385,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter. If `nw` = 0, let n = 1, otherwise let
 n = `nw`. The relation 0 < \delta = (`xmax` - `xmin`) / n shall hold.
@@ -3505,7 +3505,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter.
 
@@ -3523,7 +3523,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter. If `nw` = 0, let n = 1, otherwise let
 n = `nw`. The relation 0 < \delta = (`xmax` - `xmin`) / n shall hold.
@@ -3553,7 +3553,7 @@ k = 0, …, n.
 
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
-[*Note 1*: The header `<cstdlib>` ( [[cstdlib.syn]]) declares the
+[*Note 1*: The header `<cstdlib>` ([[cstdlib.syn]]) declares the
 functions described in this subclause. — *end note*]
 
 ``` cpp
@@ -3566,10 +3566,10 @@ in the C standard library.
 
 *Remarks:* The implementation may specify that particular library
 functions may call `rand`. It is *implementation-defined* whether the
-`rand` function may introduce data races ( [[res.on.data.races]]).
+`rand` function may introduce data races ([[res.on.data.races]]).
 
 [*Note 1*: The other random number generation facilities in this
-International Standard ( [[rand]]) are often preferable to `rand`,
+International Standard ([[rand]]) are often preferable to `rand`,
 because `rand`’s underlying algorithm is unspecified. Use of `rand`
 therefore continues to be non-portable, with unpredictable and
 oft-questionable quality and performance. — *end note*]
@@ -3718,7 +3718,7 @@ Implementations introducing such replacement types shall provide
 additional functions and operators as follows:
 
 - for every function taking a `const valarray<T>&` other than `begin`
-  and `end` ( [[valarray.range]]), identical functions taking the
+  and `end` ([[valarray.range]]), identical functions taking the
   replacement types shall be added;
 - for every function taking two `const valarray<T>&` arguments,
   identical functions taking every combination of `const valarray<T>&`
@@ -3855,7 +3855,7 @@ explicit valarray(size_t n);
 ```
 
 *Effects:* Constructs a `valarray` that has length `n`. Each element of
-the array is value-initialized ( [[dcl.init]]).
+the array is value-initialized ([[dcl.init]]).
 
 ``` cpp
 valarray(const T& v, size_t n);
@@ -3868,7 +3868,7 @@ the array is initialized with `v`.
 valarray(const T* p, size_t n);
 ```
 
-*Requires:* `p` points to an array ( [[dcl.array]]) of at least `n`
+*Requires:* `p` points to an array ([[dcl.array]]) of at least `n`
 elements.
 
 *Effects:* Constructs a `valarray` that has length `n`. The values of
@@ -4003,7 +4003,7 @@ obtained from `operator new`, and other techniques to generate efficient
 
 The reference returned by the subscript operator for an array shall be
 valid until the member function
-`resize(size_t, T)` ( [[valarray.members]]) is called for that array or
+`resize(size_t, T)` ([[valarray.members]]) is called for that array or
 until the lifetime of that array ends, whichever happens first.
 
 #### `valarray` subset operations <a id="valarray.sub">[[valarray.sub]]</a>
@@ -4309,7 +4309,7 @@ value of `n` shifts the elements left `n` places, with zero
 fill. — *end note*]
 
 [*Example 1*: If the argument has the value -2, the first two elements
-of the result will be value-initialized ( [[dcl.init]]); the third
+of the result will be value-initialized ([[dcl.init]]); the third
 element of the result will be assigned the value of the first element of
 the argument; etc. — *end example*]
 
@@ -5027,7 +5027,7 @@ argument to the elements of the `valarray<T>` object to which the
 
 In the `begin` and `end` function templates that follow, *unspecified*1
 is a type that meets the requirements of a mutable random access
-iterator ( [[random.access.iterators]]) and of a contiguous iterator (
+iterator ([[random.access.iterators]]) and of a contiguous iterator (
 [[iterator.requirements.general]]) whose `value_type` is the template
 parameter `T` and whose `reference` type is `T&`. *unspecified*2 is a
 type that meets the requirements of a constant random access iterator (
@@ -5293,7 +5293,7 @@ the following algorithms.
 
 Throughout this subclause, the parameters `UnaryOperation`,
 `BinaryOperation`, `BinaryOperation1`, and `BinaryOperation2` are used
-whenever an algorithm expects a function object ( [[function.objects]]).
+whenever an algorithm expects a function object ([[function.objects]]).
 
 [*Note 1*: The use of closed ranges as well as semi-open ranges to
 specify requirements throughout this subclause is
@@ -5551,7 +5551,7 @@ template <class InputIterator, class OutputIterator, class BinaryOperation>
 type of `*first`. The result of the expression `acc + *i` or
 `binary_op(acc, *i)` shall be implicitly convertible to
 `InputIterator`’s value type. `acc` shall be
-writable ( [[iterator.requirements.general]]) to the `result` output
+writable ([[iterator.requirements.general]]) to the `result` output
 iterator. In the ranges \[`first`, `last`\] and \[`result`,
 `result + (last - first)`\] `binary_op` shall neither modify elements
 nor invalidate iterators or subranges.[^16]
@@ -5896,7 +5896,7 @@ template <class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
 - For the overloads with no `ExecutionPolicy`, `InputIterator`’s value
   type shall be `MoveAssignable` (Table  [[tab:moveassignable]]) and
   shall be constructible from the type of `*first`. `acc` (defined
-  below) shall be writable ( [[iterator.requirements.general]]) to the
+  below) shall be writable ([[iterator.requirements.general]]) to the
   `result` output iterator. The result of the expression `val - acc` or
   `binary_op(val, acc)` shall be writable to the `result` output
   iterator.
@@ -6540,12 +6540,12 @@ namespace std {
 
 The contents and meaning of the header `<cmath>` are the same as the C
 standard library header `<math.h>`, with the addition of a
-three-dimensional hypotenuse function ( [[c.math.hypot3]]) and the
+three-dimensional hypotenuse function ([[c.math.hypot3]]) and the
 mathematical special functions described in [[sf.cmath]].
 
 [*Note 1*: Several functions have additional overloads in this
 International Standard, but they have the same behavior as in the C
-standard library ( [[library.c]]). — *end note*]
+standard library ([[library.c]]). — *end note*]
 
 For each set of overloaded functions within `<cmath>`, with the
 exception of `abs`, there shall be additional overloads sufficient to
@@ -6553,7 +6553,7 @@ ensure:
 
 1.  If any argument of arithmetic type corresponding to a `double`
     parameter has type `long double`, then all arguments of arithmetic
-    type ( [[basic.fundamental]]) corresponding to `double` parameters
+    type ([[basic.fundamental]]) corresponding to `double` parameters
     are effectively cast to `long double`.
 2.  Otherwise, if any argument of arithmetic type corresponding to a
     `double` parameter has type `double` or an integer type, then all
@@ -6569,7 +6569,7 @@ ISO C 7.12
 
 ### Absolute values <a id="c.math.abs">[[c.math.abs]]</a>
 
-[*Note 1*: The headers `<cstdlib>` ( [[cstdlib.syn]]) and `<cmath>` (
+[*Note 1*: The headers `<cstdlib>` ([[cstdlib.syn]]) and `<cmath>` (
 [[cmath.syn]]) declare the functions described in this
 subclause. — *end note*]
 
@@ -6588,7 +6588,7 @@ standard library for the functions `abs`, `labs`, `llabs`, `fabsf`,
 
 *Remarks:* If `abs()` is called with an argument of type `X` for which
 `is_unsigned_v<X>` is `true` and if `X` cannot be converted to `int` by
-integral promotion ( [[conv.prom]]), the program is ill-formed.
+integral promotion ([[conv.prom]]), the program is ill-formed.
 
 [*Note 1*: Arguments that can be promoted to `int` are permitted for
 compatibility with C. — *end note*]

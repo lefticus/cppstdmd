@@ -53,7 +53,7 @@ missing is called a null statement. Most statements are expression
 statements — usually assignments or function calls. A null statement is
 useful to carry a label just before the `}` of a compound statement and
 to supply a null body to an iteration statement such as a `while`
-statement ( [[stmt.while]]).
+statement ([[stmt.while]]).
 
 ## Compound statement or block <a id="stmt.block">[[stmt.block]]</a>
 
@@ -71,8 +71,8 @@ statement-seq:
     statement-seq statement
 ```
 
-A compound statement defines a block scope ( [[basic.scope]]). A
-declaration is a **statement ( [[stmt.dcl]]).
+A compound statement defines a block scope ([[basic.scope]]). A
+declaration is a **statement ([[stmt.dcl]]).
 
 ## Selection statements <a id="stmt.select">[[stmt.select]]</a>
 
@@ -97,7 +97,7 @@ condition. In Clause  [[stmt.stmt]], the term *substatement* refers to
 the contained **statement or \*\*{statement}{s} that appear in the
 syntax notation. The substatement in a *selection-statement* (each
 substatement, in the `else` form of the `if` statement) implicitly
-defines a block scope ( [[basic.scope]]). If the substatement in a
+defines a block scope ([[basic.scope]]). If the substatement in a
 selection-statement is a single statement and not a
 *compound-statement,* it is as if it was rewritten to be a
 compound-statement containing the original substatement.
@@ -118,7 +118,7 @@ if (x) {
 Thus after the `if` statement, `i` is no longer in scope.
 
 The rules for \*\*{condition}{s} apply both to *selection-statement*s
-and to the `for` and `while` statements ( [[stmt.iter]]). The
+and to the `for` and `while` statements ([[stmt.iter]]). The
 **declarator shall not specify a function or an array. The
 *decl-specifier-seq* shall not define a class or enumeration. If the
 `auto` appears in the , the type of the identifier being declared is
@@ -162,7 +162,7 @@ shall be either a *type-specifier* or `constexpr`.
 
 ### The `if` statement <a id="stmt.if">[[stmt.if]]</a>
 
-If the condition ( [[stmt.select]]) yields `true` the first substatement
+If the condition ([[stmt.select]]) yields `true` the first substatement
 is executed. If the `else` part of the selection statement is present
 and the condition yields `false`, the second substatement is executed.
 If the first substatement is reached via a label, the condition is not
@@ -189,7 +189,7 @@ case labels as follows:
 ```
 
 where the *constant-expression* shall be a converted constant
-expression ( [[expr.const]]) of the adjusted type of the switch
+expression ([[expr.const]]) of the adjusted type of the switch
 condition. No two of the case constants in the same switch shall have
 the same value after conversion.
 
@@ -253,7 +253,7 @@ See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
 *for-range-declaration*. A *for-init-statement* ends with a semicolon.
 
 The substatement in an *iteration-statement* implicitly defines a block
-scope ( [[basic.scope]]) which is entered and exited each time through
+scope ([[basic.scope]]) which is entered and exited each time through
 the loop.
 
 If the substatement in an iteration-statement is a single statement and
@@ -281,7 +281,7 @@ described in  [[stmt.select]].
 ### The `while` statement <a id="stmt.while">[[stmt.while]]</a>
 
 In the `while` statement the substatement is executed repeatedly until
-the value of the condition ( [[stmt.select]]) becomes `false`. The test
+the value of the condition ([[stmt.select]]) becomes `false`. The test
 takes place before each execution of the substatement.
 
 When the condition of a `while` statement is a declaration, the scope of
@@ -351,7 +351,7 @@ declarative region as those declared in the **condition, and except that
 a `continue` in **statement (not enclosed in another iteration
 statement) will execute **expression before re-evaluating **condition.
 Thus the first statement specifies initialization for the loop; the
-condition ( [[stmt.select]]) specifies a test, made before each
+condition ([[stmt.select]]) specifies a test, made before each
 iteration, such that the loop is exited when the condition becomes
 `false`; the expression often specifies incrementing that is done after
 each iteration.
@@ -420,13 +420,13 @@ exposition only, and `_RangeT` is the type of the **expression, and
   of incomplete type, the program is ill-formed;
 - if `_RangeT` is a class type, the *unqualified-id*s `begin` and `end`
   are looked up in the scope of class `\mbox{_RangeT}` as if by class
-  member access lookup ( [[basic.lookup.classref]]), and if either (or
+  member access lookup ([[basic.lookup.classref]]), and if either (or
   both) finds at least one declaration, *begin-expr* and *end-expr* are
   `__range.begin()` and `__range.end()`, respectively;
 - otherwise, *begin-expr* and *end-expr* are `begin(__range)` and
   `end(__range)`, respectively, where `begin` and `end` are looked up in
-  the associated namespaces ( [[basic.lookup.argdep]]). Ordinary
-  unqualified lookup ( [[basic.lookup.unqual]]) is not performed.
+  the associated namespaces ([[basic.lookup.argdep]]). Ordinary
+  unqualified lookup ([[basic.lookup.unqual]]) is not performed.
 
 ``` cpp
 int array[5] = { 1, 2, 3, 4, 5 };
@@ -452,7 +452,7 @@ jump-statement:
 ```
 
 On exit from a scope (however accomplished), objects with automatic
-storage duration ( [[basic.stc.auto]]) that have been constructed in
+storage duration ([[basic.stc.auto]]) that have been constructed in
 that scope are destroyed in the reverse order of their construction. For
 temporaries, see  [[class.temporary]]. Transfer out of a loop, out of a
 block, or back past an initialized variable with automatic storage
@@ -460,7 +460,7 @@ duration involves the destruction of objects with automatic storage
 duration that are in scope at the point transferred from but not at the
 point transferred to. (See  [[stmt.dcl]] for transfers into blocks).
 However, the program can be terminated (by calling `std::exit()` or
-`std::abort()` ( [[support.start.term]]), for example) without
+`std::abort()` ([[support.start.term]]), for example) without
 destroying class objects with automatic storage duration.
 
 ### The `break` statement <a id="stmt.break">[[stmt.break]]</a>
@@ -514,7 +514,7 @@ A function returns to its caller by the `return` statement.
 A return statement with neither an *expression* nor a *braced-init-list*
 can be used only in functions that do not return a value, that is, a
 function with the return type cv `void`, a constructor (
-[[class.ctor]]), or a destructor ( [[class.dtor]]). A return statement
+[[class.ctor]]), or a destructor ([[class.dtor]]). A return statement
 with an expression of non-void type can be used only in functions
 returning a value; the value of the expression is returned to the caller
 of the function. The value of the expression is implicitly converted to
@@ -522,7 +522,7 @@ the return type of the function in which it appears. A return statement
 can involve the construction and copy or move of a temporary object (
 [[class.temporary]]). A copy or move operation associated with a return
 statement may be elided or considered as an rvalue for the purpose of
-overload resolution in selecting a constructor ( [[class.copy]]). A
+overload resolution in selecting a constructor ([[class.copy]]). A
 return statement with a *braced-init-list* initializes the object or
 reference to be returned from the function by copy-list-initialization (
 [[dcl.init.list]]) from the specified initializer list.
@@ -560,10 +560,10 @@ If an identifier introduced by a declaration was previously declared in
 an outer block, the outer declaration is hidden for the remainder of the
 block, after which it resumes its force.
 
-Variables with automatic storage duration ( [[basic.stc.auto]]) are
+Variables with automatic storage duration ([[basic.stc.auto]]) are
 initialized each time their *declaration-statement* is executed.
 Variables with automatic storage duration declared in the block are
-destroyed on exit from the block ( [[stmt.jump]]).
+destroyed on exit from the block ([[stmt.jump]]).
 
 It is possible to transfer into a block, but not in a way that bypasses
 declarations with initialization. A program that jumps[^3] from a point
@@ -589,9 +589,9 @@ lx:
 }
 ```
 
-The zero-initialization ( [[dcl.init]]) of all block-scope variables
-with static storage duration ( [[basic.stc.static]]) or thread storage
-duration ( [[basic.stc.thread]]) is performed before any other
+The zero-initialization ([[dcl.init]]) of all block-scope variables
+with static storage duration ([[basic.stc.static]]) or thread storage
+duration ([[basic.stc.thread]]) is performed before any other
 initialization takes place. Constant initialization (
 [[basic.start.init]]) of a block-scope entity with static storage
 duration, if applicable, is performed before its block is first entered.
@@ -599,7 +599,7 @@ An implementation is permitted to perform early initialization of other
 block-scope variables with static or thread storage duration under the
 same conditions that an implementation is permitted to statically
 initialize a variable with static or thread storage duration in
-namespace scope ( [[basic.start.init]]). Otherwise such a variable is
+namespace scope ([[basic.start.init]]). Otherwise such a variable is
 initialized the first time control passes through its declaration; such
 a variable is considered initialized upon the completion of its
 initialization. If the initialization exits by throwing an exception,
@@ -626,7 +626,7 @@ with static and thread storage duration are destroyed.
 
 There is an ambiguity in the grammar involving *expression-statement*s
 and *declaration*s: An *expression-statement* with a function-style
-explicit type conversion ( [[expr.type.conv]]) as its leftmost
+explicit type conversion ([[expr.type.conv]]) as its leftmost
 subexpression can be indistinguishable from a *declaration* where the
 first *declarator* starts with a `(`. In those cases the *statement* is
 a *declaration*.

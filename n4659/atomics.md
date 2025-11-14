@@ -401,7 +401,7 @@ template <class T>
 ```
 
 *Effects:* The argument does not carry a dependency to the return
-value ( [[intro.multithread]]).
+value ([[intro.multithread]]).
 
 *Returns:* `y`.
 
@@ -430,13 +430,13 @@ indicates that the types are never lock-free. A value of 1 indicates
 that the types are sometimes lock-free. A value of 2 indicates that the
 types are always lock-free.
 
-The function `atomic_is_lock_free` ( [[atomics.types.operations]])
+The function `atomic_is_lock_free` ([[atomics.types.operations]])
 indicates whether the object is lock-free. In any given program
 execution, the result of the lock-free query shall be consistent for all
 pointers of the same type.
 
 Atomic operations that are not lock-free are considered to potentially
-block ( [[intro.progress]]).
+block ([[intro.progress]]).
 
 [*Note 1*: Operations that are lock-free should also be address-free.
 That is, atomic operations on the same memory location via two different
@@ -516,7 +516,7 @@ constexpr atomic(T desired) noexcept;
 ```
 
 *Effects:* Initializes the object with the value `desired`.
-Initialization is not an atomic operation ( [[intro.multithread]]).
+Initialization is not an atomic operation ([[intro.multithread]]).
 
 [*Note 2*: It is possible to have an access to an atomic object `A`
 race with its construction, for example by communicating the address of
@@ -631,7 +631,7 @@ T exchange(T desired, memory_order order = memory_order_seq_cst) noexcept;
 *Effects:* Atomically replaces the value pointed to by `this` with
 `desired`. Memory is affected according to the value of `order`. These
 operations are atomic read-modify-write
-operations ( [[intro.multithread]]).
+operations ([[intro.multithread]]).
 
 *Returns:* Atomically returns the value pointed to by `this` immediately
 before the effects.
@@ -676,7 +676,7 @@ comparison is false then, after the atomic operation, the contents of
 the memory in `expected` are replaced by the value read from the memory
 pointed to by `this` during the atomic comparison. If the operation
 returns `true`, these operations are atomic read-modify-write
-operations ( [[intro.multithread]]) on the memory pointed to by `this`.
+operations ([[intro.multithread]]) on the memory pointed to by `this`.
 Otherwise, these operations are atomic load operations on that memory.
 
 *Returns:* The result of the comparison.
@@ -866,7 +866,7 @@ T fetch_key(T operand, memory_order order = memory_order_seq_cst) noexcept;
 result of the computation applied to the value pointed to by `this` and
 the given `operand`. Memory is affected according to the value of
 `order`. These operations are atomic read-modify-write
-operations ( [[intro.multithread]]).
+operations ([[intro.multithread]]).
 
 *Returns:* Atomically, the value pointed to by `this` immediately before
 the effects.
@@ -971,7 +971,7 @@ ill-formed. — *end note*]
 result of the computation applied to the value pointed to by `this` and
 the given `operand`. Memory is affected according to the value of
 `order`. These operations are atomic read-modify-write
-operations ( [[intro.multithread]]).
+operations ([[intro.multithread]]).
 
 *Returns:* Atomically, the value pointed to by `this` immediately before
 the effects.
@@ -1122,7 +1122,7 @@ bool atomic_flag::test_and_set(memory_order order = memory_order_seq_cst) noexce
 *Effects:* Atomically sets the value pointed to by `object` or by `this`
 to `true`. Memory is affected according to the value of `order`. These
 operations are atomic read-modify-write
-operations ( [[intro.multithread]]).
+operations ([[intro.multithread]]).
 
 *Returns:* Atomically, the value of the object immediately before the
 effects.

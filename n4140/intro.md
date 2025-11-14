@@ -99,12 +99,12 @@ implementation’s output messages
 
 #### 7 dynamic type <a id="defns.dynamic.type">[defns.dynamic.type]</a>
 
-\<glvalue\> type of the most derived object ( [[intro.object]]) to which
+\<glvalue\> type of the most derived object ([[intro.object]]) to which
 the glvalue denoted by a glvalue expression refers  
-if a pointer ( [[dcl.ptr]]) `p` whose static type is “pointer to class
+if a pointer ([[dcl.ptr]]) `p` whose static type is “pointer to class
 `B`” is pointing to an object of class `D`, derived from `B` (Clause 
 [[class.derived]]), the dynamic type of the expression `*p` is “`D`.”
-References ( [[dcl.ref]]) are treated similarly.
+References ([[dcl.ref]]) are treated similarly.
 
 #### 8 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
 
@@ -153,13 +153,13 @@ by the parentheses immediately following the macro name
 
 #### 17 signature <a id="defns.signature">[defns.signature]</a>
 
-\<function\> name, parameter type list ( [[dcl.fct]]), and enclosing
+\<function\> name, parameter type list ([[dcl.fct]]), and enclosing
 namespace (if any)  
 Signatures are used as a basis for name mangling and linking.
 
 #### 18 signature <a id="defns.signature.templ">[defns.signature.templ]</a>
 
-\<function template\> name, parameter type list ( [[dcl.fct]]),
+\<function template\> name, parameter type list ([[dcl.fct]]),
 enclosing namespace (if any), return type, and template parameter list
 
 #### 19 signature <a id="defns.signature.spec">[defns.signature.spec]</a>
@@ -170,7 +170,7 @@ specified or deduced)
 
 #### 20 signature <a id="defns.signature.member">[defns.signature.member]</a>
 
-\<class member function\> name, parameter type list ( [[dcl.fct]]),
+\<class member function\> name, parameter type list ([[dcl.fct]]),
 class of which the function is a member, cv-qualifiers (if any), and
 *ref-qualifier* (if any)
 
@@ -188,7 +188,7 @@ template arguments (whether explicitly specified or deduced)
 
 #### 23 static type <a id="defns.static.type">[defns.static.type]</a>
 
-type of an expression ( [[basic.types]]) resulting from analysis of the
+type of an expression ([[basic.types]]) resulting from analysis of the
 program without considering execution semantics  
 The static type of an expression depends only on the form of the program
 in which the expression appears, and does not change while the program
@@ -219,7 +219,7 @@ International Standard.
 #### 26 well-formed program <a id="defns.well.formed">[defns.well.formed]</a>
 
 C++program constructed according to the syntax rules, diagnosable
-semantic rules, and the One Definition Rule ( [[basic.def.odr]]).
+semantic rules, and the One Definition Rule ([[basic.def.odr]]).
 
 ## Implementation compliance <a id="intro.compliance">[[intro.compliance]]</a>
 
@@ -255,14 +255,14 @@ Clauses specify declarations. Implementations shall supply definitions
 consistent with the descriptions in the library Clauses.
 
 The names defined in the library have namespace scope (
-[[basic.namespace]]). A C++translation unit ( [[lex.phases]]) obtains
+[[basic.namespace]]). A C++translation unit ([[lex.phases]]) obtains
 access to these names by including the appropriate standard library
-header ( [[cpp.include]]).
+header ([[cpp.include]]).
 
 The templates, classes, functions, and objects in the library have
-external linkage ( [[basic.link]]). The implementation provides
+external linkage ([[basic.link]]). The implementation provides
 definitions for standard library entities, as necessary, while combining
-translation units to form a complete C++program ( [[lex.phases]]).
+translation units to form a complete C++program ([[lex.phases]]).
 
 Two kinds of implementations are defined: a *hosted implementation* and
 a *freestanding implementation*. For a hosted implementation, this
@@ -270,7 +270,7 @@ International Standard defines the set of available libraries. A
 freestanding implementation is one in which execution may take place
 without the benefit of an operating system, and has an
 *implementation-defined* set of libraries that includes certain
-language-support libraries ( [[compliance]]).
+language-support libraries ([[compliance]]).
 
 A conforming implementation may have extensions (including additional
 library functions), provided they do not alter the behavior of any
@@ -341,7 +341,7 @@ the following rules:
 
 The fundamental storage unit in the C++memory model is the *byte*. A
 byte is at least large enough to contain any member of the basic
-execution character set ( [[lex.charset]]) and the eight-bit code units
+execution character set ([[lex.charset]]) and the eight-bit code units
 of the Unicode UTF-8 encoding form and is composed of a contiguous
 sequence of bits, the number of which is *implementation-defined*. The
 least significant bit is called the *low-order bit*; the most
@@ -356,7 +356,7 @@ sequence of adjacent bit-fields all having non-zero width. Various
 features of the language, such as references and virtual functions,
 might involve additional memory locations that are not accessible to
 programs but are managed by the implementation. Two or more threads of
-execution ( [[intro.multithread]]) can update and access separate memory
+execution ([[intro.multithread]]) can update and access separate memory
 locations without interfering with each other.
 
 Thus a bit-field and an adjacent non-bit-field are in separate memory
@@ -394,21 +394,21 @@ The constructs in a C++program create, destroy, refer to, access, and
 manipulate objects. An *object* is a region of storage. A function is
 not an object, regardless of whether or not it occupies storage in the
 way that objects do. An object is created by a *definition* (
-[[basic.def]]), by a *new-expression* ( [[expr.new]]) or by the
-implementation ( [[class.temporary]]) when needed. The properties of an
+[[basic.def]]), by a *new-expression* ([[expr.new]]) or by the
+implementation ([[class.temporary]]) when needed. The properties of an
 object are determined when the object is created. An object can have a
 *name* (Clause  [[basic]]). An object has a *storage duration* (
-[[basic.stc]]) which influences its *lifetime* ( [[basic.life]]). An
-object has a *type* ( [[basic.types]]). The term *object type* refers to
+[[basic.stc]]) which influences its *lifetime* ([[basic.life]]). An
+object has a *type* ([[basic.types]]). The term *object type* refers to
 the type with which the object is created. Some objects are
-*polymorphic* ( [[class.virtual]]); the implementation generates
+*polymorphic* ([[class.virtual]]); the implementation generates
 information associated with each such object that makes it possible to
 determine that object’s type during program execution. For other
 objects, the interpretation of the values found therein is determined by
 the type of the *expression*s (Clause  [[expr]]) used to access them.
 
 Objects can contain other objects, called *subobjects*. A subobject can
-be a *member subobject* ( [[class.mem]]), a *base class subobject*
+be a *member subobject* ([[class.mem]]), a *base class subobject*
 (Clause  [[class.derived]]), or an array element. An object that is not
 a subobject of any other object is called a *complete object*.
 
@@ -419,16 +419,16 @@ of* `x`, determined as follows:
 - Otherwise, the complete object of `x` is the complete object of the
   (unique) object that contains `x`.
 
-If a complete object, a data member ( [[class.mem]]), or an array
+If a complete object, a data member ([[class.mem]]), or an array
 element is of class type, its type is considered the *most derived
 class*, to distinguish it from the class type of any base class
 subobject; an object of a most derived class type or of a non-class type
 is called a *most derived object*.
 
-Unless it is a bit-field ( [[class.bit]]), a most derived object shall
+Unless it is a bit-field ([[class.bit]]), a most derived object shall
 have a non-zero size and shall occupy one or more bytes of storage. Base
 class subobjects may have zero size. An object of trivially copyable or
-standard-layout type ( [[basic.types]]) shall occupy contiguous bytes of
+standard-layout type ([[basic.types]]) shall occupy contiguous bytes of
 storage.
 
 Unless an object is a bit-field or a base class subobject of zero size,
@@ -445,7 +445,7 @@ const bool b = &test1 != &test2;      // always true
 ```
 
 C++provides a variety of fundamental types and several ways of composing
-new types from existing types ( [[basic.types]]).
+new types from existing types ([[basic.types]]).
 
 ## Program execution <a id="intro.execution">[[intro.execution]]</a>
 
@@ -468,7 +468,7 @@ that implementation (referred to as the “corresponding instance” below).
 Certain other aspects and operations of the abstract machine are
 described in this International Standard as unspecified (for example,
 evaluation of expressions in a *new-initializer* if the allocation
-function fails to allocate memory ( [[expr.new]])). Where possible, this
+function fails to allocate memory ([[expr.new]])). Where possible, this
 International Standard defines a set of allowable behaviors. These
 define the nondeterministic aspects of the abstract machine. An instance
 of the abstract machine can thus have more than one possible execution
@@ -639,7 +639,7 @@ sequenced before the value computation of the result of the operator. If
 a side effect on a scalar object is unsequenced relative to either
 another side effect on the same scalar object or a value computation
 using the value of the same scalar object, and they are not potentially
-concurrent ( [[intro.multithread]]), the behavior is undefined. The next
+concurrent ([[intro.multithread]]), the behavior is undefined. The next
 section imposes similar, but more complex restrictions on potentially
 concurrent computations.
 
@@ -670,7 +670,7 @@ C++cause evaluation of a function call, even though no corresponding
 function call syntax appears in the translation unit. Evaluation of a
 `new` expression invokes one or more allocation and constructor
 functions; see  [[expr.new]]. For another example, invocation of a
-conversion function ( [[class.conv.fct]]) can arise in contexts in which
+conversion function ([[class.conv.fct]]) can arise in contexts in which
 no function call syntax appears. The sequencing constraints on the
 execution of the called function (as described above) are features of
 the function calls as evaluated, whatever the syntax of the expression
@@ -707,7 +707,7 @@ thread priorities, may prevent an implementation from making certain
 guarantees of forward progress.
 
 Executions of atomic functions that are either defined to be lock-free (
-[[atomics.flag]]) or indicated as lock-free ( [[atomics.lockfree]]) are
+[[atomics.flag]]) or indicated as lock-free ([[atomics.lockfree]]) are
 *lock-free executions*.
 
 - If there is only one unblocked thread, a lock-free execution in that
@@ -735,7 +735,7 @@ operations with explicit and detailed visibility constraints. However,
 it also implicitly supports a simpler view for more restricted programs.
 
 Two expression evaluations *conflict* if one of them modifies a memory
-location ( [[intro.memory]]) and the other one accesses or modifies the
+location ([[intro.memory]]) and the other one accesses or modifies the
 same memory location.
 
 The library defines a number of atomic operations (Clause  [[atomics]])
@@ -794,7 +794,7 @@ An evaluation *A* *carries a dependency* to an evaluation *B* if
 
 - the value of *A* is used as an operand of *B*, unless:
   - *B* is an invocation of any specialization of
-    `std::kill_dependency` ( [[atomics.order]]), or
+    `std::kill_dependency` ([[atomics.order]]), or
   - *A* is the left operand of a built-in logical AND (`&&`, see 
     [[expr.log.and]]) or logical OR (`||`, see  [[expr.log.or]])
     operator, or
@@ -1090,7 +1090,7 @@ All rights in these originals are reserved.
 
 [^4]: Under the “as-if” rule an implementation is allowed to store two
     objects at the same machine address or not store an object at all if
-    the program cannot observe the difference ( [[intro.execution]]).
+    the program cannot observe the difference ([[intro.execution]]).
 
 [^5]: This provision is sometimes called the “as-if” rule, because an
     implementation is free to disregard any requirement of this
@@ -1118,4 +1118,4 @@ All rights in these originals are reserved.
 [^10]: An object with automatic or thread storage duration (
     [[basic.stc]]) is associated with one specific thread, and can be
     accessed by a different thread only indirectly through a pointer or
-    reference ( [[basic.compound]]).
+    reference ([[basic.compound]]).

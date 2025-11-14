@@ -185,7 +185,7 @@ handler for which the *compound-statement* or *ctor-initializer*
 following the `try` keyword was most recently entered by the thread of
 control and not yet exited.
 
-Throwing an exception copy-initializes ( [[dcl.init]],
+Throwing an exception copy-initializes ([[dcl.init]],
 [[class.copy.ctor]]) a temporary object, called the *exception object*.
 An lvalue denoting the temporary is used to initialize the variable
 declared in the matching *handler* [[except.handle]]. If the type of the
@@ -599,7 +599,7 @@ invoked when an exception is thrown during the execution of a
 constructor [[except.ctor]], their exception specifications do not
 contribute to the exception specification of the constructor, because an
 exception thrown from such a destructor would call the function
-`std::terminate` rather than escape the constructor ( [[except.throw]],
+`std::terminate` rather than escape the constructor ([[except.throw]],
 [[except.terminate]]). — *end note*]
 
 The exception specification for an implicitly-declared destructor, or a
@@ -659,7 +659,7 @@ base class function has a non-throwing exception specification.
 An exception specification is considered to be *needed* when:
 
 - in an expression, the function is the unique lookup result or the
-  selected member of a set of overloaded functions ( [[basic.lookup]],
+  selected member of a set of overloaded functions ([[basic.lookup]],
   [[over.match]], [[over.over]]);
 - the function is odr-used [[basic.def.odr]] or, if it appears in an
   unevaluated operand, would be odr-used if the expression were
@@ -722,7 +722,7 @@ These situations are:
 - when execution of the initial function of a thread exits via an
   exception [[thread.thread.constr]], or
 - for a parallel algorithm whose `ExecutionPolicy` specifies such
-  behavior ( [[execpol.seq]], [[execpol.par]], [[execpol.parunseq]]),
+  behavior ([[execpol.seq]], [[execpol.par]], [[execpol.parunseq]]),
   when execution of an element access function
   [[algorithms.parallel.defns]] of the parallel algorithm exits via an
   exception [[algorithms.parallel.exceptions]], or
@@ -730,7 +730,7 @@ These situations are:
   object of type `std::thread` that refers to a joinable thread (
   [[thread.thread.destr]], [[thread.thread.assign]]), or
 - when a call to a `wait()`, `wait_until()`, or `wait_for()` function on
-  a condition variable ( [[thread.condition.condvar]],
+  a condition variable ([[thread.condition.condvar]],
   [[thread.condition.condvarany]]) fails to meet a postcondition.
 
 — *end note*]
@@ -758,7 +758,7 @@ of a handler for the exception [[except.handle]].
 [*Note 1*: As a consequence, an exception is considered uncaught during
 any stack unwinding resulting from it being thrown. — *end note*]
 
-If an exception is rethrown ( [[expr.throw]], [[propagation]]), it is
+If an exception is rethrown ([[expr.throw]], [[propagation]]), it is
 considered uncaught from the point of rethrow until the rethrown
 exception is caught. The function `std::uncaught_exceptions()`
 [[uncaught.exceptions]] returns the number of uncaught exceptions in the

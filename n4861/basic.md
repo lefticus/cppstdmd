@@ -252,13 +252,13 @@ int n = b ? (1, S::x)           // S::x is not odr-used here
 A function is *named by* an expression or conversion as follows:
 
 - A function is named by an expression or conversion if it is the
-  selected member of an overload set ( [[basic.lookup]], [[over.match]],
+  selected member of an overload set ([[basic.lookup]], [[over.match]],
   [[over.over]]) in an overload resolution performed as part of forming
   that expression or conversion, unless it is a pure virtual function
   and either the expression is not an *id-expression* naming the
   function with an explicitly qualified name or the expression forms a
   pointer to member [[expr.unary.op]]. \[*Note 1*: This covers taking
-  the address of functions ( [[conv.func]], [[expr.unary.op]]), calls to
+  the address of functions ([[conv.func]], [[expr.unary.op]]), calls to
   named functions [[expr.call]], operator overloading [[over]],
   user-defined conversions [[class.conv.fct]], allocation functions for
   *new-expression*s [[expr.new]], as well as non-default initialization
@@ -293,7 +293,7 @@ potentially-evaluated expression.
 
 `*this` is odr-used if `this` appears as a potentially-evaluated
 expression (including as the result of the implicit transformation in
-the body of a non-static member function ( [[class.mfct.non-static]])).
+the body of a non-static member function ([[class.mfct.non-static]])).
 
 A virtual member function is odr-used if it is not pure. A function is
 odr-used if it is named by a potentially-evaluated expression or
@@ -409,7 +409,7 @@ complete class types are required. A class type `T` must be complete if:
 - an lvalue-to-rvalue conversion is applied to a glvalue referring to an
   object of type `T` [[conv.lval]], or
 - an expression is converted (either implicitly or explicitly) to type
-  `T` ( [[conv]], [[expr.type.conv]], [[expr.dynamic.cast]],
+  `T` ([[conv]], [[expr.type.conv]], [[expr.dynamic.cast]],
   [[expr.static.cast]], [[expr.cast]]), or
 - an expression that is not a null pointer constant, and has type other
   than cv `void*`, is converted to the type pointer to `T` or reference
@@ -1149,7 +1149,7 @@ the use of a name with a set of declarations [[basic.def]] of that name.
 If the declarations found by name lookup all denote functions or
 function templates, the declarations are said to form an *overload set*.
 The declarations found by name lookup shall either all denote the same
-entity or form an overload set. Overload resolution ( [[over.match]],
+entity or form an overload set. Overload resolution ([[over.match]],
 [[over.over]]) takes place after name lookup has succeeded. The access
 rules [[class.access]] are considered only once name lookup and function
 overload resolution (if applicable) have succeeded. Only after name
@@ -1602,7 +1602,7 @@ except that:
   named module `M` [[module.interface]] is visible if there is an
   associated entity attached to `M` with the same innermost enclosing
   non-inline namespace as `D`.
-- If the lookup is for a dependent name ( [[temp.dep]],
+- If the lookup is for a dependent name ([[temp.dep]],
   [[temp.dep.candidate]]), any declaration `D` in `N` is visible if `D`
   would be visible to qualified name lookup [[namespace.qual]] at any
   point in the instantiation context [[module.context]] of the lookup,
@@ -2389,7 +2389,7 @@ template or namespace if
 - both names refer to members of the same namespace or to members, not
   by inheritance, of the same class; and
 - when both names denote functions or function templates, the
-  signatures ( [[defns.signature]], [[defns.signature.templ]]) are the
+  signatures ([[defns.signature]], [[defns.signature.templ]]) are the
   same.
 
 If multiple declarations of the same name with external linkage would
@@ -2642,7 +2642,7 @@ manipulate objects. An *object* is created by a definition
 [[basic.def]], by a *new-expression* [[expr.new]], by an operation that
 implicitly creates objects (see below), when implicitly changing the
 active member of a union [[class.union]], or when a temporary object is
-created ( [[conv.rval]], [[class.temporary]]). An object occupies a
+created ([[conv.rval]], [[class.temporary]]). An object occupies a
 region of storage in its period of construction [[class.cdtor]],
 throughout its lifetime [[basic.life]], and in its period of destruction
 [[class.cdtor]].
@@ -2835,7 +2835,7 @@ or `operator new[]` implicitly creates objects in the returned region of
 storage and returns a pointer to a suitable created object.
 
 [*Note 5*: Some functions in the C++ standard library implicitly create
-objects ( [[allocator.traits.members]], [[c.malloc]], [[cstring.syn]],
+objects ([[allocator.traits.members]], [[c.malloc]], [[cstring.syn]],
 [[bit.cast]]). — *end note*]
 
 ### Lifetime <a id="basic.life">[[basic.life]]</a>
@@ -2853,7 +2853,7 @@ constructor. The lifetime of an object of type `T` begins when:
 
 except that if the object is a union member or subobject thereof, its
 lifetime only begins if that union member is the initialized member in
-the union ( [[dcl.init.aggr]], [[class.base.init]]), or as described in
+the union ([[dcl.init.aggr]], [[class.base.init]]), or as described in
 [[class.union]] and [[class.copy.ctor]], and except as described in
 [[allocator.members]]. The lifetime of an object *o* of type `T` ends
 when:
@@ -3093,7 +3093,7 @@ undefined except in the following cases:
   - the second or third operand of a conditional expression
     [[expr.cond]],
   - the right operand of a comma expression [[expr.comma]],
-  - the operand of a cast or conversion ( [[conv.integral]],
+  - the operand of a cast or conversion ([[conv.integral]],
     [[expr.type.conv]], [[expr.static.cast]], [[expr.cast]]) to an
     unsigned ordinary character type or `std::byte` type
     [[cstddef.syn]], or
@@ -3160,7 +3160,7 @@ behavior.[^13]
 All variables which do not have dynamic storage duration, do not have
 thread storage duration, and are not local have *static storage
 duration*. The storage for these entities lasts for the duration of the
-program ( [[basic.start.static]], [[basic.start.term]]).
+program ([[basic.start.static]], [[basic.start.term]]).
 
 If a variable with static storage duration has initialization or a
 destructor with side effects, it shall not be eliminated even if it
@@ -3405,7 +3405,7 @@ and is one of the following:
   a safely-derived pointer value;
 - the result of well-defined pointer arithmetic [[expr.add]] using a
   safely-derived pointer value;
-- the result of a well-defined pointer conversion ( [[conv.ptr]],
+- the result of a well-defined pointer conversion ([[conv.ptr]],
   [[expr.type.conv]], [[expr.static.cast]], [[expr.cast]]) of a
   safely-derived pointer value;
 - the result of a `reinterpret_cast` of a safely-derived pointer value;
@@ -3454,7 +3454,7 @@ their complete object [[intro.object]].
 
 ### Alignment <a id="basic.align">[[basic.align]]</a>
 
-Object types have *alignment requirements* ( [[basic.fundamental]],
+Object types have *alignment requirements* ([[basic.fundamental]],
 [[basic.compound]]) which place restrictions on the addresses at which
 an object of that type may be allocated. An *alignment* is an
 *implementation-defined* integer value representing the number of bytes
@@ -3562,16 +3562,16 @@ as possible in order to avoid creating unnecessary temporary objects.
 
 Temporary objects are materialized:
 
-- when binding a reference to a prvalue ( [[dcl.init.ref]],
+- when binding a reference to a prvalue ([[dcl.init.ref]],
   [[expr.type.conv]], [[expr.dynamic.cast]], [[expr.static.cast]],
   [[expr.const.cast]], [[expr.cast]]),
-- when performing member access on a class prvalue ( [[expr.ref]],
+- when performing member access on a class prvalue ([[expr.ref]],
   [[expr.mptr.oper]]),
 - when performing an array-to-pointer conversion or subscripting on an
-  array prvalue ( [[conv.array]], [[expr.sub]]),
+  array prvalue ([[conv.array]], [[expr.sub]]),
 - when initializing an object of type `std::initializer_list<T>` from a
   *braced-init-list* [[dcl.init.list]],
-- for certain unevaluated operands ( [[expr.typeid]], [[expr.sizeof]]),
+- for certain unevaluated operands ([[expr.typeid]], [[expr.sizeof]]),
   and
 - when a prvalue that has type other than cv `void` appears as a
   discarded-value expression [[expr.prop]].
@@ -3635,7 +3635,7 @@ object).
 be passed to or returned from functions in registers. — *end note*]
 
 When an implementation introduces a temporary object of a class that has
-a non-trivial constructor ( [[class.default.ctor]],
+a non-trivial constructor ([[class.default.ctor]],
 [[class.copy.ctor]]), it shall ensure that a constructor is called for
 the temporary object. Similarly, the destructor shall be called for a
 temporary with a non-trivial destructor [[class.dtor]]. Temporary
@@ -3651,7 +3651,7 @@ different point than the end of the full-expression. The first context
 is when a default constructor is called to initialize an element of an
 array with no corresponding initializer [[dcl.init]]. The second context
 is when a copy constructor is called to copy an element of an array
-while the entire array is copied ( [[expr.prim.lambda.capture]],
+while the entire array is copied ([[expr.prim.lambda.capture]],
 [[class.copy.ctor]]). In either case, if the constructor has one or more
 default arguments, the destruction of every temporary created in a
 default argument is sequenced before the construction of the next array
@@ -3705,7 +3705,7 @@ int&& c = cond ? id<int[3]>{1, 2, 3}[i] : static_cast<int&&>(0);
 
 [*Note 4*:
 
-An explicit type conversion ( [[expr.type.conv]], [[expr.cast]]) is
+An explicit type conversion ([[expr.type.conv]], [[expr.cast]]) is
 interpreted as a sequence of elementary casts, covered above.
 
 [*Example 3*:
@@ -3770,7 +3770,7 @@ ends at the same point, these temporaries are destroyed at that point in
 the reverse order of the completion of their construction. In addition,
 the destruction of temporaries bound to references shall take into
 account the ordering of destruction of objects with static, thread, or
-automatic storage duration ( [[basic.stc.static]], [[basic.stc.thread]],
+automatic storage duration ([[basic.stc.static]], [[basic.stc.thread]],
 [[basic.stc.auto]]); that is, if `obj1` is an object with the same
 storage duration as the temporary and created before the temporary is
 created the temporary shall be destroyed before `obj1` is destroyed; if
@@ -4118,7 +4118,7 @@ minimum values of each arithmetic type for an implementation.
 A type cv `void` is an incomplete type that cannot be completed; such a
 type has an empty set of values. It is used as the return type for
 functions that do not return a value. Any expression can be explicitly
-converted to type cv `void` ( [[expr.type.conv]], [[expr.static.cast]],
+converted to type cv `void` ([[expr.type.conv]], [[expr.static.cast]],
 [[expr.cast]]). An expression of type cv `void` shall be used only as an
 expression statement [[stmt.expr]], as an operand of a comma expression
 [[expr.comma]], as a second or third operand of `?:` [[expr.cond]], as
@@ -4129,7 +4129,7 @@ cv `void`.
 
 A value of type `std::nullptr_t` is a null pointer constant
 [[conv.ptr]]. Such values participate in the pointer and the
-pointer-to-member conversions ( [[conv.ptr]], [[conv.mem]]).
+pointer-to-member conversions ([[conv.ptr]], [[conv.mem]]).
 `sizeof(std::nullptr_t)` shall be equal to `sizeof(void*)`.
 
 The types described in this subclause are called *fundamental types*.
@@ -5742,7 +5742,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 
 [^15]: The global `operator delete(void*, std::size_t)` precludes use of
     an allocation function `void operator new(std::size_t, std::size_t)`
-    as a placement allocation function ( [[diff.cpp11.basic]]).
+    as a placement allocation function ([[diff.cpp11.basic]]).
 
 [^16]: This subclause does not impose restrictions on indirection
     through pointers to memory not allocated by `::operator new`. This
@@ -5793,5 +5793,5 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 
 [^29]: A non-local variable with static storage duration having
     initialization with side effects is initialized in this case, even
-    if it is not itself odr-used ( [[basic.def.odr]],
+    if it is not itself odr-used ([[basic.def.odr]],
     [[basic.stc.static]]).

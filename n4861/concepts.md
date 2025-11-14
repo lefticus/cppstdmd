@@ -34,7 +34,7 @@ largest subexpressions that include only:
 
 - an *id-expression* [[expr.prim.id]], and
 - invocations of the library function templates `std::move`,
-  `std::forward`, and `std::declval` ( [[forward]], [[declval]]).
+  `std::forward`, and `std::declval` ([[forward]], [[declval]]).
 
 [*Example 1*: The operands of the expression `a = std::move(b)` are `a`
 and `std::move(b)`. — *end example*]
@@ -613,7 +613,7 @@ template<class T>
 ```
 
 [*Note 1*: Unlike the *Cpp17Destructible*
-requirements ( [[cpp17.destructible]]), this concept forbids destructors
+requirements ([[cpp17.destructible]]), this concept forbids destructors
 that are potentially throwing, even if a particular invocation of the
 destructor does not actually throw. — *end note*]
 
@@ -698,7 +698,7 @@ types.
 
 The exposition-only `boolean-testable` concept specifies the
 requirements on expressions that are convertible to `bool` and for which
-the logical operators  ( [[expr.log.and]], [[expr.log.or]],
+the logical operators  ([[expr.log.and]], [[expr.log.or]],
 [[expr.unary.op]]) have the conventional semantics.
 
 ``` cpp

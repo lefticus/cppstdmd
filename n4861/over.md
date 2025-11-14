@@ -379,7 +379,7 @@ T a = 1;            // error: no viable conversion (T(C(1)) not considered)
 
 In each case where a candidate is a function template, candidate
 function template specializations are generated using template argument
-deduction ( [[temp.over]], [[temp.deduct]]). If a constructor template
+deduction ([[temp.over]], [[temp.deduct]]). If a constructor template
 or conversion function template has an *explicit-specifier* whose
 *constant-expression* is value-dependent [[temp.dep]], template argument
 deduction is performed first and then, if the context requires a
@@ -391,7 +391,7 @@ also to a set of non-template functions. In such a case, the candidate
 functions generated from each function template are combined with the
 set of non-template candidate functions.
 
-A defaulted move special member function ( [[class.copy.ctor]],
+A defaulted move special member function ([[class.copy.ctor]],
 [[class.copy.assign]]) that is defined as deleted is excluded from the
 set of candidate functions in all contexts. A constructor inherited from
 class type `C` [[class.inhctor.init]] that has a first parameter of type
@@ -920,7 +920,7 @@ resolution selects the constructor in two phases:
 In copy-list-initialization, if an explicit constructor is chosen, the
 initialization is ill-formed.
 
-[*Note 1*: This differs from other situations ( [[over.match.ctor]],
+[*Note 1*: This differs from other situations ([[over.match.ctor]],
 [[over.match.copy]]), where only converting constructors are considered
 for copy-initialization. This restriction only applies if this
 initialization is part of the final result of overload
@@ -1469,7 +1469,7 @@ convert an argument in a function call to the type of the corresponding
 parameter of the function being called. The sequence of conversions is
 an implicit conversion as defined in [[conv]], which means it is
 governed by the rules for initialization of an object or reference by a
-single expression ( [[dcl.init]], [[dcl.init.ref]]).
+single expression ([[dcl.init]], [[dcl.init.ref]]).
 
 Implicit conversion sequences are concerned only with the type,
 cv-qualification, and value category of the argument and how these are
@@ -2198,14 +2198,14 @@ function that is chosen from a set of selected functions determined
 based on the target type required in the context (if any), as described
 below. The target can be
 
-- an object or reference being initialized ( [[dcl.init]],
+- an object or reference being initialized ([[dcl.init]],
   [[dcl.init.ref]], [[dcl.init.list]]),
 - the left side of an assignment [[expr.ass]],
 - a parameter of a function [[expr.call]],
 - a parameter of a user-defined operator [[over.oper]],
 - the return value of a function, operator function, or conversion
   [[stmt.return]],
-- an explicit type conversion ( [[expr.type.conv]],
+- an explicit type conversion ([[expr.type.conv]],
   [[expr.static.cast]], [[expr.cast]]), or
 - a non-type *template-parameter* [[temp.arg.nontype]].
 
@@ -2362,7 +2362,7 @@ nor can the preprocessing symbols `#` [[cpp.stringize]] and `##`
 — *end note*]
 
 Operator functions are usually not called directly; instead they are
-invoked to evaluate the operators they implement ( [[over.unary]] –
+invoked to evaluate the operators they implement ([[over.unary]] –
 [[over.inc]]). They can be explicitly called, however, using the
 *operator-function-id* as the name of the function in the function call
 syntax [[expr.call]].

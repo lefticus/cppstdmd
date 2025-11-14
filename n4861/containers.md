@@ -702,7 +702,7 @@ required to be *Cpp17CopyAssignable* even though the associated
 
 In [[container.assoc.req]], `X` denotes an associative container class,
 `a` denotes a value of type `X`, `a2` denotes a value of a type with
-nodes compatible with type `X` ( [[container.node.compat]]), `b` denotes
+nodes compatible with type `X` ([[container.node.compat]]), `b` denotes
 a possibly `const` value of type `X`, `u` denotes the name of a variable
 being declared, `a_uniq` denotes a value of type `X` when `X` supports
 unique keys, `a_eq` denotes a value of type `X` when `X` supports
@@ -1769,8 +1769,8 @@ A `forward_list` meets all of the requirements of a container (
 provided and `operator==` has linear complexity. A `forward_list` also
 meets all of the requirements for an allocator-aware container (
 [[container.alloc.req]]). In addition, a `forward_list` provides the
-`assign` member functions ( [[container.seq.req]]) and several of the
-optional container requirements ( [[container.seq.opt]]). Descriptions
+`assign` member functions ([[container.seq.req]]) and several of the
+optional container requirements ([[container.seq.opt]]). Descriptions
 are provided here only for operations on `forward_list` that are not
 described in that table or for operations where there is additional
 semantic information.
@@ -2786,7 +2786,7 @@ A `vector` meets all of the requirements of a container and of a
 reversible container (given in two tables in 
 [[container.requirements]]), of a sequence container, including most of
 the optional sequence container requirements [[sequence.reqmts]], of an
-allocator-aware container ( [[container.alloc.req]]), and, for an
+allocator-aware container ([[container.alloc.req]]), and, for an
 element type other than `bool`, of a contiguous container
 [[container.requirements.general]]. The exceptions are the `push_front`,
 `pop_front`, and `emplace_front` member functions, which are not
@@ -5231,7 +5231,7 @@ supports forward iterators.
 
 An `unordered_multimap` meets all of the requirements of a container, of
 an unordered associative container, and of an allocator-aware container
-( [[container.alloc.req]]). It provides the operations described in the
+([[container.alloc.req]]). It provides the operations described in the
 preceding requirements table for equivalent keys; that is, an
 `unordered_multimap` supports the `a_eq` operations in that table, not
 the `a_uniq` operations. For an `unordered_multimap<Key, T>` the
@@ -5867,7 +5867,7 @@ supports forward iterators.
 
 An `unordered_multiset` meets all of the requirements of a container, of
 an unordered associative container, and of an allocator-aware container
-( [[container.alloc.req]]). It provides the operations described in the
+([[container.alloc.req]]). It provides the operations described in the
 preceding requirements table for equivalent keys; that is, an
 `unordered_multiset` supports the `a_eq` operations in that table, not
 the `a_uniq` operations. For an `unordered_multiset<Key>` the `key type`

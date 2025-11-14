@@ -24,10 +24,10 @@ types in several contexts:
 - When used as operands of operators. The operator’s requirements for
   its operands dictate the destination type (Clause  [[expr]]).
 - When used in the condition of an `if` statement or iteration
-  statement ( [[stmt.select]], [[stmt.iter]]). The destination type is
+  statement ([[stmt.select]], [[stmt.iter]]). The destination type is
   `bool`.
 - When used in the expression of a `switch` statement. The destination
-  type is integral ( [[stmt.select]]).
+  type is integral ([[stmt.select]]).
 - When used as the source expression for an initialization (which
   includes use as an argument in a function call and use as the
   expression in a `return` statement). The type of the entity being
@@ -36,7 +36,7 @@ types in several contexts:
 
 An expression `e` can be *implicitly converted* to a type `T` if and
 only if the declaration `T t=e;` is well-formed, for some invented
-temporary variable `t` ( [[dcl.init]]). Certain language constructs
+temporary variable `t` ([[dcl.init]]). Certain language constructs
 require that an expression be converted to a Boolean value. An
 expression `e` appearing in such a context is said to be *contextually
 converted to `bool`* and is well-formed if and only if the declaration
@@ -45,7 +45,7 @@ converted to `bool`* and is well-formed if and only if the declaration
 performing the declaration and initialization and then using the
 temporary variable as the result of the conversion. The result is an
 lvalue if `T` is an lvalue reference type or an rvalue reference to
-function type ( [[dcl.ref]]), an xvalue if `T` is an rvalue reference to
+function type ([[dcl.ref]]), an xvalue if `T` is an rvalue reference to
 object type, and a prvalue otherwise. The expression `e` is used as a
 glvalue if and only if the initialization uses it as a glvalue.
 
@@ -62,7 +62,7 @@ descriptions of those operators and contexts.
 
 ## Lvalue-to-rvalue conversion <a id="conv.lval">[[conv.lval]]</a>
 
-A glvalue ( [[basic.lval]]) of a non-function, non-array type `T` can be
+A glvalue ([[basic.lval]]) of a non-function, non-array type `T` can be
 converted to a prvalue.[^1] If `T` is an incomplete type, a program that
 necessitates this conversion is ill-formed. If the object to which the
 glvalue refers is not an object of type `T` and is not an object of a
@@ -109,7 +109,7 @@ cv-qualifiercv2 `T`” if “cv-qualifiercv2 `T`” is more cv-qualified than
 “cv-qualifiercv1 `T`”.
 
 Function types (including those used in pointer to member function
-types) are never cv-qualified ( [[dcl.fct]]).
+types) are never cv-qualified ([[dcl.fct]]).
 
 A conversion can add cv-qualifiers at levels other than the first in
 multi-level pointers, subject to the following rules:[^4]
@@ -148,7 +148,7 @@ cv-qualifiers are the same as those used for similar pointer types.
 ## Integral promotions <a id="conv.prom">[[conv.prom]]</a>
 
 A prvalue of an integer type other than `bool`, `char16_t`, `char32_t`,
-or `wchar_t` whose integer conversion rank ( [[conv.rank]]) is less than
+or `wchar_t` whose integer conversion rank ([[conv.rank]]) is less than
 the rank of `int` can be converted to a prvalue of type `int` if `int`
 can represent all the values of the source type; otherwise, the source
 prvalue can be converted to a prvalue of type `unsigned int`.
@@ -163,7 +163,7 @@ of type `char16_t`, `char32_t`, or `wchar_t` can be converted to a
 prvalue of its underlying type.
 
 A prvalue of an unscoped enumeration type whose underlying type is not
-fixed ( [[dcl.enum]]) can be converted to a prvalue of the first of the
+fixed ([[dcl.enum]]) can be converted to a prvalue of the first of the
 following types that can represent all the values of the enumeration
 (i.e., the values in the range bₘin to bₘax as described in 
 [[dcl.enum]]): `int`, `unsigned int`, `long` `int`, `unsigned long`
@@ -176,13 +176,13 @@ values of the enumeration can be represented. If there are two such
 extended types, the signed one is chosen.
 
 A prvalue of an unscoped enumeration type whose underlying type is
-fixed ( [[dcl.enum]]) can be converted to a prvalue of its underlying
+fixed ([[dcl.enum]]) can be converted to a prvalue of its underlying
 type. Moreover, if integral promotion can be applied to its underlying
 type, a prvalue of an unscoped enumeration type whose underlying type is
 fixed can also be converted to a prvalue of the promoted underlying
 type.
 
-A prvalue for an integral bit-field ( [[class.bit]]) can be converted to
+A prvalue for an integral bit-field ([[class.bit]]) can be converted to
 a prvalue of type `int` if `int` can represent all the values of the
 bit-field; otherwise, it can be converted to `unsigned int` if
 `unsigned int` can represent all the values of the bit-field. If the
@@ -279,7 +279,7 @@ object type, can be converted to a prvalue of type “pointer to
 cv-qualifiercv `void`”. The result of converting a “pointer to
 cv-qualifiercv `T`” to a “pointer to cv-qualifiercv `void`” points to
 the start of the storage location where the object of type `T` resides,
-as if the object is a most derived object ( [[intro.object]]) of type
+as if the object is a most derived object ([[intro.object]]) of type
 `T` (that is, not a base class subobject). The null pointer value is
 converted to the null pointer value of the destination type.
 
@@ -295,7 +295,7 @@ type.
 
 ## Pointer to member conversions <a id="conv.mem">[[conv.mem]]</a>
 
-A null pointer constant ( [[conv.ptr]]) can be converted to a pointer to
+A null pointer constant ([[conv.ptr]]) can be converted to a pointer to
 member type; the result is the *null member pointer value* of that type
 and is distinguishable from any pointer to member not created from a
 null pointer constant. Such a conversion is called a *null member
@@ -303,14 +303,14 @@ pointer conversion*. Two null member pointer values of the same type
 shall compare equal. The conversion of a null pointer constant to a
 pointer to member of cv-qualified type is a single conversion, and not
 the sequence of a pointer to member conversion followed by a
-qualification conversion ( [[conv.qual]]).
+qualification conversion ([[conv.qual]]).
 
 A prvalue of type “pointer to member of `B` of type cv-qualifiercv `T`”,
 where `B` is a class type, can be converted to a prvalue of type
 “pointer to member of `D` of type cv-qualifiercv `T`”, where `D` is a
 derived class (Clause  [[class.derived]]) of `B`. If `B` is an
 inaccessible (Clause  [[class.access]]), ambiguous (
-[[class.member.lookup]]), or virtual ( [[class.mi]]) base class of `D`,
+[[class.member.lookup]]), or virtual ([[class.mi]]) base class of `D`,
 or a base class of a virtual base class of `D`, a program that
 necessitates this conversion is ill-formed. The result of the conversion
 refers to the same member as the pointer to member before the conversion
@@ -353,7 +353,7 @@ Every integer type has an *integer conversion rank* defined as follows:
 - The rank of `bool` shall be less than the rank of all other standard
   integer types.
 - The ranks of `char16_t`, `char32_t`, and `wchar_t` shall equal the
-  ranks of their underlying types ( [[basic.fundamental]]).
+  ranks of their underlying types ([[basic.fundamental]]).
 - The rank of any extended signed integer type relative to another
   extended signed integer type with the same size is
   *implementation-defined*, but still subject to the other rules for
@@ -363,7 +363,7 @@ Every integer type has an *integer conversion rank* defined as follows:
   greater rank than `T3`.
 
 The integer conversion rank is used in the definition of the integral
-promotions ( [[conv.prom]]) and the usual arithmetic conversions
+promotions ([[conv.prom]]) and the usual arithmetic conversions
 (Clause  [[expr]]).
 
 <!-- Section link definitions -->
@@ -429,7 +429,7 @@ promotions ( [[conv.prom]]) and the usual arithmetic conversions
 [^5]: The rule for conversion of pointers to members (from pointer to
     member of base to pointer to member of derived) appears inverted
     compared to the rule for pointers to objects (from pointer to
-    derived to pointer to base) ( [[conv.ptr]], Clause 
+    derived to pointer to base) ([[conv.ptr]], Clause 
     [[class.derived]]). This inversion is necessary to ensure type
     safety. Note that a pointer to member is not an object pointer or a
     function pointer and the rules for conversions of such pointers do

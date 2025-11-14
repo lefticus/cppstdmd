@@ -4,7 +4,7 @@
 
 This Clause describes components that C++programs may use to perform
 iterations over containers (Clause [[containers]]), streams (
-[[iostream.format]]), and stream buffers ( [[stream.buffers]]).
+[[iostream.format]]), and stream buffers ([[stream.buffers]]).
 
 The following subclauses describe iterator requirements, and components
 for iterator primitives, predefined iterators, and stream iterators, as
@@ -145,7 +145,7 @@ value of `X&`, `t` denotes a value of value type `T`, `o` denotes a
 value of some type that is writable to the output iterator.
 
 [*Note 4*: For an iterator type `X` there must be an instantiation of
-`iterator_traits<X>` ( [[iterator.traits]]). — *end note*]
+`iterator_traits<X>` ([[iterator.traits]]). — *end note*]
 
 ### Iterator <a id="iterator.iterators">[[iterator.iterators]]</a>
 
@@ -153,15 +153,15 @@ The `Iterator` requirements form the basis of the iterator concept
 taxonomy; every iterator satisfies the `Iterator` requirements. This set
 of requirements specifies operations for dereferencing and incrementing
 an iterator. Most algorithms will require additional operations to
-read ( [[input.iterators]]) or write ( [[output.iterators]]) values, or
-to provide a richer set of iterator movements ( [[forward.iterators]],
+read ([[input.iterators]]) or write ([[output.iterators]]) values, or
+to provide a richer set of iterator movements ([[forward.iterators]],
 [[bidirectional.iterators]], [[random.access.iterators]]).
 
 A type `X` satisfies the `Iterator` requirements if:
 
 - `X` satisfies the `CopyConstructible`, `CopyAssignable`, and
-  `Destructible` requirements ( [[utility.arg.requirements]]) and
-  lvalues of type `X` are swappable ( [[swappable.requirements]]), and
+  `Destructible` requirements ([[utility.arg.requirements]]) and
+  lvalues of type `X` are swappable ([[swappable.requirements]]), and
 - the expressions in Table  [[tab:iterator.requirements]] are valid and
   have the indicated semantics.
 
@@ -483,7 +483,7 @@ iterator_traits<Iterator>::pointer
 
 may be defined as `void`.
 
-If `Iterator` has valid ( [[temp.deduct]]) member types
+If `Iterator` has valid ([[temp.deduct]]) member types
 `difference_type`, `value_type`, `pointer`, `reference`, and
 `iterator_category`, `iterator_traits<Iterator>` shall have the
 following as publicly accessible members:
@@ -758,19 +758,19 @@ namespace std {
 #### `reverse_iterator` requirements <a id="reverse.iter.requirements">[[reverse.iter.requirements]]</a>
 
 The template parameter `Iterator` shall meet all the requirements of a
-Bidirectional Iterator ( [[bidirectional.iterators]]).
+Bidirectional Iterator ([[bidirectional.iterators]]).
 
 Additionally, `Iterator` shall meet the requirements of a random access
-iterator ( [[random.access.iterators]]) if any of the members
-`operator+` ( [[reverse.iter.op+]]), `operator-` (
-[[reverse.iter.op-]]), `operator+=` ( [[reverse.iter.op+=]]),
-`operator-=` ( [[reverse.iter.op-=]]), `operator[]` (
+iterator ([[random.access.iterators]]) if any of the members
+`operator+` ([[reverse.iter.op+]]), `operator-` (
+[[reverse.iter.op-]]), `operator+=` ([[reverse.iter.op+=]]),
+`operator-=` ([[reverse.iter.op-=]]), `operator[]` (
 [[reverse.iter.opindex]]), or the non-member operators `operator<` (
-[[reverse.iter.op<]]), `operator>` ( [[reverse.iter.op>]]),  
-`operator<=` ( [[reverse.iter.op<=]]), `operator>=` (
-[[reverse.iter.op>=]]), `operator-` ( [[reverse.iter.opdiff]]) or
-`operator+` ( [[reverse.iter.opsum]]) are referenced in a way that
-requires instantiation ( [[temp.inst]]).
+[[reverse.iter.op<]]), `operator>` ([[reverse.iter.op>]]),  
+`operator<=` ([[reverse.iter.op<=]]), `operator>=` (
+[[reverse.iter.op>=]]), `operator-` ([[reverse.iter.opdiff]]) or
+`operator+` ([[reverse.iter.opsum]]) are referenced in a way that
+requires instantiation ([[temp.inst]]).
 
 #### `reverse_iterator` operations <a id="reverse.iter.ops">[[reverse.iter.ops]]</a>
 
@@ -1419,10 +1419,10 @@ as a synonym for `remove_reference_t<R>&&`, otherwise as a synonym for
 #### `move_iterator` requirements <a id="move.iter.requirements">[[move.iter.requirements]]</a>
 
 The template parameter `Iterator` shall meet the requirements of an
-input iterator ( [[input.iterators]]). Additionally, if any of the
+input iterator ([[input.iterators]]). Additionally, if any of the
 bidirectional or random access traversal functions are instantiated, the
 template parameter shall meet the requirements for a Bidirectional
-Iterator ( [[bidirectional.iterators]]) or a Random Access Iterator (
+Iterator ([[bidirectional.iterators]]) or a Random Access Iterator (
 [[random.access.iterators]]), respectively.
 
 #### `move_iterator` operations <a id="move.iter.ops">[[move.iter.ops]]</a>

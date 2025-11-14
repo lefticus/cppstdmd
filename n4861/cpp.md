@@ -924,7 +924,7 @@ if it were a parameter, and the preprocessing token sequence for the
 corresponding argument is defined as follows. If the substitution of
 `__VA_ARGS__` as neither an operand of `#` nor `##` consists of no
 preprocessing tokens, the argument consists of a single placemarker
-preprocessing token ( [[cpp.concat]], [[cpp.rescan]]). Otherwise, the
+preprocessing token ([[cpp.concat]], [[cpp.rescan]]). Otherwise, the
 argument consists of the results of the expansion of the contained
 *pp-tokens* as the replacement list of the current function-like macro
 before removal of placemarker tokens, rescanning, and further

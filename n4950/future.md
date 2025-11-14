@@ -278,7 +278,7 @@ template<class T> bool operator!=(const T& x, const T& y);
 ```
 
 *Requires:* Type `T` is *Cpp17EqualityComparable*
-( [[cpp17.equalitycomparable]]).
+([[cpp17.equalitycomparable]]).
 
 *Returns:* `!(x == y)`.
 
@@ -287,7 +287,7 @@ template<class T> bool operator>(const T& x, const T& y);
 ```
 
 *Requires:* Type `T` is *Cpp17LessThanComparable*
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* `y < x`.
 
@@ -296,7 +296,7 @@ template<class T> bool operator<=(const T& x, const T& y);
 ```
 
 *Requires:* Type `T` is *Cpp17LessThanComparable*
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* `!(y < x)`.
 
@@ -305,7 +305,7 @@ template<class T> bool operator>=(const T& x, const T& y);
 ```
 
 *Requires:* Type `T` is *Cpp17LessThanComparable*
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* `!(x < y)`.
 
@@ -512,7 +512,7 @@ virtual ~strstreambuf();
 *Effects:* Destroys an object of class `strstreambuf`. The function
 frees the dynamically allocated array object only if
 `(strmode & allocated) != 0` and `(strmode & frozen) == 0`.
-( [[depr.strstreambuf.virtuals]] describes how a dynamically allocated
+([[depr.strstreambuf.virtuals]] describes how a dynamically allocated
 array object is freed.)
 
 #### Member functions <a id="depr.strstreambuf.members">[[depr.strstreambuf.members]]</a>

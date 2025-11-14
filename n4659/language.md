@@ -76,7 +76,7 @@ namespace std {
 The contents and meaning of the header `<cstddef>` are the same as the C
 standard library header `<stddef.h>`, except that it does not declare
 the type `wchar_t`, that it also declares the type `byte` and its
-associated operations ( [[support.types.byteops]]), and as noted in
+associated operations ([[support.types.byteops]]), and as noted in
 [[support.types.nullptr]] and [[support.types.layout]].
 
 ISO C 7.19
@@ -182,7 +182,7 @@ the type `wchar_t`, and except as noted in [[support.types.nullptr]],
 
 [*Note 1*: Several functions have additional overloads in this
 International Standard, but they have the same behavior as in the C
-standard library ( [[library.c]]). — *end note*]
+standard library ([[library.c]]). — *end note*]
 
 ISO C 7.22
 
@@ -208,7 +208,7 @@ Standard. Use of the `offsetof` macro with a `type` other than a
 standard-layout class (Clause  [[class]]) is
 conditionally-supported.[^2] The expression
 `offsetof(type, member-designator)` is never type-dependent (
-[[temp.dep.expr]]) and it is value-dependent ( [[temp.dep.constexpr]])
+[[temp.dep.expr]]) and it is value-dependent ([[temp.dep.constexpr]])
 if and only if `type` is dependent. The result of applying the
 `offsetof` macro to a static data member or a function member is
 undefined. No operation invoked by the `offsetof` macro shall throw an
@@ -223,7 +223,7 @@ The type `size_t` is an *implementation-defined* unsigned integer type
 that is large enough to contain the size in bytes of any object.
 
 [*Note 1*: It is recommended that implementations choose types for
-`ptrdiff_t` and `size_t` whose integer conversion ranks ( [[conv.rank]])
+`ptrdiff_t` and `size_t` whose integer conversion ranks ([[conv.rank]])
 are no greater than that of `signed long int` unless a larger size is
 necessary to contain all the possible values. — *end note*]
 
@@ -231,8 +231,8 @@ The type `max_align_t` is a POD type whose alignment requirement is at
 least as great as that of every scalar type, and whose alignment
 requirement is supported in every context.
 
-Alignment ( [[basic.align]]), Sizeof ( [[expr.sizeof]]), Additive
-operators ( [[expr.add]]), Free store ( [[class.free]]), and ISO C 7.19.
+Alignment ([[basic.align]]), Sizeof ([[expr.sizeof]]), Additive
+operators ([[expr.add]]), Free store ([[class.free]]), and ISO C 7.19.
 
 ### `byte` type operations <a id="support.types.byteops">[[support.types.byteops]]</a>
 
@@ -364,8 +364,8 @@ unless `is_integral_v<IntType>` is `true`.
 
 ### General <a id="support.limits.general">[[support.limits.general]]</a>
 
-The headers `<limits>` ( [[limits.syn]]), `<climits>` (
-[[climits.syn]]), and `<cfloat>` ( [[cfloat.syn]]) supply
+The headers `<limits>` ([[limits.syn]]), `<climits>` (
+[[climits.syn]]), and `<cfloat>` ([[cfloat.syn]]) supply
 characteristics of implementation-dependent arithmetic types (
 [[basic.fundamental]]).
 
@@ -522,7 +522,7 @@ The value of each member of a specialization of `numeric_limits` on a
 cv-qualified type `cv T` shall be equal to the value of the
 corresponding member of the specialization on the unqualified type `T`.
 
-Non-arithmetic standard types, such as `complex<T>` ( [[complex]]),
+Non-arithmetic standard types, such as `complex<T>` ([[complex]]),
 shall not have specializations.
 
 #### `numeric_limits` members <a id="numeric.limits.members">[[numeric.limits.members]]</a>
@@ -778,7 +778,7 @@ static constexpr bool is_bounded;
 
 `true` if the set of values representable by the type is finite.[^25]
 
-[*Note 1*: All fundamental types ( [[basic.fundamental]]) are bounded.
+[*Note 1*: All fundamental types ([[basic.fundamental]]) are bounded.
 This member would be `false` for arbitrary precision
 types. — *end note*]
 
@@ -795,7 +795,7 @@ differs from the true value by an integer multiple of
 `max() - min() + 1`.
 
 [*Example 1*: `is_modulo` is `false` for signed integer
-types ( [[basic.fundamental]]) unless an implementation, as an extension
+types ([[basic.fundamental]]) unless an implementation, as an extension
 to this International Standard, defines signed integer overflow to
 wrap. — *end example*]
 
@@ -1086,7 +1086,7 @@ ISO C 7.20.
 
 ## Start and termination <a id="support.start.term">[[support.start.term]]</a>
 
-[*Note 1*: The header `<cstdlib>` ( [[cstdlib.syn]]) declares the
+[*Note 1*: The header `<cstdlib>` ([[cstdlib.syn]]) declares the
 functions described in this subclause. — *end note*]
 
 ``` cpp
@@ -1098,8 +1098,8 @@ library.
 
 *Remarks:* The program is terminated without executing destructors for
 objects of automatic, thread, or static storage duration and without
-calling functions passed to `atexit()` ( [[basic.start.term]]). The
-function `_Exit` is signal-safe ( [[csignal.syn]]).
+calling functions passed to `atexit()` ([[basic.start.term]]). The
+function `_Exit` is signal-safe ([[csignal.syn]]).
 
 ``` cpp
 [[noreturn]] void abort() noexcept;
@@ -1110,8 +1110,8 @@ library.
 
 *Remarks:* The program is terminated without executing destructors for
 objects of automatic, thread, or static storage duration and without
-calling functions passed to `atexit()` ( [[basic.start.term]]). The
-function `abort` is signal-safe ( [[csignal.syn]]).
+calling functions passed to `atexit()` ([[basic.start.term]]). The
+function `abort` is signal-safe ([[csignal.syn]]).
 
 ``` cpp
 int atexit(c-atexit-handler* f) noexcept;
@@ -1121,10 +1121,10 @@ int atexit(atexit-handler* f) noexcept;
 *Effects:* The `atexit()` functions register the function pointed to by
 `f` to be called without arguments at normal program termination. It is
 unspecified whether a call to `atexit()` that does not happen
-before ( [[intro.multithread]]) a call to `exit()` will succeed.
+before ([[intro.multithread]]) a call to `exit()` will succeed.
 
 [*Note 1*: The `atexit()` functions do not introduce a data
-race ( [[res.on.data.races]]). — *end note*]
+race ([[res.on.data.races]]). — *end note*]
 
 *Implementation limits:* The implementation shall support the
 registration of at least 32 functions.
@@ -1146,7 +1146,7 @@ succeeds, nonzero if it fails.
   result of calling `exit()`.)[^31] If control leaves a registered
   function called by `exit` because the function does not provide a
   handler for a thrown exception, `std::terminate()` shall be
-  called ( [[except.terminate]]).
+  called ([[except.terminate]]).
 - Next, all open C streams (as mediated by the function signatures
   declared in `<cstdio>`) with unwritten buffered data are flushed, all
   open C streams are closed, and all files created by calling
@@ -1166,10 +1166,10 @@ int at_quick_exit(atexit-handler* f) noexcept;
 *Effects:* The `at_quick_exit()` functions register the function pointed
 to by `f` to be called without arguments when `quick_exit` is called. It
 is unspecified whether a call to `at_quick_exit()` that does not happen
-before ( [[intro.multithread]]) all calls to `quick_exit` will succeed.
+before ([[intro.multithread]]) all calls to `quick_exit` will succeed.
 
 [*Note 2*: The `at_quick_exit()` functions do not introduce a data
-race ( [[res.on.data.races]]). — *end note*]
+race ([[res.on.data.races]]). — *end note*]
 
 [*Note 3*: The order of registration may be indeterminate if
 `at_quick_exit` was called from more than one thread. — *end note*]
@@ -1206,7 +1206,7 @@ After calling registered functions, `quick_exit` shall call
 
 [*Note 6*: The standard file buffers are not flushed. — *end note*]
 
-*Remarks:* The function `quick_exit` is signal-safe ( [[csignal.syn]])
+*Remarks:* The function `quick_exit` is signal-safe ([[csignal.syn]])
 when the functions registered with `at_quick_exit` are.
 
   [[basic.start]], [[basic.start.term]], ISO C 7.22.4.
@@ -1287,8 +1287,8 @@ void* operator new(std::size_t size);
 void* operator new(std::size_t size, std::align_val_t alignment);
 ```
 
-*Effects:* The allocation functions ( [[basic.stc.dynamic.allocation]])
-called by a *new-expression* ( [[expr.new]]) to allocate `size` bytes of
+*Effects:* The allocation functions ([[basic.stc.dynamic.allocation]])
+called by a *new-expression* ([[expr.new]]) to allocate `size` bytes of
 storage. The second form is called for a type with new-extended
 alignment, and allocates storage with the specified alignment. The first
 form is called otherwise, and allocates storage suitably aligned to
@@ -1300,7 +1300,7 @@ function signatures, and thereby displace the default versions defined
 by the C++standard library.
 
 *Required behavior:* Return a non-null pointer to suitably aligned
-storage ( [[basic.stc.dynamic]]), or else throw a `bad_alloc` exception.
+storage ([[basic.stc.dynamic]]), or else throw a `bad_alloc` exception.
 This requirement is binding on any replacement versions of these
 functions.
 
@@ -1312,10 +1312,10 @@ functions.
   unspecified.
 - Returns a pointer to the allocated storage if the attempt is
   successful. Otherwise, if the current
-  `new_handler` ( [[get.new.handler]]) is a null pointer value, throws
+  `new_handler` ([[get.new.handler]]) is a null pointer value, throws
   `bad_alloc`.
 - Otherwise, the function calls the current `new_handler`
-  function ( [[new.handler]]). If the called function returns, the loop
+  function ([[new.handler]]). If the called function returns, the loop
   repeats.
 - The loop terminates when an attempt to allocate the requested storage
   is successful or when a called `new_handler` function does not return.
@@ -1334,7 +1334,7 @@ function signatures, and thereby displace the default versions defined
 by the C++standard library.
 
 *Required behavior:* Return a non-null pointer to suitably aligned
-storage ( [[basic.stc.dynamic]]), or else return a null pointer. Each of
+storage ([[basic.stc.dynamic]]), or else return a null pointer. Each of
 these nothrow versions of `operator new` returns a pointer obtained as
 if acquired from the (possibly replaced) corresponding non-placement
 function. This requirement is binding on any replacement versions of
@@ -1362,7 +1362,7 @@ void operator delete(void* ptr, std::size_t size, std::align_val_t alignment) no
 ```
 
 *Effects:* The deallocation
-functions ( [[basic.stc.dynamic.deallocation]]) called by a
+functions ([[basic.stc.dynamic.deallocation]]) called by a
 *delete-expression* to render the value of `ptr` invalid.
 
 *Replaceable:* A C++program may define functions with any of these
@@ -1385,7 +1385,7 @@ the address of a block of memory allocated by an earlier call to a
 invalidated by an intervening call to `operator delete`.
 
 *Requires:* If an implementation has strict pointer
-safety ( [[basic.stc.dynamic.safety]]) then `ptr` shall be a
+safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
 *Requires:* If the `alignment` parameter is not present, `ptr` shall
@@ -1425,7 +1425,7 @@ void operator delete(void* ptr, std::align_val_t alignment, const std::nothrow_t
 ```
 
 *Effects:* The deallocation
-functions ( [[basic.stc.dynamic.deallocation]]) called by the
+functions ([[basic.stc.dynamic.deallocation]]) called by the
 implementation to render the value of `ptr` invalid when the constructor
 invoked from a nothrow placement version of the *new-expression* throws
 an exception.
@@ -1441,7 +1441,7 @@ the address of a block of memory allocated by an earlier call to a
 invalidated by an intervening call to `operator delete`.
 
 *Requires:* If an implementation has strict pointer
-safety ( [[basic.stc.dynamic.safety]]) then `ptr` shall be a
+safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
 *Requires:* If the `alignment` parameter is not present, `ptr` shall
@@ -1460,8 +1460,8 @@ void* operator new[](std::size_t size);
 void* operator new[](std::size_t size, std::align_val_t alignment);
 ```
 
-*Effects:* The allocation functions ( [[basic.stc.dynamic.allocation]])
-called by the array form of a *new-expression* ( [[expr.new]]) to
+*Effects:* The allocation functions ([[basic.stc.dynamic.allocation]])
+called by the array form of a *new-expression* ([[expr.new]]) to
 allocate `size` bytes of storage. The second form is called for a type
 with new-extended alignment, and allocates storage with the specified
 alignment. The first form is called otherwise, and allocates storage
@@ -1493,7 +1493,7 @@ function signatures, and thereby displace the default versions defined
 by the C++standard library.
 
 *Required behavior:* Return a non-null pointer to suitably aligned
-storage ( [[basic.stc.dynamic]]), or else return a null pointer. Each of
+storage ([[basic.stc.dynamic]]), or else return a null pointer. Each of
 these nothrow versions of `operator new[]` returns a pointer obtained as
 if acquired from the (possibly replaced) corresponding non-placement
 function. This requirement is binding on any replacement versions of
@@ -1512,7 +1512,7 @@ void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) 
 ```
 
 *Effects:* The deallocation
-functions ( [[basic.stc.dynamic.deallocation]]) called by the array form
+functions ([[basic.stc.dynamic.deallocation]]) called by the array form
 of a *delete-expression* to render the value of `ptr` invalid.
 
 *Replaceable:* A C++program may define functions with any of these
@@ -1535,7 +1535,7 @@ the address of a block of memory allocated by an earlier call to a
 invalidated by an intervening call to `operator delete[]`.
 
 *Requires:* If an implementation has strict pointer
-safety ( [[basic.stc.dynamic.safety]]) then `ptr` shall be a
+safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
 *Requires:* If the `alignment` parameter is not present, `ptr` shall
@@ -1566,7 +1566,7 @@ void operator delete[](void* ptr, std::align_val_t alignment, const std::nothrow
 ```
 
 *Effects:* The deallocation
-functions ( [[basic.stc.dynamic.deallocation]]) called by the
+functions ([[basic.stc.dynamic.deallocation]]) called by the
 implementation to render the value of `ptr` invalid when the constructor
 invoked from a nothrow placement version of the array *new-expression*
 throws an exception.
@@ -1582,7 +1582,7 @@ the address of a block of memory allocated by an earlier call to a
 invalidated by an intervening call to `operator delete[]`.
 
 *Requires:* If an implementation has strict pointer
-safety ( [[basic.stc.dynamic.safety]]) then `ptr` shall be a
+safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
 *Requires:* If the `alignment` parameter is not present, `ptr` shall
@@ -1597,7 +1597,7 @@ parameter. If present, the `alignment` argument shall equal the
 #### Non-allocating forms <a id="new.delete.placement">[[new.delete.placement]]</a>
 
 These functions are reserved; a C++program may not define functions that
-displace the versions in the C++standard library ( [[constraints]]). The
+displace the versions in the C++standard library ([[constraints]]). The
 provisions of  [[basic.stc.dynamic]] do not apply to these reserved
 placement forms of `operator new` and `operator delete`.
 
@@ -1635,13 +1635,13 @@ void operator delete(void* ptr, void*) noexcept;
 *Effects:* Intentionally performs no action.
 
 *Requires:* If an implementation has strict pointer
-safety ( [[basic.stc.dynamic.safety]]) then `ptr` shall be a
+safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
 *Remarks:* Default function called when any part of the initialization
 in a placement *new-expression* that invokes the library’s non-array
 placement operator new terminates by throwing an
-exception ( [[expr.new]]).
+exception ([[expr.new]]).
 
 ``` cpp
 void operator delete[](void* ptr, void*) noexcept;
@@ -1650,13 +1650,13 @@ void operator delete[](void* ptr, void*) noexcept;
 *Effects:* Intentionally performs no action.
 
 *Requires:* If an implementation has strict pointer
-safety ( [[basic.stc.dynamic.safety]]) then `ptr` shall be a
+safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
 *Remarks:* Default function called when any part of the initialization
 in a placement *new-expression* that invokes the library’s array
 placement operator new terminates by throwing an
-exception ( [[expr.new]]).
+exception ([[expr.new]]).
 
 #### Data races <a id="new.delete.dataraces">[[new.delete.dataraces]]</a>
 
@@ -1666,10 +1666,10 @@ versions of `operator new`, user replacement versions of global
 `calloc`, and `malloc`, the library versions of `operator delete`, user
 replacement versions of `operator delete`, the C standard library
 function `free`, and the C standard library function `realloc` shall not
-introduce a data race ( [[res.on.data.races]]). Calls to these functions
+introduce a data race ([[res.on.data.races]]). Calls to these functions
 that allocate or deallocate a particular unit of storage shall occur in
 a single total order, and each such deallocation call shall happen
-before ( [[intro.multithread]]) the next allocation (if any) in this
+before ([[intro.multithread]]) the next allocation (if any) in this
 order.
 
 ### Storage allocation errors <a id="alloc.errors">[[alloc.errors]]</a>
@@ -1711,8 +1711,8 @@ const char* what() const noexcept override;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]]).
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]]).
 
 #### Class `bad_array_new_length` <a id="new.badlength">[[new.badlength]]</a>
 
@@ -1729,7 +1729,7 @@ namespace std {
 The class `bad_array_new_length` defines the type of objects thrown as
 exceptions by the implementation to report an attempt to allocate an
 array of size less than zero or greater than an *implementation-defined*
-limit ( [[expr.new]]).
+limit ([[expr.new]]).
 
 ``` cpp
 bad_array_new_length() noexcept;
@@ -1744,8 +1744,8 @@ const char* what() const noexcept override;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]]).
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]]).
 
 #### Type `new_handler` <a id="new.handler">[[new.handler]]</a>
 
@@ -1754,7 +1754,7 @@ using new_handler = void (*)();
 ```
 
 The type of a *handler function* to be called by `operator new()` or
-`operator new[]()` ( [[new.delete]]) when they cannot satisfy a request
+`operator new[]()` ([[new.delete]]) when they cannot satisfy a request
 for additional storage.
 
 *Required behavior:* A `new_handler` shall perform one of the following:
@@ -1794,8 +1794,8 @@ template <class T> constexpr T* launder(T* p) noexcept;
 ```
 
 *Requires:* `p` represents the address *A* of a byte in memory. An
-object *X* that is within its lifetime ( [[basic.life]]) and whose type
-is similar ( [[conv.qual]]) to `T` is located at the address *A*. All
+object *X* that is within its lifetime ([[basic.life]]) and whose type
+is similar ([[conv.qual]]) to `T` is located at the address *A*. All
 bytes of storage that would be reachable through the result are
 reachable through `p` (see below).
 
@@ -1960,8 +1960,8 @@ const char* name() const noexcept;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]])
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]])
 
 ### Class `bad_cast` <a id="bad.cast">[[bad.cast]]</a>
 
@@ -1979,7 +1979,7 @@ namespace std {
 
 The class `bad_cast` defines the type of objects thrown as exceptions by
 the implementation to report the execution of an invalid `dynamic_cast`
-expression ( [[expr.dynamic.cast]]).
+expression ([[expr.dynamic.cast]]).
 
 ``` cpp
 bad_cast() noexcept;
@@ -2001,8 +2001,8 @@ const char* what() const noexcept override;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]])
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]])
 
 ### Class `bad_typeid` <a id="bad.typeid">[[bad.typeid]]</a>
 
@@ -2020,7 +2020,7 @@ namespace std {
 
 The class `bad_typeid` defines the type of objects thrown as exceptions
 by the implementation to report a null pointer in a `typeid`
-expression ( [[expr.typeid]]).
+expression ([[expr.typeid]]).
 
 ``` cpp
 bad_typeid() noexcept;
@@ -2042,8 +2042,8 @@ const char* what() const noexcept override;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]])
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]])
 
 ## Exception handling <a id="support.exception">[[support.exception]]</a>
 
@@ -2134,8 +2134,8 @@ virtual const char* what() const noexcept;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]]). The return value
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]]). The return value
 remains valid until the exception object from which it is obtained is
 destroyed or a non-`const` member function of the exception object is
 called.
@@ -2179,8 +2179,8 @@ const char* what() const noexcept override;
 *Returns:* An *implementation-defined* NTBS.
 
 *Remarks:* The message may be a null-terminated multibyte
-string ( [[multibyte.strings]]), suitable for conversion and display as
-a `wstring` ( [[string.classes]], [[locale.codecvt]]).
+string ([[multibyte.strings]]), suitable for conversion and display as
+a `wstring` ([[string.classes]], [[locale.codecvt]]).
 
 ### Abnormal termination <a id="exception.terminate">[[exception.terminate]]</a>
 
@@ -2230,7 +2230,7 @@ terminate_handler get_terminate() noexcept;
 ```
 
 *Remarks:* Called by the implementation when exception handling must be
-abandoned for any of several reasons ( [[except.terminate]]). May also
+abandoned for any of several reasons ([[except.terminate]]). May also
 be called directly by the program.
 
 *Effects:* Calls a `terminate_handler` function. It is unspecified which
@@ -2247,11 +2247,11 @@ callable handler in this context. — *end note*]
 int uncaught_exceptions() noexcept;
 ```
 
-*Returns:* The number of uncaught exceptions ( [[except.uncaught]]).
+*Returns:* The number of uncaught exceptions ([[except.uncaught]]).
 
 *Remarks:* When `uncaught_exceptions() > 0`, throwing an exception can
 result in a call of  
-`std::terminate()` ( [[except.terminate]]).
+`std::terminate()` ([[except.terminate]]).
 
 ### Exception propagation <a id="propagation">[[propagation]]</a>
 
@@ -2262,7 +2262,7 @@ using exception_ptr = unspecified;
 The type `exception_ptr` can be used to refer to an exception object.
 
 `exception_ptr` shall satisfy the requirements of
-`NullablePointer` ( [[nullablepointer.requirements]]).
+`NullablePointer` ([[nullablepointer.requirements]]).
 
 Two non-null values of type `exception_ptr` are equivalent and compare
 equal if and only if they refer to the same exception.
@@ -2293,7 +2293,7 @@ exception_ptr current_exception() noexcept;
 ```
 
 *Returns:* An `exception_ptr` object that refers to the currently
-handled exception ( [[except.handle]]) or a copy of the currently
+handled exception ([[except.handle]]) or a copy of the currently
 handled exception, or a null `exception_ptr` object if no exception is
 being handled. The referenced object shall remain valid at least as long
 as there is an `exception_ptr` object that refers to it. If the function
@@ -2423,7 +2423,7 @@ if (auto p = dynamic_cast<const nested_exception*>(addressof(e)))
 The header `<initializer_list>` defines a class template and several
 support functions related to list-initialization (see
 [[dcl.init.list]]). All functions specified in this subclause are
-signal-safe ( [[csignal.syn]]).
+signal-safe ([[csignal.syn]]).
 
 ### Header `<initializer_list>` synopsis <a id="initializer_list.syn">[[initializer_list.syn]]</a>
 
@@ -2518,14 +2518,14 @@ Headers `<csetjmp>` (nonlocal jumps), `<csignal>` (signal handling),
 `<cstdarg>` (variable arguments), and `<cstdlib>` (runtime environment
 `getenv, system`), provide further compatibility with C code.
 
-Calls to the function `getenv` ( [[cstdlib.syn]]) shall not introduce a
-data race ( [[res.on.data.races]]) provided that nothing modifies the
+Calls to the function `getenv` ([[cstdlib.syn]]) shall not introduce a
+data race ([[res.on.data.races]]) provided that nothing modifies the
 environment.
 
 [*Note 1*: Calls to the POSIX functions `setenv` and `putenv` modify
 the environment. — *end note*]
 
-A call to the `setlocale` function ( [[c.locales]]) may introduce a data
+A call to the `setlocale` function ([[c.locales]]) may introduce a data
 race with other calls to the `setlocale` function or with calls to
 functions that are affected by the current C locale. The implementation
 shall behave as if no library function other than `locale::global` calls
@@ -2635,10 +2635,10 @@ An evaluation is *signal-safe* unless it includes one of the following:
 - throwing of an exception;
 - control entering a *try-block* or *function-try-block*;
 - initialization of a variable with static storage duration requiring
-  dynamic initialization ( [[basic.start.dynamic]], [[stmt.dcl]]) [^35];
+  dynamic initialization ([[basic.start.dynamic]], [[stmt.dcl]]) [^35];
   or
 - waiting for the completion of the initialization of a variable with
-  static storage duration ( [[stmt.dcl]]).
+  static storage duration ([[stmt.dcl]]).
 
 A signal handler invocation has undefined behavior if it includes an
 evaluation that is not signal-safe.

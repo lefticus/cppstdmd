@@ -135,7 +135,7 @@ An expression is an xvalue if it is:
 
 - the result of calling a function, whether implicitly or explicitly,
   whose return type is an rvalue reference to object type [[expr.call]],
-- a cast to an rvalue reference to object type ( [[expr.type.conv]],
+- a cast to an rvalue reference to object type ([[expr.type.conv]],
   [[expr.dynamic.cast]], [[expr.static.cast]] [[expr.reinterpret.cast]],
   [[expr.const.cast]], [[expr.cast]]),
 - a subscripting operation with an xvalue array operand [[expr.sub]],
@@ -225,7 +225,7 @@ An lvalue is *modifiable* unless its type is const-qualified or is a
 function type.
 
 [*Note 9*: A program that attempts to modify an object through a
-nonmodifiable lvalue or through an rvalue is ill-formed ( [[expr.ass]],
+nonmodifiable lvalue or through an rvalue is ill-formed ([[expr.ass]],
 [[expr.post.incr]], [[expr.pre.incr]]). — *end note*]
 
 If a program attempts to access [[defns.access]] the stored value of an
@@ -314,7 +314,7 @@ pointer to `const int`”.
 
 ### Context dependence <a id="expr.context">[[expr.context]]</a>
 
-In some contexts, *unevaluated operands* appear ( [[expr.prim.req]],
+In some contexts, *unevaluated operands* appear ([[expr.prim.req]],
 [[expr.typeid]], [[expr.sizeof]], [[expr.unary.noexcept]],
 [[dcl.type.simple]], [[temp.pre]], [[temp.concept]]). An unevaluated
 operand is not evaluated.
@@ -481,7 +481,7 @@ rules:
 - Otherwise, if `T` has a class type, the conversion copy-initializes
   the result object from the glvalue.
 - Otherwise, if the object to which the glvalue refers contains an
-  invalid pointer value ( [[basic.stc.dynamic.deallocation]],
+  invalid pointer value ([[basic.stc.dynamic.deallocation]],
   [[basic.stc.dynamic.safety]]), the behavior is
   *implementation-defined*.
 - Otherwise, the object indicated by the glvalue is read
@@ -968,7 +968,7 @@ function [[dcl.constexpr]] shall appear only
 - in an immediate function context [[expr.const]].
 
 For an *id-expression* that denotes an overload set, overload resolution
-is performed to select a unique function ( [[over.match]],
+is performed to select a unique function ([[over.match]],
 [[over.over]]).
 
 [*Note 2*:
@@ -1024,7 +1024,7 @@ the copy of the parameter [[dcl.fct.def.coroutine]].
 denotes the destructor of the type so named; see  [[expr.prim.id.dtor]].
 Within the definition of a non-static member function, an *identifier*
 that names a non-static member is transformed to a class member access
-expression ( [[class.mfct.non-static]]). — *end note*]
+expression ([[class.mfct.non-static]]). — *end note*]
 
 The result is the entity denoted by the identifier. If the entity is a
 local entity and naming it from outside of an unevaluated operand within
@@ -1144,7 +1144,7 @@ type and the *id-expression* shall appear as the right operand of a
 class member access [[expr.ref]] that forms the *postfix-expression* of
 a function call [[expr.call]].
 
-[*Note 1*: Such a call ends the lifetime of the object ( [[expr.call]],
+[*Note 1*: Such a call ends the lifetime of the object ([[expr.call]],
 [[basic.life]]). — *end note*]
 
 [*Example 1*:
@@ -1521,7 +1521,7 @@ The *lambda-expression*’s *compound-statement* yields the
 purposes of name lookup [[basic.lookup]], determining the type and value
 of `this` [[class.this]] and transforming *id-expression*s referring to
 non-static class members into class member access expressions using
-`(*this)` ( [[class.mfct.non-static]]), the *compound-statement* is
+`(*this)` ([[class.mfct.non-static]]), the *compound-statement* is
 considered in the context of the *lambda-expression*.
 
 [*Example 8*:
@@ -2442,7 +2442,7 @@ to a function (in which case the function-to-pointer standard conversion
 pointer type.
 
 For a call to a non-static member function, the postfix expression shall
-be an implicit ( [[class.mfct.non-static]], [[class.static]]) or
+be an implicit ([[class.mfct.non-static]], [[class.static]]) or
 explicit class member access [[expr.ref]] whose *id-expression* is a
 function member name, or a pointer-to-member expression
 [[expr.mptr.oper]] selecting a function member; the call is as a member
@@ -2587,7 +2587,7 @@ except where a parameter is of a reference type [[dcl.ref]]; if the
 reference is to a const-qualified type, `const_cast` is required to be
 used to cast away the constness in order to modify the argument’s value.
 Where a parameter is of `const` reference type a temporary object is
-introduced if needed ( [[dcl.type]], [[lex.literal]], [[lex.string]],
+introduced if needed ([[dcl.type]], [[lex.literal]], [[lex.string]],
 [[dcl.array]], [[class.temporary]]). In addition, it is possible to
 modify the values of non-constant objects through pointer
 parameters. — *end note*]
@@ -3653,7 +3653,7 @@ The result of `sizeof` and `sizeof...` is a prvalue of type
 
 [*Note 3*: A `sizeof` expression is an integral constant expression
 [[expr.const]]. The type `std::size_t` is defined in the standard header
-`<cstddef>` ( [[cstddef.syn]], [[support.types.layout]]). — *end note*]
+`<cstddef>` ([[cstddef.syn]], [[support.types.layout]]). — *end note*]
 
 #### Alignof <a id="expr.alignof">[[expr.alignof]]</a>
 
@@ -3665,7 +3665,7 @@ The result is a prvalue of type `std::size_t`.
 
 [*Note 1*: An `alignof` expression is an integral constant expression
 [[expr.const]]. The type `std::size_t` is defined in the standard header
-`<cstddef>` ( [[cstddef.syn]], [[support.types.layout]]). — *end note*]
+`<cstddef>` ([[cstddef.syn]], [[support.types.layout]]). — *end note*]
 
 When `alignof` is applied to a reference type, the result is the
 alignment of the referenced type. When `alignof` is applied to an array
@@ -3888,7 +3888,7 @@ is an array type, the allocation function’s name is `operator new[]` and
 the deallocation function’s name is `operator delete[]`.
 
 [*Note 7*: An implementation is required to provide default definitions
-for the global allocation functions ( [[basic.stc.dynamic]],
+for the global allocation functions ([[basic.stc.dynamic]],
 [[new.delete.single]], [[new.delete.array]]). A C++ program can provide
 alternative definitions of these functions [[replacement.functions]]
 and/or class-specific versions [[class.free]]. The set of allocation and
@@ -3904,7 +3904,7 @@ lookup fails to find the name, or if the allocated type is not a class
 type, the allocation function’s name is looked up in the global scope.
 
 An implementation is allowed to omit a call to a replaceable global
-allocation function ( [[new.delete.single]], [[new.delete.array]]). When
+allocation function ([[new.delete.single]], [[new.delete.array]]). When
 it does so, the storage is instead provided by the implementation or
 provided by extending the allocation of another *new-expression*.
 
@@ -4299,11 +4299,11 @@ passed as the corresponding argument.
 function, and either the first argument was not the result of a prior
 call to a replaceable allocation function or the second or third
 argument was not the corresponding argument in said call, the behavior
-is undefined ( [[new.delete.single]],
+is undefined ([[new.delete.single]],
 [[new.delete.array]]). — *end note*]
 
 Access and ambiguity control are done for both the deallocation function
-and the destructor ( [[class.dtor]], [[class.free]]).
+and the destructor ([[class.dtor]], [[class.free]]).
 
 ### Explicit type conversion (cast notation) <a id="expr.cast">[[expr.cast]]</a>
 
@@ -5001,7 +5001,7 @@ or if both are bit-fields.
 Otherwise, the result is a prvalue. If the second and third operands do
 not have the same type, and either has (possibly cv-qualified) class
 type, overload resolution is used to determine the conversions (if any)
-to be applied to the operands ( [[over.match.oper]], [[over.built]]). If
+to be applied to the operands ([[over.match.oper]], [[over.built]]). If
 the overload resolution fails, the program is ill-formed. Otherwise, the
 conversions thus determined are applied, and the converted operands are
 used in place of the original operands for the remainder of this
@@ -5194,7 +5194,7 @@ A *braced-init-list* may appear on the right-hand side of
   meaning of `x = {}` is `x = T{}`.
 - an assignment to an object of class type, in which case the
   initializer list is passed as the argument to the assignment operator
-  function selected by overload resolution ( [[over.ass]],
+  function selected by overload resolution ([[over.ass]],
   [[over.match]]).
 
 [*Example 1*:
@@ -5343,7 +5343,7 @@ would evaluate one of the following:
   - its lifetime began within the evaluation of E;
 - in a *lambda-expression*, a reference to `this` or to a variable with
   automatic storage duration defined outside that *lambda-expression*,
-  where the reference would be an odr-use ( [[basic.def.odr]],
+  where the reference would be an odr-use ([[basic.def.odr]],
   [[expr.prim.lambda]]);
   \[*Example 5*:
   ``` cpp
@@ -5378,7 +5378,7 @@ would evaluate one of the following:
   — *end note*]
 - a conversion from type cv `void*` to a pointer-to-object type;
 - a `reinterpret_cast` [[expr.reinterpret.cast]];
-- a modification of an object ( [[expr.ass]], [[expr.post.incr]],
+- a modification of an object ([[expr.ass]], [[expr.post.incr]],
   [[expr.pre.incr]]) unless it is applied to a non-volatile lvalue of
   literal type that refers to a non-volatile object whose lifetime began
   within the evaluation of E;
@@ -5991,7 +5991,7 @@ A function or variable is *needed for constant evaluation* if it is:
 [^8]: The rule for conversion of pointers to members (from pointer to
     member of base to pointer to member of derived) appears inverted
     compared to the rule for pointers to objects (from pointer to
-    derived to pointer to base) ( [[conv.ptr]], [[class.derived]]). This
+    derived to pointer to base) ([[conv.ptr]], [[class.derived]]). This
     inversion is necessary to ensure type safety. Note that a pointer to
     member is not an object pointer or a function pointer and the rules
     for conversions of such pointers do not apply to pointers to
@@ -6003,7 +6003,7 @@ A function or variable is *needed for constant evaluation* if it is:
     integral type.
 
 [^10]: This also applies when the object expression is an implicit
-    `(*this)` ( [[class.mfct.non-static]]).
+    `(*this)` ([[class.mfct.non-static]]).
 
 [^11]: This is true even if the subscript operator is used in the
     following common idiom: `&x[0]`.

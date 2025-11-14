@@ -2995,7 +2995,7 @@ int main() {
 If a member template of a class template is partially specialized, the
 member template partial specializations are member templates of the
 enclosing class template; if the enclosing class template is
-instantiated ( [[temp.inst]], [[temp.explicit]]), a declaration for
+instantiated ([[temp.inst]], [[temp.explicit]]), a declaration for
 every member template partial specialization is also instantiated as
 part of creating the members of the class template specialization. If
 the primary member template is explicitly specialized for a given
@@ -3878,7 +3878,7 @@ template<class... T> struct A : T...,  T... { };    // error: duplicate base cla
 — *end example*]
 
 When looking for the declaration of a name used in a template
-definition, the usual lookup rules ( [[basic.lookup.unqual]],
+definition, the usual lookup rules ([[basic.lookup.unqual]],
 [[basic.lookup.argdep]]) are used for non-dependent names. The lookup of
 names dependent on the template parameters is postponed until the actual
 template argument is known [[temp.dep]].
@@ -4767,7 +4767,7 @@ different meanings according to the one-definition rule
 
 For a function call where the *postfix-expression* is a dependent name,
 the candidate functions are found using the usual lookup rules from the
-template definition context ( [[basic.lookup.unqual]],
+template definition context ([[basic.lookup.unqual]],
 [[basic.lookup.argdep]]).
 
 [*Note 1*: For the part of the lookup using associated namespaces
@@ -5740,7 +5740,7 @@ base classes and members that are templates) that has not been
 previously explicitly specialized in the translation unit containing the
 explicit instantiation, provided that the associated constraints, if
 any, of that member are satisfied by the template arguments of the
-explicit instantiation ( [[temp.constr.decl]], [[temp.constr.constr]]),
+explicit instantiation ([[temp.constr.decl]], [[temp.constr.constr]]),
 except as described below.
 
 [*Note 5*: In addition, it will typically be an explicit instantiation
@@ -5833,7 +5833,7 @@ An explicit specialization shall not use a *storage-class-specifier*
 [[dcl.stc]] other than `thread_local`.
 
 An explicit specialization may be declared in any scope in which the
-corresponding primary template may be defined ( [[namespace.memdef]],
+corresponding primary template may be defined ([[namespace.memdef]],
 [[class.mem]], [[temp.mem]]).
 
 A declaration of a function template, class template, or variable
@@ -6265,7 +6265,7 @@ void g(double d) {
 — *end example*]
 
 Template arguments shall not be specified when referring to a
-specialization of a constructor template ( [[class.ctor]],
+specialization of a constructor template ([[class.ctor]],
 [[class.qual]]).
 
 A template argument list may be specified when referring to a

@@ -248,8 +248,8 @@ template<class T>
 `is_move_assignable_v<T>` is `true`.
 
 *Preconditions:* Type `T` meets the *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-( [[cpp17.moveassignable]]) requirements.
+([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Exchanges values stored in two locations.
 
@@ -2554,7 +2554,7 @@ lvalue reference type or a complete non-array object type, and
 a specialization of `optional` is instantiated with a type `T` that is
 not a valid contained type for `optional`, the program is ill-formed. If
 `T` is an object type, `T` shall meet the *Cpp17Destructible*
-requirements ( [[cpp17.destructible]]).
+requirements ([[cpp17.destructible]]).
 
 #### Constructors <a id="optional.ctor">[[optional.ctor]]</a>
 
@@ -5913,7 +5913,7 @@ for the `E` parameter that is not a valid template argument for
 `unexpected` is ill-formed.
 
 When `T` is not cv `void`, it shall meet the *Cpp17Destructible*
-requirements ( [[cpp17.destructible]]). `E` shall meet the
+requirements ([[cpp17.destructible]]). `E` shall meet the
 *Cpp17Destructible* requirements.
 
 #### Constructors <a id="expected.object.cons">[[expected.object.cons]]</a>
@@ -10835,7 +10835,7 @@ requirements. Template parameters named
 of templates specified in [[func.search]] shall meet the same
 requirements and semantics as specified in [[algorithms.general]].
 Template parameters named `Hash` shall meet the *Cpp17Hash* requirements
-( [[cpp17.hash]]).
+([[cpp17.hash]]).
 
 The Boyer-Moore searcher implements the Boyer-Moore search algorithm.
 The Boyer-Moore-Horspool searcher implements the Boyer-Moore-Horspool
@@ -11077,10 +11077,10 @@ attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*]
 
 An enabled specialization `hash<Key>` will:
 
-- meet the *Cpp17Hash* requirements ( [[cpp17.hash]]), with `Key` as the
+- meet the *Cpp17Hash* requirements ([[cpp17.hash]]), with `Key` as the
   function call argument type, the *Cpp17DefaultConstructible*
-  requirements ( [[cpp17.defaultconstructible]]), the
-  *Cpp17CopyAssignable* requirements ( [[cpp17.copyassignable]]), the
+  requirements ([[cpp17.defaultconstructible]]), the
+  *Cpp17CopyAssignable* requirements ([[cpp17.copyassignable]]), the
   *Cpp17Swappable* requirements [[swappable.requirements]],
 - meet the requirement that if `k1 == k2` is `true`, `h(k1) == h(k2)` is
   also `true`, where `h` is an object of type `hash<Key>` and `k1` and

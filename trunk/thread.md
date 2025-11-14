@@ -3180,7 +3180,7 @@ arguments.
 
 [*Note 1*: If the pointers point to different complete objects (or
 subobjects thereof), the `<` operator does not establish a strict weak
-ordering ( [[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
+ordering ([[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
 
 *pointer-type* *pointer-type* *pointer-type* *pointer-type*
 
@@ -3209,7 +3209,7 @@ first parameter as the arguments.
 
 [*Note 2*: If the pointers point to different complete objects (or
 subobjects thereof), the `<` operator does not establish a strict weak
-ordering ( [[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
+ordering ([[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
 
 *pointer-type* *pointer-type*
 
@@ -4357,7 +4357,7 @@ arguments.
 
 [*Note 2*: If the pointers point to different complete objects (or
 subobjects thereof), the `<` operator does not establish a strict weak
-ordering ( [[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
+ordering ([[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
 
 ``` cpp
 void store_key(\seeabovenc operand, memory_order order = memory_order::seq_cst) volatile noexcept;
@@ -4386,7 +4386,7 @@ to by `this` and the first parameter as the arguments.
 
 [*Note 4*: If the pointers point to different complete objects (or
 subobjects thereof), the `<` operator does not establish a strict weak
-ordering ( [[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
+ordering ([[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
 
 ``` cpp
 T* operator op=(ptrdiff_t operand) volatile noexcept;
@@ -8010,13 +8010,13 @@ its destructor, do not introduce data races. The member functions
 The default value of the `CompletionFunction` template parameter is an
 unspecified type, such that, in addition to satisfying the requirements
 of `CompletionFunction`, it meets the *Cpp17DefaultConstructible*
-requirements ( [[cpp17.defaultconstructible]]) and `completion()` has no
+requirements ([[cpp17.defaultconstructible]]) and `completion()` has no
 effects.
 
 `barrier::arrival_token` is an unspecified type, such that it meets the
-*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]),
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]), and
-*Cpp17Destructible* ( [[cpp17.destructible]]) requirements.
+*Cpp17MoveConstructible* ([[cpp17.moveconstructible]]),
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]), and
+*Cpp17Destructible* ([[cpp17.destructible]]) requirements.
 
 ``` cpp
 static constexpr ptrdiff_t max() noexcept;

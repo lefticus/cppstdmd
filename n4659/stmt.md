@@ -26,7 +26,7 @@ The optional *attribute-specifier-seq* appertains to the respective
 statement.
 
 The rules for *condition*s apply both to *selection-statement*s and to
-the `for` and `while` statements ( [[stmt.iter]]). The *declarator*
+the `for` and `while` statements ([[stmt.iter]]). The *declarator*
 shall not specify a function or an array. The *decl-specifier-seq* shall
 not define a class or enumeration. If the `auto` *type-specifier*
 appears in the *decl-specifier-seq*, the type of the identifier being
@@ -94,7 +94,7 @@ other identifiers.
 
 [*Note 1*: A label may have the same name as another declaration in the
 same scope or a *template-parameter* from an enclosing scope.
-Unqualified name lookup ( [[basic.lookup.unqual]]) ignores
+Unqualified name lookup ([[basic.lookup.unqual]]) ignores
 labels. — *end note*]
 
 Case labels and default labels shall occur only in switch statements.
@@ -135,7 +135,7 @@ statement-seq:
     statement-seq statement
 ```
 
-A compound statement defines a block scope ( [[basic.scope]]).
+A compound statement defines a block scope ([[basic.scope]]).
 
 [*Note 1*: A declaration is a *statement* (
 [[stmt.dcl]]). — *end note*]
@@ -160,7 +160,7 @@ In Clause  [[stmt.stmt]], the term *substatement* refers to the
 contained *statement* or *statement*s that appear in the syntax
 notation. The substatement in a *selection-statement* (each
 substatement, in the `else` form of the `if` statement) implicitly
-defines a block scope ( [[basic.scope]]). If the substatement in a
+defines a block scope ([[basic.scope]]). If the substatement in a
 selection-statement is a single statement and not a
 *compound-statement*, it is as if it was rewritten to be a
 compound-statement containing the original substatement.
@@ -186,7 +186,7 @@ Thus after the `if` statement, `i` is no longer in scope.
 
 ### The `if` statement <a id="stmt.if">[[stmt.if]]</a>
 
-If the condition ( [[stmt.select]]) yields `true` the first substatement
+If the condition ([[stmt.select]]) yields `true` the first substatement
 is executed. If the `else` part of the selection statement is present
 and the condition yields `false`, the second substatement is executed.
 If the first substatement is reached via a label, the condition is not
@@ -197,7 +197,7 @@ shall contain an `else` part.[^1]
 
 If the `if` statement is of the form `if constexpr`, the value of the
 condition shall be a contextually converted constant expression of type
-`bool` ( [[expr.const]]); this form is called a *constexpr if*
+`bool` ([[expr.const]]); this form is called a *constexpr if*
 statement. If the value of the converted condition is `false`, the first
 substatement is a *discarded statement*, otherwise the second
 substatement, if present, is a discarded statement. During the
@@ -205,14 +205,14 @@ instantation of an enclosing templated entity (Clause  [[temp]]), if the
 condition is not value-dependent after its instantiation, the discarded
 substatement (if any) is not instantiated.
 
-[*Note 1*: Odr-uses ( [[basic.def.odr]]) in a discarded statement do
+[*Note 1*: Odr-uses ([[basic.def.odr]]) in a discarded statement do
 not require an entity to be defined. — *end note*]
 
 A `case` or `default` label appearing within such an `if` statement
-shall be associated with a `switch` statement ( [[stmt.switch]]) within
-the same `if` statement. A label ( [[stmt.label]]) declared in a
+shall be associated with a `switch` statement ([[stmt.switch]]) within
+the same `if` statement. A label ([[stmt.label]]) declared in a
 substatement of a constexpr if statement shall only be referred to by a
-statement ( [[stmt.goto]]) in the same substatement.
+statement ([[stmt.goto]]) in the same substatement.
 
 [*Example 1*:
 
@@ -275,7 +275,7 @@ case labels as follows:
 ```
 
 where the *constant-expression* shall be a converted constant
-expression ( [[expr.const]]) of the adjusted type of the switch
+expression ([[expr.const]]) of the adjusted type of the switch
 condition. No two of the case constants in the same switch shall have
 the same value after conversion.
 
@@ -348,7 +348,7 @@ See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
 [*Note 1*: An *init-statement* ends with a semicolon. — *end note*]
 
 The substatement in an *iteration-statement* implicitly defines a block
-scope ( [[basic.scope]]) which is entered and exited each time through
+scope ([[basic.scope]]) which is entered and exited each time through
 the loop.
 
 If the substatement in an iteration-statement is a single statement and
@@ -394,7 +394,7 @@ void f() {
 ### The `while` statement <a id="stmt.while">[[stmt.while]]</a>
 
 In the `while` statement the substatement is executed repeatedly until
-the value of the condition ( [[stmt.select]]) becomes `false`. The test
+the value of the condition ([[stmt.select]]) becomes `false`. The test
 takes place before each execution of the substatement.
 
 When the condition of a `while` statement is a declaration, the scope of
@@ -469,7 +469,7 @@ a `continue` in *statement* (not enclosed in another iteration
 statement) will execute *expression* before re-evaluating *condition*.
 
 [*Note 1*: Thus the first statement specifies initialization for the
-loop; the condition ( [[stmt.select]]) specifies a test, sequenced
+loop; the condition ([[stmt.select]]) specifies a test, sequenced
 before each iteration, such that the loop is exited when the condition
 becomes `false`; the expression often specifies incrementing that is
 sequenced after each iteration. — *end note*]
@@ -526,8 +526,8 @@ where
     and `__range.end()`, respectively;
   - otherwise, *begin-expr* and *end-expr* are `begin(__range)` and
     `end(__range)`, respectively, where `begin` and `end` are looked up
-    in the associated namespaces ( [[basic.lookup.argdep]]).
-    \[*Note 1*: Ordinary unqualified lookup ( [[basic.lookup.unqual]])
+    in the associated namespaces ([[basic.lookup.argdep]]).
+    \[*Note 1*: Ordinary unqualified lookup ([[basic.lookup.unqual]])
     is not performed. — *end note*]
 
 [*Example 1*:
@@ -557,7 +557,7 @@ jump-statement:
 ```
 
 On exit from a scope (however accomplished), objects with automatic
-storage duration ( [[basic.stc.auto]]) that have been constructed in
+storage duration ([[basic.stc.auto]]) that have been constructed in
 that scope are destroyed in the reverse order of their construction.
 
 [*Note 1*: For temporaries, see  [[class.temporary]]. — *end note*]
@@ -569,7 +569,7 @@ transferred from but not at the point transferred to. (See  [[stmt.dcl]]
 for transfers into blocks).
 
 [*Note 2*: However, the program can be terminated (by calling
-`std::exit()` or `std::abort()` ( [[support.start.term]]), for example)
+`std::exit()` or `std::abort()` ([[support.start.term]]), for example)
 without destroying class objects with automatic storage
 duration. — *end note*]
 
@@ -624,7 +624,7 @@ A function returns to its caller by the `return` statement.
 The *expr-or-braced-init-list* of a return statement is called its
 operand. A return statement with no operand shall be used only in a
 function whose return type is cv `void`, a constructor (
-[[class.ctor]]), or a destructor ( [[class.dtor]]). A return statement
+[[class.ctor]]), or a destructor ([[class.dtor]]). A return statement
 with an operand of type `void` shall be used only in a function whose
 return type is cv `void`. A return statement with any other operand
 shall be used only in a function whose return type is not cv `void`; the
@@ -637,7 +637,7 @@ constructor to perform a copy or move of the operand if it is not a
 prvalue or if its type differs from the return type of the function. A
 copy operation associated with a return statement may be elided or
 converted to a move operation if an automatic storage duration variable
-is returned ( [[class.copy]]). — *end note*]
+is returned ([[class.copy]]). — *end note*]
 
 [*Example 1*:
 
@@ -657,7 +657,7 @@ Otherwise, flowing off the end of a function other than `main` (
 The copy-initialization of the result of the call is sequenced before
 the destruction of temporaries at the end of the full-expression
 established by the operand of the return statement, which, in turn, is
-sequenced before the destruction of local variables ( [[stmt.jump]]) of
+sequenced before the destruction of local variables ([[stmt.jump]]) of
 the block enclosing the return statement.
 
 ### The `goto` statement <a id="stmt.goto">[[stmt.goto]]</a>
@@ -680,10 +680,10 @@ If an identifier introduced by a declaration was previously declared in
 an outer block, the outer declaration is hidden for the remainder of the
 block, after which it resumes its force.
 
-Variables with automatic storage duration ( [[basic.stc.auto]]) are
+Variables with automatic storage duration ([[basic.stc.auto]]) are
 initialized each time their *declaration-statement* is executed.
 Variables with automatic storage duration declared in the block are
-destroyed on exit from the block ( [[stmt.jump]]).
+destroyed on exit from the block ([[stmt.jump]]).
 
 It is possible to transfer into a block, but not in a way that bypasses
 declarations with initialization. A program that jumps[^2] from a point
@@ -713,7 +713,7 @@ lx:
 — *end example*]
 
 Dynamic initialization of a block-scope variable with static storage
-duration ( [[basic.stc.static]]) or thread storage duration (
+duration ([[basic.stc.static]]) or thread storage duration (
 [[basic.stc.thread]]) is performed the first time control passes through
 its declaration; such a variable is considered initialized upon the
 completion of its initialization. If the initialization exits by
@@ -746,7 +746,7 @@ destroyed. — *end note*]
 
 There is an ambiguity in the grammar involving *expression-statement*s
 and *declaration*s: An *expression-statement* with a function-style
-explicit type conversion ( [[expr.type.conv]]) as its leftmost
+explicit type conversion ([[expr.type.conv]]) as its leftmost
 subexpression can be indistinguishable from a *declaration* where the
 first *declarator* starts with a `(`. In those cases the *statement* is
 a *declaration*.
@@ -760,7 +760,7 @@ meaning of many examples.
 
 [*Example 1*:
 
-Assuming `T` is a *simple-type-specifier* ( [[dcl.type]]),
+Assuming `T` is a *simple-type-specifier* ([[dcl.type]]),
 
 ``` cpp
 T(a)->m = 7;        // expression-statement

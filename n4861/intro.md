@@ -76,7 +76,7 @@ where they are used and italicized where they are defined.
 
 #### 1 access <a id="defns.access">[defns.access]</a>
 
-⟨execution-time action⟩ read [[conv.lval]] or modify ( [[expr.ass]],
+⟨execution-time action⟩ read [[conv.lval]] or modify ([[expr.ass]],
 [[expr.post.incr]], [[expr.pre.incr]]) the value of an object
 
 [*Note 1 to entry*: Only objects of scalar type can be accessed.

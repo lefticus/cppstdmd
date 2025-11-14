@@ -7103,13 +7103,13 @@ its destructor, do not introduce data races. The member functions
 The default value of the `CompletionFunction` template parameter is an
 unspecified type, such that, in addition to satisfying the requirements
 of `CompletionFunction`, it meets the *Cpp17DefaultConstructible*
-requirements ( [[cpp17.defaultconstructible]]) and `completion()` has no
+requirements ([[cpp17.defaultconstructible]]) and `completion()` has no
 effects.
 
 `barrier::arrival_token` is an unspecified type, such that it meets the
-*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]),
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]), and
-*Cpp17Destructible* ( [[cpp17.destructible]]) requirements.
+*Cpp17MoveConstructible* ([[cpp17.moveconstructible]]),
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]), and
+*Cpp17Destructible* ([[cpp17.destructible]]) requirements.
 
 ``` cpp
 static constexpr ptrdiff_t max() noexcept;

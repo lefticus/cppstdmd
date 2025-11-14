@@ -4,19 +4,19 @@
 
 The text of the program is kept in units called *source files* in this
 International Standard. A source file together with all the headers (
-[[headers]]) and source files included ( [[cpp.include]]) via the
+[[headers]]) and source files included ([[cpp.include]]) via the
 preprocessing directive `#include`, less any source lines skipped by any
-of the conditional inclusion ( [[cpp.cond]]) preprocessing directives,
+of the conditional inclusion ([[cpp.cond]]) preprocessing directives,
 is called a *translation unit*. A C++program need not all be translated
 at the same time.
 
 Previously translated translation units and instantiation units can be
 preserved individually or in libraries. The separate translation units
-of a program communicate ( [[basic.link]]) by (for example) calls to
+of a program communicate ([[basic.link]]) by (for example) calls to
 functions whose identifiers have external linkage, manipulation of
 objects whose identifiers have external linkage, or manipulation of data
 files. Translation units can be separately translated and then later
-linked to produce an executable program ( [[basic.link]]).
+linked to produce an executable program ([[basic.link]]).
 
 ## Phases of translation <a id="lex.phases">[[lex.phases]]</a>
 
@@ -27,7 +27,7 @@ following phases.[^1]
     *implementation-defined* manner, to the basic source character set
     (introducing new-line characters for end-of-line indicators) if
     necessary. The set of physical source file characters accepted is
-    *implementation-defined*. Trigraph sequences ( [[lex.trigraph]]) are
+    *implementation-defined*. Trigraph sequences ([[lex.trigraph]]) are
     replaced by corresponding single-character internal representations.
     Any source file character not in the basic source character set (
     [[lex.charset]]) is replaced by the universal-character-name that
@@ -71,7 +71,7 @@ following phases.[^1]
     literal, as well as each escape sequence and
     universal-character-name in a character literal or a non-raw string
     literal, is converted to the corresponding member of the execution
-    character set ( [[lex.ccon]], [[lex.string]]); if there is no
+    character set ([[lex.ccon]], [[lex.string]]); if there is no
     corresponding member, it is converted to an *implementation-defined*
     member other than the null (wide) character.[^3]
 6.  Adjacent string literal tokens are concatenated.
@@ -90,7 +90,7 @@ following phases.[^1]
     follows: Some or all of these may be supplied from a library. Each
     translated translation unit is examined to produce a list of
     required instantiations. This may include instantiations which have
-    been explicitly requested ( [[temp.explicit]]). The definitions of
+    been explicitly requested ([[temp.explicit]]). The definitions of
     the required templates are located. It is *implementation-defined*
     whether the source of the translation units containing these
     definitions is required to be available. An implementation could
@@ -201,7 +201,7 @@ preprocessing-token:
     each non-white-space character that cannot be one of the above
 ```
 
-Each preprocessing token that is converted to a token ( [[lex.token]])
+Each preprocessing token that is converted to a token ([[lex.token]])
 shall have the lexical form of a keyword, an identifier, a literal, an
 operator, or a punctuator.
 
@@ -214,7 +214,7 @@ punctuators, and single non-white-space characters that do not lexically
 match the other preprocessing token categories. If a `'` or a `"`
 character matches the last category, the behavior is undefined.
 Preprocessing tokens can be separated by white space; this consists of
-comments ( [[lex.comment]]), or white-space characters (space,
+comments ([[lex.comment]]), or white-space characters (space,
 horizontal tab, new-line, vertical tab, and form-feed), or both. As
 described in Clause  [[cpp]], in certain circumstances during
 translation phase 4, white space (or the absence thereof) serves as more
@@ -333,7 +333,7 @@ q-char:
 ```
 
 Header name preprocessing tokens shall only appear within a `#include`
-preprocessing directive ( [[cpp.include]]). The sequences in both forms
+preprocessing directive ([[cpp.include]]). The sequences in both forms
 of *header-name*s are mapped in an *implementation-defined* manner to
 headers or to external source file names as specified in 
 [[cpp.include]].
@@ -360,7 +360,7 @@ pp-number:
 ```
 
 Preprocessing number tokens lexically include all integer literal
-tokens ( [[lex.icon]]) and all floating literal tokens ( [[lex.fcon]]).
+tokens ([[lex.icon]]) and all floating literal tokens ([[lex.fcon]]).
 
 A preprocessing number does not have a type or a value; it acquires both
 after a successful conversion to an integer literal token or a floating
@@ -418,14 +418,14 @@ resolved to interpret the token as a regular *identifier*.
 
 
 In addition, some identifiers are reserved for use by C++
-implementations and standard libraries ( [[global.names]]) and shall not
+implementations and standard libraries ([[global.names]]) and shall not
 be used otherwise; no diagnostic is required.
 
 ## Keywords <a id="lex.key">[[lex.key]]</a>
 
 The identifiers shown in Table  [[tab:keywords]] are reserved for use as
 keywords (that is, they are unconditionally treated as keywords in phase
-7) except in an *attribute-token* ( [[dcl.attr.grammar]]) The `export`
+7) except in an *attribute-token* ([[dcl.attr.grammar]]) The `export`
 keyword is unused but is reserved for future use.:
 
 **Table: Keywords**
@@ -451,7 +451,7 @@ keyword is unused but is reserved for future use.:
 
 Furthermore, the alternative representations shown in Table 
 [[tab:alternative.representations]] for certain operators and
-punctuators ( [[lex.digraph]]) are reserved and shall not be used
+punctuators ([[lex.digraph]]) are reserved and shall not be used
 otherwise:
 
 **Table: Alternative representations**
@@ -468,7 +468,7 @@ preprocessing tokens which are used in the syntax of the preprocessor or
 are converted into tokens for operators and punctuators:
 
 Each *preprocessing-op-or-punc* is converted to a single token in
-translation phase 7 ( [[lex.phases]]).
+translation phase 7 ([[lex.phases]]).
 
 ## Literals <a id="lex.literal">[[lex.literal]]</a>
 
@@ -616,7 +616,7 @@ represented.
 
 
 If an integer literal cannot be represented by any type in its list and
-an extended integer type ( [[basic.fundamental]]) can represent its
+an extended integer type ([[basic.fundamental]]) can represent its
 value, it may have that extended integer type. If all of the types in
 the list for the literal are signed, the extended integer type shall be
 signed. If all of the types in the list for the literal are unsigned,
@@ -914,10 +914,10 @@ string literal.
 Ordinary string literals and UTF-8 string literals are also referred to
 as narrow string literals. A narrow string literal has type “array of
 *n* `const char`”, where *n* is the size of the string as defined below,
-and has static storage duration ( [[basic.stc]]).
+and has static storage duration ([[basic.stc]]).
 
 For a UTF-8 string literal, each successive element of the object
-representation ( [[basic.types]]) has the value of the corresponding
+representation ([[basic.types]]) has the value of the corresponding
 code unit of the UTF-8 encoding of the string.
 
 A string literal that begins with `u`, such as `u"asdf"`, is a
@@ -942,7 +942,7 @@ Whether all string literals are distinct (that is, are stored in
 nonoverlapping objects) is *implementation-defined*. The effect of
 attempting to modify a string literal is undefined.
 
-In translation phase 6 ( [[lex.phases]]), adjacent string literals are
+In translation phase 6 ([[lex.phases]]), adjacent string literals are
 concatenated. If both string literals have the same *encoding-prefix*,
 the resulting concatenated string literal has that *encoding-prefix*. If
 one string literal has no *encoding-prefix*, it is treated as a string
@@ -981,7 +981,7 @@ After any necessary concatenation, in translation phase 7 (
 programs that scan a string can find its end.
 
 Escape sequences and universal-character-names in non-raw string
-literals have the same meaning as in character literals ( [[lex.ccon]]),
+literals have the same meaning as in character literals ([[lex.ccon]]),
 except that the single quote `'` is representable either by itself or by
 the escape sequence `\'`, and the double quote `"` shall be preceded by
 a `\`. In a narrow string literal, a universal-character-name may map to
@@ -1070,11 +1070,11 @@ it is treated as the latter. `123_km` is a *user-defined-literal*, but
 sequence of characters that could match that non-terminal.
 
 A *user-defined-literal* is treated as a call to a literal operator or
-literal operator template ( [[over.literal]]). To determine the form of
+literal operator template ([[over.literal]]). To determine the form of
 this call for a given *user-defined-literal* *L* with *ud-suffix* *X*,
 the *literal-operator-id* whose literal suffix identifier is *X* is
 looked up in the context of *L* using the rules for unqualified name
-lookup ( [[basic.lookup.unqual]]). Let *S* be the set of declarations
+lookup ([[basic.lookup.unqual]]). Let *S* be the set of declarations
 found by this lookup. *S* shall not be empty.
 
 If *L* is a *user-defined-integer-literal*, let *n* be the literal
@@ -1087,7 +1087,7 @@ operator "" X(nULL)
 ```
 
 Otherwise, *S* shall contain a raw literal operator or a literal
-operator template ( [[over.literal]]) but not both. If *S* contains a
+operator template ([[over.literal]]) but not both. If *S* contains a
 raw literal operator, the literal *L* is treated as a call of the form
 
 ``` cpp
@@ -1115,7 +1115,7 @@ operator "" X(fL)
 ```
 
 Otherwise, *S* shall contain a raw literal operator or a literal
-operator template ( [[over.literal]]) but not both. If *S* contains a
+operator template ([[over.literal]]) but not both. If *S* contains a
 raw literal operator, the *literal* *L* is treated as a call of the form
 
 ``` cpp
@@ -1163,7 +1163,7 @@ int main() {
 }
 ```
 
-In translation phase 6 ( [[lex.phases]]), adjacent string literals are
+In translation phase 6 ([[lex.phases]]), adjacent string literals are
 concatenated and *user-defined-string-literal*s are considered string
 literals for that purpose. During concatenation, *ud-suffix*es are
 removed and ignored and the concatenation process occurs as described
@@ -1181,7 +1181,7 @@ int main() {
 ```
 
 Some *identifier*s appearing as *ud-suffix*es are reserved for future
-standardization ( [[usrlit.suffix]]). A program containing such a
+standardization ([[usrlit.suffix]]). A program containing such a
 *ud-suffix* is ill-formed, no diagnostic required.
 
 <!-- Section link definitions -->
@@ -1272,7 +1272,7 @@ standardization ( [[usrlit.suffix]]). A program containing such a
     how the basic source characters are represented in source files.
 
 [^5]: A sequence of characters resembling a universal-character-name in
-    an *r-char-sequence* ( [[lex.string]]) does not form a
+    an *r-char-sequence* ([[lex.string]]) does not form a
     universal-character-name.
 
 [^6]:  These include “digraphs” and additional reserved words. The term
@@ -1282,7 +1282,7 @@ standardization ( [[usrlit.suffix]]). A program containing such a
     Nonetheless, those alternative tokens that aren’t lexical keywords
     are colloquially known as “digraphs”.
 
-[^7]: Thus the “stringized” values ( [[cpp.stringize]]) of `[` and `<:`
+[^7]: Thus the “stringized” values ([[cpp.stringize]]) of `[` and `<:`
     will be different, maintaining the source spelling, but the tokens
     can otherwise be freely interchanged.
 

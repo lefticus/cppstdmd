@@ -946,7 +946,7 @@ int main() {
 This subclause summarizes the contents of the C++standard library
 included from the Standard C library. It also summarizes the explicit
 changes in definitions, declarations, or behavior from the Standard C
-library noted in other subclauses ( [[headers]], [[support.types]],
+library noted in other subclauses ([[headers]], [[support.types]],
 [[c.strings]]).
 
 The C++standard library provides 57 standard macros from the C library,
@@ -954,7 +954,7 @@ as shown in Table  [[tab:diff.standard.macros]].
 
 The header names (enclosed in `<` and `>`) indicate that the macro may
 be defined in more than one header. All such definitions are equivalent
-( [[basic.def.odr]]).
+([[basic.def.odr]]).
 
 **Table: Standard macros**
 
@@ -1059,7 +1059,7 @@ library, as shown in Table  [[tab:diff.standard.functions]].
 ### Modifications to headers <a id="diff.mods.to.headers">[[diff.mods.to.headers]]</a>
 
 For compatibility with the Standard C library, the C++standard library
-provides the 18 *C headers* ( [[depr.c.headers]]), but their use is
+provides the 18 *C headers* ([[depr.c.headers]]), but their use is
 deprecated in C++.
 
 ### Modifications to definitions <a id="diff.mods.to.definitions">[[diff.mods.to.definitions]]</a>
@@ -1073,15 +1073,15 @@ typedefs to existing integral types.
 
 `wchar_t`
 
-is a keyword in this International Standard ( [[lex.key]]). It does not
+is a keyword in this International Standard ([[lex.key]]). It does not
 appear as a type name defined in any of `<cstddef>`, `<cstdlib>`, or
-`<cwchar>` ( [[c.strings]]).
+`<cwchar>` ([[c.strings]]).
 
 #### Header `<iso646.h>` <a id="diff.header.iso646.h">[[diff.header.iso646.h]]</a>
 
 The tokens `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not_eq`, `not`,
 `or`, `or_eq`, `xor`, and `xor_eq` are keywords in this International
-Standard ( [[lex.key]]). They do not appear as macro names defined in
+Standard ([[lex.key]]). They do not appear as macro names defined in
 `<ciso646>`.
 
 #### Macro `NULL` <a id="diff.null">[[diff.null]]</a>
@@ -1089,7 +1089,7 @@ Standard ( [[lex.key]]). They do not appear as macro names defined in
 The macro `NULL`, defined in any of `<clocale>`, `<cstddef>`,
 `<cstdio>`, `<cstdlib>`, `<cstring>`, `<ctime>`, or `<cwchar>`, is an
 implementation-defined C++null pointer constant in this International
-Standard ( [[support.types]]).
+Standard ([[support.types]]).
 
 ### Modifications to declarations <a id="diff.mods.to.declarations">[[diff.mods.to.declarations]]</a>
 

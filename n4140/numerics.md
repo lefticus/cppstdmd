@@ -60,7 +60,7 @@ requirements:[^1]
   use the copy constructor to initialize each element. If the
   distinction between initialization and assignment is important for a
   class, or if it fails to satisfy any of the other conditions listed
-  above, the programmer should use `vector` ( [[vector]]) instead of
+  above, the programmer should use `vector` ([[vector]]) instead of
   `valarray` for that class;
 - If `T` is a class, it does not overload unary `operator&`.
 
@@ -143,7 +143,7 @@ for representing and manipulating complex numbers.
 The effect of instantiating the template `complex` for any type other
 than `float`, `double`, or `long double` is unspecified. The
 specializations `complex<float>`, `complex<double>`, and
-`complex<long double>` are literal types ( [[basic.types]]).
+`complex<long double>` are literal types ([[basic.types]]).
 
 If the result of a function is not mathematically defined or not in the
 range of representable values for its type, the behavior is undefined.
@@ -582,12 +582,12 @@ operator>>(basic_istream<charT, traits>& is, complex<T>& x);
 
 *Effects:* Extracts a complex number `x` of the form: `u`, `(u)`, or
 `(u,v)`, where `u` is the real part and `v` is the imaginary
-part ( [[istream.formatted]]).
+part ([[istream.formatted]]).
 
 *Requires:* The input values shall be convertible to `T`.
 
 If bad input is encountered, calls `is.setstate(ios_base::failbit)`
-(which may throw `ios::failure` ( [[iostate.flags]])).
+(which may throw `ios::failure` ([[iostate.flags]])).
 
 *Returns:* `is`.
 
@@ -889,7 +889,7 @@ argument to any random number distribution object `d`, thus producing a
 zero-argument function object such as given by `bind(d,e)`.
 
 Each of the entities specified via this subclause has an associated
-arithmetic type ( [[basic.fundamental]]) identified as `result_type`.
+arithmetic type ([[basic.fundamental]]) identified as `result_type`.
 With `T` as the `result_type` thus associated with such an entity, that
 entity is characterized:
 
@@ -962,7 +962,7 @@ suitable `operator\shr{}`.
 `E`’s specification shall define:
 
 A class `E` that satisfies the requirements of a uniform random number
-generator ( [[rand.req.urng]]) also satisfies the requirements of a if
+generator ([[rand.req.urng]]) also satisfies the requirements of a if
 the expressions shown in Table  [[tab:RandomEngine]] are valid and have
 the indicated semantics, and if `E` also satisfies all other
 requirements of this section [[rand.req.eng]]. In that Table and
@@ -1258,7 +1258,7 @@ parameter(s), to hold. A program instantiating any of these templates is
 ill-formed if any such required relationship fails to hold.
 
 For every random number engine and for every random number engine
-adaptor `X` defined in this sub-clause ( [[rand.eng]]) and in
+adaptor `X` defined in this sub-clause ([[rand.eng]]) and in
 sub-clause  [[rand.adapt]]:
 
 - if the constructor
@@ -1541,7 +1541,7 @@ $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
 Each type instantiated from a class template specified in this section 
 [[rand.eng]] satisfies the requirements of a random number engine
-adaptor ( [[rand.req.adapt]]) type.
+adaptor ([[rand.req.adapt]]) type.
 
 Except where specified otherwise, the complexity of each function
 specified in this section  [[rand.adapt]] is constant.
@@ -2086,7 +2086,7 @@ $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
 
 Each type instantiated from a class template specified in this section 
 [[rand.dist]] satisfies the requirements of a random number
-distribution ( [[rand.req.dist]]) type.
+distribution ([[rand.req.dist]]) type.
 
 Descriptions are provided in this section  [[rand.dist]] only for
 distribution operations that are not described in [[rand.req.dist]] or
@@ -3230,7 +3230,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter. If `nw` = 0, let n = 1, otherwise let
 n = `nw`. The relation 0 < \delta = (`xmax` - `xmin`) / n shall hold.
@@ -3343,7 +3343,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter.
 
@@ -3361,7 +3361,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter. If `nw` = 0, let n = 1, otherwise let
 n = `nw`. The relation 0 < \delta = (`xmax` - `xmin`) / n shall hold.
@@ -3482,7 +3482,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter.
 
@@ -3500,7 +3500,7 @@ template<class UnaryOperation>
 ```
 
 *Requires:* Each instance of type `UnaryOperation` shall be a function
-object ( [[function.objects]]) whose return type shall be convertible to
+object ([[function.objects]]) whose return type shall be convertible to
 `double`. Moreover, `double` shall be convertible to the type of
 `UnaryOperation`’s sole parameter. If `nw` = 0, let n = 1, otherwise let
 n = `nw`. The relation 0 < \delta = (`xmax` - `xmin`) / n shall hold.
@@ -3671,7 +3671,7 @@ Implementations introducing such replacement types shall provide
 additional functions and operators as follows:
 
 - for every function taking a `const valarray<T>&` other than `begin`
-  and `end` ( [[valarray.range]]), identical functions taking the
+  and `end` ([[valarray.range]]), identical functions taking the
   replacement types shall be added;
 - for every function taking two `const valarray<T>&` arguments,
   identical functions taking every combination of `const valarray<T>&`
@@ -3806,7 +3806,7 @@ explicit valarray(size_t);
 
 The array created by this constructor has a length equal to the value of
 the argument. The elements of the array are
-value-initialized ( [[dcl.init]]).
+value-initialized ([[dcl.init]]).
 
 ``` cpp
 valarray(const T&, size_t);
@@ -3948,7 +3948,7 @@ advantage by optimizing compilers.[^13]
 
 The reference returned by the subscript operator for an array shall be
 valid until the member function
-`resize(size_t, T)` ( [[valarray.members]]) is called for that array or
+`resize(size_t, T)` ([[valarray.members]]) is called for that array or
 until the lifetime of that array ends, whichever happens first.
 
 If the subscript operator is invoked with a `size_t` argument whose
@@ -4896,10 +4896,10 @@ argument to the elements of the `valarray<T>` object to which the
 
 In the `begin` and `end` function templates that follow, *unspecified*1
 is a type that meets the requirements of a mutable random access
-iterator ( [[random.access.iterators]]) whose `value_type` is the
+iterator ([[random.access.iterators]]) whose `value_type` is the
 template parameter `T` and whose `reference` type is `T&`.
 *unspecified*2 is a type that meets the requirements of a constant
-random access iterator ( [[random.access.iterators]]) whose `value_type`
+random access iterator ([[random.access.iterators]]) whose `value_type`
 is the template parameter `T` and whose `reference` type is `const T&`.
 
 The iterators returned by `begin` and `end` for an array are guaranteed
@@ -5132,8 +5132,8 @@ changes:
 The `rand` function has the semantics specified in the C standard,
 except that the implementation may specify that particular library
 functions may call `rand`. It is implementation-defined whether the
-`rand` function may introduce data races ( [[res.on.data.races]]). The
-random number generation ( [[rand]]) facilities in this standard are
+`rand` function may introduce data races ([[res.on.data.races]]). The
+random number generation ([[rand]]) facilities in this standard are
 often preferable to `rand`, because `rand`’s underlying algorithm is
 unspecified. Use of `rand` therefore continues to be nonportable, with
 unpredictable and oft-questionable quality and performance.

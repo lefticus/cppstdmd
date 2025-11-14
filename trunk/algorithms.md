@@ -4396,10 +4396,10 @@ template<class InputIterator, class Function>
 ```
 
 *Preconditions:* `Function` meets the *Cpp17MoveConstructible*
-requirements ( [[cpp17.moveconstructible]]).
+requirements ([[cpp17.moveconstructible]]).
 
 [*Note 1*: `Function` need not meet the requirements of
-*Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]). — *end note*]
+*Cpp17CopyConstructible* ([[cpp17.copyconstructible]]). — *end note*]
 
 *Effects:* Applies `f` to the result of dereferencing every iterator in
 the range \[`first`, `last`), starting from `first` and proceeding to
@@ -5932,7 +5932,7 @@ Let:
 [*Note 1*: For the parallel algorithm overload in namespace `std`,
 there can be a performance cost if
 `iterator_traits<ForwardIterator1>::value_type` does not meet the
-*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) requirements.
+*Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) requirements.
 For the parallel algorithm overloads in namespace `ranges`, there can be
 a performance cost if `iter_value_t<I>` does not model
 `move_constructible`. — *end note*]
@@ -6721,7 +6721,7 @@ Let E be
 
 *Preconditions:* For the algorithms in namespace `std`, the type of
 `*first` meets the *Cpp17MoveAssignable* requirements
-( [[cpp17.moveassignable]]).
+([[cpp17.moveassignable]]).
 
 *Effects:* Eliminates all the elements referred to by iterator `i` in
 the range \[`first`, `last`) for which E holds.
@@ -6844,7 +6844,7 @@ Let:
 [*Note 2*: For the parallel algorithm overloads in namespace `std`,
 there can be a performance cost if
 `iterator_traits<ForwardIterator1>::value_type` does not meet the
-*Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) requirements.
+*Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) requirements.
 For the parallel algorithm overloads in namespace `ranges`, there can be
 a performance cost if `iter_value_t<I>` does not model
 `move_constructible`. — *end note*]
@@ -6914,7 +6914,7 @@ and let E be
 
 *Preconditions:* For the overloads in namespace `std`, `pred` is an
 equivalence relation and the type of `*first` meets the
-*Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]).
+*Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]).
 
 *Effects:* For a nonempty range, eliminates all but the first element
 from every consecutive group of equivalent elements referred to by the
@@ -7014,8 +7014,8 @@ Let:
     additional requirements for `T`. Otherwise, if `OutputIterator`
     meets the *Cpp17ForwardIterator* requirements and its value type is
     the same as `T`, then `T` meets the *Cpp17CopyAssignable*
-    ( [[cpp17.copyassignable]]) requirements. Otherwise, `T` meets both
-    the *Cpp17CopyConstructible* ( [[cpp17.copyconstructible]]) and
+    ([[cpp17.copyassignable]]) requirements. Otherwise, `T` meets both
+    the *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]) and
     *Cpp17CopyAssignable* requirements.
 
 [*Note 1*: For the parallel algorithm overloads in namespace `std`,
@@ -7169,8 +7169,8 @@ template<execution-policy Ep, random_access_iterator I, sized_sentinel_for<I> S>
 ranges. For the overloads in namespace `std`, `ForwardIterator` meets
 the *Cpp17ValueSwappable* requirements [[swappable.requirements]], and
 the type of `*first` meets the *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-( [[cpp17.moveassignable]]) requirements.
+([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+([[cpp17.moveassignable]]) requirements.
 
 *Effects:* For each non-negative integer `i < (last - first)`, places
 the element from the position `first + i` into position
@@ -7605,8 +7605,8 @@ no parameters by those names.
 *Preconditions:* For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Sorts the elements in the range \[`first`, `last`) with
 respect to `comp` and `proj`.
@@ -7659,8 +7659,8 @@ no parameters by those names.
 *Preconditions:* For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Sorts the elements in the range \[`first`, `last`) with
 respect to `comp` and `proj`.
@@ -7717,8 +7717,8 @@ no parameters by those names.
 ranges. For the overloads in namespace `std`, `RandomAccessIterator`
 meets the *Cpp17ValueSwappable* requirements [[swappable.requirements]]
 and the type of `*first` meets the *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-( [[cpp17.moveassignable]]) requirements.
+([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Places the first `middle - first` elements from the range
 \[`first`, `last`) as sorted with respect to `comp` and `proj` into the
@@ -7838,8 +7838,8 @@ overloads with no parameters by those names.
 *Preconditions:* For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]], the type of `*result_first`
-meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+meets the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 For iterators `a1` and `b1` in \[`first`, `last`), and iterators `x2`
 and `y2` in \[`result_first`, `result_last`), after evaluating the
@@ -8024,8 +8024,8 @@ no parameters by those names.
 ranges. For the overloads in namespace `std`, `RandomAccessIterator`
 meets the *Cpp17ValueSwappable* requirements [[swappable.requirements]],
 and the type of `*first` meets the *Cpp17MoveConstructible*
-( [[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
-( [[cpp17.moveassignable]]) requirements.
+([[cpp17.moveconstructible]]) and *Cpp17MoveAssignable*
+([[cpp17.moveassignable]]) requirements.
 
 *Effects:* After `nth_element` the element in the position pointed to by
 `nth` is the element that would be in that position if the whole range
@@ -8386,8 +8386,8 @@ Let `proj` be `identity{}` for the overloads with no parameter named
 *Preconditions:* For the overloads in namespace `std`,
 `BidirectionalIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Places all the elements `e` in \[`first`, `last`) that
 satisfy E(`e`) before all the elements that do not. The relative order
@@ -8676,8 +8676,8 @@ no parameters by those names.
 ranges sorted with respect to `comp` and `proj`. For the overloads in
 namespace `std`, `BidirectionalIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Merges two sorted consecutive ranges \[`first`, `middle`) and
 \[`middle`, `last`), putting the result of the merge into the range
@@ -9261,8 +9261,8 @@ no parameters by those names.
 respect to `comp` and `proj`. For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* requirements ( [[cpp17.moveconstructible]])
-and the *Cpp17MoveAssignable* requirements ( [[cpp17.moveassignable]]).
+the *Cpp17MoveConstructible* requirements ([[cpp17.moveconstructible]])
+and the *Cpp17MoveAssignable* requirements ([[cpp17.moveassignable]]).
 
 *Effects:* Places the value in the location `last - 1` into the
 resulting heap \[`first`, `last`).
@@ -9300,8 +9300,8 @@ no parameters by those names.
 with respect to `comp` and `proj`. For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Swaps the value in the location `first` with the value in the
 location `last - 1` and makes \[`first`, `last - 1`) into a heap with
@@ -9339,8 +9339,8 @@ no parameters by those names.
 *Preconditions:* For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Constructs a heap with respect to `comp` and `proj` out of
 the range \[`first`, `last`).
@@ -9378,8 +9378,8 @@ no parameters by those names.
 respect to `comp` and `proj`. For the overloads in namespace `std`,
 `RandomAccessIterator` meets the *Cpp17ValueSwappable*
 requirements [[swappable.requirements]] and the type of `*first` meets
-the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]]) and
-*Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]]) and
+*Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 
 *Effects:* Sorts elements in the heap \[`first`, `last`) with respect to
 `comp` and `proj`.
@@ -9519,7 +9519,7 @@ template<class T, class Proj = identity,
 ```
 
 *Preconditions:* For the first form, `T` meets the
-*Cpp17LessThanComparable* requirements ( [[cpp17.lessthancomparable]]).
+*Cpp17LessThanComparable* requirements ([[cpp17.lessthancomparable]]).
 
 *Returns:* The smaller value. Returns the first argument when the
 arguments are equivalent.
@@ -9554,7 +9554,7 @@ template<execution-policy Ep, sized-random-access-range R, class Proj = identity
 *Preconditions:* `ranges::distance(r) > 0`. For the overloads in
 namespace `std`, `T` meets the *Cpp17CopyConstructible* requirements.
 For the first form, `T` meets the *Cpp17LessThanComparable* requirements
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* The smallest value in the input range. Returns a copy of the
 leftmost element when several elements are equivalent to the smallest.
@@ -9577,7 +9577,7 @@ template<class T, class Proj = identity,
 ```
 
 *Preconditions:* For the first form, `T` meets the
-*Cpp17LessThanComparable* requirements ( [[cpp17.lessthancomparable]]).
+*Cpp17LessThanComparable* requirements ([[cpp17.lessthancomparable]]).
 
 *Returns:* The larger value. Returns the first argument when the
 arguments are equivalent.
@@ -9612,7 +9612,7 @@ template<execution-policy Ep, sized-random-access-range R, class Proj = identity
 *Preconditions:* `ranges::distance(r) > 0`. For the overloads in
 namespace `std`, `T` meets the *Cpp17CopyConstructible* requirements.
 For the first form, `T` meets the *Cpp17LessThanComparable* requirements
-( [[cpp17.lessthancomparable]]).
+([[cpp17.lessthancomparable]]).
 
 *Returns:* The largest value in the input range. Returns a copy of the
 leftmost element when several elements are equivalent to the largest.
@@ -9636,7 +9636,7 @@ template<class T, class Proj = identity,
 ```
 
 *Preconditions:* For the first form, `T` meets the
-*Cpp17LessThanComparable* requirements ( [[cpp17.lessthancomparable]]).
+*Cpp17LessThanComparable* requirements ([[cpp17.lessthancomparable]]).
 
 *Returns:* `{b, a}` if `b` is smaller than `a`, and `{a, b}` otherwise.
 
@@ -9671,7 +9671,7 @@ template<execution-policy Ep, sized-random-access-range R, class Proj = identity
 *Preconditions:* `ranges::distance(r) > 0`. For the overloads in
 namespace `std`, `T` meets the *Cpp17CopyConstructible* requirements.
 For the first form, type `T` meets the *Cpp17LessThanComparable*
-requirements ( [[cpp17.lessthancomparable]]).
+requirements ([[cpp17.lessthancomparable]]).
 
 *Returns:* Let `X` be the return type. Returns `X{x, y}`, where `x` is a
 copy of the leftmost element with the smallest value and `y` a copy of
@@ -9850,7 +9850,7 @@ let `proj` be `identity{}` for the overloads with no parameter `proj`.
 *Preconditions:*
 `bool(invoke(comp, invoke(proj, hi), invoke(proj, lo)))` is `false`. For
 the first form, type `T` meets the *Cpp17LessThanComparable*
-requirements ( [[cpp17.lessthancomparable]]).
+requirements ([[cpp17.lessthancomparable]]).
 
 *Returns:* `lo` if
 `bool(invoke(comp, invoke(proj, v), invoke(proj, lo)))` is `true`, `hi`
@@ -10351,8 +10351,8 @@ template<class InputIterator, class T, class BinaryOperation>
 ```
 
 *Preconditions:* `T` meets the *Cpp17CopyConstructible*
-( [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
-( [[cpp17.copyassignable]]) requirements. In the range \[`first`,
+([[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
+([[cpp17.copyassignable]]) requirements. In the range \[`first`,
 `last`\], `binary_op` neither modifies elements nor invalidates
 iterators or subranges.[^6]
 
@@ -10434,7 +10434,7 @@ are convertible to `T`.
 
 *Preconditions:*
 
-- `T` meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
+- `T` meets the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]])
   requirements.
 - `binary_op` neither invalidates iterators or subranges, nor modifies
   elements in the range \[`first`, `last`\].
@@ -10464,8 +10464,8 @@ template<class InputIterator1, class InputIterator2, class T,
 ```
 
 *Preconditions:* `T` meets the *Cpp17CopyConstructible*
-( [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
-( [[cpp17.copyassignable]]) requirements. In the ranges \[`first1`,
+([[cpp17.copyconstructible]]) and *Cpp17CopyAssignable*
+([[cpp17.copyassignable]]) requirements. In the ranges \[`first1`,
 `last1`\] and \[`first2`, `first2 + (last1 - first1)`\] `binary_op1` and
 `binary_op2` neither modifies elements nor invalidates iterators or
 subranges.[^8]
@@ -10538,7 +10538,7 @@ are convertible to `T`.
 
 *Preconditions:*
 
-- `T` meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
+- `T` meets the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]])
   requirements.
 - Neither `binary_op1` nor `binary_op2` invalidates subranges, nor
   modifies elements in the ranges \[`first1`, `last1`\] and \[`first2`,
@@ -10579,7 +10579,7 @@ are convertible to `T`.
 
 *Preconditions:*
 
-- `T` meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
+- `T` meets the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]])
   requirements.
 - Neither `unary_op` nor `binary_op` invalidates subranges, nor modifies
   elements in the range \[`first`, `last`\].
@@ -10688,7 +10688,7 @@ are convertible to `T`.
 
 *Preconditions:*
 
-- `T` meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
+- `T` meets the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]])
   requirements.
 - `binary_op` neither invalidates iterators or subranges, nor modifies
   elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -10780,7 +10780,7 @@ convertible to `U`.
 *Preconditions:*
 
 - If `init` is provided, `T` meets the *Cpp17MoveConstructible*
-  ( [[cpp17.moveconstructible]]) requirements; otherwise, `U` meets the
+  ([[cpp17.moveconstructible]]) requirements; otherwise, `U` meets the
   *Cpp17MoveConstructible* requirements.
 - `binary_op` neither invalidates iterators or subranges, nor modifies
   elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -10836,7 +10836,7 @@ are convertible to `T`.
 
 *Preconditions:*
 
-- `T` meets the *Cpp17MoveConstructible* ( [[cpp17.moveconstructible]])
+- `T` meets the *Cpp17MoveConstructible* ([[cpp17.moveconstructible]])
   requirements.
 - Neither `unary_op` nor `binary_op` invalidates iterators or subranges,
   nor modifies elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -10914,7 +10914,7 @@ are convertible to `T`; otherwise,
 *Preconditions:*
 
 - If `init` is provided, `T` meets the *Cpp17MoveConstructible*
-  ( [[cpp17.moveconstructible]]) requirements; otherwise, `U` meets the
+  ([[cpp17.moveconstructible]]) requirements; otherwise, `U` meets the
   *Cpp17MoveConstructible* requirements.
 - Neither `unary_op` nor `binary_op` invalidates iterators or subranges,
   nor modifies elements in the ranges \[`first`, `last`\] or \[`result`,
@@ -10990,7 +10990,7 @@ denotes an object of type `minus<>`.
 *Preconditions:*
 
 - For the overloads with no `ExecutionPolicy`, `T` meets the
-  *Cpp17MoveAssignable* ( [[cpp17.moveassignable]]) requirements.
+  *Cpp17MoveAssignable* ([[cpp17.moveassignable]]) requirements.
 - For all overloads, in the ranges \[`first`, `last`\] and \[`result`,
   `result + (last - first)`\], `binary_op` neither modifies elements nor
   invalidates iterators or subranges.[^10]

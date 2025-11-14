@@ -5,7 +5,7 @@ These are deprecated features, where *deprecated* is defined as:
 Normative for the current edition of the Standard, but having been
 identified as a candidate for removal from future revisions. An
 implementation may declare library names and entities described in this
-section with the `deprecated` attribute ( [[dcl.attr.deprecated]]).
+section with the `deprecated` attribute ([[dcl.attr.deprecated]]).
 
 ## Increment operator with `bool` operand <a id="depr.incr.bool">[[depr.incr.bool]]</a>
 
@@ -23,9 +23,9 @@ The implicit definition of a copy constructor as defaulted is deprecated
 if the class has a user-declared copy assignment operator or a
 user-declared destructor. The implicit definition of a copy assignment
 operator as defaulted is deprecated if the class has a user-declared
-copy constructor or a user-declared destructor ( [[class.dtor]], 
+copy constructor or a user-declared destructor ([[class.dtor]], 
 [[class.copy]]). In a future revision of this International Standard,
-these implicit definitions could become deleted ( [[dcl.fct.def]]).
+these implicit definitions could become deleted ([[dcl.fct.def]]).
 
 ## Dynamic exception specifications <a id="depr.except.spec">[[depr.except.spec]]</a>
 
@@ -53,9 +53,9 @@ Every C header, each of which has a name of the form `name.h`, behaves
 as if each name placed in the standard library namespace by the
 corresponding `cname` header is placed within the global namespace
 scope. It is unspecified whether these names are first declared or
-defined within namespace scope ( [[basic.scope.namespace]]) of the
+defined within namespace scope ([[basic.scope.namespace]]) of the
 namespace `std` and are then injected into the global namespace scope by
-explicit *using-declaration*s ( [[namespace.udecl]]).
+explicit *using-declaration*s ([[namespace.udecl]]).
 
 The header `<cstdlib>` assuredly provides its declarations and
 definitions within the namespace `std`. It may also provide these names
@@ -102,7 +102,7 @@ The type `streampos` is an *implementation-defined* type that satisfies
 the requirements of pos_type in  [[iostreams.limits.pos]].
 
 An implementation may provide the following additional member function,
-which has the effect of calling `sbumpc()` ( [[streambuf.pub.get]]):
+which has the effect of calling `sbumpc()` ([[streambuf.pub.get]]):
 
 ``` cpp
 namespace std {
@@ -313,7 +313,7 @@ virtual ~strstreambuf();
 *Effects:* Destroys an object of class `strstreambuf`. The function
 frees the dynamically allocated array object only if
 `strmode & allocated != 0` and
-`strmode & frozen == 0`. ( [[depr.strstreambuf.virtuals]] describes how
+`strmode & frozen == 0`. ([[depr.strstreambuf.virtuals]] describes how
 a dynamically allocated array object is freed.)
 
 #### Member functions <a id="depr.strstreambuf.members">[[depr.strstreambuf.members]]</a>
@@ -980,7 +980,7 @@ called given a reference to an `X` followed by the argument required for
 ## Binders <a id="depr.lib.binders">[[depr.lib.binders]]</a>
 
 The binders `binder1st`, `bind1st`, `binder2nd`, and `bind2nd` are
-deprecated. The function template `bind` ( [[func.bind.bind]]) provides
+deprecated. The function template `bind` ([[func.bind.bind]]) provides
 a better solution.
 
 ### Class template `binder1st` <a id="depr.lib.binder.1st">[[depr.lib.binder.1st]]</a>
@@ -1064,7 +1064,7 @@ finds the first integer in `v` less than 5.
 ## `auto_ptr` <a id="depr.auto.ptr">[[depr.auto.ptr]]</a>
 
 The class template `auto_ptr` is deprecated. The class template
-`unique_ptr` ( [[unique.ptr]]) provides a better solution.
+`unique_ptr` ([[unique.ptr]]) provides a better solution.
 
 ### Class template `auto_ptr` <a id="auto.ptr">[[auto.ptr]]</a>
 
@@ -1304,8 +1304,8 @@ value.
 
 *Remarks:* Called by the implementation when a function exits via an
 exception not allowed by its
-*exception-specification* ( [[except.unexpected]]), in effect after
-evaluating the throw-expression ( [[unexpected.handler]]). May also be
+*exception-specification* ([[except.unexpected]]), in effect after
+evaluating the throw-expression ([[unexpected.handler]]). May also be
 called directly by the program.
 
 *Effects:* Calls the current `unexpected_handler` function. A default
@@ -1332,7 +1332,7 @@ that each possible permutation of those elements has equal probability
 of appearance.
 
 *Requires:* `RandomAccessIterator` shall satisfy the requirements of
-`ValueSwappable` ( [[swappable.requirements]]). The random number
+`ValueSwappable` ([[swappable.requirements]]). The random number
 generating function object `rng` shall have a return type that is
 convertible to `iterator_traits<RandomAccessIterator>::difference_type`,
 and the call `rng(n)` shall return a randomly chosen value in the

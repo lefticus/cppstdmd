@@ -67,10 +67,10 @@ using state_type = see below;
 ```
 
 *Preconditions:* `state_type` meets the *Cpp17Destructible*
-( [[cpp17.destructible]]), *Cpp17CopyAssignable*
-( [[cpp17.copyassignable]]), *Cpp17CopyConstructible*
-( [[cpp17.copyconstructible]]), and *Cpp17DefaultConstructible*
-( [[cpp17.defaultconstructible]]) requirements.
+([[cpp17.destructible]]), *Cpp17CopyAssignable*
+([[cpp17.copyassignable]]), *Cpp17CopyConstructible*
+([[cpp17.copyconstructible]]), and *Cpp17DefaultConstructible*
+([[cpp17.defaultconstructible]]) requirements.
 
 ### `char_traits` specializations <a id="char.traits.specializations">[[char.traits.specializations]]</a>
 

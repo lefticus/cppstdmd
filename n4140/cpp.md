@@ -82,7 +82,7 @@ A text line shall not begin with a `#` preprocessing token. A
 non-directive shall not begin with any of the directive names appearing
 in the syntax.
 
-When in a group that is skipped ( [[cpp.cond]]), the directive syntax is
+When in a group that is skipped ([[cpp.cond]]), the directive syntax is
 relaxed to allow any sequence of preprocessing tokens to occur between
 the directive name and the following new-line character.
 
@@ -240,7 +240,7 @@ token pair or a pair of `"` characters is combined into a single header
 name preprocessing token is *implementation-defined*.
 
 The implementation shall provide unique mappings for sequences
-consisting of one or more *nondigit*s or *digit*s ( [[lex.name]])
+consisting of one or more *nondigit*s or *digit*s ([[lex.name]])
 followed by a period (`.`) and a single *nondigit*. The first character
 shall not be a *digit*. The implementation may ignore distinctions of
 alphabetical case.
@@ -660,7 +660,7 @@ character string literal.
 
 The *line number* of the current source line is one greater than the
 number of new-line characters read or introduced in translation phase
-1 ( [[lex.phases]]) while processing the source file to the current
+1 ([[lex.phases]]) while processing the source file to the current
 token.
 
 A preprocessing directive of the form
@@ -815,7 +815,7 @@ implementation has strict pointer safety (
 - **`__STDCPP_THREADS__`**
 
 Defined, and has the value integer literal 1, if and only if a program
-can have more than one thread of execution ( [[intro.multithread]]).
+can have more than one thread of execution ([[intro.multithread]]).
 
 The values of the predefined macros (except for `__FILE__` and
 `__LINE__`) remain constant throughout the translation unit.
@@ -904,7 +904,7 @@ LISTING( ..\listing.dir )
     translation phase 4, all identifiers either are or are not macro
     names — there simply are no keywords, enumeration constants, etc.
 
-[^3]: An alternative token ( [[lex.digraph]]) is not an identifier, even
+[^3]: An alternative token ([[lex.digraph]]) is not an identifier, even
     when its spelling consists entirely of letters and underscores.
     Therefore it is not subject to this replacement.
 
@@ -912,7 +912,7 @@ LISTING( ..\listing.dir )
     is `0x7FFF` and `std::numeric_limits<unsigned int>::max()` is
     `0xFFFF`, the integer literal `0x8000` is signed and positive within
     a `#if` expression even though it is unsigned in translation phase
-    7 ( [[lex.phases]]).
+    7 ([[lex.phases]]).
 
 [^5]: Thus, the constant expression in the following `#if` directive and
     `if` statement is not guaranteed to evaluate to the same value in
@@ -934,7 +934,7 @@ LISTING( ..\listing.dir )
     translation phases), they are never scanned for macro names or
     parameters.
 
-[^9]: An alternative token ( [[lex.digraph]]) is not an identifier, even
+[^9]: An alternative token ([[lex.digraph]]) is not an identifier, even
     when its spelling consists entirely of letters and underscores.
     Therefore it is not possible to define a macro whose name is the
     same as that of an alternative token.

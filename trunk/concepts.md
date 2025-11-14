@@ -621,7 +621,7 @@ template<class T>
 ```
 
 [*Note 1*: Unlike the *Cpp17Destructible*
-requirements ( [[cpp17.destructible]]), this concept forbids destructors
+requirements ([[cpp17.destructible]]), this concept forbids destructors
 that are potentially throwing, even if a particular invocation of the
 destructor does not actually throw. — *end note*]
 

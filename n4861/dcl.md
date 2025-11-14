@@ -423,7 +423,7 @@ class X {
 [*Note 4*: The `mutable` specifier on a class data member nullifies a
 `const` specifier applied to the containing class object and permits
 modification of the mutable class member even though the rest of the
-object is const ( [[basic.type.qualifier]],
+object is const ([[basic.type.qualifier]],
 [[dcl.type.cv]]). — *end note*]
 
 ### Function specifiers <a id="dcl.fct.spec">[[dcl.fct.spec]]</a>
@@ -916,7 +916,7 @@ constinit const char * d = f(false);    // error
 The `inline` specifier shall be applied only to the declaration of a
 variable or function.
 
-A function declaration ( [[dcl.fct]], [[class.mfct]], [[class.friend]])
+A function declaration ([[dcl.fct]], [[class.mfct]], [[class.friend]])
 with an `inline` specifier declares an *inline function*. The inline
 specifier indicates to the implementation that inline substitution of
 the function body at the point of call is to be preferred to the usual
@@ -960,7 +960,7 @@ declared in a definition domain, it shall be defined in that domain.
 
 [*Note 4*: A constexpr function [[dcl.constexpr]] is implicitly inline.
 In the global module, a function defined within a class definition is
-implicitly inline ( [[class.mfct]], [[class.friend]]). — *end note*]
+implicitly inline ([[class.mfct]], [[class.friend]]). — *end note*]
 
 ### Type specifiers <a id="dcl.type">[[dcl.type]]</a>
 
@@ -1055,7 +1055,7 @@ some other access path.
 [*Note 4*: Cv-qualifiers are supported by the type system so that they
 cannot be subverted without casting [[expr.const.cast]]. — *end note*]
 
-Any attempt to modify ( [[expr.ass]], [[expr.post.incr]],
+Any attempt to modify ([[expr.ass]], [[expr.post.incr]],
 [[expr.pre.incr]]) a const object [[basic.type.qualifier]] during its
 lifetime [[basic.life]] results in undefined behavior.
 
@@ -1270,7 +1270,7 @@ If the *identifier* or *simple-template-id* resolves to a *class-name*
 or *enum-name*, the *elaborated-type-specifier* introduces it into the
 declaration the same way a *simple-type-specifier* introduces its
 *type-name* [[dcl.type.simple]]. If the *identifier* or
-*simple-template-id* resolves to a *typedef-name* ( [[dcl.typedef]],
+*simple-template-id* resolves to a *typedef-name* ([[dcl.typedef]],
 [[temp.names]]), the *elaborated-type-specifier* is ill-formed.
 
 [*Note 2*:
@@ -1325,7 +1325,7 @@ follows:
 - otherwise, if E is an unparenthesized *id-expression* naming a
   non-type *template-parameter* [[temp.param]], `decltype(E)` is the
   type of the *template-parameter* after performing any necessary type
-  deduction ( [[dcl.spec.auto]], [[dcl.type.class.deduct]]);
+  deduction ([[dcl.spec.auto]], [[dcl.type.class.deduct]]);
 - otherwise, if E is an unparenthesized *id-expression* or an
   unparenthesized class member access [[expr.ref]], `decltype(E)` is the
   type of the entity named by E. If there is no such entity, or if E
@@ -2126,7 +2126,7 @@ void h(int *(C[10]));           // void h(int *(*_fp)(C _parm[10]));
 A declarator contains exactly one *declarator-id*; it names the
 identifier that is declared. An *unqualified-id* occurring in a
 *declarator-id* shall be a simple *identifier* except for the
-declaration of some special functions ( [[class.ctor]], [[class.conv]],
+declaration of some special functions ([[class.ctor]], [[class.conv]],
 [[class.dtor]], [[over.oper]]) and for the declaration of template
 specializations or partial specializations [[temp.spec]]. When the
 *declarator-id* is qualified, the declaration shall refer to a
@@ -2291,7 +2291,7 @@ and the type of the identifier in the declaration `T` `D1` is
 `D` is “*derived-declarator-type-list* reference to `T`”. The optional
 *attribute-specifier-seq* appertains to the reference type. Cv-qualified
 references are ill-formed except when the cv-qualifiers are introduced
-through the use of a *typedef-name* ( [[dcl.typedef]], [[temp.param]])
+through the use of a *typedef-name* ([[dcl.typedef]], [[temp.param]])
 or *decltype-specifier* [[dcl.type.simple]], in which case the
 cv-qualifiers are ignored.
 
@@ -2386,7 +2386,7 @@ null pointer, which causes undefined behavior. As described in 
 [[class.bit]], a reference cannot be bound directly to a
 bit-field. — *end note*]
 
-If a *typedef-name* ( [[dcl.typedef]], [[temp.param]]) or a
+If a *typedef-name* ([[dcl.typedef]], [[temp.param]]) or a
 *decltype-specifier* [[dcl.type.simple]] denotes a type `TR` that is a
 reference to a type `T`, an attempt to create the type “lvalue reference
 to cv `TR`” creates the type “lvalue reference to `T`”, while an attempt
@@ -2757,7 +2757,7 @@ parameters. For example, `int(*)(const int p, decltype(p)*)` and
 `int(*)(int, const int*)` are identical types. — *end note*]
 
 A function type with a *cv-qualifier-seq* or a *ref-qualifier*
-(including a type named by *typedef-name* ( [[dcl.typedef]],
+(including a type named by *typedef-name* ([[dcl.typedef]],
 [[temp.param]])) shall appear only as:
 
 - the function type for a non-static member function,
@@ -3484,7 +3484,7 @@ X a();
 
 is not the declaration of an object of class `X`, but the declaration of
 a function taking no argument and returning an `X`. The form `()` is
-permitted in certain other initialization contexts ( [[expr.new]],
+permitted in certain other initialization contexts ([[expr.new]],
 [[expr.type.conv]], [[class.base.init]]).
 
 — *end note*]
@@ -4298,7 +4298,7 @@ expression of type “cv-qualifiercv2 `T2`” as follows:
   - If `T1` or `T2` is a class type and `T1` is not reference-related to
     `T2`, user-defined conversions are considered using the rules for
     copy-initialization of an object of type “cv-qualifiercv1 `T1`” by
-    user-defined conversion ( [[dcl.init]], [[over.match.copy]],
+    user-defined conversion ([[dcl.init]], [[over.match.copy]],
     [[over.match.conv]]); the program is ill-formed if the corresponding
     non-reference copy-initialization would be ill-formed. The result of
     the call to the conversion function, as described for the
@@ -4375,7 +4375,7 @@ List-initialization can be used
 - as a *for-range-initializer* [[stmt.iter]]
 - as a function argument [[expr.call]]
 - as a subscript [[expr.sub]]
-- as an argument to a constructor invocation ( [[dcl.init]],
+- as an argument to a constructor invocation ([[dcl.init]],
   [[expr.type.conv]])
 - as an initializer for a non-static data member [[class.mem]]
 - in a *mem-initializer* [[class.base.init]]
@@ -4466,7 +4466,7 @@ follows:
   the object is constructed as described below.
 - Otherwise, if `T` is a class type, constructors are considered. The
   applicable constructors are enumerated and the best one is chosen
-  through overload resolution ( [[over.match]], [[over.match.list]]). If
+  through overload resolution ([[over.match]], [[over.match.list]]). If
   a narrowing conversion (see below) is required to convert any of the
   arguments, the program is ill-formed.
   \[*Example 11*:
@@ -4899,7 +4899,7 @@ U u2 = static_cast<U&&>(u1);            // OK, calls std::terminate if T::T(T&&)
 
 Explicitly-defaulted functions and implicitly-declared functions are
 collectively called *defaulted* functions, and the implementation shall
-provide implicit definitions for them ( [[class.ctor]], [[class.dtor]],
+provide implicit definitions for them ([[class.ctor]], [[class.dtor]],
 [[class.copy.ctor]], [[class.copy.assign]]), which might mean defining
 them as deleted. A defaulted prospective destructor [[class.dtor]] that
 is not a destructor is defined as deleted. A defaulted special member
@@ -6436,7 +6436,7 @@ conversion function [[temp.mem]]. — *end note*]
 
 If a constructor or assignment operator brought from a base class into a
 derived class has the signature of a copy/move constructor or assignment
-operator for the derived class ( [[class.copy.ctor]],
+operator for the derived class ([[class.copy.ctor]],
 [[class.copy.assign]]), the *using-declaration* does not by itself
 suppress the implicit declaration of the derived class member; the
 member from the base class is hidden or overridden by the
@@ -6538,7 +6538,7 @@ names a namespace, members added to the namespace after the
 they are not considered when a use of the name is made. Thus, additional
 overloads added after the *using-declaration* are ignored, but default
 function arguments [[dcl.fct.default]], default template arguments
-[[temp.param]], and template specializations ( [[temp.class.spec]],
+[[temp.param]], and template specializations ([[temp.class.spec]],
 [[temp.expl.spec]]) are considered. — *end note*]
 
 [*Example 9*:
@@ -6726,7 +6726,7 @@ function remains a member of the base class. — *end note*]
 Constructors that are introduced by a *using-declaration* are treated as
 though they were constructors of the derived class when looking up the
 constructors of the derived class [[class.qual]] or forming a set of
-overload candidates ( [[over.match.ctor]], [[over.match.copy]],
+overload candidates ([[over.match.ctor]], [[over.match.copy]],
 [[over.match.list]]).
 
 [*Note 7*: If such a constructor is selected to perform the
@@ -7588,7 +7588,7 @@ is either
 - a function call expression [[expr.call]] that calls a function
   declared `nodiscard` in a reachable declaration or whose return type
   is a nodiscard type, or
-- an explicit type conversion ( [[expr.type.conv]],
+- an explicit type conversion ([[expr.type.conv]],
   [[expr.static.cast]], [[expr.cast]]) that constructs an object through
   a constructor declared `nodiscard` in a reachable declaration, or that
   initializes an object of a nodiscard type.

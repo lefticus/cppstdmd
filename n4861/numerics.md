@@ -5961,7 +5961,7 @@ namespace std {
 
 The contents and meaning of the header `<cmath>` are the same as the C
 standard library header `<math.h>`, with the addition of a
-three-dimensional hypotenuse function ( [[c.math.hypot3]]) and the
+three-dimensional hypotenuse function ([[c.math.hypot3]]) and the
 mathematical special functions described in [[sf.cmath]].
 
 [*Note 1*: Several functions have additional overloads in this
