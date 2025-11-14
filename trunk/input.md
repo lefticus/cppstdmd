@@ -12962,8 +12962,8 @@ conversion specifier.
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [cstdint.syn]: support.md#cstdint.syn
-[defns.character.container]: #defns.character.container
-[defns.ntcts]: #defns.ntcts
+[defns.character.container]: intro.md#defns.character.container
+[defns.ntcts]: intro.md#defns.ntcts
 [enumerated.types]: library.md#enumerated.types
 [file.native]: #file.native
 [file.streams]: #file.streams
@@ -13067,7 +13067,7 @@ conversion specifier.
 [syncstream]: #syncstream
 [syncstream.syncbuf.cons]: #syncstream.syncbuf.cons
 [temp.deduct]: temp.md#temp.deduct
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [views.span]: containers.md#views.span
 
 [^1]: Typically `long long`.

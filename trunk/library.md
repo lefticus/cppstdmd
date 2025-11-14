@@ -2684,9 +2684,9 @@ unspecified state.
 [dcl.pre]: dcl.md#dcl.pre
 [dcl.typedef]: dcl.md#dcl.typedef
 [debugging]: diagnostics.md#debugging
-[defns.const.subexpr]: #defns.const.subexpr
-[defns.nonconst.libcall]: #defns.nonconst.libcall
-[defns.valid]: #defns.valid
+[defns.const.subexpr]: intro.md#defns.const.subexpr
+[defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
+[defns.valid]: intro.md#defns.valid
 [depr]: #depr
 [derivation]: #derivation
 [derived.classes]: #derived.classes
@@ -2797,9 +2797,9 @@ unspecified state.
 [temp.constr.decl]: temp.md#temp.constr.decl
 [temp.deduct.call]: temp.md#temp.deduct.call
 [template.bitset]: utilities.md#template.bitset
-[term.incomplete.type]: #term.incomplete.type
-[term.object.type]: #term.object.type
-[term.replaceable.function]: #term.replaceable.function
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.object.type]: basic.md#term.object.type
+[term.replaceable.function]: dcl.md#term.replaceable.function
 [terminate.handler]: support.md#terminate.handler
 [text]: text.md#text
 [thread]: thread.md#thread

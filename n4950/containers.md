@@ -15302,7 +15302,7 @@ swap(x.acc_, y.acc_);
 [containers]: #containers
 [containers.summary]: #containers.summary
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
-[defns.valid]: #defns.valid
+[defns.valid]: intro.md#defns.valid
 [deque]: #deque
 [deque.modifiers]: #deque.modifiers
 [expr.const]: expr.md#expr.const
@@ -15332,7 +15332,7 @@ swap(x.acc_, y.acc_);
 [temp.deduct]: temp.md#temp.deduct
 [temp.param]: temp.md#temp.param
 [temp.type]: temp.md#temp.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
 [unord]: #unord
 [unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map

@@ -14504,6 +14504,6 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [range.utility]: #range.utility
 [ranges.syn]: #ranges.syn
 [string.view]: strings.md#string.view
-[term.array.type]: #term.array.type
-[term.perfect.forwarding.call.wrapper]: #term.perfect.forwarding.call.wrapper
+[term.array.type]: dcl.md#term.array.type
+[term.perfect.forwarding.call.wrapper]: utilities.md#term.perfect.forwarding.call.wrapper
 [views.span]: containers.md#views.span

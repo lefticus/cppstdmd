@@ -1039,7 +1039,7 @@ void f() {
 [stmt.while]: #stmt.while
 [support.start.term]: support.md#support.start.term
 [temp.pre]: temp.md#temp.pre
-[term.odr.use]: #term.odr.use
+[term.odr.use]: basic.md#term.odr.use
 
 [^1]: In other words, the `else` is associated with the nearest un-elsed
     `if`.

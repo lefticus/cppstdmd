@@ -6539,7 +6539,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [cpp17.moveassignable]: #cpp17.moveassignable
 [cpp17.moveconstructible]: #cpp17.moveconstructible
 [cpp17.nullablepointer]: #cpp17.nullablepointer
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: intro.md#defns.const.subexpr
 [expr.eq]: expr.md#expr.eq
 [function.objects]: utilities.md#function.objects
 [indirect.ctor]: #indirect.ctor
@@ -6566,9 +6566,9 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [stmt.dcl]: stmt.md#stmt.dcl
 [swappable.requirements]: library.md#swappable.requirements
 [temp.deduct]: temp.md#temp.deduct
-[term.implicit.lifetime.type]: #term.implicit.lifetime.type
-[term.incomplete.type]: #term.incomplete.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
+[term.implicit.lifetime.type]: basic.md#term.implicit.lifetime.type
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
 [tuple]: utilities.md#tuple
 [unique.ptr]: #unique.ptr
 [unord.hash]: utilities.md#unord.hash

@@ -1201,7 +1201,7 @@ constructor.
 [bad.alloc]: support.md#bad.alloc
 [comparisons.three.way]: utilities.md#comparisons.three.way
 [conv]: expr.md#conv
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: library.md#defns.const.subexpr
 [diagnostics.summary]: #diagnostics.summary
 [errno]: #errno
 [res.on.exception.handling]: library.md#res.on.exception.handling

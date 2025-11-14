@@ -10504,7 +10504,7 @@ ISO C 7.8.
 [bitmask.types]: library.md#bitmask.types
 [c.files]: #c.files
 [cstdio.syn]: #cstdio.syn
-[defns.ntcts]: #defns.ntcts
+[defns.ntcts]: library.md#defns.ntcts
 [enumerated.types]: library.md#enumerated.types
 [fig:streampos]: #fig:streampos
 [file.streams]: #file.streams

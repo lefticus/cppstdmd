@@ -9478,7 +9478,7 @@ standard library.
 [specialized.algorithms]: #specialized.algorithms
 [swappable.requirements]: library.md#swappable.requirements
 [temp.func.order]: temp.md#temp.func.order
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class
 

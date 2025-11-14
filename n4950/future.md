@@ -2108,7 +2108,7 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 [structure.specifications]: library.md#structure.specifications
 [system.error.syn]: diagnostics.md#system.error.syn
 [temp.names]: temp.md#temp.names
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 
 [^1]: The function signature `strlen(const char*)` is declared in
     `<cstring>`. The macro `INT_MAX` is defined in `<climits>`.

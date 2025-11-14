@@ -1789,7 +1789,7 @@ The specializations are enabled [[unord.hash]].
 [container.rev.reqmts]: containers.md#container.rev.reqmts
 [conv]: expr.md#conv
 [cpp.predefined]: cpp.md#cpp.predefined
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: intro.md#defns.const.subexpr
 [diagnostics.summary]: #diagnostics.summary
 [errno]: #errno
 [format.string.std]: utilities.md#format.string.std

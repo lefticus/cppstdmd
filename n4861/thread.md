@@ -5440,7 +5440,7 @@ template<class R, class... ArgTypes>
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.moveassignable]: #cpp17.moveassignable
 [cpp17.moveconstructible]: #cpp17.moveconstructible
-[defns.block]: #defns.block
+[defns.block]: intro.md#defns.block
 [except.terminate]: except.md#except.terminate
 [func.require]: utilities.md#func.require
 [futures]: #futures

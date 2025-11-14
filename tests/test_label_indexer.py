@@ -386,3 +386,129 @@ def test_empty_label(temp_source_dir):
         assert "" in labels
     if "  " in labels:
         assert "  " in labels
+
+
+def test_label_command_extraction(temp_source_dir):
+    """Test extraction of \\label{} command labels"""
+    (temp_source_dir / "labels.tex").write_text(
+        r"""
+\rSec0[basic]{Basic concepts}
+\rSec1[basic.def]{Definitions}
+
+Some text here.
+\label{term.odr.use}%
+
+More text.
+\label{term.incomplete.type}%
+
+\label{term.unevaluated.operand}%
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "labels.tex")
+
+    # Should extract both \rSec labels and \label{} labels
+    assert "basic" in labels
+    assert "basic.def" in labels
+    assert "term.odr.use" in labels
+    assert "term.incomplete.type" in labels
+    assert "term.unevaluated.operand" in labels
+
+
+def test_label_command_filtering(temp_source_dir):
+    """Test that template labels in macro definitions are filtered out"""
+    (temp_source_dir / "macros.tex").write_text(
+        r"""
+% Macro definition - should be skipped
+\newcommand{\mytable}[2]{\caption{\label{tab:#2} #1}}
+
+% Real label - should be extracted
+\label{real.label}%
+
+% Caption with template - should be skipped
+\caption{\label{fig:#1} My figure}
+
+% Another real label
+\label{another.real.label}%
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "macros.tex")
+
+    # Should only extract non-template labels
+    assert "real.label" in labels
+    assert "another.real.label" in labels
+
+    # Should NOT extract template labels (containing #)
+    assert "tab:#2" not in labels
+    assert "fig:#1" not in labels
+
+
+def test_definition_macro_extraction(temp_source_dir):
+    """Test extraction of labels from \\definition{}{} macro"""
+    (temp_source_dir / "definitions.tex").write_text(
+        r"""
+\rSec0[intro]{Introduction}
+\rSec1[intro.defs]{Definitions}
+
+\definition{constant subexpression}{defns.const.subexpr}
+\defncontext{expression}
+The expression is constant...
+
+\definition{access}{defns.access}
+\defncontext{execution-time action}
+To read or modify...
+
+\definition{block}{defns.block}
+wait until some condition holds...
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "definitions.tex")
+
+    # Should extract \rSec labels
+    assert "intro" in labels
+    assert "intro.defs" in labels
+
+    # Should extract \definition{}{} labels (second argument)
+    assert "defns.const.subexpr" in labels
+    assert "defns.access" in labels
+    assert "defns.block" in labels
+
+
+def test_mixed_label_sources(temp_source_dir):
+    """Test file with labels from all three sources: \\rSec, \\label{}, and \\definition{}"""
+    (temp_source_dir / "mixed.tex").write_text(
+        r"""
+\rSec0[basic]{Basic concepts}
+\rSec1[basic.def]{Definitions}
+
+\definition{access}{defns.access}
+Some definition text.
+
+\label{term.odr.use}%
+Some more text.
+
+\rSec2[basic.scope]{Scope}
+
+\label{term.incomplete.type}%
+
+\definition{block}{defns.block}
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "mixed.tex")
+
+    # Should extract all three types of labels
+    assert "basic" in labels
+    assert "basic.def" in labels
+    assert "basic.scope" in labels
+    assert "defns.access" in labels
+    assert "defns.block" in labels
+    assert "term.odr.use" in labels
+    assert "term.incomplete.type" in labels
+    assert len(labels) == 7

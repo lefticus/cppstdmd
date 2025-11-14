@@ -1073,7 +1073,7 @@ Under these conditions, it can be shown that
 [cpp17.destructible]: #cpp17.destructible
 [customization.point.object]: library.md#customization.point.object
 [declval]: utilities.md#declval
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: library.md#defns.const.subexpr
 [expr.log.and]: expr.md#expr.log.and
 [expr.log.or]: expr.md#expr.log.or
 [expr.prim.id]: expr.md#expr.prim.id

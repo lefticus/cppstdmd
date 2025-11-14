@@ -1123,7 +1123,7 @@ Under these conditions, it can be shown that
 [customization.point.object]: library.md#customization.point.object
 [dcl.meaning]: dcl.md#dcl.meaning
 [declval]: utilities.md#declval
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: intro.md#defns.const.subexpr
 [expr.log.and]: expr.md#expr.log.and
 [expr.log.or]: expr.md#expr.log.or
 [expr.prim.id]: expr.md#expr.prim.id
@@ -1141,6 +1141,6 @@ Under these conditions, it can be shown that
 [temp.deduct.type]: temp.md#temp.deduct.type
 [temp.func.order]: temp.md#temp.func.order
 [template.bitset]: utilities.md#template.bitset
-[term.literal.type]: #term.literal.type
+[term.literal.type]: basic.md#term.literal.type
 
 [^1]: The name `swap` is used here unqualified.

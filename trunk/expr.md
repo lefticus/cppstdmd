@@ -7456,8 +7456,8 @@ A function or variable is *needed for constant evaluation* if it is:
 [dcl.type.decltype]: dcl.md#dcl.type.decltype
 [dcl.type.elab]: dcl.md#dcl.type.elab
 [dcl.type.simple]: dcl.md#dcl.type.simple
-[defns.access]: #defns.access
-[defns.nonconst.libcall]: #defns.nonconst.libcall
+[defns.access]: intro.md#defns.access
+[defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
 [depr.capture.this]: future.md#depr.capture.this
 [depr.volatile.type]: future.md#depr.volatile.type
 [except]: except.md#except
@@ -7595,10 +7595,10 @@ A function or variable is *needed for constant evaluation* if it is:
 [temp.spec.partial]: temp.md#temp.spec.partial
 [temp.type]: temp.md#temp.type
 [temp.variadic]: temp.md#temp.variadic
-[term.incomplete.type]: #term.incomplete.type
-[term.object.representation]: #term.object.representation
-[term.odr.use]: #term.odr.use
-[term.structural.type]: #term.structural.type
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.object.representation]: basic.md#term.object.representation
+[term.odr.use]: basic.md#term.odr.use
+[term.structural.type]: temp.md#term.structural.type
 [term.unevaluated.operand]: #term.unevaluated.operand
 [thread]: thread.md#thread
 [type.info]: support.md#type.info

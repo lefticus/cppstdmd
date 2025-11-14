@@ -6644,7 +6644,7 @@ constant variable template is ill-formed.
 [sf.cmath.ellint.2]: #sf.cmath.ellint.2
 [sf.cmath.ellint.3]: #sf.cmath.ellint.3
 [strings]: strings.md#strings
-[term.literal.type]: #term.literal.type
+[term.literal.type]: basic.md#term.literal.type
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class
 [utility.arg.requirements]: library.md#utility.arg.requirements

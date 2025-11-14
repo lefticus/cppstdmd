@@ -131,6 +131,29 @@ class LabelIndexer:
                 label = match.group(1)
                 labels.add(label)
 
+            # Find all \label{} commands
+            # Matches: \label{term.odr.use}%
+            # Exclude labels in macro definitions (lines with \newcommand, \caption, etc.)
+            for match in re.finditer(r"\\label\{([^}]+)\}", content):
+                label = match.group(1)
+                # Get the line containing this label to check if it's a template
+                label_pos = match.start()
+                line_start = content.rfind("\n", 0, label_pos) + 1
+                line_end = content.find("\n", label_pos)
+                if line_end == -1:
+                    line_end = len(content)
+                line = content[line_start:line_end]
+
+                # Skip labels in macro definitions (templates like \caption{\label{tab:#2}...})
+                if "\\newcommand" not in line and "\\caption" not in line and "#" not in label:
+                    labels.add(label)
+
+            # Find all \definition{}{} macros and extract the label (second argument)
+            # Matches: \definition{constant subexpression}{defns.const.subexpr}
+            for match in re.finditer(r"\\definition\{[^}]+\}\{([^}]+)\}", content):
+                label = match.group(1)
+                labels.add(label)
+
         except Exception as e:
             # Log error but continue
             import sys

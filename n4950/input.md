@@ -12522,7 +12522,7 @@ modifier for the type.
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [cstdint.syn]: support.md#cstdint.syn
-[defns.ntcts]: #defns.ntcts
+[defns.ntcts]: intro.md#defns.ntcts
 [enumerated.types]: library.md#enumerated.types
 [file.streams]: #file.streams
 [filebuf]: #filebuf
@@ -12620,7 +12620,7 @@ modifier for the type.
 [syncstream]: #syncstream
 [syncstream.syncbuf.cons]: #syncstream.syncbuf.cons
 [temp.deduct]: temp.md#temp.deduct
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [views.span]: containers.md#views.span
 
 [^1]: Typically `long long`.

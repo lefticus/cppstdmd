@@ -6337,8 +6337,8 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [dcl.type.decltype]: dcl.md#dcl.type.decltype
 [dcl.type.elab]: dcl.md#dcl.type.elab
 [dcl.typedef]: dcl.md#dcl.typedef
-[defns.access]: #defns.access
-[defns.block]: #defns.block
+[defns.access]: intro.md#defns.access
+[defns.block]: intro.md#defns.block
 [depr.local]: future.md#depr.local
 [depr.static.constexpr]: future.md#depr.static.constexpr
 [diff.cpp11.basic]: compatibility.md#diff.cpp11.basic
@@ -6478,8 +6478,8 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [term.implicit.lifetime.type]: #term.implicit.lifetime.type
 [term.incomplete.type]: #term.incomplete.type
 [term.odr.use]: #term.odr.use
-[term.replaceable.function]: #term.replaceable.function
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.replaceable.function]: dcl.md#term.replaceable.function
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [thread]: thread.md#thread
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class

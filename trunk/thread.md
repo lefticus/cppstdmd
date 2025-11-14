@@ -10132,7 +10132,7 @@ void swap(hazard_pointer& a, hazard_pointer& b) noexcept;
 [cpp17.lessthancomparable]: #cpp17.lessthancomparable
 [cpp17.moveassignable]: #cpp17.moveassignable
 [cpp17.moveconstructible]: #cpp17.moveconstructible
-[defns.block]: #defns.block
+[defns.block]: intro.md#defns.block
 [except.terminate]: except.md#except.terminate
 [expr.pre]: expr.md#expr.pre
 [expr.rel]: expr.md#expr.rel
@@ -10156,8 +10156,8 @@ void swap(hazard_pointer& a, hazard_pointer& b) noexcept;
 [stoptoken.concepts]: #stoptoken.concepts
 [syserr]: diagnostics.md#syserr
 [syserr.syserr]: diagnostics.md#syserr.syserr
-[term.padding.bits]: #term.padding.bits
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.padding.bits]: basic.md#term.padding.bits
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [thread.condition]: #thread.condition
 [thread.condition.condvarany]: #thread.condition.condvarany
 [thread.condvarany.intwait]: #thread.condvarany.intwait

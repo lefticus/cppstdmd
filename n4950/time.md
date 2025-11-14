@@ -8102,7 +8102,7 @@ required to avoid data races [[res.on.data.races]].
 [res.on.data.races]: library.md#res.on.data.races
 [swappable.requirements]: library.md#swappable.requirements
 [temp.deduct]: temp.md#temp.deduct
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [time.12]: #time.12
 [time.cal]: #time.cal
 [time.clock]: #time.clock

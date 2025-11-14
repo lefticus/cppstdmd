@@ -8611,7 +8611,7 @@ template<class R, class... ArgTypes>
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.moveassignable]: #cpp17.moveassignable
 [cpp17.moveconstructible]: #cpp17.moveconstructible
-[defns.block]: #defns.block
+[defns.block]: intro.md#defns.block
 [except.terminate]: except.md#except.terminate
 [expr.pre]: expr.md#expr.pre
 [format.string.std]: utilities.md#format.string.std
@@ -8633,8 +8633,8 @@ template<class R, class... ArgTypes>
 [stoptoken]: #stoptoken
 [syserr]: diagnostics.md#syserr
 [syserr.syserr]: diagnostics.md#syserr.syserr
-[term.padding.bits]: #term.padding.bits
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.padding.bits]: basic.md#term.padding.bits
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [thread.condition]: #thread.condition
 [thread.condition.condvarany]: #thread.condition.condvarany
 [thread.condvarany.intwait]: #thread.condvarany.intwait

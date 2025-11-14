@@ -11336,7 +11336,7 @@ C standard library header `<inttypes.h>`, with the following changes:
 [cpp17.defaultconstructible]: #cpp17.defaultconstructible
 [cpp17.destructible]: #cpp17.destructible
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[defns.ntcts]: #defns.ntcts
+[defns.ntcts]: library.md#defns.ntcts
 [enumerated.types]: library.md#enumerated.types
 [file.streams]: #file.streams
 [filebuf]: #filebuf

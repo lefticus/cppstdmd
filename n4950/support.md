@@ -4286,7 +4286,7 @@ names within the namespace `std`. — *end example*]
 [dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
 [dcl.fct.default]: dcl.md#dcl.fct.default
 [dcl.init.list]: dcl.md#dcl.init.list
-[defns.expression.equivalent]: #defns.expression.equivalent
+[defns.expression.equivalent]: intro.md#defns.expression.equivalent
 [except.handle]: except.md#except.handle
 [except.spec]: except.md#except.spec
 [except.terminate]: except.md#except.terminate
@@ -4339,7 +4339,7 @@ names within the namespace `std`. — *end example*]
 [temp.dep.constexpr]: temp.md#temp.dep.constexpr
 [temp.dep.expr]: temp.md#temp.dep.expr
 [temp.variadic]: temp.md#temp.variadic
-[term.odr.use]: #term.odr.use
+[term.odr.use]: basic.md#term.odr.use
 [unord.hash]: utilities.md#unord.hash
 [utility.arg.requirements]: library.md#utility.arg.requirements
 

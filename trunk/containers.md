@@ -18926,7 +18926,7 @@ void zero_surface(mdspan<T, E, L, A> grid3d) {
 [containers]: #containers
 [containers.summary]: #containers.summary
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
-[defns.valid]: #defns.valid
+[defns.valid]: intro.md#defns.valid
 [deque]: #deque
 [deque.modifiers]: #deque.modifiers
 [expr.const]: expr.md#expr.const
@@ -18962,8 +18962,8 @@ void zero_surface(mdspan<T, E, L, A> grid3d) {
 [swappable.requirements]: library.md#swappable.requirements
 [temp.deduct]: temp.md#temp.deduct
 [temp.type]: temp.md#temp.type
-[term.structural.type]: #term.structural.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
+[term.structural.type]: temp.md#term.structural.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
 [unord]: #unord
 [unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map

@@ -5707,11 +5707,11 @@ struct C {
 [temp.pre]: temp.md#temp.pre
 [temp.spec.partial]: temp.md#temp.spec.partial
 [temp.variadic]: temp.md#temp.variadic
-[term.incomplete.type]: #term.incomplete.type
-[term.layout.compatible.type]: #term.layout.compatible.type
-[term.object.representation]: #term.object.representation
-[term.odr.use]: #term.odr.use
-[term.padding.bits]: #term.padding.bits
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.layout.compatible.type]: basic.md#term.layout.compatible.type
+[term.object.representation]: basic.md#term.object.representation
+[term.odr.use]: basic.md#term.odr.use
+[term.padding.bits]: basic.md#term.padding.bits
 
 [^1]: This ensures that two subobjects that have the same class type and
     that belong to the same most derived object are not allocated at the

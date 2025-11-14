@@ -5850,7 +5850,7 @@ A function or variable is *needed for constant evaluation* if it is:
 [dcl.type]: dcl.md#dcl.type
 [dcl.type.cv]: dcl.md#dcl.type.cv
 [dcl.type.simple]: dcl.md#dcl.type.simple
-[defns.access]: #defns.access
+[defns.access]: intro.md#defns.access
 [depr.arith.conv.enum]: future.md#depr.arith.conv.enum
 [depr.array.comp]: future.md#depr.array.comp
 [depr.capture.this]: future.md#depr.capture.this

@@ -5561,9 +5561,9 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [dcl.struct.bind]: dcl.md#dcl.struct.bind
 [dcl.type.elab]: dcl.md#dcl.type.elab
 [dcl.typedef]: dcl.md#dcl.typedef
-[defns.block]: #defns.block
-[defns.signature]: #defns.signature
-[defns.signature.templ]: #defns.signature.templ
+[defns.block]: intro.md#defns.block
+[defns.signature]: intro.md#defns.signature
+[defns.signature.templ]: intro.md#defns.signature.templ
 [depr.local]: future.md#depr.local
 [depr.static.constexpr]: future.md#depr.static.constexpr
 [diff.cpp11.basic]: compatibility.md#diff.cpp11.basic

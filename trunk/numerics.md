@@ -14407,7 +14407,7 @@ corresponding type-generic macro with the same name specified in .
 [simd.overview]: #simd.overview
 [simd.unary]: #simd.unary
 [strings]: strings.md#strings
-[term.literal.type]: #term.literal.type
+[term.literal.type]: basic.md#term.literal.type
 [thread.jthread.class]: thread.md#thread.jthread.class
 [thread.thread.class]: thread.md#thread.thread.class
 [utility.arg.requirements]: library.md#utility.arg.requirements

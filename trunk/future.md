@@ -899,4 +899,4 @@ template<class T> constexpr T kill_dependency(T y) noexcept;
 [res.on.data.races]: library.md#res.on.data.races
 [system.error.syn]: diagnostics.md#system.error.syn
 [temp.names]: temp.md#temp.names
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand

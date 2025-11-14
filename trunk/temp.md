@@ -8457,8 +8457,8 @@ in some translation unit [[temp.pre]].
 [temp.static]: #temp.static
 [temp.type]: #temp.type
 [temp.variadic]: #temp.variadic
-[term.incomplete.type]: #term.incomplete.type
-[term.odr.use]: #term.odr.use
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.odr.use]: basic.md#term.odr.use
 
 [^1]: A `>` that encloses the *type-id* of a `dynamic_cast`,
     `static_cast`, `reinterpret_cast` or `const_cast`, or which encloses

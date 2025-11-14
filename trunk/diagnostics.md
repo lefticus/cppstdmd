@@ -1888,7 +1888,7 @@ such a tracing process is a debugger. — *end note*]
 [conv]: expr.md#conv
 [cpp.predefined]: cpp.md#cpp.predefined
 [debugging]: #debugging
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: intro.md#defns.const.subexpr
 [diagnostics.summary]: #diagnostics.summary
 [errno]: #errno
 [format.string.std]: text.md#format.string.std
@@ -1902,5 +1902,5 @@ such a tracing process is a debugger. — *end note*]
 [syserr]: #syserr
 [syserr.errcat]: #syserr.errcat
 [syserr.errcode]: #syserr.errcode
-[term.replaceable.function]: #term.replaceable.function
+[term.replaceable.function]: dcl.md#term.replaceable.function
 [unord.hash]: utilities.md#unord.hash

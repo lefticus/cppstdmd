@@ -3973,7 +3973,7 @@ caused the invocation of the handler.
 [dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
 [dcl.fct.default]: dcl.md#dcl.fct.default
 [dcl.init.list]: dcl.md#dcl.init.list
-[defns.expression-equivalent]: #defns.expression-equivalent
+[defns.expression-equivalent]: library.md#defns.expression-equivalent
 [except.handle]: except.md#except.handle
 [except.spec]: except.md#except.spec
 [except.terminate]: except.md#except.terminate

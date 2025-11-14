@@ -856,7 +856,7 @@ current thread.
 [structure.specifications]: library.md#structure.specifications
 [support.start.term]: support.md#support.start.term
 [temp.explicit]: temp.md#temp.explicit
-[term.odr.use]: #term.odr.use
+[term.odr.use]: basic.md#term.odr.use
 [thread.condition.condvar]: thread.md#thread.condition.condvar
 [thread.condition.condvarany]: thread.md#thread.condition.condvarany
 [thread.thread.assign]: thread.md#thread.thread.assign

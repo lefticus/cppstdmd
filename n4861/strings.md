@@ -3863,7 +3863,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.defaultconstructible]: #cpp17.defaultconstructible
 [cpp17.destructible]: #cpp17.destructible
-[defns.character.container]: #defns.character.container
+[defns.character.container]: library.md#defns.character.container
 [input.output]: input.md#input.output
 [intro.object]: basic.md#intro.object
 [iostate.flags]: input.md#iostate.flags

@@ -7756,8 +7756,8 @@ in some translation unit [[temp.pre]].
 [temp.static]: #temp.static
 [temp.type]: #temp.type
 [temp.variadic]: #temp.variadic
-[term.incomplete.type]: #term.incomplete.type
-[term.odr.use]: #term.odr.use
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.odr.use]: basic.md#term.odr.use
 
 [^1]: Since template *template-parameter*s and template
     *template-argument*s are treated as types for descriptive purposes,

@@ -5571,8 +5571,8 @@ template<class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [cpp17.copyassignable]: #cpp17.copyassignable
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable
 [customization.point.object]: library.md#customization.point.object
-[defns.const.subexpr]: #defns.const.subexpr
-[defns.projection]: #defns.projection
+[defns.const.subexpr]: intro.md#defns.const.subexpr
+[defns.projection]: intro.md#defns.projection
 [expr.const]: expr.md#expr.const
 [forward.iterators]: #forward.iterators
 [forwarditerator]: #forwarditerator

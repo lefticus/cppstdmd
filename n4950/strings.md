@@ -4091,7 +4091,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.defaultconstructible]: #cpp17.defaultconstructible
 [cpp17.destructible]: #cpp17.destructible
-[defns.character.container]: #defns.character.container
+[defns.character.container]: intro.md#defns.character.container
 [input.output]: input.md#input.output
 [intro.object]: basic.md#intro.object
 [iostream.forward]: input.md#iostream.forward
@@ -4117,8 +4117,8 @@ introduce a data race [[res.on.data.races]] with other calls to
 [strings.summary]: #strings.summary
 [support.signal]: support.md#support.signal
 [temp.deduct]: temp.md#temp.deduct
-[term.standard.layout.type]: #term.standard.layout.type
-[term.trivially.copyable.type]: #term.trivially.copyable.type
+[term.standard.layout.type]: basic.md#term.standard.layout.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
 [unord.hash]: utilities.md#unord.hash
 [utility.swap]: utilities.md#utility.swap
 

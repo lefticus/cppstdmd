@@ -9588,8 +9588,8 @@ is a null pointer value.
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.defaultconstructible]: #cpp17.defaultconstructible
 [cpp17.destructible]: #cpp17.destructible
-[defns.character.container]: #defns.character.container
-[defns.ntcts]: #defns.ntcts
+[defns.character.container]: intro.md#defns.character.container
+[defns.ntcts]: intro.md#defns.ntcts
 [enumerated.types]: library.md#enumerated.types
 [expr.const]: expr.md#expr.const
 [file.streams]: input.md#file.streams
@@ -9670,7 +9670,7 @@ is a null pointer value.
 [swappable.requirements]: library.md#swappable.requirements
 [tab:locale.category.facets]: #tab:locale.category.facets
 [tab:locale.spec]: #tab:locale.spec
-[term.trivially.copyable.type]: #term.trivially.copyable.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
 [text.c.strings]: #text.c.strings
 [text.encoding]: #text.encoding
 [text.summary]: #text.summary

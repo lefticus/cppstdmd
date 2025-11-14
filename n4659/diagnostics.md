@@ -1301,7 +1301,7 @@ constructor.
 [bad.alloc]: language.md#bad.alloc
 [comparisons]: utilities.md#comparisons
 [conv]: conv.md#conv
-[defns.const.subexpr]: #defns.const.subexpr
+[defns.const.subexpr]: library.md#defns.const.subexpr
 [errno]: #errno
 [res.on.exception.handling]: library.md#res.on.exception.handling
 [std.exceptions]: #std.exceptions

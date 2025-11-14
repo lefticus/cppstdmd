@@ -7879,10 +7879,10 @@ Here, `hasher`, `pred`, and `alloc` could have the same address as
 [temp.res]: temp.md#temp.res
 [temp.spec.partial]: temp.md#temp.spec.partial
 [temp.variadic]: temp.md#temp.variadic
-[term.odr.use]: #term.odr.use
-[term.padding.bits]: #term.padding.bits
-[term.scalar.type]: #term.scalar.type
-[term.unevaluated.operand]: #term.unevaluated.operand
+[term.odr.use]: basic.md#term.odr.use
+[term.padding.bits]: basic.md#term.padding.bits
+[term.scalar.type]: basic.md#term.scalar.type
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 
 [^1]: There is no special provision for a *decl-specifier-seq* that
     lacks a *type-specifier* or that has a *type-specifier* that only

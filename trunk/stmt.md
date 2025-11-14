@@ -1349,7 +1349,7 @@ void f(S s) {
 [support.start.term]: support.md#support.start.term
 [temp.decls.general]: temp.md#temp.decls.general
 [temp.pre]: temp.md#temp.pre
-[term.odr.use]: #term.odr.use
+[term.odr.use]: basic.md#term.odr.use
 [thread.thread.this]: thread.md#thread.thread.this
 
 [^1]: In other words, the `else` is associated with the nearest un-elsed

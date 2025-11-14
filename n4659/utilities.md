@@ -14386,8 +14386,8 @@ type of execution policy.
 [dcl.constexpr]: dcl.md#dcl.constexpr
 [dcl.ref]: dcl.md#dcl.ref
 [declval]: #declval
-[defns.const.subexpr]: #defns.const.subexpr
-[defns.referenceable]: #defns.referenceable
+[defns.const.subexpr]: library.md#defns.const.subexpr
+[defns.referenceable]: library.md#defns.referenceable
 [execpol]: #execpol
 [expr]: expr.md#expr
 [expr.add]: expr.md#expr.add

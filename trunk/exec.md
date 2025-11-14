@@ -7069,7 +7069,7 @@ call.
 [customization.point.object]: library.md#customization.point.object
 [dcl.init]: dcl.md#dcl.init
 [dcl.struct.bind]: dcl.md#dcl.struct.bind
-[defns.block]: #defns.block
+[defns.block]: intro.md#defns.block
 [except.terminate]: except.md#except.terminate
 [exec]: #exec
 [exec.adapt]: #exec.adapt
@@ -7100,5 +7100,5 @@ call.
 [intro.races]: basic.md#intro.races
 [meta.trans.other]: meta.md#meta.trans.other
 [namespace.std]: library.md#namespace.std
-[term.replaceable.function]: #term.replaceable.function
+[term.replaceable.function]: dcl.md#term.replaceable.function
 [thread.req.lockable.general]: thread.md#thread.req.lockable.general

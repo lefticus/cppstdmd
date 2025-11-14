@@ -14891,11 +14891,11 @@ format_error(const char* what_arg);
 [dcl.constexpr]: dcl.md#dcl.constexpr
 [dcl.ref]: dcl.md#dcl.ref
 [declval]: #declval
-[defns.const.subexpr]: #defns.const.subexpr
-[defns.expression-equivalent]: #defns.expression-equivalent
-[defns.ntcts]: #defns.ntcts
+[defns.const.subexpr]: library.md#defns.const.subexpr
+[defns.expression-equivalent]: library.md#defns.expression-equivalent
+[defns.ntcts]: library.md#defns.ntcts
 [defns.order.ptr]: #defns.order.ptr
-[defns.referenceable]: #defns.referenceable
+[defns.referenceable]: library.md#defns.referenceable
 [execpol]: #execpol
 [expr.add]: expr.md#expr.add
 [expr.alignof]: expr.md#expr.alignof
