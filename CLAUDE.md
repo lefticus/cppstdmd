@@ -145,11 +145,31 @@ The tool automatically extracts "stable names" from `\rSec0` tags to generate co
 
 This enables stable cross-file linking when using `--build-separate` mode.
 
-## Code Style
+## Code Quality and Style
 
-- Formatting: Black (configured in requirements.txt)
-- Linting: Ruff (configured in requirements.txt)
-- Python version: 3.10+
+This project uses automated linting and formatting. See [LINTING.md](LINTING.md) for complete documentation.
+
+**Quick commands:**
+```bash
+./format.sh  # Auto-format all code (Black + Ruff)
+./lint.sh    # Run all linters (Black, Ruff, MyPy, Pytest)
+make format  # Same as ./format.sh
+make lint    # Same as ./lint.sh
+```
+
+**Tools configured:**
+- **Black** - Python code formatter (line length: 100)
+- **Ruff** - Fast Python linter (replaces flake8, isort, pyupgrade)
+- **MyPy** - Static type checker (optional)
+- **Luacheck** - Lua linter for Pandoc filters
+- **Pre-commit hooks** - Automatic linting on git commit
+
+**Configuration files:**
+- `pyproject.toml` - Black, Ruff, MyPy, Pytest settings
+- `.luacheckrc` - Luacheck settings for Lua filters
+- `.pre-commit-config.yaml` - Pre-commit hooks
+
+**Python version:** 3.10+
 
 ## External Dependencies
 
@@ -169,15 +189,17 @@ This enables stable cross-file linking when using `--build-separate` mode.
 **CRITICAL:** Always follow this workflow before committing any changes to filters or code that affects output:
 
 1. Make your code changes
-2. Add unit tests for your changes in `tests/test_filters/`
-3. Run `./venv/bin/pytest tests/test_filters/your_test.py -v` to test iteratively
-4. **Run `./setup-and-build.sh` to test and regenerate with correct settings**
-5. Review git diffs carefully to ensure:
+2. **Run `./format.sh` to auto-format code**
+3. Add unit tests for your changes in `tests/test_filters/`
+4. Run `./venv/bin/pytest tests/test_filters/your_test.py -v` to test iteratively
+5. **Run `./lint.sh` to verify code quality**
+6. **Run `./setup-and-build.sh` to test and regenerate with correct settings**
+7. Review git diffs carefully to ensure:
    - Only expected files changed
    - No regressions in other files
    - Generated output looks correct
-6. Stage changes: `git add <files>`
-7. Commit only if everything looks good
+8. Stage changes: `git add <files>`
+9. Commit (pre-commit hooks will run automatically if installed)
 
 **Why this matters:** The script runs the full test suite AND regenerates the n4950 output with your preferred settings. Skipping this step risks committing broken output or missing regressions.
 

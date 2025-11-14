@@ -1,0 +1,87 @@
+# .pre-commit-config.yaml - Pre-commit hooks for code quality
+
+repos:
+  # Python code formatting
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.10
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+
+  # Python import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--line-length", "100"]
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+
+  # Python linting with ruff
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.15
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+      - id: ruff-format
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+
+  # Python type checking (optional, can be slow)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-PyYAML
+          - types-beautifulsoup4
+        exclude: '^(tests/|cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+      - id: end-of-file-fixer
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: debug-statements
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+
+  # Lua linting (requires luacheck to be installed)
+  - repo: https://github.com/luarocks/luacheck
+    rev: v1.1.2
+    hooks:
+      - id: luacheck
+        files: '^src/cpp_std_converter/filters/.*\.lua$'
+        args: ['--config', '.luacheckrc']
+
+  # Markdown linting
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
+    hooks:
+      - id: markdownlint
+        args: ['--fix']
+        exclude: '^(cplusplus-draft|n3337|n4140|n4659|n4861|n4950|trunk|full|diffs|site)/'
+
+# Configuration
+default_language_version:
+  python: python3.10
+
+# Only run on changed files by default
+default_stages: [commit]
+
+# Fail fast - stop on first failure
+fail_fast: false
+
+# Minimum pre-commit version
+minimum_pre_commit_version: '3.0.0'

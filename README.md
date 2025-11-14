@@ -136,8 +136,24 @@ cpp_standard_tools/
 ## Documentation
 
 - [tests/README.md](tests/README.md) - Test suite documentation and results
+- [LINTING.md](LINTING.md) - Code quality and linting setup
 - [PLAN.md](PLAN.md) - Complete implementation plan
 - [PYTHON_TEX_TOOLS.md](PYTHON_TEX_TOOLS.md) - Python LaTeX parsing tools reference
+
+## Code Quality
+
+This project uses automated linting and formatting. See [LINTING.md](LINTING.md) for details.
+
+```bash
+# Auto-format code
+./format.sh   # or: make format
+
+# Check code quality
+./lint.sh     # or: make lint
+
+# Install pre-commit hooks
+make setup-hooks
+```
 
 ## Testing
 
