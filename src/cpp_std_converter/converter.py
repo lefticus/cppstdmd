@@ -54,6 +54,13 @@ def unescape_wikilinks(markdown: str) -> str:
     # This improves readability for patterns like ( [[tag]]) -> ([[tag]])
     markdown = re.sub(r"\( \[\[", r"([[", markdown)
 
+    # Fix remaining \libmember{member}{class} macros (issue #46)
+    # These appear in table cells where Pandoc processes them before our filters
+    markdown = re.sub(r"\\libmember\{([^}]+)\}\{[^}]+\}", r"\1", markdown)
+
+    # Fix remaining \libglobal{name} macros (issue #24)
+    markdown = re.sub(r"\\libglobal\{([^}]+)\}", r"\1", markdown)
+
     return markdown
 
 

@@ -376,6 +376,9 @@ function RawInline(elem)
     code = code:gsub("\\exposconcept{([^}]*)}", "%1")
     code = code:gsub("\\placeholder{([^}]*)}", "%1")
     code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
+    -- Library indexing macros (issue #46)
+    code = code:gsub("\\libmember{([^}]*)}{([^}]*)}", "%1")  -- Extract member name, discard class
+    code = code:gsub("\\libglobal{([^}]*)}", "%1")  -- Extract global name (issue #24)
     code = code:gsub("\\exposid{([^}]*)}", "%1")
     code = code:gsub("\\mathit{([^}]*)}", "%1")
     -- Restored: different meaning in math mode
@@ -1127,6 +1130,25 @@ function Meta(meta)
   end
 
   return meta
+end
+
+-- Handle Code elements (inline code) to process remaining \libmember{} macros
+-- This catches cases where \tcode{} was converted to Code by Pandoc's table handler
+-- before our \tcode{} processing ran (issue #46)
+function Code(elem)
+  local text = elem.text
+
+  -- Process \libmember{member}{class} - extract member name only
+  text = text:gsub("\\libmember{([^}]*)}{([^}]*)}", "%1")
+
+  -- Process \libglobal{name} - extract name
+  text = text:gsub("\\libglobal{([^}]*)}", "%1")
+
+  if text ~= elem.text then
+    return pandoc.Code(text, elem.attr)
+  end
+
+  return elem
 end
 
 function Pandoc(doc)

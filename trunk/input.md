@@ -10341,17 +10341,17 @@ constants are distinct.
 
 | Constant                           | Meaning                                                                                                                                                                                                                     |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `\libmember{none}{file_type}`      | The type of the file has not been determined or an error occurred while trying to determine the type.                                                                                                                       |
-| `\libmember{not_found}{file_type}` | Pseudo-type indicating the file was not found. *The file not being found is not considered an error while determining the type of a file.*                                                                                  |
-| `\libmember{regular}{file_type}`   | Regular file                                                                                                                                                                                                                |
-| `\libmember{directory}{file_type}` | Directory file                                                                                                                                                                                                              |
-| `\libmember{symlink}{file_type}`   | Symbolic link file                                                                                                                                                                                                          |
-| `\libmember{block}{file_type}`     | Block special file                                                                                                                                                                                                          |
-| `\libmember{character}{file_type}` | Character special file                                                                                                                                                                                                      |
-| `\libmember{fifo}{file_type}`      | FIFO or pipe file                                                                                                                                                                                                           |
-| `\libmember{socket}{file_type}`    | Socket file                                                                                                                                                                                                                 |
+| `none`      | The type of the file has not been determined or an error occurred while trying to determine the type.                                                                                                                       |
+| `not_found` | Pseudo-type indicating the file was not found. *The file not being found is not considered an error while determining the type of a file.*                                                                                  |
+| `regular`   | Regular file                                                                                                                                                                                                                |
+| `directory` | Directory file                                                                                                                                                                                                              |
+| `symlink`   | Symbolic link file                                                                                                                                                                                                          |
+| `block`     | Block special file                                                                                                                                                                                                          |
+| `character` | Character special file                                                                                                                                                                                                      |
+| `fifo`      | FIFO or pipe file                                                                                                                                                                                                           |
+| `socket`    | Socket file                                                                                                                                                                                                                 |
 | `implementation-defined`           | Implementations that support file systems having file types in addition to the above `file_type` types shall supply implementation-defined `file_type` constants to separately identify each of those additional file types |
-| `\libmember{unknown}{file_type}`   | The file exists but the type cannot be determined                                                                                                                                                                           |
+| `unknown`   | The file exists but the type cannot be determined                                                                                                                                                                           |
 
 
 #### Enum class `copy_options` <a id="fs.enum.copy.opts">[[fs.enum.copy.opts]]</a>
@@ -10368,16 +10368,16 @@ Every other constant in the table represents a distinct bitmask element.
 
 | Constant                                       | Meaning                                                                                                                                              |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `\libmember{none}{copy_options}`               | (Default) Error; file already exists.                                                                                                                |
-| `\libmember{skip_existing}{copy_options}`      | Do not overwrite existing file, do not report an error.                                                                                              |
-| `\libmember{overwrite_existing}{copy_options}` | Overwrite the existing file.                                                                                                                         |
-| `\libmember{update_existing}{copy_options}`    | Overwrite the existing file if it is older than the replacement file. \ohdrx{2}{Option group controlling `copy` function effects for subdirectories} |
-| `\libmember{recursive}{copy_options}`          | Recursively copy subdirectories and their contents. \ohdrx{2}{Option group controlling `copy` function effects for symbolic links}                   |
-| `\libmember{copy_symlinks}{copy_options}`      | Copy symbolic links as symbolic links rather than copying the files that they point to.                                                              |
-| `\libmember{skip_symlinks}{copy_options}`      | Ignore symbolic links. \ohdrx{2}{Option group controlling `copy` function effects for choosing the form of copying}                                  |
-| `\libmember{directories_only}{copy_options}`   | Copy directory structure only, do not copy non-directory files.                                                                                      |
-| `\libmember{create_symlinks}{copy_options}`    | Make symbolic links instead of copies of files. The source path shall be an absolute path unless the destination path is in the current directory.   |
-| `\libmember{create_hard_links}{copy_options}`  | Make hard links instead of copies of files.                                                                                                          |
+| `none`               | (Default) Error; file already exists.                                                                                                                |
+| `skip_existing`      | Do not overwrite existing file, do not report an error.                                                                                              |
+| `overwrite_existing` | Overwrite the existing file.                                                                                                                         |
+| `update_existing`    | Overwrite the existing file if it is older than the replacement file. \ohdrx{2}{Option group controlling `copy` function effects for subdirectories} |
+| `recursive`          | Recursively copy subdirectories and their contents. \ohdrx{2}{Option group controlling `copy` function effects for symbolic links}                   |
+| `copy_symlinks`      | Copy symbolic links as symbolic links rather than copying the files that they point to.                                                              |
+| `skip_symlinks`      | Ignore symbolic links. \ohdrx{2}{Option group controlling `copy` function effects for choosing the form of copying}                                  |
+| `directories_only`   | Copy directory structure only, do not copy non-directory files.                                                                                      |
+| `create_symlinks`    | Make symbolic links instead of copies of files. The source path shall be an absolute path unless the destination path is in the current directory.   |
+| `create_hard_links`  | Make hard links instead of copies of files.                                                                                                          |
 
 
 #### Enum class `perms` <a id="fs.enum.perms">[[fs.enum.perms]]</a>
@@ -10390,25 +10390,25 @@ meanings listed in [[fs.enum.perms]].
 
 | Name | Value | POSIX | Definition or notes | (octal) | macro |
 | ---- | ----- | ----- | ------------------- | ------- | ----- |
-| `\libmember{none}{perms}` | `0`   |       | There are no permissions set for the file. |
-| `\libmember{owner_read}{perms}` | `0400` | `S_IRUSR` | Read permission, owner |
-| `\libmember{owner_write}{perms}` | `0200` | `S_IWUSR` | Write permission, owner |
-| `\libmember{owner_exec}{perms}` | `0100` | `S_IXUSR` | Execute/search permission, owner |
-| `\libmember{owner_all}{perms}` | `0700` | `S_IRWXU` | Read, write, execute/search by owner;<br> `owner_read | owner_write | owner_exec` |
-| `\libmember{group_read}{perms}` | `040` | `S_IRGRP` | Read permission, group |
-| `\libmember{group_write}{perms}` | `020` | `S_IWGRP` | Write permission, group |
-| `\libmember{group_exec}{perms}` | `010` | `S_IXGRP` | Execute/search permission, group |
-| `\libmember{group_all}{perms}` | `070` | `S_IRWXG` | Read, write, execute/search by group;<br> `group_read | group_write | group_exec` |
-| `\libmember{others_read}{perms}` | `04`  | `S_IROTH` | Read permission, others |
-| `\libmember{others_write}{perms}` | `02`  | `S_IWOTH` | Write permission, others |
-| `\libmember{others_exec}{perms}` | `01`  | `S_IXOTH` | Execute/search permission, others |
-| `\libmember{others_all}{perms}` | `07`  | `S_IRWXO` | Read, write, execute/search by others;<br> `others_read | others_write | others_exec` |
-| `\libmember{all}{perms}` | `0777` |       | `owner_all | group_all | others_all` |
-| `\libmember{set_uid}{perms}` | `04000` | `S_ISUID` | Set-user-ID on execution |
-| `\libmember{set_gid}{perms}` | `02000` | `S_ISGID` | Set-group-ID on execution |
-| `\libmember{sticky_bit}{perms}` | `01000` | `S_ISVTX` | Operating system dependent. |
-| `\libmember{mask}{perms}` | `07777` |       | `all | set_uid | set_gid | sticky_bit` |
-| `\libmember{unknown}{perms}` | `0xFFFF` |       | The permissions are not known, such as when a `file_status` object is created without specifying the permissions |
+| `none` | `0`   |       | There are no permissions set for the file. |
+| `owner_read` | `0400` | `S_IRUSR` | Read permission, owner |
+| `owner_write` | `0200` | `S_IWUSR` | Write permission, owner |
+| `owner_exec` | `0100` | `S_IXUSR` | Execute/search permission, owner |
+| `owner_all` | `0700` | `S_IRWXU` | Read, write, execute/search by owner;<br> `owner_read | owner_write | owner_exec` |
+| `group_read` | `040` | `S_IRGRP` | Read permission, group |
+| `group_write` | `020` | `S_IWGRP` | Write permission, group |
+| `group_exec` | `010` | `S_IXGRP` | Execute/search permission, group |
+| `group_all` | `070` | `S_IRWXG` | Read, write, execute/search by group;<br> `group_read | group_write | group_exec` |
+| `others_read` | `04`  | `S_IROTH` | Read permission, others |
+| `others_write` | `02`  | `S_IWOTH` | Write permission, others |
+| `others_exec` | `01`  | `S_IXOTH` | Execute/search permission, others |
+| `others_all` | `07`  | `S_IRWXO` | Read, write, execute/search by others;<br> `others_read | others_write | others_exec` |
+| `all` | `0777` |       | `owner_all | group_all | others_all` |
+| `set_uid` | `04000` | `S_ISUID` | Set-user-ID on execution |
+| `set_gid` | `02000` | `S_ISGID` | Set-group-ID on execution |
+| `sticky_bit` | `01000` | `S_ISVTX` | Operating system dependent. |
+| `mask` | `07777` |       | `all | set_uid | set_gid | sticky_bit` |
+| `unknown` | `0xFFFF` |       | The permissions are not known, such as when a `file_status` object is created without specifying the permissions |
 
 
 #### Enum class `perm_options` <a id="fs.enum.perm.opts">[[fs.enum.perm.opts]]</a>
@@ -10424,10 +10424,10 @@ permissions operations, with the meanings listed in
 
 | Name                                 | Meaning                                                                                                                                                 |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `\libmember{replace}{perm_options}`  | `permissions` shall replace the file's permission bits with `perm`                                                                                      |
-| `\libmember{add}{perm_options}`      | `permissions` shall replace the file's permission bits with the bitwise \logop{or} of `perm` and the file's current permission bits.                    |
-| `\libmember{remove}{perm_options}`   | `permissions` shall replace the file's permission bits with the bitwise \logop{and} of the complement of `perm` and the file's current permission bits. |
-| `\libmember{nofollow}{perm_options}` | `permissions` shall change the permissions of a symbolic link itself rather than the permissions of the file the link resolves to.                      |
+| `replace`  | `permissions` shall replace the file's permission bits with `perm`                                                                                      |
+| `add`      | `permissions` shall replace the file's permission bits with the bitwise \logop{or} of `perm` and the file's current permission bits.                    |
+| `remove`   | `permissions` shall replace the file's permission bits with the bitwise \logop{and} of the complement of `perm` and the file's current permission bits. |
+| `nofollow` | `permissions` shall change the permissions of a symbolic link itself rather than the permissions of the file the link resolves to.                      |
 
 
 #### Enum class `directory_options` <a id="fs.enum.dir.opts">[[fs.enum.dir.opts]]</a>
@@ -10442,9 +10442,9 @@ every other constant in the table represents a distinct bitmask element.
 
 | Name                                                      | Meaning                                                            |
 | --------------------------------------------------------- | ------------------------------------------------------------------ |
-| `\libmember{none}{directory_options}`                     | (Default) Skip directory symlinks, permission denied is an error.  |
-| `\libmember{follow_directory_symlink}{directory_options}` | Follow rather than skip directory symlinks.                        |
-| `\libmember{skip_permission_denied}{directory_options}`   | Skip directories that would otherwise result in permission denied. |
+| `none`                     | (Default) Skip directory symlinks, permission denied is an error.  |
+| `follow_directory_symlink` | Follow rather than skip directory symlinks.                        |
+| `skip_permission_denied`   | Skip directories that would otherwise result in permission denied. |
 
 
 ### Class `file_status` <a id="fs.class.file.status">[[fs.class.file.status]]</a>

@@ -847,3 +847,61 @@ def test_discretionary_hyphen_in_tcode():
     # Should NOT have broken code spans
     assert "``" not in output
     assert "`Forward``Iter``ator2`" not in output
+
+
+def test_libmember_in_tcode():
+    """Test that \\libmember{}{} is converted correctly in \\tcode{} contexts
+
+    Regression test for issue #46 - \\libmember{member}{class} macro not converted.
+    The macro should extract the member name and discard the class name (used for indexing).
+    """
+    latex = r"The member is \tcode{\libmember{value_type}{expected}}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have extracted member name only
+    assert "`value_type`" in output
+    # Should NOT have raw macro or class name
+    assert "\\libmember" not in output
+    assert "expected" not in output
+
+
+def test_libmember_multiple_in_tcode():
+    """Test multiple \\libmember{}{} instances in same \\tcode{}"""
+    latex = r"\tcode{\libmember{ptr}{allocation_result}}, \tcode{\libmember{count}{allocation_result}}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`ptr`" in output
+    assert "`count`" in output
+    assert "\\libmember" not in output
+    assert "allocation_result" not in output
+
+
+def test_libmember_in_table_tcode():
+    """Test \\libmember{}{} in \\tcode{} within table context
+
+    This is the actual pattern from C++ standard where issue #46 appears.
+    """
+    latex = r"Values: \tcode{\libmember{none}{file_type}}, \tcode{\libmember{regular}{file_type}}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have enum member names without macro
+    assert "`none`" in output
+    assert "`regular`" in output
+    assert "\\libmember" not in output
+    assert "file_type" not in output  # Class name should be discarded
+
+
+def test_libglobal_in_tcode():
+    """Test that \\libglobal{} is converted correctly in \\tcode{} contexts
+
+    Related to issue #24 - \\libglobal{} macro not converted.
+    """
+    latex = r"The type is \tcode{\libglobal{file_type}}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have extracted type name
+    assert "`file_type`" in output
+    # Should NOT have raw macro
+    assert "\\libglobal" not in output
+
+
